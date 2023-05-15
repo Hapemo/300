@@ -1,0 +1,7 @@
+﻿  Application.cpp
+C:\Users\wjhua\OneDrive - DigiPen Institute of Technology\Desktop\GAM250\MemoryLeak\MemoryLeak\APPLICATION\source\Application.cpp(11,10): fatal  error C1083: Cannot open include file: 'Application.h': No such file or directory
+  main.cpp
+C:\Users\wjhua\OneDrive - DigiPen Institute of Technology\Desktop\GAM250\MemoryLeak\MemoryLeak\APPLICATION\source\main.cpp(12,10): fatal  error C1083: Cannot open include file: 'Helper.h': No such file or directory
+  PlayGameButton.cpp
+C:\Users\wjhua\OneDrive - DigiPen Institute of Technology\Desktop\GAM250\MemoryLeak\MemoryLeak\APPLICATION\source\Scripts\Old\PlayGameButton.cpp(12,10): fatal  error C1083: Cannot open include file: 'PlayGameButton.h': No such file or directory
+  Generating Code...

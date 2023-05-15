@@ -1,0 +1,8 @@
+title: Bon Voyage
+window_width: 1600
+window_height: 900
+fps_limit: 0
+starting_gamestate: 11
+load_all_resources: 1
+new_starting_gamestate: ..\resources\GameStates\Menu.json
+show_cursor: 0

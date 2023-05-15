@@ -1,0 +1,681 @@
+------- File Directory: "..\\resources"
+------- File Directory: "..\\resources\\Audio"
+------- File Directory: "..\\resources\\Audio\\BGM"
+GUID: 16672825022742786 | File: 01.Daytime_Forest_Field_Sun_Loop.wav
+GUID: 16672825022939650 | File: 02.Night_Forest_Field_Stars_Loop.wav
+GUID: 16672825023070978 | File: 03.Rain_Day-Night_Loop.wav
+GUID: 16672825023398914 | File: 04.Snow_Day-Night_Cold_Wind_Loop.wav
+GUID: 16672825023661314 | File: 05.Fog-Desert_Loop.wav
+GUID: 16671508787298562 | File: Bon_Voyage_BGM.wav
+GUID: 16672825024841218 | File: CaveWithWaterDrops_Loop.wav
+GUID: 14757395258967590658 | File: Flight_Ambience_Loop.wav
+GUID: 16665530161234690 | File: MENUBG.wav
+GUID: 16671508787298818 | File: MonsterChase_BGM.wav
+GUID: 16671508787299074 | File: MonsterChase_Fire End_BGM.wav
+GUID: 16672825030805506 | File: ScaryBirdNightimeSwamp_Linear.wav
+GUID: 16672825031002370 | File: SwampNightTime_Loop.wav
+GUID: 16672825031592450 | File: ThunderClap_Linear_01.wav
+GUID: 16672825031723778 | File: ThunderClap_Linear_02.wav
+GUID: 16672825032182786 | File: ThunderClap_Linear_03.wav
+GUID: 16672825032576258 | File: Walla_behind closed doors_Loop_1.wav
+GUID: 16672825033494018 | File: Walla_behind closed doors_Loop_2.wav
+GUID: 16679324687532290 | File: 1.mp3
+GUID: 16679324687598082 | File: 10.mp3
+GUID: 14757395258967589634 | File: 11.mp3
+GUID: 16679324687729666 | File: 12.mp3
+GUID: 16679324687729922 | File: 13.mp3
+GUID: 16679324687795714 | File: 14.mp3
+GUID: 16679324687861506 | File: 15.mp3
+GUID: 16679324687861762 | File: 16.mp3
+GUID: 16679324687927554 | File: 17.mp3
+GUID: 16679324687993346 | File: 2.mp3
+GUID: 16679324687993602 | File: 3.mp3
+GUID: 16679324688059394 | File: 4.mp3
+GUID: 16679324688059650 | File: 5.mp3
+GUID: 16679324688059906 | File: 6.mp3
+GUID: 16679324688125698 | File: 7.mp3
+GUID: 16679324688191490 | File: 8.mp3
+GUID: 16679324688191746 | File: 9.mp3
+GUID: 16671508787365634 | File: Background_Light Waves_SFX.wav
+GUID: 16671508787365890 | File: Boat_Row_Long_SFX.wav
+GUID: 16671508787364866 | File: Boat_Row_SFX.wav
+GUID: 16695404779536642 | File: BTNCLICK.wav
+GUID: 16695401679225602 | File: Button_Click_SFX.wav
+GUID: 16695401679225858 | File: Button_Click_SFX2.wav
+GUID: 16784333675692290 | File: Collision_Finalized.wav
+GUID: 16665530161234178 | File: DAMAGE.wav
+GUID: 16784333675758082 | File: Dialog(Edited).wav
+GUID: 16671508787365378 | File: Fog_SFX.wav
+GUID: 16665530161234434 | File: HEALTH.wav
+GUID: 16693623942940930 | File: HOVER.wav
+GUID: 16693674837541122 | File: MonsterChase_SFX.wav
+GUID: 16671508787431682 | File: Monster_Warning_SFX.wav
+GUID: 16784333675823874 | File: OldCollision_Finalized.wav
+GUID: 16784511175753986 | File: Open Enemy-Weather.wav
+GUID: 16784333675889666 | File: OpenMemoryFragment.wav
+GUID: 16784333675889922 | File: OpenMinimap.wav
+GUID: 16671508787431938 | File: Rain_SFX.wav
+GUID: 16665530161234946 | File: SHOOT1.wav
+GUID: 16665530161235202 | File: SHOOT5.wav
+GUID: 16784333675890178 | File: Thunder.wav
+GUID: 16784333675890434 | File: Toggle(Edited).wav
+GUID: 16769834256171266 | File: TO_BE_REMOVED_THUNDER_SOUND.wav
+GUID: 16695512960860418 | File: MENUBG.wav
+------- File Directory: "..\\resources\\Dialogs"
+GUID: 16779098167443974 | File: Dialog Argus (Brown House).json
+GUID: 16782862337048838 | File: Dialog Argus (Water Fountain).json
+GUID: 16779098167444230 | File: Dialog Argus.json
+GUID: 16781659002962182 | File: Dialog Cat.json
+GUID: 16782862337114630 | File: Dialog Eleos (Island).json
+GUID: 16781276589588998 | File: Dialog Eleos (Lighthouse).json
+GUID: 16781276589589254 | File: Dialog Eleos.json
+GUID: 16782862337180422 | File: Dialog Minerva (Lighthouse).json
+GUID: 16778399950176774 | File: Dialog Minerva (Multistory House).json
+GUID: 16779098167444486 | File: Dialog Minerva.json
+GUID: 16781182660772102 | File: Dialog NPC dropoff.json
+GUID: 16781182660772358 | File: Dialog NPC.json
+GUID: 16780958070931718 | File: Dialog Objective Passenger1 (Minerva).json
+GUID: 16780958070931974 | File: Dialog Objective Passenger2 (Argus).json
+GUID: 16781276589720582 | File: Dialog Objective Passenger3 (Prometheus).json
+GUID: 16781276589720838 | File: Dialog Objective Passenger4 (Eleos).json
+GUID: 16782862337311750 | File: Dialog Prometheus (Lighthouse).json
+GUID: 16781236821426694 | File: Dialog Prometheus (Water Fountain).json
+GUID: 16781236821426950 | File: Dialog Prometheus.json
+GUID: 16781577774760198 | File: Dialogue CatTutorial.json
+GUID: 16679324688650758 | File: Dialogue LittleGirl 0.json
+GUID: 16741806067417350 | File: Dialogue LittleGirl 1.json
+GUID: 16679324688651014 | File: Dialogue Passenger 1.json
+GUID: 16679324688716806 | File: Dialogue Passenger 2.json
+GUID: 16679324688717062 | File: Dialogue Passenger 3.json
+GUID: 16679324688717318 | File: Dialogue Passenger 4.json
+GUID: 16679324688717574 | File: Dialogue Passenger 5.json
+GUID: 16679324688717830 | File: Dialogue Passenger 6.json
+GUID: 16750747055292678 | File: Dialogue SceneIntro 1.json
+------- File Directory: "..\\resources\\Fonts"
+GUID: 0 | File: 3Dumb.ttf
+------- File Directory: "..\\resources\\Fonts\\bptypewrite"
+GUID: 16682653192356872 | File: BPtypewriteDamagedSlashed.ttf
+GUID: 16682653192357128 | File: BPtypewriteDamagedSlashedItalics.ttf
+GUID: 16682653192357384 | File: BPtypewriteDamagedStrikethrough.ttf
+GUID: 16682653192423176 | File: BPtypewriteDamagedStrikethroughItalics.ttf
+GUID: 16682653192423432 | File: BPtypewriteDamagedUnderscored.ttf
+GUID: 16682653192423688 | File: BPtypewriteDamagedUnderscoredItalics.ttf
+GUID: 16682653192489736 | File: BPtypewriteSlashed.ttf
+GUID: 16682653192489992 | File: BPtypewriteSlashedItalics.ttf
+GUID: 16682653192490248 | File: BPtypewriteStrikethrough.ttf
+GUID: 16682653192556040 | File: BPtypewriteStrikethroughItalics.ttf
+GUID: 16682653192556296 | File: BPtypewriteUnderscored.ttf
+GUID: 16682653192556552 | File: BPtypewriteUnderscoredItalics.ttf
+GUID: 16684355900801288 | File: BPtypewrite.otf
+GUID: 16750633010069768 | File: BPtypewrite.ttf
+GUID: 16684355900933128 | File: BPtypewriteDamagedSlashed.ttf
+GUID: 16684355900933384 | File: BPtypewriteDamagedSlashedItalics.ttf
+GUID: 16684355900933640 | File: BPtypewriteDamagedStrikethrough.ttf
+GUID: 16684355900999432 | File: BPtypewriteDamagedStrikethroughItalics.ttf
+GUID: 16684355900999688 | File: BPtypewriteDamagedUnderscored.ttf
+GUID: 16684355901065480 | File: BPtypewriteDamagedUnderscoredItalics.ttf
+GUID: 16684355901131528 | File: BPtypewriteSlashed.ttf
+GUID: 16684355901131784 | File: BPtypewriteSlashedItalics.ttf
+GUID: 16684355901132040 | File: BPtypewriteStrikethrough.ttf
+GUID: 16684355901197832 | File: BPtypewriteStrikethroughItalics.ttf
+GUID: 16684355901198088 | File: BPtypewriteUnderscored.ttf
+GUID: 16684355901263880 | File: BPtypewriteUnderscoredItalics.ttf
+GUID: 16693173109260552 | File: CaviarDreams.ttf
+GUID: 16691255197565192 | File: COMIC.TTF
+GUID: 16691255197630984 | File: comici.ttf
+GUID: 16691255197631240 | File: ComicSans.ttf
+GUID: 16691255197631496 | File: comicz.ttf
+GUID: 16739502921220360 | File: Montserrat-Regular.ttf
+------- File Directory: "..\\resources\\GameStates"
+GUID: 16769763058188549 | File: CutScene.json
+GUID: 16749204682506757 | File: cutscene1state.json
+GUID: 16684263769047813 | File: Level1.json
+GUID: 16684263769113605 | File: Level2.json
+GUID: 16769774679752965 | File: LevelTutorial.json
+GUID: 16684263769113861 | File: Menu.json
+GUID: 16691044500504837 | File: Pause_Menu.json
+GUID: 16783902064050437 | File: testgs.json
+GUID: 16782761203597573 | File: Text Testing.json
+GUID: 16750630798230277 | File: Weather.json
+------- File Directory: "..\\resources\\Prefabs"
+------- File Directory: "..\\resources\\Scene"
+GUID: 16735843943252228 | File: Animation Sheet.json
+GUID: 16776186210812164 | File: Credits.json
+GUID: 16775958683194116 | File: CrystalBalls.json
+GUID: 16769763060482820 | File: CutScene.json
+GUID: 16749203488968708 | File: cutscene1.json
+GUID: 16778117540610308 | File: CutSceneBackground.json
+GUID: 16771389281928708 | File: CutSceneUI.json
+GUID: 16740166433833220 | File: Dialogue.json
+GUID: 16781447880573188 | File: Dialogue2.json
+GUID: 16750860586123524 | File: EnemyMap.json
+GUID: 16753404248463620 | File: FPS.json
+GUID: 16689640489550084 | File: Game Over.json
+GUID: 16684263769311492 | File: Graphic2.json
+GUID: 16783552324305156 | File: GUI Scene.json
+GUID: 16691044500570628 | File: How_To_Play.json
+GUID: 16684296408727812 | File: LayerCollider.json
+GUID: 16683804480112132 | File: Level1.json
+GUID: 16783446348857604 | File: Level1Background.json
+GUID: 16683804480177924 | File: Level2.json
+GUID: 16783465322840324 | File: Level2Background.json
+GUID: 16783465322840580 | File: Level3Background.json
+GUID: 16769774693253636 | File: LevelTutorial.json
+GUID: 16783465322906372 | File: LevelTutorialBackground.json
+GUID: 16684263769508612 | File: LightingColider.json
+GUID: 16683804480178180 | File: Menu_Main.json
+GUID: 16750844132338436 | File: MiniMap.json
+GUID: 16782613950824708 | File: Mouse.json
+GUID: 16782783808864516 | File: MouseMenu.json
+GUID: 16689323270209796 | File: Pause.json
+GUID: 14757395257650381060 | File: Quit Confirmation.json
+GUID: 16689352314650884 | File: Settings.json
+GUID: 16776186211074564 | File: ShadowBackground.json
+GUID: 16782761204515332 | File: Text Testing Scene.json
+GUID: 16782806162669828 | File: Text.json
+GUID: 16772106167320836 | File: Transition.json
+GUID: 16776186211074820 | File: TransitionScene.json
+GUID: 16771863546233092 | File: TutorialDialogue.json
+GUID: 16783006315577604 | File: TutorialUI.json
+GUID: 16783019983372548 | File: TutorialUILvl1.json
+GUID: 16783416300404996 | File: TutorialUILvl2.json
+GUID: 16783542384197892 | File: UI Scene.json
+GUID: 16783527982203140 | File: UIBackground.json
+GUID: 16750630817696004 | File: WeatherMap.json
+GUID: 14757395258967593988 | File: WeatherMapold.json
+------- File Directory: "..\\resources\\SceneGUID"
+------- File Directory: "..\\resources\\SCRIPTING"
+[10-03-2023 21:05:54]   WARN    Attempted to load unknown resource into resource manager. Resource: ..\resources\SCRIPTING\InternalCalls.cs
+------- File Directory: "..\\resources\\SCRIPTING\\obj"
+------- File Directory: "..\\resources\\SCRIPTING\\obj\\EditorDebug"
+[10-03-2023 21:05:54]   WARN    Attempted to load unknown resource into resource manager. Resource: ..\resources\SCRIPTING\TestMonoScript.cs
+------- File Directory: "..\\resources\\Scripts"
+------- File Directory: "..\\resources\\Scripts\\Includes"
+GUID: 16691742281236739 | File: PlayerMovementScript.h
+GUID: 16681628817424643 | File: RotateScript.h
+GUID: 16681628817490435 | File: ScaleScript.h
+GUID: 16681628817752835 | File: TestScript.h
+GUID: 16693661207429379 | File: WASDScript.h
+------- File Directory: "..\\resources\\Scripts\\Old"
+GUID: 16693640920629507 | File: AttackScript.cpp
+GUID: 16693249921253635 | File: BackToGameButton.cpp
+GUID: 16693095108378883 | File: BackToMainMenuButton.cpp
+GUID: 16693541625659651 | File: DeathScript.cpp
+GUID: 16691029761130755 | File: DialogueScript.cpp
+GUID: 16694961658921219 | File: ExitConfirmationButton.cpp
+GUID: 16693168924721411 | File: ExitGameButton.cpp
+GUID: 16692964492181763 | File: HowToPlayButton.cpp
+GUID: 16693983736627459 | File: MoveMinimapScript.cpp
+GUID: 16694961658987011 | File: PauseButton.cpp
+GUID: 16691742281302531 | File: PlayerMovementScript.cpp
+GUID: 16691742281302787 | File: PlayGameButton.cpp
+GUID: 16673720425316611 | File: RotateScript.cpp
+GUID: 16673720425447939 | File: ScaleScript.cpp
+GUID: 16693180933931267 | File: SettingsButton.cpp
+GUID: 16673720425448195 | File: TestScript.cpp
+GUID: 16693661207429635 | File: WASDScript.cpp
+------- File Directory: "..\\resources\\Textures"
+------- File Directory: "..\\resources\\Textures\\Background"
+GUID: 16665530911558913 | File: background.png
+GUID: 16665530911559169 | File: foreground.png
+GUID: 16665530911624961 | File: greyStoneBG.png
+GUID: 16665530911625217 | File: middleground.png
+GUID: 16747534957347073 | File: regiojn 1 concept.jpg
+GUID: 16747534957347329 | File: region 3 concept 1.jpg
+GUID: 16747534957413121 | File: region 3 concept 2.jpg
+GUID: 16747534957413377 | File: tree region concept 2.jpg
+------- File Directory: "..\\resources\\Textures\\Characters"
+GUID: 16669651548307713 | File: ghost 1.png
+GUID: 16669651548570113 | File: ghost 2.png
+GUID: 16669651548766977 | File: ghost 3.png
+GUID: 16669651549029377 | File: ghost 4.png
+GUID: 16669651549226241 | File: ghost 5.png
+GUID: 16669651549423105 | File: ghost 6.png
+GUID: 16669651549751041 | File: girl.png
+GUID: 16669651550341121 | File: mc.png
+GUID: 16747534957806849 | File: sea monster.png
+GUID: 16681741603832065 | File: sea-monster.png
+------- File Directory: "..\\resources\\Textures\\Cutscenes"
+GUID: 16782985763291393 | File: (1)HowToPlay.png
+GUID: 16782985763422977 | File: (2)Weather.png
+GUID: 16782985763488769 | File: (3)Crystalball.png
+GUID: 16782985763357185 | File: (4)Enemy.png
+GUID: 16766151882440961 | File: Cutscene1_Scene1-01.png
+GUID: 16766151882900737 | File: Cutscene1_Scene1-02.png
+GUID: 16766151882900993 | File: Cutscene1_Scene1-03.png
+GUID: 16766151882901249 | File: Cutscene1_Scene1-04.png
+GUID: 16766151882901505 | File: Cutscene1_Scene2-01.png
+GUID: 16766151882901761 | File: Cutscene1_Scene2-02.png
+GUID: 16766151882902017 | File: Cutscene1_Scene2-03.png
+GUID: 16766151882902273 | File: Cutscene1_Scene2-04.png
+GUID: 16766151882902529 | File: Cutscene1_Scene3-01.png
+GUID: 16766151882902785 | File: Cutscene1_Scene3-02.png
+GUID: 16766151882903041 | File: Cutscene1_Scene3-03.png
+GUID: 16766151882903297 | File: Cutscene1_Scene3-04.png
+GUID: 16766151882572289 | File: Cutscene1_Scene3-05.png
+GUID: 16766151882903553 | File: Cutscene1_Scene3-06.png
+GUID: 16766151882903809 | File: Cutscene1_Scene3-07.png
+GUID: 16766151882572545 | File: Cutscene1_Scene3-08.png
+GUID: 16766151882638337 | File: Cutscene1_Scene3-09.png
+GUID: 16766151882904065 | File: Cutscene1_Scene3-10.png
+GUID: 16766151882904321 | File: Cutscene1_Scene3-11.png
+GUID: 16782985765455105 | File: Page1_1.png
+GUID: 16782985775285761 | File: Page2.png
+GUID: 16782985775286017 | File: Page3.png
+GUID: 16782985775286273 | File: Page4.png
+------- File Directory: "..\\resources\\Textures\\Icons"
+GUID: 16783493554897153 | File: back2Icon.png
+GUID: 16783493555291137 | File: backBtn.png
+GUID: 16783493554962945 | File: backIcon.png
+GUID: 16783493554963201 | File: ball_minimap.png
+GUID: 16783493555291393 | File: ball_radar.png
+GUID: 16783493555291649 | File: ball_weather.png
+GUID: 16783493557455361 | File: bgmIcon.png
+GUID: 16783493557455617 | File: crystalball.png
+------- File Directory: "..\\resources\\Textures\\Icons\\cursors"
+GUID: 16683718373083393 | File: cursors.jpg
+------- File Directory: "..\\resources\\Textures\\Icons\\cursors\\direction cursor"
+GUID: 16693037898268929 | File: UI_Cursor_Direction_E.png
+GUID: 16693037898269185 | File: UI_Cursor_Direction_E_0001.png
+GUID: 16693037898269441 | File: UI_Cursor_Direction_E_0002.png
+GUID: 16693037898335233 | File: UI_Cursor_Direction_N.png
+GUID: 16693037898335489 | File: UI_Cursor_Direction_NE.png
+GUID: 16693037898335745 | File: UI_Cursor_Direction_NE_0001.png
+GUID: 16693037898336001 | File: UI_Cursor_Direction_NE_0002.png
+GUID: 16693037898401793 | File: UI_Cursor_Direction_NW.png
+GUID: 16693037898402049 | File: UI_Cursor_Direction_NW_0001.png
+GUID: 16693037898402305 | File: UI_Cursor_Direction_NW_0002.png
+GUID: 16693037898468097 | File: UI_Cursor_Direction_N_0001.png
+GUID: 16693037898468353 | File: UI_Cursor_Direction_N_0002.png
+GUID: 16693037898468609 | File: UI_Cursor_Direction_S.png
+GUID: 16693037898534401 | File: UI_Cursor_Direction_SE.png
+GUID: 16693037898534657 | File: UI_Cursor_Direction_SE_0001.png
+GUID: 16693037898534913 | File: UI_Cursor_Direction_SE_0002.png
+GUID: 16693037898600705 | File: UI_Cursor_Direction_SW.png
+GUID: 16693037898600961 | File: UI_Cursor_Direction_SW_0001.png
+GUID: 16693037898601217 | File: UI_Cursor_Direction_SW_0002.png
+GUID: 16693037898667009 | File: UI_Cursor_Direction_S_0001.png
+GUID: 16693037898667265 | File: UI_Cursor_Direction_S_0002.png
+GUID: 16693037898667521 | File: UI_Cursor_Direction_W.png
+GUID: 16693037898733313 | File: UI_Cursor_Direction_W_0001.png
+GUID: 16693037898733569 | File: UI_Cursor_Direction_W_0002.png
+GUID: 16692964149232641 | File: UI_Cursor_Mouse.png
+GUID: 16692964149298433 | File: UI_Cursor_Mouse_0001.png
+GUID: 16692964149298689 | File: UI_Cursor_Mouse_0002.png
+GUID: 16692964149364481 | File: UI_Cursor_Mouse_Spritesheet.png
+GUID: 16692964149430273 | File: UI_Cursor_Prompt.png
+GUID: 16692964149430529 | File: UI_Cursor_Prompt_001.png
+GUID: 16692964149496321 | File: UI_Cursor_Prompt_002.png
+GUID: 16692964149496577 | File: UI_Cursor_Prompt_003.png
+GUID: 16692964149562369 | File: UI_Cursor_Prompt_Spritesheet.png
+GUID: 16783493558242305 | File: cycle.png
+------- File Directory: "..\\resources\\Textures\\Icons\\dialogue"
+GUID: 16778117551031297 | File: UI_DialogueBox1.png
+GUID: 16778117549327105 | File: UI_DialogueBox2.png
+GUID: 16778117551031553 | File: UI_DialogueBox3.png
+GUID: 16778117551031809 | File: UI_DialogueOption1.png
+GUID: 16778117551032065 | File: UI_DialogueOption2.png
+GUID: 16778188759433473 | File: UI_ObjectiveBox.png
+GUID: 16783493556209921 | File: dialogueIcon.png
+GUID: 16783493558504705 | File: ExitBtn.png
+GUID: 16783493558504961 | File: fogIcon.png
+GUID: 16783493558505217 | File: folderIcon.png
+GUID: 16783493558505473 | File: gamestateIcon.png
+GUID: 16783493558505729 | File: healthbar-1.png
+GUID: 16783493558571521 | File: healthbar-10.png
+GUID: 16783493558637313 | File: healthbar-11.png
+GUID: 16783493558637569 | File: healthbar-12.png
+GUID: 16783493558637825 | File: healthbar-2.png
+GUID: 16783493558703617 | File: healthbar-3.png
+GUID: 16783493555422977 | File: healthbar-4.png
+GUID: 16783493558703873 | File: healthbar-5.png
+GUID: 16783493558704129 | File: healthbar-6.png
+GUID: 16783493559034625 | File: healthbar-7.png
+GUID: 16783493558704385 | File: healthbar-8.png
+GUID: 16783493558704897 | File: healthbar-9.png
+GUID: 14757395258967641089 | File: mc-icon-head.png
+GUID: 16783493558705153 | File: memory fragment button.png
+GUID: 16783493558705409 | File: NextBtn(Right).png
+GUID: 16783493558706177 | File: prefabIcon.png
+GUID: 16783493558705665 | File: PrevBtn(Left).png
+GUID: 16783493558705921 | File: ProgIndicator1.png
+GUID: 16783493558837505 | File: ProgIndicator2.png
+GUID: 16783493559035137 | File: ProgIndicator3.png
+GUID: 16783493559035393 | File: ProgIndicator4.png
+GUID: 16783493559036161 | File: rainfogIcon.png
+GUID: 16783493559034881 | File: rainIcon.png
+GUID: 16783493559035649 | File: rainwindfogIcon.png
+GUID: 16783493559035905 | File: rainwindIcon.png
+GUID: 16783493559036417 | File: refreshIcon.png
+GUID: 16783493559036673 | File: sceneIcon.png
+GUID: 16783493559036929 | File: scriptIcon.png
+GUID: 16783493559037185 | File: sendIcon.png
+GUID: 16783493559037441 | File: sfxIcon.png
+GUID: 16783493555750913 | File: sunIcon.png
+GUID: 16783493559034369 | File: sunIconOld.png
+GUID: 16783493559037697 | File: textIcon.png
+GUID: 16783493559037953 | File: windfogIcon.png
+GUID: 16783493559038209 | File: windIcon.png
+------- File Directory: "..\\resources\\Textures\\Menu"
+GUID: 16671515798471169 | File: bon voyage logo 5.png
+GUID: 16669651553094145 | File: button-1.png
+GUID: 16669651553094401 | File: button-2.png
+GUID: 16683718375643137 | File: button1-click.png
+GUID: 16783780001284353 | File: button3.png
+GUID: 16683718375643393 | File: credits-icon-click.png
+GUID: 16783721413738753 | File: credits-icon.png
+GUID: 16778117551622145 | File: dialogue-mockup1.png
+GUID: 16782985776599041 | File: Frame.png
+GUID: 16669651553160193 | File: game over 3.jpg
+GUID: 16689637057036545 | File: game over background.jpg
+GUID: 16665530912085249 | File: game over.jpg
+GUID: 16783750854344961 | File: htpCrystalball.png
+GUID: 16783811666575617 | File: htppassenger.png
+GUID: 16783813715427585 | File: htprelics.png
+GUID: 16747534960952833 | File: loading screen 1 bg.png
+GUID: 16747534960953345 | File: loading screen 1.jpg
+GUID: 16747534960953089 | File: Loading Screen 2 icon_0001.png
+GUID: 16747534961019137 | File: Loading Screen 2 icon_0002.png
+GUID: 16747534961019393 | File: Loading Screen 2 icon_0003.png
+GUID: 16747534961085185 | File: loading screen 2.jpg
+GUID: 16747534961085441 | File: loadingscreen2 bg.png
+GUID: 16669651554405633 | File: menu screen background.jpg
+GUID: 16669651555061249 | File: pause-screen.jpg
+GUID: 16747534961217281 | File: relic-screen-1.png
+GUID: 16747534961414401 | File: relic-screen-2.png
+GUID: 16747534961414657 | File: RelicScreen1_window1.png
+GUID: 16747534961612033 | File: RelicScreen1_window2.png
+GUID: 16747534961612289 | File: RelicScreen2_window1.png
+GUID: 16747534961545985 | File: RelicScreen2_window2.png
+GUID: 16747534961546241 | File: save screen.png
+GUID: 16747534961283073 | File: savescreenBox.png
+GUID: 16683718377609985 | File: settings-icon-click.png
+GUID: 16683718377675777 | File: settings-icon.png
+GUID: 16669651555782401 | File: settings-menu-screen.jpg
+GUID: 16741782613262593 | File: text1.png
+GUID: 16683718378134785 | File: title screen 5.jpg
+[10-03-2023 21:06:05]   ERROR   Attempted to load in invalid texture file: ..\resources\Textures\Menu\title screen gif.gif
+GUID: 16778117552278017 | File: title screen gif.gif
+GUID: 16665530912609793 | File: title screen.jpg
+GUID: 16778117548999169 | File: UI_DialogueBox1.png
+GUID: 16778117552277761 | File: UI_DialogueBox2.png
+GUID: 16778117552410625 | File: UI_DialogueBox3.png
+GUID: 16778117552409345 | File: UI_DialogueOption1.png
+GUID: 16778117552409601 | File: UI_DialogueOption2.png
+GUID: 16783780002071041 | File: UI_HowtoPlay_Window.png
+GUID: 16778117552410113 | File: UI_LoadingScreen1_Spritesheet.png
+GUID: 16778117552410369 | File: UI_LoadingScreen2_Spritesheet.png
+GUID: 16778117552409857 | File: UI_TitleScreenBG_Spritesheet.png
+GUID: 16669651557945601 | File: volume-button-1.png
+GUID: 16669651557945857 | File: volume-button-2.png
+GUID: 16669651558011649 | File: volume-button-3.png
+GUID: 16669651558011905 | File: window-1.png
+------- File Directory: "..\\resources\\Textures\\Sprites"
+GUID: 16665530913265409 | File: boat.png
+GUID: 16665530914510849 | File: building_1.png
+GUID: 16671351934157313 | File: building_2(revised).png
+GUID: 16665530915887361 | File: building_2.png
+GUID: 16671351934878465 | File: building_3(revised).png
+GUID: 16671351935075329 | File: building_5(revised).png
+GUID: 16671351935337729 | File: building_6(revised).png
+GUID: 16693194617848065 | File: bush-1.png
+GUID: 16691742289560577 | File: Character_Ghost1_SE_idle.png
+GUID: 16691742289626369 | File: Character_ghost6_SE_idle.png
+GUID: 16691742289692161 | File: Character_girl_SE_idle.png
+GUID: 16749186023686401 | File: cutscene.png
+GUID: 16691742289757953 | File: Env_Water.png
+GUID: 16747534962792193 | File: Env_Water_Green.png
+GUID: 16691742290151425 | File: ghost2_SE_idle.png
+GUID: 16691742290151681 | File: ghost3_SE_idle.png
+GUID: 16691742290217473 | File: ghost4_SE_idle.png
+GUID: 16691742290217729 | File: ghost5_SE_idle.png
+GUID: 16665530918443777 | File: ghost_1.png
+GUID: 16665530919492609 | File: ghost_1_green.png
+GUID: 16665530920148225 | File: ghost_2.png
+GUID: 16665530921197057 | File: ghost_2_green.png
+GUID: 16665530921918209 | File: ghost_3.png
+GUID: 16665530922901505 | File: ghost_3_green.png
+GUID: 16665530923622657 | File: ghost_4.png
+GUID: 16665530924737025 | File: ghost_4_green.png
+GUID: 16665530925392641 | File: ghost_5.png
+GUID: 16665530926375937 | File: ghost_5_green.png
+GUID: 16665530927031553 | File: ghost_6_green.png
+GUID: 16665530927687169 | File: girl.png
+GUID: 16665530928801537 | File: house_1.png
+GUID: 16665530930243585 | File: house_2.png
+GUID: 16665530931685633 | File: house_3.png
+GUID: 16665530933127681 | File: house_4.png
+GUID: 16671387269988609 | File: lighthouse(revised).png
+GUID: 16691998620975361 | File: log1.png
+GUID: 16691998621827585 | File: log2.png
+GUID: 16665530935553025 | File: mc.png
+GUID: 16695313745641729 | File: minimap.png
+GUID: 16665530936798465 | File: monster.png
+GUID: 16665530938240513 | File: OLD house_1.png
+GUID: 16665530939748097 | File: pet.png
+GUID: 14757395258960776193 | File: Props_Building1.png
+GUID: 14757395258961366273 | File: Props_Building2.png
+GUID: 14757395258961956353 | File: Props_Building3.png
+GUID: 14757395258962677505 | File: Props_Building4.png
+GUID: 14757395258963202049 | File: Props_Building5.png
+GUID: 14757395258963661057 | File: Props_Building6.png
+GUID: 14757395258964447745 | File: Props_Gate1.png
+GUID: 14757395258965103361 | File: Props_GirlStatue.png
+GUID: 14757395258965496833 | File: Props_island1.png
+GUID: 14757395258966021377 | File: Props_Lighthouse.png
+GUID: 14757395258966480385 | File: Props_Porthouse.png
+GUID: 16747568241443073 | File: Props_Region2_Log1.png
+GUID: 16747534965873409 | File: Props_Region2_Log2.png
+GUID: 16747534965873665 | File: Props_Region2_Lotus.png
+GUID: 16747534966070785 | File: Props_Region2_Mushroom.png
+GUID: 16747534966070529 | File: Props_Region2_Reed1.png
+GUID: 16747534966071041 | File: Props_Region2_Reed2.png
+GUID: 16747534966071297 | File: Props_Region2_Rock1.png
+GUID: 16747534965610497 | File: Props_Region2_Rock2.png
+GUID: 16747534965741825 | File: Props_Region2_Tree1.png
+GUID: 16747534966071553 | File: Props_Region2_Tree2.png
+GUID: 16747534966401025 | File: Props_Region2_Tree3.png
+GUID: 16747534966401537 | File: Props_Region2_Tree4.png
+GUID: 16747534966202881 | File: Props_Region2_Tree5.png
+GUID: 16784474544867841 | File: Props_Region3_Pillar1.png
+GUID: 16784474544868353 | File: Props_Region3_Pillar2.png
+GUID: 16784474544868353 | File: Props_Region3_Ruin1.png
+GUID: 16784474528416001 | File: Props_Region3_Ruin2.png
+GUID: 16784474529202689 | File: Props_Region3_Ruin3.png
+GUID: 16784474529202945 | File: Props_Region3_Ruin4.png
+GUID: 16784474544868097 | File: Props_Region3_Ruin5.png
+GUID: 16784474529203201 | File: Props_Region3_Star.png
+GUID: 16784474529203457 | File: Props_Region3_Tree1.png
+GUID: 16784474529203713 | File: Props_Region3_Tree2.png
+GUID: 16784474529203969 | File: Props_Region3_Tree3.png
+GUID: 16784474529204225 | File: Props_Region3_Tree4.png
+GUID: 16784474529204481 | File: Props_Region3_Tree5.png
+GUID: 16747534966203137 | File: Props_Relic1.png
+GUID: 16747534966334977 | File: Props_Relic2.png
+GUID: 16747534966401281 | File: Props_Relic3.png
+GUID: 16747534966334465 | File: Props_Relic4.png
+GUID: 16747534966334721 | File: Props_Relic5.png
+GUID: 16747534966400769 | File: Props_Relic6.png
+GUID: 14757395258967004929 | File: Props_Sign1.png
+GUID: 16691998647714561 | File: Props_Tree1.png
+GUID: 16691998649680897 | File: Props_Tree2.png
+GUID: 16691998651122945 | File: Props_Tree3.png
+GUID: 16691998652368385 | File: Props_Tree4.png
+GUID: 16691998653810433 | File: Props_Tree5.png
+GUID: 16665530940731393 | File: tree-1.png
+GUID: 16665530942042369 | File: tree-2.png
+GUID: 16665530943287809 | File: water.jpg
+------- File Directory: "..\\resources\\Textures\\Spritesheets"
+------- File Directory: "..\\resources\\Textures\\Spritesheets\\BOAT"
+GUID: 16689398516547841 | File: boat_NW_spritesheet.png
+------- File Directory: "..\\resources\\Textures\\Spritesheets\\BOAT\\capsize"
+GUID: 16693623341121793 | File: Props_Boat_E_Capsize_Spritesheet.png
+GUID: 16693623341908481 | File: Props_Boat_NE_Capsize_Spritesheet.png
+GUID: 16693623342170881 | File: Props_Boat_NW_Capsize_Spritesheet.png
+GUID: 16693623342367745 | File: Props_Boat_N_Capsize_Spritesheet.png
+GUID: 16693623342499073 | File: Props_Boat_SE_Capsize_Spritesheet.png
+GUID: 16693623342761473 | File: Props_Boat_SW_Capsize_Spritesheet.png
+GUID: 16693623342958337 | File: Props_Boat_S_Capsize_Spritesheet.png
+GUID: 16693623343089665 | File: Props_Boat_W_Capsize_Spritesheet.png
+------- File Directory: "..\\resources\\Textures\\Spritesheets\\BOAT\\hit"
+GUID: 16720718955086081 | File: Props_Boat_E_Hit_Spritesheet.png
+GUID: 16720718955610625 | File: Props_Boat_NE_Hit_Spritesheet.png
+GUID: 16720718956069633 | File: Props_Boat_NW_Hit_Spritesheet.png
+GUID: 16720718956528641 | File: Props_Boat_N_Hit_Spritesheet.png
+GUID: 16720718956791041 | File: Props_Boat_SE_Hit_Spritesheet.png
+GUID: 16720718957250049 | File: Props_Boat_SW_Hit_Spritesheet.png
+GUID: 16720718957709057 | File: Props_Boat_S_Hit_Spritesheet.png
+GUID: 16720718957971457 | File: Props_Boat_W_Hit_Spritesheet.png
+GUID: 16764502807806721 | File: Props_Boat_E_Spritesheet.png
+GUID: 16764502807150849 | File: Props_Boat_NE_spritesheet.png
+GUID: 16764502807151105 | File: Props_Boat_NW_Spritesheet.png
+GUID: 16689398516745473 | File: Props_Boat_N_Spritesheet.png
+GUID: 16689398516876801 | File: Props_Boat_SE_spritesheet.png
+GUID: 16764502808462337 | File: Props_Boat_SW_spritesheet.png
+GUID: 16689398516942593 | File: Props_Boat_S_Spritesheet.png
+GUID: 16689398517139457 | File: Props_Boat_W_Spritesheet.png
+GUID: 16665530944008961 | File: bridgeSheet.png
+GUID: 16784474547358977 | File: fog_spritesheet.png
+GUID: 16665530944009217 | File: jumppadSheet.png
+------- File Directory: "..\\resources\\Textures\\Spritesheets\\MC"
+------- File Directory: "..\\resources\\Textures\\Spritesheets\\MC\\idle"
+GUID: 16689398517270785 | File: Character_mc_E_idle_spritesheet.png
+GUID: 16689398517467649 | File: Character_mc_NE_idle_spritesheet.png
+GUID: 16689398517795585 | File: Character_mc_NW_idle_spritesheet.png
+GUID: 16689398518057985 | File: Character_mc_SE_idle_spritesheet.png
+GUID: 16689398518320385 | File: Character_mc_SW_idle_spritesheet.png
+GUID: 16689398518648321 | File: Character_mc_S_idle_spritesheet.png
+GUID: 16689398518910721 | File: Character_mc_W_idle.png
+GUID: 16683718410051585 | File: mc-death-spritesheet.png
+GUID: 16683718412476673 | File: mc-idle-back-spritesheet.png
+GUID: 16683718414770689 | File: mc-idle-spritesheet.png
+GUID: 16683718416999169 | File: mc-shock-back-spritesheet.png
+GUID: 16683718419031041 | File: mc-shock-spritesheet.png
+------- File Directory: "..\\resources\\Textures\\Spritesheets\\MONSTER"
+GUID: 16720718980253953 | File: Character_Monster_NE_Attack1_Spritesheet.png
+GUID: 16691149651509505 | File: Character_Monster_NE_Attack2_Spritesheet.png
+GUID: 16691149668811265 | File: Character_Monster_NE_idle_spritesheet.png
+GUID: 16691149676610305 | File: Character_Monster_NE_Rising_spritesheet.png
+GUID: 16750120184643841 | File: Character_Monster_NW_Attack1_Spritesheet.png
+GUID: 16750120184775169 | File: Character_Monster_NW_Attack2_Spritesheet.png
+GUID: 16750120184775425 | File: Character_Monster_NW_idle_spritesheet.png
+GUID: 16750120184775681 | File: Character_Monster_NW_Rising_spritesheet.png
+GUID: 16720719006534145 | File: Character_Monster_SE_Attack1_Spritesheet.png
+GUID: 16691149684540417 | File: Character_Monster_SE_Attack2_Spritesheet.png
+GUID: 16691149698499841 | File: Character_Monster_SE_idle_spritesheet.png
+GUID: 16691149699679745 | File: Character_Monster_SE_rising_spritesheet.png
+GUID: 16750120185366529 | File: Character_Monster_SW_Attack1_Spritesheet.png
+GUID: 16750120185366017 | File: Character_Monster_SW_Attack2_Spritesheet.png
+GUID: 16750120185366273 | File: Character_Monster_SW_idle_spritesheet.png
+GUID: 16750120185365761 | File: Character_Monster_SW_rising_spritesheet.png
+------- File Directory: "..\\resources\\Textures\\Spritesheets\\NPC"
+------- File Directory: "..\\resources\\Textures\\Spritesheets\\NPC\\cat"
+GUID: 16728197186781441 | File: Character_cat_NE_idle_spritesheet.png
+GUID: 16728197186978305 | File: Character_cat_NW_idle_spritesheet.png
+GUID: 16728197187175169 | File: Character_cat_SE_idle_spritesheet.png
+GUID: 16728197187372033 | File: Character_cat_SW_idle_spritesheet.png
+GUID: 16685760444956929 | File: Character_Ghost1_SE_Spritesheet.png
+GUID: 16685760445088257 | File: Character_Ghost2_SE_Idle_Spritesheet.png
+GUID: 16685760445285121 | File: Character_Ghost3_SE_Idle_Spritesheet.png
+GUID: 16685760445481985 | File: Character_Ghost4_SE_Idle_Spritesheet.png
+GUID: 16685760445613313 | File: Character_Ghost5_SE_Idle_Spritesheet.png
+GUID: 16685760445744641 | File: Character_Ghost6_SE_Idle_Spritesheet.png
+------- File Directory: "..\\resources\\Textures\\Spritesheets\\NPC\\ghost 1"
+GUID: 16728197188486401 | File: Character_ghost1_E_idle_spritesheet.png
+GUID: 16728197188879873 | File: Character_ghost1_NE_idle_spritesheet.png
+GUID: 16728197189273345 | File: Character_ghost1_NW_idle_spritesheet.png
+GUID: 16728197189666817 | File: Character_ghost1_SE_idle_spritesheet.png
+GUID: 16728197190060289 | File: Character_ghost1_SW_idle_spritesheet.png
+GUID: 16728197190453761 | File: Character_ghost1_S_idle_spritesheet.png
+GUID: 16728197190847233 | File: Character_ghost1_W_idle_spritesheet.png
+------- File Directory: "..\\resources\\Textures\\Spritesheets\\NPC\\ghost 2"
+GUID: 16728197191306241 | File: Character_ghost2_E_idle_spritesheet.png
+GUID: 16728197191765249 | File: Character_ghost2_NE_idle_spritesheet.png
+GUID: 16728197192158721 | File: Character_ghost2_NW_idle_spritesheet.png
+GUID: 16728197192486657 | File: Character_ghost2_SE_idle_spritesheet.png
+GUID: 16728197192880129 | File: Character_ghost2_SW_idle_spritesheet.png
+GUID: 16728197193273601 | File: Character_ghost2_S_idle_spritesheet.png
+GUID: 16728197193667073 | File: Character_ghost2_W_idle_spritesheet.png
+------- File Directory: "..\\resources\\Textures\\Spritesheets\\NPC\\ghost 3"
+GUID: 16728197194126081 | File: Character_ghost3_E_idle_spritesheet.png
+GUID: 16728197194585089 | File: Character_ghost3_NE_idle_spritesheet.png
+GUID: 16728197195044097 | File: Character_ghost3_NW_idle_spritesheet.png
+GUID: 16728197195437569 | File: Character_ghost3_SE_idle_spritesheet.png
+GUID: 16728197195831041 | File: Character_ghost3_SW_idle_spritesheet.png
+GUID: 16728197196290049 | File: Character_ghost3_S_idle_spritesheet.png
+GUID: 16728197196683521 | File: Character_ghost3_W_idle_spritesheet.png
+------- File Directory: "..\\resources\\Textures\\Spritesheets\\NPC\\ghost 4"
+GUID: 16728212152254721 | File: Character_ghost4_E_idle_spritesheet.png
+GUID: 16728197197536001 | File: Character_ghost4_NE_idle_spritesheet.png
+GUID: 16728197197929473 | File: Character_ghost4_NW_idle_spritesheet.png
+GUID: 16728197198257409 | File: Character_ghost4_SE_idle_spritesheet.png
+GUID: 16728197198650881 | File: Character_ghost4_SW_idle_spritesheet.png
+GUID: 16728197199044353 | File: Character_ghost4_S_idle_spritesheet.png
+GUID: 16728197199437825 | File: Character_ghost4_W_idle_spritesheet.png
+------- File Directory: "..\\resources\\Textures\\Spritesheets\\NPC\\ghost 5"
+GUID: 16728197199831297 | File: Character_ghost5_E_idle_spritesheet.png
+GUID: 16728197200224769 | File: Character_ghost5_NE_idle_spritesheet.png
+GUID: 16728197200552705 | File: Character_ghost5_NW_idle_spritesheet.png
+GUID: 16728197200880641 | File: Character_ghost5_SE_idle_spritesheet.png
+GUID: 16728197201274113 | File: Character_ghost5_SW_idle_spritesheet.png
+GUID: 16728197201602049 | File: Character_ghost5_S_idle_spritesheet.png
+GUID: 16728197201995521 | File: Character_ghost5_W_idle_spritesheet.png
+------- File Directory: "..\\resources\\Textures\\Spritesheets\\NPC\\ghost 6"
+GUID: 16687557551980801 | File: Character_ghost6_E_idle_spritesheet.png
+GUID: 16687557552112129 | File: Character_ghost6_NE_idle_Spritesheet.png
+GUID: 16691787165335809 | File: Character_ghost6_NW_spritesheet.png
+GUID: 16687557552243457 | File: Character_ghost6_SE_idle_spritesheet.png
+GUID: 16691787165663745 | File: Character_ghost6_SW_idle_spritesheet.png
+GUID: 16687557552374785 | File: Character_ghost6_S_idle_spritesheet.png
+GUID: 16687557552506113 | File: Character_ghost6_W_idle_spritesheet.png
+------- File Directory: "..\\resources\\Textures\\Spritesheets\\NPC\\girl"
+GUID: 16720719039958017 | File: Character_Girl_SE_Idle_Spritesheet.png
+GUID: 16728197206321153 | File: Character_girl_SW_idle_Spritesheet.png
+GUID: 16683718432796161 | File: girl-idle-spritesheet.png
+------- File Directory: "..\\resources\\Textures\\Spritesheets\\PROPS"
+GUID: 16689398527496193 | File: Props_Building1_spritesheet.png
+GUID: 16689398528479489 | File: Props_Building2_spritesheet.png
+GUID: 16689398529659393 | File: Props_Building3_spritesheet.png
+GUID: 16689398530708225 | File: Props_Building4_spritesheet.png
+GUID: 16689398531888129 | File: Props_Building5_spritesheet.png
+GUID: 16689398532936961 | File: Props_Building6_spritesheet.png
+GUID: 16778117560144129 | File: Props_Building7_spritesheet.png
+GUID: 16689398536476161 | File: Props_Gate1_spritesheet.png
+GUID: 16784474557255169 | File: Props_Gate_spritesheet.png
+GUID: 16689398537393921 | File: Props_GirlStatue_spritesheet.png
+GUID: 16689398537984001 | File: Props_Island1_spritesheet.png
+GUID: 16689398538901761 | File: Props_Lighthouse_spritesheet.png
+GUID: 16693194779918849 | File: Props_Porthouse_spritesheet.png
+GUID: 16766151897388289 | File: Props_Region1_Tree1_Spritesheet.png
+GUID: 16766151897388801 | File: Props_Region1_Tree2_Spritesheet.png
+GUID: 16766151897388545 | File: Props_Region1_Tree3_Spritesheet.png
+GUID: 16766151897389057 | File: Props_Region1_Tree4_Spritesheet.png
+GUID: 16766151897389313 | File: Props_Region1_Tree5_Spritesheet.png
+GUID: 16784474592186625 | File: Props_Region2_Lotus_spritesheet.png
+GUID: 16784474592187137 | File: Props_Region2_Reed1_Spritesheet.png
+GUID: 16784474592187905 | File: Props_Region2_Reed2_Spritesheet.png
+GUID: 16784474592188161 | File: Props_Region2_Tree1_Spritesheet.png
+GUID: 16784474558500865 | File: Props_Region2_Tree2_Spritesheet.png
+GUID: 16784474592186881 | File: Props_Region2_Tree3_Spritesheet.png
+GUID: 16784474592187393 | File: Props_Region2_Tree4_Spritesheet.png
+GUID: 16784474592187649 | File: Props_Region2_Tree5_Spritesheet.png
+GUID: 16784474558107393 | File: Props_Region3_Pillar1_Spritesheet.png
+GUID: 16784474592189697 | File: Props_Region3_Pillar2_Spritesheet.png
+GUID: 16784474592188673 | File: Props_Region3_Ruin1_Spritesheet.png
+GUID: 16784474592188417 | File: Props_Region3_Ruin2_Spritesheet.png
+GUID: 14757395258967641089 | File: Props_Region3_Ruin3_Spritesheet.png
+GUID: 16784474592189185 | File: Props_Region3_Ruin4_Spritesheet.png
+GUID: 16784474592190977 | File: Props_Region3_Ruin5_Spritesheet.png
+GUID: 16784474592190721 | File: Props_Region3_Star_Spritesheet.png
+GUID: 16784474592190209 | File: Props_Region3_Tree1_Spritesheet.png
+GUID: 16784474592189441 | File: Props_Region3_Tree2_Spritesheet.png
+GUID: 16784474592190465 | File: Props_Region3_Tree3_Spritesheet.png
+GUID: 16784474592189185 | File: Props_Region3_Tree4_Spritesheet.png
+GUID: 16784474592189953 | File: Props_Region3_Tree5_Spritesheet.png
+GUID: 16689398540409601 | File: Props_Sign1_spritesheet.png
+GUID: 16665530944009473 | File: walkingSheet.png
+------- File Directory: "..\\resources\\Textures\\Spritesheets\\Weather"
+GUID: 16783493573063169 | File: fog_spritesheet.png
+GUID: 16777559116022017 | File: rainspritesheet.png
+GUID: 16665530944009729 | File: Woodcutter_jump.png
+GUID: 16665530944009985 | File: Woodcutter_run.png
