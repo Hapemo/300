@@ -1,0 +1,66 @@
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+*.tlog
+*.idb
+*.pdb
+*.ilk
+*.ifc
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Directories
+.vs
+.tmp
+.sqlite
+logs
+
+
+MemoryLeak/bin/
+MemoryLeak/SCRIPTING/obj/
+MemoryLeak/SCRIPTING/bin
+
+MemoryLeak/bin/Debug/x64/fmod.dll
+MemoryLeak/bin/Debug/x64/fmodL.dll
+MemoryLeak/bin/Debug/x64/glew32.dll
+MemoryLeak/bin/Debug/x64/glfw3.dll
+MemoryLeak/bin/Debug/x64/TOOLS.lib
+MemoryLeak/bin/Release/x64/fmod.dll
+MemoryLeak/bin/Release/x64/fmodL.dll
+MemoryLeak/bin/Release/x64/glew32.dll
+MemoryLeak/bin/Release/x64/glfw3.dll
+MemoryLeak/bin/Release/x64/TOOLS.lib
+MemoryLeak/bin/Debug/x64/VI.lib
+MemoryLeak/resources/Scene/SceneTemp.json
+MemoryLeak/resources/Scene/SceneTmp.json
+MemoryLeak/bin/Release/x64/TOOLS/TOOLS.lib
+/MemoryLeak/lib/imgui-docking/examples/example_glfw_vulkan/out/build/x64-Debug
+/MemoryLeak/lib/imgui-docking/examples/example_android_opengl3/out/build/x64-Debug
+MemoryLeak/APPLICATION/imgui.ini
+MemoryLeak/APPLICATION/imguiTrash.ini
+MemoryLeak/APPLICATION/imgui.ini
