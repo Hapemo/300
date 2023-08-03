@@ -4,7 +4,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_PropertySheetDisplayName>_TOOLS-props</_PropertySheetDisplayName>
-    <IncludePath>$(SolutionDir)lib\glfw-3.3.7.bin.WIN64\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)lib\glfw-3.3.7.bin.WIN64\include;$(SolutionDir)lib\entt;$(SolutionDir)lib\glm-0.9.9.8;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <Link>

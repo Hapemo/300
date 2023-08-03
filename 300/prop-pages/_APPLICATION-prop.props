@@ -3,7 +3,7 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <IncludePath>$(SolutionDir)_APPLICATION\include;$(SolutionDir)lib\glew-2.2.0\include;$(SolutionDir)lib\glfw-3.3.7.bin.WIN64\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)_APPLICATION\include;$(SolutionDir)lib\glew-2.2.0\include;$(SolutionDir)lib\glfw-3.3.7.bin.WIN64\include;$(SolutionDir)lib\entt;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)lib\glew-2.2.0\lib\Release\x64;$(SolutionDir)lib\glfw-3.3.7.bin.WIN64\lib-vc2022;$(SolutionDir)\bin\$(Configuration)\$(Platform)\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup>
