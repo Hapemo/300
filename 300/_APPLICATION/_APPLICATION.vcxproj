@@ -147,6 +147,7 @@ copy "$(SolutionDir)lib\glfw-3.3.7.bin.WIN64\lib-vc2022\glfw3.dll" "$(TargetDir)
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="include\Application.h" />
+    <ClInclude Include="include\Example.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />

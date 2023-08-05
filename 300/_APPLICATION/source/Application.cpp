@@ -14,13 +14,14 @@ start up of window and game system, also runs their update functions.
 #include "Helper.h"
 #include "ECS.h"
 #include "ECS_Components.h"
+#include "Example.h"
 // Static variables
 int Application::window_width{1024};
 int Application::window_height{576};
 std::string Application::title{ "VI Engine" };
 GLFWwindow* Application::ptr_window;
-ECS ecs;
-Entity temp = ecs.NewEntity();
+
+
 
 void Application::StartUp() {
   GLFWStartUp();
@@ -38,6 +39,7 @@ void Application::SystemUpdate() {
 void Application::Init() {
   StartUp();
   SystemInit();
+  Example();
 }
 
 bool Application::FirstUpdate() {
@@ -69,13 +71,9 @@ void Application::MainUpdate() {
   // Graphics update
   // Application ending update
 
- 
   while (!glfwWindowShouldClose(ptr_window)) {
       PrintTitleBar(0.5);
-      
-      ecs.AddComponent<Transform>(temp, { 1.f });
-      ecs.GetComponent<Transform>(temp).x += 1.f;
-      std::cout << ecs.GetComponent<Transform>(temp).x;
+
     FirstUpdate();
     SystemUpdate();
     SecondUpdate(); // This should always be the last
