@@ -21,6 +21,7 @@ std::string Application::title{ "VI Engine" };
 GLFWwindow* Application::ptr_window;
 ECS ecs;
 Entity temp = ecs.NewEntity();
+
 void Application::StartUp() {
   GLFWStartUp();
   GlewStartUp();
