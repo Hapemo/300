@@ -15,6 +15,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_ENGINE", "_ENGINE\_ENGINE.
 		{655833F5-D64E-4500-8A3B-B78FE9598D5B} = {655833F5-D64E-4500-8A3B-B78FE9598D5B}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "_GRAPHICS", "_GRAPHICS\_GRAPHICS.vcxproj", "{78EF90FE-1763-42EE-A9C2-8648B494C01B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -47,6 +49,14 @@ Global
 		{14BB347E-A623-46F1-8291-EE2247044FBA}.Release|x64.Build.0 = Release|x64
 		{14BB347E-A623-46F1-8291-EE2247044FBA}.Release|x86.ActiveCfg = Release|Win32
 		{14BB347E-A623-46F1-8291-EE2247044FBA}.Release|x86.Build.0 = Release|Win32
+		{78EF90FE-1763-42EE-A9C2-8648B494C01B}.Debug|x64.ActiveCfg = Debug|x64
+		{78EF90FE-1763-42EE-A9C2-8648B494C01B}.Debug|x64.Build.0 = Debug|x64
+		{78EF90FE-1763-42EE-A9C2-8648B494C01B}.Debug|x86.ActiveCfg = Debug|Win32
+		{78EF90FE-1763-42EE-A9C2-8648B494C01B}.Debug|x86.Build.0 = Debug|Win32
+		{78EF90FE-1763-42EE-A9C2-8648B494C01B}.Release|x64.ActiveCfg = Release|x64
+		{78EF90FE-1763-42EE-A9C2-8648B494C01B}.Release|x64.Build.0 = Release|x64
+		{78EF90FE-1763-42EE-A9C2-8648B494C01B}.Release|x86.ActiveCfg = Release|Win32
+		{78EF90FE-1763-42EE-A9C2-8648B494C01B}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
