@@ -10,7 +10,7 @@ CS380::DebugRenderer::DebugRenderer()
 
 CS380::DebugRenderer::~DebugRenderer()
 {
-	mVao.Destroy();
+	mPointVao.Destroy();
 	mPointVbo.Destroy();
 	mTriangleVao.Destroy();
 	mTriangleVbo.Destroy();
@@ -33,7 +33,7 @@ void CS380::DebugRenderer::DeactivateShader()
 
 void CS380::DebugRenderer::AddPoint(vec3 const& pos, vec4 const& color)
 {
-	if (mLTW.size() >= MAX_INSTANCES)
+	if (mPointLTW.size() >= MAX_INSTANCES)
 	{
 		std::cout << "Max Instances of Objects Reached!\n";
 		return;
@@ -46,7 +46,7 @@ void CS380::DebugRenderer::AddPoint(vec3 const& pos, vec4 const& color)
 		vec4(pos, 1.f)
 	};
 
-	mLTW.push_back(world);
+	mPointLTW.push_back(world);
 	mColors.push_back(color);
 }
 
@@ -92,7 +92,7 @@ void CS380::DebugRenderer::RenderAll(mat4 viewProj)
 void CS380::DebugRenderer::ClearInstances()
 {
 	mColors.clear();
-	mLTW.clear();
+	mPointLTW.clear();
 
 	mTriangleColors.clear();
 	mTriangleLTW.clear();
@@ -109,7 +109,7 @@ void CS380::DebugRenderer::SetupShader()
 void CS380::DebugRenderer::SetupBufferObjects()
 {
 	// Create VAO
-	mVao.Create();
+	mPointVao.Create();
 
 	// Create VBO for Point object
 	std::vector<GLfloat> pointMesh	// Point mesh
@@ -118,30 +118,30 @@ void CS380::DebugRenderer::SetupBufferObjects()
 	};
 	mPointVbo.Create(pointMesh.size() * sizeof(GLfloat));
 	mPointVbo.AttachData(0, pointMesh.size() * sizeof(GLfloat), pointMesh.data());	// Attach mesh data to VBO
-	mVao.AttachVerterBuffer(mPointVbo.GetID(), 0, 0, sizeof(GLfloat) * pointMesh.size());
+	mPointVao.AttachVerterBuffer(mPointVbo.GetID(), 0, 0, sizeof(GLfloat) * pointMesh.size());
 
 	// Attach point VBO to VAO
-	mVao.AddAttribute(0, 0, 3, GL_FLOAT);							// location 0, binding vao index 0
+	mPointVao.AddAttribute(0, 0, 3, GL_FLOAT);							// location 0, binding vao index 0
 	
 	// Create VBO for Color data
-	mColorVbo.Create(sizeof(vec4) * MAX_INSTANCES);
+	mPointColorVbo.Create(sizeof(vec4) * MAX_INSTANCES);
 
 	// Attach Color VBO and divisor to VAO
-	mVao.AddAttribute(1, 1, 4, GL_FLOAT);							// location 1, binding vao index 1
-	mVao.AddAttributeDivisor(1, 1);									// divisor at vao index 1
-	mVao.AttachVerterBuffer(mColorVbo.GetID(), 1, 0, sizeof(vec4));	// Attach to index 1
+	mPointVao.AddAttribute(1, 1, 4, GL_FLOAT);							// location 1, binding vao index 1
+	mPointVao.AddAttributeDivisor(1, 1);									// divisor at vao index 1
+	mPointVao.AttachVerterBuffer(mPointColorVbo.GetID(), 1, 0, sizeof(vec4));	// Attach to index 1
 
 	// Create local-to-world VBO
-	mLTWVbo.Create(sizeof(mat4) * MAX_INSTANCES);
+	mPointLTWVbo.Create(sizeof(mat4) * MAX_INSTANCES);
 	for (int i = 0; i < 4; ++i)		// Add attributes and divisor as vec4
 	{
-		mVao.AddAttribute(2 + i, 2, 4, GL_FLOAT, sizeof(vec4) * i);		// location 2, binding vao index 2
-		mVao.AddAttributeDivisor(2, 1);									// divisor at vao index 2
+		mPointVao.AddAttribute(2 + i, 2, 4, GL_FLOAT, sizeof(vec4) * i);		// location 2, binding vao index 2
+		mPointVao.AddAttributeDivisor(2, 1);									// divisor at vao index 2
 	}
 	// Attach LTW VBO to VAO
-	mVao.AttachVerterBuffer(mLTWVbo.GetID(), 2, 0, sizeof(vec4) * 4);
+	mPointVao.AttachVerterBuffer(mPointLTWVbo.GetID(), 2, 0, sizeof(vec4) * 4);
 
-	mVao.Unbind();
+	mPointVao.Unbind();
 }
 
 void CS380::DebugRenderer::SetupTriangleBufferObjects()
@@ -241,20 +241,20 @@ void CS380::DebugRenderer::RenderAllPoints(mat4 const& viewProj)
 	mShader.Activate();
 
 	// Bind VAO to pipeline
-	mVao.Bind();
+	mPointVao.Bind();
 
 	// Attach data to vbo
-	mColorVbo.AttachData(0, mColors.size() * sizeof(vec4), mColors.data());
-	mLTWVbo.AttachData(0, mLTW.size() * sizeof(mat4), mLTW.data());
+	mPointColorVbo.AttachData(0, mColors.size() * sizeof(vec4), mColors.data());
+	mPointLTWVbo.AttachData(0, mPointLTW.size() * sizeof(mat4), mPointLTW.data());
 
 	// Set uniform
 	glUniformMatrix4fv(mShader.GetUniformVP(), 1, GL_FALSE, &viewProj[0][0]);
 
 	// Draw
-	glDrawArraysInstanced(GL_POINTS, 0, mLTW.size(), mLTW.size());
+	glDrawArraysInstanced(GL_POINTS, 0, mPointLTW.size(), mPointLTW.size());
 
 	mShader.Deactivate();
-	mVao.Unbind();
+	mPointVao.Unbind();
 }
 
 void CS380::DebugRenderer::RenderAllTriangles(mat4 const& viewProj)

@@ -48,10 +48,10 @@ namespace CS380
 
 		// -- Vertex Array and Vertex Buffers --
 		// Point
-		VAO mVao;
+		VAO mPointVao;
 		VBO mPointVbo;
-		VBO mColorVbo;
-		VBO mLTWVbo;
+		VBO mPointColorVbo;
+		VBO mPointLTWVbo;
 		// Triangle
 		VAO mTriangleVao;
 		VBO mTriangleVbo;
@@ -65,7 +65,7 @@ namespace CS380
 		VBO mQuadLTWVbo;
 
 		// -- Containers to store render data --
-		std::vector<mat4> mLTW;
+		std::vector<mat4> mPointLTW;
 		std::vector<mat4> mTriangleLTW;
 		std::vector<mat4> mQuadLTW;
 		std::vector<vec4> mColors;
