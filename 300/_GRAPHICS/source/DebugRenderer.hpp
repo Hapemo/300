@@ -75,7 +75,7 @@ namespace CS380
 		// Shader Set up
 		void SetupShader();
 
-		void SetupBufferObjects();
+		void SetupPointBufferObjects();
 		void SetupTriangleBufferObjects();
 		void SetupQuadBufferObjects();
 

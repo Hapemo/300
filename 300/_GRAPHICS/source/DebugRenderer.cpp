@@ -3,7 +3,7 @@
 CS380::DebugRenderer::DebugRenderer()
 {
 	SetupShader();
-	SetupBufferObjects();
+	SetupPointBufferObjects();
 	SetupTriangleBufferObjects();
 	SetupQuadBufferObjects();
 }
@@ -106,7 +106,7 @@ void CS380::DebugRenderer::SetupShader()
 	mShader.CreateShader(vertexShaderCode, fragmentShaderCode);
 }
 
-void CS380::DebugRenderer::SetupBufferObjects()
+void CS380::DebugRenderer::SetupPointBufferObjects()
 {
 	// Create VAO
 	mPointVao.Create();
