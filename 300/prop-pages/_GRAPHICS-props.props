@@ -3,7 +3,7 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <IncludePath>$(ProjectDir)source;$(ProjectDir)include;$(SolutionDir)lib\GLFW\include\GLFW;$(SolutionDir)lib\GLEW\include\GL;$(SolutionDir)lib\GLM\glm;$(SolutionDir)lib\IMGUI;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)source;$(ProjectDir)include;$(SolutionDir)lib\GLFW\include;$(SolutionDir)lib\GLEW\include\GL;$(SolutionDir)lib\GLM;$(SolutionDir)lib\IMGUI;$(SolutionDir)lib\IMGUI\backends;$(SolutionDir)lib\IMGUI\misc\cpp;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)lib\GLEW\lib\Release\x64;$(SolutionDir)lib\GLFW\lib-vc2022;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup>

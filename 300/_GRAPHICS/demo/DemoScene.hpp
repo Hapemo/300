@@ -20,6 +20,7 @@
 #include "Window.hpp"
 #include "DebugRenderer.hpp"
 #include "Shapes.hpp"
+#include "ImGui.hpp"
 
 
 namespace CS380 {

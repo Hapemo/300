@@ -129,6 +129,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\lib\IMGUI\backends\imgui_impl_glfw.cpp" />
+    <ClCompile Include="..\lib\IMGUI\backends\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="..\lib\IMGUI\imgui.cpp" />
+    <ClCompile Include="..\lib\IMGUI\imgui_demo.cpp" />
+    <ClCompile Include="..\lib\IMGUI\imgui_draw.cpp" />
+    <ClCompile Include="..\lib\IMGUI\imgui_tables.cpp" />
+    <ClCompile Include="..\lib\IMGUI\imgui_widgets.cpp" />
+    <ClCompile Include="..\lib\IMGUI\misc\cpp\imgui_stdlib.cpp" />
     <ClCompile Include="demo\DemoScene.cpp" />
     <ClCompile Include="demo\ImGui.cpp" />
     <ClCompile Include="demo\main.cpp" />
