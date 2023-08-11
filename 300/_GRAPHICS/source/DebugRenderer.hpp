@@ -38,6 +38,7 @@ namespace CS380
 		void AddPoint(vec3 const& pos, vec4 const& color);
 		void AddTriangle(vec3 const& p0, vec3 const& p1, vec3 const& p2, vec4 const& color);
 		void AddQuad(vec3 const& center, float width, float height, vec4 const& color = vec4{ 1.f, 1.f, 1.f, 1.f });
+		void AddAabb(vec3 const& center, vec3 const& size, vec4 const& color = vec4{ 1.f, 1.f, 1.f, 1.f });
 
 		void RenderAll(mat4 viewProj);
 
@@ -63,14 +64,23 @@ namespace CS380
 		VBO mQuadColorVbo;
 		VBO mQuadEbo;
 		VBO mQuadLTWVbo;
+		// Aabb
+		VAO mAabbVao;
+		VBO mAabbVbo;
+		VBO mAabbColorVbo;
+		VBO mAabbEbo;
+		VBO mAabbLTWVbo;
 
 		// -- Containers to store render data --
 		std::vector<mat4> mPointLTW;
 		std::vector<mat4> mTriangleLTW;
 		std::vector<mat4> mQuadLTW;
-		std::vector<vec4> mColors;
+		std::vector<mat4> mAabbLTW;
+
+		std::vector<vec4> mPointColors;
 		std::vector<vec4> mTriangleColors;
 		std::vector<vec4> mQuadColors;
+		std::vector<vec4> mAabbColors;
 
 		// Shader Set up
 		void SetupShader();
@@ -78,11 +88,13 @@ namespace CS380
 		void SetupPointBufferObjects();
 		void SetupTriangleBufferObjects();
 		void SetupQuadBufferObjects();
+		void SetupAabbBufferObjects();
 
 		// -- Render Shapes --
 		void RenderAllPoints(mat4 const& viewProj);
 		void RenderAllTriangles(mat4 const& viewProj);
 		void RenderAllQuads(mat4 const& viewProj);
+		void RenderAllAabb(mat4 const& viewProj);
 
 		// -- Shader Code --
 		const char* vertexShaderCode = R"(

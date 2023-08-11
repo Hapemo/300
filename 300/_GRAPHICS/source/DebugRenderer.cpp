@@ -6,6 +6,7 @@ CS380::DebugRenderer::DebugRenderer()
 	SetupPointBufferObjects();
 	SetupTriangleBufferObjects();
 	SetupQuadBufferObjects();
+	SetupAabbBufferObjects();
 }
 
 CS380::DebugRenderer::~DebugRenderer()
@@ -17,6 +18,9 @@ CS380::DebugRenderer::~DebugRenderer()
 	mQuadVao.Destroy();
 	mQuadVbo.Destroy();
 	mQuadEbo.Destroy();
+	mAabbVao.Destroy();
+	mAabbVbo.Destroy();
+	mAabbEbo.Destroy();
 
 	mShader.DestroyShader();
 }
@@ -47,7 +51,7 @@ void CS380::DebugRenderer::AddPoint(vec3 const& pos, vec4 const& color)
 	};
 
 	mPointLTW.push_back(world);
-	mColors.push_back(color);
+	mPointColors.push_back(color);
 }
 
 void CS380::DebugRenderer::AddTriangle(vec3 const& p0, vec3 const& p1, vec3 const& p2, vec4 const& color)
@@ -82,16 +86,30 @@ void CS380::DebugRenderer::AddQuad(vec3 const& center, float width, float height
 	mQuadColors.push_back(color);
 }
 
+void CS380::DebugRenderer::AddAabb(vec3 const& center, vec3 const& size, vec4 const& color)
+{
+	mat4 world = {
+		vec4(size.x, 0.f, 0.f, 0.f),
+		vec4(0.f, size.y, 0.f, 0.f),
+		vec4(0.f, 0.f, size.z, 0.f),
+		vec4(center, 1.f)
+	};
+
+	mAabbLTW.push_back(world);
+	mAabbColors.push_back(color);
+}
+
 void CS380::DebugRenderer::RenderAll(mat4 viewProj)
 {
 	RenderAllPoints(viewProj);
 	RenderAllTriangles(viewProj);
 	RenderAllQuads(viewProj);
+	RenderAllAabb(viewProj);
 }
 
 void CS380::DebugRenderer::ClearInstances()
 {
-	mColors.clear();
+	mPointColors.clear();
 	mPointLTW.clear();
 
 	mTriangleColors.clear();
@@ -99,6 +117,9 @@ void CS380::DebugRenderer::ClearInstances()
 
 	mQuadColors.clear();
 	mQuadLTW.clear();
+
+	mAabbColors.clear();
+	mAabbLTW.clear();
 }
 
 void CS380::DebugRenderer::SetupShader()
@@ -189,7 +210,7 @@ void CS380::DebugRenderer::SetupQuadBufferObjects()
 	// Create VAO
 	mQuadVao.Create();
 
-	// Create VBO for Point object
+	// Create VBO for Quad object
 	std::vector<vec3> quadMesh	// Point mesh
 	{
 		vec3(-0.5f,  0.5f, 0.f),		// Top left
@@ -208,8 +229,8 @@ void CS380::DebugRenderer::SetupQuadBufferObjects()
 	mQuadColorVbo.Create(sizeof(vec4) * MAX_INSTANCES);
 
 	// Attach Color VBO and divisor to VAO
-	mQuadVao.AddAttribute(1, 1, 4, GL_FLOAT);							// location 1, binding vao index 1
-	mQuadVao.AddAttributeDivisor(1, 1);									// divisor at vao index 1
+	mQuadVao.AddAttribute(1, 1, 4, GL_FLOAT);								// location 1, binding vao index 1
+	mQuadVao.AddAttributeDivisor(1, 1);										// divisor at vao index 1
 	mQuadVao.AttachVerterBuffer(mQuadColorVbo.GetID(), 1, 0, sizeof(vec4));	// Attach to index 1
 
 	// Create local-to-world VBO
@@ -235,6 +256,64 @@ void CS380::DebugRenderer::SetupQuadBufferObjects()
 	mQuadVao.Unbind();
 }
 
+void CS380::DebugRenderer::SetupAabbBufferObjects()
+{
+	// Create VAO
+	mAabbVao.Create();
+
+	// Create VBO for Aabb object
+	std::vector<vec3> aabbMesh
+	{
+		vec3(-0.5f,  0.5f,  0.5f),		// Top left near
+		vec3(-0.5f, -0.5f,  0.5f),		// Bottom left near
+		vec3( 0.5f, -0.5f,  0.5f),		// Bottom right near
+		vec3( 0.5f,  0.5f,  0.5f),		// Top right near
+		vec3(-0.5f,  0.5f, -0.5f),		// Top left far
+		vec3(-0.5f, -0.5f, -0.5f),		// Bottom left far
+		vec3( 0.5f, -0.5f, -0.5f),		// Bottom right far
+		vec3( 0.5f,  0.5f, -0.5f)		// Top right far
+	};
+	mAabbVbo.Create(aabbMesh.size() * sizeof(vec3));
+	mAabbVbo.AttachData(0, aabbMesh.size() * sizeof(vec3), aabbMesh.data());	// Attach mesh data to VBO
+	mAabbVao.AttachVerterBuffer(mAabbVbo.GetID(), 0, 0, sizeof(vec3));
+
+	// Attach point VBO to VAO
+	mAabbVao.AddAttribute(0, 0, 3, GL_FLOAT);							// location 0, binding vao index 0 - Position
+
+	// Create VBO for Color data
+	mAabbColorVbo.Create(sizeof(vec4) * MAX_INSTANCES);
+
+	// Attach Color VBO and divisor to VAO
+	mAabbVao.AddAttribute(1, 1, 4, GL_FLOAT);								// location 1, binding vao index 1
+	mAabbVao.AddAttributeDivisor(1, 1);										// divisor at vao index 1
+	mAabbVao.AttachVerterBuffer(mAabbColorVbo.GetID(), 1, 0, sizeof(vec4));	// Attach to index 1
+
+	// Create local-to-world VBO
+	mAabbLTWVbo.Create(sizeof(mat4) * MAX_INSTANCES);
+	for (int i = 0; i < 4; ++i)		// Add attributes and divisor as vec4
+	{
+		mAabbVao.AddAttribute(2 + i, 2, 4, GL_FLOAT, sizeof(vec4) * i);		// location 2 + i, binding vao index 2
+		mAabbVao.AddAttributeDivisor(2, 1);									// divisor at vao index 2
+	}
+	// Attach LTW VBO to VAO
+	mAabbVao.AttachVerterBuffer(mAabbLTWVbo.GetID(), 2, 0, sizeof(vec4) * 4); // binding vao index 2
+
+	std::array<GLushort, 16> idx = {
+		0, 1, 2, 3,
+		0, 4, 5, 1,
+		2, 6, 7, 4,
+		5, 6, 7, 3
+
+	};
+
+	// Element Buffer Object
+	mAabbEbo.Create(idx.size() * sizeof(GLushort));
+	mAabbEbo.AttachData(0, idx.size() * sizeof(GLushort), idx.data());
+	glVertexArrayElementBuffer(mAabbVao.GetID(), mAabbEbo.GetID());
+
+	mAabbVao.Unbind();
+}
+
 void CS380::DebugRenderer::RenderAllPoints(mat4 const& viewProj)
 {
 	// Attach shader to state
@@ -244,7 +323,7 @@ void CS380::DebugRenderer::RenderAllPoints(mat4 const& viewProj)
 	mPointVao.Bind();
 
 	// Attach data to vbo
-	mPointColorVbo.AttachData(0, mColors.size() * sizeof(vec4), mColors.data());
+	mPointColorVbo.AttachData(0, mPointColors.size() * sizeof(vec4), mPointColors.data());
 	mPointLTWVbo.AttachData(0, mPointLTW.size() * sizeof(mat4), mPointLTW.data());
 
 	// Set uniform
@@ -302,4 +381,29 @@ void CS380::DebugRenderer::RenderAllQuads(mat4 const& viewProj)
 
 	mShader.Deactivate();
 	mQuadVao.Unbind();
+}
+
+void CS380::DebugRenderer::RenderAllAabb(mat4 const& viewProj)
+{
+	// Attach shader to state
+	mShader.Activate();
+
+	// Bind VAO to pipeline
+	mAabbVao.Bind();
+
+	// Attach data to vbo
+	mAabbColorVbo.AttachData(0, mAabbColors.size() * sizeof(vec4), mAabbColors.data());
+	mAabbLTWVbo.AttachData(0, mAabbLTW.size() * sizeof(mat4), mAabbLTW.data());
+
+	// Use quad EBO
+	glVertexArrayElementBuffer(mAabbVao.GetID(), mAabbEbo.GetID());
+
+	// Set uniform
+	glUniformMatrix4fv(mShader.GetUniformVP(), 1, GL_FALSE, &viewProj[0][0]);
+
+	// Draw
+	glDrawElementsInstanced(GL_LINE_LOOP, 16, GL_UNSIGNED_SHORT, nullptr, mAabbLTW.size());
+
+	mShader.Deactivate();
+	mAabbVao.Unbind();
 }

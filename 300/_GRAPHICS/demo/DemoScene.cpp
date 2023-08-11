@@ -100,11 +100,51 @@ void CS380::DemoScene::Update()
     mDt = now - mLastTime;
     mLastTime = now;
 
+    double mouseX = 0.0;
+    double mouseY = 0.0;
+    glfwGetCursorPos(mWindow.GetHandle(), &mouseX, &mouseY);
+
     // User input
     if (glfwGetKey(mWindow.GetHandle(), GLFW_KEY_ESCAPE))
     {
         glfwSetWindowShouldClose(mWindow.GetHandle(), 1);
     }
+
+    auto  side = glm::normalize(glm::cross(mCamera.direction(), { 0, 1, 0 }));
+    auto  up = glm::normalize(glm::cross(mCamera.direction(), side));
+
+    // Move
+    vec3 moveVector{};
+    if (glfwGetKey(mWindow.GetHandle(), GLFW_KEY_W)) {
+        moveVector += glm::normalize(mCamera.direction()) * mDt * mCamSpeed;
+    }
+    if (glfwGetKey(mWindow.GetHandle(), GLFW_KEY_S)) {
+        moveVector -= glm::normalize(mCamera.direction()) * mDt * mCamSpeed;
+    }
+    if (glfwGetKey(mWindow.GetHandle(), GLFW_KEY_A)) {
+        moveVector -= glm::normalize(side) * mDt * mCamSpeed;
+    }
+    if (glfwGetKey(mWindow.GetHandle(), GLFW_KEY_D)) {
+        moveVector += glm::normalize(side) * mDt * mCamSpeed;
+    }
+    if (glfwGetKey(mWindow.GetHandle(), GLFW_KEY_SPACE)) {
+        moveVector -= up * mDt * mCamSpeed;
+    }
+    if (glfwGetKey(mWindow.GetHandle(), GLFW_KEY_LEFT_CONTROL)) {
+        moveVector += up * mDt * mCamSpeed;
+    }
+
+    mCamera.SetPosition(mCamera.position() + moveVector);
+
+    if (glfwGetMouseButton(mWindow.GetHandle(), GLFW_MOUSE_BUTTON_2)) {
+        // View
+        glm::vec2 cursor_delta = { (float)mouseX - mCamera.cursorPosition().x, (float)mouseY - mCamera.cursorPosition().y };
+        mCamera.SetTarget(glm::vec3(glm::vec4(mCamera.direction(), 0) * glm::rotate(glm::radians(5.0f) * mDt * cursor_delta.y, side)));
+        mCamera.SetTarget(glm::vec3(glm::vec4(mCamera.direction(), 0) * glm::rotate(glm::radians(5.0f) * mDt * cursor_delta.x, glm::vec3(0, 1, 0))));
+    }
+
+    mCamera.SetCursorPosition({ mouseX, mouseY });
+    mCamera.Update();
 
     static char buffer[10];
     sprintf(buffer, "FPS: %d", int(1.0f / mDt));
@@ -123,12 +163,18 @@ void CS380::DemoScene::Draw()
     {
         glfwPollEvents();
         Update();
+
+        // Clears buffer
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        
+
+        mRenderer->AddAabb({ 0, 0, -50 }, { 100, 300, 100 }, { 1, 0, 0, 1 });
+
+        // Renders all instances
         mRenderer->RenderAll(mCamera.viewProj());
 
         // Clear all instances
         mRenderer->ClearInstances();
+
         // ImGui UI
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

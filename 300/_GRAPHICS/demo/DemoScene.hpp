@@ -51,6 +51,7 @@ namespace CS380 {
         // -- Stats --
         float mDt = 0.0f;
         float mLastTime = 0.0f;
+        float mCamSpeed = 10.f;
 
         // -- Flags --
 
