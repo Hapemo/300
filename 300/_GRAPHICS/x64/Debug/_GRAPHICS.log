@@ -1,40 +1,17 @@
 ﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(1098,5): warning MSB8027: Two or more files with the name of imgui.cpp will produce outputs to the same location. This can lead to an incorrect build result.  The files involved are ..\lib\IMGUI\imgui.cpp, demo\ImGui.cpp.
-  imgui_impl_glfw.cpp
-  imgui_impl_opengl3.cpp
-  imgui.cpp
-  imgui_demo.cpp
-  imgui_draw.cpp
-  imgui_tables.cpp
-  imgui_widgets.cpp
-  imgui_stdlib.cpp
   DemoScene.cpp
 C:\Users\Roy\source\repos\300\300\_GRAPHICS\demo\DemoScene.cpp(64,80): warning C4244: 'argument': conversion from '_Rep' to 'unsigned int', possible loss of data
           with
           [
               _Rep=std::chrono::system_clock::rep
           ]
-  ImGui.cpp
   main.cpp
-  Camera.cpp
   DebugRenderer.cpp
-C:\Users\Roy\source\repos\300\300\_GRAPHICS\source\DebugRenderer.cpp(142,90): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
-C:\Users\Roy\source\repos\300\300\_GRAPHICS\source\DebugRenderer.cpp(333,72): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
-C:\Users\Roy\source\repos\300\300\_GRAPHICS\source\DebugRenderer.cpp(355,85): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
-C:\Users\Roy\source\repos\300\300\_GRAPHICS\source\DebugRenderer.cpp(380,86): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
-C:\Users\Roy\source\repos\300\300\_GRAPHICS\source\DebugRenderer.cpp(405,87): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
-  Math.cpp
-  Mesh.cpp
-  OpenGl.cpp
-  Random.cpp
-  Shader.cpp
-  Shapes.cpp
-  Vao.cpp
+C:\Users\Roy\source\repos\300\300\_GRAPHICS\source\DebugRenderer.cpp(226,115): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+C:\Users\Roy\source\repos\300\300\_GRAPHICS\source\DebugRenderer.cpp(247,124): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+C:\Users\Roy\source\repos\300\300\_GRAPHICS\source\DebugRenderer.cpp(268,116): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+C:\Users\Roy\source\repos\300\300\_GRAPHICS\source\DebugRenderer.cpp(289,116): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
   Generating Code...
-  Compiling...
-  Vbo.cpp
-  Window.cpp
-  Generating Code...
-x64\Debug\ImGui.obj : warning LNK4042: object specified more than once; extras ignored
   _GRAPHICS.vcxproj -> C:\Users\Roy\source\repos\300\300\x64\Debug\_GRAPHICS.exe
           1 file(s) copied.
           1 file(s) copied.

@@ -168,6 +168,9 @@ void GFX::DemoScene::Draw()
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         mRenderer->AddAabb({ 0, 0, -50 }, { 100, 300, 100 }, { 1, 0, 0, 1 });
+        //mRenderer->AddPoint({ 0, 0, 0 }, { 1, 0, 0, 1 });
+        //mRenderer->AddTriangle({ 0.f, 30.f, 0.f }, { -30.f, -30.f, 0.f }, { 30.f, -30.f, 0.f }, { 0, 1, 0, 1 });
+        //mRenderer->AddQuad({ 0, 0, 0 }, 50, 100, { 0, 0, 1, 1 });
 
         // Renders all instances
         mRenderer->RenderAll(mCamera.viewProj());

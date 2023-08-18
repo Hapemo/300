@@ -57,3 +57,20 @@ void GFX::Mesh::ClearInstances()
 	mLTW.clear();
 	mColors.clear();
 }
+
+void GFX::Mesh::BindVao()
+{
+	mVao.Bind();
+}
+
+void GFX::Mesh::UnbindVao()
+{
+	mVao.Unbind();
+}
+
+void GFX::Mesh::PrepForDraw()
+{
+	// Attach data to vbo
+	mColorVbo.AttachData(0, mColors.size() * sizeof(vec4), mColors.data());
+	mLTWVbo.AttachData(0, mLTW.size() * sizeof(mat4), mLTW.data());
+}

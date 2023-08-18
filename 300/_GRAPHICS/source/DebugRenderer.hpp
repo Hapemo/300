@@ -46,48 +46,20 @@ namespace GFX
 	private:
 		Shader mShader;
 
-		// -- Vertex Array and Vertex Buffers --
-		// Point
-		VAO mPointVao;
-		VBO mPointVbo;
-		VBO mPointColorVbo;
-		VBO mPointLTWVbo;
-		// Triangle
-		VAO mTriangleVao;
-		VBO mTriangleVbo;
-		VBO mTriangleColorVbo;
-		VBO mTriangleLTWVbo;
-		// Quad
-		VAO mQuadVao;
-		VBO mQuadVbo;
-		VBO mQuadColorVbo;
-		VBO mQuadEbo;
-		VBO mQuadLTWVbo;
-		// Aabb
-		VAO mAabbVao;
-		VBO mAabbVbo;
-		VBO mAabbColorVbo;
-		VBO mAabbEbo;
-		VBO mAabbLTWVbo;
+		// -- Mesh Models --
+		Mesh mPointMesh;
+		Mesh mTriangleMesh;
+		Mesh mQuadMesh;
+		Mesh mAabbMesh;
 
-		// -- Containers to store render data --
-		std::vector<mat4> mPointLTW;
-		std::vector<mat4> mTriangleLTW;
-		std::vector<mat4> mQuadLTW;
-		std::vector<mat4> mAabbLTW;
-
-		std::vector<vec4> mPointColors;
-		std::vector<vec4> mTriangleColors;
-		std::vector<vec4> mQuadColors;
-		std::vector<vec4> mAabbColors;
 
 		// Shader Set up
 		void SetupShader();
 
-		void SetupPointBufferObjects();
-		void SetupTriangleBufferObjects();
-		void SetupQuadBufferObjects();
-		void SetupAabbBufferObjects();
+		void SetupPointMesh();
+		void SetupTriangleMesh();
+		void SetupQuadMesh();
+		void SetupAabbMesh();
 
 		// -- Render Shapes --
 		void RenderAllPoints(mat4 const& viewProj);

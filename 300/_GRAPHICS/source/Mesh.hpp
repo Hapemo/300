@@ -23,6 +23,19 @@ namespace GFX
 
 		void ClearInstances();
 
+		void BindVao();
+
+		void UnbindVao();
+
+		void PrepForDraw();
+
+		int GetVertexCount() { return mVertexCount; }
+		int GetIndexCount() { return mIndexCount; }
+
+		// Stores the rendering data for each instance of mesh
+		std::vector<mat4> mLTW;
+		std::vector<vec4> mColors;
+
 	private:
 		// Vertex array object and buffer object for each mesh
 		VAO mVao;
@@ -31,9 +44,6 @@ namespace GFX
 		VBO mColorVbo;
 		VBO mLTWVbo;
 
-		// Stores the rendering data for each instance of mesh
-		std::vector<mat4> mLTW;
-		std::vector<vec4> mColors;
 
 		// Stats of the mesh model
 		int mVertexCount;
