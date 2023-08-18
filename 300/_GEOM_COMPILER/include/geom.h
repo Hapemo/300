@@ -7,16 +7,7 @@
 #include <array>
 #include <string>
 #include <vector>
-
-//#include <boost/archive/text_iarchive.hpp>
-//#include <boost/archive/text_oarchive.hpp>
-//
-//#include <boost/serialization/shared_ptr.hpp>
-//#include <boost/serialization/array.hpp>
-
 #include <fstream>
-//#include <boost/serialization/utility.hpp>
-//#include <boost/serialization/assume_abstract.hpp>
 
 #include <descriptor.h>
 

@@ -801,16 +801,14 @@ namespace _GEOM
 		std::ifstream infile("../compiled_geom/Skull_textured.geom");
 		assert(infile.is_open());
 
-		std::uint32_t nMeshes{}, nSubMeshes{}, m_nVertices{}, m_nExtras{}, m_nIndices{};
-		Serialization::ReadUnsigned(infile, nMeshes);
-		Serialization::ReadUnsigned(infile, nSubMeshes);
-		Serialization::ReadUnsigned(infile, m_nVertices);
-		Serialization::ReadUnsigned(infile, m_nExtras);
-		Serialization::ReadUnsigned(infile, m_nIndices);
+		Serialization::ReadUnsigned(infile, GeomData.m_nMeshes);
+		Serialization::ReadUnsigned(infile, GeomData.m_nSubMeshes);
+		Serialization::ReadUnsigned(infile, GeomData.m_nVertices);
+		Serialization::ReadUnsigned(infile, GeomData.m_nExtras);
+		Serialization::ReadUnsigned(infile, GeomData.m_nIndices);
 
-		glm::vec3 v3;	glm::vec2 v2;
-		Serialization::ReadVec3WithHeader(infile, v3);
-		Serialization::ReadVec2WithHeader(infile, v2);
+		Serialization::ReadVec3WithHeader(infile, GeomData.m_PosCompressionScale);
+		Serialization::ReadVec2WithHeader(infile, GeomData.m_UVCompressionScale);
 
 		Serialization::ReadMesh(infile, GeomData);
 		Serialization::ReadSubMesh(infile, GeomData);
