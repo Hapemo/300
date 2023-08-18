@@ -17,7 +17,7 @@
 
 #include "Common.hpp"
 
-namespace CS380 
+namespace GFX 
 {
     class Shader
     {

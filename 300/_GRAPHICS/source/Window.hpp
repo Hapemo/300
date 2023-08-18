@@ -17,7 +17,7 @@
 #include "OpenGl.hpp"
 #include "Math.hpp"
 
-namespace CS380 {
+namespace GFX {
     class Window
     {
     public:

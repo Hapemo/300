@@ -1,6 +1,6 @@
 #include "Math.hpp"
 
-float CS380::Math::atan2(float x, float y)
+float GFX::Math::atan2(float x, float y)
 {
 	float result = std::atan2(y, x);
 
@@ -11,7 +11,7 @@ float CS380::Math::atan2(float x, float y)
 	return result;
 }
 
-vec2 CS380::Math::AngleToVec2(float angle)
+vec2 GFX::Math::AngleToVec2(float angle)
 {
 	vec2 v{};
 	v.x = glm::cos(angle);

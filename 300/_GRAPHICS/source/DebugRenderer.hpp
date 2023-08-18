@@ -18,10 +18,9 @@
 #include "Shader.hpp"
 #include "Vao.hpp"
 #include "Vbo.hpp"
+#include "Mesh.hpp"
 
-constexpr int MAX_INSTANCES = 5000;
-
-namespace CS380
+namespace GFX
 {
 	class DebugRenderer
 	{

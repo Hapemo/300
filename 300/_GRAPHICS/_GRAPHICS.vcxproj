@@ -143,6 +143,7 @@
     <ClCompile Include="source\Camera.cpp" />
     <ClCompile Include="source\DebugRenderer.cpp" />
     <ClCompile Include="source\Math.cpp" />
+    <ClCompile Include="source\Mesh.cpp" />
     <ClCompile Include="source\OpenGl.cpp" />
     <ClCompile Include="source\Random.cpp" />
     <ClCompile Include="source\Shader.cpp" />
@@ -158,6 +159,7 @@
     <ClInclude Include="source\Camera.hpp" />
     <ClInclude Include="source\DebugRenderer.hpp" />
     <ClInclude Include="source\Math.hpp" />
+    <ClInclude Include="source\Mesh.hpp" />
     <ClInclude Include="source\OpenGl.hpp" />
     <ClInclude Include="source\Random.hpp" />
     <ClInclude Include="source\Shader.hpp" />

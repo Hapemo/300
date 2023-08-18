@@ -33,7 +33,7 @@
  * @return
  *  None
 *---------------------------------------------------------------------------*/
-void GLAPIENTRY CS380::MessageCallback(GLenum source,
+void GLAPIENTRY GFX::MessageCallback(GLenum source,
                                     GLenum type,
                                     GLuint id,
                                     GLenum severity,

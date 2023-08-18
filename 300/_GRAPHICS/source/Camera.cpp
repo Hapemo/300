@@ -21,7 +21,7 @@
   * @return
   *  None
   *---------------------------------------------------------------------------*/
-void CS380::Camera::SetPosition(vec3 newPosition)
+void GFX::Camera::SetPosition(vec3 newPosition)
 {
 	mPosition = newPosition;
 }
@@ -34,7 +34,7 @@ void CS380::Camera::SetPosition(vec3 newPosition)
  * @return
  *  None
  *---------------------------------------------------------------------------*/
-void CS380::Camera::SetTarget(vec3 newTarget)
+void GFX::Camera::SetTarget(vec3 newTarget)
 {
 	mTarget = newTarget;
 }
@@ -47,7 +47,7 @@ void CS380::Camera::SetTarget(vec3 newTarget)
  * @return
  *  None
  *---------------------------------------------------------------------------*/
-void CS380::Camera::SetCursorPosition(vec2 newPosition)
+void GFX::Camera::SetCursorPosition(vec2 newPosition)
 {
 	mCursorPos = newPosition;
 }
@@ -58,7 +58,7 @@ void CS380::Camera::SetCursorPosition(vec2 newPosition)
  * @return
  *  Position of the camera
  *---------------------------------------------------------------------------*/
-vec3 CS380::Camera::position()
+vec3 GFX::Camera::position()
 {
 	return mPosition;
 }
@@ -69,7 +69,7 @@ vec3 CS380::Camera::position()
  * @return
  *  Direction vector of the camera
  *---------------------------------------------------------------------------*/
-vec3 CS380::Camera::direction()
+vec3 GFX::Camera::direction()
 {
 	return mTarget - mPosition;
 }
@@ -80,7 +80,7 @@ vec3 CS380::Camera::direction()
  * @return
  *  Position of the cursor
  *---------------------------------------------------------------------------*/
-vec2 CS380::Camera::cursorPosition()
+vec2 GFX::Camera::cursorPosition()
 {
 	return mCursorPos;
 }
@@ -99,7 +99,7 @@ vec2 CS380::Camera::cursorPosition()
  * @return
  *  none
  *---------------------------------------------------------------------------*/
-void CS380::Camera::SetProjection(float left, float right, float bottom, float top, float near, float far)
+void GFX::Camera::SetProjection(float left, float right, float bottom, float top, float near, float far)
 {
 	//float aspectRatio = static_cast<float>(size.x) / static_cast<float>(size.y);
 	//mProjection = glm::perspective(glm::radians(fovAngle), aspectRatio, nearZ, farZ);
@@ -113,7 +113,7 @@ void CS380::Camera::SetProjection(float left, float right, float bottom, float t
  * @return
  *  none
  *---------------------------------------------------------------------------*/
-void CS380::Camera::Update()
+void GFX::Camera::Update()
 {
 	mView = glm::lookAt(glm::vec3(mPosition), glm::vec3(mTarget), glm::vec3(0.0f, 1.0f, 0.0f));
 	mViewProjection = mProjection * mView;
@@ -125,7 +125,7 @@ void CS380::Camera::Update()
  * @return
  *  View projection matrix of the camera
  *---------------------------------------------------------------------------*/
-glm::mat4 CS380::Camera::viewProj()
+glm::mat4 GFX::Camera::viewProj()
 {
 	return mViewProjection;
 }

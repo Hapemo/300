@@ -27,7 +27,7 @@
   * @return
   *  None
   *---------------------------------------------------------------------------*/
-CS380::DemoScene::DemoScene(Window const& window, DebugRenderer* renderer) : mWindow{ window }, mRenderer{ renderer }, mCamera{}
+GFX::DemoScene::DemoScene(Window const& window, DebugRenderer* renderer) : mWindow{ window }, mRenderer{ renderer }, mCamera{}
 {
 
 }
@@ -39,7 +39,7 @@ CS380::DemoScene::DemoScene(Window const& window, DebugRenderer* renderer) : mWi
  * @return
  *  None
  *---------------------------------------------------------------------------*/
-void CS380::DemoScene::Initialize()
+void GFX::DemoScene::Initialize()
 {
     glViewport(0, 0, mWindow.size().x, mWindow.size().y);
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -61,7 +61,7 @@ void CS380::DemoScene::Initialize()
     mCamera.Update();
 
     // Seed random generator
-    CS380::Utils::srand(std::chrono::system_clock::now().time_since_epoch().count(), 0);
+    GFX::Utils::srand(std::chrono::system_clock::now().time_since_epoch().count(), 0);
     
     // Initialize ImGui
     // ImGui
@@ -83,7 +83,7 @@ void CS380::DemoScene::Initialize()
  * @return
  *  None
  *---------------------------------------------------------------------------*/
-void CS380::DemoScene::Update()
+void GFX::DemoScene::Update()
 {
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
@@ -157,7 +157,7 @@ void CS380::DemoScene::Update()
  * @return
  *  None
  *---------------------------------------------------------------------------*/
-void CS380::DemoScene::Draw()
+void GFX::DemoScene::Draw()
 {
     while (!glfwWindowShouldClose(mWindow.GetHandle()))
     {
@@ -189,7 +189,7 @@ void CS380::DemoScene::Draw()
  * @return
  *  None
  *---------------------------------------------------------------------------*/
-void CS380::DemoScene::Exit()
+void GFX::DemoScene::Exit()
 {
     ImGui::DestroyContext();
 }

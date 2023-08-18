@@ -16,7 +16,7 @@
 
 #include "Math.hpp"
 
-namespace CS380 {
+namespace GFX {
     class Camera
     {
     public:

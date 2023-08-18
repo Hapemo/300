@@ -42,7 +42,7 @@ using glm::vec2;
 using glm::vec3;
 using glm::vec4;
 
-namespace CS380 {
+namespace GFX {
 	namespace Math
 	{
 		float atan2(float x, float y);

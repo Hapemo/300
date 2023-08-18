@@ -5,7 +5,7 @@
 /************************************************************************/
 #include "Random.hpp"
 
-namespace CS380 {
+namespace GFX {
     namespace Utils {
 
         /* return a random float >= 0 and < 1 */
@@ -47,7 +47,7 @@ namespace CS380 {
 
         int Random(int low, int high)
         {
-            int r1 = static_cast<int>(CS380::Utils::rand() / 2 - 1);
+            int r1 = static_cast<int>(GFX::Utils::rand() / 2 - 1);
             return r1 % (high - low + 1) + low;
         }
         float Random(float low, float high)

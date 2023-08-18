@@ -1,7 +1,7 @@
 #ifndef SHAPES_HPP
 #include "Common.hpp"
 
-namespace CS380
+namespace GFX
 {
 	struct Aabb
 	{

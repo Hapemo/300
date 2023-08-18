@@ -26,7 +26,7 @@
  * @return
  *  none
 *---------------------------------------------------------------------------*/
-void CS380::Shader::CreateShader(const char* vertexShaderCode, const char* fragmentShaderCode)
+void GFX::Shader::CreateShader(const char* vertexShaderCode, const char* fragmentShaderCode)
 {
 	// Create Shader Program
 	mShaderProgram = glCreateProgram();
@@ -71,7 +71,7 @@ void CS380::Shader::CreateShader(const char* vertexShaderCode, const char* fragm
 	glDeleteShader(shader);
 }
 
-void CS380::Shader::CreateShaderFromFiles(const char* vertexFile, const char* fragmentFile)
+void GFX::Shader::CreateShaderFromFiles(const char* vertexFile, const char* fragmentFile)
 {
 	std::string vertexCode{};
 	std::string fragmentCode{};
@@ -125,7 +125,7 @@ void CS380::Shader::CreateShaderFromFiles(const char* vertexFile, const char* fr
  * @return
  *  none
 *---------------------------------------------------------------------------*/
-void CS380::Shader::DestroyShader() const
+void GFX::Shader::DestroyShader() const
 {
 	glDeleteProgram(mShaderProgram);
 }
@@ -136,7 +136,7 @@ void CS380::Shader::DestroyShader() const
  * @return
  *  none
 *---------------------------------------------------------------------------*/
-void CS380::Shader::Activate() const
+void GFX::Shader::Activate() const
 {
 	glUseProgram(mShaderProgram);
 }
@@ -147,7 +147,7 @@ void CS380::Shader::Activate() const
  * @return
  *  none
 *---------------------------------------------------------------------------*/
-void CS380::Shader::Deactivate() const
+void GFX::Shader::Deactivate() const
 {
 	glUseProgram(0);
 }
@@ -162,7 +162,7 @@ void CS380::Shader::Deactivate() const
  * @return
  *  none
 *---------------------------------------------------------------------------*/
-bool CS380::Shader::CompileErrors(unsigned int shader, const char* shaderType) const
+bool GFX::Shader::CompileErrors(unsigned int shader, const char* shaderType) const
 {
 	GLint hasCompiled{};
 	if (strcmp(shaderType, "PROGRAM") != 0)
@@ -192,7 +192,7 @@ bool CS380::Shader::CompileErrors(unsigned int shader, const char* shaderType) c
 	return true;
 }
 
-int32_t CS380::Shader::GetUniformLocation(const char* uniformName) const
+int32_t GFX::Shader::GetUniformLocation(const char* uniformName) const
 {
 	return glGetUniformLocation(mShaderProgram, uniformName);
 }

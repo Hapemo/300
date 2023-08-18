@@ -15,7 +15,7 @@
 
 #include "Common.hpp"
 
-namespace CS380
+namespace GFX
 {
     void GLAPIENTRY MessageCallback(GLenum source,
                                     GLenum type,

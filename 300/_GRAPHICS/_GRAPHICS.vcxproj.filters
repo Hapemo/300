@@ -84,6 +84,9 @@
     <ClCompile Include="..\lib\IMGUI\backends\imgui_impl_opengl3.cpp">
       <Filter>ImGui</Filter>
     </ClCompile>
+    <ClCompile Include="source\Mesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Math.hpp">
@@ -124,6 +127,9 @@
     </ClInclude>
     <ClInclude Include="include\Common.hpp">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Mesh.hpp">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

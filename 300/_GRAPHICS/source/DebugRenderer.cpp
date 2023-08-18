@@ -1,6 +1,6 @@
 #include "DebugRenderer.hpp"
 
-CS380::DebugRenderer::DebugRenderer()
+GFX::DebugRenderer::DebugRenderer()
 {
 	SetupShader();
 	SetupPointBufferObjects();
@@ -9,7 +9,7 @@ CS380::DebugRenderer::DebugRenderer()
 	SetupAabbBufferObjects();
 }
 
-CS380::DebugRenderer::~DebugRenderer()
+GFX::DebugRenderer::~DebugRenderer()
 {
 	mPointVao.Destroy();
 	mPointVbo.Destroy();
@@ -25,17 +25,17 @@ CS380::DebugRenderer::~DebugRenderer()
 	mShader.DestroyShader();
 }
 
-void CS380::DebugRenderer::ActivateShader()
+void GFX::DebugRenderer::ActivateShader()
 {
 	mShader.Activate();
 }
 
-void CS380::DebugRenderer::DeactivateShader()
+void GFX::DebugRenderer::DeactivateShader()
 {
 	mShader.Deactivate();
 }
 
-void CS380::DebugRenderer::AddPoint(vec3 const& pos, vec4 const& color)
+void GFX::DebugRenderer::AddPoint(vec3 const& pos, vec4 const& color)
 {
 	if (mPointLTW.size() >= MAX_INSTANCES)
 	{
@@ -54,7 +54,7 @@ void CS380::DebugRenderer::AddPoint(vec3 const& pos, vec4 const& color)
 	mPointColors.push_back(color);
 }
 
-void CS380::DebugRenderer::AddTriangle(vec3 const& p0, vec3 const& p1, vec3 const& p2, vec4 const& color)
+void GFX::DebugRenderer::AddTriangle(vec3 const& p0, vec3 const& p1, vec3 const& p2, vec4 const& color)
 {
 	if (mTriangleLTW.size() >= MAX_INSTANCES)
 	{
@@ -73,7 +73,7 @@ void CS380::DebugRenderer::AddTriangle(vec3 const& p0, vec3 const& p1, vec3 cons
 	mTriangleColors.push_back(color);
 }
 
-void CS380::DebugRenderer::AddQuad(vec3 const& center, float width, float height, vec4 const& color)
+void GFX::DebugRenderer::AddQuad(vec3 const& center, float width, float height, vec4 const& color)
 {
 	mat4 world = {
 	vec4(width, 0.f, 0.f, 0.f),
@@ -86,7 +86,7 @@ void CS380::DebugRenderer::AddQuad(vec3 const& center, float width, float height
 	mQuadColors.push_back(color);
 }
 
-void CS380::DebugRenderer::AddAabb(vec3 const& center, vec3 const& size, vec4 const& color)
+void GFX::DebugRenderer::AddAabb(vec3 const& center, vec3 const& size, vec4 const& color)
 {
 	mat4 world = {
 		vec4(size.x, 0.f, 0.f, 0.f),
@@ -99,7 +99,7 @@ void CS380::DebugRenderer::AddAabb(vec3 const& center, vec3 const& size, vec4 co
 	mAabbColors.push_back(color);
 }
 
-void CS380::DebugRenderer::RenderAll(mat4 viewProj)
+void GFX::DebugRenderer::RenderAll(mat4 viewProj)
 {
 	RenderAllPoints(viewProj);
 	RenderAllTriangles(viewProj);
@@ -107,7 +107,7 @@ void CS380::DebugRenderer::RenderAll(mat4 viewProj)
 	RenderAllAabb(viewProj);
 }
 
-void CS380::DebugRenderer::ClearInstances()
+void GFX::DebugRenderer::ClearInstances()
 {
 	mPointColors.clear();
 	mPointLTW.clear();
@@ -122,12 +122,12 @@ void CS380::DebugRenderer::ClearInstances()
 	mAabbLTW.clear();
 }
 
-void CS380::DebugRenderer::SetupShader()
+void GFX::DebugRenderer::SetupShader()
 {
 	mShader.CreateShader(vertexShaderCode, fragmentShaderCode);
 }
 
-void CS380::DebugRenderer::SetupPointBufferObjects()
+void GFX::DebugRenderer::SetupPointBufferObjects()
 {
 	// Create VAO
 	mPointVao.Create();
@@ -165,7 +165,7 @@ void CS380::DebugRenderer::SetupPointBufferObjects()
 	mPointVao.Unbind();
 }
 
-void CS380::DebugRenderer::SetupTriangleBufferObjects()
+void GFX::DebugRenderer::SetupTriangleBufferObjects()
 {
 	// Create VAO
 	mTriangleVao.Create();
@@ -205,7 +205,7 @@ void CS380::DebugRenderer::SetupTriangleBufferObjects()
 	mTriangleVao.Unbind();
 }
 
-void CS380::DebugRenderer::SetupQuadBufferObjects()
+void GFX::DebugRenderer::SetupQuadBufferObjects()
 {
 	// Create VAO
 	mQuadVao.Create();
@@ -256,7 +256,7 @@ void CS380::DebugRenderer::SetupQuadBufferObjects()
 	mQuadVao.Unbind();
 }
 
-void CS380::DebugRenderer::SetupAabbBufferObjects()
+void GFX::DebugRenderer::SetupAabbBufferObjects()
 {
 	// Create VAO
 	mAabbVao.Create();
@@ -314,7 +314,7 @@ void CS380::DebugRenderer::SetupAabbBufferObjects()
 	mAabbVao.Unbind();
 }
 
-void CS380::DebugRenderer::RenderAllPoints(mat4 const& viewProj)
+void GFX::DebugRenderer::RenderAllPoints(mat4 const& viewProj)
 {
 	// Attach shader to state
 	mShader.Activate();
@@ -336,7 +336,7 @@ void CS380::DebugRenderer::RenderAllPoints(mat4 const& viewProj)
 	mPointVao.Unbind();
 }
 
-void CS380::DebugRenderer::RenderAllTriangles(mat4 const& viewProj)
+void GFX::DebugRenderer::RenderAllTriangles(mat4 const& viewProj)
 {
 	// Attach shader to state
 	mShader.Activate();
@@ -358,7 +358,7 @@ void CS380::DebugRenderer::RenderAllTriangles(mat4 const& viewProj)
 	mTriangleVao.Unbind();
 }
 
-void CS380::DebugRenderer::RenderAllQuads(mat4 const& viewProj)
+void GFX::DebugRenderer::RenderAllQuads(mat4 const& viewProj)
 {
 	// Attach shader to state
 	mShader.Activate();
@@ -383,7 +383,7 @@ void CS380::DebugRenderer::RenderAllQuads(mat4 const& viewProj)
 	mQuadVao.Unbind();
 }
 
-void CS380::DebugRenderer::RenderAllAabb(mat4 const& viewProj)
+void GFX::DebugRenderer::RenderAllAabb(mat4 const& viewProj)
 {
 	// Attach shader to state
 	mShader.Activate();

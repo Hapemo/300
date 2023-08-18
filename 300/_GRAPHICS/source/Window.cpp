@@ -25,7 +25,7 @@
  * @return
  *  none
 *---------------------------------------------------------------------------*/
-CS380::Window::Window(ivec2 windowSize)
+GFX::Window::Window(ivec2 windowSize)
 {
     mSize = windowSize;
 
@@ -59,7 +59,7 @@ CS380::Window::Window(ivec2 windowSize)
  * @return
  *  none
 *---------------------------------------------------------------------------*/
-CS380::Window::~Window()
+GFX::Window::~Window()
 {
     glfwDestroyWindow(mWindow);
 }
@@ -70,7 +70,7 @@ CS380::Window::~Window()
  * @return
  *  none
 *---------------------------------------------------------------------------*/
-void CS380::Window::InitializeSystem()
+void GFX::Window::InitializeSystem()
 {
     // Initialize OpenGL
     if (glfwInit() == 0)
@@ -85,7 +85,7 @@ void CS380::Window::InitializeSystem()
  * @return
  *  none
 *---------------------------------------------------------------------------*/
-void CS380::Window::DestroySystem()
+void GFX::Window::DestroySystem()
 {
     glfwTerminate();
 }
@@ -96,12 +96,12 @@ void CS380::Window::DestroySystem()
  * @return
  *  none
 *---------------------------------------------------------------------------*/
-void CS380::Window::Update()
+void GFX::Window::Update()
 {
     glfwSwapBuffers(mWindow);
 }
 
-vec2 CS380::Window::WindowToWorld(vec2 const& screenCoordinates)
+vec2 GFX::Window::WindowToWorld(vec2 const& screenCoordinates)
 {
     vec2 worldPos = screenCoordinates;
     worldPos.x -= mSize.x * 0.5f;
@@ -117,7 +117,7 @@ vec2 CS380::Window::WindowToWorld(vec2 const& screenCoordinates)
  * @return
  *  Width and height of the window
 *---------------------------------------------------------------------------*/
-ivec2 CS380::Window::size()
+ivec2 GFX::Window::size()
 {
 	return mSize;
 }
