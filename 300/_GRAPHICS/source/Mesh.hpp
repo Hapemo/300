@@ -19,18 +19,22 @@ namespace GFX
 	class Mesh
 	{
 	public:
+		// -- Called once on startup --
 		void Setup(std::vector<vec3> const& positions, std::vector<unsigned short> const& indices);
 
-		void ClearInstances();
-
+		// -- Used when drawing --
 		void BindVao();
-
+		void PrepForDraw();
 		void UnbindVao();
 
-		void PrepForDraw();
+		// -- Used after drawing current scene --
+		void ClearInstances();
 
 		int GetVertexCount() { return mVertexCount; }
 		int GetIndexCount() { return mIndexCount; }
+
+		// Called once on exit --
+		void Destroy();
 
 		// Stores the rendering data for each instance of mesh
 		std::vector<mat4> mLTW;
@@ -43,7 +47,6 @@ namespace GFX
 		VBO mEbo;
 		VBO mColorVbo;
 		VBO mLTWVbo;
-
 
 		// Stats of the mesh model
 		int mVertexCount;

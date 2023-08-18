@@ -74,3 +74,12 @@ void GFX::Mesh::PrepForDraw()
 	mColorVbo.AttachData(0, mColors.size() * sizeof(vec4), mColors.data());
 	mLTWVbo.AttachData(0, mLTW.size() * sizeof(mat4), mLTW.data());
 }
+
+void GFX::Mesh::Destroy()
+{
+	mVao.Destroy();
+	mVbo.Destroy();
+	mEbo.Destroy();
+	mLTWVbo.Destroy();
+	mColorVbo.Destroy();
+}

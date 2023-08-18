@@ -52,7 +52,6 @@ namespace GFX
 		Mesh mQuadMesh;
 		Mesh mAabbMesh;
 
-
 		// Shader Set up
 		void SetupShader();
 

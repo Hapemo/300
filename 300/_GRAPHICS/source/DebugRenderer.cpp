@@ -3,6 +3,8 @@
 GFX::DebugRenderer::DebugRenderer()
 {
 	SetupShader();
+
+	// Set up basic mesh models
 	SetupPointMesh();
 	SetupTriangleMesh();
 	SetupQuadMesh();
@@ -11,16 +13,11 @@ GFX::DebugRenderer::DebugRenderer()
 
 GFX::DebugRenderer::~DebugRenderer()
 {
-	//mPointVao.Destroy();
-	//mPointVbo.Destroy();
-	//mTriangleVao.Destroy();
-	//mTriangleVbo.Destroy();
-	//mQuadVao.Destroy();
-	//mQuadVbo.Destroy();
-	//mQuadEbo.Destroy();
-	//mAabbVao.Destroy();
-	//mAabbVbo.Destroy();
-	//mAabbEbo.Destroy();
+	// Destroy created mesh
+	mPointMesh.Destroy();
+	mTriangleMesh.Destroy();
+	mQuadMesh.Destroy();
+	mAabbMesh.Destroy();
 
 	mShader.DestroyShader();
 }
