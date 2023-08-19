@@ -52,12 +52,6 @@ namespace _GEOM
 				, m_QPosition_Y					// SINT16_4D_NORMALIZED
 				, m_QPosition_Z					//
 				, m_QPosition_QNormalX;			// The normal X dimension plus a sign bit
-
-			//template<class Archive>
-			//void serialize(Archive& ar, const unsigned int version)
-			//{
-			//	ar & m_QPosition_X & m_QPosition_Y & m_QPosition_Z & m_QPosition_QNormalX;
-			//}
 		};
 
 		struct alignas(std::uint32_t) VertexExtra
@@ -76,13 +70,6 @@ namespace _GEOM
 
 			std::int16_t    m_U							// These two go together, they are represented by
 				, m_V;									// SINT16_2D_NORMALIZED
-
-			//template<class Archive>
-			//void serialize(Archive& ar, const unsigned int version)
-			//{
-			//	ar & m_Packed;
-			//	ar & m_U & m_V;
-			//}
 		};
 
 		struct Mesh
@@ -92,12 +79,6 @@ namespace _GEOM
 			//std::uint16_t			m_iSubMesh;			//Index of submesh
 			//std::uint16_t			m_nLODs{ 1 };		//Total number of LODs in mesh
 			//std::uint16_t			m_iLOD{ 1 };		//Index of LOD of mesh
-			//template<class Archive>
-			//void serialize(Archive& ar, const unsigned int version)
-			//{
-			//	ar & m_name;
-			//	//ar & m_nSubMeshes & m_iSubMesh & m_nLODs & m_iLOD;
-			//}
 		};
 
 		struct SubMesh
@@ -110,19 +91,7 @@ namespace _GEOM
 			std::uint16_t			m_iMaterial;		//Index of material in submesh
 			glm::vec3				m_PosCompressionOffset;
 			glm::vec2				m_UVCompressionOffset;
-
-			//template<class Archive>
-			//void serialize(Archive& ar, const unsigned int version)
-			//{
-			//	ar & m_nFaces & m_iIndices & m_nIndices & m_iVertices & m_nVertices & m_iMaterial;
-			//}
 		};
-
-		//Mesh * m_pMesh;						//Pointer to Mesh
-		//SubMesh* m_pSubMesh;					//Pointer to SubMesh
-		//VertexPos* m_pPos;					//Pointer to Position
-		//VertexExtra* m_pExtras;				//Pointer to Extras
-		//std::uint32_t* m_pIndices;			//Pointer to Indices
 
 	public:
 		std::shared_ptr<Mesh[]>				m_pMesh;		//Pointer to Mesh
@@ -141,23 +110,6 @@ namespace _GEOM
 
 		static bool SerializeGeom(const std::string& filename, const DescriptorData& Desc, Geom& GeomData) noexcept;
 		static bool DeserializeGeom(const std::string Filepath, Geom& GeomRef) noexcept;
-		//static bool SerializeGeom(const std::string Filepath, Geom& GeomData) noexcept;
-		//static bool DeserializeGeom(const std::string Filepath, Geom*& GeomRef) noexcept;
-
-	//private:
-	//	friend std::ostream& operator<<(std::ostream& os, const Geom& geom);
-	//	friend std::ostream& operator<<(std::ostream& os, const SubMesh& submesh);
-	//	friend std::ostream& operator<<(std::ostream& os, const Mesh& mesh);
-	//	friend std::ostream& operator<<(std::ostream& os, const VertexExtra& VE);
-	//	friend std::ostream& operator<<(std::ostream& os, const VertexPos& VP);
-	//	friend class boost::serialization::access;
-	//	template<class Archive>
-	//	void serialize(Archive& ar, const unsigned int version)
-	//	{
-	//		ar & m_pMesh & m_pSubMesh & m_pPos & m_pExtras & m_pIndices;
-	//		ar & m_nMeshes & m_nSubMeshes & m_nVertices & m_nExtras & m_nIndices;
-	//		//ar & m_PosCompressionScale & m_UVCompressionScale;
-	//	}
 	};
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -221,38 +173,6 @@ namespace Serialization
 	bool ReadVertexPos(std::ifstream& inFile, _GEOM::Geom& GeomData) noexcept;
 	bool ReadVertexExtra(std::ifstream& inFile, _GEOM::Geom& GeomData) noexcept;
 	bool ReadIndices(std::ifstream& inFile, _GEOM::Geom& GeomData) noexcept;
-
-	
-	//////////////////////////////////////////////////////////////////////////////////////////////////////
-	//template <typename T>
-	//bool DEBUGSerializeValue(std::ofstream& outFile, const T& value) noexcept;
-	//
-	//template <typename T>
-	//bool DEBUGDeserializeValue(std::ifstream& inFile, T& value) noexcept;
-	//
-	//template <typename T>
-	//bool SerializeValue(std::ofstream& outFile, const T& value) noexcept;
-	//
-	//template <typename T>
-	//bool DeserializeValue(std::ifstream& inFile, T& value) noexcept;
-	//
-	//template <typename T, std::size_t N>
-	//bool SerializeArray(std::ofstream& outFile, const std::array<T, N>& arr) noexcept;
-	//
-	//template <typename T, std::size_t N>
-	//bool DeserializeArray(std::ifstream& inFile, std::array<T, N>& arr) noexcept;
-	//
-	//bool SerializeVertexPos(std::ofstream& outFile, const _GEOM::Geom::VertexPos* const vertexPos, std::uint32_t length) noexcept;
-	//bool SerializeVertexExtra(std::ofstream& outFile, const _GEOM::Geom::VertexExtra* const vertexExtra, std::uint32_t length) noexcept;
-	//bool SerializeMesh(std::ofstream& outFile, const _GEOM::Geom::Mesh& const mesh) noexcept;
-	//bool SerializeIndices(std::ofstream& outFile, const std::uint32_t* const indices, std::uint32_t length) noexcept;
-	//bool SerializeSubMesh(std::ofstream& outFile, const _GEOM::Geom::SubMesh* const subMesh, std::uint32_t length) noexcept;
-	//
-	//bool DeserializeVertexExtra(std::ifstream& inFile, _GEOM::Geom& GeomData) noexcept;
-	//bool DeserializeIndices(std::ifstream& inFile, _GEOM::Geom& GeomData) noexcept;
-	//bool DeserializeVertexPos(std::ifstream& inFile, _GEOM::Geom& GeomData) noexcept;
-	//bool DeserializeMesh(std::ifstream& inFile, _GEOM::Geom& GeomData) noexcept;
-	//bool DeserializeSubMesh(std::ifstream& inFile, _GEOM::Geom& GeomData) noexcept;
 }
 
 std::ostream& operator<<(std::ostream& os, const glm::vec2& v);

@@ -92,8 +92,5 @@
     <ClCompile Include="..\lib\meshoptimizer\src\vfetchoptimizer.cpp">
       <Filter>Resource Files\meshoptimizer</Filter>
     </ClCompile>
-    <ClCompile Include="src\Serialization.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
 </Project>
