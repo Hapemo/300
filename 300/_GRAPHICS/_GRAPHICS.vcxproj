@@ -120,6 +120,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -137,6 +138,7 @@
     <ClCompile Include="..\lib\IMGUI\imgui_tables.cpp" />
     <ClCompile Include="..\lib\IMGUI\imgui_widgets.cpp" />
     <ClCompile Include="..\lib\IMGUI\misc\cpp\imgui_stdlib.cpp" />
+    <ClCompile Include="..\_GEOM_COMPILER\src\geom.cpp" />
     <ClCompile Include="demo\DemoScene.cpp" />
     <ClCompile Include="demo\ImGui.cpp" />
     <ClCompile Include="demo\main.cpp" />
@@ -146,6 +148,7 @@
     <ClCompile Include="source\Mesh.cpp" />
     <ClCompile Include="source\OpenGl.cpp" />
     <ClCompile Include="source\Random.cpp" />
+    <ClCompile Include="source\Renderer.cpp" />
     <ClCompile Include="source\Shader.cpp" />
     <ClCompile Include="source\Shapes.cpp" />
     <ClCompile Include="source\Vao.cpp" />
@@ -153,6 +156,7 @@
     <ClCompile Include="source\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\_GEOM_COMPILER\include\geom.h" />
     <ClInclude Include="demo\DemoScene.hpp" />
     <ClInclude Include="demo\ImGui.hpp" />
     <ClInclude Include="include\Common.hpp" />
@@ -162,11 +166,16 @@
     <ClInclude Include="source\Mesh.hpp" />
     <ClInclude Include="source\OpenGl.hpp" />
     <ClInclude Include="source\Random.hpp" />
+    <ClInclude Include="source\Renderer.hpp" />
     <ClInclude Include="source\Shader.hpp" />
     <ClInclude Include="source\Shapes.hpp" />
     <ClInclude Include="source\Vao.hpp" />
     <ClInclude Include="source\Vbo.hpp" />
     <ClInclude Include="source\Window.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shader_files\draw_frag.glsl" />
+    <None Include="shader_files\draw_vert.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

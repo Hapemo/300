@@ -19,6 +19,9 @@
     <Filter Include="ImGui">
       <UniqueIdentifier>{1088410d-20ba-4d59-be82-8d317cc405a9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{2f276e93-189c-4ff8-8bbf-c4d43895d99d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Math.cpp">
@@ -87,6 +90,12 @@
     <ClCompile Include="source\Mesh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\Renderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_GEOM_COMPILER\src\geom.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Math.hpp">
@@ -131,5 +140,19 @@
     <ClInclude Include="source\Mesh.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="source\Renderer.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_GEOM_COMPILER\include\geom.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shader_files\draw_frag.glsl">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shader_files\draw_vert.glsl">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

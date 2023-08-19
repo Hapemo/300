@@ -4,6 +4,7 @@
 #define _GEOM_H
 
 #include <glm/glm.hpp>
+
 #include <array>
 #include <string>
 #include <vector>
@@ -45,7 +46,6 @@ namespace _GEOM
 
 	struct Geom
 	{
-
 		struct alignas(std::uint32_t) VertexPos
 		{
 			std::int16_t    m_QPosition_X		// All these go together they are represented by

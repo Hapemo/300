@@ -74,6 +74,20 @@ void GFX::DemoScene::Initialize()
 
     if (!ImGui_ImplOpenGL3_Init("#version 150"))
         throw std::runtime_error("Could not initialize ImGui::OpenGL (2)");
+
+    _GEOM::Geom GeomData;
+    Mesh skullmesh;
+    std::vector<glm::vec3> positions;
+    std::vector<unsigned short> indices;
+
+    // Deserialize Geom and load mesh
+    Deserialization::DeserializeGeom("../compiled_geom/Skull_textured.geom", GeomData);
+    skullmesh.LoadFromGeom(GeomData, positions, indices);
+    skullmesh.Setup(positions, indices);
+    mSceneMeshes["skullmesh"] = skullmesh;
+
+    // Setup shader
+    mModelShader.CreateShaderFromFiles("./shader_files/draw_vert.glsl", "./shader_files/draw_frag.glsl");
 }
 
 /**---------------------------------------------------------------------------/
@@ -166,6 +180,35 @@ void GFX::DemoScene::Draw()
 
         // Clears buffer
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        //!< test rendering skull model
+        
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        mModelShader.Activate();
+        Mesh& currentmesh = mSceneMeshes["skullmesh"];
+        currentmesh.BindVao();
+        currentmesh.PrepForDraw();
+
+        glUniformMatrix4fv(mModelShader.GetUniformVP(), 1, GL_FALSE, &mCamera.viewProj()[0][0]);            // camera projection
+
+        GLuint pds = glGetUniformLocation(mModelShader.GetHandle(), "posDecompressionScale");
+        glUniform3fv(pds, 1, glm::value_ptr(currentmesh.m_PosCompressionScale));
+
+        GLuint pdo = glGetUniformLocation(mModelShader.GetHandle(), "posDecompressionOffset");
+        glUniform3fv(pdo, 1, glm::value_ptr(currentmesh.m_PosCompressionScale));
+
+        GLuint uvs = glGetUniformLocation(mModelShader.GetHandle(), "uvDecompressionScale");
+        glUniform2fv(uvs, 1, glm::value_ptr(currentmesh.m_UVCompressionScale));
+
+        GLuint uvo = glGetUniformLocation(mModelShader.GetHandle(), "uvDecompressionOffset");
+        glUniform2fv(uvo, 1, glm::value_ptr(currentmesh.m_UVCompressionOffset));
+
+        glDrawElementsInstanced(GL_TRIANGLES, currentmesh.GetIndexCount(), GL_UNSIGNED_SHORT, nullptr, currentmesh.mLTW.size());
+
+        mModelShader.Deactivate();
+        currentmesh.UnbindVao();
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        //! 
 
         mRenderer->AddAabb({ 0, 0, -50 }, { 100, 300, 100 }, { 1, 0, 0, 1 });
         //mRenderer->AddPoint({ 0, 0, 0 }, { 1, 0, 0, 1 });

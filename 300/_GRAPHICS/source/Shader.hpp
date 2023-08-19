@@ -29,6 +29,7 @@ namespace GFX
         void Deactivate() const;
 
         // -- Getter --
+        uint32_t GetHandle() const { return mShaderProgram; }
         int32_t GetUniformVP() const { return mUniformVp; }
         int32_t GetUniformM2W() const { return mUniformM2W; }
         int32_t GetUniformColor() const { return mUniformColor; }

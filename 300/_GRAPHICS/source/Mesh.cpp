@@ -7,6 +7,31 @@
 	location = 2 --> LTW;
 ******************************************/
 
+void GFX::Mesh::LoadFromGeom(const _GEOM::Geom& GeomData, std::vector<vec3>& positions, std::vector<unsigned short>& indices)
+{
+	m_PosCompressionScale = GeomData.m_PosCompressionScale;
+	m_PosCompressionOffset = GeomData.m_pSubMesh[0].m_PosCompressionOffset;		// taking just the first submesh's POS compression
+	
+	m_UVCompressionScale = GeomData.m_UVCompressionScale;
+	m_UVCompressionOffset = GeomData.m_pSubMesh[0].m_UVCompressionOffset;		// taking just the first submesh's UV compression
+
+	for (size_t iSM{}; iSM < GeomData.m_nSubMeshes; ++iSM)
+	{
+		// Load indices
+		for (size_t iIndex{}, ui{ GeomData.m_pSubMesh[iSM].m_iIndices }; iIndex < GeomData.m_pSubMesh[iSM].m_nIndices; ++iIndex, ++ui)
+		{
+			indices.emplace_back(GeomData.m_pIndices[ui]);
+		}
+
+		// Load positions
+		for (size_t iPos{}, up{ GeomData.m_pSubMesh[iSM].m_iVertices }; iPos < GeomData.m_pSubMesh[iSM].m_nVertices; ++iPos, ++up)
+		{
+			positions.emplace_back(vec3(GeomData.m_pPos[up].m_QPosition_X, GeomData.m_pPos[up].m_QPosition_Y, GeomData.m_pPos[up].m_QPosition_Z));
+		}
+	}
+}
+
+
 void GFX::Mesh::Setup(std::vector<vec3> const& positions, std::vector<unsigned short> const& indices)
 {
 	// Create VAO
@@ -82,4 +107,235 @@ void GFX::Mesh::Destroy()
 	mEbo.Destroy();
 	mLTWVbo.Destroy();
 	mColorVbo.Destroy();
+}
+
+
+namespace Deserialization
+{
+	bool DeserializeGeom(const std::string Filepath, _GEOM::Geom& GeomData) noexcept
+	{
+		std::ifstream infile("../compiled_geom/Skull_textured.geom");
+		assert(infile.is_open());
+
+		Serialization::ReadUnsigned(infile, GeomData.m_nMeshes);
+		Serialization::ReadUnsigned(infile, GeomData.m_nSubMeshes);
+		Serialization::ReadUnsigned(infile, GeomData.m_nVertices);
+		Serialization::ReadUnsigned(infile, GeomData.m_nExtras);
+		Serialization::ReadUnsigned(infile, GeomData.m_nIndices);
+
+		Serialization::ReadVec3WithHeader(infile, GeomData.m_PosCompressionScale);
+		Serialization::ReadVec2WithHeader(infile, GeomData.m_UVCompressionScale);
+
+		Serialization::ReadMesh(infile, GeomData);
+		Serialization::ReadSubMesh(infile, GeomData);
+		Serialization::ReadVertexPos(infile, GeomData);
+		Serialization::ReadVertexExtra(infile, GeomData);
+		Serialization::ReadIndices(infile, GeomData);
+
+		return true;
+	}
+
+	// ====================================================================================================
+//										NEW DESERIALIZATION CODE BLOCK
+// ====================================================================================================
+	bool ReadIndices(std::ifstream& inFile, _GEOM::Geom& GeomData) noexcept
+	{
+		ReadUnsigned(inFile, GeomData.m_nIndices);
+		std::unique_ptr<std::uint32_t[]> indices = std::make_unique<std::uint32_t[]>(GeomData.m_nIndices);
+
+		std::string IndexStr;
+		std::getline(inFile, IndexStr);
+		std::stringstream Stream(IndexStr);
+
+		for (unsigned i{}; i < GeomData.m_nIndices; ++i)
+		{
+			Stream >> indices[i];
+		}
+
+		GeomData.m_pIndices = std::move(indices);
+		return true;
+	}
+
+
+	bool ReadVertexExtra(std::ifstream& inFile, _GEOM::Geom& GeomData) noexcept
+	{
+		ReadUnsigned(inFile, GeomData.m_nExtras);
+		std::unique_ptr<_GEOM::Geom::VertexExtra[]> extras = std::make_unique<_GEOM::Geom::VertexExtra[]>(GeomData.m_nExtras);
+
+		for (unsigned i{}; i < GeomData.m_nExtras; ++i)
+		{
+			std::string VertexExtraStr;
+			std::getline(inFile, VertexExtraStr);
+			std::stringstream Stream(VertexExtraStr);
+
+			Stream >> extras[i].m_Packed;
+			Stream >> extras[i].m_U;
+			Stream >> extras[i].m_V;
+		}
+
+		GeomData.m_pExtras = std::move(extras);
+		return true;
+	}
+
+
+	bool ReadVertexPos(std::ifstream& inFile, _GEOM::Geom& GeomData) noexcept
+	{
+		ReadUnsigned(inFile, GeomData.m_nVertices);
+		std::unique_ptr<_GEOM::Geom::VertexPos[]> pos = std::make_unique<_GEOM::Geom::VertexPos[]>(GeomData.m_nVertices);
+
+		for (unsigned i{}; i < GeomData.m_nVertices; ++i)
+		{
+			std::string VertexPosStr;
+			std::getline(inFile, VertexPosStr);
+			std::stringstream Stream(VertexPosStr);
+
+			Stream >> pos[i].m_QPosition_X;
+			Stream >> pos[i].m_QPosition_Y;
+			Stream >> pos[i].m_QPosition_Z;
+			Stream >> pos[i].m_QPosition_QNormalX;
+		}
+
+		GeomData.m_pPos = std::move(pos);
+		return true;
+	}
+
+
+	bool ReadSubMesh(std::ifstream& inFile, _GEOM::Geom& GeomData) noexcept
+	{
+		ReadUnsigned(inFile, GeomData.m_nSubMeshes);
+		std::unique_ptr<_GEOM::Geom::SubMesh[]> subMesh = std::make_unique<_GEOM::Geom::SubMesh[]>(GeomData.m_nSubMeshes);
+
+		char ch;
+		for (unsigned i{}; i < GeomData.m_nSubMeshes; ++i)
+		{
+			std::string SubMeshStr;
+			std::getline(inFile, SubMeshStr);
+			std::stringstream Stream(SubMeshStr);
+
+			Stream >> subMesh[i].m_nFaces;
+			Stream >> subMesh[i].m_iIndices;
+			Stream >> subMesh[i].m_nIndices;
+			Stream >> subMesh[i].m_iVertices;
+			Stream >> subMesh[i].m_nVertices;
+			Stream >> subMesh[i].m_iMaterial;
+
+			Stream >> ch >> subMesh[i].m_PosCompressionOffset.x >> ch >> subMesh[i].m_PosCompressionOffset.y >> ch >> subMesh[i].m_PosCompressionOffset.z >> ch;
+			Stream >> ch >> subMesh[i].m_UVCompressionOffset.x >> ch >> subMesh[i].m_UVCompressionOffset.y >> ch;
+		}
+
+		GeomData.m_pSubMesh = std::move(subMesh);
+		return true;
+	}
+
+
+	bool ReadMesh(std::ifstream& inFile, _GEOM::Geom& GeomData) noexcept
+	{
+		ReadUnsigned(inFile, GeomData.m_nMeshes);
+		std::unique_ptr<_GEOM::Geom::Mesh[]> uMesh = std::make_unique<_GEOM::Geom::Mesh[]>(GeomData.m_nMeshes);
+
+		std::string MeshStr;
+		std::getline(inFile, MeshStr);
+		std::istringstream Stream(MeshStr);
+
+		for (unsigned i{}; i < GeomData.m_nMeshes; ++i)
+		{
+			std::string NameBuffer;
+			Stream >> NameBuffer;
+
+			// if the next line starts with another serialization, means that this mesh has no name to deserialize
+			if (NameBuffer == "DEFAULT,")
+				continue;
+
+			for (unsigned j{}; j < NameBuffer.size(); ++j)
+			{
+				uMesh[i].m_name[j] = NameBuffer[j];
+			}
+		}
+
+		GeomData.m_pMesh = std::move(uMesh);
+		return true;
+	}
+
+
+	bool ReadUnsigned(std::ifstream& inFile, std::uint32_t& value) noexcept
+	{
+		std::string line;
+		std::getline(inFile, line);
+
+		size_t colonPos = line.find(':');
+		assert(colonPos != std::string::npos);
+
+		std::string unsignedStr = line.substr(colonPos + 1);
+		std::istringstream(unsignedStr) >> value;
+
+		if (unsignedStr.empty() && unsignedStr.substr(1).empty()) {
+			std::cout << "[ERROR]>> Failed to Read unsigned value\n";
+			return false;
+		}
+
+		return true;
+	}
+
+
+	bool ReadSigned(std::ifstream& inFile, std::int16_t& value) noexcept
+	{
+		std::string line;
+		std::getline(inFile, line);
+
+		size_t colonPos = line.find(':');
+		assert(colonPos != std::string::npos);
+
+		std::string signedStr = line.substr(colonPos + 1);
+		std::istringstream(signedStr) >> value;
+
+		if (signedStr.empty() && signedStr.substr(1).empty()) {
+			std::cout << "[ERROR]>> Failed to Read unsigned value\n";
+			return false;
+		}
+
+		return true;
+	}
+
+
+	bool ReadVec3WithHeader(std::ifstream& inFile, glm::vec3& value) noexcept
+	{
+		std::string line;
+		char ch;
+		std::getline(inFile, line);
+
+		size_t colonPos = line.find(':');
+		assert(colonPos != std::string::npos);
+
+		std::string VecStr = line.substr(colonPos + 1);
+		std::istringstream Stream(VecStr);
+
+		for (int i{}; i < 3; ++i) {
+			Stream >> ch;
+			Stream >> value[i];
+		}
+
+		return true;	// no errors
+	}
+
+
+	bool ReadVec2WithHeader(std::ifstream& inFile, glm::vec2& value) noexcept
+	{
+		std::string line;
+		char ch;
+		std::getline(inFile, line);
+
+		size_t colonPos = line.find(':');
+		assert(colonPos != std::string::npos);
+
+		std::string VecStr = line.substr(colonPos + 1);
+		std::istringstream Stream(VecStr);
+
+		for (int i{}; i < 2; ++i) {
+			Stream >> ch;
+			Stream >> value[i];
+		}
+
+		return true;	// no errors
+	}
+
 }

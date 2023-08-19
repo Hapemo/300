@@ -3,13 +3,12 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <IncludePath>$(SolutionDir)_GEOM_COMPILER\include;$(ProjectDir)source;$(ProjectDir)include;$(SolutionDir)lib\GLFW\include\GLFW;$(SolutionDir)lib\GLFW\include;$(SolutionDir)lib\GLEW\include\GL;$(SolutionDir)lib\GLM;$(SolutionDir)lib\IMGUI;$(SolutionDir)lib\IMGUI\backends;$(SolutionDir)lib\IMGUI\misc\cpp;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)source;$(ProjectDir)include;$(SolutionDir)lib\GLFW\include\GLFW;$(SolutionDir)lib\GLFW\include;$(SolutionDir)lib\GLEW\include\GL;$(SolutionDir)lib\GLM;$(SolutionDir)lib\IMGUI;$(SolutionDir)lib\IMGUI\backends;$(SolutionDir)lib\IMGUI\misc\cpp;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)lib\GLEW\lib\Release\x64;$(SolutionDir)lib\GLFW\lib-vc2022;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)_GEOM_COMPILER\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies>glew32.lib;opengl32.lib;glfw3dll.lib;%(AdditionalDependencies)</AdditionalDependencies>
