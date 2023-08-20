@@ -35,8 +35,6 @@ namespace _GEOM
 			std::vector<Geom::VertexExtra>	m_Extra;
 			std::vector<uint32_t>			m_Indices;
 			int						        m_iMaterialInstance;
-			glm::vec3						m_PosCompressionOffset;
-			glm::vec2						m_UVCompressionOffset;
 		};
 
 	public:

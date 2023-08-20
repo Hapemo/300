@@ -6,6 +6,7 @@
 #include <iostream>
 #include <functional>
 #include <fstream>
+#include <iomanip>
 
 #pragma comment( lib, "../lib/assimp/BINARIES/Win32/lib/Release/assimp-vc142-mt.lib")
 
@@ -423,8 +424,6 @@ namespace _GEOM
 			SubMesh.m_Extra = E.m_Extra;
 			SubMesh.m_Indices = E.m_Indices;
 			SubMesh.m_iMaterial = E.m_iMaterialInstance;
-			SubMesh.m_PosCompressionOffset = E.m_PosCompressionOffset;
-			SubMesh.m_UVCompressionOffset = E.m_UVCompressionOffset;
 		}
 	}
 
@@ -506,14 +505,6 @@ namespace _GEOM
 					GLOBAL_PosBBox.AddVerts(&Pos_Span, 1);
 					GLOBAL_UVBBox.AddVerts(&UV_Span, 1);
 				}
-
-				// OFFSET STORAGE //
-				{
-					// this compression offset is getting updated for each submesh
-					auto& RenderSubmesh = CompressedMeshParts[iSubmesh++];
-					RenderSubmesh.m_PosCompressionOffset = PosBBox.getCenter();										
-					RenderSubmesh.m_UVCompressionOffset = glm::vec2(UVBBox.getCenter().x, UVBBox.getCenter().y);	
-				}
 			}
 		}
 
@@ -536,99 +527,50 @@ namespace _GEOM
 				// For each vertex inside the submesh...
 				for (const auto& V : submesh.m_Vertices)
 				{
-					// == QUANTIZE NORMAL, TANGENT, BITANGENT (SIGN) AND UV COORDINATES //
+					// == NORMAL, TANGENT, BITANGENT (SIGN) AND UV COORDINATES //
 					{
 						Geom::VertexExtra VE;
-						float f;
-
-						// Quantize the Y component of the normal
-						VE.m_QNormalY = static_cast<std::int16_t>(V.m_fNormal.y * (V.m_fNormal.y >= 0 ? 0x1FF : 0x200));
-
+						
+						VE.m_Normal.x = V.m_Normal.x;
+						VE.m_Normal.y = V.m_Normal.y;
+						VE.m_Normal.z = V.m_Normal.z;
+						
 						// Quantize the X and Y components of the tangent
-						VE.m_QTangentX = static_cast<std::int16_t>(V.m_fTangent.x * (V.m_fTangent.x >= 0 ? 0x1FF : 0x200));
-						VE.m_QTangentY = static_cast<std::int16_t>(V.m_fTangent.y * (V.m_fTangent.y >= 0 ? 0x1FF : 0x200));
-
-						// Store the tangent z sign here so it will be [-1 || 1]
-						VE.m_QAlpha = V.m_fTangent.z >= 0 ? 0x1 : 0x3;
-
-						// == Compress the UVs == //
-
-						// Convert the U texture coordinate to [-1, 1], and scale to a 16-bit signed integer
-						f = (V.m_Texcoord.x - RenderSubmesh.m_UVCompressionOffset.x) / m_UVCompressionScale.x;
-						VE.m_U = static_cast<std::int16_t>(f >= 0 ? f * 0x7FFF : f * 0x8000);
-
-						// Convert the V texture coordinate to [-1, 1], and scale to a 16-bit signed integer
-						f = (V.m_Texcoord.y - RenderSubmesh.m_UVCompressionOffset.y) / m_UVCompressionScale.y;
-						VE.m_V = static_cast<std::int16_t>(f >= 0 ? f * 0x7FFF : f * 0x8000);
+						VE.m_Tangent.x = V.m_fTangent.x;
+						VE.m_Tangent.y = V.m_fTangent.y;
+						VE.m_Tangent.z = V.m_fTangent.z;
 
 						// Add the compressed vertex to the container
 						VEContainer.push_back(VE);
 					}
 					
-					// == QUANTIZE VERTEX POSITION COORDINATES //
+					// == VERTEX POSITION COORDINATES //
 					{
 						Geom::VertexPos VP;
+						
+						VP.pos[0] = V.m_Position.x;
+						VP.pos[1] = V.m_Position.y;
+						VP.pos[2] = V.m_Position.z;	
 
-						float f;
+						VP.m_UV[0] = V.m_Texcoord.x;
+						VP.m_UV[1] = V.m_Texcoord.y;
 
-						// Quantize the X, Y, and Z components of the position to fit within a 16-bit signed integer
-						f = (V.m_Position.x - RenderSubmesh.m_PosCompressionOffset.x) / m_PosCompressionScale.x;
-						assert(f >= -1 && f <= 1);
-						//VP.m_QPosition_X = static_cast<std::int16_t>(f >= 0 ? f * 0x7FFF : f * 0x8000);
-						VP.pos[0] = V.m_Position.x;	// rich
-
-						f = (V.m_Position.y - RenderSubmesh.m_PosCompressionOffset.y) / m_PosCompressionScale.y;
-						assert(f >= -1 && f <= 1);
-						//VP.m_QPosition_Y = static_cast<std::int16_t>(f >= 0 ? f * 0x7FFF : f * 0x8000);
-						VP.pos[1]  = V.m_Position.y;	// rich
-
-						f = (V.m_Position.z - RenderSubmesh.m_PosCompressionOffset.z) / m_PosCompressionScale.z;
-						assert(f >= -1 && f <= 1);
-						//VP.m_QPosition_Z = static_cast<std::int16_t>(f >= 0 ? f * 0x7FFF : f * 0x8000);
-						VP.pos[2] = V.m_Position.z;	// rich
-
-						// Store the Normal.X and some bits in the W part... 
-						// Now we must convert the normal to 14 bits... (we reserve the last 2 bit for something else...)
-						std::int16_t Nx = std::min((short)0x3FFF, static_cast<std::int16_t>(((V.m_fNormal.x + 1) / 2.0f) * 0x3FFF));
-
-						// Store the sign bit of Normal.Z in the last bit of the normal
-						// If NX is zero we will steal a little bit of precision to insert the negative sign...
-						if (V.m_fNormal.z < 0)
-						{
-							if (Nx == 0)
-							{
-								Nx = -1;
-							}
-							else
-							{
-								Nx = -Nx;
-							}
-						}
-
-						// We are also going to store the bitangent sign bit in bit 14
-						if (V.m_Normal.a == 128)
-						{
-							if (Nx < 0)  Nx = -((1 << 14) | (-Nx));
-							else         Nx |= (1 << 14);
-						}
-
-						// Store the quantized normal X component with extra information in VPContainer
-						//VP.m_QPosition_QNormalX = Nx;
 						VPContainer.push_back(VP);
 					}
 				}
+
 				RenderSubmesh.m_Pos = VPContainer;
-				RenderSubmesh.m_Extra = VEContainer;
+				RenderSubmesh.m_Extra = VEContainer;		// TEST. remove later!!
 			}
 		}
 
 		//Copy other data into the compressed mesh parts
 		for (int i = 0; i < _MyNodes.size(); ++i)
 		{
-			CompressedMeshParts[i].m_iMaterialInstance = _MyNodes[i].m_iMaterialInstance;
-			CompressedMeshParts[i].m_Indices = _MyNodes[i].m_Indices;			//might have to quantize this also
-			CompressedMeshParts[i].m_MeshName = _MyNodes[i].m_MeshName;
-			CompressedMeshParts[i].m_Name = _MyNodes[i].m_Name;
+			CompressedMeshParts[i].m_iMaterialInstance	= _MyNodes[i].m_iMaterialInstance;
+			CompressedMeshParts[i].m_Indices			= _MyNodes[i].m_Indices;			
+			CompressedMeshParts[i].m_MeshName			= _MyNodes[i].m_MeshName;
+			CompressedMeshParts[i].m_Name				= _MyNodes[i].m_Name;
 		}
 
 		return CompressedMeshParts;
@@ -655,27 +597,25 @@ namespace _GEOM
 			}
 		}
 
-		//Allocate memory
-		auto uMesh = std::make_unique<Geom::Mesh[]>(totalMeshes);
-		auto uSubMesh = std::make_unique<Geom::SubMesh[]>(totalSubMeshes);
-		auto uPos = std::make_unique<Geom::VertexPos[]>(totalVertices);
-		auto uExtras = std::make_unique<Geom::VertexExtra[]>(totalExtras);
-		auto uIndices = std::make_unique<std::uint32_t[]>(totalIndices);
+		// Allocate memory
+		auto uMesh		= std::make_unique<Geom::Mesh[]>(totalMeshes);
+		auto uSubMesh	= std::make_unique<Geom::SubMesh[]>(totalSubMeshes);
+		auto uPos		= std::make_unique<Geom::VertexPos[]>(totalVertices);
+		auto uExtras	= std::make_unique<Geom::VertexExtra[]>(totalExtras);
+		auto uIndices	= std::make_unique<std::uint32_t[]>(totalIndices);
 
-		auto Mesh = std::span{ uMesh.get(), static_cast<std::size_t>(totalMeshes) };
-		auto SubMesh = std::span{ uSubMesh.get(), static_cast<std::size_t>(totalSubMeshes) };
-		auto Pos = std::span{ uPos.get(), static_cast<std::size_t>(totalVertices) };
-		auto Extras = std::span{ uExtras.get(), static_cast<std::size_t>(totalExtras) };
-		auto Indices = std::span{ uIndices.get(), static_cast<std::size_t>(totalIndices) };
+		auto Mesh		= std::span{ uMesh.get(), static_cast<std::size_t>(totalMeshes) };
+		auto SubMesh	= std::span{ uSubMesh.get(), static_cast<std::size_t>(totalSubMeshes) };
+		auto Pos		= std::span{ uPos.get(), static_cast<std::size_t>(totalVertices) };
+		auto Extras		= std::span{ uExtras.get(), static_cast<std::size_t>(totalExtras) };
+		auto Indices	= std::span{ uIndices.get(), static_cast<std::size_t>(totalIndices) };
 
-		//Start copying data in
-		_geom.m_nMeshes = (std::uint32_t)totalMeshes;
-		_geom.m_nSubMeshes = (std::uint32_t)totalSubMeshes;
-		_geom.m_nVertices = (std::uint32_t)totalVertices;
-		_geom.m_nExtras = (std::uint32_t)totalExtras;
-		_geom.m_nIndices = (std::uint32_t)totalIndices;
-		_geom.m_PosCompressionScale = posScaleDecompress;
-		_geom.m_UVCompressionScale = UVScaleDecompress;
+		// Start copying data in
+		_geom.m_nMeshes		= (std::uint32_t)totalMeshes;
+		_geom.m_nSubMeshes	= (std::uint32_t)totalSubMeshes;
+		_geom.m_nVertices	= (std::uint32_t)totalVertices;
+		_geom.m_nExtras		= (std::uint32_t)totalExtras;
+		_geom.m_nIndices	= (std::uint32_t)totalIndices;
 
 		std::size_t iVertex = 0, iIndices = 0, iExtra = 0;
 		for (std::size_t i = 0; i < totalMeshes; ++i)
@@ -690,8 +630,6 @@ namespace _GEOM
 				SubMesh[j].m_iIndices = (std::uint32_t)iIndices;
 				SubMesh[j].m_iVertices = (std::uint32_t)iVertex;
 				SubMesh[j].m_iMaterial = (std::uint16_t)m_Meshes[i].m_Submeshes[j].m_iMaterial;
-				SubMesh[j].m_PosCompressionOffset = m_Meshes[i].m_Submeshes[j].m_PosCompressionOffset;
-				SubMesh[j].m_UVCompressionOffset = m_Meshes[i].m_Submeshes[j].m_UVCompressionOffset;
 
 				std::size_t vertSize = m_Meshes[i].m_Submeshes[j].m_Pos.size();
 				std::size_t extraSize = m_Meshes[i].m_Submeshes[j].m_Extra.size();
@@ -703,12 +641,10 @@ namespace _GEOM
 				{
 					for (const auto& _pos : submesh.m_Pos)
 					{
-						auto& pos = Pos[iVertex++];
+						auto& savepos = Pos[iVertex++];
 
-						pos.pos[0] = _pos.pos[0];
-						pos.pos[1] = _pos.pos[1];
-						pos.pos[2] = _pos.pos[2];
-						//pos.m_QPosition_QNormalX = _pos.m_QPosition_QNormalX;
+						savepos.pos  = _pos.pos;
+						savepos.m_UV = _pos.m_UV;
 					}
 				}
 
@@ -716,11 +652,10 @@ namespace _GEOM
 				{
 					for (const auto& _extra : submesh.m_Extra)
 					{
-						auto& extra = Extras[iExtra++];
-
-						extra.m_Packed = _extra.m_Packed;
-						extra.m_U = _extra.m_U;
-						extra.m_V = _extra.m_V;
+						auto& saveextra = Extras[iExtra++];
+						
+						saveextra.m_Normal = _extra.m_Normal;
+						saveextra.m_Tangent = _extra.m_Tangent;
 					}
 				}
 
@@ -728,14 +663,14 @@ namespace _GEOM
 				{
 					for (const auto& _indices : submesh.m_Indices)
 					{
-						auto& indice = Indices[iIndices++];
+						auto& saveindice = Indices[iIndices++];
 
-						indice = _indices;
+						saveindice = _indices;
 					}
 				}
 
 				SubMesh[j].m_nVertices = (std::uint32_t)vertSize;
-				SubMesh[j].m_nIndices = (std::uint32_t)indexSize;
+				SubMesh[j].m_nIndices  = (std::uint32_t)indexSize;
 			}
 		}
 
@@ -753,6 +688,8 @@ namespace _GEOM
 		std::ofstream outfile(filepath.c_str());
 		assert(outfile.is_open());
 
+		outfile << std::fixed << std::setprecision(3);	// set precision to 3 decimal places
+
 		outfile << "[Number of Meshes]: ";
 		Serialization::SerializeUnsigned(outfile, GeomData.m_nMeshes);
 
@@ -762,17 +699,11 @@ namespace _GEOM
 		outfile << std::endl << "[Number of Vertices]: ";
 		Serialization::SerializeUnsigned(outfile, GeomData.m_nVertices);
 
-		outfile << std::endl << "[Number of Extras]: ";
+		outfile << std::endl << "[Number of Extras]: ";			
 		Serialization::SerializeUnsigned(outfile, GeomData.m_nExtras);
 
 		outfile << std::endl << "[Number of Indices]: ";
 		Serialization::SerializeUnsigned(outfile, GeomData.m_nIndices);
-
-		outfile << std::endl << "[Pos Compression Scale]: ";
-		Serialization::SerializeVec3(outfile, GeomData.m_PosCompressionScale);
-
-		outfile << std::endl << "[UV Compression Scale]: ";
-		Serialization::SerializeVec2(outfile, GeomData.m_UVCompressionScale);
 
 		outfile << std::endl << "[Meshes]: ";
 		Serialization::SerializeUnsigned(outfile, GeomData.m_nMeshes);
@@ -786,9 +717,9 @@ namespace _GEOM
 		Serialization::SerializeUnsigned(outfile, GeomData.m_nVertices);
 		Serialization::SerializeVertexPos(outfile, GeomData);
 
-		outfile << std::endl << "[Vertex Extras]: ";
-		Serialization::SerializeUnsigned(outfile, GeomData.m_nExtras);
-		Serialization::SerializeVertexExtra(outfile, GeomData);
+		//outfile << std::endl << "[Vertex Extras]: ";						// == We dont need these data for now ==	
+		//Serialization::SerializeUnsigned(outfile, GeomData.m_nExtras);
+		//Serialization::SerializeVertexExtra(outfile, GeomData);
 
 		outfile << std::endl << "[Indices]: ";
 		Serialization::SerializeUnsigned(outfile, GeomData.m_nIndices);
@@ -800,26 +731,23 @@ namespace _GEOM
 	}
 
 
-	bool DeserializeGeom(const std::string Filepath, Geom& GeomData) noexcept
-	{
-		std::ifstream infile("../compiled_geom/Skull_textured.geom");
-		assert(infile.is_open());
+	//bool DeserializeGeom(const std::string Filepath, Geom& GeomData) noexcept
+	//{
+	//	std::ifstream infile("../compiled_geom/Skull_textured.geom");
+	//	assert(infile.is_open());
 
-		Serialization::ReadUnsigned(infile, GeomData.m_nMeshes);
-		Serialization::ReadUnsigned(infile, GeomData.m_nSubMeshes);
-		Serialization::ReadUnsigned(infile, GeomData.m_nVertices);
-		Serialization::ReadUnsigned(infile, GeomData.m_nExtras);
-		Serialization::ReadUnsigned(infile, GeomData.m_nIndices);
+	//	Serialization::ReadUnsigned(infile, GeomData.m_nMeshes);
+	//	Serialization::ReadUnsigned(infile, GeomData.m_nSubMeshes);
+	//	Serialization::ReadUnsigned(infile, GeomData.m_nVertices);
+	//	Serialization::ReadUnsigned(infile, GeomData.m_nExtras);
+	//	Serialization::ReadUnsigned(infile, GeomData.m_nIndices);
 
-		Serialization::ReadVec3WithHeader(infile, GeomData.m_PosCompressionScale);
-		Serialization::ReadVec2WithHeader(infile, GeomData.m_UVCompressionScale);
+	//	Serialization::ReadMesh(infile, GeomData);
+	//	Serialization::ReadSubMesh(infile, GeomData);
+	//	Serialization::ReadVertexPos(infile, GeomData);
+	//	//Serialization::ReadVertexExtra(infile, GeomData);					// == We dont need these data for now ==	
+	//	Serialization::ReadIndices(infile, GeomData);
 
-		Serialization::ReadMesh(infile, GeomData);
-		Serialization::ReadSubMesh(infile, GeomData);
-		Serialization::ReadVertexPos(infile, GeomData);
-		Serialization::ReadVertexExtra(infile, GeomData);
-		Serialization::ReadIndices(infile, GeomData);
-
-		return true;
-	}
+	//	return true;
+	//}
 }

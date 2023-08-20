@@ -96,7 +96,6 @@ void GFX::DemoScene::Initialize()
 
     currentmesh.Setup(currentmesh.mPositions, currentmesh.mIndices);
 
-
     // Setup shader
     mModelShader.CreateShaderFromFiles("./shader_files/draw_vert.glsl", "./shader_files/draw_frag.glsl");
 }
@@ -208,18 +207,6 @@ void GFX::DemoScene::Draw()
 
 
         glUniformMatrix4fv(mModelShader.GetUniformVP(), 1, GL_FALSE, &mCamera.viewProj()[0][0]);            // camera projection
-
-        GLuint pds = glGetUniformLocation(mModelShader.GetHandle(), "posDecompressionScale");
-        glUniform3fv(pds, 1, glm::value_ptr(currentmesh.m_PosCompressionScale));
-
-        GLuint pdo = glGetUniformLocation(mModelShader.GetHandle(), "posDecompressionOffset");
-        glUniform3fv(pdo, 1, glm::value_ptr(currentmesh.m_PosCompressionOffset));
-
-        GLuint uvs = glGetUniformLocation(mModelShader.GetHandle(), "uvDecompressionScale");
-        glUniform2fv(uvs, 1, glm::value_ptr(currentmesh.m_UVCompressionScale));
-
-        GLuint uvo = glGetUniformLocation(mModelShader.GetHandle(), "uvDecompressionOffset");
-        glUniform2fv(uvo, 1, glm::value_ptr(currentmesh.m_UVCompressionOffset));
 
         glDrawElementsInstanced(GL_TRIANGLES, currentmesh.GetIndexCount(), GL_UNSIGNED_INT, nullptr, currentmesh.mLTW.size());
 

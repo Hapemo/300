@@ -8,10 +8,6 @@ layout (location = 0) in vec3 inQPos;		        // INPUT_POSITION
 layout (location = 1) in vec4 inVertexColor;        // input color
 layout (location = 2) in mat4 inLTW;			    // local to world
 
-uniform vec3 posDecompressionScale;
-uniform vec3 posDecompressionOffset;
-uniform vec2 uvDecompressionScale;
-uniform vec2 uvDecompressionOffset;
 uniform mat4 uMatrixVP;
 
 out vec4 VertexColor;    
@@ -22,7 +18,6 @@ void main()
     mat3 Rot                    = mat3(inLTW);
 
 	 // Decompress Position
-    //vec4 Pos = vec4( posDecompressionScale * inQPos.xyz + posDecompressionOffset, 1.0f);
     vec4 Pos = vec4(inQPos.xyz, 1.0f);
 
     // Decompress UVs

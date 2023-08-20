@@ -48,30 +48,14 @@ namespace _GEOM
 	{
 		struct alignas(std::uint32_t) VertexPos
 		{
-			//std::int16_t    m_QPosition_X		// All these go together they are represented by
-			//	, m_QPosition_Y					// SINT16_4D_NORMALIZED
-			//	, m_QPosition_Z					//
-			//	, m_QPosition_QNormalX;			// The normal X dimension plus a sign bit
 			glm::vec3 pos;
-			glm::vec2 nml;
+			glm::vec2 m_UV;
 		};
 
 		struct alignas(std::uint32_t) VertexExtra
 		{
-			union
-			{
-				struct
-				{
-					std::uint32_t   m_QNormalY : 10		// This contains two signs bits (For the Tangent.z, and the Bitangent direction)
-						, m_QTangentX : 10				// All these guys go together, they are represented by
-						, m_QTangentY : 10				// SINT_A2RGB10_4D_NORMALIZED
-						, m_QAlpha : 2;
-				};
-				std::uint32_t m_Packed;					// Packed union
-			};
-
-			std::int16_t    m_U							// These two go together, they are represented by
-				, m_V;									// SINT16_2D_NORMALIZED
+			glm::vec3 m_Normal;
+			glm::vec3 m_Tangent;
 		};
 
 		struct Mesh
@@ -91,8 +75,6 @@ namespace _GEOM
 			std::uint32_t			m_iVertices;		//Index of vertices in submesh
 			std::uint32_t			m_nVertices;		//Total number of vertices for this submesh
 			std::uint16_t			m_iMaterial;		//Index of material in submesh
-			glm::vec3				m_PosCompressionOffset;
-			glm::vec2				m_UVCompressionOffset;
 		};
 
 	public:
@@ -107,11 +89,9 @@ namespace _GEOM
 		std::uint32_t			m_nVertices;
 		std::uint32_t			m_nExtras;
 		std::uint32_t			m_nIndices;
-		glm::vec3				m_PosCompressionScale;
-		glm::vec2				m_UVCompressionScale;
 
 		static bool SerializeGeom(const std::string& filename, const DescriptorData& Desc, Geom& GeomData) noexcept;
-		static bool DeserializeGeom(const std::string Filepath, Geom& GeomRef) noexcept;
+		//static bool DeserializeGeom(const std::string Filepath, Geom& GeomRef) noexcept;
 	};
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////

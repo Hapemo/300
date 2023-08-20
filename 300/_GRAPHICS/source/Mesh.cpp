@@ -9,12 +9,6 @@
 
 void GFX::Mesh::LoadFromGeom(const _GEOM::Geom& GeomData, std::vector<vec3>& positions, std::vector<unsigned int>& indices)
 {
-	m_PosCompressionScale = GeomData.m_PosCompressionScale;
-	m_PosCompressionOffset = GeomData.m_pSubMesh[0].m_PosCompressionOffset;		// taking just the first submesh's POS compression
-	
-	m_UVCompressionScale = GeomData.m_UVCompressionScale;
-	m_UVCompressionOffset = GeomData.m_pSubMesh[0].m_UVCompressionOffset;		// taking just the first submesh's UV compression
-
 	for (size_t iSM{}; iSM < GeomData.m_nSubMeshes; ++iSM)
 	{
 		// Load indices
@@ -123,13 +117,10 @@ namespace Deserialization
 		Serialization::ReadUnsigned(infile, GeomData.m_nExtras);
 		Serialization::ReadUnsigned(infile, GeomData.m_nIndices);
 
-		Serialization::ReadVec3WithHeader(infile, GeomData.m_PosCompressionScale);
-		Serialization::ReadVec2WithHeader(infile, GeomData.m_UVCompressionScale);
-
 		Serialization::ReadMesh(infile, GeomData);
 		Serialization::ReadSubMesh(infile, GeomData);
 		Serialization::ReadVertexPos(infile, GeomData);
-		Serialization::ReadVertexExtra(infile, GeomData);
+		//Serialization::ReadVertexExtra(infile, GeomData);		// == We dont need these data for now ==	
 		Serialization::ReadIndices(infile, GeomData);
 
 		infile.close();

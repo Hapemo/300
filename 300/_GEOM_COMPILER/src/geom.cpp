@@ -107,8 +107,6 @@ namespace Serialization
 				SerializeUnsigned(outFile, GeomData.m_pSubMesh[i].m_iVertices);
 				SerializeUnsigned(outFile, GeomData.m_pSubMesh[i].m_nVertices);
 				SerializeUnsigned(outFile, GeomData.m_pSubMesh[i].m_iMaterial);
-				SerializeVec3(outFile, GeomData.m_pSubMesh[i].m_PosCompressionOffset);
-				SerializeVec2(outFile, GeomData.m_pSubMesh[i].m_UVCompressionOffset);
 			}
 
 			return true;
@@ -121,10 +119,7 @@ namespace Serialization
 			{
 				outFile << std::endl;
 				SerializeVec3(outFile, GeomData.m_pPos[i].pos);
-				//SerializeSigned(outFile, GeomData.m_pPos[i].m_QPosition_X);
-				//SerializeSigned(outFile, GeomData.m_pPos[i].m_QPosition_Y);
-				//SerializeSigned(outFile, GeomData.m_pPos[i].m_QPosition_Z);
-				//SerializeSigned(outFile, GeomData.m_pPos[i].m_QPosition_QNormalX);
+				SerializeVec2(outFile, GeomData.m_pPos[i].m_UV);
 			}
 
 			return true;	// no errors
@@ -136,9 +131,8 @@ namespace Serialization
 			for (unsigned i{}; i < GeomData.m_nExtras; ++i)
 			{
 				outFile << std::endl;
-				SerializeUnsigned(outFile, GeomData.m_pExtras[i].m_Packed);
-				SerializeSigned(outFile, GeomData.m_pExtras[i].m_U);
-				SerializeSigned(outFile, GeomData.m_pExtras[i].m_V);
+				SerializeVec3(outFile, GeomData.m_pExtras[i].m_Normal);
+				SerializeVec3(outFile, GeomData.m_pExtras[i].m_Tangent);
 			}
 
 			return true;
@@ -184,13 +178,18 @@ namespace Serialization
 
 		for (unsigned i{}; i < GeomData.m_nExtras; ++i)
 		{
+			char ch;
 			std::string VertexExtraStr;
 			std::getline(inFile, VertexExtraStr);
 			std::stringstream Stream(VertexExtraStr);
 
-			Stream >> extras[i].m_Packed;
-			Stream >> extras[i].m_U;
-			Stream >> extras[i].m_V;
+			Stream >> ch >> extras[i].m_Normal.x;
+			Stream >> ch >> extras[i].m_Normal.y;
+			Stream >> ch >> extras[i].m_Normal.z >> ch;
+
+			Stream >> ch >> extras[i].m_Tangent.x;
+			Stream >> ch >> extras[i].m_Tangent.y;
+			Stream >> ch >> extras[i].m_Tangent.z;
 		}
 
 		GeomData.m_pExtras = std::move(extras);
@@ -210,9 +209,12 @@ namespace Serialization
 			std::getline(inFile, VertexPosStr);
 			std::stringstream Stream(VertexPosStr);
 
-			Stream >> ch >> pos[i].pos[0];
-			Stream >> ch >> pos[i].pos[1];
-			Stream >> ch >> pos[i].pos[2];
+			Stream >> ch >> pos[i].pos.x;
+			Stream >> ch >> pos[i].pos.y;
+			Stream >> ch >> pos[i].pos.z >> ch;
+
+			Stream >> ch >> pos[i].m_UV.x;
+			Stream >> ch >> pos[i].m_UV.y;
 			//Stream >> pos[i].m_QPosition_QNormalX;
 		}
 
@@ -239,9 +241,6 @@ namespace Serialization
 			Stream >> subMesh[i].m_iVertices;
 			Stream >> subMesh[i].m_nVertices;
 			Stream >> subMesh[i].m_iMaterial;
-
-			Stream >> ch >> subMesh[i].m_PosCompressionOffset.x >> ch >> subMesh[i].m_PosCompressionOffset.y >> ch >> subMesh[i].m_PosCompressionOffset.z >> ch;
-			Stream >> ch >> subMesh[i].m_UVCompressionOffset.x >> ch >> subMesh[i].m_UVCompressionOffset.y >> ch;
 		}
 
 		GeomData.m_pSubMesh = std::move(subMesh);
