@@ -29,5 +29,6 @@ void main()
 
     // Set all the output vars
     VertexColor                 = inVertexColor;
-    gl_Position                 = uMatrixVP * inLTW * Pos;
+    gl_Position                 = uMatrixVP * inLTW * inQPos;
+    //gl_Position                 = uMatrixVP * inLTW * Pos;
 }

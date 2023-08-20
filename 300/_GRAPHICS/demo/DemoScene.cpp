@@ -17,6 +17,8 @@
 #include "ImGui.hpp"
 #include <cassert>
 
+std::vector<GFX::Mesh> GFX::Mesh::assimpLoadedMeshes;
+
  /**---------------------------------------------------------------------------/
   * @brief
   *  Constructor for the DemoScene class
@@ -81,10 +83,15 @@ void GFX::DemoScene::Initialize()
     std::vector<unsigned short> indices;
 
     // Deserialize Geom and load mesh
-    Deserialization::DeserializeGeom("../compiled_geom/Skull_textured.geom", GeomData);
-    skullmesh.LoadFromGeom(GeomData, positions, indices);
-    skullmesh.Setup(positions, indices);
-    mSceneMeshes["skullmesh"] = skullmesh;
+        //Deserialization::DeserializeGeom("../compiled_geom/Skull_textured.geom", GeomData);
+        //skullmesh.LoadFromGeom(GeomData, positions, indices);
+    
+    AssimpImporter::loadModel("../assets/demon-skull-textured/source/Skull_textured.fbx");
+    auto& currentmesh = GFX::Mesh::assimpLoadedMeshes[0];
+    currentmesh.Setup(currentmesh.mPositions, currentmesh.mIndices);
+
+    //skullmesh.Setup(positions, indices);
+    //mSceneMeshes["skullmesh"] = skullmesh;
 
     // Setup shader
     mModelShader.CreateShaderFromFiles("./shader_files/draw_vert.glsl", "./shader_files/draw_frag.glsl");
@@ -182,32 +189,34 @@ void GFX::DemoScene::Draw()
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         //!< test rendering skull model
-        
-        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-        mModelShader.Activate();
-        Mesh& currentmesh = mSceneMeshes["skullmesh"];
-        currentmesh.BindVao();
-        currentmesh.PrepForDraw();
+        {
+            glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+            mModelShader.Activate();
+            //Mesh& currentmesh = mSceneMeshes["skullmesh"];
+            Mesh& currentmesh = GFX::Mesh::assimpLoadedMeshes[0];
+            currentmesh.BindVao();
+            currentmesh.PrepForDraw();
 
-        glUniformMatrix4fv(mModelShader.GetUniformVP(), 1, GL_FALSE, &mCamera.viewProj()[0][0]);            // camera projection
+            glUniformMatrix4fv(mModelShader.GetUniformVP(), 1, GL_FALSE, &mCamera.viewProj()[0][0]);            // camera projection
 
-        GLuint pds = glGetUniformLocation(mModelShader.GetHandle(), "posDecompressionScale");
-        glUniform3fv(pds, 1, glm::value_ptr(currentmesh.m_PosCompressionScale));
+            GLuint pds = glGetUniformLocation(mModelShader.GetHandle(), "posDecompressionScale");
+            glUniform3fv(pds, 1, glm::value_ptr(currentmesh.m_PosCompressionScale));
 
-        GLuint pdo = glGetUniformLocation(mModelShader.GetHandle(), "posDecompressionOffset");
-        glUniform3fv(pdo, 1, glm::value_ptr(currentmesh.m_PosCompressionScale));
+            GLuint pdo = glGetUniformLocation(mModelShader.GetHandle(), "posDecompressionOffset");
+            glUniform3fv(pdo, 1, glm::value_ptr(currentmesh.m_PosCompressionOffset));
 
-        GLuint uvs = glGetUniformLocation(mModelShader.GetHandle(), "uvDecompressionScale");
-        glUniform2fv(uvs, 1, glm::value_ptr(currentmesh.m_UVCompressionScale));
+            GLuint uvs = glGetUniformLocation(mModelShader.GetHandle(), "uvDecompressionScale");
+            glUniform2fv(uvs, 1, glm::value_ptr(currentmesh.m_UVCompressionScale));
 
-        GLuint uvo = glGetUniformLocation(mModelShader.GetHandle(), "uvDecompressionOffset");
-        glUniform2fv(uvo, 1, glm::value_ptr(currentmesh.m_UVCompressionOffset));
+            GLuint uvo = glGetUniformLocation(mModelShader.GetHandle(), "uvDecompressionOffset");
+            glUniform2fv(uvo, 1, glm::value_ptr(currentmesh.m_UVCompressionOffset));
 
-        glDrawElementsInstanced(GL_TRIANGLES, currentmesh.GetIndexCount(), GL_UNSIGNED_SHORT, nullptr, currentmesh.mLTW.size());
+            glDrawElementsInstanced(GL_TRIANGLES, currentmesh.GetIndexCount(), GL_UNSIGNED_SHORT, nullptr, currentmesh.mLTW.size());
 
-        mModelShader.Deactivate();
-        currentmesh.UnbindVao();
-        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+            mModelShader.Deactivate();
+            currentmesh.UnbindVao();
+            glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        }
         //! 
 
         mRenderer->AddAabb({ 0, 0, -50 }, { 100, 300, 100 }, { 1, 0, 0, 1 });

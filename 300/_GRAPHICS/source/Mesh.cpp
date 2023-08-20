@@ -339,3 +339,72 @@ namespace Deserialization
 	}
 
 }
+
+
+namespace AssimpImporter
+{
+	void processnode(aiNode* node, const aiScene* scene) 
+	{
+		// process each mesh located at the current node
+		for (unsigned int i = 0; i < node->mNumMeshes; i++)
+		{
+			// the node object only contains indices to index the actual objects in the scene. 
+			// the scene contains all the data, node is just to keep stuff organized (like relations between nodes).
+			aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
+			GFX::Mesh::assimpLoadedMeshes.push_back(processmesh(mesh, scene));
+		}
+		// after we've processed all of the meshes (if any) we then recursively process each of the children nodes
+		for (unsigned int i = 0; i < node->mNumChildren; i++)
+		{
+			processnode(node->mChildren[i], scene);
+		}
+	};
+
+	GFX::Mesh processmesh(aiMesh* mesh, const aiScene* scene)
+	{
+		std::vector<glm::vec3> positions;
+		std::vector<unsigned short> indices;
+
+		for (unsigned int i{}; i < mesh->mNumVertices; ++i)
+		{
+			positions.emplace_back( glm::vec3(mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z) );
+		}
+
+		for (unsigned int i{}; i < mesh->mNumFaces; ++i)
+		{
+			const aiFace& face = mesh->mFaces[i];
+			for (unsigned int j{}; j < face.mNumIndices; ++j)
+			{
+				indices.emplace_back(static_cast<unsigned short>(face.mIndices[j]));
+			}
+		}
+
+		// material stuff, we leave it empty for now.
+		//aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
+		//vector<Texture> diffuseMaps = loadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
+		//textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
+		//vector<Texture> specularMaps = loadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
+		//textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
+		//std::vector<Texture> normalMaps = loadMaterialTextures(material, aiTextureType_HEIGHT, "texture_normal");
+		//textures.insert(textures.end(), normalMaps.begin(), normalMaps.end());
+		//std::vector<Texture> heightMaps = loadMaterialTextures(material, aiTextureType_AMBIENT, "texture_height");
+		//textures.insert(textures.end(), heightMaps.begin(), heightMaps.end());
+
+		GFX::Mesh retmesh;
+		retmesh.mPositions = std::move(positions);
+		retmesh.mIndices = std::move(indices);
+		return retmesh;
+	}
+
+	void loadModel(const std::string& filepath)
+	{
+		Assimp::Importer importer;
+		const aiScene* scene = importer.ReadFile("../assets/demon-skull-textured/source/Skull_textured.fbx", aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_CalcTangentSpace);
+		if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) {
+			assert(false);
+		}
+
+		// process ASSIMP's root node recursively
+		processnode(scene->mRootNode, scene);
+	}
+}

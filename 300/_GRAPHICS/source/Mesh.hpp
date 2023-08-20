@@ -6,6 +6,15 @@
 #include "Vbo.hpp"
 #include <geom.h>
 
+// temporary mesh loading test. this will change to include files from geom compiler when that is done
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
+#include "../../lib/stb-master/stb_image.h"
+
+#pragma comment( lib, "../lib/assimp/BINARIES/Win32/lib/Release/assimp-vc142-mt.lib")
+
+
 constexpr int MAX_INSTANCES = 1000;
 
 // Follows the format in the shader code
@@ -17,6 +26,7 @@ constexpr int MAX_INSTANCES = 1000;
 
 namespace GFX
 {
+
 	class Mesh
 	{
 	public:
@@ -42,10 +52,15 @@ namespace GFX
 		std::vector<mat4> mLTW;
 		std::vector<vec4> mColors;
 
-		glm::vec3 m_PosCompressionScale;
-		glm::vec3 m_PosCompressionOffset;
-		glm::vec2 m_UVCompressionScale;
-		glm::vec2 m_UVCompressionOffset;
+		glm::vec3 m_PosCompressionScale		= glm::vec3(1.f);
+		glm::vec3 m_PosCompressionOffset	= glm::vec3(1.f);
+		glm::vec2 m_UVCompressionScale		= glm::vec2(1.f);
+		glm::vec2 m_UVCompressionOffset		= glm::vec2(1.f);
+
+		// assimp loaded mesh variables
+		std::vector<glm::vec3>		mPositions;
+		std::vector<unsigned short>	mIndices;
+		static std::vector<Mesh> assimpLoadedMeshes;	// temp global variable
 
 	private:
 		// Vertex array object and buffer object for each mesh
@@ -58,7 +73,9 @@ namespace GFX
 		// Stats of the mesh model
 		int mVertexCount;
 		int mIndexCount;
+
 	};
+
 }
 
 
@@ -75,6 +92,14 @@ namespace Deserialization
 	bool ReadIndices(std::ifstream& inFile, _GEOM::Geom& GeomData) noexcept;
 
 	bool DeserializeGeom(const std::string Filepath, _GEOM::Geom& GeomData) noexcept;
+}
+
+
+namespace AssimpImporter
+{
+	void loadModel(const std::string& filepath);
+	void processnode(aiNode* node, const aiScene* scene);
+	GFX::Mesh processmesh(aiMesh* mesh, const aiScene* scene);
 }
 
 #endif

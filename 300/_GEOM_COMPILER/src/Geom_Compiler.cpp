@@ -131,7 +131,7 @@ namespace _GEOM
 
 		MergeData(myNodes);
 
-		Optimize(myNodes);
+		//Optimize(myNodes);
 
 		CreateSkinGeom(Quantize(myNodes));
 	}
