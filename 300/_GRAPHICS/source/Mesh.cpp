@@ -132,6 +132,7 @@ namespace Deserialization
 		Serialization::ReadVertexExtra(infile, GeomData);
 		Serialization::ReadIndices(infile, GeomData);
 
+		infile.close();
 		return true;
 	}
 
