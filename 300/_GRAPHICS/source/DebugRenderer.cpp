@@ -136,7 +136,7 @@ void GFX::DebugRenderer::SetupPointMesh()
 		vec3(0.f, 0.f, 0.f)
 	};
 	
-	std::vector<GLushort> indices
+	std::vector<GLuint> indices
 	{
 		0
 	};
@@ -153,7 +153,7 @@ void GFX::DebugRenderer::SetupTriangleMesh()
 		vec3(0.f, 0.f, 1.f)
 	};
 
-	std::vector<GLushort> indices
+	std::vector<GLuint> indices
 	{
 		0, 1, 2
 	};
@@ -171,7 +171,7 @@ void GFX::DebugRenderer::SetupQuadMesh()
 		vec3( 0.5f,  0.5f, 0.f)			// Top right
 	};
 
-	std::vector<GLushort> indices
+	std::vector<GLuint> indices
 	{
 		0, 1, 2,
 		2, 3, 0
@@ -194,7 +194,7 @@ void GFX::DebugRenderer::SetupAabbMesh()
 		vec3( 0.5f,  0.5f, -0.5f)		// Top right far
 	};
 	
-	std::vector<GLushort> indices
+	std::vector<GLuint> indices
 	{
 		0, 1, 2, 3,
 		0, 4, 5, 1,
@@ -220,7 +220,7 @@ void GFX::DebugRenderer::RenderAllPoints(mat4 const& viewProj)
 	glUniformMatrix4fv(mShader.GetUniformVP(), 1, GL_FALSE, &viewProj[0][0]);
 
 	// Draw
-	glDrawElementsInstanced(GL_POINTS, mPointMesh.GetIndexCount(), GL_UNSIGNED_SHORT, nullptr, mPointMesh.mLTW.size());
+	glDrawElementsInstanced(GL_POINTS, mPointMesh.GetIndexCount(), GL_UNSIGNED_INT, nullptr, mPointMesh.mLTW.size());
 
 	mShader.Deactivate();
 	mPointMesh.UnbindVao();
@@ -241,7 +241,7 @@ void GFX::DebugRenderer::RenderAllTriangles(mat4 const& viewProj)
 	glUniformMatrix4fv(mShader.GetUniformVP(), 1, GL_FALSE, &viewProj[0][0]);
 
 	// Draw
-	glDrawElementsInstanced(GL_TRIANGLES, mTriangleMesh.GetIndexCount(), GL_UNSIGNED_SHORT, nullptr, mTriangleMesh.mLTW.size());
+	glDrawElementsInstanced(GL_TRIANGLES, mTriangleMesh.GetIndexCount(), GL_UNSIGNED_INT, nullptr, mTriangleMesh.mLTW.size());
 
 	mShader.Deactivate();
 	mTriangleMesh.UnbindVao();
@@ -262,7 +262,7 @@ void GFX::DebugRenderer::RenderAllQuads(mat4 const& viewProj)
 	glUniformMatrix4fv(mShader.GetUniformVP(), 1, GL_FALSE, &viewProj[0][0]);
 
 	// Draw
-	glDrawElementsInstanced(GL_TRIANGLES, mQuadMesh.GetIndexCount(), GL_UNSIGNED_SHORT, nullptr, mQuadMesh.mLTW.size());
+	glDrawElementsInstanced(GL_TRIANGLES, mQuadMesh.GetIndexCount(), GL_UNSIGNED_INT, nullptr, mQuadMesh.mLTW.size());
 
 	mShader.Deactivate();
 	mQuadMesh.UnbindVao();
@@ -283,7 +283,7 @@ void GFX::DebugRenderer::RenderAllAabb(mat4 const& viewProj)
 	glUniformMatrix4fv(mShader.GetUniformVP(), 1, GL_FALSE, &viewProj[0][0]);
 
 	// Draw
-	glDrawElementsInstanced(GL_LINE_LOOP, mAabbMesh.GetIndexCount(), GL_UNSIGNED_SHORT, nullptr, mAabbMesh.mLTW.size());
+	glDrawElementsInstanced(GL_LINE_LOOP, mAabbMesh.GetIndexCount(), GL_UNSIGNED_INT, nullptr, mAabbMesh.mLTW.size());
 
 	mShader.Deactivate();
 	mAabbMesh.UnbindVao();

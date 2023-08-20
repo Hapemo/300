@@ -30,7 +30,8 @@ namespace GFX {
         void SetPosition(vec3 newPosition);
         void SetTarget(vec3 newTarget);
         void SetCursorPosition(vec2 newPosition);
-        void SetProjection(float left, float right, float bottom, float top, float near, float far);
+        //void SetProjection(float left, float right, float bottom, float top, float near, float far);
+        void SetProjection(float fovAngle, ivec2 size, float nearZ, float farZ);
 
         void Update();
 
