@@ -7,7 +7,7 @@
 	location = 2 --> LTW;
 ******************************************/
 
-void GFX::Mesh::LoadFromGeom(const _GEOM::Geom& GeomData, std::vector<vec3>& positions, std::vector<unsigned short>& indices)
+void GFX::Mesh::LoadFromGeom(const _GEOM::Geom& GeomData, std::vector<vec3>& positions, std::vector<unsigned int>& indices)
 {
 	m_PosCompressionScale = GeomData.m_PosCompressionScale;
 	m_PosCompressionOffset = GeomData.m_pSubMesh[0].m_PosCompressionOffset;		// taking just the first submesh's POS compression
@@ -32,7 +32,7 @@ void GFX::Mesh::LoadFromGeom(const _GEOM::Geom& GeomData, std::vector<vec3>& pos
 }
 
 
-void GFX::Mesh::Setup(std::vector<vec3> const& positions, std::vector<unsigned short> const& indices)
+void GFX::Mesh::Setup(std::vector<vec3> const& positions, std::vector<unsigned int> const& indices)
 {
 	// Create VAO
 	mVao.Create();
@@ -66,8 +66,8 @@ void GFX::Mesh::Setup(std::vector<vec3> const& positions, std::vector<unsigned s
 	mVao.AttachVerterBuffer(mLTWVbo.GetID(), 2, 0, sizeof(vec4) * 4);
 
 	// Element Buffer Object
-	mEbo.Create(indices.size() * sizeof(GLushort));
-	mEbo.AttachData(0, indices.size() * sizeof(GLushort), indices.data());
+	mEbo.Create(indices.size() * sizeof(GLuint));
+	mEbo.AttachData(0, indices.size() * sizeof(GLuint), indices.data());
 	glVertexArrayElementBuffer(mVao.GetID(), mEbo.GetID());
 
 	mVao.Unbind();

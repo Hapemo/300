@@ -21,8 +21,8 @@ namespace GFX
 	{
 	public:
 		// -- Called once on startup --
-		void LoadFromGeom(const _GEOM::Geom& GeomData, std::vector<vec3>& positions, std::vector<unsigned short>& indices);
-		void Setup(std::vector<vec3> const& positions, std::vector<unsigned short> const& indices);
+		void LoadFromGeom(const _GEOM::Geom& GeomData, std::vector<vec3>& positions, std::vector<unsigned int>& indices);
+		void Setup(std::vector<vec3> const& positions, std::vector<unsigned int> const& indices);
 
 		// -- Used when drawing --
 		void BindVao();

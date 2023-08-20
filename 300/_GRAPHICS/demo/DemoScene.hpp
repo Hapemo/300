@@ -55,7 +55,7 @@ namespace GFX {
         // -- Stats --
         float mDt = 0.0f;
         float mLastTime = 0.0f;
-        float mCamSpeed = 10.f;
+        float mCamSpeed = 50.f;
 
         // -- Flags --
 

@@ -99,11 +99,12 @@ vec2 GFX::Camera::cursorPosition()
  * @return
  *  none
  *---------------------------------------------------------------------------*/
-void GFX::Camera::SetProjection(float left, float right, float bottom, float top, float near, float far)
+//void GFX::Camera::SetProjection(float left, float right, float bottom, float top, float near, float far)
+void GFX::Camera::SetProjection(float fovAngle, ivec2 size, float nearZ, float farZ)
 {
-	//float aspectRatio = static_cast<float>(size.x) / static_cast<float>(size.y);
-	//mProjection = glm::perspective(glm::radians(fovAngle), aspectRatio, nearZ, farZ);
-	mProjection = glm::ortho(left, right, bottom, top, near, far);
+	float aspectRatio = static_cast<float>(size.x) / static_cast<float>(size.y);
+	mProjection = glm::perspective(glm::radians(fovAngle), aspectRatio, nearZ, farZ);
+	//mProjection = glm::ortho(left, right, bottom, top, near, far);
 }
 
 /**---------------------------------------------------------------------------/

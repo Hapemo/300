@@ -35,7 +35,7 @@ GFX::Window::Window(ivec2 windowSize)
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE);
     glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
     glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);
-    mWindow = glfwCreateWindow(mSize.x, mSize.y, "Ant Simulation", nullptr, nullptr);
+    mWindow = glfwCreateWindow(mSize.x, mSize.y, "Graphics", nullptr, nullptr);
     if (mWindow == nullptr)
     {
         throw std::runtime_error("Failed to create a window!");

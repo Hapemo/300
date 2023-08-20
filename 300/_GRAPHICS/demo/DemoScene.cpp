@@ -55,9 +55,11 @@ void GFX::DemoScene::Initialize()
     glDepthMask(GL_TRUE);
 
     // Camera
-    mCamera.SetProjection(-mWindow.size().x / 2.f, mWindow.size().x / 2.f, -mWindow.size().y / 2.f, mWindow.size().y / 2.f, 0.01f, 200.f);
-    mCamera.SetPosition({ 0, 0, 10 });
-    mCamera.SetTarget({ 0, 0, 0 });
+    mCamera.SetProjection(45.0, mWindow.size(), 0.1f, 1000.f);
+    //mCamera.SetProjection(-mWindow.size().x / 2.f, mWindow.size().x / 2.f, -mWindow.size().y / 2.f, mWindow.size().y / 2.f, 0.01f, 200.f);
+
+    mCamera.SetPosition({ 0, 0, 200 });
+    mCamera.SetTarget({ -4.08, 3.71, 1 });
     mCamera.Update();
 
     // Seed random generator
@@ -78,7 +80,7 @@ void GFX::DemoScene::Initialize()
     _GEOM::Geom GeomData;
     Mesh skullmesh;
     std::vector<glm::vec3> positions;
-    std::vector<unsigned short> indices;
+    std::vector<unsigned int> indices;
 
     // Deserialize Geom and load mesh
     Deserialization::DeserializeGeom("../compiled_geom/Skull_textured.geom", GeomData);
@@ -106,7 +108,8 @@ void GFX::DemoScene::Update()
     // Imgui start frame
     if (ImGui::Begin("Options"))
     {
-
+        ImGui::SliderFloat("Camera Speed: ", &mCamSpeed, 50.f, 300.f, "%1.f", ImGuiSliderFlags_AlwaysClamp);
+        ImGui::Text("Camera Position: %.0f, %.0f, %.0f", mCamera.position().x, mCamera.position().y, mCamera.position().z);
     }
     ImGui::End();
 
@@ -183,11 +186,17 @@ void GFX::DemoScene::Draw()
 
         //!< test rendering skull model
         
+#if 1
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         mModelShader.Activate();
         Mesh& currentmesh = mSceneMeshes["skullmesh"];
+
+        mat4 identity = mat4(1.0);
+        currentmesh.mLTW.push_back(identity);
+
         currentmesh.BindVao();
         currentmesh.PrepForDraw();
+
 
         glUniformMatrix4fv(mModelShader.GetUniformVP(), 1, GL_FALSE, &mCamera.viewProj()[0][0]);            // camera projection
 
@@ -203,23 +212,26 @@ void GFX::DemoScene::Draw()
         GLuint uvo = glGetUniformLocation(mModelShader.GetHandle(), "uvDecompressionOffset");
         glUniform2fv(uvo, 1, glm::value_ptr(currentmesh.m_UVCompressionOffset));
 
-        glDrawElementsInstanced(GL_TRIANGLES, currentmesh.GetIndexCount(), GL_UNSIGNED_SHORT, nullptr, currentmesh.mLTW.size());
+        glDrawElementsInstanced(GL_TRIANGLES, currentmesh.GetIndexCount(), GL_UNSIGNED_INT, nullptr, currentmesh.mLTW.size());
 
         mModelShader.Deactivate();
         currentmesh.UnbindVao();
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+        currentmesh.ClearInstances();
         //! 
+#else
+        mRenderer->AddAabb({ 0, 0, -500 }, { 100, 300, 100 }, { 1, 0, 0, 1 });
+        ////mRenderer->AddPoint({ 0, 0, 0 }, { 1, 0, 0, 1 });
+        ////mRenderer->AddTriangle({ 0.f, 30.f, 0.f }, { -30.f, -30.f, 0.f }, { 30.f, -30.f, 0.f }, { 0, 1, 0, 1 });
+        ////mRenderer->AddQuad({ 0, 0, 0 }, 50, 100, { 0, 0, 1, 1 });
 
-        mRenderer->AddAabb({ 0, 0, -50 }, { 100, 300, 100 }, { 1, 0, 0, 1 });
-        //mRenderer->AddPoint({ 0, 0, 0 }, { 1, 0, 0, 1 });
-        //mRenderer->AddTriangle({ 0.f, 30.f, 0.f }, { -30.f, -30.f, 0.f }, { 30.f, -30.f, 0.f }, { 0, 1, 0, 1 });
-        //mRenderer->AddQuad({ 0, 0, 0 }, 50, 100, { 0, 0, 1, 1 });
-
-        // Renders all instances
+        //// Renders all instances
         mRenderer->RenderAll(mCamera.viewProj());
 
-        // Clear all instances
+        //// Clear all instances
         mRenderer->ClearInstances();
+#endif
 
         // ImGui UI
         ImGui::Render();

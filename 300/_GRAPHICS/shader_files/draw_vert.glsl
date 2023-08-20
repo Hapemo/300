@@ -3,7 +3,7 @@
 //#extension GL_ARB_separate_shader_objects  : enable
 //#extension GL_ARB_shading_language_420pack : enable
 
-layout (location = 0) in vec4 inQPos;		        // INPUT_POSITION
+layout (location = 0) in vec3 inQPos;		        // INPUT_POSITION
 
 layout (location = 1) in vec4 inVertexColor;        // input color
 layout (location = 2) in mat4 inLTW;			    // local to world
@@ -12,7 +12,7 @@ uniform vec3 posDecompressionScale;
 uniform vec3 posDecompressionOffset;
 uniform vec2 uvDecompressionScale;
 uniform vec2 uvDecompressionOffset;
-uniform vec4 uMatrixVP;
+uniform mat4 uMatrixVP;
 
 out vec4 VertexColor;    
 
