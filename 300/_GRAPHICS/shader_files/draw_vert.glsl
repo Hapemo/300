@@ -22,13 +22,13 @@ void main()
     mat3 Rot                    = mat3(inLTW);
 
 	 // Decompress Position
-    vec4 Pos = vec4( posDecompressionScale * inQPos.xyz + posDecompressionOffset, 1.0f);
+    //vec4 Pos = vec4( posDecompressionScale * inQPos.xyz + posDecompressionOffset, 1.0f);
+    vec4 Pos = vec4(inQPos.xyz, 1.0f);
 
     // Decompress UVs
     //Out.UV   = pushConsts.UVDecompression.xy * inQUV + pushConsts.UVDecompression.zw;
 
     // Set all the output vars
     VertexColor                 = inVertexColor;
-    gl_Position                 = uMatrixVP * inLTW * inQPos;
-    //gl_Position                 = uMatrixVP * inLTW * Pos;
+    gl_Position                 = uMatrixVP * inLTW * Pos;
 }

@@ -219,7 +219,7 @@ void GFX::DemoScene::Draw()
         GLuint uvo = glGetUniformLocation(mModelShader.GetHandle(), "uvDecompressionOffset");
         glUniform2fv(uvo, 1, glm::value_ptr(currentmesh.m_UVCompressionOffset));
 
-        glDrawElementsInstanced(GL_TRIANGLES, currentmesh.GetIndexCount(), GL_UNSIGNED_SHORT, nullptr, currentmesh.mLTW.size());
+        glDrawElementsInstanced(GL_TRIANGLES, currentmesh.GetIndexCount(), GL_UNSIGNED_INT, nullptr, currentmesh.mLTW.size());
 
         mModelShader.Deactivate();
         currentmesh.UnbindVao();

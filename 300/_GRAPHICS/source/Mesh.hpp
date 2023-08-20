@@ -59,7 +59,7 @@ namespace GFX
 
 		// assimp loaded mesh variables
 		std::vector<glm::vec3>		mPositions;
-		std::vector<unsigned short>	mIndices;
+		std::vector<unsigned int>	mIndices;
 		static std::vector<Mesh> assimpLoadedMeshes;	// temp global variable
 
 	private:

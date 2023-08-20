@@ -363,7 +363,7 @@ namespace AssimpImporter
 	GFX::Mesh processmesh(aiMesh* mesh, const aiScene* scene)
 	{
 		std::vector<glm::vec3> positions;
-		std::vector<unsigned short> indices;
+		std::vector<unsigned int> indices;
 
 		for (unsigned int i{}; i < mesh->mNumVertices; ++i)
 		{
@@ -375,7 +375,7 @@ namespace AssimpImporter
 			const aiFace& face = mesh->mFaces[i];
 			for (unsigned int j{}; j < face.mNumIndices; ++j)
 			{
-				indices.emplace_back(static_cast<unsigned short>(face.mIndices[j]));
+				indices.emplace_back(face.mIndices[j]);
 			}
 		}
 
