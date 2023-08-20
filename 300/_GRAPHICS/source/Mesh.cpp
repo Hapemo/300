@@ -26,7 +26,7 @@ void GFX::Mesh::LoadFromGeom(const _GEOM::Geom& GeomData, std::vector<vec3>& pos
 		// Load positions
 		for (size_t iPos{}, up{ GeomData.m_pSubMesh[iSM].m_iVertices }; iPos < GeomData.m_pSubMesh[iSM].m_nVertices; ++iPos, ++up)
 		{
-			positions.emplace_back(vec3(GeomData.m_pPos[up].m_QPosition_X, GeomData.m_pPos[up].m_QPosition_Y, GeomData.m_pPos[up].m_QPosition_Z));
+			positions.emplace_back(vec3(GeomData.m_pPos[up].pos.x, GeomData.m_pPos[up].pos.y, GeomData.m_pPos[up].pos.z));
 		}
 	}
 }
@@ -135,10 +135,11 @@ namespace Deserialization
 		return true;
 	}
 
+#if 0
 	// ====================================================================================================
-//										NEW DESERIALIZATION CODE BLOCK
-// ====================================================================================================
-	bool ReadIndices(std::ifstream& inFile, _GEOM::Geom& GeomData) noexcept
+	//										NEW DESERIALIZATION CODE BLOCK
+	// ====================================================================================================
+	bool ReadIndices(std::ifstream & inFile, _GEOM::Geom & GeomData) noexcept
 	{
 		ReadUnsigned(inFile, GeomData.m_nIndices);
 		std::unique_ptr<std::uint32_t[]> indices = std::make_unique<std::uint32_t[]>(GeomData.m_nIndices);
@@ -157,7 +158,7 @@ namespace Deserialization
 	}
 
 
-	bool ReadVertexExtra(std::ifstream& inFile, _GEOM::Geom& GeomData) noexcept
+	bool ReadVertexExtra(std::ifstream & inFile, _GEOM::Geom & GeomData) noexcept
 	{
 		ReadUnsigned(inFile, GeomData.m_nExtras);
 		std::unique_ptr<_GEOM::Geom::VertexExtra[]> extras = std::make_unique<_GEOM::Geom::VertexExtra[]>(GeomData.m_nExtras);
@@ -178,7 +179,7 @@ namespace Deserialization
 	}
 
 
-	bool ReadVertexPos(std::ifstream& inFile, _GEOM::Geom& GeomData) noexcept
+	bool ReadVertexPos(std::ifstream & inFile, _GEOM::Geom & GeomData) noexcept
 	{
 		ReadUnsigned(inFile, GeomData.m_nVertices);
 		std::unique_ptr<_GEOM::Geom::VertexPos[]> pos = std::make_unique<_GEOM::Geom::VertexPos[]>(GeomData.m_nVertices);
@@ -189,10 +190,10 @@ namespace Deserialization
 			std::getline(inFile, VertexPosStr);
 			std::stringstream Stream(VertexPosStr);
 
-			Stream >> pos[i].m_QPosition_X;
-			Stream >> pos[i].m_QPosition_Y;
-			Stream >> pos[i].m_QPosition_Z;
-			Stream >> pos[i].m_QPosition_QNormalX;
+			Stream >> pos[i].pos[0];
+			Stream >> pos[i].pos[1];
+			Stream >> pos[i].pos[2];
+			//Stream >> pos[i].m_QPosition_QNormalX;
 		}
 
 		GeomData.m_pPos = std::move(pos);
@@ -200,7 +201,7 @@ namespace Deserialization
 	}
 
 
-	bool ReadSubMesh(std::ifstream& inFile, _GEOM::Geom& GeomData) noexcept
+	bool ReadSubMesh(std::ifstream & inFile, _GEOM::Geom & GeomData) noexcept
 	{
 		ReadUnsigned(inFile, GeomData.m_nSubMeshes);
 		std::unique_ptr<_GEOM::Geom::SubMesh[]> subMesh = std::make_unique<_GEOM::Geom::SubMesh[]>(GeomData.m_nSubMeshes);
@@ -228,7 +229,7 @@ namespace Deserialization
 	}
 
 
-	bool ReadMesh(std::ifstream& inFile, _GEOM::Geom& GeomData) noexcept
+	bool ReadMesh(std::ifstream & inFile, _GEOM::Geom & GeomData) noexcept
 	{
 		ReadUnsigned(inFile, GeomData.m_nMeshes);
 		std::unique_ptr<_GEOM::Geom::Mesh[]> uMesh = std::make_unique<_GEOM::Geom::Mesh[]>(GeomData.m_nMeshes);
@@ -257,7 +258,7 @@ namespace Deserialization
 	}
 
 
-	bool ReadUnsigned(std::ifstream& inFile, std::uint32_t& value) noexcept
+	bool ReadUnsigned(std::ifstream & inFile, std::uint32_t & value) noexcept
 	{
 		std::string line;
 		std::getline(inFile, line);
@@ -277,7 +278,7 @@ namespace Deserialization
 	}
 
 
-	bool ReadSigned(std::ifstream& inFile, std::int16_t& value) noexcept
+	bool ReadSigned(std::ifstream & inFile, std::int16_t & value) noexcept
 	{
 		std::string line;
 		std::getline(inFile, line);
@@ -297,7 +298,7 @@ namespace Deserialization
 	}
 
 
-	bool ReadVec3WithHeader(std::ifstream& inFile, glm::vec3& value) noexcept
+	bool ReadVec3WithHeader(std::ifstream & inFile, glm::vec3 & value) noexcept
 	{
 		std::string line;
 		char ch;
@@ -318,7 +319,7 @@ namespace Deserialization
 	}
 
 
-	bool ReadVec2WithHeader(std::ifstream& inFile, glm::vec2& value) noexcept
+	bool ReadVec2WithHeader(std::ifstream & inFile, glm::vec2 & value) noexcept
 	{
 		std::string line;
 		char ch;
@@ -337,7 +338,7 @@ namespace Deserialization
 
 		return true;	// no errors
 	}
-
+#endif
 }
 
 

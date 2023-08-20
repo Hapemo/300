@@ -120,10 +120,11 @@ namespace Serialization
 			for (unsigned i{}; i < GeomData.m_nVertices; ++i)
 			{
 				outFile << std::endl;
-				SerializeSigned(outFile, GeomData.m_pPos[i].m_QPosition_X);
-				SerializeSigned(outFile, GeomData.m_pPos[i].m_QPosition_Y);
-				SerializeSigned(outFile, GeomData.m_pPos[i].m_QPosition_Z);
-				SerializeSigned(outFile, GeomData.m_pPos[i].m_QPosition_QNormalX);
+				SerializeVec3(outFile, GeomData.m_pPos[i].pos);
+				//SerializeSigned(outFile, GeomData.m_pPos[i].m_QPosition_X);
+				//SerializeSigned(outFile, GeomData.m_pPos[i].m_QPosition_Y);
+				//SerializeSigned(outFile, GeomData.m_pPos[i].m_QPosition_Z);
+				//SerializeSigned(outFile, GeomData.m_pPos[i].m_QPosition_QNormalX);
 			}
 
 			return true;	// no errors
@@ -204,14 +205,15 @@ namespace Serialization
 
 		for (unsigned i{}; i < GeomData.m_nVertices; ++i)
 		{
+			char ch;
 			std::string VertexPosStr;
 			std::getline(inFile, VertexPosStr);
 			std::stringstream Stream(VertexPosStr);
 
-			Stream >> pos[i].m_QPosition_X;
-			Stream >> pos[i].m_QPosition_Y;
-			Stream >> pos[i].m_QPosition_Z;
-			Stream >> pos[i].m_QPosition_QNormalX;
+			Stream >> ch >> pos[i].pos[0];
+			Stream >> ch >> pos[i].pos[1];
+			Stream >> ch >> pos[i].pos[2];
+			//Stream >> pos[i].m_QPosition_QNormalX;
 		}
 
 		GeomData.m_pPos = std::move(pos);

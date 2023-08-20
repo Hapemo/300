@@ -81,15 +81,15 @@ namespace GFX
 
 namespace Deserialization
 {
-	bool ReadUnsigned(std::ifstream& inFile, std::uint32_t& value) noexcept;
-	bool ReadSigned(std::ifstream& inFile, std::int16_t& value) noexcept;
-	bool ReadVec3WithHeader(std::ifstream& inFile, glm::vec3& value) noexcept;
-	bool ReadVec2WithHeader(std::ifstream& inFile, glm::vec2& value) noexcept;
-	bool ReadMesh(std::ifstream& inFile, _GEOM::Geom& GeomData) noexcept;
-	bool ReadSubMesh(std::ifstream& inFile, _GEOM::Geom& GeomData) noexcept;
-	bool ReadVertexPos(std::ifstream& inFile, _GEOM::Geom& GeomData) noexcept;
-	bool ReadVertexExtra(std::ifstream& inFile, _GEOM::Geom& GeomData) noexcept;
-	bool ReadIndices(std::ifstream& inFile, _GEOM::Geom& GeomData) noexcept;
+	//bool ReadUnsigned(std::ifstream& inFile, std::uint32_t& value) noexcept;
+	//bool ReadSigned(std::ifstream& inFile, std::int16_t& value) noexcept;
+	//bool ReadVec3WithHeader(std::ifstream& inFile, glm::vec3& value) noexcept;
+	//bool ReadVec2WithHeader(std::ifstream& inFile, glm::vec2& value) noexcept;
+	//bool ReadMesh(std::ifstream& inFile, _GEOM::Geom& GeomData) noexcept;
+	//bool ReadSubMesh(std::ifstream& inFile, _GEOM::Geom& GeomData) noexcept;
+	//bool ReadVertexPos(std::ifstream& inFile, _GEOM::Geom& GeomData) noexcept;
+	//bool ReadVertexExtra(std::ifstream& inFile, _GEOM::Geom& GeomData) noexcept;
+	//bool ReadIndices(std::ifstream& inFile, _GEOM::Geom& GeomData) noexcept;
 
 	bool DeserializeGeom(const std::string Filepath, _GEOM::Geom& GeomData) noexcept;
 }

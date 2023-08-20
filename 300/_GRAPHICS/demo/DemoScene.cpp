@@ -85,15 +85,17 @@ void GFX::DemoScene::Initialize()
     std::vector<unsigned int> indices;
 
     // Deserialize Geom and load mesh
-        //Deserialization::DeserializeGeom("../compiled_geom/Skull_textured.geom", GeomData);
-        //skullmesh.LoadFromGeom(GeomData, positions, indices);
+    Deserialization::DeserializeGeom("../compiled_geom/Skull_textured.geom", GeomData);
+    skullmesh.LoadFromGeom(GeomData, positions, indices);
+    skullmesh.Setup(positions, indices);
+    mSceneMeshes["skullmesh"] = skullmesh;
+    auto& currentmesh = skullmesh;
     
-    AssimpImporter::loadModel("../assets/demon-skull-textured/source/Skull_textured.fbx");
-    auto& currentmesh = GFX::Mesh::assimpLoadedMeshes[0];
+    //AssimpImporter::loadModel("../assets/demon-skull-textured/source/Skull_textured.fbx");
+    //auto& currentmesh = GFX::Mesh::assimpLoadedMeshes[0];
+
     currentmesh.Setup(currentmesh.mPositions, currentmesh.mIndices);
 
-    //skullmesh.Setup(positions, indices);
-    //mSceneMeshes["skullmesh"] = skullmesh;
 
     // Setup shader
     mModelShader.CreateShaderFromFiles("./shader_files/draw_vert.glsl", "./shader_files/draw_frag.glsl");
@@ -195,8 +197,8 @@ void GFX::DemoScene::Draw()
         //!< test rendering skull model
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         mModelShader.Activate();
-        //Mesh& currentmesh = mSceneMeshes["skullmesh"];
-        Mesh& currentmesh = GFX::Mesh::assimpLoadedMeshes[0];
+        Mesh& currentmesh = mSceneMeshes["skullmesh"];
+        //Mesh& currentmesh = GFX::Mesh::assimpLoadedMeshes[0];
 
         mat4 identity = mat4(1.0);
         currentmesh.mLTW.push_back(identity);

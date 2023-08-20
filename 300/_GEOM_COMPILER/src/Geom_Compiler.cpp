@@ -158,6 +158,7 @@ namespace _GEOM
 				FullVertices& Vertex = MeshPart.m_Vertices[i];		// the mesh's vertices
 					
 				auto L = Transform * AssimpMesh.mVertices[i];		// adds pretransformation to the vertices
+				//auto L = AssimpMesh.mVertices[i];		// rich 
 
 				// VERTEX POSITIONS //
 				Vertex.m_Position = glm::vec3						// populating the transformed vertex position
@@ -573,15 +574,18 @@ namespace _GEOM
 						// Quantize the X, Y, and Z components of the position to fit within a 16-bit signed integer
 						f = (V.m_Position.x - RenderSubmesh.m_PosCompressionOffset.x) / m_PosCompressionScale.x;
 						assert(f >= -1 && f <= 1);
-						VP.m_QPosition_X = static_cast<std::int16_t>(f >= 0 ? f * 0x7FFF : f * 0x8000);
+						//VP.m_QPosition_X = static_cast<std::int16_t>(f >= 0 ? f * 0x7FFF : f * 0x8000);
+						VP.pos[0] = V.m_Position.x;	// rich
 
 						f = (V.m_Position.y - RenderSubmesh.m_PosCompressionOffset.y) / m_PosCompressionScale.y;
 						assert(f >= -1 && f <= 1);
-						VP.m_QPosition_Y = static_cast<std::int16_t>(f >= 0 ? f * 0x7FFF : f * 0x8000);
+						//VP.m_QPosition_Y = static_cast<std::int16_t>(f >= 0 ? f * 0x7FFF : f * 0x8000);
+						VP.pos[1]  = V.m_Position.y;	// rich
 
 						f = (V.m_Position.z - RenderSubmesh.m_PosCompressionOffset.z) / m_PosCompressionScale.z;
 						assert(f >= -1 && f <= 1);
-						VP.m_QPosition_Z = static_cast<std::int16_t>(f >= 0 ? f * 0x7FFF : f * 0x8000);
+						//VP.m_QPosition_Z = static_cast<std::int16_t>(f >= 0 ? f * 0x7FFF : f * 0x8000);
+						VP.pos[2] = V.m_Position.z;	// rich
 
 						// Store the Normal.X and some bits in the W part... 
 						// Now we must convert the normal to 14 bits... (we reserve the last 2 bit for something else...)
@@ -609,7 +613,7 @@ namespace _GEOM
 						}
 
 						// Store the quantized normal X component with extra information in VPContainer
-						VP.m_QPosition_QNormalX = Nx;
+						//VP.m_QPosition_QNormalX = Nx;
 						VPContainer.push_back(VP);
 					}
 				}
@@ -701,10 +705,10 @@ namespace _GEOM
 					{
 						auto& pos = Pos[iVertex++];
 
-						pos.m_QPosition_X = _pos.m_QPosition_X;
-						pos.m_QPosition_Y = _pos.m_QPosition_Y;
-						pos.m_QPosition_Z = _pos.m_QPosition_Z;
-						pos.m_QPosition_QNormalX = _pos.m_QPosition_QNormalX;
+						pos.pos[0] = _pos.pos[0];
+						pos.pos[1] = _pos.pos[1];
+						pos.pos[2] = _pos.pos[2];
+						//pos.m_QPosition_QNormalX = _pos.m_QPosition_QNormalX;
 					}
 				}
 

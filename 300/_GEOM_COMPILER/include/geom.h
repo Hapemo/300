@@ -48,10 +48,12 @@ namespace _GEOM
 	{
 		struct alignas(std::uint32_t) VertexPos
 		{
-			std::int16_t    m_QPosition_X		// All these go together they are represented by
-				, m_QPosition_Y					// SINT16_4D_NORMALIZED
-				, m_QPosition_Z					//
-				, m_QPosition_QNormalX;			// The normal X dimension plus a sign bit
+			//std::int16_t    m_QPosition_X		// All these go together they are represented by
+			//	, m_QPosition_Y					// SINT16_4D_NORMALIZED
+			//	, m_QPosition_Z					//
+			//	, m_QPosition_QNormalX;			// The normal X dimension plus a sign bit
+			glm::vec3 pos;
+			glm::vec2 nml;
 		};
 
 		struct alignas(std::uint32_t) VertexExtra
