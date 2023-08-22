@@ -32,7 +32,7 @@ namespace GFX
 	public:
 		// -- Called once on startup --
 		void LoadFromGeom(const _GEOM::Geom& GeomData, std::vector<vec3>& positions, std::vector<unsigned int>& indices);
-		void Setup(std::vector<vec3> const& positions, std::vector<unsigned int> const& indices);
+		void Setup(std::vector<vec3> const& positions, std::vector<unsigned int> const& indices, std::vector<vec2> const& TexCoords = std::vector<vec2>{});
 
 		// -- Used when drawing --
 		void BindVao();
@@ -68,6 +68,7 @@ namespace GFX
 		VBO mVbo;
 		VBO mEbo;
 		VBO mColorVbo;
+		VBO mTexCoordVbo;
 		VBO mLTWVbo;
 
 		// Stats of the mesh model

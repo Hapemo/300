@@ -26,7 +26,7 @@ void GFX::Mesh::LoadFromGeom(const _GEOM::Geom& GeomData, std::vector<vec3>& pos
 }
 
 
-void GFX::Mesh::Setup(std::vector<vec3> const& positions, std::vector<unsigned int> const& indices)
+void GFX::Mesh::Setup(std::vector<vec3> const& positions, std::vector<unsigned int> const& indices, std::vector<vec2> const& TexCoords)
 {
 	// Create VAO
 	mVao.Create();
@@ -47,17 +47,25 @@ void GFX::Mesh::Setup(std::vector<vec3> const& positions, std::vector<unsigned i
 	mVao.AddAttributeDivisor(1, 1);													// divisor at vao index 1
 	mVao.AttachVerterBuffer(mColorVbo.GetID(), 1, 0, sizeof(vec4));					// Attach to index 1
 
+	// Create VBO for Tex Coordinates data
+	mTexCoordVbo.Create(sizeof(vec2) * TexCoords.size());
+
+	// Attach TexCoord VBO and divisor to VAO
+	mVao.AddAttribute(2, 2, 2, GL_FLOAT);											// location 2, binding vao index 2
+	mVao.AddAttributeDivisor(2, 1);													// divisor at vao index 2
+	mVao.AttachVerterBuffer(mTexCoordVbo.GetID(), 2, 0, sizeof(vec2));				// Attach to index 2
+
 	// Create local-to-world VBO
 	mLTWVbo.Create(sizeof(mat4) * MAX_INSTANCES);
 
 	// Add attributes and divisor as vec4
 	for (int i = 0; i < 4; ++i)		
 	{
-		mVao.AddAttribute(2 + i, 2, 4, GL_FLOAT, sizeof(vec4) * i);					// location 2, binding vao index 2
-		mVao.AddAttributeDivisor(2, 1);												// divisor at vao index 2
+		mVao.AddAttribute(3 + i, 3, 4, GL_FLOAT, sizeof(vec4) * i);					// location 3, binding vao index 3
+		mVao.AddAttributeDivisor(3, 1);												// divisor at vao index 3
 	}
 	// Attach LTW VBO to VAO
-	mVao.AttachVerterBuffer(mLTWVbo.GetID(), 2, 0, sizeof(vec4) * 4);
+	mVao.AttachVerterBuffer(mLTWVbo.GetID(), 3, 0, sizeof(vec4) * 4);
 
 	// Element Buffer Object
 	mEbo.Create(indices.size() * sizeof(GLuint));

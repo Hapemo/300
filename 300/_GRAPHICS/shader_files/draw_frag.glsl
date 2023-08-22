@@ -3,6 +3,7 @@
 //#extension GL_ARB_shading_language_420pack : enable
 
 in vec4 VertexColor;
+in vec2 TexCoords;
 
 out vec4 FragColor;
 
