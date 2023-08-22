@@ -1,18 +1,21 @@
 #ifndef MESH_HPP
 #define MESH_HPP
 
+#define _ASSIMP_LOADING 0
+
 #include "Math.hpp"
 #include "Vao.hpp"
 #include "Vbo.hpp"
 #include <geom.h>
 
-// temporary mesh loading test. this will change to include files from geom compiler when that is done
+#include "../../lib/stb-master/stb_image.h"
+
+#if _ASSIMP_LOADING
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
-#include "../../lib/stb-master/stb_image.h"
-
 #pragma comment( lib, "../lib/assimp/BINARIES/Win32/lib/Release/assimp-vc142-mt.lib")
+#endif
 
 
 constexpr int MAX_INSTANCES = 1000;
@@ -96,11 +99,13 @@ namespace Deserialization
 }
 
 
+#if _ASSIMP_LOADING
 namespace AssimpImporter
 {
 	void loadModel(const std::string& filepath);
 	void processnode(aiNode* node, const aiScene* scene);
 	GFX::Mesh processmesh(aiMesh* mesh, const aiScene* scene);
 }
+#endif
 
 #endif

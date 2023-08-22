@@ -28,5 +28,5 @@ void main()
     // Set all the output vars
     VertexColor                 = inVertexColor;
     gl_Position                 = uMatrixVP * inLTW * Pos;
-    TexCoords                   = Out.UV;
+    TexCoords                   = inQUV;
 }

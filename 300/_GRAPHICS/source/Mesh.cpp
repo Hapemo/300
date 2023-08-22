@@ -341,7 +341,7 @@ namespace Deserialization
 #endif
 }
 
-
+#if _ASSIMP_LOADING
 namespace AssimpImporter
 {
 	void processnode(aiNode* node, const aiScene* scene) 
@@ -409,3 +409,4 @@ namespace AssimpImporter
 		processnode(scene->mRootNode, scene);
 	}
 }
+#endif
