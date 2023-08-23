@@ -140,6 +140,22 @@ namespace _GEOM
 
 	void Mesh_Loader::ImportStaticData(std::vector<InputMeshPart>& _MyNodes)
 	{
+		auto LoadMaterialTextures = [&](aiMaterial* mat, aiTextureType type, std::string typeName) -> std::vector<Geom::Texture>
+		{
+			std::vector<Geom::Texture> textures;
+			for (unsigned int i{}; i < mat->GetTextureCount(type); ++i)
+			{
+				aiString str;
+				mat->GetTexture(type, i, &str);
+				Geom::Texture texture;
+				texture.type = typeName;
+				texture.path = str.C_Str();
+				textures.emplace_back(texture);
+			}
+
+			return textures;
+		};
+
 		// process the provided node mesh by extractomg data from the assimp mesh and storing it into my own data structure
 		auto ProcessMesh = [&](const aiMesh& AssimpMesh, const aiMatrix4x4& Transform, InputMeshPart& MeshPart, const int iTexCordinates, const int iColors)
 		{
@@ -152,6 +168,17 @@ namespace _GEOM
 
 			MeshPart.m_Name = AssimpMesh.mName.C_Str();
 			MeshPart.m_iMaterialInstance = AssimpMesh.mMaterialIndex;
+
+			// getting the mesh's material
+			if (AssimpMesh.mMaterialIndex >= 0)
+			{
+				aiMaterial* material = m_Scene->mMaterials[AssimpMesh.mMaterialIndex];
+				std::vector<Geom::Texture> diffusemaps = LoadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
+				MeshPart.m_Textures.insert(MeshPart.m_Textures.end(), diffusemaps.begin(), diffusemaps.end());
+
+				std::vector<Geom::Texture> specularmaps = LoadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
+				MeshPart.m_Textures.insert(MeshPart.m_Textures.end(), specularmaps.begin(), specularmaps.end());
+			}
 
 			MeshPart.m_Vertices.resize(AssimpMesh.mNumVertices);
 			for (auto i = 0u; i < AssimpMesh.mNumVertices; ++i)
@@ -472,6 +499,7 @@ namespace _GEOM
 		std::cout << ">>== \t\tQuantizing mesh data...\n";
 		std::vector<CompressedMeshPart> CompressedMeshParts(_MyNodes.size());		// create a return vector with the same size as the input vector
 
+#if 0
 		// Create a bounding box for each submesh
 		bbox GLOBAL_PosBBox;
 		bbox GLOBAL_UVBBox;
@@ -511,6 +539,8 @@ namespace _GEOM
 		// Set the global scale for the quantization, this will allow us to normalize
 		m_PosCompressionScale = GLOBAL_PosBBox.getSize();
 		m_UVCompressionScale = glm::vec2(GLOBAL_UVBBox.getSize().x, GLOBAL_UVBBox.getSize().y);
+#endif
+
 
 		////////////////////////////////////
 		// QUANTIZE VERTEX DATA 
@@ -560,7 +590,7 @@ namespace _GEOM
 				}
 
 				RenderSubmesh.m_Pos = VPContainer;
-				RenderSubmesh.m_Extra = VEContainer;		// TEST. remove later!!
+				RenderSubmesh.m_Extra = VEContainer;
 			}
 		}
 
@@ -577,7 +607,7 @@ namespace _GEOM
 	}
 
 
-	void SkinGeom::CastToGeomStruct(Geom& _geom, const glm::vec3& posScaleDecompress, const glm::vec2& UVScaleDecompress) noexcept
+	void SkinGeom::CastToGeomStruct(Geom& _geom) noexcept
 	{
 		//Get total sizes
 		std::size_t totalMeshes = m_Meshes.size();

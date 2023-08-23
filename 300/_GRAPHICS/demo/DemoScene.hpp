@@ -23,7 +23,6 @@
 #include "ImGui.hpp"
 #include "Texture.hpp"
 #include <geom.h>
-#include <map>
 
 
 namespace GFX {
@@ -51,7 +50,6 @@ namespace GFX {
         DebugRenderer* mRenderer;
         Camera mCamera;
         Shader mModelShader;
-        std::map<std::string, Mesh> mSceneMeshes;
 
         // -- Stats --
         float mDt = 0.0f;
@@ -61,7 +59,7 @@ namespace GFX {
         // -- Flags --
 
         // -- Helper --
-
+        
         // -- Textures --
         Texture mTexture;
     };

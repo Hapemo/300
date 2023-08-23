@@ -77,6 +77,13 @@ namespace _GEOM
 			std::uint16_t			m_iMaterial;		//Index of material in submesh
 		};
 
+		struct Texture
+		{
+			unsigned int id;
+			std::string type;
+			std::string path;
+		};
+
 	public:
 		std::shared_ptr<Mesh[]>				m_pMesh;		//Pointer to Mesh
 		std::shared_ptr<SubMesh[]>			m_pSubMesh;		//Pointer to SubMesh
@@ -117,7 +124,7 @@ namespace _GEOM
 		std::string							m_Filename;
 		std::vector<Mesh>					m_Meshes;
 
-		void								CastToGeomStruct(Geom& _geom, const glm::vec3& posScaleDecompress, const glm::vec2& UVScaleDecompress) noexcept;
+		void								CastToGeomStruct(Geom& _geom) noexcept;
 	};
 }
 

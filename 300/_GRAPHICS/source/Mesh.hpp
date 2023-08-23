@@ -56,15 +56,12 @@ namespace GFX
 		std::vector<mat4> mLTW;
 		std::vector<vec4> mColors;
 
-		glm::vec3 m_PosCompressionScale		= glm::vec3(1.f);
-		glm::vec3 m_PosCompressionOffset	= glm::vec3(1.f);
-		glm::vec2 m_UVCompressionScale		= glm::vec2(1.f);
-		glm::vec2 m_UVCompressionOffset		= glm::vec2(1.f);
-
+#if _ASSIMP_LOADING
 		// assimp loaded mesh variables
 		std::vector<glm::vec3>		mPositions;
 		std::vector<unsigned int>	mIndices;
-		static std::vector<Mesh> assimpLoadedMeshes;	// temp global variable
+		static std::vector<Mesh> assimpLoadedMeshes;	
+#endif
 
 	private:
 		// Vertex array object and buffer object for each mesh
@@ -76,11 +73,34 @@ namespace GFX
 		VBO mLTWVbo;
 
 		// Stats of the mesh model
+		std::string mMeshName;
 		int mVertexCount{};
 		int mIndexCount{};
-
 	};
 
+
+	class MeshManager
+	{
+	public:
+		std::vector<Mesh> mSceneMeshes;
+
+	public:
+		static MeshManager& GetInstance()
+		{
+			static MeshManager instance;
+			return instance;
+		}
+
+		MeshManager() = default;
+		MeshManager(MeshManager const&) = delete;
+		void Init();
+		//void Destroy();
+
+		void operator=(MeshManager const&) = delete;
+
+	private:
+		std::string compiled_geom_path = "../compiled_geom/";
+	};
 }
 
 

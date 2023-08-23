@@ -46,7 +46,7 @@ int main()
 		std::cout << ">>== \t\tSuccessfully Loaded Asset\n";
 		std::cout << ">>== \t\tCreating Geom Structure\n";
 		_GEOM::Geom geom{};
-		SkinGeom.CastToGeomStruct(geom, meshLoader.m_PosCompressionScale, meshLoader.m_UVCompressionScale);
+		SkinGeom.CastToGeomStruct(geom);
 
 		std::string sRawFileName = getFileNameWithoutExtension(Desc.m_Filepaths[Desc.m_iMeshCurrent]);
 		std::string sGeomFilepath = Desc.m_sOutputPath + sRawFileName + Desc.m_sOutputFormat;

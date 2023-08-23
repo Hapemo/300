@@ -17,7 +17,6 @@
 #include "ImGui.hpp"
 #include <cassert>
 
-std::vector<GFX::Mesh> GFX::Mesh::assimpLoadedMeshes;
 
  /**---------------------------------------------------------------------------/
   * @brief
@@ -82,23 +81,27 @@ void GFX::DemoScene::Initialize()
     // Loading in Compressed textures
     mTexture.Load("../assets/Compressed/Skull.png");
 
-    _GEOM::Geom GeomData;
-    Mesh skullmesh;
-    std::vector<glm::vec3> positions;
-    std::vector<glm::vec2> uvs;
-    std::vector<unsigned int> indices;
+    // Load all meshes
+    MeshManager::GetInstance().Init();
 
-    // Deserialize Geom and load mesh
-    Deserialization::DeserializeGeom("../compiled_geom/Skull_textured.geom", GeomData);
-    skullmesh.LoadFromGeom(GeomData, positions, uvs, indices);
-    skullmesh.Setup(positions, indices, uvs);
-    mSceneMeshes["skullmesh"] = skullmesh;
-    auto& currentmesh = skullmesh;
+    //_GEOM::Geom GeomData;
+    //Mesh skullmesh;
+    //std::vector<glm::vec3> positions;
+    //std::vector<glm::vec2> uvs;
+    //std::vector<unsigned int> indices;
+        // Deserialize Geom and load mesh
+    //Deserialization::DeserializeGeom("../compiled_geom/Skull_textured.geom", GeomData);
+    //skullmesh.LoadFromGeom(GeomData, positions, uvs, indices);
+    //skullmesh.Setup(positions, indices, uvs);
+    //mSceneMeshes.push_back(skullmesh);
+    //auto& currentmesh = skullmesh;
+    //currentmesh.Setup(currentmesh.mPositions, currentmesh.mIndices);
     
-    //AssimpImporter::loadModel("../assets/demon-skull-textured/source/Skull_textured.fbx");
-    //auto& currentmesh = GFX::Mesh::assimpLoadedMeshes[0];
+#if _ASSIMP_LOADING
+    AssimpImporter::loadModel("../assets/demon-skull-textured/source/Skull_textured.fbx");
+    auto& currentmesh = GFX::Mesh::assimpLoadedMeshes[0];
+#endif
 
-    currentmesh.Setup(currentmesh.mPositions, currentmesh.mIndices);
 
     // Setup shader
     mModelShader.CreateShaderFromFiles("./shader_files/draw_vert.glsl", "./shader_files/draw_frag.glsl");
@@ -200,15 +203,13 @@ void GFX::DemoScene::Draw()
         //!< test rendering skull model
         //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         mModelShader.Activate();
-        Mesh& currentmesh = mSceneMeshes["skullmesh"];
-        //Mesh& currentmesh = GFX::Mesh::assimpLoadedMeshes[0];
+        Mesh& currentmesh = MeshManager::GetInstance().mSceneMeshes[1];
 
         mat4 identity = mat4(1.0);
         currentmesh.mLTW.push_back(identity);
 
         currentmesh.BindVao();
         currentmesh.PrepForDraw();
-
 
         glUniformMatrix4fv(mModelShader.GetUniformVP(), 1, GL_FALSE, &mCamera.viewProj()[0][0]);            // camera projection
 

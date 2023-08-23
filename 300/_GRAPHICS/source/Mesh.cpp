@@ -1,4 +1,5 @@
 #include "Mesh.hpp"
+#include <filesystem>
 
 // Follows the format in the shader code
 /******************************************
@@ -126,12 +127,39 @@ void GFX::Mesh::Destroy()
 	mColorVbo.Destroy();
 }
 
+void GFX::MeshManager::Init()
+{
+	std::filesystem::path folderpath = compiled_geom_path.c_str();
+
+	for (const auto& entry : std::filesystem::directory_iterator(folderpath))
+	{
+		if (std::filesystem::is_regular_file(entry))
+		{
+			std::cout << "Loading file: " << entry.path().filename() << "\n";
+
+			_GEOM::Geom GeomData;
+			Mesh localmesh;
+			std::vector<glm::vec3> positions;
+			std::vector<glm::vec2> uvs;
+			std::vector<unsigned int> indices;
+
+			std::string filepath = compiled_geom_path + entry.path().filename().string();
+			Deserialization::DeserializeGeom(filepath.c_str(), GeomData);
+			localmesh.LoadFromGeom(GeomData, positions, uvs, indices);
+			localmesh.Setup(positions, indices, uvs);
+
+			mSceneMeshes.emplace_back(localmesh);
+		}
+	}
+}
+
 
 namespace Deserialization
 {
 	bool DeserializeGeom(const std::string Filepath, _GEOM::Geom& GeomData) noexcept
 	{
-		std::ifstream infile("../compiled_geom/Skull_textured.geom");
+		//std::ifstream infile("../compiled_geom/Skull_textured.geom");
+		std::ifstream infile(Filepath.c_str());
 		assert(infile.is_open());
 
 		Serialization::ReadUnsigned(infile, GeomData.m_nMeshes);

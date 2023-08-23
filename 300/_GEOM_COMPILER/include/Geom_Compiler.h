@@ -25,6 +25,7 @@ namespace _GEOM
 			std::vector<FullVertices>		m_Vertices;
 			std::vector<uint32_t>			m_Indices;
 			int								m_iMaterialInstance;
+			std::vector<Geom::Texture>		m_Textures;
 		};
 
 		struct CompressedMeshPart
@@ -40,8 +41,8 @@ namespace _GEOM
 	public:
 		bool Load(const DescriptorData& _DData, SkinGeom* _skinGeom) noexcept;
 
-		glm::vec3							m_PosCompressionScale;
-		glm::vec2							m_UVCompressionScale;
+		//glm::vec3							m_PosCompressionScale;
+		//glm::vec2							m_UVCompressionScale;
 	
 	private:
 		bool								ImportGeometryValidateMesh(const aiMesh& AssimpMesh, int& iTexture, int& iColor) noexcept;
