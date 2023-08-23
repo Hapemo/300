@@ -96,6 +96,9 @@
     <ClCompile Include="..\_GEOM_COMPILER\src\geom.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\Texture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Math.hpp">
@@ -144,6 +147,9 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="..\_GEOM_COMPILER\include\geom.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Texture.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

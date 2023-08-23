@@ -45,6 +45,7 @@ namespace GFX
 		// -- Used after drawing current scene --
 		void ClearInstances();
 
+		// -- Getter --
 		int GetVertexCount() { return mVertexCount; }
 		int GetIndexCount() { return mIndexCount; }
 
@@ -75,8 +76,8 @@ namespace GFX
 		VBO mLTWVbo;
 
 		// Stats of the mesh model
-		int mVertexCount;
-		int mIndexCount;
+		int mVertexCount{};
+		int mIndexCount{};
 
 	};
 

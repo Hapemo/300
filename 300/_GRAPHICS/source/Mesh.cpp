@@ -37,14 +37,20 @@ void GFX::Mesh::Setup(std::vector<vec3> const& positions, std::vector<unsigned i
 	// Create VAO
 	mVao.Create();
 
+	/////////////////////////////////////////
+	// POSITIONS
+	/////////////////////////////////////////
 	// Create VBO for mesh model
 	mVbo.Create(positions.size() * sizeof(vec3));
-	mVbo.AttachData(0, positions.size() * sizeof(vec3), positions.data());			// Attach mesh data to VBO
-	mVao.AttachVerterBuffer(mVbo.GetID(), 0, 0, sizeof(vec3));
 
-	// Attach point VBO to VAO
+	// Attach VBO for positions to VAO
 	mVao.AddAttribute(0, 0, 3, GL_FLOAT);											// location 0, binding vao index 0
+	mVbo.AttachData(0, positions.size() * sizeof(vec3), positions.data());			// Attach mesh data to VBO
+	mVao.AttachVerterBuffer(mVbo.GetID(), 0, 0, sizeof(vec3));						// Attach to index 0
 
+	/////////////////////////////////////////
+	// COLORS
+	/////////////////////////////////////////
 	// Create VBO for Color data
 	mColorVbo.Create(sizeof(vec4) * MAX_INSTANCES);
 
@@ -53,12 +59,15 @@ void GFX::Mesh::Setup(std::vector<vec3> const& positions, std::vector<unsigned i
 	mVao.AddAttributeDivisor(1, 1);													// divisor at vao index 1
 	mVao.AttachVerterBuffer(mColorVbo.GetID(), 1, 0, sizeof(vec4));					// Attach to index 1
 
+	/////////////////////////////////////////
+	// TEXTURE COORDINATES
+	/////////////////////////////////////////
 	// Create VBO for Tex Coordinates data
 	mTexCoordVbo.Create(sizeof(vec2) * TexCoords.size());
 
-	// Attach TexCoord VBO and divisor to VAO
+	// Attach TexCoord VBO to VAO
 	mVao.AddAttribute(2, 2, 2, GL_FLOAT);											// location 2, binding vao index 2
-	mVao.AddAttributeDivisor(2, 1);													// divisor at vao index 2
+	mTexCoordVbo.AttachData(0, TexCoords.size() * sizeof(vec2), TexCoords.data());	// Attach mesh data to VBO
 	mVao.AttachVerterBuffer(mTexCoordVbo.GetID(), 2, 0, sizeof(vec2));				// Attach to index 2
 
 	// Create local-to-world VBO

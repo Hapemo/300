@@ -79,6 +79,9 @@ void GFX::DemoScene::Initialize()
     if (!ImGui_ImplOpenGL3_Init("#version 150"))
         throw std::runtime_error("Could not initialize ImGui::OpenGL (2)");
 
+    // Loading in Compressed textures
+    mTexture.Load("../assets/Compressed/Skull.png");
+
     _GEOM::Geom GeomData;
     Mesh skullmesh;
     std::vector<glm::vec3> positions;
@@ -88,7 +91,7 @@ void GFX::DemoScene::Initialize()
     // Deserialize Geom and load mesh
     Deserialization::DeserializeGeom("../compiled_geom/Skull_textured.geom", GeomData);
     skullmesh.LoadFromGeom(GeomData, positions, uvs, indices);
-    skullmesh.Setup(positions, indices);
+    skullmesh.Setup(positions, indices, uvs);
     mSceneMeshes["skullmesh"] = skullmesh;
     auto& currentmesh = skullmesh;
     
@@ -195,7 +198,7 @@ void GFX::DemoScene::Draw()
 
 #if 1
         //!< test rendering skull model
-        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         mModelShader.Activate();
         Mesh& currentmesh = mSceneMeshes["skullmesh"];
         //Mesh& currentmesh = GFX::Mesh::assimpLoadedMeshes[0];
@@ -209,10 +212,14 @@ void GFX::DemoScene::Draw()
 
         glUniformMatrix4fv(mModelShader.GetUniformVP(), 1, GL_FALSE, &mCamera.viewProj()[0][0]);            // camera projection
 
+        // Bind texture unit
+        glBindTextureUnit(0, mTexture.ID());
+
         glDrawElementsInstanced(GL_TRIANGLES, currentmesh.GetIndexCount(), GL_UNSIGNED_INT, nullptr, currentmesh.mLTW.size());
 
         mModelShader.Deactivate();
         currentmesh.UnbindVao();
+        glBindTextureUnit(0, 0);
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         currentmesh.ClearInstances();
         //! 

@@ -21,6 +21,7 @@
 #include "DebugRenderer.hpp"
 #include "Shapes.hpp"
 #include "ImGui.hpp"
+#include "Texture.hpp"
 #include <geom.h>
 #include <map>
 
@@ -60,6 +61,9 @@ namespace GFX {
         // -- Flags --
 
         // -- Helper --
+
+        // -- Textures --
+        Texture mTexture;
     };
 }
 

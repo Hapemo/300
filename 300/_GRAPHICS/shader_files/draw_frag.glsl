@@ -5,13 +5,16 @@
 in vec4 VertexColor;
 in vec2 TexCoords;
 
+uniform sampler2D uTex;
+
 out vec4 FragColor;
 
 //------------------- MAIN FUNCTION -----------------------------
 void main() 
 {
 	FragColor = VertexColor;
-	FragColor = vec4(1.0, 0.0, 0.0, 1.0);
-}
+	//FragColor = vec4(1.0, 0.0, 0.0, 1.0);
+	FragColor = texture(uTex, TexCoords);
+}	
 
 
