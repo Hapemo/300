@@ -82,11 +82,12 @@ void GFX::DemoScene::Initialize()
     _GEOM::Geom GeomData;
     Mesh skullmesh;
     std::vector<glm::vec3> positions;
+    std::vector<glm::vec2> uvs;
     std::vector<unsigned int> indices;
 
     // Deserialize Geom and load mesh
     Deserialization::DeserializeGeom("../compiled_geom/Skull_textured.geom", GeomData);
-    skullmesh.LoadFromGeom(GeomData, positions, indices);
+    skullmesh.LoadFromGeom(GeomData, positions, uvs, indices);
     skullmesh.Setup(positions, indices);
     mSceneMeshes["skullmesh"] = skullmesh;
     auto& currentmesh = skullmesh;

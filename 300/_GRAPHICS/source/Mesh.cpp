@@ -7,7 +7,7 @@
 	location = 2 --> LTW;
 ******************************************/
 
-void GFX::Mesh::LoadFromGeom(const _GEOM::Geom& GeomData, std::vector<vec3>& positions, std::vector<unsigned int>& indices)
+void GFX::Mesh::LoadFromGeom(const _GEOM::Geom& GeomData, std::vector<vec3>& positions, std::vector<glm::vec2>& uvs, std::vector<unsigned int>& indices)
 {
 	for (size_t iSM{}; iSM < GeomData.m_nSubMeshes; ++iSM)
 	{
@@ -21,6 +21,12 @@ void GFX::Mesh::LoadFromGeom(const _GEOM::Geom& GeomData, std::vector<vec3>& pos
 		for (size_t iPos{}, up{ GeomData.m_pSubMesh[iSM].m_iVertices }; iPos < GeomData.m_pSubMesh[iSM].m_nVertices; ++iPos, ++up)
 		{
 			positions.emplace_back(vec3(GeomData.m_pPos[up].pos.x, GeomData.m_pPos[up].pos.y, GeomData.m_pPos[up].pos.z));
+		}
+
+		// Load UVs
+		for (size_t iUV{}, uuv{ GeomData.m_pSubMesh[iSM].m_iVertices }; iUV < GeomData.m_pSubMesh[iSM].m_nVertices; ++iUV, ++uuv)
+		{
+			uvs.emplace_back(vec2(GeomData.m_pPos[uuv].m_UV.x, GeomData.m_pPos[uuv].m_UV.y));
 		}
 	}
 }
