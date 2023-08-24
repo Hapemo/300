@@ -21,7 +21,7 @@ unsigned int GFX::Texture::Load(const char* filename)
 #if 1
 
 	// Load, create texture and generate mipmaps
-	stbi_set_flip_vertically_on_load(true);
+	stbi_set_flip_vertically_on_load(false);
 	unsigned char* buffer = stbi_load(filename, &mWidth, &mHeight, &mChannels, 0);
 
 #endif
