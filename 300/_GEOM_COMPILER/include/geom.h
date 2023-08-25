@@ -14,10 +14,9 @@
 
 namespace _GEOM
 {
-	class SharedVertexPos;
-
 	struct FullVertices
 	{
+		glm::vec4			m_Color;			//Color of vertex
 		glm::vec3			m_Position;			//Position of vertex
 		glm::vec2			m_Texcoord;			//UVs of vertex
 		glm::vec3			m_fNormal;			//Normal of vertex
@@ -26,7 +25,7 @@ namespace _GEOM
 		glm::ivec4			m_Tangent;			//Tangent of vertex
 		glm::ivec4			m_Bitangent;		//Bi-tangent of vertex
 		glm::ivec4			m_Normal;			//Normal of vertex
-		glm::ivec4			m_Color;			//Color of vertex
+
 	};
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -48,7 +47,8 @@ namespace _GEOM
 	{
 		struct alignas(std::uint32_t) VertexPos
 		{
-			glm::vec3 pos;
+			glm::vec3 m_Pos;
+			glm::vec3 m_Clr;
 			glm::vec2 m_UV;
 		};
 
@@ -97,7 +97,7 @@ namespace _GEOM
 		std::uint32_t			m_nExtras;
 		std::uint32_t			m_nIndices;
 
-		static bool SerializeGeom(const std::string& filename, const DescriptorData& Desc, Geom& GeomData) noexcept;
+		static bool SerializeGeom(const std::string& filename, Geom& GeomData) noexcept;
 		//static bool DeserializeGeom(const std::string Filepath, Geom& GeomRef) noexcept;
 	};
 
@@ -107,12 +107,10 @@ namespace _GEOM
 	{
 		struct Submesh
 		{	
-			std::vector<Geom::VertexPos>	m_Pos;
+			std::vector<Geom::VertexPos>	m_Vertex;
 			std::vector<Geom::VertexExtra>	m_Extra;
 			std::vector<uint32_t>			m_Indices;
 			int m_iMaterial;
-			glm::vec3						m_PosCompressionOffset;
-			glm::vec2						m_UVCompressionOffset;
 		};
 
 		struct Mesh
@@ -153,7 +151,7 @@ namespace Serialization
 	bool SerializeVertexExtra(std::ofstream& outFile, const _GEOM::Geom& GeomData) noexcept;
 	bool SerializeIndices(std::ofstream& outFile, const _GEOM::Geom& GeomData) noexcept;	
 
-	bool ReadUnsigned(std::ifstream& inFile, std::uint32_t& value) noexcept;
+	std::string ReadUnsigned(std::ifstream& inFile, std::uint32_t& value) noexcept;
 	bool ReadSigned(std::ifstream& inFile, std::int16_t& value) noexcept;
 	bool ReadVec3WithHeader(std::ifstream& inFile, glm::vec3& value) noexcept;
 	bool ReadVec2WithHeader(std::ifstream& inFile, glm::vec2& value) noexcept;
@@ -162,6 +160,9 @@ namespace Serialization
 	bool ReadVertexPos(std::ifstream& inFile, _GEOM::Geom& GeomData) noexcept;
 	bool ReadVertexExtra(std::ifstream& inFile, _GEOM::Geom& GeomData) noexcept;
 	bool ReadIndices(std::ifstream& inFile, _GEOM::Geom& GeomData) noexcept;
+
+	extern bool bVtxClrPresent;		// when this boolean is false, it means that the vertex colors are not present within the mesh.
+								    // defaults to (1, 1, 1, 1)
 }
 
 std::ostream& operator<<(std::ostream& os, const glm::vec2& v);

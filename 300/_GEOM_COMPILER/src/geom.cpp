@@ -48,6 +48,9 @@ namespace _GEOM
 
 namespace Serialization
 {
+	// Global Variable
+	bool bVtxClrPresent = true;
+
 		// ====================================================================================================
 		//										NEW SERIALIZATION CODE BLOCK
 		// ====================================================================================================
@@ -115,11 +118,21 @@ namespace Serialization
 
 		bool SerializeVertexPos(std::ofstream& outFile, const _GEOM::Geom& GeomData) noexcept
 		{
+			// Vertex color present
+			if(bVtxClrPresent)
+				outFile << " VTXCLR_YES";
+			else
+				outFile << " VTXCLR_NO";
+
 			for (unsigned i{}; i < GeomData.m_nVertices; ++i)
 			{
 				outFile << std::endl;
-				SerializeVec3(outFile, GeomData.m_pPos[i].pos);
+				SerializeVec3(outFile, GeomData.m_pPos[i].m_Pos);
 				SerializeVec2(outFile, GeomData.m_pPos[i].m_UV);
+
+				if (bVtxClrPresent) {
+					SerializeVec3(outFile, GeomData.m_pPos[i].m_Clr);
+				}
 			}
 
 			return true;	// no errors
@@ -199,9 +212,14 @@ namespace Serialization
 	
 	bool ReadVertexPos(std::ifstream& inFile, _GEOM::Geom& GeomData) noexcept
 	{
-		ReadUnsigned(inFile, GeomData.m_nVertices);
-		std::unique_ptr<_GEOM::Geom::VertexPos[]> pos = std::make_unique<_GEOM::Geom::VertexPos[]>(GeomData.m_nVertices);
+		std::string check;
+		check = ReadUnsigned(inFile, GeomData.m_nVertices);
+		if(check.find("VTXCLR_YES") != std::string::npos)
+			bVtxClrPresent = true;
+		else
+			bVtxClrPresent = false;
 
+		std::unique_ptr<_GEOM::Geom::VertexPos[]> pos = std::make_unique<_GEOM::Geom::VertexPos[]>(GeomData.m_nVertices);
 		for (unsigned i{}; i < GeomData.m_nVertices; ++i)
 		{
 			char ch;
@@ -209,13 +227,20 @@ namespace Serialization
 			std::getline(inFile, VertexPosStr);
 			std::stringstream Stream(VertexPosStr);
 
-			Stream >> ch >> pos[i].pos.x;
-			Stream >> ch >> pos[i].pos.y;
-			Stream >> ch >> pos[i].pos.z >> ch;
+			Stream >> ch >> pos[i].m_Pos.x;
+			Stream >> ch >> pos[i].m_Pos.y;
+			Stream >> ch >> pos[i].m_Pos.z >> ch;
 
 			Stream >> ch >> pos[i].m_UV.x;
-			Stream >> ch >> pos[i].m_UV.y;
-			//Stream >> pos[i].m_QPosition_QNormalX;
+			Stream >> ch >> pos[i].m_UV.y >> ch;
+
+			// only serialize the vertex color if it is present
+			if (bVtxClrPresent)
+			{
+				Stream >> ch >> pos[i].m_Clr.x;
+				Stream >> ch >> pos[i].m_Clr.y;
+				Stream >> ch >> pos[i].m_Clr.z;
+			}
 		}
 
 		GeomData.m_pPos = std::move(pos);
@@ -277,7 +302,7 @@ namespace Serialization
 	}
 
 	
-	bool ReadUnsigned(std::ifstream& inFile, std::uint32_t& value) noexcept
+	std::string ReadUnsigned(std::ifstream& inFile, std::uint32_t& value) noexcept
 	{
 		std::string line;
 		std::getline(inFile, line);
@@ -286,14 +311,15 @@ namespace Serialization
 		assert(colonPos != std::string::npos);
 
 		std::string unsignedStr = line.substr(colonPos + 1);
-		std::istringstream(unsignedStr) >> value;
+		std::istringstream ss(unsignedStr);
+		ss >> value;
 
 		if (unsignedStr.empty() && unsignedStr.substr(1).empty()) {
 			std::cout << "[ERROR]>> Failed to Read unsigned value\n";
-			return false;
+			assert(false);
 		}
 
-		return true;
+		return ss.str();
 	}
 
 

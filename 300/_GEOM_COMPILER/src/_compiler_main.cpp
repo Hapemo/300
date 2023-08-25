@@ -51,7 +51,7 @@ int main()
 		std::string sRawFileName = getFileNameWithoutExtension(Desc.m_Filepaths[Desc.m_iMeshCurrent]);
 		std::string sGeomFilepath = Desc.m_sOutputPath + sRawFileName + Desc.m_sOutputFormat;
 
-		_GEOM::Geom::SerializeGeom(sGeomFilepath, Desc, geom);
+		_GEOM::Geom::SerializeGeom(sGeomFilepath, geom);
 		std::cout << ">>== \t\tSERIALIZATION SUCCESSFUL\n";
 		std::cout << ">>== \t\tEnding \t\t==\n";
 	}

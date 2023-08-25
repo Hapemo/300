@@ -186,7 +186,6 @@ namespace _GEOM
 				FullVertices& Vertex = MeshPart.m_Vertices[i];		// the mesh's vertices
 					
 				auto L = Transform * AssimpMesh.mVertices[i];		// adds pretransformation to the vertices
-				//auto L = AssimpMesh.mVertices[i];		// rich 
 
 				// VERTEX POSITIONS //
 				Vertex.m_Position = glm::vec3						// populating the transformed vertex position
@@ -213,7 +212,8 @@ namespace _GEOM
 				// COLORS //
 				if (iColors == -1)
 				{
-					Vertex.m_Color = glm::vec4(255, 255, 255, 255);	// default initializes color to white if not present
+					Vertex.m_Color = glm::vec4(1.f, 1.f, 1.f, 1.f);	// default initializes color to white if not present
+					Serialization::bVtxClrPresent = false;
 				}
 				else
 				{
@@ -447,7 +447,7 @@ namespace _GEOM
 			FinalMesh.m_Submeshes.emplace_back();
 			auto& SubMesh = FinalMesh.m_Submeshes.back();
 
-			SubMesh.m_Pos = E.m_Pos;
+			SubMesh.m_Vertex = E.m_Vertex;
 			SubMesh.m_Extra = E.m_Extra;
 			SubMesh.m_Indices = E.m_Indices;
 			SubMesh.m_iMaterial = E.m_iMaterialInstance;
@@ -559,7 +559,7 @@ namespace _GEOM
 				{
 					// == NORMAL, TANGENT, BITANGENT (SIGN) AND UV COORDINATES //
 					{
-						Geom::VertexExtra VE;
+						Geom::VertexExtra VE{};
 						
 						VE.m_Normal.x = V.m_Normal.x;
 						VE.m_Normal.y = V.m_Normal.y;
@@ -576,11 +576,15 @@ namespace _GEOM
 					
 					// == VERTEX POSITION COORDINATES //
 					{
-						Geom::VertexPos VP;
+						Geom::VertexPos VP{};
 						
-						VP.pos[0] = V.m_Position.x;
-						VP.pos[1] = V.m_Position.y;
-						VP.pos[2] = V.m_Position.z;	
+						VP.m_Pos[0] = V.m_Position.x;
+						VP.m_Pos[1] = V.m_Position.y;
+						VP.m_Pos[2] = V.m_Position.z;	
+
+						VP.m_Clr[0] = V.m_Color.x;
+						VP.m_Clr[1] = V.m_Color.y;
+						VP.m_Clr[2] = V.m_Color.z;
 
 						VP.m_UV[0] = V.m_Texcoord.x;
 						VP.m_UV[1] = V.m_Texcoord.y;
@@ -589,7 +593,7 @@ namespace _GEOM
 					}
 				}
 
-				RenderSubmesh.m_Pos = VPContainer;
+				RenderSubmesh.m_Vertex = VPContainer;
 				RenderSubmesh.m_Extra = VEContainer;
 			}
 		}
@@ -602,6 +606,8 @@ namespace _GEOM
 			CompressedMeshParts[i].m_MeshName			= _MyNodes[i].m_MeshName;
 			CompressedMeshParts[i].m_Name				= _MyNodes[i].m_Name;
 		}
+
+		
 
 		return CompressedMeshParts;
 	}
@@ -621,7 +627,7 @@ namespace _GEOM
 			totalSubMeshes += _mesh.m_Submeshes.size();
 			for (auto& _submesh : _mesh.m_Submeshes)
 			{
-				totalVertices += _submesh.m_Pos.size();
+				totalVertices += _submesh.m_Vertex.size();
 				totalExtras += _submesh.m_Extra.size();
 				totalIndices += _submesh.m_Indices.size();
 			}
@@ -634,13 +640,13 @@ namespace _GEOM
 		auto uExtras	= std::make_unique<Geom::VertexExtra[]>(totalExtras);
 		auto uIndices	= std::make_unique<std::uint32_t[]>(totalIndices);
 
-		auto Mesh		= std::span{ uMesh.get(), static_cast<std::size_t>(totalMeshes) };
-		auto SubMesh	= std::span{ uSubMesh.get(), static_cast<std::size_t>(totalSubMeshes) };
-		auto Pos		= std::span{ uPos.get(), static_cast<std::size_t>(totalVertices) };
-		auto Extras		= std::span{ uExtras.get(), static_cast<std::size_t>(totalExtras) };
-		auto Indices	= std::span{ uIndices.get(), static_cast<std::size_t>(totalIndices) };
-
-		// Start copying data in
+		auto Mesh		= std::span{ uMesh.get(), static_cast<std::size_t>(totalMeshes) };				// Geom Struct
+		auto SubMesh	= std::span{ uSubMesh.get(), static_cast<std::size_t>(totalSubMeshes) };		// Geom Struct
+		auto Pos		= std::span{ uPos.get(), static_cast<std::size_t>(totalVertices) };				// Geom Struct
+		auto Extras		= std::span{ uExtras.get(), static_cast<std::size_t>(totalExtras) };			// Geom Struct
+		auto Indices	= std::span{ uIndices.get(), static_cast<std::size_t>(totalIndices) };			// Geom Struct
+																										// Geom Struct
+		// Start copying static data into geom struct
 		_geom.m_nMeshes		= (std::uint32_t)totalMeshes;
 		_geom.m_nSubMeshes	= (std::uint32_t)totalSubMeshes;
 		_geom.m_nVertices	= (std::uint32_t)totalVertices;
@@ -656,24 +662,25 @@ namespace _GEOM
 			//Submesh data
 			for (std::size_t j = 0; j < totalSubMeshes; ++j)
 			{
-				SubMesh[j].m_nFaces = (std::uint32_t)m_Meshes[i].m_Submeshes[j].m_Indices.size() / 3;
-				SubMesh[j].m_iIndices = (std::uint32_t)iIndices;
-				SubMesh[j].m_iVertices = (std::uint32_t)iVertex;
-				SubMesh[j].m_iMaterial = (std::uint16_t)m_Meshes[i].m_Submeshes[j].m_iMaterial;
+				SubMesh[j].m_nFaces		= (std::uint32_t)m_Meshes[i].m_Submeshes[j].m_Indices.size() / 3;
+				SubMesh[j].m_iIndices	= (std::uint32_t)iIndices;
+				SubMesh[j].m_iVertices	= (std::uint32_t)iVertex;
+				SubMesh[j].m_iMaterial	= (std::uint16_t)m_Meshes[i].m_Submeshes[j].m_iMaterial;
 
-				std::size_t vertSize = m_Meshes[i].m_Submeshes[j].m_Pos.size();
+				std::size_t vertSize = m_Meshes[i].m_Submeshes[j].m_Vertex.size();
 				std::size_t extraSize = m_Meshes[i].m_Submeshes[j].m_Extra.size();
 				std::size_t indexSize = m_Meshes[i].m_Submeshes[j].m_Indices.size();
 
 				const auto& submesh = m_Meshes[i].m_Submeshes[j];
 
-				//Position
+				// Vertex position, clr, and uv
 				{
-					for (const auto& _pos : submesh.m_Pos)
+					for (const auto& _pos : submesh.m_Vertex)
 					{
 						auto& savepos = Pos[iVertex++];
 
-						savepos.pos  = _pos.pos;
+						savepos.m_Pos = _pos.m_Pos;
+						savepos.m_Clr = _pos.m_Clr;
 						savepos.m_UV = _pos.m_UV;
 					}
 				}
@@ -704,6 +711,7 @@ namespace _GEOM
 			}
 		}
 
+		// release the memory to the geom struct
 		_geom.m_pMesh		= std::move(uMesh);
 		_geom.m_pSubMesh	= std::move(uSubMesh);
 		_geom.m_pPos		= std::move(uPos);
@@ -712,9 +720,9 @@ namespace _GEOM
 	}
 
 
-	bool Geom::SerializeGeom(const std::string& assetfilepath, const DescriptorData& Desc, Geom& GeomData) noexcept
+	bool Geom::SerializeGeom(const std::string& assetfilepath, Geom& GeomData) noexcept
 	{
-		std::string filepath = Desc.m_sOutputPath + assetfilepath;
+		std::string filepath = assetfilepath;
 		std::ofstream outfile(filepath.c_str());
 		assert(outfile.is_open());
 

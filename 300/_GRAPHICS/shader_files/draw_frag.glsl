@@ -12,9 +12,8 @@ out vec4 FragColor;
 //------------------- MAIN FUNCTION -----------------------------
 void main() 
 {
-	FragColor = VertexColor;
-	//FragColor = vec4(1.0, 0.0, 0.0, 1.0);
-	FragColor = texture(uTex, TexCoords);
+	vec4 texturecolor = texture(uTex, TexCoords);
+	FragColor = texturecolor;
 }	
 
 

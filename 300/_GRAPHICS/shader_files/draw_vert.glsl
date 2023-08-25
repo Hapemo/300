@@ -19,11 +19,8 @@ void main()
     // Decompress the binormal & transform everything to world space
     mat3 Rot                    = mat3(inLTW);
 
-	 // Decompress Position
+	 // Position
     vec4 Pos = vec4(inQPos.xyz, 1.0f);
-
-    // Decompress UVs
-    //Out.UV   = pushConsts.UVDecompression.xy * inQUV + pushConsts.UVDecompression.zw;
 
     // Set all the output vars
     VertexColor                 = inVertexColor;

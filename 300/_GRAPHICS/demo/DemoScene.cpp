@@ -83,25 +83,11 @@ void GFX::DemoScene::Initialize()
 
     // Load all meshes
     MeshManager::GetInstance().Init();
-
-    //_GEOM::Geom GeomData;
-    //Mesh skullmesh;
-    //std::vector<glm::vec3> positions;
-    //std::vector<glm::vec2> uvs;
-    //std::vector<unsigned int> indices;
-        // Deserialize Geom and load mesh
-    //Deserialization::DeserializeGeom("../compiled_geom/Skull_textured.geom", GeomData);
-    //skullmesh.LoadFromGeom(GeomData, positions, uvs, indices);
-    //skullmesh.Setup(positions, indices, uvs);
-    //mSceneMeshes.push_back(skullmesh);
-    //auto& currentmesh = skullmesh;
-    //currentmesh.Setup(currentmesh.mPositions, currentmesh.mIndices);
     
 #if _ASSIMP_LOADING
     AssimpImporter::loadModel("../assets/demon-skull-textured/source/Skull_textured.fbx");
     auto& currentmesh = GFX::Mesh::assimpLoadedMeshes[0];
 #endif
-
 
     // Setup shader
     mModelShader.CreateShaderFromFiles("./shader_files/draw_vert.glsl", "./shader_files/draw_frag.glsl");
@@ -210,7 +196,7 @@ void GFX::DemoScene::Draw()
 
         currentmesh.BindVao();
         currentmesh.PrepForDraw();
-
+        
         glUniformMatrix4fv(mModelShader.GetUniformVP(), 1, GL_FALSE, &mCamera.viewProj()[0][0]);            // camera projection
 
         // Bind texture unit

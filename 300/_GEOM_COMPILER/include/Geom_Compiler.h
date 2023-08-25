@@ -32,7 +32,7 @@ namespace _GEOM
 		{
 			std::string						m_MeshName;
 			std::string						m_Name;
-			std::vector<Geom::VertexPos>	m_Pos;
+			std::vector<Geom::VertexPos>	m_Vertex;
 			std::vector<Geom::VertexExtra>	m_Extra;
 			std::vector<uint32_t>			m_Indices;
 			int						        m_iMaterialInstance;

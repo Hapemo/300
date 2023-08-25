@@ -21,7 +21,7 @@ void GFX::Mesh::LoadFromGeom(const _GEOM::Geom& GeomData, std::vector<vec3>& pos
 		// Load positions
 		for (size_t iPos{}, up{ GeomData.m_pSubMesh[iSM].m_iVertices }; iPos < GeomData.m_pSubMesh[iSM].m_nVertices; ++iPos, ++up)
 		{
-			positions.emplace_back(vec3(GeomData.m_pPos[up].pos.x, GeomData.m_pPos[up].pos.y, GeomData.m_pPos[up].pos.z));
+			positions.emplace_back(vec3(GeomData.m_pPos[up].m_Pos.x, GeomData.m_pPos[up].m_Pos.y, GeomData.m_pPos[up].m_Pos.z));
 		}
 
 		// Load UVs
