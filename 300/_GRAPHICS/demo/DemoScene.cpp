@@ -79,7 +79,7 @@ void GFX::DemoScene::Initialize()
         throw std::runtime_error("Could not initialize ImGui::OpenGL (2)");
 
     // Loading in Compressed textures
-    mTexture.Load("../assets/Compressed/Skull.png");
+    mTexture.Load("../assets/Compressed/Skull.texture");
 
     // Load all meshes
     MeshManager::GetInstance().Init();

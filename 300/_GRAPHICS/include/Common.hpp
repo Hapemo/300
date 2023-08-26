@@ -14,6 +14,7 @@
 #include <fstream>
 #include <sstream>
 #include <chrono>
+#include <string>
 
 
 #endif // !COMMON_HPP

@@ -10,7 +10,7 @@ void LoadAndSerializeImageFile(const char* filepath, const char* outputFolder)
 	int width, height, channel;
 
 	// Settings
-	stbi_set_flip_vertically_on_load(true);
+	stbi_set_flip_vertically_on_load(false);
 	
 	// Loading of image file with STB
 	unsigned char* texData = stbi_load(filepath, &width, &height, &channel, 0);

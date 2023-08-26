@@ -24,7 +24,7 @@ namespace GFX
 		int mHeight{};
 		int mChannels{};
 
-		void DeserializeImageFile(const char* filename, unsigned char* buffer);
+		void DeserializeImageFile(const char* filename, unsigned char* &buffer);
 	};
 }
 
