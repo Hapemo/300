@@ -79,6 +79,7 @@ void GFX::DemoScene::Initialize()
         throw std::runtime_error("Could not initialize ImGui::OpenGL (2)");
 
     // Loading in Compressed textures
+    //mTexture.Load("../assets/Compressed/Vampire_diffuse.texture");
     mTexture.Load("../assets/Compressed/Skull.texture");
 
     // Load all meshes
@@ -189,7 +190,7 @@ void GFX::DemoScene::Draw()
         //!< test rendering skull model
         //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         mModelShader.Activate();
-        Mesh& currentmesh = MeshManager::GetInstance().mSceneMeshes[1];
+        Mesh& currentmesh = MeshManager::GetInstance().mSceneMeshes[2];
 
         mat4 identity = mat4(1.0);
         currentmesh.mLTW.push_back(identity);

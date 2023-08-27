@@ -1,7 +1,5 @@
-{
-    "Asset_Filepaths": 
-    ["../assets/demon-skull-textured/source/Skull_textured.fbx",
-    "../assets/dancing_vampire_test/dancing_vampire.dae"],
+{	
+	"Asset_Filepaths": "../assets/Models/",
 
     "Asset_OutputPath": "../compiled_geom/",
     "Compiled_Geom_Format": ".geom",

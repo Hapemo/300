@@ -6,6 +6,8 @@
 #include <rapidjson/writer.h>
 #include <rapidjson/stringbuffer.h>
 
+#include <filesystem>
+
 #define MAX_FILEPATHS	 50
 
 namespace _GEOM
@@ -44,12 +46,15 @@ namespace _GEOM
 		if (document.HasMember("Asset_Filepaths"))
 		{
 			rapidjson::Value& assetFilepaths = document["Asset_Filepaths"];
-			assert(assetFilepaths.IsArray());
-			for (rapidjson::SizeType i = 0; i < assetFilepaths.Size(); i++)
+			assert(assetFilepaths.IsString());
+
+			std::filesystem::path folderpath = assetFilepaths.GetString();
+			for (const auto& entry : std::filesystem::directory_iterator(folderpath))
 			{
-				assert(assetFilepaths[i].IsString());
-				Desc.m_Filepaths[i] = assetFilepaths[i].GetString();
-				++Desc.m_iMeshTotal;
+				if (std::filesystem::is_regular_file(entry))
+				{
+					Desc.m_Filepaths[Desc.m_iMeshTotal++] = entry.path().string();
+				}
 			}
 		}
 

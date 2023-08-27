@@ -7,6 +7,7 @@
 #include <functional>
 #include <fstream>
 #include <iomanip>
+#include <algorithm>
 
 #pragma comment( lib, "../lib/assimp/BINARIES/Win32/lib/Release/assimp-vc142-mt.lib")
 
@@ -98,7 +99,7 @@ namespace _GEOM
 			}
 			else
 			{
-				printf("WARNING: Found a mesh (%s) with too many UV chanels we will use only one...\n", AssimpMesh.mName.C_Str());
+				printf("WARNING: Found a mesh (%s) with (%d) UV chanels we will use only one...\n", AssimpMesh.mName.C_Str(), AssimpMesh.GetNumUVChannels());
 			}
 		}
 
@@ -180,6 +181,7 @@ namespace _GEOM
 				MeshPart.m_Textures.insert(MeshPart.m_Textures.end(), specularmaps.begin(), specularmaps.end());
 			}
 
+			// Copy the vertices
 			MeshPart.m_Vertices.resize(AssimpMesh.mNumVertices);
 			for (auto i = 0u; i < AssimpMesh.mNumVertices; ++i)
 			{
@@ -241,26 +243,10 @@ namespace _GEOM
 					Vertex.m_fTangent = glm::normalize(Vertex.m_fTangent);
 					Vertex.m_fBitangent = glm::normalize(Vertex.m_fBitangent);
 
-					// compressing the floating point tangent to an 8 bit unsigned integer
-					Vertex.m_Tangent.r = static_cast<std::uint8_t>(static_cast<std::int8_t>(Vertex.m_fTangent.x < 0 ? std::max(-128, static_cast<int>(Vertex.m_fTangent.x * 128)) : std::min(127, static_cast<int>(Vertex.m_fTangent.x * 127))));
-					Vertex.m_Tangent.g = static_cast<std::uint8_t>(static_cast<std::int8_t>(Vertex.m_fTangent.y < 0 ? std::max(-128, static_cast<int>(Vertex.m_fTangent.y * 128)) : std::min(127, static_cast<int>(Vertex.m_fTangent.y * 127))));
-					Vertex.m_Tangent.b = static_cast<std::uint8_t>(static_cast<std::int8_t>(Vertex.m_fTangent.z < 0 ? std::max(-128, static_cast<int>(Vertex.m_fTangent.z * 128)) : std::min(127, static_cast<int>(Vertex.m_fTangent.z * 127))));
-					Vertex.m_Tangent.a = 0;
-
 					assert(AssimpMesh.HasNormals());
-					Vertex.m_Normal.r = static_cast<std::uint8_t>(static_cast<std::int8_t>(Vertex.m_fNormal.x < 0 ? std::max(-128, static_cast<int>(Vertex.m_fNormal.x * 128)) : std::min(127, static_cast<int>(Vertex.m_fNormal.x * 127))));
-					Vertex.m_Normal.g = static_cast<std::uint8_t>(static_cast<std::int8_t>(Vertex.m_fNormal.y < 0 ? std::max(-128, static_cast<int>(Vertex.m_fNormal.y * 128)) : std::min(127, static_cast<int>(Vertex.m_fNormal.y * 127))));
-					Vertex.m_Normal.b = static_cast<std::uint8_t>(static_cast<std::int8_t>(Vertex.m_fNormal.z < 0 ? std::max(-128, static_cast<int>(Vertex.m_fNormal.z * 128)) : std::min(127, static_cast<int>(Vertex.m_fNormal.z * 127))));
-					Vertex.m_Normal.a = static_cast<std::uint8_t>(static_cast<std::int8_t>(glm::dot(glm::cross(Vertex.m_fTangent, Vertex.m_fNormal), Vertex.m_fBitangent) > 0 ? 127 : -128));
-					//Vertex.m_Normal.a = static_cast<std::uint8_t>(static_cast<std::int8_t>(Vertex.m_fTangent.Cross(Vertex.m_fNormal).Dot(Vertex.m_fBitangent) > 0 ? 127 : -128));
 				}
 				else
 				{
-					Vertex.m_Tangent.r = 0xff;
-					Vertex.m_Tangent.g = 0;
-					Vertex.m_Tangent.b = 0;
-					Vertex.m_Tangent.a = 0;
-
 					const auto N = presentRotation.Rotate(AssimpMesh.mNormals[i]);
 
 					Vertex.m_fNormal	= glm::vec3(N.x, N.y, N.z);
@@ -268,11 +254,6 @@ namespace _GEOM
 					Vertex.m_fBitangent = glm::vec3(1, 0, 0);
 
 					Vertex.m_fNormal = glm::normalize(Vertex.m_fNormal);
-
-					Vertex.m_Normal.r = static_cast<std::uint8_t>(static_cast<std::int8_t>(Vertex.m_fNormal.x < 0 ? std::max(-128, static_cast<int>(Vertex.m_fNormal.x * 128)) : std::min(127, static_cast<int>(Vertex.m_fNormal.x * 127))));
-					Vertex.m_Normal.g = static_cast<std::uint8_t>(static_cast<std::int8_t>(Vertex.m_fNormal.y < 0 ? std::max(-128, static_cast<int>(Vertex.m_fNormal.y * 128)) : std::min(127, static_cast<int>(Vertex.m_fNormal.y * 127))));
-					Vertex.m_Normal.b = static_cast<std::uint8_t>(static_cast<std::int8_t>(Vertex.m_fNormal.z < 0 ? std::max(-128, static_cast<int>(Vertex.m_fNormal.z * 128)) : std::min(127, static_cast<int>(Vertex.m_fNormal.z * 127))));
-					Vertex.m_Normal.a = 127;
 				}
 			}
 
@@ -285,6 +266,9 @@ namespace _GEOM
 					MeshPart.m_Indices.push_back(Face.mIndices[j]);
 				}
 			}
+
+			// Copy the bones
+			// continue here!! <<<<<<<<<<<<<<<<<<<<<<<<<
 		};
 
 		// Recurse the scene from the root node and process each mesh we find
@@ -361,7 +345,7 @@ namespace _GEOM
 
 			if (AssimpMesh.HasBones())
 			{
-				if (Refs.size() > 1)
+				if (Refs.size() >= 1)
 				{
 					printf("INFO: I had a skin mesh (%s) that is reference in the scene %zd times. This mesh is capable of vertex animations.\n", AssimpMesh.mName.C_Str(), Refs.size());
 					return true;
@@ -369,7 +353,7 @@ namespace _GEOM
 			}
 			else
 			{
-				if (Refs.size() > 1)
+				if (Refs.size() >= 1)
 				{
 					printf("INFO: I will be duplicating mesh %s, %zd times. This mesh is NOT capable of vertex animations\n", AssimpMesh.mName.C_Str(), Refs.size());
 				}
@@ -405,6 +389,16 @@ namespace _GEOM
 					const auto iBaseIndex = _MyNodes[i].m_Indices.size();
 					_MyNodes[i].m_Vertices.insert(_MyNodes[i].m_Vertices.end(), _MyNodes[j].m_Vertices.begin(), _MyNodes[j].m_Vertices.end());
 					_MyNodes[i].m_Indices.insert(_MyNodes[i].m_Indices.end(), _MyNodes[j].m_Indices.begin(), _MyNodes[j].m_Indices.end());
+					_MyNodes[i].m_Textures.insert(_MyNodes[i].m_Textures.end(), _MyNodes[j].m_Textures.begin(), _MyNodes[j].m_Textures.end());
+
+					// removing duplicate textures
+					std::sort(_MyNodes[i].m_Textures.begin(), _MyNodes[i].m_Textures.end(), [](const Geom::Texture& lhs, const Geom::Texture& rhs) {
+						return lhs.path < rhs.path;
+						});
+					auto newEnd = std::unique(_MyNodes[i].m_Textures.begin(), _MyNodes[i].m_Textures.end(), [](const Geom::Texture& lhs, const Geom::Texture& rhs){
+						return lhs.path == rhs.path;
+						});
+					_MyNodes[i].m_Textures.erase(newEnd, _MyNodes[i].m_Textures.end());
 
 					// Fix the indices
 					for (auto I = iBaseIndex; I < _MyNodes[i].m_Indices.size(); ++I)
@@ -426,7 +420,7 @@ namespace _GEOM
 		for (auto& E : _MyNodes)
 		{
 			int iFinalMesh = -1;
-			for (auto i = 0u; i < m_SkinGeom->m_Meshes.size(); ++i)
+			for (auto i = 0u; i < m_SkinGeom->m_Meshes.size(); ++i)					// if there is already an existing skingeom mesh
 			{
 				if (m_SkinGeom->m_Meshes[i].m_Name == E.m_MeshName)
 				{
@@ -435,21 +429,22 @@ namespace _GEOM
 				}
 			}
 
-			if (iFinalMesh == -1)
+			if (iFinalMesh == -1)													// if there is no existing skingeom mesh, create an empty one
 			{
-				iFinalMesh = static_cast<int>(m_SkinGeom->m_Meshes.size());
+				iFinalMesh = static_cast<int>(m_SkinGeom->m_Meshes.size());			
 				m_SkinGeom->m_Meshes.emplace_back();
 				m_SkinGeom->m_Meshes.back().m_Name = E.m_MeshName;
 			}
 
 
-			auto& FinalMesh = m_SkinGeom->m_Meshes[iFinalMesh];
-			FinalMesh.m_Submeshes.emplace_back();
+			auto& FinalMesh = m_SkinGeom->m_Meshes[iFinalMesh];						
+			FinalMesh.m_Submeshes.emplace_back();									// create a new submesh instance for the mesh
 			auto& SubMesh = FinalMesh.m_Submeshes.back();
 
-			SubMesh.m_Vertex = E.m_Vertex;
-			SubMesh.m_Extra = E.m_Extra;
-			SubMesh.m_Indices = E.m_Indices;
+			// Copy the data over
+			SubMesh.m_Vertex	= E.m_Vertex;
+			SubMesh.m_Extra		= E.m_Extra;
+			SubMesh.m_Indices	= E.m_Indices;
 			SubMesh.m_iMaterial = E.m_iMaterialInstance;
 		}
 	}
@@ -471,6 +466,7 @@ namespace _GEOM
 			optimized_submesh.m_Indices.resize(index_count);
 			optimized_submesh.m_Vertices.resize(vertex_count);
 			optimized_submesh.m_iMaterialInstance = meshPart.m_iMaterialInstance;
+			optimized_submesh.m_Textures = meshPart.m_Textures;
 
 			//Remap indices
 			meshopt_remapIndexBuffer(optimized_submesh.m_Indices.data(), meshPart.m_Indices.data(), index_count, &remap[0]);
@@ -561,9 +557,9 @@ namespace _GEOM
 					{
 						Geom::VertexExtra VE{};
 						
-						VE.m_Normal.x = V.m_Normal.x;
-						VE.m_Normal.y = V.m_Normal.y;
-						VE.m_Normal.z = V.m_Normal.z;
+						VE.m_Normal.x = V.m_fNormal.x;
+						VE.m_Normal.y = V.m_fNormal.y;
+						VE.m_Normal.z = V.m_fNormal.z;
 						
 						// Quantize the X and Y components of the tangent
 						VE.m_Tangent.x = V.m_fTangent.x;
@@ -593,21 +589,20 @@ namespace _GEOM
 					}
 				}
 
+				// For each bone inside the submesh...
+				// <<<<<<<<<<<<<< write bone data transfer here >>>>>>>>>>>>>>
+
 				RenderSubmesh.m_Vertex = VPContainer;
 				RenderSubmesh.m_Extra = VEContainer;
+
+				// Copy the rest of the data over to the compressed mesh part
+				RenderSubmesh.m_Textures			= submesh.m_Textures;	
+				RenderSubmesh.m_iMaterialInstance	= submesh.m_iMaterialInstance;
+				RenderSubmesh.m_Indices				= submesh.m_Indices;
+				RenderSubmesh.m_MeshName			= submesh.m_MeshName;
+				RenderSubmesh.m_Name				= submesh.m_Name;
 			}
 		}
-
-		//Copy other data into the compressed mesh parts
-		for (int i = 0; i < _MyNodes.size(); ++i)
-		{
-			CompressedMeshParts[i].m_iMaterialInstance	= _MyNodes[i].m_iMaterialInstance;
-			CompressedMeshParts[i].m_Indices			= _MyNodes[i].m_Indices;			
-			CompressedMeshParts[i].m_MeshName			= _MyNodes[i].m_MeshName;
-			CompressedMeshParts[i].m_Name				= _MyNodes[i].m_Name;
-		}
-
-		
 
 		return CompressedMeshParts;
 	}

@@ -23,26 +23,24 @@ namespace _GEOM
 			std::string						m_MeshName;
 			std::string						m_Name;
 			std::vector<FullVertices>		m_Vertices;
+			std::vector<Geom::Texture>		m_Textures;					// we have not used this in _rendering
 			std::vector<uint32_t>			m_Indices;
-			int								m_iMaterialInstance;
-			std::vector<Geom::Texture>		m_Textures;
+			int								m_iMaterialInstance{};
 		};
 
 		struct CompressedMeshPart
 		{
-			std::string						m_MeshName;
+			std::string						m_MeshName; 
 			std::string						m_Name;
 			std::vector<Geom::VertexPos>	m_Vertex;
 			std::vector<Geom::VertexExtra>	m_Extra;
+			std::vector<Geom::Texture>		m_Textures;					// we have not used this in _rendering
 			std::vector<uint32_t>			m_Indices;
-			int						        m_iMaterialInstance;
+			int						        m_iMaterialInstance{};
 		};
 
 	public:
 		bool Load(const DescriptorData& _DData, SkinGeom* _skinGeom) noexcept;
-
-		//glm::vec3							m_PosCompressionScale;
-		//glm::vec2							m_UVCompressionScale;
 	
 	private:
 		bool								ImportGeometryValidateMesh(const aiMesh& AssimpMesh, int& iTexture, int& iColor) noexcept;

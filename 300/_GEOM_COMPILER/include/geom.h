@@ -22,9 +22,6 @@ namespace _GEOM
 		glm::vec3			m_fNormal;			//Normal of vertex
 		glm::vec3			m_fTangent;			//Tangent of vertex
 		glm::vec3			m_fBitangent;		//Bi-tangent of vertex
-		glm::ivec4			m_Tangent;			//Tangent of vertex
-		glm::ivec4			m_Bitangent;		//Bi-tangent of vertex
-		glm::ivec4			m_Normal;			//Normal of vertex
 
 	};
 
