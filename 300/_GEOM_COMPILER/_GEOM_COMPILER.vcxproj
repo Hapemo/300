@@ -137,6 +137,8 @@
     <ClInclude Include="descriptor.h" />
     <ClInclude Include="geom.h" />
     <ClInclude Include="Geom_Compiler.h" />
+    <ClInclude Include="include\Bone.h" />
+    <ClInclude Include="include\Helper.h" />
     <ClInclude Include="include\Serialization.h" />
   </ItemGroup>
   <ItemGroup>
@@ -155,9 +157,11 @@
     <ClCompile Include="..\lib\meshoptimizer\src\vertexfilter.cpp" />
     <ClCompile Include="..\lib\meshoptimizer\src\vfetchanalyzer.cpp" />
     <ClCompile Include="..\lib\meshoptimizer\src\vfetchoptimizer.cpp" />
+    <ClCompile Include="src\Bone.cpp" />
     <ClCompile Include="src\descriptor.cpp" />
     <ClCompile Include="src\geom.cpp" />
     <ClCompile Include="src\Geom_Compiler.cpp" />
+    <ClCompile Include="src\Helper.cpp" />
     <ClCompile Include="src\_compiler_main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

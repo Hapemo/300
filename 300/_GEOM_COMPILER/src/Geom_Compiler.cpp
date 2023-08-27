@@ -1,5 +1,5 @@
 #include <Geom_Compiler.h>
-#include <meshoptimizer/src/meshoptimizer.h>
+#include <Helper.h>
 
 #include <span>
 #include <limits>
@@ -9,6 +9,7 @@
 #include <iomanip>
 #include <algorithm>
 
+#include <meshoptimizer/src/meshoptimizer.h>
 #pragma comment( lib, "../lib/assimp/BINARIES/Win32/lib/Release/assimp-vc142-mt.lib")
 
 namespace _GEOM
@@ -157,6 +158,96 @@ namespace _GEOM
 			return textures;
 		};
 
+		// BONE:: Initialize bone data
+		auto DefaultInitializeVertexBoneData = [](FullVertices& vertex)
+		{
+			for (int i = 0; i < MAX_BONE_INFLUENCE; ++i)
+			{
+				vertex.m_BoneIDs[i] = -1;
+				vertex.m_Weights[i] = 0.0f;
+			}
+		};
+		
+		// BONE:: Set bone data
+		auto SetVertexBoneData = [](FullVertices& vertex, int boneID, float weight)
+		{
+			for (int i = 0; i < MAX_BONE_INFLUENCE; ++i)
+			{
+				if (vertex.m_BoneIDs[i] < 0)
+				{
+					vertex.m_Weights[i] = weight;
+					vertex.m_BoneIDs[i] = boneID;
+					break;
+				}
+			}
+		};
+
+		// BONE:: Load bone data
+		auto ExtractBoneWeightForVertex = [&](InputMeshPart& Vertex, const aiMesh& mesh)
+		{
+			auto& rBoneInfoMap	= m_SkinGeom->m_Animation.m_BoneInfoMap;
+			int& iBoneCount		= m_SkinGeom->m_Animation.m_BoneCounter;
+
+			for (int boneindex = 0; boneindex < mesh.mNumBones; ++boneindex)
+			{
+				int boneID = -1;
+				std::string boneName = mesh.mBones[boneindex]->mName.C_Str();
+
+				// >> check if the bone already exists
+				if (rBoneInfoMap.find(boneName) == rBoneInfoMap.end())
+				{
+					// add the new bone to the bone map if it doesn't exist
+					BoneInfo newboneinfo;
+					newboneinfo.id = iBoneCount;
+					newboneinfo.offset = AssimpHelper::ConvertMatrixToGLMFormat(mesh.mBones[boneindex]->mOffsetMatrix);
+					rBoneInfoMap[boneName] = newboneinfo;
+					boneID = iBoneCount++;
+				}
+				else
+				{
+					boneID = rBoneInfoMap[boneName].id;
+				}
+				assert(boneID != -1);
+
+				// >> populating the weight each vertex has on the bone
+				const auto& weights	= mesh.mBones[boneindex]->mWeights;
+				int numWeights		= mesh.mBones[boneindex]->mNumWeights;
+				for (int weightindex{}; weightindex < numWeights; ++weightindex)
+				{
+					int vertexID = weights[weightindex].mVertexId;
+					float weight = weights[weightindex].mWeight;
+					assert(vertexID <= Vertex.m_Vertices.size());
+					SetVertexBoneData(Vertex.m_Vertices[vertexID], boneID, weight);
+				}
+			}
+		};
+
+		// BONE:: Read missing bones and populate bone vector
+		auto ReadMissingBones = [&](const aiAnimation* const animation)
+		{
+			m_SkinGeom->m_Animation.m_Duration = animation->mDuration;
+			m_SkinGeom->m_Animation.m_TicksPerSecond = animation->mTicksPerSecond;
+			int size = animation->mNumChannels;
+			
+			auto& boneInfoMap	= m_SkinGeom->m_Animation.m_BoneInfoMap;
+			int& boneCount		= m_SkinGeom->m_Animation.m_BoneCounter;
+
+			// Reading channels (bones engaged in an animation and their keyframes)
+			for (int i{}; i < size; ++i)
+			{
+				auto channel = animation->mChannels[i];
+				std::string boneName = channel->mNodeName.data;
+
+				// populate the bone info map if there are any missing entries
+				if (boneInfoMap.find(boneName) == boneInfoMap.end())
+				{
+					boneInfoMap[boneName].id = boneCount++;
+				}
+				m_SkinGeom->m_Animation.m_Bones.emplace_back(Bone(channel->mNodeName.data, boneInfoMap[channel->mNodeName.data].id, channel));
+			}
+		};
+
+
 		// process the provided node mesh by extractomg data from the assimp mesh and storing it into my own data structure
 		auto ProcessMesh = [&](const aiMesh& AssimpMesh, const aiMatrix4x4& Transform, InputMeshPart& MeshPart, const int iTexCordinates, const int iColors)
 		{
@@ -167,8 +258,8 @@ namespace _GEOM
 				Transform.DecomposeNoScaling(presentRotation, p);
 			}
 
-			MeshPart.m_Name = AssimpMesh.mName.C_Str();
-			MeshPart.m_iMaterialInstance = AssimpMesh.mMaterialIndex;
+			MeshPart.m_Name					= AssimpMesh.mName.C_Str();
+			MeshPart.m_iMaterialInstance	= AssimpMesh.mMaterialIndex;
 
 			// getting the mesh's material
 			if (AssimpMesh.mMaterialIndex >= 0)
@@ -186,15 +277,11 @@ namespace _GEOM
 			for (auto i = 0u; i < AssimpMesh.mNumVertices; ++i)
 			{
 				FullVertices& Vertex = MeshPart.m_Vertices[i];		// the mesh's vertices
+				DefaultInitializeVertexBoneData(Vertex);
 					
-				auto L = Transform * AssimpMesh.mVertices[i];		// adds pretransformation to the vertices
-
 				// VERTEX POSITIONS //
-				Vertex.m_Position = glm::vec3						// populating the transformed vertex position
-				(	static_cast<float>(L.x)
-					, static_cast<float>(L.y)
-					, static_cast<float>(L.z)
-				);
+				auto L = Transform * AssimpMesh.mVertices[i];		// adds pretransformation to the vertices
+				Vertex.m_Position = AssimpHelper::GetGLMVec(L);
 
 				// UV COORDINATES //
 				if (iTexCordinates == -1)
@@ -268,7 +355,10 @@ namespace _GEOM
 			}
 
 			// Copy the bones
-			// continue here!! <<<<<<<<<<<<<<<<<<<<<<<<<
+			if (AssimpMesh.HasBones()) {
+				ExtractBoneWeightForVertex(MeshPart, AssimpMesh);
+				m_SkinGeom->m_HasAnimation = true;
+			}
 		};
 
 		// Recurse the scene from the root node and process each mesh we find
@@ -306,6 +396,13 @@ namespace _GEOM
 
 		aiMatrix4x4 L2W = m_DescriptorMatrix;				// the pretransform data that was gotten from the descriptor file
 		RecurseScene(*m_Scene->mRootNode, L2W);
+		
+		if (m_SkinGeom->m_HasAnimation)
+		{
+			std::cout << ">>[NOTE]: \tImporting Bones\n";
+			ReadMissingBones(m_Scene->mAnimations[0]);
+			std::cout << ">>[NOTE]: \tFinished Importing Bones\n";
+		}
 	}
 
 
@@ -433,7 +530,7 @@ namespace _GEOM
 			{
 				iFinalMesh = static_cast<int>(m_SkinGeom->m_Meshes.size());			
 				m_SkinGeom->m_Meshes.emplace_back();
-				m_SkinGeom->m_Meshes.back().m_Name = E.m_MeshName;
+				m_SkinGeom->m_Meshes.back().m_Name			= E.m_MeshName;
 			}
 
 
@@ -642,17 +739,19 @@ namespace _GEOM
 		auto Indices	= std::span{ uIndices.get(), static_cast<std::size_t>(totalIndices) };			// Geom Struct
 																										// Geom Struct
 		// Start copying static data into geom struct
-		_geom.m_nMeshes		= (std::uint32_t)totalMeshes;
-		_geom.m_nSubMeshes	= (std::uint32_t)totalSubMeshes;
-		_geom.m_nVertices	= (std::uint32_t)totalVertices;
-		_geom.m_nExtras		= (std::uint32_t)totalExtras;
-		_geom.m_nIndices	= (std::uint32_t)totalIndices;
+		_geom.m_nMeshes			= (std::uint32_t)totalMeshes;
+		_geom.m_nSubMeshes		= (std::uint32_t)totalSubMeshes;
+		_geom.m_nVertices		= (std::uint32_t)totalVertices;
+		_geom.m_nExtras			= (std::uint32_t)totalExtras;
+		_geom.m_nIndices		= (std::uint32_t)totalIndices;
 
 		std::size_t iVertex = 0, iIndices = 0, iExtra = 0;
 		for (std::size_t i = 0; i < totalMeshes; ++i)
 		{
-			//Copy name of mesh in
+			// Copy name of mesh in
 			strcpy_s(Mesh[i].m_name.data(), Mesh[i].m_name.size(), m_Meshes[i].m_Name.c_str());
+			Mesh[i].m_Animation		= m_Animation;
+			_geom.m_bHasAnimations	= m_HasAnimation ? true : _geom.m_bHasAnimations;
 
 			//Submesh data
 			for (std::size_t j = 0; j < totalSubMeshes; ++j)
@@ -737,6 +836,10 @@ namespace _GEOM
 
 		outfile << std::endl << "[Number of Indices]: ";
 		Serialization::SerializeUnsigned(outfile, GeomData.m_nIndices);
+
+		if (GeomData.m_bHasAnimations) {
+			std::cout << "Serialize animation data here\n";
+		}
 
 		outfile << std::endl << "[Meshes]: ";
 		Serialization::SerializeUnsigned(outfile, GeomData.m_nMeshes);

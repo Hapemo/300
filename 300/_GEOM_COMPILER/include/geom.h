@@ -3,17 +3,24 @@
 #ifndef _GEOM_H
 #define _GEOM_H
 
+#define MAX_BONE_INFLUENCE 4
+
 #include <glm/glm.hpp>
 
 #include <array>
 #include <string>
 #include <vector>
 #include <fstream>
+#include <unordered_map>
 
 #include <descriptor.h>
+#include <Bone.h>
 
 namespace _GEOM
 {
+	struct BoneInfo;
+	class Bone;
+
 	struct FullVertices
 	{
 		glm::vec4			m_Color;			//Color of vertex
@@ -23,6 +30,8 @@ namespace _GEOM
 		glm::vec3			m_fTangent;			//Tangent of vertex
 		glm::vec3			m_fBitangent;		//Bi-tangent of vertex
 
+		int					m_BoneIDs[MAX_BONE_INFLUENCE];	// bone indices which will influence this vertex
+		float				m_Weights[MAX_BONE_INFLUENCE];	// weights from each bone
 	};
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -38,6 +47,22 @@ namespace _GEOM
 		glm::vec3 getCenter() const noexcept;
 	};
 	
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	struct Animation
+	{
+		std::unordered_map<std::string, BoneInfo>		m_BoneInfoMap;
+		std::vector<Bone>								m_Bones;
+
+		int												m_BoneCounter = 0;
+		float											m_Duration;
+		float											m_TicksPerSecond;
+
+		// NOTE:: there is another member variable called AssimpNodeData, that contains the
+		// transformation, childrencount, and name. But this is already done with pretransformations
+		// in the mesh loading.. keep it in mind for now.
+	};
+
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	struct Geom
@@ -57,11 +82,8 @@ namespace _GEOM
 
 		struct Mesh
 		{
-			std::array<char, 64>	m_name;				//Name of mesh
-			//std::uint16_t			m_nSubMeshes;		//Total number of submeshes in mesh
-			//std::uint16_t			m_iSubMesh;			//Index of submesh
-			//std::uint16_t			m_nLODs{ 1 };		//Total number of LODs in mesh
-			//std::uint16_t			m_iLOD{ 1 };		//Index of LOD of mesh
+			std::array<char, 64>	m_name;				// Name of mesh
+			Animation				m_Animation;		// Animation data of the mesh
 		};
 
 		struct SubMesh
@@ -94,6 +116,8 @@ namespace _GEOM
 		std::uint32_t			m_nExtras;
 		std::uint32_t			m_nIndices;
 
+		bool					m_bHasAnimations = false;
+
 		static bool SerializeGeom(const std::string& filename, Geom& GeomData) noexcept;
 		//static bool DeserializeGeom(const std::string Filepath, Geom& GeomRef) noexcept;
 	};
@@ -104,22 +128,25 @@ namespace _GEOM
 	{
 		struct Submesh
 		{	
-			std::vector<Geom::VertexPos>	m_Vertex;
-			std::vector<Geom::VertexExtra>	m_Extra;
-			std::vector<uint32_t>			m_Indices;
+			std::vector<Geom::VertexPos>				m_Vertex;
+			std::vector<Geom::VertexExtra>				m_Extra;
+			std::vector<uint32_t>						m_Indices;
 			int m_iMaterial;
 		};
 
 		struct Mesh
 		{
-			std::string						m_Name;
-			std::vector<Submesh>			m_Submeshes;
+			std::string									m_Name;
+			std::vector<Submesh>						m_Submeshes;
 		};
 
-		std::string							m_Filename;
-		std::vector<Mesh>					m_Meshes;
+		std::string										m_Filename;
+		std::vector<Mesh>								m_Meshes;
 
-		void								CastToGeomStruct(Geom& _geom) noexcept;
+		Animation										m_Animation;	
+		bool											m_HasAnimation = false;	
+
+		void CastToGeomStruct(Geom& _geom) noexcept;
 	};
 }
 

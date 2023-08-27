@@ -33,6 +33,12 @@
     <ClInclude Include="include\Serialization.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\Helper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Bone.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\_compiler_main.cpp">
@@ -91,6 +97,12 @@
     </ClCompile>
     <ClCompile Include="..\lib\meshoptimizer\src\vfetchoptimizer.cpp">
       <Filter>Resource Files\meshoptimizer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Helper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Bone.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

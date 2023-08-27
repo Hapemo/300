@@ -11,6 +11,7 @@
 #include <vector>
 
 #include <descriptor.h>
+#include <Bone.h>
 #include <geom.h>
 
 namespace _GEOM
@@ -23,7 +24,7 @@ namespace _GEOM
 			std::string						m_MeshName;
 			std::string						m_Name;
 			std::vector<FullVertices>		m_Vertices;
-			std::vector<Geom::Texture>		m_Textures;					// we have not used this in _rendering
+			std::vector<Geom::Texture>		m_Textures;						// we have not used this in _rendering
 			std::vector<uint32_t>			m_Indices;
 			int								m_iMaterialInstance{};
 		};
@@ -34,7 +35,7 @@ namespace _GEOM
 			std::string						m_Name;
 			std::vector<Geom::VertexPos>	m_Vertex;
 			std::vector<Geom::VertexExtra>	m_Extra;
-			std::vector<Geom::Texture>		m_Textures;					// we have not used this in _rendering
+			std::vector<Geom::Texture>		m_Textures;						// we have not used this in _rendering
 			std::vector<uint32_t>			m_Indices;
 			int						        m_iMaterialInstance{};
 		};
