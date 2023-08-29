@@ -1,6 +1,7 @@
 #pragma once
 #include "ECS.h"
 #include "ECS_Components.h"
+#include "Input.h"
 
 /*
 struct Transform
@@ -25,6 +26,18 @@ struct TestComponent3
 	float z;
 };
 */
+void InputExample() {
+	// There are 4 states of key, press, release, hold and not press
+	// There are even more keys you can press, for mouse and keyboard, refer to E_KEY for more details
+
+	if (Input::CheckKey(E_STATE::PRESS, E_KEY::SPACE)) {
+		// Do something if spacebar is pressed
+
+		glm::vec2 mousePosition = Input::CursorPos(); // Get the mouse position
+		//double scrollState = Input::GetScroll(); Scroll is not working, let jazz know if you need it
+	}
+}
+
 
 void Example()
 {
@@ -153,3 +166,10 @@ void Example()
 	tempfloat = four.GetComponent<TestComponent3>().z;							// 5.f
 	tempfloat = five.GetComponent<TestComponent3>().z;							// 5.f
 }
+
+
+
+
+
+
+
