@@ -16,7 +16,7 @@ struct TestComponent1
 
 struct TestComponent2
 {
-	float y;
+	float z;
 };
 
 struct TestComponent3
