@@ -3,7 +3,7 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <IncludePath>$(SolutionDir)_TOOLS\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)_TOOLS\include;$(SolutionDir)lib\rapidjson;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup />
   <ItemGroup />

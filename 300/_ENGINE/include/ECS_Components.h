@@ -1,6 +1,5 @@
 #pragma once
 #include "glm/glm.hpp"
-#include "../../lib/glm-0.9.9.8/glm/glm.hpp" 
 
 struct Transform
 {

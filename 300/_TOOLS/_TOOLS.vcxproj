@@ -147,6 +147,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="include\Helper.h" />
+    <ClInclude Include="include\Input.h" />
     <ClInclude Include="include\ISingleton.h" />
     <ClInclude Include="include\Misc.h" />
     <ClInclude Include="include\pch.h" />
@@ -154,6 +155,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Helper.cpp" />
+    <ClCompile Include="source\Input.cpp" />
     <ClCompile Include="source\Misc.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
