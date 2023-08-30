@@ -69,6 +69,7 @@ bool EntityJSON::Deserialize(const rapidjson::Value& obj)
 			blabla.something = obj["BlaBla"].GetSomething();
 		}
 	*/
+	return true;
 }
 
 bool EntityJSON::Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* writer) const
@@ -82,4 +83,42 @@ bool EntityJSON::Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* wri
 	*/
 
 	writer->EndObject();
+	
+	return true;
+}
+
+bool EntityListJSON::Deserialize(const std::string& s)
+{
+	rapidjson::Document doc;
+	if (!InitDocument(s, doc))
+	{
+		return false;
+	}
+
+	if (!doc.IsArray())
+	{
+		return false;
+	}
+
+	for (rapidjson::Value::ConstValueIterator ci = doc.Begin(); ci != doc.End(); ++ci)
+	{
+		EntityJSON ent;
+		ent.Deserialize(*ci);
+		ents.push_back(ent);
+	}
+
+	return true;
+}
+bool EntityListJSON::Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* writer) const
+{
+	writer->StartArray();
+
+	for (std::list<EntityJSON>::const_iterator i = ents.begin(); i != ents.end(); i++)
+	{
+		(*i).Serialize(writer);
+	}
+
+	writer->EndArray();
+
+	return true;
 }

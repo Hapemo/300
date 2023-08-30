@@ -31,6 +31,7 @@ struct ExampleComponent
 
 class EntityJSON : public BaseJSON
 {
+public:
 	EntityJSON();
 	virtual ~EntityJSON();
 
@@ -61,4 +62,20 @@ class EntityJSON : public BaseJSON
 	*/
 private:
 	ExampleComponent ec;
+};
+
+class EntityListJSON : public BaseJSON
+{
+public:
+	virtual ~EntityListJSON() {};
+
+	virtual bool Deserialize(const std::string& s);
+	virtual bool Deserialize(const rapidjson::Value&) { return false; }
+	virtual bool Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* writer) const;
+
+	std::list<EntityJSON>& EntitiesList() { return ents; }
+
+private:
+	std::list<EntityJSON> ents;
+
 };
