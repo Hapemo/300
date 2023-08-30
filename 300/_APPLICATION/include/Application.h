@@ -61,14 +61,14 @@ public:
 	//------------------------------------------------------------------------------
 	// Getter and Setters
 	//------------------------------------------------------------------------------
-	static GLFWwindow* getWindow() { return ptr_window; }
+	//static GLFWwindow* getWindow() { return ptr_window; }
 	static std::string getTitle() { return title; }
 	static int getWindowWidth() { return window_width; }
 	static int getWindowHeight() { return window_height; }
 private:
 	static int window_width, window_height;
 	static std::string title;
-	static GLFWwindow* ptr_window;
+	//static GLFWwindow* ptr_window;
 
 	/*!*****************************************************************************
 	 Print the window title bar
