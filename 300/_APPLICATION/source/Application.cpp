@@ -15,6 +15,9 @@ start up of window and game system, also runs their update functions.
 #include "ECS.h"
 #include "ECS_Components.h"
 #include "Example.h"
+#include "Input.h"
+#include "SingletonManager.h"
+
 // Static variables
 int Application::window_width{1024};
 int Application::window_height{576};
@@ -29,7 +32,7 @@ void Application::StartUp() {
 }
 
 void Application::SystemInit() {
-
+  Input::Init(ptr_window);
 }
 
 void Application::SystemUpdate() {
@@ -39,7 +42,7 @@ void Application::SystemUpdate() {
 void Application::Init() {
   StartUp();
   SystemInit();
-  Example();
+  //Example();
 }
 
 bool Application::FirstUpdate() {
@@ -54,6 +57,7 @@ bool Application::FirstUpdate() {
 }
 
 void Application::SecondUpdate() {
+  Input::UpdatePrevKeyStates();
   FPSManager::LimitFPS();
   FPSManager::CalcDeltaTime();
 }
@@ -81,6 +85,7 @@ void Application::MainUpdate() {
 }
 
 void Application::Exit() {
+    SingletonManager::destroyAllSingletons();
   glfwTerminate();
 }
 
