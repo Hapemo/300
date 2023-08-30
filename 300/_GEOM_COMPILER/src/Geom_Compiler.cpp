@@ -727,6 +727,31 @@ namespace _GEOM
 		outfile.write((char*)&GeomData.m_nVertices, sizeof(GeomData.m_nVertices));		// m_nVertices
 		outfile.write((char*)&GeomData.m_nExtras, sizeof(GeomData.m_nExtras));			// m_nExtras
 		outfile.write((char*)&GeomData.m_nIndices, sizeof(GeomData.m_nIndices));		// m_nIndices
+
+		// Vertex Positions, UVs, Colors
+		for (uint32_t i{}; i < GeomData.m_nVertices; ++i) {
+			outfile.write((char*)&GeomData.m_pPos[i].m_UV, sizeof(glm::vec2));			// UV Coords
+			//outfile.write((char*)&GeomData.m_pPos[i].m_Pos, sizeof(glm::vec3));			// Vtx Position
+		}
+
+		// Indices
+		for (uint32_t i{}; i < GeomData.m_nIndices; ++i) {
+			outfile.write((char*)&GeomData.m_pIndices[i], sizeof(std::uint32_t));
+		}
+
+		//for (std::size_t i = 0; i < GeomData.m_nMeshes; ++i)
+		//{
+		//	GeomData.m_pMesh[i].m_Animation.m_BoneCounter = 6969;
+		//	GeomData.m_pMesh[i].m_Animation.m_Duration = 6969;
+		//	GeomData.m_pMesh[i].m_Animation.m_TicksPerSecond = 6969;
+		//	outfile.write((char*)&GeomData.m_pMesh[i].m_name, sizeof(GeomData.m_pMesh[i].m_name));	// m_Meshes
+		//	outfile.write((char*)&GeomData.m_pMesh[i].m_Animation, sizeof(Animation));	// m_Meshes
+		////for (std::size_t i = 0; i < nMeshes; ++i)
+		////{
+		////	infile.read((char*)&mesh.m_name, mesh.m_name.size());
+		////	infile.read((char*)&mesh.m_Animation, sizeof(Animation));
+		////}
+		//}
 		outfile.close();
 
 		///////////////////////////////////////////////////////////////////////////////////////////
@@ -735,15 +760,34 @@ namespace _GEOM
 		assert(infile.is_open());
 
 		std::uint32_t nMeshes, nSubmeshes, m_nVertices, m_nExtras, m_nIndices;
+		Mesh mesh;
+		std::vector<uint32_t> indices;
+
 		infile.read((char*)&nMeshes, sizeof(nMeshes));									// m_nMeshes
 		infile.read((char*)&nSubmeshes, sizeof(nSubmeshes));							// m_nSubMeshes
 		infile.read((char*)&m_nVertices, sizeof(m_nVertices));							// m_nVertices
 		infile.read((char*)&m_nExtras, sizeof(m_nExtras));								// m_nExtras
 		infile.read((char*)&m_nIndices, sizeof(m_nIndices));							// m_nIndices
+
+		for (uint32_t i{}; i < m_nVertices; ++i) {
+			VertexPos pos;
+			infile.read((char*)&pos.m_UV, sizeof(glm::vec2));							// UV coords
+			//infile.read((char*)&pos.m_Pos, sizeof(glm::vec3));							// Vtx Position
+			
+			//std::cout << pos.m_UV.x << ", " << pos.m_UV.y << std::endl;
+			//std::cout << pos.m_Pos.x << ", " << pos.m_Pos.y << pos.m_Pos.z << std::endl;
+		}
+
+		for (uint32_t i{}; i < m_nIndices; ++i) {
+			uint32_t idx{};
+			infile.read((char*)&idx, sizeof(uint32_t));									// m_Indices
+			indices.push_back(idx);
+		}
+
+		assert(infile.good());
 		infile.close();											
-#endif
 																
-#if 1															
+#else											
 		std::string filepath = assetfilepath;
 		std::ofstream outfile(filepath.c_str());
 		assert(outfile.is_open());

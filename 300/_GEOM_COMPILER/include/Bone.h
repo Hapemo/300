@@ -31,10 +31,10 @@ namespace _GEOM
 	
 	struct AssimpNodeData
 	{
-		glm::mat4						m_Transformation;
-		std::string						m_Name;
+		glm::mat4						m_Transformation{};
+		std::string						m_Name{};
 		int								m_NumChildren{};
-		std::vector<AssimpNodeData>		m_Children;
+		std::vector<AssimpNodeData>		m_Children{};
 	};
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////

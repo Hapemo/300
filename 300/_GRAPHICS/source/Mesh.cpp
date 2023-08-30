@@ -10,24 +10,28 @@
 
 void GFX::Mesh::LoadFromGeom(const _GEOM::Geom& GeomData, std::vector<vec3>& positions, std::vector<glm::vec2>& uvs, std::vector<unsigned int>& indices)
 {
-	for (size_t iSM{}; iSM < GeomData.m_nSubMeshes; ++iSM)
+	//for (size_t iSM{}; iSM < GeomData.m_nSubMeshes; ++iSM)
 	{
 		// Load indices
-		for (size_t iIndex{}, ui{ GeomData.m_pSubMesh[iSM].m_iIndices }; iIndex < GeomData.m_pSubMesh[iSM].m_nIndices; ++iIndex, ++ui)
+		//for (size_t iIndex{}, ui{ GeomData.m_pSubMesh[iSM].m_iIndices }; iIndex < GeomData.m_pSubMesh[iSM].m_nIndices; ++iIndex, ++ui)
+		for (size_t iIndex{}; iIndex < GeomData.m_nIndices; ++iIndex)
 		{
-			indices.emplace_back(GeomData.m_pIndices[ui]);
+			indices.emplace_back(GeomData.m_pIndices[iIndex]);
 		}
 
 		// Load positions
-		for (size_t iPos{}, up{ GeomData.m_pSubMesh[iSM].m_iVertices }; iPos < GeomData.m_pSubMesh[iSM].m_nVertices; ++iPos, ++up)
+		//for (size_t iPos{}, up{ GeomData.m_pSubMesh[iSM].m_iVertices }; iPos < GeomData.m_pSubMesh[iSM].m_nVertices; ++iPos, ++up)
+		for (size_t iPos{}; iPos < GeomData.m_nVertices; ++iPos)
 		{
-			positions.emplace_back(vec3(GeomData.m_pPos[up].m_Pos.x, GeomData.m_pPos[up].m_Pos.y, GeomData.m_pPos[up].m_Pos.z));
+			//positions.emplace_back(vec3(GeomData.m_pPos[up].m_Pos.x, GeomData.m_pPos[up].m_Pos.y, GeomData.m_pPos[up].m_Pos.z));
+			positions.emplace_back(vec3(GeomData.m_pPos[iPos].m_Pos.x, GeomData.m_pPos[iPos].m_Pos.y, GeomData.m_pPos[iPos].m_Pos.z));
+			uvs.emplace_back(vec2(GeomData.m_pPos[iPos].m_UV.x, GeomData.m_pPos[iPos].m_UV.y));
 		}
 
 		// Load UVs
-		for (size_t iUV{}, uuv{ GeomData.m_pSubMesh[iSM].m_iVertices }; iUV < GeomData.m_pSubMesh[iSM].m_nVertices; ++iUV, ++uuv)
+		//for (size_t iUV{}, uuv{ GeomData.m_pSubMesh[iSM].m_iVertices }; iUV < GeomData.m_pSubMesh[iSM].m_nVertices; ++iUV, ++uuv)
 		{
-			uvs.emplace_back(vec2(GeomData.m_pPos[uuv].m_UV.x, GeomData.m_pPos[uuv].m_UV.y));
+			//uvs.emplace_back(vec2(GeomData.m_pPos[uuv].m_UV.x, GeomData.m_pPos[uuv].m_UV.y));
 		}
 	}
 }
@@ -158,7 +162,38 @@ namespace Deserialization
 {
 	bool DeserializeGeom(const std::string Filepath, _GEOM::Geom& GeomData) noexcept
 	{
+#if 0
 		//std::ifstream infile("../compiled_geom/Skull_textured.geom");
+		std::ifstream infile(Filepath.c_str());
+		assert(infile.is_open());
+
+		infile.read((char*)&GeomData.m_nMeshes, sizeof(GeomData.m_nMeshes));				// m_nMeshes
+		infile.read((char*)&GeomData.m_nSubMeshes, sizeof(GeomData.m_nSubMeshes));			// m_nSubMeshes
+		infile.read((char*)&GeomData.m_nVertices, sizeof(GeomData.m_nVertices));			// m_nVertices
+		infile.read((char*)&GeomData.m_nExtras, sizeof(GeomData.m_nExtras));				// m_nExtras
+		infile.read((char*)&GeomData.m_nIndices, sizeof(GeomData.m_nIndices));				// m_nIndices
+
+		GeomData.m_pPos = std::make_shared<_GEOM::Geom::VertexPos[]>(GeomData.m_nVertices);
+		for (uint32_t i{}; i < GeomData.m_nVertices; ++i) 
+		{
+			infile.read((char*)&GeomData.m_pPos[i].m_UV, sizeof(glm::vec2));				// UV Coords
+			//infile.read((char*)&GeomData.m_pPos[i].m_Pos, sizeof(glm::vec3));				// Vtx Position
+
+			std::cout << GeomData.m_pPos[i].m_UV.x << ", " << GeomData.m_pPos[i].m_UV.y << "\n";
+			//std::cout << GeomData.m_pPos[i].m_Pos.x << ", " << GeomData.m_pPos[i].m_Pos.y << ", " << GeomData.m_pPos[i].m_Pos.z << "\n";
+		}
+
+		GeomData.m_pIndices = std::make_shared<uint32_t[]>(GeomData.m_nIndices);
+		for (uint32_t i{}; i < GeomData.m_nIndices; ++i) {
+			uint32_t idx{};
+			infile.read((char*)&idx, sizeof(std::uint32_t));					// m_Indices
+			std::cout << idx << "\n";
+		}
+
+		//assert(infile.good());
+		infile.close();
+		return true;
+#else
 		std::ifstream infile(Filepath.c_str());
 		assert(infile.is_open());
 
@@ -174,9 +209,13 @@ namespace Deserialization
 		//Serialization::ReadVertexExtra(infile, GeomData);		// == We dont need these data for now ==	
 		Serialization::ReadIndices(infile, GeomData);
 
+		assert(infile.good());
 		infile.close();
 		return true;
+#endif
 	}
+
+
 
 #if 0
 	// ====================================================================================================
