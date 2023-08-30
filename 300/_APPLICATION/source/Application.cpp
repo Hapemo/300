@@ -16,6 +16,7 @@ start up of window and game system, also runs their update functions.
 #include "ECS_Components.h"
 #include "Example.h"
 #include "Input.h"
+#include "SingletonManager.h"
 
 // Static variables
 int Application::window_width{1024};
@@ -41,7 +42,7 @@ void Application::SystemUpdate() {
 void Application::Init() {
   StartUp();
   SystemInit();
-  Example();
+  //Example();
 }
 
 bool Application::FirstUpdate() {
@@ -84,6 +85,7 @@ void Application::MainUpdate() {
 }
 
 void Application::Exit() {
+    SingletonManager::destroyAllSingletons();
   glfwTerminate();
 }
 
