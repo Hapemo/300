@@ -13,12 +13,13 @@
 #include <fstream>
 #include <unordered_map>
 
-#include <descriptor.h>
 #include <Bone.h>
+#include <descriptor.h>
 
 namespace _GEOM
 {
 	struct BoneInfo;
+	struct AssimpNodeData;
 	class Bone;
 
 	struct FullVertices
@@ -53,6 +54,7 @@ namespace _GEOM
 	{
 		std::unordered_map<std::string, BoneInfo>		m_BoneInfoMap;
 		std::vector<Bone>								m_Bones;
+		AssimpNodeData									m_RootNode;
 
 		int												m_BoneCounter = 0;
 		float											m_Duration;
@@ -98,7 +100,7 @@ namespace _GEOM
 
 		struct Texture
 		{
-			unsigned int id;
+			//unsigned int id;
 			std::string type;
 			std::string path;
 		};
@@ -116,7 +118,10 @@ namespace _GEOM
 		std::uint32_t			m_nExtras;
 		std::uint32_t			m_nIndices;
 
+		bool					m_bHasTextures = false;		// does the mesh contain textures
 		bool					m_bHasAnimations = false;
+		bool					m_bVtxClrPresent = false;	// when this boolean is false, it means that the vertex colors are not present within the mesh.
+															// defaults to (1, 1, 1, 1)
 
 		static bool SerializeGeom(const std::string& filename, Geom& GeomData) noexcept;
 		//static bool DeserializeGeom(const std::string Filepath, Geom& GeomRef) noexcept;
@@ -144,7 +149,8 @@ namespace _GEOM
 		std::vector<Mesh>								m_Meshes;
 
 		Animation										m_Animation;	
-		bool											m_HasAnimation = false;	
+		bool											m_bHasAnimation = false;	
+		bool											m_bVtxClrPresent = false;
 
 		void CastToGeomStruct(Geom& _geom) noexcept;
 	};
@@ -184,9 +190,6 @@ namespace Serialization
 	bool ReadVertexPos(std::ifstream& inFile, _GEOM::Geom& GeomData) noexcept;
 	bool ReadVertexExtra(std::ifstream& inFile, _GEOM::Geom& GeomData) noexcept;
 	bool ReadIndices(std::ifstream& inFile, _GEOM::Geom& GeomData) noexcept;
-
-	extern bool bVtxClrPresent;		// when this boolean is false, it means that the vertex colors are not present within the mesh.
-								    // defaults to (1, 1, 1, 1)
 }
 
 std::ostream& operator<<(std::ostream& os, const glm::vec2& v);

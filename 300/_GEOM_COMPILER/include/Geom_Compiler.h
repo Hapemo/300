@@ -53,6 +53,16 @@ namespace _GEOM
 		void								Optimize(std::vector<InputMeshPart>& _MyNodes) noexcept;
 		std::vector<CompressedMeshPart> 	Quantize(const std::vector<InputMeshPart>& _MyNodes) noexcept;
 
+
+		// BONE::
+		std::vector<Geom::Texture> LoadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName) noexcept;
+		void ReadHierarchyData(AssimpNodeData& dest, const aiNode* src) noexcept;
+		void DefaultInitializeVertexBoneData(FullVertices& vertex) noexcept;
+		void SetVertexBoneData(FullVertices& vertex, int boneID, float weight) noexcept;
+		void ExtractBoneWeightForVertex(InputMeshPart& Vertex, const aiMesh& mesh) noexcept;
+		void ReadMissingBones(const aiAnimation* const animation) noexcept;
+
+
 	private:
 		struct Refs
 		{

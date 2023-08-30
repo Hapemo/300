@@ -142,112 +142,6 @@ namespace _GEOM
 
 	void Mesh_Loader::ImportStaticData(std::vector<InputMeshPart>& _MyNodes)
 	{
-		auto LoadMaterialTextures = [&](aiMaterial* mat, aiTextureType type, std::string typeName) -> std::vector<Geom::Texture>
-		{
-			std::vector<Geom::Texture> textures;
-			for (unsigned int i{}; i < mat->GetTextureCount(type); ++i)
-			{
-				aiString str;
-				mat->GetTexture(type, i, &str);
-				Geom::Texture texture;
-				texture.type = typeName;
-				texture.path = str.C_Str();
-				textures.emplace_back(texture);
-			}
-
-			return textures;
-		};
-
-		// BONE:: Initialize bone data
-		auto DefaultInitializeVertexBoneData = [](FullVertices& vertex)
-		{
-			for (int i = 0; i < MAX_BONE_INFLUENCE; ++i)
-			{
-				vertex.m_BoneIDs[i] = -1;
-				vertex.m_Weights[i] = 0.0f;
-			}
-		};
-		
-		// BONE:: Set bone data
-		auto SetVertexBoneData = [](FullVertices& vertex, int boneID, float weight)
-		{
-			for (int i = 0; i < MAX_BONE_INFLUENCE; ++i)
-			{
-				if (vertex.m_BoneIDs[i] < 0)
-				{
-					vertex.m_Weights[i] = weight;
-					vertex.m_BoneIDs[i] = boneID;
-					break;
-				}
-			}
-		};
-
-		// BONE:: Load bone data
-		auto ExtractBoneWeightForVertex = [&](InputMeshPart& Vertex, const aiMesh& mesh)
-		{
-			auto& rBoneInfoMap	= m_SkinGeom->m_Animation.m_BoneInfoMap;
-			int& iBoneCount		= m_SkinGeom->m_Animation.m_BoneCounter;
-
-			for (int boneindex = 0; boneindex < mesh.mNumBones; ++boneindex)
-			{
-				int boneID = -1;
-				std::string boneName = mesh.mBones[boneindex]->mName.C_Str();
-
-				// >> check if the bone already exists
-				if (rBoneInfoMap.find(boneName) == rBoneInfoMap.end())
-				{
-					// add the new bone to the bone map if it doesn't exist
-					BoneInfo newboneinfo;
-					newboneinfo.id = iBoneCount;
-					newboneinfo.offset = AssimpHelper::ConvertMatrixToGLMFormat(mesh.mBones[boneindex]->mOffsetMatrix);
-					rBoneInfoMap[boneName] = newboneinfo;
-					boneID = iBoneCount++;
-				}
-				else
-				{
-					boneID = rBoneInfoMap[boneName].id;
-				}
-				assert(boneID != -1);
-
-				// >> populating the weight each vertex has on the bone
-				const auto& weights	= mesh.mBones[boneindex]->mWeights;
-				int numWeights		= mesh.mBones[boneindex]->mNumWeights;
-				for (int weightindex{}; weightindex < numWeights; ++weightindex)
-				{
-					int vertexID = weights[weightindex].mVertexId;
-					float weight = weights[weightindex].mWeight;
-					assert(vertexID <= Vertex.m_Vertices.size());
-					SetVertexBoneData(Vertex.m_Vertices[vertexID], boneID, weight);
-				}
-			}
-		};
-
-		// BONE:: Read missing bones and populate bone vector
-		auto ReadMissingBones = [&](const aiAnimation* const animation)
-		{
-			m_SkinGeom->m_Animation.m_Duration = animation->mDuration;
-			m_SkinGeom->m_Animation.m_TicksPerSecond = animation->mTicksPerSecond;
-			int size = animation->mNumChannels;
-			
-			auto& boneInfoMap	= m_SkinGeom->m_Animation.m_BoneInfoMap;
-			int& boneCount		= m_SkinGeom->m_Animation.m_BoneCounter;
-
-			// Reading channels (bones engaged in an animation and their keyframes)
-			for (int i{}; i < size; ++i)
-			{
-				auto channel = animation->mChannels[i];
-				std::string boneName = channel->mNodeName.data;
-
-				// populate the bone info map if there are any missing entries
-				if (boneInfoMap.find(boneName) == boneInfoMap.end())
-				{
-					boneInfoMap[boneName].id = boneCount++;
-				}
-				m_SkinGeom->m_Animation.m_Bones.emplace_back(Bone(channel->mNodeName.data, boneInfoMap[channel->mNodeName.data].id, channel));
-			}
-		};
-
-
 		// process the provided node mesh by extractomg data from the assimp mesh and storing it into my own data structure
 		auto ProcessMesh = [&](const aiMesh& AssimpMesh, const aiMatrix4x4& Transform, InputMeshPart& MeshPart, const int iTexCordinates, const int iColors)
 		{
@@ -277,7 +171,7 @@ namespace _GEOM
 			for (auto i = 0u; i < AssimpMesh.mNumVertices; ++i)
 			{
 				FullVertices& Vertex = MeshPart.m_Vertices[i];		// the mesh's vertices
-				DefaultInitializeVertexBoneData(Vertex);
+				DefaultInitializeVertexBoneData(Vertex);			// default initializes the bone data
 					
 				// VERTEX POSITIONS //
 				auto L = Transform * AssimpMesh.mVertices[i];		// adds pretransformation to the vertices
@@ -302,10 +196,10 @@ namespace _GEOM
 				if (iColors == -1)
 				{
 					Vertex.m_Color = glm::vec4(1.f, 1.f, 1.f, 1.f);	// default initializes color to white if not present
-					Serialization::bVtxClrPresent = false;
 				}
 				else
 				{
+					m_SkinGeom->m_bVtxClrPresent = true;
 					Vertex.m_Color = glm::vec4
 					(
 						static_cast<float>(AssimpMesh.mColors[iColors][i].r)
@@ -357,7 +251,7 @@ namespace _GEOM
 			// Copy the bones
 			if (AssimpMesh.HasBones()) {
 				ExtractBoneWeightForVertex(MeshPart, AssimpMesh);
-				m_SkinGeom->m_HasAnimation = true;
+				m_SkinGeom->m_bHasAnimation = true;
 			}
 		};
 
@@ -397,9 +291,10 @@ namespace _GEOM
 		aiMatrix4x4 L2W = m_DescriptorMatrix;				// the pretransform data that was gotten from the descriptor file
 		RecurseScene(*m_Scene->mRootNode, L2W);
 		
-		if (m_SkinGeom->m_HasAnimation)
+		if (m_SkinGeom->m_bHasAnimation)
 		{
 			std::cout << ">>[NOTE]: \tImporting Bones\n";
+			ReadHierarchyData(m_SkinGeom->m_Animation.m_RootNode, m_Scene->mRootNode);
 			ReadMissingBones(m_Scene->mAnimations[0]);
 			std::cout << ">>[NOTE]: \tFinished Importing Bones\n";
 		}
@@ -751,7 +646,8 @@ namespace _GEOM
 			// Copy name of mesh in
 			strcpy_s(Mesh[i].m_name.data(), Mesh[i].m_name.size(), m_Meshes[i].m_Name.c_str());
 			Mesh[i].m_Animation		= m_Animation;
-			_geom.m_bHasAnimations	= m_HasAnimation ? true : _geom.m_bHasAnimations;
+			_geom.m_bHasAnimations	= m_bHasAnimation ? true : _geom.m_bHasAnimations;
+			_geom.m_bVtxClrPresent	= m_bVtxClrPresent ? true : _geom.m_bVtxClrPresent;
 
 			//Submesh data
 			for (std::size_t j = 0; j < totalSubMeshes; ++j)
@@ -886,4 +782,130 @@ namespace _GEOM
 
 	//	return true;
 	//}
+
+
+	std::vector<Geom::Texture> Mesh_Loader::LoadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName) noexcept
+	{
+		std::vector<Geom::Texture> textures;
+		for (unsigned int i{}; i < mat->GetTextureCount(type); ++i)
+		{
+			aiString str;
+			mat->GetTexture(type, i, &str);
+			Geom::Texture texture;
+			texture.type = typeName;
+			texture.path = str.C_Str();
+			textures.emplace_back(texture);
+		}
+
+		return textures;
+	};
+
+
+	// BONE:: Read Hierarchy data
+	void Mesh_Loader::ReadHierarchyData(AssimpNodeData& dest, const aiNode* src) noexcept
+	{
+		assert(src);
+
+		dest.m_Name = src->mName.data;
+		dest.m_Transformation = AssimpHelper::ConvertMatrixToGLMFormat(src->mTransformation);
+		dest.m_NumChildren = src->mNumChildren;
+
+		for (int i{}; i < src->mNumChildren; ++i)
+		{
+			AssimpNodeData newData;
+			ReadHierarchyData(newData, src->mChildren[i]);
+			dest.m_Children.emplace_back(newData);
+		}
+	};
+
+
+	// BONE:: Initialize bone data
+	void Mesh_Loader::DefaultInitializeVertexBoneData(FullVertices& vertex) noexcept
+	{
+		for (int i = 0; i < MAX_BONE_INFLUENCE; ++i)
+		{
+			vertex.m_BoneIDs[i] = -1;
+			vertex.m_Weights[i] = 0.0f;
+		}
+	};
+
+	// BONE:: Set bone data
+	void Mesh_Loader::SetVertexBoneData(FullVertices& vertex, int boneID, float weight) noexcept
+	{
+		for (int i = 0; i < MAX_BONE_INFLUENCE; ++i)
+		{
+			// only change the default initialized bones
+			if (vertex.m_BoneIDs[i] < 0)
+			{
+				vertex.m_Weights[i] = weight;
+				vertex.m_BoneIDs[i] = boneID;
+				break;
+			}
+		}
+	};
+
+	// BONE:: Load bone data
+	void Mesh_Loader::ExtractBoneWeightForVertex(Mesh_Loader::InputMeshPart& Vertex, const aiMesh& mesh) noexcept
+	{
+		auto& rBoneInfoMap = m_SkinGeom->m_Animation.m_BoneInfoMap;
+		int& iBoneCount = m_SkinGeom->m_Animation.m_BoneCounter;
+
+		for (int boneindex = 0; boneindex < mesh.mNumBones; ++boneindex)
+		{
+			int boneID = -1;
+			std::string boneName = mesh.mBones[boneindex]->mName.C_Str();
+
+			// >> check if the bone already exists
+			if (rBoneInfoMap.find(boneName) == rBoneInfoMap.end())
+			{
+				// add the new bone to the bone map if it doesn't exist
+				BoneInfo newboneinfo{};
+				newboneinfo.id = iBoneCount;
+				newboneinfo.offset = AssimpHelper::ConvertMatrixToGLMFormat(mesh.mBones[boneindex]->mOffsetMatrix);
+				rBoneInfoMap[boneName] = newboneinfo;
+				boneID = iBoneCount++;
+			}
+			else
+			{
+				boneID = rBoneInfoMap[boneName].id;
+			}
+			assert(boneID != -1);
+
+			// >> populating the weight each vertex has on the bone
+			const auto& weights = mesh.mBones[boneindex]->mWeights;
+			int numWeights = mesh.mBones[boneindex]->mNumWeights;
+			for (int weightindex{}; weightindex < numWeights; ++weightindex)
+			{
+				int vertexID = weights[weightindex].mVertexId;
+				float weight = weights[weightindex].mWeight;
+				assert(vertexID <= Vertex.m_Vertices.size());
+				SetVertexBoneData(Vertex.m_Vertices[vertexID], boneID, weight);
+			}
+		}
+	};
+
+	// BONE:: Read missing bones and populate bone vector
+	void Mesh_Loader::ReadMissingBones(const aiAnimation* const animation) noexcept
+	{
+		m_SkinGeom->m_Animation.m_Duration = animation->mDuration;
+		m_SkinGeom->m_Animation.m_TicksPerSecond = animation->mTicksPerSecond;
+		int size = animation->mNumChannels;
+
+		auto& boneInfoMap = m_SkinGeom->m_Animation.m_BoneInfoMap;
+		int& boneCount = m_SkinGeom->m_Animation.m_BoneCounter;
+
+		// Reading channels (bones engaged in an animation and their keyframes)
+		for (int i{}; i < size; ++i)
+		{
+			auto channel = animation->mChannels[i];
+			std::string boneName = channel->mNodeName.data;
+
+			// populate the bone info map if there are any missing entries
+			if (boneInfoMap.find(boneName) == boneInfoMap.end())
+			{
+				boneInfoMap[boneName].id = boneCount++;
+			}
+			m_SkinGeom->m_Animation.m_Bones.emplace_back(Bone(channel->mNodeName.data, boneInfoMap[channel->mNodeName.data].id, channel));
+		}
+	};
 }

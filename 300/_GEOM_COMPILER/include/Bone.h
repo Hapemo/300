@@ -3,14 +3,16 @@
 #ifndef _BONE_H
 #define _BONE_H
 
-#include <geom.h>
-#include <Helper.h>
 #include <glm/gtc/quaternion.hpp>
-
 #include <glm/glm.hpp>
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
+
+#include <vector>
+
+//#include <geom.h>
+#include <Helper.h>
 
 namespace _GEOM
 {
@@ -23,6 +25,16 @@ namespace _GEOM
 
 		/*offset matrix transforms vertex from model space to bone space*/
 		glm::mat4 offset;
+	};
+
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	struct AssimpNodeData
+	{
+		glm::mat4						m_Transformation;
+		std::string						m_Name;
+		int								m_NumChildren{};
+		std::vector<AssimpNodeData>		m_Children;
 	};
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////

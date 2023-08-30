@@ -48,8 +48,6 @@ namespace _GEOM
 
 namespace Serialization
 {
-	// Global Variable
-	bool bVtxClrPresent = true;
 
 		// ====================================================================================================
 		//										NEW SERIALIZATION CODE BLOCK
@@ -119,7 +117,7 @@ namespace Serialization
 		bool SerializeVertexPos(std::ofstream& outFile, const _GEOM::Geom& GeomData) noexcept
 		{
 			// Vertex color present
-			if(bVtxClrPresent)
+			if(GeomData.m_bVtxClrPresent)
 				outFile << " VTXCLR_YES";
 			else
 				outFile << " VTXCLR_NO";
@@ -130,7 +128,7 @@ namespace Serialization
 				SerializeVec3(outFile, GeomData.m_pPos[i].m_Pos);
 				SerializeVec2(outFile, GeomData.m_pPos[i].m_UV);
 
-				if (bVtxClrPresent) {
+				if (GeomData.m_bVtxClrPresent) {
 					SerializeVec3(outFile, GeomData.m_pPos[i].m_Clr);
 				}
 			}
@@ -215,9 +213,9 @@ namespace Serialization
 		std::string check;
 		check = ReadUnsigned(inFile, GeomData.m_nVertices);
 		if(check.find("VTXCLR_YES") != std::string::npos)
-			bVtxClrPresent = true;
+			GeomData.m_bVtxClrPresent = true;
 		else
-			bVtxClrPresent = false;
+			GeomData.m_bVtxClrPresent = false;
 
 		std::unique_ptr<_GEOM::Geom::VertexPos[]> pos = std::make_unique<_GEOM::Geom::VertexPos[]>(GeomData.m_nVertices);
 		for (unsigned i{}; i < GeomData.m_nVertices; ++i)
@@ -235,7 +233,7 @@ namespace Serialization
 			Stream >> ch >> pos[i].m_UV.y >> ch;
 
 			// only serialize the vertex color if it is present
-			if (bVtxClrPresent)
+			if (GeomData.m_bVtxClrPresent)
 			{
 				Stream >> ch >> pos[i].m_Clr.x;
 				Stream >> ch >> pos[i].m_Clr.y;
