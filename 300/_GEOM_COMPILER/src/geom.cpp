@@ -160,6 +160,58 @@ namespace Serialization
 			return true;
 		}
 
+
+		bool SerializeQuaternion(std::ofstream& outFile, const glm::quat& value) noexcept
+		{
+			return false;
+		}
+
+
+		bool SerializeAnimation(std::ofstream& outFile, const _GEOM::Geom& GeomData) noexcept
+		{
+			bool Err{};
+
+			assert(GeomData.m_bHasAnimations);
+
+			for (unsigned meshindex{}; meshindex < GeomData.m_nMeshes; ++meshindex)
+			{
+				// How many meshes are there? Each mesh has a bone info map
+				Err |= SerializeBoneInfoMap(outFile, GeomData.m_pMesh[meshindex].m_Animation);
+			}
+
+			return Err;
+		}
+
+
+		bool SerializeBoneInfoMap(std::ofstream& outFile, const _GEOM::Animation animation) noexcept
+		{
+			outFile << " | Bone_Count: " << animation.m_BoneCounter << " | ";
+			outFile << "m_Duration: " << animation.m_Duration << " | ";
+			outFile << "m_TicksPerSecond: " << animation.m_TicksPerSecond << " | ";
+			outFile << "Bone_Info_Map_Size: " << animation.m_BoneInfoMap.size() << "\n";
+
+			// in this particular mesh, extract and serialize the bone info map
+			for (const auto lBoneInfo : animation.m_BoneInfoMap)
+			{
+				// serialize the bone name and the bone id
+				outFile << lBoneInfo.first << " " << lBoneInfo.second.id << " | ";
+			}
+
+			// serialize the offset mat4x4, in row major order
+			for (unsigned rows{}; rows < 4; ++rows)
+			{
+				outFile << std::endl;
+				for (const auto lBoneInfo : animation.m_BoneInfoMap)
+				{
+					outFile << "{" << lBoneInfo.second.offset[0][rows] << " " << lBoneInfo.second.offset[1][rows] << " " << lBoneInfo.second.offset[2][rows] << " " << lBoneInfo.second.offset[3][rows] << "} ";
+				}
+			}
+
+			return true;
+		}
+
+
+
 	// ====================================================================================================
 	//										NEW DESERIALIZATION CODE BLOCK
 	// ====================================================================================================

@@ -1,16 +1,8 @@
-﻿  Bone.cpp
-F:\300\300\_GEOM_COMPILER\src\Bone.cpp(17,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-F:\300\300\_GEOM_COMPILER\src\Bone.cpp(28,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-F:\300\300\_GEOM_COMPILER\src\Bone.cpp(39,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-  geom.cpp
-F:\300\300\_GEOM_COMPILER\src\geom.cpp(254,8): warning C4101: 'ch': unreferenced local variable
-  Geom_Compiler.cpp
-F:\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(813,19): warning C4018: '<': signed/unsigned mismatch
-F:\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(853,37): warning C4018: '<': signed/unsigned mismatch
-F:\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(890,49): warning C4244: '=': conversion from 'const double' to 'float', possible loss of data
-F:\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(891,55): warning C4244: '=': conversion from 'const double' to 'float', possible loss of data
-  _compiler_main.cpp
-  Generating Code...
+﻿  Geom_Compiler.cpp
+F:\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(851,19): warning C4018: '<': signed/unsigned mismatch
+F:\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(891,37): warning C4018: '<': signed/unsigned mismatch
+F:\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(928,49): warning C4244: '=': conversion from 'const double' to 'float', possible loss of data
+F:\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(929,55): warning C4244: '=': conversion from 'const double' to 'float', possible loss of data
   _GEOM_COMPILER.vcxproj -> F:\300\300\x64\Debug\_GEOM_COMPILER.exe
           1 file(s) copied.
           1 file(s) copied.

@@ -645,9 +645,14 @@ namespace _GEOM
 		{
 			// Copy name of mesh in
 			strcpy_s(Mesh[i].m_name.data(), Mesh[i].m_name.size(), m_Meshes[i].m_Name.c_str());
+			
+			// Copy the animation data in
 			Mesh[i].m_Animation		= m_Animation;
+
+			// Copy the bool statuses in
 			_geom.m_bHasAnimations	= m_bHasAnimation ? true : _geom.m_bHasAnimations;
 			_geom.m_bVtxClrPresent	= m_bVtxClrPresent ? true : _geom.m_bVtxClrPresent;
+			_geom.m_bHasTextures	= m_bHasTextures ? true : _geom.m_bHasTextures;
 
 			//Submesh data
 			for (std::size_t j = 0; j < totalSubMeshes; ++j)
@@ -712,6 +717,33 @@ namespace _GEOM
 
 	bool Geom::SerializeGeom(const std::string& assetfilepath, Geom& GeomData) noexcept
 	{
+#if 0
+		std::string filepath = assetfilepath;
+		std::ofstream outfile(filepath.c_str(), std::ios::binary);
+		assert(outfile.is_open());
+
+		outfile.write((char*)&GeomData.m_nMeshes, sizeof(GeomData.m_nMeshes));			// m_nMeshes
+		outfile.write((char*)&GeomData.m_nSubMeshes, sizeof(GeomData.m_nSubMeshes));	// m_nSubMeshes
+		outfile.write((char*)&GeomData.m_nVertices, sizeof(GeomData.m_nVertices));		// m_nVertices
+		outfile.write((char*)&GeomData.m_nExtras, sizeof(GeomData.m_nExtras));			// m_nExtras
+		outfile.write((char*)&GeomData.m_nIndices, sizeof(GeomData.m_nIndices));		// m_nIndices
+		outfile.close();
+
+		///////////////////////////////////////////////////////////////////////////////////////////
+
+		std::ifstream infile(filepath.c_str(), std::ios::binary);
+		assert(infile.is_open());
+
+		std::uint32_t nMeshes, nSubmeshes, m_nVertices, m_nExtras, m_nIndices;
+		infile.read((char*)&nMeshes, sizeof(nMeshes));									// m_nMeshes
+		infile.read((char*)&nSubmeshes, sizeof(nSubmeshes));							// m_nSubMeshes
+		infile.read((char*)&m_nVertices, sizeof(m_nVertices));							// m_nVertices
+		infile.read((char*)&m_nExtras, sizeof(m_nExtras));								// m_nExtras
+		infile.read((char*)&m_nIndices, sizeof(m_nIndices));							// m_nIndices
+		infile.close();											
+#endif
+																
+#if 1															
 		std::string filepath = assetfilepath;
 		std::ofstream outfile(filepath.c_str());
 		assert(outfile.is_open());
@@ -733,10 +765,6 @@ namespace _GEOM
 		outfile << std::endl << "[Number of Indices]: ";
 		Serialization::SerializeUnsigned(outfile, GeomData.m_nIndices);
 
-		if (GeomData.m_bHasAnimations) {
-			std::cout << "Serialize animation data here\n";
-		}
-
 		outfile << std::endl << "[Meshes]: ";
 		Serialization::SerializeUnsigned(outfile, GeomData.m_nMeshes);
 		Serialization::SerializeMesh(outfile, GeomData);
@@ -757,30 +785,40 @@ namespace _GEOM
 		Serialization::SerializeUnsigned(outfile, GeomData.m_nIndices);
 		Serialization::SerializeIndices(outfile, GeomData);
 
-		outfile.close();
+		outfile << std::endl << "[Vertex Animation]: ";		//!< reorder this, for deserialization
+		if (GeomData.m_bHasAnimations) {
+			outfile << "VTX_ANIMATION_YES ";
+			Serialization::SerializeAnimation(outfile, GeomData);
+		}
+		else {
+			outfile << "VTX_ANIMATION_NO ";
+		}
+#endif
 
 		return true; // no errors
 	}
 
 
-	//bool DeserializeGeom(const std::string Filepath, Geom& GeomData) noexcept
+	//bool Geom::DeserializeGeom(const std::string Filepath, _GEOM::Geom& GeomData) noexcept
 	//{
-	//	std::ifstream infile("../compiled_geom/Skull_textured.geom");
-	//	assert(infile.is_open());
+		////std::ifstream infile("../compiled_geom/Skull_textured.geom");
+		//std::ifstream infile(Filepath.c_str());
+		//assert(infile.is_open());
 
-	//	Serialization::ReadUnsigned(infile, GeomData.m_nMeshes);
-	//	Serialization::ReadUnsigned(infile, GeomData.m_nSubMeshes);
-	//	Serialization::ReadUnsigned(infile, GeomData.m_nVertices);
-	//	Serialization::ReadUnsigned(infile, GeomData.m_nExtras);
-	//	Serialization::ReadUnsigned(infile, GeomData.m_nIndices);
+		//Serialization::ReadUnsigned(infile, GeomData.m_nMeshes);
+		//Serialization::ReadUnsigned(infile, GeomData.m_nSubMeshes);
+		//Serialization::ReadUnsigned(infile, GeomData.m_nVertices);
+		//Serialization::ReadUnsigned(infile, GeomData.m_nExtras);
+		//Serialization::ReadUnsigned(infile, GeomData.m_nIndices);
 
-	//	Serialization::ReadMesh(infile, GeomData);
-	//	Serialization::ReadSubMesh(infile, GeomData);
-	//	Serialization::ReadVertexPos(infile, GeomData);
-	//	//Serialization::ReadVertexExtra(infile, GeomData);					// == We dont need these data for now ==	
-	//	Serialization::ReadIndices(infile, GeomData);
+		//Serialization::ReadMesh(infile, GeomData);
+		//Serialization::ReadSubMesh(infile, GeomData);
+		//Serialization::ReadVertexPos(infile, GeomData);
+		////Serialization::ReadVertexExtra(infile, GeomData);		// == We dont need these data for now ==	
+		//Serialization::ReadIndices(infile, GeomData);
 
-	//	return true;
+		//infile.close();
+		//return true;
 	//}
 
 

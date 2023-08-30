@@ -6,6 +6,7 @@
 #define MAX_BONE_INFLUENCE 4
 
 #include <glm/glm.hpp>
+#include <glm/gtc/quaternion.hpp>
 
 #include <array>
 #include <string>
@@ -50,6 +51,7 @@ namespace _GEOM
 	
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+	// The animation information of the mesh.
 	struct Animation
 	{
 		std::unordered_map<std::string, BoneInfo>		m_BoneInfoMap;
@@ -98,6 +100,7 @@ namespace _GEOM
 			std::uint16_t			m_iMaterial;		//Index of material in submesh
 		};
 
+		// TODO:: add texture de/serialization
 		struct Texture
 		{
 			//unsigned int id;
@@ -149,6 +152,8 @@ namespace _GEOM
 		std::vector<Mesh>								m_Meshes;
 
 		Animation										m_Animation;	
+
+		bool											m_bHasTextures = false;		// TODO:: this has not been fully implemented yet. 
 		bool											m_bHasAnimation = false;	
 		bool											m_bVtxClrPresent = false;
 
@@ -173,13 +178,17 @@ namespace Serialization
 	*/
 	bool SerializeUnsigned(std::ofstream& outFile, const std::uint32_t& value) noexcept;
 	bool SerializeSigned(std::ofstream& outFile, const std::int16_t& value) noexcept;
+	bool SerializeQuaternion(std::ofstream& outFile, const glm::quat& value) noexcept;	// {0.0, 0.0, 0.0, 0.0}
 	bool SerializeVec3(std::ofstream& outFile, const glm::vec3& value) noexcept;	// {0.0, 0.0, 0.0}
 	bool SerializeVec2(std::ofstream& outFile, const glm::vec2& value) noexcept;	// {0.0, 0.0}
+
 	bool SerializeMesh(std::ofstream& outFile, const _GEOM::Geom& GeomData) noexcept;
 	bool SerializeSubMesh(std::ofstream& outFile, const _GEOM::Geom& GeomData) noexcept;
 	bool SerializeVertexPos(std::ofstream& outFile, const _GEOM::Geom& GeomData) noexcept;
 	bool SerializeVertexExtra(std::ofstream& outFile, const _GEOM::Geom& GeomData) noexcept;
 	bool SerializeIndices(std::ofstream& outFile, const _GEOM::Geom& GeomData) noexcept;	
+	bool SerializeAnimation(std::ofstream& outFile, const _GEOM::Geom& GeomData) noexcept;
+	bool SerializeBoneInfoMap(std::ofstream& outFile, const _GEOM::Animation animation) noexcept;
 
 	std::string ReadUnsigned(std::ifstream& inFile, std::uint32_t& value) noexcept;
 	bool ReadSigned(std::ifstream& inFile, std::int16_t& value) noexcept;
