@@ -8,7 +8,6 @@
 main file of the whole program
 *******************************************************************************/
 #include "Application.h"
-#include "Editor/Editor.h"
 #include "GLFW/glfw3.h"
 #include "Misc.h"
 #include "pch.h"
@@ -70,24 +69,14 @@ void real_main() {
     //std::signal(SIGFPE, HandleSignal);
 
     // Part 1
-    EditorWindow::Mainwindow = new Editor;
-
     Application::Init();
-    EditorWindow::Mainwindow->UIinit();
-    
+
     // Part 2
-    while (!glfwWindowShouldClose(/*Application::getWindow()*/EditorWindow::Mainwindow->_Editorwindow)) {
+    while (!glfwWindowShouldClose(Application::getWindow())) {
         Application::MainUpdate();
-
-        EditorWindow::Mainwindow->UIupdate();
-        //EditorWindow::Mainwindow->WindowUpdate();
-        EditorWindow::Mainwindow->UIdraw(EditorWindow::Mainwindow->_Editorwindow);
-        EditorWindow::Mainwindow->WindowUpdate();
-
         //GameStateManager::GetInstance()->Update();
         //if (GameStateManager::GetInstance()->GetNextGS() == E_GS::EXIT) break;
     }
-    EditorWindow::Mainwindow->UIend();
 
     // Part 3
     Application::Exit();

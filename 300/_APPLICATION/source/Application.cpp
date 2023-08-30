@@ -16,14 +16,13 @@ start up of window and game system, also runs their update functions.
 #include "ECS_Components.h"
 #include "Example.h"
 #include "Input.h"
-#include "Editor/Editor.h"
 
 // Static variables
 int Application::window_width{1024};
 int Application::window_height{576};
 std::string Application::title{ "VI Engine" };
-//GLFWwindow* Application::ptr_window;
-Editor* EditorWindow::Mainwindow;
+GLFWwindow* Application::ptr_window;
+
 
 
 void Application::StartUp() {
@@ -32,7 +31,7 @@ void Application::StartUp() {
 }
 
 void Application::SystemInit() {
-  Input::Init(EditorWindow::Mainwindow->_Editorwindow);
+  Input::Init(ptr_window);
 }
 
 void Application::SystemUpdate() {
@@ -75,13 +74,13 @@ void Application::MainUpdate() {
   // Graphics update
   // Application ending update
 
- // while (!glfwWindowShouldClose(EditorWindow::Mainwindow->_Editorwindow)) {
+  while (!glfwWindowShouldClose(ptr_window)) {
       PrintTitleBar(0.5);
 
     FirstUpdate();
     SystemUpdate();
     SecondUpdate(); // This should always be the last
-  //}
+  }
 }
 
 void Application::Exit() {
@@ -101,7 +100,7 @@ void Application::PrintTitleBar(double _s) {
     sstr << std::fixed << std::setprecision(3) << Application::getTitle() << " | " 
                                                << "fps: " << FPSManager::fps << " | "
                                                << "dt: " << FPSManager::dt;
-    //glfwSetWindowTitle(Application::getWindow(), sstr.str().c_str());
+    glfwSetWindowTitle(Application::getWindow(), sstr.str().c_str());
   }
 }
 
@@ -126,21 +125,21 @@ void Application::GLFWStartUp() {
   glfwWindowHint(GLFW_BLUE_BITS, 8); glfwWindowHint(GLFW_ALPHA_BITS, 8);
   glfwWindowHint(GLFW_RESIZABLE, GL_TRUE); // window dimensions are not static
 
-  EditorWindow::Mainwindow->_Editorwindow = glfwCreateWindow(window_width, window_height, title.c_str(), NULL, NULL);
-  glfwSetWindowAspectRatio(EditorWindow::Mainwindow->_Editorwindow, window_width, window_height);
-  glfwSetWindowSizeCallback(EditorWindow::Mainwindow->_Editorwindow, [](GLFWwindow* window, int width, int height)
+  ptr_window = glfwCreateWindow(window_width, window_height, title.c_str(), NULL, NULL);
+  glfwSetWindowAspectRatio(ptr_window, window_width, window_height);
+  glfwSetWindowSizeCallback(ptr_window, [](GLFWwindow* window, int width, int height)
       {
           (void)window;
           window_width = width;
           window_height = height;
       });
-  if (!EditorWindow::Mainwindow->_Editorwindow) {
+  if (!ptr_window) {
     glfwTerminate();
   }
 
-  glfwMakeContextCurrent(EditorWindow::Mainwindow->_Editorwindow);
+  glfwMakeContextCurrent(ptr_window);
 
-  glfwSetFramebufferSizeCallback(EditorWindow::Mainwindow->_Editorwindow, fbsize_cb);
+  glfwSetFramebufferSizeCallback(ptr_window, fbsize_cb);
   glfwSwapInterval(0);
 }
 
