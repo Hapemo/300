@@ -30,22 +30,3 @@ public:
 	void Load(int& entityID);
 	void Run(const char* funcName);
 };
-
-/***************************************************************************/
-/*!
-\brief
-Script component that entities who need to have script will possess.
-*/
-/***************************************************************************/
-class Scripts {
-public:
-	Scripts() = default;
-	~Scripts() = default;
-	void Inspect();
-
-	//static void AddScript(EntityID id, std::string fileName);
-	//static void LoadRunScript(EntityID entity);
-
-	std::string scriptFile{};
-	std::vector <Script> scriptsContainer;
-};

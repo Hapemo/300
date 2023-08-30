@@ -27,17 +27,19 @@ generate the overall performance of the scripting system.
 ***/
 //#include "../PCH/pch.h"
 //#include "../Engine/Engine.h"
-//#include "../ECS/EntityManager.h"
-//#include "../Input/InputSystem.h"
 //#include "LuaEngine.h"
 //#include "LuaComponent.h"
 //#include "../GameState/GameStateManager.h"
-//#include "Script.h"
 #include "ScriptingSystem.h"
 
 sol::state ScriptingSystem::luaState{};
 bool ScriptingSystem::once{ false };
 
+/******************************************************************************/
+/*!
+    Example
+ */
+ /******************************************************************************/
 //void print(const std::string& str)
 //{
 //    std::cout << str << std::endl;
@@ -53,8 +55,13 @@ void ScriptingSystem::Init()
     //g_engine->entityMgr->RegisterSystem(SystemType<ScriptingSystem>(), this);
     //AddComponentSignature<Scripts>();
 
-    //luaState.open_libraries();
+    luaState.open_libraries();
 
+    /******************************************************************************/
+    /*!
+        Example
+     */
+     /******************************************************************************/
     //luaState.set_function("print", print);
     //luaState.set_function("printVec", printVec);
 
@@ -64,6 +71,11 @@ void ScriptingSystem::Init()
     //    "y", &Vec2::y
     //    );
 
+    /******************************************************************************/
+    /*!
+        Insert engine functions to LUA
+     */
+     /******************************************************************************/
     //LuaEngine();
     //LuaGameStateMgr();
     //LuaEntityMgr();
@@ -79,51 +91,55 @@ void ScriptingSystem::Init()
     //LuaHelperFunc();
     //LuaRigidBody();
 
-    //errorFlagCounter = 1000;
+    errorFlagCounter = 1000;
 
-    // Bring keys and mouse buttons to LUA scripts
-    /*luaState.new_enum("InputKeys",
-        "MOUSE_LEFT", GLFW_MOUSE_BUTTON_LEFT,
-        "MOUSE_RIGHT", GLFW_MOUSE_BUTTON_RIGHT,
-        "KEY_0", GLFW_KEY_0,
-        "KEY_1", GLFW_KEY_1,
-        "KEY_2", GLFW_KEY_2,
-        "KEY_3", GLFW_KEY_3,
-        "KEY_4", GLFW_KEY_4,
-        "KEY_5", GLFW_KEY_5,
-        "KEY_6", GLFW_KEY_6,
-        "KEY_7", GLFW_KEY_7,
-        "KEY_8", GLFW_KEY_8,
-        "KEY_9", GLFW_KEY_9,
-        "KEY_A", GLFW_KEY_A,
-        "KEY_B", GLFW_KEY_B,
-        "KEY_C", GLFW_KEY_C,
-        "KEY_D", GLFW_KEY_D,
-        "KEY_E", GLFW_KEY_E,
-        "KEY_F", GLFW_KEY_F,
-        "KEY_G", GLFW_KEY_G,
-        "KEY_H", GLFW_KEY_H,
-        "KEY_I", GLFW_KEY_I,
-        "KEY_J", GLFW_KEY_J,
-        "KEY_K", GLFW_KEY_K,
-        "KEY_L", GLFW_KEY_L,
-        "KEY_M", GLFW_KEY_M,
-        "KEY_N", GLFW_KEY_N,
-        "KEY_O", GLFW_KEY_O,
-        "KEY_P", GLFW_KEY_P,
-        "KEY_Q", GLFW_KEY_Q,
-        "KEY_R", GLFW_KEY_R,
-        "KEY_S", GLFW_KEY_S,
-        "KEY_T", GLFW_KEY_T,
-        "KEY_U", GLFW_KEY_U,
-        "KEY_V", GLFW_KEY_V,
-        "KEY_W", GLFW_KEY_W,
-        "KEY_X", GLFW_KEY_X,
-        "KEY_Y", GLFW_KEY_Y,
-        "KEY_Z", GLFW_KEY_Z,
-        "KEY_SPACE", GLFW_KEY_SPACE,
-        "KEY_ESCAPE", GLFW_KEY_ESCAPE
-    );*/
+    /******************************************************************************/
+    /*!
+        Insert input system to LUA
+     */
+     /******************************************************************************/
+    luaState.new_enum("InputKeys",
+        "MOUSE_LEFT", E_KEY::M_BUTTON_L,
+        "MOUSE_RIGHT", E_KEY::M_BUTTON_R,
+        "KEY_0", E_KEY::_0,
+        "KEY_1", E_KEY::_1,
+        "KEY_2", E_KEY::_2,
+        "KEY_3", E_KEY::_3,
+        "KEY_4", E_KEY::_4,
+        "KEY_5", E_KEY::_5,
+        "KEY_6", E_KEY::_6,
+        "KEY_7", E_KEY::_7,
+        "KEY_8", E_KEY::_8,
+        "KEY_9", E_KEY::_9,
+        "KEY_A", E_KEY::A,
+        "KEY_B", E_KEY::B,
+        "KEY_C", E_KEY::C,
+        "KEY_D", E_KEY::D,
+        "KEY_E", E_KEY::E,
+        "KEY_F", E_KEY::F,
+        "KEY_G", E_KEY::G,
+        "KEY_H", E_KEY::H,
+        "KEY_I", E_KEY::I,
+        "KEY_J", E_KEY::J,
+        "KEY_K", E_KEY::K,
+        "KEY_L", E_KEY::L,
+        "KEY_M", E_KEY::M,
+        "KEY_N", E_KEY::N,
+        "KEY_O", E_KEY::O,
+        "KEY_P", E_KEY::P,
+        "KEY_Q", E_KEY::Q,
+        "KEY_R", E_KEY::R,
+        "KEY_S", E_KEY::S,
+        "KEY_T", E_KEY::T,
+        "KEY_U", E_KEY::U,
+        "KEY_V", E_KEY::V,
+        "KEY_W", E_KEY::W,
+        "KEY_X", E_KEY::X,
+        "KEY_Y", E_KEY::Y,
+        "KEY_Z", E_KEY::Z,
+        "KEY_SPACE", E_KEY::SPACE,
+        "KEY_ESCAPE", E_KEY::ESCAPE
+    );
 }
 
 void ScriptingSystem::Update(double /*dt*/)
@@ -132,21 +148,24 @@ void ScriptingSystem::Update(double /*dt*/)
     ////{
     //Timer::GetTime(startTime);
 
-    ////// If "Pause" is checked
-    ////if (g_engine->gameStateMgr->isPaused)
-    ////{
-    ////    return;
-    ////}
+    //// If "Pause" is checked
+    //if (g_engine->gameStateMgr->isPaused)
+    //{
+    //    return;
+    //}
 
-    ////if (g_engine->gameStateMgr->isPlaying)
-    ////{
-    //    // Load the scripts and call the "Start" function
+    auto scriptEntities = ECS::GetInstance()->GetEntitiesWith<Scripts>();
+
+    //if (g_engine->gameStateMgr->isPlaying)
+    //{
+        // Load the scripts and call the "Start" function
     //    if (!once)
     //    {
-    //        for (auto& objects : g_engine->scriptingSys->entities)
+    //        for (auto& objects : scriptEntities)
     //        {
-    //            Scripts* scripts = g_engine->entityMgr->GetComponent<Scripts>(objects);
-    //            for (auto& i : scripts->scriptsContainer)
+    //            //Scripts* scripts = g_engine->entityMgr->GetComponent<Scripts>(objects);
+    //            Script* scripts = objects.GetComponent<Scripts>().
+    //            for (auto& i : e.GetComponent<Script>().)
     //            {
     //                int entityID = objects;
     //                i.Load(entityID);
@@ -182,7 +201,7 @@ void ScriptingSystem::Update(double /*dt*/)
     //        }
     //    }
     //    once = false;
-    ////}
+    //}
 
     //Timer::GetTime(endTime);
     //Timer::UpdateSystemMs(SystemType<ScriptingSystem>(), startTime, endTime);

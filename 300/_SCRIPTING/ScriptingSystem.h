@@ -27,7 +27,16 @@ generate the overall performance of the scripting system.
 ***/
 #pragma once
 #include <sol/sol.hpp>
+#include "../_ENGINE/include/ECS.h"
+#include "../_ENGINE/include/ECS_Components.h"
+#include "../_TOOLS/include/Input.h"
 #include "Script.h"
+
+/******************************************************************************/
+/*!
+    Example
+ */
+ /******************************************************************************/
 
 //struct Vec2
 //{
@@ -40,10 +49,10 @@ generate the overall performance of the scripting system.
 //    float x, y;
 //};
 //
-//struct vec3
+//struct Vec3
 //{
-//    vec3() = default;
-//    vec3(float _x, float _y, float _z)
+//    Vec3() = default;
+//    Vec3(float _x, float _y, float _z)
 //    {
 //        x = _x;
 //        y = _y;
@@ -53,7 +62,7 @@ generate the overall performance of the scripting system.
 //};
 
 //void print(const std::string& str);
-
+//
 //void printVec(const Vec2& vec);
 
 /******************************************************************************/
