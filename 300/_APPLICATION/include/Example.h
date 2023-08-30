@@ -109,6 +109,7 @@ void Example()
 	auto tempView1 = ECS::GetInstance()->GetEntitiesWith<Transform>();
 	for (Entity e : tempView1)													// iterates through all 5 entities as all of them has transform
 	{
+		
 		e.GetComponent<Transform>().scale.x += 1.f;								// do stuff
 	}
 	tempfloat = one.GetComponent<Transform>().scale.x;							// 1.f
@@ -137,7 +138,13 @@ void Example()
 		auto [testComp1, testComp3] = Entity(e).GetComponent<TestComponent1, TestComponent3>();
 		testComp1.x += 1.f;														// do stuff
 		testComp3.z += 1.f;														// do stuff
+
+		//even more efficient 
+		auto [betterComp1, betterComp3] = tempGroup1.get<TestComponent1, TestComponent3>(e.id);
+		betterComp1.x += 1.f;														// do stuff
+		betterComp3.z += 1.f;														// do stuff
 	}
+
 	tempfloat = four.GetComponent<TestComponent1>().x;							// 2.f
 	tempfloat = five.GetComponent<TestComponent1>().x;							// 2.f
 

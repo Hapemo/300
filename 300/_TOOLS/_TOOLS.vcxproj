@@ -152,11 +152,13 @@
     <ClInclude Include="include\Misc.h" />
     <ClInclude Include="include\pch.h" />
     <ClInclude Include="include\Singleton.h" />
+    <ClInclude Include="include\SingletonManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Helper.cpp" />
     <ClCompile Include="source\Input.cpp" />
     <ClCompile Include="source\Misc.cpp" />
+    <ClCompile Include="source\SingletonManager.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
