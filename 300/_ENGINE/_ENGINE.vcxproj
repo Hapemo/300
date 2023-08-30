@@ -137,9 +137,11 @@
   <ItemGroup>
     <ClInclude Include="include\ECS.h" />
     <ClInclude Include="include\ECS_Components.h" />
+    <ClInclude Include="include\Physics\PhysicsSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\ECS.cpp" />
+    <ClCompile Include="source\Physics\PhysicsSystem.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

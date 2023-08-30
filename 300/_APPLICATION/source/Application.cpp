@@ -42,7 +42,7 @@ void Application::SystemUpdate() {
 void Application::Init() {
   StartUp();
   SystemInit();
-  //Example();
+  Example();
 }
 
 bool Application::FirstUpdate() {

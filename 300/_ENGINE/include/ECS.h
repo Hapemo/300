@@ -1,7 +1,6 @@
 #pragma once
 #include "Singleton.h"
 #include "entt.hpp";
-
 struct Entity;
 
 class ECS : public Singleton<ECS>
@@ -9,7 +8,7 @@ class ECS : public Singleton<ECS>
 	entt::registry registry;
 public:
 	ECS() = default;
-
+	
 	Entity NewEntity();
 
 	void DeleteEntity(Entity e);
