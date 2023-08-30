@@ -1,11 +1,9 @@
 #include "Texture.hpp"
 
-#define TEST_COMPRESSOR 1
-
 unsigned int GFX::Texture::Load(const char* filename)
 {
 	unsigned char* buffer{ nullptr };
-	DeserializeImageFile(filename, buffer);
+	int imgSize = DeserializeImageFile(filename, buffer);
 
 	// Store data in GPU as glTexture
 	//glCreateTextures(GL_TEXTURE_2D, 1, &mID);		// Create texture
@@ -18,10 +16,17 @@ unsigned int GFX::Texture::Load(const char* filename)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
 	// Load onto GPU storage
+#if TEST_COMPRESSOR
+	int blockSize = mInternalFormat == GL_COMPRESSED_RGBA_S3TC_DXT1_EXT ? 8 : 16;
+	int size = ((mWidth + 3) / 4) * ((mHeight + 3) / 4) * blockSize;
+
+	glCompressedTexImage2DARB(GL_TEXTURE_2D, 0, mInternalFormat, mWidth, mHeight, 0, imgSize, buffer);
+#else
 	if (mChannels == 4)
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, mWidth, mHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
 	else if (mChannels == 3)
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, mWidth, mHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, buffer);
+#endif
 
 	glGenerateMipmap(GL_TEXTURE_2D);
 
@@ -34,14 +39,17 @@ unsigned int GFX::Texture::Load(const char* filename)
 	return mID;
 }
 
-void GFX::Texture::DeserializeImageFile(const char* filename, unsigned char* &buffer)
+int GFX::Texture::DeserializeImageFile(const char* filename, unsigned char* &buffer)
 {
 	std::ifstream ifs{ filename, std::ios_base::binary };
 
 	int dataSize{};
-
 	// Read in header of texture file
+#if TEST_COMPRESSOR
+	ifs >> mWidth >> mHeight >> mChannels >> mInternalFormat >> dataSize;
+#else
 	ifs >> mWidth >> mHeight >> mChannels >> dataSize;
+#endif
 	std::string tmp{};
 	std::getline(ifs, tmp);
 
@@ -50,4 +58,6 @@ void GFX::Texture::DeserializeImageFile(const char* filename, unsigned char* &bu
 
 	// Read data from opened file into buffer
 	ifs.read(reinterpret_cast<char*>(buffer), dataSize);
+
+	return dataSize;
 }

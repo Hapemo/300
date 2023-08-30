@@ -80,7 +80,11 @@ void GFX::DemoScene::Initialize()
 
     // Loading in Compressed textures
     //mTexture.Load("../assets/Compressed/Vampire_diffuse.texture");
+#if TEST_COMPRESSOR
+    mTexture.Load("../assets/Compressed/Skull.ctexture");
+#else
     mTexture.Load("../assets/Compressed/Skull.texture");
+#endif
 
     // Load all meshes
     MeshManager::GetInstance().Init();

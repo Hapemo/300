@@ -72,6 +72,10 @@
     <Import Project="..\prop-pages\_TEXTURE_COMPRESSOR-props.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>$(SolutionDir)lib\GLFW\include\GLFW;$(SolutionDir)lib\GLFW\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)lib\GLFW\lib-vc2022;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>

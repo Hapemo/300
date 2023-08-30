@@ -3,6 +3,8 @@
 
 #include "Common.hpp"
 
+#define TEST_COMPRESSOR 0
+
 namespace GFX
 {
 	class Texture
@@ -23,8 +25,9 @@ namespace GFX
 		int mWidth{};
 		int mHeight{};
 		int mChannels{};
+		int mInternalFormat{};
 
-		void DeserializeImageFile(const char* filename, unsigned char* &buffer);
+		int DeserializeImageFile(const char* filename, unsigned char* &buffer);
 	};
 }
 
