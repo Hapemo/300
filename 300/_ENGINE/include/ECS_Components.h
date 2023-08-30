@@ -1,6 +1,5 @@
 #pragma once
 #include "glm/glm.hpp"
-#include "../../lib/glm-0.9.9.8/glm/glm.hpp" 
 
 struct Transform
 {
@@ -16,7 +15,7 @@ struct TestComponent1
 
 struct TestComponent2
 {
-	float y;
+	float y ;
 };
 
 struct TestComponent3
