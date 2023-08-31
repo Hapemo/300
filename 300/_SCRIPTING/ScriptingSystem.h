@@ -73,8 +73,8 @@ generate the overall performance of the scripting system.
 class ScriptingSystem
 {
 public:
-    void Init();
-    void Update(double dt);
+    static void Init();
+    static void Update(/*double dt*/);
     void Free();
     static sol::state luaState;
     double startTime = 0.0, endTime = 0.0;

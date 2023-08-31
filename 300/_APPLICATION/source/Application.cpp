@@ -17,14 +17,13 @@ start up of window and game system, also runs their update functions.
 #include "Example.h"
 #include "Input.h"
 #include "SingletonManager.h"
+#include "../../_SCRIPTING/ScriptingSystem.h"
 
 // Static variables
 int Application::window_width{1024};
 int Application::window_height{576};
 std::string Application::title{ "VI Engine" };
 GLFWwindow* Application::ptr_window;
-
-
 
 void Application::StartUp() {
   GLFWStartUp();
@@ -33,16 +32,19 @@ void Application::StartUp() {
 
 void Application::SystemInit() {
   Input::Init(ptr_window);
+  ScriptingSystem::Init();
 }
 
 void Application::SystemUpdate() {
-    
+  ScriptingSystem::Update();
 }
 
 void Application::Init() {
   StartUp();
   SystemInit();
   Example();
+  
+  ScriptTestInit();
 }
 
 bool Application::FirstUpdate() {
@@ -80,7 +82,9 @@ void Application::MainUpdate() {
 
     FirstUpdate();
     SystemUpdate();
+    ScriptTestUpdate();
     SecondUpdate(); // This should always be the last
+
   }
 }
 

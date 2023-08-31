@@ -164,6 +164,9 @@ copy "$(SolutionDir)lib\glfw-3.3.7.bin.WIN64\lib-vc2022\glfw3.dll" "$(TargetDir)
     <ClCompile Include="source\main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\_SCRIPTING\_SCRIPTING.vcxproj">
+      <Project>{a3aa807c-3ce6-4265-9987-2441325319ed}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\_TOOLS\_TOOLS.vcxproj">
       <Project>{655833f5-d64e-4500-8a3b-b78fe9598d5b}</Project>
     </ProjectReference>

@@ -10,9 +10,9 @@ Input detects keyboard and mouse input states and returns that to caller
 
 #pragma once
 #include "pch.h"
-#include <GL/glew.h> // for access to OpenGL API declarations 
-#include <GLFW/glfw3.h>
-#include "glm/glm.hpp"
+#include <../glew-2.2.0/include/GL/glew.h> // for access to OpenGL API declarations 
+#include <../glfw-3.3.7.bin.WIN64/include/GLFW/glfw3.h>
+#include "../../lib/glm-0.9.9.8/glm/glm.hpp"
 
 // Available keys
 enum E_KEY {
