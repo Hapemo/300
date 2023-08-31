@@ -717,7 +717,7 @@ namespace _GEOM
 
 	bool Geom::SerializeGeom(const std::string& assetfilepath, Geom& GeomData) noexcept
 	{
-#if 0
+#if 1
 		std::string filepath = assetfilepath;
 		std::ofstream outfile(filepath.c_str(), std::ios::binary);
 		assert(outfile.is_open());
@@ -730,8 +730,7 @@ namespace _GEOM
 
 		// Vertex Positions, UVs, Colors
 		for (uint32_t i{}; i < GeomData.m_nVertices; ++i) {
-			outfile.write((char*)&GeomData.m_pPos[i].m_UV, sizeof(glm::vec2));			// UV Coords
-			//outfile.write((char*)&GeomData.m_pPos[i].m_Pos, sizeof(glm::vec3));			// Vtx Position
+			outfile.write((char*)&GeomData.m_pPos[i], sizeof(Geom::VertexPos));
 		}
 
 		// Indices

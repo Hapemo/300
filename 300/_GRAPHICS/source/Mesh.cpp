@@ -162,9 +162,9 @@ namespace Deserialization
 {
 	bool DeserializeGeom(const std::string Filepath, _GEOM::Geom& GeomData) noexcept
 	{
-#if 0
+#if 1
 		//std::ifstream infile("../compiled_geom/Skull_textured.geom");
-		std::ifstream infile(Filepath.c_str());
+		std::ifstream infile(Filepath.c_str(), std::ios::binary);
 		assert(infile.is_open());
 
 		infile.read((char*)&GeomData.m_nMeshes, sizeof(GeomData.m_nMeshes));				// m_nMeshes
@@ -176,18 +176,17 @@ namespace Deserialization
 		GeomData.m_pPos = std::make_shared<_GEOM::Geom::VertexPos[]>(GeomData.m_nVertices);
 		for (uint32_t i{}; i < GeomData.m_nVertices; ++i) 
 		{
-			infile.read((char*)&GeomData.m_pPos[i].m_UV, sizeof(glm::vec2));				// UV Coords
+			infile.read((char*)&GeomData.m_pPos[i], sizeof(_GEOM::Geom::VertexPos));		// UV Coords
 			//infile.read((char*)&GeomData.m_pPos[i].m_Pos, sizeof(glm::vec3));				// Vtx Position
 
-			std::cout << GeomData.m_pPos[i].m_UV.x << ", " << GeomData.m_pPos[i].m_UV.y << "\n";
+			//std::cout << GeomData.m_pPos[i].m_UV.x << ", " << GeomData.m_pPos[i].m_UV.y << "\n";
 			//std::cout << GeomData.m_pPos[i].m_Pos.x << ", " << GeomData.m_pPos[i].m_Pos.y << ", " << GeomData.m_pPos[i].m_Pos.z << "\n";
 		}
 
 		GeomData.m_pIndices = std::make_shared<uint32_t[]>(GeomData.m_nIndices);
 		for (uint32_t i{}; i < GeomData.m_nIndices; ++i) {
-			uint32_t idx{};
-			infile.read((char*)&idx, sizeof(std::uint32_t));					// m_Indices
-			std::cout << idx << "\n";
+			infile.read((char*)&GeomData.m_pIndices[i], sizeof(std::uint32_t));					// m_Indices
+			//std::cout << GeomData.m_pIndices[i] << "\n";
 		}
 
 		//assert(infile.good());
