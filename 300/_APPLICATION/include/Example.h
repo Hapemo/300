@@ -1,6 +1,7 @@
 #pragma once
 #include "ECS.h"
 #include "ECS_Components.h"
+#include "Input.h"
 
 /*
 struct Transform
@@ -25,6 +26,18 @@ struct TestComponent3
 	float z;
 };
 */
+void InputExample() {
+	// There are 4 states of key, press, release, hold and not press
+	// There are even more keys you can press, for mouse and keyboard, refer to E_KEY for more details
+
+	if (Input::CheckKey(E_STATE::PRESS, E_KEY::SPACE)) {
+		// Do something if spacebar is pressed
+
+		glm::vec2 mousePosition = Input::CursorPos(); // Get the mouse position
+		//double scrollState = Input::GetScroll(); Scroll is not working, let jazz know if you need it
+	}
+}
+
 
 void Example()
 {
@@ -96,6 +109,7 @@ void Example()
 	auto tempView1 = ECS::GetInstance()->GetEntitiesWith<Transform>();
 	for (Entity e : tempView1)													// iterates through all 5 entities as all of them has transform
 	{
+		
 		e.GetComponent<Transform>().scale.x += 1.f;								// do stuff
 	}
 	tempfloat = one.GetComponent<Transform>().scale.x;							// 1.f
@@ -124,7 +138,13 @@ void Example()
 		auto [testComp1, testComp3] = Entity(e).GetComponent<TestComponent1, TestComponent3>();
 		testComp1.x += 1.f;														// do stuff
 		testComp3.z += 1.f;														// do stuff
+
+		//even more efficient 
+		auto [betterComp1, betterComp3] = tempGroup1.get<TestComponent1, TestComponent3>(e.id);
+		betterComp1.x += 1.f;														// do stuff
+		betterComp3.z += 1.f;														// do stuff
 	}
+
 	tempfloat = four.GetComponent<TestComponent1>().x;							// 2.f
 	tempfloat = five.GetComponent<TestComponent1>().x;							// 2.f
 
@@ -153,3 +173,10 @@ void Example()
 	tempfloat = four.GetComponent<TestComponent3>().z;							// 5.f
 	tempfloat = five.GetComponent<TestComponent3>().z;							// 5.f
 }
+
+
+
+
+
+
+

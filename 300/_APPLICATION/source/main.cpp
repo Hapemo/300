@@ -72,11 +72,11 @@ void real_main() {
     Application::Init();
 
     // Part 2
-    while (!glfwWindowShouldClose(Application::getWindow())) {
+    //while (!glfwWindowShouldClose(Application::getWindow())) {
         Application::MainUpdate();
         //GameStateManager::GetInstance()->Update();
         //if (GameStateManager::GetInstance()->GetNextGS() == E_GS::EXIT) break;
-    }
+    //}
 
     // Part 3
     Application::Exit();
