@@ -85,6 +85,7 @@ void Application::MainUpdate() {
 }
 
 void Application::Exit() {
+    ECS::GetInstance()->DeleteAllEntities();
     SingletonManager::destroyAllSingletons();
   glfwTerminate();
 }

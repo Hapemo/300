@@ -20,7 +20,7 @@ public:
 	template <typename Component>
 	auto GetEntitiesWith();
 
-	//friend struct Entity;
+	void DeleteAllEntities();
 };
 
 struct Entity
