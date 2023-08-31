@@ -3,9 +3,9 @@
 
 struct Transform
 {
-	glm::vec3 scale;
-	glm::vec3 rotate;
-	glm::vec3 translate;
+	glm::vec3 mScale;
+	glm::vec3 mRotate;
+	glm::vec3 mTranslate;
 };
 
 struct TestComponent1
