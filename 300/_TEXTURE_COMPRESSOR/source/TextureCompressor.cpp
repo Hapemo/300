@@ -47,7 +47,7 @@ void SerializeCompressedImage(int width, int height, int channels, int size, uns
 
 	outfile << width << "\n";
 	outfile << height << "\n";
-	//outfile << channels << "\n";
+	outfile << channels << "\n";
 	outfile << internalFormat << "\n";
 	outfile << size << "\n";
 	outfile.write(reinterpret_cast<char*>(pixelData), size);

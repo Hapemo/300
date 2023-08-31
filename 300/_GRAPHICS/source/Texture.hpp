@@ -3,7 +3,7 @@
 
 #include "Common.hpp"
 
-#define TEST_COMPRESSOR 0
+#define TEST_COMPRESSOR 1
 
 namespace GFX
 {

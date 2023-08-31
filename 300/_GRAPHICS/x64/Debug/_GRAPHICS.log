@@ -1,5 +1,6 @@
-﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(1101,5): warning MSB8027: Two or more files with the name of imgui.cpp will produce outputs to the same location. This can lead to an incorrect build result.  The files involved are ..\lib\IMGUI\imgui.cpp, demo\ImGui.cpp.
-  Mesh.cpp
-  _GRAPHICS.vcxproj -> F:\300\300\x64\Debug\_GRAPHICS.exe
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(1116,5): warning MSB8027: Two or more files with the name of imgui.cpp will produce outputs to the same location. This can lead to an incorrect build result.  The files involved are ..\lib\IMGUI\imgui.cpp, demo\ImGui.cpp.
+  Texture.cpp
+C:\Users\f.lee\Documents\GitHub\300\300\_GRAPHICS\source\Texture.cpp(21,11): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+  _GRAPHICS.vcxproj -> C:\Users\f.lee\Documents\GitHub\300\300\x64\Debug\_GRAPHICS.exe
           1 file(s) copied.
           1 file(s) copied.
