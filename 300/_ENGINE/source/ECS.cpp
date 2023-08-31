@@ -1,13 +1,22 @@
 #include "ECS.h"
+#include "ECS_Components.h"
 
 Entity ECS::NewEntity()
 {
-	return { registry.create() };
+	Entity e = registry.create();
+	e.AddComponent<General>();
+	e.AddComponent<Transform>();
+	return e;
 }
 
 void ECS::DeleteEntity(Entity e)
 {
 	registry.destroy(e.id);
+}
+
+auto ECS::GetAllEntities()
+{
+	return registry.group<General, Transform>();
 }
 
 void ECS::DeleteAllEntities()
