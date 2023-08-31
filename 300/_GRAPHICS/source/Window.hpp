@@ -21,6 +21,7 @@ namespace GFX {
     class Window
     {
     public:
+        Window() : mSize{}, mWindow{ nullptr } {};
         Window(ivec2 windowSize);
         Window(Window const&) = default;
         Window& operator=(Window const&) = default;
@@ -32,6 +33,8 @@ namespace GFX {
 
         // Retrieves the GLFW handle of the window instance
         GLFWwindow* GetHandle() { return mWindow; }
+
+        void SetWindowTitle(const char* title);
 
         vec2 WindowToWorld(vec2 const& screenCoordinates);   // maps glfw coordinates to world coordinates
 

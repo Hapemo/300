@@ -10,6 +10,9 @@ start up of window and game system, also runs their update functions.
 *******************************************************************************/
 #pragma once
 #include "pch.h"
+#include "Window.hpp"
+#include "Camera.hpp"
+#include "DebugRenderer.hpp"
 
 struct GLFWwindow;
 
@@ -58,17 +61,15 @@ public:
 	*******************************************************************************/
 	static void Exit();
 
-	//------------------------------------------------------------------------------
-	// Getter and Setters
-	//------------------------------------------------------------------------------
-	static GLFWwindow* getWindow() { return ptr_window; }
-	static std::string getTitle() { return title; }
-	static int getWindowWidth() { return window_width; }
-	static int getWindowHeight() { return window_height; }
 private:
-	static int window_width, window_height;
-	static std::string title;
-	static GLFWwindow* ptr_window;
+	/*static int window_width, window_height;*/
+	static std::string title;/*
+	static GLFWwindow* ptr_window;*/
+	static GFX::Window mWindow;
+    static GFX::DebugRenderer* mRenderer;
+    GFX::Camera mCamera;
+
+
 
 	/*!*****************************************************************************
 	 Print the window title bar

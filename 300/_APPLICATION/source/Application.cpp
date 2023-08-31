@@ -19,20 +19,17 @@ start up of window and game system, also runs their update functions.
 #include "SingletonManager.h"
 
 // Static variables
-int Application::window_width{1024};
-int Application::window_height{576};
-std::string Application::title{ "VI Engine" };
-GLFWwindow* Application::ptr_window;
-
-
-
+GFX::Window Application::mWindow;
+std::string Application::title;
 void Application::StartUp() {
-  GLFWStartUp();
-  GlewStartUp();
+    //gfx glew and glfw startup
+    GFX::Window::InitializeSystem();
+    mWindow = GFX::Window({ 1920, 1080 });
 }
 
 void Application::SystemInit() {
-  Input::Init(ptr_window);
+    //gfx init
+  Input::Init(mWindow.GetHandle());
 }
 
 void Application::SystemUpdate() {
@@ -46,20 +43,20 @@ void Application::Init() {
 }
 
 bool Application::FirstUpdate() {
-  FPSManager::mPrevTime = glfwGetTime();
+  //FPSManager::mPrevTime = glfwGetTime();
   // Part 1
   glfwPollEvents();
 
   // Part 2
-  FPSManager::CalcFPS(0);
+  //FPSManager::CalcFPS(0);
   return true;// !Helper::GetWindowMinimized();
 
 }
 
 void Application::SecondUpdate() {
   Input::UpdatePrevKeyStates();
-  FPSManager::LimitFPS();
-  FPSManager::CalcDeltaTime();
+  //FPSManager::LimitFPS();
+  //FPSManager::CalcDeltaTime();
 }
 
 void Application::MainUpdate() {
@@ -75,12 +72,16 @@ void Application::MainUpdate() {
   // Graphics update
   // Application ending update
 
-  while (!glfwWindowShouldClose(ptr_window)) {
+  while (!glfwWindowShouldClose(mWindow.GetHandle())) {
       PrintTitleBar(0.5);
 
     FirstUpdate();
     SystemUpdate();
     SecondUpdate(); // This should always be the last
+
+    // Graphics update
+
+    mWindow.Update();
   }
 }
 
@@ -93,65 +94,65 @@ void Application::Exit() {
 // _s, time interval in updating titlebar, in seconds
 void Application::PrintTitleBar(double _s) {
   static double timeElapsed{};
-  timeElapsed += FPSManager::dt;
+  //timeElapsed += FPSManager::dt;
   if (timeElapsed > _s) {
     timeElapsed = 0;
 
     // write window title with current fps ...
     std::stringstream sstr;
 
-    sstr << std::fixed << std::setprecision(3) << Application::getTitle() << " | " 
-                                               << "fps: " << FPSManager::fps << " | "
-                                               << "dt: " << FPSManager::dt;
-    glfwSetWindowTitle(Application::getWindow(), sstr.str().c_str());
+    //sstr << std::fixed << std::setprecision(3) << Application::title << " | " 
+    //                                           << "fps: " << FPSManager::fps << " | "
+    //                                           << "dt: " << FPSManager::dt;
+    mWindow.SetWindowTitle(sstr.str().c_str());
   }
 }
 
 void Application::GLFWStartUp() {
-    glfwInit();
-  const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+  //  glfwInit();
+  //const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
 
-  if (!window_width) window_width = mode->width;
-  if (!window_height) window_height = mode->height;
+  //if (!window_width) window_width = mode->width;
+  //if (!window_height) window_height = mode->height;
 
-  // In case a GLFW function fails, an error is reported to callback function
-  glfwSetErrorCallback(error_cb);
-  
-   //Before asking GLFW to create an OpenGL context, we specify the minimum constraints
-  // in that context:
-  glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-  glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
-  glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-  glfwWindowHint(GLFW_DOUBLEBUFFER, GLFW_TRUE);
-  glfwWindowHint(GLFW_DEPTH_BITS, 24);
-  glfwWindowHint(GLFW_RED_BITS, 8); glfwWindowHint(GLFW_GREEN_BITS, 8);
-  glfwWindowHint(GLFW_BLUE_BITS, 8); glfwWindowHint(GLFW_ALPHA_BITS, 8);
-  glfwWindowHint(GLFW_RESIZABLE, GL_TRUE); // window dimensions are not static
+  //// In case a GLFW function fails, an error is reported to callback function
+  //glfwSetErrorCallback(error_cb);
+  //
+  // //Before asking GLFW to create an OpenGL context, we specify the minimum constraints
+  //// in that context:
+  //glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+  //glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
+  //glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+  //glfwWindowHint(GLFW_DOUBLEBUFFER, GLFW_TRUE);
+  //glfwWindowHint(GLFW_DEPTH_BITS, 24);
+  //glfwWindowHint(GLFW_RED_BITS, 8); glfwWindowHint(GLFW_GREEN_BITS, 8);
+  //glfwWindowHint(GLFW_BLUE_BITS, 8); glfwWindowHint(GLFW_ALPHA_BITS, 8);
+  //glfwWindowHint(GLFW_RESIZABLE, GL_TRUE); // window dimensions are not static
 
-  ptr_window = glfwCreateWindow(window_width, window_height, title.c_str(), NULL, NULL);
-  glfwSetWindowAspectRatio(ptr_window, window_width, window_height);
-  glfwSetWindowSizeCallback(ptr_window, [](GLFWwindow* window, int width, int height)
-      {
-          (void)window;
-          window_width = width;
-          window_height = height;
-      });
-  if (!ptr_window) {
-    glfwTerminate();
-  }
+  //ptr_window = glfwCreateWindow(window_width, window_height, title.c_str(), NULL, NULL);
+  //glfwSetWindowAspectRatio(ptr_window, window_width, window_height);
+  //glfwSetWindowSizeCallback(ptr_window, [](GLFWwindow* window, int width, int height)
+  //    {
+  //        (void)window;
+  //        window_width = width;
+  //        window_height = height;
+  //    });
+  //if (!ptr_window) {
+  //  glfwTerminate();
+  //}
 
-  glfwMakeContextCurrent(ptr_window);
+  //glfwMakeContextCurrent(ptr_window);
 
-  glfwSetFramebufferSizeCallback(ptr_window, fbsize_cb);
-  glfwSwapInterval(0);
+  //glfwSetFramebufferSizeCallback(ptr_window, fbsize_cb);
+  //glfwSwapInterval(0);
 }
 
 void Application::GlewStartUp() {
-  // Part 2: Initialize entry points to OpenGL functions and extensions
-  GLenum err = glewInit();
+  //// Part 2: Initialize entry points to OpenGL functions and extensions
+  //GLenum err = glewInit();
 
-  std::stringstream string;
-  string << "Unable to initialize GLEW - error " << glewGetErrorString(err) << " abort program\n";
+  //std::stringstream string;
+  //string << "Unable to initialize GLEW - error " << glewGetErrorString(err) << " abort program\n";
 }
 
 void Application::error_cb(int error, char const* description) {

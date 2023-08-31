@@ -61,7 +61,7 @@ GFX::Window::Window(ivec2 windowSize)
 *---------------------------------------------------------------------------*/
 GFX::Window::~Window()
 {
-    glfwDestroyWindow(mWindow);
+    //glfwDestroyWindow(mWindow);
 }
 
 /**---------------------------------------------------------------------------/
@@ -121,3 +121,9 @@ ivec2 GFX::Window::size()
 {
 	return mSize;
 }
+
+void GFX::Window::SetWindowTitle(const char* title)
+{
+    glfwSetWindowTitle(mWindow, title);
+}
+
