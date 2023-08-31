@@ -145,9 +145,11 @@
   <ItemGroup>
     <ClInclude Include="include\ECS.h" />
     <ClInclude Include="include\ECS_Components.h" />
+    <ClInclude Include="include\Serialization\Serialization.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\ECS.cpp" />
+    <ClCompile Include="source\Serialization\Serialization.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

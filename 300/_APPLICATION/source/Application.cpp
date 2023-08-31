@@ -42,7 +42,7 @@ void Application::SystemUpdate() {
 void Application::Init() {
   StartUp();
   SystemInit();
-  //Example();
+  Example();
 }
 
 bool Application::FirstUpdate() {
@@ -85,6 +85,7 @@ void Application::MainUpdate() {
 }
 
 void Application::Exit() {
+    ECS::GetInstance()->DeleteAllEntities();
     SingletonManager::destroyAllSingletons();
   glfwTerminate();
 }
