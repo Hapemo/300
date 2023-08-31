@@ -166,30 +166,55 @@ namespace Deserialization
 		//std::ifstream infile("../compiled_geom/Skull_textured.geom");
 		std::ifstream infile(Filepath.c_str(), std::ios::binary);
 		assert(infile.is_open());
+		assert(infile.good());
 
+		// Input Values
 		infile.read((char*)&GeomData.m_nMeshes, sizeof(GeomData.m_nMeshes));				// m_nMeshes
 		infile.read((char*)&GeomData.m_nSubMeshes, sizeof(GeomData.m_nSubMeshes));			// m_nSubMeshes
 		infile.read((char*)&GeomData.m_nVertices, sizeof(GeomData.m_nVertices));			// m_nVertices
 		infile.read((char*)&GeomData.m_nExtras, sizeof(GeomData.m_nExtras));				// m_nExtras
 		infile.read((char*)&GeomData.m_nIndices, sizeof(GeomData.m_nIndices));				// m_nIndices
 
+		// Input Booleans
+		infile.read((char*)&GeomData.m_bHasAnimations, sizeof(bool));						// bAnimations
+		infile.read((char*)&GeomData.m_bHasTextures, sizeof(bool));							// bTextures
+		infile.read((char*)&GeomData.m_bVtxClrPresent, sizeof(bool));						// bColors
+
+		// VertexPos
 		GeomData.m_pPos = std::make_shared<_GEOM::Geom::VertexPos[]>(GeomData.m_nVertices);
-		for (uint32_t i{}; i < GeomData.m_nVertices; ++i) 
-		{
-			infile.read((char*)&GeomData.m_pPos[i], sizeof(_GEOM::Geom::VertexPos));		// UV Coords
-			//infile.read((char*)&GeomData.m_pPos[i].m_Pos, sizeof(glm::vec3));				// Vtx Position
-
-			//std::cout << GeomData.m_pPos[i].m_UV.x << ", " << GeomData.m_pPos[i].m_UV.y << "\n";
-			//std::cout << GeomData.m_pPos[i].m_Pos.x << ", " << GeomData.m_pPos[i].m_Pos.y << ", " << GeomData.m_pPos[i].m_Pos.z << "\n";
+		for (uint32_t i{}; i < GeomData.m_nVertices; ++i) {									
+			infile.read((char*)&GeomData.m_pPos[i], sizeof(_GEOM::Geom::VertexPos));		
 		}
 
+		// Indices
 		GeomData.m_pIndices = std::make_shared<uint32_t[]>(GeomData.m_nIndices);
-		for (uint32_t i{}; i < GeomData.m_nIndices; ++i) {
-			infile.read((char*)&GeomData.m_pIndices[i], sizeof(std::uint32_t));					// m_Indices
-			//std::cout << GeomData.m_pIndices[i] << "\n";
+		for (uint32_t i{}; i < GeomData.m_nIndices; ++i) {									
+			infile.read((char*)&GeomData.m_pIndices[i], sizeof(std::uint32_t));				
 		}
 
-		//assert(infile.good());
+		// Meshes
+		GeomData.m_pMesh = std::make_shared<_GEOM::Geom::Mesh[]>(GeomData.m_nMeshes);
+		for (uint32_t i{}; i < GeomData.m_nMeshes; ++i) 
+		{				
+			infile.read((char*)&GeomData.m_pMesh[i].m_name, sizeof(char) * 64);
+
+			if (GeomData.m_bHasAnimations) {
+				//infile.read((char*)&GeomData.m_pMesh[i].m_Animation, sizeof(_GEOM::Animation));
+			}
+		}
+
+		// Submeshes
+		GeomData.m_pSubMesh = std::make_shared<_GEOM::Geom::SubMesh[]>(GeomData.m_nSubMeshes);
+		for (uint32_t i{}; i < GeomData.m_nMeshes; ++i) {									
+			infile.read((char*)&GeomData.m_pSubMesh[i], sizeof(_GEOM::Geom::SubMesh));
+		}
+
+		// Vertex Extras
+		GeomData.m_pExtras = std::make_shared<_GEOM::Geom::VertexExtra[]>(GeomData.m_nExtras);
+		for (uint32_t i{}; i < GeomData.m_nExtras; ++i) {									
+			infile.read((char*)&GeomData.m_pExtras[i], sizeof(_GEOM::Geom::m_nExtras));
+		}
+
 		infile.close();
 		return true;
 #else

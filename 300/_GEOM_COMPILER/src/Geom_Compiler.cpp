@@ -722,11 +722,17 @@ namespace _GEOM
 		std::ofstream outfile(filepath.c_str(), std::ios::binary);
 		assert(outfile.is_open());
 
+		// Output values
 		outfile.write((char*)&GeomData.m_nMeshes, sizeof(GeomData.m_nMeshes));			// m_nMeshes
 		outfile.write((char*)&GeomData.m_nSubMeshes, sizeof(GeomData.m_nSubMeshes));	// m_nSubMeshes
 		outfile.write((char*)&GeomData.m_nVertices, sizeof(GeomData.m_nVertices));		// m_nVertices
 		outfile.write((char*)&GeomData.m_nExtras, sizeof(GeomData.m_nExtras));			// m_nExtras
 		outfile.write((char*)&GeomData.m_nIndices, sizeof(GeomData.m_nIndices));		// m_nIndices
+
+		// Flags
+		outfile.write((char*)&GeomData.m_bHasAnimations, sizeof(bool));					// bAnimations
+		outfile.write((char*)&GeomData.m_bHasTextures, sizeof(bool));					// bTextures
+		outfile.write((char*)&GeomData.m_bVtxClrPresent, sizeof(bool));					// bColors
 
 		// Vertex Positions, UVs, Colors
 		for (uint32_t i{}; i < GeomData.m_nVertices; ++i) {
@@ -738,54 +744,28 @@ namespace _GEOM
 			outfile.write((char*)&GeomData.m_pIndices[i], sizeof(std::uint32_t));
 		}
 
-		//for (std::size_t i = 0; i < GeomData.m_nMeshes; ++i)
-		//{
-		//	GeomData.m_pMesh[i].m_Animation.m_BoneCounter = 6969;
-		//	GeomData.m_pMesh[i].m_Animation.m_Duration = 6969;
-		//	GeomData.m_pMesh[i].m_Animation.m_TicksPerSecond = 6969;
-		//	outfile.write((char*)&GeomData.m_pMesh[i].m_name, sizeof(GeomData.m_pMesh[i].m_name));	// m_Meshes
-		//	outfile.write((char*)&GeomData.m_pMesh[i].m_Animation, sizeof(Animation));	// m_Meshes
-		////for (std::size_t i = 0; i < nMeshes; ++i)
-		////{
-		////	infile.read((char*)&mesh.m_name, mesh.m_name.size());
-		////	infile.read((char*)&mesh.m_Animation, sizeof(Animation));
-		////}
-		//}
+		// Meshes
+		for (uint32_t i{}; i < GeomData.m_nMeshes; ++i) 
+		{
+			outfile.write((char*)&GeomData.m_pMesh[i].m_name, sizeof(char) * 64);
+
+			if (GeomData.m_bHasAnimations) {
+				//outfile.write((char*)&GeomData.m_pMesh[i].m_Animation, sizeof(Animation));
+			}
+		}
+
+		// Submeshes
+		for (uint32_t i{}; i < GeomData.m_nSubMeshes; ++i) {
+			outfile.write((char*)&GeomData.m_pSubMesh[i], sizeof(Geom::SubMesh));
+		}
+
+		// Vertex Extra
+		for (uint32_t i{}; i < GeomData.m_nExtras; ++i) {
+			outfile.write((char*)&GeomData.m_pExtras[i], sizeof(Geom::VertexExtra));
+		}
+
 		outfile.close();
-
-		///////////////////////////////////////////////////////////////////////////////////////////
-
-		std::ifstream infile(filepath.c_str(), std::ios::binary);
-		assert(infile.is_open());
-
-		std::uint32_t nMeshes, nSubmeshes, m_nVertices, m_nExtras, m_nIndices;
-		Mesh mesh;
-		std::vector<uint32_t> indices;
-
-		infile.read((char*)&nMeshes, sizeof(nMeshes));									// m_nMeshes
-		infile.read((char*)&nSubmeshes, sizeof(nSubmeshes));							// m_nSubMeshes
-		infile.read((char*)&m_nVertices, sizeof(m_nVertices));							// m_nVertices
-		infile.read((char*)&m_nExtras, sizeof(m_nExtras));								// m_nExtras
-		infile.read((char*)&m_nIndices, sizeof(m_nIndices));							// m_nIndices
-
-		for (uint32_t i{}; i < m_nVertices; ++i) {
-			VertexPos pos;
-			infile.read((char*)&pos.m_UV, sizeof(glm::vec2));							// UV coords
-			//infile.read((char*)&pos.m_Pos, sizeof(glm::vec3));							// Vtx Position
-			
-			//std::cout << pos.m_UV.x << ", " << pos.m_UV.y << std::endl;
-			//std::cout << pos.m_Pos.x << ", " << pos.m_Pos.y << pos.m_Pos.z << std::endl;
-		}
-
-		for (uint32_t i{}; i < m_nIndices; ++i) {
-			uint32_t idx{};
-			infile.read((char*)&idx, sizeof(uint32_t));									// m_Indices
-			indices.push_back(idx);
-		}
-
-		assert(infile.good());
-		infile.close();											
-																
+									
 #else											
 		std::string filepath = assetfilepath;
 		std::ofstream outfile(filepath.c_str());

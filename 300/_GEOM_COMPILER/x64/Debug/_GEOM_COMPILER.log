@@ -1,8 +1,8 @@
 ﻿  Geom_Compiler.cpp
-C:\Users\r.choo\Documents\GitHub\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(894,19): warning C4018: '<': signed/unsigned mismatch
-C:\Users\r.choo\Documents\GitHub\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(934,37): warning C4018: '<': signed/unsigned mismatch
-C:\Users\r.choo\Documents\GitHub\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(971,49): warning C4244: '=': conversion from 'const double' to 'float', possible loss of data
-C:\Users\r.choo\Documents\GitHub\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(972,55): warning C4244: '=': conversion from 'const double' to 'float', possible loss of data
+C:\Users\r.choo\Documents\GitHub\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(874,19): warning C4018: '<': signed/unsigned mismatch
+C:\Users\r.choo\Documents\GitHub\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(914,37): warning C4018: '<': signed/unsigned mismatch
+C:\Users\r.choo\Documents\GitHub\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(951,49): warning C4244: '=': conversion from 'const double' to 'float', possible loss of data
+C:\Users\r.choo\Documents\GitHub\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(952,55): warning C4244: '=': conversion from 'const double' to 'float', possible loss of data
   _GEOM_COMPILER.vcxproj -> C:\Users\r.choo\Documents\GitHub\300\300\x64\Debug\_GEOM_COMPILER.exe
           1 file(s) copied.
           1 file(s) copied.
