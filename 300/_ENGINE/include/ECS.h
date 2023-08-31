@@ -1,26 +1,24 @@
 #pragma once
-#include "Singleton.h"
 #include "entt.hpp";
 
 struct Entity;
 
-class ECS : public Singleton<ECS>
+class ECS 
 {
-	entt::registry registry;
 public:
-	ECS() = default;
+	static entt::registry registry;
 
-	Entity NewEntity();
+	static Entity NewEntity();
 
-	void DeleteEntity(Entity e);
+	static void DeleteEntity(Entity e);
 
 	template <typename Component, typename OtherComponent, typename ...Components>
-	auto GetEntitiesWith();
+	static auto GetEntitiesWith();
 
 	template <typename Component>
-	auto GetEntitiesWith();
+	static auto GetEntitiesWith();
 
-	friend struct Entity;
+	static void DeleteAllEntities();
 };
 
 struct Entity
@@ -70,47 +68,47 @@ auto ECS::GetEntitiesWith()
 template <typename Component>
 Component& Entity::AddComponent()
 {
-	return ECS::GetInstance()->registry.emplace_or_replace<Component>(id, Component());
+	return ECS::registry.emplace_or_replace<Component>(id, Component());
 }
 
 template <typename Component>
 Component& Entity::AddComponent(const Component& component)
 {
-	return ECS::GetInstance()->registry.emplace_or_replace<Component>(id, component);
+	return ECS::registry.emplace_or_replace<Component>(id, component);
 }
 
 template <typename Component>
 Component& Entity::GetComponent()
 {
-	return ECS::GetInstance()->registry.get_or_emplace<Component>(id, Component());
+	return ECS::registry.get_or_emplace<Component>(id, Component());
 }
 
 template <typename Component, typename OtherComponent, typename ...Components>
 auto Entity::GetComponent()
 {
-	return ECS::GetInstance()->registry.get<Component, OtherComponent, Components...>(id);
+	return ECS::registry.get<Component, OtherComponent, Components...>(id);
 }
 
 template <typename Component>
 bool Entity::HasComponent()
 {
-	return ECS::GetInstance()->registry.all_of<Component>(id);
+	return ECS::registry.all_of<Component>(id);
 }
 
 template <typename ... Components>
 bool Entity::HasAnyOfComponents()
 {
-	return ECS::GetInstance()->registry.any_of<Components...>(id);
+	return ECS::registry.any_of<Components...>(id);
 }
 
 template <typename ... Components>
 bool Entity::HasAllOfComponents()
 {
-	return ECS::GetInstance()->registry.all_of<Components...>(id);
+	return ECS::registry.all_of<Components...>(id);
 }
 
 template <typename Component>
 void Entity::RemoveComponent()
 {
-	ECS::GetInstance()->registry.remove<Component>(id);
+	ECS::registry.remove<Component>(id);
 }

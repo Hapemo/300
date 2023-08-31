@@ -3,29 +3,6 @@
 #include "ECS_Components.h"
 #include "Input.h"
 
-/*
-struct Transform
-{
-	glm::vec3 scale;
-	glm::vec3 rotate;
-	glm::vec3 translate;
-};
-
-struct TestComponent1
-{
-	float x;
-};
-
-struct TestComponent2
-{
-	float y;
-};
-
-struct TestComponent3
-{
-	float z;
-};
-*/
 void InputExample() {
 	// There are 4 states of key, press, release, hold and not press
 	// There are even more keys you can press, for mouse and keyboard, refer to E_KEY for more details
@@ -45,11 +22,11 @@ void Example()
 	/*--------------------ADDING COMPONENTS--------------------*/
 	//-----------------------------------------------------------
 	// create new entities 
-	Entity one = ECS::GetInstance()->NewEntity();
-	Entity two = ECS::GetInstance()->NewEntity();
-	Entity three = ECS::GetInstance()->NewEntity();
-	Entity four = ECS::GetInstance()->NewEntity();
-	Entity five = ECS::GetInstance()->NewEntity();
+	Entity one = ECS::NewEntity();
+	Entity two = ECS::NewEntity();
+	Entity three = ECS::NewEntity();
+	Entity four = ECS::NewEntity();
+	Entity five = ECS::NewEntity();
 
 	// adds a component to an entity using default constructor of that component
 	one.AddComponent<Transform>();
@@ -106,7 +83,7 @@ void Example()
 	bool tempbool4 = two.HasAnyOfComponents<TestComponent2, TestComponent3>();	// tempbool4 == true
 
 	// iterate through entities with ONE of the specified component
-	auto tempView1 = ECS::GetInstance()->GetEntitiesWith<Transform>();
+	auto tempView1 = ECS::GetEntitiesWith<Transform>();
 	for (Entity e : tempView1)													// iterates through all 5 entities as all of them has transform
 	{
 		
@@ -119,7 +96,7 @@ void Example()
 	tempfloat = five.GetComponent<Transform>().scale.x;							// 1.f
 
 	// iterate through entities with ONE of the specified component
-	auto tempView2 = ECS::GetInstance()->GetEntitiesWith<TestComponent3>();		// only entities four and five contain TestComponent3
+	auto tempView2 = ECS::GetEntitiesWith<TestComponent3>();		// only entities four and five contain TestComponent3
 	for (Entity e : tempView2)													// iterates through entities four and five ONLY
 	{
 		e.GetComponent<TestComponent3>().z += 1.f;								// do stuff
@@ -128,7 +105,7 @@ void Example()
 	tempfloat = five.GetComponent<TestComponent3>().z;							// 1.f
 
 	// iterate through entities with ALL of the specified components
-	auto tempGroup1 = ECS::GetInstance()->GetEntitiesWith<TestComponent1, TestComponent3>();
+	auto tempGroup1 = ECS::GetEntitiesWith<TestComponent1, TestComponent3>();
 	for (Entity e : tempGroup1)													// iterates through entities four and five ONLY
 	{
 		e.GetComponent<TestComponent1>().x += 1.f;								// do stuff
@@ -154,7 +131,7 @@ void Example()
 	// adding and initializing component
 	two.AddComponent<TestComponent3>() = { 50.f };
 	// iterate through entities with ALL of the specified components
-	auto tempGroup2 = ECS::GetInstance()->GetEntitiesWith<TestComponent2, TestComponent3>();
+	auto tempGroup2 = ECS::GetEntitiesWith<TestComponent2, TestComponent3>();
 	for (Entity e : tempGroup2)													// iterates through entities two, four and five ONLY
 	{
 		e.GetComponent<TestComponent2>().y += 1.f;								// do stuff
