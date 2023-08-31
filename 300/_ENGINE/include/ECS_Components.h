@@ -1,5 +1,27 @@
 #pragma once
-#include "glm/glm.hpp"
+#include "../glm-0.9.9.8/glm/glm.hpp"
+#include "../../_SCRIPTING/Script.h"
+#include <vector>
+#include "pch.h"
+
+enum class TAG
+{
+	PLAYER,
+	//more to come
+};
+
+enum class SUBTAG
+{
+	//more to come
+};
+
+struct General
+{
+	std::string name;
+	bool isActive;
+	TAG tag;
+	SUBTAG subtag;
+};
 
 struct Transform
 {
@@ -21,4 +43,23 @@ struct TestComponent2
 struct TestComponent3
 {
 	float z;
+};
+
+/***************************************************************************/
+/*!
+\brief
+Script component that entities who need to have script will possess.
+*/
+/***************************************************************************/
+class Scripts {
+public:
+	Scripts() = default;
+	~Scripts() = default;
+	void Inspect();
+
+	static void AddScript(Entity id, std::string fileName);
+	//static void LoadRunScript(Entity entity);
+
+	std::string scriptFile{};
+	std::vector <Script> scriptsContainer;
 };

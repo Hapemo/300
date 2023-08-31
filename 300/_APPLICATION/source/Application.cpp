@@ -24,6 +24,8 @@ int Application::window_height{576};
 std::string Application::title{ "VI Engine" };
 GLFWwindow* Application::ptr_window;
 
+
+
 void Application::StartUp() {
   GLFWStartUp();
   GlewStartUp();
@@ -83,7 +85,7 @@ void Application::MainUpdate() {
 }
 
 void Application::Exit() {
-    ECS::DeleteAllEntities();
+    ECS::GetInstance()->DeleteAllEntities();
     SingletonManager::destroyAllSingletons();
   glfwTerminate();
 }

@@ -1,21 +1,30 @@
 #include "ECS.h"
 #include "Physics/PhysicsSystem.h"
+#include "ECS_Components.h"
 
 entt::registry ECS::registry;
 
 Entity ECS::NewEntity()
 {
-	return { ECS::registry.create() };
+	Entity e = registry.create();
+	e.AddComponent<General>();
+	e.AddComponent<Transform>();
+	return e;
 }
 
 void ECS::DeleteEntity(Entity e)
 {
-	ECS::registry.destroy(e.id);
+	registry.destroy(e.id);
+}
+
+auto ECS::GetAllEntities()
+{
+	return registry.group<General, Transform>();
 }
 
 void ECS::DeleteAllEntities()
 {
-	ECS::registry.clear();
+	registry.clear();
 }
 
 Entity::Entity(entt::entity id) : id(id) {}

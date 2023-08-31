@@ -22,6 +22,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Physics\PhysicsSystem.h">
+    <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Serialization\Serialization.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -30,6 +33,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\Physics\PhysicsSystem.cpp">
+    <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Serialization\Serialization.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

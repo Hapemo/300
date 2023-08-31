@@ -76,6 +76,14 @@
     <Import Project="..\prop-pages\_ENGINE-props.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>$(SolutionDir)\lib\lua-5.3.6\include;$(SolutionDir)\lib\sol-3.2.3;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)\lib\lua-5.3.6\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>$(SolutionDir)\lib\lua-5.3.6\include;$(SolutionDir)\lib\sol-3.2.3;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)\lib\lua-5.3.6\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -142,6 +150,10 @@
   <ItemGroup>
     <ClCompile Include="source\ECS.cpp" />
     <ClCompile Include="source\Physics\PhysicsSystem.cpp" />
+    <ClInclude Include="include\Serialization\Serialization.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\Serialization\Serialization.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
