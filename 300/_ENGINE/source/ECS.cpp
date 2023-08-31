@@ -1,20 +1,13 @@
 #include "ECS.h"
 
-entt::registry ECS::registry;
-
 Entity ECS::NewEntity()
 {
-	return { ECS::registry.create() };
+	return { registry.create() };
 }
 
 void ECS::DeleteEntity(Entity e)
 {
-	ECS::registry.destroy(e.id);
-}
-
-void ECS::DeleteAllEntities()
-{
-	ECS::registry.clear();
+	registry.destroy(e.id);
 }
 
 Entity::Entity(entt::entity id) : id(id) {}
