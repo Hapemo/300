@@ -137,7 +137,7 @@
   <ItemGroup>
     <ClInclude Include="include\ECS.h" />
     <ClInclude Include="include\ECS_Components.h" />
-    <ClInclude Include="source\Serialization\Serialization.h" />
+    <ClInclude Include="include\Serialization\Serialization.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\ECS.cpp" />

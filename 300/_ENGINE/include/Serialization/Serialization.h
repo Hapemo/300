@@ -1,5 +1,5 @@
 #pragma once
-#include "../../../_TOOLS/include/pch.h"
+#include "pch.h"
 #include "document.h"
 #include "prettywriter.h"
 #include "stringbuffer.h"
