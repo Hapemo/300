@@ -17,10 +17,10 @@ unsigned int GFX::Texture::Load(const char* filename)
 
 	// Load onto GPU storage
 #if TEST_COMPRESSOR
-	int blockSize = mInternalFormat == GL_COMPRESSED_RGBA_S3TC_DXT1_EXT ? 8 : 16;
-	int size = blockSize * glm::ceil(mWidth / 4.f) * glm::ceil(mHeight / 4.f);
+	//int blockSize = mInternalFormat == GL_COMPRESSED_RGBA_S3TC_DXT1_EXT ? 8 : 16;
+	//int size = blockSize * glm::ceil(mWidth / 4.f) * glm::ceil(mHeight / 4.f);
 
-	glCompressedTexImage2DARB(GL_TEXTURE_2D, 0, mInternalFormat, mWidth, mHeight, 0, size, reinterpret_cast<void*>(buffer));
+	glCompressedTexImage2DARB(GL_TEXTURE_2D, 0, mInternalFormat, mWidth, mHeight, 0, imgSize, reinterpret_cast<void*>(buffer));
 #else
 	if (mChannels == 4)
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, mWidth, mHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
