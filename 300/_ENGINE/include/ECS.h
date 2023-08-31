@@ -6,9 +6,9 @@ struct Entity;
 
 class ECS : public Singleton<ECS>
 {
-	entt::registry registry;
 public:
 	ECS() = default;
+	entt::registry registry;
 
 	Entity NewEntity();
 
@@ -20,7 +20,7 @@ public:
 	template <typename Component>
 	auto GetEntitiesWith();
 
-	friend struct Entity;
+	//friend struct Entity;
 };
 
 struct Entity
