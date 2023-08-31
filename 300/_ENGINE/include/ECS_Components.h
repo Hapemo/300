@@ -2,6 +2,26 @@
 #include "../glm-0.9.9.8/glm/glm.hpp"
 #include "../../_SCRIPTING/Script.h"
 #include <vector>
+#include "pch.h"
+
+enum class TAG
+{
+	PLAYER,
+	//more to come
+};
+
+enum class SUBTAG
+{
+	//more to come
+};
+
+struct General
+{
+	std::string name;
+	bool isActive;
+	TAG tag;
+	SUBTAG subtag;
+};
 
 struct Transform
 {
