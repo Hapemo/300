@@ -2,7 +2,7 @@
 #include "ECS.h"
 #include "ECS_Components.h"
 #include "Input.h"
-
+#include "Multithread.h"
 /*
 struct Transform
 {
@@ -38,6 +38,40 @@ void InputExample() {
 	}
 }
 
+void MultithreadExample() {
+	// A blocking function that runs MTFoo1, MTFoo2, MTFoo3 concurrently, exits once all functions finish running
+	// Only for function pointer of type void(*)()
+	std::cout << "RunFunctions\n";
+	Multithread::GetInstance()->RunFunctions(MTFoo1, MTFoo2, MTFoo3);
+
+	// Creating some instances for testing
+	MTCoo1 a1, a2, a3;
+	MTCoo2 b1, b2, b3;
+	MTCoo3 c1, c2, c3;
+
+	// Blocking function that runs non-static member functions
+	// Requires the class instance and pointer to the member function
+	// It can be run with any combination of functions and class instances, for example below
+
+	// Different member functions of the same instance (BECAREFUL!!! MAKE SURE YOUR FUNCTIONS ARE ALL THREAD SAFE)
+	std::cout << "Different member functions of the same instance" << '\n';
+	Multithread::GetInstance()->RunMemberFunctions(std::pair(a1, &MTCoo1::Boo1),
+																								 std::pair(a1, &MTCoo1::Boo2),
+																								 std::pair(a1, &MTCoo1::Boo3));
+
+	// Different member function of different instances
+	std::cout << "Different member function of different instances" << '\n';
+	Multithread::GetInstance()->RunMemberFunctions(std::pair(a1, &MTCoo1::Boo1),
+																								 std::pair(a2, &MTCoo1::Boo2),
+																								 std::pair(a3, &MTCoo1::Boo3));
+
+	// Different member function of different classes
+	std::cout << "Different member function of different classes" << '\n';
+	Multithread::GetInstance()->RunMemberFunctions(std::pair(a1, &MTCoo1::Boo1),
+																								 std::pair(b1, &MTCoo2::Boo2),
+																								 std::pair(c1, &MTCoo3::Boo3));
+
+}
 
 void Example()
 {

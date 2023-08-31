@@ -17,6 +17,7 @@ start up of window and game system, also runs their update functions.
 #include "Example.h"
 #include "Input.h"
 #include "SingletonManager.h"
+#include "Multithread.h"
 
 // Static variables
 int Application::window_width{1024};
@@ -36,13 +37,13 @@ void Application::SystemInit() {
 }
 
 void Application::SystemUpdate() {
-    
 }
 
 void Application::Init() {
   StartUp();
   SystemInit();
   Example();
+  MultithreadExample();
 }
 
 bool Application::FirstUpdate() {

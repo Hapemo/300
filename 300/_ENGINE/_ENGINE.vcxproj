@@ -137,9 +137,11 @@
   <ItemGroup>
     <ClInclude Include="include\ECS.h" />
     <ClInclude Include="include\ECS_Components.h" />
+    <ClInclude Include="include\Multithread.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\ECS.cpp" />
+    <ClCompile Include="source\Multithread.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
