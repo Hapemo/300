@@ -91,7 +91,6 @@ void ScriptingSystem::Init()
     //LuaHelperFunc();
     //LuaRigidBody();
 
-    errorFlagCounter = 1000;
 
     /******************************************************************************/
     /*!
@@ -163,10 +162,9 @@ void ScriptingSystem::Update(double /*dt*/)
         {
             for (Entity entity : scriptEntities)
             {   
-                for (Script script : entity.GetComponent<Scripts>().scriptsContainer)
+                for (Script script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
                 {
-                    int entityID = entity.id;
-                    script.Load(entityID);
+                    script.Load(entity);
                     script.Run("Start");
                 }
             }
@@ -176,7 +174,7 @@ void ScriptingSystem::Update(double /*dt*/)
         // Call the "Update" function
         for (Entity entity : scriptEntities)
         {
-            for (auto& script : entity.GetComponent<Scripts>().scriptsContainer)
+            for (Script script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
             {
                 script.Run("Update");
             }

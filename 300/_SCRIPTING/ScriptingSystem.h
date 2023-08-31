@@ -27,9 +27,9 @@ generate the overall performance of the scripting system.
 ***/
 #pragma once
 #include <sol/sol.hpp>
-#include "../_ENGINE/include/ECS.h"
-#include "../_ENGINE/include/ECS_Components.h"
-#include "../_TOOLS/include/Input.h"
+#include "ECS.h"
+#include "ECS_Components.h"
+#include "Input.h"
 #include "Script.h"
 
 /******************************************************************************/
@@ -82,5 +82,4 @@ public:
 
 private:
     bool errorFlag{};
-    int errorFlagCounter = 0, counter = 1000;
 };

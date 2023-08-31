@@ -21,7 +21,7 @@ This file contains the logic to Load and Run scripts.
 #include "Script.h"
 #include "ScriptingSystem.h"
 
-void Script::Load(entt::entity& entityID)
+void Script::Load(Entity entityID)
 {
     sol::protected_function_result result = ScriptingSystem::luaState.script_file(scriptFile, env);
     if (!result.valid())
@@ -31,7 +31,7 @@ void Script::Load(entt::entity& entityID)
         //PERROR("Error opening file! %s.\n", err.what());
     }
 
-    env["script_entity_id"] = entityID;
+    env["script_entity_id"] = entityID.id;
 }
 
 void Script::Run(const char* funcName)
@@ -82,12 +82,12 @@ void Scripts::AddScript(Entity id, std::string fileName)
     temp.env = { ScriptingSystem::luaState, sol::create, ScriptingSystem::luaState.globals() };
     id.GetComponent<Scripts>().scriptsContainer.push_back(temp);
 }
-
-void Scripts::LoadRunScript(Entity entity)
-{
-    for (auto& script : entity.GetComponent<Scripts>().scriptsContainer)
-    {
-        script.Load(entity.id);
-        script.Run("Start");
-    }
-}
+//
+//void Scripts::LoadRunScript(Entity entity)
+//{
+//    for (auto& script : entity.GetComponent<Scripts>().scriptsContainer)
+//    {
+//        script.Load(entity.id);
+//        script.Run("Start");
+//    }
+//}
