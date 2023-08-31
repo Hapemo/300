@@ -13,7 +13,7 @@ This file contains scripting component logic.
 //#include "../ECS/BaseComponent.h"
 //#include "../ECS/EntityManager.h"
 //#include "../Engine/Engine.h"
-#include <sol.hpp>
+#include "../sol-3.2.3/sol/sol.hpp"
 
 /***************************************************************************/
 /*!
@@ -27,6 +27,6 @@ public:
 	sol::environment env{};
 	std::string scriptFile{};
 
-	void Load(int& entityID);
+	void Load(entt::entity& entityID);
 	void Run(const char* funcName);
 };

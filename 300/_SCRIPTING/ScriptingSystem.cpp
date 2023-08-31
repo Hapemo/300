@@ -159,48 +159,49 @@ void ScriptingSystem::Update(double /*dt*/)
     //if (g_engine->gameStateMgr->isPlaying)
     //{
         // Load the scripts and call the "Start" function
-    //    if (!once)
-    //    {
-    //        for (auto& objects : scriptEntities)
-    //        {
-    //            //Scripts* scripts = g_engine->entityMgr->GetComponent<Scripts>(objects);
-    //            Script* scripts = objects.GetComponent<Scripts>().
-    //            for (auto& i : e.GetComponent<Script>().)
-    //            {
-    //                int entityID = objects;
-    //                i.Load(entityID);
-    //                i.Run("Start");
-    //            }
-    //        }
-    //        once = true;
-    //    }
+        if (!once)
+        {
+            for (Entity entity : scriptEntities)
+            {   
+                for (Script script : entity.GetComponent<Scripts>().scriptsContainer)
+                {
+                    int entityID = entity.id;
+                    script.Load(entityID);
+                    script.Run("Start");
+                }
+            }
+            once = true;
+        }
 
-    //    // Call the "Update" function
-    //    for (auto& objects : g_engine->scriptingSys->entities)
-    //    {
-    //        Scripts* scripts = g_engine->entityMgr->GetComponent<Scripts>(objects);
-    //        for (auto& i : scripts->scriptsContainer)
-    //        {
-    //            i.Run("Update");
-    //        }
-    //    }
-    ////}
-    ////else
-    ////{
-    //    // load scripts when scene is not playing & left-shift is pressed
-    //    if (g_engine->inputsys->iskeypress(glfw_key_left_shift))
-    //    {
-    //        for (auto& objects : g_engine->scriptingsys->entities)
-    //        {
-    //            Scripts* scripts = g_engine->entitymgr->getcomponent<scripts>(objects);
-    //            for (auto& i : scripts->scriptscontainer)
-    //            {
-    //                int entityid = objects;
-    //                i.load(entityid);
-    //            }
-    //        }
-    //    }
-    //    once = false;
+        // Call the "Update" function
+        for (Entity entity : scriptEntities)
+        {
+            for (auto& script : entity.GetComponent<Scripts>().scriptsContainer)
+            {
+                script.Run("Update");
+            }
+        }
+    //}
+    /******************************************************************************/
+    /*!
+        To implement when game state manager is ready
+        Load scripts when scene is not playing & left-shift is pressed
+     */
+     /******************************************************************************/
+    //else
+    //{
+        //if (Input::CheckKey(E_STATE::PRESS, E_KEY::LEFT_SHIFT))
+        //{
+        //    for (Entity entity : ECS::GetInstance()->GetEntitiesWith<Scripts>())
+        //    {
+        //        for (auto& script : entity.GetComponent<Scripts>().scriptsContainer)
+        //        {
+        //            int entityid = entity.id;
+        //            script.Load(entityid);
+        //        }
+        //    }
+        //}
+        //once = false;
     //}
 
     //Timer::GetTime(endTime);

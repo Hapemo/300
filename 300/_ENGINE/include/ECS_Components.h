@@ -1,5 +1,7 @@
 #pragma once
-#include "glm/glm.hpp"
+#include "../glm-0.9.9.8/glm/glm.hpp"
+#include "../../_SCRIPTING/Script.h"
+#include <vector>
 
 struct Transform
 {
@@ -35,8 +37,8 @@ public:
 	~Scripts() = default;
 	void Inspect();
 
-	//static void AddScript(EntityID id, std::string fileName);
-	//static void LoadRunScript(EntityID entity);
+	static void AddScript(Entity id, std::string fileName);
+	static void LoadRunScript(Entity entity);
 
 	std::string scriptFile{};
 	std::vector <Script> scriptsContainer;
