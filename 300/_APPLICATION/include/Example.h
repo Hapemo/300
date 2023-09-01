@@ -211,9 +211,9 @@ void ScriptTestUpdate()
 		std::cout << "Enter new script name: ";
 		std::getline(std::cin, scriptName);
 		std::stringstream ss;
-		std::ifstream defScript{ "../../Resources/Scripts/DefaultTemplate.lua" };
+		std::ifstream defScript{ "../Resources/Scripts/DefaultTemplate.lua" };
 		std::ofstream output;
-		ss << "../../Resources/Scripts/" << scriptName << ".lua";
+		ss << "../Resources/Scripts/" << scriptName << ".lua";
 		// create the script
 		std::string path = ss.str();
 		output.open(path.c_str(), std::ios_base::out);
@@ -222,11 +222,7 @@ void ScriptTestUpdate()
 		{
 			output << line << std::endl;
 		}
-		defScript.close();
-		std::cout << "Reached" << std::endl;
-		std::ifstream stream;
-		stream.exceptions(std::ios::failbit | std::ios::badbit);
-		stream.open(ss.str().c_str());
+		std::cout << scriptName << ".lua added to Resources/Scripts." << std::endl;
 	}
 
 	// Button press number 2 to add script to entity
@@ -275,6 +271,20 @@ void ScriptTestUpdate()
 						std::cout << "Script " << scriptName << ".lua added to entity " << entityID << std::endl;
 					}
 				}
+			}
+		}
+	}
+
+	//Print all scripts that each entity has
+	if (Input::CheckKey(E_STATE::PRESS, E_KEY::_3))
+	{
+		std::cout << "/******************************************************************************/" << std::endl;
+		auto scriptEntities = ECS::GetInstance()->GetEntitiesWith<Scripts>();
+		for (Entity entity : scriptEntities)
+		{
+			for (Script script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
+			{
+				std::cout << "Entity " << std::to_string(unsigned int(entity.id)) << " has script: " << script.scriptFile << std::endl;;
 			}
 		}
 	}
