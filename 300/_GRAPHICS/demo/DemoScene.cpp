@@ -194,6 +194,8 @@ void GFX::DemoScene::Draw()
         //!< test rendering skull model
         //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         mModelShader.Activate();
+        //uid uids("gayed");
+        //Mesh& currentmesh = MeshManager::GetInstance().mSceneMeshes[uids.id]->meshdata;
         Mesh& currentmesh = MeshManager::GetInstance().mSceneMeshes[2];
 
         mat4 identity = mat4(1.0);

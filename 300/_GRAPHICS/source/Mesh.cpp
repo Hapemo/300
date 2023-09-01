@@ -1,6 +1,7 @@
 #include "Mesh.hpp"
 #include <filesystem>
 
+
 // Follows the format in the shader code
 /******************************************
 	location = 0 --> Pos;
@@ -131,8 +132,37 @@ void GFX::Mesh::Destroy()
 	mColorVbo.Destroy();
 }
 
+
+
+//GFX::MeshData& GFX::MeshManager::AllocRscInfo()
+//{
+//	auto pTemp = m_pInfoBufferEmptyHead;
+//
+//
+//	MeshData* pNext = reinterpret_cast<MeshData*>(m_pInfoBufferEmptyHead->m_pData);
+//	m_pInfoBufferEmptyHead = pNext;
+//
+//	return *pTemp;
+//}
+//
+//void GFX::MeshManager::ReleaseRscInfo(MeshData& RscInfo)
+//{
+//	// Add this resource info to the empty chain
+//	RscInfo.m_pData = m_pInfoBufferEmptyHead;
+//	m_pInfoBufferEmptyHead = &RscInfo;
+//}
+
+
 void GFX::MeshManager::Init()
 {
+	//for (int i = 0, end = (int)m_Meshbuffer.size() - 1; i != end; ++i)
+	//{
+	//	m_Meshbuffer[i].m_pData = &m_Meshbuffer[i + 1];
+	//}
+	//m_Meshbuffer[m_Meshbuffer.size() - 1].m_pData = nullptr;
+	//m_pInfoBufferEmptyHead = m_Meshbuffer.data();
+
+
 	std::filesystem::path folderpath = compiled_geom_path.c_str();
 
 	for (const auto& entry : std::filesystem::directory_iterator(folderpath))
@@ -140,6 +170,9 @@ void GFX::MeshManager::Init()
 		if (std::filesystem::is_regular_file(entry))
 		{
 			std::cout << "Loading file: " << entry.path().filename() << "\n";
+
+			//uid uids("dasdsadsadasdassssssssssadaddddddddddddddddddddddddddddddddddddddddddddddddddddadadsd");
+			//std::cout << uids.id<< "\n";
 
 			_GEOM::Geom GeomData;
 			Mesh localmesh;
@@ -153,6 +186,13 @@ void GFX::MeshManager::Init()
 			localmesh.Setup(positions, indices, uvs);
 
 			mSceneMeshes.emplace_back(localmesh);
+
+			//uid uidd(entry.path().filename().string());
+			//uid uids("gayed");
+			//MeshData&  temp =AllocRscInfo();
+			//temp.meshdata = std::move(localmesh);
+			//mSceneMeshes.emplace(std::make_pair(uids.id, &temp));
+
 		}
 	}
 }

@@ -7,6 +7,7 @@
 #include "Vao.hpp"
 #include "Vbo.hpp"
 #include <geom.h>
+#include "../../_ENGINE/source/Resource/Guid.h"
 
 #include "../../lib/stb-master/stb_image.h"
 
@@ -79,10 +80,24 @@ namespace GFX
 	};
 
 
+	struct MeshData {
+		void* m_pData;
+		Mesh meshdata;
+	};
+
+
 	class MeshManager
 	{
 	public:
+		//constexpr static int  MAX_RESOURCE = 2400;
+
 		std::vector<Mesh> mSceneMeshes;
+		//std::unordered_map<unsigned, MeshData*> mSceneMeshes;
+		//MeshData* m_pInfoBufferEmptyHead{ nullptr };
+		//std::array<MeshData, MAX_RESOURCE>         m_Meshbuffer;
+
+		//MeshData& AllocRscInfo();
+		//void ReleaseRscInfo(MeshData& RscInfo);
 
 	public:
 		static MeshManager& GetInstance()
