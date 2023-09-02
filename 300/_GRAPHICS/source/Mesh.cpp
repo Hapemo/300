@@ -11,28 +11,24 @@
 
 void GFX::Mesh::LoadFromGeom(const _GEOM::Geom& GeomData, std::vector<vec3>& positions, std::vector<glm::vec2>& uvs, std::vector<unsigned int>& indices)
 {
-	//for (size_t iSM{}; iSM < GeomData.m_nSubMeshes; ++iSM)
+	for (size_t iSM{}; iSM < GeomData.m_nSubMeshes; ++iSM)
 	{
 		// Load indices
-		//for (size_t iIndex{}, ui{ GeomData.m_pSubMesh[iSM].m_iIndices }; iIndex < GeomData.m_pSubMesh[iSM].m_nIndices; ++iIndex, ++ui)
-		for (size_t iIndex{}; iIndex < GeomData.m_nIndices; ++iIndex)
+		for (size_t iIndex{}, ui{ GeomData.m_pSubMesh[iSM].m_iIndices }; iIndex < GeomData.m_pSubMesh[iSM].m_nIndices; ++iIndex, ++ui)
 		{
 			indices.emplace_back(GeomData.m_pIndices[iIndex]);
 		}
 
 		// Load positions
-		//for (size_t iPos{}, up{ GeomData.m_pSubMesh[iSM].m_iVertices }; iPos < GeomData.m_pSubMesh[iSM].m_nVertices; ++iPos, ++up)
-		for (size_t iPos{}; iPos < GeomData.m_nVertices; ++iPos)
+		for (size_t iPos{}, up{ GeomData.m_pSubMesh[iSM].m_iVertices }; iPos < GeomData.m_pSubMesh[iSM].m_nVertices; ++iPos, ++up)
 		{
-			//positions.emplace_back(vec3(GeomData.m_pPos[up].m_Pos.x, GeomData.m_pPos[up].m_Pos.y, GeomData.m_pPos[up].m_Pos.z));
-			positions.emplace_back(vec3(GeomData.m_pPos[iPos].m_Pos.x, GeomData.m_pPos[iPos].m_Pos.y, GeomData.m_pPos[iPos].m_Pos.z));
-			uvs.emplace_back(vec2(GeomData.m_pPos[iPos].m_UV.x, GeomData.m_pPos[iPos].m_UV.y));
+			positions.emplace_back(vec3(GeomData.m_pPos[up].m_Pos.x, GeomData.m_pPos[up].m_Pos.y, GeomData.m_pPos[up].m_Pos.z));
 		}
 
 		// Load UVs
-		//for (size_t iUV{}, uuv{ GeomData.m_pSubMesh[iSM].m_iVertices }; iUV < GeomData.m_pSubMesh[iSM].m_nVertices; ++iUV, ++uuv)
+		for (size_t iUV{}, uuv{ GeomData.m_pSubMesh[iSM].m_iVertices }; iUV < GeomData.m_pSubMesh[iSM].m_nVertices; ++iUV, ++uuv)
 		{
-			//uvs.emplace_back(vec2(GeomData.m_pPos[uuv].m_UV.x, GeomData.m_pPos[uuv].m_UV.y));
+			uvs.emplace_back(vec2(GeomData.m_pPos[uuv].m_UV.x, GeomData.m_pPos[uuv].m_UV.y));
 		}
 	}
 }
@@ -238,8 +234,70 @@ namespace Deserialization
 		{				
 			infile.read((char*)&GeomData.m_pMesh[i].m_name, sizeof(char) * 64);
 
-			if (GeomData.m_bHasAnimations) {
-				//infile.read((char*)&GeomData.m_pMesh[i].m_Animation, sizeof(_GEOM::Animation));
+			// Animation Data
+			if (GeomData.m_bHasAnimations) 
+			{
+				infile.read((char*)&GeomData.m_pMesh[i].m_Animation.m_BoneCounter, sizeof(uint32_t));
+				infile.read((char*)&GeomData.m_pMesh[i].m_Animation.m_Duration, sizeof(float));
+				infile.read((char*)&GeomData.m_pMesh[i].m_Animation.m_TicksPerSecond, sizeof(float));
+
+				// Bone info map
+				for (unsigned j{}; j < GeomData.m_pMesh[i].m_Animation.m_BoneCounter; ++j)
+				{
+					_GEOM::BoneInfo temp;
+					char cname[64];
+					uint8_t strlen{};
+
+					infile.read((char*)&strlen, sizeof(uint8_t));						// Bone name length
+					infile.read(cname, strlen);											// Bone name							
+					infile.read((char*)&temp, sizeof(_GEOM::BoneInfo));					// Bone info	
+					
+					std::string name(cname, strlen);
+
+					GeomData.m_pMesh[i].m_Animation.m_BoneInfoMap.emplace(name, temp);
+				}
+
+				// Bones
+				GeomData.m_pMesh[i].m_Animation.m_Bones.resize(GeomData.m_pMesh[i].m_Animation.m_BoneCounter);
+				for(unsigned j{}; j < GeomData.m_pMesh[i].m_Animation.m_BoneCounter; ++j)
+				{
+					auto& boneinst = GeomData.m_pMesh[i].m_Animation.m_Bones[j];
+
+					char cname[64];
+					uint8_t strlen{};
+
+					infile.read((char*)&strlen, sizeof(uint8_t));						// Bone name length
+					infile.read(cname, strlen);											// Bone name
+					boneinst.m_Name = std::string(cname, strlen);
+
+					infile.read((char*)&boneinst.m_ID, sizeof(int));					// Bone ID
+
+					infile.read((char*)&boneinst.m_NumPositions, sizeof(int));			// num positions
+					infile.read((char*)&boneinst.m_NumRotations, sizeof(int));			// num rotations
+					infile.read((char*)&boneinst.m_NumScalings, sizeof(int));			// num scalings
+
+					boneinst.m_Positions.resize(boneinst.m_NumPositions);
+					boneinst.m_Rotations.resize(boneinst.m_NumRotations);
+					boneinst.m_Scales.resize(boneinst.m_NumScalings);
+
+					// local transform
+					infile.read((char*)&boneinst.m_LocalTransform, sizeof(glm::mat4));
+
+					// key positions
+					for (int k{}; k < boneinst.m_NumPositions; ++k) {
+						infile.read((char*)&boneinst.m_Positions[k], sizeof(_GEOM::KeyPosition));
+					}
+
+					// key rotations
+					for (int k{}; k < boneinst.m_NumRotations; ++k) {
+						infile.read((char*)&boneinst.m_Rotations[k], sizeof(_GEOM::KeyRotation));
+					}
+
+					// key scalings
+					for (int k{}; k < boneinst.m_NumScalings; ++k) {
+						infile.read((char*)&boneinst.m_Scales[k], sizeof(_GEOM::KeyScale));
+					}
+				}
 			}
 		}
 
@@ -257,7 +315,9 @@ namespace Deserialization
 
 		infile.close();
 		return true;
-#else
+
+#else	////////////////////////////////////////////////////////////////////////////////
+
 		std::ifstream infile(Filepath.c_str());
 		assert(infile.is_open());
 
@@ -268,7 +328,6 @@ namespace Deserialization
 		Serialization::ReadUnsigned(infile, GeomData.m_nIndices);
 
 		Serialization::ReadMesh(infile, GeomData);
-		Serialization::ReadSubMesh(infile, GeomData);
 		Serialization::ReadVertexPos(infile, GeomData);
 		//Serialization::ReadVertexExtra(infile, GeomData);		// == We dont need these data for now ==	
 		Serialization::ReadIndices(infile, GeomData);

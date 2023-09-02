@@ -31,7 +31,7 @@ namespace _GEOM
 			| aiProcess_GenNormals                 // if it does not have normals generate them... (this may not be a good option as it may hide issues from artist)
 			| aiProcess_CalcTangentSpace           // calculate tangents and bitangents if possible (definetly you will meed UVs)
 			| aiProcess_RemoveRedundantMaterials   // remove redundant materials
-			| aiProcess_FindInvalidData            // detect invalid model data, such as invalid normal vectors
+			//| aiProcess_FindInvalidData            // detect invalid model data, such as invalid normal vectors. this flag affects the keypositions
 			| aiProcess_FlipUVs                    // flip the V to match the Vulkans way of doing UVs
 			;
 
@@ -609,6 +609,7 @@ namespace _GEOM
 		std::size_t totalExtras = 0;
 		std::size_t totalIndices = 0;
 
+		// accumulate the total sizes, for memory allocation
 		for (auto& _mesh : m_Meshes)
 		{
 			totalSubMeshes += _mesh.m_Submeshes.size();
@@ -647,7 +648,9 @@ namespace _GEOM
 			strcpy_s(Mesh[i].m_name.data(), Mesh[i].m_name.size(), m_Meshes[i].m_Name.c_str());
 			
 			// Copy the animation data in
-			Mesh[i].m_Animation		= m_Animation;
+			if (m_bHasAnimation) {
+				Mesh[i].m_Animation = m_Animation;
+			}
 
 			// Copy the bool statuses in
 			_geom.m_bHasAnimations	= m_bHasAnimation ? true : _geom.m_bHasAnimations;
@@ -668,7 +671,7 @@ namespace _GEOM
 
 				const auto& submesh = m_Meshes[i].m_Submeshes[j];
 
-				// Vertex position, clr, and uv
+				// VertexPos
 				{
 					for (const auto& _pos : submesh.m_Vertex)
 					{
@@ -680,7 +683,7 @@ namespace _GEOM
 					}
 				}
 
-				//Extras
+				// VertexExtra
 				{
 					for (const auto& _extra : submesh.m_Extra)
 					{
@@ -691,7 +694,7 @@ namespace _GEOM
 					}
 				}
 
-				//Indices
+				// Indices
 				{
 					for (const auto& _indices : submesh.m_Indices)
 					{
@@ -715,6 +718,7 @@ namespace _GEOM
 	}
 
 
+	//===== Serialize the Geom Struct =====//
 	bool Geom::SerializeGeom(const std::string& assetfilepath, Geom& GeomData) noexcept
 	{
 #if 1
@@ -749,9 +753,56 @@ namespace _GEOM
 		{
 			outfile.write((char*)&GeomData.m_pMesh[i].m_name, sizeof(char) * 64);
 
-			if (GeomData.m_bHasAnimations) {
-				//outfile.write((char*)&GeomData.m_pMesh[i].m_Animation, sizeof(Animation));
-			}
+			// Animation Data
+			if (GeomData.m_bHasAnimations) 
+			{
+				outfile.write((char*)&GeomData.m_pMesh[i].m_Animation.m_BoneCounter, sizeof(uint32_t));		// Number of bones
+				outfile.write((char*)&GeomData.m_pMesh[i].m_Animation.m_Duration, sizeof(float));			// Duration
+				outfile.write((char*)&GeomData.m_pMesh[i].m_Animation.m_TicksPerSecond, sizeof(float));		// Ticks Per Second
+
+				// Bone info map
+				for (const auto& boneinfo : GeomData.m_pMesh[i].m_Animation.m_BoneInfoMap) 
+				{
+					uint8_t strlen = (uint8_t)boneinfo.first.size();
+					outfile.write((char*)&strlen, sizeof(uint8_t));						// name length
+					outfile.write((char*)boneinfo.first.c_str(), strlen);				// name
+					outfile.write((char*)&boneinfo.second, sizeof(_GEOM::BoneInfo));	// boneinfo
+				}
+
+				// Bones
+				for (unsigned j{}; j < GeomData.m_pMesh[i].m_Animation.m_BoneCounter; ++j)
+				{
+					auto& boneinst = GeomData.m_pMesh[i].m_Animation.m_Bones[j];
+
+					uint8_t strlen = (uint8_t)boneinst.m_Name.size();
+					outfile.write((char*)&strlen, sizeof(uint8_t));						// name length
+					outfile.write((char*)boneinst.m_Name.c_str(), strlen);				// name	
+
+					outfile.write((char*)&boneinst.m_ID, sizeof(int));					// id
+
+					outfile.write((char*)&boneinst.m_NumPositions, sizeof(int));		// numpos
+					outfile.write((char*)&boneinst.m_NumRotations, sizeof(int));		// numrot
+					outfile.write((char*)&boneinst.m_NumScalings, sizeof(int));			// numscale
+
+					// local transform
+					outfile.write((char*)&boneinst.m_LocalTransform, sizeof(glm::mat4));
+
+					// keypositions
+					for (int k{}; k < boneinst.m_NumPositions; ++k) {
+						outfile.write((char*)&boneinst.m_Positions[k], sizeof(_GEOM::KeyPosition));
+					}
+
+					// keyrotations
+					for (int k{}; k < boneinst.m_NumRotations; ++k) {
+						outfile.write((char*)&boneinst.m_Rotations[k], sizeof(_GEOM::KeyRotation));
+					}
+
+					// keyscalings
+					for (int k{}; k < boneinst.m_NumScalings; ++k) {
+						outfile.write((char*)&boneinst.m_Scales[k], sizeof(_GEOM::KeyScale));
+					}
+				}
+			}	// animation data
 		}
 
 		// Submeshes
@@ -822,28 +873,9 @@ namespace _GEOM
 	}
 
 
-	//bool Geom::DeserializeGeom(const std::string Filepath, _GEOM::Geom& GeomData) noexcept
-	//{
-		////std::ifstream infile("../compiled_geom/Skull_textured.geom");
-		//std::ifstream infile(Filepath.c_str());
-		//assert(infile.is_open());
-
-		//Serialization::ReadUnsigned(infile, GeomData.m_nMeshes);
-		//Serialization::ReadUnsigned(infile, GeomData.m_nSubMeshes);
-		//Serialization::ReadUnsigned(infile, GeomData.m_nVertices);
-		//Serialization::ReadUnsigned(infile, GeomData.m_nExtras);
-		//Serialization::ReadUnsigned(infile, GeomData.m_nIndices);
-
-		//Serialization::ReadMesh(infile, GeomData);
-		//Serialization::ReadSubMesh(infile, GeomData);
-		//Serialization::ReadVertexPos(infile, GeomData);
-		////Serialization::ReadVertexExtra(infile, GeomData);		// == We dont need these data for now ==	
-		//Serialization::ReadIndices(infile, GeomData);
-
-		//infile.close();
-		//return true;
-	//}
-
+	////////////////////////////////////////////////////
+	//===== Loading Helper Function Definitions =====//
+	////////////////////////////////////////////////////
 
 	std::vector<Geom::Texture> Mesh_Loader::LoadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName) noexcept
 	{
@@ -946,7 +978,7 @@ namespace _GEOM
 	};
 
 	// BONE:: Read missing bones and populate bone vector
-	void Mesh_Loader::ReadMissingBones(const aiAnimation* const animation) noexcept
+	void Mesh_Loader::ReadMissingBones(const aiAnimation* animation) noexcept
 	{
 		m_SkinGeom->m_Animation.m_Duration = animation->mDuration;
 		m_SkinGeom->m_Animation.m_TicksPerSecond = animation->mTicksPerSecond;

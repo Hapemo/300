@@ -62,6 +62,7 @@ namespace _GEOM
 	class Bone
 	{
 	public:
+		Bone() = default;
 		Bone(const std::string& name, int ID, const aiNodeAnim* channel);
 
 		glm::mat4 GetLocalTransform() { return m_LocalTransform; }
@@ -101,7 +102,7 @@ namespace _GEOM
 		}
 
 
-	private:
+	public:
 		std::vector<KeyPosition> m_Positions;
 		std::vector<KeyRotation> m_Rotations;
 		std::vector<KeyScale> m_Scales;

@@ -60,7 +60,7 @@ namespace _GEOM
 		void DefaultInitializeVertexBoneData(FullVertices& vertex) noexcept;
 		void SetVertexBoneData(FullVertices& vertex, int boneID, float weight) noexcept;
 		void ExtractBoneWeightForVertex(InputMeshPart& Vertex, const aiMesh& mesh) noexcept;
-		void ReadMissingBones(const aiAnimation* const animation) noexcept;
+		void ReadMissingBones(const aiAnimation* animation) noexcept;
 
 
 	private:
