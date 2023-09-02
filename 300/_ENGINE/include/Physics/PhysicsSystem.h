@@ -15,3 +15,8 @@ struct PhysX
 	physx::PxMaterial* mMaterial = NULL;
 	physx::PxPvd* mPvd = NULL;
 };
+
+class PhysicsSystem
+{
+	PhysX px;
+};

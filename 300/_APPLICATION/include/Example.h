@@ -1,6 +1,6 @@
 #pragma once
-#include "ECS.h"
-#include "ECS_Components.h"
+#include "ECS/ECS.h"
+#include "ECS/ECS_Components.h"
 #include "Input.h"
 
 /*
@@ -110,13 +110,13 @@ void Example()
 	for (Entity e : tempView1)													// iterates through all 5 entities as all of them has transform
 	{
 		
-		e.GetComponent<Transform>().scale.x += 1.f;								// do stuff
+		e.GetComponent<Transform>().mScale.x += 1.f;								// do stuff
 	}
-	tempfloat = one.GetComponent<Transform>().scale.x;							// 1.f
-	tempfloat = two.GetComponent<Transform>().scale.x;							// 1.f
-	tempfloat = three.GetComponent<Transform>().scale.x;						// 1.f
-	tempfloat = four.GetComponent<Transform>().scale.x;							// 1.f
-	tempfloat = five.GetComponent<Transform>().scale.x;							// 1.f
+	tempfloat = one.GetComponent<Transform>().mScale.x;							// 1.f
+	tempfloat = two.GetComponent<Transform>().mScale.x;							// 1.f
+	tempfloat = three.GetComponent<Transform>().mScale.x;						// 1.f
+	tempfloat = four.GetComponent<Transform>().mScale.x;							// 1.f
+	tempfloat = five.GetComponent<Transform>().mScale.x;							// 1.f
 
 	// iterate through entities with ONE of the specified component
 	auto tempView2 = ECS::GetInstance()->GetEntitiesWith<TestComponent3>();		// only entities four and five contain TestComponent3

@@ -1,8 +1,6 @@
-#include "ECS.h"
+#include "ECS/ECS.h"
 #include "Physics/PhysicsSystem.h"
-#include "ECS_Components.h"
-
-entt::registry ECS::registry;
+#include "ECS/ECS_Components.h"
 
 Entity ECS::NewEntity()
 {
