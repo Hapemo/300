@@ -153,6 +153,10 @@
     <ClInclude Include="include\Serialization\Serialization.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Object\ObjectFactory.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\Object\ObjectFactory.cpp" />
     <ClCompile Include="source\Serialization\Serialization.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

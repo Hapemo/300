@@ -172,6 +172,8 @@ void Example()
 	tempfloat = two.GetComponent<TestComponent3>().z;							// 52.f
 	tempfloat = four.GetComponent<TestComponent3>().z;							// 5.f
 	tempfloat = five.GetComponent<TestComponent3>().z;							// 5.f
+
+	// test serialization here
 }
 
 
