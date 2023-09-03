@@ -27,8 +27,8 @@ generate the overall performance of the scripting system.
 ***/
 #pragma once
 #include <sol/sol.hpp>
-#include "ECS.h"
-#include "ECS_Components.h"
+#include "ECS/ECS.h"
+#include "ECS/ECS_Components.h"
 #include "Input.h"
 #include "Script.h"
 
