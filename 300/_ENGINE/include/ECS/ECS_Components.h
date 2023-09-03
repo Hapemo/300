@@ -3,14 +3,15 @@
 #include "../../_SCRIPTING/Script.h"
 #include <vector>
 #include "pch.h"
+#include "Physics/PhysicsSystem.h"
 
-enum class TAG
+enum class TAG : unsigned char
 {
 	PLAYER,
 	//more to come
 };
 
-enum class SUBTAG
+enum class SUBTAG : unsigned char
 {
 	//more to come
 };
@@ -18,9 +19,9 @@ enum class SUBTAG
 struct General
 {
 	std::string name;
-	bool isActive;
 	TAG tag;
 	SUBTAG subtag;
+	bool isActive;
 };
 
 struct Transform
@@ -30,19 +31,9 @@ struct Transform
 	glm::vec3 mTranslate;
 };
 
-struct TestComponent1
+struct RigidBody
 {
-	float x;
-};
-
-struct TestComponent2
-{
-	float y ;
-};
-
-struct TestComponent3
-{
-	float z;
+	MATERIAL mMaterial;
 };
 
 /***************************************************************************/

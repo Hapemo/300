@@ -30,6 +30,15 @@
     <ClInclude Include="include\Object\ObjectFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\ECS\ECS_Systems.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Physics\Materials.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Physics\PhysX.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\ECS\ECS.cpp">
@@ -42,6 +51,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\Object\ObjectFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ECS\ECS_Systems.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Physics\PhysX.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

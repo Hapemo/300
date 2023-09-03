@@ -145,11 +145,15 @@
   <ItemGroup>
     <ClInclude Include="include\ECS\ECS.h" />
     <ClInclude Include="include\ECS\ECS_Components.h" />
+    <ClInclude Include="include\Physics\Materials.h" />
+    <ClInclude Include="include\ECS\ECS_Systems.h" />
     <ClInclude Include="include\Physics\PhysicsSystem.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="source\ECS\ECS_Systems.cpp" />
     <ClCompile Include="source\ECS\ECS.cpp" />
     <ClCompile Include="source\Physics\PhysicsSystem.cpp" />
+    <ClInclude Include="include\Physics\PhysX.h" />
     <ClInclude Include="include\Serialization\Serialization.h" />
   </ItemGroup>
   <ItemGroup>
@@ -157,6 +161,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Object\ObjectFactory.cpp" />
+    <ClCompile Include="source\Physics\PhysX.cpp" />
     <ClCompile Include="source\Serialization\Serialization.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

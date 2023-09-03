@@ -1,27 +1,28 @@
 #include "Physics/PhysicsSystem.h"
 
-PhysX::PhysX()
+PhysicsSystem::PhysicsSystem()
 {
-	mFoundation = PxCreateFoundation(PX_PHYSICS_VERSION, mDefaultAllocator, mErrorCallback);
-	if (!mFoundation) throw("PxCreateFoundation failed");
-	mPvd = physx::PxCreatePvd(*mFoundation);
-	physx::PxPvdTransport* transport = physx::PxDefaultPvdSocketTransportCreate("127.0.0.1", 5425, 10);
-	mPvd->connect(*transport, physx::PxPvdInstrumentationFlag::eALL);
-	mToleranceScale.length = 100;
-	mToleranceScale.speed = 981;
-	mPhysics = PxCreatePhysics(PX_PHYSICS_VERSION, *mFoundation, mToleranceScale, true, mPvd);
-	physx::PxSceneDesc sceneDesc(mPhysics->getTolerancesScale());
-	sceneDesc.gravity = physx::PxVec3(0.f, -0.81f, 0.f);
-	mDispatcher = physx::PxDefaultCpuDispatcherCreate(2);
-	sceneDesc.cpuDispatcher = mDispatcher;
-	sceneDesc.filterShader = physx::PxDefaultSimulationFilterShader;
-	mScene = mPhysics->createScene(sceneDesc);
+}
 
-	physx::PxPvdSceneClient* pvdClient = mScene->getScenePvdClient();
-	if (pvdClient)
-	{
-		pvdClient->setScenePvdFlag(physx::PxPvdSceneFlag::eTRANSMIT_CONSTRAINTS, true);
-		pvdClient->setScenePvdFlag(physx::PxPvdSceneFlag::eTRANSMIT_CONTACTS, true);
-		pvdClient->setScenePvdFlag(physx::PxPvdSceneFlag::eTRANSMIT_SCENEQUERIES, true);
-	}
+void PhysicsSystem::Init()
+{
+	CreateMaterial(MATERIAL::RUBBER, 0.9f, 0.8f, 0.2f);
+	CreateMaterial(MATERIAL::WOOD, 0.5f, 0.4f, 0.3f);
+	CreateMaterial(MATERIAL::METAL, 0.7f, 0.6f, 0.05f);
+	CreateMaterial(MATERIAL::ICE, 0.1f, 0.05f, 0.1f);
+	CreateMaterial(MATERIAL::CONCRETE, 0.6f, 0.5f, 0.2f);
+	CreateMaterial(MATERIAL::GLASS, 0.4f, 0.3f, 0.7f);
+}
+
+void PhysicsSystem::Update(float dt)
+{
+}
+
+void PhysicsSystem::Exit()
+{
+}
+
+void PhysicsSystem::CreateMaterial(MATERIAL material, float us, float uk, float e)
+{
+	mMaterialList.insert(std::pair<MATERIAL, physx::PxMaterial*>(material, mPhysX.mPhysics->createMaterial(us, uk, e)));
 }

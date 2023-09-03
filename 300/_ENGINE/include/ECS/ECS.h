@@ -1,6 +1,6 @@
 #pragma once
 #include "entt.hpp";
-#include "../../_TOOLS/include/Singleton.h"
+#include "Singleton.h"
 
 struct Entity;
 

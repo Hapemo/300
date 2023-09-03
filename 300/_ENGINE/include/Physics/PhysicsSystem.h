@@ -1,22 +1,19 @@
 #pragma once
-#include <PxPhysicsAPI.h>
-#include <PxPhysics.h>
-
-struct PhysX
-{
-	PhysX();
-	physx::PxDefaultAllocator mDefaultAllocator;
-	physx::PxDefaultErrorCallback mErrorCallback;
-	physx::PxDefaultCpuDispatcher* mDispatcher = NULL;
-	physx::PxTolerancesScale mToleranceScale;
-	physx::PxFoundation* mFoundation = NULL;
-	physx::PxPhysics* mPhysics = NULL;
-	physx::PxScene* mScene = NULL;
-	physx::PxMaterial* mMaterial = NULL;
-	physx::PxPvd* mPvd = NULL;
-};
+#include "PhysX.h"
+#include "Materials.h"
+#include "pch.h"
 
 class PhysicsSystem
 {
-	PhysX px;
+	PhysX mPhysX;
+	std::unordered_map<MATERIAL, physx::PxMaterial*> mMaterialList;
+
+public:
+	PhysicsSystem();
+	void Init();
+	void Update(float dt);
+	void Exit();
+
+private:
+	void CreateMaterial(MATERIAL material, float us, float uk, float e);
 };

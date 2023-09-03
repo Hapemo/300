@@ -23,7 +23,7 @@ int Application::window_width{1024};
 int Application::window_height{576};
 std::string Application::title{ "VI Engine" };
 GLFWwindow* Application::ptr_window;
-
+SystemManager Application::systemManager;
 
 
 void Application::StartUp() {
@@ -32,11 +32,12 @@ void Application::StartUp() {
 }
 
 void Application::SystemInit() {
+    systemManager.Init();
   Input::Init(ptr_window);
 }
 
 void Application::SystemUpdate() {
-    
+    systemManager.Update(1.f /*insert dt here*/);
 }
 
 void Application::Init() {
@@ -85,6 +86,7 @@ void Application::MainUpdate() {
 }
 
 void Application::Exit() {
+    systemManager.Exit();
     ECS::GetInstance()->DeleteAllEntities();
     SingletonManager::destroyAllSingletons();
   glfwTerminate();

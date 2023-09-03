@@ -10,6 +10,7 @@ start up of window and game system, also runs their update functions.
 *******************************************************************************/
 #pragma once
 #include "pch.h"
+#include "ECS/ECS_Systems.h"
 
 struct GLFWwindow;
 
@@ -69,6 +70,7 @@ private:
 	static int window_width, window_height;
 	static std::string title;
 	static GLFWwindow* ptr_window;
+	static SystemManager systemManager;
 
 	/*!*****************************************************************************
 	 Print the window title bar
