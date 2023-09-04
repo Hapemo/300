@@ -198,8 +198,20 @@ void GFX::DemoScene::Draw()
         //Mesh& currentmesh = MeshManager::GetInstance().mSceneMeshes[uids.id]->meshdata;
         Mesh& currentmesh = MeshManager::GetInstance().mSceneMeshes[2];
 
-        mat4 identity = mat4(1.0);
-        currentmesh.mLTW.push_back(identity);
+        // Multiple meshes test
+        vec3 start{ -250.f, -250.f, 0.f };
+        mat4 scale = glm::scale(mat4(1.f), vec3(0.2f, 0.2f, 0.2f));
+        for (int r = 0; r < 5; ++r)
+        {
+            for (int c = 0; c < 5; ++c)
+            {
+                float x = start.x + c * 100.f;
+                float y = start.y + r * 100.f;
+                mat4 trans = glm::translate(vec3(x, y, 0.f));
+                mat4 final = trans * scale;
+                currentmesh.mLTW.push_back(final);
+            }
+        }
 
         currentmesh.BindVao();
         currentmesh.PrepForDraw();

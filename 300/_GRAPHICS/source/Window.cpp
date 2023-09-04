@@ -2,11 +2,11 @@
  * @file
  *  Window.cpp
  * @author
- *  Lee Fu Sheng Roy, 670000622, f.lee@digipen.edu
+ *  Lee Fu Sheng Roy, 2101440, f.lee@digipen.edu
  * @date
  *  2023/05/21
  * @brief
- *  Class implementation of Window. Initializes GLFW and GLAD
+ *  Class implementation of Window. Initializes GLFW and GLEW
  * @copyright
  *  Copyright (C) 2023 DigiPen Institute of Technology.
  *-------------------------------------------------------------------------------------*/
@@ -111,15 +111,19 @@ vec2 GFX::Window::WindowToWorld(vec2 const& screenCoordinates)
     return worldPos;
 }
 
-/**---------------------------------------------------------------------------/
- * @brief
- *  Gets the width and height of the window
- * @return
- *  Width and height of the window
-*---------------------------------------------------------------------------*/
-ivec2 GFX::Window::size()
+bool GFX::Window::IsKeyPressed(int key)
 {
-	return mSize;
+    return static_cast<bool>(glfwGetKey(mWindow, key));
+}
+
+bool GFX::Window::IsMousePressed(int key)
+{
+    return static_cast<bool>(glfwGetMouseButton(mWindow, key));
+}
+
+void GFX::Window::GetCursorPos(double* x, double* y)
+{
+    glfwGetCursorPos(mWindow, x, y);
 }
 
 void GFX::Window::SetWindowTitle(const char* title)

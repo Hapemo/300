@@ -2,11 +2,11 @@
  * @file
  *  Window.hpp
  * @author
- *  Lee Fu Sheng Roy, 670000622, f.lee@digipen.edu
+ *  Lee Fu Sheng Roy, 2101440, f.lee@digipen.edu
  * @date
  *  2023/05/21
  * @brief
- *  Class definition of Window. Initializes GLFW and GLAD
+ *  Class definition of Window. Initializes GLFW and GLEW
  * @copyright
  *  Copyright (C) 2023 DigiPen Institute of Technology.
  *-------------------------------------------------------------------------------------*/
@@ -31,20 +31,27 @@ namespace GFX {
         static void DestroySystem();
         void Update();
 
-        // Retrieves the GLFW handle of the window instance
-        GLFWwindow* GetHandle() { return mWindow; }
+        // -- Getter --
+        double GetTime()        { return glfwGetTime(); }   // Retrieves the current run time of the window
+        GLFWwindow* GetHandle() { return mWindow; }         // Retrieves the GLFW handle of the window instance
+        ivec2 size()            { return mSize; }           // Retrieves the width and height of window
 
         void SetWindowTitle(const char* title);
 
-        vec2 WindowToWorld(vec2 const& screenCoordinates);   // maps glfw coordinates to world coordinates
+        // -- Input --
+        bool IsKeyPressed(int key);         // Keyboard
+        bool IsMousePressed(int key);       // Mouse
+        void GetCursorPos(double* x, double* y);
 
-        // -- Getter --
-        ivec2 size();
+        // -- NOT TESTED YET --
+        vec2 WindowToWorld(vec2 const& screenCoordinates);   // maps glfw coordinates to world coordinates
 
     private:
         ivec2 mSize;
         GLFWwindow* mWindow;
     };
 }
+
+
 
 #endif // WINDOW_HPP
