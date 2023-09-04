@@ -2,11 +2,11 @@
  * @file
  *  Window.hpp
  * @author
- *  Lee Fu Sheng Roy, 670000622, f.lee@digipen.edu
+ *  Lee Fu Sheng Roy, 2101440, f.lee@digipen.edu
  * @date
  *  2023/05/21
  * @brief
- *  Class definition of Window. Initializes GLFW and GLAD
+ *  Class definition of Window. Initializes GLFW and GLEW
  * @copyright
  *  Copyright (C) 2023 DigiPen Institute of Technology.
  *-------------------------------------------------------------------------------------*/
@@ -41,10 +41,17 @@ namespace GFX {
         // -- Getter --
         ivec2 size();
 
+        // -- Input --
+        bool IsKeyPressed(int key);         // Keyboard
+        bool IsMousePressed(int key);       // Mouse
+        void GetCursorPos(double* x, double* y);
+
     private:
         ivec2 mSize;
         GLFWwindow* mWindow;
     };
 }
+
+
 
 #endif // WINDOW_HPP
