@@ -111,17 +111,6 @@ vec2 GFX::Window::WindowToWorld(vec2 const& screenCoordinates)
     return worldPos;
 }
 
-/**---------------------------------------------------------------------------/
- * @brief
- *  Gets the width and height of the window
- * @return
- *  Width and height of the window
-*---------------------------------------------------------------------------*/
-ivec2 GFX::Window::size()
-{
-	return mSize;
-}
-
 bool GFX::Window::IsKeyPressed(int key)
 {
     return static_cast<bool>(glfwGetKey(mWindow, key));

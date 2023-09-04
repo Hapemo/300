@@ -31,20 +31,20 @@ namespace GFX {
         static void DestroySystem();
         void Update();
 
-        // Retrieves the GLFW handle of the window instance
-        GLFWwindow* GetHandle() { return mWindow; }
+        // -- Getter --
+        double GetTime()        { return glfwGetTime(); }   // Retrieves the current run time of the window
+        GLFWwindow* GetHandle() { return mWindow; }         // Retrieves the GLFW handle of the window instance
+        ivec2 size()            { return mSize; }           // Retrieves the width and height of window
 
         void SetWindowTitle(const char* title);
-
-        vec2 WindowToWorld(vec2 const& screenCoordinates);   // maps glfw coordinates to world coordinates
-
-        // -- Getter --
-        ivec2 size();
 
         // -- Input --
         bool IsKeyPressed(int key);         // Keyboard
         bool IsMousePressed(int key);       // Mouse
         void GetCursorPos(double* x, double* y);
+
+        // -- NOT TESTED YET --
+        vec2 WindowToWorld(vec2 const& screenCoordinates);   // maps glfw coordinates to world coordinates
 
     private:
         ivec2 mSize;
