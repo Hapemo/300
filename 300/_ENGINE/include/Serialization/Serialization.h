@@ -3,6 +3,8 @@
 #include "document.h"
 #include "prettywriter.h"
 #include "stringbuffer.h"
+#include "../ECS_Components.h"
+#include "../ECS.h"
 
 class BaseJSON
 {
@@ -22,11 +24,12 @@ protected:
 
 // to be replaced by added components later on
 // e.g.: Transform, Texture, Collider, etc.
-struct ExampleComponent
+struct GeneralJSON
 {
-	std::string component_name;
-	int ent_id{};
-	float num_1{}, num_2{};
+	std::string mName;
+	bool mIsActive;
+	TAG mTag;
+	SUBTAG mSubtag;
 };
 
 class EntityJSON : public BaseJSON
@@ -38,30 +41,41 @@ public:
 	virtual bool Deserialize(const rapidjson::Value& obj);
 	virtual bool Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* writer) const;
 
-	/*
-		// for deserializing the info into the editor
-		const ComponentType getComponent() const
-		{
-			ComponentType ct;
-			ct.component_name = ec.component_name;
-			ct.ent_id = ec.ent_id;
-			ct.num_1 = ec.num_1;
-			ct.num_2 = ec.num_2;
 
-			return ct;
+		const entt::entity GetID() const
+		{
+			return mID;
+		}
+
+		void SetID(const entt::entity ID)
+		{
+			mID = ID;
+		}
+
+		// for deserializing the info into the editor
+		const General GetGeneralJSON() const
+		{
+			General gj;
+			gj.name = mGJ.mName;
+			gj.isActive = mGJ.mIsActive;
+			gj.tag = mGJ.mTag;
+			gj.subtag = mGJ.mSubtag;
+
+			return gj;
 		}
 
 		// for serializing the info into the json file
-		void setComponent(const ComponentType ct)
+		void SetGeneralJSON(const General gj)
 		{
-			ec.component_name = ct.component_name;
-			ec.ent_id = ct.ent_id;
-			ec.num_1 = ct.num_1;
-			ec.num_2 = ct.num2_2;
+			mGJ.mName = gj.name;
+			mGJ.mIsActive = gj.isActive;
+			mGJ.mTag = gj.tag;
+			mGJ.mSubtag = gj.subtag;
 		}
-	*/
+	
 private:
-	ExampleComponent ec;
+	entt::entity mID{};
+	GeneralJSON mGJ;
 };
 
 class EntityListJSON : public BaseJSON
@@ -77,5 +91,4 @@ public:
 
 private:
 	std::list<EntityJSON> ents;
-
 };
