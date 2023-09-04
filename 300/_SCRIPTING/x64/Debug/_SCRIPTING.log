@@ -1,5 +1,8 @@
 ﻿  Script.cpp
-C:\Users\kew\OneDrive\Desktop\300\300\_SCRIPTING\Script.h(17,10): fatal error C1083: Cannot open include file: 'ECS.h': No such file or directory
+C:\Users\kew\OneDrive\Desktop\300\300\_ENGINE\include\ECS\ECS.h(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  The contents of <source_location> are available only with C++20 consteval support.
   ScriptingSystem.cpp
-C:\Users\kew\OneDrive\Desktop\300\300\_SCRIPTING\ScriptingSystem.h(30,10): fatal error C1083: Cannot open include file: 'ECS.h': No such file or directory
+C:\Users\kew\OneDrive\Desktop\300\300\_ENGINE\include\ECS\ECS.h(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  The contents of <source_location> are available only with C++20 consteval support.
   Generating Code...
+  _SCRIPTING.vcxproj -> C:\Users\kew\OneDrive\Desktop\300\300\x64\Debug\_SCRIPTING.lib
