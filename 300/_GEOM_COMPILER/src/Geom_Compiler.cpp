@@ -31,7 +31,7 @@ namespace _GEOM
 			| aiProcess_GenNormals                 // if it does not have normals generate them... (this may not be a good option as it may hide issues from artist)
 			| aiProcess_CalcTangentSpace           // calculate tangents and bitangents if possible (definetly you will meed UVs)
 			| aiProcess_RemoveRedundantMaterials   // remove redundant materials
-			//| aiProcess_FindInvalidData            // detect invalid model data, such as invalid normal vectors. this flag affects the keypositions
+			| aiProcess_FindInvalidData            // detect invalid model data, such as invalid normal vectors. 
 			| aiProcess_FlipUVs                    // flip the V to match the Vulkans way of doing UVs
 			;
 
@@ -751,14 +751,15 @@ namespace _GEOM
 		// Meshes
 		for (uint32_t i{}; i < GeomData.m_nMeshes; ++i) 
 		{
-			outfile.write((char*)&GeomData.m_pMesh[i].m_name, sizeof(char) * 64);
+			auto& meshInst = GeomData.m_pMesh[i];
+			outfile.write((char*)&meshInst.m_name, sizeof(char) * 64);
 
 			// Animation Data
 			if (GeomData.m_bHasAnimations) 
 			{
-				outfile.write((char*)&GeomData.m_pMesh[i].m_Animation.m_BoneCounter, sizeof(uint32_t));		// Number of bones
-				outfile.write((char*)&GeomData.m_pMesh[i].m_Animation.m_Duration, sizeof(float));			// Duration
-				outfile.write((char*)&GeomData.m_pMesh[i].m_Animation.m_TicksPerSecond, sizeof(float));		// Ticks Per Second
+				outfile.write((char*)&meshInst.m_Animation.m_BoneCounter, sizeof(uint32_t));		// Number of bones
+				outfile.write((char*)&meshInst.m_Animation.m_Duration, sizeof(float));			// Duration
+				outfile.write((char*)&meshInst.m_Animation.m_TicksPerSecond, sizeof(float));		// Ticks Per Second
 
 				// Bone info map
 				for (const auto& boneinfo : GeomData.m_pMesh[i].m_Animation.m_BoneInfoMap) 
@@ -770,9 +771,9 @@ namespace _GEOM
 				}
 
 				// Bones
-				for (unsigned j{}; j < GeomData.m_pMesh[i].m_Animation.m_BoneCounter; ++j)
+				for (unsigned j{}; j < meshInst.m_Animation.m_BoneCounter; ++j)
 				{
-					auto& boneinst = GeomData.m_pMesh[i].m_Animation.m_Bones[j];
+					auto& boneinst = meshInst.m_Animation.m_Bones[j];
 
 					uint8_t strlen = (uint8_t)boneinst.m_Name.size();
 					outfile.write((char*)&strlen, sizeof(uint8_t));						// name length
@@ -802,6 +803,10 @@ namespace _GEOM
 						outfile.write((char*)&boneinst.m_Scales[k], sizeof(_GEOM::KeyScale));
 					}
 				}
+
+				// AssimpNodeData
+				Serialization::SerializeAssimpNodeData(outfile, meshInst.m_Animation.m_RootNode);
+
 			}	// animation data
 		}
 

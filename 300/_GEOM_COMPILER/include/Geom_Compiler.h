@@ -77,5 +77,8 @@ namespace _GEOM
 	};
 }
 
+void LoadAndSerializeAllMeshes(_GEOM::DescriptorData& Desc);
+std::string getFileNameWithoutExtension(const std::string& ResourceFilePath);
+
 
 #endif // !_GEOM_COMPILER

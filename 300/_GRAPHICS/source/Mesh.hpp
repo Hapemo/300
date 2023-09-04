@@ -122,6 +122,7 @@ namespace GFX
 namespace Deserialization
 {
 	bool DeserializeGeom(const std::string Filepath, _GEOM::Geom& GeomData) noexcept;
+	void DeserializeAssimpNodeData(std::ifstream& infile, _GEOM::AssimpNodeData& Node);
 }
 
 

@@ -190,6 +190,8 @@ namespace Serialization
 	bool SerializeAnimation(std::ofstream& outFile, const _GEOM::Geom& GeomData) noexcept;
 	bool SerializeBoneInfoMap(std::ofstream& outFile, const _GEOM::Animation animation) noexcept;
 
+	void SerializeAssimpNodeData(std::ofstream& outfile, const _GEOM::AssimpNodeData& Node);
+
 	std::string ReadUnsigned(std::ifstream& inFile, std::uint32_t& value) noexcept;
 	bool ReadSigned(std::ifstream& inFile, std::int16_t& value) noexcept;
 	bool ReadVec3WithHeader(std::ifstream& inFile, glm::vec3& value) noexcept;

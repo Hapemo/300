@@ -52,6 +52,23 @@ namespace Serialization
 		// ====================================================================================================
 		//										NEW SERIALIZATION CODE BLOCK
 		// ====================================================================================================
+	
+
+	void SerializeAssimpNodeData(std::ofstream& outfile, const _GEOM::AssimpNodeData& Node)
+	{
+		uint8_t strlen = (uint8_t)Node.m_Name.size();		// get the length of the string
+		outfile.write((char*)&strlen, sizeof(uint8_t));		// write the length of the string
+		outfile.write(Node.m_Name.c_str(), strlen);			// write the string	
+
+		outfile.write((char*)&Node.m_NumChildren, sizeof(int));					// number of children
+		outfile.write((char*)&Node.m_Transformation, sizeof(glm::mat4));		// local transformation matrix
+
+		// serialize the children
+		for (int i{}; i < Node.m_NumChildren; ++i) {
+			SerializeAssimpNodeData(outfile, Node.m_Children[i]);
+		}
+	}
+
 
 		bool SerializeUnsigned(std::ofstream& outFile, const std::uint32_t& value) noexcept
 		{

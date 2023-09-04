@@ -196,6 +196,28 @@ void GFX::MeshManager::Init()
 
 namespace Deserialization
 {
+	void DeserializeAssimpNodeData(std::ifstream& infile, _GEOM::AssimpNodeData& Node)
+	{
+		uint8_t strlen;
+		char cname[128];
+
+		infile.read((char*)&strlen, sizeof(uint8_t));		// read the length of the string
+		infile.read(cname, strlen);							// read the string	
+		Node.m_Name = std::string(cname, strlen);			// set the name
+			   
+		infile.read((char*)&Node.m_NumChildren, sizeof(int));				// number of children
+		infile.read((char*)&Node.m_Transformation, sizeof(glm::mat4));		// local transformation matrix
+
+
+		// go and deserialize the children all the way to the leaf
+		for (int i{}; i < Node.m_NumChildren; ++i)
+		{
+			Node.m_Children.emplace_back(_GEOM::AssimpNodeData());
+			DeserializeAssimpNodeData(infile, Node.m_Children[i]);
+		}
+	}
+
+
 	bool DeserializeGeom(const std::string Filepath, _GEOM::Geom& GeomData) noexcept
 	{
 #if 1
@@ -298,6 +320,10 @@ namespace Deserialization
 						infile.read((char*)&boneinst.m_Scales[k], sizeof(_GEOM::KeyScale));
 					}
 				}
+
+				// AssimpNodeData
+				Deserialization::DeserializeAssimpNodeData(infile, GeomData.m_pMesh[i].m_Animation.m_RootNode);
+				std::cout << "\t\Animation Deserialization completed\n";
 			}
 		}
 
