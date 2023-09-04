@@ -7,6 +7,7 @@ int main()
 	std::string lDescriptorFilepath = "./descriptor_files/model_descriptors.json";
 	std::cout << "================================================================================\n";
 	std::cout << ">>\t\tLaunching GEOM Compiler!\n";
+	std::cout << "\tAssimp Version: " << aiGetVersionMajor() << "." << aiGetVersionMinor() << "." << aiGetVersionRevision() << std::endl;
 	std::cout << "================================================================================\n";
 
 	// Load the descriptor data

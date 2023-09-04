@@ -4,6 +4,8 @@ F:\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(906,19): warning C4018: '<': sig
 F:\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(946,37): warning C4018: '<': signed/unsigned mismatch
 F:\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(983,49): warning C4244: '=': conversion from 'const double' to 'float', possible loss of data
 F:\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(984,55): warning C4244: '=': conversion from 'const double' to 'float', possible loss of data
+  _compiler_main.cpp
+  Generating Code...
   _GEOM_COMPILER.vcxproj -> F:\300\300\x64\Debug\_GEOM_COMPILER.exe
           1 file(s) copied.
           1 file(s) copied.
