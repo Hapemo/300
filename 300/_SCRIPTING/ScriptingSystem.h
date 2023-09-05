@@ -31,6 +31,7 @@ generate the overall performance of the scripting system.
 #include "ECS/ECS_Components.h"
 #include "Input.h"
 #include "Script.h"
+#include "Singleton.h"
 
 /******************************************************************************/
 /*!
@@ -70,14 +71,14 @@ generate the overall performance of the scripting system.
     ScriptingSystem Class
  */
  /******************************************************************************/
-class ScriptingSystem
+class ScriptingSystem : public Singleton<ScriptingSystem>
 {
 public:
-    static void Init();
-    static void Update(/*double dt*/);
-    static void Exit();
-    static sol::state luaState;
-    static bool once;
+    void Init();
+    void Update(float dt);
+    void Exit();
+    sol::state luaState;
+    bool once;
 
 private:
 };

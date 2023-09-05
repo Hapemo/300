@@ -45,6 +45,8 @@ void Application::SystemInit()
     systemManager.Init();
     //gfx init
     Input::Init(mWindow);
+    // To remove (Script test with entities)
+    //ScriptTestInit();
 }
 
 void Application::FirstUpdate() 
@@ -67,6 +69,8 @@ void Application::MainUpdate()
     while (!glfwWindowShouldClose(mWindow.GetHandle())) {
         FirstUpdate();
         SystemUpdate();
+        // To remove (Script test with entities)
+        //ScriptTestUpdate();
         SecondUpdate(); // This should always be the last
 
         // Graphics update

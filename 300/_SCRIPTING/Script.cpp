@@ -23,12 +23,14 @@ This file contains the logic to Load and Run scripts.
 
 void Script::Load(Entity entityID)
 {
-    sol::protected_function_result result = ScriptingSystem::luaState.script_file(scriptFile, env);
+    sol::protected_function_result result = ScriptingSystem::GetInstance()->luaState.script_file(scriptFile, env);
     if (!result.valid())
     {
         // print what error was invoked when the script was loading
         sol::error err = result;
         //PERROR("Error opening file! %s.\n", err.what());
+        std::cout << "Error opening file!" << std::endl;
+        std::cout << err.what() << std::endl;
     }
 
     env["script_entity_id"] = entityID.id;
@@ -45,6 +47,8 @@ void Script::Run(const char* funcName)
     {
         sol::error err = result;
         //PERROR("Error getting function: %s.\n", err.what());
+        std::cout << "Error getting function!" << std::endl;
+        std::cout << err.what() << std::endl;
         return;
     }
 
@@ -53,6 +57,8 @@ void Script::Run(const char* funcName)
     {
         sol::error err = result;
         //PERROR("Error running function: %s.\n", err.what());
+        std::cout << "Error running function!" << std::endl;
+        std::cout << err.what() << std::endl;
         return;
     }
 
@@ -71,6 +77,8 @@ void Script::Run(const char* funcName)
         {
             sol::error err = result;
             //PERROR("Wrong type %s.\n", err.what());
+            std::cout << "Wrong type!" << std::endl;
+            std::cout << err.what() << std::endl;
         }
     }
 }
@@ -79,7 +87,7 @@ void Scripts::AddScript(Entity id, std::string fileName)
 {
     Script temp;
     temp.scriptFile = fileName;
-    temp.env = { ScriptingSystem::luaState, sol::create, ScriptingSystem::luaState.globals() };
+    temp.env = { ScriptingSystem::GetInstance()->luaState, sol::create, ScriptingSystem::GetInstance()->luaState.globals() };
     id.GetComponent<Scripts>().scriptsContainer.push_back(temp);
 }
 //

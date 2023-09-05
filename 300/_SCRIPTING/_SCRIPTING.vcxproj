@@ -19,12 +19,18 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="LuaEngine.cpp" />
     <ClCompile Include="Script.cpp" />
     <ClCompile Include="ScriptingSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="LuaEngine.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Script.h" />
     <ClInclude Include="ScriptingSystem.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="_SCRIPTING.rc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

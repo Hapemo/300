@@ -27,7 +27,7 @@ generate the overall performance of the scripting system.
 ***/
 //#include "../PCH/pch.h"
 //#include "../Engine/Engine.h"
-//#include "LuaEngine.h"
+#include "LuaEngine.h"
 //#include "LuaComponent.h"
 //#include "../GameState/GameStateManager.h"
 #include "ScriptingSystem.h"
@@ -47,8 +47,8 @@ generate the overall performance of the scripting system.
 //    std::cout << "Vec " << vec.x << "  " << vec.y << std::endl;
 //}
 
-sol::state ScriptingSystem::luaState;
-bool ScriptingSystem::once;
+//sol::state ScriptingSystem::luaState;
+//bool ScriptingSystem::once;
 
 void ScriptingSystem::Init()
 {
@@ -83,7 +83,7 @@ void ScriptingSystem::Init()
     //LuaScriptComp();
     //LuaAnimation();
     //LuaGameObject();
-    //LuaInput();
+    LuaInput();
     //LuaLayer();
     //LuaTimer();
     //LuaAudio();
@@ -141,7 +141,7 @@ void ScriptingSystem::Init()
     );
 }
 
-void ScriptingSystem::Update()
+void ScriptingSystem::Update(float dt)
 {
     //for (int step = 0; step <= Engine::currentNumberOfSteps - 1; ++step)
     ////{
@@ -176,6 +176,7 @@ void ScriptingSystem::Update()
         {
             for (Script script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
             {
+                std::cout << "Running" << std::endl;
                 script.Run("Update");
             }
         }

@@ -220,7 +220,7 @@ void ScriptTestUpdate()
 				{
 					Script script;
 					script.scriptFile = scriptName;
-					script.env = { ScriptingSystem::luaState, sol::create, ScriptingSystem::luaState.globals() };
+					script.env = { ScriptingSystem::GetInstance()->luaState, sol::create, ScriptingSystem::GetInstance()->luaState.globals() };
 					scriptEntities.get<Scripts>(entity.id).scriptsContainer.push_back(script);
 					std::cout << "Script " << scriptName << ".lua added to entity " << entityID << std::endl;
 				}
@@ -243,7 +243,7 @@ void ScriptTestUpdate()
 					{
 						Script script;
 						script.scriptFile = scriptName;
-						script.env = { ScriptingSystem::luaState, sol::create, ScriptingSystem::luaState.globals() };
+						script.env = { ScriptingSystem::GetInstance()->luaState, sol::create, ScriptingSystem::GetInstance()->luaState.globals() };
 						scriptEntities.get<Scripts>(entity.id).scriptsContainer.push_back(script);
 						std::cout << "Script " << scriptName << ".lua added to entity " << entityID << std::endl;
 					}
