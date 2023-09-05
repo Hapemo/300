@@ -32,9 +32,6 @@ generate the overall performance of the scripting system.
 //#include "../GameState/GameStateManager.h"
 #include "ScriptingSystem.h"
 
-sol::state ScriptingSystem::luaState{};
-bool ScriptingSystem::once{ false };
-
 /******************************************************************************/
 /*!
     Example
@@ -207,7 +204,7 @@ void ScriptingSystem::Update()
     //}
 }
 
-void ScriptingSystem::Free()
+void ScriptingSystem::Exit()
 {
     // Empty for now
 }

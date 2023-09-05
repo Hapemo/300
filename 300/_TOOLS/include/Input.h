@@ -10,8 +10,8 @@ Input detects keyboard and mouse input states and returns that to caller
 
 #pragma once
 #include "pch.h"
-#include <GL/glew.h> // for access to OpenGL API declarations 
-#include <GLFW/glfw3.h>
+#include <glew.h> // for access to OpenGL API declarations 
+#include <glfw3.h>
 #include "glm/glm.hpp"
 #include "Window.hpp"
 
