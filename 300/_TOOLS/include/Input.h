@@ -13,6 +13,7 @@ Input detects keyboard and mouse input states and returns that to caller
 #include <GL/glew.h> // for access to OpenGL API declarations 
 #include <GLFW/glfw3.h>
 #include "glm/glm.hpp"
+#include "Window.hpp"
 
 // Available keys
 enum E_KEY {
@@ -111,7 +112,7 @@ private:
   static int mStartingIndex;
   static int mTotalMouseKey;
   static int mMaxKeyboardIndex;
-  static GLFWwindow* mWindow;
+  static GFX::Window mWindow;
   static GLFWcursor* mCursor;
   static double mScrollTotal;
   static double mScrollOffset;
@@ -121,7 +122,7 @@ public:
   \brief
   Initialises the Input system
   *******************************************************************************/
-  static void Init(GLFWwindow*);
+  static void Init(GFX::Window& window);
 
   //-------------------------------------------------------------
   // Keyboard controls

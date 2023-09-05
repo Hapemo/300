@@ -1,13 +1,36 @@
-﻿  Geom_Compiler.cpp
-F:\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(774,26): warning C4018: '<': signed/unsigned mismatch
-F:\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(911,19): warning C4018: '<': signed/unsigned mismatch
-F:\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(951,37): warning C4018: '<': signed/unsigned mismatch
-F:\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(988,49): warning C4244: '=': conversion from 'const double' to 'float', possible loss of data
-F:\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(989,55): warning C4244: '=': conversion from 'const double' to 'float', possible loss of data
-  _compiler_main.cpp
+﻿  allocator.cpp
+  clusterizer.cpp
+  indexcodec.cpp
+  indexgenerator.cpp
+  overdrawanalyzer.cpp
+  overdrawoptimizer.cpp
+  simplifier.cpp
+  spatialorder.cpp
+  stripifier.cpp
+  vcacheanalyzer.cpp
+  vcacheoptimizer.cpp
+  vertexcodec.cpp
+  vertexfilter.cpp
+  vfetchanalyzer.cpp
+  vfetchoptimizer.cpp
+  Bone.cpp
+C:\Users\kew\OneDrive\Desktop\300\300\_GEOM_COMPILER\src\Bone.cpp(17,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\kew\OneDrive\Desktop\300\300\_GEOM_COMPILER\src\Bone.cpp(28,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\kew\OneDrive\Desktop\300\300\_GEOM_COMPILER\src\Bone.cpp(39,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  descriptor.cpp
   geom.cpp
-F:\300\300\_GEOM_COMPILER\src\geom.cpp(323,8): warning C4101: 'ch': unreferenced local variable
+C:\Users\kew\OneDrive\Desktop\300\300\_GEOM_COMPILER\src\geom.cpp(323,8): warning C4101: 'ch': unreferenced local variable
+  Geom_Compiler.cpp
+C:\Users\kew\OneDrive\Desktop\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(774,26): warning C4018: '<': signed/unsigned mismatch
+C:\Users\kew\OneDrive\Desktop\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(911,19): warning C4018: '<': signed/unsigned mismatch
+C:\Users\kew\OneDrive\Desktop\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(951,37): warning C4018: '<': signed/unsigned mismatch
+C:\Users\kew\OneDrive\Desktop\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(988,49): warning C4244: '=': conversion from 'const double' to 'float', possible loss of data
+C:\Users\kew\OneDrive\Desktop\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(989,55): warning C4244: '=': conversion from 'const double' to 'float', possible loss of data
+  Helper.cpp
   Generating Code...
-  _GEOM_COMPILER.vcxproj -> F:\300\300\x64\Debug\_GEOM_COMPILER.exe
+  Compiling...
+  _compiler_main.cpp
+  Generating Code...
+  _GEOM_COMPILER.vcxproj -> C:\Users\kew\OneDrive\Desktop\300\300\x64\Debug\_GEOM_COMPILER.exe
           1 file(s) copied.
           1 file(s) copied.

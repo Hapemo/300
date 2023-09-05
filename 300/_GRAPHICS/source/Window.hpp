@@ -10,7 +10,7 @@
  * @copyright
  *  Copyright (C) 2023 DigiPen Institute of Technology.
  *-------------------------------------------------------------------------------------*/
-
+#pragma once
 #ifndef WINDOW_HPP
 #define WINDOW_HPP
 
@@ -39,6 +39,7 @@ namespace GFX {
         void SetWindowTitle(const char* title);
 
         // -- Input --
+        void PollEvents();
         bool IsKeyPressed(int key);         // Keyboard
         bool IsMousePressed(int key);       // Mouse
         void GetCursorPos(double* x, double* y);

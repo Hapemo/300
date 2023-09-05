@@ -15,8 +15,6 @@ start up of window and game system, also runs their update functions.
 #include "Camera.hpp"
 #include "DebugRenderer.hpp"
 
-struct GLFWwindow;
-
 class Application {
 public:
 	/*!*****************************************************************************
@@ -37,17 +35,17 @@ public:
 	static void SystemInit();
 
 	/*!*****************************************************************************
-	 Update Game Engine ECS's systems, should be called every game loop
-	*******************************************************************************/
-	static void SystemUpdate();
-
-	/*!*****************************************************************************
 	 Initialisation before start of each game loop.
 	 
 	 \return bool
 	- True if ran successfully, otherwise false
 	*******************************************************************************/
-	static bool FirstUpdate();
+	static void FirstUpdate();
+
+	/*!*****************************************************************************
+	 Update Game Engine ECS's systems, should be called every game loop
+	*******************************************************************************/
+	static void SystemUpdate();
 
 	/*!*****************************************************************************
 	 Clean up after end of each game loop.
@@ -63,33 +61,11 @@ public:
 	static void Exit();
 
 private:
-	/*static int window_width, window_height;*/
-	static std::string title;/*
-	static GLFWwindow* ptr_window;*/
+	static std::string title;
 	static GFX::Window mWindow;
     static GFX::DebugRenderer* mRenderer;
+	static SystemManager systemManager;
     GFX::Camera mCamera;
-
-
-
-	/*!*****************************************************************************
-	 Print the window title bar
-
-	 \param double
-	 - Frequency of updating the title bar in seconds. eg. if 0.3, title bar will
-	refresh evert 0.3 seconds
-	*******************************************************************************/
-	static void PrintTitleBar(double);
-
-	/*!*****************************************************************************
-	 Start up GLFW
-	*******************************************************************************/
-	static void GLFWStartUp();
-	
-	/*!*****************************************************************************
-	 Start up GLEW
-	*******************************************************************************/
-	static void GlewStartUp();
 	
 	/*!*****************************************************************************
 	 Callback function for GLFW errors
