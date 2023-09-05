@@ -4,7 +4,7 @@
 
 class SystemManager
 {
-	PhysicsSystem mPhysicsSystem;
+	//PhysicsSystem mPhysicsSystem;
 
 public:
 	void Init();

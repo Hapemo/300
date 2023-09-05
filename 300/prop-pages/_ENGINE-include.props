@@ -5,6 +5,10 @@
   <PropertyGroup>
     <IncludePath>$(SolutionDir)_ENGINE\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
-  <ItemDefinitionGroup />
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+    </ClCompile>
+  </ItemDefinitionGroup>
   <ItemGroup />
 </Project>

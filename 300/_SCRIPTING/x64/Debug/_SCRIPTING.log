@@ -1,8 +1,8 @@
 ﻿  Script.cpp
 C:\Users\kew\OneDrive\Desktop\300\300\_ENGINE\include\ECS\ECS.h(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-  The contents of <source_location> are available only with C++20 consteval support.
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\include\source_location(12): warning STL4038: The contents of <source_location> are available only with C++20 or later.
   ScriptingSystem.cpp
 C:\Users\kew\OneDrive\Desktop\300\300\_ENGINE\include\ECS\ECS.h(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-  The contents of <source_location> are available only with C++20 consteval support.
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\include\source_location(12): warning STL4038: The contents of <source_location> are available only with C++20 or later.
   Generating Code...
   _SCRIPTING.vcxproj -> C:\Users\kew\OneDrive\Desktop\300\300\x64\Debug\_SCRIPTING.lib

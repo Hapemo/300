@@ -2,15 +2,15 @@
 
 void SystemManager::Init()
 {
-	mPhysicsSystem.Init();
+	//mPhysicsSystem.Init();
 }
 
 void SystemManager::Update(float dt)
 {
-	mPhysicsSystem.Update(dt);
+	//mPhysicsSystem.Update(dt);
 }
 
 void SystemManager::Exit()
 {
-	mPhysicsSystem.Exit();
+	//mPhysicsSystem.Exit();
 }

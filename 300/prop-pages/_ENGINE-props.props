@@ -3,11 +3,12 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <IncludePath>$(SolutionDir)lib\entt;$(SolutionDir)lib\glm-0.9.9.8;$(SolutionDir)lib\physx\include\physx;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)lib\entt;$(SolutionDir)lib\glm-0.9.9.8;$(SolutionDir)lib\physx\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <Link>
-      <AdditionalDependencies>LowLevelAABB_static_64.lib;PhysXCooking_64.lib;PhysXVehicle2_static_64.lib;LowLevelDynamics_static_64.lib;PhysXExtensions_static_64.lib;PhysXVehicle_static_64.lib;LowLevel_static_64.lib;PhysXFoundation_64.lib;PhysX_64.lib;PhysXCharacterKinematic_static_64.lib;PhysXPvdSDK_static_64.lib;SceneQuery_static_64.lib;PhysXCommon_64.lib;PhysXTask_static_64.lib;SimulationController_static_64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>DLowLevelAABB_static_64.lib;DPhysXCooking_64.lib;DPhysXVehicle_static_64.lib;DLowLevelDynamics_static_64.lib;DPhysXExtensions_static_64.lib;DPhysX_64.lib;DLowLevel_static_64.lib;DPhysXFoundation_64.lib;DSceneQuery_static_64.lib;DPVDRuntime_64.lib;DPhysXPvdSDK_static_64.lib;DSimulationController_static_64.lib;DPhysXCharacterKinematic_static_64.lib;DPhysXTask_static_64.lib;DPhysXCommon_64.lib;DPhysXVehicle2_static_64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)lib/physx/debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup />
