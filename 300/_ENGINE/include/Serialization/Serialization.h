@@ -3,8 +3,8 @@
 #include "document.h"
 #include "prettywriter.h"
 #include "stringbuffer.h"
-#include "../ECS_Components.h"
-#include "../ECS.h"
+#include "ECS/ECS_Components.h"
+#include "ECS/ECS.h"
 
 class BaseJSON
 {
