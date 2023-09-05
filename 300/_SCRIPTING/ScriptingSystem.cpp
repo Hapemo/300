@@ -141,7 +141,7 @@ void ScriptingSystem::Init()
     );
 }
 
-void ScriptingSystem::Update(double /*dt*/)
+void ScriptingSystem::Update()
 {
     //for (int step = 0; step <= Engine::currentNumberOfSteps - 1; ++step)
     ////{

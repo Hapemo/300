@@ -17,6 +17,7 @@ start up of window and game system, also runs their update functions.
 #include "Example.h"
 #include "Input.h"
 #include "SingletonManager.h"
+#include "../../_SCRIPTING/ScriptingSystem.h"
 
 // Static variables
 GFX::DebugRenderer* Application::mRenderer;
