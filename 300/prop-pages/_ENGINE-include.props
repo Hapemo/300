@@ -3,7 +3,7 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <IncludePath>$(SolutionDir)_ENGINE\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)_ENGINE\include;$(SolutionDir)_GRAPHICS\source;$(SolutionDir)_GRAPHICS\include;$(SolutionDir)lib\GLEW\include\GL;$(SolutionDir)lib\GLFW\include\GLFW;$(SolutionDir)_GEOM_COMPILER\include;$(SolutionDir)lib\assimp\include;$(SolutionDir)lib\assimp\BINARIES\Win32\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>

@@ -1,0 +1,20 @@
+Preprocessing
+- Geom Compiler (Static objects)
+- Animation Compiler 
+- Texture Compressor
+
+Runtime
+- Model Loader
+- Scene Loader
+- Animation Loader
+- Texture Loader
+
+struct Model
+- Positions
+- Indices
+- TexCoords
+- Normals
+
+struct SceneObject
+- ID
+- m2w_matrix
