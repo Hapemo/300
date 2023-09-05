@@ -3,17 +3,17 @@
 void SystemManager::Init()
 {
 	//mPhysicsSystem.Init();
-	mScriptingSystem.Init();
+	ScriptingSystem::Init();
 }
 
 void SystemManager::Update(float dt)
 {
 	//mPhysicsSystem.Update();
-	mScriptingSystem.Update();
+	ScriptingSystem::Update();
 }
 
 void SystemManager::Exit()
 {
 	//mPhysicsSystem.Exit();
-	mScriptingSystem.Exit();
+	ScriptingSystem::Exit();
 }

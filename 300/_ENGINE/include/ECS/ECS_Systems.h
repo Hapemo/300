@@ -6,7 +6,7 @@
 class SystemManager
 {
 	//PhysicsSystem mPhysicsSystem;
-	ScriptingSystem mScriptingSystem;
+	//ScriptingSystem mScriptingSystem;
 public:
 	void Init();
 	void Update(float dt);

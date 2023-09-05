@@ -73,11 +73,11 @@ generate the overall performance of the scripting system.
 class ScriptingSystem
 {
 public:
-    void Init();
-    void Update(/*double dt*/);
-    void Exit();
-    sol::state luaState;
-    bool once = false;
+    static void Init();
+    static void Update(/*double dt*/);
+    static void Exit();
+    static sol::state luaState;
+    static bool once;
 
 private:
 };

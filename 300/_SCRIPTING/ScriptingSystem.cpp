@@ -47,6 +47,9 @@ generate the overall performance of the scripting system.
 //    std::cout << "Vec " << vec.x << "  " << vec.y << std::endl;
 //}
 
+sol::state ScriptingSystem::luaState;
+bool ScriptingSystem::once;
+
 void ScriptingSystem::Init()
 {
     //g_engine->entityMgr->RegisterSystem(SystemType<ScriptingSystem>(), this);
