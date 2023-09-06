@@ -13,13 +13,14 @@ double FPSManager::fps;
 double FPSManager::dt;
 double FPSManager::mPrevTime;
 double FPSManager::mLimitFPS = 0;
+GFX::Window* FPSManager::mWindow;
 
 void FPSManager::Init(GFX::Window* window)
 {
 	mWindow = window;
 }
 
-void FPSManager::CalcFPS(double fps_calc_interval) {
+void FPSManager::Update(double fps_calc_interval) {
   double curr_time = mWindow->GetTime();
 
   // fps calculations
@@ -38,6 +39,7 @@ void FPSManager::CalcFPS(double fps_calc_interval) {
     start_time = curr_time;
     count = 0.0;
   }
+  CalcDeltaTime();
 }
 
 void FPSManager::CalcDeltaTime() {

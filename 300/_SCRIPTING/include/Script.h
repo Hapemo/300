@@ -13,7 +13,7 @@ This file contains scripting component logic.
 //#include "../ECS/BaseComponent.h"
 //#include "../ECS/EntityManager.h"
 //#include "../Engine/Engine.h"
-#include "../sol-3.2.3/sol/sol.hpp"
+#include "sol/sol.hpp"
 #include "ECS/ECS.h"
 
 /***************************************************************************/

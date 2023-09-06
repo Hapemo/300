@@ -27,7 +27,7 @@ struct FPSManager
   \param double
   - the interval (in seconds) at which fps is to be calculated
   *******************************************************************************/
-  static void CalcFPS(double = 1.0);
+  static void Update(double = 1.0);
 
   /*!*****************************************************************************
   Calculates the time taken for the previous frame to run

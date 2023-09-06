@@ -1,4 +1,4 @@
-#include "ResourceManager.h"
+#include "Resource/ResourceManager.h"
 
 Resource::Resource() {
     for (int i = 0, end = (int)m_Infobuffer.size() - 1; i != end; ++i)

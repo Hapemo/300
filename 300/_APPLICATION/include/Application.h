@@ -34,6 +34,9 @@ public:
 	*******************************************************************************/
 	static void SystemInit();
 
+	// Main update that runs everythign in a loop
+	static void MainUpdate();
+
 	/*!*****************************************************************************
 	 Initialisation before start of each game loop.
 	 
@@ -51,9 +54,6 @@ public:
 	 Clean up after end of each game loop.
 	*******************************************************************************/
 	static void SecondUpdate();
-
-	// Main update that runs everythign in a loop
-	static void MainUpdate();
 
 	/*!*****************************************************************************
 	 Unload and clean up when exiting the application

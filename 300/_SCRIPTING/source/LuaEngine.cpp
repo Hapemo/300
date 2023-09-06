@@ -1,7 +1,7 @@
 #include "LuaEngine.h"
 #include "ScriptingSystem.h"
-#include "../_TOOLS/include/Input.h"
-#include "../_ENGINE/include/ECS/ECS_Systems.h"
+#include "Input.h"
+#include "ECS/ECS_Systems.h"
 
 void LuaEngine()
 {

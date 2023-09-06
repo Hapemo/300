@@ -58,7 +58,7 @@ bool Input::CheckKey(E_STATE state, E_KEY key) {
 
    default:
 #ifdef NDEBUG
-    std::cout << "Invalid current keyId: " + std::to_string((int)key) + " | with current state: " + std::to_string(glfwGetKey(mWindow.GetHandle(), (int)key)) << '\n';
+    std::cout << "Invalid current keyId: " + std::to_string((int)key) + " | with current state: " + std::to_string(glfwGetKey(mWindow->GetHandle(), (int)key)) << '\n';
 #endif
     assert(0 && "Invalid current key pressed");
 

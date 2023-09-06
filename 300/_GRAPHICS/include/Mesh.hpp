@@ -7,9 +7,9 @@
 #include "Vao.hpp"
 #include "Vbo.hpp"
 #include <geom.h>
-#include "../../_ENGINE/source/Resource/Guid.h"
+#include "Resource/Guid.h"
 
-#include "../../lib/stb-master/stb_image.h"
+#include "stb_image.h"
 
 #if _ASSIMP_LOADING
 #include <assimp/Importer.hpp>

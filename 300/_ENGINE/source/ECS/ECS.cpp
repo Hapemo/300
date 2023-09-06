@@ -1,5 +1,4 @@
 #include "ECS/ECS.h"
-#include "Physics/PhysicsSystem.h"
 #include "ECS/ECS_Components.h"
 
 Entity ECS::NewEntity()

@@ -18,18 +18,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Geom_Compiler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="geom.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="descriptor.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\lib\meshoptimizer\src\meshoptimizer.h">
-      <Filter>Resource Files\meshoptimizer</Filter>
-    </ClInclude>
     <ClInclude Include="include\Serialization.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -37,6 +25,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Bone.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Geom_Compiler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\descriptor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\geom.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -53,55 +50,55 @@
     <ClCompile Include="src\Geom_Compiler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\lib\meshoptimizer\src\allocator.cpp">
-      <Filter>Resource Files\meshoptimizer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\lib\meshoptimizer\src\clusterizer.cpp">
-      <Filter>Resource Files\meshoptimizer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\lib\meshoptimizer\src\indexcodec.cpp">
-      <Filter>Resource Files\meshoptimizer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\lib\meshoptimizer\src\indexgenerator.cpp">
-      <Filter>Resource Files\meshoptimizer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\lib\meshoptimizer\src\overdrawanalyzer.cpp">
-      <Filter>Resource Files\meshoptimizer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\lib\meshoptimizer\src\overdrawoptimizer.cpp">
-      <Filter>Resource Files\meshoptimizer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\lib\meshoptimizer\src\simplifier.cpp">
-      <Filter>Resource Files\meshoptimizer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\lib\meshoptimizer\src\spatialorder.cpp">
-      <Filter>Resource Files\meshoptimizer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\lib\meshoptimizer\src\stripifier.cpp">
-      <Filter>Resource Files\meshoptimizer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\lib\meshoptimizer\src\vcacheanalyzer.cpp">
-      <Filter>Resource Files\meshoptimizer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\lib\meshoptimizer\src\vcacheoptimizer.cpp">
-      <Filter>Resource Files\meshoptimizer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\lib\meshoptimizer\src\vertexcodec.cpp">
-      <Filter>Resource Files\meshoptimizer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\lib\meshoptimizer\src\vertexfilter.cpp">
-      <Filter>Resource Files\meshoptimizer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\lib\meshoptimizer\src\vfetchanalyzer.cpp">
-      <Filter>Resource Files\meshoptimizer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\lib\meshoptimizer\src\vfetchoptimizer.cpp">
-      <Filter>Resource Files\meshoptimizer</Filter>
-    </ClCompile>
     <ClCompile Include="src\Helper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Bone.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\MESH-OPTIMIZER\src\allocator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\MESH-OPTIMIZER\src\clusterizer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\MESH-OPTIMIZER\src\indexcodec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\MESH-OPTIMIZER\src\indexgenerator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\MESH-OPTIMIZER\src\overdrawanalyzer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\MESH-OPTIMIZER\src\overdrawoptimizer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\MESH-OPTIMIZER\src\simplifier.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\MESH-OPTIMIZER\src\spatialorder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\MESH-OPTIMIZER\src\stripifier.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\MESH-OPTIMIZER\src\vcacheanalyzer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\MESH-OPTIMIZER\src\vcacheoptimizer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\MESH-OPTIMIZER\src\vertexcodec.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\MESH-OPTIMIZER\src\vertexfilter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\MESH-OPTIMIZER\src\vfetchanalyzer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\lib\MESH-OPTIMIZER\src\vfetchoptimizer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

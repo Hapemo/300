@@ -21,9 +21,6 @@
     <ClInclude Include="include\ECS\ECS_Components.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Physics\PhysicsSystem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\Serialization\Serialization.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -33,18 +30,15 @@
     <ClInclude Include="include\ECS\ECS_Systems.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Physics\Materials.h">
+    <ClInclude Include="include\Resource\ResourceManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Physics\PhysX.h">
+    <ClInclude Include="include\Resource\Guid.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\ECS\ECS.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Physics\PhysicsSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\Serialization\Serialization.cpp">
@@ -56,7 +50,7 @@
     <ClCompile Include="source\ECS\ECS_Systems.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\Physics\PhysX.cpp">
+    <ClCompile Include="source\Resource\ResourceManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

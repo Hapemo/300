@@ -44,21 +44,6 @@ void Application::SystemInit()
     //gfx init
 }
 
-void Application::FirstUpdate() 
-{
-    mWindow.PollEvents();
-}
-
-void Application::SystemUpdate() 
-{
-    systemManager.Update(1.f /*insert dt here*/);
-}
-
-void Application::SecondUpdate() 
-{
-    Input::UpdatePrevKeyStates();
-}
-
 void Application::MainUpdate() 
 {
     while (!glfwWindowShouldClose(mWindow.GetHandle())) {
@@ -71,6 +56,22 @@ void Application::MainUpdate()
         // Graphics update
         mWindow.Update();
     }
+}
+
+void Application::FirstUpdate() 
+{
+    FPSManager::Update();
+    mWindow.PollEvents();
+}
+
+void Application::SystemUpdate() 
+{
+    systemManager.Update(1.f /*insert dt here*/);
+}
+
+void Application::SecondUpdate() 
+{
+    Input::UpdatePrevKeyStates();
 }
 
 void Application::Exit() 
