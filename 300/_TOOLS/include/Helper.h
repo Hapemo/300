@@ -14,7 +14,7 @@ Engine requires.
 #pragma once
 
 #include "pch.h"
-#include "GLFW\glfw3.h"
+#include "glfw3.h"
 
 struct FPSManager {
   /*!*****************************************************************************

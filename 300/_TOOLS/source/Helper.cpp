@@ -8,7 +8,7 @@
 General helper class of application that calculates FPS and prints GLFW info
 *******************************************************************************/
 #include "Helper.h"
-#include "GLFW/glfw3.h"
+#include "glfw3.h"
 
 // static data members declared in Helper
 double FPSManager::fps;

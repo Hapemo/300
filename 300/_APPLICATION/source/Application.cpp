@@ -9,15 +9,12 @@ Main application that gets called in the main loop. It handles the creation and
 start up of window and game system, also runs their update functions.
 *******************************************************************************/
 #include "Application.h"
-#include "GL/glew.h"
-#include "GLFW/glfw3.h"
 #include "Helper.h"
 #include "ECS/ECS.h"
 #include "ECS/ECS_Components.h"
-#include "Example.h"
 #include "Input.h"
 #include "SingletonManager.h"
-#include "../../_SCRIPTING/ScriptingSystem.h"
+#include "ScriptingSystem.h"
 
 // Static variables
 GFX::DebugRenderer* Application::mRenderer;
@@ -29,7 +26,6 @@ void Application::Init()
 {
     StartUp();
     SystemInit();
-    //Example();
 }
 
 void Application::StartUp() 
@@ -45,8 +41,6 @@ void Application::SystemInit()
     systemManager.Init();
     //gfx init
     Input::Init(mWindow);
-    // To remove (Script test with entities)
-    //ScriptTestInit();
 }
 
 void Application::FirstUpdate() 
@@ -83,21 +77,5 @@ void Application::Exit()
     systemManager.Exit();
     ECS::GetInstance()->DeleteAllEntities();
     SingletonManager::destroyAllSingletons();
-    glfwTerminate();
-}
-
-void Application::error_cb(int error, char const* description) 
-{
-    (void)error;
-    (void)description; // This function should only be called for debug mode
-    std::cerr << "GLFW error " << error << ": " << description << std::endl;
-}
-
-void Application::fbsize_cb(GLFWwindow* ptr_win, int width, int height) 
-{
-    std::cout << "fbsize_cb getting called!!!" << std::endl;
-    // use the entire framebuffer as drawing region
-    glViewport(0, 0, width, height);
-    (void)ptr_win;
-    // later, if working in 3D, we'll have to set the projection matrix here ...
+    mWindow.DestroySystem();
 }

@@ -65,13 +65,9 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\prop-pages\_TOOLS.props" />
-    <Import Project="..\prop-pages\_TOOLS-include.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\prop-pages\_TOOLS-include.props" />
-    <Import Project="..\prop-pages\_TOOLS.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -82,10 +78,11 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(SolutionDir)_APPLICATION/include;$(SolutionDir)_ENGINE/include;$(SolutionDir)_GRAPHICS/include;$(SolutionDir)_SCRIPTING/include;$(SolutionDir)_TOOLS/include;$(SolutionDir)lib/GLEW/include/GL;$(SolutionDir)lib\GLFW\include\GLFW;$(SolutionDir)lib\GLM;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)_TOOLS\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)_APPLICATION/include;$(SolutionDir)_ENGINE/include;$(SolutionDir)_GRAPHICS/include;$(SolutionDir)_SCRIPTING/include;$(SolutionDir)_TOOLS/include;$(SolutionDir)lib/GLEW/include/GL;$(SolutionDir)lib\GLFW\include\GLFW;$(SolutionDir)lib\GLM;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

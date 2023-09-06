@@ -8,7 +8,6 @@
 main file of the whole program
 *******************************************************************************/
 #include "Application.h"
-#include "GLFW/glfw3.h"
 #include "Misc.h"
 #include "pch.h"
 // Extension loader library's header must be included before GLFW's header!!!
@@ -40,7 +39,7 @@ Note that the C++ compiler will insert a return 0 statement if one is missing.
  \brief
  child main file that runs the application
 *******************************************************************************/
-void real_main(); 
+void RealMain(); 
 
 /*!*****************************************************************************
  \brief
@@ -50,34 +49,20 @@ void real_main();
  \int main int
 *******************************************************************************/
 int main() {
-    try {
+    try 
+    {
         Misc::MemLeakCheck();
-        real_main();
+        RealMain();
     }
-    catch (const std::exception& e) {
+    catch (const std::exception& e) 
+    {
         std::string exc = e.what();
         std::cout << exc << std::endl;
     }
 }
 
-void real_main() {
-    //std::signal(SIGABRT, HandleSignal);
-    //std::signal(SIGTERM, HandleSignal);
-    //std::signal(SIGINT, HandleSignal);
-    //std::signal(SIGSEGV, HandleSignal);
-    //std::signal(SIGILL, HandleSignal);
-    //std::signal(SIGFPE, HandleSignal);
-
-    // Part 1
+void RealMain() {
     Application::Init();
-
-    // Part 2
-    //while (!glfwWindowShouldClose(Application::getWindow())) {
     Application::MainUpdate();
-        //GameStateManager::GetInstance()->Update();
-        //if (GameStateManager::GetInstance()->GetNextGS() == E_GS::EXIT) break;
-    //}
-
-    // Part 3
     Application::Exit();
 }
