@@ -112,7 +112,7 @@ private:
   static int mStartingIndex;
   static int mTotalMouseKey;
   static int mMaxKeyboardIndex;
-  static GFX::Window mWindow;
+  static GFX::Window* mWindow;
   static GLFWcursor* mCursor;
   static double mScrollTotal;
   static double mScrollOffset;
@@ -122,7 +122,7 @@ public:
   \brief
   Initialises the Input system
   *******************************************************************************/
-  static void Init(GFX::Window& window);
+  static void Init(GFX::Window* window);
 
   //-------------------------------------------------------------
   // Keyboard controls

@@ -9,7 +9,7 @@ Main application that gets called in the main loop. It handles the creation and
 start up of window and game system, also runs their update functions.
 *******************************************************************************/
 #include "Application.h"
-#include "Helper.h"
+#include "FPSManager.h"
 #include "ECS/ECS.h"
 #include "ECS/ECS_Components.h"
 #include "Input.h"
@@ -38,9 +38,10 @@ void Application::StartUp()
 
 void Application::SystemInit() 
 {
+    FPSManager::Init(&mWindow);
+    Input::Init(&mWindow);
     systemManager.Init();
     //gfx init
-    Input::Init(mWindow);
 }
 
 void Application::FirstUpdate() 

@@ -16,21 +16,21 @@ int Input::mTotalMouseKey{ 8 };
 int Input::mMaxKeyboardIndex{ 348 };
 double Input::mScrollTotal{ 0 };
 double Input::mScrollOffset{ 0 };
-GFX::Window Input::mWindow;
+GFX::Window* Input::mWindow;
 GLFWcursor* Input::mCursor;
 
-void Input::Init(GFX::Window& window) {
+void Input::Init(GFX::Window* window) {
   mWindow = window;
 
-  glfwSetScrollCallback(mWindow.GetHandle(), scroll_callback);
+  glfwSetScrollCallback(mWindow->GetHandle(), scroll_callback);
  }
 
 bool Input::CheckKey(E_STATE state, E_KEY key) {
   int curr_state{};
   if ((int)key > mMaxKeyboardIndex)
-    curr_state = glfwGetMouseButton(mWindow.GetHandle(), (int)key - mMaxKeyboardIndex - 1);
+    curr_state = glfwGetMouseButton(mWindow->GetHandle(), (int)key - mMaxKeyboardIndex - 1);
   else 
-    curr_state = glfwGetKey(mWindow.GetHandle(), (int)key);
+    curr_state = glfwGetKey(mWindow->GetHandle(), (int)key);
 
   switch (curr_state) {
   case 0: // Curr not pressed
@@ -68,16 +68,16 @@ bool Input::CheckKey(E_STATE state, E_KEY key) {
 
 void Input::UpdatePrevKeyStates() {
   for (int i = 0; i < static_cast<int>(sizeof(mPrevKeyStates)) - mTotalMouseKey; ++i)
-    mPrevKeyStates[i] = (bool)glfwGetKey(mWindow.GetHandle(), mStartingIndex + i);
+    mPrevKeyStates[i] = (bool)glfwGetKey(mWindow->GetHandle(), mStartingIndex + i);
   for (int i = static_cast<int>(sizeof(mPrevKeyStates)) - mTotalMouseKey + 1, j = 0; i < static_cast<int>(sizeof(mPrevKeyStates)); ++i, ++j) {
-    mPrevKeyStates[i] = (bool)glfwGetMouseButton(mWindow.GetHandle(), j);
+    mPrevKeyStates[i] = (bool)glfwGetMouseButton(mWindow->GetHandle(), j);
   }
   mScrollOffset = 0.0;
 }
 
 glm::vec2 Input::CursorPos() {
   double xpos, ypos;
-  glfwGetCursorPos(mWindow.GetHandle(), &xpos, &ypos);
+  glfwGetCursorPos(mWindow->GetHandle(), &xpos, &ypos);
   return glm::vec2{ static_cast<float>(xpos), static_cast<float>(ypos) };
 }
 
