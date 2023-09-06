@@ -82,6 +82,18 @@ bool EntityJSON::Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* wri
 		writer->String(ec.component_name.c_str());
 	*/
 
+	writer->String("Name");
+	writer->String(mGJ.mName.c_str());
+
+	writer->String("isActive");
+	writer->Bool(mGJ.mIsActive);
+
+	//writer->String("Tag");
+	//writer->Int(mGJ.mTag);
+
+	//writer->String("Subtag");
+	//writer->String(std::to_string(mGJ.mSubtag).c_str());
+
 	writer->EndObject();
 	
 	return true;

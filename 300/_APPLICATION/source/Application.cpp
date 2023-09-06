@@ -18,6 +18,7 @@ start up of window and game system, also runs their update functions.
 #include "Input.h"
 #include "SingletonManager.h"
 #include "../../_SCRIPTING/ScriptingSystem.h"
+#include "../../_ENGINE/include/Object/ObjectFactory.h"
 
 // Static variables
 GFX::DebugRenderer* Application::mRenderer;
@@ -30,6 +31,9 @@ void Application::Init()
     StartUp();
     SystemInit();
     //Example();
+    // test serialization
+    // working, just no information for the existing entities yet
+    //ObjectFactory::SerializeScene("../resources/Scenes/test.json");
 }
 
 void Application::StartUp() 
