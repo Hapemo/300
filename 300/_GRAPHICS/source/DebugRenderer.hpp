@@ -2,9 +2,9 @@
  * @file
  *  DebugRenderer.hpp
  * @author
- *  Lee Fu Sheng Roy, 670000622, f.lee@digipen.edu
+ *  Lee Fu Sheng Roy, 2101440, f.lee@digipen.edu
  * @date
- *  2023/05/21
+ *  2023/09/06
  * @brief
  *  Class definition of DebugRenderer. 
  * @copyright
