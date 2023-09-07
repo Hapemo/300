@@ -28,9 +28,9 @@ void Input::Init(GFX::Window* window) {
 bool Input::CheckKey(E_STATE state, E_KEY key) {
   int curr_state{};
   if ((int)key > mMaxKeyboardIndex)
-    curr_state = glfwGetMouseButton(mWindow->GetHandle(), (int)key - mMaxKeyboardIndex - 1);
+    curr_state = mWindow->IsMousePressed((int)key - mMaxKeyboardIndex - 1);
   else 
-    curr_state = glfwGetKey(mWindow->GetHandle(), (int)key);
+    curr_state = mWindow->IsKeyPressed((int)key);
 
   switch (curr_state) {
   case 0: // Curr not pressed
@@ -68,9 +68,9 @@ bool Input::CheckKey(E_STATE state, E_KEY key) {
 
 void Input::UpdatePrevKeyStates() {
   for (int i = 0; i < static_cast<int>(sizeof(mPrevKeyStates)) - mTotalMouseKey; ++i)
-    mPrevKeyStates[i] = (bool)glfwGetKey(mWindow->GetHandle(), mStartingIndex + i);
+    mPrevKeyStates[i] = mWindow->IsKeyPressed(mStartingIndex + i);
   for (int i = static_cast<int>(sizeof(mPrevKeyStates)) - mTotalMouseKey + 1, j = 0; i < static_cast<int>(sizeof(mPrevKeyStates)); ++i, ++j) {
-    mPrevKeyStates[i] = (bool)glfwGetMouseButton(mWindow->GetHandle(), j);
+    mPrevKeyStates[i] = mWindow->IsMousePressed(j);
   }
   mScrollOffset = 0.0;
 }
