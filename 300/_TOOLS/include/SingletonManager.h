@@ -31,7 +31,6 @@ public:
 	SingletonManager& operator= (SingletonManager&&) = delete;
 
 	/*!*****************************************************************************
-	\brief
 	Adds a singleton to the manager, mainly used by Singleton ctor
 	
 	\param ISingleton*
@@ -40,7 +39,6 @@ public:
 	static void addSingleton(ISingleton*);
 
 	/*!*****************************************************************************
-	\brief
 	Deallocate all singleton's heap memory
 	*******************************************************************************/
 	static void destroyAllSingletons();
