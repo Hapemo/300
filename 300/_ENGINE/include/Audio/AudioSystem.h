@@ -26,6 +26,7 @@ struct Sound
 };
 	
 static int MAX_AUDIO_FILES_PLAYING = 32;     // Number of Sounds (that are allowed to be played simultaneously)
+static int NO_OF_CHANNELS_TO_INIT  = 32;	 // Number of Channels (to init at the start)
 
 //extern std::unique_ptr<AudioManager> mAudio; // Audio Manager Reference (only 1)
 
@@ -57,9 +58,11 @@ static int MAX_AUDIO_FILES_PLAYING = 32;     // Number of Sounds (that are allow
 class AudioManager : public Singleton<AudioManager>
 {
 public: 
-	typedef std::map<int, FMOD::Channel*>				ChannelMap;
-	typedef std::map<std::string, Sound*>				SoundMap;
-	typedef std::map<std::string, FMOD::Studio::Bank*>  BankMap;
+	typedef std::unordered_map<int, FMOD::Channel*>				  ChannelMap;
+	typedef std::unordered_map<std::string, Sound*>				  SoundMap;
+	typedef std::unordered_map<std::string, FMOD::Studio::Bank*>  BankMap;
+
+	int channel_no = 0;
 
 public:
 	static int ErrCodeCheck(FMOD_RESULT result);		    // Status Check for (FMOD Function Calls) -> can be used outside of class
@@ -68,8 +71,8 @@ public:
 	AudioManager();											// Initialization of (FMOD System)
 
 	void Init();
-	void AudioSystemUpdate();
-	void AudioSystemExit();
+	void Update();
+	void Exit();
 
 	/* Load Sounds 
 	   [TODO] - Work with [Serialization Team] to port over relevant data files in the future
@@ -134,10 +137,10 @@ public:
 	FMOD::System* system;									// System Object
 	FMOD::Studio::System* studio_system;					// [FMOD Studio API]	 - Studio System Object (Events)
 	FMOD_RESULT	  result_code;								// Used to troubleshoot stuff, tells us if an operation is successful or not.
-	ChannelMap	  aChannels;								// [List of Channels]    - Keeps Track of which Channels are Available. (Channels Start from ID: 1)
-	SoundMap	  aSoundsSFX;							    // [List of SFX]	     - Stores all the (SFX) Sound files that has been loaded into the system.
-	SoundMap	  aSoundsBGM;								// [List of BGM]         - Stores all the (BGM) Sound files that has been loaded into the system.
-	BankMap		  aBank;									// [Banks - Event Based] - Stores all the sounds and information for each event.
+	ChannelMap	  mChannels;								// [List of Channels]    - Keeps Track of which Channels are Available. (Channels Start from ID: 1)
+	SoundMap	  mSoundsSFX;							    // [List of SFX]	     - Stores all the (SFX) Sound files that has been loaded into the system.
+	SoundMap	  mSoundsBGM;								// [List of BGM]         - Stores all the (BGM) Sound files that has been loaded into the system.
+	BankMap		  mBank;									// [Banks - Event Based] - Stores all the sounds and information for each event.
 	
 };
 

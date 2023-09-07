@@ -12,19 +12,33 @@ static bool once = false;
 #pragma region AudioSystem Core Loop
 void AudioManager::Init()
 {	
-	// Initialize System
+	// Create System
 	result_code = FMOD::System_Create(&system);	 // [Initializes the Audio System] -> returns the system object to this class. (&system)'
 	std::cout << "System Create: ";
 	ErrCodeCheck(result_code);
 
+	// Initialize System
+	result_code = system->init(MAX_AUDIO_FILES_PLAYING, FMOD_INIT_NORMAL, nullptr);
+	std::cout << "System Initialize: ";
+	AudioManager::ErrCodeCheck(result_code);
+
+	// Create Channels (at initialization)
+	while (channel_no < NO_OF_CHANNELS_TO_INIT)
+	{
+		std::cout << "CREATING CHANNEL." << std::endl;
+		FMOD::Channel* new_channel;
+		mChannels.insert(std::make_pair(channel_no, new_channel));
+		channel_no++;
+	}
+
 	// Test Load Sound
-	LoadAudioFile("../Assets/farm_ambience.wav", "farm", AUDIO_TYPE::AUDIO_BGM);
-	LoadAudioFile("../Assets/NPC_Greeting.wav", "greeting", AUDIO_TYPE::AUDIO_BGM);
+	LoadAudioFile("../assets/Audio/farm_ambience.wav", "farm", AUDIO_TYPE::AUDIO_BGM);
+	LoadAudioFile("../assets/Audio/NPC_Greeting.wav", "greeting", AUDIO_TYPE::AUDIO_BGM);
 	// Test Spatial Audio
-	LoadAudioFile("../Assets/tuning-radio-7150.wav", "radio", AUDIO_TYPE::AUDIO_SFX, true, { 0.0f,0.0f,0.0f });
+	LoadAudioFile("../assets/Audio/tuning-radio-7150.wav", "radio", AUDIO_TYPE::AUDIO_SFX, true, { 0.0f,0.0f,0.0f });
 }
 
-void AudioManager::AudioSystemUpdate()
+void AudioManager::Update()
 {
 	if (!once)
 	{
@@ -89,7 +103,7 @@ void AudioManager::AudioSystemUpdate()
   }*/
 }
 
-void AudioManager::AudioSystemExit()
+void AudioManager::Exit()
 {
 
 }
@@ -145,21 +159,21 @@ void AudioManager::LoadAudioFile(std::string audiofilePath, std::string audio_na
 	mode |= spatial ? FMOD_3D : FMOD_2D;					// [3D Audio]       - checks for (spatial flag) -> user-defined arguement
 	mode |= looping ? FMOD_LOOP_NORMAL : FMOD_LOOP_OFF;     // [Looping]		- checks for (looping flag) -> user-defined arguement
 
-	/*std::cout << "Creating Sound: " << audio_name << ": ";
-	ErrCodeCheck(system->createSound(audiofilePath.c_str(), mode, 0, &new_sound->sound)); */
+	std::cout << "Creating Sound: " << audio_name << ": ";
+	ErrCodeCheck(system->createSound(audiofilePath.c_str(), mode, 0, &new_sound->sound));
 
-	//if (&new_sound->sound) // if successfully created.
-	//{	
-	//	switch (audio_type)
-	//	{
-	//	case AUDIO_BGM:
-	//		mAudio->system_obj->aSoundsBGM[audio_name] = new_sound; // push into database.
-	//		return;
-	//	case AUDIO_SFX:
-	//		mAudio->system_obj->aSoundsSFX[audio_name] = new_sound; // push into database.
-	//		return;
-	//	}
-	//}
+	if (&new_sound->sound) // if successfully created.
+	{	
+		switch (audio_type)
+		{
+		case AUDIO_BGM:
+			mSoundsBGM[audio_name] = new_sound; // push into database.
+			return;
+		case AUDIO_SFX:
+			mSoundsSFX[audio_name] = new_sound; // push into database.
+			return;
+		}
+	}
 }
 
 /*
@@ -169,28 +183,28 @@ void AudioManager::LoadAudioFile(std::string audiofilePath, std::string audio_na
 */
 void AudioManager::PlayAudio(std::string audio_name, AUDIO_TYPE audio_type, FMOD_VECTOR audio_pos, float audio_vol)
 {
-	//AudioSystem::SoundMap* map_pointer = nullptr;
+	SoundMap* map_pointer = nullptr;
 
-	//switch (audio_type)
-	//{
-	//case AUDIO_BGM:
-	//	map_pointer = &(mAudio->system_obj->aSoundsBGM);
-	//	break;
-	//case AUDIO_SFX:
-	//	map_pointer = &(mAudio->system_obj->aSoundsSFX);
-	//	break;
-	//}
+	switch (audio_type)
+	{
+	case AUDIO_BGM:
+		map_pointer = &(mSoundsBGM);
+		break;
+	case AUDIO_SFX:
+		map_pointer = &(mSoundsSFX);
+		break;
+	}
 
-	//AudioSystem::SoundMap::iterator map_it = map_pointer->find(audio_name); // find the name.
+	SoundMap::iterator map_it = map_pointer->find(audio_name); // find the name.
 
-	//if (map_pointer)
-	//{
-	//	if (map_it == map_pointer->end()) // if the audio name is found ...
-	//	{
-	//		std::cout << "Cannot Find Audio" << std::endl;
-	//		return;
-	//	}
-	//}
+	if (map_pointer)
+	{
+		if (map_it == map_pointer->end()) // if the audio name is found ...
+		{
+			std::cout << "Cannot Find Audio" << std::endl;
+			return;
+		}
+	}
 
 	//FMOD::Channel* new_channel = nullptr;
 	//ErrCodeCheck(mAudio->system_obj->system->playSound(map_it->second->sound, nullptr, true, &new_channel)); // Play in the new channel.
