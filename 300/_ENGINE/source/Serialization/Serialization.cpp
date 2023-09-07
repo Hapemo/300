@@ -82,6 +82,9 @@ bool EntityJSON::Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* wri
 		writer->String(ec.component_name.c_str());
 	*/
 
+	//writer->String("EntityID");
+	//writer->Int(mID);
+
 	writer->String("Name");
 	writer->String(mGJ.mName.c_str());
 

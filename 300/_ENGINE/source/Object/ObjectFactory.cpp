@@ -18,8 +18,7 @@ void ObjectFactory::SerializeScene(const std::string& filename)
 	EntityListJSON entities;
 	entities.EntitiesList().clear();
 
-	// GetAllEntities() not working?
-	auto container = ECS::GetInstance()->GetEntitiesWith<General>();
+	auto container = ECS::GetInstance()->GetEntitiesWith<General, Transform>();
 
 	for (Entity e : container)
 	{
