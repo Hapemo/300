@@ -190,9 +190,8 @@ void GFX::DemoScene::Draw()
         // Clears buffer
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-#if 1
+#if 0
         //!< test rendering skull model
-        //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         mModelShader.Activate();
         //uid uids("gayed");
         //Mesh& currentmesh = MeshManager::GetInstance().mSceneMeshes[uids.id]->meshdata;
@@ -226,12 +225,12 @@ void GFX::DemoScene::Draw()
         mModelShader.Deactivate();
         currentmesh.UnbindVao();
         glBindTextureUnit(0, 0);
-        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         currentmesh.ClearInstances();
-        //! 
+
 #else
+        //! 
         mRenderer->AddAabb({ 0, 0, -500 }, { 100, 300, 100 }, { 1, 0, 0, 1 });
-        ////mRenderer->AddPoint({ 0, 0, 0 }, { 1, 0, 0, 1 });
+        //mRenderer->AddPoint({ 0, 0, 0 }, { 1, 0, 0, 1 });
         ////mRenderer->AddTriangle({ 0.f, 30.f, 0.f }, { -30.f, -30.f, 0.f }, { 30.f, -30.f, 0.f }, { 0, 1, 0, 1 });
         ////mRenderer->AddQuad({ 0, 0, 0 }, 50, 100, { 0, 0, 1, 1 });
 
