@@ -154,6 +154,7 @@ copy "$(SolutionDir)lib\GLEW\bin\Release\x64\glew32.dll" "$(TargetDir)glew32.dll
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="include\Application.h" />
+    <ClInclude Include="include\Example.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Application.cpp" />
