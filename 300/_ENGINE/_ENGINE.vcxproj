@@ -71,11 +71,11 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)_APPLICATION/include;$(SolutionDir)_ENGINE/include;$(SolutionDir)_GRAPHICS/include;$(SolutionDir)_SCRIPTING/include;$(SolutionDir)_TOOLS/include;$(IncludePath)$(SolutionDir)\lib\lua-5.3.6\include;$(SolutionDir)\lib\SOL;$(SolutionDir)lib/ENTT;$(SolutionDir)lib/GLM;$(SolutionDir)lib/RAPID-JSON;$(SolutionDir)lib\LUA\include;$(SolutionDir)lib/GLEW/include/GL;$(SolutionDir)lib/GLFW/include/GLFW</IncludePath>
+    <IncludePath>$(SolutionDir)_APPLICATION/include;$(SolutionDir)_ENGINE/include;$(SolutionDir)_GRAPHICS/include;$(SolutionDir)_SCRIPTING/include;$(SolutionDir)_TOOLS/include;$(IncludePath)$(SolutionDir)\lib\lua-5.3.6\include;$(SolutionDir)\lib\SOL;$(SolutionDir)lib/ENTT;$(SolutionDir)lib/GLM;$(SolutionDir)lib/RAPID-JSON;$(SolutionDir)lib\LUA\include;$(SolutionDir)lib/GLEW/include/GL;$(SolutionDir)lib/GLFW/include/GLFW;$(SolutionDir)lib\FMOD\core/inc;$(SolutionDir)lib\FMOD/studio\inc</IncludePath>
     <LibraryPath>$(SolutionDir)\lib\lua-5.3.6\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(SolutionDir)_APPLICATION/include;$(SolutionDir)_ENGINE/include;$(SolutionDir)_GRAPHICS/include;$(SolutionDir)_SCRIPTING/include;$(SolutionDir)_TOOLS/include;$(IncludePath)$(SolutionDir)\lib\lua-5.3.6\include;$(SolutionDir)\lib\SOL;$(SolutionDir)lib/ENTT;$(SolutionDir)lib/GLM;$(SolutionDir)lib/RAPID-JSON;$(SolutionDir)lib\LUA\include;$(SolutionDir)lib/GLEW/include/GL;$(SolutionDir)lib/GLFW/include/GLFW</IncludePath>
+    <IncludePath>$(SolutionDir)_APPLICATION/include;$(SolutionDir)_ENGINE/include;$(SolutionDir)_GRAPHICS/include;$(SolutionDir)_SCRIPTING/include;$(SolutionDir)_TOOLS/include;$(IncludePath)$(SolutionDir)\lib\lua-5.3.6\include;$(SolutionDir)\lib\SOL;$(SolutionDir)lib/ENTT;$(SolutionDir)lib/GLM;$(SolutionDir)lib/RAPID-JSON;$(SolutionDir)lib\LUA\include;$(SolutionDir)lib/GLEW/include/GL;$(SolutionDir)lib/GLFW/include/GLFW;$(SolutionDir)lib\FMOD\core/inc;$(SolutionDir)lib\FMOD/studio\inc</IncludePath>
     <LibraryPath>$(SolutionDir)\lib\lua-5.3.6\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -137,6 +137,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="include\Audio\AudioSystem.h" />
     <ClInclude Include="include\ECS\ECS.h" />
     <ClInclude Include="include\ECS\ECS_Components.h" />
     <ClInclude Include="include\ECS\ECS_Systems.h" />
@@ -144,6 +145,7 @@
     <ClInclude Include="include\Resource\ResourceManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="source\Audio\AudioSystem.cpp" />
     <ClCompile Include="source\ECS\ECS_Systems.cpp" />
     <ClCompile Include="source\ECS\ECS.cpp" />
     <ClInclude Include="include\Serialization\Serialization.h" />
