@@ -73,7 +73,6 @@ namespace GFX
 
 		layout(location = 0) in vec3 aPos;
 		layout(location = 1) in vec4 aVertexColor;
-		layout(location = 2) in vec2 aUV;
 		layout(location = 3) in mat4 aLTW;
 
 		layout(location = 0) out vec4 outColor;
@@ -81,14 +80,12 @@ namespace GFX
 		void main() {
 			gl_Position = uMatrixVP * aLTW * vec4(aPos, 1.0);
 			outColor = aVertexColor;
-			outUV = aUV;
 		}
 		)";
 
 		const char* fragmentShaderCode = R"(
 		#version 450 core
 		layout(location = 0) in vec4 color;
-		layout(location = 2) in vec2 UV;
 		layout(location = 0) out vec4 fragColor;
 		void main() {
 			fragColor = color;

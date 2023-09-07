@@ -283,10 +283,7 @@ void GFX::DebugRenderer::RenderAllAabb(mat4 const& viewProj)
 	glUniformMatrix4fv(mShader.GetUniformVP(), 1, GL_FALSE, &viewProj[0][0]);
 
 	// Draw
-	GLsizei count = mAabbMesh.GetIndexCount();
-	GLsizei size = mAabbMesh.mLTW.size();
-	glDrawElementsInstanced(GL_LINE_LOOP, count, GL_UNSIGNED_INT, nullptr, size);
-	//glDrawElementsInstanced(GL_LINE_LOOP, mAabbMesh.GetIndexCount(), GL_UNSIGNED_INT, nullptr, mAabbMesh.mLTW.size());
+	glDrawElementsInstanced(GL_LINE_LOOP, mAabbMesh.GetIndexCount(), GL_UNSIGNED_INT, nullptr, mAabbMesh.mLTW.size());
 
 	mShader.Deactivate();
 	mAabbMesh.UnbindVao();
