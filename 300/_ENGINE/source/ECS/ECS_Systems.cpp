@@ -9,6 +9,7 @@ void SystemManager::Init()
 void SystemManager::Update(float dt)
 {
 	ScriptingSystem::GetInstance()->Update(dt);
+	AudioManager::GetInstance()->Update();
 }
 
 void SystemManager::Exit()

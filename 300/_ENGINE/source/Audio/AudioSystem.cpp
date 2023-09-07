@@ -40,10 +40,12 @@ void AudioManager::Init()
 
 void AudioManager::Update()
 {
+	//std::cout << "AudioUpdate" << std::endl;
 	if (!once)
 	{
 		FMOD_VECTOR vector{ 0.0f,0.0f,0.0f };
-		PlayAudio("radio", AUDIO_TYPE::AUDIO_SFX, vector, 1.0f);
+		PlayAudio("radio", AUDIO_TYPE::AUDIO_SFX, vector, 1.0f, 0);
+		//isPlaying(0);
 		FMOD_VECTOR set_vector{ 1.0f, 0.0f, 0.0f };
 		//SetChannel3DPosition(1, set_vector);
 	/*	mAudio->channel->setVolume(0.5f);
@@ -54,6 +56,12 @@ void AudioManager::Update()
 		//std::cout << "Current Volume is: " << volume << std::endl;
 
 		once = true;
+	}
+
+	if (Input::CheckKey(PRESS, Q))
+	{
+		std::cout << "PRESSED Q." << std::endl;
+		SetChannelVolume()
 	}
 
 	//FMOD_VECTOR listener_pos = lAudio->GetListenerPosition();
@@ -181,7 +189,7 @@ void AudioManager::LoadAudioFile(std::string audiofilePath, std::string audio_na
    - Finds Requested Audio File
    - Plays at the specified position + volume.
 */
-void AudioManager::PlayAudio(std::string audio_name, AUDIO_TYPE audio_type, FMOD_VECTOR audio_pos, float audio_vol)
+void AudioManager::PlayAudio(std::string audio_name, AUDIO_TYPE audio_type,FMOD_VECTOR audio_pos, float audio_vol, int channel_no)
 {
 	SoundMap* map_pointer = nullptr;
 
@@ -205,6 +213,23 @@ void AudioManager::PlayAudio(std::string audio_name, AUDIO_TYPE audio_type, FMOD
 			return;
 		}
 	}
+
+	ChannelMap::iterator channel_it = mChannels.find(channel_no);
+
+	if (channel_it != mChannels.end())	// if found...
+	{
+		std::cout << "Channel is found." << std::endl;
+		FMOD::Channel* found_channel = channel_it->second;
+		//found_channel->setVolume(audio_vol);
+		std::cout << "Now playing sound in channel: " << channel_no << std::endl;
+		ErrCodeCheck(system->playSound(map_it->second->sound, nullptr, false, &found_channel));
+	}
+
+
+	
+
+	
+
 
 	//FMOD::Channel* new_channel = nullptr;
 	//ErrCodeCheck(mAudio->system_obj->system->playSound(map_it->second->sound, nullptr, true, &new_channel)); // Play in the new channel.
@@ -242,6 +267,23 @@ void AudioManager::PlayAudio(std::string audio_name, AUDIO_TYPE audio_type, FMOD
 	//std::cout << "New Number of Channels: " << channel_size << std::endl;
 }
 
+
+//bool AudioManager::isPlaying(int channel_no)
+//{
+//	bool playing = false;
+//
+//	ChannelMap::iterator channel_it = mChannels.find(channel_no);
+//
+//	if (channel_it != mChannels.end())	// if found...
+//	{
+//		std::cout << "Channel is found." << std::endl;
+//		channel_it->second->isPlaying(&playing);
+//		return playing; 
+//	}
+//
+//	return false;
+//}
+
 //void AudioManager::SetChannel3DPosition(int channel_id, FMOD_VECTOR audio_pos)
 //{
 //	AudioSystem::ChannelMap::iterator map_it = mAudio->system_obj->aChannels.find(channel_id); // Find using the channel ID.
@@ -264,25 +306,25 @@ void AudioManager::PlayAudio(std::string audio_name, AUDIO_TYPE audio_type, FMOD
 //	result_code = map_it->second->get3DAttributes(&final_pos, nullptr);
 //	std::cout << "Final Position: [" << final_pos.x << "," << final_pos.y << "," << final_pos.z << "]" << std::endl;
 //}
-//
-//void AudioManager::SetChannelVolume(int channel_id, float channel_vol)
-//{
-//	AudioSystem::ChannelMap::iterator map_it = mAudio->system_obj->aChannels.find(channel_id); // Find using the channel ID. 
-//
-//	// Does the Channel even exist?
-//	if (map_it == mAudio->system_obj->aChannels.end())
-//	{
-//		std::cout << "Couldn't find the requested Channel. " << std::endl;
-//		return;	// Return because no such channel.
-//	}
-//
-//	float initial_volume;
-//	float final_volume;
-//
-//	result_code = map_it->second->getVolume(&initial_volume);
-//	std::cout << "Initial Volume of Channel " << channel_id << ": " << initial_volume;
-//}
-//
+
+void AudioManager::SetChannelVolume(int channel_id, float channel_vol)
+{
+	ChannelMap::iterator map_it = mChannels.find(channel_id); // Find using the channel ID. 
+
+	// Does the Channel even exist?
+	if (map_it == mChannels.end())
+	{
+		std::cout << "Couldn't find the requested Channel. " << std::endl;
+		return;	// Return because no such channel.
+	}
+
+	float initial_volume;
+	float final_volume;
+
+	result_code = map_it->second->getVolume(&initial_volume);
+	std::cout << "Initial Volume of Channel " << channel_id << ": " << initial_volume;
+}
+
 ///*
 //	- Make sure that the bank exists in the database first.
 //*/

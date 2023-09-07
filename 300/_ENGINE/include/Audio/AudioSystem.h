@@ -6,6 +6,7 @@
 #include <iostream>
 #include <map>
 #include <filesystem>
+#include "Input.h"
 #include "Singleton.h"
 
 class AudioManager;
@@ -74,16 +75,25 @@ public:
 	void Update();
 	void Exit();
 
-	/* Load Sounds 
+	/* [Load Sounds]
 	   [TODO] - Work with [Serialization Team] to port over relevant data files in the future
 	*/
 	void LoadAudioFile(std::string audiofilePath, std::string audio_name, AUDIO_TYPE audio_type, bool spatial = false, FMOD_VECTOR audio_position = {0.0f,0.0f,0.0f} ,bool looping = false);
 
-	void PlayAudio(std::string audio_name, AUDIO_TYPE audio_type, FMOD_VECTOR audio_pos, float audio_vol);
+	/* [Play Audio]
+	   - Play the specified audio file. 
+	*/
+	void PlayAudio(std::string audio_name, AUDIO_TYPE audio_type, FMOD_VECTOR audio_pos, float audio_vol, int channel_no = 0); // Specify Channel
+
+	/* [Set Channel Volume]
+	   - Play the specified audio file.
+	*/
+	void SetChannelVolume(int channel_id, float channel_vol);
+
+	//bool isPlaying(int channel_no);
 
 	void SetChannel3DPosition(int channel_id, FMOD_VECTOR audio_pos);
-	
-	void SetChannelVolume(int channel_id, float channel_vol);
+
 
 	/* [TODO] 
 	*	1. StopPLay
@@ -140,7 +150,7 @@ public:
 	ChannelMap	  mChannels;								// [List of Channels]    - Keeps Track of which Channels are Available. (Channels Start from ID: 1)
 	SoundMap	  mSoundsSFX;							    // [List of SFX]	     - Stores all the (SFX) Sound files that has been loaded into the system.
 	SoundMap	  mSoundsBGM;								// [List of BGM]         - Stores all the (BGM) Sound files that has been loaded into the system.
-	BankMap		  mBank;									// [Banks - Event Based] - Stores all the sounds and information for each event.
+	BankMap		  mBank;									// [Banks - Event Based] - Stores all the sounds and information for each events
 	
 };
 
