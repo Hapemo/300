@@ -179,7 +179,7 @@
     <ClInclude Include="include\DebugRenderer.hpp" />
     <ClInclude Include="include\Math.hpp" />
     <ClInclude Include="include\Mesh.hpp" />
-    <ClInclude Include="source\Fbo.hpp" />
+    <ClInclude Include="include\Fbo.hpp" />
     <ClInclude Include="include\OpenGl.hpp" />
     <ClInclude Include="include\Random.hpp" />
     <ClInclude Include="include\Renderer.hpp" />

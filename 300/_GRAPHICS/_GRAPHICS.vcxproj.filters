@@ -155,7 +155,7 @@
     <ClInclude Include="include\Window.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\Fbo.hpp">
+    <ClInclude Include="include\Fbo.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
