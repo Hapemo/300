@@ -69,6 +69,30 @@ bool EntityJSON::Deserialize(const rapidjson::Value& obj)
 			blabla.something = obj["BlaBla"].GetSomething();
 		}
 	*/
+
+	if (obj.HasMember("General"))
+	{
+		mGJ.jName = obj["General"]["Name"].GetString();
+		mGJ.jIsActive = obj["General"]["isActive"].GetBool();
+		mGJ.jTag = obj["General"]["Tag"].GetString();
+		mGJ.jSubtag = obj["General"]["Subtag"].GetString();
+	}
+
+	if (obj.HasMember("Transform"))
+	{
+		mTJ.jScale.x = (float)obj["Transform"]["Scale"][0].GetDouble();
+		mTJ.jScale.y = (float)obj["Transform"]["Scale"][1].GetDouble();
+		mTJ.jScale.z = (float)obj["Transform"]["Scale"][2].GetDouble();
+
+		mTJ.jRotate.x = (float)obj["Transform"]["Rotate"][0].GetDouble();
+		mTJ.jRotate.y = (float)obj["Transform"]["Rotate"][1].GetDouble();
+		mTJ.jRotate.z = (float)obj["Transform"]["Rotate"][2].GetDouble();
+
+		mTJ.jTranslate.x = (float)obj["Transform"]["Translate"][0].GetDouble();
+		mTJ.jTranslate.y = (float)obj["Transform"]["Translate"][1].GetDouble();
+		mTJ.jTranslate.z = (float)obj["Transform"]["Translate"][2].GetDouble();
+	}
+
 	return true;
 }
 
@@ -79,6 +103,9 @@ bool EntityJSON::Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* wri
 	// no need for now
 	/*writer->String("EntityID");
 	writer->Uint((std::uint32_t)mID);*/
+
+	writer->String("General");
+	writer->StartObject();
 
 	writer->String("Name");
 	writer->String(mGJ.jName.c_str());
@@ -92,6 +119,11 @@ bool EntityJSON::Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* wri
 	writer->String("Subtag");
 	writer->String(mGJ.jSubtag.c_str());
 
+	writer->EndObject();
+
+	writer->String("Transform");
+	writer->StartObject();
+	
 	writer->String("Scale");
 	writer->StartArray();
 	writer->Double(mTJ.jScale.x);
@@ -112,6 +144,8 @@ bool EntityJSON::Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* wri
 	writer->Double(mTJ.jTranslate.y);
 	writer->Double(mTJ.jTranslate.z);
 	writer->EndArray();
+	
+	writer->EndObject();
 
 	writer->EndObject();
 	
