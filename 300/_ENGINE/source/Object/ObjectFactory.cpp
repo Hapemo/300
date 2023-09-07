@@ -23,8 +23,11 @@ void ObjectFactory::SerializeScene(const std::string& filename)
 	for (Entity e : container)
 	{
 		// set the data for general component
+		//ent.SetID(e.id); // no need for now
 		General gen = e.GetComponent<General>();
 		ent.SetGeneralJSON(gen);
+		Transform tran = e.GetComponent<Transform>();
+		ent.SetTransformJSON(tran);
 
 		// push back after done
 		entities.EntitiesList().push_back(ent);
