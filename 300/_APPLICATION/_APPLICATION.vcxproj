@@ -124,6 +124,10 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>glew32.lib;glfw3dll.lib;opengl32.lib;lua53.lib;_ENGINE.lib;_GRAPHICS.lib;_TOOLS.lib;_SCRIPTING.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>copy "$(SolutionDir)lib\GLFW\lib-vc2022\glfw3.dll" "$(TargetDir)glfw3.dll" /Y
+copy "$(SolutionDir)lib\GLEW\bin\Release\x64\glew32.dll" "$(TargetDir)glew32.dll" /Y</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -144,8 +148,8 @@
       <AdditionalDependencies>glew32.lib;glfw3dll.lib;opengl32.lib;lua53.lib;_ENGINE.lib;_GRAPHICS.lib;_TOOLS.lib;_SCRIPTING.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>copy "$(SolutionDir)lib\GLFW\lib-vc2022\glfw3.dll" "$(TargetDir)glfw3.dll" /Y
+copy "$(SolutionDir)lib\GLEW\bin\Release\x64\glew32.dll" "$(TargetDir)glew32.dll" /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
