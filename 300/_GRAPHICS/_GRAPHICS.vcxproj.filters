@@ -104,36 +104,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="source\Math.hpp">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="source\OpenGl.hpp">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Random.hpp">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Shader.hpp">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Shapes.hpp">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Vao.hpp">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Vbo.hpp">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Window.hpp">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Camera.hpp">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="source\DebugRenderer.hpp">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="demo\ImGui.hpp">
       <Filter>Demo</Filter>
     </ClInclude>
@@ -143,17 +113,47 @@
     <ClInclude Include="include\Common.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\Mesh.hpp">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="source\Renderer.hpp">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\_GEOM_COMPILER\include\geom.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\Texture.hpp">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="include\Camera.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\DebugRenderer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Math.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Mesh.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\OpenGl.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Random.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Renderer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Shader.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Shapes.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Texture.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Vao.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Vbo.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Window.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\Fbo.hpp">
       <Filter>Header Files</Filter>

@@ -1,5 +1,4 @@
-#include <stb-master/stb_image.h>
-
+#include <stb_image.h>
 #include <string>
 #include <iostream>
 #include <fstream>

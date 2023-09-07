@@ -16,22 +16,21 @@ int Input::mTotalMouseKey{ 8 };
 int Input::mMaxKeyboardIndex{ 348 };
 double Input::mScrollTotal{ 0 };
 double Input::mScrollOffset{ 0 };
-GLFWwindow* Input::mWindow;
+GFX::Window* Input::mWindow;
 GLFWcursor* Input::mCursor;
 
-void Input::Init(GLFWwindow* _window) {
-  mWindow = _window;
+void Input::Init(GFX::Window* window) {
+  mWindow = window;
 
-  glfwSetInputMode(mWindow, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-  glfwSetScrollCallback(mWindow, scroll_callback);
+  glfwSetScrollCallback(mWindow->GetHandle(), scroll_callback);
  }
 
 bool Input::CheckKey(E_STATE state, E_KEY key) {
   int curr_state{};
   if ((int)key > mMaxKeyboardIndex)
-    curr_state = glfwGetMouseButton(mWindow, (int)key - mMaxKeyboardIndex - 1);
+    curr_state = glfwGetMouseButton(mWindow->GetHandle(), (int)key - mMaxKeyboardIndex - 1);
   else 
-    curr_state = glfwGetKey(mWindow, (int)key);
+    curr_state = glfwGetKey(mWindow->GetHandle(), (int)key);
 
   switch (curr_state) {
   case 0: // Curr not pressed
@@ -59,7 +58,7 @@ bool Input::CheckKey(E_STATE state, E_KEY key) {
 
    default:
 #ifdef NDEBUG
-    std::cout << "Invalid current keyId: " + std::to_string((int)key) + " | with current state: " + std::to_string(glfwGetKey(mWindow, (int)key)) << '\n';
+    std::cout << "Invalid current keyId: " + std::to_string((int)key) + " | with current state: " + std::to_string(glfwGetKey(mWindow->GetHandle(), (int)key)) << '\n';
 #endif
     assert(0 && "Invalid current key pressed");
 
@@ -69,16 +68,16 @@ bool Input::CheckKey(E_STATE state, E_KEY key) {
 
 void Input::UpdatePrevKeyStates() {
   for (int i = 0; i < static_cast<int>(sizeof(mPrevKeyStates)) - mTotalMouseKey; ++i)
-    mPrevKeyStates[i] = (bool)glfwGetKey(mWindow, mStartingIndex + i);
+    mPrevKeyStates[i] = (bool)glfwGetKey(mWindow->GetHandle(), mStartingIndex + i);
   for (int i = static_cast<int>(sizeof(mPrevKeyStates)) - mTotalMouseKey + 1, j = 0; i < static_cast<int>(sizeof(mPrevKeyStates)); ++i, ++j) {
-    mPrevKeyStates[i] = (bool)glfwGetMouseButton(mWindow, j);
+    mPrevKeyStates[i] = (bool)glfwGetMouseButton(mWindow->GetHandle(), j);
   }
   mScrollOffset = 0.0;
 }
 
 glm::vec2 Input::CursorPos() {
   double xpos, ypos;
-  glfwGetCursorPos(mWindow, &xpos, &ypos);
+  glfwGetCursorPos(mWindow->GetHandle(), &xpos, &ypos);
   return glm::vec2{ static_cast<float>(xpos), static_cast<float>(ypos) };
 }
 

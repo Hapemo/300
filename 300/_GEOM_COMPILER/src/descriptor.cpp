@@ -2,9 +2,9 @@
 #include <iostream>
 #include <fstream>
 
-#include <rapidjson/document.h>
-#include <rapidjson/writer.h>
-#include <rapidjson/stringbuffer.h>
+#include <document.h>
+#include <writer.h>
+#include <stringbuffer.h>
 
 #include <filesystem>
 

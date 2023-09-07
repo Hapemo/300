@@ -16,7 +16,7 @@
 
 
 /**---------------------------------------------------------------------------/
- * @brief
+ * @briefhhhhh
  *  Constructor for the Window class. Creates a window of specified size
  * @param windowSize
  *	width and height of the window
@@ -40,7 +40,7 @@ GFX::Window::Window(ivec2 windowSize)
     {
         throw std::runtime_error("Failed to create a window!");
     }
-
+    glfwSetInputMode(mWindow, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
     glfwMakeContextCurrent(mWindow);
     glfwSwapInterval(1);
 
@@ -109,6 +109,11 @@ vec2 GFX::Window::WindowToWorld(vec2 const& screenCoordinates)
     worldPos.y += mSize.y * 0.5f;;
 
     return worldPos;
+}
+
+void GFX::Window::PollEvents()
+{
+    glfwPollEvents();
 }
 
 bool GFX::Window::IsKeyPressed(int key)
