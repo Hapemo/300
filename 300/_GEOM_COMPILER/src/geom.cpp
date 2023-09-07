@@ -193,7 +193,10 @@ namespace Serialization
 			for (unsigned meshindex{}; meshindex < GeomData.m_nMeshes; ++meshindex)
 			{
 				// How many meshes are there? Each mesh has a bone info map
-				Err |= SerializeBoneInfoMap(outFile, GeomData.m_pMesh[meshindex].m_Animation);
+				for (int j{}; j < GeomData.m_pMesh[meshindex].m_Animation.size(); ++j) 
+				{
+					Err |= SerializeBoneInfoMap(outFile, GeomData.m_pMesh[meshindex].m_Animation[j]);
+				}
 			}
 
 			return Err;

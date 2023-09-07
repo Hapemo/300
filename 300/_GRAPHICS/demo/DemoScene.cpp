@@ -190,7 +190,7 @@ void GFX::DemoScene::Draw()
         // Clears buffer
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-#if 0
+#if 1
         //!< test rendering skull model
         mModelShader.Activate();
         //uid uids("gayed");

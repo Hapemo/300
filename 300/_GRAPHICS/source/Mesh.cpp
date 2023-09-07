@@ -170,18 +170,8 @@ void GFX::MeshManager::Init()
 			//uid uids("dasdsadsadasdassssssssssadaddddddddddddddddddddddddddddddddddddddddddddddddddddadadsd");
 			//std::cout << uids.id<< "\n";
 
-			_GEOM::Geom GeomData;
-			Mesh localmesh;
-			std::vector<glm::vec3> positions;
-			std::vector<glm::vec2> uvs;
-			std::vector<unsigned int> indices;
-
 			std::string filepath = compiled_geom_path + entry.path().filename().string();
-			Deserialization::DeserializeGeom(filepath.c_str(), GeomData);
-			localmesh.LoadFromGeom(GeomData, positions, uvs, indices);
-			localmesh.Setup(positions, indices, uvs);
-
-			mSceneMeshes.emplace_back(localmesh);
+			SetupMesh(filepath);
 
 			//uid uidd(entry.path().filename().string());
 			//uid uids("gayed");
@@ -191,6 +181,28 @@ void GFX::MeshManager::Init()
 
 		}
 	}
+}
+
+
+void GFX::MeshManager::SetupMesh(std::string filepath)
+{
+	_GEOM::Geom GeomData;
+	Mesh localmesh;
+	std::vector<glm::vec3> positions;
+	std::vector<glm::vec2> uvs;
+	std::vector<unsigned int> indices;
+
+	Deserialization::DeserializeGeom(filepath.c_str(), GeomData);	// load the geom from the compiled geom file
+	localmesh.LoadFromGeom(GeomData, positions, uvs, indices);
+	localmesh.Setup(positions, indices, uvs);
+
+	// Load animations
+	if (GeomData.m_bHasAnimations)
+	{
+
+	}
+
+	mSceneMeshes.emplace_back(localmesh);							// storage of all the scene's meshes
 }
 
 
@@ -221,7 +233,6 @@ namespace Deserialization
 	bool DeserializeGeom(const std::string Filepath, _GEOM::Geom& GeomData) noexcept
 	{
 #if 1
-		//std::ifstream infile("../compiled_geom/Skull_textured.geom");
 		std::ifstream infile(Filepath.c_str(), std::ios::binary);
 		assert(infile.is_open());
 		assert(infile.good());
@@ -257,74 +268,85 @@ namespace Deserialization
 			infile.read((char*)&GeomData.m_pMesh[i].m_name, sizeof(char) * 64);
 
 			// Animation Data
-			if (GeomData.m_bHasAnimations) 
+			if (GeomData.m_bHasAnimations)
 			{
-				infile.read((char*)&GeomData.m_pMesh[i].m_Animation.m_BoneCounter, sizeof(uint32_t));
-				infile.read((char*)&GeomData.m_pMesh[i].m_Animation.m_Duration, sizeof(float));
-				infile.read((char*)&GeomData.m_pMesh[i].m_Animation.m_TicksPerSecond, sizeof(float));
+				uint8_t numberofanimations{};
+				infile.read((char*)&numberofanimations, sizeof(uint8_t));
 
-				// Bone info map
-				for (unsigned j{}; j < GeomData.m_pMesh[i].m_Animation.m_BoneCounter; ++j)
+				for (int j{}; j < numberofanimations; ++j)
 				{
-					_GEOM::BoneInfo temp;
-					char cname[64];
-					uint8_t strlen{};
+					_GEOM::Animation animation;
 
-					infile.read((char*)&strlen, sizeof(uint8_t));						// Bone name length
-					infile.read(cname, strlen);											// Bone name							
-					infile.read((char*)&temp, sizeof(_GEOM::BoneInfo));					// Bone info	
-					
-					std::string name(cname, strlen);
+					infile.read((char*)&animation.m_BoneCounter, sizeof(uint32_t));
+					infile.read((char*)&animation.m_Duration, sizeof(float));
+					infile.read((char*)&animation.m_TicksPerSecond, sizeof(float));
 
-					GeomData.m_pMesh[i].m_Animation.m_BoneInfoMap.emplace(name, temp);
+					// Bone info map
+					for (unsigned j{}; j < animation.m_BoneCounter; ++j)
+					{
+						_GEOM::BoneInfo temp;
+						char cname[64];
+						uint8_t strlen{};
+
+						infile.read((char*)&strlen, sizeof(uint8_t));						// Bone name length
+						infile.read(cname, strlen);											// Bone name							
+						infile.read((char*)&temp, sizeof(_GEOM::BoneInfo));					// Bone info	
+
+						std::string name(cname, strlen);
+
+						animation.m_BoneInfoMap.emplace(name, temp);
+					}
+
+					// Bones
+					animation.m_Bones.resize(animation.m_BoneCounter);
+					for (unsigned j{}; j < animation.m_BoneCounter; ++j)
+					{
+						auto& boneinst = animation.m_Bones[j];
+
+						char cname[64];
+						uint8_t strlen{};
+
+						infile.read((char*)&strlen, sizeof(uint8_t));						// Bone name length
+						infile.read(cname, strlen);											// Bone name
+						boneinst.m_Name = std::string(cname, strlen);
+
+						infile.read((char*)&boneinst.m_ID, sizeof(int));					// Bone ID
+
+						infile.read((char*)&boneinst.m_NumPositions, sizeof(int));			// num positions
+						infile.read((char*)&boneinst.m_NumRotations, sizeof(int));			// num rotations
+						infile.read((char*)&boneinst.m_NumScalings, sizeof(int));			// num scalings
+
+						boneinst.m_Positions.resize(boneinst.m_NumPositions);
+						boneinst.m_Rotations.resize(boneinst.m_NumRotations);
+						boneinst.m_Scales.resize(boneinst.m_NumScalings);
+
+						// local transform
+						infile.read((char*)&boneinst.m_LocalTransform, sizeof(glm::mat4));
+
+						// key positions
+						for (int k{}; k < boneinst.m_NumPositions; ++k) {
+							infile.read((char*)&boneinst.m_Positions[k], sizeof(_GEOM::KeyPosition));
+						}
+
+						// key rotations
+						for (int k{}; k < boneinst.m_NumRotations; ++k) {
+							infile.read((char*)&boneinst.m_Rotations[k], sizeof(_GEOM::KeyRotation));
+						}
+
+						// key scalings
+						for (int k{}; k < boneinst.m_NumScalings; ++k) {
+							infile.read((char*)&boneinst.m_Scales[k], sizeof(_GEOM::KeyScale));
+						}
+					}
+
+					// AssimpNodeData
+					Deserialization::DeserializeAssimpNodeData(infile, animation.m_RootNode);
+
+					GeomData.m_pMesh[i].m_Animation.emplace_back(animation);
 				}
-
-				// Bones
-				GeomData.m_pMesh[i].m_Animation.m_Bones.resize(GeomData.m_pMesh[i].m_Animation.m_BoneCounter);
-				for(unsigned j{}; j < GeomData.m_pMesh[i].m_Animation.m_BoneCounter; ++j)
-				{
-					auto& boneinst = GeomData.m_pMesh[i].m_Animation.m_Bones[j];
-
-					char cname[64];
-					uint8_t strlen{};
-
-					infile.read((char*)&strlen, sizeof(uint8_t));						// Bone name length
-					infile.read(cname, strlen);											// Bone name
-					boneinst.m_Name = std::string(cname, strlen);
-
-					infile.read((char*)&boneinst.m_ID, sizeof(int));					// Bone ID
-
-					infile.read((char*)&boneinst.m_NumPositions, sizeof(int));			// num positions
-					infile.read((char*)&boneinst.m_NumRotations, sizeof(int));			// num rotations
-					infile.read((char*)&boneinst.m_NumScalings, sizeof(int));			// num scalings
-
-					boneinst.m_Positions.resize(boneinst.m_NumPositions);
-					boneinst.m_Rotations.resize(boneinst.m_NumRotations);
-					boneinst.m_Scales.resize(boneinst.m_NumScalings);
-
-					// local transform
-					infile.read((char*)&boneinst.m_LocalTransform, sizeof(glm::mat4));
-
-					// key positions
-					for (int k{}; k < boneinst.m_NumPositions; ++k) {
-						infile.read((char*)&boneinst.m_Positions[k], sizeof(_GEOM::KeyPosition));
-					}
-
-					// key rotations
-					for (int k{}; k < boneinst.m_NumRotations; ++k) {
-						infile.read((char*)&boneinst.m_Rotations[k], sizeof(_GEOM::KeyRotation));
-					}
-
-					// key scalings
-					for (int k{}; k < boneinst.m_NumScalings; ++k) {
-						infile.read((char*)&boneinst.m_Scales[k], sizeof(_GEOM::KeyScale));
-					}
-				}
-
-				// AssimpNodeData
-				Deserialization::DeserializeAssimpNodeData(infile, GeomData.m_pMesh[i].m_Animation.m_RootNode);
-				std::cout << "\t\Animation Deserialization completed\n";
 			}
+
+			std::cout << "\t\Animation Deserialization completed\n";
 		}
 
 		// Submeshes

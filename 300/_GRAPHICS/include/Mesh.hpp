@@ -57,13 +57,6 @@ namespace GFX
 		std::vector<mat4> mLTW;
 		std::vector<vec4> mColors;
 
-#if _ASSIMP_LOADING
-		// assimp loaded mesh variables
-		std::vector<glm::vec3>		mPositions;
-		std::vector<unsigned int>	mIndices;
-		static std::vector<Mesh> assimpLoadedMeshes;	
-#endif
-
 	private:
 		// Vertex array object and buffer object for each mesh
 		VAO mVao;
@@ -77,6 +70,14 @@ namespace GFX
 		std::string mMeshName;
 		int mVertexCount{};
 		int mIndexCount{};
+
+	public:
+		#if _ASSIMP_LOADING
+			// assimp loaded mesh variables
+			std::vector<glm::vec3>		mPositions;
+			std::vector<unsigned int>	mIndices;
+			static std::vector<Mesh> assimpLoadedMeshes;	
+		#endif
 	};
 
 
@@ -115,6 +116,7 @@ namespace GFX
 
 	private:
 		const std::string compiled_geom_path = "../compiled_geom/";
+		void SetupMesh(std::string filepath);
 	};
 }
 

@@ -62,6 +62,8 @@ namespace _GEOM
 		float											m_Duration;
 		float											m_TicksPerSecond;
 
+		std::string										m_Name;
+
 		// NOTE:: there is another member variable called AssimpNodeData, that contains the
 		// transformation, childrencount, and name. But this is already done with pretransformations
 		// in the mesh loading.. keep it in mind for now.
@@ -87,7 +89,7 @@ namespace _GEOM
 		struct Mesh
 		{
 			std::array<char, 64>	m_name;				// Name of mesh
-			Animation				m_Animation;		// Animation data of the mesh
+			std::vector<Animation>	m_Animation;		// Animation data of the mesh
 		};
 
 		struct SubMesh
@@ -100,7 +102,7 @@ namespace _GEOM
 			std::uint16_t			m_iMaterial;		//Index of material in submesh
 		};
 
-		// TODO:: add texture de/serialization
+		// TODO:: add texture path de/serialization from fbx
 		struct Texture
 		{
 			//unsigned int id;
@@ -151,7 +153,7 @@ namespace _GEOM
 		std::string										m_Filename;
 		std::vector<Mesh>								m_Meshes;
 
-		Animation										m_Animation;	
+		std::vector<Animation>							m_Animation;	
 
 		bool											m_bHasTextures = false;		// TODO:: this has not been fully implemented yet. 
 		bool											m_bHasAnimation = false;	
