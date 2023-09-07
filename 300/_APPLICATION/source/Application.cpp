@@ -27,7 +27,7 @@ void Application::Init()
 {
     StartUp();
     SystemInit();
-    MultithreadExample();
+    //MultithreadExample();
 }
 
 void Application::StartUp() 
