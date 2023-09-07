@@ -119,7 +119,6 @@ private:
   
 public:
   /*!*****************************************************************************
-  \brief
   Initialises the Input system
   *******************************************************************************/
   static void Init(GFX::Window* window);
@@ -129,26 +128,26 @@ public:
   //-------------------------------------------------------------
   
   /*!*****************************************************************************
-  \brief
   Checks for the state of certain key
+
   \param STATE
   - State of the key pressed
+
   \param KEY
   - Key to check the state of
+
   \return bool
   - Returns true if inputted state matches current state of specified key
   *******************************************************************************/
   static bool CheckKey(E_STATE, E_KEY);
   
   /*!*****************************************************************************
-  \brief
   Update the previous state of all keys.
   Must be called once after all key inquiry
   *******************************************************************************/
   static void UpdatePrevKeyStates();
 
   /*!*****************************************************************************
-  \brief
   Returns the mouse cursor position
 
   \return Math::Vec2

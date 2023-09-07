@@ -140,6 +140,7 @@
     <ClInclude Include="include\ECS\ECS.h" />
     <ClInclude Include="include\ECS\ECS_Components.h" />
     <ClInclude Include="include\ECS\ECS_Systems.h" />
+    <ClInclude Include="include\Multithread.h" />
     <ClInclude Include="include\Resource\Guid.h" />
     <ClInclude Include="include\Resource\ResourceManager.h" />
   </ItemGroup>
@@ -152,6 +153,7 @@
     <ClInclude Include="include\Object\ObjectFactory.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="source\Multithread.cpp" />
     <ClCompile Include="source\Object\ObjectFactory.cpp" />
     <ClCompile Include="source\Resource\ResourceManager.cpp" />
     <ClCompile Include="source\Serialization\Serialization.cpp" />
