@@ -1,0 +1,400 @@
+#include "Audio/AudioSystem.h"
+
+
+// Initialize a (single "AudioManager")
+std::unique_ptr<AudioManager> mAudio;
+std::unique_ptr<AudioListener> lAudio;
+
+static bool once = false;
+
+// Audio System Life Cycle
+
+#pragma region AudioSystem Core Loop
+void AudioSystemInit()
+{	
+	mAudio = std::make_unique<AudioManager>();					  // Calls Default Constructor (initializes FMOD::System) and configurations.
+	lAudio = std::make_unique<AudioListener>(mAudio->system_obj); // Add a Listener (to test 3D spatial audio)
+
+	if (mAudio)
+	{
+		// Test Load Sound
+		mAudio->LoadAudioFile("../Assets/farm_ambience.wav", "farm", AUDIO_TYPE::AUDIO_BGM);
+		mAudio->LoadAudioFile("../Assets/NPC_Greeting.wav", "greeting", AUDIO_TYPE::AUDIO_BGM);
+		// Test Spatial Audio
+		mAudio->LoadAudioFile("../Assets/tuning-radio-7150.wav", "radio", AUDIO_TYPE::AUDIO_SFX, true, { 0.0f,0.0f,0.0f });
+	}
+
+}
+
+void AudioSystemUpdate()
+{
+	if (!once)
+	{
+		FMOD_VECTOR vector{ 0.0f,0.0f,0.0f };
+		mAudio->PlayAudio("radio", AUDIO_TYPE::AUDIO_SFX, vector, 1.0f);
+		FMOD_VECTOR set_vector{ 1.0f, 0.0f, 0.0f };
+		mAudio->SetChannel3DPosition(1, set_vector);
+	/*	mAudio->channel->setVolume(0.5f);
+		float volume = 0.0f;
+		mAudio->channel->getVolume(&volume);*/
+		//ERRGETCHECK(volume);
+
+		//std::cout << "Current Volume is: " << volume << std::endl;
+
+		once = true;
+	}
+
+	//FMOD_VECTOR listener_pos = lAudio->GetListenerPosition();
+
+	////std::cout << "Position : (" << listener_pos.x << "," << listener_pos.y << "," << listener_pos.z << ")" << std::endl;
+
+	//lAudio->SetListenerPosition(listener_pos.x - 0.0005f, listener_pos.y - 0.0005f, listener_pos.z - 0.0005f);
+	//lAudio->Update(); // [Important] - updates the volume 
+
+	//float volume = 0.0f;
+	//mAudio->channel->getVolume(&volume);
+
+	//std::cout << "Current Volume is: " << volume << std::endl;
+
+	mAudio->system_obj->Update();
+	
+
+	//if (mAudio)
+	//{
+	//	mAudio->system->update(); // Updates (FMOD audio system)
+	//	if (!once)
+	//	{
+	//		bool isPlaying;
+	//		std::cout << mAudio->channel->isPlaying(&isPlaying) << std::endl;
+	//		once = true;
+	//		if (isPlaying)
+	//			mAudio->channel->stop();
+	//	}
+	//	
+	//}
+
+
+	
+
+
+
+	/*if (!once)
+  {
+	  mAudio->PlayBGMAudio("farm");
+	  once = true;
+  }
+
+  if (!once2)
+  {
+	  mAudio->PlayBGMAudio("greeting");
+	  once = true;
+  }*/
+}
+
+void AudioSystemExit()
+{
+
+}
+#pragma endregion
+
+
+#pragma region AudioManager
+/*
+*  AudioManager Helper Functions
+*  -----------------------------------
+*/ 
+
+/*
+   [Default Constructor]
+   - Initializes the [FMOD::System]  
+*/
+AudioManager::AudioManager()
+{
+	system_obj = new AudioSystem(); // Does the initialization for the system.
+}
+
+int AudioManager::ErrCodeCheck(FMOD_RESULT result)
+{
+	if (result != FMOD_OK)
+	{
+		std::cout << "FMOD OPERATION ERROR: " << result << std::endl;
+
+		switch (result)
+		{
+			case FMOD_ERR_HEADER_MISMATCH:
+				std::cout << "(20) [FMOD_ERR_HEADER_MISMATCH] : There is a version mismatch between the FMOD header and either the FMOD Studio library or the FMOD Low Level library." << std::endl;
+				break;
+		}
+
+
+		return 1; // failure
+	}
+	std::cout << "FMOD OPERATION OK." << std::endl;
+	return 0; // success (no issues)
+}
+
+/*
+   [Helper Function - Load Audio File]
+   - Loads Audio File. 
+   - [Arguments] : 1) File Path, 2) Name your Audio!, 3) Audio Type (enum) -> refer to header file.
+*/
+void AudioManager::LoadAudioFile(std::string audiofilePath, std::string audio_name, AUDIO_TYPE audio_type, bool spatial, FMOD_VECTOR audio_position, bool looping)
+{
+	//FMOD::Sound* pSound = nullptr;
+
+	Sound* new_sound = new Sound{ audio_position , nullptr };
+	//new_sound->position = audio_position;
+
+	// Mode Selector
+	FMOD_MODE mode = FMOD_DEFAULT;							// [Normal Setting] - by default.
+	mode |= spatial ? FMOD_3D : FMOD_2D;					// [3D Audio]       - checks for (spatial flag) -> user-defined arguement
+	mode |= looping ? FMOD_LOOP_NORMAL : FMOD_LOOP_OFF;     // [Looping]		- checks for (looping flag) -> user-defined arguement
+
+	std::cout << "Creating Sound: " << audio_name << ": ";
+	ErrCodeCheck(mAudio->system_obj->system->createSound(audiofilePath.c_str(), mode, 0, &new_sound->sound)); 
+
+	if (&new_sound->sound) // if successfully created.
+	{	
+		switch (audio_type)
+		{
+		case AUDIO_BGM:
+			mAudio->system_obj->aSoundsBGM[audio_name] = new_sound; // push into database.
+			return;
+		case AUDIO_SFX:
+			mAudio->system_obj->aSoundsSFX[audio_name] = new_sound; // push into database.
+			return;
+		}
+	}
+}
+
+/*
+   [Play Audio]
+   - Finds Requested Audio File
+   - Plays at the specified position + volume.
+*/
+void AudioManager::PlayAudio(std::string audio_name, AUDIO_TYPE audio_type, FMOD_VECTOR audio_pos, float audio_vol)
+{
+	AudioSystem::SoundMap* map_pointer = nullptr;
+
+	switch (audio_type)
+	{
+	case AUDIO_BGM:
+		map_pointer = &(mAudio->system_obj->aSoundsBGM);
+		break;
+	case AUDIO_SFX:
+		map_pointer = &(mAudio->system_obj->aSoundsSFX);
+		break;
+	}
+
+	AudioSystem::SoundMap::iterator map_it = map_pointer->find(audio_name); // find the name.
+
+	if (map_pointer)
+	{
+		if (map_it == map_pointer->end()) // if the audio name is found ...
+		{
+			std::cout << "Cannot Find Audio" << std::endl;
+			return;
+		}
+	}
+
+	FMOD::Channel* new_channel = nullptr;
+	ErrCodeCheck(mAudio->system_obj->system->playSound(map_it->second->sound, nullptr, true, &new_channel)); // Play in the new channel.
+
+	// For 3D Audios
+	if (new_channel) // if channel successfully utilized...
+	{
+		FMOD_MODE audio_mode;
+		map_it->second->sound->getMode(&audio_mode); // get the audio's setting. 
+
+		if (audio_mode & FMOD_3D) // if the mode is [FMOD_3D]
+		{
+			result_code = new_channel->set3DAttributes(&audio_pos, nullptr); // Setting for 3D Position & velocity (for spatial audio)
+			std::cout << "Setting 3D Attributes: ";
+			ErrCodeCheck(result_code);
+		}
+
+		// Set the Volume of the sound.
+		result_code = new_channel->setVolume(audio_vol);
+		std::cout << "Setting Audio Volume: ";
+		ErrCodeCheck(result_code);
+
+		// Set back pause boolean. (play the audio after setting)
+		result_code = new_channel->setPaused(false);
+		std::cout << "Setting Pause Setting: ";
+		ErrCodeCheck(result_code);
+	}
+
+	// Finally push it into the list of channels we have.
+	int& channel_size = mAudio->system_obj->channel_size;
+	channel_size = mAudio->system_obj->aChannels.size();
+	std::cout << "Number of Channels: " << channel_size << std::endl;
+	mAudio->system_obj->aChannels.insert(std::make_pair(channel_size + 1, new_channel));
+	channel_size++;
+	std::cout << "New Number of Channels: " << channel_size << std::endl;
+}
+
+void AudioManager::SetChannel3DPosition(int channel_id, FMOD_VECTOR audio_pos)
+{
+	AudioSystem::ChannelMap::iterator map_it = mAudio->system_obj->aChannels.find(channel_id); // Find using the channel ID.
+
+	// Does the Channel even exist?
+	if (map_it == mAudio->system_obj->aChannels.end())
+	{
+		std::cout << "Couldn't find the requested Channel. " << std::endl;
+		return;	// Return because no such channel.
+	}
+	
+	FMOD_VECTOR initial_pos;
+	FMOD_VECTOR final_pos;
+	result_code = map_it->second->get3DAttributes(&initial_pos, nullptr);
+	result_code = map_it->second->set3DAttributes(&audio_pos, nullptr);
+	std::cout << "3D Position for [Channel " << channel_id << "]: " << std::endl;
+	std::cout << "Setting Position [" << initial_pos.x << "," << initial_pos.y << "," << initial_pos.z << "]" << std::endl;
+	ErrCodeCheck(result_code);
+	
+	result_code = map_it->second->get3DAttributes(&final_pos, nullptr);
+	std::cout << "Final Position: [" << final_pos.x << "," << final_pos.y << "," << final_pos.z << "]" << std::endl;
+}
+
+void AudioManager::SetChannelVolume(int channel_id, float channel_vol)
+{
+	AudioSystem::ChannelMap::iterator map_it = mAudio->system_obj->aChannels.find(channel_id); // Find using the channel ID. 
+
+	// Does the Channel even exist?
+	if (map_it == mAudio->system_obj->aChannels.end())
+	{
+		std::cout << "Couldn't find the requested Channel. " << std::endl;
+		return;	// Return because no such channel.
+	}
+
+	float initial_volume;
+	float final_volume;
+
+	result_code = map_it->second->getVolume(&initial_volume);
+	std::cout << "Initial Volume of Channel " << channel_id << ": " << initial_volume;
+}
+
+/*
+	- Make sure that the bank exists in the database first.
+*/
+void AudioManager::LoadAudioBank(std::string bankfilepath, std::string bank_name)
+{
+	AudioSystem::BankMap::iterator map_it = mAudio->system_obj->aBank.find(bankfilepath);
+
+	// If [Bank] exist ...
+	if (map_it != mAudio->system_obj->aBank.end()) // Does not point to the end (found a bank that has the specified name)
+	{
+		std::cout << "Bank already exists" << std::endl; 
+		return; 
+	} // Requested [Bank] does not exist yet...
+
+	// Create [Bank] file and store it in system
+	FMOD::Studio::Bank* new_bank;
+	result_code = mAudio->system_obj->studio_system->loadBankFile(bankfilepath.c_str(), FMOD_STUDIO_LOAD_BANK_NORMAL, &new_bank);
+	std::cout << "Creating New Bank: ";
+	ErrCodeCheck(result_code);
+
+	if (new_bank) // if new bank successfully created
+	{
+		mAudio->system_obj->aBank[bank_name] = new_bank; // Push in the new bank into database. 
+		return; 
+	}
+
+	return; 
+}
+
+#pragma endregion
+
+#pragma region AudioSystem
+AudioSystem::AudioSystem()
+{
+	sys_result_code = FMOD::System_Create(&system);	 // [Initializes the Audio System] -> returns the system object to this class. (&system)'
+	std::cout << "System Create: ";
+	AudioManager::ErrCodeCheck(sys_result_code);
+
+	sys_result_code = system->init(MAX_AUDIO_FILES_PLAYING, FMOD_INIT_NORMAL, nullptr);
+	std::cout << "System Initialize: ";
+	AudioManager::ErrCodeCheck(sys_result_code);
+	
+	/*unsigned int version;
+	sys_result_code = system->getVersion(&version);
+	std::cout << "System Version Retrieve: ";
+	AudioManager::ErrCodeCheck(sys_result_code);*/
+
+	// [FMOD_STUDIO_LIVEUPDATE]   - Enables live update feature, allows for modifying & updating of sound assets (real-time)
+	// [FMOD_INIT_PROFILE_ENABLE] - 
+	sys_result_code = FMOD::Studio::System::create(&studio_system);
+	std::cout << "Studio System Create: ";
+	AudioManager::ErrCodeCheck(sys_result_code);
+
+	sys_result_code = studio_system->initialize(MAX_AUDIO_FILES_PLAYING, FMOD_STUDIO_INIT_LIVEUPDATE, FMOD_INIT_PROFILE_ENABLE, NULL);
+	std::cout << "Studio System Initialize: ";
+	AudioManager::ErrCodeCheck(sys_result_code);
+}
+
+
+/* 
+	- To manage audio channels
+	- Frees up channels, for use.
+	- Used to update event sounds also.
+*/
+
+void AudioSystem::Update()
+{
+	std::vector<ChannelMap::iterator> stop_this_channel;
+
+	ChannelMap::iterator channel_it = aChannels.begin();
+	ChannelMap::iterator channel_end_it = aChannels.end();
+
+	for (; channel_it != channel_end_it; channel_it++)
+	{
+		bool currently_playing = false;
+		channel_it->second->isPlaying(&currently_playing); // Checks if current channel is still playing an audio ...
+		if (!currently_playing) // if it's stopped playing ...
+		{
+			stop_this_channel.push_back(channel_it); // push back to my list of channels to delete.
+		}
+	}
+
+	for (auto& it : stop_this_channel)
+	{
+		aChannels.erase(it);
+	}
+
+	//std::cout << "Update FMOD Internal System: ";
+	//AudioManager::ErrCodeCheck(system->update()); // Update Event Sounds (FMOD System)
+}
+#pragma endregion
+
+#pragma AudioListener
+AudioListener::AudioListener(AudioSystem* audiosys) : audioSystem(audiosys)
+{
+	listener_pos = { 0.0f, 0.0f, 0.0f };
+}
+
+AudioListener::AudioListener(AudioSystem* audiosys, FMOD_VECTOR object_pos) : audioSystem(audiosys)
+{
+	listener_pos = object_pos;
+}
+
+void AudioListener::SetListenerPosition(float x, float y, float z)
+{
+	listener_pos = { x,y,z };
+}
+
+void AudioListener::SetListenerPosition(FMOD_VECTOR object_pos)
+{
+	listener_pos = object_pos;
+}
+
+FMOD_VECTOR AudioListener::GetListenerPosition() const
+{
+	return listener_pos; 
+}
+
+
+
+
+
+
+#pragma endregion

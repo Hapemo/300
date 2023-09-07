@@ -16,6 +16,7 @@ start up of window and game system, also runs their update functions.
 #include "SingletonManager.h"
 #include "Object/ObjectFactory.h"
 #include "ScriptingSystem.h"
+#include "Example.h"
 
 // Static variables
 GFX::DebugRenderer* Application::mRenderer;
@@ -27,6 +28,7 @@ void Application::Init()
 {
     StartUp();
     SystemInit();
+    //MultithreadExample();
 }
 
 void Application::StartUp() 
