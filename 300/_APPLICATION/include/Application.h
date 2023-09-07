@@ -34,6 +34,9 @@ public:
 	*******************************************************************************/
 	static void SystemInit();
 
+	// Main update that runs everythign in a loop
+	static void MainUpdate();
+
 	/*!*****************************************************************************
 	 Initialisation before start of each game loop.
 	 
@@ -52,9 +55,6 @@ public:
 	*******************************************************************************/
 	static void SecondUpdate();
 
-	// Main update that runs everythign in a loop
-	static void MainUpdate();
-
 	/*!*****************************************************************************
 	 Unload and clean up when exiting the application
 	*******************************************************************************/
@@ -66,29 +66,4 @@ private:
     static GFX::DebugRenderer* mRenderer;
 	static SystemManager systemManager;
     GFX::Camera mCamera;
-	
-	/*!*****************************************************************************
-	 Callback function for GLFW errors
-
-	 \param int _error
-	 - Error code from GLFW
-
-	 \param char const* _description
-	 - Description of error
-	*******************************************************************************/
-	static void error_cb(int _error, char const* _description);
-
-	/*!*****************************************************************************
-	 Callback function for GLFW framebuffer
-
-	 \param GLFWwindow* _ptrWin
-	 - Pointer to window
-
-	 \param _width
-	 - Window width
-
-	 \param _height
-	 - Window height
-	*******************************************************************************/
-	static void fbsize_cb(GLFWwindow* _ptrWin, int _width, int _height);
 };

@@ -1,4 +1,4 @@
-#include "../../include/Object/ObjectFactory.h"
+#include "Object/ObjectFactory.h"
 
 void ObjectFactory::DeserializeScene(const std::string& filename)
 {

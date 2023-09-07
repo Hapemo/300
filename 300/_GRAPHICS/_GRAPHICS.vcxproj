@@ -65,18 +65,18 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\prop-pages\_GRAPHICS-props.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\prop-pages\_GRAPHICS-props.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <IncludePath>$(SolutionDir)lib\IMGUI\backends;$(SolutionDir)lib\IMGUI\misc\cpp;$(SolutionDir)lib\MESH-OPTIMIZER\src;$(SolutionDir)lib\ASSIMP\BINARIES\Win32\include;$(SolutionDir)lib\ASSIMP\include;$(SolutionDir)lib\ASSIMP\include\assimp;$(SolutionDir)lib/GLFW/include/;$(SolutionDir)lib/GLFW/include/GLFW;$(SolutionDir)lib/GLEW/include/GL;$(SolutionDir)lib/GLM;$(SolutionDir)_SCRIPTING/include;$(SolutionDir)_GRAPHICS/include;$(SolutionDir)_ENGINE/include;$(SolutionDir)_GEOM_COMPILER/include;$(SolutionDir)lib/STB;$(SolutionDir)lib\IMGUI;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <IncludePath>$(SolutionDir)lib\IMGUI\backends;$(SolutionDir)lib\IMGUI\misc\cpp;$(SolutionDir)lib\MESH-OPTIMIZER\src;$(SolutionDir)lib\ASSIMP\BINARIES\Win32\include;$(SolutionDir)lib\ASSIMP\include;$(SolutionDir)lib\ASSIMP\include\assimp;$(SolutionDir)lib/GLFW/include/;$(SolutionDir)lib/GLFW/include/GLFW;$(SolutionDir)lib/GLEW/include/GL;$(SolutionDir)lib/GLM;$(SolutionDir)_SCRIPTING/include;$(SolutionDir)_GRAPHICS/include;$(SolutionDir)_ENGINE/include;$(SolutionDir)_GEOM_COMPILER/include;$(SolutionDir)lib/STB;$(SolutionDir)lib\IMGUI;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Label="Vcpkg">
     <VcpkgEnabled>false</VcpkgEnabled>
@@ -116,6 +116,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -132,6 +133,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -171,20 +173,20 @@
     <ClInclude Include="..\_GEOM_COMPILER\include\geom.h" />
     <ClInclude Include="demo\DemoScene.hpp" />
     <ClInclude Include="demo\ImGui.hpp" />
+    <ClInclude Include="include\Camera.hpp" />
     <ClInclude Include="include\Common.hpp" />
-    <ClInclude Include="source\Camera.hpp" />
-    <ClInclude Include="source\DebugRenderer.hpp" />
-    <ClInclude Include="source\Math.hpp" />
-    <ClInclude Include="source\Mesh.hpp" />
-    <ClInclude Include="source\OpenGl.hpp" />
-    <ClInclude Include="source\Random.hpp" />
-    <ClInclude Include="source\Renderer.hpp" />
-    <ClInclude Include="source\Shader.hpp" />
-    <ClInclude Include="source\Shapes.hpp" />
-    <ClInclude Include="source\Texture.hpp" />
-    <ClInclude Include="source\Vao.hpp" />
-    <ClInclude Include="source\Vbo.hpp" />
-    <ClInclude Include="source\Window.hpp" />
+    <ClInclude Include="include\DebugRenderer.hpp" />
+    <ClInclude Include="include\Math.hpp" />
+    <ClInclude Include="include\Mesh.hpp" />
+    <ClInclude Include="include\OpenGl.hpp" />
+    <ClInclude Include="include\Random.hpp" />
+    <ClInclude Include="include\Renderer.hpp" />
+    <ClInclude Include="include\Shader.hpp" />
+    <ClInclude Include="include\Shapes.hpp" />
+    <ClInclude Include="include\Texture.hpp" />
+    <ClInclude Include="include\Vao.hpp" />
+    <ClInclude Include="include\Vbo.hpp" />
+    <ClInclude Include="include\Window.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="shader_files\draw_frag.glsl" />

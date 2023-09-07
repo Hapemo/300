@@ -21,7 +21,7 @@
     <ClInclude Include="include\pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Helper.h">
+    <ClInclude Include="include\FPSManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\ISingleton.h">
@@ -41,7 +41,7 @@
     <ClCompile Include="source\Misc.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\Helper.cpp">
+    <ClCompile Include="source\FPSManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\Input.cpp">

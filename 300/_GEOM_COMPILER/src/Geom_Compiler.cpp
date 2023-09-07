@@ -9,7 +9,7 @@
 #include <iomanip>
 #include <algorithm>
 
-#include <meshoptimizer/src/meshoptimizer.h>
+#include <meshoptimizer.h>
 #pragma comment( lib, "../lib/assimp/BINARIES/Win32/lib/Release/assimp-vc142-mt.lib")
 
 namespace _GEOM

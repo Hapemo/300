@@ -1,9 +1,8 @@
 #pragma once
-#include "../glm-0.9.9.8/glm/glm.hpp"
-#include "../../_SCRIPTING/Script.h"
+#include "glm/glm.hpp"
+#include "Script.h"
 #include <vector>
 #include "pch.h"
-#include "Physics/PhysicsSystem.h"
 
 enum class TAG : unsigned char
 {
@@ -33,7 +32,6 @@ struct Transform
 
 struct RigidBody
 {
-	MATERIAL mMaterial;
 };
 
 /***************************************************************************/

@@ -19,18 +19,18 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="LuaEngine.cpp" />
-    <ClCompile Include="Script.cpp" />
-    <ClCompile Include="ScriptingSystem.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="LuaEngine.h" />
-    <ClInclude Include="resource.h" />
-    <ClInclude Include="Script.h" />
-    <ClInclude Include="ScriptingSystem.h" />
-  </ItemGroup>
-  <ItemGroup>
     <ResourceCompile Include="_SCRIPTING.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\LuaEngine.cpp" />
+    <ClCompile Include="source\Script.cpp" />
+    <ClCompile Include="source\ScriptingSystem.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\LuaEngine.h" />
+    <ClInclude Include="include\resource.h" />
+    <ClInclude Include="include\Script.h" />
+    <ClInclude Include="include\ScriptingSystem.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -79,24 +79,18 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\prop-pages\SCRIPTING.props" />
-    <Import Project="..\prop-pages\_ENGINE-include.props" />
-    <Import Project="..\prop-pages\_TOOLS-include.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\prop-pages\SCRIPTING.props" />
-    <Import Project="..\prop-pages\_ENGINE-include.props" />
-    <Import Project="..\prop-pages\_TOOLS-include.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)lib\lua-5.3.6\include;$(SolutionDir)lib\sol-3.2.3;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)\lib\lua-5.3.6\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)lib\LUA\include;$(SolutionDir)lib/GLFW/include/GLFW;$(SolutionDir)lib\SOL;$(ProjectDir)include;$(SolutionDir)_ENGINE/include;$(SolutionDir)_TOOLS/include;$(SolutionDir)lib/ENTT;$(SolutionDir)lib/GLM;$(SolutionDir)lib/GLEW/include/GL;$(SolutionDir)_GRAPHICS/include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)\lib\LUA\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(SolutionDir)lib\lua-5.3.6\include;$(SolutionDir)lib\sol-3.2.3;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)\lib\lua-5.3.6\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)lib\LUA\include;$(SolutionDir)lib/GLFW/include/GLFW;$(SolutionDir)lib\SOL;$(ProjectDir)include;$(SolutionDir)_ENGINE/include;$(SolutionDir)_TOOLS/include;$(SolutionDir)lib/ENTT;$(SolutionDir)lib/GLM;$(SolutionDir)lib/GLEW/include/GL;$(SolutionDir)_GRAPHICS/include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)\lib\LUA\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -133,7 +127,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)\lib\lua-5.3.6\include;$(SolutionDir)\lib\sol-3.2.3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -149,6 +143,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)\lib\lua-5.3.6\include;$(SolutionDir)\lib\sol-3.2.3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
