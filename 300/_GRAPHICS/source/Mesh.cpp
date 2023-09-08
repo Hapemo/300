@@ -161,6 +161,7 @@ void GFX::MeshManager::Init()
 
 	std::filesystem::path folderpath = compiled_geom_path.c_str();
 
+	// Reads through all the files in the folder, and loads them into the mesh
 	for (const auto& entry : std::filesystem::directory_iterator(folderpath))
 	{
 		if (std::filesystem::is_regular_file(entry))
@@ -181,6 +182,9 @@ void GFX::MeshManager::Init()
 
 		}
 	}
+
+	// Set up the animator
+
 }
 
 
@@ -199,7 +203,9 @@ void GFX::MeshManager::SetupMesh(std::string filepath)
 	// Load animations
 	if (GeomData.m_bHasAnimations)
 	{
-
+		// store the animation data of the first mesh -- there should only be be one mesh per file so far, so we just take the first index
+		// We store the vector of animation data into the mesh class
+		localmesh.mAnimation = std::move(GeomData.m_pMesh[0].m_Animation);	
 	}
 
 	mSceneMeshes.emplace_back(localmesh);							// storage of all the scene's meshes

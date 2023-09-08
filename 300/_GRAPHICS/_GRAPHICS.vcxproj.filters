@@ -158,6 +158,9 @@
     <ClInclude Include="include\Fbo.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\Animator.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="shader_files\draw_frag.glsl">

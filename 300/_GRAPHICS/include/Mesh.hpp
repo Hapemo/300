@@ -57,6 +57,9 @@ namespace GFX
 		std::vector<mat4> mLTW;
 		std::vector<vec4> mColors;
 
+		// This mesh may contain multiple different animations	
+		std::vector<_GEOM::Animation> mAnimation{};
+
 	private:
 		// Vertex array object and buffer object for each mesh
 		VAO mVao;

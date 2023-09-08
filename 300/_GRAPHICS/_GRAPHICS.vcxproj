@@ -175,6 +175,7 @@
     <ClInclude Include="..\_GEOM_COMPILER\include\geom.h" />
     <ClInclude Include="demo\DemoScene.hpp" />
     <ClInclude Include="demo\ImGui.hpp" />
+    <ClInclude Include="include\Animator.hpp" />
     <ClInclude Include="include\Camera.hpp" />
     <ClInclude Include="include\Common.hpp" />
     <ClInclude Include="include\DebugRenderer.hpp" />

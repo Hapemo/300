@@ -62,8 +62,6 @@ namespace _GEOM
 		float											m_Duration;
 		float											m_TicksPerSecond;
 
-		std::string										m_Name;
-
 		// NOTE:: there is another member variable called AssimpNodeData, that contains the
 		// transformation, childrencount, and name. But this is already done with pretransformations
 		// in the mesh loading.. keep it in mind for now.
