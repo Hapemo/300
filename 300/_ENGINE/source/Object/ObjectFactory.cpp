@@ -10,10 +10,10 @@ void ObjectFactory::DeserializeScene(const std::string& filename)
 	for (auto& obj : entities.EntitiesList())
 	{
 		Entity e = ECS::GetInstance()->NewEntity();
-		General gen = e.GetComponent<General>();
-		gen = obj.GetGeneralJSON();
-		Transform trans = e.GetComponent<Transform>();
-		trans = obj.GetTransformJSON();
+		e.GetComponent<General>() = obj.GetGeneralJSON();
+		e.GetComponent<Transform>() = obj.GetTransformJSON();
+
+		//std::cout << e.GetComponent<General>().name << " " << e.GetComponent<General>().isActive << std::endl;
 	}
 }
 

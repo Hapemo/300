@@ -47,6 +47,9 @@ void Application::SystemInit()
     //gfx init
     // 
     // test serialization
+
+    //ObjectFactory::DeserializeScene("../resources/Scenes/test.json");
+
     Entity ent1 = ECS::GetInstance()->NewEntity();
     Entity ent2 = ECS::GetInstance()->NewEntity();
     Entity ent3 = ECS::GetInstance()->NewEntity();

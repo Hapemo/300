@@ -104,6 +104,7 @@ bool EntityJSON::Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* wri
 	/*writer->String("EntityID");
 	writer->Uint((std::uint32_t)mID);*/
 
+	// general
 	writer->String("General");
 	writer->StartObject();
 
@@ -121,6 +122,7 @@ bool EntityJSON::Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* wri
 
 	writer->EndObject();
 
+	// transform
 	writer->String("Transform");
 	writer->StartObject();
 	
