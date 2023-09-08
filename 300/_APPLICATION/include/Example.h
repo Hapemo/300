@@ -55,21 +55,25 @@ void MultithreadExample() {
 
 	// Different member functions of the same instance (BECAREFUL!!! MAKE SURE YOUR FUNCTIONS ARE ALL THREAD SAFE)
 	std::cout << "Different member functions of the same instance" << '\n';
-	Multithread::GetInstance()->RunMemberFunctions(std::pair(a1, &MTCoo1::Boo1),
-																								 std::pair(a1, &MTCoo1::Boo2),
-																								 std::pair(a1, &MTCoo1::Boo3));
+	Multithread::GetInstance()->RunMemberFunctions(std::pair(&a1, &MTCoo1::Boo1),
+																								 std::pair(&a1, &MTCoo1::Boo2),
+																								 std::pair(&a1, &MTCoo1::Boo3));
 
 	// Different member function of different instances
 	std::cout << "Different member function of different instances" << '\n';
-	Multithread::GetInstance()->RunMemberFunctions(std::pair(a1, &MTCoo1::Boo1),
-																								 std::pair(a2, &MTCoo1::Boo2),
-																								 std::pair(a3, &MTCoo1::Boo3));
+	Multithread::GetInstance()->RunMemberFunctions(std::pair(&a1, &MTCoo1::Boo1),
+																								 std::pair(&a2, &MTCoo1::Boo2),
+																								 std::pair(&a3, &MTCoo1::Boo3));
 
 	// Different member function of different classes
 	std::cout << "Different member function of different classes" << '\n';
-	Multithread::GetInstance()->RunMemberFunctions(std::pair(a1, &MTCoo1::Boo1),
-																								 std::pair(b1, &MTCoo2::Boo2),
-																								 std::pair(c1, &MTCoo3::Boo3));
+	Multithread::GetInstance()->RunMemberFunctions(std::pair(&a1, &MTCoo1::Boo1),
+																								 std::pair(&b1, &MTCoo2::Boo2),
+																								 std::pair(&c1, &MTCoo3::Boo3));
+
+	// Singleton
+	std::cout << "Different member function of different classes" << '\n';
+	Multithread::GetInstance()->RunMemberFunctions(std::pair(ECS::GetInstance(), &ECS::DeleteAllEntities));
 
 }
 //
