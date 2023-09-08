@@ -113,6 +113,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir)include\Editor;$(ProjectDir)source\Imgui;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -140,10 +141,45 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="source\EditorApplication.cpp" />
+    <ClCompile Include="source\Editor\ContentBrower.cpp" />
+    <ClCompile Include="source\Editor\Editor.cpp" />
+    <ClCompile Include="source\Editor\Hierarchy.cpp" />
+    <ClCompile Include="source\Editor\Inspect.cpp" />
+    <ClCompile Include="source\Editor\MenuPanel.cpp" />
+    <ClCompile Include="source\Editor\Performance.cpp" />
+    <ClCompile Include="source\Editor\SceneWindow.cpp" />
+    <ClCompile Include="source\Imgui\imgui.cpp" />
+    <ClCompile Include="source\Imgui\ImGuizmo.cpp" />
+    <ClCompile Include="source\Imgui\imgui_demo.cpp" />
+    <ClCompile Include="source\Imgui\imgui_draw.cpp" />
+    <ClCompile Include="source\Imgui\imgui_impl_glfw.cpp" />
+    <ClCompile Include="source\Imgui\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="source\Imgui\imgui_stdlib.cpp" />
+    <ClCompile Include="source\Imgui\imgui_tables.cpp" />
+    <ClCompile Include="source\Imgui\imgui_widgets.cpp" />
     <ClCompile Include="source\main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\EditorApplication.h" />
+    <ClInclude Include="include\Editor\ContentBrower.h" />
+    <ClInclude Include="include\Editor\Editor.h" />
+    <ClInclude Include="include\Editor\EditorWindow.h" />
+    <ClInclude Include="include\Editor\Hierarchy.h" />
+    <ClInclude Include="include\Editor\Inspect.h" />
+    <ClInclude Include="include\Editor\MenuPanel.h" />
+    <ClInclude Include="include\Editor\Performance.h" />
+    <ClInclude Include="include\Editor\SceneWindow.h" />
+    <ClInclude Include="source\Imgui\imconfig.h" />
+    <ClInclude Include="source\Imgui\imgui.h" />
+    <ClInclude Include="source\Imgui\ImGuizmo.h" />
+    <ClInclude Include="source\Imgui\imgui_impl_glfw.h" />
+    <ClInclude Include="source\Imgui\imgui_impl_opengl3.h" />
+    <ClInclude Include="source\Imgui\imgui_impl_opengl3_loader.h" />
+    <ClInclude Include="source\Imgui\imgui_internal.h" />
+    <ClInclude Include="source\Imgui\imgui_stdlib.h" />
+    <ClInclude Include="source\Imgui\imstb_rectpack.h" />
+    <ClInclude Include="source\Imgui\imstb_textedit.h" />
+    <ClInclude Include="source\Imgui\imstb_truetype.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

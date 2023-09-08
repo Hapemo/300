@@ -1,0 +1,112 @@
+/*!*************************************************************************
+****
+\file SceneWindow.h
+\author Han ChengWen
+\par DP email: c.han@digipen.edu
+\date 22-9-2022
+\brief
+This file contains SceneWindow window functions provides the drawing of FrameBuffer
+and display the objects with its respective camera system
+
+The functions
+- update
+Contains main loop for the Scene window that draws framebuffer
+
+- m_Hovered
+Return true if mouse is within window
+
+- Framebuffer_spec
+Setting up specification for frame buffer rendering
+
+****************************************************************************
+***/
+#pragma once
+
+#include "EditorWindow.h"
+
+
+/*******************************/
+/*!
+	SceneWindow Class
+*/
+/*******************************/
+class SceneWindow : public EditorWindow 
+{
+public:
+
+	static bool				Move;
+	static bool				Scale;
+	static bool				Rotate;
+
+
+/***************************************************************************/
+/*!
+\brief
+Initialization
+
+*/
+/**************************************************************************/
+	void init();
+
+/***************************************************************************/
+/*!
+\brief
+Contains main loop for the Scene window that draws framebuffer
+
+*/
+/***************************************************************************/
+	void update();
+
+/***************************************************************************/
+/*!
+\brief
+Setting up specification for frame buffer rendering
+
+\param fb_reference
+frame buffer reference for drawimg
+
+\return
+	none
+*/
+/***************************************************************************/
+	void Framebuffer_spec(GLuint&);
+
+/***************************************************************************/
+/*!
+\brief
+Return true if mouse is within window
+
+*/
+/***************************************************************************/
+	bool m_Hovered();
+
+
+
+/***************************************************************************/
+/*!
+\brief
+allowing dragging of object on scene window
+
+*/
+/***************************************************************************/
+	void ClickDrop();
+
+
+
+/***************************************************************************/
+/*!
+\brief
+Render IMGUIZMO integration
+
+*/
+/***************************************************************************/
+	void RenderGuizmo();
+
+
+	static bool			follow;
+
+private:
+
+	bool			    scene_m_Hovered     {0};
+	GLuint				Framebf				{0};
+};
