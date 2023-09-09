@@ -89,8 +89,10 @@ void GFX::DemoScene::Initialize()
     // Load all meshes
     MeshManager::GetInstance().Init();
 
+#if ANIMS_TEST
     // sets the global animator data. ideally, this should be set in entity creation. for now, its here for testing.
     mObjectAnimator.SetAnimation(MeshManager::GetInstance().mSceneMeshes[2].mAnimation[0]);
+#endif
     
 #if _ASSIMP_LOADING
     AssimpImporter::loadModel("../assets/demon-skull-textured/source/Skull_textured.fbx");
@@ -172,8 +174,10 @@ void GFX::DemoScene::Update()
     mCamera.SetCursorPosition({ mouseX, mouseY });
     mCamera.Update();
 
+#if ANIMS_TEST
     // == ANIMATOR UPDATE ==
     mObjectAnimator.UpdateAnimation(mDt);
+#endif
 
     static char buffer[10];
     sprintf(buffer, "FPS: %d", int(1.0f / mDt));

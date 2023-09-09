@@ -14,7 +14,6 @@
 
 
 #include <Animator.hpp>
-#include <Bone.h>
 
 namespace GFX
 {

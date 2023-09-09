@@ -17,6 +17,7 @@
 
 #define MAX_NUM_BONES 100
 
+#include <Bone.h>
 #include <glm/glm.hpp>
 
 #include <geom.h>

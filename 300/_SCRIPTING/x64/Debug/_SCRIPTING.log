@@ -1,1 +1,8 @@
-﻿
+﻿  LuaEngine.cpp
+F:\300\300\_ENGINE\include\ECS\ECS.h(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  Script.cpp
+F:\300\300\_ENGINE\include\ECS\ECS.h(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  ScriptingSystem.cpp
+F:\300\300\_ENGINE\include\ECS\ECS.h(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  Generating Code...
+  _SCRIPTING.vcxproj -> F:\300\300\x64\Debug\_SCRIPTING.lib

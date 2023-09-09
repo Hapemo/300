@@ -2,7 +2,14 @@
 #include <geom.h>
 #include <iostream>
 
-#define _DESCRIPTOR_FILEPATH "./descriptor_files/model_descriptors.json"
+#ifdef __STATIC_LIB	
+	// compiles the project into a static library
+	#define _DESCRIPTOR_FILEPATH "./descriptor_files/default_descriptor_staticlib.json"
+#else
+	// compiles the project into an executable
+	#define _DESCRIPTOR_FILEPATH "../../_GEOM_COMPILER/descriptor_files/default_descriptor_executable.json"
+#endif
+
 
 
 // Extracts the raw filename itself

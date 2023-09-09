@@ -5,6 +5,14 @@
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="Executable_DEBUG|Win32">
+      <Configuration>Executable_DEBUG</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Executable_DEBUG|x64">
+      <Configuration>Executable_DEBUG</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Win32">
       <Configuration>Release</Configuration>
       <Platform>Win32</Platform>
@@ -15,6 +23,22 @@
     </ProjectConfiguration>
     <ProjectConfiguration Include="Release|x64">
       <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="StaticLib_DEBUG|Win32">
+      <Configuration>StaticLib_DEBUG</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="StaticLib_DEBUG|x64">
+      <Configuration>StaticLib_DEBUG</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="StaticLib_RELEASE|Win32">
+      <Configuration>StaticLib_RELEASE</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="StaticLib_RELEASE|x64">
+      <Configuration>StaticLib_RELEASE</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
@@ -32,7 +56,26 @@
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='StaticLib_DEBUG|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Executable_DEBUG|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='StaticLib_RELEASE|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
@@ -45,7 +88,26 @@
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='StaticLib_DEBUG|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Executable_DEBUG|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='StaticLib_RELEASE|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
@@ -60,13 +122,31 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='StaticLib_DEBUG|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Executable_DEBUG|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='StaticLib_RELEASE|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='StaticLib_DEBUG|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Executable_DEBUG|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='StaticLib_RELEASE|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
@@ -76,7 +156,25 @@
     <IncludePath>$(SolutionDir)lib\ASSIMP\BINARIES\Win32\include;$(SolutionDir)_APPLICATION/include;$(SolutionDir)_ENGINE/include;$(SolutionDir)_GRAPHICS/include;$(SolutionDir)_SCRIPTING/include;$(SolutionDir)_TOOLS/include;$(SolutionDir)\lib\SOL;$(SolutionDir)\lib\LUA\include;$(SolutionDir)lib/ENTT;$(SolutionDir)lib/GLEW/include;$(SolutionDir)lib/GLEW/include/GL;$(SolutionDir)lib\STB;$(SolutionDir)lib\GLM;$(SolutionDir)lib/GLFW/include;$(SolutionDir)lib/GLFW/include/GLFW;$(SolutionDir)_GEOM_COMPILER/include;$(SolutionDir)lib\ASSIMP\include\assimp;$(SolutionDir)lib\ASSIMP\include;$(SolutionDir)lib\FMOD\core/inc;$(SolutionDir)lib\FMOD\studio/inc;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)lib\GLEW\lib\Release\x64;$(SolutionDir)lib\GLFW\lib-vc2022;$(SolutionDir)\lib\LUA\lib;$(SolutionDir)$(Platform)\$(Configuration)\;$(SolutionDir)lib\FMOD\studio\lib\x64;$(SolutionDir)lib\FMOD\core\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='StaticLib_DEBUG|x64'">
+    <ExecutablePath>$(ExecutablePath)</ExecutablePath>
+    <ExternalIncludePath>$(ExternalIncludePath)</ExternalIncludePath>
+    <IncludePath>$(SolutionDir)lib\ASSIMP\BINARIES\Win32\include;$(SolutionDir)_APPLICATION/include;$(SolutionDir)_ENGINE/include;$(SolutionDir)_GRAPHICS/include;$(SolutionDir)_SCRIPTING/include;$(SolutionDir)_TOOLS/include;$(SolutionDir)\lib\SOL;$(SolutionDir)\lib\LUA\include;$(SolutionDir)lib/ENTT;$(SolutionDir)lib/GLEW/include;$(SolutionDir)lib/GLEW/include/GL;$(SolutionDir)lib\STB;$(SolutionDir)lib\GLM;$(SolutionDir)lib/GLFW/include;$(SolutionDir)lib/GLFW/include/GLFW;$(SolutionDir)_GEOM_COMPILER/include;$(SolutionDir)lib\ASSIMP\include\assimp;$(SolutionDir)lib\ASSIMP\include;$(SolutionDir)lib\FMOD\core/inc;$(SolutionDir)lib\FMOD\studio/inc;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)lib\GLEW\lib\Release\x64;$(SolutionDir)lib\GLFW\lib-vc2022;$(SolutionDir)\lib\LUA\lib;$(SolutionDir)$(Platform)\$(Configuration)\;$(SolutionDir)lib\FMOD\studio\lib\x64;$(SolutionDir)lib\FMOD\core\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Executable_DEBUG|x64'">
+    <ExecutablePath>$(ExecutablePath)</ExecutablePath>
+    <ExternalIncludePath>$(ExternalIncludePath)</ExternalIncludePath>
+    <IncludePath>$(SolutionDir)lib\ASSIMP\BINARIES\Win32\include;$(SolutionDir)_APPLICATION/include;$(SolutionDir)_ENGINE/include;$(SolutionDir)_GRAPHICS/include;$(SolutionDir)_SCRIPTING/include;$(SolutionDir)_TOOLS/include;$(SolutionDir)\lib\SOL;$(SolutionDir)\lib\LUA\include;$(SolutionDir)lib/ENTT;$(SolutionDir)lib/GLEW/include;$(SolutionDir)lib/GLEW/include/GL;$(SolutionDir)lib\STB;$(SolutionDir)lib\GLM;$(SolutionDir)lib/GLFW/include;$(SolutionDir)lib/GLFW/include/GLFW;$(SolutionDir)_GEOM_COMPILER/include;$(SolutionDir)lib\ASSIMP\include\assimp;$(SolutionDir)lib\ASSIMP\include;$(SolutionDir)lib\FMOD\core/inc;$(SolutionDir)lib\FMOD\studio/inc;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)lib\GLEW\lib\Release\x64;$(SolutionDir)lib\GLFW\lib-vc2022;$(SolutionDir)\lib\LUA\lib;$(SolutionDir)$(Platform)\$(Configuration)\;$(SolutionDir)lib\FMOD\studio\lib\x64;$(SolutionDir)lib\FMOD\core\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>$(SolutionDir)lib\ASSIMP\BINARIES\Win32\include;$(SolutionDir)_APPLICATION/include;$(SolutionDir)_ENGINE/include;$(SolutionDir)_GRAPHICS/include;$(SolutionDir)_SCRIPTING/include;$(SolutionDir)_TOOLS/include;$(SolutionDir)\lib\SOL;$(SolutionDir)\lib\LUA\include;$(SolutionDir)lib/ENTT;$(SolutionDir)lib/GLEW/include;$(SolutionDir)lib/GLEW/include/GL;$(SolutionDir)lib\STB;$(SolutionDir)lib\GLM;$(SolutionDir)lib/GLFW/include;$(SolutionDir)lib/GLFW/include/GLFW;$(SolutionDir)_GEOM_COMPILER/include;$(SolutionDir)lib\ASSIMP\include\assimp;$(SolutionDir)lib\ASSIMP\include;$(SolutionDir)lib\FMOD\core/inc;$(SolutionDir)lib\FMOD\studio/inc;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)lib\GLEW\lib\Release\x64;$(SolutionDir)lib\GLFW\lib-vc2022;$(SolutionDir)\lib\LUA\lib;$(SolutionDir)$(Platform)\$(Configuration)\;$(SolutionDir)lib\FMOD\studio\lib\x64;$(SolutionDir)lib\FMOD\core\lib;$(LibraryPath)</LibraryPath>
+    <ExecutablePath>$(ExecutablePath)</ExecutablePath>
+    <ExternalIncludePath>$(ExternalIncludePath)</ExternalIncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='StaticLib_RELEASE|x64'">
     <IncludePath>$(SolutionDir)lib\ASSIMP\BINARIES\Win32\include;$(SolutionDir)_APPLICATION/include;$(SolutionDir)_ENGINE/include;$(SolutionDir)_GRAPHICS/include;$(SolutionDir)_SCRIPTING/include;$(SolutionDir)_TOOLS/include;$(SolutionDir)\lib\SOL;$(SolutionDir)\lib\LUA\include;$(SolutionDir)lib/ENTT;$(SolutionDir)lib/GLEW/include;$(SolutionDir)lib/GLEW/include/GL;$(SolutionDir)lib\STB;$(SolutionDir)lib\GLM;$(SolutionDir)lib/GLFW/include;$(SolutionDir)lib/GLFW/include/GLFW;$(SolutionDir)_GEOM_COMPILER/include;$(SolutionDir)lib\ASSIMP\include\assimp;$(SolutionDir)lib\ASSIMP\include;$(SolutionDir)lib\FMOD\core/inc;$(SolutionDir)lib\FMOD\studio/inc;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)lib\GLEW\lib\Release\x64;$(SolutionDir)lib\GLFW\lib-vc2022;$(SolutionDir)\lib\LUA\lib;$(SolutionDir)$(Platform)\$(Configuration)\;$(SolutionDir)lib\FMOD\studio\lib\x64;$(SolutionDir)lib\FMOD\core\lib;$(LibraryPath)</LibraryPath>
     <ExecutablePath>$(ExecutablePath)</ExecutablePath>
@@ -94,7 +192,47 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='StaticLib_DEBUG|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Executable_DEBUG|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='StaticLib_RELEASE|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -129,7 +267,68 @@
 copy "$(SolutionDir)lib\GLEW\bin\Release\x64\glew32.dll" "$(TargetDir)glew32.dll" /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='StaticLib_DEBUG|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>glew32.lib;glfw3dll.lib;opengl32.lib;lua53.lib;_ENGINE.lib;_GRAPHICS.lib;_TOOLS.lib;_SCRIPTING.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy "$(SolutionDir)lib\GLFW\lib-vc2022\glfw3.dll" "$(TargetDir)glfw3.dll" /Y
+copy "$(SolutionDir)lib\GLEW\bin\Release\x64\glew32.dll" "$(TargetDir)glew32.dll" /Y</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Executable_DEBUG|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>glew32.lib;glfw3dll.lib;opengl32.lib;lua53.lib;_ENGINE.lib;_GRAPHICS.lib;_TOOLS.lib;_SCRIPTING.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy "$(SolutionDir)lib\GLFW\lib-vc2022\glfw3.dll" "$(TargetDir)glfw3.dll" /Y
+copy "$(SolutionDir)lib\GLEW\bin\Release\x64\glew32.dll" "$(TargetDir)glew32.dll" /Y</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>glew32.lib;glfw3dll.lib;opengl32.lib;lua53.lib;_ENGINE.lib;_GRAPHICS.lib;_TOOLS.lib;_SCRIPTING.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy "$(SolutionDir)lib\GLFW\lib-vc2022\glfw3.dll" "$(TargetDir)glfw3.dll" /Y
+copy "$(SolutionDir)lib\GLEW\bin\Release\x64\glew32.dll" "$(TargetDir)glew32.dll" /Y</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='StaticLib_RELEASE|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
