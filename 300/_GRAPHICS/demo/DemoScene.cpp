@@ -17,6 +17,8 @@
 #include "ImGui.hpp"
 #include <cassert>
 
+#define TEST_FBO 0
+
 
  /**---------------------------------------------------------------------------/ 
   * @brief
@@ -54,6 +56,12 @@ void GFX::DemoScene::Initialize()
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);
     glDepthMask(GL_TRUE);
+
+#if TEST_FBO
+    // FBO
+    mFbo.Create(mWindow.size().x, mWindow.size().y, false);
+    mSceneAttachment = mFbo.GetGameAttachment();
+#endif
 
     // Camera
     mCamera.SetProjection(45.0, mWindow.size(), 0.1f, 1000.f);
@@ -101,6 +109,9 @@ void GFX::DemoScene::Initialize()
 
     // Setup shader
     mModelShader.CreateShaderFromFiles("./shader_files/draw_vert.glsl", "./shader_files/draw_frag.glsl");
+#if TEST_FBO
+    mSceneShader.CreateShader(vertexShaderCode, fragmentShaderCode);
+#endif
 }
 
 /**---------------------------------------------------------------------------/
@@ -228,6 +239,11 @@ void GFX::DemoScene::Draw()
 
         currentmesh.BindVao();
         currentmesh.PrepForDraw();
+
+#if TEST_FBO
+        // Bind FBO
+        mFbo.PrepForDraw();
+#endif
         
         glUniformMatrix4fv(mModelShader.GetUniformVP(), 1, GL_FALSE, &mCamera.viewProj()[0][0]);            // camera projection. changes when the camera moves
 
@@ -248,6 +264,18 @@ void GFX::DemoScene::Draw()
         currentmesh.UnbindVao();
         glBindTextureUnit(0, 0);
         currentmesh.ClearInstances();
+#if TEST_FBO
+        mFbo.Unbind();  // Unbind FBO
+
+        // Draw the game scene attachment
+        mSceneShader.Activate();
+        mRenderer->BindQuadMesh();
+        glBindTextureUnit(0, mSceneAttachment);
+        glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr, 1);
+        glBindTextureUnit(0, 0);
+        glBindVertexArray(0);
+        mSceneShader.Deactivate();
+#endif
 
 #else
         //! 

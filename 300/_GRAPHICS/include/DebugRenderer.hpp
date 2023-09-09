@@ -43,6 +43,9 @@ namespace GFX
 
 		void ClearInstances();
 
+		// -- TEMP --
+		void BindQuadMesh() { mQuadMesh.BindVao(); }
+
 	private:
 		Shader mShader;
 

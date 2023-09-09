@@ -163,7 +163,7 @@ void GFX::DebugRenderer::SetupTriangleMesh()
 
 void GFX::DebugRenderer::SetupQuadMesh()
 {
-	std::vector<vec3> positions	// Point mesh
+	std::vector<vec3> positions	// Quad mesh
 	{
 		vec3(-0.5f,  0.5f, 0.f),		// Top left
 		vec3(-0.5f, -0.5f, 0.f),		// Bottom left
@@ -177,7 +177,15 @@ void GFX::DebugRenderer::SetupQuadMesh()
 		2, 3, 0
 	};
 
-	mQuadMesh.Setup(positions, indices);
+	std::vector<vec2> texCoords
+	{
+		vec2(0.f, 1.f),
+		vec2(0.f, 0.f),
+		vec2(1.f, 0.f),
+		vec2(1.f, 1.f)
+	};
+
+	mQuadMesh.Setup(positions, indices, texCoords);
 }
 
 void GFX::DebugRenderer::SetupAabbMesh()
