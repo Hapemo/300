@@ -6,10 +6,21 @@
 	// compiles the project into a static library
 	#define _DESCRIPTOR_FILEPATH "./descriptor_files/default_descriptor_staticlib.json"
 #else
-	// compiles the project into an executable
+	// compiles the project into an executable that is meant to be run from the batch file
 	#define _DESCRIPTOR_FILEPATH "../../_GEOM_COMPILER/descriptor_files/default_descriptor_executable.json"
 #endif
 
+/*
+******************************************************************************************************
+* HOW TO USE THIS PROJECT
+	Compiling in Debug and Release mode: 
+		This compiles the GEOM Compiler into a static library. The error that is experienced is normal
+
+	Compiling in GEOMCOMPILER_EXECUTABLE mode:
+		This compiles the project into an executable file that is meant to be run from the batch file.
+		Running the geomcompiler in this function will generate and override the geomcompiler.exe 
+******************************************************************************************************
+*/
 
 
 // Extracts the raw filename itself

@@ -1,6 +1,8 @@
 @echo OFF
 
-set BATCHFILE_PATH="%cd%"
+set BATCHFILE_PATH = "%cd%"
+set GEOMCOMPILER_BUILD_PATH = %cd%/x64/Debug
+set GEOMCOMPILER_PROJ_FILE = %cd%/_GEOM_COMPILER/_GEOM_COMPILER.vcxproj
 
 COLOR 8E
 powershell write-host -fore White ------------------------------------------------------------------------------------------------------
@@ -15,8 +17,16 @@ powershell write-host -fore White COMPILING GEOM_COMPILER.EXE
 powershell write-host -fore White ------------------------------------------------------------------------------------------------------
 echo.
 
+:: build the project using MSBuild
+%GEOMCOMPILER_BUILD_PATH% %GEOMCOMPILER_PROJ_FILE% /p:Configuration=Debug /p:Platform=x64
+if %errorlevel% equ 0 (
+	echo Build Succeeded.
+) else (
+	echo Build Failed.
+)
+
 :: change the working directory to the geomcompiler DEBUG filepath
-cd %cd%/x64/Debug		
+cd %cd%/x64/GEOMCOMPILER_EXECUTABLE		
 _GEOM_COMPILER.exe
 
 if %ERRORLEVEL% GEQ 1 goto :PAUSE
