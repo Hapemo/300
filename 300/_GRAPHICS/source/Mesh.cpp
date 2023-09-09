@@ -51,7 +51,7 @@ void GFX::Mesh::Setup(const _GEOM::Geom& GeomData)
 	mVbo.Create(positions.size() * sizeof(vec3));
 	mVao.AddAttribute(0, 0, 3, GL_FLOAT);											// location 0, binding vao index 0
 	mVbo.AttachData(0, positions.size() * sizeof(vec3), positions.data());			// Attach mesh data to VBO
-	mVao.AttachVerterBuffer(mVbo.GetID(), 0, 0, sizeof(vec3));						// Attach to index 0
+	mVao.AttachVertexBuffer(mVbo.GetID(), 0, 0, sizeof(vec3));						// Attach to index 0
 
 	/////////////////////////////////////////
 	// COLORS
@@ -59,7 +59,7 @@ void GFX::Mesh::Setup(const _GEOM::Geom& GeomData)
 	mColorVbo.Create(sizeof(vec4) * MAX_INSTANCES);
 	mVao.AddAttribute(1, 1, 4, GL_FLOAT);											// location 1, binding vao index 1
 	mVao.AddAttributeDivisor(1, 1);													// divisor at vao index 1
-	mVao.AttachVerterBuffer(mColorVbo.GetID(), 1, 0, sizeof(vec4));					// Attach to index 1
+	mVao.AttachVertexBuffer(mColorVbo.GetID(), 1, 0, sizeof(vec4));					// Attach to index 1
 
 	/////////////////////////////////////////
 	// TEXTURE COORDINATES
@@ -67,7 +67,7 @@ void GFX::Mesh::Setup(const _GEOM::Geom& GeomData)
 	mTexCoordVbo.Create(sizeof(vec2) * uvs.size());
 	mVao.AddAttribute(2, 2, 2, GL_FLOAT);											// location 2, binding vao index 2
 	mTexCoordVbo.AttachData(0, uvs.size() * sizeof(vec2), uvs.data());				// Attach mesh data to VBO
-	mVao.AttachVerterBuffer(mTexCoordVbo.GetID(), 2, 0, sizeof(vec2));				// Attach to index 2
+	mVao.AttachVertexBuffer(mTexCoordVbo.GetID(), 2, 0, sizeof(vec2));				// Attach to index 2
 
 	/////////////////////////////////////////
 	// Local To World
@@ -81,7 +81,7 @@ void GFX::Mesh::Setup(const _GEOM::Geom& GeomData)
 		mVao.AddAttributeDivisor(3, 1);												// divisor at vao index 3
 	}
 	// Attach LTW VBO to VAO
-	mVao.AttachVerterBuffer(mLTWVbo.GetID(), 3, 0, sizeof(vec4) * 4);
+	mVao.AttachVertexBuffer(mLTWVbo.GetID(), 3, 0, sizeof(vec4) * 4);
 
 	/////////////////////////////////////////
 	// EBO
@@ -91,7 +91,11 @@ void GFX::Mesh::Setup(const _GEOM::Geom& GeomData)
 
 
 	/////////////////////////////////////////
-	// Bone_IDs, and Weights (TODO)
+	// Bone_IDs, and Weights (TODO) thank you sergeant.
+	// It is an array of structs. Stored the same way as the positions and uvs.
+	// The data and weights are stored in this format below::
+		//GeomData.m_pPos[0].m_BoneIDs;
+		//GeomData.m_pPos[0].m_Weights;
 
 	mVao.Unbind();
 
@@ -116,7 +120,7 @@ void GFX::Mesh::Setup(std::vector<vec3> const& positions, std::vector<unsigned i
 	// Attach VBO for positions to VAO
 	mVao.AddAttribute(0, 0, 3, GL_FLOAT);											// location 0, binding vao index 0
 	mVbo.AttachData(0, positions.size() * sizeof(vec3), positions.data());			// Attach mesh data to VBO
-	mVao.AttachVerterBuffer(mVbo.GetID(), 0, 0, sizeof(vec3));						// Attach to index 0
+	mVao.AttachVertexBuffer(mVbo.GetID(), 0, 0, sizeof(vec3));						// Attach to index 0
 
 	/////////////////////////////////////////
 	// COLORS
@@ -127,7 +131,7 @@ void GFX::Mesh::Setup(std::vector<vec3> const& positions, std::vector<unsigned i
 	// Attach Color VBO and divisor to VAO
 	mVao.AddAttribute(1, 1, 4, GL_FLOAT);											// location 1, binding vao index 1
 	mVao.AddAttributeDivisor(1, 1);													// divisor at vao index 1
-	mVao.AttachVerterBuffer(mColorVbo.GetID(), 1, 0, sizeof(vec4));					// Attach to index 1
+	mVao.AttachVertexBuffer(mColorVbo.GetID(), 1, 0, sizeof(vec4));					// Attach to index 1
 
 	/////////////////////////////////////////
 	// TEXTURE COORDINATES
@@ -138,7 +142,7 @@ void GFX::Mesh::Setup(std::vector<vec3> const& positions, std::vector<unsigned i
 	// Attach TexCoord VBO to VAO
 	mVao.AddAttribute(2, 2, 2, GL_FLOAT);											// location 2, binding vao index 2
 	mTexCoordVbo.AttachData(0, TexCoords.size() * sizeof(vec2), TexCoords.data());	// Attach mesh data to VBO
-	mVao.AttachVerterBuffer(mTexCoordVbo.GetID(), 2, 0, sizeof(vec2));				// Attach to index 2
+	mVao.AttachVertexBuffer(mTexCoordVbo.GetID(), 2, 0, sizeof(vec2));				// Attach to index 2
 
 	// Create local-to-world VBO
 	mLTWVbo.Create(sizeof(mat4) * MAX_INSTANCES);
@@ -150,7 +154,7 @@ void GFX::Mesh::Setup(std::vector<vec3> const& positions, std::vector<unsigned i
 		mVao.AddAttributeDivisor(3, 1);												// divisor at vao index 3
 	}
 	// Attach LTW VBO to VAO
-	mVao.AttachVerterBuffer(mLTWVbo.GetID(), 3, 0, sizeof(vec4) * 4);
+	mVao.AttachVertexBuffer(mLTWVbo.GetID(), 3, 0, sizeof(vec4) * 4);
 
 	// Element Buffer Object
 	mEbo.Create(indices.size() * sizeof(GLuint));
@@ -264,8 +268,6 @@ void GFX::MeshManager::SetupMesh(std::string filepath)
 
 	Deserialization::DeserializeGeom(filepath.c_str(), GeomData);	// load the geom from the compiled geom file
 	localmesh.Setup(GeomData);
-	//localmesh.LoadFromGeom(GeomData, positions, uvs, indices);
-	//localmesh.Setup(positions, indices, uvs);
 
 	// Load animations
 	if (GeomData.m_bHasAnimations)

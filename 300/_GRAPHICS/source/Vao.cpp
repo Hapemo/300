@@ -27,7 +27,7 @@ void GFX::VAO::AddAttributeDivisor(GLuint bindingIndex, GLuint divisor) const
 }
 
 
-void GFX::VAO::AttachVerterBuffer(GLuint vboID, GLuint bindingIndex, GLintptr offset, GLsizei stride) const
+void GFX::VAO::AttachVertexBuffer(GLuint vboID, GLuint bindingIndex, GLintptr offset, GLsizei stride) const
 {
 	glVertexArrayVertexBuffer(mID, bindingIndex, vboID, offset, stride);	// Binding Index in VAO
 }
