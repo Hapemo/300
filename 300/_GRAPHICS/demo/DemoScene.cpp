@@ -121,12 +121,16 @@ void GFX::DemoScene::Update()
     {
         ImGui::SliderFloat("Camera Speed: ", &mCamSpeed, 50.f, 300.f, "%1.f", ImGuiSliderFlags_AlwaysClamp);
         ImGui::Text("Camera Position: %.0f, %.0f, %.0f", mCamera.position().x, mCamera.position().y, mCamera.position().z);
+        ImGui::Checkbox("Fullscreen ", &mFullscreen);
     }
     ImGui::End();
 
     float now = static_cast<float>(glfwGetTime());
     mDt = now - mLastTime;
     mLastTime = now;
+
+    // Fullscreen test
+    mWindow.SetFullScreenFlag(mFullscreen);
 
     double mouseX = 0.0;
     double mouseY = 0.0;
