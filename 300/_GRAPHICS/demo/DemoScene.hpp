@@ -59,6 +59,7 @@ namespace GFX {
         float mCamSpeed = 50.f;
 
         // -- Flags --
+        bool mFullscreen;
 
         // -- Helper --
         

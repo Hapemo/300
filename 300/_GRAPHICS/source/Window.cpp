@@ -33,9 +33,10 @@ GFX::Window::Window(ivec2 windowSize)
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 4);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE);
-    glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
+    glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
     glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);
     mWindow = glfwCreateWindow(mSize.x, mSize.y, "Graphics", nullptr, nullptr);
+
     if (mWindow == nullptr)
     {
         throw std::runtime_error("Failed to create a window!");
@@ -51,6 +52,12 @@ GFX::Window::Window(ivec2 windowSize)
 
     glEnable(GL_DEBUG_OUTPUT);
     glDebugMessageCallback(MessageCallback, nullptr);
+
+    // Get the handle of the user's primary monitor
+    mMonitor = glfwGetPrimaryMonitor();
+
+    // Set the framebuffer resize callback functions
+    glfwSetFramebufferSizeCallback(mWindow, ResizeCallback);
 }
 
 /**---------------------------------------------------------------------------/
@@ -98,7 +105,28 @@ void GFX::Window::DestroySystem()
 *---------------------------------------------------------------------------*/
 void GFX::Window::Update()
 {
+    glfwGetFramebufferSize(mWindow, &mSize.x, &mSize.y);
     glfwSwapBuffers(mWindow);
+}
+
+void GFX::Window::SetFullScreenFlag(bool flag)
+{
+    if (mFullscreen == flag)    // Same flag, no change required
+        return;
+
+    mFullscreen = flag;
+
+    if (flag)
+    {
+        glfwSetWindowMonitor(mWindow, mMonitor, 0, 0, mSize.x, mSize.y, GLFW_DONT_CARE);
+        glfwGetFramebufferSize(mWindow, &mSize.x, &mSize.y);    // Update size of window
+    }
+    else
+    {
+        // Windowed mode
+        glfwSetWindowMonitor(mWindow, NULL, 50, 50, mSize.x, mSize.y, GLFW_DONT_CARE);
+        glfwGetFramebufferSize(mWindow, &mSize.x, &mSize.y);    // Update size of window
+    }
 }
 
 vec2 GFX::Window::WindowToWorld(vec2 const& screenCoordinates)
@@ -136,3 +164,9 @@ void GFX::Window::SetWindowTitle(const char* title)
     glfwSetWindowTitle(mWindow, title);
 }
 
+void ResizeCallback(GLFWwindow* winPtr, int width, int height)
+{
+    glViewport(0, 0, width, height);
+
+    (void)winPtr;
+}
