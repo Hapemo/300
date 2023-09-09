@@ -1,8 +1,19 @@
 ﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(1101,5): warning MSB8027: Two or more files with the name of imgui.cpp will produce outputs to the same location. This can lead to an incorrect build result.  The files involved are ..\lib\IMGUI\imgui.cpp, demo\ImGui.cpp.
-  Mesh.cpp
-F:\300\300\_GRAPHICS\source\Mesh.cpp(362,27): warning C4018: '<': signed/unsigned mismatch
-F:\300\300\_GRAPHICS\source\Mesh.cpp(379,27): warning C4018: '<': signed/unsigned mismatch
-  Vao.cpp
+  DemoScene.cpp
+F:\300\300\_GRAPHICS\demo\DemoScene.cpp(76,80): warning C4244: 'argument': conversion from '_Rep' to 'unsigned int', possible loss of data
+          with
+          [
+              _Rep=std::chrono::system_clock::rep
+          ]
+F:\300\300\_GRAPHICS\demo\DemoScene.cpp(259,125): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+  main.cpp
+  Camera.cpp
+  DebugRenderer.cpp
+F:\300\300\_GRAPHICS\source\DebugRenderer.cpp(231,113): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+F:\300\300\_GRAPHICS\source\DebugRenderer.cpp(252,122): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+F:\300\300\_GRAPHICS\source\DebugRenderer.cpp(273,114): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+F:\300\300\_GRAPHICS\source\DebugRenderer.cpp(294,114): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+  Vbo.cpp
   Generating Code...
   _GRAPHICS.vcxproj -> F:\300\300\x64\Debug\_GRAPHICS.exe
           1 file(s) copied.
