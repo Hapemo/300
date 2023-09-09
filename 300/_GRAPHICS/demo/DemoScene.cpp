@@ -88,6 +88,9 @@ void GFX::DemoScene::Initialize()
 
     // Load all meshes
     MeshManager::GetInstance().Init();
+
+    // sets the global animator data. ideally, this should be set in entity creation. for now, its here for testing.
+    mObjectAnimator.SetAnimation(MeshManager::GetInstance().mSceneMeshes[2].mAnimation[0]);
     
 #if _ASSIMP_LOADING
     AssimpImporter::loadModel("../assets/demon-skull-textured/source/Skull_textured.fbx");
@@ -169,6 +172,9 @@ void GFX::DemoScene::Update()
     mCamera.SetCursorPosition({ mouseX, mouseY });
     mCamera.Update();
 
+    // == ANIMATOR UPDATE ==
+    mObjectAnimator.UpdateAnimation(mDt);
+
     static char buffer[10];
     sprintf(buffer, "FPS: %d", int(1.0f / mDt));
     glfwSetWindowTitle(mWindow.GetHandle(), buffer);
@@ -215,7 +221,15 @@ void GFX::DemoScene::Draw()
         currentmesh.BindVao();
         currentmesh.PrepForDraw();
         
-        glUniformMatrix4fv(mModelShader.GetUniformVP(), 1, GL_FALSE, &mCamera.viewProj()[0][0]);            // camera projection
+        glUniformMatrix4fv(mModelShader.GetUniformVP(), 1, GL_FALSE, &mCamera.viewProj()[0][0]);            // camera projection. changes when the camera moves
+
+        // animation data transfer for final bone matrices
+        std::vector<glm::mat4>& boneTransforms = mObjectAnimator.m_FinalBoneMatrices;
+        for (int t{}; t < boneTransforms.size(); ++t)
+        {
+			std::string uniformName = "finalBoneMatrices[" + std::to_string(t) + "]";
+			//glUniformMatrix4fv(glGetUniformLocation(mModelShader.GetHandle(), uniformName.c_str()), 1, GL_FALSE, &boneTransforms[t][0][0]);
+		}
 
         // Bind texture unit
         glBindTextureUnit(0, mTexture.ID());

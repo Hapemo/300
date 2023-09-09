@@ -1,12 +1,1 @@
-﻿  Geom_Compiler.cpp
-F:\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(300,34): warning C4018: '<': signed/unsigned mismatch
-F:\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(787,27): warning C4018: '<': signed/unsigned mismatch
-F:\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(924,19): warning C4018: '<': signed/unsigned mismatch
-F:\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(964,37): warning C4018: '<': signed/unsigned mismatch
-F:\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(1001,42): warning C4244: '=': conversion from 'const double' to 'float', possible loss of data
-F:\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(1002,48): warning C4244: '=': conversion from 'const double' to 'float', possible loss of data
-  _compiler_main.cpp
-  geom.cpp
-F:\300\300\_GEOM_COMPILER\src\geom.cpp(326,8): warning C4101: 'ch': unreferenced local variable
-  Generating Code...
-  _GEOM_COMPILER.vcxproj -> F:\300\300\x64\Debug\_GEOM_COMPILER.exe
+﻿

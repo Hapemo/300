@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="include\Animation.h" />
     <ClInclude Include="include\Bone.h" />
     <ClInclude Include="include\descriptor.h" />
     <ClInclude Include="include\geom.h" />
@@ -162,6 +163,7 @@
     <ClCompile Include="..\lib\MESH-OPTIMIZER\src\vertexfilter.cpp" />
     <ClCompile Include="..\lib\MESH-OPTIMIZER\src\vfetchanalyzer.cpp" />
     <ClCompile Include="..\lib\MESH-OPTIMIZER\src\vfetchoptimizer.cpp" />
+    <ClCompile Include="src\Animation.cpp" />
     <ClCompile Include="src\Bone.cpp" />
     <ClCompile Include="src\descriptor.cpp" />
     <ClCompile Include="src\geom.cpp" />

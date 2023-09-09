@@ -102,6 +102,12 @@
     <ClCompile Include="source\Fbo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\Animator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\_GEOM_COMPILER\src\Bone.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="demo\ImGui.hpp">
@@ -159,6 +165,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Animator.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\_GEOM_COMPILER\include\Bone.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

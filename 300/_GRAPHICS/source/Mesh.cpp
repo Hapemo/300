@@ -182,9 +182,6 @@ void GFX::MeshManager::Init()
 
 		}
 	}
-
-	// Set up the animator
-
 }
 
 
@@ -204,7 +201,7 @@ void GFX::MeshManager::SetupMesh(std::string filepath)
 	if (GeomData.m_bHasAnimations)
 	{
 		// store the animation data of the first mesh -- there should only be be one mesh per file so far, so we just take the first index
-		// We store the vector of animation data into the mesh class
+		// We store the vector of animation data into the mesh class.
 		localmesh.mAnimation = std::move(GeomData.m_pMesh[0].m_Animation);	
 	}
 

@@ -1,27 +1,58 @@
 ﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(1101,5): warning MSB8027: Two or more files with the name of imgui.cpp will produce outputs to the same location. This can lead to an incorrect build result.  The files involved are ..\lib\IMGUI\imgui.cpp, demo\ImGui.cpp.
+  imgui_impl_glfw.cpp
+  imgui_impl_opengl3.cpp
+  imgui.cpp
+  imgui_demo.cpp
+  imgui_draw.cpp
+  imgui_tables.cpp
+  imgui_widgets.cpp
+  imgui_stdlib.cpp
+  Bone.cpp
+F:\300\300\_GEOM_COMPILER\src\Bone.cpp(23,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+F:\300\300\_GEOM_COMPILER\src\Bone.cpp(35,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+F:\300\300\_GEOM_COMPILER\src\Bone.cpp(47,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
   geom.cpp
-F:\300\300\_GEOM_COMPILER\src\geom.cpp(326,8): warning C4101: 'ch': unreferenced local variable
+F:\300\300\_GEOM_COMPILER\src\geom.cpp(331,8): warning C4101: 'ch': unreferenced local variable
   DemoScene.cpp
 F:\300\300\_GRAPHICS\demo\DemoScene.cpp(67,80): warning C4244: 'argument': conversion from '_Rep' to 'unsigned int', possible loss of data
           with
           [
               _Rep=std::chrono::system_clock::rep
           ]
-F:\300\300\_GRAPHICS\demo\DemoScene.cpp(223,125): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+F:\300\300\_GRAPHICS\demo\DemoScene.cpp(237,125): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+  ImGui.cpp
   main.cpp
+  Animator.cpp
+  Camera.cpp
   DebugRenderer.cpp
 F:\300\300\_GRAPHICS\source\DebugRenderer.cpp(223,113): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
 F:\300\300\_GRAPHICS\source\DebugRenderer.cpp(244,122): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
 F:\300\300\_GRAPHICS\source\DebugRenderer.cpp(265,114): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
 F:\300\300\_GRAPHICS\source\DebugRenderer.cpp(286,114): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+  Fbo.cpp
+  Math.cpp
   Mesh.cpp
-F:\300\300\_GRAPHICS\source\Mesh.cpp(291,27): warning C4018: '<': signed/unsigned mismatch
-F:\300\300\_GRAPHICS\source\Mesh.cpp(308,27): warning C4018: '<': signed/unsigned mismatch
-F:\300\300\_GRAPHICS\source\Mesh.cpp(355,17): warning C4129: 'A': unrecognized character escape sequence
+F:\300\300\_GRAPHICS\source\Mesh.cpp(288,27): warning C4018: '<': signed/unsigned mismatch
+F:\300\300\_GRAPHICS\source\Mesh.cpp(305,27): warning C4018: '<': signed/unsigned mismatch
+F:\300\300\_GRAPHICS\source\Mesh.cpp(352,17): warning C4129: 'A': unrecognized character escape sequence
+  OpenGl.cpp
+  Generating Code...
+F:\300\300\_GEOM_COMPILER\src\Bone.cpp(69): warning C4715: '_GEOM::Bone::GetPositionIndex': not all control paths return a value
+F:\300\300\_GEOM_COMPILER\src\Bone.cpp(95): warning C4715: '_GEOM::Bone::GetScaleIndex': not all control paths return a value
+F:\300\300\_GEOM_COMPILER\src\Bone.cpp(82): warning C4715: '_GEOM::Bone::GetRotationIndex': not all control paths return a value
+  Compiling...
+  Random.cpp
   Renderer.cpp
+  Shader.cpp
+  Shapes.cpp
+  Texture.cpp
+  Vao.cpp
+  Vbo.cpp
+  Window.cpp
   Generating Code...
 x64\Debug\ImGui.obj : warning LNK4042: object specified more than once; extras ignored
 LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
-  _GRAPHICS.vcxproj -> F:\300\300\x64\Debug\_GRAPHICS.exe
-          1 file(s) copied.
-          1 file(s) copied.
+Bone.obj : error LNK2019: unresolved external symbol "struct glm::vec<3,float,0> __cdecl AssimpHelper::GetGLMVec(class aiVector3t<float> const &)" (?GetGLMVec@AssimpHelper@@YA?AU?$vec@$02M$0A@@glm@@AEBV?$aiVector3t@M@@@Z) referenced in function "public: __cdecl _GEOM::Bone::Bone(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,int,struct aiNodeAnim const *)" (??0Bone@_GEOM@@QEAA@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@HPEBUaiNodeAnim@@@Z)
+Bone.obj : error LNK2019: unresolved external symbol "struct glm::qua<float,0> __cdecl AssimpHelper::GetGLMQuat(class aiQuaterniont<float> const &)" (?GetGLMQuat@AssimpHelper@@YA?AU?$qua@M$0A@@glm@@AEBV?$aiQuaterniont@M@@@Z) referenced in function "public: __cdecl _GEOM::Bone::Bone(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,int,struct aiNodeAnim const *)" (??0Bone@_GEOM@@QEAA@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@HPEBUaiNodeAnim@@@Z)
+Animator.obj : error LNK2019: unresolved external symbol "public: class _GEOM::Bone * __cdecl _GEOM::Animation::FindBone(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &)" (?FindBone@Animation@_GEOM@@QEAAPEAVBone@2@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z) referenced in function "private: void __cdecl GFX::Animator::CalculateBoneTransform(struct _GEOM::AssimpNodeData const *,struct glm::mat<4,4,float,0>)" (?CalculateBoneTransform@Animator@GFX@@AEAAXPEBUAssimpNodeData@_GEOM@@U?$mat@$03$03M$0A@@glm@@@Z)
+F:\300\300\x64\Debug\_GRAPHICS.exe : fatal error LNK1120: 3 unresolved externals

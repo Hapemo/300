@@ -57,7 +57,7 @@ namespace GFX
 		std::vector<mat4> mLTW;
 		std::vector<vec4> mColors;
 
-		// This mesh may contain multiple different animations	
+		// This mesh may contain multiple different animations. These animations are unique to this mesh.
 		std::vector<_GEOM::Animation> mAnimation{};
 
 	private:

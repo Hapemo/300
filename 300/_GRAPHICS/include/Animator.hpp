@@ -15,7 +15,7 @@
 #ifndef ANIMATOR_HPP
 #define ANIMATOR_HPP
 
-#define MAX_NUM_ANIMATE_OBJECTS 100
+#define MAX_NUM_BONES 100
 
 #include <glm/glm.hpp>
 
@@ -25,22 +25,24 @@ namespace GFX
 {
     //////////////////////////////////////////////////////////////////////////////////////////////////
 
+    // The animator class should be tied to the entity. Since the animator class is responsible for 
+    // Updating the specific animation of the entity's model.
+    // The animator class should be assigned to the entity in the entity's creation, and released when
+    // the entity is destroyed.
     class Animator
     {
-
-    private:
+    public:
         std::vector<glm::mat4> m_FinalBoneMatrices;
         _GEOM::Animation* m_CurrentAnimation;
         float m_CurrentTime;
         float m_DeltaTime;
-        bool m_IsPlaying;
 
 
     public:
         Animator();
-        Animator(_GEOM::Animation);
+        Animator(_GEOM::Animation*);
 
-        void SetAnimation(_GEOM::Animation*);
+        void SetAnimation(_GEOM::Animation);
         void UpdateAnimation(float dt);
 
 
@@ -49,20 +51,6 @@ namespace GFX
 
     };
 
-
-    //////////////////////////////////////////////////////////////////////////////////////////////////
-
-    class AnimatorManager
-    {
-
-    public:
-        AnimatorManager();
-        Animator& GetAvailableAnimator();
-
-    private:
-        Animator m_SceneAnimators[MAX_NUM_ANIMATE_OBJECTS];
-
-    };
 }
 
 #endif // ANIMATOR_HPP

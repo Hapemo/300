@@ -22,7 +22,9 @@
 #include "Shapes.hpp"
 #include "ImGui.hpp"
 #include "Texture.hpp"
+
 #include <geom.h>
+#include <Animator.hpp>
 
 
 namespace GFX {
@@ -62,6 +64,9 @@ namespace GFX {
         
         // -- Textures --
         Texture mTexture;
+
+        // -- Animator --
+        Animator mObjectAnimator;       // this ideally should be within an entity. for now, its here
     };
 }
 

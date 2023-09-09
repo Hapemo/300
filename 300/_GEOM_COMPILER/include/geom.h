@@ -12,9 +12,8 @@
 #include <string>
 #include <vector>
 #include <fstream>
-#include <unordered_map>
 
-#include <Bone.h>
+#include <Animation.h>
 #include <descriptor.h>
 
 namespace _GEOM
@@ -49,24 +48,6 @@ namespace _GEOM
 		glm::vec3 getCenter() const noexcept;
 	};
 	
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	// The animation information of the mesh.
-	struct Animation
-	{
-		std::unordered_map<std::string, BoneInfo>		m_BoneInfoMap;
-		std::vector<Bone>								m_Bones;
-		AssimpNodeData									m_RootNode;
-
-		int												m_BoneCounter = 0;
-		float											m_Duration;
-		float											m_TicksPerSecond;
-
-		// NOTE:: there is another member variable called AssimpNodeData, that contains the
-		// transformation, childrencount, and name. But this is already done with pretransformations
-		// in the mesh loading.. keep it in mind for now.
-	};
-
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	struct Geom

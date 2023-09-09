@@ -152,10 +152,12 @@
     <ClCompile Include="..\lib\IMGUI\imgui_tables.cpp" />
     <ClCompile Include="..\lib\IMGUI\imgui_widgets.cpp" />
     <ClCompile Include="..\lib\IMGUI\misc\cpp\imgui_stdlib.cpp" />
+    <ClCompile Include="..\_GEOM_COMPILER\src\Bone.cpp" />
     <ClCompile Include="..\_GEOM_COMPILER\src\geom.cpp" />
     <ClCompile Include="demo\DemoScene.cpp" />
     <ClCompile Include="demo\ImGui.cpp" />
     <ClCompile Include="demo\main.cpp" />
+    <ClCompile Include="source\Animator.cpp" />
     <ClCompile Include="source\Camera.cpp" />
     <ClCompile Include="source\DebugRenderer.cpp" />
     <ClCompile Include="source\Fbo.cpp" />
@@ -172,6 +174,7 @@
     <ClCompile Include="source\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\_GEOM_COMPILER\include\Bone.h" />
     <ClInclude Include="..\_GEOM_COMPILER\include\geom.h" />
     <ClInclude Include="demo\DemoScene.hpp" />
     <ClInclude Include="demo\ImGui.hpp" />

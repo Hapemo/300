@@ -943,13 +943,15 @@ namespace _GEOM
 	// BONE:: Set bone data
 	void Mesh_Loader::SetVertexBoneData(FullVertices& vertex, int boneID, float weight) noexcept
 	{
+		// this particular vertex can only be influenced by a maximum number of
+		// bones that is equal to MAX_BONE_INFLUENCE
 		for (int i = 0; i < MAX_BONE_INFLUENCE; ++i)
 		{
-			// only change the default initialized bones
+			// look for an empty slot for the weights.
 			if (vertex.m_BoneIDs[i] < 0)
 			{
-				vertex.m_Weights[i] = weight;
-				vertex.m_BoneIDs[i] = boneID;
+				vertex.m_Weights[i] = weight;	// how much this vertex is being influenced
+				vertex.m_BoneIDs[i] = boneID;	// this vertex is influenced by this particular bone
 				break;
 			}
 		}
@@ -1011,11 +1013,14 @@ namespace _GEOM
 			auto channel = sceneanimation->mChannels[i];
 			std::string boneName = channel->mNodeName.data;
 
-			// populate the bone info map if there are any missing entries
+			// sanitycheck for any misisng boneinfomap which should already be initialized before
+			// the call to this function
 			if (boneInfoMap.find(boneName) == boneInfoMap.end())
 			{
 				boneInfoMap[boneName].id = boneCount++;
 			}
+
+			// emplace back the bone data, based off the boneinfomap and channel data
 			myanimation.m_Bones.emplace_back(Bone(channel->mNodeName.data, boneInfoMap[channel->mNodeName.data].id, channel));
 		}
 	};
