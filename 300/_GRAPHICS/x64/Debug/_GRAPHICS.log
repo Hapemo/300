@@ -1,4 +1,4 @@
-﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(1101,5): warning MSB8027: Two or more files with the name of imgui.cpp will produce outputs to the same location. This can lead to an incorrect build result.  The files involved are ..\lib\IMGUI\imgui.cpp, demo\ImGui.cpp.
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(1116,5): warning MSB8027: Two or more files with the name of imgui.cpp will produce outputs to the same location. This can lead to an incorrect build result.  The files involved are ..\lib\IMGUI\imgui.cpp, demo\ImGui.cpp.
   imgui_impl_glfw.cpp
   imgui_impl_opengl3.cpp
   imgui.cpp
@@ -8,27 +8,27 @@
   imgui_widgets.cpp
   imgui_stdlib.cpp
   geom.cpp
-C:\Users\User\Documents\GitHub\300\300\_GEOM_COMPILER\src\geom.cpp(323,8): warning C4101: 'ch': unreferenced local variable
+C:\Users\kew\OneDrive\Desktop\300\300\_GEOM_COMPILER\src\geom.cpp(323,8): warning C4101: 'ch': unreferenced local variable
   DemoScene.cpp
-C:\Users\User\Documents\GitHub\300\300\_GRAPHICS\demo\DemoScene.cpp(67,80): warning C4244: 'argument': conversion from '_Rep' to 'unsigned int', possible loss of data
+C:\Users\kew\OneDrive\Desktop\300\300\_GRAPHICS\demo\DemoScene.cpp(67,80): warning C4244: 'argument': conversion from '_Rep' to 'unsigned int', possible loss of data
           with
           [
               _Rep=std::chrono::system_clock::rep
           ]
-C:\Users\User\Documents\GitHub\300\300\_GRAPHICS\demo\DemoScene.cpp(224,125): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+C:\Users\kew\OneDrive\Desktop\300\300\_GRAPHICS\demo\DemoScene.cpp(224,123): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
   ImGui.cpp
   main.cpp
   Camera.cpp
   DebugRenderer.cpp
-C:\Users\User\Documents\GitHub\300\300\_GRAPHICS\source\DebugRenderer.cpp(223,113): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
-C:\Users\User\Documents\GitHub\300\300\_GRAPHICS\source\DebugRenderer.cpp(244,122): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
-C:\Users\User\Documents\GitHub\300\300\_GRAPHICS\source\DebugRenderer.cpp(265,114): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
-C:\Users\User\Documents\GitHub\300\300\_GRAPHICS\source\DebugRenderer.cpp(286,114): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+C:\Users\kew\OneDrive\Desktop\300\300\_GRAPHICS\source\DebugRenderer.cpp(223,111): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+C:\Users\kew\OneDrive\Desktop\300\300\_GRAPHICS\source\DebugRenderer.cpp(244,120): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+C:\Users\kew\OneDrive\Desktop\300\300\_GRAPHICS\source\DebugRenderer.cpp(265,112): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+C:\Users\kew\OneDrive\Desktop\300\300\_GRAPHICS\source\DebugRenderer.cpp(286,112): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
   Math.cpp
   Mesh.cpp
-C:\Users\User\Documents\GitHub\300\300\_GRAPHICS\source\Mesh.cpp(267,26): warning C4018: '<': signed/unsigned mismatch
-C:\Users\User\Documents\GitHub\300\300\_GRAPHICS\source\Mesh.cpp(284,25): warning C4018: '<': signed/unsigned mismatch
-C:\Users\User\Documents\GitHub\300\300\_GRAPHICS\source\Mesh.cpp(326,18): warning C4129: 'A': unrecognized character escape sequence
+C:\Users\kew\OneDrive\Desktop\300\300\_GRAPHICS\source\Mesh.cpp(267,26): warning C4018: '<': signed/unsigned mismatch
+C:\Users\kew\OneDrive\Desktop\300\300\_GRAPHICS\source\Mesh.cpp(284,25): warning C4018: '<': signed/unsigned mismatch
+C:\Users\kew\OneDrive\Desktop\300\300\_GRAPHICS\source\Mesh.cpp(326,18): warning C4129: 'A': unrecognized character escape sequence
   OpenGl.cpp
   Random.cpp
   Renderer.cpp
@@ -42,4 +42,4 @@ C:\Users\User\Documents\GitHub\300\300\_GRAPHICS\source\Mesh.cpp(326,18): warnin
   Window.cpp
   Generating Code...
 x64\Debug\ImGui.obj : warning LNK4042: object specified more than once; extras ignored
-  _GRAPHICS.vcxproj -> C:\Users\User\Documents\GitHub\300\300\x64\Debug\_GRAPHICS.lib
+  _GRAPHICS.vcxproj -> C:\Users\kew\OneDrive\Desktop\300\300\x64\Debug\_GRAPHICS.lib

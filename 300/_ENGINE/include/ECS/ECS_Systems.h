@@ -1,6 +1,5 @@
 #pragma once
 // systems include
-#include "ScriptingSystem.h"
 
 class SystemManager
 {

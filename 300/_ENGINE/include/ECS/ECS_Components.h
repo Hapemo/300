@@ -3,6 +3,7 @@
 #include "Script.h"
 #include <vector>
 #include "pch.h"
+#include "Physics/Material.h"
 
 enum class TAG : unsigned char
 {
@@ -41,6 +42,7 @@ struct Transform
 
 struct RigidBody
 {
+	MATERIAL mMaterial;
 };
 
 /***************************************************************************/
