@@ -17,6 +17,7 @@
 #include "ImGui.hpp"
 #include <cassert>
 
+#define ANIMS_TEST 1
 
  /**---------------------------------------------------------------------------/ 
   * @brief
@@ -91,13 +92,10 @@ void GFX::DemoScene::Initialize()
 
 #if ANIMS_TEST
     // sets the global animator data. ideally, this should be set in entity creation. for now, its here for testing.
-    mObjectAnimator.SetAnimation(MeshManager::GetInstance().mSceneMeshes[2].mAnimation[0]);
+    mObjectAnimator.SetAnimation(&MeshManager::GetInstance().mSceneMeshes[2].mAnimation[0]);
+
 #endif
     
-#if _ASSIMP_LOADING
-    AssimpImporter::loadModel("../assets/demon-skull-textured/source/Skull_textured.fbx");
-    auto& currentmesh = GFX::Mesh::assimpLoadedMeshes[0];
-#endif
 
     // Setup shader
     mModelShader.CreateShaderFromFiles("./shader_files/draw_vert.glsl", "./shader_files/draw_frag.glsl");

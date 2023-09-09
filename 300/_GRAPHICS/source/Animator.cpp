@@ -13,6 +13,7 @@
  *-------------------------------------------------------------------------------------*/
 
 
+#include <iostream>
 #include <Animator.hpp>
 
 namespace GFX
@@ -20,7 +21,7 @@ namespace GFX
     // default
     Animator::Animator()
     {
-        m_FinalBoneMatrices.reserve(MAX_NUM_BONES);
+		m_FinalBoneMatrices.resize(MAX_NUM_BONES, glm::mat4(1.f));
         m_CurrentAnimation = nullptr;
         m_CurrentTime = -1.f;
         m_DeltaTime = -1.f;
@@ -38,9 +39,9 @@ namespace GFX
 
 
     // The enttiy can set a new animation for the animator to play
-    void Animator::SetAnimation(_GEOM::Animation animation)
+    void Animator::SetAnimation(_GEOM::Animation* animation)
     {
-		m_CurrentAnimation = &animation;
+		m_CurrentAnimation = animation;
         m_CurrentTime = 0.f;
         m_DeltaTime = 0.f;
 	}

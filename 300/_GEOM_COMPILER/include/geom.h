@@ -57,6 +57,9 @@ namespace _GEOM
 			glm::vec3 m_Pos;
 			glm::vec3 m_Clr;
 			glm::vec2 m_UV;
+
+			int					m_BoneIDs[MAX_BONE_INFLUENCE];	// bone indices which will influence this vertex
+			float				m_Weights[MAX_BONE_INFLUENCE];	// weights from each bone
 		};
 
 		struct alignas(std::uint32_t) VertexExtra
@@ -132,6 +135,10 @@ namespace _GEOM
 		std::string										m_Filename;
 		std::vector<Mesh>								m_Meshes;
 
+		// TODO:
+		// because skingeom has no concept of what mesh contains which animations, we have to change this
+		// to start storing data inside the mesh struct.
+		// Either skingeom puts animation into the mesh, or geomdata takes animation out of the mesh.
 		std::vector<Animation>							m_Animation;	
 
 		bool											m_bHasTextures = false;		// TODO:: this has not been fully implemented yet. 

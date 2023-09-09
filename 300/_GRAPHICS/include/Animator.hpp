@@ -43,7 +43,7 @@ namespace GFX
         Animator();
         Animator(_GEOM::Animation*);
 
-        void SetAnimation(_GEOM::Animation);
+        void SetAnimation(_GEOM::Animation*);
         void UpdateAnimation(float dt);
 
 

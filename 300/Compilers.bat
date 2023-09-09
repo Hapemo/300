@@ -26,7 +26,7 @@ if %errorlevel% equ 0 (
 )
 
 :: change the working directory to the geomcompiler DEBUG filepath
-cd %cd%/x64/GEOMCOMPILER_EXECUTABLE		
+cd %cd%/x64/Release		
 _GEOM_COMPILER.exe
 
 if %ERRORLEVEL% GEQ 1 goto :PAUSE

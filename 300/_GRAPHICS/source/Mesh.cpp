@@ -34,6 +34,74 @@ void GFX::Mesh::LoadFromGeom(const _GEOM::Geom& GeomData, std::vector<vec3>& pos
 }
 
 
+void GFX::Mesh::Setup(const _GEOM::Geom& GeomData)
+{
+	std::vector<glm::vec3>		positions;
+	std::vector<glm::vec2>		uvs;
+	std::vector<unsigned int>	indices;
+
+	LoadFromGeom(GeomData, positions, uvs, indices);
+
+	// Create VAO
+	mVao.Create();
+
+	/////////////////////////////////////////
+	// POSITIONS
+	// Create VBO for mesh model. Attach VBO for positions to VAO
+	mVbo.Create(positions.size() * sizeof(vec3));
+	mVao.AddAttribute(0, 0, 3, GL_FLOAT);											// location 0, binding vao index 0
+	mVbo.AttachData(0, positions.size() * sizeof(vec3), positions.data());			// Attach mesh data to VBO
+	mVao.AttachVerterBuffer(mVbo.GetID(), 0, 0, sizeof(vec3));						// Attach to index 0
+
+	/////////////////////////////////////////
+	// COLORS
+	// Create VBO for Color data. Attach Color VBO and divisor to VAO		
+	mColorVbo.Create(sizeof(vec4) * MAX_INSTANCES);
+	mVao.AddAttribute(1, 1, 4, GL_FLOAT);											// location 1, binding vao index 1
+	mVao.AddAttributeDivisor(1, 1);													// divisor at vao index 1
+	mVao.AttachVerterBuffer(mColorVbo.GetID(), 1, 0, sizeof(vec4));					// Attach to index 1
+
+	/////////////////////////////////////////
+	// TEXTURE COORDINATES
+	// Create VBO for Tex Coordinates data. Attach TexCoord VBO to VAO
+	mTexCoordVbo.Create(sizeof(vec2) * uvs.size());
+	mVao.AddAttribute(2, 2, 2, GL_FLOAT);											// location 2, binding vao index 2
+	mTexCoordVbo.AttachData(0, uvs.size() * sizeof(vec2), uvs.data());				// Attach mesh data to VBO
+	mVao.AttachVerterBuffer(mTexCoordVbo.GetID(), 2, 0, sizeof(vec2));				// Attach to index 2
+
+	/////////////////////////////////////////
+	// Local To World
+	// Create local-to-world VBO
+	mLTWVbo.Create(sizeof(mat4) * MAX_INSTANCES);
+
+	// Add attributes and divisor as vec4
+	for (int i = 0; i < 4; ++i)
+	{
+		mVao.AddAttribute(3 + i, 3, 4, GL_FLOAT, sizeof(vec4) * i);					// location 3, binding vao index 3
+		mVao.AddAttributeDivisor(3, 1);												// divisor at vao index 3
+	}
+	// Attach LTW VBO to VAO
+	mVao.AttachVerterBuffer(mLTWVbo.GetID(), 3, 0, sizeof(vec4) * 4);
+
+	/////////////////////////////////////////
+	// EBO
+	mEbo.Create(indices.size() * sizeof(GLuint));
+	mEbo.AttachData(0, indices.size() * sizeof(GLuint), indices.data());
+	glVertexArrayElementBuffer(mVao.GetID(), mEbo.GetID());
+
+
+	/////////////////////////////////////////
+	// Bone_IDs, and Weights (TODO)
+
+	mVao.Unbind();
+
+	// Store mesh stats
+	mVertexCount = static_cast<int>(positions.size());
+	mIndexCount = static_cast<int>(indices.size());
+}
+
+
+// to remove when i'm done with animation.. keeping as reference for now
 void GFX::Mesh::Setup(std::vector<vec3> const& positions, std::vector<unsigned int> const& indices, std::vector<vec2> const& TexCoords)
 {
 	// Create VAO
@@ -166,7 +234,8 @@ void GFX::MeshManager::Init()
 	{
 		if (std::filesystem::is_regular_file(entry))
 		{
-			std::cout << "Loading file: " << entry.path().filename() << "\n";
+			std::cout << "============================================\n";
+			std::cout << "[NOTE]>> Loading file: \t" << entry.path().filename() << "\n";
 
 			//uid uids("dasdsadsadasdassssssssssadaddddddddddddddddddddddddddddddddddddddddddddddddddddadadsd");
 			//std::cout << uids.id<< "\n";
@@ -194,15 +263,17 @@ void GFX::MeshManager::SetupMesh(std::string filepath)
 	std::vector<unsigned int> indices;
 
 	Deserialization::DeserializeGeom(filepath.c_str(), GeomData);	// load the geom from the compiled geom file
-	localmesh.LoadFromGeom(GeomData, positions, uvs, indices);
-	localmesh.Setup(positions, indices, uvs);
+	localmesh.Setup(GeomData);
+	//localmesh.LoadFromGeom(GeomData, positions, uvs, indices);
+	//localmesh.Setup(positions, indices, uvs);
 
 	// Load animations
 	if (GeomData.m_bHasAnimations)
 	{
 		// store the animation data of the first mesh -- there should only be be one mesh per file so far, so we just take the first index
 		// We store the vector of animation data into the mesh class.
-		localmesh.mAnimation = std::move(GeomData.m_pMesh[0].m_Animation);	
+		localmesh.mAnimation = GeomData.m_pMesh[0].m_Animation;
+		localmesh.mHasAnimation = true;
 	}
 
 	mSceneMeshes.emplace_back(localmesh);							// storage of all the scene's meshes
@@ -276,6 +347,9 @@ namespace Deserialization
 				uint8_t numberofanimations{};
 				infile.read((char*)&numberofanimations, sizeof(uint8_t));
 
+				std::cout << "[MESH DESERIALIZATION]>> This mesh contains animations\n";
+				std::cout << "[MESH DESERIALIZATION]>> Number of animations: " << (int)numberofanimations << "\n";
+
 				for (int j{}; j < numberofanimations; ++j)
 				{
 					_GEOM::Animation animation;
@@ -347,9 +421,10 @@ namespace Deserialization
 
 					GeomData.m_pMesh[i].m_Animation.emplace_back(animation);
 				}
+			
+				std::cout << "[MESH DESERIALIZATION]>> Animation Deserialization completed\n";
 			}
 
-			std::cout << "\t\Animation Deserialization completed\n";
 		}
 
 		// Submeshes
@@ -597,7 +672,7 @@ namespace Deserialization
 #endif
 }
 
-#if _ASSIMP_LOADING
+#if 0
 namespace AssimpImporter
 {
 	void processnode(aiNode* node, const aiScene* scene) 

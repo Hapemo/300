@@ -431,7 +431,7 @@ namespace _GEOM
 			{
 				iFinalMesh = static_cast<int>(m_SkinGeom->m_Meshes.size());			
 				m_SkinGeom->m_Meshes.emplace_back();
-				m_SkinGeom->m_Meshes.back().m_Name			= E.m_MeshName;
+				m_SkinGeom->m_Meshes.back().m_Name = E.m_MeshName;
 			}
 
 
@@ -583,12 +583,15 @@ namespace _GEOM
 						VP.m_UV[0] = V.m_Texcoord.x;
 						VP.m_UV[1] = V.m_Texcoord.y;
 
+						for (int i{}; i < MAX_BONE_INFLUENCE; ++i)
+						{
+							VP.m_BoneIDs[i] = V.m_BoneIDs[i];
+							VP.m_Weights[i] = V.m_Weights[i];
+						}
+
 						VPContainer.push_back(VP);
 					}
 				}
-
-				// For each bone inside the submesh...
-				// <<<<<<<<<<<<<< write bone data transfer here >>>>>>>>>>>>>>
 
 				RenderSubmesh.m_Vertex = VPContainer;
 				RenderSubmesh.m_Extra = VEContainer;
@@ -686,6 +689,12 @@ namespace _GEOM
 						savepos.m_Pos = _pos.m_Pos;
 						savepos.m_Clr = _pos.m_Clr;
 						savepos.m_UV = _pos.m_UV;
+
+						for (int i{}; i < MAX_BONE_INFLUENCE; ++i)
+						{
+							savepos.m_BoneIDs[i] = _pos.m_BoneIDs[i];
+							savepos.m_Weights[i] = _pos.m_Weights[i];
+						}
 					}
 				}
 
@@ -744,7 +753,7 @@ namespace _GEOM
 		outfile.write((char*)&GeomData.m_bHasTextures, sizeof(bool));					// bTextures
 		outfile.write((char*)&GeomData.m_bVtxClrPresent, sizeof(bool));					// bColors
 
-		// Vertex Positions, UVs, Colors
+		// Vertex Positions, UVs, Colors, bone weights and IDs
 		for (uint32_t i{}; i < GeomData.m_nVertices; ++i) {
 			outfile.write((char*)&GeomData.m_pPos[i], sizeof(Geom::VertexPos));
 		}
