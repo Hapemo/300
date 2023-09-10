@@ -84,7 +84,7 @@ void Inspect::update()
 		Entity ent(Hierarchy::selectedId);
 
 		if (ent.HasComponent<Transform>()) {
-			Transform transform = ent.GetComponent<Transform>();
+			Transform& transform = ent.GetComponent<Transform>();
 			transform.Inspect();
 		}
 
