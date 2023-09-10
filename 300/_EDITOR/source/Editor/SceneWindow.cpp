@@ -28,11 +28,11 @@ Setting up specification for frame buffer rendering
 #include <math.h>
 
 
-bool SceneWindow::follow = false;
-
-bool				SceneWindow::Move	={ true };
-bool				SceneWindow::Scale	={ true };
-bool				SceneWindow::Rotate	={ true };
+//bool SceneWindow::follow = false;
+//
+//bool				SceneWindow::Move	={ true };
+//bool				SceneWindow::Scale	={ true };
+//bool				SceneWindow::Rotate	={ true };
 
 
 void SceneWindow::init() {

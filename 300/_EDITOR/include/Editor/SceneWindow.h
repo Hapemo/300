@@ -92,7 +92,6 @@ allowing dragging of object on scene window
 	void ClickDrop();
 
 
-
 /***************************************************************************/
 /*!
 \brief

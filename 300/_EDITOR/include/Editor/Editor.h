@@ -55,6 +55,9 @@ public:
 	//ImFont* regular{};
 	//GLFWwindow* window{};
 
+
+
+
 	std::map<std::string, EditorWindow*> mWindowlist{};
 /***************************************************************************/
 /*!

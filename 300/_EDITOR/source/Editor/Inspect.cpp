@@ -61,12 +61,13 @@ Inspect display for RigidBody components
 
 #include "Inspect.h"
 #include "Editor.h"
-
-
-int Inspect::inspectmode{ inspector_layer };
-int Inspect::scaleCounter = 0;
-bool prev{}, current{};
-bool Inspect::isEditName = false;
+#include "ECS_Components.h"
+#include "Hierarchy.h"
+#include <math.h>
+//int Inspect::inspectmode{ inspector_layer };
+//int Inspect::scaleCounter = 0;
+//bool prev{}, current{};
+//bool Inspect::isEditName = false;
 //For future implementation of undo/redo
 //bool Inspect::entityFlag = false;
 
@@ -76,11 +77,91 @@ void Inspect::init() {
 
 void Inspect::update() 
 {
-	static bool addtag{ false };
-	addtag = false;
 
-	float windowWidth = ImGui::GetWindowSize().x;
-	std::string typeUR = "Name";
+
+	if (Hierarchy::selectionOn) {
+		
+		Entity ent(Hierarchy::selectedId);
+
+		if (ent.HasComponent<Transform>()) {
+			Transform transform = ent.GetComponent<Transform>();
+			transform.Inspect();
+		}
+
+
+
+		//--------------------------------------------// must be at the LAST OF THIS LOOP
+		Add_component(); 
+	}
+
+
+
+}
+
+void Inspect::Add_component() {
+
+
+	auto initialCursorPos = ImGui::GetCursorPos();
+	auto windowSize = ImGui::GetWindowSize();
+	float centralizedCursorpos = (windowSize.x - 200) * 0.5f;
+	//centralizedCursorpos = std::clamp(centralizedCursorpos, initialCursorPos.x, centralizedCursorpos);
+	ImGui::SetCursorPosX(centralizedCursorpos);
+
+
+	ImGui::Button(" Add Component ", ImVec2(200, 30));
+
+
+
+	if (ImGui::IsItemClicked(ImGuiMouseButton_Left)) {
+
+		mPopup = true;
+
+	}
+
+	if (mPopup)
+	{
+		ImGui::OpenPopup("ComponentList", ImGuiPopupFlags_MouseButtonRight);
+	}
+
+	if (ImGui::BeginPopup("ComponentList"))
+	{
+		if (ImGui::Selectable("Test Component"))
+		{
+
+		}
+		ImGui::EndPopup();
+	}
+
+	mPopup = false; 
+}
+
+
+void Transform::Inspect() {
+	if (ImGui::CollapsingHeader("Transform"), ImGuiTreeNodeFlags_DefaultOpen) {
+
+
+		//ImGui::SetCursorPosX(windowWidth / 3.f);
+		ImGui::DragFloat3("##Position", (float*)&mTranslate, 1);
+		
+		ImGui::SameLine();
+		ImGui::Text("Position");
+		ImGui::Separator();
+
+
+		ImGui::DragFloat3("##Position", (float*)&mScale, 1);
+		ImGui::SameLine();
+		ImGui::Text("Scale");
+		ImGui::Separator();
+
+
+		ImGui::DragFloat3("##Position", (float*)&mRotate, 1);
+		ImGui::SameLine();
+		ImGui::Text("Rotation");
+
+		ImGui::DragFloat("daa", &data, 1);
+
+
+	}
 
 }
 

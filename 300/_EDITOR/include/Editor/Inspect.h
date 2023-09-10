@@ -103,6 +103,8 @@ public:
 //	float windowWidth;
 
 	static int inspectmode;
+
+	bool mPopup {false};
 /***************************************************************************/
 /*!
 \brief

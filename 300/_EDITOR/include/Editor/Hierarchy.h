@@ -24,6 +24,8 @@ to select current Entity and activates inspector
 
 #include "Editor.h"
 #include "EditorWindow.h"
+#include "ECS.h"
+#include "ECS_Components.h"
 
 
 extern bool CreateTexture; // test
@@ -36,7 +38,12 @@ extern bool CreateTexture; // test
 class Hierarchy : public EditorWindow {
 
 public:
-	static int selectCnt ;
+	static entt::entity selectedId;
+	static bool selectionOn;
+
+
+	bool mPopup {false};
+
 /***************************************************************************/
 /*!
 \brief
@@ -54,6 +61,10 @@ to select current Entity and activates inspector
 */
 /**************************************************************************/
 	void update();
+
+
+
+
 
 	friend class Editor;
 
