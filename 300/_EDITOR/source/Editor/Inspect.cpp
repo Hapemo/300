@@ -141,20 +141,20 @@ void Transform::Inspect() {
 
 
 		//ImGui::SetCursorPosX(windowWidth / 3.f);
-		ImGui::DragFloat3("##Position", (float*)&mTranslate, 1);
+		ImGui::DragFloat3("##Position", (float*)&mTranslate);
 		
 		ImGui::SameLine();
 		ImGui::Text("Position");
 		ImGui::Separator();
 
 
-		ImGui::DragFloat3("##Position", (float*)&mScale, 1);
+		ImGui::DragFloat3("##Scale", (float*)&mScale, 1);
 		ImGui::SameLine();
 		ImGui::Text("Scale");
 		ImGui::Separator();
 
 
-		ImGui::DragFloat3("##Position", (float*)&mRotate, 1);
+		ImGui::DragFloat3("##Rotation", (float*)&mRotate, 1);
 		ImGui::SameLine();
 		ImGui::Text("Rotation");
 

@@ -41,7 +41,7 @@ void Hierarchy::update()
         Entity newEntity = ECS::GetInstance()->NewEntity();
         
 
-        newEntity.GetComponent<General>().name = "NewObject" + static_cast<int> (newEntity.id);
+        newEntity.GetComponent<General>().name = "NewObject"/* + static_cast<int> (newEntity.id)*/;
     }
 
 
