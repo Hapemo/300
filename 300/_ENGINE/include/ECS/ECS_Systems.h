@@ -1,5 +1,6 @@
 #pragma once
 #include <pch.h>
+
 class ScriptingSystem;
 
 class SystemManager

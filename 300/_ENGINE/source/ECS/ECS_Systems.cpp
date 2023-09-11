@@ -16,7 +16,6 @@ void SystemManager::Init()
 void SystemManager::Update(float dt)
 {
 	scriptingSystem.get()->Update(dt);
-
 }
 
 void SystemManager::Exit()
