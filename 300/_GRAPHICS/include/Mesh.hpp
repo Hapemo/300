@@ -54,6 +54,7 @@ namespace GFX
 		std::vector<_GEOM::Animation>	mAnimation{};
 		bool							mHasAnimation{ false };
 
+
 	private:
 		// Vertex array object and buffer object for each mesh
 		VAO mVao;
@@ -67,6 +68,10 @@ namespace GFX
 		std::string mMeshName;
 		int mVertexCount{};
 		int mIndexCount{};
+
+		// TODO: Should be able to know what shader to use for this mesh
+
+		// TODO: Should be able to know what textures to use for this mesh
 	};
 
 
