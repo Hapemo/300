@@ -17,9 +17,9 @@ void LuaInput()
     //double (*GetScrollPointer)();
     //GetScrollPointer = Input::GetScroll;
 
-    //ScriptingSystem::GetInstance()->luaState.new_usertype<Input>(
-    //    "Input", sol::constructors<>(),
-    //    "CheckKey", &Input::CheckKey,
-    //    "GetScroll", &Input::GetScroll
-    //    );
+    systemManager->scriptingSystem->luaState.new_usertype<Input>(
+        "Input", sol::constructors<>(),
+        "CheckKey", &Input::CheckKey,
+        "GetScroll", &Input::GetScroll
+        );
 }

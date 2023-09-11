@@ -10,6 +10,7 @@ SystemManager::SystemManager()
 
 void SystemManager::Init()
 {
+	std::cout << "About to init" << std::endl;
 	scriptingSystem.get()->Init();
 }
 
