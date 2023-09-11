@@ -47,6 +47,7 @@ namespace GFX {
         // -- NOT TESTED YET --
         vec2 WindowToWorld(vec2 const& screenCoordinates);   // maps glfw coordinates to world coordinates
         int ShouldClose();
+        void CloseWindow();
 
     private:
         ivec2 mSize;
