@@ -84,9 +84,6 @@ void Application::MainUpdate()
 
         // Graphics update
         mWindow.Update();
-        std::cout << "fps:" << FPSManager::fps << std::endl;
-
-        std::cout << "dt:" << FPSManager::dt << std::endl;
     }
 }
 
