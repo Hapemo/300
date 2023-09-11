@@ -2,18 +2,17 @@
 #include "PhysX.h"
 #include "pch.h"
 #include "Material.h"
-#include "Singleton.h"
 
-struct PhysicsSystem : public Singleton<PhysicsSystem>
+class PhysicsSystem
 {
-	PhysX mPX;
-	std::unordered_map<MATERIAL, physx::PxMaterial*> mMaterials;
-
+public:
 	PhysicsSystem() = default;
 	void Init();
 	void Update(float dt);
 	void Exit();
 
 private:
+	PhysX mPX;
+	std::unordered_map<MATERIAL, physx::PxMaterial*> mMaterials;
 	physx::PxMaterial* CreateMaterial(float us, float ud, float res);
 };

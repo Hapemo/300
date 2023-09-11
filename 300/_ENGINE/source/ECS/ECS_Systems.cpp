@@ -1,3 +1,4 @@
+#include "Physics/PhysicsSystem.h"
 #include "ECS/ECS_Systems.h"
 #include "ScriptingSystem.h"
 
@@ -5,21 +6,24 @@ SystemManager* systemManager;
 
 SystemManager::SystemManager()
 {
-	scriptingSystem = std::make_unique<ScriptingSystem>();
+	mPhysicsSystem = std::make_unique<PhysicsSystem>();
+	mScriptingSystem = std::make_unique<ScriptingSystem>();
 }
 
 void SystemManager::Init()
 {
-	scriptingSystem.get()->Init();
+	mPhysicsSystem.get()->Init();
+	mScriptingSystem.get()->Init();
 }
 
 void SystemManager::Update(float dt)
 {
-	scriptingSystem.get()->Update(dt);
+	mPhysicsSystem.get()->Update(dt);
+	mScriptingSystem.get()->Update(dt);
 }
 
 void SystemManager::Exit()
 {
-	scriptingSystem.get()->Exit();
-
+	mPhysicsSystem.get()->Exit();
+	mScriptingSystem.get()->Exit();
 }

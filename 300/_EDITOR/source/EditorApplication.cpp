@@ -15,6 +15,8 @@ start up of window and game system, also runs their update functions.
 #include "Input.h"
 #include "SingletonManager.h"
 #include "ScriptingSystem.h"
+#include "Physics/PhysicsSystem.h"
+
 
 // Static variables
 GFX::DebugRenderer* EditorApplication::mRenderer;

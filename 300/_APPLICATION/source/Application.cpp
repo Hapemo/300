@@ -16,6 +16,8 @@ start up of window and game system, also runs their update functions.
 #include "SingletonManager.h"
 #include "Object/ObjectFactory.h"
 #include "ScriptingSystem.h"
+#include "Physics/PhysicsSystem.h"
+
 #include "Example.h"
 
 // Static variables
@@ -37,6 +39,7 @@ void Application::StartUp()
     GFX::Window::InitializeSystem();
     mWindow = GFX::Window({ 1920, 1080 });
     mWindow.SetWindowTitle("Application");
+    systemManager->mWindow = &mWindow;
 }
 
 void Application::SystemInit() 
