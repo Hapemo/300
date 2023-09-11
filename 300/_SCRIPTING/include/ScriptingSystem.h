@@ -80,5 +80,8 @@ public:
     sol::state luaState;
     bool once;
 
+    // To delete after port in to imGui
+    void ScriptingInitTest();
+    void ScriptingUpdateTest();
 private:
 };

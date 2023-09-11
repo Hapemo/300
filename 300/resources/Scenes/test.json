@@ -1,65 +1,152 @@
 [
     {
-        "Name": "Apple",
-        "isActive": false,
-        "Tag": "Unknown",
-        "Subtag": "Active",
-        "Scale": [
-            0.0,
-            0.0,
-            0.0
-        ],
-        "Rotate": [
-            0.0,
-            0.0,
-            0.0
-        ],
-        "Translate": [
-            0.0,
-            0.0,
-            0.0
-        ]
+        "General": {
+            "Name": "Apple",
+            "isActive": false,
+            "Tag": "Unknown",
+            "Subtag": "Active"
+        },
+        "Transform": {
+            "Scale": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Rotate": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Translate": [
+                0.0,
+                0.0,
+                0.0
+            ]
+        }
     },
     {
-        "Name": "Other",
-        "isActive": true,
-        "Tag": "Unknown",
-        "Subtag": "Background",
-        "Scale": [
-            0.0,
-            0.0,
-            0.0
-        ],
-        "Rotate": [
-            0.0,
-            0.0,
-            0.0
-        ],
-        "Translate": [
-            0.0,
-            0.0,
-            0.0
-        ]
+        "General": {
+            "Name": "Other",
+            "isActive": true,
+            "Tag": "Unknown",
+            "Subtag": "Background"
+        },
+        "Transform": {
+            "Scale": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Rotate": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Translate": [
+                0.0,
+                0.0,
+                0.0
+            ]
+        }
     },
     {
-        "Name": "Testing",
-        "isActive": true,
-        "Tag": "Player",
-        "Subtag": "Active",
-        "Scale": [
-            0.0,
-            0.0,
-            0.0
-        ],
-        "Rotate": [
-            0.0,
-            0.0,
-            0.0
-        ],
-        "Translate": [
-            0.0,
-            0.0,
-            0.0
-        ]
+        "General": {
+            "Name": "Testing",
+            "isActive": true,
+            "Tag": "Player",
+            "Subtag": "Active"
+        },
+        "Transform": {
+            "Scale": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Rotate": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Translate": [
+                0.0,
+                0.0,
+                0.0
+            ]
+        }
+    },
+    {
+        "General": {
+            "Name": "",
+            "isActive": false,
+            "Tag": "Player",
+            "Subtag": "Active"
+        },
+        "Transform": {
+            "Scale": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Rotate": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Translate": [
+                0.0,
+                0.0,
+                0.0
+            ]
+        }
+    },
+    {
+        "General": {
+            "Name": "",
+            "isActive": false,
+            "Tag": "Player",
+            "Subtag": "Active"
+        },
+        "Transform": {
+            "Scale": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Rotate": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Translate": [
+                0.0,
+                0.0,
+                0.0
+            ]
+        }
+    },
+    {
+        "General": {
+            "Name": "",
+            "isActive": false,
+            "Tag": "Player",
+            "Subtag": "Active"
+        },
+        "Transform": {
+            "Scale": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Rotate": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Translate": [
+                0.0,
+                0.0,
+                0.0
+            ]
+        }
     }
 ]

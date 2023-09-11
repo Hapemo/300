@@ -47,6 +47,8 @@ void Application::SystemInit()
     FPSManager::Init(&mWindow);
     Input::Init(&mWindow);
     systemManager->Init();
+    // To remove (Script test with entities)
+    systemManager->scriptingSystem->ScriptingInitTest();
     //gfx init
     // 
     // test serialization
@@ -79,7 +81,7 @@ void Application::MainUpdate()
         FirstUpdate();
         SystemUpdate();
         // To remove (Script test with entities)
-        //ScriptTestUpdate();
+        systemManager->scriptingSystem->ScriptingUpdateTest();
         SecondUpdate(); // This should always be the last
 
         // Graphics update
@@ -107,8 +109,8 @@ void Application::SecondUpdate()
 void Application::Exit() 
 {
     systemManager->Exit();
-    delete systemManager;
     ECS::GetInstance()->DeleteAllEntities();
     SingletonManager::destroyAllSingletons();
     mWindow.DestroySystem();
+    delete systemManager;
 }
