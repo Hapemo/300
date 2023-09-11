@@ -48,7 +48,7 @@ void Application::SystemInit()
     Input::Init(&mWindow);
     systemManager->Init();
     // To remove (Script test with entities)
-    systemManager->scriptingSystem->ScriptingInitTest();
+    systemManager->mScriptingSystem->ScriptingInitTest();
     //gfx init
     // 
     // test serialization
@@ -81,7 +81,7 @@ void Application::MainUpdate()
         FirstUpdate();
         SystemUpdate();
         // To remove (Script test with entities)
-        systemManager->scriptingSystem->ScriptingUpdateTest();
+        systemManager->mScriptingSystem->ScriptingUpdateTest();
         SecondUpdate(); // This should always be the last
 
         // Graphics update

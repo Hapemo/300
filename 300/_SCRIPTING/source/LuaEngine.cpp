@@ -5,9 +5,9 @@
 
 void LuaEngine()
 {
-    systemManager->scriptingSystem->luaState["systemManager"] = systemManager;
+    systemManager->mScriptingSystem->luaState["systemManager"] = systemManager;
 
-    systemManager->scriptingSystem->luaState.new_usertype<SystemManager>(
+    systemManager->mScriptingSystem->luaState.new_usertype<SystemManager>(
         "SystemManager", sol::constructors<>()
 
         );
@@ -15,7 +15,7 @@ void LuaEngine()
 
 void LuaInput()
 {
-    systemManager->scriptingSystem->luaState.new_usertype<Input>(
+    systemManager->mScriptingSystem->luaState.new_usertype<Input>(
         "Input", sol::constructors<>(),
         "CheckKey", &Input::CheckKey,
         "GetScroll", &Input::GetScroll
