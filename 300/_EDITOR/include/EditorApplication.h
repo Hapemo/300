@@ -65,6 +65,5 @@ private:
 	static std::string title;
 	static GFX::Window mWindow;
 	static GFX::DebugRenderer* mRenderer;
-	static SystemManager systemManager;
 	GFX::Camera mCamera;
 };
