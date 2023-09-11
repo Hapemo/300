@@ -15,6 +15,7 @@ This file contains scripting component logic.
 //#include "../Engine/Engine.h"
 #include "sol/sol.hpp"
 #include "ECS/ECS.h"
+#include "ECS/ECS_Systems.h"
 
 /***************************************************************************/
 /*!
