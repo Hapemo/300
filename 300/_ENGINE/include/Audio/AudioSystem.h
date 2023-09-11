@@ -100,18 +100,27 @@ public:
 	   - Play the specified audio file. 
 	*/
 	void PlayAudio(std::string audio_name, AUDIO_TYPE audio_type, FMOD_VECTOR audio_pos, float audio_vol, int channel_no = 0); // Specify Channel
-
-	/* [Set Channel Volume]
+	
+#pragma region VOLUME STUFF
+	/* [Set Specific Channel Volume]
 	   - Alter the volume for a specific channel.
-	   - [Must Specify] : AUDIO_BGM / AUDIO_SFX
+	   - [Must Specify] : (1) AUDIO_BGM / AUDIO_SFX
+       -				  (2) Channel Id
 	*/
 	bool SetChannelVolume(AUDIO_TYPE audio_type, int channel_id, float channel_vol);
 
 	/* [Set Global Volume]
-	*  - Global volume control
-	
+	*  - Global volume control 
 	*/
-	bool SetAllVolume(float channel_id);
+	void SetAllVolume(float channel_vol);
+
+	void SetBGMVolume(float channel_vol);
+
+	void SetSFXVolume(float channel_vol);
+#pragma endregion
+	
+
+
 
 	// void SetGlobalVolume(int channel_id,a)
 

@@ -6,8 +6,28 @@ C:\Users\cheon\Documents\GitHub\300\300\_GRAPHICS\demo\DemoScene.cpp(67,80): war
               _Rep=std::chrono::system_clock::rep
           ]
 C:\Users\cheon\Documents\GitHub\300\300\_GRAPHICS\demo\DemoScene.cpp(224,123): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+  ImGui.cpp
   main.cpp
+  Camera.cpp
+  DebugRenderer.cpp
+C:\Users\cheon\Documents\GitHub\300\300\_GRAPHICS\source\DebugRenderer.cpp(223,111): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+C:\Users\cheon\Documents\GitHub\300\300\_GRAPHICS\source\DebugRenderer.cpp(244,120): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+C:\Users\cheon\Documents\GitHub\300\300\_GRAPHICS\source\DebugRenderer.cpp(265,112): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+C:\Users\cheon\Documents\GitHub\300\300\_GRAPHICS\source\DebugRenderer.cpp(286,112): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+  Math.cpp
+  Mesh.cpp
+C:\Users\cheon\Documents\GitHub\300\300\_GRAPHICS\source\Mesh.cpp(267,26): warning C4018: '<': signed/unsigned mismatch
+C:\Users\cheon\Documents\GitHub\300\300\_GRAPHICS\source\Mesh.cpp(284,25): warning C4018: '<': signed/unsigned mismatch
+C:\Users\cheon\Documents\GitHub\300\300\_GRAPHICS\source\Mesh.cpp(326,18): warning C4129: 'A': unrecognized character escape sequence
+  OpenGl.cpp
+  Random.cpp
+  Renderer.cpp
+  Shader.cpp
+  Shapes.cpp
   Texture.cpp
+  Vao.cpp
+  Vbo.cpp
+  Window.cpp
   Generating Code...
 x64\Debug\ImGui.obj : warning LNK4042: object specified more than once; extras ignored
   _GRAPHICS.vcxproj -> C:\Users\cheon\Documents\GitHub\300\300\x64\Debug\_GRAPHICS.lib

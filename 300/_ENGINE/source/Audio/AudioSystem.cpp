@@ -73,6 +73,7 @@ void AudioManager::Update()
 	{
 		FMOD_VECTOR vector{ 0.0f,0.0f,0.0f };
 		PlayAudio("radio", AUDIO_TYPE::AUDIO_SFX, vector, 1.0f, 0);
+		PlayAudio("farm", AUDIO_TYPE::AUDIO_BGM, vector, 1.0f, 0);
 		//isPlaying(0);
 		FMOD_VECTOR set_vector{ 1.0f, 0.0f, 0.0f };
 		//SetChannel3DPosition(1, set_vector);
@@ -92,6 +93,23 @@ void AudioManager::Update()
 		std::cout << "VOLUME SET : " << SetChannelVolume(AUDIO_SFX, 0, 0.0f);
 	}
 
+	if (Input::CheckKey(PRESS, W))
+	{
+		std::cout << "PRESSED W." << std::endl;
+		SetAllVolume(1.0f);
+	}
+
+	if (Input::CheckKey(PRESS, E))
+	{
+		std::cout << "PRESSED E." << std::endl;
+		SetBGMVolume(0.0f);
+	}
+
+	if (Input::CheckKey(PRESS, R))
+	{
+		std::cout << "PRESSED R." << std::endl;
+		SetSFXVolume(0.0f);
+	}
 	//FMOD_VECTOR listener_pos = lAudio->GetListenerPosition();
 
 	////std::cout << "Position : (" << listener_pos.x << "," << listener_pos.y << "," << listener_pos.z << ")" << std::endl;
@@ -425,9 +443,43 @@ bool AudioManager::SetChannelVolume(AUDIO_TYPE audio_type, int channel_id, float
 	
 }
 
-bool AudioManager::SetAllVolume(float channel_vol)
+void AudioManager::SetAllVolume(float channel_vol)
 {
-	return 0;
+	// Go through every [SFX] channel
+	for (auto channel : mSFXChannels)
+	{
+		if (channel.second->channel)
+			channel.second->channel->setVolume(channel_vol);
+	}
+
+	std::cout << "ADJUSTED ALL SFX CHANNELS: " << channel_vol << std::endl;
+
+	for (auto channel : mBGMChannels)
+	{
+		if (channel.second->channel)
+			channel.second->channel->setVolume(channel_vol);
+	}
+
+	std::cout << "ADJUSTED ALL BGM CHANNELS: " << channel_vol << std::endl;
+}
+
+
+void AudioManager::SetBGMVolume(float channel_vol)
+{
+	for (auto channel : mBGMChannels)
+	{
+		if(channel.second->channel)
+			channel.second->channel->setVolume(channel_vol);
+	}
+}
+
+void AudioManager::SetSFXVolume(float channel_vol)
+{
+	for (auto channel : mSFXChannels)
+	{
+		if (channel.second->channel)
+			channel.second->channel->setVolume(channel_vol);
+	}
 }
 
 ///*
