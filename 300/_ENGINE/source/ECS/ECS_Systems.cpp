@@ -1,23 +1,25 @@
 #include "ECS/ECS_Systems.h"
-#include "Audio/AudioSystem.h"
 #include "ScriptingSystem.h"
-#include "Physics/PhysicsSystem.h"
+
+SystemManager* systemManager;
+
+SystemManager::SystemManager()
+{
+	scriptingSystem = std::make_unique<ScriptingSystem>();
+}
 
 void SystemManager::Init()
 {
-	PhysicsSystem::GetInstance()->Init();
-	ScriptingSystem::GetInstance()->Init();
-	//AudioManager::GetInstance()->Init();
+	scriptingSystem.get()->Init();
 }
 
 void SystemManager::Update(float dt)
 {
-	PhysicsSystem::GetInstance()->Update(dt);
-	ScriptingSystem::GetInstance()->Update(dt);
+	scriptingSystem.get()->Update(dt);
 }
 
 void SystemManager::Exit()
 {
+	scriptingSystem.get()->Exit();
 
-	ScriptingSystem::GetInstance()->Exit();
 }
