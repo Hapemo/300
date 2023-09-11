@@ -106,7 +106,7 @@ public:
 	void PlayBGMAudio(std::string audio_name, float audio_vol, int channel_no);
 
 #pragma endregion
-#pragma region VOLUME STUFF
+#pragma region ADJUST VOLUME STUFF
 
 	/* [Set Specific Channel Volume]
 	   - Alter the volume for a specific channel.
@@ -125,6 +125,18 @@ public:
 	void SetSFXVolume(float channel_vol);
 #pragma endregion
 	
+#pragma region STOP SOUND STUFF
+	void StopAllSounds();
+	void StopAllBGMSounds();
+	void StopAllSFXSounds();
+	void StopChannel(AUDIO_TYPE audio_type, int channel_no);
+	void StopSound(std::string audio_name, AUDIO_TYPE audio_type);
+	//void StopSFXSound(std::string audio_name);
+	//void StopBGMSound(std::string audio_name);
+#pragma endregion
+
+#pragma region 
+
 
 
 

@@ -76,7 +76,8 @@ void AudioManager::Update()
 		// PlayAudio("farm", AUDIO_TYPE::AUDIO_BGM, vector, 1.0f, 0);
 
 		PlaySFXAudio("radio", 1.0f, 0);
-		PlayBGMAudio("farm", 1.0f, 0);
+		PlayBGMAudio("farm", 1.0f, 1);
+		PlayBGMAudio("greeting", 1.0f, 2);
 		//isPlaying(0);
 		FMOD_VECTOR set_vector{ 1.0f, 0.0f, 0.0f };
 		//SetChannel3DPosition(1, set_vector);
@@ -113,6 +114,44 @@ void AudioManager::Update()
 		std::cout << "PRESSED R." << std::endl;
 		SetSFXVolume(0.0f);
 	}
+
+	if (Input::CheckKey(PRESS, S))
+	{
+		std::cout << "PRESSED S." << std::endl;
+		StopAllSounds();
+	}
+
+	if (Input::CheckKey(PRESS, D))
+	{
+		std::cout << "PRESSED D." << std::endl;
+		StopAllBGMSounds();
+	}
+
+	if (Input::CheckKey(PRESS, F))
+	{
+		std::cout << "PRESSED F." << std::endl;
+		StopAllSFXSounds();
+	}
+
+	if (Input::CheckKey(PRESS, _0))
+	{
+		std::cout << "PRESSED 0." << std::endl;
+		StopChannel(AUDIO_SFX, 0);
+	}
+
+	if (Input::CheckKey(PRESS, _1))
+	{
+		std::cout << "PRESSED 1." << std::endl;
+		StopChannel(AUDIO_BGM, 1);
+	}
+
+	if (Input::CheckKey(PRESS, _2))
+	{
+		std::cout << "PRESSED 2." << std::endl;
+		StopChannel(AUDIO_BGM, 2);
+	}
+
+	
 	//FMOD_VECTOR listener_pos = lAudio->GetListenerPosition();
 
 	////std::cout << "Position : (" << listener_pos.x << "," << listener_pos.y << "," << listener_pos.z << ")" << std::endl;
@@ -232,6 +271,7 @@ void AudioManager::LoadAudioFile(std::string audiofilePath, std::string audio_na
 	}
 }
 
+#pragma region PLAY SOUNDS STUFF
 /*
    [Play Audio]
    - Finds Requested Audio File
@@ -392,8 +432,7 @@ void AudioManager::PlayBGMAudio(std::string audio_name, float audio_vol, int cha
 		return; // stop the program
 	}
 }
-
-
+#pragma endregion
 //bool AudioManager::isPlaying(int channel_no)
 //{
 //	bool playing = false;
@@ -433,6 +472,7 @@ void AudioManager::PlayBGMAudio(std::string audio_name, float audio_vol, int cha
 //	std::cout << "Final Position: [" << final_pos.x << "," << final_pos.y << "," << final_pos.z << "]" << std::endl;
 //}
 
+#pragma region ADJUST VOLUME STUFF
 bool AudioManager::SetChannelVolume(AUDIO_TYPE audio_type, int channel_id, float channel_vol)
 {	
 	int max_channel_no;
@@ -571,6 +611,106 @@ void AudioManager::SetSFXVolume(float channel_vol)
 //
 //	return; 
 //}
+
+#pragma endregion
+
+#pragma region STOP SOUND STUFF
+
+/* Global Silence */
+void AudioManager::StopAllSounds()
+{
+	// Go through every [SFX] channel
+	for (auto channel : mSFXChannels)
+	{
+		if (channel.second->channel)
+			channel.second->channel->stop();
+	}
+
+	std::cout << "MUTING & FREEING FOR ALL SFX CHANNELSS" << std::endl;
+
+	for (auto channel : mBGMChannels)
+	{
+		if (channel.second->channel)
+			channel.second->channel->stop();
+	}
+
+	std::cout << "MUTING & FREEING FOR ALL BGM CHANNELSS" << std::endl;
+}
+
+/* Silence all BGM Channels */
+void AudioManager::StopAllBGMSounds()
+{
+	for (auto channel : mBGMChannels)
+	{
+		if (channel.second->channel)
+			channel.second->channel->stop();
+	}
+
+	std::cout << "MUTING & FREEING FOR ALL BGM CHANNELSS" << std::endl;
+}
+
+void AudioManager::StopAllSFXSounds()
+{
+	// Go through every [SFX] channel
+	for (auto channel : mSFXChannels)
+	{
+		if (channel.second->channel)
+			channel.second->channel->stop();
+	}
+
+	std::cout << "MUTING & FREEING FOR ALL SFX CHANNELSS" << std::endl;
+
+}
+
+void AudioManager::StopChannel(AUDIO_TYPE audio_type, int channel_no)
+{
+	ChannelMap::iterator channel_it;
+
+	switch (audio_type)
+	{
+	case AUDIO_BGM:
+		channel_it = mBGMChannels.find(channel_no);
+
+		if (channel_it != mBGMChannels.end()) // if the specified channel is found ...
+		{
+			if (channel_it->second->channel)
+				channel_it->second->channel->stop();
+		}
+		break;
+		//return 1; // SUCCESS
+	case AUDIO_SFX:
+		channel_it = mSFXChannels.find(channel_no); // check if channel exists...
+
+		if (channel_it != mSFXChannels.end()) // if the specified channel is found ...
+		{
+			if (channel_it->second->channel)
+				channel_it->second->channel->stop();
+		}
+		break;
+		//return 1; // SUCCESS
+	}
+
+	//return 0; // FAILURE
+}
+
+/* Stop a specific audio*/
+void AudioManager::StopSound(std::string audio_name, AUDIO_TYPE audio_type)
+{
+	ChannelMap* map_pointer = nullptr;
+
+	switch (audio_type)
+	{
+		case AUDIO_BGM:
+			map_pointer = &(mBGMChannels);
+			break;
+		case AUDIO_SFX:
+			map_pointer = &(mSFXChannels);
+			break;
+	}
+
+	
+
+}
 
 #pragma endregion
 
