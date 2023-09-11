@@ -1,13 +1,16 @@
 #pragma once
-// systems include
-#include "ScriptingSystem.h"
+#include <pch.h>
+class ScriptingSystem;
 
 class SystemManager
 {
-	//PhysicsSystem mPhysicsSystem;
-	//ScriptingSystem mScriptingSystem;
 public:
+	std::unique_ptr<ScriptingSystem> scriptingSystem;
+	SystemManager();
+	~SystemManager() = default;
 	void Init();
 	void Update(float dt);
 	void Exit();
 };
+
+extern SystemManager* systemManager;

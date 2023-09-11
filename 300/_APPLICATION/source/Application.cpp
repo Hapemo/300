@@ -22,7 +22,6 @@ start up of window and game system, also runs their update functions.
 GFX::DebugRenderer* Application::mRenderer;
 GFX::Window Application::mWindow;
 std::string Application::title;
-SystemManager Application::systemManager;
 
 void Application::Init() 
 {
@@ -34,6 +33,7 @@ void Application::Init()
 void Application::StartUp() 
 {
     //gfx glew and glfw startup
+    systemManager = new SystemManager();
     GFX::Window::InitializeSystem();
     mWindow = GFX::Window({ 1920, 1080 });
     mWindow.SetWindowTitle("Application");
@@ -43,7 +43,7 @@ void Application::SystemInit()
 {
     FPSManager::Init(&mWindow);
     Input::Init(&mWindow);
-    systemManager.Init();
+    systemManager->Init();
     //gfx init
     // 
     // test serialization
@@ -92,11 +92,7 @@ void Application::FirstUpdate()
 
 void Application::SystemUpdate() 
 {
-    systemManager.Update(1.f /*insert dt here*/);
-
-    if (Input::CheckKey(HOLD, SPACE))
-      std::cout << "fps: " << FPSManager::fps << " | dt: " << FPSManager::dt << '\n';
-
+    systemManager->Update(1.f /*insert dt here*/);
 }
 
 void Application::SecondUpdate() 
@@ -107,7 +103,8 @@ void Application::SecondUpdate()
 
 void Application::Exit() 
 {
-    systemManager.Exit();
+    systemManager->Exit();
+    delete systemManager;
     ECS::GetInstance()->DeleteAllEntities();
     SingletonManager::destroyAllSingletons();
     mWindow.DestroySystem();
