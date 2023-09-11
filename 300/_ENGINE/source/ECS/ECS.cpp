@@ -14,11 +14,6 @@ void ECS::DeleteEntity(Entity e)
 	registry.destroy(e.id);
 }
 
-auto ECS::GetAllEntities()
-{
-	return registry.group<General, Transform>();
-}
-
 void ECS::DeleteAllEntities()
 {
 	registry.clear();

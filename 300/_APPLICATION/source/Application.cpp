@@ -14,6 +14,7 @@ start up of window and game system, also runs their update functions.
 #include "ECS/ECS_Components.h"
 #include "Input.h"
 #include "SingletonManager.h"
+#include "Object/ObjectFactory.h"
 #include "ScriptingSystem.h"
 #include "Example.h"
 
@@ -44,6 +45,29 @@ void Application::SystemInit()
     Input::Init(&mWindow);
     systemManager.Init();
     //gfx init
+    // 
+    // test serialization
+    Entity ent1 = ECS::GetInstance()->NewEntity();
+    Entity ent2 = ECS::GetInstance()->NewEntity();
+    Entity ent3 = ECS::GetInstance()->NewEntity();
+
+    ent1.GetComponent<General>().name = "Testing";
+    ent1.GetComponent<General>().isActive = true;
+    ent1.GetComponent<General>().tag = TAG::PLAYER;
+    ent1.GetComponent<General>().subtag = SUBTAG::ACTIVE;
+
+    ent2.GetComponent<General>().name = "Other";
+    ent2.GetComponent<General>().isActive = true;
+    ent2.GetComponent<General>().tag = TAG::UNKNOWN;
+    ent2.GetComponent<General>().subtag = SUBTAG::BACKGROUND;
+
+    ent3.GetComponent<General>().name = "Apple";
+    ent3.GetComponent<General>().isActive = false;
+    ent3.GetComponent<General>().tag = TAG::UNKNOWN;
+    ent3.GetComponent<General>().subtag = SUBTAG::ACTIVE;
+
+    ObjectFactory::SerializeScene("../resources/Scenes/test.json");
+    // end test serialization
 }
 
 void Application::MainUpdate() 
@@ -69,11 +93,16 @@ void Application::FirstUpdate()
 void Application::SystemUpdate() 
 {
     systemManager.Update(1.f /*insert dt here*/);
+
+    if (Input::CheckKey(HOLD, SPACE))
+      std::cout << "fps: " << FPSManager::fps << " | dt: " << FPSManager::dt << '\n';
+
 }
 
 void Application::SecondUpdate() 
 {
     Input::UpdatePrevKeyStates();
+    FPSManager::LimitFPS(0);
 }
 
 void Application::Exit() 

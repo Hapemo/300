@@ -72,8 +72,8 @@ void MultithreadExample() {
 																								 std::pair(&c1, &MTCoo3::Boo3));
 
 	// Singleton
-	std::cout << "Different member function of different classes" << '\n';
-	Multithread::GetInstance()->RunMemberFunctions(std::pair(ECS::GetInstance(), &ECS::DeleteAllEntities));
+	//std::cout << "Different member function of different classes" << '\n';
+	//Multithread::GetInstance()->RunMemberFunctions(std::pair(ECS::GetInstance(), &ECS::DeleteAllEntities));
 
 }
 //
