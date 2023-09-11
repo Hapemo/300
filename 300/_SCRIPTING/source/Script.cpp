@@ -23,7 +23,7 @@ This file contains the logic to Load and Run scripts.
 
 void Script::Load(Entity entityID)
 {
-    sol::protected_function_result result = ScriptingSystem::GetInstance()->luaState.script_file(scriptFile, env);
+    sol::protected_function_result result = systemManager->scriptingSystem->luaState.script_file(scriptFile, env);
     if (!result.valid())
     {
         // print what error was invoked when the script was loading
@@ -87,7 +87,7 @@ void Scripts::AddScript(Entity id, std::string fileName)
 {
     Script temp;
     temp.scriptFile = fileName;
-    temp.env = { ScriptingSystem::GetInstance()->luaState, sol::create, ScriptingSystem::GetInstance()->luaState.globals() };
+    temp.env = { systemManager->scriptingSystem->luaState, sol::create, systemManager->scriptingSystem->luaState.globals() };
     id.GetComponent<Scripts>().scriptsContainer.push_back(temp);
 }
 //

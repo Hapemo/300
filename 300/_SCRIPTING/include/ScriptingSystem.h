@@ -31,7 +31,6 @@ generate the overall performance of the scripting system.
 #include "ECS/ECS_Components.h"
 #include "Input.h"
 #include "Script.h"
-#include "Singleton.h"
 
 /******************************************************************************/
 /*!
@@ -71,9 +70,10 @@ generate the overall performance of the scripting system.
     ScriptingSystem Class
  */
  /******************************************************************************/
-class ScriptingSystem : public Singleton<ScriptingSystem>
+class ScriptingSystem
 {
 public:
+    ScriptingSystem() = default;
     void Init();
     void Update(float dt);
     void Exit();
