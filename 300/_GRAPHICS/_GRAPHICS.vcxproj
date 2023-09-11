@@ -161,6 +161,7 @@
     <ClCompile Include="source\Camera.cpp" />
     <ClCompile Include="source\DebugRenderer.cpp" />
     <ClCompile Include="source\Fbo.cpp" />
+    <ClCompile Include="source\GraphicsSystem.cpp" />
     <ClCompile Include="source\Math.cpp" />
     <ClCompile Include="source\Mesh.cpp" />
     <ClCompile Include="source\OpenGl.cpp" />
@@ -182,6 +183,7 @@
     <ClInclude Include="include\Camera.hpp" />
     <ClInclude Include="include\Common.hpp" />
     <ClInclude Include="include\DebugRenderer.hpp" />
+    <ClInclude Include="include\GraphicsSystem.hpp" />
     <ClInclude Include="include\Math.hpp" />
     <ClInclude Include="include\Mesh.hpp" />
     <ClInclude Include="include\Fbo.hpp" />
