@@ -96,16 +96,11 @@ void Application::FirstUpdate()
 void Application::SystemUpdate() 
 {
     systemManager.Update(1.f /*insert dt here*/);
-
-    if (Input::CheckKey(HOLD, SPACE))
-      std::cout << "fps: " << FPSManager::fps << " | dt: " << FPSManager::dt << '\n';
-
 }
 
 void Application::SecondUpdate() 
 {
     Input::UpdatePrevKeyStates();
-    FPSManager::LimitFPS(0);
 }
 
 void Application::Exit() 
