@@ -8,10 +8,12 @@ void PhysicsSystem::Init()
 	mMaterials[MATERIAL::ICE] = CreateMaterial(0.1, 0.05, 0.1);
 	mMaterials[MATERIAL::CONCRETE] = CreateMaterial(0.6, 0.5, 0.2);
 	mMaterials[MATERIAL::GLASS] = CreateMaterial(0.4, 0.3, 0.7);
+	//get all entities with physics components
 }
 
 void PhysicsSystem::Update(float dt)
 {
+	//physics simulate
 }
 
 void PhysicsSystem::Exit()
