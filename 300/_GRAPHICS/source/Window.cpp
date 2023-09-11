@@ -113,7 +113,7 @@ vec2 GFX::Window::WindowToWorld(vec2 const& screenCoordinates)
 
 int GFX::Window::ShouldClose()
 {
-    glfwWindowShouldClose(mWindow);
+    return glfwWindowShouldClose(mWindow);
 }
 
 void GFX::Window::CloseWindow()
