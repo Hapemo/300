@@ -12,6 +12,7 @@ General helper class of application that calculates FPS and prints GLFW info
 double FPSManager::fps;
 double FPSManager::dt;
 double FPSManager::mPrevTime;
+double FPSManager::mLimitFPS = 0;
 GFX::Window* FPSManager::mWindow;
 
 void FPSManager::Init(GFX::Window* window)
@@ -20,11 +21,11 @@ void FPSManager::Init(GFX::Window* window)
 }
 
 void FPSManager::Update(double fps_calc_interval) {
-  double curr_time = glfwGetTime();
+  double curr_time = mWindow->GetTime();
 
   // fps calculations
   static double count = 0.0; // number of game loop iterations
-  static double start_time = glfwGetTime();
+  static double start_time = mWindow->GetTime();
   // get elapsed time since very beginning (in seconds) ...
   double elapsed_time = curr_time - start_time;
 
@@ -34,22 +35,21 @@ void FPSManager::Update(double fps_calc_interval) {
   fps_calc_interval = (fps_calc_interval < 0.0) ? 0.0 : fps_calc_interval;
   fps_calc_interval = (fps_calc_interval > 10.0) ? 10.0 : fps_calc_interval;
   if (elapsed_time > fps_calc_interval) {
-    FPSManager::fps = count / elapsed_time; // elapsed_time;
+  FPSManager::fps = count / FPSManager::dt; // elapsed_time;
     start_time = curr_time;
     count = 0.0;
   }
+  CalcDeltaTime();
 }
 
 void FPSManager::CalcDeltaTime() {
-  dt = glfwGetTime() - mPrevTime;
-  mPrevTime = glfwGetTime();
+  dt = mWindow->GetTime() - mPrevTime;
+  mPrevTime = mWindow->GetTime();
 }
 
-void FPSManager::LimitFPS(unsigned int fpsCap) {
-  if (fpsCap) {
-    double targetedDT = 1.f / fpsCap;
-    while ((glfwGetTime() - mPrevTime) < targetedDT) {}
-  }
+void FPSManager::LimitFPS() {
+  if (!mLimitFPS) return;
 
-  CalcDeltaTime();
+  double targetedDT = 1 / mLimitFPS;
+  while ((mWindow->GetTime() - mPrevTime) < targetedDT) {}
 }

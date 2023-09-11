@@ -3,6 +3,18 @@
 void ObjectFactory::DeserializeScene(const std::string& filename)
 {
 	// loop thru container and store entities
+
+	EntityListJSON entities;
+	entities.DeserializeFile(filename);
+
+	for (auto& obj : entities.EntitiesList())
+	{
+		Entity e = ECS::GetInstance()->NewEntity();
+		e.GetComponent<General>() = obj.GetGeneralJSON();
+		e.GetComponent<Transform>() = obj.GetTransformJSON();
+
+		//std::cout << e.GetComponent<General>().name << " " << e.GetComponent<General>().isActive << std::endl;
+	}
 }
 
 void ObjectFactory::SerializeScene(const std::string& filename)
