@@ -1,4 +1,14 @@
 ﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(1116,5): warning MSB8027: Two or more files with the name of imgui.cpp will produce outputs to the same location. This can lead to an incorrect build result.  The files involved are ..\lib\IMGUI\imgui.cpp, demo\ImGui.cpp.
+  imgui_impl_glfw.cpp
+  imgui_impl_opengl3.cpp
+  imgui.cpp
+  imgui_demo.cpp
+  imgui_draw.cpp
+  imgui_tables.cpp
+  imgui_widgets.cpp
+  imgui_stdlib.cpp
+  geom.cpp
+C:\Users\cheon\Documents\GitHub\300\300\_GEOM_COMPILER\src\geom.cpp(323,8): warning C4101: 'ch': unreferenced local variable
   DemoScene.cpp
 C:\Users\cheon\Documents\GitHub\300\300\_GRAPHICS\demo\DemoScene.cpp(67,80): warning C4244: 'argument': conversion from '_Rep' to 'unsigned int', possible loss of data
           with
@@ -23,6 +33,8 @@ C:\Users\cheon\Documents\GitHub\300\300\_GRAPHICS\source\Mesh.cpp(326,18): warni
   Random.cpp
   Renderer.cpp
   Shader.cpp
+  Generating Code...
+  Compiling...
   Shapes.cpp
   Texture.cpp
   Vao.cpp

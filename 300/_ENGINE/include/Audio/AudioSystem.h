@@ -95,13 +95,19 @@ public:
 	   [TODO] - Work with [Serialization Team] to port over relevant data files in the future
 	*/
 	void LoadAudioFile(std::string audiofilePath, std::string audio_name, AUDIO_TYPE audio_type, bool spatial = false, FMOD_VECTOR audio_position = {0.0f,0.0f,0.0f} ,bool looping = false);
-
+#pragma region PLAY SOUNDS STUFF
 	/* [Play Audio]
 	   - Play the specified audio file. 
 	*/
-	void PlayAudio(std::string audio_name, AUDIO_TYPE audio_type, FMOD_VECTOR audio_pos, float audio_vol, int channel_no = 0); // Specify Channel
-	
+	void PlayAudio(std::string audio_name, AUDIO_TYPE audio_type, FMOD_VECTOR audio_pos, float audio_vol, int channel_no); // Specify Channel
+
+	void PlaySFXAudio(std::string audio_name, float audio_vol, int channel_no); 
+
+	void PlayBGMAudio(std::string audio_name, float audio_vol, int channel_no);
+
+#pragma endregion
 #pragma region VOLUME STUFF
+
 	/* [Set Specific Channel Volume]
 	   - Alter the volume for a specific channel.
 	   - [Must Specify] : (1) AUDIO_BGM / AUDIO_SFX

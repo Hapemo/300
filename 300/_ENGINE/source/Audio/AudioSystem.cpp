@@ -72,8 +72,11 @@ void AudioManager::Update()
 	if (!once)
 	{
 		FMOD_VECTOR vector{ 0.0f,0.0f,0.0f };
-		PlayAudio("radio", AUDIO_TYPE::AUDIO_SFX, vector, 1.0f, 0);
-		PlayAudio("farm", AUDIO_TYPE::AUDIO_BGM, vector, 1.0f, 0);
+		//PlayAudio("radio", AUDIO_TYPE::AUDIO_SFX, vector, 1.0f, 0);
+		// PlayAudio("farm", AUDIO_TYPE::AUDIO_BGM, vector, 1.0f, 0);
+
+		PlaySFXAudio("radio", 1.0f, 0);
+		PlayBGMAudio("farm", 1.0f, 0);
 		//isPlaying(0);
 		FMOD_VECTOR set_vector{ 1.0f, 0.0f, 0.0f };
 		//SetChannel3DPosition(1, set_vector);
@@ -191,8 +194,7 @@ int AudioManager::ErrCodeCheck(FMOD_RESULT result)
 				std::cout << "(20) [FMOD_ERR_HEADER_MISMATCH] : There is a version mismatch between the FMOD header and either the FMOD Studio library or the FMOD Low Level library." << std::endl;
 				break;
 		}
-
-
+		
 		return 1; // failure
 	}
 	std::cout << "FMOD OPERATION OK." << std::endl;
@@ -290,12 +292,6 @@ void AudioManager::PlayAudio(std::string audio_name, AUDIO_TYPE audio_type,FMOD_
 			break;
 	}
 
-
-	
-
-	
-
-
 	//FMOD::Channel* new_channel = nullptr;
 	//ErrCodeCheck(mAudio->system_obj->system->playSound(map_it->second->sound, nullptr, true, &new_channel)); // Play in the new channel.
 
@@ -330,6 +326,71 @@ void AudioManager::PlayAudio(std::string audio_name, AUDIO_TYPE audio_type,FMOD_
 	//mAudio->system_obj->aChannels.insert(std::make_pair(channel_size + 1, new_channel));
 	//channel_size++;
 	//std::cout << "New Number of Channels: " << channel_size << std::endl;
+}
+
+/* [PlaySFXAudio]
+*  - Will play specified (audio_name) at specified (channel_no) at a volume of (audio_vol)
+*  - If chanel_no is not specified... 
+*		- Will find the next available channel and play it there. 
+*/
+void AudioManager::PlaySFXAudio(std::string audio_name, float audio_vol, int channel_no)
+{
+	SoundMap::iterator map_it = mSoundsSFX.find(audio_name); // tries to find the user-specified audio file 
+
+	if (map_it != mSoundsSFX.end()) // if it's found ...
+	{
+		ChannelMap::iterator sfx_channel_it = mSFXChannels.find(channel_no); // check if channel exists...
+
+		if (sfx_channel_it != mSFXChannels.end()) // if the specified channel is found ...
+		{	
+			// Check if it's currently occupied ... 
+			ErrCodeCheck(system->playSound(map_it->second->sound, nullptr, false, &(sfx_channel_it->second)->channel));
+
+			if (result_code)
+				std::cout << "SFX PLAYING at : " << channel_no << std::endl;
+		}
+
+		else
+		{
+			std::cout << "Channel Not Available." << std::endl;
+			return;
+		}
+	}
+	else // no such audio file ...
+	{
+		std::cout << "Cannot Find Audio" << std::endl;
+		return; // stop the program
+	}
+}
+
+void AudioManager::PlayBGMAudio(std::string audio_name, float audio_vol, int channel_no)
+{
+	SoundMap::iterator map_it = mSoundsBGM.find(audio_name); // tries to find the user-specified audio file 
+
+	if (map_it != mSoundsBGM.end()) // if it's found ...
+	{
+		ChannelMap::iterator bgm_channel_it = mBGMChannels.find(channel_no); // check if channel exists...
+
+		if (bgm_channel_it != mBGMChannels.end()) // if the specified channel is found ...
+		{
+			// Check if it's currently occupied ... 
+			ErrCodeCheck(system->playSound(map_it->second->sound, nullptr, false, &(bgm_channel_it->second)->channel));
+
+			if (result_code)
+				std::cout << "BGM PLAYING at : " << channel_no << std::endl;
+		}
+
+		else
+		{
+			std::cout << "Channel Not Available." << std::endl;
+			return;
+		}
+	}
+	else // no such audio file ...
+	{
+		std::cout << "Cannot Find Audio" << std::endl;
+		return; // stop the program
+	}
 }
 
 
