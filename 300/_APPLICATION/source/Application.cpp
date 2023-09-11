@@ -84,6 +84,9 @@ void Application::MainUpdate()
 
         // Graphics update
         mWindow.Update();
+        std::cout << "fps:" << FPSManager::fps << std::endl;
+
+        std::cout << "dt:" << FPSManager::dt << std::endl;
     }
 }
 
@@ -95,7 +98,7 @@ void Application::FirstUpdate()
 
 void Application::SystemUpdate() 
 {
-    systemManager->Update(1.f /*insert dt here*/);
+    systemManager->Update(FPSManager::dt);
 }
 
 void Application::SecondUpdate() 
