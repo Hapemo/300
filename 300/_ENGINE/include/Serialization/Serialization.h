@@ -26,10 +26,17 @@ protected:
 // e.g.: Transform, Texture, Collider, etc.
 struct GeneralJSON
 {
-	std::string mName;
-	bool mIsActive;
-	TAG mTag;
-	SUBTAG mSubtag;
+	std::string jName;
+	bool jIsActive;
+	std::string jTag;
+	std::string jSubtag;
+};
+
+struct TransformJSON
+{
+	glm::vec3 jScale;
+	glm::vec3 jRotate;
+	glm::vec3 jTranslate;
 };
 
 class EntityJSON : public BaseJSON
@@ -41,8 +48,46 @@ public:
 	virtual bool Deserialize(const rapidjson::Value& obj);
 	virtual bool Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* writer) const;
 
+	// helper function to convert enum to str, vice versa
+	std::string FindTagString(TAG tag) const
+	{
+		for (const auto& it : TagMap)
+		{
+			if (it.second == tag)
+				return it.first;
+		}
+	}
 
-		const entt::entity GetID() const
+	TAG FindTagEnum(std::string str) const
+	{
+		for (const auto& it : TagMap)
+		{
+			if (it.first == str)
+				return it.second;
+		}
+	}
+
+	std::string FindSubTagString(SUBTAG subtag) const
+	{
+		for (const auto& it : SubTagMap)
+		{
+			if (it.second == subtag)
+				return it.first;
+		}
+	}
+
+	SUBTAG FindSubTagEnum(std::string str) const
+	{
+		for (const auto& it : SubTagMap)
+		{
+			if (it.first == str)
+				return it.second;
+		}
+	}
+	// end of helper function
+		
+		// no need for now
+		/*const entt::entity GetID() const
 		{
 			return mID;
 		}
@@ -50,32 +95,50 @@ public:
 		void SetID(const entt::entity ID)
 		{
 			mID = ID;
-		}
+		}*/
 
-		// for deserializing the info into the editor
+		// getter: for deserializing the info into the editor
 		const General GetGeneralJSON() const
 		{
 			General gj;
-			gj.name = mGJ.mName;
-			gj.isActive = mGJ.mIsActive;
-			gj.tag = mGJ.mTag;
-			gj.subtag = mGJ.mSubtag;
+			gj.name = mGJ.jName;
+			gj.isActive = mGJ.jIsActive;
+			gj.tag = FindTagEnum(mGJ.jTag);
+			gj.subtag = FindSubTagEnum(mGJ.jSubtag);
 
 			return gj;
 		}
 
-		// for serializing the info into the json file
+		// setter: for serializing the info into the json file
 		void SetGeneralJSON(const General gj)
 		{
-			mGJ.mName = gj.name;
-			mGJ.mIsActive = gj.isActive;
-			mGJ.mTag = gj.tag;
-			mGJ.mSubtag = gj.subtag;
+			mGJ.jName = gj.name;
+			mGJ.jIsActive = gj.isActive;
+			mGJ.jTag = FindTagString(gj.tag);
+			mGJ.jSubtag = FindSubTagString(gj.subtag);
+		}
+
+		const Transform GetTransformJSON() const
+		{
+			Transform tj;
+			tj.mScale = mTJ.jScale;
+			tj.mRotate = mTJ.jRotate;
+			tj.mTranslate = mTJ.jTranslate;
+
+			return tj;
+		}
+
+		void SetTransformJSON(const Transform tj)
+		{
+			mTJ.jScale = tj.mScale;
+			mTJ.jRotate = tj.mRotate;
+			mTJ.jTranslate = tj.mTranslate;
 		}
 	
 private:
-	entt::entity mID{};
+	//entt::entity mID{}; // no need for now
 	GeneralJSON mGJ;
+	TransformJSON mTJ;
 };
 
 class EntityListJSON : public BaseJSON

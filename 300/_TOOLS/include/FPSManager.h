@@ -35,13 +35,15 @@ struct FPSManager
   static void CalcDeltaTime();
 
   /*!*****************************************************************************
-  Limit the FPS. If limit fps is 0, fps will not be limited.
+  Limit the FPS. If limit is not specified, fps will not be limited.
+
+  \param unsigned int
+  - The fps to limit to, default value 0
   *******************************************************************************/
-  static void LimitFPS();
+  static void LimitFPS(unsigned int = 0);
 
   static double fps;
   static double dt; // time taken to complete most recent game loop
   static double mPrevTime; // Time at beginning of game loop
-  static double mLimitFPS;
   static GFX::Window* mWindow;
 };

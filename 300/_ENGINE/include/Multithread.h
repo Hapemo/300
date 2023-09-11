@@ -58,10 +58,26 @@ public:
 	void RecurRunFunctions(std::vector<std::thread>& threads, void(*first)(), VTypes... systems);
 	
 	template<typename T, typename ...VTypes>
-	void RunMemberFunctions(std::pair<T, void(T::*)()> first, VTypes... systems);
+	void RunMemberFunctions(std::pair<T*, void(T::*)()> first, VTypes... systems) {
+		std::vector<std::thread> threads;
+
+		RecurRunMemberFunctions(threads, first, systems...);
+
+		//threads.push_back(std::thread(first.second, first.first));
+
+		for (auto& thread : threads)
+			thread.join();
+		threads.clear();
+	}
 
 	template<typename T, typename ...VTypes>
-	void RecurRunMemberFunctions(std::vector<std::thread>& threads, std::pair<T, void(T::*)()> first, VTypes... systems);
+	void RecurRunMemberFunctions(std::vector<std::thread>& threads, std::pair<T*, void(T::*)()> first, VTypes... systems) {
+
+		threads.push_back(std::thread(std::thread(first.second, first.first)));
+
+		if constexpr (sizeof...(systems) != 0)
+			RecurRunMemberFunctions(threads, systems...);
+	}
 
 
 private:
@@ -91,28 +107,12 @@ void Multithread::RecurRunFunctions(std::vector<std::thread>& threads, void(*fir
 	if constexpr (sizeof...(systems) != 0)
 		RecurRunFunctions(threads, systems...);
 }
-
-template<typename T, typename ...VTypes>
-void Multithread::RunMemberFunctions(std::pair<T, void(T::*)()> first, VTypes... systems) {
-	std::vector<std::thread> threads;
-
-	RecurRunMemberFunctions(threads, first, systems...);
-
-	//threads.push_back(std::thread(first.second, first.first));
-
-	for (auto& thread : threads)
-		thread.join();
-	threads.clear();
-}
-
-template<typename T, typename ...VTypes>
-void Multithread::RecurRunMemberFunctions(std::vector<std::thread>&threads, std::pair<T, void(T::*)()> first, VTypes... systems) {
-
-	threads.push_back(std::thread(std::thread(first.second, first.first)));
-
-	if constexpr (sizeof...(systems) != 0)
-		RecurRunMemberFunctions(threads, systems...);
-}
+//
+//template<typename T*, typename ...VTypes>
+//void Multithread::RunMemberFunctions(std::pair<T, void(T::*)()> first, VTypes... systems)
+//
+//template<typename T, typename ...VTypes>
+//void Multithread::RecurRunMemberFunctions(std::vector<std::thread>&threads, std::pair<T*, void(T::*)()> first, VTypes... systems)
 
 
 
