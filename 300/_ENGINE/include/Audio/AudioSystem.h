@@ -26,8 +26,9 @@ struct Sound
 	FMOD::Sound* sound;
 };
 	
-static int MAX_AUDIO_FILES_PLAYING = 32;     // Number of Sounds (that are allowed to be played simultaneously)
-static int NO_OF_CHANNELS_TO_INIT  = 32;	 // Number of Channels (to init at the start)
+static int MAX_AUDIO_FILES_PLAYING = 32;         // Number of Sounds (that are allowed to be played simultaneously)
+static int NO_OF_SFX_CHANNELS_TO_INIT  = 32;	 // Number of SFX Channels (to init at the start)
+static int NO_OF_BGM_CHANNELS_TO_INIT = 16;		 // Number of BGM Channels
 
 //extern std::unique_ptr<AudioManager> mAudio; // Audio Manager Reference (only 1)
 
@@ -56,14 +57,29 @@ static int NO_OF_CHANNELS_TO_INIT  = 32;	 // Number of Channels (to init at the 
 	//BankMap		  aBank;									// [Banks - Event Based] - Stores all the sounds and information for each event.
 //};
 
+
+
+class Channel
+{
+public:
+	Channel();
+	//Channel(FMOD::Channel* new_channel, bool active);
+public:
+	FMOD::Channel* channel;
+	bool		   isActive;
+};
+
+
 class AudioManager : public Singleton<AudioManager>
 {
 public: 
-	typedef std::unordered_map<int, FMOD::Channel*>				  ChannelMap;
+	typedef std::unordered_map<int, Channel*>				      ChannelMap;
 	typedef std::unordered_map<std::string, Sound*>				  SoundMap;
 	typedef std::unordered_map<std::string, FMOD::Studio::Bank*>  BankMap;
 
-	int channel_no = 0;
+	int sfx_channel_no = 0;
+
+	int bgm_channel_no = 0;
 
 public:
 	static int ErrCodeCheck(FMOD_RESULT result);		    // Status Check for (FMOD Function Calls) -> can be used outside of class
@@ -86,9 +102,18 @@ public:
 	void PlayAudio(std::string audio_name, AUDIO_TYPE audio_type, FMOD_VECTOR audio_pos, float audio_vol, int channel_no = 0); // Specify Channel
 
 	/* [Set Channel Volume]
-	   - Play the specified audio file.
+	   - Alter the volume for a specific channel.
+	   - [Must Specify] : AUDIO_BGM / AUDIO_SFX
 	*/
-	void SetChannelVolume(int channel_id, float channel_vol);
+	bool SetChannelVolume(AUDIO_TYPE audio_type, int channel_id, float channel_vol);
+
+	/* [Set Global Volume]
+	*  - Global volume control
+	
+	*/
+	bool SetAllVolume(float channel_id);
+
+	// void SetGlobalVolume(int channel_id,a)
 
 	//bool isPlaying(int channel_no);
 
@@ -145,12 +170,13 @@ public:
 	// AudioSystem* system_obj;								// Stores all the relevant FMOD data.
 
 	FMOD::System* system;									// System Object
-	FMOD::Studio::System* studio_system;					// [FMOD Studio API]	 - Studio System Object (Events)
+	FMOD::Studio::System* studio_system;					// [FMOD Studio API]		 - Studio System Object (Events)
 	FMOD_RESULT	  result_code;								// Used to troubleshoot stuff, tells us if an operation is successful or not.
-	ChannelMap	  mChannels;								// [List of Channels]    - Keeps Track of which Channels are Available. (Channels Start from ID: 1)
-	SoundMap	  mSoundsSFX;							    // [List of SFX]	     - Stores all the (SFX) Sound files that has been loaded into the system.
-	SoundMap	  mSoundsBGM;								// [List of BGM]         - Stores all the (BGM) Sound files that has been loaded into the system.
-	BankMap		  mBank;									// [Banks - Event Based] - Stores all the sounds and information for each events
+	ChannelMap	  mSFXChannels;								// [List of SFX Channels]	 - Keeps Track of which Channels are Available. (Channels Start from ID: 0)
+	ChannelMap	  mBGMChannels;								// [List of BGM Channels]    - (BGM) Reserved Channels
+	SoundMap	  mSoundsSFX;							    // [List of SFX]			 - Stores all the (SFX) Sound files that has been loaded into the system.
+	SoundMap	  mSoundsBGM;								// [List of BGM]			 - Stores all the (BGM) Sound files that has been loaded into the system.
+	BankMap		  mBank;									// [Banks - Event Based]	 - Stores all the sounds and information for each events
 	
 };
 

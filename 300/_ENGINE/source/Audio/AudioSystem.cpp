@@ -7,6 +7,20 @@
 
 static bool once = false;
 
+#pragma region Channel Class
+//Channel::Channel(FMOD::Channel* new_channel, bool active) : channel(new_channel) ,
+//{
+//}
+
+Channel::Channel() : isActive(false)
+{
+	FMOD::Channel* new_channel_obj = nullptr;
+	channel = new_channel_obj;
+}
+
+
+#pragma endregion
+
 // Audio System Life Cycle
 
 #pragma region AudioSystem Core Loop
@@ -23,12 +37,26 @@ void AudioManager::Init()
 	AudioManager::ErrCodeCheck(result_code);
 
 	// Create Channels (at initialization)
-	while (channel_no < NO_OF_CHANNELS_TO_INIT)
+	while (sfx_channel_no < NO_OF_SFX_CHANNELS_TO_INIT)
 	{
-		std::cout << "CREATING CHANNEL." << std::endl;
-		FMOD::Channel* new_channel;
-		mChannels.insert(std::make_pair(channel_no, new_channel));
-		channel_no++;
+		std::cout << "CREATING SFX CHANNEL #" << sfx_channel_no << "." << std::endl;
+		
+		Channel* new_channel = new Channel();
+
+		mSFXChannels.insert(std::make_pair(sfx_channel_no, new_channel));
+		sfx_channel_no++;
+	}
+
+	while (bgm_channel_no < NO_OF_BGM_CHANNELS_TO_INIT)
+	{
+
+		std::cout << "CREATING BGM CHANNEL #" << bgm_channel_no << "." << std::endl;
+
+		Channel* new_channel = new Channel();
+
+		mBGMChannels.insert(std::make_pair(bgm_channel_no, new_channel));
+
+		bgm_channel_no++;
 	}
 
 	// Test Load Sound
@@ -61,7 +89,7 @@ void AudioManager::Update()
 	if (Input::CheckKey(PRESS, Q))
 	{
 		std::cout << "PRESSED Q." << std::endl;
-		SetChannelVolume()
+		std::cout << "VOLUME SET : " << SetChannelVolume(AUDIO_SFX, 0, 0.0f);
 	}
 
 	//FMOD_VECTOR listener_pos = lAudio->GetListenerPosition();
@@ -214,15 +242,34 @@ void AudioManager::PlayAudio(std::string audio_name, AUDIO_TYPE audio_type,FMOD_
 		}
 	}
 
-	ChannelMap::iterator channel_it = mChannels.find(channel_no);
+	ChannelMap::iterator channel_it;
 
-	if (channel_it != mChannels.end())	// if found...
+	switch (audio_type)
 	{
-		std::cout << "Channel is found." << std::endl;
-		FMOD::Channel* found_channel = channel_it->second;
-		//found_channel->setVolume(audio_vol);
-		std::cout << "Now playing sound in channel: " << channel_no << std::endl;
-		ErrCodeCheck(system->playSound(map_it->second->sound, nullptr, false, &found_channel));
+		case AUDIO_BGM:
+			channel_it = mBGMChannels.find(channel_no);
+
+			if (channel_it != mBGMChannels.end())	// if found...
+			{
+				std::cout << "BGM Channel is found." << std::endl;
+				/*FMOD::Channel* found_channel = channel_it->second;*/
+				//found_channel->setVolume(audio_vol);
+				std::cout << "Now playing sound in channel: " << channel_no << std::endl;
+				ErrCodeCheck(system->playSound(map_it->second->sound, nullptr, false, &(channel_it->second)->channel));
+			}
+			break;
+		case AUDIO_SFX:
+			channel_it = mSFXChannels.find(channel_no);
+
+			if (channel_it != mSFXChannels.end())	// if found...
+			{
+				std::cout << "SFX Channel is found." << std::endl;
+				/*FMOD::Channel* found_channel = channel_it->second;*/
+				//found_channel->setVolume(audio_vol);
+				std::cout << "Now playing sound in channel: " << channel_no << std::endl;
+				ErrCodeCheck(system->playSound(map_it->second->sound, nullptr, false, &(channel_it->second->channel)));
+			}
+			break;
 	}
 
 
@@ -307,22 +354,80 @@ void AudioManager::PlayAudio(std::string audio_name, AUDIO_TYPE audio_type,FMOD_
 //	std::cout << "Final Position: [" << final_pos.x << "," << final_pos.y << "," << final_pos.z << "]" << std::endl;
 //}
 
-void AudioManager::SetChannelVolume(int channel_id, float channel_vol)
-{
-	ChannelMap::iterator map_it = mChannels.find(channel_id); // Find using the channel ID. 
+bool AudioManager::SetChannelVolume(AUDIO_TYPE audio_type, int channel_id, float channel_vol)
+{	
+	int max_channel_no;
+	ChannelMap::iterator map_it;
 
-	// Does the Channel even exist?
-	if (map_it == mChannels.end())
+	switch (audio_type)
 	{
-		std::cout << "Couldn't find the requested Channel. " << std::endl;
-		return;	// Return because no such channel.
+		case AUDIO_BGM:
+			max_channel_no = NO_OF_BGM_CHANNELS_TO_INIT;
+			map_it = mBGMChannels.find(channel_id);
+			break;
+		case AUDIO_SFX:
+			max_channel_no = NO_OF_SFX_CHANNELS_TO_INIT;
+			map_it = mSFXChannels.find(channel_id);
+			break;
 	}
 
-	float initial_volume;
-	float final_volume;
+	if (channel_id >= 0 && channel_id < max_channel_no)
+	{	
+		switch (audio_type)
+		{
+			case AUDIO_BGM: 
+				// Does the Channel even exist?
+				if (map_it == mBGMChannels.end())
+				{
+					std::cout << "Couldn't find the requested BGM Channel. " << std::endl;
+					return 0;	// Return because no such channel.
+				}
 
-	result_code = map_it->second->getVolume(&initial_volume);
-	std::cout << "Initial Volume of Channel " << channel_id << ": " << initial_volume;
+				else // found
+				{
+					if (map_it->second != nullptr)
+						map_it->second->channel->setVolume(channel_vol);
+
+				}
+
+				break;
+
+			case AUDIO_SFX:
+
+				// Does the Channel even exist?
+				if (map_it == mSFXChannels.end())
+				{
+					std::cout << "Couldn't find the requested SFX Channel. " << std::endl;
+					return 0;	// Return because no such channel.
+				}
+
+				else // found
+				{
+					if (map_it->second != nullptr)
+					{
+						map_it->second->channel->setVolume(channel_vol);
+						std::cout << "VOLUME CHANGED SUCCESSFULLY: " << channel_vol << std::endl;
+					}
+				
+
+				
+
+				}
+
+				break;
+		}
+	}
+
+	else
+	{
+		return 1;
+	}
+	
+}
+
+bool AudioManager::SetAllVolume(float channel_vol)
+{
+	return 0;
 }
 
 ///*
