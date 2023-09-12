@@ -23,6 +23,7 @@ Setting up specification for frame buffer rendering
 #pragma once
 
 #include "EditorWindow.h"
+#include <GLFW/glfw3.h>
 
 
 /*******************************/

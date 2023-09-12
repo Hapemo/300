@@ -163,7 +163,6 @@
     <ClCompile Include="source\Camera.cpp" />
     <ClCompile Include="source\DebugRenderer.cpp" />
     <ClCompile Include="source\Fbo.cpp" />
-    <ClCompile Include="source\GraphicsSystem.cpp" />
     <ClCompile Include="source\Math.cpp" />
     <ClCompile Include="source\Mesh.cpp" />
     <ClCompile Include="source\OpenGl.cpp" />
