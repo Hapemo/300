@@ -1,7 +1,6 @@
 #ifndef MESH_HPP
 #define MESH_HPP
 
-#define _ASSIMP_LOADING 0
 
 #include "Math.hpp"
 #include "Vao.hpp"
@@ -11,15 +10,8 @@
 
 #include "stb_image.h"
 
-#if _ASSIMP_LOADING
-#include <assimp/Importer.hpp>
-#include <assimp/scene.h>
-#include <assimp/postprocess.h>
-#pragma comment( lib, "../lib/assimp/BINARIES/Win32/lib/Release/assimp-vc142-mt.lib")
-#endif
 
-
-constexpr int MAX_INSTANCES = 1000;
+constexpr int MAX_INSTANCES = 100;
 
 // Follows the format in the shader code
 /******************************************
@@ -37,6 +29,7 @@ namespace GFX
 		// -- Called once on startup --
 		void LoadFromGeom(const _GEOM::Geom& GeomData, std::vector<vec3>& positions, std::vector<glm::vec2>& uvs, std::vector<unsigned int>& indices);
 		void Setup(std::vector<vec3> const& positions, std::vector<unsigned int> const& indices, std::vector<vec2> const& TexCoords = std::vector<vec2>{});
+		void Setup(const _GEOM::Geom& GeomData);
 
 		// -- Used when drawing --
 		void BindVao();
@@ -57,12 +50,10 @@ namespace GFX
 		std::vector<mat4> mLTW;
 		std::vector<vec4> mColors;
 
-#if _ASSIMP_LOADING
-		// assimp loaded mesh variables
-		std::vector<glm::vec3>		mPositions;
-		std::vector<unsigned int>	mIndices;
-		static std::vector<Mesh> assimpLoadedMeshes;	
-#endif
+		// This mesh may contain multiple different animations. These animations are unique to this mesh.
+		std::vector<_GEOM::Animation>	mAnimation{};
+		bool							mHasAnimation{ false };
+
 
 	private:
 		// Vertex array object and buffer object for each mesh
@@ -77,6 +68,10 @@ namespace GFX
 		std::string mMeshName;
 		int mVertexCount{};
 		int mIndexCount{};
+
+		// TODO: Should be able to know what shader to use for this mesh
+
+		// TODO: Should be able to know what textures to use for this mesh
 	};
 
 
@@ -115,6 +110,7 @@ namespace GFX
 
 	private:
 		const std::string compiled_geom_path = "../compiled_geom/";
+		void SetupMesh(std::string filepath);
 	};
 }
 
@@ -124,15 +120,5 @@ namespace Deserialization
 	bool DeserializeGeom(const std::string Filepath, _GEOM::Geom& GeomData) noexcept;
 	void DeserializeAssimpNodeData(std::ifstream& infile, _GEOM::AssimpNodeData& Node);
 }
-
-
-#if _ASSIMP_LOADING
-namespace AssimpImporter
-{
-	void loadModel(const std::string& filepath);
-	void processnode(aiNode* node, const aiScene* scene);
-	GFX::Mesh processmesh(aiMesh* mesh, const aiScene* scene);
-}
-#endif
 
 #endif

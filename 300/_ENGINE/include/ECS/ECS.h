@@ -20,8 +20,6 @@ public:
 	template <typename Component>
 	auto GetEntitiesWith();
 
-	auto GetAllEntities();
-
 	void DeleteAllEntities();
 };
 

@@ -76,11 +76,42 @@ bool EntityJSON::Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* wri
 {
 	writer->StartObject();
 
-	/*
-		eg:
-		writer->String("ComponentName");
-		writer->String(ec.component_name.c_str());
-	*/
+	// no need for now
+	/*writer->String("EntityID");
+	writer->Uint((std::uint32_t)mID);*/
+
+	writer->String("Name");
+	writer->String(mGJ.jName.c_str());
+
+	writer->String("isActive");
+	writer->Bool(mGJ.jIsActive);
+
+	writer->String("Tag");
+	writer->String(mGJ.jTag.c_str());
+
+	writer->String("Subtag");
+	writer->String(mGJ.jSubtag.c_str());
+
+	writer->String("Scale");
+	writer->StartArray();
+	writer->Double(mTJ.jScale.x);
+	writer->Double(mTJ.jScale.y);
+	writer->Double(mTJ.jScale.z);
+	writer->EndArray();
+
+	writer->String("Rotate");
+	writer->StartArray();
+	writer->Double(mTJ.jRotate.x);
+	writer->Double(mTJ.jRotate.y);
+	writer->Double(mTJ.jRotate.z);
+	writer->EndArray();
+
+	writer->String("Translate");
+	writer->StartArray();
+	writer->Double(mTJ.jTranslate.x);
+	writer->Double(mTJ.jTranslate.y);
+	writer->Double(mTJ.jTranslate.z);
+	writer->EndArray();
 
 	writer->EndObject();
 	

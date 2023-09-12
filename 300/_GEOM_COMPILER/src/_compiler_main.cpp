@@ -2,8 +2,6 @@
 #include <geom.h>
 #include <iostream>
 
-#define _DESCRIPTOR_FILEPATH "./descriptor_files/model_descriptors.json"
-
 
 // Extracts the raw filename itself
 std::string getFileNameWithoutExtension(const std::string& ResourceFilePath)
@@ -55,10 +53,20 @@ int main(int argc, char* argv[])
 	std::cout << "\tAssimp Version: " << aiGetVersionMajor() << "." << aiGetVersionMinor() << "." << aiGetVersionRevision() << std::endl;
 	std::cout << "================================================================================\n";
 
+	std::string descriptorFilepath{};
+	
+
+#if __RELEASE
+	descriptorFilepath = "../../_GEOM_COMPILER/descriptor_files/default_descriptor_BUILD.json";
+#else
+	descriptorFilepath = "./descriptor_files/default_descriptor.json";
+#endif
+
+
 	// Load the descriptor data
 	std::cout << ">>\t\tLoading Descriptor Data\n";
 	_GEOM::DescriptorData Desc;
-	bool Err = _GEOM::DescriptorData::LoadDescriptorData(Desc, _DESCRIPTOR_FILEPATH);
+	bool Err = _GEOM::DescriptorData::LoadDescriptorData(Desc, descriptorFilepath);
 	assert(Err);
 
 	std::cout << "\n================================================================================\n";

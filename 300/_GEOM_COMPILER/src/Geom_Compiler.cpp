@@ -249,9 +249,12 @@ namespace _GEOM
 			}
 
 			// Copy the bones
-			if (AssimpMesh.HasBones()) {
-				ExtractBoneWeightForVertex(MeshPart, AssimpMesh);
+			if (AssimpMesh.HasBones()) 
+			{
+				Animation newanimation;
+				ExtractBoneWeightForVertex(newanimation, MeshPart, AssimpMesh);
 				m_SkinGeom->m_bHasAnimation = true;
+				m_SkinGeom->m_Animation.emplace_back(newanimation);
 			}
 		};
 
@@ -294,8 +297,11 @@ namespace _GEOM
 		if (m_SkinGeom->m_bHasAnimation)
 		{
 			std::cout << ">>[NOTE]: \tImporting Bones\n";
-			ReadHierarchyData(m_SkinGeom->m_Animation.m_RootNode, m_Scene->mRootNode);
-			ReadMissingBones(m_Scene->mAnimations[0]);
+			for (int numanims{}; numanims < m_Scene->mNumAnimations; ++numanims)
+			{
+				ReadHierarchyData(m_SkinGeom->m_Animation[numanims].m_RootNode, m_Scene->mRootNode);
+				ReadMissingBones(m_SkinGeom->m_Animation[numanims], m_Scene->mAnimations[0]);
+			}
 			std::cout << ">>[NOTE]: \tFinished Importing Bones\n";
 		}
 	}
@@ -425,7 +431,7 @@ namespace _GEOM
 			{
 				iFinalMesh = static_cast<int>(m_SkinGeom->m_Meshes.size());			
 				m_SkinGeom->m_Meshes.emplace_back();
-				m_SkinGeom->m_Meshes.back().m_Name			= E.m_MeshName;
+				m_SkinGeom->m_Meshes.back().m_Name = E.m_MeshName;
 			}
 
 
@@ -577,12 +583,15 @@ namespace _GEOM
 						VP.m_UV[0] = V.m_Texcoord.x;
 						VP.m_UV[1] = V.m_Texcoord.y;
 
+						for (int i{}; i < MAX_BONE_INFLUENCE; ++i)
+						{
+							VP.m_BoneIDs[i] = V.m_BoneIDs[i];
+							VP.m_Weights[i] = V.m_Weights[i];
+						}
+
 						VPContainer.push_back(VP);
 					}
 				}
-
-				// For each bone inside the submesh...
-				// <<<<<<<<<<<<<< write bone data transfer here >>>>>>>>>>>>>>
 
 				RenderSubmesh.m_Vertex = VPContainer;
 				RenderSubmesh.m_Extra = VEContainer;
@@ -649,7 +658,7 @@ namespace _GEOM
 			
 			// Copy the animation data in
 			if (m_bHasAnimation) {
-				Mesh[i].m_Animation = m_Animation;
+				Mesh[i].m_Animation = std::move(m_Animation);
 			}
 
 			// Copy the bool statuses in
@@ -680,6 +689,12 @@ namespace _GEOM
 						savepos.m_Pos = _pos.m_Pos;
 						savepos.m_Clr = _pos.m_Clr;
 						savepos.m_UV = _pos.m_UV;
+
+						for (int i{}; i < MAX_BONE_INFLUENCE; ++i)
+						{
+							savepos.m_BoneIDs[i] = _pos.m_BoneIDs[i];
+							savepos.m_Weights[i] = _pos.m_Weights[i];
+						}
 					}
 				}
 
@@ -738,7 +753,7 @@ namespace _GEOM
 		outfile.write((char*)&GeomData.m_bHasTextures, sizeof(bool));					// bTextures
 		outfile.write((char*)&GeomData.m_bVtxClrPresent, sizeof(bool));					// bColors
 
-		// Vertex Positions, UVs, Colors
+		// Vertex Positions, UVs, Colors, bone weights and IDs
 		for (uint32_t i{}; i < GeomData.m_nVertices; ++i) {
 			outfile.write((char*)&GeomData.m_pPos[i], sizeof(Geom::VertexPos));
 		}
@@ -757,56 +772,63 @@ namespace _GEOM
 			// Animation Data
 			if (GeomData.m_bHasAnimations) 
 			{
-				outfile.write((char*)&meshInst.m_Animation.m_BoneCounter, sizeof(uint32_t));		// Number of bones
-				outfile.write((char*)&meshInst.m_Animation.m_Duration, sizeof(float));			// Duration
-				outfile.write((char*)&meshInst.m_Animation.m_TicksPerSecond, sizeof(float));		// Ticks Per Second
+				uint8_t animationSize = (uint8_t)meshInst.m_Animation.size();
+				outfile.write((char*)&animationSize, sizeof(uint8_t));						// Number of animations
 
-				// Bone info map
-				for (const auto& boneinfo : GeomData.m_pMesh[i].m_Animation.m_BoneInfoMap) 
+				for (int j{}; j < meshInst.m_Animation.size(); ++j)
 				{
-					uint8_t strlen = (uint8_t)boneinfo.first.size();
-					outfile.write((char*)&strlen, sizeof(uint8_t));						// name length
-					outfile.write((char*)boneinfo.first.c_str(), strlen);				// name
-					outfile.write((char*)&boneinfo.second, sizeof(_GEOM::BoneInfo));	// boneinfo
+					auto& animation = meshInst.m_Animation[j];
+
+					outfile.write((char*)&animation.m_BoneCounter, sizeof(uint32_t));		// Number of bones
+					outfile.write((char*)&animation.m_Duration, sizeof(float));				// Duration
+					outfile.write((char*)&animation.m_TicksPerSecond, sizeof(float));		// Ticks Per Second
+
+					// Bone info map
+					for (const auto& boneinfo : animation.m_BoneInfoMap)
+					{
+						uint8_t strlen = (uint8_t)boneinfo.first.size();
+						outfile.write((char*)&strlen, sizeof(uint8_t));						// name length
+						outfile.write((char*)boneinfo.first.c_str(), strlen);				// name
+						outfile.write((char*)&boneinfo.second, sizeof(_GEOM::BoneInfo));	// boneinfo
+					}
+
+					// Bones
+					for (unsigned j{}; j < animation.m_BoneCounter; ++j)
+					{
+						auto& boneinst = animation.m_Bones[j];
+
+						uint8_t strlen = (uint8_t)boneinst.m_Name.size();
+						outfile.write((char*)&strlen, sizeof(uint8_t));						// name length
+						outfile.write((char*)boneinst.m_Name.c_str(), strlen);				// name	
+
+						outfile.write((char*)&boneinst.m_ID, sizeof(int));					// id
+
+						outfile.write((char*)&boneinst.m_NumPositions, sizeof(int));		// numpos
+						outfile.write((char*)&boneinst.m_NumRotations, sizeof(int));		// numrot
+						outfile.write((char*)&boneinst.m_NumScalings, sizeof(int));			// numscale
+
+						// local transform
+						outfile.write((char*)&boneinst.m_LocalTransform, sizeof(glm::mat4));
+
+						// keypositions
+						for (int k{}; k < boneinst.m_NumPositions; ++k) {
+							outfile.write((char*)&boneinst.m_Positions[k], sizeof(_GEOM::KeyPosition));
+						}
+
+						// keyrotations
+						for (int k{}; k < boneinst.m_NumRotations; ++k) {
+							outfile.write((char*)&boneinst.m_Rotations[k], sizeof(_GEOM::KeyRotation));
+						}
+
+						// keyscalings
+						for (int k{}; k < boneinst.m_NumScalings; ++k) {
+							outfile.write((char*)&boneinst.m_Scales[k], sizeof(_GEOM::KeyScale));
+						}
+					}
+
+					// AssimpNodeData
+					Serialization::SerializeAssimpNodeData(outfile, animation.m_RootNode);
 				}
-
-				// Bones
-				for (unsigned j{}; j < meshInst.m_Animation.m_BoneCounter; ++j)
-				{
-					auto& boneinst = meshInst.m_Animation.m_Bones[j];
-
-					uint8_t strlen = (uint8_t)boneinst.m_Name.size();
-					outfile.write((char*)&strlen, sizeof(uint8_t));						// name length
-					outfile.write((char*)boneinst.m_Name.c_str(), strlen);				// name	
-
-					outfile.write((char*)&boneinst.m_ID, sizeof(int));					// id
-
-					outfile.write((char*)&boneinst.m_NumPositions, sizeof(int));		// numpos
-					outfile.write((char*)&boneinst.m_NumRotations, sizeof(int));		// numrot
-					outfile.write((char*)&boneinst.m_NumScalings, sizeof(int));			// numscale
-
-					// local transform
-					outfile.write((char*)&boneinst.m_LocalTransform, sizeof(glm::mat4));
-
-					// keypositions
-					for (int k{}; k < boneinst.m_NumPositions; ++k) {
-						outfile.write((char*)&boneinst.m_Positions[k], sizeof(_GEOM::KeyPosition));
-					}
-
-					// keyrotations
-					for (int k{}; k < boneinst.m_NumRotations; ++k) {
-						outfile.write((char*)&boneinst.m_Rotations[k], sizeof(_GEOM::KeyRotation));
-					}
-
-					// keyscalings
-					for (int k{}; k < boneinst.m_NumScalings; ++k) {
-						outfile.write((char*)&boneinst.m_Scales[k], sizeof(_GEOM::KeyScale));
-					}
-				}
-
-				// AssimpNodeData
-				Serialization::SerializeAssimpNodeData(outfile, meshInst.m_Animation.m_RootNode);
-
 			}	// animation data
 		}
 
@@ -930,23 +952,25 @@ namespace _GEOM
 	// BONE:: Set bone data
 	void Mesh_Loader::SetVertexBoneData(FullVertices& vertex, int boneID, float weight) noexcept
 	{
+		// this particular vertex can only be influenced by a maximum number of
+		// bones that is equal to MAX_BONE_INFLUENCE
 		for (int i = 0; i < MAX_BONE_INFLUENCE; ++i)
 		{
-			// only change the default initialized bones
+			// look for an empty slot for the weights.
 			if (vertex.m_BoneIDs[i] < 0)
 			{
-				vertex.m_Weights[i] = weight;
-				vertex.m_BoneIDs[i] = boneID;
+				vertex.m_Weights[i] = weight;	// how much this vertex is being influenced
+				vertex.m_BoneIDs[i] = boneID;	// this vertex is influenced by this particular bone
 				break;
 			}
 		}
 	};
 
 	// BONE:: Load bone data
-	void Mesh_Loader::ExtractBoneWeightForVertex(Mesh_Loader::InputMeshPart& Vertex, const aiMesh& mesh) noexcept
+	void Mesh_Loader::ExtractBoneWeightForVertex(Animation& anims, Mesh_Loader::InputMeshPart& Vertex, const aiMesh& mesh) noexcept
 	{
-		auto& rBoneInfoMap = m_SkinGeom->m_Animation.m_BoneInfoMap;
-		int& iBoneCount = m_SkinGeom->m_Animation.m_BoneCounter;
+		auto& rBoneInfoMap	= anims.m_BoneInfoMap;
+		int& iBoneCount		= anims.m_BoneCounter;
 
 		for (int boneindex = 0; boneindex < mesh.mNumBones; ++boneindex)
 		{
@@ -983,27 +1007,30 @@ namespace _GEOM
 	};
 
 	// BONE:: Read missing bones and populate bone vector
-	void Mesh_Loader::ReadMissingBones(const aiAnimation* animation) noexcept
+	void Mesh_Loader::ReadMissingBones(Animation& myanimation, const aiAnimation* sceneanimation) noexcept
 	{
-		m_SkinGeom->m_Animation.m_Duration = animation->mDuration;
-		m_SkinGeom->m_Animation.m_TicksPerSecond = animation->mTicksPerSecond;
-		int size = animation->mNumChannels;
+		myanimation.m_Duration = sceneanimation->mDuration;
+		myanimation.m_TicksPerSecond = sceneanimation->mTicksPerSecond;
+		int size = sceneanimation->mNumChannels;
 
-		auto& boneInfoMap = m_SkinGeom->m_Animation.m_BoneInfoMap;
-		int& boneCount = m_SkinGeom->m_Animation.m_BoneCounter;
+		auto& boneInfoMap = myanimation.m_BoneInfoMap;
+		int& boneCount = myanimation.m_BoneCounter;
 
 		// Reading channels (bones engaged in an animation and their keyframes)
 		for (int i{}; i < size; ++i)
 		{
-			auto channel = animation->mChannels[i];
+			auto channel = sceneanimation->mChannels[i];
 			std::string boneName = channel->mNodeName.data;
 
-			// populate the bone info map if there are any missing entries
+			// sanitycheck for any misisng boneinfomap which should already be initialized before
+			// the call to this function
 			if (boneInfoMap.find(boneName) == boneInfoMap.end())
 			{
 				boneInfoMap[boneName].id = boneCount++;
 			}
-			m_SkinGeom->m_Animation.m_Bones.emplace_back(Bone(channel->mNodeName.data, boneInfoMap[channel->mNodeName.data].id, channel));
+
+			// emplace back the bone data, based off the boneinfomap and channel data
+			myanimation.m_Bones.emplace_back(Bone(channel->mNodeName.data, boneInfoMap[channel->mNodeName.data].id, channel));
 		}
 	};
 }
