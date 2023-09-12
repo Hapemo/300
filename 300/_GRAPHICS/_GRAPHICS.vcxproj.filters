@@ -108,9 +108,6 @@
     <ClCompile Include="..\_GEOM_COMPILER\src\Bone.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\GraphicsSystem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="demo\ImGui.hpp">

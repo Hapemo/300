@@ -61,7 +61,7 @@ Inspect display for RigidBody components
 
 #include "Inspect.h"
 #include "Editor.h"
-#include "ECS_Components.h"
+#include "ECS/ECS_Components.h"
 #include "Hierarchy.h"
 #include <math.h>
 //int Inspect::inspectmode{ inspector_layer };

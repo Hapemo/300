@@ -24,8 +24,8 @@ to select current Entity and activates inspector
 
 #include "Editor.h"
 #include "EditorWindow.h"
-#include "ECS.h"
-#include "ECS_Components.h"
+#include "ECS/ECS.h"
+#include "ECS/ECS_Components.h"
 
 
 extern bool CreateTexture; // test
