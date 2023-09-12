@@ -5,21 +5,19 @@
 
 void LuaEngine()
 {
+    systemManager->mScriptingSystem->luaState["systemManager"] = systemManager;
 
+    systemManager->mScriptingSystem->luaState.new_usertype<SystemManager>(
+        "SystemManager", sol::constructors<>()
+
+        );
 }
 
 void LuaInput()
 {
-    // Function pointer for 2 input functions
-    //bool (*CheckKeyPointer)(E_STATE, E_KEY);
-    //CheckKeyPointer = Input::CheckKey;
-    //
-    //double (*GetScrollPointer)();
-    //GetScrollPointer = Input::GetScroll;
-
-    //ScriptingSystem::GetInstance()->luaState.new_usertype<Input>(
-    //    "Input", sol::constructors<>(),
-    //    "CheckKey", &Input::CheckKey,
-    //    "GetScroll", &Input::GetScroll
-    //    );
+    systemManager->mScriptingSystem->luaState.new_usertype<Input>(
+        "Input", sol::constructors<>(),
+        "CheckKey", &Input::CheckKey,
+        "GetScroll", &Input::GetScroll
+        );
 }

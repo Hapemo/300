@@ -14,7 +14,7 @@ public:
 	GFX::Window* mWindow;
 
 	SystemManager();
-	~SystemManager() = default;
+	~SystemManager();
 	void Init();
 	void Update(float dt);
 	void Exit();

@@ -10,6 +10,11 @@ SystemManager::SystemManager()
 	mScriptingSystem = std::make_unique<ScriptingSystem>();
 }
 
+SystemManager::~SystemManager()
+{
+
+}
+
 void SystemManager::Init()
 {
 	mPhysicsSystem.get()->Init();
