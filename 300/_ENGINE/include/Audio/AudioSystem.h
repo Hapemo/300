@@ -30,35 +30,6 @@ static int MAX_AUDIO_FILES_PLAYING = 32;         // Number of Sounds (that are a
 static int NO_OF_SFX_CHANNELS_TO_INIT  = 32;	 // Number of SFX Channels (to init at the start)
 static int NO_OF_BGM_CHANNELS_TO_INIT = 16;		 // Number of BGM Channels
 
-//extern std::unique_ptr<AudioManager> mAudio; // Audio Manager Reference (only 1)
-
-// Initialize the Audio System
-
-
-// [Audio System] object - data 
-// - Manages Audio Files & Relevant Data 
-//struct AudioSystem {
-	//AudioSystem();
-
-	//void Update();
-
-	//typedef std::map<int, FMOD::Channel*>				ChannelMap;		
-	//typedef std::map<std::string, Sound*>				SoundMap;
-	//typedef std::map<std::string, FMOD::Studio::Bank*>  BankMap;
-
-	//int channel_size = 0;									// Acts as a counter + naming of ID of newly created Channels.
-
-	//FMOD::System* system;									// System Object
-	//FMOD::Studio::System* studio_system;					// [FMOD Studio API]	 - Studio System Object (Events)
-	//FMOD_RESULT	  sys_result_code;							// Used to troubleshoot stuff, tells us if an operation is successful or not.
-	//ChannelMap	  aChannels;								// [List of Channels]    - Keeps Track of which Channels are Available. (Channels Start from ID: 1)
-	//SoundMap	  aSoundsSFX;							    // [List of SFX]	     - Stores all the (SFX) Sound files that has been loaded into the system.
-	//SoundMap	  aSoundsBGM;								// [List of BGM]         - Stores all the (BGM) Sound files that has been loaded into the system.
-	//BankMap		  aBank;									// [Banks - Event Based] - Stores all the sounds and information for each event.
-//};
-
-
-
 class Channel
 {
 public:
@@ -66,7 +37,8 @@ public:
 	//Channel(FMOD::Channel* new_channel, bool active);
 public:
 	FMOD::Channel* channel;
-	bool		   isActive;
+	bool		   isActive;  // Sound is loaded into channel.
+	bool		   isPlaying; // Channel is playing = true, is paused = false;
 };
 
 
@@ -126,16 +98,36 @@ public:
 #pragma endregion
 	
 #pragma region STOP SOUND STUFF
+	// These releases the sound from their channels.
 	void StopAllSounds();
 	void StopAllBGMSounds();
 	void StopAllSFXSounds();
 	void StopChannel(AUDIO_TYPE audio_type, int channel_no);
-	void StopSound(std::string audio_name, AUDIO_TYPE audio_type);
-	//void StopSFXSound(std::string audio_name);
-	//void StopBGMSound(std::string audio_name);
 #pragma endregion
 
-#pragma region 
+
+// TODO
+// ---------------------------------
+#pragma region PAUSE & RESUME SOUND
+	// These pauses the playing of the sound only.
+	void PauseAllSounds();
+	void PauseSFXChannel(int channel_no);
+	void PauseBGMChannel(int channel_no);
+
+	void ResumeAllSounds();
+	void ResumeSFXChannel(int channel_no);
+	void ResumeBGMChannel(int channel_no);
+#pragma endregion
+#pragma region AUDIO INFORMATION
+	bool isActive(AUDIO_TYPE audio_type, int channel_no);
+	bool isPlaying(AUDIO_TYPE audito_type, int channel_no);
+#pragma endregion 
+#pragma region RELEASE RESOURCES
+
+#pragma endregion
+#pragma region 3D Audio Stuff
+
+#pragma endregion
 
 
 

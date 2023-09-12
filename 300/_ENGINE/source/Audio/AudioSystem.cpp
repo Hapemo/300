@@ -151,6 +151,45 @@ void AudioManager::Update()
 		StopChannel(AUDIO_BGM, 2);
 	}
 
+	if (Input::CheckKey(PRESS, _3))
+	{
+		std::cout << "PRESSED 3." << std::endl;
+		PauseAllSounds();
+	}
+	
+	if (Input::CheckKey(PRESS, _4))
+	{
+		std::cout << "PRESSED 4." << std::endl;
+		PauseSFXChannel(0);
+	}
+
+	if (Input::CheckKey(PRESS, _5))
+	{
+		std::cout << "PRESSED 5." << std::endl;
+		PauseBGMChannel(1);
+	}
+
+	if (Input::CheckKey(PRESS, _6))
+	{
+		std::cout << "PRESSED 6." << std::endl;
+		ResumeAllSounds();
+	}
+
+	if (Input::CheckKey(PRESS, _7))
+	{
+		std::cout << "PRESSED 7." << std::endl;
+		ResumeSFXChannel(0);
+	}
+
+	if (Input::CheckKey(PRESS, _8))
+	{
+		std::cout << "PRESSED 8." << std::endl;
+		ResumeBGMChannel(1);
+	}
+
+
+
+
 	
 	//FMOD_VECTOR listener_pos = lAudio->GetListenerPosition();
 
@@ -316,6 +355,7 @@ void AudioManager::PlayAudio(std::string audio_name, AUDIO_TYPE audio_type,FMOD_
 				//found_channel->setVolume(audio_vol);
 				std::cout << "Now playing sound in channel: " << channel_no << std::endl;
 				ErrCodeCheck(system->playSound(map_it->second->sound, nullptr, false, &(channel_it->second)->channel));
+				channel_it->second->isActive = true;
 			}
 			break;
 		case AUDIO_SFX:
@@ -328,6 +368,7 @@ void AudioManager::PlayAudio(std::string audio_name, AUDIO_TYPE audio_type,FMOD_
 				//found_channel->setVolume(audio_vol);
 				std::cout << "Now playing sound in channel: " << channel_no << std::endl;
 				ErrCodeCheck(system->playSound(map_it->second->sound, nullptr, false, &(channel_it->second->channel)));
+				channel_it->second->isActive = true;
 			}
 			break;
 	}
@@ -387,7 +428,10 @@ void AudioManager::PlaySFXAudio(std::string audio_name, float audio_vol, int cha
 			ErrCodeCheck(system->playSound(map_it->second->sound, nullptr, false, &(sfx_channel_it->second)->channel));
 
 			if (result_code)
-				std::cout << "SFX PLAYING at : " << channel_no << std::endl;
+			{
+				sfx_channel_it->second->isActive = true;
+				sfx_channel_it->second->isPlaying = true;
+			}
 		}
 
 		else
@@ -693,26 +737,92 @@ void AudioManager::StopChannel(AUDIO_TYPE audio_type, int channel_no)
 	//return 0; // FAILURE
 }
 
-/* Stop a specific audio*/
-void AudioManager::StopSound(std::string audio_name, AUDIO_TYPE audio_type)
-{
-	ChannelMap* map_pointer = nullptr;
+#pragma endregion
 
-	switch (audio_type)
+#pragma region PAUSE & RESUME SOUND
+// These pauses the playing of the sound only.
+void AudioManager::PauseAllSounds()
+{
+	for (auto channel : mSFXChannels)
 	{
-		case AUDIO_BGM:
-			map_pointer = &(mBGMChannels);
-			break;
-		case AUDIO_SFX:
-			map_pointer = &(mSFXChannels);
-			break;
+		channel.second->channel->setPaused(true);
 	}
 
-	
+	for (auto channel : mBGMChannels)
+	{
+		channel.second->channel->setPaused(true);
+	}
+}
+
+void AudioManager::PauseSFXChannel(int channel_no)
+{
+	ChannelMap::iterator map_it = mSFXChannels.find(channel_no);
+
+	if (map_it != mSFXChannels.end()) // found ...
+	{
+		std::cout << "FOUND" << std::endl;
+		map_it->second->channel->setPaused(true);
+	}
+}
+
+void AudioManager::PauseBGMChannel(int channel_no)
+{
+	ChannelMap::iterator map_it = mBGMChannels.find(channel_no);
+
+	if (map_it != mBGMChannels.end()) // found ...
+	{
+		map_it->second->channel->setPaused(true);
+	}
 
 }
 
-#pragma endregion
+void AudioManager::ResumeAllSounds()
+{
+	for (auto channel : mSFXChannels)
+	{
+		channel.second->channel->setPaused(false);
+	}
+
+	for (auto channel : mBGMChannels)
+	{
+		channel.second->channel->setPaused(false);
+	}
+}
+
+
+void AudioManager::ResumeSFXChannel(int channel_no)
+{
+	ChannelMap::iterator map_it = mSFXChannels.find(channel_no);
+
+	if (map_it != mSFXChannels.end()) // found ...
+	{
+		std::cout << "FOUND" << std::endl;
+		map_it->second->channel->setPaused(false);
+	}
+}
+
+void AudioManager::ResumeBGMChannel(int channel_no)
+{
+	ChannelMap::iterator map_it = mBGMChannels.find(channel_no);
+
+	if (map_it != mBGMChannels.end()) // found ...
+	{
+		map_it->second->channel->setPaused(false);
+	}
+}
+
+#pragma region AUDIO INFORMATION
+
+bool AudioManager::isActive(AUDIO_TYPE audito_type, int channel_no)
+{
+	
+}
+
+bool AudioManager::isPlaying(AUDIO_TYPE audito_type, int channel_no)
+{
+
+}
+#pragma endregion 
 
 //#pragma region AudioSystem
 //AudioSystem::AudioSystem()
