@@ -10,7 +10,6 @@ PhysicsSystem::PhysicsSystem()
 	mMaterials[MATERIAL::ICE] = CreateMaterial(0.1, 0.05, 0.1);
 	mMaterials[MATERIAL::CONCRETE] = CreateMaterial(0.6, 0.5, 0.2);
 	mMaterials[MATERIAL::GLASS] = CreateMaterial(0.4, 0.3, 0.7);
-	mActors.reserve(1000);
 }
 
 void PhysicsSystem::Init()
@@ -43,18 +42,24 @@ void PhysicsSystem::CreateActor(Entity e, const Transform& xform, const RigidBod
 {
 	if (e.HasComponent<BoxCollider>())
 	{
-		physx::PxTransform PXform = physx::PxTransform(Convert<float>(xform.mTranslate));
-		physx::PxMaterial* PMat = mMaterials[rbod.mMaterial];
-		physx::PxActor* PActor;
+		BoxCollider collider = e.GetComponent<BoxCollider>();
+		physx::PxTransform PXform = physx::PxTransform(Convert(xform.mTranslate + collider.mTranslateOffset));
+		physx::PxRigidActor* PActor{};
 
 		if (rbod.mMotion == MOTION::STATIC)
-		{
 			PActor = mPX.mPhysics->createRigidStatic(PXform);
-		}
 		else if (rbod.mMotion == MOTION::DYNAMIC)
-		{
 			PActor = mPX.mPhysics->createRigidDynamic(PXform);
-			physx::PxRigidBodyExt::updateMassAndInertia((physx::PxRigidBody&)*PActor, 10.f);
-		}
+
+		mActors[static_cast<std::uint32_t>(e.id)] = PActor;
+
+		physx::PxBoxGeometry PGeom(Convert(collider.mScaleOffset * xform.mScale));
+		physx::PxShape* shape = mPX.mPhysics->createShape(PGeom, *mMaterials[rbod.mMaterial]);
+		PActor->attachShape(*shape);
 	}
+}
+
+physx::PxVec3T<float> PhysicsSystem::Convert(const glm::vec3& vec)
+{
+	return physx::PxVec3T<float>(vec.x, vec.y, vec.z);
 }

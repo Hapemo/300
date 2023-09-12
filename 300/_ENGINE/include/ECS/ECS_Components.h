@@ -39,6 +39,8 @@ struct Transform
 	glm::vec3 mScale;
 	glm::vec3 mRotate;
 	glm::vec3 mTranslate;
+
+	Transform() : mScale(1.f), mRotate(0.f), mTranslate(0.f) {}
 };
 
 struct RigidBody
@@ -53,7 +55,7 @@ struct BoxCollider
 	glm::vec3 mScaleOffset; //multiplier
 	glm::vec3 mTranslateOffset; //addiplier
 
-	BoxCollider() : mScaleOffset(1.f, 1.f, .1f), mTranslateOffset(0.f, 0.f, 0.f) {}
+	BoxCollider() : mScaleOffset(1.f), mTranslateOffset(0.f) {}
 };
 
 struct PlaneCollider
