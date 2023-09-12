@@ -3,6 +3,7 @@
 #include "Script.h"
 #include <vector>
 #include "pch.h"
+#include "Physics/Material.h"
 
 enum class TAG : unsigned char
 {
@@ -21,8 +22,9 @@ enum class SUBTAG : unsigned char
 // every time tags/subtags get updated, please update the maps here
 static std::unordered_map<std::string, TAG> TagMap = { {"Player", TAG::PLAYER},
 													   {"Unknown", TAG::UNKNOWN} };
+
 static std::unordered_map<std::string, SUBTAG> SubTagMap = { {"Active", SUBTAG::ACTIVE},
-															 {"Background", SUBTAG::BACKGROUND}};
+															 {"Background", SUBTAG::BACKGROUND} };
 
 struct General
 {
@@ -37,10 +39,14 @@ struct Transform
 	glm::vec3 mScale;
 	glm::vec3 mRotate;
 	glm::vec3 mTranslate;
+	float data {0};
+
+	void Inspect();
 };
 
 struct RigidBody
 {
+	MATERIAL mMaterial;
 };
 
 /***************************************************************************/

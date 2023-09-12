@@ -139,6 +139,16 @@ vec2 GFX::Window::WindowToWorld(vec2 const& screenCoordinates)
     return worldPos;
 }
 
+int GFX::Window::ShouldClose()
+{
+    return glfwWindowShouldClose(mWindow);
+}
+
+void GFX::Window::CloseWindow()
+{
+    glfwSetWindowShouldClose(mWindow, GL_TRUE);
+}
+
 void GFX::Window::PollEvents()
 {
     glfwPollEvents();
