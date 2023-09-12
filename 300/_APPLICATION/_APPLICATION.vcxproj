@@ -74,11 +74,11 @@
     <ExecutablePath>$(ExecutablePath)</ExecutablePath>
     <ExternalIncludePath>$(ExternalIncludePath)</ExternalIncludePath>
     <IncludePath>$(SolutionDir)lib\RAPID-JSON;$(SolutionDir)lib\ASSIMP\BINARIES\Win32\include;$(SolutionDir)_APPLICATION/include;$(SolutionDir)_ENGINE/include;$(SolutionDir)_GRAPHICS/include;$(SolutionDir)_SCRIPTING/include;$(SolutionDir)_TOOLS/include;$(SolutionDir)\lib\SOL;$(SolutionDir)\lib\LUA\include;$(SolutionDir)lib/ENTT;$(SolutionDir)lib/GLEW/include;$(SolutionDir)lib/GLEW/include/GL;$(SolutionDir)lib\STB;$(SolutionDir)lib\GLM;$(SolutionDir)lib/GLFW/include;$(SolutionDir)lib/GLFW/include/GLFW;$(SolutionDir)_GEOM_COMPILER/include;$(SolutionDir)lib\ASSIMP\include\assimp;$(SolutionDir)lib\ASSIMP\include;$(SolutionDir)lib\FMOD\core/inc;$(SolutionDir)lib\FMOD\studio/inc;$(SolutionDir)lib\ASSIMP\BINARIES\Win32\include\assimp;$(SolutionDir)lib/PHYSX/include</IncludePath>
-    <LibraryPath>$(SolutionDir)lib\GLEW\lib\Release\x64;$(SolutionDir)lib\GLFW\lib-vc2022;$(SolutionDir)\lib\LUA\lib;$(SolutionDir)$(Platform)\$(Configuration)\;$(SolutionDir)lib\FMOD\studio\lib\x64;$(SolutionDir)lib\FMOD\core\lib;$(SolutionDir)lib/PHYSX/lib/debug;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(SolutionDir)lib\GLEW\lib\Release\x64;$(SolutionDir)lib\GLFW\lib-vc2022;$(SolutionDir)\lib\LUA\lib;$(SolutionDir)$(Platform)\$(Configuration)\;$(SolutionDir)lib\FMOD\studio\lib\x64;$(SolutionDir)lib\FMOD\core\lib;$(SolutionDir)lib\rttr-0.9.6-win64-\lib;$(SolutionDir)lib/PHYSX/lib/debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>$(SolutionDir)lib\RAPID-JSON;$(SolutionDir)lib\ASSIMP\BINARIES\Win32\include;$(SolutionDir)_APPLICATION/include;$(SolutionDir)_ENGINE/include;$(SolutionDir)_GRAPHICS/include;$(SolutionDir)_SCRIPTING/include;$(SolutionDir)_TOOLS/include;$(SolutionDir)\lib\SOL;$(SolutionDir)\lib\LUA\include;$(SolutionDir)lib/ENTT;$(SolutionDir)lib/GLEW/include;$(SolutionDir)lib/GLEW/include/GL;$(SolutionDir)lib\STB;$(SolutionDir)lib\GLM;$(SolutionDir)lib/GLFW/include;$(SolutionDir)lib/GLFW/include/GLFW;$(SolutionDir)_GEOM_COMPILER/include;$(SolutionDir)lib\ASSIMP\include\assimp;$(SolutionDir)lib\ASSIMP\include;$(SolutionDir)lib\FMOD\core/inc;$(SolutionDir)lib\FMOD\studio/inc;$(SolutionDir)lib\ASSIMP\BINARIES\Win32\include\assimp;$(SolutionDir)lib/PHYSX/include</IncludePath>
-    <LibraryPath>$(SolutionDir)lib\GLEW\lib\Release\x64;$(SolutionDir)lib\GLFW\lib-vc2022;$(SolutionDir)\lib\LUA\lib;$(SolutionDir)$(Platform)\$(Configuration)\;$(SolutionDir)lib\FMOD\studio\lib\x64;$(SolutionDir)lib\FMOD\core\lib;$(SolutionDir)lib/PHYSX/lib/release;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(SolutionDir)lib\GLEW\lib\Release\x64;$(SolutionDir)lib\GLFW\lib-vc2022;$(SolutionDir)\lib\LUA\lib;$(SolutionDir)$(Platform)\$(Configuration)\;$(SolutionDir)lib\FMOD\studio\lib\x64;$(SolutionDir)lib\FMOD\core\lib;$(SolutionDir)lib\rttr-0.9.6-win64-\lib;$(SolutionDir)lib/PHYSX/lib/release;$(LibraryPath)</LibraryPath>
     <ExecutablePath>$(ExecutablePath)</ExecutablePath>
     <ExternalIncludePath>$(ExternalIncludePath)</ExternalIncludePath>
   </PropertyGroup>
@@ -117,7 +117,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>rttr_core_d.dll;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
@@ -144,7 +144,7 @@ copy "$(SolutionDir)lib\PHYSX\lib\debug\PhysXFoundation_64.dll" "$(TargetDir)Phy
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>rttr_core_d.dll;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
