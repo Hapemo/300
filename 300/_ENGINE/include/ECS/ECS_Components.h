@@ -43,6 +43,7 @@ struct Transform
 
 struct RigidBody
 {
+	std::uint16_t mass;
 	MATERIAL mMaterial;
 	MOTION mMotion;
 };

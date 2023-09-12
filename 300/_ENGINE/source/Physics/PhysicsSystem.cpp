@@ -10,6 +10,7 @@ PhysicsSystem::PhysicsSystem()
 	mMaterials[MATERIAL::ICE] = CreateMaterial(0.1, 0.05, 0.1);
 	mMaterials[MATERIAL::CONCRETE] = CreateMaterial(0.6, 0.5, 0.2);
 	mMaterials[MATERIAL::GLASS] = CreateMaterial(0.4, 0.3, 0.7);
+	mActors.reserve(1000);
 }
 
 void PhysicsSystem::Init()
@@ -20,7 +21,7 @@ void PhysicsSystem::Init()
 	for (Entity e : view)
 	{
 		auto [xform, rbod] = view.get<Transform, RigidBody>(e.id);
-		CreateActor(xform, rbod);
+		CreateActor(e, xform, rbod);
 	}
 }
 
@@ -38,7 +39,22 @@ physx::PxMaterial* PhysicsSystem::CreateMaterial(float us, float ud, float res)
 	return mPX.mPhysics->createMaterial(us, ud, res);
 }
 
-void PhysicsSystem::CreateActor(const Transform& xform, const RigidBody& rbod)
+void PhysicsSystem::CreateActor(Entity e, const Transform& xform, const RigidBody& rbod)
 {
-	
+	if (e.HasComponent<BoxCollider>())
+	{
+		physx::PxTransform PXform = physx::PxTransform(Convert<float>(xform.mTranslate));
+		physx::PxMaterial* PMat = mMaterials[rbod.mMaterial];
+		physx::PxActor* PActor;
+
+		if (rbod.mMotion == MOTION::STATIC)
+		{
+			PActor = mPX.mPhysics->createRigidStatic(PXform);
+		}
+		else if (rbod.mMotion == MOTION::DYNAMIC)
+		{
+			PActor = mPX.mPhysics->createRigidDynamic(PXform);
+			physx::PxRigidBodyExt::updateMassAndInertia((physx::PxRigidBody&)*PActor, 10.f);
+		}
+	}
 }
