@@ -20,7 +20,7 @@ public:
 
 	// Mesh
 	void AddInstance(GFX::Mesh& mesh, Transform transform);
-	void DrawAll(GFX::Mesh& mesh);	// TODO: A function in Mesh class to Draw All Instances
+	void DrawAll(GFX::Mesh& mesh);
 	void ClearInstances(GFX::Mesh& mesh);
 
 	// -- FBO --

@@ -184,6 +184,14 @@ void GFX::Mesh::UnbindVao()
 	mVao.Unbind();
 }
 
+void GFX::Mesh::DrawAllInstances()
+{
+	mVao.Bind();		// Bind mesh
+	PrepForDraw();		// Copy data from local buffer into opengl buffer
+	glDrawElementsInstanced(GL_TRIANGLES, mIndexCount, GL_UNSIGNED_INT, nullptr, mLTW.size());
+	mVao.Unbind();		// Unbind mesh
+}
+
 void GFX::Mesh::PrepForDraw()
 {
 	// Attach data to vbo

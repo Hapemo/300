@@ -12,6 +12,11 @@ void GraphicsSystem::Update()
 	// TODO: Retrieve the mesh instances to be drawn
 }
 
+void GraphicsSystem::Exit()
+{
+
+}
+
 void GraphicsSystem::AddInstance(GFX::Mesh& mesh, Transform transform)
 {
 	// Local to world transformation
@@ -24,6 +29,19 @@ void GraphicsSystem::AddInstance(GFX::Mesh& mesh, Transform transform)
 
 	// TODO: To combine rotation transformation as well
 	mesh.mLTW.push_back(world);
+}
+
+void GraphicsSystem::DrawAll(GFX::Mesh& mesh)
+{
+	// TODO: Activate the necessary Shader
+
+	// TODO: Bind the required textures
+
+	mesh.DrawAllInstances();
+
+	// TODO: Unbind the bound textures
+
+	// TODO: Deactivate the activated shader
 }
 
 void GraphicsSystem::ClearInstances(GFX::Mesh& mesh)

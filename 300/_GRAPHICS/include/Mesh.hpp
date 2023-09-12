@@ -36,6 +36,8 @@ namespace GFX
 		void PrepForDraw();
 		void UnbindVao();
 
+		void DrawAllInstances();
+
 		// -- Used after drawing current scene --
 		void ClearInstances();
 
