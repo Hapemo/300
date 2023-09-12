@@ -15,13 +15,14 @@ start up of window and game system, also runs their update functions.
 #include "Input.h"
 #include "SingletonManager.h"
 #include "ScriptingSystem.h"
+#include "Physics/PhysicsSystem.h"
+
 
 
 // Static variables
 GFX::DebugRenderer* EditorApplication::mRenderer;
 GFX::Window EditorApplication::mWindow;
 std::string EditorApplication::title;
-SystemManager EditorApplication::systemManager;
 Editor EditorApplication::mMaineditor;
 
 void EditorApplication::Init()
@@ -33,6 +34,7 @@ void EditorApplication::Init()
 void EditorApplication::StartUp()
 {
     //gfx glew and glfw startup
+    systemManager = new SystemManager();
     GFX::Window::InitializeSystem();
     mWindow = GFX::Window({ 1920, 1080 });
     mWindow.SetWindowTitle("Editor");
@@ -43,8 +45,7 @@ void EditorApplication::SystemInit()
 {
     FPSManager::Init(&mWindow);
     Input::Init(&mWindow);
-    systemManager.Init();
-
+    systemManager->Init();
     //gfx init
 
     //Editor init
@@ -79,7 +80,7 @@ void EditorApplication::FirstUpdate()
 
 void EditorApplication::SystemUpdate()
 {
-    systemManager.Update(1.f /*insert dt here*/);
+    systemManager->Update(1.f /*insert dt here*/);
 }
 
 void EditorApplication::SecondUpdate()
@@ -89,10 +90,9 @@ void EditorApplication::SecondUpdate()
 
 void EditorApplication::Exit()
 {
-    //End of editor 
     mMaineditor.UIend();
-
-    systemManager.Exit();
+    systemManager->Exit();
+    delete systemManager;
     ECS::GetInstance()->DeleteAllEntities();
     SingletonManager::destroyAllSingletons();
     mWindow.DestroySystem();

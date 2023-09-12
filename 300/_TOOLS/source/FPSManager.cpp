@@ -20,11 +20,11 @@ void FPSManager::Init(GFX::Window* window)
 }
 
 void FPSManager::Update(double fps_calc_interval) {
-  double curr_time = glfwGetTime();
+  double curr_time = mWindow->GetTime();
 
   // fps calculations
   static double count = 0.0; // number of game loop iterations
-  static double start_time = glfwGetTime();
+  static double start_time = mWindow->GetTime();
   // get elapsed time since very beginning (in seconds) ...
   double elapsed_time = curr_time - start_time;
 
@@ -41,14 +41,14 @@ void FPSManager::Update(double fps_calc_interval) {
 }
 
 void FPSManager::CalcDeltaTime() {
-  dt = glfwGetTime() - mPrevTime;
-  mPrevTime = glfwGetTime();
+  dt = mWindow->GetTime() - mPrevTime;
+  mPrevTime = mWindow->GetTime();
 }
 
 void FPSManager::LimitFPS(unsigned int fpsCap) {
   if (fpsCap) {
     double targetedDT = 1.f / fpsCap;
-    while ((glfwGetTime() - mPrevTime) < targetedDT) {}
+    while ((mWindow->GetTime() - mPrevTime) < targetedDT) {}
   }
 
   CalcDeltaTime();
