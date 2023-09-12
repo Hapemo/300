@@ -3,7 +3,7 @@
 #include "Script.h"
 #include <vector>
 #include "pch.h"
-#include "Physics/Material.h"
+#include "Physics/PhysicsTypes.h"
 
 enum class TAG : unsigned char
 {
@@ -44,6 +44,25 @@ struct Transform
 struct RigidBody
 {
 	MATERIAL mMaterial;
+	MOTION mMotion;
+};
+
+struct BoxCollider
+{
+	glm::vec3 mScaleOffset; //multiplier
+	glm::vec3 mTranslateOffset; //addiplier
+
+	BoxCollider() : mScaleOffset(1.f, 1.f, .1f), mTranslateOffset(0.f, 0.f, 0.f) {}
+};
+
+struct PlaneCollider
+{
+
+};
+
+struct SphereCollider
+{
+
 };
 
 /***************************************************************************/
