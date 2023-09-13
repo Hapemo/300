@@ -61,17 +61,17 @@ void GFX::Mesh::LoadAnimationDataFromGeom(const _GEOM::Geom& GeomData, std::vect
 
 void GFX::Mesh::Setup(const _GEOM::Geom& GeomData)
 {
-	std::vector<glm::vec3>						positions;
-	std::vector<glm::vec2>						uvs;
-	std::vector<unsigned int>					indices;
-	std::vector<int[MAX_BONE_INFLUENCE]>		boneIDs;
-	std::vector<float[MAX_BONE_INFLUENCE]>		boneWeights;
+	std::vector<glm::vec3>								positions;
+	std::vector<glm::vec2>								uvs;
+	std::vector<unsigned int>							indices;
+	std::vector<std::array<int,MAX_BONE_INFLUENCE>>		boneIDs;
+	std::vector<std::array<float,MAX_BONE_INFLUENCE>>	boneWeights;
 
 	LoadFromGeom(GeomData, positions, uvs, indices);
 
 	if (GeomData.m_bHasAnimations)
 	{
-		//LoadAnimationDataFromGeom(GeomData, boneIDs, boneWeights);
+		LoadAnimationDataFromGeom(GeomData, boneIDs, boneWeights);
 	}
 
 	// Create VAO
