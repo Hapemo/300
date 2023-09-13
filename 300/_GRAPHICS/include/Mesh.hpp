@@ -28,6 +28,7 @@ namespace GFX
 	public:
 		// -- Called once on startup --
 		void LoadFromGeom(const _GEOM::Geom& GeomData, std::vector<vec3>& positions, std::vector<glm::vec2>& uvs, std::vector<unsigned int>& indices);
+		void LoadAnimationDataFromGeom(const _GEOM::Geom& GeomData, std::vector<std::array<int, MAX_BONE_INFLUENCE>>& boneIDs, std::vector<std::array<float, MAX_BONE_INFLUENCE>>& boneWeights);
 		void Setup(std::vector<vec3> const& positions, std::vector<unsigned int> const& indices, std::vector<vec2> const& TexCoords = std::vector<vec2>{});
 		void Setup(const _GEOM::Geom& GeomData);
 
