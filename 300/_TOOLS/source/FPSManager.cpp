@@ -8,23 +8,22 @@
 General helper class of application that calculates FPS and prints GLFW info
 *******************************************************************************/
 #include "FPSManager.h"
+#include "ECS/ECS_Systems.h"
 // static data members declared in Helper
 double FPSManager::fps;
 double FPSManager::dt;
 double FPSManager::mPrevTime;
-GFX::Window* FPSManager::mWindow;
 
-void FPSManager::Init(GFX::Window* window)
+void FPSManager::Init()
 {
-	mWindow = window;
 }
 
 void FPSManager::Update(double fps_calc_interval) {
-  double curr_time = mWindow->GetTime();
+  double curr_time = systemManager->GetWindow()->GetTime();
 
   // fps calculations
   static double count = 0.0; // number of game loop iterations
-  static double start_time = mWindow->GetTime();
+  static double start_time = systemManager->GetWindow()->GetTime();
   // get elapsed time since very beginning (in seconds) ...
   double elapsed_time = curr_time - start_time;
 
@@ -41,14 +40,14 @@ void FPSManager::Update(double fps_calc_interval) {
 }
 
 void FPSManager::CalcDeltaTime() {
-  dt = mWindow->GetTime() - mPrevTime;
-  mPrevTime = mWindow->GetTime();
+  dt = systemManager->GetWindow()->GetTime() - mPrevTime;
+  mPrevTime = systemManager->GetWindow()->GetTime();
 }
 
 void FPSManager::LimitFPS(unsigned int fpsCap) {
   if (fpsCap) {
     double targetedDT = 1.f / fpsCap;
-    while ((mWindow->GetTime() - mPrevTime) < targetedDT) {}
+    while ((systemManager->GetWindow()->GetTime() - mPrevTime) < targetedDT) {}
   }
 
   CalcDeltaTime();
