@@ -158,7 +158,6 @@ void Transform::Inspect() {
 		ImGui::SameLine();
 		ImGui::Text("Rotation");
 
-		ImGui::DragFloat("daa", &data, 1);
 
 
 	}

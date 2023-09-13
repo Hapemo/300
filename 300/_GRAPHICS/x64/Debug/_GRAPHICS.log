@@ -37,8 +37,8 @@ C:\Users\kew\OneDrive\Desktop\300\300\_GRAPHICS\source\Mesh.cpp(381,27): warning
   OpenGl.cpp
   Generating Code...
 C:\Users\kew\OneDrive\Desktop\300\300\_GEOM_COMPILER\src\Bone.cpp(82): warning C4715: '_GEOM::Bone::GetRotationIndex': not all control paths return a value
-C:\Users\kew\OneDrive\Desktop\300\300\_GEOM_COMPILER\src\Bone.cpp(69): warning C4715: '_GEOM::Bone::GetPositionIndex': not all control paths return a value
 C:\Users\kew\OneDrive\Desktop\300\300\_GEOM_COMPILER\src\Bone.cpp(95): warning C4715: '_GEOM::Bone::GetScaleIndex': not all control paths return a value
+C:\Users\kew\OneDrive\Desktop\300\300\_GEOM_COMPILER\src\Bone.cpp(69): warning C4715: '_GEOM::Bone::GetPositionIndex': not all control paths return a value
   Compiling...
   Random.cpp
   Renderer.cpp

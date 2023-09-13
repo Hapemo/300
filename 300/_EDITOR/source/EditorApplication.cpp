@@ -43,9 +43,9 @@ void EditorApplication::StartUp()
 
 void EditorApplication::SystemInit()
 {
-    FPSManager::Init(&mWindow);
-    Input::Init(&mWindow);
-    systemManager->Init();
+    systemManager->Init(&mWindow);
+    FPSManager::Init();
+    Input::Init();
     //gfx init
 
     //Editor init
