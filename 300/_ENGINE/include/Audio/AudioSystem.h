@@ -1,6 +1,6 @@
 
 
-//#include "../../lib/FMOD Studio API Windows/api/studio/inc/fmod_studio.hpp"
+#pragma once
 #include <fmod_studio.hpp>
 #include <fmod.hpp>		// Include [FMOD] Library
 #include <iostream>
@@ -19,9 +19,34 @@ enum AUDIO_TYPE
 	AUDIO_TOTAL
 };
 
+/* [SoundInfo] 
+	- Information regarding the audio being serialized into the system.
+	- Can be used to find certain information relating to the audio being loaded in (interact with system) 
+		* 3D Audio
+		* Is Looping
+		* Is Loaded (?)
+*/
+class SoundInformation
+{
+public:
+	SoundInformation() = default;
+	SoundInformation(std::string afile_path, std::string asound_name, bool ais3D, bool aisLooping);
+
+private:
+	// unsigned int unique_ID;	// Probably have to go through the database and update incremental (Unique ID)
+	std::string  file_path;		// Can reference this to find where this sound is located at. 
+	std::string	 sound_name;	// Give this [Audio file] a name!!
+	bool		 is3D;			// [3D - Spatial Audio] : is this a 3D audio? (do we need this?)
+	bool		 isLooping;		// [Looping]			: is this audio going to loop
+	bool		 isLoaded;      // [Loaded or Not]      : is this audio loaded into the system already?  (only updated during <Init> Loop
+
+// private: // 3D Properties (do we need this?)
+
+};
+
 // Added 9/4/2023 (thinking how to integrate with component data)
 struct Sound
-{
+{  
 	FMOD_VECTOR	 position; 
 	FMOD::Sound* sound;
 };
@@ -48,6 +73,7 @@ public:
 	typedef std::unordered_map<int, Channel*>				      ChannelMap;
 	typedef std::unordered_map<std::string, Sound*>				  SoundMap;
 	typedef std::unordered_map<std::string, FMOD::Studio::Bank*>  BankMap;
+	typedef std::unordered_map<unsigned int, SoundInformation*>	  SoundInfoMap;
 
 	int sfx_channel_no = 0;
 
@@ -195,6 +221,7 @@ public:
 	ChannelMap	  mBGMChannels;								// [List of BGM Channels]    - (BGM) Reserved Channels
 	SoundMap	  mSoundsSFX;							    // [List of SFX]			 - Stores all the (SFX) Sound files that has been loaded into the system.
 	SoundMap	  mSoundsBGM;								// [List of BGM]			 - Stores all the (BGM) Sound files that has been loaded into the system.
+	SoundInfoMap  mSoundInfo;								
 	BankMap		  mBank;									// [Banks - Event Based]	 - Stores all the sounds and information for each events
 	
 };

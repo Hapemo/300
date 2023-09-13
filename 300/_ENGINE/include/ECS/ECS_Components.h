@@ -34,6 +34,15 @@ struct RigidBody
 {
 };
 
+struct SoundInfo
+{
+	unsigned int unique_ID;
+	std::string  file_path;
+	std::string	 sound_name;
+	bool		 is3D;
+	bool		 isLooping; 
+};
+
 /***************************************************************************/
 /*!
 \brief

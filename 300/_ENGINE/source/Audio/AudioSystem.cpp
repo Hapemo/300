@@ -7,6 +7,13 @@
 
 static bool once = false;
 
+#pragma region <SoundInfo> Class
+SoundInformation::SoundInformation(std::string afile_path, std::string asound_name, bool ais3D, bool aisLooping) : file_path(afile_path), sound_name(asound_name), is3D(ais3D),
+																									 isLooping(aisLooping), isLoaded(false) {}
+
+
+#pragma endregion
+
 #pragma region Channel Class
 //Channel::Channel(FMOD::Channel* new_channel, bool active) : channel(new_channel) ,
 //{
@@ -45,6 +52,7 @@ void AudioManager::Init()
 
 		mSFXChannels.insert(std::make_pair(sfx_channel_no, new_channel));
 		sfx_channel_no++;
+	ErrCodeCheck(result_code);
 	}
 
 	while (bgm_channel_no < NO_OF_BGM_CHANNELS_TO_INIT)
@@ -58,6 +66,13 @@ void AudioManager::Init()
 
 		bgm_channel_no++;
 	}
+
+	// [9/13/2023] - Integrating <SoundInfo> into [AudioSystem] 
+	SoundInformation* sound_1 = new SoundInformation("../assets/Audio/farm_ambience.wav", "farm", false, false);
+	SoundInformation* sound_2 = new SoundInformation("../assets/Audio/NPC_Greeting.wav", "npc", false, false); 
+	SoundInformation* sound_3 = new SoundInformation("../assets/Audio/tuning-radio-7150.wav", "radio", false, false);
+
+
 
 	// Test Load Sound
 	LoadAudioFile("../assets/Audio/farm_ambience.wav", "farm", AUDIO_TYPE::AUDIO_BGM);
@@ -245,7 +260,7 @@ void AudioManager::Exit()
 #pragma endregion
 
 
-#pragma region AudioManager
+#pragma region AudioManager Core Functions
 /*
 *  AudioManager Helper Functions
 *  -----------------------------------
@@ -279,6 +294,7 @@ int AudioManager::ErrCodeCheck(FMOD_RESULT result)
 	return 0; // success (no issues)
 }
 
+
 /*
    [Helper Function - Load Audio File]
    - Loads Audio File. 
@@ -309,6 +325,8 @@ void AudioManager::LoadAudioFile(std::string audiofilePath, std::string audio_na
 		}
 	}
 }
+
+#pragma endregion
 
 #pragma region PLAY SOUNDS STUFF
 /*
@@ -477,44 +495,6 @@ void AudioManager::PlayBGMAudio(std::string audio_name, float audio_vol, int cha
 	}
 }
 #pragma endregion
-//bool AudioManager::isPlaying(int channel_no)
-//{
-//	bool playing = false;
-//
-//	ChannelMap::iterator channel_it = mChannels.find(channel_no);
-//
-//	if (channel_it != mChannels.end())	// if found...
-//	{
-//		std::cout << "Channel is found." << std::endl;
-//		channel_it->second->isPlaying(&playing);
-//		return playing; 
-//	}
-//
-//	return false;
-//}
-
-//void AudioManager::SetChannel3DPosition(int channel_id, FMOD_VECTOR audio_pos)
-//{
-//	AudioSystem::ChannelMap::iterator map_it = mAudio->system_obj->aChannels.find(channel_id); // Find using the channel ID.
-//
-//	// Does the Channel even exist?
-//	if (map_it == mAudio->system_obj->aChannels.end())
-//	{
-//		std::cout << "Couldn't find the requested Channel. " << std::endl;
-//		return;	// Return because no such channel.
-//	}
-//	
-//	FMOD_VECTOR initial_pos;
-//	FMOD_VECTOR final_pos;
-//	result_code = map_it->second->get3DAttributes(&initial_pos, nullptr);
-//	result_code = map_it->second->set3DAttributes(&audio_pos, nullptr);
-//	std::cout << "3D Position for [Channel " << channel_id << "]: " << std::endl;
-//	std::cout << "Setting Position [" << initial_pos.x << "," << initial_pos.y << "," << initial_pos.z << "]" << std::endl;
-//	ErrCodeCheck(result_code);
-//	
-//	result_code = map_it->second->get3DAttributes(&final_pos, nullptr);
-//	std::cout << "Final Position: [" << final_pos.x << "," << final_pos.y << "," << final_pos.z << "]" << std::endl;
-//}
 
 #pragma region ADJUST VOLUME STUFF
 bool AudioManager::SetChannelVolume(AUDIO_TYPE audio_type, int channel_id, float channel_vol)
@@ -815,12 +795,12 @@ void AudioManager::ResumeBGMChannel(int channel_no)
 
 bool AudioManager::isActive(AUDIO_TYPE audito_type, int channel_no)
 {
-	
+	return true;
 }
 
 bool AudioManager::isPlaying(AUDIO_TYPE audito_type, int channel_no)
 {
-
+	return true;
 }
 #pragma endregion 
 
