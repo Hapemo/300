@@ -61,47 +61,8 @@ namespace _GEOM
 
 	class Bone
 	{
-	public:
-		Bone() = default;
-		Bone(const std::string& name, int ID, const aiNodeAnim* channel);
 
-		glm::mat4 GetLocalTransform() { return m_LocalTransform; }
-		
-		std::string GetBoneName() const { return m_Name; }
-	
-		int GetBoneID() { return m_ID; }
-
-		int GetPositionIndex(float animationTime)
-		{
-			for (int index = 0; index < m_NumPositions - 1; ++index)
-			{
-				if (animationTime < m_Positions[index + 1].timeStamp)
-					return index;
-			}
-			assert(0);
-		}
-
-		int GetRotationIndex(float animationTime)
-		{
-			for (int index = 0; index < m_NumRotations - 1; ++index)
-			{
-				if (animationTime < m_Rotations[index + 1].timeStamp)
-					return index;
-			}
-			assert(0);
-		}
-
-		int GetScaleIndex(float animationTime)
-		{
-			for (int index = 0; index < m_NumScalings - 1; ++index)
-			{
-				if (animationTime < m_Scales[index + 1].timeStamp)
-					return index;
-			}
-			assert(0);
-		}
-
-
+	//!< Member Variables
 	public:
 		std::vector<KeyPosition> m_Positions;
 		std::vector<KeyRotation> m_Rotations;
@@ -113,6 +74,33 @@ namespace _GEOM
 		glm::mat4 m_LocalTransform;
 		std::string m_Name;
 		int m_ID;
+
+	//!< Public Member Functions
+	public:
+		// Constructors
+		Bone() = default;
+		Bone(const std::string& name, int ID, const aiNodeAnim* channel);
+
+		// Getters
+		glm::mat4 GetLocalTransform() const;
+		std::string GetBoneName() const;
+		int GetBoneID() const;
+
+		// Modified Getters
+		int GetPositionIndex(float animationTime);
+		int GetRotationIndex(float animationTime);
+		int GetScaleIndex(float animationTime);
+
+		// Primary Functions
+		void Update(float animationTime);
+
+	//!< Private Member Functions
+	private:
+		glm::mat4 InterpolatePosition(float animationTime);
+		glm::mat4 InterpolateRotation(float animationTime);
+		glm::mat4 InterpolateScaling(float animationTime);
+		float GetScaleFactor(float lastTimeStamp, float nextTimeStamp, float animationTime);
+
 	};
 }
 

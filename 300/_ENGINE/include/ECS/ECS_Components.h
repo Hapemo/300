@@ -39,6 +39,9 @@ struct Transform
 	glm::vec3 mScale;
 	glm::vec3 mRotate;
 	glm::vec3 mTranslate;
+	float data {0};
+
+	void Inspect();
 };
 
 struct RigidBody

@@ -75,7 +75,7 @@
     <LibraryPath>$(SolutionDir)lib\GLEW\lib\Release\x64;$(SolutionDir)lib\GLFW\lib-vc2022;$(SolutionDir)\lib\LUA\lib;$(SolutionDir)$(Platform)\$(Configuration)\;$(SolutionDir)lib/PHYSX/lib/debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(SolutionDir)lib\ASSIMP\BINARIES\Win32\include;$(SolutionDir)_ENGINE/include;$(SolutionDir)_GRAPHICS/include;$(SolutionDir)_SCRIPTING/include;$(SolutionDir)_TOOLS/include;$(SolutionDir)\lib\SOL;$(SolutionDir)\lib\LUA\include;$(SolutionDir)lib/ENTT;$(SolutionDir)lib/GLEW/include;$(SolutionDir)lib/GLEW/include/GL;$(SolutionDir)lib\STB;$(SolutionDir)lib\GLM;$(SolutionDir)lib/GLFW/include;$(SolutionDir)lib/GLFW/include/GLFW;$(SolutionDir)_GEOM_COMPILER/include;$(SolutionDir)lib\ASSIMP\include\assimp;$(SolutionDir)lib\ASSIMP\include;$(SolutionDir)_EDITOR/include;$(SolutionDir)lib/PHYSX/include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)lib\ASSIMP\BINARIES\Win32\include;$(SolutionDir)_ENGINE/include;$(SolutionDir)_GRAPHICS/include;$(SolutionDir)_SCRIPTING/include;$(SolutionDir)_TOOLS/include;$(SolutionDir)\lib\SOL;$(SolutionDir)\lib\LUA\include;$(SolutionDir)lib/ENTT;$(SolutionDir)lib/GLEW/include;$(SolutionDir)lib/GLEW/include/GL;$(SolutionDir)lib\STB;$(SolutionDir)lib\GLM;$(SolutionDir)lib/GLFW/include;$(SolutionDir)lib/GLFW/include/GLFW;$(SolutionDir)_GEOM_COMPILER/include;$(SolutionDir)lib\ASSIMP\include\assimp;$(SolutionDir)lib\ASSIMP\include;$(SolutionDir)_EDITOR/include;$(SolutionDir)lib/PHYSX/include;$(ProjectDir)include/Editor;$(ProjectDir)source/Imgui;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)lib\GLEW\lib\Release\x64;$(SolutionDir)lib\GLFW\lib-vc2022;$(SolutionDir)\lib\LUA\lib;$(SolutionDir)$(Platform)\$(Configuration)\;$(SolutionDir)lib/PHYSX/lib/release;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -113,7 +113,8 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AdditionalIncludeDirectories>$(ProjectDir)include\Editor;$(ProjectDir)source\Imgui;$(SolutionDir)_ENGINE\include\ECS</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -134,7 +135,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -150,10 +151,45 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="source\EditorApplication.cpp" />
+    <ClCompile Include="source\Editor\ContentBrower.cpp" />
+    <ClCompile Include="source\Editor\Editor.cpp" />
+    <ClCompile Include="source\Editor\Hierarchy.cpp" />
+    <ClCompile Include="source\Editor\Inspect.cpp" />
+    <ClCompile Include="source\Editor\MenuPanel.cpp" />
+    <ClCompile Include="source\Editor\Performance.cpp" />
+    <ClCompile Include="source\Editor\SceneWindow.cpp" />
+    <ClCompile Include="source\Imgui\imgui.cpp" />
+    <ClCompile Include="source\Imgui\ImGuizmo.cpp" />
+    <ClCompile Include="source\Imgui\imgui_demo.cpp" />
+    <ClCompile Include="source\Imgui\imgui_draw.cpp" />
+    <ClCompile Include="source\Imgui\imgui_impl_glfw.cpp" />
+    <ClCompile Include="source\Imgui\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="source\Imgui\imgui_stdlib.cpp" />
+    <ClCompile Include="source\Imgui\imgui_tables.cpp" />
+    <ClCompile Include="source\Imgui\imgui_widgets.cpp" />
     <ClCompile Include="source\main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\EditorApplication.h" />
+    <ClInclude Include="include\Editor\ContentBrower.h" />
+    <ClInclude Include="include\Editor\Editor.h" />
+    <ClInclude Include="include\Editor\EditorWindow.h" />
+    <ClInclude Include="include\Editor\Hierarchy.h" />
+    <ClInclude Include="include\Editor\Inspect.h" />
+    <ClInclude Include="include\Editor\MenuPanel.h" />
+    <ClInclude Include="include\Editor\Performance.h" />
+    <ClInclude Include="include\Editor\SceneWindow.h" />
+    <ClInclude Include="source\Imgui\imconfig.h" />
+    <ClInclude Include="source\Imgui\imgui.h" />
+    <ClInclude Include="source\Imgui\ImGuizmo.h" />
+    <ClInclude Include="source\Imgui\imgui_impl_glfw.h" />
+    <ClInclude Include="source\Imgui\imgui_impl_opengl3.h" />
+    <ClInclude Include="source\Imgui\imgui_impl_opengl3_loader.h" />
+    <ClInclude Include="source\Imgui\imgui_internal.h" />
+    <ClInclude Include="source\Imgui\imgui_stdlib.h" />
+    <ClInclude Include="source\Imgui\imstb_rectpack.h" />
+    <ClInclude Include="source\Imgui\imstb_textedit.h" />
+    <ClInclude Include="source\Imgui\imstb_truetype.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
