@@ -35,10 +35,10 @@ void Application::Init()
 void Application::StartUp() 
 {
     //gfx glew and glfw startup
-    systemManager = new SystemManager();
     GFX::Window::InitializeSystem();
     mWindow = GFX::Window({ 1920, 1080 });
     mWindow.SetWindowTitle("Application");
+    systemManager = new SystemManager();
 }
 
 void Application::SystemInit() 
