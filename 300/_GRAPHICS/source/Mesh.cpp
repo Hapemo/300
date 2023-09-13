@@ -39,8 +39,20 @@ void GFX::Mesh::Setup(const _GEOM::Geom& GeomData)
 	std::vector<glm::vec3>		positions;
 	std::vector<glm::vec2>		uvs;
 	std::vector<unsigned int>	indices;
+	std::vector<glm::ivec4>		boneIDs;
+	std::vector<glm::vec4>		boneWeights;
 
 	LoadFromGeom(GeomData, positions, uvs, indices);
+
+	// TODO: RICHMOND. Load Bone IDs and Weights into container
+	if (GeomData.m_bHasAnimations)
+	{
+		for (int i{}; i < GeomData.m_nVertices; ++i)
+		{
+			
+		}
+	}
+
 
 	// Create VAO
 	mVao.Create();
@@ -77,11 +89,11 @@ void GFX::Mesh::Setup(const _GEOM::Geom& GeomData)
 	// Add attributes and divisor as vec4
 	for (int i = 0; i < 4; ++i)
 	{
-		mVao.AddAttribute(3 + i, 3, 4, GL_FLOAT, sizeof(vec4) * i);					// location 3, binding vao index 3
-		mVao.AddAttributeDivisor(3, 1);												// divisor at vao index 3
+		mVao.AddAttribute(5 + i, 5, 4, GL_FLOAT, sizeof(vec4) * i);					// location 5, binding vao index 5
+		mVao.AddAttributeDivisor(5, 1);												// divisor at vao index 5
 	}
 	// Attach LTW VBO to VAO
-	mVao.AttachVertexBuffer(mLTWVbo.GetID(), 3, 0, sizeof(vec4) * 4);
+	mVao.AttachVertexBuffer(mLTWVbo.GetID(), 5, 0, sizeof(vec4) * 4);
 
 	/////////////////////////////////////////
 	// EBO
@@ -96,6 +108,19 @@ void GFX::Mesh::Setup(const _GEOM::Geom& GeomData)
 	// The data and weights are stored in this format below::
 		//GeomData.m_pPos[0].m_BoneIDs;
 		//GeomData.m_pPos[0].m_Weights;
+	// Create VBO for Bone IDs. Attach VBO for Bone IDs to VAO
+	mBoneIDVbo.Create(positions.size() * sizeof(ivec4));								// 1 for each vertex
+	mVao.AddAttribute(3, 3, 4, GL_INT);													// location 3, binding vao index 3
+	// TODO: need to somehow get the data of all Bone IDs
+	mBoneIDVbo.AttachData(0, boneIDs.size() * sizeof(ivec4), boneIDs.data());			// Attach mesh data to VBO
+	mVao.AttachVertexBuffer(mBoneIDVbo.GetID(), 3, 0, sizeof(vec3));					// Attach to index 3
+
+	// Create VBO for Bone weights. Attach VBO for Bone weights to VAO
+	mBoneWeightVbo.Create(positions.size() * sizeof(vec4));									// 1 for each vertex
+	mVao.AddAttribute(4, 4, 4, GL_FLOAT);													// location 4, binding vao index 4
+	// TODO: need to somehow get the data of all Bone IDs
+	mBoneWeightVbo.AttachData(0, boneWeights.size() * sizeof(vec4), boneWeights.data());	// Attach mesh data to VBO
+	mVao.AttachVertexBuffer(mBoneWeightVbo.GetID(), 4, 0, sizeof(vec3));					// Attach to index 4
 
 	mVao.Unbind();
 

@@ -65,6 +65,8 @@ namespace GFX
 		VBO mColorVbo;
 		VBO mTexCoordVbo;
 		VBO mLTWVbo;
+		VBO mBoneIDVbo;
+		VBO mBoneWeightVbo;
 
 		// Stats of the mesh model
 		std::string mMeshName;

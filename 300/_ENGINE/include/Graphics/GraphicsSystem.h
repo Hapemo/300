@@ -18,10 +18,8 @@ public:
 	void Update();
 	void Exit();
 
-	// Mesh
-	void AddInstance(GFX::Mesh& mesh, Transform transform);
-	void DrawAll(GFX::Mesh& mesh);
-	void ClearInstances(GFX::Mesh& mesh);
+	// -- Mesh --
+	void AddInstance(GFX::Mesh& mesh, Transform transform);		// Adds an instance of a mesh to be drawn
 
 	// -- FBO --
 	unsigned int GetGameAttachment()	{ return m_Fbo.GetGameAttachment(); }
@@ -30,6 +28,9 @@ public:
 private:
 	GFX::DebugRenderer m_Renderer;		// isolated to debug draws
 	GFX::FBO m_Fbo;
+
+	// -- Private Functions --
+	void DrawAll(GFX::Mesh& mesh);		// Renders all instances of a given mesh
 };
 
 #endif

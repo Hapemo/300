@@ -10,6 +10,13 @@ void GraphicsSystem::Init()
 void GraphicsSystem::Update()
 {
 	// TODO: Retrieve the mesh instances to be drawn
+
+	// Prepare and bind the Framebuffer to be rendered on
+	m_Fbo.PrepForDraw();
+
+	// TODO: Render all instances of a given mesh
+
+	// TODO: Clears all instances that have been rendered from local buffer
 }
 
 void GraphicsSystem::Exit()
@@ -42,9 +49,4 @@ void GraphicsSystem::DrawAll(GFX::Mesh& mesh)
 	// TODO: Unbind the bound textures
 
 	// TODO: Deactivate the activated shader
-}
-
-void GraphicsSystem::ClearInstances(GFX::Mesh& mesh)
-{
-	mesh.ClearInstances();
 }
