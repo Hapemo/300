@@ -15,7 +15,7 @@ void GraphicsSystem::Init()
 	m_Fbo.Create(m_Width, m_Height, m_EditorMode);
 }
 
-void GraphicsSystem::Update()
+void GraphicsSystem::Update(float dt)
 {
 	// TODO: Retrieve the mesh instances to be drawn
 

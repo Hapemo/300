@@ -15,7 +15,7 @@ public:
 	GraphicsSystem() = default;
 
 	void Init();
-	void Update();
+	void Update(float dt);
 	void Exit();
 
 	// -- Mesh --
