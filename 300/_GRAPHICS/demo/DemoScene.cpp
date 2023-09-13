@@ -249,8 +249,8 @@ void GFX::DemoScene::Draw()
         std::vector<glm::mat4>& boneTransforms = mObjectAnimator.m_FinalBoneMatrices;
         for (int t{}; t < boneTransforms.size(); ++t)
         {
-			std::string uniformName = "finalBoneMatrices[" + std::to_string(t) + "]";
-			//glUniformMatrix4fv(glGetUniformLocation(mModelShader.GetHandle(), uniformName.c_str()), 1, GL_FALSE, &boneTransforms[t][0][0]);
+			std::string uniformName = "uFinalBoneMatrices[" + std::to_string(t) + "]";
+			glUniformMatrix4fv(glGetUniformLocation(mModelShader.GetHandle(), uniformName.c_str()), 1, GL_FALSE, &boneTransforms[t][0][0]);
 		}
 
         // Bind texture unit

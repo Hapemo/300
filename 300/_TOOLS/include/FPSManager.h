@@ -13,11 +13,10 @@ Engine requires.
 *******************************************************************************/
 #pragma once
 #include "pch.h"
-#include "Window.hpp"
 
 struct FPSManager 
 {
-	static void Init(GFX::Window* window);
+	static void Init();
   /*!*****************************************************************************
   This function must be called once per game loop. It uses GLFW's time
   functions to compute:
@@ -45,5 +44,4 @@ struct FPSManager
   static double fps;
   static double dt; // time taken to complete most recent game loop
   static double mPrevTime; // Time at beginning of game loop
-  static GFX::Window* mWindow;
 };

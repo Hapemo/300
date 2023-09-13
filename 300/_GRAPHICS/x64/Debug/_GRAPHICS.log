@@ -1,4 +1,4 @@
-﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(1101,5): warning MSB8027: Two or more files with the name of imgui.cpp will produce outputs to the same location. This can lead to an incorrect build result.  The files involved are ..\lib\IMGUI\imgui.cpp, demo\ImGui.cpp.
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(1098,5): warning MSB8027: Two or more files with the name of imgui.cpp will produce outputs to the same location. This can lead to an incorrect build result.  The files involved are ..\lib\IMGUI\imgui.cpp, demo\ImGui.cpp.
   imgui_impl_glfw.cpp
   imgui_impl_opengl3.cpp
   imgui.cpp
@@ -8,37 +8,38 @@
   imgui_widgets.cpp
   imgui_stdlib.cpp
   Bone.cpp
-C:\Users\jazzt\Documents\GitHub\300\300\_GEOM_COMPILER\src\Bone.cpp(23,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\jazzt\Documents\GitHub\300\300\_GEOM_COMPILER\src\Bone.cpp(35,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\jazzt\Documents\GitHub\300\300\_GEOM_COMPILER\src\Bone.cpp(47,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\lfsro\OneDrive\Documents\GitHub\300\300\_GEOM_COMPILER\src\Bone.cpp(23,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\lfsro\OneDrive\Documents\GitHub\300\300\_GEOM_COMPILER\src\Bone.cpp(35,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\lfsro\OneDrive\Documents\GitHub\300\300\_GEOM_COMPILER\src\Bone.cpp(47,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
   geom.cpp
-C:\Users\jazzt\Documents\GitHub\300\300\_GEOM_COMPILER\src\geom.cpp(331,8): warning C4101: 'ch': unreferenced local variable
+C:\Users\lfsro\OneDrive\Documents\GitHub\300\300\_GEOM_COMPILER\src\geom.cpp(331,8): warning C4101: 'ch': unreferenced local variable
   DemoScene.cpp
-C:\Users\jazzt\Documents\GitHub\300\300\_GRAPHICS\demo\DemoScene.cpp(76,80): warning C4244: 'argument': conversion from '_Rep' to 'unsigned int', possible loss of data
+C:\Users\lfsro\OneDrive\Documents\GitHub\300\300\_GRAPHICS\demo\DemoScene.cpp(76,80): warning C4244: 'argument': conversion from '_Rep' to 'unsigned int', possible loss of data
           with
           [
               _Rep=std::chrono::system_clock::rep
           ]
-C:\Users\jazzt\Documents\GitHub\300\300\_GRAPHICS\demo\DemoScene.cpp(259,125): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+C:\Users\lfsro\OneDrive\Documents\GitHub\300\300\_GRAPHICS\demo\DemoScene.cpp(259,125): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
   ImGui.cpp
   main.cpp
   Animator.cpp
   Camera.cpp
   DebugRenderer.cpp
-C:\Users\jazzt\Documents\GitHub\300\300\_GRAPHICS\source\DebugRenderer.cpp(231,113): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
-C:\Users\jazzt\Documents\GitHub\300\300\_GRAPHICS\source\DebugRenderer.cpp(252,122): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
-C:\Users\jazzt\Documents\GitHub\300\300\_GRAPHICS\source\DebugRenderer.cpp(273,114): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
-C:\Users\jazzt\Documents\GitHub\300\300\_GRAPHICS\source\DebugRenderer.cpp(294,114): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+C:\Users\lfsro\OneDrive\Documents\GitHub\300\300\_GRAPHICS\source\DebugRenderer.cpp(231,113): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+C:\Users\lfsro\OneDrive\Documents\GitHub\300\300\_GRAPHICS\source\DebugRenderer.cpp(252,122): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+C:\Users\lfsro\OneDrive\Documents\GitHub\300\300\_GRAPHICS\source\DebugRenderer.cpp(273,114): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+C:\Users\lfsro\OneDrive\Documents\GitHub\300\300\_GRAPHICS\source\DebugRenderer.cpp(294,114): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
   Fbo.cpp
   Math.cpp
   Mesh.cpp
-C:\Users\jazzt\Documents\GitHub\300\300\_GRAPHICS\source\Mesh.cpp(364,27): warning C4018: '<': signed/unsigned mismatch
-C:\Users\jazzt\Documents\GitHub\300\300\_GRAPHICS\source\Mesh.cpp(381,27): warning C4018: '<': signed/unsigned mismatch
+C:\Users\lfsro\OneDrive\Documents\GitHub\300\300\_GRAPHICS\source\Mesh.cpp(240,90): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+C:\Users\lfsro\OneDrive\Documents\GitHub\300\300\_GRAPHICS\source\Mesh.cpp(421,27): warning C4018: '<': signed/unsigned mismatch
+C:\Users\lfsro\OneDrive\Documents\GitHub\300\300\_GRAPHICS\source\Mesh.cpp(438,27): warning C4018: '<': signed/unsigned mismatch
   OpenGl.cpp
   Generating Code...
-C:\Users\jazzt\Documents\GitHub\300\300\_GEOM_COMPILER\src\Bone.cpp(95): warning C4715: '_GEOM::Bone::GetScaleIndex': not all control paths return a value
-C:\Users\jazzt\Documents\GitHub\300\300\_GEOM_COMPILER\src\Bone.cpp(82): warning C4715: '_GEOM::Bone::GetRotationIndex': not all control paths return a value
-C:\Users\jazzt\Documents\GitHub\300\300\_GEOM_COMPILER\src\Bone.cpp(69): warning C4715: '_GEOM::Bone::GetPositionIndex': not all control paths return a value
+C:\Users\lfsro\OneDrive\Documents\GitHub\300\300\_GEOM_COMPILER\src\Bone.cpp(82): warning C4715: '_GEOM::Bone::GetRotationIndex': not all control paths return a value
+C:\Users\lfsro\OneDrive\Documents\GitHub\300\300\_GEOM_COMPILER\src\Bone.cpp(95): warning C4715: '_GEOM::Bone::GetScaleIndex': not all control paths return a value
+C:\Users\lfsro\OneDrive\Documents\GitHub\300\300\_GEOM_COMPILER\src\Bone.cpp(69): warning C4715: '_GEOM::Bone::GetPositionIndex': not all control paths return a value
   Compiling...
   Random.cpp
   Renderer.cpp
@@ -50,6 +51,7 @@ C:\Users\jazzt\Documents\GitHub\300\300\_GEOM_COMPILER\src\Bone.cpp(69): warning
   Window.cpp
   Generating Code...
 x64\Debug\ImGui.obj : warning LNK4042: object specified more than once; extras ignored
-  _GRAPHICS.vcxproj -> C:\Users\jazzt\Documents\GitHub\300\300\x64\Debug\_GRAPHICS.lib
+LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
+  _GRAPHICS.vcxproj -> C:\Users\lfsro\OneDrive\Documents\GitHub\300\300\x64\Debug\_GRAPHICS.exe
           1 file(s) copied.
           1 file(s) copied.
