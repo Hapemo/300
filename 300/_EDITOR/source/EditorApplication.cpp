@@ -102,7 +102,7 @@ void EditorApplication::Exit()
     mMaineditor.UIend();
     systemManager->Exit();
     delete systemManager;
-    ECS::GetInstance()->DeleteAllEntities();
+    systemManager->ecs->DeleteAllEntities();
     SingletonManager::destroyAllSingletons();
     mWindow.DestroySystem();
 }

@@ -2,6 +2,7 @@
 #include "Graphics/GraphicsSystem.h"
 #include "ECS/ECS_Systems.h"
 #include "ScriptingSystem.h"
+#include "ECS/ECS.h"
 
 SystemManager* systemManager;
 
@@ -10,11 +11,12 @@ SystemManager::SystemManager()
 	mPhysicsSystem = std::make_unique<PhysicsSystem>();
 	mScriptingSystem = std::make_unique<ScriptingSystem>();
 	mGraphicsSystem = std::make_unique<GraphicsSystem>();
+	ecs = new ECS;
 }
 
 SystemManager::~SystemManager()
 {
-
+	delete ecs;
 }
 
 void SystemManager::Init(bool isEditor, GFX::Window* window)
@@ -38,4 +40,9 @@ void SystemManager::Exit()
 	mPhysicsSystem.get()->Exit();
 	mScriptingSystem.get()->Exit();
 	mGraphicsSystem.get()->Exit();
+}
+
+PhysicsSystem* SystemManager::GetPhysicsPointer()
+{
+	return mPhysicsSystem.get();
 }
