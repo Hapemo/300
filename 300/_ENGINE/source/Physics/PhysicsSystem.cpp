@@ -1,6 +1,5 @@
 #include "Physics/PhysicsSystem.h"
 #include "ECS/ECS.h"
-#include "ECS/ECS_Components.h"
 
 PhysicsSystem::PhysicsSystem()
 {
@@ -40,23 +39,38 @@ physx::PxMaterial* PhysicsSystem::CreateMaterial(float us, float ud, float res)
 
 void PhysicsSystem::CreateActor(Entity e, const Transform& xform, const RigidBody& rbod)
 {
+	physx::PxRigidActor* PActor{};
+
 	if (e.HasComponent<BoxCollider>())
-	{
-		BoxCollider collider = e.GetComponent<BoxCollider>();
-		physx::PxTransform PXform = physx::PxTransform(Convert(xform.mTranslate + collider.mTranslateOffset));
-		physx::PxRigidActor* PActor{};
+		CreateBoxCollider(PActor, xform, e.GetComponent<BoxCollider>());
+	else if (e.HasComponent<SphereCollider>())
+		CreateSphereCollider(PActor, e.GetComponent<SphereCollider>());
 
-		if (rbod.mMotion == MOTION::STATIC)
-			PActor = mPX.mPhysics->createRigidStatic(PXform);
-		else if (rbod.mMotion == MOTION::DYNAMIC)
-			PActor = mPX.mPhysics->createRigidDynamic(PXform);
+}
 
-		mActors[static_cast<std::uint32_t>(e.id)] = PActor;
+void PhysicsSystem::CreateBoxCollider(physx::PxRigidActor* actor, const Transform& xform, const BoxCollider& collider)
+{
+	physx::PxTransform PXform = physx::PxTransform(Convert(xform.mTranslate + collider.mTranslateOffset));
+	physx::PxRigidActor* PActor{};
 
-		physx::PxBoxGeometry PGeom(Convert(collider.mScaleOffset * xform.mScale));
-		physx::PxShape* shape = mPX.mPhysics->createShape(PGeom, *mMaterials[rbod.mMaterial]);
-		PActor->attachShape(*shape);
-	}
+	if (rbod.mMotion == MOTION::STATIC)
+		PActor = mPX.mPhysics->createRigidStatic(PXform);
+	else if (rbod.mMotion == MOTION::DYNAMIC)
+		PActor = mPX.mPhysics->createRigidDynamic(PXform);
+
+	mActors[static_cast<std::uint32_t>(e.id)] = PActor;
+
+	physx::PxBoxGeometry PGeom(Convert(collider.mScaleOffset * xform.mScale));
+	physx::PxShape* shape = mPX.mPhysics->createShape(PGeom, *mMaterials[rbod.mMaterial]);
+	PActor->attachShape(*shape);
+}
+
+void PhysicsSystem::CreateSphereCollider(physx::PxRigidActor* actor, const Transform& xform, const SphereCollider& collider)
+{
+}
+
+void PhysicsSystem::CreatePlaneCollider(physx::PxRigidActor* actor, const Transform& xform, const PlaneCollider& collider)
+{
 }
 
 physx::PxVec3T<float> PhysicsSystem::Convert(const glm::vec3& vec)

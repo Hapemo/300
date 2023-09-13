@@ -18,8 +18,11 @@ private:
 	std::unordered_map<MATERIAL, physx::PxMaterial*> mMaterials;
 	physx::PxMaterial* CreateMaterial(float us, float ud, float res);
 	void CreateActor(Entity e, const Transform& xform, const RigidBody& rbod);
-	//void CreateBoxCollider();
-	//void CreatePlaneCollider();
-	//void CreateSphereCollider();
+
+
+	// Helper Functions
+	void CreateBoxCollider(physx::PxRigidActor* actor, const Transform& xform, const BoxCollider& collider);
+	void CreateSphereCollider(physx::PxRigidActor* actor, const Transform& xform, const SphereCollider& collider);
+	void CreatePlaneCollider(physx::PxRigidActor* actor, const Transform& xform, const PlaneCollider& collider);
 	physx::PxVec3T<float> Convert(const glm::vec3& vec);
 };
