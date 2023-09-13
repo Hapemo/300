@@ -48,12 +48,11 @@ namespace _GEOM
 
 namespace Serialization
 {
-
 		// ====================================================================================================
 		//										NEW SERIALIZATION CODE BLOCK
 		// ====================================================================================================
 	
-
+	// Serializes the AssimpNodeData into a binary file recursively
 	void SerializeAssimpNodeData(std::ofstream& outfile, const _GEOM::AssimpNodeData& Node)
 	{
 		uint8_t strlen = (uint8_t)Node.m_Name.size();		// get the length of the string
@@ -70,6 +69,8 @@ namespace Serialization
 	}
 
 
+	//!< This serialization code block was used to serialize the data into text file.
+	//! REDACTED
 		bool SerializeUnsigned(std::ofstream& outFile, const std::uint32_t& value) noexcept
 		{
 			outFile << value << " ";
@@ -193,7 +194,10 @@ namespace Serialization
 			for (unsigned meshindex{}; meshindex < GeomData.m_nMeshes; ++meshindex)
 			{
 				// How many meshes are there? Each mesh has a bone info map
-				Err |= SerializeBoneInfoMap(outFile, GeomData.m_pMesh[meshindex].m_Animation);
+				for (int j{}; j < GeomData.m_pMesh[meshindex].m_Animation.size(); ++j) 
+				{
+					Err |= SerializeBoneInfoMap(outFile, GeomData.m_pMesh[meshindex].m_Animation[j]);
+				}
 			}
 
 			return Err;
@@ -232,6 +236,10 @@ namespace Serialization
 	// ====================================================================================================
 	//										NEW DESERIALIZATION CODE BLOCK
 	// ====================================================================================================
+	
+		//!< This serialization code block was used to serialize the data into text file.
+		//! REDACTED
+		
 	bool ReadIndices(std::ifstream& inFile, _GEOM::Geom& GeomData) noexcept
 	{
 		ReadUnsigned(inFile, GeomData.m_nIndices);

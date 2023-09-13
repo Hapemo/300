@@ -69,6 +69,30 @@ bool EntityJSON::Deserialize(const rapidjson::Value& obj)
 			blabla.something = obj["BlaBla"].GetSomething();
 		}
 	*/
+
+	if (obj.HasMember("General"))
+	{
+		mGJ.jName = obj["General"]["Name"].GetString();
+		mGJ.jIsActive = obj["General"]["isActive"].GetBool();
+		mGJ.jTag = obj["General"]["Tag"].GetString();
+		mGJ.jSubtag = obj["General"]["Subtag"].GetString();
+	}
+
+	if (obj.HasMember("Transform"))
+	{
+		mTJ.jScale.x = (float)obj["Transform"]["Scale"][0].GetDouble();
+		mTJ.jScale.y = (float)obj["Transform"]["Scale"][1].GetDouble();
+		mTJ.jScale.z = (float)obj["Transform"]["Scale"][2].GetDouble();
+
+		mTJ.jRotate.x = (float)obj["Transform"]["Rotate"][0].GetDouble();
+		mTJ.jRotate.y = (float)obj["Transform"]["Rotate"][1].GetDouble();
+		mTJ.jRotate.z = (float)obj["Transform"]["Rotate"][2].GetDouble();
+
+		mTJ.jTranslate.x = (float)obj["Transform"]["Translate"][0].GetDouble();
+		mTJ.jTranslate.y = (float)obj["Transform"]["Translate"][1].GetDouble();
+		mTJ.jTranslate.z = (float)obj["Transform"]["Translate"][2].GetDouble();
+	}
+
 	return true;
 }
 
@@ -76,11 +100,54 @@ bool EntityJSON::Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* wri
 {
 	writer->StartObject();
 
-	/*
-		eg:
-		writer->String("ComponentName");
-		writer->String(ec.component_name.c_str());
-	*/
+	// no need for now
+	/*writer->String("EntityID");
+	writer->Uint((std::uint32_t)mID);*/
+
+	// general
+	writer->String("General");
+	writer->StartObject();
+
+	writer->String("Name");
+	writer->String(mGJ.jName.c_str());
+
+	writer->String("isActive");
+	writer->Bool(mGJ.jIsActive);
+
+	writer->String("Tag");
+	writer->String(mGJ.jTag.c_str());
+
+	writer->String("Subtag");
+	writer->String(mGJ.jSubtag.c_str());
+
+	writer->EndObject();
+
+	// transform
+	writer->String("Transform");
+	writer->StartObject();
+	
+	writer->String("Scale");
+	writer->StartArray();
+	writer->Double(mTJ.jScale.x);
+	writer->Double(mTJ.jScale.y);
+	writer->Double(mTJ.jScale.z);
+	writer->EndArray();
+
+	writer->String("Rotate");
+	writer->StartArray();
+	writer->Double(mTJ.jRotate.x);
+	writer->Double(mTJ.jRotate.y);
+	writer->Double(mTJ.jRotate.z);
+	writer->EndArray();
+
+	writer->String("Translate");
+	writer->StartArray();
+	writer->Double(mTJ.jTranslate.x);
+	writer->Double(mTJ.jTranslate.y);
+	writer->Double(mTJ.jTranslate.z);
+	writer->EndArray();
+	
+	writer->EndObject();
 
 	writer->EndObject();
 	

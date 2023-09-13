@@ -1,5 +1,6 @@
 #pragma once
 #include "pch.h"
+#include "../Serialization/Serialization.h"
 
 class ObjectFactory
 {

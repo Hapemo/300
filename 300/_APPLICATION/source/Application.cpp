@@ -14,23 +14,28 @@ start up of window and game system, also runs their update functions.
 #include "ECS/ECS_Components.h"
 #include "Input.h"
 #include "SingletonManager.h"
+#include "Object/ObjectFactory.h"
 #include "ScriptingSystem.h"
+#include "Physics/PhysicsSystem.h"
+
+#include "Example.h"
 
 // Static variables
 GFX::DebugRenderer* Application::mRenderer;
 GFX::Window Application::mWindow;
 std::string Application::title;
-SystemManager Application::systemManager;
 
 void Application::Init() 
 {
     StartUp();
     SystemInit();
+    //MultithreadExample();
 }
 
 void Application::StartUp() 
 {
     //gfx glew and glfw startup
+    systemManager = new SystemManager();
     GFX::Window::InitializeSystem();
     mWindow = GFX::Window({ 1920, 1080 });
     mWindow.SetWindowTitle("Application");
@@ -38,10 +43,35 @@ void Application::StartUp()
 
 void Application::SystemInit() 
 {
-    FPSManager::Init(&mWindow);
-    Input::Init(&mWindow);
-    systemManager.Init();
+    systemManager->Init(&mWindow);
+    FPSManager::Init();
+    Input::Init();
+    // To remove (Script test with entities)
+    //systemManager->mScriptingSystem->ScriptingInitTest();
     //gfx init
+    // 
+    // test serialization
+    Entity ent1 = ECS::GetInstance()->NewEntity();
+    Entity ent2 = ECS::GetInstance()->NewEntity();
+    Entity ent3 = ECS::GetInstance()->NewEntity();
+
+    ent1.GetComponent<General>().name = "Testing";
+    ent1.GetComponent<General>().isActive = true;
+    ent1.GetComponent<General>().tag = TAG::PLAYER;
+    ent1.GetComponent<General>().subtag = SUBTAG::ACTIVE;
+
+    ent2.GetComponent<General>().name = "Other";
+    ent2.GetComponent<General>().isActive = true;
+    ent2.GetComponent<General>().tag = TAG::UNKNOWN;
+    ent2.GetComponent<General>().subtag = SUBTAG::BACKGROUND;
+
+    ent3.GetComponent<General>().name = "Apple";
+    ent3.GetComponent<General>().isActive = false;
+    ent3.GetComponent<General>().tag = TAG::UNKNOWN;
+    ent3.GetComponent<General>().subtag = SUBTAG::ACTIVE;
+
+    ObjectFactory::SerializeScene("../resources/Scenes/test.json");
+    // end test serialization
 }
 
 void Application::MainUpdate() 
@@ -50,7 +80,7 @@ void Application::MainUpdate()
         FirstUpdate();
         SystemUpdate();
         // To remove (Script test with entities)
-        //ScriptTestUpdate();
+        //systemManager->mScriptingSystem->ScriptingUpdateTest();
         SecondUpdate(); // This should always be the last
 
         // Graphics update
@@ -66,18 +96,20 @@ void Application::FirstUpdate()
 
 void Application::SystemUpdate() 
 {
-    systemManager.Update(1.f /*insert dt here*/);
+    systemManager->Update(FPSManager::dt);
 }
 
 void Application::SecondUpdate() 
 {
     Input::UpdatePrevKeyStates();
+    //FPSManager::LimitFPS(0);
 }
 
 void Application::Exit() 
 {
-    systemManager.Exit();
+    systemManager->Exit();
     ECS::GetInstance()->DeleteAllEntities();
     SingletonManager::destroyAllSingletons();
     mWindow.DestroySystem();
+    delete systemManager;
 }

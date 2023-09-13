@@ -3,17 +3,28 @@
 #include "Script.h"
 #include <vector>
 #include "pch.h"
+#include "Physics/PhysicsTypes.h"
 
 enum class TAG : unsigned char
 {
 	PLAYER,
+	UNKNOWN
 	//more to come
 };
 
 enum class SUBTAG : unsigned char
 {
+	ACTIVE,
+	BACKGROUND
 	//more to come
 };
+
+// every time tags/subtags get updated, please update the maps here
+static std::unordered_map<std::string, TAG> TagMap = { {"Player", TAG::PLAYER},
+													   {"Unknown", TAG::UNKNOWN} };
+
+static std::unordered_map<std::string, SUBTAG> SubTagMap = { {"Active", SUBTAG::ACTIVE},
+															 {"Background", SUBTAG::BACKGROUND} };
 
 struct General
 {
@@ -28,10 +39,35 @@ struct Transform
 	glm::vec3 mScale;
 	glm::vec3 mRotate;
 	glm::vec3 mTranslate;
+
+	Transform() : mScale(1.f), mRotate(0.f), mTranslate(0.f) {}
+	glm::quat GetQuaternion() { return glm::quat(mRotate); }
+	void Inspect();
 };
 
 struct RigidBody
 {
+	std::uint16_t mass;
+	MATERIAL mMaterial;
+	MOTION mMotion;
+};
+
+struct BoxCollider
+{
+	glm::vec3 mScaleOffset; //multiplier
+	glm::vec3 mTranslateOffset; //addiplier
+
+	BoxCollider() : mScaleOffset(1.f), mTranslateOffset(0.f) {}
+};
+
+struct PlaneCollider
+{
+
+};
+
+struct SphereCollider
+{
+
 };
 
 struct SoundInfo

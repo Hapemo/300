@@ -1,13 +1,24 @@
 #pragma once
-// systems include
-#include "ScriptingSystem.h"
+#include <pch.h>
+#include <Window.hpp>
+
+class PhysicsSystem;
+class ScriptingSystem;
 
 class SystemManager
 {
-	//PhysicsSystem mPhysicsSystem;
-	//ScriptingSystem mScriptingSystem;
+	GFX::Window* mWindow;
 public:
-	void Init();
+	std::unique_ptr<PhysicsSystem> mPhysicsSystem;
+	std::unique_ptr<ScriptingSystem> mScriptingSystem;
+	
+
+	SystemManager();
+	~SystemManager();
+	GFX::Window* GetWindow() { return mWindow; }
+	void Init(GFX::Window* window);
 	void Update(float dt);
 	void Exit();
 };
+
+extern SystemManager* systemManager;

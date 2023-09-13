@@ -10,7 +10,6 @@ start up of window and game system, also runs their update functions.
 *******************************************************************************/
 #pragma once
 #include "pch.h"
-#include "ECS/ECS_Systems.h"
 #include "Window.hpp"
 #include "Camera.hpp"
 #include "DebugRenderer.hpp"
@@ -64,6 +63,5 @@ private:
 	static std::string title;
 	static GFX::Window mWindow;
     static GFX::DebugRenderer* mRenderer;
-	static SystemManager systemManager;
     GFX::Camera mCamera;
 };
