@@ -54,23 +54,24 @@ struct RigidBody
 
 struct BoxCollider
 {
-	glm::vec3 mScaleOffset;			//final scale = mScaleOffset * Transform.mScale;
-	glm::vec3 mTranslateOffset;		//final pos = Transform.mTranslate + mTranslateOffset;
+	glm::vec3 mScaleOffset;			// final scale = mScaleOffset * Transform.mScale;
+	glm::vec3 mTranslateOffset;		// final pos = Transform.mTranslate + mTranslateOffset;
 
 	BoxCollider() : mScaleOffset(1.f), mTranslateOffset(0.f) {}
 };
 
 struct SphereCollider
 {
-	float mScaleOffset;				//final scale = mScaleOffset * std::max(Transform.mScale.x, Transform.mScale.y, Transform.mScale.z);
-	glm::vec3 mTranslateOffset;		//final pos = Transform.mTranslate + mTranslateOffset;
+	float mScaleOffset;				// final scale = mScaleOffset * std::max(Transform.mScale.x, Transform.mScale.y, Transform.mScale.z);
+	glm::vec3 mTranslateOffset;		// final pos = Transform.mTranslate + mTranslateOffset;
 
 	SphereCollider() : mScaleOffset(1.f), mTranslateOffset(0.f) {};
 };
 
 struct PlaneCollider
 {
-
+	glm::vec3 mNormal;				// direction of plane
+	float mTranslateOffset;			// final pos = magnitude(Transform.mTranslate) + mTranslateOffset;
 };
 
 /***************************************************************************/

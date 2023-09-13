@@ -21,8 +21,10 @@ private:
 
 
 	// Helper Functions
-	void CreateBoxCollider(physx::PxRigidActor* actor, const Transform& xform, const BoxCollider& collider);
-	void CreateSphereCollider(physx::PxRigidActor* actor, const Transform& xform, const SphereCollider& collider);
-	void CreatePlaneCollider(physx::PxRigidActor* actor, const Transform& xform, const PlaneCollider& collider);
+	void CreateCollider(physx::PxRigidActor* actor, const Transform& xform, const RigidBody& rbod, const BoxCollider& collider);
+	void CreateCollider(physx::PxRigidActor* actor, const Transform& xform, const RigidBody& rbod, const SphereCollider& collider);
+	void CreateCollider(physx::PxRigidActor* actor, const Transform& xform, const RigidBody& rbod, const PlaneCollider& collider);
+	void CreateActorType(physx::PxRigidActor* actor, const physx::PxTransform& p_xform, MOTION motion);
 	physx::PxVec3T<float> Convert(const glm::vec3& vec);
+	physx::PxVec4T<float> Convert(const glm::vec4& vec);
 };
