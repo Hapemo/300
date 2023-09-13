@@ -36,7 +36,6 @@ This function exits the application.
 ***/
 
 #pragma once
-#include "pch.h"
 
 class GameStateManager
 {

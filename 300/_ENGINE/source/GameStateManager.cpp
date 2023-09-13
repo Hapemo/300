@@ -49,20 +49,6 @@ This function exits the application.
 //#include "../Audio/AudioSystem.h"
 #include "Object/ObjectFactory.h"
 #include "Window.hpp"
-#include "rttr/registration.h"
-
-struct MyStruct { MyStruct() {}; void func(double) { std::cout << "hello world!\n"; }; int data; };
-static int printhello(int h) { std::cout << "hello world!" << '\n'; return 1; }
-RTTR_REGISTRATION
-{
-	using namespace rttr;
-		registration::class_<MyStruct>("MyStruct")
-				 .constructor<>()
-				 .method("func", &MyStruct::func)
-				 .property("data", &MyStruct::data);
-
-		registration::method("func1", &printhello);
-}
 
 GameStateManager::GameStateManager()
 {

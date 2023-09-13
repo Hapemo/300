@@ -98,8 +98,6 @@ void Application::FirstUpdate()
 void Application::SystemUpdate() 
 {
     systemManager->Update(FPSManager::dt);
-    if (Input::CheckKey(HOLD, SPACE))
-      std::cout << "fps: " << FPSManager::fps << " | dt: " << FPSManager::dt << '\n';
 }
 
 void Application::SecondUpdate() 

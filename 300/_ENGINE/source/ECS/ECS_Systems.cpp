@@ -1,7 +1,6 @@
 #include "Physics/PhysicsSystem.h"
 #include "ECS/ECS_Systems.h"
 #include "ScriptingSystem.h"
-#include "rttr/registration.h"
 
 SystemManager* systemManager;
 
@@ -26,8 +25,6 @@ void SystemManager::Update(float dt)
 {
 	mPhysicsSystem.get()->Update(dt);
 	mScriptingSystem.get()->Update(dt);
-	//rttr::type::invoke("func", {});
-	//rttr::type::invoke("func1", {});
 }
 
 void SystemManager::Exit()
