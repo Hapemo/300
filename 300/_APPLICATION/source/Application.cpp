@@ -48,13 +48,13 @@ void Application::SystemInit()
     Input::Init(&mWindow);
     systemManager->Init();
     // To remove (Script test with entities)
-    //systemManager->mScriptingSystem->ScriptingInitTest();
+    systemManager->mScriptingSystem->ScriptingInitTest();
     //gfx init
     // 
     // test serialization
-    Entity ent1 = ECS::GetInstance()->NewEntity();
-    Entity ent2 = ECS::GetInstance()->NewEntity();
-    Entity ent3 = ECS::GetInstance()->NewEntity();
+    Entity ent1 = systemManager->ecs->NewEntity();
+    Entity ent2 = systemManager->ecs->NewEntity();
+    Entity ent3 = systemManager->ecs->NewEntity();
 
     ent1.GetComponent<General>().name = "Testing";
     ent1.GetComponent<General>().isActive = true;
@@ -72,6 +72,13 @@ void Application::SystemInit()
     ent3.GetComponent<General>().subtag = SUBTAG::ACTIVE;
 
     ObjectFactory::SerializeScene("../resources/Scenes/test.json");
+
+    auto view = systemManager->ecs->GetEntitiesWith<General, Transform>();
+    int size = view.size();
+    for (Entity e : view)
+    {
+        e.GetComponent<Transform>();
+    }
     // end test serialization
 }
 
@@ -81,7 +88,7 @@ void Application::MainUpdate()
         FirstUpdate();
         SystemUpdate();
         // To remove (Script test with entities)
-        //systemManager->mScriptingSystem->ScriptingUpdateTest();
+        systemManager->mScriptingSystem->ScriptingUpdateTest();
         SecondUpdate(); // This should always be the last
 
         // Graphics update
@@ -109,7 +116,7 @@ void Application::SecondUpdate()
 void Application::Exit() 
 {
     systemManager->Exit();
-    ECS::GetInstance()->DeleteAllEntities();
+    systemManager->ecs->DeleteAllEntities();
     SingletonManager::destroyAllSingletons();
     mWindow.DestroySystem();
     delete systemManager;

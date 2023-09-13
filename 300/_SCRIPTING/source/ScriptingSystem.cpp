@@ -136,7 +136,7 @@ void ScriptingSystem::Update(float dt)
     //    return; 
     //} 
 
-    auto scriptEntities = ECS::GetInstance()->GetEntitiesWith<Scripts>();
+    auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
 
     //if (g_engine->gameStateMgr->isPlaying) 
     //{ 
@@ -197,11 +197,11 @@ void ScriptingSystem::Exit()
 
 void ScriptingSystem::ScriptingInitTest()
 {
-    Entity player = ECS::GetInstance()->NewEntity();
+    Entity player = systemManager->ecs->NewEntity();
     std::cout << "Player (EntityID: " << std::to_string(unsigned int(player.id)) << ")added." << std::endl;
-    Entity enemy1 = ECS::GetInstance()->NewEntity();
+    Entity enemy1 = systemManager->ecs->NewEntity();
     std::cout << "Enemy1 (EntityID: " << std::to_string(unsigned int(enemy1.id)) << ")added." << std::endl;
-    Entity enemy2 = ECS::GetInstance()->NewEntity();
+    Entity enemy2 = systemManager->ecs->NewEntity();
     std::cout << "Enemy2 (EntityID: " << std::to_string(unsigned int(enemy2.id)) << ")added." << std::endl;
 
     player.AddComponent<Transform>();
@@ -246,7 +246,7 @@ void ScriptingSystem::ScriptingUpdateTest()
         std::cout << "Enter script name to add to entity(Reference from Resources/Scripts: ";
         std::cin >> scriptName;
         std::string temp = "../assets/Scripts/" + scriptName + ".lua";
-        auto scriptEntities = ECS::GetInstance()->GetEntitiesWith<Scripts>();
+        auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
         for (Entity entity : scriptEntities)
         {
             if (entity.id == static_cast<entt::entity>(std::stoul(entityID)))
@@ -292,7 +292,7 @@ void ScriptingSystem::ScriptingUpdateTest()
     if (Input::CheckKey(E_STATE::PRESS, E_KEY::_3))
     {
         std::cout << "/******************************************************************************/" << std::endl;
-        auto scriptEntities = ECS::GetInstance()->GetEntitiesWith<Scripts>();
+        auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
         for (Entity entity : scriptEntities)
         {
             for (Script script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)

@@ -1,6 +1,7 @@
 #include "Physics/PhysicsSystem.h"
 #include "ECS/ECS_Systems.h"
 #include "ScriptingSystem.h"
+#include "ECS/ECS.h"
 
 SystemManager* systemManager;
 
@@ -8,11 +9,12 @@ SystemManager::SystemManager()
 {
 	mPhysicsSystem = std::make_unique<PhysicsSystem>();
 	mScriptingSystem = std::make_unique<ScriptingSystem>();
+	ecs = new ECS;
 }
 
 SystemManager::~SystemManager()
 {
-
+	delete ecs;
 }
 
 void SystemManager::Init()
