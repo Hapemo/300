@@ -68,8 +68,7 @@ class Resource {
 public:
 
 
-    
-
+   
     Resource();
     Resource(const Resource&) = delete;
     ~Resource() = default;

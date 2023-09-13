@@ -2,6 +2,7 @@
 #include "Graphics/GraphicsSystem.h"
 #include "ECS/ECS_Systems.h"
 #include "ScriptingSystem.h"
+#include "ResourceManager.h"
 
 SystemManager* systemManager;
 
