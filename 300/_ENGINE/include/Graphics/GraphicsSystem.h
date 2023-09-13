@@ -3,6 +3,7 @@
 #define _GRAPHICS_SYSTEM_H
 
 #include <pch.h>
+#include <ECS/ECS_Systems.h>
 #include <ECS/ECS_Components.h>
 #include <ECS/ECS.h>
 
