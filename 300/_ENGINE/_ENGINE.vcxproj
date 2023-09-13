@@ -150,7 +150,7 @@
     <ClInclude Include="include\ECS\ECS_Components.h" />
     <ClInclude Include="include\ECS\ECS_Systems.h" />
     <ClInclude Include="include\Multithread.h" />
-    <ClInclude Include="include\Physics\Material.h" />
+    <ClInclude Include="include\Physics\PhysicsTypes.h" />
     <ClInclude Include="include\Physics\PhysicsSystem.h" />
     <ClInclude Include="include\Physics\PhysX.h" />
     <ClInclude Include="include\Resource\Guid.h" />

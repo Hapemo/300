@@ -39,14 +39,13 @@ void Application::StartUp()
     GFX::Window::InitializeSystem();
     mWindow = GFX::Window({ 1920, 1080 });
     mWindow.SetWindowTitle("Application");
-    systemManager->mWindow = &mWindow;
 }
 
 void Application::SystemInit() 
 {
-    FPSManager::Init(&mWindow);
-    Input::Init(&mWindow);
-    systemManager->Init();
+    systemManager->Init(&mWindow);
+    FPSManager::Init();
+    Input::Init();
     // To remove (Script test with entities)
     //systemManager->mScriptingSystem->ScriptingInitTest();
     //gfx init

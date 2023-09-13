@@ -45,7 +45,7 @@
     <ClInclude Include="include\Physics\PhysX.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Physics\Material.h">
+    <ClInclude Include="include\Physics\PhysicsTypes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Physics\PhysicsSystem.h">

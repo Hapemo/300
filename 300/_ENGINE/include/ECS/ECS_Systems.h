@@ -7,15 +7,16 @@ class ScriptingSystem;
 
 class SystemManager
 {
+	GFX::Window* mWindow;
 public:
 	std::unique_ptr<PhysicsSystem> mPhysicsSystem;
 	std::unique_ptr<ScriptingSystem> mScriptingSystem;
 	
-	GFX::Window* mWindow;
 
 	SystemManager();
 	~SystemManager();
-	void Init();
+	GFX::Window* GetWindow() { return mWindow; }
+	void Init(GFX::Window* window);
 	void Update(float dt);
 	void Exit();
 };
