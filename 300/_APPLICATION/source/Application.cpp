@@ -76,7 +76,8 @@ void Application::SystemInit()
 
 void Application::MainUpdate() 
 {
-    while (!glfwWindowShouldClose(mWindow.GetHandle())) {
+    while (!glfwWindowShouldClose(mWindow.GetHandle())) 
+    {
         FirstUpdate();
         SystemUpdate();
         // To remove (Script test with entities)

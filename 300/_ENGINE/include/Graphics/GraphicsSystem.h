@@ -25,6 +25,9 @@ public:
 	unsigned int GetGameAttachment()	{ return m_Fbo.GetGameAttachment(); }
 	unsigned int GetEditorAttachment()	{ return m_Fbo.GetEditorAttachment(); }
 
+	// Getter
+	GFX::DebugRenderer& getDebugRenderer() { return m_Renderer; }
+
 private:
 	GFX::DebugRenderer m_Renderer;		// isolated to debug draws
 	GFX::FBO m_Fbo;
