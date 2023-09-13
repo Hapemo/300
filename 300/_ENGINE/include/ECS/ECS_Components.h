@@ -41,6 +41,7 @@ struct Transform
 	glm::vec3 mTranslate;
 
 	Transform() : mScale(1.f), mRotate(0.f), mTranslate(0.f) {}
+	glm::quat GetQuaternion() { return glm::quat(mRotate); }
 	void Inspect();
 };
 
