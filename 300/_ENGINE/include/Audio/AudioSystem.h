@@ -30,15 +30,17 @@ class SoundInformation
 {
 public:
 	SoundInformation() = default;
-	SoundInformation(std::string afile_path, std::string asound_name, bool ais3D, bool aisLooping);
+	SoundInformation(std::string afile_path, std::string asound_name, bool ais3D, bool aisLooping, AUDIO_TYPE audio_type);
 
 private:
-	// unsigned int unique_ID;	// Probably have to go through the database and update incremental (Unique ID)
+	unsigned int unique_ID;	    // Probably have to go through the database and update incremental (Unique ID)
 	std::string  file_path;		// Can reference this to find where this sound is located at. 
 	std::string	 sound_name;	// Give this [Audio file] a name!!
 	bool		 is3D;			// [3D - Spatial Audio] : is this a 3D audio? (do we need this?)
 	bool		 isLooping;		// [Looping]			: is this audio going to loop
 	bool		 isLoaded;      // [Loaded or Not]      : is this audio loaded into the system already?  (only updated during <Init> Loop
+	bool		 isSFX;			// [SFX Bool]           : exsits in the <SFX Sound Map>
+	bool		 isBGM;			// [BGM Bool]			: exists in the <BGM Sound Map>
 
 // private: // 3D Properties (do we need this?)
 
@@ -76,14 +78,19 @@ public:
 	typedef std::unordered_map<unsigned int, SoundInformation*>	  SoundInfoMap;
 
 	int sfx_channel_no = 0;
-
 	int bgm_channel_no = 0;
+	unsigned int sound_info_uniqueID = 0;
 
 public:
 	static int ErrCodeCheck(FMOD_RESULT result);		    // Status Check for (FMOD Function Calls) -> can be used outside of class
 
 	/* Create System Object + Initialization */
 	AudioManager();											// Initialization of (FMOD System)
+
+#pragma region SOUND DATABASE THINGS
+	void AddSoundInfoDatabase(SoundInformation* sound_info);
+	void PopulateSoundInfoDatabase(std::vector<SoundInformation*> sound_info_datbaase);
+#pragma endregion
 
 	void Init();
 	void Update();

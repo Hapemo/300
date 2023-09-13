@@ -8,10 +8,40 @@
 static bool once = false;
 
 #pragma region <SoundInfo> Class
-SoundInformation::SoundInformation(std::string afile_path, std::string asound_name, bool ais3D, bool aisLooping) : file_path(afile_path), sound_name(asound_name), is3D(ais3D),
-																									 isLooping(aisLooping), isLoaded(false) {}
+SoundInformation::SoundInformation(std::string afile_path, std::string asound_name, bool ais3D, bool aisLooping, AUDIO_TYPE audio_type) : file_path(afile_path), sound_name(asound_name), is3D(ais3D),
+																																		  isLooping(aisLooping), isLoaded(false)
+{
+	switch (audio_type)
+	{
+		case AUDIO_BGM:
+			isBGM = true;
+			isSFX = false;
+			break;
+		case AUDIO_SFX:
+			isSFX = true;
+			isBGM = false;
+			break;
+	}
+}
 
 
+#pragma endregion
+
+#pragma region SOUND DATABASE THINGS
+void AudioManager::AddSoundInfoDatabase(SoundInformation* sound_info)
+{
+	mSoundInfo.insert(std::make_pair(sound_info_uniqueID,sound_info));
+	sound_info_uniqueID++;
+}
+
+void AudioManager::PopulateSoundInfoDatabase(std::vector<SoundInformation*> sound_info_database)
+{
+	for (SoundInformation* sound_info : sound_info_database)
+	{
+		mSoundInfo.insert(std::make_pair(sound_info_uniqueID, sound_info));
+		sound_info_uniqueID++;
+	}
+}
 #pragma endregion
 
 #pragma region Channel Class
@@ -68,11 +98,14 @@ void AudioManager::Init()
 	}
 
 	// [9/13/2023] - Integrating <SoundInfo> into [AudioSystem] 
-	SoundInformation* sound_1 = new SoundInformation("../assets/Audio/farm_ambience.wav", "farm", false, false);
-	SoundInformation* sound_2 = new SoundInformation("../assets/Audio/NPC_Greeting.wav", "npc", false, false); 
-	SoundInformation* sound_3 = new SoundInformation("../assets/Audio/tuning-radio-7150.wav", "radio", false, false);
+	// * in the future de-serialize
+	SoundInformation* sound_1 = new SoundInformation("../assets/Audio/farm_ambience.wav", "farm", false, false, AUDIO_BGM);
+	SoundInformation* sound_2 = new SoundInformation("../assets/Audio/NPC_Greeting.wav", "npc", false, false, AUDIO_SFX); 
+	SoundInformation* sound_3 = new SoundInformation("../assets/Audio/tuning-radio-7150.wav", "radio", false, false, AUDIO_SFX);
 
-
+	AddSoundInfoDatabase(sound_1);
+	AddSoundInfoDatabase(sound_2); 
+	AddSoundInfoDatabase(sound_3);
 
 	// Test Load Sound
 	LoadAudioFile("../assets/Audio/farm_ambience.wav", "farm", AUDIO_TYPE::AUDIO_BGM);
