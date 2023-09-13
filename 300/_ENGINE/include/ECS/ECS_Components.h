@@ -41,6 +41,7 @@ struct Transform
 	glm::vec3 mTranslate;
 
 	Transform() : mScale(1.f), mRotate(0.f), mTranslate(0.f) {}
+	void Inspect();
 };
 
 struct RigidBody

@@ -18,10 +18,12 @@ start up of window and game system, also runs their update functions.
 #include "Physics/PhysicsSystem.h"
 
 
+
 // Static variables
 GFX::DebugRenderer* EditorApplication::mRenderer;
 GFX::Window EditorApplication::mWindow;
 std::string EditorApplication::title;
+Editor EditorApplication::mMaineditor;
 
 void EditorApplication::Init()
 {
@@ -36,6 +38,7 @@ void EditorApplication::StartUp()
     GFX::Window::InitializeSystem();
     mWindow = GFX::Window({ 1920, 1080 });
     mWindow.SetWindowTitle("Editor");
+
 }
 
 void EditorApplication::SystemInit()
@@ -44,6 +47,10 @@ void EditorApplication::SystemInit()
     Input::Init(&mWindow);
     systemManager->Init();
     //gfx init
+
+    //Editor init
+    mMaineditor.UIinit(EditorApplication::mWindow.GetHandle());
+
 }
 
 void EditorApplication::MainUpdate()
@@ -51,6 +58,11 @@ void EditorApplication::MainUpdate()
     while (!glfwWindowShouldClose(mWindow.GetHandle())) {
         FirstUpdate();
         SystemUpdate();
+
+        mMaineditor.UIupdate(EditorApplication::mWindow.GetHandle());
+        //mMaineditor.WindowUpdate(EditorApplication::mWindow.GetHandle());
+        mMaineditor.UIdraw(EditorApplication::mWindow.GetHandle());
+
         // To remove (Script test with entities)
         //ScriptTestUpdate();
         SecondUpdate(); // This should always be the last
@@ -78,6 +90,7 @@ void EditorApplication::SecondUpdate()
 
 void EditorApplication::Exit()
 {
+    mMaineditor.UIend();
     systemManager->Exit();
     delete systemManager;
     ECS::GetInstance()->DeleteAllEntities();

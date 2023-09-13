@@ -60,8 +60,8 @@ namespace _GEOM
 		void ReadHierarchyData(AssimpNodeData& dest, const aiNode* src) noexcept;
 		void DefaultInitializeVertexBoneData(FullVertices& vertex) noexcept;
 		void SetVertexBoneData(FullVertices& vertex, int boneID, float weight) noexcept;
-		void ExtractBoneWeightForVertex(InputMeshPart& Vertex, const aiMesh& mesh) noexcept;
-		void ReadMissingBones(const aiAnimation* animation) noexcept;
+		void ExtractBoneWeightForVertex(Animation& anims, InputMeshPart& Vertex, const aiMesh& mesh) noexcept;
+		void ReadMissingBones(Animation&, const aiAnimation* ) noexcept;
 
 
 	private:

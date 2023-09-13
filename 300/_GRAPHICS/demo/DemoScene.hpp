@@ -22,7 +22,10 @@
 #include "Shapes.hpp"
 #include "ImGui.hpp"
 #include "Texture.hpp"
+#include "Fbo.hpp"
+
 #include <geom.h>
+#include <Animator.hpp>
 
 
 namespace GFX {
@@ -50,6 +53,9 @@ namespace GFX {
         DebugRenderer* mRenderer;
         Camera mCamera;
         Shader mModelShader;
+        FBO mFbo;
+        Shader mSceneShader;
+        unsigned int mSceneAttachment;
 
         // -- Stats --
         float mDt = 0.0f;
@@ -57,11 +63,43 @@ namespace GFX {
         float mCamSpeed = 50.f;
 
         // -- Flags --
+        bool mFullscreen;
 
         // -- Helper --
         
         // -- Textures --
         Texture mTexture;
+
+        // -- Animator --
+        Animator mObjectAnimator;       // this ideally should be within an entity. for now, its here
+
+
+
+        // -- Shader Code --
+        const char* vertexShaderCode = R"(
+		#version 450 core
+
+		layout(location = 0) in vec3 aPos;
+		layout(location = 2) in vec2 aUV;
+
+		layout(location = 0) out vec2 outUV;
+		void main() {
+			gl_Position = vec4(aPos, 1.0);
+            outUV = aUV;
+		}
+		)";
+
+        const char* fragmentShaderCode = R"(
+		#version 450 core
+		layout(location = 0) in vec2 UV;
+		layout(location = 0) out vec4 fragColor;
+
+        uniform sampler2D uTex;
+
+		void main() {
+			fragColor = texture(uTex, UV);
+		}
+		)";
     };
 }
 

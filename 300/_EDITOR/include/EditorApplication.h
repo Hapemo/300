@@ -15,6 +15,8 @@ start up of window and game system, also runs their update functions.
 #include "Window.hpp"
 #include "Camera.hpp"
 #include "DebugRenderer.hpp"
+#include "Editor/Editor.h"
+
 
 class EditorApplication {
 public:
@@ -65,5 +67,6 @@ private:
 	static std::string title;
 	static GFX::Window mWindow;
 	static GFX::DebugRenderer* mRenderer;
+	static Editor mMaineditor;
 	GFX::Camera mCamera;
 };

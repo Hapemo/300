@@ -45,7 +45,7 @@ void GLAPIENTRY GFX::MessageCallback(GLenum source,
     std::cout << " *ERROR* ";
     std::cout << "Source: " << source << " | ID: " << id;
     std::cout << " | Type: " << type << " | Severity: " << severity;
-    std::cout << " | Message: " << message << "\n";
+    std::cout << " | Message: " << message << "\n\n";
 
     (void)length;
     (void)userParam;
