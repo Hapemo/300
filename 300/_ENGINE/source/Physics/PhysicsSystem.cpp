@@ -27,6 +27,14 @@ void PhysicsSystem::Update(float dt)
 {
 	mPX.mScene->simulate(dt);
 	mPX.mScene->fetchResults(true);
+
+	for (auto itr = mActors.begin(); itr != mActors.end(); ++itr)
+	{
+		physx::PxTransform PXform = itr->second->getGlobalPose();
+		Transform& xform = Entity(itr->first).GetComponent<Transform>();
+		xform.mTranslate = Convert(PXform.p);
+		xform.mRotate = glm::eulerAngles(Convert(PXform.q));
+	}
 }
 
 void PhysicsSystem::Exit()
@@ -69,7 +77,7 @@ void PhysicsSystem::CreateCollider(physx::PxRigidActor* actor, const Transform& 
 	physx::PxTransform PXform = physx::PxTransform(Convert(xform.mTranslate + collider.mTranslateOffset));
 	CreateActorType(actor, PXform, rbod.mMotion);
 
-	physx::PxSphereGeometry PGeom(collider.mScaleOffset * std::max(xform.mScale.x, xform.mScale.y, xform.mScale.z));
+	physx::PxSphereGeometry PGeom(collider.mScaleOffset * std::max({ xform.mScale.x, xform.mScale.y, xform.mScale.z }));
 	physx::PxShape* shape = mPX.mPhysics->createShape(PGeom, *mMaterials[rbod.mMaterial]);
 	actor->attachShape(*shape);
 }
@@ -99,4 +107,14 @@ physx::PxVec3T<float> PhysicsSystem::Convert(const glm::vec3& vec)
 physx::PxVec4T<float> PhysicsSystem::Convert(const glm::vec4& vec)
 {
 	return physx::PxVec4T<float>(vec.x, vec.y, vec.z, vec.w);
+}
+
+glm::vec3 PhysicsSystem::Convert(const physx::PxVec3T<float>& vec)
+{
+	return { vec.x, vec.y, vec.z };
+}
+
+glm::quat PhysicsSystem::Convert(const physx::PxQuatT<float>& vec)
+{
+	return { vec.x, vec.y, vec.z, vec.w };
 }

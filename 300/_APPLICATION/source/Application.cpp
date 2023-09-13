@@ -35,10 +35,10 @@ void Application::Init()
 void Application::StartUp() 
 {
     //gfx glew and glfw startup
-    systemManager = new SystemManager();
     GFX::Window::InitializeSystem();
     mWindow = GFX::Window({ 1920, 1080 });
     mWindow.SetWindowTitle("Application");
+    systemManager = new SystemManager();
 }
 
 void Application::SystemInit() 
@@ -70,6 +70,7 @@ void Application::SystemInit()
     ent3.GetComponent<General>().tag = TAG::UNKNOWN;
     ent3.GetComponent<General>().subtag = SUBTAG::ACTIVE;
 
+
     ObjectFactory::SerializeScene("../resources/Scenes/test.json");
     // end test serialization
 }
@@ -85,6 +86,7 @@ void Application::MainUpdate()
 
         // Graphics update
         mWindow.Update();
+
     }
 }
 
@@ -102,7 +104,7 @@ void Application::SystemUpdate()
 void Application::SecondUpdate() 
 {
     Input::UpdatePrevKeyStates();
-    //FPSManager::LimitFPS(0);
+    FPSManager::LimitFPS(60);
 }
 
 void Application::Exit() 

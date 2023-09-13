@@ -34,10 +34,10 @@ void EditorApplication::Init()
 void EditorApplication::StartUp()
 {
     //gfx glew and glfw startup
-    systemManager = new SystemManager();
     GFX::Window::InitializeSystem();
     mWindow = GFX::Window({ 1920, 1080 });
     mWindow.SetWindowTitle("Editor");
+    systemManager = new SystemManager();
 
 }
 
@@ -80,12 +80,13 @@ void EditorApplication::FirstUpdate()
 
 void EditorApplication::SystemUpdate()
 {
-    systemManager->Update(1.f /*insert dt here*/);
+    systemManager->Update(FPSManager::dt);
 }
 
 void EditorApplication::SecondUpdate()
 {
     Input::UpdatePrevKeyStates();
+    FPSManager::LimitFPS(60);
 }
 
 void EditorApplication::Exit()

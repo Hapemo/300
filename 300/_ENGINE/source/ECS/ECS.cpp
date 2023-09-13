@@ -20,3 +20,4 @@ void ECS::DeleteAllEntities()
 }
 
 Entity::Entity(entt::entity id) : id(id) {}
+Entity::Entity(std::uint32_t id) : id(entt::entity(id)) {}

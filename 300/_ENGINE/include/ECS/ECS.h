@@ -29,6 +29,7 @@ struct Entity
 
 	Entity() = delete;
 	Entity(entt::entity id);
+	Entity(std::uint32_t id);
 
 	template <typename Component>
 	Component& AddComponent();
