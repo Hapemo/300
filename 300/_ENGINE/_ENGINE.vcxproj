@@ -71,8 +71,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)_APPLICATION/include;$(SolutionDir)_ENGINE/include;$(SolutionDir)_GRAPHICS/include;$(SolutionDir)_SCRIPTING/include;$(SolutionDir)_TOOLS/include;$(IncludePath)$(SolutionDir)\lib\lua-5.3.6\include;$(SolutionDir)\lib\SOL;$(SolutionDir)lib/ENTT;$(SolutionDir)lib/GLM;$(SolutionDir)lib/RAPID-JSON;$(SolutionDir)lib\LUA\include;$(SolutionDir)lib/GLEW/include/GL;$(SolutionDir)lib/GLFW/include/GLFW;$(SolutionDir)lib\FMOD\core/inc;$(SolutionDir)lib\FMOD/studio\inc;$(SolutionDir)lib/PHYSX/include</IncludePath>
-    <LibraryPath>$(SolutionDir)\lib\lua-5.3.6\lib;$(SolutionDir)/lib/PHYSX/lib/debug;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)_APPLICATION/include;$(SolutionDir)_ENGINE/include;$(SolutionDir)_GRAPHICS/include;$(SolutionDir)_SCRIPTING/include;$(SolutionDir)_TOOLS/include;$(IncludePath)$(SolutionDir)\lib\lua-5.3.6\include;$(SolutionDir)\lib\SOL;$(SolutionDir)lib/ENTT;$(SolutionDir)lib/GLM;$(SolutionDir)lib/RAPID-JSON;$(SolutionDir)lib\LUA\include;$(SolutionDir)lib/GLEW/include/GL;$(SolutionDir)lib/GLFW/include/GLFW;$(SolutionDir)lib\FMOD\core/inc;$(SolutionDir)lib\FMOD/studio\inc;$(SolutionDir)lib/PHYSX/include;$(SolutionDir)lib/rttr-0.9.6/include</IncludePath>
+    <LibraryPath>$(SolutionDir)\lib\lua-5.3.6\lib;$(SolutionDir)/lib/PHYSX/lib/debug;$(SolutionDir)lib\rttr-0.9.6;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>$(SolutionDir)_APPLICATION/include;$(SolutionDir)_ENGINE/include;$(SolutionDir)_GRAPHICS/include;$(SolutionDir)_SCRIPTING/include;$(SolutionDir)_TOOLS/include;$(IncludePath)$(SolutionDir)\lib\lua-5.3.6\include;$(SolutionDir)\lib\SOL;$(SolutionDir)lib/ENTT;$(SolutionDir)lib/GLM;$(SolutionDir)lib/RAPID-JSON;$(SolutionDir)lib\LUA\include;$(SolutionDir)lib/GLEW/include/GL;$(SolutionDir)lib/GLFW/include/GLFW;$(SolutionDir)lib\FMOD\core/inc;$(SolutionDir)lib\FMOD/studio\inc;$(SolutionDir)lib/PHYSX/include</IncludePath>
@@ -115,15 +115,19 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>
-      </AdditionalDependencies>
+      <AdditionalDependencies>rttr_core_d.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)lib\rttr-0.9.6</AdditionalLibraryDirectories>
     </Lib>
+    <PostBuildEvent>
+      <Command>copy "$(SolutionDir)lib\rttr-0.9.6\rttr_core_d.dll" "$(TargetDir)rttr_core_d.dll" /Y</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -136,6 +140,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
