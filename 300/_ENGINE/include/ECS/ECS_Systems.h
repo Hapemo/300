@@ -8,6 +8,7 @@ class ScriptingSystem;
 class SystemManager
 {
 	GFX::Window* mWindow;
+	bool mIsEditor;
 public:
 	std::unique_ptr<PhysicsSystem> mPhysicsSystem;
 	std::unique_ptr<ScriptingSystem> mScriptingSystem;
@@ -16,7 +17,8 @@ public:
 	SystemManager();
 	~SystemManager();
 	GFX::Window* GetWindow() { return mWindow; }
-	void Init(GFX::Window* window);
+	bool IsEditor() { return mIsEditor; }
+	void Init(bool isEditor, GFX::Window* window);
 	void Update(float dt);
 	void Exit();
 };

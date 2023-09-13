@@ -2,7 +2,11 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
+<<<<<<< Updated upstream
       <FullPath>D:\github\300\300\x64\Debug\_GRAPHICS.exe</FullPath>
+=======
+      <FullPath>C:\Users\lfsro\OneDrive\Documents\GitHub\300\300\x64\Debug\_GRAPHICS.exe</FullPath>
+>>>>>>> Stashed changes
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles />

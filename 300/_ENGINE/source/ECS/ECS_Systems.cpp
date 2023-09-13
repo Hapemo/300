@@ -15,8 +15,9 @@ SystemManager::~SystemManager()
 
 }
 
-void SystemManager::Init(GFX::Window* window)
+void SystemManager::Init(bool isEditor, GFX::Window* window)
 {
+	mIsEditor = isEditor;
 	mWindow = window;
 	mPhysicsSystem.get()->Init();
 	mScriptingSystem.get()->Init();

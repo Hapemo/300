@@ -29,6 +29,14 @@ private:
 	GFX::DebugRenderer m_Renderer;		// isolated to debug draws
 	GFX::FBO m_Fbo;
 
+	// -- Window --
+	GFX::Window* m_Window;
+	int m_Width;
+	int m_Height;
+
+	// -- Flags --
+	bool m_EditorMode;
+
 	// -- Private Functions --
 	void DrawAll(GFX::Mesh& mesh);		// Renders all instances of a given mesh
 };
