@@ -400,6 +400,32 @@ namespace Deserialization
 		{				
 			infile.read((char*)&GeomData.m_pMesh[i].m_name, sizeof(char) * 64);
 
+			// Textures Data
+			if (GeomData.m_bHasTextures)
+			{
+				uint8_t numberofTextures{};
+				infile.read((char*)&numberofTextures, sizeof(uint8_t));
+
+				for (uint8_t k{}; k < numberofTextures; ++k)
+				{
+					_GEOM::Geom::Texture lTexture{};
+	
+					char cname1[64];
+					uint8_t strlen1{};
+					infile.read((char*)&strlen1, sizeof(uint8_t));							// Texture Path length
+					infile.read(cname1, strlen1);											// Texture Path
+					lTexture.path = std::string(cname1, strlen1);
+
+					char cname2[64];
+					uint8_t strlen2{};
+					infile.read((char*)&strlen2, sizeof(uint8_t));							// Texture type length
+					infile.read(cname2, strlen2);											// Texture type
+					lTexture.type = std::string(cname2, strlen2);
+
+					GeomData.m_pMesh[i].m_Texture.emplace_back(lTexture);
+				}
+			}
+
 			// Animation Data
 			if (GeomData.m_bHasAnimations)
 			{

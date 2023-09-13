@@ -4,7 +4,7 @@
 
 
 // Extracts the raw filename itself
-std::string getFileNameWithoutExtension(const std::string& ResourceFilePath)
+std::string _GEOM::Mesh_Loader::getFileNameWithoutExtension(const std::string& ResourceFilePath)
 {
 	size_t lastSlash = ResourceFilePath.find_last_of("/\\");
 	std::string RawName = ResourceFilePath.substr(lastSlash + 1);
@@ -21,6 +21,14 @@ std::string getFileNameWithoutExtension(const std::string& ResourceFilePath)
 }
 
 
+std::string _GEOM::Mesh_Loader::getFileNameWithExtension(const std::string& ResourceFilePath)
+{
+	size_t lastSlash = ResourceFilePath.find_last_of("/\\");
+	std::string RawName = ResourceFilePath.substr(lastSlash + 1);
+	return RawName;
+}
+
+
 void LoadAndSerializeAllMeshes(_GEOM::DescriptorData& Desc)
 {
 	// looping through all the filepaths in the descriptor file
@@ -28,6 +36,8 @@ void LoadAndSerializeAllMeshes(_GEOM::DescriptorData& Desc)
 	{
 		_GEOM::Mesh_Loader meshLoader;
 		_GEOM::SkinGeom SkinGeom;
+
+		meshLoader.getMeshName() = meshLoader.getFileNameWithoutExtension(Desc.m_Filepaths[Desc.m_iMeshCurrent]);
 		bool Err = meshLoader.Load(Desc, &SkinGeom);
 		assert(Err);
 
@@ -36,8 +46,7 @@ void LoadAndSerializeAllMeshes(_GEOM::DescriptorData& Desc)
 		_GEOM::Geom geom{};
 		SkinGeom.CastToGeomStruct(geom);
 
-		std::string sRawFileName = getFileNameWithoutExtension(Desc.m_Filepaths[Desc.m_iMeshCurrent]);
-		std::string sGeomFilepath = Desc.m_sOutputPath + sRawFileName + Desc.m_sOutputFormat;
+		std::string sGeomFilepath = Desc.m_sOutputPath + meshLoader.getMeshName() + Desc.m_sOutputFormat;
 
 		_GEOM::Geom::SerializeGeom(sGeomFilepath, geom);
 		std::cout << ">>== \t\tSERIALIZATION SUCCESSFUL\n";
