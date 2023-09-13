@@ -43,7 +43,7 @@ void Application::StartUp()
 
 void Application::SystemInit() 
 {
-    systemManager->Init(&mWindow);
+    systemManager->Init(false, &mWindow);
     FPSManager::Init();
     Input::Init();
     // To remove (Script test with entities)

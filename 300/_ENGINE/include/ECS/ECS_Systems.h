@@ -4,7 +4,7 @@
 
 class PhysicsSystem;
 class ScriptingSystem;
-class mGraphicsSystem;
+class GraphicsSystem;
 
 class SystemManager
 {

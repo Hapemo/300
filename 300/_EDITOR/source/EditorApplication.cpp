@@ -43,7 +43,7 @@ void EditorApplication::StartUp()
 
 void EditorApplication::SystemInit()
 {
-    systemManager->Init(&mWindow);
+    systemManager->Init(true, &mWindow);
     FPSManager::Init();
     Input::Init();
     //gfx init
