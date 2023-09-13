@@ -4,6 +4,7 @@
 
 class PhysicsSystem;
 class ScriptingSystem;
+class AudioManager;
 
 class SystemManager
 {
@@ -11,6 +12,7 @@ class SystemManager
 public:
 	std::unique_ptr<PhysicsSystem> mPhysicsSystem;
 	std::unique_ptr<ScriptingSystem> mScriptingSystem;
+	std::unique_ptr<AudioManager> mAudioSystem;
 	
 
 	SystemManager();

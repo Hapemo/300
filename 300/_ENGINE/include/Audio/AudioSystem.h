@@ -93,7 +93,7 @@ public:
 #pragma endregion
 
 	void Init();
-	void Update();
+	void Update(float dt);
 	void Exit();
 
 	/* [Load Sounds]

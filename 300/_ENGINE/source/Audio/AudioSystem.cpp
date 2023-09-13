@@ -114,8 +114,10 @@ void AudioManager::Init()
 	LoadAudioFile("../assets/Audio/tuning-radio-7150.wav", "radio", AUDIO_TYPE::AUDIO_SFX, true, { 0.0f,0.0f,0.0f });
 }
 
-void AudioManager::Update()
+void AudioManager::Update(float dt)
 {
+	dt = dt + 1; // just to use the argument only.
+
 	//std::cout << "AudioUpdate" << std::endl;
 	if (!once)
 	{
