@@ -335,6 +335,8 @@ int AudioManager::ErrCodeCheck(FMOD_RESULT result)
 */
 void AudioManager::LoadAudioFile(std::string audiofilePath, std::string audio_name, AUDIO_TYPE audio_type, bool spatial, FMOD_VECTOR audio_position, bool looping)
 {
+	// [TODO] - Update [mSoundInfo] database. -> if successful
+
 	Sound* new_sound = new Sound{ audio_position , nullptr }; // [1] Position , [2] FMOD::Sound * 
 
 	// Mode Selector
@@ -359,6 +361,23 @@ void AudioManager::LoadAudioFile(std::string audiofilePath, std::string audio_na
 	}
 }
 
+void AudioManager::LoadAudioDatabase()
+{
+	std::cout << "Loading Audio into the FMOD Core System ..." << std::endl;
+
+	/*for (unsigned int i = 0; i < mSoundInfo.size(); i++)
+	{
+		std::cout << "Attempting to load: " << mSoundInfo[]
+	}
+	for (std::pair<unsigned int, SoundInformation*> sound_info : mSoundInfo)
+	{
+		std::cout << "Attempting to load : " << sound_info.second;
+
+		
+
+		FMOD_MODE mode = FMOD_DEFAULT;
+	}*/
+}
 #pragma endregion
 
 #pragma region PLAY SOUNDS STUFF

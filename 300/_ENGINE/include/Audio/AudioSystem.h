@@ -99,7 +99,11 @@ public:
 	/* [Load Sounds]
 	   [TODO] - Work with [Serialization Team] to port over relevant data files in the future
 	*/
+#pragma region LOAD SOUNDS STUFF
 	void LoadAudioFile(std::string audiofilePath, std::string audio_name, AUDIO_TYPE audio_type, bool spatial = false, FMOD_VECTOR audio_position = {0.0f,0.0f,0.0f} ,bool looping = false);
+	void LoadAudioDatabase(); // Using the [mSoundInfo] database, and loads the sounds to <fmod core system> / <fmod studio system>
+#pragma endregion
+
 #pragma region PLAY SOUNDS STUFF
 	/* [Play Audio]
 	   - Play the specified audio file. 
