@@ -20,6 +20,7 @@ public:
 	void Init();
 	void Update(float dt);
 	void Exit();
+	PhysicsSystem* GetPhysicsPointer();
 };
 
 extern SystemManager* systemManager;

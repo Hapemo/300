@@ -1,4 +1,12 @@
 ﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(1098,5): warning MSB8027: Two or more files with the name of imgui.cpp will produce outputs to the same location. This can lead to an incorrect build result.  The files involved are ..\lib\IMGUI\imgui.cpp, demo\ImGui.cpp.
+  imgui_impl_glfw.cpp
+  imgui_impl_opengl3.cpp
+  imgui.cpp
+  imgui_demo.cpp
+  imgui_draw.cpp
+  imgui_tables.cpp
+  imgui_widgets.cpp
+  imgui_stdlib.cpp
   Bone.cpp
 C:\Users\mcheo\OneDrive\Documents\300\300\300\_GEOM_COMPILER\src\Bone.cpp(23,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
 C:\Users\mcheo\OneDrive\Documents\300\300\300\_GEOM_COMPILER\src\Bone.cpp(35,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
@@ -12,6 +20,7 @@ C:\Users\mcheo\OneDrive\Documents\300\300\300\_GRAPHICS\demo\DemoScene.cpp(76,80
               _Rep=std::chrono::system_clock::rep
           ]
 C:\Users\mcheo\OneDrive\Documents\300\300\300\_GRAPHICS\demo\DemoScene.cpp(259,125): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+  ImGui.cpp
   main.cpp
   Animator.cpp
   Camera.cpp
@@ -21,18 +30,25 @@ C:\Users\mcheo\OneDrive\Documents\300\300\300\_GRAPHICS\source\DebugRenderer.cpp
 C:\Users\mcheo\OneDrive\Documents\300\300\300\_GRAPHICS\source\DebugRenderer.cpp(273,114): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
 C:\Users\mcheo\OneDrive\Documents\300\300\300\_GRAPHICS\source\DebugRenderer.cpp(294,114): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
   Fbo.cpp
+  Math.cpp
   Mesh.cpp
 C:\Users\mcheo\OneDrive\Documents\300\300\300\_GRAPHICS\source\Mesh.cpp(364,27): warning C4018: '<': signed/unsigned mismatch
 C:\Users\mcheo\OneDrive\Documents\300\300\300\_GRAPHICS\source\Mesh.cpp(381,27): warning C4018: '<': signed/unsigned mismatch
   OpenGl.cpp
+  Generating Code...
+C:\Users\mcheo\OneDrive\Documents\300\300\300\_GEOM_COMPILER\src\Bone.cpp(82): warning C4715: '_GEOM::Bone::GetRotationIndex': not all control paths return a value
+C:\Users\mcheo\OneDrive\Documents\300\300\300\_GEOM_COMPILER\src\Bone.cpp(95): warning C4715: '_GEOM::Bone::GetScaleIndex': not all control paths return a value
+C:\Users\mcheo\OneDrive\Documents\300\300\300\_GEOM_COMPILER\src\Bone.cpp(69): warning C4715: '_GEOM::Bone::GetPositionIndex': not all control paths return a value
+  Compiling...
+  Random.cpp
   Renderer.cpp
+  Shader.cpp
+  Shapes.cpp
+  Texture.cpp
   Vao.cpp
   Vbo.cpp
   Window.cpp
   Generating Code...
-C:\Users\mcheo\OneDrive\Documents\300\300\300\_GEOM_COMPILER\src\Bone.cpp(95): warning C4715: '_GEOM::Bone::GetScaleIndex': not all control paths return a value
-C:\Users\mcheo\OneDrive\Documents\300\300\300\_GEOM_COMPILER\src\Bone.cpp(69): warning C4715: '_GEOM::Bone::GetPositionIndex': not all control paths return a value
-C:\Users\mcheo\OneDrive\Documents\300\300\300\_GEOM_COMPILER\src\Bone.cpp(82): warning C4715: '_GEOM::Bone::GetRotationIndex': not all control paths return a value
 x64\Debug\ImGui.obj : warning LNK4042: object specified more than once; extras ignored
   _GRAPHICS.vcxproj -> C:\Users\mcheo\OneDrive\Documents\300\300\300\x64\Debug\_GRAPHICS.lib
           1 file(s) copied.

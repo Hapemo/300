@@ -34,3 +34,8 @@ void SystemManager::Exit()
 	mPhysicsSystem.get()->Exit();
 	mScriptingSystem.get()->Exit();
 }
+
+PhysicsSystem* SystemManager::GetPhysicsPointer()
+{
+	return mPhysicsSystem.get();
+}
