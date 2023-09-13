@@ -45,8 +45,7 @@ void LuaTransform()
         "Transform", sol::constructors<>(),
         "mScale", &Transform::mScale,
         "mRotate", &Transform::mRotate,
-        "mTranslate", &Transform::mTranslate,
-        "data", &Transform::data
+        "mTranslate", &Transform::mTranslate
         );
 }
 
