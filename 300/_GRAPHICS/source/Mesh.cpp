@@ -132,14 +132,14 @@ void GFX::Mesh::Setup(const _GEOM::Geom& GeomData)
 	if (GeomData.m_bHasAnimations)
 	{
 		// Create VBO for Bone IDs. Attach VBO for Bone IDs to VAO
-		mBoneIDVbo.Create(positions.size() * sizeof(ivec4));														// 1 for each vertex
+		mBoneIDVbo.Create(positions.size() * sizeof(int) * MAX_BONE_INFLUENCE);										// 1 for each vertex
 		mVao.AddAttribute(3, 3, 4, GL_INT);																			// location 3, binding vao index 3
 		// TODO: need to somehow get the data of all Bone IDs
 		mBoneIDVbo.AttachData(0, boneIDs.size() * sizeof(int) * MAX_BONE_INFLUENCE, boneIDs.data());				// Attach mesh data to VBO
 		mVao.AttachVertexBuffer(mBoneIDVbo.GetID(), 3, 0, sizeof(int) * MAX_BONE_INFLUENCE);						// Attach to index 3
 
 		// Create VBO for Bone weights. Attach VBO for Bone weights to VAO
-		mBoneWeightVbo.Create(positions.size() * sizeof(vec4));														// 1 for each vertex
+		mBoneWeightVbo.Create(positions.size() * sizeof(float) * MAX_BONE_INFLUENCE);								// 1 for each vertex
 		mVao.AddAttribute(4, 4, 4, GL_FLOAT);																		// location 4, binding vao index 4
 		// TODO: need to somehow get the data of all Bone IDs
 		mBoneWeightVbo.AttachData(0, boneWeights.size() * sizeof(float) * MAX_BONE_INFLUENCE, boneWeights.data());	// Attach mesh data to VBO

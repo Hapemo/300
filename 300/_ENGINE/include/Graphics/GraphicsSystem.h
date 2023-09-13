@@ -15,15 +15,16 @@ public:
 	GraphicsSystem() = default;
 
 	void Init();
-	void Update();
+	void Update(float dt);
 	void Exit();
 
 	// -- Mesh --
 	void AddInstance(GFX::Mesh& mesh, Transform transform);		// Adds an instance of a mesh to be drawn
 
 	// -- FBO --
-	unsigned int GetGameAttachment()	{ return m_Fbo.GetGameAttachment(); }
-	unsigned int GetEditorAttachment()	{ return m_Fbo.GetEditorAttachment(); }
+	unsigned int GetGameAttachment()		{ return m_Fbo.GetGameAttachment(); }
+	unsigned int GetEditorAttachment()		{ return m_Fbo.GetEditorAttachment(); }
+	unsigned int GetEntityID(int x, int y)	{ return m_Fbo.ReadEntityID(x, y); }
 
 private:
 	GFX::DebugRenderer m_Renderer;		// isolated to debug draws
