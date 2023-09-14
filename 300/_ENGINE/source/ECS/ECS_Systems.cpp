@@ -1,25 +1,48 @@
+#include "Physics/PhysicsSystem.h"
+#include "Graphics/GraphicsSystem.h"
 #include "ECS/ECS_Systems.h"
 #include "ScriptingSystem.h"
+#include "ECS/ECS.h"
 
 SystemManager* systemManager;
 
 SystemManager::SystemManager()
 {
-	scriptingSystem = std::make_unique<ScriptingSystem>();
+	mPhysicsSystem = std::make_unique<PhysicsSystem>();
+	mScriptingSystem = std::make_unique<ScriptingSystem>();
+	mGraphicsSystem = std::make_unique<GraphicsSystem>();
+	ecs = new ECS;
 }
 
-void SystemManager::Init()
+SystemManager::~SystemManager()
 {
-	scriptingSystem.get()->Init();
+	delete ecs;
+}
+
+void SystemManager::Init(bool isEditor, GFX::Window* window)
+{
+	mIsEditor = isEditor;
+	mWindow = window;
+	mPhysicsSystem.get()->Init();
+	mScriptingSystem.get()->Init();
+	mGraphicsSystem.get()->Init();
 }
 
 void SystemManager::Update(float dt)
 {
-	scriptingSystem.get()->Update(dt);
+	mPhysicsSystem.get()->Update(dt);
+	mScriptingSystem.get()->Update(dt);
+	mGraphicsSystem.get()->Update(dt);
 }
 
 void SystemManager::Exit()
 {
-	scriptingSystem.get()->Exit();
+	mPhysicsSystem.get()->Exit();
+	mScriptingSystem.get()->Exit();
+	mGraphicsSystem.get()->Exit();
+}
 
+PhysicsSystem* SystemManager::GetPhysicsPointer()
+{
+	return mPhysicsSystem.get();
 }

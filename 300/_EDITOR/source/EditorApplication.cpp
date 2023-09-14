@@ -15,46 +15,69 @@ start up of window and game system, also runs their update functions.
 #include "Input.h"
 #include "SingletonManager.h"
 #include "ScriptingSystem.h"
+#include "Physics/PhysicsSystem.h"
+
+
 
 // Static variables
 GFX::DebugRenderer* EditorApplication::mRenderer;
 GFX::Window EditorApplication::mWindow;
 std::string EditorApplication::title;
+Editor EditorApplication::mMaineditor;
 
 void EditorApplication::Init()
 {
     StartUp();
     SystemInit();
+
 }
 
 void EditorApplication::StartUp()
 {
     //gfx glew and glfw startup
-    systemManager = new SystemManager();
     GFX::Window::InitializeSystem();
     mWindow = GFX::Window({ 1920, 1080 });
     mWindow.SetWindowTitle("Editor");
+    systemManager = new SystemManager();
+
+
+
 }
 
 void EditorApplication::SystemInit()
 {
-    FPSManager::Init(&mWindow);
-    Input::Init(&mWindow);
-    systemManager->Init();
+    systemManager->Init(true, &mWindow);
+    FPSManager::Init();
+    Input::Init();
     //gfx init
+
+    //Editor init
+
 }
 
 void EditorApplication::MainUpdate()
 {
+
+    mMaineditor.UIinit(mWindow.GetHandle());
+
+
     while (!glfwWindowShouldClose(mWindow.GetHandle())) {
         FirstUpdate();
         SystemUpdate();
+
         // To remove (Script test with entities)
         //ScriptTestUpdate();
-        SecondUpdate(); // This should always be the last
 
         // Graphics update
+
+        mMaineditor.UIupdate(mWindow.GetHandle());
+        //mMaineditor.WindowUpdate(mWindow.GetHandle());
+        mMaineditor.UIdraw(mWindow.GetHandle());
+
+        SecondUpdate(); // This should always be the last
+
         mWindow.Update();
+
     }
 }
 
@@ -76,9 +99,10 @@ void EditorApplication::SecondUpdate()
 
 void EditorApplication::Exit()
 {
+    mMaineditor.UIend();
     systemManager->Exit();
-    delete systemManager;
-    ECS::GetInstance()->DeleteAllEntities();
+    systemManager->ecs->DeleteAllEntities();
     SingletonManager::destroyAllSingletons();
     mWindow.DestroySystem();
+    delete systemManager;
 }

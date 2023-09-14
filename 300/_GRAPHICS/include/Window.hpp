@@ -30,11 +30,16 @@ namespace GFX {
         static void InitializeSystem();
         static void DestroySystem();
         void Update();
+        void SetFullScreenFlag(bool flag);
 
         // -- Getter --
-        double GetTime()        { return glfwGetTime(); }   // Retrieves the current run time of the window
-        GLFWwindow* GetHandle() { return mWindow; }         // Retrieves the GLFW handle of the window instance
-        ivec2 size()            { return mSize; }           // Retrieves the width and height of window
+        double GetTime()            { return glfwGetTime(); }   // Retrieves the current run time of the window
+        GLFWwindow* GetHandle()     { return mWindow; }         // Retrieves the GLFW handle of the window instance
+        ivec2 size()                { return mSize; }           // Retrieves the width and height of window
+        int GetScreenWidth()        { return mSize.x; }
+        int GetScreenHeight()       { return mSize.y; }
+        bool GetFullScreenFlag()    { return mFullscreen; }
+        bool GetWindowMinimised()   { return !glfwGetWindowAttrib(mWindow, GLFW_FOCUSED); }
 
         void SetWindowTitle(const char* title);
 
@@ -52,8 +57,15 @@ namespace GFX {
     private:
         ivec2 mSize;
         GLFWwindow* mWindow;
+        GLFWmonitor* mMonitor;
+
+        // -- Flags -- 
+        bool mFullscreen;
     };
+
 }
+// -- Callback Functions -- 
+void ResizeCallback(GLFWwindow* winPtr, int width, int height);
 
 
 

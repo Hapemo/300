@@ -65,6 +65,7 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\properties\_GRAPHICS.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -117,6 +118,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -134,6 +136,7 @@
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -151,12 +154,15 @@
     <ClCompile Include="..\lib\IMGUI\imgui_tables.cpp" />
     <ClCompile Include="..\lib\IMGUI\imgui_widgets.cpp" />
     <ClCompile Include="..\lib\IMGUI\misc\cpp\imgui_stdlib.cpp" />
+    <ClCompile Include="..\_GEOM_COMPILER\src\Bone.cpp" />
     <ClCompile Include="..\_GEOM_COMPILER\src\geom.cpp" />
     <ClCompile Include="demo\DemoScene.cpp" />
     <ClCompile Include="demo\ImGui.cpp" />
     <ClCompile Include="demo\main.cpp" />
+    <ClCompile Include="source\Animator.cpp" />
     <ClCompile Include="source\Camera.cpp" />
     <ClCompile Include="source\DebugRenderer.cpp" />
+    <ClCompile Include="source\Fbo.cpp" />
     <ClCompile Include="source\Math.cpp" />
     <ClCompile Include="source\Mesh.cpp" />
     <ClCompile Include="source\OpenGl.cpp" />
@@ -170,14 +176,18 @@
     <ClCompile Include="source\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\_GEOM_COMPILER\include\Bone.h" />
     <ClInclude Include="..\_GEOM_COMPILER\include\geom.h" />
     <ClInclude Include="demo\DemoScene.hpp" />
     <ClInclude Include="demo\ImGui.hpp" />
+    <ClInclude Include="include\Animator.hpp" />
     <ClInclude Include="include\Camera.hpp" />
     <ClInclude Include="include\Common.hpp" />
     <ClInclude Include="include\DebugRenderer.hpp" />
+    <ClInclude Include="include\GraphicsSystem.hpp" />
     <ClInclude Include="include\Math.hpp" />
     <ClInclude Include="include\Mesh.hpp" />
+    <ClInclude Include="include\Fbo.hpp" />
     <ClInclude Include="include\OpenGl.hpp" />
     <ClInclude Include="include\Random.hpp" />
     <ClInclude Include="include\Renderer.hpp" />
@@ -191,6 +201,11 @@
   <ItemGroup>
     <None Include="shader_files\draw_frag.glsl" />
     <None Include="shader_files\draw_vert.glsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\_GEOM_COMPILER\_GEOM_COMPILER.vcxproj">
+      <Project>{8ddd6b4d-060b-4208-99b2-963a21e98ef7}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

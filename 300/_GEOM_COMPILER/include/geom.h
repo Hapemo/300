@@ -12,9 +12,8 @@
 #include <string>
 #include <vector>
 #include <fstream>
-#include <unordered_map>
 
-#include <Bone.h>
+#include <Animation.h>
 #include <descriptor.h>
 
 namespace _GEOM
@@ -51,31 +50,16 @@ namespace _GEOM
 	
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	// The animation information of the mesh.
-	struct Animation
-	{
-		std::unordered_map<std::string, BoneInfo>		m_BoneInfoMap;
-		std::vector<Bone>								m_Bones;
-		AssimpNodeData									m_RootNode;
-
-		int												m_BoneCounter = 0;
-		float											m_Duration;
-		float											m_TicksPerSecond;
-
-		// NOTE:: there is another member variable called AssimpNodeData, that contains the
-		// transformation, childrencount, and name. But this is already done with pretransformations
-		// in the mesh loading.. keep it in mind for now.
-	};
-
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 	struct Geom
 	{
 		struct alignas(std::uint32_t) VertexPos
 		{
-			glm::vec3 m_Pos;
-			glm::vec3 m_Clr;
-			glm::vec2 m_UV;
+			glm::vec3			m_Pos;
+			glm::vec3			m_Clr;
+			glm::vec2			m_UV;
+
+			int					m_BoneIDs[MAX_BONE_INFLUENCE];	// bone indices which will influence this vertex
+			float				m_Weights[MAX_BONE_INFLUENCE];	// weights from each bone
 		};
 
 		struct alignas(std::uint32_t) VertexExtra
@@ -87,7 +71,7 @@ namespace _GEOM
 		struct Mesh
 		{
 			std::array<char, 64>	m_name;				// Name of mesh
-			Animation				m_Animation;		// Animation data of the mesh
+			std::vector<Animation>	m_Animation;		// Animation data of the mesh
 		};
 
 		struct SubMesh
@@ -100,7 +84,7 @@ namespace _GEOM
 			std::uint16_t			m_iMaterial;		//Index of material in submesh
 		};
 
-		// TODO:: add texture de/serialization
+		// TODO:: add texture path de/serialization from fbx
 		struct Texture
 		{
 			//unsigned int id;
@@ -151,7 +135,11 @@ namespace _GEOM
 		std::string										m_Filename;
 		std::vector<Mesh>								m_Meshes;
 
-		Animation										m_Animation;	
+		// TODO:
+		// because skingeom has no concept of what mesh contains which animations, we have to change this
+		// to start storing data inside the mesh struct.
+		// Either skingeom puts animation into the mesh, or geomdata takes animation out of the mesh.
+		std::vector<Animation>							m_Animation;	
 
 		bool											m_bHasTextures = false;		// TODO:: this has not been fully implemented yet. 
 		bool											m_bHasAnimation = false;	

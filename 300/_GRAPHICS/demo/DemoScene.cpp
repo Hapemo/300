@@ -17,6 +17,9 @@
 #include "ImGui.hpp"
 #include <cassert>
 
+#define TEST_FBO 0
+#define ANIMS_TEST 1
+
 
  /**---------------------------------------------------------------------------/ 
   * @brief
@@ -55,6 +58,12 @@ void GFX::DemoScene::Initialize()
     glDepthFunc(GL_LEQUAL);
     glDepthMask(GL_TRUE);
 
+#if TEST_FBO
+    // FBO
+    mFbo.Create(mWindow.size().x, mWindow.size().y, false);
+    mSceneAttachment = mFbo.GetGameAttachment();
+#endif
+
     // Camera
     mCamera.SetProjection(45.0, mWindow.size(), 0.1f, 1000.f);
     //mCamera.SetProjection(-mWindow.size().x / 2.f, mWindow.size().x / 2.f, -mWindow.size().y / 2.f, mWindow.size().y / 2.f, 0.01f, 200.f);
@@ -88,14 +97,18 @@ void GFX::DemoScene::Initialize()
 
     // Load all meshes
     MeshManager::GetInstance().Init();
-    
-#if _ASSIMP_LOADING
-    AssimpImporter::loadModel("../assets/demon-skull-textured/source/Skull_textured.fbx");
-    auto& currentmesh = GFX::Mesh::assimpLoadedMeshes[0];
+
+#if ANIMS_TEST
+    // sets the global animator data. ideally, this should be set in entity creation. for now, its here for testing.
+    mObjectAnimator.SetAnimation(&MeshManager::GetInstance().mSceneMeshes[2].mAnimation[0]);
 #endif
+    
 
     // Setup shader
     mModelShader.CreateShaderFromFiles("./shader_files/draw_vert.glsl", "./shader_files/draw_frag.glsl");
+#if TEST_FBO
+    mSceneShader.CreateShader(vertexShaderCode, fragmentShaderCode);
+#endif
 }
 
 /**---------------------------------------------------------------------------/
@@ -116,12 +129,16 @@ void GFX::DemoScene::Update()
     {
         ImGui::SliderFloat("Camera Speed: ", &mCamSpeed, 50.f, 300.f, "%1.f", ImGuiSliderFlags_AlwaysClamp);
         ImGui::Text("Camera Position: %.0f, %.0f, %.0f", mCamera.position().x, mCamera.position().y, mCamera.position().z);
+        ImGui::Checkbox("Fullscreen ", &mFullscreen);
     }
     ImGui::End();
 
     float now = static_cast<float>(glfwGetTime());
     mDt = now - mLastTime;
     mLastTime = now;
+
+    // Fullscreen test
+    mWindow.SetFullScreenFlag(mFullscreen);
 
     double mouseX = 0.0;
     double mouseY = 0.0;
@@ -169,6 +186,11 @@ void GFX::DemoScene::Update()
     mCamera.SetCursorPosition({ mouseX, mouseY });
     mCamera.Update();
 
+#if ANIMS_TEST
+    // == ANIMATOR UPDATE ==
+    mObjectAnimator.UpdateAnimation(mDt);
+#endif
+
     static char buffer[10];
     sprintf(buffer, "FPS: %d", int(1.0f / mDt));
     glfwSetWindowTitle(mWindow.GetHandle(), buffer);
@@ -192,7 +214,6 @@ void GFX::DemoScene::Draw()
 
 #if 1
         //!< test rendering skull model
-        //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
         mModelShader.Activate();
         //uid uids("gayed");
         //Mesh& currentmesh = MeshManager::GetInstance().mSceneMeshes[uids.id]->meshdata;
@@ -215,8 +236,21 @@ void GFX::DemoScene::Draw()
 
         currentmesh.BindVao();
         currentmesh.PrepForDraw();
+
+#if TEST_FBO
+        // Bind FBO
+        mFbo.PrepForDraw();
+#endif
         
-        glUniformMatrix4fv(mModelShader.GetUniformVP(), 1, GL_FALSE, &mCamera.viewProj()[0][0]);            // camera projection
+        glUniformMatrix4fv(mModelShader.GetUniformVP(), 1, GL_FALSE, &mCamera.viewProj()[0][0]);            // camera projection. changes when the camera moves
+
+        // animation data transfer for final bone matrices
+        std::vector<glm::mat4>& boneTransforms = mObjectAnimator.m_FinalBoneMatrices;
+        for (int t{}; t < boneTransforms.size(); ++t)
+        {
+			std::string uniformName = "uFinalBoneMatrices[" + std::to_string(t) + "]";
+			glUniformMatrix4fv(glGetUniformLocation(mModelShader.GetHandle(), uniformName.c_str()), 1, GL_FALSE, &boneTransforms[t][0][0]);
+		}
 
         // Bind texture unit
         glBindTextureUnit(0, mTexture.ID());
@@ -226,12 +260,24 @@ void GFX::DemoScene::Draw()
         mModelShader.Deactivate();
         currentmesh.UnbindVao();
         glBindTextureUnit(0, 0);
-        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         currentmesh.ClearInstances();
-        //! 
+#if TEST_FBO
+        mFbo.Unbind();  // Unbind FBO
+
+        // Draw the game scene attachment
+        mSceneShader.Activate();
+        mRenderer->BindQuadMesh();
+        glBindTextureUnit(0, mSceneAttachment);
+        glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr, 1);
+        glBindTextureUnit(0, 0);
+        glBindVertexArray(0);
+        mSceneShader.Deactivate();
+#endif
+
 #else
+        //! 
         mRenderer->AddAabb({ 0, 0, -500 }, { 100, 300, 100 }, { 1, 0, 0, 1 });
-        ////mRenderer->AddPoint({ 0, 0, 0 }, { 1, 0, 0, 1 });
+        //mRenderer->AddPoint({ 0, 0, 0 }, { 1, 0, 0, 1 });
         ////mRenderer->AddTriangle({ 0.f, 30.f, 0.f }, { -30.f, -30.f, 0.f }, { 30.f, -30.f, 0.f }, { 0, 1, 0, 1 });
         ////mRenderer->AddQuad({ 0, 0, 0 }, 50, 100, { 0, 0, 1, 1 });
 

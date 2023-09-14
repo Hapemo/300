@@ -1,6 +1,6 @@
 #include "Mesh.hpp"
 #include <filesystem>
-
+#include <array>
 
 // Follows the format in the shader code
 /******************************************
@@ -11,6 +11,11 @@
 
 void GFX::Mesh::LoadFromGeom(const _GEOM::Geom& GeomData, std::vector<vec3>& positions, std::vector<glm::vec2>& uvs, std::vector<unsigned int>& indices)
 {
+	const int reservenumber = GeomData.m_nVertices;
+	indices.reserve(reservenumber);
+	positions.reserve(reservenumber);
+	uvs.reserve(reservenumber);
+
 	for (size_t iSM{}; iSM < GeomData.m_nSubMeshes; ++iSM)
 	{
 		// Load indices
@@ -19,21 +24,137 @@ void GFX::Mesh::LoadFromGeom(const _GEOM::Geom& GeomData, std::vector<vec3>& pos
 			indices.emplace_back(GeomData.m_pIndices[iIndex]);
 		}
 
-		// Load positions
-		for (size_t iPos{}, up{ GeomData.m_pSubMesh[iSM].m_iVertices }; iPos < GeomData.m_pSubMesh[iSM].m_nVertices; ++iPos, ++up)
+		// Load positions and uvs
+		for (size_t iIndex{}, ui{ GeomData.m_pSubMesh[iSM].m_iVertices }; iIndex < GeomData.m_pSubMesh[iSM].m_nVertices; ++iIndex, ++ui)
 		{
-			positions.emplace_back(vec3(GeomData.m_pPos[up].m_Pos.x, GeomData.m_pPos[up].m_Pos.y, GeomData.m_pPos[up].m_Pos.z));
-		}
-
-		// Load UVs
-		for (size_t iUV{}, uuv{ GeomData.m_pSubMesh[iSM].m_iVertices }; iUV < GeomData.m_pSubMesh[iSM].m_nVertices; ++iUV, ++uuv)
-		{
-			uvs.emplace_back(vec2(GeomData.m_pPos[uuv].m_UV.x, GeomData.m_pPos[uuv].m_UV.y));
+			positions.emplace_back(vec3(GeomData.m_pPos[iIndex].m_Pos.x, GeomData.m_pPos[iIndex].m_Pos.y, GeomData.m_pPos[iIndex].m_Pos.z));
+			uvs.emplace_back(vec2(GeomData.m_pPos[iIndex].m_UV.x, GeomData.m_pPos[iIndex].m_UV.y));
 		}
 	}
 }
 
 
+void GFX::Mesh::LoadAnimationDataFromGeom(const _GEOM::Geom& GeomData, std::vector<std::array<int,MAX_BONE_INFLUENCE>>& boneIDs, std::vector<std::array<float,MAX_BONE_INFLUENCE>>& boneWeights)
+{
+	const int reservenumber = GeomData.m_nVertices;
+	boneIDs.reserve(reservenumber);
+	boneWeights.reserve(reservenumber);
+
+	for (size_t iSM{}; iSM < GeomData.m_nSubMeshes; ++iSM)
+	{
+		// Load bone weights, and bone IDs
+		for (size_t iIndex{}, ui{ GeomData.m_pSubMesh[iSM].m_iVertices }; iIndex < GeomData.m_pSubMesh[iSM].m_nVertices; ++iIndex, ++ui)
+		{
+			std::array<int, MAX_BONE_INFLUENCE> lBoneIDs;
+			std::array<float, MAX_BONE_INFLUENCE> lBoneWeights;
+			const auto& localgeom = GeomData.m_pPos[iIndex];
+
+			lBoneIDs = { localgeom.m_BoneIDs[0], localgeom.m_BoneIDs[1], localgeom.m_BoneIDs[2], localgeom.m_BoneIDs[3] };
+			lBoneWeights = { localgeom.m_Weights[0], localgeom.m_Weights[1] , localgeom.m_Weights[2] , localgeom.m_Weights[3] };
+
+			boneIDs.emplace_back(lBoneIDs);
+			boneWeights.emplace_back(lBoneWeights);
+		}
+	}
+}
+
+
+void GFX::Mesh::Setup(const _GEOM::Geom& GeomData)
+{
+	std::vector<glm::vec3>								positions;
+	std::vector<glm::vec2>								uvs;
+	std::vector<unsigned int>							indices;
+	std::vector<std::array<int,MAX_BONE_INFLUENCE>>		boneIDs;
+	std::vector<std::array<float,MAX_BONE_INFLUENCE>>	boneWeights;
+
+	LoadFromGeom(GeomData, positions, uvs, indices);
+
+	if (GeomData.m_bHasAnimations)
+	{
+		LoadAnimationDataFromGeom(GeomData, boneIDs, boneWeights);
+	}
+
+	// Create VAO
+	mVao.Create();
+
+	/////////////////////////////////////////
+	// POSITIONS
+	// Create VBO for mesh model. Attach VBO for positions to VAO
+	mVbo.Create(positions.size() * sizeof(vec3));
+	mVao.AddAttribute(0, 0, 3, GL_FLOAT);											// location 0, binding vao index 0
+	mVbo.AttachData(0, positions.size() * sizeof(vec3), positions.data());			// Attach mesh data to VBO
+	mVao.AttachVertexBuffer(mVbo.GetID(), 0, 0, sizeof(vec3));						// Attach to index 0
+
+	/////////////////////////////////////////
+	// COLORS
+	// Create VBO for Color data. Attach Color VBO and divisor to VAO		
+	mColorVbo.Create(sizeof(vec4) * MAX_INSTANCES);
+	mVao.AddAttribute(1, 1, 4, GL_FLOAT);											// location 1, binding vao index 1
+	mVao.AddAttributeDivisor(1, 1);													// divisor at vao index 1
+	mVao.AttachVertexBuffer(mColorVbo.GetID(), 1, 0, sizeof(vec4));					// Attach to index 1
+
+	/////////////////////////////////////////
+	// TEXTURE COORDINATES
+	// Create VBO for Tex Coordinates data. Attach TexCoord VBO to VAO
+	mTexCoordVbo.Create(sizeof(vec2) * uvs.size());
+	mVao.AddAttribute(2, 2, 2, GL_FLOAT);											// location 2, binding vao index 2
+	mTexCoordVbo.AttachData(0, uvs.size() * sizeof(vec2), uvs.data());				// Attach mesh data to VBO
+	mVao.AttachVertexBuffer(mTexCoordVbo.GetID(), 2, 0, sizeof(vec2));				// Attach to index 2
+
+	/////////////////////////////////////////
+	// Local To World
+	// Create local-to-world VBO
+	mLTWVbo.Create(sizeof(mat4) * MAX_INSTANCES);
+
+	// Add attributes and divisor as vec4
+	for (int i = 0; i < 4; ++i)
+	{
+		mVao.AddAttribute(5 + i, 5, 4, GL_FLOAT, sizeof(vec4) * i);					// location 5, binding vao index 5
+		mVao.AddAttributeDivisor(5, 1);												// divisor at vao index 5
+	}
+	// Attach LTW VBO to VAO
+	mVao.AttachVertexBuffer(mLTWVbo.GetID(), 5, 0, sizeof(vec4) * 4);
+
+	/////////////////////////////////////////
+	// EBO
+	mEbo.Create(indices.size() * sizeof(GLuint));
+	mEbo.AttachData(0, indices.size() * sizeof(GLuint), indices.data());
+	glVertexArrayElementBuffer(mVao.GetID(), mEbo.GetID());
+
+
+	/////////////////////////////////////////
+	// Bone_IDs, and Weights (TODO) thank you sergeant.
+	// It is an array of structs. Stored the same way as the positions and uvs.
+	// The data and weights are stored in this format below::
+		//GeomData.m_pPos[0].m_BoneIDs;
+		//GeomData.m_pPos[0].m_Weights;
+		
+	if (GeomData.m_bHasAnimations)
+	{
+		// Create VBO for Bone IDs. Attach VBO for Bone IDs to VAO
+		mBoneIDVbo.Create(positions.size() * sizeof(int) * MAX_BONE_INFLUENCE);										// 1 for each vertex
+		mVao.AddAttribute(3, 3, 4, GL_INT);																			// location 3, binding vao index 3
+		// TODO: need to somehow get the data of all Bone IDs
+		mBoneIDVbo.AttachData(0, boneIDs.size() * sizeof(int) * MAX_BONE_INFLUENCE, boneIDs.data());				// Attach mesh data to VBO
+		mVao.AttachVertexBuffer(mBoneIDVbo.GetID(), 3, 0, sizeof(int) * MAX_BONE_INFLUENCE);						// Attach to index 3
+
+		// Create VBO for Bone weights. Attach VBO for Bone weights to VAO
+		mBoneWeightVbo.Create(positions.size() * sizeof(float) * MAX_BONE_INFLUENCE);								// 1 for each vertex
+		mVao.AddAttribute(4, 4, 4, GL_FLOAT);																		// location 4, binding vao index 4
+		// TODO: need to somehow get the data of all Bone IDs
+		mBoneWeightVbo.AttachData(0, boneWeights.size() * sizeof(float) * MAX_BONE_INFLUENCE, boneWeights.data());	// Attach mesh data to VBO
+		mVao.AttachVertexBuffer(mBoneWeightVbo.GetID(), 4, 0, sizeof(float) * MAX_BONE_INFLUENCE);					// Attach to index 4
+	}
+
+	mVao.Unbind();
+
+	// Store mesh stats
+	mVertexCount = static_cast<int>(positions.size());
+	mIndexCount = static_cast<int>(indices.size());
+}
+
+
+// to remove when i'm done with animation.. keeping as reference for now
 void GFX::Mesh::Setup(std::vector<vec3> const& positions, std::vector<unsigned int> const& indices, std::vector<vec2> const& TexCoords)
 {
 	// Create VAO
@@ -48,7 +169,7 @@ void GFX::Mesh::Setup(std::vector<vec3> const& positions, std::vector<unsigned i
 	// Attach VBO for positions to VAO
 	mVao.AddAttribute(0, 0, 3, GL_FLOAT);											// location 0, binding vao index 0
 	mVbo.AttachData(0, positions.size() * sizeof(vec3), positions.data());			// Attach mesh data to VBO
-	mVao.AttachVerterBuffer(mVbo.GetID(), 0, 0, sizeof(vec3));						// Attach to index 0
+	mVao.AttachVertexBuffer(mVbo.GetID(), 0, 0, sizeof(vec3));						// Attach to index 0
 
 	/////////////////////////////////////////
 	// COLORS
@@ -59,7 +180,7 @@ void GFX::Mesh::Setup(std::vector<vec3> const& positions, std::vector<unsigned i
 	// Attach Color VBO and divisor to VAO
 	mVao.AddAttribute(1, 1, 4, GL_FLOAT);											// location 1, binding vao index 1
 	mVao.AddAttributeDivisor(1, 1);													// divisor at vao index 1
-	mVao.AttachVerterBuffer(mColorVbo.GetID(), 1, 0, sizeof(vec4));					// Attach to index 1
+	mVao.AttachVertexBuffer(mColorVbo.GetID(), 1, 0, sizeof(vec4));					// Attach to index 1
 
 	/////////////////////////////////////////
 	// TEXTURE COORDINATES
@@ -70,7 +191,7 @@ void GFX::Mesh::Setup(std::vector<vec3> const& positions, std::vector<unsigned i
 	// Attach TexCoord VBO to VAO
 	mVao.AddAttribute(2, 2, 2, GL_FLOAT);											// location 2, binding vao index 2
 	mTexCoordVbo.AttachData(0, TexCoords.size() * sizeof(vec2), TexCoords.data());	// Attach mesh data to VBO
-	mVao.AttachVerterBuffer(mTexCoordVbo.GetID(), 2, 0, sizeof(vec2));				// Attach to index 2
+	mVao.AttachVertexBuffer(mTexCoordVbo.GetID(), 2, 0, sizeof(vec2));				// Attach to index 2
 
 	// Create local-to-world VBO
 	mLTWVbo.Create(sizeof(mat4) * MAX_INSTANCES);
@@ -82,7 +203,7 @@ void GFX::Mesh::Setup(std::vector<vec3> const& positions, std::vector<unsigned i
 		mVao.AddAttributeDivisor(3, 1);												// divisor at vao index 3
 	}
 	// Attach LTW VBO to VAO
-	mVao.AttachVerterBuffer(mLTWVbo.GetID(), 3, 0, sizeof(vec4) * 4);
+	mVao.AttachVertexBuffer(mLTWVbo.GetID(), 3, 0, sizeof(vec4) * 4);
 
 	// Element Buffer Object
 	mEbo.Create(indices.size() * sizeof(GLuint));
@@ -110,6 +231,14 @@ void GFX::Mesh::BindVao()
 void GFX::Mesh::UnbindVao()
 {
 	mVao.Unbind();
+}
+
+void GFX::Mesh::DrawAllInstances()
+{
+	mVao.Bind();		// Bind mesh
+	PrepForDraw();		// Copy data from local buffer into opengl buffer
+	glDrawElementsInstanced(GL_TRIANGLES, mIndexCount, GL_UNSIGNED_INT, nullptr, mLTW.size());
+	mVao.Unbind();		// Unbind mesh
 }
 
 void GFX::Mesh::PrepForDraw()
@@ -161,27 +290,19 @@ void GFX::MeshManager::Init()
 
 	std::filesystem::path folderpath = compiled_geom_path.c_str();
 
+	// Reads through all the files in the folder, and loads them into the mesh
 	for (const auto& entry : std::filesystem::directory_iterator(folderpath))
 	{
 		if (std::filesystem::is_regular_file(entry))
 		{
-			std::cout << "Loading file: " << entry.path().filename() << "\n";
+			std::cout << "============================================\n";
+			std::cout << "[NOTE]>> Loading file: \t" << entry.path().filename() << "\n";
 
 			//uid uids("dasdsadsadasdassssssssssadaddddddddddddddddddddddddddddddddddddddddddddddddddddadadsd");
 			//std::cout << uids.id<< "\n";
 
-			_GEOM::Geom GeomData;
-			Mesh localmesh;
-			std::vector<glm::vec3> positions;
-			std::vector<glm::vec2> uvs;
-			std::vector<unsigned int> indices;
-
 			std::string filepath = compiled_geom_path + entry.path().filename().string();
-			Deserialization::DeserializeGeom(filepath.c_str(), GeomData);
-			localmesh.LoadFromGeom(GeomData, positions, uvs, indices);
-			localmesh.Setup(positions, indices, uvs);
-
-			mSceneMeshes.emplace_back(localmesh);
+			SetupMesh(filepath);
 
 			//uid uidd(entry.path().filename().string());
 			//uid uids("gayed");
@@ -191,6 +312,30 @@ void GFX::MeshManager::Init()
 
 		}
 	}
+}
+
+
+void GFX::MeshManager::SetupMesh(std::string filepath)
+{
+	_GEOM::Geom GeomData;
+	Mesh localmesh;
+	std::vector<glm::vec3> positions;
+	std::vector<glm::vec2> uvs;
+	std::vector<unsigned int> indices;
+
+	Deserialization::DeserializeGeom(filepath.c_str(), GeomData);	// load the geom from the compiled geom file
+	localmesh.Setup(GeomData);
+
+	// Load animations
+	if (GeomData.m_bHasAnimations)
+	{
+		// store the animation data of the first mesh -- there should only be be one mesh per file so far, so we just take the first index
+		// We store the vector of animation data into the mesh class.
+		localmesh.mAnimation = GeomData.m_pMesh[0].m_Animation;
+		localmesh.mHasAnimation = true;
+	}
+
+	mSceneMeshes.emplace_back(localmesh);							// storage of all the scene's meshes
 }
 
 
@@ -221,7 +366,6 @@ namespace Deserialization
 	bool DeserializeGeom(const std::string Filepath, _GEOM::Geom& GeomData) noexcept
 	{
 #if 1
-		//std::ifstream infile("../compiled_geom/Skull_textured.geom");
 		std::ifstream infile(Filepath.c_str(), std::ios::binary);
 		assert(infile.is_open());
 		assert(infile.good());
@@ -257,74 +401,89 @@ namespace Deserialization
 			infile.read((char*)&GeomData.m_pMesh[i].m_name, sizeof(char) * 64);
 
 			// Animation Data
-			if (GeomData.m_bHasAnimations) 
+			if (GeomData.m_bHasAnimations)
 			{
-				infile.read((char*)&GeomData.m_pMesh[i].m_Animation.m_BoneCounter, sizeof(uint32_t));
-				infile.read((char*)&GeomData.m_pMesh[i].m_Animation.m_Duration, sizeof(float));
-				infile.read((char*)&GeomData.m_pMesh[i].m_Animation.m_TicksPerSecond, sizeof(float));
+				uint8_t numberofanimations{};
+				infile.read((char*)&numberofanimations, sizeof(uint8_t));
 
-				// Bone info map
-				for (unsigned j{}; j < GeomData.m_pMesh[i].m_Animation.m_BoneCounter; ++j)
+				std::cout << "[MESH DESERIALIZATION]>> This mesh contains animations\n";
+				std::cout << "[MESH DESERIALIZATION]>> Number of animations: " << (int)numberofanimations << "\n";
+
+				for (int j{}; j < numberofanimations; ++j)
 				{
-					_GEOM::BoneInfo temp;
-					char cname[64];
-					uint8_t strlen{};
+					_GEOM::Animation animation;
 
-					infile.read((char*)&strlen, sizeof(uint8_t));						// Bone name length
-					infile.read(cname, strlen);											// Bone name							
-					infile.read((char*)&temp, sizeof(_GEOM::BoneInfo));					// Bone info	
-					
-					std::string name(cname, strlen);
+					infile.read((char*)&animation.m_BoneCounter, sizeof(uint32_t));
+					infile.read((char*)&animation.m_Duration, sizeof(float));
+					infile.read((char*)&animation.m_TicksPerSecond, sizeof(float));
 
-					GeomData.m_pMesh[i].m_Animation.m_BoneInfoMap.emplace(name, temp);
+					// Bone info map
+					for (unsigned j{}; j < animation.m_BoneCounter; ++j)
+					{
+						_GEOM::BoneInfo temp;
+						char cname[64];
+						uint8_t strlen{};
+
+						infile.read((char*)&strlen, sizeof(uint8_t));						// Bone name length
+						infile.read(cname, strlen);											// Bone name							
+						infile.read((char*)&temp, sizeof(_GEOM::BoneInfo));					// Bone info	
+
+						std::string name(cname, strlen);
+
+						animation.m_BoneInfoMap.emplace(name, temp);
+					}
+
+					// Bones
+					animation.m_Bones.resize(animation.m_BoneCounter);
+					for (unsigned j{}; j < animation.m_BoneCounter; ++j)
+					{
+						auto& boneinst = animation.m_Bones[j];
+
+						char cname[64];
+						uint8_t strlen{};
+
+						infile.read((char*)&strlen, sizeof(uint8_t));						// Bone name length
+						infile.read(cname, strlen);											// Bone name
+						boneinst.m_Name = std::string(cname, strlen);
+
+						infile.read((char*)&boneinst.m_ID, sizeof(int));					// Bone ID
+
+						infile.read((char*)&boneinst.m_NumPositions, sizeof(int));			// num positions
+						infile.read((char*)&boneinst.m_NumRotations, sizeof(int));			// num rotations
+						infile.read((char*)&boneinst.m_NumScalings, sizeof(int));			// num scalings
+
+						boneinst.m_Positions.resize(boneinst.m_NumPositions);
+						boneinst.m_Rotations.resize(boneinst.m_NumRotations);
+						boneinst.m_Scales.resize(boneinst.m_NumScalings);
+
+						// local transform
+						infile.read((char*)&boneinst.m_LocalTransform, sizeof(glm::mat4));
+
+						// key positions
+						for (int k{}; k < boneinst.m_NumPositions; ++k) {
+							infile.read((char*)&boneinst.m_Positions[k], sizeof(_GEOM::KeyPosition));
+						}
+
+						// key rotations
+						for (int k{}; k < boneinst.m_NumRotations; ++k) {
+							infile.read((char*)&boneinst.m_Rotations[k], sizeof(_GEOM::KeyRotation));
+						}
+
+						// key scalings
+						for (int k{}; k < boneinst.m_NumScalings; ++k) {
+							infile.read((char*)&boneinst.m_Scales[k], sizeof(_GEOM::KeyScale));
+						}
+					}
+
+					// AssimpNodeData
+					Deserialization::DeserializeAssimpNodeData(infile, animation.m_RootNode);
+
+					GeomData.m_pMesh[i].m_Animation.emplace_back(animation);
 				}
-
-				// Bones
-				GeomData.m_pMesh[i].m_Animation.m_Bones.resize(GeomData.m_pMesh[i].m_Animation.m_BoneCounter);
-				for(unsigned j{}; j < GeomData.m_pMesh[i].m_Animation.m_BoneCounter; ++j)
-				{
-					auto& boneinst = GeomData.m_pMesh[i].m_Animation.m_Bones[j];
-
-					char cname[64];
-					uint8_t strlen{};
-
-					infile.read((char*)&strlen, sizeof(uint8_t));						// Bone name length
-					infile.read(cname, strlen);											// Bone name
-					boneinst.m_Name = std::string(cname, strlen);
-
-					infile.read((char*)&boneinst.m_ID, sizeof(int));					// Bone ID
-
-					infile.read((char*)&boneinst.m_NumPositions, sizeof(int));			// num positions
-					infile.read((char*)&boneinst.m_NumRotations, sizeof(int));			// num rotations
-					infile.read((char*)&boneinst.m_NumScalings, sizeof(int));			// num scalings
-
-					boneinst.m_Positions.resize(boneinst.m_NumPositions);
-					boneinst.m_Rotations.resize(boneinst.m_NumRotations);
-					boneinst.m_Scales.resize(boneinst.m_NumScalings);
-
-					// local transform
-					infile.read((char*)&boneinst.m_LocalTransform, sizeof(glm::mat4));
-
-					// key positions
-					for (int k{}; k < boneinst.m_NumPositions; ++k) {
-						infile.read((char*)&boneinst.m_Positions[k], sizeof(_GEOM::KeyPosition));
-					}
-
-					// key rotations
-					for (int k{}; k < boneinst.m_NumRotations; ++k) {
-						infile.read((char*)&boneinst.m_Rotations[k], sizeof(_GEOM::KeyRotation));
-					}
-
-					// key scalings
-					for (int k{}; k < boneinst.m_NumScalings; ++k) {
-						infile.read((char*)&boneinst.m_Scales[k], sizeof(_GEOM::KeyScale));
-					}
-				}
-
-				// AssimpNodeData
-				Deserialization::DeserializeAssimpNodeData(infile, GeomData.m_pMesh[i].m_Animation.m_RootNode);
-				std::cout << "\t\Animation Deserialization completed\n";
+			
+				std::cout << "[MESH DESERIALIZATION]>> Animation Deserialization completed\n";
 			}
+
 		}
 
 		// Submeshes
@@ -572,7 +731,7 @@ namespace Deserialization
 #endif
 }
 
-#if _ASSIMP_LOADING
+#if 0
 namespace AssimpImporter
 {
 	void processnode(aiNode* node, const aiScene* scene) 
