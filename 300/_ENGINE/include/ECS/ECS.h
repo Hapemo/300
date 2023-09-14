@@ -9,7 +9,11 @@ struct Entity;
 class ECS
 {
 public:
-	ECS() = default;
+	ECS() 
+	{ 
+		entt::entity e = registry.create(); 
+	};
+
 	entt::registry registry;
 
 	Entity NewEntity();

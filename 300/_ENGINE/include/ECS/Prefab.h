@@ -1,6 +1,6 @@
 #pragma once
 
-class Prefab
+struct Prefab
 {
 
 };
