@@ -15,8 +15,8 @@ struct General
 	SUBTAG subtag;
 	bool isActive;
 
-	RTTR_ENABLE()
 	General() : parent(Entity(0)) {};
+	RTTR_ENABLE()
 };
 
 struct Transform
@@ -38,8 +38,8 @@ struct RigidBody
 	MATERIAL mMaterial;
 	MOTION mMotion;
 
-	RTTR_ENABLE()
 	RigidBody() : mMass(10.f), mMaterial(MATERIAL::WOOD), mMotion(MOTION::STATIC) {};
+	RTTR_ENABLE()
 };
 
 struct BoxCollider
@@ -83,10 +83,10 @@ public:
 
 RTTR_REGISTRATION
 {
-	rttr::registration::class_<Entity>("Entity")
-	.constructor()(rttr::policy::ctor::as_object)
-	.property("EntityID", &Entity::id)
-	;
+	//rttr::registration::class_<Entity>("Entity")
+	//.constructor()(rttr::policy::ctor::as_object)
+	//.property("EntityID", &Entity::id)
+	//;
 
 	rttr::registration::class_<General>("General")
 	.property("Name", &General::name)
