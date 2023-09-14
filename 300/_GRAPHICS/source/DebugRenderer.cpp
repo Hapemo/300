@@ -143,7 +143,7 @@ void GFX::DebugRenderer::AddSphere(vec3 const& camPos, vec3 const& center, float
 	glm::mat4 modelToWorldXZ = glm::rotate(modelToWorld, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 	mSphereMesh.mLTW.push_back(modelToWorldXZ);
 
-	// Compute Transformation of the horizon disc
+	// Compute Transformation of the horizon disc 
 	vec3 normal = camPos - center;
 	vec3 up = { 0, 0, 1 };
 	vec3 right = glm::cross(up, normal);
