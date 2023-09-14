@@ -41,7 +41,6 @@ void GraphicsSystem::Update(float dt)
 	// TODO: Render all instances of a given mesh
 
 	// TODO: Clears all instances that have been rendered from local buffer
-	//m_Window->Update();
 	m_Fbo.Unbind();
 }
 
