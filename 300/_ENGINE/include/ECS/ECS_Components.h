@@ -4,6 +4,8 @@
 #include <vector>
 #include "pch.h"
 #include "Physics/PhysicsTypes.h"
+#include "rttr/registration.h"
+#include "ECS.h"
 
 enum class TAG : unsigned char
 {
@@ -32,6 +34,8 @@ struct General
 	TAG tag;
 	SUBTAG subtag;
 	bool isActive;
+
+	RTTR_ENABLE()
 };
 
 struct Transform
@@ -43,6 +47,8 @@ struct Transform
 	Transform() : mScale(1.f), mRotate(0.f), mTranslate(0.f) {}
 	glm::quat GetQuaternion() { return glm::quat(mRotate); }
 	void Inspect();
+
+	RTTR_ENABLE()
 };
 
 struct RigidBody
@@ -50,6 +56,8 @@ struct RigidBody
 	std::uint16_t mass;
 	MATERIAL mMaterial;
 	MOTION mMotion;
+
+	RTTR_ENABLE()
 };
 
 struct BoxCollider
@@ -58,6 +66,8 @@ struct BoxCollider
 	glm::vec3 mTranslateOffset; //addiplier
 
 	BoxCollider() : mScaleOffset(1.f), mTranslateOffset(0.f) {}
+	
+	RTTR_ENABLE()
 };
 
 struct PlaneCollider
@@ -88,3 +98,30 @@ public:
 	std::string mScriptFile{};
 	std::vector <Script> scriptsContainer;
 };
+
+RTTR_REGISTRATION
+{
+	rttr::registration::class_<Entity>("Entity")
+	.constructor()(rttr::policy::ctor::as_object)
+	.property("EntityID", &Entity::id)
+	;
+
+	rttr::registration::class_<General>("General")
+	.property("Name", &General::name)
+	.property("Tag", &General::tag)
+	.property("Subtag", &General::subtag)
+	.property("Active", &General::isActive)
+	;
+
+	rttr::registration::enumeration<TAG>("Tag")
+	(
+		rttr::value("Player", TAG::PLAYER),
+		rttr::value("Unknown", TAG::UNKNOWN)
+	);
+
+	rttr::registration::enumeration<SUBTAG>("Subtag")
+	(
+		rttr::value("Active", SUBTAG::ACTIVE),
+		rttr::value("Background", SUBTAG::BACKGROUND)
+	);
+}

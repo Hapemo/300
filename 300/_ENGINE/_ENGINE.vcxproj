@@ -166,6 +166,7 @@
     <ClCompile Include="source\Audio\AudioSystem.cpp" />
     <ClCompile Include="source\ECS\ECS_Systems.cpp" />
     <ClCompile Include="source\ECS\ECS.cpp" />
+    <ClInclude Include="include\Serialization\SerializationTemp.h" />
     <ClInclude Include="include\Serialization\Serialization.h" />
   </ItemGroup>
   <ItemGroup>
@@ -178,6 +179,7 @@
     <ClCompile Include="source\Physics\PhysicsSystem.cpp" />
     <ClCompile Include="source\Physics\PhysX.cpp" />
     <ClCompile Include="source\Resource\ResourceManager.cpp" />
+    <ClCompile Include="source\Serialization\SerializationTemp.cpp" />
     <ClCompile Include="source\Serialization\Serialization.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

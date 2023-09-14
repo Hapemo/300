@@ -17,6 +17,7 @@ start up of window and game system, also runs their update functions.
 #include "Object/ObjectFactory.h"
 #include "ScriptingSystem.h"
 #include "Physics/PhysicsSystem.h"
+#include "Serialization/SerializationTemp.h"
 
 #include "Example.h"
 
@@ -78,6 +79,9 @@ void Application::SystemInit()
     {
         e.GetComponent<Transform>();
     }
+
+    //rttr
+    //std::string json_str = to_json(ent1);
     // end test serialization
 }
 
