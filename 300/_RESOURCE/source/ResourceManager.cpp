@@ -101,8 +101,8 @@ void Resource::mesh_Loader() {
 
 			std::string filepath = compiled_geom_path + entry.path().filename().string();
 
-			mResouceCnt++;
-			mMeshManager.mResouceCnt++;
+			++mResouceCnt;
+			++mMeshManager.mResouceCnt;
 
 			uid uids(filepath);
 			mMeshManager.SetupMesh(filepath,uids.id);
