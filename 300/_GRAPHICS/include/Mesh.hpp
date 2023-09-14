@@ -6,7 +6,6 @@
 #include "Vao.hpp"
 #include "Vbo.hpp"
 #include <geom.h>
-#include "Resource/Guid.h"
 
 #include "stb_image.h"
 

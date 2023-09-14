@@ -2,10 +2,12 @@
 #include <pch.h>
 #include <Window.hpp>
 
+
 class PhysicsSystem;
 class ScriptingSystem;
 class GraphicsSystem;
 class ECS;
+class Resource;
 
 class SystemManager
 {
@@ -16,6 +18,8 @@ public:
 	std::unique_ptr<PhysicsSystem> mPhysicsSystem;
 	std::unique_ptr<ScriptingSystem> mScriptingSystem;
 	std::unique_ptr<GraphicsSystem> mGraphicsSystem;
+	std::unique_ptr<Resource> mResourceSystem;
+	//std::unique_ptr<GraphicsSystem> mGraphicsSystem;
 
 	ECS *ecs;
 
