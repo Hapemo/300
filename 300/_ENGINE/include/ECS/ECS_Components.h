@@ -2,29 +2,8 @@
 #include "glm/glm.hpp"
 #include "Script.h"
 #include <vector>
-#include "pch.h"
 #include "Physics/PhysicsTypes.h"
-
-enum class TAG : unsigned char
-{
-	PLAYER,
-	UNKNOWN
-	//more to come
-};
-
-enum class SUBTAG : unsigned char
-{
-	ACTIVE,
-	BACKGROUND
-	//more to come
-};
-
-// every time tags/subtags get updated, please update the maps here
-static std::unordered_map<std::string, TAG> TagMap = { {"Player", TAG::PLAYER},
-													   {"Unknown", TAG::UNKNOWN} };
-
-static std::unordered_map<std::string, SUBTAG> SubTagMap = { {"Active", SUBTAG::ACTIVE},
-															 {"Background", SUBTAG::BACKGROUND} };
+#include "Tags.h"
 
 struct General
 {
@@ -47,9 +26,11 @@ struct Transform
 
 struct RigidBody
 {
-	std::uint16_t mass;
+	std::uint16_t mMass;
 	MATERIAL mMaterial;
 	MOTION mMotion;
+
+	RigidBody() : mMass(10.f), mMaterial(MATERIAL::WOOD), mMotion(MOTION::STATIC) {};
 };
 
 struct BoxCollider
@@ -72,14 +53,10 @@ struct PlaneCollider
 {
 	glm::vec3 mNormal;				// direction of plane
 	float mTranslateOffset;			// final pos = magnitude(Transform.mTranslate) + mTranslateOffset;
+
+	PlaneCollider() : mNormal(0.f, 1.f, 0.f), mTranslateOffset(0.f) {};
 };
 
-/***************************************************************************/
-/*!
-\brief
-Script component that entities who need to have script will possess.
-*/
-/***************************************************************************/
 class Scripts {
 public:
 	Scripts() = default;
