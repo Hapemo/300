@@ -3,6 +3,7 @@
 #include "ECS/ECS_Systems.h"
 #include "ScriptingSystem.h"
 #include "ECS/ECS.h"
+#include "ECS/ECS_Components.h"
 
 SystemManager* systemManager;
 
@@ -12,6 +13,7 @@ SystemManager::SystemManager()
 	mScriptingSystem = std::make_unique<ScriptingSystem>();
 	mGraphicsSystem = std::make_unique<GraphicsSystem>();
 	ecs = new ECS;
+	mComponents.insert(mComponents.end(), { "General", "Transform", "RigidBody", "BoxCollider", "SphereCollider", "PlaneCollider", "Scripts" });
 }
 
 SystemManager::~SystemManager()

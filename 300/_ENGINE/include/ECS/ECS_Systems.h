@@ -19,6 +19,8 @@ public:
 
 	ECS *ecs;
 
+	std::vector<std::string> mComponents;
+
 	SystemManager();
 	~SystemManager();
 	GFX::Window *GetWindow() { return mWindow; }

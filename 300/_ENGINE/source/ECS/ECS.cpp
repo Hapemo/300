@@ -1,6 +1,8 @@
 #include "ECS/ECS.h"
 #include "ECS/ECS_Components.h"
 
+ECS::ECS() : registry(), NullEntity(registry.create()) {} 
+
 Entity ECS::NewEntity()
 {
 	Entity e = registry.create();
@@ -20,3 +22,7 @@ void ECS::DeleteAllEntities()
 }
 
 Entity::Entity(entt::entity id) : id(id) {}
+
+//for (string str : component list)
+//	if (e.hascom<rttr(stR)>())
+//		e.getcom<rttr(str)>()

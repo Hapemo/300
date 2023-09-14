@@ -3,33 +3,14 @@
 #include "Singleton.h"
 #include "ECS_Systems.h"
 
-struct Entity;
-
-class ECS
-{
-public:
-	ECS() = default;
-	entt::registry registry;
-
-	Entity NewEntity();
-
-	void DeleteEntity(Entity e);
-
-	template <typename Component, typename OtherComponent, typename ...Components>
-	auto GetEntitiesWith();
-
-	template <typename Component>
-	auto GetEntitiesWith();
-
-	void DeleteAllEntities();
-};
-
-struct Entity
-{
+struct Entity {
 	entt::entity id;
 
 	Entity() = delete;
 	Entity(entt::entity id);
+
+	bool operator<(Entity e) { return id < e.id; }
+	bool operator<(const Entity e) const { return id < e.id; }
 
 	template <typename Component>
 	Component& AddComponent();
@@ -55,6 +36,29 @@ struct Entity
 	template <typename Component>
 	void RemoveComponent();
 };
+
+class ECS
+{
+public:
+	ECS();
+	entt::registry registry;
+
+	Entity NewEntity();
+
+	void DeleteEntity(Entity e);
+
+	template <typename Component, typename OtherComponent, typename ...Components>
+	auto GetEntitiesWith();
+
+	template <typename Component>
+	auto GetEntitiesWith();
+
+	void DeleteAllEntities();
+
+	const Entity NullEntity;
+};
+
+
 
 template <typename Component>
 auto ECS::GetEntitiesWith()
