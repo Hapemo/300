@@ -5,6 +5,7 @@
 #include "pch.h"
 #include "Physics/PhysicsTypes.h"
 
+
 enum class TAG : unsigned char
 {
 	PLAYER,
@@ -51,6 +52,8 @@ struct MeshRenderer
 	std::pair<std::string, std::string> mShaderPath;
 	std::string							mMaterialInstancePath;
 	std::string							mMeshPath;
+	
+	unsigned							mGUID;
 };
 
 struct RigidBody

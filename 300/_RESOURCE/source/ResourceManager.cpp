@@ -78,8 +78,6 @@ void Resource::mesh_Loader()
 			tempInstance.m_GUID = uids.id;
 			tempInstance.m_Type = MESH;
 			m_Meshes.emplace(uids.id, &tempInstance);
-
-			break;
 		}
 	}
 }
