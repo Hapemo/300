@@ -3,6 +3,7 @@
 #define _GRAPHICS_SYSTEM_H
 
 #include <pch.h>
+#include <ECS/ECS_Systems.h>
 #include <ECS/ECS_Components.h>
 #include <ECS/ECS.h>
 
@@ -15,21 +16,33 @@ public:
 	GraphicsSystem() = default;
 
 	void Init();
-	void Update();
+	void Update(float dt);
 	void Exit();
 
-	// Mesh
-	void AddInstance(GFX::Mesh& mesh, Transform transform);
-	void DrawAll(GFX::Mesh& mesh);	// TODO: A function in Mesh class to Draw All Instances
-	void ClearInstances(GFX::Mesh& mesh);
+	// -- Mesh --
+	void AddInstance(GFX::Mesh& mesh, Transform transform);		// Adds an instance of a mesh to be drawn
 
 	// -- FBO --
 	unsigned int GetGameAttachment()	{ return m_Fbo.GetGameAttachment(); }
 	unsigned int GetEditorAttachment()	{ return m_Fbo.GetEditorAttachment(); }
 
+	// Getter
+	GFX::DebugRenderer& getDebugRenderer() { return m_Renderer; }
+
 private:
 	GFX::DebugRenderer m_Renderer;		// isolated to debug draws
 	GFX::FBO m_Fbo;
+
+	// -- Window --
+	GFX::Window* m_Window;
+	int m_Width;
+	int m_Height;
+
+	// -- Flags --
+	bool m_EditorMode;
+
+	// -- Private Functions --
+	void DrawAll(GFX::Mesh& mesh);		// Renders all instances of a given mesh
 };
 
 #endif

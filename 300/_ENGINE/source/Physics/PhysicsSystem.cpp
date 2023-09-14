@@ -14,7 +14,7 @@ PhysicsSystem::PhysicsSystem()
 void PhysicsSystem::Init()
 {
 	//get all entities with physics components
-	auto view = ECS::GetInstance()->GetEntitiesWith<Transform, RigidBody>();
+	auto view = systemManager->ecs->GetEntitiesWith<Transform, RigidBody>();
 	
 	for (Entity e : view)
 	{

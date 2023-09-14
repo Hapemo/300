@@ -1,10 +1,11 @@
 #pragma once
 #include "entt.hpp";
 #include "Singleton.h"
+#include "ECS_Systems.h"
 
 struct Entity;
 
-class ECS : public Singleton<ECS>
+class ECS
 {
 public:
 	ECS() = default;
@@ -71,47 +72,47 @@ auto ECS::GetEntitiesWith()
 template <typename Component>
 Component& Entity::AddComponent()
 {
-	return ECS::GetInstance()->registry.emplace_or_replace<Component>(id, Component());
+	return systemManager->ecs->registry.emplace_or_replace<Component>(id, Component());
 }
 
 template <typename Component>
 Component& Entity::AddComponent(const Component& component)
 {
-	return ECS::GetInstance()->registry.emplace_or_replace<Component>(id, component);
+	return systemManager->ecs->registry.emplace_or_replace<Component>(id, component);
 }
 
 template <typename Component>
 Component& Entity::GetComponent()
 {
-	return ECS::GetInstance()->registry.get_or_emplace<Component>(id, Component());
+	return systemManager->ecs->registry.get_or_emplace<Component>(id, Component());
 }
 
 template <typename Component, typename OtherComponent, typename ...Components>
 auto Entity::GetComponent()
 {
-	return ECS::GetInstance()->registry.get<Component, OtherComponent, Components...>(id);
+	return systemManager->ecs->registry.get<Component, OtherComponent, Components...>(id);
 }
 
 template <typename Component>
 bool Entity::HasComponent()
 {
-	return ECS::GetInstance()->registry.all_of<Component>(id);
+	return systemManager->ecs->registry.all_of<Component>(id);
 }
 
 template <typename ... Components>
 bool Entity::HasAnyOfComponents()
 {
-	return ECS::GetInstance()->registry.any_of<Components...>(id);
+	return systemManager->ecs->registry.any_of<Components...>(id);
 }
 
 template <typename ... Components>
 bool Entity::HasAllOfComponents()
 {
-	return ECS::GetInstance()->registry.all_of<Components...>(id);
+	return systemManager->ecs->registry.all_of<Components...>(id);
 }
 
 template <typename Component>
 void Entity::RemoveComponent()
 {
-	ECS::GetInstance()->registry.remove<Component>(id);
+	systemManager->ecs->registry.remove<Component>(id);
 }

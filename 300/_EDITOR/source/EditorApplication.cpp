@@ -29,6 +29,7 @@ void EditorApplication::Init()
 {
     StartUp();
     SystemInit();
+
 }
 
 void EditorApplication::StartUp()
@@ -39,36 +40,44 @@ void EditorApplication::StartUp()
     mWindow.SetWindowTitle("Editor");
     systemManager = new SystemManager();
 
+
+
 }
 
 void EditorApplication::SystemInit()
 {
-    systemManager->Init(&mWindow);
+    systemManager->Init(true, &mWindow);
     FPSManager::Init();
     Input::Init();
     //gfx init
 
     //Editor init
-    mMaineditor.UIinit(EditorApplication::mWindow.GetHandle());
 
 }
 
 void EditorApplication::MainUpdate()
 {
+
+    mMaineditor.UIinit(mWindow.GetHandle());
+
+
     while (!glfwWindowShouldClose(mWindow.GetHandle())) {
         FirstUpdate();
         SystemUpdate();
 
-        mMaineditor.UIupdate(EditorApplication::mWindow.GetHandle());
-        //mMaineditor.WindowUpdate(EditorApplication::mWindow.GetHandle());
-        mMaineditor.UIdraw(EditorApplication::mWindow.GetHandle());
-
         // To remove (Script test with entities)
         //ScriptTestUpdate();
-        SecondUpdate(); // This should always be the last
 
         // Graphics update
+
+        mMaineditor.UIupdate(mWindow.GetHandle());
+        //mMaineditor.WindowUpdate(mWindow.GetHandle());
+        mMaineditor.UIdraw(mWindow.GetHandle());
+
+        SecondUpdate(); // This should always be the last
+
         mWindow.Update();
+
     }
 }
 
@@ -93,8 +102,8 @@ void EditorApplication::Exit()
 {
     mMaineditor.UIend();
     systemManager->Exit();
-    delete systemManager;
-    ECS::GetInstance()->DeleteAllEntities();
+    systemManager->ecs->DeleteAllEntities();
     SingletonManager::destroyAllSingletons();
     mWindow.DestroySystem();
+    delete systemManager;
 }

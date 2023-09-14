@@ -54,9 +54,9 @@ namespace _GEOM
 	{
 		struct alignas(std::uint32_t) VertexPos
 		{
-			glm::vec3 m_Pos;
-			glm::vec3 m_Clr;
-			glm::vec2 m_UV;
+			glm::vec3			m_Pos;
+			glm::vec3			m_Clr;
+			glm::vec2			m_UV;
 
 			int					m_BoneIDs[MAX_BONE_INFLUENCE];	// bone indices which will influence this vertex
 			float				m_Weights[MAX_BONE_INFLUENCE];	// weights from each bone

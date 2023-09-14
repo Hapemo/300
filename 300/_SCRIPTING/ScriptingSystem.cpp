@@ -162,7 +162,7 @@ void ScriptingSystem::Update(float dt)
     //    return;
     //}
 
-    auto scriptEntities = ECS::GetInstance()->GetEntitiesWith<Scripts>();
+    auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
 
     //if (g_engine->gameStateMgr->isPlaying)
     //{
@@ -208,6 +208,7 @@ void ScriptingSystem::Update(float dt)
         //        }
         //    }
             once = false;
+            Script::isOnce = false;
         }
     //}
 

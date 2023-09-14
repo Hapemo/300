@@ -31,4 +31,7 @@ public:
 
 	void Load(Entity entityID);
 	void Run(const char* funcName);
+
+	// Make sure error only print once
+	static bool isOnce;
 };
