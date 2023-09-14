@@ -163,11 +163,16 @@ void GFX::DebugRenderer::AddSphere(vec3 const& camPos, vec3 const& center, float
 
 void GFX::DebugRenderer::RenderAll(mat4 viewProj)
 {
-	RenderAllPoints(viewProj);
-	RenderAllTriangles(viewProj);
-	RenderAllQuads(viewProj);
-	RenderAllAabb(viewProj);
-	RenderAllSphere(viewProj);
+	if (mPointMesh.mLTW.size())
+		RenderAllPoints(viewProj);
+	if (mTriangleMesh.mLTW.size())
+		RenderAllTriangles(viewProj);
+	if (mQuadMesh.mLTW.size())
+		RenderAllQuads(viewProj);
+	if (mAabbMesh.mLTW.size())
+		RenderAllAabb(viewProj);
+	if (mSphereMesh.mLTW.size())
+		RenderAllSphere(viewProj);
 }
 
 void GFX::DebugRenderer::ClearInstances()

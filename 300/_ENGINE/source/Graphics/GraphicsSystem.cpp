@@ -18,15 +18,19 @@ void GraphicsSystem::Init()
 	SetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_ALL, { 0, 0, 200 });
 	SetCameraTarget(CAMERA_TYPE::CAMERA_TYPE_ALL, { 0, 0, 0 });
 
-	m_GameCamera.Update();
-	m_EditorCamera.Update();
+	UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_ALL);
 }
 
 void GraphicsSystem::Update(float dt)
 {
+	SetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_ALL, { 0, 0, 200 });
+	SetCameraTarget(CAMERA_TYPE::CAMERA_TYPE_ALL, { 0, 0, 0 });
+
+	UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_ALL);
+
 	// To be removed once entity to be drawn created
-	m_Renderer.AddSphere(m_EditorCamera.position(), { 50, 150, -300 }, 100.f, { 0, 1, 0, 1 });
-	m_Renderer.AddAabb({ 100, 300, -500 }, { 200, 300, 100 }, { 1, 0, 0, 1 });
+	m_Renderer.AddSphere(m_EditorCamera.position(), { -400, -400, 300 }, 100.f, { 0, 1, 0, 1 });
+	//m_Renderer.AddAabb({ 100, 300, -500 }, { 200, 300, 100 }, { 1, 0, 0, 1 });
 
 	// TODO: Retrieve the mesh instances to be drawn
 
@@ -37,6 +41,7 @@ void GraphicsSystem::Update(float dt)
 	// TODO: Render all instances of a given mesh
 
 	// TODO: Clears all instances that have been rendered from local buffer
+	//m_Window->Update();
 	m_Fbo.Unbind();
 }
 
