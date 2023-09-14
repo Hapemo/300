@@ -8,7 +8,15 @@
 #include <ECS/ECS.h>
 
 #include <DebugRenderer.hpp>
+#include <Camera.hpp>
 #include <Fbo.hpp>
+
+enum class CAMERA_TYPE
+{
+	CAMERA_TYPE_GAME,
+	CAMERA_TYPE_EDITOR,
+	CAMERA_TYPE_ALL
+};
 
 class GraphicsSystem
 {
@@ -30,6 +38,16 @@ public:
 	// Getter
 	GFX::DebugRenderer& getDebugRenderer() { return m_Renderer; }
 
+	// -- Camera Functions --
+	void SetCameraPosition(CAMERA_TYPE type, vec3 position);
+	void SetCameraTarget(CAMERA_TYPE type, vec3 position);
+	void UpdateCamera(CAMERA_TYPE type);
+
+	vec3 GetCameraPosition(CAMERA_TYPE type);
+	vec3 GetCameraTarget(CAMERA_TYPE type);
+	// Direction vector of the camera (Target - position)
+	vec3 GetCameraDirection(CAMERA_TYPE type);
+
 private:
 	GFX::DebugRenderer m_Renderer;		// isolated to debug draws
 	GFX::FBO m_Fbo;
@@ -38,6 +56,10 @@ private:
 	GFX::Window* m_Window;
 	int m_Width;
 	int m_Height;
+
+	// -- Camera --
+	GFX::Camera m_GameCamera;
+	GFX::Camera m_EditorCamera;
 
 	// -- Flags --
 	bool m_EditorMode;

@@ -235,10 +235,16 @@ void GFX::Mesh::UnbindVao()
 
 void GFX::Mesh::DrawAllInstances()
 {
+	// TODO: Activate necessary shader
+	// TODO: Get and bind necessary textures
+
 	mVao.Bind();		// Bind mesh
 	PrepForDraw();		// Copy data from local buffer into opengl buffer
 	glDrawElementsInstanced(GL_TRIANGLES, mIndexCount, GL_UNSIGNED_INT, nullptr, mLTW.size());
 	mVao.Unbind();		// Unbind mesh
+
+	// TODO: Unbind textures
+	// TODO: Deactivate shader
 }
 
 void GFX::Mesh::PrepForDraw()

@@ -9,6 +9,7 @@ GFX::DebugRenderer::DebugRenderer()
 	SetupTriangleMesh();
 	SetupQuadMesh();
 	SetupAabbMesh();
+	SetupSphereMesh();
 }
 
 GFX::DebugRenderer::~DebugRenderer()
@@ -18,6 +19,7 @@ GFX::DebugRenderer::~DebugRenderer()
 	mTriangleMesh.Destroy();
 	mQuadMesh.Destroy();
 	mAabbMesh.Destroy();
+	mSphereMesh.Destroy();
 
 	mShader.DestroyShader();
 }
@@ -108,12 +110,63 @@ void GFX::DebugRenderer::AddAabb(vec3 const& center, vec3 const& size, vec4 cons
 	mAabbMesh.mColors.push_back(color);
 }
 
+void GFX::DebugRenderer::AddSphere(vec3 const& camPos, vec3 const& center, float radius, vec4 const& color)
+{
+	// Calculate the horizon disc's position and radius
+	float distanceSq = glm::dot(center - camPos, center - camPos);
+	float length = glm::sqrt(glm::abs(distanceSq - radius * radius));
+	float rPrime = (radius * length) / glm::sqrt(distanceSq);
+	float offset = glm::sqrt(glm::abs(radius * radius - rPrime * rPrime));
+
+	mat4 modelToWorld = {
+		vec4(radius * 2, 0.0f, 0.0f, 0.0f),
+		vec4(0.0f, radius * 2, 0.0f, 0.0f),
+		vec4(0.0f, 0.0f, radius * 2, 0.0f),
+		vec4(center, 1.0f)
+	};
+
+	mat4 horizonModelToWorld = {
+		vec4(rPrime * 2, 0.0f, 0.0f, 0.0f),
+		vec4(0.0f, rPrime * 2, 0.0f, 0.0f),
+		vec4(0.0f, 0.0f, rPrime * 2, 0.0f),
+		vec4(0.0f, 0.0f, 0.0f, 1.0f)
+	};
+
+	// Add the disc along the X-Y axis
+	mSphereMesh.mLTW.push_back(modelToWorld);
+
+	// Add the disc along the Y-Z axis
+	glm::mat4 modelToWorldYZ = glm::rotate(modelToWorld, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	mSphereMesh.mLTW.push_back(modelToWorldYZ);
+
+	// Add the disc along the X-Z axis
+	glm::mat4 modelToWorldXZ = glm::rotate(modelToWorld, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+	mSphereMesh.mLTW.push_back(modelToWorldXZ);
+
+	// Compute Transformation of the horizon disc
+	vec3 normal = camPos - center;
+	vec3 up = { 0, 0, 1 };
+	vec3 right = glm::cross(up, normal);
+	vec3 forward = glm::cross(right, normal);
+	vec3 centerPrime = center + glm::normalize(camPos - center) * offset;
+
+	mat4 horizonRotate = {
+		vec4(glm::normalize(right), 0.0f),
+		vec4(glm::normalize(forward), 0.0f),
+		vec4(glm::normalize(normal), 0.0f),
+		vec4(centerPrime, 1.0f)
+	};
+	horizonModelToWorld = horizonRotate * horizonModelToWorld;
+	mSphereMesh.mLTW.push_back(horizonModelToWorld);
+}
+
 void GFX::DebugRenderer::RenderAll(mat4 viewProj)
 {
 	RenderAllPoints(viewProj);
 	RenderAllTriangles(viewProj);
 	RenderAllQuads(viewProj);
 	RenderAllAabb(viewProj);
+	RenderAllSphere(viewProj);
 }
 
 void GFX::DebugRenderer::ClearInstances()
@@ -122,6 +175,7 @@ void GFX::DebugRenderer::ClearInstances()
 	mTriangleMesh.ClearInstances();
 	mQuadMesh.ClearInstances();
 	mAabbMesh.ClearInstances();
+	mSphereMesh.ClearInstances();
 }
 
 void GFX::DebugRenderer::SetupShader()
@@ -213,6 +267,34 @@ void GFX::DebugRenderer::SetupAabbMesh()
 	mAabbMesh.Setup(positions, indices);
 }
 
+void GFX::DebugRenderer::SetupSphereMesh()
+{
+	constexpr int SLICES = 32;
+	std::vector<vec3> positions;
+	std::vector<GLuint> indices;
+
+	positions.resize(SLICES);
+	indices.resize(SLICES + 1);
+
+	float x{};
+	float y{};
+	float angle = 0.0f;
+
+	for (int i = 0; i < SLICES; ++i)
+	{
+		x = glm::cos(glm::radians(angle)) * 0.5f;
+		y = glm::sin(glm::radians(angle)) * 0.5f;
+
+		positions[i] = vec3{ x, y, 0.0f };
+		indices[i] = i;
+
+		angle += 360.0f / SLICES;
+	}
+	indices[SLICES] = 0;
+
+	mSphereMesh.Setup(positions, indices);
+}
+
 void GFX::DebugRenderer::RenderAllPoints(mat4 const& viewProj)
 {
 	// Attach shader to state
@@ -295,4 +377,25 @@ void GFX::DebugRenderer::RenderAllAabb(mat4 const& viewProj)
 
 	mShader.Deactivate();
 	mAabbMesh.UnbindVao();
+}
+
+void GFX::DebugRenderer::RenderAllSphere(mat4 const& viewProj)
+{
+	// Attach shader to state
+	mShader.Activate();
+
+	// Bind VAO to pipeline
+	mSphereMesh.BindVao();
+
+	// Attach data to vbo
+	mSphereMesh.PrepForDraw();
+
+	// Set uniform
+	glUniformMatrix4fv(mShader.GetUniformVP(), 1, GL_FALSE, &viewProj[0][0]);
+
+	// Draw
+	glDrawElementsInstanced(GL_LINE_STRIP, mSphereMesh.GetIndexCount(), GL_UNSIGNED_INT, nullptr, mSphereMesh.mLTW.size());
+
+	mShader.Deactivate();
+	mSphereMesh.UnbindVao();
 }
