@@ -17,8 +17,6 @@ start up of window and game system, also runs their update functions.
 #include "ScriptingSystem.h"
 #include "Physics/PhysicsSystem.h"
 
-
-
 // Static variables
 GFX::DebugRenderer* EditorApplication::mRenderer;
 GFX::Window EditorApplication::mWindow;
@@ -73,6 +71,9 @@ void EditorApplication::MainUpdate()
         mMaineditor.UIupdate(mWindow.GetHandle());
         //mMaineditor.WindowUpdate(mWindow.GetHandle());
         mMaineditor.UIdraw(mWindow.GetHandle());
+
+        // To remove (Script test with entities)
+        systemManager->mScriptingSystem->ScriptingUpdateTest();
 
         SecondUpdate(); // This should always be the last
 

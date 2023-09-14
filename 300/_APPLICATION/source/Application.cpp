@@ -88,7 +88,7 @@ void Application::MainUpdate()
         FirstUpdate();
         SystemUpdate();
         // To remove (Script test with entities)
-        //systemManager->mScriptingSystem->ScriptingUpdateTest();
+        systemManager->mScriptingSystem->ScriptingUpdateTest();
         SecondUpdate(); // This should always be the last
 
         // Graphics update
