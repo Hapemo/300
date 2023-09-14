@@ -94,6 +94,9 @@ void Resource::shader_Loader()
 	uid uids(combinedPath);
 	mShaderManager.SetupShader(vertPath, fragPath, uids.id);
 
+	++mResouceCnt;
+	++mShaderManager.mResourceCnt;
+
 	instance_info& tempInstance = AllocRscInfo();
 	tempInstance.m_Name = combinedPath;
 	tempInstance.m_GUID = uids.id;
@@ -108,6 +111,9 @@ void Resource::MaterialInstance_Loader()
 
 	uid uids(materialinstancepath);
 	mMaterialInstanceManager.SetupMaterialInstance(materialinstancepath, uids.id);
+
+	++mResouceCnt;
+	++mMaterialInstanceManager.mResourceCnt;
 
 	instance_info& tempInstance = AllocRscInfo();
 	tempInstance.m_Name = materialinstancepath;
