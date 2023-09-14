@@ -2,12 +2,17 @@
 #include <filesystem>
 
 Resource::Resource() {
-    for (int i = 0, end = (int)m_Infobuffer.size() - 1; i != end; ++i)
-    {
-        m_Infobuffer[i].m_pData = &m_Infobuffer[i + 1];
-    }
-    m_Infobuffer[m_Infobuffer.size() - 1].m_pData = nullptr;
-    m_pInfoBufferEmptyHead = m_Infobuffer.data();
+	// empty
+}
+
+
+void Resource::Init() {
+	for (int i = 0, end = (int)m_Infobuffer.size() - 1; i != end; ++i)
+	{
+		m_Infobuffer[i].m_pData = &m_Infobuffer[i + 1];
+	}
+	m_Infobuffer[m_Infobuffer.size() - 1].m_pData = nullptr;
+	m_pInfoBufferEmptyHead = m_Infobuffer.data();
 
 
 	std::cout << "Initializing Resource Manager.\n";
@@ -93,8 +98,8 @@ void Resource::mesh_Loader() {
 	{
 		if (std::filesystem::is_regular_file(entry))
 		{
-			std::cout << "============================================\n";
-			std::cout << "[NOTE]>> Loading file: \t" << entry.path().filename() << "\n";
+			//std::cout << "============================================\n";
+			//std::cout << "[NOTE]>> Loading file: \t" << entry.path().filename() << "\n";
 
 			//uid uids("dasdsadsadasdassssssssssadaddddddddddddddddddddddddddddddddddddddddddddddddddddadadsd");
 			//std::cout << uids.id<< "\n";
@@ -111,6 +116,8 @@ void Resource::mesh_Loader() {
 			tempInstance.m_GUID = uids.id;
 			tempInstance.m_Type = MESH;
 			m_Meshes.emplace(uids.id, &tempInstance);
+
+			std::cout << tempInstance.m_Name << "Inside instance!\n";
 		}
 	}
 }
@@ -146,5 +153,20 @@ void MeshManager::SetupMesh(std::string filepath,unsigned id)
 	MeshData& temp = AllocRscInfo();
 	temp.meshdata = std::move(localmesh);
 	mSceneMeshes.emplace(std::make_pair(id, &temp));
+
+}
+
+GFX::Mesh& Resource::get_Mesh(std::string name) {
+	
+	//uid id(name);
+	
+	for (auto ins : m_Meshes) {	
+		if (ins.second->m_Name == name) {
+			++(m_Meshes[ins.second->m_GUID.id]->m_RefCount);
+			return mMeshManager.get_Mesh(ins.second->m_GUID.id).meshdata;
+		}
+	}
+
+	std::cout << "Could not find MESH Data.\n";
 
 }
