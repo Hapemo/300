@@ -18,10 +18,12 @@ void Resource::Init() {
 	std::cout << "Initializing Resource Manager.\n";
 
 	mMeshManager.Init();
-
+	mShaderManager.Init();
+	mMaterialInstanceManager.Init();
 
 	mesh_Loader();
 	shader_Loader();
+	MaterialInstance_Loader();
 }
 
 instance_info& Resource::AllocRscInfo(void)
@@ -76,6 +78,8 @@ void Resource::mesh_Loader()
 			tempInstance.m_GUID = uids.id;
 			tempInstance.m_Type = MESH;
 			m_Meshes.emplace(uids.id, &tempInstance);
+
+			break;
 		}
 	}
 }
@@ -83,8 +87,8 @@ void Resource::mesh_Loader()
 void Resource::shader_Loader()
 {
 	// hardcode data path for now 
-	const std::string vertPath = "..\_GRAPHICS\shader_files\draw_vert.glsl";
-	const std::string fragPath = "..\_GRAPHICS\shader_files\draw_frag.glsl";
+	const std::string vertPath = "../_GRAPHICS/shader_files/draw_vert.glsl";
+	const std::string fragPath = "../_GRAPHICS/shader_files/draw_frag.glsl";
 	std::string combinedPath = vertPath + fragPath;
 
 	uid uids(combinedPath);
@@ -100,9 +104,16 @@ void Resource::shader_Loader()
 void Resource::MaterialInstance_Loader()
 {
 	// hardcode material instance path for now 
-	const std::string materialinstancepath = "..\assets\Compressed\Skull.ctexture";
+	const std::string materialinstancepath = "../assets/Compressed/Skull.ctexture";
 
+	uid uids(materialinstancepath);
+	mMaterialInstanceManager.SetupMaterialInstance(materialinstancepath, uids.id);
 
+	instance_info& tempInstance = AllocRscInfo();
+	tempInstance.m_Name = materialinstancepath;
+	tempInstance.m_GUID = uids.id;
+	tempInstance.m_Type = SHADER;
+	m_Shaders.emplace(uids.id, &tempInstance);
 }
 
 
@@ -253,7 +264,7 @@ void MeshManager::SetupMesh(std::string filepath,unsigned id)
 	std::vector<unsigned int> indices;
 
 	Deserialization::DeserializeGeom(filepath.c_str(), GeomData);	// load the geom from the compiled geom file
-	//localmesh.Setup(GeomData);
+	localmesh.Setup(GeomData);
 
 	// Load animations
 	if (GeomData.m_bHasAnimations)
