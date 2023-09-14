@@ -10,6 +10,9 @@
  * @copyright
  *  Copyright (C) 2023 DigiPen Institute of Technology.
  *-------------------------------------------------------------------------------------*/
+
+#define _GLDEBUG 0
+
 #include "OpenGl.hpp"
 
 /**---------------------------------------------------------------------------/
@@ -41,11 +44,13 @@ void GLAPIENTRY GFX::MessageCallback(GLenum source,
                                     const char* message,
                                     const void* userParam)
 {
+#if _GLDEBUG
     std::cout << "GL Callback: ";
     std::cout << " *ERROR* ";
     std::cout << "Source: " << source << " | ID: " << id;
     std::cout << " | Type: " << type << " | Severity: " << severity;
     std::cout << " | Message: " << message << "\n\n";
+#endif
 
     (void)length;
     (void)userParam;

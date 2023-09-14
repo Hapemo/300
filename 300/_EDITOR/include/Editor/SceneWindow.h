@@ -21,7 +21,7 @@ Setting up specification for frame buffer rendering
 ****************************************************************************
 ***/
 #pragma once
-
+#include "Graphics/GraphicsSystem.h"
 #include "EditorWindow.h"
 #include <GLFW/glfw3.h>
 
@@ -104,6 +104,8 @@ Render IMGUIZMO integration
 
 
 	static bool			follow;
+
+	GFX::Shader m_ModelShader;
 
 private:
 

@@ -15,25 +15,25 @@
   vfetchoptimizer.cpp
   Animation.cpp
   Bone.cpp
-C:\Users\lfsro\OneDrive\Documents\GitHub\300\300\_GEOM_COMPILER\src\Bone.cpp(23,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\lfsro\OneDrive\Documents\GitHub\300\300\_GEOM_COMPILER\src\Bone.cpp(35,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\lfsro\OneDrive\Documents\GitHub\300\300\_GEOM_COMPILER\src\Bone.cpp(47,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\mcheo\OneDrive\Documents\300\300\300\_GEOM_COMPILER\src\Bone.cpp(23,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\mcheo\OneDrive\Documents\300\300\300\_GEOM_COMPILER\src\Bone.cpp(35,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\mcheo\OneDrive\Documents\300\300\300\_GEOM_COMPILER\src\Bone.cpp(47,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
   descriptor.cpp
   geom.cpp
-C:\Users\lfsro\OneDrive\Documents\GitHub\300\300\_GEOM_COMPILER\src\geom.cpp(331,8): warning C4101: 'ch': unreferenced local variable
+C:\Users\mcheo\OneDrive\Documents\300\300\300\_GEOM_COMPILER\src\geom.cpp(331,8): warning C4101: 'ch': unreferenced local variable
   Geom_Compiler.cpp
-C:\Users\lfsro\OneDrive\Documents\GitHub\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(300,34): warning C4018: '<': signed/unsigned mismatch
-C:\Users\lfsro\OneDrive\Documents\GitHub\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(796,27): warning C4018: '<': signed/unsigned mismatch
-C:\Users\lfsro\OneDrive\Documents\GitHub\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(933,19): warning C4018: '<': signed/unsigned mismatch
-C:\Users\lfsro\OneDrive\Documents\GitHub\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(975,37): warning C4018: '<': signed/unsigned mismatch
-C:\Users\lfsro\OneDrive\Documents\GitHub\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(1012,42): warning C4244: '=': conversion from 'const double' to 'float', possible loss of data
-C:\Users\lfsro\OneDrive\Documents\GitHub\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(1013,48): warning C4244: '=': conversion from 'const double' to 'float', possible loss of data
+C:\Users\mcheo\OneDrive\Documents\300\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(300,34): warning C4018: '<': signed/unsigned mismatch
+C:\Users\mcheo\OneDrive\Documents\300\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(796,27): warning C4018: '<': signed/unsigned mismatch
+C:\Users\mcheo\OneDrive\Documents\300\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(933,19): warning C4018: '<': signed/unsigned mismatch
+C:\Users\mcheo\OneDrive\Documents\300\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(975,37): warning C4018: '<': signed/unsigned mismatch
+C:\Users\mcheo\OneDrive\Documents\300\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(1012,42): warning C4244: '=': conversion from 'const double' to 'float', possible loss of data
+C:\Users\mcheo\OneDrive\Documents\300\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(1013,48): warning C4244: '=': conversion from 'const double' to 'float', possible loss of data
   Generating Code...
-C:\Users\lfsro\OneDrive\Documents\GitHub\300\300\_GEOM_COMPILER\src\Bone.cpp(95): warning C4715: '_GEOM::Bone::GetScaleIndex': not all control paths return a value
-C:\Users\lfsro\OneDrive\Documents\GitHub\300\300\_GEOM_COMPILER\src\Bone.cpp(82): warning C4715: '_GEOM::Bone::GetRotationIndex': not all control paths return a value
-C:\Users\lfsro\OneDrive\Documents\GitHub\300\300\_GEOM_COMPILER\src\Bone.cpp(69): warning C4715: '_GEOM::Bone::GetPositionIndex': not all control paths return a value
+C:\Users\mcheo\OneDrive\Documents\300\300\300\_GEOM_COMPILER\src\Bone.cpp(82): warning C4715: '_GEOM::Bone::GetRotationIndex': not all control paths return a value
+C:\Users\mcheo\OneDrive\Documents\300\300\300\_GEOM_COMPILER\src\Bone.cpp(95): warning C4715: '_GEOM::Bone::GetScaleIndex': not all control paths return a value
+C:\Users\mcheo\OneDrive\Documents\300\300\300\_GEOM_COMPILER\src\Bone.cpp(69): warning C4715: '_GEOM::Bone::GetPositionIndex': not all control paths return a value
   Compiling...
   Helper.cpp
   _compiler_main.cpp
   Generating Code...
-  _GEOM_COMPILER.vcxproj -> C:\Users\lfsro\OneDrive\Documents\GitHub\300\300\x64\Debug\_GEOM_COMPILER.lib
+  _GEOM_COMPILER.vcxproj -> C:\Users\mcheo\OneDrive\Documents\300\300\300\x64\Debug\_GEOM_COMPILER.lib

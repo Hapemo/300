@@ -3,6 +3,7 @@
 #define _GRAPHICS_SYSTEM_H
 
 #include <pch.h>
+#include <ECS/ECS_Systems.h>
 #include <ECS/ECS_Components.h>
 #include <ECS/ECS.h>
 
@@ -24,6 +25,9 @@ public:
 	// -- FBO --
 	unsigned int GetGameAttachment()	{ return m_Fbo.GetGameAttachment(); }
 	unsigned int GetEditorAttachment()	{ return m_Fbo.GetEditorAttachment(); }
+
+	// Getter
+	GFX::DebugRenderer& getDebugRenderer() { return m_Renderer; }
 
 private:
 	GFX::DebugRenderer m_Renderer;		// isolated to debug draws
