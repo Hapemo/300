@@ -32,6 +32,7 @@ struct General
 	TAG tag;
 	SUBTAG subtag;
 	bool isActive;
+	bool isPaused;
 };
 
 struct Transform

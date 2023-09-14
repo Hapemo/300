@@ -1,5 +1,13 @@
 #include "ECS/ECS.h"
 #include "ECS/ECS_Components.h"
+#include "pch.h"
+
+bool Entity::ShouldRun() {
+	assert(HasComponent<General>() && std::string("There is no general component when attempting to change Entity's isActive").c_str());
+
+	General const& genComponent = GetComponent<General>();
+	return !genComponent.isPaused && genComponent.isActive;
+}
 
 ECS::ECS() : registry(), NullEntity(registry.create()) {} 
 

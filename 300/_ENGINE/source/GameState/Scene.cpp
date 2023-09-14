@@ -44,7 +44,7 @@ void Scene::Init() {
 		//LOG_INFO("Attempting to call Init() called for ENTITY: " + std::to_string(e.id) + " with name: " + e.GetComponent<General>().name + " ==================");
 		if (e.GetComponent<General>().isActive) {
 			//LOG_INFO("Call Init() called for ENTITY: " + std::to_string(e.id) + " with name: " + e.GetComponent<General>().name + " ==================");
-			//e.Activate(); // shouldRun.insert(e); TODO yj
+			//e.Activate(); TODO mich
 		}
 	}
 	
@@ -57,10 +57,7 @@ void Scene::Update() {
 };
 
 void Scene::Exit() {
-	//std::set<Entity> shouldRun{};
-	//for (auto e : mEntities) if (e.GetComponent<General>().isActive) e.Deactivate(); // shouldRun.insert(e); TODO yj
-
-	//logicSystem->Exit(shouldRun);
+	//for (auto e : mEntities) if (e.GetComponent<General>().isActive) e.Deactivate(); // TODO mich
 };
 
 void Scene::PrimaryUpdate() {
@@ -81,7 +78,7 @@ void Scene::Load(std::filesystem::path const& _path) {
 	//LOG_CUSTOM("SCENE", "Loading Scene: " + mName);
 	//serializationManager->LoadScene(*this, _path); TODO
 	for (auto e : mEntities) {
-		//e.GetComponent<General>().isPaused = mIsPause; TODO
+		e.GetComponent<General>().isPaused = mIsPause;
 	}
 }
 
@@ -95,7 +92,7 @@ void Scene::Unload() {
 
 	decltype(mEntities) tempEntities = mEntities;
 	for (auto e : tempEntities) {
-		//RemoveEntity(e); TODO yj
+		systemManager->ecs->DeleteEntity(e);
 	}
 	assert(mEntities.empty() && std::string("Scene \"" + mName + "\"still contains " + std::to_string(mEntities.size()) + " after unloading").c_str());
 
@@ -103,7 +100,6 @@ void Scene::Unload() {
 	mEntities.clear();
 	mIsPause = false;
 	mName = decltype(mName)();
-	//mCamera = decltype(mCamera)();
 	mLayer = decltype(mLayer)();
 	mOrder = decltype(mOrder)();
 }
@@ -115,10 +111,10 @@ Entity Scene::AddEntity() {
 	return e;
 }
 
-//void Scene::RemoveEntity(Entity const& _e) {
-//	//if (_e.GetComponent<General>().isActive) _e.Deactivate(); TODO yj
-//	systemManager->ecs->DeleteEntity(_e);
-//	
-//	mEntities.erase(_e);
-//}
+void Scene::RemoveEntity(Entity const& _e) {
+	//if (_e.GetComponent<General>().isActive) _e.Deactivate(); TODO mich
+	systemManager->ecs->DeleteEntity(_e);
+	
+	mEntities.erase(_e);
+}
 

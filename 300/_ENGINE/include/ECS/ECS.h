@@ -35,6 +35,8 @@ struct Entity {
 
 	template <typename Component>
 	void RemoveComponent();
+
+	bool ShouldRun();
 };
 
 class ECS
