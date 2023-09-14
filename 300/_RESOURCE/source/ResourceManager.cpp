@@ -1,7 +1,8 @@
 #include "ResourceManager.h"
 #include <filesystem>
 
-Resource::Resource() {
+Resource::Resource() 
+{
     for (int i = 0, end = (int)m_Infobuffer.size() - 1; i != end; ++i)
     {
         m_Infobuffer[i].m_pData = &m_Infobuffer[i + 1];
@@ -16,6 +17,7 @@ Resource::Resource() {
 
 
 	mesh_Loader();
+	shader_Loader();
 }
 
 instance_info& Resource::AllocRscInfo(void)
@@ -43,6 +45,160 @@ void Resource::ReleaseRscInfo(instance_info& RscInfo)
 	--mMeshManager.mResouceCnt;
 }
 
+void Resource::mesh_Loader() 
+{
+	std::filesystem::path folderpath = compiled_geom_path.c_str();
+
+	// Reads through all the files in the folder, and loads them into the mesh
+	for (const auto& entry : std::filesystem::directory_iterator(folderpath))
+	{
+		if (std::filesystem::is_regular_file(entry))
+		{
+			std::cout << "============================================\n";
+			std::cout << "[NOTE]>> Loading file: \t" << entry.path().filename() << "\n";
+
+			//uid uids("dasdsadsadasdassssssssssadaddddddddddddddddddddddddddddddddddddddddddddddddddddadadsd");
+			//std::cout << uids.id<< "\n";
+
+			std::string filepath = compiled_geom_path + entry.path().filename().string();
+
+			++mResouceCnt;
+			++mMeshManager.mResouceCnt;
+
+			uid uids(filepath);
+			mMeshManager.SetupMesh(filepath, uids.id);
+			instance_info& tempInstance = AllocRscInfo();
+			tempInstance.m_Name = filepath;
+			tempInstance.m_GUID = uids.id;
+			tempInstance.m_Type = MESH;
+			m_Meshes.emplace(uids.id, &tempInstance);
+		}
+	}
+}
+
+void Resource::shader_Loader()
+{
+	// hardcode data path for now 
+	const std::string vertPath = "..\_GRAPHICS\shader_files\draw_vert.glsl";
+	const std::string fragPath = "..\_GRAPHICS\shader_files\draw_frag.glsl";
+	std::string combinedPath = vertPath + fragPath;
+
+	uid uids(combinedPath);
+	mShaderManager.SetupShader(vertPath, fragPath, uids.id);
+
+	instance_info& tempInstance = AllocRscInfo();
+	tempInstance.m_Name = combinedPath;
+	tempInstance.m_GUID = uids.id;
+	tempInstance.m_Type = SHADER;
+	m_Shaders.emplace(uids.id, &tempInstance);
+}
+
+void Resource::MaterialInstance_Loader()
+{
+	// hardcode material instance path for now 
+	const std::string materialinstancepath = "..\assets\Compressed\Skull.ctexture";
+
+
+}
+
+
+
+ShaderData& ShaderManager::AllocRscInfo()
+{
+	auto pTemp = m_pInfoBufferEmptyHead;
+
+
+	ShaderData* pNext = reinterpret_cast<ShaderData*>(m_pInfoBufferEmptyHead->m_pData);
+	m_pInfoBufferEmptyHead = pNext;
+
+	return *pTemp;
+}
+
+void ShaderManager::ReleaseRscInfo(ShaderData& RscInfo)
+{
+	// Add this resource info to the empty chain
+	RscInfo.m_pData = m_pInfoBufferEmptyHead;
+	m_pInfoBufferEmptyHead = &RscInfo;
+}
+
+ShaderData& ShaderManager::getShader(unsigned id) {
+	return *mSceneShaders[id];
+}
+
+void ShaderManager::Init()
+{
+	std::cout << "Initializing ShaderManager.\n";
+
+	for (int i = 0, end = (int)m_Shaderbuffer.size() - 1; i != end; ++i)
+	{
+		m_Shaderbuffer[i].m_pData = &m_Shaderbuffer[i + 1];
+	}
+	m_Shaderbuffer[m_Shaderbuffer.size() - 1].m_pData = nullptr;
+	m_pInfoBufferEmptyHead = m_Shaderbuffer.data();
+}
+
+void ShaderManager::SetupShader(std::string vertpath, std::string fragpath, unsigned uid)
+{
+	GFX::Shader localshader;
+	localshader.CreateShaderFromFiles(vertpath.c_str(), fragpath.c_str());
+
+	std::cout << " data for file path " << vertpath << "\n"; // testing 
+	
+	//uid uids(filepath);
+	ShaderData& temp = AllocRscInfo();
+	temp.shaderData = std::move(localshader);
+	mSceneShaders.emplace(std::make_pair(uid, &temp));
+}
+
+
+
+MaterialInstanceData& MaterialInstanceManager::AllocRscInfo()
+{
+	auto pTemp = m_pInfoBufferEmptyHead;
+
+
+	MaterialInstanceData* pNext = reinterpret_cast<MaterialInstanceData*>(m_pInfoBufferEmptyHead->m_pData);
+	m_pInfoBufferEmptyHead = pNext;
+
+	return *pTemp;
+}
+
+void MaterialInstanceManager::ReleaseRscInfo(MaterialInstanceData& RscInfo)
+{
+	// Add this resource info to the empty chain
+	RscInfo.m_pData = m_pInfoBufferEmptyHead;
+	m_pInfoBufferEmptyHead = &RscInfo;
+}
+
+MaterialInstanceData& MaterialInstanceManager::getMaterialInstance(unsigned id) {
+	return *mSceneMaterialInstances[id];
+}
+
+void MaterialInstanceManager::Init()
+{
+	std::cout << "Initializing MaterialInstanceManager.\n";
+
+	for (int i = 0, end = (int)m_MaterialInstancebuffer.size() - 1; i != end; ++i)
+	{
+		m_MaterialInstancebuffer[i].m_pData = &m_MaterialInstancebuffer[i + 1];
+	}
+	m_MaterialInstancebuffer[m_MaterialInstancebuffer.size() - 1].m_pData = nullptr;
+	m_pInfoBufferEmptyHead = m_MaterialInstancebuffer.data();
+
+}
+
+void MaterialInstanceManager::SetupMaterialInstance(std::string filepath, unsigned uid)
+{
+	GFX::Texture localMaterialInstance;
+	localMaterialInstance.Load(filepath.c_str());
+
+	std::cout << " data for file path " << filepath << "\n"; // testing 
+
+	//uid uids(filepath);
+	MaterialInstanceData& temp = AllocRscInfo();
+	temp.materialInstanceData = std::move(localMaterialInstance);
+	mSceneMaterialInstances.emplace(std::make_pair(uid, &temp));
+}
 
 
 
@@ -66,7 +222,6 @@ void MeshManager::ReleaseRscInfo(MeshData& RscInfo)
 
 }
 
-
 MeshData& MeshManager::get_Mesh(unsigned id) {
 	return *mSceneMeshes[id];
 }
@@ -84,37 +239,6 @@ void MeshManager::Init()
 	m_pInfoBufferEmptyHead = m_Meshbuffer.data();
 
 }
-
-void Resource::mesh_Loader() {
-	std::filesystem::path folderpath = compiled_geom_path.c_str();
-
-	// Reads through all the files in the folder, and loads them into the mesh
-	for (const auto& entry : std::filesystem::directory_iterator(folderpath))
-	{
-		if (std::filesystem::is_regular_file(entry))
-		{
-			std::cout << "============================================\n";
-			std::cout << "[NOTE]>> Loading file: \t" << entry.path().filename() << "\n";
-
-			//uid uids("dasdsadsadasdassssssssssadaddddddddddddddddddddddddddddddddddddddddddddddddddddadadsd");
-			//std::cout << uids.id<< "\n";
-
-			std::string filepath = compiled_geom_path + entry.path().filename().string();
-
-			++mResouceCnt;
-			++mMeshManager.mResouceCnt;
-
-			uid uids(filepath);
-			mMeshManager.SetupMesh(filepath,uids.id);
-			instance_info& tempInstance = AllocRscInfo();
-			tempInstance.m_Name = filepath;
-			tempInstance.m_GUID = uids.id;
-			tempInstance.m_Type = MESH;
-			m_Meshes.emplace(uids.id, &tempInstance);
-		}
-	}
-}
-
 
 void MeshManager::SetupMesh(std::string filepath,unsigned id)
 {
