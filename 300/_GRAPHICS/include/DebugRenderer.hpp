@@ -93,9 +93,11 @@ namespace GFX
 		const char* fragmentShaderCode = R"(
 		#version 450 core
 		layout(location = 0) in vec4 color;
-		layout(location = 0) out vec4 fragColor;
+		layout(location = 0) out vec4 fragColor0;
+		layout(location = 1) out vec4 fragColor1;
 		void main() {
-			fragColor = color;
+			fragColor0 = color;
+			fragColor1 = color;
 		}
 		)";
 	};

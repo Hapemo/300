@@ -15,7 +15,7 @@ void GraphicsSystem::Init()
 	m_Fbo.Create(m_Width, m_Height, m_EditorMode);
 
 	// Set Cameras' starting position
-	SetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_ALL, { 0, 0, 10 });
+	SetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_ALL, { 0, 0, 200 });
 	SetCameraTarget(CAMERA_TYPE::CAMERA_TYPE_ALL, { 0, 0, 0 });
 
 	m_GameCamera.Update();
@@ -24,11 +24,16 @@ void GraphicsSystem::Init()
 
 void GraphicsSystem::Update(float dt)
 {
+	// To be removed once entity to be drawn created
+	m_Renderer.AddSphere(m_EditorCamera.position(), { 50, 150, -300 }, 100.f, { 0, 1, 0, 1 });
+	m_Renderer.AddAabb({ 100, 300, -500 }, { 200, 300, 100 }, { 1, 0, 0, 1 });
+
 	// TODO: Retrieve the mesh instances to be drawn
 
 	// Prepare and bind the Framebuffer to be rendered on
 	m_Fbo.PrepForDraw();
-
+	m_Renderer.RenderAll(m_EditorCamera.viewProj());
+	m_Renderer.ClearInstances();
 	// TODO: Render all instances of a given mesh
 
 	// TODO: Clears all instances that have been rendered from local buffer

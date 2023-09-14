@@ -69,6 +69,7 @@ void EditorApplication::MainUpdate()
         //ScriptTestUpdate();
 
         // Graphics update
+        mWindow.Update();
 
         mMaineditor.UIupdate(mWindow.GetHandle());
         //mMaineditor.WindowUpdate(mWindow.GetHandle());
@@ -76,7 +77,6 @@ void EditorApplication::MainUpdate()
 
         SecondUpdate(); // This should always be the last
 
-        mWindow.Update();
 
     }
 }
