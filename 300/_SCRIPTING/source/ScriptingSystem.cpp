@@ -49,6 +49,7 @@ generate the overall performance of the scripting system.
 
 //sol::state ScriptingSystem::luaState;
 //bool ScriptingSystem::once;
+bool ScriptingSystem::printOnce = false;
 
 void ScriptingSystem::Init()
 {
@@ -76,20 +77,13 @@ void ScriptingSystem::Init()
         Insert engine functions to LUA
      */
      /******************************************************************************/
-    //LuaEngine();
-    //LuaGameStateMgr();
-    //LuaEntityMgr();
-    //LuaGraphicsComp();
-    //LuaScriptComp();
-    //LuaAnimation();
-    //LuaGameObject();
+    LuaEngine();
+    LuaEntity();
+    LuaGeneral();
+    LuaTransform();
+    LuaRigidBody();
+    LuaScript();
     LuaInput();
-    //LuaLayer();
-    //LuaTimer();
-    //LuaAudio();
-    //LuaFont();
-    //LuaHelperFunc();
-    //LuaRigidBody();
 
 
     /******************************************************************************/
@@ -197,24 +191,35 @@ void ScriptingSystem::Exit()
 
 void ScriptingSystem::ScriptingInitTest()
 {
-    Entity player = systemManager->ecs->NewEntity();
-    std::cout << "Player (EntityID: " << std::to_string(unsigned int(player.id)) << ")added." << std::endl;
-    Entity enemy1 = systemManager->ecs->NewEntity();
-    std::cout << "Enemy1 (EntityID: " << std::to_string(unsigned int(enemy1.id)) << ")added." << std::endl;
-    Entity enemy2 = systemManager->ecs->NewEntity();
-    std::cout << "Enemy2 (EntityID: " << std::to_string(unsigned int(enemy2.id)) << ")added." << std::endl;
+    //Entity player = systemManager->ecs->NewEntity();
+    //std::cout << "Player (EntityID: " << std::to_string(unsigned int(player.id)) << ")added." << std::endl;
+    //Entity enemy1 = systemManager->ecs->NewEntity();
+    //std::cout << "Enemy1 (EntityID: " << std::to_string(unsigned int(enemy1.id)) << ")added." << std::endl;
+    //Entity enemy2 = systemManager->ecs->NewEntity();
+    //std::cout << "Enemy2 (EntityID: " << std::to_string(unsigned int(enemy2.id)) << ")added." << std::endl;
 
-    player.AddComponent<Transform>();
-    player.AddComponent<Scripts>();
+    //player.AddComponent<Transform>();
+    //player.AddComponent<Scripts>();
 
-    enemy1.AddComponent<Transform>();
-    enemy1.AddComponent<Scripts>();
+    //enemy1.AddComponent<Transform>();
+    //enemy1.AddComponent<Scripts>();
 
-    enemy2.AddComponent<Scripts>();
+    //enemy2.AddComponent<Scripts>();
 }
 
 void ScriptingSystem::ScriptingUpdateTest()
 {
+    // Get all exisiting entities
+    if (!printOnce)
+    {
+        for (auto& elem : systemManager->ecs->GetEntitiesWith<General>())
+        {
+
+            std::cout << "Player (EntityID: " << std::to_string(unsigned int(elem)) << ")added." << std::endl;
+        }
+        std::cout << std::endl;
+        printOnce = !printOnce;
+    }
     // Button press number 1 to add new script 
     if (Input::CheckKey(E_STATE::PRESS, E_KEY::_1))
     {

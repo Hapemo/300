@@ -23,6 +23,7 @@ to select current Entity and activates inspector
 
 #include "imgui.h"
 #include "Hierarchy.h"
+#include "../../../_SCRIPTING/include/ScriptingSystem.h"
 
 
 entt::entity Hierarchy::selectedId;
@@ -42,6 +43,9 @@ void Hierarchy::update()
         
 
         newEntity.GetComponent<General>().name = "NewObject"/* + static_cast<int> (newEntity.id)*/;
+
+        // TO delete after port into IMGUI
+        ScriptingSystem::printOnce = !ScriptingSystem::printOnce;
     }
 
 

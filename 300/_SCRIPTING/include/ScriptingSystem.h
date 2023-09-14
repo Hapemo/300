@@ -83,5 +83,6 @@ public:
     // To delete after port in to imGui
     void ScriptingInitTest();
     void ScriptingUpdateTest();
+    static bool printOnce;
 private:
 };
