@@ -85,6 +85,6 @@ public:
 	static void AddScript(Entity id, std::string fileName);
 	//static void LoadRunScript(Entity entity);
 
-	std::string scriptFile{};
+	std::string mScriptFile{};
 	std::vector <Script> scriptsContainer;
 };

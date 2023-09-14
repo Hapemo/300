@@ -28,6 +28,9 @@ Setting up specification for frame buffer rendering
 #include <math.h>
 
 
+
+
+
 //bool SceneWindow::follow = false;
 //
 //bool				SceneWindow::Move	={ true };
@@ -35,12 +38,16 @@ Setting up specification for frame buffer rendering
 //bool				SceneWindow::Rotate	={ true };
 
 
-void SceneWindow::init() {
+void SceneWindow::init() 
+{
 	//empty
+    m_ModelShader.CreateShaderFromFiles("./shader_files/draw_vert.glsl", "./shader_files/draw_frag.glsl");
 }
 
 void SceneWindow::update()
 {
 
 	scene_m_Hovered = ImGui::IsWindowHovered();	
+
+	ImGui::Image((ImTextureID)(intptr_t)systemManager->mGraphicsSystem->GetEditorAttachment(),ImVec2(1920, 1080));
 }

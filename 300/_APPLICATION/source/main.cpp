@@ -61,7 +61,8 @@ int main() {
     }
 }
 
-void RealMain() {
+void RealMain() 
+{
     Application::Init();
     Application::MainUpdate();
     Application::Exit();

@@ -101,7 +101,6 @@ void GFX::DemoScene::Initialize()
 #if ANIMS_TEST
     // sets the global animator data. ideally, this should be set in entity creation. for now, its here for testing.
     mObjectAnimator.SetAnimation(&MeshManager::GetInstance().mSceneMeshes[2].mAnimation[0]);
-
 #endif
     
 

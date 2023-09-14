@@ -33,12 +33,12 @@ void Hierarchy::init() {}
 
 void Hierarchy::update()
 {
-    auto allObjects = ECS::GetInstance()->GetEntitiesWith<Transform>();
+    auto allObjects = systemManager->ecs->GetEntitiesWith<Transform>();
 
 
     if (ImGui::Button("Add", ImVec2(50, 50)))
     {
-        Entity newEntity = ECS::GetInstance()->NewEntity();
+        Entity newEntity = systemManager->ecs->NewEntity();
         
 
         newEntity.GetComponent<General>().name = "NewObject"/* + static_cast<int> (newEntity.id)*/;
@@ -83,7 +83,7 @@ void Hierarchy::update()
         if (ImGui::Selectable("Delete")) {
             selectionOn = false;
             //Entity ent(Hierarchy::selectedId);
-            ECS::ECS::GetInstance()->DeleteEntity(Hierarchy::selectedId);
+            systemManager->ecs->DeleteEntity(Hierarchy::selectedId);
         }
         mPopup = false;
         ImGui::EndPopup();
