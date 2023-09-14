@@ -151,6 +151,10 @@ public:
     Resource(const Resource&) = delete;
     ~Resource() = default;
 
+    void Init();
+    void Update();
+    void Exit();
+
     void mesh_Loader();
     void shader_Loader();
     void MaterialInstance_Loader();
@@ -158,7 +162,7 @@ public:
     void get_Texture(uid<> id);
     void get_Mesh(uid<> id);
     void get_Texture(std::string name);
-    void get_Mesh(std::string name);
+    GFX::Mesh& get_Mesh(std::string name);
 
     instance_info& AllocRscInfo(void);
     void ReleaseRscInfo(instance_info& RscInfo);
