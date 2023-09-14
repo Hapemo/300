@@ -2,13 +2,18 @@
 #include "entt.hpp";
 #include "Singleton.h"
 #include "ECS_Systems.h"
+//#include "Prefab.h"
 
 struct Entity;
 
 class ECS
 {
 public:
-	ECS() = default;
+	ECS() 
+	{ 
+		entt::entity e = registry.create(); 
+	};
+
 	entt::registry registry;
 
 	Entity NewEntity();
@@ -22,6 +27,8 @@ public:
 	auto GetEntitiesWith();
 
 	void DeleteAllEntities();
+
+	//Entity NewPrefabEntity(const Prefab& prefab);
 };
 
 struct Entity
@@ -30,6 +37,10 @@ struct Entity
 
 	Entity() = delete;
 	Entity(entt::entity id);
+	Entity(std::uint32_t id);
+
+	Entity(const Entity& entity);
+	void operator=(const Entity& entity);
 
 	template <typename Component>
 	Component& AddComponent();
@@ -40,17 +51,20 @@ struct Entity
 	template <typename Component>
 	Component& GetComponent();
 
+	template <typename Component>
+	const Component& GetComponent() const;
+
 	template <typename Component, typename OtherComponent, typename ...Components>
 	auto GetComponent();
 
 	template <typename Component>
-	bool HasComponent();
+	bool HasComponent() const;
 
 	template <typename ... Components>
-	bool HasAnyOfComponents();
+	bool HasAnyOfComponents() const;
 
 	template <typename ... Components>
-	bool HasAllOfComponents();
+	bool HasAllOfComponents() const;
 
 	template <typename Component>
 	void RemoveComponent();
@@ -86,6 +100,12 @@ Component& Entity::GetComponent()
 	return systemManager->ecs->registry.get_or_emplace<Component>(id, Component());
 }
 
+template<typename Component>
+const Component& Entity::GetComponent() const
+{
+	return systemManager->ecs->registry.get_or_emplace<Component>(id, Component());
+}
+
 template <typename Component, typename OtherComponent, typename ...Components>
 auto Entity::GetComponent()
 {
@@ -93,19 +113,19 @@ auto Entity::GetComponent()
 }
 
 template <typename Component>
-bool Entity::HasComponent()
+bool Entity::HasComponent() const
 {
 	return systemManager->ecs->registry.all_of<Component>(id);
 }
 
 template <typename ... Components>
-bool Entity::HasAnyOfComponents()
+bool Entity::HasAnyOfComponents() const
 {
 	return systemManager->ecs->registry.any_of<Components...>(id);
 }
 
 template <typename ... Components>
-bool Entity::HasAllOfComponents()
+bool Entity::HasAllOfComponents() const 
 {
 	return systemManager->ecs->registry.all_of<Components...>(id);
 }

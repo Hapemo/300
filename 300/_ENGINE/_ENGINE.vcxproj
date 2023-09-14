@@ -154,6 +154,8 @@
     <ClInclude Include="include\ECS\ECS.h" />
     <ClInclude Include="include\ECS\ECS_Components.h" />
     <ClInclude Include="include\ECS\ECS_Systems.h" />
+    <ClInclude Include="include\ECS\Prefab.h" />
+    <ClInclude Include="include\ECS\Tags.h" />
     <ClInclude Include="include\Graphics\GraphicsSystem.h" />
     <ClInclude Include="include\Multithread.h" />
     <ClInclude Include="include\Physics\PhysicsTypes.h" />
