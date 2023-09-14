@@ -134,6 +134,7 @@ void GFX::DebugRenderer::AddSphere(vec3 const& camPos, vec3 const& center, float
 
 	// Add the disc along the X-Y axis
 	mSphereMesh.mLTW.push_back(modelToWorld);
+	mSphereMesh.mColors.push_back(color);
 
 	// Add the disc along the Y-Z axis
 	glm::mat4 modelToWorldYZ = glm::rotate(modelToWorld, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
@@ -292,7 +293,7 @@ void GFX::DebugRenderer::SetupSphereMesh()
 	}
 	indices[SLICES] = 0;
 
-	mSphereMesh.Setup(positions, indices);
+	mSphereMesh.Setup(positions, indices, std::vector<vec2>{}, 4);
 }
 
 void GFX::DebugRenderer::RenderAllPoints(mat4 const& viewProj)

@@ -155,7 +155,7 @@ void GFX::Mesh::Setup(const _GEOM::Geom& GeomData)
 
 
 // to remove when i'm done with animation.. keeping as reference for now
-void GFX::Mesh::Setup(std::vector<vec3> const& positions, std::vector<unsigned int> const& indices, std::vector<vec2> const& TexCoords)
+void GFX::Mesh::Setup(std::vector<vec3> const& positions, std::vector<unsigned int> const& indices, std::vector<vec2> const& TexCoords, unsigned colorDivisor)
 {
 	// Create VAO
 	mVao.Create();
@@ -179,7 +179,7 @@ void GFX::Mesh::Setup(std::vector<vec3> const& positions, std::vector<unsigned i
 
 	// Attach Color VBO and divisor to VAO
 	mVao.AddAttribute(1, 1, 4, GL_FLOAT);											// location 1, binding vao index 1
-	mVao.AddAttributeDivisor(1, 1);													// divisor at vao index 1
+	mVao.AddAttributeDivisor(1, colorDivisor);										// divisor at vao index 1
 	mVao.AttachVertexBuffer(mColorVbo.GetID(), 1, 0, sizeof(vec4));					// Attach to index 1
 
 	/////////////////////////////////////////
