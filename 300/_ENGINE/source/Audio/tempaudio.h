@@ -10,11 +10,12 @@ enum class AUDIO_TYPE :unsigned char
 	BGM, SFX
 };
 
-struct AudioComponent
-{
-	AUDIO_TYPE type;
-	std::string name;
-};
+//struct AudioComponent
+//{
+//	AUDIO_TYPE type;
+//	std::string name;
+//	bool isPlaying;
+//};
 
 class AudioManager
 {
@@ -29,5 +30,4 @@ public:
 	void Exit();
 	AudioManager();
 	~AudioManager();
-
 };
