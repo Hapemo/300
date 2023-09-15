@@ -15,9 +15,9 @@ void GraphicsSystem::Init()
 	m_Fbo.Create(m_Width, m_Height, m_EditorMode);
 
 	// Set Cameras' starting position
-	SetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_ALL, { 0, 0, 200 });								// Position of camera
+	SetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_ALL, { 50, 0, 200 });							// Position of camera
 	SetCameraTarget(CAMERA_TYPE::CAMERA_TYPE_ALL, { 0, 0, 0 });									// Target of camera
-	SetCameraProjection(CAMERA_TYPE::CAMERA_TYPE_ALL, 60.f, m_Window->size(), 0.1f, 500.f);		// Projection of camera
+	SetCameraProjection(CAMERA_TYPE::CAMERA_TYPE_ALL, 60.f, m_Window->size(), 0.1f, 900.f);		// Projection of camera
 
 	UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_ALL);
 }
@@ -28,7 +28,7 @@ void GraphicsSystem::Update(float dt)
 
 	// To be removed once entity to be drawn created
 	m_Renderer.AddSphere(m_EditorCamera.position(), { 0, 0, -300 }, 100.f, { 0, 1, 0, 1 });
-	//m_Renderer.AddAabb({ 100, 300, -500 }, { 200, 300, 100 }, { 1, 0, 0, 1 });
+	m_Renderer.AddAabb({ -50, -60, -200 }, { 10, 30, -0.1f }, { 1, 0, 0, 1 });
 
 	// TODO: Retrieve the mesh instances to be drawn
 
