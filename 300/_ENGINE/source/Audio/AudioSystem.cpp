@@ -7,9 +7,9 @@
 
 static bool once = false;
 
-#pragma region <SoundInfo> Class
-SoundInformation::SoundInformation(std::string afile_path, std::string asound_name, bool ais3D, bool aisLooping, AUDIO_TYPE audio_type) : file_path(afile_path), sound_name(asound_name), is3D(ais3D),
-																																		  isLooping(aisLooping), isLoaded(false)
+#pragma region <SoundInformation> Class
+SoundInformation::SoundInformation(std::string afile_path, std::string asound_name, bool ais3D, bool aisLooping, AUDIO_TYPE audiotype) : file_path(afile_path), sound_name(asound_name), is3D(ais3D),
+																																		 isLooping(aisLooping), isLoaded(false) , audio_type(audiotype)
 {
 	switch (audio_type)
 	{
@@ -24,7 +24,68 @@ SoundInformation::SoundInformation(std::string afile_path, std::string asound_na
 	}
 }
 
+bool SoundInformation::IsLoaded() const
+{
+	return isLoaded;
+}
 
+bool SoundInformation::Is3D() const
+{
+	return is3D;
+}
+
+bool SoundInformation::IsLooping() const
+{
+	return isLooping;
+}
+
+std::string SoundInformation::GetFilePath() const
+{
+	return file_path; 
+}
+
+bool SoundInformation::IsSFX() const
+{
+	return isSFX;
+}
+
+bool SoundInformation::IsBGM() const
+{
+	return isBGM;
+}
+
+
+void SoundInformation::SetIsLoaded(bool isloaded)
+{
+	isLoaded = isloaded;
+}
+
+void SoundInformation::SetIs3D(bool is3d)
+{
+	is3D = is3d;
+}
+void SoundInformation::SetIsLooping(bool islooping)
+{
+	isLooping = islooping;
+}
+
+void SoundInformation::SetFilePath(std::string filepath)
+{
+	file_path = filepath;
+}
+
+#pragma endregion
+
+#pragma region <Sound> Class
+Sound::Sound() : position({0.0f,0.0f,0.0f}) , sound(nullptr)
+{
+
+}
+
+Sound::Sound(FMOD_VECTOR aPosition, FMOD::Sound* aSound) : position(aPosition) , sound(aSound)
+{
+
+}
 #pragma endregion
 
 #pragma region SOUND DATABASE THINGS
@@ -107,11 +168,13 @@ void AudioManager::Init()
 	AddSoundInfoDatabase(sound_2); 
 	AddSoundInfoDatabase(sound_3);
 
+	LoadAudioDatabase();
+
 	// Test Load Sound
-	LoadAudioFile("../assets/Audio/farm_ambience.wav", "farm", AUDIO_TYPE::AUDIO_BGM);
-	LoadAudioFile("../assets/Audio/NPC_Greeting.wav", "greeting", AUDIO_TYPE::AUDIO_BGM);
-	// Test Spatial Audio
-	LoadAudioFile("../assets/Audio/tuning-radio-7150.wav", "radio", AUDIO_TYPE::AUDIO_SFX, true, { 0.0f,0.0f,0.0f });
+	//LoadAudioFile("../assets/Audio/farm_ambience.wav", "farm", AUDIO_TYPE::AUDIO_BGM);
+	//LoadAudioFile("../assets/Audio/NPC_Greeting.wav", "greeting", AUDIO_TYPE::AUDIO_BGM);
+	//// Test Spatial Audio
+	//LoadAudioFile("../assets/Audio/tuning-radio-7150.wav", "radio", AUDIO_TYPE::AUDIO_SFX, true, { 0.0f,0.0f,0.0f });
 }
 
 void AudioManager::Update(float dt)
@@ -365,7 +428,41 @@ void AudioManager::LoadAudioFile(std::string audiofilePath, std::string audio_na
 
 void AudioManager::LoadAudioDatabase()
 {
-	std::cout << "Loading Audio into the FMOD Core System ..." << std::endl;
+	std::cout << "Loading Audio from [SoundInfo Database] into the FMOD Core System ..." << std::endl;
+
+	for (auto sound_info : mSoundInfo)
+	{
+		// Load File Path
+		if (!sound_info.second->IsLoaded()) // if this sound file has not loaded ...
+		{ 
+			// Mode Selector  
+			FMOD_MODE mode = FMOD_DEFAULT;												   // [Normal Setting] - by default.
+			mode |= sound_info.second->Is3D() ? FMOD_3D : FMOD_2D;					       // [3D Audio]       - checks for (spatial flag) -> user-defined arguement
+			mode |= sound_info.second->IsLooping() ? FMOD_LOOP_NORMAL : FMOD_LOOP_OFF;     // [Looping]		- checks for (looping flag) -> user-defined arguement
+
+			FMOD_VECTOR audio_pos = { 0.0f,0.0f,0.0f };
+			Sound* new_sound = new Sound{audio_pos , nullptr };
+
+			std::string audio_file_path = sound_info.second->GetFilePath();
+			bool check = ErrCodeCheck(system->createSound(sound_info.second->sound_name.c_str(), mode, 0, &new_sound->sound));
+
+			if (check)
+			{
+				switch (sound_info.second->audio_type)
+				{
+					case AUDIO_BGM:
+						mSoundsBGM[sound_info.second->sound_name] = new_sound; // push into database.
+						sound_info.second->SetIsLoaded(true);
+						break;
+					case AUDIO_SFX:
+						mSoundsSFX[sound_info.second->sound_name] = new_sound; // push into database.
+						sound_info.second->SetIsLoaded(true);
+						break;
+
+				}
+			}
+		}
+	}
 
 	/*for (unsigned int i = 0; i < mSoundInfo.size(); i++)
 	{

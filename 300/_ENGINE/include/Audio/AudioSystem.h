@@ -29,16 +29,31 @@ enum AUDIO_TYPE
 class SoundInformation
 {
 public:
+	unsigned int unique_ID;	    // Probably have to go through the database and update incremental (Unique ID)
+	std::string	 sound_name;
+	AUDIO_TYPE   audio_type;	// [Audio Type]
+
+public:
 	SoundInformation() = default;
-	SoundInformation(std::string afile_path, std::string asound_name, bool ais3D, bool aisLooping, AUDIO_TYPE audio_type);
+	SoundInformation(std::string afile_path, std::string asound_name, bool ais3D, bool aisLooping, AUDIO_TYPE audiotype);
+	
+	bool IsLoaded() const;
+	bool Is3D() const;
+	bool IsLooping() const;
+	std::string GetFilePath() const;
+	bool IsSFX() const; 
+	bool IsBGM() const; 
+
+	void SetIsLoaded(bool isloaded);
+	void SetIs3D(bool is3d);
+	void SetIsLooping(bool islooping);
+	void SetFilePath(std::string filepath);
 
 private:
-	unsigned int unique_ID;	    // Probably have to go through the database and update incremental (Unique ID)
 	std::string  file_path;		// Can reference this to find where this sound is located at. 
-	std::string	 sound_name;	// Give this [Audio file] a name!!
 	bool		 is3D;			// [3D - Spatial Audio] : is this a 3D audio? (do we need this?)
 	bool		 isLooping;		// [Looping]			: is this audio going to loop
-	bool		 isLoaded;      // [Loaded or Not]      : is this audio loaded into the system already?  (only updated during <Init> Loop
+	bool		 isLoaded;      // [Loaded or Not]      : is this audio loaded into the system already?  (only updated during <Init> Loop)
 	bool		 isSFX;			// [SFX Bool]           : exsits in the <SFX Sound Map>
 	bool		 isBGM;			// [BGM Bool]			: exists in the <BGM Sound Map>
 
@@ -47,8 +62,12 @@ private:
 };
 
 // Added 9/4/2023 (thinking how to integrate with component data)
-struct Sound
+class Sound
 {  
+public:
+	Sound();
+	Sound(FMOD_VECTOR position, FMOD::Sound* sound);
+
 	FMOD_VECTOR	 position; 
 	FMOD::Sound* sound;
 };
