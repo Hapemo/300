@@ -1,13 +1,12 @@
 
 
 #pragma once
-#include <fmod_studio.hpp>
+//#include <fmod_studio.hpp>
 #include <fmod.hpp>		// Include [FMOD] Library
 #include <iostream>
 #include <map>
 #include <filesystem>
 #include "Input.h"
-#include "Singleton.h"
 
 class AudioManager;
 //class AudioListener;
@@ -88,12 +87,12 @@ public:
 };
 
 
-class AudioManager : public Singleton<AudioManager>
+class AudioManager
 {
 public: 
 	typedef std::unordered_map<int, Channel*>				      ChannelMap;
 	typedef std::unordered_map<std::string, Sound*>				  SoundMap;
-	typedef std::unordered_map<std::string, FMOD::Studio::Bank*>  BankMap;
+	/*typedef std::unordered_map<std::string, FMOD::Studio::Bank*>  BankMap;*/
 	typedef std::unordered_map<unsigned int, SoundInformation*>	  SoundInfoMap;
 
 	int sfx_channel_no = 0;
@@ -105,6 +104,7 @@ public:
 
 	/* Create System Object + Initialization */
 	AudioManager();											// Initialization of (FMOD System)
+	~AudioManager();
 
 #pragma region SOUND DATABASE THINGS
 	void AddSoundInfoDatabase(SoundInformation* sound_info);
@@ -245,14 +245,14 @@ public:
 	// AudioSystem* system_obj;								// Stores all the relevant FMOD data.
 
 	FMOD::System* system;									// System Object
-	FMOD::Studio::System* studio_system;					// [FMOD Studio API]		 - Studio System Object (Events)
+	//FMOD::Studio::System* studio_system;					// [FMOD Studio API]		 - Studio System Object (Events)
 	FMOD_RESULT	  result_code;								// Used to troubleshoot stuff, tells us if an operation is successful or not.
 	ChannelMap	  mSFXChannels;								// [List of SFX Channels]	 - Keeps Track of which Channels are Available. (Channels Start from ID: 0)
 	ChannelMap	  mBGMChannels;								// [List of BGM Channels]    - (BGM) Reserved Channels
 	SoundMap	  mSoundsSFX;							    // [List of SFX]			 - Stores all the (SFX) Sound files that has been loaded into the system.
 	SoundMap	  mSoundsBGM;								// [List of BGM]			 - Stores all the (BGM) Sound files that has been loaded into the system.
 	SoundInfoMap  mSoundInfo;								
-	BankMap		  mBank;									// [Banks - Event Based]	 - Stores all the sounds and information for each events
+	//BankMap		  mBank;									// [Banks - Event Based]	 - Stores all the sounds and information for each events
 	
 };
 

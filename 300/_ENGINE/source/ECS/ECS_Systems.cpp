@@ -35,16 +35,16 @@ void SystemManager::Update(float dt)
 {
 	mPhysicsSystem.get()->Update(dt);
 	mScriptingSystem.get()->Update(dt);
-	mAudioSystem.get()->Update(dt);
 	mGraphicsSystem.get()->Update(dt);
+	mAudioSystem.get()->Update(dt);
 }
 
 void SystemManager::Exit()
 {
 	mPhysicsSystem.get()->Exit();
 	mScriptingSystem.get()->Exit();
-	mAudioSystem.get()->Exit();
 	mGraphicsSystem.get()->Exit();
+	mAudioSystem.get()->Exit();
 }
 
 PhysicsSystem* SystemManager::GetPhysicsPointer()

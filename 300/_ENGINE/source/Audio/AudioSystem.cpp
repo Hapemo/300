@@ -126,6 +126,7 @@ void AudioManager::Init()
 {	
 	// Create System
 	result_code = FMOD::System_Create(&system);	 // [Initializes the Audio System] -> returns the system object to this class. (&system)'
+
 	std::cout << "System Create: ";
 	ErrCodeCheck(result_code);
 
@@ -371,6 +372,46 @@ void AudioManager::Exit()
 AudioManager::AudioManager()
 {
 	//system_obj = new AudioSystem(); // Does the initialization for the system.
+}
+
+AudioManager::~AudioManager()
+{   
+	// Realease all SFX Channels
+	for (auto channel : mSFXChannels)
+	{
+		channel.second->channel->stop(); 
+	}
+
+	// Release all BGM Channels
+	for (auto channel : mBGMChannels)
+	{
+		channel.second->channel->stop();
+	}
+
+	// Release SFX Sounds
+	for (auto sfx_sound : mSoundsSFX)
+	{
+		sfx_sound.second->sound->release();
+	}
+
+	// Release BGM Sounds
+	for (auto bgm_sound : mSoundsBGM)
+	{
+		bgm_sound.second->sound->release();
+	}
+
+	// Release All SoundInformation Data
+	for (std::pair<unsigned int, SoundInformation*> sound_info : mSoundInfo)
+	{
+		delete sound_info.second;
+	}
+
+	system->close();
+	system->release();
+	//studio_system->release();
+
+
+
 }
 
 int AudioManager::ErrCodeCheck(FMOD_RESULT result)
