@@ -158,6 +158,7 @@
     <ClInclude Include="include\Physics\PhysX.h" />
     <ClInclude Include="include\Resource\Guid.h" />
     <ClInclude Include="include\Resource\ResourceManager.h" />
+    <ClInclude Include="source\Audio\tempaudio.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Audio\AudioSystem.cpp" />
