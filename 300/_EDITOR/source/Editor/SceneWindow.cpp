@@ -49,5 +49,5 @@ void SceneWindow::update()
 
 	scene_m_Hovered = ImGui::IsWindowHovered();	
 
-	ImGui::Image((ImTextureID)(intptr_t)systemManager->mGraphicsSystem->GetGameAttachment(),ImVec2(1920, 1080));
+	ImGui::Image((ImTextureID)(intptr_t)systemManager->mGraphicsSystem->GetEditorAttachment(),ImVec2(1920, 1080));
 }

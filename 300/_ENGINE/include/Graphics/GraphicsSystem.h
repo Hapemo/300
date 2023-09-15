@@ -41,6 +41,7 @@ public:
 	// -- Camera Functions --
 	void SetCameraPosition(CAMERA_TYPE type, vec3 position);
 	void SetCameraTarget(CAMERA_TYPE type, vec3 position);
+	void SetCameraProjection(CAMERA_TYPE type, float fovDegree, ivec2 size, float nearZ, float farZ);
 	void UpdateCamera(CAMERA_TYPE type);
 
 	vec3 GetCameraPosition(CAMERA_TYPE type);

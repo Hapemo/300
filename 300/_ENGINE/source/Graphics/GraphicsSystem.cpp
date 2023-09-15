@@ -15,21 +15,19 @@ void GraphicsSystem::Init()
 	m_Fbo.Create(m_Width, m_Height, m_EditorMode);
 
 	// Set Cameras' starting position
-	SetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_ALL, { 0, 0, 200 });
-	SetCameraTarget(CAMERA_TYPE::CAMERA_TYPE_ALL, { 0, 0, 0 });
+	SetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_ALL, { 0, 0, 200 });								// Position of camera
+	SetCameraTarget(CAMERA_TYPE::CAMERA_TYPE_ALL, { 0, 0, 0 });									// Target of camera
+	SetCameraProjection(CAMERA_TYPE::CAMERA_TYPE_ALL, 60.f, m_Window->size(), 0.1f, 500.f);		// Projection of camera
 
 	UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_ALL);
 }
 
 void GraphicsSystem::Update(float dt)
 {
-	SetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_ALL, { 0, 0, 200 });
-	SetCameraTarget(CAMERA_TYPE::CAMERA_TYPE_ALL, { 0, 0, 0 });
-
 	UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_ALL);
 
 	// To be removed once entity to be drawn created
-	m_Renderer.AddSphere(m_EditorCamera.position(), { -400, -400, 300 }, 100.f, { 0, 1, 0, 1 });
+	m_Renderer.AddSphere(m_EditorCamera.position(), { 0, 0, -300 }, 100.f, { 0, 1, 0, 1 });
 	//m_Renderer.AddAabb({ 100, 300, -500 }, { 200, 300, 100 }, { 1, 0, 0, 1 });
 
 	// TODO: Retrieve the mesh instances to be drawn
@@ -96,6 +94,25 @@ void GraphicsSystem::SetCameraTarget(CAMERA_TYPE type, vec3 position)
 	case CAMERA_TYPE::CAMERA_TYPE_ALL:
 		m_GameCamera.SetTarget(position);
 		m_EditorCamera.SetTarget(position);
+		break;
+	}
+}
+
+void GraphicsSystem::SetCameraProjection(CAMERA_TYPE type, float fovDegree, ivec2 size, float nearZ, float farZ)
+{
+	switch (type)
+	{
+	case CAMERA_TYPE::CAMERA_TYPE_GAME:
+		m_GameCamera.SetProjection(fovDegree, size, nearZ, farZ);
+		break;
+
+	case CAMERA_TYPE::CAMERA_TYPE_EDITOR:
+		m_EditorCamera.SetProjection(fovDegree, size, nearZ, farZ);
+		break;
+
+	case CAMERA_TYPE::CAMERA_TYPE_ALL:
+		m_GameCamera.SetProjection(fovDegree, size, nearZ, farZ);
+		m_EditorCamera.SetProjection(fovDegree, size, nearZ, farZ);
 		break;
 	}
 }
