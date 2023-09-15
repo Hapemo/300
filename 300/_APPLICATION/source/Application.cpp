@@ -35,15 +35,15 @@ void Application::Init()
 void Application::StartUp() 
 {
     //gfx glew and glfw startup
-    systemManager = new SystemManager();
     GFX::Window::InitializeSystem();
     mWindow = GFX::Window({ 1920, 1080 });
     mWindow.SetWindowTitle("Application");
+    systemManager = new SystemManager();
 }
 
 void Application::SystemInit() 
 {
-    systemManager->Init(&mWindow);
+    systemManager->Init(false, &mWindow);
     FPSManager::Init();
     Input::Init();
     // To remove (Script test with entities)
@@ -51,9 +51,9 @@ void Application::SystemInit()
     //gfx init
     // 
     // test serialization
-    Entity ent1 = ECS::GetInstance()->NewEntity();
-    Entity ent2 = ECS::GetInstance()->NewEntity();
-    Entity ent3 = ECS::GetInstance()->NewEntity();
+    Entity ent1 = systemManager->ecs->NewEntity();
+    Entity ent2 = systemManager->ecs->NewEntity();
+    Entity ent3 = systemManager->ecs->NewEntity();
 
     ent1.GetComponent<General>().name = "Testing";
     ent1.GetComponent<General>().isActive = true;
@@ -70,13 +70,22 @@ void Application::SystemInit()
     ent3.GetComponent<General>().tag = TAG::UNKNOWN;
     ent3.GetComponent<General>().subtag = SUBTAG::ACTIVE;
 
+
     ObjectFactory::SerializeScene("../resources/Scenes/test.json");
+
+    auto view = systemManager->ecs->GetEntitiesWith<General, Transform>();
+    int size = view.size();
+    for (Entity e : view)
+    {
+        e.GetComponent<Transform>();
+    }
     // end test serialization
 }
 
 void Application::MainUpdate() 
 {
-    while (!glfwWindowShouldClose(mWindow.GetHandle())) {
+    while (!glfwWindowShouldClose(mWindow.GetHandle())) 
+    {
         FirstUpdate();
         SystemUpdate();
         // To remove (Script test with entities)
@@ -85,6 +94,7 @@ void Application::MainUpdate()
 
         // Graphics update
         mWindow.Update();
+
     }
 }
 
@@ -102,13 +112,13 @@ void Application::SystemUpdate()
 void Application::SecondUpdate() 
 {
     Input::UpdatePrevKeyStates();
-    //FPSManager::LimitFPS(0);
+    FPSManager::LimitFPS(60);
 }
 
 void Application::Exit() 
 {
     systemManager->Exit();
-    ECS::GetInstance()->DeleteAllEntities();
+    systemManager->ecs->DeleteAllEntities();
     SingletonManager::destroyAllSingletons();
     mWindow.DestroySystem();
     delete systemManager;
