@@ -27,10 +27,8 @@ Entity::Entity(const Entity& entity)
 	id = systemManager->ecs->NewEntity().id;
 
 	// temp, change after rttr is done
-	if (entity.HasComponent<General>())
-		this->AddComponent<General>(entity.GetComponent<General>());
-	if (entity.HasComponent<Transform>())
-		this->AddComponent<Transform>(entity.GetComponent<Transform>());
+	this->GetComponent<General>() = entity.GetComponent<General>();
+	this->GetComponent<Transform>() = entity.GetComponent<Transform>();
 	if (entity.HasComponent<RigidBody>())
 		this->AddComponent<RigidBody>(entity.GetComponent<RigidBody>());
 	if (entity.HasComponent<BoxCollider>())
@@ -48,10 +46,8 @@ void Entity::operator=(const Entity& entity)
 	systemManager->ecs->registry.destroy(id);
 	id = systemManager->ecs->NewEntity().id;
 
-	if (entity.HasComponent<General>())
-		this->AddComponent<General>(entity.GetComponent<General>());
-	if (entity.HasComponent<Transform>())
-		this->AddComponent<Transform>(entity.GetComponent<Transform>());
+	this->AddComponent<General>() = entity.GetComponent<General>();
+	this->AddComponent<Transform>() = entity.GetComponent<Transform>();
 	if (entity.HasComponent<RigidBody>())
 		this->AddComponent<RigidBody>(entity.GetComponent<RigidBody>());
 	if (entity.HasComponent<BoxCollider>())
