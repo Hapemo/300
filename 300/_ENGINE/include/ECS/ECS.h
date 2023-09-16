@@ -50,7 +50,7 @@ struct Entity {
 class ECS
 {
 public:
-	ECS() { entt::entity e = registry.create(); };
+	ECS();
 
 	entt::registry registry;
 

@@ -9,14 +9,14 @@
 
 struct General
 {
-	/*Entity parent;*/
+	//Entity parent;
 	std::string name;
 	TAG tag;
 	SUBTAG subtag;
 	bool isActive;
 	bool isPaused;
 
-	General() : parent(Entity(0)) {};
+	//General() : parent(Entity(0)) {};
 	RTTR_ENABLE()
 	/*General() : parent(0) {};*/
 };
