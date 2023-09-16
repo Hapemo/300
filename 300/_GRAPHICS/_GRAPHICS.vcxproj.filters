@@ -60,33 +60,6 @@
     <ClCompile Include="demo\DemoScene.cpp">
       <Filter>Demo</Filter>
     </ClCompile>
-    <ClCompile Include="demo\ImGui.cpp">
-      <Filter>Demo</Filter>
-    </ClCompile>
-    <ClCompile Include="..\lib\IMGUI\imgui_demo.cpp">
-      <Filter>ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\lib\IMGUI\imgui_draw.cpp">
-      <Filter>ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\lib\IMGUI\imgui_tables.cpp">
-      <Filter>ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\lib\IMGUI\imgui_widgets.cpp">
-      <Filter>ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\lib\IMGUI\imgui.cpp">
-      <Filter>ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\lib\IMGUI\misc\cpp\imgui_stdlib.cpp">
-      <Filter>ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\lib\IMGUI\backends\imgui_impl_glfw.cpp">
-      <Filter>ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\lib\IMGUI\backends\imgui_impl_opengl3.cpp">
-      <Filter>ImGui</Filter>
-    </ClCompile>
     <ClCompile Include="source\Mesh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -110,9 +83,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="demo\ImGui.hpp">
-      <Filter>Demo</Filter>
-    </ClInclude>
     <ClInclude Include="demo\DemoScene.hpp">
       <Filter>Demo</Filter>
     </ClInclude>

@@ -80,8 +80,21 @@ public:
     sol::state luaState;
     bool once;
 
+    // To call selected script init and update functions
+    void ScriptAlive(const Entity& script);
+    void ScriptStart(const Entity& script);
+    //void ScriptUpdate(const Entity& script);
+    void ScriptExit(const Entity& script);
+    void ScriptDead(const Entity& script);
+
+    // To test ScriptStart and ScriptUpdate in main
+    void TestSSSU();
+    bool runOnce;
+
     // To delete after port in to imGui
     void ScriptingInitTest();
     void ScriptingUpdateTest();
+    static bool printOnce;
+
 private:
 };
