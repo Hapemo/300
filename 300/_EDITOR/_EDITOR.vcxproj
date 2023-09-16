@@ -116,6 +116,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir)include\Editor;$(ProjectDir)source\Imgui;$(SolutionDir)_ENGINE\include\ECS</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

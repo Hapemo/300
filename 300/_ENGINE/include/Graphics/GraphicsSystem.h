@@ -35,17 +35,19 @@ public:
 	unsigned int GetEditorAttachment()		{ return m_Fbo.GetEditorAttachment(); }
 	unsigned int GetEntityID(int x, int y)	{ return m_Fbo.ReadEntityID(x, y); }
 
-	// Getter
+	// -- Getter --
 	GFX::DebugRenderer& getDebugRenderer() { return m_Renderer; }
 
 	// -- Camera Functions --
 	void SetCameraPosition(CAMERA_TYPE type, vec3 position);
 	void SetCameraTarget(CAMERA_TYPE type, vec3 position);
 	void SetCameraProjection(CAMERA_TYPE type, float fovDegree, ivec2 size, float nearZ, float farZ);
+	void SetCameraSize(CAMERA_TYPE type, ivec2 size);
 	void UpdateCamera(CAMERA_TYPE type);
 
 	vec3 GetCameraPosition(CAMERA_TYPE type);
 	vec3 GetCameraTarget(CAMERA_TYPE type);
+
 	// Direction vector of the camera (Target - position)
 	vec3 GetCameraDirection(CAMERA_TYPE type);
 

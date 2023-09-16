@@ -117,6 +117,25 @@ void GraphicsSystem::SetCameraProjection(CAMERA_TYPE type, float fovDegree, ivec
 	}
 }
 
+void GraphicsSystem::SetCameraSize(CAMERA_TYPE type, ivec2 size)
+{
+	switch (type)
+	{
+	case CAMERA_TYPE::CAMERA_TYPE_GAME:
+		m_GameCamera.SetSize(size);
+		break;
+
+	case CAMERA_TYPE::CAMERA_TYPE_EDITOR:
+		m_EditorCamera.SetSize(size);
+		break;
+
+	case CAMERA_TYPE::CAMERA_TYPE_ALL:
+		m_GameCamera.SetSize(size);
+		m_EditorCamera.SetSize(size);
+		break;
+	}
+}
+
 void GraphicsSystem::UpdateCamera(CAMERA_TYPE type)
 {
 	switch (type)
