@@ -42,18 +42,13 @@ struct Entity
 	Entity(std::uint32_t id);
 
 	Entity(const Entity& entity);
-	void operator=(const Entity& entity);
+	void operator=(const Entity& entity) = delete;
 
 	template <typename Component>
 	Component& AddComponent();
 
 	template <typename Component>
 	Component& AddComponent(const Component& component);
-
-	Children& AddChild(Entity e);
-
-	template<>
-	Children& AddComponent<Children>();
 
 	template <typename Component>
 	Component& GetComponent();
@@ -75,6 +70,16 @@ struct Entity
 
 	template <typename Component>
 	void RemoveComponent();
+
+	void AddChild(Entity e);
+
+	std::vector<Entity> GetAllChildren();
+
+	Entity GetParent();
+
+	bool HasChildren();
+
+	bool HasParent();
 };
 
 template <typename Component>

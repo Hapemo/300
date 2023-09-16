@@ -24,79 +24,18 @@ void ECS::DeleteAllEntities()
 	registry.clear();
 }
 
-Entity::Entity(entt::entity id) : id(id) 
-{ 
-//#ifdef _DEBUG
-//	assert(static_cast<std::uint32_t>(this->id) != 0); 
-//#endif
+Entity::Entity(entt::entity id) : id(id) {}
+Entity::Entity(std::uint32_t id) : id(entt::entity(id)) {}
+Entity::Entity(const Entity& entity) : id(entity.id) {}
+
+void Entity::AddChild(Entity e)
+{
+	if (this->id == e.id)
+		throw ("trying to make entity reproduce asexually");
+	if (static_cast<std::uint32_t>(e.id) == 0)
+		throw ("trying to add null entity as child");
 	if (static_cast<std::uint32_t>(this->id) == 0)
-		throw ("tired to construct entitiy with id 0");
-}
-Entity::Entity(std::uint32_t id) : id(entt::entity(id)) 
-{ 
-//#ifdef _DEBUG
-//	assert(static_cast<std::uint32_t>(this->id) != 0);
-//#endif
-	if (static_cast<std::uint32_t>(this->id) == 0)
-		throw ("tired to construct entitiy with id 0");
-}
-
-Entity::Entity(const Entity& entity)
-{
-//#ifdef _DEBUG
-//	assert(static_cast<std::uint32_t>(entity.id) != 0);
-//#endif
-	if (static_cast<std::uint32_t>(entity.id) == 0)
-		throw ("tried to copy null entity to entity");
-
-	id = systemManager->ecs->NewEntity().id;
-
-	// temp, change after rttr is done
-	if (entity.HasComponent<General>())
-		this->AddComponent<General>(entity.GetComponent<General>());
-	if (entity.HasComponent<Transform>())
-		this->AddComponent<Transform>(entity.GetComponent<Transform>());
-	if (entity.HasComponent<RigidBody>())
-		this->AddComponent<RigidBody>(entity.GetComponent<RigidBody>());
-	if (entity.HasComponent<BoxCollider>())
-		this->AddComponent<BoxCollider>(entity.GetComponent<BoxCollider>());
-	if (entity.HasComponent<SphereCollider>())
-		this->AddComponent<SphereCollider>(entity.GetComponent<SphereCollider>());
-	if (entity.HasComponent<PlaneCollider>())
-		this->AddComponent<PlaneCollider>(entity.GetComponent<PlaneCollider>());
-	if (entity.HasComponent<Scripts>())
-		this->AddComponent<Scripts>(entity.GetComponent<Scripts>());
-}
-
-void Entity::operator=(const Entity& entity)
-{
-//#ifdef _DEBUG
-//	assert(static_cast<std::uint32_t>(entity.id) != 0);
-//#endif
-	if (static_cast<std::uint32_t>(entity.id) == 0)
-		throw ("tried to assign null entity to entity");
-
-	systemManager->ecs->registry.destroy(id);
-	id = systemManager->ecs->NewEntity().id;
-
-	if (entity.HasComponent<General>())
-		this->AddComponent<General>(entity.GetComponent<General>());
-	if (entity.HasComponent<Transform>())
-		this->AddComponent<Transform>(entity.GetComponent<Transform>());
-	if (entity.HasComponent<RigidBody>())
-		this->AddComponent<RigidBody>(entity.GetComponent<RigidBody>());
-	if (entity.HasComponent<BoxCollider>())
-		this->AddComponent<BoxCollider>(entity.GetComponent<BoxCollider>());
-	if (entity.HasComponent<SphereCollider>())
-		this->AddComponent<SphereCollider>(entity.GetComponent<SphereCollider>());
-	if (entity.HasComponent<PlaneCollider>())
-		this->AddComponent<PlaneCollider>(entity.GetComponent<PlaneCollider>());
-	if (entity.HasComponent<Scripts>())
-		this->AddComponent<Scripts>(entity.GetComponent<Scripts>());
-}
-
-Children& Entity::AddChild(Entity e)
-{
+		throw ("trying to add child to null entity");
 	if (e.HasComponent<Parent>())
 		throw ("entity is the child of another!");
 	
@@ -118,4 +57,37 @@ Children& Entity::AddChild(Entity e)
 	lastBorn.GetComponent<Parent>().mNextSibling = eID;
 	parent.mNextSibling = static_cast<uint32_t>(firstBorn.id);
 	parent.mPrevSibling = static_cast<uint32_t>(lastBorn.id);
+}
+
+std::vector<Entity> Entity::GetAllChildren()
+{
+	if (!this->HasComponent<Children>())
+		return {};
+	Children child = this->GetComponent<Children>();
+	std::vector<Entity> children;
+	children.push_back(child.mFirstChild);
+	Parent parent = Entity(child.mFirstChild).GetComponent<Parent>();
+	while (parent.mNextSibling != child.mFirstChild)
+	{
+		children.push_back(parent.mNextSibling);
+		parent = Entity(parent.mNextSibling).GetComponent<Parent>();
+	}
+	return children;
+}
+
+Entity Entity::GetParent()
+{
+	if (!this->HasComponent<Parent>())
+		return 0;
+	return this->GetComponent<Parent>().mParent;
+}
+
+bool Entity::HasChildren() 
+{
+	return this->HasComponent<Children>();
+}
+
+bool Entity::HasParent()
+{
+	return this->HasComponent<Parent>();
 }

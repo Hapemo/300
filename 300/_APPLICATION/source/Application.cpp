@@ -79,7 +79,26 @@ void Application::SystemInit()
     #pragma endregion testserialization
 
 #pragma region testparentchild
+    Entity ent4 = systemManager->ecs->NewEntity();
+    Entity ent5 = systemManager->ecs->NewEntity();
+    Entity ent6 = systemManager->ecs->NewEntity();
+    ent4.AddChild(ent5); 
+    ent5.AddChild(ent6);
 
+    auto viewtemp1 = systemManager->ecs->GetEntitiesWith<Parent>();
+    int size1 = viewtemp1.size();
+    auto viewtemp2 = systemManager->ecs->GetEntitiesWith<Parent, Children>();
+    bool e4 = ent4.HasAllOfComponents<Parent, Children>();
+    bool e5 = ent5.HasAllOfComponents<Parent, Children>();
+    bool e6 = ent6.HasAllOfComponents<Parent, Children>();
+    ent5.AddChild(ent1);
+    ent5.AddChild(ent2);
+    ent5.AddChild(ent3);
+    assert(ent5.GetComponent<Children>().mNumChildren == 4);
+    std::vector<Entity> children = ent5.GetAllChildren();
+    Entity ent5parent = ent5.GetParent();
+    Entity ent6parent = ent6.GetParent();
+    //loop over children of an entity
 #pragma endregion testparentchild
 }
 
