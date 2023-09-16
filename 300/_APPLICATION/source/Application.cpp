@@ -17,6 +17,7 @@ start up of window and game system, also runs their update functions.
 #include "Object/ObjectFactory.h"
 #include "ScriptingSystem.h"
 #include "Physics/PhysicsSystem.h"
+#include "Serialization/SerializationTemp.h"
 
 #include "Example.h"
 
@@ -70,6 +71,7 @@ void Application::SystemInit()
     ent3.GetComponent<General>().tag = TAG::UNKNOWN;
     ent3.GetComponent<General>().subtag = SUBTAG::ACTIVE;
 
+
     ObjectFactory::SerializeScene("../resources/Scenes/test.json");
 
     auto view = systemManager->ecs->GetEntitiesWith<General, Transform>();
@@ -78,6 +80,9 @@ void Application::SystemInit()
     {
         e.GetComponent<Transform>();
     }
+
+    //rttr
+    //std::string json_str = to_json(ent1);
     // end test serialization
 }
 
@@ -93,6 +98,7 @@ void Application::MainUpdate()
 
         // Graphics update
         mWindow.Update();
+
     }
 }
 

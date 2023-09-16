@@ -12,8 +12,7 @@ SystemManager::SystemManager()
 	mPhysicsSystem = std::make_unique<PhysicsSystem>();
 	mScriptingSystem = std::make_unique<ScriptingSystem>();
 	mGraphicsSystem = std::make_unique<GraphicsSystem>();
-	ecs = new ECS;
-	mComponents.insert(mComponents.end(), { "General", "Transform", "RigidBody", "BoxCollider", "SphereCollider", "PlaneCollider", "Scripts" });
+	ecs = new ECS();
 }
 
 SystemManager::~SystemManager()

@@ -89,12 +89,13 @@ void EditorApplication::FirstUpdate()
 
 void EditorApplication::SystemUpdate()
 {
-    systemManager->Update(1.f /*insert dt here*/);
+    systemManager->Update(FPSManager::dt);
 }
 
 void EditorApplication::SecondUpdate()
 {
     Input::UpdatePrevKeyStates();
+    FPSManager::LimitFPS(60);
 }
 
 void EditorApplication::Exit()
