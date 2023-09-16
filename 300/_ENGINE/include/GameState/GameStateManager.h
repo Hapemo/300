@@ -78,11 +78,10 @@ public:
 	void UpdateNextGSMState();
 
 	/*!*****************************************************************************
-	Change the current game state to another indicated game state. Use defined
-	constant EXIT or RESTART to exit or restart the game.
+	Get a loaded scene from a current game state
 
 	\param std::string const&
-	- Name of the next game state
+	- Name of the scene
 	*******************************************************************************/
 	Scene& SelectScene(std::string const& _name);
 

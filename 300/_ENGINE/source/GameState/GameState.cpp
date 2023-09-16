@@ -9,6 +9,8 @@ the scenes. Only 1 gmae state should be loaded and running in the game at a
 time.
 *******************************************************************************/
 #include "GameState/GameState.h"
+#include "ECS/ECS_Components.h"
+#include "ScriptingSystem.h"
 //#include "Serialization.h"
 #include "ECS/ECS.h"
 
@@ -20,6 +22,7 @@ void GameState::Init() {
 		if (!editorManager->IsScenePaused())
 #endif
 			for (auto e : scene.mEntities) {
+				if (e.HasComponent<Scripts>()) systemManager->GetScriptingPointer()->ScriptAlive(e);
 				//if (e.HasComponent<Script>()) logicSystem->Alive(e); TODO mich
 			}
 #ifdef _EDITOR
@@ -40,6 +43,7 @@ void GameState::Exit() {
 		scene.Exit();
 		for (auto e : scene.mEntities) {
 			//if (e.HasComponent<Script>()) logicSystem->Dead(e); TODO mich
+			if (e.HasComponent<Scripts>()) systemManager->GetScriptingPointer()->ScriptDead(e);
 		}
 	}
 	//particleManager->Reset();
@@ -65,6 +69,7 @@ void GameState::AddScene(std::filesystem::path const& _path) { // filesystem
 	//if(!editorManager->IsScenePaused())
 		for (auto e : latestScene.mEntities) {
 			//if (e.HasComponent<Script>()) logicSystem->Alive(e); TODO mich
+			if (e.HasComponent<Scripts>()) systemManager->GetScriptingPointer()->ScriptAlive(e);
 		}
 #endif
 

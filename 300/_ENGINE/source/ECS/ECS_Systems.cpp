@@ -47,3 +47,7 @@ PhysicsSystem* SystemManager::GetPhysicsPointer()
 {
 	return mPhysicsSystem.get();
 }
+
+ScriptingSystem* SystemManager::GetScriptingPointer() {
+	return mScriptingSystem.get();
+}

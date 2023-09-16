@@ -7,8 +7,7 @@ class ScriptingSystem;
 class GraphicsSystem;
 class ECS;
 
-class SystemManager
-{
+class SystemManager {
 	GFX::Window *mWindow;
 	bool mIsEditor;
 
@@ -29,6 +28,7 @@ public:
 	void Update(float dt);
 	void Exit();
 	PhysicsSystem *GetPhysicsPointer();
+	ScriptingSystem* GetScriptingPointer();
 };
 
 extern SystemManager *systemManager;
