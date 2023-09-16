@@ -46,11 +46,8 @@ void Application::SystemInit()
     systemManager->Init(false, &mWindow);
     FPSManager::Init();
     Input::Init();
-    // To remove (Script test with entities)
-    //systemManager->mScriptingSystem->ScriptingInitTest();
-    //gfx init
-    // 
-    // test serialization
+
+    #pragma region testserialization
     Entity ent1 = systemManager->ecs->NewEntity();
     Entity ent2 = systemManager->ecs->NewEntity();
     Entity ent3 = systemManager->ecs->NewEntity();
@@ -79,7 +76,11 @@ void Application::SystemInit()
     {
         e.GetComponent<Transform>();
     }
-    // end test serialization
+    #pragma endregion testserialization
+
+#pragma region testparentchild
+
+#pragma endregion testparentchild
 }
 
 void Application::MainUpdate() 

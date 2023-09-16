@@ -7,13 +7,14 @@
 
 struct General
 {
-	/*Entity parent;*/
 	std::string name;
 	TAG tag;
 	SUBTAG subtag;
 	bool isActive;
 
-	/*General() : parent(0) {};*/
+	General() 
+	: name(""), tag(TAG::UNKNOWN), subtag(SUBTAG::ACTIVE), isActive(true) 
+	{};
 };
 
 struct Transform
@@ -71,4 +72,21 @@ public:
 
 	std::string mScriptFile{};
 	std::vector <Script> scriptsContainer;
+};
+
+struct Parent
+{
+	std::uint32_t mPrevSibling;
+	std::uint32_t mNextSibling;
+	std::uint32_t mParent;
+
+	Parent() : mPrevSibling(0), mNextSibling(0), mParent(0) {};
+};
+
+struct Children
+{
+	std::uint32_t mNumChildren;	
+	std::uint32_t mFirstChild;
+
+	Children() : mNumChildren(0), mFirstChild(0) {};
 };
