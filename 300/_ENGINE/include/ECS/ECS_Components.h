@@ -9,7 +9,7 @@
 
 struct General
 {
-	Entity parent;
+	/*Entity parent;*/
 	std::string name;
 	TAG tag;
 	SUBTAG subtag;
@@ -17,6 +17,7 @@ struct General
 
 	General() : parent(Entity(0)) {};
 	RTTR_ENABLE()
+	/*General() : parent(0) {};*/
 };
 
 struct Transform
