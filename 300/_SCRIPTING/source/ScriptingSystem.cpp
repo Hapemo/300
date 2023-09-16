@@ -78,7 +78,7 @@ void ScriptingSystem::Init()
      */
      /******************************************************************************/
     LuaEngine();
-    LuaEntity();
+    LuaECS();
     LuaGeneral();
     LuaTransform();
     LuaRigidBody();
@@ -120,73 +120,129 @@ void ScriptingSystem::Init()
 
 void ScriptingSystem::Update(float dt)
 {
-    //for (int step = 0; step <= Engine::currentNumberOfSteps - 1; ++step) 
+    ////for (int step = 0; step <= Engine::currentNumberOfSteps - 1; ++step) 
+    //////{ 
+    ////Timer::GetTime(startTime); 
+
+    ////// If "Pause" is checked 
+    ////if (g_engine->gameStateMgr->isPaused) 
     ////{ 
-    //Timer::GetTime(startTime); 
+    ////    return; 
+    ////} 
 
-    //// If "Pause" is checked 
-    //if (g_engine->gameStateMgr->isPaused) 
-    //{ 
-    //    return; 
-    //} 
+    //auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
 
-    auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
-
-    //if (g_engine->gameStateMgr->isPlaying) 
-    //{ 
-        // Load the scripts and call the "Start" function 
-    if (!once)
-    {
-        for (Entity entity : scriptEntities)
-        {
-            for (Script script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
-            {
-                script.Load(entity);
-                script.Run("Start");
-            }
-        }
-        once = true;
-    }
-
-    // Call the "Update" function 
-    for (Entity entity : scriptEntities)
-    {
-        for (Script script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
-        {
-            script.Run("Update");
-        }
-    }
-    //} 
-    /******************************************************************************/
-    /*!
-        To implement when game state manager is ready
-        Load scripts when scene is not playing & left-shift is pressed
-     */
-     /******************************************************************************/
-    //else 
-    //{ 
-    if (Input::CheckKey(E_STATE::PRESS, E_KEY::LEFT_SHIFT))
-    {
-        //    for (Entity entity : ECS::GetInstance()->GetEntitiesWith<Scripts>()) 
-        //    { 
-        //        for (auto& script : entity.GetComponent<Scripts>().scriptsContainer) 
-        //        { 
-        //            int entityid = entity.id; 
-        //            script.Load(entityid); 
-        //        } 
-        //    } 
-        once = false;
-    }
-    //} 
-
-    //Timer::GetTime(endTime); 
-    //Timer::UpdateSystemMs(SystemType<ScriptingSystem>(), startTime, endTime); 
+    ////if (g_engine->gameStateMgr->isPlaying) 
+    ////{ 
+    //    // Load the scripts and call the "Start" function 
+    //if (!once)
+    //{
+    //    for (Entity entity : scriptEntities)
+    //    {
+    //        for (Script script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
+    //        {
+    //            script.Load(entity);
+    //            script.Run("Start");
+    //        }
+    //    }
+    //    once = true;
     //}
+
+    //// Call the "Update" function 
+    //for (Entity entity : scriptEntities)
+    //{
+    //    for (Script script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
+    //    {
+    //        script.Run("Update");
+    //    }
+    //}
+    ////} 
+    ///******************************************************************************/
+    ///*!
+    //    To implement when game state manager is ready
+    //    Load scripts when scene is not playing & left-shift is pressed
+    // */
+    // /******************************************************************************/
+    ////else 
+    ////{ 
+    //if (Input::CheckKey(E_STATE::PRESS, E_KEY::LEFT_SHIFT))
+    //{
+    //    //    for (Entity entity : ECS::GetInstance()->GetEntitiesWith<Scripts>()) 
+    //    //    { 
+    //    //        for (auto& script : entity.GetComponent<Scripts>().scriptsContainer) 
+    //    //        { 
+    //    //            int entityid = entity.id; 
+    //    //            script.Load(entityid); 
+    //    //        } 
+    //    //    } 
+    //    once = false;
+    //}
+    ////} 
+
+    ////Timer::GetTime(endTime); 
+    ////Timer::UpdateSystemMs(SystemType<ScriptingSystem>(), startTime, endTime); 
+    ////}
 }
 
 void ScriptingSystem::Exit()
 {
     // Empty for now
+}
+
+void ScriptingSystem::ScriptAlive(const Entity& entity)
+{
+    auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
+    for (Script script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
+    {
+        script.Load(entity);
+        script.Run("Alive");
+    }
+}
+
+void ScriptingSystem::ScriptStart(const Entity& entity)
+{
+    auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
+    for (Script script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
+    {
+        script.Load(entity);
+        script.Run("Start");
+    }
+}
+
+void ScriptingSystem::ScriptExit(const Entity& entity)
+{
+    auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
+    for (Script script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
+    {
+        script.Run("Exit");
+    }
+}
+
+void ScriptingSystem::ScriptDead(const Entity& entity)
+{
+    auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
+    for (Script script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
+    {
+        script.Run("Dead");
+    }
+}
+
+void ScriptingSystem::TestSSSU()
+{
+    std::string entityID;
+    if (Input::CheckKey(E_STATE::PRESS, E_KEY::_4))
+    {
+        std::cout << "Select entity that you want to run its functions in scripts: ";
+        std::cin >> entityID;
+
+        ScriptingSystem::ScriptAlive(Entity((entt::entity)std::stoul(entityID)));
+
+        ScriptingSystem::ScriptStart(Entity((entt::entity)std::stoul(entityID)));
+
+        ScriptingSystem::ScriptExit(Entity((entt::entity)std::stoul(entityID)));
+
+        ScriptingSystem::ScriptDead(Entity((entt::entity)std::stoul(entityID)));
+    }
 }
 
 void ScriptingSystem::ScriptingInitTest()
@@ -218,8 +274,10 @@ void ScriptingSystem::ScriptingUpdateTest()
             std::cout << "Player (EntityID: " << std::to_string(unsigned int(elem)) << ")added." << std::endl;
         }
         std::cout << std::endl;
-        printOnce = !printOnce;
+        printOnce = true;
     }
+    if (Input::CheckKey(E_STATE::PRESS, E_KEY::T))
+        printOnce = false;
     // Button press number 1 to add new script 
     if (Input::CheckKey(E_STATE::PRESS, E_KEY::_1))
     {
@@ -306,4 +364,5 @@ void ScriptingSystem::ScriptingUpdateTest()
             }
         }
     }
+
 }

@@ -79,6 +79,15 @@ void Application::SystemInit()
         e.GetComponent<Transform>();
     }
     // end test serialization
+
+    // temporary for scripting test
+    Entity ent4 = systemManager->ecs->NewEntity();
+    std::cout << "(EntityID: " << std::to_string(unsigned int(ent4.id)) << ")added." << std::endl;
+    Entity ent5 = systemManager->ecs->NewEntity();
+    std::cout << "(EntityID: " << std::to_string(unsigned int(ent5.id)) << ")added." << std::endl;
+
+    ent4.AddComponent<Scripts>();
+    ent5.AddComponent<Scripts>();
 }
 
 void Application::MainUpdate() 
@@ -89,6 +98,8 @@ void Application::MainUpdate()
         SystemUpdate();
         // To remove (Script test with entities)
         systemManager->mScriptingSystem->ScriptingUpdateTest();
+        // To remove after ScriptStart and ScriptUpdate are functions are working
+        systemManager->mScriptingSystem->TestSSSU();
         SecondUpdate(); // This should always be the last
 
         // Graphics update

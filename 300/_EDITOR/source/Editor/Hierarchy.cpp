@@ -43,9 +43,6 @@ void Hierarchy::update()
         
 
         newEntity.GetComponent<General>().name = "NewObject"/* + static_cast<int> (newEntity.id)*/;
-
-        // TO delete after port into IMGUI
-        ScriptingSystem::printOnce = !ScriptingSystem::printOnce;
     }
 
 

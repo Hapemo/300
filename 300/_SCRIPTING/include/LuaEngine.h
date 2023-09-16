@@ -1,6 +1,7 @@
 #pragma once
 
 void LuaEngine();
+void LuaECS();
 void LuaEntity();
 void LuaGeneral();
 void LuaTransform();

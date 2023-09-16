@@ -7,5 +7,5 @@ function Update()
     --systemManager.ecs:NewEntity();
 
     --Test ScriptStart and ScriptUpdate functions
-    print("Running from Run.lua !!")
+    print("FLYYYYYY.lua !!")
 end
