@@ -20,3 +20,46 @@ void ECS::DeleteAllEntities()
 }
 
 Entity::Entity(entt::entity id) : id(id) {}
+Entity::Entity(std::uint32_t id) : id(entt::entity(id)) {}
+
+Entity::Entity(const Entity& entity)
+{
+	id = systemManager->ecs->NewEntity().id;
+
+	// temp, change after rttr is done
+	if (entity.HasComponent<General>())
+		this->AddComponent<General>(entity.GetComponent<General>());
+	if (entity.HasComponent<Transform>())
+		this->AddComponent<Transform>(entity.GetComponent<Transform>());
+	if (entity.HasComponent<RigidBody>())
+		this->AddComponent<RigidBody>(entity.GetComponent<RigidBody>());
+	if (entity.HasComponent<BoxCollider>())
+		this->AddComponent<BoxCollider>(entity.GetComponent<BoxCollider>());
+	if (entity.HasComponent<SphereCollider>())
+		this->AddComponent<SphereCollider>(entity.GetComponent<SphereCollider>());
+	if (entity.HasComponent<PlaneCollider>())
+		this->AddComponent<PlaneCollider>(entity.GetComponent<PlaneCollider>());
+	if (entity.HasComponent<Scripts>())
+		this->AddComponent<Scripts>(entity.GetComponent<Scripts>());
+}
+
+void Entity::operator=(const Entity& entity)
+{
+	systemManager->ecs->registry.destroy(id);
+	id = systemManager->ecs->NewEntity().id;
+
+	if (entity.HasComponent<General>())
+		this->AddComponent<General>(entity.GetComponent<General>());
+	if (entity.HasComponent<Transform>())
+		this->AddComponent<Transform>(entity.GetComponent<Transform>());
+	if (entity.HasComponent<RigidBody>())
+		this->AddComponent<RigidBody>(entity.GetComponent<RigidBody>());
+	if (entity.HasComponent<BoxCollider>())
+		this->AddComponent<BoxCollider>(entity.GetComponent<BoxCollider>());
+	if (entity.HasComponent<SphereCollider>())
+		this->AddComponent<SphereCollider>(entity.GetComponent<SphereCollider>());
+	if (entity.HasComponent<PlaneCollider>())
+		this->AddComponent<PlaneCollider>(entity.GetComponent<PlaneCollider>());
+	if (entity.HasComponent<Scripts>())
+		this->AddComponent<Scripts>(entity.GetComponent<Scripts>());
+}
