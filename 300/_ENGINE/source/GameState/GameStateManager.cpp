@@ -109,6 +109,12 @@ void GameStateManager::Exit() {
 	ChangeGameState(E_GSMSTATE::EXIT);
 }
 
+void GameStateManager::NewGameState(std::string const& _name) {
+	if (!mCurrentGameState.mName.empty())
+		mCurrentGameState.Unload();
+	mCurrentGameState.mName = _name;
+}
+
 //void GameStateManager::AddGameState(std::filesystem::path const& _path) {
 //	std::string currName{ mCurrentGameState->mName };
 //
