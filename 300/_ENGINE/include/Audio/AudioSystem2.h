@@ -50,9 +50,10 @@ public:
 	void SetSpecificChannelVolume(AUDIOTYPE audio_type, int id, float audio_vol);			// Set Specific Volume
 	void SetAllSFXVolume(float audio_vol);													// Global Volume Setting (SFX)
 	void SetAllBGMVolume(float audio_vol);													// Global Volume Setting (BGM)
-	void MuteSFX();
+	void MuteSFX();											
 	void MuteBGM();
-
+	void StopAllSFX();
+	void StopAllBGM();
 
 private:
 	std::unordered_map<AUDIOTYPE, std::vector<FMOD::Channel*>> mChannels;

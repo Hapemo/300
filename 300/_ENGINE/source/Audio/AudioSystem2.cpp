@@ -79,6 +79,24 @@ void AudioSystem::Update(float dt)
 		SetSpecificChannelVolume(AUDIO_SFX, 1, 0.0f);
 	}
 
+	if (Input::CheckKey(PRESS, A))
+	{
+		StopAllSFX();
+	}
+
+	if (Input::CheckKey(PRESS, S))
+	{
+		StopAllBGM();
+	}
+
+	if (Input::CheckKey(PRESS, D))
+	{
+		PlaySFXAudio("NPC_Greeting");
+	}
+
+	
+
+
 
 
 
@@ -251,4 +269,27 @@ void AudioSystem::MuteBGM()
 {
 	std::cout << "Muting Global BGM." << std::endl;
 	SetAllBGMVolume(0.0f);
+}
+
+void AudioSystem::StopAllSFX()
+{
+	auto channel_it = mChannels.find(AUDIO_SFX);
+
+	for (FMOD::Channel* channel : channel_it->second)
+	{
+		channel->stop();
+	}
+
+	channel_it->second.erase(channel_it->second.begin(), channel_it->second.end());
+}
+
+void AudioSystem::StopAllBGM()
+{
+	auto channel_it = mChannels.find(AUDIO_BGM);
+
+	for (FMOD::Channel* channel : channel_it->second)
+	{
+		channel->stop();
+		channel = nullptr;
+	}
 }
