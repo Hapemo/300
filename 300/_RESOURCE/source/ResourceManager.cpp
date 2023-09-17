@@ -86,39 +86,59 @@ void Resource::mesh_Loader()
 void Resource::shader_Loader()
 {
 	// hardcode data path for now 
-	const std::string vertPath = "../_GRAPHICS/shader_files/draw_vert.glsl";
-	const std::string fragPath = "../_GRAPHICS/shader_files/draw_frag.glsl";
-	std::string combinedPath = vertPath + fragPath;
+	// ideally, this code should read through 
+	std::vector<std::pair<std::string, std::string>> shaderpaths;
+	shaderpaths.emplace_back(std::pair<std::string, std::string>{ "../_GRAPHICS/shader_files/draw_vert.glsl", "../_GRAPHICS/shader_files/draw_frag.glsl" });
 
-	uid uids(combinedPath);
-	mShaderManager.SetupShader(vertPath, fragPath, uids.id);
+	// load all the shaders
+	for (const auto& x : shaderpaths)
+	{
+		std::string vertPath = x.first;
+		std::string fragPath = x.second;
+		std::string combinedPath = vertPath + fragPath;
 
-	++mResouceCnt;
-	++mShaderManager.mResourceCnt;
+		uid uids(combinedPath);
+		mShaderManager.SetupShader(vertPath, fragPath, uids.id);
 
-	instance_info& tempInstance = AllocRscInfo();
-	tempInstance.m_Name = combinedPath;
-	tempInstance.m_GUID = uids.id;
-	tempInstance.m_Type = SHADER;
-	m_Shaders.emplace(uids.id, &tempInstance);
+		++mResouceCnt;
+		++mShaderManager.mResourceCnt;
+
+		instance_info& tempInstance = AllocRscInfo();
+		tempInstance.m_Name = combinedPath;
+		tempInstance.m_GUID = uids.id;
+		tempInstance.m_Type = SHADER;
+		m_Shaders.emplace(uids.id, &tempInstance);
+	}
 }
 
 void Resource::MaterialInstance_Loader()
 {
 	// hardcode material instance path for now 
-	const std::string materialinstancepath = "../assets/Compressed/Skull.ctexture";
+	std::vector<std::string> materialinstancepaths;
+	materialinstancepaths.emplace_back("../assets/Compressed/Skull.ctexture");
 
-	uid uids(materialinstancepath);
-	mMaterialInstanceManager.SetupMaterialInstance(materialinstancepath, uids.id);
+	std::filesystem::path folderpath = compressed_texture_path.c_str();
 
-	++mResouceCnt;
-	++mMaterialInstanceManager.mResourceCnt;
+	// Reads through all the files in the folder, and loads them into the mesh
+	for (const auto& entry : std::filesystem::directory_iterator(folderpath))
+	{
+		std::cout << "============================================\n";
+		std::cout << "[NOTE]>> Loading Compressed Texture: \t" << entry.path().filename() << "\n";
 
-	instance_info& tempInstance = AllocRscInfo();
-	tempInstance.m_Name = materialinstancepath;
-	tempInstance.m_GUID = uids.id;
-	tempInstance.m_Type = TEXTURE;
-	m_Textures.emplace(uids.id, &tempInstance);
+		std::string filepath = compressed_texture_path + entry.path().filename().string();
+		std::string materialinstancepath = filepath;
+		uid uids(materialinstancepath);
+		mMaterialInstanceManager.SetupMaterialInstance(materialinstancepath, uids.id);
+
+		++mResouceCnt;
+		++mMaterialInstanceManager.mResourceCnt;
+
+		instance_info& tempInstance = AllocRscInfo();
+		tempInstance.m_Name = materialinstancepath;
+		tempInstance.m_GUID = uids.id;
+		tempInstance.m_Type = TEXTURE;
+		m_Textures.emplace(uids.id, &tempInstance);
+	}
 }
 
 
@@ -212,8 +232,6 @@ void MaterialInstanceManager::SetupMaterialInstance(std::string filepath, unsign
 	GFX::Texture localMaterialInstance;
 	localMaterialInstance.Load(filepath.c_str());
 
-	std::cout << " data for file path " << filepath << "\n"; // testing 
-
 	//uid uids(filepath);
 	MaterialInstanceData& temp = AllocRscInfo();
 	temp.materialInstanceData = std::move(localMaterialInstance);
@@ -260,7 +278,7 @@ void MeshManager::Init()
 
 }
 
-void MeshManager::SetupMesh(std::string filepath, unsigned id)
+void MeshManager::SetupMesh(std::string filepath,unsigned id)
 {
 	_GEOM::Geom GeomData;
 	GFX::Mesh localmesh;
@@ -272,13 +290,17 @@ void MeshManager::SetupMesh(std::string filepath, unsigned id)
 	localmesh.Setup(GeomData);
 
 	// Load animations
-	if (GeomData.m_bHasAnimations)
+	if (GeomData.m_bHasAnimations && _ENABLE_ANIMATIONS)
 	{
 		// store the animation data of the first mesh -- there should only be be one mesh per file so far, so we just take the first index
 		// We store the vector of animation data into the mesh class.
 		localmesh.mAnimation = GeomData.m_pMesh[0].m_Animation;
 		localmesh.mHasAnimation = true;
 	}
+
+	//mSceneMeshes.emplace_back(localmesh);							// storage of all the scene's meshes
+
+
 	//uid uidd(entry.path().filename().string());
 
 	std::cout << " data for file path " << filepath << "\n"; // testing 

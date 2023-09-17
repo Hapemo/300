@@ -19,6 +19,7 @@ enum class CAMERA_TYPE
 	CAMERA_TYPE_ALL
 };
 
+
 class GraphicsSystem
 {
 public:
@@ -73,6 +74,7 @@ private:
 
 	// -- Private Functions --
 	void DrawAll(GFX::Mesh& mesh);		// Renders all instances of a given mesh
+
 };
 
 #endif
