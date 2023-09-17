@@ -93,6 +93,13 @@ bool EntityJSON::Deserialize(const rapidjson::Value& obj)
 		mTJ.jTranslate.z = (float)obj["Transform"]["Translate"][2].GetDouble();
 	}
 
+	if (obj.HasMember("RigidBody"))
+	{
+		mRBJ.jMass = obj["RigidBody"]["Mass"].GetUint();
+		mRBJ.jMaterial = obj["RigidBody"]["Material"].GetString();
+		mRBJ.jMotion = obj["RigidBody"]["Motion"].GetString();
+	}
+
 	return true;
 }
 
@@ -148,6 +155,21 @@ bool EntityJSON::Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* wri
 	writer->EndArray();
 	
 	writer->EndObject();
+
+	writer->EndObject();
+
+	// rigidbody
+	writer->String("RigidBody");
+	writer->StartObject();
+
+	writer->String("Mass");
+	writer->Uint(mRBJ.jMass);
+
+	writer->String("Material");
+	writer->String(mRBJ.jMaterial.c_str());
+
+	writer->String("Motion");
+	writer->String(mRBJ.jMotion.c_str());
 
 	writer->EndObject();
 	

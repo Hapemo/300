@@ -39,6 +39,13 @@ struct TransformJSON
 	glm::vec3 jTranslate;
 };
 
+struct RigidBodyJSON
+{
+	std::uint16_t jMass;
+	std::string jMaterial;
+	std::string jMotion;
+};
+
 class EntityJSON : public BaseJSON
 {
 public:
@@ -84,19 +91,44 @@ public:
 				return it.second;
 		}
 	}
+
+	std::string FindMaterialString(MATERIAL tag) const
+	{
+		for (const auto& it : MaterialMap)
+		{
+			if (it.second == tag)
+				return it.first;
+		}
+	}
+
+	MATERIAL FindMaterialEnum(std::string str) const
+	{
+		for (const auto& it : MaterialMap)
+		{
+			if (it.first == str)
+				return it.second;
+		}
+	}
+
+	std::string FindMotionString(MOTION tag) const
+	{
+		for (const auto& it : MotionMap)
+		{
+			if (it.second == tag)
+				return it.first;
+		}
+	}
+
+	MOTION FindMotionEnum(std::string str) const
+	{
+		for (const auto& it : MotionMap)
+		{
+			if (it.first == str)
+				return it.second;
+		}
+	}
 	// end of helper function
 		
-		// no need for now
-		/*const entt::entity GetID() const
-		{
-			return mID;
-		}
-
-		void SetID(const entt::entity ID)
-		{
-			mID = ID;
-		}*/
-
 		// getter: for deserializing the info into the editor
 		const General GetGeneralJSON() const
 		{
@@ -134,11 +166,31 @@ public:
 			mTJ.jRotate = tj.mRotate;
 			mTJ.jTranslate = tj.mTranslate;
 		}
+
+		const RigidBody GetRigidBodyJSON() const
+		{
+			RigidBody rbj;
+
+			rbj.mMass = mRBJ.jMass;
+			rbj.mMaterial = FindMaterialEnum(mRBJ.jMaterial);
+			rbj.mMotion = FindMotionEnum(mRBJ.jMotion);
+
+			return rbj;
+		}
+
+		void SetRigidBodyJSON(const RigidBody rbj)
+		{
+			mRBJ.jMass = rbj.mMass;
+			mRBJ.jMaterial = FindMaterialString(rbj.mMaterial);
+			mRBJ.jMotion = FindMotionString(rbj.mMotion);
+		}
+
 	
 private:
 	//entt::entity mID{}; // no need for now
 	GeneralJSON mGJ;
 	TransformJSON mTJ;
+	RigidBodyJSON mRBJ;
 };
 
 class EntityListJSON : public BaseJSON

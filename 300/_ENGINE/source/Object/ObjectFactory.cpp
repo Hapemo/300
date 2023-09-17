@@ -13,6 +13,9 @@ void ObjectFactory::DeserializeScene(const std::string& filename)
 		e.GetComponent<General>() = obj.GetGeneralJSON();
 		e.GetComponent<Transform>() = obj.GetTransformJSON();
 
+		if (e.HasComponent<RigidBody>())
+			e.GetComponent<RigidBody>() = obj.GetRigidBodyJSON();
+
 		//std::cout << e.GetComponent<General>().name << " " << e.GetComponent<General>().isActive << std::endl;
 	}
 }
@@ -40,6 +43,12 @@ void ObjectFactory::SerializeScene(const std::string& filename)
 		ent.SetGeneralJSON(gen);
 		Transform tran = e.GetComponent<Transform>();
 		ent.SetTransformJSON(tran);
+
+		if (e.HasComponent<RigidBody>())
+		{
+			RigidBody rb = e.GetComponent<RigidBody>();
+			ent.SetRigidBodyJSON(rb);
+		}
 
 		// push back after done
 		entities.EntitiesList().push_back(ent);
