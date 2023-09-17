@@ -15,7 +15,6 @@ struct General
 	SUBTAG subtag;
 	bool isActive;
 
-	General() : parent(Entity(0)) {};
 	RTTR_ENABLE()
 	/*General() : parent(0) {};*/
 };
