@@ -152,6 +152,7 @@ namespace _GEOM
 				Transform.DecomposeNoScaling(presentRotation, p);
 			}
 
+			MeshPart.m_MeshName				= m_MeshName;
 			MeshPart.m_Name					= AssimpMesh.mName.C_Str();
 			MeshPart.m_iMaterialInstance	= AssimpMesh.mMaterialIndex;
 
@@ -434,6 +435,10 @@ namespace _GEOM
 				m_SkinGeom->m_Meshes.back().m_Name = E.m_MeshName;
 			}
 
+			if (E.m_Textures.size() > 0) {
+				m_SkinGeom->m_bHasTextures = true;
+				m_SkinGeom->m_Textures = E.m_Textures;									// add the textures here
+			}
 
 			auto& FinalMesh = m_SkinGeom->m_Meshes[iFinalMesh];						
 			FinalMesh.m_Submeshes.emplace_back();									// create a new submesh instance for the mesh
@@ -480,6 +485,9 @@ namespace _GEOM
 
 			//Optimize vertex fetch
 			optimized_submesh.m_Vertices.resize(meshopt_optimizeVertexFetch(optimized_submesh.m_Vertices.data(), optimized_submesh.m_Indices.data(), index_count, optimized_submesh.m_Vertices.data(), vertex_count, sizeof(FullVertices)));
+
+			optimized_submesh.m_MeshName = meshPart.m_MeshName;
+			optimized_submesh.m_Name = meshPart.m_Name;
 
 			optimizedMeshParts.push_back(optimized_submesh);
 		}
@@ -602,6 +610,7 @@ namespace _GEOM
 				RenderSubmesh.m_Indices				= submesh.m_Indices;
 				RenderSubmesh.m_MeshName			= submesh.m_MeshName;
 				RenderSubmesh.m_Name				= submesh.m_Name;
+				RenderSubmesh.m_Textures			= submesh.m_Textures;
 			}
 		}
 
@@ -659,6 +668,10 @@ namespace _GEOM
 			// Copy the animation data in
 			if (m_bHasAnimation) {
 				Mesh[i].m_Animation = std::move(m_Animation);
+			}
+
+			if(m_bHasTextures) {
+				Mesh[i].m_Texture = std::move(m_Textures);
 			}
 
 			// Copy the bool statuses in
@@ -768,6 +781,26 @@ namespace _GEOM
 		{
 			auto& meshInst = GeomData.m_pMesh[i];
 			outfile.write((char*)&meshInst.m_name, sizeof(char) * 64);
+
+			// Texture Data
+			if (GeomData.m_bHasTextures)
+			{
+				uint8_t numberoftextures = static_cast<uint8_t>(meshInst.m_Texture.size());
+				outfile.write((char*)&numberoftextures, sizeof(uint8_t));
+
+				for (int j{}; j < meshInst.m_Texture.size(); ++j)
+				{
+					auto& textureinst = meshInst.m_Texture[j];
+
+					uint8_t strlen = textureinst.path.size();
+					outfile.write((char*)&strlen, sizeof(uint8_t));							// path name length
+					outfile.write((char*)textureinst.path.c_str(), strlen);						// path name
+
+					strlen = textureinst.type.size();
+					outfile.write((char*)&strlen, sizeof(uint8_t));							// type name length
+					outfile.write((char*)textureinst.type.c_str(), strlen);						// type name					
+				}
+			}
 
 			// Animation Data
 			if (GeomData.m_bHasAnimations) 
@@ -913,7 +946,7 @@ namespace _GEOM
 			mat->GetTexture(type, i, &str);
 			Geom::Texture texture;
 			texture.type = typeName;
-			texture.path = str.C_Str();
+			texture.path = getFileNameWithExtension(str.C_Str());
 			textures.emplace_back(texture);
 		}
 

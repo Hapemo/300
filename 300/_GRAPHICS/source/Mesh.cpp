@@ -71,6 +71,7 @@ void GFX::Mesh::Setup(const _GEOM::Geom& GeomData)
 
 	if (GeomData.m_bHasAnimations)
 	{
+		// load the animation data into vectors, to push into the vbo
 		LoadAnimationDataFromGeom(GeomData, boneIDs, boneWeights);
 	}
 
@@ -155,7 +156,7 @@ void GFX::Mesh::Setup(const _GEOM::Geom& GeomData)
 
 
 // to remove when i'm done with animation.. keeping as reference for now
-void GFX::Mesh::Setup(std::vector<vec3> const& positions, std::vector<unsigned int> const& indices, std::vector<vec2> const& TexCoords)
+void GFX::Mesh::Setup(std::vector<vec3> const& positions, std::vector<unsigned int> const& indices, std::vector<vec2> const& TexCoords, unsigned colorDivisor)
 {
 	// Create VAO
 	mVao.Create();
@@ -179,7 +180,7 @@ void GFX::Mesh::Setup(std::vector<vec3> const& positions, std::vector<unsigned i
 
 	// Attach Color VBO and divisor to VAO
 	mVao.AddAttribute(1, 1, 4, GL_FLOAT);											// location 1, binding vao index 1
-	mVao.AddAttributeDivisor(1, 1);													// divisor at vao index 1
+	mVao.AddAttributeDivisor(1, colorDivisor);										// divisor at vao index 1
 	mVao.AttachVertexBuffer(mColorVbo.GetID(), 1, 0, sizeof(vec4));					// Attach to index 1
 
 	/////////////////////////////////////////
@@ -235,10 +236,16 @@ void GFX::Mesh::UnbindVao()
 
 void GFX::Mesh::DrawAllInstances()
 {
+	// TODO: Activate necessary shader
+	// TODO: Get and bind necessary textures
+
 	mVao.Bind();		// Bind mesh
 	PrepForDraw();		// Copy data from local buffer into opengl buffer
 	glDrawElementsInstanced(GL_TRIANGLES, mIndexCount, GL_UNSIGNED_INT, nullptr, mLTW.size());
 	mVao.Unbind();		// Unbind mesh
+
+	// TODO: Unbind textures
+	// TODO: Deactivate shader
 }
 
 void GFX::Mesh::PrepForDraw()
@@ -399,6 +406,32 @@ namespace Deserialization
 		for (uint32_t i{}; i < GeomData.m_nMeshes; ++i) 
 		{				
 			infile.read((char*)&GeomData.m_pMesh[i].m_name, sizeof(char) * 64);
+
+			// Textures Data
+			if (GeomData.m_bHasTextures)
+			{
+				uint8_t numberofTextures{};
+				infile.read((char*)&numberofTextures, sizeof(uint8_t));
+
+				for (uint8_t k{}; k < numberofTextures; ++k)
+				{
+					_GEOM::Geom::Texture lTexture{};
+	
+					char cname1[64];
+					uint8_t strlen1{};
+					infile.read((char*)&strlen1, sizeof(uint8_t));							// Texture Path length
+					infile.read(cname1, strlen1);											// Texture Path
+					lTexture.path = std::string(cname1, strlen1);
+
+					char cname2[64];
+					uint8_t strlen2{};
+					infile.read((char*)&strlen2, sizeof(uint8_t));							// Texture type length
+					infile.read(cname2, strlen2);											// Texture type
+					lTexture.type = std::string(cname2, strlen2);
+
+					GeomData.m_pMesh[i].m_Texture.emplace_back(lTexture);
+				}
+			}
 
 			// Animation Data
 			if (GeomData.m_bHasAnimations)

@@ -22,6 +22,7 @@ namespace GFX {
     public:
         // -- Getter --
         vec3 position();
+        vec3 target();
         vec3 direction();
         vec2 cursorPosition();
         mat4 viewProj();
@@ -29,18 +30,24 @@ namespace GFX {
         // -- Setter --
         void SetPosition(vec3 newPosition);
         void SetTarget(vec3 newTarget);
+        void SetSize(ivec2 size);
         void SetCursorPosition(vec2 newPosition);
-        void SetProjection(float fovAngle, ivec2 size, float nearZ, float farZ);
+        void SetProjection(float fovDegree, ivec2 size, float nearZ, float farZ);
 
         void Update();
 
     private:
-        vec3 mPosition;
-        vec3 mTarget;
-        vec2 mCursorPos;
         mat4 mProjection;
         mat4 mView;
         mat4 mViewProjection;
+        vec3 mPosition;
+        vec3 mTarget;
+        vec2 mCursorPos;
+        ivec2 mSize;
+        float mAspectRatio;
+        float mNear;
+        float mFar;
+        float mFovDegree;
     };
 }
 

@@ -8,7 +8,16 @@
 #include <ECS/ECS.h>
 
 #include <DebugRenderer.hpp>
+#include <Camera.hpp>
 #include <Fbo.hpp>
+#include <Animator.hpp>
+
+enum class CAMERA_TYPE
+{
+	CAMERA_TYPE_GAME,
+	CAMERA_TYPE_EDITOR,
+	CAMERA_TYPE_ALL
+};
 
 class GraphicsSystem
 {
@@ -23,11 +32,25 @@ public:
 	void AddInstance(GFX::Mesh& mesh, Transform transform);		// Adds an instance of a mesh to be drawn
 
 	// -- FBO --
-	unsigned int GetGameAttachment()	{ return m_Fbo.GetGameAttachment(); }
-	unsigned int GetEditorAttachment()	{ return m_Fbo.GetEditorAttachment(); }
+	unsigned int GetGameAttachment()		{ return m_Fbo.GetGameAttachment(); }
+	unsigned int GetEditorAttachment()		{ return m_Fbo.GetEditorAttachment(); }
+	unsigned int GetEntityID(int x, int y)	{ return m_Fbo.ReadEntityID(x, y); }
 
-	// Getter
+	// -- Getter --
 	GFX::DebugRenderer& getDebugRenderer() { return m_Renderer; }
+
+	// -- Camera Functions --
+	void SetCameraPosition(CAMERA_TYPE type, vec3 position);
+	void SetCameraTarget(CAMERA_TYPE type, vec3 position);
+	void SetCameraProjection(CAMERA_TYPE type, float fovDegree, ivec2 size, float nearZ, float farZ);
+	void SetCameraSize(CAMERA_TYPE type, ivec2 size);
+	void UpdateCamera(CAMERA_TYPE type);
+
+	vec3 GetCameraPosition(CAMERA_TYPE type);
+	vec3 GetCameraTarget(CAMERA_TYPE type);
+
+	// Direction vector of the camera (Target - position)
+	vec3 GetCameraDirection(CAMERA_TYPE type);
 
 private:
 	GFX::DebugRenderer m_Renderer;		// isolated to debug draws
@@ -38,8 +61,15 @@ private:
 	int m_Width;
 	int m_Height;
 
+	// -- Camera --
+	GFX::Camera m_GameCamera;
+	GFX::Camera m_EditorCamera;
+
 	// -- Flags --
 	bool m_EditorMode;
+
+	// -- Animator --
+	GFX::Animator m_Animator;
 
 	// -- Private Functions --
 	void DrawAll(GFX::Mesh& mesh);		// Renders all instances of a given mesh

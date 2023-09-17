@@ -6,7 +6,8 @@ Resource::Resource() {
 }
 
 
-void Resource::Init() {
+void Resource::Init() 
+{
 	for (int i = 0, end = (int)m_Infobuffer.size() - 1; i != end; ++i)
 	{
 		m_Infobuffer[i].m_pData = &m_Infobuffer[i + 1];
@@ -116,8 +117,8 @@ void Resource::MaterialInstance_Loader()
 	instance_info& tempInstance = AllocRscInfo();
 	tempInstance.m_Name = materialinstancepath;
 	tempInstance.m_GUID = uids.id;
-	tempInstance.m_Type = SHADER;
-	m_Shaders.emplace(uids.id, &tempInstance);
+	tempInstance.m_Type = TEXTURE;
+	m_Textures.emplace(uids.id, &tempInstance);
 }
 
 
@@ -292,7 +293,8 @@ void MeshManager::SetupMesh(std::string filepath,unsigned id)
 
 }
 
-GFX::Mesh& Resource::get_Mesh(std::string name) {
+GFX::Mesh& Resource::get_Mesh(std::string name) 
+{
 	
 	//uid id(name);
 	
@@ -305,4 +307,31 @@ GFX::Mesh& Resource::get_Mesh(std::string name) {
 
 	std::cout << "Could not find MESH Data.\n";
 
+}
+
+GFX::Shader& Resource::get_Shader(std::string name)
+{
+	for (auto ins : m_Shaders) 
+	{
+		if (ins.second->m_Name == name) 
+		{
+			++(m_Shaders[ins.second->m_GUID.id]->m_RefCount);
+			return mShaderManager.getShader(ins.second->m_GUID.id).shaderData;
+		}
+	}
+
+	std::cout << "Could not find SHADER Data.\n";
+}
+
+GFX::Texture& Resource::get_MaterialInstance(std::string name)
+{
+	for (auto ins : m_Textures)
+	{
+		if (ins.second->m_Name == name)
+		{
+			++(m_Textures[ins.second->m_GUID.id]->m_RefCount);
+			return mMaterialInstanceManager.getMaterialInstance(ins.second->m_GUID.id).materialInstanceData;
+		}
+	}
+	std::cout << "Could not find MATERIAL_INSTANCE Data.\n";
 }

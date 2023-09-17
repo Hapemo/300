@@ -38,6 +38,7 @@ namespace GFX
 		void AddTriangle(vec3 const& p0, vec3 const& p1, vec3 const& p2, vec4 const& color);
 		void AddQuad(vec3 const& center, float width, float height, vec4 const& color = vec4{ 1.f, 1.f, 1.f, 1.f });
 		void AddAabb(vec3 const& center, vec3 const& size, vec4 const& color = vec4{ 1.f, 1.f, 1.f, 1.f });
+		void AddSphere(vec3 const& camPos, vec3 const& center, float radius, vec4 const& color = vec4{ 1.f, 1.f, 1.f, 1.f });
 
 		void RenderAll(mat4 viewProj);
 
@@ -54,6 +55,7 @@ namespace GFX
 		Mesh mTriangleMesh;
 		Mesh mQuadMesh;
 		Mesh mAabbMesh;
+		Mesh mSphereMesh;
 
 		// Shader Set up
 		void SetupShader();
@@ -62,12 +64,14 @@ namespace GFX
 		void SetupTriangleMesh();
 		void SetupQuadMesh();
 		void SetupAabbMesh();
+		void SetupSphereMesh();
 
 		// -- Render Shapes --
 		void RenderAllPoints(mat4 const& viewProj);
 		void RenderAllTriangles(mat4 const& viewProj);
 		void RenderAllQuads(mat4 const& viewProj);
 		void RenderAllAabb(mat4 const& viewProj);
+		void RenderAllSphere(mat4 const& viewProj);
 
 		// -- Shader Code --
 		const char* vertexShaderCode = R"(
@@ -89,9 +93,11 @@ namespace GFX
 		const char* fragmentShaderCode = R"(
 		#version 450 core
 		layout(location = 0) in vec4 color;
-		layout(location = 0) out vec4 fragColor;
+		layout(location = 0) out vec4 fragColor0;
+		layout(location = 1) out vec4 fragColor1;
 		void main() {
-			fragColor = color;
+			fragColor0 = color;
+			fragColor1 = color;
 		}
 		)";
 	};
