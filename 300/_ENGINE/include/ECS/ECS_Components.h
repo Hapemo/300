@@ -15,11 +15,11 @@ struct General
 	bool isActive;
 	bool isPaused;
 
-	RTTR_ENABLE()
-	
 	General() 
 	: name(""), tag(TAG::UNKNOWN), subtag(SUBTAG::ACTIVE), isActive(true) 
 	{};
+
+	RTTR_ENABLE()
 };
 
 struct Transform
