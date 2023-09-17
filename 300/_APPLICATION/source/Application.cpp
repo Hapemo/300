@@ -98,7 +98,7 @@ void Application::SystemInit()
 
 void Application::MainUpdate() 
 {
-    //while (!systemManager->mGameStateManager->Exited()) //TODO change to this
+    //while (!systemManager->mGameStateSystem->Exited()) //TODO change to this
     while (!glfwWindowShouldClose(mWindow.GetHandle()))
     {
         FirstUpdate();
@@ -112,7 +112,7 @@ void Application::MainUpdate()
         // Graphics update
         mWindow.Update();
 
-        // if (glfwWindowShouldClose(mWindow.GetHandle())) systemManager->mGameStateManager->Exit();
+        // if (glfwWindowShouldClose(mWindow.GetHandle())) systemManager->mGameStateSystem->Exit();
     }
 }
 

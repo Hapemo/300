@@ -4,6 +4,7 @@
 #include "ScriptingSystem.h"
 #include "ECS/ECS.h"
 #include "ECS/ECS_Components.h"
+#include "GameState/GameStateManager.h"
 
 SystemManager* systemManager;
 
@@ -12,6 +13,7 @@ SystemManager::SystemManager()
 	mPhysicsSystem = std::make_unique<PhysicsSystem>();
 	mScriptingSystem = std::make_unique<ScriptingSystem>();
 	mGraphicsSystem = std::make_unique<GraphicsSystem>();
+	mGameStateSystem = std::make_unique<GameStateManager>();
 	ecs = new ECS();
 }
 
@@ -27,6 +29,7 @@ void SystemManager::Init(bool isEditor, GFX::Window* window)
 	mPhysicsSystem.get()->Init();
 	mScriptingSystem.get()->Init();
 	mGraphicsSystem.get()->Init();
+	mGameStateSystem.get()->Init();
 }
 
 void SystemManager::Update(float dt)
@@ -41,6 +44,7 @@ void SystemManager::Exit()
 	mPhysicsSystem.get()->Exit();
 	mScriptingSystem.get()->Exit();
 	mGraphicsSystem.get()->Exit();
+	mGameStateSystem.get()->Unload();
 }
 
 PhysicsSystem* SystemManager::GetPhysicsPointer()

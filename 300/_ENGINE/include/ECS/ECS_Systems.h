@@ -5,6 +5,7 @@
 class PhysicsSystem;
 class ScriptingSystem;
 class GraphicsSystem;
+class GameStateManager;
 class ECS;
 
 class SystemManager {
@@ -15,6 +16,7 @@ public:
 	std::unique_ptr<PhysicsSystem> mPhysicsSystem;
 	std::unique_ptr<ScriptingSystem> mScriptingSystem;
 	std::unique_ptr<GraphicsSystem> mGraphicsSystem;
+	std::unique_ptr<GameStateManager> mGameStateSystem;
 
 	ECS *ecs;
 

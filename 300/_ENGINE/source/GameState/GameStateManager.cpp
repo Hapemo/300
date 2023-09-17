@@ -8,8 +8,12 @@
 Manages the gamestate flow, control which game state is running or will be
 running.
 
-For Milestone 3:
-Added additional features for editor and game mode to manage the game state flow
+In editor mode, gamestate manager init will not load in any gamestate
+Editor has to call ChangeGameState("gamestate name") to get a gamestate out.
+If editor wants to close a gamestate and have blank state, call
+ChangeGameState(E_GSMSTATE::NONE)
+
+M_GSMSTATE::EXIT is only used for closing the game in GAMEMODE only.
 *******************************************************************************/
 #include "GameState/GameStateManager.h"
 #include "GameState/GameState.h"
