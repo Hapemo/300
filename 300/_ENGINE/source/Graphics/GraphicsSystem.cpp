@@ -67,10 +67,15 @@ void GraphicsSystem::Update(float dt)
 		std::string texturestr = inst.GetComponent<MeshRenderer>().mMaterialInstancePath;
 		GFX::Texture& textureinst = systemManager->mResourceSystem->get_MaterialInstance(texturestr);	// loads the texture
 
-		m_Fbo.PrepForDraw();
+		// pushback LTW matrices
+		glm::mat4 trns = glm::translate(vec3(0.f, 0.f, 0.f));
+		glm::mat4 final = glm::scale(trns, vec3(1.f, 1.f, 1.f));
+		meshinst.mLTW.push_back(final);
+
 		shaderinst.Activate();
 		meshinst.BindVao();
 		meshinst.PrepForDraw();
+		m_Fbo.PrepForDraw();
 
 		glUniformMatrix4fv(shaderinst.GetUniformVP(), 1, GL_FALSE, &m_EditorCamera.viewProj()[0][0]);            // camera projection. changes when the camera moves
 
@@ -86,7 +91,7 @@ void GraphicsSystem::Update(float dt)
 	}
 
 	// Prepare and bind the Framebuffer to be rendered on
-		m_Fbo.PrepForDraw();
+		//m_Fbo.PrepForDraw();
 		m_Renderer.RenderAll(m_EditorCamera.viewProj());
 		m_Renderer.ClearInstances();
 

@@ -68,6 +68,7 @@ void GFX::Mesh::Setup(const _GEOM::Geom& GeomData)
 	std::vector<std::array<float,MAX_BONE_INFLUENCE>>	boneWeights;
 
 	LoadFromGeom(GeomData, positions, uvs, indices);
+	mMeshName = std::string(GeomData.m_pMesh[0].m_name.begin(), GeomData.m_pMesh[0].m_name.end());
 
 	if (GeomData.m_bHasAnimations)
 	{

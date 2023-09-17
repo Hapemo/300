@@ -260,7 +260,7 @@ void MeshManager::Init()
 
 }
 
-void MeshManager::SetupMesh(std::string filepath,unsigned id)
+void MeshManager::SetupMesh(std::string filepath, unsigned id)
 {
 	_GEOM::Geom GeomData;
 	GFX::Mesh localmesh;
@@ -279,10 +279,6 @@ void MeshManager::SetupMesh(std::string filepath,unsigned id)
 		localmesh.mAnimation = GeomData.m_pMesh[0].m_Animation;
 		localmesh.mHasAnimation = true;
 	}
-
-	//mSceneMeshes.emplace_back(localmesh);							// storage of all the scene's meshes
-
-
 	//uid uidd(entry.path().filename().string());
 
 	std::cout << " data for file path " << filepath << "\n"; // testing 
