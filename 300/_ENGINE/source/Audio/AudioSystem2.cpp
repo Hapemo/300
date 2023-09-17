@@ -52,13 +52,27 @@ void AudioSystem::Init()
 	LoadAudioFromDirectory("../assets/Audio");
 
 	PlayAudio("tuning-radio-7150", AUDIO_SFX);
-	PlaySFXAudio("farm_ambience");
-	//PlayBGMAudio("farm_ambience");
-	
+	PlaySFXAudio("NPC_Greeting");
+	PlayBGMAudio("farm_ambience");
 }
 
 void AudioSystem::Update(float dt)
 {
+	if (Input::CheckKey(PRESS, _1))
+	{
+		PlaySFXAudio("NPC_Greeting");
+	}
+
+	if (Input::CheckKey(PRESS, _2))
+	{
+		PlayBGMAudio("farm_ambience");
+	}
+
+	if (Input::CheckKey(PRESS, _3))
+	{
+		PlaySFXAudio("tuning-radio-7150");
+	}
+
 	if (Input::CheckKey(PRESS, Q))
 	{
 		SetAllSFXVolume(0.0f);
@@ -89,18 +103,31 @@ void AudioSystem::Update(float dt)
 		StopAllBGM();
 	}
 
-	if (Input::CheckKey(PRESS, D))
+	if (Input::CheckKey(PRESS, F))
 	{
-		PlaySFXAudio("NPC_Greeting");
+		TogglePauseSFXSounds();
+	}
+	
+	if (Input::CheckKey(PRESS, G))
+	{
+		TogglePauseBGMSounds();
 	}
 
-	
+	if (Input::CheckKey(PRESS, H))
+	{
+		TogglePauseAllSounds();
+	}
+
+	if (Input::CheckKey(PRESS, J))
+	{
+		TogglePauseSpecific(AUDIO_SFX, 1);
+		TogglePauseSpecific(AUDIO_SFX, 3);
+	}
 
 
 
 
 
-	
 }
 
 void AudioSystem::Exit()
@@ -243,19 +270,37 @@ void AudioSystem::SetAllBGMVolume(float audio_vol)
 	bgmVolume = audio_vol;
 }
 
-void AudioSystem::SetSpecificChannelVolume(AUDIOTYPE audio_type, int id, float audio_vol)
+void AudioSystem::SetSpecificChannelVolume(AUDIOTYPE audio_type, int channel_id, float audio_vol)
 {	
 	auto channel_it = mChannels.find(audio_type);
 
 	if (channel_it != mChannels.end())
 	{
-		FMOD::Channel** channelpp = nullptr;
-		channelpp = &channel_it->second[id];
-
-		if (channelpp)
+		if (channel_id < channel_it->second.size())
 		{
-			channel_it->second[id]->setVolume(audio_vol);
+			FMOD::Channel** channelpp = nullptr;
+			channelpp = &channel_it->second[channel_id];
+
+			if (channelpp)
+			{
+				channel_it->second[channel_id]->setVolume(audio_vol);
+			}
 		}
+	}
+
+	else
+	{
+		std::cout << "Sorry, requested channel ID is invalid." << std::endl;
+	}
+
+	switch (audio_type)
+	{
+		case AUDIO_BGM:
+			bgmVolume = audio_vol;
+			return;
+		case AUDIO_SFX:
+			sfxVolume = audio_vol;
+			return;
 	}
 }
 
@@ -273,6 +318,8 @@ void AudioSystem::MuteBGM()
 
 void AudioSystem::StopAllSFX()
 {
+	std::cout << "Stopping and Releasing All SFX." << std::endl;
+
 	auto channel_it = mChannels.find(AUDIO_SFX);
 
 	for (FMOD::Channel* channel : channel_it->second)
@@ -285,6 +332,8 @@ void AudioSystem::StopAllSFX()
 
 void AudioSystem::StopAllBGM()
 {
+	std::cout << "Stopping and Releasing All BGM." << std::endl;
+
 	auto channel_it = mChannels.find(AUDIO_BGM);
 
 	for (FMOD::Channel* channel : channel_it->second)
@@ -293,3 +342,111 @@ void AudioSystem::StopAllBGM()
 		channel = nullptr;
 	}
 }
+
+void AudioSystem::TogglePauseAllSounds()
+{
+	auto channel_sfx_it = mChannels.find(AUDIO_SFX);
+
+	for (FMOD::Channel* channel : channel_sfx_it->second)
+	{
+		bool paused;
+		std::cout << "Checking Channel Pause Status: " << std::endl;
+		ErrCodeCheck(channel->getPaused(&paused));
+
+		if (paused)
+			std::cout << "Resuming SFX Channels. " << std::endl;
+		else
+			std::cout << "Pausing SFX Channels. " << std::endl;
+
+		ErrCodeCheck(channel->setPaused(!paused));
+	}
+
+	auto channel_bgm_it = mChannels.find(AUDIO_BGM);
+
+	for (FMOD::Channel* channel : channel_bgm_it->second)
+	{
+		bool paused;
+		std::cout << "Checking Channel Pause Status: " << std::endl;
+		ErrCodeCheck(channel->getPaused(&paused));
+
+		if (paused)
+			std::cout << "Resuming SFX Channels. " << std::endl;
+		else
+			std::cout << "Pausing SFX Channels. " << std::endl;
+
+		ErrCodeCheck(channel->setPaused(!paused));
+	}
+}
+
+void AudioSystem::TogglePauseSFXSounds()
+{
+	auto channel_it = mChannels.find(AUDIO_SFX);
+	
+	for (FMOD::Channel* channel : channel_it->second)
+	{
+		bool paused;
+		std::cout << "Checking Channel Pause Status: " << std::endl;
+		ErrCodeCheck(channel->getPaused(&paused));
+
+		if (paused)
+			std::cout << "Resuming SFX Channels. " << std::endl;
+		else
+			std::cout << "Pausing SFX Channels. " << std::endl;
+
+		ErrCodeCheck(channel->setPaused(!paused));
+	}
+}
+
+void AudioSystem::TogglePauseBGMSounds()
+{
+	auto channel_it = mChannels.find(AUDIO_BGM);
+
+	for (FMOD::Channel* channel : channel_it->second)
+	{
+		bool paused;
+		std::cout << "Checking Channel Pause Status: " << std::endl;
+		ErrCodeCheck(channel->getPaused(&paused));
+
+		if (paused)
+			std::cout << "Resuming SFX Channels. " << std::endl;
+		else
+			std::cout << "Pausing SFX Channels. " << std::endl;
+
+		ErrCodeCheck(channel->setPaused(!paused));
+	}
+}
+
+void AudioSystem::TogglePauseSpecific(AUDIOTYPE audio_type, int channel_id)
+{
+	auto channel_it = mChannels.find(audio_type);
+
+	if (channel_it != mChannels.end())
+	{
+		if (channel_id < channel_it->second.size())
+		{
+			FMOD::Channel** channelpp = nullptr;
+
+			channelpp = &channel_it->second[channel_id];
+
+			if (channelpp)
+			{
+				bool paused;
+				std::cout << "Checking Channel Pause Status: " << std::endl;
+				ErrCodeCheck(channel_it->second[channel_id]->getPaused(&paused));
+
+				if (paused)
+					std::cout << "Resuming Selected Channel. " << std::endl;
+				else
+					std::cout << "Pausing Selected Channel. " << std::endl;
+
+				ErrCodeCheck(channel_it->second[channel_id]->setPaused(!paused));
+			}
+		}
+
+		else
+		{
+			std::cout << "Sorry, requested channel ID is invalid." << std::endl;
+		}
+	}
+}
+

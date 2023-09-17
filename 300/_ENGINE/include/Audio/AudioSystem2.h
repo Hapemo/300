@@ -41,7 +41,7 @@ public:
 	~AudioSystem();
 
 public:
-	int ErrCodeCheck(FMOD_RESULT result);													// Debugging tool
+	int  ErrCodeCheck(FMOD_RESULT result);													// Debugging tool
 	void LoadAudioFiles(std::filesystem::path file_path);									// Load single file
 	void LoadAudioFromDirectory(std::filesystem::path file_path);							// Load files from directory
 	void PlayAudio(std::string audio_name, AUDIOTYPE audio_type, float audio_vol = 1.0f);	// Play an audio based on it's name
@@ -54,7 +54,12 @@ public:
 	void MuteBGM();
 	void StopAllSFX();
 	void StopAllBGM();
+	void TogglePauseAllSounds();
+	void TogglePauseSFXSounds();
+	void TogglePauseBGMSounds();
+	void TogglePauseSpecific(AUDIOTYPE audio_type, int channel_id);
 
+	// Will build as needs require.
 private:
 	std::unordered_map<AUDIOTYPE, std::vector<FMOD::Channel*>> mChannels;
 	std::unordered_map<std::string, FMOD::Sound*> mSounds;
