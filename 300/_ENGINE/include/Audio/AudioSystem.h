@@ -192,15 +192,15 @@ public:
 
 	//bool isPlaying(int channel_no);
 
-	void SetChannel3DPosition(int channel_id, FMOD_VECTOR audio_pos);
+	//void SetChannel3DPosition(int channel_id, FMOD_VECTOR audio_pos);
 
 
-	/* [TODO] 
-	*	1. StopPLay
-	*/
+	///* [TODO] 
+	//*	1. StopPLay
+	//*/
 
-	// For [FMOD Studios]
-	void LoadAudioBank(std::string bankfilepath, std::string bank_name); // Support for different modes (?) - research
+	//// For [FMOD Studios]
+	//void LoadAudioBank(std::string bankfilepath, std::string bank_name); // Support for different modes (?) - research
 
 
 
