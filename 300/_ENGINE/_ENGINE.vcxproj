@@ -151,6 +151,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="include\Audio\AudioSystem.h" />
+    <ClInclude Include="include\Debug\AssertException.h" />
+    <ClInclude Include="include\Debug\Asserts.h" />
+    <ClInclude Include="include\Debug\LogException.h" />
+    <ClInclude Include="include\Debug\Logger.h" />
     <ClInclude Include="include\ECS\ECS.h" />
     <ClInclude Include="include\ECS\ECS_Components.h" />
     <ClInclude Include="include\ECS\ECS_Systems.h" />
@@ -169,6 +173,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Audio\AudioSystem.cpp" />
+    <ClCompile Include="source\Debug\AssertException.cpp" />
+    <ClCompile Include="source\Debug\LogException.cpp" />
+    <ClCompile Include="source\Debug\Logger.cpp" />
     <ClCompile Include="source\ECS\ECS_Systems.cpp" />
     <ClCompile Include="source\ECS\ECS.cpp" />
     <ClInclude Include="include\Serialization\SerializationTemp.h" />
