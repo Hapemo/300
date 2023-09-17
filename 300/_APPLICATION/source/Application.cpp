@@ -48,11 +48,8 @@ void Application::SystemInit()
     systemManager->Init(false, &mWindow);
     FPSManager::Init();
     Input::Init();
-    // To remove (Script test with entities)
-    //systemManager->mScriptingSystem->ScriptingInitTest();
-    //gfx init
-    // 
-    // test serialization
+
+    #pragma region testserialization
     Entity ent1 = systemManager->ecs->NewEntity();
     Entity ent2 = systemManager->ecs->NewEntity();
     Entity ent3 = systemManager->ecs->NewEntity();
@@ -81,19 +78,30 @@ void Application::SystemInit()
     {
         e.GetComponent<Transform>();
     }
+    #pragma endregion testserialization
 
-    //rttr
-    //std::string json_str = to_json(ent1);
-    // end test serialization
-
-    // temporary for scripting test
+#pragma region testparentchild
     Entity ent4 = systemManager->ecs->NewEntity();
-    std::cout << "(EntityID: " << std::to_string(unsigned int(ent4.id)) << ")added." << std::endl;
     Entity ent5 = systemManager->ecs->NewEntity();
-    std::cout << "(EntityID: " << std::to_string(unsigned int(ent5.id)) << ")added." << std::endl;
+    Entity ent6 = systemManager->ecs->NewEntity();
+    ent4.AddChild(ent5); 
+    ent5.AddChild(ent6);
 
-    ent4.AddComponent<Scripts>();
-    ent5.AddComponent<Scripts>();
+    auto viewtemp1 = systemManager->ecs->GetEntitiesWith<Parent>();
+    int size1 = viewtemp1.size();
+    auto viewtemp2 = systemManager->ecs->GetEntitiesWith<Parent, Children>();
+    bool e4 = ent4.HasAllOfComponents<Parent, Children>();
+    bool e5 = ent5.HasAllOfComponents<Parent, Children>();
+    bool e6 = ent6.HasAllOfComponents<Parent, Children>();
+    ent5.AddChild(ent1);
+    ent5.AddChild(ent2);
+    ent5.AddChild(ent3);
+    assert(ent5.GetComponent<Children>().mNumChildren == 4);
+    std::vector<Entity> children = ent5.GetAllChildren();
+    Entity ent5parent = ent5.GetParent();
+    Entity ent6parent = ent6.GetParent();
+    //loop over children of an entity
+#pragma endregion testparentchild
 }
 
 void Application::MainUpdate() 
