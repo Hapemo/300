@@ -10,11 +10,11 @@ SystemManager* systemManager;
 
 SystemManager::SystemManager()
 {
-	mPhysicsSystem = std::make_unique<PhysicsSystem>();
-	mScriptingSystem = std::make_unique<ScriptingSystem>();
-	mGraphicsSystem = std::make_unique<GraphicsSystem>();
+	mPhysicsSystem		= std::make_unique<PhysicsSystem>();
+	mScriptingSystem	= std::make_unique<ScriptingSystem>();
+	mGraphicsSystem		= std::make_unique<GraphicsSystem>();
+	mResourceSystem		= std::make_unique<Resource>();
 	ecs = new ECS;
-	mResourceSystem = std::make_unique<Resource>();
 }
 
 SystemManager::~SystemManager()
@@ -29,7 +29,7 @@ void SystemManager::Init(bool isEditor, GFX::Window* window)
 	mPhysicsSystem.get()->Init();
 	mScriptingSystem.get()->Init();
 	mGraphicsSystem.get()->Init();
-	mResourceSystem.get()->Init();
+	mResourceSystem.get()->Init();			// all the resources are loaaded here
 }
 
 void SystemManager::Update(float dt)

@@ -61,7 +61,8 @@ void EditorApplication::MainUpdate()
     mMaineditor.UIinit(mWindow.GetHandle());
 
 
-    while (!glfwWindowShouldClose(mWindow.GetHandle())) {
+    while (!glfwWindowShouldClose(mWindow.GetHandle())) 
+    {
         FirstUpdate();
         SystemUpdate();
 

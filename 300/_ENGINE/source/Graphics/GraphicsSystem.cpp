@@ -1,7 +1,13 @@
 #include <Graphics/GraphicsSystem.h>
+#include <ResourceManager.h>
 
 
-
+/***************************************************************************/
+/*!
+\brief
+	Initialize the Graphics system
+*/
+/**************************************************************************/
 void GraphicsSystem::Init()
 {
 	// Get Window Handle
@@ -20,33 +26,93 @@ void GraphicsSystem::Init()
 	SetCameraProjection(CAMERA_TYPE::CAMERA_TYPE_ALL, 60.f, m_Window->size(), 0.1f, 900.f);		// Projection of camera
 
 	UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_ALL);
+
+	// Create a new entity here, for testing purposes
+	Entity newentity = systemManager->ecs->NewEntity();			// creating a new entity
+	newentity.AddComponent<MeshRenderer>();
+	newentity.GetComponent<MeshRenderer>().mMeshPath = "../compiled_geom/Skull_textured.geom";
+	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath = "../assets/Compressed/Skull.ctexture";
+	newentity.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/draw_vert.glsl", "../_GRAPHICS/shader_files/draw_frag.glsl" };
 }
 
+/***************************************************************************/
+/*!
+\brief
+	Update the Graphics system. Called every frame
+	Updates the camera, and the renderer
+*/
+/**************************************************************************/
 void GraphicsSystem::Update(float dt)
 {
 	UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_ALL);
 
 	// To be removed once entity to be drawn created
-	m_Renderer.AddSphere(m_EditorCamera.position(), { 0, 0, -300 }, 100.f, { 0, 1, 0, 1 });
-	m_Renderer.AddAabb({ -50, -60, -200 }, { 10, 30, -0.1f }, { 1, 0, 0, 1 });
+		m_Renderer.AddSphere(m_EditorCamera.position(), { 0, 0, -300 }, 100.f, { 0, 1, 0, 1 });
+		m_Renderer.AddAabb({ -50, -60, -200 }, { 10, 30, -0.1f }, { 1, 0, 0, 1 });
 
 	// TODO: Retrieve the mesh instances to be drawn
+	auto meshRendererInstances = systemManager->ecs->GetEntitiesWith<MeshRenderer>();
+	for (Entity inst : meshRendererInstances)
+	{
+		// get the mesh filepath
+		std::string meshstr = inst.GetComponent<MeshRenderer>().mMeshPath;					
+		GFX::Mesh& meshinst = systemManager->mResourceSystem->get_Mesh(meshstr);						// loads the mesh
+
+		// gets the shader filepath
+		std::pair<std::string, std::string> shaderstr = inst.GetComponent<MeshRenderer>().mShaderPath;			
+		std::string concatname = shaderstr.first + shaderstr.second;
+		GFX::Shader& shaderinst = systemManager->mResourceSystem->get_Shader(concatname);				// loads the shader
+
+		// get the texture filepath
+		std::string texturestr = inst.GetComponent<MeshRenderer>().mMaterialInstancePath;
+		GFX::Texture& textureinst = systemManager->mResourceSystem->get_MaterialInstance(texturestr);	// loads the texture
+
+		m_Fbo.PrepForDraw();
+		shaderinst.Activate();
+		meshinst.BindVao();
+		meshinst.PrepForDraw();
+
+		glUniformMatrix4fv(shaderinst.GetUniformVP(), 1, GL_FALSE, &m_EditorCamera.viewProj()[0][0]);            // camera projection. changes when the camera moves
+
+		// bind texture unit
+		glBindTextureUnit(0, textureinst.ID());
+
+		glDrawElementsInstanced(GL_TRIANGLES, meshinst.GetIndexCount(), GL_UNSIGNED_INT, nullptr, meshinst.mLTW.size());
+
+		shaderinst.Deactivate();
+		meshinst.UnbindVao();
+		glBindTextureUnit(0, 0);
+		meshinst.ClearInstances();
+	}
 
 	// Prepare and bind the Framebuffer to be rendered on
-	m_Fbo.PrepForDraw();
-	m_Renderer.RenderAll(m_EditorCamera.viewProj());
-	m_Renderer.ClearInstances();
+		m_Fbo.PrepForDraw();
+		m_Renderer.RenderAll(m_EditorCamera.viewProj());
+		m_Renderer.ClearInstances();
+
 	// TODO: Render all instances of a given mesh
 
 	// TODO: Clears all instances that have been rendered from local buffer
 	m_Fbo.Unbind();
 }
 
+/***************************************************************************/
+/*!
+\brief
+	Exit the Graphics system. Unalloc anything unnecessary
+*/
+/**************************************************************************/
 void GraphicsSystem::Exit()
 {
 
 }
 
+/***************************************************************************/
+/*!
+\brief
+	Adds an instance of a mesh to be drawn, For instancing
+*/
+/**************************************************************************/
 void GraphicsSystem::AddInstance(GFX::Mesh& mesh, Transform transform)
 {
 	// Local to world transformation
@@ -60,6 +126,12 @@ void GraphicsSystem::AddInstance(GFX::Mesh& mesh, Transform transform)
 	mesh.mLTW.push_back(world);
 }
 
+/***************************************************************************/
+/*!
+\brief
+	Updates the camera's position. 
+*/
+/**************************************************************************/
 void GraphicsSystem::SetCameraPosition(CAMERA_TYPE type, vec3 position)
 {
 	switch (type)
@@ -79,6 +151,12 @@ void GraphicsSystem::SetCameraPosition(CAMERA_TYPE type, vec3 position)
 	}
 }
 
+/***************************************************************************/
+/*!
+\brief
+	Updates the camera's target.
+*/
+/**************************************************************************/
 void GraphicsSystem::SetCameraTarget(CAMERA_TYPE type, vec3 position)
 {
 	switch (type)
@@ -98,6 +176,12 @@ void GraphicsSystem::SetCameraTarget(CAMERA_TYPE type, vec3 position)
 	}
 }
 
+/***************************************************************************/
+/*!
+\brief
+	Updates the camera's projection.
+*/
+/**************************************************************************/
 void GraphicsSystem::SetCameraProjection(CAMERA_TYPE type, float fovDegree, ivec2 size, float nearZ, float farZ)
 {
 	switch (type)

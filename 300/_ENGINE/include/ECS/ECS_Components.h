@@ -9,6 +9,7 @@ enum class TAG : unsigned char
 {
 	PLAYER,
 	UNKNOWN
+	// BATTLEGROUND
 	//more to come
 };
 
@@ -45,6 +46,7 @@ struct Transform
 	void Inspect();
 };
 
+// this struct stores the filepaths for the meshdata, material, and shader. the actual data is stored in the resource manager
 struct MeshRenderer
 {
 	// For now, we store the string to the filepaths. TO CHANGE to uids for efficient referencing

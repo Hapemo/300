@@ -161,8 +161,9 @@ public:
 
     void get_Texture(uid<> id);
     void get_Mesh(uid<> id);
-    void get_Texture(std::string name);
+    GFX::Texture& get_MaterialInstance(std::string name);
     GFX::Mesh& get_Mesh(std::string name);
+    GFX::Shader& get_Shader(std::string name);
 
     instance_info& AllocRscInfo(void);
     void ReleaseRscInfo(instance_info& RscInfo);

@@ -10,6 +10,7 @@
 #include <DebugRenderer.hpp>
 #include <Camera.hpp>
 #include <Fbo.hpp>
+#include <Animator.hpp>
 
 enum class CAMERA_TYPE
 {
@@ -66,6 +67,9 @@ private:
 
 	// -- Flags --
 	bool m_EditorMode;
+
+	// -- Animator --
+	GFX::Animator m_Animator;
 
 	// -- Private Functions --
 	void DrawAll(GFX::Mesh& mesh);		// Renders all instances of a given mesh

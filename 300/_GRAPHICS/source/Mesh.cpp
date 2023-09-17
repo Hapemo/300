@@ -71,6 +71,7 @@ void GFX::Mesh::Setup(const _GEOM::Geom& GeomData)
 
 	if (GeomData.m_bHasAnimations)
 	{
+		// load the animation data into vectors, to push into the vbo
 		LoadAnimationDataFromGeom(GeomData, boneIDs, boneWeights);
 	}
 
