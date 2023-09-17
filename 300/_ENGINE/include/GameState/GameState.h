@@ -19,10 +19,10 @@ public:
 	*******************************************************************************/
 	void Init();
 
-	/*!*****************************************************************************
-	Update the scene every loop, only active scenes will update.
-	*******************************************************************************/
-	void Update();
+	///*!*****************************************************************************
+	//Update the scene every loop, only active scenes will update.
+	//*******************************************************************************/
+	//void Update();
 
 	/*!*****************************************************************************
 	Exit all the scenes in the game state, all scenes' exit will be called.
@@ -33,7 +33,7 @@ public:
 	// *EDITOR ONLY FUNCTIONALITIES*
 	/*!*****************************************************************************
 	Add new scenes to a game state via json file or load an existing scene into the
-	gamestate.
+	gamestate. (Should not be used when gamestate is playing in editor mode)
 
 	\param std::filesystem::path const&
 	- File path of scene file. Leave this empty to create a new scene without a json

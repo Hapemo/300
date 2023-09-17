@@ -18,6 +18,7 @@ start up of window and game system, also runs their update functions.
 #include "ScriptingSystem.h"
 #include "Physics/PhysicsSystem.h"
 #include "Serialization/SerializationTemp.h"
+#include "GameState/GameStateManager.h"
 
 #include "Example.h"
 
@@ -97,7 +98,8 @@ void Application::SystemInit()
 
 void Application::MainUpdate() 
 {
-    while (!glfwWindowShouldClose(mWindow.GetHandle())) 
+    //while (!systemManager->mGameStateManager->Exited()) //TODO change to this
+    while (!glfwWindowShouldClose(mWindow.GetHandle()))
     {
         FirstUpdate();
         SystemUpdate();
@@ -110,6 +112,7 @@ void Application::MainUpdate()
         // Graphics update
         mWindow.Update();
 
+        // if (glfwWindowShouldClose(mWindow.GetHandle())) systemManager->mGameStateManager->Exit();
     }
 }
 

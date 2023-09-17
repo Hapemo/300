@@ -18,38 +18,20 @@ void GameState::Init() {
 	//LOG_INFO("Init() called for gamestate: " + mName + +" ==================");
 	for (auto& scene : mScenes) {
 		//LOG_INFO("Attempting to call Alive() called for scene: " + scene.mName + +" ==================");
-#ifdef _EDITOR
-		if (!editorManager->IsScenePaused())
-#endif
-			for (auto e : scene.mEntities) {
-				if (e.HasComponent<Scripts>()) systemManager->GetScriptingPointer()->ScriptAlive(e);
-				//if (e.HasComponent<Script>()) logicSystem->Alive(e); TODO mich
-			}
-#ifdef _EDITOR
-		if (!editorManager->IsScenePaused())
-#endif
-			if (!scene.mIsPause) scene.Init();
+		for (auto e : scene.mEntities)
+			if (e.HasComponent<Scripts>()) systemManager->GetScriptingPointer()->ScriptAlive(e);
 
+		if (!scene.mIsPause) scene.Init();
 	}
-}
-
-void GameState::Update() {
-	for (auto& scene : mScenes)
-		if (!scene.mIsPause) scene.PrimaryUpdate();
 }
 
 void GameState::Exit() {
 	for (auto& scene : mScenes) {
 		scene.Exit();
-		for (auto e : scene.mEntities) {
-			//if (e.HasComponent<Script>()) logicSystem->Dead(e); TODO mich
+		for (auto e : scene.mEntities)
 			if (e.HasComponent<Scripts>()) systemManager->GetScriptingPointer()->ScriptDead(e);
-		}
 	}
-	//particleManager->Reset();
 }
-
-// Load new gamestate with file path
 
 
 void GameState::AddScene(std::filesystem::path const& _path) { // filesystem
@@ -64,15 +46,7 @@ void GameState::AddScene(std::filesystem::path const& _path) { // filesystem
 		latestScene.Load(_path);
 		//LOG_CUSTOM("GAMESTATE", "Adding scene \"" + _path.stem().string() + "\" to gamestate: " + mName);
 	}
-
-#ifndef _EDITOR
-	//if(!editorManager->IsScenePaused())
-		for (auto e : latestScene.mEntities) {
-			//if (e.HasComponent<Script>()) logicSystem->Alive(e); TODO mich
-			if (e.HasComponent<Scripts>()) systemManager->GetScriptingPointer()->ScriptAlive(e);
-		}
-#endif
-
+	
 	if (!latestScene.mIsPause) latestScene.Init();
 }
 void GameState::RemoveScene(std::string const& _name){
@@ -114,7 +88,6 @@ void GameState::Unload() {
 	// ResourceManager::GetInstance()->SelectiveUnloadAllResources();
 #endif
 }
-
 
 
 

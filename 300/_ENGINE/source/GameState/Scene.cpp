@@ -15,6 +15,7 @@ Added adding and removing of entity
 #include "GameState/Scene.h"
 #include "ECS/ECS.h"
 #include "ECS/ECS_Components.h"
+#include "ScriptingSystem.h"
 //#include "LogicSystem.h"
 
 
@@ -52,18 +53,18 @@ void Scene::Init() {
 	//logicSystem->Init(shouldRun);
 };
 
-void Scene::Update() {
-	
-};
+//void Scene::Update() {
+//	
+//};
 
 void Scene::Exit() {
-	//for (auto e : mEntities) if (e.GetComponent<General>().isActive) e.Deactivate(); // TODO mich
+	//for (auto e : mEntities) if (e.GetComponent<General>().isActive) e.Deactivate(); // TODO mich yj
 };
 
-void Scene::PrimaryUpdate() {
-	if (mIsPause) return;
-	Update();
-}
+//void Scene::PrimaryUpdate() {
+//	if (mIsPause) return;
+//	Update();
+//}
 
 void Scene::Pause(bool _pause) { 
 	//LOG_CUSTOM("SCENE", "Changed Scene \"" + mName + "\" pause status to " + (_pause ? "true" : "false"));
@@ -78,6 +79,7 @@ void Scene::Load(std::filesystem::path const& _path) {
 	//LOG_CUSTOM("SCENE", "Loading Scene: " + mName);
 	//serializationManager->LoadScene(*this, _path); TODO
 	for (auto e : mEntities) {
+		if (e.HasComponent<Scripts>()) systemManager->GetScriptingPointer()->ScriptAlive(e);
 		e.GetComponent<General>().isPaused = mIsPause;
 	}
 }
@@ -92,7 +94,7 @@ void Scene::Unload() {
 
 	decltype(mEntities) tempEntities = mEntities;
 	for (auto e : tempEntities) {
-		systemManager->ecs->DeleteEntity(e);
+		RemoveEntity(e);
 	}
 	assert(mEntities.empty() && std::string("Scene \"" + mName + "\"still contains " + std::to_string(mEntities.size()) + " after unloading").c_str());
 
