@@ -3,9 +3,8 @@ function Start()
 end
 
 function Update()
-    --Working
-    --systemManager.ecs:NewEntity();
-
-    --Test ScriptStart and ScriptUpdate functions
-    print("Running from Run.lua !!")
+    -- keyPressCheck = Input.CheckKey(State.PRESS, Key.KEY_6)
+    -- if (keyPressCheck) then
+    --     print("haha got it");
+    -- end
 end

@@ -14,7 +14,7 @@
 
 #include "DemoScene.hpp"
 #include "Common.hpp"
-//#include "ImGui.hpp"
+#include "ImGui.hpp"
 #include <cassert>
 
 #define TEST_FBO 0
@@ -77,7 +77,7 @@ void GFX::DemoScene::Initialize()
     
     // Initialize ImGui
     // ImGui
-    /*IMGUI_CHECKVERSION();
+    IMGUI_CHECKVERSION();
     if (!ImGui::CreateContext())
         throw std::runtime_error("Could not initialize ImGui");
 
@@ -85,7 +85,7 @@ void GFX::DemoScene::Initialize()
         throw std::runtime_error("Could not initialize ImGui::OpenGL");
 
     if (!ImGui_ImplOpenGL3_Init("#version 150"))
-        throw std::runtime_error("Could not initialize ImGui::OpenGL (2)");*/
+        throw std::runtime_error("Could not initialize ImGui::OpenGL (2)");
 
     // Loading in Compressed textures
     //mTexture.Load("../assets/Compressed/Vampire_diffuse.texture");
@@ -120,18 +120,18 @@ void GFX::DemoScene::Initialize()
  *---------------------------------------------------------------------------*/
 void GFX::DemoScene::Update()
 {
-    //ImGui_ImplOpenGL3_NewFrame();
-    //ImGui_ImplGlfw_NewFrame();
-    //ImGui::NewFrame();
+    ImGui_ImplOpenGL3_NewFrame();
+    ImGui_ImplGlfw_NewFrame();
+    ImGui::NewFrame();
 
-    //// Imgui start frame
-    //if (ImGui::Begin("Options"))
-    //{
-    //    ImGui::SliderFloat("Camera Speed: ", &mCamSpeed, 50.f, 300.f, "%1.f", ImGuiSliderFlags_AlwaysClamp);
-    //    ImGui::Text("Camera Position: %.0f, %.0f, %.0f", mCamera.position().x, mCamera.position().y, mCamera.position().z);
-    //    ImGui::Checkbox("Fullscreen ", &mFullscreen);
-    //}
-    //ImGui::End();
+    // Imgui start frame
+    if (ImGui::Begin("Options"))
+    {
+        ImGui::SliderFloat("Camera Speed: ", &mCamSpeed, 50.f, 300.f, "%1.f", ImGuiSliderFlags_AlwaysClamp);
+        ImGui::Text("Camera Position: %.0f, %.0f, %.0f", mCamera.position().x, mCamera.position().y, mCamera.position().z);
+        ImGui::Checkbox("Fullscreen ", &mFullscreen);
+    }
+    ImGui::End();
 
     float now = static_cast<float>(glfwGetTime());
     mDt = now - mLastTime;
@@ -288,9 +288,9 @@ void GFX::DemoScene::Draw()
         mRenderer->ClearInstances();
 #endif
 
-        //// ImGui UI
-        //ImGui::Render();
-        //ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+        // ImGui UI
+        ImGui::Render();
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
         glfwSwapBuffers(mWindow.GetHandle());
     } // END WHILE
@@ -304,5 +304,5 @@ void GFX::DemoScene::Draw()
  *---------------------------------------------------------------------------*/
 void GFX::DemoScene::Exit()
 {
-    //ImGui::DestroyContext();
+    ImGui::DestroyContext();
 }

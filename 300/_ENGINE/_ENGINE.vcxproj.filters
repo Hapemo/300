@@ -54,18 +54,6 @@
     <ClInclude Include="include\Graphics\GraphicsSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\GameState\GameState.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\GameState\GameStateManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\GameState\Scene.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Serialization\SerializationTemp.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\ECS\Prefab.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -114,16 +102,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\Audio\AudioSystem2.cpp">
-    <ClCompile Include="source\GameState\GameState.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\GameState\GameStateManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\GameState\Scene.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Serialization\SerializationTemp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

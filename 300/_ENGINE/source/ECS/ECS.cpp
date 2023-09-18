@@ -1,15 +1,5 @@
 #include "ECS/ECS.h"
 #include "ECS/ECS_Components.h"
-#include "pch.h"
-
-bool Entity::ShouldRun() {
-	assert(HasComponent<General>() && std::string("There is no general component when attempting to change Entity's isActive").c_str());
-
-	General const& genComponent = GetComponent<General>();
-	return !genComponent.isPaused && genComponent.isActive;
-}
-
-ECS::ECS() : registry(), NullEntity(registry.create()) {} 
 
 Entity ECS::NewEntity()
 {
@@ -21,11 +11,6 @@ Entity ECS::NewEntity()
 
 void ECS::DeleteEntity(Entity e)
 {
-//#ifdef _DEBUG
-//	assert(static_cast<std::uint32_t>(e.id) != 0);
-//#endif
-	if (static_cast<std::uint32_t>(e.id) == 0)
-		throw ("tried to delete entitiy with id 0");
 	registry.destroy(e.id);
 }
 
@@ -36,9 +21,8 @@ void ECS::DeleteAllEntities()
 
 Entity::Entity(entt::entity id) : id(id) {}
 Entity::Entity(std::uint32_t id) : id(entt::entity(id)) {}
-Entity::Entity(const Entity& entity) : id(entity.id) {}
 
-void Entity::AddChild(Entity e)
+Entity::Entity(const Entity& entity)
 {
 	id = systemManager->ecs->NewEntity().id;
 
@@ -55,36 +39,9 @@ void Entity::AddChild(Entity e)
 		this->AddComponent<PlaneCollider>(entity.GetComponent<PlaneCollider>());
 	if (entity.HasComponent<Scripts>())
 		this->AddComponent<Scripts>(entity.GetComponent<Scripts>());
-	if (this->id == e.id)
-		throw ("trying to make entity reproduce asexually");
-	if (static_cast<std::uint32_t>(e.id) == 0)
-		throw ("trying to add null entity as child");
-	if (static_cast<std::uint32_t>(this->id) == 0)
-		throw ("trying to add child to null entity");
-	if (e.HasComponent<Parent>())
-		throw ("entity is the child of another!");
-	
-	std::uint32_t eID = static_cast<std::uint32_t>(e.id);
-	Children& children = this->GetComponent<Children>();
-	Parent& parent = e.GetComponent<Parent>();
-	
-	++children.mNumChildren;
-	parent.mParent = static_cast<std::uint32_t>(this->id);
-	if (children.mNumChildren == 1) // this entity is a new parent
-	{
-		parent.mNextSibling = parent.mPrevSibling = children.mFirstChild = eID;
-		return;
-	}
-	// entity is already a parent of another
-	Entity firstBorn(children.mFirstChild);
-	Entity lastBorn(firstBorn.GetComponent<Parent>().mPrevSibling);
-	firstBorn.GetComponent<Parent>().mPrevSibling = eID;
-	lastBorn.GetComponent<Parent>().mNextSibling = eID;
-	parent.mNextSibling = static_cast<uint32_t>(firstBorn.id);
-	parent.mPrevSibling = static_cast<uint32_t>(lastBorn.id);
 }
 
-std::vector<Entity> Entity::GetAllChildren()
+void Entity::operator=(const Entity& entity)
 {
 	systemManager->ecs->registry.destroy(id);
 	id = systemManager->ecs->NewEntity().id;
@@ -101,33 +58,4 @@ std::vector<Entity> Entity::GetAllChildren()
 		this->AddComponent<PlaneCollider>(entity.GetComponent<PlaneCollider>());
 	if (entity.HasComponent<Scripts>())
 		this->AddComponent<Scripts>(entity.GetComponent<Scripts>());
-	if (!this->HasComponent<Children>())
-		return {};
-	Children child = this->GetComponent<Children>();
-	std::vector<Entity> children;
-	children.push_back(child.mFirstChild);
-	Parent parent = Entity(child.mFirstChild).GetComponent<Parent>();
-	while (parent.mNextSibling != child.mFirstChild)
-	{
-		children.push_back(parent.mNextSibling);
-		parent = Entity(parent.mNextSibling).GetComponent<Parent>();
-	}
-	return children;
-}
-
-Entity Entity::GetParent()
-{
-	if (!this->HasComponent<Parent>())
-		return 0;
-	return this->GetComponent<Parent>().mParent;
-}
-
-bool Entity::HasChildren() 
-{
-	return this->HasComponent<Children>();
-}
-
-bool Entity::HasParent()
-{
-	return this->HasComponent<Parent>();
 }

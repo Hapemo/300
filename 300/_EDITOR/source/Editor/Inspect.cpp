@@ -60,17 +60,10 @@ Inspect display for RigidBody components
 ***/
 
 #include "Inspect.h"
-
-
 #include "Editor.h"
 #include "ECS/ECS_Components.h"
-#include "ECS/ECS_Systems.h"
 #include "Hierarchy.h"
 #include <math.h>
-#include "imgui_stdlib.h"
-#include "../../../_SCRIPTING/include/ScriptingSystem.h"
-
-
 //int Inspect::inspectmode{ inspector_layer };
 //int Inspect::scaleCounter = 0;
 //bool prev{}, current{};
@@ -93,11 +86,6 @@ void Inspect::update()
 		if (ent.HasComponent<Transform>()) {
 			Transform& transform = ent.GetComponent<Transform>();
 			transform.Inspect();
-		}
-		if (ent.HasComponent<Scripts>())
-		{
-			Scripts& scripts = ent.GetComponent<Scripts>();
-			scripts.Inspect();
 		}
 
 
@@ -141,8 +129,6 @@ void Inspect::Add_component() {
 		{
 
 		}
-		if (ImGui::Selectable("Scripts"))
-			Entity(Hierarchy::selectedId).AddComponent<Scripts>();
 		ImGui::EndPopup();
 	}
 
@@ -174,86 +160,6 @@ void Transform::Inspect() {
 
 
 
-	}
-
-}
-
-void Scripts::Inspect() {
-	bool delete_component = true;
-	const char* data_script{};
-	static std::string newScript;
-
-	Scripts& scripts = Entity(Hierarchy::selectedId).GetComponent<Scripts>();
-	auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
-
-	if (ImGui::CollapsingHeader("Scripts"), &delete_component, ImGuiTreeNodeFlags_DefaultOpen)
-	{
-		if (ImGui::BeginDragDropTarget())
-		{
-			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_LUA_OBJ"))
-			{
-				data_script = (const char*)payload->Data;
-				scripts.mScriptFile = std::string(data_script);
-				std::string dataScript = std::string(data_script);
-
-				// if entity does not contain any script, just add 
-				if (scriptEntities.get<Scripts>(Hierarchy::selectedId).scriptsContainer.size() == 0)
-				{
-					Script script;
-					script.scriptFile = dataScript;
-					script.env = { systemManager->mScriptingSystem->luaState, sol::create, systemManager->mScriptingSystem->luaState.globals() };
-					scriptEntities.get<Scripts>(Hierarchy::selectedId).scriptsContainer.push_back(script);
-					std::cout << "Script " << script.scriptFile << ".lua added to entity " << std::to_string((int)Hierarchy::selectedId) << std::endl;
-				}
-				// if entity already has scripts attached, check if duplicate 
-				else
-				{
-					bool hasScript{ };
-
-					for (auto& elem : scriptEntities.get<Scripts>(Hierarchy::selectedId).scriptsContainer)
-					{
-						if (elem.scriptFile == scripts.mScriptFile)
-						{
-							hasScript = true;
-							std::cout << "Script is already attached! " << std::endl;
-							break;
-						}
-					}
-
-					if (!hasScript)
-					{
-						Script script;
-						script.scriptFile = dataScript;
-						script.env = { systemManager->mScriptingSystem->luaState, sol::create, systemManager->mScriptingSystem->luaState.globals() };
-						scriptEntities.get<Scripts>(Hierarchy::selectedId).scriptsContainer.push_back(script);
-						std::cout << "Script " << script.scriptFile << ".lua added to entity " << std::to_string((int)Hierarchy::selectedId) << std::endl;
-					}
-				}
-			}
-			ImGui::EndDragDropTarget();
-		}
-
-		ImGui::InputText(".lua", &newScript);
-		if (ImGui::Button("Add Lua Script"))
-		{
-			std::ofstream output;
-			std::ifstream input{ "../assets/Scripts/DefaultTemplate.lua" };
-			std::stringstream ss;
-			std::string lua = ".lua";
-			std::string line;
-			ss << "../assets/Scripts/" << newScript << ".lua";
-			std::cout << ss.str() << std::endl;
-			std::string pathInString = ss.str();
-			const char* path = pathInString.c_str();
-			output.open(path, std::ios_base::out);
-			while (getline(input, line))
-			{
-				output << line << std::endl;
-			}
-			input.close();
-			newScript = " ";
-			ImGui::InputText(".lua", &newScript);
-		}
 	}
 
 }
