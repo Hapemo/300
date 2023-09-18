@@ -66,9 +66,6 @@
     <ClInclude Include="include\Serialization\SerializationTemp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\ECS\Prefab.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\ECS\Tags.h">
       <Filter>Header Files</Filter>
     </ClInclude>

@@ -14,7 +14,7 @@ ECS::ECS() : registry(), NullEntity(registry.create()) {}
 Entity ECS::NewEntity()
 {
 	Entity e = registry.create();
-	e.AddComponent<General>();
+	e.AddComponent<General>().name = "Entity" + static_cast<uint32_t>(e.id);
 	e.AddComponent<Transform>();
 	return e;
 }
@@ -32,6 +32,34 @@ void ECS::DeleteEntity(Entity e)
 void ECS::DeleteAllEntities()
 {
 	registry.clear();
+}
+
+void ECS::NewPrefab(Entity e)
+{
+	// store to resources/prefabs/e.getcomponent<general>().name
+	// general flow 
+	// 1) serialize prefab based on entity
+	// 2) have a list of entities tied to a prefab
+	// for now, use member map
+	std::string name = e.GetComponent<General>().name;
+	if (mPrefabs.count(name))
+		throw ("prefab of the same name exists!");
+	mPrefabs[e.GetComponent<General>().name].push_back(e);
+}
+
+void ECS::NewEntityFromPrefab(std::string prefabName)
+{
+	Entity e = NewEntity();
+	//copy all prefab components (except transform) to new entity
+	mPrefabs[prefabName].push_back(e);
+}
+
+void ECS::UpdatePrefabEntities(std::string prefabName)
+{
+	for (Entity e : mPrefabs[prefabName])
+	{
+		//copy all prefab components into new entity
+	}
 }
 
 Entity::Entity(entt::entity id) : id(id) {}

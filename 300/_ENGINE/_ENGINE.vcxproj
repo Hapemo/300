@@ -157,7 +157,6 @@
     <ClInclude Include="include\GameState\GameState.h" />
     <ClInclude Include="include\GameState\GameStateManager.h" />
     <ClInclude Include="include\GameState\Scene.h" />
-    <ClInclude Include="include\ECS\Prefab.h" />
     <ClInclude Include="include\ECS\Tags.h" />
     <ClInclude Include="include\Graphics\GraphicsSystem.h" />
     <ClInclude Include="include\Multithread.h" />

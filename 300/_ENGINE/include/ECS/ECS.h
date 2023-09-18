@@ -2,9 +2,7 @@
 #include "entt.hpp";
 #include "Singleton.h"
 #include "ECS_Systems.h"
-//#include "Prefab.h"
 
-struct Entity;
 struct Children;
 struct Parent;
 
@@ -66,6 +64,8 @@ class ECS
 public:
 	ECS();
 
+	std::unordered_map<std::string, std::vector<Entity>> mPrefabs;
+
 	entt::registry registry;
 
 	Entity NewEntity();
@@ -80,7 +80,11 @@ public:
 
 	void DeleteAllEntities();
 
-	//Entity NewPrefabEntity(const Prefab& prefab);
+	void NewPrefab(Entity e);
+
+	void NewEntityFromPrefab(std::string prefabName);
+
+	void UpdatePrefabEntities(std::string prefabName);
 
 	const Entity NullEntity;
 };
