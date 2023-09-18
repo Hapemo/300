@@ -32,9 +32,9 @@ void EditorApplication::Init()
     SystemInit();
 
     // create new entity
-    Entity mEntity = ECS::GetInstance()->NewEntity();
+    /*Entity mEntity = systemManager->ecs->NewEntity();
     mEntity.GetComponent<General>().name = "DefaultTestObj";
-    mEntity.GetComponent<MeshRenderer>().mMeshPath = "../compiled_geom/Skull_textured.geom";
+    mEntity.GetComponent<MeshRenderer>().mMeshPath = "../compiled_geom/Skull_textured.geom";*/
 }
 
 void EditorApplication::StartUp()
