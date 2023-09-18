@@ -12,6 +12,9 @@
 #include <meshoptimizer.h>
 #pragma comment( lib, "../lib/assimp/BINARIES/Win32/lib/Release/assimp-vc142-mt.lib")
 
+// Artist create different sized models -- units
+// nodes are different sizes -- units
+
 namespace _GEOM
 {
 	//----------------------------------------------------------------------------------------------------
@@ -52,12 +55,15 @@ namespace _GEOM
 		assert(SanityCheck());
 
 		aiVector3D scaling((ai_real)_DData.m_Scale.x, (ai_real)_DData.m_Scale.y, (ai_real)_DData.m_Scale.z);
-		m_DescriptorMatrix.Scaling(scaling, m_DescriptorMatrix);
-		m_DescriptorMatrix.RotationX((ai_real)_DData.m_Rotate.x, m_DescriptorMatrix);
-		m_DescriptorMatrix.RotationY((ai_real)_DData.m_Rotate.y, m_DescriptorMatrix);
-		m_DescriptorMatrix.RotationZ((ai_real)_DData.m_Rotate.z, m_DescriptorMatrix);
+		aiMatrix4x4 scl, rot, trns;
+		m_DescriptorMatrix.Scaling(scaling, scl);
+		m_DescriptorMatrix.RotationX((ai_real)_DData.m_Rotate.x, rot);
+		m_DescriptorMatrix.RotationY((ai_real)_DData.m_Rotate.y, rot);
+		m_DescriptorMatrix.RotationZ((ai_real)_DData.m_Rotate.z, rot);
 		aiVector3D translation((ai_real)_DData.m_Translate.x, (ai_real)_DData.m_Translate.y, (ai_real)_DData.m_Translate.z);
-		m_DescriptorMatrix.Translation(translation, m_DescriptorMatrix);
+		m_DescriptorMatrix.Translation(translation, trns);
+
+		m_DescriptorMatrix = trns * rot * scl;
 
 		std::cout << ">>[NOTE]: \tImporting Data\n";
 
@@ -152,6 +158,7 @@ namespace _GEOM
 				Transform.DecomposeNoScaling(presentRotation, p);
 			}
 
+			MeshPart.m_MeshName				= m_MeshName;
 			MeshPart.m_Name					= AssimpMesh.mName.C_Str();
 			MeshPart.m_iMaterialInstance	= AssimpMesh.mMaterialIndex;
 
@@ -261,7 +268,7 @@ namespace _GEOM
 		// Recurse the scene from the root node and process each mesh we find
 		std::function<void(const aiNode&, const aiMatrix4x4&)> RecurseScene = [&](const aiNode& Node, const aiMatrix4x4& ParentTransform)
 		{
-			const aiMatrix4x4 Transform = ParentTransform * Node.mTransformation;
+			const aiMatrix4x4 Transform = ParentTransform * Node.mTransformation;		// >> DEBUG: the values are so big because of here
 			auto        iBase = _MyNodes.size();
 
 			// Collect all the meshes
@@ -434,6 +441,10 @@ namespace _GEOM
 				m_SkinGeom->m_Meshes.back().m_Name = E.m_MeshName;
 			}
 
+			if (E.m_Textures.size() > 0) {
+				m_SkinGeom->m_bHasTextures = true;
+				m_SkinGeom->m_Textures = E.m_Textures;									// add the textures here
+			}
 
 			auto& FinalMesh = m_SkinGeom->m_Meshes[iFinalMesh];						
 			FinalMesh.m_Submeshes.emplace_back();									// create a new submesh instance for the mesh
@@ -480,6 +491,9 @@ namespace _GEOM
 
 			//Optimize vertex fetch
 			optimized_submesh.m_Vertices.resize(meshopt_optimizeVertexFetch(optimized_submesh.m_Vertices.data(), optimized_submesh.m_Indices.data(), index_count, optimized_submesh.m_Vertices.data(), vertex_count, sizeof(FullVertices)));
+
+			optimized_submesh.m_MeshName = meshPart.m_MeshName;
+			optimized_submesh.m_Name = meshPart.m_Name;
 
 			optimizedMeshParts.push_back(optimized_submesh);
 		}
@@ -602,6 +616,7 @@ namespace _GEOM
 				RenderSubmesh.m_Indices				= submesh.m_Indices;
 				RenderSubmesh.m_MeshName			= submesh.m_MeshName;
 				RenderSubmesh.m_Name				= submesh.m_Name;
+				RenderSubmesh.m_Textures			= submesh.m_Textures;
 			}
 		}
 
@@ -659,6 +674,10 @@ namespace _GEOM
 			// Copy the animation data in
 			if (m_bHasAnimation) {
 				Mesh[i].m_Animation = std::move(m_Animation);
+			}
+
+			if(m_bHasTextures) {
+				Mesh[i].m_Texture = std::move(m_Textures);
 			}
 
 			// Copy the bool statuses in
@@ -768,6 +787,26 @@ namespace _GEOM
 		{
 			auto& meshInst = GeomData.m_pMesh[i];
 			outfile.write((char*)&meshInst.m_name, sizeof(char) * 64);
+
+			// Texture Data
+			if (GeomData.m_bHasTextures)
+			{
+				uint8_t numberoftextures = static_cast<uint8_t>(meshInst.m_Texture.size());
+				outfile.write((char*)&numberoftextures, sizeof(uint8_t));
+
+				for (int j{}; j < meshInst.m_Texture.size(); ++j)
+				{
+					auto& textureinst = meshInst.m_Texture[j];
+
+					uint8_t strlen = textureinst.path.size();
+					outfile.write((char*)&strlen, sizeof(uint8_t));							// path name length
+					outfile.write((char*)textureinst.path.c_str(), strlen);						// path name
+
+					strlen = textureinst.type.size();
+					outfile.write((char*)&strlen, sizeof(uint8_t));							// type name length
+					outfile.write((char*)textureinst.type.c_str(), strlen);						// type name					
+				}
+			}
 
 			// Animation Data
 			if (GeomData.m_bHasAnimations) 
@@ -913,7 +952,7 @@ namespace _GEOM
 			mat->GetTexture(type, i, &str);
 			Geom::Texture texture;
 			texture.type = typeName;
-			texture.path = str.C_Str();
+			texture.path = getFileNameWithExtension(str.C_Str());
 			textures.emplace_back(texture);
 		}
 

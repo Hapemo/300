@@ -39,6 +39,12 @@ void GFX::Camera::SetTarget(vec3 newTarget)
 	mTarget = newTarget;
 }
 
+void GFX::Camera::SetSize(ivec2 size)
+{
+	mSize = size;
+	mAspectRatio = static_cast<float>(size.x) / static_cast<float>(size.y);
+}
+
 /**---------------------------------------------------------------------------/
  * @brief
  *  Set the cursor position
@@ -61,6 +67,11 @@ void GFX::Camera::SetCursorPosition(vec2 newPosition)
 vec3 GFX::Camera::position()
 {
 	return mPosition;
+}
+
+vec3 GFX::Camera::target()
+{
+	return mTarget;
 }
 
 /**---------------------------------------------------------------------------/
@@ -100,11 +111,13 @@ vec2 GFX::Camera::cursorPosition()
  *  none
  *---------------------------------------------------------------------------*/
 //void GFX::Camera::SetProjection(float left, float right, float bottom, float top, float near, float far)
-void GFX::Camera::SetProjection(float fovAngle, ivec2 size, float nearZ, float farZ)
+void GFX::Camera::SetProjection(float fovDegree, ivec2 size, float nearZ, float farZ)
 {
-	float aspectRatio = static_cast<float>(size.x) / static_cast<float>(size.y);
-	mProjection = glm::perspective(glm::radians(fovAngle), aspectRatio, nearZ, farZ);
-	//mProjection = glm::ortho(left, right, bottom, top, near, far);
+	mFovDegree = fovDegree;
+	mSize = size;
+	mNear = nearZ;
+	mFar = farZ;
+	mAspectRatio = static_cast<float>(size.x) / static_cast<float>(size.y);
 }
 
 /**---------------------------------------------------------------------------/
@@ -116,6 +129,7 @@ void GFX::Camera::SetProjection(float fovAngle, ivec2 size, float nearZ, float f
  *---------------------------------------------------------------------------*/
 void GFX::Camera::Update()
 {
+	mProjection = glm::perspective(glm::radians(mFovDegree), mAspectRatio, mNear, mFar);
 	mView = glm::lookAt(glm::vec3(mPosition), glm::vec3(mTarget), glm::vec3(0.0f, 1.0f, 0.0f));
 	mViewProjection = mProjection * mView;
 }

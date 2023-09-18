@@ -9,7 +9,7 @@ void ObjectFactory::DeserializeScene(const std::string& filename)
 
 	for (auto& obj : entities.EntitiesList())
 	{
-		Entity e = ECS::GetInstance()->NewEntity();
+		Entity e = systemManager->ecs->NewEntity();
 		e.GetComponent<General>() = obj.GetGeneralJSON();
 		e.GetComponent<Transform>() = obj.GetTransformJSON();
 
@@ -30,7 +30,7 @@ void ObjectFactory::SerializeScene(const std::string& filename)
 	EntityListJSON entities;
 	entities.EntitiesList().clear();
 
-	auto container = ECS::GetInstance()->GetEntitiesWith<General, Transform>();
+	auto container = systemManager->ecs->GetEntitiesWith<General, Transform>();
 
 	for (Entity e : container)
 	{

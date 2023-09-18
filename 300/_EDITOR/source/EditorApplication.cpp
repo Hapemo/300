@@ -82,8 +82,7 @@ void EditorApplication::MainUpdate()
 
         SecondUpdate(); // This should always be the last
 
-        mWindow.Update();
-
+        mWindow.Update();   // This is required for IMGUI draws as well
     }
 }
 
@@ -107,8 +106,8 @@ void EditorApplication::Exit()
 {
     mMaineditor.UIend();
     systemManager->Exit();
-    delete systemManager;
-    ECS::GetInstance()->DeleteAllEntities();
+    systemManager->ecs->DeleteAllEntities();
     SingletonManager::destroyAllSingletons();
     mWindow.DestroySystem();
+    delete systemManager;
 }

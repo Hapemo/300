@@ -1,9 +1,15 @@
+#pragma once 
+#ifndef _RESOURCEMANAGER_H
+#define _RESOURCEMANAGER_H
+
+#define  _ENABLE_ANIMATIONS 0
 #include "Guid.h"
 #include "Mesh.hpp"
 #include "Shader.hpp"
 #include "Texture.hpp"
 
 #include <filesystem>
+
 
 enum ResourceTypes : unsigned {
 
@@ -161,8 +167,9 @@ public:
 
     void get_Texture(uid<> id);
     void get_Mesh(uid<> id);
-    void get_Texture(std::string name);
+    GFX::Texture& get_MaterialInstance(std::string name);
     GFX::Mesh& get_Mesh(std::string name);
+    GFX::Shader& get_Shader(std::string name);
 
     instance_info& AllocRscInfo(void);
     void ReleaseRscInfo(instance_info& RscInfo);
@@ -180,6 +187,7 @@ private:
     std::array<instance_info, MAX_RESOURCE>             m_Infobuffer;
 
     const std::string compiled_geom_path = "../compiled_geom/";
+    const std::string compressed_texture_path = "../assets/Compressed/";
 
     MeshManager             mMeshManager;
     ShaderManager           mShaderManager;
@@ -188,3 +196,4 @@ private:
 
 
 
+#endif // !_RESOURCEMANAGER_H
