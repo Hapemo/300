@@ -19,6 +19,7 @@ start up of window and game system, also runs their update functions.
 #include "Physics/PhysicsSystem.h"
 #include "Serialization/SerializationTemp.h"
 #include "GameState/GameStateManager.h"
+#include "Debug/Logger.h"
 
 #include "Example.h"
 
@@ -46,6 +47,7 @@ void Application::StartUp()
 void Application::SystemInit() 
 {
     systemManager->Init(false, &mWindow);
+
     FPSManager::Init();
     Input::Init();
 
@@ -146,6 +148,7 @@ void Application::Exit()
     systemManager->Exit();
     systemManager->ecs->DeleteAllEntities();
     SingletonManager::destroyAllSingletons();
+    systemManager->mLogger->EndLogging();
     mWindow.DestroySystem();
     delete systemManager;
 }

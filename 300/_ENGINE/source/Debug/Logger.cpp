@@ -64,7 +64,7 @@ void Logger::InitLogging()
 	std::stringstream ss;
 	std::string log = "_Log.txt";
 	//ss << "../../ENGINE/Resources/Logs/" << temp2 << log;
-	ss << "../../ENGINE/Resources/Logs/" << log;
+	ss << "../assets/Logs/" << log;
 	std::string temp = ss.str();
 	temp.erase(std::remove(temp.begin(), temp.end(), '\n'), temp.cend());
 	const char* path = temp.c_str();

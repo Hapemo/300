@@ -31,6 +31,7 @@ generate the overall performance of the scripting system.
 //#include "LuaComponent.h"
 //#include "../GameState/GameStateManager.h"
 #include "ScriptingSystem.h"
+#include "Debug/Logger.h"
 
 /******************************************************************************/
 /*!

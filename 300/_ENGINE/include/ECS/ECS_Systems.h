@@ -7,6 +7,7 @@ class ScriptingSystem;
 class GraphicsSystem;
 class GameStateManager;
 class ECS;
+class Logger;
 
 class SystemManager {
 	GFX::Window *mWindow;
@@ -17,6 +18,7 @@ public:
 	std::unique_ptr<ScriptingSystem> mScriptingSystem;
 	std::unique_ptr<GraphicsSystem> mGraphicsSystem;
 	std::unique_ptr<GameStateManager> mGameStateSystem;
+	std::unique_ptr<Logger> mLogger;
 
 	ECS *ecs;
 
