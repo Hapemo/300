@@ -66,11 +66,18 @@ void ScriptingSystem::Init()
     //luaState.set_function("print", print);
     //luaState.set_function("printVec", printVec);
 
-    //luaState.new_usertype<Vec2>(
-    //    "Vec2", sol::constructors<Vec2(), Vec2(float, float)>(),
-    //    "x", &Vec2::x,
-    //    "y", &Vec2::y
-    //    );
+    luaState.new_usertype<glm::vec2>(
+        "Vec2", sol::constructors<glm::vec2(), glm::vec2(float, float)>(),
+        "x", &glm::vec2::x,
+        "y", &glm::vec2::y
+        );
+
+    luaState.new_usertype<glm::vec3>(
+        "Vec3", sol::constructors<glm::vec3(), glm::vec3(float, float, float)>(),
+        "x", &glm::vec3::x,
+        "y", &glm::vec3::y,
+        "z", &glm::vec3::z
+        );
 
     /******************************************************************************/
     /*!
@@ -79,9 +86,11 @@ void ScriptingSystem::Init()
      /******************************************************************************/
     LuaEngine();
     LuaECS();
+    LuaEntity();
     LuaGeneral();
     LuaTransform();
     LuaRigidBody();
+    LuaBoxCollider();
     LuaScript();
     LuaInput();
 

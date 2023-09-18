@@ -1,11 +1,1 @@
-﻿  DemoScene.cpp
-  main.cpp
-C:\Users\jazzt\Documents\GitHub\300\300\_GRAPHICS\demo\DemoScene.cpp(76,80): warning C4244: 'argument': conversion from '_Rep' to 'unsigned int', possible loss of data
-          with
-          [
-              _Rep=std::chrono::system_clock::rep
-          ]
-C:\Users\jazzt\Documents\GitHub\300\300\_GRAPHICS\demo\DemoScene.cpp(258,125): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
-  _GRAPHICS.vcxproj -> C:\Users\jazzt\Documents\GitHub\300\300\x64\Debug\_GRAPHICS.lib
-          1 file(s) copied.
-          1 file(s) copied.
+﻿

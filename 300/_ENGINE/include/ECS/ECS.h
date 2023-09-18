@@ -1,6 +1,5 @@
 #pragma once
 #include "entt.hpp";
-#include "Singleton.h"
 #include "ECS_Systems.h"
 //#include "Prefab.h"
 
@@ -59,6 +58,15 @@ struct Entity
 	bool HasChildren();
 
 	bool HasParent();
+
+	template<typename Component>
+	Component& LuaGetComponent(Entity entity);
+
+	//template <typename Component, typename OtherComponent, typename ...Components>
+	/*auto LuaGetComponents(Entity entity);*/
+
+	//template <typename Component, typename OtherComponent, typename ...Components>
+	//auto LuaGetComponents(Entity entity, sol::as_args args);
 };
 
 class ECS
@@ -192,3 +200,15 @@ void Entity::RemoveComponent()
 {
 	systemManager->ecs->registry.remove<Component>(id);
 }
+
+template<typename Component>
+Component& Entity::LuaGetComponent(Entity entity)
+{
+	return entity.GetComponent<Component>();
+}
+
+//template <typename Component, typename OtherComponent, typename ...Components>
+//auto Entity::LuaGetComponents(Entity entity)
+//{
+//	return entity.GetComponent<Component, OtherComponent, Components...>;
+//}
