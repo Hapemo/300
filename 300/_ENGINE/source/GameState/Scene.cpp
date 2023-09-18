@@ -19,7 +19,7 @@ Added adding and removing of entity
 //#include "LogicSystem.h"
 
 
-Scene::Scene() : mEntities(), mIsPause(false), mName(), mLayer(), mOrder() {
+Scene::Scene() : mEntities(), mIsPause(false), mName() {
 	//LOG_CUSTOM("SCENE", "New Scene created with no name");
 }
 
@@ -28,7 +28,7 @@ Scene::Scene() : mEntities(), mIsPause(false), mName(), mLayer(), mOrder() {
 //	//LOG_CUSTOM("SCENE", "New Scene created with no name");
 //}
 
-Scene::Scene(std::string const& _name) : mEntities(), mIsPause(false), mName(_name),/* mCamera(),*/ mLayer(), mOrder() {
+Scene::Scene(std::string const& _name) : mEntities(), mIsPause(false), mName(_name) {
 	(void)_name;
 	//LOG_CUSTOM("SCENE", "Scene created with name: " + mName);
 }
@@ -102,8 +102,6 @@ void Scene::Unload() {
 	mEntities.clear();
 	mIsPause = false;
 	mName = decltype(mName)();
-	mLayer = decltype(mLayer)();
-	mOrder = decltype(mOrder)();
 }
 
 Entity Scene::AddEntity() {
