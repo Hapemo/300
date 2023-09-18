@@ -70,6 +70,7 @@ void Application::SystemInit()
     ent3.GetComponent<General>().tag = TAG::UNKNOWN;
     ent3.GetComponent<General>().subtag = SUBTAG::ACTIVE;
 
+
     ObjectFactory::SerializeScene("../resources/Scenes/test.json");
 
     auto view = systemManager->ecs->GetEntitiesWith<General, Transform>();
@@ -93,6 +94,7 @@ void Application::MainUpdate()
 
         // Graphics update
         mWindow.Update();
+
     }
 }
 
@@ -110,7 +112,7 @@ void Application::SystemUpdate()
 void Application::SecondUpdate() 
 {
     Input::UpdatePrevKeyStates();
-    //FPSManager::LimitFPS(0);
+    FPSManager::LimitFPS(60);
 }
 
 void Application::Exit() 
