@@ -1,4 +1,5 @@
 #include "Mesh.hpp"
+#include "../../_RESOURCE/include/ResourceManager.h"		// for _enable_animations define
 #include <filesystem>
 #include <array>
 
@@ -68,8 +69,9 @@ void GFX::Mesh::Setup(const _GEOM::Geom& GeomData)
 	std::vector<std::array<float,MAX_BONE_INFLUENCE>>	boneWeights;
 
 	LoadFromGeom(GeomData, positions, uvs, indices);
+	mMeshName = std::string(GeomData.m_pMesh[0].m_name.begin(), GeomData.m_pMesh[0].m_name.end());
 
-	if (GeomData.m_bHasAnimations)
+	if (GeomData.m_bHasAnimations && _ENABLE_ANIMATIONS)
 	{
 		// load the animation data into vectors, to push into the vbo
 		LoadAnimationDataFromGeom(GeomData, boneIDs, boneWeights);
@@ -130,7 +132,7 @@ void GFX::Mesh::Setup(const _GEOM::Geom& GeomData)
 		//GeomData.m_pPos[0].m_BoneIDs;
 		//GeomData.m_pPos[0].m_Weights;
 		
-	if (GeomData.m_bHasAnimations)
+	if (GeomData.m_bHasAnimations && _ENABLE_ANIMATIONS)
 	{
 		// Create VBO for Bone IDs. Attach VBO for Bone IDs to VAO
 		mBoneIDVbo.Create(positions.size() * sizeof(int) * MAX_BONE_INFLUENCE);										// 1 for each vertex

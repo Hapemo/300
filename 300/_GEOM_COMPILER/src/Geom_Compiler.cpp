@@ -12,6 +12,9 @@
 #include <meshoptimizer.h>
 #pragma comment( lib, "../lib/assimp/BINARIES/Win32/lib/Release/assimp-vc142-mt.lib")
 
+// Artist create different sized models -- units
+// nodes are different sizes -- units
+
 namespace _GEOM
 {
 	//----------------------------------------------------------------------------------------------------
@@ -52,12 +55,15 @@ namespace _GEOM
 		assert(SanityCheck());
 
 		aiVector3D scaling((ai_real)_DData.m_Scale.x, (ai_real)_DData.m_Scale.y, (ai_real)_DData.m_Scale.z);
-		m_DescriptorMatrix.Scaling(scaling, m_DescriptorMatrix);
-		m_DescriptorMatrix.RotationX((ai_real)_DData.m_Rotate.x, m_DescriptorMatrix);
-		m_DescriptorMatrix.RotationY((ai_real)_DData.m_Rotate.y, m_DescriptorMatrix);
-		m_DescriptorMatrix.RotationZ((ai_real)_DData.m_Rotate.z, m_DescriptorMatrix);
+		aiMatrix4x4 scl, rot, trns;
+		m_DescriptorMatrix.Scaling(scaling, scl);
+		m_DescriptorMatrix.RotationX((ai_real)_DData.m_Rotate.x, rot);
+		m_DescriptorMatrix.RotationY((ai_real)_DData.m_Rotate.y, rot);
+		m_DescriptorMatrix.RotationZ((ai_real)_DData.m_Rotate.z, rot);
 		aiVector3D translation((ai_real)_DData.m_Translate.x, (ai_real)_DData.m_Translate.y, (ai_real)_DData.m_Translate.z);
-		m_DescriptorMatrix.Translation(translation, m_DescriptorMatrix);
+		m_DescriptorMatrix.Translation(translation, trns);
+
+		m_DescriptorMatrix = trns * rot * scl;
 
 		std::cout << ">>[NOTE]: \tImporting Data\n";
 
@@ -262,7 +268,7 @@ namespace _GEOM
 		// Recurse the scene from the root node and process each mesh we find
 		std::function<void(const aiNode&, const aiMatrix4x4&)> RecurseScene = [&](const aiNode& Node, const aiMatrix4x4& ParentTransform)
 		{
-			const aiMatrix4x4 Transform = ParentTransform * Node.mTransformation;
+			const aiMatrix4x4 Transform = ParentTransform * Node.mTransformation;		// >> DEBUG: the values are so big because of here
 			auto        iBase = _MyNodes.size();
 
 			// Collect all the meshes
