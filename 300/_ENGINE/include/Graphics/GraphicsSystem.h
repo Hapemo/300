@@ -45,7 +45,7 @@ public:
 	void SetCameraTarget(CAMERA_TYPE type, vec3 position);
 	void SetCameraProjection(CAMERA_TYPE type, float fovDegree, ivec2 size, float nearZ, float farZ);
 	void SetCameraSize(CAMERA_TYPE type, ivec2 size);
-	void UpdateCamera(CAMERA_TYPE type);
+	void UpdateCamera(CAMERA_TYPE type, const float&);
 
 	vec3 GetCameraPosition(CAMERA_TYPE type);
 	vec3 GetCameraTarget(CAMERA_TYPE type);

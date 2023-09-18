@@ -1,5 +1,6 @@
 #include <Graphics/GraphicsSystem.h>
 #include <ResourceManager.h>
+#include <Graphics/Camera_Input.h>
 
 /***************************************************************************/
 /*!
@@ -24,7 +25,7 @@ void GraphicsSystem::Init()
 	SetCameraTarget(CAMERA_TYPE::CAMERA_TYPE_ALL, { 0, 0, 0 });									// Target of camera
 	SetCameraProjection(CAMERA_TYPE::CAMERA_TYPE_ALL, 60.f, m_Window->size(), 0.1f, 900.f);		// Projection of camera
 
-	UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_ALL);
+	UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_ALL, 0.f);
 
 	// Create a new entity here, for testing purposes
 	Entity newentity = systemManager->ecs->NewEntity();			// creating a new entity
@@ -47,7 +48,8 @@ void GraphicsSystem::Update(float dt)
 	// local variable to keep track of rendered mesh instances
 	std::map<std::string, short> renderedMesh;
 
-	UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_ALL);
+	// update the camera's transformations, and its input
+	UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_EDITOR, dt);
 
 	// To be removed once entity to be drawn created
 	m_Renderer.AddSphere(m_EditorCamera.position(), { 0, 0, -300 }, 100.f, { 0, 1, 0, 1 });
@@ -245,19 +247,23 @@ void GraphicsSystem::SetCameraSize(CAMERA_TYPE type, ivec2 size)
 	}
 }
 
-void GraphicsSystem::UpdateCamera(CAMERA_TYPE type)
+void GraphicsSystem::UpdateCamera(CAMERA_TYPE type, const float& dt)
 {
 	switch (type)
 	{
 	case CAMERA_TYPE::CAMERA_TYPE_GAME:
+		Camera_Input::getInstance().updateCameraInput(m_GameCamera, dt);
 		m_GameCamera.Update();
 		break;
 
 	case CAMERA_TYPE::CAMERA_TYPE_EDITOR:
+		Camera_Input::getInstance().updateCameraInput(m_EditorCamera, dt);
 		m_EditorCamera.Update();
 		break;
 
 	case CAMERA_TYPE::CAMERA_TYPE_ALL:
+		Camera_Input::getInstance().updateCameraInput(m_GameCamera, dt);
+		Camera_Input::getInstance().updateCameraInput(m_EditorCamera, dt);
 		m_GameCamera.Update();
 		m_EditorCamera.Update();
 		break;

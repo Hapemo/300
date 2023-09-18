@@ -16,7 +16,8 @@
 
 #include "Math.hpp"
 
-namespace GFX {
+namespace GFX 
+{
     class Camera
     {
     public:
