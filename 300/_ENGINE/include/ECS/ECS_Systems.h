@@ -7,10 +7,10 @@ class ScriptingSystem;
 class AudioSystem;
 class AudioManager;
 class GraphicsSystem;
+class GameStateManager;
 class ECS;
 
-class SystemManager
-{
+class SystemManager {
 	GFX::Window *mWindow;
 	bool mIsEditor;
 
@@ -20,8 +20,11 @@ public:
 	std::unique_ptr<AudioSystem> mAudioSystem;
 	
 	std::unique_ptr<GraphicsSystem> mGraphicsSystem;
+	std::unique_ptr<GameStateManager> mGameStateSystem;
 
 	ECS *ecs;
+
+	std::vector<std::string> mComponents;
 
 	SystemManager();
 	~SystemManager();
@@ -31,6 +34,7 @@ public:
 	void Update(float dt);
 	void Exit();
 	PhysicsSystem *GetPhysicsPointer();
+	ScriptingSystem* GetScriptingPointer();
 };
 
 extern SystemManager *systemManager;

@@ -76,7 +76,7 @@ void MultithreadExample() {
 	Multithread::GetInstance()->RunMemberFunctions(std::pair(systemManager->ecs, &ECS::DeleteAllEntities));
 
 }
-//
+
 //void Example()
 //{
 //	//-----------------------------------------------------------
