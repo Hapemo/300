@@ -19,12 +19,16 @@ void main()
     vec3 normal = texture(uTex[1], TexCoords).xyz;                  // Normal texture
     normal = (WorldPos * vec4(normal, 0.f)).xyz;                    // Transform the normal to world space
 
-    vec3 lightDir = normalize(WorldPos.xyz - lightPos.xyz);         // Light Direction
-    float diffuse = max(dot(lightDir, normal), 0.0f);    // Diffuse scale
+    vec3 lightDir = normalize(lightPos.xyz - WorldPos.xyz);         // Light Direction
+    float diff = max(dot(lightDir, normal), 0.0f);                  // Diffuse scale
 
-    float ambient = 0.5f;
+    float ambientStrength = 0.5f;
 
-    vec3 finalColor = uColor.xyz * vec3(1.f, 0.2f, 0.2f) * (diffuse + ambient);
+    vec3 lightColor = vec3(1.f, 0.2f, 0.2f);
+    vec3 ambient = ambientStrength * lightColor;
+    vec3 diffuse = diff * lightColor;
+
+    vec3 finalColor = (ambient + diffuse) * uColor.xyz;
 
     // Output
     fragColor0 = vec4(finalColor, uColor.a);
