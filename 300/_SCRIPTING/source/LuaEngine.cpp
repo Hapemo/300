@@ -15,17 +15,29 @@ void LuaEngine()
         );
 }
 
-void LuaEntity()
+void LuaECS()
 {
     systemManager->mScriptingSystem->luaState.new_usertype<ECS>(
         "ecs", sol::constructors<>(),
         "NewEntity", &ECS::NewEntity,
         "DeleteEntity", &ECS::DeleteEntity,
-        "GetGeneral", &ECS::GetEntitiesWith<General>,
-        "GetTransform", &ECS::GetEntitiesWith<Transform>,
-        "GetRigidBody", &ECS::GetEntitiesWith<RigidBody>,
-        "GetScripts", &ECS::GetEntitiesWith<Scripts>
+        "GetEntitiesWithGeneral", &ECS::GetEntitiesWith<General>,
+        "GetEntitiesWithTransform", &ECS::GetEntitiesWith<Transform>,
+        "GetEntitiesWithRigidBody", &ECS::GetEntitiesWith<RigidBody>,
+        "GetEntitiesWithScripts", &ECS::GetEntitiesWith<Scripts>
         );
+}
+
+void LuaEntity()
+{
+    systemManager->mScriptingSystem->luaState.new_usertype<Entity>(
+        "entity", sol::constructors<>(),
+        "id", &Entity::id,
+        "HasRigidBodyComponent", &Entity::HasComponent<RigidBody>
+        );
+
+    // to explore (std::resolve for templated c++ functions to lua)
+    //"AddRigidBodyComponent", sol::resolve<decltype(&systemManager->entity->AddComponent<RigidBody>())>(&Entity::AddComponent<RigidBody>)
 }
 
 void LuaGeneral()

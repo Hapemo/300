@@ -81,6 +81,9 @@ void EditorApplication::MainUpdate()
         //mMaineditor.WindowUpdate(mWindow.GetHandle());
         mMaineditor.UIdraw(mWindow.GetHandle());
 
+        // To remove (Script test with entities)
+        systemManager->mScriptingSystem->ScriptingUpdateTest();
+
         SecondUpdate(); // This should always be the last
 
         mWindow.Update();   // This is required for IMGUI draws as well
@@ -97,12 +100,13 @@ void EditorApplication::FirstUpdate()
 
 void EditorApplication::SystemUpdate()
 {
-    systemManager->Update(1.f /*insert dt here*/);
+    systemManager->Update(FPSManager::dt);
 }
 
 void EditorApplication::SecondUpdate()
 {
     Input::UpdatePrevKeyStates();
+    FPSManager::LimitFPS(60);
 }
 
 void EditorApplication::Exit()

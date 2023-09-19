@@ -2,13 +2,70 @@
 #include "entt.hpp";
 #include "Singleton.h"
 #include "ECS_Systems.h"
+//#include "Prefab.h"
 
 struct Entity;
+struct Children;
+struct Parent;
+
+struct Entity
+{
+	entt::entity id;
+
+	Entity() = delete;
+	Entity(entt::entity id);
+	Entity(std::uint32_t id);
+
+	Entity(const Entity& entity);
+	void operator=(const Entity& entity) = delete;
+
+	bool operator<(Entity e) { return id < e.id; }
+	bool operator<(const Entity e) const { return id < e.id; }
+
+	template <typename Component>
+	Component& AddComponent();
+
+	template <typename Component>
+	Component& AddComponent(const Component& component);
+
+	template <typename Component>
+	Component& GetComponent();
+
+	template <typename Component>
+	const Component& GetComponent() const;
+
+	template <typename Component, typename OtherComponent, typename ...Components>
+	auto GetComponent();
+
+	template <typename Component>
+	bool HasComponent() const;
+
+	template <typename ... Components>
+	bool HasAnyOfComponents() const;
+
+	template <typename ... Components>
+	bool HasAllOfComponents() const;
+
+	template <typename Component>
+	void RemoveComponent();
+
+	bool ShouldRun();
+	void AddChild(Entity e);
+
+	std::vector<Entity> GetAllChildren();
+
+	Entity GetParent();
+
+	bool HasChildren();
+
+	bool HasParent();
+};
 
 class ECS
 {
 public:
-	ECS() = default;
+	ECS();
+
 	entt::registry registry;
 
 	Entity NewEntity();
@@ -22,39 +79,13 @@ public:
 	auto GetEntitiesWith();
 
 	void DeleteAllEntities();
+
+	//Entity NewPrefabEntity(const Prefab& prefab);
+
+	const Entity NullEntity;
 };
 
-struct Entity
-{
-	entt::entity id;
 
-	Entity() = delete;
-	Entity(entt::entity id);
-
-	template <typename Component>
-	Component& AddComponent();
-
-	template <typename Component>
-	Component& AddComponent(const Component& component);
-
-	template <typename Component>
-	Component& GetComponent();
-
-	template <typename Component, typename OtherComponent, typename ...Components>
-	auto GetComponent();
-
-	template <typename Component>
-	bool HasComponent();
-
-	template <typename ... Components>
-	bool HasAnyOfComponents();
-
-	template <typename ... Components>
-	bool HasAllOfComponents();
-
-	template <typename Component>
-	void RemoveComponent();
-};
 
 template <typename Component>
 auto ECS::GetEntitiesWith()
@@ -71,41 +102,87 @@ auto ECS::GetEntitiesWith()
 template <typename Component>
 Component& Entity::AddComponent()
 {
+//#ifdef _DEBUG
+//	assert(static_cast<std::uint32_t>(this->id) != 0);
+//#else
+//	if (static_cast<std::uint32_t>(this->id) == 0)
+//		return Component();
+//#endif
+	if (static_cast<std::uint32_t>(this->id) == 0)
+		throw ("Tried to add component to null entity! e.id = 0");
 	return systemManager->ecs->registry.emplace_or_replace<Component>(id, Component());
 }
 
 template <typename Component>
 Component& Entity::AddComponent(const Component& component)
 {
+//#ifdef _DEBUG
+//	assert(static_cast<std::uint32_t>(this->id) != 0);
+//#else
+//	if (static_cast<std::uint32_t>(this->id) == 0)
+//		return Component();
+//#endif
+	if (static_cast<std::uint32_t>(this->id) == 0)
+		throw ("Tried to add component to null entity! e.id = 0");
 	return systemManager->ecs->registry.emplace_or_replace<Component>(id, component);
 }
 
 template <typename Component>
 Component& Entity::GetComponent()
 {
+//#ifdef _DEBUG
+//	assert(static_cast<std::uint32_t>(this->id) != 0);
+//#else
+//	if (static_cast<std::uint32_t>(this->id) == 0)
+//		return Component();
+//#endif
+	if (static_cast<std::uint32_t>(this->id) == 0)
+		throw ("Tried to get component from null entity! e.id = 0");
+	return systemManager->ecs->registry.get_or_emplace<Component>(id, Component());
+}
+
+template<typename Component>
+const Component& Entity::GetComponent() const
+{
+//#ifdef _DEBUG
+//	assert(static_cast<std::uint32_t>(this->id) != 0);
+//#else
+//	if (static_cast<std::uint32_t>(this->id) == 0)
+//		return Component();
+//#endif
+	if (static_cast<std::uint32_t>(this->id) == 0)
+		throw ("Tried to get component from null entity! e.id = 0");
 	return systemManager->ecs->registry.get_or_emplace<Component>(id, Component());
 }
 
 template <typename Component, typename OtherComponent, typename ...Components>
 auto Entity::GetComponent()
 {
+//#ifdef _DEBUG
+//	assert(static_cast<std::uint32_t>(this->id) != 0);
+//#else
+//	if (static_cast<std::uint32_t>(this->id) == 0)
+//		return auto();
+//#endif
+	if (static_cast<std::uint32_t>(this->id) == 0)
+		throw ("Tried to get component from null entity! e.id = 0");
 	return systemManager->ecs->registry.get<Component, OtherComponent, Components...>(id);
 }
 
 template <typename Component>
-bool Entity::HasComponent()
+bool Entity::HasComponent() const
 {
 	return systemManager->ecs->registry.all_of<Component>(id);
 }
 
 template <typename ... Components>
-bool Entity::HasAnyOfComponents()
+bool Entity::HasAnyOfComponents() const
 {
 	return systemManager->ecs->registry.any_of<Components...>(id);
 }
 
 template <typename ... Components>
-bool Entity::HasAllOfComponents()
+bool Entity::HasAllOfComponents() const 
 {
 	return systemManager->ecs->registry.all_of<Components...>(id);
 }
