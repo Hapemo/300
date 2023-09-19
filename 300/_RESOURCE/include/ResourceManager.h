@@ -139,6 +139,49 @@ private:
 };
 
 
+
+//class AudioManager
+//{
+//public:
+//    constexpr static int  MAX_RESOURCE = 2400;
+//    static MeshManager& GetInstance()
+//    {
+//        static MeshManager instance;
+//        return instance;
+//    }
+//    MeshManager() = default;
+//    MeshManager(MeshManager const&) = delete;
+//    void operator=(MeshManager const&) = delete;
+//
+//    //std::vector<Mesh> mSceneMeshes;
+//
+//    MeshData& AllocRscInfo();
+//    void ReleaseRscInfo(MeshData& RscInfo);
+//
+//    void SetupMesh(std::string filepath, unsigned);
+//
+//    void Init();
+//
+//    MeshData& get_Mesh(unsigned);
+//
+//    //void Destroy();
+//
+//    int mResouceCnt{ 0 };
+//
+//private:
+//    std::unordered_map<unsigned, MeshData*>     mSceneMeshes;
+//    MeshData* m_pInfoBufferEmptyHead{ nullptr };
+//    std::array<MeshData, MAX_RESOURCE>          m_Meshbuffer;
+//};
+
+
+
+
+
+
+
+
+
 struct instance_info 
 {
     std::string     m_Name{};
