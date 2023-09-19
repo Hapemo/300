@@ -35,6 +35,7 @@ void GraphicsSystem::Init()
 	//newentity.GetComponent<MeshRenderer>().mMaterialInstancePath = "../assets/Compressed/Skull.ctexture";
 	//newentity.GetComponent<MeshRenderer>().mMeshPath = "../compiled_geom/Skull_textured.geom";
 	//newentity.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/draw_vert.glsl", "../_GRAPHICS/shader_files/draw_frag.glsl" };
+	//newentity.GetComponent<MeshRenderer>().mMeshPath = "../assets/compiled_geom/FreeModelNathan_WalkAnim.geom";
 	newentity.GetComponent<MeshRenderer>().mMeshPath = "../assets/compiled_geom/dancing_vampire.geom";
 	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Vampire_diffuse.ctexture");
 	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Vampire_normal.ctexture");
@@ -59,8 +60,8 @@ void GraphicsSystem::Update(float dt)
 	UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_EDITOR, dt);
 
 	// To be removed once entity to be drawn created
-	m_Renderer.AddSphere(m_EditorCamera.position(), { 0, 0, -300 }, 100.f, { 0, 1, 0, 1 });
-	m_Renderer.AddAabb({ -50, -60, -200 }, { 10, 30, -0.1f }, { 1, 0, 0, 1 });
+	//m_Renderer.AddSphere(m_EditorCamera.position(), { 0, 0, -300 }, 100.f, { 0, 1, 0, 1 });
+	//m_Renderer.AddAabb({ -50, -60, -200 }, { 10, 30, -0.1f }, { 1, 0, 0, 1 });
 
 	// Retrieve and update the mesh instances to be drawn
 	auto meshRendererInstances = systemManager->ecs->GetEntitiesWith<MeshRenderer>();
@@ -84,7 +85,7 @@ void GraphicsSystem::Update(float dt)
 			m_Renderer.AddAabb(inst.GetComponent<Transform>().mTranslate + inst.GetComponent<BoxCollider>().mTranslateOffset, bbox_dimens, {1.f, 0.f, 0.f, 1.f});
 
 			// draw the center of the mesh
-			m_Renderer.AddPoint(inst.GetComponent<Transform>().mTranslate, { 1.f, 1.f, 0.f, 1.f });
+			m_Renderer.AddSphere(m_EditorCamera.position(), inst.GetComponent<Transform>().mTranslate, 0.5f, { 1.f, 1.f, 0.f, 1.f });
 		}
 
 		meshinst.mLTW.push_back(final);
