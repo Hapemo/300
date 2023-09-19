@@ -298,9 +298,6 @@ void MeshManager::SetupMesh(std::string filepath,unsigned id)
 		localmesh.mHasAnimation = true;
 	}
 
-	//mSceneMeshes.emplace_back(localmesh);							// storage of all the scene's meshes
-
-
 	//uid uidd(entry.path().filename().string());
 
 	std::cout << " data for file path " << filepath << "\n"; // testing 

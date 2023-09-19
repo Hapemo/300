@@ -70,6 +70,9 @@ void GraphicsSystem::Update(float dt)
 		rot = glm::rotate(rot, glm::radians(inst.GetComponent<Transform>().mRotate.z), glm::vec3(0.f, 0.f, 1.f));
 		glm::mat4 final = glm::scale(rot, inst.GetComponent<Transform>().mScale);
 
+		// glm::vec3 bbox_dimens = {meshinst.mBBOX.m_Max.x }
+		// m_Renderer.AddAabb(inst.GetComponent<Transform>().mTranslate, )
+
 		meshinst.mLTW.push_back(final);
 	}
 
