@@ -17,12 +17,12 @@ void main()
 {
     vec4 uColor = texture(uTex[0], TexCoords);                      // Color texture
     vec3 normal = texture(uTex[1], TexCoords).xyz;                  // Normal texture
-    normal = (WorldPos * vec4(normal, 0.f)).xyz;                    // Transform the normal to world space
+    normal = mat3(LTW) * normal;                                    // Transform the normal to world space
 
     vec3 lightDir = normalize(lightPos.xyz - WorldPos.xyz);         // Light Direction
-    float diff = max(dot(lightDir, normal), 0.0f);                  // Diffuse scale
+    float diff = max(dot(lightDir, normalize(normal)), 0.0f);       // Diffuse scale
 
-    float ambientStrength = 0.5f;
+    float ambientStrength = 0.3f;
 
     vec3 lightColor = vec3(1.f, 0.2f, 0.2f);
     vec3 ambient = ambientStrength * lightColor;
