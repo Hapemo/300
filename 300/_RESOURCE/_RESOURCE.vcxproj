@@ -138,10 +138,13 @@
   <ItemGroup>
     <ClInclude Include="include\Guid.h" />
     <ClInclude Include="include\ResourceManager.h" />
+    <ClInclude Include="include\ResourceManagerTy.h" />
+    <ClInclude Include="include\ResourceType.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp" />
     <ClCompile Include="source\ResourceManager.cpp" />
+    <ClCompile Include="source\ResourceManagerTy.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

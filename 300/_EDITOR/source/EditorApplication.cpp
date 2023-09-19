@@ -17,6 +17,7 @@ start up of window and game system, also runs their update functions.
 #include "ScriptingSystem.h"
 #include "Physics/PhysicsSystem.h"
 #include "ResourceManager.h"
+#include "ResourceManagerTy.h"
 #include "Guid.h"
 
 
@@ -83,6 +84,8 @@ void EditorApplication::MainUpdate()
         SecondUpdate(); // This should always be the last
 
         mWindow.Update();   // This is required for IMGUI draws as well
+
+        
     }
 }
 

@@ -5,6 +5,7 @@
 #include "ECS/ECS.h"
 #include "Guid.h"
 #include "ResourceManager.h"
+#include "ResourceManagerTy.h"
 
 SystemManager* systemManager;
 
@@ -14,6 +15,8 @@ SystemManager::SystemManager()
 	mScriptingSystem	= std::make_unique<ScriptingSystem>();
 	mGraphicsSystem		= std::make_unique<GraphicsSystem>();
 	mResourceSystem		= std::make_unique<Resource>();
+	mResourceTySystem = std::make_unique<ResourceTy>();
+
 	ecs = new ECS;
 }
 
