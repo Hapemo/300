@@ -110,7 +110,7 @@ namespace GFX
 		void operator=(MeshManager const&) = delete;
 
 	private:
-		const std::string compiled_geom_path = "../compiled_geom/";
+		const std::string compiled_geom_path = "../assets/compiled_geom/";
 		void SetupMesh(std::string filepath);
 	};
 }

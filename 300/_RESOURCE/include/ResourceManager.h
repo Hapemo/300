@@ -186,7 +186,7 @@ private:
     std::unordered_map<unsigned, instance_info*>        m_MaterialInstances;
     std::array<instance_info, MAX_RESOURCE>             m_Infobuffer;
 
-    const std::string compiled_geom_path = "../compiled_geom/";
+    const std::string compiled_geom_path = "../assets/compiled_geom/";
     const std::string compressed_texture_path = "../assets/Compressed/";
 
     MeshManager             mMeshManager;
