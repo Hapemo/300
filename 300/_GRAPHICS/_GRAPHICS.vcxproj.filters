@@ -181,5 +181,7 @@
     <None Include="shader_files\draw_vert.glsl">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="shader_files\pointLight_frag.glsl" />
+    <None Include="shader_files\pointLight_vert.glsl" />
   </ItemGroup>
 </Project>

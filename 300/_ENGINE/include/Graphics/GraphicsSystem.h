@@ -66,6 +66,9 @@ private:
 	GFX::Camera m_GameCamera;
 	GFX::Camera m_EditorCamera;
 
+	// -- Textures --
+	std::vector<int> m_Textures;
+
 	// -- Flags --
 	bool m_EditorMode;
 	bool m_DebugDrawing{ 1 };			// debug drawing 
