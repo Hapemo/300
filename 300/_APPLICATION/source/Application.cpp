@@ -46,7 +46,7 @@ void Application::StartUp()
 void Application::SystemInit() 
 {
 #pragma region testphysics
-    Entity e1 = systemManager->ecs->NewEntity();
+    //Entity e1 = systemManager->ecs->NewEntity();
     Entity e2 = systemManager->ecs->NewEntity();
 
     //e1.AddComponent<RigidBody>();
