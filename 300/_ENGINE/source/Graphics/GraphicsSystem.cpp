@@ -27,11 +27,11 @@ void GraphicsSystem::Init()
 	UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_ALL);
 
 	// Create a new entity here, for testing purposes
-	Entity newentity = systemManager->ecs->NewEntity();			// creating a new entity
-	newentity.AddComponent<MeshRenderer>();
-	newentity.GetComponent<MeshRenderer>().mMeshPath = "../compiled_geom/dancing_vampire.geom";
-	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath = "../assets/Compressed/Vampire_diffuse.ctexture";
-	newentity.GetComponent<MeshRenderer>().mShaderPath = std::pair<std::string, std::string>( "../_GRAPHICS/shader_files/draw_vert.glsl", "../_GRAPHICS/shader_files/draw_frag.glsl" );
+	//Entity newentity = systemManager->ecs->NewEntity();			// creating a new entity
+	//newentity.AddComponent<MeshRenderer>();
+	//newentity.GetComponent<MeshRenderer>().mMeshPath = "../compiled_geom/dancing_vampire.geom";
+	//newentity.GetComponent<MeshRenderer>().mMaterialInstancePath = "../assets/Compressed/Vampire_diffuse.ctexture";
+	//newentity.GetComponent<MeshRenderer>().mShaderPath = std::pair<std::string, std::string>( "../_GRAPHICS/shader_files/draw_vert.glsl", "../_GRAPHICS/shader_files/draw_frag.glsl" );
 
 }
 
@@ -54,22 +54,22 @@ void GraphicsSystem::Update(float dt)
 	m_Renderer.AddAabb({ -50, -60, -200 }, { 10, 30, -0.1f }, { 1, 0, 0, 1 });
 
 	// Retrieve and update the mesh instances to be drawn
-	auto meshRendererInstances = systemManager->ecs->GetEntitiesWith<MeshRenderer>();
-	for (Entity inst : meshRendererInstances)
-	{
-		// get the mesh filepath
-		std::string meshstr = inst.GetComponent<MeshRenderer>().mMeshPath;
-		GFX::Mesh& meshinst = systemManager->mResourceSystem->get_Mesh(meshstr);						// loads the mesh
+	//auto meshRendererInstances = systemManager->ecs->GetEntitiesWith<MeshRenderer>();
+	//for (Entity inst : meshRendererInstances)
+	//{
+	//	// get the mesh filepath
+	//	std::string meshstr = inst.GetComponent<MeshRenderer>().mMeshPath;
+	//	GFX::Mesh& meshinst = systemManager->mResourceSystem->get_Mesh(meshstr);						// loads the mesh
 
-		// pushback LTW matrices
-		glm::mat4	trns = glm::translate(inst.GetComponent<Transform>().mTranslate);
-		glm::mat4	rot = glm::rotate(trns, glm::radians(inst.GetComponent<Transform>().mRotate.x), glm::vec3(1.f, 0.f, 0.f));
-		rot = glm::rotate(rot, glm::radians(inst.GetComponent<Transform>().mRotate.y), glm::vec3(0.f, 1.f, 0.f));
-		rot = glm::rotate(rot, glm::radians(inst.GetComponent<Transform>().mRotate.z), glm::vec3(0.f, 0.f, 1.f));
-		glm::mat4 final = glm::scale(rot, inst.GetComponent<Transform>().mScale);
+	//	// pushback LTW matrices
+	//	glm::mat4	trns = glm::translate(inst.GetComponent<Transform>().mTranslate);
+	//	glm::mat4	rot = glm::rotate(trns, glm::radians(inst.GetComponent<Transform>().mRotate.x), glm::vec3(1.f, 0.f, 0.f));
+	//	rot = glm::rotate(rot, glm::radians(inst.GetComponent<Transform>().mRotate.y), glm::vec3(0.f, 1.f, 0.f));
+	//	rot = glm::rotate(rot, glm::radians(inst.GetComponent<Transform>().mRotate.z), glm::vec3(0.f, 0.f, 1.f));
+	//	glm::mat4 final = glm::scale(rot, inst.GetComponent<Transform>().mScale);
 
-		meshinst.mLTW.push_back(final);
-	}
+	//	meshinst.mLTW.push_back(final);
+	//}
 
 	// Prepare and bind the Framebuffer to be rendered on
 	m_Fbo.PrepForDraw();
@@ -77,45 +77,45 @@ void GraphicsSystem::Update(float dt)
 	m_Renderer.ClearInstances();
 
 	// Render all instances of a given mesh
-	for (Entity inst : meshRendererInstances)
-	{
-		std::string meshstr = inst.GetComponent<MeshRenderer>().mMeshPath;
-		if (renderedMesh.find(meshstr) != renderedMesh.end()) {
-			// the mesh has been rendered before
-			continue;
-		}
+	//for (Entity inst : meshRendererInstances)
+	//{
+	//	std::string meshstr = inst.GetComponent<MeshRenderer>().mMeshPath;
+	//	if (renderedMesh.find(meshstr) != renderedMesh.end()) {
+	//		// the mesh has been rendered before
+	//		continue;
+	//	}
 
-		// update the map
-		renderedMesh[meshstr] = 1;
+	//	// update the map
+	//	renderedMesh[meshstr] = 1;
 
-		// render the mesh and its instances here
-		GFX::Mesh& meshinst = systemManager->mResourceSystem->get_Mesh(meshstr);						// loads the mesh
+	//	// render the mesh and its instances here
+	//	GFX::Mesh& meshinst = systemManager->mResourceSystem->get_Mesh(meshstr);						// loads the mesh
 
-		// gets the shader filepath
-		std::pair<std::string, std::string> shaderstr = inst.GetComponent<MeshRenderer>().mShaderPath;
-		std::string concatname = shaderstr.first + shaderstr.second;
-		GFX::Shader& shaderinst = systemManager->mResourceSystem->get_Shader(concatname);				// loads the shader
+	//	// gets the shader filepath
+	//	std::pair<std::string, std::string> shaderstr = inst.GetComponent<MeshRenderer>().mShaderPath;
+	//	std::string concatname = shaderstr.first + shaderstr.second;
+	//	GFX::Shader& shaderinst = systemManager->mResourceSystem->get_Shader(concatname);				// loads the shader
 
-		// get the texture filepath
-		std::string texturestr = inst.GetComponent<MeshRenderer>().mMaterialInstancePath;
-		GFX::Texture& textureinst = systemManager->mResourceSystem->get_MaterialInstance(texturestr);	// loads the texture
+	//	// get the texture filepath
+	//	std::string texturestr = inst.GetComponent<MeshRenderer>().mMaterialInstancePath;
+	//	GFX::Texture& textureinst = systemManager->mResourceSystem->get_MaterialInstance(texturestr);	// loads the texture
 
-		shaderinst.Activate();
-		meshinst.BindVao();
-		meshinst.PrepForDraw();
+	//	shaderinst.Activate();
+	//	meshinst.BindVao();
+	//	meshinst.PrepForDraw();
 
-		glUniformMatrix4fv(shaderinst.GetUniformVP(), 1, GL_FALSE, &m_EditorCamera.viewProj()[0][0]);
+	//	glUniformMatrix4fv(shaderinst.GetUniformVP(), 1, GL_FALSE, &m_EditorCamera.viewProj()[0][0]);
 
-		// bind texture unit
-		glBindTextureUnit(0, textureinst.ID());
+	//	// bind texture unit
+	//	glBindTextureUnit(0, textureinst.ID());
 
-		glDrawElementsInstanced(GL_TRIANGLES, meshinst.GetIndexCount(), GL_UNSIGNED_INT, nullptr, meshinst.mLTW.size());
+	//	glDrawElementsInstanced(GL_TRIANGLES, meshinst.GetIndexCount(), GL_UNSIGNED_INT, nullptr, meshinst.mLTW.size());
 
-		shaderinst.Deactivate();
-		meshinst.UnbindVao();
-		glBindTextureUnit(0, 0);
-		meshinst.ClearInstances();
-	}
+	//	shaderinst.Deactivate();
+	//	meshinst.UnbindVao();
+	//	glBindTextureUnit(0, 0);
+	//	meshinst.ClearInstances();
+	//}
 
 	// TODO: Clears all instances that have been rendered from local buffer
 	m_Fbo.Unbind();
