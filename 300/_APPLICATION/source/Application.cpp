@@ -46,14 +46,14 @@ void Application::StartUp()
 void Application::SystemInit() 
 {
 #pragma region testphysics
-    //Entity e1 = systemManager->ecs->NewEntity();
+    Entity e1 = systemManager->ecs->NewEntity();
     Entity e2 = systemManager->ecs->NewEntity();
 
-    //e1.AddComponent<RigidBody>();
-    //e1.GetComponent<RigidBody>().mMass = 10.f;
-    //e1.GetComponent<RigidBody>().mMaterial = MATERIAL::CONCRETE;
-    //e1.GetComponent<RigidBody>().mMotion = MOTION::STATIC;
-    //e1.AddComponent<PlaneCollider>();
+    e1.AddComponent<RigidBody>();
+    e1.GetComponent<RigidBody>().mMass = 10.f;
+    e1.GetComponent<RigidBody>().mMaterial = MATERIAL::CONCRETE;
+    e1.GetComponent<RigidBody>().mMotion = MOTION::STATIC;
+    e1.AddComponent<PlaneCollider>();
 
     e2.AddComponent<RigidBody>();
     e2.GetComponent<RigidBody>().mMass = 10.f;

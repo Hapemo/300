@@ -28,15 +28,15 @@ void PhysicsSystem::Update(float dt)
 	if (dt <= 0)
 		return;
 	mPX.mScene->simulate(dt);
-	mPX.mScene->fetchResults(true);
+	bool temp = mPX.mScene->fetchResults(true);
 
-	//for (auto itr = mActors.begin(); itr != mActors.end(); ++itr)
-	//{
-	//	physx::PxTransform PXform = itr->second->getGlobalPose();
-	//	Transform& xform = Entity(itr->first).GetComponent<Transform>();
-	//	xform.mTranslate = Convert(PXform.p);
-	//	xform.mRotate = glm::eulerAngles(Convert(PXform.q));
-	//}
+	for (auto itr = mActors.begin(); itr != mActors.end(); ++itr)
+	{
+		physx::PxTransform PXform = itr->second->getGlobalPose();
+		Transform& xform = Entity(itr->first).GetComponent<Transform>();
+		xform.mTranslate = Convert(PXform.p);
+		xform.mRotate = glm::eulerAngles(Convert(PXform.q));
+	}
 }
 
 void PhysicsSystem::Exit()
