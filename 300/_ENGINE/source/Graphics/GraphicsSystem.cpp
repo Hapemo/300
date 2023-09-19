@@ -34,13 +34,13 @@ void GraphicsSystem::Init()
 
 	//newentity.GetComponent<MeshRenderer>().mMaterialInstancePath = "../assets/Compressed/Skull.ctexture";
 	//newentity.GetComponent<MeshRenderer>().mMeshPath = "../compiled_geom/Skull_textured.geom";
+	//newentity.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/draw_vert.glsl", "../_GRAPHICS/shader_files/draw_frag.glsl" };
 	newentity.GetComponent<MeshRenderer>().mMeshPath = "../compiled_geom/dancing_vampire.geom";
 	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Vampire_diffuse.ctexture");
 	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Vampire_normal.ctexture");
-	//newentity.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/draw_vert.glsl", "../_GRAPHICS/shader_files/draw_frag.glsl" };
 	newentity.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/pointLight_vert.glsl", "../_GRAPHICS/shader_files/pointLight_frag.glsl" };	// for point light
 
-	newentity.GetComponent<BoxCollider>().mTranslateOffset = { 0.f, 1.1f, 0.f };
+	newentity.GetComponent<BoxCollider>().mTranslateOffset = { 0.f, 1.05f, 0.f };
 }
 
 /***************************************************************************/
@@ -125,6 +125,7 @@ void GraphicsSystem::Update(float dt)
 		meshinst.PrepForDraw();
 
 		glUniformMatrix4fv(shaderinst.GetUniformVP(), 1, GL_FALSE, &m_EditorCamera.viewProj()[0][0]);
+
 		GLuint mLightPosShaderLocation = glGetUniformLocation(shaderinst.GetHandle(), "lightPos");
 		vec3 lightPos = GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR);
 		glUniform3fv(mLightPosShaderLocation, 1, &lightPos[0]);
@@ -141,13 +142,11 @@ void GraphicsSystem::Update(float dt)
 
 		glDrawElementsInstanced(GL_TRIANGLES, meshinst.GetIndexCount(), GL_UNSIGNED_INT, nullptr, meshinst.mLTW.size());
 
+		shaderinst.Deactivate();
+		meshinst.UnbindVao();
 		m_Textures.clear();
 		glBindTextureUnit(0, 0);
 		glBindTextureUnit(1, 0);
-
-		shaderinst.Deactivate();
-		meshinst.UnbindVao();
-		glBindTextureUnit(0, 0);
 		meshinst.ClearInstances();
 	}
 
