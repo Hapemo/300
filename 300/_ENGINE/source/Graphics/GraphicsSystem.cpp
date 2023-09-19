@@ -30,12 +30,15 @@ void GraphicsSystem::Init()
 	// Create a new entity here, for testing purposes
 	Entity newentity = systemManager->ecs->NewEntity();			// creating a new entity
 	newentity.AddComponent<MeshRenderer>();
+	newentity.AddComponent<BoxCollider>();
+
 	//newentity.GetComponent<MeshRenderer>().mMaterialInstancePath = "../assets/Compressed/Skull.ctexture";
 	//newentity.GetComponent<MeshRenderer>().mMeshPath = "../compiled_geom/Skull_textured.geom";
 	newentity.GetComponent<MeshRenderer>().mMeshPath = "../compiled_geom/dancing_vampire.geom";
 	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath = "../assets/Compressed/Vampire_diffuse.ctexture";
 	newentity.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/draw_vert.glsl", "../_GRAPHICS/shader_files/draw_frag.glsl" };
 
+	newentity.GetComponent<BoxCollider>().mTranslateOffset = { 0.f, 1.1f, 0.f };
 }
 
 /***************************************************************************/
@@ -72,9 +75,15 @@ void GraphicsSystem::Update(float dt)
 		rot = glm::rotate(rot, glm::radians(inst.GetComponent<Transform>().mRotate.z), glm::vec3(0.f, 0.f, 1.f));
 		glm::mat4 final = glm::scale(rot, inst.GetComponent<Transform>().mScale);
 
-		// 
-		glm::vec3 bbox_dimens = meshinst.mBBOX.m_Max - meshinst.mBBOX.m_Min;
-		m_Renderer.AddAabb(inst.GetComponent<Transform>().mTranslate, bbox_dimens, { 1.f, 0.f, 0.f, 1.f });
+		if (m_DebugDrawing && inst.HasComponent<BoxCollider>())
+		{
+			// draw the AABB of the mesh
+			glm::vec3 bbox_dimens = meshinst.mBBOX.m_Max - meshinst.mBBOX.m_Min;
+			m_Renderer.AddAabb(inst.GetComponent<Transform>().mTranslate + inst.GetComponent<BoxCollider>().mTranslateOffset, bbox_dimens, {1.f, 0.f, 0.f, 1.f});
+
+			// draw the center of the mesh
+			m_Renderer.AddPoint(inst.GetComponent<Transform>().mTranslate, { 1.f, 1.f, 0.f, 1.f });
+		}
 
 		meshinst.mLTW.push_back(final);
 	}
