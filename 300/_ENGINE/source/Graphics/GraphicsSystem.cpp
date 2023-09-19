@@ -97,8 +97,11 @@ void GraphicsSystem::Update(float dt)
 		GFX::Shader& shaderinst = systemManager->mResourceSystem->get_Shader(concatname);				// loads the shader
 
 		// get the texture filepath
-		std::string texturestr = inst.GetComponent<MeshRenderer>().mMaterialInstancePath;
+
+		std::string texturestr = inst.GetComponent<MeshRenderer>().mMaterialInstancePath;		
 		GFX::Texture& textureinst = systemManager->mResourceSystem->get_MaterialInstance(texturestr);	// loads the texture
+		
+
 
 		shaderinst.Activate();
 		meshinst.BindVao();

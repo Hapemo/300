@@ -71,12 +71,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)lib\ASSIMP\include;$(SolutionDir)lib\ASSIMP\include\assimp;$(SolutionDir)_GEOM_COMPILER/include;$(SolutionDir)lib\ASSIMP\BINARIES\Win32\include;$(SolutionDir)_APPLICATION/include;$(SolutionDir)_RESOURCE/include;$(SolutionDir)_ENGINE/include;$(SolutionDir)_GRAPHICS/include;$(SolutionDir)_SCRIPTING/include;$(SolutionDir)_TOOLS/include;$(IncludePath)$(SolutionDir)\lib\lua-5.3.6\include;$(SolutionDir)\lib\SOL;$(SolutionDir)lib/ENTT;$(SolutionDir)lib/GLM;$(SolutionDir)lib/RAPID-JSON;$(SolutionDir)lib\LUA\include;$(SolutionDir)lib/GLEW/include/GL;$(SolutionDir)lib/GLFW/include/GLFW;$(SolutionDir)lib\FMOD\core/inc;$(SolutionDir)lib\FMOD/studio\inc;$(SolutionDir)lib/PHYSX/include;$(SolutionDir)lib/STB</IncludePath>
-    <LibraryPath>$(SolutionDir)\lib\lua-5.3.6\lib;$(SolutionDir)/lib/PHYSX/lib/debug;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)lib\ASSIMP\include;$(SolutionDir)lib\ASSIMP\include\assimp;$(SolutionDir)_GEOM_COMPILER/include;$(SolutionDir)lib\ASSIMP\BINARIES\Win32\include;$(SolutionDir)lib\rttr-0.9.6\include;$(SolutionDir)_RESOURCE/include;$(SolutionDir)_APPLICATION/include;$(SolutionDir)_RESOURCE/include;$(SolutionDir)_ENGINE/include;$(SolutionDir)_GRAPHICS/include;$(SolutionDir)_SCRIPTING/include;$(SolutionDir)_TOOLS/include;$(IncludePath)$(SolutionDir)\lib\lua-5.3.6\include;$(SolutionDir)\lib\SOL;$(SolutionDir)lib/ENTT;$(SolutionDir)lib/GLM;$(SolutionDir)lib/RAPID-JSON;$(SolutionDir)lib\LUA\include;$(SolutionDir)lib/GLEW/include/GL;$(SolutionDir)lib/GLFW/include/GLFW;$(SolutionDir)lib\FMOD\core/inc;$(SolutionDir)lib\FMOD/studio\inc;$(SolutionDir)lib/PHYSX/include;$(SolutionDir)lib/STB</IncludePath>
+    <LibraryPath>$(SolutionDir)\lib\lua-5.3.6\lib;$(SolutionDir)/lib/PHYSX/lib/debug;$(LibraryPath);$(SolutionDir)lib\rttr-0.9.6</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(SolutionDir)lib\ASSIMP\include;$(SolutionDir)lib\ASSIMP\include\assimp;$(SolutionDir)_GEOM_COMPILER/include;$(SolutionDir)lib\ASSIMP\BINARIES\Win32\include;$(SolutionDir)_APPLICATION/include;$(SolutionDir)_ENGINE/include;$(SolutionDir)_GRAPHICS/include;$(SolutionDir)_SCRIPTING/include;$(SolutionDir)_TOOLS/include;$(IncludePath)$(SolutionDir)\lib\lua-5.3.6\include;$(SolutionDir)\lib\SOL;$(SolutionDir)lib/ENTT;$(SolutionDir)lib/GLM;$(SolutionDir)lib/RAPID-JSON;$(SolutionDir)lib\LUA\include;$(SolutionDir)lib/GLEW/include/GL;$(SolutionDir)lib/GLFW/include/GLFW;$(SolutionDir)lib\FMOD\core/inc;$(SolutionDir)lib\FMOD/studio\inc;$(SolutionDir)lib/PHYSX/include;$(SolutionDir)lib/STB</IncludePath>
-    <LibraryPath>$(SolutionDir)\lib\lua-5.3.6\lib;$(SolutionDir)lib/PHYSX/lib/release;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)lib\ASSIMP\include;$(SolutionDir)lib\ASSIMP\include\assimp;$(SolutionDir)_GEOM_COMPILER/include;$(SolutionDir)lib\ASSIMP\BINARIES\Win32\include;$(SolutionDir)lib\rttr-0.9.6\include;$(SolutionDir)_RESOURCE/include;$(SolutionDir)_APPLICATION/include;$(SolutionDir)_ENGINE/include;$(SolutionDir)_GRAPHICS/include;$(SolutionDir)_SCRIPTING/include;$(SolutionDir)_TOOLS/include;$(IncludePath)$(SolutionDir)\lib\lua-5.3.6\include;$(SolutionDir)\lib\SOL;$(SolutionDir)lib/ENTT;$(SolutionDir)lib/GLM;$(SolutionDir)lib/RAPID-JSON;$(SolutionDir)lib\LUA\include;$(SolutionDir)lib/GLEW/include/GL;$(SolutionDir)lib/GLFW/include/GLFW;$(SolutionDir)lib\FMOD\core/inc;$(SolutionDir)lib\FMOD/studio\inc;$(SolutionDir)lib/PHYSX/include;$(SolutionDir)lib/STB</IncludePath>
+    <LibraryPath>$(SolutionDir)\lib\lua-5.3.6\lib;$(SolutionDir)lib/PHYSX/lib/release;$(LibraryPath);$(SolutionDir)lib\rttr-0.9.6</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -109,7 +109,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <SDLCheck>true</SDLCheck>
+      <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
@@ -131,7 +131,7 @@
       <WarningLevel>Level3</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <SDLCheck>true</SDLCheck>
+      <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
@@ -150,6 +150,11 @@
     <ClInclude Include="include\ECS\ECS.h" />
     <ClInclude Include="include\ECS\ECS_Components.h" />
     <ClInclude Include="include\ECS\ECS_Systems.h" />
+    <ClInclude Include="include\ECS\Prefab.h" />
+    <ClInclude Include="include\ECS\Tags.h" />
+    <ClInclude Include="include\GameState\GameState.h" />
+    <ClInclude Include="include\GameState\GameStateManager.h" />
+    <ClInclude Include="include\GameState\Scene.h" />
     <ClInclude Include="include\Graphics\GraphicsSystem.h" />
     <ClInclude Include="include\Multithread.h" />
     <ClInclude Include="include\Physics\PhysicsTypes.h" />
@@ -166,6 +171,9 @@
     <ClInclude Include="include\Object\ObjectFactory.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="source\GameState\GameState.cpp" />
+    <ClCompile Include="source\GameState\GameStateManager.cpp" />
+    <ClCompile Include="source\GameState\Scene.cpp" />
     <ClCompile Include="source\Graphics\GraphicsSystem.cpp" />
     <ClCompile Include="source\Multithread.cpp" />
     <ClCompile Include="source\Object\ObjectFactory.cpp" />
