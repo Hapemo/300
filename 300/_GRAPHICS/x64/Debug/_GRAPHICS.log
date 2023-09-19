@@ -1,11 +1,26 @@
-﻿  DemoScene.cpp
+﻿  geom.cpp
+  DemoScene.cpp
   main.cpp
-C:\Users\jazzt\Documents\GitHub\300\300\_GRAPHICS\demo\DemoScene.cpp(76,80): warning C4244: 'argument': conversion from '_Rep' to 'unsigned int', possible loss of data
+  Animator.cpp
+  Camera.cpp
+  DebugRenderer.cpp
+  Fbo.cpp
+  Mesh.cpp
+  Renderer.cpp
+C:\Users\kew\OneDrive\Desktop\300\300\_GEOM_COMPILER\src\geom.cpp(331,8): warning C4101: 'ch': unreferenced local variable
+C:\Users\kew\OneDrive\Desktop\300\300\_GRAPHICS\demo\DemoScene.cpp(76,80): warning C4244: 'argument': conversion from '_Rep' to 'unsigned int', possible loss of data
           with
           [
               _Rep=std::chrono::system_clock::rep
           ]
-C:\Users\jazzt\Documents\GitHub\300\300\_GRAPHICS\demo\DemoScene.cpp(258,125): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
-  _GRAPHICS.vcxproj -> C:\Users\jazzt\Documents\GitHub\300\300\x64\Debug\_GRAPHICS.lib
+C:\Users\kew\OneDrive\Desktop\300\300\_GRAPHICS\demo\DemoScene.cpp(258,123): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+C:\Users\kew\OneDrive\Desktop\300\300\_GRAPHICS\source\Mesh.cpp(240,88): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+C:\Users\kew\OneDrive\Desktop\300\300\_GRAPHICS\source\Mesh.cpp(421,27): warning C4018: '<': signed/unsigned mismatch
+C:\Users\kew\OneDrive\Desktop\300\300\_GRAPHICS\source\Mesh.cpp(438,27): warning C4018: '<': signed/unsigned mismatch
+C:\Users\kew\OneDrive\Desktop\300\300\_GRAPHICS\source\DebugRenderer.cpp(231,111): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+C:\Users\kew\OneDrive\Desktop\300\300\_GRAPHICS\source\DebugRenderer.cpp(252,120): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+C:\Users\kew\OneDrive\Desktop\300\300\_GRAPHICS\source\DebugRenderer.cpp(273,112): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+C:\Users\kew\OneDrive\Desktop\300\300\_GRAPHICS\source\DebugRenderer.cpp(294,112): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+  _GRAPHICS.vcxproj -> C:\Users\kew\OneDrive\Desktop\300\300\x64\Debug\_GRAPHICS.lib
           1 file(s) copied.
           1 file(s) copied.
