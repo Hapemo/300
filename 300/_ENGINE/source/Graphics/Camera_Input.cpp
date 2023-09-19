@@ -14,7 +14,7 @@ Camera_Input::Camera_Input()
 void Camera_Input::updateCameraInput(GFX::Camera& cam, const float& dt)
 {
 	glm::vec3 moveVector{};
-	static auto  side = glm::normalize(glm::cross(cam.direction(), { 0, 1, 0 }));
+	auto  side = glm::normalize(glm::cross(cam.direction(), { 0, 1, 0 }));
 	auto  up = glm::normalize(glm::cross(cam.direction(), side));
 
 	//!< WASD Camera Movement

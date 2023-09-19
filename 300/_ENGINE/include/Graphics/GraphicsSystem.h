@@ -68,6 +68,7 @@ private:
 
 	// -- Flags --
 	bool m_EditorMode;
+	bool m_DebugDrawing{ 1 };			// debug drawing 
 
 	// -- Animator --
 	GFX::Animator m_Animator;
