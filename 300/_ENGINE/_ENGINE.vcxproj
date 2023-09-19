@@ -147,14 +147,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="include\Audio\AudioSystem.h" />
-    <ClInclude Include="include\Audio\AudioSystem2.h" />
-    <ClInclude Include="include\Audio\SoundComponent.h" />
-    <ClInclude Include="include\Audio\tempaudio.h" />
     <ClInclude Include="include\ECS\ECS.h" />
     <ClInclude Include="include\ECS\ECS_Components.h" />
     <ClInclude Include="include\ECS\ECS_Systems.h" />
-    <ClInclude Include="include\ECS\Prefab.h" />
-    <ClInclude Include="include\ECS\Tags.h" />
     <ClInclude Include="include\Graphics\GraphicsSystem.h" />
     <ClInclude Include="include\Multithread.h" />
     <ClInclude Include="include\Physics\PhysicsTypes.h" />
@@ -163,7 +158,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Audio\AudioSystem.cpp" />
-    <ClCompile Include="source\Audio\AudioSystem2.cpp" />
     <ClCompile Include="source\ECS\ECS_Systems.cpp" />
     <ClCompile Include="source\ECS\ECS.cpp" />
     <ClInclude Include="include\Serialization\Serialization.h" />

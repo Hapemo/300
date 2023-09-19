@@ -51,9 +51,9 @@ void SystemManager::Exit()
 	mScriptingSystem.get()->Exit();
 	mGraphicsSystem.get()->Exit();
 	mAudioSystem.get()->Exit();
-	//mResourceSystem.get()->Exit();
+	mResourceSystem.get()->Exit();
 }
-
+}
 
 PhysicsSystem* SystemManager::GetPhysicsPointer()
 {
