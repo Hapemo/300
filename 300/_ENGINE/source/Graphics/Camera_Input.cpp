@@ -7,14 +7,14 @@
 
 
 Camera_Input::Camera_Input()
-	: mCameraSpeed{ 1.f }, mMouseSensitivity{ 0.1f }, mYaw{}, mPitch{}
+	: mCameraSpeed{ 1.f }, mMouseSensitivity{ 0.1f }, mYaw{ -90.f }, mPitch{}
 {}
 
 
 void Camera_Input::updateCameraInput(GFX::Camera& cam, const float& dt)
 {
 	glm::vec3 moveVector{};
-	auto  side = glm::normalize(glm::cross(cam.direction(), { 0, 1, 0 }));
+	static auto  side = glm::normalize(glm::cross(cam.direction(), { 0, 1, 0 }));
 	auto  up = glm::normalize(glm::cross(cam.direction(), side));
 
 	//!< WASD Camera Movement
@@ -66,22 +66,37 @@ void Camera_Input::updateCameraInput(GFX::Camera& cam, const float& dt)
 
 				mYaw += delta.x;
 				mPitch += delta.y;
-
-				if (mPitch > 89.0f)
-					mPitch = 89.0f;
-				if (mPitch < -89.0f)
-					mPitch = -89.0f;
-
-				glm::vec3 direction;
-				direction.x = cos(glm::radians(mYaw)) * cos(glm::radians(mPitch));
-				direction.y = sin(glm::radians(mPitch));
-				direction.z = sin(glm::radians(mYaw)) * cos(glm::radians(mPitch));
-				cam.SetTarget(cam.position() + glm::normalize(direction));
-
-				// update previous cursor pos
 			}
 		}
+		
+		// update previous cursor pos
 		cam.SetCursorPosition(Input::CursorPos());
+
+		if (mPitch > 89.0f) {
+			mPitch = 89.0f;
+		}
+
+		if (mPitch < -89.0f) {
+			mPitch = -89.0f;
+		}
+
+		glm::vec3 direction;
+		direction.x = cos(glm::radians(mYaw)) * cos(glm::radians(mPitch));
+		direction.y = sin(glm::radians(mPitch));
+		direction.z = sin(glm::radians(mYaw)) * cos(glm::radians(mPitch));
+
+		// update the camera's target based on the normalized direction
+		cam.SetTarget(cam.position() + glm::normalize(direction));
+	}
+
+	//!< Camera Zoom
+	cam.mFovDegree -= Input::GetScroll();
+	if (cam.mFovDegree < 1.0f) {
+		cam.mFovDegree = 1.0f;
+	}
+
+	if (cam.mFovDegree > 45.0f) {
+		cam.mFovDegree = 45.0f;
 	}
 
 
