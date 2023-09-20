@@ -1,1 +1,4 @@
-﻿
+﻿  LuaEngine.cpp
+C:\Users\mcheo\OneDrive\Documents\300\300\300\_ENGINE\include\ECS\ECS.h(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\mcheo\OneDrive\Documents\300\300\300\_ENGINE\include\ECS\ECS_Components.h(44,21): warning C4244: 'initializing': conversion from 'float' to 'uint16_t', possible loss of data
+  _SCRIPTING.vcxproj -> C:\Users\mcheo\OneDrive\Documents\300\300\300\x64\Debug\_SCRIPTING.lib

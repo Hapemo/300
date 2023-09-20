@@ -31,33 +31,34 @@ void LuaECS()
 
 void LuaEntity()
 {
-    //systemManager->mScriptingSystem->luaState.new_usertype<Entity>(
-    //    "Entity", sol::constructors<>(),
-    //    "id", &Entity::id,
-    //    ////"GetGeneralComponent", &Entity::LuaGetComponent<General>,
-    //    "HasGeneralComponent", &Entity::HasComponent <General>,
-    //    ////"GetTransformComponent", &Entity::LuaGetComponent<Transform>,
-    //    //"HasTransformComponent", &Entity::HasComponent<Transform>,
-    //    "HasRigidBodyComponent", &Entity::HasComponent<RigidBody>,
-    //    //"GetRigidBodyComponent", sol::resolve<RigidBody& ()>(&Entity::GetComponent<RigidBody>)
-    //    "GetBoxColliderComponent", &Entity::LuaGetComponent<BoxCollider>,
-    //    "HasBoxColliderComponent", &Entity::HasComponent<BoxCollider>,
-    //    //"GetRigidBodyComponent", static_cast<RigidBody & (Entity::*) ()>(&Entity::GetComponent<RigidBody>),
-    //    //"GetSphereColliderComponent", &Entity::LuaGetComponent<SphereCollider>
-    //    //"HasSphereColliderComponent", &Entity::HasComponent<SphereCollider>
-    //    //"GetPlaneColliderComponent", &Entity::LuaGetComponent<PlaneCollider>,
-    //    //"HasPlaneColliderComponent", &Entity::HasComponent<PlaneCollider>,
-    //    //"GetScriptsComponent", &Entity::LuaGetComponent<Scripts>,
-    //    "HasScriptsComponent", &Entity::HasComponent<Scripts>
-    //    //"GetParentComponent", &Entity::LuaGetComponent<Parent>,
-    //    //"HasParentComponent", &Entity::HasComponent<Parent>,
-    //    //"GetChildrenComponent", &Entity::LuaGetComponent<Children>,
-    //    //"HasChildrenComponent", &Entity::HasComponent<Children>
-    //    //"GetComponents", &Entity::LuaGetComponents<sol::variadic_args>
-    //    );
+    systemManager->mScriptingSystem->luaState.new_usertype<Entity>(
+        "Entity", sol::constructors<>(),
+        "id", &Entity::id,
+        "GetGeneralComponent", &Entity::LuaGetComponent<General>,
+        "HasGeneralComponent", &Entity::HasComponent <General>,
+        "GetTransformComponent", &Entity::LuaGetComponent<Transform>,
+        "HasTransformComponent", &Entity::HasComponent<Transform>,
+        //"GetRigidBodyComponent", &Entity::LuaComponent<RigidBody>,
+        "GetRigidBodyComponent", static_cast<RigidBody & (Entity::*) ()>(&Entity::GetComponent<RigidBody>),
+        "HasRigidBodyComponent", &Entity::HasComponent<RigidBody>,
+        "GetBoxColliderComponent", &Entity::LuaGetComponent<BoxCollider>,
+        "HasBoxColliderComponent", &Entity::HasComponent<BoxCollider>,
+        "GetSphereColliderComponent", &Entity::LuaGetComponent<SphereCollider>,
+        "HasSphereColliderComponent", &Entity::HasComponent<SphereCollider>,
+        "GetPlaneColliderComponent", &Entity::LuaGetComponent<PlaneCollider>,
+        "HasPlaneColliderComponent", &Entity::HasComponent<PlaneCollider>,
+        "GetScriptsComponent", &Entity::LuaGetComponent<Scripts>,
+        "HasScriptsComponent", &Entity::HasComponent<Scripts>,
+        "GetParentComponent", &Entity::LuaGetComponent<Parent>,
+        "HasParentComponent", &Entity::HasComponent<Parent>,
+        "GetChildrenComponent", &Entity::LuaGetComponent<Children>,
+        "HasChildrenComponent", &Entity::HasComponent<Children>
+        //"GetComponents", &Entity::LuaGetComponents<sol::variadic_args>
+        );
 
    //systemManager->mScriptingSystem->luaState.set_function("AddRigidBodyComponent", static_cast<RigidBody& (Entity::*) ()>(&Entity::AddComponent<RigidBody>));
    // systemManager->mScriptingSystem->luaState.set_function("GetRigidBodyComponent", sol::resolve<RigidBody& (Entity)>(&Entity::LuaGetComponent<RigidBody>));
+   //"GetRigidBodyComponent", sol::resolve<RigidBody& ()>(&Entity::GetComponent<RigidBody>)
 }
 
 
@@ -100,12 +101,49 @@ void LuaBoxCollider()
         );
 }
 
+void LuaSphereCollider()
+{
+    systemManager->mScriptingSystem->luaState.new_usertype<SphereCollider>(
+        "SphereCollider", sol::constructors<>(),
+        "mScaleOffset", &SphereCollider::mScaleOffset,
+        "mTranslateOffset", &SphereCollider::mTranslateOffset
+        );
+}
+
+void LuaPlaneCollider()
+{
+    systemManager->mScriptingSystem->luaState.new_usertype<PlaneCollider>(
+        "PlaneCollider", sol::constructors<>(),
+        "mNormal", &PlaneCollider::mNormal,
+        "mTranslateOffset", &PlaneCollider::mTranslateOffset
+        );
+}
+
 void LuaScript()
 {
     systemManager->mScriptingSystem->luaState.new_usertype<Scripts>(
         "Scripts", sol::constructors<>(),
         "AddScript", &Scripts::AddScript,
         "mScriptFile", &Scripts::mScriptFile
+        );
+}
+
+void LuaParent()
+{
+    systemManager->mScriptingSystem->luaState.new_usertype<Parent>(
+        "Parent", sol::constructors<>(),
+        "mPrevSibling", &Parent::mPrevSibling,
+        "mNextSibling", &Parent::mNextSibling,
+        "mParent", &Parent::mParent
+        );
+}
+
+void LuaChildren()
+{
+    systemManager->mScriptingSystem->luaState.new_usertype<Children>(
+        "Parent", sol::constructors<>(),
+        "mNumChildren", &Children::mNumChildren,
+        "mFirstChild", &Children::mFirstChild
         );
 }
 
