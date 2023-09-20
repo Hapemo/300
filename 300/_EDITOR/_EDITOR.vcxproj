@@ -130,7 +130,8 @@ copy "$(SolutionDir)lib\PHYSX\lib\debug\PhysX_64.dll" "$(TargetDir)PhysX_64.dll"
 copy "$(SolutionDir)lib\PHYSX\lib\debug\PhysXCommon_64.dll" "$(TargetDir)PhysXCommon_64.dll" /Y
 copy "$(SolutionDir)lib\PHYSX\lib\debug\PhysXCooking_64.dll" "$(TargetDir)PhysXCooking_64.dll" /Y
 copy "$(SolutionDir)lib\PHYSX\lib\debug\PhysXFoundation_64.dll" "$(TargetDir)PhysXFoundation_64.dll" /Y
-copy "$(SolutionDir)lib\rttr-0.9.6\rttr_core_d.dll" "$(TargetDir)rttr_core_d.dll" /Y</Command>
+copy "$(SolutionDir)lib\rttr-0.9.6\rttr_core_d.dll" "$(TargetDir)rttr_core_d.dll" /Y
+copy "$(SolutionDir)lib\FMOD\core\lib\fmodL.dll" "$(TargetDir)fmodL.dll" /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -162,7 +163,8 @@ copy "$(SolutionDir)lib\PHYSX\lib\release\PhysXCooking_64.dll" "$(TargetDir)Phys
 copy "$(SolutionDir)lib\PHYSX\lib\release\PhysXDevice64.dll" "$(TargetDir)PhysXDevice64.dll" /Y
 copy "$(SolutionDir)lib\PHYSX\lib\release\PhysXFoundation_64.dll" "$(TargetDir)PhysXFoundation_64.dll" /Y
 copy "$(SolutionDir)lib\PHYSX\lib\release\PVDRuntime_64.dll" "$(TargetDir)PVDRuntime_64.dll" /Y
-copy "$(SolutionDir)lib\rttr-0.9.6\rttr_core_d.dll" "$(TargetDir)rttr_core_d.dll" /Y</Command>
+copy "$(SolutionDir)lib\rttr-0.9.6\rttr_core_d.dll" "$(TargetDir)rttr_core_d.dll" /Y
+copy "$(SolutionDir)lib\FMOD\core\lib\fmod.dll" "$(TargetDir)fmod.dll" /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
