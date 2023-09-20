@@ -127,9 +127,11 @@ void GraphicsSystem::Update(float dt)
 
 		glUniformMatrix4fv(shaderinst.GetUniformVP(), 1, GL_FALSE, &m_EditorCamera.viewProj()[0][0]);
 
-		GLuint mLightPosShaderLocation = glGetUniformLocation(shaderinst.GetHandle(), "lightPos");
+		GLuint mLightPosShaderLocation = glGetUniformLocation(shaderinst.GetHandle(), "uLightPos");
+		GLuint mViewPosShaderLocation = glGetUniformLocation(shaderinst.GetHandle(), "uViewPos");
 		vec3 lightPos = GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR);
 		glUniform3fv(mLightPosShaderLocation, 1, &lightPos[0]);
+		glUniform3fv(mViewPosShaderLocation, 1, &lightPos[0]);
 
 		// bind texture unit
 		glBindTextureUnit(0, textureColorinst.ID());

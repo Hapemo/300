@@ -67,6 +67,8 @@ void GFX::Mesh::Setup(const _GEOM::Geom& GeomData)
 	std::vector<unsigned int>							indices;
 	std::vector<std::array<int,MAX_BONE_INFLUENCE>>		boneIDs;
 	std::vector<std::array<float,MAX_BONE_INFLUENCE>>	boneWeights;
+	std::vector<glm::vec3>								tangents;
+	std::vector<glm::vec3>								normals;
 
 	LoadFromGeom(GeomData, positions, uvs, indices);
 	mMeshName	= std::string(GeomData.m_pMesh[0].m_name.begin(), GeomData.m_pMesh[0].m_name.end());
@@ -113,11 +115,11 @@ void GFX::Mesh::Setup(const _GEOM::Geom& GeomData)
 	// Add attributes and divisor as vec4
 	for (int i = 0; i < 4; ++i)
 	{
-		mVao.AddAttribute(5 + i, 5, 4, GL_FLOAT, sizeof(vec4) * i);					// location 5, binding vao index 5
-		mVao.AddAttributeDivisor(5, 1);												// divisor at vao index 5
+		mVao.AddAttribute(7 + i, 7, 4, GL_FLOAT, sizeof(vec4) * i);					// location 7, binding vao index 7
+		mVao.AddAttributeDivisor(7, 1);												// divisor at vao index 7
 	}
 	// Attach LTW VBO to VAO
-	mVao.AttachVertexBuffer(mLTWVbo.GetID(), 5, 0, sizeof(vec4) * 4);
+	mVao.AttachVertexBuffer(mLTWVbo.GetID(), 8, 0, sizeof(vec4) * 4);
 
 	/////////////////////////////////////////
 	// EBO
@@ -149,6 +151,22 @@ void GFX::Mesh::Setup(const _GEOM::Geom& GeomData)
 		mBoneWeightVbo.AttachData(0, boneWeights.size() * sizeof(float) * MAX_BONE_INFLUENCE, boneWeights.data());	// Attach mesh data to VBO
 		mVao.AttachVertexBuffer(mBoneWeightVbo.GetID(), 4, 0, sizeof(float) * MAX_BONE_INFLUENCE);					// Attach to index 4
 	}
+
+	/////////////////////////////////////////
+	// Bit Tangents and Tangent Data
+	/////////////////////////////////////////
+	mTangentVbo.Create(tangents.size() * sizeof(vec3));
+	mVao.AddAttribute(5, 5, 3, GL_FLOAT);													// location 5, binding vao index 5
+	mTangentVbo.AttachData(0, tangents.size() * sizeof(vec3), tangents.data());				// Attach mesh data to VBO
+	mVao.AttachVertexBuffer(mTangentVbo.GetID(), 5, 0, sizeof(vec3));						// Attach to index 5
+
+	/////////////////////////////////////////
+	// Vertex Normal Data
+	/////////////////////////////////////////
+	mNormalVbo.Create(normals.size() * sizeof(vec3));
+	mVao.AddAttribute(6, 6, 3, GL_FLOAT);													// location 6, binding vao index 6
+	mNormalVbo.AttachData(0, normals.size() * sizeof(vec3), normals.data());				// Attach mesh data to VBO
+	mVao.AttachVertexBuffer(mNormalVbo.GetID(), 6, 0, sizeof(vec3));						// Attach to index 6
 
 	mVao.Unbind();
 

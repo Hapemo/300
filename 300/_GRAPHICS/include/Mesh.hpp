@@ -66,6 +66,9 @@ namespace GFX
 		VBO mColorVbo;
 		VBO mTexCoordVbo;
 		VBO mLTWVbo;
+		VBO mTangentVbo;
+		VBO mBitTangentVbo;
+		VBO mNormalVbo;
 		VBO mBoneIDVbo;
 		VBO mBoneWeightVbo;
 
