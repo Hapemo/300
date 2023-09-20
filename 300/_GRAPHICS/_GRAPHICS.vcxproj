@@ -191,6 +191,7 @@
     <ClInclude Include="include\Window.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="shader_files\animations_vert.glsl" />
     <None Include="shader_files\draw_frag.glsl" />
     <None Include="shader_files\draw_vert.glsl" />
     <None Include="shader_files\pointLight_frag.glsl" />

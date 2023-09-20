@@ -46,7 +46,7 @@ void GFX::Mesh::LoadFromGeom(const _GEOM::Geom& GeomData, std::vector<vec3>& pos
 }
 
 
-void GFX::Mesh::LoadAnimationDataFromGeom(const _GEOM::Geom& GeomData, std::vector<std::array<int,MAX_BONE_INFLUENCE>>& boneIDs, std::vector<std::array<float,MAX_BONE_INFLUENCE>>& boneWeights)
+void GFX::Mesh::LoadAnimationDataFromGeom(const _GEOM::Geom& GeomData, std::vector<glm::ivec4>& boneIDs, std::vector<glm::vec4>& boneWeights)
 {
 	const int reservenumber = GeomData.m_nVertices;
 	boneIDs.reserve(reservenumber);
@@ -57,15 +57,10 @@ void GFX::Mesh::LoadAnimationDataFromGeom(const _GEOM::Geom& GeomData, std::vect
 		// Load bone weights, and bone IDs
 		for (size_t iIndex{}, ui{ GeomData.m_pSubMesh[iSM].m_iVertices }; iIndex < GeomData.m_pSubMesh[iSM].m_nVertices; ++iIndex, ++ui)
 		{
-			std::array<int, MAX_BONE_INFLUENCE> lBoneIDs;
-			std::array<float, MAX_BONE_INFLUENCE> lBoneWeights;
 			const auto& localgeom = GeomData.m_pPos[iIndex];
 
-			lBoneIDs = { localgeom.m_BoneIDs[0], localgeom.m_BoneIDs[1], localgeom.m_BoneIDs[2], localgeom.m_BoneIDs[3] };
-			lBoneWeights = { localgeom.m_Weights[0], localgeom.m_Weights[1] , localgeom.m_Weights[2] , localgeom.m_Weights[3] };
-
-			boneIDs.emplace_back(lBoneIDs);
-			boneWeights.emplace_back(lBoneWeights);
+			boneIDs.emplace_back(ivec4{ localgeom.m_BoneIDs[0], localgeom.m_BoneIDs[1], localgeom.m_BoneIDs[2], localgeom.m_BoneIDs[3] });
+			boneWeights.emplace_back(vec4{ localgeom.m_Weights[0], localgeom.m_Weights[1] , localgeom.m_Weights[2] , localgeom.m_Weights[3] });
 		}
 	}
 }
@@ -76,8 +71,8 @@ void GFX::Mesh::Setup(const _GEOM::Geom& GeomData)
 	std::vector<glm::vec3>								positions;
 	std::vector<glm::vec2>								uvs;
 	std::vector<unsigned int>							indices;
-	std::vector<std::array<int,MAX_BONE_INFLUENCE>>		boneIDs;
-	std::vector<std::array<float,MAX_BONE_INFLUENCE>>	boneWeights;
+	std::vector<glm::ivec4>								boneIDs;
+	std::vector<glm::vec4>								boneWeights;
 	std::vector<glm::vec3>								tangents;
 	std::vector<glm::vec3>								normals;
 
@@ -145,18 +140,18 @@ void GFX::Mesh::Setup(const _GEOM::Geom& GeomData)
 	if (GeomData.m_bHasAnimations && _ENABLE_ANIMATIONS)
 	{
 		// Create VBO for Bone IDs. Attach VBO for Bone IDs to VAO
-		mBoneIDVbo.Create(positions.size() * sizeof(int) * MAX_BONE_INFLUENCE);										// 1 for each vertex
-		mVao.AddAttribute(3, 3, 4, GL_INT);																			// location 3, binding vao index 3
+		mBoneIDVbo.Create(positions.size() * sizeof(ivec4));									// 1 for each vertex
+		mVao.AddAttribute(3, 3, 4, GL_INT);														// location 3, binding vao index 3
 		// TODO: need to somehow get the data of all Bone IDs
-		mBoneIDVbo.AttachData(0, boneIDs.size() * sizeof(int) * MAX_BONE_INFLUENCE, boneIDs.data());				// Attach mesh data to VBO
-		mVao.AttachVertexBuffer(mBoneIDVbo.GetID(), 3, 0, sizeof(int) * MAX_BONE_INFLUENCE);						// Attach to index 3
+		mBoneIDVbo.AttachData(0, boneIDs.size() * sizeof(ivec4), boneIDs.data());				// Attach mesh data to VBO
+		mVao.AttachVertexBuffer(mBoneIDVbo.GetID(), 3, 0, sizeof(ivec4));						// Attach to index 3
 
 		// Create VBO for Bone weights. Attach VBO for Bone weights to VAO
-		mBoneWeightVbo.Create(positions.size() * sizeof(float) * MAX_BONE_INFLUENCE);								// 1 for each vertex
-		mVao.AddAttribute(4, 4, 4, GL_FLOAT);																		// location 4, binding vao index 4
+		mBoneWeightVbo.Create(positions.size() * sizeof(vec4));									// 1 for each vertex
+		mVao.AddAttribute(4, 4, 4, GL_FLOAT);													// location 4, binding vao index 4
 		// TODO: need to somehow get the data of all Bone IDs
-		mBoneWeightVbo.AttachData(0, boneWeights.size() * sizeof(float) * MAX_BONE_INFLUENCE, boneWeights.data());	// Attach mesh data to VBO
-		mVao.AttachVertexBuffer(mBoneWeightVbo.GetID(), 4, 0, sizeof(float) * MAX_BONE_INFLUENCE);					// Attach to index 4
+		mBoneWeightVbo.AttachData(0, boneWeights.size() * sizeof(vec4), boneWeights.data());	// Attach mesh data to VBO
+		mVao.AttachVertexBuffer(mBoneWeightVbo.GetID(), 4, 0, sizeof(vec4));					// Attach to index 4
 	}
 
 	/////////////////////////////////////////

@@ -30,9 +30,6 @@ void GraphicsSystem::Init()
 	// Create a new entity here, for testing purposes
 	Entity newentity = systemManager->ecs->NewEntity();			// creating a new entity
 	newentity.AddComponent<MeshRenderer>();
-	//newentity.GetComponent<MeshRenderer>().mMeshPath = "../compiled_geom/dancing_vampire.geom";
-	//newentity.GetComponent<MeshRenderer>().mMaterialInstancePath = "../assets/Compressed/Vampire_diffuse.ctexture";
-	//newentity.GetComponent<MeshRenderer>().mShaderPath = std::pair<std::string, std::string>( "../_GRAPHICS/shader_files/draw_vert.glsl", "../_GRAPHICS/shader_files/draw_frag.glsl" );
 	newentity.AddComponent<BoxCollider>();
 
 	//newentity.GetComponent<MeshRenderer>().mMaterialInstancePath = "../assets/Compressed/Skull.ctexture";
@@ -42,9 +39,15 @@ void GraphicsSystem::Init()
 	newentity.GetComponent<MeshRenderer>().mMeshPath = "../assets/compiled_geom/dancing_vampire.geom";
 	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Vampire_diffuse.ctexture");
 	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Vampire_normal.ctexture");
-	newentity.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/pointLight_vert.glsl", "../_GRAPHICS/shader_files/pointLight_frag.glsl" };	// for point light
+	newentity.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/animations_vert.glsl", "../_GRAPHICS/shader_files/pointLight_frag.glsl" };	// for point light
 
 	newentity.GetComponent<BoxCollider>().mTranslateOffset = { 0.f, 1.05f, 0.f };
+
+	auto& meshinst = systemManager->mResourceSystem->get_Mesh("../assets/compiled_geom/dancing_vampire.geom");
+	if (meshinst.mHasAnimation && _ENABLE_ANIMATIONS)
+	{
+		m_Animator.SetAnimation(&meshinst.mAnimation[0]);
+	}
 }
 
 /***************************************************************************/
@@ -61,6 +64,9 @@ void GraphicsSystem::Update(float dt)
 
 	// update the camera's transformations, and its input
 	UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_EDITOR, dt);
+
+	// update the current animation
+	m_Animator.UpdateAnimation(dt);
 
 	// To be removed once entity to be drawn created
 	//m_Renderer.AddSphere(m_EditorCamera.position(), { 0, 0, -300 }, 100.f, { 0, 1, 0, 1 });
@@ -119,6 +125,7 @@ void GraphicsSystem::Update(float dt)
 		std::pair<std::string, std::string> shaderstr = inst.GetComponent<MeshRenderer>().mShaderPath;
 		std::string concatname = shaderstr.first + shaderstr.second;
 		GFX::Shader& shaderinst = systemManager->mResourceSystem->get_Shader(concatname);				// loads the shader
+		unsigned shaderID = shaderinst.GetHandle();
 
 		// get the texture filepath
 		std::vector<std::string> texturestr = inst.GetComponent<MeshRenderer>().mMaterialInstancePath;
@@ -131,8 +138,8 @@ void GraphicsSystem::Update(float dt)
 
 		glUniformMatrix4fv(shaderinst.GetUniformVP(), 1, GL_FALSE, &m_EditorCamera.viewProj()[0][0]);
 
-		GLuint mLightPosShaderLocation = glGetUniformLocation(shaderinst.GetHandle(), "uLightPos");
-		GLuint mViewPosShaderLocation = glGetUniformLocation(shaderinst.GetHandle(), "uViewPos");
+		GLuint mLightPosShaderLocation = glGetUniformLocation(shaderID, "uLightPos");
+		GLuint mViewPosShaderLocation = glGetUniformLocation(shaderID, "uViewPos");
 		vec3 lightPos = GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR);
 		glUniform3fv(mLightPosShaderLocation, 1, &lightPos[0]);
 		glUniform3fv(mViewPosShaderLocation, 1, &lightPos[0]);
@@ -144,8 +151,22 @@ void GraphicsSystem::Update(float dt)
 		m_Textures.push_back(0);
 		m_Textures.push_back(1);
 
-		GLuint uniform_tex = glGetUniformLocation(shaderinst.GetHandle(), "uTex");
+		GLuint uniform_tex = glGetUniformLocation(shaderID, "uTex");
 		glUniform1iv(uniform_tex, (GLsizei)m_Textures.size(), m_Textures.data());	// passing Texture ID to the fragment shader
+
+		// send animation data over to the shader if there is animations
+		if (meshinst.mHasAnimation && _ENABLE_ANIMATIONS)
+		{
+			const auto& transform = m_Animator.m_FinalBoneMatrices;
+			size_t totaltransform = transform.size();
+
+			for (size_t b{}; b < totaltransform; ++b)
+			{
+				// send the bone matrices to the shader via uniforms
+				std::string name = "finalBonesMatrices[" + std::to_string(b) + "]";
+				glUniformMatrix4fv(glGetUniformLocation(shaderID, name.c_str()), 1, GL_FALSE, &transform[b][0][0]);
+			}
+		}
 
 		glDrawElementsInstanced(GL_TRIANGLES, meshinst.GetIndexCount(), GL_UNSIGNED_INT, nullptr, meshinst.mLTW.size());
 

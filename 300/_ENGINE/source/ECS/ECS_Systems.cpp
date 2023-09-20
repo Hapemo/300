@@ -33,8 +33,8 @@ void SystemManager::Init(bool isEditor, GFX::Window* window)
 	mWindow = window;
 	mPhysicsSystem.get()->Init();
 	mScriptingSystem.get()->Init();
-	mGraphicsSystem.get()->Init();
 	mResourceSystem.get()->Init();			// all the resources are loaaded here
+	mGraphicsSystem.get()->Init();
 	mGameStateSystem.get()->Init();
 }
 

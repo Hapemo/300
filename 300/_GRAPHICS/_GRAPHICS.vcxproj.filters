@@ -153,5 +153,6 @@
     </None>
     <None Include="shader_files\pointLight_frag.glsl" />
     <None Include="shader_files\pointLight_vert.glsl" />
+    <None Include="shader_files\animations_vert.glsl" />
   </ItemGroup>
 </Project>

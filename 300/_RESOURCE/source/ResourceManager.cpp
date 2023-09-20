@@ -90,6 +90,8 @@ void Resource::shader_Loader()
 	std::vector<std::pair<std::string, std::string>> shaderpaths;
 	shaderpaths.emplace_back(std::pair<std::string, std::string>{ "../_GRAPHICS/shader_files/draw_vert.glsl", "../_GRAPHICS/shader_files/draw_frag.glsl" });
 	shaderpaths.emplace_back(std::pair<std::string, std::string>{ "../_GRAPHICS/shader_files/pointLight_vert.glsl", "../_GRAPHICS/shader_files/pointLight_frag.glsl" });
+	shaderpaths.emplace_back(std::pair<std::string, std::string>{ "../_GRAPHICS/shader_files/animations_vert.glsl", "../_GRAPHICS/shader_files/pointLight_frag.glsl" });
+
 
 	// load all the shaders
 	for (const auto& x : shaderpaths)
