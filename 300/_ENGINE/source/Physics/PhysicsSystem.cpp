@@ -28,7 +28,7 @@ void PhysicsSystem::Update(float dt)
 	if (dt <= 0)
 		return;
 	mPX.mScene->simulate(dt);
-	bool temp = mPX.mScene->fetchResults(true);
+	mPX.mScene->fetchResults(true);
 
 	for (auto itr = mActors.begin(); itr != mActors.end(); ++itr)
 	{
@@ -36,6 +36,9 @@ void PhysicsSystem::Update(float dt)
 		Transform& xform = Entity(itr->first).GetComponent<Transform>();
 		xform.mTranslate = Convert(PXform.p);
 		xform.mRotate = glm::eulerAngles(Convert(PXform.q));
+		if (Entity(itr->first).GetComponent<RigidBody>().mMotion != MOTION::DYNAMIC)
+			continue;
+		Entity(itr->first).GetComponent<RigidBody>().mVelocity = Convert(static_cast<physx::PxRigidDynamic*>(itr->second)->getLinearVelocity());
 	}
 }
 

@@ -21,12 +21,12 @@ start up of window and game system, also runs their update functions.
 #include "GameState/GameStateManager.h"
 
 #include "Example.h"
-
+#include "Input.h"
 // Static variables
 GFX::DebugRenderer* Application::mRenderer;
 GFX::Window Application::mWindow;
 std::string Application::title;
-
+uint32_t ee2;
 void Application::Init() 
 {
     StartUp();
@@ -48,7 +48,7 @@ void Application::SystemInit()
 #pragma region testphysics
     Entity e1 = systemManager->ecs->NewEntity();
     Entity e2 = systemManager->ecs->NewEntity();
-
+    ee2 = (uint32_t)e2.id;
     e1.AddComponent<RigidBody>();
     e1.GetComponent<RigidBody>().mMass = 10.f;
     e1.GetComponent<RigidBody>().mMaterial = MATERIAL::CONCRETE;
@@ -151,6 +151,8 @@ void Application::FirstUpdate()
 
 void Application::SystemUpdate() 
 {
+    //if (Input::CheckKey(E_STATE::RELEASE, E_KEY::A))
+    //    systemManager->mPhysicsSystem->SetVelocity(ee2, glm::vec3(100, 10, 0));
     systemManager->Update(FPSManager::dt);
 }
 
