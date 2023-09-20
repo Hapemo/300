@@ -36,9 +36,10 @@ void PhysicsSystem::Update(float dt)
 		Transform& xform = Entity(itr->first).GetComponent<Transform>();
 		xform.mTranslate = Convert(PXform.p);
 		xform.mRotate = glm::eulerAngles(Convert(PXform.q));
-		if (Entity(itr->first).GetComponent<RigidBody>().mMotion != MOTION::DYNAMIC)
+		RigidBody& rbod = Entity(itr->first).GetComponent<RigidBody>();
+		if (rbod.mMotion != MOTION::DYNAMIC)
 			continue;
-		Entity(itr->first).GetComponent<RigidBody>().mVelocity = Convert(static_cast<physx::PxRigidDynamic*>(itr->second)->getLinearVelocity());
+		rbod.mVelocity = Convert(static_cast<physx::PxRigidDynamic*>(itr->second)->getLinearVelocity());
 	}
 }
 
