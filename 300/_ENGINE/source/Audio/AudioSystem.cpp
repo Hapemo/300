@@ -17,6 +17,7 @@ void AudioSystem::Init()
 	// load audio for loop
 	// [Create the Audio System] -> returns the system object to this class. (&system)'
 	std::cout << "System Create: ";
+	PINFO("System Create: ");
 	ErrCodeCheck(FMOD::System_Create(&system_obj));
 
 	// Initialize the System settings	
