@@ -62,9 +62,9 @@ void Logger::InitLogging()
 
 	//Concatenating the name with the appropriate file location
 	std::stringstream ss;
-	std::string log = "_Log.txt";
+	std::string log = "Log.txt";
 	//ss << "../../ENGINE/Resources/Logs/" << temp2 << log;
-	ss << "../assets/Logs/" << log;
+	ss << "../Logs/" << log;
 	std::string temp = ss.str();
 	temp.erase(std::remove(temp.begin(), temp.end(), '\n'), temp.cend());
 	const char* path = temp.c_str();
@@ -89,8 +89,19 @@ void Logger::LogOutput(log_mode mode, const char* message, ...)
 	vsnprintf(outputMessage, 1000, message, argument_ptr);
 	va_end(argument_ptr);
 
+	//Get current date to name Log file
+	auto curr = std::chrono::system_clock::now();
+	std::time_t currTime = std::chrono::system_clock::to_time_t(curr);
+
+	//Generating the appropriate name for the file 
+	char timeStr[26];
+	ctime_s(timeStr, sizeof(timeStr), &currTime);
+	std::string temp2 = timeStr;
+	temp2 = std::regex_replace(temp2, std::regex(" "), "_");
+	temp2 = std::regex_replace(temp2, std::regex(":"), "_");
+
 	//Output to opened log file from InitLogging()
-	Pfile << mode_strings[mode] << outputMessage << "\n";
+	Pfile << temp2 << mode_strings[mode] << outputMessage << "\n";
 	std::string strMode(mode_strings[mode]);
 	std::string strMessage(outputMessage);
 	flag = true;
