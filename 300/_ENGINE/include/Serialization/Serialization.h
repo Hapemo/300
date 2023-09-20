@@ -6,6 +6,7 @@
 #include "stringbuffer.h"
 #include "ECS/ECS_Components.h"
 #include "ECS/ECS.h"
+#include "GameState/GameStateManager.h"
 
 // helper functions to convert strings to enums
 TAG FindTagEnum(std::string str);
@@ -211,4 +212,57 @@ public:
 
 private:
 	std::list<EntityJSON> ents;
+};
+
+struct ScJSON
+{
+	std::string name;
+	bool isPause;
+	bool forceRender;
+};
+
+class SceneJSON : public BaseJSON
+{
+public:
+	SceneJSON();
+
+	virtual ~SceneJSON();
+
+	virtual bool Deserialize(const rapidjson::Value& obj);
+	virtual bool Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* writer) const;
+
+	void SetSceneJSON(const Scene scj)
+	{
+		sj.name = scj.mName;
+		sj.isPause = scj.mIsPause;
+		sj.forceRender = scj.mForceRender;
+	}
+
+	const Scene GetSceneJSON() const
+	{
+		Scene scj;
+		scj.mName = sj.name;
+		scj.mIsPause = sj.isPause;
+		scj.mForceRender = sj.forceRender;
+
+		return scj;
+	}
+
+private:
+	ScJSON sj;
+};
+
+class SceneListJSON : public BaseJSON
+{
+public:
+	virtual ~SceneListJSON() {};
+
+	virtual bool Deserialize(const std::string& s);
+	virtual bool Deserialize(const rapidjson::Value&) { return false; }
+	virtual bool Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* writer) const;
+
+	std::list<SceneJSON>& SceneList() { return scenes; }
+
+private:
+	std::list<SceneJSON> scenes;
 };

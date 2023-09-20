@@ -290,6 +290,81 @@ bool EntityListJSON::Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>*
 	return true;
 }
 
+SceneJSON::SceneJSON() {}
+
+SceneJSON::~SceneJSON() {}
+
+bool SceneJSON::Deserialize(const rapidjson::Value& obj)
+{
+	if (obj.HasMember("Scene"))
+	{
+		sj.name = obj["Scene"]["SceneName"].GetString();
+		sj.isPause = obj["Scene"]["Pause"].GetBool();
+		sj.forceRender = obj["Scene"]["ForceRender"].GetBool();
+	}
+
+	return true;
+}
+
+bool SceneJSON::Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* writer) const
+{
+	writer->StartObject();
+
+	writer->String("Scene");
+	writer->StartObject();
+
+	writer->String("SceneName");
+	writer->String(sj.name.c_str());
+
+	writer->String("Pause");
+	writer->Bool(sj.isPause);
+
+	writer->String("ForceRender");
+	writer->Bool(sj.forceRender);
+
+	writer->EndObject();
+
+	writer->EndObject();
+
+	return true;
+}
+
+bool SceneListJSON::Deserialize(const std::string& s)
+{
+	rapidjson::Document doc;
+	if (!InitDocument(s, doc))
+	{
+		return false;
+	}
+
+	if (!doc.IsArray())
+	{
+		return false;
+	}
+
+	for (rapidjson::Value::ConstValueIterator ci = doc.Begin(); ci != doc.End(); ++ci)
+	{
+		SceneJSON sce;
+		sce.Deserialize(*ci);
+		scenes.push_back(sce);
+	}
+
+	return true;
+}
+bool SceneListJSON::Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* writer) const
+{
+	writer->StartArray();
+
+	for (std::list<SceneJSON>::const_iterator i = scenes.begin(); i != scenes.end(); i++)
+	{
+		(*i).Serialize(writer);
+	}
+
+	writer->EndArray();
+
+	return true;
+}
+
 // helper functions for translating strings to tags
 
 TAG FindTagEnum(std::string str)
