@@ -12,7 +12,7 @@ uniform vec3 uLightPos;
 uniform vec3 uViewPos;
 uniform mat4 uMatrixVP;
 
-//out vec4 VertexColor;
+out vec4 VertexColor;       // for debugging
 out vec2 TexCoords;
 out vec3 TangentLightPos;
 out vec3 TangentViewPos;
@@ -20,10 +20,10 @@ out vec3 TangentFragPos;
 
 void main() 
 {
-	 // Position
+	// Position
+    VertexColor = vec4(0.f);
     vec4 Pos = vec4(inPos, 1.0f);
     gl_Position = uMatrixVP * inLTW * Pos;
-    //VertexColor = inVertexColor;
     TexCoords = inUV;
     
     // Compute world-to-tangent space matrix

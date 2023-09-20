@@ -39,13 +39,14 @@ void GraphicsSystem::Init()
 	newentity.GetComponent<MeshRenderer>().mMeshPath = "../assets/compiled_geom/dancing_vampire.geom";
 	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Vampire_diffuse.ctexture");
 	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Vampire_normal.ctexture");
-	newentity.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/animations_vert.glsl", "../_GRAPHICS/shader_files/pointLight_frag.glsl" };	// for point light
+	newentity.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/pointLight_vert.glsl", "../_GRAPHICS/shader_files/pointLight_frag.glsl" };	// for point light
 
 	newentity.GetComponent<BoxCollider>().mTranslateOffset = { 0.f, 1.05f, 0.f };
 
 	auto& meshinst = systemManager->mResourceSystem->get_Mesh("../assets/compiled_geom/dancing_vampire.geom");
 	if (meshinst.mHasAnimation && _ENABLE_ANIMATIONS)
 	{
+		newentity.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/animations_vert.glsl", "../_GRAPHICS/shader_files/pointLight_frag.glsl" };	// for point light
 		m_Animator.SetAnimation(&meshinst.mAnimation[0]);
 	}
 }
@@ -65,8 +66,11 @@ void GraphicsSystem::Update(float dt)
 	// update the camera's transformations, and its input
 	UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_EDITOR, dt);
 
-	// update the current animation
-	m_Animator.UpdateAnimation(dt);
+	if (_ENABLE_ANIMATIONS) 
+	{
+		// update the current animation
+		m_Animator.UpdateAnimation(dt);
+	}
 
 	// To be removed once entity to be drawn created
 	//m_Renderer.AddSphere(m_EditorCamera.position(), { 0, 0, -300 }, 100.f, { 0, 1, 0, 1 });
@@ -85,7 +89,8 @@ void GraphicsSystem::Update(float dt)
 		glm::mat4	rot = glm::rotate(trns, glm::radians(inst.GetComponent<Transform>().mRotate.x), glm::vec3(1.f, 0.f, 0.f));
 		rot = glm::rotate(rot, glm::radians(inst.GetComponent<Transform>().mRotate.y), glm::vec3(0.f, 1.f, 0.f));
 		rot = glm::rotate(rot, glm::radians(inst.GetComponent<Transform>().mRotate.z), glm::vec3(0.f, 0.f, 1.f));
-		glm::mat4 final = glm::scale(rot, inst.GetComponent<Transform>().mScale);
+		glm::mat4 final = glm::mat4(1.f);
+		//glm::mat4 final = glm::scale(rot, inst.GetComponent<Transform>().mScale);
 
 		if (m_DebugDrawing && inst.HasComponent<BoxCollider>())
 		{

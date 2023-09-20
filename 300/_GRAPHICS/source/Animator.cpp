@@ -75,13 +75,13 @@ namespace GFX
             nodeTransform = bone->GetLocalTransform();
         }
 
-        glm::mat4 globalTransform = parentTransform;
+        glm::mat4 globalTransform = parentTransform * nodeTransform;
 
         auto& boneInfoMap = m_CurrentAnimation->m_BoneInfoMap;
         if (boneInfoMap.find(nodename) != boneInfoMap.end())
         {
             // there exist a bone info map with the same node name
-            globalTransform = parentTransform * nodeTransform;
+            //globalTransform = parentTransform * nodeTransform;
             int index = boneInfoMap[nodename].id;                           // the index for the boneinfomap is the id of the bone
             glm::mat4 offset = boneInfoMap[nodename].offset;                // the offset is the offset WRT to the bone's origin transformation
             m_FinalBoneMatrices[index] = globalTransform * offset;          // populating this vector of matrices with the bone matrices, WRT to the bone's parent transformation

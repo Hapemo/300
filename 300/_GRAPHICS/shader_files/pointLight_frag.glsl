@@ -1,6 +1,6 @@
 #version 450
 
-//in vec4 VertexColor;
+in vec4 VertexColor;
 in vec2 TexCoords;
 in vec3 TangentLightPos;
 in vec3 TangentViewPos;
@@ -37,7 +37,7 @@ void main()
     float spec = pow(max(dot(normal, halfwayDir), 0.0), 32.0);
     vec3 specular = vec3(0.7) * spec;
 
-    vec3 finalColor = vec3(ambient + diffuse + specular);
+    vec3 finalColor = vec3(ambient + diffuse + specular + VertexColor.xyz);
 
     // Output
     fragColor0 = vec4(finalColor, uColor.a);
