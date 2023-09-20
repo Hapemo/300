@@ -48,6 +48,7 @@ void Application::SystemInit()
 #pragma region testphysics
     Entity e1 = systemManager->ecs->NewEntity();
     Entity e2 = systemManager->ecs->NewEntity();
+    Entity e3 = systemManager->ecs->NewEntity();
     ee2 = (uint32_t)e2.id;
     e1.AddComponent<RigidBody>();
     e1.GetComponent<RigidBody>().mMass = 10.f;
@@ -59,8 +60,17 @@ void Application::SystemInit()
     e2.GetComponent<RigidBody>().mMass = 10.f;
     e2.GetComponent<RigidBody>().mMaterial = MATERIAL::CONCRETE;
     e2.GetComponent<RigidBody>().mMotion = MOTION::DYNAMIC;
-    e2.AddComponent<SphereCollider>();
+    e2.AddComponent<BoxCollider>();
     e2.GetComponent<Transform>().mTranslate.y = 1000.f;
+
+    e3.AddComponent<RigidBody>();
+    e3.GetComponent<RigidBody>().mMass = 10.f;
+    e3.GetComponent<RigidBody>().mMaterial = MATERIAL::CONCRETE;
+    e3.GetComponent<RigidBody>().mMotion = MOTION::DYNAMIC;
+    e3.AddComponent<SphereCollider>();
+    e3.GetComponent<Transform>().mTranslate.y = 1000.f;
+    e3.GetComponent<Transform>().mTranslate.x = 300.f;
+
 
 #pragma endregion testphysics
     systemManager->Init(false, &mWindow);
@@ -151,8 +161,8 @@ void Application::FirstUpdate()
 
 void Application::SystemUpdate() 
 {
-    //if (Input::CheckKey(E_STATE::RELEASE, E_KEY::A))
-    //    systemManager->mPhysicsSystem->SetVelocity(ee2, glm::vec3(100, 10, 0));
+    if (Input::CheckKey(E_STATE::RELEASE, E_KEY::A))
+        systemManager->mPhysicsSystem->SetVelocity(ee2, glm::vec3(100, 10, 0));
     systemManager->Update(FPSManager::dt);
 }
 

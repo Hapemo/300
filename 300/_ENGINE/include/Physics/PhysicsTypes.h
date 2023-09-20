@@ -13,5 +13,6 @@ enum class MATERIAL : unsigned char
 enum class MOTION : unsigned char
 {
 	STATIC,
-	DYNAMIC
+	DYNAMIC,
+	KINEMATIC
 };
