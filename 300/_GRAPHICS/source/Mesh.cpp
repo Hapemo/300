@@ -140,11 +140,7 @@ void GFX::Mesh::Setup(const _GEOM::Geom& GeomData)
 
 
 	/////////////////////////////////////////
-	// Bone_IDs, and Weights (TODO) thank you sergeant.
-	// It is an array of structs. Stored the same way as the positions and uvs.
-	// The data and weights are stored in this format below::
-		//GeomData.m_pPos[0].m_BoneIDs;
-		//GeomData.m_pPos[0].m_Weights;
+	// Bone_IDs, and Weights
 		
 	if (GeomData.m_bHasAnimations && _ENABLE_ANIMATIONS)
 	{
@@ -354,6 +350,7 @@ void GFX::MeshManager::Init()
 }
 
 
+// this code has been ported over
 void GFX::MeshManager::SetupMesh(std::string filepath)
 {
 	_GEOM::Geom GeomData;
@@ -564,7 +561,7 @@ namespace Deserialization
 		// Vertex Extras
 		GeomData.m_pExtras = std::make_shared<_GEOM::Geom::VertexExtra[]>(GeomData.m_nExtras);
 		for (uint32_t i{}; i < GeomData.m_nExtras; ++i) {									
-			infile.read((char*)&GeomData.m_pExtras[i], sizeof(_GEOM::Geom::m_nExtras));
+			infile.read((char*)&GeomData.m_pExtras[i], sizeof(_GEOM::Geom::VertexExtra));
 		}
 
 		infile.close();
