@@ -206,7 +206,7 @@ void Scripts::Inspect() {
 					script.scriptFile = dataScript;
 					script.env = { systemManager->mScriptingSystem->luaState, sol::create, systemManager->mScriptingSystem->luaState.globals() };
 					scripts.scriptsContainer.push_back(script);
-					std::cout << "Script " << script.scriptFile << ".lua added to entity " << std::to_string((int)Hierarchy::selectedId) << std::endl;
+					//std::cout << "Script " << script.scriptFile << ".lua added to entity " << std::to_string((int)Hierarchy::selectedId) << std::endl;
 				}
 				// if entity already has scripts attached, check if duplicate 
 				else
@@ -218,7 +218,7 @@ void Scripts::Inspect() {
 						if (elem.scriptFile == scripts.mScriptFile)
 						{
 							hasScript = true;
-							std::cout << "Script is already attached! " << std::endl;
+							//std::cout << "Script is already attached! " << std::endl;
 							PWARNING("Script is already attached! ");
 							break;
 						}
@@ -230,8 +230,8 @@ void Scripts::Inspect() {
 						script.scriptFile = dataScript;
 						script.env = { systemManager->mScriptingSystem->luaState, sol::create, systemManager->mScriptingSystem->luaState.globals() };
 						scripts.scriptsContainer.push_back(script);
-						std::cout << "Script " << script.scriptFile << ".lua added to entity " << std::to_string((int)Hierarchy::selectedId) << std::endl;
-						PINFO("Script %s.lua added to entity", std::to_string((int)Hierarchy::selectedId));
+						//std::cout << "Script " << script.scriptFile << ".lua added to entity " << std::to_string((int)Hierarchy::selectedId) << std::endl;
+						PINFO("Script %s added to entity %s", script.scriptFile.c_str(), std::to_string((int)Hierarchy::selectedId).c_str());
 					}
 				}
 			}

@@ -276,16 +276,16 @@ void ScriptingSystem::ScriptingInitTest()
 void ScriptingSystem::ScriptingUpdateTest()
 {
     // Get all exisiting entities
-    if (!printOnce)
-    {
-        for (auto& elem : systemManager->ecs->GetEntitiesWith<General>())
-        {
+    //if (!printOnce)
+    //{
+    //    for (auto& elem : systemManager->ecs->GetEntitiesWith<General>())
+    //    {
 
-            std::cout << "Player (EntityID: " << std::to_string(unsigned int(elem)) << ")added." << std::endl;
-        }
-        std::cout << std::endl;
-        printOnce = true;
-    }
+    //        std::cout << "Player (EntityID: " << std::to_string(unsigned int(elem)) << ")added." << std::endl;
+    //    }
+    //    std::cout << std::endl;
+    //    printOnce = true;
+    //}
     if (Input::CheckKey(E_STATE::PRESS, E_KEY::T))
         printOnce = false;
     //// Button press number 1 to add new script 
