@@ -8,6 +8,7 @@
 #include "ResourceManagerTy.h"
 #include "ECS/ECS_Components.h"
 #include "GameState/GameStateManager.h"
+#include "Debug/Logger.h"
 
 SystemManager* systemManager;
 
@@ -19,6 +20,7 @@ SystemManager::SystemManager()
 	mGameStateSystem = std::make_unique<GameStateManager>();
 	mResourceTySystem = std::make_unique<ResourceTy>();
 	mResourceSystem		= std::make_unique<Resource>();
+	mLogger = std::make_unique<Logger>();
 	ecs = new ECS();
 }
 
@@ -31,11 +33,17 @@ void SystemManager::Init(bool isEditor, GFX::Window* window)
 {
 	mIsEditor = isEditor;
 	mWindow = window;
+	mLogger.get()->InitLogging();
+	PINFO("Init Logger\n");
 	mPhysicsSystem.get()->Init();
+	PINFO("Init Physics System\n");
 	mScriptingSystem.get()->Init();
+	PINFO("Init Scripting System\n");
 	mGraphicsSystem.get()->Init();
 	mResourceSystem.get()->Init();			// all the resources are loaaded here
+	PINFO("Init Graphics System\n");
 	mGameStateSystem.get()->Init();
+	PINFO("Init Game state System\n");
 }
 
 void SystemManager::Update(float dt)

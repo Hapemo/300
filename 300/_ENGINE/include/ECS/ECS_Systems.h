@@ -10,6 +10,7 @@ class GameStateManager;
 class ECS;
 class Resource;
 class ResourceTy;
+class Logger;
 
 class SystemManager {
 	GFX::Window *mWindow;
@@ -22,6 +23,7 @@ public:
 	std::unique_ptr<Resource> mResourceSystem;
 	std::unique_ptr<ResourceTy> mResourceTySystem;
 	std::unique_ptr<GameStateManager> mGameStateSystem;
+	std::unique_ptr<Logger> mLogger;
 
 
 	ECS *ecs;
