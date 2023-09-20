@@ -70,6 +70,7 @@ void Application::SystemInit()
     ent3.GetComponent<General>().tag = TAG::UNKNOWN;
     ent3.GetComponent<General>().subtag = SUBTAG::ACTIVE;
 
+    ent3.GetComponent<SoundComponent>().audio_type = AUDIO_BGM;
 
     ObjectFactory::SerializeScene("../resources/Scenes/test.json");
 

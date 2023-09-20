@@ -6,25 +6,9 @@
 #include "Input.h"
 
 #include "SoundComponent.h"
+#include "AudioType.h" // BGM/SFX
 
-//struct AudioComponent
-//{
-//	AUDIO_TYPE type;
-//	std::string name;
-//	bool isPlaying;
-//};
-
-enum AUDIOTYPE :unsigned char
-{
-	AUDIO_BGM, 
-	AUDIO_SFX
-};
-
-//struct Channel
-//{
-//	int channel_id;
-//	FMOD::Channel* channel;
-//};
+enum AUDIOTYPE : unsigned char;
 
 class AudioSystem
 {	 

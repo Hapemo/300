@@ -4,6 +4,9 @@
 #include <vector>
 #include "Physics/PhysicsTypes.h"
 #include "Tags.h"
+#include "Audio/AudioType.h" 
+
+enum AUDIOTYPE : unsigned char;
 
 struct General
 {
@@ -60,14 +63,14 @@ struct PlaneCollider
 	PlaneCollider() : mNormal(0.f, 1.f, 0.f), mTranslateOffset(0.f) {};
 };
 
-struct SoundInfo
-{
-	unsigned int unique_ID;
-	std::string  file_path;
-	std::string	 sound_name;
-	bool		 is3D;
-	bool		 isLooping; 
-};
+//struct SoundInfo
+//{
+//	unsigned int unique_ID;
+//	std::string  file_path;
+//	std::string	 sound_name;
+//	bool		 is3D;
+//	bool		 isLooping; 
+//};
 
 /***************************************************************************/
 /*!
@@ -87,3 +90,18 @@ public:
 	std::string mScriptFile{};
 	std::vector <Script> scriptsContainer;
 };
+
+
+// 9/16/2023 - Basic Audio Component for Audio System.
+struct SoundComponent
+{
+	std::string file_path;		// File Path to Load the Audio from
+	AUDIOTYPE  audio_type;		// Determines SFX or BGM
+	bool		isLooping;		// Is the audio looping?
+	bool		isPlaying;
+	bool		isPlay;
+
+	// bool is3D;
+	// Transform a_transform	// Needed for positional audio
+};
+
