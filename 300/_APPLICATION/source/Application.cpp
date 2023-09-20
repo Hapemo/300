@@ -45,11 +45,29 @@ void Application::StartUp()
 
 void Application::SystemInit() 
 {
+#pragma region testphysics
+    Entity e1 = systemManager->ecs->NewEntity();
+    Entity e2 = systemManager->ecs->NewEntity();
+
+    e1.AddComponent<RigidBody>();
+    e1.GetComponent<RigidBody>().mMass = 10.f;
+    e1.GetComponent<RigidBody>().mMaterial = MATERIAL::CONCRETE;
+    e1.GetComponent<RigidBody>().mMotion = MOTION::STATIC;
+    e1.AddComponent<PlaneCollider>();
+
+    e2.AddComponent<RigidBody>();
+    e2.GetComponent<RigidBody>().mMass = 10.f;
+    e2.GetComponent<RigidBody>().mMaterial = MATERIAL::CONCRETE;
+    e2.GetComponent<RigidBody>().mMotion = MOTION::DYNAMIC;
+    e2.AddComponent<SphereCollider>();
+    e2.GetComponent<Transform>().mTranslate.y = 1000.f;
+
+#pragma endregion testphysics
     systemManager->Init(false, &mWindow);
     FPSManager::Init();
     Input::Init();
 
-    #pragma region testserialization
+#pragma region testserialization
     Entity ent1 = systemManager->ecs->NewEntity();
     Entity ent2 = systemManager->ecs->NewEntity();
     Entity ent3 = systemManager->ecs->NewEntity();
@@ -78,7 +96,7 @@ void Application::SystemInit()
     {
         e.GetComponent<Transform>();
     }
-    #pragma endregion testserialization
+#pragma endregion testserialization
 
 #pragma region testparentchild
     Entity ent4 = systemManager->ecs->NewEntity();
@@ -102,6 +120,7 @@ void Application::SystemInit()
     Entity ent6parent = ent6.GetParent();
     //loop over children of an entity
 #pragma endregion testparentchild
+
 }
 
 void Application::MainUpdate() 

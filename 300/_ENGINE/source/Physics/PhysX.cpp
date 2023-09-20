@@ -9,8 +9,7 @@ PhysX::PhysX()
 	mPvd = PxCreatePvd(*mFoundation);
 	physx::PxPvdTransport* transport = physx::PxDefaultPvdSocketTransportCreate("127.0.0.1", 5425, 10);
 	mPvd->connect(*transport, physx::PxPvdInstrumentationFlag::eALL);
-	mToleranceScale.length = 100;
-	mToleranceScale.speed = 981;
+
 	mPhysics = PxCreatePhysics(PX_PHYSICS_VERSION, *mFoundation, mToleranceScale, true, mPvd);
 
 	physx::PxSceneDesc sceneDesc(mPhysics->getTolerancesScale());

@@ -6,7 +6,7 @@
 #include "Tags.h"
 #include "rttr/registration.h"
 #include "ECS.h"
-
+#include "Audio/AudioType.h"
 
 struct General
 {
@@ -113,6 +113,13 @@ struct Children
 	Children() : mNumChildren(0), mFirstChild(0) {};
 };
 
+struct Audio
+{
+	std::string mFileName;
+	AUDIOTYPE mAudioType;
+	bool mIsPlaying;// check if audio is already playing
+	bool mIsPlay;	// play audio if true
+};
 
 RTTR_REGISTRATION
 {
@@ -140,3 +147,4 @@ RTTR_REGISTRATION
 		rttr::value("Background", SUBTAG::BACKGROUND)
 	);
 }
+

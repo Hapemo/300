@@ -64,6 +64,9 @@
     <ClInclude Include="include\Graphics\Camera_Input.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\Audio\AudioType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\ECS\ECS.cpp">

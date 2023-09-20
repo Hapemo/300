@@ -8,6 +8,7 @@
 #include "ResourceManagerTy.h"
 #include "ECS/ECS_Components.h"
 #include "GameState/GameStateManager.h"
+#include "Audio/AudioSystem.h"
 
 SystemManager* systemManager;
 
@@ -19,6 +20,7 @@ SystemManager::SystemManager()
 	mGameStateSystem = std::make_unique<GameStateManager>();
 	mResourceTySystem = std::make_unique<ResourceTy>();
 	mResourceSystem		= std::make_unique<Resource>();
+	mAudioSystem = std::make_unique<AudioSystem>();
 	ecs = new ECS();
 }
 
@@ -36,6 +38,8 @@ void SystemManager::Init(bool isEditor, GFX::Window* window)
 	mResourceSystem.get()->Init();			// all the resources are loaaded here
 	mGraphicsSystem.get()->Init();
 	mGameStateSystem.get()->Init();
+	mAudioSystem.get()->Init();
+
 }
 
 void SystemManager::Update(float dt)
@@ -43,6 +47,8 @@ void SystemManager::Update(float dt)
 	mPhysicsSystem.get()->Update(dt);
 	mScriptingSystem.get()->Update(dt);
 	mGraphicsSystem.get()->Update(dt);
+	mAudioSystem.get()->Update(dt);
+
 //	mResourceSystem.get()->Update();
 }
 
@@ -53,6 +59,8 @@ void SystemManager::Exit()
 	mGraphicsSystem.get()->Exit();
 //	mResourceSystem.get()->Exit();
 	mGameStateSystem.get()->Unload();
+	mAudioSystem.get()->Exit();
+
 }
 
 PhysicsSystem* SystemManager::GetPhysicsPointer()
