@@ -68,6 +68,8 @@ void Application::SystemInit()
     Input::Init();
 
 #pragma region testserialization
+    //ObjectFactory::DeserializeScene("../resources/Scenes/test.json");
+
     Entity ent1 = systemManager->ecs->NewEntity();
     Entity ent2 = systemManager->ecs->NewEntity();
     Entity ent3 = systemManager->ecs->NewEntity();
@@ -76,6 +78,9 @@ void Application::SystemInit()
     ent1.GetComponent<General>().isActive = true;
     ent1.GetComponent<General>().tag = TAG::PLAYER;
     ent1.GetComponent<General>().subtag = SUBTAG::ACTIVE;
+
+    //ent1.AddComponent<MeshRenderer>();
+    //ent2.AddComponent<Audio>();
 
     ent2.GetComponent<General>().name = "Other";
     ent2.GetComponent<General>().isActive = true;

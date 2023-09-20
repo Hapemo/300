@@ -1,10 +1,22 @@
 #pragma once
 #include "pch.h"
+#include "rttr/type.h"
 #include "document.h"
 #include "prettywriter.h"
 #include "stringbuffer.h"
 #include "ECS/ECS_Components.h"
 #include "ECS/ECS.h"
+
+// helper functions to convert strings to enums
+TAG FindTagEnum(std::string str);
+
+SUBTAG FindSubTagEnum(std::string str);
+
+MATERIAL FindMaterialEnum(std::string str);
+
+MOTION FindMotionEnum(std::string str);
+
+AUDIOTYPE FindAudioEnum(std::string str);
 
 class BaseJSON
 {
@@ -22,23 +34,6 @@ protected:
 	bool InitDocument(const std::string& s, rapidjson::Document& doc);
 };
 
-// to be replaced by added components later on
-// e.g.: Transform, Texture, Collider, etc.
-struct GeneralJSON
-{
-	std::string jName;
-	bool jIsActive;
-	std::string jTag;
-	std::string jSubtag;
-};
-
-struct TransformJSON
-{
-	glm::vec3 jScale;
-	glm::vec3 jRotate;
-	glm::vec3 jTranslate;
-};
-
 class EntityJSON : public BaseJSON
 {
 public:
@@ -48,97 +43,159 @@ public:
 	virtual bool Deserialize(const rapidjson::Value& obj);
 	virtual bool Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* writer) const;
 
-	// helper function to convert enum to str, vice versa
-	std::string FindTagString(TAG tag) const
+	const entt::entity GetIDJSON() const
 	{
-		for (const auto& it : TagMap)
-		{
-			if (it.second == tag)
-				return it.first;
-		}
+		return mID.id;
 	}
 
-	TAG FindTagEnum(std::string str) const
+	void SetIDJSON(const entt::entity id)
 	{
-		for (const auto& it : TagMap)
-		{
-			if (it.first == str)
-				return it.second;
-		}
+		mID.id = id;
+		mid_t = true;
 	}
 
-	std::string FindSubTagString(SUBTAG subtag) const
+	// getter: for deserializing the info into the editor
+	const General GetGeneralJSON() const
 	{
-		for (const auto& it : SubTagMap)
-		{
-			if (it.second == subtag)
-				return it.first;
-		}
+		return mGJ;
 	}
 
-	SUBTAG FindSubTagEnum(std::string str) const
+	// setter: for serializing the info into the json file
+	void SetGeneralJSON(const General gj)
 	{
-		for (const auto& it : SubTagMap)
-		{
-			if (it.first == str)
-				return it.second;
-		}
+		mGJ = gj;
+		mg_t = true;
 	}
-	// end of helper function
-		
-		// no need for now
-		/*const entt::entity GetID() const
-		{
-			return mID;
-		}
 
-		void SetID(const entt::entity ID)
-		{
-			mID = ID;
-		}*/
+	const Transform GetTransformJSON() const
+	{
+		return mTJ;
+	}
 
-		// getter: for deserializing the info into the editor
-		const General GetGeneralJSON() const
-		{
-			General gj;
-			gj.name = mGJ.jName;
-			gj.isActive = mGJ.jIsActive;
-			gj.tag = FindTagEnum(mGJ.jTag);
-			gj.subtag = FindSubTagEnum(mGJ.jSubtag);
+	void SetTransformJSON(const Transform tj)
+	{
+		mTJ = tj;
+		mt_t = true;
+	}
 
-			return gj;
-		}
+	const RigidBody GetRBJSON() const
+	{
+		return mRBJ;
+	}
 
-		// setter: for serializing the info into the json file
-		void SetGeneralJSON(const General gj)
-		{
-			mGJ.jName = gj.name;
-			mGJ.jIsActive = gj.isActive;
-			mGJ.jTag = FindTagString(gj.tag);
-			mGJ.jSubtag = FindSubTagString(gj.subtag);
-		}
+	void SetMRJSON(const MeshRenderer mrj)
+	{
+		mMRJ = mrj;
+		mr_t = true;
+	}
 
-		const Transform GetTransformJSON() const
-		{
-			Transform tj;
-			tj.mScale = mTJ.jScale;
-			tj.mRotate = mTJ.jRotate;
-			tj.mTranslate = mTJ.jTranslate;
+	const MeshRenderer GetMRJSON() const
+	{
+		return mMRJ;
+	}
 
-			return tj;
-		}
+	void SetRBJSON(const RigidBody rbj)
+	{
+		mRBJ = rbj;
+		mrb_t = true;
+	}
 
-		void SetTransformJSON(const Transform tj)
-		{
-			mTJ.jScale = tj.mScale;
-			mTJ.jRotate = tj.mRotate;
-			mTJ.jTranslate = tj.mTranslate;
-		}
-	
+	const BoxCollider GetBCJSON() const
+	{
+		return mBCJ;
+	}
+
+	void SetBCJSON(const BoxCollider bcj)
+	{
+		mBCJ = bcj;
+		mbc_t = true;
+	}
+
+	const SphereCollider GetSCJSON() const
+	{
+		return mSCJ;
+	}
+
+	void SetSCJSON(const SphereCollider scj)
+	{
+		mSCJ = scj;
+		msc_t = true;
+	}
+
+	const PlaneCollider GetPCJSON() const
+	{
+		return mPCJ;
+	}
+
+	void SetPCJSON(const PlaneCollider pcj)
+	{
+		mPCJ = pcj;
+		mpc_t = true;
+	}
+
+	const Scripts GetSJSON() const
+	{
+		return mSJ;
+	}
+
+	void SetSJSON(const Scripts sj)
+	{
+		mSJ = sj;
+		ms_t = true;
+	}
+
+	const Parent GetPJSON() const
+	{
+		return mPJ;
+	}
+
+	void SetPJSON(const Parent pj)
+	{
+		mPJ = pj;
+		mp_t = true;
+	}
+
+	const Children GetCJSON() const
+	{
+		return mCJ;
+	}
+
+	void SetCJSON(const Children cj)
+	{
+		mCJ = cj;
+		mc_t = true;
+	}
+
+	void SetAJSON(const Audio aj)
+	{
+		mAJ = aj;
+		ma_t = true;
+	}
+
+	const Audio GetAJSON() const
+	{
+		return mAJ;
+	}
+
+	// trackers to disable serialization if component does not exist
+	bool mid_t = false, mg_t = false, mt_t = false,
+		mrb_t = false, mr_t = false, mbc_t = false, msc_t = false,
+		mpc_t = false, ms_t = false, mp_t = false,
+		mc_t = false, ma_t = false;
+
 private:
-	//entt::entity mID{}; // no need for now
-	GeneralJSON mGJ;
-	TransformJSON mTJ;
+	Entity mID;
+	General mGJ;
+	Transform mTJ;
+	RigidBody mRBJ;
+	MeshRenderer mMRJ;
+	BoxCollider mBCJ;
+	SphereCollider mSCJ;
+	PlaneCollider mPCJ;
+	Scripts mSJ;
+	Parent mPJ;
+	Children mCJ;
+	Audio mAJ;
 };
 
 class EntityListJSON : public BaseJSON

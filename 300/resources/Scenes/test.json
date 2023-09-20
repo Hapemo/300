@@ -1,152 +1,210 @@
 [
     {
+        "EntityID": {
+            "EntityID": 6
+        },
         "General": {
             "Name": "Apple",
-            "isActive": false,
             "Tag": "Unknown",
-            "Subtag": "Active"
+            "Subtag": "Active",
+            "Active": false,
+            "Paused": true
         },
         "Transform": {
-            "Scale": [
-                100.0,
-                100.0,
-                100.0
-            ],
-            "Rotate": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "Translate": [
-                0.0,
-                0.0,
-                0.0
-            ]
+            "Scale": {
+                "x": 100.0,
+                "y": 100.0,
+                "z": 100.0
+            },
+            "Rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
         }
     },
     {
+        "EntityID": {
+            "EntityID": 5
+        },
         "General": {
             "Name": "Other",
-            "isActive": true,
             "Tag": "Unknown",
-            "Subtag": "Background"
+            "Subtag": "Background",
+            "Active": true,
+            "Paused": true
         },
         "Transform": {
-            "Scale": [
-                100.0,
-                100.0,
-                100.0
-            ],
-            "Rotate": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "Translate": [
-                0.0,
-                0.0,
-                0.0
-            ]
+            "Scale": {
+                "x": 100.0,
+                "y": 100.0,
+                "z": 100.0
+            },
+            "Rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
         }
     },
     {
+        "EntityID": {
+            "EntityID": 4
+        },
         "General": {
             "Name": "Testing",
-            "isActive": true,
             "Tag": "Player",
-            "Subtag": "Active"
+            "Subtag": "Active",
+            "Active": true,
+            "Paused": false
         },
         "Transform": {
-            "Scale": [
-                100.0,
-                100.0,
-                100.0
-            ],
-            "Rotate": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "Translate": [
-                0.0,
-                0.0,
-                0.0
-            ]
+            "Scale": {
+                "x": 100.0,
+                "y": 100.0,
+                "z": 100.0
+            },
+            "Rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
         }
     },
     {
+        "EntityID": {
+            "EntityID": 3
+        },
         "General": {
             "Name": "",
-            "isActive": true,
             "Tag": "Unknown",
-            "Subtag": "Active"
+            "Subtag": "Active",
+            "Active": true,
+            "Paused": true
         },
         "Transform": {
-            "Scale": [
-                100.0,
-                100.0,
-                100.0
-            ],
-            "Rotate": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "Translate": [
-                0.0,
-                0.0,
-                0.0
-            ]
+            "Scale": {
+                "x": 100.0,
+                "y": 100.0,
+                "z": 100.0
+            },
+            "Rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
         }
     },
     {
+        "EntityID": {
+            "EntityID": 2
+        },
         "General": {
             "Name": "",
-            "isActive": true,
             "Tag": "Unknown",
-            "Subtag": "Active"
+            "Subtag": "Active",
+            "Active": true,
+            "Paused": true
         },
         "Transform": {
-            "Scale": [
-                100.0,
-                100.0,
-                100.0
-            ],
-            "Rotate": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "Translate": [
-                0.0,
-                1000.0,
-                0.0
-            ]
+            "Scale": {
+                "x": 100.0,
+                "y": 100.0,
+                "z": 100.0
+            },
+            "Rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Translate": {
+                "x": 0.0,
+                "y": 1000.0,
+                "z": 0.0
+            }
+        },
+        "RigidBody": {
+            "Mass": 10,
+            "Material": "Concrete",
+            "Motion": "Dynamic"
+        },
+        "SphereCollider": {
+            "ScaleOffset": 1.0,
+            "TranslateOffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
         }
     },
     {
+        "EntityID": {
+            "EntityID": 1
+        },
         "General": {
             "Name": "",
-            "isActive": true,
             "Tag": "Unknown",
-            "Subtag": "Active"
+            "Subtag": "Active",
+            "Active": true,
+            "Paused": true
         },
         "Transform": {
-            "Scale": [
-                100.0,
-                100.0,
-                100.0
-            ],
-            "Rotate": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "Translate": [
-                0.0,
-                0.0,
-                0.0
-            ]
+            "Scale": {
+                "x": 100.0,
+                "y": 100.0,
+                "z": 100.0
+            },
+            "Rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "RigidBody": {
+            "Mass": 10,
+            "Material": "Concrete",
+            "Motion": "Static"
+        },
+        "SphereCollider": {
+            "ScaleOffset": 1.0,
+            "TranslateOffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "PlaneCollider": {
+            "Normal": {
+                "x": 0.0,
+                "y": 1.0,
+                "z": 0.0
+            },
+            "TranslateOffset": 0.0
         }
     }
 ]

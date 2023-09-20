@@ -8,6 +8,7 @@ std::string to_json(rttr::instance obj)
 	rapidjson::StringBuffer sb;
 	rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(sb);
 
+
 	to_json_recursive(obj, writer);
 
 	return sb.GetString();
@@ -30,13 +31,13 @@ void to_json_recursive(const rttr::instance& obj2, rapidjson::PrettyWriter<rapid
 			continue;
 
 		const auto name = prop.get_name();
-		writer.String(name.data(), static_cast<rapidjson::SizeType>(name.length(), false));
+		writer.String(name.data(), static_cast<rapidjson::SizeType>(name.length()), false);
 
 		if (!write_variant(prop_val, writer))
 			std::cerr << "Cannot serialize property: " << name << std::endl;
 
-		writer.EndObject();
 	}
+	writer.EndObject();
 }
 
 bool write_variant(const rttr::variant& var, rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer)
@@ -131,7 +132,7 @@ bool write_atomic_types(const rttr::type& t, const rttr::variant& var, rapidjson
 		writer.String(var.to_string().c_str());
 		return true;
 	}
-	
+
 	return false;
 }
 
