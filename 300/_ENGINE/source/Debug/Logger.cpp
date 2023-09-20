@@ -102,6 +102,7 @@ void Logger::LogOutput(log_mode mode, const char* message, ...)
 
 	//Output to opened log file from InitLogging()
 	Pfile << temp2 << mode_strings[mode] << outputMessage << "\n";
+	Pfile << "\n";
 	std::string strMode(mode_strings[mode]);
 	std::string strMessage(outputMessage);
 	flag = true;

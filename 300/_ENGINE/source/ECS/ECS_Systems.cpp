@@ -34,16 +34,16 @@ void SystemManager::Init(bool isEditor, GFX::Window* window)
 	mIsEditor = isEditor;
 	mWindow = window;
 	mLogger.get()->InitLogging();
-	PINFO("Init Logger\n");
+	PINFO("Init Logger");
 	mPhysicsSystem.get()->Init();
-	PINFO("Init Physics System\n");
+	PINFO("Init Physics System");
 	mScriptingSystem.get()->Init();
-	PINFO("Init Scripting System\n");
+	PINFO("Init Scripting System");
 	mGraphicsSystem.get()->Init();
 	mResourceSystem.get()->Init();			// all the resources are loaaded here
-	PINFO("Init Graphics System\n");
+	PINFO("Init Graphics System");
 	mGameStateSystem.get()->Init();
-	PINFO("Init Game state System\n");
+	PINFO("Init Game state System");
 }
 
 void SystemManager::Update(float dt)

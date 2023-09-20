@@ -69,6 +69,7 @@ Inspect display for RigidBody components
 #include <math.h>
 #include "imgui_stdlib.h"
 #include "../../../_SCRIPTING/include/ScriptingSystem.h"
+#include "../Debug/Logger.h"
 
 
 //int Inspect::inspectmode{ inspector_layer };
@@ -218,7 +219,7 @@ void Scripts::Inspect() {
 						{
 							hasScript = true;
 							std::cout << "Script is already attached! " << std::endl;
-							//PWARNING("Script is already attached! ");
+							PWARNING("Script is already attached! ");
 							break;
 						}
 					}
@@ -230,14 +231,15 @@ void Scripts::Inspect() {
 						script.env = { systemManager->mScriptingSystem->luaState, sol::create, systemManager->mScriptingSystem->luaState.globals() };
 						scripts.scriptsContainer.push_back(script);
 						std::cout << "Script " << script.scriptFile << ".lua added to entity " << std::to_string((int)Hierarchy::selectedId) << std::endl;
-						//PINFO("Script %s.lua added to entity", std::to_string((int)Hierarchy::selectedId));
+						PINFO("Script %s.lua added to entity", std::to_string((int)Hierarchy::selectedId));
 					}
 				}
 			}
 			ImGui::EndDragDropTarget();
 		}
 
-		ImGui::Text("Place script here!");
+		ImGui::Text("Drag drop scripts to header above 'Scripts'");
+		ImGui::Text("Entity contains scripts: ");
 		for (auto& elem : scripts.scriptsContainer)
 		{
 			bool selected{};
@@ -270,6 +272,7 @@ void Scripts::Inspect() {
 		}
 		open_popup = false;
 
+		ImGui::Text("Create new script: ");
 		ImGui::InputText(".lua", &newScript);
 		if (ImGui::Button("Add Lua Script"))
 		{
