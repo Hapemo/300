@@ -44,6 +44,19 @@ void PhysicsSystem::Exit()
 	mActors.clear();
 }
 
+void PhysicsSystem::SetVelocity(Entity e, const glm::vec3& velocity)
+{
+	if (!e.HasComponent<RigidBody>())
+		throw ("tried to set velocity to object with no rigidbody");
+	RigidBody rbod = e.GetComponent<RigidBody>();
+	if (rbod.mMotion == MOTION::STATIC)
+		throw ("tried to set velocity to static object");
+
+	physx::PxRigidDynamic* actor = (physx::PxRigidDynamic*)(mActors[static_cast<uint32_t>(e.id)]);
+	actor->setAngularDamping(0.5f);
+	actor->setLinearVelocity(Convert(velocity));
+}
+
 physx::PxMaterial* PhysicsSystem::CreateMaterial(float us, float ud, float res)
 {
 	return mPX.mPhysics->createMaterial(us, ud, res);
@@ -95,10 +108,7 @@ void PhysicsSystem::CreateActorType(physx::PxRigidActor*& actor, const physx::Px
 	if (motion == MOTION::STATIC)
 		actor = mPX.mPhysics->createRigidStatic(p_xform);
 	else if (motion == MOTION::DYNAMIC)
-	{
 		actor = mPX.mPhysics->createRigidDynamic(p_xform);
-		physx::PxRigidBodyExt::updateMassAndInertia(static_cast<physx::PxRigidBody&>(*actor), 10.f);
-	}
 }
 
 physx::PxVec3T<float> PhysicsSystem::Convert(const glm::vec3& vec)

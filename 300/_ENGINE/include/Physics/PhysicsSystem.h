@@ -12,6 +12,8 @@ public:
 	void Update(float dt);
 	void Exit();
 
+	void SetVelocity(Entity e, const glm::vec3& velocity);
+
 private:
 	PhysX mPX;
 	std::unordered_map<std::uint32_t, physx::PxRigidActor*> mActors;
