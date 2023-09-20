@@ -35,11 +35,17 @@ class SceneWindow : public EditorWindow
 {
 public:
 
-	static bool				Move;
-	static bool				Scale;
-	static bool				Rotate;
+	//static bool				Move;
+	//static bool				Scale;
+	//static bool				Rotate;
 
 
+	//ImGuiWindowFlags	mWinFlag;
+
+	//float winSize_X;
+	//float winSize_Y;
+
+	glm::ivec2 winSize;
 /***************************************************************************/
 /*!
 \brief
@@ -103,9 +109,11 @@ Render IMGUIZMO integration
 	void RenderGuizmo();
 
 
-	static bool			follow;
 
-	GFX::Shader m_ModelShader;
+
+	void ConstrainedResize(bool* p_open);
+
+	static bool			follow;
 
 private:
 

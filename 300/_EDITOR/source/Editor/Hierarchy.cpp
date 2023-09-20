@@ -36,6 +36,7 @@ void Hierarchy::update()
 {
     auto allObjects = systemManager->ecs->GetEntitiesWith<Transform>();
 
+    int i = allObjects.size();
 
     if (ImGui::Button("Add", ImVec2(50, 50)))
     {

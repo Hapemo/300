@@ -6,7 +6,6 @@
 #include "Vao.hpp"
 #include "Vbo.hpp"
 #include <geom.h>
-#include "Resource/Guid.h"
 
 #include "stb_image.h"
 
@@ -29,7 +28,7 @@ namespace GFX
 		// -- Called once on startup --
 		void LoadFromGeom(const _GEOM::Geom& GeomData, std::vector<vec3>& positions, std::vector<glm::vec2>& uvs, std::vector<unsigned int>& indices);
 		void LoadAnimationDataFromGeom(const _GEOM::Geom& GeomData, std::vector<std::array<int, MAX_BONE_INFLUENCE>>& boneIDs, std::vector<std::array<float, MAX_BONE_INFLUENCE>>& boneWeights);
-		void Setup(std::vector<vec3> const& positions, std::vector<unsigned int> const& indices, std::vector<vec2> const& TexCoords = std::vector<vec2>{});
+		void Setup(std::vector<vec3> const& positions, std::vector<unsigned int> const& indices, std::vector<vec2> const& TexCoords = std::vector<vec2>{}, unsigned colorDivisor = 1u);
 		void Setup(const _GEOM::Geom& GeomData);
 
 		// -- Used when drawing --
@@ -56,6 +55,7 @@ namespace GFX
 		// This mesh may contain multiple different animations. These animations are unique to this mesh.
 		std::vector<_GEOM::Animation>	mAnimation{};
 		bool							mHasAnimation{ false };
+		_GEOM::bbox						mBBOX;
 
 
 	private:
@@ -70,13 +70,9 @@ namespace GFX
 		VBO mBoneWeightVbo;
 
 		// Stats of the mesh model
-		std::string mMeshName;
-		int mVertexCount{};
-		int mIndexCount{};
-
-		// TODO: Should be able to know what shader to use for this mesh
-
-		// TODO: Should be able to know what textures to use for this mesh
+		std::string		mMeshName;
+		int				mVertexCount{};
+		int				mIndexCount{};
 	};
 
 
@@ -114,7 +110,7 @@ namespace GFX
 		void operator=(MeshManager const&) = delete;
 
 	private:
-		const std::string compiled_geom_path = "../compiled_geom/";
+		const std::string compiled_geom_path = "../assets/compiled_geom/";
 		void SetupMesh(std::string filepath);
 	};
 }

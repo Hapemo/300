@@ -43,7 +43,8 @@ namespace _GEOM
 		glm::vec3 m_Max{};
 
 	public:
-		bbox AddVerts(const glm::vec3* pVerts, std::int32_t nVerts) noexcept;
+		void AddVerts(const glm::vec3* pVerts) noexcept;
+		void MergeBBOX(const bbox& inputbox) noexcept;
 		glm::vec3 getSize() const noexcept;
 		glm::vec3 getCenter() const noexcept;
 	};
@@ -52,6 +53,13 @@ namespace _GEOM
 
 	struct Geom
 	{
+		struct Texture
+		{
+			//unsigned int id;
+			std::string type;
+			std::string path;
+		};
+
 		struct alignas(std::uint32_t) VertexPos
 		{
 			glm::vec3			m_Pos;
@@ -70,8 +78,10 @@ namespace _GEOM
 
 		struct Mesh
 		{
-			std::array<char, 64>	m_name;				// Name of mesh
-			std::vector<Animation>	m_Animation;		// Animation data of the mesh
+			std::array<char, 64>		m_name;				// Name of mesh
+			std::vector<Animation>		m_Animation;		// Animation data of the mesh
+			std::vector<Geom::Texture>	m_Texture;			// The texture that the mesh contains
+			bbox						m_MeshBBOX;
 		};
 
 		struct SubMesh
@@ -82,14 +92,6 @@ namespace _GEOM
 			std::uint32_t			m_iVertices;		//Index of vertices in submesh
 			std::uint32_t			m_nVertices;		//Total number of vertices for this submesh
 			std::uint16_t			m_iMaterial;		//Index of material in submesh
-		};
-
-		// TODO:: add texture path de/serialization from fbx
-		struct Texture
-		{
-			//unsigned int id;
-			std::string type;
-			std::string path;
 		};
 
 	public:
@@ -111,7 +113,6 @@ namespace _GEOM
 															// defaults to (1, 1, 1, 1)
 
 		static bool SerializeGeom(const std::string& filename, Geom& GeomData) noexcept;
-		//static bool DeserializeGeom(const std::string Filepath, Geom& GeomRef) noexcept;
 	};
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -130,18 +131,16 @@ namespace _GEOM
 		{
 			std::string									m_Name;
 			std::vector<Submesh>						m_Submeshes;
+			bbox										m_MeshBBOX;
 		};
 
 		std::string										m_Filename;
 		std::vector<Mesh>								m_Meshes;
 
-		// TODO:
-		// because skingeom has no concept of what mesh contains which animations, we have to change this
-		// to start storing data inside the mesh struct.
-		// Either skingeom puts animation into the mesh, or geomdata takes animation out of the mesh.
-		std::vector<Animation>							m_Animation;	
+		std::vector<Animation>							m_Animation;
+		std::vector<Geom::Texture>						m_Textures;
 
-		bool											m_bHasTextures = false;		// TODO:: this has not been fully implemented yet. 
+		bool											m_bHasTextures = false;	
 		bool											m_bHasAnimation = false;	
 		bool											m_bVtxClrPresent = false;
 

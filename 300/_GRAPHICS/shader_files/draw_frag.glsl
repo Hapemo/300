@@ -13,6 +13,7 @@ out vec4 FragColor;
 void main() 
 {
 	vec4 texturecolor = texture(uTex, TexCoords);
+	if (texturecolor.a <= 0.0f) discard;
 	FragColor = texturecolor;
 }	
 

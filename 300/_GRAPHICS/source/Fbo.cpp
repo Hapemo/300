@@ -88,7 +88,22 @@ void GFX::FBO::PrepForDraw()
 
 unsigned int GFX::FBO::ReadEntityID(int posX, int posY)
 {
-	return 0;
+	int mapped_x = posX + (mWidth / 2);
+	int mapped_y = posY + (mHeight / 2);
+	if (mapped_x >= mWidth || mapped_x < 0 || mapped_y >= mHeight || mapped_y < 0)
+		return 0xFFFFFFFF;
+	GLsizei bufsize = mWidth * mHeight;
+	unsigned int* p_eid = new unsigned int[bufsize];	// allocate buffer
+
+	glBindTexture(GL_TEXTURE_2D, mEntityIDAttachment);	// bind texture
+	glGetTexImage(GL_TEXTURE_2D, 0, GL_RED_INTEGER, GL_UNSIGNED_INT, p_eid);
+	
+	unsigned int eid = p_eid[mapped_y * mWidth + mapped_x];		// Retrieve entity ID
+
+	delete[] p_eid;		// free buffer
+	glBindTexture(GL_TEXTURE_2D, 0);	// unbind texture
+
+	return eid;
 }
 
 void GFX::FBO::Resize(int width, int height)

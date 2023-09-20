@@ -57,7 +57,7 @@ namespace GFX
 		unsigned int mID{};						// Framebuffer Object ID
 		unsigned int mRboID{};					// Renderbuffer Object ID
 		unsigned int mGameAttachment{};			// Color Attachment of game scene
-		unsigned int mEditorAttachment{};		// Color Attachment of game scene
+		unsigned int mEditorAttachment{};		// Color Attachment of Editor scene
 		unsigned int mEntityIDAttachment{};		// Attachment that contains Entity ID of each corresponding pixel
 
 		int mWidth{};

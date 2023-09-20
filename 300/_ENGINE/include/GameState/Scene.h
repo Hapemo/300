@@ -87,9 +87,6 @@ public:
 	bool mForceRender;
 	std::string mName="";
 	//Transform mCamera{};
-	bool mIsUI = false;
-	int mLayer=0;
-	int mOrder=0;
 
 private:
 	bool mInitBefore = false;

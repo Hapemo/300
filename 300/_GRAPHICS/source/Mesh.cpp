@@ -1,4 +1,5 @@
 #include "Mesh.hpp"
+#include "../../_RESOURCE/include/ResourceManager.h"		// for _enable_animations define
 #include <filesystem>
 #include <array>
 
@@ -68,9 +69,12 @@ void GFX::Mesh::Setup(const _GEOM::Geom& GeomData)
 	std::vector<std::array<float,MAX_BONE_INFLUENCE>>	boneWeights;
 
 	LoadFromGeom(GeomData, positions, uvs, indices);
+	mMeshName	= std::string(GeomData.m_pMesh[0].m_name.begin(), GeomData.m_pMesh[0].m_name.end());
+	mBBOX		= GeomData.m_pMesh[0].m_MeshBBOX;
 
-	if (GeomData.m_bHasAnimations)
+	if (GeomData.m_bHasAnimations && _ENABLE_ANIMATIONS)
 	{
+		// load the animation data into vectors, to push into the vbo
 		LoadAnimationDataFromGeom(GeomData, boneIDs, boneWeights);
 	}
 
@@ -129,7 +133,7 @@ void GFX::Mesh::Setup(const _GEOM::Geom& GeomData)
 		//GeomData.m_pPos[0].m_BoneIDs;
 		//GeomData.m_pPos[0].m_Weights;
 		
-	if (GeomData.m_bHasAnimations)
+	if (GeomData.m_bHasAnimations && _ENABLE_ANIMATIONS)
 	{
 		// Create VBO for Bone IDs. Attach VBO for Bone IDs to VAO
 		mBoneIDVbo.Create(positions.size() * sizeof(int) * MAX_BONE_INFLUENCE);										// 1 for each vertex
@@ -155,7 +159,7 @@ void GFX::Mesh::Setup(const _GEOM::Geom& GeomData)
 
 
 // to remove when i'm done with animation.. keeping as reference for now
-void GFX::Mesh::Setup(std::vector<vec3> const& positions, std::vector<unsigned int> const& indices, std::vector<vec2> const& TexCoords)
+void GFX::Mesh::Setup(std::vector<vec3> const& positions, std::vector<unsigned int> const& indices, std::vector<vec2> const& TexCoords, unsigned colorDivisor)
 {
 	// Create VAO
 	mVao.Create();
@@ -179,7 +183,7 @@ void GFX::Mesh::Setup(std::vector<vec3> const& positions, std::vector<unsigned i
 
 	// Attach Color VBO and divisor to VAO
 	mVao.AddAttribute(1, 1, 4, GL_FLOAT);											// location 1, binding vao index 1
-	mVao.AddAttributeDivisor(1, 1);													// divisor at vao index 1
+	mVao.AddAttributeDivisor(1, colorDivisor);										// divisor at vao index 1
 	mVao.AttachVertexBuffer(mColorVbo.GetID(), 1, 0, sizeof(vec4));					// Attach to index 1
 
 	/////////////////////////////////////////
@@ -235,10 +239,16 @@ void GFX::Mesh::UnbindVao()
 
 void GFX::Mesh::DrawAllInstances()
 {
+	// TODO: Activate necessary shader
+	// TODO: Get and bind necessary textures
+
 	mVao.Bind();		// Bind mesh
 	PrepForDraw();		// Copy data from local buffer into opengl buffer
 	glDrawElementsInstanced(GL_TRIANGLES, mIndexCount, GL_UNSIGNED_INT, nullptr, mLTW.size());
 	mVao.Unbind();		// Unbind mesh
+
+	// TODO: Unbind textures
+	// TODO: Deactivate shader
 }
 
 void GFX::Mesh::PrepForDraw()
@@ -397,8 +407,38 @@ namespace Deserialization
 		// Meshes
 		GeomData.m_pMesh = std::make_shared<_GEOM::Geom::Mesh[]>(GeomData.m_nMeshes);
 		for (uint32_t i{}; i < GeomData.m_nMeshes; ++i) 
-		{				
+		{			
+			// name of the mesh
 			infile.read((char*)&GeomData.m_pMesh[i].m_name, sizeof(char) * 64);
+
+			// the bounding box of the mesh
+			infile.read((char*)&GeomData.m_pMesh[i].m_MeshBBOX, sizeof(_GEOM::bbox));
+
+			// Textures Data
+			if (GeomData.m_bHasTextures)
+			{
+				uint8_t numberofTextures{};
+				infile.read((char*)&numberofTextures, sizeof(uint8_t));
+
+				for (uint8_t k{}; k < numberofTextures; ++k)
+				{
+					_GEOM::Geom::Texture lTexture{};
+	
+					char cname1[64];
+					uint8_t strlen1{};
+					infile.read((char*)&strlen1, sizeof(uint8_t));							// Texture Path length
+					infile.read(cname1, strlen1);											// Texture Path
+					lTexture.path = std::string(cname1, strlen1);
+
+					char cname2[64];
+					uint8_t strlen2{};
+					infile.read((char*)&strlen2, sizeof(uint8_t));							// Texture type length
+					infile.read(cname2, strlen2);											// Texture type
+					lTexture.type = std::string(cname2, strlen2);
+
+					GeomData.m_pMesh[i].m_Texture.emplace_back(lTexture);
+				}
+			}
 
 			// Animation Data
 			if (GeomData.m_bHasAnimations)

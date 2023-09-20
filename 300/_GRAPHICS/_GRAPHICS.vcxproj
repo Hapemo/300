@@ -131,7 +131,7 @@
       <WarningLevel>Level3</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <SDLCheck>true</SDLCheck>
+      <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -193,6 +193,8 @@
   <ItemGroup>
     <None Include="shader_files\draw_frag.glsl" />
     <None Include="shader_files\draw_vert.glsl" />
+    <None Include="shader_files\pointLight_frag.glsl" />
+    <None Include="shader_files\pointLight_vert.glsl" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\_GEOM_COMPILER\_GEOM_COMPILER.vcxproj">

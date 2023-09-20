@@ -7,6 +7,7 @@
 #include "rttr/registration.h"
 #include "ECS.h"
 
+
 struct General
 {
 	std::string name;
@@ -33,6 +34,17 @@ struct Transform
 	void Inspect();
 
 	RTTR_ENABLE()
+};
+
+// this struct stores the filepaths for the meshdata, material, and shader. the actual data is stored in the resource manager
+struct MeshRenderer
+{
+	// For now, we store the string to the filepaths. TO CHANGE to uids for efficient referencing
+	std::pair<std::string, std::string> mShaderPath;
+	std::vector<std::string>				mMaterialInstancePath;
+	std::string							mMeshPath;
+	
+	unsigned							mGUID;
 };
 
 struct RigidBody

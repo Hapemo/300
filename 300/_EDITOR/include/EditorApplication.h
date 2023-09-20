@@ -18,7 +18,8 @@ start up of window and game system, also runs their update functions.
 #include "Editor/Editor.h"
 
 
-class EditorApplication {
+class EditorApplication 
+{
 public:
 	/*!*****************************************************************************
 	 Initialise the application and it's systems such as window, texture resources
@@ -63,10 +64,13 @@ public:
 	*******************************************************************************/
 	static void Exit();
 
+
+	GFX::Camera mCamera;
+
 private:
 	static std::string title;
 	static GFX::Window mWindow;
 	static GFX::DebugRenderer* mRenderer;
 	static Editor mMaineditor;
-	GFX::Camera mCamera;
+
 };

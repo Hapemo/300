@@ -11,7 +11,8 @@ running.
 In editor mode, gamestate manager init will not load in any gamestate
 Editor has to call ChangeGameState("gamestate name") to get a gamestate out.
 If editor wants to close a gamestate and have blank state, call
-ChangeGameState(E_GSMSTATE::NONE)
+ChangeGameState(E_GSMSTATE::NONE). Create a new empty gamestate 
+with NewGameState("name")
 
 M_GSMSTATE::EXIT is only used for closing the game in GAMEMODE only.
 *******************************************************************************/
@@ -160,6 +161,12 @@ public:
 	Check if game loop should close
 	*******************************************************************************/
 	bool Exited() const { return mGSMState == E_GSMSTATE::EXIT; }
+
+	/*!*****************************************************************************
+	Create a new empty gamestate. If there is another gamestate opened, Unload it
+	and replace with new empty gamestate
+	*******************************************************************************/
+	void NewGameState(std::string const& _name);
 
 	///*!*****************************************************************************
 	//Find the gamestate name stated. Returns iterator position of gamestate if found,

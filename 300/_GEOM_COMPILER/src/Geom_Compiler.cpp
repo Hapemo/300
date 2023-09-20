@@ -12,6 +12,9 @@
 #include <meshoptimizer.h>
 #pragma comment( lib, "../lib/assimp/BINARIES/Win32/lib/Release/assimp-vc142-mt.lib")
 
+// Artist create different sized models -- units
+// nodes are different sizes -- units
+
 namespace _GEOM
 {
 	//----------------------------------------------------------------------------------------------------
@@ -52,12 +55,15 @@ namespace _GEOM
 		assert(SanityCheck());
 
 		aiVector3D scaling((ai_real)_DData.m_Scale.x, (ai_real)_DData.m_Scale.y, (ai_real)_DData.m_Scale.z);
-		m_DescriptorMatrix.Scaling(scaling, m_DescriptorMatrix);
-		m_DescriptorMatrix.RotationX((ai_real)_DData.m_Rotate.x, m_DescriptorMatrix);
-		m_DescriptorMatrix.RotationY((ai_real)_DData.m_Rotate.y, m_DescriptorMatrix);
-		m_DescriptorMatrix.RotationZ((ai_real)_DData.m_Rotate.z, m_DescriptorMatrix);
+		aiMatrix4x4 scl, rot, trns;
+		m_DescriptorMatrix.Scaling(scaling, scl);
+		m_DescriptorMatrix.RotationX((ai_real)_DData.m_Rotate.x, rot);
+		m_DescriptorMatrix.RotationY((ai_real)_DData.m_Rotate.y, rot);
+		m_DescriptorMatrix.RotationZ((ai_real)_DData.m_Rotate.z, rot);
 		aiVector3D translation((ai_real)_DData.m_Translate.x, (ai_real)_DData.m_Translate.y, (ai_real)_DData.m_Translate.z);
-		m_DescriptorMatrix.Translation(translation, m_DescriptorMatrix);
+		m_DescriptorMatrix.Translation(translation, trns);
+
+		m_DescriptorMatrix = trns * rot * scl;
 
 		std::cout << ">>[NOTE]: \tImporting Data\n";
 
@@ -152,6 +158,7 @@ namespace _GEOM
 				Transform.DecomposeNoScaling(presentRotation, p);
 			}
 
+			MeshPart.m_MeshName				= m_MeshName;
 			MeshPart.m_Name					= AssimpMesh.mName.C_Str();
 			MeshPart.m_iMaterialInstance	= AssimpMesh.mMaterialIndex;
 
@@ -261,7 +268,7 @@ namespace _GEOM
 		// Recurse the scene from the root node and process each mesh we find
 		std::function<void(const aiNode&, const aiMatrix4x4&)> RecurseScene = [&](const aiNode& Node, const aiMatrix4x4& ParentTransform)
 		{
-			const aiMatrix4x4 Transform = ParentTransform * Node.mTransformation;
+			const aiMatrix4x4 Transform = ParentTransform * Node.mTransformation;		// >> DEBUG: the values are so big because of here
 			auto        iBase = _MyNodes.size();
 
 			// Collect all the meshes
@@ -434,8 +441,16 @@ namespace _GEOM
 				m_SkinGeom->m_Meshes.back().m_Name = E.m_MeshName;
 			}
 
+			if (E.m_Textures.size() > 0) {
+				m_SkinGeom->m_bHasTextures = true;
+				m_SkinGeom->m_Textures = E.m_Textures;								// add the textures here
+			}
 
 			auto& FinalMesh = m_SkinGeom->m_Meshes[iFinalMesh];						
+
+			// Merging all the bboxes into a final bbox for the mesh
+			FinalMesh.m_MeshBBOX.MergeBBOX(E.m_Bbox);
+
 			FinalMesh.m_Submeshes.emplace_back();									// create a new submesh instance for the mesh
 			auto& SubMesh = FinalMesh.m_Submeshes.back();
 
@@ -481,6 +496,9 @@ namespace _GEOM
 			//Optimize vertex fetch
 			optimized_submesh.m_Vertices.resize(meshopt_optimizeVertexFetch(optimized_submesh.m_Vertices.data(), optimized_submesh.m_Indices.data(), index_count, optimized_submesh.m_Vertices.data(), vertex_count, sizeof(FullVertices)));
 
+			optimized_submesh.m_MeshName = meshPart.m_MeshName;
+			optimized_submesh.m_Name = meshPart.m_Name;
+
 			optimizedMeshParts.push_back(optimized_submesh);
 		}
 
@@ -492,48 +510,6 @@ namespace _GEOM
 	{
 		std::cout << ">>== \t\tQuantizing mesh data...\n";
 		std::vector<CompressedMeshPart> CompressedMeshParts(_MyNodes.size());		// create a return vector with the same size as the input vector
-
-#if 0
-		// Create a bounding box for each submesh
-		bbox GLOBAL_PosBBox;
-		bbox GLOBAL_UVBBox;
-		{
-			GLOBAL_PosBBox.m_Min = glm::vec3(0.f);		// initialize the min to 0
-			GLOBAL_UVBBox.m_Min	= glm::vec3(0.f);
-
-			auto iSubmesh = 0u;
-			for (auto& Submesh : _MyNodes)
-			{
-				bbox PosBBox;
-				bbox UVBBox;
-
-				// looping through all the vertices in the submesh
-				for (auto& V : Submesh.m_Vertices)
-				{
-					// VERTEX POSITION BOUNDS //
-					PosBBox.AddVerts(&V.m_Position, 1);
-
-					// VERTEX UV COORDINATES BOUNDS //
-					glm::vec3 UV(V.m_Texcoord.x, V.m_Texcoord.y, 0.f);
-					UVBBox.AddVerts(&UV, 1);
-				}
-
-				// GLOBAL BOUNDS //
-				{
-					// add both bboxes to the global total
-					glm::vec3 Pos_Span(PosBBox.getSize());
-					glm::vec3 UV_Span(UVBBox.getSize());
-
-					GLOBAL_PosBBox.AddVerts(&Pos_Span, 1);
-					GLOBAL_UVBBox.AddVerts(&UV_Span, 1);
-				}
-			}
-		}
-
-		// Set the global scale for the quantization, this will allow us to normalize
-		m_PosCompressionScale = GLOBAL_PosBBox.getSize();
-		m_UVCompressionScale = glm::vec2(GLOBAL_UVBBox.getSize().x, GLOBAL_UVBBox.getSize().y);
-#endif
 
 
 		////////////////////////////////////
@@ -548,9 +524,13 @@ namespace _GEOM
 				std::vector<Geom::VertexExtra>	VEContainer;
 				std::vector<Geom::VertexPos>	VPContainer;
 
+				RenderSubmesh.m_Bbox.m_Min = glm::vec3(0.f);	// initialize the min to 0
+
 				// For each vertex inside the submesh...
 				for (const auto& V : submesh.m_Vertices)
 				{
+					RenderSubmesh.m_Bbox.AddVerts(&V.m_Position);
+
 					// == NORMAL, TANGENT, BITANGENT (SIGN) AND UV COORDINATES //
 					{
 						Geom::VertexExtra VE{};
@@ -602,6 +582,7 @@ namespace _GEOM
 				RenderSubmesh.m_Indices				= submesh.m_Indices;
 				RenderSubmesh.m_MeshName			= submesh.m_MeshName;
 				RenderSubmesh.m_Name				= submesh.m_Name;
+				RenderSubmesh.m_Textures			= submesh.m_Textures;
 			}
 		}
 
@@ -660,6 +641,13 @@ namespace _GEOM
 			if (m_bHasAnimation) {
 				Mesh[i].m_Animation = std::move(m_Animation);
 			}
+
+			if(m_bHasTextures) {
+				Mesh[i].m_Texture = std::move(m_Textures);
+			}
+
+			// push the bounding box over
+			Mesh[i].m_MeshBBOX = std::move(m_Meshes[i].m_MeshBBOX);
 
 			// Copy the bool statuses in
 			_geom.m_bHasAnimations	= m_bHasAnimation ? true : _geom.m_bHasAnimations;
@@ -767,7 +755,28 @@ namespace _GEOM
 		for (uint32_t i{}; i < GeomData.m_nMeshes; ++i) 
 		{
 			auto& meshInst = GeomData.m_pMesh[i];
-			outfile.write((char*)&meshInst.m_name, sizeof(char) * 64);
+			outfile.write((char*)&meshInst.m_name, sizeof(char) * 64);						// name of the mesh
+			outfile.write((char*)&meshInst.m_MeshBBOX, sizeof(bbox));						// the bounding box of the mesh
+
+			// Texture Data
+			if (GeomData.m_bHasTextures)
+			{
+				uint8_t numberoftextures = static_cast<uint8_t>(meshInst.m_Texture.size());
+				outfile.write((char*)&numberoftextures, sizeof(uint8_t));
+
+				for (int j{}; j < meshInst.m_Texture.size(); ++j)
+				{
+					auto& textureinst = meshInst.m_Texture[j];
+
+					uint8_t strlen = textureinst.path.size();
+					outfile.write((char*)&strlen, sizeof(uint8_t));							// path name length
+					outfile.write((char*)textureinst.path.c_str(), strlen);						// path name
+
+					strlen = textureinst.type.size();
+					outfile.write((char*)&strlen, sizeof(uint8_t));							// type name length
+					outfile.write((char*)textureinst.type.c_str(), strlen);						// type name					
+				}
+			}
 
 			// Animation Data
 			if (GeomData.m_bHasAnimations) 
@@ -913,7 +922,7 @@ namespace _GEOM
 			mat->GetTexture(type, i, &str);
 			Geom::Texture texture;
 			texture.type = typeName;
-			texture.path = str.C_Str();
+			texture.path = getFileNameWithExtension(str.C_Str());
 			textures.emplace_back(texture);
 		}
 
