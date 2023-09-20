@@ -69,5 +69,6 @@ private:
 	static GFX::Window mWindow;
 	static GFX::DebugRenderer* mRenderer;
 	static Editor mMaineditor;
+
 	GFX::Camera mCamera;
 };

@@ -61,6 +61,7 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\GameState\Scene.h">
+    <ClInclude Include="include\Graphics\Camera_Input.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -99,6 +100,7 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\GameState\Scene.cpp">
+    <ClCompile Include="source\Graphics\Camera_Input.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

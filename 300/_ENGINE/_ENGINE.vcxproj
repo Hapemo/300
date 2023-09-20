@@ -155,6 +155,7 @@
     <ClInclude Include="include\GameState\GameState.h" />
     <ClInclude Include="include\GameState\GameStateManager.h" />
     <ClInclude Include="include\GameState\Scene.h" />
+    <ClInclude Include="include\Graphics\Camera_Input.h" />
     <ClInclude Include="include\Graphics\GraphicsSystem.h" />
     <ClInclude Include="include\Multithread.h" />
     <ClInclude Include="include\Physics\PhysicsTypes.h" />
@@ -174,6 +175,7 @@
     <ClCompile Include="source\GameState\GameState.cpp" />
     <ClCompile Include="source\GameState\GameStateManager.cpp" />
     <ClCompile Include="source\GameState\Scene.cpp" />
+    <ClCompile Include="source\Graphics\Camera_Input.cpp" />
     <ClCompile Include="source\Graphics\GraphicsSystem.cpp" />
     <ClCompile Include="source\Multithread.cpp" />
     <ClCompile Include="source\Object\ObjectFactory.cpp" />
