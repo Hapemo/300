@@ -10,26 +10,37 @@
 	location = 2 --> LTW;
 ******************************************/
 
-void GFX::Mesh::LoadFromGeom(const _GEOM::Geom& GeomData, std::vector<vec3>& positions, std::vector<glm::vec2>& uvs, std::vector<unsigned int>& indices)
+void GFX::Mesh::LoadFromGeom(const _GEOM::Geom& GeomData, std::vector<vec3>& positions, std::vector<glm::vec2>& uvs, std::vector<unsigned int>& indices,
+							std::vector<vec3>& normal, std::vector<vec3>& tangents)
 {
 	const int reservenumber = GeomData.m_nVertices;
-	indices.reserve(reservenumber);
 	positions.reserve(reservenumber);
 	uvs.reserve(reservenumber);
+	tangents.reserve(reservenumber);
+	normal.reserve(reservenumber);
+
+	indices.reserve(GeomData.m_nIndices);
 
 	for (size_t iSM{}; iSM < GeomData.m_nSubMeshes; ++iSM)
 	{
 		// Load indices
-		for (size_t iIndex{}, ui{ GeomData.m_pSubMesh[iSM].m_iIndices }; iIndex < GeomData.m_pSubMesh[iSM].m_nIndices; ++iIndex, ++ui)
+		for (size_t iIndex{}; iIndex < GeomData.m_pSubMesh[iSM].m_nIndices; ++iIndex)
 		{
 			indices.emplace_back(GeomData.m_pIndices[iIndex]);
 		}
 
-		// Load positions and uvs
-		for (size_t iIndex{}, ui{ GeomData.m_pSubMesh[iSM].m_iVertices }; iIndex < GeomData.m_pSubMesh[iSM].m_nVertices; ++iIndex, ++ui)
+		// Load positions, uvs, normals and tangents
+		for (size_t iIndex{}; iIndex < GeomData.m_pSubMesh[iSM].m_nVertices; ++iIndex)
 		{
 			positions.emplace_back(vec3(GeomData.m_pPos[iIndex].m_Pos.x, GeomData.m_pPos[iIndex].m_Pos.y, GeomData.m_pPos[iIndex].m_Pos.z));
 			uvs.emplace_back(vec2(GeomData.m_pPos[iIndex].m_UV.x, GeomData.m_pPos[iIndex].m_UV.y));
+		}
+
+		// load normals and tangents
+		for (size_t iIndex{}; iIndex < GeomData.m_nExtras; ++iIndex)
+		{
+			normal.emplace_back(GeomData.m_pExtras[iIndex].m_Normal);
+			tangents.emplace_back(GeomData.m_pExtras[iIndex].m_Tangent);
 		}
 	}
 }
@@ -70,7 +81,7 @@ void GFX::Mesh::Setup(const _GEOM::Geom& GeomData)
 	std::vector<glm::vec3>								tangents;
 	std::vector<glm::vec3>								normals;
 
-	LoadFromGeom(GeomData, positions, uvs, indices);
+	LoadFromGeom(GeomData, positions, uvs, indices, normals, tangents);
 	mMeshName	= std::string(GeomData.m_pMesh[0].m_name.begin(), GeomData.m_pMesh[0].m_name.end());
 	mBBOX		= GeomData.m_pMesh[0].m_MeshBBOX;
 
