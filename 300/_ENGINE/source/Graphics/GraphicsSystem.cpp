@@ -163,7 +163,7 @@ void GraphicsSystem::Update(float dt)
 			for (size_t b{}; b < totaltransform; ++b)
 			{
 				// send the bone matrices to the shader via uniforms
-				std::string name = "finalBonesMatrices[" + std::to_string(b) + "]";
+				std::string name = "finalBoneMatrices[" + std::to_string(b) + "]";
 				glUniformMatrix4fv(glGetUniformLocation(shaderID, name.c_str()), 1, GL_FALSE, &transform[b][0][0]);
 			}
 		}

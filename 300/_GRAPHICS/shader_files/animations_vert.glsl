@@ -7,7 +7,7 @@ layout (location = 0) in vec3 inQPos;		        // INPUT_POSITION
 
 //layout (location = 1) in vec4   inVertexColor;      // input color
 layout (location = 2) in vec2   inQUV;			    // Texture Coordinates
-layout (location = 3) in ivec4  boneIds;			// Bone IDs
+layout (location = 3) in vec4  boneIds;			    // Bone IDs
 layout (location = 4) in vec4   boneWeights;		// Bone Weights
 layout (location = 5) in vec3   inTangent;			// Per vertex Tangent
 layout (location = 6) in vec3   inNormal;			// Per vertex Normal
@@ -34,7 +34,7 @@ void main()
     vec3 normal = vec3(0.0f);
     for(int i = 0; i < MAX_BONE_INFLUENCE; ++i)
     {
-        int boneId = boneIds[i];
+        int boneId = int(boneIds[i]);
         // find an initialized bone
         if(boneId < 0)
 			continue;
@@ -46,9 +46,9 @@ void main()
             break;
         }
 
-        vec4 localPosition = finalBoneMatrices[boneIds[i]] * vec4(inQPos, 1.0f);
+        vec4 localPosition = finalBoneMatrices[boneId] * vec4(inQPos, 1.0f);
         totalPosition += localPosition * boneWeights[i];
-        normal = mat3(finalBoneMatrices[boneIds[i]]) * inNormal;
+        normal = mat3(finalBoneMatrices[boneId]) * inNormal;
     }
 
     // Compute world-to-tangent space matrix
