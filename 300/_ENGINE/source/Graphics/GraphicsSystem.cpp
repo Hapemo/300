@@ -150,6 +150,7 @@ void GraphicsSystem::Update(float dt)
 		m_Textures.clear();
 		glBindTextureUnit(0, 0);
 		glBindTextureUnit(1, 0);
+
 		meshinst.ClearInstances();
 	}
 

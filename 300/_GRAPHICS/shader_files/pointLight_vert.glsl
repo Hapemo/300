@@ -2,7 +2,7 @@
 
 layout (location = 0) in vec3 inPos;		        // INPUT_POSITION
 
-layout (location = 1) in vec4 inVertexColor;        // input color
+//layout (location = 1) in vec4 inVertexColor;        // input color
 layout (location = 2) in vec2 inUV;			        // Texture Coordinates
 layout (location = 5) in vec3 inTangent;			// Per vertex Tangent
 layout (location = 6) in vec3 inNormal;			    // Per vertex Normal
@@ -12,7 +12,7 @@ uniform vec3 uLightPos;
 uniform vec3 uViewPos;
 uniform mat4 uMatrixVP;
 
-out vec4 VertexColor;
+//out vec4 VertexColor;
 out vec2 TexCoords;
 out vec3 TangentLightPos;
 out vec3 TangentViewPos;
@@ -23,7 +23,7 @@ void main()
 	 // Position
     vec4 Pos = vec4(inPos, 1.0f);
     gl_Position = uMatrixVP * inLTW * Pos;
-    VertexColor = inVertexColor;
+    //VertexColor = inVertexColor;
     TexCoords = inUV;
     
     // Compute world-to-tangent space matrix

@@ -1,6 +1,6 @@
 #version 450
 
-in vec4 VertexColor;
+//in vec4 VertexColor;
 in vec2 TexCoords;
 in vec3 TangentLightPos;
 in vec3 TangentViewPos;
@@ -17,6 +17,7 @@ void main()
 {
     
     vec4 uColor = texture(uTex[0], TexCoords);              // Diffuse Color
+    if (uColor.a <= 0.1) discard;
 
     vec3 normal = texture(uTex[1], TexCoords).rgb;          // Normal Map
     normal = normalize(normal * 2.0 - 1.0);
@@ -34,7 +35,7 @@ void main()
     vec3 reflectDir = reflect(-lightDir, normal);
     vec3 halfwayDir = normalize(lightDir + viewDir);  
     float spec = pow(max(dot(normal, halfwayDir), 0.0), 32.0);
-    vec3 specular = vec3(0.2) * spec;
+    vec3 specular = vec3(0.7) * spec;
 
     vec3 finalColor = vec3(ambient + diffuse + specular);
 

@@ -130,7 +130,7 @@ void GFX::Mesh::Setup(const _GEOM::Geom& GeomData)
 		mVao.AddAttributeDivisor(7, 1);												// divisor at vao index 7
 	}
 	// Attach LTW VBO to VAO
-	mVao.AttachVertexBuffer(mLTWVbo.GetID(), 8, 0, sizeof(vec4) * 4);
+	mVao.AttachVertexBuffer(mLTWVbo.GetID(), 7, 0, sizeof(vec4) * 4);
 
 	/////////////////////////////////////////
 	// EBO
@@ -160,7 +160,7 @@ void GFX::Mesh::Setup(const _GEOM::Geom& GeomData)
 	}
 
 	/////////////////////////////////////////
-	// Bit Tangents and Tangent Data
+	// Tangent Data
 	/////////////////////////////////////////
 	mTangentVbo.Create(tangents.size() * sizeof(vec3));
 	mVao.AddAttribute(5, 5, 3, GL_FLOAT);													// location 5, binding vao index 5
