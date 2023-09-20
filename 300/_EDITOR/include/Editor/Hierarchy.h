@@ -39,13 +39,14 @@ class Hierarchy : public EditorWindow {
 
 public:
 	static entt::entity selectedId;
+	static entt::entity RselectedId;
 	static bool selectionOn;
 
 
 
 
 	bool mPopup {false};
-
+	bool mCPopup{ false };
 /***************************************************************************/
 /*!
 \brief

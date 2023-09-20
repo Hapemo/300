@@ -44,4 +44,6 @@ public:
 private:
     //instance_info* m_pInfoBufferEmptyHead{ nullptr };
     //std::array<instance_info, MAX_RESOURCE>             m_Infobuffer;
+
+    //std::array<type<int>,MAX_RESOURCE> temp;
 };
