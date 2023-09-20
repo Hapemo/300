@@ -127,6 +127,13 @@ void AudioSystem::Update(float dt)
 		TogglePauseSpecific(AUDIO_SFX, 3);
 	}
 
+	if (Input::CheckKey(PRESS, P))
+	{
+		PlayAudio("tuning-radio-7150", AUDIO_SFX);
+	}
+
+
+
 
 
 
