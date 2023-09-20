@@ -3,7 +3,7 @@
 #include <iostream>
 #include <map>
 #include <filesystem>
-#include "Input.h"
+#include "Input/Input.h"
 #include "AudioType.h"			   // BGM/SFX
 #include "../Debug/Logger.h"	   // Debug Macros
 

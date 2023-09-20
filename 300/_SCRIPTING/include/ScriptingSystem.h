@@ -29,7 +29,7 @@ generate the overall performance of the scripting system.
 #include <sol/sol.hpp>
 #include "ECS/ECS.h"
 #include "ECS/ECS_Components.h"
-#include "Input.h"
+#include "Input/Input.h"
 #include "Script.h"
 
 /******************************************************************************/

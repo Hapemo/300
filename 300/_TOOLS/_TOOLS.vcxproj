@@ -150,7 +150,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="include\FPSManager.h" />
-    <ClInclude Include="include\Input.h" />
+    <ClInclude Include="include\Input\Input.h" />
+    <ClInclude Include="include\Input\InputAction.h" />
+    <ClInclude Include="include\Input\InputActionMap.h" />
+    <ClInclude Include="include\Input\InputSystem.h" />
     <ClInclude Include="include\ISingleton.h" />
     <ClInclude Include="include\Misc.h" />
     <ClInclude Include="include\pch.h" />
@@ -159,7 +162,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\FPSManager.cpp" />
-    <ClCompile Include="source\Input.cpp" />
+    <ClCompile Include="source\Input\Input.cpp" />
+    <ClCompile Include="source\Input\InputInfo.cpp" />
+    <ClCompile Include="source\Input\InputSystem.cpp" />
     <ClCompile Include="source\Misc.cpp" />
     <ClCompile Include="source\SingletonManager.cpp" />
   </ItemGroup>

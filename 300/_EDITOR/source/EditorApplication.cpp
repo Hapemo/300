@@ -12,7 +12,7 @@ start up of window and game system, also runs their update functions.
 #include "FPSManager.h"
 #include "ECS/ECS.h"
 #include "ECS/ECS_Components.h"
-#include "Input.h"
+#include "Input/Input.h"
 #include "SingletonManager.h"
 #include "ScriptingSystem.h"
 #include "Physics/PhysicsSystem.h"
