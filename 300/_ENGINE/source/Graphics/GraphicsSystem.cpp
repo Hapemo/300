@@ -85,6 +85,7 @@ void GraphicsSystem::Update(float dt)
 		{
 			// draw the AABB of the mesh
 			glm::vec3 bbox_dimens = meshinst.mBBOX.m_Max - meshinst.mBBOX.m_Min;
+			bbox_dimens = bbox_dimens * inst.GetComponent<Transform>().mScale;
 			m_Renderer.AddAabb(inst.GetComponent<Transform>().mTranslate + inst.GetComponent<BoxCollider>().mTranslateOffset, bbox_dimens, {1.f, 0.f, 0.f, 1.f});
 
 			// draw the center of the mesh

@@ -7,7 +7,7 @@
 
 
 Camera_Input::Camera_Input()
-	: mCameraSpeed{ 1.f }, mMouseSensitivity{ 0.1f }, mYaw{ -90.f }, mPitch{}
+	: mCameraSpeed{ 100.f }, mMouseSensitivity{ 0.1f }, mYaw{ -90.f }, mPitch{}
 {}
 
 
