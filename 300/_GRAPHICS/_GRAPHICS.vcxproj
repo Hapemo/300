@@ -131,13 +131,14 @@
       <WarningLevel>Level3</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <SDLCheck>true</SDLCheck>
+      <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -147,18 +148,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\lib\IMGUI\backends\imgui_impl_glfw.cpp" />
-    <ClCompile Include="..\lib\IMGUI\backends\imgui_impl_opengl3.cpp" />
-    <ClCompile Include="..\lib\IMGUI\imgui.cpp" />
-    <ClCompile Include="..\lib\IMGUI\imgui_demo.cpp" />
-    <ClCompile Include="..\lib\IMGUI\imgui_draw.cpp" />
-    <ClCompile Include="..\lib\IMGUI\imgui_tables.cpp" />
-    <ClCompile Include="..\lib\IMGUI\imgui_widgets.cpp" />
-    <ClCompile Include="..\lib\IMGUI\misc\cpp\imgui_stdlib.cpp" />
     <ClCompile Include="..\_GEOM_COMPILER\src\Bone.cpp" />
     <ClCompile Include="..\_GEOM_COMPILER\src\geom.cpp" />
     <ClCompile Include="demo\DemoScene.cpp" />
-    <ClCompile Include="demo\ImGui.cpp" />
     <ClCompile Include="demo\main.cpp" />
     <ClCompile Include="source\Animator.cpp" />
     <ClCompile Include="source\Camera.cpp" />
@@ -180,7 +172,6 @@
     <ClInclude Include="..\_GEOM_COMPILER\include\Bone.h" />
     <ClInclude Include="..\_GEOM_COMPILER\include\geom.h" />
     <ClInclude Include="demo\DemoScene.hpp" />
-    <ClInclude Include="demo\ImGui.hpp" />
     <ClInclude Include="include\Animator.hpp" />
     <ClInclude Include="include\Camera.hpp" />
     <ClInclude Include="include\Common.hpp" />

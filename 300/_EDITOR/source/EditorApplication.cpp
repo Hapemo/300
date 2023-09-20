@@ -12,11 +12,16 @@ start up of window and game system, also runs their update functions.
 #include "FPSManager.h"
 #include "ECS/ECS.h"
 #include "ECS/ECS_Components.h"
+#include "ECS/ECS_Systems.h"
 #include "Input.h"
 #include "SingletonManager.h"
 #include "ScriptingSystem.h"
 #include "Physics/PhysicsSystem.h"
-
+#include "ResourceManager.h"
+#include "ResourceManagerTy.h"
+#include "Graphics/GraphicsSystem.h"
+#include "SceneWindow.h"
+#include "Guid.h"
 
 
 // Static variables
@@ -30,6 +35,10 @@ void EditorApplication::Init()
     StartUp();
     SystemInit();
 
+    // create new entity
+    /*Entity mEntity = systemManager->ecs->NewEntity();
+    mEntity.GetComponent<General>().name = "DefaultTestObj";
+    mEntity.GetComponent<MeshRenderer>().mMeshPath = "../compiled_geom/Skull_textured.geom";*/
 }
 
 void EditorApplication::StartUp()
@@ -39,7 +48,6 @@ void EditorApplication::StartUp()
     mWindow = GFX::Window({ 1920, 1080 });
     mWindow.SetWindowTitle("Editor");
     systemManager = new SystemManager();
-
 
 
 }
@@ -71,13 +79,27 @@ void EditorApplication::MainUpdate()
 
         // Graphics update
 
+        auto windowSize = static_cast<SceneWindow*>(mMaineditor.mWindowlist["Editscene"])->winSize;
+        //int windowSizeY = static_cast<SceneWindow*>(mMaineditor.mWindowlist["Editscene"])->winSize_Y;
+
+            
+       // auto cam = systemManager->mGraphicsSystem->m_EditorCamera;
+
+        systemManager->mGraphicsSystem->SetCameraSize(CAMERA_TYPE::CAMERA_TYPE_EDITOR, windowSize);
+       // systemManager->mGraphicsSystem->SetCameraSize(&systemManager->mGraphicsSystem->mCamera, ImGui::GetWindowSize().x, ImGui::GetWindowSize().y);
         mMaineditor.UIupdate(mWindow.GetHandle());
         //mMaineditor.WindowUpdate(mWindow.GetHandle());
         mMaineditor.UIdraw(mWindow.GetHandle());
 
+       // systemManager->mGraphicsSystem->SetCameraPosition(&systemManager->mGraphicsSystem->mCamera,);
+        // To remove (Script test with entities)
+        systemManager->mScriptingSystem->ScriptingUpdateTest();
+
         SecondUpdate(); // This should always be the last
 
         mWindow.Update();   // This is required for IMGUI draws as well
+
+        
     }
 }
 
@@ -89,12 +111,13 @@ void EditorApplication::FirstUpdate()
 
 void EditorApplication::SystemUpdate()
 {
-    systemManager->Update(1.f /*insert dt here*/);
+    systemManager->Update(FPSManager::dt);
 }
 
 void EditorApplication::SecondUpdate()
 {
     Input::UpdatePrevKeyStates();
+    FPSManager::LimitFPS(60);
 }
 
 void EditorApplication::Exit()

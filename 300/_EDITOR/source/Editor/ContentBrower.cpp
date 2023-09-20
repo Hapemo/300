@@ -21,6 +21,9 @@ Contains main loop for the logic of contentbrowsing + Drag and drop functionalit
 
 #include "ContentBrower.h"
 #include <stdlib.h>
+#include <iostream>
+#include <string>
+#include <algorithm>
 
 static const std::filesystem::path s_asset_directory = "../assets";
 bool ContentBrowser::dragCheck = false;
@@ -35,6 +38,11 @@ bool check_extension(std::string file, std::string extension) {
 		return true;
 
 	return false;
+}
+
+void format_string(std::string& path) {
+
+	std::replace(path.begin(), path.end(), '\\', '/');
 }
 
 void ContentBrowser::update() 
@@ -88,18 +96,42 @@ void ContentBrowser::update()
 
 			ImGui::Button(filename_string.c_str(), { buttonsize, buttonsize }); // draw button of file
 
-			if (check_extension(path.string(), ".ttf")) {
+			if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) {
+				std::cout << path.string() << "\n";
+			}
+
+			if (check_extension(path.string(), ".lua")) {
 
 				if (ImGui::BeginDragDropSource()) {
 
 					std::string path_str = path.string();
+
+					//format the string from \\ to /.
+					format_string(path_str);
+					//std::cout << path_str << "newstr\n";
 					const char* source_path = path_str.c_str();
 					ImGui::SetDragDropPayload("FILE_LUA", source_path, strlen(source_path) * sizeof(wchar_t), ImGuiCond_Once);
 
 					ImGui::EndDragDropSource();
 				}
-
 			}
+
+
+			if (check_extension(path.string(), ".geom")) {
+
+				if (ImGui::BeginDragDropSource()) {
+
+					std::string path_str = path.string();
+					
+					//format the string from \\ to /.
+					format_string(path_str);
+					const char* source_path = path_str.c_str();
+					ImGui::SetDragDropPayload("FILE_GEOM", source_path, strlen(source_path) * sizeof(wchar_t), ImGuiCond_Once);
+
+					ImGui::EndDragDropSource();
+				}
+			}
+
 		}
 
 		ImGui::NextColumn();

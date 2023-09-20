@@ -23,6 +23,7 @@ to select current Entity and activates inspector
 
 #include "imgui.h"
 #include "Hierarchy.h"
+#include "../../../_SCRIPTING/include/ScriptingSystem.h"
 
 
 entt::entity Hierarchy::selectedId;
@@ -35,6 +36,7 @@ void Hierarchy::update()
 {
     auto allObjects = systemManager->ecs->GetEntitiesWith<Transform>();
 
+    int i = allObjects.size();
 
     if (ImGui::Button("Add", ImVec2(50, 50)))
     {

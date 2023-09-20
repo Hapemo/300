@@ -46,7 +46,7 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -71,7 +71,11 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)lib\ASSIMP\BINARIES\Win32\include;$(SolutionDir)_ENGINE/include;$(SolutionDir)_GRAPHICS/include;$(SolutionDir)_SCRIPTING/include;$(SolutionDir)_TOOLS/include;$(SolutionDir)\lib\SOL;$(SolutionDir)\lib\LUA\include;$(SolutionDir)lib/ENTT;$(SolutionDir)lib/GLEW/include;$(SolutionDir)lib/GLEW/include/GL;$(SolutionDir)lib\STB;$(SolutionDir)lib\GLM;$(SolutionDir)lib/GLFW/include;$(SolutionDir)lib/GLFW/include/GLFW;$(SolutionDir)_GEOM_COMPILER/include;$(SolutionDir)lib\ASSIMP\include\assimp;$(SolutionDir)lib\ASSIMP\include;$(SolutionDir)_EDITOR/include;$(SolutionDir)lib/PHYSX/include;$(SolutionDir)_RESOURCE/include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)_GRAPHICS/include;$(SolutionDir)lib\ASSIMP\BINARIES\Win32\include;$(SolutionDir)_ENGINE/include;$(SolutionDir)_GRAPHICS/include;$(SolutionDir)_SCRIPTING/include;$(SolutionDir)_TOOLS/include;$(SolutionDir)\lib\SOL;$(SolutionDir)\lib\LUA\include;$(SolutionDir)lib/ENTT;$(SolutionDir)lib/GLEW/include;$(SolutionDir)lib/GLEW/include/GL;$(SolutionDir)lib\STB;$(SolutionDir)lib\GLM;$(SolutionDir)lib/GLFW/include;$(SolutionDir)lib/GLFW/include/GLFW;$(SolutionDir)_GEOM_COMPILER/include;$(SolutionDir)lib\ASSIMP\include\assimp;$(SolutionDir)lib\ASSIMP\include;$(SolutionDir)_EDITOR/include;$(SolutionDir)lib/PHYSX/include;$(SolutionDir)_RESOURCE/include;$(IncludePath);$(SolutionDir)_RESOURCE/include</IncludePath>
+    <LibraryPath>$(SolutionDir)lib\GLFW\lib-vc2022;$(SolutionDir)lib\GLEW\lib\Release\x64;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>$(SolutionDir)_GRAPHICS/include;$(SolutionDir)lib\ASSIMP\BINARIES\Win32\include;$(SolutionDir)_ENGINE/include;$(SolutionDir)_GRAPHICS/include;$(SolutionDir)_SCRIPTING/include;$(SolutionDir)_TOOLS/include;$(SolutionDir)\lib\SOL;$(SolutionDir)\lib\LUA\include;$(SolutionDir)lib/ENTT;$(SolutionDir)lib/GLEW/include;$(SolutionDir)lib/GLEW/include/GL;$(SolutionDir)lib\STB;$(SolutionDir)lib\GLM;$(SolutionDir)lib/GLFW/include;$(SolutionDir)lib/GLFW/include/GLFW;$(SolutionDir)_GEOM_COMPILER/include;$(SolutionDir)lib\ASSIMP\include\assimp;$(SolutionDir)lib\ASSIMP\include;$(SolutionDir)_EDITOR/include;$(SolutionDir)lib/PHYSX/include;$(SolutionDir)_RESOURCE/include;$(IncludePath);$(SolutionDir)_RESOURCE/include</IncludePath>
     <LibraryPath>$(SolutionDir)lib\GLFW\lib-vc2022;$(SolutionDir)lib\GLEW\lib\Release\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -138,10 +142,13 @@
   <ItemGroup>
     <ClInclude Include="include\Guid.h" />
     <ClInclude Include="include\ResourceManager.h" />
+    <ClInclude Include="include\ResourceManagerTy.h" />
+    <ClInclude Include="include\ResourceType.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\main.cpp" />
     <ClCompile Include="source\ResourceManager.cpp" />
+    <ClCompile Include="source\ResourceManagerTy.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

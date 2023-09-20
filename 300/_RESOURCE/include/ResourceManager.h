@@ -122,7 +122,7 @@ public:
     MeshData& AllocRscInfo();
     void ReleaseRscInfo(MeshData& RscInfo);
 
-    void SetupMesh(std::string filepath,unsigned );
+    void SetupMesh(std::string filepath, unsigned);
 
     void Init();
 

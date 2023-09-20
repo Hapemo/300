@@ -53,7 +53,9 @@ Inspect display for RigidBody components
 ****************************************************************************
 ***/
 #pragma once
+
 #include "EditorWindow.h"
+
 #include <string>
 
 /***************************************************************************/
