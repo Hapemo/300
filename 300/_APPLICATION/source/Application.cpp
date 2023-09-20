@@ -68,7 +68,7 @@ void Application::SystemInit()
     Input::Init();
 
 #pragma region testserialization
-    //ObjectFactory::DeserializeScene("../resources/Scenes/test.json");
+    ObjectFactory::DeserializeScene("../resources/Scenes/test.json");
 
     Entity ent1 = systemManager->ecs->NewEntity();
     Entity ent2 = systemManager->ecs->NewEntity();

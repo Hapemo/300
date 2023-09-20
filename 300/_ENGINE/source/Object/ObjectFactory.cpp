@@ -96,6 +96,9 @@ void ObjectFactory::DeserializeScene(const std::string& filename)
 	auto parent_cont = systemManager->ecs->GetEntitiesWith<Parent>();
 	auto child_cont = systemManager->ecs->GetEntitiesWith<Children>();
 
+	// working
+	//std::cout << "containers: " << parent_cont.size() << " " << child_cont.size() << std::endl;
+
 	for (Entity pe : parent_cont)
 	{
 		for (const auto& p : idMap)
@@ -127,7 +130,7 @@ void ObjectFactory::DeserializeScene(const std::string& filename)
 			if (ce.GetComponent<Children>().mFirstChild == (std::uint32_t)c.first)
 			{
 				// update the child's id with the new id
-				ce.GetComponent<Children>().mFirstChild = (std::uint32_t)p.second;
+				ce.GetComponent<Children>().mFirstChild = (std::uint32_t)c.second;
 			}
 
 			// clarify
