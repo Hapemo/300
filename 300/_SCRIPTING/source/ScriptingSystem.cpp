@@ -287,78 +287,78 @@ void ScriptingSystem::ScriptingUpdateTest()
     }
     if (Input::CheckKey(E_STATE::PRESS, E_KEY::T))
         printOnce = false;
-    // Button press number 1 to add new script 
-    if (Input::CheckKey(E_STATE::PRESS, E_KEY::_1))
-    {
-        std::string scriptName, line;
-        // get prefered name for script 
-        std::cout << "Enter new script name: ";
-        std::getline(std::cin, scriptName);
-        std::stringstream ss;
-        std::ifstream defScript{ "../assets/Scripts/DefaultTemplate.lua" };
-        std::ofstream output;
-        ss << "../assets/Scripts/" << scriptName << ".lua";
-        // create the script 
-        std::string path = ss.str();
-        output.open(path.c_str(), std::ios_base::out);
-        // copy the default template into the newly created script 
-        while (getline(defScript, line))
-        {
-            output << line << std::endl;
-        }
-        std::cout << scriptName << ".lua added to assets/Scripts." << std::endl;
-    }
+    //// Button press number 1 to add new script 
+    //if (Input::CheckKey(E_STATE::PRESS, E_KEY::_1))
+    //{
+    //    std::string scriptName, line;
+    //    // get prefered name for script 
+    //    std::cout << "Enter new script name: ";
+    //    std::getline(std::cin, scriptName);
+    //    std::stringstream ss;
+    //    std::ifstream defScript{ "../assets/Scripts/DefaultTemplate.lua" };
+    //    std::ofstream output;
+    //    ss << "../assets/Scripts/" << scriptName << ".lua";
+    //    // create the script 
+    //    std::string path = ss.str();
+    //    output.open(path.c_str(), std::ios_base::out);
+    //    // copy the default template into the newly created script 
+    //    while (getline(defScript, line))
+    //    {
+    //        output << line << std::endl;
+    //    }
+    //    std::cout << scriptName << ".lua added to assets/Scripts." << std::endl;
+    //}
 
     // Button press number 2 to add script to entity 
-    if (Input::CheckKey(E_STATE::PRESS, E_KEY::_2))
-    {
-        std::string entityID, scriptName;
-        std::cout << "Indicate entity (by their id) to add script to: ";
-        std::cin >> entityID;
-        std::cout << "Enter script name to add to entity(Reference from Resources/Scripts: ";
-        std::cin >> scriptName;
-        std::string temp = "../assets/Scripts/" + scriptName + ".lua";
-        auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
-        for (Entity entity : scriptEntities)
-        {
-            if (entity.id == static_cast<entt::entity>(std::stoul(entityID)))
-            {
-                // if entity does not contain any script, just add 
-                if (scriptEntities.get<Scripts>(entity.id).scriptsContainer.size() == 0)
-                {
-                    Script script;
-                    script.scriptFile = "../assets/Scripts/" + scriptName + ".lua";
-                    script.env = { systemManager->mScriptingSystem->luaState, sol::create, systemManager->mScriptingSystem->luaState.globals() };
-                    scriptEntities.get<Scripts>(entity.id).scriptsContainer.push_back(script);
-                    std::cout << "Script " << scriptName << ".lua added to entity " << entityID << std::endl;
-                }
-                // if entity already has scripts attached, check if duplicate 
-                else
-                {
-                    bool hasScript{ };
+    //if (Input::CheckKey(E_STATE::PRESS, E_KEY::_2))
+    //{
+    //    std::string entityID, scriptName;
+    //    std::cout << "Indicate entity (by their id) to add script to: ";
+    //    std::cin >> entityID;
+    //    std::cout << "Enter script name to add to entity(Reference from Resources/Scripts: ";
+    //    std::cin >> scriptName;
+    //    std::string temp = "../assets/Scripts/" + scriptName + ".lua";
+    //    auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
+    //    for (Entity entity : scriptEntities)
+    //    {
+    //        if (entity.id == static_cast<entt::entity>(std::stoul(entityID)))
+    //        {
+    //            // if entity does not contain any script, just add 
+    //            if (scriptEntities.get<Scripts>(entity.id).scriptsContainer.size() == 0)
+    //            {
+    //                Script script;
+    //                script.scriptFile = "../assets/Scripts/" + scriptName + ".lua";
+    //                script.env = { systemManager->mScriptingSystem->luaState, sol::create, systemManager->mScriptingSystem->luaState.globals() };
+    //                scriptEntities.get<Scripts>(entity.id).scriptsContainer.push_back(script);
+    //                std::cout << "Script " << scriptName << ".lua added to entity " << entityID << std::endl;
+    //            }
+    //            // if entity already has scripts attached, check if duplicate 
+    //            else
+    //            {
+    //                bool hasScript{ };
 
-                    for (auto& elem : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
-                    {
-                        if (elem.scriptFile == temp)
-                        {
-                            hasScript = true;
-                            std::cout << "Script is already attached! " << std::endl;
-                            break;
-                        }
-                    }
+    //                for (auto& elem : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
+    //                {
+    //                    if (elem.scriptFile == temp)
+    //                    {
+    //                        hasScript = true;
+    //                        std::cout << "Script is already attached! " << std::endl;
+    //                        break;
+    //                    }
+    //                }
 
-                    if (!hasScript)
-                    {
-                        Script script;
-                        script.scriptFile = "../assets/Scripts/" + scriptName + ".lua";
-                        script.env = { systemManager->mScriptingSystem->luaState, sol::create, systemManager->mScriptingSystem->luaState.globals() };
-                        scriptEntities.get<Scripts>(entity.id).scriptsContainer.push_back(script);
-                        std::cout << "Script " << scriptName << ".lua added to entity " << entityID << std::endl;
-                    }
-                }
-            }
-        }
-    }
+    //                if (!hasScript)
+    //                {
+    //                    Script script;
+    //                    script.scriptFile = "../assets/Scripts/" + scriptName + ".lua";
+    //                    script.env = { systemManager->mScriptingSystem->luaState, sol::create, systemManager->mScriptingSystem->luaState.globals() };
+    //                    scriptEntities.get<Scripts>(entity.id).scriptsContainer.push_back(script);
+    //                    std::cout << "Script " << scriptName << ".lua added to entity " << entityID << std::endl;
+    //                }
+    //            }
+    //        }
+    //    }
+    //}
 
     //Print all scripts that each entity has 
     if (Input::CheckKey(E_STATE::PRESS, E_KEY::_3))
