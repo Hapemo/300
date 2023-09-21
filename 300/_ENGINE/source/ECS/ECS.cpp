@@ -1,5 +1,6 @@
 #include "ECS/ECS.h"
 #include "ECS/ECS_Components.h"
+#include "ScriptingSystem.h"
 #include "pch.h"
 
 bool Entity::ShouldRun() {
@@ -7,6 +8,40 @@ bool Entity::ShouldRun() {
 
 	General const& genComponent = GetComponent<General>();
 	return !genComponent.isPaused && genComponent.isActive;
+}
+
+void Entity::Activate() {
+	if (!HasComponent<General>()) {
+		//LOG_ERROR("There is no general component when attempting to activate, entity ID: " + std::to_string(id));
+		assert(false && std::string("There is no general component when attempting to activate, entity ID: " + std::to_string(static_cast<uint32_t>(id))).c_str());
+		return;
+	}
+	General& genComp{ GetComponent<General>() };
+
+	//------------------------------------------------------------------
+	// Codes that should run when activating entity halfway through game
+
+	// Scripting
+#ifdef _EDITOR
+	if (editorManager->IsScenePaused()) return;
+#endif
+	//if (!editorManager->IsScenePaused())
+	if (HasComponent<Script>())
+		systemManager->GetScriptingPointer()->ScriptStart(*this);
+
+
+	// General
+	genComp.isActive = true;
+
+	// Parent Child
+	/*if (HasComponent<)
+	Entity firstChild = 
+
+	for (Entity e : genComp.children) e.Activate();*/
+
+
+
+	//------------------------------------------------------------------
 }
 
 ECS::ECS() : registry(), NullEntity(registry.create()) {} 

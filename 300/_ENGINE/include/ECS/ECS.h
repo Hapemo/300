@@ -47,6 +47,11 @@ struct Entity
 	void RemoveComponent();
 
 	bool ShouldRun();
+
+	void Activate();
+
+	void Deactivate();
+
 	void AddChild(Entity e);
 
 	std::vector<Entity> GetAllChildren();
