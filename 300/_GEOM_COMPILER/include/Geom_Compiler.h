@@ -32,12 +32,13 @@ namespace _GEOM
 
 		struct CompressedMeshPart
 		{
-			std::string						m_MeshName; 
-			std::string						m_Name;
 			std::vector<Geom::VertexPos>	m_Vertex;
 			std::vector<Geom::VertexExtra>	m_Extra;
 			std::vector<Geom::Texture>		m_Textures;						
 			std::vector<uint32_t>			m_Indices;
+			std::string						m_MeshName; 
+			std::string						m_Name;
+			bbox							m_Bbox;
 			int						        m_iMaterialInstance{};
 		};
 
