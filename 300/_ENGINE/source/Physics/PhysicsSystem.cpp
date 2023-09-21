@@ -25,8 +25,10 @@ void PhysicsSystem::Init()
 
 void PhysicsSystem::Update(float dt)
 {
+	if (dt <= 0)
+		return;
 	mPX.mScene->simulate(dt);
-	mPX.mScene->fetchResults(true);
+	bool temp = mPX.mScene->fetchResults(true);
 
 	for (auto itr = mActors.begin(); itr != mActors.end(); ++itr)
 	{
@@ -62,7 +64,7 @@ void PhysicsSystem::CreateActor(Entity e, const Transform& xform, const RigidBod
 	mPX.mScene->addActor(*PActor);
 }
 
-void PhysicsSystem::CreateCollider(physx::PxRigidActor* actor, const Transform& xform, const RigidBody& rbod, const BoxCollider& collider)
+void PhysicsSystem::CreateCollider(physx::PxRigidActor*& actor, const Transform& xform, const RigidBody& rbod, const BoxCollider& collider)
 {
 	physx::PxTransform PXform = physx::PxTransform(Convert(xform.mTranslate + collider.mTranslateOffset));
 	CreateActorType(actor, PXform, rbod.mMotion);
@@ -72,7 +74,7 @@ void PhysicsSystem::CreateCollider(physx::PxRigidActor* actor, const Transform& 
 	actor->attachShape(*shape);
 }
 
-void PhysicsSystem::CreateCollider(physx::PxRigidActor* actor, const Transform& xform, const RigidBody& rbod, const SphereCollider& collider)
+void PhysicsSystem::CreateCollider(physx::PxRigidActor*& actor, const Transform& xform, const RigidBody& rbod, const SphereCollider& collider)
 {
 	physx::PxTransform PXform = physx::PxTransform(Convert(xform.mTranslate + collider.mTranslateOffset));
 	CreateActorType(actor, PXform, rbod.mMotion);
@@ -82,13 +84,13 @@ void PhysicsSystem::CreateCollider(physx::PxRigidActor* actor, const Transform& 
 	actor->attachShape(*shape);
 }
 
-void PhysicsSystem::CreateCollider(physx::PxRigidActor* actor, const Transform& xform, const RigidBody& rbod, const PlaneCollider& collider)
+void PhysicsSystem::CreateCollider(physx::PxRigidActor*& actor, const Transform& xform, const RigidBody& rbod, const PlaneCollider& collider)
 {
 	glm::vec3 nml = collider.mNormal;
 	actor = physx::PxCreatePlane(*mPX.mPhysics, physx::PxPlane(nml.x, nml.y, nml.z, glm::length(xform.mTranslate) + collider.mTranslateOffset), *mMaterials[rbod.mMaterial]);
 }
 
-void PhysicsSystem::CreateActorType(physx::PxRigidActor* actor, const physx::PxTransform& p_xform, MOTION motion)
+void PhysicsSystem::CreateActorType(physx::PxRigidActor*& actor, const physx::PxTransform& p_xform, MOTION motion)
 {
 	if (motion == MOTION::STATIC)
 		actor = mPX.mPhysics->createRigidStatic(p_xform);

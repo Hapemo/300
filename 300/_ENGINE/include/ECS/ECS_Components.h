@@ -6,6 +6,7 @@
 #include "Tags.h"
 #include "rttr/registration.h"
 #include "ECS.h"
+#include "Audio/AudioType.h"
 
 struct General
 {
@@ -33,6 +34,17 @@ struct Transform
 	void Inspect();
 
 	RTTR_ENABLE()
+};
+
+// this struct stores the filepaths for the meshdata, material, and shader. the actual data is stored in the resource manager
+struct MeshRenderer
+{
+	// For now, we store the string to the filepaths. TO CHANGE to uids for efficient referencing
+	std::pair<std::string, std::string> mShaderPath;
+	std::string							mMaterialInstancePath;
+	std::string							mMeshPath;
+	
+	unsigned							mGUID;
 };
 
 struct RigidBody
@@ -101,6 +113,13 @@ struct Children
 	Children() : mNumChildren(0), mFirstChild(0) {};
 };
 
+struct Audio
+{
+	std::string mFileName;
+	AUDIOTYPE mAudioType;
+	bool mIsPlaying;// check if audio is already playing
+	bool mIsPlay;	// play audio if true
+};
 
 RTTR_REGISTRATION
 {
@@ -128,3 +147,4 @@ RTTR_REGISTRATION
 		rttr::value("Background", SUBTAG::BACKGROUND)
 	);
 }
+

@@ -105,8 +105,6 @@ Render IMGUIZMO integration
 
 	static bool			follow;
 
-	GFX::Shader m_ModelShader;
-
 private:
 
 	bool			    scene_m_Hovered     {0};

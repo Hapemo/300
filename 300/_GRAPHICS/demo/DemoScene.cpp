@@ -212,7 +212,7 @@ void GFX::DemoScene::Draw()
         // Clears buffer
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-#if 1
+#if 0
         //!< test rendering skull model
         mModelShader.Activate();
         //uid uids("gayed");
@@ -276,10 +276,13 @@ void GFX::DemoScene::Draw()
 
 #else
         //! 
-        mRenderer->AddAabb({ 0, 0, -500 }, { 100, 300, 100 }, { 1, 0, 0, 1 });
+        //mRenderer->AddAabb({ 0, 0, -500 }, { 100, 300, 100 }, { 1, 0, 0, 1 });
+        //mRenderer->AddAabb({ 100, 300, -500 }, { 200, 300, 100 }, { 0, 0, 1, 1 });
+        //mRenderer->AddSphere(mCamera.position(), { 50, 150, -300 }, 100.f, { 0, 1, 0, 1 });
+        mRenderer->AddSphere(mCamera.position(), { -50, -150, -300 }, 100.f, { 0, 0, 1, 1 });
         //mRenderer->AddPoint({ 0, 0, 0 }, { 1, 0, 0, 1 });
-        ////mRenderer->AddTriangle({ 0.f, 30.f, 0.f }, { -30.f, -30.f, 0.f }, { 30.f, -30.f, 0.f }, { 0, 1, 0, 1 });
-        ////mRenderer->AddQuad({ 0, 0, 0 }, 50, 100, { 0, 0, 1, 1 });
+        //mRenderer->AddTriangle({ 0.f, 30.f, 0.f }, { -30.f, -30.f, 0.f }, { 30.f, -30.f, 0.f }, { 0, 1, 0, 1 });
+        //mRenderer->AddQuad({ 0, 0, 0 }, 50, 100, { 0, 0, 1, 1 });
 
         //// Renders all instances
         mRenderer->RenderAll(mCamera.viewProj());

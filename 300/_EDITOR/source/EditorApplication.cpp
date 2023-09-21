@@ -16,6 +16,10 @@ start up of window and game system, also runs their update functions.
 #include "SingletonManager.h"
 #include "ScriptingSystem.h"
 #include "Physics/PhysicsSystem.h"
+#include "ResourceManager.h"
+#include "ResourceManagerTy.h"
+#include "Guid.h"
+
 
 // Static variables
 GFX::DebugRenderer* EditorApplication::mRenderer;
@@ -28,6 +32,10 @@ void EditorApplication::Init()
     StartUp();
     SystemInit();
 
+    // create new entity
+    /*Entity mEntity = systemManager->ecs->NewEntity();
+    mEntity.GetComponent<General>().name = "DefaultTestObj";
+    mEntity.GetComponent<MeshRenderer>().mMeshPath = "../compiled_geom/Skull_textured.geom";*/
 }
 
 void EditorApplication::StartUp()
@@ -37,7 +45,6 @@ void EditorApplication::StartUp()
     mWindow = GFX::Window({ 1920, 1080 });
     mWindow.SetWindowTitle("Editor");
     systemManager = new SystemManager();
-
 
 
 }
@@ -59,7 +66,8 @@ void EditorApplication::MainUpdate()
     mMaineditor.UIinit(mWindow.GetHandle());
 
 
-    while (!glfwWindowShouldClose(mWindow.GetHandle())) {
+    while (!glfwWindowShouldClose(mWindow.GetHandle())) 
+    {
         FirstUpdate();
         SystemUpdate();
 
@@ -67,6 +75,7 @@ void EditorApplication::MainUpdate()
         //ScriptTestUpdate();
 
         // Graphics update
+
 
         mMaineditor.UIupdate(mWindow.GetHandle());
         //mMaineditor.WindowUpdate(mWindow.GetHandle());
@@ -77,8 +86,9 @@ void EditorApplication::MainUpdate()
 
         SecondUpdate(); // This should always be the last
 
-        mWindow.Update();
+        mWindow.Update();   // This is required for IMGUI draws as well
 
+        
     }
 }
 

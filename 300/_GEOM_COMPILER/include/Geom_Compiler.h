@@ -25,7 +25,7 @@ namespace _GEOM
 			std::string						m_MeshName;
 			std::string						m_Name;
 			std::vector<FullVertices>		m_Vertices;
-			std::vector<Geom::Texture>		m_Textures;						// we have not used this in _rendering
+			std::vector<Geom::Texture>		m_Textures;						
 			std::vector<uint32_t>			m_Indices;
 			int								m_iMaterialInstance{};
 		};
@@ -36,13 +36,20 @@ namespace _GEOM
 			std::string						m_Name;
 			std::vector<Geom::VertexPos>	m_Vertex;
 			std::vector<Geom::VertexExtra>	m_Extra;
-			std::vector<Geom::Texture>		m_Textures;						// we have not used this in _rendering
+			std::vector<Geom::Texture>		m_Textures;						
 			std::vector<uint32_t>			m_Indices;
 			int						        m_iMaterialInstance{};
 		};
 
 	public:
 		bool Load(const DescriptorData& _DData, SkinGeom* _skinGeom) noexcept;
+
+		// Helper
+		std::string getFileNameWithoutExtension(const std::string& ResourceFilePath);
+		std::string getFileNameWithExtension(const std::string& ResourceFilePath);
+
+		// Getters
+		std::string& getMeshName() { return m_MeshName; }
 	
 	private:
 		bool								ImportGeometryValidateMesh(const aiMesh& AssimpMesh, int& iTexture, int& iColor) noexcept;
@@ -53,7 +60,6 @@ namespace _GEOM
 		void								CreateSkinGeom(const std::vector<CompressedMeshPart>& _MyNodes) noexcept;
 		void								Optimize(std::vector<InputMeshPart>& _MyNodes) noexcept;
 		std::vector<CompressedMeshPart> 	Quantize(const std::vector<InputMeshPart>& _MyNodes) noexcept;
-
 
 		// BONE::
 		std::vector<Geom::Texture> LoadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName) noexcept;
@@ -74,11 +80,11 @@ namespace _GEOM
 		std::vector<Refs>				m_MeshRefs;
 		SkinGeom*						m_SkinGeom;
 		aiMatrix4x4						m_DescriptorMatrix;
+		std::string						m_MeshName;
 	};
 }
 
 void LoadAndSerializeAllMeshes(_GEOM::DescriptorData& Desc);
-std::string getFileNameWithoutExtension(const std::string& ResourceFilePath);
 
 
 #endif // !_GEOM_COMPILER

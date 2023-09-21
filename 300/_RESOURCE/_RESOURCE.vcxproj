@@ -17,7 +17,6 @@
       <Configuration>Release</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
-
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -41,39 +40,44 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
-
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
-  <ImportGroup Label="Shared" >
+  <ImportGroup Label="Shared">
   </ImportGroup>
-    <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-      <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    </ImportGroup>
-    <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-      <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    </ImportGroup>
-    <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-      <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    </ImportGroup>
-    <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-      <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    </ImportGroup>
-
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>$(SolutionDir)_GRAPHICS/include;$(SolutionDir)lib\ASSIMP\BINARIES\Win32\include;$(SolutionDir)_ENGINE/include;$(SolutionDir)_GRAPHICS/include;$(SolutionDir)_SCRIPTING/include;$(SolutionDir)_TOOLS/include;$(SolutionDir)\lib\SOL;$(SolutionDir)\lib\LUA\include;$(SolutionDir)lib/ENTT;$(SolutionDir)lib/GLEW/include;$(SolutionDir)lib/GLEW/include/GL;$(SolutionDir)lib\STB;$(SolutionDir)lib\GLM;$(SolutionDir)lib/GLFW/include;$(SolutionDir)lib/GLFW/include/GLFW;$(SolutionDir)_GEOM_COMPILER/include;$(SolutionDir)lib\ASSIMP\include\assimp;$(SolutionDir)lib\ASSIMP\include;$(SolutionDir)_EDITOR/include;$(SolutionDir)lib/PHYSX/include;$(SolutionDir)_RESOURCE/include;$(IncludePath);$(SolutionDir)_RESOURCE/include</IncludePath>
+    <LibraryPath>$(SolutionDir)lib\GLFW\lib-vc2022;$(SolutionDir)lib\GLEW\lib\Release\x64;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>$(SolutionDir)_GRAPHICS/include;$(SolutionDir)lib\ASSIMP\BINARIES\Win32\include;$(SolutionDir)_ENGINE/include;$(SolutionDir)_GRAPHICS/include;$(SolutionDir)_SCRIPTING/include;$(SolutionDir)_TOOLS/include;$(SolutionDir)\lib\SOL;$(SolutionDir)\lib\LUA\include;$(SolutionDir)lib/ENTT;$(SolutionDir)lib/GLEW/include;$(SolutionDir)lib/GLEW/include/GL;$(SolutionDir)lib\STB;$(SolutionDir)lib\GLM;$(SolutionDir)lib/GLFW/include;$(SolutionDir)lib/GLFW/include/GLFW;$(SolutionDir)_GEOM_COMPILER/include;$(SolutionDir)lib\ASSIMP\include\assimp;$(SolutionDir)lib\ASSIMP\include;$(SolutionDir)_EDITOR/include;$(SolutionDir)lib/PHYSX/include;$(SolutionDir)_RESOURCE/include;$(IncludePath);$(SolutionDir)_RESOURCE/include</IncludePath>
+    <LibraryPath>$(SolutionDir)lib\GLFW\lib-vc2022;$(SolutionDir)lib\GLEW\lib\Release\x64;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -108,10 +112,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>glew32.lib;glfw3dll.lib;opengl32.lib;lua53.lib;_ENGINE.lib;_GRAPHICS.lib;_TOOLS.lib;_SCRIPTING.lib;LowLevelAABB_static_64.lib;PhysXCooking_64.lib;PhysXVehicle_static_64.lib;LowLevelDynamics_static_64.lib;PhysXExtensions_static_64.lib;PhysX_64.lib;LowLevel_static_64.lib;PhysXFoundation_64.lib;SceneQuery_static_64.lib;PVDRuntime_64.lib;PhysXPvdSDK_static_64.lib;SimulationController_static_64.lib;PhysXCharacterKinematic_static_64.lib;PhysXTask_static_64.lib;SnippetRender_static_64.lib;PhysXCommon_64.lib;PhysXVehicle2_static_64.lib;SnippetUtils_static_64.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -122,6 +130,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -130,8 +139,17 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-
-  <ItemGroup></ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\Guid.h" />
+    <ClInclude Include="include\ResourceManager.h" />
+    <ClInclude Include="include\ResourceManagerTy.h" />
+    <ClInclude Include="include\ResourceType.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\main.cpp" />
+    <ClCompile Include="source\ResourceManager.cpp" />
+    <ClCompile Include="source\ResourceManagerTy.cpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

@@ -41,7 +41,6 @@ Setting up specification for frame buffer rendering
 void SceneWindow::init() 
 {
 	//empty
-    m_ModelShader.CreateShaderFromFiles("./shader_files/draw_vert.glsl", "./shader_files/draw_frag.glsl");
 }
 
 void SceneWindow::update()
@@ -49,5 +48,7 @@ void SceneWindow::update()
 
 	scene_m_Hovered = ImGui::IsWindowHovered();	
 
-	ImGui::Image((ImTextureID)(intptr_t)systemManager->mGraphicsSystem->GetEditorAttachment(),ImVec2(1920, 1080));
+	ImGui::Image((ImTextureID)(intptr_t)systemManager->mGraphicsSystem->GetEditorAttachment(),ImGui::GetWindowSize());
+	
+	//ImGui::Image((ImTextureID)(intptr_t)systemManager->mGraphicsSystem->GetEditorAttachment(),ImVec2(1920, 1080));
 }
