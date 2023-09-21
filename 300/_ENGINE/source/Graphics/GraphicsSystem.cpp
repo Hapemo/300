@@ -46,7 +46,7 @@ void GraphicsSystem::Init()
 	auto& meshinst = systemManager->mResourceSystem->get_Mesh("../assets/compiled_geom/dancing_vampire.geom");
 	if (meshinst.mHasAnimation && _ENABLE_ANIMATIONS)
 	{
-		newentity.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/animations_vert.glsl", "../_GRAPHICS/shader_files/pointLight_frag.glsl" };	// for point light
+		newentity.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/animations_vert.glsl", "../_GRAPHICS/shader_files/pointLight_frag.glsl" };// for point light
 		m_Animator.SetAnimation(&meshinst.mAnimation[0]);
 	}
 }
@@ -112,6 +112,7 @@ void GraphicsSystem::Update(float dt)
 			m_Animator.UpdateAnimation(dt, final);
 		}
 	}
+	m_Renderer.AddCube({ -10, 0, 0 }, { 2, 15, 2 }, { 1.f, 0., 0.f, 1.f });
 
 	// Prepare and bind the Framebuffer to be rendered on
 	m_Fbo.PrepForDraw();

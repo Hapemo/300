@@ -38,6 +38,7 @@ namespace GFX
 		void AddTriangle(vec3 const& p0, vec3 const& p1, vec3 const& p2, vec4 const& color);
 		void AddQuad(vec3 const& center, float width, float height, vec4 const& color = vec4{ 1.f, 1.f, 1.f, 1.f });
 		void AddAabb(vec3 const& center, vec3 const& size, vec4 const& color = vec4{ 1.f, 1.f, 1.f, 1.f });
+		void AddCube(vec3 const& center, vec3 const& size, vec4 const& color = vec4{ 1.f, 1.f, 1.f, 1.f });
 		void AddSphere(vec3 const& camPos, vec3 const& center, float radius, vec4 const& color = vec4{ 1.f, 1.f, 1.f, 1.f });
 
 		void RenderAll(mat4 viewProj);
@@ -55,6 +56,7 @@ namespace GFX
 		Mesh mTriangleMesh;
 		Mesh mQuadMesh;
 		Mesh mAabbMesh;
+		Mesh mCubeMesh;
 		Mesh mSphereMesh;
 
 		// Shader Set up
@@ -64,6 +66,7 @@ namespace GFX
 		void SetupTriangleMesh();
 		void SetupQuadMesh();
 		void SetupAabbMesh();
+		void SetupCubeMesh();
 		void SetupSphereMesh();
 
 		// -- Render Shapes --
@@ -71,6 +74,7 @@ namespace GFX
 		void RenderAllTriangles(mat4 const& viewProj);
 		void RenderAllQuads(mat4 const& viewProj);
 		void RenderAllAabb(mat4 const& viewProj);
+		void RenderAllCube(mat4 const& viewProj);
 		void RenderAllSphere(mat4 const& viewProj);
 
 		// -- Shader Code --

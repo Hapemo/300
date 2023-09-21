@@ -9,6 +9,7 @@ GFX::DebugRenderer::DebugRenderer()
 	SetupTriangleMesh();
 	SetupQuadMesh();
 	SetupAabbMesh();
+	SetupCubeMesh();
 	SetupSphereMesh();
 }
 
@@ -19,6 +20,7 @@ GFX::DebugRenderer::~DebugRenderer()
 	mTriangleMesh.Destroy();
 	mQuadMesh.Destroy();
 	mAabbMesh.Destroy();
+	mCubeMesh.Destroy();
 	mSphereMesh.Destroy();
 
 	mShader.DestroyShader();
@@ -110,6 +112,25 @@ void GFX::DebugRenderer::AddAabb(vec3 const& center, vec3 const& size, vec4 cons
 	mAabbMesh.mColors.push_back(color);
 }
 
+void GFX::DebugRenderer::AddCube(vec3 const& center, vec3 const& size, vec4 const& color)
+{
+	if (mCubeMesh.mLTW.size() >= MAX_INSTANCES)
+	{
+		std::cout << "Max Instances of Objects Reached!\n";
+		return;
+	}
+
+	mat4 world = {
+		vec4(size.x, 0.f, 0.f, 0.f),
+		vec4(0.f, size.y, 0.f, 0.f),
+		vec4(0.f, 0.f, size.z, 0.f),
+		vec4(center, 1.f)
+	};
+
+	mCubeMesh.mLTW.push_back(world);
+	mCubeMesh.mColors.push_back(color);
+}
+
 void GFX::DebugRenderer::AddSphere(vec3 const& camPos, vec3 const& center, float radius, vec4 const& color)
 {
 	// Calculate the horizon disc's position and radius
@@ -171,6 +192,8 @@ void GFX::DebugRenderer::RenderAll(mat4 viewProj)
 		RenderAllQuads(viewProj);
 	if (mAabbMesh.mLTW.size())
 		RenderAllAabb(viewProj);
+	if (mCubeMesh.mLTW.size())
+		RenderAllCube(viewProj);
 	if (mSphereMesh.mLTW.size())
 		RenderAllSphere(viewProj);
 }
@@ -181,6 +204,7 @@ void GFX::DebugRenderer::ClearInstances()
 	mTriangleMesh.ClearInstances();
 	mQuadMesh.ClearInstances();
 	mAabbMesh.ClearInstances();
+	mCubeMesh.ClearInstances();
 	mSphereMesh.ClearInstances();
 }
 
@@ -271,6 +295,33 @@ void GFX::DebugRenderer::SetupAabbMesh()
 	};
 
 	mAabbMesh.Setup(positions, indices);
+}
+
+void GFX::DebugRenderer::SetupCubeMesh()
+{
+	std::vector<vec3> positions
+	{
+		vec3(-0.5f,  0.5f,  0.5f),		// Top left near
+		vec3(-0.5f, -0.5f,  0.5f),		// Bottom left near
+		vec3( 0.5f, -0.5f,  0.5f),		// Bottom right near
+		vec3( 0.5f,  0.5f,  0.5f),		// Top right near
+		vec3(-0.5f,  0.5f, -0.5f),		// Top left far
+		vec3(-0.5f, -0.5f, -0.5f),		// Bottom left far
+		vec3( 0.5f, -0.5f, -0.5f),		// Bottom right far
+		vec3( 0.5f,  0.5f, -0.5f)		// Top right far
+	};
+
+	std::vector<GLuint> indices
+	{
+		0, 1, 2, 2, 3, 0,	// front
+		7, 6, 5, 5, 4, 7,	// far
+		4, 5, 1, 1, 0, 4,	// left
+		7, 3, 2, 2, 6, 7,	// right
+		4, 0, 3, 3, 7, 4,	// top
+		5, 1, 2, 2, 6, 5	// bottom
+	};
+
+	mCubeMesh.Setup(positions, indices);
 }
 
 void GFX::DebugRenderer::SetupSphereMesh()
@@ -383,6 +434,27 @@ void GFX::DebugRenderer::RenderAllAabb(mat4 const& viewProj)
 
 	mShader.Deactivate();
 	mAabbMesh.UnbindVao();
+}
+
+void GFX::DebugRenderer::RenderAllCube(mat4 const& viewProj)
+{
+	// Attach shader to state
+	mShader.Activate();
+
+	// Bind VAO to pipeline
+	mCubeMesh.BindVao();
+
+	// Attach data to vbo
+	mCubeMesh.PrepForDraw();
+
+	// Set uniform
+	glUniformMatrix4fv(mShader.GetUniformVP(), 1, GL_FALSE, &viewProj[0][0]);
+
+	// Draw
+	glDrawElementsInstanced(GL_TRIANGLES, mCubeMesh.GetIndexCount(), GL_UNSIGNED_INT, nullptr, mCubeMesh.mLTW.size());
+
+	mShader.Deactivate();
+	mCubeMesh.UnbindVao();
 }
 
 void GFX::DebugRenderer::RenderAllSphere(mat4 const& viewProj)
