@@ -195,7 +195,6 @@ MaterialInstanceData& MaterialInstanceManager::AllocRscInfo()
 {
 	auto pTemp = m_pInfoBufferEmptyHead;
 
-
 	MaterialInstanceData* pNext = reinterpret_cast<MaterialInstanceData*>(m_pInfoBufferEmptyHead->m_pData);
 	m_pInfoBufferEmptyHead = pNext;
 

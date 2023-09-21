@@ -127,6 +127,7 @@ namespace _GEOM
 		glm::mat4 scale = InterpolateScaling(animationTime);
 
 		m_LocalTransform = translation * rotation * scale;
+		//m_LocalTransform = trans;
 	}
 
 

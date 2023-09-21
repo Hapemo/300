@@ -21,7 +21,7 @@ void GraphicsSystem::Init()
 	m_Fbo.Create(m_Width, m_Height, m_EditorMode);
 
 	// Set Cameras' starting position
-	SetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_ALL, { 0, 0, 20 });							// Position of camera
+	SetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_ALL, { 0, 0, 20 });								// Position of camera
 	SetCameraTarget(CAMERA_TYPE::CAMERA_TYPE_ALL, { 0, 0, 0 });									// Target of camera
 	SetCameraProjection(CAMERA_TYPE::CAMERA_TYPE_ALL, 60.f, m_Window->size(), 0.1f, 900.f);		// Projection of camera
 
@@ -66,16 +66,6 @@ void GraphicsSystem::Update(float dt)
 	// update the camera's transformations, and its input
 	UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_EDITOR, dt);
 
-	if (_ENABLE_ANIMATIONS) 
-	{
-		// update the current animation
-		m_Animator.UpdateAnimation(dt);
-	}
-
-	// To be removed once entity to be drawn created
-	//m_Renderer.AddSphere(m_EditorCamera.position(), { 0, 0, -300 }, 100.f, { 0, 1, 0, 1 });
-	//m_Renderer.AddAabb({ -50, -60, -200 }, { 10, 30, -0.1f }, { 1, 0, 0, 1 });
-
 	// Retrieve and update the mesh instances to be drawn
 	auto meshRendererInstances = systemManager->ecs->GetEntitiesWith<MeshRenderer>();
 	for (Entity inst : meshRendererInstances)
@@ -85,25 +75,42 @@ void GraphicsSystem::Update(float dt)
 		GFX::Mesh& meshinst = systemManager->mResourceSystem->get_Mesh(meshstr);						// loads the mesh
 
 		// pushback LTW matrices
+		glm::mat4 scale = glm::scale(mat4(1.0f), inst.GetComponent<Transform>().mScale);
+		glm::mat4	rot = glm::rotate(mat4(1.0f), glm::radians(inst.GetComponent<Transform>().mRotate.x), glm::vec3(1.f, 0.f, 0.f));
+					rot = glm::rotate(rot, glm::radians(inst.GetComponent<Transform>().mRotate.y), glm::vec3(0.f, 1.f, 0.f));
+					rot = glm::rotate(rot, glm::radians(inst.GetComponent<Transform>().mRotate.z), glm::vec3(0.f, 0.f, 1.f));
 		glm::mat4	trns = glm::translate(inst.GetComponent<Transform>().mTranslate);
-		glm::mat4	rot = glm::rotate(trns, glm::radians(inst.GetComponent<Transform>().mRotate.x), glm::vec3(1.f, 0.f, 0.f));
-		rot = glm::rotate(rot, glm::radians(inst.GetComponent<Transform>().mRotate.y), glm::vec3(0.f, 1.f, 0.f));
-		rot = glm::rotate(rot, glm::radians(inst.GetComponent<Transform>().mRotate.z), glm::vec3(0.f, 0.f, 1.f));
+		//glm::mat4 final = trns * rot * scale;
 		glm::mat4 final = glm::mat4(1.f);
-		//glm::mat4 final = glm::scale(rot, inst.GetComponent<Transform>().mScale);
 
+		// if the debug drawing is turned on 
 		if (m_DebugDrawing && inst.HasComponent<BoxCollider>())
 		{
 			// draw the AABB of the mesh
 			glm::vec3 bbox_dimens = meshinst.mBBOX.m_Max - meshinst.mBBOX.m_Min;
-			bbox_dimens = bbox_dimens * inst.GetComponent<Transform>().mScale;
+			bbox_dimens = bbox_dimens * inst.GetComponent<Transform>().mScale * inst.GetComponent<BoxCollider>().mScaleOffset;
 			m_Renderer.AddAabb(inst.GetComponent<Transform>().mTranslate + inst.GetComponent<BoxCollider>().mTranslateOffset, bbox_dimens, {1.f, 0.f, 0.f, 1.f});
 
-			// draw the center of the mesh
+			// draw the mesh's origin
 			m_Renderer.AddSphere(m_EditorCamera.position(), inst.GetComponent<Transform>().mTranslate, 0.5f, { 1.f, 1.f, 0.f, 1.f });
+
+			// draw the mesh's bone positions as boxes
+			for (const auto& bones : meshinst.mAnimation[0].m_Bones)
+			{
+				static const vec3 bonescale(0.1f, 0.1f, 0.1f);
+				vec4 bonestrns = m_Animator.m_FinalBoneMatrices[bones.GetBoneID()] * vec4(inst.GetComponent<Transform>().mTranslate, 1.f);
+
+				m_Renderer.AddAabb({ bonestrns.x, bonestrns.y, bonestrns.z }, bonescale);
+			}
 		}
 
 		meshinst.mLTW.push_back(final);
+
+		if (_ENABLE_ANIMATIONS)
+		{
+			// update the current animation
+			m_Animator.UpdateAnimation(dt, final);
+		}
 	}
 
 	// Prepare and bind the Framebuffer to be rendered on
@@ -124,12 +131,12 @@ void GraphicsSystem::Update(float dt)
 		renderedMesh[meshstr] = 1;
 
 		// render the mesh and its instances here
-		GFX::Mesh& meshinst = systemManager->mResourceSystem->get_Mesh(meshstr);						// loads the mesh
+		GFX::Mesh& meshinst = systemManager->mResourceSystem->get_Mesh(meshstr);								// loads the mesh
 
 		// gets the shader filepath
 		std::pair<std::string, std::string> shaderstr = inst.GetComponent<MeshRenderer>().mShaderPath;
 		std::string concatname = shaderstr.first + shaderstr.second;
-		GFX::Shader& shaderinst = systemManager->mResourceSystem->get_Shader(concatname);				// loads the shader
+		GFX::Shader& shaderinst = systemManager->mResourceSystem->get_Shader(concatname);						// loads the shader
 		unsigned shaderID = shaderinst.GetHandle();
 
 		// get the texture filepath
@@ -383,4 +390,14 @@ vec3 GraphicsSystem::GetCameraDirection(CAMERA_TYPE type)
 void GraphicsSystem::DrawAll(GFX::Mesh& mesh)
 {
 	mesh.DrawAllInstances();
+}
+
+void GraphicsSystem::PrintMat4(const glm::mat4& input)
+{
+	std::cout << "=============================================================================\n";
+	std::cout << "| " << input[0][0] << " | " << input[1][0] << " | " << input[2][0] << " | " << input[3][0] << "\n";
+	std::cout << "| " << input[0][1] << " | " << input[1][1] << " | " << input[2][1] << " | " << input[3][1] << "\n";
+	std::cout << "| " << input[0][2] << " | " << input[1][2] << " | " << input[2][2] << " | " << input[3][2] << "\n";
+	std::cout << "| " << input[0][3] << " | " << input[1][3] << " | " << input[2][3] << " | " << input[3][3] << "\n";
+	std::cout << "=============================================================================\n";
 }

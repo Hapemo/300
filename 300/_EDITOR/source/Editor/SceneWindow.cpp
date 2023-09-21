@@ -50,13 +50,10 @@ void SceneWindow::update()
 	//ConstrainedResize(nullptr);
 	scene_m_Hovered = ImGui::IsWindowHovered();	
 
-	
-	ImGui::Image((ImTextureID)(intptr_t)systemManager->mGraphicsSystem->GetEditorAttachment(),ImGui::GetWindowSize());
-	
+	ImGui::Image((ImTextureID)(intptr_t)systemManager->mGraphicsSystem->GetEditorAttachment(), ImGui::GetWindowSize(), ImVec2(0, 1), ImVec2(1, 0));
 
 	//winSize_X = ImGui::GetWindowSize().x;
 	//winSize_Y = ImGui::GetWindowSize().y;
-	
 
 	winSize= { ImGui::GetWindowSize().x ,ImGui::GetWindowSize().y};
 	//systemManager->mGraphicsSystem->SetCameraSize()

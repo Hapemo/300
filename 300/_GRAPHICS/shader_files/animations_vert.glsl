@@ -33,7 +33,7 @@ void main()
     VertexColor = vec4(0.f);
 
 	// Position
-    vec4 totalPosition = vec4(inQPos.xyz, 1.0f);
+    vec4 totalPosition = vec4(inQPos, 1.0f);
     vec3 normal = vec3(0.0f);
     for(int i = 0; i < MAX_BONE_INFLUENCE; ++i)
     {
@@ -44,9 +44,8 @@ void main()
         }
 
         // if the bone found is invalid, set a default position value
-        if(boneId >= MAX_BONES)
-        {
-            totalPosition = vec4(inQPos.xyz, 1.0f);
+        if(boneId >= MAX_BONES) {
+            totalPosition = vec4(inQPos, 1.0f);
             break;
         }
 
@@ -56,7 +55,7 @@ void main()
         normal = mat3(finalBoneMatrices[boneId]) * inNormal;
     }
 
-
+    
     // Compute world-to-tangent space matrix
     mat3 normalMatrix = transpose(inverse(mat3(inLTW)));
     vec3 T = normalize(normalMatrix * inTangent);
@@ -64,6 +63,7 @@ void main()
     T = normalize(T - dot(T, N) * N);
     vec3 B = cross(N, T);
     mat3 TBN = transpose(mat3(T, B, N));
+
 
     // Set all the output vars
     //gl_Position         = uMatrixVP * inLTW * vec4(inQPos,1.0);

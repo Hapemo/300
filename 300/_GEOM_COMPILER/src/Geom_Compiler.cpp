@@ -34,7 +34,7 @@ namespace _GEOM
 			| aiProcess_GenNormals                 // if it does not have normals generate them... (this may not be a good option as it may hide issues from artist)
 			| aiProcess_CalcTangentSpace           // calculate tangents and bitangents if possible (definetly you will meed UVs)
 			| aiProcess_RemoveRedundantMaterials   // remove redundant materials
-			| aiProcess_FindInvalidData            // detect invalid model data, such as invalid normal vectors. 
+			//| aiProcess_FindInvalidData            // detect invalid model data, such as invalid normal vectors. 
 			| aiProcess_FlipUVs                    // flip the V to match the Vulkans way of doing UVs
 			;
 

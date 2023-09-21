@@ -53,6 +53,9 @@ public:
 	// Direction vector of the camera (Target - position)
 	vec3 GetCameraDirection(CAMERA_TYPE type);
 
+	// Helper Function
+	void PrintMat4(const glm::mat4& input);
+
 private:
 	GFX::DebugRenderer m_Renderer;		// isolated to debug draws
 	GFX::FBO m_Fbo;
