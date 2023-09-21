@@ -1,6 +1,7 @@
 #include "ECS/ECS.h"
 #include "ECS/ECS_Components.h"
 #include "pch.h"
+#include "Object/ObjectFactory.h"
 
 bool Entity::ShouldRun() {
 	assert(HasComponent<General>() && std::string("There is no general component when attempting to change Entity's isActive").c_str());
@@ -44,16 +45,17 @@ void ECS::NewPrefab(Entity e)
 	// 2) have a list of entities tied to a prefab
 	// for now, use member map
 	std::string name = e.GetComponent<General>().name;
+	ObjectFactory::SerializePrefab(e, "../assets/Prefabs/" + name + ".json");
 	if (mPrefabs.count(name))
 		throw ("prefab of the same name exists!");
-	mPrefabs[e.GetComponent<General>().name].push_back(e);
+	mPrefabs[name].push_back(e);
 }
 
 void ECS::NewEntityFromPrefab(std::string prefabName)
 {
 	// void ObjectFactory::DeserializeScene(const std::string& filename)
 	// creation of new entity done inside deserializescene function
-	Entity e = NewEntity();
+	Entity e = ObjectFactory::DeserializePrefab("../assets/Prefabs/" + prefabName + ".json");
 	//copy all prefab components (except transform) to new entity
 	mPrefabs[prefabName].push_back(e);
 }
