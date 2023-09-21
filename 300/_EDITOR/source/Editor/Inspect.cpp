@@ -69,7 +69,7 @@ Inspect display for RigidBody components
 #include <math.h>
 #include "imgui_stdlib.h"
 #include "../../../_SCRIPTING/include/ScriptingSystem.h"
-#include "../Debug/Logger.h"
+#include "../../../_ENGINE/include/Debug/Logger.h"
 
 
 //int Inspect::inspectmode{ inspector_layer };
