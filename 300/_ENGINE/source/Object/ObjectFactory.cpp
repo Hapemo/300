@@ -27,6 +27,12 @@ void ObjectFactory::DeserializeScene(const std::string& filename)
 			e.GetComponent<RigidBody>() = obj.GetRBJSON();
 		}
 
+		if (obj.mmr_t)
+		{
+			e.AddComponent<MeshRenderer>();
+			e.GetComponent<MeshRenderer>() = obj.GetMRJSON();
+		}
+
 		if (obj.mbc_t)
 		{
 			e.AddComponent<BoxCollider>();
@@ -49,6 +55,8 @@ void ObjectFactory::DeserializeScene(const std::string& filename)
 		{
 			e.AddComponent<Scripts>();
 			e.GetComponent<Scripts>() = obj.GetSJSON();
+			/*for (Script ya : e.GetComponent<Scripts>().scriptsContainer)
+				std::cout << ya.scriptFile << std::endl;*/
 		}
 
 		if (obj.mp_t)
@@ -77,47 +85,27 @@ void ObjectFactory::DeserializeScene(const std::string& filename)
 	auto child_cont = systemManager->ecs->GetEntitiesWith<Children>();
 
 	// working
-	//std::cout << "containers: " << parent_cont.size() << " " << child_cont.size() << std::endl;
+	std::cout << "containers: " << parent_cont.size() << " " << child_cont.size() << std::endl;
 
 	for (Entity pe : parent_cont)
 	{
-		for (const auto& p : idMap)
-		{
-			// if the next sibling's old id matches the old id in the list
-			if (pe.GetComponent<Parent>().mNextSibling == (std::uint32_t)p.first)
-			{
-				// update the next sibling's id with the new id
-				pe.GetComponent<Parent>().mNextSibling = (std::uint32_t)p.second;
-			}
+		Parent& parent = pe.GetComponent<Parent>();
+		std::cout << "old parent stuff: " << parent.mNextSibling << ", " << parent.mParent << ", " << parent.mPrevSibling << std::endl;
+		parent.mNextSibling = (uint32_t)idMap[(entt::entity)parent.mNextSibling];
+		parent.mParent = (uint32_t)idMap[(entt::entity)parent.mParent];
+		parent.mPrevSibling = (uint32_t)idMap[(entt::entity)parent.mPrevSibling];
 
-			if (pe.GetComponent<Parent>().mParent == (std::uint32_t)p.first)
-			{
-				pe.GetComponent<Parent>().mParent = (std::uint32_t)p.second;
-			}
-
-			if (pe.GetComponent<Parent>().mPrevSibling == (std::uint32_t)p.first)
-			{
-				pe.GetComponent<Parent>().mPrevSibling = (std::uint32_t)p.second;
-			}
-		}
+		std::cout << "new parent stuff: " << parent.mNextSibling << ", " << parent.mParent << ", " << parent.mPrevSibling << std::endl;
 	}
 
 	for (Entity ce : child_cont)
 	{
 		for (const auto& c : idMap)
 		{
-			// if the child's old id matches the old id in the list
-			if (ce.GetComponent<Children>().mFirstChild == (std::uint32_t)c.first)
-			{
-				// update the child's id with the new id
-				ce.GetComponent<Children>().mFirstChild = (std::uint32_t)c.second;
-			}
-
-			// clarify
-			/*if (ce.GetComponent<Children>().mNumChildren == (std::uint32_t)c.first)
-			{
-				ce.GetComponent<Children>().mNumChildren = (std::uint32_t)c.second;
-			}*/
+			Children& child = ce.GetComponent<Children>();
+			std::cout << "old child stuff: " << child.mFirstChild << std::endl;
+			child.mFirstChild = (uint32_t)idMap[(entt::entity)child.mFirstChild];
+			std::cout << "new child stuff: " << child.mFirstChild << std::endl;
 		}
 	}
 
@@ -146,33 +134,46 @@ void ObjectFactory::SerializeScene(const std::string& filename)
 	for (Entity e : container)
 	{
 		// basic stuff that must be set
+		std::string name = e.GetComponent<General>().name;
 		ent.SetIDJSON(e.id);
 		ent.SetGeneralJSON(e.GetComponent<General>());
 		ent.SetTransformJSON(e.GetComponent<Transform>());
 
 		if (e.HasComponent<RigidBody>())
 			ent.SetRBJSON(e.GetComponent<RigidBody>());
+		else ent.mrb_t = false;
+
+		if (e.HasComponent<MeshRenderer>())
+			ent.SetMRJSON(e.GetComponent<MeshRenderer>());
+		else ent.mmr_t = false;
 
 		if (e.HasComponent<BoxCollider>())
 			ent.SetBCJSON(e.GetComponent<BoxCollider>());
+		else ent.mbc_t = false;
 
 		if (e.HasComponent<SphereCollider>())
 			ent.SetSCJSON(e.GetComponent<SphereCollider>());
+		else ent.msc_t = false;
 
 		if (e.HasComponent<PlaneCollider>())
 			ent.SetPCJSON(e.GetComponent<PlaneCollider>());
+		else ent.mpc_t = false;
 
 		if (e.HasComponent<Scripts>())
 			ent.SetSJSON(e.GetComponent<Scripts>());
+		else ent.ms_t = false;
 
 		if (e.HasComponent<Parent>())
 			ent.SetPJSON(e.GetComponent<Parent>());
+		else ent.mp_t = false;
 
 		if (e.HasComponent<Children>())
 			ent.SetCJSON(e.GetComponent<Children>());
+		else ent.mc_t = false;
 
 		if (e.HasComponent<Audio>())
 			ent.SetAJSON(e.GetComponent<Audio>());
+		else ent.ma_t = false;
 
 		// push back after done
 		entities.EntitiesList().push_back(ent);
@@ -196,29 +197,47 @@ void ObjectFactory::SerializePrefab(Entity e, const std::string& filename)
 	ent.SetGeneralJSON(e.GetComponent<General>());
 	ent.SetTransformJSON(e.GetComponent<Transform>());
 
+	// basic stuff that must be set
+	std::string name = e.GetComponent<General>().name;
+	ent.SetIDJSON(e.id);
+	ent.SetGeneralJSON(e.GetComponent<General>());
+	ent.SetTransformJSON(e.GetComponent<Transform>());
+
 	if (e.HasComponent<RigidBody>())
 		ent.SetRBJSON(e.GetComponent<RigidBody>());
+	else ent.mrb_t = false;
+
+	if (e.HasComponent<MeshRenderer>())
+		ent.SetMRJSON(e.GetComponent<MeshRenderer>());
+	else ent.mmr_t = false;
 
 	if (e.HasComponent<BoxCollider>())
 		ent.SetBCJSON(e.GetComponent<BoxCollider>());
+	else ent.mbc_t = false;
 
 	if (e.HasComponent<SphereCollider>())
 		ent.SetSCJSON(e.GetComponent<SphereCollider>());
+	else ent.msc_t = false;
 
 	if (e.HasComponent<PlaneCollider>())
 		ent.SetPCJSON(e.GetComponent<PlaneCollider>());
+	else ent.mpc_t = false;
 
 	if (e.HasComponent<Scripts>())
 		ent.SetSJSON(e.GetComponent<Scripts>());
+	else ent.ms_t = false;
 
 	if (e.HasComponent<Parent>())
 		ent.SetPJSON(e.GetComponent<Parent>());
+	else ent.mp_t = false;
 
 	if (e.HasComponent<Children>())
 		ent.SetCJSON(e.GetComponent<Children>());
+	else ent.mc_t = false;
 
 	if (e.HasComponent<Audio>())
 		ent.SetAJSON(e.GetComponent<Audio>());
+	else ent.ma_t = false;
 
 	// push back after done
 	entities.EntitiesList().push_back(ent);

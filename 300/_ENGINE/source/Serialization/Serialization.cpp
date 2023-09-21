@@ -1,5 +1,6 @@
 #include "Serialization/Serialization.h"
 #include "Serialization/SerializationTemp.h"
+#include "GameState/Scene.h"
 
 bool BaseJSON::DeserializeFile(const std::string& filename)
 {
@@ -103,6 +104,18 @@ bool EntityJSON::Deserialize(const rapidjson::Value& obj)
 	}
 	else mrb_t = false;
 
+	if (obj.HasMember("MeshRenderer"))
+	{
+		mMRJ.mShaderPath = std::pair<std::string, std::string>(obj["MeshRenderer"]["ShaderPath"]["first"].GetString(), obj["MeshRenderer"]["ShaderPath"]["second"].GetString());
+		mMRJ.mMaterialInstancePath = obj["MeshRenderer"]["MaterialInstancePath"].GetString();
+		mMRJ.mMeshPath = obj["MeshRenderer"]["MeshPath"].GetString();
+		mMRJ.mGUID = (unsigned)obj["MeshRenderer"]["GUID"].GetInt();
+
+		mmr_t = true;
+	}
+	else mmr_t = false;
+
+
 	if (obj.HasMember("BoxCollider"))
 	{
 		mBCJ.mScaleOffset.x = (float)obj["BoxCollider"]["ScaleOffset"]["x"].GetDouble();
@@ -145,9 +158,9 @@ bool EntityJSON::Deserialize(const rapidjson::Value& obj)
 	{
 		Script tmp;
 
-		for (int i = 0; i < obj["Scripts"].Size(); ++i)
+		for (int i = 0; i < obj["Scripts"]["ScriptsFiles"].Size(); ++i)
 		{
-			tmp.scriptFile = obj["Scripts"][i].GetString();
+			tmp.scriptFile = obj["Scripts"]["ScriptsFiles"][i]["Filename"].GetString();
 			mSJ.scriptsContainer.push_back(tmp);
 		}
 
@@ -165,7 +178,7 @@ bool EntityJSON::Deserialize(const rapidjson::Value& obj)
 	}
 	else mp_t = false;
 
-	if (obj.HasMember("Child"))
+	if (obj.HasMember("Children"))
 	{
 		mCJ.mNumChildren = (std::uint32_t)obj["Children"]["NumChildren"].GetInt();
 		mCJ.mFirstChild = (std::uint32_t)obj["Children"]["FirstChild"].GetInt();
@@ -205,6 +218,12 @@ bool EntityJSON::Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* wri
 	{
 		writer->String("RigidBody");
 		to_json_recursive(mRBJ, *writer);
+	}
+
+	if (mmr_t)
+	{
+		writer->String("MeshRenderer");
+		to_json_recursive(mMRJ, *writer);
 	}
 
 	if (mbc_t)
@@ -410,4 +429,21 @@ AUDIOTYPE FindAudioEnum(std::string str)
 		if (it.first == str)
 			return it.second;
 	}
+}
+
+void SceneJSON::SetSceneJSON(const Scene scj)
+{
+	sj.name = scj.mName;
+	sj.isPause = scj.mIsPause;
+	sj.forceRender = scj.mForceRender;
+}
+
+const Scene SceneJSON::GetSceneJSON() const
+{
+	Scene scj;
+	scj.mName = sj.name;
+	scj.mIsPause = sj.isPause;
+	scj.mForceRender = sj.forceRender;
+
+	return scj;
 }

@@ -6,7 +6,8 @@
 #include "stringbuffer.h"
 #include "ECS/ECS_Components.h"
 #include "ECS/ECS.h"
-#include "GameState/GameStateManager.h"
+//#include "GameState/GameStateManager.h"
+class Scene;
 
 // helper functions to convert strings to enums
 TAG FindTagEnum(std::string str);
@@ -84,21 +85,21 @@ public:
 		return mRBJ;
 	}
 
+	void SetRBJSON(const RigidBody rbj)
+	{
+		mRBJ = rbj;
+		mrb_t = true;
+	}
+
 	void SetMRJSON(const MeshRenderer mrj)
 	{
 		mMRJ = mrj;
-		mr_t = true;
+		mmr_t = true;
 	}
 
 	const MeshRenderer GetMRJSON() const
 	{
 		return mMRJ;
-	}
-
-	void SetRBJSON(const RigidBody rbj)
-	{
-		mRBJ = rbj;
-		mrb_t = true;
 	}
 
 	const BoxCollider GetBCJSON() const
@@ -179,8 +180,8 @@ public:
 	}
 
 	// trackers to disable serialization if component does not exist
-	bool mid_t = false, mg_t = false, mt_t = false,
-		mrb_t = false, mr_t = false, mbc_t = false, msc_t = false,
+	bool mid_t = false, mg_t = false, mt_t = false, mmr_t = false,
+		mrb_t = false, mbc_t = false, msc_t = false,
 		mpc_t = false, ms_t = false, mp_t = false,
 		mc_t = false, ma_t = false;
 
@@ -231,22 +232,8 @@ public:
 	virtual bool Deserialize(const rapidjson::Value& obj);
 	virtual bool Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* writer) const;
 
-	void SetSceneJSON(const Scene scj)
-	{
-		sj.name = scj.mName;
-		sj.isPause = scj.mIsPause;
-		sj.forceRender = scj.mForceRender;
-	}
-
-	const Scene GetSceneJSON() const
-	{
-		Scene scj;
-		scj.mName = sj.name;
-		scj.mIsPause = sj.isPause;
-		scj.mForceRender = sj.forceRender;
-
-		return scj;
-	}
+	void SetSceneJSON(const Scene scj);
+	const Scene GetSceneJSON() const;
 
 private:
 	ScJSON sj;

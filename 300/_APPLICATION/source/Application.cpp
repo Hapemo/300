@@ -46,21 +46,21 @@ void Application::StartUp()
 void Application::SystemInit() 
 {
 #pragma region testphysics
-    Entity e1 = systemManager->ecs->NewEntity();
-    Entity e2 = systemManager->ecs->NewEntity();
+    //Entity e1 = systemManager->ecs->NewEntity();
+    //Entity e2 = systemManager->ecs->NewEntity();
 
-    e1.AddComponent<RigidBody>();
-    e1.GetComponent<RigidBody>().mMass = 10.f;
-    e1.GetComponent<RigidBody>().mMaterial = MATERIAL::CONCRETE;
-    e1.GetComponent<RigidBody>().mMotion = MOTION::STATIC;
-    e1.AddComponent<PlaneCollider>();
+    //e1.AddComponent<RigidBody>();
+    //e1.GetComponent<RigidBody>().mMass = 10.f;
+    //e1.GetComponent<RigidBody>().mMaterial = MATERIAL::CONCRETE;
+    //e1.GetComponent<RigidBody>().mMotion = MOTION::STATIC;
+    //e1.AddComponent<PlaneCollider>();
 
-    e2.AddComponent<RigidBody>();
-    e2.GetComponent<RigidBody>().mMass = 10.f;
-    e2.GetComponent<RigidBody>().mMaterial = MATERIAL::CONCRETE;
-    e2.GetComponent<RigidBody>().mMotion = MOTION::DYNAMIC;
-    e2.AddComponent<SphereCollider>();
-    e2.GetComponent<Transform>().mTranslate.y = 1000.f;
+    //e2.AddComponent<RigidBody>();
+    //e2.GetComponent<RigidBody>().mMass = 10.f;
+    //e2.GetComponent<RigidBody>().mMaterial = MATERIAL::CONCRETE;
+    //e2.GetComponent<RigidBody>().mMotion = MOTION::DYNAMIC;
+    //e2.AddComponent<SphereCollider>();
+    //e2.GetComponent<Transform>().mTranslate.y = 1000.f;
 
 #pragma endregion testphysics
     systemManager->Init(false, &mWindow);
@@ -68,7 +68,7 @@ void Application::SystemInit()
     Input::Init();
 
 #pragma region testserialization
-    ObjectFactory::DeserializeScene("../resources/Scenes/test.json");
+    //ObjectFactory::DeserializeScene("../resources/Scenes/test.json");
 
     Entity ent1 = systemManager->ecs->NewEntity();
     Entity ent2 = systemManager->ecs->NewEntity();
@@ -78,8 +78,15 @@ void Application::SystemInit()
     ent1.GetComponent<General>().isActive = true;
     ent1.GetComponent<General>().tag = TAG::PLAYER;
     ent1.GetComponent<General>().subtag = SUBTAG::ACTIVE;
+    ent1.AddComponent<Scripts>();
+    Script test, test2;
+    test.scriptFile = "../assets/Scripts/Run.lua";
+    test.env = { systemManager->mScriptingSystem->luaState, sol::create, systemManager->mScriptingSystem->luaState.globals() };
+    test2.scriptFile = "../assets/Scripts/Fly.lua";
+    test2.env = { systemManager->mScriptingSystem->luaState, sol::create, systemManager->mScriptingSystem->luaState.globals() };
+    ent1.GetComponent<Scripts>().scriptsContainer.push_back(test);
+    ent1.GetComponent<Scripts>().scriptsContainer.push_back(test2);
 
-    //ent1.AddComponent<MeshRenderer>();
     //ent2.AddComponent<Audio>();
 
     ent2.GetComponent<General>().name = "Other";
@@ -92,6 +99,23 @@ void Application::SystemInit()
     ent3.GetComponent<General>().tag = TAG::UNKNOWN;
     ent3.GetComponent<General>().subtag = SUBTAG::ACTIVE;
 
+    Entity ent4 = systemManager->ecs->NewEntity();
+    Entity ent5 = systemManager->ecs->NewEntity();
+    Entity ent6 = systemManager->ecs->NewEntity();
+    ent4.AddChild(ent5);
+    ent5.AddChild(ent6);
+
+    auto viewtemp1 = systemManager->ecs->GetEntitiesWith<Parent>();
+    int size1 = viewtemp1.size();
+    auto viewtemp2 = systemManager->ecs->GetEntitiesWith<Parent, Children>();
+    bool e4 = ent4.HasAllOfComponents<Parent, Children>();
+    bool e5 = ent5.HasAllOfComponents<Parent, Children>();
+    bool e6 = ent6.HasAllOfComponents<Parent, Children>();
+    std::vector<Entity> children = ent5.GetAllChildren();
+    Entity ent5parent = ent5.GetParent();
+    Entity ent6parent = ent6.GetParent();
+
+    bool x = ent1.HasAllOfComponents<Parent, Children>();
 
     ObjectFactory::SerializeScene("../resources/Scenes/test.json");
 
@@ -104,25 +128,7 @@ void Application::SystemInit()
 #pragma endregion testserialization
 
 #pragma region testparentchild
-    Entity ent4 = systemManager->ecs->NewEntity();
-    Entity ent5 = systemManager->ecs->NewEntity();
-    Entity ent6 = systemManager->ecs->NewEntity();
-    ent4.AddChild(ent5); 
-    ent5.AddChild(ent6);
 
-    auto viewtemp1 = systemManager->ecs->GetEntitiesWith<Parent>();
-    int size1 = viewtemp1.size();
-    auto viewtemp2 = systemManager->ecs->GetEntitiesWith<Parent, Children>();
-    bool e4 = ent4.HasAllOfComponents<Parent, Children>();
-    bool e5 = ent5.HasAllOfComponents<Parent, Children>();
-    bool e6 = ent6.HasAllOfComponents<Parent, Children>();
-    ent5.AddChild(ent1);
-    ent5.AddChild(ent2);
-    ent5.AddChild(ent3);
-    assert(ent5.GetComponent<Children>().mNumChildren == 4);
-    std::vector<Entity> children = ent5.GetAllChildren();
-    Entity ent5parent = ent5.GetParent();
-    Entity ent6parent = ent6.GetParent();
     //loop over children of an entity
 #pragma endregion testparentchild
 

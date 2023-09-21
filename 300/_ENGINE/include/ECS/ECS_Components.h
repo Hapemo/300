@@ -173,12 +173,12 @@ RTTR_REGISTRATION
 	.property("Motion", &RigidBody::mMotion)
 	;
 
-	/*rttr::registration::class_<MeshRenderer>("MeshRenderer")
+	rttr::registration::class_<MeshRenderer>("MeshRenderer")
 	.property("ShaderPath", &MeshRenderer::mShaderPath)
 	.property("MaterialInstancePath", &MeshRenderer::mMaterialInstancePath)
 	.property("MeshPath", &MeshRenderer::mMeshPath)
 	.property("GUID", &MeshRenderer::mGUID)
-	;*/
+	;
 
 	rttr::registration::class_<BoxCollider>("BoxCollider")
 	.property("ScaleOffset", &BoxCollider::mScaleOffset)
@@ -245,8 +245,14 @@ RTTR_REGISTRATION
 		rttr::value("SFX", AUDIOTYPE::AUDIO_SFX)
 	);
 
-	/*rttr::registration::class_<Script>("Script")
+	rttr::registration::class_<Script>("Script")
 	.property("Filename", &Script::scriptFile)
-	;*/
+	;
+
+	rttr::registration::class_<std::pair<std::string, std::string>>("std::pair")
+	.constructor<std::string, std::string>()
+	.property("first", &std::pair<std::string, std::string>::first)
+	.property("second", &std::pair<std::string, std::string>::second)
+	;
 }
 
