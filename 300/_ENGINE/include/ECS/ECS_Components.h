@@ -41,7 +41,7 @@ struct MeshRenderer
 {
 	// For now, we store the string to the filepaths. TO CHANGE to uids for efficient referencing
 	std::pair<std::string, std::string> mShaderPath;
-	std::string							mMaterialInstancePath;
+	std::vector<std::string>				mMaterialInstancePath;
 	std::string							mMeshPath;
 	
 	unsigned							mGUID;

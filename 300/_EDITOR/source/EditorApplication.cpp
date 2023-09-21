@@ -12,12 +12,15 @@ start up of window and game system, also runs their update functions.
 #include "FPSManager.h"
 #include "ECS/ECS.h"
 #include "ECS/ECS_Components.h"
+#include "ECS/ECS_Systems.h"
 #include "Input.h"
 #include "SingletonManager.h"
 #include "ScriptingSystem.h"
 #include "Physics/PhysicsSystem.h"
 #include "ResourceManager.h"
 #include "ResourceManagerTy.h"
+#include "Graphics/GraphicsSystem.h"
+#include "SceneWindow.h"
 #include "Guid.h"
 
 
@@ -76,11 +79,19 @@ void EditorApplication::MainUpdate()
 
         // Graphics update
 
+        auto windowSize = static_cast<SceneWindow*>(mMaineditor.mWindowlist["Editscene"])->winSize;
+        //int windowSizeY = static_cast<SceneWindow*>(mMaineditor.mWindowlist["Editscene"])->winSize_Y;
 
+            
+       // auto cam = systemManager->mGraphicsSystem->m_EditorCamera;
+
+        systemManager->mGraphicsSystem->SetCameraSize(CAMERA_TYPE::CAMERA_TYPE_EDITOR, windowSize);
+       // systemManager->mGraphicsSystem->SetCameraSize(&systemManager->mGraphicsSystem->mCamera, ImGui::GetWindowSize().x, ImGui::GetWindowSize().y);
         mMaineditor.UIupdate(mWindow.GetHandle());
         //mMaineditor.WindowUpdate(mWindow.GetHandle());
         mMaineditor.UIdraw(mWindow.GetHandle());
 
+       // systemManager->mGraphicsSystem->SetCameraPosition(&systemManager->mGraphicsSystem->mCamera,);
         // To remove (Script test with entities)
         systemManager->mScriptingSystem->ScriptingUpdateTest();
 

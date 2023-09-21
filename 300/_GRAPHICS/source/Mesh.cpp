@@ -69,7 +69,8 @@ void GFX::Mesh::Setup(const _GEOM::Geom& GeomData)
 	std::vector<std::array<float,MAX_BONE_INFLUENCE>>	boneWeights;
 
 	LoadFromGeom(GeomData, positions, uvs, indices);
-	mMeshName = std::string(GeomData.m_pMesh[0].m_name.begin(), GeomData.m_pMesh[0].m_name.end());
+	mMeshName	= std::string(GeomData.m_pMesh[0].m_name.begin(), GeomData.m_pMesh[0].m_name.end());
+	mBBOX		= GeomData.m_pMesh[0].m_MeshBBOX;
 
 	if (GeomData.m_bHasAnimations && _ENABLE_ANIMATIONS)
 	{
@@ -406,8 +407,12 @@ namespace Deserialization
 		// Meshes
 		GeomData.m_pMesh = std::make_shared<_GEOM::Geom::Mesh[]>(GeomData.m_nMeshes);
 		for (uint32_t i{}; i < GeomData.m_nMeshes; ++i) 
-		{				
+		{			
+			// name of the mesh
 			infile.read((char*)&GeomData.m_pMesh[i].m_name, sizeof(char) * 64);
+
+			// the bounding box of the mesh
+			infile.read((char*)&GeomData.m_pMesh[i].m_MeshBBOX, sizeof(_GEOM::bbox));
 
 			// Textures Data
 			if (GeomData.m_bHasTextures)

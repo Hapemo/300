@@ -21,7 +21,7 @@ Pure Virtual init function
 ****************************************************************************
 ***/
 #pragma once
-
+#include "imgui.h"
 class Editor;
 
 /*******************************/
@@ -36,6 +36,9 @@ public:
 	virtual void init() = 0;
 	virtual void update() = 0;
 	
+	
+	ImGuiWindowFlags	mWinFlag {0};
+
 	friend class Editor;
 
 

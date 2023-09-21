@@ -5,29 +5,33 @@
 namespace _GEOM
 {
 	// considers the vertices, and returns the bounding box with all the vertices inside it
-	bbox bbox::AddVerts(const glm::vec3* pVerts, std::int32_t nVerts) noexcept
+	void bbox::AddVerts(const glm::vec3* pVerts) noexcept
 	{
 		assert(pVerts != nullptr);
-		assert(nVerts > 0);
 
-		for (std::int32_t i{}; i < nVerts; ++i)
-		{
-			m_Min = glm::vec3
-			(
-				glm::min(m_Min.x, pVerts[i].x),
-				glm::min(m_Min.y, pVerts[i].y),
-				glm::min(m_Min.z, pVerts[i].z)
-			);
-
-			m_Max = glm::vec3
-			(
-				glm::max(m_Max.x, pVerts[i].x),
-				glm::max(m_Max.y, pVerts[i].y),
-				glm::max(m_Max.z, pVerts[i].z)
-			);
+		if (pVerts->x < 0 || pVerts->y < 0 || pVerts->z < 0) {
+			//std::cout << "tjeiowjioewr\n";
 		}
 
-		return *this;
+		m_Min.x = std::min(m_Min.x, pVerts->x);
+		m_Min.y = std::min(m_Min.y, pVerts->y);
+		m_Min.z = std::min(m_Min.z, pVerts->z);
+
+		m_Max.x = std::max(m_Max.x, pVerts->x);
+		m_Max.y = std::max(m_Max.y, pVerts->y);
+		m_Max.z = std::max(m_Max.z, pVerts->z);
+	}
+
+
+	void bbox::MergeBBOX(const bbox& inputbbox) noexcept
+	{
+		m_Min.x = std::min(m_Min.x, inputbbox.m_Min.x);
+		m_Min.y = std::min(m_Min.y, inputbbox.m_Min.y);
+		m_Min.z = std::min(m_Min.z, inputbbox.m_Min.z);
+
+		m_Max.x = std::max(m_Max.x, inputbbox.m_Max.x);
+		m_Max.y = std::max(m_Max.y, inputbbox.m_Max.y);
+		m_Max.z = std::max(m_Max.z, inputbbox.m_Max.z);
 	}
 
 

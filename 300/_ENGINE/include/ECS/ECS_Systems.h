@@ -11,6 +11,7 @@ class ECS;
 class Resource;
 class ResourceTy;
 class AudioSystem;
+class Logger;
 
 class SystemManager {
 	GFX::Window *mWindow;
@@ -24,7 +25,7 @@ public:
 	std::unique_ptr<ResourceTy> mResourceTySystem;
 	std::unique_ptr<GameStateManager> mGameStateSystem;
 	std::unique_ptr<AudioSystem> mAudioSystem;
-
+	std::unique_ptr<Logger> mLogger;
 
 
 	ECS *ecs;

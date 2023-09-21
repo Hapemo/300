@@ -159,10 +159,10 @@ void Editor::UIinit(GLFWwindow* window)
 //    static_cast<SceneWindow*>(windowlist["Scene"])->Framebuffer_spec(Editor_fb->color_attachment);
 //    static_cast<SceneWindow*>(windowlist["Display"])->Framebuffer_spec(MainCam_fb->color_attachment);
 //
-//    for (auto & windows : windowlist ) 
-//    {
-//        windows.second->init();
-//    }
+    for (auto & windows : mWindowlist ) 
+    {
+        windows.second->init();
+    }
 }
 
 void Editor::WindowUpdate(GLFWwindow* window)
@@ -230,9 +230,10 @@ void Editor::UIupdate(GLFWwindow* window) {
 
     for (auto& windows : mWindowlist)
     {
-
-        ImGui::Begin(windows.first.c_str(), 0);
-
+        //if (windows.first == "Editscene")
+        //    static_cast<SceneWindow*>(windows.second)->ConstrainedResize(nullptr);
+        //
+        ImGui::Begin(windows.first.c_str(), 0, windows.second->mWinFlag);
         windows.second->update();
         ImGui::End();
     }

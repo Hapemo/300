@@ -16,7 +16,8 @@
 
 #include "Math.hpp"
 
-namespace GFX {
+namespace GFX 
+{
     class Camera
     {
     public:
@@ -36,6 +37,8 @@ namespace GFX {
 
         void Update();
 
+        float mFovDegree;
+
     private:
         mat4 mProjection;
         mat4 mView;
@@ -47,7 +50,6 @@ namespace GFX {
         float mAspectRatio;
         float mNear;
         float mFar;
-        float mFovDegree;
     };
 }
 

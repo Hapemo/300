@@ -43,7 +43,8 @@ namespace _GEOM
 		glm::vec3 m_Max{};
 
 	public:
-		bbox AddVerts(const glm::vec3* pVerts, std::int32_t nVerts) noexcept;
+		void AddVerts(const glm::vec3* pVerts) noexcept;
+		void MergeBBOX(const bbox& inputbox) noexcept;
 		glm::vec3 getSize() const noexcept;
 		glm::vec3 getCenter() const noexcept;
 	};
@@ -80,6 +81,7 @@ namespace _GEOM
 			std::array<char, 64>		m_name;				// Name of mesh
 			std::vector<Animation>		m_Animation;		// Animation data of the mesh
 			std::vector<Geom::Texture>	m_Texture;			// The texture that the mesh contains
+			bbox						m_MeshBBOX;
 		};
 
 		struct SubMesh
@@ -129,6 +131,7 @@ namespace _GEOM
 		{
 			std::string									m_Name;
 			std::vector<Submesh>						m_Submeshes;
+			bbox										m_MeshBBOX;
 		};
 
 		std::string										m_Filename;
