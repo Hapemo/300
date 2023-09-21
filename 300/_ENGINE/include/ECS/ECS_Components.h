@@ -49,12 +49,12 @@ struct MeshRenderer
 
 struct RigidBody
 {
-	std::uint16_t mMass;
+	float mDensity;
 	MATERIAL mMaterial;
 	MOTION mMotion;
 	glm::vec3 mVelocity;
 
-	RigidBody() : mMass(10.f), mMaterial(MATERIAL::WOOD), mMotion(MOTION::STATIC), mVelocity(0.f) {};
+	RigidBody() : mDensity(10.f), mMaterial(MATERIAL::WOOD), mMotion(MOTION::STATIC), mVelocity(0.f) {};
 	RTTR_ENABLE()
 };
 

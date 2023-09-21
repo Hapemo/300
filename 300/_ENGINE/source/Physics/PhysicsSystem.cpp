@@ -27,7 +27,8 @@ void PhysicsSystem::Init()
 			PxShape* shape = mPX.mPhysics->createShape(PxBoxGeometry(Convert(halfextents)), *mMaterials[rbod.mMaterial]);
 			PxRigidDynamic* actor = mPX.mPhysics->createRigidDynamic(PxTransform(Convert(pos)));
 			actor->attachShape(*shape);
-			//actor->setLinearVelocity(Convert(rbod.mVelocity));
+			PxRigidBodyExt::updateMassAndInertia(*actor, rbod.mDensity);
+			actor->setLinearVelocity(Convert(rbod.mVelocity));
 			mActors[static_cast<uint32_t>(e.id)] = actor;
 			mPX.mScene->addActor(*actor);
 			shape->release();
@@ -49,6 +50,7 @@ void PhysicsSystem::Init()
 			PxShape* shape = mPX.mPhysics->createShape(PxSphereGeometry(rad), *mMaterials[rbod.mMaterial]);
 			PxRigidDynamic* actor = mPX.mPhysics->createRigidDynamic(PxTransform(Convert(pos)));
 			actor->attachShape(*shape);
+			PxRigidBodyExt::updateMassAndInertia(*actor, rbod.mDensity);
 			actor->setLinearVelocity(Convert(rbod.mVelocity));
 			mActors[static_cast<uint32_t>(e.id)] = actor;
 			mPX.mScene->addActor(*actor);

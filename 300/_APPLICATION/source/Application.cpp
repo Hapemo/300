@@ -51,25 +51,21 @@ void Application::SystemInit()
     Entity e3 = systemManager->ecs->NewEntity();
     ee2 = (uint32_t)e2.id;
     e1.AddComponent<RigidBody>();
-    e1.GetComponent<RigidBody>().mMass = 10.f;
     e1.GetComponent<RigidBody>().mMaterial = MATERIAL::CONCRETE;
     e1.GetComponent<RigidBody>().mMotion = MOTION::STATIC;
     e1.AddComponent<PlaneCollider>();
 
     e2.AddComponent<RigidBody>();
-    e2.GetComponent<RigidBody>().mMass = 10.f;
     e2.GetComponent<RigidBody>().mMaterial = MATERIAL::CONCRETE;
     e2.GetComponent<RigidBody>().mMotion = MOTION::DYNAMIC;
     e2.AddComponent<BoxCollider>();
     e2.GetComponent<Transform>().mTranslate.y = 1000.f;
 
     e3.AddComponent<RigidBody>();
-    e3.GetComponent<RigidBody>().mMass = 10.f;
     e3.GetComponent<RigidBody>().mMaterial = MATERIAL::CONCRETE;
     e3.GetComponent<RigidBody>().mMotion = MOTION::DYNAMIC;
     e3.AddComponent<SphereCollider>();
-    e3.GetComponent<Transform>().mTranslate.y = 1000.f;
-    e3.GetComponent<Transform>().mTranslate.x = 300.f;
+    e3.GetComponent<Transform>().mTranslate.y = 1500.f;
 
 
 #pragma endregion testphysics
