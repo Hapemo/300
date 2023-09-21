@@ -106,7 +106,7 @@ T generateUniqueIDfromString(std::string name) {
 
     for (const char& c : name) {
 
-        hashedValue += c * table.ms_Table[counter++];
+        hashedValue += c /** table.ms_Table[counter++]*/;
     }
 
     //std::cout << hashedValue;
