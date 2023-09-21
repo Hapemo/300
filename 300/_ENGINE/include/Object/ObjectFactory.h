@@ -20,6 +20,6 @@ public:
 	//serializationManager->SaveGameState(*this); TODO
 	static void SaveGameState(/*gamestate*/);
 
-	static void DeserializePrefab(const std::string& filename);
+	//static void DeserializePrefab(const std::string& filename); // just use the normal deserializescene function, works exactly the same
 	static void SerializePrefab(Entity e, const std::string& filename);
 };
