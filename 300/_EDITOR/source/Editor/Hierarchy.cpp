@@ -50,15 +50,20 @@ void Hierarchy::update()
 
     if (ImGui::TreeNodeEx("Scene", ImGuiTreeNodeFlags_DefaultOpen))
     {
-        int i = 0;
+        int i = 5462;
         for (Entity ent : allObjects)													
         {
-            if (!ent.HasParent()&&!ent.HasChildren()) {
+            if (ent.HasParent() == false&& ent.HasChildren() == false) {
 
                 General& info = ent.GetComponent<General>();
-            
                 ImGui::PushID(i);
-                ImGui::TreeNodeEx((info.name /*+std::to_string(i)*/).c_str(), ImGuiTreeNodeFlags_NoTreePushOnOpen | ImGuiTreeNodeFlags_Leaf);
+            
+                ImGuiWindowFlags selectflag{ 0 };
+                if (ent.id == selectedId)
+                    selectflag |= ImGuiTreeNodeFlags_Selected;
+                
+                ImGui::TreeNodeEx((info.name /*+std::to_string(i)*/).c_str(), selectflag|ImGuiTreeNodeFlags_NoTreePushOnOpen | ImGuiTreeNodeFlags_Leaf);
+                ImGui::PopID();
 
                 //--------------------------------------------------------------------------// Select Object
 
@@ -74,7 +79,6 @@ void Hierarchy::update()
                     }
                 
                 }
-                ImGui::PopID();
 
                 if (ImGui::BeginDragDropTarget()) {
 
@@ -103,49 +107,65 @@ void Hierarchy::update()
                 if (ImGui::IsItemClicked(ImGuiMouseButton_Right)) {
                     mPopup = true;
                 }
-
             }
-            i++;
+            
 
 
 
                 //-------------------------------------------------------------------------------------// 
                 //-------------------------------------------------------------------------------------// 
 
-                if (ent.HasChildren()) {
-                    if (ImGui::TreeNodeEx((ent.GetComponent<General>().name).c_str())) {
+            if (ent.HasChildren()==true) {
 
-                        if (ImGui::BeginDragDropTarget()) {
+                ImGuiWindowFlags selectflag{ 0 };
+                if (ent.id == selectedId)
+                    selectflag |= ImGuiTreeNodeFlags_Selected; 
+                if(ImGui::TreeNodeEx((ent.GetComponent<General>().name).c_str(), selectflag|ImGuiTreeNodeFlags_OpenOnDoubleClick| ImGuiTreeNodeFlags_DefaultOpen)) {
 
-
-                            //ImGui::SetDragDropPayload("PARENT_CHILD", source_path, strlen(source_path) * sizeof(wchar_t), ImGuiCond_Once);
-
-                            if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("PARENT_CHILD")) {
-                                // auto payload = ImGui::AcceptDragDropPayload("PARENT_CHILD");
-
-                                auto data = static_cast<entt::entity*> (payload->Data);
-                                std::cout << "im here for thed ata\n";
-                                ent.AddChild(*data);
-                            }
-                            ImGui::EndDragDropTarget();
-                        }
-                        auto allchild = ent.GetAllChildren();
-
-                        for (auto& child : allchild) {
-                            ImGui::TreeNodeEx((child.GetComponent<General>().name + "xiaohai").c_str(), ImGuiTreeNodeFlags_NoTreePushOnOpen | ImGuiTreeNodeFlags_Leaf);
- 
-                            if (ImGui::IsItemClicked(ImGuiMouseButton_Right)) {
-                                RselectedId = child.id;
-                                mPopup = true;
-                            }
-
-                        }
-                        ImGui::TreePop();
+                    if (ImGui::IsItemClicked(ImGuiMouseButton_Left)) {
+                        selectionOn = true;
+                        selectedId = ent.id;
                     }
 
+                    if (ImGui::BeginDragDropTarget()) {
+                        //ImGui::SetDragDropPayload("PARENT_CHILD", source_path, strlen(source_path) * sizeof(wchar_t), ImGuiCond_Once);
+
+                        if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("PARENT_CHILD")) {
+                            // auto payload = ImGui::AcceptDragDropPayload("PARENT_CHILD");
+
+                            auto data = static_cast<entt::entity*> (payload->Data);
+                            std::cout << "im here for thed ata\n";
+                            ent.AddChild(*data);
+                        }
+                        ImGui::EndDragDropTarget();
+                    }
+                    auto allchild = ent.GetAllChildren();
+
+                    for (auto& child : allchild) {
+                        ImGuiWindowFlags selectflag{ 0 };
+                        if (child.id == selectedId)
+                            selectflag |= ImGuiTreeNodeFlags_Selected;
+
+                        ImGui::TreeNodeEx((child.GetComponent<General>().name + "xiaohai").c_str(), selectflag | ImGuiTreeNodeFlags_NoTreePushOnOpen | ImGuiTreeNodeFlags_Leaf);
+
+                        if (ImGui::IsItemClicked(ImGuiMouseButton_Right)) {
+                            RselectedId = child.id;
+                            mPopup = true;
+                        }
+
+                        if (ImGui::IsItemClicked(ImGuiMouseButton_Left)) {
+                            selectionOn = true;
+                            selectedId = child.id;
+                        }
+
+                    }
+                    ImGui::TreePop();
 
                 }
-
+                        //if(allchild.size()>=1 )  
+                
+                }
+            i++; // for id
             
 
 
