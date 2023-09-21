@@ -32,6 +32,7 @@ generate the overall performance of the scripting system.
 //#include "../GameState/GameStateManager.h"
 #include "ScriptingSystem.h"
 #include "Debug/Logger.h"
+#include "CustomCompCont.h"
 
 /******************************************************************************/
 /*!
@@ -51,6 +52,11 @@ generate the overall performance of the scripting system.
 //sol::state ScriptingSystem::luaState;
 //bool ScriptingSystem::once;
 bool ScriptingSystem::printOnce = false;
+
+namespace sol {
+    template <>
+    struct is_container<CustomCompCont> : std::false_type { };
+}
 
 void ScriptingSystem::Init()
 {
@@ -78,6 +84,14 @@ void ScriptingSystem::Init()
         "x", &glm::vec3::x,
         "y", &glm::vec3::y,
         "z", &glm::vec3::z
+        );
+
+
+    luaState.new_usertype<CustomCompCont>("CustomCompCont",
+        sol::constructors<CustomCompCont>(),
+        "begin", &CustomCompCont::begin,
+        "end", &CustomCompCont::end,
+        "size", &CustomCompCont::size
         );
 
     /******************************************************************************/
@@ -130,68 +144,70 @@ void ScriptingSystem::Init()
 
 void ScriptingSystem::Update(float dt)
 {
-    ////for (int step = 0; step <= Engine::currentNumberOfSteps - 1; ++step) 
-    //////{ 
-    ////Timer::GetTime(startTime); 
-
-    ////// If "Pause" is checked 
-    ////if (g_engine->gameStateMgr->isPaused) 
+    //for (int step = 0; step <= Engine::currentNumberOfSteps - 1; ++step) 
     ////{ 
-    ////    return; 
-    ////} 
+    //Timer::GetTime(startTime); 
 
-    //auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
+    //// If "Pause" is checked 
+    //if (g_engine->gameStateMgr->isPaused) 
+    //{ 
+    //    return; 
+    //} 
 
-    ////if (g_engine->gameStateMgr->isPlaying) 
-    ////{ 
-    //    // Load the scripts and call the "Start" function 
-    //if (!once)
-    //{
-    //    for (Entity entity : scriptEntities)
-    //    {
-    //        for (Script script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
-    //        {
-    //            script.Load(entity);
-    //            script.Run("Start");
-    //        }
-    //    }
-    //    once = true;
+    auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
+
+    //scriptEntities
+
+    //if (g_engine->gameStateMgr->isPlaying) 
+    //{ 
+        // Load the scripts and call the "Start" function 
+    if (!once)
+    {
+        for (Entity entity : scriptEntities)
+        {
+            for (Script script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
+            {
+                script.Load(entity);
+                script.Run("Start");
+            }
+        }
+        once = true;
+    }
+
+    // Call the "Update" function 
+    for (Entity entity : scriptEntities)
+    {
+        for (Script script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
+        {
+            script.Run("Update");
+        }
+    }
+    //} 
+    /******************************************************************************/
+    /*!
+        To implement when game state manager is ready
+        Load scripts when scene is not playing & left-shift is pressed
+     */
+     /******************************************************************************/
+    //else 
+    //{ 
+    if (Input::CheckKey(E_STATE::PRESS, E_KEY::LEFT_SHIFT))
+    {
+        //    for (Entity entity : ECS::GetInstance()->GetEntitiesWith<Scripts>()) 
+        //    { 
+        //        for (auto& script : entity.GetComponent<Scripts>().scriptsContainer) 
+        //        { 
+        //            int entityid = entity.id; 
+        //            script.Load(entityid); 
+        //        } 
+        //    } 
+        once = false;
+    }
+    //} 
+
+    //Timer::GetTime(endTime); 
+    //Timer::UpdateSystemMs(SystemType<ScriptingSystem>(), startTime, endTime); 
     //}
-
-    //// Call the "Update" function 
-    //for (Entity entity : scriptEntities)
-    //{
-    //    for (Script script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
-    //    {
-    //        script.Run("Update");
-    //    }
-    //}
-    ////} 
-    ///******************************************************************************/
-    ///*!
-    //    To implement when game state manager is ready
-    //    Load scripts when scene is not playing & left-shift is pressed
-    // */
-    // /******************************************************************************/
-    ////else 
-    ////{ 
-    //if (Input::CheckKey(E_STATE::PRESS, E_KEY::LEFT_SHIFT))
-    //{
-    //    //    for (Entity entity : ECS::GetInstance()->GetEntitiesWith<Scripts>()) 
-    //    //    { 
-    //    //        for (auto& script : entity.GetComponent<Scripts>().scriptsContainer) 
-    //    //        { 
-    //    //            int entityid = entity.id; 
-    //    //            script.Load(entityid); 
-    //    //        } 
-    //    //    } 
-    //    once = false;
-    //}
-    ////} 
-
-    ////Timer::GetTime(endTime); 
-    ////Timer::UpdateSystemMs(SystemType<ScriptingSystem>(), startTime, endTime); 
-    ////}
 }
 
 void ScriptingSystem::Exit()
@@ -286,6 +302,12 @@ void ScriptingSystem::ScriptingUpdateTest()
     //    std::cout << std::endl;
     //    printOnce = true;
     //}
+    if (Input::CheckKey(E_STATE::PRESS, E_KEY::Q))
+    {
+        Entity entity = systemManager->ecs->NewEntity();
+        /*std::cout << entity.GetComponent<General>().name << std::endl;*/
+    }
+
     if (Input::CheckKey(E_STATE::PRESS, E_KEY::T))
         printOnce = false;
     //// Button press number 1 to add new script 

@@ -4,6 +4,11 @@
 #include "Input.h"
 #include "ECS/ECS_Systems.h"
 
+void LuaComponentContainer()
+{
+
+}
+
 void LuaEngine()
 {
     systemManager->mScriptingSystem->luaState["systemManager"] = systemManager;

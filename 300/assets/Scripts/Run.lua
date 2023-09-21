@@ -4,8 +4,13 @@ end
 
 function Update()
     --Working
-    --systemManager.ecs:NewEntity();
-
-    --Test ScriptStart and ScriptUpdate functions
-    print("Running from Run.lua !!")
+    --print("Running from Run.lua !!")
+    --systemManager.ecs:NewEntity()
+    --systemManager.ecs:DeleteEntity(entity)
+    
+    --Testing
+    generalEntities = systemManager.ecs:GetEntitiesWithGeneral();
+    for i = 0, #generalEntities do
+        print(generalEntities[i].id)
+    end
 end

@@ -27,6 +27,7 @@
     <ClCompile Include="source\ScriptingSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\CustomCompCont.h" />
     <ClInclude Include="include\LuaEngine.h" />
     <ClInclude Include="include\resource.h" />
     <ClInclude Include="include\Script.h" />
