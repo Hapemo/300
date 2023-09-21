@@ -1,10 +1,7 @@
 #pragma once
 #include "entt.hpp";
-#include "Singleton.h"
 #include "ECS_Systems.h"
-//#include "Prefab.h"
 
-struct Entity;
 struct Children;
 struct Parent;
 
@@ -59,12 +56,23 @@ struct Entity
 	bool HasChildren();
 
 	bool HasParent();
+
+	template<typename Component>
+	Component& LuaGetComponent(Entity entity);
+
+	//template <typename Component, typename OtherComponent, typename ...Components>
+	/*auto LuaGetComponents(Entity entity);*/
+
+	//template <typename Component, typename OtherComponent, typename ...Components>
+	//auto LuaGetComponents(Entity entity, sol::as_args args);
 };
 
 class ECS
 {
 public:
 	ECS();
+
+	std::unordered_map<std::string, std::vector<Entity>> mPrefabs;
 
 	entt::registry registry;
 
@@ -80,7 +88,11 @@ public:
 
 	void DeleteAllEntities();
 
-	//Entity NewPrefabEntity(const Prefab& prefab);
+	void NewPrefab(Entity e);
+
+	void NewEntityFromPrefab(std::string prefabName);
+
+	void UpdatePrefabEntities(std::string prefabName);
 
 	const Entity NullEntity;
 };
@@ -192,3 +204,15 @@ void Entity::RemoveComponent()
 {
 	systemManager->ecs->registry.remove<Component>(id);
 }
+
+template<typename Component>
+Component& Entity::LuaGetComponent(Entity entity)
+{
+	return entity.GetComponent<Component>();
+}
+
+//template <typename Component, typename OtherComponent, typename ...Components>
+//auto Entity::LuaGetComponents(Entity entity)
+//{
+//	return entity.GetComponent<Component, OtherComponent, Components...>;
+//}

@@ -64,10 +64,13 @@ public:
 	*******************************************************************************/
 	static void Exit();
 
+
+	GFX::Camera mCamera;
+
 private:
 	static std::string title;
 	static GFX::Window mWindow;
 	static GFX::DebugRenderer* mRenderer;
 	static Editor mMaineditor;
-	GFX::Camera mCamera;
+
 };

@@ -69,6 +69,7 @@ Inspect display for RigidBody components
 #include <math.h>
 #include "imgui_stdlib.h"
 #include "../../../_SCRIPTING/include/ScriptingSystem.h"
+#include "../../../_ENGINE/include/Debug/Logger.h"
 
 
 //int Inspect::inspectmode{ inspector_layer };
@@ -182,15 +183,17 @@ void Scripts::Inspect() {
 	bool delete_component = true;
 	const char* data_script{};
 	static std::string newScript;
+	static bool open_popup{ false };
+	static std::string deleteScript;
 
-	Scripts& scripts = Entity(Hierarchy::selectedId).GetComponent<Scripts>();
 	auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
+	Scripts& scripts = scriptEntities.get<Scripts>(Hierarchy::selectedId);
 
 	if (ImGui::CollapsingHeader("Scripts"), &delete_component, ImGuiTreeNodeFlags_DefaultOpen)
 	{
 		if (ImGui::BeginDragDropTarget())
 		{
-			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_LUA_OBJ"))
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_LUA"))
 			{
 				data_script = (const char*)payload->Data;
 				scripts.mScriptFile = std::string(data_script);
@@ -202,20 +205,21 @@ void Scripts::Inspect() {
 					Script script;
 					script.scriptFile = dataScript;
 					script.env = { systemManager->mScriptingSystem->luaState, sol::create, systemManager->mScriptingSystem->luaState.globals() };
-					scriptEntities.get<Scripts>(Hierarchy::selectedId).scriptsContainer.push_back(script);
-					std::cout << "Script " << script.scriptFile << ".lua added to entity " << std::to_string((int)Hierarchy::selectedId) << std::endl;
+					scripts.scriptsContainer.push_back(script);
+					//std::cout << "Script " << script.scriptFile << ".lua added to entity " << std::to_string((int)Hierarchy::selectedId) << std::endl;
 				}
 				// if entity already has scripts attached, check if duplicate 
 				else
 				{
 					bool hasScript{ };
 
-					for (auto& elem : scriptEntities.get<Scripts>(Hierarchy::selectedId).scriptsContainer)
+					for (auto& elem : scripts.scriptsContainer)
 					{
 						if (elem.scriptFile == scripts.mScriptFile)
 						{
 							hasScript = true;
-							std::cout << "Script is already attached! " << std::endl;
+							//std::cout << "Script is already attached! " << std::endl;
+							PWARNING("Script is already attached! ");
 							break;
 						}
 					}
@@ -225,14 +229,50 @@ void Scripts::Inspect() {
 						Script script;
 						script.scriptFile = dataScript;
 						script.env = { systemManager->mScriptingSystem->luaState, sol::create, systemManager->mScriptingSystem->luaState.globals() };
-						scriptEntities.get<Scripts>(Hierarchy::selectedId).scriptsContainer.push_back(script);
-						std::cout << "Script " << script.scriptFile << ".lua added to entity " << std::to_string((int)Hierarchy::selectedId) << std::endl;
+						scripts.scriptsContainer.push_back(script);
+						//std::cout << "Script " << script.scriptFile << ".lua added to entity " << std::to_string((int)Hierarchy::selectedId) << std::endl;
+						PINFO("Script %s added to entity %s", script.scriptFile.c_str(), std::to_string((int)Hierarchy::selectedId).c_str());
 					}
 				}
 			}
 			ImGui::EndDragDropTarget();
 		}
 
+		ImGui::Text("Drag drop scripts to header above 'Scripts'");
+		ImGui::Text("Entity contains scripts: ");
+		for (auto& elem : scripts.scriptsContainer)
+		{
+			bool selected{};
+			ImGui::Selectable(elem.scriptFile.c_str(), &selected);
+			if (ImGui::IsItemClicked(ImGuiMouseButton_Left)) {
+			}
+			if (ImGui::IsItemClicked(1)) {
+				open_popup = true;
+				deleteScript = elem.scriptFile;
+			}
+		}
+
+		if (open_popup) {
+			ImGui::OpenPopup("Delete_Script", ImGuiPopupFlags_MouseButtonRight);
+		}
+		if (ImGui::BeginPopup("Delete_Script"))
+		{
+			if (ImGui::Selectable("Delete"))
+			{
+				for (auto i = 0; i < scripts.scriptsContainer.size(); i++)
+				{
+					if (scripts.scriptsContainer[i].scriptFile == deleteScript)
+					{
+						scripts.scriptsContainer.erase(scripts.scriptsContainer.begin() + i);
+					}
+				}
+				open_popup = false;
+			}
+			ImGui::EndPopup();
+		}
+		open_popup = false;
+
+		ImGui::Text("Create new script: ");
 		ImGui::InputText(".lua", &newScript);
 		if (ImGui::Button("Add Lua Script"))
 		{

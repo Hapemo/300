@@ -45,7 +45,7 @@ public:
 	void SetCameraTarget(CAMERA_TYPE type, vec3 position);
 	void SetCameraProjection(CAMERA_TYPE type, float fovDegree, ivec2 size, float nearZ, float farZ);
 	void SetCameraSize(CAMERA_TYPE type, ivec2 size);
-	void UpdateCamera(CAMERA_TYPE type);
+	void UpdateCamera(CAMERA_TYPE type, const float&);
 
 	vec3 GetCameraPosition(CAMERA_TYPE type);
 	vec3 GetCameraTarget(CAMERA_TYPE type);
@@ -66,8 +66,12 @@ private:
 	GFX::Camera m_GameCamera;
 	GFX::Camera m_EditorCamera;
 
+	// -- Textures --
+	std::vector<int> m_Textures;
+
 	// -- Flags --
 	bool m_EditorMode;
+	bool m_DebugDrawing{ 1 };			// debug drawing 
 
 	// -- Animator --
 	GFX::Animator m_Animator;
