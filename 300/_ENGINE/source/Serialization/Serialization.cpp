@@ -107,7 +107,8 @@ bool EntityJSON::Deserialize(const rapidjson::Value& obj)
 	if (obj.HasMember("MeshRenderer"))
 	{
 		mMRJ.mShaderPath = std::pair<std::string, std::string>(obj["MeshRenderer"]["ShaderPath"]["first"].GetString(), obj["MeshRenderer"]["ShaderPath"]["second"].GetString());
-		mMRJ.mMaterialInstancePath = obj["MeshRenderer"]["MaterialInstancePath"].GetString();
+		for(int i = 0; i < obj["MeshRenderer"]["MaterialInstancePath"].Size(); ++i)
+			mMRJ.mMaterialInstancePath.push_back(obj["MeshRenderer"]["MaterialInstancePath"][i].GetString());
 		mMRJ.mMeshPath = obj["MeshRenderer"]["MeshPath"].GetString();
 		mMRJ.mGUID = (unsigned)obj["MeshRenderer"]["GUID"].GetInt();
 

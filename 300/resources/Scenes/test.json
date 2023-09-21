@@ -76,7 +76,7 @@
             "EntityID": 5
         },
         "General": {
-            "Name": "",
+            "Name": "y",
             "Tag": "Unknown",
             "Subtag": "Active",
             "Active": true,
@@ -206,11 +206,11 @@
             "EntityID": 1
         },
         "General": {
-            "Name": "",
+            "Name": "ntity",
             "Tag": "Unknown",
             "Subtag": "Active",
             "Active": true,
-            "Paused": true
+            "Paused": false
         },
         "Transform": {
             "Scale": {
@@ -231,12 +231,27 @@
         },
         "MeshRenderer": {
             "ShaderPath": {
-                "first": "../_GRAPHICS/shader_files/draw_vert.glsl",
-                "second": "../_GRAPHICS/shader_files/draw_frag.glsl"
+                "first": "../_GRAPHICS/shader_files/pointLight_vert.glsl",
+                "second": "../_GRAPHICS/shader_files/pointLight_frag.glsl"
             },
-            "MaterialInstancePath": "../assets/Compressed/Vampire_diffuse.ctexture",
-            "MeshPath": "../compiled_geom/dancing_vampire.geom",
+            "MaterialInstancePath": [
+                "../assets/Compressed/Vampire_diffuse.ctexture",
+                "../assets/Compressed/Vampire_normal.ctexture"
+            ],
+            "MeshPath": "../assets/compiled_geom/dancing_vampire.geom",
             "GUID": 0
+        },
+        "BoxCollider": {
+            "ScaleOffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "TranslateOffset": {
+                "x": 0.0,
+                "y": 1.0499999523162842,
+                "z": 0.0
+            }
         }
     }
 ]
