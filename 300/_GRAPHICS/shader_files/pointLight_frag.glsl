@@ -6,7 +6,7 @@ in vec3 TangentLightPos;
 in vec3 TangentViewPos;
 in vec3 TangentFragPos;
 
-//uniform vec3 lightIntensity;
+vec3 lightIntensity = vec3(2.0);
 
 uniform sampler2D uTex[5];
 
@@ -37,10 +37,18 @@ void main()
     vec3 viewDir = normalize(TangentViewPos - TangentFragPos);
     vec3 reflectDir = reflect(-lightDir, normal);
     vec3 halfwayDir = normalize(lightDir + viewDir);  
-    float spec = pow(max(dot(normal, halfwayDir), 0.0), 50.0);
-    specular = spec * specular;
+    float spec = pow(max(dot(normal, halfwayDir), 0.0), 32.0);
+    specular = spec * specular * lightIntensity;
 
     vec3 finalColor = vec3(ambient + diffuse + specular + VertexColor.rgb + emission);
+
+    // HDR
+    //float exposure = 1.0;
+    //finalColor = vec3(1.0) - exp(-finalColor * exposure);
+
+    // Gamma correction
+    //float gamma = 2.2;
+    //finalColor = pow(finalColor, vec3(1.0/gamma));
 
     // Output
     fragColor0 = vec4(finalColor, uColor.a);
