@@ -17,7 +17,7 @@ start up of window and game system, also runs their update functions.
 #include "Object/ObjectFactory.h"
 #include "ScriptingSystem.h"
 #include "Physics/PhysicsSystem.h"
-#include "Serialization/SerializationTemp.h"
+//#include "Serialization/SerializationTemp.h"
 #include "GameState/GameStateManager.h"
 #include "Debug/Logger.h"
 
@@ -100,24 +100,7 @@ void Application::SystemInit()
     ent3.GetComponent<General>().isActive = false;
     ent3.GetComponent<General>().tag = TAG::UNKNOWN;
     ent3.GetComponent<General>().subtag = SUBTAG::ACTIVE;
-
-    Entity ent4 = systemManager->ecs->NewEntity();
-    Entity ent5 = systemManager->ecs->NewEntity();
-    Entity ent6 = systemManager->ecs->NewEntity();
-    ent4.AddChild(ent5);
-    ent5.AddChild(ent6);
-
-    auto viewtemp1 = systemManager->ecs->GetEntitiesWith<Parent>();
-    int size1 = viewtemp1.size();
-    auto viewtemp2 = systemManager->ecs->GetEntitiesWith<Parent, Children>();
-    bool e4 = ent4.HasAllOfComponents<Parent, Children>();
-    bool e5 = ent5.HasAllOfComponents<Parent, Children>();
-    bool e6 = ent6.HasAllOfComponents<Parent, Children>();
-    std::vector<Entity> children = ent5.GetAllChildren();
-    Entity ent5parent = ent5.GetParent();
-    Entity ent6parent = ent6.GetParent();
-
-    bool x = ent1.HasAllOfComponents<Parent, Children>();
+    
 
     ObjectFactory::SerializeScene("../resources/Scenes/test.json");
 
@@ -132,6 +115,36 @@ void Application::SystemInit()
 #pragma region testparentchild
 
     //loop over children of an entity
+    Entity ent4 = systemManager->ecs->NewEntity();
+    Entity ent5 = systemManager->ecs->NewEntity();
+    Entity ent6 = systemManager->ecs->NewEntity();
+    Entity ent7 = systemManager->ecs->NewEntity();
+
+    ent4.AddChild(ent5);
+    int s1 = ent4.GetComponent<Children>().mNumChildren;
+
+    ent4.AddChild(ent6);
+    ent4.AddChild(ent7);
+    s1 = ent4.GetComponent<Children>().mNumChildren;
+
+
+    auto viewtemp1 = systemManager->ecs->GetEntitiesWith<Parent>();
+    int size1 = viewtemp1.size();
+    auto viewtemp2 = systemManager->ecs->GetEntitiesWith<Parent, Children>();
+    bool e4 = ent4.HasAllOfComponents<Parent, Children>();
+    bool e5 = ent5.HasAllOfComponents<Parent, Children>();
+    bool e6 = ent6.HasAllOfComponents<Parent, Children>();
+    std::vector<Entity> children = ent5.GetAllChildren();
+    Entity ent5parent = ent5.GetParent();
+    Entity ent6parent = ent6.GetParent();
+    ent4.RemoveChild(ent7);
+    auto v1 = systemManager->ecs->GetEntitiesWith<Parent>();
+    assert(ent5.GetComponent<Parent>().mNextSibling == ent5.GetComponent<Parent>().mPrevSibling);
+    assert(ent6.GetComponent<Parent>().mNextSibling == ent6.GetComponent<Parent>().mPrevSibling);
+
+    s1 = ent4.GetComponent<Children>().mNumChildren;
+    //assert( == 2);
+
 #pragma endregion testparentchild
 
 #pragma region testprefab

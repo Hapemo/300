@@ -1,5 +1,6 @@
 #include "ECS/ECS.h"
 #include "ECS/ECS_Components.h"
+#include "ScriptingSystem.h"
 #include "pch.h"
 #include "Object/ObjectFactory.h"
 
@@ -8,6 +9,40 @@ bool Entity::ShouldRun() {
 
 	General const& genComponent = GetComponent<General>();
 	return !genComponent.isPaused && genComponent.isActive;
+}
+
+void Entity::Activate() {
+	if (!HasComponent<General>()) {
+		//LOG_ERROR("There is no general component when attempting to activate, entity ID: " + std::to_string(id));
+		assert(false && std::string("There is no general component when attempting to activate, entity ID: " + std::to_string(static_cast<uint32_t>(id))).c_str());
+		return;
+	}
+	General& genComp{ GetComponent<General>() };
+
+	//------------------------------------------------------------------
+	// Codes that should run when activating entity halfway through game
+
+	// Scripting
+#ifdef _EDITOR
+	if (editorManager->IsScenePaused()) return;
+#endif
+	//if (!editorManager->IsScenePaused())
+	if (HasComponent<Script>())
+		systemManager->GetScriptingPointer()->ScriptStart(*this);
+
+
+	// General
+	genComp.isActive = true;
+
+	// Parent Child
+	/*if (HasComponent<)
+	Entity firstChild = 
+
+	for (Entity e : genComp.children) e.Activate();*/
+
+
+
+	//------------------------------------------------------------------
 }
 
 ECS::ECS() : registry(), NullEntity(registry.create()) {} 
@@ -171,4 +206,29 @@ bool Entity::HasChildren()
 bool Entity::HasParent()
 {
 	return this->HasComponent<Parent>();
+}
+
+void Entity::RemoveChild(Entity e)
+{
+	if (!this->HasComponent<Children>())
+		return;
+	if (!e.HasComponent<Parent>())
+		return;
+	if (e.GetComponent<Parent>().mParent != static_cast<uint32_t>(this->id))
+		return;
+	
+	Children& thisChildren = this->GetComponent<Children>();
+	if (thisChildren.mNumChildren == 1)
+	{
+		e.RemoveComponent<Parent>();
+		this->RemoveComponent<Children>();
+		return;
+	}
+	--thisChildren.mNumChildren;
+	Parent& eParent = e.GetComponent<Parent>();
+	Entity prev = eParent.mPrevSibling;
+	Entity next = eParent.mNextSibling;
+	prev.GetComponent<Parent>().mNextSibling = static_cast<uint32_t>(next.id);
+	next.GetComponent<Parent>().mPrevSibling = static_cast<uint32_t>(prev.id);
+	e.RemoveComponent<Parent>();
 }

@@ -49,6 +49,11 @@ struct Entity
 	void RemoveComponent();
 
 	bool ShouldRun();
+
+	void Activate();
+
+	void Deactivate();
+
 	void AddChild(Entity e);
 
 	std::vector<Entity> GetAllChildren();
@@ -58,6 +63,8 @@ struct Entity
 	bool HasChildren();
 
 	bool HasParent();
+
+	void RemoveChild(Entity e);
 
 	template<typename Component>
 	Component& LuaGetComponent(Entity entity);

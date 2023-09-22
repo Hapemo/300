@@ -1,24 +1,36 @@
 #pragma once
 #include "pch.h"
-#include "rttr/type.h"
+//#include "rttr/type.h"
 #include "document.h"
 #include "prettywriter.h"
 #include "stringbuffer.h"
 #include "ECS/ECS_Components.h"
 #include "ECS/ECS.h"
+#include "GameState/Scene.h"
 //#include "GameState/GameStateManager.h"
-class Scene;
+//class Scene;
 
-// helper functions to convert strings to enums
+//helper functions to convert strings to enums
+//template <typename T>
+//std::string FindString(const T& val, const std::unordered_map<std::string, T>& map);
+//
+//template <typename T>
+//T FindEnum(const std::string& str, const std::unordered_map<std::string, T>& map);
+
 TAG FindTagEnum(std::string str);
+std::string FindTagString(TAG tag);
 
 SUBTAG FindSubTagEnum(std::string str);
+std::string FindSubTagString(SUBTAG subtag);
 
 MATERIAL FindMaterialEnum(std::string str);
+std::string FindMaterialString(MATERIAL tag);
 
 MOTION FindMotionEnum(std::string str);
+std::string FindMotionString(MOTION tag);
 
 AUDIOTYPE FindAudioEnum(std::string str);
+std::string FindAudioString(AUDIOTYPE tag);
 
 class BaseJSON
 {
@@ -215,13 +227,6 @@ private:
 	std::list<EntityJSON> ents;
 };
 
-struct ScJSON
-{
-	std::string name;
-	bool isPause;
-	bool forceRender;
-};
-
 class SceneJSON : public BaseJSON
 {
 public:
@@ -232,11 +237,18 @@ public:
 	virtual bool Deserialize(const rapidjson::Value& obj);
 	virtual bool Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* writer) const;
 
-	void SetSceneJSON(const Scene scj);
-	const Scene GetSceneJSON() const;
+	void SetSceneJSON(const Scene sj)
+	{
+		mScene = sj;
+	}
+
+	const Scene GetSceneJSON() const
+	{
+		return mScene;
+	}
 
 private:
-	ScJSON sj;
+	Scene mScene;
 };
 
 class SceneListJSON : public BaseJSON

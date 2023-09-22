@@ -1,5 +1,5 @@
 #include "Serialization/Serialization.h"
-#include "Serialization/SerializationTemp.h"
+//#include "Serialization/SerializationTemp.h"
 #include "GameState/Scene.h"
 
 bool BaseJSON::DeserializeFile(const std::string& filename)
@@ -67,7 +67,7 @@ bool EntityJSON::Deserialize(const rapidjson::Value& obj)
 {
 	if (obj.HasMember("EntityID"))
 	{
-		mID.id = (entt::entity)obj["EntityID"]["EntityID"].GetInt();
+		mID.id = (entt::entity)obj["EntityID"].GetInt();
 	}
 
 	if (obj.HasMember("General"))
@@ -81,17 +81,17 @@ bool EntityJSON::Deserialize(const rapidjson::Value& obj)
 
 	if (obj.HasMember("Transform"))
 	{
-		mTJ.mScale.x = (float)obj["Transform"]["Scale"]["x"].GetDouble();
-		mTJ.mScale.y = (float)obj["Transform"]["Scale"]["y"].GetDouble();
-		mTJ.mScale.z = (float)obj["Transform"]["Scale"]["z"].GetDouble();
+		mTJ.mScale = { (float)obj["Transform"]["Scale"][0].GetDouble(),
+					   (float)obj["Transform"]["Scale"][1].GetDouble(),
+					   (float)obj["Transform"]["Scale"][2].GetDouble() };
 
-		mTJ.mRotate.x = (float)obj["Transform"]["Rotate"]["x"].GetDouble();
-		mTJ.mRotate.y = (float)obj["Transform"]["Rotate"]["y"].GetDouble();
-		mTJ.mRotate.z = (float)obj["Transform"]["Rotate"]["z"].GetDouble();
+		mTJ.mRotate = { (float)obj["Transform"]["Rotate"][0].GetDouble(),
+						(float)obj["Transform"]["Rotate"][1].GetDouble(),
+						(float)obj["Transform"]["Rotate"][2].GetDouble() };
 
-		mTJ.mTranslate.x = (float)obj["Transform"]["Translate"]["x"].GetDouble();
-		mTJ.mTranslate.y = (float)obj["Transform"]["Translate"]["y"].GetDouble();
-		mTJ.mTranslate.z = (float)obj["Transform"]["Translate"]["z"].GetDouble();
+		mTJ.mTranslate = { (float)obj["Transform"]["Translate"][0].GetDouble(),
+						   (float)obj["Transform"]["Translate"][1].GetDouble(),
+						   (float)obj["Transform"]["Translate"][2].GetDouble() };
 	}
 
 	if (obj.HasMember("RigidBody"))
@@ -106,7 +106,7 @@ bool EntityJSON::Deserialize(const rapidjson::Value& obj)
 
 	if (obj.HasMember("MeshRenderer"))
 	{
-		mMRJ.mShaderPath = std::pair<std::string, std::string>(obj["MeshRenderer"]["ShaderPath"]["first"].GetString(), obj["MeshRenderer"]["ShaderPath"]["second"].GetString());
+		mMRJ.mShaderPath = std::pair<std::string, std::string>(obj["MeshRenderer"]["ShaderPath"][0].GetString(), obj["MeshRenderer"]["ShaderPath"][1].GetString());
 		for(int i = 0; i < obj["MeshRenderer"]["MaterialInstancePath"].Size(); ++i)
 			mMRJ.mMaterialInstancePath.push_back(obj["MeshRenderer"]["MaterialInstancePath"][i].GetString());
 		mMRJ.mMeshPath = obj["MeshRenderer"]["MeshPath"].GetString();
@@ -119,13 +119,13 @@ bool EntityJSON::Deserialize(const rapidjson::Value& obj)
 
 	if (obj.HasMember("BoxCollider"))
 	{
-		mBCJ.mScaleOffset.x = (float)obj["BoxCollider"]["ScaleOffset"]["x"].GetDouble();
-		mBCJ.mScaleOffset.y = (float)obj["BoxCollider"]["ScaleOffset"]["y"].GetDouble();
-		mBCJ.mScaleOffset.z = (float)obj["BoxCollider"]["ScaleOffset"]["z"].GetDouble();
+		mBCJ.mScaleOffset = {(float)obj["BoxCollider"]["ScaleOffset"][0].GetDouble(),
+							 (float)obj["BoxCollider"]["ScaleOffset"][1].GetDouble(),
+							 (float)obj["BoxCollider"]["ScaleOffset"][2].GetDouble() };
 
-		mBCJ.mTranslateOffset.x = (float)obj["BoxCollider"]["TranslateOffset"]["x"].GetDouble();
-		mBCJ.mTranslateOffset.y = (float)obj["BoxCollider"]["TranslateOffset"]["y"].GetDouble();
-		mBCJ.mTranslateOffset.z = (float)obj["BoxCollider"]["TranslateOffset"]["z"].GetDouble();
+		mBCJ.mTranslateOffset = { (float)obj["BoxCollider"]["TranslateOffset"][0].GetDouble(),
+								  (float)obj["BoxCollider"]["TranslateOffset"][1].GetDouble(),
+								  (float)obj["BoxCollider"]["TranslateOffset"][2].GetDouble() };
 
 		mbc_t = true;
 	}
@@ -135,9 +135,9 @@ bool EntityJSON::Deserialize(const rapidjson::Value& obj)
 	{
 		mSCJ.mScaleOffset = (float)obj["SphereCollider"]["ScaleOffset"].GetDouble();
 
-		mSCJ.mTranslateOffset.x = (float)obj["SphereCollider"]["TranslateOffset"]["x"].GetDouble();
-		mSCJ.mTranslateOffset.y = (float)obj["SphereCollider"]["TranslateOffset"]["y"].GetDouble();
-		mSCJ.mTranslateOffset.z = (float)obj["SphereCollider"]["TranslateOffset"]["z"].GetDouble();
+		mSCJ.mTranslateOffset = { (float)obj["SphereCollider"]["TranslateOffset"][0].GetDouble(),
+								  (float)obj["SphereCollider"]["TranslateOffset"][1].GetDouble(),
+								  (float)obj["SphereCollider"]["TranslateOffset"][2].GetDouble() };
 
 		msc_t = true;
 	}
@@ -145,9 +145,9 @@ bool EntityJSON::Deserialize(const rapidjson::Value& obj)
 
 	if (obj.HasMember("PlaneCollider"))
 	{
-		mPCJ.mNormal.x = (float)obj["PlaneCollider"]["Normal"]["x"].GetDouble();
-		mPCJ.mNormal.y = (float)obj["PlaneCollider"]["Normal"]["y"].GetDouble();
-		mPCJ.mNormal.z = (float)obj["PlaneCollider"]["Normal"]["z"].GetDouble();
+		mPCJ.mNormal = { (float)obj["PlaneCollider"]["Normal"][0].GetDouble(),
+						 (float)obj["PlaneCollider"]["Normal"][1].GetDouble(),
+						 (float)obj["PlaneCollider"]["Normal"][2].GetDouble() };
 
 		mPCJ.mTranslateOffset = (float)obj["PlaneCollider"]["TranslateOffset"].GetDouble();
 
@@ -159,9 +159,9 @@ bool EntityJSON::Deserialize(const rapidjson::Value& obj)
 	{
 		Script tmp;
 
-		for (int i = 0; i < obj["Scripts"]["ScriptsFiles"].Size(); ++i)
+		for (int i = 0; i < obj["Scripts"].Size(); ++i)
 		{
-			tmp.scriptFile = obj["Scripts"]["ScriptsFiles"][i]["Filename"].GetString();
+			tmp.scriptFile = obj["Scripts"][i].GetString();
 			mSJ.scriptsContainer.push_back(tmp);
 		}
 
@@ -207,66 +207,227 @@ bool EntityJSON::Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* wri
 	writer->StartObject();
 
 	writer->String("EntityID");
-	to_json_recursive(mID, *writer);
+	writer->Int((int)mID.id);
+	//to_json_recursive(mID, *writer);
 
 	writer->String("General");
-	to_json_recursive(mGJ, *writer);
+	writer->StartObject();
+
+	writer->String("Name");
+	writer->String(mGJ.name.c_str());
+
+	writer->String("Active");
+	writer->Bool(mGJ.isActive);
+
+	writer->String("Paused");
+	writer->Bool(mGJ.isPaused);
+
+	writer->String("Tag");
+	writer->String(FindTagString(mGJ.tag).c_str());
+
+	writer->String("Subtag");
+	writer->String(FindSubTagString(mGJ.subtag).c_str());
+	
+	writer->EndObject();
+	//to_json_recursive(mGJ, *writer);
 
 	writer->String("Transform");
-	to_json_recursive(mTJ, *writer);
+	writer->StartObject();
+
+	writer->String("Scale");
+	writer->StartArray();
+	writer->Double(mTJ.mScale.x);
+	writer->Double(mTJ.mScale.y);
+	writer->Double(mTJ.mScale.z);
+	writer->EndArray();
+
+	writer->String("Rotate");
+	writer->StartArray();
+	writer->Double(mTJ.mRotate.x);
+	writer->Double(mTJ.mRotate.y);
+	writer->Double(mTJ.mRotate.z);
+	writer->EndArray();
+
+	writer->String("Translate");
+	writer->StartArray();
+	writer->Double(mTJ.mTranslate.x);
+	writer->Double(mTJ.mTranslate.y);
+	writer->Double(mTJ.mTranslate.z);
+	writer->EndArray();
+
+	writer->EndObject();
+	//to_json_recursive(mTJ, *writer);
 
 	if (mrb_t)
 	{
 		writer->String("RigidBody");
-		to_json_recursive(mRBJ, *writer);
+		writer->StartObject();
+
+		writer->String("Mass");
+		writer->Uint(mRBJ.mMass);
+
+		writer->String("Material");
+		writer->String(FindMaterialString(mRBJ.mMaterial).c_str());
+
+		writer->String("Motion");
+		writer->String(FindMotionString(mRBJ.mMotion).c_str());
+
+		writer->EndObject();
+		//to_json_recursive(mRBJ, *writer);
 	}
 
 	if (mmr_t)
 	{
 		writer->String("MeshRenderer");
-		to_json_recursive(mMRJ, *writer);
+		writer->StartObject();
+
+		writer->String("ShaderPath");
+		writer->StartArray();
+		writer->String(mMRJ.mShaderPath.first.c_str());
+		writer->String(mMRJ.mShaderPath.second.c_str());
+		writer->EndArray();
+
+		writer->String("MaterialInstancePath");
+		writer->StartArray();
+		for (int i = 0; i < mMRJ.mMaterialInstancePath.size(); ++i)
+			writer->String(mMRJ.mMaterialInstancePath[i].c_str());
+		writer->EndArray();
+
+		writer->String("MeshPath");
+		writer->String(mMRJ.mMeshPath.c_str());
+
+		writer->String("GUID");
+		writer->Int(mMRJ.mGUID);
+
+		writer->EndObject();
+		//to_json_recursive(mMRJ, *writer);
 	}
 
 	if (mbc_t)
 	{
 		writer->String("BoxCollider");
-		to_json_recursive(mBCJ, *writer);
+		writer->StartObject();
+
+		writer->String("ScaleOffset");
+		writer->StartArray();
+		writer->Double(mBCJ.mScaleOffset.x);
+		writer->Double(mBCJ.mScaleOffset.y);
+		writer->Double(mBCJ.mScaleOffset.z);
+		writer->EndArray();
+
+		writer->String("TranslateOffset");
+		writer->StartArray();
+		writer->Double(mBCJ.mTranslateOffset.x);
+		writer->Double(mBCJ.mTranslateOffset.y);
+		writer->Double(mBCJ.mTranslateOffset.z);
+		writer->EndArray();
+
+		writer->EndObject();
+		//to_json_recursive(mBCJ, *writer);
 	}
 
 	if (msc_t)
 	{
 		writer->String("SphereCollider");
-		to_json_recursive(mSCJ, *writer);
+		writer->StartObject();
+
+		writer->String("ScaleOffset");
+		writer->Double(mSCJ.mScaleOffset);
+
+		writer->String("TranslateOffset");
+		writer->StartArray();
+		writer->Double(mSCJ.mTranslateOffset.x);
+		writer->Double(mSCJ.mTranslateOffset.y);
+		writer->Double(mSCJ.mTranslateOffset.z);
+		writer->EndArray();
+
+		writer->EndObject();
+		//to_json_recursive(mSCJ, *writer);
 	}
 
 	if (mpc_t)
 	{
 		writer->String("PlaneCollider");
-		to_json_recursive(mPCJ, *writer);
+		writer->StartObject();
+
+		writer->String("Normal");
+		writer->StartArray();
+		writer->Double(mPCJ.mNormal.x);
+		writer->Double(mPCJ.mNormal.y);
+		writer->Double(mPCJ.mNormal.z);
+		writer->EndArray();
+
+		writer->String("TranslateOffset");
+		writer->Double(mPCJ.mTranslateOffset);
+
+		writer->EndObject();
+		//to_json_recursive(mPCJ, *writer);
 	}
 
 	if (ms_t)
 	{
 		writer->String("Scripts");
-		to_json_recursive(mSJ, *writer);
+		writer->StartArray();
+
+		for (int i = 0; i < mSJ.scriptsContainer.size(); ++i)
+			writer->String(mSJ.scriptsContainer[i].scriptFile.c_str());
+
+		writer->EndArray();
+		//to_json_recursive(mSJ, *writer);
 	}
 
 	if (mp_t)
 	{
 		writer->String("Parent");
-		to_json_recursive(mPJ, *writer);
+		writer->StartObject();
+
+		writer->String("Parent");
+		writer->Int(mPJ.mParent);
+
+		writer->String("PreviousSibling");
+		writer->Int(mPJ.mPrevSibling);
+
+		writer->String("NextSibling");
+		writer->Int(mPJ.mNextSibling);
+
+		writer->EndObject();
+		//to_json_recursive(mPJ, *writer);
 	}
 
 	if (mc_t)
 	{
 		writer->String("Children");
-		to_json_recursive(mCJ, *writer);
+		writer->StartObject();
+
+		writer->String("NumChildren");
+		writer->Int(mCJ.mNumChildren);
+
+		writer->String("FirstChild");
+		writer->Int(mCJ.mFirstChild);
+
+		writer->EndObject();
+		//to_json_recursive(mCJ, *writer);
 	}
 
 	if (ma_t)
 	{
 		writer->String("Audio");
-		to_json_recursive(mAJ, *writer);
+		writer->StartObject();
+
+		writer->String("Filename");
+		writer->String(mAJ.mFileName.c_str());
+
+		writer->String("AudioType");
+		writer->String(FindAudioString(mAJ.mAudioType).c_str());
+
+		writer->String("Playing");
+		writer->Bool(mAJ.mIsPlaying);
+
+		writer->String("Play");
+		writer->Bool(mAJ.mIsPlay);
+
+		writer->EndObject();
+		//to_json_recursive(mAJ, *writer);
 	}
 
 	writer->EndObject();
@@ -318,9 +479,9 @@ bool SceneJSON::Deserialize(const rapidjson::Value& obj)
 {
 	if (obj.HasMember("Scene"))
 	{
-		sj.name = obj["Scene"]["SceneName"].GetString();
-		sj.isPause = obj["Scene"]["Pause"].GetBool();
-		sj.forceRender = obj["Scene"]["ForceRender"].GetBool();
+		mScene.mName = obj["Scene"]["SceneName"].GetString();
+		mScene.mIsPause = obj["Scene"]["Pause"].GetBool();
+		mScene.mForceRender = obj["Scene"]["ForceRender"].GetBool();
 	}
 
 	return true;
@@ -334,13 +495,13 @@ bool SceneJSON::Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* writ
 	writer->StartObject();
 
 	writer->String("SceneName");
-	writer->String(sj.name.c_str());
+	writer->String(mScene.mName.c_str());
 
 	writer->String("Pause");
-	writer->Bool(sj.isPause);
+	writer->Bool(mScene.mIsPause);
 
 	writer->String("ForceRender");
-	writer->Bool(sj.forceRender);
+	writer->Bool(mScene.mForceRender);
 
 	writer->EndObject();
 
@@ -396,12 +557,30 @@ TAG FindTagEnum(std::string str)
 	}
 }
 
+std::string FindTagString(TAG tag)
+{
+	for (const auto& it : TagMap)
+	{
+		if (it.second == tag)
+			return it.first;
+	}
+}
+
 SUBTAG FindSubTagEnum(std::string str)
 {
 	for (const auto& it : SubTagMap)
 	{
 		if (it.first == str)
 			return it.second;
+	}
+}
+
+std::string FindSubTagString(SUBTAG subtag)
+{
+	for (const auto& it : SubTagMap)
+	{
+		if (it.second == subtag)
+			return it.first;
 	}
 }
 
@@ -414,12 +593,30 @@ MATERIAL FindMaterialEnum(std::string str)
 	}
 }
 
+std::string FindMaterialString(MATERIAL tag)
+{
+	for (const auto& it : MaterialMap)
+	{
+		if (it.second == tag)
+			return it.first;
+	}
+}
+
 MOTION FindMotionEnum(std::string str)
 {
 	for (const auto& it : MotionMap)
 	{
 		if (it.first == str)
 			return it.second;
+	}
+}
+
+std::string FindMotionString(MOTION tag)
+{
+	for (const auto& it : MotionMap)
+	{
+		if (it.second == tag)
+			return it.first;
 	}
 }
 
@@ -432,19 +629,31 @@ AUDIOTYPE FindAudioEnum(std::string str)
 	}
 }
 
-void SceneJSON::SetSceneJSON(const Scene scj)
+std::string FindAudioString(AUDIOTYPE tag)
 {
-	sj.name = scj.mName;
-	sj.isPause = scj.mIsPause;
-	sj.forceRender = scj.mForceRender;
+	for (const auto& it : AudioMap)
+	{
+		if (it.second == tag)
+			return it.first;
+	}
 }
 
-const Scene SceneJSON::GetSceneJSON() const
-{
-	Scene scj;
-	scj.mName = sj.name;
-	scj.mIsPause = sj.isPause;
-	scj.mForceRender = sj.forceRender;
-
-	return scj;
-}
+//template <typename T>
+//std::string FindString(T& val, const std::unordered_map<std::string, T>& map)
+//{
+//	for (const auto& it : map)
+//	{
+//		if (it.second == val)
+//			return it.first;
+//	}
+//}
+//
+//template <typename T>
+//T FindEnum(const std::string& str, const std::unordered_map<std::string, T>& map)
+//{
+//	for (const auto& it : map)
+//	{
+//		if (it.first == str)
+//			return it.second;
+//	}
+//}
