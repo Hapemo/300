@@ -1,1 +1,13 @@
-﻿  _GEOM_COMPILER.vcxproj -> C:\Users\mcheo\OneDrive\Documents\300\300\300\x64\Debug\_GEOM_COMPILER.lib
+﻿  Geom_Compiler.cpp
+  _compiler_main.cpp
+  geom.cpp
+C:\Users\User\Documents\GitHub\300\300\_GEOM_COMPILER\src\geom.cpp(335,8): warning C4101: 'ch': unreferenced local variable
+C:\Users\User\Documents\GitHub\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(307,34): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User\Documents\GitHub\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(771,46): warning C4267: 'initializing': conversion from 'size_t' to 'uint8_t', possible loss of data
+C:\Users\User\Documents\GitHub\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(775,38): warning C4267: '=': conversion from 'size_t' to 'uint8_t', possible loss of data
+C:\Users\User\Documents\GitHub\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(805,27): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User\Documents\GitHub\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(942,19): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User\Documents\GitHub\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(984,37): warning C4018: '<': signed/unsigned mismatch
+C:\Users\User\Documents\GitHub\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(1021,42): warning C4244: '=': conversion from 'const double' to 'float', possible loss of data
+C:\Users\User\Documents\GitHub\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(1022,48): warning C4244: '=': conversion from 'const double' to 'float', possible loss of data
+  _GEOM_COMPILER.vcxproj -> C:\Users\User\Documents\GitHub\300\300\x64\Debug\_GEOM_COMPILER.lib
