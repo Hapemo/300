@@ -256,3 +256,7 @@ RTTR_REGISTRATION
 	;
 }
 
+struct Prefab
+{
+	std::string mPrefab;
+};

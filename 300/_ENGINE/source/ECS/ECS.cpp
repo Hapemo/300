@@ -46,6 +46,7 @@ void ECS::NewPrefab(Entity e)
 	// for now, use member map
 	std::string name = e.GetComponent<General>().name;
 	ObjectFactory::SerializePrefab(e, "../assets/Prefabs/" + name + ".json");
+	e.AddComponent<Prefab>().mPrefab = name;
 	if (mPrefabs.count(name))
 		throw ("prefab of the same name exists!");
 	mPrefabs[name].push_back(e);
@@ -56,6 +57,7 @@ void ECS::NewEntityFromPrefab(std::string prefabName)
 	// void ObjectFactory::DeserializeScene(const std::string& filename)
 	// creation of new entity done inside deserializescene function
 	Entity e = ObjectFactory::DeserializePrefab("../assets/Prefabs/" + prefabName + ".json");
+	e.AddComponent<Prefab>().mPrefab = prefabName;
 	//copy all prefab components (except transform) to new entity
 	mPrefabs[prefabName].push_back(e);
 }
@@ -87,7 +89,14 @@ void ECS::UpdatePrefabEntities(std::string prefabName)
 
 void ECS::UnlinkPrefab(Entity e)
 {
-
+	if (!e.HasComponent<Prefab>())
+		return;
+	std::string name = e.GetComponent<Prefab>().mPrefab;
+	auto temp = mPrefabs[name].end();
+	if ((temp = std::find(mPrefabs[name].begin(), mPrefabs[name].end(), e)) == mPrefabs[name].end())
+		return;
+	mPrefabs[name].erase(temp);
+	e.RemoveComponent<Prefab>();
 }
 
 Entity::Entity(entt::entity id) : id(id) {}
