@@ -65,6 +65,7 @@ EntityJSON::~EntityJSON() {}
 
 bool EntityJSON::Deserialize(const rapidjson::Value& obj)
 {
+	return false;
 	if (obj.HasMember("EntityID"))
 	{
 		mID.id = (entt::entity)obj["EntityID"]["EntityID"].GetInt();
