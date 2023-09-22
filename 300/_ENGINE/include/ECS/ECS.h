@@ -62,6 +62,8 @@ struct Entity
 
 	bool HasParent();
 
+	void RemoveChild(Entity e);
+
 	template<typename Component>
 	Component& LuaGetComponent(Entity entity);
 

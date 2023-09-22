@@ -168,3 +168,28 @@ bool Entity::HasParent()
 {
 	return this->HasComponent<Parent>();
 }
+
+void Entity::RemoveChild(Entity e)
+{
+	if (!this->HasComponent<Children>())
+		return;
+	if (!e.HasComponent<Parent>())
+		return;
+	if (e.GetComponent<Parent>().mParent != static_cast<uint32_t>(this->id))
+		return;
+	
+	Children& thisChildren = this->GetComponent<Children>();
+	if (thisChildren.mNumChildren == 1)
+	{
+		e.RemoveComponent<Parent>();
+		this->RemoveComponent<Children>();
+		return;
+	}
+	--thisChildren.mNumChildren;
+	Parent& eParent = e.GetComponent<Parent>();
+	Entity prev = eParent.mPrevSibling;
+	Entity next = eParent.mNextSibling;
+	prev.GetComponent<Parent>().mNextSibling = static_cast<uint32_t>(next.id);
+	next.GetComponent<Parent>().mPrevSibling = static_cast<uint32_t>(prev.id);
+	e.RemoveComponent<Parent>();
+}
