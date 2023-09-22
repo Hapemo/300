@@ -1,31 +1,29 @@
 [
     {
-        "EntityID": {
-            "EntityID": 7
-        },
+        "EntityID": 7,
         "General": {
             "Name": "",
-            "Tag": "Unknown",
-            "Subtag": "Active",
             "Active": true,
-            "Paused": true
+            "Paused": true,
+            "Tag": "Unknown",
+            "Subtag": "Active"
         },
         "Transform": {
-            "Scale": {
-                "x": 100.0,
-                "y": 100.0,
-                "z": 100.0
-            },
-            "Rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "Translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
+            "Scale": [
+                100.0,
+                100.0,
+                100.0
+            ],
+            "Rotate": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Translate": [
+                0.0,
+                0.0,
+                0.0
+            ]
         },
         "Parent": {
             "Parent": 6,
@@ -34,32 +32,30 @@
         }
     },
     {
-        "EntityID": {
-            "EntityID": 6
-        },
+        "EntityID": 6,
         "General": {
             "Name": "",
-            "Tag": "Unknown",
-            "Subtag": "Active",
             "Active": true,
-            "Paused": true
+            "Paused": true,
+            "Tag": "Unknown",
+            "Subtag": "Active"
         },
         "Transform": {
-            "Scale": {
-                "x": 100.0,
-                "y": 100.0,
-                "z": 100.0
-            },
-            "Rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "Translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
+            "Scale": [
+                100.0,
+                100.0,
+                100.0
+            ],
+            "Rotate": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Translate": [
+                0.0,
+                0.0,
+                0.0
+            ]
         },
         "Parent": {
             "Parent": 5,
@@ -72,32 +68,30 @@
         }
     },
     {
-        "EntityID": {
-            "EntityID": 5
-        },
+        "EntityID": 5,
         "General": {
             "Name": "y",
-            "Tag": "Unknown",
-            "Subtag": "Active",
             "Active": true,
-            "Paused": true
+            "Paused": true,
+            "Tag": "Unknown",
+            "Subtag": "Active"
         },
         "Transform": {
-            "Scale": {
-                "x": 100.0,
-                "y": 100.0,
-                "z": 100.0
-            },
-            "Rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "Translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
+            "Scale": [
+                100.0,
+                100.0,
+                100.0
+            ],
+            "Rotate": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Translate": [
+                0.0,
+                0.0,
+                0.0
+            ]
         },
         "Children": {
             "NumChildren": 1,
@@ -105,135 +99,121 @@
         }
     },
     {
-        "EntityID": {
-            "EntityID": 4
-        },
+        "EntityID": 4,
         "General": {
             "Name": "Apple",
-            "Tag": "Unknown",
-            "Subtag": "Active",
             "Active": false,
-            "Paused": true
-        },
-        "Transform": {
-            "Scale": {
-                "x": 100.0,
-                "y": 100.0,
-                "z": 100.0
-            },
-            "Rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "Translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        }
-    },
-    {
-        "EntityID": {
-            "EntityID": 3
-        },
-        "General": {
-            "Name": "Other",
+            "Paused": true,
             "Tag": "Unknown",
-            "Subtag": "Background",
-            "Active": true,
-            "Paused": true
+            "Subtag": "Active"
         },
         "Transform": {
-            "Scale": {
-                "x": 100.0,
-                "y": 100.0,
-                "z": 100.0
-            },
-            "Rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "Translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        }
-    },
-    {
-        "EntityID": {
-            "EntityID": 2
-        },
-        "General": {
-            "Name": "Testing",
-            "Tag": "Player",
-            "Subtag": "Active",
-            "Active": true,
-            "Paused": false
-        },
-        "Transform": {
-            "Scale": {
-                "x": 100.0,
-                "y": 100.0,
-                "z": 100.0
-            },
-            "Rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "Translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "Scripts": {
-            "ScriptsFiles": [
-                {
-                    "Filename": "../assets/Scripts/Run.lua"
-                },
-                {
-                    "Filename": "../assets/Scripts/Fly.lua"
-                }
+            "Scale": [
+                100.0,
+                100.0,
+                100.0
+            ],
+            "Rotate": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Translate": [
+                0.0,
+                0.0,
+                0.0
             ]
         }
     },
     {
-        "EntityID": {
-            "EntityID": 1
-        },
+        "EntityID": 3,
         "General": {
-            "Name": "ntity",
-            "Tag": "Unknown",
-            "Subtag": "Active",
+            "Name": "Other",
             "Active": true,
-            "Paused": false
+            "Paused": true,
+            "Tag": "Unknown",
+            "Subtag": "Background"
         },
         "Transform": {
-            "Scale": {
-                "x": 100.0,
-                "y": 100.0,
-                "z": 100.0
-            },
-            "Rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "Translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
+            "Scale": [
+                100.0,
+                100.0,
+                100.0
+            ],
+            "Rotate": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Translate": [
+                0.0,
+                0.0,
+                0.0
+            ]
+        }
+    },
+    {
+        "EntityID": 2,
+        "General": {
+            "Name": "Testing",
+            "Active": true,
+            "Paused": true,
+            "Tag": "Player",
+            "Subtag": "Active"
+        },
+        "Transform": {
+            "Scale": [
+                100.0,
+                100.0,
+                100.0
+            ],
+            "Rotate": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Translate": [
+                0.0,
+                0.0,
+                0.0
+            ]
+        },
+        "Scripts": [
+            "../assets/Scripts/Run.lua",
+            "../assets/Scripts/Fly.lua"
+        ]
+    },
+    {
+        "EntityID": 1,
+        "General": {
+            "Name": "ntity",
+            "Active": true,
+            "Paused": true,
+            "Tag": "Unknown",
+            "Subtag": "Active"
+        },
+        "Transform": {
+            "Scale": [
+                100.0,
+                100.0,
+                100.0
+            ],
+            "Rotate": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Translate": [
+                0.0,
+                0.0,
+                0.0
+            ]
         },
         "MeshRenderer": {
-            "ShaderPath": {
-                "first": "../_GRAPHICS/shader_files/pointLight_vert.glsl",
-                "second": "../_GRAPHICS/shader_files/pointLight_frag.glsl"
-            },
+            "ShaderPath": [
+                "../_GRAPHICS/shader_files/pointLight_vert.glsl",
+                "../_GRAPHICS/shader_files/pointLight_frag.glsl"
+            ],
             "MaterialInstancePath": [
                 "../assets/Compressed/Vampire_diffuse.ctexture",
                 "../assets/Compressed/Vampire_normal.ctexture"
@@ -242,16 +222,16 @@
             "GUID": 0
         },
         "BoxCollider": {
-            "ScaleOffset": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "TranslateOffset": {
-                "x": 0.0,
-                "y": 1.0499999523162842,
-                "z": 0.0
-            }
+            "ScaleOffset": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "TranslateOffset": [
+                0.0,
+                1.0499999523162842,
+                0.0
+            ]
         }
     }
 ]

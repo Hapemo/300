@@ -10,12 +10,11 @@
 class Scene;
 
 //helper functions to convert strings to enums
-
-template <typename T>
-std::string FindString(const T& val, const std::unordered_map<std::string, T>& map);
-
-template <typename T>
-T FindEnum(const std::string& str, const std::unordered_map<std::string, T>& map);
+//template <typename T>
+//std::string FindString(const T& val, const std::unordered_map<std::string, T>& map);
+//
+//template <typename T>
+//T FindEnum(const std::string& str, const std::unordered_map<std::string, T>& map);
 
 TAG FindTagEnum(std::string str);
 std::string FindTagString(TAG tag);
