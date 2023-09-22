@@ -62,10 +62,32 @@ void ECS::NewEntityFromPrefab(std::string prefabName)
 
 void ECS::UpdatePrefabEntities(std::string prefabName)
 {
+	Entity temp = ObjectFactory::DeserializePrefab("../assets/Prefabs/" + prefabName + ".json");
+	
 	for (Entity e : mPrefabs[prefabName])
 	{
-		//copy all prefab components into new entity
+		if (temp.HasComponent<MeshRenderer>())
+			e.GetComponent<MeshRenderer>() = temp.GetComponent<MeshRenderer>();
+		if (temp.HasComponent<RigidBody>())
+			e.GetComponent<RigidBody>() = temp.GetComponent<RigidBody>();
+		if (temp.HasComponent<BoxCollider>())
+			e.GetComponent<BoxCollider>() = temp.GetComponent<BoxCollider>();
+		if (temp.HasComponent<SphereCollider>())
+			e.GetComponent<SphereCollider>() = temp.GetComponent<SphereCollider>(); 
+		if (temp.HasComponent<PlaneCollider>())
+			e.GetComponent<PlaneCollider>() = temp.GetComponent<PlaneCollider>();
+		if (temp.HasComponent<Scripts>())
+			e.GetComponent<Scripts>() = temp.GetComponent<Scripts>();
+		if (temp.HasComponent<Audio>())
+			e.GetComponent<Audio>() = temp.GetComponent<Audio>();
 	}
+
+	systemManager->ecs->DeleteEntity(temp);
+}
+
+void ECS::UnlinkPrefab(Entity e)
+{
+
 }
 
 Entity::Entity(entt::entity id) : id(id) {}

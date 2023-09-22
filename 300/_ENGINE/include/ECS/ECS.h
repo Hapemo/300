@@ -94,6 +94,8 @@ public:
 
 	void UpdatePrefabEntities(std::string prefabName);
 
+	void UnlinkPrefab(Entity e);
+
 	const Entity NullEntity;
 };
 

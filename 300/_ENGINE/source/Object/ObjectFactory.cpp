@@ -230,13 +230,8 @@ void ObjectFactory::SerializePrefab(Entity e, const std::string& filename)
 		ent.SetPJSON(e.GetComponent<Parent>());
 	else ent.mp_t = false;
 
-	if (e.HasComponent<Children>())
-		ent.SetCJSON(e.GetComponent<Children>());
-	else ent.mc_t = false;
-
-	if (e.HasComponent<Audio>())
-		ent.SetAJSON(e.GetComponent<Audio>());
-	else ent.ma_t = false;
+	ent.mc_t = false;
+	ent.ma_t = false;
 
 	// push back after done
 	entities.EntitiesList().push_back(ent);
@@ -249,113 +244,66 @@ Entity ObjectFactory::DeserializePrefab(const std::string& filename)
 	EntityListJSON entities;
 	entities.DeserializeFile(filename);
 
-	std::unordered_map<entt::entity, entt::entity> idMap;
-	
-	Entity e(0);
-	int counter = 0;
+	if (entities.EntitiesList().size() > 1)
+		throw ("multiple entities in prefab file!");
 
-	for (auto& obj : entities.EntitiesList())
+	EntityJSON& eJ = entities.EntitiesList().front();
+
+	Entity e = systemManager->ecs->NewEntity().id;
+
+	General temp = eJ.GetGeneralJSON();
+
+	General& curr = e.GetComponent<General>();
+
+	curr.isActive = true;
+	curr.isPaused = true;
+	curr.tag = temp.tag;
+	curr.subtag = temp.subtag;
+
+	if (eJ.mrb_t)
 	{
-		if (counter == 1)
-			throw ("more than 1 entity stored in prefab file");
-		++counter;
-		e.id = systemManager->ecs->NewEntity().id;
-
-		// (oldid, newid)
-		idMap.insert({ obj.GetIDJSON(), e.id });
-
-		e.GetComponent<General>() = obj.GetGeneralJSON();
-
-		if (obj.mrb_t)
-		{
-			e.AddComponent<RigidBody>();
-			e.GetComponent<RigidBody>() = obj.GetRBJSON();
-		}
-
-		if (obj.mmr_t)
-		{
-			e.AddComponent<MeshRenderer>();
-			e.GetComponent<MeshRenderer>() = obj.GetMRJSON();
-		}
-
-		if (obj.mbc_t)
-		{
-			e.AddComponent<BoxCollider>();
-			e.GetComponent<BoxCollider>() = obj.GetBCJSON();
-		}
-
-		if (obj.msc_t)
-		{
-			e.AddComponent<SphereCollider>();
-			e.GetComponent<SphereCollider>() = obj.GetSCJSON();
-		}
-
-		if (obj.mpc_t)
-		{
-			e.AddComponent<PlaneCollider>();
-			e.GetComponent<PlaneCollider>() = obj.GetPCJSON();
-		}
-
-		if (obj.ms_t)
-		{
-			e.AddComponent<Scripts>();
-			e.GetComponent<Scripts>() = obj.GetSJSON();
-			/*for (Script ya : e.GetComponent<Scripts>().scriptsContainer)
-				std::cout << ya.scriptFile << std::endl;*/
-		}
-
-		if (obj.mp_t)
-		{
-			e.AddComponent<Parent>();
-			e.GetComponent<Parent>() = obj.GetPJSON();
-		}
-
-		if (obj.mc_t)
-		{
-			e.AddComponent<Children>();
-			e.GetComponent<Children>() = obj.GetCJSON();
-		}
-
-		if (obj.ma_t)
-		{
-			e.AddComponent<Audio>();
-			e.GetComponent<Audio>() = obj.GetAJSON();
-		}
-
-		// weird stuff, why still have value in rb when the component does not exist?
-		//std::cout << e.GetComponent<General>().name << " " << obj.mrb_t << " " << e.GetComponent<RigidBody>().mMass << std::endl;
+		e.AddComponent<RigidBody>();
+		e.GetComponent<RigidBody>() = eJ.GetRBJSON();
 	}
 
-	auto parent_cont = systemManager->ecs->GetEntitiesWith<Parent>();
-	auto child_cont = systemManager->ecs->GetEntitiesWith<Children>();
-
-	// working
-	//std::cout << "containers: " << parent_cont.size() << " " << child_cont.size() << std::endl;
-
-	for (Entity pe : parent_cont)
+	if (eJ.mmr_t)
 	{
-		Parent& parent = pe.GetComponent<Parent>();
-		//std::cout << "old parent stuff: " << parent.mNextSibling << ", " << parent.mParent << ", " << parent.mPrevSibling << std::endl;
-		parent.mNextSibling = (uint32_t)idMap[(entt::entity)parent.mNextSibling];
-		parent.mParent = (uint32_t)idMap[(entt::entity)parent.mParent];
-		parent.mPrevSibling = (uint32_t)idMap[(entt::entity)parent.mPrevSibling];
-
-		//std::cout << "new parent stuff: " << parent.mNextSibling << ", " << parent.mParent << ", " << parent.mPrevSibling << std::endl;
+		e.AddComponent<MeshRenderer>();
+		e.GetComponent<MeshRenderer>() = eJ.GetMRJSON();
 	}
 
-	for (Entity ce : child_cont)
+	if (eJ.mbc_t)
 	{
-		Children& child = ce.GetComponent<Children>();
-		//std::cout << "old child stuff: " << child.mFirstChild << std::endl;
-		child.mFirstChild = (uint32_t)idMap[(entt::entity)child.mFirstChild];
-		//std::cout << "new child stuff: " << child.mFirstChild << std::endl;
+		e.AddComponent<BoxCollider>();
+		e.GetComponent<BoxCollider>() = eJ.GetBCJSON();
 	}
 
-	//// working
-	//for (const auto& n : idMap)
-	//{
-	//	std::cout << "old id: " << (std::uint32_t)n.first << ", new id: " << (std::uint32_t)n.second << std::endl;
-	//}
+	if (eJ.msc_t)
+	{
+		e.AddComponent<SphereCollider>();
+		e.GetComponent<SphereCollider>() = eJ.GetSCJSON();
+	}
+
+	if (eJ.mpc_t)
+	{
+		e.AddComponent<PlaneCollider>();
+		e.GetComponent<PlaneCollider>() = eJ.GetPCJSON();
+	}
+
+	if (eJ.ms_t)
+	{
+		e.AddComponent<Scripts>();
+		e.GetComponent<Scripts>() = eJ.GetSJSON();
+		/*for (Script ya : e.GetComponent<Scripts>().scriptsContainer)
+			std::cout << ya.scriptFile << std::endl;*/
+	}
+
+	if (eJ.ma_t)
+	{
+		e.AddComponent<Audio>();
+		e.GetComponent<Audio>() = eJ.GetAJSON();
+	}
+
 	return e;
 }
 
