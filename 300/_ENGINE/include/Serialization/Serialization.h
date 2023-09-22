@@ -1,6 +1,6 @@
 #pragma once
 #include "pch.h"
-#include "rttr/type.h"
+//#include "rttr/type.h"
 #include "document.h"
 #include "prettywriter.h"
 #include "stringbuffer.h"
@@ -9,16 +9,28 @@
 //#include "GameState/GameStateManager.h"
 class Scene;
 
-// helper functions to convert strings to enums
+//helper functions to convert strings to enums
+
+template <typename T>
+std::string FindString(const T& val, const std::unordered_map<std::string, T>& map);
+
+template <typename T>
+T FindEnum(const std::string& str, const std::unordered_map<std::string, T>& map);
+
 TAG FindTagEnum(std::string str);
+std::string FindTagString(TAG tag);
 
 SUBTAG FindSubTagEnum(std::string str);
+std::string FindSubTagString(SUBTAG subtag);
 
 MATERIAL FindMaterialEnum(std::string str);
+std::string FindMaterialString(MATERIAL tag);
 
 MOTION FindMotionEnum(std::string str);
+std::string FindMotionString(MOTION tag);
 
 AUDIOTYPE FindAudioEnum(std::string str);
+std::string FindAudioString(AUDIOTYPE tag);
 
 class BaseJSON
 {
