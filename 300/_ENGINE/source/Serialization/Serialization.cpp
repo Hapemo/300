@@ -65,140 +65,139 @@ EntityJSON::~EntityJSON() {}
 
 bool EntityJSON::Deserialize(const rapidjson::Value& obj)
 {
-	return false;
 	if (obj.HasMember("EntityID"))
 	{
-		mID.id = (entt::entity)obj["EntityID"]["EntityID"].GetInt();
+		mID.id = (entt::entity)obj["EntityID"].GetInt();
 	}
 
-	//if (obj.HasMember("General"))
-	//{
-	//	mGJ.name = obj["General"]["Name"].GetString();
-	//	mGJ.isActive = obj["General"]["Active"].GetBool();
-	//	mGJ.isPaused = obj["General"]["Paused"].GetBool();
-	//	mGJ.tag = FindTagEnum(obj["General"]["Tag"].GetString());
-	//	mGJ.subtag = FindSubTagEnum(obj["General"]["Subtag"].GetString());
-	//}
+	if (obj.HasMember("General"))
+	{
+		mGJ.name = obj["General"]["Name"].GetString();
+		mGJ.isActive = obj["General"]["Active"].GetBool();
+		mGJ.isPaused = obj["General"]["Paused"].GetBool();
+		mGJ.tag = FindTagEnum(obj["General"]["Tag"].GetString());
+		mGJ.subtag = FindSubTagEnum(obj["General"]["Subtag"].GetString());
+	}
 
-	//if (obj.HasMember("Transform"))
-	//{
-	//	mTJ.mScale = { (float)obj["Transform"]["Scale"][0].GetDouble(),
-	//				   (float)obj["Transform"]["Scale"][1].GetDouble(),
-	//				   (float)obj["Transform"]["Scale"][2].GetDouble() };
+	if (obj.HasMember("Transform"))
+	{
+		mTJ.mScale = { (float)obj["Transform"]["Scale"][0].GetDouble(),
+					   (float)obj["Transform"]["Scale"][1].GetDouble(),
+					   (float)obj["Transform"]["Scale"][2].GetDouble() };
 
-	//	mTJ.mRotate = { (float)obj["Transform"]["Rotate"][0].GetDouble(),
-	//					(float)obj["Transform"]["Rotate"][1].GetDouble(),
-	//					(float)obj["Transform"]["Rotate"][2].GetDouble() };
+		mTJ.mRotate = { (float)obj["Transform"]["Rotate"][0].GetDouble(),
+						(float)obj["Transform"]["Rotate"][1].GetDouble(),
+						(float)obj["Transform"]["Rotate"][2].GetDouble() };
 
-	//	mTJ.mTranslate = { (float)obj["Transform"]["Translate"][0].GetDouble(),
-	//					   (float)obj["Transform"]["Translate"][1].GetDouble(),
-	//					   (float)obj["Transform"]["Translate"][2].GetDouble() };
-	//}
+		mTJ.mTranslate = { (float)obj["Transform"]["Translate"][0].GetDouble(),
+						   (float)obj["Transform"]["Translate"][1].GetDouble(),
+						   (float)obj["Transform"]["Translate"][2].GetDouble() };
+	}
 
-	//if (obj.HasMember("RigidBody"))
-	//{
-	//	mRBJ.mMass = (std::uint16_t)obj["RigidBody"]["Mass"].GetDouble();
-	//	mRBJ.mMaterial = FindMaterialEnum(obj["RigidBody"]["Material"].GetString());
-	//	mRBJ.mMotion = FindMotionEnum(obj["RigidBody"]["Motion"].GetString());
+	if (obj.HasMember("RigidBody"))
+	{
+		mRBJ.mMass = (std::uint16_t)obj["RigidBody"]["Mass"].GetDouble();
+		mRBJ.mMaterial = FindMaterialEnum(obj["RigidBody"]["Material"].GetString());
+		mRBJ.mMotion = FindMotionEnum(obj["RigidBody"]["Motion"].GetString());
 
-	//	mrb_t = true;
-	//}
-	//else mrb_t = false;
+		mrb_t = true;
+	}
+	else mrb_t = false;
 
-	//if (obj.HasMember("MeshRenderer"))
-	//{
-	//	mMRJ.mShaderPath = std::pair<std::string, std::string>(obj["MeshRenderer"]["ShaderPath"][0].GetString(), obj["MeshRenderer"]["ShaderPath"][1].GetString());
-	//	for(int i = 0; i < obj["MeshRenderer"]["MaterialInstancePath"].Size(); ++i)
-	//		mMRJ.mMaterialInstancePath.push_back(obj["MeshRenderer"]["MaterialInstancePath"][i].GetString());
-	//	mMRJ.mMeshPath = obj["MeshRenderer"]["MeshPath"].GetString();
-	//	mMRJ.mGUID = (unsigned)obj["MeshRenderer"]["GUID"].GetInt();
+	if (obj.HasMember("MeshRenderer"))
+	{
+		mMRJ.mShaderPath = std::pair<std::string, std::string>(obj["MeshRenderer"]["ShaderPath"][0].GetString(), obj["MeshRenderer"]["ShaderPath"][1].GetString());
+		for(int i = 0; i < obj["MeshRenderer"]["MaterialInstancePath"].Size(); ++i)
+			mMRJ.mMaterialInstancePath.push_back(obj["MeshRenderer"]["MaterialInstancePath"][i].GetString());
+		mMRJ.mMeshPath = obj["MeshRenderer"]["MeshPath"].GetString();
+		mMRJ.mGUID = (unsigned)obj["MeshRenderer"]["GUID"].GetInt();
 
-	//	mmr_t = true;
-	//}
-	//else mmr_t = false;
+		mmr_t = true;
+	}
+	else mmr_t = false;
 
 
-	//if (obj.HasMember("BoxCollider"))
-	//{
-	//	mBCJ.mScaleOffset = {(float)obj["BoxCollider"]["ScaleOffset"][0].GetDouble(),
-	//						 (float)obj["BoxCollider"]["ScaleOffset"][1].GetDouble(),
-	//						 (float)obj["BoxCollider"]["ScaleOffset"][2].GetDouble() };
+	if (obj.HasMember("BoxCollider"))
+	{
+		mBCJ.mScaleOffset = {(float)obj["BoxCollider"]["ScaleOffset"][0].GetDouble(),
+							 (float)obj["BoxCollider"]["ScaleOffset"][1].GetDouble(),
+							 (float)obj["BoxCollider"]["ScaleOffset"][2].GetDouble() };
 
-	//	mBCJ.mTranslateOffset = { (float)obj["BoxCollider"]["TranslateOffset"][0].GetDouble(),
-	//							  (float)obj["BoxCollider"]["TranslateOffset"][1].GetDouble(),
-	//							  (float)obj["BoxCollider"]["TranslateOffset"][2].GetDouble() };
+		mBCJ.mTranslateOffset = { (float)obj["BoxCollider"]["TranslateOffset"][0].GetDouble(),
+								  (float)obj["BoxCollider"]["TranslateOffset"][1].GetDouble(),
+								  (float)obj["BoxCollider"]["TranslateOffset"][2].GetDouble() };
 
-	//	mbc_t = true;
-	//}
-	//else mbc_t = false;
+		mbc_t = true;
+	}
+	else mbc_t = false;
 
-	//if (obj.HasMember("SphereCollider"))
-	//{
-	//	mSCJ.mScaleOffset = (float)obj["SphereCollider"]["ScaleOffset"].GetDouble();
+	if (obj.HasMember("SphereCollider"))
+	{
+		mSCJ.mScaleOffset = (float)obj["SphereCollider"]["ScaleOffset"].GetDouble();
 
-	//	mSCJ.mTranslateOffset = { (float)obj["SphereCollider"]["TranslateOffset"][0].GetDouble(),
-	//							  (float)obj["SphereCollider"]["TranslateOffset"][1].GetDouble(),
-	//							  (float)obj["SphereCollider"]["TranslateOffset"][2].GetDouble() };
+		mSCJ.mTranslateOffset = { (float)obj["SphereCollider"]["TranslateOffset"][0].GetDouble(),
+								  (float)obj["SphereCollider"]["TranslateOffset"][1].GetDouble(),
+								  (float)obj["SphereCollider"]["TranslateOffset"][2].GetDouble() };
 
-	//	msc_t = true;
-	//}
-	//else msc_t = false;
+		msc_t = true;
+	}
+	else msc_t = false;
 
-	//if (obj.HasMember("PlaneCollider"))
-	//{
-	//	mPCJ.mNormal = { (float)obj["PlaneCollider"]["Normal"][0].GetDouble(),
-	//					 (float)obj["PlaneCollider"]["Normal"][1].GetDouble(),
-	//					 (float)obj["PlaneCollider"]["Normal"][2].GetDouble() };
+	if (obj.HasMember("PlaneCollider"))
+	{
+		mPCJ.mNormal = { (float)obj["PlaneCollider"]["Normal"][0].GetDouble(),
+						 (float)obj["PlaneCollider"]["Normal"][1].GetDouble(),
+						 (float)obj["PlaneCollider"]["Normal"][2].GetDouble() };
 
-	//	mPCJ.mTranslateOffset = (float)obj["PlaneCollider"]["TranslateOffset"].GetDouble();
+		mPCJ.mTranslateOffset = (float)obj["PlaneCollider"]["TranslateOffset"].GetDouble();
 
-	//	mpc_t = true;
-	//}
-	//else mpc_t = false;
+		mpc_t = true;
+	}
+	else mpc_t = false;
 
-	//if (obj.HasMember("Scripts"))
-	//{
-	//	Script tmp;
+	if (obj.HasMember("Scripts"))
+	{
+		Script tmp;
 
-	//	for (int i = 0; i < obj["Scripts"].Size(); ++i)
-	//	{
-	//		tmp.scriptFile = obj["Scripts"][i].GetString();
-	//		mSJ.scriptsContainer.push_back(tmp);
-	//	}
+		for (int i = 0; i < obj["Scripts"].Size(); ++i)
+		{
+			tmp.scriptFile = obj["Scripts"][i].GetString();
+			mSJ.scriptsContainer.push_back(tmp);
+		}
 
-	//	ms_t = true;
-	//}
-	//else ms_t = false;
+		ms_t = true;
+	}
+	else ms_t = false;
 
-	//if (obj.HasMember("Parent"))
-	//{
-	//	mPJ.mParent = (std::uint32_t)obj["Parent"]["Parent"].GetInt();
-	//	mPJ.mPrevSibling = (std::uint32_t)obj["Parent"]["PreviousSibling"].GetInt();
-	//	mPJ.mNextSibling = (std::uint32_t)obj["Parent"]["NextSibling"].GetInt();
+	if (obj.HasMember("Parent"))
+	{
+		mPJ.mParent = (std::uint32_t)obj["Parent"]["Parent"].GetInt();
+		mPJ.mPrevSibling = (std::uint32_t)obj["Parent"]["PreviousSibling"].GetInt();
+		mPJ.mNextSibling = (std::uint32_t)obj["Parent"]["NextSibling"].GetInt();
 
-	//	mp_t = true;
-	//}
-	//else mp_t = false;
+		mp_t = true;
+	}
+	else mp_t = false;
 
-	//if (obj.HasMember("Children"))
-	//{
-	//	mCJ.mNumChildren = (std::uint32_t)obj["Children"]["NumChildren"].GetInt();
-	//	mCJ.mFirstChild = (std::uint32_t)obj["Children"]["FirstChild"].GetInt();
+	if (obj.HasMember("Children"))
+	{
+		mCJ.mNumChildren = (std::uint32_t)obj["Children"]["NumChildren"].GetInt();
+		mCJ.mFirstChild = (std::uint32_t)obj["Children"]["FirstChild"].GetInt();
 
-	//	mc_t = true;
-	//}
-	//else mc_t = false;
+		mc_t = true;
+	}
+	else mc_t = false;
 
-	//if (obj.HasMember("Audio"))
-	//{
-	//	mAJ.mFileName = obj["Audio"]["Filename"].GetString();
-	//	mAJ.mAudioType = FindAudioEnum(obj["Audio"]["AudioType"].GetString());
-	//	mAJ.mIsPlaying = obj["Audio"]["Playing"].GetBool();
-	//	mAJ.mIsPlay = obj["Audio"]["Play"].GetBool();
+	if (obj.HasMember("Audio"))
+	{
+		mAJ.mFileName = obj["Audio"]["Filename"].GetString();
+		mAJ.mAudioType = FindAudioEnum(obj["Audio"]["AudioType"].GetString());
+		mAJ.mIsPlaying = obj["Audio"]["Playing"].GetBool();
+		mAJ.mIsPlay = obj["Audio"]["Play"].GetBool();
 
-	//	ma_t = true;
-	//}
-	//else ma_t = false;
+		ma_t = true;
+	}
+	else ma_t = false;
 
 	return true;
 }
