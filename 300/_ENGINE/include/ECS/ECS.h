@@ -14,10 +14,12 @@ struct Entity
 	Entity(std::uint32_t id);
 
 	Entity(const Entity& entity);
-	void operator=(const Entity& entity) = delete;
+	void operator=(const Entity& entity);
 
 	bool operator<(Entity e) { return id < e.id; }
 	bool operator<(const Entity e) const { return id < e.id; }
+	bool operator==(Entity e) { return id < e.id; }
+	bool operator==(const Entity e) const { return id < e.id; }
 
 	template <typename Component>
 	Component& AddComponent();
@@ -90,7 +92,7 @@ public:
 
 	void NewPrefab(Entity e);
 
-	void NewEntityFromPrefab(std::string prefabName);
+	Entity NewEntityFromPrefab(std::string prefabName);
 
 	void UpdatePrefabEntities(std::string prefabName);
 

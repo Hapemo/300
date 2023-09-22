@@ -15,7 +15,7 @@ ECS::ECS() : registry(), NullEntity(registry.create()) {}
 Entity ECS::NewEntity()
 {
 	Entity e = registry.create();
-	e.AddComponent<General>().name = "Entity" + static_cast<uint32_t>(e.id);
+	e.AddComponent<General>().name = "Entity" + std::to_string(static_cast<uint32_t>(e.id));
 	e.AddComponent<Transform>();
 	return e;
 }
@@ -52,19 +52,20 @@ void ECS::NewPrefab(Entity e)
 	mPrefabs[name].push_back(e);
 }
 
-void ECS::NewEntityFromPrefab(std::string prefabName)
+Entity ECS::NewEntityFromPrefab(std::string prefabName)
 {
 	// void ObjectFactory::DeserializeScene(const std::string& filename)
 	// creation of new entity done inside deserializescene function
-	Entity e = ObjectFactory::DeserializePrefab("../assets/Prefabs/" + prefabName + ".json");
+	Entity e(ObjectFactory::DeserializePrefab("../assets/Prefabs/" + prefabName + ".json"));
 	e.AddComponent<Prefab>().mPrefab = prefabName;
 	//copy all prefab components (except transform) to new entity
 	mPrefabs[prefabName].push_back(e);
+	return e;
 }
 
 void ECS::UpdatePrefabEntities(std::string prefabName)
 {
-	Entity temp = ObjectFactory::DeserializePrefab("../assets/Prefabs/" + prefabName + ".json");
+	Entity temp(ObjectFactory::DeserializePrefab("../assets/Prefabs/" + prefabName + ".json"));
 	
 	for (Entity e : mPrefabs[prefabName])
 	{
@@ -102,6 +103,11 @@ void ECS::UnlinkPrefab(Entity e)
 Entity::Entity(entt::entity id) : id(id) {}
 Entity::Entity(std::uint32_t id) : id(entt::entity(id)) {}
 Entity::Entity(const Entity& entity) : id(entity.id) {}
+
+void Entity::operator=(const Entity& entity)
+{
+	this->id = entity.id;
+}
 
 void Entity::AddChild(Entity e)
 {
