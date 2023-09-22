@@ -22,6 +22,9 @@ void main()
     vec3 normal = texture(uTex[1], TexCoords).rgb;          // Normal Map
     normal = normalize(normal * 2.0 - 1.0);
 
+    vec3 emission = texture(uTex[2], TexCoords).rgb;        // Emission Map
+    vec3 specular = texture(uTex[3], TexCoords).rgb;        // Specular Map
+
     // Ambient Color
     vec3 ambient = 0.1 * uColor.rgb;
 
@@ -34,10 +37,10 @@ void main()
     vec3 viewDir = normalize(TangentViewPos - TangentFragPos);
     vec3 reflectDir = reflect(-lightDir, normal);
     vec3 halfwayDir = normalize(lightDir + viewDir);  
-    float spec = pow(max(dot(normal, halfwayDir), 0.0), 32.0);
-    vec3 specular = vec3(0.7) * spec;
+    float spec = pow(max(dot(normal, halfwayDir), 0.0), 50.0);
+    specular = spec * specular;
 
-    vec3 finalColor = vec3(ambient + diffuse + specular + VertexColor.xyz);
+    vec3 finalColor = vec3(ambient + diffuse + specular + VertexColor.rgb + emission);
 
     // Output
     fragColor0 = vec4(finalColor, uColor.a);

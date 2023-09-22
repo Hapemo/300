@@ -39,6 +39,8 @@ void GraphicsSystem::Init()
 	newentity.GetComponent<MeshRenderer>().mMeshPath = "../assets/compiled_geom/dancing_vampire.geom";
 	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Vampire_diffuse.ctexture");
 	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Vampire_normal.ctexture");
+	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Vampire_emission.ctexture");
+	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Vampire_specular.ctexture");
 	newentity.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/pointLight_vert.glsl", "../_GRAPHICS/shader_files/pointLight_frag.glsl" };	// for point light
 
 	newentity.GetComponent<BoxCollider>().mTranslateOffset = { 0.f, 1.05f, 0.f };
@@ -94,13 +96,16 @@ void GraphicsSystem::Update(float dt)
 			// draw the mesh's origin
 			m_Renderer.AddSphere(m_EditorCamera.position(), inst.GetComponent<Transform>().mTranslate, 0.5f, { 1.f, 1.f, 0.f, 1.f });
 
-			// draw the mesh's bone positions as boxes
-			for (const auto& bones : meshinst.mAnimation[0].m_Bones)
+			if (meshinst.mHasAnimation && _ENABLE_ANIMATIONS)
 			{
-				static const vec3 bonescale(0.1f, 0.1f, 0.1f);
-				vec4 bonestrns = m_Animator.m_FinalBoneMatrices[bones.GetBoneID()] * vec4(inst.GetComponent<Transform>().mTranslate, 1.f);
+				// draw the mesh's bone positions as boxes
+				for (const auto& bones : meshinst.mAnimation[0].m_Bones)
+				{
+					static const vec3 bonescale(0.1f, 0.1f, 0.1f);
+					vec4 bonestrns = m_Animator.m_FinalBoneMatrices[bones.GetBoneID()] * vec4(inst.GetComponent<Transform>().mTranslate, 1.f);
 
-				m_Renderer.AddAabb({ bonestrns.x, bonestrns.y, bonestrns.z }, bonescale);
+					m_Renderer.AddAabb({ bonestrns.x, bonestrns.y, bonestrns.z }, bonescale);
+				}
 			}
 		}
 
@@ -142,8 +147,10 @@ void GraphicsSystem::Update(float dt)
 
 		// get the texture filepath
 		std::vector<std::string> texturestr = inst.GetComponent<MeshRenderer>().mMaterialInstancePath;
-		GFX::Texture& textureColorinst = systemManager->mResourceSystem->get_MaterialInstance(texturestr[0]);	// loads the texture
-		GFX::Texture& textureNormalinst = systemManager->mResourceSystem->get_MaterialInstance(texturestr[1]);	// loads the texture
+		GFX::Texture& textureColorinst = systemManager->mResourceSystem->get_MaterialInstance(texturestr[0]);		// loads the diffuse texture
+		GFX::Texture& textureNormalinst = systemManager->mResourceSystem->get_MaterialInstance(texturestr[1]);		// loads the normal texture
+		GFX::Texture& textureEmissioninst = systemManager->mResourceSystem->get_MaterialInstance(texturestr[2]);	// loads the emission texture
+		GFX::Texture& textureSpecularinst = systemManager->mResourceSystem->get_MaterialInstance(texturestr[3]);	// loads the specular texture
 
 		shaderinst.Activate();
 		meshinst.BindVao();
@@ -160,9 +167,13 @@ void GraphicsSystem::Update(float dt)
 		// bind texture unit
 		glBindTextureUnit(0, textureColorinst.ID());
 		glBindTextureUnit(1, textureNormalinst.ID());
+		glBindTextureUnit(2, textureEmissioninst.ID());
+		glBindTextureUnit(3, textureSpecularinst.ID());
 
 		m_Textures.push_back(0);
 		m_Textures.push_back(1);
+		m_Textures.push_back(2);
+		m_Textures.push_back(3);
 
 		GLuint uniform_tex = glGetUniformLocation(shaderID, "uTex");
 		glUniform1iv(uniform_tex, (GLsizei)m_Textures.size(), m_Textures.data());	// passing Texture ID to the fragment shader
@@ -188,6 +199,8 @@ void GraphicsSystem::Update(float dt)
 		m_Textures.clear();
 		glBindTextureUnit(0, 0);
 		glBindTextureUnit(1, 0);
+		glBindTextureUnit(2, 0);
+		glBindTextureUnit(3, 0);
 
 		meshinst.ClearInstances();
 	}

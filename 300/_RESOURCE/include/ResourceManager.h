@@ -2,7 +2,7 @@
 #ifndef _RESOURCEMANAGER_H
 #define _RESOURCEMANAGER_H
 
-#define  _ENABLE_ANIMATIONS 1
+#define  _ENABLE_ANIMATIONS 0
 #include "Guid.h"
 #include "Mesh.hpp"
 #include "Shader.hpp"
