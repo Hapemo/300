@@ -45,6 +45,8 @@ struct MeshRenderer
 	std::string							mMeshPath;
 	
 	unsigned							mGUID;
+
+	RTTR_ENABLE()
 };
 
 struct RigidBody
@@ -73,6 +75,8 @@ struct SphereCollider
 	glm::vec3 mTranslateOffset;		// final pos = Transform.mTranslate + mTranslateOffset;
 
 	SphereCollider() : mScaleOffset(1.f), mTranslateOffset(0.f) {};
+
+	RTTR_ENABLE()
 };
 
 struct PlaneCollider
@@ -81,6 +85,8 @@ struct PlaneCollider
 	float mTranslateOffset;			// final pos = magnitude(Transform.mTranslate) + mTranslateOffset;
 
 	PlaneCollider() : mNormal(0.f, 1.f, 0.f), mTranslateOffset(0.f) {};
+
+	RTTR_ENABLE()
 };
 
 class Scripts {
@@ -94,6 +100,8 @@ public:
 
 	std::string mScriptFile{};
 	std::vector <Script> scriptsContainer;
+
+	RTTR_ENABLE()
 };
 
 struct Parent
@@ -103,6 +111,8 @@ struct Parent
 	std::uint32_t mParent;
 
 	Parent() : mPrevSibling(0), mNextSibling(0), mParent(0) {};
+
+	RTTR_ENABLE()
 };
 
 struct Children
@@ -111,6 +121,8 @@ struct Children
 	std::uint32_t mFirstChild;
 
 	Children() : mNumChildren(0), mFirstChild(0) {};
+
+	RTTR_ENABLE()
 };
 
 struct Audio
@@ -119,20 +131,22 @@ struct Audio
 	AUDIOTYPE mAudioType;
 	bool mIsPlaying;// check if audio is already playing
 	bool mIsPlay;	// play audio if true
+
+	RTTR_ENABLE()
 };
 
 RTTR_REGISTRATION
 {
-	//rttr::registration::class_<Entity>("Entity")
-	//.constructor()(rttr::policy::ctor::as_object)
-	//.property("EntityID", &Entity::id)
-	//;
+	rttr::registration::class_<Entity>("Entity")
+	.property("EntityID", &Entity::id)
+	;
 
 	rttr::registration::class_<General>("General")
 	.property("Name", &General::name)
 	.property("Tag", &General::tag)
 	.property("Subtag", &General::subtag)
 	.property("Active", &General::isActive)
+	.property("Paused", &General::isPaused)
 	;
 
 	rttr::registration::enumeration<TAG>("Tag")
@@ -146,5 +160,99 @@ RTTR_REGISTRATION
 		rttr::value("Active", SUBTAG::ACTIVE),
 		rttr::value("Background", SUBTAG::BACKGROUND)
 	);
+
+	rttr::registration::class_<Transform>("Transform")
+	.property("Scale", &Transform::mScale)
+	.property("Rotate", &Transform::mRotate)
+	.property("Translate", &Transform::mTranslate)
+	;
+
+	rttr::registration::class_<RigidBody>("RigidBody")
+	.property("Mass", &RigidBody::mMass)
+	.property("Material", &RigidBody::mMaterial)
+	.property("Motion", &RigidBody::mMotion)
+	;
+
+	rttr::registration::class_<MeshRenderer>("MeshRenderer")
+	.property("ShaderPath", &MeshRenderer::mShaderPath)
+	.property("MaterialInstancePath", &MeshRenderer::mMaterialInstancePath)
+	.property("MeshPath", &MeshRenderer::mMeshPath)
+	.property("GUID", &MeshRenderer::mGUID)
+	;
+
+	rttr::registration::class_<BoxCollider>("BoxCollider")
+	.property("ScaleOffset", &BoxCollider::mScaleOffset)
+	.property("TranslateOffset", &BoxCollider::mTranslateOffset)
+	;
+
+	rttr::registration::class_<SphereCollider>("SphereCollider")
+	.property("ScaleOffset", &SphereCollider::mScaleOffset)
+	.property("TranslateOffset", &SphereCollider::mTranslateOffset)
+	;
+
+	rttr::registration::class_<PlaneCollider>("PlaneCollider")
+	.property("Normal", &PlaneCollider::mNormal)
+	.property("TranslateOffset", &PlaneCollider::mTranslateOffset)
+	;
+
+	rttr::registration::class_<Scripts>("Scripts")
+	.property("ScriptsFiles", &Scripts::scriptsContainer)
+	;
+
+	rttr::registration::class_<Parent>("Parent")
+	.property("Parent", &Parent::mParent)
+	.property("PreviousSibling", &Parent::mPrevSibling)
+	.property("NextSibling", &Parent::mNextSibling)
+	;
+
+	rttr::registration::class_<Children>("Children")
+	.property("NumChildren", &Children::mNumChildren)
+	.property("FirstChild", &Children::mFirstChild)
+	;
+
+	rttr::registration::class_<Audio>("Audio")
+	.property("Filename", &Audio::mFileName)
+	.property("AudioType", &Audio::mAudioType)
+	.property("Playing", &Audio::mIsPlaying)
+	.property("Play", &Audio::mIsPlay)
+	;
+
+	rttr::registration::class_<glm::vec3>("vec3")
+	.property("x", &glm::vec3::x)
+	.property("y", &glm::vec3::y)
+	.property("z", &glm::vec3::z)
+	;
+
+	rttr::registration::enumeration<MATERIAL>("Material")
+	(
+		rttr::value("Rubber", MATERIAL::RUBBER),
+		rttr::value("Wood", MATERIAL::WOOD),
+		rttr::value("Metal", MATERIAL::METAL),
+		rttr::value("Ice", MATERIAL::ICE),
+		rttr::value("Concrete", MATERIAL::CONCRETE),
+		rttr::value("Glass", MATERIAL::GLASS)
+	);
+
+	rttr::registration::enumeration<MOTION>("Motion")
+	(
+		rttr::value("Static", MOTION::STATIC),
+		rttr::value("Dynamic", MOTION::DYNAMIC)
+	);
+
+	rttr::registration::enumeration<AUDIOTYPE>("AudioType")
+	(
+		rttr::value("BGM", AUDIOTYPE::AUDIO_BGM),
+		rttr::value("SFX", AUDIOTYPE::AUDIO_SFX)
+	);
+
+	rttr::registration::class_<Script>("Script")
+	.property("Filename", &Script::scriptFile)
+	;
+
+	rttr::registration::class_<std::pair<std::string, std::string>>("std::pair")
+	.constructor<std::string, std::string>()
+	.property("first", &std::pair<std::string, std::string>::first)
+	.property("second", &std::pair<std::string, std::string>::second)
+	;
 }
 

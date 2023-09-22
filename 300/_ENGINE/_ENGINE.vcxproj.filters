@@ -85,6 +85,9 @@
     <ClInclude Include="include\Audio\AudioType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\Serialization\SerializationTemp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\ECS\ECS.cpp">
@@ -131,6 +134,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\Debug\Logger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Serialization\SerializationTemp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

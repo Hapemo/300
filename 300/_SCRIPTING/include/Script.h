@@ -16,6 +16,7 @@ This file contains scripting component logic.
 #include "sol/sol.hpp"
 #include "ECS/ECS.h"
 #include "ECS/ECS_Systems.h"
+#include "rttr/registration.h"
 
 /***************************************************************************/
 /*!
@@ -34,4 +35,6 @@ public:
 
 	// Make sure error only print once
 	static bool isOnce;
+
+	RTTR_ENABLE()
 };

@@ -1,152 +1,257 @@
 [
     {
+        "EntityID": {
+            "EntityID": 7
+        },
+        "General": {
+            "Name": "",
+            "Tag": "Unknown",
+            "Subtag": "Active",
+            "Active": true,
+            "Paused": true
+        },
+        "Transform": {
+            "Scale": {
+                "x": 100.0,
+                "y": 100.0,
+                "z": 100.0
+            },
+            "Rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "Parent": {
+            "Parent": 6,
+            "PreviousSibling": 7,
+            "NextSibling": 7
+        }
+    },
+    {
+        "EntityID": {
+            "EntityID": 6
+        },
+        "General": {
+            "Name": "",
+            "Tag": "Unknown",
+            "Subtag": "Active",
+            "Active": true,
+            "Paused": true
+        },
+        "Transform": {
+            "Scale": {
+                "x": 100.0,
+                "y": 100.0,
+                "z": 100.0
+            },
+            "Rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "Parent": {
+            "Parent": 5,
+            "PreviousSibling": 6,
+            "NextSibling": 6
+        },
+        "Children": {
+            "NumChildren": 1,
+            "FirstChild": 7
+        }
+    },
+    {
+        "EntityID": {
+            "EntityID": 5
+        },
+        "General": {
+            "Name": "y",
+            "Tag": "Unknown",
+            "Subtag": "Active",
+            "Active": true,
+            "Paused": true
+        },
+        "Transform": {
+            "Scale": {
+                "x": 100.0,
+                "y": 100.0,
+                "z": 100.0
+            },
+            "Rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "Children": {
+            "NumChildren": 1,
+            "FirstChild": 6
+        }
+    },
+    {
+        "EntityID": {
+            "EntityID": 4
+        },
         "General": {
             "Name": "Apple",
-            "isActive": false,
             "Tag": "Unknown",
-            "Subtag": "Active"
+            "Subtag": "Active",
+            "Active": false,
+            "Paused": true
         },
         "Transform": {
-            "Scale": [
-                100.0,
-                100.0,
-                100.0
-            ],
-            "Rotate": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "Translate": [
-                0.0,
-                0.0,
-                0.0
-            ]
+            "Scale": {
+                "x": 100.0,
+                "y": 100.0,
+                "z": 100.0
+            },
+            "Rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
         }
     },
     {
+        "EntityID": {
+            "EntityID": 3
+        },
         "General": {
             "Name": "Other",
-            "isActive": true,
             "Tag": "Unknown",
-            "Subtag": "Background"
+            "Subtag": "Background",
+            "Active": true,
+            "Paused": true
         },
         "Transform": {
-            "Scale": [
-                100.0,
-                100.0,
-                100.0
-            ],
-            "Rotate": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "Translate": [
-                0.0,
-                0.0,
-                0.0
-            ]
+            "Scale": {
+                "x": 100.0,
+                "y": 100.0,
+                "z": 100.0
+            },
+            "Rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
         }
     },
     {
+        "EntityID": {
+            "EntityID": 2
+        },
         "General": {
             "Name": "Testing",
-            "isActive": true,
             "Tag": "Player",
-            "Subtag": "Active"
+            "Subtag": "Active",
+            "Active": true,
+            "Paused": false
         },
         "Transform": {
-            "Scale": [
-                100.0,
-                100.0,
-                100.0
-            ],
-            "Rotate": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "Translate": [
-                0.0,
-                0.0,
-                0.0
+            "Scale": {
+                "x": 100.0,
+                "y": 100.0,
+                "z": 100.0
+            },
+            "Rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "Scripts": {
+            "ScriptsFiles": [
+                {
+                    "Filename": "../assets/Scripts/Run.lua"
+                },
+                {
+                    "Filename": "../assets/Scripts/Fly.lua"
+                }
             ]
         }
     },
     {
+        "EntityID": {
+            "EntityID": 1
+        },
         "General": {
-            "Name": "",
-            "isActive": true,
+            "Name": "ntity",
             "Tag": "Unknown",
-            "Subtag": "Active"
+            "Subtag": "Active",
+            "Active": true,
+            "Paused": false
         },
         "Transform": {
-            "Scale": [
-                100.0,
-                100.0,
-                100.0
-            ],
-            "Rotate": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "Translate": [
-                0.0,
-                0.0,
-                0.0
-            ]
-        }
-    },
-    {
-        "General": {
-            "Name": "",
-            "isActive": true,
-            "Tag": "Unknown",
-            "Subtag": "Active"
+            "Scale": {
+                "x": 100.0,
+                "y": 100.0,
+                "z": 100.0
+            },
+            "Rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "Translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
         },
-        "Transform": {
-            "Scale": [
-                100.0,
-                100.0,
-                100.0
+        "MeshRenderer": {
+            "ShaderPath": {
+                "first": "../_GRAPHICS/shader_files/pointLight_vert.glsl",
+                "second": "../_GRAPHICS/shader_files/pointLight_frag.glsl"
+            },
+            "MaterialInstancePath": [
+                "../assets/Compressed/Vampire_diffuse.ctexture",
+                "../assets/Compressed/Vampire_normal.ctexture"
             ],
-            "Rotate": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "Translate": [
-                0.0,
-                1000.0,
-                0.0
-            ]
-        }
-    },
-    {
-        "General": {
-            "Name": "",
-            "isActive": true,
-            "Tag": "Unknown",
-            "Subtag": "Active"
+            "MeshPath": "../assets/compiled_geom/dancing_vampire.geom",
+            "GUID": 0
         },
-        "Transform": {
-            "Scale": [
-                100.0,
-                100.0,
-                100.0
-            ],
-            "Rotate": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "Translate": [
-                0.0,
-                0.0,
-                0.0
-            ]
+        "BoxCollider": {
+            "ScaleOffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "TranslateOffset": {
+                "x": 0.0,
+                "y": 1.0499999523162842,
+                "z": 0.0
+            }
         }
     }
 ]

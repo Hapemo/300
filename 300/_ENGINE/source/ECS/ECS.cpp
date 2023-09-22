@@ -71,6 +71,8 @@ void ECS::DeleteAllEntities()
 
 void ECS::NewPrefab(Entity e)
 {
+
+	// void ObjectFactory::SerializePrefab(Entity e, const std::string& filename) call here
 	// store to resources/prefabs/e.getcomponent<general>().name
 	// general flow 
 	// 1) serialize prefab based on entity
@@ -84,6 +86,8 @@ void ECS::NewPrefab(Entity e)
 
 void ECS::NewEntityFromPrefab(std::string prefabName)
 {
+	// void ObjectFactory::DeserializeScene(const std::string& filename)
+	// creation of new entity done inside deserializescene function
 	Entity e = NewEntity();
 	//copy all prefab components (except transform) to new entity
 	mPrefabs[prefabName].push_back(e);

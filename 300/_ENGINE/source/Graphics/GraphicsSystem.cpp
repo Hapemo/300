@@ -27,7 +27,7 @@ void GraphicsSystem::Init()
 
 	UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_ALL, 0.f);
 
-	// Create a new entity here, for testing purposes
+	 //Create a new entity here, for testing purposes
 	Entity newentity = systemManager->ecs->NewEntity();			// creating a new entity
 	newentity.AddComponent<MeshRenderer>();
 	//newentity.GetComponent<MeshRenderer>().mMeshPath = "../compiled_geom/dancing_vampire.geom";
