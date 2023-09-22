@@ -4,7 +4,7 @@
         "General": {
             "Name": "",
             "Active": true,
-            "Paused": true,
+            "Paused": false,
             "Tag": "Unknown",
             "Subtag": "Active"
         },
@@ -36,7 +36,7 @@
         "General": {
             "Name": "",
             "Active": true,
-            "Paused": true,
+            "Paused": false,
             "Tag": "Unknown",
             "Subtag": "Active"
         },
@@ -72,7 +72,7 @@
         "General": {
             "Name": "y",
             "Active": true,
-            "Paused": true,
+            "Paused": false,
             "Tag": "Unknown",
             "Subtag": "Active"
         },
@@ -103,7 +103,7 @@
         "General": {
             "Name": "Apple",
             "Active": false,
-            "Paused": true,
+            "Paused": false,
             "Tag": "Unknown",
             "Subtag": "Active"
         },
@@ -130,7 +130,7 @@
         "General": {
             "Name": "Other",
             "Active": true,
-            "Paused": true,
+            "Paused": false,
             "Tag": "Unknown",
             "Subtag": "Background"
         },
@@ -157,7 +157,7 @@
         "General": {
             "Name": "Testing",
             "Active": true,
-            "Paused": true,
+            "Paused": false,
             "Tag": "Player",
             "Subtag": "Active"
         },
@@ -188,7 +188,7 @@
         "General": {
             "Name": "ntity",
             "Active": true,
-            "Paused": true,
+            "Paused": false,
             "Tag": "Unknown",
             "Subtag": "Active"
         },

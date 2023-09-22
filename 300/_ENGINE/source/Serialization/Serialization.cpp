@@ -479,9 +479,9 @@ bool SceneJSON::Deserialize(const rapidjson::Value& obj)
 {
 	if (obj.HasMember("Scene"))
 	{
-		sj.name = obj["Scene"]["SceneName"].GetString();
-		sj.isPause = obj["Scene"]["Pause"].GetBool();
-		sj.forceRender = obj["Scene"]["ForceRender"].GetBool();
+		mScene.mName = obj["Scene"]["SceneName"].GetString();
+		mScene.mIsPause = obj["Scene"]["Pause"].GetBool();
+		mScene.mForceRender = obj["Scene"]["ForceRender"].GetBool();
 	}
 
 	return true;
@@ -495,13 +495,13 @@ bool SceneJSON::Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* writ
 	writer->StartObject();
 
 	writer->String("SceneName");
-	writer->String(sj.name.c_str());
+	writer->String(mScene.mName.c_str());
 
 	writer->String("Pause");
-	writer->Bool(sj.isPause);
+	writer->Bool(mScene.mIsPause);
 
 	writer->String("ForceRender");
-	writer->Bool(sj.forceRender);
+	writer->Bool(mScene.mForceRender);
 
 	writer->EndObject();
 
@@ -636,23 +636,6 @@ std::string FindAudioString(AUDIOTYPE tag)
 		if (it.second == tag)
 			return it.first;
 	}
-}
-
-void SceneJSON::SetSceneJSON(const Scene scj)
-{
-	sj.name = scj.mName;
-	sj.isPause = scj.mIsPause;
-	sj.forceRender = scj.mForceRender;
-}
-
-const Scene SceneJSON::GetSceneJSON() const
-{
-	Scene scj;
-	scj.mName = sj.name;
-	scj.mIsPause = sj.isPause;
-	scj.mForceRender = sj.forceRender;
-
-	return scj;
 }
 
 //template <typename T>
