@@ -93,8 +93,8 @@ void ECS::UnlinkPrefab(Entity e)
 	if (!e.HasComponent<Prefab>())
 		return;
 	std::string name = e.GetComponent<Prefab>().mPrefab;
-	auto temp = mPrefabs[name].end();
-	if ((temp = std::find(mPrefabs[name].begin(), mPrefabs[name].end(), e)) == mPrefabs[name].end())
+	auto temp = std::find(mPrefabs[name].begin(), mPrefabs[name].end(), e);
+	if (temp == mPrefabs[name].end())
 		return;
 	mPrefabs[name].erase(temp);
 	e.RemoveComponent<Prefab>();

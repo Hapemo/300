@@ -18,8 +18,8 @@ struct Entity
 
 	bool operator<(Entity e) { return id < e.id; }
 	bool operator<(const Entity e) const { return id < e.id; }
-	bool operator==(Entity e) { return id < e.id; }
-	bool operator==(const Entity e) const { return id < e.id; }
+	bool operator==(Entity e) { return id == e.id; }
+	bool operator==(const Entity e) const { return id == e.id; }
 
 	template <typename Component>
 	Component& AddComponent();
