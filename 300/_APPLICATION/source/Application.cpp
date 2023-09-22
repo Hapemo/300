@@ -148,13 +148,19 @@ void Application::SystemInit()
 #pragma endregion testparentchild
 
 #pragma region testprefab
-    Entity ent00 = systemManager->ecs->NewEntityFromPrefab("Entity8");
-    ent00.GetComponent<General>().name = "eeeee";
-    systemManager->ecs->UnlinkPrefab(ent00);
-    ent00.RemoveComponent<RigidBody>();
-    ent00.RemoveComponent<PlaneCollider>();
-    systemManager->ecs->UpdatePrefabEntities("Entity8");
+    Entity ent00 = systemManager->ecs->NewEntity();
+    ent00.GetComponent<General>().name = "testPrefab";
+    ent00.AddComponent<RigidBody>();
+    ent00.AddComponent<PlaneCollider>();
     systemManager->ecs->NewPrefab(ent00);
+
+    
+    Entity ent01 = systemManager->ecs->NewEntityFromPrefab("testPrefab");
+    systemManager->ecs->UnlinkPrefab(ent01);
+    ent01.RemoveComponent<RigidBody>();
+    ent01.RemoveComponent<PlaneCollider>();
+    systemManager->ecs->NewPrefab(ent01);
+
 #pragma endregion testprefab
 
 }
