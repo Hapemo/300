@@ -104,16 +104,17 @@ void Inspect::update()
 		}
 
 		if (ent.HasComponent<MeshRenderer>()) {
-
 			MeshRenderer& Meshrender = ent.GetComponent<MeshRenderer>();
 			Meshrender.Inspect();
 		}
 		if (ent.HasComponent<RigidBody>()) {
-
 			RigidBody& rigidBody = ent.GetComponent<RigidBody>();
 			rigidBody.Inspect();
 		}
-
+		if (ent.HasComponent<BoxCollider>()) {
+			BoxCollider& boxCollider = ent.GetComponent<BoxCollider>();
+			boxCollider.Inspect();
+		}
 		//--------------------------------------------// must be at the LAST OF THIS LOOP
 		Add_component(); 
 	}
@@ -158,9 +159,16 @@ void Inspect::Add_component() {
 				Entity(Hierarchy::selectedId).AddComponent<RigidBody>();
 		}
 
+		if (ImGui::Selectable("BoxCollider")) {
+			if (!Entity(Hierarchy::selectedId).HasComponent<BoxCollider>())
+				Entity(Hierarchy::selectedId).AddComponent<BoxCollider>();
+		}
 
-		if (ImGui::Selectable("Scripts"))
-			Entity(Hierarchy::selectedId).AddComponent<Scripts>();
+
+		if (ImGui::Selectable("Scripts")) {
+			if (!Entity(Hierarchy::selectedId).HasComponent<Scripts>())
+				Entity(Hierarchy::selectedId).AddComponent<Scripts>();
+		}
 		ImGui::EndPopup();
 	}
 
@@ -377,9 +385,21 @@ void RigidBody::Inspect() {
 }
 
 void BoxCollider::Inspect() {
+	if (ImGui::CollapsingHeader("BoxCollider", ImGuiTreeNodeFlags_DefaultOpen)) {
+
+		ImGui::DragFloat3("##Scale", (float*)&mScaleOffset);
+
+		ImGui::SameLine();
+		ImGui::Text("Scale");
+		ImGui::Separator();
 
 
+		ImGui::DragFloat3("##Translate", (float*)&mTranslateOffset);
 
+		ImGui::SameLine();
+		ImGui::Text("Translate");
+		ImGui::Separator();
+	}
 }
 void SphereCollider::Inspect() {
 

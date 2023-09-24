@@ -61,6 +61,8 @@ struct RigidBody
 
 	RigidBody() : mDensity(10.f), mMaterial(MATERIAL::WOOD), mMotion(MOTION::STATIC), mVelocity(0.f) {};
 	//RTTR_ENABLE()
+
+
 	int mMat{ 0 };
 	int mMot{ 0 };
 	void							Inspect();
@@ -70,6 +72,8 @@ struct BoxCollider
 {
 	glm::vec3 mScaleOffset;			// final scale = mScaleOffset * Transform.mScale;
 	glm::vec3 mTranslateOffset;		// final pos = Transform.mTranslate + mTranslateOffset;
+	
+
 
 	BoxCollider() : mScaleOffset(1.f), mTranslateOffset(0.f) {}
 	
