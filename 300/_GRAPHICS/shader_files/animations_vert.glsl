@@ -33,7 +33,7 @@ void main()
     VertexColor = vec4(0.f);
 
 	// Position
-    vec4 totalPosition = vec4(inQPos, 1.0f);
+    vec4 totalPosition = vec4(0.f);
     vec3 normal = vec3(0.0f);
     for(int i = 0; i < MAX_BONE_INFLUENCE; ++i)
     {

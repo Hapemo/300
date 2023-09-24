@@ -36,6 +36,7 @@ void GraphicsSystem::Init()
 	//newentity.GetComponent<MeshRenderer>().mMeshPath = "../compiled_geom/Skull_textured.geom";
 	//newentity.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/draw_vert.glsl", "../_GRAPHICS/shader_files/draw_frag.glsl" };
 	//newentity.GetComponent<MeshRenderer>().mMeshPath = "../assets/compiled_geom/FreeModelNathan_WalkAnim.geom";
+	//newentity.GetComponent<MeshRenderer>().mMeshPath = "../assets/compiled_geom/dancing_vampire.geom";
 	newentity.GetComponent<MeshRenderer>().mMeshPath = "../assets/compiled_geom/dancing_vampire.geom";
 	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Vampire_diffuse.ctexture");
 	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Vampire_normal.ctexture");
@@ -96,6 +97,7 @@ void GraphicsSystem::Update(float dt)
 			// draw the mesh's origin
 			m_Renderer.AddSphere(m_EditorCamera.position(), inst.GetComponent<Transform>().mTranslate, 0.5f, { 1.f, 1.f, 0.f, 1.f });
 
+			// draw the animation data for the bones
 			if (meshinst.mHasAnimation && _ENABLE_ANIMATIONS)
 			{
 				// draw the mesh's bone positions as boxes
@@ -104,14 +106,14 @@ void GraphicsSystem::Update(float dt)
 					static const vec3 bonescale(0.1f, 0.1f, 0.1f);
 					vec4 bonestrns = m_Animator.m_FinalBoneMatrices[bones.GetBoneID()] * vec4(inst.GetComponent<Transform>().mTranslate, 1.f);
 
-					m_Renderer.AddAabb({ bonestrns.x, bonestrns.y, bonestrns.z }, bonescale);
+					m_Renderer.AddAabb({ bonestrns.x, bonestrns.y, bonestrns.z }, bonescale, vec4(1.f, 1.f, 0.f, 1.f));
 				}
 			}
 		}
 
 		meshinst.mLTW.push_back(final);
 
-		if (_ENABLE_ANIMATIONS)
+		if (m_Animator.m_CurrentAnimation != nullptr && _ENABLE_ANIMATIONS)
 		{
 			// update the current animation
 			m_Animator.UpdateAnimation(dt, final);

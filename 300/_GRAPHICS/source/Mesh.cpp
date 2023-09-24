@@ -80,7 +80,7 @@ void GFX::Mesh::Setup(const _GEOM::Geom& GeomData)
 	mMeshName	= std::string(GeomData.m_pMesh[0].m_name.begin(), GeomData.m_pMesh[0].m_name.end());
 	mBBOX		= GeomData.m_pMesh[0].m_MeshBBOX;
 
-	if (GeomData.m_bHasAnimations && _ENABLE_ANIMATIONS)
+	if (GeomData.m_bHasAnimations)
 	{
 		// load the animation data into vectors, to push into the vbo
 		LoadAnimationDataFromGeom(GeomData, boneIDs, boneWeights);
