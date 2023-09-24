@@ -36,16 +36,16 @@ void GraphicsSystem::Init()
 	//newentity.GetComponent<MeshRenderer>().mMeshPath = "../compiled_geom/Skull_textured.geom";
 	//newentity.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/draw_vert.glsl", "../_GRAPHICS/shader_files/draw_frag.glsl" };
 	//newentity.GetComponent<MeshRenderer>().mMeshPath = "../assets/compiled_geom/FreeModelNathan_WalkAnim.geom";
-	newentity.GetComponent<MeshRenderer>().mMeshPath = "../assets/compiled_geom/dancing_vampire.geom";
-	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Vampire_diffuse.ctexture");
-	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Vampire_normal.ctexture");
+	newentity.GetComponent<MeshRenderer>().mMeshPath = "../assets/compiled_geom/Wall_Partition(No Material).geom";
+	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Wood Material 15_BaseColor.ctexture");
+	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Wood Material 15_Normal.ctexture");
 	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Vampire_emission.ctexture");
 	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Vampire_specular.ctexture");
 	newentity.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/pointLight_vert.glsl", "../_GRAPHICS/shader_files/pointLight_frag.glsl" };	// for point light
 
 	newentity.GetComponent<BoxCollider>().mTranslateOffset = { 0.f, 1.05f, 0.f };
 
-	auto& meshinst = systemManager->mResourceSystem->get_Mesh("../assets/compiled_geom/dancing_vampire.geom");
+	auto& meshinst = systemManager->mResourceSystem->get_Mesh("../assets/compiled_geom/Wall_Partition(No Material).geom");
 	if (meshinst.mHasAnimation && _ENABLE_ANIMATIONS)
 	{
 		newentity.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/animations_vert.glsl", "../_GRAPHICS/shader_files/pointLight_frag.glsl" };// for point light
@@ -167,13 +167,13 @@ void GraphicsSystem::Update(float dt)
 		// bind texture unit
 		glBindTextureUnit(0, textureColorinst.ID());
 		glBindTextureUnit(1, textureNormalinst.ID());
-		glBindTextureUnit(2, textureEmissioninst.ID());
-		glBindTextureUnit(3, textureSpecularinst.ID());
+		//glBindTextureUnit(2, textureEmissioninst.ID());
+		//glBindTextureUnit(3, textureSpecularinst.ID());
 
 		m_Textures.push_back(0);
 		m_Textures.push_back(1);
-		m_Textures.push_back(2);
-		m_Textures.push_back(3);
+		//m_Textures.push_back(2);
+		//m_Textures.push_back(3);
 
 		GLuint uniform_tex = glGetUniformLocation(shaderID, "uTex");
 		glUniform1iv(uniform_tex, (GLsizei)m_Textures.size(), m_Textures.data());	// passing Texture ID to the fragment shader
@@ -199,8 +199,8 @@ void GraphicsSystem::Update(float dt)
 		m_Textures.clear();
 		glBindTextureUnit(0, 0);
 		glBindTextureUnit(1, 0);
-		glBindTextureUnit(2, 0);
-		glBindTextureUnit(3, 0);
+		//glBindTextureUnit(2, 0);
+		//glBindTextureUnit(3, 0);
 
 		meshinst.ClearInstances();
 	}
