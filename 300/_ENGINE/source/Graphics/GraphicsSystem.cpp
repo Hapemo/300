@@ -69,6 +69,12 @@ void GraphicsSystem::Update(float dt)
 	// update the camera's transformations, and its input
 	UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_EDITOR, dt);
 
+	if (m_Animator.m_CurrentAnimation != nullptr && _ENABLE_ANIMATIONS)
+	{
+		// update the current animation
+		m_Animator.UpdateAnimation(dt, mat4(1.f));
+	}
+
 	// Retrieve and update the mesh instances to be drawn
 	auto meshRendererInstances = systemManager->ecs->GetEntitiesWith<MeshRenderer>();
 	for (Entity inst : meshRendererInstances)
@@ -104,21 +110,19 @@ void GraphicsSystem::Update(float dt)
 				for (const auto& bones : meshinst.mAnimation[0].m_Bones)
 				{
 					static const vec3 bonescale(0.1f, 0.1f, 0.1f);
-					vec4 bonestrns = m_Animator.m_FinalBoneMatrices[bones.GetBoneID()] * vec4(inst.GetComponent<Transform>().mTranslate, 1.f);
-
+					vec4 bonestrns = bones.GetLocalTransform() * vec4(inst.GetComponent<Transform>().mTranslate, 1.f);
+					//mat4 bonestrns = final * m_Animator.m_FinalBoneMatrices[bones.GetBoneID()] * bones.GetLocalTransform(); // vec4(inst.GetComponent<Transform>().mTranslate, 1.f);
+					
 					m_Renderer.AddAabb({ bonestrns.x, bonestrns.y, bonestrns.z }, bonescale, vec4(1.f, 1.f, 0.f, 1.f));
+					//m_Renderer.AddAabb({ bonestrns[3][0], bonestrns[3][1], bonestrns[3][2]}, bonescale, vec4(1.f, 1.f, 0.f, 1.f));
 				}
 			}
 		}
 
 		meshinst.mLTW.push_back(final);
-
-		if (m_Animator.m_CurrentAnimation != nullptr && _ENABLE_ANIMATIONS)
-		{
-			// update the current animation
-			m_Animator.UpdateAnimation(dt, final);
-		}
 	}
+	
+	// test drawing
 	m_Renderer.AddCube({ -10, 0, 0 }, { 2, 15, 2 }, { 1.f, 0., 0.f, 1.f });
 
 	// Prepare and bind the Framebuffer to be rendered on
@@ -206,6 +210,7 @@ void GraphicsSystem::Update(float dt)
 
 		meshinst.ClearInstances();
 	}
+
 
 	// TODO: Clears all instances that have been rendered from local buffer
 	m_Fbo.Unbind();
