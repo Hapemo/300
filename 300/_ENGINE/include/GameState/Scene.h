@@ -56,7 +56,7 @@ public:
 	/*!*****************************************************************************
 	Load scene from a file path
 	*******************************************************************************/
-	void Load(std::filesystem::path const& _path);
+	void Load(std::string const& _name);
 
 	// *EDITOR ONLY FUNCTION*
 	void Save();

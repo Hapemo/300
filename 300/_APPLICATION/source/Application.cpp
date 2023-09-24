@@ -20,9 +20,12 @@ start up of window and game system, also runs their update functions.
 //#include "Serialization/SerializationTemp.h"
 #include "GameState/GameStateManager.h"
 #include "Debug/Logger.h"
+#include "ConfigManager.h"
 
 #include "Example.h"
 #include "Input.h"
+#include "Physics/Accumulator.h"
+
 // Static variables
 GFX::DebugRenderer* Application::mRenderer;
 GFX::Window Application::mWindow;
@@ -67,10 +70,10 @@ void Application::SystemInit()
     systemManager->Init(false, &mWindow);
 
     FPSManager::Init();
+    ConfigManager::Init("../assets/config.txt");
     Input::Init();
-
 #pragma region testserialization
-    //ObjectFactory::DeserializeScene("../resources/Scenes/test.json");
+    //ObjectFactory::DeserializeScene("../assets/Scenes/test.json");
 
     //Entity ent1 = systemManager->ecs->NewEntity();
     //Entity ent2 = systemManager->ecs->NewEntity();
@@ -100,9 +103,13 @@ void Application::SystemInit()
     //ent3.GetComponent<General>().isActive = false;
     //ent3.GetComponent<General>().tag = TAG::UNKNOWN;
     //ent3.GetComponent<General>().subtag = SUBTAG::ACTIVE;
-    
+    //
 
-    //ObjectFactory::SerializeScene("../resources/Scenes/test.json");
+    //ObjectFactory::SerializeScene("../assets/Scenes/test.json");
+
+    systemManager->mGameStateSystem->NewGameState("MAMAMA");
+    systemManager->mGameStateSystem->GetCurrentGameState()->AddScene("test");
+    systemManager->mGameStateSystem->GetCurrentGameState()->Save();
 
     //auto view = systemManager->ecs->GetEntitiesWith<General, Transform>();
     //int size = view.size();
@@ -111,7 +118,6 @@ void Application::SystemInit()
     //    e.GetComponent<Transform>();
     //}
 #pragma endregion testserialization
-
 #pragma region testparentchild
 
     //loop over children of an entity
@@ -146,7 +152,6 @@ void Application::SystemInit()
     //assert( == 2);
 
 #pragma endregion testparentchild
-
 #pragma region testprefab
     //Entity ent00 = systemManager->ecs->NewEntity();
     //ent00.GetComponent<General>().name = "testPrefab";
@@ -188,6 +193,7 @@ void Application::MainUpdate()
 void Application::FirstUpdate() 
 {
     FPSManager::Update();
+    Accumulator::Update(FPSManager::dt);
     mWindow.PollEvents();
 }
 

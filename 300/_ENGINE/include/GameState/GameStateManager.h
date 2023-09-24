@@ -168,6 +168,8 @@ public:
 	*******************************************************************************/
 	void NewGameState(std::string const& _name);
 
+	GameState* GetCurrentGameState() { return &mCurrentGameState; }
+
 	///*!*****************************************************************************
 	//Find the gamestate name stated. Returns iterator position of gamestate if found,
 	//returns end position if not found

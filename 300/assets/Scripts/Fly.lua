@@ -1,3 +1,7 @@
+function Alive()
+
+end
+
 function Start()
 
 end
@@ -8,4 +12,12 @@ function Update()
 
     --Test ScriptStart and ScriptUpdate functions
     print("FLYYYYYY.lua !!")
+end
+
+function Exit()
+
+end
+
+function Dead()
+
 end

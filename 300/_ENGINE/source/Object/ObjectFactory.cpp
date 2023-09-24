@@ -3,6 +3,7 @@
 #include "document.h"
 #include "GameState/Scene.h"
 #include "GameState/GameState.h"
+#include "ConfigManager.h"
 
 void ObjectFactory::DeserializeScene(const std::string& filename)
 {
@@ -313,7 +314,7 @@ void ObjectFactory::LoadScene(Scene* scene, const std::string& filename)
 	// loop thru container and store entities
 
 	EntityListJSON entities;
-	entities.DeserializeFile(filename);
+	entities.DeserializeFile(ConfigManager::GetValue("ScenePath") + filename + ".json");
 
 	std::unordered_map<entt::entity, entt::entity> idMap;
 
@@ -405,7 +406,7 @@ void ObjectFactory::LoadScene(Scene* scene, const std::string& filename)
 void ObjectFactory::SaveScene(Scene* scene)
 {
 	// form the filename
-	std::string filename = "../resources/Scenes/" + scene->mName + ".json";
+	std::string filename = ConfigManager::GetValue("ScenePath") + scene->mName + ".json";
 
 	std::ofstream ofs;
 	ofs.open(filename, std::fstream::out | std::fstream::trunc);
@@ -490,7 +491,7 @@ void ObjectFactory::LoadGameState(GameState* gs, const std::string& filename)
 void ObjectFactory::SaveGameState(GameState* gs)
 {
 	// form the filename
-	std::string filename = "../resources/GameStates/" + gs->mName + ".json";
+	std::string filename = ConfigManager::GetValue("GameStatePath") + gs->mName + ".json";
 
 	std::ofstream ofs;
 	ofs.open(filename, std::fstream::out | std::fstream::trunc);
