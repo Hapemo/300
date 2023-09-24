@@ -96,7 +96,7 @@ bool EntityJSON::Deserialize(const rapidjson::Value& obj)
 
 	if (obj.HasMember("RigidBody"))
 	{
-		mRBJ.mMass = (std::uint16_t)obj["RigidBody"]["Mass"].GetDouble();
+		mRBJ.mDensity = (std::uint16_t)obj["RigidBody"]["Density"].GetDouble();
 		mRBJ.mMaterial = FindMaterialEnum(obj["RigidBody"]["Material"].GetString());
 		mRBJ.mMotion = FindMotionEnum(obj["RigidBody"]["Motion"].GetString());
 
@@ -264,7 +264,7 @@ bool EntityJSON::Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* wri
 		writer->StartObject();
 
 		writer->String("Mass");
-		writer->Uint(mRBJ.mMass);
+		writer->Uint(mRBJ.mDensity);
 
 		writer->String("Material");
 		writer->String(FindMaterialString(mRBJ.mMaterial).c_str());

@@ -57,7 +57,7 @@ struct RigidBody
 	glm::vec3 mVelocity;
 
 	RigidBody() : mDensity(10.f), mMaterial(MATERIAL::WOOD), mMotion(MOTION::STATIC), mVelocity(0.f) {};
-	RTTR_ENABLE()
+	//RTTR_ENABLE()
 };
 
 struct BoxCollider

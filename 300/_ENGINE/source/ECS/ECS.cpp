@@ -45,7 +45,7 @@ void Entity::Activate() {
 	//------------------------------------------------------------------
 }
 
-ECS::ECS() : registry(), NullEntity(registry.create()) {} 
+ECS::ECS() : registry(), NullEntity(registry.create()), mClipboard(0) {} 
 
 Entity ECS::NewEntity()
 {
@@ -79,6 +79,8 @@ void ECS::NewPrefab(Entity e)
 	// 1) serialize prefab based on entity
 	// 2) have a list of entities tied to a prefab
 	// for now, use member map
+	if (static_cast<std::uint32_t>(e.id) == 0)
+		throw ("trying to make prefab from null entity");
 	std::string name = e.GetComponent<General>().name;
 	ObjectFactory::SerializePrefab(e, "../assets/Prefabs/" + name + ".json");
 	e.AddComponent<Prefab>().mPrefab = name;
@@ -122,6 +124,40 @@ void ECS::UpdatePrefabEntities(std::string prefabName)
 
 	systemManager->ecs->DeleteEntity(temp);
 }
+
+void ECS::CopyEntity(Entity e)
+{
+	if (static_cast<std::uint32_t>(e.id) == 0)
+		throw ("trying to copy null entity");
+	mClipboard = e;
+}
+
+Entity ECS::PasteEntity()
+{
+	if (static_cast<uint32_t>(mClipboard.id) == 0)
+		return Entity(0);
+
+	Entity e = NewEntity();
+	
+	if (mClipboard.HasComponent<MeshRenderer>())
+		e.GetComponent<MeshRenderer>() = mClipboard.GetComponent<MeshRenderer>();
+	if (mClipboard.HasComponent<RigidBody>())
+		e.GetComponent<RigidBody>() = mClipboard.GetComponent<RigidBody>();
+	if (mClipboard.HasComponent<BoxCollider>())
+		e.GetComponent<BoxCollider>() = mClipboard.GetComponent<BoxCollider>();
+	if (mClipboard.HasComponent<SphereCollider>())
+		e.GetComponent<SphereCollider>() = mClipboard.GetComponent<SphereCollider>();
+	if (mClipboard.HasComponent<PlaneCollider>())
+		e.GetComponent<PlaneCollider>() = mClipboard.GetComponent<PlaneCollider>();
+	if (mClipboard.HasComponent<Scripts>())
+		e.GetComponent<Scripts>() = mClipboard.GetComponent<Scripts>();
+	if (mClipboard.HasComponent<Audio>())
+		e.GetComponent<Audio>() = mClipboard.GetComponent<Audio>();
+
+	return true;
+}
+
+
 
 void ECS::UnlinkPrefab(Entity e)
 {

@@ -83,6 +83,8 @@ public:
 
 	std::unordered_map<std::string, std::vector<Entity>> mPrefabs;
 
+	Entity mClipboard;
+
 	entt::registry registry;
 
 	Entity NewEntity();
@@ -104,6 +106,10 @@ public:
 	void UpdatePrefabEntities(std::string prefabName);
 
 	void UnlinkPrefab(Entity e);
+
+	void CopyEntity(Entity e);
+
+	Entity PasteEntity();
 
 	const Entity NullEntity;
 };
