@@ -1,7 +1,8 @@
 #include "Physics/PhysicsSystem.h"
 #include "ECS/ECS.h"
+#include "Physics/Accumulator.h"
 
-PhysicsSystem::PhysicsSystem()
+PhysicsSystem::PhysicsSystem() : mFixedDT(1/60.f)
 {
 	mMaterials[MATERIAL::RUBBER] = CreateMaterial(0.9, 0.8, 0.2);
 	mMaterials[MATERIAL::WOOD] = CreateMaterial(0.5, 0.4, 0.3);
@@ -64,8 +65,12 @@ void PhysicsSystem::Update(float dt)
 {
 	if (dt <= 0)
 		return;
-	mPX.mScene->simulate(dt);
-	mPX.mScene->fetchResults(true);
+
+	for (int step = 0; step < Accumulator::mSteps; ++step)
+	{
+		mPX.mScene->simulate(Accumulator::mFixedDT);
+		mPX.mScene->fetchResults(true);
+	}
 
 	for (auto itr = mActors.begin(); itr != mActors.end(); ++itr)
 	{
