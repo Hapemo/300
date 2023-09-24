@@ -54,16 +54,24 @@ namespace _GEOM
 		std::cout << ">>[NOTE]: \tSanity Check\n";
 		assert(SanityCheck());
 
-		aiVector3D scaling((ai_real)_DData.m_Scale.x, (ai_real)_DData.m_Scale.y, (ai_real)_DData.m_Scale.z);
-		aiMatrix4x4 scl, rot, trns;
-		m_DescriptorMatrix.Scaling(scaling, scl);
-		m_DescriptorMatrix.RotationX((ai_real)_DData.m_Rotate.x, rot);
-		m_DescriptorMatrix.RotationY((ai_real)_DData.m_Rotate.y, rot);
-		m_DescriptorMatrix.RotationZ((ai_real)_DData.m_Rotate.z, rot);
-		aiVector3D translation((ai_real)_DData.m_Translate.x, (ai_real)_DData.m_Translate.y, (ai_real)_DData.m_Translate.z);
-		m_DescriptorMatrix.Translation(translation, trns);
+		//aiVector3D scaling((ai_real)_DData.m_Scale.x, (ai_real)_DData.m_Scale.y, (ai_real)_DData.m_Scale.z);
+		//aiMatrix4x4 scl, rot, trns;
+		//m_DescriptorMatrix.Scaling(scaling, scl);
+		//m_DescriptorMatrix.RotationX((ai_real)_DData.m_Rotate.x, rot);
+		//m_DescriptorMatrix.RotationY((ai_real)_DData.m_Rotate.y, rot);
+		//m_DescriptorMatrix.RotationZ((ai_real)_DData.m_Rotate.z, rot);
+		//aiVector3D translation((ai_real)_DData.m_Translate.x, (ai_real)_DData.m_Translate.y, (ai_real)_DData.m_Translate.z);
+		//m_DescriptorMatrix.Translation(translation, trns);
+		//m_DescriptorMatrix = trns * rot * scl;
 
-		m_DescriptorMatrix = trns * rot * scl;
+		aiVector3D scaling((ai_real)_DData.m_Scale.x, (ai_real)_DData.m_Scale.y, (ai_real)_DData.m_Scale.z);
+		m_DescriptorMatrix.Scaling(scaling, m_DescriptorMatrix);
+		m_DescriptorMatrix.RotationX((ai_real)_DData.m_Rotate.x, m_DescriptorMatrix);
+		m_DescriptorMatrix.RotationY((ai_real)_DData.m_Rotate.y, m_DescriptorMatrix);
+		m_DescriptorMatrix.RotationZ((ai_real)_DData.m_Rotate.z, m_DescriptorMatrix);
+		aiVector3D translation((ai_real)_DData.m_Translate.x, (ai_real)_DData.m_Translate.y, (ai_real)_DData.m_Translate.z);
+		m_DescriptorMatrix.Translation(translation, m_DescriptorMatrix);
+
 
 		std::cout << ">>[NOTE]: \tImporting Data\n";
 
@@ -930,7 +938,7 @@ namespace _GEOM
 	};
 
 
-	// BONE:: Read Hierarchy data
+	// BONE:: Read Hierarchy data. This is for the bone matrix offset
 	void Mesh_Loader::ReadHierarchyData(AssimpNodeData& dest, const aiNode* src) noexcept
 	{
 		assert(src);

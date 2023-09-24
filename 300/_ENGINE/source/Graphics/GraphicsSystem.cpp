@@ -38,7 +38,7 @@ void GraphicsSystem::Init()
 	//newentity.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/draw_vert.glsl", "../_GRAPHICS/shader_files/draw_frag.glsl" };
 	//newentity.GetComponent<MeshRenderer>().mMeshPath = "../assets/compiled_geom/FreeModelNathan_WalkAnim.geom";
 	//newentity.GetComponent<MeshRenderer>().mMeshPath = "../assets/compiled_geom/dancing_vampire.geom";
-	newentity.GetComponent<MeshRenderer>().mMeshPath = "../assets/compiled_geom/FreeModelNathan_WalkAnim.geom";
+	newentity.GetComponent<MeshRenderer>().mMeshPath = "../assets/compiled_geom/dancing_vampire.geom";
 	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Vampire_diffuse.ctexture");
 	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Vampire_normal.ctexture");
 	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Vampire_emission.ctexture");
@@ -51,7 +51,7 @@ void GraphicsSystem::Init()
 
 	newentity.GetComponent<BoxCollider>().mTranslateOffset = { 0.f, 1.05f, 0.f };
 
-	auto& meshinst = systemManager->mResourceSystem->get_Mesh("../assets/compiled_geom/FreeModelNathan_WalkAnim.geom");
+	auto& meshinst = systemManager->mResourceSystem->get_Mesh("../assets/compiled_geom/dancing_vampire.geom");
 	if (meshinst.mHasAnimation && _ENABLE_ANIMATIONS)
 	{
 		newentity.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/animations_vert.glsl", "../_GRAPHICS/shader_files/pointLight_frag.glsl" };// for point light
@@ -127,11 +127,11 @@ void GraphicsSystem::Update(float dt)
 				for (const auto& bones : meshinst.mAnimation[0].m_Bones)
 				{
 					static const vec3 bonescale(0.1f, 0.1f, 0.1f);
-					vec4 bonestrns = bones.GetLocalTransform() * vec4(inst.GetComponent<Transform>().mTranslate, 1.f);
+					mat4 bonestrns = final * bones.GetLocalTransform();
 					//mat4 bonestrns = final * m_Animator.m_FinalBoneMatrices[bones.GetBoneID()] * bones.GetLocalTransform(); // vec4(inst.GetComponent<Transform>().mTranslate, 1.f);
 					
-					m_Renderer.AddAabb({ bonestrns.x, bonestrns.y, bonestrns.z }, bonescale, vec4(1.f, 1.f, 0.f, 1.f));
-					//m_Renderer.AddAabb({ bonestrns[3][0], bonestrns[3][1], bonestrns[3][2]}, bonescale, vec4(1.f, 1.f, 0.f, 1.f));
+					//m_Renderer.AddAabb({ bonestrns.x, bonestrns.y, bonestrns.z }, bonescale, vec4(1.f, 1.f, 0.f, 1.f));
+					m_Renderer.AddAabb({ bonestrns[3][0], bonestrns[3][1], bonestrns[3][2]}, bonescale, vec4(1.f, 1.f, 0.f, 1.f));
 				}
 			}
 		}
