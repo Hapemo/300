@@ -24,6 +24,8 @@ start up of window and game system, also runs their update functions.
 
 #include "Example.h"
 #include "Input.h"
+#include "Physics/Accumulator.h"
+
 // Static variables
 GFX::DebugRenderer* Application::mRenderer;
 GFX::Window Application::mWindow;
@@ -70,7 +72,6 @@ void Application::SystemInit()
     FPSManager::Init();
     ConfigManager::Init("../assets/config.txt");
     Input::Init();
-
 #pragma region testserialization
     //ObjectFactory::DeserializeScene("../resources/Scenes/test.json");
 
@@ -113,7 +114,6 @@ void Application::SystemInit()
     //    e.GetComponent<Transform>();
     //}
 #pragma endregion testserialization
-
 #pragma region testparentchild
 
     //loop over children of an entity
@@ -148,7 +148,6 @@ void Application::SystemInit()
     //assert( == 2);
 
 #pragma endregion testparentchild
-
 #pragma region testprefab
     //Entity ent00 = systemManager->ecs->NewEntity();
     //ent00.GetComponent<General>().name = "testPrefab";
@@ -190,6 +189,7 @@ void Application::MainUpdate()
 void Application::FirstUpdate() 
 {
     FPSManager::Update();
+    Accumulator::Update(FPSManager::dt);
     mWindow.PollEvents();
 }
 

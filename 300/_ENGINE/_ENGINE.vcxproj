@@ -163,6 +163,7 @@
     <ClInclude Include="include\Graphics\Camera_Input.h" />
     <ClInclude Include="include\Graphics\GraphicsSystem.h" />
     <ClInclude Include="include\Multithread.h" />
+    <ClInclude Include="include\Physics\Accumulator.h" />
     <ClInclude Include="include\Physics\PhysicsTypes.h" />
     <ClInclude Include="include\Physics\PhysicsSystem.h" />
     <ClInclude Include="include\Physics\PhysX.h" />
@@ -175,6 +176,7 @@
     <ClCompile Include="source\Debug\Logger.cpp" />
     <ClCompile Include="source\ECS\ECS_Systems.cpp" />
     <ClCompile Include="source\ECS\ECS.cpp" />
+    <ClCompile Include="source\Physics\Accumulator.cpp" />
     <ClCompile Include="source\Serialization\SerializationTemp.cpp" />
     <ClInclude Include="include\Serialization\Serialization.h" />
   </ItemGroup>
