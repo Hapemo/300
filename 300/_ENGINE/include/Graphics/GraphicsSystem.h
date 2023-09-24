@@ -76,9 +76,6 @@ private:
 	bool m_EditorMode;
 	bool m_DebugDrawing{ 1 };			// debug drawing 
 
-	// -- Animator --
-	GFX::Animator m_Animator;
-
 	// -- Private Functions --
 	void DrawAll(GFX::Mesh& mesh);		// Renders all instances of a given mesh
 

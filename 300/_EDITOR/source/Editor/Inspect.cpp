@@ -343,6 +343,22 @@ void Scripts::Inspect() {
 		Entity(Hierarchy::selectedId).RemoveComponent<Scripts>();
 }
 
+void Animator::Inspect()
+{
+	bool delete_component{ true };
+	if (ImGui::CollapsingHeader("Animator", &delete_component, ImGuiTreeNodeFlags_DefaultOpen)) 
+	{
+		ImGui::Text("test");
+		if (ImGui::Button("Pause Animaton"))
+		{
+			mIsPaused = !mIsPaused;
+		}
+	}
+
+	if (delete_component == false)
+		Entity(Hierarchy::selectedId).RemoveComponent<MeshRenderer>();
+}
+
 void MeshRenderer::Inspect() {
 	bool delete_component{ true };
 	if (ImGui::CollapsingHeader("MeshRenderer", &delete_component,ImGuiTreeNodeFlags_DefaultOpen)) {
@@ -418,12 +434,12 @@ void BoxCollider::Inspect() {
 	bool delete_component{ true };
 	if (ImGui::CollapsingHeader("BoxCollider", &delete_component, ImGuiTreeNodeFlags_DefaultOpen)) {
 
-		ImGui::DragFloat3("##Scale", (float*)&mScaleOffset);
+		ImGui::DragFloat3("Boxcollider Scale", (float*)&mScaleOffset);
 		ImGui::SameLine();
 		ImGui::Text("Scale");
 		ImGui::Separator();
 
-		ImGui::DragFloat3("##Translate", (float*)&mTranslateOffset);
+		ImGui::DragFloat3("Boxcollider Translate", (float*)&mTranslateOffset);
 		ImGui::SameLine();
 		ImGui::Text("Translate");
 		ImGui::Separator();
@@ -431,6 +447,8 @@ void BoxCollider::Inspect() {
 	if (delete_component == false)
 		Entity(Hierarchy::selectedId).RemoveComponent<BoxCollider>();
 }
+
+
 void SphereCollider::Inspect() {
 	bool delete_component{ true };
 	if (ImGui::CollapsingHeader("SphereCollider", &delete_component, ImGuiTreeNodeFlags_DefaultOpen)) {

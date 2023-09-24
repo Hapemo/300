@@ -7,6 +7,7 @@
 //#include "rttr/registration.h"
 #include "ECS.h"
 #include "Audio/AudioType.h"
+#include <Animator.hpp>
 
 struct General
 {
@@ -36,6 +37,14 @@ struct Transform
 	//RTTR_ENABLE()
 };
 
+struct Animator
+{
+	GFX::Animator	mAnimator;
+	bool			mIsPaused;
+
+	void Inspect();
+};
+
 // this struct stores the filepaths for the meshdata, material, and shader. the actual data is stored in the resource manager
 struct MeshRenderer
 {
@@ -44,13 +53,12 @@ struct MeshRenderer
 	std::vector<std::string>			mMaterialInstancePath;
 	std::string							mMeshPath;
 	
-	void*							mMeshRef;
-
-
-	unsigned						mGUID;
-
-	void							Inspect();
+	void*								mMeshRef;
+	unsigned							mGUID;
 	//RTTR_ENABLE()
+
+
+	void								Inspect();
 };
 
 struct RigidBody
@@ -74,7 +82,6 @@ struct BoxCollider
 	glm::vec3 mScaleOffset;			// final scale = mScaleOffset * Transform.mScale;
 	glm::vec3 mTranslateOffset;		// final pos = Transform.mTranslate + mTranslateOffset;
 	
-
 
 	BoxCollider() : mScaleOffset(1.f), mTranslateOffset(0.f) {}
 	
