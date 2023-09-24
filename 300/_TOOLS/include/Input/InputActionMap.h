@@ -19,6 +19,8 @@ public:
 	void AddAction(std::string action_name);
 	std::unordered_map<std::string, InputAction>& GetActions();
 
+	std::string GetActionMapName();
+
 private:
 	std::string									 mActionMap_name;		// [Group Name]		 - Action Map Name (Gameplay / Main Menu)
 	std::unordered_map<std::string, InputAction> mActions;				/* [List of Actions] - (1) Action Name(Move / Jump / Crouch / Use)

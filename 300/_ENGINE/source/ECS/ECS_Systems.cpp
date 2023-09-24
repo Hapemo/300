@@ -37,7 +37,7 @@ void SystemManager::Init(bool isEditor, GFX::Window* window)
 {
 	mIsEditor = isEditor;
 	mWindow = window;
-	mInputActionSystem.get();
+	mInputActionSystem.get()->Init();
 	PINFO("Init Input Action System");
 	mLogger.get()->InitLogging();
 	PINFO("Init Logger");

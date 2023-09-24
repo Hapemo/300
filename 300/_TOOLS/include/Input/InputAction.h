@@ -26,7 +26,6 @@ struct InputBinding
 	E_KEY       key_binding;
 	
 	MAP_TO_AXIS direction_map; // For Movement? (first)
-	INPUT_STATE input_state = WAITING;
 
 	void SetDirectionMap(MAP_TO_AXIS dir_map)
 	{
@@ -49,13 +48,15 @@ public:
 	// std::unordered_map<std::string, InputBinding> GetKeyBindings() const;			    // Get all the (Key-Bindings) from database
 	InputBinding& GetKeyBinding(std::string binding_name);								// Get a Singular (Key-Binding)
 	std::unordered_map<std::string, InputBinding>& GetKeyBindings();					// Get the entire (Key-Binding) container
-
+	
 	glm::vec2 ReadValue() const; // Might Template this (can return gamestates?)
+	void UpdateState(INPUT_STATE new_state);
 
 private:
 	std::string									  mActionName;
 	//std::vector<InputBinding>  mKeyBindings; // Key Bindings (for now only support for keyboard keys - with GLFW)
 	std::unordered_map<std::string, InputBinding> mKeyBindings;
+	INPUT_STATE									  mCurrentState;
 	bool isEnable = false;
 
 };

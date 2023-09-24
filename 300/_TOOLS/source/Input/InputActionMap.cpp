@@ -17,12 +17,12 @@ void InputActionMap::RenameActionMap(std::string rename)
 
 void InputActionMap::Enable()
 {
-	isEnable = false;
+	isEnable = true;
 }
 
 void InputActionMap::Disable()
 {
-	isEnable = true;
+	isEnable = false;
 }
 
 bool InputActionMap::isEnabled()
@@ -54,5 +54,10 @@ void InputActionMap::AddAction(std::string action_name)
 std::unordered_map<std::string, InputAction>& InputActionMap::GetActions()
 {
 	return mActions;
+}
+
+std::string InputActionMap::GetActionMapName()
+{
+	return mActionMap_name;
 }
 

@@ -16,7 +16,7 @@ public:
 	void Update();
 	void Exit();
 	
-	//void AddActionMap(std::string action_map_name);
+	void AddActionMap(InputActionMap& action_map);
 	//void CheckInput(); // Check Here?
 	//InputActionMap& GetActionMap(std::string action_map_name);
 

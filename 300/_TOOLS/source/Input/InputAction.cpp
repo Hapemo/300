@@ -1,12 +1,12 @@
 #include "Input/InputAction.h"
 
-InputAction::InputAction() : mActionName("New Action")
+InputAction::InputAction() : mActionName("New Action") , mCurrentState(WAITING)
 {}
 
-InputAction::InputAction(std::string action_name) : mActionName(action_name)
+InputAction::InputAction(std::string action_name) : mActionName(action_name) , mCurrentState(WAITING)
 {}
 
-InputAction::InputAction(std::string action_name, E_STATE key_state, E_KEY key_binding) : mActionName(action_name)
+InputAction::InputAction(std::string action_name, E_STATE key_state, E_KEY key_binding) : mActionName(action_name) , mCurrentState(WAITING)
 {
 	InputBinding new_binding = InputBinding(key_state, key_binding); 
 	mKeyBindings.insert(std::make_pair(action_name, new_binding));
@@ -82,9 +82,13 @@ glm::vec2 InputAction::ReadValue() const
 				return vec;
 		}
 	}
-
 	vec = { 0.0f, 0.0f };
 	return vec;
+}
+
+void InputAction::UpdateState(INPUT_STATE new_state)
+{
+	mCurrentState = new_state;
 }
 
 
