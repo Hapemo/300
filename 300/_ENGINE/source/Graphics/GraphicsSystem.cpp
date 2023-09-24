@@ -49,7 +49,6 @@ void GraphicsSystem::Init()
 	uid temp(newentity.GetComponent<MeshRenderer>().mMeshPath);
 	newentity.GetComponent<MeshRenderer>().mMeshRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(temp.id));
 
-
 	newentity.GetComponent<BoxCollider>().mTranslateOffset = { 0.f, 1.05f, 0.f };
 
 	auto& meshinst = systemManager->mResourceSystem->get_Mesh("../assets/compiled_geom/FreeModelNathan_WalkAnim.geom");
