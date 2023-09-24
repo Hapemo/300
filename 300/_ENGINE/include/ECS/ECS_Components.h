@@ -135,9 +135,9 @@ struct Audio
 	bool mIsPlaying;					// check if audio is already playing
 	bool mIsPlay;						// play audio if true
 
-	Audio() : mFilePath("../assets/Audio"), mFileName("Sample Name"), mAudioType(AUDIO_NULL), mIsPlaying(false), mIsPlay(true) {}
+	Audio() : mFilePath("../assets/Audio"), mFileName("Sample Name"), mAudioType(AUDIO_NULL), mIsPlaying(false), mIsPlay(false) {}
 
-	Audio(std::string file_path_to_audio, std::string file_audio_name) : mAudioType(AUDIO_NULL) , mIsPlaying(false) , mIsPlay(true)
+	Audio(std::string file_path_to_audio, std::string file_audio_name, AUDIOTYPE audio_type, bool isPlay) : mAudioType(audio_type) , mIsPlaying(false) , mIsPlay(isPlay)
 	{	
 		mFilePath = file_path_to_audio;
 		mFileName = file_audio_name;

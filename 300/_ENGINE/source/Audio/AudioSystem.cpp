@@ -62,6 +62,31 @@ void AudioSystem::Init()
 
 void AudioSystem::Update(float dt)
 {
+	auto audio_entities = systemManager->ecs->GetEntitiesWith<Audio>();
+
+	for (Entity audio : audio_entities)
+	{
+		Audio& audio_component = audio.GetComponent<Audio>();
+		
+		if (audio_component.mIsPlay) // if it's supposed to play.
+		{
+			switch (audio_component.mAudioType)
+			{
+				case AUDIO_BGM:
+					PlayBGMAudio(audio_component.mFileName, 1.0f);
+					break;
+				case AUDIO_SFX:
+					PlaySFXAudio(audio_component.mFileName, 1.0f); 
+					break;
+			}
+
+			audio_component.mIsPlaying = true;  // currently playing. 
+			audio_component.mIsPlay = false;	// don't need to play again.
+		}
+		
+	}
+
+
 	if (Input::CheckKey(PRESS, _1))
 	{
 		PlaySFXAudio("NPC_Greeting.wav");
@@ -111,27 +136,13 @@ void AudioSystem::Update(float dt)
 	{
 		TogglePauseSFXSounds();
 	}
-	
+
 	if (Input::CheckKey(PRESS, G))
 	{
 		TogglePauseBGMSounds();
 	}
 
-	if (Input::CheckKey(PRESS, H))
-	{
-		TogglePauseAllSounds();
-	}
-
-	if (Input::CheckKey(PRESS, J))
-	{
-		TogglePauseSpecific(AUDIO_SFX, 1);
-		TogglePauseSpecific(AUDIO_SFX, 3);
-	}
-
-	
-
-
-
+	system_obj->update();
 }
 
 void AudioSystem::Exit()
@@ -164,7 +175,7 @@ void AudioSystem::LoadAudio(std::string file_path, std::string audio_name)
 	std::cout << "File Detected: " << file_path << std::endl;
 	std::cout << "Creating Sound: ";
 	FMOD::Sound* new_sound;
-	int check = ErrCodeCheck(system_obj->createSound(file_path.c_str(), FMOD_LOOP_NORMAL, 0, &new_sound));
+	int check = ErrCodeCheck(system_obj->createSound(file_path.c_str(), FMOD_LOOP_OFF, 0, &new_sound));
 
 	if (!check)
 	{
@@ -194,7 +205,7 @@ void AudioSystem::LoadAudioFromDirectory(std::filesystem::path directory_path)
 
 		std::cout << "Creating Sound: ";
 		FMOD::Sound* new_sound;
-		ErrCodeCheck(system_obj->createSound(file_path.string().c_str(), FMOD_LOOP_NORMAL, 0, &new_sound));
+		ErrCodeCheck(system_obj->createSound(file_path.string().c_str(), FMOD_LOOP_OFF, 0, &new_sound));
 
 		mSounds.insert(std::make_pair(audio_name, new_sound));
 	}
