@@ -33,10 +33,10 @@ void InputAction::AddKeyBinding(std::string binding_name, E_STATE key_state, E_K
 	mKeyBindings.insert(std::make_pair(binding_name, new_binding));
 }
 
-std::unordered_map<std::string, InputBinding> InputAction::GetKeyBindings() const
-{
-	return mKeyBindings;
-}
+//std::unordered_map<std::string, InputBinding> InputAction::GetKeyBindings() const
+//{
+//	return mKeyBindings;
+//}
 
 InputBinding& InputAction::GetKeyBinding(std::string binding_name)
 {
@@ -50,6 +50,11 @@ InputBinding& InputAction::GetKeyBinding(std::string binding_name)
 	InputBinding empty;
 
 	return empty;
+}
+
+std::unordered_map<std::string, InputBinding>& InputAction::GetKeyBindings()
+{
+	return mKeyBindings; 
 }
 
 glm::vec2 InputAction::ReadValue() const

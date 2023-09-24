@@ -150,7 +150,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="include\FPSManager.h" />
-    <ClInclude Include="include\Input.h" />
     <ClInclude Include="include\Input\Input.h" />
     <ClInclude Include="include\Input\InputAction.h" />
     <ClInclude Include="include\Input\InputActionMap.h" />

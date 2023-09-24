@@ -30,9 +30,6 @@
     <ClInclude Include="include\Singleton.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Input.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\SingletonManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>

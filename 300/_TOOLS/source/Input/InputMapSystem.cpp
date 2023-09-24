@@ -16,8 +16,33 @@ void InputMapSystem::Init()
 }
 
 void InputMapSystem::Update()
-{
+{	
+	// Run through all the actions that are enabled.
+	for (auto& action_map : mActionMaps)
+	{
+		if (action_map.isEnabled()) // This [Action Map] is currently set to be used...
+		{	
+			for (auto& action_pair : action_map.GetActions()) // Go through [Action Map]'s list of [Actions]
+			{
+				auto& action = action_pair.second; // Retrieve each [Action] 
 
+				for (auto& binding_pair : action_pair.second.GetKeyBindings()) // Iterate through [Key Bindings]
+				{
+					E_KEY   key_bind  = binding_pair.second.key_binding;
+					E_STATE key_state = binding_pair.second.key_state;
+
+					if (Input::CheckKey(key_state, key_bind))
+					{
+						
+					}
+
+
+				}
+
+
+			}
+		}
+	}
 }
 
 void InputMapSystem::Exit()
@@ -25,10 +50,10 @@ void InputMapSystem::Exit()
 
 }
 
-void InputMapSystem::AddActionMap(std::string action_map_name)
-{
-	
-}
+//void InputMapSystem::AddActionMap(std::string action_map_name)
+//{
+//	
+//}
 
 
 //InputActionMap& InputMapSystem::GetActionMap(std::string action_map_name)
