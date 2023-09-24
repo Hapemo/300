@@ -1,5 +1,6 @@
 #include "Physics/PhysicsSystem.h"
 #include "ECS/ECS.h"
+#include "Debug/EnginePerformance.h"
 
 PhysicsSystem::PhysicsSystem()
 {
@@ -25,6 +26,8 @@ void PhysicsSystem::Init()
 
 void PhysicsSystem::Update(float dt)
 {
+	EnginePerformance::GetTime(startTime);
+
 	if (dt <= 0)
 		return;
 	mPX.mScene->simulate(dt);
@@ -37,6 +40,9 @@ void PhysicsSystem::Update(float dt)
 		xform.mTranslate = Convert(PXform.p);
 		xform.mRotate = glm::eulerAngles(Convert(PXform.q));
 	}
+
+	EnginePerformance::GetTime(endTime);
+	EnginePerformance::UpdateSystemMs("Physics", startTime, endTime);
 }
 
 void PhysicsSystem::Exit()

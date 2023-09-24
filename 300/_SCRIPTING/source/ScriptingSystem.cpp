@@ -33,6 +33,7 @@ generate the overall performance of the scripting system.
 #include "ScriptingSystem.h"
 #include "Debug/Logger.h"
 #include "CustomCompCont.h"
+#include "Debug/EnginePerformance.h"
 
 /******************************************************************************/
 /*!
@@ -144,6 +145,7 @@ void ScriptingSystem::Init()
 
 void ScriptingSystem::Update(float dt)
 {
+    EnginePerformance::GetTime(startTime);
     //for (int step = 0; step <= Engine::currentNumberOfSteps - 1; ++step) 
     ////{ 
     //Timer::GetTime(startTime); 
@@ -205,9 +207,8 @@ void ScriptingSystem::Update(float dt)
     }
     //} 
 
-    //Timer::GetTime(endTime); 
-    //Timer::UpdateSystemMs(SystemType<ScriptingSystem>(), startTime, endTime); 
-    //}
+    EnginePerformance::GetTime(endTime);
+    EnginePerformance::UpdateSystemMs("Scripting", startTime, endTime);
 }
 
 void ScriptingSystem::Exit()

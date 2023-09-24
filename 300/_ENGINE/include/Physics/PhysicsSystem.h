@@ -31,4 +31,7 @@ private:
 
 	glm::vec3 Convert(const physx::PxVec3T<float>& vec);
 	glm::quat Convert(const physx::PxQuatT<float>& vec);
+
+	// for performance
+	double startTime, endTime;
 };

@@ -66,10 +66,17 @@ static float values[INTERVALS];
 static float graphicsValues[INTERVALS];
 static float physicsValues[INTERVALS];
 static float scriptingValues[INTERVALS];
+static float resourceValues[INTERVALS];
+static float gameStateValues[INTERVALS];
+static float audioValues[INTERVALS];
+static float loggerValues[INTERVALS];
 //static float audioValues[INTERVALS];
 static float min;
 static int fpsCount;
+static int sysCount;
 
 private:
 	bool scene_m_Hovered{};
+	float gDisplayTemp{}, pDisplayTemp{}, sDisplayTemp{},
+		rDisplayTemp{}, gsDisplayTemp{}, aDisplayTemp{}, lDisplayTemp{};
 };

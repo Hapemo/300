@@ -170,7 +170,7 @@ void Application::SystemUpdate()
 void Application::SecondUpdate() 
 {
     Input::UpdatePrevKeyStates();
-    FPSManager::LimitFPS(60);
+    FPSManager::LimitFPS(0);
 }
 
 void Application::Exit() 

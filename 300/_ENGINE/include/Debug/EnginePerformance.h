@@ -1,14 +1,19 @@
 #pragma once
 #include <string>
-#include "../../../_EDITOR/include/Editor/Performance.h"
+#include <array>
 
 class EnginePerformance
 {
+public:
 	// call glfwGetTime() function
-	void GetTime(double& time);
+	static void GetTime(double& time);
 	// update systems ms
-	void UpdateSystemMs(std::string systemName,
+	static void UpdateSystemMs(std::string systemName,
 		const double& startTime,
 		const double& endTime);
-	float FpsPercentage(const double& systemFps);
+	static float FpsPercentage(const double& systemFps);
+
+	static int sysCount;
+	static std::array<double, 7> systemDuration;
+	static bool trigger;
 };

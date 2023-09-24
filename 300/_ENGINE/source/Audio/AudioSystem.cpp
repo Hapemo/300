@@ -1,5 +1,5 @@
 #include "Audio/AudioSystem.h"
-
+#include "Debug/EnginePerformance.h"
 
 AudioSystem::AudioSystem() : sfxVolume(1.0f), bgmVolume(1.0f)
 {
@@ -61,6 +61,7 @@ void AudioSystem::Init()
 
 void AudioSystem::Update(float dt)
 {
+	EnginePerformance::GetTime(startTime);
 	if (Input::CheckKey(PRESS, _1))
 	{
 		PlaySFXAudio("NPC_Greeting");
@@ -127,10 +128,8 @@ void AudioSystem::Update(float dt)
 		TogglePauseSpecific(AUDIO_SFX, 3);
 	}
 
-
-
-
-
+	EnginePerformance::GetTime(endTime);
+	EnginePerformance::UpdateSystemMs("Audio", startTime, endTime);
 }
 
 void AudioSystem::Exit()

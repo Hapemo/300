@@ -79,6 +79,8 @@ private:
 	// -- Private Functions --
 	void DrawAll(GFX::Mesh& mesh);		// Renders all instances of a given mesh
 
+	// for performance
+	double startTime, endTime;
 };
 
 #endif

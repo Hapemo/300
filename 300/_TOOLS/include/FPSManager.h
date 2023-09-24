@@ -44,7 +44,7 @@ struct FPSManager
   static double fps;
   static double dt; // time taken to complete most recent game loop
   static double mPrevTime; // Time at beginning of game loop
-
+  static double elapsedTimeMs;
   //static int counter; // for performance visualizer in imGui
   static bool trigger;
 };

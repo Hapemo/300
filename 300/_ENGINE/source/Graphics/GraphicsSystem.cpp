@@ -1,6 +1,7 @@
 #include <Graphics/GraphicsSystem.h>
 #include <ResourceManager.h>
 #include <Graphics/Camera_Input.h>
+#include "Debug/EnginePerformance.h"
 
 /***************************************************************************/
 /*!
@@ -56,6 +57,7 @@ void GraphicsSystem::Init()
 /**************************************************************************/
 void GraphicsSystem::Update(float dt)
 {
+	EnginePerformance::GetTime(startTime);
 	// local variable to keep track of rendered mesh instances
 	std::map<std::string, short> renderedMesh;
 
@@ -156,6 +158,9 @@ void GraphicsSystem::Update(float dt)
 
 	// TODO: Clears all instances that have been rendered from local buffer
 	m_Fbo.Unbind();
+
+	EnginePerformance::GetTime(endTime);
+	EnginePerformance::UpdateSystemMs("Graphics", startTime, endTime);
 }
 
 /***************************************************************************/

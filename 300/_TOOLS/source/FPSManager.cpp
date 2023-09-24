@@ -14,6 +14,7 @@ General helper class of application that calculates FPS and prints GLFW info
 double FPSManager::fps;
 double FPSManager::dt;
 double FPSManager::mPrevTime;
+double FPSManager::elapsedTimeMs;
 //int FPSManager::counter = 0;
 bool FPSManager::trigger = false;
 
@@ -29,7 +30,7 @@ void FPSManager::Update(double fps_calc_interval) {
   static double start_time = systemManager->GetWindow()->GetTime();
   // get elapsed time since very beginning (in seconds) ...
   double elapsed_time = curr_time - start_time;
-
+  elapsedTimeMs = elapsed_time / 0.001;
   ++count;
 
   // update fps at least every 10 seconds ...

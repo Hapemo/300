@@ -97,4 +97,6 @@ public:
     static bool printOnce;
 
 private:
+    // for performance
+    double startTime, endTime;
 };
