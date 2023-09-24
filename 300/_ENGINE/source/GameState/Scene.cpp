@@ -16,6 +16,7 @@ Added adding and removing of entity
 #include "ECS/ECS.h"
 #include "ECS/ECS_Components.h"
 #include "ScriptingSystem.h"
+#include "Object/ObjectFactory.h"
 //#include "LogicSystem.h"
 
 
@@ -75,9 +76,10 @@ void Scene::Pause(bool _pause) {
 	if (!_pause) if (!mInitBefore) Init();
 }
 
-void Scene::Load(std::filesystem::path const& _path) {
+void Scene::Load(std::string const& _name) {
 	//LOG_CUSTOM("SCENE", "Loading Scene: " + mName);
 	//serializationManager->LoadScene(*this, _path); TODO
+	ObjectFactory::LoadScene(this, _name);
 	for (auto e : mEntities) {
 		if (e.HasComponent<Scripts>()) systemManager->GetScriptingPointer()->ScriptAlive(e);
 		e.GetComponent<General>().isPaused = mIsPause;
@@ -87,6 +89,7 @@ void Scene::Load(std::filesystem::path const& _path) {
 void Scene::Save() {
 	//LOG_CUSTOM("SCENE", "Saving Scene: " + mName);
 	//serializationManager->SaveScene(*this); TODO
+	ObjectFactory::SaveScene(this);
 }
 
 void Scene::Unload() {
