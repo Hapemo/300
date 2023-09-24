@@ -3,6 +3,7 @@
 #include "document.h"
 #include "GameState/Scene.h"
 #include "GameState/GameState.h"
+#include "ConfigManager.h"
 
 void ObjectFactory::DeserializeScene(const std::string& filename)
 {
@@ -313,7 +314,7 @@ void ObjectFactory::LoadScene(Scene* scene, const std::string& filename)
 	// loop thru container and store entities
 
 	EntityListJSON entities;
-	entities.DeserializeFile(filename);
+	entities.DeserializeFile(ConfigManager::GetValue("ScenePath") + filename + ".json");
 
 	std::unordered_map<entt::entity, entt::entity> idMap;
 
@@ -405,7 +406,7 @@ void ObjectFactory::LoadScene(Scene* scene, const std::string& filename)
 void ObjectFactory::SaveScene(Scene* scene)
 {
 	// form the filename
-	std::string filename = "../resources/Scenes/" + scene->mName + ".json";
+	std::string filename = ConfigManager::GetValue("ScenePath") + scene->mName + ".json";
 
 	std::ofstream ofs;
 	ofs.open(filename, std::fstream::out | std::fstream::trunc);
@@ -466,10 +467,12 @@ void ObjectFactory::SaveScene(Scene* scene)
 	entities.SerializeFile(filename);
 }
 
-void ObjectFactory::LoadGameState(GameState* gs, const std::string& filename)
+void ObjectFactory::LoadGameState(GameState* gs, const std::string& _name)
 {
+	gs->mName = _name;
+
 	SceneListJSON scenes;
-	scenes.DeserializeFile(filename);
+	scenes.DeserializeFile(ConfigManager::GetValue("GameStatePath") + _name + ".json");
 
 	Scene sce;
 	for (auto& s : scenes.SceneList())
@@ -480,17 +483,17 @@ void ObjectFactory::LoadGameState(GameState* gs, const std::string& filename)
 
 	// split the file name and save it into the scene
 	// eg "../resources/GameStates/test.json"
-	size_t lastSep = filename.find_last_of("/\\");
-	size_t lastStop = filename.find_last_of(".");
+	size_t lastSep = _name.find_last_of("/\\");
+	size_t lastStop = _name.find_last_of(".");
 
 	if (lastSep != std::string::npos && lastStop != std::string::npos && lastStop > lastSep)
-		gs->mName = filename.substr(lastSep + 1, lastStop - lastSep - 1);
+		gs->mName = _name.substr(lastSep + 1, lastStop - lastSep - 1);
 }
 
 void ObjectFactory::SaveGameState(GameState* gs)
 {
 	// form the filename
-	std::string filename = "../resources/GameStates/" + gs->mName + ".json";
+	std::string filename = ConfigManager::GetValue("GameStatePath") + gs->mName + ".json";
 
 	std::ofstream ofs;
 	ofs.open(filename, std::fstream::out | std::fstream::trunc);

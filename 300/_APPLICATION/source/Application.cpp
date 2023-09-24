@@ -46,6 +46,7 @@ void Application::StartUp()
     mWindow = GFX::Window({ 1920, 1080 });
     mWindow.SetWindowTitle("Application");
     systemManager = new SystemManager();
+    ConfigManager::Init("../assets/config.txt");
 }
 
 void Application::SystemInit() 
@@ -80,10 +81,9 @@ void Application::SystemInit()
     systemManager->Init(false, &mWindow);
 
     FPSManager::Init();
-    ConfigManager::Init("../assets/config.txt");
     Input::Init();
 #pragma region testserialization
-    //ObjectFactory::DeserializeScene("../resources/Scenes/test.json");
+    //ObjectFactory::DeserializeScene("../assets/Scenes/test.json");
 
     //Entity ent1 = systemManager->ecs->NewEntity();
     //Entity ent2 = systemManager->ecs->NewEntity();
@@ -113,9 +113,13 @@ void Application::SystemInit()
     //ent3.GetComponent<General>().isActive = false;
     //ent3.GetComponent<General>().tag = TAG::UNKNOWN;
     //ent3.GetComponent<General>().subtag = SUBTAG::ACTIVE;
-    
+    //
 
-    //ObjectFactory::SerializeScene("../resources/Scenes/test.json");
+    //ObjectFactory::SerializeScene("../assets/Scenes/test.json");
+
+    systemManager->mGameStateSystem->NewGameState("MAMAMA");
+    systemManager->mGameStateSystem->GetCurrentGameState()->AddScene("test");
+    systemManager->mGameStateSystem->GetCurrentGameState()->Save();
 
     //auto view = systemManager->ecs->GetEntitiesWith<General, Transform>();
     //int size = view.size();
