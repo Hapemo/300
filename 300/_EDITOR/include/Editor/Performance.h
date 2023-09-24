@@ -68,6 +68,7 @@ static float physicsValues[INTERVALS];
 static float scriptingValues[INTERVALS];
 //static float audioValues[INTERVALS];
 static float min;
+static int fpsCount;
 
 private:
 	bool scene_m_Hovered{};

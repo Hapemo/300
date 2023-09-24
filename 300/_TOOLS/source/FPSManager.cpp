@@ -9,10 +9,13 @@ General helper class of application that calculates FPS and prints GLFW info
 *******************************************************************************/
 #include "FPSManager.h"
 #include "ECS/ECS_Systems.h"
+
 // static data members declared in Helper
 double FPSManager::fps;
 double FPSManager::dt;
 double FPSManager::mPrevTime;
+//int FPSManager::counter = 0;
+bool FPSManager::trigger = false;
 
 void FPSManager::Init()
 {
@@ -34,9 +37,14 @@ void FPSManager::Update(double fps_calc_interval) {
   fps_calc_interval = (fps_calc_interval > 10.0) ? 10.0 : fps_calc_interval;
   if (elapsed_time > fps_calc_interval) {
     FPSManager::fps = count / elapsed_time; // elapsed_time;
+    trigger = !trigger;
+    //++counter;
     start_time = curr_time;
     count = 0.0;
   }
+
+  //if (counter == INTERVALS)
+  //    counter = 0;
 }
 
 void FPSManager::CalcDeltaTime() {

@@ -9,8 +9,8 @@ function Update()
     --systemManager.ecs:DeleteEntity(entity)
     
     --Testing
-    generalEntities = systemManager.ecs:GetEntitiesWithGeneral();
+    generalEntities = systemManager.ecs:GetGeneralComponent();
     for i = 0, #generalEntities do
-        print(generalEntities[i].id)
+        print(generalEntities[i].id, generalEntities[i])
     end
 end

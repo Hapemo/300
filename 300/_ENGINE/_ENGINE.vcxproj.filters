@@ -18,6 +18,7 @@
     <ClCompile Include="source\Physics\PhysicsSystem.cpp" />
     <ClCompile Include="source\Physics\PhysX.cpp" />
     <ClCompile Include="source\Serialization\Serialization.cpp" />
+    <ClCompile Include="source\Debug\EnginePerformance.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Audio\AudioSystem.h" />
@@ -43,5 +44,6 @@
     <ClInclude Include="include\Serialization\SerializationTemp.h" />
     <ClInclude Include="include\Serialization\Serialization.h" />
     <ClInclude Include="include\Object\ObjectFactory.h" />
+    <ClInclude Include="include\Debug\EnginePerformance.h" />
   </ItemGroup>
 </Project>
