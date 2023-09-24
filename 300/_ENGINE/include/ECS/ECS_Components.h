@@ -29,7 +29,7 @@ struct Transform
 	glm::vec3 mRotate;
 	glm::vec3 mTranslate;
 
-	Transform() : mScale(100.f), mRotate(0.f), mTranslate(0.f) {}
+	Transform() : mScale(1.f), mRotate(0.f), mTranslate(0.f) {}
 	glm::quat GetQuaternion() { return glm::quat(mRotate); }
 	void Inspect();
 
@@ -280,25 +280,27 @@ struct Prefab
 	//.property("EntityID", &Entity::id)
 	//;
 
-	rttr::registration::class_<General>("General")
-	.property("Name", &General::name)
-	.property("Tag", &General::tag)
-	.property("Subtag", &General::subtag)
-	.property("Active", &General::isActive)
-	;
+	//rttr::registration::class_<General>("General")
+	//.property("Name", &General::name)
+	//.property("Tag", &General::tag)
+	//.property("Subtag", &General::subtag)
+	//.property("Active", &General::isActive)
+	//;
 
-	rttr::registration::enumeration<TAG>("Tag")
-	(
-		rttr::value("Player", TAG::PLAYER),
-		rttr::value("Unknown", TAG::UNKNOWN)
-	);
+	//rttr::registration::enumeration<TAG>("Tag")
+	//(
+	//	rttr::value("Player", TAG::PLAYER),
+	//	rttr::value("Unknown", TAG::UNKNOWN)
+	//);
 
-	rttr::registration::enumeration<SUBTAG>("Subtag")
-	(
-		rttr::value("Active", SUBTAG::ACTIVE),
-		rttr::value("Background", SUBTAG::BACKGROUND)
-	);
-}
+	//rttr::registration::enumeration<SUBTAG>("Subtag")
+	//(
+	//	rttr::value("Active", SUBTAG::ACTIVE),
+	//	rttr::value("Background", SUBTAG::BACKGROUND)
+	//);
+
+	std::string mPrefab;
+};
 
 struct PointLight
 {

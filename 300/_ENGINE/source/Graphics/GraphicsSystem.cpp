@@ -107,8 +107,8 @@ void GraphicsSystem::Update(float dt)
 					rot = glm::rotate(rot, glm::radians(inst.GetComponent<Transform>().mRotate.y), glm::vec3(0.f, 1.f, 0.f));
 					rot = glm::rotate(rot, glm::radians(inst.GetComponent<Transform>().mRotate.z), glm::vec3(0.f, 0.f, 1.f));
 		glm::mat4	trns = glm::translate(inst.GetComponent<Transform>().mTranslate);
-		//glm::mat4 final = trns * rot * scale;
-		glm::mat4 final = glm::mat4(1.f);
+		glm::mat4 final = trns * rot * scale;
+		//glm::mat4 final = glm::mat4(1.f);
 
 		// if the debug drawing is turned on 
 		if (m_DebugDrawing && inst.HasComponent<BoxCollider>())
