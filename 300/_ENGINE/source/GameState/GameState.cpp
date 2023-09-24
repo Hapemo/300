@@ -14,14 +14,11 @@ time.
 //#include "Serialization.h"
 #include "Object/ObjectFactory.h"
 #include "ECS/ECS.h"
+#include "GameState/GameStateManager.h"
 
 void GameState::Init() {
 	//LOG_INFO("Init() called for gamestate: " + mName + +" ==================");
 	for (auto& scene : mScenes) {
-		//LOG_INFO("Attempting to call Alive() called for scene: " + scene.mName + +" ==================");
-		for (auto e : scene.mEntities)
-			if (e.HasComponent<Scripts>()) systemManager->GetScriptingPointer()->ScriptAlive(e);
-
 		if (!scene.mIsPause) scene.Init();
 	}
 }
@@ -50,6 +47,7 @@ void GameState::AddScene(std::string const& _name) { // filesystem
 	
 	if (!latestScene.mIsPause) latestScene.Init();
 }
+
 void GameState::RemoveScene(std::string const& _name){
 	//LOG_CUSTOM("GAMESTATE", "Attempting to remove scene \"" + _name + "\" from gamestate: " + mName);
 	
@@ -62,23 +60,27 @@ void GameState::RemoveScene(std::string const& _name){
 	}
 }
 
+Scene* GameState::GetScene(std::string const& _name) {
+	for (Scene& scene : mScenes)
+		if (_name == scene.mName) return &scene;
+	return systemManager->mGameStateSystem->GetErrorScene();
+}
+
+
 void GameState::Load(std::string const& _name){
 	//LOG_CUSTOM("GAMESTATE", "Load GameState: " + _path.string());
 	// Load relevant resources here, Game Mode only
 #ifndef _EDITOR
 	//ResourceManager::GetInstance()->LoadGameStateResources(_path);
 #endif
-	//serializationManager->LoadGameState(*this, _path); TODO
 	ObjectFactory::LoadGameState(this, _name);
 	for (auto& scene : mScenes) {
-		//std::filesystem::path path{ ResourceManager::GetInstance()->FileTypePath(ResourceManager::E_RESOURCETYPE::scene).string() + scene.mName + ".json"}; TODO
-		//scene.Load(path);
+		scene.Load();
 	}
 }
 
 void GameState::Save() {
 	//LOG_CUSTOM("GAMESTATE", "Save GameState: " + mName);
-	//serializationManager->SaveGameState(*this); TODO
 	ObjectFactory::SaveGameState(this);
 }
 

@@ -45,6 +45,40 @@ void Entity::Activate() {
 	//------------------------------------------------------------------
 }
 
+void Entity::Deactivate() {
+	if (!HasComponent<General>()) {
+		//LOG_ERROR("There is no general component when attempting to activate, entity ID: " + std::to_string(id));
+		assert(false && std::string("There is no general component when attempting to deactivate, entity ID: " + std::to_string(static_cast<uint32_t>(id))).c_str());
+		return;
+	}
+	General& genComp{ GetComponent<General>() };
+
+	//------------------------------------------------------------------
+	// Codes that should run when activating entity halfway through game
+
+	// Scripting
+#ifdef _EDITOR
+	if (editorManager->IsScenePaused()) return;
+#endif
+	//if (!editorManager->IsScenePaused())
+	if (HasComponent<Script>())
+		systemManager->GetScriptingPointer()->ScriptExit(*this);
+
+
+	// General
+	genComp.isActive = true;
+
+	// Parent Child
+	/*if (HasComponent<)
+	Entity firstChild =
+
+	for (Entity e : genComp.children) e.Deactivate();*/
+
+
+
+	//------------------------------------------------------------------
+}
+
 ECS::ECS() : registry(), NullEntity(registry.create()), mClipboard(0) {} 
 
 Entity ECS::NewEntity()

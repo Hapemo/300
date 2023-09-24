@@ -45,6 +45,7 @@ void Application::StartUp()
     mWindow = GFX::Window({ 1920, 1080 });
     mWindow.SetWindowTitle("Application");
     systemManager = new SystemManager();
+    ConfigManager::Init("../assets/config.txt");
 }
 
 void Application::SystemInit() 
@@ -70,7 +71,6 @@ void Application::SystemInit()
     systemManager->Init(false, &mWindow);
 
     FPSManager::Init();
-    ConfigManager::Init("../assets/config.txt");
     Input::Init();
 #pragma region testserialization
     //ObjectFactory::DeserializeScene("../assets/Scenes/test.json");

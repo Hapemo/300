@@ -24,6 +24,10 @@ public:
 	Scene();
 	//Scene(ResourceManager::GUID const&); TODO
 	Scene(std::string const&);
+
+	// Check if scene has the same name
+	bool operator==(Scene const& _scene) { return mName == _scene.mName; }
+
 	~Scene();
 	/*!*****************************************************************************
 	Set the scene's pause status
@@ -56,7 +60,7 @@ public:
 	/*!*****************************************************************************
 	Load scene from a file path
 	*******************************************************************************/
-	void Load(std::string const& _name);
+	void Load(std::string const& _name = std::string());
 
 	// *EDITOR ONLY FUNCTION*
 	void Save();
@@ -80,7 +84,9 @@ public:
 	\param Entity const&
 	- Entity to remove
 	*******************************************************************************/
-	void RemoveEntity(Entity const&); 
+	void RemoveEntity(Entity);
+
+	bool IsError();
 
 	std::set<Entity> mEntities{};			// Entities in the scene 
 	bool mIsPause = true;											// Paused state of the scene
