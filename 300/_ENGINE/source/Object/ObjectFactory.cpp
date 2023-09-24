@@ -314,7 +314,7 @@ void ObjectFactory::LoadScene(Scene* scene, const std::string& filename)
 	// loop thru container and store entities
 
 	EntityListJSON entities;
-	entities.DeserializeFile(filename);
+	entities.DeserializeFile(ConfigManager::GetValue("ScenePath") + filename + ".json");
 
 	std::unordered_map<entt::entity, entt::entity> idMap;
 

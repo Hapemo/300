@@ -106,8 +106,9 @@ void Application::SystemInit()
 
     //ObjectFactory::SerializeScene("../assets/Scenes/test.json");
 
-    //systemManager->mGameStateSystem->NewGameState("MAMAMA");
-    //systemManager->mGameStateSystem->GetCurrentGameState()->Save();
+    systemManager->mGameStateSystem->NewGameState("MAMAMA");
+    systemManager->mGameStateSystem->GetCurrentGameState()->AddScene("test");
+    systemManager->mGameStateSystem->GetCurrentGameState()->Save();
 
     //auto view = systemManager->ecs->GetEntitiesWith<General, Transform>();
     //int size = view.size();
