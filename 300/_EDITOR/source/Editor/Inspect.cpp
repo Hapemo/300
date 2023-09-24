@@ -115,6 +115,14 @@ void Inspect::update()
 			BoxCollider& boxCollider = ent.GetComponent<BoxCollider>();
 			boxCollider.Inspect();
 		}
+		if (ent.HasComponent<SphereCollider>()) {
+			SphereCollider& sphereCollider = ent.GetComponent<SphereCollider>();
+			sphereCollider.Inspect();
+		}
+		if (ent.HasComponent<PlaneCollider>()) {
+			PlaneCollider& planeCollider = ent.GetComponent<PlaneCollider>();
+			planeCollider.Inspect();
+		}
 		//--------------------------------------------// must be at the LAST OF THIS LOOP
 		Add_component(); 
 	}
@@ -169,6 +177,17 @@ void Inspect::Add_component() {
 			if (!Entity(Hierarchy::selectedId).HasComponent<Scripts>())
 				Entity(Hierarchy::selectedId).AddComponent<Scripts>();
 		}
+
+		if (ImGui::Selectable("SphereCollider")) {
+			if (!Entity(Hierarchy::selectedId).HasComponent<SphereCollider>())
+				Entity(Hierarchy::selectedId).AddComponent<SphereCollider>();
+		}
+
+		if (ImGui::Selectable("PlaneCollider")) {
+			if (!Entity(Hierarchy::selectedId).HasComponent<PlaneCollider>())
+				Entity(Hierarchy::selectedId).AddComponent<PlaneCollider>();
+		}
+
 		ImGui::EndPopup();
 	}
 
@@ -214,7 +233,7 @@ void Scripts::Inspect() {
 	auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
 	Scripts& scripts = scriptEntities.get<Scripts>(Hierarchy::selectedId);
 
-	if (ImGui::CollapsingHeader("Scripts"), &delete_component, ImGuiTreeNodeFlags_DefaultOpen)
+	if (ImGui::CollapsingHeader("Scripts", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
 	{
 		if (ImGui::BeginDragDropTarget())
 		{
@@ -320,12 +339,13 @@ void Scripts::Inspect() {
 			ImGui::InputText(".lua", &newScript);
 		}
 	}
-
+	if (delete_component == false)
+		Entity(Hierarchy::selectedId).RemoveComponent<Scripts>();
 }
 
 void MeshRenderer::Inspect() {
-
-	if (ImGui::CollapsingHeader("MeshRenderer", ImGuiTreeNodeFlags_DefaultOpen)) {
+	bool delete_component{ true };
+	if (ImGui::CollapsingHeader("MeshRenderer", &delete_component,ImGuiTreeNodeFlags_DefaultOpen)) {
 
 		ImGui::Text(mMeshPath.c_str());
 		if (ImGui::BeginDragDropTarget())
@@ -343,71 +363,107 @@ void MeshRenderer::Inspect() {
 			ImGui::EndDragDropTarget();
 		}
 	}
-
+	if (delete_component == false)
+		Entity(Hierarchy::selectedId).RemoveComponent<MeshRenderer>();
 }
 
 
 void RigidBody::Inspect() {
-	ImGui::DragFloat("##Density", (float*)&mDensity);
+	bool delete_component{ true };
 
-	ImGui::SameLine();
-	ImGui::Text("Density");
-	ImGui::Separator();
-
-
-	const char* materials[] = { "RUBBER", "WOOD", "METAL", "ICE","CONCRETE","GLASS" };
-	const char* motions[] = { "STATIC", "DYNAMIC" };
+	if (ImGui::CollapsingHeader("RigidBody", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
+	{
 
 
-	if(ImGui::BeginCombo("Material", (materials[mMat]))){
+		ImGui::DragFloat("##Density", (float*)&mDensity);
 
-		for (unsigned char i{ 0 }; i < 6; i++) {
-			if (ImGui::Selectable(materials[i])) {
+		ImGui::SameLine();
+		ImGui::Text("Density");
+		ImGui::Separator();
+
+
+		const char* materials[] = { "RUBBER", "WOOD", "METAL", "ICE","CONCRETE","GLASS" };
+		const char* motions[] = { "STATIC", "DYNAMIC" };
+
+
+		if (ImGui::BeginCombo("Material", (materials[mMat]))) {
+
+			for (unsigned char i{ 0 }; i < 6; i++) {
+				if (ImGui::Selectable(materials[i])) {
 					mMat = i;
 					mMaterial = (MATERIAL)i;
+				}
 			}
+			ImGui::EndCombo();
 		}
-		ImGui::EndCombo();
-	}
 
-	if (ImGui::BeginCombo("Motions", (motions[mMot]))) {
+		if (ImGui::BeginCombo("Motions", (motions[mMot]))) {
 
-		for (unsigned char i{ 0 }; i < 2; i++) {
-			if (ImGui::Selectable(motions[i])) {			
+			for (unsigned char i{ 0 }; i < 2; i++) {
+				if (ImGui::Selectable(motions[i])) {
 					mMot = i;
 					mMotion = (MOTION)i;
+				}
 			}
+			ImGui::EndCombo();
 		}
-		ImGui::EndCombo();
+
 	}
 
-
+	if (delete_component == false)
+		Entity(Hierarchy::selectedId).RemoveComponent<RigidBody>();
 }
 
 void BoxCollider::Inspect() {
-	if (ImGui::CollapsingHeader("BoxCollider", ImGuiTreeNodeFlags_DefaultOpen)) {
+	bool delete_component{ true };
+	if (ImGui::CollapsingHeader("BoxCollider", &delete_component, ImGuiTreeNodeFlags_DefaultOpen)) {
 
 		ImGui::DragFloat3("##Scale", (float*)&mScaleOffset);
-
 		ImGui::SameLine();
 		ImGui::Text("Scale");
 		ImGui::Separator();
 
-
 		ImGui::DragFloat3("##Translate", (float*)&mTranslateOffset);
-
 		ImGui::SameLine();
 		ImGui::Text("Translate");
 		ImGui::Separator();
 	}
+	if (delete_component == false)
+		Entity(Hierarchy::selectedId).RemoveComponent<BoxCollider>();
 }
 void SphereCollider::Inspect() {
+	bool delete_component{ true };
+	if (ImGui::CollapsingHeader("SphereCollider", &delete_component, ImGuiTreeNodeFlags_DefaultOpen)) {
+		
+		ImGui::DragFloat("##Scale", (float*)&mScaleOffset);
+		ImGui::SameLine();
+		ImGui::Text("Scale");
+		ImGui::Separator();
 
-
-
+		ImGui::DragFloat3("##Translate", (float*)&mTranslateOffset);
+		ImGui::SameLine();
+		ImGui::Text("Translate");
+		ImGui::Separator();
+	}
+	if (delete_component == false)
+		Entity(Hierarchy::selectedId).RemoveComponent<SphereCollider>();
 }
+
+
 void PlaneCollider::Inspect() {
+	bool delete_component{ true };
+	if (ImGui::CollapsingHeader("PlaneCollider",&delete_component, ImGuiTreeNodeFlags_DefaultOpen)) {
+		ImGui::DragFloat3("##Scale", (float*)&mNormal);
+		ImGui::SameLine();
+		ImGui::Text("Scale");
+		ImGui::Separator();
 
+		ImGui::DragFloat("##Translate", (float*)&mTranslateOffset);
+		ImGui::SameLine();
+		ImGui::Text("Translate");
+		ImGui::Separator();
 
-
+	}
+	if (delete_component == false)
+		Entity(Hierarchy::selectedId).RemoveComponent<PlaneCollider>();
 }
