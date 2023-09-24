@@ -66,7 +66,8 @@ int main(int argc, char* argv[])
 	
 
 #if __RELEASE
-	descriptorFilepath = "../../_GEOM_COMPILER/descriptor_files/default_descriptor_BUILD.json";
+	//descriptorFilepath = "../../_GEOM_COMPILER/descriptor_files/default_descriptor_BUILD.json";
+	descriptorFilepath = "./descriptor_files/default_descriptor.json";
 #else
 	descriptorFilepath = "./descriptor_files/default_descriptor.json";
 #endif

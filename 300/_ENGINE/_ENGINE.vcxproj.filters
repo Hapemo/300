@@ -1,108 +1,47 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
+    <ClCompile Include="source\Audio\AudioSystem.cpp" />
+    <ClCompile Include="source\Debug\AssertException.cpp" />
+    <ClCompile Include="source\Debug\LogException.cpp" />
+    <ClCompile Include="source\Debug\Logger.cpp" />
+    <ClCompile Include="source\ECS\ECS_Systems.cpp" />
+    <ClCompile Include="source\ECS\ECS.cpp" />
+    <ClCompile Include="source\Serialization\SerializationTemp.cpp" />
+    <ClCompile Include="source\GameState\GameState.cpp" />
+    <ClCompile Include="source\GameState\GameStateManager.cpp" />
+    <ClCompile Include="source\GameState\Scene.cpp" />
+    <ClCompile Include="source\Graphics\Camera_Input.cpp" />
+    <ClCompile Include="source\Graphics\GraphicsSystem.cpp" />
+    <ClCompile Include="source\Multithread.cpp" />
+    <ClCompile Include="source\Object\ObjectFactory.cpp" />
+    <ClCompile Include="source\Physics\PhysicsSystem.cpp" />
+    <ClCompile Include="source\Physics\PhysX.cpp" />
+    <ClCompile Include="source\Serialization\Serialization.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\ECS\ECS.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ECS\ECS_Components.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Serialization\Serialization.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Object\ObjectFactory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ECS\ECS_Systems.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Audio\AudioSystem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Multithread.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Physics\PhysX.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Physics\PhysicsTypes.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Physics\PhysicsSystem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Graphics\GraphicsSystem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ECS\Prefab.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ECS\Tags.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\GameState\GameState.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\GameState\GameStateManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\GameState\Scene.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Audio\AudioType.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="source\ECS\ECS.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Serialization\Serialization.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Object\ObjectFactory.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\ECS\ECS_Systems.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Audio\AudioSystem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Multithread.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Physics\PhysX.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Physics\PhysicsSystem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Graphics\GraphicsSystem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\GameState\GameState.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\GameState\GameStateManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\GameState\Scene.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
+    <ClInclude Include="include\Audio\AudioSystem.h" />
+    <ClInclude Include="include\Audio\AudioType.h" />
+    <ClInclude Include="include\Debug\AssertException.h" />
+    <ClInclude Include="include\Debug\Asserts.h" />
+    <ClInclude Include="include\Debug\LogException.h" />
+    <ClInclude Include="include\Debug\Logger.h" />
+    <ClInclude Include="include\ECS\ECS.h" />
+    <ClInclude Include="include\ECS\ECS_Components.h" />
+    <ClInclude Include="include\ECS\ECS_Systems.h" />
+    <ClInclude Include="include\ECS\Prefab.h" />
+    <ClInclude Include="include\ECS\Tags.h" />
+    <ClInclude Include="include\GameState\GameState.h" />
+    <ClInclude Include="include\GameState\GameStateManager.h" />
+    <ClInclude Include="include\GameState\Scene.h" />
+    <ClInclude Include="include\Graphics\Camera_Input.h" />
+    <ClInclude Include="include\Graphics\GraphicsSystem.h" />
+    <ClInclude Include="include\Multithread.h" />
+    <ClInclude Include="include\Physics\PhysicsTypes.h" />
+    <ClInclude Include="include\Physics\PhysicsSystem.h" />
+    <ClInclude Include="include\Physics\PhysX.h" />
+    <ClInclude Include="include\Serialization\SerializationTemp.h" />
+    <ClInclude Include="include\Serialization\Serialization.h" />
+    <ClInclude Include="include\Object\ObjectFactory.h" />
   </ItemGroup>
 </Project>

@@ -1,8 +1,10 @@
 [
     {
+        "EntityID": 4,
         "General": {
             "Name": "Apple",
-            "isActive": false,
+            "Active": false,
+            "Paused": false,
             "Tag": "Unknown",
             "Subtag": "Active"
         },
@@ -25,9 +27,11 @@
         }
     },
     {
+        "EntityID": 3,
         "General": {
             "Name": "Other",
-            "isActive": true,
+            "Active": true,
+            "Paused": false,
             "Tag": "Unknown",
             "Subtag": "Background"
         },
@@ -50,9 +54,11 @@
         }
     },
     {
+        "EntityID": 2,
         "General": {
             "Name": "Testing",
-            "isActive": true,
+            "Active": true,
+            "Paused": false,
             "Tag": "Player",
             "Subtag": "Active"
         },
@@ -72,12 +78,18 @@
                 0.0,
                 0.0
             ]
-        }
+        },
+        "Scripts": [
+            "../assets/Scripts/Run.lua",
+            "../assets/Scripts/Fly.lua"
+        ]
     },
     {
+        "EntityID": 1,
         "General": {
-            "Name": "",
-            "isActive": true,
+            "Name": "Entity1",
+            "Active": true,
+            "Paused": false,
             "Tag": "Unknown",
             "Subtag": "Active"
         },
@@ -97,79 +109,28 @@
                 0.0,
                 0.0
             ]
-        }
-    },
-    {
-        "General": {
-            "Name": "",
-            "isActive": true,
-            "Tag": "Unknown",
-            "Subtag": "Active"
         },
-        "Transform": {
-            "Scale": [
-                100.0,
-                100.0,
-                100.0
+        "MeshRenderer": {
+            "ShaderPath": [
+                "../_GRAPHICS/shader_files/pointLight_vert.glsl",
+                "../_GRAPHICS/shader_files/pointLight_frag.glsl"
             ],
-            "Rotate": [
-                0.0,
-                0.0,
-                0.0
+            "MaterialInstancePath": [
+                "../assets/Compressed/Vampire_diffuse.ctexture",
+                "../assets/Compressed/Vampire_normal.ctexture"
             ],
-            "Translate": [
-                0.0,
-                1500.0,
-                0.0
-            ]
-        }
-    },
-    {
-        "General": {
-            "Name": "",
-            "isActive": true,
-            "Tag": "Unknown",
-            "Subtag": "Active"
+            "MeshPath": "../assets/compiled_geom/dancing_vampire.geom",
+            "GUID": 0
         },
-        "Transform": {
-            "Scale": [
-                100.0,
-                100.0,
-                100.0
+        "BoxCollider": {
+            "ScaleOffset": [
+                1.0,
+                1.0,
+                1.0
             ],
-            "Rotate": [
+            "TranslateOffset": [
                 0.0,
-                0.0,
-                0.0
-            ],
-            "Translate": [
-                0.0,
-                1000.0,
-                0.0
-            ]
-        }
-    },
-    {
-        "General": {
-            "Name": "",
-            "isActive": true,
-            "Tag": "Unknown",
-            "Subtag": "Active"
-        },
-        "Transform": {
-            "Scale": [
-                100.0,
-                100.0,
-                100.0
-            ],
-            "Rotate": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "Translate": [
-                0.0,
-                0.0,
+                1.0499999523162842,
                 0.0
             ]
         }

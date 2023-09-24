@@ -55,6 +55,7 @@ namespace GFX
 		// This mesh may contain multiple different animations. These animations are unique to this mesh.
 		std::vector<_GEOM::Animation>	mAnimation{};
 		bool							mHasAnimation{ false };
+		_GEOM::bbox						mBBOX;
 
 
 	private:
@@ -69,13 +70,9 @@ namespace GFX
 		VBO mBoneWeightVbo;
 
 		// Stats of the mesh model
-		std::string mMeshName;
-		int mVertexCount{};
-		int mIndexCount{};
-
-		// TODO: Should be able to know what shader to use for this mesh
-
-		// TODO: Should be able to know what textures to use for this mesh
+		std::string		mMeshName;
+		int				mVertexCount{};
+		int				mIndexCount{};
 	};
 
 
@@ -113,7 +110,7 @@ namespace GFX
 		void operator=(MeshManager const&) = delete;
 
 	private:
-		const std::string compiled_geom_path = "../compiled_geom/";
+		const std::string compiled_geom_path = "../assets/compiled_geom/";
 		void SetupMesh(std::string filepath);
 	};
 }

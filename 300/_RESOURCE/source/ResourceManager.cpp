@@ -88,7 +88,8 @@ void Resource::shader_Loader()
 	// hardcode data path for now 
 	// ideally, this code should read through 
 	std::vector<std::pair<std::string, std::string>> shaderpaths;
-	shaderpaths.emplace_back(std::pair<std::string, std::string>{ "../_GRAPHICS/shader_files/draw_vert.glsl", "../_GRAPHICS/shader_files/draw_frag.glsl" });
+	//shaderpaths.emplace_back(std::pair<std::string, std::string>{ "../_GRAPHICS/shader_files/draw_vert.glsl", "../_GRAPHICS/shader_files/draw_frag.glsl" });
+	shaderpaths.emplace_back(std::pair<std::string, std::string>{ "../_GRAPHICS/shader_files/pointLight_vert.glsl", "../_GRAPHICS/shader_files/pointLight_frag.glsl" });
 
 	// load all the shaders
 	for (const auto& x : shaderpaths)
@@ -297,9 +298,6 @@ void MeshManager::SetupMesh(std::string filepath,unsigned id)
 		localmesh.mAnimation = GeomData.m_pMesh[0].m_Animation;
 		localmesh.mHasAnimation = true;
 	}
-
-	//mSceneMeshes.emplace_back(localmesh);							// storage of all the scene's meshes
-
 
 	//uid uidd(entry.path().filename().string());
 

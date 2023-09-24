@@ -443,10 +443,14 @@ namespace _GEOM
 
 			if (E.m_Textures.size() > 0) {
 				m_SkinGeom->m_bHasTextures = true;
-				m_SkinGeom->m_Textures = E.m_Textures;									// add the textures here
+				m_SkinGeom->m_Textures = E.m_Textures;								// add the textures here
 			}
 
 			auto& FinalMesh = m_SkinGeom->m_Meshes[iFinalMesh];						
+
+			// Merging all the bboxes into a final bbox for the mesh
+			FinalMesh.m_MeshBBOX.MergeBBOX(E.m_Bbox);
+
 			FinalMesh.m_Submeshes.emplace_back();									// create a new submesh instance for the mesh
 			auto& SubMesh = FinalMesh.m_Submeshes.back();
 
@@ -507,48 +511,6 @@ namespace _GEOM
 		std::cout << ">>== \t\tQuantizing mesh data...\n";
 		std::vector<CompressedMeshPart> CompressedMeshParts(_MyNodes.size());		// create a return vector with the same size as the input vector
 
-#if 0
-		// Create a bounding box for each submesh
-		bbox GLOBAL_PosBBox;
-		bbox GLOBAL_UVBBox;
-		{
-			GLOBAL_PosBBox.m_Min = glm::vec3(0.f);		// initialize the min to 0
-			GLOBAL_UVBBox.m_Min	= glm::vec3(0.f);
-
-			auto iSubmesh = 0u;
-			for (auto& Submesh : _MyNodes)
-			{
-				bbox PosBBox;
-				bbox UVBBox;
-
-				// looping through all the vertices in the submesh
-				for (auto& V : Submesh.m_Vertices)
-				{
-					// VERTEX POSITION BOUNDS //
-					PosBBox.AddVerts(&V.m_Position, 1);
-
-					// VERTEX UV COORDINATES BOUNDS //
-					glm::vec3 UV(V.m_Texcoord.x, V.m_Texcoord.y, 0.f);
-					UVBBox.AddVerts(&UV, 1);
-				}
-
-				// GLOBAL BOUNDS //
-				{
-					// add both bboxes to the global total
-					glm::vec3 Pos_Span(PosBBox.getSize());
-					glm::vec3 UV_Span(UVBBox.getSize());
-
-					GLOBAL_PosBBox.AddVerts(&Pos_Span, 1);
-					GLOBAL_UVBBox.AddVerts(&UV_Span, 1);
-				}
-			}
-		}
-
-		// Set the global scale for the quantization, this will allow us to normalize
-		m_PosCompressionScale = GLOBAL_PosBBox.getSize();
-		m_UVCompressionScale = glm::vec2(GLOBAL_UVBBox.getSize().x, GLOBAL_UVBBox.getSize().y);
-#endif
-
 
 		////////////////////////////////////
 		// QUANTIZE VERTEX DATA 
@@ -562,9 +524,13 @@ namespace _GEOM
 				std::vector<Geom::VertexExtra>	VEContainer;
 				std::vector<Geom::VertexPos>	VPContainer;
 
+				RenderSubmesh.m_Bbox.m_Min = glm::vec3(0.f);	// initialize the min to 0
+
 				// For each vertex inside the submesh...
 				for (const auto& V : submesh.m_Vertices)
 				{
+					RenderSubmesh.m_Bbox.AddVerts(&V.m_Position);
+
 					// == NORMAL, TANGENT, BITANGENT (SIGN) AND UV COORDINATES //
 					{
 						Geom::VertexExtra VE{};
@@ -680,6 +646,9 @@ namespace _GEOM
 				Mesh[i].m_Texture = std::move(m_Textures);
 			}
 
+			// push the bounding box over
+			Mesh[i].m_MeshBBOX = std::move(m_Meshes[i].m_MeshBBOX);
+
 			// Copy the bool statuses in
 			_geom.m_bHasAnimations	= m_bHasAnimation ? true : _geom.m_bHasAnimations;
 			_geom.m_bVtxClrPresent	= m_bVtxClrPresent ? true : _geom.m_bVtxClrPresent;
@@ -786,7 +755,8 @@ namespace _GEOM
 		for (uint32_t i{}; i < GeomData.m_nMeshes; ++i) 
 		{
 			auto& meshInst = GeomData.m_pMesh[i];
-			outfile.write((char*)&meshInst.m_name, sizeof(char) * 64);
+			outfile.write((char*)&meshInst.m_name, sizeof(char) * 64);						// name of the mesh
+			outfile.write((char*)&meshInst.m_MeshBBOX, sizeof(bbox));						// the bounding box of the mesh
 
 			// Texture Data
 			if (GeomData.m_bHasTextures)

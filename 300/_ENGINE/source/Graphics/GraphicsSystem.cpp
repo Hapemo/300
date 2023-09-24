@@ -1,5 +1,6 @@
 #include <Graphics/GraphicsSystem.h>
 #include <ResourceManager.h>
+#include <Graphics/Camera_Input.h>
 
 /***************************************************************************/
 /*!
@@ -24,15 +25,26 @@ void GraphicsSystem::Init()
 	SetCameraTarget(CAMERA_TYPE::CAMERA_TYPE_ALL, { 0, 0, 0 });									// Target of camera
 	SetCameraProjection(CAMERA_TYPE::CAMERA_TYPE_ALL, 60.f, m_Window->size(), 0.1f, 900.f);		// Projection of camera
 
-	UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_ALL);
+	UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_ALL, 0.f);
 
-	// Create a new entity here, for testing purposes
+	 //Create a new entity here, for testing purposes
 	Entity newentity = systemManager->ecs->NewEntity();			// creating a new entity
 	newentity.AddComponent<MeshRenderer>();
-	newentity.GetComponent<MeshRenderer>().mMeshPath = "../compiled_geom/dancing_vampire.geom";
-	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath = "../assets/Compressed/Vampire_diffuse.ctexture";
-	newentity.GetComponent<MeshRenderer>().mShaderPath = std::pair<std::string, std::string>( "../_GRAPHICS/shader_files/draw_vert.glsl", "../_GRAPHICS/shader_files/draw_frag.glsl" );
+	//newentity.GetComponent<MeshRenderer>().mMeshPath = "../compiled_geom/dancing_vampire.geom";
+	//newentity.GetComponent<MeshRenderer>().mMaterialInstancePath = "../assets/Compressed/Vampire_diffuse.ctexture";
+	//newentity.GetComponent<MeshRenderer>().mShaderPath = std::pair<std::string, std::string>( "../_GRAPHICS/shader_files/draw_vert.glsl", "../_GRAPHICS/shader_files/draw_frag.glsl" );
+	newentity.AddComponent<BoxCollider>();
 
+	//newentity.GetComponent<MeshRenderer>().mMaterialInstancePath = "../assets/Compressed/Skull.ctexture";
+	//newentity.GetComponent<MeshRenderer>().mMeshPath = "../compiled_geom/Skull_textured.geom";
+	//newentity.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/draw_vert.glsl", "../_GRAPHICS/shader_files/draw_frag.glsl" };
+	//newentity.GetComponent<MeshRenderer>().mMeshPath = "../assets/compiled_geom/FreeModelNathan_WalkAnim.geom";
+	newentity.GetComponent<MeshRenderer>().mMeshPath = "../assets/compiled_geom/dancing_vampire.geom";
+	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Vampire_diffuse.ctexture");
+	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Vampire_normal.ctexture");
+	newentity.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/pointLight_vert.glsl", "../_GRAPHICS/shader_files/pointLight_frag.glsl" };	// for point light
+
+	newentity.GetComponent<BoxCollider>().mTranslateOffset = { 0.f, 1.05f, 0.f };
 }
 
 /***************************************************************************/
@@ -47,11 +59,12 @@ void GraphicsSystem::Update(float dt)
 	// local variable to keep track of rendered mesh instances
 	std::map<std::string, short> renderedMesh;
 
-	UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_ALL);
+	// update the camera's transformations, and its input
+	UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_EDITOR, dt);
 
 	// To be removed once entity to be drawn created
-	m_Renderer.AddSphere(m_EditorCamera.position(), { 0, 0, -300 }, 100.f, { 0, 1, 0, 1 });
-	m_Renderer.AddAabb({ -50, -60, -200 }, { 10, 30, -0.1f }, { 1, 0, 0, 1 });
+	//m_Renderer.AddSphere(m_EditorCamera.position(), { 0, 0, -300 }, 100.f, { 0, 1, 0, 1 });
+	//m_Renderer.AddAabb({ -50, -60, -200 }, { 10, 30, -0.1f }, { 1, 0, 0, 1 });
 
 	// Retrieve and update the mesh instances to be drawn
 	auto meshRendererInstances = systemManager->ecs->GetEntitiesWith<MeshRenderer>();
@@ -68,6 +81,16 @@ void GraphicsSystem::Update(float dt)
 		rot = glm::rotate(rot, glm::radians(inst.GetComponent<Transform>().mRotate.z), glm::vec3(0.f, 0.f, 1.f));
 		glm::mat4 final = glm::scale(rot, inst.GetComponent<Transform>().mScale);
 
+		if (m_DebugDrawing && inst.HasComponent<BoxCollider>())
+		{
+			// draw the AABB of the mesh
+			glm::vec3 bbox_dimens = meshinst.mBBOX.m_Max - meshinst.mBBOX.m_Min;
+			m_Renderer.AddAabb(inst.GetComponent<Transform>().mTranslate + inst.GetComponent<BoxCollider>().mTranslateOffset, bbox_dimens, {1.f, 0.f, 0.f, 1.f});
+
+			// draw the center of the mesh
+			m_Renderer.AddSphere(m_EditorCamera.position(), inst.GetComponent<Transform>().mTranslate, 0.5f, { 1.f, 1.f, 0.f, 1.f });
+		}
+
 		meshinst.mLTW.push_back(final);
 	}
 
@@ -81,7 +104,7 @@ void GraphicsSystem::Update(float dt)
 	{
 		std::string meshstr = inst.GetComponent<MeshRenderer>().mMeshPath;
 		if (renderedMesh.find(meshstr) != renderedMesh.end()) {
-			// the mesh has been rendered before
+			// the mesh has been rendered before, skip it
 			continue;
 		}
 
@@ -97,11 +120,9 @@ void GraphicsSystem::Update(float dt)
 		GFX::Shader& shaderinst = systemManager->mResourceSystem->get_Shader(concatname);				// loads the shader
 
 		// get the texture filepath
-
-		std::string texturestr = inst.GetComponent<MeshRenderer>().mMaterialInstancePath;		
-		GFX::Texture& textureinst = systemManager->mResourceSystem->get_MaterialInstance(texturestr);	// loads the texture
-		
-
+		std::vector<std::string> texturestr = inst.GetComponent<MeshRenderer>().mMaterialInstancePath;
+		GFX::Texture& textureColorinst = systemManager->mResourceSystem->get_MaterialInstance(texturestr[0]);	// loads the texture
+		GFX::Texture& textureNormalinst = systemManager->mResourceSystem->get_MaterialInstance(texturestr[1]);	// loads the texture
 
 		shaderinst.Activate();
 		meshinst.BindVao();
@@ -109,14 +130,27 @@ void GraphicsSystem::Update(float dt)
 
 		glUniformMatrix4fv(shaderinst.GetUniformVP(), 1, GL_FALSE, &m_EditorCamera.viewProj()[0][0]);
 
+		GLuint mLightPosShaderLocation = glGetUniformLocation(shaderinst.GetHandle(), "lightPos");
+		vec3 lightPos = GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR);
+		glUniform3fv(mLightPosShaderLocation, 1, &lightPos[0]);
+
 		// bind texture unit
-		glBindTextureUnit(0, textureinst.ID());
+		glBindTextureUnit(0, textureColorinst.ID());
+		glBindTextureUnit(1, textureNormalinst.ID());
+
+		m_Textures.push_back(0);
+		m_Textures.push_back(1);
+
+		GLuint uniform_tex = glGetUniformLocation(shaderinst.GetHandle(), "uTex");
+		glUniform1iv(uniform_tex, (GLsizei)m_Textures.size(), m_Textures.data());	// passing Texture ID to the fragment shader
 
 		glDrawElementsInstanced(GL_TRIANGLES, meshinst.GetIndexCount(), GL_UNSIGNED_INT, nullptr, meshinst.mLTW.size());
 
 		shaderinst.Deactivate();
 		meshinst.UnbindVao();
+		m_Textures.clear();
 		glBindTextureUnit(0, 0);
+		glBindTextureUnit(1, 0);
 		meshinst.ClearInstances();
 	}
 
@@ -248,19 +282,23 @@ void GraphicsSystem::SetCameraSize(CAMERA_TYPE type, ivec2 size)
 	}
 }
 
-void GraphicsSystem::UpdateCamera(CAMERA_TYPE type)
+void GraphicsSystem::UpdateCamera(CAMERA_TYPE type, const float& dt)
 {
 	switch (type)
 	{
 	case CAMERA_TYPE::CAMERA_TYPE_GAME:
+		Camera_Input::getInstance().updateCameraInput(m_GameCamera, dt);
 		m_GameCamera.Update();
 		break;
 
 	case CAMERA_TYPE::CAMERA_TYPE_EDITOR:
+		Camera_Input::getInstance().updateCameraInput(m_EditorCamera, dt);
 		m_EditorCamera.Update();
 		break;
 
 	case CAMERA_TYPE::CAMERA_TYPE_ALL:
+		Camera_Input::getInstance().updateCameraInput(m_GameCamera, dt);
+		Camera_Input::getInstance().updateCameraInput(m_EditorCamera, dt);
 		m_GameCamera.Update();
 		m_EditorCamera.Update();
 		break;
