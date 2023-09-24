@@ -202,7 +202,7 @@ void ScriptingSystem::Exit()
 void ScriptingSystem::ScriptAlive(const Entity& entity)
 {
     auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
-    for (Script script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
+    for (Script& script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
     {
         script.Load(entity);
         script.Run("Alive");
@@ -212,7 +212,7 @@ void ScriptingSystem::ScriptAlive(const Entity& entity)
 void ScriptingSystem::ScriptStart(const Entity& entity)
 {
     auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
-    for (Script script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
+    for (Script& script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
     {
         script.Load(entity);
         script.Run("Start");
@@ -222,7 +222,7 @@ void ScriptingSystem::ScriptStart(const Entity& entity)
 void ScriptingSystem::ScriptExit(const Entity& entity)
 {
     auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
-    for (Script script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
+    for (Script& script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
     {
         script.Run("Exit");
     }
@@ -231,7 +231,7 @@ void ScriptingSystem::ScriptExit(const Entity& entity)
 void ScriptingSystem::ScriptDead(const Entity& entity)
 {
     auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
-    for (Script script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
+    for (Script& script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
     {
         script.Run("Dead");
     }

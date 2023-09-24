@@ -79,9 +79,10 @@ void Scene::Pause(bool _pause) {
 void Scene::Load(std::string const& _name) {
 	//LOG_CUSTOM("SCENE", "Loading Scene: " + mName);
 	//serializationManager->LoadScene(*this, _path); TODO
+	mName = _name;
 	ObjectFactory::LoadScene(this, _name);
 	for (auto e : mEntities) {
-		if (e.HasComponent<Scripts>()) systemManager->GetScriptingPointer()->ScriptAlive(e);
+		//if (e.HasComponent<Scripts>()) systemManager->GetScriptingPointer()->ScriptAlive(e);
 		e.GetComponent<General>().isPaused = mIsPause;
 	}
 }
