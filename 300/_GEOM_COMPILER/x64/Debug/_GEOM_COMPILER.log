@@ -1,10 +1,38 @@
-﻿  Geom_Compiler.cpp
-C:\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(315,34): warning C4018: '<': signed/unsigned mismatch
-C:\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(779,21): warning C4267: 'initializing': conversion from 'size_t' to 'uint8_t', possible loss of data
-C:\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(783,36): warning C4267: '=': conversion from 'size_t' to 'uint8_t', possible loss of data
-C:\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(813,27): warning C4018: '<': signed/unsigned mismatch
-C:\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(950,19): warning C4018: '<': signed/unsigned mismatch
-C:\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(992,37): warning C4018: '<': signed/unsigned mismatch
-C:\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(1029,42): warning C4244: '=': conversion from 'const double' to 'float', possible loss of data
-C:\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(1030,48): warning C4244: '=': conversion from 'const double' to 'float', possible loss of data
-  _GEOM_COMPILER.vcxproj -> C:\300\300\x64\Debug\_GEOM_COMPILER.exe
+﻿  allocator.cpp
+  clusterizer.cpp
+  indexcodec.cpp
+  indexgenerator.cpp
+  overdrawanalyzer.cpp
+  overdrawoptimizer.cpp
+  simplifier.cpp
+  spatialorder.cpp
+  stripifier.cpp
+  vcacheanalyzer.cpp
+  vcacheoptimizer.cpp
+  vertexcodec.cpp
+  vertexfilter.cpp
+  vfetchanalyzer.cpp
+  vfetchoptimizer.cpp
+  Animation.cpp
+  Bone.cpp
+  descriptor.cpp
+  geom.cpp
+  Geom_Compiler.cpp
+  Helper.cpp
+  _compiler_main.cpp
+F:\300\300\_GEOM_COMPILER\src\Bone.cpp(23,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+F:\300\300\_GEOM_COMPILER\src\Bone.cpp(35,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+F:\300\300\_GEOM_COMPILER\src\Bone.cpp(47,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+F:\300\300\_GEOM_COMPILER\src\geom.cpp(335,8): warning C4101: 'ch': unreferenced local variable
+F:\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(322,34): warning C4018: '<': signed/unsigned mismatch
+F:\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(326,61): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+F:\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(327,67): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+F:\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(790,46): warning C4267: 'initializing': conversion from 'size_t' to 'uint8_t', possible loss of data
+F:\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(794,38): warning C4267: '=': conversion from 'size_t' to 'uint8_t', possible loss of data
+F:\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(824,27): warning C4018: '<': signed/unsigned mismatch
+F:\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(961,19): warning C4018: '<': signed/unsigned mismatch
+F:\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(1003,37): warning C4018: '<': signed/unsigned mismatch
+F:\300\300\_GEOM_COMPILER\src\Bone.cpp(69): warning C4715: '_GEOM::Bone::GetPositionIndex': not all control paths return a value
+F:\300\300\_GEOM_COMPILER\src\Bone.cpp(82): warning C4715: '_GEOM::Bone::GetRotationIndex': not all control paths return a value
+F:\300\300\_GEOM_COMPILER\src\Bone.cpp(95): warning C4715: '_GEOM::Bone::GetScaleIndex': not all control paths return a value
+  _GEOM_COMPILER.vcxproj -> F:\300\300\x64\Debug\_GEOM_COMPILER.lib

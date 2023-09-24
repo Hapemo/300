@@ -276,7 +276,9 @@ namespace _GEOM
 		// Recurse the scene from the root node and process each mesh we find
 		std::function<void(const aiNode&, const aiMatrix4x4&)> RecurseScene = [&](const aiNode& Node, const aiMatrix4x4& ParentTransform)
 		{
-			const aiMatrix4x4 Transform = ParentTransform * Node.mTransformation;		// >> DEBUG: the values are so big because of here
+			// set to identity matrix
+			aiMatrix4x4 Transform;
+
 			auto        iBase = _MyNodes.size();
 
 			// Collect all the meshes
@@ -284,6 +286,11 @@ namespace _GEOM
 			for (auto i = 0u, end = Node.mNumMeshes; i < end; ++i)
 			{
 				aiMesh& AssimpMesh = *m_Scene->mMeshes[Node.mMeshes[i]];
+
+				// Get the transformation only if the mesh is non animated. Updated only once
+				if (!AssimpMesh.HasBones() && i == 0) {
+					Transform = ParentTransform * Node.mTransformation;
+				}
 
 				// Check if the mesh is valid, and get its texture coordinates and color
 				int iTexCordinates, iColor;
@@ -314,8 +321,12 @@ namespace _GEOM
 			std::cout << ">>[NOTE]: \tImporting Bones\n";
 			for (int numanims{}; numanims < m_Scene->mNumAnimations; ++numanims)
 			{
+				auto& animation = m_Scene->mAnimations[numanims];
+
+				m_SkinGeom->m_Animation[numanims].m_Duration = animation->mDuration;					// set the duration of the animation
+				m_SkinGeom->m_Animation[numanims].m_TicksPerSecond = animation->mTicksPerSecond;		// set the ticks per second of the animation
 				ReadHierarchyData(m_SkinGeom->m_Animation[numanims].m_RootNode, m_Scene->mRootNode);
-				ReadMissingBones(m_SkinGeom->m_Animation[numanims], m_Scene->mAnimations[0]);
+				ReadMissingBones(m_SkinGeom->m_Animation[numanims], animation);
 			}
 			std::cout << ">>[NOTE]: \tFinished Importing Bones\n";
 		}
@@ -1026,8 +1037,6 @@ namespace _GEOM
 	// BONE:: Read missing bones and populate bone vector
 	void Mesh_Loader::ReadMissingBones(Animation& myanimation, const aiAnimation* sceneanimation) noexcept
 	{
-		myanimation.m_Duration = sceneanimation->mDuration;
-		myanimation.m_TicksPerSecond = sceneanimation->mTicksPerSecond;
 		int size = sceneanimation->mNumChannels;
 
 		auto& boneInfoMap = myanimation.m_BoneInfoMap;
