@@ -39,13 +39,16 @@ struct Transform
 // this struct stores the filepaths for the meshdata, material, and shader. the actual data is stored in the resource manager
 struct MeshRenderer
 {
+
+
+
 	// For now, we store the string to the filepaths. TO CHANGE to uids for efficient referencing
 	std::pair<std::string, std::string> mShaderPath;
 	std::vector<std::string>			mMaterialInstancePath;
 	std::string							mMeshPath;
 	
 	void*							mMeshRef;
-
+	void*							mTextureRef[4];
 
 	unsigned						mGUID;
 
