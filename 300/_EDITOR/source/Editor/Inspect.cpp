@@ -108,7 +108,11 @@ void Inspect::update()
 			MeshRenderer& Meshrender = ent.GetComponent<MeshRenderer>();
 			Meshrender.Inspect();
 		}
+		if (ent.HasComponent<RigidBody>()) {
 
+			RigidBody& rigidBody = ent.GetComponent<RigidBody>();
+			rigidBody.Inspect();
+		}
 
 		//--------------------------------------------// must be at the LAST OF THIS LOOP
 		Add_component(); 
@@ -145,10 +149,16 @@ void Inspect::Add_component() {
 
 	if (ImGui::BeginPopup("ComponentList"))
 	{
-		if (ImGui::Selectable("Test Component"))
-		{
+		//if (ImGui::Selectable("Test Component"))
+		//{
 
+		//}
+		if (ImGui::Selectable("RigidBody")) {
+			if(!Entity(Hierarchy::selectedId).HasComponent<RigidBody>())
+				Entity(Hierarchy::selectedId).AddComponent<RigidBody>();
 		}
+
+
 		if (ImGui::Selectable("Scripts"))
 			Entity(Hierarchy::selectedId).AddComponent<Scripts>();
 		ImGui::EndPopup();
@@ -325,5 +335,59 @@ void MeshRenderer::Inspect() {
 			ImGui::EndDragDropTarget();
 		}
 	}
+
+}
+
+
+void RigidBody::Inspect() {
+	ImGui::DragFloat("##Density", (float*)&mDensity);
+
+	ImGui::SameLine();
+	ImGui::Text("Density");
+	ImGui::Separator();
+
+
+	const char* materials[] = { "RUBBER", "WOOD", "METAL", "ICE","CONCRETE","GLASS" };
+	const char* motions[] = { "STATIC", "DYNAMIC" };
+
+
+	if(ImGui::BeginCombo("Material", (materials[mMat]))){
+
+		for (unsigned char i{ 0 }; i < 6; i++) {
+			if (ImGui::Selectable(materials[i])) {
+					mMat = i;
+					mMaterial = (MATERIAL)i;
+			}
+		}
+		ImGui::EndCombo();
+	}
+
+	if (ImGui::BeginCombo("Motions", (motions[mMot]))) {
+
+		for (unsigned char i{ 0 }; i < 2; i++) {
+			if (ImGui::Selectable(motions[i])) {			
+					mMot = i;
+					mMotion = (MOTION)i;
+			}
+		}
+		ImGui::EndCombo();
+	}
+
+
+}
+
+void BoxCollider::Inspect() {
+
+
+
+}
+void SphereCollider::Inspect() {
+
+
+
+}
+void PlaneCollider::Inspect() {
+
+
 
 }

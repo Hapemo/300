@@ -23,7 +23,7 @@ to select current Entity and activates inspector
 
 #include "imgui.h"
 #include "Hierarchy.h"
-#include "../../../_SCRIPTING/include/ScriptingSystem.h"
+#include "ScriptingSystem.h"
 
 
 entt::entity Hierarchy::selectedId;
@@ -234,3 +234,8 @@ void Hierarchy::update()
     }
     mPopup = false;
 }
+
+
+//void update() {
+//
+//}
