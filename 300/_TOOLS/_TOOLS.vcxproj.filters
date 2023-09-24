@@ -33,7 +33,7 @@
     <ClInclude Include="include\SingletonManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Input\InputSystem.h">
+    <ClInclude Include="include\Input\InputMapSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Input\InputAction.h">
@@ -56,13 +56,16 @@
     <ClCompile Include="source\SingletonManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\Input\InputSystem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="source\Input\InputInfo.cpp">
+    <ClCompile Include="source\Input\InputMapSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\Input\Input.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Input\InputAction.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Input\InputActionMap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

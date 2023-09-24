@@ -10,6 +10,7 @@
 #include "GameState/GameStateManager.h"
 #include "Audio/AudioSystem.h"
 #include "Debug/Logger.h"
+#include "Input/InputMapSystem.h"
 
 SystemManager* systemManager;
 
@@ -23,6 +24,7 @@ SystemManager::SystemManager()
 	mResourceSystem		= std::make_unique<Resource>();
 	mAudioSystem = std::make_unique<AudioSystem>();
 	mLogger = std::make_unique<Logger>();
+	mInputMapSystem = std::make_unique<InputMapSystem>();
 	ecs = new ECS();
 }
 
@@ -45,6 +47,9 @@ void SystemManager::Init(bool isEditor, GFX::Window* window)
 	mResourceSystem.get()->Init();			// all the resources are loaaded here
 	mGameStateSystem.get()->Init();
 	mAudioSystem.get()->Init();
+	
+	PINFO("Init Input Map System");
+	mInputMapSystem.get()->Init();
 
 	PINFO("Init Graphics System\n");
 	mGameStateSystem.get()->Init();
