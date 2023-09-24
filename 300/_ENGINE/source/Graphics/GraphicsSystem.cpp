@@ -37,7 +37,7 @@ void GraphicsSystem::Init()
 	//newentity.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/draw_vert.glsl", "../_GRAPHICS/shader_files/draw_frag.glsl" };
 	//newentity.GetComponent<MeshRenderer>().mMeshPath = "../assets/compiled_geom/FreeModelNathan_WalkAnim.geom";
 	//newentity.GetComponent<MeshRenderer>().mMeshPath = "../assets/compiled_geom/dancing_vampire.geom";
-	newentity.GetComponent<MeshRenderer>().mMeshPath = "../assets/compiled_geom/dancing_vampire.geom";
+	newentity.GetComponent<MeshRenderer>().mMeshPath = "../assets/compiled_geom/FreeModelNathan_WalkAnim.geom";
 	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Vampire_diffuse.ctexture");
 	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Vampire_normal.ctexture");
 	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Vampire_emission.ctexture");
@@ -46,7 +46,7 @@ void GraphicsSystem::Init()
 
 	newentity.GetComponent<BoxCollider>().mTranslateOffset = { 0.f, 1.05f, 0.f };
 
-	auto& meshinst = systemManager->mResourceSystem->get_Mesh("../assets/compiled_geom/dancing_vampire.geom");
+	auto& meshinst = systemManager->mResourceSystem->get_Mesh("../assets/compiled_geom/FreeModelNathan_WalkAnim.geom");
 	if (meshinst.mHasAnimation && _ENABLE_ANIMATIONS)
 	{
 		newentity.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/animations_vert.glsl", "../_GRAPHICS/shader_files/pointLight_frag.glsl" };// for point light
