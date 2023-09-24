@@ -44,8 +44,32 @@ void Application::StartUp()
     systemManager = new SystemManager();
 }
 
-void Application::SystemInit() 
+void Application::SystemInit()
 {
+
+#pragma region AudioComponent Test
+    Entity entAudio = systemManager->ecs->NewEntity();
+    entAudio.AddComponent<Audio>({ "../assets/Audio" , "tuning-radio-7150.wav" });
+    Audio& audio_component = entAudio.GetComponent<Audio>();
+
+    // Test Edit <Audio> Component
+    entAudio.GetComponent<Audio>().mFileName = "farm_ambience.wav";
+    entAudio.GetComponent<Audio>().mIsPlay = false;
+    entAudio.GetComponent<Audio>().mIsPlaying = false;
+    entAudio.GetComponent<Audio>().mIsPlay = true;
+    entAudio.GetComponent<Audio>().mIsPlaying = true;
+
+    Entity radioAudio = systemManager->ecs->NewEntity();
+    radioAudio.AddComponent<Audio>({ "../assets/Audio" , "tuning-radio-7150.wav" });
+
+    Entity npcAudio = systemManager->ecs->NewEntity();
+    npcAudio.AddComponent<Audio>({ "../assets/Audio" , "NPC_Greeting.wav" });
+
+    Entity non_existent_audio = systemManager->ecs->NewEntity();
+    non_existent_audio.AddComponent<Audio>();
+
+#pragma endregion
+
 #pragma region testphysics
     //Entity e1 = systemManager->ecs->NewEntity();
     //Entity e2 = systemManager->ecs->NewEntity();
@@ -64,8 +88,9 @@ void Application::SystemInit()
     //e2.GetComponent<Transform>().mTranslate.y = 1000.f;
 
 #pragma endregion testphysics
-    systemManager->Init(false, &mWindow);
+  /*  systemManager->Init(false, &mWindow);*/ // Moved this after Audio Component Test
 
+    systemManager->Init(false, &mWindow);
     FPSManager::Init();
     Input::Init();
 
@@ -100,7 +125,7 @@ void Application::SystemInit()
     //ent3.GetComponent<General>().isActive = false;
     //ent3.GetComponent<General>().tag = TAG::UNKNOWN;
     //ent3.GetComponent<General>().subtag = SUBTAG::ACTIVE;
-    
+
 
     //ObjectFactory::SerializeScene("../resources/Scenes/test.json");
 
@@ -162,6 +187,10 @@ void Application::SystemInit()
     //systemManager->ecs->NewPrefab(ent01);
 
 #pragma endregion testprefab
+
+
+
+
 
 }
 

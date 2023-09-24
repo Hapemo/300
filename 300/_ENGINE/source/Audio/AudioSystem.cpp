@@ -49,31 +49,32 @@ void AudioSystem::Init()
 		mChannels.find(AUDIO_BGM)->second.push_back(new_channel);
 	}*/
 
-	std::cout << "HI";
+	auto audio_entities = systemManager->ecs->GetEntitiesWith<Audio>();
 
-	//LoadAudioFiles("../assets/Audio");
-	LoadAudioFromDirectory("../assets/Audio");
-
-	//PlayAudio("tuning-radio-7150", AUDIO_SFX);
-	//PlaySFXAudio("NPC_Greeting");
-	//PlayBGMAudio("farm_ambience");
+	for (Entity audio : audio_entities)
+	{
+		Audio& audio_component = audio.GetComponent<Audio>();
+		std::string audio_path = audio_component.mFilePath + "/" + audio_component.mFileName;
+		std::string audio_name = audio_component.mFileName;
+		LoadAudio(audio_path, audio_name);
+	}
 }
 
 void AudioSystem::Update(float dt)
 {
 	if (Input::CheckKey(PRESS, _1))
 	{
-		PlaySFXAudio("NPC_Greeting");
+		PlaySFXAudio("NPC_Greeting.wav");
 	}
 
 	if (Input::CheckKey(PRESS, _2))
 	{
-		PlayBGMAudio("farm_ambience");
+		PlayBGMAudio("farm_ambience.wav");
 	}
 
 	if (Input::CheckKey(PRESS, _3))
 	{
-		PlaySFXAudio("tuning-radio-7150");
+		PlaySFXAudio("tuning-radio-7150.wav");
 	}
 
 	if (Input::CheckKey(PRESS, Q))
@@ -127,7 +128,7 @@ void AudioSystem::Update(float dt)
 		TogglePauseSpecific(AUDIO_SFX, 3);
 	}
 
-
+	
 
 
 
@@ -156,6 +157,21 @@ int AudioSystem::ErrCodeCheck(FMOD_RESULT result)
 	}
 	std::cout << "FMOD OPERATION OK." << std::endl;
 	return 1; // success (no issues)
+}
+
+void AudioSystem::LoadAudio(std::string file_path, std::string audio_name)
+{
+	std::cout << "File Detected: " << file_path << std::endl;
+	std::cout << "Creating Sound: ";
+	FMOD::Sound* new_sound;
+	int check = ErrCodeCheck(system_obj->createSound(file_path.c_str(), FMOD_LOOP_NORMAL, 0, &new_sound));
+
+	if (!check)
+	{
+		std::cout << "Error: Sound Not Loaded." << std::endl;
+	}
+
+	mSounds.insert(std::make_pair(audio_name, new_sound));
 }
 
 void AudioSystem::LoadAudioFiles(std::filesystem::path file_path)

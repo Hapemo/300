@@ -5,6 +5,8 @@
 #include <filesystem>
 #include "Input.h"
 #include "AudioType.h" // BGM/SFX
+#include "ECS/ECS.h"
+#include "ECS/ECS_Components.h"
 
 enum AUDIOTYPE : unsigned char;
 
@@ -24,6 +26,7 @@ public:
 
 public:
 	int  ErrCodeCheck(FMOD_RESULT result);													// Debugging tool
+	void LoadAudio(std::string file_path, std::string audio_name);
 	void LoadAudioFiles(std::filesystem::path file_path);									// Load single file
 	void LoadAudioFromDirectory(std::filesystem::path file_path);							// Load files from directory
 	void PlayAudio(std::string audio_name, AUDIOTYPE audio_type, float audio_vol = 1.0f);	// Play an audio based on it's name
