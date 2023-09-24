@@ -1,5 +1,6 @@
 #include <Graphics/GraphicsSystem.h>
 #include <ResourceManager.h>
+#include "ResourceManagerTy.h"
 #include <Graphics/Camera_Input.h>
 
 /***************************************************************************/
@@ -27,7 +28,7 @@ void GraphicsSystem::Init()
 
 	UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_ALL, 0.f);
 
-	// Create a new entity here, for testing purposes
+	 //Create a new entity here, for testing purposes
 	Entity newentity = systemManager->ecs->NewEntity();			// creating a new entity
 	newentity.AddComponent<MeshRenderer>();
 	newentity.AddComponent<BoxCollider>();
@@ -43,6 +44,11 @@ void GraphicsSystem::Init()
 	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Vampire_emission.ctexture");
 	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Vampire_specular.ctexture");
 	newentity.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/pointLight_vert.glsl", "../_GRAPHICS/shader_files/pointLight_frag.glsl" };	// for point light
+	
+	
+	uid temp(newentity.GetComponent<MeshRenderer>().mMeshPath);
+	newentity.GetComponent<MeshRenderer>().mMeshRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(temp.id));
+
 
 	newentity.GetComponent<BoxCollider>().mTranslateOffset = { 0.f, 1.05f, 0.f };
 
@@ -79,9 +85,21 @@ void GraphicsSystem::Update(float dt)
 	auto meshRendererInstances = systemManager->ecs->GetEntitiesWith<MeshRenderer>();
 	for (Entity inst : meshRendererInstances)
 	{
-		// get the mesh filepath
+
 		std::string meshstr = inst.GetComponent<MeshRenderer>().mMeshPath;
-		GFX::Mesh& meshinst = systemManager->mResourceSystem->get_Mesh(meshstr);						// loads the mesh
+
+
+		// get the mesh filepath
+		
+		//if( )
+	//	GFX::Mesh& meshinst = systemManager->mResourceSystem->get_Mesh(meshstr);						// loads the mesh
+
+		void* tt = inst.GetComponent<MeshRenderer>().mMeshRef;
+		GFX::Mesh& meshinst = *reinterpret_cast<GFX::Mesh*>(tt);
+
+
+		uid temp(meshstr);
+		//GFX::Mesh& meshinst = *(systemManager->mResourceTySystem->get_mesh(temp.id));
 
 		// pushback LTW matrices
 		glm::mat4 scale = glm::scale(mat4(1.0f), inst.GetComponent<Transform>().mScale);
@@ -143,8 +161,11 @@ void GraphicsSystem::Update(float dt)
 		renderedMesh[meshstr] = 1;
 
 		// render the mesh and its instances here
-		GFX::Mesh& meshinst = systemManager->mResourceSystem->get_Mesh(meshstr);								// loads the mesh
-
+		//GFX::Mesh& meshinst = systemManager->mResourceSystem->get_Mesh(meshstr);						// loads the mesh
+		void* tt = inst.GetComponent<MeshRenderer>().mMeshRef;
+		GFX::Mesh& meshinst = *reinterpret_cast<GFX::Mesh*>(tt);
+		//uid temp(meshstr);
+		//GFX::Mesh& meshinst = *(systemManager->mResourceTySystem->get_mesh(temp.id));
 		// gets the shader filepath
 		std::pair<std::string, std::string> shaderstr = inst.GetComponent<MeshRenderer>().mShaderPath;
 		std::string concatname = shaderstr.first + shaderstr.second;

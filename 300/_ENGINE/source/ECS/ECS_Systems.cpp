@@ -9,6 +9,7 @@
 #include "ECS/ECS_Components.h"
 #include "GameState/GameStateManager.h"
 #include "Audio/AudioSystem.h"
+#include "Debug/Logger.h"
 
 SystemManager* systemManager;
 
@@ -19,8 +20,9 @@ SystemManager::SystemManager()
 	mGraphicsSystem = std::make_unique<GraphicsSystem>();
 	mGameStateSystem = std::make_unique<GameStateManager>();
 	mResourceTySystem = std::make_unique<ResourceTy>();
-	mResourceSystem		= std::make_unique<Resource>();
+	mResourceSystem	= std::make_unique<Resource>();
 	mAudioSystem = std::make_unique<AudioSystem>();
+	mLogger = std::make_unique<Logger>();
 	ecs = new ECS();
 }
 
@@ -33,13 +35,22 @@ void SystemManager::Init(bool isEditor, GFX::Window* window)
 {
 	mIsEditor = isEditor;
 	mWindow = window;
+	mLogger.get()->InitLogging();
+	PINFO("Init Logger");
 	mPhysicsSystem.get()->Init();
+	PINFO("Init Physics System");
 	mScriptingSystem.get()->Init();
-	mResourceSystem.get()->Init();			// all the resources are loaaded here
+	PINFO("Init Scripting System");
+
+	mResourceSystem.get()->Init();
+	mResourceTySystem.get()->Init();
 	mGraphicsSystem.get()->Init();
+	PINFO("Init Graphics System");
+
+			// all the resources are loaaded here
 	mGameStateSystem.get()->Init();
 	mAudioSystem.get()->Init();
-
+	PINFO("Init Game state System");
 }
 
 void SystemManager::Update(float dt)
@@ -57,7 +68,7 @@ void SystemManager::Exit()
 	mPhysicsSystem.get()->Exit();
 	mScriptingSystem.get()->Exit();
 	mGraphicsSystem.get()->Exit();
-//	mResourceSystem.get()->Exit();
+	mResourceTySystem.get()->Exit();
 	mGameStateSystem.get()->Unload();
 	mAudioSystem.get()->Exit();
 
