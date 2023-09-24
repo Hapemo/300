@@ -6,6 +6,9 @@ ResourceTy::ResourceTy() {
 	//temp.data = 2;	
 }
 
+
+
+
 void ResourceTy::Init()
 {
 	for (int i = 0, end = (int)m_Infobuffer.size() - 1; i != end; ++i)
@@ -16,9 +19,19 @@ void ResourceTy::Init()
 	m_pInfoBufferEmptyHead = m_Infobuffer.data();
 
 
+	mesh_Loader();
 	std::cout << "Initializing Resource Manager.\n";
 }
 
+void ResourceTy::Exit() {
+
+	for (auto& data : m_ResourceInstance) {
+
+		delete  reinterpret_cast<GFX::Mesh*>(data.second->m_pData);
+	}
+
+
+}
 
 void ResourceTy::mesh_Loader()
 {
@@ -40,6 +53,8 @@ void ResourceTy::mesh_Loader()
 			++mResouceCnt;
 			//++mMeshManager.mResouceCnt;
 
+			//std::cout << filepath << "im ur father\n";
+
 			uid uids(filepath);
 			GFX::Mesh* meshPtr = SetupMesh(filepath, uids.id);
 			instance_infos& tempInstance = AllocRscInfo();
@@ -49,9 +64,19 @@ void ResourceTy::mesh_Loader()
 			tempInstance.m_Name = filepath;
 			tempInstance.m_GUID = uids.id;
 			tempInstance.m_Type = _MESH;
-			//m_Meshes.emplace(uids.id, &tempInstance);
+
+			
+			m_ResourceInstance.emplace(uids.id, &tempInstance);
 		}
+
+		//std::cout << m_ResourceInstance.size()<<"zxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n";
 	}
+}
+
+GFX::Mesh* ResourceTy::get_mesh(unsigned id) {
+
+	return reinterpret_cast<GFX::Mesh*>(m_ResourceInstance[id]->m_pData);
+
 }
 
 

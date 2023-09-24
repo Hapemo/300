@@ -3,9 +3,10 @@
 #include "Script.h"
 #include <vector>
 #include "Physics/PhysicsTypes.h"
-#include "Tags.h"
 #include "rttr/registration.h"
 #include "ECS.h"
+#include "Tags.h"
+//#include "Mesh.hpp"
 
 
 struct General
@@ -44,7 +45,11 @@ struct MeshRenderer
 	std::vector<std::string>				mMaterialInstancePath;
 	std::string							mMeshPath;
 	
+	void*							mMeshRef;
+
 	unsigned							mGUID;
+
+	void								Inspect();
 };
 
 struct RigidBody

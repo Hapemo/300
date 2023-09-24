@@ -69,6 +69,8 @@ Inspect display for RigidBody components
 #include <math.h>
 #include "imgui_stdlib.h"
 #include "../../../_SCRIPTING/include/ScriptingSystem.h"
+#include "Guid.h"
+#include "ResourceManagerTy.h"
 
 
 //int Inspect::inspectmode{ inspector_layer };
@@ -100,6 +102,11 @@ void Inspect::update()
 			scripts.Inspect();
 		}
 
+		if (ent.HasComponent<MeshRenderer>()) {
+
+			MeshRenderer& Meshrender = ent.GetComponent<MeshRenderer>();
+			Meshrender.Inspect();
+		}
 
 
 		//--------------------------------------------// must be at the LAST OF THIS LOOP
@@ -151,7 +158,7 @@ void Inspect::Add_component() {
 
 
 void Transform::Inspect() {
-	if (ImGui::CollapsingHeader("Transform"), ImGuiTreeNodeFlags_DefaultOpen) {
+	if (ImGui::CollapsingHeader("Transform", ImGuiTreeNodeFlags_DefaultOpen)) {
 
 
 		//ImGui::SetCursorPosX(windowWidth / 3.f);
@@ -258,4 +265,25 @@ void Scripts::Inspect() {
 
 }
 
+void MeshRenderer::Inspect() {
 
+	if (ImGui::CollapsingHeader("MeshRenderer", ImGuiTreeNodeFlags_DefaultOpen)) {
+
+		ImGui::Text(mMeshPath.c_str());
+		if (ImGui::BeginDragDropTarget())
+		{
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_GEOM")) {
+
+				const char* data = (const char*)payload->Data;
+				std::string data_str = std::string(data);
+				mMeshPath = data_str;
+
+				uid temp(mMeshPath);
+				mMeshRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(temp.id));
+
+			}
+			ImGui::EndDragDropTarget();
+		}
+	}
+
+}

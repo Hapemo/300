@@ -33,8 +33,10 @@ void SystemManager::Init(bool isEditor, GFX::Window* window)
 	mWindow = window;
 	mPhysicsSystem.get()->Init();
 	mScriptingSystem.get()->Init();
+	mResourceSystem.get()->Init();
+	mResourceTySystem.get()->Init();
 	mGraphicsSystem.get()->Init();
-	mResourceSystem.get()->Init();			// all the resources are loaaded here
+			// all the resources are loaaded here
 	mGameStateSystem.get()->Init();
 }
 
@@ -51,7 +53,7 @@ void SystemManager::Exit()
 	mPhysicsSystem.get()->Exit();
 	mScriptingSystem.get()->Exit();
 	mGraphicsSystem.get()->Exit();
-//	mResourceSystem.get()->Exit();
+	mResourceTySystem.get()->Exit();
 	mGameStateSystem.get()->Unload();
 }
 

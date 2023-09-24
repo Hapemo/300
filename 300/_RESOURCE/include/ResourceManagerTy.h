@@ -56,9 +56,12 @@ public:
     ~ResourceTy() = default;
 
     void Init();
+    void Exit();
 
     void mesh_Loader();
     GFX::Mesh* SetupMesh(std::string filepath, unsigned);
+    GFX::Mesh* get_mesh(unsigned );
+
 
     instance_infos& AllocRscInfo(void);
     void ReleaseRscInfo(instance_infos& RscInfo);

@@ -55,7 +55,8 @@ Inspect display for RigidBody components
 #pragma once
 
 #include "EditorWindow.h"
-
+//#include "Mesh.hpp"
+//#include "ResourceManagerTy.h"
 #include <string>
 
 /***************************************************************************/
