@@ -154,7 +154,7 @@ Entity ECS::PasteEntity()
 	if (mClipboard.HasComponent<Audio>())
 		e.GetComponent<Audio>() = mClipboard.GetComponent<Audio>();
 
-	return true;
+	return e;
 }
 
 
