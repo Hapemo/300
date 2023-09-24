@@ -6,7 +6,7 @@ in vec3 TangentLightPos;
 in vec3 TangentViewPos;
 in vec3 TangentFragPos;
 
-vec3 lightIntensity = vec3(0.5);
+vec3 lightIntensity = vec3(1.5);
 
 uniform sampler2D uTex[5];
 

@@ -36,16 +36,17 @@ void GraphicsSystem::Init()
 	//newentity.GetComponent<MeshRenderer>().mMeshPath = "../compiled_geom/Skull_textured.geom";
 	//newentity.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/draw_vert.glsl", "../_GRAPHICS/shader_files/draw_frag.glsl" };
 	//newentity.GetComponent<MeshRenderer>().mMeshPath = "../assets/compiled_geom/FreeModelNathan_WalkAnim.geom";
-	newentity.GetComponent<MeshRenderer>().mMeshPath = "../assets/compiled_geom/Wall_Partition(No Material).geom";
-	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Wood Material 15_BaseColor.ctexture");
-	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Wood Material 15_Normal.ctexture");
+	//newentity.GetComponent<MeshRenderer>().mMeshPath = "../assets/compiled_geom/dancing_vampire.geom";
+	newentity.GetComponent<MeshRenderer>().mMeshPath = "../assets/compiled_geom/FreeModelNathan_WalkAnim.geom";
+	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Vampire_diffuse.ctexture");
+	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Vampire_normal.ctexture");
 	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Vampire_emission.ctexture");
 	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Vampire_specular.ctexture");
 	newentity.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/pointLight_vert.glsl", "../_GRAPHICS/shader_files/pointLight_frag.glsl" };	// for point light
 
 	newentity.GetComponent<BoxCollider>().mTranslateOffset = { 0.f, 1.05f, 0.f };
 
-	auto& meshinst = systemManager->mResourceSystem->get_Mesh("../assets/compiled_geom/Wall_Partition(No Material).geom");
+	auto& meshinst = systemManager->mResourceSystem->get_Mesh("../assets/compiled_geom/FreeModelNathan_WalkAnim.geom");
 	if (meshinst.mHasAnimation && _ENABLE_ANIMATIONS)
 	{
 		newentity.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/animations_vert.glsl", "../_GRAPHICS/shader_files/pointLight_frag.glsl" };// for point light
@@ -67,6 +68,12 @@ void GraphicsSystem::Update(float dt)
 
 	// update the camera's transformations, and its input
 	UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_EDITOR, dt);
+
+	if (m_Animator.m_CurrentAnimation != nullptr && _ENABLE_ANIMATIONS)
+	{
+		// update the current animation
+		m_Animator.UpdateAnimation(dt, mat4(1.f));
+	}
 
 	// Retrieve and update the mesh instances to be drawn
 	auto meshRendererInstances = systemManager->ecs->GetEntitiesWith<MeshRenderer>();
@@ -96,27 +103,26 @@ void GraphicsSystem::Update(float dt)
 			// draw the mesh's origin
 			m_Renderer.AddSphere(m_EditorCamera.position(), inst.GetComponent<Transform>().mTranslate, 0.5f, { 1.f, 1.f, 0.f, 1.f });
 
+			// draw the animation data for the bones
 			if (meshinst.mHasAnimation && _ENABLE_ANIMATIONS)
 			{
 				// draw the mesh's bone positions as boxes
 				for (const auto& bones : meshinst.mAnimation[0].m_Bones)
 				{
 					static const vec3 bonescale(0.1f, 0.1f, 0.1f);
-					vec4 bonestrns = m_Animator.m_FinalBoneMatrices[bones.GetBoneID()] * vec4(inst.GetComponent<Transform>().mTranslate, 1.f);
-
-					m_Renderer.AddAabb({ bonestrns.x, bonestrns.y, bonestrns.z }, bonescale);
+					vec4 bonestrns = bones.GetLocalTransform() * vec4(inst.GetComponent<Transform>().mTranslate, 1.f);
+					//mat4 bonestrns = final * m_Animator.m_FinalBoneMatrices[bones.GetBoneID()] * bones.GetLocalTransform(); // vec4(inst.GetComponent<Transform>().mTranslate, 1.f);
+					
+					m_Renderer.AddAabb({ bonestrns.x, bonestrns.y, bonestrns.z }, bonescale, vec4(1.f, 1.f, 0.f, 1.f));
+					//m_Renderer.AddAabb({ bonestrns[3][0], bonestrns[3][1], bonestrns[3][2]}, bonescale, vec4(1.f, 1.f, 0.f, 1.f));
 				}
 			}
 		}
 
 		meshinst.mLTW.push_back(final);
-
-		if (_ENABLE_ANIMATIONS)
-		{
-			// update the current animation
-			m_Animator.UpdateAnimation(dt, final);
-		}
 	}
+	
+	// test drawing
 	m_Renderer.AddCube({ -10, 0, 0 }, { 2, 15, 2 }, { 1.f, 0., 0.f, 1.f });
 
 	// Prepare and bind the Framebuffer to be rendered on
@@ -167,13 +173,13 @@ void GraphicsSystem::Update(float dt)
 		// bind texture unit
 		glBindTextureUnit(0, textureColorinst.ID());
 		glBindTextureUnit(1, textureNormalinst.ID());
-		//glBindTextureUnit(2, textureEmissioninst.ID());
-		//glBindTextureUnit(3, textureSpecularinst.ID());
+		glBindTextureUnit(2, textureEmissioninst.ID());
+		glBindTextureUnit(3, textureSpecularinst.ID());
 
 		m_Textures.push_back(0);
 		m_Textures.push_back(1);
-		//m_Textures.push_back(2);
-		//m_Textures.push_back(3);
+		m_Textures.push_back(2);
+		m_Textures.push_back(3);
 
 		GLuint uniform_tex = glGetUniformLocation(shaderID, "uTex");
 		glUniform1iv(uniform_tex, (GLsizei)m_Textures.size(), m_Textures.data());	// passing Texture ID to the fragment shader
@@ -199,11 +205,12 @@ void GraphicsSystem::Update(float dt)
 		m_Textures.clear();
 		glBindTextureUnit(0, 0);
 		glBindTextureUnit(1, 0);
-		//glBindTextureUnit(2, 0);
-		//glBindTextureUnit(3, 0);
+		glBindTextureUnit(2, 0);
+		glBindTextureUnit(3, 0);
 
 		meshinst.ClearInstances();
 	}
+
 
 	// TODO: Clears all instances that have been rendered from local buffer
 	m_Fbo.Unbind();
