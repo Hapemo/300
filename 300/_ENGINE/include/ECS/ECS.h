@@ -1,10 +1,7 @@
 #pragma once
 #include "entt.hpp";
-#include "Singleton.h"
 #include "ECS_Systems.h"
-//#include "Prefab.h"
 
-struct Entity;
 struct Children;
 struct Parent;
 
@@ -17,10 +14,12 @@ struct Entity
 	Entity(std::uint32_t id);
 
 	Entity(const Entity& entity);
-	void operator=(const Entity& entity) = delete;
+	void operator=(const Entity& entity);
 
 	bool operator<(Entity e) { return id < e.id; }
 	bool operator<(const Entity e) const { return id < e.id; }
+	bool operator==(Entity e) { return id == e.id; }
+	bool operator==(const Entity e) const { return id == e.id; }
 
 	template <typename Component>
 	Component& AddComponent();
@@ -50,6 +49,11 @@ struct Entity
 	void RemoveComponent();
 
 	bool ShouldRun();
+
+	void Activate();
+
+	void Deactivate();
+
 	void AddChild(Entity e);
 
 	std::vector<Entity> GetAllChildren();
@@ -59,12 +63,27 @@ struct Entity
 	bool HasChildren();
 
 	bool HasParent();
+
+	void RemoveChild(Entity e);
+
+	template<typename Component>
+	Component& LuaGetComponent(Entity entity);
+
+	//template <typename Component, typename OtherComponent, typename ...Components>
+	/*auto LuaGetComponents(Entity entity);*/
+
+	//template <typename Component, typename OtherComponent, typename ...Components>
+	//auto LuaGetComponents(Entity entity, sol::as_args args);
 };
 
 class ECS
 {
 public:
 	ECS();
+
+	std::unordered_map<std::string, std::vector<Entity>> mPrefabs;
+
+	Entity mClipboard;
 
 	entt::registry registry;
 
@@ -80,7 +99,17 @@ public:
 
 	void DeleteAllEntities();
 
-	//Entity NewPrefabEntity(const Prefab& prefab);
+	void NewPrefab(Entity e);
+
+	Entity NewEntityFromPrefab(std::string prefabName);
+
+	void UpdatePrefabEntities(std::string prefabName);
+
+	void UnlinkPrefab(Entity e);
+
+	void CopyEntity(Entity e);
+
+	Entity PasteEntity();
 
 	const Entity NullEntity;
 };
@@ -192,3 +221,15 @@ void Entity::RemoveComponent()
 {
 	systemManager->ecs->registry.remove<Component>(id);
 }
+
+template<typename Component>
+Component& Entity::LuaGetComponent(Entity entity)
+{
+	return entity.GetComponent<Component>();
+}
+
+//template <typename Component, typename OtherComponent, typename ...Components>
+//auto Entity::LuaGetComponents(Entity entity)
+//{
+//	return entity.GetComponent<Component, OtherComponent, Components...>;
+//}

@@ -34,4 +34,5 @@ public:
 
 	// Make sure error only print once
 	static bool isOnce;
+
 };
