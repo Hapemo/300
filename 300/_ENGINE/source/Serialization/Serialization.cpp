@@ -263,7 +263,7 @@ bool EntityJSON::Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* wri
 		writer->String("RigidBody");
 		writer->StartObject();
 
-		writer->String("Mass");
+		writer->String("Density");
 		writer->Uint(mRBJ.mDensity);
 
 		writer->String("Material");
