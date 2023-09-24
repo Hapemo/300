@@ -20,6 +20,7 @@ start up of window and game system, also runs their update functions.
 //#include "Serialization/SerializationTemp.h"
 #include "GameState/GameStateManager.h"
 #include "Debug/Logger.h"
+#include "ConfigManager.h"
 
 #include "Example.h"
 #include "Input.h"
@@ -67,6 +68,7 @@ void Application::SystemInit()
     systemManager->Init(false, &mWindow);
 
     FPSManager::Init();
+    ConfigManager::Init("../assets/config.txt");
     Input::Init();
 
 #pragma region testserialization
