@@ -123,7 +123,9 @@ void GraphicsSystem::Update(float dt)
 	}
 	
 	// test drawing
-	m_Renderer.AddCube({ -10, 0, 0 }, { 2, 15, 2 }, { 1.f, 0., 0.f, 1.f });
+	m_Renderer.AddCube({ -10, 0, 0 }, { 0.5f, 0.5f, 0.5f }, { 1.f, 0., 0.f, 1.f });
+	m_Renderer.AddLine({ -10, 0, 0 }, { 10, 10, 0 }, { 0.f, 1.f, 0.f, 1.f });
+	m_Renderer.AddLine({ 10, 10, 0 }, { -10, 10, 0 }, { 1.f, 0.f, 1.f, 1.f });
 
 	// Prepare and bind the Framebuffer to be rendered on
 	m_Fbo.PrepForDraw();

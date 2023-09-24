@@ -6,6 +6,7 @@ GFX::DebugRenderer::DebugRenderer()
 
 	// Set up basic mesh models
 	SetupPointMesh();
+	SetupLineMesh();
 	SetupTriangleMesh();
 	SetupQuadMesh();
 	SetupAabbMesh();
@@ -17,6 +18,7 @@ GFX::DebugRenderer::~DebugRenderer()
 {
 	// Destroy created mesh
 	mPointMesh.Destroy();
+	mLineMesh.Destroy();
 	mTriangleMesh.Destroy();
 	mQuadMesh.Destroy();
 	mAabbMesh.Destroy();
@@ -53,6 +55,25 @@ void GFX::DebugRenderer::AddPoint(vec3 const& pos, vec4 const& color)
 
 	mPointMesh.mLTW.push_back(world);
 	mPointMesh.mColors.push_back(color);
+}
+
+void GFX::DebugRenderer::AddLine(vec3 const& pos1, vec3 const& pos2, vec4 const& color)
+{
+	if (mLineMesh.mLTW.size() >= MAX_INSTANCES)
+	{
+		std::cout << "Max Instances of Objects Reached!\n";
+		return;
+	}
+
+	mat4 world = {
+		vec4(pos1, 0.f),
+		vec4(pos2, 0.f),
+		vec4(0.f, 0.f, 1.f, 0.f),
+		vec4(0.f, 0.f, 0.f, 1.f),
+	};
+
+	mLineMesh.mLTW.push_back(world);
+	mLineMesh.mColors.push_back(color);
 }
 
 void GFX::DebugRenderer::AddTriangle(vec3 const& p0, vec3 const& p1, vec3 const& p2, vec4 const& color)
@@ -186,6 +207,8 @@ void GFX::DebugRenderer::RenderAll(mat4 viewProj)
 {
 	if (mPointMesh.mLTW.size())
 		RenderAllPoints(viewProj);
+	if (mLineMesh.mLTW.size())
+		RenderAllLines(viewProj);
 	if (mTriangleMesh.mLTW.size())
 		RenderAllTriangles(viewProj);
 	if (mQuadMesh.mLTW.size())
@@ -201,6 +224,7 @@ void GFX::DebugRenderer::RenderAll(mat4 viewProj)
 void GFX::DebugRenderer::ClearInstances()
 {
 	mPointMesh.ClearInstances();
+	mLineMesh.ClearInstances();
 	mTriangleMesh.ClearInstances();
 	mQuadMesh.ClearInstances();
 	mAabbMesh.ClearInstances();
@@ -226,6 +250,22 @@ void GFX::DebugRenderer::SetupPointMesh()
 	};
 
 	mPointMesh.Setup(positions, indices);
+}
+
+void GFX::DebugRenderer::SetupLineMesh()
+{
+	std::vector<vec3> positions
+	{
+		vec3(1.f, 0.f, 0.f),
+		vec3(0.f, 1.f, 0.f)
+	};
+
+	std::vector<GLuint> indices
+	{
+		0, 1
+	};
+
+	mLineMesh.Setup(positions, indices);
 }
 
 void GFX::DebugRenderer::SetupTriangleMesh()
@@ -371,6 +411,27 @@ void GFX::DebugRenderer::RenderAllPoints(mat4 const& viewProj)
 
 	mShader.Deactivate();
 	mPointMesh.UnbindVao();
+}
+
+void GFX::DebugRenderer::RenderAllLines(mat4 const& viewProj)
+{
+	// Attach shader to state
+	mShader.Activate();
+
+	// Bind VAO to pipeline
+	mLineMesh.BindVao();
+
+	// Attach data to vbo
+	mLineMesh.PrepForDraw();
+
+	// Set uniform
+	glUniformMatrix4fv(mShader.GetUniformVP(), 1, GL_FALSE, &viewProj[0][0]);
+
+	// Draw
+	glDrawElementsInstanced(GL_LINES, mLineMesh.GetIndexCount(), GL_UNSIGNED_INT, nullptr, mLineMesh.mLTW.size());
+
+	mShader.Deactivate();
+	mLineMesh.UnbindVao();
 }
 
 void GFX::DebugRenderer::RenderAllTriangles(mat4 const& viewProj)
