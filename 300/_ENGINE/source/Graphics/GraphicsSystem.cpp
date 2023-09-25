@@ -157,7 +157,6 @@ void GraphicsSystem::Update(float dt)
 		if (m_DebugDrawing && inst.HasComponent<BoxCollider>())
 		{
 			// draw the AABB of the mesh
-			std::cout << inst.GetComponent<Transform>().mTranslate.x << ", " << inst.GetComponent<Transform>().mTranslate.y << ", " << inst.GetComponent<Transform>().mTranslate.z  << " || " << inst.GetComponent<BoxCollider>().mTranslateOffset.x << ", " << inst.GetComponent<BoxCollider>().mTranslateOffset.y << ", " << inst.GetComponent<BoxCollider>().mTranslateOffset.z << std::endl;
 			glm::vec3 bbox_dimens = meshinst.mBBOX.m_Max - meshinst.mBBOX.m_Min;
 			bbox_dimens = bbox_dimens * inst.GetComponent<Transform>().mScale * inst.GetComponent<BoxCollider>().mScaleOffset;
 			m_Renderer.AddAabb(inst.GetComponent<Transform>().mTranslate + inst.GetComponent<BoxCollider>().mTranslateOffset, bbox_dimens, {1.f, 0.f, 0.f, 1.f});
