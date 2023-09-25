@@ -52,14 +52,14 @@ void Application::SystemInit()
     Audio& audio_component = entAudio.GetComponent<Audio>();
 
     // Test Edit <Audio> Component
-    entAudio.GetComponent<Audio>().mFileName = "farm_ambience.wav";
+    /*entAudio.GetComponent<Audio>().mFileName = "farm_ambience.wav";
     entAudio.GetComponent<Audio>().mIsPlay = false;
     entAudio.GetComponent<Audio>().mIsPlaying = false;
     entAudio.GetComponent<Audio>().mIsPlay = false;
-    entAudio.GetComponent<Audio>().mIsPlaying = false;
+    entAudio.GetComponent<Audio>().mIsPlaying = false;*/
 
     Entity radioAudio = systemManager->ecs->NewEntity();
-    radioAudio.AddComponent<Audio>({ "../assets/Audio" , "tuning-radio-7150.wav" , AUDIO_SFX, false });
+    radioAudio.AddComponent<Audio>({ "../assets/Audio" , "tuning-radio-7150.wav" , AUDIO_SFX, true });
 
     Entity npcAudio = systemManager->ecs->NewEntity();
     npcAudio.AddComponent<Audio>({ "../assets/Audio" , "NPC_Greeting.wav" , AUDIO_SFX, true });

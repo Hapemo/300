@@ -257,16 +257,27 @@ void AudioSystem::PlayAudio(std::string audio_name, AUDIOTYPE audio_type, float 
 		std::cerr << "Can't find the requested audio." << std::endl;
 	}
 
-	auto channel_it = mChannels.find(audio_type);
+	auto channel_it = mChannelsNew.find(audio_type);
 
-	FMOD::Channel* new_channel = nullptr;
-
-	int check = ErrCodeCheck(system_obj->playSound(map_it->second, nullptr, false, &new_channel));
-
-	if (check)
+	if (channel_it != mChannelsNew.end())
 	{
-		new_channel->setVolume(audio_vol);
-		channel_it->second.push_back(new_channel);
+		bool found_channel = false;
+
+		for (Channel& channel : channel_it->second)
+		{
+			if (!channel.mIsPlayingSound)
+			{
+				int check_play = ErrCodeCheck(system_obj->playSound(map_it->second, nullptr, false, &(channel.mChannel)));
+
+				if (check_play)
+				{
+					channel.mChannel->setVolume(audio_vol);
+					channel.mIsPlayingSound = true;
+					break;
+				}
+
+			}
+		}
 	}
 }
 
@@ -281,13 +292,29 @@ void AudioSystem::PlaySFXAudio(std::string audio_name, float audio_vol)
 		return;
 	}
 
-	auto channel_it = mChannels.find(AUDIO_SFX);
+	auto channel_it = mChannelsNew.find(AUDIO_SFX);
 
-	FMOD::Channel* new_channel = nullptr;
-	ErrCodeCheck(system_obj->playSound(map_it->second, nullptr, false, &new_channel));
-	new_channel->setVolume(audio_vol);
-	channel_it->second.push_back(new_channel);
-	
+	if (channel_it != mChannelsNew.end())
+	{
+		bool found_channel = false;
+
+		for (Channel& channel : channel_it->second)
+		{
+			if (!channel.mIsPlayingSound)
+			{
+				int check_play = ErrCodeCheck(system_obj->playSound(map_it->second, nullptr, false, &(channel.mChannel)));
+
+				if (check_play)
+				{
+					std::cout << "Currently Playing (" << audio_name << ") on SFX Channel : #" << channel.mChannelID << std::endl;
+					channel.mChannel->setVolume(audio_vol);
+					channel.mIsPlayingSound = true;
+					break;
+				}
+
+			}
+		}
+	}
 }
 
 void AudioSystem::PlayBGMAudio(std::string audio_name, float audio_vol)
@@ -301,12 +328,30 @@ void AudioSystem::PlayBGMAudio(std::string audio_name, float audio_vol)
 		return;
 	}
 
-	auto channel_it = mChannels.find(AUDIO_BGM);
+	//auto channel_it = mChannels.find(AUDIO_BGM);
+	auto channel_it = mChannelsNew.find(AUDIO_BGM);
 
-	FMOD::Channel* new_channel = nullptr;
-	ErrCodeCheck(system_obj->playSound(map_it->second, nullptr, false, &new_channel));
-	new_channel->setVolume(audio_vol);
-	channel_it->second.push_back(new_channel);
+	if (channel_it != mChannelsNew.end())
+	{
+		bool found_channel = false;
+
+		for (Channel& channel : channel_it->second)
+		{
+			if (!channel.mIsPlayingSound)
+			{
+				int check_play = ErrCodeCheck(system_obj->playSound(map_it->second, nullptr, false, &(channel.mChannel)));
+
+				if (check_play)
+				{
+					std::cout << "Currently Playing (" << audio_name << ") on BGM Channel : #" << channel.mChannelID << std::endl;
+					channel.mChannel->setVolume(audio_vol); 
+					channel.mIsPlayingSound = true;
+					break;
+				}
+
+			}
+		}
+	}
 }
 
 void AudioSystem::SetAllSFXVolume(float audio_vol)
