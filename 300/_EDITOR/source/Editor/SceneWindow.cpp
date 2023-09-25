@@ -54,7 +54,7 @@ void SceneWindow::update()
 	//ConstrainedResize(nullptr);
 	scene_m_Hovered = ImGui::IsWindowHovered();	
 	const ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
-	ImGui::Image((ImTextureID)(intptr_t)systemManager->mGraphicsSystem->GetEditorAttachment(), viewportPanelSize);
+	ImGui::Image((ImTextureID)(intptr_t)systemManager->mGraphicsSystem->GetEditorAttachment(), viewportPanelSize, ImVec2(0,1), ImVec2(1,0));
 	if (ImGui::IsItemClicked(ImGuiMouseButton_Left)) {
 		unsigned int getid = systemManager->mGraphicsSystem->GetEntityID(ImGui::GetMousePos().x, ImGui::GetMousePos().y );
 

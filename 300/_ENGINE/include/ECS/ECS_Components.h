@@ -58,6 +58,7 @@ struct MeshRenderer
 	
 	void*							mMeshRef;
 	void*							mTextureRef[4];
+	bool							mTextureCont[4];
 
 	unsigned						mGUID;
 
@@ -65,7 +66,7 @@ struct MeshRenderer
 	//RTTR_ENABLE()
 
 
-	void								Inspect();
+	//void								Inspect();
 };
 
 struct RigidBody
