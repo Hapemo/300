@@ -10,9 +10,9 @@
         },
         "Transform": {
             "Scale": [
-                100.0,
-                100.0,
-                100.0
+                1.0,
+                1.0,
+                1.0
             ],
             "Rotate": [
                 0.0,
@@ -27,17 +27,23 @@
         },
         "MeshRenderer": {
             "ShaderPath": [
-                "../_GRAPHICS/shader_files/pointLight_vert.glsl",
+                "../_GRAPHICS/shader_files/animations_vert.glsl",
                 "../_GRAPHICS/shader_files/pointLight_frag.glsl"
             ],
             "MaterialInstancePath": [
                 "../assets/Compressed/Vampire_diffuse.ctexture",
                 "../assets/Compressed/Vampire_normal.ctexture",
-                "",
-                ""
+                "../assets/Compressed/Vampire_emission.ctexture",
+                "../assets/Compressed/Vampire_specular.ctexture"
             ],
             "MeshPath": "../assets/compiled_geom/dancing_vampire.geom",
-            "GUID": 0
+            "GUID": 0,
+            "TextureCont": [
+                true,
+                false,
+                false,
+                false
+            ]
         },
         "BoxCollider": {
             "ScaleOffset": [
@@ -47,7 +53,7 @@
             ],
             "TranslateOffset": [
                 0.0,
-                1.0499999523162842,
+                76.0,
                 0.0
             ]
         }
