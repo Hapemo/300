@@ -97,6 +97,13 @@ void ECS::DeleteEntity(Entity e)
 //#endif
 	if (static_cast<std::uint32_t>(e.id) == 0)
 		throw ("tried to delete entitiy with id 0");
+	if (e.HasParent())
+		Entity(e.GetParent()).RemoveChild(e);
+	if (e.HasChildren())
+		for (Entity child : e.GetAllChildren())
+			e.RemoveChild(child);
+	if (e.HasComponent<Prefab>())
+		UnlinkPrefab(e);
 	registry.destroy(e.id);
 }
 
@@ -140,6 +147,8 @@ Entity ECS::NewEntityFromPrefab(std::string prefabName)
 	General temp1 = e.GetComponent<General>();
 	MeshRenderer temp = e.GetComponent<MeshRenderer>();
 	mPrefabs[prefabName].push_back(e);
+	if (static_cast<uint32_t>(e.id) == 0)
+		throw ("null entity created?");
 	return e;
 }
 
@@ -250,6 +259,10 @@ void Entity::AddChild(Entity e)
 		throw ("trying to add child to null entity");
 	if (e.HasComponent<Parent>())
 		throw ("entity is the child of another!");
+	if (e.HasComponent<Prefab>())
+		systemManager->ecs->UnlinkPrefab(e);
+	if (this->HasComponent<Prefab>())
+		systemManager->ecs->UnlinkPrefab(*this);
 	
 	std::uint32_t eID = static_cast<std::uint32_t>(e.id);
 	Children& children = this->GetComponent<Children>();

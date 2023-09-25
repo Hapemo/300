@@ -243,7 +243,7 @@ void Hierarchy::update()
         if (ImGui::Selectable("Delete")) {
             selectionOn = false;
             //Entity ent(Hierarchy::selectedId);
-            systemManager->ecs->DeleteEntity(Hierarchy::selectedId);
+            systemManager->ecs->DeleteEntity(Hierarchy::RselectedId);
         }
         if (ImGui::Selectable("Prefab")) {
         //    selectionOn = false;
