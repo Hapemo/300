@@ -20,13 +20,17 @@ start up of window and game system, also runs their update functions.
 //#include "Serialization/SerializationTemp.h"
 #include "GameState/GameStateManager.h"
 #include "Debug/Logger.h"
+#include "ConfigManager.h"
 
 #include "Example.h"
 #include "Input.h"
+#include "Physics/Accumulator.h"
+
 // Static variables
 GFX::DebugRenderer* Application::mRenderer;
 GFX::Window Application::mWindow;
 std::string Application::title;
+//uint32_t eee;
 
 void Application::Init() 
 {
@@ -42,6 +46,7 @@ void Application::StartUp()
     mWindow = GFX::Window({ 1920, 1080 });
     mWindow.SetWindowTitle("Application");
     systemManager = new SystemManager();
+    ConfigManager::Init("../assets/config.txt");
 }
 
 void Application::SystemInit() 
@@ -49,28 +54,36 @@ void Application::SystemInit()
 #pragma region testphysics
     //Entity e1 = systemManager->ecs->NewEntity();
     //Entity e2 = systemManager->ecs->NewEntity();
+    //Entity e3 = systemManager->ecs->NewEntity();
 
     //e1.AddComponent<RigidBody>();
-    //e1.GetComponent<RigidBody>().mMass = 10.f;
+    //e1.GetComponent<RigidBody>().mDensity = 10.f;
     //e1.GetComponent<RigidBody>().mMaterial = MATERIAL::CONCRETE;
     //e1.GetComponent<RigidBody>().mMotion = MOTION::STATIC;
     //e1.AddComponent<PlaneCollider>();
 
     //e2.AddComponent<RigidBody>();
-    //e2.GetComponent<RigidBody>().mMass = 10.f;
+    //e2.GetComponent<RigidBody>().mDensity = 10.f;
     //e2.GetComponent<RigidBody>().mMaterial = MATERIAL::CONCRETE;
     //e2.GetComponent<RigidBody>().mMotion = MOTION::DYNAMIC;
     //e2.AddComponent<SphereCollider>();
-    //e2.GetComponent<Transform>().mTranslate.y = 1000.f;
+    //e2.GetComponent<Transform>().mTranslate.y = 400.f;
+
+    //e3.AddComponent<RigidBody>();
+    //e3.GetComponent<RigidBody>().mDensity = 10.f;
+    //e3.GetComponent<RigidBody>().mMaterial = MATERIAL::CONCRETE;
+    //e3.GetComponent<RigidBody>().mMotion = MOTION::STATIC;
+    //e3.AddComponent<SphereCollider>();
+    //e3.GetComponent<Transform>().mTranslate = glm::vec3(300.f, 105, 300.f);
+    //eee = (uint32_t)e2.id;
 
 #pragma endregion testphysics
     systemManager->Init(false, &mWindow);
 
     FPSManager::Init();
     Input::Init();
-
 #pragma region testserialization
-    //ObjectFactory::DeserializeScene("../resources/Scenes/test.json");
+    //ObjectFactory::DeserializeScene("../assets/Scenes/test.json");
 
     //Entity ent1 = systemManager->ecs->NewEntity();
     //Entity ent2 = systemManager->ecs->NewEntity();
@@ -100,9 +113,13 @@ void Application::SystemInit()
     //ent3.GetComponent<General>().isActive = false;
     //ent3.GetComponent<General>().tag = TAG::UNKNOWN;
     //ent3.GetComponent<General>().subtag = SUBTAG::ACTIVE;
-    
+    //
 
-    //ObjectFactory::SerializeScene("../resources/Scenes/test.json");
+    //ObjectFactory::SerializeScene("../assets/Scenes/test.json");
+
+    //systemManager->mGameStateSystem->NewGameState("MAMAMA");
+    //systemManager->mGameStateSystem->GetCurrentGameState()->AddScene("test");
+    //systemManager->mGameStateSystem->GetCurrentGameState()->Save();
 
     //auto view = systemManager->ecs->GetEntitiesWith<General, Transform>();
     //int size = view.size();
@@ -111,7 +128,6 @@ void Application::SystemInit()
     //    e.GetComponent<Transform>();
     //}
 #pragma endregion testserialization
-
 #pragma region testparentchild
 
     //loop over children of an entity
@@ -146,7 +162,6 @@ void Application::SystemInit()
     //assert( == 2);
 
 #pragma endregion testparentchild
-
 #pragma region testprefab
     //Entity ent00 = systemManager->ecs->NewEntity();
     //ent00.GetComponent<General>().name = "testPrefab";
@@ -188,11 +203,20 @@ void Application::MainUpdate()
 void Application::FirstUpdate() 
 {
     FPSManager::Update();
+    Accumulator::Update(FPSManager::dt);
     mWindow.PollEvents();
 }
 
 void Application::SystemUpdate() 
 {
+    //if (Input::CheckKey(E_STATE::HOLD, E_KEY::A))
+    //    systemManager->mPhysicsSystem->SetVelocity(Entity(eee), glm::vec3(50.f, 0, 0));
+    //if (Input::CheckKey(E_STATE::HOLD, E_KEY::D))
+    //    systemManager->mPhysicsSystem->SetVelocity(Entity(eee), glm::vec3(-50.f, 0, 0));
+    //if (Input::CheckKey(E_STATE::HOLD, E_KEY::W))
+    //    systemManager->mPhysicsSystem->SetVelocity(Entity(eee), glm::vec3(0.f, 0, 50));
+    //if (Input::CheckKey(E_STATE::HOLD, E_KEY::S))
+    //    systemManager->mPhysicsSystem->SetVelocity(Entity(eee), glm::vec3(0.f, 0, -50));
     systemManager->Update(FPSManager::dt);
 }
 

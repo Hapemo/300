@@ -109,6 +109,13 @@ public:
 
 	void CopyEntity(Entity e);
 
+	Entity StartEditPrefab(std::string prefabName);
+
+	void EndEditPrefab(Entity e); //no save
+	
+	void EndEditPrefab(std::string str, Entity e); //save
+
+
 	Entity PasteEntity();
 
 	const Entity NullEntity;

@@ -22,7 +22,7 @@ start up of window and game system, also runs their update functions.
 #include "Graphics/GraphicsSystem.h"
 #include "SceneWindow.h"
 #include "Guid.h"
-
+#include "Physics/Accumulator.h"
 
 // Static variables
 GFX::DebugRenderer* EditorApplication::mRenderer;
@@ -106,6 +106,7 @@ void EditorApplication::MainUpdate()
 void EditorApplication::FirstUpdate()
 {
     FPSManager::Update();
+    Accumulator::Update(FPSManager::dt);
     mWindow.PollEvents();
 }
 
