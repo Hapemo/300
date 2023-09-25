@@ -189,7 +189,8 @@ public:
 
 	//std::vector<GameState> mGameStates{}; // Only 1 in game, multi gamestates allowed during editor mode
 	//std::map<std::string,std::vector<bool>> mGameStatesScenesPause; // One std::vector<bool> for each game state to keep record of their pause
-
+	static bool GameStateJsonExist(std::string const& _name);
+	static bool SceneJsonExist(std::string const& _name);
 
 	Scene mErrorScene;
 	E_GSMSTATE mGSMState;

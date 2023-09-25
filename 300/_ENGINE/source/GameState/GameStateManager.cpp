@@ -20,6 +20,7 @@ M_GSMSTATE::EXIT is only used for closing the game in GAMEMODE only.
 #include "Helper.h"
 #include "ECS/ECS.h"
 #include "ECS/ECS_Components.h"
+#include "ConfigManager.h"
 //#include "PerformanceVisualiser.h"
 //#include "ResourceManager.h"
 //#include "Graphics/RenderManager.h"
@@ -45,9 +46,9 @@ void GameStateManager::Init() {
 	return;
 #endif
 
-	//mCurrentGameState.Load(mNextGSName);
+	mCurrentGameState.Load(mNextGSName);
 
-	mCurrentGameState.Load("Default");
+	//mCurrentGameState.Load("Defaulst");
 
 	mCurrentGameState.Init();
 
@@ -256,3 +257,14 @@ void GameStateManager::Unload() {
 	mCurrentGameState.Unload();
 	mNextGSName = "";
 }
+
+bool GameStateManager::GameStateJsonExist(std::string const& _name) {
+	std::ifstream f(ConfigManager::GetValue("GameStatePath") + _name + ".json");
+	return f.is_open();
+}
+
+bool GameStateManager::SceneJsonExist(std::string const& _name) {
+	std::ifstream f(ConfigManager::GetValue("ScenePath") + _name + ".json");
+	return f.is_open();
+}
+

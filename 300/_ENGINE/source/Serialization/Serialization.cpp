@@ -6,6 +6,9 @@
 bool BaseJSON::DeserializeFile(const std::string& filename)
 {
 	std::ifstream file(filename);
+
+	if (!file.is_open()) std::cout << filename << " not found when attempting to open file\n";
+
 	std::stringstream buffer;
 	buffer << file.rdbuf();
 	file.close();
