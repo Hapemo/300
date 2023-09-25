@@ -7,7 +7,7 @@
 \brief
 Input detects keyboard and mouse input states and returns that to caller
 *******************************************************************************/
-#include "Input.h"
+#include "Input/Input.h"
 #include "pch.h"
 #include "ECS/ECS_Systems.h"
 

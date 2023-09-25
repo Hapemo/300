@@ -1,5 +1,6 @@
 #include <Graphics/Camera_Input.h>
-#include <Input.h>
+//#include <Input.h>
+#include "Input/Input.h"
 #include <FPSManager.h>
 
 #include <glm/gtc/quaternion.hpp>

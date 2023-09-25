@@ -13,7 +13,7 @@ start up of window and game system, also runs their update functions.
 #include "ECS/ECS.h"
 #include "ECS/ECS_Components.h"
 #include "ECS/ECS_Systems.h"
-#include "Input.h"
+#include "Input/Input.h"
 #include "SingletonManager.h"
 #include "ScriptingSystem.h"
 #include "Physics/PhysicsSystem.h"

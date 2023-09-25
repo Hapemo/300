@@ -12,7 +12,7 @@ start up of window and game system, also runs their update functions.
 #include "FPSManager.h"
 #include "ECS/ECS.h"
 #include "ECS/ECS_Components.h"
-#include "Input.h"
+#include "Input/Input.h"
 #include "SingletonManager.h"
 #include "Object/ObjectFactory.h"
 #include "ScriptingSystem.h"
@@ -49,8 +49,32 @@ void Application::StartUp()
     ConfigManager::Init("../assets/config.txt");
 }
 
-void Application::SystemInit() 
+void Application::SystemInit()
 {
+
+#pragma region AudioComponent Test
+    Entity entAudio = systemManager->ecs->NewEntity();
+    entAudio.AddComponent<Audio>({ "../assets/Audio" , "farm_ambience.wav", AUDIO_BGM, false});
+    Audio& audio_component = entAudio.GetComponent<Audio>();
+
+    // Test Edit <Audio> Component
+    //entAudio.GetComponent<Audio>().mFileName = "farm_ambience.wav";
+    /*entAudio.GetComponent<Audio>().mIsPlay = false;
+    entAudio.GetComponent<Audio>().mIsPlaying = false;
+    entAudio.GetComponent<Audio>().mIsPlay = false;
+    entAudio.GetComponent<Audio>().mIsPlaying = false;*/
+
+    Entity radioAudio = systemManager->ecs->NewEntity();
+    radioAudio.AddComponent<Audio>({ "../assets/Audio" , "tuning-radio-7150.wav" , AUDIO_SFX, false });
+
+    Entity npcAudio = systemManager->ecs->NewEntity();
+    npcAudio.AddComponent<Audio>({ "../assets/Audio" , "NPC_Greeting.wav" , AUDIO_SFX, true });
+
+    Entity non_existent_audio = systemManager->ecs->NewEntity();
+    non_existent_audio.AddComponent<Audio>();
+
+#pragma endregion
+
 #pragma region testphysics
     //Entity e1 = systemManager->ecs->NewEntity();
     //Entity e2 = systemManager->ecs->NewEntity();
@@ -78,8 +102,9 @@ void Application::SystemInit()
     //eee = (uint32_t)e2.id;
 
 #pragma endregion testphysics
-    systemManager->Init(false, &mWindow);
+  /*  systemManager->Init(false, &mWindow);*/ // Moved this after Audio Component Test
 
+    systemManager->Init(false, &mWindow);
     FPSManager::Init();
     Input::Init();
 #pragma region testserialization
@@ -114,6 +139,7 @@ void Application::SystemInit()
     //ent3.GetComponent<General>().tag = TAG::UNKNOWN;
     //ent3.GetComponent<General>().subtag = SUBTAG::ACTIVE;
     //
+
 
     //ObjectFactory::SerializeScene("../assets/Scenes/test.json");
 
@@ -177,6 +203,10 @@ void Application::SystemInit()
     //systemManager->ecs->NewPrefab(ent01);
 
 #pragma endregion testprefab
+
+
+
+
 
 }
 
