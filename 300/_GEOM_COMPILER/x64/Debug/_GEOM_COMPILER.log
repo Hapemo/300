@@ -32,7 +32,7 @@ C:\Users\cheon\Documents\GitHub\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(942
 C:\Users\cheon\Documents\GitHub\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(984,37): warning C4018: '<': signed/unsigned mismatch
 C:\Users\cheon\Documents\GitHub\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(1021,42): warning C4244: '=': conversion from 'const double' to 'float', possible loss of data
 C:\Users\cheon\Documents\GitHub\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(1022,48): warning C4244: '=': conversion from 'const double' to 'float', possible loss of data
-C:\Users\cheon\Documents\GitHub\300\300\_GEOM_COMPILER\src\Bone.cpp(69): warning C4715: '_GEOM::Bone::GetPositionIndex': not all control paths return a value
 C:\Users\cheon\Documents\GitHub\300\300\_GEOM_COMPILER\src\Bone.cpp(82): warning C4715: '_GEOM::Bone::GetRotationIndex': not all control paths return a value
+C:\Users\cheon\Documents\GitHub\300\300\_GEOM_COMPILER\src\Bone.cpp(69): warning C4715: '_GEOM::Bone::GetPositionIndex': not all control paths return a value
 C:\Users\cheon\Documents\GitHub\300\300\_GEOM_COMPILER\src\Bone.cpp(95): warning C4715: '_GEOM::Bone::GetScaleIndex': not all control paths return a value
   _GEOM_COMPILER.vcxproj -> C:\Users\cheon\Documents\GitHub\300\300\x64\Debug\_GEOM_COMPILER.lib

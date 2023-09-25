@@ -48,7 +48,7 @@ void Application::SystemInit()
 
 #pragma region AudioComponent Test
     Entity entAudio = systemManager->ecs->NewEntity();
-    entAudio.AddComponent<Audio>({ "../assets/Audio" , "farm_ambience.wav", AUDIO_BGM, true});
+    entAudio.AddComponent<Audio>({ "../assets/Audio" , "farm_ambience.wav", AUDIO_BGM, false});
     Audio& audio_component = entAudio.GetComponent<Audio>();
 
     // Test Edit <Audio> Component
@@ -59,10 +59,10 @@ void Application::SystemInit()
     entAudio.GetComponent<Audio>().mIsPlaying = false;*/
 
     Entity radioAudio = systemManager->ecs->NewEntity();
-    radioAudio.AddComponent<Audio>({ "../assets/Audio" , "tuning-radio-7150.wav" , AUDIO_SFX, true });
+    radioAudio.AddComponent<Audio>({ "../assets/Audio" , "tuning-radio-7150.wav" , AUDIO_SFX, false });
 
     Entity npcAudio = systemManager->ecs->NewEntity();
-    npcAudio.AddComponent<Audio>({ "../assets/Audio" , "NPC_Greeting.wav" , AUDIO_SFX, false });
+    npcAudio.AddComponent<Audio>({ "../assets/Audio" , "NPC_Greeting.wav" , AUDIO_SFX, true });
 
     Entity non_existent_audio = systemManager->ecs->NewEntity();
     non_existent_audio.AddComponent<Audio>();

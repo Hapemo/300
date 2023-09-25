@@ -16,7 +16,7 @@ struct Channel
 {
 	unsigned int   mChannelID;
 	FMOD::Channel* mChannel;
-	int			   mIsPlayingSound;
+	bool		   mIsPlayingSound;
 };
 
 class AudioSystem
@@ -38,8 +38,8 @@ public:
 	void LoadAudioFiles(std::filesystem::path file_path);									// Load single file
 	void LoadAudioFromDirectory(std::filesystem::path file_path);							// Load files from directory
 	void PlayAudio(std::string audio_name, AUDIOTYPE audio_type, float audio_vol = 1.0f);	// Play an audio based on it's name
-	void PlaySFXAudio(std::string audio_name, float audio_vol = 1.0f);						// Play an SFX Audio (specify volume)
-	void PlayBGMAudio(std::string audio_name, float audio_vol = 1.0f);						// Play an BGM Audio (specify volume)
+	int  PlaySFXAudio(std::string audio_name, float audio_vol = 1.0f);						// Play an SFX Audio (specify volume)
+	int  PlayBGMAudio(std::string audio_name, float audio_vol = 1.0f);						// Play an BGM Audio (specify volume)
 	void SetSpecificChannelVolume(AUDIOTYPE audio_type, int id, float audio_vol);			// Set Specific Volume
 	void SetAllSFXVolume(float audio_vol);													// Global Volume Setting (SFX)
 	void SetAllBGMVolume(float audio_vol);													// Global Volume Setting (BGM)
@@ -58,7 +58,7 @@ public:
 
 	// Will build as needs require.
 private:
-	std::unordered_map<AUDIOTYPE, std::vector<FMOD::Channel*>>  mChannels;
+	std::unordered_map<AUDIOTYPE, std::vector<FMOD::Channel*>>  mChannels;	// Depreciated [9/25]
 	std::unordered_map<AUDIOTYPE, std::vector<Channel>>         mChannelsNew;
 	std::unordered_map<std::string, FMOD::Sound*>				mSounds;
 	//std::unordered_map<AUDIOTYPE, std::unordered_map<std::string, FMOD::Sound*>> mSounds;

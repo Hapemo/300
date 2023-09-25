@@ -99,27 +99,80 @@ void AudioSystem::Update(float dt)
 {
 	auto audio_entities = systemManager->ecs->GetEntitiesWith<Audio>();
 
+	/*
+		[Check Play Loop]
+		- Checks for (mIsPlay)    flag : signify that the audio is expected to play.
+		- Checks for (mIsPlaying) flag : signify that it's already playing, so do not play again.
+	*/
 	for (Entity audio : audio_entities)
 	{
 		Audio& audio_component = audio.GetComponent<Audio>();
-		
+
 		if (audio_component.mIsPlay) // if it's supposed to play.
 		{
-			switch (audio_component.mAudioType)
+			if (!audio_component.mIsPlaying)
 			{
+				int channel_id;
+
+				switch (audio_component.mAudioType)
+				{
 				case AUDIO_BGM:
-					PlayBGMAudio(audio_component.mFileName, 1.0f);
+					channel_id = PlayBGMAudio(audio_component.mFileName, 1.0f);
+					if(channel_id != -1)
+						audio_component.mPlayBGMChannelID.push_back(channel_id);
 					break;
 				case AUDIO_SFX:
-					PlaySFXAudio(audio_component.mFileName, 1.0f); 
+					channel_id = PlaySFXAudio(audio_component.mFileName, 1.0f);
+					if (channel_id != -1)
+						audio_component.mPlaySFXChannelID.push_back(channel_id);
 					break;
+				}
 			}
-
+				
 			audio_component.mIsPlaying = true;  // currently playing. 
 			audio_component.mIsPlay = false;	// don't need to play again.
 		}
+
+		/*
+			[Check if Channel is still Playing]
+			- Iterate through [Audio Component]
+
+		*/
+
+		for (Entity audio : audio_entities)
+		{
+			Audio& audio_component = audio.GetComponent<Audio>();
+			
+			for (int id : audio_component.mPlayBGMChannelID)
+			{
+				Channel& channel = FindChannel(AUDIO_BGM, id);
+				
+				channel.mChannel->isPlaying(&channel.mIsPlayingSound);
+
+				if (!channel.mIsPlayingSound) // channel stopped playing
+				{
+					audio_component.mIsPlaying = false;
+					audio_component.mIsPlay    = false;
+				}
+			}
+
+			for (int id : audio_component.mPlaySFXChannelID)
+			{
+				Channel& channel = FindChannel(AUDIO_SFX, id);
+
+				channel.mChannel->isPlaying(&channel.mIsPlayingSound);
+
+				if (!channel.mIsPlayingSound) // channel stopped playing
+				{
+					audio_component.mIsPlaying = false;
+					audio_component.mIsPlay = false;
+				}
+			}
+		}
 		
 	}
+
+
 
 
 	if (Input::CheckKey(PRESS, _1))
@@ -293,7 +346,7 @@ void AudioSystem::PlayAudio(std::string audio_name, AUDIOTYPE audio_type, float 
 	}
 }
 
-void AudioSystem::PlaySFXAudio(std::string audio_name, float audio_vol)
+int AudioSystem::PlaySFXAudio(std::string audio_name, float audio_vol)
 {
 	// Find the sound first ...
 	auto map_it = mSounds.find(audio_name); // tries to find the audio with this name...
@@ -301,7 +354,7 @@ void AudioSystem::PlaySFXAudio(std::string audio_name, float audio_vol)
 	if (map_it == mSounds.end()) // true if not found;
 	{
 		std::cerr << "Can't find the requested audio." << std::endl;
-		return;
+		return -1;
 	}
 
 	auto channel_it = mChannelsNew.find(AUDIO_SFX);
@@ -321,6 +374,7 @@ void AudioSystem::PlaySFXAudio(std::string audio_name, float audio_vol)
 					std::cout << "Currently Playing (" << audio_name << ") on SFX Channel : #" << channel.mChannelID << std::endl;
 					channel.mChannel->setVolume(audio_vol);
 					channel.mIsPlayingSound = true;
+					return channel.mChannelID;
 					break;
 				}
 
@@ -329,7 +383,7 @@ void AudioSystem::PlaySFXAudio(std::string audio_name, float audio_vol)
 	}
 }
 
-void AudioSystem::PlayBGMAudio(std::string audio_name, float audio_vol)
+int AudioSystem::PlayBGMAudio(std::string audio_name, float audio_vol)
 {
 	// Find the sound first ...
 	auto map_it = mSounds.find(audio_name); // tries to find the audio with this name...
@@ -337,7 +391,7 @@ void AudioSystem::PlayBGMAudio(std::string audio_name, float audio_vol)
 	if (map_it == mSounds.end()) // true if not found;
 	{
 		std::cerr << "Can't find the requested audio." << std::endl;
-		return;
+		return -1;
 	}
 
 	//auto channel_it = mChannels.find(AUDIO_BGM);
@@ -358,7 +412,7 @@ void AudioSystem::PlayBGMAudio(std::string audio_name, float audio_vol)
 					std::cout << "Currently Playing (" << audio_name << ") on BGM Channel : #" << channel.mChannelID << std::endl;
 					channel.mChannel->setVolume(audio_vol); 
 					channel.mIsPlayingSound = true;
-					break;
+					return channel.mChannelID;
 				}
 
 			}
