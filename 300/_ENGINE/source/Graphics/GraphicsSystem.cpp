@@ -58,6 +58,7 @@ void GraphicsSystem::Init()
 
 
 	auto& meshinst = systemManager->mResourceSystem->get_Mesh("../assets/compiled_geom/dancing_vampire.geom");
+	newentity.GetComponent<Transform>().mScale = meshinst.mBBOX.m_Max - meshinst.mBBOX.m_Min;
 	if (newentity.HasComponent<Animator>() && _ENABLE_ANIMATIONS)
 	{
 		newentity.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/animations_vert.glsl", "../_GRAPHICS/shader_files/pointLight_frag.glsl" };// for point light
@@ -98,6 +99,7 @@ void GraphicsSystem::Init()
 	newentity1.GetComponent<BoxCollider>().mTranslateOffset = { 0.f, 85.f, 0.f };
 
 	auto& meshinst1 = systemManager->mResourceSystem->get_Mesh("../assets/compiled_geom/FreeModelNathan_WalkAnim.geom");
+	newentity1.GetComponent<Transform>().mScale = meshinst1.mBBOX.m_Max - meshinst1.mBBOX.m_Min;
 	if (newentity1.HasComponent<Animator>() && _ENABLE_ANIMATIONS)
 	{
 		newentity1.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/animations_vert.glsl", "../_GRAPHICS/shader_files/pointLight_frag.glsl" };// for point light
@@ -147,7 +149,7 @@ void GraphicsSystem::Update(float dt)
 
 		// pushback LTW matrices
 		glm::mat4	trns	= glm::translate(inst.GetComponent<Transform>().mTranslate);
-		glm::mat4	scale	= glm::scale(trns, inst.GetComponent<Transform>().mScale);
+		glm::mat4	scale	= glm::scale(trns, inst.GetComponent<Transform>().mScale / (meshinst.mBBOX.m_Max - meshinst.mBBOX.m_Min));
 		glm::mat4	final	= glm::rotate(scale, glm::radians(inst.GetComponent<Transform>().mRotate.x), glm::vec3(1.f, 0.f, 0.f));
 					final	= glm::rotate(final, glm::radians(inst.GetComponent<Transform>().mRotate.y), glm::vec3(0.f, 1.f, 0.f));
 					final	= glm::rotate(final, glm::radians(inst.GetComponent<Transform>().mRotate.z), glm::vec3(0.f, 0.f, 1.f));
@@ -156,25 +158,25 @@ void GraphicsSystem::Update(float dt)
 		if (m_DebugDrawing && inst.HasComponent<BoxCollider>())
 		{
 			// draw the AABB of the mesh
-			glm::vec3 bbox_dimens = meshinst.mBBOX.m_Max - meshinst.mBBOX.m_Min;
-			bbox_dimens = bbox_dimens * inst.GetComponent<Transform>().mScale * inst.GetComponent<BoxCollider>().mScaleOffset;
+			//glm::vec3 bbox_dimens = meshinst.mBBOX.m_Max - meshinst.mBBOX.m_Min;
+			glm::vec3 bbox_dimens = inst.GetComponent<Transform>().mScale * inst.GetComponent<BoxCollider>().mScaleOffset;
 			m_Renderer.AddAabb(inst.GetComponent<Transform>().mTranslate + inst.GetComponent<BoxCollider>().mTranslateOffset, bbox_dimens, {1.f, 0.f, 0.f, 1.f});
 
 			// draw the mesh's origin
 			m_Renderer.AddSphere(m_EditorCamera.position(), inst.GetComponent<Transform>().mTranslate, 0.5f, { 1.f, 1.f, 0.f, 1.f });
+		}
 
-			// draw the animation data for the bones
-			if (inst.HasComponent<Animator>() && _ENABLE_ANIMATIONS)
+		// draw the animation data for the bones
+		if (inst.HasComponent<Animator>() && _ENABLE_ANIMATIONS && m_DebugDrawing)
+		{
+			// draw the mesh's bone positions as boxes
+			for (const auto& bones : meshinst.mAnimation[0].m_Bones)
 			{
-				// draw the mesh's bone positions as boxes
-				for (const auto& bones : meshinst.mAnimation[0].m_Bones)
-				{
-					static const vec3 bonescale(0.1f, 0.1f, 0.1f);
-					mat4 bonestrns = inst.GetComponent<Animator>().mAnimator.m_FinalBoneMatrices[bones.GetBoneID()] * final;
-					
-					//m_Renderer.AddAabb({ bonestrns.x, bonestrns.y, bonestrns.z }, bonescale, vec4(1.f, 1.f, 0.f, 1.f));
-					//m_Renderer.AddAabb({ bonestrns[3][0], bonestrns[3][1], bonestrns[3][2]}, bonescale, vec4(1.f, 1.f, 0.f, 1.f));
-				}
+				static const vec3 bonescale(0.1f, 0.1f, 0.1f);
+				mat4 bonestrns = final * inst.GetComponent<Animator>().mAnimator.m_FinalBoneMatrices[bones.GetBoneID()] * bones.m_LocalTransform;
+
+				//m_Renderer.AddAabb({ bonestrns.x, bonestrns.y, bonestrns.z }, bonescale, vec4(1.f, 1.f, 0.f, 1.f));
+				//m_Renderer.AddAabb({ bonestrns[3][0], bonestrns[3][1], bonestrns[3][2] }, bonescale, vec4(1.f, 1.f, 0.f, 1.f));
 			}
 		}
 
