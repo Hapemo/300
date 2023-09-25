@@ -194,6 +194,7 @@ public:
 	Scene mErrorScene;
 	E_GSMSTATE mGSMState;
 	GameState mCurrentGameState;
+
 private:
 	std::string mNextGSName; // This path has to be set initially in config file. TODO
 	//std::string mNextGSPath; // This path has to be set initially in config file. TODO
