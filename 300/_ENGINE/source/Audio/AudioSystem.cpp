@@ -177,6 +177,18 @@ void AudioSystem::Update(float dt)
 		TogglePauseBGMSounds();
 	}
 
+	if (Input::CheckKey(PRESS, H))
+	{
+		TogglePauseSpecific(AUDIO_BGM, 0);
+	}
+
+	if (Input::CheckKey(PRESS, J))
+	{
+		TogglePauseAllSounds();
+	}
+
+
+
 	system_obj->update();
 }
 
@@ -439,129 +451,150 @@ void AudioSystem::StopAllSFX()
 {
 	std::cout << "Stopping and Releasing All SFX." << std::endl;
 
-	auto channel_it = mChannels.find(AUDIO_SFX);
+	auto channel_it = mChannelsNew.find(AUDIO_SFX);
 
-	for (FMOD::Channel* channel : channel_it->second)
+	if (channel_it != mChannelsNew.end())
 	{
-		channel->stop();
+		for (Channel& channel : channel_it->second)
+		{
+			channel.mChannel->stop();
+		}
 	}
-
-	channel_it->second.erase(channel_it->second.begin(), channel_it->second.end());
 }
 
 void AudioSystem::StopAllBGM()
 {
 	std::cout << "Stopping and Releasing All BGM." << std::endl;
 
-	auto channel_it = mChannels.find(AUDIO_BGM);
+	auto channel_it = mChannelsNew.find(AUDIO_BGM);
 
-	for (FMOD::Channel* channel : channel_it->second)
+	if (channel_it != mChannelsNew.end())
 	{
-		channel->stop();
-		channel = nullptr;
+		for (Channel& channel : channel_it->second)
+		{
+			channel.mChannel->stop();
+		}
 	}
 }
 
 void AudioSystem::TogglePauseAllSounds()
 {
-	auto channel_sfx_it = mChannels.find(AUDIO_SFX);
+	auto channel_it_sfx = mChannelsNew.find(AUDIO_SFX);
 
-	for (FMOD::Channel* channel : channel_sfx_it->second)
+	if (channel_it_sfx != mChannelsNew.end())
 	{
-		bool paused;
-		std::cout << "Checking Channel Pause Status: " << std::endl;
-		ErrCodeCheck(channel->getPaused(&paused));
+		for (Channel& channel : channel_it_sfx->second)
+		{
+			if (channel.mIsPlayingSound)
+			{
+				bool paused;
+				std::cout << "Checking Channel Pause Status: " << std::endl;
+				ErrCodeCheck(channel.mChannel->getPaused(&paused));
 
-		if (paused)
-			std::cout << "Resuming SFX Channels. " << std::endl;
-		else
-			std::cout << "Pausing SFX Channels. " << std::endl;
+				if (paused)
+					std::cout << "Resuming SFX Channels. " << std::endl;
+				else
+					std::cout << "Pausing SFX Channels. " << std::endl;
 
-		ErrCodeCheck(channel->setPaused(!paused));
+				ErrCodeCheck(channel.mChannel->setPaused(!paused));
+			}
+		}
 	}
 
-	auto channel_bgm_it = mChannels.find(AUDIO_BGM);
+	auto channel_it_bgm = mChannelsNew.find(AUDIO_BGM);
 
-	for (FMOD::Channel* channel : channel_bgm_it->second)
+	if (channel_it_bgm != mChannelsNew.end())
 	{
-		bool paused;
-		std::cout << "Checking Channel Pause Status: " << std::endl;
-		ErrCodeCheck(channel->getPaused(&paused));
+		for (Channel& channel : channel_it_bgm->second)
+		{
+			if (channel.mIsPlayingSound)
+			{
+				bool paused;
+				std::cout << "Checking Channel Pause Status: " << std::endl;
+				ErrCodeCheck(channel.mChannel->getPaused(&paused));
 
-		if (paused)
-			std::cout << "Resuming SFX Channels. " << std::endl;
-		else
-			std::cout << "Pausing SFX Channels. " << std::endl;
+				if (paused)
+					std::cout << "Resuming BGM Channels. " << std::endl;
+				else
+					std::cout << "Pausing BGM Channels. " << std::endl;
 
-		ErrCodeCheck(channel->setPaused(!paused));
+				ErrCodeCheck(channel.mChannel->setPaused(!paused));
+			}
+		}
 	}
 }
 
 void AudioSystem::TogglePauseSFXSounds()
 {
-	auto channel_it = mChannels.find(AUDIO_SFX);
-	
-	for (FMOD::Channel* channel : channel_it->second)
+	auto channel_it_sfx = mChannelsNew.find(AUDIO_SFX);
+
+	if (channel_it_sfx != mChannelsNew.end())
 	{
-		bool paused;
-		std::cout << "Checking Channel Pause Status: " << std::endl;
-		ErrCodeCheck(channel->getPaused(&paused));
+		for (Channel& channel : channel_it_sfx->second)
+		{
+			if (channel.mIsPlayingSound)
+			{
+				bool paused;
+				std::cout << "Checking Channel Pause Status: " << std::endl;
+				ErrCodeCheck(channel.mChannel->getPaused(&paused));
 
-		if (paused)
-			std::cout << "Resuming SFX Channels. " << std::endl;
-		else
-			std::cout << "Pausing SFX Channels. " << std::endl;
+				if (paused)
+					std::cout << "Resuming SFX Channels. " << std::endl;
+				else
+					std::cout << "Pausing SFX Channels. " << std::endl;
 
-		ErrCodeCheck(channel->setPaused(!paused));
+				ErrCodeCheck(channel.mChannel->setPaused(!paused));
+			}
+		}
 	}
 }
 
 void AudioSystem::TogglePauseBGMSounds()
 {
-	auto channel_it = mChannels.find(AUDIO_BGM);
+	auto channel_it = mChannelsNew.find(AUDIO_BGM);
 
-	for (FMOD::Channel* channel : channel_it->second)
+	if (channel_it != mChannelsNew.end())
 	{
-		bool paused;
-		std::cout << "Checking Channel Pause Status: " << std::endl;
-		ErrCodeCheck(channel->getPaused(&paused));
+		for (Channel& channel : channel_it->second)
+		{
+			if (channel.mIsPlayingSound)
+			{
+				bool paused;
+				std::cout << "Checking Channel Pause Status: " << std::endl;
+				ErrCodeCheck(channel.mChannel->getPaused(&paused));
 
-		if (paused)
-			std::cout << "Resuming SFX Channels. " << std::endl;
-		else
-			std::cout << "Pausing SFX Channels. " << std::endl;
+				if (paused)
+					std::cout << "Resuming BGM Channels. " << std::endl;
+				else
+					std::cout << "Pausing BGM Channels. " << std::endl;
 
-		ErrCodeCheck(channel->setPaused(!paused));
+				ErrCodeCheck(channel.mChannel->setPaused(!paused));
+			}
+		}
 	}
 }
 
 void AudioSystem::TogglePauseSpecific(AUDIOTYPE audio_type, int channel_id)
 {
-	auto channel_it = mChannels.find(audio_type);
+	auto channel_it = mChannelsNew.find(audio_type);
 
-	if (channel_it != mChannels.end())
+	if (channel_it != mChannelsNew.end())
 	{
 		if (channel_id < channel_it->second.size())
 		{
-			FMOD::Channel** channelpp = nullptr;
+			std::cout << "CHANNEL REQUEST: " << channel_id << std::endl;
+			Channel& channel_found = FindChannel(audio_type, channel_id);
+			bool paused;
+			std::cout << "Checking Channel Pause Status: " << std::endl;
+			ErrCodeCheck(FindChannel(audio_type, channel_id).mChannel->getPaused(&paused));
 
-			channelpp = &channel_it->second[channel_id];
+			if (paused)
+				std::cout << "Resuming Selected Channel. " << std::endl;
+			else
+				std::cout << "Pausing Selected Channel. " << std::endl;
 
-			if (channelpp)
-			{
-				bool paused;
-				std::cout << "Checking Channel Pause Status: " << std::endl;
-				ErrCodeCheck(channel_it->second[channel_id]->getPaused(&paused));
-
-				if (paused)
-					std::cout << "Resuming Selected Channel. " << std::endl;
-				else
-					std::cout << "Pausing Selected Channel. " << std::endl;
-
-				ErrCodeCheck(channel_it->second[channel_id]->setPaused(!paused));
-			}
+			ErrCodeCheck(FindChannel(audio_type, channel_id).mChannel->setPaused(!paused));
 		}
-
 		else
 		{
 			std::cout << "Sorry, requested channel ID is invalid." << std::endl;
