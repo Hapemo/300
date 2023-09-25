@@ -78,7 +78,7 @@ void GFX::FBO::PrepForDraw()
 	}
 	// Renders to Game Attachment by default
 
-	glClearColor(.4f, .5f, .6f, 1.f);
+	glClearColor(.2f, .2f, .2f, 1.f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LEQUAL);

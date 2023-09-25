@@ -102,7 +102,10 @@ void Inspect::update()
 			Scripts& scripts = ent.GetComponent<Scripts>();
 			scripts.Inspect();
 		}
-
+		if (ent.HasComponent<Animator>()) {
+			Animator& ani = ent.GetComponent<Animator>();
+			ani.Inspect();
+		}
 		if (ent.HasComponent<MeshRenderer>()) {
 			MeshRenderer& Meshrender = ent.GetComponent<MeshRenderer>();
 			Meshrender.Inspect();
@@ -186,6 +189,10 @@ void Inspect::Add_component() {
 				Entity(Hierarchy::selectedId).AddComponent<PlaneCollider>();
 		}
 
+		if (ImGui::Selectable("Animator")) {
+			if (!Entity(Hierarchy::selectedId).HasComponent<Animator>())
+				Entity(Hierarchy::selectedId).AddComponent<Animator>();
+		}
 		ImGui::EndPopup();
 	}
 
@@ -344,13 +351,13 @@ void Scripts::Inspect() {
 void Animator::Inspect()
 {
 	bool delete_component{ true };
-	if (ImGui::CollapsingHeader("Animator", &delete_component, ImGuiTreeNodeFlags_DefaultOpen)) 
+	if (ImGui::CollapsingHeader("Animator", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
 	{
-		ImGui::Text("test");
-		if (ImGui::Button("Pause Animaton"))
-		{
-			mIsPaused = !mIsPaused;
-		}
+		ImGui::Text(std::to_string(mAnimator.m_CurrentTime).c_str());	ImGui::SameLine();
+		ImGui::Text(" / ");												ImGui::SameLine();
+		ImGui::Text(std::to_string(mAnimator.m_CurrentAnimation->m_Duration).c_str());
+		
+		ImGui::Checkbox("Pause Animaton", &mIsPaused);
 	}
 
 	if (delete_component == false)

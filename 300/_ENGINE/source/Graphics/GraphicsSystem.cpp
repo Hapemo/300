@@ -28,6 +28,7 @@ void GraphicsSystem::Init()
 
 	UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_ALL, 0.f);
 
+
 #pragma region create entity 1
 	 //Create a new entity here, for testing purposes
 	Entity newentity = systemManager->ecs->NewEntity();			// creating a new entity
@@ -35,20 +36,11 @@ void GraphicsSystem::Init()
 	newentity.AddComponent<BoxCollider>();
 	newentity.AddComponent<Animator>();
 
-	//newentity.GetComponent<MeshRenderer>().mMaterialInstancePath = "../assets/Compressed/Skull.ctexture";
-	//newentity.GetComponent<MeshRenderer>().mMeshPath = "../compiled_geom/Skull_textured.geom";
-	//newentity.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/draw_vert.glsl", "../_GRAPHICS/shader_files/draw_frag.glsl" };
-	//newentity.GetComponent<MeshRenderer>().mMeshPath = "../assets/compiled_geom/FreeModelNathan_WalkAnim.geom";
-	//newentity.GetComponent<MeshRenderer>().mMeshPath = "../assets/compiled_geom/dancing_vampire.geom";
 	newentity.GetComponent<MeshRenderer>().mMeshPath = "../assets/compiled_geom/dancing_vampire.geom";
 	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath[DIFFUSE]="../assets/Compressed/Vampire_diffuse.ctexture";
 	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath[NORMAL]="../assets/Compressed/Vampire_normal.ctexture";
 	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath[2]="../assets/Compressed/Vampire_emission.ctexture";
 	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath[3]="../assets/Compressed/Vampire_specular.ctexture";
-	// newentity.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Vampire_diffuse.ctexture");
-	// newentity.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Vampire_normal.ctexture");
-	// newentity.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Vampire_emission.ctexture");
-	// newentity.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Vampire_specular.ctexture");
 	newentity.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/pointLight_vert.glsl", "../_GRAPHICS/shader_files/pointLight_frag.glsl" };	// for point light
 	
 	uid temp(newentity.GetComponent<MeshRenderer>().mMeshPath);
@@ -81,16 +73,7 @@ void GraphicsSystem::Init()
 	newentity1.AddComponent<BoxCollider>();
 	newentity1.AddComponent<Animator>();
 
-	//newentity.GetComponent<MeshRenderer>().mMaterialInstancePath = "../assets/Compressed/Skull.ctexture";
-	//newentity.GetComponent<MeshRenderer>().mMeshPath = "../compiled_geom/Skull_textured.geom";
-	//newentity.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/draw_vert.glsl", "../_GRAPHICS/shader_files/draw_frag.glsl" };
-	//newentity.GetComponent<MeshRenderer>().mMeshPath = "../assets/compiled_geom/FreeModelNathan_WalkAnim.geom";
-	//newentity.GetComponent<MeshRenderer>().mMeshPath = "../assets/compiled_geom/dancing_vampire.geom";
 	newentity1.GetComponent<MeshRenderer>().mMeshPath = "../assets/compiled_geom/FreeModelNathan_WalkAnim.geom";
-	//newentity1.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Wood Material 15_BaseColor.ctexture");
-	//newentity1.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Wood Material 15_Normal.ctexture");
-	//newentity1.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Vampire_emission.ctexture");
-	//newentity1.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Vampire_specular.ctexture");
 	newentity1.GetComponent<MeshRenderer>().mMaterialInstancePath[0] = "../assets/Compressed/Wood Material 15_BaseColor.ctexture";
 	newentity1.GetComponent<MeshRenderer>().mMaterialInstancePath[1] = "../assets/Compressed/Wood Material 15_Normal.ctexture";
 	newentity1.GetComponent<MeshRenderer>().mMaterialInstancePath[2] = "../assets/Compressed/Vampire_emission.ctexture";
@@ -154,7 +137,7 @@ void GraphicsSystem::Update(float dt)
 				inst.GetComponent<Animator>().mAnimator.UpdateAnimation(dt, mat4(1.f));					// update the current animation
 			}
 		}
-		
+
 		void* tt = inst.GetComponent<MeshRenderer>().mMeshRef;
 		GFX::Mesh& meshinst = *reinterpret_cast<GFX::Mesh*>(tt);
 
@@ -164,7 +147,7 @@ void GraphicsSystem::Update(float dt)
 
 		// pushback LTW matrices
 		glm::mat4	trns	= glm::translate(inst.GetComponent<Transform>().mTranslate);
-		glm::mat4 scale		= glm::scale(trns, inst.GetComponent<Transform>().mScale);
+		glm::mat4	scale	= glm::scale(trns, inst.GetComponent<Transform>().mScale);
 		glm::mat4	final	= glm::rotate(scale, glm::radians(inst.GetComponent<Transform>().mRotate.x), glm::vec3(1.f, 0.f, 0.f));
 					final	= glm::rotate(final, glm::radians(inst.GetComponent<Transform>().mRotate.y), glm::vec3(0.f, 1.f, 0.f));
 					final	= glm::rotate(final, glm::radians(inst.GetComponent<Transform>().mRotate.z), glm::vec3(0.f, 0.f, 1.f));

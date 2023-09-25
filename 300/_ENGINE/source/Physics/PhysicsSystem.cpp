@@ -2,7 +2,7 @@
 #include "ECS/ECS.h"
 #include "Physics/Accumulator.h"
 
-PhysicsSystem::PhysicsSystem() : mFixedDT(1/60.f)
+PhysicsSystem::PhysicsSystem()
 {
 	mMaterials[MATERIAL::RUBBER] = CreateMaterial(0.9, 0.8, 0.2);
 	mMaterials[MATERIAL::WOOD] = CreateMaterial(0.5, 0.4, 0.3);

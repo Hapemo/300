@@ -18,7 +18,6 @@ public:
 
 private:
 	PhysX mPX;
-	float mFixedDT;
 	std::unordered_map<std::uint32_t, PxRigidActor*> mActors;
 	std::unordered_map<MATERIAL, PxMaterial*> mMaterials;
 	PxMaterial* CreateMaterial(float us, float ud, float res);
