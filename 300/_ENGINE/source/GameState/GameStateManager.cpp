@@ -30,6 +30,8 @@ M_GSMSTATE::EXIT is only used for closing the game in GAMEMODE only.
 //const Entity GameStateManager::mErrorEntity(0);
 GameStateManager::GameStateManager() : mErrorScene("Error"), mGSMState(E_GSMSTATE::NONE), mCurrentGameState(), mNextGSName("MAMAMA") {};
 
+
+
 // Load the first game state.
 void GameStateManager::Init() {
 	//LOG_CREATE("SCENE");
