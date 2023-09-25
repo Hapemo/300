@@ -6,9 +6,11 @@ GFX::DebugRenderer::DebugRenderer()
 
 	// Set up basic mesh models
 	SetupPointMesh();
+	SetupLineMesh();
 	SetupTriangleMesh();
 	SetupQuadMesh();
 	SetupAabbMesh();
+	SetupCubeMesh();
 	SetupSphereMesh();
 }
 
@@ -16,9 +18,11 @@ GFX::DebugRenderer::~DebugRenderer()
 {
 	// Destroy created mesh
 	mPointMesh.Destroy();
+	mLineMesh.Destroy();
 	mTriangleMesh.Destroy();
 	mQuadMesh.Destroy();
 	mAabbMesh.Destroy();
+	mCubeMesh.Destroy();
 	mSphereMesh.Destroy();
 
 	mShader.DestroyShader();
@@ -51,6 +55,25 @@ void GFX::DebugRenderer::AddPoint(vec3 const& pos, vec4 const& color)
 
 	mPointMesh.mLTW.push_back(world);
 	mPointMesh.mColors.push_back(color);
+}
+
+void GFX::DebugRenderer::AddLine(vec3 const& pos1, vec3 const& pos2, vec4 const& color)
+{
+	if (mLineMesh.mLTW.size() >= MAX_INSTANCES)
+	{
+		std::cout << "Max Instances of Objects Reached!\n";
+		return;
+	}
+
+	mat4 world = {
+		vec4(pos1, 0.f),
+		vec4(pos2, 0.f),
+		vec4(0.f, 0.f, 1.f, 0.f),
+		vec4(0.f, 0.f, 0.f, 1.f),
+	};
+
+	mLineMesh.mLTW.push_back(world);
+	mLineMesh.mColors.push_back(color);
 }
 
 void GFX::DebugRenderer::AddTriangle(vec3 const& p0, vec3 const& p1, vec3 const& p2, vec4 const& color)
@@ -110,6 +133,25 @@ void GFX::DebugRenderer::AddAabb(vec3 const& center, vec3 const& size, vec4 cons
 	mAabbMesh.mColors.push_back(color);
 }
 
+void GFX::DebugRenderer::AddCube(vec3 const& center, vec3 const& size, vec4 const& color)
+{
+	if (mCubeMesh.mLTW.size() >= MAX_INSTANCES)
+	{
+		std::cout << "Max Instances of Objects Reached!\n";
+		return;
+	}
+
+	mat4 world = {
+		vec4(size.x, 0.f, 0.f, 0.f),
+		vec4(0.f, size.y, 0.f, 0.f),
+		vec4(0.f, 0.f, size.z, 0.f),
+		vec4(center, 1.f)
+	};
+
+	mCubeMesh.mLTW.push_back(world);
+	mCubeMesh.mColors.push_back(color);
+}
+
 void GFX::DebugRenderer::AddSphere(vec3 const& camPos, vec3 const& center, float radius, vec4 const& color)
 {
 	// Calculate the horizon disc's position and radius
@@ -165,12 +207,16 @@ void GFX::DebugRenderer::RenderAll(mat4 viewProj)
 {
 	if (mPointMesh.mLTW.size())
 		RenderAllPoints(viewProj);
+	if (mLineMesh.mLTW.size())
+		RenderAllLines(viewProj);
 	if (mTriangleMesh.mLTW.size())
 		RenderAllTriangles(viewProj);
 	if (mQuadMesh.mLTW.size())
 		RenderAllQuads(viewProj);
 	if (mAabbMesh.mLTW.size())
 		RenderAllAabb(viewProj);
+	if (mCubeMesh.mLTW.size())
+		RenderAllCube(viewProj);
 	if (mSphereMesh.mLTW.size())
 		RenderAllSphere(viewProj);
 }
@@ -178,9 +224,11 @@ void GFX::DebugRenderer::RenderAll(mat4 viewProj)
 void GFX::DebugRenderer::ClearInstances()
 {
 	mPointMesh.ClearInstances();
+	mLineMesh.ClearInstances();
 	mTriangleMesh.ClearInstances();
 	mQuadMesh.ClearInstances();
 	mAabbMesh.ClearInstances();
+	mCubeMesh.ClearInstances();
 	mSphereMesh.ClearInstances();
 }
 
@@ -202,6 +250,22 @@ void GFX::DebugRenderer::SetupPointMesh()
 	};
 
 	mPointMesh.Setup(positions, indices);
+}
+
+void GFX::DebugRenderer::SetupLineMesh()
+{
+	std::vector<vec3> positions
+	{
+		vec3(1.f, 0.f, 0.f),
+		vec3(0.f, 1.f, 0.f)
+	};
+
+	std::vector<GLuint> indices
+	{
+		0, 1
+	};
+
+	mLineMesh.Setup(positions, indices);
 }
 
 void GFX::DebugRenderer::SetupTriangleMesh()
@@ -273,6 +337,33 @@ void GFX::DebugRenderer::SetupAabbMesh()
 	mAabbMesh.Setup(positions, indices);
 }
 
+void GFX::DebugRenderer::SetupCubeMesh()
+{
+	std::vector<vec3> positions
+	{
+		vec3(-0.5f,  0.5f,  0.5f),		// Top left near
+		vec3(-0.5f, -0.5f,  0.5f),		// Bottom left near
+		vec3( 0.5f, -0.5f,  0.5f),		// Bottom right near
+		vec3( 0.5f,  0.5f,  0.5f),		// Top right near
+		vec3(-0.5f,  0.5f, -0.5f),		// Top left far
+		vec3(-0.5f, -0.5f, -0.5f),		// Bottom left far
+		vec3( 0.5f, -0.5f, -0.5f),		// Bottom right far
+		vec3( 0.5f,  0.5f, -0.5f)		// Top right far
+	};
+
+	std::vector<GLuint> indices
+	{
+		0, 1, 2, 2, 3, 0,	// front
+		7, 6, 5, 5, 4, 7,	// far
+		4, 5, 1, 1, 0, 4,	// left
+		7, 3, 2, 2, 6, 7,	// right
+		4, 0, 3, 3, 7, 4,	// top
+		5, 1, 2, 2, 6, 5	// bottom
+	};
+
+	mCubeMesh.Setup(positions, indices);
+}
+
 void GFX::DebugRenderer::SetupSphereMesh()
 {
 	constexpr int SLICES = 32;
@@ -320,6 +411,27 @@ void GFX::DebugRenderer::RenderAllPoints(mat4 const& viewProj)
 
 	mShader.Deactivate();
 	mPointMesh.UnbindVao();
+}
+
+void GFX::DebugRenderer::RenderAllLines(mat4 const& viewProj)
+{
+	// Attach shader to state
+	mShader.Activate();
+
+	// Bind VAO to pipeline
+	mLineMesh.BindVao();
+
+	// Attach data to vbo
+	mLineMesh.PrepForDraw();
+
+	// Set uniform
+	glUniformMatrix4fv(mShader.GetUniformVP(), 1, GL_FALSE, &viewProj[0][0]);
+
+	// Draw
+	glDrawElementsInstanced(GL_LINES, mLineMesh.GetIndexCount(), GL_UNSIGNED_INT, nullptr, mLineMesh.mLTW.size());
+
+	mShader.Deactivate();
+	mLineMesh.UnbindVao();
 }
 
 void GFX::DebugRenderer::RenderAllTriangles(mat4 const& viewProj)
@@ -383,6 +495,27 @@ void GFX::DebugRenderer::RenderAllAabb(mat4 const& viewProj)
 
 	mShader.Deactivate();
 	mAabbMesh.UnbindVao();
+}
+
+void GFX::DebugRenderer::RenderAllCube(mat4 const& viewProj)
+{
+	// Attach shader to state
+	mShader.Activate();
+
+	// Bind VAO to pipeline
+	mCubeMesh.BindVao();
+
+	// Attach data to vbo
+	mCubeMesh.PrepForDraw();
+
+	// Set uniform
+	glUniformMatrix4fv(mShader.GetUniformVP(), 1, GL_FALSE, &viewProj[0][0]);
+
+	// Draw
+	glDrawElementsInstanced(GL_TRIANGLES, mCubeMesh.GetIndexCount(), GL_UNSIGNED_INT, nullptr, mCubeMesh.mLTW.size());
+
+	mShader.Deactivate();
+	mCubeMesh.UnbindVao();
 }
 
 void GFX::DebugRenderer::RenderAllSphere(mat4 const& viewProj)

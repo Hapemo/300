@@ -156,6 +156,7 @@
     <ClCompile Include="source\Camera.cpp" />
     <ClCompile Include="source\DebugRenderer.cpp" />
     <ClCompile Include="source\Fbo.cpp" />
+    <ClCompile Include="source\Font.cpp" />
     <ClCompile Include="source\Math.cpp" />
     <ClCompile Include="source\Mesh.cpp" />
     <ClCompile Include="source\OpenGl.cpp" />
@@ -176,6 +177,7 @@
     <ClInclude Include="include\Camera.hpp" />
     <ClInclude Include="include\Common.hpp" />
     <ClInclude Include="include\DebugRenderer.hpp" />
+    <ClInclude Include="include\Font.hpp" />
     <ClInclude Include="include\GraphicsSystem.hpp" />
     <ClInclude Include="include\Math.hpp" />
     <ClInclude Include="include\Mesh.hpp" />
@@ -191,8 +193,10 @@
     <ClInclude Include="include\Window.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="shader_files\animations_vert.glsl" />
     <None Include="shader_files\draw_frag.glsl" />
     <None Include="shader_files\draw_vert.glsl" />
+    <None Include="shader_files\pbr_frag.glsl" />
     <None Include="shader_files\pointLight_frag.glsl" />
     <None Include="shader_files\pointLight_vert.glsl" />
   </ItemGroup>

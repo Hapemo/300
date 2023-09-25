@@ -18,6 +18,17 @@
 
 namespace GFX
 {
+    // temp fnct to test animations
+    void PrintMat4(const glm::mat4& input)
+    {
+        std::cout << "=============================================================================\n";
+        std::cout << "| " << input[0][0] << " | " << input[1][0] << " | " << input[2][0] << " | " << input[3][0] << "\n";
+        std::cout << "| " << input[0][1] << " | " << input[1][1] << " | " << input[2][1] << " | " << input[3][1] << "\n";
+        std::cout << "| " << input[0][2] << " | " << input[1][2] << " | " << input[2][2] << " | " << input[3][2] << "\n";
+        std::cout << "| " << input[0][3] << " | " << input[1][3] << " | " << input[2][3] << " | " << input[3][3] << "\n";
+        std::cout << "=============================================================================\n";
+    }
+
     // default
     Animator::Animator()
     {
@@ -48,16 +59,15 @@ namespace GFX
 
 
     // Update the animation
-    void Animator::UpdateAnimation(float dt)
+    void Animator::UpdateAnimation(float dt, const glm::mat4& inputmtx)
     {
         assert(m_CurrentAnimation != nullptr);
 
         m_DeltaTime = dt;
-        // ECS::GetComponent<Transform>(entityID).getLocalTransform();
 
         m_CurrentTime += m_CurrentAnimation->m_TicksPerSecond * m_DeltaTime;
         m_CurrentTime = fmod(m_CurrentTime, m_CurrentAnimation->m_Duration);        // this loops the animation
-        CalculateBoneTransform(&m_CurrentAnimation->m_RootNode, glm::mat4(1.f));    // this calculates the bone matrices, WRT to the entity's world position
+        CalculateBoneTransform(&m_CurrentAnimation->m_RootNode, inputmtx);          // this calculates the bone matrices, WRT to the entity's world position
     }
 
 
@@ -75,7 +85,7 @@ namespace GFX
             nodeTransform = bone->GetLocalTransform();
         }
 
-        glm::mat4 globalTransform = parentTransform;
+        glm::mat4 globalTransform = parentTransform; // *nodeTransform;
 
         auto& boneInfoMap = m_CurrentAnimation->m_BoneInfoMap;
         if (boneInfoMap.find(nodename) != boneInfoMap.end())

@@ -45,11 +45,8 @@ int GFX::Texture::DeserializeImageFile(const char* filename, unsigned char* &buf
 
 	int dataSize{};
 	// Read in header of texture file
-#if TEST_COMPRESSOR
 	ifs >> mWidth >> mHeight >> mChannels >> mInternalFormat >> dataSize;
-#else
-	ifs >> mWidth >> mHeight >> mChannels >> dataSize;
-#endif
+
 	std::string tmp{};
 	std::getline(ifs, tmp);
 

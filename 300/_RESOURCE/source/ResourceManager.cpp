@@ -88,8 +88,10 @@ void Resource::shader_Loader()
 	// hardcode data path for now 
 	// ideally, this code should read through 
 	std::vector<std::pair<std::string, std::string>> shaderpaths;
-	//shaderpaths.emplace_back(std::pair<std::string, std::string>{ "../_GRAPHICS/shader_files/draw_vert.glsl", "../_GRAPHICS/shader_files/draw_frag.glsl" });
+	shaderpaths.emplace_back(std::pair<std::string, std::string>{ "../_GRAPHICS/shader_files/draw_vert.glsl", "../_GRAPHICS/shader_files/draw_frag.glsl" });
 	shaderpaths.emplace_back(std::pair<std::string, std::string>{ "../_GRAPHICS/shader_files/pointLight_vert.glsl", "../_GRAPHICS/shader_files/pointLight_frag.glsl" });
+	shaderpaths.emplace_back(std::pair<std::string, std::string>{ "../_GRAPHICS/shader_files/animations_vert.glsl", "../_GRAPHICS/shader_files/pointLight_frag.glsl" });
+
 
 	// load all the shaders
 	for (const auto& x : shaderpaths)
@@ -197,7 +199,6 @@ MaterialInstanceData& MaterialInstanceManager::AllocRscInfo()
 {
 	auto pTemp = m_pInfoBufferEmptyHead;
 
-
 	MaterialInstanceData* pNext = reinterpret_cast<MaterialInstanceData*>(m_pInfoBufferEmptyHead->m_pData);
 	m_pInfoBufferEmptyHead = pNext;
 
@@ -283,9 +284,6 @@ void MeshManager::SetupMesh(std::string filepath,unsigned id)
 {
 	_GEOM::Geom GeomData;
 	GFX::Mesh localmesh;
-	std::vector<glm::vec3> positions;
-	std::vector<glm::vec2> uvs;
-	std::vector<unsigned int> indices;
 
 	Deserialization::DeserializeGeom(filepath.c_str(), GeomData);	// load the geom from the compiled geom file
 	localmesh.Setup(GeomData);

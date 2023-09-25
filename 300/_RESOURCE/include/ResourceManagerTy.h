@@ -2,7 +2,7 @@
 #ifndef _RESOURCEMANAGERTY_H
 #define _RESOURCEMANAGERTY_H
 
-#define  _ENABLE_ANIMATIONS 0
+#define  _ENABLE_ANIMATIONS 1
 
 
 #include <filesystem>

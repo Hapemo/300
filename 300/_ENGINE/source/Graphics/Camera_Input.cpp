@@ -7,7 +7,7 @@
 
 
 Camera_Input::Camera_Input()
-	: mCameraSpeed{ 1.f }, mMouseSensitivity{ 0.1f }, mYaw{ -90.f }, mPitch{}
+	: mCameraSpeed{ 100.f }, mMouseSensitivity{ 0.1f }, mYaw{ -90.f }, mPitch{}
 {}
 
 
@@ -15,7 +15,7 @@ void Camera_Input::updateCameraInput(GFX::Camera& cam, const float& dt)
 {
 	glm::vec3 moveVector{};
 	auto  side = glm::normalize(glm::cross(cam.direction(), { 0, 1, 0 }));
-	auto  up = glm::normalize(glm::cross(cam.direction(), side));
+	auto  up = glm::normalize(glm::cross(side, cam.direction()));
 
 	//!< WASD Camera Movement
 	{
@@ -84,6 +84,7 @@ void Camera_Input::updateCameraInput(GFX::Camera& cam, const float& dt)
 		direction.x = cos(glm::radians(mYaw)) * cos(glm::radians(mPitch));
 		direction.y = sin(glm::radians(mPitch));
 		direction.z = sin(glm::radians(mYaw)) * cos(glm::radians(mPitch));
+		direction.y *= -1;
 
 		// update the camera's target based on the normalized direction
 		cam.SetTarget(cam.position() + glm::normalize(direction));
