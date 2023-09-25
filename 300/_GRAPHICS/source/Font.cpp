@@ -16,6 +16,9 @@ unsigned int GFX::Font::Load(const char* fontFile)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);		// Set texture filtering
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
+	// Copy pixel data into texture
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, mAtlasWidth, mAtlasHeight, 0, GL_RED, GL_UNSIGNED_BYTE, reinterpret_cast<void*>(buffer));
+
 	// Delete buffer allocated in deserialize function
 	delete[] buffer;
 
