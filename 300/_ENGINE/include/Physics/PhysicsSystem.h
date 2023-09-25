@@ -22,6 +22,7 @@ private:
 	std::unordered_map<std::uint32_t, PxRigidActor*> mActors;
 	std::unordered_map<MATERIAL, PxMaterial*> mMaterials;
 	PxMaterial* CreateMaterial(float us, float ud, float res);
+	void CreateRigidBody(Entity e);
 
 	PxVec3T<float> Convert(const glm::vec3& vec);
 	PxVec4T<float> Convert(const glm::vec4& vec);

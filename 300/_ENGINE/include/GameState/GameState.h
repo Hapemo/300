@@ -47,7 +47,9 @@ public:
 	\param std::string const&
 	- Name of scene to remove
 	*******************************************************************************/
-	void RemoveScene(std::string const& _name); 
+	void RemoveScene(std::string const& _name);
+
+	Scene* GetScene(std::string const& _name);
 
 	/*!*****************************************************************************
 	Load in a game state file, running al the load of it's scenes too.

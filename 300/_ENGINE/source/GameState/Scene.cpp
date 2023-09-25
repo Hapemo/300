@@ -18,6 +18,7 @@ Added adding and removing of entity
 #include "ScriptingSystem.h"
 #include "Object/ObjectFactory.h"
 //#include "LogicSystem.h"
+#include "GameState/GameStateManager.h"
 
 
 Scene::Scene() : mEntities(), mIsPause(false), mName() {
@@ -39,6 +40,8 @@ Scene::~Scene() {
 }
 
 void Scene::Init() {
+	return; // Temporary remove - Han
+
 	//LOG_INFO("Attempting to call Init() called for scene: " + mName + +" ==================");
 	//std::set<Entity> shouldRun{};
 	mInitBefore = true;
@@ -46,7 +49,7 @@ void Scene::Init() {
 		//LOG_INFO("Attempting to call Init() called for ENTITY: " + std::to_string(e.id) + " with name: " + e.GetComponent<General>().name + " ==================");
 		if (e.GetComponent<General>().isActive) {
 			//LOG_INFO("Call Init() called for ENTITY: " + std::to_string(e.id) + " with name: " + e.GetComponent<General>().name + " ==================");
-			//e.Activate(); TODO mich
+			e.Activate(); 
 		}
 	}
 	
@@ -59,7 +62,8 @@ void Scene::Init() {
 //};
 
 void Scene::Exit() {
-	//for (auto e : mEntities) if (e.GetComponent<General>().isActive) e.Deactivate(); // TODO mich yj
+	return; // Temporary remove - Han
+	for (auto e : mEntities) if (e.GetComponent<General>().isActive) e.Deactivate();
 };
 
 //void Scene::PrimaryUpdate() {
@@ -78,18 +82,17 @@ void Scene::Pause(bool _pause) {
 
 void Scene::Load(std::string const& _name) {
 	//LOG_CUSTOM("SCENE", "Loading Scene: " + mName);
-	//serializationManager->LoadScene(*this, _path); TODO
-	mName = _name;
-	ObjectFactory::LoadScene(this, _name);
+	if (mName.empty()) mName = _name;
+	
+	ObjectFactory::LoadScene(this, mName);
 	for (auto e : mEntities) {
-		//if (e.HasComponent<Scripts>()) systemManager->GetScriptingPointer()->ScriptAlive(e);
+		if (e.HasComponent<Scripts>()) systemManager->GetScriptingPointer()->ScriptAlive(e);
 		e.GetComponent<General>().isPaused = mIsPause;
 	}
 }
 
 void Scene::Save() {
 	//LOG_CUSTOM("SCENE", "Saving Scene: " + mName);
-	//serializationManager->SaveScene(*this); TODO
 	ObjectFactory::SaveScene(this);
 }
 
@@ -115,10 +118,12 @@ Entity Scene::AddEntity() {
 	return e;
 }
 
-void Scene::RemoveEntity(Entity const& _e) {
-	//if (_e.GetComponent<General>().isActive) _e.Deactivate(); TODO mich
+void Scene::RemoveEntity(Entity _e) {
+	// if (_e.GetComponent<General>().isActive) _e.Deactivate(); // Temporary remove - Han
 	systemManager->ecs->DeleteEntity(_e);
-	
 	mEntities.erase(_e);
 }
 
+bool Scene::IsError() {
+	return operator==(*systemManager->mGameStateSystem->GetErrorScene());
+}

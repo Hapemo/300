@@ -18,10 +18,9 @@ M_GSMSTATE::EXIT is only used for closing the game in GAMEMODE only.
 *******************************************************************************/
 #pragma once
 #include "pch.h"
-#include "Singleton.h"
 #include "GameState.h"
 
-class GameStateManager : public Singleton<GameStateManager> {
+class GameStateManager {
 public:
 	enum class E_GSMSTATE {
 		EXIT,
@@ -155,7 +154,7 @@ public:
 	\param std::string const&
 	- Next game state's path
 	*******************************************************************************/
-	void SetNextGSPath(std::string const& _path) { mNextGSPath = _path; }
+	void SetNextGSPath(std::string const& _path) { mNextGSName = _path; }
 
 	/*!*****************************************************************************
 	Check if game loop should close
@@ -168,7 +167,11 @@ public:
 	*******************************************************************************/
 	void NewGameState(std::string const& _name);
 
+	void EditorRestartGameState() { mGSMState = E_GSMSTATE::CHANGING; }
+
 	GameState* GetCurrentGameState() { return &mCurrentGameState; }
+
+	Scene* GetErrorScene() { return &mErrorScene; }
 
 	///*!*****************************************************************************
 	//Find the gamestate name stated. Returns iterator position of gamestate if found,

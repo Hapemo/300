@@ -45,6 +45,40 @@ void Entity::Activate() {
 	//------------------------------------------------------------------
 }
 
+void Entity::Deactivate() {
+	if (!HasComponent<General>()) {
+		//LOG_ERROR("There is no general component when attempting to activate, entity ID: " + std::to_string(id));
+		assert(false && std::string("There is no general component when attempting to deactivate, entity ID: " + std::to_string(static_cast<uint32_t>(id))).c_str());
+		return;
+	}
+	General& genComp{ GetComponent<General>() };
+
+	//------------------------------------------------------------------
+	// Codes that should run when activating entity halfway through game
+
+	// Scripting
+#ifdef _EDITOR
+	if (editorManager->IsScenePaused()) return;
+#endif
+	//if (!editorManager->IsScenePaused())
+	if (HasComponent<Script>())
+		systemManager->GetScriptingPointer()->ScriptExit(*this);
+
+
+	// General
+	genComp.isActive = true;
+
+	// Parent Child
+	/*if (HasComponent<)
+	Entity firstChild =
+
+	for (Entity e : genComp.children) e.Deactivate();*/
+
+
+
+	//------------------------------------------------------------------
+}
+
 ECS::ECS() : registry(), NullEntity(registry.create()), mClipboard(0) {} 
 
 Entity ECS::NewEntity()
@@ -93,16 +127,18 @@ Entity ECS::NewEntityFromPrefab(std::string prefabName)
 {
 	// void ObjectFactory::DeserializeScene(const std::string& filename)
 	// creation of new entity done inside deserializescene function
-	Entity e(ObjectFactory::DeserializePrefab("../assets/Prefabs/" + prefabName + ".json"));
+	Entity e(ObjectFactory::DeserializePrefab("../assets/Prefabs/" + prefabName + ".json", mPrefabs[prefabName].size()));
 	e.AddComponent<Prefab>().mPrefab = prefabName;
 	//copy all prefab components (except transform) to new entity
+	General temp1 = e.GetComponent<General>();
+	MeshRenderer temp = e.GetComponent<MeshRenderer>();
 	mPrefabs[prefabName].push_back(e);
 	return e;
 }
 
 void ECS::UpdatePrefabEntities(std::string prefabName)
 {
-	Entity temp(ObjectFactory::DeserializePrefab("../assets/Prefabs/" + prefabName + ".json"));
+	Entity temp(ObjectFactory::DeserializePrefab("../assets/Prefabs/" + prefabName + ".json", 0));
 	
 	for (Entity e : mPrefabs[prefabName])
 	{
@@ -154,7 +190,7 @@ Entity ECS::PasteEntity()
 	if (mClipboard.HasComponent<Audio>())
 		e.GetComponent<Audio>() = mClipboard.GetComponent<Audio>();
 
-	return true;
+	return e;
 }
 
 

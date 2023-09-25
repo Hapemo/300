@@ -1,6 +1,7 @@
 #include "Serialization/Serialization.h"
 //#include "Serialization/SerializationTemp.h"
 #include "GameState/Scene.h"
+#include "../../../_SCRIPTING/include/ScriptingSystem.h"
 
 bool BaseJSON::DeserializeFile(const std::string& filename)
 {
@@ -162,6 +163,7 @@ bool EntityJSON::Deserialize(const rapidjson::Value& obj)
 		for (int i = 0; i < obj["Scripts"].Size(); ++i)
 		{
 			tmp.scriptFile = obj["Scripts"][i].GetString();
+			tmp.env = { systemManager->mScriptingSystem->luaState, sol::create, systemManager->mScriptingSystem->luaState.globals() };
 			mSJ.scriptsContainer.push_back(tmp);
 		}
 

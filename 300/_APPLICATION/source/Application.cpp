@@ -30,6 +30,7 @@ start up of window and game system, also runs their update functions.
 GFX::DebugRenderer* Application::mRenderer;
 GFX::Window Application::mWindow;
 std::string Application::title;
+//uint32_t eee;
 
 void Application::Init() 
 {
@@ -45,6 +46,7 @@ void Application::StartUp()
     mWindow = GFX::Window({ 1920, 1080 });
     mWindow.SetWindowTitle("Application");
     systemManager = new SystemManager();
+    ConfigManager::Init("../assets/config.txt");
 }
 
 void Application::SystemInit() 
@@ -52,25 +54,33 @@ void Application::SystemInit()
 #pragma region testphysics
     //Entity e1 = systemManager->ecs->NewEntity();
     //Entity e2 = systemManager->ecs->NewEntity();
+    //Entity e3 = systemManager->ecs->NewEntity();
 
     //e1.AddComponent<RigidBody>();
-    //e1.GetComponent<RigidBody>().mMass = 10.f;
+    //e1.GetComponent<RigidBody>().mDensity = 10.f;
     //e1.GetComponent<RigidBody>().mMaterial = MATERIAL::CONCRETE;
     //e1.GetComponent<RigidBody>().mMotion = MOTION::STATIC;
     //e1.AddComponent<PlaneCollider>();
 
     //e2.AddComponent<RigidBody>();
-    //e2.GetComponent<RigidBody>().mMass = 10.f;
+    //e2.GetComponent<RigidBody>().mDensity = 10.f;
     //e2.GetComponent<RigidBody>().mMaterial = MATERIAL::CONCRETE;
     //e2.GetComponent<RigidBody>().mMotion = MOTION::DYNAMIC;
     //e2.AddComponent<SphereCollider>();
-    //e2.GetComponent<Transform>().mTranslate.y = 1000.f;
+    //e2.GetComponent<Transform>().mTranslate.y = 400.f;
+
+    //e3.AddComponent<RigidBody>();
+    //e3.GetComponent<RigidBody>().mDensity = 10.f;
+    //e3.GetComponent<RigidBody>().mMaterial = MATERIAL::CONCRETE;
+    //e3.GetComponent<RigidBody>().mMotion = MOTION::STATIC;
+    //e3.AddComponent<SphereCollider>();
+    //e3.GetComponent<Transform>().mTranslate = glm::vec3(300.f, 105, 300.f);
+    //eee = (uint32_t)e2.id;
 
 #pragma endregion testphysics
     systemManager->Init(false, &mWindow);
 
     FPSManager::Init();
-    ConfigManager::Init("../assets/config.txt");
     Input::Init();
 #pragma region testserialization
     //ObjectFactory::DeserializeScene("../assets/Scenes/test.json");
@@ -107,9 +117,9 @@ void Application::SystemInit()
 
     //ObjectFactory::SerializeScene("../assets/Scenes/test.json");
 
-    systemManager->mGameStateSystem->NewGameState("MAMAMA");
-    systemManager->mGameStateSystem->GetCurrentGameState()->AddScene("test");
-    systemManager->mGameStateSystem->GetCurrentGameState()->Save();
+    //systemManager->mGameStateSystem->NewGameState("MAMAMA");
+    //systemManager->mGameStateSystem->GetCurrentGameState()->AddScene("test");
+    //systemManager->mGameStateSystem->GetCurrentGameState()->Save();
 
     //auto view = systemManager->ecs->GetEntitiesWith<General, Transform>();
     //int size = view.size();
@@ -199,6 +209,14 @@ void Application::FirstUpdate()
 
 void Application::SystemUpdate() 
 {
+    //if (Input::CheckKey(E_STATE::HOLD, E_KEY::A))
+    //    systemManager->mPhysicsSystem->SetVelocity(Entity(eee), glm::vec3(50.f, 0, 0));
+    //if (Input::CheckKey(E_STATE::HOLD, E_KEY::D))
+    //    systemManager->mPhysicsSystem->SetVelocity(Entity(eee), glm::vec3(-50.f, 0, 0));
+    //if (Input::CheckKey(E_STATE::HOLD, E_KEY::W))
+    //    systemManager->mPhysicsSystem->SetVelocity(Entity(eee), glm::vec3(0.f, 0, 50));
+    //if (Input::CheckKey(E_STATE::HOLD, E_KEY::S))
+    //    systemManager->mPhysicsSystem->SetVelocity(Entity(eee), glm::vec3(0.f, 0, -50));
     systemManager->Update(FPSManager::dt);
 }
 

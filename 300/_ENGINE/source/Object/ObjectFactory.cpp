@@ -240,7 +240,7 @@ void ObjectFactory::SerializePrefab(Entity e, const std::string& filename)
 	entities.SerializeFile(filename);
 }
 
-Entity ObjectFactory::DeserializePrefab(const std::string& filename)
+Entity ObjectFactory::DeserializePrefab(const std::string& filename, int id)
 {
 	EntityListJSON entities;
 	entities.DeserializeFile(filename);
@@ -256,6 +256,7 @@ Entity ObjectFactory::DeserializePrefab(const std::string& filename)
 
 	General& curr = e.GetComponent<General>();
 
+	curr.name = temp.name + " Prefab " + std::to_string(id);
 	curr.isActive = true;
 	curr.isPaused = true;
 	curr.tag = temp.tag;
@@ -467,10 +468,12 @@ void ObjectFactory::SaveScene(Scene* scene)
 	entities.SerializeFile(filename);
 }
 
-void ObjectFactory::LoadGameState(GameState* gs, const std::string& filename)
+void ObjectFactory::LoadGameState(GameState* gs, const std::string& _name)
 {
+	gs->mName = _name;
+
 	SceneListJSON scenes;
-	scenes.DeserializeFile(filename);
+	scenes.DeserializeFile(ConfigManager::GetValue("GameStatePath") + _name + ".json");
 
 	Scene sce;
 	for (auto& s : scenes.SceneList())
@@ -481,11 +484,11 @@ void ObjectFactory::LoadGameState(GameState* gs, const std::string& filename)
 
 	// split the file name and save it into the scene
 	// eg "../resources/GameStates/test.json"
-	size_t lastSep = filename.find_last_of("/\\");
-	size_t lastStop = filename.find_last_of(".");
+	size_t lastSep = _name.find_last_of("/\\");
+	size_t lastStop = _name.find_last_of(".");
 
 	if (lastSep != std::string::npos && lastStop != std::string::npos && lastStop > lastSep)
-		gs->mName = filename.substr(lastSep + 1, lastStop - lastSep - 1);
+		gs->mName = _name.substr(lastSep + 1, lastStop - lastSep - 1);
 }
 
 void ObjectFactory::SaveGameState(GameState* gs)
