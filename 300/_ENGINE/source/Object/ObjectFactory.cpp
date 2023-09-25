@@ -278,11 +278,9 @@ Entity ObjectFactory::DeserializePrefab(const std::string& filename, int id)
 	{
 		e.AddComponent<MeshRenderer>();
 		e.GetComponent<MeshRenderer>() = eJ.GetMRJSON();
-		MeshRenderer mr = e.GetComponent<MeshRenderer>();
+		MeshRenderer& mr = e.GetComponent<MeshRenderer>();
 		uid uids(mr.mMeshPath);
 		mr.mMeshRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(uids.id));
-		GFX::Mesh temp = *reinterpret_cast<GFX::Mesh*>(mr.mMeshRef);
-		std::cout << "temp\n";
 	}
 
 	if (eJ.mbc_t)
