@@ -116,7 +116,7 @@ void Resource::MaterialInstance_Loader()
 {
 	// hardcode material instance path for now 
 	std::vector<std::string> materialinstancepaths;
-	materialinstancepaths.emplace_back("../assets/Compressed/Skull.ctexture");
+	//materialinstancepaths.emplace_back("../assets/Compressed/Skull.ctexture");
 
 	std::filesystem::path folderpath = compressed_texture_path.c_str();
 

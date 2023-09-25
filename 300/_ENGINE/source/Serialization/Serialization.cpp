@@ -108,8 +108,8 @@ bool EntityJSON::Deserialize(const rapidjson::Value& obj)
 	if (obj.HasMember("MeshRenderer"))
 	{
 		mMRJ.mShaderPath = std::pair<std::string, std::string>(obj["MeshRenderer"]["ShaderPath"][0].GetString(), obj["MeshRenderer"]["ShaderPath"][1].GetString());
-		for(int i = 0; i < obj["MeshRenderer"]["MaterialInstancePath"].Size(); ++i)
-			mMRJ.mMaterialInstancePath.push_back(obj["MeshRenderer"]["MaterialInstancePath"][i].GetString());
+		for(int i = 0; i < 4; ++i) // size 4 becausae only 4 type of material property can be assigned
+			mMRJ.mMaterialInstancePath[i] = (obj["MeshRenderer"]["MaterialInstancePath"][i].GetString());
 		mMRJ.mMeshPath = obj["MeshRenderer"]["MeshPath"].GetString();
 		mMRJ.mGUID = (unsigned)obj["MeshRenderer"]["GUID"].GetInt();
 
@@ -291,7 +291,7 @@ bool EntityJSON::Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* wri
 
 		writer->String("MaterialInstancePath");
 		writer->StartArray();
-		for (int i = 0; i < mMRJ.mMaterialInstancePath.size(); ++i)
+		for (int i = 0; i < 4; ++i) // size of material property
 			writer->String(mMRJ.mMaterialInstancePath[i].c_str());
 		writer->EndArray();
 

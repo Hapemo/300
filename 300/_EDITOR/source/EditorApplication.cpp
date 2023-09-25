@@ -93,7 +93,7 @@ void EditorApplication::MainUpdate()
 
        // systemManager->mGraphicsSystem->SetCameraPosition(&systemManager->mGraphicsSystem->mCamera,);
         // To remove (Script test with entities)
-        systemManager->mScriptingSystem->ScriptingUpdateTest();
+        //systemManager->mScriptingSystem->ScriptingUpdateTest();
 
         SecondUpdate(); // This should always be the last
 

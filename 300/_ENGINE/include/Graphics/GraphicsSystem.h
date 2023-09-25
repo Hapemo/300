@@ -52,8 +52,8 @@ public:
 
 	// Direction vector of the camera (Target - position)
 	vec3 GetCameraDirection(CAMERA_TYPE type);
-
-private:
+	
+	
 	GFX::DebugRenderer m_Renderer;		// isolated to debug draws
 	GFX::FBO m_Fbo;
 
@@ -78,6 +78,8 @@ private:
 
 	// -- Private Functions --
 	void DrawAll(GFX::Mesh& mesh);		// Renders all instances of a given mesh
+private:
+
 
 };
 

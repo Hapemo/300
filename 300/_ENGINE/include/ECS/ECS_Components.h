@@ -39,13 +39,20 @@ struct Transform
 // this struct stores the filepaths for the meshdata, material, and shader. the actual data is stored in the resource manager
 struct MeshRenderer
 {
+
+
+
 	// For now, we store the string to the filepaths. TO CHANGE to uids for efficient referencing
 	std::pair<std::string, std::string> mShaderPath;
-	std::vector<std::string>				mMaterialInstancePath;
+	std::string			mMaterialInstancePath[4];
 	std::string							mMeshPath;
 	
-	unsigned							mGUID;
+	void*							mMeshRef;
+	void*							mTextureRef[4];
 
+	unsigned						mGUID;
+
+	void							Inspect();
 	//RTTR_ENABLE()
 };
 
@@ -58,16 +65,24 @@ struct RigidBody
 
 	RigidBody() : mDensity(10.f), mMaterial(MATERIAL::WOOD), mMotion(MOTION::STATIC), mVelocity(0.f) {};
 	//RTTR_ENABLE()
+
+
+	int mMat{ 0 };
+	int mMot{ 0 };
+	void							Inspect();
 };
 
 struct BoxCollider
 {
 	glm::vec3 mScaleOffset;			// final scale = mScaleOffset * Transform.mScale;
 	glm::vec3 mTranslateOffset;		// final pos = Transform.mTranslate + mTranslateOffset;
+	
+
 
 	BoxCollider() : mScaleOffset(1.f), mTranslateOffset(0.f) {}
 	
 	//RTTR_ENABLE()
+	void							Inspect();
 };
 
 struct SphereCollider
@@ -78,6 +93,7 @@ struct SphereCollider
 	SphereCollider() : mScaleOffset(1.f), mTranslateOffset(0.f) {};
 
 	//RTTR_ENABLE()
+	void							Inspect();
 };
 
 struct PlaneCollider //if has plane collider always static
@@ -88,13 +104,13 @@ struct PlaneCollider //if has plane collider always static
 	PlaneCollider() : mNormal(0.f, 1.f, 0.f), mTranslateOffset(0.f) {};
 
 	//RTTR_ENABLE()
+	void							Inspect();
 };
 
 class Scripts {
 public:
 	Scripts() = default;
 	~Scripts() = default;
-	void Inspect();
 
 	static void AddScript(Entity id, std::string fileName);
 	//static void LoadRunScript(Entity entity);
@@ -103,6 +119,8 @@ public:
 	std::vector <Script> scriptsContainer;
 
 	//RTTR_ENABLE()
+	void Inspect();
+
 };
 
 struct Parent
@@ -134,6 +152,7 @@ struct Audio
 	bool mIsPlay;	// play audio if true
 
 	//RTTR_ENABLE()
+	void							Inspect();
 };
 
 //RTTR_REGISTRATION

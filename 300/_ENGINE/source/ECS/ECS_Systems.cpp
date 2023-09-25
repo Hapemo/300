@@ -41,9 +41,13 @@ void SystemManager::Init(bool isEditor, GFX::Window* window)
 	PINFO("Init Physics System");
 	mScriptingSystem.get()->Init();
 	PINFO("Init Scripting System");
+
+	mResourceSystem.get()->Init();
+	mResourceTySystem.get()->Init();
 	mGraphicsSystem.get()->Init();
-	mResourceSystem.get()->Init();			// all the resources are loaaded here
 	PINFO("Init Graphics System");
+
+			// all the resources are loaaded here
 	mGameStateSystem.get()->Init();
 	mAudioSystem.get()->Init();
 	PINFO("Init Game state System");
@@ -64,7 +68,7 @@ void SystemManager::Exit()
 	mPhysicsSystem.get()->Exit();
 	mScriptingSystem.get()->Exit();
 	mGraphicsSystem.get()->Exit();
-//	mResourceSystem.get()->Exit();
+	mResourceTySystem.get()->Exit();
 	mGameStateSystem.get()->Unload();
 	mAudioSystem.get()->Exit();
 
