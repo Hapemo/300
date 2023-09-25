@@ -26,6 +26,11 @@ to select current Entity and activates inspector
 #include "ScriptingSystem.h"
 #include "GameState/GameStateManager.h"
 
+
+#define DEBUG
+
+
+
 entt::entity Hierarchy::selectedId;
 entt::entity Hierarchy::RselectedId;
 bool Hierarchy::selectionOn;
@@ -34,7 +39,6 @@ void Hierarchy::init() {}
 //int Hierarchy::selectCnt{ -1 };
 
 
-//#define DEBUG
 #ifdef DEBUG
 
 void Hierarchy::update()
@@ -281,6 +285,27 @@ void Hierarchy::update() {
     for (int i{ 0 }; i < allScene.size();++i) {
         if (ImGui::TreeNodeEx(allScene[i].mName.c_str(), ImGuiTreeNodeFlags_DefaultOpen))
         {
+            if (ImGui::BeginDragDropTarget()) {
+                //ImGui::SetDragDropPayload("PARENT_CHILD", source_path, strlen(source_path) * sizeof(wchar_t), ImGuiCond_Once);
+
+                if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_PREFAB")) {
+                    // auto payload = ImGui::AcceptDragDropPayload("PARENT_CHILD");
+
+                    auto data = (const char*)payload->Data;
+
+
+                    std::string newdata(data);
+                    Entity newent = systemManager->ecs->NewEntityFromPrefab(newdata);
+
+
+                    //allScene[i].
+                    //Entity tempEnt(RselectedId);
+                    //systemManager->ecs->NewPrefab(tempEnt);
+                }
+                ImGui::EndDragDropTarget();
+            }
+
+
             for (Entity ent : allScene[i].mEntities) {
 
 

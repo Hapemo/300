@@ -144,3 +144,9 @@ glm::mat4 GFX::Camera::viewProj()
 {
 	return mViewProjection;
 }
+
+
+glm::mat4 GFX::Camera::Proj()
+{
+	return mProjection;
+}
