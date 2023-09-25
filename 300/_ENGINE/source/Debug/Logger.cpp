@@ -86,6 +86,9 @@ void Logger::LogOutput(log_mode mode, const char* message, ...)
 	char outputMessage[1000];
 	memset(outputMessage, 0, sizeof(outputMessage));
 
+	std::string strMode(mode_strings[mode]);
+	flag = true;
+
 	//Making use of <stdarg.h> library that accepts an indefinite number of mesages
 	va_list argument_ptr;
 	va_start(argument_ptr, message);
@@ -106,29 +109,34 @@ void Logger::LogOutput(log_mode mode, const char* message, ...)
 	if (concatFlag)
 	{
 		Pfile << outputMessage << "\n";
+		Pfile << "\n";
 		concatFlag = !concatFlag;
+		//Store log in std::deque container that will be used to
+		//output log to imGUI logging panel
+		std::string strMessage(outputMessage);
+		logToGUI.push_back(strMessage + "\n");
 	}
 
-	if (messageStr.find_last_of("+"))
+	if (messageStr.back() == '+')
 	{
 		std::string msg(outputMessage);
 		msg.erase(remove(msg.begin(), msg.end(), '+'), msg.end());
 		Pfile << temp2 << mode_strings[mode] << msg;
 		concatFlag = !concatFlag;
+		//Store log in std::deque container that will be used to
+		//output log to imGUI logging panel
+		logToGUI.push_back(strMode + msg);
 	}
 	else
 	{
 		//Output to opened log file from InitLogging()
 		Pfile << temp2 << mode_strings[mode] << outputMessage << "\n";
 		Pfile << "\n";
+		//Store log in std::deque container that will be used to
+		//output log to imGUI logging panel
+		std::string strMessage(outputMessage);
+		logToGUI.push_back(strMode + strMessage + "\n");
 	}
-
-	std::string strMode(mode_strings[mode]);
-	std::string strMessage(outputMessage);
-	flag = true;
-	//Store log in std::deque container that will be used to
-	//output log to imGUI logging panel
-	logToGUI.push_back(strMode + strMessage + "\n");
 }
 
 void Logger::EndLogging()

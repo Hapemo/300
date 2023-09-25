@@ -15,12 +15,13 @@ void AudioSystem::Init()
 	//  load audio for loop
 	//  [Create the Audio System] -> returns the system object to this class. (&system)'
 	// PINFO("FMOD System Create: %d", ErrCodeCheck(FMOD::System_Create(&system_obj)));
-
+	PINFO("FMOD System Create: +");
 	std::cout << "FMOD System Create:";
 	ErrCodeCheck(FMOD::System_Create(&system_obj));
 
 	// Initialize the System settings
 	// PINFO("FMOD System Initialize: %d" , ErrCodeCheck(system_obj->init(MAX_AUDIO_FILES_PLAYING, FMOD_INIT_NORMAL, nullptr))); // Settings can be combined by doing OR operation)
+	PINFO("FMOD System Initialize: +");
 	std::cout << "FMOD System Initialize: ";
 	ErrCodeCheck(system_obj->init(MAX_AUDIO_FILES_PLAYING, FMOD_INIT_NORMAL, nullptr));
 
@@ -255,7 +256,7 @@ int AudioSystem::ErrCodeCheck(FMOD_RESULT result)
 	{
 		// PWARNING("FMOD OPERATION ERROR: %d", result);
 		std::cout << "FMOD OPERATION ERROR: " << result << std::endl;
-		PWARNING("ERROR");
+		PINFO("FMOD OPERATION ERROR: %s", result);
 
 		switch (result)
 		{
@@ -267,14 +268,16 @@ int AudioSystem::ErrCodeCheck(FMOD_RESULT result)
 
 		return 0; // failure
 	}
-	/*PINFO("FMOD OPERATION OK.");*/
+	PINFO("FMOD OPERATION OK.");
 	std::cout << "FMOD OPERATION OK." << std::endl;
 	return 1; // success (no issues)
 }
 
 void AudioSystem::LoadAudio(std::string file_path, std::string audio_name)
 {
+	PINFO("File Detected: %s", file_path);
 	std::cout << "File Detected: " << file_path << std::endl;
+	PINFO("Creating Sound: +");
 	std::cout << "Creating Sound: ";
 	FMOD::Sound *new_sound;
 	int check = ErrCodeCheck(system_obj->createSound(file_path.c_str(), FMOD_LOOP_OFF, 0, &new_sound));
