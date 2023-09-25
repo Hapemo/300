@@ -250,8 +250,7 @@ void ScriptingSystem::Update(float dt)
         //    } 
         once = false;
     }
-    //} 
-
+    //}
     EnginePerformance::EndTrack("Scripting");
     EnginePerformance::UpdateSystemMs("Scripting");
 }
@@ -348,14 +347,14 @@ void ScriptingSystem::ScriptingUpdateTest()
     //    std::cout << std::endl;
     //    printOnce = true;
     //}
-    if (Input::CheckKey(E_STATE::PRESS, E_KEY::Q))
-    {
-        Entity entity = systemManager->ecs->NewEntity();
-        /*std::cout << entity.GetComponent<General>().name << std::endl;*/
-    }
+    //if (Input::CheckKey(E_STATE::PRESS, E_KEY::Q))
+    //{
+    //    Entity entity = systemManager->ecs->NewEntity();
+    //    /*std::cout << entity.GetComponent<General>().name << std::endl;*/
+    //}
 
-    if (Input::CheckKey(E_STATE::PRESS, E_KEY::T))
-        printOnce = false;
+    //if (Input::CheckKey(E_STATE::PRESS, E_KEY::T))
+    //    printOnce = false;
     //// Button press number 1 to add new script 
     //if (Input::CheckKey(E_STATE::PRESS, E_KEY::_1))
     //{

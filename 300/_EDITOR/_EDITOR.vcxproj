@@ -171,6 +171,7 @@ copy "$(SolutionDir)lib\FMOD\core\lib\fmod.dll" "$(TargetDir)fmod.dll" /Y</Comma
     <ClCompile Include="source\EditorApplication.cpp" />
     <ClCompile Include="source\Editor\ContentBrower.cpp" />
     <ClCompile Include="source\Editor\Editor.cpp" />
+    <ClCompile Include="source\Editor\EditorLogger.cpp" />
     <ClCompile Include="source\Editor\Hierarchy.cpp" />
     <ClCompile Include="source\Editor\Inspect.cpp" />
     <ClCompile Include="source\Editor\MenuPanel.cpp" />
@@ -194,6 +195,7 @@ copy "$(SolutionDir)lib\FMOD\core\lib\fmod.dll" "$(TargetDir)fmod.dll" /Y</Comma
     <ClInclude Include="include\Editor\EditorWindow.h" />
     <ClInclude Include="include\Editor\Hierarchy.h" />
     <ClInclude Include="include\Editor\Inspect.h" />
+    <ClInclude Include="include\Editor\EditorLogger.h" />
     <ClInclude Include="include\Editor\MenuPanel.h" />
     <ClInclude Include="include\Editor\Performance.h" />
     <ClInclude Include="include\Editor\SceneWindow.h" />
