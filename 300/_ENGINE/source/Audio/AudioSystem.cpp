@@ -149,12 +149,12 @@ void AudioSystem::Update(float dt)
 
 	if (Input::CheckKey(PRESS, R))
 	{
-		SetSpecificChannelVolume(AUDIO_SFX, 0, 0.0f);
+		SetSpecificChannelVolume(AUDIO_BGM, 0, 0.0f);
 	}
 
 	if (Input::CheckKey(PRESS, T))
 	{
-		SetSpecificChannelVolume(AUDIO_SFX, 1, 0.0f);
+		SetSpecificChannelVolume(AUDIO_SFX, 0, 0.0f);
 	}
 
 	if (Input::CheckKey(PRESS, A))
@@ -356,12 +356,15 @@ void AudioSystem::PlayBGMAudio(std::string audio_name, float audio_vol)
 
 void AudioSystem::SetAllSFXVolume(float audio_vol)
 {
-	auto channel_it = mChannels.find(AUDIO_SFX);
+	auto channel_it = mChannelsNew.find(AUDIO_SFX);
 	std::cout << "Setting SFX Volume: ";
 
-	for (FMOD::Channel* channel : channel_it->second)
+	if (channel_it != mChannelsNew.end())
 	{
-		ErrCodeCheck(channel->setVolume(audio_vol));
+		for (Channel& channel : channel_it->second)
+		{
+			ErrCodeCheck(channel.mChannel->setVolume(audio_vol));
+		}
 	}
 
 	sfxVolume = audio_vol;
@@ -369,12 +372,15 @@ void AudioSystem::SetAllSFXVolume(float audio_vol)
 
 void AudioSystem::SetAllBGMVolume(float audio_vol)
 {
-	auto channel_it = mChannels.find(AUDIO_BGM);
+	auto channel_it = mChannelsNew.find(AUDIO_BGM);
 	std::cout << "Setting BGM Volume: ";
 
-	for (FMOD::Channel* channel : channel_it->second)
+	if (channel_it != mChannelsNew.end())
 	{
-		ErrCodeCheck(channel->setVolume(audio_vol));
+		for (Channel& channel : channel_it->second)
+		{
+			ErrCodeCheck(channel.mChannel->setVolume(audio_vol));
+		}
 	}
 
 	bgmVolume = audio_vol;
@@ -382,19 +388,22 @@ void AudioSystem::SetAllBGMVolume(float audio_vol)
 
 void AudioSystem::SetSpecificChannelVolume(AUDIOTYPE audio_type, int channel_id, float audio_vol)
 {	
-	auto channel_it = mChannels.find(audio_type);
+	auto channel_it_new = mChannelsNew.find(audio_type);
 
-	if (channel_it != mChannels.end())
+	if (channel_it_new != mChannelsNew.end())
 	{
-		if (channel_id < channel_it->second.size())
+		if (channel_id < channel_it_new->second.size())
 		{
-			FMOD::Channel** channelpp = nullptr;
-			channelpp = &channel_it->second[channel_id];
+			std::cout << "CHANNEL REQUEST: " << channel_id << std::endl;
+			Channel& channel_found = FindChannel(audio_type, channel_id);
+			std::cout << "SETTING VOLUME:";
+			ErrCodeCheck(channel_found.mChannel->setVolume(audio_vol));
 
-			if (channelpp)
+		/*	if (channel_it_new->second[channel_id].mIsPlayingSound)
 			{
-				channel_it->second[channel_id]->setVolume(audio_vol);
-			}
+				std::cout << "Attempting to Change Sound @ Channel 0." << std::endl;
+				ErrCodeCheck(FindChannel(audio_type, channel_id).mChannel->setVolume(audio_vol));
+			}*/
 		}
 	}
 
@@ -560,3 +569,24 @@ void AudioSystem::TogglePauseSpecific(AUDIOTYPE audio_type, int channel_id)
 	}
 }
 
+Channel& AudioSystem::FindChannel(AUDIOTYPE audio_type, int channel_id)
+{
+	if (channel_id > mChannelsNew.size())
+	{
+		std::cout << "Requested Index does not exists..." << std::endl;
+		//throw std::out_of_range("Requested Index does not exists...");
+	}
+
+	auto channel_it = mChannelsNew.find(audio_type);
+
+	if (channel_it != mChannelsNew.end())
+	{
+		for (Channel& channel : channel_it->second)
+		{
+			if (channel.mChannelID == channel_id)
+			{
+				return channel;
+			}
+		}
+	}
+}

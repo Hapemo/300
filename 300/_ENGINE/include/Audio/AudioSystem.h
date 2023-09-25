@@ -3,6 +3,7 @@
 #include <iostream>
 #include <map>
 #include <filesystem>
+#include <stdexcept>   // Added (9/25)
 #include "Input/Input.h"
 #include "AudioType.h" // BGM/SFX
 #include "ECS/ECS.h"
@@ -50,6 +51,10 @@ public:
 	void TogglePauseSFXSounds();
 	void TogglePauseBGMSounds();
 	void TogglePauseSpecific(AUDIOTYPE audio_type, int channel_id);
+
+// Helper Functions...
+public:
+	Channel& FindChannel(AUDIOTYPE audio_type , int id);
 
 	// Will build as needs require.
 private:
