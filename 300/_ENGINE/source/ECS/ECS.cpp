@@ -3,6 +3,7 @@
 #include "ScriptingSystem.h"
 #include "pch.h"
 #include "Object/ObjectFactory.h"
+#include "Debug/AssertException.h"
 
 bool Entity::ShouldRun() {
 	assert(HasComponent<General>() && std::string("There is no general component when attempting to change Entity's isActive").c_str());
@@ -114,12 +115,18 @@ void ECS::NewPrefab(Entity e)
 	// 2) have a list of entities tied to a prefab
 	// for now, use member map
 	if (static_cast<std::uint32_t>(e.id) == 0)
-		throw ("trying to make prefab from null entity");
+	{
+		 PWARNING("trying to make prefab from null entity - prefab not created");
+		 return;
+	}
 	std::string name = e.GetComponent<General>().name;
+	if (mPrefabs.count(name))
+	{
+		PWARNING("prefab of the same name exists! - prefab not created");
+		return;
+	}
 	ObjectFactory::SerializePrefab(e, "../assets/Prefabs/" + name + ".json");
 	e.AddComponent<Prefab>().mPrefab = name;
-	if (mPrefabs.count(name))
-		throw ("prefab of the same name exists!");
 	mPrefabs[name].push_back(e);
 }
 
@@ -164,7 +171,7 @@ void ECS::UpdatePrefabEntities(std::string prefabName)
 void ECS::CopyEntity(Entity e)
 {
 	if (static_cast<std::uint32_t>(e.id) == 0)
-		throw ("trying to copy null entity");
+		PASSERT ("trying to copy null entity");
 	mClipboard = e;
 }
 
