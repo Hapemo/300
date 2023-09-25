@@ -116,6 +116,10 @@ void Resource::shader_Loader()
 
 void Resource::MaterialInstance_Loader()
 {
+	// hardcode material instance path for now 
+	std::vector<std::string> materialinstancepaths;
+	//materialinstancepaths.emplace_back("../assets/Compressed/Skull.ctexture");
+
 	std::filesystem::path folderpath = compressed_texture_path.c_str();
 
 	// Reads through all the files in the folder, and loads them into the mesh

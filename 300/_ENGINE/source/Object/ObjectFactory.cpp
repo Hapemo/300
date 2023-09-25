@@ -4,7 +4,9 @@
 #include "GameState/Scene.h"
 #include "GameState/GameState.h"
 #include "ConfigManager.h"
+#include "ResourceManagerTy.h"
 
+// unused (technically)
 void ObjectFactory::DeserializeScene(const std::string& filename)
 {
 	// loop thru container and store entities
@@ -34,6 +36,9 @@ void ObjectFactory::DeserializeScene(const std::string& filename)
 		{
 			e.AddComponent<MeshRenderer>();
 			e.GetComponent<MeshRenderer>() = obj.GetMRJSON();
+			MeshRenderer mr = e.GetComponent<MeshRenderer>();
+			uid uids(mr.mMeshPath);
+			mr.mMeshRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(uids.id));
 		}
 
 		if (obj.mbc_t)
@@ -116,6 +121,7 @@ void ObjectFactory::DeserializeScene(const std::string& filename)
 	//}
 }
 
+// unused (technically)
 void ObjectFactory::SerializeScene(const std::string& filename)
 {
 	// loop thru container and store entity data from editor
@@ -272,6 +278,22 @@ Entity ObjectFactory::DeserializePrefab(const std::string& filename, int id)
 	{
 		e.AddComponent<MeshRenderer>();
 		e.GetComponent<MeshRenderer>() = eJ.GetMRJSON();
+		MeshRenderer& mr = e.GetComponent<MeshRenderer>();
+		uid uids(mr.mMeshPath);
+		mr.mMeshRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(uids.id));
+		for (int i{ 0 }; i < 4; i++) {
+
+			if (mr.mTextureCont[i] == true) {
+				uid uids(mr.mMaterialInstancePath[i]);
+				mr.mTextureRef[i] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(uids.id));
+			}
+		}
+		GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mr.mMeshRef);
+		if (meshinst->mHasAnimation)
+		{
+			e.AddComponent<Animator>();
+			e.GetComponent<Animator>().mAnimator.SetAnimation(&meshinst->mAnimation[0]);
+		}
 	}
 
 	if (eJ.mbc_t)
@@ -338,6 +360,9 @@ void ObjectFactory::LoadScene(Scene* scene, const std::string& filename)
 		{
 			e.AddComponent<MeshRenderer>();
 			e.GetComponent<MeshRenderer>() = obj.GetMRJSON();
+			MeshRenderer mr = e.GetComponent<MeshRenderer>();
+			uid uids(mr.mMeshPath);
+			mr.mMeshRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(uids.id));
 		}
 
 		if (obj.mbc_t)

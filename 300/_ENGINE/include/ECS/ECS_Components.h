@@ -48,17 +48,25 @@ struct Animator
 // this struct stores the filepaths for the meshdata, material, and shader. the actual data is stored in the resource manager
 struct MeshRenderer
 {
+
+
+
 	// For now, we store the string to the filepaths. TO CHANGE to uids for efficient referencing
 	std::pair<std::string, std::string> mShaderPath;
-	std::vector<std::string>			mMaterialInstancePath;
+	std::string			mMaterialInstancePath[4];
 	std::string							mMeshPath;
 	
-	void*								mMeshRef;
-	unsigned							mGUID;
+	void*							mMeshRef;
+	void*							mTextureRef[4];
+	bool							mTextureCont[4];
+
+	unsigned						mGUID;
+
+	void							Inspect();
 	//RTTR_ENABLE()
 
 
-	void								Inspect();
+	//void								Inspect();
 };
 
 struct RigidBody
