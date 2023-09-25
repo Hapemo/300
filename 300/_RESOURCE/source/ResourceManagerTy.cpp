@@ -20,14 +20,17 @@ void ResourceTy::Init()
 
 
 	mesh_Loader();
+	MaterialInstance_Loader();
 	std::cout << "Initializing Resource Manager.\n";
 }
 
 void ResourceTy::Exit() {
 
 	for (auto& data : m_ResourceInstance) {
-
-		delete  reinterpret_cast<GFX::Mesh*>(data.second->m_pData);
+		if( data.second->m_Type == _MESH)
+			delete  reinterpret_cast<GFX::Mesh*>(data.second->m_pData);
+		else if (data.second->m_Type == _TEXTURE)
+			delete  reinterpret_cast<GFX::Texture*>(data.second->m_pData);
 	}
 
 
@@ -138,4 +141,51 @@ void ResourceTy::ReleaseRscInfo(instance_infos& RscInfo)
 
 	--mResouceCnt;
 	//--mMeshManager.mResouceCnt;
+}
+
+
+void ResourceTy::MaterialInstance_Loader() {
+	// hardcode material instance path for now 
+	std::vector<std::string> materialinstancepaths;
+	materialinstancepaths.emplace_back("../assets/Compressed/Skull.ctexture");
+
+	std::filesystem::path folderpath = compressed_texture_path.c_str();
+
+	// Reads through all the files in the folder, and loads them into the mesh
+	for (const auto& entry : std::filesystem::directory_iterator(folderpath))
+	{
+		std::cout << "============================================\n";
+		std::cout << "[NOTE]>> Loading Compressed Texture: \t" << entry.path().filename() << "\n";
+
+		std::string filepath = compressed_texture_path + entry.path().filename().string();
+		std::string materialinstancepath = filepath;
+
+		std::cout << " i neeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed texture " << filepath << " \n";
+
+		uid uids(materialinstancepath);
+		auto texPtr = SetupMaterialInstance(materialinstancepath, uids.id);
+		++mResouceCnt;
+		instance_infos& tempInstance = AllocRscInfo();
+		tempInstance.m_Name = materialinstancepath;
+		tempInstance.m_GUID = uids.id;
+		tempInstance.m_pData = reinterpret_cast<void*>(texPtr);
+
+		tempInstance.m_Type = _TEXTURE;
+		m_ResourceInstance.emplace(uids.id, &tempInstance);
+	}
+}
+GFX::Texture* ResourceTy::SetupMaterialInstance(std::string filepath, unsigned) {
+	GFX::Texture localMaterialInstance;
+	localMaterialInstance.Load(filepath.c_str());
+
+
+	auto Texret = std::make_unique<GFX::Texture>(localMaterialInstance);
+	return Texret.release();
+	//uid uids(filepath);
+	//MaterialInstanceData& temp = AllocRscInfo();
+	//temp.materialInstanceData = std::move(localMaterialInstance);
+	//mSceneMaterialInstances.emplace(std::make_pair(uid, &temp));
+}
+GFX::Texture* ResourceTy::getMaterialInstance(unsigned id) {
+	return reinterpret_cast<GFX::Texture*>(m_ResourceInstance[id]->m_pData);
 }
