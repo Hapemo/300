@@ -125,5 +125,5 @@ void Scene::RemoveEntity(Entity _e) {
 }
 
 bool Scene::IsError() {
-	return *this == *systemManager->mGameStateSystem->GetErrorScene();
+	return operator==(*systemManager->mGameStateSystem->GetErrorScene());
 }
