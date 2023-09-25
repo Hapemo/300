@@ -168,6 +168,23 @@ void ECS::CopyEntity(Entity e)
 	mClipboard = e;
 }
 
+Entity ECS::StartEditPrefab(std::string prefabName)
+{
+	return NewEntityFromPrefab(prefabName);
+}
+
+void ECS::EndEditPrefab(Entity e)
+{
+	DeleteEntity(e);
+}
+
+void ECS::EndEditPrefab(std::string prefab, Entity e)
+{
+	ObjectFactory::SerializePrefab(e, "../assets/Prefabs/" + prefab + ".json");
+	UpdatePrefabEntities(prefab);
+	DeleteEntity(e);
+}
+
 Entity ECS::PasteEntity()
 {
 	if (static_cast<uint32_t>(mClipboard.id) == 0)
