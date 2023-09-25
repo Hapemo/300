@@ -245,7 +245,14 @@ void MenuPanel::update()
             }
             ImGui::EndMenu();
         }
+        int temp = ImGui::GetWindowSize().x - 70;
+        ImGui::SetCursorPosX(temp);
+        ImGui::Checkbox("Debug", &systemManager->mGraphicsSystem->m_DebugDrawing);
+
 
         ImGui::EndMenuBar();
+
     }
+
+    	//ImGui::Button("Debug");
 }

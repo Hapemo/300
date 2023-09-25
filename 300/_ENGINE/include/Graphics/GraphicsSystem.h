@@ -56,7 +56,7 @@ public:
 	// Helper Function
 	void PrintMat4(const glm::mat4& input);
 
-private:
+
 	GFX::DebugRenderer m_Renderer;		// isolated to debug draws
 	GFX::FBO m_Fbo;
 
@@ -78,6 +78,8 @@ private:
 
 	// -- Private Functions --
 	void DrawAll(GFX::Mesh& mesh);		// Renders all instances of a given mesh
+private:
+
 
 };
 

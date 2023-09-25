@@ -41,14 +41,26 @@ void GraphicsSystem::Init()
 	//newentity.GetComponent<MeshRenderer>().mMeshPath = "../assets/compiled_geom/FreeModelNathan_WalkAnim.geom";
 	//newentity.GetComponent<MeshRenderer>().mMeshPath = "../assets/compiled_geom/dancing_vampire.geom";
 	newentity.GetComponent<MeshRenderer>().mMeshPath = "../assets/compiled_geom/dancing_vampire.geom";
-	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Vampire_diffuse.ctexture");
-	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Vampire_normal.ctexture");
-	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Vampire_emission.ctexture");
-	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Vampire_specular.ctexture");
+	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath[0]="../assets/Compressed/Vampire_diffuse.ctexture";
+	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath[1]="../assets/Compressed/Vampire_normal.ctexture";
+		newentity.GetComponent<MeshRenderer>().mMaterialInstancePath[2]="../assets/Compressed/Vampire_emission.ctexture";
+	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath[3]="../assets/Compressed/Vampire_specular.ctexture";
+	// newentity.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Vampire_diffuse.ctexture");
+	// newentity.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Vampire_normal.ctexture");
+	// newentity.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Vampire_emission.ctexture");
+	// newentity.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Vampire_specular.ctexture");
 	newentity.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/pointLight_vert.glsl", "../_GRAPHICS/shader_files/pointLight_frag.glsl" };	// for point light
 	
 	uid temp(newentity.GetComponent<MeshRenderer>().mMeshPath);
 	newentity.GetComponent<MeshRenderer>().mMeshRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(temp.id));
+
+	uid mat1(newentity.GetComponent<MeshRenderer>().mMaterialInstancePath[DIFFUSE]);
+	newentity.GetComponent<MeshRenderer>().mTextureRef[DIFFUSE] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(mat1.id));
+	newentity.GetComponent<MeshRenderer>().mTextureCont[DIFFUSE] = true;
+
+
+	uid mat2(newentity.GetComponent<MeshRenderer>().mMaterialInstancePath[NORMAL]);
+	newentity.GetComponent<MeshRenderer>().mTextureRef[NORMAL] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(mat2.id));
 
 	newentity.GetComponent<BoxCollider>().mTranslateOffset = { 0.f, 76.f, 0.f };
 
@@ -63,36 +75,36 @@ void GraphicsSystem::Init()
 
 #pragma region create entity 2
 	//Create a new entity here, for testing purposes
-	Entity newentity1 = systemManager->ecs->NewEntity();			// creating a new entity
-	newentity1.AddComponent<MeshRenderer>();
-	newentity1.AddComponent<BoxCollider>();
-	newentity1.AddComponent<Animator>();
+	//Entity newentity1 = systemManager->ecs->NewEntity();			// creating a new entity
+	//newentity1.AddComponent<MeshRenderer>();
+	//newentity1.AddComponent<BoxCollider>();
+	//newentity1.AddComponent<Animator>();
 
-	//newentity.GetComponent<MeshRenderer>().mMaterialInstancePath = "../assets/Compressed/Skull.ctexture";
-	//newentity.GetComponent<MeshRenderer>().mMeshPath = "../compiled_geom/Skull_textured.geom";
-	//newentity.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/draw_vert.glsl", "../_GRAPHICS/shader_files/draw_frag.glsl" };
-	//newentity.GetComponent<MeshRenderer>().mMeshPath = "../assets/compiled_geom/FreeModelNathan_WalkAnim.geom";
-	//newentity.GetComponent<MeshRenderer>().mMeshPath = "../assets/compiled_geom/dancing_vampire.geom";
-	newentity1.GetComponent<MeshRenderer>().mMeshPath = "../assets/compiled_geom/FreeModelNathan_WalkAnim.geom";
-	newentity1.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Wood Material 15_BaseColor.ctexture");
-	newentity1.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Wood Material 15_Normal.ctexture");
-	newentity1.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Vampire_emission.ctexture");
-	newentity1.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Vampire_specular.ctexture");
-	newentity1.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/pointLight_vert.glsl", "../_GRAPHICS/shader_files/pointLight_frag.glsl" };	// for point light
+	////newentity.GetComponent<MeshRenderer>().mMaterialInstancePath = "../assets/Compressed/Skull.ctexture";
+	////newentity.GetComponent<MeshRenderer>().mMeshPath = "../compiled_geom/Skull_textured.geom";
+	////newentity.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/draw_vert.glsl", "../_GRAPHICS/shader_files/draw_frag.glsl" };
+	////newentity.GetComponent<MeshRenderer>().mMeshPath = "../assets/compiled_geom/FreeModelNathan_WalkAnim.geom";
+	////newentity.GetComponent<MeshRenderer>().mMeshPath = "../assets/compiled_geom/dancing_vampire.geom";
+	//newentity1.GetComponent<MeshRenderer>().mMeshPath = "../assets/compiled_geom/FreeModelNathan_WalkAnim.geom";
+	//newentity1.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Wood Material 15_BaseColor.ctexture");
+	//newentity1.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Wood Material 15_Normal.ctexture");
+	//newentity1.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Vampire_emission.ctexture");
+	//newentity1.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Vampire_specular.ctexture");
+	//newentity1.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/pointLight_vert.glsl", "../_GRAPHICS/shader_files/pointLight_frag.glsl" };	// for point light
 
-	uid temp1(newentity1.GetComponent<MeshRenderer>().mMeshPath);
-	newentity1.GetComponent<MeshRenderer>().mMeshRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(temp1.id));
+	//uid temp1(newentity1.GetComponent<MeshRenderer>().mMeshPath);
+	//newentity1.GetComponent<MeshRenderer>().mMeshRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(temp1.id));
 
-	newentity1.GetComponent<Transform>().mTranslate = { 300.f, 0.f, 0.f };
-	newentity1.GetComponent<BoxCollider>().mTranslateOffset = { 0.f, 85.f, 0.f };
+	//newentity1.GetComponent<Transform>().mTranslate = { 300.f, 0.f, 0.f };
+	//newentity1.GetComponent<BoxCollider>().mTranslateOffset = { 0.f, 85.f, 0.f };
 
-	auto& meshinst1 = systemManager->mResourceSystem->get_Mesh("../assets/compiled_geom/FreeModelNathan_WalkAnim.geom");
-	if (newentity1.HasComponent<Animator>() && _ENABLE_ANIMATIONS)
-	{
-		newentity1.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/animations_vert.glsl", "../_GRAPHICS/shader_files/pointLight_frag.glsl" };// for point light
-		newentity1.GetComponent<Animator>().mAnimator.SetAnimation(&meshinst1.mAnimation[0]);
-		newentity1.GetComponent<Animator>().mIsPaused = false;
-	}
+	//auto& meshinst1 = systemManager->mResourceSystem->get_Mesh("../assets/compiled_geom/FreeModelNathan_WalkAnim.geom");
+	//if (newentity1.HasComponent<Animator>() && _ENABLE_ANIMATIONS)
+	//{
+	//	newentity1.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/animations_vert.glsl", "../_GRAPHICS/shader_files/pointLight_frag.glsl" };// for point light
+	//	newentity1.GetComponent<Animator>().mAnimator.SetAnimation(&meshinst1.mAnimation[0]);
+	//	newentity1.GetComponent<Animator>().mIsPaused = false;
+	//}
 #pragma endregion
 }
 
@@ -202,12 +214,28 @@ void GraphicsSystem::Update(float dt)
 		GFX::Shader& shaderinst = systemManager->mResourceSystem->get_Shader(shaderstr.first + shaderstr.second);					
 		unsigned shaderID = shaderinst.GetHandle();
 
+
+		//std::vector<std::string> texturestr = inst.GetComponent<MeshRenderer>().mMaterialInstancePath;
+
 		// get the texture filepath
-		std::vector<std::string> texturestr = inst.GetComponent<MeshRenderer>().mMaterialInstancePath;
-		GFX::Texture& textureColorinst = systemManager->mResourceSystem->get_MaterialInstance(texturestr[0]);		// loads the diffuse texture
-		GFX::Texture& textureNormalinst = systemManager->mResourceSystem->get_MaterialInstance(texturestr[1]);		// loads the normal texture
-		GFX::Texture& textureEmissioninst = systemManager->mResourceSystem->get_MaterialInstance(texturestr[2]);	// loads the emission texture
-		GFX::Texture& textureSpecularinst = systemManager->mResourceSystem->get_MaterialInstance(texturestr[3]);	// loads the specular texture
+		//std::vector<std::string> texturestr = inst.GetComponent<MeshRenderer>().mMaterialInstancePath;
+	//	GFX::Texture& textureColorinst = systemManager->mResourceSystem->get_MaterialInstance(texturestr[0]);	// loads the texture
+		//GFX::Texture& textureNormalinst = systemManager->mResourceSystem->get_MaterialInstance(texturestr[1]);	// loads the texture
+
+		GFX::Texture* textureInst[4]{};
+		for (int i{ 0 }; i < 4; i++) {
+
+			if (inst.GetComponent<MeshRenderer>().mTextureCont[i] == true)
+				textureInst[i] = reinterpret_cast<GFX::Texture*>(inst.GetComponent<MeshRenderer>().mTextureRef[DIFFUSE]);
+			//GFX::Texture& textureNormalinst = *reinterpret_cast<GFX::Texture*>(inst.GetComponent<MeshRenderer>().mTextureRef[NORMAL]);
+			//GFX::Texture& textureEmissioninst = *reinterpret_cast<GFX::Texture*>(inst.GetComponent<MeshRenderer>().mTextureRef[EMISSION]);
+			//GFX::Texture& textureSpecularinst = *reinterpret_cast<GFX::Texture*>(inst.GetComponent<MeshRenderer>().mTextureRef[SPECULAR]);
+
+		}
+		// GFX::Texture& textureColorinst = systemManager->mResourceSystem->get_MaterialInstance(texturestr[0]);		// loads the diffuse texture
+		// GFX::Texture& textureNormalinst = systemManager->mResourceSystem->get_MaterialInstance(texturestr[1]);		// loads the normal texture
+		// GFX::Texture& textureEmissioninst = systemManager->mResourceSystem->get_MaterialInstance(texturestr[2]);	// loads the emission texture
+		// GFX::Texture& textureSpecularinst = systemManager->mResourceSystem->get_MaterialInstance(texturestr[3]);	// loads the specular texture
 
 		shaderinst.Activate();
 		meshinst.BindVao();
@@ -222,10 +250,18 @@ void GraphicsSystem::Update(float dt)
 		glUniform3fv(mViewPosShaderLocation, 1, &lightPos[0]);
 
 		// bind texture unit
-		glBindTextureUnit(0, textureColorinst.ID());
-		glBindTextureUnit(1, textureNormalinst.ID());
-		glBindTextureUnit(2, textureEmissioninst.ID());
-		glBindTextureUnit(3, textureSpecularinst.ID());
+		//glBindTextureUnit(0, textureColorinst.ID());
+		//glBindTextureUnit(1, textureNormalinst.ID());
+		//glBindTextureUnit(2, textureEmissioninst.ID());
+		//glBindTextureUnit(3, textureSpecularinst.ID());
+
+		for (int i{ 0 }; i < 4; i++) {
+
+			if (inst.GetComponent<MeshRenderer>().mTextureCont[i] == true)
+				glBindTextureUnit(i, textureInst[i]->ID());
+
+		}
+
 
 		m_Textures.push_back(0);
 		m_Textures.push_back(1);
@@ -254,10 +290,17 @@ void GraphicsSystem::Update(float dt)
 		shaderinst.Deactivate();
 		meshinst.UnbindVao();
 		m_Textures.clear();
-		glBindTextureUnit(0, 0);
-		glBindTextureUnit(1, 0);
-		glBindTextureUnit(2, 0);
-		glBindTextureUnit(3, 0);
+		//glBindTextureUnit(0, 0);
+		//glBindTextureUnit(1, 0);
+		//glBindTextureUnit(2, 0);
+		//glBindTextureUnit(3, 0);
+
+		for (int i{ 0 }; i < 4; i++) {
+
+			if (inst.GetComponent<MeshRenderer>().mTextureCont[i] == true)
+				glBindTextureUnit(i, 0);
+
+		}
 
 		meshinst.ClearInstances();
 	}
