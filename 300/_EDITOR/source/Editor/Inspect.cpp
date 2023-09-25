@@ -372,8 +372,23 @@ void MeshRenderer::Inspect() {
 
 				uid temp(mMeshPath);
 				mMeshRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(temp.id));
-
+					
+				GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mMeshRef);
+				
+				Entity entins(Hierarchy::selectedId);
+				if (entins.HasComponent<Animator>() && meshinst->mHasAnimation)
+				{
+					// if the new entity has both animations and the animator component, update the animator to use the new animation
+					entins.GetComponent<Animator>().mAnimator.SetAnimation(&meshinst->mAnimation[0]);
+				}
+				else if (entins.HasComponent<Animator>() && !meshinst->mHasAnimation)
+				{
+					// if the new entity's mesh has no animation, but the entity still has the animator component
+					entins.GetComponent<Animator>().mAnimator.m_CurrentAnimation = nullptr;
+				}
 			}
+
+
 			ImGui::EndDragDropTarget();
 		}
 
@@ -397,6 +412,8 @@ void MeshRenderer::Inspect() {
 
 							uid temp(mMaterialInstancePath[i]);
 							mTextureRef[i] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(temp.id));
+
+							
 
 						}
 						ImGui::EndDragDropTarget();

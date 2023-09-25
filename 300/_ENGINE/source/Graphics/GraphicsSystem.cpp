@@ -150,8 +150,11 @@ void GraphicsSystem::Update(float dt)
 		{
 			if (!inst.GetComponent<Animator>().mIsPaused)
 			{
-				assert(inst.GetComponent<Animator>().mAnimator.m_CurrentAnimation != nullptr);
-				inst.GetComponent<Animator>().mAnimator.UpdateAnimation(dt, mat4(1.f));					// update the current animation
+				// skip the mesh that does not have an animation set
+				if (inst.GetComponent<Animator>().mAnimator.m_CurrentAnimation != nullptr)
+				{
+					inst.GetComponent<Animator>().mAnimator.UpdateAnimation(dt, mat4(1.f));					// update the current animation
+				}
 			}
 		}
 		
