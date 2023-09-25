@@ -16,12 +16,15 @@ void AudioSystem::Init()
 	//todo
 	// load audio for loop
 	// [Create the Audio System] -> returns the system object to this class. (&system)'
-	std::cout << "System Create: ";
+	//PINFO("FMOD System Create: %d", ErrCodeCheck(FMOD::System_Create(&system_obj)));
+
+	std::cout << "FMOD System Create:";
 	ErrCodeCheck(FMOD::System_Create(&system_obj));
 
 	// Initialize the System settings	
-	std::cout << "System Initialize: ";
-	ErrCodeCheck(system_obj->init(MAX_AUDIO_FILES_PLAYING, FMOD_INIT_NORMAL, nullptr)); // Settings can be combined by doing OR operation
+	//PINFO("FMOD System Initialize: %d" , ErrCodeCheck(system_obj->init(MAX_AUDIO_FILES_PLAYING, FMOD_INIT_NORMAL, nullptr))); // Settings can be combined by doing OR operation)
+	std::cout << "FMOD System Initialize: ";
+	ErrCodeCheck(system_obj->init(MAX_AUDIO_FILES_PLAYING, FMOD_INIT_NORMAL, nullptr));
 
 	// Create Channels (At Initialization) - OLD
 	std::vector<FMOD::Channel*> bgm_channel;
@@ -255,17 +258,21 @@ int AudioSystem::ErrCodeCheck(FMOD_RESULT result)
 {
 	if (result != FMOD_OK)
 	{
+		//PWARNING("FMOD OPERATION ERROR: %d", result);
 		std::cout << "FMOD OPERATION ERROR: " << result << std::endl;
+		PWARNING("ERROR");
 
 		switch (result)
 		{
 		case FMOD_ERR_HEADER_MISMATCH:
+		
 			std::cout << "(20) [FMOD_ERR_HEADER_MISMATCH] : There is a version mismatch between the FMOD header and either the FMOD Studio library or the FMOD Low Level library." << std::endl;
 			break;
 		}
 
 		return 0; // failure
 	}
+	/*PINFO("FMOD OPERATION OK.");*/
 	std::cout << "FMOD OPERATION OK." << std::endl;
 	return 1; // success (no issues)
 }

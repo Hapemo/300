@@ -8,6 +8,7 @@
 #include "AudioType.h" // BGM/SFX
 #include "ECS/ECS.h"
 #include "ECS/ECS_Components.h"
+#include "Debug/Logger.h"
 
 enum AUDIOTYPE : unsigned char;
 
