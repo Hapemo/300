@@ -22,29 +22,34 @@ void GraphicsSystem::Init()
 	m_Fbo.Create(m_Width, m_Height, m_EditorMode);
 
 	// Set Cameras' starting position
-	SetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_ALL, { 50, 0, 200 });							// Position of camera
+	SetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_ALL, { 0, 0, 20 });								// Position of camera
 	SetCameraTarget(CAMERA_TYPE::CAMERA_TYPE_ALL, { 0, 0, 0 });									// Target of camera
 	SetCameraProjection(CAMERA_TYPE::CAMERA_TYPE_ALL, 60.f, m_Window->size(), 0.1f, 900.f);		// Projection of camera
 
 	UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_ALL, 0.f);
 
+#pragma region create entity 1
 	 //Create a new entity here, for testing purposes
 	Entity newentity = systemManager->ecs->NewEntity();			// creating a new entity
 	newentity.AddComponent<MeshRenderer>();
-	//newentity.GetComponent<MeshRenderer>().mMeshPath = "../compiled_geom/dancing_vampire.geom";
-	//newentity.GetComponent<MeshRenderer>().mMaterialInstancePath = "../assets/Compressed/Vampire_diffuse.ctexture";
-	//newentity.GetComponent<MeshRenderer>().mShaderPath = std::pair<std::string, std::string>( "../_GRAPHICS/shader_files/draw_vert.glsl", "../_GRAPHICS/shader_files/draw_frag.glsl" );
 	newentity.AddComponent<BoxCollider>();
+	newentity.AddComponent<Animator>();
 
 	//newentity.GetComponent<MeshRenderer>().mMaterialInstancePath = "../assets/Compressed/Skull.ctexture";
 	//newentity.GetComponent<MeshRenderer>().mMeshPath = "../compiled_geom/Skull_textured.geom";
 	//newentity.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/draw_vert.glsl", "../_GRAPHICS/shader_files/draw_frag.glsl" };
 	//newentity.GetComponent<MeshRenderer>().mMeshPath = "../assets/compiled_geom/FreeModelNathan_WalkAnim.geom";
+	//newentity.GetComponent<MeshRenderer>().mMeshPath = "../assets/compiled_geom/dancing_vampire.geom";
 	newentity.GetComponent<MeshRenderer>().mMeshPath = "../assets/compiled_geom/dancing_vampire.geom";
 	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath[0]="../assets/Compressed/Vampire_diffuse.ctexture";
 	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath[1]="../assets/Compressed/Vampire_normal.ctexture";
+		newentity.GetComponent<MeshRenderer>().mMaterialInstancePath[2]="../assets/Compressed/Vampire_emission.ctexture";
+	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath[3]="../assets/Compressed/Vampire_specular.ctexture";
+	// newentity.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Vampire_diffuse.ctexture");
+	// newentity.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Vampire_normal.ctexture");
+	// newentity.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Vampire_emission.ctexture");
+	// newentity.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Vampire_specular.ctexture");
 	newentity.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/pointLight_vert.glsl", "../_GRAPHICS/shader_files/pointLight_frag.glsl" };	// for point light
-	
 	
 	uid temp(newentity.GetComponent<MeshRenderer>().mMeshPath);
 	newentity.GetComponent<MeshRenderer>().mMeshRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(temp.id));
@@ -55,8 +60,50 @@ void GraphicsSystem::Init()
 	uid mat2(newentity.GetComponent<MeshRenderer>().mMaterialInstancePath[NORMAL]);
 	newentity.GetComponent<MeshRenderer>().mTextureRef[NORMAL] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(mat2.id));
 
+	newentity.GetComponent<BoxCollider>().mTranslateOffset = { 0.f, 76.f, 0.f };
 
-	newentity.GetComponent<BoxCollider>().mTranslateOffset = { 0.f, 1.05f, 0.f };
+	auto& meshinst = systemManager->mResourceSystem->get_Mesh("../assets/compiled_geom/dancing_vampire.geom");
+	if (newentity.HasComponent<Animator>() && _ENABLE_ANIMATIONS)
+	{
+		newentity.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/animations_vert.glsl", "../_GRAPHICS/shader_files/pointLight_frag.glsl" };// for point light
+		newentity.GetComponent<Animator>().mAnimator.SetAnimation(&meshinst.mAnimation[0]);
+		newentity.GetComponent<Animator>().mIsPaused = false;
+	}
+#pragma endregion
+
+#pragma region create entity 2
+	//Create a new entity here, for testing purposes
+	Entity newentity1 = systemManager->ecs->NewEntity();			// creating a new entity
+	newentity1.AddComponent<MeshRenderer>();
+	newentity1.AddComponent<BoxCollider>();
+	newentity1.AddComponent<Animator>();
+
+	//newentity.GetComponent<MeshRenderer>().mMaterialInstancePath = "../assets/Compressed/Skull.ctexture";
+	//newentity.GetComponent<MeshRenderer>().mMeshPath = "../compiled_geom/Skull_textured.geom";
+	//newentity.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/draw_vert.glsl", "../_GRAPHICS/shader_files/draw_frag.glsl" };
+	//newentity.GetComponent<MeshRenderer>().mMeshPath = "../assets/compiled_geom/FreeModelNathan_WalkAnim.geom";
+	//newentity.GetComponent<MeshRenderer>().mMeshPath = "../assets/compiled_geom/dancing_vampire.geom";
+	newentity1.GetComponent<MeshRenderer>().mMeshPath = "../assets/compiled_geom/FreeModelNathan_WalkAnim.geom";
+	newentity1.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Wood Material 15_BaseColor.ctexture");
+	newentity1.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Wood Material 15_Normal.ctexture");
+	newentity1.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Vampire_emission.ctexture");
+	newentity1.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Vampire_specular.ctexture");
+	newentity1.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/pointLight_vert.glsl", "../_GRAPHICS/shader_files/pointLight_frag.glsl" };	// for point light
+
+	uid temp1(newentity1.GetComponent<MeshRenderer>().mMeshPath);
+	newentity1.GetComponent<MeshRenderer>().mMeshRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(temp1.id));
+
+	newentity1.GetComponent<Transform>().mTranslate = { 300.f, 0.f, 0.f };
+	newentity1.GetComponent<BoxCollider>().mTranslateOffset = { 0.f, 85.f, 0.f };
+
+	auto& meshinst1 = systemManager->mResourceSystem->get_Mesh("../assets/compiled_geom/FreeModelNathan_WalkAnim.geom");
+	if (newentity1.HasComponent<Animator>() && _ENABLE_ANIMATIONS)
+	{
+		newentity1.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/animations_vert.glsl", "../_GRAPHICS/shader_files/pointLight_frag.glsl" };// for point light
+		newentity1.GetComponent<Animator>().mAnimator.SetAnimation(&meshinst1.mAnimation[0]);
+		newentity1.GetComponent<Animator>().mIsPaused = false;
+	}
+#pragma endregion
 }
 
 /***************************************************************************/
@@ -74,23 +121,22 @@ void GraphicsSystem::Update(float dt)
 	// update the camera's transformations, and its input
 	UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_EDITOR, dt);
 
-	// To be removed once entity to be drawn created
-	//m_Renderer.AddSphere(m_EditorCamera.position(), { 0, 0, -300 }, 100.f, { 0, 1, 0, 1 });
-	//m_Renderer.AddAabb({ -50, -60, -200 }, { 10, 30, -0.1f }, { 1, 0, 0, 1 });
-
+#pragma region update all the mesh instances
 	// Retrieve and update the mesh instances to be drawn
 	auto meshRendererInstances = systemManager->ecs->GetEntitiesWith<MeshRenderer>();
 	for (Entity inst : meshRendererInstances)
 	{
-
 		std::string meshstr = inst.GetComponent<MeshRenderer>().mMeshPath;
 
-
-		// get the mesh filepath
+		if (inst.HasComponent<Animator>() && _ENABLE_ANIMATIONS)
+		{
+			if (!inst.GetComponent<Animator>().mIsPaused)
+			{
+				assert(inst.GetComponent<Animator>().mAnimator.m_CurrentAnimation != nullptr);
+				inst.GetComponent<Animator>().mAnimator.UpdateAnimation(dt, mat4(1.f));					// update the current animation
+			}
+		}
 		
-		//if( )
-	//	GFX::Mesh& meshinst = systemManager->mResourceSystem->get_Mesh(meshstr);						// loads the mesh
-
 		void* tt = inst.GetComponent<MeshRenderer>().mMeshRef;
 		GFX::Mesh& meshinst = *reinterpret_cast<GFX::Mesh*>(tt);
 
@@ -99,30 +145,53 @@ void GraphicsSystem::Update(float dt)
 		//GFX::Mesh& meshinst = *(systemManager->mResourceTySystem->get_mesh(temp.id));
 
 		// pushback LTW matrices
-		glm::mat4	trns = glm::translate(inst.GetComponent<Transform>().mTranslate);
-		glm::mat4	rot = glm::rotate(trns, glm::radians(inst.GetComponent<Transform>().mRotate.x), glm::vec3(1.f, 0.f, 0.f));
-		rot = glm::rotate(rot, glm::radians(inst.GetComponent<Transform>().mRotate.y), glm::vec3(0.f, 1.f, 0.f));
-		rot = glm::rotate(rot, glm::radians(inst.GetComponent<Transform>().mRotate.z), glm::vec3(0.f, 0.f, 1.f));
-		glm::mat4 final = glm::scale(rot, inst.GetComponent<Transform>().mScale);
+		glm::mat4	trns	= glm::translate(inst.GetComponent<Transform>().mTranslate);
+		glm::mat4 scale		= glm::scale(trns, inst.GetComponent<Transform>().mScale);
+		glm::mat4	final	= glm::rotate(scale, glm::radians(inst.GetComponent<Transform>().mRotate.x), glm::vec3(1.f, 0.f, 0.f));
+					final	= glm::rotate(final, glm::radians(inst.GetComponent<Transform>().mRotate.y), glm::vec3(0.f, 1.f, 0.f));
+					final	= glm::rotate(final, glm::radians(inst.GetComponent<Transform>().mRotate.z), glm::vec3(0.f, 0.f, 1.f));
 
+		// if the debug drawing is turned on 
 		if (m_DebugDrawing && inst.HasComponent<BoxCollider>())
 		{
 			// draw the AABB of the mesh
 			glm::vec3 bbox_dimens = meshinst.mBBOX.m_Max - meshinst.mBBOX.m_Min;
+			bbox_dimens = bbox_dimens * inst.GetComponent<Transform>().mScale * inst.GetComponent<BoxCollider>().mScaleOffset;
 			m_Renderer.AddAabb(inst.GetComponent<Transform>().mTranslate + inst.GetComponent<BoxCollider>().mTranslateOffset, bbox_dimens, {1.f, 0.f, 0.f, 1.f});
 
-			// draw the center of the mesh
+			// draw the mesh's origin
 			m_Renderer.AddSphere(m_EditorCamera.position(), inst.GetComponent<Transform>().mTranslate, 0.5f, { 1.f, 1.f, 0.f, 1.f });
+
+			// draw the animation data for the bones
+			if (inst.HasComponent<Animator>() && _ENABLE_ANIMATIONS)
+			{
+				// draw the mesh's bone positions as boxes
+				for (const auto& bones : meshinst.mAnimation[0].m_Bones)
+				{
+					static const vec3 bonescale(0.1f, 0.1f, 0.1f);
+					mat4 bonestrns = inst.GetComponent<Animator>().mAnimator.m_FinalBoneMatrices[bones.GetBoneID()] * final;
+					
+					//m_Renderer.AddAabb({ bonestrns.x, bonestrns.y, bonestrns.z }, bonescale, vec4(1.f, 1.f, 0.f, 1.f));
+					//m_Renderer.AddAabb({ bonestrns[3][0], bonestrns[3][1], bonestrns[3][2]}, bonescale, vec4(1.f, 1.f, 0.f, 1.f));
+				}
+			}
 		}
 
 		meshinst.mLTW.push_back(final);
 	}
+#pragma endregion
+
+	// test drawing
+	m_Renderer.AddCube({ -10, 0, 0 }, { 0.5f, 0.5f, 0.5f }, { 1.f, 0., 0.f, 1.f });
+	m_Renderer.AddLine({ -10, 0, 0 }, { 10, 10, 0 }, { 0.f, 1.f, 0.f, 1.f });
+	m_Renderer.AddLine({ 10, 10, 0 }, { -10, 10, 0 }, { 1.f, 0.f, 1.f, 1.f });
 
 	// Prepare and bind the Framebuffer to be rendered on
 	m_Fbo.PrepForDraw();
 	m_Renderer.RenderAll(m_EditorCamera.viewProj());
 	m_Renderer.ClearInstances();
 
+#pragma region render all the mesh instances
 	// Render all instances of a given mesh
 	for (Entity inst : meshRendererInstances)
 	{
@@ -132,19 +201,19 @@ void GraphicsSystem::Update(float dt)
 			continue;
 		}
 
-		// update the map
+		// update the map of rendered meshes
 		renderedMesh[meshstr] = 1;
 
 		// render the mesh and its instances here
-		//GFX::Mesh& meshinst = systemManager->mResourceSystem->get_Mesh(meshstr);						// loads the mesh
-		void* tt = inst.GetComponent<MeshRenderer>().mMeshRef;
-		GFX::Mesh& meshinst = *reinterpret_cast<GFX::Mesh*>(tt);
-		//uid temp(meshstr);
-		//GFX::Mesh& meshinst = *(systemManager->mResourceTySystem->get_mesh(temp.id));
+		GFX::Mesh& meshinst = *reinterpret_cast<GFX::Mesh*>(inst.GetComponent<MeshRenderer>().mMeshRef);
+		
 		// gets the shader filepath
 		std::pair<std::string, std::string> shaderstr = inst.GetComponent<MeshRenderer>().mShaderPath;
-		std::string concatname = shaderstr.first + shaderstr.second;
-		GFX::Shader& shaderinst = systemManager->mResourceSystem->get_Shader(concatname);				// loads the shader
+		GFX::Shader& shaderinst = systemManager->mResourceSystem->get_Shader(shaderstr.first + shaderstr.second);					
+		unsigned shaderID = shaderinst.GetHandle();
+
+
+		std::vector<std::string> texturestr = inst.GetComponent<MeshRenderer>().mMaterialInstancePath;
 
 		// get the texture filepath
 		//std::vector<std::string> texturestr = inst.GetComponent<MeshRenderer>().mMaterialInstancePath;
@@ -152,6 +221,12 @@ void GraphicsSystem::Update(float dt)
 		//GFX::Texture& textureNormalinst = systemManager->mResourceSystem->get_MaterialInstance(texturestr[1]);	// loads the texture
 		GFX::Texture& textureColorinst = *reinterpret_cast<GFX::Texture*>(inst.GetComponent<MeshRenderer>().mTextureRef[DIFFUSE]);
 		GFX::Texture& textureNormalinst = *reinterpret_cast<GFX::Texture*>(inst.GetComponent<MeshRenderer>().mTextureRef[NORMAL]);
+		GFX::Texture& textureEmissioninst = *reinterpret_cast<GFX::Texture*>(inst.GetComponent<MeshRenderer>().mTextureRef[EMISSION]);
+		GFX::Texture& textureSpecularinst = *reinterpret_cast<GFX::Texture*>(inst.GetComponent<MeshRenderer>().mTextureRef[SPECULAR]);
+		// GFX::Texture& textureColorinst = systemManager->mResourceSystem->get_MaterialInstance(texturestr[0]);		// loads the diffuse texture
+		// GFX::Texture& textureNormalinst = systemManager->mResourceSystem->get_MaterialInstance(texturestr[1]);		// loads the normal texture
+		// GFX::Texture& textureEmissioninst = systemManager->mResourceSystem->get_MaterialInstance(texturestr[2]);	// loads the emission texture
+		// GFX::Texture& textureSpecularinst = systemManager->mResourceSystem->get_MaterialInstance(texturestr[3]);	// loads the specular texture
 
 		shaderinst.Activate();
 		meshinst.BindVao();
@@ -159,19 +234,39 @@ void GraphicsSystem::Update(float dt)
 
 		glUniformMatrix4fv(shaderinst.GetUniformVP(), 1, GL_FALSE, &m_EditorCamera.viewProj()[0][0]);
 
-		GLuint mLightPosShaderLocation = glGetUniformLocation(shaderinst.GetHandle(), "lightPos");
+		GLuint mLightPosShaderLocation = glGetUniformLocation(shaderID, "uLightPos");
+		GLuint mViewPosShaderLocation = glGetUniformLocation(shaderID, "uViewPos");
 		vec3 lightPos = GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR);
 		glUniform3fv(mLightPosShaderLocation, 1, &lightPos[0]);
+		glUniform3fv(mViewPosShaderLocation, 1, &lightPos[0]);
 
 		// bind texture unit
 		glBindTextureUnit(0, textureColorinst.ID());
 		glBindTextureUnit(1, textureNormalinst.ID());
+		glBindTextureUnit(2, textureEmissioninst.ID());
+		glBindTextureUnit(3, textureSpecularinst.ID());
 
 		m_Textures.push_back(0);
 		m_Textures.push_back(1);
+		m_Textures.push_back(2);
+		m_Textures.push_back(3);
 
-		GLuint uniform_tex = glGetUniformLocation(shaderinst.GetHandle(), "uTex");
+		GLuint uniform_tex = glGetUniformLocation(shaderID, "uTex");
 		glUniform1iv(uniform_tex, (GLsizei)m_Textures.size(), m_Textures.data());	// passing Texture ID to the fragment shader
+
+		// send animation data over to the shader if there is animations
+		if (inst.HasComponent<Animator>() && _ENABLE_ANIMATIONS)
+		{
+			const auto& transform = inst.GetComponent<Animator>().mAnimator.m_FinalBoneMatrices;
+			size_t totaltransform = transform.size();
+
+			for (size_t b{}; b < totaltransform; ++b)
+			{
+				// send the bone matrices to the shader via uniforms
+				std::string name = "finalBoneMatrices[" + std::to_string(b) + "]";
+				glUniformMatrix4fv(glGetUniformLocation(shaderID, name.c_str()), 1, GL_FALSE, &transform[b][0][0]);
+			}
+		}
 
 		glDrawElementsInstanced(GL_TRIANGLES, meshinst.GetIndexCount(), GL_UNSIGNED_INT, nullptr, meshinst.mLTW.size());
 
@@ -180,8 +275,12 @@ void GraphicsSystem::Update(float dt)
 		m_Textures.clear();
 		glBindTextureUnit(0, 0);
 		glBindTextureUnit(1, 0);
+		glBindTextureUnit(2, 0);
+		glBindTextureUnit(3, 0);
+
 		meshinst.ClearInstances();
 	}
+#pragma endregion
 
 	// TODO: Clears all instances that have been rendered from local buffer
 	m_Fbo.Unbind();
@@ -382,4 +481,14 @@ vec3 GraphicsSystem::GetCameraDirection(CAMERA_TYPE type)
 void GraphicsSystem::DrawAll(GFX::Mesh& mesh)
 {
 	mesh.DrawAllInstances();
+}
+
+void GraphicsSystem::PrintMat4(const glm::mat4& input)
+{
+	std::cout << "=============================================================================\n";
+	std::cout << "| " << input[0][0] << " | " << input[1][0] << " | " << input[2][0] << " | " << input[3][0] << "\n";
+	std::cout << "| " << input[0][1] << " | " << input[1][1] << " | " << input[2][1] << " | " << input[3][1] << "\n";
+	std::cout << "| " << input[0][2] << " | " << input[1][2] << " | " << input[2][2] << " | " << input[3][2] << "\n";
+	std::cout << "| " << input[0][3] << " | " << input[1][3] << " | " << input[2][3] << " | " << input[3][3] << "\n";
+	std::cout << "=============================================================================\n";
 }

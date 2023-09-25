@@ -2,11 +2,11 @@
 
 in vec4 VertexColor;
 in vec2 TexCoords;
-in mat4 LTW;
-in vec4 WorldPos;
+in vec3 TangentLightPos;
+in vec3 TangentViewPos;
+in vec3 TangentFragPos;
 
-uniform vec3 lightPos;
-//uniform vec3 lightIntensity;
+vec3 lightIntensity = vec3(1.5);
 
 uniform sampler2D uTex[5];
 
@@ -15,20 +15,41 @@ layout (location = 1) out vec4 fragColor1;
 
 void main() 
 {
-    vec4 uColor = texture(uTex[0], TexCoords);                      // Color texture
-    vec3 normal = texture(uTex[1], TexCoords).xyz;                  // Normal texture
-    normal = mat3(LTW) * normal;                                    // Transform the normal to world space
+    
+    vec4 uColor = texture(uTex[0], TexCoords);              // Diffuse Color
+    if (uColor.a <= 0.1) discard;
 
-    vec3 lightDir = normalize(lightPos.xyz - WorldPos.xyz);         // Light Direction
-    float diff = max(dot(lightDir, normalize(normal)), 0.0f);       // Diffuse scale
+    vec3 normal = texture(uTex[1], TexCoords).rgb;          // Normal Map
+    normal = normalize(normal * 2.0 - 1.0);
 
-    float ambientStrength = 0.3f;
+    //vec3 emission = texture(uTex[2], TexCoords).rgb;        // Emission Map
+    //vec3 specular = texture(uTex[3], TexCoords).rgb;        // Specular Map
+    vec3 specular = vec3(0.3);
 
-    vec3 lightColor = vec3(1.f, 0.2f, 0.2f);
-    vec3 ambient = ambientStrength * lightColor;
-    vec3 diffuse = diff * lightColor;
+    // Ambient Color
+    vec3 ambient = 0.1 * uColor.rgb;
 
-    vec3 finalColor = (ambient + diffuse) * uColor.xyz;
+    // Diffuse
+    vec3 lightDir = normalize(TangentLightPos - TangentFragPos);
+    float diff = max(dot(lightDir, normal), 0.0);
+    vec3 diffuse = diff * uColor.rgb;
+
+    // specular
+    vec3 viewDir = normalize(TangentViewPos - TangentFragPos);
+    vec3 reflectDir = reflect(-lightDir, normal);
+    vec3 halfwayDir = normalize(lightDir + viewDir);  
+    float spec = pow(max(dot(normal, halfwayDir), 0.0), 32.0);
+    specular = spec * specular * lightIntensity;
+
+    vec3 finalColor = vec3(ambient + diffuse + specular + VertexColor.rgb/* + emission*/);
+
+    // HDR
+    //float exposure = 1.0;
+    //finalColor = vec3(1.0) - exp(-finalColor * exposure);
+
+    // Gamma correction
+    float gamma = 2.2;
+    finalColor = pow(finalColor, vec3(1.0/gamma));
 
     // Output
     fragColor0 = vec4(finalColor, uColor.a);

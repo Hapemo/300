@@ -81,6 +81,9 @@
     <ClCompile Include="..\_GEOM_COMPILER\src\Bone.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\Font.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="demo\DemoScene.hpp">
@@ -143,6 +146,9 @@
     <ClInclude Include="include\GraphicsSystem.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\Font.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="shader_files\draw_frag.glsl">
@@ -153,5 +159,7 @@
     </None>
     <None Include="shader_files\pointLight_frag.glsl" />
     <None Include="shader_files\pointLight_vert.glsl" />
+    <None Include="shader_files\animations_vert.glsl" />
+    <None Include="shader_files\pbr_frag.glsl" />
   </ItemGroup>
 </Project>

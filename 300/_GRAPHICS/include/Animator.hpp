@@ -44,7 +44,7 @@ namespace GFX
         Animator(_GEOM::Animation*);
 
         void SetAnimation(_GEOM::Animation*);
-        void UpdateAnimation(float dt);
+        void UpdateAnimation(float dt, const glm::mat4&);
 
 
     private:

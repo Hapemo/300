@@ -10,32 +10,43 @@
 	location = 2 --> LTW;
 ******************************************/
 
-void GFX::Mesh::LoadFromGeom(const _GEOM::Geom& GeomData, std::vector<vec3>& positions, std::vector<glm::vec2>& uvs, std::vector<unsigned int>& indices)
+void GFX::Mesh::LoadFromGeom(const _GEOM::Geom& GeomData, std::vector<vec3>& positions, std::vector<glm::vec2>& uvs, std::vector<unsigned int>& indices,
+							std::vector<vec3>& normal, std::vector<vec3>& tangents)
 {
 	const int reservenumber = GeomData.m_nVertices;
-	indices.reserve(reservenumber);
 	positions.reserve(reservenumber);
 	uvs.reserve(reservenumber);
+	tangents.reserve(reservenumber);
+	normal.reserve(reservenumber);
+
+	indices.reserve(GeomData.m_nIndices);
 
 	for (size_t iSM{}; iSM < GeomData.m_nSubMeshes; ++iSM)
 	{
 		// Load indices
-		for (size_t iIndex{}, ui{ GeomData.m_pSubMesh[iSM].m_iIndices }; iIndex < GeomData.m_pSubMesh[iSM].m_nIndices; ++iIndex, ++ui)
+		for (size_t iIndex{}; iIndex < GeomData.m_pSubMesh[iSM].m_nIndices; ++iIndex)
 		{
 			indices.emplace_back(GeomData.m_pIndices[iIndex]);
 		}
 
-		// Load positions and uvs
-		for (size_t iIndex{}, ui{ GeomData.m_pSubMesh[iSM].m_iVertices }; iIndex < GeomData.m_pSubMesh[iSM].m_nVertices; ++iIndex, ++ui)
+		// Load positions, uvs, normals and tangents
+		for (size_t iIndex{}; iIndex < GeomData.m_pSubMesh[iSM].m_nVertices; ++iIndex)
 		{
 			positions.emplace_back(vec3(GeomData.m_pPos[iIndex].m_Pos.x, GeomData.m_pPos[iIndex].m_Pos.y, GeomData.m_pPos[iIndex].m_Pos.z));
 			uvs.emplace_back(vec2(GeomData.m_pPos[iIndex].m_UV.x, GeomData.m_pPos[iIndex].m_UV.y));
+		}
+
+		// load normals and tangents
+		for (size_t iIndex{}; iIndex < GeomData.m_nExtras; ++iIndex)
+		{
+			normal.emplace_back(GeomData.m_pExtras[iIndex].m_Normal);
+			tangents.emplace_back(GeomData.m_pExtras[iIndex].m_Tangent);
 		}
 	}
 }
 
 
-void GFX::Mesh::LoadAnimationDataFromGeom(const _GEOM::Geom& GeomData, std::vector<std::array<int,MAX_BONE_INFLUENCE>>& boneIDs, std::vector<std::array<float,MAX_BONE_INFLUENCE>>& boneWeights)
+void GFX::Mesh::LoadAnimationDataFromGeom(const _GEOM::Geom& GeomData, std::vector<glm::vec4>& boneIDs, std::vector<glm::vec4>& boneWeights)
 {
 	const int reservenumber = GeomData.m_nVertices;
 	boneIDs.reserve(reservenumber);
@@ -46,15 +57,10 @@ void GFX::Mesh::LoadAnimationDataFromGeom(const _GEOM::Geom& GeomData, std::vect
 		// Load bone weights, and bone IDs
 		for (size_t iIndex{}, ui{ GeomData.m_pSubMesh[iSM].m_iVertices }; iIndex < GeomData.m_pSubMesh[iSM].m_nVertices; ++iIndex, ++ui)
 		{
-			std::array<int, MAX_BONE_INFLUENCE> lBoneIDs;
-			std::array<float, MAX_BONE_INFLUENCE> lBoneWeights;
 			const auto& localgeom = GeomData.m_pPos[iIndex];
 
-			lBoneIDs = { localgeom.m_BoneIDs[0], localgeom.m_BoneIDs[1], localgeom.m_BoneIDs[2], localgeom.m_BoneIDs[3] };
-			lBoneWeights = { localgeom.m_Weights[0], localgeom.m_Weights[1] , localgeom.m_Weights[2] , localgeom.m_Weights[3] };
-
-			boneIDs.emplace_back(lBoneIDs);
-			boneWeights.emplace_back(lBoneWeights);
+			boneIDs.emplace_back(ivec4{ localgeom.m_BoneIDs[0], localgeom.m_BoneIDs[1], localgeom.m_BoneIDs[2], localgeom.m_BoneIDs[3] });
+			boneWeights.emplace_back(vec4{ localgeom.m_Weights[0], localgeom.m_Weights[1] , localgeom.m_Weights[2] , localgeom.m_Weights[3] });
 		}
 	}
 }
@@ -65,14 +71,16 @@ void GFX::Mesh::Setup(const _GEOM::Geom& GeomData)
 	std::vector<glm::vec3>								positions;
 	std::vector<glm::vec2>								uvs;
 	std::vector<unsigned int>							indices;
-	std::vector<std::array<int,MAX_BONE_INFLUENCE>>		boneIDs;
-	std::vector<std::array<float,MAX_BONE_INFLUENCE>>	boneWeights;
+	std::vector<glm::vec4>								boneIDs;
+	std::vector<glm::vec4>								boneWeights;
+	std::vector<glm::vec3>								tangents;
+	std::vector<glm::vec3>								normals;
 
-	LoadFromGeom(GeomData, positions, uvs, indices);
+	LoadFromGeom(GeomData, positions, uvs, indices, normals, tangents);
 	mMeshName	= std::string(GeomData.m_pMesh[0].m_name.begin(), GeomData.m_pMesh[0].m_name.end());
 	mBBOX		= GeomData.m_pMesh[0].m_MeshBBOX;
 
-	if (GeomData.m_bHasAnimations && _ENABLE_ANIMATIONS)
+	if (GeomData.m_bHasAnimations)
 	{
 		// load the animation data into vectors, to push into the vbo
 		LoadAnimationDataFromGeom(GeomData, boneIDs, boneWeights);
@@ -113,11 +121,11 @@ void GFX::Mesh::Setup(const _GEOM::Geom& GeomData)
 	// Add attributes and divisor as vec4
 	for (int i = 0; i < 4; ++i)
 	{
-		mVao.AddAttribute(5 + i, 5, 4, GL_FLOAT, sizeof(vec4) * i);					// location 5, binding vao index 5
-		mVao.AddAttributeDivisor(5, 1);												// divisor at vao index 5
+		mVao.AddAttribute(7 + i, 7, 4, GL_FLOAT, sizeof(vec4) * i);					// location 7, binding vao index 7
+		mVao.AddAttributeDivisor(7, 1);												// divisor at vao index 7
 	}
 	// Attach LTW VBO to VAO
-	mVao.AttachVertexBuffer(mLTWVbo.GetID(), 5, 0, sizeof(vec4) * 4);
+	mVao.AttachVertexBuffer(mLTWVbo.GetID(), 7, 0, sizeof(vec4) * 4);
 
 	/////////////////////////////////////////
 	// EBO
@@ -127,28 +135,40 @@ void GFX::Mesh::Setup(const _GEOM::Geom& GeomData)
 
 
 	/////////////////////////////////////////
-	// Bone_IDs, and Weights (TODO) thank you sergeant.
-	// It is an array of structs. Stored the same way as the positions and uvs.
-	// The data and weights are stored in this format below::
-		//GeomData.m_pPos[0].m_BoneIDs;
-		//GeomData.m_pPos[0].m_Weights;
+	// Bone_IDs, and Weights
 		
 	if (GeomData.m_bHasAnimations && _ENABLE_ANIMATIONS)
 	{
 		// Create VBO for Bone IDs. Attach VBO for Bone IDs to VAO
-		mBoneIDVbo.Create(positions.size() * sizeof(int) * MAX_BONE_INFLUENCE);										// 1 for each vertex
-		mVao.AddAttribute(3, 3, 4, GL_INT);																			// location 3, binding vao index 3
+		mBoneIDVbo.Create(boneIDs.size() * sizeof(ivec4));										// 1 for each vertex
+		mVao.AddAttribute(3, 3, 4, GL_FLOAT);														// location 3, binding vao index 3
 		// TODO: need to somehow get the data of all Bone IDs
-		mBoneIDVbo.AttachData(0, boneIDs.size() * sizeof(int) * MAX_BONE_INFLUENCE, boneIDs.data());				// Attach mesh data to VBO
-		mVao.AttachVertexBuffer(mBoneIDVbo.GetID(), 3, 0, sizeof(int) * MAX_BONE_INFLUENCE);						// Attach to index 3
+		mBoneIDVbo.AttachData(0, boneIDs.size() * sizeof(vec4), boneIDs.data());				// Attach mesh data to VBO
+		mVao.AttachVertexBuffer(mBoneIDVbo.GetID(), 3, 0, sizeof(vec4));						// Attach to index 3
 
 		// Create VBO for Bone weights. Attach VBO for Bone weights to VAO
-		mBoneWeightVbo.Create(positions.size() * sizeof(float) * MAX_BONE_INFLUENCE);								// 1 for each vertex
-		mVao.AddAttribute(4, 4, 4, GL_FLOAT);																		// location 4, binding vao index 4
+		mBoneWeightVbo.Create(boneWeights.size() * sizeof(vec4));								// 1 for each vertex
+		mVao.AddAttribute(4, 4, 4, GL_FLOAT);													// location 4, binding vao index 4
 		// TODO: need to somehow get the data of all Bone IDs
-		mBoneWeightVbo.AttachData(0, boneWeights.size() * sizeof(float) * MAX_BONE_INFLUENCE, boneWeights.data());	// Attach mesh data to VBO
-		mVao.AttachVertexBuffer(mBoneWeightVbo.GetID(), 4, 0, sizeof(float) * MAX_BONE_INFLUENCE);					// Attach to index 4
+		mBoneWeightVbo.AttachData(0, boneWeights.size() * sizeof(vec4), boneWeights.data());	// Attach mesh data to VBO
+		mVao.AttachVertexBuffer(mBoneWeightVbo.GetID(), 4, 0, sizeof(vec4));					// Attach to index 4
 	}
+
+	/////////////////////////////////////////
+	// Tangent Data
+	/////////////////////////////////////////
+	mTangentVbo.Create(tangents.size() * sizeof(vec3));
+	mVao.AddAttribute(5, 5, 3, GL_FLOAT);													// location 5, binding vao index 5
+	mTangentVbo.AttachData(0, tangents.size() * sizeof(vec3), tangents.data());				// Attach mesh data to VBO
+	mVao.AttachVertexBuffer(mTangentVbo.GetID(), 5, 0, sizeof(vec3));						// Attach to index 5
+
+	/////////////////////////////////////////
+	// Vertex Normal Data
+	/////////////////////////////////////////
+	mNormalVbo.Create(normals.size() * sizeof(vec3));
+	mVao.AddAttribute(6, 6, 3, GL_FLOAT);													// location 6, binding vao index 6
+	mNormalVbo.AttachData(0, normals.size() * sizeof(vec3), normals.data());				// Attach mesh data to VBO
+	mVao.AttachVertexBuffer(mNormalVbo.GetID(), 6, 0, sizeof(vec3));						// Attach to index 6
 
 	mVao.Unbind();
 
@@ -325,6 +345,7 @@ void GFX::MeshManager::Init()
 }
 
 
+// this code has been ported over
 void GFX::MeshManager::SetupMesh(std::string filepath)
 {
 	_GEOM::Geom GeomData;
@@ -535,7 +556,7 @@ namespace Deserialization
 		// Vertex Extras
 		GeomData.m_pExtras = std::make_shared<_GEOM::Geom::VertexExtra[]>(GeomData.m_nExtras);
 		for (uint32_t i{}; i < GeomData.m_nExtras; ++i) {									
-			infile.read((char*)&GeomData.m_pExtras[i], sizeof(_GEOM::Geom::m_nExtras));
+			infile.read((char*)&GeomData.m_pExtras[i], sizeof(_GEOM::Geom::VertexExtra));
 		}
 
 		infile.close();

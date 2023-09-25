@@ -52,8 +52,11 @@ public:
 
 	// Direction vector of the camera (Target - position)
 	vec3 GetCameraDirection(CAMERA_TYPE type);
-	
-	
+
+	// Helper Function
+	void PrintMat4(const glm::mat4& input);
+
+private:
 	GFX::DebugRenderer m_Renderer;		// isolated to debug draws
 	GFX::FBO m_Fbo;
 
@@ -72,9 +75,6 @@ public:
 	// -- Flags --
 	bool m_EditorMode;
 	bool m_DebugDrawing{ 1 };			// debug drawing 
-
-	// -- Animator --
-	GFX::Animator m_Animator;
 
 	// -- Private Functions --
 	void DrawAll(GFX::Mesh& mesh);		// Renders all instances of a given mesh
