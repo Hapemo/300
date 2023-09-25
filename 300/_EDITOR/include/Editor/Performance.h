@@ -75,6 +75,7 @@ static float min;
 static int fpsCount;
 static int sysCount;
 
+
 private:
 	bool scene_m_Hovered{};
 	float gDisplayTemp{}, pDisplayTemp{}, sDisplayTemp{},

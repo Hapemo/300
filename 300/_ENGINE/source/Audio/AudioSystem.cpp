@@ -61,7 +61,7 @@ void AudioSystem::Init()
 
 void AudioSystem::Update(float dt)
 {
-	EnginePerformance::GetTime(startTime);
+	EnginePerformance::StartTrack("Audio");
 	if (Input::CheckKey(PRESS, _1))
 	{
 		PlaySFXAudio("NPC_Greeting");
@@ -128,8 +128,8 @@ void AudioSystem::Update(float dt)
 		TogglePauseSpecific(AUDIO_SFX, 3);
 	}
 
-	EnginePerformance::GetTime(endTime);
-	EnginePerformance::UpdateSystemMs("Audio", startTime, endTime);
+	EnginePerformance::EndTrack("Audio");
+	EnginePerformance::UpdateSystemMs("Audio");
 }
 
 void AudioSystem::Exit()

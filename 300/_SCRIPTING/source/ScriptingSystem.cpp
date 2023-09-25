@@ -145,11 +145,9 @@ void ScriptingSystem::Init()
 
 void ScriptingSystem::Update(float dt)
 {
-    EnginePerformance::GetTime(startTime);
+    EnginePerformance::StartTrack("Scripting");
     //for (int step = 0; step <= Engine::currentNumberOfSteps - 1; ++step) 
     ////{ 
-    //Timer::GetTime(startTime); 
-
     //// If "Pause" is checked 
     //if (g_engine->gameStateMgr->isPaused) 
     //{ 
@@ -207,9 +205,6 @@ void ScriptingSystem::Update(float dt)
     }
     //} 
 
-    EnginePerformance::GetTime(endTime);
-    EnginePerformance::UpdateSystemMs("Scripting", startTime, endTime);
-
     //if (g_engine->gameStateMgr->isPlaying) 
     //{ 
         // Load the scripts and call the "Start" function 
@@ -257,9 +252,8 @@ void ScriptingSystem::Update(float dt)
     }
     //} 
 
-    //Timer::GetTime(endTime); 
-    //Timer::UpdateSystemMs(SystemType<ScriptingSystem>(), startTime, endTime); 
-    //}
+    EnginePerformance::EndTrack("Scripting");
+    EnginePerformance::UpdateSystemMs("Scripting");
 }
 
 void ScriptingSystem::Exit()
