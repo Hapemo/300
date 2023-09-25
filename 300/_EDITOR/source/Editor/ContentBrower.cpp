@@ -131,6 +131,20 @@ void ContentBrowser::update()
 					ImGui::EndDragDropSource();
 				}
 			}
+			if (check_extension(path.string(), ".ctexture")) {
+
+				if (ImGui::BeginDragDropSource()) {
+
+					std::string path_str = path.string();
+
+					//format the string from \\ to /.
+					format_string(path_str);
+					const char* source_path = path_str.c_str();
+					ImGui::SetDragDropPayload("FILE_TEXT", source_path, strlen(source_path) * sizeof(wchar_t), ImGuiCond_Once);
+
+					ImGui::EndDragDropSource();
+				}
+			}
 
 		}
 

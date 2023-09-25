@@ -49,16 +49,34 @@ void SceneWindow::update()
 
 	//ConstrainedResize(nullptr);
 	scene_m_Hovered = ImGui::IsWindowHovered();	
+	const ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
+	ImGui::Image((ImTextureID)(intptr_t)systemManager->mGraphicsSystem->GetEditorAttachment(), viewportPanelSize);
+	ImGui::SetItemAllowOverlap();
+	//wevents = ImGui::IsItemHovered();  /// <-- This returns true if mouse is over the overlaped Test button
 
+
+	ImGui::SetCursorPosX(ImGui::GetWindowContentRegionMax().x-70);
+	ImGui::SetCursorPosY(ImGui::GetWindowContentRegionMin().y+10);
+	ImGui::Checkbox("Debug",&systemManager->mGraphicsSystem->m_DebugDrawing);
 	
-	ImGui::Image((ImTextureID)(intptr_t)systemManager->mGraphicsSystem->GetEditorAttachment(),ImGui::GetWindowSize());
 	
+	//	auto pos = ImGui::GetCursorPos();
+
+	//ImGui::SetItemAllowOverlap();
+	//ImGui::SetCursorPos(pos);
+	//ImGui::Button("Debug");
+
+
 	//winSize_X = ImGui::GetWindowSize().x;
 	//winSize_Y = ImGui::GetWindowSize().y;
 	
 	winSize= { ImGui::GetWindowSize().x ,ImGui::GetWindowSize().y};
 	//systemManager->mGraphicsSystem->SetCameraSize()
 	//ImGui::Image((ImTextureID)(intptr_t)systemManager->mGraphicsSystem->GetEditorAttachment(),ImVec2(1920, 1080));
+
+
+
+
 }
 
 static void Square(ImGuiSizeCallbackData* data) { data->DesiredSize.x = data->DesiredSize.y = ImMin(data->DesiredSize.x, data->DesiredSize.y); }

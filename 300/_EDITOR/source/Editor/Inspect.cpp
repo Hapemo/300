@@ -127,8 +127,6 @@ void Inspect::update()
 		Add_component(); 
 	}
 
-
-
 }
 
 void Inspect::Add_component() {
@@ -362,6 +360,55 @@ void MeshRenderer::Inspect() {
 			}
 			ImGui::EndDragDropTarget();
 		}
+
+		for (int i{ 0 }; i <4; i++) {
+
+			if (mMaterialInstancePath[i] != "") {
+
+				int posstart = mMaterialInstancePath[i].find_last_of("/");
+				int posend = mMaterialInstancePath[i].find_last_of(".");
+
+				std::string newpath = mMaterialInstancePath[i].substr(posstart+1, posend-(posstart+1));
+
+				ImGui::Selectable(newpath.c_str());
+					if (ImGui::BeginDragDropTarget())
+					{
+						if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_TEXT")) {
+
+							const char* data = (const char*)payload->Data;
+							std::string data_str = std::string(data);
+							mMaterialInstancePath[i] = data_str;
+
+							uid temp(mMaterialInstancePath[i]);
+							mTextureRef[i] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(temp.id));
+
+						}
+						ImGui::EndDragDropTarget();
+					}
+				
+			}
+			else {
+				ImGui::Selectable(" ");
+					if (ImGui::BeginDragDropTarget())
+					{
+						if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_TEXT")) {
+
+							const char* data = (const char*)payload->Data;
+							std::string data_str = std::string(data);
+							mMaterialInstancePath[i] = data_str;
+
+							uid temp(mMaterialInstancePath[i]);
+							mTextureRef[i] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(temp.id));
+
+						}
+						ImGui::EndDragDropTarget();
+					}
+				
+			}
+		}
+
+
+
 	}
 	if (delete_component == false)
 		Entity(Hierarchy::selectedId).RemoveComponent<MeshRenderer>();

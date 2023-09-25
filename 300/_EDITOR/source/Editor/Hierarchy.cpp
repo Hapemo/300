@@ -150,7 +150,7 @@ void Hierarchy::update()
 
                         if (ImGui::IsItemClicked(ImGuiMouseButton_Right)) {
                             RselectedId = child.id;
-                            mPopup = true;
+                            mCPopup = true;
                         }
 
                         if (ImGui::IsItemClicked(ImGuiMouseButton_Left)) {
@@ -190,14 +190,17 @@ void Hierarchy::update()
            // systemManager->ecs->DeleteEntity(Hierarchy::selectedId);
         }
         if (ImGui::Selectable("RemoveChild")) {
-          //  selectionOn = false;
+
+            Entity child = RselectedId;
+            child.GetParent().RemoveChild(child);
+            //  selectionOn = false;
 
             //ntity tempEnt(RselectedId);
 
             // tempEnt.GetParent().;
 
 
-             //systemManager->ecs->DeleteEntity(Hierarchy::selectedId);
+            //systemManager->ecs->DeleteEntity(Hierarchy::selectedId);
         }
 
 
@@ -217,16 +220,16 @@ void Hierarchy::update()
             //Entity ent(Hierarchy::selectedId);
             systemManager->ecs->DeleteEntity(Hierarchy::selectedId);
         }
-        if (ImGui::Selectable("RemoveChild")) {
-            selectionOn = false;
+        //if (ImGui::Selectable("RemoveChild")) {
+        //    selectionOn = false;
 
-           //ntity tempEnt(RselectedId);
+        //   //ntity tempEnt(RselectedId);
 
-           // tempEnt.GetParent().;
+        //   // tempEnt.GetParent().;
 
 
-            //systemManager->ecs->DeleteEntity(Hierarchy::selectedId);
-        }
+        //    //systemManager->ecs->DeleteEntity(Hierarchy::selectedId);
+        //}
 
 
         mPopup = false;
