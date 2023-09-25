@@ -24,7 +24,7 @@ to select current Entity and activates inspector
 #include "imgui.h"
 #include "Hierarchy.h"
 #include "ScriptingSystem.h"
-
+#include "GameState/GameStateManager.h"
 
 entt::entity Hierarchy::selectedId;
 entt::entity Hierarchy::RselectedId;
@@ -32,6 +32,10 @@ bool Hierarchy::selectionOn;
 
 void Hierarchy::init() {}
 //int Hierarchy::selectCnt{ -1 };
+
+
+#define DEBUG
+#ifdef DEBUG
 
 void Hierarchy::update()
 {
@@ -50,6 +54,24 @@ void Hierarchy::update()
 
     if (ImGui::TreeNodeEx("Scene", ImGuiTreeNodeFlags_DefaultOpen))
     {
+        if (ImGui::BeginDragDropTarget()) {
+            //ImGui::SetDragDropPayload("PARENT_CHILD", source_path, strlen(source_path) * sizeof(wchar_t), ImGuiCond_Once);
+
+            if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_PREFAB")) {
+                // auto payload = ImGui::AcceptDragDropPayload("PARENT_CHILD");
+
+                auto data = (const char*)payload->Data;
+
+
+                std::string newdata(data);
+                systemManager->ecs->NewEntityFromPrefab(newdata);
+                //Entity tempEnt(RselectedId);
+                //systemManager->ecs->NewPrefab(tempEnt);
+            }
+            ImGui::EndDragDropTarget();
+        }
+
+
         int i = 5462;
         for (Entity ent : allObjects)													
         {
@@ -106,6 +128,7 @@ void Hierarchy::update()
                 //--------------------------------------------------------------------------// Delete Object
                 if (ImGui::IsItemClicked(ImGuiMouseButton_Right)) {
                     mPopup = true;
+                    RselectedId = ent.id;
                 }
             }
             
@@ -202,8 +225,6 @@ void Hierarchy::update()
 
             //systemManager->ecs->DeleteEntity(Hierarchy::selectedId);
         }
-
-
         mCPopup = false;
         ImGui::EndPopup();
     }
@@ -220,16 +241,16 @@ void Hierarchy::update()
             //Entity ent(Hierarchy::selectedId);
             systemManager->ecs->DeleteEntity(Hierarchy::selectedId);
         }
-        //if (ImGui::Selectable("RemoveChild")) {
+        if (ImGui::Selectable("Prefab")) {
         //    selectionOn = false;
 
-        //   //ntity tempEnt(RselectedId);
-
+            Entity tempEnt(RselectedId);
+            systemManager->ecs->NewPrefab(tempEnt);
         //   // tempEnt.GetParent().;
 
 
         //    //systemManager->ecs->DeleteEntity(Hierarchy::selectedId);
-        //}
+        }
 
 
         mPopup = false;
@@ -238,7 +259,30 @@ void Hierarchy::update()
     mPopup = false;
 }
 
+#endif
 
-//void update() {
-//
-//}
+
+#ifndef DEBUG
+
+void update() {
+
+   
+
+    if (ImGui::Button("Add", ImVec2(50, 50)))
+    {
+        Entity newEntity = systemManager->ecs->NewEntity();
+
+
+        newEntity.GetComponent<General>().name = "NewObject"/* + static_cast<int> (newEntity.id)*/;
+    }
+
+    auto scene = systemManager->mGameStateSystem->mCurrentGameState.mScenes;
+
+    for (auto& obj : scene) {
+
+      //  obj
+    }
+
+}
+
+#endif // 1

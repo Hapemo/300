@@ -27,7 +27,7 @@ Setting up specification for frame buffer rendering
 #define _USE_MATH_DEFINES
 #include <math.h>
 #include "imgui_internal.h"
-
+#include "Hierarchy.h"
 
 typedef void    (*ImGuiSizeCallback)(ImGuiSizeCallbackData* data);
 
@@ -51,6 +51,15 @@ void SceneWindow::update()
 	scene_m_Hovered = ImGui::IsWindowHovered();	
 	const ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
 	ImGui::Image((ImTextureID)(intptr_t)systemManager->mGraphicsSystem->GetEditorAttachment(), viewportPanelSize);
+	if (ImGui::IsItemClicked(ImGuiMouseButton_Left)) {
+		unsigned int getid = systemManager->mGraphicsSystem->GetEntityID(ImGui::GetMousePos().x, ImGui::GetMousePos().y );
+
+		std::cout << "Mouse pos " << ImGui::GetMousePos().x << " " << ImGui::GetMousePos().y << "\n";
+
+		std::cout << getid << " i got something bitch\n";
+		std::cout << (unsigned int)Hierarchy::selectedId <<"\n";
+	}
+
 	ImGui::SetItemAllowOverlap();
 	//wevents = ImGui::IsItemHovered();  /// <-- This returns true if mouse is over the overlaped Test button
 
@@ -75,6 +84,7 @@ void SceneWindow::update()
 	//ImGui::Image((ImTextureID)(intptr_t)systemManager->mGraphicsSystem->GetEditorAttachment(),ImVec2(1920, 1080));
 
 
+	
 
 
 }
