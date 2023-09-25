@@ -23,6 +23,10 @@
 C:\Users\mcheo\OneDrive\Documents\300\300\300\_GEOM_COMPILER\src\Bone.cpp(23,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
 C:\Users\mcheo\OneDrive\Documents\300\300\300\_GEOM_COMPILER\src\Bone.cpp(35,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
 C:\Users\mcheo\OneDrive\Documents\300\300\300\_GEOM_COMPILER\src\Bone.cpp(47,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\mcheo\OneDrive\Documents\300\300\300\_GEOM_COMPILER\src\geom.cpp(335,8): warning C4101: 'ch': unreferenced local variable
+C:\Users\mcheo\OneDrive\Documents\300\300\300\_GEOM_COMPILER\src\Bone.cpp(69): warning C4715: '_GEOM::Bone::GetPositionIndex': not all control paths return a value
+C:\Users\mcheo\OneDrive\Documents\300\300\300\_GEOM_COMPILER\src\Bone.cpp(95): warning C4715: '_GEOM::Bone::GetScaleIndex': not all control paths return a value
+C:\Users\mcheo\OneDrive\Documents\300\300\300\_GEOM_COMPILER\src\Bone.cpp(82): warning C4715: '_GEOM::Bone::GetRotationIndex': not all control paths return a value
 C:\Users\mcheo\OneDrive\Documents\300\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(307,34): warning C4018: '<': signed/unsigned mismatch
 C:\Users\mcheo\OneDrive\Documents\300\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(771,46): warning C4267: 'initializing': conversion from 'size_t' to 'uint8_t', possible loss of data
 C:\Users\mcheo\OneDrive\Documents\300\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(775,38): warning C4267: '=': conversion from 'size_t' to 'uint8_t', possible loss of data
@@ -31,8 +35,4 @@ C:\Users\mcheo\OneDrive\Documents\300\300\300\_GEOM_COMPILER\src\Geom_Compiler.c
 C:\Users\mcheo\OneDrive\Documents\300\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(984,37): warning C4018: '<': signed/unsigned mismatch
 C:\Users\mcheo\OneDrive\Documents\300\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(1021,42): warning C4244: '=': conversion from 'const double' to 'float', possible loss of data
 C:\Users\mcheo\OneDrive\Documents\300\300\300\_GEOM_COMPILER\src\Geom_Compiler.cpp(1022,48): warning C4244: '=': conversion from 'const double' to 'float', possible loss of data
-C:\Users\mcheo\OneDrive\Documents\300\300\300\_GEOM_COMPILER\src\geom.cpp(335,8): warning C4101: 'ch': unreferenced local variable
-C:\Users\mcheo\OneDrive\Documents\300\300\300\_GEOM_COMPILER\src\Bone.cpp(69): warning C4715: '_GEOM::Bone::GetPositionIndex': not all control paths return a value
-C:\Users\mcheo\OneDrive\Documents\300\300\300\_GEOM_COMPILER\src\Bone.cpp(82): warning C4715: '_GEOM::Bone::GetRotationIndex': not all control paths return a value
-C:\Users\mcheo\OneDrive\Documents\300\300\300\_GEOM_COMPILER\src\Bone.cpp(95): warning C4715: '_GEOM::Bone::GetScaleIndex': not all control paths return a value
   _GEOM_COMPILER.vcxproj -> C:\Users\mcheo\OneDrive\Documents\300\300\300\x64\Debug\_GEOM_COMPILER.lib

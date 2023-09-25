@@ -46,6 +46,7 @@ std::ofstream Logger::Pfile{};
 std::deque<std::string> Logger::logToGUI;
 bool Logger::flag = false;
 bool Logger::firstTimeFlag = true;
+bool Logger::concatFlag = false;
 
 void Logger::InitLogging()
 {
@@ -75,6 +76,8 @@ void Logger::InitLogging()
 
 void Logger::LogOutput(log_mode mode, const char* message, ...)
 {
+	std::string messageStr = std::string(message);
+	//std::cout << std::string(lastChar) << std::endl;
 	//6 different modes of logs
 	const char* mode_strings[6] = { "{FATAL}: ", "{ERROR}: ", "{WARN}: ",
 									"{INFO}: ", "{DEBUG}: ", "{TRACE}: " };
@@ -100,9 +103,26 @@ void Logger::LogOutput(log_mode mode, const char* message, ...)
 	temp2 = std::regex_replace(temp2, std::regex(" "), "_");
 	temp2 = std::regex_replace(temp2, std::regex(":"), "_");
 
-	//Output to opened log file from InitLogging()
-	Pfile << temp2 << mode_strings[mode] << outputMessage << "\n";
-	Pfile << "\n";
+	if (concatFlag)
+	{
+		Pfile << outputMessage << "\n";
+		concatFlag = !concatFlag;
+	}
+
+	if (messageStr.find_last_of("+"))
+	{
+		std::string msg(outputMessage);
+		msg.erase(remove(msg.begin(), msg.end(), '+'), msg.end());
+		Pfile << temp2 << mode_strings[mode] << msg;
+		concatFlag = !concatFlag;
+	}
+	else
+	{
+		//Output to opened log file from InitLogging()
+		Pfile << temp2 << mode_strings[mode] << outputMessage << "\n";
+		Pfile << "\n";
+	}
+
 	std::string strMode(mode_strings[mode]);
 	std::string strMessage(outputMessage);
 	flag = true;
