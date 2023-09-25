@@ -112,6 +112,8 @@ bool EntityJSON::Deserialize(const rapidjson::Value& obj)
 			mMRJ.mMaterialInstancePath[i] = (obj["MeshRenderer"]["MaterialInstancePath"][i].GetString());
 		mMRJ.mMeshPath = obj["MeshRenderer"]["MeshPath"].GetString();
 		mMRJ.mGUID = (unsigned)obj["MeshRenderer"]["GUID"].GetInt();
+		for (int i = 0; i < 4; ++i)
+			mMRJ.mTextureCont[i] = (obj["MeshRenderer"]["TextureCont"][i].GetBool());
 
 		mmr_t = true;
 	}
@@ -300,6 +302,12 @@ bool EntityJSON::Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* wri
 
 		writer->String("GUID");
 		writer->Int(mMRJ.mGUID);
+
+		writer->String("TextureCont");
+		writer->StartArray();
+		for (int i = 0; i < 4; ++i)
+			writer->Bool(mMRJ.mTextureCont[i]);
+		writer->EndArray();
 
 		writer->EndObject();
 		//to_json_recursive(mMRJ, *writer);
