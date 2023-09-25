@@ -23,13 +23,21 @@ void AudioSystem::Init()
 	std::cout << "System Initialize: ";
 	ErrCodeCheck(system_obj->init(MAX_AUDIO_FILES_PLAYING, FMOD_INIT_NORMAL, nullptr)); // Settings can be combined by doing OR operation
 
-	// Create Channels (At Initialization)
+	// Create Channels (At Initialization) - OLD
 	std::vector<FMOD::Channel*> bgm_channel;
 	std::vector<FMOD::Channel*> sfx_channel;
 	std::cout << "Initialize BGM Channel." << std::endl;
 	mChannels.emplace(std::make_pair(AUDIO_BGM, bgm_channel));
 	std::cout << "Initialize SFX Channel." << std::endl;
 	mChannels.emplace(std::make_pair(AUDIO_SFX, sfx_channel));
+
+	// Create Channels (At Initialization) - NEW (w ID tracking)
+	std::vector<Channel> bgm_channel_new;
+	std::vector<Channel> sfx_channel_new;
+	std::cout << "Initialize BGM NEW Channel." << std::endl;
+	mChannelsNew.emplace(std::make_pair(AUDIO_BGM, bgm_channel_new));
+	std::cout << "Initialize SFX NEW Channel." << std::endl;
+	mChannelsNew.emplace(std::make_pair(AUDIO_SFX, sfx_channel_new));
 
 	// Populate Channel
 	/*for (; no_of_sfx_channels < NO_OF_SFX_CHANNELS_TO_INIT; no_of_sfx_channels++)
@@ -57,6 +65,33 @@ void AudioSystem::Init()
 		std::string audio_path = audio_component.mFilePath + "/" + audio_component.mFileName;
 		std::string audio_name = audio_component.mFileName;
 		LoadAudio(audio_path, audio_name);
+	}
+
+	// [9/25] Decided to just init a number of channels from the start.
+	auto bgm_channel_it = mChannelsNew.find(AUDIO_BGM);
+	auto sfx_channel_it = mChannelsNew.find(AUDIO_SFX);
+
+	// [9/25] Populate the (Channel) Object
+	if (bgm_channel_it != mChannelsNew.end())
+	{
+		for (int i = 0; i < NO_OF_BGM_CHANNELS_TO_INIT; ++i)
+		{
+			FMOD::Channel* new_channel = nullptr;
+			Channel new_bgm_channel = Channel(next_avail_id_bgm, new_channel, false); // We need this for the channel status.
+			next_avail_id_bgm++;
+			bgm_channel_it->second.push_back(new_bgm_channel);
+		}
+	}
+
+	if (sfx_channel_it != mChannelsNew.end())
+	{
+		for (int i = 0; i < NO_OF_SFX_CHANNELS_TO_INIT; ++i)
+		{
+			FMOD::Channel* new_channel = nullptr;
+			Channel new_sfx_channel = Channel(next_avail_id_sfx, new_channel, false); // We need this for the channel status.
+			next_avail_id_sfx++;
+			sfx_channel_it->second.push_back(new_sfx_channel);
+		}
 	}
 }
 
