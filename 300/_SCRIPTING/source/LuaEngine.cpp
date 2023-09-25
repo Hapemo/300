@@ -92,8 +92,10 @@ void LuaRigidBody()
 {
     systemManager->mScriptingSystem->luaState.new_usertype<RigidBody>(
         "RigidBody", sol::constructors<>(),
+        "mDensity", &RigidBody::mDensity,
         "mMaterial", &RigidBody::mMaterial,
-        "mMotion", &RigidBody::mMass
+        "mMotion", &RigidBody::mMotion,
+        "mVelocity", &RigidBody::mVelocity
         );
 }
 

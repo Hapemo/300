@@ -2,6 +2,7 @@
 #include "ECS/ECS_Components.h"
 #include "ScriptingSystem.h"
 #include "pch.h"
+#include "Object/ObjectFactory.h"
 
 bool Entity::ShouldRun() {
 	assert(HasComponent<General>() && std::string("There is no general component when attempting to change Entity's isActive").c_str());
@@ -44,7 +45,41 @@ void Entity::Activate() {
 	//------------------------------------------------------------------
 }
 
-ECS::ECS() : registry(), NullEntity(registry.create()) {} 
+void Entity::Deactivate() {
+	if (!HasComponent<General>()) {
+		//LOG_ERROR("There is no general component when attempting to activate, entity ID: " + std::to_string(id));
+		assert(false && std::string("There is no general component when attempting to deactivate, entity ID: " + std::to_string(static_cast<uint32_t>(id))).c_str());
+		return;
+	}
+	General& genComp{ GetComponent<General>() };
+
+	//------------------------------------------------------------------
+	// Codes that should run when activating entity halfway through game
+
+	// Scripting
+#ifdef _EDITOR
+	if (editorManager->IsScenePaused()) return;
+#endif
+	//if (!editorManager->IsScenePaused())
+	if (HasComponent<Script>())
+		systemManager->GetScriptingPointer()->ScriptExit(*this);
+
+
+	// General
+	genComp.isActive = true;
+
+	// Parent Child
+	/*if (HasComponent<)
+	Entity firstChild =
+
+	for (Entity e : genComp.children) e.Deactivate();*/
+
+
+
+	//------------------------------------------------------------------
+}
+
+ECS::ECS() : registry(), NullEntity(registry.create()), mClipboard(0) {} 
 
 Entity ECS::NewEntity()
 {
@@ -79,32 +114,106 @@ void ECS::NewPrefab(Entity e)
 	// 1) serialize prefab based on entity
 	// 2) have a list of entities tied to a prefab
 	// for now, use member map
+	if (static_cast<std::uint32_t>(e.id) == 0)
+		throw ("trying to make prefab from null entity");
 	std::string name = e.GetComponent<General>().name;
+	ObjectFactory::SerializePrefab(e, "../assets/Prefabs/" + name + ".json");
+	e.AddComponent<Prefab>().mPrefab = name;
 	if (mPrefabs.count(name))
 		throw ("prefab of the same name exists!");
-	mPrefabs[e.GetComponent<General>().name].push_back(e);
+	mPrefabs[name].push_back(e);
 }
 
-void ECS::NewEntityFromPrefab(std::string prefabName)
+Entity ECS::NewEntityFromPrefab(std::string prefabName)
 {
 	// void ObjectFactory::DeserializeScene(const std::string& filename)
 	// creation of new entity done inside deserializescene function
-	Entity e = NewEntity();
+	Entity e(ObjectFactory::DeserializePrefab("../assets/Prefabs/" + prefabName + ".json"));
+	e.AddComponent<Prefab>().mPrefab = prefabName;
 	//copy all prefab components (except transform) to new entity
 	mPrefabs[prefabName].push_back(e);
+	return e;
 }
 
 void ECS::UpdatePrefabEntities(std::string prefabName)
 {
+	Entity temp(ObjectFactory::DeserializePrefab("../assets/Prefabs/" + prefabName + ".json"));
+	
 	for (Entity e : mPrefabs[prefabName])
 	{
-		//copy all prefab components into new entity
+		if (temp.HasComponent<MeshRenderer>())
+			e.GetComponent<MeshRenderer>() = temp.GetComponent<MeshRenderer>();
+		if (temp.HasComponent<RigidBody>())
+			e.GetComponent<RigidBody>() = temp.GetComponent<RigidBody>();
+		if (temp.HasComponent<BoxCollider>())
+			e.GetComponent<BoxCollider>() = temp.GetComponent<BoxCollider>();
+		if (temp.HasComponent<SphereCollider>())
+			e.GetComponent<SphereCollider>() = temp.GetComponent<SphereCollider>(); 
+		if (temp.HasComponent<PlaneCollider>())
+			e.GetComponent<PlaneCollider>() = temp.GetComponent<PlaneCollider>();
+		if (temp.HasComponent<Scripts>())
+			e.GetComponent<Scripts>() = temp.GetComponent<Scripts>();
+		if (temp.HasComponent<Audio>())
+			e.GetComponent<Audio>() = temp.GetComponent<Audio>();
 	}
+
+	systemManager->ecs->DeleteEntity(temp);
+}
+
+void ECS::CopyEntity(Entity e)
+{
+	if (static_cast<std::uint32_t>(e.id) == 0)
+		throw ("trying to copy null entity");
+	mClipboard = e;
+}
+
+Entity ECS::PasteEntity()
+{
+	if (static_cast<uint32_t>(mClipboard.id) == 0)
+		return Entity(0);
+
+	Entity e = NewEntity();
+	
+	if (mClipboard.HasComponent<MeshRenderer>())
+		e.GetComponent<MeshRenderer>() = mClipboard.GetComponent<MeshRenderer>();
+	if (mClipboard.HasComponent<RigidBody>())
+		e.GetComponent<RigidBody>() = mClipboard.GetComponent<RigidBody>();
+	if (mClipboard.HasComponent<BoxCollider>())
+		e.GetComponent<BoxCollider>() = mClipboard.GetComponent<BoxCollider>();
+	if (mClipboard.HasComponent<SphereCollider>())
+		e.GetComponent<SphereCollider>() = mClipboard.GetComponent<SphereCollider>();
+	if (mClipboard.HasComponent<PlaneCollider>())
+		e.GetComponent<PlaneCollider>() = mClipboard.GetComponent<PlaneCollider>();
+	if (mClipboard.HasComponent<Scripts>())
+		e.GetComponent<Scripts>() = mClipboard.GetComponent<Scripts>();
+	if (mClipboard.HasComponent<Audio>())
+		e.GetComponent<Audio>() = mClipboard.GetComponent<Audio>();
+
+	return e;
+}
+
+
+
+void ECS::UnlinkPrefab(Entity e)
+{
+	if (!e.HasComponent<Prefab>())
+		return;
+	std::string name = e.GetComponent<Prefab>().mPrefab;
+	auto temp = std::find(mPrefabs[name].begin(), mPrefabs[name].end(), e);
+	if (temp == mPrefabs[name].end())
+		return;
+	mPrefabs[name].erase(temp);
+	e.RemoveComponent<Prefab>();
 }
 
 Entity::Entity(entt::entity id) : id(id) {}
 Entity::Entity(std::uint32_t id) : id(entt::entity(id)) {}
 Entity::Entity(const Entity& entity) : id(entity.id) {}
+
+void Entity::operator=(const Entity& entity)
+{
+	this->id = entity.id;
+}
 
 void Entity::AddChild(Entity e)
 {
@@ -168,4 +277,29 @@ bool Entity::HasChildren()
 bool Entity::HasParent()
 {
 	return this->HasComponent<Parent>();
+}
+
+void Entity::RemoveChild(Entity e)
+{
+	if (!this->HasComponent<Children>())
+		return;
+	if (!e.HasComponent<Parent>())
+		return;
+	if (e.GetComponent<Parent>().mParent != static_cast<uint32_t>(this->id))
+		return;
+	
+	Children& thisChildren = this->GetComponent<Children>();
+	if (thisChildren.mNumChildren == 1)
+	{
+		e.RemoveComponent<Parent>();
+		this->RemoveComponent<Children>();
+		return;
+	}
+	--thisChildren.mNumChildren;
+	Parent& eParent = e.GetComponent<Parent>();
+	Entity prev = eParent.mPrevSibling;
+	Entity next = eParent.mNextSibling;
+	prev.GetComponent<Parent>().mNextSibling = static_cast<uint32_t>(next.id);
+	next.GetComponent<Parent>().mPrevSibling = static_cast<uint32_t>(prev.id);
+	e.RemoveComponent<Parent>();
 }

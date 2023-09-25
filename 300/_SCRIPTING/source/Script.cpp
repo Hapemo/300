@@ -23,8 +23,9 @@ This file contains the logic to Load and Run scripts.
 
 //bool Script::isOnce = false;
 
-void Script::Load(Entity entityID)
+void Script::Load(Entity entity)
 {
+    //std::cout << (int)entity.id << std::endl;
     sol::protected_function_result result = systemManager->mScriptingSystem->luaState.script_file(scriptFile, env);
     if (!result.valid())
     {
@@ -36,7 +37,7 @@ void Script::Load(Entity entityID)
         //isOnce = true;
     }
 
-    env["script_entity_id"] = entityID.id;
+    env["script_entity_id"] = entity.id;
 }
 
 void Script::Run(const char* funcName)

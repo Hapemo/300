@@ -6,8 +6,9 @@
 #include "stringbuffer.h"
 #include "ECS/ECS_Components.h"
 #include "ECS/ECS.h"
+#include "GameState/Scene.h"
 //#include "GameState/GameStateManager.h"
-class Scene;
+//class Scene;
 
 //helper functions to convert strings to enums
 //template <typename T>
@@ -226,13 +227,6 @@ private:
 	std::list<EntityJSON> ents;
 };
 
-struct ScJSON
-{
-	std::string name;
-	bool isPause;
-	bool forceRender;
-};
-
 class SceneJSON : public BaseJSON
 {
 public:
@@ -243,11 +237,18 @@ public:
 	virtual bool Deserialize(const rapidjson::Value& obj);
 	virtual bool Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* writer) const;
 
-	void SetSceneJSON(const Scene scj);
-	const Scene GetSceneJSON() const;
+	void SetSceneJSON(const Scene sj)
+	{
+		mScene = sj;
+	}
+
+	const Scene GetSceneJSON() const
+	{
+		return mScene;
+	}
 
 private:
-	ScJSON sj;
+	Scene mScene;
 };
 
 class SceneListJSON : public BaseJSON

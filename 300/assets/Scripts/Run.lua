@@ -1,3 +1,7 @@
+function Alive()
+
+end
+
 function Start()
 
 end
@@ -13,4 +17,12 @@ function Update()
     for i = 0, #generalEntities do
         print(generalEntities[i].id, generalEntities[i])
     end
+end
+
+function Exit()
+
+end
+
+function Dead()
+
 end

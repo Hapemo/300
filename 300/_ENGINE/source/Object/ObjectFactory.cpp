@@ -3,6 +3,7 @@
 #include "document.h"
 #include "GameState/Scene.h"
 #include "GameState/GameState.h"
+#include "ConfigManager.h"
 
 void ObjectFactory::DeserializeScene(const std::string& filename)
 {
@@ -230,18 +231,81 @@ void ObjectFactory::SerializePrefab(Entity e, const std::string& filename)
 		ent.SetPJSON(e.GetComponent<Parent>());
 	else ent.mp_t = false;
 
-	if (e.HasComponent<Children>())
-		ent.SetCJSON(e.GetComponent<Children>());
-	else ent.mc_t = false;
-
-	if (e.HasComponent<Audio>())
-		ent.SetAJSON(e.GetComponent<Audio>());
-	else ent.ma_t = false;
+	ent.mc_t = false;
+	ent.ma_t = false;
 
 	// push back after done
 	entities.EntitiesList().push_back(ent);
 
 	entities.SerializeFile(filename);
+}
+
+Entity ObjectFactory::DeserializePrefab(const std::string& filename)
+{
+	EntityListJSON entities;
+	entities.DeserializeFile(filename);
+
+	if (entities.EntitiesList().size() > 1)
+		throw ("multiple entities in prefab file!");
+
+	EntityJSON& eJ = entities.EntitiesList().front();
+
+	Entity e = systemManager->ecs->NewEntity().id;
+
+	General temp = eJ.GetGeneralJSON();
+
+	General& curr = e.GetComponent<General>();
+
+	curr.isActive = true;
+	curr.isPaused = true;
+	curr.tag = temp.tag;
+	curr.subtag = temp.subtag;
+
+	if (eJ.mrb_t)
+	{
+		e.AddComponent<RigidBody>();
+		e.GetComponent<RigidBody>() = eJ.GetRBJSON();
+	}
+
+	if (eJ.mmr_t)
+	{
+		e.AddComponent<MeshRenderer>();
+		e.GetComponent<MeshRenderer>() = eJ.GetMRJSON();
+	}
+
+	if (eJ.mbc_t)
+	{
+		e.AddComponent<BoxCollider>();
+		e.GetComponent<BoxCollider>() = eJ.GetBCJSON();
+	}
+
+	if (eJ.msc_t)
+	{
+		e.AddComponent<SphereCollider>();
+		e.GetComponent<SphereCollider>() = eJ.GetSCJSON();
+	}
+
+	if (eJ.mpc_t)
+	{
+		e.AddComponent<PlaneCollider>();
+		e.GetComponent<PlaneCollider>() = eJ.GetPCJSON();
+	}
+
+	if (eJ.ms_t)
+	{
+		e.AddComponent<Scripts>();
+		e.GetComponent<Scripts>() = eJ.GetSJSON();
+		/*for (Script ya : e.GetComponent<Scripts>().scriptsContainer)
+			std::cout << ya.scriptFile << std::endl;*/
+	}
+
+	if (eJ.ma_t)
+	{
+		e.AddComponent<Audio>();
+		e.GetComponent<Audio>() = eJ.GetAJSON();
+	}
+
+	return e;
 }
 
 // deserialize scenes from the Scenes folder
@@ -250,7 +314,7 @@ void ObjectFactory::LoadScene(Scene* scene, const std::string& filename)
 	// loop thru container and store entities
 
 	EntityListJSON entities;
-	entities.DeserializeFile(filename);
+	entities.DeserializeFile(ConfigManager::GetValue("ScenePath") + filename + ".json");
 
 	std::unordered_map<entt::entity, entt::entity> idMap;
 
@@ -342,7 +406,7 @@ void ObjectFactory::LoadScene(Scene* scene, const std::string& filename)
 void ObjectFactory::SaveScene(Scene* scene)
 {
 	// form the filename
-	std::string filename = "../resources/Scenes/" + scene->mName + ".json";
+	std::string filename = ConfigManager::GetValue("ScenePath") + scene->mName + ".json";
 
 	std::ofstream ofs;
 	ofs.open(filename, std::fstream::out | std::fstream::trunc);
@@ -403,12 +467,49 @@ void ObjectFactory::SaveScene(Scene* scene)
 	entities.SerializeFile(filename);
 }
 
-void ObjectFactory::LoadGameState(GameState* gs, const std::string& filename)
+void ObjectFactory::LoadGameState(GameState* gs, const std::string& _name)
 {
+	gs->mName = _name;
 
+	SceneListJSON scenes;
+	scenes.DeserializeFile(ConfigManager::GetValue("GameStatePath") + _name + ".json");
+
+	Scene sce;
+	for (auto& s : scenes.SceneList())
+	{
+		sce = s.GetSceneJSON();
+		gs->mScenes.push_back(sce);
+	}
+
+	// split the file name and save it into the scene
+	// eg "../resources/GameStates/test.json"
+	size_t lastSep = _name.find_last_of("/\\");
+	size_t lastStop = _name.find_last_of(".");
+
+	if (lastSep != std::string::npos && lastStop != std::string::npos && lastStop > lastSep)
+		gs->mName = _name.substr(lastSep + 1, lastStop - lastSep - 1);
 }
 
 void ObjectFactory::SaveGameState(GameState* gs)
 {
+	// form the filename
+	std::string filename = ConfigManager::GetValue("GameStatePath") + gs->mName + ".json";
 
+	std::ofstream ofs;
+	ofs.open(filename, std::fstream::out | std::fstream::trunc);
+	ofs.close();
+
+	SceneJSON sce;
+	SceneListJSON scenes;
+	scenes.SceneList().clear();
+
+	for (Scene s : gs->mScenes)
+	{
+		sce.SetSceneJSON(s);
+
+		// push back after done
+		scenes.SceneList().push_back(sce);
+	}
+
+	scenes.SerializeFile(filename);
 }

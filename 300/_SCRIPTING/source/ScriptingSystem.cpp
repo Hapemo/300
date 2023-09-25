@@ -209,6 +209,57 @@ void ScriptingSystem::Update(float dt)
 
     EnginePerformance::GetTime(endTime);
     EnginePerformance::UpdateSystemMs("Scripting", startTime, endTime);
+
+    //if (g_engine->gameStateMgr->isPlaying) 
+    //{ 
+        // Load the scripts and call the "Start" function 
+    //if (!once)
+    //{
+    //    for (Entity entity : scriptEntities)
+    //    {
+    //        for (Script script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
+    //        {
+    //            script.Load(entity);
+    //            script.Run("Start");
+    //        }
+    //    }
+    //    once = true;
+    //}
+
+    // Call the "Update" function 
+    for (Entity entity : scriptEntities)
+    {
+        for (Script script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
+        {
+            script.Run("Update");
+        }
+    }
+    //} 
+    /******************************************************************************/
+    /*!
+        To implement when game state manager is ready
+        Load scripts when scene is not playing & left-shift is pressed
+     */
+     /******************************************************************************/
+    //else 
+    //{ 
+    if (Input::CheckKey(E_STATE::PRESS, E_KEY::LEFT_SHIFT))
+    {
+        //    for (Entity entity : ECS::GetInstance()->GetEntitiesWith<Scripts>()) 
+        //    { 
+        //        for (auto& script : entity.GetComponent<Scripts>().scriptsContainer) 
+        //        { 
+        //            int entityid = entity.id; 
+        //            script.Load(entityid); 
+        //        } 
+        //    } 
+        once = false;
+    }
+    //} 
+
+    //Timer::GetTime(endTime); 
+    //Timer::UpdateSystemMs(SystemType<ScriptingSystem>(), startTime, endTime); 
+    //}
 }
 
 void ScriptingSystem::Exit()
@@ -219,7 +270,7 @@ void ScriptingSystem::Exit()
 void ScriptingSystem::ScriptAlive(const Entity& entity)
 {
     auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
-    for (Script script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
+    for (Script& script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
     {
         script.Load(entity);
         script.Run("Alive");
@@ -229,7 +280,7 @@ void ScriptingSystem::ScriptAlive(const Entity& entity)
 void ScriptingSystem::ScriptStart(const Entity& entity)
 {
     auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
-    for (Script script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
+    for (Script& script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
     {
         script.Load(entity);
         script.Run("Start");
@@ -239,7 +290,7 @@ void ScriptingSystem::ScriptStart(const Entity& entity)
 void ScriptingSystem::ScriptExit(const Entity& entity)
 {
     auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
-    for (Script script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
+    for (Script& script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
     {
         script.Run("Exit");
     }
@@ -248,7 +299,7 @@ void ScriptingSystem::ScriptExit(const Entity& entity)
 void ScriptingSystem::ScriptDead(const Entity& entity)
 {
     auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
-    for (Script script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
+    for (Script& script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
     {
         script.Run("Dead");
     }

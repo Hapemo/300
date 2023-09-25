@@ -36,6 +36,9 @@
     <ClInclude Include="include\SingletonManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\ConfigManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Misc.cpp">
@@ -48,6 +51,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\SingletonManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\ConfigManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

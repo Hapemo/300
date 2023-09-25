@@ -39,7 +39,7 @@ public:
 	- File path of scene file. Leave this empty to create a new scene without a json
 	file
 	*******************************************************************************/
-	void AddScene(std::filesystem::path const& _path = std::filesystem::path());
+	void AddScene(std::string const& _name = std::string());
 
 	/*!*****************************************************************************
 	Remove a scene from the game state.
@@ -47,7 +47,9 @@ public:
 	\param std::string const&
 	- Name of scene to remove
 	*******************************************************************************/
-	void RemoveScene(std::string const& _name); 
+	void RemoveScene(std::string const& _name);
+
+	Scene* GetScene(std::string const& _name);
 
 	/*!*****************************************************************************
 	Load in a game state file, running al the load of it's scenes too.
@@ -55,7 +57,7 @@ public:
 	\param std::filesystem::path const&
 	- File path of the gamestate file 
 	*******************************************************************************/
-	void Load(std::filesystem::path const& _path);
+	void Load(std::string const& _name);
 
 	/*!*****************************************************************************
 	Save the game state data.

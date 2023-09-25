@@ -51,11 +51,12 @@ struct MeshRenderer
 
 struct RigidBody
 {
-	std::uint16_t mMass;
+	float mDensity;
 	MATERIAL mMaterial;
 	MOTION mMotion;
+	glm::vec3 mVelocity;
 
-	RigidBody() : mMass(10.f), mMaterial(MATERIAL::WOOD), mMotion(MOTION::STATIC) {};
+	RigidBody() : mDensity(10.f), mMaterial(MATERIAL::WOOD), mMotion(MOTION::STATIC), mVelocity(0.f) {};
 	//RTTR_ENABLE()
 };
 
@@ -79,7 +80,7 @@ struct SphereCollider
 	//RTTR_ENABLE()
 };
 
-struct PlaneCollider
+struct PlaneCollider //if has plane collider always static
 {
 	glm::vec3 mNormal;				// direction of plane
 	float mTranslateOffset;			// final pos = magnitude(Transform.mTranslate) + mTranslateOffset;
@@ -256,3 +257,7 @@ struct Audio
 //	;
 //}
 
+struct Prefab
+{
+	std::string mPrefab;
+};
