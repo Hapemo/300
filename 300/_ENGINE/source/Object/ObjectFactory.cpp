@@ -240,7 +240,7 @@ void ObjectFactory::SerializePrefab(Entity e, const std::string& filename)
 	entities.SerializeFile(filename);
 }
 
-Entity ObjectFactory::DeserializePrefab(const std::string& filename)
+Entity ObjectFactory::DeserializePrefab(const std::string& filename, int id)
 {
 	EntityListJSON entities;
 	entities.DeserializeFile(filename);
@@ -256,6 +256,7 @@ Entity ObjectFactory::DeserializePrefab(const std::string& filename)
 
 	General& curr = e.GetComponent<General>();
 
+	curr.name = temp.name + " Prefab " + std::to_string(id);
 	curr.isActive = true;
 	curr.isPaused = true;
 	curr.tag = temp.tag;

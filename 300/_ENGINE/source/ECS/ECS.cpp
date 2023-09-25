@@ -127,16 +127,18 @@ Entity ECS::NewEntityFromPrefab(std::string prefabName)
 {
 	// void ObjectFactory::DeserializeScene(const std::string& filename)
 	// creation of new entity done inside deserializescene function
-	Entity e(ObjectFactory::DeserializePrefab("../assets/Prefabs/" + prefabName + ".json"));
+	Entity e(ObjectFactory::DeserializePrefab("../assets/Prefabs/" + prefabName + ".json", mPrefabs[prefabName].size()));
 	e.AddComponent<Prefab>().mPrefab = prefabName;
 	//copy all prefab components (except transform) to new entity
+	General temp1 = e.GetComponent<General>();
+	MeshRenderer temp = e.GetComponent<MeshRenderer>();
 	mPrefabs[prefabName].push_back(e);
 	return e;
 }
 
 void ECS::UpdatePrefabEntities(std::string prefabName)
 {
-	Entity temp(ObjectFactory::DeserializePrefab("../assets/Prefabs/" + prefabName + ".json"));
+	Entity temp(ObjectFactory::DeserializePrefab("../assets/Prefabs/" + prefabName + ".json", 0));
 	
 	for (Entity e : mPrefabs[prefabName])
 	{
