@@ -147,16 +147,16 @@ void SceneWindow::RenderGuizmo()
 	//float transformtemp[16] {0};
 
 	//Hierarchy::selectedId =;
-//	if (Hierarchy::selectionOn == true) {
+	if (Hierarchy::selectionOn == true) {
 
-	//	Transform& transform = Entity(Hierarchy::selectedId).GetComponent<Transform>();
+		Transform& transform = Entity(Hierarchy::selectedId).GetComponent<Transform>();
 
 		//glm::mat3 testMat{ 1.0 };
 
 		glm::vec3 tempRot = /*{ transform->orientation.z,0,transform->orientation.x }*/{ 0,0,0 };
 
-		ImGuizmo::RecomposeMatrixFromComponents(glm::value_ptr(trans), glm::value_ptr(tempRot),
-			glm::value_ptr(scale), glm::value_ptr(objectMatrix) /*glm::value_ptr(transformtemp)*/);
+		ImGuizmo::RecomposeMatrixFromComponents(glm::value_ptr(transform.mTranslate), glm::value_ptr(transform.mRotate),
+			glm::value_ptr(transform.mScale), glm::value_ptr(objectMatrix) /*glm::value_ptr(transformtemp)*/);
 
 		ImGuizmo::SetOrthographic(true);
 		ImGuizmo::SetDrawlist();
@@ -176,14 +176,14 @@ void SceneWindow::RenderGuizmo()
 	//			ImGuizmo::OPERATION::SCALE, ImGuizmo::WORLD, glm::value_ptr(objectMatrix));
 	////	}
 
-	//	if (ImGuizmo::IsUsing()) {
-	//		ImGuizmo::DecomposeMatrixToComponents(glm::value_ptr(objectMatrix), glm::value_ptr(transform.mTranslate),
-	//			glm::value_ptr(tempRot), glm::value_ptr(transform.mScale));
+		if (ImGuizmo::IsUsing()) {
+			ImGuizmo::DecomposeMatrixToComponents(glm::value_ptr(objectMatrix), glm::value_ptr(transform.mTranslate),
+				glm::value_ptr(tempRot), glm::value_ptr(transform.mScale));
 
 	//		//transform->orientation.x += tempRot.z;
-	//	}
+		}
 
 
-	//}
+	}
 }
 
