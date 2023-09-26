@@ -102,7 +102,7 @@ void ContentBrowser::update()
 
 
 			if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) {
-				if (check_extension(path.string(), ".json")) {
+				if (check_extension(path.string(), ".prefab")) {
 
 
 					int posstart = filename_string.find_last_of("\\");
