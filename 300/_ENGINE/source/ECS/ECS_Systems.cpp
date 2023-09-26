@@ -68,10 +68,10 @@ void SystemManager::Reset()
 
 void SystemManager::Update(float dt)
 {
+	mInputActionSystem.get()->Update();
 	mGraphicsSystem.get()->Update(dt);
 	if (!mIsPlay) return;
 
-	mInputActionSystem.get()->Update();
 	mPhysicsSystem.get()->Update(dt);
 	//mScriptingSystem.get()->Update(dt);
 	mGraphicsSystem.get()->Update(dt);

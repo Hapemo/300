@@ -2,7 +2,7 @@
 
 
 void InputMapSystem::Init()
-{
+{	
 	InputActionMap general_movement = InputActionMap("General Movement");
 	general_movement.Enable();
 	general_movement.AddAction("move");
@@ -18,6 +18,8 @@ void InputMapSystem::Init()
 	glm::vec2 vec_response_up = move_action.ReadValue(E_KEY::UP);
 	glm::vec2 vec_response_down = move_action.ReadValue(E_KEY::DOWN);
 	glm::vec2 read_vec;
+
+	AddActionMap(general_movement);
 
 	E_KEY key_pressed = E_KEY::DOWN;
 
@@ -48,6 +50,8 @@ void InputMapSystem::Update()
 					if (Input::CheckKey(key_state, key_bind))
 					{
 						std::cout << "Action Map Triggered!!! : " << action_map.GetActionMapName() << std::endl;
+						glm::vec2 vec_response = action_pair.second.ReadValue(key_bind);
+						std::cout << "Vector Response: (" << vec_response.x << "," << vec_response.y << ")" << std::endl;
 					}
 				}
 			}
