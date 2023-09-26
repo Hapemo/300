@@ -149,6 +149,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="include\ConfigManager.h" />
     <ClInclude Include="include\FPSManager.h" />
     <ClInclude Include="include\Input\Input.h" />
     <ClInclude Include="include\Input\InputAction.h" />
@@ -162,6 +163,7 @@
     <ClInclude Include="include\SingletonManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="source\ConfigManager.cpp" />
     <ClCompile Include="source\FPSManager.cpp" />
     <ClCompile Include="source\Input\Input.cpp" />
     <ClCompile Include="source\Input\InputAction.cpp" />

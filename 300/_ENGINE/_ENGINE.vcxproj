@@ -150,6 +150,7 @@
     <ClInclude Include="include\Audio\AudioType.h" />
     <ClInclude Include="include\Debug\AssertException.h" />
     <ClInclude Include="include\Debug\Asserts.h" />
+    <ClInclude Include="include\Debug\EnginePerformance.h" />
     <ClInclude Include="include\Debug\LogException.h" />
     <ClInclude Include="include\Debug\Logger.h" />
     <ClInclude Include="include\ECS\ECS.h" />
@@ -163,6 +164,7 @@
     <ClInclude Include="include\Graphics\Camera_Input.h" />
     <ClInclude Include="include\Graphics\GraphicsSystem.h" />
     <ClInclude Include="include\Multithread.h" />
+    <ClInclude Include="include\Physics\Accumulator.h" />
     <ClInclude Include="include\Physics\PhysicsTypes.h" />
     <ClInclude Include="include\Physics\PhysicsSystem.h" />
     <ClInclude Include="include\Physics\PhysX.h" />
@@ -171,10 +173,12 @@
   <ItemGroup>
     <ClCompile Include="source\Audio\AudioSystem.cpp" />
     <ClCompile Include="source\Debug\AssertException.cpp" />
+    <ClCompile Include="source\Debug\EnginePerformance.cpp" />
     <ClCompile Include="source\Debug\LogException.cpp" />
     <ClCompile Include="source\Debug\Logger.cpp" />
     <ClCompile Include="source\ECS\ECS_Systems.cpp" />
     <ClCompile Include="source\ECS\ECS.cpp" />
+    <ClCompile Include="source\Physics\Accumulator.cpp" />
     <ClCompile Include="source\Serialization\SerializationTemp.cpp" />
     <ClInclude Include="include\Serialization\Serialization.h" />
   </ItemGroup>

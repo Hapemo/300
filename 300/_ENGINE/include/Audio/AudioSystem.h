@@ -77,4 +77,7 @@ private:
 	int next_avail_id_bgm = 0;
 
 	FMOD::System* system_obj;
+
+	// for performance
+	double startTime, endTime;
 };

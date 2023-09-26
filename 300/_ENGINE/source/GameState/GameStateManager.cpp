@@ -28,7 +28,7 @@ M_GSMSTATE::EXIT is only used for closing the game in GAMEMODE only.
 
 //Scene GameStateManager::mErrorScene("Error");
 //const Entity GameStateManager::mErrorEntity(0);
-GameStateManager::GameStateManager() : mErrorScene("Error"), mGSMState(E_GSMSTATE::NONE), mCurrentGameState(), mNextGSPath("") {};
+GameStateManager::GameStateManager() : mErrorScene("Error"), mGSMState(E_GSMSTATE::NONE), mCurrentGameState(), mNextGSName("MAMAMA") {};
 
 // Load the first game state.
 void GameStateManager::Init() {
@@ -43,7 +43,7 @@ void GameStateManager::Init() {
 	return;
 #endif
 
-	mCurrentGameState.Load(mNextGSPath);
+	mCurrentGameState.Load(mNextGSName);
 	mCurrentGameState.Init();
 
 	mGSMState = E_GSMSTATE::RUNNING;
@@ -70,7 +70,7 @@ void GameStateManager::UpdateNextGSMState() {
 	case E_GSMSTATE::CHANGING:
 		mCurrentGameState.Unload();
 		//SetGameState(mNextGSPath);
-		mCurrentGameState.Load(mNextGSPath);
+		mCurrentGameState.Load(mNextGSName);
 		mCurrentGameState.Init();
 		break;
 	}
@@ -89,14 +89,8 @@ Scene& GameStateManager::SelectScene(std::string const& _name) {
 
 void GameStateManager::ChangeGameState(std::string const& _name) {
 	//LOG_CUSTOM("GAMESTATEMANAGER", "Set gamestate to change to: " + _name);
-	//std::string path{ ResourceManager::GetInstance()->FileTypePath(ResourceManager::E_RESOURCETYPE::gamestateEntities).string() + _name + ".json" }; TODO
 	//audioManager->StopAllSound(); TODO minglun
-	
-	//if (!ResourceManager::FileExist(path)) { TODO
-	//	LOG_ERROR("Unable to change gamestate to: " + _name);
-	//	return;
-	//}
-	//mNextGSPath = path; TODO
+	mNextGSName = _name;
 	mGSMState = E_GSMSTATE::CHANGING;
 }
 
@@ -113,6 +107,8 @@ void GameStateManager::NewGameState(std::string const& _name) {
 	if (!mCurrentGameState.mName.empty())
 		mCurrentGameState.Unload();
 	mCurrentGameState.mName = _name;
+
+	mCurrentGameState.AddScene();
 }
 
 //void GameStateManager::AddGameState(std::filesystem::path const& _path) {
@@ -253,5 +249,5 @@ void GameStateManager::Unload() {
 	//LOG_CUSTOM("GAMESTATEMANAGER", "Unload GameStateManager");
 	mCurrentGameState.Exit();
 	mCurrentGameState.Unload();
-	mNextGSPath = "";
+	mNextGSName = "";
 }

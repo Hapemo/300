@@ -80,7 +80,7 @@ struct SphereCollider
 	//RTTR_ENABLE()
 };
 
-struct PlaneCollider
+struct PlaneCollider //if has plane collider always static
 {
 	glm::vec3 mNormal;				// direction of plane
 	float mTranslateOffset;			// final pos = magnitude(Transform.mTranslate) + mTranslateOffset;

@@ -53,11 +53,9 @@ void SceneWindow::update()
 	
 	ImGui::Image((ImTextureID)(intptr_t)systemManager->mGraphicsSystem->GetEditorAttachment(),ImGui::GetWindowSize());
 	
-
 	//winSize_X = ImGui::GetWindowSize().x;
 	//winSize_Y = ImGui::GetWindowSize().y;
 	
-
 	winSize= { ImGui::GetWindowSize().x ,ImGui::GetWindowSize().y};
 	//systemManager->mGraphicsSystem->SetCameraSize()
 	//ImGui::Image((ImTextureID)(intptr_t)systemManager->mGraphicsSystem->GetEditorAttachment(),ImVec2(1920, 1080));
