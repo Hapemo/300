@@ -70,6 +70,7 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\Editor\EditorLogger.cpp">
+    <ClCompile Include="source\Editor\PrefabWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -135,6 +136,7 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Editor\EditorLogger.h">
+    <ClInclude Include="include\Editor\PrefabWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

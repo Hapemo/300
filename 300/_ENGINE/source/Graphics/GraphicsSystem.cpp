@@ -29,51 +29,51 @@ void GraphicsSystem::Init()
 
 	UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_ALL, 0.f);
 
-//#pragma region create entity 1
-//	 //Create a new entity here, for testing purposes
-//	Entity newentity = systemManager->ecs->NewEntity();			// creating a new entity
-//	newentity.AddComponent<MeshRenderer>();
-//	newentity.AddComponent<BoxCollider>();
-//	newentity.AddComponent<Animator>();
-//
-//	//newentity.GetComponent<MeshRenderer>().mMaterialInstancePath = "../assets/Compressed/Skull.ctexture";
-//	//newentity.GetComponent<MeshRenderer>().mMeshPath = "../compiled_geom/Skull_textured.geom";
-//	//newentity.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/draw_vert.glsl", "../_GRAPHICS/shader_files/draw_frag.glsl" };
-//	//newentity.GetComponent<MeshRenderer>().mMeshPath = "../assets/compiled_geom/FreeModelNathan_WalkAnim.geom";
-//	//newentity.GetComponent<MeshRenderer>().mMeshPath = "../assets/compiled_geom/dancing_vampire.geom";
-//	newentity.GetComponent<MeshRenderer>().mMeshPath = "../assets/compiled_geom/dancing_vampire.geom";
-//	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath[DIFFUSE]="../assets/Compressed/Vampire_diffuse.ctexture";
-//	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath[NORMAL]="../assets/Compressed/Vampire_normal.ctexture";
-//	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath[2]="../assets/Compressed/Vampire_emission.ctexture";
-//	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath[3]="../assets/Compressed/Vampire_specular.ctexture";
-//	// newentity.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Vampire_diffuse.ctexture");
-//	// newentity.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Vampire_normal.ctexture");
-//	// newentity.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Vampire_emission.ctexture");
-//	// newentity.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Vampire_specular.ctexture");
-//	newentity.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/pointLight_vert.glsl", "../_GRAPHICS/shader_files/pointLight_frag.glsl" };	// for point light
-//	
-//	uid temp(newentity.GetComponent<MeshRenderer>().mMeshPath);
-//	newentity.GetComponent<MeshRenderer>().mMeshRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(temp.id));
-//
-//	uid mat1(newentity.GetComponent<MeshRenderer>().mMaterialInstancePath[DIFFUSE]);
-//	newentity.GetComponent<MeshRenderer>().mTextureRef[DIFFUSE] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(mat1.id));
-//	newentity.GetComponent<MeshRenderer>().mTextureCont[DIFFUSE] = true;
-//
-//
-//	uid mat2(newentity.GetComponent<MeshRenderer>().mMaterialInstancePath[NORMAL]);
-//	newentity.GetComponent<MeshRenderer>().mTextureRef[NORMAL] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(mat2.id));
-//	newentity.GetComponent<MeshRenderer>().mTextureCont[NORMAL] = true;
-//	newentity.GetComponent<BoxCollider>().mTranslateOffset = { 0.f, 76.f, 0.f };
-//
-//
-//	auto& meshinst = systemManager->mResourceSystem->get_Mesh("../assets/compiled_geom/dancing_vampire.geom");
-//	if (newentity.HasComponent<Animator>() && _ENABLE_ANIMATIONS)
-//	{
-//		newentity.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/animations_vert.glsl", "../_GRAPHICS/shader_files/pointLight_frag.glsl" };// for point light
-//		newentity.GetComponent<Animator>().mAnimator.SetAnimation(&meshinst.mAnimation[0]);
-//		newentity.GetComponent<Animator>().mIsPaused = false;
-//	}
-//#pragma endregion
+#pragma region create entity 1
+	 //Create a new entity here, for testing purposes
+	Entity newentity = systemManager->ecs->NewEntity();			// creating a new entity
+	newentity.AddComponent<MeshRenderer>();
+	newentity.AddComponent<BoxCollider>();
+	newentity.AddComponent<Animator>();
+
+	//newentity.GetComponent<MeshRenderer>().mMaterialInstancePath = "../assets/Compressed/Skull.ctexture";
+	//newentity.GetComponent<MeshRenderer>().mMeshPath = "../compiled_geom/Skull_textured.geom";
+	//newentity.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/draw_vert.glsl", "../_GRAPHICS/shader_files/draw_frag.glsl" };
+	//newentity.GetComponent<MeshRenderer>().mMeshPath = "../assets/compiled_geom/FreeModelNathan_WalkAnim.geom";
+	//newentity.GetComponent<MeshRenderer>().mMeshPath = "../assets/compiled_geom/dancing_vampire.geom";
+	newentity.GetComponent<MeshRenderer>().mMeshPath = "../assets/compiled_geom/dancing_vampire.geom";
+	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath[DIFFUSE]="../assets/Compressed/Vampire_diffuse.ctexture";
+	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath[NORMAL]="../assets/Compressed/Vampire_normal.ctexture";
+	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath[2]="../assets/Compressed/Vampire_emission.ctexture";
+	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath[3]="../assets/Compressed/Vampire_specular.ctexture";
+	// newentity.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Vampire_diffuse.ctexture");
+	// newentity.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Vampire_normal.ctexture");
+	// newentity.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Vampire_emission.ctexture");
+	// newentity.GetComponent<MeshRenderer>().mMaterialInstancePath.emplace_back("../assets/Compressed/Vampire_specular.ctexture");
+	newentity.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/pointLight_vert.glsl", "../_GRAPHICS/shader_files/pointLight_frag.glsl" };	// for point light
+	
+	uid temp(newentity.GetComponent<MeshRenderer>().mMeshPath);
+	newentity.GetComponent<MeshRenderer>().mMeshRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(temp.id));
+
+	uid mat1(newentity.GetComponent<MeshRenderer>().mMaterialInstancePath[DIFFUSE]);
+	newentity.GetComponent<MeshRenderer>().mTextureRef[DIFFUSE] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(mat1.id));
+	newentity.GetComponent<MeshRenderer>().mTextureCont[DIFFUSE] = true;
+
+
+	uid mat2(newentity.GetComponent<MeshRenderer>().mMaterialInstancePath[NORMAL]);
+	newentity.GetComponent<MeshRenderer>().mTextureRef[NORMAL] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(mat2.id));
+	newentity.GetComponent<MeshRenderer>().mTextureCont[NORMAL] = true;
+	newentity.GetComponent<BoxCollider>().mTranslateOffset = { 0.f, 76.f, 0.f };
+
+
+	auto& meshinst = systemManager->mResourceSystem->get_Mesh("../assets/compiled_geom/dancing_vampire.geom");
+	if (newentity.HasComponent<Animator>() && _ENABLE_ANIMATIONS)
+	{
+		newentity.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/animations_vert.glsl", "../_GRAPHICS/shader_files/pointLight_frag.glsl" };// for point light
+		newentity.GetComponent<Animator>().mAnimator.SetAnimation(&meshinst.mAnimation[0]);
+		newentity.GetComponent<Animator>().mIsPaused = false;
+	}
+#pragma endregion
 //
 //#pragma region create entity 2
 //	//Create a new entity here, for testing purposes
@@ -151,8 +151,11 @@ void GraphicsSystem::Update(float dt)
 		{
 			if (!inst.GetComponent<Animator>().mIsPaused)
 			{
-				assert(inst.GetComponent<Animator>().mAnimator.m_CurrentAnimation != nullptr);
-				inst.GetComponent<Animator>().mAnimator.UpdateAnimation(dt, mat4(1.f));					// update the current animation
+				// skip the mesh that does not have an animation set
+				if (inst.GetComponent<Animator>().mAnimator.m_CurrentAnimation != nullptr)
+				{
+					inst.GetComponent<Animator>().mAnimator.UpdateAnimation(dt, mat4(1.f));					// update the current animation
+				}
 			}
 		}
 		

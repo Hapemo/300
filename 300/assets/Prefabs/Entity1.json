@@ -1,6 +1,6 @@
 [
     {
-        "EntityID": 1,
+        "EntityID": 2,
         "General": {
             "Name": "Entity1",
             "Active": true,
@@ -47,7 +47,7 @@
         },
         "BoxCollider": {
             "ScaleOffset": [
-                1.0,
+                39.0,
                 1.0,
                 1.0
             ],

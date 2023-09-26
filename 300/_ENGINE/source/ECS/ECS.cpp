@@ -187,18 +187,20 @@ void ECS::CopyEntity(Entity e)
 
 Entity ECS::StartEditPrefab(std::string prefabName)
 {
-	return NewEntityFromPrefab(prefabName);
+	Entity e = NewEntityFromPrefab(prefabName);
+	e.GetComponent<General>().name = prefabName;
+	return e;
 }
 
 void ECS::EndEditPrefab(Entity e)
 {
+	ObjectFactory::SerializePrefab(e, "../assets/Prefabs/" + e.GetComponent<General>().name + ".json");
+	UpdatePrefabEntities(e.GetComponent<General>().name);
 	DeleteEntity(e);
 }
 
-void ECS::EndEditPrefab(std::string prefab, Entity e)
+void ECS::EndEditPrefabNoSave(Entity e)
 {
-	ObjectFactory::SerializePrefab(e, "../assets/Prefabs/" + prefab + ".json");
-	UpdatePrefabEntities(prefab);
 	DeleteEntity(e);
 }
 

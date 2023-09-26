@@ -33,6 +33,8 @@ to select current Entity and activates inspector
 
 entt::entity Hierarchy::selectedId;
 entt::entity Hierarchy::RselectedId;
+int Hierarchy::selectedScene;
+int Hierarchy::RselectedScene;
 bool Hierarchy::selectionOn;
 
 void Hierarchy::init() {}
@@ -194,8 +196,6 @@ void Hierarchy::update()
                 }
             i++; // for id
             
-
-
         }
 
         //-----------------------------------------------------------------------------------------------------// End of Deletion of entity
@@ -270,27 +270,71 @@ void Hierarchy::update()
 
 void Hierarchy::update() {
 
-   
-    auto allScene = systemManager->mGameStateSystem->mCurrentGameState.mScenes;
+    auto allObjects = systemManager->ecs->GetEntitiesWith<Transform>();
+
+    int i = allObjects.size();
+
+    for (Entity ent : allObjects)
+    {
+        if (ent.HasParent() == false && ent.HasChildren() == false) {
+            General& info = ent.GetComponent<General>();
+
+            ImGui::TreeNodeEx((info.name /*+std::to_string(i)*/).c_str(), ImGuiTreeNodeFlags_NoTreePushOnOpen | ImGuiTreeNodeFlags_Leaf);
+
+        }
+
+    }
+    auto& allScene = systemManager->mGameStateSystem->mCurrentGameState.mScenes;
+
+    //if (ImGui::Button("AddS", ImVec2(50, 50)))
+    //{
+    //  //  Entity newEntity = systemManager->ecs->NewEntity();    
+
+    //}
 
     if (ImGui::Button("Add", ImVec2(50, 50)))
     {
-      //  Entity newEntity = systemManager->ecs->NewEntity();
-     
-        Entity newEntity = allScene[0].AddEntity();
-        newEntity.GetComponent<General>().name = "NewObject"/* + static_cast<int> (newEntity.id)*/;
+        //  Entity newEntity = systemManager->ecs->NewEntity();
+      //  if (allScene.size() <= 0)
+        //    systemManager->mGameStateSystem->mCurrentGameState.AddScene("NewScene");
+
+        if (allScene.size() <= 0) {
+            systemManager->mGameStateSystem->mCurrentGameState.AddScene("NewScene");
+            Entity newEntity = allScene[0].AddEntity();
+
+        }
+        else {
+            Entity newEntity = allScene[Hierarchy::selectedScene].AddEntity();
+            newEntity.GetComponent<General>().name = "NewObject"/* + static_cast<int> (newEntity.id)*/;
+
+        }
     }
 
     ImGui::SameLine();
     if (ImGui::Button("Scene", ImVec2(50, 50))) {
         systemManager->mGameStateSystem->mCurrentGameState.AddScene("NewScene"+ std::to_string(allScene.size()));
+
     }
 
 
     for (int i{ 0 }; i < allScene.size(); ++i) {
     
-        if (ImGui::TreeNodeEx(allScene[i].mName.c_str(), ImGuiTreeNodeFlags_DefaultOpen))
+
+        ImGuiWindowFlags selectflagscene{ 0 };
+        if (i == selectedScene)
+            selectflagscene |= ImGuiTreeNodeFlags_Selected;
+
+        if (ImGui::TreeNodeEx(allScene[i].mName.c_str(), selectflagscene| ImGuiTreeNodeFlags_DefaultOpen| ImGuiTreeNodeFlags_OpenOnDoubleClick))
         {
+
+            if (ImGui::IsItemClicked(ImGuiMouseButton_Left)) {  
+                selectedScene = i;
+            }
+            //--------------------------------------------------------------------------// Delete Object
+            if (ImGui::IsItemClicked(ImGuiMouseButton_Right)) {
+                RselectedScene = i;
+                sCPopup = true;
+            }
 
             if (ImGui::BeginDragDropTarget()) {
 
@@ -301,6 +345,28 @@ void Hierarchy::update() {
                 }
                 ImGui::EndDragDropTarget();
             }
+
+            for (Entity ent : allScene[i].mEntities) {
+
+
+                if (ent.HasParent() == false && ent.HasChildren() == false) {
+
+                    General& info = ent.GetComponent<General>();
+                    //ImGui::PushID(i);
+
+                    ImGuiWindowFlags selectflag{ 0 };
+                    if (ent.id == selectedId)
+                        selectflag |= ImGuiTreeNodeFlags_Selected;
+
+                    ImGui::TreeNodeEx((info.name /*+std::to_string(i)*/).c_str(), selectflag | ImGuiTreeNodeFlags_NoTreePushOnOpen | ImGuiTreeNodeFlags_Leaf);
+                    //ImGui::PopID();
+
+                }
+
+            }
+
+
+
 
             ImGui::TreePop();
         }
@@ -491,12 +557,36 @@ void Hierarchy::update() {
 
             //    //systemManager->ecs->DeleteEntity(Hierarchy::selectedId);
         }
-
-
         mPopup = false;
         ImGui::EndPopup();
     }
     mPopup = false;
+
+
+
+    if (sCPopup)
+        ImGui::OpenPopup("Edit_scene", ImGuiPopupFlags_MouseButtonRight);
+
+    if (ImGui::BeginPopup("Edit_scene"))
+    {
+        if (ImGui::Selectable("Delete")) {
+
+
+            systemManager->mGameStateSystem->
+                mCurrentGameState.RemoveScene(systemManager->mGameStateSystem->mCurrentGameState.mScenes[RselectedScene].mName);
+            
+            // selectionOn = false;
+             //Entity ent(Hierarchy::selectedId);
+            // systemManager->ecs->DeleteEntity(Hierarchy::selectedId);
+        }
+       
+        sCPopup = false;
+        ImGui::EndPopup();
+    }
+    sCPopup = false;
+
+
+
 }
 
 #endif // 1

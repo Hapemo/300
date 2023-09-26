@@ -176,6 +176,7 @@ copy "$(SolutionDir)lib\FMOD\core\lib\fmod.dll" "$(TargetDir)fmod.dll" /Y</Comma
     <ClCompile Include="source\Editor\Inspect.cpp" />
     <ClCompile Include="source\Editor\MenuPanel.cpp" />
     <ClCompile Include="source\Editor\Performance.cpp" />
+    <ClCompile Include="source\Editor\PrefabWindow.cpp" />
     <ClCompile Include="source\Editor\SceneWindow.cpp" />
     <ClCompile Include="source\Imgui\imgui.cpp" />
     <ClCompile Include="source\Imgui\ImGuizmo.cpp" />
@@ -198,6 +199,7 @@ copy "$(SolutionDir)lib\FMOD\core\lib\fmod.dll" "$(TargetDir)fmod.dll" /Y</Comma
     <ClInclude Include="include\Editor\EditorLogger.h" />
     <ClInclude Include="include\Editor\MenuPanel.h" />
     <ClInclude Include="include\Editor\Performance.h" />
+    <ClInclude Include="include\Editor\PrefabWindow.h" />
     <ClInclude Include="include\Editor\SceneWindow.h" />
     <ClInclude Include="source\Imgui\imconfig.h" />
     <ClInclude Include="source\Imgui\imgui.h" />
