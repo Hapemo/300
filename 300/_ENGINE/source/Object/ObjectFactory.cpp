@@ -268,6 +268,13 @@ Entity ObjectFactory::DeserializePrefab(const std::string& filename, int id)
 	curr.tag = temp.tag;
 	curr.subtag = temp.subtag;
 
+	Transform tempX = eJ.GetTransformJSON();
+
+	Transform& xform = e.GetComponent<Transform>();
+	xform.mScale = tempX.mScale;
+	xform.mRotate = tempX.mRotate;
+
+
 	if (eJ.mrb_t)
 	{
 		e.AddComponent<RigidBody>();
