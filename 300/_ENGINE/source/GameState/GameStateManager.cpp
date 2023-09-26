@@ -117,123 +117,6 @@ void GameStateManager::NewGameState(std::string const& _name) {
 	mCurrentGameState.AddScene();
 }
 
-//void GameStateManager::AddGameState(std::filesystem::path const& _path) {
-//	std::string currName{ mCurrentGameState->mName };
-//
-//	mGameStates.push_back(GameState());
-//	
-//	for (auto& gs : mGameStates) 
-//		if (gs.mName == currName) 
-//			mCurrentGameState = &gs; // This line is required because push_back changes arrangement of gamestates, messing up where mCurrentGameState is pointing at.
-//	
-//	if (_path.string().size() == 0) {
-//		static int newGSCount = 1;
-//		mGameStates.back().mName = "New GameState " + std::to_string(newGSCount++);  //cannot have same GS name
-//		//LOG_CUSTOM("GAMESTATEMANAGER", "Add NEW gamestate");
-//	} else {
-//		mGameStates.back().Load(_path);
-//		//LOG_CUSTOM("GAMESTATEMANAGER", "Add gamestate: " + _path.string());
-//	}
-//
-//	// Init the gamestate after loading it.
-//	// But must temporarily set it to current game state because some of the functions uses that.
-//	GameState* tempStoreGS = mCurrentGameState;
-//	mCurrentGameState = &mGameStates.back();
-//	mGameStates.back().Init();
-//	mCurrentGameState = tempStoreGS;
-//
-//	// FOR EDITOR
-//	std::vector<bool> pausedList{};
-//	for (Scene& scene : mGameStates.back().mScenes)
-//		pausedList.push_back(scene.mIsPause);
-//
-//	mGameStatesScenesPause[mGameStates.back().mName] = pausedList; // FOR EDITOR
-//	SetGameState(_path.stem().string());  //Call set game state to chnage is paused of entites
-//	//SetGameState(_path.stem().string());  //Call set game state to chnage is paused of entites
-//	//mCurrentGameState = &mGameStates.back();
-//}
-//
-//void GameStateManager::RemoveGameState(GameState* _gameState) {
-//	if (!_gameState) {
-//		_gameState = mCurrentGameState;
-//
-//		assert(_gameState && "There is no existing gamestate to be removed");
-//		//if (!_gameState) {
-//		//	LOG_WARN();
-//		//	return;
-//		//}
-//	}
-//
-//	for (auto it = mGameStates.begin(); it != mGameStates.end(); ++it) {
-//		// Find the game state
-//		if (it->mName == _gameState->mName) {
-//			// Do necessary unloading 
-//			it->Exit();
-//			it->Unload();
-//			mGameStatesScenesPause.erase(mGameStatesScenesPause.find(it->mName)); // FOR EDITOR
-//			std::string currName{ mCurrentGameState->mName };
-//			// Erase selected gs from pool
-//			if (mCurrentGameState == &*it) {
-//				if (mGameStates.empty())
-//					mCurrentGameState = nullptr;
-//				else mCurrentGameState = &mGameStates.front();
-//			}
-//			mGameStates.erase(it);
-//			//if (!mGameStates.size()) {
-//			//	LOG_CUSTOM("GAMESTATEMANAGER", "No more gamestate exists after removing this gamestate: " + _gameState->mName);
-//			//	mCurrentGameState = nullptr;
-//			//}
-//			//for (auto& gs : mGameStates) if (gs.mName == currName) mCurrentGameState = &gs; // This line is required because removing gamestates from vector changes arrangement of gamestates, 
-//																																											// messing up where mCurrentGameState is pointing at.
-//			//LOG_CUSTOM("GAMESTATEMANAGER", "Removed gamestate: " + _gameState->mName);
-//
-//			return;
-//		}
-//	}
-//
-//	assert(false && std::string("Unable to find gamestate to remove: " + _gameState->mName).c_str());
-//}
-
-//bool GameStateManager::SetGameState(std::string const& _name) {
-//	for (auto& gs : mGameStates) {
-//		if (gs.mName == _name) {
-//			// save curr gamestate scene pause, and pause all the scenes
-//			std::vector<bool>& currPauseList = mGameStatesScenesPause[mCurrentGameState->mName];
-//			currPauseList.clear();
-//			currPauseList.resize(mCurrentGameState->mScenes.size());
-//			for (size_t i{}; i < mCurrentGameState->mScenes.size(); ++i) {
-//				currPauseList[i] = mCurrentGameState->mScenes[i].mIsPause;
-//				mCurrentGameState->mScenes[i].Pause(true);
-//			}
-//
-//			// load next gamestate scene pause, and unload all the saved pause status to the scenes
-//			mCurrentGameState = &gs;
-//			std::vector<bool>& nextPauseList = mGameStatesScenesPause[mCurrentGameState->mName];
-//			//if (nextPauseList.size() == 0) {
-//			//	LOG_WARN("GameState Scene Pause is 0, gamestate: " + mCurrentGameState->mName);
-//			//} else
-//			for (size_t i{}; i < mCurrentGameState->mScenes.size(); ++i) {
-//				mCurrentGameState->mScenes[i].Pause(nextPauseList[i]);
-//			}
-//			nextPauseList.clear();
-//
-//			//LOG_CUSTOM("GAMESTATEMANAGER", "Set gamestate to: " + _name);
-//			return 1;
-//		}
-//	}
-//	
-//	assert(false && std::string("Unable to find gamestate to set to: " + _name).c_str());
-//
-//	return 0;
-//}
-
-//void GameStateManager::RenameGameState(GameState* _gs, std::string const& _name) {
-//	std::string ogName = _gs->mName;
-//	mGameStatesScenesPause[_name] = mGameStatesScenesPause[ogName];
-//	mGameStatesScenesPause.erase(ogName);
-//	_gs->mName = _name;
-//}
-
 Entity GameStateManager::GetEntity(std::string const& _entityName, std::string const& _sceneName) {
 	for (Scene& scene : mCurrentGameState.mScenes) {
 		// If scene is specified, skip those scenes that are not same name.
@@ -268,3 +151,43 @@ bool GameStateManager::SceneJsonExist(std::string const& _name) {
 	return f.is_open();
 }
 
+bool GameStateManager::TransferEntity(std::string const& _srcName, std::string const& _dstName, Entity _e) {
+	auto src = std::find_if(mCurrentGameState.mScenes.begin(), mCurrentGameState.mScenes.end(), [_srcName] (Scene const& scene)->bool { return scene.mName == _srcName; });
+	auto dst = std::find_if(mCurrentGameState.mScenes.begin(), mCurrentGameState.mScenes.end(), [_dstName] (Scene const& scene)->bool { return scene.mName == _dstName; });
+	if (src == mCurrentGameState.mScenes.end()) {
+		std::cout << "Unable to find" << _srcName << " when attempting to TransferEntity()\n";
+		return false;
+	}
+	if (dst == mCurrentGameState.mScenes.end()) {
+		std::cout << "Unable to find" << _dstName << " when attempting to TransferEntity()\n";
+		return false;
+	}
+	
+	return TransferEntity(&*src, &*dst, std::move(_e));
+}
+
+bool GameStateManager::TransferEntity(Scene* _src, Scene* _dst, Entity _e) {
+	auto it = _src->mEntities.find(_e);
+	if (it == _src->mEntities.end()) {
+		std::cout << "Unable to find Entity in " << _src->mName << " when attempting to TransferEntity()\n";
+		return false;
+	}
+
+	_src->mEntities.erase(it);
+
+	if (_e.HasParent())
+		Entity(_e.GetComponent<Parent>().mParent).RemoveChild(_e);
+
+	std::vector<Entity> children = _e.GetAllChildren();
+	for (Entity& child : children) {
+		auto childIt = _src->mEntities.find(child);
+		if (childIt == _src->mEntities.end())
+			_e.RemoveChild(child);
+		else
+			_src->mEntities.erase(childIt);
+	}
+
+	for (Entity& child : _e.GetAllChildren())
+		_dst->mEntities.insert(child);
+	_dst->mEntities.insert(_e);
+}

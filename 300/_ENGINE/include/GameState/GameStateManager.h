@@ -111,42 +111,9 @@ public:
 	*******************************************************************************/
 	Entity GetEntity(std::string const& _entityName, std::string const& _sceneName = "");
 
-
+	//----------------------------------
 	// Editor only functionalities
-	///*!*****************************************************************************
-	//Add new game state to game state manager's control
-
-	//\param std::string const&
-	//- Path of new game state
-	//*******************************************************************************/
-	//void AddGameState(std::filesystem::path const& _path = std::filesystem::path());
-
-	///*!*****************************************************************************
-	//Remove the game state specified
-
-	//\param GameState* 
-	//- Pointer to the game state to remove from GameStateManager
-	//*******************************************************************************/
-	//void RemoveGameState(GameState* = nullptr);
-
-	///*!*****************************************************************************
-	//Set the mCurrentGameState to specified game state
-
-	//\param std::string const&
-	//- Name of game state to set to
-	//*******************************************************************************/
-	//bool SetGameState(std::string const& _name);
-	
-	///*!*****************************************************************************
-	//Rename a game state
-
-	//\param GameState*
-	//- Pointer to the game state
-	//
-	//\param std::string const&
-	//- Game state's new name
-	//*******************************************************************************/
-	//void RenameGameState(GameState* _gs, std::string const& _name);
+	//----------------------------------
 
 	/*!*****************************************************************************
 	Set the next game state path
@@ -167,28 +134,28 @@ public:
 	*******************************************************************************/
 	void NewGameState(std::string const& _name);
 
+	/*!*****************************************************************************
+	Transfer the entity from one scene to another in current gamestate
+
+	\param _srcName or _src
+	- String name of scene or pointer to scene, source of entity
+
+	\param _dstName or _dst
+	- String name of scene or pointer to scene, destination of entity
+
+	\return bool
+	- true if successfully transferred, otherwise false
+	*******************************************************************************/
+	bool TransferEntity(std::string const& _srcName, std::string const& _dstName, Entity _e);
+	bool TransferEntity(Scene* _src, Scene* _dst, Entity _e);
+
+
 	void EditorRestartGameState() { mGSMState = E_GSMSTATE::CHANGING; }
 
 	GameState* GetCurrentGameState() { return &mCurrentGameState; }
 
 	Scene* GetErrorScene() { return &mErrorScene; }
 
-	///*!*****************************************************************************
-	//Find the gamestate name stated. Returns iterator position of gamestate if found,
-	//returns end position if not found
-
-	//\param std::string const&
-	//- Name of game state
-
-	//\return std::vector<GameState>::iterator
-	//- Iterator position of game state if found, mGameState.end() otherwise.
-	//*******************************************************************************/
-	//inline std::vector<GameState>::iterator FindGameState(std::string const& _name) {
-	//	return std::find_if(mGameStates.begin(), mGameStates.end(), [_name] (GameState& gs) -> bool { return gs.mName == _name; });
-	//}
-
-	//std::vector<GameState> mGameStates{}; // Only 1 in game, multi gamestates allowed during editor mode
-	//std::map<std::string,std::vector<bool>> mGameStatesScenesPause; // One std::vector<bool> for each game state to keep record of their pause
 	static bool GameStateJsonExist(std::string const& _name);
 	static bool SceneJsonExist(std::string const& _name);
 
@@ -198,6 +165,5 @@ public:
 
 private:
 	std::string mNextGSName; // This path has to be set initially in config file. TODO
-	//std::string mNextGSPath; // This path has to be set initially in config file. TODO
 };
 
