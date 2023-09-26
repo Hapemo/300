@@ -4,10 +4,10 @@
 #include <vector>
 #include "Physics/PhysicsTypes.h"
 #include "Tags.h"
-//#include "rttr/registration.h"
 #include "ECS.h"
 #include "Audio/AudioType.h"
 #include <Animator.hpp>
+//#include "rttr/registration.h"
 
 struct General
 {

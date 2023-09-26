@@ -143,6 +143,9 @@ void GraphicsSystem::Update(float dt)
 #pragma region update all the mesh instances
 	// Retrieve and update the mesh instances to be drawn
 	auto meshRendererInstances = systemManager->ecs->GetEntitiesWith<MeshRenderer>();
+	int a = meshRendererInstances.size();
+	if (a != 0)
+		a = a;
 	for (Entity inst : meshRendererInstances)
 	{
 		std::string meshstr = inst.GetComponent<MeshRenderer>().mMeshPath;

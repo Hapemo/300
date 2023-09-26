@@ -25,7 +25,7 @@ to select current Entity and activates inspector
 #include "Hierarchy.h"
 #include "ScriptingSystem.h"
 #include "GameState/GameStateManager.h"
-
+#include "imgui_stdlib.h"
 
 //#define DEBUG
 
@@ -269,7 +269,10 @@ void Hierarchy::update()
 #ifndef DEBUG
 
 void Hierarchy::update() {
+    
 
+    ImGui::InputText(" ", &systemManager->mGameStateSystem->mCurrentGameState.mName);
+    // ImGui::Text(systemManager->mGameStateSystem->mCurrentGameState.mName.c_str());
     //auto allObjects = systemManager->ecs->GetEntitiesWith<Transform>();
 
     //int i = allObjects.size();

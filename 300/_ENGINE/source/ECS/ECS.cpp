@@ -145,8 +145,8 @@ Entity ECS::NewEntityFromPrefab(std::string prefabName)
 	Entity e(ObjectFactory::DeserializePrefab("../assets/Prefabs/" + prefabName + ".json", mPrefabs[prefabName].size()));
 	e.AddComponent<Prefab>().mPrefab = prefabName;
 	//copy all prefab components (except transform) to new entity
-	General temp1 = e.GetComponent<General>();
-	MeshRenderer temp = e.GetComponent<MeshRenderer>();
+	//General temp1 = e.GetComponent<General>();
+	//MeshRenderer temp = e.GetComponent<MeshRenderer>();
 	mPrefabs[prefabName].push_back(e);
 	if (static_cast<uint32_t>(e.id) == 0)
 		throw ("null entity created?");
@@ -191,6 +191,7 @@ Entity ECS::StartEditPrefab(std::string prefabName)
 	e.GetComponent<General>().name = prefabName;
 	return e;
 }
+
 
 void ECS::EndEditPrefab(Entity e)
 {

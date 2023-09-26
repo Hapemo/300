@@ -1,8 +1,8 @@
 [
     {
-        "EntityID": 1,
+        "EntityID": 5,
         "General": {
-            "Name": "Entity1",
+            "Name": "NewObject",
             "Active": true,
             "Paused": true,
             "Tag": "Unknown",
