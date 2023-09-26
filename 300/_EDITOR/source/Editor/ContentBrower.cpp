@@ -103,7 +103,13 @@ void ContentBrowser::update()
 
 			if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) {
 				if (check_extension(path.string(), ".json")) {
-					Entity toEdit = systemManager->ecs->StartEditPrefab(filename_string);
+
+
+					int posstart = filename_string.find_last_of("\\");
+					int posend = filename_string.find_last_of(".");
+					std::string newpath = filename_string.substr(posstart + 1,posend);
+
+					Entity toEdit = systemManager->ecs->StartEditPrefab(newpath);
 					PrefabWindow::prefabObj = toEdit.id;
 				}
 
