@@ -27,7 +27,7 @@ to select current Entity and activates inspector
 #include "GameState/GameStateManager.h"
 
 
-#define DEBUG
+//#define DEBUG
 
 
 
@@ -284,25 +284,31 @@ void Hierarchy::update() {
         }
 
     }
-    auto allScene = systemManager->mGameStateSystem->mCurrentGameState.mScenes;
+    auto& allScene = systemManager->mGameStateSystem->mCurrentGameState.mScenes;
+
+    //if (ImGui::Button("AddS", ImVec2(50, 50)))
+    //{
+    //  //  Entity newEntity = systemManager->ecs->NewEntity();    
+
+    //}
 
     if (ImGui::Button("Add", ImVec2(50, 50)))
     {
-      //  Entity newEntity = systemManager->ecs->NewEntity();    
-        if (allScene.size() <= 0)
-            systemManager->mGameStateSystem->mCurrentGameState.AddScene("NewScene");
-    }
-
-    if (ImGui::Button("AddS", ImVec2(50, 50)))
-    {
         //  Entity newEntity = systemManager->ecs->NewEntity();
-        if (allScene.size() <= 0)
+      //  if (allScene.size() <= 0)
+        //    systemManager->mGameStateSystem->mCurrentGameState.AddScene("NewScene");
+
+        if (allScene.size() <= 0) {
             systemManager->mGameStateSystem->mCurrentGameState.AddScene("NewScene");
+            Entity newEntity = allScene[0].AddEntity();
 
-        Entity newEntity = allScene[0].AddEntity();
-        newEntity.GetComponent<General>().name = "NewObject"/* + static_cast<int> (newEntity.id)*/;
+        }
+        else {
+            Entity newEntity = allScene[Hierarchy::selectedScene].AddEntity();
+            newEntity.GetComponent<General>().name = "NewObject"/* + static_cast<int> (newEntity.id)*/;
+
+        }
     }
-
 
     ImGui::SameLine();
     if (ImGui::Button("Scene", ImVec2(50, 50))) {

@@ -111,9 +111,9 @@ public:
 
 	Entity StartEditPrefab(std::string prefabName);
 
-	void EndEditPrefab(Entity e); //no save
+	void EndEditPrefab(Entity e); //saves
 	
-	void EndEditPrefab(std::string str, Entity e); //save
+	void EndEditPrefabNoSave(Entity e); //no save
 
 
 	Entity PasteEntity();

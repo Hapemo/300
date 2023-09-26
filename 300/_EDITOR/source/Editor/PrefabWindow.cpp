@@ -46,4 +46,22 @@ void PrefabWindow::update() {
 			planeCollider.Inspect();
 		}
 	}
+
+
+	if (ImGui::Button("Save")) {
+
+		Entity ent(PrefabWindow::prefabObj);
+		systemManager->ecs->EndEditPrefab(ent);
+
+		PrefabWindow::prefabObj = static_cast<entt::entity>(-1);
+	}
+
+	ImGui::SameLine();
+	if (ImGui::Button("Delete")) {
+		Entity ent(PrefabWindow::prefabObj);
+		systemManager->ecs->DeleteEntity(ent);
+		PrefabWindow::prefabObj = static_cast<entt::entity>(-1);
+	}
+
+	
 }
