@@ -35,21 +35,7 @@ GameStateManager::GameStateManager() : mErrorScene("Error"), mGSMState(E_GSMSTAT
 
 // Load the first game state.
 void GameStateManager::Init() {
-	//LOG_CREATE("SCENE");
-	//LOG_CREATE("GAMESTATE");
-	//LOG_CREATE("GAMESTATEMANAGER");
-
-	//mGameStates.emplace_back(GameState());
-	//mCurrentGameState = &mGameStates.front();
-
-#ifdef _EDITOR // If editor, don't load in any initial game state
-	return;
-#endif
-
 	mCurrentGameState.Load(mNextGSName);
-
-	//mCurrentGameState.Load("Defaulst");
-
 	mCurrentGameState.Init();
 
 	mGSMState = E_GSMSTATE::RUNNING;
@@ -75,7 +61,6 @@ void GameStateManager::UpdateNextGSMState() {
 		break;
 	case E_GSMSTATE::CHANGING:
 		mCurrentGameState.Unload();
-		//SetGameState(mNextGSPath);
 		mCurrentGameState.Load(mNextGSName);
 		mCurrentGameState.Init();
 		break;
@@ -152,18 +137,22 @@ bool GameStateManager::SceneJsonExist(std::string const& _name) {
 }
 
 bool GameStateManager::TransferEntity(std::string const& _srcName, std::string const& _dstName, Entity _e) {
-	auto src = std::find_if(mCurrentGameState.mScenes.begin(), mCurrentGameState.mScenes.end(), [_srcName] (Scene const& scene)->bool { return scene.mName == _srcName; });
-	auto dst = std::find_if(mCurrentGameState.mScenes.begin(), mCurrentGameState.mScenes.end(), [_dstName] (Scene const& scene)->bool { return scene.mName == _dstName; });
-	if (src == mCurrentGameState.mScenes.end()) {
+	Scene* src = mCurrentGameState.GetScene(_srcName);
+	Scene* dst = mCurrentGameState.GetScene(_dstName);
+	if (*src == mErrorScene) {
 		std::cout << "Unable to find" << _srcName << " when attempting to TransferEntity()\n";
 		return false;
 	}
-	if (dst == mCurrentGameState.mScenes.end()) {
+	if (*dst == mErrorScene) {
 		std::cout << "Unable to find" << _dstName << " when attempting to TransferEntity()\n";
 		return false;
 	}
 	
 	return TransferEntity(&*src, &*dst, std::move(_e));
+}
+
+bool GameStateManager::TransferEntity(int _srcID, int _dstID, Entity _e) {
+	TransferEntity(&mCurrentGameState.mScenes[_srcID], &mCurrentGameState.mScenes[_dstID], _e);
 }
 
 bool GameStateManager::TransferEntity(Scene* _src, Scene* _dst, Entity _e) {
@@ -191,3 +180,13 @@ bool GameStateManager::TransferEntity(Scene* _src, Scene* _dst, Entity _e) {
 		_dst->mEntities.insert(child);
 	_dst->mEntities.insert(_e);
 }
+
+bool GameStateManager::DeleteEntityFromScene(int _sceneID, Entity _e) {
+	mCurrentGameState.mScenes[_sceneID].RemoveEntity(_e);
+}
+
+
+
+
+
+

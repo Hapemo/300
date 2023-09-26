@@ -137,18 +137,32 @@ public:
 	/*!*****************************************************************************
 	Transfer the entity from one scene to another in current gamestate
 
-	\param _srcName or _src
-	- String name of scene or pointer to scene, source of entity
+	\param _srcName or _src or _srcID
+	- String name of scene or pointer to scene or ID position in gamestate's scene container, source of entity
 
-	\param _dstName or _dst
-	- String name of scene or pointer to scene, destination of entity
+	\param _dstName or _dst or _dstID
+	- String name of scene or pointer to scene or ID position in gamestate's scene container, destination of entity
 
 	\return bool
 	- true if successfully transferred, otherwise false
 	*******************************************************************************/
 	bool TransferEntity(std::string const& _srcName, std::string const& _dstName, Entity _e);
 	bool TransferEntity(Scene* _src, Scene* _dst, Entity _e);
+	bool TransferEntity(int _srcID, int _dstID, Entity _e);
 
+	/*!*****************************************************************************
+	Delete an entity from existing scene
+
+	\param _sceneID
+	- ID position in gamestate's scene container
+
+	\param _e
+	- Entity to delete
+
+	\return bool
+	- true if successfully transferred, otherwise false
+	*******************************************************************************/
+	bool DeleteEntityFromScene(int _sceneID, Entity _e);
 
 	void EditorRestartGameState() { mGSMState = E_GSMSTATE::CHANGING; }
 
