@@ -54,7 +54,8 @@ void GraphicsSystem::Init()
 	uid mat2(newentity.GetComponent<MeshRenderer>().mMaterialInstancePath[NORMAL]);
 	newentity.GetComponent<MeshRenderer>().mTextureRef[NORMAL] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(mat2.id));
 	newentity.GetComponent<MeshRenderer>().mTextureCont[NORMAL] = true;
-	newentity.GetComponent<BoxCollider>().mTranslateOffset = { 0.f, 76.f, 0.f };
+	newentity.GetComponent<BoxCollider>().mTranslateOffset = { 0.f, 80.f, 0.f };
+	newentity.GetComponent<BoxCollider>().mScaleOffset = { 1.f, 0.8f, 1.5f };
 
 
 	auto& meshinst = systemManager->mResourceSystem->get_Mesh("../assets/compiled_geom/dancing_vampire.geom");
@@ -74,11 +75,11 @@ void GraphicsSystem::Init()
 	newentity1.AddComponent<BoxCollider>();
 	newentity1.AddComponent<Animator>();
 
-	newentity1.GetComponent<MeshRenderer>().mMeshPath = "../assets/compiled_geom/FreeModelNathan_WalkAnim.geom";
-	newentity1.GetComponent<MeshRenderer>().mMaterialInstancePath[0] = "../assets/Compressed/Wood Material 15_BaseColor.ctexture";
-	newentity1.GetComponent<MeshRenderer>().mMaterialInstancePath[1] = "../assets/Compressed/Wood Material 15_Normal.ctexture";
-	newentity1.GetComponent<MeshRenderer>().mMaterialInstancePath[2] = "../assets/Compressed/Vampire_emission.ctexture";
-	newentity1.GetComponent<MeshRenderer>().mMaterialInstancePath[3] = "../assets/Compressed/Vampire_specular.ctexture";
+	newentity1.GetComponent<MeshRenderer>().mMeshPath = "../assets/compiled_geom/GirlAnimationWalking.geom";
+	newentity1.GetComponent<MeshRenderer>().mMaterialInstancePath[0] = "../assets/Compressed/Girl_Diffuse.ctexture";
+	newentity1.GetComponent<MeshRenderer>().mMaterialInstancePath[1] = "../assets/Compressed/Girl_Normal.ctexture";
+	newentity1.GetComponent<MeshRenderer>().mMaterialInstancePath[2] = "../assets/Compressed/Girl_Glossiness.ctexture";
+	newentity1.GetComponent<MeshRenderer>().mMaterialInstancePath[3] = "../assets/Compressed/Girl_Specular.ctexture";
 
 	newentity1.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/pointLight_vert.glsl", "../_GRAPHICS/shader_files/pointLight_frag.glsl" };	// for point light
 
@@ -96,9 +97,10 @@ void GraphicsSystem::Init()
 	newentity1.GetComponent<MeshRenderer>().mMeshRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(temp1.id));
 
 	newentity1.GetComponent<Transform>().mTranslate = { 300.f, 0.f, 0.f };
-	newentity1.GetComponent<BoxCollider>().mTranslateOffset = { 0.f, 85.f, 0.f };
+	newentity.GetComponent<BoxCollider>().mTranslateOffset = { -2.f, 98.f, 0.f };
+	newentity.GetComponent<BoxCollider>().mScaleOffset = { 0.5f, 4.2f, 0.4f };
 
-	auto& meshinst1 = systemManager->mResourceSystem->get_Mesh("../assets/compiled_geom/FreeModelNathan_WalkAnim.geom");
+	auto& meshinst1 = systemManager->mResourceSystem->get_Mesh("../assets/compiled_geom/GirlAnimationWalking.geom");
 	newentity1.GetComponent<Transform>().mScale = meshinst1.mBBOX.m_Max - meshinst1.mBBOX.m_Min;
 	if (newentity1.HasComponent<Animator>() && _ENABLE_ANIMATIONS)
 	{
@@ -158,7 +160,6 @@ void GraphicsSystem::Update(float dt)
 		if (m_DebugDrawing && inst.HasComponent<BoxCollider>())
 		{
 			// draw the AABB of the mesh
-			//glm::vec3 bbox_dimens = meshinst.mBBOX.m_Max - meshinst.mBBOX.m_Min;
 			glm::vec3 bbox_dimens = inst.GetComponent<Transform>().mScale * inst.GetComponent<BoxCollider>().mScaleOffset;
 			m_Renderer.AddAabb(inst.GetComponent<Transform>().mTranslate + inst.GetComponent<BoxCollider>().mTranslateOffset, bbox_dimens, {1.f, 0.f, 0.f, 1.f});
 
@@ -175,8 +176,8 @@ void GraphicsSystem::Update(float dt)
 				static const vec3 bonescale(0.1f, 0.1f, 0.1f);
 				mat4 bonestrns = final * inst.GetComponent<Animator>().mAnimator.m_FinalBoneMatrices[bones.GetBoneID()] * bones.m_LocalTransform;
 
-				//m_Renderer.AddAabb({ bonestrns.x, bonestrns.y, bonestrns.z }, bonescale, vec4(1.f, 1.f, 0.f, 1.f));
-				//m_Renderer.AddAabb({ bonestrns[3][0], bonestrns[3][1], bonestrns[3][2] }, bonescale, vec4(1.f, 1.f, 0.f, 1.f));
+				//m_Renderer.AddCube({ bonestrns.x, bonestrns.y, bonestrns.z }, bonescale, vec4(1.f, 1.f, 0.f, 1.f));
+				//m_Renderer.AddCube({ bonestrns[3][0], bonestrns[3][1], bonestrns[3][2] }, bonescale, vec4(1.f, 1.f, 0.f, 1.f));
 			}
 		}
 

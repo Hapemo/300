@@ -13,7 +13,7 @@ layout (location = 5) in vec3   inTangent;			// Per vertex Tangent
 layout (location = 6) in vec3   inNormal;			// Per vertex Normal
 layout (location = 7) in mat4   inLTW;			    // local to world
 
-const int MAX_BONES = 100;
+const int MAX_BONES = 200;
 const int MAX_BONE_INFLUENCE = 4;
 uniform mat4 finalBoneMatrices[MAX_BONES];
 

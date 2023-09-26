@@ -488,7 +488,7 @@ void BoxCollider::Inspect() {
 	bool delete_component{ true };
 	if (ImGui::CollapsingHeader("BoxCollider", &delete_component, ImGuiTreeNodeFlags_DefaultOpen)) {
 
-		ImGui::DragFloat3("Boxcollider Scale", (float*)&mScaleOffset);
+		ImGui::DragFloat3("Boxcollider Scale", (float*)&mScaleOffset, 0.1f);
 		ImGui::SameLine();
 		ImGui::Text("Scale");
 		ImGui::Separator();
