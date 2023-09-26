@@ -23,7 +23,7 @@ start up of window and game system, also runs their update functions.
 #include "ConfigManager.h"
 
 #include "Example.h"
-#include "Input.h"
+#include "Input/Input.h"
 #include "Physics/Accumulator.h"
 
 // Static variables

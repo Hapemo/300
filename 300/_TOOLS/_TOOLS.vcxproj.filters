@@ -45,6 +45,12 @@
     <ClInclude Include="include\Input\InputMapSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\Input\Subscriber.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Input\TestInputMapScripts.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="include\ConfigManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>

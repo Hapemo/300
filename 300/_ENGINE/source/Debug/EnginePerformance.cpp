@@ -1,6 +1,8 @@
-#include "../Debug/EnginePerformance.h"
+//#include "../Debug/EnginePerformance.h"
+#include "Debug/EnginePerformance.h"
 #include "../../../_TOOLS/include/FPSManager.h"
-#include "../Debug/LogException.h"
+//#include "../Debug/LogException.h"
+#include "Debug/LogException.h"
 #include <string>
 #include "glfw3.h"
 

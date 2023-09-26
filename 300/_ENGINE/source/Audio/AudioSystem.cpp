@@ -256,7 +256,7 @@ int AudioSystem::ErrCodeCheck(FMOD_RESULT result)
 	{
 		// PWARNING("FMOD OPERATION ERROR: %d", result);
 		std::cout << "FMOD OPERATION ERROR: " << result << std::endl;
-		PINFO("FMOD OPERATION ERROR: %s", result);
+		PINFO("FMOD OPERATION ERROR: %d", result);
 
 		switch (result)
 		{
