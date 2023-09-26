@@ -38,11 +38,7 @@ void InputMapSystem::Update()
 						action.UpdateState(STARTED);
 						std::cout << "Action Map Triggered!!! : " << action_map.GetActionMapName() << std::endl;
 					}
-
-
 				}
-
-
 			}
 		}
 	}

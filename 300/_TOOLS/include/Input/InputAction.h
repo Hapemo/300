@@ -1,6 +1,7 @@
 #pragma once
 #include "../pch.h"
 #include "Input/Input.h"
+#include "Input/Subscriber.h" // Subscriber Model
 
 // Similar to Action Callbacks (WIP) - 9/24/2023 
 enum INPUT_STATE
@@ -45,18 +46,20 @@ public:
 	bool isEnabled();
 
 	void AddKeyBinding(std::string binding_name, E_STATE key_state, E_KEY key_binding);	// Add a (Key-Bindings) to InputAction
-	// std::unordered_map<std::string, InputBinding> GetKeyBindings() const;			    // Get all the (Key-Bindings) from database
+	// std::unordered_map<std::string, InputBinding> GetKeyBindings() const;			// Get all the (Key-Bindings) from database
 	InputBinding& GetKeyBinding(std::string binding_name);								// Get a Singular (Key-Binding)
 	std::unordered_map<std::string, InputBinding>& GetKeyBindings();					// Get the entire (Key-Binding) container
 	
-	glm::vec2 ReadValue() const; // Might Template this (can return gamestates?)
-	void UpdateState(INPUT_STATE new_state);
+	glm::vec2 ReadValue() const;														// Might Template this (can return gamestates?)
+	void      UpdateState(INPUT_STATE new_state);
+
+	// Subscriber/Observer Pattern
+	void RegisterSubscribers();
 
 private:
 	std::string									  mActionName;
-	//std::vector<InputBinding>  mKeyBindings; // Key Bindings (for now only support for keyboard keys - with GLFW)
 	std::unordered_map<std::string, InputBinding> mKeyBindings;
 	INPUT_STATE									  mCurrentState;
-	bool isEnable = false;
-
+	bool										  isEnable = false;
+	std::vector<Subscriber>						  mSubscribers;
 };
