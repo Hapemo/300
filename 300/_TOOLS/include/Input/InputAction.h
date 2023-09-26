@@ -37,6 +37,8 @@ struct InputBinding
 class InputAction
 {
 public:
+	std::string mActionName;
+public:
 	InputAction();
 	InputAction(std::string action_name);
 	InputAction(std::string action_name, E_STATE key_state, E_KEY key_binding);
@@ -53,13 +55,10 @@ public:
 	glm::vec2 ReadValue() const;														// Might Template this (can return gamestates?)
 	void      UpdateState(INPUT_STATE new_state);
 
-	// Subscriber/Observer Pattern
-	void RegisterSubscribers();
-
 private:
-	std::string									  mActionName;
-	std::unordered_map<std::string, InputBinding> mKeyBindings;
-	INPUT_STATE									  mCurrentState;
-	bool										  isEnable = false;
-	std::vector<Subscriber>						  mSubscribers;
+
+	std::unordered_map<std::string, InputBinding>    mKeyBindings;						// [Limit to 2 bindings] (for now)
+	INPUT_STATE									     mCurrentState;						
+	bool										     isEnable = false;
+	//std::vector<Subscriber>						  mSubscribers;
 };
