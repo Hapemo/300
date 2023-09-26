@@ -11,6 +11,7 @@
 #include "Audio/AudioSystem.h"
 #include "Debug/Logger.h"
 #include "../../../_TOOLS/include/Input/InputMapSystem.h"
+#include "Debug/EnginePerformance.h"
 
 SystemManager* systemManager;
 
@@ -51,7 +52,7 @@ void SystemManager::Init(bool isEditor, GFX::Window* window)
 	mGraphicsSystem.get()->Init();
 	PINFO("Init Graphics System");
 
-			// all the resources are loaaded here
+	// all the resources are loaaded here
 	mGameStateSystem.get()->Init();
 	mAudioSystem.get()->Init();
 	PINFO("Init Game state System");
@@ -60,11 +61,26 @@ void SystemManager::Init(bool isEditor, GFX::Window* window)
 void SystemManager::Update(float dt)
 {
 	mInputActionSystem.get()->Update();
-	mPhysicsSystem.get()->Update(dt);
-	mScriptingSystem.get()->Update(dt);
-	mGraphicsSystem.get()->Update(dt);
-	mAudioSystem.get()->Update(dt);
 
+	EnginePerformance::StartTrack("Physics");
+	mPhysicsSystem.get()->Update(dt);
+	EnginePerformance::EndTrack("Physics");
+	EnginePerformance::UpdateSystemMs("Physics");
+
+	EnginePerformance::StartTrack("Scripting");
+	mScriptingSystem.get()->Update(dt);
+	EnginePerformance::EndTrack("Scripting");
+	EnginePerformance::UpdateSystemMs("Scripting");
+
+	EnginePerformance::StartTrack("Graphics");
+	mGraphicsSystem.get()->Update(dt);
+	EnginePerformance::EndTrack("Graphics");
+	EnginePerformance::UpdateSystemMs("Graphics");
+
+	EnginePerformance::StartTrack("Audio");
+	mAudioSystem.get()->Update(dt);
+	EnginePerformance::EndTrack("Audio");
+	EnginePerformance::UpdateSystemMs("Audio");
 //	mResourceSystem.get()->Update();
 }
 

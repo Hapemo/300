@@ -36,6 +36,7 @@ Returns main window for docking
 #include "Inspect.h"
 #include "MenuPanel.h"
 #include "EditorLogger.h"
+#include "Debug/EnginePerformance.h"
 //bool Editor::show_Inspector;
 //int Editor::entity {}; // static var for selected entity ID
 //bool Editor::Entity_Selected; // static var for Inspector to show
@@ -236,7 +237,6 @@ void Editor::UIupdate(GLFWwindow* window) {
         //    static_cast<SceneWindow*>(windows.second)->ConstrainedResize(nullptr);
         //
         ImGui::Begin(windows.first.c_str(), 0, windows.second->mWinFlag);
-
 
         windows.second->update();
         if (windows.first == "Editscene") {

@@ -134,7 +134,6 @@ void GraphicsSystem::Init()
 /**************************************************************************/
 void GraphicsSystem::Update(float dt)
 {
-	EnginePerformance::StartTrack("Graphics");
 	std::map<std::string, short> renderedMesh;
 
 	// update the camera's transformations, and its input
@@ -325,9 +324,6 @@ void GraphicsSystem::Update(float dt)
 
 	// TODO: Clears all instances that have been rendered from local buffer
 	m_Fbo.Unbind();
-
-	EnginePerformance::EndTrack("Graphics");
-	EnginePerformance::UpdateSystemMs("Graphics");
 }
 
 /***************************************************************************/

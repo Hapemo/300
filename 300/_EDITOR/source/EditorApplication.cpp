@@ -23,6 +23,7 @@ start up of window and game system, also runs their update functions.
 #include "SceneWindow.h"
 #include "Guid.h"
 #include "Physics/Accumulator.h"
+#include "Debug/EnginePerformance.h"
 
 // Static variables
 GFX::DebugRenderer* EditorApplication::mRenderer;
@@ -71,6 +72,7 @@ void EditorApplication::MainUpdate()
 
     while (!glfwWindowShouldClose(mWindow.GetHandle())) 
     {
+        EnginePerformance::StartTrack("Editor");
         FirstUpdate();
         SystemUpdate();
 
@@ -87,8 +89,11 @@ void EditorApplication::MainUpdate()
 
         systemManager->mGraphicsSystem->SetCameraSize(CAMERA_TYPE::CAMERA_TYPE_EDITOR, windowSize);
        // systemManager->mGraphicsSystem->SetCameraSize(&systemManager->mGraphicsSystem->mCamera, ImGui::GetWindowSize().x, ImGui::GetWindowSize().y);
+        EnginePerformance::EndTrack("Editor");
+        EnginePerformance::TotalTime("Editor");
         mMaineditor.UIupdate(mWindow.GetHandle());
         //mMaineditor.WindowUpdate(mWindow.GetHandle());
+        EnginePerformance::StartTrack("Editor");
         mMaineditor.UIdraw(mWindow.GetHandle());
 
        // systemManager->mGraphicsSystem->SetCameraPosition(&systemManager->mGraphicsSystem->mCamera,);
@@ -99,7 +104,8 @@ void EditorApplication::MainUpdate()
 
         mWindow.Update();   // This is required for IMGUI draws as well
 
-        
+        EnginePerformance::EndTrack("Editor");
+        EnginePerformance::StoreTime("Editor");
     }
 }
 
@@ -107,7 +113,7 @@ void EditorApplication::FirstUpdate()
 {
     FPSManager::Update();
     Accumulator::Update(FPSManager::dt);
-    mWindow.PollEvents();
+    mWindow.PollEvents();//win manafer
 }
 
 void EditorApplication::SystemUpdate()
