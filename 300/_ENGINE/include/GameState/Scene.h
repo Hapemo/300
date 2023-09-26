@@ -92,6 +92,7 @@ public:
 	bool mIsPause = true;											// Paused state of the scene
 	bool mForceRender;
 	std::string mName="";
+	bool selected;
 	//Transform mCamera{};
 
 private:

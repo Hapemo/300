@@ -85,7 +85,7 @@ void PhysicsSystem::CreateRigidBody(Entity e)
 	{
 		RigidBody rbod = e.GetComponent<RigidBody>();
 		BoxCollider col = e.GetComponent<BoxCollider>();
-		PxShape* shape = mPX.mPhysics->createShape(PxBoxGeometry(Convert(xform.mScale * col.mScaleOffset)), *mMaterials[rbod.mMaterial]);
+		PxShape* shape = mPX.mPhysics->createShape(PxBoxGeometry(Convert(xform.mScale * col.mScaleOffset) / 2.f), *mMaterials[rbod.mMaterial]);
 		PxRigidActor* actor{};
 		if (rbod.mMotion == MOTION::DYNAMIC)
 		{
@@ -108,7 +108,7 @@ void PhysicsSystem::CreateRigidBody(Entity e)
 	{
 		RigidBody rbod = e.GetComponent<RigidBody>();
 		SphereCollider col = e.GetComponent<SphereCollider>();
-		PxShape* shape = mPX.mPhysics->createShape(PxSphereGeometry(std::max({ xform.mScale.x, xform.mScale.y, xform.mScale.z }) * col.mScaleOffset), *mMaterials[rbod.mMaterial]);
+		PxShape* shape = mPX.mPhysics->createShape(PxSphereGeometry(std::max({ xform.mScale.x, xform.mScale.y, xform.mScale.z }) * col.mScaleOffset / 2.f), *mMaterials[rbod.mMaterial]);
 		PxRigidActor* actor{};
 		if (rbod.mMotion == MOTION::DYNAMIC)
 		{
