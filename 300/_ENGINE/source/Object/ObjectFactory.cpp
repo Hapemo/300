@@ -530,7 +530,6 @@ void ObjectFactory::SaveGameState(GameState* gs)
 
 	std::ofstream ofs;
 	ofs.open(filename, std::fstream::out | std::fstream::trunc);
-	ofs.close();
 
 	SceneJSON sce;
 	SceneListJSON scenes;
@@ -545,4 +544,5 @@ void ObjectFactory::SaveGameState(GameState* gs)
 	}
 
 	scenes.SerializeFile(filename);
+	ofs.close();
 }

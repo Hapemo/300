@@ -29,6 +29,7 @@ Setting up specification for frame buffer rendering
 #include "imgui_internal.h"
 #include "Hierarchy.h"
 #include "ImGuizmo.h"
+#include "GameState/GameStateManager.h"
 typedef void    (*ImGuiSizeCallback)(ImGuiSizeCallbackData* data);
 
 //bool SceneWindow::follow = false;
@@ -79,6 +80,27 @@ void SceneWindow::update()
 	ImGui::SetCursorPosY(ImGui::GetWindowContentRegionMin().y+10);
 	ImGui::Checkbox("Debug",&systemManager->mGraphicsSystem->m_DebugDrawing);
 	
+
+	ImGui::SetItemAllowOverlap();
+	//wevents = ImGui::IsItemHovered();  /// <-- This returns true if mouse is over the overlaped Test button
+
+
+	ImGui::SetCursorPosX(ImGui::GetWindowContentRegionMax().x - 400);
+	ImGui::SetCursorPosY(ImGui::GetWindowContentRegionMin().y + 10);
+	if (ImGui::Button("PLAY")) {
+		systemManager->Play();
+	}
+	if (ImGui::Button("PAUSE")) {
+		systemManager->Pause();
+	}
+	if (ImGui::Button("RESET")) {
+		systemManager->Reset();
+	}
+
+
+
+
+
 	winSize= { ImGui::GetWindowSize().x ,ImGui::GetWindowSize().y};
 	//systemManager->mGraphicsSystem->SetCameraSize()
 	//ImGui::Image((ImTextureID)(intptr_t)systemManager->mGraphicsSystem->GetEditorAttachment(),ImVec2(1920, 1080));

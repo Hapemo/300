@@ -387,7 +387,7 @@ void Hierarchy::update() {
                         if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("PARENT_CHILD")) {
                             // auto payload = ImGui::AcceptDragDropPayload("PARENT_CHILD");
 
-                            auto data = static_cast<entt::entity*> (payload->Data);                         
+                            auto data = static_cast<entt::entity*> (payload->Data);    
                             ent.AddChild(*data);
                         }
                         ImGui::EndDragDropTarget();

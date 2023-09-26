@@ -36,7 +36,7 @@ void MenuPanel::update()
         {       
             //save scene
             if (ImGui::MenuItem("Save GameState")) {
-                systemManager->mGameStateSystem->mCurrentGameState.Save();
+               // systemManager->;
             }
 
 

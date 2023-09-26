@@ -163,7 +163,7 @@ void ContentBrowser::update()
 				}
 			}
 
-			if (check_extension(path.string(), ".json")) {
+			if (check_extension(path.string(), ".prefab")) {
 	
 
 				if (ImGui::BeginDragDropSource()) {

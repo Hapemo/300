@@ -3,6 +3,7 @@
 #include "ScriptingSystem.h"
 #include "pch.h"
 #include "Object/ObjectFactory.h"
+#include "GameState/GameStateManager.h"
 #include "Debug/AssertException.h"
 
 bool Entity::ShouldRun() {
@@ -144,6 +145,7 @@ Entity ECS::NewEntityFromPrefab(std::string prefabName)
 	// creation of new entity done inside deserializescene function
 	Entity e(ObjectFactory::DeserializePrefab("../assets/Prefabs/" + prefabName + ".prefab", mPrefabs[prefabName].size()));
 	e.AddComponent<Prefab>().mPrefab = prefabName;
+	systemManager->mGameStateSystem->mCurrentGameState.mScenes[0].mEntities.insert(e);
 	//copy all prefab components (except transform) to new entity
 	//General temp1 = e.GetComponent<General>();
 	//MeshRenderer temp = e.GetComponent<MeshRenderer>();
@@ -187,8 +189,17 @@ void ECS::CopyEntity(Entity e)
 
 Entity ECS::StartEditPrefab(std::string prefabName)
 {
-	Entity e = NewEntityFromPrefab(prefabName);
+	// void ObjectFactory::DeserializeScene(const std::string& filename)
+	// creation of new entity done inside deserializescene function
+	Entity e(ObjectFactory::DeserializePrefab("../assets/Prefabs/" + prefabName + ".prefab", mPrefabs[prefabName].size()));
+	e.AddComponent<Prefab>().mPrefab = prefabName;
+	//copy all prefab components (except transform) to new entity
+	//General temp1 = e.GetComponent<General>();
+	//MeshRenderer temp = e.GetComponent<MeshRenderer>();
+	mPrefabs[prefabName].push_back(e);
 	e.GetComponent<General>().name = prefabName;
+	if (static_cast<uint32_t>(e.id) == 0)
+		throw ("null entity created?");
 	return e;
 }
 
