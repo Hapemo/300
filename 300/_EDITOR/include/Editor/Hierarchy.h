@@ -40,11 +40,13 @@ class Hierarchy : public EditorWindow {
 public:
 	static entt::entity selectedId;
 	static entt::entity RselectedId;
+	static int selectedScene;
+	static int RselectedScene;
 	static bool selectionOn;
 
 
 
-
+	bool sCPopup{ false };
 	bool mPopup {false};
 	bool mCPopup{ false };
 /***************************************************************************/
