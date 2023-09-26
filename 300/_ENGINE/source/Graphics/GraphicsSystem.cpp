@@ -184,7 +184,8 @@ void GraphicsSystem::Update(float dt)
 			}
 		}
 
-		meshinst.mLTW.push_back(final);
+		//meshinst.mLTW.push_back(final);
+		AddInstance(meshinst, final, 69u);
 	}
 #pragma endregion
 
@@ -343,6 +344,12 @@ void GraphicsSystem::AddInstance(GFX::Mesh& mesh, Transform transform, unsigned 
 
 	mat4 world = translate * rotation * scale;
 	mesh.mLTW.push_back(world);
+	mesh.mTexEntID.push_back(vec4(0.f, (float)entityID, 0.f, 0.f));
+}
+
+void GraphicsSystem::AddInstance(GFX::Mesh& mesh, mat4 transform, unsigned entityID)
+{
+	mesh.mLTW.push_back(transform);
 	mesh.mTexEntID.push_back(vec4(0.f, (float)entityID, 0.f, 0.f));
 }
 

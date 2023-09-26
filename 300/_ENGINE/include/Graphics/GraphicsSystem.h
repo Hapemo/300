@@ -31,7 +31,7 @@ public:
 
 	// -- Mesh --
 	void AddInstance(GFX::Mesh& mesh, Transform transform, unsigned entityID = 0xFFFFFFFF);		// Adds an instance of a mesh to be drawn
-	void AddInstance(GFX::Mesh& mesh, mat4 transform, unsigned entityID);	// Adds an instance of a mesh to be drawn
+	void AddInstance(GFX::Mesh& mesh, mat4 transform, unsigned entityID = 0xFFFFFFFF);	// Adds an instance of a mesh to be drawn
 
 	// -- FBO --
 	unsigned int GetGameAttachment()		{ return m_Fbo.GetGameAttachment(); }

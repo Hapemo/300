@@ -88,8 +88,8 @@ void GFX::FBO::PrepForDraw()
 
 unsigned int GFX::FBO::ReadEntityID(int posX, int posY)
 {
-	int mapped_x = posX + (mWidth / 2);
-	int mapped_y = posY + (mHeight / 2);
+	int mapped_x = posX/* + (mWidth / 2)*/;
+	int mapped_y = posY/* + (mHeight / 2)*/;
 	if (mapped_x >= mWidth || mapped_x < 0 || mapped_y >= mHeight || mapped_y < 0)
 		return 0xFFFFFFFF;
 	GLsizei bufsize = mWidth * mHeight;
