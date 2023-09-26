@@ -69,3 +69,7 @@ void InputMapSystem::AddActionMap(InputActionMap& action_map)
 	mActionMaps.push_back(action_map);
 }
 
+std::vector<InputActionMap>& InputMapSystem::GetActionMaps()
+{
+	return mActionMaps;
+}
