@@ -6,14 +6,12 @@ layout (location = 0) in vec3 inPos;		        // INPUT_POSITION
 layout (location = 2) in vec2 inUV;			        // Texture Coordinates
 layout (location = 5) in vec3 inTangent;			// Per vertex Tangent
 layout (location = 6) in vec3 inNormal;			    // Per vertex Normal
-layout (location = 7) in vec4 inTex_Ent_ID;			// Texture ID, Entity ID of object
+layout (location = 7) in vec4 inTex_Ent_ID;		    // Texture ID, Entity ID of object
 layout (location = 8) in mat4 inLTW;			    // local to world
 
 uniform vec3 uLightPos;
 uniform vec3 uViewPos;
 uniform mat4 uMatrixVP;
-uniform int uDebugDraw;
-
 
 out vec4 VertexColor;       // for debugging
 out vec2 TexCoords;
@@ -21,8 +19,6 @@ out vec3 TangentLightPos;
 out vec3 TangentViewPos;
 out vec3 TangentFragPos;
 out vec4 Tex_Ent_ID;
-out int isDebugDraw;
-
 
 void main() 
 {
@@ -45,6 +41,4 @@ void main()
     TangentViewPos  = TBN * uViewPos;
     TangentFragPos  = TBN * vec3(inLTW * vec4(inPos, 1.0));
     Tex_Ent_ID      = inTex_Ent_ID;
-    isDebugDraw = uDebugDraw;
-
 }

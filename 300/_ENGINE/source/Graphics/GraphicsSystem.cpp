@@ -2,6 +2,7 @@
 #include <ResourceManager.h>
 #include "ResourceManagerTy.h"
 #include <Graphics/Camera_Input.h>
+#include "Debug/EnginePerformance.h"
 
 /***************************************************************************/
 /*!
@@ -122,7 +123,7 @@ void GraphicsSystem::Init()
 /**************************************************************************/
 void GraphicsSystem::Update(float dt)
 {
-	// local variable to keep track of rendered mesh instances
+	EnginePerformance::StartTrack("Graphics");
 	std::map<std::string, short> renderedMesh;
 
 	// update the camera's transformations, and its input
@@ -131,6 +132,9 @@ void GraphicsSystem::Update(float dt)
 #pragma region update all the mesh instances
 	// Retrieve and update the mesh instances to be drawn
 	auto meshRendererInstances = systemManager->ecs->GetEntitiesWith<MeshRenderer>();
+	int a = meshRendererInstances.size();
+	if (a != 0)
+		a = a;
 	for (Entity inst : meshRendererInstances)
 	{
 		std::string meshstr = inst.GetComponent<MeshRenderer>().mMeshPath;
@@ -199,6 +203,9 @@ void GraphicsSystem::Update(float dt)
 
 	// Prepare and bind the Framebuffer to be rendered on
 	m_Fbo.PrepForDraw();
+	int fboWidth = m_Fbo.GetWidth();
+	int fboHeight = m_Fbo.GetHeight();
+
 	m_Renderer.RenderAll(m_EditorCamera.viewProj());
 	m_Renderer.ClearInstances();
 
@@ -320,6 +327,9 @@ void GraphicsSystem::Update(float dt)
 
 	// TODO: Clears all instances that have been rendered from local buffer
 	m_Fbo.Unbind();
+
+	EnginePerformance::EndTrack("Graphics");
+	EnginePerformance::UpdateSystemMs("Graphics");
 }
 
 /***************************************************************************/
@@ -350,13 +360,13 @@ void GraphicsSystem::AddInstance(GFX::Mesh& mesh, Transform transform, unsigned 
 
 	mat4 world = translate * rotation * scale;
 	mesh.mLTW.push_back(world);
-	mesh.mTexEntID.push_back(vec4(0.f, (float)entityID, 0.f, 0.f));
+	mesh.mTexEntID.push_back(vec4(0, (float)entityID + 0.5f, 0, 0));
 }
 
 void GraphicsSystem::AddInstance(GFX::Mesh& mesh, mat4 transform, unsigned entityID)
 {
 	mesh.mLTW.push_back(transform);
-	mesh.mTexEntID.push_back(vec4(0.f, (float)entityID, 0.f, 0.f));
+	mesh.mTexEntID.push_back(vec4(0, (float)entityID + 0.5f, 0, 0));
 }
 
 /***************************************************************************/

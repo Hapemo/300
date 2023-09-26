@@ -3,6 +3,7 @@
 #include "ScriptingSystem.h"
 #include "pch.h"
 #include "Object/ObjectFactory.h"
+#include "GameState/GameStateManager.h"
 #include "Debug/AssertException.h"
 
 bool Entity::ShouldRun() {
@@ -87,6 +88,7 @@ Entity ECS::NewEntity()
 	Entity e = registry.create();
 	e.AddComponent<General>().name = "Entity" + std::to_string(static_cast<uint32_t>(e.id));
 	e.AddComponent<Transform>();
+	std::cout << e.GetComponent<General>().name << std::endl;
 	return e;
 }
 
@@ -132,7 +134,7 @@ void ECS::NewPrefab(Entity e)
 		PWARNING("prefab of the same name exists! - prefab not created");
 		return;
 	}
-	ObjectFactory::SerializePrefab(e, "../assets/Prefabs/" + name + ".json");
+	ObjectFactory::SerializePrefab(e, "../assets/Prefabs/" + name + ".prefab");
 	e.AddComponent<Prefab>().mPrefab = name;
 	mPrefabs[name].push_back(e);
 }
@@ -141,11 +143,12 @@ Entity ECS::NewEntityFromPrefab(std::string prefabName)
 {
 	// void ObjectFactory::DeserializeScene(const std::string& filename)
 	// creation of new entity done inside deserializescene function
-	Entity e(ObjectFactory::DeserializePrefab("../assets/Prefabs/" + prefabName + ".json", mPrefabs[prefabName].size()));
+	Entity e(ObjectFactory::DeserializePrefab("../assets/Prefabs/" + prefabName + ".prefab", mPrefabs[prefabName].size()));
 	e.AddComponent<Prefab>().mPrefab = prefabName;
+	systemManager->mGameStateSystem->mCurrentGameState.mScenes[0].mEntities.insert(e);
 	//copy all prefab components (except transform) to new entity
-	General temp1 = e.GetComponent<General>();
-	MeshRenderer temp = e.GetComponent<MeshRenderer>();
+	//General temp1 = e.GetComponent<General>();
+	//MeshRenderer temp = e.GetComponent<MeshRenderer>();
 	mPrefabs[prefabName].push_back(e);
 	if (static_cast<uint32_t>(e.id) == 0)
 		throw ("null entity created?");
@@ -154,7 +157,7 @@ Entity ECS::NewEntityFromPrefab(std::string prefabName)
 
 void ECS::UpdatePrefabEntities(std::string prefabName)
 {
-	Entity temp(ObjectFactory::DeserializePrefab("../assets/Prefabs/" + prefabName + ".json", 0));
+	Entity temp(ObjectFactory::DeserializePrefab("../assets/Prefabs/" + prefabName + ".prefab", 0));
 	
 	for (Entity e : mPrefabs[prefabName])
 	{
@@ -186,18 +189,30 @@ void ECS::CopyEntity(Entity e)
 
 Entity ECS::StartEditPrefab(std::string prefabName)
 {
-	return NewEntityFromPrefab(prefabName);
+	// void ObjectFactory::DeserializeScene(const std::string& filename)
+	// creation of new entity done inside deserializescene function
+	Entity e(ObjectFactory::DeserializePrefab("../assets/Prefabs/" + prefabName + ".prefab", mPrefabs[prefabName].size()));
+	e.AddComponent<Prefab>().mPrefab = prefabName;
+	//copy all prefab components (except transform) to new entity
+	//General temp1 = e.GetComponent<General>();
+	//MeshRenderer temp = e.GetComponent<MeshRenderer>();
+	mPrefabs[prefabName].push_back(e);
+	e.GetComponent<General>().name = prefabName;
+	if (static_cast<uint32_t>(e.id) == 0)
+		throw ("null entity created?");
+	return e;
 }
+
 
 void ECS::EndEditPrefab(Entity e)
 {
+	ObjectFactory::SerializePrefab(e, "../assets/Prefabs/" + e.GetComponent<General>().name + ".prefab");
+	UpdatePrefabEntities(e.GetComponent<General>().name);
 	DeleteEntity(e);
 }
 
-void ECS::EndEditPrefab(std::string prefab, Entity e)
+void ECS::EndEditPrefabNoSave(Entity e)
 {
-	ObjectFactory::SerializePrefab(e, "../assets/Prefabs/" + prefab + ".json");
-	UpdatePrefabEntities(prefab);
 	DeleteEntity(e);
 }
 

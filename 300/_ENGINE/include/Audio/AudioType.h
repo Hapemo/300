@@ -3,7 +3,8 @@
 enum AUDIOTYPE :unsigned char
 {
 	AUDIO_BGM,
-	AUDIO_SFX
+	AUDIO_SFX, 
+	AUDIO_NULL // For Empty Instantiation
 };
 
 // please update here
