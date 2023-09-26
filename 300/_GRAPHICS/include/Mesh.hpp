@@ -52,6 +52,7 @@ namespace GFX
 		// Stores the rendering data for each instance of mesh
 		std::vector<mat4> mLTW;
 		std::vector<vec4> mColors;
+		std::vector<vec4> mTexEntID;
 
 		// This mesh may contain multiple different animations. These animations are unique to this mesh.
 		std::vector<_GEOM::Animation>	mAnimation{};
@@ -66,6 +67,7 @@ namespace GFX
 		VBO mEbo;
 		VBO mColorVbo;
 		VBO mTexCoordVbo;
+		VBO mTexEntIDVbo;
 		VBO mLTWVbo;
 		VBO mTangentVbo;
 		VBO mBitTangentVbo;

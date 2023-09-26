@@ -114,6 +114,14 @@ void GFX::Mesh::Setup(const _GEOM::Geom& GeomData)
 	mVao.AttachVertexBuffer(mTexCoordVbo.GetID(), 2, 0, sizeof(vec2));				// Attach to index 2
 
 	/////////////////////////////////////////
+	// TEXTURE AND ENTITY ID
+	// Create VBO for Texture ID and Entity ID
+	mTexEntIDVbo.Create(sizeof(vec4) * MAX_INSTANCES);
+	mVao.AddAttribute(1, 1, 4, GL_FLOAT);											// location 7, binding vao index 7
+	mVao.AddAttributeDivisor(1, 1);													// divisor at vao index 1
+	mVao.AttachVertexBuffer(mTexEntIDVbo.GetID(), 1, 0, sizeof(vec4));				// Attach to index 7
+
+	/////////////////////////////////////////
 	// Local To World
 	// Create local-to-world VBO
 	mLTWVbo.Create(sizeof(mat4) * MAX_INSTANCES);
@@ -276,6 +284,7 @@ void GFX::Mesh::PrepForDraw()
 	// Attach data to vbo
 	mColorVbo.AttachData(0, mColors.size() * sizeof(vec4), mColors.data());
 	mLTWVbo.AttachData(0, mLTW.size() * sizeof(mat4), mLTW.data());
+	mTexEntIDVbo.AttachData(0, mTexEntID.size() * sizeof(vec4), mTexEntID.data());
 }
 
 void GFX::Mesh::Destroy()

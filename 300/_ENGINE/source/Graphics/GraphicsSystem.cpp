@@ -328,7 +328,7 @@ void GraphicsSystem::Exit()
 	Adds an instance of a mesh to be drawn, For instancing
 */
 /**************************************************************************/
-void GraphicsSystem::AddInstance(GFX::Mesh& mesh, Transform transform)
+void GraphicsSystem::AddInstance(GFX::Mesh& mesh, Transform transform, unsigned entityID)
 {
 	// Local to world transformation
 	mat4 scale = glm::scale(transform.mScale);
@@ -339,6 +339,7 @@ void GraphicsSystem::AddInstance(GFX::Mesh& mesh, Transform transform)
 
 	mat4 world = translate * rotation * scale;
 	mesh.mLTW.push_back(world);
+	mesh.mTexEntID.push_back(vec4(0.f, (float)entityID, 0.f, 0.f));
 }
 
 /***************************************************************************/
