@@ -34,7 +34,7 @@ void LuaECS()
         );
 }
 
-#define DECLARE_COMPONENT(str, type) str, (type&(Entity::*)())(&Entity::GetComponent<type>)
+#define DECLARE_COMPONENT(str, type) str, sol::resolve<type&()>(&Entity::GetComponent<type>)
 
 void LuaEntity()
 {
