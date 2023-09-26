@@ -125,8 +125,9 @@ namespace _GEOM
 		glm::mat4 translation = InterpolatePosition(animationTime);
 		glm::mat4 rotation = InterpolateRotation(animationTime);
 		glm::mat4 scale = InterpolateScaling(animationTime);
-
+;
 		m_LocalTransform = translation * rotation * scale;
+		//m_LocalTransform = trans;
 	}
 
 

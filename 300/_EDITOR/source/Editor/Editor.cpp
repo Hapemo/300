@@ -36,6 +36,8 @@ Returns main window for docking
 #include "Inspect.h"
 #include "MenuPanel.h"
 #include "EditorLogger.h"
+#include "PrefabWindow.h"
+#include "PrefabWindow.h"
 //bool Editor::show_Inspector;
 //int Editor::entity {}; // static var for selected entity ID
 //bool Editor::Entity_Selected; // static var for Inspector to show
@@ -142,6 +144,7 @@ void Editor::UIinit(GLFWwindow* window)
     mWindowlist["Contentbrowser"] = new ContentBrowser;
     mWindowlist["Logger"] = new EditorLogger;
 
+    mWindowlist["PrefabScene"] = new PrefabWindow;
     //std::cout<< mWindowlist.size() << "test\n";
 
     //windowlist["ContentBrowser"] = new ContentBrowser;
@@ -235,9 +238,26 @@ void Editor::UIupdate(GLFWwindow* window) {
         //if (windows.first == "Editscene")
         //    static_cast<SceneWindow*>(windows.second)->ConstrainedResize(nullptr);
         //
-        ImGui::Begin(windows.first.c_str(), 0, windows.second->mWinFlag);
-        windows.second->update();
-        ImGui::End();
+
+        if (windows.first == "PrefabScene") {
+            
+            if (static_cast<unsigned>(PrefabWindow::prefabObj) != 0) {
+                ImGui::Begin(windows.first.c_str(), 0, windows.second->mWinFlag);
+                windows.second->update();
+                ImGui::End();
+
+            }
+        }
+        else {
+
+            ImGui::Begin(windows.first.c_str(), 0, windows.second->mWinFlag);
+            if (windows.first == "Editscene") {
+                (static_cast<SceneWindow*>(windows.second))->RenderGuizmo();
+            }
+            windows.second->update();
+            ImGui::End();
+        }
+
     }
     //        if (windows.first == "Scene" || windows.first == "Display")
     //        {

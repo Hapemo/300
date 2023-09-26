@@ -4,7 +4,9 @@
 #include "GameState/Scene.h"
 #include "GameState/GameState.h"
 #include "ConfigManager.h"
+#include "ResourceManagerTy.h"
 
+// unused (technically)
 void ObjectFactory::DeserializeScene(const std::string& filename)
 {
 	// loop thru container and store entities
@@ -34,6 +36,9 @@ void ObjectFactory::DeserializeScene(const std::string& filename)
 		{
 			e.AddComponent<MeshRenderer>();
 			e.GetComponent<MeshRenderer>() = obj.GetMRJSON();
+			MeshRenderer mr = e.GetComponent<MeshRenderer>();
+			uid uids(mr.mMeshPath);
+			mr.mMeshRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(uids.id));
 		}
 
 		if (obj.mbc_t)
@@ -116,6 +121,7 @@ void ObjectFactory::DeserializeScene(const std::string& filename)
 	//}
 }
 
+// unused (technically)
 void ObjectFactory::SerializeScene(const std::string& filename)
 {
 	// loop thru container and store entity data from editor
@@ -240,7 +246,7 @@ void ObjectFactory::SerializePrefab(Entity e, const std::string& filename)
 	entities.SerializeFile(filename);
 }
 
-Entity ObjectFactory::DeserializePrefab(const std::string& filename)
+Entity ObjectFactory::DeserializePrefab(const std::string& filename, int id)
 {
 	EntityListJSON entities;
 	entities.DeserializeFile(filename);
@@ -256,10 +262,18 @@ Entity ObjectFactory::DeserializePrefab(const std::string& filename)
 
 	General& curr = e.GetComponent<General>();
 
+	curr.name = temp.name + " Prefab " + std::to_string(id);
 	curr.isActive = true;
 	curr.isPaused = true;
 	curr.tag = temp.tag;
 	curr.subtag = temp.subtag;
+
+	Transform tempX = eJ.GetTransformJSON();
+
+	Transform& xform = e.GetComponent<Transform>();
+	xform.mScale = tempX.mScale;
+	xform.mRotate = tempX.mRotate;
+
 
 	if (eJ.mrb_t)
 	{
@@ -271,6 +285,22 @@ Entity ObjectFactory::DeserializePrefab(const std::string& filename)
 	{
 		e.AddComponent<MeshRenderer>();
 		e.GetComponent<MeshRenderer>() = eJ.GetMRJSON();
+		MeshRenderer& mr = e.GetComponent<MeshRenderer>();
+		uid uids(mr.mMeshPath);
+		mr.mMeshRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(uids.id));
+		for (int i{ 0 }; i < 4; i++) {
+
+			if (mr.mTextureCont[i] == true) {
+				uid uids(mr.mMaterialInstancePath[i]);
+				mr.mTextureRef[i] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(uids.id));
+			}
+		}
+		GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mr.mMeshRef);
+		if (meshinst->mHasAnimation)
+		{
+			e.AddComponent<Animator>();
+			e.GetComponent<Animator>().mAnimator.SetAnimation(&meshinst->mAnimation[0]);
+		}
 	}
 
 	if (eJ.mbc_t)
@@ -314,7 +344,7 @@ void ObjectFactory::LoadScene(Scene* scene, const std::string& filename)
 	// loop thru container and store entities
 
 	EntityListJSON entities;
-	entities.DeserializeFile(ConfigManager::GetValue("ScenePath") + filename + ".json");
+	entities.DeserializeFile(ConfigManager::GetValue("ScenePath") + filename + ".scn");
 
 	std::unordered_map<entt::entity, entt::entity> idMap;
 
@@ -337,6 +367,9 @@ void ObjectFactory::LoadScene(Scene* scene, const std::string& filename)
 		{
 			e.AddComponent<MeshRenderer>();
 			e.GetComponent<MeshRenderer>() = obj.GetMRJSON();
+			MeshRenderer mr = e.GetComponent<MeshRenderer>();
+			uid uids(mr.mMeshPath);
+			mr.mMeshRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(uids.id));
 		}
 
 		if (obj.mbc_t)
@@ -406,7 +439,7 @@ void ObjectFactory::LoadScene(Scene* scene, const std::string& filename)
 void ObjectFactory::SaveScene(Scene* scene)
 {
 	// form the filename
-	std::string filename = ConfigManager::GetValue("ScenePath") + scene->mName + ".json";
+	std::string filename = ConfigManager::GetValue("ScenePath") + scene->mName + ".scn";
 
 	std::ofstream ofs;
 	ofs.open(filename, std::fstream::out | std::fstream::trunc);
@@ -472,7 +505,7 @@ void ObjectFactory::LoadGameState(GameState* gs, const std::string& _name)
 	gs->mName = _name;
 
 	SceneListJSON scenes;
-	scenes.DeserializeFile(ConfigManager::GetValue("GameStatePath") + _name + ".json");
+	scenes.DeserializeFile(ConfigManager::GetValue("GameStatePath") + _name + ".gs");
 
 	Scene sce;
 	for (auto& s : scenes.SceneList())
@@ -493,11 +526,10 @@ void ObjectFactory::LoadGameState(GameState* gs, const std::string& _name)
 void ObjectFactory::SaveGameState(GameState* gs)
 {
 	// form the filename
-	std::string filename = ConfigManager::GetValue("GameStatePath") + gs->mName + ".json";
+	std::string filename = ConfigManager::GetValue("GameStatePath") + gs->mName + ".gs";
 
 	std::ofstream ofs;
 	ofs.open(filename, std::fstream::out | std::fstream::trunc);
-	ofs.close();
 
 	SceneJSON sce;
 	SceneListJSON scenes;
@@ -512,4 +544,5 @@ void ObjectFactory::SaveGameState(GameState* gs)
 	}
 
 	scenes.SerializeFile(filename);
+	ofs.close();
 }

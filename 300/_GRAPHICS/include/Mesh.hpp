@@ -26,8 +26,9 @@ namespace GFX
 	{
 	public:
 		// -- Called once on startup --
-		void LoadFromGeom(const _GEOM::Geom& GeomData, std::vector<vec3>& positions, std::vector<glm::vec2>& uvs, std::vector<unsigned int>& indices);
-		void LoadAnimationDataFromGeom(const _GEOM::Geom& GeomData, std::vector<std::array<int, MAX_BONE_INFLUENCE>>& boneIDs, std::vector<std::array<float, MAX_BONE_INFLUENCE>>& boneWeights);
+		void LoadFromGeom(const _GEOM::Geom& GeomData, std::vector<vec3>& positions, std::vector<glm::vec2>& uvs, 
+						std::vector<unsigned int>& indices, std::vector<vec3>& normals, std::vector<vec3>& tangents);
+		void LoadAnimationDataFromGeom(const _GEOM::Geom& GeomData, std::vector<glm::vec4>& boneIDs, std::vector<glm::vec4>& boneWeights);
 		void Setup(std::vector<vec3> const& positions, std::vector<unsigned int> const& indices, std::vector<vec2> const& TexCoords = std::vector<vec2>{}, unsigned colorDivisor = 1u);
 		void Setup(const _GEOM::Geom& GeomData);
 
@@ -51,6 +52,7 @@ namespace GFX
 		// Stores the rendering data for each instance of mesh
 		std::vector<mat4> mLTW;
 		std::vector<vec4> mColors;
+		std::vector<vec4> mTexEntID;
 
 		// This mesh may contain multiple different animations. These animations are unique to this mesh.
 		std::vector<_GEOM::Animation>	mAnimation{};
@@ -65,7 +67,11 @@ namespace GFX
 		VBO mEbo;
 		VBO mColorVbo;
 		VBO mTexCoordVbo;
+		VBO mTexEntIDVbo;
 		VBO mLTWVbo;
+		VBO mTangentVbo;
+		VBO mBitTangentVbo;
+		VBO mNormalVbo;
 		VBO mBoneIDVbo;
 		VBO mBoneWeightVbo;
 

@@ -16,6 +16,7 @@ SystemManager* systemManager;
 
 SystemManager::SystemManager()
 {
+	mIsPlay = false;
 	mPhysicsSystem = std::make_unique<PhysicsSystem>();
 	mScriptingSystem = std::make_unique<ScriptingSystem>();
 	mGraphicsSystem = std::make_unique<GraphicsSystem>();
@@ -41,24 +42,40 @@ void SystemManager::Init(bool isEditor, GFX::Window* window)
 	PINFO("Init Input Action System");
 	mLogger.get()->InitLogging();
 	PINFO("Init Logger");
-	mPhysicsSystem.get()->Init();
-	PINFO("Init Physics System");
 	mScriptingSystem.get()->Init();
 	PINFO("Init Scripting System");
+
+	mResourceSystem.get()->Init();
+	mResourceTySystem.get()->Init();
 	mGraphicsSystem.get()->Init();
-	mResourceSystem.get()->Init();			// all the resources are loaaded here
 	PINFO("Init Graphics System");
+
+	// all the resources are loaaded here
 	mGameStateSystem.get()->Init();
 	mAudioSystem.get()->Init();
 	PINFO("Init Game state System");
+	mPhysicsSystem.get()->Init();
+	PINFO("Init Physics System");
+}
+
+void SystemManager::Reset()
+{
+	mGameStateSystem.get()->Unload();
+	mGameStateSystem.get()->Init();
+	mPhysicsSystem.get()->Init();
+	mIsPlay = false;
 }
 
 void SystemManager::Update(float dt)
 {
+	mGraphicsSystem.get()->Update(dt);
+	if (!mIsPlay) return;
+
 	mInputActionSystem.get()->Update();
 	mPhysicsSystem.get()->Update(dt);
 	//mScriptingSystem.get()->Update(dt);
 	mGraphicsSystem.get()->Update(dt);
+	mScriptingSystem.get()->Update(dt);
 	mAudioSystem.get()->Update(dt);
 
 //	mResourceSystem.get()->Update();
@@ -69,7 +86,7 @@ void SystemManager::Exit()
 	mPhysicsSystem.get()->Exit();
 	mScriptingSystem.get()->Exit();
 	mGraphicsSystem.get()->Exit();
-//	mResourceSystem.get()->Exit();
+	mResourceTySystem.get()->Exit();
 	mGameStateSystem.get()->Unload();
 	mAudioSystem.get()->Exit();
 
@@ -83,3 +100,4 @@ PhysicsSystem* SystemManager::GetPhysicsPointer()
 ScriptingSystem* SystemManager::GetScriptingPointer() {
 	return mScriptingSystem.get();
 }
+

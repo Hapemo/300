@@ -109,6 +109,13 @@ public:
 
 	void CopyEntity(Entity e);
 
+	Entity StartEditPrefab(std::string prefabName);
+
+	void EndEditPrefab(Entity e); //saves
+	
+	void EndEditPrefabNoSave(Entity e); //no save
+
+
 	Entity PasteEntity();
 
 	const Entity NullEntity;
@@ -167,6 +174,8 @@ Component& Entity::GetComponent()
 //#endif
 	if (static_cast<std::uint32_t>(this->id) == 0)
 		throw ("Tried to get component from null entity! e.id = 0");
+	if (!this->HasComponent<Component>())
+		throw ("no such component");
 	return systemManager->ecs->registry.get_or_emplace<Component>(id, Component());
 }
 

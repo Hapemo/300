@@ -73,11 +73,11 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
-    <IncludePath>$(SolutionDir)lib\IMGUI\backends;$(SolutionDir)lib\IMGUI\misc\cpp;$(SolutionDir)lib\MESH-OPTIMIZER\src;$(SolutionDir)lib\ASSIMP\BINARIES\Win32\include;$(SolutionDir)lib\ASSIMP\include;$(SolutionDir)lib\ASSIMP\include\assimp;$(SolutionDir)lib/GLFW/include/;$(SolutionDir)lib/GLFW/include/GLFW;$(SolutionDir)lib/GLEW/include/GL;$(SolutionDir)lib/GLM;$(SolutionDir)_SCRIPTING/include;$(SolutionDir)_GRAPHICS/include;$(SolutionDir)_ENGINE/include;$(SolutionDir)_GEOM_COMPILER/include;$(SolutionDir)lib/STB;$(SolutionDir)lib\IMGUI;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)lib/entt;$(SolutionDir)lib/LUA/include;$(SolutionDir)lib\IMGUI\backends;$(SolutionDir)lib\IMGUI\misc\cpp;$(SolutionDir)lib\MESH-OPTIMIZER\src;$(SolutionDir)lib\ASSIMP\BINARIES\Win32\include;$(SolutionDir)lib\ASSIMP\include;$(SolutionDir)lib\ASSIMP\include\assimp;$(SolutionDir)lib/GLFW/include/;$(SolutionDir)lib/GLFW/include/GLFW;$(SolutionDir)lib/GLEW/include/GL;$(SolutionDir)lib/SOL;$(SolutionDir)lib/GLM;$(SolutionDir)_SCRIPTING/include;$(SolutionDir)_GRAPHICS/include;$(SolutionDir)_ENGINE/include;$(SolutionDir)_TOOLS/include;$(SolutionDir)_GEOM_COMPILER/include;$(SolutionDir)lib/STB;$(SolutionDir)lib\IMGUI;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
-    <IncludePath>$(SolutionDir)lib\IMGUI\backends;$(SolutionDir)lib\IMGUI\misc\cpp;$(SolutionDir)lib\MESH-OPTIMIZER\src;$(SolutionDir)lib\ASSIMP\BINARIES\Win32\include;$(SolutionDir)lib\ASSIMP\include;$(SolutionDir)lib\ASSIMP\include\assimp;$(SolutionDir)lib/GLFW/include/;$(SolutionDir)lib/GLFW/include/GLFW;$(SolutionDir)lib/GLEW/include/GL;$(SolutionDir)lib/GLM;$(SolutionDir)_SCRIPTING/include;$(SolutionDir)_GRAPHICS/include;$(SolutionDir)_ENGINE/include;$(SolutionDir)_GEOM_COMPILER/include;$(SolutionDir)lib/STB;$(SolutionDir)lib\IMGUI;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)lib/entt;$(SolutionDir)lib/LUA/include;$(SolutionDir)lib\IMGUI\backends;$(SolutionDir)lib\IMGUI\misc\cpp;$(SolutionDir)lib\MESH-OPTIMIZER\src;$(SolutionDir)lib\ASSIMP\BINARIES\Win32\include;$(SolutionDir)lib\ASSIMP\include;$(SolutionDir)lib\ASSIMP\include\assimp;$(SolutionDir)lib/GLFW/include/;$(SolutionDir)lib/GLFW/include/GLFW;$(SolutionDir)lib/GLEW/include/GL;$(SolutionDir)lib/SOL;$(SolutionDir)lib/GLM;$(SolutionDir)_SCRIPTING/include;$(SolutionDir)_GRAPHICS/include;$(SolutionDir)_ENGINE/include;$(SolutionDir)_TOOLS/include;$(SolutionDir)_GEOM_COMPILER/include;$(SolutionDir)lib/STB;$(SolutionDir)lib\IMGUI;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Label="Vcpkg">
     <VcpkgEnabled>false</VcpkgEnabled>
@@ -156,6 +156,7 @@
     <ClCompile Include="source\Camera.cpp" />
     <ClCompile Include="source\DebugRenderer.cpp" />
     <ClCompile Include="source\Fbo.cpp" />
+    <ClCompile Include="source\Font.cpp" />
     <ClCompile Include="source\Math.cpp" />
     <ClCompile Include="source\Mesh.cpp" />
     <ClCompile Include="source\OpenGl.cpp" />
@@ -176,6 +177,7 @@
     <ClInclude Include="include\Camera.hpp" />
     <ClInclude Include="include\Common.hpp" />
     <ClInclude Include="include\DebugRenderer.hpp" />
+    <ClInclude Include="include\Font.hpp" />
     <ClInclude Include="include\GraphicsSystem.hpp" />
     <ClInclude Include="include\Math.hpp" />
     <ClInclude Include="include\Mesh.hpp" />
@@ -191,8 +193,10 @@
     <ClInclude Include="include\Window.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="shader_files\animations_vert.glsl" />
     <None Include="shader_files\draw_frag.glsl" />
     <None Include="shader_files\draw_vert.glsl" />
+    <None Include="shader_files\pbr_frag.glsl" />
     <None Include="shader_files\pointLight_frag.glsl" />
     <None Include="shader_files\pointLight_vert.glsl" />
   </ItemGroup>

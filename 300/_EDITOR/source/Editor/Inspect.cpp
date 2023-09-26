@@ -69,6 +69,8 @@ Inspect display for RigidBody components
 #include <math.h>
 #include "imgui_stdlib.h"
 #include "../../../_SCRIPTING/include/ScriptingSystem.h"
+#include "Guid.h"
+#include "ResourceManagerTy.h"
 #include "../../../_ENGINE/include/Debug/Logger.h"
 
 
@@ -100,14 +102,33 @@ void Inspect::update()
 			Scripts& scripts = ent.GetComponent<Scripts>();
 			scripts.Inspect();
 		}
-
-
-
+		if (ent.HasComponent<Animator>()) {
+			Animator& ani = ent.GetComponent<Animator>();
+			ani.Inspect();
+		}
+		if (ent.HasComponent<MeshRenderer>()) {
+			MeshRenderer& Meshrender = ent.GetComponent<MeshRenderer>();
+			Meshrender.Inspect();
+		}
+		if (ent.HasComponent<RigidBody>()) {
+			RigidBody& rigidBody = ent.GetComponent<RigidBody>();
+			rigidBody.Inspect();
+		}
+		if (ent.HasComponent<BoxCollider>()) {
+			BoxCollider& boxCollider = ent.GetComponent<BoxCollider>();
+			boxCollider.Inspect();
+		}
+		if (ent.HasComponent<SphereCollider>()) {
+			SphereCollider& sphereCollider = ent.GetComponent<SphereCollider>();
+			sphereCollider.Inspect();
+		}
+		if (ent.HasComponent<PlaneCollider>()) {
+			PlaneCollider& planeCollider = ent.GetComponent<PlaneCollider>();
+			planeCollider.Inspect();
+		}
 		//--------------------------------------------// must be at the LAST OF THIS LOOP
 		Add_component(); 
 	}
-
-
 
 }
 
@@ -138,12 +159,40 @@ void Inspect::Add_component() {
 
 	if (ImGui::BeginPopup("ComponentList"))
 	{
-		if (ImGui::Selectable("Test Component"))
-		{
+		//if (ImGui::Selectable("Test Component"))
+		//{
 
+		//}
+		if (ImGui::Selectable("RigidBody")) {
+			if(!Entity(Hierarchy::selectedId).HasComponent<RigidBody>())
+				Entity(Hierarchy::selectedId).AddComponent<RigidBody>();
 		}
-		if (ImGui::Selectable("Scripts"))
-			Entity(Hierarchy::selectedId).AddComponent<Scripts>();
+
+		if (ImGui::Selectable("BoxCollider")) {
+			if (!Entity(Hierarchy::selectedId).HasComponent<BoxCollider>())
+				Entity(Hierarchy::selectedId).AddComponent<BoxCollider>();
+		}
+
+
+		if (ImGui::Selectable("Scripts")) {
+			if (!Entity(Hierarchy::selectedId).HasComponent<Scripts>())
+				Entity(Hierarchy::selectedId).AddComponent<Scripts>();
+		}
+
+		if (ImGui::Selectable("SphereCollider")) {
+			if (!Entity(Hierarchy::selectedId).HasComponent<SphereCollider>())
+				Entity(Hierarchy::selectedId).AddComponent<SphereCollider>();
+		}
+
+		if (ImGui::Selectable("PlaneCollider")) {
+			if (!Entity(Hierarchy::selectedId).HasComponent<PlaneCollider>())
+				Entity(Hierarchy::selectedId).AddComponent<PlaneCollider>();
+		}
+
+		if (ImGui::Selectable("Animator")) {
+			if (!Entity(Hierarchy::selectedId).HasComponent<Animator>())
+				Entity(Hierarchy::selectedId).AddComponent<Animator>();
+		}
 		ImGui::EndPopup();
 	}
 
@@ -152,7 +201,7 @@ void Inspect::Add_component() {
 
 
 void Transform::Inspect() {
-	if (ImGui::CollapsingHeader("Transform"), ImGuiTreeNodeFlags_DefaultOpen) {
+	if (ImGui::CollapsingHeader("Transform", ImGuiTreeNodeFlags_DefaultOpen)) {
 
 
 		//ImGui::SetCursorPosX(windowWidth / 3.f);
@@ -189,7 +238,7 @@ void Scripts::Inspect() {
 	auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
 	Scripts& scripts = scriptEntities.get<Scripts>(Hierarchy::selectedId);
 
-	if (ImGui::CollapsingHeader("Scripts"), &delete_component, ImGuiTreeNodeFlags_DefaultOpen)
+	if (ImGui::CollapsingHeader("Scripts", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
 	{
 		if (ImGui::BeginDragDropTarget())
 		{
@@ -295,7 +344,215 @@ void Scripts::Inspect() {
 			ImGui::InputText(".lua", &newScript);
 		}
 	}
+	if (delete_component == false)
+		Entity(Hierarchy::selectedId).RemoveComponent<Scripts>();
+}
 
+void Animator::Inspect()
+{
+	bool delete_component{ true };
+	if (ImGui::CollapsingHeader("Animator", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
+	{
+		ImGui::Text(std::to_string(mAnimator.m_CurrentTime).c_str());	ImGui::SameLine();
+		ImGui::Text(" / ");												ImGui::SameLine();
+		ImGui::Text(std::to_string(mAnimator.m_CurrentAnimation->m_Duration).c_str());
+		
+		ImGui::Checkbox("Pause Animaton", &mIsPaused);
+	}
+
+	if (delete_component == false)
+		Entity(Hierarchy::selectedId).RemoveComponent<MeshRenderer>();
+}
+
+void MeshRenderer::Inspect() {
+	bool delete_component{ true };
+	if (ImGui::CollapsingHeader("MeshRenderer", &delete_component,ImGuiTreeNodeFlags_DefaultOpen)) {
+
+		ImGui::Text(mMeshPath.c_str());
+		if (ImGui::BeginDragDropTarget())
+		{
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_GEOM")) {
+
+				const char* data = (const char*)payload->Data;
+				std::string data_str = std::string(data);
+				mMeshPath = data_str;
+
+				uid temp(mMeshPath);
+				mMeshRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(temp.id));
+					
+				GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mMeshRef);
+				
+				Entity entins(Hierarchy::selectedId);
+				if (entins.HasComponent<Animator>() && meshinst->mHasAnimation)
+				{
+					// if the new entity has both animations and the animator component, update the animator to use the new animation
+					entins.GetComponent<Animator>().mAnimator.SetAnimation(&meshinst->mAnimation[0]);
+				}
+				else if (entins.HasComponent<Animator>() && !meshinst->mHasAnimation)
+				{
+					// if the new entity's mesh has no animation, but the entity still has the animator component
+					entins.GetComponent<Animator>().mAnimator.m_CurrentAnimation = nullptr;
+				}
+			}
+
+
+			ImGui::EndDragDropTarget();
+		}
+
+		for (int i{ 0 }; i <4; i++) {
+
+			if (mMaterialInstancePath[i] != "") {
+
+				int posstart = mMaterialInstancePath[i].find_last_of("/");
+				int posend = mMaterialInstancePath[i].find_last_of(".");
+
+				std::string newpath = mMaterialInstancePath[i].substr(posstart+1, posend-(posstart+1));
+
+				ImGui::Selectable(newpath.c_str());
+					if (ImGui::BeginDragDropTarget())
+					{
+						if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_TEXT")) {
+
+							const char* data = (const char*)payload->Data;
+							std::string data_str = std::string(data);
+							mMaterialInstancePath[i] = data_str;
+
+							uid temp(mMaterialInstancePath[i]);
+							mTextureRef[i] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(temp.id));
+
+							
+
+						}
+						ImGui::EndDragDropTarget();
+					}
+				
+			}
+			else {
+				ImGui::Selectable(" ");
+					if (ImGui::BeginDragDropTarget())
+					{
+						if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_TEXT")) {
+
+							const char* data = (const char*)payload->Data;
+							std::string data_str = std::string(data);
+							mMaterialInstancePath[i] = data_str;
+
+							uid temp(mMaterialInstancePath[i]);
+							mTextureRef[i] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(temp.id));
+
+						}
+						ImGui::EndDragDropTarget();
+					}
+				
+			}
+		}
+
+
+
+	}
+	if (delete_component == false)
+		Entity(Hierarchy::selectedId).RemoveComponent<MeshRenderer>();
 }
 
 
+void RigidBody::Inspect() {
+	bool delete_component{ true };
+
+	if (ImGui::CollapsingHeader("RigidBody", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
+	{
+
+
+		ImGui::DragFloat("##Density", (float*)&mDensity);
+
+		ImGui::SameLine();
+		ImGui::Text("Density");
+		ImGui::Separator();
+
+
+		const char* materials[] = { "RUBBER", "WOOD", "METAL", "ICE","CONCRETE","GLASS" };
+		const char* motions[] = { "STATIC", "DYNAMIC" };
+
+
+		if (ImGui::BeginCombo("Material", (materials[mMat]))) {
+
+			for (unsigned char i{ 0 }; i < 6; i++) {
+				if (ImGui::Selectable(materials[i])) {
+					mMat = i;
+					mMaterial = (MATERIAL)i;
+				}
+			}
+			ImGui::EndCombo();
+		}
+
+		if (ImGui::BeginCombo("Motions", (motions[mMot]))) {
+
+			for (unsigned char i{ 0 }; i < 2; i++) {
+				if (ImGui::Selectable(motions[i])) {
+					mMot = i;
+					mMotion = (MOTION)i;
+				}
+			}
+			ImGui::EndCombo();
+		}
+
+	}
+
+	if (delete_component == false)
+		Entity(Hierarchy::selectedId).RemoveComponent<RigidBody>();
+}
+
+void BoxCollider::Inspect() {
+	bool delete_component{ true };
+	if (ImGui::CollapsingHeader("BoxCollider", &delete_component, ImGuiTreeNodeFlags_DefaultOpen)) {
+
+		ImGui::DragFloat3("Boxcollider Scale", (float*)&mScaleOffset, 0.1f);
+		ImGui::SameLine();
+		ImGui::Text("Scale");
+		ImGui::Separator();
+
+		ImGui::DragFloat3("Boxcollider Translate", (float*)&mTranslateOffset);
+		ImGui::SameLine();
+		ImGui::Text("Translate");
+		ImGui::Separator();
+	}
+	if (delete_component == false)
+		Entity(Hierarchy::selectedId).RemoveComponent<BoxCollider>();
+}
+
+
+void SphereCollider::Inspect() {
+	bool delete_component{ true };
+	if (ImGui::CollapsingHeader("SphereCollider", &delete_component, ImGuiTreeNodeFlags_DefaultOpen)) {
+		
+		ImGui::DragFloat("##Scale", (float*)&mScaleOffset);
+		ImGui::SameLine();
+		ImGui::Text("Scale");
+		ImGui::Separator();
+
+		ImGui::DragFloat3("##Translate", (float*)&mTranslateOffset);
+		ImGui::SameLine();
+		ImGui::Text("Translate");
+		ImGui::Separator();
+	}
+	if (delete_component == false)
+		Entity(Hierarchy::selectedId).RemoveComponent<SphereCollider>();
+}
+
+
+void PlaneCollider::Inspect() {
+	bool delete_component{ true };
+	if (ImGui::CollapsingHeader("PlaneCollider",&delete_component, ImGuiTreeNodeFlags_DefaultOpen)) {
+		ImGui::DragFloat3("##Scale", (float*)&mNormal);
+		ImGui::SameLine();
+		ImGui::Text("Scale");
+		ImGui::Separator();
+
+		ImGui::DragFloat("##Translate", (float*)&mTranslateOffset);
+		ImGui::SameLine();
+		ImGui::Text("Translate");
+		ImGui::Separator();
+
+	}
+	if (delete_component == false)
+		Entity(Hierarchy::selectedId).RemoveComponent<PlaneCollider>();
+}

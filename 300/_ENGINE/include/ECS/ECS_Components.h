@@ -4,9 +4,10 @@
 #include <vector>
 #include "Physics/PhysicsTypes.h"
 #include "Tags.h"
-//#include "rttr/registration.h"
 #include "ECS.h"
 #include "Audio/AudioType.h"
+#include <Animator.hpp>
+//#include "rttr/registration.h"
 
 struct General
 {
@@ -29,11 +30,19 @@ struct Transform
 	glm::vec3 mRotate;
 	glm::vec3 mTranslate;
 
-	Transform() : mScale(100.f), mRotate(0.f), mTranslate(0.f) {}
+	Transform() : mScale(1.f), mRotate(0.f), mTranslate(0.f) {}
 	glm::quat GetQuaternion() { return glm::quat(mRotate); }
 	void Inspect();
 
 	//RTTR_ENABLE()
+};
+
+struct Animator
+{
+	GFX::Animator	mAnimator;
+	bool			mIsPaused;
+
+	void Inspect();
 };
 
 // this struct stores the filepaths for the meshdata, material, and shader. the actual data is stored in the resource manager
@@ -41,12 +50,20 @@ struct MeshRenderer
 {
 	// For now, we store the string to the filepaths. TO CHANGE to uids for efficient referencing
 	std::pair<std::string, std::string> mShaderPath;
-	std::vector<std::string>				mMaterialInstancePath;
+	std::string							mMaterialInstancePath[4];
 	std::string							mMeshPath;
 	
+	void*								mMeshRef;
+	void*								mTextureRef[4];
+	bool								mTextureCont[4];
+
 	unsigned							mGUID;
 
+	void								Inspect();
 	//RTTR_ENABLE()
+
+
+	//void								Inspect();
 };
 
 struct RigidBody
@@ -58,16 +75,23 @@ struct RigidBody
 
 	RigidBody() : mDensity(10.f), mMaterial(MATERIAL::WOOD), mMotion(MOTION::STATIC), mVelocity(0.f) {};
 	//RTTR_ENABLE()
+
+
+	int mMat{ 0 };
+	int mMot{ 0 };
+	void							Inspect();
 };
 
 struct BoxCollider
 {
 	glm::vec3 mScaleOffset;			// final scale = mScaleOffset * Transform.mScale;
 	glm::vec3 mTranslateOffset;		// final pos = Transform.mTranslate + mTranslateOffset;
+	
 
 	BoxCollider() : mScaleOffset(1.f), mTranslateOffset(0.f) {}
 	
 	//RTTR_ENABLE()
+	void							Inspect();
 };
 
 struct SphereCollider
@@ -78,6 +102,7 @@ struct SphereCollider
 	SphereCollider() : mScaleOffset(1.f), mTranslateOffset(0.f) {};
 
 	//RTTR_ENABLE()
+	void							Inspect();
 };
 
 struct PlaneCollider //if has plane collider always static
@@ -88,13 +113,13 @@ struct PlaneCollider //if has plane collider always static
 	PlaneCollider() : mNormal(0.f, 1.f, 0.f), mTranslateOffset(0.f) {};
 
 	//RTTR_ENABLE()
+	void							Inspect();
 };
 
 class Scripts {
 public:
 	Scripts() = default;
 	~Scripts() = default;
-	void Inspect();
 
 	static void AddScript(Entity id, std::string fileName);
 	//static void LoadRunScript(Entity entity);
@@ -103,6 +128,8 @@ public:
 	std::vector <Script> scriptsContainer;
 
 	//RTTR_ENABLE()
+	void Inspect();
+
 };
 
 struct Parent
@@ -147,6 +174,7 @@ struct Audio
 		mFileName = file_audio_name;
 	}
 	//RTTR_ENABLE()
+	void							Inspect();
 };
 
 //RTTR_REGISTRATION
@@ -272,5 +300,37 @@ struct Audio
 
 struct Prefab
 {
+	//rttr::registration::class_<Entity>("Entity")
+	//.constructor()(rttr::policy::ctor::as_object)
+	//.property("EntityID", &Entity::id)
+	//;
+
+	//rttr::registration::class_<General>("General")
+	//.property("Name", &General::name)
+	//.property("Tag", &General::tag)
+	//.property("Subtag", &General::subtag)
+	//.property("Active", &General::isActive)
+	//;
+
+	//rttr::registration::enumeration<TAG>("Tag")
+	//(
+	//	rttr::value("Player", TAG::PLAYER),
+	//	rttr::value("Unknown", TAG::UNKNOWN)
+	//);
+
+	//rttr::registration::enumeration<SUBTAG>("Subtag")
+	//(
+	//	rttr::value("Active", SUBTAG::ACTIVE),
+	//	rttr::value("Background", SUBTAG::BACKGROUND)
+	//);
+
+	std::string mPrefab;
+};
+
+struct PointLight
+{
+	vec3	mLightColor{ 1.f, 1.f, 1.f };
+	float	mAttenuation;
+	float	mIntensity;
 	std::string mPrefab;
 };

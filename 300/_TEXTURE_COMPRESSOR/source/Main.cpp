@@ -2,31 +2,50 @@
 #include <iostream>
 #include <string>
 
-#define TEST_COMPRESSOR 1
-
 // Forward Declaration
 void Init();
 void LoadAndSerializeImageFile(const char* filepath, const char* outputFolder);
 void CompressImageFile(const char* filepath, const char* outputFolder);
+void LoadAndSerializeFontFile(const char* filepath, const char* outputFolder);
 
 int main()
 {
-	std::filesystem::path directory = "../assets/Textures";
+	std::filesystem::path directoryTex = "../assets/Textures";
+	std::filesystem::path directoryFont = "../assets/Fonts";
 
 	Init();
 
-	// Load every file in the directory ^
-	for (const auto& entry : std::filesystem::directory_iterator(directory))
+	// Load every texture in the directory ^
+	for (const auto& entry : std::filesystem::directory_iterator(directoryTex))
 	{
 		std::string file = entry.path().filename().string();
 
-		file = directory.string() + "/" + file;
+		file = directoryTex.string() + "/" + file;
+
+		std::string filetype = file.substr(file.find_last_of("."));
+
 		std::cout << file.c_str() << std::endl;
 
-#if TEST_COMPRESSOR
-		CompressImageFile(file.c_str(), "../assets/Compressed");
-#else
-		LoadAndSerializeImageFile(file.c_str(), "../assets/Compressed");
-#endif
+		if (filetype == ".ttf")
+			LoadAndSerializeFontFile(file.c_str(), "../assets/compiled_fonts");
+		else
+			CompressImageFile(file.c_str(), "../assets/Compressed");
+	}
+
+	// Load every font in the directory ^
+	for (const auto& entry : std::filesystem::directory_iterator(directoryFont))
+	{
+		std::string file = entry.path().filename().string();
+
+		file = directoryFont.string() + "/" + file;
+
+		std::string filetype = file.substr(file.find_last_of("."));
+
+		std::cout << file.c_str() << std::endl;
+
+		if (filetype == ".ttf")
+			LoadAndSerializeFontFile(file.c_str(), "../assets/compiled_fonts");
+		else
+			CompressImageFile(file.c_str(), "../assets/Compressed");
 	}
 }

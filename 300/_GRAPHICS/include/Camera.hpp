@@ -27,7 +27,9 @@ namespace GFX
         vec3 direction();
         vec2 cursorPosition();
         mat4 viewProj();
-        
+        mat4   Proj();
+
+
         // -- Setter --
         void SetPosition(vec3 newPosition);
         void SetTarget(vec3 newTarget);
@@ -38,10 +40,12 @@ namespace GFX
         void Update();
 
         float mFovDegree;
-
-    private:
         mat4 mProjection;
         mat4 mView;
+
+
+    private:
+
         mat4 mViewProjection;
         vec3 mPosition;
         vec3 mTarget;

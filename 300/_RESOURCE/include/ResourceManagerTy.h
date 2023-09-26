@@ -2,12 +2,14 @@
 #ifndef _RESOURCEMANAGERTY_H
 #define _RESOURCEMANAGERTY_H
 
-#define  _ENABLE_ANIMATIONS 0
+#define  _ENABLE_ANIMATIONS 1
 
-#include "Mesh.hpp"
+
 #include <filesystem>
 #include "Guid.h"
-
+#include "Shader.hpp"
+#include "Texture.hpp"
+#include "Mesh.hpp"
 
 enum ResourceType : unsigned {
 
@@ -37,6 +39,16 @@ enum ResourceType : unsigned {
 //    GFX::Mesh meshdata;
 //};
 
+
+
+enum MaterialType : unsigned {
+
+    DIFFUSE,
+    NORMAL,
+    EMISSION,
+    SPECULAR
+
+};
 struct instance_infos
 {
     std::string     m_Name{};
@@ -56,9 +68,16 @@ public:
     ~ResourceTy() = default;
 
     void Init();
+    void Exit();
 
     void mesh_Loader();
     GFX::Mesh* SetupMesh(std::string filepath, unsigned);
+    GFX::Mesh* get_mesh(unsigned );
+
+
+    void MaterialInstance_Loader();
+    GFX::Texture* SetupMaterialInstance(std::string filepath, unsigned);
+    GFX::Texture* getMaterialInstance(unsigned);
 
     instance_infos& AllocRscInfo(void);
     void ReleaseRscInfo(instance_infos& RscInfo);
@@ -66,6 +85,7 @@ public:
 
     constexpr static int  MAX_RESOURCE = 2400;
     const std::string compiled_geom_path = "../assets/compiled_geom/";
+    const std::string compressed_texture_path = "../assets/Compressed/";
 
     int mResouceCnt;
 private:

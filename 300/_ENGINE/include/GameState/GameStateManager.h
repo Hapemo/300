@@ -190,12 +190,13 @@ public:
 	//std::vector<GameState> mGameStates{}; // Only 1 in game, multi gamestates allowed during editor mode
 	//std::map<std::string,std::vector<bool>> mGameStatesScenesPause; // One std::vector<bool> for each game state to keep record of their pause
 
-	
 
-private:
 	Scene mErrorScene;
 	E_GSMSTATE mGSMState;
 	GameState mCurrentGameState;
+
+private:
 	std::string mNextGSName; // This path has to be set initially in config file. TODO
+	//std::string mNextGSPath; // This path has to be set initially in config file. TODO
 };
 
