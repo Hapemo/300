@@ -57,7 +57,7 @@ void SystemManager::Update(float dt)
 {
 	mInputActionSystem.get()->Update();
 	mPhysicsSystem.get()->Update(dt);
-	mScriptingSystem.get()->Update(dt);
+	//mScriptingSystem.get()->Update(dt);
 	mGraphicsSystem.get()->Update(dt);
 	mAudioSystem.get()->Update(dt);
 
