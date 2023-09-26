@@ -268,6 +268,13 @@ Entity ObjectFactory::DeserializePrefab(const std::string& filename, int id)
 	curr.tag = temp.tag;
 	curr.subtag = temp.subtag;
 
+	Transform tempX = eJ.GetTransformJSON();
+
+	Transform& xform = e.GetComponent<Transform>();
+	xform.mScale = tempX.mScale;
+	xform.mRotate = tempX.mRotate;
+
+
 	if (eJ.mrb_t)
 	{
 		e.AddComponent<RigidBody>();
@@ -337,7 +344,7 @@ void ObjectFactory::LoadScene(Scene* scene, const std::string& filename)
 	// loop thru container and store entities
 
 	EntityListJSON entities;
-	entities.DeserializeFile(ConfigManager::GetValue("ScenePath") + filename + ".json");
+	entities.DeserializeFile(ConfigManager::GetValue("ScenePath") + filename + ".scn");
 
 	std::unordered_map<entt::entity, entt::entity> idMap;
 
@@ -432,7 +439,7 @@ void ObjectFactory::LoadScene(Scene* scene, const std::string& filename)
 void ObjectFactory::SaveScene(Scene* scene)
 {
 	// form the filename
-	std::string filename = ConfigManager::GetValue("ScenePath") + scene->mName + ".json";
+	std::string filename = ConfigManager::GetValue("ScenePath") + scene->mName + ".scn";
 
 	std::ofstream ofs;
 	ofs.open(filename, std::fstream::out | std::fstream::trunc);
@@ -498,7 +505,7 @@ void ObjectFactory::LoadGameState(GameState* gs, const std::string& _name)
 	gs->mName = _name;
 
 	SceneListJSON scenes;
-	scenes.DeserializeFile(ConfigManager::GetValue("GameStatePath") + _name + ".json");
+	scenes.DeserializeFile(ConfigManager::GetValue("GameStatePath") + _name + ".gs");
 
 	Scene sce;
 	for (auto& s : scenes.SceneList())
@@ -519,11 +526,10 @@ void ObjectFactory::LoadGameState(GameState* gs, const std::string& _name)
 void ObjectFactory::SaveGameState(GameState* gs)
 {
 	// form the filename
-	std::string filename = ConfigManager::GetValue("GameStatePath") + gs->mName + ".json";
+	std::string filename = ConfigManager::GetValue("GameStatePath") + gs->mName + ".gs";
 
 	std::ofstream ofs;
 	ofs.open(filename, std::fstream::out | std::fstream::trunc);
-	ofs.close();
 
 	SceneJSON sce;
 	SceneListJSON scenes;
@@ -538,4 +544,5 @@ void ObjectFactory::SaveGameState(GameState* gs)
 	}
 
 	scenes.SerializeFile(filename);
+	ofs.close();
 }

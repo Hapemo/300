@@ -35,6 +35,8 @@ Returns main window for docking
 #include "Performance.h"
 #include "Inspect.h"
 #include "MenuPanel.h"
+#include "EditorLogger.h"
+#include "PrefabWindow.h"
 #include "PrefabWindow.h"
 //bool Editor::show_Inspector;
 //int Editor::entity {}; // static var for selected entity ID
@@ -140,6 +142,8 @@ void Editor::UIinit(GLFWwindow* window)
     mWindowlist["Performance"] = new Performance;
     mWindowlist["Editscene"] = new SceneWindow;
     mWindowlist["Contentbrowser"] = new ContentBrowser;
+    mWindowlist["Logger"] = new EditorLogger;
+
     mWindowlist["PrefabScene"] = new PrefabWindow;
     //std::cout<< mWindowlist.size() << "test\n";
 
@@ -237,10 +241,22 @@ void Editor::UIupdate(GLFWwindow* window) {
         ImGui::Begin(windows.first.c_str(), 0, windows.second->mWinFlag);
 
 
-        windows.second->update();
+        
         if (windows.first == "Editscene") {
             (static_cast<SceneWindow*>(windows.second))->RenderGuizmo();
         }
+        
+        if (windows.first == "PrefabScene") {
+            if (static_cast<int>(PrefabWindow::prefabObj) != -1) {
+                windows.second->update();
+            }
+
+        }
+        else {
+            windows.second->update();
+        }
+
+
         ImGui::End();
     }
     //        if (windows.first == "Scene" || windows.first == "Display")

@@ -12,11 +12,12 @@ class Resource;
 class ResourceTy;
 class AudioSystem;
 class Logger;
+class InputMapSystem;
 
 class SystemManager {
 	GFX::Window *mWindow;
 	bool mIsEditor;
-
+	bool mIsPlay;
 public:
 	std::unique_ptr<PhysicsSystem> mPhysicsSystem;
 	std::unique_ptr<ScriptingSystem> mScriptingSystem;
@@ -26,6 +27,7 @@ public:
 	std::unique_ptr<GameStateManager> mGameStateSystem;
 	std::unique_ptr<AudioSystem> mAudioSystem;
 	std::unique_ptr<Logger> mLogger;
+	std::unique_ptr<InputMapSystem> mInputActionSystem;
 
 
 	ECS *ecs;
@@ -37,6 +39,9 @@ public:
 	GFX::Window *GetWindow() { return mWindow; }
 	bool IsEditor() { return mIsEditor; }
 	void Init(bool isEditor, GFX::Window *window);
+	void Reset();
+	void Pause() { mIsPlay = false; }
+	void Play() { mIsPlay = true; }
 	void Update(float dt);
 	void Exit();
 	PhysicsSystem *GetPhysicsPointer();

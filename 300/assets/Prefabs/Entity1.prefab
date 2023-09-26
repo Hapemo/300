@@ -1,0 +1,29 @@
+[
+    {
+        "EntityID": 1,
+        "General": {
+            "Name": "Entity1",
+            "Active": true,
+            "Paused": true,
+            "Tag": "Unknown",
+            "Subtag": "Active"
+        },
+        "Transform": {
+            "Scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "Rotate": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Translate": [
+                0.0,
+                0.0,
+                0.0
+            ]
+        }
+    }
+]
