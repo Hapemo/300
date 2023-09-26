@@ -46,6 +46,7 @@ void GFX::FBO::Create(int width, int height, bool editorMode)
 	glBindTexture(GL_TEXTURE_2D, mEntityIDAttachment);
 	// Specifying size
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_R32UI, width, height, 0, GL_RED_INTEGER, GL_UNSIGNED_INT, NULL);
+
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 	// Attach all Attachments to currently bound framebuffer
@@ -86,17 +87,17 @@ void GFX::FBO::PrepForDraw()
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
-unsigned int GFX::FBO::ReadEntityID(int posX, int posY)
+unsigned int GFX::FBO::ReadEntityID(float posX, float posY)
 {
-	int mapped_x = posX/* + (mWidth / 2)*/;
-	int mapped_y = posY/* + (mHeight / 2)*/;
+	int mapped_x = int(posX * mWidth);
+	int mapped_y = int(mHeight - posY * mHeight);
 	if (mapped_x >= mWidth || mapped_x < 0 || mapped_y >= mHeight || mapped_y < 0)
 		return 0xFFFFFFFF;
 	GLsizei bufsize = mWidth * mHeight;
 	unsigned int* p_eid = new unsigned int[bufsize];	// allocate buffer
 
 	glBindTexture(GL_TEXTURE_2D, mEntityIDAttachment);	// bind texture
-	glGetTexImage(GL_TEXTURE_2D, 0, GL_RED_INTEGER, GL_UNSIGNED_INT, p_eid);
+	glGetTexImage(GL_TEXTURE_2D, 0, GL_RED_INTEGER, GL_UNSIGNED_INT, p_eid);	// Read pixel data into buffer
 	
 	unsigned int eid = p_eid[mapped_y * mWidth + mapped_x];		// Retrieve entity ID
 
@@ -129,6 +130,7 @@ void GFX::FBO::Resize(int width, int height)
 	glBindTexture(GL_TEXTURE_2D, mEntityIDAttachment);
 	// Specifying new attachment size
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_R32UI, width, height, 0, GL_RED_INTEGER, GL_UNSIGNED_INT, NULL);
+
 	// Unbind 
 	glBindTexture(GL_TEXTURE_2D, 0);
 

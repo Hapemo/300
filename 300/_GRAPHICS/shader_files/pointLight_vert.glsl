@@ -6,7 +6,7 @@ layout (location = 0) in vec3 inPos;		        // INPUT_POSITION
 layout (location = 2) in vec2 inUV;			        // Texture Coordinates
 layout (location = 5) in vec3 inTangent;			// Per vertex Tangent
 layout (location = 6) in vec3 inNormal;			    // Per vertex Normal
-layout (location = 7) in vec4 inTex_Ent_ID;			// Texture ID, Entity ID of object
+layout (location = 7) in vec4 inTex_Ent_ID;		    // Texture ID, Entity ID of object
 layout (location = 8) in mat4 inLTW;			    // local to world
 
 uniform vec3 uLightPos;
@@ -40,5 +40,5 @@ void main()
     TangentLightPos = TBN * uLightPos;
     TangentViewPos  = TBN * uViewPos;
     TangentFragPos  = TBN * vec3(inLTW * vec4(inPos, 1.0));
-    tex_Ent_ID      = inTex_Ent_ID;
+    Tex_Ent_ID      = inTex_Ent_ID;
 }

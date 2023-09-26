@@ -196,6 +196,9 @@ void GraphicsSystem::Update(float dt)
 
 	// Prepare and bind the Framebuffer to be rendered on
 	m_Fbo.PrepForDraw();
+	int fboWidth = m_Fbo.GetWidth();
+	int fboHeight = m_Fbo.GetHeight();
+
 	m_Renderer.RenderAll(m_EditorCamera.viewProj());
 	m_Renderer.ClearInstances();
 
@@ -344,13 +347,13 @@ void GraphicsSystem::AddInstance(GFX::Mesh& mesh, Transform transform, unsigned 
 
 	mat4 world = translate * rotation * scale;
 	mesh.mLTW.push_back(world);
-	mesh.mTexEntID.push_back(vec4(0.f, (float)entityID, 0.f, 0.f));
+	mesh.mTexEntID.push_back(vec4(0, (float)entityID + 0.5f, 0, 0));
 }
 
 void GraphicsSystem::AddInstance(GFX::Mesh& mesh, mat4 transform, unsigned entityID)
 {
 	mesh.mLTW.push_back(transform);
-	mesh.mTexEntID.push_back(vec4(0.f, (float)entityID, 0.f, 0.f));
+	mesh.mTexEntID.push_back(vec4(0, (float)entityID + 0.5f, 0, 0));
 }
 
 /***************************************************************************/

@@ -62,10 +62,10 @@ void SceneWindow::update()
 	
 	
 	if (ImGui::IsItemClicked(ImGuiMouseButton_Left)) {
-		unsigned int getid = systemManager->mGraphicsSystem->GetEntityID(((ImGui::GetMousePos().x - ImGui::GetWindowPos().x)/winSize.x)*1600,
-			((ImGui::GetMousePos().y - ImGui::GetWindowPos().y) / winSize.y)*900);
+		unsigned int getid = systemManager->mGraphicsSystem->GetEntityID(((ImGui::GetMousePos().x - ImGui::GetWindowPos().x)/winSize.x),
+			((ImGui::GetMousePos().y - ImGui::GetWindowPos().y) / winSize.y));
 
-		std::cout << "Mouse pos " << ImGui::GetMousePos().x- ImGui::GetWindowPos().x << " " << ImGui::GetMousePos().y- ImGui::GetWindowPos().y << "\n";
+		std::cout << "Mouse pos " << (ImGui::GetMousePos().x- ImGui::GetWindowPos().x)/winSize.x << " " << (ImGui::GetMousePos().y- ImGui::GetWindowPos().y) / winSize.y << "\n";
 
 		std::cout << getid << " i got something bitch\n";
 		std::cout << (unsigned int)Hierarchy::selectedId <<"\n";
