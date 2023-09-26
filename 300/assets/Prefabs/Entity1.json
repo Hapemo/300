@@ -1,6 +1,6 @@
 [
     {
-        "EntityID": 2,
+        "EntityID": 1,
         "General": {
             "Name": "Entity1",
             "Active": true,
@@ -22,38 +22,6 @@
             "Translate": [
                 0.0,
                 0.0,
-                0.0
-            ]
-        },
-        "MeshRenderer": {
-            "ShaderPath": [
-                "../_GRAPHICS/shader_files/animations_vert.glsl",
-                "../_GRAPHICS/shader_files/pointLight_frag.glsl"
-            ],
-            "MaterialInstancePath": [
-                "../assets/Compressed/Vampire_diffuse.ctexture",
-                "../assets/Compressed/Vampire_normal.ctexture",
-                "../assets/Compressed/Vampire_emission.ctexture",
-                "../assets/Compressed/Vampire_specular.ctexture"
-            ],
-            "MeshPath": "../assets/compiled_geom/dancing_vampire.geom",
-            "GUID": 0,
-            "TextureCont": [
-                true,
-                false,
-                false,
-                false
-            ]
-        },
-        "BoxCollider": {
-            "ScaleOffset": [
-                39.0,
-                1.0,
-                1.0
-            ],
-            "TranslateOffset": [
-                0.0,
-                76.0,
                 0.0
             ]
         }
