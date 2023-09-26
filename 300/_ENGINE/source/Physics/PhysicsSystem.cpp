@@ -1,5 +1,6 @@
 #include "Physics/PhysicsSystem.h"
 #include "ECS/ECS.h"
+#include "Debug/EnginePerformance.h"
 #include "Physics/Accumulator.h"
 
 PhysicsSystem::PhysicsSystem() : mFixedDT(1/60.f)
@@ -23,6 +24,8 @@ void PhysicsSystem::Init()
 
 void PhysicsSystem::Update(float dt)
 {
+	EnginePerformance::StartTrack("Physics");
+
 	if (dt <= 0)
 		return;
 
@@ -45,6 +48,9 @@ void PhysicsSystem::Update(float dt)
 			continue;
 		rbod.mVelocity = Convert(static_cast<physx::PxRigidDynamic*>(itr->second)->getLinearVelocity());
 	}
+
+	EnginePerformance::EndTrack("Physics");
+	EnginePerformance::UpdateSystemMs("Physics");
 }
 
 void PhysicsSystem::Exit()

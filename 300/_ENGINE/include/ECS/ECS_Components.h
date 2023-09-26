@@ -157,12 +157,25 @@ struct Children
 };
 
 struct Audio
-{
-	std::string mFileName;
-	AUDIOTYPE mAudioType;
-	bool mIsPlaying;// check if audio is already playing
-	bool mIsPlay;	// play audio if true
+{	
+	std::string mFilePath;				// File Path to the Audio File
+	std::string mFileName;				// Name of Audio file
+	//std::string mFullPath;				// 
+	AUDIOTYPE mAudioType;				// SFX or BGM?
+	bool mIsPlaying;					// check if audio is already playing
+	bool mIsPlay;						// play audio if true
 
+	// Don't need to serialize ...
+	std::vector<int> mPlaySFXChannelID;    // Currently playing in SFX Channel...
+	std::vector<int> mPlayBGMChannelID;	   // Currently playing in BGM Channel ...
+
+	Audio() : mFilePath("../assets/Audio"), mFileName("Sample Name"), mAudioType(AUDIO_NULL), mIsPlaying(false), mIsPlay(false) {}
+
+	Audio(std::string file_path_to_audio, std::string file_audio_name, AUDIOTYPE audio_type, bool isPlay) : mAudioType(audio_type) , mIsPlaying(false) , mIsPlay(isPlay)
+	{	
+		mFilePath = file_path_to_audio;
+		mFileName = file_audio_name;
+	}
 	//RTTR_ENABLE()
 	void							Inspect();
 };

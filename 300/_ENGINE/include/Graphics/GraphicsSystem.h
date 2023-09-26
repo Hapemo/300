@@ -81,6 +81,8 @@ public:
 private:
 
 
+	//// for performance
+	//double startTime, endTime;
 };
 
 #endif

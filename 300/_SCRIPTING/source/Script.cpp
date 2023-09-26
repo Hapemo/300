@@ -21,20 +21,20 @@ This file contains the logic to Load and Run scripts.
 #include "Script.h"
 #include "ScriptingSystem.h"
 
-bool Script::isOnce = false;
+//bool Script::isOnce = false;
 
 void Script::Load(Entity entity)
 {
     //std::cout << (int)entity.id << std::endl;
     sol::protected_function_result result = systemManager->mScriptingSystem->luaState.script_file(scriptFile, env);
-    if (!result.valid() && isOnce == false)
+    if (!result.valid())
     {
         // print what error was invoked when the script was loading
         sol::error err = result;
         //PERROR("Error opening file! %s.\n", err.what());
         std::cout << "Error opening file!" << std::endl;
         std::cout << err.what() << std::endl;
-        isOnce = true;
+        //isOnce = true;
     }
 
     env["script_entity_id"] = entity.id;
@@ -49,28 +49,28 @@ void Script::Run(const char* funcName)
     // Check if function is valid
     if (!func.valid())
     {
-        if (isOnce == false)
-        {
+        //if (isOnce == false)
+        //{
             sol::error err = result;
             //PERROR("Error getting function: %s.\n", err.what());
             std::cout << "Error getting function!" << std::endl;
             std::cout << err.what() << std::endl;
-            isOnce = true;
-        }
+            //isOnce = true;
+        //}
         return;
     }
 
     // Will throw error if type is different
     if (!result.valid())
     {
-        if (isOnce == false)
-        {
+        //if (isOnce == false)
+        //{
             sol::error err = result;
             //PERROR("Error running function: %s.\n", err.what());
             std::cout << "Error running function!" << std::endl;
             std::cout << err.what() << std::endl;
-            isOnce = true;
-        }
+            //isOnce = true;
+        //}
         return;
     }
 
@@ -87,14 +87,14 @@ void Script::Run(const char* funcName)
         }
         else
         {
-            if (isOnce == false)
-            {
+            //if (isOnce == false)
+            //{
                 sol::error err = result;
                 //PERROR("Wrong type %s.\n", err.what());
                 std::cout << "Wrong type!" << std::endl;
                 std::cout << err.what() << std::endl;
-                isOnce = true;
-            }
+                //isOnce = true;
+            //}
         }
     }
 }
