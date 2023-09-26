@@ -37,7 +37,9 @@ int Hierarchy::selectedScene;
 int Hierarchy::RselectedScene;
 bool Hierarchy::selectionOn;
 
-void Hierarchy::init() {}
+void Hierarchy::init() {
+
+}
 //int Hierarchy::selectCnt{ -1 };
 
 

@@ -238,26 +238,26 @@ void Editor::UIupdate(GLFWwindow* window) {
         //if (windows.first == "Editscene")
         //    static_cast<SceneWindow*>(windows.second)->ConstrainedResize(nullptr);
         //
-        ImGui::Begin(windows.first.c_str(), 0, windows.second->mWinFlag);
 
-
-        
-        if (windows.first == "Editscene") {
-            (static_cast<SceneWindow*>(windows.second))->RenderGuizmo();
-        }
-        
         if (windows.first == "PrefabScene") {
-            if (static_cast<int>(PrefabWindow::prefabObj) != -1) {
+            
+            if (static_cast<unsigned>(PrefabWindow::prefabObj) != 0) {
+                ImGui::Begin(windows.first.c_str(), 0, windows.second->mWinFlag);
                 windows.second->update();
-            }
+                ImGui::End();
 
+            }
         }
         else {
+
+            ImGui::Begin(windows.first.c_str(), 0, windows.second->mWinFlag);
+            if (windows.first == "Editscene") {
+                (static_cast<SceneWindow*>(windows.second))->RenderGuizmo();
+            }
             windows.second->update();
+            ImGui::End();
         }
 
-
-        ImGui::End();
     }
     //        if (windows.first == "Scene" || windows.first == "Display")
     //        {

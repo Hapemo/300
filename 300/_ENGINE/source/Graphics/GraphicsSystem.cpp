@@ -3,7 +3,7 @@
 #include "ResourceManagerTy.h"
 #include <Graphics/Camera_Input.h>
 #include "Debug/EnginePerformance.h"
-
+#include "GameState/GameStateManager.h"
 /***************************************************************************/
 /*!
 \brief
@@ -31,19 +31,22 @@ void GraphicsSystem::Init()
 
 
 #pragma region create entity 1
-	 //Create a new entity here, for testing purposes
+	//Create a new entity here, for testing purposes
 	Entity newentity = systemManager->ecs->NewEntity();			// creating a new entity
+	systemManager->mGameStateSystem->mCurrentGameState.AddScene("NewScene");
+	systemManager->mGameStateSystem->mCurrentGameState.mScenes[0].mEntities.insert(newentity);
+
 	newentity.AddComponent<MeshRenderer>();
 	newentity.AddComponent<BoxCollider>();
 	newentity.AddComponent<Animator>();
 
 	newentity.GetComponent<MeshRenderer>().mMeshPath = "../assets/compiled_geom/dancing_vampire.geom";
-	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath[DIFFUSE]="../assets/Compressed/Vampire_diffuse.ctexture";
-	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath[NORMAL]="../assets/Compressed/Vampire_normal.ctexture";
-	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath[2]="../assets/Compressed/Vampire_emission.ctexture";
-	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath[3]="../assets/Compressed/Vampire_specular.ctexture";
+	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath[DIFFUSE] = "../assets/Compressed/Vampire_diffuse.ctexture";
+	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath[NORMAL] = "../assets/Compressed/Vampire_normal.ctexture";
+	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath[2] = "../assets/Compressed/Vampire_emission.ctexture";
+	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath[3] = "../assets/Compressed/Vampire_specular.ctexture";
 	newentity.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/pointLight_vert.glsl", "../_GRAPHICS/shader_files/pointLight_frag.glsl" };	// for point light
-	
+
 	uid temp(newentity.GetComponent<MeshRenderer>().mMeshPath);
 	newentity.GetComponent<MeshRenderer>().mMeshRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(temp.id));
 
@@ -189,7 +192,7 @@ void GraphicsSystem::Update(float dt)
 		}
 
 		//meshinst.mLTW.push_back(final);
-		AddInstance(meshinst, final, 69u);
+		AddInstance(meshinst, final, static_cast<unsigned>(inst.id));
 	}
 #pragma endregion
 
