@@ -35,6 +35,7 @@ Returns main window for docking
 #include "Performance.h"
 #include "Inspect.h"
 #include "MenuPanel.h"
+#include "PrefabWindow.h"
 //bool Editor::show_Inspector;
 //int Editor::entity {}; // static var for selected entity ID
 //bool Editor::Entity_Selected; // static var for Inspector to show
@@ -139,7 +140,7 @@ void Editor::UIinit(GLFWwindow* window)
     mWindowlist["Performance"] = new Performance;
     mWindowlist["Editscene"] = new SceneWindow;
     mWindowlist["Contentbrowser"] = new ContentBrowser;
-
+    mWindowlist["PrefabScene"] = new PrefabWindow;
     //std::cout<< mWindowlist.size() << "test\n";
 
     //windowlist["ContentBrowser"] = new ContentBrowser;

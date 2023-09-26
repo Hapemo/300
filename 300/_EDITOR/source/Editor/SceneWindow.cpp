@@ -55,10 +55,17 @@ void SceneWindow::update()
 	scene_m_Hovered = ImGui::IsWindowHovered();	
 	const ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
 	ImGui::Image((ImTextureID)(intptr_t)systemManager->mGraphicsSystem->GetEditorAttachment(), viewportPanelSize, ImVec2(0,1), ImVec2(1,0));
+	
+	
+	
+	
+	
+	
 	if (ImGui::IsItemClicked(ImGuiMouseButton_Left)) {
-		unsigned int getid = systemManager->mGraphicsSystem->GetEntityID(ImGui::GetMousePos().x, ImGui::GetMousePos().y );
+		unsigned int getid = systemManager->mGraphicsSystem->GetEntityID(((ImGui::GetMousePos().x - ImGui::GetWindowPos().x)/winSize.x)*1600,
+			((ImGui::GetMousePos().y - ImGui::GetWindowPos().y) / winSize.y)*900);
 
-		std::cout << "Mouse pos " << ImGui::GetMousePos().x << " " << ImGui::GetMousePos().y << "\n";
+		std::cout << "Mouse pos " << ImGui::GetMousePos().x- ImGui::GetWindowPos().x << " " << ImGui::GetMousePos().y- ImGui::GetWindowPos().y << "\n";
 
 		std::cout << getid << " i got something bitch\n";
 		std::cout << (unsigned int)Hierarchy::selectedId <<"\n";
@@ -72,17 +79,6 @@ void SceneWindow::update()
 	ImGui::SetCursorPosY(ImGui::GetWindowContentRegionMin().y+10);
 	ImGui::Checkbox("Debug",&systemManager->mGraphicsSystem->m_DebugDrawing);
 	
-	
-	//	auto pos = ImGui::GetCursorPos();
-
-	//ImGui::SetItemAllowOverlap();
-	//ImGui::SetCursorPos(pos);
-	//ImGui::Button("Debug");
-
-
-	//winSize_X = ImGui::GetWindowSize().x;
-	//winSize_Y = ImGui::GetWindowSize().y;
-
 	winSize= { ImGui::GetWindowSize().x ,ImGui::GetWindowSize().y};
 	//systemManager->mGraphicsSystem->SetCameraSize()
 	//ImGui::Image((ImTextureID)(intptr_t)systemManager->mGraphicsSystem->GetEditorAttachment(),ImVec2(1920, 1080));
@@ -107,7 +103,6 @@ void SceneWindow::ConstrainedResize(bool* p_open)
 
 void SceneWindow::RenderGuizmo()
 {
-
 	glm::mat4 objectMatrix =
 	{ 1.f, 0.f, 0.f, 0.f,
 	0.f, 1.f, 0.f, 0.f,
@@ -116,25 +111,9 @@ void SceneWindow::RenderGuizmo()
 
 	glm::mat4 cameraProjection = glm::mat4(systemManager->mGraphicsSystem->m_EditorCamera.mProjection);
 
-	/*glm::mat4 cameraProjection = { 1.f, 0.f, 0.f, 0.f,
-	0.f, 1.f, 0.f, 0.f,
-	0.f, 0.f, 1.f, 0.f,
-	0.f, 0.f, 0.f, 1.f };*/
-
 	glm::vec3 rotation = glm::vec3(0, 0, 0);
-
-	/*glm::mat4 cameraView{ 1.f, 0.f, 0.f, 0.f,
-							0.f ,1.f ,0.f ,0.f,
-							0.f ,0.f ,1.f,  0.f ,
-							GraphicsSystem::camera.view_xform[2][0] ,-GraphicsSystem::camera.view_xform[2][1] ,0.f ,1.f }*/
-		
+	
 	glm::mat4 cameraView = systemManager->mGraphicsSystem->m_EditorCamera.mView;
-
-	/*glm::mat4 cameraView = { 1.f, 0.f, 0.f, 0.f,
-	0.f, 1.f, 0.f, 0.f,
-	0.f, 0.f, 1.f, 0.f,
-	0.f, 0.f, 0.f, 1.f };*/
-
 
 	glm::mat4 inverseCamera = cameraView;
 

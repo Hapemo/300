@@ -20,6 +20,7 @@ Contains main loop for the logic of contentbrowsing + Drag and drop functionalit
 
 
 #include "ContentBrower.h"
+#include "PrefabWindow.h"
 #include <stdlib.h>
 #include <iostream>
 #include <string>
@@ -96,8 +97,18 @@ void ContentBrowser::update()
 
 			ImGui::Button(filename_string.c_str(), { buttonsize, buttonsize }); // draw button of file
 
+
+
+
+
 			if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) {
-				std::cout << path.string() << "\n";
+				if (check_extension(path.string(), ".json")) {
+					Entity toEdit = systemManager->ecs->StartEditPrefab(filename_string);
+					PrefabWindow::prefabObj = toEdit.id;
+				}
+
+
+				//std::cout << path.string() << "\n";
 			}
 
 			if (check_extension(path.string(), ".lua")) {
@@ -147,6 +158,7 @@ void ContentBrowser::update()
 			}
 
 			if (check_extension(path.string(), ".json")) {
+	
 
 				if (ImGui::BeginDragDropSource()) {
 
