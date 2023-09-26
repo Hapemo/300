@@ -5,6 +5,7 @@ in vec2 TexCoords;
 in vec3 TangentLightPos;
 in vec3 TangentViewPos;
 in vec3 TangentFragPos;
+in vec4 Tex_Ent_ID;     // x : Tex ID, y: Entity ID
 
 vec3 lightIntensity = vec3(1.5);
 
@@ -12,6 +13,7 @@ uniform sampler2D uTex[5];
 
 layout (location = 0) out vec4 fragColor0;
 layout (location = 1) out vec4 fragColor1;
+layout (location = 2) out uint outEntityID;
 
 void main() 
 {
@@ -54,4 +56,5 @@ void main()
     // Output
     fragColor0 = vec4(finalColor, uColor.a);
     fragColor1 = vec4(finalColor, uColor.a);
+    outEntityID = uint(Tex_Ent_ID.y);
 }
