@@ -12,6 +12,8 @@ layout (location = 8) in mat4 inLTW;			    // local to world
 uniform vec3 uLightPos;
 uniform vec3 uViewPos;
 uniform mat4 uMatrixVP;
+uniform int uDebugDraw;
+
 
 out vec4 VertexColor;       // for debugging
 out vec2 TexCoords;
@@ -19,6 +21,8 @@ out vec3 TangentLightPos;
 out vec3 TangentViewPos;
 out vec3 TangentFragPos;
 out vec4 Tex_Ent_ID;
+out int isDebugDraw;
+
 
 void main() 
 {
@@ -40,5 +44,7 @@ void main()
     TangentLightPos = TBN * uLightPos;
     TangentViewPos  = TBN * uViewPos;
     TangentFragPos  = TBN * vec3(inLTW * vec4(inPos, 1.0));
-    tex_Ent_ID      = inTex_Ent_ID;
+    Tex_Ent_ID      = inTex_Ent_ID;
+    isDebugDraw = uDebugDraw;
+
 }

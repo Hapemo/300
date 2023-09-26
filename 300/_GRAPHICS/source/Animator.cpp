@@ -68,6 +68,9 @@ namespace GFX
 
         m_DeltaTime = dt;
 
+        if (m_CurrentTime < 10)
+            m_CurrentTime = m_CurrentTime;
+
         m_CurrentTime += m_CurrentAnimation->m_TicksPerSecond * m_DeltaTime;
         m_CurrentTime = fmod(m_CurrentTime, m_CurrentAnimation->m_Duration);        // this loops the animation
         CalculateBoneTransform(&m_CurrentAnimation->m_RootNode, inputmtx);          // this calculates the bone matrices, WRT to the entity's world position
@@ -97,11 +100,17 @@ namespace GFX
             globalTransform = parentTransform * nodeTransform;
             int index = boneInfoMap[nodename].id;                           // the index for the boneinfomap is the id of the bone
             glm::mat4 offset = boneInfoMap[nodename].offset;                // the offset is the offset WRT to the bone's origin transformation
+
+            if(systemManager->mGraphicsSystem)
             m_FinalBoneMatrices[index] = globalTransform * offset;          // populating this vector of matrices with the bone matrices, WRT to the bone's parent transformation
                                                                             // and the entity's world position
 
-            const mat4 & final = m_FinalBoneMatrices[index];
-            systemManager->mGraphicsSystem->m_Renderer.AddCube({ final[3][0], final[3][1], final[3][2] }, { 0.5f, 0.5, 0.5f }, { 1.f, 0.f, 0.f, 1.f });
+            if (systemManager->mGraphicsSystem->m_DebugDrawing)
+            {
+                //const mat4 & final = m_FinalBoneMatrices[index];
+                //systemManager->mGraphicsSystem->m_Renderer.AddCube({ final[3][0], final[3][1], final[3][2] }, { 0.5f, 0.5, 0.5f }, { 1.f, 0.f, 0.f, 1.f });
+                //systemManager->mGraphicsSystem->m_Renderer.AddLine({ parentTransform[3][0], parentTransform[3][1], parentTransform[3][2] }, { final[3][0], final[3][1], final[3][2] });
+            }
         }
 
         // recursively call this function for all the children of this node

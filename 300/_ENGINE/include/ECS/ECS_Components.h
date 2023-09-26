@@ -40,7 +40,6 @@ struct Transform
 struct Animator
 {
 	GFX::Animator	mAnimator;
-	bool			mIsPaused;
 
 	void Inspect();
 };

@@ -46,9 +46,11 @@ namespace GFX
         void SetAnimation(_GEOM::Animation*);
         void UpdateAnimation(float dt, const glm::mat4&);
 
+        bool mIsPaused{ 0 };
 
     private:
         void CalculateBoneTransform(const _GEOM::AssimpNodeData* node, glm::mat4 parentTransform);
+
 
     };
 
