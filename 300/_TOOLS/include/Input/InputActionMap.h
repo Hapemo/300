@@ -22,8 +22,8 @@ public:
 	std::string GetActionMapName();
 
 private:
-	std::string									 mActionMap_name;		// [Group Name]		 - Action Map Name (Gameplay / Main Menu)
-	std::unordered_map<std::string, InputAction> mActions;				/* [List of Actions] - (1) Action Name(Move / Jump / Crouch / Use)
+	std::string									  mActionMap_name;		// [Group Name]		 - Action Map Name (Gameplay / Main Menu)
+	std::unordered_map<std::string, InputAction>  mActions;				/* [List of Actions] - (1) Action Name(Move / Jump / Crouch / Use)
 																							   (2) InputAction : contains (KEY BINDINGS) + (LOGIC?) */
 	bool isEnable = false;												// Works like isActive() in unity.													
 };

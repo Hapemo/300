@@ -17,8 +17,7 @@ public:
 	void Exit();
 	
 	void AddActionMap(InputActionMap& action_map);
-	//void CheckInput(); // Check Here?
-	//InputActionMap& GetActionMap(std::string action_map_name);
+	bool CheckActionInput(InputAction action, E_KEY key_pressed);	// Used in Scripting Side
 
 private:
 	std::vector<InputActionMap> mActionMaps; // A collection of [Action Maps] -> [ActionMap] contains 1 or more [Actions]
