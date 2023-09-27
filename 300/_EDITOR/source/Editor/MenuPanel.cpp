@@ -21,6 +21,7 @@ Contains main loop for the logic of MenuPanel.
 #include "ECS/ECS.h"
 #include "ECS/ECS_Systems.h"
 #include "GameState/GameStateManager.h"
+#include "Hierarchy.h"
 void MenuPanel::init() {
     // empty
 }
@@ -37,6 +38,11 @@ void MenuPanel::update()
             //save scene
             if (ImGui::MenuItem("Save GameState")) {
                // systemManager->;
+                systemManager->mGameStateSystem->mCurrentGameState.Save();
+            }
+
+            if (ImGui::MenuItem("Save Scene")) {
+                systemManager->mGameStateSystem->mCurrentGameState.mScenes[Hierarchy::selectedScene].Save();
             }
 
 
