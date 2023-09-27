@@ -227,8 +227,9 @@ void ContentBrowser::update()
 
 			}
 			else if (check_extension(path.string(), ".scn")) {
+				ImGui::PushID(idd);
 				ImGui::ImageButton((ImTextureID)(intptr_t)resourceDatas->m_EditorTextures["Electro"]->ID(), { buttonsize, buttonsize });
-
+				ImGui::PopID();
 				if (ImGui::BeginDragDropSource()) {
 
 					std::string path_str = path.string();

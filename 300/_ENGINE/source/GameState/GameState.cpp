@@ -41,7 +41,27 @@ void GameState::AddScene(std::string const& _name) { // filesystem
 		latestScene.mName = "New Scene " + std::to_string(newSceneCount++);  //cannot have same GS name
 		//LOG_CUSTOM("GAMESTATE", "Adding NEW scene to gamestate: " + mName);
 	} else {
+		std::string newName{};
+		int counter = 0;
+		if (std::find_if(mScenes.begin(), mScenes.end(), [_name](Scene& scene) -> bool { return scene.mName == _name; }) != mScenes.end()) {
+			// if the scene exists
+			++counter; // increment the counter
+			// Increment file number to the biggest one
+			for (Scene& scene : systemManager->mGameStateSystem->mCurrentGameState.mScenes) {
+				// if the scene name exists AND 
+				std::string tempName = _name + std::to_string(counter);
+				if (std::find_if(mScenes.begin(), mScenes.end(), [tempName](Scene& scene) -> bool { return scene.mName == tempName; }) != mScenes.end())
+					++counter;
+			}
+			
+			std::string tempName = _name + std::to_string(counter);
+			if (std::find_if(mScenes.begin(), mScenes.end(), [tempName](Scene& scene) -> bool { return scene.mName == tempName; }) == mScenes.end())
+				newName = tempName;
+		}
 		latestScene.Load(_name);
+		if (!newName.empty())
+			latestScene.mName = newName;
+
 		//LOG_CUSTOM("GAMESTATE", "Adding scene \"" + _path.stem().string() + "\" to gamestate: " + mName);
 	}
 	

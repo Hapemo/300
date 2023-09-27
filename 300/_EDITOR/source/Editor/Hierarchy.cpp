@@ -25,6 +25,7 @@ to select current Entity and activates inspector
 #include "Hierarchy.h"
 #include "ScriptingSystem.h"
 #include "GameState/GameStateManager.h"
+#include "Misc.h"
 #include "imgui_stdlib.h"
 
 //#define DEBUG
@@ -482,13 +483,24 @@ void Hierarchy::update() {
 
         if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_SCN")) {
             auto data = (const char*)payload->Data;
-            size_t lastSep = std::string(data).find_last_of("/\\");
-            size_t lastStop = std::string(data).find_last_of(".");
+            std::string name = Misc::GetFileName(std::string(data));
+            //int counter = 0;
+            //
+            //// if the scene exists
+            //if (systemManager->mGameStateSystem->SceneExists(name)) {
+            //    ++counter; // increment the counter
+            //    // Increment file number to the biggest one
+            //    for (Scene& scene : systemManager->mGameStateSystem->mCurrentGameState.mScenes) {
+            //        // if the scene name exists AND 
+            //        if (systemManager->mGameStateSystem->SceneExists(name + std::to_string(counter)))
+            //            ++counter;
+            //    }
+            //}
+            //if (!systemManager->mGameStateSystem->SceneExists(name + std::to_string(counter)))
+            //        systemManager->mGameStateSystem->mCurrentGameState.AddScene(name + std::to_string(counter));
 
-            // extracts the filename from data and adds a number at the back of the string so as to prevent scenes with same names
-            // ask jazz how to access loadscene function
-            if (lastSep != std::string::npos && lastStop != std::string::npos && lastStop > lastSep)
-                systemManager->mGameStateSystem->mCurrentGameState.AddScene(std::string(data).substr(lastSep + 1, lastStop - lastSep - 1));
+            //counter = 0;
+            systemManager->mGameStateSystem->AddScene(name);
         }
         ImGui::EndDragDropTarget();
     }

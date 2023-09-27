@@ -116,6 +116,19 @@ void GameStateManager::NewGameState(std::string const& _name) {
 	mCurrentGameState.AddScene();
 }
 
+void GameStateManager::AddScene(std::string const& _name) {
+	mCurrentGameState.AddScene(_name);
+}
+
+
+bool GameStateManager::SceneExists(std::string const& _name) {
+	for (Scene& scene : mCurrentGameState.mScenes)
+		if (scene.mName == _name)
+			return true;
+	return false;
+}
+
+
 //void GameStateManager::AddGameState(std::filesystem::path const& _path) {
 //	std::string currName{ mCurrentGameState->mName };
 //

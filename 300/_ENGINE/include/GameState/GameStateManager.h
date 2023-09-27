@@ -167,11 +167,15 @@ public:
 	*******************************************************************************/
 	void NewGameState(std::string const& _name);
 
+	void AddScene(std::string const& _name);
+
 	void EditorRestartGameState() { mGSMState = E_GSMSTATE::CHANGING; }
 
 	GameState* GetCurrentGameState() { return &mCurrentGameState; }
 
 	Scene* GetErrorScene() { return &mErrorScene; }
+
+	bool SceneExists(std::string const& _name);
 
 	///*!*****************************************************************************
 	//Find the gamestate name stated. Returns iterator position of gamestate if found,
