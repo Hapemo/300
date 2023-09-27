@@ -566,6 +566,10 @@ void Hierarchy::update() {
 
     if (ImGui::BeginPopup("Edit_scene"))
     {
+        if (ImGui::Selectable("Save"))
+        {
+            systemManager->mGameStateSystem->mCurrentGameState.mScenes[RselectedScene].Save();
+        }
         if (ImGui::Selectable("Delete")) {
 
 
