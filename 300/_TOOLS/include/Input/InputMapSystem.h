@@ -16,9 +16,9 @@ public:
 	void Update();
 	void Exit();
 	
+	// Need this for Lua
 	void AddActionMap(InputActionMap& action_map);
-	//void CheckInput(); // Check Here?
-	//InputActionMap& GetActionMap(std::string action_map_name);
+	std::vector<InputActionMap>& GetActionMaps();
 
 private:
 	std::vector<InputActionMap> mActionMaps; // A collection of [Action Maps] -> [ActionMap] contains 1 or more [Actions]

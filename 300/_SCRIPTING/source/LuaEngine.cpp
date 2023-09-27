@@ -3,6 +3,7 @@
 #include "../../_ENGINE/include/Physics/PhysicsSystem.h"
 #include "Input/Input.h"
 #include "ECS/ECS_Systems.h"
+#include "ECS/ECS_Components.h"
 
 void LuaComponentContainer()
 {
@@ -25,45 +26,41 @@ void LuaECS()
     systemManager->mScriptingSystem->luaState.new_usertype<ECS>(
         "ecs", sol::constructors<>(),
         "NewEntity", &ECS::NewEntity,
-        "DeleteEntity", &ECS::DeleteEntity,
-        "GetEntitiesWithGeneral", &ECS::GetEntitiesWith<General>,
-        "GetEntitiesWithTransform", &ECS::GetEntitiesWith<Transform>,
-        "GetEntitiesWithRigidBody", &ECS::GetEntitiesWith<RigidBody>,
-        "GetEntitiesWithBoxCollider", &ECS::GetEntitiesWith<BoxCollider>,
-        "GetEntitiesWithScripts", &ECS::GetEntitiesWith<Scripts>
+        "DeleteEntity", &ECS::DeleteEntity
+        //"GetEntitiesWithGeneral", &ECS::GetEntitiesWith<General>,
+        //"GetEntitiesWithTransform", &ECS::GetEntitiesWith<Transform>,
+        //"GetEntitiesWithRigidBody", &ECS::GetEntitiesWith<RigidBody>,
+        //"GetEntitiesWithBoxCollider", &ECS::GetEntitiesWith<BoxCollider>,
+        //"GetEntitiesWithScripts", &ECS::GetEntitiesWith<Scripts>
         );
 }
+
+#define DECLARE_COMPONENT(str, type) str, sol::resolve<type&()>(&Entity::GetComponent<type>)
 
 void LuaEntity()
 {
     systemManager->mScriptingSystem->luaState.new_usertype<Entity>(
-        "Entity", sol::constructors<>(),
+        "Entity", sol::constructors<Entity(std::uint32_t)>(),
         "id", &Entity::id,
-        "GetGeneralComponent", &Entity::LuaGetComponent<General>,
-        "HasGeneralComponent", &Entity::HasComponent <General>,
-        "GetTransformComponent", &Entity::LuaGetComponent<Transform>,
+        DECLARE_COMPONENT("GetGeneralComponent", General),
+        "HasGeneralComponent", &Entity::HasComponent<General>,
+        DECLARE_COMPONENT("GetTransformComponent", Transform),
         "HasTransformComponent", &Entity::HasComponent<Transform>,
-        //"GetRigidBodyComponent", &Entity::LuaComponent<RigidBody>,
-        "GetRigidBodyComponent", static_cast<RigidBody & (Entity::*) ()>(&Entity::GetComponent<RigidBody>),
+        DECLARE_COMPONENT("GetRigidBodyComponent", RigidBody),
         "HasRigidBodyComponent", &Entity::HasComponent<RigidBody>,
-        "GetBoxColliderComponent", &Entity::LuaGetComponent<BoxCollider>,
+        DECLARE_COMPONENT("GetBoxColliderComponent", BoxCollider),
         "HasBoxColliderComponent", &Entity::HasComponent<BoxCollider>,
-        "GetSphereColliderComponent", &Entity::LuaGetComponent<SphereCollider>,
+        DECLARE_COMPONENT("GetSphereColliderComponent", SphereCollider),
         "HasSphereColliderComponent", &Entity::HasComponent<SphereCollider>,
-        "GetPlaneColliderComponent", &Entity::LuaGetComponent<PlaneCollider>,
+        DECLARE_COMPONENT("GetPlaneColliderComponent", PlaneCollider),
         "HasPlaneColliderComponent", &Entity::HasComponent<PlaneCollider>,
-        "GetScriptsComponent", &Entity::LuaGetComponent<Scripts>,
+        DECLARE_COMPONENT("GetScriptsComponent", Scripts),
         "HasScriptsComponent", &Entity::HasComponent<Scripts>,
-        "GetParentComponent", &Entity::LuaGetComponent<Parent>,
+        DECLARE_COMPONENT("GetParentComponent", Parent),
         "HasParentComponent", &Entity::HasComponent<Parent>,
-        "GetChildrenComponent", &Entity::LuaGetComponent<Children>,
+        DECLARE_COMPONENT("GetChildrenComponent", Children),
         "HasChildrenComponent", &Entity::HasComponent<Children>
-        //"GetComponents", &Entity::LuaGetComponents<sol::variadic_args>
         );
-
-   //systemManager->mScriptingSystem->luaState.set_function("AddRigidBodyComponent", static_cast<RigidBody& (Entity::*) ()>(&Entity::AddComponent<RigidBody>));
-   // systemManager->mScriptingSystem->luaState.set_function("GetRigidBodyComponent", sol::resolve<RigidBody& (Entity)>(&Entity::LuaGetComponent<RigidBody>));
-   //"GetRigidBodyComponent", sol::resolve<RigidBody& ()>(&Entity::GetComponent<RigidBody>)
 }
 
 
@@ -72,7 +69,7 @@ void LuaGeneral()
     systemManager->mScriptingSystem->luaState.new_usertype<General>(
         "General", sol::constructors<>(),
         "name", &General::name,
-        "tag", &General::tag,
+        "tagid", &General::tagid,
         "subtag", &General::subtag,
         "isActive", &General::isActive
         );

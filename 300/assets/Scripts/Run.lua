@@ -2,25 +2,27 @@ function Alive()
 
 end
 
-function Start()
-
-end
-
 function Update()
-    --Working
-    --print("Running from Run.lua !!")
-    --systemManager.ecs:NewEntity()
-    --systemManager.ecs:DeleteEntity(entity)
-    
-    --Testing
-    generalEntities = systemManager.ecs:GetGeneralComponent();
-    for i = 0, #generalEntities do
-        print(generalEntities[i].id, generalEntities[i])
+    --For M1 demo
+    entity = Entity.new(script_entity_id)
+    if entity == nil then
+        print("Entity nil in script!")
     end
-end
+    generalComponent = entity:GetGeneralComponent()
+    transformComponent = entity:GetTransformComponent()
+    -- Change entity name to enemy
+    generalComponent.name = "Enemy"
 
-function Exit()
-
+    -- Make character move x-axis
+    if Input.CheckKey(State.HOLD, Key.UP) then
+        transformComponent.mTranslate.y = transformComponent.mTranslate.y + 20
+    elseif Input.CheckKey(State.HOLD, Key.LEFT) then
+        transformComponent.mTranslate.x = transformComponent.mTranslate.x - 20
+    elseif Input.CheckKey(State.HOLD, Key.DOWN) then
+        transformComponent.mTranslate.y = transformComponent.mTranslate.y - 20
+    elseif Input.CheckKey(State.HOLD, Key.RIGHT) then
+        transformComponent.mTranslate.x = transformComponent.mTranslate.x + 20
+    end
 end
 
 function Dead()

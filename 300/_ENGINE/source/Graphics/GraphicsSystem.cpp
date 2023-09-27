@@ -21,7 +21,7 @@ void GraphicsSystem::Init()
 	// only initialize an editor camera
 	if (systemManager->IsEditor())
 	{
-		Entity CameraEntity = systemManager->ecs->NewEntity();			// creating a new entity
+		Entity CameraEntity = systemManager->ecs->NewEntity(); // creating a new entity
 		systemManager->mGameStateSystem->mCurrentGameState.AddScene("NewScene");
 		systemManager->mGameStateSystem->mCurrentGameState.mScenes[0].mName = "Richmond";
 		systemManager->mGameStateSystem->mCurrentGameState.mScenes[0].mEntities.insert(CameraEntity);
@@ -42,24 +42,26 @@ void GraphicsSystem::Init()
 	m_GameFbo.Create(m_Width, m_Height, m_EditorMode);
 
 	// Set Cameras' starting position
-	SetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_ALL, { 0, 0, 20 });								// Position of camera
-	SetCameraTarget(CAMERA_TYPE::CAMERA_TYPE_ALL, { 0, 0, 0 });									// Target of camera
-	SetCameraProjection(CAMERA_TYPE::CAMERA_TYPE_ALL, 60.f, m_Window->size(), 0.1f, 900.f);		// Projection of camera
+	SetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_ALL, {0, 0, 20});							// Position of camera
+	SetCameraTarget(CAMERA_TYPE::CAMERA_TYPE_ALL, {0, 0, 0});								// Target of camera
+	SetCameraProjection(CAMERA_TYPE::CAMERA_TYPE_ALL, 60.f, m_Window->size(), 0.1f, 900.f); // Projection of camera
 
-	if (m_EditorMode) {
+	if (m_EditorMode)
+	{
 		// update both the editor and game camera
 		UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_ALL, 0.f);
 	}
-	else {
+	else
+	{
 		// only update the game camera if editor mode is not enabled
 		UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_GAME, 0.f);
 	}
 
 #if 1
 #pragma region create entity 1
-	//Create a new entity here, for testing purposes
-	Entity newentity = systemManager->ecs->NewEntity();			// creating a new entity
-//	systemManager->mGameStateSystem->mCurrentGameState.AddScene("NewScene");
+	// Create a new entity here, for testing purposes
+	Entity newentity = systemManager->ecs->NewEntity(); // creating a new entity
+														//	systemManager->mGameStateSystem->mCurrentGameState.AddScene("NewScene");
 	systemManager->mGameStateSystem->mCurrentGameState.mScenes[0].mEntities.insert(newentity);
 
 	newentity.AddComponent<MeshRenderer>();
@@ -71,27 +73,26 @@ void GraphicsSystem::Init()
 	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath[NORMAL] = "../assets/Compressed/Vampire_normal.ctexture";
 	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath[2] = "../assets/Compressed/Vampire_emission.ctexture";
 	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath[3] = "../assets/Compressed/Vampire_specular.ctexture";
-	newentity.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/pointLight_vert.glsl", "../_GRAPHICS/shader_files/pointLight_frag.glsl" };	// for point light
+	newentity.GetComponent<MeshRenderer>().mShaderPath = {"../_GRAPHICS/shader_files/pointLight_vert.glsl", "../_GRAPHICS/shader_files/pointLight_frag.glsl"}; // for point light
 
 	uid temp(newentity.GetComponent<MeshRenderer>().mMeshPath);
-	newentity.GetComponent<MeshRenderer>().mMeshRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(temp.id));
+	newentity.GetComponent<MeshRenderer>().mMeshRef = reinterpret_cast<void *>(systemManager->mResourceTySystem->get_mesh(temp.id));
 
 	uid mat1(newentity.GetComponent<MeshRenderer>().mMaterialInstancePath[DIFFUSE]);
-	newentity.GetComponent<MeshRenderer>().mTextureRef[DIFFUSE] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(mat1.id));
+	newentity.GetComponent<MeshRenderer>().mTextureRef[DIFFUSE] = reinterpret_cast<void *>(systemManager->mResourceTySystem->getMaterialInstance(mat1.id));
 	newentity.GetComponent<MeshRenderer>().mTextureCont[DIFFUSE] = true;
 
-
 	uid mat2(newentity.GetComponent<MeshRenderer>().mMaterialInstancePath[NORMAL]);
-	newentity.GetComponent<MeshRenderer>().mTextureRef[NORMAL] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(mat2.id));
+	newentity.GetComponent<MeshRenderer>().mTextureRef[NORMAL] = reinterpret_cast<void *>(systemManager->mResourceTySystem->getMaterialInstance(mat2.id));
 	newentity.GetComponent<MeshRenderer>().mTextureCont[NORMAL] = true;
-	newentity.GetComponent<BoxCollider>().mTranslateOffset = { 0.f, 80.f, 0.f };
-	newentity.GetComponent<BoxCollider>().mScaleOffset = { 1.f, 0.8f, 1.5f };
+	newentity.GetComponent<BoxCollider>().mTranslateOffset = {0.f, 80.f, 0.f};
+	newentity.GetComponent<BoxCollider>().mScaleOffset = {1.f, 0.8f, 1.5f};
 
-	auto& meshinst = systemManager->mResourceSystem->get_Mesh("../assets/compiled_geom/dancing_vampire.geom");
+	auto &meshinst = systemManager->mResourceSystem->get_Mesh("../assets/compiled_geom/dancing_vampire.geom");
 	newentity.GetComponent<Transform>().mScale = meshinst.mBBOX.m_Max - meshinst.mBBOX.m_Min;
 	if (newentity.HasComponent<Animator>() && _ENABLE_ANIMATIONS)
 	{
-		newentity.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/animations_vert.glsl", "../_GRAPHICS/shader_files/pointLight_frag.glsl" };// for point light
+		newentity.GetComponent<MeshRenderer>().mShaderPath = {"../_GRAPHICS/shader_files/animations_vert.glsl", "../_GRAPHICS/shader_files/pointLight_frag.glsl"}; // for point light
 		newentity.GetComponent<Animator>().mAnimator.SetAnimation(&meshinst.mAnimation[0]);
 	}
 #pragma endregion
@@ -139,7 +140,6 @@ void GraphicsSystem::Init()
 	}
 #pragma endregion
 #endif
-
 }
 
 /***************************************************************************/
@@ -151,14 +151,16 @@ void GraphicsSystem::Init()
 /**************************************************************************/
 void GraphicsSystem::Update(float dt)
 {
-	EnginePerformance::StartTrack("Game Graphics");
+	EnginePerformance::StartTrack("Graphics");
 
 	// update the camera's transformations, and its input
-	if (m_EditorMode) {
+	if (m_EditorMode)
+	{
 		// update both the editor and game camera
 		UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_ALL, dt);
 	}
-	else {
+	else
+	{
 		// only update the game camera if editor mode is not enabled
 		UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_GAME, dt);
 	}
@@ -172,20 +174,20 @@ void GraphicsSystem::Update(float dt)
 		std::string meshstr = inst.GetComponent<MeshRenderer>().mMeshPath;
 		Animator anim = inst.GetComponent<Animator>();
 
-		void* tt = inst.GetComponent<MeshRenderer>().mMeshRef;
-		GFX::Mesh& meshinst = *reinterpret_cast<GFX::Mesh*>(tt);
+		void *tt = inst.GetComponent<MeshRenderer>().mMeshRef;
+		GFX::Mesh &meshinst = *reinterpret_cast<GFX::Mesh *>(tt);
 
 		uid temp(meshstr);
-		//GFX::Mesh& meshinst = *(systemManager->mResourceTySystem->get_mesh(temp.id));
+		// GFX::Mesh& meshinst = *(systemManager->mResourceTySystem->get_mesh(temp.id));
 
 		// pushback LTW matrices
-		glm::mat4	trns	= glm::translate(inst.GetComponent<Transform>().mTranslate);
-		glm::mat4	scale	= glm::scale(trns, inst.GetComponent<Transform>().mScale / (meshinst.mBBOX.m_Max - meshinst.mBBOX.m_Min));
-		glm::mat4	final	= glm::rotate(scale, glm::radians(inst.GetComponent<Transform>().mRotate.x), glm::vec3(1.f, 0.f, 0.f));
-					final	= glm::rotate(final, glm::radians(inst.GetComponent<Transform>().mRotate.y), glm::vec3(0.f, 1.f, 0.f));
-					final	= glm::rotate(final, glm::radians(inst.GetComponent<Transform>().mRotate.z), glm::vec3(0.f, 0.f, 1.f));
+		glm::mat4 trns = glm::translate(inst.GetComponent<Transform>().mTranslate);
+		glm::mat4 scale = glm::scale(trns, inst.GetComponent<Transform>().mScale / (meshinst.mBBOX.m_Max - meshinst.mBBOX.m_Min));
+		glm::mat4 final = glm::rotate(scale, glm::radians(inst.GetComponent<Transform>().mRotate.x), glm::vec3(1.f, 0.f, 0.f));
+		final = glm::rotate(final, glm::radians(inst.GetComponent<Transform>().mRotate.y), glm::vec3(0.f, 1.f, 0.f));
+		final = glm::rotate(final, glm::radians(inst.GetComponent<Transform>().mRotate.z), glm::vec3(0.f, 0.f, 1.f));
 
-		// if the debug drawing is turned on 
+		// if the debug drawing is turned on
 		if (m_DebugDrawing && inst.HasComponent<BoxCollider>())
 		{
 			// draw the AABB of the mesh
@@ -193,7 +195,7 @@ void GraphicsSystem::Update(float dt)
 			m_Renderer.AddAabb(inst.GetComponent<Transform>().mTranslate + inst.GetComponent<BoxCollider>().mTranslateOffset, bbox_dimens, {1.f, 0.f, 0.f, 1.f});
 
 			// draw the mesh's origin
-			m_Renderer.AddSphere(m_EditorCamera.position(), inst.GetComponent<Transform>().mTranslate, 0.5f, { 1.f, 1.f, 0.f, 1.f });
+			m_Renderer.AddSphere(m_EditorCamera.position(), inst.GetComponent<Transform>().mTranslate, 0.5f, {1.f, 1.f, 0.f, 1.f});
 		}
 
 		// Update the animation
@@ -202,20 +204,20 @@ void GraphicsSystem::Update(float dt)
 			// skip the mesh that does not have an animation set
 			if (inst.GetComponent<Animator>().mAnimator.m_CurrentAnimation != nullptr)
 			{
-				inst.GetComponent<Animator>().mAnimator.UpdateAnimation(dt, mat4(1.f), final);		// update the current animation
+				inst.GetComponent<Animator>().mAnimator.UpdateAnimation(dt, mat4(1.f), final); // update the current animation
 			}
 		}
 
-		//meshinst.mLTW.push_back(final);
+		// meshinst.mLTW.push_back(final);
 		AddInstance(meshinst, final, static_cast<unsigned>(inst.id));
 	}
 
 #pragma endregion
 
 	//// test drawing
-	//m_Renderer.AddCube({ -10, 0, 0 }, { 0.5f, 0.5f, 0.5f }, { 1.f, 0., 0.f, 1.f });
-	//m_Renderer.AddLine({ -10, 0, 0 }, { 10, 10, 0 }, { 0.f, 1.f, 0.f, 1.f });
-	//m_Renderer.AddLine({ 10, 10, 0 }, { -10, 10, 0 }, { 1.f, 0.f, 1.f, 1.f }); 
+	// m_Renderer.AddCube({ -10, 0, 0 }, { 0.5f, 0.5f, 0.5f }, { 1.f, 0., 0.f, 1.f });
+	// m_Renderer.AddLine({ -10, 0, 0 }, { 10, 10, 0 }, { 0.f, 1.f, 0.f, 1.f });
+	// m_Renderer.AddLine({ 10, 10, 0 }, { -10, 10, 0 }, { 1.f, 0.f, 1.f, 1.f });
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -237,7 +239,8 @@ void GraphicsSystem::EditorDraw(float dt)
 	for (Entity inst : meshRendererInstances)
 	{
 		std::string meshstr = inst.GetComponent<MeshRenderer>().mMeshPath;
-		if (renderedMesh.find(meshstr) != renderedMesh.end()) {
+		if (renderedMesh.find(meshstr) != renderedMesh.end())
+		{
 			// the mesh has been rendered before, skip it
 			continue;
 		}
@@ -246,29 +249,30 @@ void GraphicsSystem::EditorDraw(float dt)
 		renderedMesh[meshstr] = 1;
 
 		// render the mesh and its instances here
-		GFX::Mesh& meshinst = *reinterpret_cast<GFX::Mesh*>(inst.GetComponent<MeshRenderer>().mMeshRef);
+		GFX::Mesh &meshinst = *reinterpret_cast<GFX::Mesh *>(inst.GetComponent<MeshRenderer>().mMeshRef);
 
 		// gets the shader filepath
 		std::pair<std::string, std::string> shaderstr = inst.GetComponent<MeshRenderer>().mShaderPath;
-		GFX::Shader& shaderinst = systemManager->mResourceSystem->get_Shader(shaderstr.first + shaderstr.second);
+		GFX::Shader &shaderinst = systemManager->mResourceSystem->get_Shader(shaderstr.first + shaderstr.second);
 		unsigned shaderID = shaderinst.GetHandle();
 
-		//std::vector<std::string> texturestr = inst.GetComponent<MeshRenderer>().mMaterialInstancePath;
+		// std::vector<std::string> texturestr = inst.GetComponent<MeshRenderer>().mMaterialInstancePath;
 
 		// get the texture filepath
-		//std::vector<std::string> texturestr = inst.GetComponent<MeshRenderer>().mMaterialInstancePath;
-	//	GFX::Texture& textureColorinst = systemManager->mResourceSystem->get_MaterialInstance(texturestr[0]);	// loads the texture
-		//GFX::Texture& textureNormalinst = systemManager->mResourceSystem->get_MaterialInstance(texturestr[1]);	// loads the texture
+		// std::vector<std::string> texturestr = inst.GetComponent<MeshRenderer>().mMaterialInstancePath;
+		//	GFX::Texture& textureColorinst = systemManager->mResourceSystem->get_MaterialInstance(texturestr[0]);	// loads the texture
+		// GFX::Texture& textureNormalinst = systemManager->mResourceSystem->get_MaterialInstance(texturestr[1]);	// loads the texture
 
-		GFX::Texture* textureInst[4]{};
-		for (int i{ 0 }; i < 4; i++)
+		GFX::Texture *textureInst[4]{};
+		for (int i{0}; i < 4; i++)
 		{
-			if (inst.GetComponent<MeshRenderer>().mTextureCont[i] == true) {
-				textureInst[i] = reinterpret_cast<GFX::Texture*>(inst.GetComponent<MeshRenderer>().mTextureRef[i]);
+			if (inst.GetComponent<MeshRenderer>().mTextureCont[i] == true)
+			{
+				textureInst[i] = reinterpret_cast<GFX::Texture *>(inst.GetComponent<MeshRenderer>().mTextureRef[i]);
 			}
-			//GFX::Texture& textureNormalinst = *reinterpret_cast<GFX::Texture*>(inst.GetComponent<MeshRenderer>().mTextureRef[NORMAL]);
-			//GFX::Texture& textureEmissioninst = *reinterpret_cast<GFX::Texture*>(inst.GetComponent<MeshRenderer>().mTextureRef[EMISSION]);
-			//GFX::Texture& textureSpecularinst = *reinterpret_cast<GFX::Texture*>(inst.GetComponent<MeshRenderer>().mTextureRef[SPECULAR]);
+			// GFX::Texture& textureNormalinst = *reinterpret_cast<GFX::Texture*>(inst.GetComponent<MeshRenderer>().mTextureRef[NORMAL]);
+			// GFX::Texture& textureEmissioninst = *reinterpret_cast<GFX::Texture*>(inst.GetComponent<MeshRenderer>().mTextureRef[EMISSION]);
+			// GFX::Texture& textureSpecularinst = *reinterpret_cast<GFX::Texture*>(inst.GetComponent<MeshRenderer>().mTextureRef[SPECULAR]);
 		}
 		// GFX::Texture& textureColorinst = systemManager->mResourceSystem->get_MaterialInstance(texturestr[0]);		// loads the diffuse texture
 		// GFX::Texture& textureNormalinst = systemManager->mResourceSystem->get_MaterialInstance(texturestr[1]);		// loads the normal texture
@@ -278,7 +282,7 @@ void GraphicsSystem::EditorDraw(float dt)
 		shaderinst.Activate();
 
 		glUniformMatrix4fv(shaderinst.GetUniformVP(), 1, GL_FALSE, &m_EditorCamera.viewProj()[0][0]);
-		
+
 		// Retrieve Point Light object
 		auto lightEntity = systemManager->ecs->GetEntitiesWith<PointLight>();
 		m_HasLight = !lightEntity.empty();
@@ -288,8 +292,8 @@ void GraphicsSystem::EditorDraw(float dt)
 
 		if (m_HasLight)
 		{
-			PointLight& lightData = lightEntity.get<PointLight>(lightEntity[0]);
-			Transform& lightTransform = Entity(lightEntity[0]).GetComponent<Transform>();
+			PointLight &lightData = lightEntity.get<PointLight>(lightEntity[0]);
+			Transform &lightTransform = Entity(lightEntity[0]).GetComponent<Transform>();
 
 			GLuint mLightPosShaderLocation = shaderinst.GetUniformLocation("uLightPos");
 			GLuint mViewPosShaderLocation = shaderinst.GetUniformLocation("uViewPos");
@@ -304,9 +308,10 @@ void GraphicsSystem::EditorDraw(float dt)
 		}
 
 		// bind texture unit
-		for (int i{ 0 }; i < 4; i++)
+		for (int i{0}; i < 4; i++)
 		{
-			if (inst.GetComponent<MeshRenderer>().mTextureCont[i] == true) {
+			if (inst.GetComponent<MeshRenderer>().mTextureCont[i] == true)
+			{
 				glBindTextureUnit(i, textureInst[i]->ID());
 			}
 		}
@@ -317,7 +322,7 @@ void GraphicsSystem::EditorDraw(float dt)
 		m_Textures.push_back(3);
 
 		GLuint uniform_tex = glGetUniformLocation(shaderID, "uTex");
-		glUniform1iv(uniform_tex, (GLsizei)m_Textures.size(), m_Textures.data());	// passing Texture ID to the fragment shader
+		glUniform1iv(uniform_tex, (GLsizei)m_Textures.size(), m_Textures.data()); // passing Texture ID to the fragment shader
 
 		GLuint debug_draw = glGetUniformLocation(shaderID, "uDebugDraw");
 		glUniform1i(debug_draw, m_DebugDrawing);
@@ -325,7 +330,7 @@ void GraphicsSystem::EditorDraw(float dt)
 		// send animation data over to the shader if there is animations
 		if (inst.HasComponent<Animator>() && _ENABLE_ANIMATIONS)
 		{
-			const auto& transform = inst.GetComponent<Animator>().mAnimator.m_FinalBoneMatrices;
+			const auto &transform = inst.GetComponent<Animator>().mAnimator.m_FinalBoneMatrices;
 			size_t totaltransform = transform.size();
 
 			for (size_t b{}; b < totaltransform; ++b)
@@ -344,9 +349,10 @@ void GraphicsSystem::EditorDraw(float dt)
 		m_Textures.clear();
 
 		// unbind the textures
-		for (int i{ 0 }; i < 4; i++) 
+		for (int i{0}; i < 4; i++)
 		{
-			if (inst.GetComponent<MeshRenderer>().mTextureCont[i] == true) {
+			if (inst.GetComponent<MeshRenderer>().mTextureCont[i] == true)
+			{
 				glBindTextureUnit(i, 0);
 			}
 		}
@@ -356,8 +362,8 @@ void GraphicsSystem::EditorDraw(float dt)
 	// TODO: Clears all instances that have been rendered from local buffer
 	m_Fbo.Unbind();
 
-	EnginePerformance::EndTrack("Game Graphics");
-	EnginePerformance::UpdateSystemMs("Game Graphics");
+	EnginePerformance::EndTrack("Graphics");
+	EnginePerformance::UpdateSystemMs("Graphics");
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -368,7 +374,8 @@ void GraphicsSystem::GameDraw(float dt)
 	auto meshRendererInstances = systemManager->ecs->GetEntitiesWith<MeshRenderer>();
 
 	auto localcamera = systemManager->ecs->GetEntitiesWith<Camera>();
-	if (localcamera.empty()) return; // Cannot find camera Richmond
+	if (localcamera.empty())
+		return; // Cannot find camera Richmond
 	Entity camera = localcamera.front();
 
 	// Prepare and bind the Framebuffer to be rendered on
@@ -376,13 +383,14 @@ void GraphicsSystem::GameDraw(float dt)
 	int fboWidth = m_GameFbo.GetWidth();
 	int fboHeight = m_GameFbo.GetHeight();
 
-	//m_Renderer.RenderAll(camera.GetComponent<Camera>().mCamera.viewProj());
+	// m_Renderer.RenderAll(camera.GetComponent<Camera>().mCamera.viewProj());
 
 	// Render all instances of a given mesh
 	for (Entity inst : meshRendererInstances)
 	{
 		std::string meshstr = inst.GetComponent<MeshRenderer>().mMeshPath;
-		if (renderedMesh.find(meshstr) != renderedMesh.end()) {
+		if (renderedMesh.find(meshstr) != renderedMesh.end())
+		{
 			// the mesh has been rendered before, skip it
 			continue;
 		}
@@ -391,18 +399,19 @@ void GraphicsSystem::GameDraw(float dt)
 		renderedMesh[meshstr] = 1;
 
 		// render the mesh and its instances here
-		GFX::Mesh& meshinst = *reinterpret_cast<GFX::Mesh*>(inst.GetComponent<MeshRenderer>().mMeshRef);
+		GFX::Mesh &meshinst = *reinterpret_cast<GFX::Mesh *>(inst.GetComponent<MeshRenderer>().mMeshRef);
 
 		// gets the shader filepath
 		std::pair<std::string, std::string> shaderstr = inst.GetComponent<MeshRenderer>().mShaderPath;
-		GFX::Shader& shaderinst = systemManager->mResourceSystem->get_Shader(shaderstr.first + shaderstr.second);
+		GFX::Shader &shaderinst = systemManager->mResourceSystem->get_Shader(shaderstr.first + shaderstr.second);
 		unsigned shaderID = shaderinst.GetHandle();
 
-		GFX::Texture* textureInst[4]{};
-		for (int i{ 0 }; i < 4; i++)
+		GFX::Texture *textureInst[4]{};
+		for (int i{0}; i < 4; i++)
 		{
-			if (inst.GetComponent<MeshRenderer>().mTextureCont[i] == true) {
-				textureInst[i] = reinterpret_cast<GFX::Texture*>(inst.GetComponent<MeshRenderer>().mTextureRef[i]);
+			if (inst.GetComponent<MeshRenderer>().mTextureCont[i] == true)
+			{
+				textureInst[i] = reinterpret_cast<GFX::Texture *>(inst.GetComponent<MeshRenderer>().mTextureRef[i]);
 			}
 		}
 
@@ -419,8 +428,8 @@ void GraphicsSystem::GameDraw(float dt)
 
 		if (m_HasLight)
 		{
-			PointLight& lightData = lightEntity.get<PointLight>(lightEntity[0]);
-			Transform& lightTransform = Entity(lightEntity[0]).GetComponent<Transform>();
+			PointLight &lightData = lightEntity.get<PointLight>(lightEntity[0]);
+			Transform &lightTransform = Entity(lightEntity[0]).GetComponent<Transform>();
 
 			GLuint mLightPosShaderLocation = shaderinst.GetUniformLocation("uLightPos");
 			GLuint mViewPosShaderLocation = shaderinst.GetUniformLocation("uViewPos");
@@ -434,9 +443,10 @@ void GraphicsSystem::GameDraw(float dt)
 			glUniform1f(mLightIntensityShaderLocation, lightData.mIntensity);
 		}
 
-		for (int i{ 0 }; i < 4; i++)
+		for (int i{0}; i < 4; i++)
 		{
-			if (inst.GetComponent<MeshRenderer>().mTextureCont[i] == true) {
+			if (inst.GetComponent<MeshRenderer>().mTextureCont[i] == true)
+			{
 				glBindTextureUnit(i, textureInst[i]->ID());
 			}
 		}
@@ -448,16 +458,17 @@ void GraphicsSystem::GameDraw(float dt)
 
 		// Bind mesh's VAO, copy render data into VBO, Draw
 		DrawAll(meshinst);
-		//glDrawElementsInstanced(GL_TRIANGLES, meshinst.GetIndexCount(), GL_UNSIGNED_INT, nullptr, meshinst.mLTW.size());
+		// glDrawElementsInstanced(GL_TRIANGLES, meshinst.GetIndexCount(), GL_UNSIGNED_INT, nullptr, meshinst.mLTW.size());
 
 		meshinst.UnbindVao();
 		shaderinst.Deactivate();
 		m_Textures.clear();
 
 		// unbind the textures
-		for (int i{ 0 }; i < 4; i++)
+		for (int i{0}; i < 4; i++)
 		{
-			if (inst.GetComponent<MeshRenderer>().mTextureCont[i] == true) {
+			if (inst.GetComponent<MeshRenderer>().mTextureCont[i] == true)
+			{
 				glBindTextureUnit(i, 0);
 			}
 		}
@@ -470,7 +481,6 @@ void GraphicsSystem::GameDraw(float dt)
 	m_GameFbo.Unbind();
 }
 
-
 /***************************************************************************/
 /*!
 \brief
@@ -479,7 +489,6 @@ void GraphicsSystem::GameDraw(float dt)
 /**************************************************************************/
 void GraphicsSystem::Exit()
 {
-
 }
 
 /***************************************************************************/
@@ -488,21 +497,21 @@ void GraphicsSystem::Exit()
 	Adds an instance of a mesh to be drawn, For instancing
 */
 /**************************************************************************/
-void GraphicsSystem::AddInstance(GFX::Mesh& mesh, Transform transform, unsigned entityID)
+void GraphicsSystem::AddInstance(GFX::Mesh &mesh, Transform transform, unsigned entityID)
 {
 	// Local to world transformation
 	mat4 scale = glm::scale(transform.mScale);
 	mat4 translate = glm::translate(transform.mTranslate);
 
-	glm::quat quatRotate = glm::quat(transform.mRotate);	// Retrieve quaternions via euler angles
-	glm::mat4 rotation = glm::toMat4(quatRotate);			// Retrieve rotation matrix via quaternions
+	glm::quat quatRotate = glm::quat(transform.mRotate); // Retrieve quaternions via euler angles
+	glm::mat4 rotation = glm::toMat4(quatRotate);		 // Retrieve rotation matrix via quaternions
 
 	mat4 world = translate * rotation * scale;
 	mesh.mLTW.push_back(world);
 	mesh.mTexEntID.push_back(vec4(0, (float)entityID + 0.5f, 0, 0));
 }
 
-void GraphicsSystem::AddInstance(GFX::Mesh& mesh, mat4 transform, unsigned entityID)
+void GraphicsSystem::AddInstance(GFX::Mesh &mesh, mat4 transform, unsigned entityID)
 {
 	mesh.mLTW.push_back(transform);
 	mesh.mTexEntID.push_back(vec4(0, (float)entityID + 0.5f, 0, 0));
@@ -511,13 +520,14 @@ void GraphicsSystem::AddInstance(GFX::Mesh& mesh, mat4 transform, unsigned entit
 /***************************************************************************/
 /*!
 \brief
-	Updates the camera's position. 
+	Updates the camera's position.
 */
 /**************************************************************************/
 void GraphicsSystem::SetCameraPosition(CAMERA_TYPE type, vec3 position)
 {
 	auto localcamera = systemManager->ecs->GetEntitiesWith<Camera>();
-	if (localcamera.empty()) return; // Cannot find camera Richmond
+	if (localcamera.empty())
+		return; // Cannot find camera Richmond
 	Entity camera = localcamera.front();
 
 	switch (type)
@@ -546,7 +556,8 @@ void GraphicsSystem::SetCameraPosition(CAMERA_TYPE type, vec3 position)
 void GraphicsSystem::SetCameraTarget(CAMERA_TYPE type, vec3 position)
 {
 	auto localcamera = systemManager->ecs->GetEntitiesWith<Camera>();
-	if (localcamera.empty()) return; // Cannot find camera Richmond
+	if (localcamera.empty())
+		return; // Cannot find camera Richmond
 	Entity camera = localcamera.front();
 
 	switch (type)
@@ -575,7 +586,8 @@ void GraphicsSystem::SetCameraTarget(CAMERA_TYPE type, vec3 position)
 void GraphicsSystem::SetCameraProjection(CAMERA_TYPE type, float fovDegree, ivec2 size, float nearZ, float farZ)
 {
 	auto localcamera = systemManager->ecs->GetEntitiesWith<Camera>();
-	if (localcamera.empty()) return; // Cannot find camera Richmond
+	if (localcamera.empty())
+		return; // Cannot find camera Richmond
 	Entity camera = localcamera.front();
 
 	switch (type)
@@ -599,7 +611,8 @@ void GraphicsSystem::SetCameraProjection(CAMERA_TYPE type, float fovDegree, ivec
 void GraphicsSystem::SetCameraSize(CAMERA_TYPE type, ivec2 size)
 {
 	auto localcamera = systemManager->ecs->GetEntitiesWith<Camera>();
-	if (localcamera.empty()) return; // Cannot find camera Richmond
+	if (localcamera.empty())
+		return; // Cannot find camera Richmond
 	Entity camera = localcamera.front();
 
 	switch (type)
@@ -619,10 +632,11 @@ void GraphicsSystem::SetCameraSize(CAMERA_TYPE type, ivec2 size)
 	}
 }
 
-void GraphicsSystem::UpdateCamera(CAMERA_TYPE type, const float& dt)
+void GraphicsSystem::UpdateCamera(CAMERA_TYPE type, const float &dt)
 {
 	auto localcamera = systemManager->ecs->GetEntitiesWith<Camera>();
-	if (localcamera.empty()) return; // Cannot find camera Richmond
+	if (localcamera.empty())
+		return; // Cannot find camera Richmond
 	Entity camera = localcamera.front();
 
 	switch (type)
@@ -641,7 +655,7 @@ void GraphicsSystem::UpdateCamera(CAMERA_TYPE type, const float& dt)
 		Camera_Input::getInstance().updateCameraInput(m_EditorCamera, dt);
 		m_EditorCamera.Update();
 
-		//Camera_Input::getInstance().updateCameraInput(camera.GetComponent<Camera>().mCamera, dt);
+		// Camera_Input::getInstance().updateCameraInput(camera.GetComponent<Camera>().mCamera, dt);
 		camera.GetComponent<Camera>().mCamera.Update();
 		break;
 	}
@@ -650,7 +664,8 @@ void GraphicsSystem::UpdateCamera(CAMERA_TYPE type, const float& dt)
 vec3 GraphicsSystem::GetCameraPosition(CAMERA_TYPE type)
 {
 	auto localcamera = systemManager->ecs->GetEntitiesWith<Camera>();
-	if (localcamera.empty()) return vec3(); // Cannot find camera Richmond
+	if (localcamera.empty())
+		return vec3(); // Cannot find camera Richmond
 	Entity camera = localcamera.front();
 
 	switch (type)
@@ -669,7 +684,8 @@ vec3 GraphicsSystem::GetCameraPosition(CAMERA_TYPE type)
 vec3 GraphicsSystem::GetCameraTarget(CAMERA_TYPE type)
 {
 	auto localcamera = systemManager->ecs->GetEntitiesWith<Camera>();
-	if (localcamera.empty()) return vec3(); // Cannot find camera Richmond
+	if (localcamera.empty())
+		return vec3(); // Cannot find camera Richmond
 	Entity camera = localcamera.front();
 
 	switch (type)
@@ -688,7 +704,8 @@ vec3 GraphicsSystem::GetCameraTarget(CAMERA_TYPE type)
 vec3 GraphicsSystem::GetCameraDirection(CAMERA_TYPE type)
 {
 	auto localcamera = systemManager->ecs->GetEntitiesWith<Camera>();
-	if (localcamera.empty()) return vec3(); // Cannot find camera Richmond
+	if (localcamera.empty())
+		return vec3(); // Cannot find camera Richmond
 	Entity camera = localcamera.front();
 
 	switch (type)
@@ -704,12 +721,12 @@ vec3 GraphicsSystem::GetCameraDirection(CAMERA_TYPE type)
 	}
 }
 
-void GraphicsSystem::DrawAll(GFX::Mesh& mesh)
+void GraphicsSystem::DrawAll(GFX::Mesh &mesh)
 {
 	mesh.DrawAllInstances();
 }
 
-void GraphicsSystem::PrintMat4(const glm::mat4& input)
+void GraphicsSystem::PrintMat4(const glm::mat4 &input)
 {
 	std::cout << "=============================================================================\n";
 	std::cout << "| " << input[0][0] << " | " << input[1][0] << " | " << input[2][0] << " | " << input[3][0] << "\n";
@@ -723,7 +740,6 @@ void GraphicsSystem::UnpauseGlobalAnimation()
 {
 	m_EnableGlobalAnimations = true;
 }
-
 
 void GraphicsSystem::PauseGlobalAnimation()
 {

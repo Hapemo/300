@@ -143,6 +143,10 @@ void Inspect::update()
 		}
 
 
+		if (ent.HasComponent<Audio>()) {
+			Audio& audio = ent.GetComponent<Audio>();
+			audio.Inspect();
+		}
 		//--------------------------------------------// must be at the LAST OF THIS LOOP
 		Add_component(); 
 	}
@@ -218,6 +222,11 @@ void Inspect::Add_component() {
 			if (!Entity(Hierarchy::selectedId).HasComponent<PointLight>())
 				Entity(Hierarchy::selectedId).AddComponent<PointLight>();
 		}
+		if (ImGui::Selectable("Audio")) {
+			if (!Entity(Hierarchy::selectedId).HasComponent<Audio>())
+				Entity(Hierarchy::selectedId).AddComponent<Audio>();
+		}
+
 		ImGui::EndPopup();
 	}
 
@@ -243,11 +252,11 @@ void General::Inspect() {
 	ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
 		- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
 
-	if (ImGui::BeginCombo("##Tag", tag[tagid].c_str())) {
+	if (ImGui::BeginCombo("##Tag", enum_tag::ToString(tagid))) {
 
-		for (int i = 0; i < 5; i++) {
-			if (ImGui::Selectable(tag[i].c_str())) {
-				tagid = i;
+		for (int i = 0; i < enum_tag::COUNT; i++) {
+			if (ImGui::Selectable(enum_tag::ToString(tagid))) {
+				tagid = static_cast<enum_tag::enum_tag>(i);
 			}
 		}
 		ImGui::EndCombo();
@@ -732,4 +741,34 @@ void PlaneCollider::Inspect() {
 	}
 	if (delete_component == false)
 		Entity(Hierarchy::selectedId).RemoveComponent<PlaneCollider>();
+}
+
+void Audio::Inspect() {
+	bool delete_component = true;
+	auto audioEntities = systemManager->ecs->GetEntitiesWith<Audio>();
+
+	if (ImGui::CollapsingHeader("Audio", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
+	{
+		if (ImGui::BeginDragDropTarget())
+		{
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_AUDIO"))
+			{
+				const char* audioFilePath = (const char*)payload->Data;
+
+				// Now you have the audioFilePath, you can do something with it.
+				// For example, you can set it to a member variable of the Audio component.
+				//mAudioFilePath = audioFilePath;
+
+				// You might want to load the audio file and do further processing here.
+
+				// Example code for loading audio file using a hypothetical LoadAudio function:
+				// mAudioData = LoadAudio(mAudioFilePath);
+
+				// Note: You will need to implement the LoadAudio function based on your audio system.
+
+				// Additional logic can be added based on what you want to do with the audio file.
+			}
+		}
+		ImGui::EndDragDropTarget();
+	}
 }

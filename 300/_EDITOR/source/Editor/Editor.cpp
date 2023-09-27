@@ -36,7 +36,7 @@ Returns main window for docking
 #include "Inspect.h"
 #include "MenuPanel.h"
 #include "EditorLogger.h"
-#include "PrefabWindow.h"
+#include "Debug/EnginePerformance.h"
 #include "PrefabWindow.h"
 #include "GameScene.h"
 #include "TabWindow.h"
