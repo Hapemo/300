@@ -3,7 +3,7 @@
         "EntityID": 1,
         "General": {
             "Name": "Entity1",
-            "Active": false,
+            "Active": true,
             "Paused": false,
             "Subtag": "Active"
         },
@@ -19,16 +19,16 @@
                 0.0
             ],
             "Translate": [
-                3.9851818084716797,
-                -2.620398998260498,
-                0.0
+                400.0,
+                121.0,
+                -9.0
             ]
         },
         "Camera": {
             "Position": [
-                0.0,
-                0.0,
-                20.0
+                400.0,
+                121.0,
+                11.0
             ],
             "Target": [
                 0.0,
@@ -36,11 +36,104 @@
                 0.0
             ],
             "Size": [
-                544,
+                583,
                 607
             ],
             "Near": 0.10000000149011612,
             "Far": 900.0
+        }
+    },
+    {
+        "EntityID": 2,
+        "General": {
+            "Name": "Entity2",
+            "Active": true,
+            "Paused": false,
+            "Subtag": "Active"
+        },
+        "Transform": {
+            "Scale": [
+                270.382568359375,
+                211.37704467773438,
+                67.81583404541016
+            ],
+            "Rotate": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Translate": [
+                0.0,
+                0.0,
+                0.0
+            ]
+        },
+        "MeshRenderer": {
+            "ShaderPath": [
+                "../_GRAPHICS/shader_files/animations_vert.glsl",
+                "../_GRAPHICS/shader_files/pointLight_frag.glsl"
+            ],
+            "MaterialInstancePath": [
+                "../assets/Compressed/Vampire_diffuse.ctexture",
+                "../assets/Compressed/Vampire_normal.ctexture",
+                "../assets/Compressed/Vampire_emission.ctexture",
+                "../assets/Compressed/Vampire_specular.ctexture"
+            ],
+            "MeshPath": "../assets/compiled_geom/dancing_vampire.geom",
+            "GUID": 0,
+            "TextureCont": [
+                true,
+                true,
+                false,
+                false
+            ]
+        },
+        "BoxCollider": {
+            "ScaleOffset": [
+                1.0,
+                0.800000011920929,
+                1.5
+            ],
+            "TranslateOffset": [
+                0.0,
+                80.0,
+                0.0
+            ]
+        }
+    },
+    {
+        "EntityID": 3,
+        "General": {
+            "Name": "NewObject",
+            "Active": true,
+            "Paused": true,
+            "Subtag": "Active"
+        },
+        "Transform": {
+            "Scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "Rotate": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Translate": [
+                28.78548240661621,
+                81.32376098632813,
+                62.877052307128906
+            ]
+        },
+        "PointLight": {
+            "LightColor": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "Attenuation": 0.0,
+            "Intensity": 13.0
         }
     }
 ]

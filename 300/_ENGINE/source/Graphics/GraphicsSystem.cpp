@@ -376,7 +376,7 @@ void GraphicsSystem::GameDraw(float dt)
 	int fboWidth = m_GameFbo.GetWidth();
 	int fboHeight = m_GameFbo.GetHeight();
 
-	m_Renderer.RenderAll(camera.GetComponent<Camera>().mCamera.viewProj());
+	//m_Renderer.RenderAll(camera.GetComponent<Camera>().mCamera.viewProj());
 
 	// Render all instances of a given mesh
 	for (Entity inst : meshRendererInstances)
@@ -407,6 +407,8 @@ void GraphicsSystem::GameDraw(float dt)
 		}
 
 		shaderinst.Activate();
+		mat4 gameCamVP = camera.GetComponent<Camera>().mCamera.viewProj();
+		glUniformMatrix4fv(shaderinst.GetUniformVP(), 1, GL_FALSE, &gameCamVP[0][0]);
 
 		// Retrieve Point Light object
 		auto lightEntity = systemManager->ecs->GetEntitiesWith<PointLight>();
