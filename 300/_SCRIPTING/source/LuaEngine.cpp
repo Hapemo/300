@@ -69,8 +69,8 @@ void LuaGeneral()
     systemManager->mScriptingSystem->luaState.new_usertype<General>(
         "General", sol::constructors<>(),
         "name", &General::name,
-        "tagid", &General::tagid,
-        "subtag", &General::subtag,
+        //"tagid", &General::tagid,
+        //"subtag", &General::subtag,
         "isActive", &General::isActive
         );
 }

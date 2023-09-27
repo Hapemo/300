@@ -12,14 +12,16 @@
 
 //#include "rttr/registration.h"
 
-DECLARE_ENUMSTRING(enum_tag, PLAYER, ENEMY, BULLET, STATIC, BUILDING)
+//DECLARE_ENUMSTRING(enum_tag, PLAYER, ENEMY, BULLET, STATIC, BUILDING)
 
 struct General
 {
 	std::string name;
 	/*TAG tag;*/
 	//enum_tag::enum_tag tag;
-	enum_tag::enum_tag tagid;
+	//enum_tag::enum_tag tagid;
+	std::string tag[5] = { "PLAYER","ENEMY","BULLET","STATIC","BUILDING" };
+	int tagid{ 0 };
 	SUBTAG subtag;
 	bool isActive;
 	bool isPaused;
