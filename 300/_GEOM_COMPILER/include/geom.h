@@ -78,7 +78,7 @@ namespace _GEOM
 
 		struct Mesh
 		{
-			std::array<char, 64>		m_name;				// Name of mesh
+			std::array<char, 64>		m_name{};			// Name of mesh
 			std::vector<Animation>		m_Animation;		// Animation data of the mesh
 			std::vector<Geom::Texture>	m_Texture;			// The texture that the mesh contains
 			bbox						m_MeshBBOX;
@@ -124,7 +124,7 @@ namespace _GEOM
 			std::vector<Geom::VertexPos>				m_Vertex;
 			std::vector<Geom::VertexExtra>				m_Extra;
 			std::vector<uint32_t>						m_Indices;
-			int m_iMaterial;
+			int m_iMaterial{};
 		};
 
 		struct Mesh

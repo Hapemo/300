@@ -332,7 +332,6 @@ namespace Serialization
 		ReadUnsigned(inFile, GeomData.m_nSubMeshes);
 		std::unique_ptr<_GEOM::Geom::SubMesh[]> subMesh = std::make_unique<_GEOM::Geom::SubMesh[]>(GeomData.m_nSubMeshes);
 
-		char ch;
 		for (unsigned i{}; i < GeomData.m_nSubMeshes; ++i)
 		{
 			std::string SubMeshStr;

@@ -2,8 +2,13 @@
   Script.cpp
   ScriptingSystem.cpp
 C:\Users\r.choo\Documents\GitHub\300\300\_ENGINE\include\ECS\ECS.h(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline (compiling source file source\Script.cpp)
-C:\Users\r.choo\Documents\GitHub\300\300\_ENGINE\include\ECS\ECS.h(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline (compiling source file source\ScriptingSystem.cpp)
 C:\Users\r.choo\Documents\GitHub\300\300\_ENGINE\include\ECS\ECS.h(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline (compiling source file source\LuaEngine.cpp)
+C:\Users\r.choo\Documents\GitHub\300\300\_ENGINE\include\ECS\ECS.h(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline (compiling source file source\ScriptingSystem.cpp)
+C:\Users\r.choo\Documents\GitHub\300\300\_ENGINE\include\ECS\ECS.h(148,2): warning C4002: too many arguments for function-like macro invocation 'PASSERT' (compiling source file source\LuaEngine.cpp)
+C:\Users\r.choo\Documents\GitHub\300\300\_ENGINE\include\ECS\ECS.h(161,2): warning C4002: too many arguments for function-like macro invocation 'PASSERT' (compiling source file source\LuaEngine.cpp)
+C:\Users\r.choo\Documents\GitHub\300\300\_ENGINE\include\ECS\ECS.h(175,2): warning C4002: too many arguments for function-like macro invocation 'PASSERT' (compiling source file source\LuaEngine.cpp)
+C:\Users\r.choo\Documents\GitHub\300\300\_ENGINE\include\ECS\ECS.h(188,2): warning C4002: too many arguments for function-like macro invocation 'PASSERT' (compiling source file source\LuaEngine.cpp)
+C:\Users\r.choo\Documents\GitHub\300\300\_ENGINE\include\ECS\ECS.h(201,2): warning C4002: too many arguments for function-like macro invocation 'PASSERT' (compiling source file source\LuaEngine.cpp)
 C:\Users\r.choo\Documents\GitHub\300\300\_ENGINE\include\ECS\ECS.h(148,2): warning C4002: too many arguments for function-like macro invocation 'PASSERT' (compiling source file source\ScriptingSystem.cpp)
 C:\Users\r.choo\Documents\GitHub\300\300\_ENGINE\include\ECS\ECS.h(161,2): warning C4002: too many arguments for function-like macro invocation 'PASSERT' (compiling source file source\ScriptingSystem.cpp)
 C:\Users\r.choo\Documents\GitHub\300\300\_ENGINE\include\ECS\ECS.h(175,2): warning C4002: too many arguments for function-like macro invocation 'PASSERT' (compiling source file source\ScriptingSystem.cpp)
@@ -14,9 +19,4 @@ C:\Users\r.choo\Documents\GitHub\300\300\_ENGINE\include\ECS\ECS.h(161,2): warni
 C:\Users\r.choo\Documents\GitHub\300\300\_ENGINE\include\ECS\ECS.h(175,2): warning C4002: too many arguments for function-like macro invocation 'PASSERT' (compiling source file source\Script.cpp)
 C:\Users\r.choo\Documents\GitHub\300\300\_ENGINE\include\ECS\ECS.h(188,2): warning C4002: too many arguments for function-like macro invocation 'PASSERT' (compiling source file source\Script.cpp)
 C:\Users\r.choo\Documents\GitHub\300\300\_ENGINE\include\ECS\ECS.h(201,2): warning C4002: too many arguments for function-like macro invocation 'PASSERT' (compiling source file source\Script.cpp)
-C:\Users\r.choo\Documents\GitHub\300\300\_ENGINE\include\ECS\ECS.h(148,2): warning C4002: too many arguments for function-like macro invocation 'PASSERT' (compiling source file source\LuaEngine.cpp)
-C:\Users\r.choo\Documents\GitHub\300\300\_ENGINE\include\ECS\ECS.h(161,2): warning C4002: too many arguments for function-like macro invocation 'PASSERT' (compiling source file source\LuaEngine.cpp)
-C:\Users\r.choo\Documents\GitHub\300\300\_ENGINE\include\ECS\ECS.h(175,2): warning C4002: too many arguments for function-like macro invocation 'PASSERT' (compiling source file source\LuaEngine.cpp)
-C:\Users\r.choo\Documents\GitHub\300\300\_ENGINE\include\ECS\ECS.h(188,2): warning C4002: too many arguments for function-like macro invocation 'PASSERT' (compiling source file source\LuaEngine.cpp)
-C:\Users\r.choo\Documents\GitHub\300\300\_ENGINE\include\ECS\ECS.h(201,2): warning C4002: too many arguments for function-like macro invocation 'PASSERT' (compiling source file source\LuaEngine.cpp)
   _SCRIPTING.vcxproj -> C:\Users\r.choo\Documents\GitHub\300\300\x64\Debug\_SCRIPTING.lib
