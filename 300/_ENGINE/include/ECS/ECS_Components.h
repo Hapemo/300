@@ -14,14 +14,17 @@
 struct General
 {
 	std::string name;
-	TAG tag;
+	/*TAG tag;*/
+
+	std::string tag[5] = {"PLAYER","ENEMY","BULLET","STATIC","BUILDING"};
+	int tagid {0};
 	SUBTAG subtag;
 	bool isActive;
 	bool isPaused;
 
-	General() 
-	: name(""), tag(TAG::UNKNOWN), subtag(SUBTAG::ACTIVE), isActive(true) 
-	{};
+	//General() 
+	//: name(""), tag(TAG::UNKNOWN), subtag(SUBTAG::ACTIVE), isActive(true) 
+//	{};
 
 	void								Inspect();
 

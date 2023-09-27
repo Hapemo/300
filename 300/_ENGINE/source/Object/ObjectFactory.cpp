@@ -245,7 +245,7 @@ Entity ObjectFactory::DeserializePrefab(const std::string& filename, int id)
 	curr.name = temp.name + " Prefab " + std::to_string(id);
 	curr.isActive = true;
 	curr.isPaused = true;
-	curr.tag = temp.tag;
+	//curr.tag = temp.tag;
 	curr.subtag = temp.subtag;
 
 	Transform tempX = eJ.GetTransformJSON();
