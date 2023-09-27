@@ -94,7 +94,7 @@ void Inspect::update()
 		Entity ent(Hierarchy::selectedId);
 
 		General& Inspector = ent.GetComponent<General>();
-		//Inspector.Inspect();
+		Inspector.Inspect();
 
 
 
@@ -213,7 +213,31 @@ void Inspect::Add_component() {
 
 	mPopup = false; 
 }
+void General::Inspect() {
 
+
+	ImGui::Button("Name");
+	ImGui::SameLine();
+	ImGui::InputText("##naming",&name);
+
+
+	//ImGui::Dummy(ImVec2(0.0, 5.f));
+
+
+	ImGui::Text("Tag");
+	ImGui::SameLine();
+
+	if (ImGui::BeginCombo("##Tag", tag[tagid].c_str())) {
+
+		for (int i = 0; i < 5; i++) {
+			if (ImGui::Selectable(tag[i].c_str())) {
+				tagid = i;
+			}
+		}
+		ImGui::EndCombo();
+	}
+
+}
 
 void Transform::Inspect() {
 	if (ImGui::CollapsingHeader("Transform", ImGuiTreeNodeFlags_DefaultOpen)) {
