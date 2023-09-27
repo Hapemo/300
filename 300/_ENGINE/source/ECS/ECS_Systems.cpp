@@ -47,7 +47,6 @@ void SystemManager::Init(bool isEditor, GFX::Window *window)
 	mScriptingSystem.get()->Init();
 	PINFO("Init Scripting System");
 
-	mGameStateSystem.get()->Init();
 
 	mResourceSystem.get()->Init();
 	mResourceTySystem.get()->Init();
@@ -55,7 +54,10 @@ void SystemManager::Init(bool isEditor, GFX::Window *window)
 
 	// all the resources are loaaded here
 	//mGameStateSystem.get()->Init();
+	mGameStateSystem.get()->Init();
 	mGraphicsSystem.get()->Init();
+	mGraphicsSystem->PauseGlobalAnimation();
+
 
 	mAudioSystem.get()->Init();
 	PINFO("Init Game state System");

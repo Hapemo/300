@@ -1,7 +1,7 @@
 [
     {
         "Scene": {
-            "SceneName": "test",
+            "SceneName": "Test",
             "Pause": false,
             "ForceRender": true
         }

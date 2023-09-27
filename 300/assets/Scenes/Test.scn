@@ -1,8 +1,8 @@
 [
     {
-        "EntityID": 1,
+        "EntityID": 3,
         "General": {
-            "Name": "Entity1",
+            "Name": "NewObject",
             "Active": true,
             "Paused": false,
             "Subtag": "Active"
@@ -19,32 +19,23 @@
                 0.0
             ],
             "Translate": [
-                400.0,
-                121.0,
-                -9.0
+                28.78548240661621,
+                81.32376098632813,
+                62.877052307128906
             ]
         },
-        "Camera": {
-            "Position": [
-                400.0,
-                121.0,
-                11.0
+        "PointLight": {
+            "LightColor": [
+                1.0,
+                1.0,
+                1.0
             ],
-            "Target": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "Size": [
-                583,
-                607
-            ],
-            "Near": 0.10000000149011612,
-            "Far": 900.0
+            "Attenuation": 0.0,
+            "Intensity": 13.0
         }
     },
     {
-        "EntityID": 2,
+        "EntityID": 1048577,
         "General": {
             "Name": "Entity2",
             "Active": true,
@@ -102,11 +93,11 @@
         }
     },
     {
-        "EntityID": 3,
+        "EntityID": 1048578,
         "General": {
-            "Name": "NewObject",
+            "Name": "Entity1",
             "Active": true,
-            "Paused": true,
+            "Paused": false,
             "Subtag": "Active"
         },
         "Transform": {
@@ -121,19 +112,28 @@
                 0.0
             ],
             "Translate": [
-                28.78548240661621,
-                81.32376098632813,
-                62.877052307128906
+                400.0,
+                121.0,
+                -9.0
             ]
         },
-        "PointLight": {
-            "LightColor": [
-                1.0,
-                1.0,
-                1.0
+        "Camera": {
+            "Position": [
+                400.0,
+                121.0,
+                11.0
             ],
-            "Attenuation": 0.0,
-            "Intensity": 13.0
+            "Target": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Size": [
+                556,
+                607
+            ],
+            "Near": 0.10000000149011612,
+            "Far": 900.0
         }
     }
 ]
