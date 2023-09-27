@@ -46,20 +46,6 @@ void Script::Run(const char* funcName)
     sol::protected_function func = env[funcName];
     sol::protected_function_result result = func();
 
-    // Check if function is valid
-    if (!func.valid())
-    {
-        //if (isOnce == false)
-        //{
-            sol::error err = result;
-            //PERROR("Error getting function: %s.\n", err.what());
-            std::cout << "Error getting function!" << std::endl;
-            std::cout << err.what() << std::endl;
-            //isOnce = true;
-        //}
-        return;
-    }
-
     // Will throw error if type is different
     if (!result.valid())
     {
@@ -67,7 +53,7 @@ void Script::Run(const char* funcName)
         //{
             sol::error err = result;
             //PERROR("Error running function: %s.\n", err.what());
-            std::cout << "Error running function!" << std::endl;
+            std::cout << "Error running function! From " << scriptFile << " of function " << funcName << std::endl;
             std::cout << err.what() << std::endl;
             //isOnce = true;
         //}
