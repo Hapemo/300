@@ -23,8 +23,8 @@ struct General
 	std::string tag[5] = { "PLAYER","ENEMY","BULLET","STATIC","BUILDING" };
 	int tagid{ 0 };
 	SUBTAG subtag;
-	bool isActive;
-	bool isPaused;
+	bool isActive{};
+	bool isPaused{};
 
 	General() 
 	: name(""), subtag(SUBTAG::ACTIVE), isActive(true) 
@@ -63,7 +63,7 @@ struct MeshRenderer
 	std::string							mMaterialInstancePath[4] {" "," " ," " ," " };
 	std::string							mMeshPath;
 	
-	void*								mMeshRef;
+	void*								mMeshRef{};
 	void*								mTextureRef[4];
 	bool								mTextureCont[4];
 
@@ -203,7 +203,7 @@ struct Prefab
 struct PointLight
 {
 	vec3	mLightColor{ 1.f, 1.f, 1.f };
-	float	mAttenuation;
-	float	mIntensity;
+	float	mAttenuation{};
+	float	mIntensity{};
 	void Inspect();
 };

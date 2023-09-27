@@ -5,12 +5,12 @@
 
 PhysicsSystem::PhysicsSystem()
 {
-	mMaterials[MATERIAL::RUBBER] = CreateMaterial(0.9, 0.8, 0.2);
-	mMaterials[MATERIAL::WOOD] = CreateMaterial(0.5, 0.4, 0.3);
-	mMaterials[MATERIAL::METAL] = CreateMaterial(0.7, 0.6, 0.05);
-	mMaterials[MATERIAL::ICE] = CreateMaterial(0.1, 0.05, 0.1);
-	mMaterials[MATERIAL::CONCRETE] = CreateMaterial(0.6, 0.5, 0.2);
-	mMaterials[MATERIAL::GLASS] = CreateMaterial(0.4, 0.3, 0.7);
+	mMaterials[MATERIAL::RUBBER] = CreateMaterial(0.9f, 0.8f, 0.2f);
+	mMaterials[MATERIAL::WOOD] = CreateMaterial(0.5f, 0.4f, 0.3f);
+	mMaterials[MATERIAL::METAL] = CreateMaterial(0.7f, 0.6f, 0.05f);
+	mMaterials[MATERIAL::ICE] = CreateMaterial(0.1f, 0.05f, 0.1f);
+	mMaterials[MATERIAL::CONCRETE] = CreateMaterial(0.6f, 0.5f, 0.2f);
+	mMaterials[MATERIAL::GLASS] = CreateMaterial(0.4f, 0.3f, 0.7f);
 }
 
 void PhysicsSystem::Init()

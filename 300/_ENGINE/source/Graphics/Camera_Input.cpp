@@ -92,7 +92,7 @@ void Camera_Input::updateCameraInput(GFX::Camera& cam, const float& dt)
 	}
 
 	//!< Camera Zoom
-	cam.mFovDegree -= Input::GetScroll();
+	cam.mFovDegree -= static_cast<float>(Input::GetScroll());
 	if (cam.mFovDegree < 1.0f) {
 		cam.mFovDegree = 1.0f;
 	}
