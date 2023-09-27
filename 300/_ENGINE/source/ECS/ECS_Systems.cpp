@@ -47,11 +47,12 @@ void SystemManager::Init(bool isEditor, GFX::Window* window)
 
 	mResourceSystem.get()->Init();
 	mResourceTySystem.get()->Init();
-	mGraphicsSystem.get()->Init();
 	PINFO("Init Graphics System");
 
 	// all the resources are loaaded here
 	mGameStateSystem.get()->Init();
+	mGraphicsSystem.get()->Init();
+
 	mAudioSystem.get()->Init();
 	PINFO("Init Game state System");
 	mPhysicsSystem.get()->Init();
@@ -64,6 +65,18 @@ void SystemManager::Reset()
 	mGameStateSystem.get()->Init();
 	mPhysicsSystem.get()->Init();
 	mIsPlay = false;
+}
+
+void SystemManager::Pause()
+{
+	mIsPlay = false; 
+	mGraphicsSystem->PauseGlobalAnimation();
+}
+
+void SystemManager::Play()
+{
+	mIsPlay = true; 
+	mGraphicsSystem->UnpauseGlobalAnimation();
 }
 
 void SystemManager::Update(float dt)

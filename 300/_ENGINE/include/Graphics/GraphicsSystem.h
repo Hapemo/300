@@ -57,6 +57,10 @@ public:
 	// Helper Function
 	void PrintMat4(const glm::mat4& input);
 
+	//pause
+	void PauseGlobalAnimation();
+	void UnpauseGlobalAnimation();
+
 
 	GFX::DebugRenderer m_Renderer;		// isolated to debug draws
 	GFX::FBO m_Fbo;
@@ -74,8 +78,9 @@ public:
 	std::vector<int> m_Textures;
 
 	// -- Flags --
-	bool m_EditorMode;
-	bool m_DebugDrawing{ 1 };			// debug drawing 
+	int		m_DebugDrawing{ 1 };			// debug drawing 
+	bool	m_EditorMode;
+	bool	m_EnableGlobalAnimations{ 1 };
 
 	// -- Private Functions --
 	void DrawAll(GFX::Mesh& mesh);		// Renders all instances of a given mesh

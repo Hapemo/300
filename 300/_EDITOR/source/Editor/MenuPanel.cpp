@@ -44,10 +44,6 @@ void MenuPanel::update()
                     systemManager->mGameStateSystem->mCurrentGameState.mScenes[i].Save();
             }
 
-            if (ImGui::MenuItem("Save Scene")) {
-                systemManager->mGameStateSystem->mCurrentGameState.mScenes[Hierarchy::selectedScene].Save();
-            }
-
 
             ImGui::EndMenu();
         }
@@ -255,8 +251,11 @@ void MenuPanel::update()
         }
         int temp = ImGui::GetWindowSize().x - 70;
         ImGui::SetCursorPosX(temp);
-        ImGui::Checkbox("Debug", &systemManager->mGraphicsSystem->m_DebugDrawing);
 
+        static bool ischecked = systemManager->mGraphicsSystem->m_DebugDrawing;
+        if (ImGui::Checkbox("Debug", &ischecked)) {
+            systemManager->mGraphicsSystem->m_DebugDrawing = ischecked ? 1 : 0;
+        }
 
         ImGui::EndMenuBar();
 
