@@ -102,13 +102,13 @@ void EditorApplication::MainUpdate()
 void EditorApplication::FirstUpdate()
 {
     FPSManager::Update(0.01f);
-    Accumulator::Update(FPSManager::dt);
+    Accumulator::Update(static_cast<float>(FPSManager::dt));
     mWindow.PollEvents(); // win manafer
 }
 
 void EditorApplication::SystemUpdate()
 {
-    systemManager->Update(FPSManager::dt);
+    systemManager->Update(static_cast<float>(FPSManager::dt));
 }
 
 void EditorApplication::SecondUpdate()

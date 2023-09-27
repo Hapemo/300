@@ -125,8 +125,8 @@ void ContentBrowser::update()
 
 					//format the string from \\ to /.
 					//format_string(path_str);
-					int posstart = path_str.find_last_of("\\");
-					int posend = path_str.find_last_of(".");
+					int posstart = static_cast<int>(path_str.find_last_of("\\"));
+					int posend = static_cast<int>(path_str.find_last_of("."));
 
 					std::string newpath = path_str.substr(posstart + 1, posend - (posstart + 1));
 
@@ -139,8 +139,8 @@ void ContentBrowser::update()
 				if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) {
 
 
-					int posstart = filename_string.find_last_of("\\");
-					int posend = filename_string.find_last_of(".");
+					int posstart = static_cast<int>(filename_string.find_last_of("\\"));
+					int posend = static_cast<int>(filename_string.find_last_of("."));
 					std::string newpath = filename_string.substr(posstart + 1, posend);
 
 					Entity toEdit = systemManager->ecs->StartEditPrefab(newpath);

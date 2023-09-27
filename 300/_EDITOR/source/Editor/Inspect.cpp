@@ -539,8 +539,8 @@ void MeshRenderer::Inspect() {
 	bool delete_component{ true };
 	if (ImGui::CollapsingHeader("MeshRenderer", &delete_component,ImGuiTreeNodeFlags_DefaultOpen)) {
 		
-		int st = mMeshPath.find_last_of("/");
-		int ed = mMeshPath.find_last_of(".");
+		int st = static_cast<int>(mMeshPath.find_last_of("/"));
+		int ed = static_cast<int>(mMeshPath.find_last_of("."));
 		std::string tempPath = mMeshPath.substr(st + 1, ed - (st + 1));
 
 		ImGui::Text("Mesh");
@@ -603,8 +603,8 @@ void MeshRenderer::Inspect() {
 					}
 					ImGui::EndDragDropTarget();
 				}
-				int posstart = mMaterialInstancePath[i].find_last_of("/");
-				int posend = mMaterialInstancePath[i].find_last_of(".");
+				int posstart = static_cast<int>(mMaterialInstancePath[i].find_last_of("/"));
+				int posend = static_cast<int>(mMaterialInstancePath[i].find_last_of("."));
 
 				std::string newpath = mMaterialInstancePath[i].substr(posstart+1, posend-(posstart+1));
 
