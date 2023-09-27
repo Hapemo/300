@@ -7,19 +7,26 @@
 #include "ECS.h"
 #include "Audio/AudioType.h"
 #include <Animator.hpp>
+#include <Camera.hpp>
+
 //#include "rttr/registration.h"
 
 struct General
 {
 	std::string name;
-	TAG tag;
+	/*TAG tag;*/
+
+	std::string tag[5] = {"PLAYER","ENEMY","BULLET","STATIC","BUILDING"};
+	int tagid {0};
 	SUBTAG subtag;
 	bool isActive;
 	bool isPaused;
 
-	General() 
-	: name(""), tag(TAG::UNKNOWN), subtag(SUBTAG::ACTIVE), isActive(true) 
-	{};
+	//General() 
+	//: name(""), tag(TAG::UNKNOWN), subtag(SUBTAG::ACTIVE), isActive(true) 
+//	{};
+
+	void								Inspect();
 
 	//RTTR_ENABLE()
 };
@@ -175,6 +182,15 @@ struct Audio
 	//RTTR_ENABLE()
 	void							Inspect();
 };
+
+
+struct Camera 
+{
+	GFX::Camera						mCamera;
+
+	void							Inspect();
+};
+
 
 //RTTR_REGISTRATION
 //{

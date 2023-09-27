@@ -93,6 +93,11 @@ void Inspect::update()
 		
 		Entity ent(Hierarchy::selectedId);
 
+		General& Inspector = ent.GetComponent<General>();
+		//Inspector.Inspect();
+
+
+
 		if (ent.HasComponent<Transform>()) {
 			Transform& transform = ent.GetComponent<Transform>();
 			transform.Inspect();
@@ -125,7 +130,15 @@ void Inspect::update()
 		if (ent.HasComponent<PlaneCollider>()) {
 			PlaneCollider& planeCollider = ent.GetComponent<PlaneCollider>();
 			planeCollider.Inspect();
+
 		}
+
+		if (ent.HasComponent<Camera>()) {
+			Camera& cam = ent.GetComponent<Camera>();
+			cam.Inspect();
+		}
+
+
 		//--------------------------------------------// must be at the LAST OF THIS LOOP
 		Add_component(); 
 	}
@@ -163,6 +176,8 @@ void Inspect::Add_component() {
 		//{
 
 		//}
+
+
 		if (ImGui::Selectable("RigidBody")) {
 			if(!Entity(Hierarchy::selectedId).HasComponent<RigidBody>())
 				Entity(Hierarchy::selectedId).AddComponent<RigidBody>();
@@ -223,6 +238,25 @@ void Transform::Inspect() {
 		ImGui::Text("Rotation");
 
 
+
+	}
+
+}
+
+void Camera::Inspect()
+{
+
+	if (ImGui::CollapsingHeader("Camera", ImGuiTreeNodeFlags_DefaultOpen))
+	{
+
+		ImGui::DragFloat3("##Position", (float*)&mCamera.mPosition);
+
+		ImGui::SameLine();
+		ImGui::Text("Position");
+		ImGui::Separator();
+
+		//ImGui::Text("Position: %d, %d, %d", mCamera.mPosition.x, mCamera.mPosition.y, mCamera.mPosition.z);
+		ImGui::Text("Target: %d, %d, %d", mCamera.mTarget.x, mCamera.mTarget.y, mCamera.mTarget.z);
 
 	}
 
@@ -367,8 +401,13 @@ void Animator::Inspect()
 void MeshRenderer::Inspect() {
 	bool delete_component{ true };
 	if (ImGui::CollapsingHeader("MeshRenderer", &delete_component,ImGuiTreeNodeFlags_DefaultOpen)) {
+		
+		int st = mMeshPath.find_last_of("/");
+		int ed = mMeshPath.find_last_of(".");
+		std::string tempPath = mMeshPath.substr(st + 1, ed - (st + 1));
 
-		ImGui::Text(mMeshPath.c_str());
+		ImGui::Text("Mesh");
+
 		if (ImGui::BeginDragDropTarget())
 		{
 			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_GEOM")) {
@@ -379,9 +418,9 @@ void MeshRenderer::Inspect() {
 
 				uid temp(mMeshPath);
 				mMeshRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(temp.id));
-					
+
 				GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mMeshRef);
-				
+
 				Entity entins(Hierarchy::selectedId);
 				if (entins.HasComponent<Animator>() && meshinst->mHasAnimation)
 				{
@@ -399,49 +438,79 @@ void MeshRenderer::Inspect() {
 			ImGui::EndDragDropTarget();
 		}
 
+		ImGui::SameLine();
+
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcTextSize(tempPath.c_str()).x
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		ImGui::Text(tempPath.c_str());
+
+		
+
+		ImGui::Dummy(ImVec2(0.0f, 10.0f));
+
+		std::string textures[4] = { "DIFFUSE","NORMAL", "EMISSION","SPECULAR"};
+
 		for (int i{ 0 }; i <4; i++) {
-
 			if (mMaterialInstancePath[i] != "") {
+				ImGui::Selectable(textures[i].c_str());
+				if (ImGui::BeginDragDropTarget())
+				{
+					if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_TEXT")) {
 
+						const char* data = (const char*)payload->Data;
+						std::string data_str = std::string(data);
+						mMaterialInstancePath[i] = data_str;
+
+						uid temp(mMaterialInstancePath[i]);
+						mTextureRef[i] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(temp.id));
+					}
+					ImGui::EndDragDropTarget();
+				}
 				int posstart = mMaterialInstancePath[i].find_last_of("/");
 				int posend = mMaterialInstancePath[i].find_last_of(".");
 
 				std::string newpath = mMaterialInstancePath[i].substr(posstart+1, posend-(posstart+1));
 
-				ImGui::Selectable(newpath.c_str());
-					if (ImGui::BeginDragDropTarget())
-					{
-						if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_TEXT")) {
-
-							const char* data = (const char*)payload->Data;
-							std::string data_str = std::string(data);
-							mMaterialInstancePath[i] = data_str;
-
-							uid temp(mMaterialInstancePath[i]);
-							mTextureRef[i] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(temp.id));
-
-							
-
-						}
-						ImGui::EndDragDropTarget();
-					}
 				
+
+				ImGui::SameLine();
+
+				ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcTextSize(newpath.c_str()).x
+					- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+
+				ImGui::Selectable(newpath.c_str());
+
+				ImGui::Dummy(ImVec2(0.0f, 10.0f));
 			}
 			else {
 				ImGui::Selectable(" ");
-					if (ImGui::BeginDragDropTarget())
-					{
-						if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_TEXT")) {
 
-							const char* data = (const char*)payload->Data;
-							std::string data_str = std::string(data);
-							mMaterialInstancePath[i] = data_str;
-							uid temp(mMaterialInstancePath[i]);
-							mTextureRef[i] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(temp.id));
+				if (ImGui::BeginDragDropTarget())
+				{
+					if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_TEXT")) {
 
-						}
-						ImGui::EndDragDropTarget();
+						const char* data = (const char*)payload->Data;
+						std::string data_str = std::string(data);
+						mMaterialInstancePath[i] = data_str;
+
+						uid temp(mMaterialInstancePath[i]);
+						mTextureRef[i] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(temp.id));
 					}
+					ImGui::EndDragDropTarget();
+				}
+					//if (ImGui::BeginDragDropTarget())
+					//{
+					//	if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_TEXT")) {
+
+					//		const char* data = (const char*)payload->Data;
+					//		std::string data_str = std::string(data);
+					//		mMaterialInstancePath[i] = data_str;
+					//		uid temp(mMaterialInstancePath[i]);
+					//		mTextureRef[i] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(temp.id));
+
+					//	}
+					//	ImGui::EndDragDropTarget();
+					//}
 				
 			}
 		}

@@ -50,7 +50,7 @@ void SystemManager::Init(bool isEditor, GFX::Window* window)
 	PINFO("Init Graphics System");
 
 	// all the resources are loaaded here
-	mGameStateSystem.get()->Init();
+	//mGameStateSystem.get()->Init();
 	mGraphicsSystem.get()->Init();
 
 	mAudioSystem.get()->Init();
@@ -83,6 +83,8 @@ void SystemManager::Update(float dt)
 {
 	mGraphicsSystem.get()->Update(dt);
 	mGameStateSystem.get()->UpdateNextGSMState();
+	mGraphicsSystem.get()->EditorDraw(dt);
+	mGraphicsSystem.get()->GameDraw(dt);
 	if (!mIsPlay) return;
 
 	mInputActionSystem.get()->Update();

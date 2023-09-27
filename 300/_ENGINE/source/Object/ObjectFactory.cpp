@@ -4,7 +4,7 @@
 #include "GameState/GameState.h"
 #include "ConfigManager.h"
 #include "ResourceManagerTy.h"
-
+#include "Debug/Logger.h"
 // unused (technically)
 void ObjectFactory::DeserializeScene(const std::string& filename)
 {
@@ -232,7 +232,7 @@ Entity ObjectFactory::DeserializePrefab(const std::string& filename, int id)
 	entities.DeserializeFile(filename);
 
 	if (entities.EntitiesList().size() > 1)
-		throw ("multiple entities in prefab file!");
+		PWARNING("more than 1 entity in prefab file, taking first entity...");
 
 	EntityJSON& eJ = entities.EntitiesList().front();
 
@@ -245,7 +245,7 @@ Entity ObjectFactory::DeserializePrefab(const std::string& filename, int id)
 	curr.name = temp.name + " Prefab " + std::to_string(id);
 	curr.isActive = true;
 	curr.isPaused = true;
-	curr.tag = temp.tag;
+	//curr.tag = temp.tag;
 	curr.subtag = temp.subtag;
 
 	Transform tempX = eJ.GetTransformJSON();

@@ -70,8 +70,6 @@ void EditorApplication::SystemInit()
 void EditorApplication::MainUpdate()
 {
 
-
-
     while (!glfwWindowShouldClose(mWindow.GetHandle())) 
     {
         FirstUpdate();
@@ -82,9 +80,11 @@ void EditorApplication::MainUpdate()
 
         // Graphics update
 
-        auto windowSize = static_cast<SceneWindow*>(mMaineditor.mWindowlist["Editscene"])->winSize;
-            
-        systemManager->mGraphicsSystem->SetCameraSize(CAMERA_TYPE::CAMERA_TYPE_EDITOR, windowSize);
+        auto editorwindowsize = static_cast<SceneWindow*>(mMaineditor.mWindowlist["Editscene"])->winSize;
+        systemManager->mGraphicsSystem->SetCameraSize(CAMERA_TYPE::CAMERA_TYPE_EDITOR, editorwindowsize);
+
+        auto gamewindowsize = static_cast<SceneWindow*>(mMaineditor.mWindowlist["GameScene"])->winSize;
+        systemManager->mGraphicsSystem->SetCameraSize(CAMERA_TYPE::CAMERA_TYPE_GAME, gamewindowsize);
         mMaineditor.UIupdate(mWindow.GetHandle());
 
         mMaineditor.UIdraw(mWindow.GetHandle());

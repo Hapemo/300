@@ -38,6 +38,7 @@ Returns main window for docking
 #include "EditorLogger.h"
 #include "PrefabWindow.h"
 #include "PrefabWindow.h"
+#include "GameScene.h"
 //bool Editor::show_Inspector;
 //int Editor::entity {}; // static var for selected entity ID
 //bool Editor::Entity_Selected; // static var for Inspector to show
@@ -144,8 +145,8 @@ void Editor::UIinit(GLFWwindow* window)
     mWindowlist["Editscene"] = new SceneWindow;
     mWindowlist["Contentbrowser"] = new ContentBrowser;
     mWindowlist["Logger"] = new EditorLogger;
-
     mWindowlist["PrefabScene"] = new PrefabWindow;
+    mWindowlist["GameScene"] = new GameScene;
     //std::cout<< mWindowlist.size() << "test\n";
 
     //windowlist["ContentBrowser"] = new ContentBrowser;
@@ -252,10 +253,11 @@ void Editor::UIupdate(GLFWwindow* window) {
         else {
 
             ImGui::Begin(windows.first.c_str(), 0, windows.second->mWinFlag);
+
+            windows.second->update();
             if (windows.first == "Editscene") {
                 (static_cast<SceneWindow*>(windows.second))->RenderGuizmo();
             }
-            windows.second->update();
             ImGui::End();
         }
 

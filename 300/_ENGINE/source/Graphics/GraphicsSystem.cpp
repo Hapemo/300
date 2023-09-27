@@ -15,6 +15,21 @@ float second_entitytime{};
 
 void GraphicsSystem::Init()
 {
+
+#pragma region Camera entity
+
+	// only initialize an editor camera
+	if (systemManager->IsEditor())
+	{
+		Entity CameraEntity = systemManager->ecs->NewEntity();			// creating a new entity
+		systemManager->mGameStateSystem->mCurrentGameState.AddScene("NewScene");
+		systemManager->mGameStateSystem->mCurrentGameState.mScenes[0].mName = "Richmond";
+		systemManager->mGameStateSystem->mCurrentGameState.mScenes[0].mEntities.insert(CameraEntity);
+		CameraEntity.AddComponent<Camera>();
+	}
+
+#pragma endregion
+
 	// Get Window Handle
 	m_Window = systemManager->GetWindow();
 	m_Width = m_Window->size().x;
@@ -24,13 +39,21 @@ void GraphicsSystem::Init()
 
 	// Create FBO, with the width and height of the window
 	m_Fbo.Create(m_Width, m_Height, m_EditorMode);
+	m_GameFbo.Create(m_Width, m_Height, m_EditorMode);
 
 	// Set Cameras' starting position
 	SetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_ALL, { 0, 0, 20 });								// Position of camera
 	SetCameraTarget(CAMERA_TYPE::CAMERA_TYPE_ALL, { 0, 0, 0 });									// Target of camera
 	SetCameraProjection(CAMERA_TYPE::CAMERA_TYPE_ALL, 60.f, m_Window->size(), 0.1f, 900.f);		// Projection of camera
 
-	UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_ALL, 0.f);
+	if (m_EditorMode) {
+		// update both the editor and game camera
+		UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_ALL, 0.f);
+	}
+	else {
+		// only update the game camera if editor mode is not enabled
+		UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_GAME, 0.f);
+	}
 
 #if 0
 #pragma region create entity 1
@@ -128,18 +151,22 @@ void GraphicsSystem::Init()
 /**************************************************************************/
 void GraphicsSystem::Update(float dt)
 {
-	EnginePerformance::StartTrack("Graphics");
-	std::map<std::string, short> renderedMesh;
+	EnginePerformance::StartTrack("Game Graphics");
 
 	// update the camera's transformations, and its input
-	UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_EDITOR, dt);
+	if (m_EditorMode) {
+		// update both the editor and game camera
+		UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_ALL, dt);
+	}
+	else {
+		// only update the game camera if editor mode is not enabled
+		UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_GAME, dt);
+	}
 
 #pragma region update all the mesh instances
+
 	// Retrieve and update the mesh instances to be drawn
 	auto meshRendererInstances = systemManager->ecs->GetEntitiesWith<MeshRenderer>();
-	int a = meshRendererInstances.size();
-	if (a != 0)
-		a = a;
 	for (Entity inst : meshRendererInstances)
 	{
 		std::string meshstr = inst.GetComponent<MeshRenderer>().mMeshPath;
@@ -147,7 +174,6 @@ void GraphicsSystem::Update(float dt)
 
 		void* tt = inst.GetComponent<MeshRenderer>().mMeshRef;
 		GFX::Mesh& meshinst = *reinterpret_cast<GFX::Mesh*>(tt);
-
 
 		uid temp(meshstr);
 		//GFX::Mesh& meshinst = *(systemManager->mResourceTySystem->get_mesh(temp.id));
@@ -183,12 +209,21 @@ void GraphicsSystem::Update(float dt)
 		//meshinst.mLTW.push_back(final);
 		AddInstance(meshinst, final, static_cast<unsigned>(inst.id));
 	}
+
 #pragma endregion
 
 	//// test drawing
 	//m_Renderer.AddCube({ -10, 0, 0 }, { 0.5f, 0.5f, 0.5f }, { 1.f, 0., 0.f, 1.f });
 	//m_Renderer.AddLine({ -10, 0, 0 }, { 10, 10, 0 }, { 0.f, 1.f, 0.f, 1.f });
 	//m_Renderer.AddLine({ 10, 10, 0 }, { -10, 10, 0 }, { 1.f, 0.f, 1.f, 1.f }); 
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void GraphicsSystem::EditorDraw(float dt)
+{
+	std::map<std::string, short> renderedMesh;
+	auto meshRendererInstances = systemManager->ecs->GetEntitiesWith<MeshRenderer>();
 
 	// Prepare and bind the Framebuffer to be rendered on
 	m_Fbo.PrepForDraw();
@@ -196,7 +231,6 @@ void GraphicsSystem::Update(float dt)
 	int fboHeight = m_Fbo.GetHeight();
 
 	m_Renderer.RenderAll(m_EditorCamera.viewProj());
-	m_Renderer.ClearInstances();
 
 #pragma region render all the mesh instances
 	// Render all instances of a given mesh
@@ -213,12 +247,11 @@ void GraphicsSystem::Update(float dt)
 
 		// render the mesh and its instances here
 		GFX::Mesh& meshinst = *reinterpret_cast<GFX::Mesh*>(inst.GetComponent<MeshRenderer>().mMeshRef);
-		
+
 		// gets the shader filepath
 		std::pair<std::string, std::string> shaderstr = inst.GetComponent<MeshRenderer>().mShaderPath;
-		GFX::Shader& shaderinst = systemManager->mResourceSystem->get_Shader(shaderstr.first + shaderstr.second);					
+		GFX::Shader& shaderinst = systemManager->mResourceSystem->get_Shader(shaderstr.first + shaderstr.second);
 		unsigned shaderID = shaderinst.GetHandle();
-
 
 		//std::vector<std::string> texturestr = inst.GetComponent<MeshRenderer>().mMaterialInstancePath;
 
@@ -228,14 +261,14 @@ void GraphicsSystem::Update(float dt)
 		//GFX::Texture& textureNormalinst = systemManager->mResourceSystem->get_MaterialInstance(texturestr[1]);	// loads the texture
 
 		GFX::Texture* textureInst[4]{};
-		for (int i{ 0 }; i < 4; i++) {
-
-			if (inst.GetComponent<MeshRenderer>().mTextureCont[i] == true)
+		for (int i{ 0 }; i < 4; i++)
+		{
+			if (inst.GetComponent<MeshRenderer>().mTextureCont[i] == true) {
 				textureInst[i] = reinterpret_cast<GFX::Texture*>(inst.GetComponent<MeshRenderer>().mTextureRef[i]);
+			}
 			//GFX::Texture& textureNormalinst = *reinterpret_cast<GFX::Texture*>(inst.GetComponent<MeshRenderer>().mTextureRef[NORMAL]);
 			//GFX::Texture& textureEmissioninst = *reinterpret_cast<GFX::Texture*>(inst.GetComponent<MeshRenderer>().mTextureRef[EMISSION]);
 			//GFX::Texture& textureSpecularinst = *reinterpret_cast<GFX::Texture*>(inst.GetComponent<MeshRenderer>().mTextureRef[SPECULAR]);
-
 		}
 		// GFX::Texture& textureColorinst = systemManager->mResourceSystem->get_MaterialInstance(texturestr[0]);		// loads the diffuse texture
 		// GFX::Texture& textureNormalinst = systemManager->mResourceSystem->get_MaterialInstance(texturestr[1]);		// loads the normal texture
@@ -260,13 +293,12 @@ void GraphicsSystem::Update(float dt)
 		//glBindTextureUnit(2, textureEmissioninst.ID());
 		//glBindTextureUnit(3, textureSpecularinst.ID());
 
-		for (int i{ 0 }; i < 4; i++) {
-
-			if (inst.GetComponent<MeshRenderer>().mTextureCont[i] == true)
+		for (int i{ 0 }; i < 4; i++)
+		{
+			if (inst.GetComponent<MeshRenderer>().mTextureCont[i] == true) {
 				glBindTextureUnit(i, textureInst[i]->ID());
-
+			}
 		}
-
 
 		m_Textures.push_back(0);
 		m_Textures.push_back(1);
@@ -303,23 +335,117 @@ void GraphicsSystem::Update(float dt)
 		//glBindTextureUnit(2, 0);
 		//glBindTextureUnit(3, 0);
 
-		for (int i{ 0 }; i < 4; i++) {
-
-			if (inst.GetComponent<MeshRenderer>().mTextureCont[i] == true)
+		// unbind the textures
+		for (int i{ 0 }; i < 4; i++) 
+		{
+			if (inst.GetComponent<MeshRenderer>().mTextureCont[i] == true) {
 				glBindTextureUnit(i, 0);
-
+			}
 		}
 
-		meshinst.ClearInstances();
+		//meshinst.ClearInstances();
 	}
 #pragma endregion
 
 	// TODO: Clears all instances that have been rendered from local buffer
 	m_Fbo.Unbind();
 
-	EnginePerformance::EndTrack("Graphics");
-	EnginePerformance::UpdateSystemMs("Graphics");
+	EnginePerformance::EndTrack("Game Graphics");
+	EnginePerformance::UpdateSystemMs("Game Graphics");
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void GraphicsSystem::GameDraw(float dt)
+{
+	std::map<std::string, short> renderedMesh;
+	auto meshRendererInstances = systemManager->ecs->GetEntitiesWith<MeshRenderer>();
+
+	auto localcamera = systemManager->ecs->GetEntitiesWith<Camera>();
+	Entity camera = localcamera.front();
+
+	// Prepare and bind the Framebuffer to be rendered on
+	m_GameFbo.PrepForDraw();
+	int fboWidth = m_GameFbo.GetWidth();
+	int fboHeight = m_GameFbo.GetHeight();
+
+	m_Renderer.RenderAll(camera.GetComponent<Camera>().mCamera.viewProj());
+
+	// Render all instances of a given mesh
+	for (Entity inst : meshRendererInstances)
+	{
+		std::string meshstr = inst.GetComponent<MeshRenderer>().mMeshPath;
+		if (renderedMesh.find(meshstr) != renderedMesh.end()) {
+			// the mesh has been rendered before, skip it
+			continue;
+		}
+
+		// update the map of rendered meshes
+		renderedMesh[meshstr] = 1;
+
+		// render the mesh and its instances here
+		GFX::Mesh& meshinst = *reinterpret_cast<GFX::Mesh*>(inst.GetComponent<MeshRenderer>().mMeshRef);
+
+		// gets the shader filepath
+		std::pair<std::string, std::string> shaderstr = inst.GetComponent<MeshRenderer>().mShaderPath;
+		GFX::Shader& shaderinst = systemManager->mResourceSystem->get_Shader(shaderstr.first + shaderstr.second);
+		unsigned shaderID = shaderinst.GetHandle();
+
+		GFX::Texture* textureInst[4]{};
+		for (int i{ 0 }; i < 4; i++)
+		{
+			if (inst.GetComponent<MeshRenderer>().mTextureCont[i] == true) {
+				textureInst[i] = reinterpret_cast<GFX::Texture*>(inst.GetComponent<MeshRenderer>().mTextureRef[i]);
+			}
+		}
+
+		shaderinst.Activate();
+		meshinst.BindVao();
+		meshinst.PrepForDraw();
+
+		glUniformMatrix4fv(shaderinst.GetUniformVP(), 1, GL_FALSE, &camera.GetComponent<Camera>().mCamera.viewProj()[0][0]);
+
+		GLuint mLightPosShaderLocation = glGetUniformLocation(shaderID, "uLightPos");
+		GLuint mViewPosShaderLocation = glGetUniformLocation(shaderID, "uViewPos");
+		vec3 lightPos = GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_GAME);
+		glUniform3fv(mLightPosShaderLocation, 1, &lightPos[0]);
+		glUniform3fv(mViewPosShaderLocation, 1, &lightPos[0]);
+
+		for (int i{ 0 }; i < 4; i++)
+		{
+			if (inst.GetComponent<MeshRenderer>().mTextureCont[i] == true) {
+				glBindTextureUnit(i, textureInst[i]->ID());
+			}
+		}
+
+		m_Textures.push_back(0);
+		m_Textures.push_back(1);
+		m_Textures.push_back(2);
+		m_Textures.push_back(3);
+
+
+		glDrawElementsInstanced(GL_TRIANGLES, meshinst.GetIndexCount(), GL_UNSIGNED_INT, nullptr, meshinst.mLTW.size());
+
+		shaderinst.Deactivate();
+		meshinst.UnbindVao();
+		m_Textures.clear();
+
+		// unbind the textures
+		for (int i{ 0 }; i < 4; i++)
+		{
+			if (inst.GetComponent<MeshRenderer>().mTextureCont[i] == true) {
+				glBindTextureUnit(i, 0);
+			}
+		}
+
+		meshinst.ClearInstances();
+		m_Renderer.ClearInstances();
+	}
+
+	// TODO: Clears all instances that have been rendered from local buffer
+	m_GameFbo.Unbind();
+}
+
 
 /***************************************************************************/
 /*!
@@ -366,10 +492,13 @@ void GraphicsSystem::AddInstance(GFX::Mesh& mesh, mat4 transform, unsigned entit
 /**************************************************************************/
 void GraphicsSystem::SetCameraPosition(CAMERA_TYPE type, vec3 position)
 {
+	auto localcamera = systemManager->ecs->GetEntitiesWith<Camera>();
+	Entity camera = localcamera.front();
+
 	switch (type)
 	{
 	case CAMERA_TYPE::CAMERA_TYPE_GAME:
-		m_GameCamera.SetPosition(position);
+		camera.GetComponent<Camera>().mCamera.SetPosition(position);
 		break;
 
 	case CAMERA_TYPE::CAMERA_TYPE_EDITOR:
@@ -377,7 +506,7 @@ void GraphicsSystem::SetCameraPosition(CAMERA_TYPE type, vec3 position)
 		break;
 
 	case CAMERA_TYPE::CAMERA_TYPE_ALL:
-		m_GameCamera.SetPosition(position);
+		camera.GetComponent<Camera>().mCamera.SetPosition(position);
 		m_EditorCamera.SetPosition(position);
 		break;
 	}
@@ -391,10 +520,13 @@ void GraphicsSystem::SetCameraPosition(CAMERA_TYPE type, vec3 position)
 /**************************************************************************/
 void GraphicsSystem::SetCameraTarget(CAMERA_TYPE type, vec3 position)
 {
+	auto localcamera = systemManager->ecs->GetEntitiesWith<Camera>();
+	Entity camera = localcamera.front();
+
 	switch (type)
 	{
 	case CAMERA_TYPE::CAMERA_TYPE_GAME:
-		m_GameCamera.SetTarget(position);
+		camera.GetComponent<Camera>().mCamera.SetTarget(position);
 		break;
 
 	case CAMERA_TYPE::CAMERA_TYPE_EDITOR:
@@ -402,7 +534,7 @@ void GraphicsSystem::SetCameraTarget(CAMERA_TYPE type, vec3 position)
 		break;
 
 	case CAMERA_TYPE::CAMERA_TYPE_ALL:
-		m_GameCamera.SetTarget(position);
+		camera.GetComponent<Camera>().mCamera.SetTarget(position);
 		m_EditorCamera.SetTarget(position);
 		break;
 	}
@@ -416,10 +548,14 @@ void GraphicsSystem::SetCameraTarget(CAMERA_TYPE type, vec3 position)
 /**************************************************************************/
 void GraphicsSystem::SetCameraProjection(CAMERA_TYPE type, float fovDegree, ivec2 size, float nearZ, float farZ)
 {
+	auto localcamera = systemManager->ecs->GetEntitiesWith<Camera>();
+	Entity camera = localcamera.front();
+
 	switch (type)
 	{
+
 	case CAMERA_TYPE::CAMERA_TYPE_GAME:
-		m_GameCamera.SetProjection(fovDegree, size, nearZ, farZ);
+		camera.GetComponent<Camera>().mCamera.SetProjection(fovDegree, size, nearZ, farZ);
 		break;
 
 	case CAMERA_TYPE::CAMERA_TYPE_EDITOR:
@@ -427,7 +563,7 @@ void GraphicsSystem::SetCameraProjection(CAMERA_TYPE type, float fovDegree, ivec
 		break;
 
 	case CAMERA_TYPE::CAMERA_TYPE_ALL:
-		m_GameCamera.SetProjection(fovDegree, size, nearZ, farZ);
+		camera.GetComponent<Camera>().mCamera.SetProjection(fovDegree, size, nearZ, farZ);
 		m_EditorCamera.SetProjection(fovDegree, size, nearZ, farZ);
 		break;
 	}
@@ -435,10 +571,13 @@ void GraphicsSystem::SetCameraProjection(CAMERA_TYPE type, float fovDegree, ivec
 
 void GraphicsSystem::SetCameraSize(CAMERA_TYPE type, ivec2 size)
 {
+	auto localcamera = systemManager->ecs->GetEntitiesWith<Camera>();
+	Entity camera = localcamera.front();
+
 	switch (type)
 	{
 	case CAMERA_TYPE::CAMERA_TYPE_GAME:
-		m_GameCamera.SetSize(size);
+		camera.GetComponent<Camera>().mCamera.SetSize(size);
 		break;
 
 	case CAMERA_TYPE::CAMERA_TYPE_EDITOR:
@@ -446,7 +585,7 @@ void GraphicsSystem::SetCameraSize(CAMERA_TYPE type, ivec2 size)
 		break;
 
 	case CAMERA_TYPE::CAMERA_TYPE_ALL:
-		m_GameCamera.SetSize(size);
+		camera.GetComponent<Camera>().mCamera.SetSize(size);
 		m_EditorCamera.SetSize(size);
 		break;
 	}
@@ -454,11 +593,14 @@ void GraphicsSystem::SetCameraSize(CAMERA_TYPE type, ivec2 size)
 
 void GraphicsSystem::UpdateCamera(CAMERA_TYPE type, const float& dt)
 {
+	auto localcamera = systemManager->ecs->GetEntitiesWith<Camera>();
+	Entity camera = localcamera.front();
+
 	switch (type)
 	{
 	case CAMERA_TYPE::CAMERA_TYPE_GAME:
-		Camera_Input::getInstance().updateCameraInput(m_GameCamera, dt);
-		m_GameCamera.Update();
+		Camera_Input::getInstance().updateCameraInput(camera.GetComponent<Camera>().mCamera, dt);
+		camera.GetComponent<Camera>().mCamera.Update();
 		break;
 
 	case CAMERA_TYPE::CAMERA_TYPE_EDITOR:
@@ -467,20 +609,24 @@ void GraphicsSystem::UpdateCamera(CAMERA_TYPE type, const float& dt)
 		break;
 
 	case CAMERA_TYPE::CAMERA_TYPE_ALL:
-		Camera_Input::getInstance().updateCameraInput(m_GameCamera, dt);
 		Camera_Input::getInstance().updateCameraInput(m_EditorCamera, dt);
-		m_GameCamera.Update();
 		m_EditorCamera.Update();
+
+		//Camera_Input::getInstance().updateCameraInput(camera.GetComponent<Camera>().mCamera, dt);
+		camera.GetComponent<Camera>().mCamera.Update();
 		break;
 	}
 }
 
 vec3 GraphicsSystem::GetCameraPosition(CAMERA_TYPE type)
 {
+	auto localcamera = systemManager->ecs->GetEntitiesWith<Camera>();
+	Entity camera = localcamera.front();
+
 	switch (type)
 	{
 	case CAMERA_TYPE::CAMERA_TYPE_GAME:
-		return m_GameCamera.position();
+		return camera.GetComponent<Camera>().mCamera.position();
 
 	case CAMERA_TYPE::CAMERA_TYPE_EDITOR:
 		return m_EditorCamera.position();
@@ -492,10 +638,13 @@ vec3 GraphicsSystem::GetCameraPosition(CAMERA_TYPE type)
 
 vec3 GraphicsSystem::GetCameraTarget(CAMERA_TYPE type)
 {
+	auto localcamera = systemManager->ecs->GetEntitiesWith<Camera>();
+	Entity camera = localcamera.front();
+
 	switch (type)
 	{
 	case CAMERA_TYPE::CAMERA_TYPE_GAME:
-		return m_GameCamera.target();
+		return camera.GetComponent<Camera>().mCamera.target();
 
 	case CAMERA_TYPE::CAMERA_TYPE_EDITOR:
 		return m_EditorCamera.target();
@@ -507,10 +656,13 @@ vec3 GraphicsSystem::GetCameraTarget(CAMERA_TYPE type)
 
 vec3 GraphicsSystem::GetCameraDirection(CAMERA_TYPE type)
 {
+	auto localcamera = systemManager->ecs->GetEntitiesWith<Camera>();
+	Entity camera = localcamera.front();
+
 	switch (type)
 	{
 	case CAMERA_TYPE::CAMERA_TYPE_GAME:
-		return m_GameCamera.direction();
+		return camera.GetComponent<Camera>().mCamera.direction();
 
 	case CAMERA_TYPE::CAMERA_TYPE_EDITOR:
 		return m_EditorCamera.direction();

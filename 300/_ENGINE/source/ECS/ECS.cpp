@@ -5,6 +5,8 @@
 #include "Object/ObjectFactory.h"
 #include "GameState/GameStateManager.h"
 #include "Debug/AssertException.h"
+#include "ResourceManagerTy.h"
+
 
 bool Entity::ShouldRun() {
 	assert(HasComponent<General>() && std::string("There is no general component when attempting to change Entity's isActive").c_str());
@@ -97,7 +99,10 @@ void ECS::DeleteEntity(Entity e)
 //	assert(static_cast<std::uint32_t>(e.id) != 0);
 //#endif
 	if (static_cast<std::uint32_t>(e.id) == 0)
-		throw ("tried to delete entitiy with id 0");
+	{
+		PWARNING("tried to delete entitiy with id 0");
+		return;
+	}
 	if (e.HasParent())
 		Entity(e.GetParent()).RemoveChild(e);
 	if (e.HasChildren())
@@ -149,8 +154,7 @@ Entity ECS::NewEntityFromPrefab(std::string prefabName)
 	//General temp1 = e.GetComponent<General>();
 	//MeshRenderer temp = e.GetComponent<MeshRenderer>();
 	mPrefabs[prefabName].push_back(e);
-	if (static_cast<uint32_t>(e.id) == 0)
-		throw ("null entity created?");
+	PASSERT(static_cast<uint32_t>(e.id) != 0);
 	return e;
 }
 
@@ -161,19 +165,19 @@ void ECS::UpdatePrefabEntities(std::string prefabName)
 	for (Entity e : mPrefabs[prefabName])
 	{
 		if (temp.HasComponent<MeshRenderer>())
-			e.GetComponent<MeshRenderer>() = temp.GetComponent<MeshRenderer>();
+			e.AddComponent<MeshRenderer>() = temp.GetComponent<MeshRenderer>();
 		if (temp.HasComponent<RigidBody>())
-			e.GetComponent<RigidBody>() = temp.GetComponent<RigidBody>();
+			e.AddComponent<RigidBody>() = temp.GetComponent<RigidBody>();
 		if (temp.HasComponent<BoxCollider>())
-			e.GetComponent<BoxCollider>() = temp.GetComponent<BoxCollider>();
+			e.AddComponent<BoxCollider>() = temp.GetComponent<BoxCollider>();
 		if (temp.HasComponent<SphereCollider>())
-			e.GetComponent<SphereCollider>() = temp.GetComponent<SphereCollider>(); 
+			e.AddComponent<SphereCollider>() = temp.GetComponent<SphereCollider>();
 		if (temp.HasComponent<PlaneCollider>())
-			e.GetComponent<PlaneCollider>() = temp.GetComponent<PlaneCollider>();
+			e.AddComponent<PlaneCollider>() = temp.GetComponent<PlaneCollider>();
 		if (temp.HasComponent<Scripts>())
-			e.GetComponent<Scripts>() = temp.GetComponent<Scripts>();
+			e.AddComponent<Scripts>() = temp.GetComponent<Scripts>();
 		if (temp.HasComponent<Audio>())
-			e.GetComponent<Audio>() = temp.GetComponent<Audio>();
+			e.AddComponent<Audio>() = temp.GetComponent<Audio>();
 	}
 
 	systemManager->ecs->DeleteEntity(temp);
@@ -197,8 +201,7 @@ Entity ECS::StartEditPrefab(std::string prefabName)
 	//MeshRenderer temp = e.GetComponent<MeshRenderer>();
 	mPrefabs[prefabName].push_back(e);
 	e.GetComponent<General>().name = prefabName;
-	if (static_cast<uint32_t>(e.id) == 0)
-		throw ("null entity created?");
+	PASSERT(static_cast<uint32_t>(e.id) != 0);
 	return e;
 }
 
@@ -215,27 +218,67 @@ void ECS::EndEditPrefabNoSave(Entity e)
 	DeleteEntity(e);
 }
 
-Entity ECS::PasteEntity()
+Entity ECS::PasteEntity(int scene)
 {
 	if (static_cast<uint32_t>(mClipboard.id) == 0)
 		return Entity(0);
 
-	Entity e = NewEntity();
-	
+
+
+	//Entity e = NewEntity();
+	Entity e =systemManager->mGameStateSystem->mCurrentGameState.mScenes[scene].AddEntity();
+
 	if (mClipboard.HasComponent<MeshRenderer>())
+	{
+		e.AddComponent<MeshRenderer>();
 		e.GetComponent<MeshRenderer>() = mClipboard.GetComponent<MeshRenderer>();
+		MeshRenderer& mr = e.GetComponent<MeshRenderer>();
+		uid uids(mr.mMeshPath);
+		mr.mMeshRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(uids.id));
+		for (int i{ 0 }; i < 4; i++) {
+
+			if (mr.mTextureCont[i] == true) {
+				uid uids(mr.mMaterialInstancePath[i]);
+				mr.mTextureRef[i] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(uids.id));
+			}
+		}
+		GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mr.mMeshRef);
+		if (meshinst->mHasAnimation)
+		{
+			e.AddComponent<Animator>();
+			e.GetComponent<Animator>().mAnimator.SetAnimation(&meshinst->mAnimation[0]);
+		}
+	}
 	if (mClipboard.HasComponent<RigidBody>())
+	{
+		e.AddComponent<RigidBody>();
 		e.GetComponent<RigidBody>() = mClipboard.GetComponent<RigidBody>();
+	}
 	if (mClipboard.HasComponent<BoxCollider>())
+	{
+		e.AddComponent<BoxCollider>();
 		e.GetComponent<BoxCollider>() = mClipboard.GetComponent<BoxCollider>();
+	}
 	if (mClipboard.HasComponent<SphereCollider>())
+	{
+		e.AddComponent<SphereCollider>();
 		e.GetComponent<SphereCollider>() = mClipboard.GetComponent<SphereCollider>();
+	}
 	if (mClipboard.HasComponent<PlaneCollider>())
+	{
+		e.AddComponent<PlaneCollider>();
 		e.GetComponent<PlaneCollider>() = mClipboard.GetComponent<PlaneCollider>();
+	}
 	if (mClipboard.HasComponent<Scripts>())
+	{
+		e.AddComponent<Scripts>();
 		e.GetComponent<Scripts>() = mClipboard.GetComponent<Scripts>();
+	}
 	if (mClipboard.HasComponent<Audio>())
+	{
+		e.AddComponent<Audio>();
 		e.GetComponent<Audio>() = mClipboard.GetComponent<Audio>();
+	}
 
 	return e;
 }
@@ -266,13 +309,25 @@ void Entity::operator=(const Entity& entity)
 void Entity::AddChild(Entity e)
 {
 	if (this->id == e.id)
-		throw ("trying to make entity reproduce asexually");
+	{
+		PWARNING("tried to add entity as child to itself");
+		return;
+	}
 	if (static_cast<std::uint32_t>(e.id) == 0)
-		throw ("trying to add null entity as child");
+	{
+		PWARNING("tried to add null entity as child");
+		return;
+	}
 	if (static_cast<std::uint32_t>(this->id) == 0)
-		throw ("trying to add child to null entity");
+	{
+		PWARNING("tried to add child to null entity");
+		return;
+	}
 	if (e.HasComponent<Parent>())
-		throw ("entity is the child of another!");
+	{
+		PWARNING("tried to add child with parent to another parent");
+		return;
+	}
 	if (e.HasComponent<Prefab>())
 		systemManager->ecs->UnlinkPrefab(e);
 	if (this->HasComponent<Prefab>())

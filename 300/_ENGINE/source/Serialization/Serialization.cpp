@@ -84,7 +84,7 @@ bool EntityJSON::Deserialize(const rapidjson::Value& obj)
 		mGJ.name = obj["General"]["Name"].GetString();
 		mGJ.isActive = obj["General"]["Active"].GetBool();
 		mGJ.isPaused = obj["General"]["Paused"].GetBool();
-		mGJ.tag = FindTagEnum(obj["General"]["Tag"].GetString());
+		//mGJ.tag = FindTagEnum(obj["General"]["Tag"].GetString());
 		mGJ.subtag = FindSubTagEnum(obj["General"]["Subtag"].GetString());
 	}
 
@@ -234,8 +234,8 @@ bool EntityJSON::Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* wri
 	writer->String("Paused");
 	writer->Bool(mGJ.isPaused);
 
-	writer->String("Tag");
-	writer->String(FindTagString(mGJ.tag).c_str());
+	//writer->String("Tag");
+	//writer->String(FindTagString(mGJ.tag).c_str());
 
 	writer->String("Subtag");
 	writer->String(FindSubTagString(mGJ.subtag).c_str());
