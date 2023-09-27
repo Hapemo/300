@@ -8,8 +8,8 @@ class GameState;
 class ObjectFactory
 {
 public:
-	static void DeserializeScene(const std::string& filename);
-	static void SerializeScene(const std::string& filename);
+	//static void DeserializeScene(const std::string& filename);
+	//static void SerializeScene(const std::string& filename);
 
 	// *this refers to Scene pointer
 	//serializationManager->LoadScene(*this, _path); TODO

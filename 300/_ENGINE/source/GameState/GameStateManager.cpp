@@ -47,7 +47,7 @@ void GameStateManager::Init() {
 
 	//mCurrentGameState.Load(mNextGSName);
 
-	mCurrentGameState.Load("Default");
+	mCurrentGameState.Load(mCurrentGameState.mName);
 
 	mCurrentGameState.Init();
 

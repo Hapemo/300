@@ -211,6 +211,41 @@ bool EntityJSON::Deserialize(const rapidjson::Value& obj)
 	}
 	else ma_t = false;
 
+	if (obj.HasMember("Camera"))
+	{
+		mCamJ.mCamera.mPosition = { (float)obj["Camera"]["Position"][0].GetDouble(),
+									(float)obj["Camera"]["Position"][1].GetDouble(),
+									(float)obj["Camera"]["Position"][2].GetDouble() };
+
+		mCamJ.mCamera.mTarget = { (float)obj["Camera"]["Target"][0].GetDouble(),
+								  (float)obj["Camera"]["Target"][1].GetDouble(),
+								  (float)obj["Camera"]["Target"][2].GetDouble() };
+
+		mCamJ.mCamera.mSize = { (float)obj["Camera"]["Size"][0].GetInt(),
+								(float)obj["Camera"]["Size"][1].GetInt() };
+
+		mCamJ.mCamera.mNear = (float)obj["Camera"]["Near"].GetDouble();
+
+		mCamJ.mCamera.mFar = (float)obj["Camera"]["Far"].GetDouble();
+
+		mcam_t = true;
+	}
+	else mcam_t = false;
+
+	if (obj.HasMember("PointLight"))
+	{
+		mPLJ.mLightColor = { (float)obj["PointLight"]["LightColor"][0].GetDouble(),
+							 (float)obj["PointLight"]["LightColor"][1].GetDouble(),
+							 (float)obj["PointLight"]["LightColor"][2].GetDouble() };
+
+		mPLJ.mAttenuation = (float)obj["PointLight"]["Attenuation"].GetDouble();
+
+		mPLJ.mIntensity = (float)obj["PointLight"]["Intensity"].GetDouble();
+
+		mpl_t = true;
+	}
+	else mpl_t = false;
+
 	return true;
 }
 
@@ -433,6 +468,61 @@ bool EntityJSON::Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* wri
 
 		writer->String("Play");
 		writer->Bool(mAJ.mIsPlay);
+
+		writer->EndObject();
+	}
+
+	if (mcam_t)
+	{
+		writer->String("Camera");
+		writer->StartObject();
+
+		writer->String("Position");
+		writer->StartArray();
+		writer->Double(mCamJ.mCamera.mPosition.x);
+		writer->Double(mCamJ.mCamera.mPosition.y);
+		writer->Double(mCamJ.mCamera.mPosition.z);
+		writer->EndArray();
+
+		writer->String("Target");
+		writer->StartArray();
+		writer->Double(mCamJ.mCamera.mTarget.x);
+		writer->Double(mCamJ.mCamera.mTarget.y);
+		writer->Double(mCamJ.mCamera.mTarget.z);
+		writer->EndArray();
+
+		writer->String("Size");
+		writer->StartArray();
+		writer->Int(mCamJ.mCamera.mSize.x);
+		writer->Int(mCamJ.mCamera.mSize.y);
+		writer->EndArray();
+
+		writer->String("Near");
+		writer->Double(mCamJ.mCamera.mNear);
+
+		writer->String("Far");
+		writer->Double(mCamJ.mCamera.mFar);
+
+		writer->EndObject();
+	}
+
+	if (mpl_t)
+	{
+		writer->String("PointLight");
+		writer->StartObject();
+
+		writer->String("LightColor");
+		writer->StartArray();
+		writer->Double(mPLJ.mLightColor.x);
+		writer->Double(mPLJ.mLightColor.y);
+		writer->Double(mPLJ.mLightColor.z);
+		writer->EndArray();
+
+		writer->String("Attenuation");
+		writer->Double(mPLJ.mAttenuation);
+
+		writer->String("Intensity");
+		writer->Double(mPLJ.mIntensity);
 
 		writer->EndObject();
 	}

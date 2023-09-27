@@ -297,12 +297,12 @@ void Camera::Inspect()
 	if (ImGui::CollapsingHeader("Camera", ImGuiTreeNodeFlags_DefaultOpen))
 	{
 
-		//ImGui::Text("Position");
+		ImGui::Text("Position");
 
-		//ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::GetItemRectSize().x
-		//	- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
-		//ImGui::SameLine();
-		//ImGui::DragFloat3("##Position", (float*)&mCamera.mPosition);
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::GetItemRectSize().x
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		ImGui::SameLine();
+		ImGui::DragFloat3("##Position", (float*)&mCamera.mPosition);
 
 
 
