@@ -87,6 +87,7 @@ void SceneWindow::update()
 		systemManager->Pause();
 	}
 	if (ImGui::Button("RESET")) {
+		Hierarchy::selectionOn = false;
 		systemManager->Reset();
 	}
 

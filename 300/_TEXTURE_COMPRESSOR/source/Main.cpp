@@ -12,6 +12,7 @@ int main()
 {
 	std::filesystem::path directoryTex = "../assets/Textures";
 	std::filesystem::path directoryFont = "../assets/Fonts";
+	std::filesystem::path directoryIMGUITex = "../_EDITOR/Assets/Textures/";
 
 	Init();
 
@@ -30,6 +31,23 @@ int main()
 			LoadAndSerializeFontFile(file.c_str(), "../assets/compiled_fonts");
 		else
 			CompressImageFile(file.c_str(), "../assets/Compressed");
+	}
+
+	// Load every IMGUI texture in the directory
+	for (const auto& entry : std::filesystem::directory_iterator(directoryIMGUITex))
+	{
+		std::string file = entry.path().filename().string();
+
+		file = directoryIMGUITex.string() + "/" + file;
+
+		std::string filetype = file.substr(file.find_last_of("."));
+
+		std::cout << file.c_str() << std::endl;
+
+		if (filetype == ".ttf")
+			LoadAndSerializeFontFile(file.c_str(), "../assets/compiled_fonts");
+		else
+			CompressImageFile(file.c_str(), "../_EDITOR/Assets/Textures_Compressed/");
 	}
 
 	// Load every font in the directory ^

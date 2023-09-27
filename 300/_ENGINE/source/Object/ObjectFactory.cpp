@@ -4,7 +4,7 @@
 #include "GameState/GameState.h"
 #include "ConfigManager.h"
 #include "ResourceManagerTy.h"
-
+#include "Debug/Logger.h"
 // unused (technically)
 void ObjectFactory::DeserializeScene(const std::string& filename)
 {
@@ -232,7 +232,7 @@ Entity ObjectFactory::DeserializePrefab(const std::string& filename, int id)
 	entities.DeserializeFile(filename);
 
 	if (entities.EntitiesList().size() > 1)
-		throw ("multiple entities in prefab file!");
+		PWARNING("more than 1 entity in prefab file, taking first entity...");
 
 	EntityJSON& eJ = entities.EntitiesList().front();
 
@@ -346,9 +346,22 @@ void ObjectFactory::LoadScene(Scene* scene, const std::string& filename)
 		{
 			e.AddComponent<MeshRenderer>();
 			e.GetComponent<MeshRenderer>() = obj.GetMRJSON();
-			MeshRenderer mr = e.GetComponent<MeshRenderer>();
+			MeshRenderer& mr = e.GetComponent<MeshRenderer>();
 			uid uids(mr.mMeshPath);
 			mr.mMeshRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(uids.id));
+			for (int i{ 0 }; i < 4; i++) {
+
+				if (mr.mTextureCont[i] == true) {
+					uid uids(mr.mMaterialInstancePath[i]);
+					mr.mTextureRef[i] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(uids.id));
+				}
+			}
+			GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mr.mMeshRef);
+			if (meshinst->mHasAnimation)
+			{
+				e.AddComponent<Animator>();
+				e.GetComponent<Animator>().mAnimator.SetAnimation(&meshinst->mAnimation[0]);
+			}
 		}
 
 		if (obj.mbc_t)
