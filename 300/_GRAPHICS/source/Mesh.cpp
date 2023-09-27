@@ -253,6 +253,7 @@ void GFX::Mesh::ClearInstances()
 {
 	mLTW.clear();
 	mColors.clear();
+	mTexEntID.clear();
 }
 
 void GFX::Mesh::BindVao()

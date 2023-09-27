@@ -138,7 +138,6 @@ void Editor::UIinit(GLFWwindow* window)
     // ----------------------------------------------------------------------------- // Add EditorWindows
     
     mMenuwindow = new MenuPanel;
-    mMenuwindow2 = new MenuPanel;
     mWindowlist["Objects"] = new Hierarchy;
     //mWindowlist["Menu"] = new MenuPanel;
     mWindowlist["Inspect"] = new Inspect;

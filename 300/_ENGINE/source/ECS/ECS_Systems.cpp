@@ -21,8 +21,8 @@ SystemManager::SystemManager()
 	mIsPlay = false;
 	mPhysicsSystem = std::make_unique<PhysicsSystem>();
 	mScriptingSystem = std::make_unique<ScriptingSystem>();
-	mGraphicsSystem = std::make_unique<GraphicsSystem>();
 	mGameStateSystem = std::make_unique<GameStateManager>();
+	mGraphicsSystem = std::make_unique<GraphicsSystem>();
 	mResourceTySystem = std::make_unique<ResourceTy>();
 	mResourceSystem = std::make_unique<Resource>();
 	mAudioSystem = std::make_unique<AudioSystem>();
@@ -46,6 +46,8 @@ void SystemManager::Init(bool isEditor, GFX::Window *window)
 	PINFO("Init Logger");
 	mScriptingSystem.get()->Init();
 	PINFO("Init Scripting System");
+
+	mGameStateSystem.get()->Init();
 
 	mResourceSystem.get()->Init();
 	mResourceTySystem.get()->Init();
