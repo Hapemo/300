@@ -3,32 +3,26 @@ function Alive()
 end
 
 function Update()
-    --Working
-    --systemManager.ecs:DeleteEntity(entity)
-    
-    --Testing
-
-    --print(script_entity_id)
-
+    --For M1 demo
     entity = Entity.new(script_entity_id)
     if entity == nil then
-        print("NULL!!!!")
+        print("Entity nil in script!")
     end
     generalComponent = entity:GetGeneralComponent()
     transformComponent = entity:GetTransformComponent()
     -- Change entity name to enemy
     generalComponent.name = "Enemy"
-    print("Updating !!!!")
-    print("Hi")
 
     -- Make character move x-axis
-    if Input.CheckKey(State.PRESS, Key.KEY_SPACE) then
-        transformComponent.mTranslate.x = transformComponent.mTranslate.x + 30
+    if Input.CheckKey(State.HOLD, Key.UP) then
+        transformComponent.mTranslate.y = transformComponent.mTranslate.y + 20
+    elseif Input.CheckKey(State.HOLD, Key.LEFT) then
+        transformComponent.mTranslate.x = transformComponent.mTranslate.x - 20
+    elseif Input.CheckKey(State.HOLD, Key.DOWN) then
+        transformComponent.mTranslate.y = transformComponent.mTranslate.y - 20
+    elseif Input.CheckKey(State.HOLD, Key.RIGHT) then
+        transformComponent.mTranslate.x = transformComponent.mTranslate.x + 20
     end
-
-    -- for i = 0, #generalEntities do
-    --     print(generalEntities[i].id, generalEntities[i])
-    -- end
 end
 
 function Dead()

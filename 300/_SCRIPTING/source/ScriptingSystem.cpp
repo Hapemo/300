@@ -139,7 +139,8 @@ void ScriptingSystem::Init()
         "KEY_U", E_KEY::U, "KEY_V", E_KEY::V,
         "KEY_W", E_KEY::W, "KEY_X", E_KEY::X,
         "KEY_Y", E_KEY::Y, "KEY_Z", E_KEY::Z,
-        "KEY_SPACE", E_KEY::SPACE, "KEY_ESCAPE", E_KEY::ESCAPE
+        "KEY_SPACE", E_KEY::SPACE, "KEY_ESCAPE", E_KEY::ESCAPE,
+        "UP", E_KEY::UP, "DOWN", E_KEY::DOWN, "LEFT", E_KEY::LEFT, "RIGHT", E_KEY::RIGHT
     );
 }
 
