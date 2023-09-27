@@ -56,6 +56,8 @@ public:
 
 	// Helper Function
 	void PrintMat4(const glm::mat4& input);
+
+	//pause
 	void PauseGlobalAnimation();
 	void UnpauseGlobalAnimation();
 
