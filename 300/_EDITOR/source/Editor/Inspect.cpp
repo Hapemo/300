@@ -216,8 +216,10 @@ void Inspect::Add_component() {
 void General::Inspect() {
 
 
-	ImGui::Button("Name");
+	ImGui::Text("Name");
 	ImGui::SameLine();
+	ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+		- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
 	ImGui::InputText("##naming",&name);
 
 
@@ -225,7 +227,10 @@ void General::Inspect() {
 
 
 	ImGui::Text("Tag");
+
 	ImGui::SameLine();
+	ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+		- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
 
 	if (ImGui::BeginCombo("##Tag", tag[tagid].c_str())) {
 
@@ -244,23 +249,30 @@ void Transform::Inspect() {
 
 
 		//ImGui::SetCursorPosX(windowWidth / 3.f);
-		ImGui::DragFloat3("##Position", (float*)&mTranslate);
-		
-		ImGui::SameLine();
+
 		ImGui::Text("Position");
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		ImGui::DragFloat3("##Position", (float*)&mTranslate);
+
 		ImGui::Separator();
 
 
-		ImGui::DragFloat3("##Scale", (float*)&mScale, 1);
-		ImGui::SameLine();
 		ImGui::Text("Scale");
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		ImGui::DragFloat3("##Scale", (float*)&mScale, 1);
+
 		ImGui::Separator();
 
 
-		ImGui::DragFloat3("##Rotation", (float*)&mRotate, 1);
-		ImGui::SameLine();
 		ImGui::Text("Rotation");
-
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		ImGui::DragFloat3("##Rotation", (float*)&mRotate, 1);
 
 
 	}
@@ -273,14 +285,61 @@ void Camera::Inspect()
 	if (ImGui::CollapsingHeader("Camera", ImGuiTreeNodeFlags_DefaultOpen))
 	{
 
-		ImGui::DragFloat3("##Position", (float*)&mCamera.mPosition);
+		//ImGui::Text("Position");
 
+		//ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::GetItemRectSize().x
+		//	- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		//ImGui::SameLine();
+		//ImGui::DragFloat3("##Position", (float*)&mCamera.mPosition);
+
+
+
+
+		float aspect{ 1800 };
+		float nearplane{ 60 };
+		float FOV{ 10 };
+		float farplane{ 0 };
+		static bool Orthographic{ 0 };
+		
+
+		ImGui::Text("Aspect Ration");
 		ImGui::SameLine();
-		ImGui::Text("Position");
-		ImGui::Separator();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		ImGui::DragFloat("##Aspect", &aspect);
+
+
+		ImGui::Text("FOV");
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		ImGui::DragFloat("##FOV", &FOV);
+
+
+
+
+		ImGui::Text("Far Plane");
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		ImGui::DragFloat("##FP", &farplane);
+
+		ImGui::Text("Near plane");
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		ImGui::DragFloat("##NP", &nearplane);
+
+		ImGui::Text("Orthographic");
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		ImGui::Checkbox("##Orth", &Orthographic);
+
+
 
 		//ImGui::Text("Position: %d, %d, %d", mCamera.mPosition.x, mCamera.mPosition.y, mCamera.mPosition.z);
-		ImGui::Text("Target: %d, %d, %d", mCamera.mTarget.x, mCamera.mTarget.y, mCamera.mTarget.z);
+		//ImGui::Text("Target: %d, %d, %d", mCamera.mTarget.x, mCamera.mTarget.y, mCamera.mTarget.z);
 
 	}
 

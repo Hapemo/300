@@ -72,26 +72,23 @@ void ContentBrowser::update()
 	if (columncount < 1) {
 		columncount = 1;
 	}
+
+
 	ImGui::Columns(columncount, 0, false);
 
 	auto& resourceDatas = systemManager->mResourceTySystem;
-
 	int idd{ 0 };
+
 	// looping through filesystem
-
-
 	for (auto const& directory : std::filesystem::directory_iterator{ current_Directory }) {
-		idd++;
 		const auto& path = directory.path(); // directory path
 
 		auto relativepath = std::filesystem::relative(path, current_Directory);
 		std::string filename_string = relativepath.filename().string();
 
 		if (directory.is_directory()) {
-
-			
-
-			std::string file_button = filename_string.c_str();
+	
+			//std::string file_button = filename_string.c_str();
 
 			//ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
 			//ImGui::PushID(idd++);
@@ -99,23 +96,20 @@ void ContentBrowser::update()
 			//ImGui::PopID();
 			//ImGui::PopStyleColor();
 			//ImGui::Button(file_button.c_str(), { buttonsize, buttonsize }); // draw button of file
-
+		
 			
-			ImGui::SetCursorPosY(55);
-
-
+			//ImGui::SetCursorPosY(55);
+			ImGui::PushID(idd);
 			ImGui::ImageButton((ImTextureID)(intptr_t)resourceDatas->m_EditorTextures["Folder"]->ID(), {buttonsize, buttonsize});
-	
-
+			ImGui::PopID();
 			if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) {
 				//if (directory.is_directory())
 					current_Directory /= path.filename();
 			}
 			ImGui::Text(filename_string.c_str());
 			//ImGui::Text(filename_string.c_str());
-			ImGui::NextColumn();
 		}
-		else{
+		else if(!directory.is_directory()) {
 
 			//ImGui::Button(filename_string.c_str(), { buttonsize, buttonsize }); // draw button of file
 
@@ -168,7 +162,7 @@ void ContentBrowser::update()
 					//std::cout << path.string() << "\n";
 				}
 				ImGui::Text(filename_string.c_str());
-				ImGui::NextColumn();
+				//ImGui::NextColumn();
 
 			}
 
@@ -189,7 +183,7 @@ void ContentBrowser::update()
 					ImGui::EndDragDropSource();
 				}
 				ImGui::Text(filename_string.c_str());
-				ImGui::NextColumn();
+				//ImGui::NextColumn();
 
 			}
 
@@ -210,7 +204,7 @@ void ContentBrowser::update()
 					ImGui::EndDragDropSource();
 				}
 				ImGui::Text(filename_string.c_str());
-				ImGui::NextColumn();
+				//ImGui::NextColumn();
 
 			}
 			else if (check_extension(path.string(), ".ctexture")) {
@@ -229,7 +223,7 @@ void ContentBrowser::update()
 					ImGui::EndDragDropSource();
 				}
 				ImGui::Text(filename_string.c_str());
-				ImGui::NextColumn();
+				//ImGui::NextColumn();
 
 			}
 			else if (check_extension(path.string(), ".scn")) {
@@ -253,6 +247,11 @@ void ContentBrowser::update()
 
 
 		}
+
+		ImGui::NextColumn();
+		idd++;
+
+		
 	}
 	ImGui::Columns(1);
 }

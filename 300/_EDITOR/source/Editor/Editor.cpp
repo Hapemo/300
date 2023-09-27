@@ -39,6 +39,7 @@ Returns main window for docking
 #include "PrefabWindow.h"
 #include "PrefabWindow.h"
 #include "GameScene.h"
+#include "TabWindow.h"
 //bool Editor::show_Inspector;
 //int Editor::entity {}; // static var for selected entity ID
 //bool Editor::Entity_Selected; // static var for Inspector to show
@@ -137,11 +138,12 @@ void Editor::UIinit(GLFWwindow* window)
     // ----------------------------------------------------------------------------- // Add EditorWindows
     
     mMenuwindow = new MenuPanel;
-
+    mMenuwindow2 = new MenuPanel;
     mWindowlist["Objects"] = new Hierarchy;
     //mWindowlist["Menu"] = new MenuPanel;
     mWindowlist["Inspect"] = new Inspect;
     mWindowlist["Performance"] = new Performance;
+    mWindowlist["Settings"] = new TabWindow;
     mWindowlist["Editscene"] = new SceneWindow;
     mWindowlist["Contentbrowser"] = new ContentBrowser;
     mWindowlist["Logger"] = new EditorLogger;
@@ -196,6 +198,7 @@ void Editor::UIupdate(GLFWwindow* window) {
     ImGui::NewFrame();
     ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
     ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
+   // ImGui::PushStyleVar(imguistylevar_windowsize, ImVec2(0.0f, 0.0f));
     ImGui::Begin("Editor Window",0 , 
          ImGuiWindowFlags_NoBringToFrontOnFocus 
         | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_MenuBar 
@@ -219,7 +222,7 @@ void Editor::UIupdate(GLFWwindow* window) {
    
 
     mMenuwindow->update();
-   
+        
     ImGui::PopID();
 
     ImGui::End();

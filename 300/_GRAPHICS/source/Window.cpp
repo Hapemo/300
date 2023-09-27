@@ -43,7 +43,7 @@ GFX::Window::Window(ivec2 windowSize)
     }
     glfwSetInputMode(mWindow, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
     glfwMakeContextCurrent(mWindow);
-    glfwSwapInterval(1);
+    glfwSwapInterval(0);
 
     if (glewInit() != GLEW_OK)
     {
