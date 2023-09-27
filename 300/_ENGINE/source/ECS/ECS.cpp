@@ -88,7 +88,6 @@ Entity ECS::NewEntity()
 	Entity e = registry.create();
 	e.AddComponent<General>().name = "Entity" + std::to_string(static_cast<uint32_t>(e.id));
 	e.AddComponent<Transform>();
-	std::cout << e.GetComponent<General>().name << std::endl;
 	return e;
 }
 
