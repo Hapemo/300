@@ -213,31 +213,15 @@ void Inspect::Add_component() {
 
 	mPopup = false; 
 }
+
 void General::Inspect() {
 
 
-	ImGui::Button("Name");
+	ImGui::Text("Name");
 	ImGui::SameLine();
-	ImGui::InputText("##naming",&name);
-
-
-	//ImGui::Dummy(ImVec2(0.0, 5.f));
-
-
-	ImGui::Text("Tag");
-	ImGui::SameLine();
-
-	if (ImGui::BeginCombo("##Tag", tag[tagid].c_str())) {
-
-		for (int i = 0; i < 5; i++) {
-			if (ImGui::Selectable(tag[i].c_str())) {
-				tagid = i;
-			}
-		}
-		ImGui::EndCombo();
-	}
-
+	ImGui::InputText( "##", &name);
 }
+
 
 void Transform::Inspect() {
 	if (ImGui::CollapsingHeader("Transform", ImGuiTreeNodeFlags_DefaultOpen)) {
@@ -421,6 +405,7 @@ void Animator::Inspect()
 	if (delete_component == false)
 		Entity(Hierarchy::selectedId).RemoveComponent<MeshRenderer>();
 }
+
 
 void MeshRenderer::Inspect() {
 	bool delete_component{ true };

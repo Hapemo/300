@@ -151,7 +151,7 @@ void GraphicsSystem::Init()
 /**************************************************************************/
 void GraphicsSystem::Update(float dt)
 {
-	EnginePerformance::StartTrack("Graphics");
+	EnginePerformance::StartTrack("Game Graphics");
 
 	// update the camera's transformations, and its input
 	if (m_EditorMode) {
@@ -276,23 +276,36 @@ void GraphicsSystem::EditorDraw(float dt)
 		// GFX::Texture& textureSpecularinst = systemManager->mResourceSystem->get_MaterialInstance(texturestr[3]);	// loads the specular texture
 
 		shaderinst.Activate();
-		meshinst.BindVao();
-		meshinst.PrepForDraw();
 
 		glUniformMatrix4fv(shaderinst.GetUniformVP(), 1, GL_FALSE, &m_EditorCamera.viewProj()[0][0]);
+		
+		// Retrieve Point Light object
+		auto lightEntity = systemManager->ecs->GetEntitiesWith<PointLight>();
+		m_HasLight = !lightEntity.empty();
 
-		GLuint mLightPosShaderLocation = glGetUniformLocation(shaderID, "uLightPos");
-		GLuint mViewPosShaderLocation = glGetUniformLocation(shaderID, "uViewPos");
-		vec3 lightPos = GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR);
-		glUniform3fv(mLightPosShaderLocation, 1, &lightPos[0]);
-		glUniform3fv(mViewPosShaderLocation, 1, &lightPos[0]);
+		GLuint mHasLightFlagLocation = shaderinst.GetUniformLocation("uHasLight");
+		glUniform1i(mHasLightFlagLocation, m_HasLight);
+
+		Transform lightTransform;
+		PointLight lightData;
+		if (m_HasLight)
+		{
+			PointLight& lightData = lightEntity.get<PointLight>(lightEntity[0]);
+			Transform& lightXform = Entity(lightEntity[0]).GetComponent<Transform>();
+
+			GLuint mLightPosShaderLocation = shaderinst.GetUniformLocation("uLightPos");
+			GLuint mViewPosShaderLocation = shaderinst.GetUniformLocation("uViewPos");
+			GLuint mLightIntensityShaderLocation = shaderinst.GetUniformLocation("uLightIntensity");
+			GLuint mLightColorShaderLocation = shaderinst.GetUniformLocation("uLightColor");
+
+			vec3 viewPos = GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR);
+			glUniform3fv(mLightPosShaderLocation, 1, &lightTransform.mTranslate[0]);
+			glUniform3fv(mViewPosShaderLocation, 1, &viewPos[0]);
+			glUniform3fv(mLightColorShaderLocation, 1, &lightData.mLightColor[0]);
+			glUniform1f(mLightIntensityShaderLocation, lightData.mIntensity);
+		}
 
 		// bind texture unit
-		//glBindTextureUnit(0, textureColorinst.ID());
-		//glBindTextureUnit(1, textureNormalinst.ID());
-		//glBindTextureUnit(2, textureEmissioninst.ID());
-		//glBindTextureUnit(3, textureSpecularinst.ID());
-
 		for (int i{ 0 }; i < 4; i++)
 		{
 			if (inst.GetComponent<MeshRenderer>().mTextureCont[i] == true) {
@@ -325,15 +338,12 @@ void GraphicsSystem::EditorDraw(float dt)
 			}
 		}
 
-		glDrawElementsInstanced(GL_TRIANGLES, meshinst.GetIndexCount(), GL_UNSIGNED_INT, nullptr, meshinst.mLTW.size());
+		// Bind mesh's VAO, copy render data into VBO, Draw
+		DrawAll(meshinst);
 
 		shaderinst.Deactivate();
 		meshinst.UnbindVao();
 		m_Textures.clear();
-		//glBindTextureUnit(0, 0);
-		//glBindTextureUnit(1, 0);
-		//glBindTextureUnit(2, 0);
-		//glBindTextureUnit(3, 0);
 
 		// unbind the textures
 		for (int i{ 0 }; i < 4; i++) 
@@ -342,16 +352,14 @@ void GraphicsSystem::EditorDraw(float dt)
 				glBindTextureUnit(i, 0);
 			}
 		}
-
-		//meshinst.ClearInstances();
 	}
 #pragma endregion
 
 	// TODO: Clears all instances that have been rendered from local buffer
 	m_Fbo.Unbind();
 
-	EnginePerformance::EndTrack("Graphics");
-	EnginePerformance::UpdateSystemMs("Graphics");
+	EnginePerformance::EndTrack("Game Graphics");
+	EnginePerformance::UpdateSystemMs("Game Graphics");
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -400,16 +408,30 @@ void GraphicsSystem::GameDraw(float dt)
 		}
 
 		shaderinst.Activate();
-		meshinst.BindVao();
-		meshinst.PrepForDraw();
 
-		glUniformMatrix4fv(shaderinst.GetUniformVP(), 1, GL_FALSE, &camera.GetComponent<Camera>().mCamera.viewProj()[0][0]);
+		// Retrieve Point Light object
+		auto lightEntity = systemManager->ecs->GetEntitiesWith<PointLight>();
+		m_HasLight = !lightEntity.empty();
 
-		GLuint mLightPosShaderLocation = glGetUniformLocation(shaderID, "uLightPos");
-		GLuint mViewPosShaderLocation = glGetUniformLocation(shaderID, "uViewPos");
-		vec3 lightPos = GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_GAME);
-		glUniform3fv(mLightPosShaderLocation, 1, &lightPos[0]);
-		glUniform3fv(mViewPosShaderLocation, 1, &lightPos[0]);
+		GLuint mHasLightFlagLocation = shaderinst.GetUniformLocation("uHasLight");
+		glUniform1i(mHasLightFlagLocation, m_HasLight);
+
+		if (m_HasLight)
+		{
+			PointLight& lightData = lightEntity.get<PointLight>(lightEntity[0]);
+			Transform& lightTransform = Entity(lightEntity[0]).GetComponent<Transform>();
+
+			GLuint mLightPosShaderLocation = shaderinst.GetUniformLocation("uLightPos");
+			GLuint mViewPosShaderLocation = shaderinst.GetUniformLocation("uViewPos");
+			GLuint mLightIntensityShaderLocation = shaderinst.GetUniformLocation("uLightIntensity");
+			GLuint mLightColorShaderLocation = shaderinst.GetUniformLocation("uLightColor");
+
+			vec3 viewPos = camera.GetComponent<Camera>().mCamera.position();
+			glUniform3fv(mLightPosShaderLocation, 1, &lightTransform.mTranslate[0]);
+			glUniform3fv(mViewPosShaderLocation, 1, &viewPos[0]);
+			glUniform3fv(mLightColorShaderLocation, 1, &lightData.mLightColor[0]);
+			glUniform1f(mLightIntensityShaderLocation, lightData.mIntensity);
+		}
 
 		for (int i{ 0 }; i < 4; i++)
 		{
@@ -423,11 +445,12 @@ void GraphicsSystem::GameDraw(float dt)
 		m_Textures.push_back(2);
 		m_Textures.push_back(3);
 
+		// Bind mesh's VAO, copy render data into VBO, Draw
+		DrawAll(meshinst);
+		//glDrawElementsInstanced(GL_TRIANGLES, meshinst.GetIndexCount(), GL_UNSIGNED_INT, nullptr, meshinst.mLTW.size());
 
-		glDrawElementsInstanced(GL_TRIANGLES, meshinst.GetIndexCount(), GL_UNSIGNED_INT, nullptr, meshinst.mLTW.size());
-
-		shaderinst.Deactivate();
 		meshinst.UnbindVao();
+		shaderinst.Deactivate();
 		m_Textures.clear();
 
 		// unbind the textures

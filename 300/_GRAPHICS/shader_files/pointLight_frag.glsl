@@ -5,14 +5,15 @@ in vec3 TangentLightPos;
 in vec3 TangentViewPos;
 in vec3 TangentFragPos;
 in vec4 Tex_Ent_ID;     // x : Tex ID, y: Entity ID
-
-vec3 lightIntensity = vec3(1.5);
+in int hasLight;
 
 uniform sampler2D uTex[5];
 uniform int uDebugDraw;
+uniform bool uHasLight;
+uniform float uLightIntensity;
+uniform vec3 uLightColor;
 
 layout (location = 0) out vec4 fragColor0;
-layout (location = 1) out vec4 fragColor1;
 layout (location = 2) out uint outEntityID;
 
 void main() 
@@ -20,6 +21,13 @@ void main()
     
     vec4 uColor = texture(uTex[0], TexCoords);              // Diffuse Color
     if (uColor.a <= 0.1) discard;
+
+    outEntityID = uint(Tex_Ent_ID.y);
+    if (!uHasLight)
+    {
+        fragColor0 = uColor;
+        return;
+    }
 
     vec3 normal = texture(uTex[1], TexCoords).rgb;          // Normal Map
     normal = normalize(normal * 2.0 - 1.0);
@@ -34,13 +42,14 @@ void main()
     // Diffuse
     vec3 lightDir = normalize(TangentLightPos - TangentFragPos);
     float diff = max(dot(lightDir, normal), 0.0);
-    vec3 diffuse = diff * uColor.rgb;
+    vec3 diffuse = diff * uColor.rgb * uLightColor;
 
     // specular
     vec3 viewDir = normalize(TangentViewPos - TangentFragPos);
     vec3 reflectDir = reflect(-lightDir, normal);
     vec3 halfwayDir = normalize(lightDir + viewDir);  
     float spec = pow(max(dot(normal, halfwayDir), 0.0), 32.0);
+    vec3 lightIntensity = vec3(uLightIntensity);
     specular = spec * specular * lightIntensity;
 
     vec3 finalColor = vec3(ambient + diffuse + specular /* + emission*/);
@@ -59,6 +68,4 @@ void main()
     }
 
     fragColor0 = vec4(finalColor, uColor.a);
-    fragColor1 = vec4(finalColor, uColor.a);
-    outEntityID = uint(Tex_Ent_ID.y);
 }

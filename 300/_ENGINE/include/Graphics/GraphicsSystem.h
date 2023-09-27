@@ -83,7 +83,7 @@ public:
 	int		m_DebugDrawing{ 1 };			// debug drawing 
 	bool	m_EditorMode;
 	bool	m_EnableGlobalAnimations{ 1 };
-
+	bool	m_HasLight{ false };
 	// -- Private Functions --
 	void DrawAll(GFX::Mesh& mesh);		// Renders all instances of a given mesh
 private:
