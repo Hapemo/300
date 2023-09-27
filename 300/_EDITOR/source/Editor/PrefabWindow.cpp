@@ -5,7 +5,7 @@ entt::entity PrefabWindow::prefabObj;
 
 
 void PrefabWindow::init() {
-	prefabObj = static_cast<entt::entity>(- 1);
+	prefabObj = static_cast<entt::entity>(0);
 }
 
 void PrefabWindow::update() {
@@ -53,14 +53,14 @@ void PrefabWindow::update() {
 			Entity ent(PrefabWindow::prefabObj);
 			systemManager->ecs->EndEditPrefab(ent);
 
-			PrefabWindow::prefabObj = static_cast<entt::entity>(-1);
+			PrefabWindow::prefabObj = static_cast<entt::entity>(0);
 		}
 
 		ImGui::SameLine();
 		if (ImGui::Button("Delete")) {
 			Entity ent(PrefabWindow::prefabObj);
 			systemManager->ecs->DeleteEntity(ent);
-			PrefabWindow::prefabObj = static_cast<entt::entity>(-1);
+			PrefabWindow::prefabObj = static_cast<entt::entity>(0);
 		}
 	}
 

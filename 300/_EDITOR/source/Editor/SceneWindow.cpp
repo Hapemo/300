@@ -46,30 +46,24 @@ void SceneWindow::init()
 
 void SceneWindow::update()
 {
-
-
-
-
 	mWinFlag |= ImGuiWindowFlags_NoScrollbar;
 
 	//ConstrainedResize(nullptr);
 	scene_m_Hovered = ImGui::IsWindowHovered();	
 	const ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
 	ImGui::Image((ImTextureID)(intptr_t)systemManager->mGraphicsSystem->GetEditorAttachment(), viewportPanelSize, ImVec2(0,1), ImVec2(1,0));
-	
-	
-	
-	
-	
-	
+		
 	if (ImGui::IsItemClicked(ImGuiMouseButton_Left)) {
 		unsigned int getid = systemManager->mGraphicsSystem->GetEntityID(((ImGui::GetMousePos().x - ImGui::GetWindowPos().x)/winSize.x),
 			((ImGui::GetMousePos().y - ImGui::GetWindowPos().y) / winSize.y));
 
-		std::cout << "Mouse pos " << (ImGui::GetMousePos().x- ImGui::GetWindowPos().x)/winSize.x << " " << (ImGui::GetMousePos().y- ImGui::GetWindowPos().y) / winSize.y << "\n";
+		//std::cout << getid << ": ID \n";
 
-		std::cout << getid << " i got something bitch\n";
-		std::cout << (unsigned int)Hierarchy::selectedId <<"\n";
+
+		if (getid != 0) {
+			Hierarchy::selectedId = static_cast<entt::entity>(getid);
+			Hierarchy::selectionOn = true;
+		}
 	}
 
 	ImGui::SetItemAllowOverlap();
@@ -84,7 +78,6 @@ void SceneWindow::update()
 	ImGui::SetItemAllowOverlap();
 	//wevents = ImGui::IsItemHovered();  /// <-- This returns true if mouse is over the overlaped Test button
 
-
 	ImGui::SetCursorPosX(ImGui::GetWindowContentRegionMax().x - 400);
 	ImGui::SetCursorPosY(ImGui::GetWindowContentRegionMin().y + 10);
 	if (ImGui::Button("PLAY")) {
@@ -97,17 +90,7 @@ void SceneWindow::update()
 		systemManager->Reset();
 	}
 
-
-
-
-
 	winSize= { ImGui::GetWindowSize().x ,ImGui::GetWindowSize().y};
-	//systemManager->mGraphicsSystem->SetCameraSize()
-	//ImGui::Image((ImTextureID)(intptr_t)systemManager->mGraphicsSystem->GetEditorAttachment(),ImVec2(1920, 1080));
-
-	
-
-
 }
 
 static void Square(ImGuiSizeCallbackData* data) { data->DesiredSize.x = data->DesiredSize.y = ImMin(data->DesiredSize.x, data->DesiredSize.y); }

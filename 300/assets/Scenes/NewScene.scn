@@ -1,0 +1,29 @@
+[
+    {
+        "EntityID": 1048577,
+        "General": {
+            "Name": "NewObject",
+            "Active": true,
+            "Paused": true,
+            "Tag": "Unknown",
+            "Subtag": "Active"
+        },
+        "Transform": {
+            "Scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "Rotate": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Translate": [
+                5.0,
+                10.0,
+                3.0
+            ]
+        }
+    }
+]

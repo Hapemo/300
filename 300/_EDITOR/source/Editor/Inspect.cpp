@@ -436,7 +436,6 @@ void MeshRenderer::Inspect() {
 							const char* data = (const char*)payload->Data;
 							std::string data_str = std::string(data);
 							mMaterialInstancePath[i] = data_str;
-
 							uid temp(mMaterialInstancePath[i]);
 							mTextureRef[i] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(temp.id));
 

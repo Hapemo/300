@@ -1,5 +1,4 @@
 #include "Object/ObjectFactory.h"
-//#include "Serialization/SerializationTemp.h"
 #include "document.h"
 #include "GameState/Scene.h"
 #include "GameState/GameState.h"
@@ -63,8 +62,6 @@ void ObjectFactory::DeserializeScene(const std::string& filename)
 		{
 			e.AddComponent<Scripts>();
 			e.GetComponent<Scripts>() = obj.GetSJSON();
-			/*for (Script ya : e.GetComponent<Scripts>().scriptsContainer)
-				std::cout << ya.scriptFile << std::endl;*/
 		}
 
 		if (obj.mp_t)
@@ -84,41 +81,24 @@ void ObjectFactory::DeserializeScene(const std::string& filename)
 			e.AddComponent<Audio>();
 			e.GetComponent<Audio>() = obj.GetAJSON();
 		}
-
-		// weird stuff, why still have value in rb when the component does not exist?
-		//std::cout << e.GetComponent<General>().name << " " << obj.mrb_t << " " << e.GetComponent<RigidBody>().mMass << std::endl;
 	}
 
 	auto parent_cont = systemManager->ecs->GetEntitiesWith<Parent>();
 	auto child_cont = systemManager->ecs->GetEntitiesWith<Children>();
 
-	// working
-	//std::cout << "containers: " << parent_cont.size() << " " << child_cont.size() << std::endl;
-
 	for (Entity pe : parent_cont)
 	{
 		Parent& parent = pe.GetComponent<Parent>();
-		//std::cout << "old parent stuff: " << parent.mNextSibling << ", " << parent.mParent << ", " << parent.mPrevSibling << std::endl;
 		parent.mNextSibling = (uint32_t)idMap[(entt::entity)parent.mNextSibling];
 		parent.mParent = (uint32_t)idMap[(entt::entity)parent.mParent];
 		parent.mPrevSibling = (uint32_t)idMap[(entt::entity)parent.mPrevSibling];
-
-		//std::cout << "new parent stuff: " << parent.mNextSibling << ", " << parent.mParent << ", " << parent.mPrevSibling << std::endl;
 	}
 
 	for (Entity ce : child_cont)
 	{
 		Children& child = ce.GetComponent<Children>();
-		//std::cout << "old child stuff: " << child.mFirstChild << std::endl;
 		child.mFirstChild = (uint32_t)idMap[(entt::entity)child.mFirstChild];
-		//std::cout << "new child stuff: " << child.mFirstChild << std::endl;
 	}
-
-	//// working
-	//for (const auto& n : idMap)
-	//{
-	//	std::cout << "old id: " << (std::uint32_t)n.first << ", new id: " << (std::uint32_t)n.second << std::endl;
-	//}
 }
 
 // unused (technically)
@@ -325,8 +305,6 @@ Entity ObjectFactory::DeserializePrefab(const std::string& filename, int id)
 	{
 		e.AddComponent<Scripts>();
 		e.GetComponent<Scripts>() = eJ.GetSJSON();
-		/*for (Script ya : e.GetComponent<Scripts>().scriptsContainer)
-			std::cout << ya.scriptFile << std::endl;*/
 	}
 
 	if (eJ.ma_t)
@@ -344,7 +322,8 @@ void ObjectFactory::LoadScene(Scene* scene, const std::string& filename)
 	// loop thru container and store entities
 
 	EntityListJSON entities;
-	entities.DeserializeFile(ConfigManager::GetValue("ScenePath") + filename + ".scn");
+	//entities.DeserializeFile(ConfigManager::GetValue("ScenePath") + filename + ".scn");
+	entities.DeserializeFile("../assets/Scenes/" + filename + ".scn");
 
 	std::unordered_map<entt::entity, entt::entity> idMap;
 
@@ -439,7 +418,7 @@ void ObjectFactory::LoadScene(Scene* scene, const std::string& filename)
 void ObjectFactory::SaveScene(Scene* scene)
 {
 	// form the filename
-	std::string filename = ConfigManager::GetValue("ScenePath") + scene->mName + ".scn";
+	std::string filename = "../assets/Scenes/" + scene->mName + ".scn";
 
 	std::ofstream ofs;
 	ofs.open(filename, std::fstream::out | std::fstream::trunc);
@@ -505,7 +484,7 @@ void ObjectFactory::LoadGameState(GameState* gs, const std::string& _name)
 	gs->mName = _name;
 
 	SceneListJSON scenes;
-	scenes.DeserializeFile(ConfigManager::GetValue("GameStatePath") + _name + ".gs");
+	scenes.DeserializeFile("../assets/GameStates/" + _name + ".gs");
 
 	Scene sce;
 	for (auto& s : scenes.SceneList())
@@ -526,7 +505,7 @@ void ObjectFactory::LoadGameState(GameState* gs, const std::string& _name)
 void ObjectFactory::SaveGameState(GameState* gs)
 {
 	// form the filename
-	std::string filename = ConfigManager::GetValue("GameStatePath") + gs->mName + ".gs";
+	std::string filename = "../assets/GameStates/" + gs->mName + ".gs";
 
 	std::ofstream ofs;
 	ofs.open(filename, std::fstream::out | std::fstream::trunc);
