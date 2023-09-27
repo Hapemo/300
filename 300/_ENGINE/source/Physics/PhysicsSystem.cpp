@@ -3,7 +3,7 @@
 #include "Debug/EnginePerformance.h"
 #include "Physics/Accumulator.h"
 
-PhysicsSystem::PhysicsSystem() : mFixedDT(1/60.f)
+PhysicsSystem::PhysicsSystem()
 {
 	mMaterials[MATERIAL::RUBBER] = CreateMaterial(0.9, 0.8, 0.2);
 	mMaterials[MATERIAL::WOOD] = CreateMaterial(0.5, 0.4, 0.3);
@@ -86,7 +86,7 @@ void PhysicsSystem::CreateRigidBody(Entity e)
 	{
 		RigidBody rbod = e.GetComponent<RigidBody>();
 		BoxCollider col = e.GetComponent<BoxCollider>();
-		PxShape* shape = mPX.mPhysics->createShape(PxBoxGeometry(Convert(xform.mScale * col.mScaleOffset)), *mMaterials[rbod.mMaterial]);
+		PxShape* shape = mPX.mPhysics->createShape(PxBoxGeometry(Convert(xform.mScale * col.mScaleOffset) / 2.f), *mMaterials[rbod.mMaterial]);
 		PxRigidActor* actor{};
 		if (rbod.mMotion == MOTION::DYNAMIC)
 		{
@@ -109,7 +109,7 @@ void PhysicsSystem::CreateRigidBody(Entity e)
 	{
 		RigidBody rbod = e.GetComponent<RigidBody>();
 		SphereCollider col = e.GetComponent<SphereCollider>();
-		PxShape* shape = mPX.mPhysics->createShape(PxSphereGeometry(std::max({ xform.mScale.x, xform.mScale.y, xform.mScale.z }) * col.mScaleOffset), *mMaterials[rbod.mMaterial]);
+		PxShape* shape = mPX.mPhysics->createShape(PxSphereGeometry(std::max({ xform.mScale.x, xform.mScale.y, xform.mScale.z }) * col.mScaleOffset / 2.f), *mMaterials[rbod.mMaterial]);
 		PxRigidActor* actor{};
 		if (rbod.mMotion == MOTION::DYNAMIC)
 		{

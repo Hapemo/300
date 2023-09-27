@@ -17,7 +17,7 @@ class InputMapSystem;
 class SystemManager {
 	GFX::Window *mWindow;
 	bool mIsEditor;
-
+	bool mIsPlay;
 public:
 	std::unique_ptr<PhysicsSystem> mPhysicsSystem;
 	std::unique_ptr<ScriptingSystem> mScriptingSystem;
@@ -39,6 +39,9 @@ public:
 	GFX::Window *GetWindow() { return mWindow; }
 	bool IsEditor() { return mIsEditor; }
 	void Init(bool isEditor, GFX::Window *window);
+	void Reset();
+	void Pause() { mIsPlay = false; }
+	void Play() { mIsPlay = true; }
 	void Update(float dt);
 	void Exit();
 	PhysicsSystem *GetPhysicsPointer();

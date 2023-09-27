@@ -60,6 +60,7 @@ void EditorApplication::SystemInit()
     Input::Init();
     //gfx init
 
+    mMaineditor.UIinit(mWindow.GetHandle());
     //Editor init
 
 }
@@ -67,7 +68,6 @@ void EditorApplication::SystemInit()
 void EditorApplication::MainUpdate()
 {
 
-    mMaineditor.UIinit(mWindow.GetHandle());
 
 
     while (!glfwWindowShouldClose(mWindow.GetHandle())) 
@@ -82,11 +82,7 @@ void EditorApplication::MainUpdate()
         // Graphics update
 
         auto windowSize = static_cast<SceneWindow*>(mMaineditor.mWindowlist["Editscene"])->winSize;
-        //int windowSizeY = static_cast<SceneWindow*>(mMaineditor.mWindowlist["Editscene"])->winSize_Y;
-
             
-       // auto cam = systemManager->mGraphicsSystem->m_EditorCamera;
-
         systemManager->mGraphicsSystem->SetCameraSize(CAMERA_TYPE::CAMERA_TYPE_EDITOR, windowSize);
        // systemManager->mGraphicsSystem->SetCameraSize(&systemManager->mGraphicsSystem->mCamera, ImGui::GetWindowSize().x, ImGui::GetWindowSize().y);
         EnginePerformance::EndTrack("Editor");
@@ -96,9 +92,7 @@ void EditorApplication::MainUpdate()
         EnginePerformance::StartTrack("Editor");
         mMaineditor.UIdraw(mWindow.GetHandle());
 
-       // systemManager->mGraphicsSystem->SetCameraPosition(&systemManager->mGraphicsSystem->mCamera,);
-        // To remove (Script test with entities)
-        //systemManager->mScriptingSystem->ScriptingUpdateTest();
+
 
         SecondUpdate(); // This should always be the last
 

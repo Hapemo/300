@@ -13,16 +13,17 @@
 #include "../../../_TOOLS/include/Input/InputMapSystem.h"
 #include "Debug/EnginePerformance.h"
 
-SystemManager* systemManager;
+SystemManager *systemManager;
 
 SystemManager::SystemManager()
 {
+	mIsPlay = false;
 	mPhysicsSystem = std::make_unique<PhysicsSystem>();
 	mScriptingSystem = std::make_unique<ScriptingSystem>();
 	mGraphicsSystem = std::make_unique<GraphicsSystem>();
 	mGameStateSystem = std::make_unique<GameStateManager>();
 	mResourceTySystem = std::make_unique<ResourceTy>();
-	mResourceSystem	= std::make_unique<Resource>();
+	mResourceSystem = std::make_unique<Resource>();
 	mAudioSystem = std::make_unique<AudioSystem>();
 	mLogger = std::make_unique<Logger>();
 	mInputActionSystem = std::make_unique<InputMapSystem>();
@@ -34,7 +35,7 @@ SystemManager::~SystemManager()
 	delete ecs;
 }
 
-void SystemManager::Init(bool isEditor, GFX::Window* window)
+void SystemManager::Init(bool isEditor, GFX::Window *window)
 {
 	mIsEditor = isEditor;
 	mWindow = window;
@@ -42,8 +43,6 @@ void SystemManager::Init(bool isEditor, GFX::Window* window)
 	PINFO("Init Input Action System");
 	mLogger.get()->InitLogging();
 	PINFO("Init Logger");
-	mPhysicsSystem.get()->Init();
-	PINFO("Init Physics System");
 	mScriptingSystem.get()->Init();
 	PINFO("Init Scripting System");
 
@@ -56,11 +55,26 @@ void SystemManager::Init(bool isEditor, GFX::Window* window)
 	mGameStateSystem.get()->Init();
 	mAudioSystem.get()->Init();
 	PINFO("Init Game state System");
+	mPhysicsSystem.get()->Init();
+	PINFO("Init Physics System");
+}
+
+void SystemManager::Reset()
+{
+	mGameStateSystem.get()->Unload();
+	mGameStateSystem.get()->Init();
+	mPhysicsSystem.get()->Init();
+	mIsPlay = false;
 }
 
 void SystemManager::Update(float dt)
 {
-	mInputActionSystem.get()->Update();
+	EnginePerformance::StartTrack("Graphics");
+	mGraphicsSystem.get()->Update(dt);
+	EnginePerformance::EndTrack("Graphics");
+	EnginePerformance::UpdateSystemMs("Graphics");
+	if (!mIsPlay)
+		return;
 
 	EnginePerformance::StartTrack("Physics");
 	mPhysicsSystem.get()->Update(dt);
@@ -72,16 +86,11 @@ void SystemManager::Update(float dt)
 	EnginePerformance::EndTrack("Scripting");
 	EnginePerformance::UpdateSystemMs("Scripting");
 
-	EnginePerformance::StartTrack("Graphics");
-	mGraphicsSystem.get()->Update(dt);
-	EnginePerformance::EndTrack("Graphics");
-	EnginePerformance::UpdateSystemMs("Graphics");
-
 	EnginePerformance::StartTrack("Audio");
 	mAudioSystem.get()->Update(dt);
 	EnginePerformance::EndTrack("Audio");
 	EnginePerformance::UpdateSystemMs("Audio");
-//	mResourceSystem.get()->Update();
+	//	mResourceSystem.get()->Update();
 }
 
 void SystemManager::Exit()
@@ -92,14 +101,14 @@ void SystemManager::Exit()
 	mResourceTySystem.get()->Exit();
 	mGameStateSystem.get()->Unload();
 	mAudioSystem.get()->Exit();
-
 }
 
-PhysicsSystem* SystemManager::GetPhysicsPointer()
+PhysicsSystem *SystemManager::GetPhysicsPointer()
 {
 	return mPhysicsSystem.get();
 }
 
-ScriptingSystem* SystemManager::GetScriptingPointer() {
+ScriptingSystem *SystemManager::GetScriptingPointer()
+{
 	return mScriptingSystem.get();
 }

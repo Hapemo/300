@@ -4,10 +4,10 @@
 #include <vector>
 #include "Physics/PhysicsTypes.h"
 #include "Tags.h"
-//#include "rttr/registration.h"
 #include "ECS.h"
 #include "Audio/AudioType.h"
 #include <Animator.hpp>
+//#include "rttr/registration.h"
 
 struct General
 {
@@ -48,21 +48,18 @@ struct Animator
 // this struct stores the filepaths for the meshdata, material, and shader. the actual data is stored in the resource manager
 struct MeshRenderer
 {
-
-
-
 	// For now, we store the string to the filepaths. TO CHANGE to uids for efficient referencing
 	std::pair<std::string, std::string> mShaderPath;
-	std::string			mMaterialInstancePath[4];
+	std::string							mMaterialInstancePath[4];
 	std::string							mMeshPath;
 	
-	void*							mMeshRef;
-	void*							mTextureRef[4];
-	bool							mTextureCont[4];
+	void*								mMeshRef;
+	void*								mTextureRef[4];
+	bool								mTextureCont[4];
 
-	unsigned						mGUID;
+	unsigned							mGUID;
 
-	void							Inspect();
+	void								Inspect();
 	//RTTR_ENABLE()
 
 

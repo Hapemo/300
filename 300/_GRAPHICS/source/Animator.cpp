@@ -16,6 +16,9 @@
 #include <iostream>
 #include <Animator.hpp>
 
+#include "Graphics/GraphicsSystem.h"
+
+
 namespace GFX
 {
     // temp fnct to test animations
@@ -96,6 +99,9 @@ namespace GFX
             glm::mat4 offset = boneInfoMap[nodename].offset;                // the offset is the offset WRT to the bone's origin transformation
             m_FinalBoneMatrices[index] = globalTransform * offset;          // populating this vector of matrices with the bone matrices, WRT to the bone's parent transformation
                                                                             // and the entity's world position
+
+            const mat4 & final = m_FinalBoneMatrices[index];
+            systemManager->mGraphicsSystem->m_Renderer.AddCube({ final[3][0], final[3][1], final[3][2] }, { 0.5f, 0.5, 0.5f }, { 1.f, 0.f, 0.f, 1.f });
         }
 
         // recursively call this function for all the children of this node

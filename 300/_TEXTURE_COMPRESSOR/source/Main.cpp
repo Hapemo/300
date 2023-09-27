@@ -15,22 +15,22 @@ int main()
 
 	Init();
 
-	//// Load every texture in the directory ^
-	//for (const auto& entry : std::filesystem::directory_iterator(directoryTex))
-	//{
-	//	std::string file = entry.path().filename().string();
+	// Load every texture in the directory ^
+	for (const auto& entry : std::filesystem::directory_iterator(directoryTex))
+	{
+		std::string file = entry.path().filename().string();
 
-	//	file = directoryTex.string() + "/" + file;
+		file = directoryTex.string() + "/" + file;
 
-	//	std::string filetype = file.substr(file.find_last_of("."));
+		std::string filetype = file.substr(file.find_last_of("."));
 
-	//	std::cout << file.c_str() << std::endl;
+		std::cout << file.c_str() << std::endl;
 
-	//	if (filetype == ".ttf")
-	//		LoadAndSerializeFontFile(file.c_str(), "../assets/compiled_fonts");
-	//	else
-	//		CompressImageFile(file.c_str(), "../assets/Compressed");
-	//}
+		if (filetype == ".ttf")
+			LoadAndSerializeFontFile(file.c_str(), "../assets/compiled_fonts");
+		else
+			CompressImageFile(file.c_str(), "../assets/Compressed");
+	}
 
 	// Load every font in the directory ^
 	for (const auto& entry : std::filesystem::directory_iterator(directoryFont))

@@ -30,12 +30,13 @@ public:
 	void Exit();
 
 	// -- Mesh --
-	void AddInstance(GFX::Mesh& mesh, Transform transform);		// Adds an instance of a mesh to be drawn
+	void AddInstance(GFX::Mesh& mesh, Transform transform, unsigned entityID = 0xFFFFFFFF);		// Adds an instance of a mesh to be drawn
+	void AddInstance(GFX::Mesh& mesh, mat4 transform, unsigned entityID = 0xFFFFFFFF);	// Adds an instance of a mesh to be drawn
 
 	// -- FBO --
 	unsigned int GetGameAttachment()		{ return m_Fbo.GetGameAttachment(); }
 	unsigned int GetEditorAttachment()		{ return m_Fbo.GetEditorAttachment(); }
-	unsigned int GetEntityID(int x, int y)	{ return m_Fbo.ReadEntityID(x, y); }
+	unsigned int GetEntityID(float x, float y)	{ return m_Fbo.ReadEntityID(x, y); }
 
 	// -- Getter --
 	GFX::DebugRenderer& getDebugRenderer() { return m_Renderer; }
