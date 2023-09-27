@@ -219,7 +219,25 @@ void General::Inspect() {
 
 	ImGui::Text("Name");
 	ImGui::SameLine();
-	ImGui::InputText( "##", &name);
+	ImGui::Button( name.c_str());
+
+
+	//ImGui::Dummy(ImVec2(0.0, 5.f));
+
+
+	ImGui::Text("Tag");
+	ImGui::SameLine();
+
+	if(ImGui::BeginCombo("##Tag", tag[tagid].c_str())) {
+	
+		for (int i = 0; i < 5; i++) {
+			if (ImGui::Selectable(tag[i].c_str())) {
+				tagid = i;
+			}
+		}
+		ImGui::EndCombo();
+	}
+
 }
 
 
@@ -455,7 +473,7 @@ void MeshRenderer::Inspect() {
 
 		
 
-		ImGui::Dummy(ImVec2(0.0f, 10.0f));
+		//ImGui::Dummy(ImVec2(0.0f, 10.0f));
 
 		std::string textures[4] = { "DIFFUSE","NORMAL", "EMISSION","SPECULAR"};
 
@@ -489,7 +507,7 @@ void MeshRenderer::Inspect() {
 
 				ImGui::Selectable(newpath.c_str());
 
-				ImGui::Dummy(ImVec2(0.0f, 10.0f));
+				//ImGui::Dummy(ImVec2(0.0f, 10.0f));
 			}
 			else {
 				ImGui::Selectable(" ");
