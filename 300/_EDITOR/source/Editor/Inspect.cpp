@@ -93,6 +93,11 @@ void Inspect::update()
 		
 		Entity ent(Hierarchy::selectedId);
 
+		General& Inspector = ent.GetComponent<General>();
+		Inspector.Inspect();
+
+
+
 		if (ent.HasComponent<Transform>()) {
 			Transform& transform = ent.GetComponent<Transform>();
 			transform.Inspect();
