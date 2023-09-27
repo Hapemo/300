@@ -165,19 +165,19 @@ void ECS::UpdatePrefabEntities(std::string prefabName)
 	for (Entity e : mPrefabs[prefabName])
 	{
 		if (temp.HasComponent<MeshRenderer>())
-			e.GetComponent<MeshRenderer>() = temp.GetComponent<MeshRenderer>();
+			e.AddComponent<MeshRenderer>() = temp.GetComponent<MeshRenderer>();
 		if (temp.HasComponent<RigidBody>())
-			e.GetComponent<RigidBody>() = temp.GetComponent<RigidBody>();
+			e.AddComponent<RigidBody>() = temp.GetComponent<RigidBody>();
 		if (temp.HasComponent<BoxCollider>())
-			e.GetComponent<BoxCollider>() = temp.GetComponent<BoxCollider>();
+			e.AddComponent<BoxCollider>() = temp.GetComponent<BoxCollider>();
 		if (temp.HasComponent<SphereCollider>())
-			e.GetComponent<SphereCollider>() = temp.GetComponent<SphereCollider>(); 
+			e.AddComponent<SphereCollider>() = temp.GetComponent<SphereCollider>();
 		if (temp.HasComponent<PlaneCollider>())
-			e.GetComponent<PlaneCollider>() = temp.GetComponent<PlaneCollider>();
+			e.AddComponent<PlaneCollider>() = temp.GetComponent<PlaneCollider>();
 		if (temp.HasComponent<Scripts>())
-			e.GetComponent<Scripts>() = temp.GetComponent<Scripts>();
+			e.AddComponent<Scripts>() = temp.GetComponent<Scripts>();
 		if (temp.HasComponent<Audio>())
-			e.GetComponent<Audio>() = temp.GetComponent<Audio>();
+			e.AddComponent<Audio>() = temp.GetComponent<Audio>();
 	}
 
 	systemManager->ecs->DeleteEntity(temp);
