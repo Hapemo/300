@@ -272,7 +272,6 @@ void Hierarchy::update()
 
 void Hierarchy::update() {
     
-    copyPaste();
 
     ImGui::InputText(" ", &systemManager->mGameStateSystem->mCurrentGameState.mName);
     // ImGui::Text(systemManager->mGameStateSystem->mCurrentGameState.mName.c_str());
@@ -469,6 +468,12 @@ void Hierarchy::update() {
     }
 
 
+
+    
+
+
+
+
     if (mCPopup)
         ImGui::OpenPopup("Edit_entity", ImGuiPopupFlags_MouseButtonRight);
 
@@ -543,18 +548,10 @@ void Hierarchy::update() {
         if (ImGui::Selectable("Delete")) {
 
 
-             
-            selectionOn = false;
-
-             if (systemManager->mGameStateSystem->mCurrentGameState.mScenes[RselectedScene].mEntities.size() > 0) {
-
-                 for (int i{ 0 }; i < systemManager->mGameStateSystem->mCurrentGameState.mScenes[RselectedScene].mEntities.size(); i++) {
-                     systemManager->mGameStateSystem->mCurrentGameState.mScenes[RselectedScene].mEntities.clear();
-                 }
-             }
-
-             systemManager->mGameStateSystem->
-                 mCurrentGameState.RemoveScene(systemManager->mGameStateSystem->mCurrentGameState.mScenes[RselectedScene].mName);
+            systemManager->mGameStateSystem->
+                mCurrentGameState.RemoveScene(systemManager->mGameStateSystem->mCurrentGameState.mScenes[RselectedScene].mName);
+            
+             selectionOn = false;
              //Entity ent(Hierarchy::selectedId);
             // systemManager->ecs->DeleteEntity(Hierarchy::selectedId);
         }
@@ -568,18 +565,4 @@ void Hierarchy::update() {
 
 }
 
-
-void Hierarchy::copyPaste() {
-    if (Input::CheckKey(E_STATE::HOLD, E_KEY::LEFT_CONTROL))
-    {
-        if (Input::CheckKey(E_STATE::PRESS, E_KEY::C))
-        {
-            systemManager->ecs->CopyEntity(Hierarchy::selectedId);
-        }
-        else if (Input::CheckKey(E_STATE::PRESS, E_KEY::V))
-        {
-            Hierarchy::selectedId = systemManager->ecs->PasteEntity(Hierarchy::selectedScene).id;
-        }
-    }
-}
 #endif // 1

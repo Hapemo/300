@@ -63,9 +63,8 @@ void Editor::UIinit(GLFWwindow* window)
     }
 
     style.FrameBorderSize = 0.f;
-    style.FrameRounding = 12.f;
-    style.TabRounding = 4.f;
     style.TabBorderSize = 1.5f;
+    style.TabRounding = 0.f;
     style.ItemSpacing = ImVec2( 4.f,4.f);
     style.WindowBorderSize = 0.f;
 
@@ -253,11 +252,10 @@ void Editor::UIupdate(GLFWwindow* window) {
         else {
 
             ImGui::Begin(windows.first.c_str(), 0, windows.second->mWinFlag);
-
-            windows.second->update();
             if (windows.first == "Editscene") {
                 (static_cast<SceneWindow*>(windows.second))->RenderGuizmo();
             }
+            windows.second->update();
             ImGui::End();
         }
 

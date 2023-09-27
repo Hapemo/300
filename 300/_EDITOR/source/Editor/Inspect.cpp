@@ -398,6 +398,14 @@ void Animator::Inspect()
 		Entity(Hierarchy::selectedId).RemoveComponent<MeshRenderer>();
 }
 
+void General::Inspect()
+{
+	if (ImGui::CollapsingHeader("General", ImGuiTreeNodeFlags_DefaultOpen))
+	{
+
+	}
+}
+
 void MeshRenderer::Inspect() {
 	bool delete_component{ true };
 	if (ImGui::CollapsingHeader("MeshRenderer", &delete_component,ImGuiTreeNodeFlags_DefaultOpen)) {
