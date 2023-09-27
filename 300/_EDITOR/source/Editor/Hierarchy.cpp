@@ -551,7 +551,7 @@ void Hierarchy::update() {
             systemManager->mGameStateSystem->
                 mCurrentGameState.RemoveScene(systemManager->mGameStateSystem->mCurrentGameState.mScenes[RselectedScene].mName);
             
-            // selectionOn = false;
+             selectionOn = false;
              //Entity ent(Hierarchy::selectedId);
             // systemManager->ecs->DeleteEntity(Hierarchy::selectedId);
         }

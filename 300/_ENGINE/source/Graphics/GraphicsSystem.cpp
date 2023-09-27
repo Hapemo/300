@@ -33,7 +33,7 @@ void GraphicsSystem::Init()
 #pragma region create entity 1
 	//Create a new entity here, for testing purposes
 	Entity newentity = systemManager->ecs->NewEntity();			// creating a new entity
-	systemManager->mGameStateSystem->mCurrentGameState.AddScene("NewScene");
+//	systemManager->mGameStateSystem->mCurrentGameState.AddScene("NewScene");
 	systemManager->mGameStateSystem->mCurrentGameState.mScenes[0].mEntities.insert(newentity);
 
 	newentity.AddComponent<MeshRenderer>();

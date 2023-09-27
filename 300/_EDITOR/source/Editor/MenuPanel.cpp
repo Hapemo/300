@@ -41,10 +41,6 @@ void MenuPanel::update()
                 systemManager->mGameStateSystem->mCurrentGameState.Save();
             }
 
-            if (ImGui::MenuItem("Save Scene")) {
-                systemManager->mGameStateSystem->mCurrentGameState.mScenes[Hierarchy::selectedScene].Save();
-            }
-
 
             ImGui::EndMenu();
         }
