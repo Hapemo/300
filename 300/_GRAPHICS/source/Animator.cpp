@@ -78,6 +78,8 @@ namespace GFX
     void Animator::CalculateBoneTransform(const _GEOM::AssimpNodeData* node, glm::mat4 parentTransform, const glm::mat4& LTW)
     {
         static const mat4 identity(1.f);
+        static const vec4 identityvec(1.f);
+
         const std::string& nodename = node->m_Name;
         glm::mat4 nodeTransform = node->m_Transformation;
 
@@ -107,8 +109,8 @@ namespace GFX
             //!< ==== Debug Drawing for the bones ==== //
             if (systemManager->mGraphicsSystem->m_DebugDrawing && (parentTransform != identity))
             {
-                vec4 final  = LTW * globalTransform * vec4(1.f);
-                vec4 parent = LTW * parentTransform * vec4(1.f);
+                vec4 final  = LTW * globalTransform * identityvec;
+                vec4 parent = LTW * parentTransform * identityvec;
 
                 systemManager->mGraphicsSystem->m_Renderer.AddCube(parent, { 0.5f, 0.5, 0.5f }, { 1.f, 0.f, 0.f, 1.f });
                 systemManager->mGraphicsSystem->m_Renderer.AddLine( parent, final, {0.f, 1.f, 1.f, 1.f});
