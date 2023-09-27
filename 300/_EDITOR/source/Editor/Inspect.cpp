@@ -132,6 +132,10 @@ void Inspect::update()
 			planeCollider.Inspect();
 
 		}
+		if (ent.HasComponent<PointLight>()) {
+			PointLight& pointLight = ent.GetComponent<PointLight>();
+			pointLight.Inspect();
+		}
 
 		if (ent.HasComponent<Camera>()) {
 			Camera& cam = ent.GetComponent<Camera>();
@@ -208,6 +212,12 @@ void Inspect::Add_component() {
 			if (!Entity(Hierarchy::selectedId).HasComponent<Animator>())
 				Entity(Hierarchy::selectedId).AddComponent<Animator>();
 		}
+
+		if (ImGui::Selectable("PointLight"))
+		{
+			if (!Entity(Hierarchy::selectedId).HasComponent<PointLight>())
+				Entity(Hierarchy::selectedId).AddComponent<PointLight>();
+		}
 		ImGui::EndPopup();
 	}
 
@@ -268,6 +278,19 @@ void Camera::Inspect()
 
 	}
 
+}
+
+void PointLight::Inspect()
+{
+	if (ImGui::CollapsingHeader("PointLight", ImGuiTreeNodeFlags_DefaultOpen))
+	{
+
+		ImGui::DragFloat3("##Light Color", (float*)&mLightColor);
+		ImGui::DragFloat("##Attenuation", (float*)&mAttenuation);
+		ImGui::DragFloat("##Intensity", (float*)&mIntensity);
+
+
+	}
 }
 
 void Scripts::Inspect() {
