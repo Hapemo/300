@@ -322,7 +322,7 @@ void Hierarchy::update() {
 
     ImGui::SameLine();
     if (ImGui::Button("Scene", ImVec2(50, 50))) {
-        systemManager->mGameStateSystem->mCurrentGameState.AddScene("NewScene"+ std::to_string(allScene.size()));
+        systemManager->mGameStateSystem->mCurrentGameState.AddScene();
 
     }
 
@@ -334,7 +334,7 @@ void Hierarchy::update() {
         if (i == selectedScene)
             selectflagscene |= ImGuiTreeNodeFlags_Selected;
 
-        if (ImGui::TreeNodeEx(allScene[i].mName.c_str(), selectflagscene| ImGuiTreeNodeFlags_DefaultOpen| ImGuiTreeNodeFlags_OpenOnDoubleClick))
+        if (ImGui::TreeNodeEx(allScene[i].mName.c_str(), selectflagscene | ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_OpenOnDoubleClick))
         {
 
             if (ImGui::IsItemClicked(ImGuiMouseButton_Left)) {  
