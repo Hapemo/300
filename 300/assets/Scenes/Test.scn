@@ -1,8 +1,66 @@
 [
     {
-        "EntityID": 3,
+        "EntityID": 1,
         "General": {
-            "Name": "NewObject",
+            "Name": "Floor",
+            "Active": true,
+            "Paused": false,
+            "Subtag": "Active"
+        },
+        "Transform": {
+            "Scale": [
+                500.0,
+                10.0,
+                500.0
+            ],
+            "Rotate": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Translate": [
+                0.0,
+                0.0,
+                0.0
+            ]
+        },
+        "MeshRenderer": {
+            "ShaderPath": [
+                "../_GRAPHICS/shader_files/pointLight_vert.glsl",
+                "../_GRAPHICS/shader_files/pointLight_frag.glsl"
+            ],
+            "MaterialInstancePath": [
+                "../assets/Compressed/Wood Material 15_BaseColor.ctexture",
+                "../assets/Compressed/Wood Material 15_Normal.ctexture",
+                "../assets/Compressed/Wood Material 15_BaseColor.ctexture",
+                "../assets/Compressed/Wood Material 15_BaseColor.ctexture"
+            ],
+            "MeshPath": "../assets/compiled_geom/Wall_Partition(No Material).geom",
+            "GUID": 0,
+            "TextureCont": [
+                false,
+                false,
+                false,
+                false
+            ]
+        },
+        "BoxCollider": {
+            "ScaleOffset": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "TranslateOffset": [
+                0.0,
+                0.0,
+                0.0
+            ]
+        }
+    },
+    {
+        "EntityID": 2,
+        "General": {
+            "Name": "Camera",
             "Active": true,
             "Paused": false,
             "Subtag": "Active"
@@ -19,25 +77,34 @@
                 0.0
             ],
             "Translate": [
-                28.78548240661621,
-                81.32376098632813,
-                62.877052307128906
+                400.0,
+                121.0,
+                -9.0
             ]
         },
-        "PointLight": {
-            "LightColor": [
-                1.0,
-                1.0,
-                1.0
+        "Camera": {
+            "Position": [
+                400.0,
+                121.0,
+                11.0
             ],
-            "Attenuation": 0.0,
-            "Intensity": 13.0
+            "Target": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Size": [
+                582,
+                607
+            ],
+            "Near": 0.10000000149011612,
+            "Far": 900.0
         }
     },
     {
-        "EntityID": 1048577,
+        "EntityID": 3,
         "General": {
-            "Name": "Entity2",
+            "Name": "Animation",
             "Active": true,
             "Paused": false,
             "Subtag": "Active"
@@ -55,7 +122,7 @@
             ],
             "Translate": [
                 0.0,
-                0.0,
+                10.0,
                 0.0
             ]
         },
@@ -93,9 +160,9 @@
         }
     },
     {
-        "EntityID": 1048578,
+        "EntityID": 4,
         "General": {
-            "Name": "Entity1",
+            "Name": "Light",
             "Active": true,
             "Paused": false,
             "Subtag": "Active"
@@ -112,28 +179,309 @@
                 0.0
             ],
             "Translate": [
-                400.0,
-                121.0,
-                -9.0
+                5.486000061035156,
+                230.67599487304688,
+                48.341705322265625
             ]
         },
-        "Camera": {
-            "Position": [
-                400.0,
-                121.0,
-                11.0
+        "PointLight": {
+            "LightColor": [
+                1.0,
+                1.0,
+                1.0
             ],
-            "Target": [
+            "Attenuation": 0.0,
+            "Intensity": 28.0
+        }
+    },
+    {
+        "EntityID": 5,
+        "General": {
+            "Name": "Wall",
+            "Active": true,
+            "Paused": false,
+            "Subtag": "Active"
+        },
+        "Transform": {
+            "Scale": [
+                500.0,
+                300.0,
+                10.0
+            ],
+            "Rotate": [
                 0.0,
                 0.0,
                 0.0
             ],
-            "Size": [
-                556,
-                607
+            "Translate": [
+                0.0,
+                0.0,
+                -250.0
+            ]
+        },
+        "MeshRenderer": {
+            "ShaderPath": [
+                "../_GRAPHICS/shader_files/pointLight_vert.glsl",
+                "../_GRAPHICS/shader_files/pointLight_frag.glsl"
             ],
-            "Near": 0.10000000149011612,
-            "Far": 900.0
+            "MaterialInstancePath": [
+                "../assets/Compressed/Wood Material 15_BaseColor.ctexture",
+                "../assets/Compressed/Wood Material 15_Normal.ctexture",
+                "../assets/Compressed/Wood Material 15_BaseColor.ctexture",
+                "../assets/Compressed/Wood Material 15_BaseColor.ctexture"
+            ],
+            "MeshPath": "../assets/compiled_geom/Wall_Partition(No Material).geom",
+            "GUID": 0,
+            "TextureCont": [
+                false,
+                false,
+                false,
+                false
+            ]
+        },
+        "BoxCollider": {
+            "ScaleOffset": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "TranslateOffset": [
+                0.0,
+                150.0,
+                0.0
+            ]
+        }
+    },
+    {
+        "EntityID": 6,
+        "General": {
+            "Name": "Wall",
+            "Active": true,
+            "Paused": false,
+            "Subtag": "Active"
+        },
+        "Transform": {
+            "Scale": [
+                500.0,
+                300.0,
+                10.0
+            ],
+            "Rotate": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Translate": [
+                0.0,
+                0.0,
+                250.0
+            ]
+        },
+        "MeshRenderer": {
+            "ShaderPath": [
+                "../_GRAPHICS/shader_files/pointLight_vert.glsl",
+                "../_GRAPHICS/shader_files/pointLight_frag.glsl"
+            ],
+            "MaterialInstancePath": [
+                "../assets/Compressed/Wood Material 15_BaseColor.ctexture",
+                "../assets/Compressed/Wood Material 15_Normal.ctexture",
+                "../assets/Compressed/Wood Material 15_BaseColor.ctexture",
+                "../assets/Compressed/Wood Material 15_BaseColor.ctexture"
+            ],
+            "MeshPath": "../assets/compiled_geom/Wall_Partition(No Material).geom",
+            "GUID": 0,
+            "TextureCont": [
+                false,
+                false,
+                false,
+                false
+            ]
+        },
+        "BoxCollider": {
+            "ScaleOffset": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "TranslateOffset": [
+                0.0,
+                150.0,
+                0.0
+            ]
+        }
+    },
+    {
+        "EntityID": 7,
+        "General": {
+            "Name": "Wall",
+            "Active": true,
+            "Paused": false,
+            "Subtag": "Active"
+        },
+        "Transform": {
+            "Scale": [
+                10.0,
+                300.0,
+                500.0
+            ],
+            "Rotate": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Translate": [
+                -250.0,
+                0.0,
+                0.0
+            ]
+        },
+        "MeshRenderer": {
+            "ShaderPath": [
+                "../_GRAPHICS/shader_files/pointLight_vert.glsl",
+                "../_GRAPHICS/shader_files/pointLight_frag.glsl"
+            ],
+            "MaterialInstancePath": [
+                "../assets/Compressed/Wood Material 15_BaseColor.ctexture",
+                "../assets/Compressed/Wood Material 15_Normal.ctexture",
+                "../assets/Compressed/Wood Material 15_BaseColor.ctexture",
+                "../assets/Compressed/Wood Material 15_BaseColor.ctexture"
+            ],
+            "MeshPath": "../assets/compiled_geom/Wall_Partition(No Material).geom",
+            "GUID": 0,
+            "TextureCont": [
+                false,
+                false,
+                false,
+                false
+            ]
+        },
+        "BoxCollider": {
+            "ScaleOffset": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "TranslateOffset": [
+                0.0,
+                150.0,
+                0.0
+            ]
+        }
+    },
+    {
+        "EntityID": 8,
+        "General": {
+            "Name": "Wall",
+            "Active": true,
+            "Paused": false,
+            "Subtag": "Active"
+        },
+        "Transform": {
+            "Scale": [
+                10.0,
+                300.0,
+                500.0
+            ],
+            "Rotate": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Translate": [
+                250.0,
+                0.0,
+                0.0
+            ]
+        },
+        "MeshRenderer": {
+            "ShaderPath": [
+                "../_GRAPHICS/shader_files/pointLight_vert.glsl",
+                "../_GRAPHICS/shader_files/pointLight_frag.glsl"
+            ],
+            "MaterialInstancePath": [
+                "../assets/Compressed/Wood Material 15_BaseColor.ctexture",
+                "../assets/Compressed/Wood Material 15_Normal.ctexture",
+                "../assets/Compressed/Wood Material 15_BaseColor.ctexture",
+                "../assets/Compressed/Wood Material 15_BaseColor.ctexture"
+            ],
+            "MeshPath": "../assets/compiled_geom/Wall_Partition(No Material).geom",
+            "GUID": 0,
+            "TextureCont": [
+                false,
+                false,
+                false,
+                false
+            ]
+        },
+        "BoxCollider": {
+            "ScaleOffset": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "TranslateOffset": [
+                0.0,
+                150.0,
+                0.0
+            ]
+        }
+    },
+    {
+        "EntityID": 9,
+        "General": {
+            "Name": "Ceiling",
+            "Active": true,
+            "Paused": false,
+            "Subtag": "Active"
+        },
+        "Transform": {
+            "Scale": [
+                500.0,
+                10.0,
+                500.0
+            ],
+            "Rotate": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Translate": [
+                0.0,
+                300.0,
+                0.0
+            ]
+        },
+        "MeshRenderer": {
+            "ShaderPath": [
+                "../_GRAPHICS/shader_files/pointLight_vert.glsl",
+                "../_GRAPHICS/shader_files/pointLight_frag.glsl"
+            ],
+            "MaterialInstancePath": [
+                "../assets/Compressed/Wood Material 15_BaseColor.ctexture",
+                "../assets/Compressed/Wood Material 15_Normal.ctexture",
+                "../assets/Compressed/Wood Material 15_BaseColor.ctexture",
+                "../assets/Compressed/Wood Material 15_BaseColor.ctexture"
+            ],
+            "MeshPath": "../assets/compiled_geom/Wall_Partition(No Material).geom",
+            "GUID": 0,
+            "TextureCont": [
+                false,
+                false,
+                false,
+                false
+            ]
+        },
+        "BoxCollider": {
+            "ScaleOffset": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "TranslateOffset": [
+                0.0,
+                5.0,
+                0.0
+            ]
         }
     }
 ]

@@ -228,6 +228,10 @@ Entity ECS::PasteEntity(int scene)
 	//Entity e = NewEntity();
 	Entity e =systemManager->mGameStateSystem->mCurrentGameState.mScenes[scene].AddEntity();
 
+	e.GetComponent<Transform>().mScale = Entity(mClipboard).GetComponent<Transform>().mScale;
+	e.GetComponent<Transform>().mRotate = Entity(mClipboard).GetComponent<Transform>().mRotate;
+
+
 	if (mClipboard.HasComponent<MeshRenderer>())
 	{
 		e.AddComponent<MeshRenderer>();
@@ -334,8 +338,8 @@ void Entity::AddChild(Entity e)
 		systemManager->ecs->UnlinkPrefab(*this);
 	
 	std::uint32_t eID = static_cast<std::uint32_t>(e.id);
-	Children& children = this->GetComponent<Children>();
-	Parent& parent = e.GetComponent<Parent>();
+	Children& children = this->HasComponent<Children>() ? this->GetComponent<Children>() : this->AddComponent<Children>();
+	Parent& parent = e.HasComponent<Parent>() ? e.GetComponent<Parent>() : e.AddComponent<Parent>();
 	
 	++children.mNumChildren;
 	parent.mParent = static_cast<std::uint32_t>(this->id);
