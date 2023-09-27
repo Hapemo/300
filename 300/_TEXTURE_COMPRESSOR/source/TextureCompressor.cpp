@@ -128,7 +128,12 @@ void CompressImageFile(const char* filepath, const char* outputFolder)
 	GLint internalFormat{ GL_COMPRESSED_RGBA_ARB };
 	GLint format{ GL_RGBA };
 
-	if (channel == 3)		// RGB
+	if (channel == 1)		// RED, 1 component
+	{
+		internalFormat = GL_COMPRESSED_RED;
+		format = GL_RED;
+	}
+	else if (channel == 3)		// RGB
 	{
 		internalFormat = GL_COMPRESSED_RGB_ARB;
 		format = GL_RGB;
@@ -171,6 +176,7 @@ void CompressImageFile(const char* filepath, const char* outputFolder)
 
 	// Free memory of loaded data in stb
 	stbi_image_free(texData);
+	glDeleteTextures(1, &tex);
 }
 
 void CreateFontTextureAtlas(unsigned int* id, unsigned int width, unsigned height)

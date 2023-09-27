@@ -30,12 +30,13 @@ public:
 	void Exit();
 
 	// -- Mesh --
-	void AddInstance(GFX::Mesh& mesh, Transform transform);		// Adds an instance of a mesh to be drawn
+	void AddInstance(GFX::Mesh& mesh, Transform transform, unsigned entityID = 0xFFFFFFFF);		// Adds an instance of a mesh to be drawn
+	void AddInstance(GFX::Mesh& mesh, mat4 transform, unsigned entityID = 0xFFFFFFFF);	// Adds an instance of a mesh to be drawn
 
 	// -- FBO --
 	unsigned int GetGameAttachment()		{ return m_Fbo.GetGameAttachment(); }
 	unsigned int GetEditorAttachment()		{ return m_Fbo.GetEditorAttachment(); }
-	unsigned int GetEntityID(int x, int y)	{ return m_Fbo.ReadEntityID(x, y); }
+	unsigned int GetEntityID(float x, float y)	{ return m_Fbo.ReadEntityID(x, y); }
 
 	// -- Getter --
 	GFX::DebugRenderer& getDebugRenderer() { return m_Renderer; }
@@ -56,6 +57,10 @@ public:
 	// Helper Function
 	void PrintMat4(const glm::mat4& input);
 
+	//pause
+	void PauseGlobalAnimation();
+	void UnpauseGlobalAnimation();
+
 
 	GFX::DebugRenderer m_Renderer;		// isolated to debug draws
 	GFX::FBO m_Fbo;
@@ -73,14 +78,17 @@ public:
 	std::vector<int> m_Textures;
 
 	// -- Flags --
-	bool m_EditorMode;
-	bool m_DebugDrawing{ 1 };			// debug drawing 
+	int		m_DebugDrawing{ 1 };			// debug drawing 
+	bool	m_EditorMode;
+	bool	m_EnableGlobalAnimations{ 1 };
 
 	// -- Private Functions --
 	void DrawAll(GFX::Mesh& mesh);		// Renders all instances of a given mesh
 private:
 
 
+	//// for performance
+	//double startTime, endTime;
 };
 
 #endif

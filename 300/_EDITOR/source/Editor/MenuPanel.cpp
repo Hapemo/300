@@ -18,17 +18,17 @@ Contains main loop for the logic of MenuPanel.
 #include "Editor.h"
 #include "MenuPanel.h"
 #include "SceneWindow.h"
-
+#include "ECS/ECS.h"
+#include "ECS/ECS_Systems.h"
+#include "GameState/GameStateManager.h"
+#include "Hierarchy.h"
 void MenuPanel::init() {
     // empty
 }
 
 
 void MenuPanel::update() 
-
-
 {
-
 
     if (ImGui::BeginMenuBar())
     {   
@@ -36,8 +36,9 @@ void MenuPanel::update()
         if (ImGui::BeginMenu("Files"))
         {       
             //save scene
-            if (ImGui::MenuItem("Save Scene")) {
-                //g_engine->gameStateMgr->Save();
+            if (ImGui::MenuItem("Save GameState")) {
+               // systemManager->;
+                systemManager->mGameStateSystem->mCurrentGameState.Save();
             }
 
 
@@ -247,8 +248,11 @@ void MenuPanel::update()
         }
         int temp = ImGui::GetWindowSize().x - 70;
         ImGui::SetCursorPosX(temp);
-        ImGui::Checkbox("Debug", &systemManager->mGraphicsSystem->m_DebugDrawing);
 
+        static bool ischecked = systemManager->mGraphicsSystem->m_DebugDrawing;
+        if (ImGui::Checkbox("Debug", &ischecked)) {
+            systemManager->mGraphicsSystem->m_DebugDrawing = ischecked ? 1 : 0;
+        }
 
         ImGui::EndMenuBar();
 

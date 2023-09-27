@@ -29,7 +29,7 @@ namespace GFX
 		// Selects which attachments to bind and draw to
 		void PrepForDraw();
 
-		unsigned int ReadEntityID(int posX, int posY);
+		unsigned int ReadEntityID(float posX, float posY);
 
 		void Bind()		{ glBindFramebuffer(GL_FRAMEBUFFER, mID); }
 		void Unbind()	{ glBindFramebuffer(GL_FRAMEBUFFER, 0); }

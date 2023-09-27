@@ -81,7 +81,7 @@ public:
 	static std::deque<std::string> logToGUI;
 	//firstTimeFLag is used in loggerWindow.cpp
 	//flag is used in loggerWindow.cpp
-	static bool firstTimeFlag, flag;
+	static bool firstTimeFlag, flag, concatFlag;
 	/***************************************************************************/
 	/*!
 	\brief

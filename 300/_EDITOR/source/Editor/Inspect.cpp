@@ -102,7 +102,10 @@ void Inspect::update()
 			Scripts& scripts = ent.GetComponent<Scripts>();
 			scripts.Inspect();
 		}
-
+		if (ent.HasComponent<Animator>()) {
+			Animator& ani = ent.GetComponent<Animator>();
+			ani.Inspect();
+		}
 		if (ent.HasComponent<MeshRenderer>()) {
 			MeshRenderer& Meshrender = ent.GetComponent<MeshRenderer>();
 			Meshrender.Inspect();
@@ -186,6 +189,10 @@ void Inspect::Add_component() {
 				Entity(Hierarchy::selectedId).AddComponent<PlaneCollider>();
 		}
 
+		if (ImGui::Selectable("Animator")) {
+			if (!Entity(Hierarchy::selectedId).HasComponent<Animator>())
+				Entity(Hierarchy::selectedId).AddComponent<Animator>();
+		}
 		ImGui::EndPopup();
 	}
 
@@ -344,13 +351,13 @@ void Scripts::Inspect() {
 void Animator::Inspect()
 {
 	bool delete_component{ true };
-	if (ImGui::CollapsingHeader("Animator", &delete_component, ImGuiTreeNodeFlags_DefaultOpen)) 
+	if (ImGui::CollapsingHeader("Animator", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
 	{
-		ImGui::Text("test");
-		if (ImGui::Button("Pause Animaton"))
-		{
-			mIsPaused = !mIsPaused;
-		}
+		ImGui::Text(std::to_string(mAnimator.m_CurrentTime).c_str());	ImGui::SameLine();
+		ImGui::Text(" / ");												ImGui::SameLine();
+		ImGui::Text(std::to_string(mAnimator.m_CurrentAnimation->m_Duration).c_str());
+		
+		ImGui::Checkbox("Pause Animaton", &mAnimator.mIsPaused);
 	}
 
 	if (delete_component == false)
@@ -372,8 +379,23 @@ void MeshRenderer::Inspect() {
 
 				uid temp(mMeshPath);
 				mMeshRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(temp.id));
-
+					
+				GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mMeshRef);
+				
+				Entity entins(Hierarchy::selectedId);
+				if (entins.HasComponent<Animator>() && meshinst->mHasAnimation)
+				{
+					// if the new entity has both animations and the animator component, update the animator to use the new animation
+					entins.GetComponent<Animator>().mAnimator.SetAnimation(&meshinst->mAnimation[0]);
+				}
+				else if (entins.HasComponent<Animator>() && !meshinst->mHasAnimation)
+				{
+					// if the new entity's mesh has no animation, but the entity still has the animator component
+					entins.GetComponent<Animator>().mAnimator.m_CurrentAnimation = nullptr;
+				}
 			}
+
+
 			ImGui::EndDragDropTarget();
 		}
 
@@ -398,6 +420,8 @@ void MeshRenderer::Inspect() {
 							uid temp(mMaterialInstancePath[i]);
 							mTextureRef[i] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(temp.id));
 
+							
+
 						}
 						ImGui::EndDragDropTarget();
 					}
@@ -412,7 +436,6 @@ void MeshRenderer::Inspect() {
 							const char* data = (const char*)payload->Data;
 							std::string data_str = std::string(data);
 							mMaterialInstancePath[i] = data_str;
-
 							uid temp(mMaterialInstancePath[i]);
 							mTextureRef[i] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(temp.id));
 
@@ -481,7 +504,7 @@ void BoxCollider::Inspect() {
 	bool delete_component{ true };
 	if (ImGui::CollapsingHeader("BoxCollider", &delete_component, ImGuiTreeNodeFlags_DefaultOpen)) {
 
-		ImGui::DragFloat3("Boxcollider Scale", (float*)&mScaleOffset);
+		ImGui::DragFloat3("Boxcollider Scale", (float*)&mScaleOffset, 0.1f);
 		ImGui::SameLine();
 		ImGui::Text("Scale");
 		ImGui::Separator();

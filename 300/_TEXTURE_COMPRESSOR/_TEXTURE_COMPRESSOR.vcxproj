@@ -71,11 +71,11 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)lib\GLEW\include\GL;$(SolutionDir)lib\GLFW\include\GLFW;$(SolutionDir)lib\STB;$(SolutionDir)lib\FREETYPE;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)lib/GLM;$(SolutionDir)lib\GLEW\include\GL;$(SolutionDir)lib\GLFW\include\GLFW;$(SolutionDir)lib\STB;$(SolutionDir)lib\FREETYPE;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)lib\GLEW\lib\Release\x64;$(SolutionDir)lib\GLFW\lib-vc2022;$(SolutionDir)lib\FREETYPE;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(SolutionDir)lib\GLEW\include\GL;$(SolutionDir)lib\GLFW\include\GLFW;$(SolutionDir)lib\STB;$(SolutionDir)lib\FREETYPE;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)lib/GLM;$(SolutionDir)lib\GLEW\include\GL;$(SolutionDir)lib\GLFW\include\GLFW;$(SolutionDir)lib\STB;$(SolutionDir)lib\FREETYPE;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)lib\GLEW\lib\Release\x64;$(SolutionDir)lib\GLFW\lib-vc2022;$(SolutionDir)lib\FREETYPE;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

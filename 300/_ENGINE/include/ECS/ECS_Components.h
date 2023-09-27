@@ -4,10 +4,10 @@
 #include <vector>
 #include "Physics/PhysicsTypes.h"
 #include "Tags.h"
-//#include "rttr/registration.h"
 #include "ECS.h"
 #include "Audio/AudioType.h"
 #include <Animator.hpp>
+//#include "rttr/registration.h"
 
 struct General
 {
@@ -40,7 +40,6 @@ struct Transform
 struct Animator
 {
 	GFX::Animator	mAnimator;
-	bool			mIsPaused;
 
 	void Inspect();
 };
@@ -48,21 +47,18 @@ struct Animator
 // this struct stores the filepaths for the meshdata, material, and shader. the actual data is stored in the resource manager
 struct MeshRenderer
 {
-
-
-
 	// For now, we store the string to the filepaths. TO CHANGE to uids for efficient referencing
 	std::pair<std::string, std::string> mShaderPath;
-	std::string			mMaterialInstancePath[4];
+	std::string							mMaterialInstancePath[4];
 	std::string							mMeshPath;
 	
-	void*							mMeshRef;
-	void*							mTextureRef[4];
-	bool							mTextureCont[4];
+	void*								mMeshRef;
+	void*								mTextureRef[4];
+	bool								mTextureCont[4];
 
-	unsigned						mGUID;
+	unsigned							mGUID;
 
-	void							Inspect();
+	void								Inspect();
 	//RTTR_ENABLE()
 
 
@@ -157,12 +153,25 @@ struct Children
 };
 
 struct Audio
-{
-	std::string mFileName;
-	AUDIOTYPE mAudioType;
-	bool mIsPlaying;// check if audio is already playing
-	bool mIsPlay;	// play audio if true
+{	
+	std::string mFilePath;				// File Path to the Audio File
+	std::string mFileName;				// Name of Audio file
+	//std::string mFullPath;				// 
+	AUDIOTYPE mAudioType;				// SFX or BGM?
+	bool mIsPlaying;					// check if audio is already playing
+	bool mIsPlay;						// play audio if true
 
+	// Don't need to serialize ...
+	std::vector<int> mPlaySFXChannelID;    // Currently playing in SFX Channel...
+	std::vector<int> mPlayBGMChannelID;	   // Currently playing in BGM Channel ...
+
+	Audio() : mFilePath("../assets/Audio"), mFileName("Sample Name"), mAudioType(AUDIO_NULL), mIsPlaying(false), mIsPlay(false) {}
+
+	Audio(std::string file_path_to_audio, std::string file_audio_name, AUDIOTYPE audio_type, bool isPlay) : mAudioType(audio_type) , mIsPlaying(false) , mIsPlay(isPlay)
+	{	
+		mFilePath = file_path_to_audio;
+		mFileName = file_audio_name;
+	}
 	//RTTR_ENABLE()
 	void							Inspect();
 };

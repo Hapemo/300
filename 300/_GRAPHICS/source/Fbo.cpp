@@ -46,6 +46,7 @@ void GFX::FBO::Create(int width, int height, bool editorMode)
 	glBindTexture(GL_TEXTURE_2D, mEntityIDAttachment);
 	// Specifying size
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_R32UI, width, height, 0, GL_RED_INTEGER, GL_UNSIGNED_INT, NULL);
+
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 	// Attach all Attachments to currently bound framebuffer
@@ -70,33 +71,46 @@ void GFX::FBO::PrepForDraw()
 	// bind framebuffer as buffer to render to
 	glBindFramebuffer(GL_FRAMEBUFFER, mID);
 
+	glClearColor(.2f, .2f, .2f, 1.f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 	if (mEditorMode)	// Need to render to both color attachments and Entity ID attachment
 	{
+		// Clear Entity ID buffer
+		glDrawBuffer(GL_COLOR_ATTACHMENT2);
+		glClearColor(0.f, 0.f, 0.f, 0.f);
+		glClear(GL_COLOR_BUFFER_BIT);
+
 		// Game attachment, Editor Attachment, Entity ID Attachment
-		GLuint attachments[3] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2 };
-		glDrawBuffers(3, attachments);
+		// Clear Color attachments
+		GLuint attachments[2] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1 };
+		glDrawBuffers(2, attachments);
+		glClearColor(0.2f, 0.2f, 0.2f, 1.f);
+		glClear(GL_COLOR_BUFFER_BIT);
+
+		// Set all attachments for output
+		GLuint allAttachments[3] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2 };
+		glDrawBuffers(3, allAttachments);
 	}
 	// Renders to Game Attachment by default
 
-	glClearColor(.4f, .5f, .6f, 1.f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LEQUAL);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
-unsigned int GFX::FBO::ReadEntityID(int posX, int posY)
+unsigned int GFX::FBO::ReadEntityID(float posX, float posY)
 {
-	int mapped_x = posX + (mWidth / 2);
-	int mapped_y = posY + (mHeight / 2);
+	int mapped_x = int(posX * mWidth);
+	int mapped_y = int(mHeight - posY * mHeight);
 	if (mapped_x >= mWidth || mapped_x < 0 || mapped_y >= mHeight || mapped_y < 0)
 		return 0xFFFFFFFF;
 	GLsizei bufsize = mWidth * mHeight;
 	unsigned int* p_eid = new unsigned int[bufsize];	// allocate buffer
 
 	glBindTexture(GL_TEXTURE_2D, mEntityIDAttachment);	// bind texture
-	glGetTexImage(GL_TEXTURE_2D, 0, GL_RED_INTEGER, GL_UNSIGNED_INT, p_eid);
+	glGetTexImage(GL_TEXTURE_2D, 0, GL_RED_INTEGER, GL_UNSIGNED_INT, p_eid);	// Read pixel data into buffer
 	
 	unsigned int eid = p_eid[mapped_y * mWidth + mapped_x];		// Retrieve entity ID
 
@@ -129,6 +143,7 @@ void GFX::FBO::Resize(int width, int height)
 	glBindTexture(GL_TEXTURE_2D, mEntityIDAttachment);
 	// Specifying new attachment size
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_R32UI, width, height, 0, GL_RED_INTEGER, GL_UNSIGNED_INT, NULL);
+
 	// Unbind 
 	glBindTexture(GL_TEXTURE_2D, 0);
 

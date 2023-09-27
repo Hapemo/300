@@ -4,14 +4,16 @@
 enum class TAG : unsigned char
 {
 	PLAYER,
-	UNKNOWN
+	UNKNOWN,
+	UNDEFINED // for serialization helper functions
 	//more to come
 };
 
 enum class SUBTAG : unsigned char
 {
 	ACTIVE,
-	BACKGROUND
+	BACKGROUND,
+	UNDEFINED // for serialization helper functions
 	//more to come
 };
 

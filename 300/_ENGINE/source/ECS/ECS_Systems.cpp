@@ -10,11 +10,13 @@
 #include "GameState/GameStateManager.h"
 #include "Audio/AudioSystem.h"
 #include "Debug/Logger.h"
+#include "../../../_TOOLS/include/Input/InputMapSystem.h"
 
 SystemManager* systemManager;
 
 SystemManager::SystemManager()
 {
+	mIsPlay = false;
 	mPhysicsSystem = std::make_unique<PhysicsSystem>();
 	mScriptingSystem = std::make_unique<ScriptingSystem>();
 	mGraphicsSystem = std::make_unique<GraphicsSystem>();
@@ -23,6 +25,7 @@ SystemManager::SystemManager()
 	mResourceSystem	= std::make_unique<Resource>();
 	mAudioSystem = std::make_unique<AudioSystem>();
 	mLogger = std::make_unique<Logger>();
+	mInputActionSystem = std::make_unique<InputMapSystem>();
 	ecs = new ECS();
 }
 
@@ -35,29 +38,55 @@ void SystemManager::Init(bool isEditor, GFX::Window* window)
 {
 	mIsEditor = isEditor;
 	mWindow = window;
+	mInputActionSystem.get()->Init();
+	PINFO("Init Input Action System");
 	mLogger.get()->InitLogging();
 	PINFO("Init Logger");
-	mPhysicsSystem.get()->Init();
-	PINFO("Init Physics System");
 	mScriptingSystem.get()->Init();
 	PINFO("Init Scripting System");
 
 	mResourceSystem.get()->Init();
 	mResourceTySystem.get()->Init();
-	mGraphicsSystem.get()->Init();
 	PINFO("Init Graphics System");
 
-			// all the resources are loaaded here
+	// all the resources are loaaded here
 	mGameStateSystem.get()->Init();
+	mGraphicsSystem.get()->Init();
+
 	mAudioSystem.get()->Init();
 	PINFO("Init Game state System");
+	mPhysicsSystem.get()->Init();
+	PINFO("Init Physics System");
+}
+
+void SystemManager::Reset()
+{
+	mGameStateSystem.get()->Unload();
+	mGameStateSystem.get()->Init();
+	mPhysicsSystem.get()->Init();
+	mIsPlay = false;
+}
+
+void SystemManager::Pause()
+{
+	mIsPlay = false; 
+	mGraphicsSystem->PauseGlobalAnimation();
+}
+
+void SystemManager::Play()
+{
+	mIsPlay = true; 
+	mGraphicsSystem->UnpauseGlobalAnimation();
 }
 
 void SystemManager::Update(float dt)
 {
+	mGraphicsSystem.get()->Update(dt);
+	if (!mIsPlay) return;
+
+	mInputActionSystem.get()->Update();
 	mPhysicsSystem.get()->Update(dt);
 	mScriptingSystem.get()->Update(dt);
-	mGraphicsSystem.get()->Update(dt);
 	mAudioSystem.get()->Update(dt);
 
 //	mResourceSystem.get()->Update();
@@ -82,3 +111,4 @@ PhysicsSystem* SystemManager::GetPhysicsPointer()
 ScriptingSystem* SystemManager::GetScriptingPointer() {
 	return mScriptingSystem.get();
 }
+

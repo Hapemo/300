@@ -29,6 +29,7 @@ Setting up specification for frame buffer rendering
 #include "imgui_internal.h"
 #include "Hierarchy.h"
 #include "ImGuizmo.h"
+#include "GameState/GameStateManager.h"
 typedef void    (*ImGuiSizeCallback)(ImGuiSizeCallbackData* data);
 
 //bool SceneWindow::follow = false;
@@ -45,23 +46,24 @@ void SceneWindow::init()
 
 void SceneWindow::update()
 {
-
-
-
-
 	mWinFlag |= ImGuiWindowFlags_NoScrollbar;
 
 	//ConstrainedResize(nullptr);
 	scene_m_Hovered = ImGui::IsWindowHovered();	
 	const ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
 	ImGui::Image((ImTextureID)(intptr_t)systemManager->mGraphicsSystem->GetEditorAttachment(), viewportPanelSize, ImVec2(0,1), ImVec2(1,0));
+		
 	if (ImGui::IsItemClicked(ImGuiMouseButton_Left)) {
-		unsigned int getid = systemManager->mGraphicsSystem->GetEntityID(ImGui::GetMousePos().x, ImGui::GetMousePos().y );
+		unsigned int getid = systemManager->mGraphicsSystem->GetEntityID(((ImGui::GetMousePos().x - ImGui::GetWindowPos().x)/winSize.x),
+			((ImGui::GetMousePos().y - ImGui::GetWindowPos().y) / winSize.y));
 
-		std::cout << "Mouse pos " << ImGui::GetMousePos().x << " " << ImGui::GetMousePos().y << "\n";
+		//std::cout << getid << ": ID \n";
 
-		std::cout << getid << " i got something bitch\n";
-		std::cout << (unsigned int)Hierarchy::selectedId <<"\n";
+
+		if (getid != 0) {
+			Hierarchy::selectedId = static_cast<entt::entity>(getid);
+			Hierarchy::selectionOn = true;
+		}
 	}
 
 	ImGui::SetItemAllowOverlap();
@@ -70,26 +72,25 @@ void SceneWindow::update()
 
 	ImGui::SetCursorPosX(ImGui::GetWindowContentRegionMax().x-70);
 	ImGui::SetCursorPosY(ImGui::GetWindowContentRegionMin().y+10);
-	ImGui::Checkbox("Debug",&systemManager->mGraphicsSystem->m_DebugDrawing);
+	//ImGui::Checkbox("Debug",&systemManager->mGraphicsSystem->m_DebugDrawing);
 	
-	
-	//	auto pos = ImGui::GetCursorPos();
 
-	//ImGui::SetItemAllowOverlap();
-	//ImGui::SetCursorPos(pos);
-	//ImGui::Button("Debug");
+	ImGui::SetItemAllowOverlap();
+	//wevents = ImGui::IsItemHovered();  /// <-- This returns true if mouse is over the overlaped Test button
 
-
-	//winSize_X = ImGui::GetWindowSize().x;
-	//winSize_Y = ImGui::GetWindowSize().y;
+	ImGui::SetCursorPosX(ImGui::GetWindowContentRegionMax().x - 400);
+	ImGui::SetCursorPosY(ImGui::GetWindowContentRegionMin().y + 10);
+	if (ImGui::Button("PLAY")) {
+		systemManager->Play();
+	}
+	if (ImGui::Button("PAUSE")) {
+		systemManager->Pause();
+	}
+	if (ImGui::Button("RESET")) {
+		systemManager->Reset();
+	}
 
 	winSize= { ImGui::GetWindowSize().x ,ImGui::GetWindowSize().y};
-	//systemManager->mGraphicsSystem->SetCameraSize()
-	//ImGui::Image((ImTextureID)(intptr_t)systemManager->mGraphicsSystem->GetEditorAttachment(),ImVec2(1920, 1080));
-
-	
-
-
 }
 
 static void Square(ImGuiSizeCallbackData* data) { data->DesiredSize.x = data->DesiredSize.y = ImMin(data->DesiredSize.x, data->DesiredSize.y); }
@@ -107,7 +108,6 @@ void SceneWindow::ConstrainedResize(bool* p_open)
 
 void SceneWindow::RenderGuizmo()
 {
-
 	glm::mat4 objectMatrix =
 	{ 1.f, 0.f, 0.f, 0.f,
 	0.f, 1.f, 0.f, 0.f,
@@ -116,25 +116,9 @@ void SceneWindow::RenderGuizmo()
 
 	glm::mat4 cameraProjection = glm::mat4(systemManager->mGraphicsSystem->m_EditorCamera.mProjection);
 
-	/*glm::mat4 cameraProjection = { 1.f, 0.f, 0.f, 0.f,
-	0.f, 1.f, 0.f, 0.f,
-	0.f, 0.f, 1.f, 0.f,
-	0.f, 0.f, 0.f, 1.f };*/
-
 	glm::vec3 rotation = glm::vec3(0, 0, 0);
-
-	/*glm::mat4 cameraView{ 1.f, 0.f, 0.f, 0.f,
-							0.f ,1.f ,0.f ,0.f,
-							0.f ,0.f ,1.f,  0.f ,
-							GraphicsSystem::camera.view_xform[2][0] ,-GraphicsSystem::camera.view_xform[2][1] ,0.f ,1.f }*/
-		
+	
 	glm::mat4 cameraView = systemManager->mGraphicsSystem->m_EditorCamera.mView;
-
-	/*glm::mat4 cameraView = { 1.f, 0.f, 0.f, 0.f,
-	0.f, 1.f, 0.f, 0.f,
-	0.f, 0.f, 1.f, 0.f,
-	0.f, 0.f, 0.f, 1.f };*/
-
 
 	glm::mat4 inverseCamera = cameraView;
 
@@ -147,16 +131,16 @@ void SceneWindow::RenderGuizmo()
 	//float transformtemp[16] {0};
 
 	//Hierarchy::selectedId =;
-//	if (Hierarchy::selectionOn == true) {
+	if (Hierarchy::selectionOn == true) {
 
-	//	Transform& transform = Entity(Hierarchy::selectedId).GetComponent<Transform>();
+		Transform& transform = Entity(Hierarchy::selectedId).GetComponent<Transform>();
 
 		//glm::mat3 testMat{ 1.0 };
 
 		glm::vec3 tempRot = /*{ transform->orientation.z,0,transform->orientation.x }*/{ 0,0,0 };
 
-		ImGuizmo::RecomposeMatrixFromComponents(glm::value_ptr(trans), glm::value_ptr(tempRot),
-			glm::value_ptr(scale), glm::value_ptr(objectMatrix) /*glm::value_ptr(transformtemp)*/);
+		ImGuizmo::RecomposeMatrixFromComponents(glm::value_ptr(transform.mTranslate), glm::value_ptr(transform.mRotate),
+			glm::value_ptr(transform.mScale), glm::value_ptr(objectMatrix) /*glm::value_ptr(transformtemp)*/);
 
 		ImGuizmo::SetOrthographic(true);
 		ImGuizmo::SetDrawlist();
@@ -176,14 +160,14 @@ void SceneWindow::RenderGuizmo()
 	//			ImGuizmo::OPERATION::SCALE, ImGuizmo::WORLD, glm::value_ptr(objectMatrix));
 	////	}
 
-	//	if (ImGuizmo::IsUsing()) {
-	//		ImGuizmo::DecomposeMatrixToComponents(glm::value_ptr(objectMatrix), glm::value_ptr(transform.mTranslate),
-	//			glm::value_ptr(tempRot), glm::value_ptr(transform.mScale));
+		if (ImGuizmo::IsUsing()) {
+			ImGuizmo::DecomposeMatrixToComponents(glm::value_ptr(objectMatrix), glm::value_ptr(transform.mTranslate),
+				glm::value_ptr(tempRot), glm::value_ptr(transform.mScale));
 
 	//		//transform->orientation.x += tempRot.z;
-	//	}
+		}
 
 
-	//}
+	}
 }
 

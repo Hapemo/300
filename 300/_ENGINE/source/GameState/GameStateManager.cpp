@@ -25,7 +25,7 @@ M_GSMSTATE::EXIT is only used for closing the game in GAMEMODE only.
 //#include "ResourceManager.h"
 //#include "Graphics/RenderManager.h"
 //#include "Graphics/SpriteManager.h"
-#include "Input.h"
+#include "Input/Input.h"
 
 //Scene GameStateManager::mErrorScene("Error");
 //const Entity GameStateManager::mErrorEntity(0);

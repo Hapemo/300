@@ -15,7 +15,7 @@
 #ifndef ANIMATOR_HPP
 #define ANIMATOR_HPP
 
-#define MAX_NUM_BONES 100
+#define MAX_NUM_BONES 200
 
 #include <Bone.h>
 #include <glm/glm.hpp>
@@ -44,11 +44,13 @@ namespace GFX
         Animator(_GEOM::Animation*);
 
         void SetAnimation(_GEOM::Animation*);
-        void UpdateAnimation(float dt, const glm::mat4&);
+        void UpdateAnimation(float dt, const glm::mat4&, const glm::mat4& LTW);
 
+        bool mIsPaused{ 0 };
 
     private:
-        void CalculateBoneTransform(const _GEOM::AssimpNodeData* node, glm::mat4 parentTransform);
+        void CalculateBoneTransform(const _GEOM::AssimpNodeData* node, glm::mat4 parentTransform, const glm::mat4& LTW);
+
 
     };
 
