@@ -357,7 +357,7 @@ void Animator::Inspect()
 		ImGui::Text(" / ");												ImGui::SameLine();
 		ImGui::Text(std::to_string(mAnimator.m_CurrentAnimation->m_Duration).c_str());
 		
-		ImGui::Checkbox("Pause Animaton", &mIsPaused);
+		ImGui::Checkbox("Pause Animaton", &mAnimator.mIsPaused);
 	}
 
 	if (delete_component == false)

@@ -67,6 +67,18 @@ void SystemManager::Reset()
 	mIsPlay = false;
 }
 
+void SystemManager::Pause()
+{
+	mIsPlay = false; 
+	mGraphicsSystem->PauseGlobalAnimation();
+}
+
+void SystemManager::Play()
+{
+	mIsPlay = true; 
+	mGraphicsSystem->UnpauseGlobalAnimation();
+}
+
 void SystemManager::Update(float dt)
 {
 	mGraphicsSystem.get()->Update(dt);

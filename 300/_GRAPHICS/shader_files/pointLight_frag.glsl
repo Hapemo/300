@@ -1,6 +1,5 @@
 #version 450
 
-in vec4 VertexColor;
 in vec2 TexCoords;
 in vec3 TangentLightPos;
 in vec3 TangentViewPos;
@@ -10,6 +9,7 @@ in vec4 Tex_Ent_ID;     // x : Tex ID, y: Entity ID
 vec3 lightIntensity = vec3(1.5);
 
 uniform sampler2D uTex[5];
+uniform int uDebugDraw;
 
 layout (location = 0) out vec4 fragColor0;
 layout (location = 1) out vec4 fragColor1;
@@ -43,7 +43,7 @@ void main()
     float spec = pow(max(dot(normal, halfwayDir), 0.0), 32.0);
     specular = spec * specular * lightIntensity;
 
-    vec3 finalColor = vec3(ambient + diffuse + specular + VertexColor.rgb/* + emission*/);
+    vec3 finalColor = vec3(ambient + diffuse + specular /* + emission*/);
 
     // HDR
     //float exposure = 1.0;
@@ -54,6 +54,10 @@ void main()
     finalColor = pow(finalColor, vec3(1.0/gamma));
 
     // Output
+    if(uDebugDraw == 1) {
+        uColor.a = 0.3f;
+    }
+
     fragColor0 = vec4(finalColor, uColor.a);
     fragColor1 = vec4(finalColor, uColor.a);
     outEntityID = uint(Tex_Ent_ID.y);
