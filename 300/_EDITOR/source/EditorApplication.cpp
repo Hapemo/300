@@ -23,9 +23,10 @@ start up of window and game system, also runs their update functions.
 #include "SceneWindow.h"
 #include "Guid.h"
 #include "Physics/Accumulator.h"
+#include "Debug/EnginePerformance.h"
 
 // Static variables
-GFX::DebugRenderer* EditorApplication::mRenderer;
+GFX::DebugRenderer *EditorApplication::mRenderer;
 GFX::Window EditorApplication::mWindow;
 std::string EditorApplication::title;
 Editor EditorApplication::mMaineditor;
@@ -43,13 +44,11 @@ void EditorApplication::Init()
 
 void EditorApplication::StartUp()
 {
-    //gfx glew and glfw startup
+    // gfx glew and glfw startup
     GFX::Window::InitializeSystem();
-    mWindow = GFX::Window({ 1920, 1080 });
+    mWindow = GFX::Window({1920, 1080});
     mWindow.SetWindowTitle("Editor");
     systemManager = new SystemManager();
-
-
 }
 
 void EditorApplication::SystemInit()
@@ -57,42 +56,43 @@ void EditorApplication::SystemInit()
     systemManager->Init(true, &mWindow);
     FPSManager::Init();
     Input::Init();
-    //gfx init
+    // gfx init
 
     mMaineditor.UIinit(mWindow.GetHandle());
-    //Editor init
-
+    // Editor init
 }
 
 void EditorApplication::MainUpdate()
 {
 
-    while (!glfwWindowShouldClose(mWindow.GetHandle())) 
+    while (!glfwWindowShouldClose(mWindow.GetHandle()))
     {
+        EnginePerformance::StartTrack("Editor");
         FirstUpdate();
         SystemUpdate();
 
         // To remove (Script test with entities)
-        //ScriptTestUpdate();
+        // ScriptTestUpdate();
 
         // Graphics update
 
-        auto editorwindowsize = static_cast<SceneWindow*>(mMaineditor.mWindowlist["Editscene"])->winSize;
+        auto editorwindowsize = static_cast<SceneWindow *>(mMaineditor.mWindowlist["Editscene"])->winSize;
         systemManager->mGraphicsSystem->SetCameraSize(CAMERA_TYPE::CAMERA_TYPE_EDITOR, editorwindowsize);
-
-        auto gamewindowsize = static_cast<SceneWindow*>(mMaineditor.mWindowlist["GameScene"])->winSize;
+        auto gamewindowsize = static_cast<SceneWindow *>(mMaineditor.mWindowlist["GameScene"])->winSize;
         systemManager->mGraphicsSystem->SetCameraSize(CAMERA_TYPE::CAMERA_TYPE_GAME, gamewindowsize);
+        EnginePerformance::EndTrack("Editor");
+        EnginePerformance::TotalTime("Editor");
         mMaineditor.UIupdate(mWindow.GetHandle());
-
+        // mMaineditor.WindowUpdate(mWindow.GetHandle());
+        EnginePerformance::StartTrack("Editor");
         mMaineditor.UIdraw(mWindow.GetHandle());
-
-
 
         SecondUpdate(); // This should always be the last
 
-        mWindow.Update();   // This is required for IMGUI draws as well
+        mWindow.Update(); // This is required for IMGUI draws as well
 
-        
+        EnginePerformance::EndTrack("Editor");
+        EnginePerformance::StoreTime("Editor");
     }
 }
 
@@ -100,7 +100,7 @@ void EditorApplication::FirstUpdate()
 {
     FPSManager::Update();
     Accumulator::Update(FPSManager::dt);
-    mWindow.PollEvents();
+    mWindow.PollEvents(); // win manafer
 }
 
 void EditorApplication::SystemUpdate()

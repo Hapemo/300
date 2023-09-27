@@ -10,6 +10,8 @@ public:
 	//static void GetTime(double& time);
 	// update systems ms
 	static void UpdateSystemMs(std::string str);
+	static void StoreTime(std::string str);
+	static void TotalTime(std::string str);
 	//static float FpsPercentage(const double& systemFps);
 
 	static void StartTrack(std::string str);
@@ -19,4 +21,5 @@ public:
 	//static std::array<double, 7> systemDuration;
 	static std::map<std::string, double> systemT;
 	static bool trigger;
+	static double storedTime;
 };

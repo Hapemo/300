@@ -238,12 +238,6 @@ void ContentBrowser::update()
 				}
 			}
 
-			if (check_extension(path.string(), ".gs")) {
-
-
-
-			}
-
 		}
 
 		

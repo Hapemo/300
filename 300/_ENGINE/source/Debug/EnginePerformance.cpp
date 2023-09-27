@@ -10,6 +10,7 @@ int EnginePerformance::sysCount = 0;
 //std::array<double, 7> EnginePerformance::systemDuration{};
 std::map<std::string, double> EnginePerformance::systemT{};
 bool EnginePerformance::trigger = false;
+double EnginePerformance::storedTime = 0.0;
 
 // update systems ms
 void EnginePerformance::UpdateSystemMs(std::string str)
@@ -37,4 +38,15 @@ void EnginePerformance::StartTrack(std::string str)
 void EnginePerformance::EndTrack(std::string str)
 {
 	systemT[str] = (glfwGetTime() / 0.001) - systemT[str];
+}
+
+void EnginePerformance::StoreTime(std::string str)
+{
+	storedTime = systemT[str];
+	systemT[str] = 0.0;
+}
+
+void EnginePerformance::TotalTime(std::string str)
+{
+	systemT[str] += storedTime;
 }

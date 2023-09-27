@@ -8,11 +8,13 @@
 #include "ResourceManagerTy.h"
 #include "ECS/ECS_Components.h"
 #include "GameState/GameStateManager.h"
+#include "GameState/GameState.h"
 #include "Audio/AudioSystem.h"
 #include "Debug/Logger.h"
 #include "../../../_TOOLS/include/Input/InputMapSystem.h"
+#include "Debug/EnginePerformance.h"
 
-SystemManager* systemManager;
+SystemManager *systemManager;
 
 SystemManager::SystemManager()
 {
@@ -22,7 +24,7 @@ SystemManager::SystemManager()
 	mGraphicsSystem = std::make_unique<GraphicsSystem>();
 	mGameStateSystem = std::make_unique<GameStateManager>();
 	mResourceTySystem = std::make_unique<ResourceTy>();
-	mResourceSystem	= std::make_unique<Resource>();
+	mResourceSystem = std::make_unique<Resource>();
 	mAudioSystem = std::make_unique<AudioSystem>();
 	mLogger = std::make_unique<Logger>();
 	mInputActionSystem = std::make_unique<InputMapSystem>();
@@ -34,7 +36,7 @@ SystemManager::~SystemManager()
 	delete ecs;
 }
 
-void SystemManager::Init(bool isEditor, GFX::Window* window)
+void SystemManager::Init(bool isEditor, GFX::Window *window)
 {
 	mIsEditor = isEditor;
 	mWindow = window;
@@ -64,6 +66,7 @@ void SystemManager::Reset()
 	mGameStateSystem.get()->Unload();
 	mGameStateSystem.get()->Init();
 	mPhysicsSystem.get()->Init();
+	mScriptingSystem.get()->ScriptReload();
 	mIsPlay = false;
 }
 
@@ -77,21 +80,36 @@ void SystemManager::Play()
 {
 	mIsPlay = true; 
 	mGraphicsSystem->UnpauseGlobalAnimation();
+	mGameStateSystem->mCurrentGameState.Save();
 }
 
 void SystemManager::Update(float dt)
 {
+	EnginePerformance::StartTrack("Graphics");
 	mGraphicsSystem.get()->Update(dt);
 	mGraphicsSystem.get()->EditorDraw(dt);
 	mGraphicsSystem.get()->GameDraw(dt);
+	EnginePerformance::EndTrack("Graphics");
+	EnginePerformance::UpdateSystemMs("Graphics");
 	if (!mIsPlay) return;
 
 	mInputActionSystem.get()->Update();
-	mPhysicsSystem.get()->Update(dt);
-	mScriptingSystem.get()->Update(dt);
-	mAudioSystem.get()->Update(dt);
 
-//	mResourceSystem.get()->Update();
+	EnginePerformance::StartTrack("Physics");
+	mPhysicsSystem.get()->Update(dt);
+	EnginePerformance::EndTrack("Physics");
+	EnginePerformance::UpdateSystemMs("Physics");
+
+	EnginePerformance::StartTrack("Scripting");
+	mScriptingSystem.get()->Update(dt);
+	EnginePerformance::EndTrack("Scripting");
+	EnginePerformance::UpdateSystemMs("Scripting");
+
+	EnginePerformance::StartTrack("Audio");
+	mAudioSystem.get()->Update(dt);
+	EnginePerformance::EndTrack("Audio");
+	EnginePerformance::UpdateSystemMs("Audio");
+	//	mResourceSystem.get()->Update();
 }
 
 void SystemManager::Exit()
@@ -102,15 +120,14 @@ void SystemManager::Exit()
 	mResourceTySystem.get()->Exit();
 	mGameStateSystem.get()->Unload();
 	mAudioSystem.get()->Exit();
-
 }
 
-PhysicsSystem* SystemManager::GetPhysicsPointer()
+PhysicsSystem *SystemManager::GetPhysicsPointer()
 {
 	return mPhysicsSystem.get();
 }
 
-ScriptingSystem* SystemManager::GetScriptingPointer() {
+ScriptingSystem *SystemManager::GetScriptingPointer()
+{
 	return mScriptingSystem.get();
 }
-

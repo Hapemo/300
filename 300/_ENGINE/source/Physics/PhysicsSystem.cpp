@@ -24,8 +24,6 @@ void PhysicsSystem::Init()
 
 void PhysicsSystem::Update(float dt)
 {
-	EnginePerformance::StartTrack("Physics");
-
 	if (dt <= 0)
 		return;
 
@@ -48,9 +46,6 @@ void PhysicsSystem::Update(float dt)
 			continue;
 		rbod.mVelocity = Convert(static_cast<physx::PxRigidDynamic*>(itr->second)->getLinearVelocity());
 	}
-
-	EnginePerformance::EndTrack("Physics");
-	EnginePerformance::UpdateSystemMs("Physics");
 }
 
 void PhysicsSystem::Exit()

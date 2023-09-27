@@ -4,27 +4,28 @@
 #include "Input/Subscriber.h" // Subscriber Model
 
 // Similar to Action Callbacks (WIP) - 9/24/2023 
-enum INPUT_STATE
-{
-	DISABLED, 
-	WAITING, 
-	STARTED,
-	PERFORMED,
-	CANCELLED
-};
-
 enum MAP_TO_AXIS
 {
 	X_POSITIVE, 
 	Y_POSITIVE, 
 	X_NEGATIVE,
-	Y_NEGATIVE
+	Y_NEGATIVE, 
+	EMPTY
+};
+
+enum KEY_BIND
+{
+	KEY_UP,
+	KEY_LEFT,
+	KEY_RIGHT,
+	KEY_DOWN,
+	KEY_TOTAL
 };
 
 struct InputBinding
 {
-	E_STATE     key_state;
-	E_KEY       key_binding;
+	E_STATE     key_state   = E_STATE::NOTPRESS;
+	E_KEY       key_binding = E_KEY::UNKNOWN;
 	
 	MAP_TO_AXIS direction_map; // For Movement? (first)
 
@@ -37,6 +38,8 @@ struct InputBinding
 class InputAction
 {
 public:
+	std::string mActionName;
+public:
 	InputAction();
 	InputAction(std::string action_name);
 	InputAction(std::string action_name, E_STATE key_state, E_KEY key_binding);
@@ -45,21 +48,17 @@ public:
 	void Disable();
 	bool isEnabled();
 
-	void AddKeyBinding(std::string binding_name, E_STATE key_state, E_KEY key_binding);	// Add a (Key-Bindings) to InputAction
-	// std::unordered_map<std::string, InputBinding> GetKeyBindings() const;			// Get all the (Key-Bindings) from database
-	InputBinding& GetKeyBinding(std::string binding_name);								// Get a Singular (Key-Binding)
-	std::unordered_map<std::string, InputBinding>& GetKeyBindings();					// Get the entire (Key-Binding) container
+	void AddKeyBinding(KEY_BIND key_bind, E_STATE key_state, E_KEY key_binding);
+	void RemoveKeyBinding(KEY_BIND key_bind);
 	
-	glm::vec2 ReadValue() const;														// Might Template this (can return gamestates?)
-	void      UpdateState(INPUT_STATE new_state);
-
-	// Subscriber/Observer Pattern
-	void RegisterSubscribers();
+	std::unordered_map<KEY_BIND, InputBinding>& GetKeyBindings();					// Get the entire (Key-Binding) container
+	
+	glm::vec2 ReadValue(E_KEY key_pressed) const;									// Might Template this (can return gamestates?)
 
 private:
-	std::string									  mActionName;
-	std::unordered_map<std::string, InputBinding> mKeyBindings;
-	INPUT_STATE									  mCurrentState;
-	bool										  isEnable = false;
-	std::vector<Subscriber>						  mSubscribers;
+	std::unordered_map<KEY_BIND, InputBinding>       mKeyBindingsNew;					// Will only have the [Base 4 Directions Map] - Defined in (Init)
+	std::unordered_map<std::string, InputBinding>    mKeyBindings;						// [Limit to 2 bindings] (for now)
+	//INPUT_STATE									     mCurrentState;						
+	bool										     isEnable = false;
+	//std::vector<Subscriber>						  mSubscribers;
 };
