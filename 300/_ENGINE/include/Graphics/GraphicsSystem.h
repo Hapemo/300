@@ -27,6 +27,8 @@ public:
 
 	void Init();
 	void Update(float dt);
+	void GameDraw(float dt);
+	void EditorDraw(float dt);
 	void Exit();
 
 	// -- Mesh --
@@ -34,7 +36,7 @@ public:
 	void AddInstance(GFX::Mesh& mesh, mat4 transform, unsigned entityID = 0xFFFFFFFF);	// Adds an instance of a mesh to be drawn
 
 	// -- FBO --
-	unsigned int GetGameAttachment()		{ return m_Fbo.GetGameAttachment(); }
+	unsigned int GetGameAttachment()		{ return m_GameFbo.GetGameAttachment(); }
 	unsigned int GetEditorAttachment()		{ return m_Fbo.GetEditorAttachment(); }
 	unsigned int GetEntityID(float x, float y)	{ return m_Fbo.ReadEntityID(x, y); }
 
@@ -64,6 +66,7 @@ public:
 
 	GFX::DebugRenderer m_Renderer;		// isolated to debug draws
 	GFX::FBO m_Fbo;
+	GFX::FBO m_GameFbo;
 
 	// -- Window --
 	GFX::Window* m_Window;
@@ -71,7 +74,6 @@ public:
 	int m_Height;
 
 	// -- Camera --
-	GFX::Camera m_GameCamera;
 	GFX::Camera m_EditorCamera;
 
 	// -- Textures --

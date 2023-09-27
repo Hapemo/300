@@ -7,6 +7,8 @@
 #include "ECS.h"
 #include "Audio/AudioType.h"
 #include <Animator.hpp>
+#include <Camera.hpp>
+
 //#include "rttr/registration.h"
 
 struct General
@@ -175,6 +177,15 @@ struct Audio
 	//RTTR_ENABLE()
 	void							Inspect();
 };
+
+
+struct Camera 
+{
+	GFX::Camera						mCamera;
+
+	void							Inspect();
+};
+
 
 //RTTR_REGISTRATION
 //{

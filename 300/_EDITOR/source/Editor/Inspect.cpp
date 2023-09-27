@@ -125,7 +125,15 @@ void Inspect::update()
 		if (ent.HasComponent<PlaneCollider>()) {
 			PlaneCollider& planeCollider = ent.GetComponent<PlaneCollider>();
 			planeCollider.Inspect();
+
 		}
+
+		if (ent.HasComponent<Camera>()) {
+			Camera& cam = ent.GetComponent<Camera>();
+			cam.Inspect();
+		}
+
+
 		//--------------------------------------------// must be at the LAST OF THIS LOOP
 		Add_component(); 
 	}
@@ -163,6 +171,8 @@ void Inspect::Add_component() {
 		//{
 
 		//}
+
+
 		if (ImGui::Selectable("RigidBody")) {
 			if(!Entity(Hierarchy::selectedId).HasComponent<RigidBody>())
 				Entity(Hierarchy::selectedId).AddComponent<RigidBody>();
@@ -223,6 +233,25 @@ void Transform::Inspect() {
 		ImGui::Text("Rotation");
 
 
+
+	}
+
+}
+
+void Camera::Inspect()
+{
+
+	if (ImGui::CollapsingHeader("Camera", ImGuiTreeNodeFlags_DefaultOpen))
+	{
+
+		ImGui::DragFloat3("##Position", (float*)&mCamera.mPosition);
+
+		ImGui::SameLine();
+		ImGui::Text("Position");
+		ImGui::Separator();
+
+		//ImGui::Text("Position: %d, %d, %d", mCamera.mPosition.x, mCamera.mPosition.y, mCamera.mPosition.z);
+		ImGui::Text("Target: %d, %d, %d", mCamera.mTarget.x, mCamera.mTarget.y, mCamera.mTarget.z);
 
 	}
 
