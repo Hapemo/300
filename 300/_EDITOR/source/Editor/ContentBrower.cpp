@@ -49,12 +49,16 @@ void format_string(std::string& path) {
 
 void ContentBrowser::update() 
 {
+
+	ImVec2 maxpos;
+
 	if (current_Directory != std::filesystem::path(s_asset_directory))
 	{
 		if (ImGui::Button("<<",ImVec2(40,40)))
 		{
 			current_Directory = current_Directory.parent_path();
 		}
+	//	maxpos = ImGui::GetItemRectMin();
 	}
 
 	static float padding{ 10 };
@@ -72,7 +76,10 @@ void ContentBrowser::update()
 
 	int idd{ 0 };
 	// looping through filesystem
+
+
 	for (auto const& directory : std::filesystem::directory_iterator{ current_Directory }) {
+		idd++;
 		const auto& path = directory.path(); // directory path
 
 		auto relativepath = std::filesystem::relative(path, current_Directory);
@@ -80,7 +87,7 @@ void ContentBrowser::update()
 
 		if (directory.is_directory()) {
 
-			ImGui::SetCursorPosY(buttonsize+25);
+			
 
 			std::string file_button = filename_string.c_str();
 
@@ -92,6 +99,7 @@ void ContentBrowser::update()
 			//ImGui::Button(file_button.c_str(), { buttonsize, buttonsize }); // draw button of file
 
 			
+			ImGui::SetCursorPosY(55);
 
 
 			ImGui::ImageButton((ImTextureID)(intptr_t)resourceDatas->m_EditorTextures["Folder"]->ID(), {buttonsize, buttonsize});
@@ -110,8 +118,9 @@ void ContentBrowser::update()
 			//ImGui::Button(filename_string.c_str(), { buttonsize, buttonsize }); // draw button of file
 
 			if (check_extension(path.string(), ".prefab")) {
-
+				ImGui::PushID(idd);
 				ImGui::ImageButton((ImTextureID)(intptr_t)resourceDatas->m_EditorTextures["3DFileIcon"]->ID(), { buttonsize, buttonsize });
+				ImGui::PopID();
 				if (ImGui::BeginDragDropSource()) {
 
 					std::string path_str = path.string();
@@ -149,8 +158,9 @@ void ContentBrowser::update()
 			}
 
 			else if (check_extension(path.string(), ".lua")) {
-
+				ImGui::PushID(idd);
 				ImGui::ImageButton((ImTextureID)(intptr_t)resourceDatas->m_EditorTextures["UnknownIcon"]->ID(), { buttonsize, buttonsize });
+				ImGui::PopID();
 				if (ImGui::BeginDragDropSource()) {
 
 					std::string path_str = path.string();
@@ -170,8 +180,9 @@ void ContentBrowser::update()
 
 
 			else if (check_extension(path.string(), ".geom")) {
+				ImGui::PushID(idd);
 				ImGui::ImageButton((ImTextureID)(intptr_t)resourceDatas->m_EditorTextures["PhysicsMaterial"]->ID(), { buttonsize, buttonsize });
-
+				ImGui::PopID();
 				if (ImGui::BeginDragDropSource()) {
 
 					std::string path_str = path.string();
@@ -188,8 +199,9 @@ void ContentBrowser::update()
 
 			}
 			else if (check_extension(path.string(), ".ctexture")) {
+				ImGui::PushID(idd);
 				ImGui::ImageButton((ImTextureID)(intptr_t)resourceDatas->m_EditorTextures["ImageIcon"]->ID(), { buttonsize, buttonsize });
-
+				ImGui::PopID();
 				if (ImGui::BeginDragDropSource()) {
 
 					std::string path_str = path.string();

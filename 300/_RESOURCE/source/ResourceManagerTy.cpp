@@ -34,7 +34,9 @@ void ResourceTy::Exit() {
 			delete  reinterpret_cast<GFX::Texture*>(data.second->m_pData);
 	}
 
-
+	for (auto& data : m_EditorTextures) {
+		delete  reinterpret_cast<GFX::Texture*>(data.second);
+	}
 }
 
 void ResourceTy::mesh_Loader()
@@ -177,9 +179,7 @@ void ResourceTy::MaterialInstance_Loader() {
 }
 
 void ResourceTy::MaterialEditor_Loader() {
-	// hardcode material instance path for now 
-	//std::vector<std::string> materialinstancepaths;
-	//materialinstancepaths.emplace_back("../assets/Compressed/Skull.ctexture");
+
 
 	std::filesystem::path folderpath = compressed_Editor_path.c_str();
 
@@ -192,33 +192,32 @@ void ResourceTy::MaterialEditor_Loader() {
 		std::string filepath = compressed_Editor_path + entry.path().filename().string();
 		std::string materialinstancepath = filepath;
 
-		//std::cout << " i neeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed texture " << entry.path().filename() << " \n";
-
 		std::string saved;
 		
 		saved = entry.path().filename().string().substr(0,entry.path().filename().string().find_last_of("."));
 		
 
-		auto texPtr = SetupMaterialInstance(materialinstancepath);
-
+		auto texPtr = SetupEditorlInstance(materialinstancepath);
 		m_EditorTextures.emplace(saved, texPtr);
-		/*uid uids(materialinstancepath);
-		auto texPtr = SetupMaterialInstance(materialinstancepath, uids.id);
-		++mResouceCnt;
-		instance_infos& tempInstance = AllocRscInfo();
-		tempInstance.m_Name = materialinstancepath;
-		tempInstance.m_GUID = uids.id;
-		tempInstance.m_pData = reinterpret_cast<void*>(texPtr);
 
-		tempInstance.m_Type = _TEXTURE;
-		m_ResourceInstance.emplace(uids.id, &tempInstance);*/
 
 
 
 	}
 }
 
+GFX::Texture* ResourceTy::SetupEditorlInstance(std::string filepath) {
+	GFX::Texture localMaterialInstance;
+	localMaterialInstance.Load(filepath.c_str());
 
+
+	auto Texret = std::make_unique<GFX::Texture>(localMaterialInstance);
+	return Texret.release();
+	//uid uids(filepath);
+	//MaterialInstanceData& temp = AllocRscInfo();
+	//temp.materialInstanceData = std::move(localMaterialInstance);
+	//mSceneMaterialInstances.emplace(std::make_pair(uid, &temp));
+}
 
 GFX::Texture* ResourceTy::SetupMaterialInstance(std::string filepath) {
 	GFX::Texture localMaterialInstance;

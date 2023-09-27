@@ -79,6 +79,7 @@ public:
     void MaterialEditor_Loader();
     GFX::Texture* SetupMaterialInstance(std::string filepath);
     GFX::Texture* getMaterialInstance(unsigned);
+    GFX::Texture* SetupEditorlInstance(std::string filepath);
 
     instance_infos& AllocRscInfo(void);
     void ReleaseRscInfo(instance_infos& RscInfo);

@@ -117,7 +117,7 @@ public:
 	void EndEditPrefabNoSave(Entity e); //no save
 
 
-	Entity PasteEntity();
+	Entity PasteEntity(int );
 
 	const Entity NullEntity;
 };
