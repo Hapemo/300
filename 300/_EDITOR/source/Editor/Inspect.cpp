@@ -173,12 +173,16 @@ void Inspect::Add_component() {
 
 	}
 
+
 	if (mPopup)
 	{
 		ImGui::OpenPopup("ComponentList", ImGuiPopupFlags_MouseButtonRight);
 	}
 
-	if (ImGui::BeginPopup("ComponentList"))
+
+
+
+	if (ImGui::BeginCombo("##add","ComponentList"))
 	{
 		//if (ImGui::Selectable("Test Component"))
 		//{
@@ -231,6 +235,7 @@ void Inspect::Add_component() {
 				Entity(Hierarchy::selectedId).AddComponent<MeshRenderer>();
 		}
 
+		ImGui::EndCombo();
 
 
 	}
