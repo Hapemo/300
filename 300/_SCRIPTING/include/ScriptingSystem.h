@@ -91,6 +91,9 @@ public:
     void TestSSSU();
     bool runOnce;
 
+    // Call in Reload function
+    void ScriptReload();
+
     // To delete after port in to imGui
     void ScriptingInitTest();
     void ScriptingUpdateTest();

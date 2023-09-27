@@ -8,6 +8,7 @@
 #include "ResourceManagerTy.h"
 #include "ECS/ECS_Components.h"
 #include "GameState/GameStateManager.h"
+#include "GameState/GameState.h"
 #include "Audio/AudioSystem.h"
 #include "Debug/Logger.h"
 #include "../../../_TOOLS/include/Input/InputMapSystem.h"
@@ -65,6 +66,7 @@ void SystemManager::Reset()
 	mGameStateSystem.get()->Unload();
 	mGameStateSystem.get()->Init();
 	mPhysicsSystem.get()->Init();
+	mScriptingSystem.get()->ScriptReload();
 	mIsPlay = false;
 }
 
@@ -78,6 +80,7 @@ void SystemManager::Play()
 {
 	mIsPlay = true; 
 	mGraphicsSystem->UnpauseGlobalAnimation();
+	mGameStateSystem->mCurrentGameState.Save();
 }
 
 void SystemManager::Update(float dt)

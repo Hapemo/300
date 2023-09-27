@@ -167,7 +167,7 @@ void ScriptingSystem::Update(float dt)
             for (Script script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
             {
                 script.Load(entity);
-                script.Run("Start");
+                script.Run("Alive");
             }
         }
         once = true;
@@ -190,18 +190,18 @@ void ScriptingSystem::Update(float dt)
      /******************************************************************************/
     //else 
     //{ 
-    if (Input::CheckKey(E_STATE::PRESS, E_KEY::LEFT_SHIFT))
-    {
-        //    for (Entity entity : ECS::GetInstance()->GetEntitiesWith<Scripts>()) 
-        //    { 
-        //        for (auto& script : entity.GetComponent<Scripts>().scriptsContainer) 
-        //        { 
-        //            int entityid = entity.id; 
-        //            script.Load(entityid); 
-        //        } 
-        //    } 
-        once = false;
-    }
+    //if (Input::CheckKey(E_STATE::PRESS, E_KEY::LEFT_SHIFT))
+    //{
+    //    //    for (Entity entity : ECS::GetInstance()->GetEntitiesWith<Scripts>()) 
+    //    //    { 
+    //    //        for (auto& script : entity.GetComponent<Scripts>().scriptsContainer) 
+    //    //        { 
+    //    //            int entityid = entity.id; 
+    //    //            script.Load(entityid); 
+    //    //        } 
+    //    //    } 
+    //    once = false;
+    //}
 }
 
 void ScriptingSystem::Exit()
@@ -263,6 +263,11 @@ void ScriptingSystem::TestSSSU()
 
         ScriptingSystem::ScriptDead(Entity((entt::entity)std::stoul(entityID)));
     }
+}
+
+void ScriptingSystem::ScriptReload()
+{
+    once = false;
 }
 
 void ScriptingSystem::ScriptingInitTest()
