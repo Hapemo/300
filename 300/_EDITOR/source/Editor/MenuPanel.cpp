@@ -36,8 +36,13 @@ void MenuPanel::update()
         if (ImGui::BeginMenu("Files"))
         {       
             //save scene
-            if (ImGui::MenuItem("Save GameState")) {
-               // systemManager->;
+            if (ImGui::MenuItem("Save Scene"))
+            {
+                systemManager->mGameStateSystem->mCurrentGameState.mScenes[Hierarchy::selectedScene].Save();
+            }
+
+            if (ImGui::MenuItem("Save GameState"))
+            {
                 // must save both the scenes and gamestate
                 systemManager->mGameStateSystem->mCurrentGameState.Save();
                 for(int i = 0; i < systemManager->mGameStateSystem->mCurrentGameState.mScenes.size(); ++i)

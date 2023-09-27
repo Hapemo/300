@@ -120,8 +120,8 @@ Entity Scene::AddEntity() {
 
 void Scene::RemoveEntity(Entity _e) {
 	// if (_e.GetComponent<General>().isActive) _e.Deactivate(); // Temporary remove - Han
-	systemManager->ecs->DeleteEntity(_e);
 	mEntities.erase(_e);
+	systemManager->ecs->DeleteEntity(_e);
 }
 
 bool Scene::IsError() {

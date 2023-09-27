@@ -22,6 +22,8 @@ Contains main loop for the logic of contentbrowsing + Drag and drop functionalit
 #include "ContentBrower.h"
 #include "PrefabWindow.h"
 #include "ResourceManagerTy.h"
+#include "GameState/GameStateManager.h"
+#include "Misc.h"
 #include <stdlib.h>
 #include <iostream>
 #include <string>
@@ -138,9 +140,22 @@ void ContentBrowser::update()
 
 					Entity toEdit = systemManager->ecs->StartEditPrefab(newpath);
 					PrefabWindow::prefabObj = toEdit.id;
+					
 
 
+					//std::cout << path.string() << "\n";
+				}
+				ImGui::Text(filename_string.c_str());
+				ImGui::NextColumn();
 
+			}
+			else if (check_extension(path.string(), ".gs")) {
+
+				ImGui::ImageButton((ImTextureID)(intptr_t)resourceDatas->m_EditorTextures["3DFileIcon"]->ID(), { buttonsize, buttonsize });
+				if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) {
+					systemManager->mGameStateSystem->GetCurrentGameState()->Save();
+					systemManager->mGameStateSystem->ChangeGameState(Misc::GetFileName(path.string()));
+					
 					//std::cout << path.string() << "\n";
 				}
 				ImGui::Text(filename_string.c_str());
@@ -205,13 +220,8 @@ void ContentBrowser::update()
 				ImGui::NextColumn();
 
 			}
-
-			//if (check_extension(path.string(), ".prefab")) {
-	
-			//	
-			//}
-
-			if (check_extension(path.string(), ".scn")) {
+			else if (check_extension(path.string(), ".scn")) {
+				ImGui::ImageButton((ImTextureID)(intptr_t)resourceDatas->m_EditorTextures["Electro"]->ID(), { buttonsize, buttonsize });
 
 				if (ImGui::BeginDragDropSource()) {
 
@@ -224,17 +234,13 @@ void ContentBrowser::update()
 
 					ImGui::EndDragDropSource();
 				}
-			}
-
-			if (check_extension(path.string(), ".gs")) {
-
-
+				ImGui::Text(filename_string.c_str());
+				ImGui::NextColumn();
 
 			}
+
 
 		}
-
-		
 	}
 	ImGui::Columns(1);
 }

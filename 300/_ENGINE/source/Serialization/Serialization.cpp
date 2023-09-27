@@ -6,6 +6,10 @@
 bool BaseJSON::DeserializeFile(const std::string& filename)
 {
 	std::ifstream file(filename);
+	if (!file.is_open()) {
+		std::cout << "Failed to DeserializeFile " + filename << '\n';
+		return false;
+	}
 	std::stringstream buffer;
 	buffer << file.rdbuf();
 	file.close();
@@ -16,6 +20,10 @@ bool BaseJSON::DeserializeFile(const std::string& filename)
 bool BaseJSON::SerializeFile(const std::string& filename)
 {
 	std::ofstream file(filename);
+	if (!file.is_open()) {
+		std::cout << "Failed to SerializeFile " + filename << '\n';
+		return false;
+	}
 	std::string str = Serialize();
 	file << str;
 	file.flush();

@@ -42,7 +42,7 @@ void GFX::DebugRenderer::AddPoint(vec3 const& pos, vec4 const& color)
 {
 	if (mPointMesh.mLTW.size() >= MAX_INSTANCES)
 	{
-		std::cout << "Max Instances of Objects Reached!\n";
+		//std::cout << "Max Instances of Objects Reached!\n";
 		return;
 	}
 
@@ -61,7 +61,7 @@ void GFX::DebugRenderer::AddLine(vec3 const& pos1, vec3 const& pos2, vec4 const&
 {
 	if (mLineMesh.mLTW.size() >= MAX_INSTANCES)
 	{
-		std::cout << "Max Instances of Objects Reached!\n";
+		//std::cout << "Max Instances of Objects Reached!\n";
 		return;
 	}
 
@@ -80,7 +80,7 @@ void GFX::DebugRenderer::AddTriangle(vec3 const& p0, vec3 const& p1, vec3 const&
 {
 	if (mTriangleMesh.mLTW.size() >= MAX_INSTANCES)
 	{
-		std::cout << "Max Instances of Objects Reached!\n";
+		//std::cout << "Max Instances of Objects Reached!\n";
 		return;
 	}
 
@@ -99,7 +99,7 @@ void GFX::DebugRenderer::AddQuad(vec3 const& center, float width, float height, 
 {
 	if (mQuadMesh.mLTW.size() >= MAX_INSTANCES)
 	{
-		std::cout << "Max Instances of Objects Reached!\n";
+		//std::cout << "Max Instances of Objects Reached!\n";
 		return;
 	}
 
@@ -118,7 +118,7 @@ void GFX::DebugRenderer::AddAabb(vec3 const& center, vec3 const& size, vec4 cons
 {
 	if (mAabbMesh.mLTW.size() >= MAX_INSTANCES)
 	{
-		std::cout << "Max Instances of Objects Reached!\n";
+		//std::cout << "Max Instances of Objects Reached!\n";
 		return;
 	}
 
@@ -137,7 +137,7 @@ void GFX::DebugRenderer::AddCube(vec3 const& center, vec3 const& size, vec4 cons
 {
 	if (mCubeMesh.mLTW.size() >= MAX_INSTANCES)
 	{
-		std::cout << "Max Instances of Objects Reached!\n";
+		//std::cout << "Max Instances of Objects Reached!\n";
 		return;
 	}
 

@@ -42,6 +42,10 @@ void Hierarchy::init() {
 }
 //int Hierarchy::selectCnt{ -1 };
 
+// Helper function
+
+
+
 
 #ifdef DEBUG
 
@@ -271,7 +275,6 @@ void Hierarchy::update()
 #ifndef DEBUG
 
 void Hierarchy::update() {
-    
 
     ImGui::InputText(" ", &systemManager->mGameStateSystem->mCurrentGameState.mName);
     // ImGui::Text(systemManager->mGameStateSystem->mCurrentGameState.mName.c_str());
@@ -465,12 +468,28 @@ void Hierarchy::update() {
 
             ImGui::TreePop();
         }
+
+
     }
 
 
-
+    ImGui::Dummy(ImGui::GetContentRegionAvail());
     
 
+    if (ImGui::BeginDragDropTarget()) {
+
+        if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_SCN")) {
+            auto data = (const char*)payload->Data;
+            size_t lastSep = std::string(data).find_last_of("/\\");
+            size_t lastStop = std::string(data).find_last_of(".");
+
+            // extracts the filename from data and adds a number at the back of the string so as to prevent scenes with same names
+            // ask jazz how to access loadscene function
+            if (lastSep != std::string::npos && lastStop != std::string::npos && lastStop > lastSep)
+                systemManager->mGameStateSystem->mCurrentGameState.AddScene(std::string(data).substr(lastSep + 1, lastStop - lastSep - 1));
+        }
+        ImGui::EndDragDropTarget();
+    }
 
 
 
