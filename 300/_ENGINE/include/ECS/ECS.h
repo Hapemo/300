@@ -171,7 +171,7 @@ Component& Entity::GetComponent()
 //	if (static_cast<std::uint32_t>(this->id) == 0)
 //		return Component();
 //#endif
-	PASSERT(static_cast<std::uint32_t>(this->id) != 0, "Tried to get component from null entity! e.id = 0");
+	//PASSERT(static_cast<std::uint32_t>(this->id) != 0, "Tried to get component from null entity! e.id = 0");
 	PASSERT(this->HasComponent<Component>(), "no such component in entity");
 	return systemManager->ecs->registry.get_or_emplace<Component>(id, Component());
 }
