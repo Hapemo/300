@@ -1,5 +1,7 @@
 #include "TabWindow.h"
 #include "Graphics/GraphicsSystem.h"
+#include "ECS/ECS.h"
+#include "ECS/ECS_Systems.h"
 
 void TabWindow::init() {
     //mWinFlag |= ImGuiWindowFlags_NoBringToFrontOnFocus
