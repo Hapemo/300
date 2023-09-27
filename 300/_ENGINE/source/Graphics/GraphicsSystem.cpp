@@ -55,7 +55,7 @@ void GraphicsSystem::Init()
 		UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_GAME, 0.f);
 	}
 
-#if 0
+#if 1
 #pragma region create entity 1
 	//Create a new entity here, for testing purposes
 	Entity newentity = systemManager->ecs->NewEntity();			// creating a new entity
@@ -286,12 +286,10 @@ void GraphicsSystem::EditorDraw(float dt)
 		GLuint mHasLightFlagLocation = shaderinst.GetUniformLocation("uHasLight");
 		glUniform1i(mHasLightFlagLocation, m_HasLight);
 
-		Transform lightTransform;
-		PointLight lightData;
 		if (m_HasLight)
 		{
 			PointLight& lightData = lightEntity.get<PointLight>(lightEntity[0]);
-			Transform& lightXform = Entity(lightEntity[0]).GetComponent<Transform>();
+			Transform& lightTransform = Entity(lightEntity[0]).GetComponent<Transform>();
 
 			GLuint mLightPosShaderLocation = shaderinst.GetUniformLocation("uLightPos");
 			GLuint mViewPosShaderLocation = shaderinst.GetUniformLocation("uViewPos");
