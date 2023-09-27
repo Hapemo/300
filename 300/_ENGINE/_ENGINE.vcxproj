@@ -168,7 +168,6 @@
     <ClInclude Include="include\Physics\PhysicsTypes.h" />
     <ClInclude Include="include\Physics\PhysicsSystem.h" />
     <ClInclude Include="include\Physics\PhysX.h" />
-    <ClInclude Include="include\Serialization\SerializationTemp.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Audio\AudioSystem.cpp" />
@@ -179,7 +178,6 @@
     <ClCompile Include="source\ECS\ECS_Systems.cpp" />
     <ClCompile Include="source\ECS\ECS.cpp" />
     <ClCompile Include="source\Physics\Accumulator.cpp" />
-    <ClCompile Include="source\Serialization\SerializationTemp.cpp" />
     <ClInclude Include="include\Serialization\Serialization.h" />
   </ItemGroup>
   <ItemGroup>

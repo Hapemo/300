@@ -1,18 +1,18 @@
 [
     {
-        "EntityID": 1048577,
+        "EntityID": 1,
         "General": {
-            "Name": "NewObject",
+            "Name": "Entity1",
             "Active": true,
-            "Paused": true,
+            "Paused": false,
             "Tag": "Unknown",
             "Subtag": "Active"
         },
         "Transform": {
             "Scale": [
-                1.0,
-                1.0,
-                1.0
+                270.382568359375,
+                211.37704467773438,
+                67.81583404541016
             ],
             "Rotate": [
                 0.0,
@@ -20,9 +20,41 @@
                 0.0
             ],
             "Translate": [
-                5.0,
-                10.0,
-                3.0
+                0.0,
+                0.0,
+                0.0
+            ]
+        },
+        "MeshRenderer": {
+            "ShaderPath": [
+                "../_GRAPHICS/shader_files/animations_vert.glsl",
+                "../_GRAPHICS/shader_files/pointLight_frag.glsl"
+            ],
+            "MaterialInstancePath": [
+                "../assets/Compressed/Vampire_diffuse.ctexture",
+                "../assets/Compressed/Vampire_normal.ctexture",
+                "../assets/Compressed/Vampire_emission.ctexture",
+                "../assets/Compressed/Vampire_specular.ctexture"
+            ],
+            "MeshPath": "../assets/compiled_geom/dancing_vampire.geom",
+            "GUID": 0,
+            "TextureCont": [
+                true,
+                true,
+                false,
+                false
+            ]
+        },
+        "BoxCollider": {
+            "ScaleOffset": [
+                1.0,
+                0.800000011920929,
+                1.5
+            ],
+            "TranslateOffset": [
+                0.0,
+                80.0,
+                0.0
             ]
         }
     }
