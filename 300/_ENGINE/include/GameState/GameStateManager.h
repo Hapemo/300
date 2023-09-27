@@ -158,11 +158,8 @@ public:
 
 	\param _e
 	- Entity to delete
-
-	\return bool
-	- true if successfully transferred, otherwise false
 	*******************************************************************************/
-	bool DeleteEntityFromScene(int _sceneID, Entity _e);
+	void DeleteEntityFromScene(int _sceneID, Entity _e);
 
 	void EditorRestartGameState() { mGSMState = E_GSMSTATE::CHANGING; }
 

@@ -152,7 +152,7 @@ bool GameStateManager::TransferEntity(std::string const& _srcName, std::string c
 }
 
 bool GameStateManager::TransferEntity(int _srcID, int _dstID, Entity _e) {
-	TransferEntity(&mCurrentGameState.mScenes[_srcID], &mCurrentGameState.mScenes[_dstID], _e);
+	return TransferEntity(&mCurrentGameState.mScenes[_srcID], &mCurrentGameState.mScenes[_dstID], _e);
 }
 
 bool GameStateManager::TransferEntity(Scene* _src, Scene* _dst, Entity _e) {
@@ -181,7 +181,7 @@ bool GameStateManager::TransferEntity(Scene* _src, Scene* _dst, Entity _e) {
 	_dst->mEntities.insert(_e);
 }
 
-bool GameStateManager::DeleteEntityFromScene(int _sceneID, Entity _e) {
+void GameStateManager::DeleteEntityFromScene(int _sceneID, Entity _e) {
 	mCurrentGameState.mScenes[_sceneID].RemoveEntity(_e);
 }
 
