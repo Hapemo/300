@@ -87,7 +87,7 @@ ECS::ECS() : registry(), NullEntity(registry.create()), mClipboard(0) {}
 
 Entity ECS::NewEntity()
 {
-	Entity e = registry.create();
+	Entity e = entt::to_integral(registry.create());
 	e.AddComponent<General>().name = "Entity" + std::to_string(static_cast<uint32_t>(e.id));
 	e.AddComponent<Transform>();
 	return e;

@@ -45,8 +45,8 @@ void Application::StartUp()
     GFX::Window::InitializeSystem();
     mWindow = GFX::Window({ 1920, 1080 });
     mWindow.SetWindowTitle("Application");
-    systemManager = new SystemManager();
     ConfigManager::Init("../assets/config.txt");
+    systemManager = new SystemManager();
 }
 
 void Application::SystemInit()

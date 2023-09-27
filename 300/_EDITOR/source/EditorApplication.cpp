@@ -23,6 +23,8 @@ start up of window and game system, also runs their update functions.
 #include "SceneWindow.h"
 #include "Guid.h"
 #include "Physics/Accumulator.h"
+#include "ConfigManager.h"
+#include "GameState/GameStateManager.h"
 
 // Static variables
 GFX::DebugRenderer* EditorApplication::mRenderer;
@@ -47,6 +49,7 @@ void EditorApplication::StartUp()
     GFX::Window::InitializeSystem();
     mWindow = GFX::Window({ 1920, 1080 });
     mWindow.SetWindowTitle("Editor");
+    ConfigManager::Init("../assets/config.txt");
     systemManager = new SystemManager();
 
 

@@ -41,7 +41,7 @@ void GameState::AddScene(std::string const& _name) { // filesystem
 		latestScene.mName = "New Scene " + std::to_string(newSceneCount++);  //cannot have same GS name
 		//LOG_CUSTOM("GAMESTATE", "Adding NEW scene to gamestate: " + mName);
 	} else {
-		//latestScene.Load(_name);
+		latestScene.Load(_name);
 		//LOG_CUSTOM("GAMESTATE", "Adding scene \"" + _path.stem().string() + "\" to gamestate: " + mName);
 	}
 	
