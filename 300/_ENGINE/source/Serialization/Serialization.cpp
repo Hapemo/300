@@ -1,7 +1,7 @@
 #include "Serialization/Serialization.h"
-//#include "Serialization/SerializationTemp.h"
 #include "GameState/Scene.h"
 #include "../../../_SCRIPTING/include/ScriptingSystem.h"
+#include "Debug/Logger.h"
 
 bool BaseJSON::DeserializeFile(const std::string& filename)
 {
@@ -97,7 +97,7 @@ bool EntityJSON::Deserialize(const rapidjson::Value& obj)
 
 	if (obj.HasMember("RigidBody"))
 	{
-		mRBJ.mDensity = (std::uint16_t)obj["RigidBody"]["Density"].GetDouble();
+		mRBJ.mDensity = (float)obj["RigidBody"]["Density"].GetDouble();
 		mRBJ.mMaterial = FindMaterialEnum(obj["RigidBody"]["Material"].GetString());
 		mRBJ.mMotion = FindMotionEnum(obj["RigidBody"]["Motion"].GetString());
 
@@ -108,7 +108,7 @@ bool EntityJSON::Deserialize(const rapidjson::Value& obj)
 	if (obj.HasMember("MeshRenderer"))
 	{
 		mMRJ.mShaderPath = std::pair<std::string, std::string>(obj["MeshRenderer"]["ShaderPath"][0].GetString(), obj["MeshRenderer"]["ShaderPath"][1].GetString());
-		for(int i = 0; i < 4; ++i) // size 4 becausae only 4 type of material property can be assigned
+		for(int i = 0; i < 4; ++i) // size 4 because only 4 type of material property can be assigned
 			mMRJ.mMaterialInstancePath[i] = (obj["MeshRenderer"]["MaterialInstancePath"][i].GetString());
 		mMRJ.mMeshPath = obj["MeshRenderer"]["MeshPath"].GetString();
 		mMRJ.mGUID = (unsigned)obj["MeshRenderer"]["GUID"].GetInt();
@@ -162,7 +162,7 @@ bool EntityJSON::Deserialize(const rapidjson::Value& obj)
 	{
 		Script tmp;
 
-		for (int i = 0; i < obj["Scripts"].Size(); ++i)
+		for (unsigned i = 0; i < obj["Scripts"].Size(); ++i)
 		{
 			tmp.scriptFile = obj["Scripts"][i].GetString();
 			tmp.env = { systemManager->mScriptingSystem->luaState, sol::create, systemManager->mScriptingSystem->luaState.globals() };
@@ -233,7 +233,6 @@ bool EntityJSON::Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* wri
 	writer->String(FindSubTagString(mGJ.subtag).c_str());
 	
 	writer->EndObject();
-	//to_json_recursive(mGJ, *writer);
 
 	writer->String("Transform");
 	writer->StartObject();
@@ -260,7 +259,6 @@ bool EntityJSON::Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* wri
 	writer->EndArray();
 
 	writer->EndObject();
-	//to_json_recursive(mTJ, *writer);
 
 	if (mrb_t)
 	{
@@ -268,7 +266,7 @@ bool EntityJSON::Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* wri
 		writer->StartObject();
 
 		writer->String("Density");
-		writer->Uint(mRBJ.mDensity);
+		writer->Double(mRBJ.mDensity);
 
 		writer->String("Material");
 		writer->String(FindMaterialString(mRBJ.mMaterial).c_str());
@@ -277,7 +275,6 @@ bool EntityJSON::Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* wri
 		writer->String(FindMotionString(mRBJ.mMotion).c_str());
 
 		writer->EndObject();
-		//to_json_recursive(mRBJ, *writer);
 	}
 
 	if (mmr_t)
@@ -310,7 +307,6 @@ bool EntityJSON::Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* wri
 		writer->EndArray();
 
 		writer->EndObject();
-		//to_json_recursive(mMRJ, *writer);
 	}
 
 	if (mbc_t)
@@ -333,7 +329,6 @@ bool EntityJSON::Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* wri
 		writer->EndArray();
 
 		writer->EndObject();
-		//to_json_recursive(mBCJ, *writer);
 	}
 
 	if (msc_t)
@@ -352,7 +347,6 @@ bool EntityJSON::Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* wri
 		writer->EndArray();
 
 		writer->EndObject();
-		//to_json_recursive(mSCJ, *writer);
 	}
 
 	if (mpc_t)
@@ -371,7 +365,6 @@ bool EntityJSON::Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* wri
 		writer->Double(mPCJ.mTranslateOffset);
 
 		writer->EndObject();
-		//to_json_recursive(mPCJ, *writer);
 	}
 
 	if (ms_t)
@@ -383,7 +376,6 @@ bool EntityJSON::Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* wri
 			writer->String(mSJ.scriptsContainer[i].scriptFile.c_str());
 
 		writer->EndArray();
-		//to_json_recursive(mSJ, *writer);
 	}
 
 	if (mp_t)
@@ -401,7 +393,6 @@ bool EntityJSON::Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* wri
 		writer->Int(mPJ.mNextSibling);
 
 		writer->EndObject();
-		//to_json_recursive(mPJ, *writer);
 	}
 
 	if (mc_t)
@@ -416,7 +407,6 @@ bool EntityJSON::Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* wri
 		writer->Int(mCJ.mFirstChild);
 
 		writer->EndObject();
-		//to_json_recursive(mCJ, *writer);
 	}
 
 	if (ma_t)
@@ -437,7 +427,6 @@ bool EntityJSON::Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* wri
 		writer->Bool(mAJ.mIsPlay);
 
 		writer->EndObject();
-		//to_json_recursive(mAJ, *writer);
 	}
 
 	writer->EndObject();
@@ -565,6 +554,8 @@ TAG FindTagEnum(std::string str)
 		if (it.first == str)
 			return it.second;
 	}
+
+	return TAG::UNDEFINED;
 }
 
 std::string FindTagString(TAG tag)
@@ -574,6 +565,8 @@ std::string FindTagString(TAG tag)
 		if (it.second == tag)
 			return it.first;
 	}
+
+	return std::string();
 }
 
 SUBTAG FindSubTagEnum(std::string str)
@@ -583,6 +576,8 @@ SUBTAG FindSubTagEnum(std::string str)
 		if (it.first == str)
 			return it.second;
 	}
+
+	return SUBTAG::UNDEFINED;
 }
 
 std::string FindSubTagString(SUBTAG subtag)
@@ -592,6 +587,8 @@ std::string FindSubTagString(SUBTAG subtag)
 		if (it.second == subtag)
 			return it.first;
 	}
+
+	return std::string();
 }
 
 MATERIAL FindMaterialEnum(std::string str)
@@ -601,6 +598,8 @@ MATERIAL FindMaterialEnum(std::string str)
 		if (it.first == str)
 			return it.second;
 	}
+
+	return MATERIAL::UNDEFINED;
 }
 
 std::string FindMaterialString(MATERIAL tag)
@@ -610,6 +609,8 @@ std::string FindMaterialString(MATERIAL tag)
 		if (it.second == tag)
 			return it.first;
 	}
+
+	return std::string();
 }
 
 MOTION FindMotionEnum(std::string str)
@@ -619,6 +620,8 @@ MOTION FindMotionEnum(std::string str)
 		if (it.first == str)
 			return it.second;
 	}
+
+	return MOTION::UNDEFINED;
 }
 
 std::string FindMotionString(MOTION tag)
@@ -628,6 +631,8 @@ std::string FindMotionString(MOTION tag)
 		if (it.second == tag)
 			return it.first;
 	}
+
+	return std::string();
 }
 
 AUDIOTYPE FindAudioEnum(std::string str)
@@ -637,6 +642,8 @@ AUDIOTYPE FindAudioEnum(std::string str)
 		if (it.first == str)
 			return it.second;
 	}
+
+	return AUDIOTYPE::UNDEFINED;
 }
 
 std::string FindAudioString(AUDIOTYPE tag)
@@ -646,24 +653,6 @@ std::string FindAudioString(AUDIOTYPE tag)
 		if (it.second == tag)
 			return it.first;
 	}
-}
 
-//template <typename T>
-//std::string FindString(T& val, const std::unordered_map<std::string, T>& map)
-//{
-//	for (const auto& it : map)
-//	{
-//		if (it.second == val)
-//			return it.first;
-//	}
-//}
-//
-//template <typename T>
-//T FindEnum(const std::string& str, const std::unordered_map<std::string, T>& map)
-//{
-//	for (const auto& it : map)
-//	{
-//		if (it.first == str)
-//			return it.second;
-//	}
-//}
+	return std::string();
+}

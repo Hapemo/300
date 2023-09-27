@@ -4,7 +4,8 @@ enum AUDIOTYPE :unsigned char
 {
 	AUDIO_BGM,
 	AUDIO_SFX, 
-	AUDIO_NULL // For Empty Instantiation
+	AUDIO_NULL, // For Empty Instantiation
+	UNDEFINED // for serialization helper functions
 };
 
 // please update here
