@@ -347,5 +347,4 @@ struct PointLight
 	vec3	mLightColor{ 1.f, 1.f, 1.f };
 	float	mAttenuation;
 	float	mIntensity;
-	std::string mPrefab;
 };
