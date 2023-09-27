@@ -94,7 +94,7 @@ void Inspect::update()
 		Entity ent(Hierarchy::selectedId);
 
 		General& Inspector = ent.GetComponent<General>();
-		Inspector.Inspect();
+		//Inspector.Inspect();
 
 
 
@@ -212,32 +212,6 @@ void Inspect::Add_component() {
 	}
 
 	mPopup = false; 
-}
-
-void General::Inspect() {
-
-
-	ImGui::Text("Name");
-	ImGui::SameLine();
-	ImGui::Button( name.c_str());
-
-
-	//ImGui::Dummy(ImVec2(0.0, 5.f));
-
-
-	ImGui::Text("Tag");
-	ImGui::SameLine();
-
-	if(ImGui::BeginCombo("##Tag", tag[tagid].c_str())) {
-	
-		for (int i = 0; i < 5; i++) {
-			if (ImGui::Selectable(tag[i].c_str())) {
-				tagid = i;
-			}
-		}
-		ImGui::EndCombo();
-	}
-
 }
 
 
@@ -424,7 +398,6 @@ void Animator::Inspect()
 		Entity(Hierarchy::selectedId).RemoveComponent<MeshRenderer>();
 }
 
-
 void MeshRenderer::Inspect() {
 	bool delete_component{ true };
 	if (ImGui::CollapsingHeader("MeshRenderer", &delete_component,ImGuiTreeNodeFlags_DefaultOpen)) {
@@ -473,7 +446,7 @@ void MeshRenderer::Inspect() {
 
 		
 
-		//ImGui::Dummy(ImVec2(0.0f, 10.0f));
+		ImGui::Dummy(ImVec2(0.0f, 10.0f));
 
 		std::string textures[4] = { "DIFFUSE","NORMAL", "EMISSION","SPECULAR"};
 
@@ -507,7 +480,7 @@ void MeshRenderer::Inspect() {
 
 				ImGui::Selectable(newpath.c_str());
 
-				//ImGui::Dummy(ImVec2(0.0f, 10.0f));
+				ImGui::Dummy(ImVec2(0.0f, 10.0f));
 			}
 			else {
 				ImGui::Selectable(" ");
