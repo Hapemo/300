@@ -226,8 +226,13 @@ void Inspect::Add_component() {
 			if (!Entity(Hierarchy::selectedId).HasComponent<Audio>())
 				Entity(Hierarchy::selectedId).AddComponent<Audio>();
 		}
+		if (ImGui::Selectable("MeshRenderer")) {
+			if (!Entity(Hierarchy::selectedId).HasComponent<MeshRenderer>())
+				Entity(Hierarchy::selectedId).AddComponent<MeshRenderer>();
+		}
 
-		ImGui::EndPopup();
+
+
 	}
 
 	mPopup = false; 
@@ -296,6 +301,7 @@ void Transform::Inspect() {
 		ImGui::DragFloat3("##Rotation", (float*)&mRotate, 1);
 
 
+		
 	}
 
 }
@@ -308,10 +314,11 @@ void Camera::Inspect()
 
 		ImGui::Text("Position");
 
-		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::GetItemRectSize().x
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
 			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
 		ImGui::SameLine();
-		ImGui::DragFloat3("##Position", (float*)&mCamera.mPosition);
+		//ImGui::DragFloat3("##Position", (float*)&mCamera.mPosition);
+
 
 
 
@@ -323,7 +330,7 @@ void Camera::Inspect()
 		static bool Orthographic{ 0 };
 		
 
-		ImGui::Text("Aspect Ration");
+		ImGui::Text("Aspect Ratio");
 		ImGui::SameLine();
 		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
 			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);

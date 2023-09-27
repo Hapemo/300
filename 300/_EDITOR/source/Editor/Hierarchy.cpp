@@ -552,7 +552,7 @@ void Hierarchy::update() {
 
     if (ImGui::BeginPopup("Edit_scene"))
     {
-        if (ImGui::Button("Rename"))
+        if (ImGui::Selectable("Rename"))
         {
             ImGui::OpenPopup("Delete?");
             sCPopup = false;
