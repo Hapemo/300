@@ -16,8 +16,9 @@ public:
 	void Update();
 	void Exit();
 	
+	// Need this for Lua
 	void AddActionMap(InputActionMap& action_map);
-	bool CheckActionInput(InputAction action, E_KEY key_pressed);	// Used in Scripting Side
+	std::vector<InputActionMap>& GetActionMaps();
 
 private:
 	std::vector<InputActionMap> mActionMaps; // A collection of [Action Maps] -> [ActionMap] contains 1 or more [Actions]

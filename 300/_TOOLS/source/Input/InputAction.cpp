@@ -1,12 +1,63 @@
 #include "Input/InputAction.h"
 
-InputAction::InputAction() : mActionName("New Action") , mCurrentState(WAITING)
-{}
+InputAction::InputAction() : mActionName("New Action")
+{
+	// Initialize the [mKeyBindings] with the basic [4 directional keys]
+	for (int i = 0; i < KEY_TOTAL; i++)
+	{
+		KEY_BIND key = static_cast<KEY_BIND>(i);
+		mKeyBindingsNew[key] = InputBinding();
 
-InputAction::InputAction(std::string action_name) : mActionName(action_name) , mCurrentState(WAITING)
-{}
+		switch (key)
+		{
+		case KEY_UP:
+			mKeyBindingsNew[key].direction_map = Y_POSITIVE;
+			break;
+		case KEY_LEFT:
+			mKeyBindingsNew[key].direction_map = X_NEGATIVE;
+			break;
+		case KEY_RIGHT:
+			mKeyBindingsNew[key].direction_map = X_POSITIVE;
+			break;
+		case KEY_DOWN:
+			mKeyBindingsNew[key].direction_map = Y_NEGATIVE;
+			break;
+		default:
+			mKeyBindingsNew[key].direction_map = EMPTY;
+			break;
+		}
+	}
+}
 
-InputAction::InputAction(std::string action_name, E_STATE key_state, E_KEY key_binding) : mActionName(action_name) , mCurrentState(WAITING)
+
+InputAction::InputAction(std::string action_name) : mActionName(action_name)
+{
+	for (int i = 0; i < KEY_TOTAL; i++)
+	{
+		KEY_BIND key = static_cast<KEY_BIND>(i);
+		mKeyBindingsNew[key] = InputBinding();
+
+		switch (key)
+		{
+		case KEY_UP:
+			mKeyBindingsNew[key].direction_map = Y_POSITIVE;
+			break;
+		case KEY_LEFT:
+			mKeyBindingsNew[key].direction_map = X_NEGATIVE;
+			break;
+		case KEY_RIGHT:
+			mKeyBindingsNew[key].direction_map = X_POSITIVE;
+			break;
+		case KEY_DOWN:
+			mKeyBindingsNew[key].direction_map = Y_NEGATIVE;
+			break;
+		default:
+			mKeyBindingsNew[key].direction_map = EMPTY;
+			break;
+		}
+	}
+}
+InputAction::InputAction(std::string action_name, E_STATE key_state, E_KEY key_binding) : mActionName(action_name) 
 {
 	InputBinding new_binding = InputBinding(key_state, key_binding); 
 	mKeyBindings.insert(std::make_pair(action_name, new_binding));
@@ -27,47 +78,35 @@ bool InputAction::isEnabled()
 	return isEnable;
 }
 
-void InputAction::AddKeyBinding(std::string binding_name, E_STATE key_state, E_KEY key_binding)
+void InputAction::AddKeyBinding(KEY_BIND key_bind, E_STATE key_state, E_KEY key_binding)
 {
-	InputBinding new_binding = InputBinding(key_state, key_binding);
-	mKeyBindings.insert(std::make_pair(binding_name, new_binding));
+	InputBinding new_binding = InputBinding({ key_state, key_binding });
+
+	mKeyBindingsNew[key_bind].key_binding = key_binding;
+	mKeyBindingsNew[key_bind].key_state = key_state;
 }
 
-//std::unordered_map<std::string, InputBinding> InputAction::GetKeyBindings() const
-//{
-//	return mKeyBindings;
-//}
-
-InputBinding& InputAction::GetKeyBinding(std::string binding_name)
+void InputAction::RemoveKeyBinding(KEY_BIND key_bind)
 {
-	auto binding_it = mKeyBindings.find(binding_name);
-
-	if (binding_it != mKeyBindings.end())
-	{
-		return mKeyBindings.find(binding_name)->second;
-	}
-
-	InputBinding empty;
-
-	return empty;
+	mKeyBindingsNew[key_bind].key_binding = UNKNOWN;
+	mKeyBindingsNew[key_bind].key_state = NOTPRESS;
 }
 
-std::unordered_map<std::string, InputBinding>& InputAction::GetKeyBindings()
+std::unordered_map<KEY_BIND, InputBinding>& InputAction::GetKeyBindings()
 {
-	return mKeyBindings; 
+	return mKeyBindingsNew;
 }
 
-glm::vec2 InputAction::ReadValue() const
+glm::vec2 InputAction::ReadValue(E_KEY key_pressed) const
 {
 	glm::vec2 vec;
 
-	for (const auto& input_binding : mKeyBindings)
+	for (const auto& input_binding : mKeyBindingsNew)
 	{
-		MAP_TO_AXIS axis_mapping = input_binding.second.direction_map; 
-	
-
-		switch (axis_mapping)
+		if (input_binding.second.key_binding == key_pressed)
 		{
+			switch (input_binding.second.direction_map)
+			{
 			case X_POSITIVE:
 				vec = { 1.0f, 0.0f };
 				return vec;
@@ -80,15 +119,12 @@ glm::vec2 InputAction::ReadValue() const
 			case Y_NEGATIVE:
 				vec = { 0.0f , -1.0f };
 				return vec;
+			}
 		}
 	}
+
 	vec = { 0.0f, 0.0f };
 	return vec;
-}
-
-void InputAction::UpdateState(INPUT_STATE new_state)
-{
-	mCurrentState = new_state;
 }
 
 
