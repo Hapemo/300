@@ -176,7 +176,7 @@ void GraphicsSystem::Update(float dt)
 			continue;
 
 		std::string meshstr = inst.GetComponent<MeshRenderer>().mMeshPath;
-		Animator anim = inst.GetComponent<Animator>();
+		//Animator anim = inst.GetComponent<Animator>();
 
 		void *tt = inst.GetComponent<MeshRenderer>().mMeshRef;
 		GFX::Mesh &meshinst = *reinterpret_cast<GFX::Mesh *>(tt);

@@ -64,7 +64,7 @@ void ContentBrowser::update()
 	}
 
 	static float padding{ 10 };
-	static float buttonsize{ 50 };
+	static float buttonsize{ 70 };
 	float cellsize = buttonsize + padding;
 
 	float panelwidth = ImGui::GetContentRegionAvail().x;
