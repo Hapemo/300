@@ -214,6 +214,14 @@ void Inspect::Add_component() {
 	mPopup = false; 
 }
 
+void General::Inspect() {
+
+
+	ImGui::Text("Name");
+	ImGui::SameLine();
+	ImGui::InputText( "##", &name);
+}
+
 
 void Transform::Inspect() {
 	if (ImGui::CollapsingHeader("Transform", ImGuiTreeNodeFlags_DefaultOpen)) {
