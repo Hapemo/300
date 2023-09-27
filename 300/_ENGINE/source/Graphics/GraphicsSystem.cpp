@@ -10,6 +10,9 @@
 	Initialize the Graphics system
 */
 /**************************************************************************/
+float first_entitytime{};
+float second_entitytime{};
+
 void GraphicsSystem::Init()
 {
 	// Get Window Handle
@@ -29,11 +32,11 @@ void GraphicsSystem::Init()
 
 	UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_ALL, 0.f);
 
-
+#if 1
 #pragma region create entity 1
 	//Create a new entity here, for testing purposes
 	Entity newentity = systemManager->ecs->NewEntity();			// creating a new entity
-	systemManager->mGameStateSystem->mCurrentGameState.AddScene("NewScene");
+//	systemManager->mGameStateSystem->mCurrentGameState.AddScene("NewScene");
 	systemManager->mGameStateSystem->mCurrentGameState.mScenes[0].mEntities.insert(newentity);
 
 	newentity.AddComponent<MeshRenderer>();
@@ -61,58 +64,59 @@ void GraphicsSystem::Init()
 	newentity.GetComponent<BoxCollider>().mTranslateOffset = { 0.f, 80.f, 0.f };
 	newentity.GetComponent<BoxCollider>().mScaleOffset = { 1.f, 0.8f, 1.5f };
 
-
 	auto& meshinst = systemManager->mResourceSystem->get_Mesh("../assets/compiled_geom/dancing_vampire.geom");
 	newentity.GetComponent<Transform>().mScale = meshinst.mBBOX.m_Max - meshinst.mBBOX.m_Min;
 	if (newentity.HasComponent<Animator>() && _ENABLE_ANIMATIONS)
 	{
 		newentity.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/animations_vert.glsl", "../_GRAPHICS/shader_files/pointLight_frag.glsl" };// for point light
 		newentity.GetComponent<Animator>().mAnimator.SetAnimation(&meshinst.mAnimation[0]);
-		newentity.GetComponent<Animator>().mIsPaused = false;
 	}
 #pragma endregion
+#endif
 
-//#pragma region create entity 2
-//	//Create a new entity here, for testing purposes
-//	Entity newentity1 = systemManager->ecs->NewEntity();			// creating a new entity
-//	newentity1.AddComponent<MeshRenderer>();
-//	newentity1.AddComponent<BoxCollider>();
-//	newentity1.AddComponent<Animator>();
-//
-//	newentity1.GetComponent<MeshRenderer>().mMeshPath = "../assets/compiled_geom/GirlAnimationWalking.geom";
-//	newentity1.GetComponent<MeshRenderer>().mMaterialInstancePath[0] = "../assets/Compressed/Girl_Diffuse.ctexture";
-//	newentity1.GetComponent<MeshRenderer>().mMaterialInstancePath[1] = "../assets/Compressed/Girl_Normal.ctexture";
-//	newentity1.GetComponent<MeshRenderer>().mMaterialInstancePath[2] = "../assets/Compressed/Girl_Glossiness.ctexture";
-//	newentity1.GetComponent<MeshRenderer>().mMaterialInstancePath[3] = "../assets/Compressed/Girl_Specular.ctexture";
-//
-//	newentity1.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/pointLight_vert.glsl", "../_GRAPHICS/shader_files/pointLight_frag.glsl" };	// for point light
-//
-//	uid mat3(newentity1.GetComponent<MeshRenderer>().mMaterialInstancePath[DIFFUSE]);
-//	newentity1.GetComponent<MeshRenderer>().mTextureRef[DIFFUSE] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(mat3.id));
-//	newentity1.GetComponent<MeshRenderer>().mTextureCont[DIFFUSE] = true;
-//
-//
-//	uid mat4(newentity1.GetComponent<MeshRenderer>().mMaterialInstancePath[NORMAL]);
-//	newentity1.GetComponent<MeshRenderer>().mTextureRef[NORMAL] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(mat4.id));
-//	newentity1.GetComponent<MeshRenderer>().mTextureCont[NORMAL] = true;
-//
-//
-//	uid temp1(newentity1.GetComponent<MeshRenderer>().mMeshPath);
-//	newentity1.GetComponent<MeshRenderer>().mMeshRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(temp1.id));
-//
-//	newentity1.GetComponent<Transform>().mTranslate = { 300.f, 0.f, 0.f };
-//	newentity.GetComponent<BoxCollider>().mTranslateOffset = { -2.f, 98.f, 0.f };
-//	newentity.GetComponent<BoxCollider>().mScaleOffset = { 0.5f, 4.2f, 0.4f };
-//
-//	auto& meshinst1 = systemManager->mResourceSystem->get_Mesh("../assets/compiled_geom/GirlAnimationWalking.geom");
-//	newentity1.GetComponent<Transform>().mScale = meshinst1.mBBOX.m_Max - meshinst1.mBBOX.m_Min;
-//	if (newentity1.HasComponent<Animator>() && _ENABLE_ANIMATIONS)
-//	{
-//		newentity1.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/animations_vert.glsl", "../_GRAPHICS/shader_files/pointLight_frag.glsl" };// for point light
-//		newentity1.GetComponent<Animator>().mAnimator.SetAnimation(&meshinst1.mAnimation[0]);
-//		newentity1.GetComponent<Animator>().mIsPaused = false;
-//	}
-//#pragma endregion
+#if 0
+#pragma region create entity 2
+	//Create a new entity here, for testing purposes
+	Entity newentity1 = systemManager->ecs->NewEntity();			// creating a new entity
+	newentity1.AddComponent<MeshRenderer>();
+	newentity1.AddComponent<BoxCollider>();
+	newentity1.AddComponent<Animator>();
+
+	newentity1.GetComponent<MeshRenderer>().mMeshPath = "../assets/compiled_geom/GirlAnimationWalking.geom";
+	newentity1.GetComponent<MeshRenderer>().mMaterialInstancePath[0] = "../assets/Compressed/Girl_Diffuse.ctexture";
+	newentity1.GetComponent<MeshRenderer>().mMaterialInstancePath[1] = "../assets/Compressed/Girl_Normal.ctexture";
+	newentity1.GetComponent<MeshRenderer>().mMaterialInstancePath[2] = "../assets/Compressed/Girl_Glossiness.ctexture";
+	newentity1.GetComponent<MeshRenderer>().mMaterialInstancePath[3] = "../assets/Compressed/Girl_Specular.ctexture";
+
+	newentity1.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/pointLight_vert.glsl", "../_GRAPHICS/shader_files/pointLight_frag.glsl" };	// for point light
+
+	uid mat3(newentity1.GetComponent<MeshRenderer>().mMaterialInstancePath[DIFFUSE]);
+	newentity1.GetComponent<MeshRenderer>().mTextureRef[DIFFUSE] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(mat3.id));
+	newentity1.GetComponent<MeshRenderer>().mTextureCont[DIFFUSE] = true;
+
+
+	uid mat4(newentity1.GetComponent<MeshRenderer>().mMaterialInstancePath[NORMAL]);
+	newentity1.GetComponent<MeshRenderer>().mTextureRef[NORMAL] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(mat4.id));
+	newentity1.GetComponent<MeshRenderer>().mTextureCont[NORMAL] = true;
+
+
+	uid temp1(newentity1.GetComponent<MeshRenderer>().mMeshPath);
+	newentity1.GetComponent<MeshRenderer>().mMeshRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(temp1.id));
+
+	//newentity1.GetComponent<Transform>().mTranslate = { 300.f, 0.f, 0.f };
+	newentity1.GetComponent<BoxCollider>().mTranslateOffset = { -2.f, 98.f, 0.f };
+	newentity1.GetComponent<BoxCollider>().mScaleOffset = { 0.5f, 4.2f, 0.4f };
+
+	auto& meshinst1 = systemManager->mResourceSystem->get_Mesh("../assets/compiled_geom/GirlAnimationWalking.geom");
+	newentity1.GetComponent<Transform>().mScale = meshinst1.mBBOX.m_Max - meshinst1.mBBOX.m_Min;
+	if (newentity1.HasComponent<Animator>() && _ENABLE_ANIMATIONS)
+	{
+		newentity1.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/animations_vert.glsl", "../_GRAPHICS/shader_files/pointLight_frag.glsl" };// for point light
+		newentity1.GetComponent<Animator>().mAnimator.SetAnimation(&meshinst1.mAnimation[0]);
+	}
+#pragma endregion
+#endif
+
 }
 
 /***************************************************************************/
@@ -138,18 +142,7 @@ void GraphicsSystem::Update(float dt)
 	for (Entity inst : meshRendererInstances)
 	{
 		std::string meshstr = inst.GetComponent<MeshRenderer>().mMeshPath;
-
-		if (inst.HasComponent<Animator>() && _ENABLE_ANIMATIONS)
-		{
-			if (!inst.GetComponent<Animator>().mIsPaused)
-			{
-				// skip the mesh that does not have an animation set
-				if (inst.GetComponent<Animator>().mAnimator.m_CurrentAnimation != nullptr)
-				{
-					inst.GetComponent<Animator>().mAnimator.UpdateAnimation(dt, mat4(1.f));					// update the current animation
-				}
-			}
-		}
+		Animator anim = inst.GetComponent<Animator>();
 
 		void* tt = inst.GetComponent<MeshRenderer>().mMeshRef;
 		GFX::Mesh& meshinst = *reinterpret_cast<GFX::Mesh*>(tt);
@@ -176,17 +169,13 @@ void GraphicsSystem::Update(float dt)
 			m_Renderer.AddSphere(m_EditorCamera.position(), inst.GetComponent<Transform>().mTranslate, 0.5f, { 1.f, 1.f, 0.f, 1.f });
 		}
 
-		// draw the animation data for the bones
-		if (inst.HasComponent<Animator>() && _ENABLE_ANIMATIONS && m_DebugDrawing)
+		// Update the animation
+		if (inst.HasComponent<Animator>() && _ENABLE_ANIMATIONS && systemManager->mGraphicsSystem->m_EnableGlobalAnimations)
 		{
-			// draw the mesh's bone positions as boxes
-			for (const auto& bones : meshinst.mAnimation[0].m_Bones)
+			// skip the mesh that does not have an animation set
+			if (inst.GetComponent<Animator>().mAnimator.m_CurrentAnimation != nullptr)
 			{
-				static const vec3 bonescale(0.1f, 0.1f, 0.1f);
-				mat4 bonestrns = final * inst.GetComponent<Animator>().mAnimator.m_FinalBoneMatrices[bones.GetBoneID()] * bones.m_LocalTransform;
-
-				//m_Renderer.AddCube({ bonestrns.x, bonestrns.y, bonestrns.z }, bonescale, vec4(1.f, 1.f, 0.f, 1.f));
-				//m_Renderer.AddCube({ bonestrns[3][0], bonestrns[3][1], bonestrns[3][2] }, bonescale, vec4(1.f, 1.f, 0.f, 1.f));
+				inst.GetComponent<Animator>().mAnimator.UpdateAnimation(dt, mat4(1.f), final);		// update the current animation
 			}
 		}
 
@@ -195,10 +184,10 @@ void GraphicsSystem::Update(float dt)
 	}
 #pragma endregion
 
-	// test drawing
-	m_Renderer.AddCube({ -10, 0, 0 }, { 0.5f, 0.5f, 0.5f }, { 1.f, 0., 0.f, 1.f });
-	m_Renderer.AddLine({ -10, 0, 0 }, { 10, 10, 0 }, { 0.f, 1.f, 0.f, 1.f });
-	m_Renderer.AddLine({ 10, 10, 0 }, { -10, 10, 0 }, { 1.f, 0.f, 1.f, 1.f });
+	//// test drawing
+	//m_Renderer.AddCube({ -10, 0, 0 }, { 0.5f, 0.5f, 0.5f }, { 1.f, 0., 0.f, 1.f });
+	//m_Renderer.AddLine({ -10, 0, 0 }, { 10, 10, 0 }, { 0.f, 1.f, 0.f, 1.f });
+	//m_Renderer.AddLine({ 10, 10, 0 }, { -10, 10, 0 }, { 1.f, 0.f, 1.f, 1.f }); 
 
 	// Prepare and bind the Framebuffer to be rendered on
 	m_Fbo.PrepForDraw();
@@ -285,6 +274,9 @@ void GraphicsSystem::Update(float dt)
 
 		GLuint uniform_tex = glGetUniformLocation(shaderID, "uTex");
 		glUniform1iv(uniform_tex, (GLsizei)m_Textures.size(), m_Textures.data());	// passing Texture ID to the fragment shader
+
+		GLuint debug_draw = glGetUniformLocation(shaderID, "uDebugDraw");
+		glUniform1i(debug_draw, m_DebugDrawing);
 
 		// send animation data over to the shader if there is animations
 		if (inst.HasComponent<Animator>() && _ENABLE_ANIMATIONS)
@@ -537,4 +529,15 @@ void GraphicsSystem::PrintMat4(const glm::mat4& input)
 	std::cout << "| " << input[0][2] << " | " << input[1][2] << " | " << input[2][2] << " | " << input[3][2] << "\n";
 	std::cout << "| " << input[0][3] << " | " << input[1][3] << " | " << input[2][3] << " | " << input[3][3] << "\n";
 	std::cout << "=============================================================================\n";
+}
+
+void GraphicsSystem::UnpauseGlobalAnimation()
+{
+	m_EnableGlobalAnimations = true;
+}
+
+
+void GraphicsSystem::PauseGlobalAnimation()
+{
+	m_EnableGlobalAnimations = false;
 }

@@ -62,8 +62,9 @@ void Editor::UIinit(GLFWwindow* window)
     }
 
     style.FrameBorderSize = 0.f;
+    style.FrameRounding = 12.f;
+    style.TabRounding = 4.f;
     style.TabBorderSize = 1.5f;
-    style.TabRounding = 0.f;
     style.ItemSpacing = ImVec2( 4.f,4.f);
     style.WindowBorderSize = 0.f;
 

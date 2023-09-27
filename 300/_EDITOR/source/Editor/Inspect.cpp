@@ -367,7 +367,7 @@ void Animator::Inspect()
 		ImGui::Text(" / ");												ImGui::SameLine();
 		ImGui::Text(std::to_string(mAnimator.m_CurrentAnimation->m_Duration).c_str());
 		
-		ImGui::Checkbox("Pause Animaton", &mIsPaused);
+		ImGui::Checkbox("Pause Animaton", &mAnimator.mIsPaused);
 	}
 
 	if (delete_component == false)
@@ -446,7 +446,6 @@ void MeshRenderer::Inspect() {
 							const char* data = (const char*)payload->Data;
 							std::string data_str = std::string(data);
 							mMaterialInstancePath[i] = data_str;
-
 							uid temp(mMaterialInstancePath[i]);
 							mTextureRef[i] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(temp.id));
 

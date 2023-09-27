@@ -189,7 +189,7 @@ void GFX::DemoScene::Update()
 #if ANIMS_TEST
     // == ANIMATOR UPDATE ==
     static const glm::mat4 dflt = glm::mat4(1.f);
-    mObjectAnimator.UpdateAnimation(mDt, dflt);
+    mObjectAnimator.UpdateAnimation(mDt, dflt, glm::mat4(1.f));
 #endif
 
     static char buffer[10];

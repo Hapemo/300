@@ -40,8 +40,8 @@ public:
 	bool IsEditor() { return mIsEditor; }
 	void Init(bool isEditor, GFX::Window *window);
 	void Reset();
-	void Pause() { mIsPlay = false; }
-	void Play() { mIsPlay = true; }
+	void Pause();
+	void Play();
 	void Update(float dt);
 	void Exit();
 	PhysicsSystem *GetPhysicsPointer();

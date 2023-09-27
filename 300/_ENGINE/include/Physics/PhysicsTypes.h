@@ -7,13 +7,15 @@ enum class MATERIAL : unsigned char
 	METAL,
 	ICE,
 	CONCRETE,
-	GLASS
+	GLASS,
+	UNDEFINED // for serialization helper functions
 };
 
 enum class MOTION : unsigned char
 {
 	STATIC,
-	DYNAMIC
+	DYNAMIC,
+	UNDEFINED // for serialization helper functions
 };
 
 // please update the maps here

@@ -72,7 +72,7 @@ void SceneWindow::update()
 
 	ImGui::SetCursorPosX(ImGui::GetWindowContentRegionMax().x-70);
 	ImGui::SetCursorPosY(ImGui::GetWindowContentRegionMin().y+10);
-	ImGui::Checkbox("Debug",&systemManager->mGraphicsSystem->m_DebugDrawing);
+	//ImGui::Checkbox("Debug",&systemManager->mGraphicsSystem->m_DebugDrawing);
 	
 
 	ImGui::SetItemAllowOverlap();
@@ -87,6 +87,7 @@ void SceneWindow::update()
 		systemManager->Pause();
 	}
 	if (ImGui::Button("RESET")) {
+		Hierarchy::selectionOn = false;
 		systemManager->Reset();
 	}
 
