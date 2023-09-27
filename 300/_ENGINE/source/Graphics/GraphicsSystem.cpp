@@ -32,7 +32,7 @@ void GraphicsSystem::Init()
 
 	UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_ALL, 0.f);
 
-
+#if 1
 #pragma region create entity 1
 	 //Create a new entity here, for testing purposes
 	Entity newentity = systemManager->ecs->NewEntity();			// creating a new entity
@@ -70,48 +70,51 @@ void GraphicsSystem::Init()
 		newentity.GetComponent<Animator>().mAnimator.SetAnimation(&meshinst.mAnimation[0]);
 	}
 #pragma endregion
+#endif
 
-//#pragma region create entity 2
-//	//Create a new entity here, for testing purposes
-//	Entity newentity1 = systemManager->ecs->NewEntity();			// creating a new entity
-//	newentity1.AddComponent<MeshRenderer>();
-//	newentity1.AddComponent<BoxCollider>();
-//	newentity1.AddComponent<Animator>();
-//
-//	newentity1.GetComponent<MeshRenderer>().mMeshPath = "../assets/compiled_geom/GirlAnimationWalking.geom";
-//	newentity1.GetComponent<MeshRenderer>().mMaterialInstancePath[0] = "../assets/Compressed/Girl_Diffuse.ctexture";
-//	newentity1.GetComponent<MeshRenderer>().mMaterialInstancePath[1] = "../assets/Compressed/Girl_Normal.ctexture";
-//	newentity1.GetComponent<MeshRenderer>().mMaterialInstancePath[2] = "../assets/Compressed/Girl_Glossiness.ctexture";
-//	newentity1.GetComponent<MeshRenderer>().mMaterialInstancePath[3] = "../assets/Compressed/Girl_Specular.ctexture";
-//
-//	newentity1.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/pointLight_vert.glsl", "../_GRAPHICS/shader_files/pointLight_frag.glsl" };	// for point light
-//
-//	uid mat3(newentity1.GetComponent<MeshRenderer>().mMaterialInstancePath[DIFFUSE]);
-//	newentity1.GetComponent<MeshRenderer>().mTextureRef[DIFFUSE] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(mat3.id));
-//	newentity1.GetComponent<MeshRenderer>().mTextureCont[DIFFUSE] = true;
-//
-//
-//	uid mat4(newentity1.GetComponent<MeshRenderer>().mMaterialInstancePath[NORMAL]);
-//	newentity1.GetComponent<MeshRenderer>().mTextureRef[NORMAL] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(mat4.id));
-//	newentity1.GetComponent<MeshRenderer>().mTextureCont[NORMAL] = true;
-//
-//
-//	uid temp1(newentity1.GetComponent<MeshRenderer>().mMeshPath);
-//	newentity1.GetComponent<MeshRenderer>().mMeshRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(temp1.id));
-//
-//	newentity1.GetComponent<Transform>().mTranslate = { 300.f, 0.f, 0.f };
-//	newentity.GetComponent<BoxCollider>().mTranslateOffset = { -2.f, 98.f, 0.f };
-//	newentity.GetComponent<BoxCollider>().mScaleOffset = { 0.5f, 4.2f, 0.4f };
-//
-//	auto& meshinst1 = systemManager->mResourceSystem->get_Mesh("../assets/compiled_geom/GirlAnimationWalking.geom");
-//	newentity1.GetComponent<Transform>().mScale = meshinst1.mBBOX.m_Max - meshinst1.mBBOX.m_Min;
-//	if (newentity1.HasComponent<Animator>() && _ENABLE_ANIMATIONS)
-//	{
-//		newentity1.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/animations_vert.glsl", "../_GRAPHICS/shader_files/pointLight_frag.glsl" };// for point light
-//		newentity1.GetComponent<Animator>().mAnimator.SetAnimation(&meshinst1.mAnimation[0]);
-//		newentity1.GetComponent<Animator>().mIsPaused = false;
-//	}
-//#pragma endregion
+#if 0
+#pragma region create entity 2
+	//Create a new entity here, for testing purposes
+	Entity newentity1 = systemManager->ecs->NewEntity();			// creating a new entity
+	newentity1.AddComponent<MeshRenderer>();
+	newentity1.AddComponent<BoxCollider>();
+	newentity1.AddComponent<Animator>();
+
+	newentity1.GetComponent<MeshRenderer>().mMeshPath = "../assets/compiled_geom/GirlAnimationWalking.geom";
+	newentity1.GetComponent<MeshRenderer>().mMaterialInstancePath[0] = "../assets/Compressed/Girl_Diffuse.ctexture";
+	newentity1.GetComponent<MeshRenderer>().mMaterialInstancePath[1] = "../assets/Compressed/Girl_Normal.ctexture";
+	newentity1.GetComponent<MeshRenderer>().mMaterialInstancePath[2] = "../assets/Compressed/Girl_Glossiness.ctexture";
+	newentity1.GetComponent<MeshRenderer>().mMaterialInstancePath[3] = "../assets/Compressed/Girl_Specular.ctexture";
+
+	newentity1.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/pointLight_vert.glsl", "../_GRAPHICS/shader_files/pointLight_frag.glsl" };	// for point light
+
+	uid mat3(newentity1.GetComponent<MeshRenderer>().mMaterialInstancePath[DIFFUSE]);
+	newentity1.GetComponent<MeshRenderer>().mTextureRef[DIFFUSE] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(mat3.id));
+	newentity1.GetComponent<MeshRenderer>().mTextureCont[DIFFUSE] = true;
+
+
+	uid mat4(newentity1.GetComponent<MeshRenderer>().mMaterialInstancePath[NORMAL]);
+	newentity1.GetComponent<MeshRenderer>().mTextureRef[NORMAL] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(mat4.id));
+	newentity1.GetComponent<MeshRenderer>().mTextureCont[NORMAL] = true;
+
+
+	uid temp1(newentity1.GetComponent<MeshRenderer>().mMeshPath);
+	newentity1.GetComponent<MeshRenderer>().mMeshRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(temp1.id));
+
+	//newentity1.GetComponent<Transform>().mTranslate = { 300.f, 0.f, 0.f };
+	newentity1.GetComponent<BoxCollider>().mTranslateOffset = { -2.f, 98.f, 0.f };
+	newentity1.GetComponent<BoxCollider>().mScaleOffset = { 0.5f, 4.2f, 0.4f };
+
+	auto& meshinst1 = systemManager->mResourceSystem->get_Mesh("../assets/compiled_geom/GirlAnimationWalking.geom");
+	newentity1.GetComponent<Transform>().mScale = meshinst1.mBBOX.m_Max - meshinst1.mBBOX.m_Min;
+	if (newentity1.HasComponent<Animator>() && _ENABLE_ANIMATIONS)
+	{
+		newentity1.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/animations_vert.glsl", "../_GRAPHICS/shader_files/pointLight_frag.glsl" };// for point light
+		newentity1.GetComponent<Animator>().mAnimator.SetAnimation(&meshinst1.mAnimation[0]);
+	}
+#pragma endregion
+#endif
+
 }
 
 /***************************************************************************/
@@ -140,18 +143,6 @@ void GraphicsSystem::Update(float dt)
 		std::string meshstr = inst.GetComponent<MeshRenderer>().mMeshPath;
 		Animator anim = inst.GetComponent<Animator>();
 
-		if (inst.HasComponent<Animator>() && _ENABLE_ANIMATIONS && systemManager->mGraphicsSystem->m_EnableGlobalAnimations)
-		{
-			//if (!inst.GetComponent<Animator>().mIsPaused)
-			{
-				// skip the mesh that does not have an animation set
-				if (inst.GetComponent<Animator>().mAnimator.m_CurrentAnimation != nullptr)
-				{
-					inst.GetComponent<Animator>().mAnimator.UpdateAnimation(dt, mat4(1.f));					// update the current animation
-				}
-			}
-		}
-
 		void* tt = inst.GetComponent<MeshRenderer>().mMeshRef;
 		GFX::Mesh& meshinst = *reinterpret_cast<GFX::Mesh*>(tt);
 
@@ -177,17 +168,13 @@ void GraphicsSystem::Update(float dt)
 			m_Renderer.AddSphere(m_EditorCamera.position(), inst.GetComponent<Transform>().mTranslate, 0.5f, { 1.f, 1.f, 0.f, 1.f });
 		}
 
-		// draw the animation data for the bones
-		if (inst.HasComponent<Animator>() && _ENABLE_ANIMATIONS && m_DebugDrawing)
+		// Update the animation
+		if (inst.HasComponent<Animator>() && _ENABLE_ANIMATIONS && systemManager->mGraphicsSystem->m_EnableGlobalAnimations)
 		{
-			// draw the mesh's bone positions as boxes
-			for (const auto& bones : meshinst.mAnimation[0].m_Bones)
+			// skip the mesh that does not have an animation set
+			if (inst.GetComponent<Animator>().mAnimator.m_CurrentAnimation != nullptr)
 			{
-				static const vec3 bonescale(0.1f, 0.1f, 0.1f);
-				mat4 bonestrns = final * inst.GetComponent<Animator>().mAnimator.m_FinalBoneMatrices[bones.GetBoneID()];
-
-				//m_Renderer.AddCube({ bonestrns.x, bonestrns.y, bonestrns.z }, bonescale, vec4(1.f, 1.f, 0.f, 1.f));
-				m_Renderer.AddCube({ bonestrns[3][0], bonestrns[3][1], bonestrns[3][2] }, bonescale, vec4(1.f, 1.f, 0.f, 1.f));
+				inst.GetComponent<Animator>().mAnimator.UpdateAnimation(dt, mat4(1.f), final);		// update the current animation
 			}
 		}
 
@@ -196,10 +183,10 @@ void GraphicsSystem::Update(float dt)
 	}
 #pragma endregion
 
-	// test drawing
-	m_Renderer.AddCube({ -10, 0, 0 }, { 0.5f, 0.5f, 0.5f }, { 1.f, 0., 0.f, 1.f });
-	m_Renderer.AddLine({ -10, 0, 0 }, { 10, 10, 0 }, { 0.f, 1.f, 0.f, 1.f });
-	m_Renderer.AddLine({ 10, 10, 0 }, { -10, 10, 0 }, { 1.f, 0.f, 1.f, 1.f }); 
+	//// test drawing
+	//m_Renderer.AddCube({ -10, 0, 0 }, { 0.5f, 0.5f, 0.5f }, { 1.f, 0., 0.f, 1.f });
+	//m_Renderer.AddLine({ -10, 0, 0 }, { 10, 10, 0 }, { 0.f, 1.f, 0.f, 1.f });
+	//m_Renderer.AddLine({ 10, 10, 0 }, { -10, 10, 0 }, { 1.f, 0.f, 1.f, 1.f }); 
 
 	// Prepare and bind the Framebuffer to be rendered on
 	m_Fbo.PrepForDraw();
