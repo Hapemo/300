@@ -548,10 +548,18 @@ void Hierarchy::update() {
         if (ImGui::Selectable("Delete")) {
 
 
-            systemManager->mGameStateSystem->
-                mCurrentGameState.RemoveScene(systemManager->mGameStateSystem->mCurrentGameState.mScenes[RselectedScene].mName);
-            
-             selectionOn = false;
+             
+            selectionOn = false;
+
+             if (systemManager->mGameStateSystem->mCurrentGameState.mScenes[RselectedScene].mEntities.size() > 0) {
+
+                 for (int i{ 0 }; i < systemManager->mGameStateSystem->mCurrentGameState.mScenes[RselectedScene].mEntities.size(); i++) {
+                     systemManager->mGameStateSystem->mCurrentGameState.mScenes[RselectedScene].mEntities.clear();
+                 }
+             }
+
+             systemManager->mGameStateSystem->
+                 mCurrentGameState.RemoveScene(systemManager->mGameStateSystem->mCurrentGameState.mScenes[RselectedScene].mName);
              //Entity ent(Hierarchy::selectedId);
             // systemManager->ecs->DeleteEntity(Hierarchy::selectedId);
         }
