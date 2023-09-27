@@ -68,21 +68,21 @@ void Performance::update()
         for (it = EnginePerformance::systemT.begin(); it != EnginePerformance::systemT.end(); ++it)
         {
             if (it->first == "Graphics")
-                graphicsValues[sysCount] = it->second;
+                graphicsValues[sysCount] = static_cast<float>(it->second);
             else if (it->first == "Physics")
-                physicsValues[sysCount] = it->second;
+                physicsValues[sysCount] = static_cast<float>(it->second);
             else if (it->first == "Scripting")
-                scriptingValues[sysCount] = it->second;
+                scriptingValues[sysCount] = static_cast<float>(it->second);
             else if (it->first == "Resource")
-                resourceValues[sysCount] = it->second;
+                resourceValues[sysCount] = static_cast<float>(it->second);
             else if (it->first == "GameState")
-                gameStateValues[sysCount] = it->second;
+                gameStateValues[sysCount] = static_cast<float>(it->second);
             else if (it->first == "Audio")
-                audioValues[sysCount] = it->second;
+                audioValues[sysCount] = static_cast<float>(it->second);
             else if (it->first == "Logger")
-                loggerValues[sysCount] = it->second;
+                loggerValues[sysCount] = static_cast<float>(it->second);
             else if (it->first == "Editor")
-                editorValues[sysCount] = it->second;
+                editorValues[sysCount] = static_cast<float>(it->second);
         }
 
         gDisplayTemp = Performance::graphicsValues[sysCount];
@@ -104,10 +104,10 @@ void Performance::update()
         char graphicsOverlay[32];
         char physicsOverlay[32];
         char scriptingOverlay[32];
-        char resourceOverlay[32];
-        char gameStateOverlay[32];
+        //char resourceOverlay[32];
+        //char gameStateOverlay[32];
         char audioOverlay[32];
-        char loggerOverlay[32];
+        //char loggerOverlay[32];
         char editorOverlay[32];
         //char audioOverlay[32];
         //Print and display total FPS

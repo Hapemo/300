@@ -18,10 +18,12 @@ function Update()
     end
     generalComponent = entity:GetGeneralComponent()
     transformComponent = entity:GetTransformComponent()
+    -- Change entity name to enemy
     generalComponent.name = "Enemy"
 
+    -- Make character move x-axis
     if Input.CheckKey(State.PRESS, Key.KEY_SPACE) then
-        transformComponent.mScale.x = transformComponent.mScale.x + 50
+        transformComponent.mTranslate.x = transformComponent.mTranslate.x + 30
     end
 
     -- for i = 0, #generalEntities do
