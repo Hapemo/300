@@ -3,6 +3,7 @@
 #include "../../_ENGINE/include/Physics/PhysicsSystem.h"
 #include "Input/Input.h"
 #include "ECS/ECS_Systems.h"
+#include "ECS/ECS_Components.h"
 
 void LuaComponentContainer()
 {
@@ -25,12 +26,12 @@ void LuaECS()
     systemManager->mScriptingSystem->luaState.new_usertype<ECS>(
         "ecs", sol::constructors<>(),
         "NewEntity", &ECS::NewEntity,
-        "DeleteEntity", &ECS::DeleteEntity,
-        "GetEntitiesWithGeneral", &ECS::GetEntitiesWith<General>,
-        "GetEntitiesWithTransform", &ECS::GetEntitiesWith<Transform>,
-        "GetEntitiesWithRigidBody", &ECS::GetEntitiesWith<RigidBody>,
-        "GetEntitiesWithBoxCollider", &ECS::GetEntitiesWith<BoxCollider>,
-        "GetEntitiesWithScripts", &ECS::GetEntitiesWith<Scripts>
+        "DeleteEntity", &ECS::DeleteEntity
+        //"GetEntitiesWithGeneral", &ECS::GetEntitiesWith<General>,
+        //"GetEntitiesWithTransform", &ECS::GetEntitiesWith<Transform>,
+        //"GetEntitiesWithRigidBody", &ECS::GetEntitiesWith<RigidBody>,
+        //"GetEntitiesWithBoxCollider", &ECS::GetEntitiesWith<BoxCollider>,
+        //"GetEntitiesWithScripts", &ECS::GetEntitiesWith<Scripts>
         );
 }
 
@@ -68,7 +69,7 @@ void LuaGeneral()
     systemManager->mScriptingSystem->luaState.new_usertype<General>(
         "General", sol::constructors<>(),
         "name", &General::name,
-        "tag", &General::tag,
+        "tagid", &General::tagid,
         "subtag", &General::subtag,
         "isActive", &General::isActive
         );

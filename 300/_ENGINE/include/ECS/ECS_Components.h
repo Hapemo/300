@@ -8,16 +8,18 @@
 #include "Audio/AudioType.h"
 #include <Animator.hpp>
 #include <Camera.hpp>
+#include "EnumStrings.h"
 
 //#include "rttr/registration.h"
+
+DECLARE_ENUMSTRING(enum_tag, PLAYER, ENEMY, BULLET, STATIC, BUILDING)
 
 struct General
 {
 	std::string name;
 	/*TAG tag;*/
-
-	std::string tag[5] = {"PLAYER","ENEMY","BULLET","STATIC","BUILDING"};
-	int tagid {0};
+	//enum_tag::enum_tag tag;
+	enum_tag::enum_tag tagid;
 	SUBTAG subtag;
 	bool isActive;
 	bool isPaused;
@@ -26,7 +28,7 @@ struct General
 	//: name(""), tag(TAG::UNKNOWN), subtag(SUBTAG::ACTIVE), isActive(true) 
 //	{};
 
-	void								Inspect();
+	void Inspect();
 
 	//RTTR_ENABLE()
 };

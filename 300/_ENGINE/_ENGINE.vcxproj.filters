@@ -45,5 +45,6 @@
     <ClInclude Include="include\Object\ObjectFactory.h" />
     <ClInclude Include="include\Debug\EnginePerformance.h" />
     <ClInclude Include="include\Physics\Accumulator.h" />
+    <ClInclude Include="include\ECS\EnumStrings.h" />
   </ItemGroup>
 </Project>

@@ -237,11 +237,11 @@ void General::Inspect() {
 	ImGui::Text("Tag");
 	ImGui::SameLine();
 
-	if (ImGui::BeginCombo("##Tag", tag[tagid].c_str())) {
+	if (ImGui::BeginCombo("##Tag", enum_tag::ToString(tagid))) {
 
-		for (int i = 0; i < 5; i++) {
-			if (ImGui::Selectable(tag[i].c_str())) {
-				tagid = i;
+		for (int i = 0; i < enum_tag::COUNT; i++) {
+			if (ImGui::Selectable(enum_tag::ToString(tagid))) {
+				tagid = static_cast<enum_tag::enum_tag>(i);
 			}
 		}
 		ImGui::EndCombo();

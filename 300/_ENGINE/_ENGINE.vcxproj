@@ -156,6 +156,7 @@
     <ClInclude Include="include\ECS\ECS.h" />
     <ClInclude Include="include\ECS\ECS_Components.h" />
     <ClInclude Include="include\ECS\ECS_Systems.h" />
+    <ClInclude Include="include\ECS\EnumStrings.h" />
     <ClInclude Include="include\ECS\Prefab.h" />
     <ClInclude Include="include\ECS\Tags.h" />
     <ClInclude Include="include\GameState\GameState.h" />

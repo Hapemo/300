@@ -35,7 +35,7 @@ struct Entity
 	const Component& GetComponent() const;
 
 	template <typename Component, typename OtherComponent, typename ...Components>
-	auto GetComponent();
+	auto GetComponents();
 
 	template <typename Component>
 	bool HasComponent() const;
@@ -190,7 +190,7 @@ const Component& Entity::GetComponent() const
 }
 
 template <typename Component, typename OtherComponent, typename ...Components>
-auto Entity::GetComponent()
+auto Entity::GetComponents()
 {
 //#ifdef _DEBUG
 //	assert(static_cast<std::uint32_t>(this->id) != 0);
