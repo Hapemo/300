@@ -38,6 +38,8 @@ Returns main window for docking
 #include "EditorLogger.h"
 #include "PrefabWindow.h"
 #include "PrefabWindow.h"
+#include "GameScene.h"
+#include "TabWindow.h"
 //bool Editor::show_Inspector;
 //int Editor::entity {}; // static var for selected entity ID
 //bool Editor::Entity_Selected; // static var for Inspector to show
@@ -62,8 +64,9 @@ void Editor::UIinit(GLFWwindow* window)
     }
 
     style.FrameBorderSize = 0.f;
+    style.FrameRounding = 12.f;
+    style.TabRounding = 4.f;
     style.TabBorderSize = 1.5f;
-    style.TabRounding = 0.f;
     style.ItemSpacing = ImVec2( 4.f,4.f);
     style.WindowBorderSize = 0.f;
 
@@ -135,16 +138,17 @@ void Editor::UIinit(GLFWwindow* window)
     // ----------------------------------------------------------------------------- // Add EditorWindows
     
     mMenuwindow = new MenuPanel;
-
+    mMenuwindow2 = new MenuPanel;
     mWindowlist["Objects"] = new Hierarchy;
     //mWindowlist["Menu"] = new MenuPanel;
     mWindowlist["Inspect"] = new Inspect;
     mWindowlist["Performance"] = new Performance;
+    mWindowlist["Settings"] = new TabWindow;
     mWindowlist["Editscene"] = new SceneWindow;
     mWindowlist["Contentbrowser"] = new ContentBrowser;
     mWindowlist["Logger"] = new EditorLogger;
-
     mWindowlist["PrefabScene"] = new PrefabWindow;
+    mWindowlist["GameScene"] = new GameScene;
     //std::cout<< mWindowlist.size() << "test\n";
 
     //windowlist["ContentBrowser"] = new ContentBrowser;
@@ -194,6 +198,7 @@ void Editor::UIupdate(GLFWwindow* window) {
     ImGui::NewFrame();
     ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
     ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
+   // ImGui::PushStyleVar(imguistylevar_windowsize, ImVec2(0.0f, 0.0f));
     ImGui::Begin("Editor Window",0 , 
          ImGuiWindowFlags_NoBringToFrontOnFocus 
         | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_MenuBar 
@@ -217,7 +222,7 @@ void Editor::UIupdate(GLFWwindow* window) {
    
 
     mMenuwindow->update();
-   
+        
     ImGui::PopID();
 
     ImGui::End();
@@ -251,10 +256,11 @@ void Editor::UIupdate(GLFWwindow* window) {
         else {
 
             ImGui::Begin(windows.first.c_str(), 0, windows.second->mWinFlag);
+
+            windows.second->update();
             if (windows.first == "Editscene") {
                 (static_cast<SceneWindow*>(windows.second))->RenderGuizmo();
             }
-            windows.second->update();
             ImGui::End();
         }
 

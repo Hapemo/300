@@ -17,8 +17,8 @@ namespace _GEOM
 		AssimpNodeData									m_RootNode;
 
 		int												m_BoneCounter = 0;
-		float											m_Duration;
-		float											m_TicksPerSecond;
+		float											m_Duration{};
+		float											m_TicksPerSecond{};
 
 		Animation() = default;
 		Bone* FindBone(const std::string& name);

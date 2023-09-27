@@ -184,7 +184,7 @@ bool GFX::Shader::CompileErrors(unsigned int shader, const char* shaderType) con
 		{
 			std::cout << "SHADER_LINKING_ERROR for: " << shaderType << '\n' << std::endl;
 			char infoLog[1024];
-			glGetShaderInfoLog(shader, 1024, NULL, infoLog);
+			glGetProgramInfoLog(shader, 1024, NULL, infoLog);
 			std::cout << infoLog << "\n";
 			return false;
 		}

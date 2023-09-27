@@ -35,8 +35,7 @@ namespace GFX
 		void Unbind()	{ glBindFramebuffer(GL_FRAMEBUFFER, 0); }
 
 		// -- Getter --
-		unsigned int GetGameAttachment()		{ return mGameAttachment; }
-		unsigned int GetEditorAttachment()		{ return mEditorAttachment; }
+		unsigned int GetColorAttachment()		{ return mColorAttachment; }
 		unsigned int GetEntityIDAttachment()	{ return mEntityIDAttachment; }
 		int GetWidth()							{ return mWidth; }
 		int GetHeight()							{ return mHeight; }
@@ -48,16 +47,14 @@ namespace GFX
 		{
 			glDeleteFramebuffers(1, &mID);
 			glDeleteRenderbuffers(1, &mRboID);
-			glDeleteTextures(1, &mGameAttachment);
-			glDeleteTextures(1, &mEditorAttachment);
+			glDeleteTextures(1, &mColorAttachment);
 			glDeleteTextures(1, &mEntityIDAttachment);
 		}
 
 	private:
 		unsigned int mID{};						// Framebuffer Object ID
 		unsigned int mRboID{};					// Renderbuffer Object ID
-		unsigned int mGameAttachment{};			// Color Attachment of game scene
-		unsigned int mEditorAttachment{};		// Color Attachment of Editor scene
+		unsigned int mColorAttachment{};		// Color Attachment of scene
 		unsigned int mEntityIDAttachment{};		// Attachment that contains Entity ID of each corresponding pixel
 
 		int mWidth{};

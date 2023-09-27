@@ -191,11 +191,33 @@ public:
 		return mAJ;
 	}
 
+	void SetCAMJSON(const Camera camj)
+	{
+		mCamJ = camj;
+		mcam_t = true;
+	}
+
+	const Camera GetCAMJSON() const
+	{
+		return mCamJ;
+	}
+
+	void SetPLJSON(const PointLight plj)
+	{
+		mPLJ = plj;
+		mpl_t = true;
+	}
+
+	const PointLight GetPLJSON() const
+	{
+		return mPLJ;
+	}
+
 	// trackers to disable serialization if component does not exist
 	bool mid_t = false, mg_t = false, mt_t = false, mmr_t = false,
 		mrb_t = false, mbc_t = false, msc_t = false,
 		mpc_t = false, ms_t = false, mp_t = false,
-		mc_t = false, ma_t = false;
+		mc_t = false, ma_t = false, mcam_t = false, mpl_t = false;
 
 private:
 	Entity mID;
@@ -210,6 +232,8 @@ private:
 	Parent mPJ;
 	Children mCJ;
 	Audio mAJ;
+	Camera mCamJ;
+	PointLight mPLJ;
 };
 
 class EntityListJSON : public BaseJSON

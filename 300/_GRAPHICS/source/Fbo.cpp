@@ -24,17 +24,8 @@ void GFX::FBO::Create(int width, int height, bool editorMode)
 	glBindFramebuffer(GL_FRAMEBUFFER, mID);
 
 	// Creating Game Attachment
-	glGenTextures(1, &mGameAttachment);
-	glBindTexture(GL_TEXTURE_2D, mGameAttachment);
-	// Specifying texture size
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, width, height, 0, GL_RGBA, GL_FLOAT, NULL);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glBindTexture(GL_TEXTURE_2D, 0);
-
-	// Creating Editor Attachment
-	glGenTextures(1, &mEditorAttachment);
-	glBindTexture(GL_TEXTURE_2D, mEditorAttachment);
+	glGenTextures(1, &mColorAttachment);
+	glBindTexture(GL_TEXTURE_2D, mColorAttachment);
 	// Specifying texture size
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, width, height, 0, GL_RGBA, GL_FLOAT, NULL);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -50,9 +41,8 @@ void GFX::FBO::Create(int width, int height, bool editorMode)
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 	// Attach all Attachments to currently bound framebuffer
-	glNamedFramebufferTexture(mID, GL_COLOR_ATTACHMENT0, mGameAttachment, 0);			// 0
-	glNamedFramebufferTexture(mID, GL_COLOR_ATTACHMENT1, mEditorAttachment, 0);			// 1
-	glNamedFramebufferTexture(mID, GL_COLOR_ATTACHMENT2, mEntityIDAttachment, 0);		// 2
+	glNamedFramebufferTexture(mID, GL_COLOR_ATTACHMENT0, mColorAttachment, 0);			// 0
+	glNamedFramebufferTexture(mID, GL_COLOR_ATTACHMENT1, mEntityIDAttachment, 0);		// 1
 
 	// Creating renderbuffer object for depth testing
 	glCreateRenderbuffers(1, &mRboID);
@@ -77,20 +67,19 @@ void GFX::FBO::PrepForDraw()
 	if (mEditorMode)	// Need to render to both color attachments and Entity ID attachment
 	{
 		// Clear Entity ID buffer
-		glDrawBuffer(GL_COLOR_ATTACHMENT2);
+		glDrawBuffer(GL_COLOR_ATTACHMENT1);
 		glClearColor(0.f, 0.f, 0.f, 0.f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		// Game attachment, Editor Attachment, Entity ID Attachment
 		// Clear Color attachments
-		GLuint attachments[2] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1 };
-		glDrawBuffers(2, attachments);
+		glDrawBuffer(GL_COLOR_ATTACHMENT0);
 		glClearColor(0.2f, 0.2f, 0.2f, 1.f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		// Set all attachments for output
-		GLuint allAttachments[3] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2 };
-		glDrawBuffers(3, allAttachments);
+		GLuint allAttachments[2] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1 };
+		glDrawBuffers(2, allAttachments);
 	}
 	// Renders to Game Attachment by default
 
@@ -125,15 +114,8 @@ void GFX::FBO::Resize(int width, int height)
 	mWidth = width;
 	mHeight = height;
 
-	// Bind Game Attachment to be resized
-	glBindTexture(GL_TEXTURE_2D, mGameAttachment);
-	// Specifying new attachment size
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, width, height, 0, GL_RGBA, GL_FLOAT, NULL);
-	// Unbind 
-	glBindTexture(GL_TEXTURE_2D, 0);
-
-	// Bind Editor Attachment to be resized
-	glBindTexture(GL_TEXTURE_2D, mEditorAttachment);
+	// Bind Color Attachment to be resized
+	glBindTexture(GL_TEXTURE_2D, mColorAttachment);
 	// Specifying new attachment size
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, width, height, 0, GL_RGBA, GL_FLOAT, NULL);
 	// Unbind 

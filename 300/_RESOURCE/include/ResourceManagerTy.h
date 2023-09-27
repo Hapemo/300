@@ -76,8 +76,10 @@ public:
 
 
     void MaterialInstance_Loader();
-    GFX::Texture* SetupMaterialInstance(std::string filepath, unsigned);
+    void MaterialEditor_Loader();
+    GFX::Texture* SetupMaterialInstance(std::string filepath);
     GFX::Texture* getMaterialInstance(unsigned);
+    GFX::Texture* SetupEditorlInstance(std::string filepath);
 
     instance_infos& AllocRscInfo(void);
     void ReleaseRscInfo(instance_infos& RscInfo);
@@ -86,9 +88,14 @@ public:
     constexpr static int  MAX_RESOURCE = 2400;
     const std::string compiled_geom_path = "../assets/compiled_geom/";
     const std::string compressed_texture_path = "../assets/Compressed/";
+    const std::string compressed_Editor_path = "../_EDITOR/Assets/Textures_Compressed/";
+
+    std::unordered_map<std::string, GFX::Texture*> m_EditorTextures;
 
     int mResouceCnt;
 private:
+
+
     instance_infos*                                         m_pInfoBufferEmptyHead{ nullptr };
     std::unordered_map<std::uint64_t, instance_infos*>      m_ResourceInstance;
     std::array<instance_infos, MAX_RESOURCE>                m_Infobuffer;

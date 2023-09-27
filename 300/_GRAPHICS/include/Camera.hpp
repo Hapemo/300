@@ -27,7 +27,7 @@ namespace GFX
         vec3 direction();
         vec2 cursorPosition();
         mat4 viewProj();
-        mat4   Proj();
+        mat4 Proj();
 
 
         // -- Setter --
@@ -44,16 +44,14 @@ namespace GFX
         mat4 mView;
 
 
-    private:
-
         mat4 mViewProjection;
-        vec3 mPosition;
-        vec3 mTarget;
+        vec3 mPosition; //save
+        vec3 mTarget;   //save
         vec2 mCursorPos;
-        ivec2 mSize;
+        ivec2 mSize;    //save
         float mAspectRatio;
-        float mNear;
-        float mFar;
+        float mNear;    //save
+        float mFar;     //save
     };
 }
 

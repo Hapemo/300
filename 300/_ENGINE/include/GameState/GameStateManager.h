@@ -160,6 +160,7 @@ public:
 	- Entity to delete
 	*******************************************************************************/
 	void DeleteEntityFromScene(int _sceneID, Entity _e);
+	void AddScene(std::string const& _name);
 
 	void EditorRestartGameState() { mGSMState = E_GSMSTATE::CHANGING; }
 
@@ -169,6 +170,7 @@ public:
 
 	static bool GameStateJsonExist(std::string const& _name);
 	static bool SceneJsonExist(std::string const& _name);
+	bool SceneExists(std::string const& _name);
 
 	Scene mErrorScene;
 	E_GSMSTATE mGSMState;

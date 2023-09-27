@@ -172,12 +172,14 @@ copy "$(SolutionDir)lib\FMOD\core\lib\fmod.dll" "$(TargetDir)fmod.dll" /Y</Comma
     <ClCompile Include="source\Editor\ContentBrower.cpp" />
     <ClCompile Include="source\Editor\Editor.cpp" />
     <ClCompile Include="source\Editor\EditorLogger.cpp" />
+    <ClCompile Include="source\Editor\GameScene.cpp" />
     <ClCompile Include="source\Editor\Hierarchy.cpp" />
     <ClCompile Include="source\Editor\Inspect.cpp" />
     <ClCompile Include="source\Editor\MenuPanel.cpp" />
     <ClCompile Include="source\Editor\Performance.cpp" />
     <ClCompile Include="source\Editor\PrefabWindow.cpp" />
     <ClCompile Include="source\Editor\SceneWindow.cpp" />
+    <ClCompile Include="source\Editor\TabWindow.cpp" />
     <ClCompile Include="source\Imgui\imgui.cpp" />
     <ClCompile Include="source\Imgui\ImGuizmo.cpp" />
     <ClCompile Include="source\Imgui\imgui_demo.cpp" />
@@ -194,6 +196,7 @@ copy "$(SolutionDir)lib\FMOD\core\lib\fmod.dll" "$(TargetDir)fmod.dll" /Y</Comma
     <ClInclude Include="include\Editor\ContentBrower.h" />
     <ClInclude Include="include\Editor\Editor.h" />
     <ClInclude Include="include\Editor\EditorWindow.h" />
+    <ClInclude Include="include\Editor\GameScene.h" />
     <ClInclude Include="include\Editor\Hierarchy.h" />
     <ClInclude Include="include\Editor\Inspect.h" />
     <ClInclude Include="include\Editor\EditorLogger.h" />
@@ -201,6 +204,7 @@ copy "$(SolutionDir)lib\FMOD\core\lib\fmod.dll" "$(TargetDir)fmod.dll" /Y</Comma
     <ClInclude Include="include\Editor\Performance.h" />
     <ClInclude Include="include\Editor\PrefabWindow.h" />
     <ClInclude Include="include\Editor\SceneWindow.h" />
+    <ClInclude Include="include\Editor\TabWindow.h" />
     <ClInclude Include="source\Imgui\imconfig.h" />
     <ClInclude Include="source\Imgui\imgui.h" />
     <ClInclude Include="source\Imgui\ImGuizmo.h" />

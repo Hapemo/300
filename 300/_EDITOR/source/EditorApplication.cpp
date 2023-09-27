@@ -23,6 +23,8 @@ start up of window and game system, also runs their update functions.
 #include "SceneWindow.h"
 #include "Guid.h"
 #include "Physics/Accumulator.h"
+#include "ConfigManager.h"
+#include "GameState/GameStateManager.h"
 
 // Static variables
 GFX::DebugRenderer* EditorApplication::mRenderer;
@@ -47,6 +49,7 @@ void EditorApplication::StartUp()
     GFX::Window::InitializeSystem();
     mWindow = GFX::Window({ 1920, 1080 });
     mWindow.SetWindowTitle("Editor");
+    ConfigManager::Init("../assets/config.txt");
     systemManager = new SystemManager();
 
 
@@ -67,8 +70,6 @@ void EditorApplication::SystemInit()
 void EditorApplication::MainUpdate()
 {
 
-
-
     while (!glfwWindowShouldClose(mWindow.GetHandle())) 
     {
         FirstUpdate();
@@ -79,9 +80,11 @@ void EditorApplication::MainUpdate()
 
         // Graphics update
 
-        auto windowSize = static_cast<SceneWindow*>(mMaineditor.mWindowlist["Editscene"])->winSize;
-            
-        systemManager->mGraphicsSystem->SetCameraSize(CAMERA_TYPE::CAMERA_TYPE_EDITOR, windowSize);
+        auto editorwindowsize = static_cast<SceneWindow*>(mMaineditor.mWindowlist["Editscene"])->winSize;
+        systemManager->mGraphicsSystem->SetCameraSize(CAMERA_TYPE::CAMERA_TYPE_EDITOR, editorwindowsize);
+
+        auto gamewindowsize = static_cast<SceneWindow*>(mMaineditor.mWindowlist["GameScene"])->winSize;
+        systemManager->mGraphicsSystem->SetCameraSize(CAMERA_TYPE::CAMERA_TYPE_GAME, gamewindowsize);
         mMaineditor.UIupdate(mWindow.GetHandle());
 
         mMaineditor.UIdraw(mWindow.GetHandle());
@@ -98,7 +101,7 @@ void EditorApplication::MainUpdate()
 
 void EditorApplication::FirstUpdate()
 {
-    FPSManager::Update();
+    FPSManager::Update(0.01f);
     Accumulator::Update(FPSManager::dt);
     mWindow.PollEvents();
 }

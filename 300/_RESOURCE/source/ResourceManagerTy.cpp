@@ -21,6 +21,7 @@ void ResourceTy::Init()
 
 	mesh_Loader();
 	MaterialInstance_Loader();
+	MaterialEditor_Loader();
 	std::cout << "Initializing Resource Manager.\n";
 }
 
@@ -33,7 +34,9 @@ void ResourceTy::Exit() {
 			delete  reinterpret_cast<GFX::Texture*>(data.second->m_pData);
 	}
 
-
+	for (auto& data : m_EditorTextures) {
+		delete  reinterpret_cast<GFX::Texture*>(data.second);
+	}
 }
 
 void ResourceTy::mesh_Loader()
@@ -146,8 +149,8 @@ void ResourceTy::ReleaseRscInfo(instance_infos& RscInfo)
 
 void ResourceTy::MaterialInstance_Loader() {
 	// hardcode material instance path for now 
-	std::vector<std::string> materialinstancepaths;
-	materialinstancepaths.emplace_back("../assets/Compressed/Skull.ctexture");
+	//std::vector<std::string> materialinstancepaths;
+	//materialinstancepaths.emplace_back("../assets/Compressed/Skull.ctexture");
 
 	std::filesystem::path folderpath = compressed_texture_path.c_str();
 
@@ -163,7 +166,7 @@ void ResourceTy::MaterialInstance_Loader() {
 		std::cout << " i neeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed texture " << filepath << " \n";
 
 		uid uids(materialinstancepath);
-		auto texPtr = SetupMaterialInstance(materialinstancepath, uids.id);
+		auto texPtr = SetupMaterialInstance(materialinstancepath);
 		++mResouceCnt;
 		instance_infos& tempInstance = AllocRscInfo();
 		tempInstance.m_Name = materialinstancepath;
@@ -174,7 +177,49 @@ void ResourceTy::MaterialInstance_Loader() {
 		m_ResourceInstance.emplace(uids.id, &tempInstance);
 	}
 }
-GFX::Texture* ResourceTy::SetupMaterialInstance(std::string filepath, unsigned) {
+
+void ResourceTy::MaterialEditor_Loader() {
+
+
+	std::filesystem::path folderpath = compressed_Editor_path.c_str();
+
+	// Reads through all the files in the folder, and loads them into the mesh
+	for (const auto& entry : std::filesystem::directory_iterator(folderpath))
+	{
+		std::cout << "============================================\n";
+		std::cout << "[NOTE]>> Loading Compressed Texture: \t" << entry.path().filename() << "\n";
+
+		std::string filepath = compressed_Editor_path + entry.path().filename().string();
+		std::string materialinstancepath = filepath;
+
+		std::string saved;
+		
+		saved = entry.path().filename().string().substr(0,entry.path().filename().string().find_last_of("."));
+		
+
+		auto texPtr = SetupEditorlInstance(materialinstancepath);
+		m_EditorTextures.emplace(saved, texPtr);
+
+
+
+
+	}
+}
+
+GFX::Texture* ResourceTy::SetupEditorlInstance(std::string filepath) {
+	GFX::Texture localMaterialInstance;
+	localMaterialInstance.Load(filepath.c_str());
+
+
+	auto Texret = std::make_unique<GFX::Texture>(localMaterialInstance);
+	return Texret.release();
+	//uid uids(filepath);
+	//MaterialInstanceData& temp = AllocRscInfo();
+	//temp.materialInstanceData = std::move(localMaterialInstance);
+	//mSceneMaterialInstances.emplace(std::make_pair(uid, &temp));
+}
+
+GFX::Texture* ResourceTy::SetupMaterialInstance(std::string filepath) {
 	GFX::Texture localMaterialInstance;
 	localMaterialInstance.Load(filepath.c_str());
 

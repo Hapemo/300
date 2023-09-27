@@ -25,6 +25,7 @@ to select current Entity and activates inspector
 #include "Hierarchy.h"
 #include "ScriptingSystem.h"
 #include "GameState/GameStateManager.h"
+#include "Misc.h"
 #include "imgui_stdlib.h"
 
 //#define DEBUG
@@ -41,6 +42,10 @@ void Hierarchy::init() {
 
 }
 //int Hierarchy::selectCnt{ -1 };
+
+// Helper function
+
+
 
 
 #ifdef DEBUG
@@ -272,6 +277,7 @@ void Hierarchy::update()
 
 void Hierarchy::update() {
     
+    copyPaste();
 
     ImGui::InputText(" ", &systemManager->mGameStateSystem->mCurrentGameState.mName);
     // ImGui::Text(systemManager->mGameStateSystem->mCurrentGameState.mName.c_str());
@@ -317,7 +323,7 @@ void Hierarchy::update() {
 
     ImGui::SameLine();
     if (ImGui::Button("Scene", ImVec2(50, 50))) {
-        systemManager->mGameStateSystem->mCurrentGameState.AddScene("NewScene"+ std::to_string(allScene.size()));
+        systemManager->mGameStateSystem->mCurrentGameState.AddScene();
 
     }
 
@@ -329,7 +335,7 @@ void Hierarchy::update() {
         if (i == selectedScene)
             selectflagscene |= ImGuiTreeNodeFlags_Selected;
 
-        if (ImGui::TreeNodeEx(allScene[i].mName.c_str(), selectflagscene| ImGuiTreeNodeFlags_DefaultOpen| ImGuiTreeNodeFlags_OpenOnDoubleClick))
+        if (ImGui::TreeNodeEx(allScene[i].mName.c_str(), selectflagscene | ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_OpenOnDoubleClick))
         {
 
             if (ImGui::IsItemClicked(ImGuiMouseButton_Left)) {  
@@ -465,12 +471,39 @@ void Hierarchy::update() {
 
             ImGui::TreePop();
         }
+
+
     }
 
 
-
+    ImGui::Dummy(ImGui::GetContentRegionAvail());
     
 
+    if (ImGui::BeginDragDropTarget()) {
+
+        if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_SCN")) {
+            auto data = (const char*)payload->Data;
+            std::string name = Misc::GetFileName(std::string(data));
+            //int counter = 0;
+            //
+            //// if the scene exists
+            //if (systemManager->mGameStateSystem->SceneExists(name)) {
+            //    ++counter; // increment the counter
+            //    // Increment file number to the biggest one
+            //    for (Scene& scene : systemManager->mGameStateSystem->mCurrentGameState.mScenes) {
+            //        // if the scene name exists AND 
+            //        if (systemManager->mGameStateSystem->SceneExists(name + std::to_string(counter)))
+            //            ++counter;
+            //    }
+            //}
+            //if (!systemManager->mGameStateSystem->SceneExists(name + std::to_string(counter)))
+            //        systemManager->mGameStateSystem->mCurrentGameState.AddScene(name + std::to_string(counter));
+
+            //counter = 0;
+            systemManager->mGameStateSystem->AddScene(name);
+        }
+        ImGui::EndDragDropTarget();
+    }
 
 
 
@@ -545,13 +578,25 @@ void Hierarchy::update() {
 
     if (ImGui::BeginPopup("Edit_scene"))
     {
+        if (ImGui::Selectable("Save"))
+        {
+            systemManager->mGameStateSystem->mCurrentGameState.mScenes[RselectedScene].Save();
+        }
         if (ImGui::Selectable("Delete")) {
 
 
-            systemManager->mGameStateSystem->
-                mCurrentGameState.RemoveScene(systemManager->mGameStateSystem->mCurrentGameState.mScenes[RselectedScene].mName);
-            
-             selectionOn = false;
+             
+            selectionOn = false;
+
+             if (systemManager->mGameStateSystem->mCurrentGameState.mScenes[RselectedScene].mEntities.size() > 0) {
+
+                 for (int i{ 0 }; i < systemManager->mGameStateSystem->mCurrentGameState.mScenes[RselectedScene].mEntities.size(); i++) {
+                     systemManager->mGameStateSystem->mCurrentGameState.mScenes[RselectedScene].mEntities.clear();
+                 }
+             }
+
+             systemManager->mGameStateSystem->
+                 mCurrentGameState.RemoveScene(systemManager->mGameStateSystem->mCurrentGameState.mScenes[RselectedScene].mName);
              //Entity ent(Hierarchy::selectedId);
             // systemManager->ecs->DeleteEntity(Hierarchy::selectedId);
         }
@@ -565,4 +610,18 @@ void Hierarchy::update() {
 
 }
 
+
+void Hierarchy::copyPaste() {
+    if (Input::CheckKey(E_STATE::HOLD, E_KEY::LEFT_CONTROL))
+    {
+        if (Input::CheckKey(E_STATE::PRESS, E_KEY::C))
+        {
+            systemManager->ecs->CopyEntity(Hierarchy::selectedId);
+        }
+        else if (Input::CheckKey(E_STATE::PRESS, E_KEY::V))
+        {
+            Hierarchy::selectedId = systemManager->ecs->PasteEntity(Hierarchy::selectedScene).id;
+        }
+    }
+}
 #endif // 1
