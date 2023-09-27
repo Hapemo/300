@@ -18,8 +18,8 @@ Contains main loop for the logic of MenuPanel.
 #include "Editor.h"
 #include "MenuPanel.h"
 #include "SceneWindow.h"
-#include "ECS.h"
-#include "ECS_Systems.h"
+#include "ECS/ECS.h"
+#include "ECS/ECS_Systems.h"
 #include "GameState/GameStateManager.h"
 void MenuPanel::init() {
     // empty

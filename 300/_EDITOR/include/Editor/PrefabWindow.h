@@ -1,6 +1,6 @@
 #pragma once
 #include "EditorWindow.h"
-#include "ECS.h"
+#include "ECS/ECS.h"
 
 
 class PrefabWindow : public EditorWindow
