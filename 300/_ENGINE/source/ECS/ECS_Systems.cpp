@@ -76,6 +76,8 @@ void SystemManager::Update(float dt)
 	if (!mIsPlay)
 		return;
 
+	mInputActionSystem.get()->Update();
+
 	EnginePerformance::StartTrack("Physics");
 	mPhysicsSystem.get()->Update(dt);
 	EnginePerformance::EndTrack("Physics");
