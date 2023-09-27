@@ -145,7 +145,7 @@ Component& Entity::AddComponent()
 //	if (static_cast<std::uint32_t>(this->id) == 0)
 //		return Component();
 //#endif
-	PASSERT(static_cast<std::uint32_t>(this->id) != 0, "Tried to add component from null entity! e.id = 0");
+	PASSERT((static_cast<std::uint32_t>(this->id) != 0, "Tried to add component from null entity! e.id = 0"));
 	return systemManager->ecs->registry.emplace_or_replace<Component>(id, Component());
 }
 
@@ -158,7 +158,7 @@ Component& Entity::AddComponent(const Component& component)
 //	if (static_cast<std::uint32_t>(this->id) == 0)
 //		return Component();
 //#endif
-	PASSERT(static_cast<std::uint32_t>(this->id) != 0, "Tried to add component from null entity! e.id = 0");
+	PASSERT((static_cast<std::uint32_t>(this->id) != 0, "Tried to add component from null entity! e.id = 0"));
 	return systemManager->ecs->registry.emplace_or_replace<Component>(id, component);
 }
 
@@ -171,8 +171,8 @@ Component& Entity::GetComponent()
 //	if (static_cast<std::uint32_t>(this->id) == 0)
 //		return Component();
 //#endif
-	PASSERT(static_cast<std::uint32_t>(this->id) != 0, "Tried to get component from null entity! e.id = 0");
-	PASSERT(this->HasComponent<Component>(), "no such component in entity");
+	PASSERT((static_cast<std::uint32_t>(this->id) != 0, "Tried to get component from null entity! e.id = 0"));
+	PASSERT((this->HasComponent<Component>(), "no such component in entity"));
 	return systemManager->ecs->registry.get_or_emplace<Component>(id, Component());
 }
 
@@ -185,7 +185,7 @@ const Component& Entity::GetComponent() const
 //	if (static_cast<std::uint32_t>(this->id) == 0)
 //		return Component();
 //#endif
-	PASSERT(static_cast<std::uint32_t>(this->id) != 0, "Tried to get component from null entity! e.id = 0");
+	PASSERT((static_cast<std::uint32_t>(this->id) != 0, "Tried to get component from null entity! e.id = 0"));
 	return systemManager->ecs->registry.get_or_emplace<Component>(id, Component());
 }
 
@@ -198,7 +198,7 @@ auto Entity::GetComponents()
 //	if (static_cast<std::uint32_t>(this->id) == 0)
 //		return auto();
 //#endif
-	PASSERT(static_cast<std::uint32_t>(this->id) != 0, "Tried to get component from null entity! e.id = 0");
+	PASSERT((static_cast<std::uint32_t>(this->id) != 0, "Tried to get component from null entity! e.id = 0"));
 	return systemManager->ecs->registry.get<Component, OtherComponent, Components...>(id);
 }
 
