@@ -32,7 +32,7 @@ void GraphicsSystem::Init()
 
 	UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_ALL, 0.f);
 
-#if 1
+#if 0
 #pragma region create entity 1
 	//Create a new entity here, for testing purposes
 	Entity newentity = systemManager->ecs->NewEntity();			// creating a new entity
