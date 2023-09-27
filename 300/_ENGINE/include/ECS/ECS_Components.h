@@ -21,6 +21,7 @@ struct General
 	: name(""), tag(TAG::UNKNOWN), subtag(SUBTAG::ACTIVE), isActive(true) 
 	{};
 
+	void Inspect();
 	//RTTR_ENABLE()
 };
 
