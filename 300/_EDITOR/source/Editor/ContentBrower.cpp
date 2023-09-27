@@ -21,6 +21,7 @@ Contains main loop for the logic of contentbrowsing + Drag and drop functionalit
 
 #include "ContentBrower.h"
 #include "PrefabWindow.h"
+#include "ResourceManagerTy.h"
 #include <stdlib.h>
 #include <iostream>
 #include <string>
@@ -57,7 +58,7 @@ void ContentBrowser::update()
 	}
 
 	static float padding{ 10 };
-	static float buttonsize{ 200 };
+	static float buttonsize{ 50 };
 	float cellsize = buttonsize + padding;
 
 	float panelwidth = ImGui::GetContentRegionAvail().x;
@@ -66,6 +67,8 @@ void ContentBrowser::update()
 		columncount = 1;
 	}
 	ImGui::Columns(columncount, 0, false);
+
+	auto& resourceDatas = systemManager->mResourceTySystem;
 
 	int idd{ 0 };
 	// looping through filesystem
@@ -77,6 +80,8 @@ void ContentBrowser::update()
 
 		if (directory.is_directory()) {
 
+			ImGui::SetCursorPosY(buttonsize+25);
+
 			std::string file_button = filename_string.c_str();
 
 			//ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
@@ -84,41 +89,68 @@ void ContentBrowser::update()
 			//ImGui::ImageButton((ImTextureID)(intptr_t)Texture2D::editor_Storage[file_button], { buttonsize, buttonsize });
 			//ImGui::PopID();
 			//ImGui::PopStyleColor();
-			ImGui::Button(file_button.c_str(), { buttonsize, buttonsize }); // draw button of file
+			//ImGui::Button(file_button.c_str(), { buttonsize, buttonsize }); // draw button of file
+
+			
+
+
+			ImGui::ImageButton((ImTextureID)(intptr_t)resourceDatas->m_EditorTextures["Folder"]->ID(), {buttonsize, buttonsize});
+	
 
 			if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) {
-				if (directory.is_directory())
+				//if (directory.is_directory())
 					current_Directory /= path.filename();
 			}
+			ImGui::Text(filename_string.c_str());
 			//ImGui::Text(filename_string.c_str());
-			
+			ImGui::NextColumn();
 		}
 		else{
 
-			ImGui::Button(filename_string.c_str(), { buttonsize, buttonsize }); // draw button of file
+			//ImGui::Button(filename_string.c_str(), { buttonsize, buttonsize }); // draw button of file
 
+			if (check_extension(path.string(), ".prefab")) {
 
+				ImGui::ImageButton((ImTextureID)(intptr_t)resourceDatas->m_EditorTextures["3DFileIcon"]->ID(), { buttonsize, buttonsize });
+				if (ImGui::BeginDragDropSource()) {
 
+					std::string path_str = path.string();
 
+					//format the string from \\ to /.
+					//format_string(path_str);
+					int posstart = path_str.find_last_of("\\");
+					int posend = path_str.find_last_of(".");
 
-			if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) {
-				if (check_extension(path.string(), ".prefab")) {
+					std::string newpath = path_str.substr(posstart + 1, posend - (posstart + 1));
+
+					const char* source_path = newpath.c_str();
+					ImGui::SetDragDropPayload("FILE_PREFAB", source_path, strlen(source_path) * sizeof(wchar_t), ImGuiCond_Once);
+
+					ImGui::EndDragDropSource();
+				}
+
+				if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) {
 
 
 					int posstart = filename_string.find_last_of("\\");
 					int posend = filename_string.find_last_of(".");
-					std::string newpath = filename_string.substr(posstart + 1,posend);
+					std::string newpath = filename_string.substr(posstart + 1, posend);
 
 					Entity toEdit = systemManager->ecs->StartEditPrefab(newpath);
 					PrefabWindow::prefabObj = toEdit.id;
+
+
+
+					//std::cout << path.string() << "\n";
 				}
+				ImGui::Text(filename_string.c_str());
+				ImGui::NextColumn();
 
-
-				//std::cout << path.string() << "\n";
 			}
 
-			if (check_extension(path.string(), ".lua")) {
+			else if (check_extension(path.string(), ".lua")) {
 
+				ImGui::ImageButton((ImTextureID)(intptr_t)resourceDatas->m_EditorTextures["UnknownIcon"]->ID(), { buttonsize, buttonsize });
 				if (ImGui::BeginDragDropSource()) {
 
 					std::string path_str = path.string();
@@ -131,10 +163,14 @@ void ContentBrowser::update()
 
 					ImGui::EndDragDropSource();
 				}
+				ImGui::Text(filename_string.c_str());
+				ImGui::NextColumn();
+
 			}
 
 
-			if (check_extension(path.string(), ".geom")) {
+			else if (check_extension(path.string(), ".geom")) {
+				ImGui::ImageButton((ImTextureID)(intptr_t)resourceDatas->m_EditorTextures["PhysicsMaterial"]->ID(), { buttonsize, buttonsize });
 
 				if (ImGui::BeginDragDropSource()) {
 
@@ -147,8 +183,12 @@ void ContentBrowser::update()
 
 					ImGui::EndDragDropSource();
 				}
+				ImGui::Text(filename_string.c_str());
+				ImGui::NextColumn();
+
 			}
-			if (check_extension(path.string(), ".ctexture")) {
+			else if (check_extension(path.string(), ".ctexture")) {
+				ImGui::ImageButton((ImTextureID)(intptr_t)resourceDatas->m_EditorTextures["ImageIcon"]->ID(), { buttonsize, buttonsize });
 
 				if (ImGui::BeginDragDropSource()) {
 
@@ -161,28 +201,15 @@ void ContentBrowser::update()
 
 					ImGui::EndDragDropSource();
 				}
+				ImGui::Text(filename_string.c_str());
+				ImGui::NextColumn();
+
 			}
 
-			if (check_extension(path.string(), ".prefab")) {
+			//if (check_extension(path.string(), ".prefab")) {
 	
-
-				if (ImGui::BeginDragDropSource()) {
-
-					std::string path_str = path.string();
-
-					//format the string from \\ to /.
-					//format_string(path_str);
-					int posstart = path_str.find_last_of("\\");
-					int posend = path_str.find_last_of(".");
-
-					std::string newpath = path_str.substr(posstart + 1, posend - (posstart + 1));
-					
-					const char* source_path = newpath.c_str();
-					ImGui::SetDragDropPayload("FILE_PREFAB", source_path, strlen(source_path) * sizeof(wchar_t), ImGuiCond_Once);
-
-					ImGui::EndDragDropSource();
-				}
-			}
+			//	
+			//}
 
 			if (check_extension(path.string(), ".scn")) {
 
@@ -207,7 +234,7 @@ void ContentBrowser::update()
 
 		}
 
-		ImGui::NextColumn();
+		
 	}
 	ImGui::Columns(1);
 }

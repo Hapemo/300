@@ -1,7 +1,7 @@
 ﻿  LuaEngine.cpp
   Script.cpp
   ScriptingSystem.cpp
-C:\Users\User\Documents\GitHub\300\300\_ENGINE\include\ECS\ECS.h(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline (compiling source file source\ScriptingSystem.cpp)
-C:\Users\User\Documents\GitHub\300\300\_ENGINE\include\ECS\ECS.h(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline (compiling source file source\Script.cpp)
-C:\Users\User\Documents\GitHub\300\300\_ENGINE\include\ECS\ECS.h(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline (compiling source file source\LuaEngine.cpp)
-  _SCRIPTING.vcxproj -> C:\Users\User\Documents\GitHub\300\300\x64\Debug\_SCRIPTING.lib
+D:\300\300\_ENGINE\include\ECS\ECS.h(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline (compiling source file source\Script.cpp)
+D:\300\300\_ENGINE\include\ECS\ECS.h(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline (compiling source file source\LuaEngine.cpp)
+D:\300\300\_ENGINE\include\ECS\ECS.h(2,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline (compiling source file source\ScriptingSystem.cpp)
+  _SCRIPTING.vcxproj -> D:\300\300\x64\Debug\_SCRIPTING.lib
