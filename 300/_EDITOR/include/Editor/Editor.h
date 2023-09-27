@@ -119,7 +119,7 @@ Returns main window for docking
 
 
 private:	
-
 	MenuPanel* mMenuwindow{};
+	MenuPanel* mMenuwindow2{};
 };
 

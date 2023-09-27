@@ -78,18 +78,7 @@ void SceneWindow::update()
 	ImGui::SetItemAllowOverlap();
 	//wevents = ImGui::IsItemHovered();  /// <-- This returns true if mouse is over the overlaped Test button
 
-	ImGui::SetCursorPosX(ImGui::GetWindowContentRegionMax().x - 400);
-	ImGui::SetCursorPosY(ImGui::GetWindowContentRegionMin().y + 10);
-	if (ImGui::Button("PLAY")) {
-		systemManager->Play();
-	}
-	if (ImGui::Button("PAUSE")) {
-		systemManager->Pause();
-	}
-	if (ImGui::Button("RESET")) {
-		Hierarchy::selectionOn = false;
-		systemManager->Reset();
-	}
+
 
 	winSize= { ImGui::GetWindowSize().x ,ImGui::GetWindowSize().y};
 }

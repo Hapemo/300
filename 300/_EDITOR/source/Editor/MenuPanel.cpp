@@ -249,13 +249,24 @@ void MenuPanel::update()
             }
             ImGui::EndMenu();
         }
-        int temp = ImGui::GetWindowSize().x - 70;
-        ImGui::SetCursorPosX(temp);
+        //int temp = ImGui::GetWindowSize().x - 70;
+        //ImGui::SetCursorPosX(temp);
 
-        static bool ischecked = systemManager->mGraphicsSystem->m_DebugDrawing;
-        if (ImGui::Checkbox("Debug", &ischecked)) {
-            systemManager->mGraphicsSystem->m_DebugDrawing = ischecked ? 1 : 0;
+        ImVec2 buttonSize{ 50,50 };
+
+        ImGui::SetCursorPosX(ImGui::GetWindowSize().x/2- buttonSize.x*3);
+    //    ImGui::SetCursorPosY(ImGui::GetWindowContentRegionMin().y + 10);
+        if (ImGui::Button("PLAY")) {
+            systemManager->Play();
         }
+        if (ImGui::Button("PAUSE")) {
+            systemManager->Pause();
+        }
+        if (ImGui::Button("RESET")) {
+            Hierarchy::selectionOn = false;
+            systemManager->Reset();
+        }
+
 
         ImGui::EndMenuBar();
 
