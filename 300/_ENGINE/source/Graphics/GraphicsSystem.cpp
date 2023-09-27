@@ -170,6 +170,11 @@ void GraphicsSystem::Update(float dt)
 	auto meshRendererInstances = systemManager->ecs->GetEntitiesWith<MeshRenderer>();
 	for (Entity inst : meshRendererInstances)
 	{
+	
+		auto& meshrefptr = inst.GetComponent<MeshRenderer>();
+		if (meshrefptr.mMeshRef == nullptr)
+			continue;
+
 		std::string meshstr = inst.GetComponent<MeshRenderer>().mMeshPath;
 		Animator anim = inst.GetComponent<Animator>();
 
@@ -223,6 +228,8 @@ void GraphicsSystem::Update(float dt)
 
 void GraphicsSystem::EditorDraw(float dt)
 {
+
+	
 	std::map<std::string, short> renderedMesh;
 	auto meshRendererInstances = systemManager->ecs->GetEntitiesWith<MeshRenderer>();
 
@@ -237,6 +244,10 @@ void GraphicsSystem::EditorDraw(float dt)
 	// Render all instances of a given mesh
 	for (Entity inst : meshRendererInstances)
 	{
+		auto& meshrefptr = inst.GetComponent<MeshRenderer>();
+		if (meshrefptr.mMeshRef == nullptr)
+			continue;
+
 		std::string meshstr = inst.GetComponent<MeshRenderer>().mMeshPath;
 		if (renderedMesh.find(meshstr) != renderedMesh.end())
 		{
@@ -384,6 +395,11 @@ void GraphicsSystem::GameDraw(float dt)
 	// Render all instances of a given mesh
 	for (Entity inst : meshRendererInstances)
 	{
+
+		auto& meshrefptr = inst.GetComponent<MeshRenderer>();
+		if (meshrefptr.mMeshRef == nullptr)
+			continue;
+
 		std::string meshstr = inst.GetComponent<MeshRenderer>().mMeshPath;
 		if (renderedMesh.find(meshstr) != renderedMesh.end())
 		{

@@ -60,7 +60,7 @@ struct MeshRenderer
 {
 	// For now, we store the string to the filepaths. TO CHANGE to uids for efficient referencing
 	std::pair<std::string, std::string> mShaderPath;
-	std::string							mMaterialInstancePath[4];
+	std::string							mMaterialInstancePath[4] {" "," " ," " ," " };
 	std::string							mMeshPath;
 	
 	void*								mMeshRef;

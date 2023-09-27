@@ -163,22 +163,23 @@ void Inspect::Add_component() {
 	ImGui::SetCursorPosX(centralizedCursorpos);
 
 
-	ImGui::Button(" Add Component ", ImVec2(200, 30));
+	//ImGui::Button(" Add Component ", ImVec2(200, 30));
 
 
 
-	if (ImGui::IsItemClicked(ImGuiMouseButton_Left)) {
+	//if (ImGui::IsItemClicked(ImGuiMouseButton_Left)) {
 
-		mPopup = true;
+	//	mPopup = true;
 
-	}
+	//}
 
 
-	if (mPopup)
-	{
-		ImGui::OpenPopup("ComponentList", ImGuiPopupFlags_MouseButtonRight);
-	}
+	//if (mPopup)
+	//{
+	//	ImGui::OpenPopup("ComponentList", ImGuiPopupFlags_MouseButtonRight);
+	//}
 
+	ImGui::SetCursorPosX((ImGui::GetWindowSize().x )/2 - ImGui::CalcTextSize("      ComponentList ").x);
 
 
 
@@ -231,8 +232,14 @@ void Inspect::Add_component() {
 				Entity(Hierarchy::selectedId).AddComponent<Audio>();
 		}
 		if (ImGui::Selectable("MeshRenderer")) {
-			if (!Entity(Hierarchy::selectedId).HasComponent<MeshRenderer>())
+			if (!Entity(Hierarchy::selectedId).HasComponent<MeshRenderer>()) {
 				Entity(Hierarchy::selectedId).AddComponent<MeshRenderer>();
+
+				Entity meshobj(Hierarchy::selectedId);
+				auto& meshref= meshobj.GetComponent<MeshRenderer>();
+				//meshref.get
+
+			}
 		}
 
 		ImGui::EndCombo();
@@ -240,7 +247,7 @@ void Inspect::Add_component() {
 
 	}
 
-	mPopup = false; 
+//	mPopup = false; 
 }
 
 void General::Inspect() {
@@ -582,7 +589,7 @@ void MeshRenderer::Inspect() {
 
 		for (int i{ 0 }; i <4; i++) {
 			if (mMaterialInstancePath[i] != "") {
-				ImGui::Selectable(textures[i].c_str());
+				ImGui::Text(textures[i].c_str());
 				if (ImGui::BeginDragDropTarget())
 				{
 					if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_TEXT")) {
