@@ -55,7 +55,7 @@ void GraphicsSystem::Init()
 		UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_GAME, 0.f);
 	}
 
-#if 1
+#if 0
 #pragma region create entity 1
 	//Create a new entity here, for testing purposes
 	Entity newentity = systemManager->ecs->NewEntity();			// creating a new entity
@@ -370,6 +370,7 @@ void GraphicsSystem::GameDraw(float dt)
 	auto meshRendererInstances = systemManager->ecs->GetEntitiesWith<MeshRenderer>();
 
 	auto localcamera = systemManager->ecs->GetEntitiesWith<Camera>();
+	if (localcamera.empty()) return; // Cannot find camera Richmond
 	Entity camera = localcamera.front();
 
 	// Prepare and bind the Framebuffer to be rendered on
@@ -516,6 +517,7 @@ void GraphicsSystem::AddInstance(GFX::Mesh& mesh, mat4 transform, unsigned entit
 void GraphicsSystem::SetCameraPosition(CAMERA_TYPE type, vec3 position)
 {
 	auto localcamera = systemManager->ecs->GetEntitiesWith<Camera>();
+	if (localcamera.empty()) return; // Cannot find camera Richmond
 	Entity camera = localcamera.front();
 
 	switch (type)
@@ -544,6 +546,7 @@ void GraphicsSystem::SetCameraPosition(CAMERA_TYPE type, vec3 position)
 void GraphicsSystem::SetCameraTarget(CAMERA_TYPE type, vec3 position)
 {
 	auto localcamera = systemManager->ecs->GetEntitiesWith<Camera>();
+	if (localcamera.empty()) return; // Cannot find camera Richmond
 	Entity camera = localcamera.front();
 
 	switch (type)
@@ -572,6 +575,7 @@ void GraphicsSystem::SetCameraTarget(CAMERA_TYPE type, vec3 position)
 void GraphicsSystem::SetCameraProjection(CAMERA_TYPE type, float fovDegree, ivec2 size, float nearZ, float farZ)
 {
 	auto localcamera = systemManager->ecs->GetEntitiesWith<Camera>();
+	if (localcamera.empty()) return; // Cannot find camera Richmond
 	Entity camera = localcamera.front();
 
 	switch (type)
@@ -595,6 +599,7 @@ void GraphicsSystem::SetCameraProjection(CAMERA_TYPE type, float fovDegree, ivec
 void GraphicsSystem::SetCameraSize(CAMERA_TYPE type, ivec2 size)
 {
 	auto localcamera = systemManager->ecs->GetEntitiesWith<Camera>();
+	if (localcamera.empty()) return; // Cannot find camera Richmond
 	Entity camera = localcamera.front();
 
 	switch (type)
@@ -617,6 +622,7 @@ void GraphicsSystem::SetCameraSize(CAMERA_TYPE type, ivec2 size)
 void GraphicsSystem::UpdateCamera(CAMERA_TYPE type, const float& dt)
 {
 	auto localcamera = systemManager->ecs->GetEntitiesWith<Camera>();
+	if (localcamera.empty()) return; // Cannot find camera Richmond
 	Entity camera = localcamera.front();
 
 	switch (type)
@@ -644,6 +650,7 @@ void GraphicsSystem::UpdateCamera(CAMERA_TYPE type, const float& dt)
 vec3 GraphicsSystem::GetCameraPosition(CAMERA_TYPE type)
 {
 	auto localcamera = systemManager->ecs->GetEntitiesWith<Camera>();
+	if (localcamera.empty()) return vec3(); // Cannot find camera Richmond
 	Entity camera = localcamera.front();
 
 	switch (type)
@@ -662,6 +669,7 @@ vec3 GraphicsSystem::GetCameraPosition(CAMERA_TYPE type)
 vec3 GraphicsSystem::GetCameraTarget(CAMERA_TYPE type)
 {
 	auto localcamera = systemManager->ecs->GetEntitiesWith<Camera>();
+	if (localcamera.empty()) return vec3(); // Cannot find camera Richmond
 	Entity camera = localcamera.front();
 
 	switch (type)
@@ -680,6 +688,7 @@ vec3 GraphicsSystem::GetCameraTarget(CAMERA_TYPE type)
 vec3 GraphicsSystem::GetCameraDirection(CAMERA_TYPE type)
 {
 	auto localcamera = systemManager->ecs->GetEntitiesWith<Camera>();
+	if (localcamera.empty()) return vec3(); // Cannot find camera Richmond
 	Entity camera = localcamera.front();
 
 	switch (type)

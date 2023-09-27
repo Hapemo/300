@@ -25,6 +25,7 @@ to select current Entity and activates inspector
 #include "Hierarchy.h"
 #include "ScriptingSystem.h"
 #include "GameState/GameStateManager.h"
+#include "Misc.h"
 #include "imgui_stdlib.h"
 
 //#define DEBUG
@@ -41,6 +42,10 @@ void Hierarchy::init() {
 
 }
 //int Hierarchy::selectCnt{ -1 };
+
+// Helper function
+
+
 
 
 #ifdef DEBUG
@@ -318,7 +323,7 @@ void Hierarchy::update() {
 
     ImGui::SameLine();
     if (ImGui::Button("Scene", ImVec2(50, 50))) {
-        systemManager->mGameStateSystem->mCurrentGameState.AddScene("NewScene"+ std::to_string(allScene.size()));
+        systemManager->mGameStateSystem->mCurrentGameState.AddScene();
 
     }
 
@@ -330,7 +335,7 @@ void Hierarchy::update() {
         if (i == selectedScene)
             selectflagscene |= ImGuiTreeNodeFlags_Selected;
 
-        if (ImGui::TreeNodeEx(allScene[i].mName.c_str(), selectflagscene| ImGuiTreeNodeFlags_DefaultOpen| ImGuiTreeNodeFlags_OpenOnDoubleClick))
+        if (ImGui::TreeNodeEx(allScene[i].mName.c_str(), selectflagscene | ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_OpenOnDoubleClick))
         {
 
             if (ImGui::IsItemClicked(ImGuiMouseButton_Left)) {  
@@ -466,7 +471,40 @@ void Hierarchy::update() {
 
             ImGui::TreePop();
         }
+
+
     }
+
+
+    ImGui::Dummy(ImGui::GetContentRegionAvail());
+    
+
+    if (ImGui::BeginDragDropTarget()) {
+
+        if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_SCN")) {
+            auto data = (const char*)payload->Data;
+            std::string name = Misc::GetFileName(std::string(data));
+            //int counter = 0;
+            //
+            //// if the scene exists
+            //if (systemManager->mGameStateSystem->SceneExists(name)) {
+            //    ++counter; // increment the counter
+            //    // Increment file number to the biggest one
+            //    for (Scene& scene : systemManager->mGameStateSystem->mCurrentGameState.mScenes) {
+            //        // if the scene name exists AND 
+            //        if (systemManager->mGameStateSystem->SceneExists(name + std::to_string(counter)))
+            //            ++counter;
+            //    }
+            //}
+            //if (!systemManager->mGameStateSystem->SceneExists(name + std::to_string(counter)))
+            //        systemManager->mGameStateSystem->mCurrentGameState.AddScene(name + std::to_string(counter));
+
+            //counter = 0;
+            systemManager->mGameStateSystem->AddScene(name);
+        }
+        ImGui::EndDragDropTarget();
+    }
+
 
 
     if (mCPopup)

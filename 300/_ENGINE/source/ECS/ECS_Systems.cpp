@@ -82,6 +82,7 @@ void SystemManager::Play()
 void SystemManager::Update(float dt)
 {
 	mGraphicsSystem.get()->Update(dt);
+	mGameStateSystem.get()->UpdateNextGSMState();
 	mGraphicsSystem.get()->EditorDraw(dt);
 	mGraphicsSystem.get()->GameDraw(dt);
 	if (!mIsPlay) return;

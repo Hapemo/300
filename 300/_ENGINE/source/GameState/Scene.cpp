@@ -83,6 +83,8 @@ void Scene::Pause(bool _pause) {
 void Scene::Load(std::string const& _name) {
 	//LOG_CUSTOM("SCENE", "Loading Scene: " + mName);
 	if (mName.empty()) mName = _name;
+
+
 	
 	ObjectFactory::LoadScene(this, mName);
 	for (auto e : mEntities) {
@@ -120,8 +122,8 @@ Entity Scene::AddEntity() {
 
 void Scene::RemoveEntity(Entity _e) {
 	// if (_e.GetComponent<General>().isActive) _e.Deactivate(); // Temporary remove - Han
-	systemManager->ecs->DeleteEntity(_e);
 	mEntities.erase(_e);
+	systemManager->ecs->DeleteEntity(_e);
 }
 
 bool Scene::IsError() {

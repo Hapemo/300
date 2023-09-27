@@ -322,8 +322,8 @@ void ObjectFactory::LoadScene(Scene* scene, const std::string& filename)
 	// loop thru container and store entities
 
 	EntityListJSON entities;
-	//entities.DeserializeFile(ConfigManager::GetValue("ScenePath") + filename + ".scn");
-	entities.DeserializeFile("../assets/Scenes/" + filename + ".scn");
+	//entities.DeserializeFile( + filename + ".scn");
+	entities.DeserializeFile(ConfigManager::GetValue("ScenePath") + filename + ".scn");
 
 	std::unordered_map<entt::entity, entt::entity> idMap;
 
@@ -431,7 +431,7 @@ void ObjectFactory::LoadScene(Scene* scene, const std::string& filename)
 void ObjectFactory::SaveScene(Scene* scene)
 {
 	// form the filename
-	std::string filename = "../assets/Scenes/" + scene->mName + ".scn";
+	std::string filename = ConfigManager::GetValue("ScenePath") + scene->mName + ".scn";
 
 	std::ofstream ofs;
 	ofs.open(filename, std::fstream::out | std::fstream::trunc);
@@ -497,7 +497,7 @@ void ObjectFactory::LoadGameState(GameState* gs, const std::string& _name)
 	gs->mName = _name;
 
 	SceneListJSON scenes;
-	scenes.DeserializeFile("../assets/GameStates/" + _name + ".gs");
+	scenes.DeserializeFile(ConfigManager::GetValue("GameStatePath") + _name + ".gs");
 
 	Scene sce;
 	for (auto& s : scenes.SceneList())
@@ -518,7 +518,7 @@ void ObjectFactory::LoadGameState(GameState* gs, const std::string& _name)
 void ObjectFactory::SaveGameState(GameState* gs)
 {
 	// form the filename
-	std::string filename = "../assets/GameStates/" + gs->mName + ".gs";
+	std::string filename = ConfigManager::GetValue("GameStatePath") + gs->mName + ".gs";
 
 	std::ofstream ofs;
 	ofs.open(filename, std::fstream::out | std::fstream::trunc);
