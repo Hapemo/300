@@ -68,8 +68,12 @@ namespace GFX
 
         m_DeltaTime = dt;
 
-        m_CurrentTime += m_CurrentAnimation->m_TicksPerSecond * m_DeltaTime;
-        m_CurrentTime = fmod(m_CurrentTime, m_CurrentAnimation->m_Duration);        // this loops the animation
+        // shouldnt increment the time when the animation is paused
+        if (!mIsPaused) {
+            m_CurrentTime += m_CurrentAnimation->m_TicksPerSecond * m_DeltaTime;
+            m_CurrentTime = fmod(m_CurrentTime, m_CurrentAnimation->m_Duration);        // this loops the animation
+        }
+
         CalculateBoneTransform(&m_CurrentAnimation->m_RootNode, inputmtx, LTW);          // this calculates the bone matrices, WRT to the entity's world position
     }
 
@@ -101,10 +105,8 @@ namespace GFX
             int index = boneInfoMap[nodename].id;                           // the index for the boneinfomap is the id of the bone
             glm::mat4 offset = boneInfoMap[nodename].offset;                // the offset is the offset WRT to the bone's origin transformation
 
-            if (!mIsPaused) {
-                m_FinalBoneMatrices[index] = globalTransform * offset;      // populating this vector of matrices with the bone matrices, WRT to the bone's parent transformation
-                                                                            // and the entity's world position
-            }
+            m_FinalBoneMatrices[index] = globalTransform * offset;      // populating this vector of matrices with the bone matrices, WRT to the bone's parent transformation
+                                                                        // and the entity's world position
 
             //!< ==== Debug Drawing for the bones ==== //
             if (systemManager->mGraphicsSystem->m_DebugDrawing && (parentTransform != identity))
