@@ -269,11 +269,11 @@ bool GameStateManager::SceneJsonExist(std::string const& _name) {
 bool GameStateManager::TransferEntity(std::string const& _srcName, std::string const& _dstName, Entity _e) {
 	Scene* src = mCurrentGameState.GetScene(_srcName);
 	Scene* dst = mCurrentGameState.GetScene(_dstName);
-	if (*src == mErrorScene) {
+	if (src->operator==(mErrorScene)) {
 		std::cout << "Unable to find" << _srcName << " when attempting to TransferEntity()\n";
 		return false;
 	}
-	if (*dst == mErrorScene) {
+	if (dst->operator==(mErrorScene)) {
 		std::cout << "Unable to find" << _dstName << " when attempting to TransferEntity()\n";
 		return false;
 	}
