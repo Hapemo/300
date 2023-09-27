@@ -23,8 +23,9 @@ void GraphicsSystem::Init()
 	{
 		Entity CameraEntity = systemManager->ecs->NewEntity(); // creating a new entity
 		systemManager->mGameStateSystem->mCurrentGameState.AddScene("NewScene");
-		systemManager->mGameStateSystem->mCurrentGameState.mScenes[0].mName = "Richmond";
+		systemManager->mGameStateSystem->mCurrentGameState.mScenes[0].mName = "Scene";
 		systemManager->mGameStateSystem->mCurrentGameState.mScenes[0].mEntities.insert(CameraEntity);
+		CameraEntity.GetComponent<General>().name = "Camera";
 		CameraEntity.AddComponent<Camera>();
 	}
 

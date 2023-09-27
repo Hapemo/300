@@ -278,36 +278,17 @@ void Hierarchy::update()
 void Hierarchy::update() {
     
     copyPaste();
+    ImGui::Text("GameState");
+    ImGui::SameLine();
 
     ImGui::InputText(" ", &systemManager->mGameStateSystem->mCurrentGameState.mName);
-    // ImGui::Text(systemManager->mGameStateSystem->mCurrentGameState.mName.c_str());
-    //auto allObjects = systemManager->ecs->GetEntitiesWith<Transform>();
 
-    //int i = allObjects.size();
-
-    //for (Entity ent : allObjects)
-    //{
-    //    if (ent.HasParent() == false && ent.HasChildren() == false) {
-    //        General& info = ent.GetComponent<General>();
-
-    //        ImGui::TreeNodeEx((info.name /*+std::to_string(i)*/).c_str(), ImGuiTreeNodeFlags_NoTreePushOnOpen | ImGuiTreeNodeFlags_Leaf);
-
-    //    }
-
-    //}
     auto& allScene = systemManager->mGameStateSystem->mCurrentGameState.mScenes;
 
-    //if (ImGui::Button("AddS", ImVec2(50, 50)))
-    //{
-    //  //  Entity newEntity = systemManager->ecs->NewEntity();    
 
-    //}
 
     if (ImGui::Button("Add", ImVec2(50, 50)))
     {
-        //  Entity newEntity = systemManager->ecs->NewEntity();
-      //  if (allScene.size() <= 0)
-        //    systemManager->mGameStateSystem->mCurrentGameState.AddScene("NewScene");
 
         if (allScene.size() <= 0) {
             systemManager->mGameStateSystem->mCurrentGameState.AddScene("NewScene");
@@ -389,11 +370,7 @@ void Hierarchy::update() {
 
                     if (ImGui::BeginDragDropTarget()) {
 
-
-                        //ImGui::SetDragDropPayload("PARENT_CHILD", source_path, strlen(source_path) * sizeof(wchar_t), ImGuiCond_Once);
-
                         if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("PARENT_CHILD")) {
-                            // auto payload = ImGui::AcceptDragDropPayload("PARENT_CHILD");
 
                             auto data = static_cast<entt::entity*> (payload->Data);    
                             ent.AddChild(*data);
@@ -462,9 +439,6 @@ void Hierarchy::update() {
 
                     }
                     ImGui::PopID();
-
-                    //if(allchild.size()>=1 )  
-
                 }
 
             }
@@ -578,23 +552,48 @@ void Hierarchy::update() {
 
     if (ImGui::BeginPopup("Edit_scene"))
     {
+        if (ImGui::Button("Rename"))
+        {
+            ImGui::OpenPopup("Delete?");
+            sCPopup = false;
+        }
+        ImVec2 center = ImGui::GetMainViewport()->GetCenter();
+        ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
+
+        if (ImGui::BeginPopupModal("Delete?", NULL, ImGuiWindowFlags_AlwaysAutoResize))
+        {
+            ImGui::Text("Name: ");
+            ImGui::InputText("##SceneName", &systemManager->mGameStateSystem->mCurrentGameState.mScenes[RselectedScene].mName);
+            ImGui::Separator();
+
+            //static int unused_i = 0;
+            //ImGui::Combo("Combo", &unused_i, "Delete\0Delete harder\0");
+
+            static bool dont_ask_me_next_time = false;
+            ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(0, 0));
+            ImGui::Checkbox("Don't ask me next time", &dont_ask_me_next_time);
+            ImGui::PopStyleVar();
+
+            if (ImGui::Button("OK", ImVec2(120, 0))) { ImGui::CloseCurrentPopup(); }
+            ImGui::SetItemDefaultFocus();
+            ImGui::SameLine();
+            if (ImGui::Button("Cancel", ImVec2(120, 0))) { ImGui::CloseCurrentPopup(); }
+            ImGui::EndPopup();
+        }
+
         if (ImGui::Selectable("Save"))
         {
             systemManager->mGameStateSystem->mCurrentGameState.mScenes[RselectedScene].Save();
         }
         if (ImGui::Selectable("Delete")) {
-
-
-             
+            
             selectionOn = false;
-
              if (systemManager->mGameStateSystem->mCurrentGameState.mScenes[RselectedScene].mEntities.size() > 0) {
 
                  for (int i{ 0 }; i < systemManager->mGameStateSystem->mCurrentGameState.mScenes[RselectedScene].mEntities.size(); i++) {
                      systemManager->mGameStateSystem->mCurrentGameState.mScenes[RselectedScene].mEntities.clear();
                  }
              }
-
              systemManager->mGameStateSystem->
                  mCurrentGameState.RemoveScene(systemManager->mGameStateSystem->mCurrentGameState.mScenes[RselectedScene].mName);
              //Entity ent(Hierarchy::selectedId);
@@ -607,7 +606,8 @@ void Hierarchy::update() {
     sCPopup = false;
 
 
-
+    // Always center this window when appearing
+   
 }
 
 

@@ -107,6 +107,8 @@ void ContentBrowser::update()
 					current_Directory /= path.filename();
 			}
 			ImGui::Text(filename_string.c_str());
+			ImGui::NextColumn();
+
 			//ImGui::Text(filename_string.c_str());
 		}
 		else if(!directory.is_directory()) {
@@ -162,7 +164,7 @@ void ContentBrowser::update()
 					//std::cout << path.string() << "\n";
 				}
 				ImGui::Text(filename_string.c_str());
-				//ImGui::NextColumn();
+				ImGui::NextColumn();
 
 			}
 
@@ -183,7 +185,7 @@ void ContentBrowser::update()
 					ImGui::EndDragDropSource();
 				}
 				ImGui::Text(filename_string.c_str());
-				//ImGui::NextColumn();
+				ImGui::NextColumn();
 
 			}
 
@@ -204,7 +206,7 @@ void ContentBrowser::update()
 					ImGui::EndDragDropSource();
 				}
 				ImGui::Text(filename_string.c_str());
-				//ImGui::NextColumn();
+				ImGui::NextColumn();
 
 			}
 			else if (check_extension(path.string(), ".ctexture")) {
@@ -223,7 +225,7 @@ void ContentBrowser::update()
 					ImGui::EndDragDropSource();
 				}
 				ImGui::Text(filename_string.c_str());
-				//ImGui::NextColumn();
+				ImGui::NextColumn();
 
 			}
 			else if (check_extension(path.string(), ".scn")) {
@@ -249,7 +251,6 @@ void ContentBrowser::update()
 
 		}
 
-		ImGui::NextColumn();
 		idd++;
 
 		

@@ -136,7 +136,7 @@ void SceneWindow::RenderGuizmo()
 		ImGuizmo::SetDrawlist();
 		ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y, winSize.x, winSize.y);
 
-	//	//if (Move == true) {
+		//if (Move == true) {
 			ImGuizmo::Manipulate(glm::value_ptr(cameraView), glm::value_ptr(cameraProjection),
 				ImGuizmo::OPERATION::TRANSLATE, ImGuizmo::LOCAL, glm::value_ptr(objectMatrix) /*glm::value_ptr(transformtemp)*/);
 

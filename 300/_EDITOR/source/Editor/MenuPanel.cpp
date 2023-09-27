@@ -250,11 +250,11 @@ void MenuPanel::update()
         }
         //int temp = ImGui::GetWindowSize().x - 70;
         //ImGui::SetCursorPosX(temp);
-
         ImVec2 buttonSize{ 50,50 };
 
-        ImGui::SetCursorPosX(ImGui::GetWindowSize().x/2- buttonSize.x*3);
-    //    ImGui::SetCursorPosY(ImGui::GetWindowContentRegionMin().y + 10);
+        ImGui::SetCursorPosX(ImGui::GetWindowSize().x / 2 - buttonSize.x * 3);
+        //    ImGui::SetCursorPosY(ImGui::GetWindowContentRegionMin().y + 10);
+
         if (ImGui::Button("PLAY")) {
             systemManager->Play();
         }
@@ -266,9 +266,9 @@ void MenuPanel::update()
             systemManager->Reset();
         }
 
+        
 
         ImGui::EndMenuBar();
-
     }
 
     	//ImGui::Button("Debug");
