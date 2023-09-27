@@ -216,13 +216,16 @@ void ECS::EndEditPrefabNoSave(Entity e)
 	DeleteEntity(e);
 }
 
-Entity ECS::PasteEntity()
+Entity ECS::PasteEntity(int scene)
 {
 	if (static_cast<uint32_t>(mClipboard.id) == 0)
 		return Entity(0);
 
-	Entity e = NewEntity();
-	
+
+
+	//Entity e = NewEntity();
+	Entity e =systemManager->mGameStateSystem->mCurrentGameState.mScenes[scene].AddEntity();
+
 	if (mClipboard.HasComponent<MeshRenderer>())
 		e.GetComponent<MeshRenderer>() = mClipboard.GetComponent<MeshRenderer>();
 	if (mClipboard.HasComponent<RigidBody>())
