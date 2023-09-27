@@ -98,7 +98,7 @@ void EditorApplication::MainUpdate()
 
 void EditorApplication::FirstUpdate()
 {
-    FPSManager::Update();
+    FPSManager::Update(0.01f);
     Accumulator::Update(FPSManager::dt);
     mWindow.PollEvents();
 }

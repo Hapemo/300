@@ -319,12 +319,12 @@ namespace _GEOM
 		if (m_SkinGeom->m_bHasAnimation)
 		{
 			std::cout << ">>[NOTE]: \tImporting Bones\n";
-			for (int numanims{}; numanims < m_Scene->mNumAnimations; ++numanims)
+			for (unsigned numanims{}; numanims < m_Scene->mNumAnimations; ++numanims)
 			{
 				auto& animation = m_Scene->mAnimations[numanims];
 
-				m_SkinGeom->m_Animation[numanims].m_Duration = animation->mDuration;					// set the duration of the animation
-				m_SkinGeom->m_Animation[numanims].m_TicksPerSecond = animation->mTicksPerSecond;		// set the ticks per second of the animation
+				m_SkinGeom->m_Animation[numanims].m_Duration = static_cast<float>(animation->mDuration);					// set the duration of the animation
+				m_SkinGeom->m_Animation[numanims].m_TicksPerSecond = static_cast<float>(animation->mTicksPerSecond);		// set the ticks per second of the animation
 				ReadHierarchyData(m_SkinGeom->m_Animation[numanims].m_RootNode, m_Scene->mRootNode);
 				ReadMissingBones(m_SkinGeom->m_Animation[numanims], animation);
 			}
@@ -787,11 +787,11 @@ namespace _GEOM
 				{
 					auto& textureinst = meshInst.m_Texture[j];
 
-					uint8_t strlen = textureinst.path.size();
+					uint8_t strlen = static_cast<uint8_t>(textureinst.path.size());
 					outfile.write((char*)&strlen, sizeof(uint8_t));							// path name length
 					outfile.write((char*)textureinst.path.c_str(), strlen);						// path name
 
-					strlen = textureinst.type.size();
+					strlen = static_cast<uint8_t>(textureinst.type.size());
 					outfile.write((char*)&strlen, sizeof(uint8_t));							// type name length
 					outfile.write((char*)textureinst.type.c_str(), strlen);						// type name					
 				}
@@ -821,7 +821,7 @@ namespace _GEOM
 					}
 
 					// Bones
-					for (unsigned j{}; j < animation.m_BoneCounter; ++j)
+					for (int j{}; j < animation.m_BoneCounter; ++j)
 					{
 						auto& boneinst = animation.m_Bones[j];
 
@@ -958,7 +958,7 @@ namespace _GEOM
 		dest.m_Transformation = AssimpHelper::ConvertMatrixToGLMFormat(src->mTransformation);
 		dest.m_NumChildren = src->mNumChildren;
 
-		for (int i{}; i < src->mNumChildren; ++i)
+		for (unsigned i{}; i < src->mNumChildren; ++i)
 		{
 			AssimpNodeData newData;
 			ReadHierarchyData(newData, src->mChildren[i]);
@@ -1000,7 +1000,7 @@ namespace _GEOM
 		auto& rBoneInfoMap	= anims.m_BoneInfoMap;
 		int& iBoneCount		= anims.m_BoneCounter;
 
-		for (int boneindex = 0; boneindex < mesh.mNumBones; ++boneindex)
+		for (unsigned boneindex = 0; boneindex < mesh.mNumBones; ++boneindex)
 		{
 			int boneID = -1;
 			std::string boneName = mesh.mBones[boneindex]->mName.C_Str();

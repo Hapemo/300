@@ -68,7 +68,7 @@ to select current Entity and activates inspector
 	void update();
 
 
-
+	void copyPaste();
 
 
 	friend class Editor;

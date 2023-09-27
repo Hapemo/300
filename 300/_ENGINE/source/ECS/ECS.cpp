@@ -5,6 +5,8 @@
 #include "Object/ObjectFactory.h"
 #include "GameState/GameStateManager.h"
 #include "Debug/AssertException.h"
+#include "ResourceManagerTy.h"
+
 
 bool Entity::ShouldRun() {
 	assert(HasComponent<General>() && std::string("There is no general component when attempting to change Entity's isActive").c_str());
@@ -163,19 +165,19 @@ void ECS::UpdatePrefabEntities(std::string prefabName)
 	for (Entity e : mPrefabs[prefabName])
 	{
 		if (temp.HasComponent<MeshRenderer>())
-			e.GetComponent<MeshRenderer>() = temp.GetComponent<MeshRenderer>();
+			e.AddComponent<MeshRenderer>() = temp.GetComponent<MeshRenderer>();
 		if (temp.HasComponent<RigidBody>())
-			e.GetComponent<RigidBody>() = temp.GetComponent<RigidBody>();
+			e.AddComponent<RigidBody>() = temp.GetComponent<RigidBody>();
 		if (temp.HasComponent<BoxCollider>())
-			e.GetComponent<BoxCollider>() = temp.GetComponent<BoxCollider>();
+			e.AddComponent<BoxCollider>() = temp.GetComponent<BoxCollider>();
 		if (temp.HasComponent<SphereCollider>())
-			e.GetComponent<SphereCollider>() = temp.GetComponent<SphereCollider>(); 
+			e.AddComponent<SphereCollider>() = temp.GetComponent<SphereCollider>();
 		if (temp.HasComponent<PlaneCollider>())
-			e.GetComponent<PlaneCollider>() = temp.GetComponent<PlaneCollider>();
+			e.AddComponent<PlaneCollider>() = temp.GetComponent<PlaneCollider>();
 		if (temp.HasComponent<Scripts>())
-			e.GetComponent<Scripts>() = temp.GetComponent<Scripts>();
+			e.AddComponent<Scripts>() = temp.GetComponent<Scripts>();
 		if (temp.HasComponent<Audio>())
-			e.GetComponent<Audio>() = temp.GetComponent<Audio>();
+			e.AddComponent<Audio>() = temp.GetComponent<Audio>();
 	}
 
 	systemManager->ecs->DeleteEntity(temp);
@@ -227,19 +229,56 @@ Entity ECS::PasteEntity(int scene)
 	Entity e =systemManager->mGameStateSystem->mCurrentGameState.mScenes[scene].AddEntity();
 
 	if (mClipboard.HasComponent<MeshRenderer>())
+	{
+		e.AddComponent<MeshRenderer>();
 		e.GetComponent<MeshRenderer>() = mClipboard.GetComponent<MeshRenderer>();
+		MeshRenderer& mr = e.GetComponent<MeshRenderer>();
+		uid uids(mr.mMeshPath);
+		mr.mMeshRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(uids.id));
+		for (int i{ 0 }; i < 4; i++) {
+
+			if (mr.mTextureCont[i] == true) {
+				uid uids(mr.mMaterialInstancePath[i]);
+				mr.mTextureRef[i] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(uids.id));
+			}
+		}
+		GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mr.mMeshRef);
+		if (meshinst->mHasAnimation)
+		{
+			e.AddComponent<Animator>();
+			e.GetComponent<Animator>().mAnimator.SetAnimation(&meshinst->mAnimation[0]);
+		}
+	}
 	if (mClipboard.HasComponent<RigidBody>())
+	{
+		e.AddComponent<RigidBody>();
 		e.GetComponent<RigidBody>() = mClipboard.GetComponent<RigidBody>();
+	}
 	if (mClipboard.HasComponent<BoxCollider>())
+	{
+		e.AddComponent<BoxCollider>();
 		e.GetComponent<BoxCollider>() = mClipboard.GetComponent<BoxCollider>();
+	}
 	if (mClipboard.HasComponent<SphereCollider>())
+	{
+		e.AddComponent<SphereCollider>();
 		e.GetComponent<SphereCollider>() = mClipboard.GetComponent<SphereCollider>();
+	}
 	if (mClipboard.HasComponent<PlaneCollider>())
+	{
+		e.AddComponent<PlaneCollider>();
 		e.GetComponent<PlaneCollider>() = mClipboard.GetComponent<PlaneCollider>();
+	}
 	if (mClipboard.HasComponent<Scripts>())
+	{
+		e.AddComponent<Scripts>();
 		e.GetComponent<Scripts>() = mClipboard.GetComponent<Scripts>();
+	}
 	if (mClipboard.HasComponent<Audio>())
+	{
+		e.AddComponent<Audio>();
 		e.GetComponent<Audio>() = mClipboard.GetComponent<Audio>();
+	}
 
 	return e;
 }
