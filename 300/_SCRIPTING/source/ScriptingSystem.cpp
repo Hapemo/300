@@ -141,12 +141,12 @@ void ScriptingSystem::Init()
         "KEY_Y", E_KEY::Y, "KEY_Z", E_KEY::Z,
         "KEY_SPACE", E_KEY::SPACE, "KEY_ESCAPE", E_KEY::ESCAPE,
         "UP", E_KEY::UP, "DOWN", E_KEY::DOWN, "LEFT", E_KEY::LEFT, "RIGHT", E_KEY::RIGHT);
-    luaState.new_enum("enum_tag",
-        "PLAYER", enum_tag::PLAYER,
-        "ENEMY", enum_tag::ENEMY,
-        "BULLET", enum_tag::BULLET,
-        "STATIC", enum_tag::STATIC,
-        "BUILDING", enum_tag::BUILDING);
+    //luaState.new_enum("enum_tag",
+    //    "PLAYER", enum_tag::PLAYER,
+    //    "ENEMY", enum_tag::ENEMY,
+    //    "BULLET", enum_tag::BULLET,
+    //    "STATIC", enum_tag::STATIC,
+    //    "BUILDING", enum_tag::BUILDING);
 }
 
 void ScriptingSystem::Update(float dt)
