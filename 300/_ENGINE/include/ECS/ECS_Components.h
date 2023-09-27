@@ -14,17 +14,14 @@
 struct General
 {
 	std::string name;
-	/*TAG tag;*/
-
-	std::string tag[5] = {"PLAYER","ENEMY","BULLET","STATIC","BUILDING"};
-	int tagid {0};
+	TAG tag;
 	SUBTAG subtag;
 	bool isActive;
 	bool isPaused;
 
-	//General() 
-	//: name(""), tag(TAG::UNKNOWN), subtag(SUBTAG::ACTIVE), isActive(true) 
-//	{};
+	General() 
+	: name(""), tag(TAG::UNKNOWN), subtag(SUBTAG::ACTIVE), isActive(true) 
+	{};
 
 	void								Inspect();
 
@@ -347,5 +344,5 @@ struct PointLight
 	vec3	mLightColor{ 1.f, 1.f, 1.f };
 	float	mAttenuation;
 	float	mIntensity;
-	std::string mPrefab;
+	void Inspect();
 };

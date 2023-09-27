@@ -42,7 +42,7 @@ void GFX::FBO::Create(int width, int height, bool editorMode)
 
 	// Attach all Attachments to currently bound framebuffer
 	glNamedFramebufferTexture(mID, GL_COLOR_ATTACHMENT0, mColorAttachment, 0);			// 0
-	glNamedFramebufferTexture(mID, GL_COLOR_ATTACHMENT2, mEntityIDAttachment, 0);		// 2
+	glNamedFramebufferTexture(mID, GL_COLOR_ATTACHMENT1, mEntityIDAttachment, 0);		// 1
 
 	// Creating renderbuffer object for depth testing
 	glCreateRenderbuffers(1, &mRboID);
@@ -67,7 +67,7 @@ void GFX::FBO::PrepForDraw()
 	if (mEditorMode)	// Need to render to both color attachments and Entity ID attachment
 	{
 		// Clear Entity ID buffer
-		glDrawBuffer(GL_COLOR_ATTACHMENT2);
+		glDrawBuffer(GL_COLOR_ATTACHMENT1);
 		glClearColor(0.f, 0.f, 0.f, 0.f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
@@ -78,7 +78,7 @@ void GFX::FBO::PrepForDraw()
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		// Set all attachments for output
-		GLuint allAttachments[2] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT2 };
+		GLuint allAttachments[2] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1 };
 		glDrawBuffers(2, allAttachments);
 	}
 	// Renders to Game Attachment by default

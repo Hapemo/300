@@ -14,7 +14,7 @@ uniform float uLightIntensity;
 uniform vec3 uLightColor;
 
 layout (location = 0) out vec4 fragColor0;
-layout (location = 2) out uint outEntityID;
+layout (location = 1) out uint outEntityID;
 
 void main() 
 {
