@@ -1,3 +1,16 @@
+
+/*!*************************************************************************
+****
+\file		   ECS_Components.h
+\author(s)	   
+\par DP email:
+\date		   16-8-2023
+\brief
+
+This file contains the base AudioSystem class that supports the following functionalities:
+- Loading in Audio Files (from components/directory)
+- Manipulating Audio (Play/Pause/Stop)
+****************************************************************************/
 #pragma once
 #include "glm/glm.hpp"
 #include "Script.h"
@@ -18,6 +31,11 @@
 
 //DECLARE_ENUMSTRING(enum_tag, PLAYER, ENEMY, BULLET, STATIC, BUILDING)
 
+/******************************************************************************/
+/*!
+	[Component] - General
+ */
+ /******************************************************************************/
 struct General
 {
 	std::string name;
@@ -39,6 +57,11 @@ struct General
 	//RTTR_ENABLE()
 };
 
+/******************************************************************************/
+/*!
+	[Component] - Transform
+ */
+ /******************************************************************************/
 struct Transform
 {
 	glm::vec3 mScale;
@@ -52,6 +75,11 @@ struct Transform
 	//RTTR_ENABLE()
 };
 
+/******************************************************************************/
+/*!
+	[Component] - Animator
+ */
+ /******************************************************************************/
 struct Animator
 {
 	GFX::Animator	mAnimator;
@@ -59,6 +87,11 @@ struct Animator
 	void Inspect();
 };
 
+/******************************************************************************/
+/*!
+	[Component] - MeshRenderer
+ */
+ /******************************************************************************/
 // this struct stores the filepaths for the meshdata, material, and shader. the actual data is stored in the resource manager
 struct MeshRenderer
 {
@@ -84,6 +117,11 @@ struct MeshRenderer
 	//void								Inspect();
 };
 
+/******************************************************************************/
+/*!
+	[Component] - RigidBody
+ */
+ /******************************************************************************/
 struct RigidBody
 {
 	float mDensity;
@@ -100,6 +138,11 @@ struct RigidBody
 	void							Inspect();
 };
 
+/******************************************************************************/
+/*!
+	[Component] - BoxCollider
+ */
+ /******************************************************************************/
 struct BoxCollider
 {
 	glm::vec3 mScaleOffset;			// final scale = mScaleOffset * Transform.mScale;
@@ -112,6 +155,11 @@ struct BoxCollider
 	void							Inspect();
 };
 
+/******************************************************************************/
+/*!
+	[Component] - SphereCollider
+ */
+ /******************************************************************************/
 struct SphereCollider
 {
 	float mScaleOffset;				// final scale = mScaleOffset * std::max(Transform.mScale.x, Transform.mScale.y, Transform.mScale.z);
@@ -123,6 +171,11 @@ struct SphereCollider
 	void							Inspect();
 };
 
+/******************************************************************************/
+/*!
+	[Component] - PlaneCollider
+ */
+ /******************************************************************************/
 struct PlaneCollider //if has plane collider always static
 {
 	glm::vec3 mNormal;				// direction of plane
@@ -134,6 +187,11 @@ struct PlaneCollider //if has plane collider always static
 	void							Inspect();
 };
 
+/******************************************************************************/
+/*!
+	[Component] - Scripts
+ */
+ /******************************************************************************/
 class Scripts {
 public:
 	Scripts() = default;
@@ -150,6 +208,11 @@ public:
 
 };
 
+/******************************************************************************/
+/*!
+	[Component] - Parent
+ */
+ /******************************************************************************/
 struct Parent
 {
 	std::uint32_t mPrevSibling;
@@ -161,6 +224,11 @@ struct Parent
 	//RTTR_ENABLE()
 };
 
+/******************************************************************************/
+/*!
+	[Component] - Children
+ */
+ /******************************************************************************/
 struct Children
 {
 	std::uint32_t mNumChildren;	
@@ -170,6 +238,13 @@ struct Children
 
 	//RTTR_ENABLE()
 };
+
+
+/******************************************************************************/
+/*!
+	[Component] - Audio
+ */
+ /******************************************************************************/
 
 struct Audio
 {
@@ -214,6 +289,11 @@ struct Audio
 	void							Inspect();
 };
 
+/******************************************************************************/
+/*!
+	[Component] - Camera
+ */
+ /******************************************************************************/
 struct Camera 
 {
 	GFX::Camera						mCamera;
@@ -221,11 +301,21 @@ struct Camera
 	void							Inspect();
 };
 
+/******************************************************************************/
+/*!
+	[Component] - Prefab
+ */
+ /******************************************************************************/
 struct Prefab
 {
 	std::string mPrefab;
 };
 
+/******************************************************************************/
+/*!
+	[Component] - PointLight
+ */
+ /******************************************************************************/
 struct PointLight
 {
 	vec3	mLightColor{ 1.f, 1.f, 1.f };
@@ -237,6 +327,12 @@ struct PointLight
 
 // Added [9/27]
 // Pseudo-Component (Helps InputActionMapEditor)
+
+/******************************************************************************/
+/*!
+	[Support] InputActionMap()
+ */
+ /******************************************************************************/
 struct PseudoInputAction
 {
 	std::string							      mActionName;
@@ -335,7 +431,11 @@ struct PseudoInputAction
 	bool isEnabled = true;
 };
 
-
+/******************************************************************************/
+/*!
+	[Component] InputActionMapEditor
+ */
+ /******************************************************************************/
 struct InputActionMapEditor
 {
 	// Action Map -> contains (Action) -> contains (E_KEY)
