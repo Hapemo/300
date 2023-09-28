@@ -1,3 +1,16 @@
+/*!*************************************************************************
+****
+\file			Descriptor.h
+\author			Richmond
+\par DP email:	r.choo@digipen.edu
+\date			28/9/23
+\brief
+	This class contains the descriptor data that is loaded from the descriptor
+	files.
+
+****************************************************************************
+***/
+
 #pragma once
 
 #ifndef _DESCRIPTOR_H
@@ -9,6 +22,13 @@
 
 namespace _GEOM
 {
+
+/***************************************************************************/
+/*!
+\brief
+	Contains the functionalities and data stored from the descriptor files
+*/
+/**************************************************************************/
 	struct DescriptorData
 	{
 		// Import Mesh //
@@ -27,9 +47,28 @@ namespace _GEOM
 		std::string m_sOutputPath;
 		std::string m_sOutputFormat;
 
-		// Descriptor Functions //
+		/***************************************************************************/
+		/*!
+		\brief
+			Helper function to print data
+		*/
+		/**************************************************************************/
 		void PrintData();
+
+		/***************************************************************************/
+		/*!
+		\brief
+			loads the descriptor data from the provided filepath
+		*/
+		/**************************************************************************/
 		static bool LoadDescriptorData(DescriptorData& Desc, std::string filepath) noexcept;
+
+		/***************************************************************************/
+		/*!
+		\brief
+			Default constructor for the descriptordata struct
+		*/
+		/**************************************************************************/
 		DescriptorData();
 	};
 }

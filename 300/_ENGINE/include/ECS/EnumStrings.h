@@ -1,3 +1,4 @@
+// WIP, not used in engine currently (meant for entity tag use)
 #pragma once
 #include <string>
 #include <sstream>

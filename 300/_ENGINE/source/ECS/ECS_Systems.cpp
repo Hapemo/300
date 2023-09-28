@@ -11,7 +11,7 @@
 #include "GameState/GameState.h"
 #include "Audio/AudioSystem.h"
 #include "Debug/Logger.h"
-#include "../../../_TOOLS/include/Input/InputMapSystem.h"
+#include "Input/InputMapSystem.h"
 #include "Debug/EnginePerformance.h"
 
 SystemManager *systemManager;
@@ -90,6 +90,7 @@ void SystemManager::Play()
 
 void SystemManager::Update(float dt)
 {
+	mInputActionSystem.get()->Update();
 	EnginePerformance::StartTrack("Graphics");
 	mGraphicsSystem.get()->Update(dt);
 	mGameStateSystem.get()->UpdateNextGSMState();
@@ -97,9 +98,12 @@ void SystemManager::Update(float dt)
 	mGraphicsSystem.get()->GameDraw(dt);
 	EnginePerformance::EndTrack("Graphics");
 	EnginePerformance::UpdateSystemMs("Graphics");
-	if (!mIsPlay) return;
 
-	mInputActionSystem.get()->Update();
+	// To Test (Uncomment)
+	//EnginePerformance::StartTrack("Audio");
+	//mAudioSystem.get()->Update(dt);
+	//EnginePerformance::EndTrack("Audio");
+	if (!mIsPlay) return;
 
 	EnginePerformance::StartTrack("Physics");
 	mPhysicsSystem.get()->Update(dt);

@@ -19,6 +19,10 @@
     <ClCompile Include="source\Serialization\Serialization.cpp" />
     <ClCompile Include="source\Debug\EnginePerformance.cpp" />
     <ClCompile Include="source\Physics\Accumulator.cpp" />
+    <ClCompile Include="source\Input\Input.cpp" />
+    <ClCompile Include="source\Input\InputAction.cpp" />
+    <ClCompile Include="source\Input\InputActionMap.cpp" />
+    <ClCompile Include="source\Input\InputMapSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Audio\AudioSystem.h" />
@@ -46,5 +50,13 @@
     <ClInclude Include="include\Debug\EnginePerformance.h" />
     <ClInclude Include="include\Physics\Accumulator.h" />
     <ClInclude Include="include\ECS\EnumStrings.h" />
+    <ClInclude Include="..\..\..\..\..\Desktop\300\300\_ENGINE\include\Input\KeyBind.h" />
+    <ClInclude Include="..\..\..\..\..\Desktop\300\300\_ENGINE\include\Input\Input.h" />
+    <ClInclude Include="..\..\..\..\..\Desktop\300\300\_ENGINE\include\Input\InputAction.h" />
+    <ClInclude Include="..\..\..\..\..\Desktop\300\300\_ENGINE\include\Input\InputActionMap.h" />
+    <ClInclude Include="..\..\..\..\..\Desktop\300\300\_ENGINE\include\Input\InputMapSystem.h" />
+    <ClInclude Include="include\Input\Input.h" />
+    <ClInclude Include="include\Input\InputMapSystem.h" />
+    <ClInclude Include="include\Input\KeyBind.h" />
   </ItemGroup>
 </Project>

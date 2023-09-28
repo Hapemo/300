@@ -1,3 +1,15 @@
+/*!*************************************************************************
+****
+\file			Geom_Compiler.cpp
+\author			Richmond
+\par DP email:	r.choo@digipen.edu
+\date			28/9/23
+\brief
+	The main functions used to execute the geom compiler functions
+
+****************************************************************************
+***/
+
 #include <Geom_Compiler.h>
 #include <Helper.h>
 
@@ -387,7 +399,7 @@ namespace _GEOM
 
 		processNode(*m_Scene->mRootNode);
 
-		// Checks if the mesh is skinned, and if it's capable of vertex animations
+		// uses m_meshrefs to check if the mesh is skinned, and if it's capable of vertex animations
 		for (auto iMesh = 0u; iMesh < m_Scene->mNumMeshes; ++iMesh)
 		{
 			const aiMesh& AssimpMesh = *m_Scene->mMeshes[iMesh];

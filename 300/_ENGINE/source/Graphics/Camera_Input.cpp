@@ -1,5 +1,18 @@
+/*!*************************************************************************
+****
+\file			Camera_Input.cpp
+\author			Richmond
+\par DP email:	r.choo@digipen.edu
+\date			28/9/23
+\brief
+	The function definitions for the Camera_Input class
+	This class controls the keyboard and mouse input related to the camera's
+	movement
+
+****************************************************************************
+***/
+
 #include <Graphics/Camera_Input.h>
-//#include <Input.h>
 #include "Input/Input.h"
 #include <FPSManager.h>
 

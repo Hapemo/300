@@ -1,3 +1,15 @@
+/*!*************************************************************************
+****
+\file			geom.h
+\author			Richmond
+\par DP email:	r.choo@digipen.edu
+\date			28/9/23
+\brief
+	The declarations for the geom struct, and its various sub structs
+
+****************************************************************************
+***/
+
 #pragma once
 
 #ifndef _GEOM_H
@@ -18,10 +30,19 @@
 
 namespace _GEOM
 {
+	//!< forward declarations
 	struct BoneInfo;
 	struct AssimpNodeData;
 	class Bone;
 
+
+/***************************************************************************/
+/*!
+\brief
+	All the information that each vertex is required to have
+	This contains the full information
+*/
+/**************************************************************************/
 	struct FullVertices
 	{
 		glm::vec4			m_Color;			//Color of vertex
@@ -37,6 +58,12 @@ namespace _GEOM
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
+/***************************************************************************/
+/*!
+\brief
+	the bounding box of the model, in model space
+*/
+/**************************************************************************/
 	struct bbox
 	{
 		glm::vec3 m_Min{};
@@ -51,8 +78,22 @@ namespace _GEOM
 	
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/***************************************************************************/
+/*!
+\brief
+	the overall geom struct that contains everything. this is what will
+	get de/serialized
+*/
+/**************************************************************************/
 	struct Geom
 	{
+
+	/***************************************************************************/
+	/*!
+	\brief
+		The path of the texture in the model loaded from assimp
+	*/
+	/**************************************************************************/
 		struct Texture
 		{
 			//unsigned int id;
@@ -60,6 +101,12 @@ namespace _GEOM
 			std::string path;
 		};
 
+	/***************************************************************************/
+	/*!
+	\brief
+		The scaled down version of what each struct is required to have
+	*/
+	/**************************************************************************/
 		struct alignas(std::uint32_t) VertexPos
 		{
 			glm::vec3			m_Pos;
@@ -70,12 +117,27 @@ namespace _GEOM
 			float				m_Weights[MAX_BONE_INFLUENCE];	// weights from each bone
 		};
 
+	/***************************************************************************/
+	/*!
+	\brief
+		The extra stuff that the vertex has. This is stored in a different
+		struct for modularity
+	*/
+	/**************************************************************************/
 		struct alignas(std::uint32_t) VertexExtra
 		{
 			glm::vec3 m_Normal;
 			glm::vec3 m_Tangent;
 		};
 
+
+	/***************************************************************************/
+	/*!
+	\brief
+		The data that each mesh contains.
+		This is unique to one per mesh, as what was intended by the model
+	*/
+	/**************************************************************************/
 		struct Mesh
 		{
 			std::array<char, 64>		m_name{};			// Name of mesh
@@ -84,6 +146,13 @@ namespace _GEOM
 			bbox						m_MeshBBOX;
 		};
 
+	/***************************************************************************/
+	/*!
+	\brief
+		The data of each submeshes should there be any. Such as the starting
+		vertex and index positions, and the total number of each
+	*/
+	/**************************************************************************/
 		struct SubMesh
 		{
 			std::uint32_t			m_nFaces;			//Total number of faces(triangles) in submesh
@@ -112,13 +181,35 @@ namespace _GEOM
 		bool					m_bVtxClrPresent = false;	// when this boolean is false, it means that the vertex colors are not present within the mesh.
 															// defaults to (1, 1, 1, 1)
 
+	/***************************************************************************/
+	/*!
+	\brief
+		SerializeGeom()
+		This function is used to serialize the geom struct into binary data
+	*/
+	/**************************************************************************/
 		static bool SerializeGeom(const std::string& filename, Geom& GeomData) noexcept;
 	};
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+	/***************************************************************************/
+	/*!
+	\brief
+		The skingeom is the precursor to the geom struct. It stores the data
+		required to be serialized in the end
+	*/
+	/**************************************************************************/
 	struct SkinGeom
 	{
+
+	/***************************************************************************/
+	/*!
+	\brief
+		Contains the data for the mesh. This contains the elements that each
+		vertex would need to render
+	*/
+	/**************************************************************************/
 		struct Submesh
 		{	
 			std::vector<Geom::VertexPos>				m_Vertex;
@@ -127,6 +218,14 @@ namespace _GEOM
 			int m_iMaterial{};
 		};
 
+	/***************************************************************************/
+	/*!
+	\brief
+		The data unique to the mesh. Such as the name, the vector of submeshes
+		if there should be more than one, as well as the bounding box that 
+		encompasses the model
+	*/
+	/**************************************************************************/
 		struct Mesh
 		{
 			std::string									m_Name;
@@ -144,6 +243,13 @@ namespace _GEOM
 		bool											m_bHasAnimation = false;	
 		bool											m_bVtxClrPresent = false;
 
+	/***************************************************************************/
+	/*!
+	\brief
+		Casts the data stored within skingeom into the final geom struct, that 
+		is then serialized
+	*/
+	/**************************************************************************/
 		void CastToGeomStruct(Geom& _geom) noexcept;
 	};
 }
@@ -151,6 +257,8 @@ namespace _GEOM
 
 namespace Serialization
 {
+
+#pragma region depreceated, these functions serializes in string format
 	/*
 		FORMAT:
 		[Mesh Data Number]: 5		// for unsigned int
@@ -188,6 +296,8 @@ namespace Serialization
 	bool ReadVertexPos(std::ifstream& inFile, _GEOM::Geom& GeomData) noexcept;
 	bool ReadVertexExtra(std::ifstream& inFile, _GEOM::Geom& GeomData) noexcept;
 	bool ReadIndices(std::ifstream& inFile, _GEOM::Geom& GeomData) noexcept;
+#pragma endregion
+
 }
 
 std::ostream& operator<<(std::ostream& os, const glm::vec2& v);

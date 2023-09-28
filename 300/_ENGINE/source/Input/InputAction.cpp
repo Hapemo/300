@@ -1,4 +1,5 @@
 #include "Input/InputAction.h"
+#include "Input/KeyBind.h"
 
 InputAction::InputAction() : mActionName("New Action")
 {
@@ -57,11 +58,11 @@ InputAction::InputAction(std::string action_name) : mActionName(action_name)
 		}
 	}
 }
-InputAction::InputAction(std::string action_name, E_STATE key_state, E_KEY key_binding) : mActionName(action_name) 
-{
-	InputBinding new_binding = InputBinding(key_state, key_binding); 
-	mKeyBindings.insert(std::make_pair(action_name, new_binding));
-}
+//InputAction::InputAction(std::string action_name, E_STATE key_state, E_KEY key_binding) : mActionName(action_name) 
+//{
+//	InputBinding new_binding = InputBinding(key_state, key_binding); 
+//	mKeyBindingsNew.insert(std::make_pair(action_name, new_binding));
+//}
 
 void InputAction::Enable()
 {

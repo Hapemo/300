@@ -9,6 +9,8 @@
 #include <Animator.hpp>
 #include <Camera.hpp>
 #include "EnumStrings.h"
+#include "Input/KeyBind.h"
+#include "Input/Input.h"
 //#include "Graphics/GraphicsSystem.h"
 #include "Mesh.hpp"
 
@@ -170,29 +172,47 @@ struct Children
 };
 
 struct Audio
-{	
+{
 	std::string mFilePath;				// File Path to the Audio File
 	std::string mFileName;				// Name of Audio file
-	//std::string mFullPath;				// 
-	AUDIOTYPE mAudioType;				// SFX or BGM?
-	bool mIsPlaying;					// check if audio is already playing
+	std::string mFullPath;				// 
+	AUDIOTYPE mAudioType;				// SFX or BGM
 	bool mIsPlay;						// play audio if true
 
 	// Don't need to serialize ...
 	std::vector<int> mPlaySFXChannelID;    // Currently playing in SFX Channel...
 	std::vector<int> mPlayBGMChannelID;	   // Currently playing in BGM Channel ...
+	bool             mIsPlaying;		   // Check if audio is already playing
 
-	Audio() : mFilePath("../assets/Audio"), mFileName("Sample Name"), mAudioType(AUDIO_NULL), mIsPlaying(false), mIsPlay(false) {}
+	// For Editor
+	bool			 mIsEmpty = false;	   // [For Editor] - if empty delete all data in this <Audio> component
+	bool			 mIsLoaded = false;	   // [For Loading]
 
-	Audio(std::string file_path_to_audio, std::string file_audio_name, AUDIOTYPE audio_type, bool isPlay) : mAudioType(audio_type) , mIsPlaying(false) , mIsPlay(isPlay)
-	{	
+	Audio() : mFilePath("../assets/Audio"), mFileName("Empty Audio"), mAudioType(AUDIO_NULL), mIsPlaying(false), mIsPlay(false), mIsEmpty(true) {}
+
+	Audio(std::string file_path_to_audio, std::string file_audio_name, AUDIOTYPE audio_type, bool isPlay) : mAudioType(audio_type), mIsPlaying(false), mIsPlay(isPlay)
+	{
 		mFilePath = file_path_to_audio;
 		mFileName = file_audio_name;
+		mFullPath = file_path_to_audio + "/" + mFileName;
 	}
+
+	void ClearAudioComponent()
+	{
+		mFilePath = "";
+		mFileName = "";
+		mFullPath = "";
+		mAudioType = AUDIO_NULL;
+		mIsPlay = false;
+		mIsEmpty = true;
+	}
+
+
+	int mAudio{ 0 };
+
 	//RTTR_ENABLE()
 	void							Inspect();
 };
-
 
 struct Camera 
 {
@@ -213,3 +233,145 @@ struct PointLight
 	float	mIntensity{};
 	void Inspect();
 };
+
+
+// Added [9/27]
+// Pseudo-Component (Helps InputActionMapEditor)
+struct PseudoInputAction
+{
+	std::string							      mActionName;
+	std::unordered_map<KEY_BIND, E_KEY>       mDefinedKeyMap;
+	std::unordered_map<KEY_BIND, MAP_TO_AXIS> mMapToAxis;
+
+	PseudoInputAction() : mActionName("Sample Action")
+	{
+		mDefinedKeyMap[KEY_BIND::KEY_UP] = E_KEY::UNKNOWN;
+		mDefinedKeyMap[KEY_BIND::KEY_DOWN] = E_KEY::UNKNOWN;
+		mDefinedKeyMap[KEY_BIND::KEY_LEFT] = E_KEY::UNKNOWN;
+		mDefinedKeyMap[KEY_BIND::KEY_RIGHT] = E_KEY::UNKNOWN;
+
+		mMapToAxis[KEY_BIND::KEY_UP] = Y_POSITIVE;
+		mMapToAxis[KEY_BIND::KEY_DOWN] = Y_NEGATIVE;
+		mMapToAxis[KEY_BIND::KEY_LEFT] = X_NEGATIVE;
+		mMapToAxis[KEY_BIND::KEY_RIGHT] = X_POSITIVE;
+	}
+
+	PseudoInputAction(std::string action_name) : mActionName(action_name)
+	{
+		mDefinedKeyMap[KEY_BIND::KEY_UP] = E_KEY::UNKNOWN;
+		mDefinedKeyMap[KEY_BIND::KEY_DOWN] = E_KEY::UNKNOWN;
+		mDefinedKeyMap[KEY_BIND::KEY_LEFT] = E_KEY::UNKNOWN;
+		mDefinedKeyMap[KEY_BIND::KEY_RIGHT] = E_KEY::UNKNOWN;
+
+		mMapToAxis[KEY_BIND::KEY_UP] = Y_POSITIVE;
+		mMapToAxis[KEY_BIND::KEY_DOWN] = Y_NEGATIVE;
+		mMapToAxis[KEY_BIND::KEY_LEFT] = X_NEGATIVE;
+		mMapToAxis[KEY_BIND::KEY_RIGHT] = X_POSITIVE;
+	}
+
+	void AddKeyBinding(KEY_BIND key_bind, E_KEY key)
+	{
+		mDefinedKeyMap[key_bind] = key;
+	}
+
+	void RemoveKeyBinding(KEY_BIND key_bind)
+	{
+		mDefinedKeyMap[key_bind] = E_KEY::UNKNOWN;
+	}
+
+	void LinkKeyBinding(KEY_BIND key_bind, E_KEY key)
+	{
+		mDefinedKeyMap[key_bind] = key;
+	}
+
+	glm::vec2 ReadValue(E_KEY key_pressed) const
+	{
+		glm::vec2 vec;
+		KEY_BIND key_bind;
+
+		for (auto& defined_key_pair : mDefinedKeyMap)
+		{
+			if (defined_key_pair.second == key_pressed)
+			{
+				key_bind = defined_key_pair.first;
+			}
+		}
+
+		auto map_axis_it = mMapToAxis.find(key_bind);
+
+		if (map_axis_it != mMapToAxis.end())
+		{
+			switch (map_axis_it->second)
+			{
+				case X_POSITIVE:
+					vec = { 1.0f, 0.0f };
+					return vec;
+				case X_NEGATIVE:
+					vec = { -1.0f, 0.0f };
+					return vec;
+				case Y_POSITIVE:
+					vec = { 0.0f , 1.0f };
+					return vec;
+				case Y_NEGATIVE:
+					vec = { 0.0f , -1.0f };
+					return vec;
+			}
+		}
+		vec = { 0.0f, 0.0f };
+		return vec;
+	}
+
+	int mKeyBindUp{ 0 };
+	int mKeyBindDown{ 0 };
+	int mKeyBindLeft{ 0 };
+	int mKeyBindRight{ 0 };
+
+	// [For Editor]
+	std::string mSelectedBindingUP{ " " };
+	std::string mSelectedBindingDOWN{ " " };
+	std::string mSelectedBindingLEFT{ " " };
+	std::string mSelectedBindingRIGHT{ " " };
+	// [For Update]
+	bool isEnabled = true;
+};
+
+
+struct InputActionMapEditor
+{
+	// Action Map -> contains (Action) -> contains (E_KEY)
+	// std::unordered_map<std::string, E_KEY> mActionMapNew;
+	std::unordered_map <std::string, PseudoInputAction> mActionMap;
+
+	InputActionMapEditor() {} // Just Initalizes the mActionMap.
+
+	InputActionMapEditor(std::string action_name) {
+		mActionMap[action_name] = PseudoInputAction();
+	}
+
+	void AddAction(std::string action_name)
+	{
+		PseudoInputAction new_action = PseudoInputAction(action_name);
+		mActionMap[action_name] = new_action;
+	}
+
+	void AddActionMap(std::string map_name)
+	{
+		mActionMap[map_name] = PseudoInputAction();
+	}
+
+	PseudoInputAction& GetAction(std::string action_name)
+	{
+		return mActionMap[action_name];
+	}
+
+
+	void Inspect();
+
+	// [For Editor]
+	int mAction{ 0 };
+	std::string mSelectedMapName{ " " };
+	bool selected = false;
+
+};
+
+

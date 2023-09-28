@@ -72,6 +72,8 @@ Inspect display for RigidBody components
 #include "Guid.h"
 #include "ResourceManagerTy.h"
 #include "../../../_ENGINE/include/Debug/Logger.h"
+#include "Audio/AudioSystem.h"
+#include "Input/InputMapSystem.h"
 
 
 //int Inspect::inspectmode{ inspector_layer };
@@ -142,10 +144,14 @@ void Inspect::update()
 			cam.Inspect();
 		}
 
-
 		if (ent.HasComponent<Audio>()) {
 			Audio& audio = ent.GetComponent<Audio>();
 			audio.Inspect();
+		}
+
+		if (ent.HasComponent<InputActionMapEditor>()) {
+			InputActionMapEditor& inputAction = ent.GetComponent<InputActionMapEditor>();
+			inputAction.Inspect();
 		}
 		//--------------------------------------------// must be at the LAST OF THIS LOOP
 		Add_component(); 
@@ -240,6 +246,11 @@ void Inspect::Add_component() {
 				//meshref.get
 
 			}
+		}
+
+		if (ImGui::Selectable("InputActionMapEditor")) {
+			if (!Entity(Hierarchy::selectedId).HasComponent<InputActionMapEditor>())
+				Entity(Hierarchy::selectedId).AddComponent<InputActionMapEditor>();
 		}
 
 		ImGui::EndCombo();
@@ -778,29 +789,228 @@ void PlaneCollider::Inspect() {
 void Audio::Inspect() {
 	bool delete_component = true;
 	auto audioEntities = systemManager->ecs->GetEntitiesWith<Audio>();
+	std::string full_file_path;  // With the Audio File Name
+	std::string file_path;		 // Only Audio Directory
+	std::string audio_name;
 
+	const char* audio_type[] = { "BGM" , "SFX" };
+
+	// Audio Component (Bar)
 	if (ImGui::CollapsingHeader("Audio", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
 	{
 		if (ImGui::BeginDragDropTarget())
 		{
 			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_AUDIO"))
 			{
-				const char* audioFilePath = (const char*)payload->Data;
+				full_file_path = std::string((const char*)payload->Data);
 
-				// Now you have the audioFilePath, you can do something with it.
-				// For example, you can set it to a member variable of the Audio component.
-				//mAudioFilePath = audioFilePath;
+				size_t audio_dir_pos = full_file_path.find_first_of("Audio");
 
-				// You might want to load the audio file and do further processing here.
+				if (audio_dir_pos != std::string::npos) {
+					// Use substr to extract the substring up to the found position
+					file_path = full_file_path.substr(0, audio_dir_pos + 5); // Account for "Audio"
+					//std::cout << result << std::endl;
+				}
 
-				// Example code for loading audio file using a hypothetical LoadAudio function:
-				// mAudioData = LoadAudio(mAudioFilePath);
+				size_t audio_name_start = full_file_path.find_last_of("\\");
+				size_t audio_name_end = full_file_path.find_last_of(".wav");
 
-				// Note: You will need to implement the LoadAudio function based on your audio system.
+				if (audio_name_start != std::string::npos && audio_name_end != std::string::npos && audio_name_start < audio_name_end) {
+					audio_name = full_file_path.substr(audio_name_start + 1, audio_name_end - audio_name_start);
+					//std::cout << audio_name << std::endl;
+				}
 
-				// Additional logic can be added based on what you want to do with the audio file.
+				Entity(Hierarchy::selectedId).AddComponent<Audio>({ file_path, audio_name, AUDIO_BGM, false });
+				Audio& audio_component = Entity(Hierarchy::selectedId).GetComponent<Audio>();
+
+				Entity(Hierarchy::selectedId).GetComponent<Audio>().mIsEmpty = false; // Component is populated with info
+				systemManager->mAudioSystem.get()->UpdateLoadAudio();
+			}
+
+			ImGui::EndDragDropTarget();
+		}
+
+	}
+
+	ImGui::Text("Drag drop 'Audio' files to header above 'Audio'");
+	ImGui::Text("Audio File Selected: ");
+	ImGui::Text(Entity(Hierarchy::selectedId).GetComponent<Audio>().mFullPath.c_str());
+
+	static bool remove_audio_bool = false;
+	if (!Entity(Hierarchy::selectedId).GetComponent<Audio>().mIsEmpty)
+	{
+		ImGui::Checkbox("Remove Audio File.", &remove_audio_bool);
+	}
+
+	if (!mIsEmpty && remove_audio_bool) // if not empty
+	{
+		Entity(Hierarchy::selectedId).GetComponent<Audio>().ClearAudioComponent();
+		remove_audio_bool = false;
+
+	}
+
+	if (!mIsEmpty && mIsLoaded)
+	{
+		ImGui::Checkbox("Play This", &mIsPlay);
+		ImGui::Checkbox("IsPlaying", &mIsPlaying);
+	}
+
+	// AudioType Selector 
+	if (ImGui::BeginCombo("Audio Type", audio_type[mAudio]))
+	{
+		for (unsigned char i{ 0 }; i < 2; i++) {
+			if (ImGui::Selectable(audio_type[i])) {
+				mAudio = i;
+				switch (mAudio)
+				{
+				case 0:
+					mAudioType = AUDIO_BGM;
+					break;
+				case 1:
+					mAudioType = AUDIO_BGM;
+					break;
+				}
 			}
 		}
-		ImGui::EndDragDropTarget();
+
+		// Check Which AudioType has been assigned.
+	/*	switch (Entity(Hierarchy::selectedId).GetComponent<Audio>().mAudioType)
+		{
+		case AUDIO_BGM:
+			std::cout << "BGM" << std::endl;
+			break;
+		case AUDIO_SFX:
+			std::cout << "SFX" << std::endl;
+			break;
+		}*/
+
+		ImGui::EndCombo();
+	}
+
+	if (delete_component == false)
+		Entity(Hierarchy::selectedId).RemoveComponent<Audio>();
+}
+
+void InputActionMapEditor::Inspect()
+{
+	bool delete_component = true;
+
+	const char* action_maps[] = { "PlayerMovement", "MenuControls" };
+	static std::string newActionMapName;
+
+	//std::string selected_map {};
+
+	if (ImGui::CollapsingHeader("InputActionMapEditor", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
+	{
+		auto ActionMapEntities = systemManager->ecs->GetEntitiesWith<InputActionMapEditor>();
+		//int size = ActionMapEntities.size();
+		InputActionMapEditor& editor_component = ActionMapEntities.get<InputActionMapEditor>(Hierarchy::selectedId);
+		int map_size = editor_component.mActionMap.size();
+
+		// Create New [InputActionMap]
+		ImGui::Text("Create new InputActionMap");
+		ImGui::InputText(".", &newActionMapName);
+		if (ImGui::Button("Add Action Map"))
+		{
+			// Creates a new [ActionMap] - component side.
+			Entity(Hierarchy::selectedId).GetComponent<InputActionMapEditor>().AddActionMap(newActionMapName);
+		}
+
+		// [InputActionMap] selected
+		ImGui::Text("Select Action Map (to edit): ");
+		if (ImGui::BeginCombo("Selected Action Map", mSelectedMapName.c_str()))
+		{
+
+			for (auto& action_pair : editor_component.mActionMap)
+			{
+				if (ImGui::Selectable(action_pair.first.c_str()))
+				{
+					mSelectedMapName = action_pair.first.c_str();
+
+					selected = true;
+				}
+			}
+			ImGui::EndCombo();
+		}
+
+
+		PseudoInputAction& selected_action = GetAction(mSelectedMapName);
+
+		size_t no_of_keys = sizeof(user_key) / sizeof(user_key[0]);
+
+		auto& e_key_map = systemManager->mInputActionSystem->e_key_mapping;
+
+		if (selected)
+		{
+			if (mSelectedMapName != " ")
+			{
+				if (ImGui::BeginCombo("Movement (UP)", selected_action.mSelectedBindingUP.c_str()))
+				{
+					// Iterate through the [Key Map]
+					for (auto& e_keypair : e_key_map)
+					{
+						std::string key_name = e_keypair.first;
+						if (ImGui::Selectable(key_name.c_str()))
+						{
+							selected_action.mKeyBindUp = (int)(e_key_map[key_name]);
+							selected_action.LinkKeyBinding(KEY_UP, (E_KEY)selected_action.mKeyBindUp);
+							selected_action.mSelectedBindingUP = e_keypair.first;
+						}
+					}
+					ImGui::EndCombo();
+				}
+
+				if (ImGui::BeginCombo("Movement (DOWN)", selected_action.mSelectedBindingDOWN.c_str()))
+				{
+					// Iterate through the [Key Map]
+					for (auto& e_keypair : e_key_map)
+					{
+						std::string key_name = e_keypair.first;
+						if (ImGui::Selectable(key_name.c_str()))
+						{
+							selected_action.mKeyBindDown = (int)(e_key_map[key_name]);
+							selected_action.LinkKeyBinding(KEY_DOWN, (E_KEY)selected_action.mKeyBindDown);
+							selected_action.mSelectedBindingDOWN = e_keypair.first;
+						}
+					}
+
+					ImGui::EndCombo();
+				}
+
+				if (ImGui::BeginCombo("Movement (LEFT)", selected_action.mSelectedBindingLEFT.c_str()))
+				{
+					// Iterate through the [Key Map]
+					for (auto& e_keypair : e_key_map)
+					{
+						std::string key_name = e_keypair.first;
+						if (ImGui::Selectable(key_name.c_str()))
+						{
+							selected_action.mKeyBindLeft = (int)(e_key_map[key_name]);
+							selected_action.LinkKeyBinding(KEY_LEFT, (E_KEY)selected_action.mKeyBindLeft);
+							selected_action.mSelectedBindingLEFT = e_keypair.first;
+						}
+					}
+
+					ImGui::EndCombo();
+				}
+
+				if (ImGui::BeginCombo("Movement (RIGHT)", selected_action.mSelectedBindingRIGHT.c_str()))
+				{
+					// Iterate through the [Key Map]
+					for (auto& e_keypair : e_key_map)
+					{
+						std::string key_name = e_keypair.first;
+						if (ImGui::Selectable(key_name.c_str()))
+						{
+							selected_action.mKeyBindRight = (int)(e_key_map[key_name]);
+							selected_action.LinkKeyBinding(KEY_RIGHT, (E_KEY)selected_action.mKeyBindRight);
+							selected_action.mSelectedBindingRIGHT = e_keypair.first;
+						}
+					}
+
+					ImGui::EndCombo();
+				}
+			}
+		}
 	}
 }

@@ -1,3 +1,16 @@
+/**-------------------------------------------------------------------------------------/
+ * @file
+ *  Random.cpp
+ * @author
+ *  Lee Fu Sheng Roy, 670000622, f.lee@digipen.edu
+ * @date
+ *  2023/05/21
+ * @brief
+ *  Class definition of Camera.
+ * @copyright
+ *  Copyright (C) 2023 DigiPen Institute of Technology.
+ *-------------------------------------------------------------------------------------*/
+
 /************************************************************************/
 /* concatenation of following two 16-bit multiply with carry generators */
 /* x(n)=a*x(n-1)+carry mod 2^16 and y(n)=b*y(n-1)+carry mod 2^16,       */

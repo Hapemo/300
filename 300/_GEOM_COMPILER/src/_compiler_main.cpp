@@ -1,12 +1,25 @@
+/*!*************************************************************************
+****
+\file			_compiler_main.cpp
+\author			Richmond
+\par DP email:	r.choo@digipen.edu
+\date			28/9/23
+\brief
+	The entrypoint for the geom compiler. This file calls the other supporting
+	functions that the geom compiler uses
+
+****************************************************************************
+***/
+
 #include <Geom_Compiler.h>
 #include <geom.h>
 #include <iostream>
 
 
-// Extracts the raw filename itself
 /***************************************************************************/
 /*!
 \brief
+	// Extracts the raw filename itself
 	Helper function that gets the raw filename without any prefix and postfix
 	extensions
 */
