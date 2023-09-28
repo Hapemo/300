@@ -18,4 +18,8 @@
 
 		winSize = { ImGui::GetWindowSize().x ,ImGui::GetWindowSize().y };
 
+		if (ImGui::IsItemClicked(ImGuiMouseButton_Left))
+		{
+			systemManager->mGraphicsSystem->m_CameraControl = CAMERA_TYPE::CAMERA_TYPE_GAME;
+		}
 	}

@@ -75,6 +75,7 @@ public:
 
 	// -- Camera --
 	GFX::Camera m_EditorCamera;
+	CAMERA_TYPE m_CameraControl;
 
 	// -- Textures --
 	std::vector<int> m_Textures;
@@ -84,13 +85,10 @@ public:
 	bool	m_EditorMode;
 	bool	m_EnableGlobalAnimations{ 1 };
 	bool	m_HasLight{ false };
+
 	// -- Private Functions --
 	void DrawAll(GFX::Mesh& mesh);		// Renders all instances of a given mesh
-private:
 
-
-	//// for performance
-	//double startTime, endTime;
 };
 
 #endif

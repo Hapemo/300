@@ -44,9 +44,13 @@ void GraphicsSystem::Init()
 	m_GameFbo.Create(m_Width, m_Height, m_EditorMode);
 
 	// Set Cameras' starting position
-	SetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR, {0, 0, 20});							// Position of camera
-	SetCameraTarget(CAMERA_TYPE::CAMERA_TYPE_EDITOR, {0, 0, 0});								// Target of camera
-	SetCameraProjection(CAMERA_TYPE::CAMERA_TYPE_EDITOR, 60.f, m_Window->size(), 0.1f, 900.f); // Projection of camera
+	SetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR, {0, 0, 20});									// Position of camera
+	SetCameraTarget(CAMERA_TYPE::CAMERA_TYPE_EDITOR, {0, 0, 0});									// Target of camera
+	SetCameraProjection(CAMERA_TYPE::CAMERA_TYPE_ALL, 60.f, m_Window->size(), 0.1f, 900.f);			// Projection of camera
+
+	// init game camera
+	SetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_GAME, { 16.218f, 474.854f, 748.714f });
+	SetCameraTarget(CAMERA_TYPE::CAMERA_TYPE_GAME, { 16.21f, 473.694f, 739.714f });
 
 	if (m_EditorMode)
 	{
@@ -659,6 +663,7 @@ void GraphicsSystem::UpdateCamera(CAMERA_TYPE type, const float &dt)
 	case CAMERA_TYPE::CAMERA_TYPE_GAME:
 		Camera_Input::getInstance().updateCameraInput(camera.GetComponent<Camera>().mCamera, dt);
 		camera.GetComponent<Camera>().mCamera.Update();
+		camera.GetComponent<Transform>().mTranslate = camera.GetComponent<Camera>().mCamera.mPosition;
 		break;
 
 	case CAMERA_TYPE::CAMERA_TYPE_EDITOR:
@@ -667,11 +672,18 @@ void GraphicsSystem::UpdateCamera(CAMERA_TYPE type, const float &dt)
 		break;
 
 	case CAMERA_TYPE::CAMERA_TYPE_ALL:
-		Camera_Input::getInstance().updateCameraInput(m_EditorCamera, dt);
 		m_EditorCamera.Update();
-
-		// Camera_Input::getInstance().updateCameraInput(camera.GetComponent<Camera>().mCamera, dt);
 		camera.GetComponent<Camera>().mCamera.Update();
+
+		if (m_CameraControl == CAMERA_TYPE::CAMERA_TYPE_EDITOR) {
+			Camera_Input::getInstance().updateCameraInput(m_EditorCamera, dt);
+		}
+
+		else if (m_CameraControl == CAMERA_TYPE::CAMERA_TYPE_GAME) {
+			Camera_Input::getInstance().updateCameraInput(camera.GetComponent<Camera>().mCamera, dt);
+			camera.GetComponent<Transform>().mTranslate = camera.GetComponent<Camera>().mCamera.mPosition;
+		}
+
 		break;
 	}
 }

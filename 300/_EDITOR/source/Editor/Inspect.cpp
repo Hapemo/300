@@ -329,7 +329,8 @@ void Camera::Inspect()
 		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
 			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
 		ImGui::SameLine();
-		ImGui::DragFloat3("##Position", (float*)&mCamera.mPosition);
+		ImGui::DragFloat3("Camera Position", (float*)&mCamera.mPosition);
+		ImGui::DragFloat3("Camera Target", (float*)&mCamera.mTarget);
 
 
 

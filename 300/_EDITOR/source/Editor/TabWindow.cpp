@@ -3,6 +3,8 @@
 #include "ECS/ECS.h"
 #include "ECS/ECS_Systems.h"
 
+#include <Graphics/Camera_Input.h>
+
 void TabWindow::init() {
     //mWinFlag |= ImGuiWindowFlags_NoBringToFrontOnFocus
     //    | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_MenuBar
@@ -14,7 +16,6 @@ void TabWindow::update() {
 
 	glm::vec3 mTranslate{};
 	glm::vec3 mRotate{};
-	float speed{};
 	ImGui::Text("Position");
 	ImGui::SameLine();
 	ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
@@ -33,7 +34,11 @@ void TabWindow::update() {
 	ImGui::SameLine();
 	ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
 		- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
-	ImGui::DragFloat("##CS", (float*)&speed);
+	ImGui::DragFloat("##CS", (float*)&Camera_Input::getInstance().mCameraSpeed);
+
+	const auto& editorcam = systemManager->mGraphicsSystem->m_EditorCamera;
+	ImGui::Text("Editor Camera Position: %0.2f, %0.2f, %0.2f", editorcam.mPosition.x, editorcam.mPosition.y, editorcam.mPosition.z);
+	ImGui::Text("Editor Camera Target: %0.2f, %0.2f, %0.2f", editorcam.mTarget.x, editorcam.mTarget.y, editorcam.mTarget.z);
 
 	ImGui::Separator();
 	ImGui::Text("Debug");

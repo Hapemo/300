@@ -59,6 +59,8 @@ void SceneWindow::update()
 			unsigned int getid = systemManager->mGraphicsSystem->GetEntityID(((ImGui::GetMousePos().x - ImGui::GetWindowPos().x) / winSize.x),
 				((ImGui::GetMousePos().y - ImGui::GetWindowPos().y) / winSize.y));
 
+		//std::cout << getid << ": ID \n";
+		systemManager->mGraphicsSystem->m_CameraControl = CAMERA_TYPE::CAMERA_TYPE_EDITOR;
 
 			if (getid != 0) {
 				Hierarchy::selectedId = static_cast<entt::entity>(getid);
