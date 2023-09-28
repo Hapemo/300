@@ -1,0 +1,28 @@
+[
+    {
+        "EntityID": 4,
+        "General": {
+            "Name": "Ganmer",
+            "Active": true,
+            "Paused": true,
+            "Subtag": "Active"
+        },
+        "Transform": {
+            "Scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "Rotate": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Translate": [
+                0.0,
+                0.0,
+                0.0
+            ]
+        }
+    }
+]

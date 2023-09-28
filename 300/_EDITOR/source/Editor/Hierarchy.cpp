@@ -531,7 +531,6 @@ void Hierarchy::update() {
                 systemManager->mGameStateSystem->mCurrentGameState.mScenes[RselectedScene].mEntities.erase(child.id);
             }
 
-
             systemManager->mGameStateSystem->mCurrentGameState.mScenes[RselectedScene].mEntities.erase(Hierarchy::RselectedId);
             systemManager->ecs->DeleteEntity(Hierarchy::RselectedId);
 
@@ -552,11 +551,16 @@ void Hierarchy::update() {
 
     if (ImGui::BeginPopup("Edit_scene"))
     {
-        if (ImGui::Selectable("Rename"))
+        ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 0);
+
+        if (ImGui::Button("Rename"))
         {
+
             ImGui::OpenPopup("Delete?");
-            sCPopup = false;
+            //sCPopup = false;
         }
+
+        ImGui::PopStyleVar();
         ImVec2 center = ImGui::GetMainViewport()->GetCenter();
         ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
 
