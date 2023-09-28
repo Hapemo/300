@@ -122,12 +122,12 @@ Entity Scene::AddEntity() {
 
 void Scene::RemoveEntity(Entity _e) {
 	// if (_e.GetComponent<General>().isActive) _e.Deactivate(); // Temporary remove - Han
-	if (_e.HasChildren()) {
+	/*if (_e.HasChildren()) {
 		std::vector<Entity> children = _e.GetAllChildren();
 		for (Entity child : children) {
 			RemoveEntity(child);
 		}
-	}
+	}*/
 
 	mEntities.erase(_e);
 	systemManager->ecs->DeleteEntity(_e);

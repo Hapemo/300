@@ -16,6 +16,7 @@ PhysicsSystem::PhysicsSystem()
 void PhysicsSystem::Init()
 {
 	//get all entities with physics components
+	mActors.clear();
 	auto view = systemManager->ecs->GetEntitiesWith<Transform, RigidBody>();
 	
 	for (Entity e : view)
@@ -40,7 +41,9 @@ void PhysicsSystem::Update(float dt)
 		physx::PxTransform PXform = itr->second->getGlobalPose();
 		Transform& xform = Entity(itr->first).GetComponent<Transform>();
 		xform.mTranslate = Convert(PXform.p);
-		xform.mRotate = glm::eulerAngles(Convert(PXform.q));
+		if (Entity(itr->first).HasComponent<BoxCollider>())
+			xform.mTranslate -= Entity(itr->first).GetComponent<BoxCollider>().mTranslateOffset;
+		xform.mRotate = glm::vec3(0,0,0);
 		RigidBody& rbod = Entity(itr->first).GetComponent<RigidBody>();
 		if (rbod.mMotion != MOTION::DYNAMIC)
 			continue;
