@@ -1,26 +1,8 @@
 #pragma once
-#include "../pch.h"
+#include "pch.h"
 #include "Input/Input.h"
-#include "Input/Subscriber.h" // Subscriber Model
-
-// Similar to Action Callbacks (WIP) - 9/24/2023 
-enum MAP_TO_AXIS
-{
-	X_POSITIVE, 
-	Y_POSITIVE, 
-	X_NEGATIVE,
-	Y_NEGATIVE, 
-	EMPTY
-};
-
-enum KEY_BIND
-{
-	KEY_UP,
-	KEY_LEFT,
-	KEY_RIGHT,
-	KEY_DOWN,
-	KEY_TOTAL
-};
+//#include "Input/Subscriber.h" // Subscriber Model
+#include "Input/KeyBind.h"
 
 struct InputBinding
 {
@@ -42,7 +24,7 @@ public:
 public:
 	InputAction();
 	InputAction(std::string action_name);
-	InputAction(std::string action_name, E_STATE key_state, E_KEY key_binding);
+	//InputAction(std::string action_name, E_STATE key_state, E_KEY key_binding);
 
 	void Enable();
 	void Disable();
@@ -57,7 +39,7 @@ public:
 
 private:
 	std::unordered_map<KEY_BIND, InputBinding>       mKeyBindingsNew;					// Will only have the [Base 4 Directions Map] - Defined in (Init)
-	std::unordered_map<std::string, InputBinding>    mKeyBindings;						// [Limit to 2 bindings] (for now)
+	//std::unordered_map<std::string, InputBinding>    mKeyBindings;						// [Limit to 2 bindings] (for now)
 	//INPUT_STATE									     mCurrentState;						
 	bool										     isEnable = false;
 	//std::vector<Subscriber>						  mSubscribers;

@@ -2,8 +2,8 @@
 \file Input.h
 \author Jazz Teoh Yu Jue
 \par DP email: j.teoh\@digipen.edu
-\par Group: Pepe Production
-\date 28-09-2023
+\par Group: Memory Leak Studios
+\date 27-11-2022
 \brief
 Input detects keyboard and mouse input states and returns that to caller
 *******************************************************************************/
@@ -90,7 +90,8 @@ enum E_KEY {
   M_BUTTON_5,
   M_BUTTON_6,
   M_BUTTON_7,
-  M_BUTTON_8
+  M_BUTTON_8,
+  KEY_TOTAL
 };
 
 // State of key pressed

@@ -33,9 +33,11 @@ public:
 	AudioSystem();
 	~AudioSystem();
 
+	void UpdateLoadAudio();																	// [For Engine] - Add Component mid-way
+
 public:
 	int  ErrCodeCheck(FMOD_RESULT result);													// Debugging tool
-	void LoadAudio(std::string file_path, std::string audio_name);
+	bool LoadAudio(std::string file_path, std::string audio_name);
 	void LoadAudioFiles(std::filesystem::path file_path);									// Load single file
 	void LoadAudioFromDirectory(std::filesystem::path file_path);							// Load files from directory
 	void PlayAudio(std::string audio_name, AUDIOTYPE audio_type, float audio_vol = 1.0f);	// Play an audio based on it's name
@@ -53,16 +55,15 @@ public:
 	void TogglePauseBGMSounds();
 	void TogglePauseSpecific(AUDIOTYPE audio_type, int channel_id);
 
-// Helper Functions...
+	// Helper Functions...
 public:
-	Channel& FindChannel(AUDIOTYPE audio_type , int id);
+	Channel& FindChannel(AUDIOTYPE audio_type, int id);
 
 	// Will build as needs require.
 private:
-	std::unordered_map<AUDIOTYPE, std::vector<FMOD::Channel*>>  mChannels;	// Depreciated [9/25]
+	// std::unordered_map<AUDIOTYPE, std::vector<FMOD::Channel*>>  mChannels;	// Depreciated [9/25]
 	std::unordered_map<AUDIOTYPE, std::vector<Channel>>         mChannelsNew;
 	std::unordered_map<std::string, FMOD::Sound*>				mSounds;
-	//std::unordered_map<AUDIOTYPE, std::unordered_map<std::string, FMOD::Sound*>> mSounds;
 
 	// Global Volume 
 	float sfxVolume;
