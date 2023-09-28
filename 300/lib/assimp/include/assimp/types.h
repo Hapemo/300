@@ -364,7 +364,7 @@ struct aiString {
         if (!len) {
             return;
         }
-        if (length + len >= MAXLEN) {
+        if (static_cast<size_t>(length + len) >= MAXLEN) {
             return;
         }
 

@@ -265,15 +265,13 @@ void GraphicsSystem::Update(float dt)
 /**************************************************************************/
 void GraphicsSystem::EditorDraw(float dt)
 {
+	(void)dt;
 
-	
 	std::map<std::string, short> renderedMesh;
 	auto meshRendererInstances = systemManager->ecs->GetEntitiesWith<MeshRenderer>();
 
 	// Prepare and bind the Framebuffer to be rendered on
 	m_Fbo.PrepForDraw();
-	int fboWidth = m_Fbo.GetWidth();
-	int fboHeight = m_Fbo.GetHeight();
 
 	m_Renderer.RenderAll(m_EditorCamera.viewProj());
 
@@ -411,6 +409,8 @@ void GraphicsSystem::EditorDraw(float dt)
 /**************************************************************************/
 void GraphicsSystem::GameDraw(float dt)
 {
+	(void)dt;
+
 	std::map<std::string, short> renderedMesh;
 	auto meshRendererInstances = systemManager->ecs->GetEntitiesWith<MeshRenderer>();
 
@@ -421,8 +421,6 @@ void GraphicsSystem::GameDraw(float dt)
 
 	// Prepare and bind the Framebuffer to be rendered on
 	m_GameFbo.PrepForDraw();
-	int fboWidth = m_GameFbo.GetWidth();
-	int fboHeight = m_GameFbo.GetHeight();
 
 	// m_Renderer.RenderAll(camera.GetComponent<Camera>().mCamera.viewProj());
 
@@ -450,7 +448,6 @@ void GraphicsSystem::GameDraw(float dt)
 		// gets the shader filepath
 		std::pair<std::string, std::string> shaderstr = inst.GetComponent<MeshRenderer>().mShaderPath;
 		GFX::Shader &shaderinst = systemManager->mResourceSystem->get_Shader(shaderstr.first + shaderstr.second);
-		unsigned shaderID = shaderinst.GetHandle();
 
 		GFX::Texture *textureInst[4]{};
 		for (int i{0}; i < 4; i++)
@@ -775,6 +772,7 @@ vec3 GraphicsSystem::GetCameraTarget(CAMERA_TYPE type)
 		return m_EditorCamera.target();
 
 	case CAMERA_TYPE::CAMERA_TYPE_ALL:
+		return vec3();
 		break;
 	}
 }
@@ -802,6 +800,7 @@ vec3 GraphicsSystem::GetCameraDirection(CAMERA_TYPE type)
 		return m_EditorCamera.direction();
 
 	case CAMERA_TYPE::CAMERA_TYPE_ALL:
+		return vec3();
 		break;
 	}
 }

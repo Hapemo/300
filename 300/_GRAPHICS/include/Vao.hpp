@@ -61,7 +61,7 @@ Unbinds the VAO from the openGL context
 		void Unbind() const;
 
 	private:
-		GLuint mID;
+		GLuint mID{};
 	};
 }
 

@@ -284,7 +284,7 @@ void GFX::Mesh::DrawAllInstances()
 
 	mVao.Bind();		// Bind mesh
 	PrepForDraw();		// Copy data from local buffer into opengl buffer
-	glDrawElementsInstanced(GL_TRIANGLES, mIndexCount, GL_UNSIGNED_INT, nullptr, mLTW.size());
+	glDrawElementsInstanced(GL_TRIANGLES, mIndexCount, GL_UNSIGNED_INT, nullptr, static_cast<GLsizei>(mLTW.size()));
 	mVao.Unbind();		// Unbind mesh
 
 	// TODO: Unbind textures
@@ -507,7 +507,7 @@ namespace Deserialization
 					infile.read((char*)&animation.m_TicksPerSecond, sizeof(float));
 
 					// Bone info map
-					for (unsigned j{}; j < animation.m_BoneCounter; ++j)
+					for (int j{}; j < animation.m_BoneCounter; ++j)
 					{
 						_GEOM::BoneInfo temp;
 						char cname[64];
@@ -524,7 +524,7 @@ namespace Deserialization
 
 					// Bones
 					animation.m_Bones.resize(animation.m_BoneCounter);
-					for (unsigned j{}; j < animation.m_BoneCounter; ++j)
+					for (int j{}; j < animation.m_BoneCounter; ++j)
 					{
 						auto& boneinst = animation.m_Bones[j];
 

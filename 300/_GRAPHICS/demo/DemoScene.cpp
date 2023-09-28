@@ -73,7 +73,7 @@ void GFX::DemoScene::Initialize()
     mCamera.Update();
 
     // Seed random generator
-    GFX::Utils::srand(std::chrono::system_clock::now().time_since_epoch().count(), 0);
+    GFX::Utils::srand(static_cast<unsigned int>(std::chrono::system_clock::now().time_since_epoch().count()), 0);
     
     // Initialize ImGui
     // ImGui

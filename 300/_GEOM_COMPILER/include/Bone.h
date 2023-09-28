@@ -113,13 +113,13 @@ namespace _GEOM
 		std::vector<KeyPosition> m_Positions;
 		std::vector<KeyRotation> m_Rotations;
 		std::vector<KeyScale> m_Scales;
-		int m_NumPositions;
-		int m_NumRotations;
-		int m_NumScalings;
-
+		std::string m_Name{};
 		glm::mat4 m_LocalTransform;
-		std::string m_Name;
-		int m_ID;
+
+		int m_NumPositions{};
+		int m_NumRotations{};
+		int m_NumScalings{};
+		int m_ID{};
 
 	//!< Public Member Functions
 	public:

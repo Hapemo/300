@@ -145,11 +145,11 @@ close
 
     private:
         ivec2 mSize;
-        GLFWwindow* mWindow;
-        GLFWmonitor* mMonitor;
+        GLFWwindow* mWindow{};
+        GLFWmonitor* mMonitor{};
 
         // -- Flags -- 
-        bool mFullscreen;
+        bool mFullscreen{};
     };
 
 }

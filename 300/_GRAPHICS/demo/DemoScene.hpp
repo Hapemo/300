@@ -55,7 +55,7 @@ namespace GFX {
         Shader mModelShader;
         FBO mFbo;
         Shader mSceneShader;
-        unsigned int mSceneAttachment;
+        unsigned int mSceneAttachment{};
 
         // -- Stats --
         float mDt = 0.0f;
@@ -63,7 +63,7 @@ namespace GFX {
         float mCamSpeed = 50.f;
 
         // -- Flags --
-        bool mFullscreen;
+        bool mFullscreen{};
 
         // -- Helper --
         
