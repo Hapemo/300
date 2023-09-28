@@ -13,6 +13,16 @@
 
 #include "Camera.hpp"
 
+GFX::Camera::Camera()
+{
+	mYaw = -90.f ;
+	mPitch = 0.f;
+	mAspectRatio = 0.f;
+	mNear = 0.f;   
+	mFar = 0.f;    
+	mFovDegree = 0.f;
+}
+
  /**---------------------------------------------------------------------------/
   * @brief
   *  Set the position of the camera

@@ -8,7 +8,7 @@
 
 
 Camera_Input::Camera_Input()
-	: mCameraSpeed{ 100.f }, mMouseSensitivity{ 0.1f }, mYaw{ -90.f }, mPitch{}
+	: mCameraSpeed{ 100.f }, mMouseSensitivity{ 0.1f }
 {}
 
 
@@ -65,26 +65,26 @@ void Camera_Input::updateCameraInput(GFX::Camera& cam, const float& dt)
 			{
 				delta *= mMouseSensitivity;		// adjust the mouse movement sensitivity
 
-				mYaw += delta.x;
-				mPitch += delta.y;
+				cam.mYaw += delta.x;
+				cam.mPitch += delta.y;
 			}
 		}
 		
 		// update previous cursor pos
 		cam.SetCursorPosition(Input::CursorPos());
 
-		if (mPitch > 89.0f) {
-			mPitch = 89.0f;
+		if (cam.mPitch > 89.0f) {
+			cam.mPitch = 89.0f;
 		}
 
-		if (mPitch < -89.0f) {
-			mPitch = -89.0f;
+		if (cam.mPitch < -89.0f) {
+			cam.mPitch = -89.0f;
 		}
 
 		glm::vec3 direction;
-		direction.x = cos(glm::radians(mYaw)) * cos(glm::radians(mPitch));
-		direction.y = sin(glm::radians(mPitch));
-		direction.z = sin(glm::radians(mYaw)) * cos(glm::radians(mPitch));
+		direction.x = cos(glm::radians(cam.mYaw)) * cos(glm::radians(cam.mPitch));
+		direction.y = sin(glm::radians(cam.mPitch));
+		direction.z = sin(glm::radians(cam.mYaw)) * cos(glm::radians(cam.mPitch));
 		direction.y *= -1;
 
 		// update the camera's target based on the normalized direction

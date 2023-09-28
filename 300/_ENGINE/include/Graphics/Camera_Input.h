@@ -16,7 +16,6 @@ public:
 	// Member variable
 	float	mCameraSpeed;
 	float	mMouseSensitivity;
-	float	mYaw, mPitch;
 
 	// Member function
 	Camera_Input();

@@ -21,6 +21,8 @@ namespace GFX
     class Camera
     {
     public:
+        Camera();
+
         // -- Getter --
         vec3 position();
         vec3 target();
@@ -39,19 +41,20 @@ namespace GFX
 
         void Update();
 
-        float mFovDegree;
         mat4 mProjection;
         mat4 mView;
 
 
-        mat4 mViewProjection;
-        vec3 mPosition; //save
-        vec3 mTarget;   //save
-        vec2 mCursorPos;
-        ivec2 mSize;    //save
-        float mAspectRatio;
-        float mNear;    //save
-        float mFar;     //save
+        mat4    mViewProjection;
+        vec3    mPosition; //save
+        vec3    mTarget;   //save
+        vec2    mCursorPos;
+        ivec2   mSize;    //save
+        float   mAspectRatio;
+        float   mNear;    //save
+        float   mFar;     //save
+        float   mFovDegree;
+        float	mYaw, mPitch;
     };
 }
 
