@@ -1,3 +1,17 @@
+/**-------------------------------------------------------------------------------------/
+ * @file
+ *  Camera.hpp
+ * @author
+ *  Lee Fu Sheng Roy, 670000622,	f.lee@digipen.edu
+ *  Richmond Choo,					r.choo@digipen.edu
+ * @date
+ *  2023/09/21
+ * @brief
+ *  Class definition of Camera.
+ * @copyright
+ *  Copyright (C) 2023 DigiPen Institute of Technology.
+ *-------------------------------------------------------------------------------------*/
+
 #ifndef MESH_HPP
 #define MESH_HPP
 
@@ -91,15 +105,7 @@ namespace GFX
 	class MeshManager
 	{
 	public:
-		//constexpr static int  MAX_RESOURCE = 2400;
-
 		std::vector<Mesh> mSceneMeshes;
-		//std::unordered_map<unsigned, MeshData*> mSceneMeshes;
-		//MeshData* m_pInfoBufferEmptyHead{ nullptr };
-		//std::array<MeshData, MAX_RESOURCE>         m_Meshbuffer;
-
-		//MeshData& AllocRscInfo();
-		//void ReleaseRscInfo(MeshData& RscInfo);
 
 	public:
 		static MeshManager& GetInstance()
@@ -111,7 +117,6 @@ namespace GFX
 		MeshManager() = default;
 		MeshManager(MeshManager const&) = delete;
 		void Init();
-		//void Destroy();
 
 		void operator=(MeshManager const&) = delete;
 

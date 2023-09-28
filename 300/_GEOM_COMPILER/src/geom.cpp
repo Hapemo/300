@@ -1,3 +1,15 @@
+/*!*************************************************************************
+****
+\file			geom.cpp
+\author			Richmond
+\par DP email:	r.choo@digipen.edu
+\date			28/9/23
+\brief
+	The functions used to assist with the functionalities of the geom class
+
+****************************************************************************
+***/
+
 #include <geom.h>
 #include <iostream>
 #include <sstream>

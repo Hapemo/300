@@ -1,3 +1,15 @@
+/*!*************************************************************************
+****
+\file			Bone.cpp
+\author			Richmond
+\par DP email:	r.choo@digipen.edu
+\date			28/9/23
+\brief
+	The definitions for the bone class
+
+****************************************************************************
+***/
+
 #include <Bone.h>
 
 #include <iostream>

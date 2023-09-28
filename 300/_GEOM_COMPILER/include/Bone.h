@@ -1,3 +1,16 @@
+/*!*************************************************************************
+****
+\file			Bone.h
+\author			Richmond
+\par DP email:	r.choo@digipen.edu
+\date			28/9/23
+\brief
+	The declarations for the bone class and the structs that assist with
+	its implementation
+
+****************************************************************************
+***/
+
 #pragma once
 
 #ifndef _BONE_H
@@ -16,8 +29,14 @@
 
 namespace _GEOM
 {
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/***************************************************************************/
+/*!
+\brief
+	This class contains the offset for each individual bone relative to the
+	model space
+*/
+/**************************************************************************/
 	struct BoneInfo
 	{
 		/*id is index in finalBoneMatrices*/
@@ -27,8 +46,15 @@ namespace _GEOM
 		glm::mat4 offset;
 	};
 
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
+/***************************************************************************/
+/*!
+\brief
+	This class contains the recursive parent/child nature of the bones.
+	The m_children stores the children of this particular bone, which
+	then contains its own children
+*/
+/**************************************************************************/
 	struct AssimpNodeData
 	{
 		glm::mat4						m_Transformation{};
@@ -37,28 +63,48 @@ namespace _GEOM
 		std::vector<AssimpNodeData>		m_Children{};
 	};
 
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+/***************************************************************************/
+/*!
+\brief
+	The position keyframe within the animation
+*/
+/**************************************************************************/
 	struct KeyPosition
 	{
 		glm::vec3 position;
 		float timeStamp;
 	};
 
+/***************************************************************************/
+/*!
+\brief
+	The rotation keyframe within the animation
+*/
+/**************************************************************************/
 	struct KeyRotation
 	{
 		glm::quat orientation;
 		float timeStamp;
 	};
 
+/***************************************************************************/
+/*!
+\brief
+	The scale keyframe within the animation
+*/
+/**************************************************************************/
 	struct KeyScale
 	{
 		glm::vec3 scale;
 		float timeStamp;
 	};
 
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+/***************************************************************************/
+/*!
+\brief
+	The bone class that contains the data of a single bone
+*/
+/**************************************************************************/
 	class Bone
 	{
 
@@ -77,30 +123,73 @@ namespace _GEOM
 
 	//!< Public Member Functions
 	public:
-		// Constructors
+		
+	/***************************************************************************/
+	/*!
+	\brief
+		The default bone constructor
+	*/
+	/**************************************************************************/
 		Bone() = default;
+
+	/***************************************************************************/
+	/*!
+	\brief
+		Non default constructor for the bone
+	*/
+	/**************************************************************************/
 		Bone(const std::string& name, int ID, const aiNodeAnim* channel);
 
-		// Getters
+	/***************************************************************************/
+	/*!
+	\brief
+		Getters for the bone class
+	*/
+	/**************************************************************************/
 		glm::mat4 GetLocalTransform() const;
 		std::string GetBoneName() const;
 		int GetBoneID() const;
 
-		// Modified Getters
+	/***************************************************************************/
+	/*!
+	\brief
+		Specialized getters for the bone class
+	*/
+	/**************************************************************************/
 		int GetPositionIndex(float animationTime);
 		int GetRotationIndex(float animationTime);
 		int GetScaleIndex(float animationTime);
 
-		// Primary Functions
+	/***************************************************************************/
+	/*!
+	\brief
+		The update function given the animation time
+	*/
+	/**************************************************************************/
 		void Update(float animationTime);
 
 	//!< Private Member Functions
 	private:
+
+		/***************************************************************************/
+		/*!
+		\brief
+			Interpolates the Position, Rotation, and Scale according to the animation
+			time
+		*/
+		/**************************************************************************/
 		glm::mat4 InterpolatePosition(float animationTime);
 		glm::mat4 InterpolateRotation(float animationTime);
 		glm::mat4 InterpolateScaling(float animationTime);
-		float GetScaleFactor(float lastTimeStamp, float nextTimeStamp, float animationTime);
 
+		/***************************************************************************/
+		/*!
+		\brief
+			The scale result of the animation time as a result of its outcome 
+			between its last timestamp and its next timestamp
+		*/	
+		/**************************************************************************/
+		float GetScaleFactor(float lastTimeStamp, float nextTimeStamp, float animationTime);
 	};
 }
 
