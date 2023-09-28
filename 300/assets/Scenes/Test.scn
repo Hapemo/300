@@ -1,6 +1,6 @@
 [
     {
-        "EntityID": 1,
+        "EntityID": 1048578,
         "General": {
             "Name": "Floor",
             "Active": true,
@@ -37,14 +37,14 @@
             "MaterialInstancePath": [
                 "../assets/Compressed/Wood Material 15_BaseColor.ctexture",
                 "../assets/Compressed/Wood Material 15_Normal.ctexture",
-                "../assets/Compressed/Wood Material 15_BaseColor.ctexture",
-                "../assets/Compressed/Wood Material 15_BaseColor.ctexture"
+                " ",
+                " "
             ],
             "MeshPath": "../assets/compiled_geom/Wall_Partition(No Material).geom",
             "GUID": 0,
             "TextureCont": [
-                false,
-                false,
+                true,
+                true,
                 false,
                 false
             ]
@@ -63,11 +63,11 @@
         },
         "Children": {
             "NumChildren": 5,
-            "FirstChild": 8
+            "FirstChild": 1048584
         }
     },
     {
-        "EntityID": 2,
+        "EntityID": 1048579,
         "General": {
             "Name": "Camera",
             "Active": true,
@@ -86,16 +86,16 @@
                 0.0
             ],
             "Translate": [
-                400.0,
-                121.0,
-                -9.0
+                0.0,
+                0.0,
+                0.0
             ]
         },
         "Camera": {
             "Position": [
-                400.0,
-                121.0,
-                11.0
+                0.0,
+                0.0,
+                0.0
             ],
             "Target": [
                 0.0,
@@ -103,7 +103,7 @@
                 0.0
             ],
             "Size": [
-                354,
+                502,
                 607
             ],
             "Near": 0.10000000149011612,
@@ -111,65 +111,7 @@
         }
     },
     {
-        "EntityID": 3,
-        "General": {
-            "Name": "Animation",
-            "Active": true,
-            "Paused": false,
-            "Subtag": "Active"
-        },
-        "Transform": {
-            "Scale": [
-                270.382568359375,
-                211.37704467773438,
-                67.81583404541016
-            ],
-            "Rotate": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "Translate": [
-                0.0,
-                10.0,
-                0.0
-            ]
-        },
-        "MeshRenderer": {
-            "ShaderPath": [
-                "../_GRAPHICS/shader_files/animations_vert.glsl",
-                "../_GRAPHICS/shader_files/pointLight_frag.glsl"
-            ],
-            "MaterialInstancePath": [
-                "../assets/Compressed/Vampire_diffuse.ctexture",
-                "../assets/Compressed/Vampire_normal.ctexture",
-                "../assets/Compressed/Vampire_emission.ctexture",
-                "../assets/Compressed/Vampire_specular.ctexture"
-            ],
-            "MeshPath": "../assets/compiled_geom/dancing_vampire.geom",
-            "GUID": 0,
-            "TextureCont": [
-                true,
-                true,
-                false,
-                false
-            ]
-        },
-        "BoxCollider": {
-            "ScaleOffset": [
-                1.0,
-                0.800000011920929,
-                1.5
-            ],
-            "TranslateOffset": [
-                0.0,
-                80.0,
-                0.0
-            ]
-        }
-    },
-    {
-        "EntityID": 4,
+        "EntityID": 1048580,
         "General": {
             "Name": "Light",
             "Active": true,
@@ -200,11 +142,11 @@
                 1.0
             ],
             "Attenuation": 0.0,
-            "Intensity": 28.0
+            "Intensity": 5.0
         }
     },
     {
-        "EntityID": 5,
+        "EntityID": 1048581,
         "General": {
             "Name": "Wall",
             "Active": true,
@@ -241,14 +183,14 @@
             "MaterialInstancePath": [
                 "../assets/Compressed/Wood Material 15_BaseColor.ctexture",
                 "../assets/Compressed/Wood Material 15_Normal.ctexture",
-                "../assets/Compressed/Wood Material 15_BaseColor.ctexture",
-                "../assets/Compressed/Wood Material 15_BaseColor.ctexture"
+                " ",
+                " "
             ],
             "MeshPath": "../assets/compiled_geom/Wall_Partition(No Material).geom",
             "GUID": 0,
             "TextureCont": [
-                false,
-                false,
+                true,
+                true,
                 false,
                 false
             ]
@@ -266,13 +208,13 @@
             ]
         },
         "Parent": {
-            "Parent": 1,
-            "PreviousSibling": 8,
-            "NextSibling": 6
+            "Parent": 1048578,
+            "PreviousSibling": 1048584,
+            "NextSibling": 1048582
         }
     },
     {
-        "EntityID": 6,
+        "EntityID": 1048582,
         "General": {
             "Name": "Wall",
             "Active": true,
@@ -309,14 +251,14 @@
             "MaterialInstancePath": [
                 "../assets/Compressed/Wood Material 15_BaseColor.ctexture",
                 "../assets/Compressed/Wood Material 15_Normal.ctexture",
-                "../assets/Compressed/Wood Material 15_BaseColor.ctexture",
-                "../assets/Compressed/Wood Material 15_BaseColor.ctexture"
+                " ",
+                " "
             ],
             "MeshPath": "../assets/compiled_geom/Wall_Partition(No Material).geom",
             "GUID": 0,
             "TextureCont": [
-                false,
-                false,
+                true,
+                true,
                 false,
                 false
             ]
@@ -334,13 +276,13 @@
             ]
         },
         "Parent": {
-            "Parent": 1,
-            "PreviousSibling": 5,
-            "NextSibling": 7
+            "Parent": 1048578,
+            "PreviousSibling": 1048581,
+            "NextSibling": 1048583
         }
     },
     {
-        "EntityID": 7,
+        "EntityID": 1048583,
         "General": {
             "Name": "Wall",
             "Active": true,
@@ -377,14 +319,14 @@
             "MaterialInstancePath": [
                 "../assets/Compressed/Wood Material 15_BaseColor.ctexture",
                 "../assets/Compressed/Wood Material 15_Normal.ctexture",
-                "../assets/Compressed/Wood Material 15_BaseColor.ctexture",
-                "../assets/Compressed/Wood Material 15_BaseColor.ctexture"
+                " ",
+                " "
             ],
             "MeshPath": "../assets/compiled_geom/Wall_Partition(No Material).geom",
             "GUID": 0,
             "TextureCont": [
-                false,
-                false,
+                true,
+                true,
                 false,
                 false
             ]
@@ -402,13 +344,13 @@
             ]
         },
         "Parent": {
-            "Parent": 1,
-            "PreviousSibling": 6,
-            "NextSibling": 9
+            "Parent": 1048578,
+            "PreviousSibling": 1048582,
+            "NextSibling": 1048585
         }
     },
     {
-        "EntityID": 8,
+        "EntityID": 1048584,
         "General": {
             "Name": "Wall",
             "Active": true,
@@ -445,14 +387,14 @@
             "MaterialInstancePath": [
                 "../assets/Compressed/Wood Material 15_BaseColor.ctexture",
                 "../assets/Compressed/Wood Material 15_Normal.ctexture",
-                "../assets/Compressed/Wood Material 15_BaseColor.ctexture",
-                "../assets/Compressed/Wood Material 15_BaseColor.ctexture"
+                " ",
+                " "
             ],
             "MeshPath": "../assets/compiled_geom/Wall_Partition(No Material).geom",
             "GUID": 0,
             "TextureCont": [
-                false,
-                false,
+                true,
+                true,
                 false,
                 false
             ]
@@ -470,13 +412,13 @@
             ]
         },
         "Parent": {
-            "Parent": 1,
-            "PreviousSibling": 9,
-            "NextSibling": 5
+            "Parent": 1048578,
+            "PreviousSibling": 1048585,
+            "NextSibling": 1048581
         }
     },
     {
-        "EntityID": 9,
+        "EntityID": 1048585,
         "General": {
             "Name": "Ceiling",
             "Active": true,
@@ -513,14 +455,14 @@
             "MaterialInstancePath": [
                 "../assets/Compressed/Wood Material 15_BaseColor.ctexture",
                 "../assets/Compressed/Wood Material 15_Normal.ctexture",
-                "../assets/Compressed/Wood Material 15_BaseColor.ctexture",
-                "../assets/Compressed/Wood Material 15_BaseColor.ctexture"
+                " ",
+                " "
             ],
             "MeshPath": "../assets/compiled_geom/Wall_Partition(No Material).geom",
             "GUID": 0,
             "TextureCont": [
-                false,
-                false,
+                true,
+                true,
                 false,
                 false
             ]
@@ -538,9 +480,67 @@
             ]
         },
         "Parent": {
-            "Parent": 1,
-            "PreviousSibling": 7,
-            "NextSibling": 8
+            "Parent": 1048578,
+            "PreviousSibling": 1048583,
+            "NextSibling": 1048584
+        }
+    },
+    {
+        "EntityID": 1048586,
+        "General": {
+            "Name": "Girl",
+            "Active": true,
+            "Paused": false,
+            "Subtag": "Active"
+        },
+        "Transform": {
+            "Scale": [
+                174.15533447265625,
+                46.30226135253906,
+                199.10911560058594
+            ],
+            "Rotate": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Translate": [
+                171.54681396484375,
+                23.528644561767578,
+                -94.45980072021484
+            ]
+        },
+        "MeshRenderer": {
+            "ShaderPath": [
+                "../_GRAPHICS/shader_files/animations_vert.glsl",
+                "../_GRAPHICS/shader_files/pointLight_frag.glsl"
+            ],
+            "MaterialInstancePath": [
+                "../assets/Compressed/Girl_Diffuse.ctexture",
+                "../assets/Compressed/Girl_Normal.ctexture",
+                "../assets/Compressed/Girl_Glossiness.ctexture",
+                "../assets/Compressed/Girl_Specular.ctexture"
+            ],
+            "MeshPath": "../assets/compiled_geom/GirlAnimationWalking.geom",
+            "GUID": 0,
+            "TextureCont": [
+                true,
+                true,
+                false,
+                false
+            ]
+        },
+        "BoxCollider": {
+            "ScaleOffset": [
+                0.5,
+                4.199999809265137,
+                0.4000000059604645
+            ],
+            "TranslateOffset": [
+                -2.0,
+                98.0,
+                0.0
+            ]
         }
     }
 ]

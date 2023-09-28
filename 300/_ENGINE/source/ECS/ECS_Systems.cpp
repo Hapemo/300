@@ -83,6 +83,7 @@ void SystemManager::Pause()
 void SystemManager::Play()
 {
 	mIsPlay = true; 
+	mPhysicsSystem.get()->Init();
 	mGraphicsSystem->UnpauseGlobalAnimation();
 	mGameStateSystem->mCurrentGameState.Save();
 }

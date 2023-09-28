@@ -114,6 +114,7 @@ Render IMGUIZMO integration
 	void ConstrainedResize(bool* p_open);
 
 	static bool			follow;
+	bool				objPicking{ true };
 
 private:
 
