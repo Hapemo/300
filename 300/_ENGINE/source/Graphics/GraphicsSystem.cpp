@@ -58,7 +58,7 @@ void GraphicsSystem::Init()
 		UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_GAME, 0.f);
 	}
 
-#if 0
+#if 1
 #pragma region create entity 1
 	// Create a new entity here, for testing purposes
 	Entity newentity = systemManager->ecs->NewEntity(); // creating a new entity
@@ -99,10 +99,11 @@ void GraphicsSystem::Init()
 #pragma endregion
 #endif
 
-#if 0
+#if 1
 #pragma region create entity 2
 	//Create a new entity here, for testing purposes
 	Entity newentity1 = systemManager->ecs->NewEntity();			// creating a new entity
+	systemManager->mGameStateSystem->mCurrentGameState.mScenes[0].mEntities.insert(newentity1);
 	newentity1.AddComponent<MeshRenderer>();
 	newentity1.AddComponent<BoxCollider>();
 	newentity1.AddComponent<Animator>();
@@ -277,18 +278,12 @@ void GraphicsSystem::EditorDraw(float dt)
 		// render the mesh and its instances here
 		GFX::Mesh &meshinst = *reinterpret_cast<GFX::Mesh *>(inst.GetComponent<MeshRenderer>().mMeshRef);
 
-		// gets the shader filepath
+		// gets the shader filepathc
 		std::pair<std::string, std::string> shaderstr = inst.GetComponent<MeshRenderer>().mShaderPath;
 		GFX::Shader &shaderinst = systemManager->mResourceSystem->get_Shader(shaderstr.first + shaderstr.second);
 		unsigned shaderID = shaderinst.GetHandle();
 
-		// std::vector<std::string> texturestr = inst.GetComponent<MeshRenderer>().mMaterialInstancePath;
-
-		// get the texture filepath
-		// std::vector<std::string> texturestr = inst.GetComponent<MeshRenderer>().mMaterialInstancePath;
-		//	GFX::Texture& textureColorinst = systemManager->mResourceSystem->get_MaterialInstance(texturestr[0]);	// loads the texture
-		// GFX::Texture& textureNormalinst = systemManager->mResourceSystem->get_MaterialInstance(texturestr[1]);	// loads the texture
-
+		// bind all texture
 		GFX::Texture *textureInst[4]{};
 		for (int i{0}; i < 4; i++)
 		{
@@ -296,19 +291,10 @@ void GraphicsSystem::EditorDraw(float dt)
 			{
 				textureInst[i] = reinterpret_cast<GFX::Texture *>(inst.GetComponent<MeshRenderer>().mTextureRef[i]);
 			}
-			// GFX::Texture& textureNormalinst = *reinterpret_cast<GFX::Texture*>(inst.GetComponent<MeshRenderer>().mTextureRef[NORMAL]);
-			// GFX::Texture& textureEmissioninst = *reinterpret_cast<GFX::Texture*>(inst.GetComponent<MeshRenderer>().mTextureRef[EMISSION]);
-			// GFX::Texture& textureSpecularinst = *reinterpret_cast<GFX::Texture*>(inst.GetComponent<MeshRenderer>().mTextureRef[SPECULAR]);
 		}
-		// GFX::Texture& textureColorinst = systemManager->mResourceSystem->get_MaterialInstance(texturestr[0]);		// loads the diffuse texture
-		// GFX::Texture& textureNormalinst = systemManager->mResourceSystem->get_MaterialInstance(texturestr[1]);		// loads the normal texture
-		// GFX::Texture& textureEmissioninst = systemManager->mResourceSystem->get_MaterialInstance(texturestr[2]);	// loads the emission texture
-		// GFX::Texture& textureSpecularinst = systemManager->mResourceSystem->get_MaterialInstance(texturestr[3]);	// loads the specular texture
-
+	
 		shaderinst.Activate();
-
 		glUniformMatrix4fv(shaderinst.GetUniformVP(), 1, GL_FALSE, &m_EditorCamera.viewProj()[0][0]);
-
 		// Retrieve Point Light object
 		auto lightEntity = systemManager->ecs->GetEntitiesWith<PointLight>();
 		m_HasLight = !lightEntity.empty();
