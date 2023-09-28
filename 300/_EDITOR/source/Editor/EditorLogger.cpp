@@ -3,7 +3,7 @@
 \file LoggerWindow.cpp
 \author Han ChengWen, Lor Xaun Yun Michelle
 \par DP email: c.han@digipen.edu, xaunyunmichelle.lor@digipen.edu
-\date 22-9-2022
+\date 28-09-2023
 \brief
 This file contains logger UI system that display logging information in an
 IMGUI window, with function such as filtering/ scrolling to find necessary

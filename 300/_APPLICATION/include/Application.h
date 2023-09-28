@@ -2,7 +2,7 @@
 \file main.cpp
 \author Kew Yu Jun
 \par DP email: k.yujun@digipen.edu
-\par Group: Memory Leak Studios
+\par Group: Pepe Production
 \date 15/05/2023
 \brief
 Main application that gets called in the main loop. It handles the creation and 

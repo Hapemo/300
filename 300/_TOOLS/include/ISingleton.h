@@ -2,8 +2,8 @@
 \file ISingleton.h
 \author Jazz Teoh Yu Jue
 \par DP email: j.teoh\@digipen.edu
-\par Group: Memory Leak Studios
-\date 27-11-2022
+\par Group: Pepe Production
+\date 28-09-2023
 \brief
 ISingleton is only used to provide polymorphism control for SingletonManager. This
 is necessary since Singleton class is templatized

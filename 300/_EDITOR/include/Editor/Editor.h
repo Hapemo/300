@@ -3,7 +3,7 @@
 \file Editor.h
 \author Han ChengWen
 \par DP email: c.han@digipen.edu
-\date 22-9-2022
+\date 28-09-2023
 \brief
 This header file contains main loop logic for drawing all related IMGUI window
 classes declared such as Inspect, ContentBrowser.. etc, setting up / creation

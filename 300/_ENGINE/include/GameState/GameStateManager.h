@@ -2,8 +2,8 @@
 \file GameStateManager.h
 \author Jazz Teoh Yu Jue
 \par DP email: j.teoh\@digipen.edu
-\par Group: Memory Leak Studios
-\date 27-11-2022
+\par Group: Pepe Production
+\date 28-09-2023
 \brief
 Manages the gamestate flow, control which game state is running or will be 
 running.
@@ -160,23 +160,66 @@ public:
 	- Entity to delete
 	*******************************************************************************/
 	void DeleteEntityFromScene(int _sceneID, Entity _e);
+
+	/*!*****************************************************************************
+	Adds scene to current game state. If scene can be found in scene folder in
+	asset, add that scene.
+	
+	\param _name
+	- Name of scene to add
+	*******************************************************************************/
 	void AddScene(std::string const& _name);
 
-	void EditorRestartGameState() { mGSMState = E_GSMSTATE::CHANGING; }
+	/*!*****************************************************************************
+	Restart the editor's game running
+	*******************************************************************************/
+	void EditorRestartGameState();
 
-	GameState* GetCurrentGameState() { return &mCurrentGameState; }
+	/*!*****************************************************************************
+	Getter for current game state
 
-	Scene* GetErrorScene() { return &mErrorScene; }
+	\return GameState*
+	- current game state
+	*******************************************************************************/
+	GameState* GetCurrentGameState();
 
-	static bool GameStateJsonExist(std::string const& _name);
-	static bool SceneJsonExist(std::string const& _name);
+	/*!*****************************************************************************
+	Getter for the error scene
+
+	\return Scene*
+	- error scene
+	*******************************************************************************/
+	Scene* GetErrorScene();
+
+	/*!*****************************************************************************
+	Checks if game state file exists in the gamestate folder in assets
+
+	\param _name
+	- Name of gamestate file
+	*******************************************************************************/
+	static bool GameStateFileExist(std::string const& _name);
+	
+	/*!*****************************************************************************
+	Checks if scene file exists in the scene folder in assets
+
+	\param _name
+	- Name of scene file
+	*******************************************************************************/
+	static bool SceneFileExist(std::string const& _name);
+	
+	/*!*****************************************************************************
+	Checks if the scene exists in the current game state
+
+	\param _name
+	- Name of scene
+	*******************************************************************************/
 	bool SceneExists(std::string const& _name);
 
-	Scene mErrorScene;
-	E_GSMSTATE mGSMState;
-	GameState mCurrentGameState;
+	Scene mErrorScene;						// Error Scene, to show that some error occured when getting scene
+	E_GSMSTATE mGSMState;					// The state of the gamestate
+	GameState mCurrentGameState;	// Current game state that is operated on
 
 private:
-	std::string mNextGSName; // This path has to be set initially in config file. TODO
+	std::string mNextGSName;			// This path has to be set initially in config file
 };
 

@@ -6,10 +6,6 @@
 \brief
 Scene base class. Each game state can have multiple scenes which encapsulates
 a group of entities and operates on them.
-
-For Milestone 2:
-Added load and unload of scene using resourceManager
-Added adding and removing of entity
 *******************************************************************************/
 #include "GameState/Scene.h"
 #include "ECS/ECS.h"
@@ -23,11 +19,6 @@ Added adding and removing of entity
 Scene::Scene() : mEntities(), mIsPause(false), mName() {
 	//LOG_CUSTOM("SCENE", "New Scene created with no name");
 }
-
-//Scene::Scene(ResourceManager::GUID const& _guid) : mEntities(), mIsPause(false), mName(),/* mCamera(),*/ mLayer(), mOrder() {
-//	(void)_guid;
-//	//LOG_CUSTOM("SCENE", "New Scene created with no name");
-//}
 
 Scene::Scene(std::string const& _name) : mEntities(), mIsPause(false), mName(_name) {
 	(void)_name;
@@ -56,19 +47,10 @@ void Scene::Init() {
 	//logicSystem->Init(shouldRun);
 };
 
-//void Scene::Update() {
-//	
-//};
-
 void Scene::Exit() {
 	return; // Temporary remove - Han
 	for (auto e : mEntities) if (e.GetComponent<General>().isActive) e.Deactivate();
 };
-
-//void Scene::PrimaryUpdate() {
-//	if (mIsPause) return;
-//	Update();
-//}
 
 void Scene::Pause(bool _pause) { 
 	//LOG_CUSTOM("SCENE", "Changed Scene \"" + mName + "\" pause status to " + (_pause ? "true" : "false"));
@@ -119,14 +101,19 @@ Entity Scene::AddEntity() {
 	return e;
 }
 
+void Scene::RemoveChildFromScene(Entity _e) {
+	if (!_e.HasChildren()) return;
+
+	std::vector<Entity> children = _e.GetAllChildren();
+	for (Entity child : children) {
+		RemoveChildFromScene(child);
+		mEntities.erase(child);
+	}
+}
+
 void Scene::RemoveEntity(Entity _e) {
 	// if (_e.GetComponent<General>().isActive) _e.Deactivate(); // Temporary remove - Han
-	/*if (_e.HasChildren()) {
-		std::vector<Entity> children = _e.GetAllChildren();
-		for (Entity child : children) {
-			RemoveEntity(child);
-		}
-	}*/
+	RemoveChildFromScene(_e);
 
 	mEntities.erase(_e);
 	systemManager->ecs->DeleteEntity(_e);

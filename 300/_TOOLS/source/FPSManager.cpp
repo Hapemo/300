@@ -2,8 +2,8 @@
 \file Helper.cpp
 \author Jazz Teoh Yu Jue
 \par DP email: j.teoh\@digipen.edu
-\par Group: Memory Leak Studios
-\date 27-11-2022
+\par Group: Pepe Production
+\date 28-09-2023
 \brief
 General helper class of application that calculates FPS and prints GLFW info
 *******************************************************************************/

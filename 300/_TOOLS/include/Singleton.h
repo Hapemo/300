@@ -2,8 +2,8 @@
 \file Singleton.h
 \author Jazz Teoh Yu Jue
 \par DP email: j.teoh\@digipen.edu
-\par Group: Memory Leak Studios
-\date 27-11-2022
+\par Group: Pepe Production
+\date 28-09-2023
 \brief
 Singleton base class, a design pattern that allows creation of only one instance
 of a class.

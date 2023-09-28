@@ -3,7 +3,7 @@
 \file SceneWindow.h
 \author Han ChengWen
 \par DP email: c.han@digipen.edu
-\date 22-9-2022
+\date 28-09-2023
 \brief
 This file contains SceneWindow window functions provides the drawing of FrameBuffer
 and display the objects with its respective camera system

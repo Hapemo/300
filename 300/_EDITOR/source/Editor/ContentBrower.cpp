@@ -3,7 +3,7 @@
 \file ContentBrowser.cpp
 \author Han ChengWen, Kew Yu Jun, Charissa Yip, Jazz Teoh Yu Jue
 \par DP email: c.han@digipen.edu, charissa.yip@digipen.edu
-\date 22-9-2022
+\date 28-09-2023
 \brief
 This file contains ContentBrowser window functions that display
 the relative folder and files to a directory stated, (currently hardcoded)

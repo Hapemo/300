@@ -2,7 +2,7 @@
 \file main.cpp
 \author Kew Yu Jun
 \par DP email: k.yujun@digipen.edu
-\par Group: Memory Leak Studios
+\par Group: Pepe Production
 \date 15/05/2023
 \brief
 main file of the whole program

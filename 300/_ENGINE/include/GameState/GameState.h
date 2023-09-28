@@ -2,7 +2,7 @@
 \file GameState.h
 \author Jazz Teoh Yu Jue, Charissa Yip
 \par DP email: j.teoh\@digipen.edu, charissa.yip@digipen.edu
-\date 28-9-2023
+\date 29-09-2023
 GameState is a container that manages a range of scenes. It acts as manager for
 the scenes. Only 1 gmae state should be loaded and running in the game at a 
 time.
@@ -18,10 +18,6 @@ public:
 	*******************************************************************************/
 	void Init();
 
-	///*!*****************************************************************************
-	//Update the scene every loop, only active scenes will update.
-	//*******************************************************************************/
-	//void Update();
 
 	/*!*****************************************************************************
 	Exit all the scenes in the game state, all scenes' exit will be called.
@@ -48,6 +44,15 @@ public:
 	*******************************************************************************/
 	void RemoveScene(std::string const& _name);
 
+	/*!*****************************************************************************
+	Get a scene in current game state by comparing name
+
+	\param _name
+	- Name of scene to geet
+
+	\return Scene*
+	- Pointer to scene, returns error scene if scene not found
+	*******************************************************************************/
 	Scene* GetScene(std::string const& _name);
 
 	/*!*****************************************************************************

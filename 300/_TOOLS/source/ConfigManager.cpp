@@ -2,7 +2,7 @@
 \file ConfigManager.cpp
 \author Jazz Teoh Yu Jue
 \par DP email: j.teoh\@digipen.edu
-\par Group: Memory Leak Studios
+\par Group: Pepe Production
 \date 24-09-2023
 \brief
 Allows the program to access manually set values from the config file of the

@@ -3,7 +3,7 @@
 \file LeftPanel.h
 \author Han ChengWen
 \par DP email: c.han@digipen.edu
-\date 22-9-2022
+\date 28-09-2023
 \brief
 This header file contains the Leftpanel(Hierarchy) window and relative functions to run
 the system logic, allowing user to select Entites, opening up Inspector window and modify

@@ -3,7 +3,7 @@
 \file Inspect.cpp
 \author Han ChengWen, Charissa Yip, Lwin Li Yue Sandi
 \par DP email: c.han@\digipen.edu, charissa.yip\@digipen.edu, l.liyuesandi\@digipen.edu
-\date 22-9-2022
+\date 28-09-2023
 \brief
 This header file contains the inspector window and relative functions to run
 the system logic.
