@@ -233,7 +233,7 @@ void Application::MainUpdate()
 void Application::FirstUpdate() 
 {
     FPSManager::Update();
-    Accumulator::Update(FPSManager::dt);
+    Accumulator::Update(static_cast<float>(FPSManager::dt));
     mWindow.PollEvents();
 }
 
@@ -247,7 +247,7 @@ void Application::SystemUpdate()
     //    systemManager->mPhysicsSystem->SetVelocity(Entity(eee), glm::vec3(0.f, 0, 50));
     //if (Input::CheckKey(E_STATE::HOLD, E_KEY::S))
     //    systemManager->mPhysicsSystem->SetVelocity(Entity(eee), glm::vec3(0.f, 0, -50));
-    systemManager->Update(FPSManager::dt);
+    systemManager->Update(static_cast<float>(FPSManager::dt));
 }
 
 void Application::SecondUpdate() 
