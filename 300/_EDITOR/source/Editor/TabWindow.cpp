@@ -37,8 +37,8 @@ void TabWindow::update() {
 	ImGui::DragFloat("##CS", (float*)&Camera_Input::getInstance().mCameraSpeed);
 
 	const auto& editorcam = systemManager->mGraphicsSystem->m_EditorCamera;
-	ImGui::Text("Editor Camera Position: %0.2f, %0.2f, %0.2f", editorcam.mPosition.x, editorcam.mPosition.y, editorcam.mPosition.z);
-	ImGui::Text("Editor Camera Target: %0.2f, %0.2f, %0.2f", editorcam.mTarget.x, editorcam.mTarget.y, editorcam.mTarget.z);
+	//ImGui::Text("Editor Camera Position: %0.2f, %0.2f, %0.2f", editorcam.mPosition.x, editorcam.mPosition.y, editorcam.mPosition.z);
+	//ImGui::Text("Editor Camera Target: %0.2f, %0.2f, %0.2f", editorcam.mTarget.x, editorcam.mTarget.y, editorcam.mTarget.z);
 
 	ImGui::Separator();
 	ImGui::Text("Debug");

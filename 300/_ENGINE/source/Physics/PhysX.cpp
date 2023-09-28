@@ -13,7 +13,7 @@ PhysX::PhysX()
 	mPhysics = PxCreatePhysics(PX_PHYSICS_VERSION, *mFoundation, mToleranceScale, true, mPvd);
 
 	physx::PxSceneDesc sceneDesc(mPhysics->getTolerancesScale());
-	sceneDesc.gravity = physx::PxVec3(0.f, -9.81f, 0.f);
+	sceneDesc.gravity = physx::PxVec3(0.f, -98.1f, 0.f);
 	mDispatcher = physx::PxDefaultCpuDispatcherCreate(2);
 	sceneDesc.cpuDispatcher = mDispatcher;
 	sceneDesc.filterShader = physx::PxDefaultSimulationFilterShader;

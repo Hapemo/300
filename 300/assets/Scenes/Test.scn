@@ -1,6 +1,6 @@
 [
     {
-        "EntityID": 1048577,
+        "EntityID": 1048578,
         "General": {
             "Name": "Floor",
             "Active": true,
@@ -63,11 +63,11 @@
         },
         "Children": {
             "NumChildren": 5,
-            "FirstChild": 1048583
+            "FirstChild": 1048584
         }
     },
     {
-        "EntityID": 1048578,
+        "EntityID": 1048579,
         "General": {
             "Name": "Camera",
             "Active": true,
@@ -103,7 +103,7 @@
                 0.0
             ],
             "Size": [
-                582,
+                502,
                 607
             ],
             "Near": 0.10000000149011612,
@@ -111,7 +111,7 @@
         }
     },
     {
-        "EntityID": 1048579,
+        "EntityID": 1048580,
         "General": {
             "Name": "Light",
             "Active": true,
@@ -142,11 +142,11 @@
                 1.0
             ],
             "Attenuation": 0.0,
-            "Intensity": 28.0
+            "Intensity": 5.0
         }
     },
     {
-        "EntityID": 1048580,
+        "EntityID": 1048581,
         "General": {
             "Name": "Wall",
             "Active": true,
@@ -208,13 +208,13 @@
             ]
         },
         "Parent": {
-            "Parent": 1048577,
-            "PreviousSibling": 1048583,
-            "NextSibling": 1048581
+            "Parent": 1048578,
+            "PreviousSibling": 1048584,
+            "NextSibling": 1048582
         }
     },
     {
-        "EntityID": 1048581,
+        "EntityID": 1048582,
         "General": {
             "Name": "Wall",
             "Active": true,
@@ -276,13 +276,13 @@
             ]
         },
         "Parent": {
-            "Parent": 1048577,
-            "PreviousSibling": 1048580,
-            "NextSibling": 1048582
+            "Parent": 1048578,
+            "PreviousSibling": 1048581,
+            "NextSibling": 1048583
         }
     },
     {
-        "EntityID": 1048582,
+        "EntityID": 1048583,
         "General": {
             "Name": "Wall",
             "Active": true,
@@ -344,13 +344,13 @@
             ]
         },
         "Parent": {
-            "Parent": 1048577,
-            "PreviousSibling": 1048581,
-            "NextSibling": 1048584
+            "Parent": 1048578,
+            "PreviousSibling": 1048582,
+            "NextSibling": 1048585
         }
     },
     {
-        "EntityID": 1048583,
+        "EntityID": 1048584,
         "General": {
             "Name": "Wall",
             "Active": true,
@@ -412,13 +412,13 @@
             ]
         },
         "Parent": {
-            "Parent": 1048577,
-            "PreviousSibling": 1048584,
-            "NextSibling": 1048580
+            "Parent": 1048578,
+            "PreviousSibling": 1048585,
+            "NextSibling": 1048581
         }
     },
     {
-        "EntityID": 1048584,
+        "EntityID": 1048585,
         "General": {
             "Name": "Ceiling",
             "Active": true,
@@ -480,13 +480,13 @@
             ]
         },
         "Parent": {
-            "Parent": 1048577,
-            "PreviousSibling": 1048582,
-            "NextSibling": 1048583
+            "Parent": 1048578,
+            "PreviousSibling": 1048583,
+            "NextSibling": 1048584
         }
     },
     {
-        "EntityID": 1048585,
+        "EntityID": 1048586,
         "General": {
             "Name": "Girl",
             "Active": true,
@@ -505,9 +505,9 @@
                 0.0
             ],
             "Translate": [
-                0.0,
-                0.0,
-                0.0
+                171.54681396484375,
+                23.528644561767578,
+                -94.45980072021484
             ]
         },
         "MeshRenderer": {
