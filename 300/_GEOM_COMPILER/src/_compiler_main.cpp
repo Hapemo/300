@@ -4,6 +4,13 @@
 
 
 // Extracts the raw filename itself
+/***************************************************************************/
+/*!
+\brief
+	Helper function that gets the raw filename without any prefix and postfix
+	extensions
+*/
+/**************************************************************************/
 std::string _GEOM::Mesh_Loader::getFileNameWithoutExtension(const std::string& ResourceFilePath)
 {
 	size_t lastSlash = ResourceFilePath.find_last_of("/\\");
@@ -20,7 +27,12 @@ std::string _GEOM::Mesh_Loader::getFileNameWithoutExtension(const std::string& R
 	}
 }
 
-
+/***************************************************************************/
+/*!
+\brief
+	Helper function that gets the filename with the postfix extentions
+*/
+/**************************************************************************/
 std::string _GEOM::Mesh_Loader::getFileNameWithExtension(const std::string& ResourceFilePath)
 {
 	size_t lastSlash = ResourceFilePath.find_last_of("/\\");
@@ -29,6 +41,12 @@ std::string _GEOM::Mesh_Loader::getFileNameWithExtension(const std::string& Reso
 }
 
 
+/***************************************************************************/
+/*!
+\brief
+	Loads and serializes all the meshes
+*/
+/**************************************************************************/
 void LoadAndSerializeAllMeshes(_GEOM::DescriptorData& Desc)
 {
 	// looping through all the filepaths in the descriptor file
@@ -55,6 +73,12 @@ void LoadAndSerializeAllMeshes(_GEOM::DescriptorData& Desc)
 }
 
 
+/***************************************************************************/
+/*!
+\brief
+	entry point to the geom compiler
+*/
+/**************************************************************************/
 int main(int argc, char* argv[])
 {
 	std::cout << "================================================================================\n";

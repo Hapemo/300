@@ -242,6 +242,13 @@ void GraphicsSystem::Update(float dt)
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+/***************************************************************************/
+/*!
+\brief
+	The Draw function isolated onto the editor framebuffer
+*/
+/**************************************************************************/
 void GraphicsSystem::EditorDraw(float dt)
 {
 
@@ -382,6 +389,12 @@ void GraphicsSystem::EditorDraw(float dt)
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/***************************************************************************/
+/*!
+\brief
+	The draw function isolated onto the game's framebuffer
+*/
+/**************************************************************************/
 void GraphicsSystem::GameDraw(float dt)
 {
 	std::map<std::string, short> renderedMesh;
@@ -627,6 +640,12 @@ void GraphicsSystem::SetCameraProjection(CAMERA_TYPE type, float fovDegree, ivec
 	}
 }
 
+/***************************************************************************/
+/*!
+\brief
+	Sets the size of the camera according to the enum provided
+*/
+/**************************************************************************/
 void GraphicsSystem::SetCameraSize(CAMERA_TYPE type, ivec2 size)
 {
 	auto localcamera = systemManager->ecs->GetEntitiesWith<Camera>();
@@ -651,6 +670,12 @@ void GraphicsSystem::SetCameraSize(CAMERA_TYPE type, ivec2 size)
 	}
 }
 
+/***************************************************************************/
+/*!
+\brief
+	Updates the camera and its input according to the enum provided
+*/
+/**************************************************************************/
 void GraphicsSystem::UpdateCamera(CAMERA_TYPE type, const float &dt)
 {
 	auto localcamera = systemManager->ecs->GetEntitiesWith<Camera>();
@@ -688,6 +713,12 @@ void GraphicsSystem::UpdateCamera(CAMERA_TYPE type, const float &dt)
 	}
 }
 
+/***************************************************************************/
+/*!
+\brief
+	Gets the camera's position depending on the enum provided
+*/
+/**************************************************************************/
 vec3 GraphicsSystem::GetCameraPosition(CAMERA_TYPE type)
 {
 	auto localcamera = systemManager->ecs->GetEntitiesWith<Camera>();
@@ -708,6 +739,12 @@ vec3 GraphicsSystem::GetCameraPosition(CAMERA_TYPE type)
 	}
 }
 
+/***************************************************************************/
+/*!
+\brief
+	Gets the camera's target depending on the enum provided
+*/
+/**************************************************************************/
 vec3 GraphicsSystem::GetCameraTarget(CAMERA_TYPE type)
 {
 	auto localcamera = systemManager->ecs->GetEntitiesWith<Camera>();
@@ -728,6 +765,13 @@ vec3 GraphicsSystem::GetCameraTarget(CAMERA_TYPE type)
 	}
 }
 
+/***************************************************************************/
+/*!
+\brief
+	Gets the direction the camera is pointint to depending on the enum
+	provided
+*/
+/**************************************************************************/
 vec3 GraphicsSystem::GetCameraDirection(CAMERA_TYPE type)
 {
 	auto localcamera = systemManager->ecs->GetEntitiesWith<Camera>();
@@ -748,11 +792,24 @@ vec3 GraphicsSystem::GetCameraDirection(CAMERA_TYPE type)
 	}
 }
 
+/***************************************************************************/
+/*!
+\brief
+	Draws all instances of this mesh
+*/
+/**************************************************************************/
 void GraphicsSystem::DrawAll(GFX::Mesh &mesh)
 {
 	mesh.DrawAllInstances();
 }
 
+
+/***************************************************************************/
+/*!
+\brief
+	Helper function -- to print mat4 matrices
+*/
+/**************************************************************************/
 void GraphicsSystem::PrintMat4(const glm::mat4 &input)
 {
 	std::cout << "=============================================================================\n";
@@ -763,11 +820,23 @@ void GraphicsSystem::PrintMat4(const glm::mat4 &input)
 	std::cout << "=============================================================================\n";
 }
 
+/***************************************************************************/
+/*!
+\brief
+	Global enum to unpause all animations
+*/
+/**************************************************************************/
 void GraphicsSystem::UnpauseGlobalAnimation()
 {
 	m_EnableGlobalAnimations = true;
 }
 
+/***************************************************************************/
+/*!
+\brief
+	Global enum to pause all animations
+*/
+/**************************************************************************/
 void GraphicsSystem::PauseGlobalAnimation()
 {
 	m_EnableGlobalAnimations = false;

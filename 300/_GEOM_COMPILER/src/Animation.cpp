@@ -3,6 +3,12 @@
 namespace _GEOM
 {
 
+/***************************************************************************/
+/*!
+\brief
+	Find the relevant bone given the name
+*/
+/**************************************************************************/
 	Bone* Animation::FindBone(const std::string& name)
 	{
 		auto iter = std::find_if(m_Bones.begin(), m_Bones.end(),

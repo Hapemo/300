@@ -4,7 +4,12 @@
 
 namespace _GEOM
 {
+/***************************************************************************/
+/*!
+\brief
 	// considers the vertices, and returns the bounding box with all the vertices inside it
+*/
+/**************************************************************************/
 	void bbox::AddVerts(const glm::vec3* pVerts) noexcept
 	{
 		assert(pVerts != nullptr);
@@ -23,6 +28,12 @@ namespace _GEOM
 	}
 
 
+/***************************************************************************/
+/*!
+\brief
+	merges the two bounding boxes
+*/
+/**************************************************************************/
 	void bbox::MergeBBOX(const bbox& inputbbox) noexcept
 	{
 		m_Min.x = std::min(m_Min.x, inputbbox.m_Min.x);
@@ -56,7 +67,12 @@ namespace Serialization
 		//										NEW SERIALIZATION CODE BLOCK
 		// ====================================================================================================
 	
+/***************************************************************************/
+/*!
+\brief
 	// Serializes the AssimpNodeData into a binary file recursively
+*/
+/**************************************************************************/
 	void SerializeAssimpNodeData(std::ofstream& outfile, const _GEOM::AssimpNodeData& Node)
 	{
 		uint8_t strlen = (uint8_t)Node.m_Name.size();		// get the length of the string
@@ -73,6 +89,7 @@ namespace Serialization
 	}
 
 
+#pragma region deprecated, due to serializing non binary
 	//!< This serialization code block was used to serialize the data into text file.
 	//! REDACTED
 		bool SerializeUnsigned(std::ofstream& outFile, const std::uint32_t& value) noexcept
@@ -234,7 +251,7 @@ namespace Serialization
 
 			return true;
 		}
-
+#pragma endregion
 
 
 	// ====================================================================================================
@@ -244,6 +261,7 @@ namespace Serialization
 		//!< This serialization code block was used to serialize the data into text file.
 		//! REDACTED
 		
+#pragma region deprecated, due to deserializing nonbinary
 	bool ReadIndices(std::ifstream& inFile, _GEOM::Geom& GeomData) noexcept
 	{
 		ReadUnsigned(inFile, GeomData.m_nIndices);
@@ -487,3 +505,5 @@ std::ifstream& operator>>(std::ifstream& is, glm::vec3& v)
 	is >> v.x >> v.y >> v.z;
 	return is;
 }
+
+#pragma endregion

@@ -12,6 +12,13 @@
 
 namespace _GEOM
 {
+
+/***************************************************************************/
+/*!
+\brief
+	default constructor
+*/
+/**************************************************************************/
 	DescriptorData::DescriptorData()
 	{
 		m_iMeshTotal = 0;
@@ -25,6 +32,12 @@ namespace _GEOM
 		m_Translate = glm::vec3(0.f);
 	}
 
+/***************************************************************************/
+/*!
+\brief
+	loads the descriptor data from the provided filepath
+*/
+/**************************************************************************/
 	bool DescriptorData::LoadDescriptorData(DescriptorData& Desc, std::string filepath) noexcept
 	{
 		// Read the json data from the file

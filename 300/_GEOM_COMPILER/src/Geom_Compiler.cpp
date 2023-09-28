@@ -20,6 +20,13 @@ namespace _GEOM
 	//----------------------------------------------------------------------------------------------------
 	//					MESH LOADER: PUBLIC FUNCTIONS
 	//----------------------------------------------------------------------------------------------------
+
+/***************************************************************************/
+/*!
+\brief
+	loads the mesh given the data extracted from my descriptor file
+*/
+/**************************************************************************/
 	bool Mesh_Loader::Load(const DescriptorData& _DData, SkinGeom* _skinGeom) noexcept
 	{
 		std::cout << "\n\n====================================================================================================\n";
@@ -81,6 +88,12 @@ namespace _GEOM
 	}
 
 
+/***************************************************************************/
+/*!
+\brief
+	Import the data, and filter out what kind of mesh is being extracted
+*/
+/**************************************************************************/
 	bool Mesh_Loader::ImportGeometryValidateMesh(const aiMesh& AssimpMesh, int& iTexture, int& iColor) noexcept
 	{
 		if (AssimpMesh.HasPositions() == false)
@@ -140,6 +153,12 @@ namespace _GEOM
 	//----------------------------------------------------------------------------------------------------
 	//					MESH LOADER: PRIVATE FUNCTIONS
 	//----------------------------------------------------------------------------------------------------
+/***************************************************************************/
+/*!
+\brief
+	wrapper function to deserialize and sort, calls internal functions.
+*/
+/**************************************************************************/
 	void Mesh_Loader::ImportData()
 	{
 		std::vector<InputMeshPart> myNodes;
@@ -153,7 +172,14 @@ namespace _GEOM
 		CreateSkinGeom(Quantize(myNodes));
 	}
 
-
+/***************************************************************************/
+/*!
+\brief
+	obtains the initial data from the assimp mesh
+	contains recurseScene, processMesh
+	Animation data is being extracted here
+*/
+/**************************************************************************/
 	void Mesh_Loader::ImportStaticData(std::vector<InputMeshPart>& _MyNodes)
 	{
 		// process the provided node mesh by extractomg data from the assimp mesh and storing it into my own data structure
@@ -332,7 +358,13 @@ namespace _GEOM
 		}
 	}
 
-
+/***************************************************************************/
+/*!
+\brief
+	contains m_meshrefs. sanity checks on the type of the incoming mesh
+	contains processNode
+*/
+/**************************************************************************/
 	bool Mesh_Loader::SanityCheck() noexcept
 	{
 		m_MeshRefs.resize(m_Scene->mNumMeshes);
@@ -387,7 +419,13 @@ namespace _GEOM
 		return true;	// no error
 	}
 
-
+/***************************************************************************/
+/*!
+\brief
+	merges the submeshes into one big mesh so we have lesser things to
+	de/serialize. makes things neater
+*/
+/**************************************************************************/
 	void _GEOM::Mesh_Loader::MergeData(std::vector<InputMeshPart>& _MyNodes) noexcept
 	{
 		// Remove Mesh parts with zero vertices
@@ -438,6 +476,12 @@ namespace _GEOM
 	}
 
 
+/***************************************************************************/
+/*!
+\brief
+	casts the compressed nodes into a skin geom
+*/
+/**************************************************************************/
 	void _GEOM::Mesh_Loader::CreateSkinGeom(const std::vector<CompressedMeshPart>& _MyNodes) noexcept
 	{
 		// Create final structure using the compressed nodes
@@ -481,7 +525,12 @@ namespace _GEOM
 		}
 	}
 
-
+/***************************************************************************/
+/*!
+\brief
+	using meshoptimizer to optimize the mesh
+*/
+/**************************************************************************/
 	void _GEOM::Mesh_Loader::Optimize(std::vector<InputMeshPart>& _MyNodes) noexcept
 	{
 		std::cout << ">>[NOTE]: \tOptimizing Mesh Data\n";
@@ -524,7 +573,13 @@ namespace _GEOM
 		_MyNodes = optimizedMeshParts;
 	}
 
-
+/***************************************************************************/
+/*!
+\brief
+	quantizes the data
+	(WIP)
+*/
+/**************************************************************************/
 	std::vector<Mesh_Loader::CompressedMeshPart> Mesh_Loader::Quantize(const std::vector<InputMeshPart>& _MyNodes) noexcept
 	{
 		std::cout << ">>== \t\tQuantizing mesh data...\n";
@@ -608,7 +663,13 @@ namespace _GEOM
 		return CompressedMeshParts;
 	}
 
-
+/***************************************************************************/
+/*!
+\brief
+	casts to the geom struct from the skingeom struct
+	this is the final struct that will be serialized into binary
+*/
+/**************************************************************************/
 	void SkinGeom::CastToGeomStruct(Geom& _geom) noexcept
 	{
 		//Get total sizes
@@ -741,6 +802,12 @@ namespace _GEOM
 
 
 	//===== Serialize the Geom Struct =====//
+/***************************************************************************/
+/*!
+\brief
+	serializes the geom struct into binary
+*/
+/**************************************************************************/
 	bool Geom::SerializeGeom(const std::string& assetfilepath, Geom& GeomData) noexcept
 	{
 #if 1
@@ -932,6 +999,12 @@ namespace _GEOM
 	//===== Loading Helper Function Definitions =====//
 	////////////////////////////////////////////////////
 
+/***************************************************************************/
+/*!
+\brief
+	loads the material textures such as the filename to the textures
+*/
+/**************************************************************************/
 	std::vector<Geom::Texture> Mesh_Loader::LoadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName) noexcept
 	{
 		std::vector<Geom::Texture> textures;
@@ -949,7 +1022,12 @@ namespace _GEOM
 	};
 
 
+/***************************************************************************/
+/*!
+\brief
 	// BONE:: Read Hierarchy data. This is for the bone matrix offset
+*/
+/**************************************************************************/
 	void Mesh_Loader::ReadHierarchyData(AssimpNodeData& dest, const aiNode* src) noexcept
 	{
 		assert(src);
@@ -967,7 +1045,12 @@ namespace _GEOM
 	};
 
 
+/***************************************************************************/
+/*!
+\brief
 	// BONE:: Initialize bone data
+*/
+/**************************************************************************/
 	void Mesh_Loader::DefaultInitializeVertexBoneData(FullVertices& vertex) noexcept
 	{
 		for (int i = 0; i < MAX_BONE_INFLUENCE; ++i)
@@ -977,7 +1060,12 @@ namespace _GEOM
 		}
 	};
 
+/***************************************************************************/
+/*!
+\brief
 	// BONE:: Set bone data
+*/
+/**************************************************************************/
 	void Mesh_Loader::SetVertexBoneData(FullVertices& vertex, int boneID, float weight) noexcept
 	{
 		// this particular vertex can only be influenced by a maximum number of
@@ -994,7 +1082,12 @@ namespace _GEOM
 		}
 	};
 
+/***************************************************************************/
+/*!
+\brief
 	// BONE:: Load bone data
+*/
+/**************************************************************************/
 	void Mesh_Loader::ExtractBoneWeightForVertex(Animation& anims, Mesh_Loader::InputMeshPart& Vertex, const aiMesh& mesh) noexcept
 	{
 		auto& rBoneInfoMap	= anims.m_BoneInfoMap;
@@ -1034,7 +1127,12 @@ namespace _GEOM
 		}
 	};
 
+/***************************************************************************/
+/*!
+\brief
 	// BONE:: Read missing bones and populate bone vector
+*/
+/**************************************************************************/
 	void Mesh_Loader::ReadMissingBones(Animation& myanimation, const aiAnimation* sceneanimation) noexcept
 	{
 		int size = sceneanimation->mNumChannels;

@@ -8,7 +8,13 @@ namespace _GEOM
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
 	// Constructors
 	
-	// Non default bone constructor
+/***************************************************************************/
+/*!
+\brief
+	Non default bone constructor. Initializes the bones and its relevant
+	keyframe transformations
+*/
+/**************************************************************************/
 	Bone::Bone(const std::string& name, int ID, const aiNodeAnim* channel)
 	{
 		m_LocalTransform = glm::mat4(1.f);
@@ -56,7 +62,12 @@ namespace _GEOM
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
 	// Modified Getters
 	
-	// Get the bone's position index, given at which point in time the animation is currently in
+/***************************************************************************/
+/*!
+\brief
+	Get the bone's position index, given at which point in time the animation is currently in
+*/
+/**************************************************************************/
 	int Bone::GetPositionIndex(float animationTime)
 	{
 		for (int index{}; index < m_NumPositions - 1; ++index)
@@ -71,7 +82,12 @@ namespace _GEOM
 	}
 
 
+/***************************************************************************/
+/*!
+\brief
 	// Get the bone's rotation index, given at which point in time the animation is currently in
+*/
+/**************************************************************************/
 	int Bone::GetRotationIndex(float animationTime)
 	{
 		for (int index{}; index < m_NumRotations - 1; ++index)
@@ -86,7 +102,12 @@ namespace _GEOM
 	}
 
 
+/***************************************************************************/
+/*!
+\brief
 	// Get the bone's scale index, given at which point in time the animation is currently in
+*/
+/**************************************************************************/
 	int Bone::GetScaleIndex(float animationTime)
 	{
 		for (int index{}; index < m_NumScalings - 1; ++index)
@@ -104,18 +125,35 @@ namespace _GEOM
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
 	// Getters
 
+/***************************************************************************/
+/*!
+\brief
+	bone_id getter
+*/
+/**************************************************************************/
 	int Bone::GetBoneID() const
 	{
 		return m_ID;
 	}
 
-
+/***************************************************************************/
+/*!
+\brief
+	bone name getter
+*/
+/**************************************************************************/
 	std::string Bone::GetBoneName() const
 	{
 		return m_Name;
 	}
 
 
+/***************************************************************************/
+/*!
+\brief
+	local transform getter
+*/
+/**************************************************************************/
 	glm::mat4 Bone::GetLocalTransform() const
 	{
 		return m_LocalTransform;
@@ -125,7 +163,12 @@ namespace _GEOM
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
 	// Primary Functions
 
+/***************************************************************************/
+/*!
+\brief
 	// Updates the position, rotation and scale of the bone WRT to the current animation time
+*/
+/**************************************************************************/
 	void Bone::Update(float animationTime)
 	{
 		glm::mat4 translation = InterpolatePosition(animationTime);
@@ -140,6 +183,13 @@ namespace _GEOM
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
 	// Private Functions
 
+/***************************************************************************/
+/*!
+\brief
+	get the scale factor depending on the animation time with respect
+	to the next timeframe
+*/
+/**************************************************************************/
 	float Bone::GetScaleFactor(float lastTimeStamp, float nextTimeStamp, float animationTime)
 	{
 		float scaleFactor = 0.f;	
@@ -149,7 +199,13 @@ namespace _GEOM
 		return scaleFactor;
 	}
 
-
+/***************************************************************************/
+/*!
+\brief
+	internal function used to interpolate the position given the animation
+	time
+*/
+/**************************************************************************/
 	glm::mat4 Bone::InterpolatePosition(float animationTime)
 	{
 		// if there is only one position keyframe, return the position
@@ -168,7 +224,13 @@ namespace _GEOM
 		return glm::translate(glm::mat4(1.f), finalPosition);
 	}
 
-
+/***************************************************************************/
+/*!
+\brief
+	internal functoin used to interpolate the rotation given the 
+	animation time
+*/
+/**************************************************************************/
 	glm::mat4 Bone::InterpolateRotation(float animationTime)
 	{
 		// if there is only one rotation keyframe, return the rotation
@@ -188,7 +250,13 @@ namespace _GEOM
 		return glm::toMat4(finalRotation);
 	}
 
-
+/***************************************************************************/
+/*!
+\brief
+	internal function used to interpolate the scaling given the animation
+	time
+*/
+/**************************************************************************/
 	glm::mat4 Bone::InterpolateScaling(float aniamtionTime)
 	{
 		// if there is only one scale keyframe, return the scale

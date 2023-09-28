@@ -1,7 +1,26 @@
+/*!*************************************************************************
+****
+\file Helper.cpp
+\author Richmond
+\par DP email: r.choo@digipen.edu
+\date 28/9/2023
+\brief
+
+
+****************************************************************************
+***/
+
 #include <Helper.h>
 
 namespace AssimpHelper
 {
+
+/***************************************************************************/
+/*!
+\brief
+	this is essential because assimp and glm uses different format 
+*/
+/**************************************************************************/
 	glm::mat4 ConvertMatrixToGLMFormat(const aiMatrix4x4& from)
 	{
 		glm::mat4 to;
@@ -13,11 +32,23 @@ namespace AssimpHelper
 		return to;
 	}
 
+/***************************************************************************/
+/*!
+\brief
+	get the glm version of the assimp vec3
+*/
+/**************************************************************************/
 	glm::vec3 GetGLMVec(const aiVector3D& vec)
 	{
 		return glm::vec3(vec.x, vec.y, vec.z);
 	}
 
+/***************************************************************************/
+/*!
+\brief
+	get the glm::quat version of the assimp quaternion
+*/
+/**************************************************************************/
 	glm::quat GetGLMQuat(const aiQuaternion& pOrientation)
 	{
 		return glm::quat(pOrientation.w, pOrientation.x, pOrientation.y, pOrientation.z);
