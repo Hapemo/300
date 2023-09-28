@@ -1,3 +1,15 @@
+/*!*************************************************************************
+****
+\file			Animation.cpp
+\author			Richmond
+\par DP email:	r.choo@digipen.edu
+\date			28/9/23
+\brief
+	The function definition for the animation class
+
+****************************************************************************
+***/
+
 #include <Animation.h>
 
 namespace _GEOM

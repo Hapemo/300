@@ -1,9 +1,23 @@
+/*!*************************************************************************
+****
+\file			GraphicsSystem.cpp
+\author			Richmond
+\par DP email:	r.choo@digipen.edu
+\date			28/9/23
+\brief
+	The function definitions for the functionalities of the graphics system
+
+****************************************************************************
+***/
+
 #include <Graphics/GraphicsSystem.h>
 #include <ResourceManager.h>
 #include "ResourceManagerTy.h"
 #include <Graphics/Camera_Input.h>
 #include "Debug/EnginePerformance.h"
 #include "GameState/GameStateManager.h"
+
+
 /***************************************************************************/
 /*!
 \brief

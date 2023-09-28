@@ -1,3 +1,15 @@
+/*!*************************************************************************
+****
+\file			Animation.h
+\author			Richmond
+\par DP email:	r.choo@digipen.edu
+\date			28/9/23
+\brief
+	The function declarations for the animator class
+
+****************************************************************************
+***/
+
 #pragma once
 
 #ifndef _ANIMATION_H
@@ -9,7 +21,12 @@
 
 namespace _GEOM
 {
-	// The animation information of the mesh. The animation data is read from assimp in the GEOM Compiler
+	/***************************************************************************/
+	/*!
+	\brief
+		// The animation information of the mesh. The animation data is read from assimp in the GEOM Compiler
+	*/
+	/**************************************************************************/
 	struct Animation
 	{
 		std::unordered_map<std::string, BoneInfo>		m_BoneInfoMap;
@@ -20,12 +37,21 @@ namespace _GEOM
 		float											m_Duration{};
 		float											m_TicksPerSecond{};
 
+	/***************************************************************************/
+	/*!
+	\brief
+		default constructor
+	*/
+	/**************************************************************************/
 		Animation() = default;
-		Bone* FindBone(const std::string& name);
 
-		// NOTE:: there is another member variable called AssimpNodeData, that contains the
-		// transformation, childrencount, and name. But this is already done with pretransformations
-		// in the mesh loading.. keep it in mind for now.
+	/***************************************************************************/
+	/*!
+	\brief
+		Finds the bone according to the name
+	*/
+	/**************************************************************************/
+		Bone* FindBone(const std::string& name);
 	};
 }
 
