@@ -185,7 +185,6 @@ void GraphicsSystem::Update(float dt)
 		// GFX::Mesh& meshinst = *(systemManager->mResourceTySystem->get_mesh(temp.id));
 
 		// pushback LTW matrices
-		Transform transform;
 		vec3 trans = inst.GetComponent<Transform>().mTranslate;
 		if (inst.HasParent())
 		{
@@ -202,7 +201,12 @@ void GraphicsSystem::Update(float dt)
 		{
 			// draw the AABB of the mesh
 			glm::vec3 bbox_dimens = inst.GetComponent<Transform>().mScale * inst.GetComponent<BoxCollider>().mScaleOffset;
-			m_Renderer.AddAabb(inst.GetComponent<Transform>().mTranslate + inst.GetComponent<BoxCollider>().mTranslateOffset, bbox_dimens, {1.f, 0.f, 0.f, 1.f});
+			glm::vec3 bbox_xlate = inst.GetComponent<Transform>().mTranslate + inst.GetComponent<BoxCollider>().mTranslateOffset;
+			if (inst.HasParent())
+			{
+				bbox_xlate += Entity(inst.GetParent()).GetComponent<Transform>().mTranslate;
+			}
+			m_Renderer.AddAabb(bbox_xlate, bbox_dimens, {1.f, 0.f, 0.f, 1.f});
 
 			// draw the mesh's origin
 			m_Renderer.AddSphere(m_EditorCamera.position(), inst.GetComponent<Transform>().mTranslate, 0.5f, {1.f, 1.f, 0.f, 1.f});

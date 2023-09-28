@@ -76,11 +76,12 @@ physx::PxMaterial* PhysicsSystem::CreateMaterial(float us, float ud, float res)
 void PhysicsSystem::CreateRigidBody(Entity e)
 {
 	Transform xform = e.GetComponent<Transform>();
+	glm::vec3 xtraxlate = e.HasParent() ? Entity(e.GetParent()).GetComponent<Transform>().mTranslate : glm::vec3(0);
 	if (e.HasComponent<PlaneCollider>())
 	{
 		RigidBody rbod = e.GetComponent<RigidBody>();
 		PlaneCollider col = e.GetComponent<PlaneCollider>();
-		PxRigidStatic* plane = PxCreatePlane(*mPX.mPhysics, PxPlane(Convert(col.mNormal), glm::length(xform.mTranslate) + col.mTranslateOffset), *mMaterials[rbod.mMaterial]);
+		PxRigidStatic* plane = PxCreatePlane(*mPX.mPhysics, PxPlane(Convert(col.mNormal), glm::length(xform.mTranslate + xtraxlate) + col.mTranslateOffset), *mMaterials[rbod.mMaterial]);
 		mActors[static_cast<uint32_t>(e.id)] = plane;
 		mPX.mScene->addActor(*plane);
 		return;
@@ -93,14 +94,14 @@ void PhysicsSystem::CreateRigidBody(Entity e)
 		PxRigidActor* actor{};
 		if (rbod.mMotion == MOTION::DYNAMIC)
 		{
-			actor = mPX.mPhysics->createRigidDynamic(PxTransform(Convert(xform.mTranslate + col.mTranslateOffset)));
+			actor = mPX.mPhysics->createRigidDynamic(PxTransform(Convert(xform.mTranslate + col.mTranslateOffset + xtraxlate)));
 			actor->attachShape(*shape);
 			PxRigidBodyExt::updateMassAndInertia(*static_cast<PxRigidDynamic*>(actor), rbod.mDensity);
 			static_cast<PxRigidDynamic*>(actor)->setLinearVelocity(Convert(rbod.mVelocity));
 		}
 		else
 		{
-			actor = mPX.mPhysics->createRigidStatic(PxTransform(Convert(xform.mTranslate + col.mTranslateOffset)));
+			actor = mPX.mPhysics->createRigidStatic(PxTransform(Convert(xform.mTranslate + col.mTranslateOffset + xtraxlate)));
 			actor->attachShape(*shape);
 		}
 		mActors[static_cast<uint32_t>(e.id)] = actor;
@@ -116,14 +117,14 @@ void PhysicsSystem::CreateRigidBody(Entity e)
 		PxRigidActor* actor{};
 		if (rbod.mMotion == MOTION::DYNAMIC)
 		{
-			actor = mPX.mPhysics->createRigidDynamic(PxTransform(Convert(xform.mTranslate + col.mTranslateOffset)));
+			actor = mPX.mPhysics->createRigidDynamic(PxTransform(Convert(xform.mTranslate + col.mTranslateOffset + xtraxlate)));
 			actor->attachShape(*shape);
 			PxRigidBodyExt::updateMassAndInertia(*static_cast<PxRigidDynamic*>(actor), rbod.mDensity);
 			static_cast<PxRigidDynamic*>(actor)->setLinearVelocity(Convert(rbod.mVelocity));
 		}
 		else
 		{
-			actor = mPX.mPhysics->createRigidStatic(PxTransform(Convert(xform.mTranslate + col.mTranslateOffset)));
+			actor = mPX.mPhysics->createRigidStatic(PxTransform(Convert(xform.mTranslate + col.mTranslateOffset + xtraxlate)));
 			actor->attachShape(*shape);
 		}
 		mActors[static_cast<uint32_t>(e.id)] = actor;
