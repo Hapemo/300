@@ -329,7 +329,7 @@ void Camera::Inspect()
 		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
 			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
 		ImGui::SameLine();
-		//ImGui::DragFloat3("##Position", (float*)&mCamera.mPosition);
+		ImGui::DragFloat3("##Position", (float*)&mCamera.mPosition);
 
 
 
@@ -389,9 +389,23 @@ void PointLight::Inspect()
 {
 	if (ImGui::CollapsingHeader("PointLight", ImGuiTreeNodeFlags_DefaultOpen))
 	{
-
+		ImGui::Text("Color");
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
 		ImGui::DragFloat3("##Light Color", (float*)&mLightColor);
+
+
+		ImGui::Text("Attenuation");
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
 		ImGui::DragFloat("##Attenuation", (float*)&mAttenuation);
+
+		ImGui::Text("Intensity");
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
 		ImGui::DragFloat("##Intensity", (float*)&mIntensity);
 
 
@@ -600,6 +614,7 @@ void MeshRenderer::Inspect() {
 
 						uid temp(mMaterialInstancePath[i]);
 						mTextureRef[i] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(temp.id));
+						mTextureCont[i] = true;
 					}
 					ImGui::EndDragDropTarget();
 				}
@@ -632,6 +647,7 @@ void MeshRenderer::Inspect() {
 
 						uid temp(mMaterialInstancePath[i]);
 						mTextureRef[i] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(temp.id));
+						mTextureCont[i] = true;
 					}
 					ImGui::EndDragDropTarget();
 				}

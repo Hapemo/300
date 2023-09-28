@@ -9,6 +9,8 @@
 #include <Animator.hpp>
 #include <Camera.hpp>
 #include "EnumStrings.h"
+//#include "Graphics/GraphicsSystem.h"
+#include "Mesh.hpp"
 
 //#include "rttr/registration.h"
 
@@ -70,6 +72,10 @@ struct MeshRenderer
 	unsigned							mGUID;
 
 	void								Inspect();
+
+
+
+	GFX::Mesh							testmesh;
 	//RTTR_ENABLE()
 
 
