@@ -412,20 +412,12 @@ void ObjectFactory::LoadScene(Scene* scene, const std::string& filename)
 		{
 			e.AddComponent<Parent>();
 			e.GetComponent<Parent>() = obj.GetPJSON();
-
-			Parent& parent = e.GetComponent<Parent>();
-			parent.mNextSibling = (uint32_t)idMap[(entt::entity)parent.mNextSibling];
-			parent.mParent = (uint32_t)idMap[(entt::entity)parent.mParent];
-			parent.mPrevSibling = (uint32_t)idMap[(entt::entity)parent.mPrevSibling];
 		}
 
 		if (obj.mc_t)
 		{
 			e.AddComponent<Children>();
 			e.GetComponent<Children>() = obj.GetCJSON();
-
-			Children& child = e.GetComponent<Children>();
-			child.mFirstChild = (uint32_t)idMap[(entt::entity)child.mFirstChild];
 		}
 
 		if (obj.ma_t)
@@ -448,7 +440,21 @@ void ObjectFactory::LoadScene(Scene* scene, const std::string& filename)
 
 		scene->mEntities.insert(e);
 	}
+	auto parent_cont = systemManager->ecs->GetEntitiesWith<Parent>();
+	auto child_cont = systemManager->ecs->GetEntitiesWith<Children>();
+	for (Entity pe : parent_cont)
+	{
+		Parent& parent = pe.GetComponent<Parent>();
+		parent.mNextSibling = (uint32_t)idMap[(entt::entity)parent.mNextSibling];
+		parent.mParent = (uint32_t)idMap[(entt::entity)parent.mParent];
+		parent.mPrevSibling = (uint32_t)idMap[(entt::entity)parent.mPrevSibling];
+	}
 
+	for (Entity ce : child_cont)
+	{
+		Children& child = ce.GetComponent<Children>();
+		child.mFirstChild = (uint32_t)idMap[(entt::entity)child.mFirstChild];
+	}
 	// split the file name and save it into the scene
 	// eg "../resources/Scenes/test.json"
 	size_t lastSep = filename.find_last_of("/\\");

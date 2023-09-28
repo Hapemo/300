@@ -1,8 +1,8 @@
 [
     {
-        "EntityID": 1,
+        "EntityID": 1048577,
         "General": {
-            "Name": "Ceiling",
+            "Name": "Floor",
             "Active": true,
             "Paused": false,
             "Subtag": "Active"
@@ -20,7 +20,7 @@
             ],
             "Translate": [
                 0.0,
-                300.0,
+                0.0,
                 0.0
             ]
         },
@@ -57,57 +57,96 @@
             ],
             "TranslateOffset": [
                 0.0,
-                5.0,
+                0.0,
                 0.0
             ]
         }
     },
     {
-        "EntityID": 2,
+        "EntityID": 1048578,
         "General": {
-            "Name": "Wall",
+            "Name": "Camera",
             "Active": true,
             "Paused": false,
             "Subtag": "Active"
         },
         "Transform": {
             "Scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "Rotate": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Translate": [
+                400.0,
+                121.0,
+                -9.0
+            ]
+        },
+        "Camera": {
+            "Position": [
+                400.0,
+                121.0,
+                11.0
+            ],
+            "Target": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Size": [
+                582,
+                607
+            ],
+            "Near": 0.10000000149011612,
+            "Far": 900.0
+        }
+    },
+    {
+        "EntityID": 1048579,
+        "General": {
+            "Name": "Animation",
+            "Active": true,
+            "Paused": false,
+            "Subtag": "Active"
+        },
+        "Transform": {
+            "Scale": [
+                270.382568359375,
+                211.37704467773438,
+                67.81583404541016
+            ],
+            "Rotate": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Translate": [
+                0.0,
                 10.0,
-                300.0,
-                500.0
-            ],
-            "Rotate": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "Translate": [
-                255.0,
-                0.0,
                 0.0
             ]
         },
-        "RigidBody": {
-            "Density": 10.0,
-            "Material": "Concrete",
-            "Motion": "Static"
-        },
         "MeshRenderer": {
             "ShaderPath": [
-                "../_GRAPHICS/shader_files/pointLight_vert.glsl",
+                "../_GRAPHICS/shader_files/animations_vert.glsl",
                 "../_GRAPHICS/shader_files/pointLight_frag.glsl"
             ],
             "MaterialInstancePath": [
-                "../assets/Compressed/Wood Material 15_BaseColor.ctexture",
-                "../assets/Compressed/Wood Material 15_Normal.ctexture",
-                "../assets/Compressed/Wood Material 15_BaseColor.ctexture",
-                "../assets/Compressed/Wood Material 15_BaseColor.ctexture"
+                "../assets/Compressed/Vampire_diffuse.ctexture",
+                "../assets/Compressed/Vampire_normal.ctexture",
+                "../assets/Compressed/Vampire_emission.ctexture",
+                "../assets/Compressed/Vampire_specular.ctexture"
             ],
-            "MeshPath": "../assets/compiled_geom/Wall_Partition(No Material).geom",
+            "MeshPath": "../assets/compiled_geom/dancing_vampire.geom",
             "GUID": 0,
             "TextureCont": [
-                false,
-                false,
+                true,
+                true,
                 false,
                 false
             ]
@@ -115,144 +154,53 @@
         "BoxCollider": {
             "ScaleOffset": [
                 1.0,
-                1.0,
-                1.0
+                0.800000011920929,
+                1.5
             ],
             "TranslateOffset": [
                 0.0,
-                150.0,
+                80.0,
                 0.0
             ]
         }
     },
     {
-        "EntityID": 3,
+        "EntityID": 1048580,
         "General": {
-            "Name": "Wall",
+            "Name": "Light",
             "Active": true,
             "Paused": false,
             "Subtag": "Active"
         },
         "Transform": {
             "Scale": [
-                10.0,
-                300.0,
-                500.0
-            ],
-            "Rotate": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "Translate": [
-                -255.0,
-                0.0,
-                0.0
-            ]
-        },
-        "RigidBody": {
-            "Density": 10.0,
-            "Material": "Concrete",
-            "Motion": "Static"
-        },
-        "MeshRenderer": {
-            "ShaderPath": [
-                "../_GRAPHICS/shader_files/pointLight_vert.glsl",
-                "../_GRAPHICS/shader_files/pointLight_frag.glsl"
-            ],
-            "MaterialInstancePath": [
-                "../assets/Compressed/Wood Material 15_BaseColor.ctexture",
-                "../assets/Compressed/Wood Material 15_Normal.ctexture",
-                "../assets/Compressed/Wood Material 15_BaseColor.ctexture",
-                "../assets/Compressed/Wood Material 15_BaseColor.ctexture"
-            ],
-            "MeshPath": "../assets/compiled_geom/Wall_Partition(No Material).geom",
-            "GUID": 0,
-            "TextureCont": [
-                false,
-                false,
-                false,
-                false
-            ]
-        },
-        "BoxCollider": {
-            "ScaleOffset": [
                 1.0,
                 1.0,
                 1.0
             ],
-            "TranslateOffset": [
-                0.0,
-                150.0,
-                0.0
-            ]
-        }
-    },
-    {
-        "EntityID": 4,
-        "General": {
-            "Name": "Wall",
-            "Active": true,
-            "Paused": false,
-            "Subtag": "Active"
-        },
-        "Transform": {
-            "Scale": [
-                500.0,
-                300.0,
-                10.0
-            ],
             "Rotate": [
                 0.0,
                 0.0,
                 0.0
             ],
             "Translate": [
-                0.0,
-                0.0,
-                255.0
+                5.486000061035156,
+                230.67599487304688,
+                48.341705322265625
             ]
         },
-        "RigidBody": {
-            "Density": 10.0,
-            "Material": "Concrete",
-            "Motion": "Static"
-        },
-        "MeshRenderer": {
-            "ShaderPath": [
-                "../_GRAPHICS/shader_files/pointLight_vert.glsl",
-                "../_GRAPHICS/shader_files/pointLight_frag.glsl"
-            ],
-            "MaterialInstancePath": [
-                "../assets/Compressed/Wood Material 15_BaseColor.ctexture",
-                "../assets/Compressed/Wood Material 15_Normal.ctexture",
-                "../assets/Compressed/Wood Material 15_BaseColor.ctexture",
-                "../assets/Compressed/Wood Material 15_BaseColor.ctexture"
-            ],
-            "MeshPath": "../assets/compiled_geom/Wall_Partition(No Material).geom",
-            "GUID": 0,
-            "TextureCont": [
-                false,
-                false,
-                false,
-                false
-            ]
-        },
-        "BoxCollider": {
-            "ScaleOffset": [
+        "PointLight": {
+            "LightColor": [
                 1.0,
                 1.0,
-                0.5
+                1.0
             ],
-            "TranslateOffset": [
-                0.0,
-                150.0,
-                0.0
-            ]
+            "Attenuation": 0.0,
+            "Intensity": 28.0
         }
     },
     {
-        "EntityID": 5,
+        "EntityID": 1048581,
         "General": {
             "Name": "Wall",
             "Active": true,
@@ -315,146 +263,9 @@
         }
     },
     {
-        "EntityID": 6,
+        "EntityID": 1048582,
         "General": {
-            "Name": "Light",
-            "Active": true,
-            "Paused": false,
-            "Subtag": "Active"
-        },
-        "Transform": {
-            "Scale": [
-                1.0,
-                1.0,
-                1.0
-            ],
-            "Rotate": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "Translate": [
-                5.486000061035156,
-                230.67599487304688,
-                48.341705322265625
-            ]
-        },
-        "PointLight": {
-            "LightColor": [
-                1.0,
-                1.0,
-                1.0
-            ],
-            "Attenuation": 0.0,
-            "Intensity": 28.0
-        }
-    },
-    {
-        "EntityID": 7,
-        "General": {
-            "Name": "Animation",
-            "Active": true,
-            "Paused": false,
-            "Subtag": "Active"
-        },
-        "Transform": {
-            "Scale": [
-                270.382568359375,
-                211.37704467773438,
-                67.81583404541016
-            ],
-            "Rotate": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "Translate": [
-                0.0,
-                10.0,
-                0.0
-            ]
-        },
-        "MeshRenderer": {
-            "ShaderPath": [
-                "../_GRAPHICS/shader_files/animations_vert.glsl",
-                "../_GRAPHICS/shader_files/pointLight_frag.glsl"
-            ],
-            "MaterialInstancePath": [
-                "../assets/Compressed/Vampire_diffuse.ctexture",
-                "../assets/Compressed/Vampire_normal.ctexture",
-                "../assets/Compressed/Vampire_emission.ctexture",
-                "../assets/Compressed/Vampire_specular.ctexture"
-            ],
-            "MeshPath": "../assets/compiled_geom/dancing_vampire.geom",
-            "GUID": 0,
-            "TextureCont": [
-                true,
-                true,
-                false,
-                false
-            ]
-        },
-        "BoxCollider": {
-            "ScaleOffset": [
-                1.0,
-                0.800000011920929,
-                1.5
-            ],
-            "TranslateOffset": [
-                0.0,
-                80.0,
-                0.0
-            ]
-        }
-    },
-    {
-        "EntityID": 8,
-        "General": {
-            "Name": "Camera",
-            "Active": true,
-            "Paused": false,
-            "Subtag": "Active"
-        },
-        "Transform": {
-            "Scale": [
-                1.0,
-                1.0,
-                1.0
-            ],
-            "Rotate": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "Translate": [
-                400.0,
-                121.0,
-                -9.0
-            ]
-        },
-        "Camera": {
-            "Position": [
-                400.0,
-                121.0,
-                11.0
-            ],
-            "Target": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "Size": [
-                582,
-                607
-            ],
-            "Near": 0.10000000149011612,
-            "Far": 900.0
-        }
-    },
-    {
-        "EntityID": 9,
-        "General": {
-            "Name": "Floor",
+            "Name": "Wall",
             "Active": true,
             "Paused": false,
             "Subtag": "Active"
@@ -462,7 +273,70 @@
         "Transform": {
             "Scale": [
                 500.0,
+                300.0,
+                10.0
+            ],
+            "Rotate": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Translate": [
+                0.0,
+                0.0,
+                255.0
+            ]
+        },
+        "RigidBody": {
+            "Density": 10.0,
+            "Material": "Concrete",
+            "Motion": "Static"
+        },
+        "MeshRenderer": {
+            "ShaderPath": [
+                "../_GRAPHICS/shader_files/pointLight_vert.glsl",
+                "../_GRAPHICS/shader_files/pointLight_frag.glsl"
+            ],
+            "MaterialInstancePath": [
+                "../assets/Compressed/Wood Material 15_BaseColor.ctexture",
+                "../assets/Compressed/Wood Material 15_Normal.ctexture",
+                "../assets/Compressed/Wood Material 15_BaseColor.ctexture",
+                "../assets/Compressed/Wood Material 15_BaseColor.ctexture"
+            ],
+            "MeshPath": "../assets/compiled_geom/Wall_Partition(No Material).geom",
+            "GUID": 0,
+            "TextureCont": [
+                false,
+                false,
+                false,
+                false
+            ]
+        },
+        "BoxCollider": {
+            "ScaleOffset": [
+                1.0,
+                1.0,
+                0.5
+            ],
+            "TranslateOffset": [
+                0.0,
+                150.0,
+                0.0
+            ]
+        }
+    },
+    {
+        "EntityID": 1048583,
+        "General": {
+            "Name": "Wall",
+            "Active": true,
+            "Paused": false,
+            "Subtag": "Active"
+        },
+        "Transform": {
+            "Scale": [
                 10.0,
+                300.0,
                 500.0
             ],
             "Rotate": [
@@ -471,7 +345,7 @@
                 0.0
             ],
             "Translate": [
-                0.0,
+                -255.0,
                 0.0,
                 0.0
             ]
@@ -509,9 +383,144 @@
             ],
             "TranslateOffset": [
                 0.0,
+                150.0,
+                0.0
+            ]
+        }
+    },
+    {
+        "EntityID": 1048584,
+        "General": {
+            "Name": "Wall",
+            "Active": true,
+            "Paused": false,
+            "Subtag": "Active"
+        },
+        "Transform": {
+            "Scale": [
+                10.0,
+                300.0,
+                500.0
+            ],
+            "Rotate": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Translate": [
+                255.0,
                 0.0,
                 0.0
             ]
+        },
+        "RigidBody": {
+            "Density": 10.0,
+            "Material": "Concrete",
+            "Motion": "Static"
+        },
+        "MeshRenderer": {
+            "ShaderPath": [
+                "../_GRAPHICS/shader_files/pointLight_vert.glsl",
+                "../_GRAPHICS/shader_files/pointLight_frag.glsl"
+            ],
+            "MaterialInstancePath": [
+                "../assets/Compressed/Wood Material 15_BaseColor.ctexture",
+                "../assets/Compressed/Wood Material 15_Normal.ctexture",
+                "../assets/Compressed/Wood Material 15_BaseColor.ctexture",
+                "../assets/Compressed/Wood Material 15_BaseColor.ctexture"
+            ],
+            "MeshPath": "../assets/compiled_geom/Wall_Partition(No Material).geom",
+            "GUID": 0,
+            "TextureCont": [
+                false,
+                false,
+                false,
+                false
+            ]
+        },
+        "BoxCollider": {
+            "ScaleOffset": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "TranslateOffset": [
+                0.0,
+                150.0,
+                0.0
+            ]
+        },
+        "Parent": {
+            "Parent": 1048585,
+            "PreviousSibling": 1048584,
+            "NextSibling": 1048584
+        }
+    },
+    {
+        "EntityID": 1048585,
+        "General": {
+            "Name": "Ceiling",
+            "Active": true,
+            "Paused": false,
+            "Subtag": "Active"
+        },
+        "Transform": {
+            "Scale": [
+                500.0,
+                10.0,
+                500.0
+            ],
+            "Rotate": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Translate": [
+                0.0,
+                300.0,
+                0.0
+            ]
+        },
+        "RigidBody": {
+            "Density": 10.0,
+            "Material": "Concrete",
+            "Motion": "Static"
+        },
+        "MeshRenderer": {
+            "ShaderPath": [
+                "../_GRAPHICS/shader_files/pointLight_vert.glsl",
+                "../_GRAPHICS/shader_files/pointLight_frag.glsl"
+            ],
+            "MaterialInstancePath": [
+                "../assets/Compressed/Wood Material 15_BaseColor.ctexture",
+                "../assets/Compressed/Wood Material 15_Normal.ctexture",
+                "../assets/Compressed/Wood Material 15_BaseColor.ctexture",
+                "../assets/Compressed/Wood Material 15_BaseColor.ctexture"
+            ],
+            "MeshPath": "../assets/compiled_geom/Wall_Partition(No Material).geom",
+            "GUID": 0,
+            "TextureCont": [
+                false,
+                false,
+                false,
+                false
+            ]
+        },
+        "BoxCollider": {
+            "ScaleOffset": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "TranslateOffset": [
+                0.0,
+                5.0,
+                0.0
+            ]
+        },
+        "Children": {
+            "NumChildren": 1,
+            "FirstChild": 1048584
         }
     }
 ]
