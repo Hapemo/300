@@ -1,38 +1,45 @@
+/*!*************************************************************************
+****
+\file		   InputMapSystem.cpp
+\author(s)	   Cheong Ming Lun
+\par DP email: m.cheong@digipen.edu
+\date		   16-8-2023
+\brief
+
+This file contains the base InputMapSystem.h that supports mapping of inputs through
+the editor to physical keys.
+****************************************************************************/
 #include "Input/InputMapSystem.h"
 #include "ECS/ECS.h"
 #include "ECS/ECS_Components.h"
 
 std::unordered_map<std::string, int> InputMapSystem::e_key_mapping;
 
-//void InputMapSystem::Init()
-//{	
-//	InputActionMap general_movement = InputActionMap("General Movement");
-//	general_movement.Enable();
-//	general_movement.AddAction("move");
-//	// general_movement.AddAction("jump");
-//
-//	InputAction& move_action = general_movement.FindAction("move");
-//	move_action.Enable();
-//	move_action.AddKeyBinding(KEY_BIND::KEY_UP, E_STATE::PRESS, E_KEY::UP);
-//	move_action.AddKeyBinding(KEY_BIND::KEY_DOWN, E_STATE::PRESS, E_KEY::DOWN);
-//	move_action.AddKeyBinding(KEY_BIND::KEY_LEFT, E_STATE::PRESS, E_KEY::LEFT);
-//	move_action.AddKeyBinding(KEY_BIND::KEY_RIGHT, E_STATE::PRESS, E_KEY::RIGHT);
-//
-//	glm::vec2 vec_response_up = move_action.ReadValue(E_KEY::UP);
-//	glm::vec2 vec_response_down = move_action.ReadValue(E_KEY::DOWN);
-//	glm::vec2 read_vec;
-//
-//	AddActionMap(general_movement);
-//
-//	E_KEY key_pressed = E_KEY::DOWN;
-//
-//	read_vec = move_action.ReadValue(key_pressed);
-//}
+
+/******************************************************************************/
+/*!
+	[Default Constructor] - InputMapSystem()
+	- Calls upon [Helper Function - EKeyMappingInit()] 
+		- This helps with initializing the keys that we have registered in GLFW.
+		- Since the GLFW is not contiguous inside the enumeration.
+		- Used to Cross-Reference the custom-bindings the user chooses.
+ */
+ /******************************************************************************/
 InputMapSystem::InputMapSystem() { EKeyMappingInit(); }
 
+/******************************************************************************/
+/*!
+	 Init()
+ */
+ /******************************************************************************/
 void InputMapSystem::Init() {}
 
 
+/******************************************************************************/
+/*!
+	 Update()
+ */
+ /******************************************************************************/
 void InputMapSystem::Update()
 {
 	auto ActionMapEntities = systemManager->ecs->GetEntitiesWith<InputActionMapEditor>();
@@ -66,61 +73,36 @@ void InputMapSystem::Update()
 		}
 
 	}
-
-
-
-
-	// [9/26] - Functionality Moved to [CheckActionInput()] : Check when needed (used in the script)
-	//for (auto& action_map : mActionMaps)
-	//{
-	//	if (action_map.isEnabled()) // In side [InputActionMap]
-	//	{
-	//		for (auto& action_pair : action_map.GetActions())
-	//		{
-	//			auto& action = action_pair.second;
-
-	//			for (auto& binding_pair : action.GetKeyBindings())
-	//			{
-	//				if (binding_pair.second.key_binding == E_KEY::UNKNOWN)
-	//				{
-	//					break;
-	//				}
-
-	//				E_KEY   key_bind = binding_pair.second.key_binding;
-	//				E_STATE key_state = binding_pair.second.key_state;
-
-	//				if (Input::CheckKey(key_state, key_bind))
-	//				{
-	//					std::cout << "Action Map Triggered!!! : " << action_map.GetActionMapName() << std::endl;
-	//					glm::vec2 vec_response = action_pair.second.ReadValue(key_bind);
-	//					std::cout << "Vector Response: (" << vec_response.x << "," << vec_response.y << ")" << std::endl;
-	//				}
-	//			}
-	//		}
-	//	}
-	//}
 }
 
+/******************************************************************************/
+/*!
+	 Exit()
+ */
+ /******************************************************************************/
 void InputMapSystem::Exit()
 {
 
 }
 
-//void InputMapSystem::AddActionMap(InputActionMap& action_map)
-//{
-//	mActionMaps.push_back(action_map);
-//}
-//
-//std::vector<InputActionMap>& InputMapSystem::GetActionMaps()
-//{
-//	return mActionMaps;
-//}
-
+/******************************************************************************/
+/*!
+	 CheckEKeyMap()
+	 - Checks the (enum - int) equivalent of the requested "key string"
+ */
+ /******************************************************************************/
 int InputMapSystem::CheckEKeyMap(std::string key_string)
 {
 	return e_key_mapping[key_string];
 }
 
+/******************************************************************************/
+/*!
+	 EKeyMappingInit()
+	 - Custom Maps out existing GLFW bindings to "std::string" equivalents that 
+	 works in tandem with the editor side.
+ */
+ /******************************************************************************/
 void InputMapSystem::EKeyMappingInit() {
 	e_key_mapping.reserve(230);
 	e_key_mapping["Unknown"] = -1;

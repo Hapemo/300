@@ -1,3 +1,15 @@
+/*!*************************************************************************
+****
+\file		   AudioSystem.h
+\author(s)	   Cheong Ming Lun
+\par DP email: m.cheong@digipen.edu
+\date		   16-8-2023
+\brief
+
+This file contains the base AudioSystem class that supports the following functionalities:
+- Loading in Audio Files (from components/directory)
+- Manipulating Audio (Play/Pause/Stop)
+****************************************************************************/
 #pragma once
 #include <fmod.hpp>		// Include [FMOD] Library
 #include <iostream>
@@ -13,6 +25,13 @@
 enum AUDIOTYPE : unsigned char;
 
 // [9/25] Decided that we need this if we want to track if the audio is still playing in a particular channel
+/******************************************************************************/
+/*!
+	[Struct] Channel
+	 \brief
+	  - Contains relevant channel information.
+ */
+ /******************************************************************************/
 struct Channel
 {
 	unsigned int   mChannelID;
@@ -20,10 +39,17 @@ struct Channel
 	bool		   mIsPlayingSound;
 };
 
+/******************************************************************************/
+/*!
+	[Class] AudioSystem
+	 \brief
+	  - Core Audio System that supports the base functionalities of loading / manipulating sounds.
+ */
+ /******************************************************************************/
 class AudioSystem
 {
 public:
-	int MAX_AUDIO_FILES_PLAYING = 32;         // Number of Sounds (that are allowed to be played simultaneously)
+	int MAX_AUDIO_FILES_PLAYING = 32;														// Number of Sounds (that are allowed to be played simultaneously)
 	int NO_OF_BGM_CHANNELS_TO_INIT = 16;
 	int NO_OF_SFX_CHANNELS_TO_INIT = 16;
 public:
