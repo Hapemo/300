@@ -1,5 +1,14 @@
 #pragma once
+/*!*************************************************************************
+****
+\file		   KeyBind.h
+\author(s)	   Cheong Ming Lun
+\par DP email: m.cheong@digipen.edu
+\date		   16-8-2023
+\brief
 
+Structures and Enums relating to the Input Mapping System.
+****************************************************************************/
 enum MAP_TO_AXIS
 {
 	X_POSITIVE,
