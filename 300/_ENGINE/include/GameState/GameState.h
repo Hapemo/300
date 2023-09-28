@@ -1,9 +1,8 @@
 /*!*****************************************************************************
 \file GameState.h
-\author Jazz Teoh Yu Jue
-\par DP email: j.teoh\@digipen.edu
-\par Group: Memory Leak Studios
-\date 27-11-2022
+\author Jazz Teoh Yu Jue, Charissa Yip
+\par DP email: j.teoh\@digipen.edu, charissa.yip@digipen.edu
+\date 28-9-2023
 GameState is a container that manages a range of scenes. It acts as manager for
 the scenes. Only 1 gmae state should be loaded and running in the game at a 
 time.
@@ -74,41 +73,3 @@ public:
 private:
 
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

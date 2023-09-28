@@ -1,3 +1,17 @@
+/*!*************************************************************************
+****
+\file Serialization.cpp
+\author Charissa Yip
+\par DP email: charissa.yip@digipen.edu
+\date 28-9-2023
+\brief
+
+This file contains definitions of functions to facilitate the loading
+and saving of prefabs, scenes and gamestates using serialization.
+
+****************************************************************************
+***/
+
 #include "Serialization/Serialization.h"
 #include "GameState/Scene.h"
 #include "../../../_SCRIPTING/include/ScriptingSystem.h"

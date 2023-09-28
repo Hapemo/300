@@ -1,9 +1,8 @@
 /*!*****************************************************************************
 \file Scene.h
-\author Jazz Teoh Yu Jue
-\par DP email: j.teoh\@digipen.edu
-\par Group: Memory Leak Studios
-\date 27-11-2022
+\author Jazz Teoh Yu Jue, Charissa Yip
+\par DP email: j.teoh\@digipen.edu, charissa.yip@digipen.edu
+\date 28-9-2023
 \brief
 Scene base class. Each game state can have multiple scenes which encapsulates
 a group of entities and operates on them.

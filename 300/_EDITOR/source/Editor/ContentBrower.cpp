@@ -1,8 +1,8 @@
 /*!*************************************************************************
 ****
 \file ContentBrowser.cpp
-\author Han ChengWen
-\par DP email: c.han@digipen.edu
+\author Han ChengWen, Kew Yu Jun, Charissa Yip, Jazz Teoh Yu Jue
+\par DP email: c.han@digipen.edu, charissa.yip@digipen.edu
 \date 22-9-2022
 \brief
 This file contains ContentBrowser window functions that display
