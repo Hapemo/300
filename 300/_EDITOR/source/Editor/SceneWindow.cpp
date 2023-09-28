@@ -30,6 +30,7 @@ Setting up specification for frame buffer rendering
 #include "Hierarchy.h"
 #include "ImGuizmo.h"
 #include "GameState/GameStateManager.h"
+
 typedef void    (*ImGuiSizeCallback)(ImGuiSizeCallbackData* data);
 
 //bool SceneWindow::follow = false;
@@ -54,17 +55,19 @@ void SceneWindow::update()
 	ImGui::Image((ImTextureID)(intptr_t)systemManager->mGraphicsSystem->GetEditorAttachment(), viewportPanelSize, ImVec2(0,1), ImVec2(1,0));
 		
 	if (ImGui::IsItemClicked(ImGuiMouseButton_Left)) {
-		unsigned int getid = systemManager->mGraphicsSystem->GetEntityID(((ImGui::GetMousePos().x - ImGui::GetWindowPos().x)/winSize.x),
-			((ImGui::GetMousePos().y - ImGui::GetWindowPos().y) / winSize.y));
+		if (objPicking) {
+			unsigned int getid = systemManager->mGraphicsSystem->GetEntityID(((ImGui::GetMousePos().x - ImGui::GetWindowPos().x) / winSize.x),
+				((ImGui::GetMousePos().y - ImGui::GetWindowPos().y) / winSize.y));
 
-		//std::cout << getid << ": ID \n";
 
-
-		if (getid != 0) {
-			Hierarchy::selectedId = static_cast<entt::entity>(getid);
-			Hierarchy::selectionOn = true;
+			if (getid != 0) {
+				Hierarchy::selectedId = static_cast<entt::entity>(getid);
+				Hierarchy::selectionOn = true;
+			}
 		}
+		//std::cout << getid << ": ID \n";
 	}
+	
 
 	ImGui::SetItemAllowOverlap();
 	//wevents = ImGui::IsItemHovered();  /// <-- This returns true if mouse is over the overlaped Test button
@@ -150,10 +153,17 @@ void SceneWindow::RenderGuizmo()
 	//			ImGuizmo::OPERATION::SCALE, ImGuizmo::WORLD, glm::value_ptr(objectMatrix));
 	////	}
 
+		if (ImGuizmo::IsOver()) {
+			objPicking = false;
+		}
+		else {
+			objPicking = true;
+		}
+
 		if (ImGuizmo::IsUsing()) {
 			ImGuizmo::DecomposeMatrixToComponents(glm::value_ptr(objectMatrix), glm::value_ptr(transform.mTranslate),
 				glm::value_ptr(tempRot), glm::value_ptr(transform.mScale));
-
+			
 	//		//transform->orientation.x += tempRot.z;
 		}
 
