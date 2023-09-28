@@ -64,14 +64,14 @@ namespace GFX
 		void Destroy();
 
 		// Stores the rendering data for each instance of mesh
-		std::vector<mat4> mLTW;
-		std::vector<vec4> mColors;
-		std::vector<vec4> mTexEntID;
+		_GEOM::bbox						mBBOX;
+		std::vector<mat4>				mLTW;
+		std::vector<vec4>				mColors;
+		std::vector<vec4>				mTexEntID;
 
 		// This mesh may contain multiple different animations. These animations are unique to this mesh.
 		std::vector<_GEOM::Animation>	mAnimation{};
 		bool							mHasAnimation{ false };
-		_GEOM::bbox						mBBOX;
 
 
 	private:
@@ -90,7 +90,7 @@ namespace GFX
 		VBO mBoneWeightVbo;
 
 		// Stats of the mesh model
-		std::string		mMeshName;
+		std::string		mMeshName{};
 		int				mVertexCount{};
 		int				mIndexCount{};
 	};

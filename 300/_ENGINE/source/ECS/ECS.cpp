@@ -148,7 +148,7 @@ Entity ECS::NewEntityFromPrefab(std::string prefabName)
 {
 	// void ObjectFactory::DeserializeScene(const std::string& filename)
 	// creation of new entity done inside deserializescene function
-	Entity e(ObjectFactory::DeserializePrefab("../assets/Prefabs/" + prefabName + ".prefab", mPrefabs[prefabName].size()));
+	Entity e(ObjectFactory::DeserializePrefab("../assets/Prefabs/" + prefabName + ".prefab", static_cast<int>(mPrefabs[prefabName].size())));
 	e.AddComponent<Prefab>().mPrefab = prefabName;
 	systemManager->mGameStateSystem->mCurrentGameState.mScenes[0].mEntities.insert(e);
 	//copy all prefab components (except transform) to new entity
@@ -195,7 +195,7 @@ Entity ECS::StartEditPrefab(std::string prefabName)
 {
 	// void ObjectFactory::DeserializeScene(const std::string& filename)
 	// creation of new entity done inside deserializescene function
-	Entity e(ObjectFactory::DeserializePrefab("../assets/Prefabs/" + prefabName + ".prefab", mPrefabs[prefabName].size()));
+	Entity e(ObjectFactory::DeserializePrefab("../assets/Prefabs/" + prefabName + ".prefab", static_cast<int>(mPrefabs[prefabName].size())));
 	e.AddComponent<Prefab>().mPrefab = prefabName;
 	//copy all prefab components (except transform) to new entity
 	//General temp1 = e.GetComponent<General>();
@@ -243,8 +243,8 @@ Entity ECS::PasteEntity(int scene)
 		for (int i{ 0 }; i < 4; i++) {
 
 			if (mr.mTextureCont[i] == true) {
-				uid uids(mr.mMaterialInstancePath[i]);
-				mr.mTextureRef[i] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(uids.id));
+				uid localuids(mr.mMaterialInstancePath[i]);
+				mr.mTextureRef[i] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(localuids.id));
 			}
 		}
 		GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mr.mMeshRef);

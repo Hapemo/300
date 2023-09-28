@@ -54,7 +54,7 @@ void Scene::Exit() {
 
 void Scene::Pause(bool _pause) { 
 	//LOG_CUSTOM("SCENE", "Changed Scene \"" + mName + "\" pause status to " + (_pause ? "true" : "false"));
-	for (auto& e : mEntities)
+	//for (auto& e : mEntities)
 		//e.GetComponent<General>().isPaused = _pause;yj
 	mIsPause = _pause; 
 	

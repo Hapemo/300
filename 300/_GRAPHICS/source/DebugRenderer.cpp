@@ -420,7 +420,7 @@ void GFX::DebugRenderer::RenderAllPoints(mat4 const& viewProj)
 	glUniformMatrix4fv(mShader.GetUniformVP(), 1, GL_FALSE, &viewProj[0][0]);
 
 	// Draw
-	glDrawElementsInstanced(GL_POINTS, mPointMesh.GetIndexCount(), GL_UNSIGNED_INT, nullptr, mPointMesh.mLTW.size());
+	glDrawElementsInstanced(GL_POINTS, mPointMesh.GetIndexCount(), GL_UNSIGNED_INT, nullptr, static_cast<GLsizei>(mPointMesh.mLTW.size()));
 
 	mShader.Deactivate();
 	mPointMesh.UnbindVao();
@@ -441,7 +441,7 @@ void GFX::DebugRenderer::RenderAllLines(mat4 const& viewProj)
 	glUniformMatrix4fv(mShader.GetUniformVP(), 1, GL_FALSE, &viewProj[0][0]);
 
 	// Draw
-	glDrawElementsInstanced(GL_LINES, mLineMesh.GetIndexCount(), GL_UNSIGNED_INT, nullptr, mLineMesh.mLTW.size());
+	glDrawElementsInstanced(GL_LINES, mLineMesh.GetIndexCount(), GL_UNSIGNED_INT, nullptr, static_cast<GLsizei>(mLineMesh.mLTW.size()));
 
 	mShader.Deactivate();
 	mLineMesh.UnbindVao();
@@ -462,7 +462,7 @@ void GFX::DebugRenderer::RenderAllTriangles(mat4 const& viewProj)
 	glUniformMatrix4fv(mShader.GetUniformVP(), 1, GL_FALSE, &viewProj[0][0]);
 
 	// Draw
-	glDrawElementsInstanced(GL_TRIANGLES, mTriangleMesh.GetIndexCount(), GL_UNSIGNED_INT, nullptr, mTriangleMesh.mLTW.size());
+	glDrawElementsInstanced(GL_TRIANGLES, mTriangleMesh.GetIndexCount(), GL_UNSIGNED_INT, nullptr, static_cast<GLsizei>(mTriangleMesh.mLTW.size()));
 
 	mShader.Deactivate();
 	mTriangleMesh.UnbindVao();
@@ -483,7 +483,7 @@ void GFX::DebugRenderer::RenderAllQuads(mat4 const& viewProj)
 	glUniformMatrix4fv(mShader.GetUniformVP(), 1, GL_FALSE, &viewProj[0][0]);
 
 	// Draw
-	glDrawElementsInstanced(GL_TRIANGLES, mQuadMesh.GetIndexCount(), GL_UNSIGNED_INT, nullptr, mQuadMesh.mLTW.size());
+	glDrawElementsInstanced(GL_TRIANGLES, mQuadMesh.GetIndexCount(), GL_UNSIGNED_INT, nullptr, static_cast<GLsizei>(mQuadMesh.mLTW.size()));
 
 	mShader.Deactivate();
 	mQuadMesh.UnbindVao();
@@ -504,7 +504,7 @@ void GFX::DebugRenderer::RenderAllAabb(mat4 const& viewProj)
 	glUniformMatrix4fv(mShader.GetUniformVP(), 1, GL_FALSE, &viewProj[0][0]);
 
 	// Draw
-	glDrawElementsInstanced(GL_LINE_LOOP, mAabbMesh.GetIndexCount(), GL_UNSIGNED_INT, nullptr, mAabbMesh.mLTW.size());
+	glDrawElementsInstanced(GL_LINE_LOOP, mAabbMesh.GetIndexCount(), GL_UNSIGNED_INT, nullptr, static_cast<GLsizei>(mAabbMesh.mLTW.size()));
 
 	mShader.Deactivate();
 	mAabbMesh.UnbindVao();
@@ -525,7 +525,7 @@ void GFX::DebugRenderer::RenderAllCube(mat4 const& viewProj)
 	glUniformMatrix4fv(mShader.GetUniformVP(), 1, GL_FALSE, &viewProj[0][0]);
 
 	// Draw
-	glDrawElementsInstanced(GL_TRIANGLES, mCubeMesh.GetIndexCount(), GL_UNSIGNED_INT, nullptr, mCubeMesh.mLTW.size());
+	glDrawElementsInstanced(GL_TRIANGLES, mCubeMesh.GetIndexCount(), GL_UNSIGNED_INT, nullptr, static_cast<GLsizei>(mCubeMesh.mLTW.size()));
 
 	mShader.Deactivate();
 	mCubeMesh.UnbindVao();
@@ -546,7 +546,7 @@ void GFX::DebugRenderer::RenderAllSphere(mat4 const& viewProj)
 	glUniformMatrix4fv(mShader.GetUniformVP(), 1, GL_FALSE, &viewProj[0][0]);
 
 	// Draw
-	glDrawElementsInstanced(GL_LINE_STRIP, mSphereMesh.GetIndexCount(), GL_UNSIGNED_INT, nullptr, mSphereMesh.mLTW.size());
+	glDrawElementsInstanced(GL_LINE_STRIP, mSphereMesh.GetIndexCount(), GL_UNSIGNED_INT, nullptr, static_cast<GLsizei>(mSphereMesh.mLTW.size()));
 
 	mShader.Deactivate();
 	mSphereMesh.UnbindVao();

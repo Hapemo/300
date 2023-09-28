@@ -34,7 +34,7 @@ namespace GFX
 		void Unbind() const;
 
 	private:
-		GLuint mID;
+		GLuint mID{};
 	};
 }
 
