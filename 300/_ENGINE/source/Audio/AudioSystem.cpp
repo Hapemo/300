@@ -11,94 +11,79 @@ AudioSystem::~AudioSystem()
 
 void AudioSystem::Init()
 {
-	// todo
-	//  load audio for loop
-	//  [Create the Audio System] -> returns the system object to this class. (&system)'
+	// [Create the Audio System] -> returns the system object to this class. (&system)'
 	// PINFO("FMOD System Create: %d", ErrCodeCheck(FMOD::System_Create(&system_obj)));
 	PINFO("FMOD System Create: +");
-	std::cout << "FMOD System Create:";
+	/*std::cout << "FMOD System Create:";*/
 	ErrCodeCheck(FMOD::System_Create(&system_obj));
 
 	// Initialize the System settings
 	// PINFO("FMOD System Initialize: %d" , ErrCodeCheck(system_obj->init(MAX_AUDIO_FILES_PLAYING, FMOD_INIT_NORMAL, nullptr))); // Settings can be combined by doing OR operation)
 	PINFO("FMOD System Initialize: +");
-	std::cout << "FMOD System Initialize: ";
 	ErrCodeCheck(system_obj->init(MAX_AUDIO_FILES_PLAYING, FMOD_INIT_NORMAL, nullptr));
-
-	// Create Channels (At Initialization) - OLD
-	std::vector<FMOD::Channel *> bgm_channel;
-	std::vector<FMOD::Channel *> sfx_channel;
-	std::cout << "Initialize BGM Channel." << std::endl;
-	mChannels.emplace(std::make_pair(AUDIO_BGM, bgm_channel));
-	std::cout << "Initialize SFX Channel." << std::endl;
-	mChannels.emplace(std::make_pair(AUDIO_SFX, sfx_channel));
 
 	// Create Channels (At Initialization) - NEW (w ID tracking)
 	std::vector<Channel> bgm_channel_new;
 	std::vector<Channel> sfx_channel_new;
-	std::cout << "Initialize BGM NEW Channel." << std::endl;
+	PINFO("Initializing BGM Channels.");
 	mChannelsNew.emplace(std::make_pair(AUDIO_BGM, bgm_channel_new));
-	std::cout << "Initialize SFX NEW Channel." << std::endl;
+	PINFO("Initializing SFX Channels.");
 	mChannelsNew.emplace(std::make_pair(AUDIO_SFX, sfx_channel_new));
-
-	// Populate Channel
-	/*for (; no_of_sfx_channels < NO_OF_SFX_CHANNELS_TO_INIT; no_of_sfx_channels++)
-	{
-		std::cout << "CREATING SFX CHANNEL #" << no_of_sfx_channels << "." << std::endl;
-
-		FMOD::Channel* new_channel = nullptr;
-		mChannels.find(AUDIO_SFX)->second.push_back(new_channel);
-
-	}
-
-	for (; no_of_bgm_channels < NO_OF_BGM_CHANNELS_TO_INIT; no_of_bgm_channels++)
-	{
-		std::cout << "CREATING SFX CHANNEL #" << no_of_sfx_channels << "." << std::endl;
-
-		FMOD::Channel* new_channel = nullptr;
-		mChannels.find(AUDIO_BGM)->second.push_back(new_channel);
-	}*/
-
-	auto audio_entities = systemManager->ecs->GetEntitiesWith<Audio>();
-
-	for (Entity audio : audio_entities)
-	{
-		Audio &audio_component = audio.GetComponent<Audio>();
-		std::string audio_path = audio_component.mFilePath + "/" + audio_component.mFileName;
-		std::string audio_name = audio_component.mFileName;
-		LoadAudio(audio_path, audio_name);
-	}
 
 	// [9/25] Decided to just init a number of channels from the start.
 	auto bgm_channel_it = mChannelsNew.find(AUDIO_BGM);
 	auto sfx_channel_it = mChannelsNew.find(AUDIO_SFX);
 
 	// [9/25] Populate the (Channel) Object
+	PINFO("Populating BGM Channels.");
 	if (bgm_channel_it != mChannelsNew.end())
 	{
 		for (int i = 0; i < NO_OF_BGM_CHANNELS_TO_INIT; ++i)
 		{
-			FMOD::Channel *new_channel = nullptr;
+			FMOD::Channel* new_channel = nullptr;
 			Channel new_bgm_channel = Channel(next_avail_id_bgm, new_channel, false); // We need this for the channel status.
 			next_avail_id_bgm++;
 			bgm_channel_it->second.push_back(new_bgm_channel);
 		}
 	}
 
+	PINFO("Populating BGM Channels.");
 	if (sfx_channel_it != mChannelsNew.end())
 	{
 		for (int i = 0; i < NO_OF_SFX_CHANNELS_TO_INIT; ++i)
 		{
-			FMOD::Channel *new_channel = nullptr;
+			FMOD::Channel* new_channel = nullptr;
 			Channel new_sfx_channel = Channel(next_avail_id_sfx, new_channel, false); // We need this for the channel status.
 			next_avail_id_sfx++;
 			sfx_channel_it->second.push_back(new_sfx_channel);
+		}
+	}
+
+
+	auto audio_entities = systemManager->ecs->GetEntitiesWith<Audio>();
+
+	if (audio_entities.size() > 0)
+		PINFO("Loading Audio Entities");
+
+	for (Entity audio : audio_entities)
+	{
+		Audio& audio_component = audio.GetComponent<Audio>();
+		std::string audio_path = audio_component.mFilePath + "/" + audio_component.mFileName;
+		std::string audio_name = audio_component.mFileName;
+		if (LoadAudio(audio_path, audio_name))
+		{
+			audio_component.mIsLoaded = true;
+		}
+		else
+		{
+			audio_component.mIsLoaded = false;
 		}
 	}
 }
 
 void AudioSystem::Update(float dt)
 {
+	EnginePerformance::StartTrack("Audio");
 	auto audio_entities = systemManager->ecs->GetEntitiesWith<Audio>();
 
 	/*
@@ -108,7 +93,7 @@ void AudioSystem::Update(float dt)
 	*/
 	for (Entity audio : audio_entities)
 	{
-		Audio &audio_component = audio.GetComponent<Audio>();
+		Audio& audio_component = audio.GetComponent<Audio>();
 
 		if (audio_component.mIsPlay) // if it's supposed to play.
 		{
@@ -143,11 +128,11 @@ void AudioSystem::Update(float dt)
 
 		for (Entity audio : audio_entities)
 		{
-			Audio &audio_component = audio.GetComponent<Audio>();
+			Audio& audio_component = audio.GetComponent<Audio>();
 
 			for (int id : audio_component.mPlayBGMChannelID)
 			{
-				Channel &channel = FindChannel(AUDIO_BGM, id);
+				Channel& channel = FindChannel(AUDIO_BGM, id);
 
 				channel.mChannel->isPlaying(&channel.mIsPlayingSound);
 
@@ -160,7 +145,7 @@ void AudioSystem::Update(float dt)
 
 			for (int id : audio_component.mPlaySFXChannelID)
 			{
-				Channel &channel = FindChannel(AUDIO_SFX, id);
+				Channel& channel = FindChannel(AUDIO_SFX, id);
 
 				channel.mChannel->isPlaying(&channel.mIsPlayingSound);
 
@@ -173,76 +158,40 @@ void AudioSystem::Update(float dt)
 		}
 	}
 
-	if (Input::CheckKey(PRESS, _1))
-	{
-		PlaySFXAudio("NPC_Greeting.wav");
-	}
-
-	if (Input::CheckKey(PRESS, _2))
-	{
-		PlayBGMAudio("farm_ambience.wav");
-	}
-
-	if (Input::CheckKey(PRESS, _3))
-	{
-		PlaySFXAudio("tuning-radio-7150.wav");
-	}
-
-	if (Input::CheckKey(PRESS, Q))
-	{
-		SetAllSFXVolume(0.0f);
-	}
-
-	if (Input::CheckKey(PRESS, W))
-	{
-		SetAllBGMVolume(0.0f);
-	}
-
-	if (Input::CheckKey(PRESS, R))
-	{
-		SetSpecificChannelVolume(AUDIO_BGM, 0, 0.0f);
-	}
-
-	if (Input::CheckKey(PRESS, T))
-	{
-		SetSpecificChannelVolume(AUDIO_SFX, 0, 0.0f);
-	}
-
-	if (Input::CheckKey(PRESS, A))
-	{
-		StopAllSFX();
-	}
-
-	if (Input::CheckKey(PRESS, S))
-	{
-		StopAllBGM();
-	}
-
-	if (Input::CheckKey(PRESS, F))
-	{
-		TogglePauseSFXSounds();
-	}
-
-	if (Input::CheckKey(PRESS, G))
-	{
-		TogglePauseBGMSounds();
-	}
-
-	if (Input::CheckKey(PRESS, H))
-	{
-		TogglePauseSpecific(AUDIO_BGM, 0);
-	}
-
-	if (Input::CheckKey(PRESS, J))
-	{
-		TogglePauseAllSounds();
-	}
-
 	system_obj->update();
+
+	EnginePerformance::EndTrack("Audio");
+	EnginePerformance::UpdateSystemMs("Audio");
 }
 
 void AudioSystem::Exit()
 {
+}
+
+void AudioSystem::UpdateLoadAudio()
+{
+	auto audio_entities = systemManager->ecs->GetEntitiesWith<Audio>();
+
+	for (Entity audio : audio_entities)
+	{
+		Audio& audio_component = audio.GetComponent<Audio>();
+		if (!audio_component.mIsLoaded)
+		{
+			std::string audio_path = audio_component.mFilePath + "/" + audio_component.mFileName;
+			std::string audio_name = audio_component.mFileName;
+			if (LoadAudio(audio_path, audio_name))
+			{
+				audio_component.mIsLoaded = true;
+				PINFO("Audio Successfully Loaded :)");
+
+			}
+			else
+			{
+				audio_component.mIsLoaded = false;
+				PWARNING("Audio could not be loaded... Please Check (1) Directory Name , (2) File");
+			}
+		}
+	}
 }
 
 // Use this whenever you use a [FMOD] Functiom
@@ -251,37 +200,44 @@ int AudioSystem::ErrCodeCheck(FMOD_RESULT result)
 	if (result != FMOD_OK)
 	{
 		// PWARNING("FMOD OPERATION ERROR: %d", result);
-		std::cout << "FMOD OPERATION ERROR: " << result << std::endl;
-		PINFO("FMOD OPERATION ERROR: %d", result);
+		//std::cout << "FMOD OPERATION ERROR: " << result << std::endl;
+		PINFO(" "); // concatanate nothing...
 
 		switch (result)
 		{
+		case FMOD_ERR_FILE_NOTFOUND:
+			PWARNING("(18) [FMOD_ERR_FILE_NOTFOUND] : The requested audio file path cannot be found, unsuccessfully loaded.");
+			break;
 		case FMOD_ERR_HEADER_MISMATCH:
-
-			std::cout << "(20) [FMOD_ERR_HEADER_MISMATCH] : There is a version mismatch between the FMOD header and either the FMOD Studio library or the FMOD Low Level library." << std::endl;
+			PWARNING("(20) [FMOD_ERR_HEADER_MISMATCH] : There is a version mismatch between the FMOD header and either the FMOD Studio library or the FMOD Low Level library.");
+			//std::cout << "(20) [FMOD_ERR_HEADER_MISMATCH] : There is a version mismatch between the FMOD header and either the FMOD Studio library or the FMOD Low Level library." << std::endl;
 			break;
 		}
 
 		return 0; // failure
 	}
 	PINFO("FMOD OPERATION OK.");
-	std::cout << "FMOD OPERATION OK." << std::endl;
+	//std::cout << "FMOD OPERATION OK." << std::endl;
 	return 1; // success (no issues)
 }
 
-void AudioSystem::LoadAudio(std::string file_path, std::string audio_name)
+bool AudioSystem::LoadAudio(std::string file_path, std::string audio_name)
 {
-	PINFO("File Detected: %s", file_path);
-	std::cout << "File Detected: " << file_path << std::endl;
+	PINFO("File Detected: %s", file_path.c_str());
+	//std::cout << "File Detected: " << file_path << std::endl;
 	PINFO("Creating Sound: +");
-	std::cout << "Creating Sound: ";
-	FMOD::Sound *new_sound;
+	/*std::cout << "Creating Sound: ";*/
+	FMOD::Sound* new_sound;
 	int check = ErrCodeCheck(system_obj->createSound(file_path.c_str(), FMOD_LOOP_OFF, 0, &new_sound));
 
 	if (!check)
 	{
-		std::cout << "Error: Sound Not Loaded." << std::endl;
+		PWARNING("Error: Sound Not Loaded.");
+		return 0;
+		//std::cout << "Error: Sound Not Loaded." << std::endl;
 	}
+
+
 
 	mSounds.insert(std::make_pair(audio_name, new_sound));
 }
@@ -294,17 +250,20 @@ void AudioSystem::LoadAudioFiles(std::filesystem::path file_path)
 
 void AudioSystem::LoadAudioFromDirectory(std::filesystem::path directory_path)
 {
-	for (auto &file : std::filesystem::directory_iterator(directory_path))
+	for (auto& file : std::filesystem::directory_iterator(directory_path))
 	{
 		std::filesystem::path file_path = file.path();
-		std::cout << "File Detected: " << file_path.string() << std::endl;
+		PINFO("File Detected: %s", file_path.string());
+		/*std::cout << "File Detected: " << file_path.string() << std::endl;*/
 		std::string audio_name = file_path.filename().string();
 		size_t extension_pos = audio_name.find_last_of('.');
 		audio_name = audio_name.substr(0, extension_pos);
-		std::cout << "Audio Name: " << audio_name << std::endl;
+		PINFO("Audio Name: %s", audio_name);
+		//std::cout << "Audio Name: " << audio_name << std::endl;
 
-		std::cout << "Creating Sound: ";
-		FMOD::Sound *new_sound;
+		PINFO("Creating Sound: ");
+		//std::cout << "Creating Sound: ";
+		FMOD::Sound* new_sound;
 		ErrCodeCheck(system_obj->createSound(file_path.string().c_str(), FMOD_LOOP_OFF, 0, &new_sound));
 
 		mSounds.insert(std::make_pair(audio_name, new_sound));
@@ -319,7 +278,8 @@ void AudioSystem::PlayAudio(std::string audio_name, AUDIOTYPE audio_type, float 
 
 	if (map_it == mSounds.end()) // true if not found;
 	{
-		std::cerr << "Can't find the requested audio." << std::endl;
+		PWARNING("Can't find the requested audio.");
+		//std::cerr << "Can't find the requested audio." << std::endl;
 	}
 
 	auto channel_it = mChannelsNew.find(audio_type);
@@ -328,7 +288,7 @@ void AudioSystem::PlayAudio(std::string audio_name, AUDIOTYPE audio_type, float 
 	{
 		bool found_channel = false;
 
-		for (Channel &channel : channel_it->second)
+		for (Channel& channel : channel_it->second)
 		{
 			if (!channel.mIsPlayingSound)
 			{
@@ -352,7 +312,8 @@ int AudioSystem::PlaySFXAudio(std::string audio_name, float audio_vol)
 
 	if (map_it == mSounds.end()) // true if not found;
 	{
-		std::cerr << "Can't find the requested audio." << std::endl;
+		PWARNING("Can't find the requested audio.");
+		//std::cerr << "Can't find the requested audio." << std::endl;
 		return -1;
 	}
 
@@ -362,7 +323,7 @@ int AudioSystem::PlaySFXAudio(std::string audio_name, float audio_vol)
 	{
 		bool found_channel = false;
 
-		for (Channel &channel : channel_it->second)
+		for (Channel& channel : channel_it->second)
 		{
 			if (!channel.mIsPlayingSound)
 			{
@@ -370,7 +331,8 @@ int AudioSystem::PlaySFXAudio(std::string audio_name, float audio_vol)
 
 				if (check_play)
 				{
-					std::cout << "Currently Playing (" << audio_name << ") on SFX Channel : #" << channel.mChannelID << std::endl;
+					PINFO("Currently Playing (%s) on SFX Channel : #%d", audio_name.c_str(), channel.mChannelID);
+					//std::cout << "Currently Playing (" << audio_name << ") on SFX Channel : #" << channel.mChannelID << std::endl;
 					channel.mChannel->setVolume(audio_vol);
 					channel.mIsPlayingSound = true;
 					return channel.mChannelID;
@@ -388,7 +350,8 @@ int AudioSystem::PlayBGMAudio(std::string audio_name, float audio_vol)
 
 	if (map_it == mSounds.end()) // true if not found;
 	{
-		std::cerr << "Can't find the requested audio." << std::endl;
+		PWARNING("Can't find the requested audio.");
+		//std::cerr << "Can't find the requested audio." << std::endl;
 		return -1;
 	}
 
@@ -399,7 +362,7 @@ int AudioSystem::PlayBGMAudio(std::string audio_name, float audio_vol)
 	{
 		bool found_channel = false;
 
-		for (Channel &channel : channel_it->second)
+		for (Channel& channel : channel_it->second)
 		{
 			if (!channel.mIsPlayingSound)
 			{
@@ -407,7 +370,8 @@ int AudioSystem::PlayBGMAudio(std::string audio_name, float audio_vol)
 
 				if (check_play)
 				{
-					std::cout << "Currently Playing (" << audio_name << ") on BGM Channel : #" << channel.mChannelID << std::endl;
+					PINFO("Currently Playing (%s) on BGM Channel : #%d", audio_name.c_str(), channel.mChannelID);
+					//std::cout << "Currently Playing (" << audio_name << ") on BGM Channel : #" << channel.mChannelID << std::endl;
 					channel.mChannel->setVolume(audio_vol);
 					channel.mIsPlayingSound = true;
 					return channel.mChannelID;
@@ -420,11 +384,12 @@ int AudioSystem::PlayBGMAudio(std::string audio_name, float audio_vol)
 void AudioSystem::SetAllSFXVolume(float audio_vol)
 {
 	auto channel_it = mChannelsNew.find(AUDIO_SFX);
-	std::cout << "Setting SFX Volume: ";
+	PINFO("Setting SFX Volume: ");
+	//std::cout << "Setting SFX Volume: ";
 
 	if (channel_it != mChannelsNew.end())
 	{
-		for (Channel &channel : channel_it->second)
+		for (Channel& channel : channel_it->second)
 		{
 			ErrCodeCheck(channel.mChannel->setVolume(audio_vol));
 		}
@@ -436,11 +401,12 @@ void AudioSystem::SetAllSFXVolume(float audio_vol)
 void AudioSystem::SetAllBGMVolume(float audio_vol)
 {
 	auto channel_it = mChannelsNew.find(AUDIO_BGM);
-	std::cout << "Setting BGM Volume: ";
+	PINFO("Setting BGM Volume: ");
+	//std::cout << "Setting BGM Volume: ";
 
 	if (channel_it != mChannelsNew.end())
 	{
-		for (Channel &channel : channel_it->second)
+		for (Channel& channel : channel_it->second)
 		{
 			ErrCodeCheck(channel.mChannel->setVolume(audio_vol));
 		}
@@ -457,9 +423,11 @@ void AudioSystem::SetSpecificChannelVolume(AUDIOTYPE audio_type, int channel_id,
 	{
 		if (channel_id < channel_it_new->second.size())
 		{
-			std::cout << "CHANNEL REQUEST: " << channel_id << std::endl;
-			Channel &channel_found = FindChannel(audio_type, channel_id);
-			std::cout << "SETTING VOLUME:";
+			PINFO("CHANNEL REQUEST: %d", channel_id);
+			//std::cout << "CHANNEL REQUEST: " << channel_id << std::endl;
+			Channel& channel_found = FindChannel(audio_type, channel_id);
+			PINFO("SETTING VOLUME:");
+			//std::cout << "SETTING VOLUME:";
 			ErrCodeCheck(channel_found.mChannel->setVolume(audio_vol));
 
 			/*	if (channel_it_new->second[channel_id].mIsPlayingSound)
@@ -472,7 +440,8 @@ void AudioSystem::SetSpecificChannelVolume(AUDIOTYPE audio_type, int channel_id,
 
 	else
 	{
-		std::cout << "Sorry, requested channel ID is invalid." << std::endl;
+		PWARNING("Sorry, requested channel ID is invalid.");
+		//std::cout << "Sorry, requested channel ID is invalid." << std::endl;
 	}
 
 	switch (audio_type)
@@ -488,25 +457,28 @@ void AudioSystem::SetSpecificChannelVolume(AUDIOTYPE audio_type, int channel_id,
 
 void AudioSystem::MuteSFX()
 {
-	std::cout << "Muting Global SFX." << std::endl;
+	PINFO("Muting Global SFX.");
+	//std::cout << "Muting Global SFX." << std::endl;
 	SetAllSFXVolume(0.0f);
 }
 
 void AudioSystem::MuteBGM()
 {
-	std::cout << "Muting Global BGM." << std::endl;
+	PINFO("Muting Global BGM.");
+	//std::cout << "Muting Global BGM." << std::endl;
 	SetAllBGMVolume(0.0f);
 }
 
 void AudioSystem::StopAllSFX()
 {
+	PINFO("Stopping and Releasing All SFX.");
 	std::cout << "Stopping and Releasing All SFX." << std::endl;
 
 	auto channel_it = mChannelsNew.find(AUDIO_SFX);
 
 	if (channel_it != mChannelsNew.end())
 	{
-		for (Channel &channel : channel_it->second)
+		for (Channel& channel : channel_it->second)
 		{
 			channel.mChannel->stop();
 		}
@@ -515,13 +487,14 @@ void AudioSystem::StopAllSFX()
 
 void AudioSystem::StopAllBGM()
 {
-	std::cout << "Stopping and Releasing All BGM." << std::endl;
+	PINFO("Stopping and Releasing All BGM.");
+	//std::cout << "Stopping and Releasing All BGM." << std::endl;
 
 	auto channel_it = mChannelsNew.find(AUDIO_BGM);
 
 	if (channel_it != mChannelsNew.end())
 	{
-		for (Channel &channel : channel_it->second)
+		for (Channel& channel : channel_it->second)
 		{
 			channel.mChannel->stop();
 		}
@@ -534,18 +507,25 @@ void AudioSystem::TogglePauseAllSounds()
 
 	if (channel_it_sfx != mChannelsNew.end())
 	{
-		for (Channel &channel : channel_it_sfx->second)
+		for (Channel& channel : channel_it_sfx->second)
 		{
 			if (channel.mIsPlayingSound)
 			{
 				bool paused;
-				std::cout << "Checking Channel Pause Status: " << std::endl;
+				PINFO("Checking Channel Pause Status: ");
+				//std::cout << "Checking Channel Pause Status: " << std::endl;
 				ErrCodeCheck(channel.mChannel->getPaused(&paused));
 
 				if (paused)
-					std::cout << "Resuming SFX Channels. " << std::endl;
+				{
+					PINFO("Resuming SFX Channels. ");
+				}
+
 				else
-					std::cout << "Pausing SFX Channels. " << std::endl;
+				{
+					PINFO("Pausing SFX Channels. ");
+				}
+
 
 				ErrCodeCheck(channel.mChannel->setPaused(!paused));
 			}
@@ -556,18 +536,26 @@ void AudioSystem::TogglePauseAllSounds()
 
 	if (channel_it_bgm != mChannelsNew.end())
 	{
-		for (Channel &channel : channel_it_bgm->second)
+		for (Channel& channel : channel_it_bgm->second)
 		{
 			if (channel.mIsPlayingSound)
 			{
 				bool paused;
-				std::cout << "Checking Channel Pause Status: " << std::endl;
+				PINFO("Checking Channel Pause Status: ");
+				//std::cout << "Checking Channel Pause Status: " << std::endl;
 				ErrCodeCheck(channel.mChannel->getPaused(&paused));
 
 				if (paused)
-					std::cout << "Resuming BGM Channels. " << std::endl;
+				{
+					PINFO("Resuming BGM Channels. ");
+					//std::cout << "Resuming BGM Channels. " << std::endl;
+				}
+
 				else
-					std::cout << "Pausing BGM Channels. " << std::endl;
+				{
+					PINFO("Pausing BGM Channels. ");
+					//std::cout << "Pausing BGM Channels. " << std::endl;
+				}
 
 				ErrCodeCheck(channel.mChannel->setPaused(!paused));
 			}
@@ -581,18 +569,26 @@ void AudioSystem::TogglePauseSFXSounds()
 
 	if (channel_it_sfx != mChannelsNew.end())
 	{
-		for (Channel &channel : channel_it_sfx->second)
+		for (Channel& channel : channel_it_sfx->second)
 		{
 			if (channel.mIsPlayingSound)
 			{
 				bool paused;
-				std::cout << "Checking Channel Pause Status: " << std::endl;
+				PINFO("Checking Channel Pause Status: ");
+				//std::cout << "Checking Channel Pause Status: " << std::endl;
 				ErrCodeCheck(channel.mChannel->getPaused(&paused));
 
 				if (paused)
-					std::cout << "Resuming SFX Channels. " << std::endl;
+				{
+					PINFO("Resuming SFX Channels. ");
+					//std::cout << "Resuming SFX Channels. " << std::endl;
+				}
+
 				else
+				{
+					PINFO("Pausing SFX Channels. ");
 					std::cout << "Pausing SFX Channels. " << std::endl;
+				}
 
 				ErrCodeCheck(channel.mChannel->setPaused(!paused));
 			}
@@ -606,18 +602,27 @@ void AudioSystem::TogglePauseBGMSounds()
 
 	if (channel_it != mChannelsNew.end())
 	{
-		for (Channel &channel : channel_it->second)
+		for (Channel& channel : channel_it->second)
 		{
 			if (channel.mIsPlayingSound)
 			{
 				bool paused;
-				std::cout << "Checking Channel Pause Status: " << std::endl;
+				PINFO("Checking Channel Pause Status: +");
+				//std::cout << "Checking Channel Pause Status: " << std::endl;
 				ErrCodeCheck(channel.mChannel->getPaused(&paused));
 
 				if (paused)
-					std::cout << "Resuming BGM Channels. " << std::endl;
+				{
+					PINFO("Checking Channel Pause Status: +");
+					//std::cout << "Resuming BGM Channels. " << std::endl;
+				}
+
 				else
-					std::cout << "Pausing BGM Channels. " << std::endl;
+				{
+					PINFO("Pausing BGM Channels. +");
+					//std::cout << "Pausing BGM Channels. " << std::endl;
+				}
+
 
 				ErrCodeCheck(channel.mChannel->setPaused(!paused));
 			}
@@ -633,31 +638,43 @@ void AudioSystem::TogglePauseSpecific(AUDIOTYPE audio_type, int channel_id)
 	{
 		if (channel_id < channel_it->second.size())
 		{
-			std::cout << "CHANNEL REQUEST: " << channel_id << std::endl;
-			Channel &channel_found = FindChannel(audio_type, channel_id);
+			PINFO("CHANNEL REQUEST: %d", channel_id);
+			//std::cout << "CHANNEL REQUEST: " << channel_id << std::endl;
+			Channel& channel_found = FindChannel(audio_type, channel_id);
 			bool paused;
-			std::cout << "Checking Channel Pause Status: " << std::endl;
+			PINFO("Checking Channel Pause Status: ");
+			//std::cout << "Checking Channel Pause Status: " << std::endl;
 			ErrCodeCheck(FindChannel(audio_type, channel_id).mChannel->getPaused(&paused));
 
 			if (paused)
-				std::cout << "Resuming Selected Channel. " << std::endl;
+			{
+				PINFO("Resuming Selected Channel. ");
+				//std::cout << "Resuming Selected Channel. " << std::endl;
+			}
+
 			else
-				std::cout << "Pausing Selected Channel. " << std::endl;
+			{
+				PINFO("Pausing Selected Channel. ");
+				//std::cout << "Pausing Selected Channel. " << std::endl;
+			}
+
 
 			ErrCodeCheck(FindChannel(audio_type, channel_id).mChannel->setPaused(!paused));
 		}
 		else
 		{
-			std::cout << "Sorry, requested channel ID is invalid." << std::endl;
+			PWARNING("Sorry, requested channel ID is invalid.");
+			//std::cout << "Sorry, requested channel ID is invalid." << std::endl;
 		}
 	}
 }
 
-Channel &AudioSystem::FindChannel(AUDIOTYPE audio_type, int channel_id)
+Channel& AudioSystem::FindChannel(AUDIOTYPE audio_type, int channel_id)
 {
 	if (channel_id > mChannelsNew.size())
 	{
-		std::cout << "Requested Index does not exists..." << std::endl;
+		PWARNING("Requested Index does not exists...");
+		//ristd::cout << "Requested Index does not exists..." << std::endl;
 		// throw std::out_of_range("Requested Index does not exists...");
 	}
 
@@ -665,7 +682,7 @@ Channel &AudioSystem::FindChannel(AUDIOTYPE audio_type, int channel_id)
 
 	if (channel_it != mChannelsNew.end())
 	{
-		for (Channel &channel : channel_it->second)
+		for (Channel& channel : channel_it->second)
 		{
 			if (channel.mChannelID == channel_id)
 			{

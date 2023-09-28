@@ -116,7 +116,7 @@
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <TreatWarningAsError>true</TreatWarningAsError>
+      <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -147,6 +147,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\..\Desktop\300\300\_ENGINE\include\Input\Input.h" />
+    <ClInclude Include="..\..\..\..\..\Desktop\300\300\_ENGINE\include\Input\InputAction.h" />
+    <ClInclude Include="..\..\..\..\..\Desktop\300\300\_ENGINE\include\Input\InputActionMap.h" />
+    <ClInclude Include="..\..\..\..\..\Desktop\300\300\_ENGINE\include\Input\InputMapSystem.h" />
+    <ClInclude Include="..\..\..\..\..\Desktop\300\300\_ENGINE\include\Input\KeyBind.h" />
     <ClInclude Include="include\Audio\AudioSystem.h" />
     <ClInclude Include="include\Audio\AudioType.h" />
     <ClInclude Include="include\Debug\AssertException.h" />
@@ -165,6 +170,9 @@
     <ClInclude Include="include\GameState\Scene.h" />
     <ClInclude Include="include\Graphics\Camera_Input.h" />
     <ClInclude Include="include\Graphics\GraphicsSystem.h" />
+    <ClInclude Include="include\Input\Input.h" />
+    <ClInclude Include="include\Input\InputMapSystem.h" />
+    <ClInclude Include="include\Input\KeyBind.h" />
     <ClInclude Include="include\Multithread.h" />
     <ClInclude Include="include\Physics\Accumulator.h" />
     <ClInclude Include="include\Physics\PhysicsTypes.h" />
@@ -179,6 +187,10 @@
     <ClCompile Include="source\Debug\Logger.cpp" />
     <ClCompile Include="source\ECS\ECS_Systems.cpp" />
     <ClCompile Include="source\ECS\ECS.cpp" />
+    <ClCompile Include="source\Input\Input.cpp" />
+    <ClCompile Include="source\Input\InputAction.cpp" />
+    <ClCompile Include="source\Input\InputActionMap.cpp" />
+    <ClCompile Include="source\Input\InputMapSystem.cpp" />
     <ClCompile Include="source\Physics\Accumulator.cpp" />
     <ClInclude Include="include\Serialization\Serialization.h" />
   </ItemGroup>
