@@ -4,54 +4,45 @@
 \author(s) Lor Xaun Yun Michelle
 \par DP email:
 xaunyunmichelle.lor\@digipen.edu
-\date 16-8-2022
+\date 28-9-2023
 \brief
 This file contains scripting system class, where the logic
 of how scripts will be loaded, read and unloaded is done.
-This system will be further enhanced in the future
-when it will be involved in the porting in of the gameplay.
 
 The functions
 - Init()
-Registers scripting system and lua state. Making
-neccessary engine functions known in Lua.
+Registers scripting system and lua state. Data like enums
+will be passed to lua here. Init also calls the functions
+from file LuaEngine, where it contains the passing in 
+of more data.
 
 - Update()
 Updates scripting system by ensuring that the scripts
-load when appropriate. Timer functions are also called
-here to get start and end time of the loop in order to
-generate the overall performance of the scripting system.
+load when appropriate.
 
-(The other functions print and printVec exist for testing)
+- Script Alive()/Start()/Exit()/Dead()
+These functions run the respective script function (like Alive())
+of all scripts.
+
+- Test SSSU
+For testing of the above functions created.
+
+- Script Reload
+Implemented when the reload button on the editor is pressed,
+this reloads the script and any new changes to it will be
+processed. (Hot reloads)
+
+- Scripting Init Test and Scripting Update Test
+These functions are called when testing outside of the editor
+has to be done (Attachment of scripts and running of scripts)
 ****************************************************************************
 ***/
-//#include "../PCH/pch.h"
-//#include "../Engine/Engine.h"
 #include "LuaEngine.h"
-//#include "LuaComponent.h"
-//#include "../GameState/GameStateManager.h"
 #include "ScriptingSystem.h"
 #include "Debug/Logger.h"
 #include "CustomCompCont.h"
 #include "Debug/EnginePerformance.h"
 
-/******************************************************************************/
-/*!
-    Example
- */
- /******************************************************************************/
-//void print(const std::string& str)
-//{
-//    std::cout << str << std::endl;
-//}
-//
-//void printVec(const Vec2& vec)
-//{
-//    std::cout << "Vec " << vec.x << "  " << vec.y << std::endl;
-//}
-
-//sol::state ScriptingSystem::luaState;
-//bool ScriptingSystem::once;
 bool ScriptingSystem::printOnce = false;
 
 namespace sol {
@@ -61,18 +52,13 @@ namespace sol {
 
 void ScriptingSystem::Init()
 {
-    //g_engine->entityMgr->RegisterSystem(SystemType<ScriptingSystem>(), this);
-    //AddComponentSignature<Scripts>();
-
     luaState.open_libraries();
 
     /******************************************************************************/
     /*!
-        Example
+        Vec2 and Vec3 library
      */
      /******************************************************************************/
-    //luaState.set_function("print", print);
-    //luaState.set_function("printVec", printVec);
 
     luaState.new_usertype<glm::vec2>(
         "Vec2", sol::constructors<glm::vec2(), glm::vec2(float, float)>(),
@@ -151,21 +137,9 @@ void ScriptingSystem::Init()
 
 void ScriptingSystem::Update(float dt)
 {
-    //for (int step = 0; step <= Engine::currentNumberOfSteps - 1; ++step) 
-    ////{ 
-    //// If "Pause" is checked 
-    //if (g_engine->gameStateMgr->isPaused) 
-    //{ 
-    //    return; 
-    //} 
-
     auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
 
-    //scriptEntities
-
-    //if (g_engine->gameStateMgr->isPlaying) 
-    //{ 
-        // Load the scripts and call the "Start" function 
+    // Load the scripts and call the "Start" function 
     if (!once)
     {
         for (Entity entity : scriptEntities)
@@ -187,15 +161,11 @@ void ScriptingSystem::Update(float dt)
             script.Run("Update");
         }
     }
-    //} 
     /******************************************************************************/
     /*!
-        To implement when game state manager is ready
         Load scripts when scene is not playing & left-shift is pressed
      */
      /******************************************************************************/
-    //else 
-    //{ 
     //if (Input::CheckKey(E_STATE::PRESS, E_KEY::LEFT_SHIFT))
     //{
     //    //    for (Entity entity : ECS::GetInstance()->GetEntitiesWith<Scripts>()) 
@@ -255,20 +225,20 @@ void ScriptingSystem::ScriptDead(const Entity& entity)
 
 void ScriptingSystem::TestSSSU()
 {
-    std::string entityID;
-    if (Input::CheckKey(E_STATE::PRESS, E_KEY::_4))
-    {
-        std::cout << "Select entity that you want to run its functions in scripts: ";
-        std::cin >> entityID;
+    //std::string entityID;
+    //if (Input::CheckKey(E_STATE::PRESS, E_KEY::_4))
+    //{
+    //    std::cout << "Select entity that you want to run its functions in scripts: ";
+    //    std::cin >> entityID;
 
-        ScriptingSystem::ScriptAlive(Entity((entt::entity)std::stoul(entityID)));
+    //    ScriptingSystem::ScriptAlive(Entity((entt::entity)std::stoul(entityID)));
 
-        ScriptingSystem::ScriptStart(Entity((entt::entity)std::stoul(entityID)));
+    //    ScriptingSystem::ScriptStart(Entity((entt::entity)std::stoul(entityID)));
 
-        ScriptingSystem::ScriptExit(Entity((entt::entity)std::stoul(entityID)));
+    //    ScriptingSystem::ScriptExit(Entity((entt::entity)std::stoul(entityID)));
 
-        ScriptingSystem::ScriptDead(Entity((entt::entity)std::stoul(entityID)));
-    }
+    //    ScriptingSystem::ScriptDead(Entity((entt::entity)std::stoul(entityID)));
+    //}
 }
 
 void ScriptingSystem::ScriptReload()
@@ -276,6 +246,12 @@ void ScriptingSystem::ScriptReload()
     once = false;
 }
 
+/******************************************************************************/
+/*!
+    These functions to be used when scripting is to be tested without
+    editor present
+ */
+ /******************************************************************************/
 void ScriptingSystem::ScriptingInitTest()
 {
     //Entity player = systemManager->ecs->NewEntity();
@@ -388,18 +364,17 @@ void ScriptingSystem::ScriptingUpdateTest()
     //    }
     //}
 
-    //Print all scripts that each entity has 
-    if (Input::CheckKey(E_STATE::PRESS, E_KEY::_3))
-    {
-        std::cout << "/******************************************************************************/" << std::endl;
-        auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
-        for (Entity entity : scriptEntities)
-        {
-            for (Script script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
-            {
-                std::cout << "Entity " << std::to_string(unsigned int(entity.id)) << " has script: " << script.scriptFile << std::endl;;
-            }
-        }
-    }
-
+    ////Print all scripts that each entity has 
+    //if (Input::CheckKey(E_STATE::PRESS, E_KEY::_3))
+    //{
+    //    std::cout << "/******************************************************************************/" << std::endl;
+    //    auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
+    //    for (Entity entity : scriptEntities)
+    //    {
+    //        for (Script script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
+    //        {
+    //            std::cout << "Entity " << std::to_string(unsigned int(entity.id)) << " has script: " << script.scriptFile << std::endl;;
+    //        }
+    //    }
+    //}
 }
