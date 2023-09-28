@@ -1,4 +1,15 @@
 #pragma once
+/*!*************************************************************************
+****
+\file		   InputMapSystem.h
+\author(s)	   Cheong Ming Lun
+\par DP email: m.cheong@digipen.edu
+\date		   16-8-2023
+\brief
+
+This file contains the base InputMapSystem.h that supports mapping of inputs through
+the editor to physical keys.
+****************************************************************************/
 #include "Input/Input.h"		// Input Keys
 #include "KeyBind.h"
 
