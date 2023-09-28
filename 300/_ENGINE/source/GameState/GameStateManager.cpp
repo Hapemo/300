@@ -193,6 +193,7 @@ bool GameStateManager::TransferEntity(Scene* _src, Scene* _dst, Entity _e) {
 	for (Entity& child : _e.GetAllChildren())
 		_dst->mEntities.insert(child);
 	_dst->mEntities.insert(_e);
+	return true;
 }
 
 void GameStateManager::DeleteEntityFromScene(int _sceneID, Entity _e) {
