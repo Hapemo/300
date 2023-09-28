@@ -1,7 +1,5 @@
-#pragma once
-#pragma once
 /*!*****************************************************************************
-\file main.cpp
+\file EditorApplication.h
 \author Kew Yu Jun
 \par DP email: k.yujun@digipen.edu
 \par Group: Pepe Production
@@ -10,6 +8,7 @@
 Main application that gets called in the main loop. It handles the creation and
 start up of window and game system, also runs their update functions.
 *******************************************************************************/
+#pragma once
 #include "pch.h"
 #include "ECS/ECS_Systems.h"
 #include "Window.hpp"

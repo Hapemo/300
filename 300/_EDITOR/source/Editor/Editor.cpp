@@ -40,10 +40,15 @@ Returns main window for docking
 #include "PrefabWindow.h"
 #include "GameScene.h"
 #include "TabWindow.h"
-//bool Editor::show_Inspector;
-//int Editor::entity {}; // static var for selected entity ID
-//bool Editor::Entity_Selected; // static var for Inspector to show
 
+
+
+/***************************************************************************/
+/*!
+\brief
+    Init function for Imgui Window which constructs all the child windows
+*/
+/**************************************************************************/
 void Editor::UIinit(GLFWwindow* window)
 {
     IMGUI_CHECKVERSION();
@@ -148,43 +153,32 @@ void Editor::UIinit(GLFWwindow* window)
     mWindowlist["Logger"] = new EditorLogger;
     mWindowlist["PrefabScene"] = new PrefabWindow;
     mWindowlist["GameScene"] = new GameScene;
-    //std::cout<< mWindowlist.size() << "test\n";
 
-    //windowlist["ContentBrowser"] = new ContentBrowser;
-    //windowlist["ContentBrowserL"] = new ContentBrowserL;
-    //windowlist["Scene"] = new SceneWindow;
-    //windowlist["Display"] = new SceneWindow;
-    //windowlist["Layer"] = new LayerWindow;
-
-//#ifndef RELEASE
-//    windowlist["Profiler"] = new Performance;
-//#endif
-//
-//    windowlist["Logger"] = new LoggerWindow;
-//    windowlist["Inspect"] = new Inspect;
-//    topwindow = new MenuPanel;
-//
-//    static_cast<SceneWindow*>(windowlist["Scene"])->Framebuffer_spec(Editor_fb->color_attachment);
-//    static_cast<SceneWindow*>(windowlist["Display"])->Framebuffer_spec(MainCam_fb->color_attachment);
-//
     for (auto & windows : mWindowlist ) 
     {
         windows.second->init();
     }
 }
-
+/***************************************************************************/
+/*!
+\brief
+    Update function for Imgui Window that loops the window container to run all windows
+*/
+/**************************************************************************/
 void Editor::WindowUpdate(GLFWwindow* window)
 {
     glfwPollEvents();
     glfwSwapBuffers(window);
-    //std::stringstream sstr;
-    //sstr << "FPS: " << Timer::fps << " " << "Test FPS: " << test_fps << "Graphics ms: " << Timer::systemDuration[0] << " " << "Graphics ms %: " << Timer::FpsPercentage(Timer::systemDuration[0]) << " " << "Sample ms: " << Timer::systemDuration[1] << " " << "Sample ms %: " << Timer::FpsPercentage(Timer::systemDuration[1]);;
-    //glfwSetWindowTitle(window, sstr.str().c_str());
     
 }
 
 
-
+/***************************************************************************/
+/*!
+\brief
+    Update functionality (temporary) for Opengl implementation
+*/
+/**************************************************************************/
 void Editor::UIupdate(GLFWwindow* window) {
 
     // ----------------------------------------------------------------------------- // style and basic setups
@@ -232,16 +226,10 @@ void Editor::UIupdate(GLFWwindow* window) {
 
     ImGui::ShowDemoWindow();
 
-//#ifndef SANDBOX_RELEASE
-
-    //if (g_engine->graphicsSys->editorOn) {
 
 
     for (auto& windows : mWindowlist)
     {
-        //if (windows.first == "Editscene")
-        //    static_cast<SceneWindow*>(windows.second)->ConstrainedResize(nullptr);
-        //
 
         if (windows.first == "PrefabScene") {
             
@@ -264,56 +252,31 @@ void Editor::UIupdate(GLFWwindow* window) {
         }
 
     }
-    //        if (windows.first == "Scene" || windows.first == "Display")
-    //        {
-    //           // windowflag |= ImGuiWindowFlags_NoScrollWithMouse;
-    //            ImGui::Begin(windows.first.c_str(), 0, ImGuiWindowFlags_NoScrollWithMouse | ImGuiWindowFlags_NoScrollbar);
-    //        }
-    //        else if (windows.first == "Inspect") {
-    //            
-    //            //windowflag |= ImGuiWindowFlags_AlwaysVerticalScrollbar;
-    //            ImGui::Begin(windows.first.c_str(), 0, windowflag);
-    //        }
-    //        else {
-    //            ImGui::Begin(windows.first.c_str(), 0, windowflag);
-    //        }
-    //        // only enable click and drag for scene
-
-    //        
-    //        //  if (windows.first != "Profiler" ) {
-    //        windows.second->update();
-    //        // }
-
-    //        if (windows.first == "Scene") {
-
-    //            if (g_engine->graphicsSys->displayOn == false) {
-    //                static_cast<SceneWindow*>(windows.second)->ClickDrop();
-    //                static_cast<SceneWindow*>(windows.second)->RenderGuizmo();
-    //            }
-    //        }
-    //        ImGui::End();
-    //    }
-    //    ImGui::End();
-
-    //}
-
-//#endif // RELEASE_SANDBOX
 }
 
-
+/***************************************************************************/
+/*!
+\brief
+    Draw function for Imgui Window
+*/
+/**************************************************************************/
 
 void Editor::UIdraw(GLFWwindow* window) 
 {
     ImGui::Render();
-    //glClearColor(1.0f, 0.0f, 0.0f, 1.f);
-    //glClear(GL_COLOR_BUFFER_BIT);
+
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
     ImGui::UpdatePlatformWindows();
     ImGui::RenderPlatformWindowsDefault();
     glfwMakeContextCurrent(window);
 }
 
-
+/***************************************************************************/
+/*!
+\brief
+    End function for Imgui Window
+*/
+/**************************************************************************/
 
 void Editor::UIend() 
 {
@@ -328,7 +291,12 @@ void Editor::UIend()
     delete mMenuwindow;
 }
 
-
+/***************************************************************************/
+/*!
+\brief
+    return Imgui Window
+*/
+/**************************************************************************/
 EditorWindow* Editor::Getwindow(std::string id) 
 {
     return mWindowlist[id];

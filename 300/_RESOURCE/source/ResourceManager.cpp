@@ -1,11 +1,22 @@
 #include "ResourceManager.h"
 #include <filesystem>
 
+/***************************************************************************/
+/*!
+\brief
+	Constructor empty
+*/
+/**************************************************************************/
 Resource::Resource() {
 	// empty
 }
 
-
+/***************************************************************************/
+/*!
+\brief
+	Initalize Resource Manager
+*/
+/**************************************************************************/
 void Resource::Init() 
 {
 	for (int i = 0, end = (int)m_Infobuffer.size() - 1; i != end; ++i)
@@ -26,7 +37,12 @@ void Resource::Init()
 	shader_Loader();
 	MaterialInstance_Loader();
 }
-
+/***************************************************************************/
+/*!
+\brief
+	Allocate resource for the Resource manager
+*/
+/**************************************************************************/
 instance_info& Resource::AllocRscInfo(void)
 {
     auto pTemp = m_pInfoBufferEmptyHead;
@@ -37,7 +53,12 @@ instance_info& Resource::AllocRscInfo(void)
 
     return *pTemp;
 }
-
+/***************************************************************************/
+/*!
+\brief
+	DeAllocate resource for the Resource manager
+*/
+/**************************************************************************/
 void Resource::ReleaseRscInfo(instance_info& RscInfo)
 {
     // Add this resource info to the empty chain
@@ -51,7 +72,12 @@ void Resource::ReleaseRscInfo(instance_info& RscInfo)
 	--mResouceCnt;
 	--mMeshManager.mResouceCnt;
 }
-
+/***************************************************************************/
+/*!
+\brief
+	Loads compiled mesh ( geom ) into Engine
+*/
+/**************************************************************************/
 void Resource::mesh_Loader() 
 {
 	std::filesystem::path folderpath = compiled_geom_path.c_str();
@@ -63,9 +89,6 @@ void Resource::mesh_Loader()
 		{
 			std::cout << "============================================\n";
 			std::cout << "[NOTE]>> Loading file: \t" << entry.path().filename() << "\n";
-
-			//uid uids("dasdsadsadasdassssssssssadaddddddddddddddddddddddddddddddddddddddddddddddddddddadadsd");
-			//std::cout << uids.id<< "\n";
 
 			std::string filepath = compiled_geom_path + entry.path().filename().string();
 
@@ -82,7 +105,12 @@ void Resource::mesh_Loader()
 		}
 	}
 }
-
+/***************************************************************************/
+/*!
+\brief
+	Loads GLSL shader into Engine
+*/
+/**************************************************************************/
 void Resource::shader_Loader()
 {
 	// hardcode data path for now 
@@ -113,7 +141,12 @@ void Resource::shader_Loader()
 		m_Shaders.emplace(uids.id, &tempInstance);
 	}
 }
-
+/***************************************************************************/
+/*!
+\brief
+	Loads Compressed texture into Engine
+*/
+/**************************************************************************/
 void Resource::MaterialInstance_Loader()
 {
 	// hardcode material instance path for now 
@@ -145,7 +178,12 @@ void Resource::MaterialInstance_Loader()
 }
 
 
-
+/***************************************************************************/
+/*!
+\brief
+	Allocate resource for shader manager
+*/
+/**************************************************************************/
 ShaderData& ShaderManager::AllocRscInfo()
 {
 	auto pTemp = m_pInfoBufferEmptyHead;
@@ -156,7 +194,12 @@ ShaderData& ShaderManager::AllocRscInfo()
 
 	return *pTemp;
 }
-
+/***************************************************************************/
+/*!
+\brief
+	DeAllocate resource for shader manager
+*/
+/**************************************************************************/
 void ShaderManager::ReleaseRscInfo(ShaderData& RscInfo)
 {
 	// Add this resource info to the empty chain
@@ -167,7 +210,12 @@ void ShaderManager::ReleaseRscInfo(ShaderData& RscInfo)
 ShaderData& ShaderManager::getShader(unsigned id) {
 	return *mSceneShaders[id];
 }
-
+/***************************************************************************/
+/*!
+\brief
+	Initialize shader manager
+*/
+/**************************************************************************/
 void ShaderManager::Init()
 {
 	std::cout << "Initializing ShaderManager.\n";
@@ -179,7 +227,12 @@ void ShaderManager::Init()
 	m_Shaderbuffer[m_Shaderbuffer.size() - 1].m_pData = nullptr;
 	m_pInfoBufferEmptyHead = m_Shaderbuffer.data();
 }
-
+/***************************************************************************/
+/*!
+\brief
+	SetupShader shader manager
+*/
+/**************************************************************************/
 void ShaderManager::SetupShader(std::string vertpath, std::string fragpath, unsigned uid)
 {
 	GFX::Shader localshader;
@@ -194,7 +247,12 @@ void ShaderManager::SetupShader(std::string vertpath, std::string fragpath, unsi
 }
 
 
-
+/***************************************************************************/
+/*!
+\brief
+	Allocate resource for MaterialInstanceManager manager
+*/
+/**************************************************************************/
 MaterialInstanceData& MaterialInstanceManager::AllocRscInfo()
 {
 	auto pTemp = m_pInfoBufferEmptyHead;
@@ -204,14 +262,24 @@ MaterialInstanceData& MaterialInstanceManager::AllocRscInfo()
 
 	return *pTemp;
 }
-
+/***************************************************************************/
+/*!
+\brief
+	DeAllocate resource for MaterialInstanceManager manager
+*/
+/**************************************************************************/
 void MaterialInstanceManager::ReleaseRscInfo(MaterialInstanceData& RscInfo)
 {
 	// Add this resource info to the empty chain
 	RscInfo.m_pData = m_pInfoBufferEmptyHead;
 	m_pInfoBufferEmptyHead = &RscInfo;
 }
-
+/***************************************************************************/
+/*!
+\brief
+	Return material instance reference
+*/
+/**************************************************************************/
 MaterialInstanceData& MaterialInstanceManager::getMaterialInstance(unsigned id) {
 	return *mSceneMaterialInstances[id];
 }
@@ -228,7 +296,12 @@ void MaterialInstanceManager::Init()
 	m_pInfoBufferEmptyHead = m_MaterialInstancebuffer.data();
 
 }
-
+/***************************************************************************/
+/*!
+\brief
+	SetupMaterialInstance using graphics functions
+*/
+/**************************************************************************/
 void MaterialInstanceManager::SetupMaterialInstance(std::string filepath, unsigned uid)
 {
 	GFX::Texture localMaterialInstance;
@@ -241,7 +314,12 @@ void MaterialInstanceManager::SetupMaterialInstance(std::string filepath, unsign
 }
 
 
-
+/***************************************************************************/
+/*!
+\brief
+	Allocate resource for MeshManager manager
+	*/
+/**************************************************************************/
 MeshData& MeshManager::AllocRscInfo()
 {
 	auto pTemp = m_pInfoBufferEmptyHead;
@@ -252,7 +330,12 @@ MeshData& MeshManager::AllocRscInfo()
 
 	return *pTemp;
 }
-
+/***************************************************************************/
+/*!
+\brief
+	DeAllocate resource for MeshManager manager
+*/
+/**************************************************************************/
 void MeshManager::ReleaseRscInfo(MeshData& RscInfo)
 {
 	// Add this resource info to the empty chain
@@ -261,11 +344,21 @@ void MeshManager::ReleaseRscInfo(MeshData& RscInfo)
 
 
 }
-
+/***************************************************************************/
+/*!
+\brief
+	Return mesh reference
+*/
+/**************************************************************************/
 MeshData& MeshManager::get_Mesh(unsigned id) {
 	return *mSceneMeshes[id];
 }
-
+/***************************************************************************/
+/*!
+\brief
+	Initialzie mesh Manager
+*/
+/**************************************************************************/
 void MeshManager::Init()
 {
 
@@ -279,7 +372,12 @@ void MeshManager::Init()
 	m_pInfoBufferEmptyHead = m_Meshbuffer.data();
 
 }
-
+/***************************************************************************/
+/*!
+\brief
+	Setup mesh using graphics engine functions
+*/
+/**************************************************************************/
 void MeshManager::SetupMesh(std::string filepath,unsigned id)
 {
 	_GEOM::Geom GeomData;
@@ -297,16 +395,18 @@ void MeshManager::SetupMesh(std::string filepath,unsigned id)
 		localmesh.mHasAnimation = true;
 	}
 
-	//uid uidd(entry.path().filename().string());
 
-	std::cout << " data for file path " << filepath << "\n"; // testing 
-	//uid uids(filepath);
 	MeshData& temp = AllocRscInfo();
 	temp.meshdata = std::move(localmesh);
 	mSceneMeshes.emplace(std::make_pair(id, &temp));
 
 }
-
+/***************************************************************************/
+/*!
+\brief
+	Return mesh instane reference
+*/
+/**************************************************************************/
 GFX::Mesh& Resource::get_Mesh(std::string name) 
 {
 	
@@ -322,7 +422,12 @@ GFX::Mesh& Resource::get_Mesh(std::string name)
 	std::cout << "Could not find MESH Data.\n";
 
 }
-
+/***************************************************************************/
+/*!
+\brief
+	Return shader Reference
+*/
+/**************************************************************************/
 GFX::Shader& Resource::get_Shader(std::string name)
 {
 	for (auto ins : m_Shaders) 
@@ -336,7 +441,12 @@ GFX::Shader& Resource::get_Shader(std::string name)
 
 	std::cout << "Could not find SHADER Data.\n";
 }
-
+/***************************************************************************/
+/*!
+\brief
+	Return reference Instance for texture 
+*/
+/**************************************************************************/
 GFX::Texture& Resource::get_MaterialInstance(std::string name)
 {
 	for (auto ins : m_Textures)

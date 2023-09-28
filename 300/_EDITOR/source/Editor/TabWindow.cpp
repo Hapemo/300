@@ -1,17 +1,35 @@
+/**-------------------------------------------------------------------------------------/
+ * @file
+ * TabWindow.cpp
+ * @author
+ *  Han Cheng Wen, c,han@digipen.edu
+ * @date
+ *  2023/05/21
+ * @brief
+ *  Setting Scene function definition
+ * @copyright
+ *  Copyright (C) 2023 DigiPen Institute of Technology.
+ *-------------------------------------------------------------------------------------*/
 #include "TabWindow.h"
 #include "Graphics/GraphicsSystem.h"
 #include "ECS/ECS.h"
 #include "ECS/ECS_Systems.h"
 
 #include <Graphics/Camera_Input.h>
-
+ /***************************************************************************/
+ /*!
+ \brief
+	 Init function for Tab window
+ */
+ /***************************************************************************/
 void TabWindow::init() {
-    //mWinFlag |= ImGuiWindowFlags_NoBringToFrontOnFocus
-    //    | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_MenuBar
-    //    | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoTitleBar|ImGuiDockNodeFlags_AutoHideTabBar | 
-    //    ImGuiDockNodeFlags_PassthruCentralNode;
 }
-
+/***************************************************************************/
+/*!
+\brief
+	Update function for tan window
+*/
+/***************************************************************************/
 void TabWindow::update() {
 
 	glm::vec3 mTranslate{};

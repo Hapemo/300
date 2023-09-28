@@ -1,14 +1,22 @@
 #include "ResourceManagerTy.h"
 #include <memory>
-
+/***************************************************************************/
+/*!
+\brief
+	Constructor for Resource Manager
+*/
+/**************************************************************************/
 ResourceTy::ResourceTy() {
-	//type<int> temp ;
-	//temp.data = 2;	
 }
 
 
 
-
+/***************************************************************************/
+/*!
+\brief
+	Initalize Resource Manager
+*/
+/**************************************************************************/
 void ResourceTy::Init()
 {
 	for (int i = 0, end = (int)m_Infobuffer.size() - 1; i != end; ++i)
@@ -24,7 +32,12 @@ void ResourceTy::Init()
 	MaterialEditor_Loader();
 	std::cout << "Initializing Resource Manager.\n";
 }
-
+/***************************************************************************/
+/*!
+\brief
+	Exit (delete necessary data allocated) Resource Manager
+*/
+/**************************************************************************/
 void ResourceTy::Exit() {
 
 	for (auto& data : m_ResourceInstance) {
@@ -38,7 +51,12 @@ void ResourceTy::Exit() {
 		delete  reinterpret_cast<GFX::Texture*>(data.second);
 	}
 }
-
+/***************************************************************************/
+/*!
+\brief
+	Loads mesh (geom) from file
+*/
+/**************************************************************************/
 void ResourceTy::mesh_Loader()
 {
 	std::filesystem::path folderpath = compiled_geom_path.c_str();
@@ -51,16 +69,10 @@ void ResourceTy::mesh_Loader()
 			std::cout << "============================================\n";
 			std::cout << "[NOTE]>> Loading file: \t" << entry.path().filename() << "\n";
 
-			//uid uids("dasdsadsadasdassssssssssadaddddddddddddddddddddddddddddddddddddddddddddddddddddadadsd");
-			//std::cout << uids.id<< "\n";
 
 			std::string filepath = compiled_geom_path + entry.path().filename().string();
 
 			++mResouceCnt;
-			//++mMeshManager.mResouceCnt;
-
-			//std::cout << filepath << "im ur father\n";
-
 			uid uids(filepath);
 			GFX::Mesh* meshPtr = SetupMesh(filepath, uids.id);
 			instance_infos& tempInstance = AllocRscInfo();
@@ -74,18 +86,26 @@ void ResourceTy::mesh_Loader()
 			
 			m_ResourceInstance.emplace(uids.id, &tempInstance);
 		}
-
-		//std::cout << m_ResourceInstance.size()<<"zxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n";
 	}
 }
-
+/***************************************************************************/
+/*!
+\brief
+	Return mesh pointer
+*/
+/**************************************************************************/
 GFX::Mesh* ResourceTy::get_mesh(unsigned id) {
 
 	return reinterpret_cast<GFX::Mesh*>(m_ResourceInstance[id]->m_pData);
 
 }
 
-
+/***************************************************************************/
+/*!
+\brief
+	Setup mesh through graphics engine
+*/
+/**************************************************************************/
 GFX::Mesh* ResourceTy::SetupMesh(std::string filepath, unsigned id)
 {
 	_GEOM::Geom GeomData;
@@ -106,13 +126,8 @@ GFX::Mesh* ResourceTy::SetupMesh(std::string filepath, unsigned id)
 		localmesh.mHasAnimation = true;
 	}
 
-	//uid uidd(entry.path().filename().string());
 
 	std::cout << " data for file path " << filepath << "\n"; // testing 
-	//uid uids(filepath);
-	//MeshData& temp = AllocRscInfo();
-	//temp.meshdata = std::move(localmesh);
-	//mSceneMeshes.emplace(std::make_pair(id, &temp));
 
 	auto Meshret = std::make_unique<GFX::Mesh>(localmesh);
 	return Meshret.release();
@@ -120,7 +135,12 @@ GFX::Mesh* ResourceTy::SetupMesh(std::string filepath, unsigned id)
 
 }
 
-
+/***************************************************************************/
+/*!
+\brief
+	Allocated data for Resource Manager
+*/
+/**************************************************************************/
 instance_infos& ResourceTy::AllocRscInfo(void)
 {
 	auto pTemp = m_pInfoBufferEmptyHead;
@@ -131,26 +151,28 @@ instance_infos& ResourceTy::AllocRscInfo(void)
 
 	return *pTemp;
 }
-
+/***************************************************************************/
+/*!
+\brief
+	DeAllocated data for Resource Manager
+*/
+/**************************************************************************/
 void ResourceTy::ReleaseRscInfo(instance_infos& RscInfo)
 {
 	// Add this resource info to the empty chain
-
-	//MeshData& temp = mMeshManager.get_Mesh(RscInfo.m_GUID.id);
-	//mMeshManager.ReleaseRscInfo(temp);
-
 	RscInfo.m_pData = m_pInfoBufferEmptyHead;
 	m_pInfoBufferEmptyHead = &RscInfo;
 
 	--mResouceCnt;
-	//--mMeshManager.mResouceCnt;
 }
 
-
+/***************************************************************************/
+/*!
+\brief
+	Loads Material instance(texture comrpessed) from file
+*/
+/**************************************************************************/
 void ResourceTy::MaterialInstance_Loader() {
-	// hardcode material instance path for now 
-	//std::vector<std::string> materialinstancepaths;
-	//materialinstancepaths.emplace_back("../assets/Compressed/Skull.ctexture");
 
 	std::filesystem::path folderpath = compressed_texture_path.c_str();
 
@@ -177,7 +199,12 @@ void ResourceTy::MaterialInstance_Loader() {
 		m_ResourceInstance.emplace(uids.id, &tempInstance);
 	}
 }
-
+/***************************************************************************/
+/*!
+\brief
+	Load texture necessary for editor to run
+*/
+/**************************************************************************/
 void ResourceTy::MaterialEditor_Loader() {
 
 
@@ -205,7 +232,12 @@ void ResourceTy::MaterialEditor_Loader() {
 
 	}
 }
-
+/***************************************************************************/
+/*!
+\brief
+	Setup texture for editor
+*/
+/**************************************************************************/
 GFX::Texture* ResourceTy::SetupEditorlInstance(std::string filepath) {
 	GFX::Texture localMaterialInstance;
 	localMaterialInstance.Load(filepath.c_str());
@@ -213,12 +245,13 @@ GFX::Texture* ResourceTy::SetupEditorlInstance(std::string filepath) {
 
 	auto Texret = std::make_unique<GFX::Texture>(localMaterialInstance);
 	return Texret.release();
-	//uid uids(filepath);
-	//MaterialInstanceData& temp = AllocRscInfo();
-	//temp.materialInstanceData = std::move(localMaterialInstance);
-	//mSceneMaterialInstances.emplace(std::make_pair(uid, &temp));
 }
-
+/***************************************************************************/
+/*!
+\brief
+	Setup general texture used
+*/
+/**************************************************************************/
 GFX::Texture* ResourceTy::SetupMaterialInstance(std::string filepath) {
 	GFX::Texture localMaterialInstance;
 	localMaterialInstance.Load(filepath.c_str());
@@ -226,11 +259,14 @@ GFX::Texture* ResourceTy::SetupMaterialInstance(std::string filepath) {
 
 	auto Texret = std::make_unique<GFX::Texture>(localMaterialInstance);
 	return Texret.release();
-	//uid uids(filepath);
-	//MaterialInstanceData& temp = AllocRscInfo();
-	//temp.materialInstanceData = std::move(localMaterialInstance);
-	//mSceneMaterialInstances.emplace(std::make_pair(uid, &temp));
 }
+
+/***************************************************************************/
+/*!
+\brief
+	Return material instance pointer
+*/
+/**************************************************************************/
 GFX::Texture* ResourceTy::getMaterialInstance(unsigned id) {
 	return reinterpret_cast<GFX::Texture*>(m_ResourceInstance[id]->m_pData);
 }
