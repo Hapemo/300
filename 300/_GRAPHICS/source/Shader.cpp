@@ -1,31 +1,15 @@
-/**-------------------------------------------------------------------------------------/
- * @file
- *  Shader.cpp
- * @author
- *  Lee Fu Sheng Roy, 670000622, f.lee@digipen.edu
- * @date
- *  2023/05/21
- * @brief
- *  Class implementation of Shader. Contains the code to create shader program by 
- *	compiling and linking the shader program
- * @copyright
- *  Copyright (C) 2023 DigiPen Institute of Technology.
- *-------------------------------------------------------------------------------------*/
+/*!*****************************************************************************
+\file Shader.cpp
+\author Lee Fu Sheng Roy
+\par DP email: f.lee@digipen.edu
+\par Group: Pepe Production
+\date 28-09-2023
+\brief
+Shader class implementation for loading, creating, compiling and linking shader
+*******************************************************************************/
 
 #include "Shader.hpp"
 
-
-/**---------------------------------------------------------------------------/
- * @brief
- *  Creates the shader program by compiling the vertex and fragment shader
- *	code. Compiled shader will be attached and link the shader program
- * @param vertexShaderCode
- *	Shader code for the vertex shader
- * @param fragmentShaderCode
- *	Shader code for the fragment shader
- * @return
- *  none
-*---------------------------------------------------------------------------*/
 void GFX::Shader::CreateShader(const char* vertexShaderCode, const char* fragmentShaderCode)
 {
 	// Create Shader Program

@@ -1,15 +1,13 @@
-/**-------------------------------------------------------------------------------------/
- * @file
- *  Fbo.hpp
- * @author
- *  Lee Fu Sheng Roy, 2101440, f.lee@digipen.edu
- * @date
- *  2023/09/06
- * @brief
- *  Implementation of the Fbo class.
- * @copyright
- *  Copyright (C) 2023 DigiPen Institute of Technology.
- *-------------------------------------------------------------------------------------*/
+/*!*****************************************************************************
+\file Fbo.hpp
+\author Lee Fu Sheng Roy
+\par DP email: f.lee@digipen.edu
+\par Group: Pepe Production
+\date 28-09-2023
+\brief
+FBO class implementation. Creates the framebuffer object. Consists of functions
+to handle resizing of framebuffers and object picking
+*******************************************************************************/
 
 #ifndef FBO_HPP
 #define FBO_HPP
@@ -23,26 +21,62 @@ namespace GFX
 	{
 	public:
 
-		// editorMode: False if running game only
+/*!*****************************************************************************
+Creates the framebuffer object and the colorAttachment, Entity ID attachment
+*******************************************************************************/
 		void Create(int width, int height, bool editorMode = true);
 
-		// Selects which attachments to bind and draw to
+/*!*****************************************************************************
+Prepares the Framebuffer to be drawn by selecting the attachments to be bound
+and rendered to
+*******************************************************************************/
 		void PrepForDraw();
 
+/*!*****************************************************************************
+Reads the entity ID in the entityIDAttachment at the posX and posY. posX and 
+posY are normalized to be from [0.f, 1.f]
+*******************************************************************************/
 		unsigned int ReadEntityID(float posX, float posY);
 
+/*!*****************************************************************************
+Binds the framebuffer to be rendered to
+*******************************************************************************/
 		void Bind()		{ glBindFramebuffer(GL_FRAMEBUFFER, mID); }
+
+/*!*****************************************************************************
+Unbinds the framebuffer
+*******************************************************************************/
 		void Unbind()	{ glBindFramebuffer(GL_FRAMEBUFFER, 0); }
 
-		// -- Getter --
+		
+/*!*****************************************************************************
+Returns the ID of the color attachment
+*******************************************************************************/
 		unsigned int GetColorAttachment()		{ return mColorAttachment; }
+		
+/*!*****************************************************************************
+Returns the ID of the entity ID attachment
+*******************************************************************************/
 		unsigned int GetEntityIDAttachment()	{ return mEntityIDAttachment; }
+		
+/*!*****************************************************************************
+Returns the width of the framebuffer
+*******************************************************************************/
 		int GetWidth()							{ return mWidth; }
+		
+/*!*****************************************************************************
+Returns the height of the framebuffer
+*******************************************************************************/
 		int GetHeight()							{ return mHeight; }
 
-		// -- Setter --
+/*!*****************************************************************************
+Resizes the size of the framebuffer
+*******************************************************************************/
 		void Resize(int width, int height);
 	
+/*!*****************************************************************************
+Destructor of the FBO class. Deletes the resources allocated on the GPU
+*******************************************************************************/
 		~FBO()
 		{
 			glDeleteFramebuffers(1, &mID);

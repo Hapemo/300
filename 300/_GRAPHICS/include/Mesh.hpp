@@ -1,16 +1,13 @@
-/**-------------------------------------------------------------------------------------/
- * @file
- *  Camera.hpp
- * @author
- *  Lee Fu Sheng Roy, 670000622,	f.lee@digipen.edu
- *  Richmond Choo,					r.choo@digipen.edu
- * @date
- *  2023/09/21
- * @brief
- *  Class definition of Camera.
- * @copyright
- *  Copyright (C) 2023 DigiPen Institute of Technology.
- *-------------------------------------------------------------------------------------*/
+/*!*****************************************************************************
+\file Mesh.hpp
+\author Lee Fu Sheng Roy
+\par DP email: f.lee@digipen.edu
+\par Group: Pepe Production
+\date 28-09-2023
+\brief
+Mesh class implementation. Consists of the loading of serialized geom data,
+creation of the required VBOs and VAO.
+*******************************************************************************/
 
 #ifndef MESH_HPP
 #define MESH_HPP
@@ -39,28 +36,67 @@ namespace GFX
 	class Mesh
 	{
 	public:
-		// -- Called once on startup --
+/*!*****************************************************************************
+Loads the positions, texture coordinates, indices, normals and tangents from
+the geom data
+*******************************************************************************/
 		void LoadFromGeom(const _GEOM::Geom& GeomData, std::vector<vec3>& positions, std::vector<glm::vec2>& uvs, 
 						std::vector<unsigned int>& indices, std::vector<vec3>& normals, std::vector<vec3>& tangents);
+		
+/*!*****************************************************************************
+Loads the animation data such as bone IDs and bone weight from the geom data
+*******************************************************************************/
 		void LoadAnimationDataFromGeom(const _GEOM::Geom& GeomData, std::vector<glm::vec4>& boneIDs, std::vector<glm::vec4>& boneWeights);
+		
+/*!*****************************************************************************
+Creates the mesh by initializing the required VAO and VBOs for the mesh
+*******************************************************************************/
 		void Setup(std::vector<vec3> const& positions, std::vector<unsigned int> const& indices, std::vector<vec2> const& TexCoords = std::vector<vec2>{}, unsigned colorDivisor = 1u);
+		
+/*!*****************************************************************************
+Creates the mesh by initializing the required VAO and VBOs for the mesh
+*******************************************************************************/
 		void Setup(const _GEOM::Geom& GeomData);
 
-		// -- Used when drawing --
+/*!*****************************************************************************
+Binds the VAO to the openGL context to be used for rendering
+*******************************************************************************/
 		void BindVao();
+
+/*!*****************************************************************************
+Prepares the mesh to be drawn by attaching the render data onto the mesh's VBO
+*******************************************************************************/
 		void PrepForDraw();
+
+/*!*****************************************************************************
+Unbinds the VAO from the openGL context
+*******************************************************************************/
 		void UnbindVao();
 
+/*!*****************************************************************************
+Draw all instances of the mesh
+*******************************************************************************/
 		void DrawAllInstances();
 
-		// -- Used after drawing current scene --
+/*!*****************************************************************************
+Clears all render of the mesh
+*******************************************************************************/
 		void ClearInstances();
 
-		// -- Getter --
+		
+/*!*****************************************************************************
+Gets the vertex count of the mesh
+*******************************************************************************/
 		int GetVertexCount() { return mVertexCount; }
+		
+/*!*****************************************************************************
+Gets the index count of the mesh
+*******************************************************************************/
 		int GetIndexCount() { return mIndexCount; }
 
-		// Called once on exit --
+/*!*****************************************************************************
+Destroys the mesh by deleting the VAO and VBOs allocated on th GPU's memory
+*******************************************************************************/
 		void Destroy();
 
 		// Stores the rendering data for each instance of mesh

@@ -1,15 +1,13 @@
-/**-------------------------------------------------------------------------------------/
- * @file
- *  Fbo.cpp
- * @author
- *  Lee Fu Sheng Roy, 2101440, f.lee@digipen.edu
- * @date
- *  2023/09/06
- * @brief
- *  Function definition of the Fbo Class
- * @copyright
- *  Copyright (C) 2023 DigiPen Institute of Technology.
- *-------------------------------------------------------------------------------------*/
+/*!*****************************************************************************
+\file Fbo.cpp
+\author Lee Fu Sheng Roy
+\par DP email: f.lee@digipen.edu
+\par Group: Pepe Production
+\date 28-09-2023
+\brief
+FBO class implementation. Creates the framebuffer object. Consists of functions 
+to handle resizing of framebuffers and object picking
+*******************************************************************************/
 
 #include "Fbo.hpp"
 

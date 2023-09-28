@@ -1,15 +1,14 @@
-/**-------------------------------------------------------------------------------------/
- * @file
- *  Camera.cpp
- * @author
- *  Lee Fu Sheng Roy, 670000622, f.lee@digipen.edu
- * @date
- *  2023/05/21
- * @brief
- *  Class implementation of Camera.
- * @copyright
- *  Copyright (C) 2023 DigiPen Institute of Technology.
- *-------------------------------------------------------------------------------------*/
+/*!*****************************************************************************
+\file Camera.cpp
+\author Lee Fu Sheng Roy
+\par DP email: f.lee@digipen.edu
+\par Group: Pepe Production
+\date 28-09-2023
+\brief
+Camera class implementation. Consists of the functions to get/set position,
+target, direction, cursor position, view projection and projection of the camera
+instance
+*******************************************************************************/
 
 #include "Camera.hpp"
 

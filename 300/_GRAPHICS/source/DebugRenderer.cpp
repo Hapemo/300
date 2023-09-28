@@ -1,15 +1,13 @@
-/**-------------------------------------------------------------------------------------/
- * @file
- * DebugRenderer.cpp
- * @author
- *  Lee Fu Sheng Roy, 670000622, f.lee@digipen.edu
- * @date
- *  2023/05/21
- * @brief
- *  Class definition of Camera.
- * @copyright
- *  Copyright (C) 2023 DigiPen Institute of Technology.
- *-------------------------------------------------------------------------------------*/
+/*!*****************************************************************************
+\file DebugRenderer.cpp
+\author Lee Fu Sheng Roy
+\par DP email: f.lee@digipen.edu
+\par Group: Pepe Production
+\date 28-09-2023
+\brief
+DebugRender class implementation. Mostly provides the functionality of debug
+drawing of different shapes. 
+*******************************************************************************/
 
 #include "DebugRenderer.hpp"
 

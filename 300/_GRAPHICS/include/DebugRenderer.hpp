@@ -1,15 +1,13 @@
-/**-------------------------------------------------------------------------------------/
- * @file
- *  DebugRenderer.hpp
- * @author
- *  Lee Fu Sheng Roy, 2101440, f.lee@digipen.edu
- * @date
- *  2023/09/06
- * @brief
- *  Class definition of DebugRenderer. 
- * @copyright
- *  Copyright (C) 2023 DigiPen Institute of Technology.
- *-------------------------------------------------------------------------------------*/
+/*!*****************************************************************************
+\file DebugRenderer.hpp
+\author Lee Fu Sheng Roy
+\par DP email: f.lee@digipen.edu
+\par Group: Pepe Production
+\date 28-09-2023
+\brief
+DebugRender class implementation. Mostly provides the functionality of debug
+drawing of different shapes.
+*******************************************************************************/
 
 #ifndef DEBUGRENDERER_HPP
 #define DEBUGRENDERER_HPP
@@ -25,29 +23,83 @@ namespace GFX
 	class DebugRenderer
 	{
 	public:
+
+		
+/*!*****************************************************************************
+Default constructor of the DebugRenderer class. Sets up the mesh of the debug 
+shapes
+*******************************************************************************/
 		DebugRenderer();
+		
+/*!*****************************************************************************
+Copy constructor deleted
+*******************************************************************************/
 		DebugRenderer(DebugRenderer const&) = delete;
+		
+/*!*****************************************************************************
+Copy assignment operator deleted
+*******************************************************************************/
 		DebugRenderer& operator=(DebugRenderer const&) = delete;
+		
+/*!*****************************************************************************
+Destructor of the DebugRenderer class. Destroys the meshes of the debug shapes
+*******************************************************************************/
 		~DebugRenderer();
 
+/*!*****************************************************************************
+Activates the debug draw shader
+*******************************************************************************/
 		void ActivateShader();
+		
+/*!*****************************************************************************
+Deactivates the debug draw shader
+*******************************************************************************/
 		void DeactivateShader();
 
-		// -- Draw Functions -- 
+/*!*****************************************************************************
+Adds an instance of a point to be drawn
+*******************************************************************************/
 		void AddPoint(vec3 const& pos, vec4 const& color = vec4{ 1.f, 1.f, 1.f, 1.f });
+		
+/*!*****************************************************************************
+Adds an instance of a line to be drawn
+*******************************************************************************/
 		void AddLine(vec3 const& pos1, vec3 const& pos2, vec4 const& color = vec4{ 1.f, 1.f, 1.f, 1.f });
+		
+/*!*****************************************************************************
+Adds an instance of a triangle to be drawn
+*******************************************************************************/
 		void AddTriangle(vec3 const& p0, vec3 const& p1, vec3 const& p2, vec4 const& color);
+		
+/*!*****************************************************************************
+Adds an instance of a quad to be drawn
+*******************************************************************************/
 		void AddQuad(vec3 const& center, float width, float height, vec4 const& color = vec4{ 1.f, 1.f, 1.f, 1.f });
+		
+/*!*****************************************************************************
+Adds an instance of a Aabb to be drawn
+*******************************************************************************/
 		void AddAabb(vec3 const& center, vec3 const& size, vec4 const& color = vec4{ 1.f, 1.f, 1.f, 1.f });
+		
+/*!*****************************************************************************
+Adds an instance of a cube to be drawn
+*******************************************************************************/
 		void AddCube(vec3 const& center, vec3 const& size, vec4 const& color = vec4{ 1.f, 1.f, 1.f, 1.f });
+		
+/*!*****************************************************************************
+Adds an instance of a sphere to be drawn
+*******************************************************************************/
 		void AddSphere(vec3 const& camPos, vec3 const& center, float radius, vec4 const& color = vec4{ 1.f, 1.f, 1.f, 1.f });
 
+/*!*****************************************************************************
+Renders all instances of all debug shapes
+*******************************************************************************/
 		void RenderAll(mat4 viewProj);
 
+/*!*****************************************************************************
+Clears all instances of all debug shapes
+*******************************************************************************/
 		void ClearInstances();
-
-		// -- TEMP --
-		void BindQuadMesh() { mQuadMesh.BindVao(); }
 
 	private:
 		Shader mShader;

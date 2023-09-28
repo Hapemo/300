@@ -1,15 +1,13 @@
-/**-------------------------------------------------------------------------------------/
- * @file
- *  VBO.cpp
- * @author
- *  Lee Fu Sheng Roy, 670000622, f.lee@digipen.edu
- * @date
- *  2023/05/21
- * @brief
- *  Class definition of Camera.
- * @copyright
- *  Copyright (C) 2023 DigiPen Institute of Technology.
- *-------------------------------------------------------------------------------------*/
+/*!*****************************************************************************
+\file Vbo.cpp
+\author Lee Fu Sheng Roy
+\par DP email: f.lee@digipen.edu
+\par Group: Pepe Production
+\date 28-09-2023
+\brief
+Class for the vertex buffer object of a mesh. Provides abstraction of VBO
+operations when creating a new mesh
+*******************************************************************************/
 
 #include "Vbo.hpp"
 

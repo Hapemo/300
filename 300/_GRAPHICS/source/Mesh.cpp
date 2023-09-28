@@ -1,16 +1,13 @@
-/**-------------------------------------------------------------------------------------/
- * @file
- *  Camera.hpp
- * @author
- *  Lee Fu Sheng Roy, 670000622,	f.lee@digipen.edu
- *	Richmond Choo					r.choo@digipen.edu
- * @date
- *  2023/05/21
- * @brief
- *  Class definition of Camera.
- * @copyright
- *  Copyright (C) 2023 DigiPen Institute of Technology.
- *-------------------------------------------------------------------------------------*/
+/*!*****************************************************************************
+\file Mesh.cpp
+\author Lee Fu Sheng Roy
+\par DP email: f.lee@digipen.edu
+\par Group: Pepe Production
+\date 28-09-2023
+\brief
+Mesh class implementation. Consists of the loading of serialized geom data, 
+creation of the required VBOs and VAO.
+*******************************************************************************/
 
 #include "Mesh.hpp"
 #include "../../_RESOURCE/include/ResourceManager.h"		// for _enable_animations define
@@ -307,8 +304,15 @@ void GFX::Mesh::Destroy()
 	mVao.Destroy();
 	mVbo.Destroy();
 	mEbo.Destroy();
-	mLTWVbo.Destroy();
 	mColorVbo.Destroy();
+	mTexCoordVbo.Destroy();
+	mTexEntIDVbo.Destroy();
+	mLTWVbo.Destroy();
+	mTangentVbo.Destroy();
+	mBitTangentVbo.Destroy();
+	mNormalVbo.Destroy();
+	mBoneIDVbo.Destroy();
+	mBoneWeightVbo.Destroy();
 }
 
 

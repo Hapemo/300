@@ -1,15 +1,13 @@
-/**-------------------------------------------------------------------------------------/
- * @file
- *  VBO.hpp
- * @author
- *  Lee Fu Sheng Roy, 670000622, f.lee@digipen.edu
- * @date
- *  2023/05/21
- * @brief
- *  Class definition of Camera.
- * @copyright
- *  Copyright (C) 2023 DigiPen Institute of Technology.
- *-------------------------------------------------------------------------------------*/
+/*!*****************************************************************************
+\file Vbo.hpp
+\author Lee Fu Sheng Roy
+\par DP email: f.lee@digipen.edu
+\par Group: Pepe Production
+\date 28-09-2023
+\brief
+Class for the vertex buffer object of a mesh. Provides abstraction of VBO
+operations when creating a new mesh
+*******************************************************************************/
 
 #ifndef VBO_HPP
 #define VBO_HPP
@@ -21,12 +19,25 @@ namespace GFX
 	class VBO
 	{
 	public:
+
+/*!*****************************************************************************
+Returns the ID of the VBO
+*******************************************************************************/		
 		GLuint GetID() const { return mID; }
 
+/*!*****************************************************************************
+Creates the VBO with the specified buffer size
+*******************************************************************************/		
 		void Create(GLsizeiptr bufferSize);
 
+/*!*****************************************************************************
+Attach the data specified onto the VBO
+*******************************************************************************/		
 		void AttachData(GLintptr offset, GLsizeiptr dataSize, const void* data) const;
 
+/*!*****************************************************************************
+Destroys the VBO that have been allocated on the GPU memory
+*******************************************************************************/		
 		void Destroy();
 
 	private:

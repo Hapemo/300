@@ -1,30 +1,17 @@
-/**-------------------------------------------------------------------------------------/
- * @file
- *  Window.cpp
- * @author
- *  Lee Fu Sheng Roy, 2101440, f.lee@digipen.edu
- * @date
- *  2023/05/21
- * @brief
- *  Class implementation of Window. Initializes GLFW and GLEW
- * @copyright
- *  Copyright (C) 2023 DigiPen Institute of Technology.
- *-------------------------------------------------------------------------------------*/
+/*!*****************************************************************************
+\file Window.cpp
+\author Lee Fu Sheng Roy
+\par DP email: f.lee@digipen.edu
+\par Group: Pepe Production
+\date 28-09-2023
+\brief
+Creates and Manages the Window of the application. Initializes GLFW and GLEW
+*******************************************************************************/
 
 #include "Common.hpp"
 #include "Window.hpp"
 
 
-/**---------------------------------------------------------------------------/
- * @briefhhhhh
- *  Constructor for the Window class. Creates a window of specified size
- * @param windowSize
- *	width and height of the window
- * @param windowVisible
- *	Flag for the visibility of window
- * @return
- *  none
-*---------------------------------------------------------------------------*/
 GFX::Window::Window(ivec2 windowSize)
 {
     mSize = windowSize;
@@ -60,23 +47,11 @@ GFX::Window::Window(ivec2 windowSize)
     glfwSetFramebufferSizeCallback(mWindow, ResizeCallback);
 }
 
-/**---------------------------------------------------------------------------/
- * @brief
- *  Destructor for the Window class. Destroys the window instance
- * @return
- *  none
-*---------------------------------------------------------------------------*/
 GFX::Window::~Window()
 {
-    //glfwDestroyWindow(mWindow);
 }
 
-/**---------------------------------------------------------------------------/
- * @brief
- *  Initializes GLFW
- * @return
- *  none
-*---------------------------------------------------------------------------*/
+
 void GFX::Window::InitializeSystem()
 {
     // Initialize OpenGL
@@ -86,23 +61,11 @@ void GFX::Window::InitializeSystem()
     }
 }
 
-/**---------------------------------------------------------------------------/
- * @brief
- *  Terminates GLFW
- * @return
- *  none
-*---------------------------------------------------------------------------*/
 void GFX::Window::DestroySystem()
 {
     glfwTerminate();
 }
 
-/**---------------------------------------------------------------------------/
- * @brief
- *  Swap the front buffer with the back buffer
- * @return
- *  none
-*---------------------------------------------------------------------------*/
 void GFX::Window::Update()
 {
     glfwGetFramebufferSize(mWindow, &mSize.x, &mSize.y);

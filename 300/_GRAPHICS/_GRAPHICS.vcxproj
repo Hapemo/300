@@ -161,7 +161,6 @@
     <ClCompile Include="source\Mesh.cpp" />
     <ClCompile Include="source\OpenGl.cpp" />
     <ClCompile Include="source\Random.cpp" />
-    <ClCompile Include="source\Renderer.cpp" />
     <ClCompile Include="source\Shader.cpp" />
     <ClCompile Include="source\Shapes.cpp" />
     <ClCompile Include="source\Texture.cpp" />
@@ -184,7 +183,6 @@
     <ClInclude Include="include\Fbo.hpp" />
     <ClInclude Include="include\OpenGl.hpp" />
     <ClInclude Include="include\Random.hpp" />
-    <ClInclude Include="include\Renderer.hpp" />
     <ClInclude Include="include\Shader.hpp" />
     <ClInclude Include="include\Shapes.hpp" />
     <ClInclude Include="include\Texture.hpp" />
