@@ -11,6 +11,7 @@ This file contains the base AudioSystem class that supports the following functi
 - Loading in Audio Files (from components/directory)
 - Manipulating Audio (Play/Pause/Stop)
 ****************************************************************************/
+
 #pragma once
 #include "glm/glm.hpp"
 #include "Script.h"
