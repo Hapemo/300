@@ -1,14 +1,45 @@
+/*!*************************************************************************
+****
+\file		   AudioSystem.cpp
+\author(s)	   Cheong Ming Lun
+\par DP email: m.cheong@digipen.edu
+\date		   16-8-2023
+\brief
+
+This file contains the base AudioSystem class that supports the following functionalities:
+- Loading in Audio Files (from components/directory)
+- Manipulating Audio (Play/Pause/Stop)
+****************************************************************************/
 #include "Audio/AudioSystem.h"
 #include "Debug/EnginePerformance.h"
 
+/******************************************************************************/
+/*!
+	[Default Constructor] AudioSystem()
+ */
+ /******************************************************************************/
 AudioSystem::AudioSystem() : sfxVolume(1.0f), bgmVolume(1.0f)
 {
 }
 
+/******************************************************************************/
+/*!
+	[Destructor] ~AudioSystem()
+ */
+ /******************************************************************************/
 AudioSystem::~AudioSystem()
 {
 }
 
+/******************************************************************************/
+/*!
+	Init() 
+	- Creates [FMOD System] 
+	- Initializes [FMOD System]
+	- Initalizing [Channels]
+	- Populating Audio from "Entities" with <Audio> Component.
+ */
+ /******************************************************************************/
 void AudioSystem::Init()
 {
 	// [Create the Audio System] -> returns the system object to this class. (&system)'
@@ -81,6 +112,14 @@ void AudioSystem::Init()
 	}
 }
 
+
+/******************************************************************************/
+/*!
+	Update()
+	- Iterate through <Audio> Component. 
+	- Decides whether if an audio is going to be played. 
+ */
+ /******************************************************************************/
 void AudioSystem::Update(float dt)
 {
 	EnginePerformance::StartTrack("Audio");
@@ -164,10 +203,21 @@ void AudioSystem::Update(float dt)
 	EnginePerformance::UpdateSystemMs("Audio");
 }
 
+/******************************************************************************/
+/*!
+	Exit()
+ */
+ /******************************************************************************/
 void AudioSystem::Exit()
 {
 }
 
+/******************************************************************************/
+/*!
+	[Helper Function] UpdateLoadAudio()
+	- Support for editor (when a new <Audio> component has been added to an "Entity"
+ */
+ /******************************************************************************/
 void AudioSystem::UpdateLoadAudio()
 {
 	auto audio_entities = systemManager->ecs->GetEntitiesWith<Audio>();
@@ -194,6 +244,12 @@ void AudioSystem::UpdateLoadAudio()
 	}
 }
 
+/******************************************************************************/
+/*!
+	[Troubleshooter] ErrCodeCheck(FMOD_RESULT result)
+	- Error Code Checker for "FMOD" related functions.
+ */
+ /******************************************************************************/
 // Use this whenever you use a [FMOD] Functiom
 int AudioSystem::ErrCodeCheck(FMOD_RESULT result)
 {
@@ -221,6 +277,12 @@ int AudioSystem::ErrCodeCheck(FMOD_RESULT result)
 	return 1; // success (no issues)
 }
 
+/******************************************************************************/
+/*!
+	 LoadAudio()
+	 - Load Audio file based on the file path + audio name provided.
+ */
+ /******************************************************************************/
 bool AudioSystem::LoadAudio(std::string file_path, std::string audio_name)
 {
 	PINFO("File Detected: %s", file_path.c_str());
@@ -242,6 +304,12 @@ bool AudioSystem::LoadAudio(std::string file_path, std::string audio_name)
 	mSounds.insert(std::make_pair(audio_name, new_sound));
 }
 
+/******************************************************************************/
+/*!
+	 LoadAudioFiles()
+	 - Iterate through provided file path and load every audio related files into the system.
+ */
+ /******************************************************************************/
 void AudioSystem::LoadAudioFiles(std::filesystem::path file_path)
 {
 	std::string file_name = file_path.filename().string();
@@ -270,6 +338,12 @@ void AudioSystem::LoadAudioFromDirectory(std::filesystem::path directory_path)
 	}
 }
 
+/******************************************************************************/
+/*!
+	 PlayAudio()
+	 - Play Audio (user provide (1) Audio Name, (2) Audio Type , (3) Audio Volume
+ */
+ /******************************************************************************/
 void AudioSystem::PlayAudio(std::string audio_name, AUDIOTYPE audio_type, float audio_vol)
 {
 
@@ -305,6 +379,13 @@ void AudioSystem::PlayAudio(std::string audio_name, AUDIOTYPE audio_type, float 
 	}
 }
 
+/******************************************************************************/
+/*!
+	 PlaySFXAudio()
+	 - Play Audio on a SFX Channel
+	 - User provide (1) Audio Name (2) Audio Volume
+ */
+ /******************************************************************************/
 int AudioSystem::PlaySFXAudio(std::string audio_name, float audio_vol)
 {
 	// Find the sound first ...
@@ -343,6 +424,13 @@ int AudioSystem::PlaySFXAudio(std::string audio_name, float audio_vol)
 	}
 }
 
+/******************************************************************************/
+/*!
+	 PlayBGMAudio()
+	 - Play Audio on a BGM Channel
+	 - User provide (1) Audio Name (2) Audio Volume
+ */
+ /******************************************************************************/
 int AudioSystem::PlayBGMAudio(std::string audio_name, float audio_vol)
 {
 	// Find the sound first ...
@@ -381,6 +469,12 @@ int AudioSystem::PlayBGMAudio(std::string audio_name, float audio_vol)
 	}
 }
 
+/******************************************************************************/
+/*!
+	 SetAllSFXVolume()
+	 - Set every SFX Channel based on the provided (1) Audio Volume
+ */
+ /******************************************************************************/
 void AudioSystem::SetAllSFXVolume(float audio_vol)
 {
 	auto channel_it = mChannelsNew.find(AUDIO_SFX);
@@ -398,6 +492,12 @@ void AudioSystem::SetAllSFXVolume(float audio_vol)
 	sfxVolume = audio_vol;
 }
 
+/******************************************************************************/
+/*!
+	 SetAllBGMVolume()
+	 - Set every BGM Channel based on the provided (1) Audio Volume
+ */
+ /******************************************************************************/
 void AudioSystem::SetAllBGMVolume(float audio_vol)
 {
 	auto channel_it = mChannelsNew.find(AUDIO_BGM);
@@ -415,6 +515,12 @@ void AudioSystem::SetAllBGMVolume(float audio_vol)
 	bgmVolume = audio_vol;
 }
 
+/******************************************************************************/
+/*!
+	 SetSpecificChannelVolume()
+	 - Set volume for a specific audio channel.
+ */
+ /******************************************************************************/
 void AudioSystem::SetSpecificChannelVolume(AUDIOTYPE audio_type, int channel_id, float audio_vol)
 {
 	auto channel_it_new = mChannelsNew.find(audio_type);
@@ -455,6 +561,12 @@ void AudioSystem::SetSpecificChannelVolume(AUDIOTYPE audio_type, int channel_id,
 	}
 }
 
+/******************************************************************************/
+/*!
+	 MuteSFX()
+	 - Mute all SFX Channels
+ */
+ /******************************************************************************/
 void AudioSystem::MuteSFX()
 {
 	PINFO("Muting Global SFX.");
@@ -462,6 +574,12 @@ void AudioSystem::MuteSFX()
 	SetAllSFXVolume(0.0f);
 }
 
+/******************************************************************************/
+/*!
+	 MuteBGM()
+	 - Mute all BGM Channels
+ */
+ /******************************************************************************/
 void AudioSystem::MuteBGM()
 {
 	PINFO("Muting Global BGM.");
@@ -469,6 +587,12 @@ void AudioSystem::MuteBGM()
 	SetAllBGMVolume(0.0f);
 }
 
+/******************************************************************************/
+/*!
+	 StopAllSFX()
+	 - Stop all SFX Channels
+ */
+ /******************************************************************************/
 void AudioSystem::StopAllSFX()
 {
 	PINFO("Stopping and Releasing All SFX.");
@@ -485,6 +609,12 @@ void AudioSystem::StopAllSFX()
 	}
 }
 
+/******************************************************************************/
+/*!
+	 StopAllBGM()
+	 - Stop All BGM Channels
+ */
+ /******************************************************************************/
 void AudioSystem::StopAllBGM()
 {
 	PINFO("Stopping and Releasing All BGM.");
@@ -501,6 +631,13 @@ void AudioSystem::StopAllBGM()
 	}
 }
 
+/******************************************************************************/
+/*!
+	 TogglePauseAllSounds()
+	 - Pause if not Paused.
+	 - Unpause if paused.
+ */
+ /******************************************************************************/
 void AudioSystem::TogglePauseAllSounds()
 {
 	auto channel_it_sfx = mChannelsNew.find(AUDIO_SFX);
@@ -563,6 +700,13 @@ void AudioSystem::TogglePauseAllSounds()
 	}
 }
 
+/******************************************************************************/
+/*!
+	 TogglePauseSFXSounds()
+	 - Pause if not Paused.
+	 - Unpause if paused.
+ */
+ /******************************************************************************/
 void AudioSystem::TogglePauseSFXSounds()
 {
 	auto channel_it_sfx = mChannelsNew.find(AUDIO_SFX);
@@ -596,6 +740,13 @@ void AudioSystem::TogglePauseSFXSounds()
 	}
 }
 
+/******************************************************************************/
+/*!
+	 TogglePauseBGMSounds()
+	 - Pause if not Paused.
+	 - Unpause if paused.
+ */
+ /******************************************************************************/
 void AudioSystem::TogglePauseBGMSounds()
 {
 	auto channel_it = mChannelsNew.find(AUDIO_BGM);
@@ -630,6 +781,14 @@ void AudioSystem::TogglePauseBGMSounds()
 	}
 }
 
+/******************************************************************************/
+/*!
+	 TogglePauseSpecific
+	 - Pause if not Paused.
+	 - Unpause if paused.
+	 - Specific Channel
+ */
+ /******************************************************************************/
 void AudioSystem::TogglePauseSpecific(AUDIOTYPE audio_type, int channel_id)
 {
 	auto channel_it = mChannelsNew.find(audio_type);
@@ -669,6 +828,12 @@ void AudioSystem::TogglePauseSpecific(AUDIOTYPE audio_type, int channel_id)
 	}
 }
 
+/******************************************************************************/
+/*!
+	 FindChannel()
+	 - Return a reference to a channel based on user request
+ */
+ /******************************************************************************/
 Channel& AudioSystem::FindChannel(AUDIOTYPE audio_type, int channel_id)
 {
 	if (channel_id > mChannelsNew.size())
