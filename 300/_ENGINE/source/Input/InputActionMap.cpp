@@ -43,6 +43,8 @@ InputAction& InputActionMap::FindAction(std::string action_name)
 		PERROR("ACTION NOT FOUND.");
 		return;
 	}*/
+	PERROR("ACTION NOT FOUND.");
+	return action_it->second;
 }
 
 void InputActionMap::AddAction(std::string action_name)

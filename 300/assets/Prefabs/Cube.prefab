@@ -31,8 +31,8 @@
         },
         "MeshRenderer": {
             "ShaderPath": [
-                "../_GRAPHICS/shader_files/pointLight_vert.glsl",
-                "../_GRAPHICS/shader_files/pointLight_frag.glsl"
+                "../assets/shader_files/pointLight_vert.glsl",
+                "../assets/shader_files/pointLight_frag.glsl"
             ],
             "MaterialInstancePath": [
                 "../assets/Compressed/Brick wall 4_baseColor.ctexture",

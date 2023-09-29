@@ -20,8 +20,8 @@ Return true if mouse is within window
 ***/
 #include "Performance.h"
 #include <cstdio>
-#include "../../../_TOOLS/include/FPSManager.h"
-#include "../../../_ENGINE/include/Debug/EnginePerformance.h"
+#include "FPSManager.h"
+#include "Debug/EnginePerformance.h"
 
 float Performance::values[INTERVALS] = {0.f};
 float Performance::graphicsValues[INTERVALS] = {0.f};

@@ -120,7 +120,7 @@ void AudioSystem::Init()
 	- Decides whether if an audio is going to be played. 
  */
  /******************************************************************************/
-void AudioSystem::Update(float dt)
+void AudioSystem::Update([[maybe_unused]]float dt)
 {
 	EnginePerformance::StartTrack("Audio");
 	auto audio_entities = systemManager->ecs->GetEntitiesWith<Audio>();
@@ -165,11 +165,11 @@ void AudioSystem::Update(float dt)
 
 		*/
 
-		for (Entity audio : audio_entities)
+		for (Entity audio1 : audio_entities)
 		{
-			Audio& audio_component = audio.GetComponent<Audio>();
+			Audio& audio_comp = audio1.GetComponent<Audio>();
 
-			for (int id : audio_component.mPlayBGMChannelID)
+			for (int id : audio_comp.mPlayBGMChannelID)
 			{
 				Channel& channel = FindChannel(AUDIO_BGM, id);
 
@@ -177,12 +177,12 @@ void AudioSystem::Update(float dt)
 
 				if (!channel.mIsPlayingSound) // channel stopped playing
 				{
-					audio_component.mIsPlaying = false;
-					audio_component.mIsPlay = false;
+					audio_comp.mIsPlaying = false;
+					audio_comp.mIsPlay = false;
 				}
 			}
 
-			for (int id : audio_component.mPlaySFXChannelID)
+			for (int id : audio_comp.mPlaySFXChannelID)
 			{
 				Channel& channel = FindChannel(AUDIO_SFX, id);
 
@@ -190,8 +190,8 @@ void AudioSystem::Update(float dt)
 
 				if (!channel.mIsPlayingSound) // channel stopped playing
 				{
-					audio_component.mIsPlaying = false;
-					audio_component.mIsPlay = false;
+					audio_comp.mIsPlaying = false;
+					audio_comp.mIsPlay = false;
 				}
 			}
 		}
@@ -300,8 +300,8 @@ bool AudioSystem::LoadAudio(std::string file_path, std::string audio_name)
 	}
 
 
-
 	mSounds.insert(std::make_pair(audio_name, new_sound));
+	return true;
 }
 
 /******************************************************************************/
@@ -360,8 +360,6 @@ void AudioSystem::PlayAudio(std::string audio_name, AUDIOTYPE audio_type, float 
 
 	if (channel_it != mChannelsNew.end())
 	{
-		bool found_channel = false;
-
 		for (Channel& channel : channel_it->second)
 		{
 			if (!channel.mIsPlayingSound)
@@ -402,7 +400,6 @@ int AudioSystem::PlaySFXAudio(std::string audio_name, float audio_vol)
 
 	if (channel_it != mChannelsNew.end())
 	{
-		bool found_channel = false;
 
 		for (Channel& channel : channel_it->second)
 		{
@@ -422,6 +419,7 @@ int AudioSystem::PlaySFXAudio(std::string audio_name, float audio_vol)
 			}
 		}
 	}
+	return -1;
 }
 
 /******************************************************************************/
@@ -448,7 +446,6 @@ int AudioSystem::PlayBGMAudio(std::string audio_name, float audio_vol)
 
 	if (channel_it != mChannelsNew.end())
 	{
-		bool found_channel = false;
 
 		for (Channel& channel : channel_it->second)
 		{
@@ -467,6 +464,7 @@ int AudioSystem::PlayBGMAudio(std::string audio_name, float audio_vol)
 			}
 		}
 	}
+	return -1;
 }
 
 /******************************************************************************/
@@ -799,7 +797,6 @@ void AudioSystem::TogglePauseSpecific(AUDIOTYPE audio_type, int channel_id)
 		{
 			PINFO("CHANNEL REQUEST: %d", channel_id);
 			//std::cout << "CHANNEL REQUEST: " << channel_id << std::endl;
-			Channel& channel_found = FindChannel(audio_type, channel_id);
 			bool paused;
 			PINFO("Checking Channel Pause Status: ");
 			//std::cout << "Checking Channel Pause Status: " << std::endl;
@@ -849,10 +846,12 @@ Channel& AudioSystem::FindChannel(AUDIOTYPE audio_type, int channel_id)
 	{
 		for (Channel& channel : channel_it->second)
 		{
-			if (channel.mChannelID == channel_id)
+			if (channel.mChannelID == (unsigned)channel_id)
 			{
 				return channel;
 			}
 		}
 	}
+	PERROR("channel not found, assigning default channel");
+	return mChannelsNew[AUDIOTYPE::AUDIO_BGM][0];
 }

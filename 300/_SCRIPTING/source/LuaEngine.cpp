@@ -1,6 +1,6 @@
 #include "LuaEngine.h"
 #include "ScriptingSystem.h"
-#include "../../_ENGINE/include/Physics/PhysicsSystem.h"
+#include "Physics/PhysicsSystem.h"
 #include "Input/Input.h"
 #include "ECS/ECS_Systems.h"
 #include "ECS/ECS_Components.h"

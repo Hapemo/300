@@ -100,7 +100,7 @@ T generateUniqueID() {
 
     // Step 4: Apply a hashing algorithm
     std::hash<std::string> hasher;
-    T hashedValue = hasher(combinedString);
+    T hashedValue = (unsigned)hasher(combinedString);
 
     // Step 5: Format the ID (optional)
     //std::string uniqueID = std::to_string(hashedValue);
@@ -121,8 +121,6 @@ template< typename T = unsigned >
 T generateUniqueIDfromString(std::string name) {
 
     unsigned hashedValue{ 0 };
-    crc table;
-    int16_t counter{ 0 };
 
     for (const char& c : name) {
 

@@ -12,7 +12,7 @@ int main()
 {
 	std::filesystem::path directoryTex = "../assets/Textures";
 	std::filesystem::path directoryFont = "../assets/Fonts";
-	std::filesystem::path directoryIMGUITex = "../_EDITOR/Assets/Textures/";
+	std::filesystem::path directoryIMGUITex = "../assets/Editor/Textures/";
 
 	Init();
 
@@ -47,7 +47,7 @@ int main()
 		if (filetype == ".ttf")
 			LoadAndSerializeFontFile(file.c_str(), "../assets/compiled_fonts");
 		else
-			CompressImageFile(file.c_str(), "../_EDITOR/Assets/Textures_Compressed/");
+			CompressImageFile(file.c_str(), "../assets/Editor/Textures_Compressed/");
 	}
 
 	// Load every font in the directory ^

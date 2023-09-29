@@ -43,7 +43,6 @@ void InputMapSystem::Init() {}
 void InputMapSystem::Update()
 {
 	auto ActionMapEntities = systemManager->ecs->GetEntitiesWith<InputActionMapEditor>();
-	int size = ActionMapEntities.size();
 
 	for (Entity entity : ActionMapEntities)
 	{

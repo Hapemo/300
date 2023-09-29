@@ -748,6 +748,8 @@ vec3 GraphicsSystem::GetCameraPosition(CAMERA_TYPE type)
 	case CAMERA_TYPE::CAMERA_TYPE_ALL:
 		break;
 	}
+	PERROR("camera spoil - graphicssystem.cpp line 751");
+	return {};
 }
 
 /***************************************************************************/
@@ -775,6 +777,8 @@ vec3 GraphicsSystem::GetCameraTarget(CAMERA_TYPE type)
 		return vec3();
 		break;
 	}
+	PERROR("camera spoil - graphicssystem.cpp line 780");
+	return {};
 }
 
 /***************************************************************************/
@@ -803,6 +807,8 @@ vec3 GraphicsSystem::GetCameraDirection(CAMERA_TYPE type)
 		return vec3();
 		break;
 	}
+	PERROR("camera spoil - graphicssystem.cpp line 809");
+	return {};
 }
 
 /***************************************************************************/

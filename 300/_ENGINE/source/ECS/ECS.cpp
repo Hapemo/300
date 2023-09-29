@@ -165,6 +165,9 @@ void ECS::UpdatePrefabEntities(std::string prefabName)
 	
 	for (Entity e : mPrefabs[prefabName])
 	{
+		e.GetComponent<Transform>().mScale = temp.GetComponent<Transform>().mScale;
+		e.GetComponent<Transform>().mRotate = temp.GetComponent<Transform>().mRotate;
+
 		if (temp.HasComponent<MeshRenderer>())
 			e.AddComponent<MeshRenderer>() = temp.GetComponent<MeshRenderer>();
 		if (temp.HasComponent<RigidBody>())
@@ -286,6 +289,10 @@ Entity ECS::PasteEntity(int scene)
 	}
 
 	return e;
+}
+
+ECS::~ECS()
+{
 }
 
 
@@ -411,6 +418,8 @@ void Entity::RemoveChild(Entity e)
 	Parent& eParent = e.GetComponent<Parent>();
 	Entity prev = eParent.mPrevSibling;
 	Entity next = eParent.mNextSibling;
+	if (thisChildren.mFirstChild == static_cast<uint32_t>(e.id))
+		thisChildren.mFirstChild = static_cast<uint32_t>(prev.id);
 	prev.GetComponent<Parent>().mNextSibling = static_cast<uint32_t>(next.id);
 	next.GetComponent<Parent>().mPrevSibling = static_cast<uint32_t>(prev.id);
 	e.RemoveComponent<Parent>();

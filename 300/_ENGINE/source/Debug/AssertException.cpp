@@ -24,7 +24,7 @@ Is an accessor to the location of file where the exception was caused.
 This function is used when exception is caught
 ****************************************************************************
 ***/
-#include "../../../_TOOLS/include/pch.h"
+#include "pch.h"
 #include "Debug/AssertException.h"
 
 const int& AssertException::GetLine() const

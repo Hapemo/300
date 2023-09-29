@@ -58,10 +58,10 @@ Inspect display for RigidBody components
 #include "Hierarchy.h"
 #include <math.h>
 #include "imgui_stdlib.h"
-#include "../../../_SCRIPTING/include/ScriptingSystem.h"
+#include "ScriptingSystem.h"
 #include "Guid.h"
 #include "ResourceManagerTy.h"
-#include "../../../_ENGINE/include/Debug/Logger.h"
+#include "Debug/Logger.h"
 #include "Audio/AudioSystem.h"
 #include "Input/InputMapSystem.h"
 
@@ -218,7 +218,6 @@ void Inspect::Add_component() {
 				Entity(Hierarchy::selectedId).AddComponent<MeshRenderer>();
 
 				Entity meshobj(Hierarchy::selectedId);
-				auto& meshref= meshobj.GetComponent<MeshRenderer>();
 
 			}
 		}
@@ -834,7 +833,6 @@ void Audio::Inspect() {
 				}
 
 				Entity(Hierarchy::selectedId).AddComponent<Audio>({ file_path, audio_name, AUDIO_BGM, false });
-				Audio& audio_component = Entity(Hierarchy::selectedId).GetComponent<Audio>();
 
 				Entity(Hierarchy::selectedId).GetComponent<Audio>().mIsEmpty = false; // Component is populated with info
 				systemManager->mAudioSystem.get()->UpdateLoadAudio();
@@ -923,7 +921,6 @@ void InputActionMapEditor::Inspect()
 		auto ActionMapEntities = systemManager->ecs->GetEntitiesWith<InputActionMapEditor>();
 		//int size = ActionMapEntities.size();
 		InputActionMapEditor& editor_component = ActionMapEntities.get<InputActionMapEditor>(Hierarchy::selectedId);
-		int map_size = editor_component.mActionMap.size();
 
 		// Create New [InputActionMap]
 		ImGui::Text("Create new InputActionMap");
@@ -954,7 +951,6 @@ void InputActionMapEditor::Inspect()
 
 		PseudoInputAction& selected_action = GetAction(mSelectedMapName);
 
-		size_t no_of_keys = sizeof(user_key) / sizeof(user_key[0]);
 
 		auto& e_key_map = systemManager->mInputActionSystem->e_key_mapping;
 

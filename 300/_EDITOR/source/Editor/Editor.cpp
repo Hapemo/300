@@ -179,7 +179,7 @@ void Editor::WindowUpdate(GLFWwindow* window)
     Update functionality (temporary) for Opengl implementation
 */
 /**************************************************************************/
-void Editor::UIupdate(GLFWwindow* window) {
+void Editor::UIupdate([[maybe_unused]]GLFWwindow* window) {
 
     // ----------------------------------------------------------------------------- // style and basic setups
 

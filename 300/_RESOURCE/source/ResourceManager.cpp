@@ -116,9 +116,9 @@ void Resource::shader_Loader()
 	// hardcode data path for now 
 	// ideally, this code should read through 
 	std::vector<std::pair<std::string, std::string>> shaderpaths;
-	shaderpaths.emplace_back(std::pair<std::string, std::string>{ "../_GRAPHICS/shader_files/draw_vert.glsl", "../_GRAPHICS/shader_files/draw_frag.glsl" });
-	shaderpaths.emplace_back(std::pair<std::string, std::string>{ "../_GRAPHICS/shader_files/pointLight_vert.glsl", "../_GRAPHICS/shader_files/pointLight_frag.glsl" });
-	shaderpaths.emplace_back(std::pair<std::string, std::string>{ "../_GRAPHICS/shader_files/animations_vert.glsl", "../_GRAPHICS/shader_files/pointLight_frag.glsl" });
+	shaderpaths.emplace_back(std::pair<std::string, std::string>{ "../assets/shader_files/draw_vert.glsl", "../assets/shader_files/draw_frag.glsl" });
+	shaderpaths.emplace_back(std::pair<std::string, std::string>{ "../assets/shader_files/pointLight_vert.glsl", "../assets/shader_files/pointLight_frag.glsl" });
+	shaderpaths.emplace_back(std::pair<std::string, std::string>{ "../assets/shader_files/animations_vert.glsl", "../assets/shader_files/pointLight_frag.glsl" });
 
 
 	// load all the shaders
@@ -420,6 +420,7 @@ GFX::Mesh& Resource::get_Mesh(std::string name)
 	}
 
 	std::cout << "Could not find MESH Data.\n";
+	return mMeshManager.get_Mesh(m_Meshes[0]->m_GUID.id).meshdata;
 
 }
 /***************************************************************************/
@@ -438,8 +439,8 @@ GFX::Shader& Resource::get_Shader(std::string name)
 			return mShaderManager.getShader(ins.second->m_GUID.id).shaderData;
 		}
 	}
-
 	std::cout << "Could not find SHADER Data.\n";
+	return mShaderManager.getShader(m_Shaders[0]->m_GUID.id).shaderData;
 }
 /***************************************************************************/
 /*!
@@ -458,4 +459,6 @@ GFX::Texture& Resource::get_MaterialInstance(std::string name)
 		}
 	}
 	std::cout << "Could not find MATERIAL_INSTANCE Data.\n";
+	return mMaterialInstanceManager.getMaterialInstance(m_Textures[0]->m_GUID.id).materialInstanceData;
+
 }

@@ -55,7 +55,6 @@ void Application::SystemInit()
 #pragma region AudioComponent Test
     Entity entAudio = systemManager->ecs->NewEntity();
     entAudio.AddComponent<Audio>({ "../assets/Audio" , "farm_ambience.wav", AUDIO_BGM, false});
-    Audio& audio_component = entAudio.GetComponent<Audio>();
 
     // Test Edit <Audio> Component
     //entAudio.GetComponent<Audio>().mFileName = "farm_ambience.wav";

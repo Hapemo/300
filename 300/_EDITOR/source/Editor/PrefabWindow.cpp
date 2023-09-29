@@ -72,16 +72,16 @@ void PrefabWindow::update() {
 
 		if (ImGui::Button("Save")) {
 
-			Entity ent(PrefabWindow::prefabObj);
-			systemManager->ecs->EndEditPrefab(ent);
+			Entity ent1(PrefabWindow::prefabObj);
+			systemManager->ecs->EndEditPrefab(ent1);
 
 			PrefabWindow::prefabObj = static_cast<entt::entity>(0);
 		}
 
 		ImGui::SameLine();
 		if (ImGui::Button("Delete")) {
-			Entity ent(PrefabWindow::prefabObj);
-			systemManager->ecs->DeleteEntity(ent);
+			Entity ent2(PrefabWindow::prefabObj);
+			systemManager->ecs->DeleteEntity(ent2);
 			PrefabWindow::prefabObj = static_cast<entt::entity>(0);
 		}
 	}

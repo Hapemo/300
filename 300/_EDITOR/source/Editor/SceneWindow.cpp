@@ -101,11 +101,10 @@ void SceneWindow::update()
 static void Square(ImGuiSizeCallbackData* data) { data->DesiredSize.x = data->DesiredSize.y = ImMin(data->DesiredSize.x, data->DesiredSize.y); }
 
 
-void SceneWindow::ConstrainedResize(bool* p_open)
+void SceneWindow::ConstrainedResize([[maybe_unused]]bool* p_open)
 {
 	//auto SquareFunc =[](ImGuiSizeCallbackData* data) { data->DesiredSize.x = data->DesiredSize.y = ImMax(data->DesiredSize.x, data->DesiredSize.y); };
 	// Helper functions to demonstrate programmatic constraints
-
 
 	ImGui::SetNextWindowSizeConstraints(ImVec2(0, 0), ImVec2(FLT_MAX, FLT_MAX), Square);
 
@@ -144,7 +143,7 @@ void SceneWindow::RenderGuizmo()
 
 		ImGuizmo::SetOrthographic(true);
 		ImGuizmo::SetDrawlist();
-		ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y, winSize.x, winSize.y);
+		ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y, (float)winSize.x, (float)winSize.y);
 
 		//if (Move == true) {
 			ImGuizmo::Manipulate(glm::value_ptr(cameraView), glm::value_ptr(cameraProjection),

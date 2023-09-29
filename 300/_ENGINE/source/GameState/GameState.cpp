@@ -46,7 +46,7 @@ void GameState::AddScene(std::string const& _name) { // filesystem
 			// if the scene exists
 			++counter; // increment the counter
 			// Increment file number to the biggest one
-			for (Scene& scene : systemManager->mGameStateSystem->mCurrentGameState.mScenes) {
+			for ([[maybe_unused]]Scene& scene : systemManager->mGameStateSystem->mCurrentGameState.mScenes) {
 				// if the scene name exists AND 
 				std::string tempName = _name + std::to_string(counter);
 				if (std::find_if(mScenes.begin(), mScenes.end(), [tempName](Scene& scene) -> bool { return scene.mName == tempName; }) != mScenes.end())

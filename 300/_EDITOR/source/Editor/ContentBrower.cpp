@@ -249,12 +249,12 @@ void ContentBrowser::update()
 
 				std::string path_str = path.string();
 
-				int posstart = path_str.find_last_of("\\");
-				int posend = path_str.find_last_of(".");
+				int posstart = (int)path_str.find_last_of("\\");
+				int posend = (int)path_str.find_last_of(".");
 
 				std::string newpath = path_str.substr(posstart + 1, posend - (posstart + 1));
 
-				const char* audio_file_name = newpath.c_str();
+				//const char* audio_file_name = newpath.c_str();
 
 				ImGui::SetDragDropPayload("FILE_AUDIO", path_str.c_str(), strlen(path_str.c_str()) * sizeof(wchar_t), ImGuiCond_Once);
 

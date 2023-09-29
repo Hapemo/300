@@ -233,7 +233,7 @@ void SerializeFont(std::map<char, Character>& charMap, unsigned int texID, unsig
 		throw std::runtime_error("Custom file not created!");
 
 	int dataSize = width * height * 4;
-	int numOfChars = charMap.size();
+	int numOfChars = (int)charMap.size();
 
 	// Fonts stats
 	outfile << width << "\n";
@@ -280,7 +280,6 @@ void LoadAndSerializeFontFile(const char* filepath, const char* outputFolder)
 {
 	std::map<char, Character> charMap;
 	FT_Library font_lib;
-	GLuint fontTex;
 	unsigned int atlasWidth{}, atlasHeight{};
 
 	// Initialize a new FreeType library object

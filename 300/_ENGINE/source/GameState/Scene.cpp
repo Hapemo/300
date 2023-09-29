@@ -30,18 +30,18 @@ Scene::~Scene() {
 }
 
 void Scene::Init() {
-	return; // Temporary remove - Han
 
-	//LOG_INFO("Attempting to call Init() called for scene: " + mName + +" ==================");
-	//std::set<Entity> shouldRun{};
-	mInitBefore = true;
-	for (auto e : mEntities) {
-		//LOG_INFO("Attempting to call Init() called for ENTITY: " + std::to_string(e.id) + " with name: " + e.GetComponent<General>().name + " ==================");
-		if (e.GetComponent<General>().isActive) {
-			//LOG_INFO("Call Init() called for ENTITY: " + std::to_string(e.id) + " with name: " + e.GetComponent<General>().name + " ==================");
-			e.Activate(); 
-		}
-	}
+	return; // Temporary remove - Han
+	////LOG_INFO("Attempting to call Init() called for scene: " + mName + +" ==================");
+	////std::set<Entity> shouldRun{};
+	//mInitBefore = true;
+	//for (auto e : mEntities) {
+	//	//LOG_INFO("Attempting to call Init() called for ENTITY: " + std::to_string(e.id) + " with name: " + e.GetComponent<General>().name + " ==================");
+	//	if (e.GetComponent<General>().isActive) {
+	//		//LOG_INFO("Call Init() called for ENTITY: " + std::to_string(e.id) + " with name: " + e.GetComponent<General>().name + " ==================");
+	//		e.Activate(); 
+	//	}
+	//}
 	
 	
 	//logicSystem->Init(shouldRun);
@@ -49,7 +49,7 @@ void Scene::Init() {
 
 void Scene::Exit() {
 	return; // Temporary remove - Han
-	for (auto e : mEntities) if (e.GetComponent<General>().isActive) e.Deactivate();
+	//for (auto e : mEntities) if (e.GetComponent<General>().isActive) e.Deactivate();
 };
 
 void Scene::Pause(bool _pause) { 

@@ -56,8 +56,8 @@ void ObjectFactory::LoadScene(Scene* scene, const std::string& filename)
 			for (int i{ 0 }; i < 4; i++) {
 
 				if (mr.mTextureCont[i] == true) {
-					uid uids(mr.mMaterialInstancePath[i]);
-					mr.mTextureRef[i] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(uids.id));
+					uid uidss(mr.mMaterialInstancePath[i]);
+					mr.mTextureRef[i] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(uidss.id));
 				}
 			}
 			GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mr.mMeshRef);
@@ -314,8 +314,8 @@ Entity ObjectFactory::DeserializePrefab(const std::string& filename, int id)
 		for (int i{ 0 }; i < 4; i++) {
 
 			if (mr.mTextureCont[i] == true) {
-				uid uids(mr.mMaterialInstancePath[i]);
-				mr.mTextureRef[i] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(uids.id));
+				uid uidss(mr.mMaterialInstancePath[i]);
+				mr.mTextureRef[i] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(uidss.id));
 			}
 		}
 		GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mr.mMeshRef);

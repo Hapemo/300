@@ -1,3 +1,12 @@
+/*!*****************************************************************************
+\file PhysX.h
+\author Kew Yu Jun
+\par DP email: k.yujun@digipen.edu
+\par Group: Pepe Production
+\date 15/08/2023
+\brief
+Functions for setting up, initialize and cleaning up PhysX.
+*******************************************************************************/
 #pragma once
 #include "PxPhysics.h"
 #include "PxPhysicsAPI.h"
@@ -13,6 +22,12 @@ struct PhysX
 	physx::PxScene* mScene;
 	physx::PxMaterial* mMaterial;
 	physx::PxPvd* mPvd;
+	/*!*****************************************************************************
+	Initialise PhysX
+	*******************************************************************************/
 	PhysX();
+	/*!*****************************************************************************
+	Clean up
+	*******************************************************************************/
 	~PhysX();
 };

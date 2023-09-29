@@ -39,7 +39,7 @@ Able to turn off logs in release mode (Logger window in
 ImGui will be empty)
 ****************************************************************************
 ***/
-#include "../../../_TOOLS/include/pch.h"
+#include "pch.h"
 #include "Debug/Logger.h"
 
 std::ofstream Logger::Pfile{};

@@ -27,7 +27,7 @@ Placed at the end of the update loop to get end time
 ****************************************************************************
 ***/
 #include "Debug/EnginePerformance.h"
-#include "../../../_TOOLS/include/FPSManager.h"
+#include "FPSManager.h"
 #include "Debug/LogException.h"
 #include <string>
 #include "glfw3.h"

@@ -28,7 +28,7 @@ void PhysicsSystem::Update(float dt)
 	if (dt <= 0)
 		return;
 
-	for (int step = 0; step < Accumulator::mSteps; ++step)
+	for (unsigned step = 0; step < Accumulator::mSteps; ++step)
 	{
 		mPX.mScene->simulate(Accumulator::mFixedDT);
 		mPX.mScene->fetchResults(true);

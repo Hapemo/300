@@ -6,10 +6,7 @@
 \par DP email:
 \date		   16-8-2023
 \brief
-
-This file contains the base AudioSystem class that supports the following functionalities:
-- Loading in Audio Files (from components/directory)
-- Manipulating Audio (Play/Pause/Stop)
+Components used by the ECS.
 ****************************************************************************/
 
 #pragma once
@@ -97,7 +94,7 @@ struct Animator
 struct MeshRenderer
 {
 	// For now, we store the string to the filepaths. TO CHANGE to uids for efficient referencing
-	std::pair<std::string, std::string> mShaderPath{ "../_GRAPHICS/shader_files/pointLight_vert.glsl", "../_GRAPHICS/shader_files/pointLight_frag.glsl" };
+	std::pair<std::string, std::string> mShaderPath{ "../assets/shader_files/pointLight_vert.glsl", "../assets/shader_files/pointLight_frag.glsl" };
 	std::string							mMaterialInstancePath[4] {" "," " ," " ," " };
 	std::string							mMeshPath;
 	

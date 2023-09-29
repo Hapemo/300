@@ -196,11 +196,11 @@ void Hierarchy::update() {
                         auto allchild = ent.GetAllChildren();
 
                         for (auto& child : allchild) {
-                            ImGuiWindowFlags selectflag{ 0 };
+                            ImGuiWindowFlags selectflag1{ 0 };
                             if (child.id == selectedId)
-                                selectflag |= ImGuiTreeNodeFlags_Selected;
+                                selectflag1 |= ImGuiTreeNodeFlags_Selected;
 
-                            ImGui::TreeNodeEx((child.GetComponent<General>().name).c_str(), selectflag | ImGuiTreeNodeFlags_NoTreePushOnOpen | ImGuiTreeNodeFlags_Leaf);
+                            ImGui::TreeNodeEx((child.GetComponent<General>().name).c_str(), selectflag1 | ImGuiTreeNodeFlags_NoTreePushOnOpen | ImGuiTreeNodeFlags_Leaf);
 
                             if (ImGui::IsItemClicked(ImGuiMouseButton_Right)) {
                                 RselectedScene = i;
