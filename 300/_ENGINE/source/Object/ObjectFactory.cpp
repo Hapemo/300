@@ -275,7 +275,9 @@ Entity ObjectFactory::DeserializePrefab(const std::string& filename, int id)
 	entities.DeserializeFile(filename);
 
 	if (entities.EntitiesList().size() > 1)
+	{
 		PWARNING("more than 1 entity in prefab file, taking first entity...");
+	}
 
 	EntityJSON& eJ = entities.EntitiesList().front();
 

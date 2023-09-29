@@ -94,7 +94,9 @@ void AudioSystem::Init()
 	auto audio_entities = systemManager->ecs->GetEntitiesWith<Audio>();
 
 	if (audio_entities.size() > 0)
+	{
 		PINFO("Loading Audio Entities");
+	}
 
 	for (Entity audio : audio_entities)
 	{
