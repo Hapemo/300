@@ -17,15 +17,24 @@ Contains main loop for the logic of logger UI system functionality
 
 #include "EditorLogger.h"
 #include "Debug/Logger.h"
-
+/***************************************************************************/
+/*!
+\brief
+    Init function for Imgui Window
+*/
+/**************************************************************************/
 void EditorLogger::init() {
     // empty
 }
-
+/***************************************************************************/
+/*!
+\brief
+    Update function for Imgui Window
+*/
+/**************************************************************************/
 void EditorLogger::update() {
     static AppLog log;
     // To check size 
-    //std::cout << Logger::logToGUI.size() << std::endl;
     //Only for the first time logger window updates
     if (Logger::firstTimeFlag == true)
     {
@@ -52,13 +61,23 @@ void EditorLogger::update() {
     Logger::flag = false;
     log.Draw("Logger");
 }
-
+/***************************************************************************/
+/*!
+\brief
+    Log function for Imgui Window
+*/
+/**************************************************************************/
 EditorLogger::AppLog::AppLog()
 {
     AutoScroll = true;
     Clear();
 }
-
+/***************************************************************************/
+/*!
+\brief
+    Clear function for Imgui Window
+*/
+/**************************************************************************/
 void EditorLogger::AppLog::Clear()
 {
     Buf.clear();

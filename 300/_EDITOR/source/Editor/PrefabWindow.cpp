@@ -1,13 +1,35 @@
+/**-------------------------------------------------------------------------------------/
+ * @file
+ *  PrefabWindow.cpp
+ * @author
+ *  Han Cheng Wen, c,han@digipen.edu
+ * @date
+ *  2023/05/21
+ * @brief
+ *  Prefab Scene function definition
+ * @copyright
+ *  Copyright (C) 2023 DigiPen Institute of Technology.
+ *-------------------------------------------------------------------------------------*/
 #include "PrefabWindow.h"
 #include "ECS/ECS_Components.h"
 
 entt::entity PrefabWindow::prefabObj;
 
-
+/***************************************************************************/
+/*!
+\brief
+	Init function for Prefab window
+*/
+/***************************************************************************/
 void PrefabWindow::init() {
 	prefabObj = static_cast<entt::entity>(0);
 }
-
+/***************************************************************************/
+/*!
+\brief
+	Update function for Menupanel window
+*/
+/***************************************************************************/
 void PrefabWindow::update() {
 
 

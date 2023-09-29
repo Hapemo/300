@@ -1,6 +1,6 @@
 /*!*************************************************************************
 ****
-\file LeftPanel.h
+\file Hierarchy.h
 \author Han ChengWen
 \par DP email: c.han@digipen.edu
 \date 28-09-2023
@@ -67,7 +67,9 @@ to select current Entity and activates inspector
 /**************************************************************************/
 	void update();
 
-
+/*!*****************************************************************************
+	Copy past functionality declaration for Objects
+*******************************************************************************/
 	void copyPaste();
 
 

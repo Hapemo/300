@@ -39,12 +39,22 @@ typedef void    (*ImGuiSizeCallback)(ImGuiSizeCallbackData* data);
 //bool				SceneWindow::Scale	={ true };
 //bool				SceneWindow::Rotate	={ true };
 
-
+/***************************************************************************/
+/*!
+\brief
+	Init function for Menupanel window
+*/
+/***************************************************************************/
 void SceneWindow::init() 
 {
 	//empty
 }
-
+/***************************************************************************/
+/*!
+\brief
+	Update function for Menupanel window
+*/
+/***************************************************************************/
 void SceneWindow::update()
 {
 	mWinFlag |= ImGuiWindowFlags_NoScrollbar;
@@ -122,15 +132,10 @@ void SceneWindow::RenderGuizmo()
 	glm::vec3 rotate(0, 0, 0);
 	glm::vec3 scale(0, 0, 0);
 
-	//static glm::mat3 transformtemp = glm::mat4(1.0f);
-	//float transformtemp[16] {0};
-
-	//Hierarchy::selectedId =;
 	if (Hierarchy::selectionOn == true) {
 
 		Transform& transform = Entity(Hierarchy::selectedId).GetComponent<Transform>();
 
-		//glm::mat3 testMat{ 1.0 };
 
 		glm::vec3 tempRot = /*{ transform->orientation.z,0,transform->orientation.x }*/{ 0,0,0 };
 

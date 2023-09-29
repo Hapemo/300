@@ -34,7 +34,12 @@ bool ContentBrowser::dragCheck = false;
 
 ContentBrowser::ContentBrowser():current_Directory(s_asset_directory) {} // constructor to set base directory
 
-
+/***************************************************************************/
+/*!
+\brief
+	Helper function for checking file extension
+*/
+/**************************************************************************/
 bool check_extension(std::string file, std::string extension) {
 	size_t path_length = file.length();
 	std::string path_extension = file.substr(path_length - extension.length());
@@ -43,12 +48,22 @@ bool check_extension(std::string file, std::string extension) {
 
 	return false;
 }
-
+/***************************************************************************/
+/*!
+\brief
+	Helper function to format file path from "\\" to "/"
+*/
+/**************************************************************************/
 void format_string(std::string& path) {
 
 	std::replace(path.begin(), path.end(), '\\', '/');
 }
-
+/***************************************************************************/
+/*!
+\brief
+	Update function for ImguiWindow
+*/
+/**************************************************************************/
 void ContentBrowser::update() 
 {
 
@@ -60,7 +75,6 @@ void ContentBrowser::update()
 		{
 			current_Directory = current_Directory.parent_path();
 		}
-	//	maxpos = ImGui::GetItemRectMin();
 	}
 
 	static float padding{ 10 };
@@ -88,32 +102,17 @@ void ContentBrowser::update()
 
 		if (directory.is_directory()) {
 	
-			//std::string file_button = filename_string.c_str();
-
-			//ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
-			//ImGui::PushID(idd++);
-			//ImGui::ImageButton((ImTextureID)(intptr_t)Texture2D::editor_Storage[file_button], { buttonsize, buttonsize });
-			//ImGui::PopID();
-			//ImGui::PopStyleColor();
-			//ImGui::Button(file_button.c_str(), { buttonsize, buttonsize }); // draw button of file
-		
-			
-			//ImGui::SetCursorPosY(55);
 			ImGui::PushID(idd);
 			ImGui::ImageButton((ImTextureID)(intptr_t)resourceDatas->m_EditorTextures["Folder"]->ID(), {buttonsize, buttonsize});
 			ImGui::PopID();
 			if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) {
-				//if (directory.is_directory())
 					current_Directory /= path.filename();
 			}
 			ImGui::Text(filename_string.c_str());
 			ImGui::NextColumn();
 
-			//ImGui::Text(filename_string.c_str());
 		}
 		else if(!directory.is_directory()) {
-
-			//ImGui::Button(filename_string.c_str(), { buttonsize, buttonsize }); // draw button of file
 
 			if (check_extension(path.string(), ".prefab")) {
 				ImGui::PushID(idd);
@@ -123,8 +122,7 @@ void ContentBrowser::update()
 
 					std::string path_str = path.string();
 
-					//format the string from \\ to /.
-					//format_string(path_str);
+
 					int posstart = static_cast<int>(path_str.find_last_of("\\"));
 					int posend = static_cast<int>(path_str.find_last_of("."));
 
@@ -146,9 +144,6 @@ void ContentBrowser::update()
 					Entity toEdit = systemManager->ecs->StartEditPrefab(newpath);
 					PrefabWindow::prefabObj = toEdit.id;
 					
-
-
-					//std::cout << path.string() << "\n";
 				}
 				ImGui::Text(filename_string.c_str());
 				ImGui::NextColumn();
@@ -160,8 +155,6 @@ void ContentBrowser::update()
 				if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) {
 					systemManager->mGameStateSystem->GetCurrentGameState()->Save();
 					systemManager->mGameStateSystem->ChangeGameState(Misc::GetFileName(path.string()));
-					
-					//std::cout << path.string() << "\n";
 				}
 				ImGui::Text(filename_string.c_str());
 				ImGui::NextColumn();
@@ -176,9 +169,8 @@ void ContentBrowser::update()
 
 					std::string path_str = path.string();
 
-					//format the string from \\ to /.
 					format_string(path_str);
-					//std::cout << path_str << "newstr\n";
+
 					const char* source_path = path_str.c_str();
 					ImGui::SetDragDropPayload("FILE_LUA", source_path, strlen(source_path) * sizeof(wchar_t), ImGuiCond_Once);
 
@@ -257,8 +249,6 @@ void ContentBrowser::update()
 
 				std::string path_str = path.string();
 
-				//format the string from \\ to /.
-				//format_string(path_str);
 				int posstart = path_str.find_last_of("\\");
 				int posend = path_str.find_last_of(".");
 
@@ -282,7 +272,12 @@ void ContentBrowser::update()
 	ImGui::Columns(1);
 }
 
-
+/***************************************************************************/
+/*!
+\brief
+	Init Function for Imgui Window
+*/
+/**************************************************************************/
 void ContentBrowser::init() {
 
 	// empty

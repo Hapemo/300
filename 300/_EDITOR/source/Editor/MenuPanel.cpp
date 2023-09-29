@@ -22,11 +22,24 @@ Contains main loop for the logic of MenuPanel.
 #include "ECS/ECS_Systems.h"
 #include "GameState/GameStateManager.h"
 #include "Hierarchy.h"
+
+
+/***************************************************************************/
+/*!
+\brief
+    Init function for Menupanel window
+*/
+/***************************************************************************/
 void MenuPanel::init() {
     // empty
 }
 
-
+/***************************************************************************/
+/*!
+\brief
+    Update function for Menupanel window
+*/
+/***************************************************************************/
 void MenuPanel::update() 
 {
 
@@ -44,23 +57,6 @@ void MenuPanel::update()
             }
 
 
-            ImGui::EndMenu();
-        }
-
-        if (ImGui::BeginMenu("Shaders"))
-        {
-
-            if (ImGui::MenuItem("Default")) {
-                //g_engine->graphicsSys->shaderUse = "Batch_Render";
-
-            }
-            if (ImGui::MenuItem("Pixelation")) {
-               // g_engine->graphicsSys->shaderUse = "Batch_PixelBend";
-            }
-
-            if (ImGui::MenuItem("GammaModify")) {
-               // g_engine->graphicsSys->shaderUse = "Batch_Gamma";
-            }
             ImGui::EndMenu();
         }
 
@@ -248,12 +244,10 @@ void MenuPanel::update()
             }
             ImGui::EndMenu();
         }
-        //int temp = ImGui::GetWindowSize().x - 70;
-        //ImGui::SetCursorPosX(temp);
+
         ImVec2 buttonSize{ 50,50 };
 
         ImGui::SetCursorPosX(ImGui::GetWindowSize().x / 2 - buttonSize.x * 3);
-        //    ImGui::SetCursorPosY(ImGui::GetWindowContentRegionMin().y + 10);
 
         if (ImGui::Button("PLAY")) {
             systemManager->Play();
@@ -264,12 +258,7 @@ void MenuPanel::update()
         if (ImGui::Button("RESET")) {
             Hierarchy::selectionOn = false;
             systemManager->Reset();
-        }
-
-        
-
+        }   
         ImGui::EndMenuBar();
     }
-
-    	//ImGui::Button("Debug");
 }

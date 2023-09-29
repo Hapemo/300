@@ -9,7 +9,12 @@
 #include <typeinfo>
 
 
-
+/***************************************************************************/
+/*!
+\brief
+    // Testing functiong for CRC T = unsigned 32
+*/
+/**************************************************************************/
 template<typename T = unsigned>
 struct crc
 {
@@ -52,7 +57,12 @@ struct crc
 
 };
 
-
+/***************************************************************************/
+/*!
+\brief
+     base class for uid generator (Unused for now)
+*/
+/**************************************************************************/
 class Base {
 
 public:
@@ -68,7 +78,12 @@ public:
 };
 
 
-
+/***************************************************************************/
+/*!
+\brief
+    // Serializes the AssimpNodeData into a binary file recursively
+*/
+/**************************************************************************/
 template< typename T = unsigned >
 T generateUniqueID() {
     // Step 1: Obtain the current system time
@@ -95,7 +110,12 @@ T generateUniqueID() {
     //static_assert(std::is_unsigned_v<T>::id, "Integral required.");
 
     return hashedValue;
-}
+}/***************************************************************************/
+/*!
+\brief
+	// Uid from string ( always unique if name is different )
+*/
+/**************************************************************************/
 
 template< typename T = unsigned >
 T generateUniqueIDfromString(std::string name) {
@@ -114,7 +134,12 @@ T generateUniqueIDfromString(std::string name) {
     return hashedValue;
 }
 
-
+/***************************************************************************/
+/*!
+\brief
+    Uid class
+*/
+/**************************************************************************/
 
 template <typename t = unsigned>
 struct uid {

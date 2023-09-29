@@ -1,8 +1,8 @@
 /*!*************************************************************************
 ****
 \file Inspect.cpp
-\author Han ChengWen, Charissa Yip, Lwin Li Yue Sandi
-\par DP email: c.han@\digipen.edu, charissa.yip\@digipen.edu, l.liyuesandi\@digipen.edu
+\author Han ChengWen, Charissa Yip
+\par DP email: c.han@\digipen.edu, charissa.yip\@digipen.edu
 \date 28-09-2023
 \brief
 This header file contains the inspector window and relative functions to run
@@ -17,14 +17,6 @@ Initialize related data needed for Inspector window to draw
 Run Inspector logic that checks for component and render related data which
 provides user to edit in run time
 
-- tags
-Tagging system logic allows User to edit and add tags
-
-- TagPosition
-Return tag position (tag id)
-
-- GetTagName
-Return tag name (tag string)
 
 - Add_component
 Add component button and logic implementation that allows user to add
@@ -34,7 +26,7 @@ components
 Inspect display for Transform component
 Included ImGui custom dragfloat3 function for data required in command system.
 
--Collider::Inspect
+-PlaneCollider::Inspect
 Inspect display for Collider component
 Included ImGui custom dragfloat3 function for data required in command system.
 
@@ -60,8 +52,6 @@ Inspect display for RigidBody components
 ***/
 
 #include "Inspect.h"
-
-
 #include "Editor.h"
 #include "ECS/ECS_Components.h"
 #include "ECS/ECS_Systems.h"
@@ -76,17 +66,21 @@ Inspect display for RigidBody components
 #include "Input/InputMapSystem.h"
 
 
-//int Inspect::inspectmode{ inspector_layer };
-//int Inspect::scaleCounter = 0;
-//bool prev{}, current{};
-//bool Inspect::isEditName = false;
-//For future implementation of undo/redo
-//bool Inspect::entityFlag = false;
-
+/***************************************************************************/
+/*!
+\brief
+	Init function for Inspector Window
+*/
+/**************************************************************************/
 void Inspect::init() {
 //empty
 }
-
+/***************************************************************************/
+/*!
+\brief
+	Update function for Inspector Window
+*/
+/**************************************************************************/
 void Inspect::update() 
 {
 
@@ -158,43 +152,25 @@ void Inspect::update()
 	}
 
 }
-
+/***************************************************************************/
+/*!
+\brief
+	Add Component function for Inspector Window
+*/
+/**************************************************************************/
 void Inspect::Add_component() {
 
 
 	auto initialCursorPos = ImGui::GetCursorPos();
 	auto windowSize = ImGui::GetWindowSize();
 	float centralizedCursorpos = (windowSize.x - 200) * 0.5f;
-	//centralizedCursorpos = std::clamp(centralizedCursorpos, initialCursorPos.x, centralizedCursorpos);
 	ImGui::SetCursorPosX(centralizedCursorpos);
 
 
-	//ImGui::Button(" Add Component ", ImVec2(200, 30));
-
-
-
-	//if (ImGui::IsItemClicked(ImGuiMouseButton_Left)) {
-
-	//	mPopup = true;
-
-	//}
-
-
-	//if (mPopup)
-	//{
-	//	ImGui::OpenPopup("ComponentList", ImGuiPopupFlags_MouseButtonRight);
-	//}
-
 	ImGui::SetCursorPosX((ImGui::GetWindowSize().x )/2 - ImGui::CalcTextSize("      ComponentList ").x);
-
-
 
 	if (ImGui::BeginCombo("##add","ComponentList"))
 	{
-		//if (ImGui::Selectable("Test Component"))
-		//{
-
-		//}
 
 
 		if (ImGui::Selectable("RigidBody")) {
@@ -243,7 +219,6 @@ void Inspect::Add_component() {
 
 				Entity meshobj(Hierarchy::selectedId);
 				auto& meshref= meshobj.GetComponent<MeshRenderer>();
-				//meshref.get
 
 			}
 		}
@@ -258,9 +233,13 @@ void Inspect::Add_component() {
 
 	}
 
-//	mPopup = false; 
 }
-
+/***************************************************************************/
+/*!
+\brief
+	Inspector functionality for General
+*/
+/**************************************************************************/
 void General::Inspect() {
 
 
@@ -271,7 +250,6 @@ void General::Inspect() {
 	ImGui::InputText("##naming",&name);
 
 
-	//ImGui::Dummy(ImVec2(0.0, 5.f));
 
 
 	ImGui::Text("Tag");
@@ -292,12 +270,15 @@ void General::Inspect() {
 
 }
 
-
+/***************************************************************************/
+/*!
+\brief
+	Inspector functionality for Transform
+*/
+/**************************************************************************/
 void Transform::Inspect() {
 	if (ImGui::CollapsingHeader("Transform", ImGuiTreeNodeFlags_DefaultOpen)) {
 
-
-		//ImGui::SetCursorPosX(windowWidth / 3.f);
 
 		ImGui::Text("Position");
 		ImGui::SameLine();
@@ -328,7 +309,12 @@ void Transform::Inspect() {
 	}
 
 }
-
+/***************************************************************************/
+/*!
+\brief
+	Inspector functionality for Camera
+*/
+/**************************************************************************/
 void Camera::Inspect()
 {
 
@@ -419,7 +405,12 @@ void PointLight::Inspect()
 
 	}
 }
-
+/***************************************************************************/
+/*!
+\brief
+	Inspector functionality for Script
+*/
+/**************************************************************************/
 void Scripts::Inspect() {
 	bool delete_component = true;
 	const char* data_script{};
@@ -539,7 +530,12 @@ void Scripts::Inspect() {
 	if (delete_component == false)
 		Entity(Hierarchy::selectedId).RemoveComponent<Scripts>();
 }
-
+/***************************************************************************/
+/*!
+\brief
+	Inspector functionality for Animator
+*/
+/**************************************************************************/
 void Animator::Inspect()
 {
 	bool delete_component{ true };
@@ -555,7 +551,12 @@ void Animator::Inspect()
 	if (delete_component == false)
 		Entity(Hierarchy::selectedId).RemoveComponent<MeshRenderer>();
 }
-
+/***************************************************************************/
+/*!
+\brief
+	Inspector functionality for MeshRenderer
+*/
+/***************************************************************************/
 
 void MeshRenderer::Inspect() {
 	bool delete_component{ true };
@@ -659,19 +660,6 @@ void MeshRenderer::Inspect() {
 					}
 					ImGui::EndDragDropTarget();
 				}
-					//if (ImGui::BeginDragDropTarget())
-					//{
-					//	if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_TEXT")) {
-
-					//		const char* data = (const char*)payload->Data;
-					//		std::string data_str = std::string(data);
-					//		mMaterialInstancePath[i] = data_str;
-					//		uid temp(mMaterialInstancePath[i]);
-					//		mTextureRef[i] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(temp.id));
-
-					//	}
-					//	ImGui::EndDragDropTarget();
-					//}
 				
 			}
 		}
@@ -683,7 +671,12 @@ void MeshRenderer::Inspect() {
 		Entity(Hierarchy::selectedId).RemoveComponent<MeshRenderer>();
 }
 
-
+/***************************************************************************/
+/*!
+\brief
+	Inspector functionality for Rigidbody
+*/
+/***************************************************************************/
 void RigidBody::Inspect() {
 	bool delete_component{ true };
 
@@ -729,7 +722,12 @@ void RigidBody::Inspect() {
 	if (delete_component == false)
 		Entity(Hierarchy::selectedId).RemoveComponent<RigidBody>();
 }
-
+/***************************************************************************/
+/*!
+\brief
+	Inspector functionality for BoxCollider
+*/
+/***************************************************************************/
 void BoxCollider::Inspect() {
 	bool delete_component{ true };
 	if (ImGui::CollapsingHeader("BoxCollider", &delete_component, ImGuiTreeNodeFlags_DefaultOpen)) {
@@ -748,7 +746,12 @@ void BoxCollider::Inspect() {
 		Entity(Hierarchy::selectedId).RemoveComponent<BoxCollider>();
 }
 
-
+/***************************************************************************/
+/*!
+\brief
+	Inspector functionality for SphereCollider
+*/
+/***************************************************************************/
 void SphereCollider::Inspect() {
 	bool delete_component{ true };
 	if (ImGui::CollapsingHeader("SphereCollider", &delete_component, ImGuiTreeNodeFlags_DefaultOpen)) {
@@ -766,7 +769,12 @@ void SphereCollider::Inspect() {
 	if (delete_component == false)
 		Entity(Hierarchy::selectedId).RemoveComponent<SphereCollider>();
 }
-
+/***************************************************************************/
+/*!
+\brief
+	Inspector functionality for PlaneCollider
+*/
+/***************************************************************************/
 
 void PlaneCollider::Inspect() {
 	bool delete_component{ true };
@@ -785,7 +793,12 @@ void PlaneCollider::Inspect() {
 	if (delete_component == false)
 		Entity(Hierarchy::selectedId).RemoveComponent<PlaneCollider>();
 }
-
+/***************************************************************************/
+/*!
+\brief
+	Inspector functionality for Audio
+*/
+/***************************************************************************/
 void Audio::Inspect() {
 	bool delete_component = true;
 	auto audioEntities = systemManager->ecs->GetEntitiesWith<Audio>();
@@ -890,7 +903,12 @@ void Audio::Inspect() {
 	if (delete_component == false)
 		Entity(Hierarchy::selectedId).RemoveComponent<Audio>();
 }
-
+/***************************************************************************/
+/*!
+\brief
+	Inspector functionality for Input action
+*/
+/***************************************************************************/
 void InputActionMapEditor::Inspect()
 {
 	bool delete_component = true;

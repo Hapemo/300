@@ -1,6 +1,6 @@
 /*!*************************************************************************
 ****
-\file SceneWindow.h
+\file GameScene.h
 \author Han ChengWen
 \par DP email: c.han@digipen.edu
 \date 28-09-2023

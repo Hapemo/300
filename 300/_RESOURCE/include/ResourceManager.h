@@ -10,7 +10,12 @@
 
 #include <filesystem>
 
-
+/***************************************************************************/
+/*!
+\brief
+    Resource Types defined 
+*/
+/**************************************************************************/
 enum ResourceTypes : unsigned {
 
     MESH = 1234567,
@@ -19,7 +24,12 @@ enum ResourceTypes : unsigned {
     MATERIALINSTANCE
 };
 
-
+/***************************************************************************/
+/*!
+\brief
+    Datas for instance allocation (Unused temporary)
+*/
+/**************************************************************************/
 struct MeshData {
     void* m_pData;
     GFX::Mesh meshdata;
@@ -40,6 +50,14 @@ struct MaterialInstanceData
 };
 
 
+
+
+/***************************************************************************/
+/*!
+\brief
+    MaterialInstanceManager 
+*/
+/**************************************************************************/
 class MaterialInstanceManager
 {
 public:
@@ -49,18 +67,34 @@ public:
         static MaterialInstanceManager instance;
         return instance;
     }
+
+/***************************************************************************/
+/*!
+\brief
+    Default functions for MaterialInstanceManager
+*/
+/**************************************************************************/
     MaterialInstanceManager() = default;
     MaterialInstanceManager(MaterialInstanceManager const&) = delete;
     void operator=(MaterialInstanceManager const&) = delete;
 
     void Init();
-
+/***************************************************************************/
+/*!
+\brief
+    Allocation/Deallocation for Material Instance Manager 
+*/
+/**************************************************************************/
     MaterialInstanceData& AllocRscInfo();
     void ReleaseRscInfo(MaterialInstanceData& RscInfo);
 
+/***************************************************************************/
+/*!
+\brief
+    Graphics function for Material Instance Manager 
+*/
+/**************************************************************************/
     void SetupMaterialInstance(std::string filepath, unsigned);
-
-    // Accessor
     MaterialInstanceData& getMaterialInstance(unsigned);
 
     int mResourceCnt{ 0 };
@@ -71,7 +105,12 @@ private:
     std::array<MaterialInstanceData, MAX_RESOURCE>          m_MaterialInstancebuffer;
 };
 
-
+/***************************************************************************/
+/*!
+\brief
+    ShaderManager 
+*/
+/**************************************************************************/
 class ShaderManager
 {
 public:
@@ -81,17 +120,33 @@ public:
         static ShaderManager instance;
         return instance;
     }
+    /***************************************************************************/
+    /*!
+    \brief
+        ShaderManager (constructors)
+    */
+    /**************************************************************************/
     ShaderManager() = default;
     ShaderManager(ShaderManager const&) = delete;
     void operator=(ShaderManager const&) = delete;
 
+    /***************************************************************************/
+    /*!
+    \brief
+        ShaderManager Data allocations
+    */
+    /**************************************************************************/
     void Init();
-
     ShaderData& AllocRscInfo();
     void ReleaseRscInfo(ShaderData& RscInfo);
 
-    void SetupShader(std::string vertpath, std::string fragpath, unsigned);
-    
+    /***************************************************************************/
+    /*!
+    \brief
+        Graphics accessor for ShaderManager
+    */
+    /**************************************************************************/
+    void SetupShader(std::string vertpath, std::string fragpath, unsigned); 
     // Accessor
     ShaderData& getShader(unsigned);
 
@@ -103,7 +158,12 @@ private:
     std::array<ShaderData, MAX_RESOURCE>        m_Shaderbuffer;
 };
 
-
+/***************************************************************************/
+/*!
+\brief
+    MeshManager
+*/
+/**************************************************************************/
 class MeshManager
 {
 public:
@@ -113,24 +173,37 @@ public:
         static MeshManager instance;
         return instance;
     }
+    /***************************************************************************/
+    /*!
+    \brief
+        Constructors
+    */
+    /**************************************************************************/
+    void Init();
     MeshManager() = default;
     MeshManager(MeshManager const&) = delete;
     void operator=(MeshManager const&) = delete;
 
-    //std::vector<Mesh> mSceneMeshes;
-
+    /***************************************************************************/
+    /*!
+    \brief
+        ShaderManager Resource Allocation
+    */
+    /**************************************************************************/
     MeshData& AllocRscInfo();
     void ReleaseRscInfo(MeshData& RscInfo);
-
-    void SetupMesh(std::string filepath, unsigned);
+   
     
-
-    void Init();
-
+    /***************************************************************************/
+    /*!
+    \brief
+        Graphics function accessor for Mesh
+    */
+    /**************************************************************************/
+    void SetupMesh(std::string filepath, unsigned);
     MeshData& get_Mesh(unsigned);
 
     //void Destroy();
-
     int mResouceCnt{ 0 };
 
 private:
@@ -149,29 +222,56 @@ struct instance_info
     int             m_RefCount{ 1 };
 };
 
-
+/***************************************************************************/
+/*!
+\brief
+    Resource Manager
+*/
+/**************************************************************************/
 class Resource 
 {
 
 public:
+    /***************************************************************************/
+    /*!
+    \brief
+        Constructor for Resource Manager
+    */
+    /**************************************************************************/
     Resource();
     Resource(const Resource&) = delete;
     ~Resource() = default;
-
+    
+    
+    /***************************************************************************/
+    /*!
+    \brief
+        Initializer for all material types
+    */
+    /**************************************************************************/
     void Init();
-    void Update();
-    void Exit();
-
     void mesh_Loader();
     void shader_Loader();
     void MaterialInstance_Loader();
 
-    void get_Texture(uid<> id);
-    void get_Mesh(uid<> id);
+    //void get_Texture(uid<> id);
+    //void get_Mesh(uid<> id);
+
+    /***************************************************************************/
+    /*!
+    \brief
+        Material accessors
+    */
+    /**************************************************************************/
     GFX::Texture& get_MaterialInstance(std::string name);
     GFX::Mesh& get_Mesh(std::string name);
     GFX::Shader& get_Shader(std::string name);
-
+    /***************************************************************************/
+    /*!
+    \brief
+        Allocators for Resource Manager
+    */
+    /**************************************************************************/
     instance_info& AllocRscInfo(void);
     void ReleaseRscInfo(instance_info& RscInfo);
 
