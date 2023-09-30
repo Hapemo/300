@@ -273,8 +273,6 @@ void GraphicsSystem::EditorDraw(float dt)
 	// Prepare and bind the Framebuffer to be rendered on
 	m_Fbo.PrepForDraw();
 
-	m_Renderer.RenderAll(m_EditorCamera.viewProj());
-
 #pragma region render all the mesh instances
 	// Render all instances of a given mesh
 	for (Entity inst : meshRendererInstances)
@@ -341,6 +339,8 @@ void GraphicsSystem::EditorDraw(float dt)
 			glUniform3fv(mViewPosShaderLocation, 1, &viewPos[0]);
 			glUniform3fv(mLightColorShaderLocation, 1, &lightData.mLightColor[0]);
 			glUniform1f(mLightIntensityShaderLocation, lightData.mIntensity);
+
+			m_Renderer.AddCube(lightTransform.mTranslate, { 20, 20, 20 });
 		}
 
 		// bind texture unit
@@ -393,6 +393,9 @@ void GraphicsSystem::EditorDraw(float dt)
 			}
 		}
 	}
+
+	// Debug draw stuffs should be drawn last
+	m_Renderer.RenderAll(m_EditorCamera.viewProj());
 #pragma endregion
 
 	// TODO: Clears all instances that have been rendered from local buffer
