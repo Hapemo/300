@@ -124,7 +124,6 @@ void AudioSystem::Init()
  /******************************************************************************/
 void AudioSystem::Update([[maybe_unused]]float dt)
 {
-	EnginePerformance::StartTrack("Audio");
 	auto audio_entities = systemManager->ecs->GetEntitiesWith<Audio>();
 
 	/*
@@ -200,9 +199,6 @@ void AudioSystem::Update([[maybe_unused]]float dt)
 	}
 
 	system_obj->update();
-
-	EnginePerformance::EndTrack("Audio");
-	EnginePerformance::UpdateSystemMs("Audio");
 }
 
 /******************************************************************************/
