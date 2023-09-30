@@ -30,22 +30,23 @@ void TabWindow::init() {
 	Update function for tan window
 */
 /***************************************************************************/
-void TabWindow::update() {
+void TabWindow::update() 
+{
 
-	glm::vec3 mTranslate{};
-	glm::vec3 mRotate{};
-	ImGui::Text("Position");
-	ImGui::SameLine();
-	ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
-		- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
-	ImGui::DragFloat3("##Position", (float*)&mTranslate);
+	auto& editorcam = systemManager->mGraphicsSystem->m_EditorCamera;
+
+	ImGui::Text("Editor Camera");
+	//ImGui::SameLine();
+	//ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+	//	- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+	ImGui::DragFloat3("Position", (float*)&editorcam.mPosition);
 
 	ImGui::Separator();
-	ImGui::Text("Rotation");
-	ImGui::SameLine();
-	ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
-		- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
-	ImGui::DragFloat3("##Rotation", (float*)&mRotate);
+	//ImGui::Text("Target");
+	//ImGui::SameLine();
+	//ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+	//	- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+	ImGui::DragFloat3("Target", (float*)&editorcam.mTarget);
 
 	ImGui::Separator();
 	ImGui::Text("Camera Speed");
