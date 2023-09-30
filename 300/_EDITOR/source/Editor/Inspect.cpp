@@ -1,8 +1,8 @@
 /*!*************************************************************************
 ****
 \file Inspect.cpp
-\author Han ChengWen, Charissa Yip
-\par DP email: c.han@\digipen.edu, charissa.yip\@digipen.edu
+\author Han ChengWen, Charissa Yip , Cheong Ming Lun
+\par DP email: c.han@\digipen.edu, charissa.yip\@digipen.edu, m.cheong\@digipen.edu
 \date 28-09-2023
 \brief
 This header file contains the inspector window and relative functions to run
@@ -48,6 +48,12 @@ Included ImGui custom dragfloat3 function for data required in command system.
 
 -RigidBody::Inspect
 Inspect display for RigidBody components
+
+- Audio::Inspect
+Inspect display for Audio components
+
+- InputActionMapEditor::Inspect
+Inspect display for InputActionMapEditor components.
 ****************************************************************************
 ***/
 
@@ -862,8 +868,9 @@ void Audio::Inspect() {
 
 	if (!mIsEmpty && mIsLoaded)
 	{
-		ImGui::Checkbox("Play This", &mIsPlay);
+		ImGui::Checkbox("Play This (start the scene first)", &mIsPlay);
 		ImGui::Checkbox("IsPlaying", &mIsPlaying);
+
 	}
 
 	// AudioType Selector 

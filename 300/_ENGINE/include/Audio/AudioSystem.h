@@ -96,15 +96,16 @@ private:
 	float bgmVolume;
 
 	// Number of Channels
-	int no_of_sfx_channels;
-	int no_of_bgm_channels;
+	int no_of_sfx_channels = 0;
+	int no_of_bgm_channels = 0;
 
 	// Registers (Sound ID) - for channel management
 	int next_avail_id_sfx = 0;
 	int next_avail_id_bgm = 0;
 
-	FMOD::System* system_obj;
+	FMOD::System* system_obj = nullptr;
 
 	// for performance
-	double startTime, endTime;
+	double startTime = 0.0f;
+	double endTime   = 0.0f;
 };
