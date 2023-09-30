@@ -14,7 +14,7 @@ and saving of prefabs, scenes and gamestates using serialization.
 
 #include "Serialization/Serialization.h"
 #include "GameState/Scene.h"
-#include "../../../_SCRIPTING/include/ScriptingSystem.h"
+#include "ScriptingSystem.h"
 #include "Debug/Logger.h"
 
 bool BaseJSON::DeserializeFile(const std::string& filename)

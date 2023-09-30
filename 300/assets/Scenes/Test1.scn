@@ -1,6 +1,6 @@
 [
     {
-        "EntityID": 3145729,
+        "EntityID": 1,
         "General": {
             "Name": "Girl",
             "Active": true,
@@ -58,7 +58,7 @@
         }
     },
     {
-        "EntityID": 3145730,
+        "EntityID": 2,
         "General": {
             "Name": "Wall1",
             "Active": true,
@@ -118,10 +118,15 @@
                 150.0,
                 0.0
             ]
+        },
+        "Parent": {
+            "Parent": 3,
+            "PreviousSibling": 4,
+            "NextSibling": 4
         }
     },
     {
-        "EntityID": 3145731,
+        "EntityID": 3,
         "General": {
             "Name": "Wall-Parent",
             "Active": true,
@@ -181,10 +186,14 @@
                 150.0,
                 0.0
             ]
+        },
+        "Children": {
+            "NumChildren": 2,
+            "FirstChild": 2
         }
     },
     {
-        "EntityID": 3145732,
+        "EntityID": 4,
         "General": {
             "Name": "Wal2",
             "Active": true,
@@ -244,10 +253,15 @@
                 150.0,
                 0.0
             ]
+        },
+        "Parent": {
+            "Parent": 3,
+            "PreviousSibling": 2,
+            "NextSibling": 2
         }
     },
     {
-        "EntityID": 3145733,
+        "EntityID": 5,
         "General": {
             "Name": "Light",
             "Active": true,
@@ -282,7 +296,7 @@
         }
     },
     {
-        "EntityID": 3145734,
+        "EntityID": 6,
         "General": {
             "Name": "Camera",
             "Active": true,
@@ -301,24 +315,24 @@
                 0.0
             ],
             "Translate": [
-                97.64271545410156,
-                351.07666015625,
-                528.7033081054688
+                16.218000411987305,
+                474.85400390625,
+                748.7139892578125
             ]
         },
         "Camera": {
             "Position": [
-                97.64271545410156,
-                351.07666015625,
-                528.7033081054688
+                16.218000411987305,
+                474.85400390625,
+                748.7139892578125
             ],
             "Target": [
-                97.57341003417969,
-                350.9634704589844,
-                527.712158203125
+                16.218000411987305,
+                474.85400390625,
+                747.7139892578125
             ],
             "Size": [
-                96,
+                703,
                 607
             ],
             "Near": 0.10000000149011612,
@@ -326,7 +340,7 @@
         }
     },
     {
-        "EntityID": 3145735,
+        "EntityID": 7,
         "General": {
             "Name": "Ceiling",
             "Active": true,
@@ -389,7 +403,7 @@
         }
     },
     {
-        "EntityID": 3145736,
+        "EntityID": 8,
         "General": {
             "Name": "Floor",
             "Active": true,

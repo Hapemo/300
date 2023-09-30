@@ -128,16 +128,22 @@ void ObjectFactory::LoadScene(Scene* scene, const std::string& filename)
 	auto child_cont = systemManager->ecs->GetEntitiesWith<Children>();
 	for (Entity pe : parent_cont)
 	{
+		//need to check if entity came from this scene!!!!
 		Parent& parent = pe.GetComponent<Parent>();
-		parent.mNextSibling = (uint32_t)idMap[(entt::entity)parent.mNextSibling];
-		parent.mParent = (uint32_t)idMap[(entt::entity)parent.mParent];
-		parent.mPrevSibling = (uint32_t)idMap[(entt::entity)parent.mPrevSibling];
+		if (idMap.count((entt::entity)parent.mNextSibling) == 0) //quick fix
+			continue;
+		parent.mNextSibling = entt::to_integral(idMap[(entt::entity)parent.mNextSibling]);
+		parent.mParent = entt::to_integral(idMap[(entt::entity)parent.mParent]);
+		parent.mPrevSibling = entt::to_integral(idMap[(entt::entity)parent.mPrevSibling]);
 	}
 
 	for (Entity ce : child_cont)
 	{
+		//need to check if entity came from this scene!!!!
 		Children& child = ce.GetComponent<Children>();
-		child.mFirstChild = (uint32_t)idMap[(entt::entity)child.mFirstChild];
+		if (idMap.count((entt::entity)child.mFirstChild) == 0) //quick fix
+			continue;
+		child.mFirstChild = entt::to_integral(idMap[(entt::entity)child.mFirstChild]);
 	}
 	// split the file name and save it into the scene
 	// eg "../resources/Scenes/test.json"
