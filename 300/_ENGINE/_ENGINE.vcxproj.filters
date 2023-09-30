@@ -20,8 +20,6 @@
     <ClCompile Include="source\Debug\EnginePerformance.cpp" />
     <ClCompile Include="source\Physics\Accumulator.cpp" />
     <ClCompile Include="source\Input\Input.cpp" />
-    <ClCompile Include="source\Input\InputAction.cpp" />
-    <ClCompile Include="source\Input\InputActionMap.cpp" />
     <ClCompile Include="source\Input\InputMapSystem.cpp" />
   </ItemGroup>
   <ItemGroup>

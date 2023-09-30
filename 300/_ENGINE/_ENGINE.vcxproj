@@ -189,8 +189,6 @@
     <ClCompile Include="source\ECS\ECS_Systems.cpp" />
     <ClCompile Include="source\ECS\ECS.cpp" />
     <ClCompile Include="source\Input\Input.cpp" />
-    <ClCompile Include="source\Input\InputAction.cpp" />
-    <ClCompile Include="source\Input\InputActionMap.cpp" />
     <ClCompile Include="source\Input\InputMapSystem.cpp" />
     <ClCompile Include="source\Physics\Accumulator.cpp" />
     <ClInclude Include="include\Serialization\Serialization.h" />
