@@ -344,7 +344,7 @@ void Hierarchy::update() {
              if (systemManager->mGameStateSystem->mCurrentGameState.mScenes[RselectedScene].mEntities.size() > 0) {
 
                  for (int i{ 0 }; i < systemManager->mGameStateSystem->mCurrentGameState.mScenes[RselectedScene].mEntities.size(); i++) {
-                     systemManager->mGameStateSystem->mCurrentGameState.mScenes[RselectedScene].mEntities.clear();
+                   systemManager->mGameStateSystem->mCurrentGameState.mScenes[RselectedScene].Unload();
                  }
              }
              systemManager->mGameStateSystem->
