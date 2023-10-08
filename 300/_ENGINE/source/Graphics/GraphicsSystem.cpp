@@ -29,6 +29,10 @@ float second_entitytime{};
 
 void GraphicsSystem::Init()
 {
+	// -- WIP -- SHADER STORAGE BUFFER OBJECT
+	SetupShaderStorageBuffer();
+	// -- WIP -- SHADER STORAGE BUFFER OBJECT
+
 	glEnable(GL_MULTISAMPLE);
 #if 0
 #pragma region Camera entity
@@ -172,6 +176,13 @@ void GraphicsSystem::Init()
 /**************************************************************************/
 void GraphicsSystem::Update(float dt)
 {
+	// -- WIP --  SHADER STORAGE BUFFER OBJECT
+	finalBoneMatrices.push_back(mat4(1.0f));
+	finalBoneMatrices.push_back(mat4(2.0f));
+	ShaderStorageBufferSubData(finalBoneMatrices.size() * sizeof(mat4), finalBoneMatrices.data());
+	finalBoneMatrices.clear();
+	// -- WIP --  SHADER STORAGE BUFFER OBJECT
+
 	// update the camera's transformations, and its input
 	if (m_EditorMode)
 	{
@@ -851,6 +862,22 @@ void GraphicsSystem::PrintMat4(const glm::mat4 &input)
 void GraphicsSystem::UnpauseGlobalAnimation()
 {
 	m_EnableGlobalAnimations = true;
+}
+
+void GraphicsSystem::SetupShaderStorageBuffer()
+{
+	glCreateBuffers(1, &m_Ssbo);
+
+	glBindBuffer(GL_SHADER_STORAGE_BUFFER, m_Ssbo);
+	glNamedBufferData(m_Ssbo, sizeof(mat4) * MAX_NUM_BONES * MAX_INSTANCES, nullptr, GL_DYNAMIC_DRAW);
+	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 3, m_Ssbo);
+
+	glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
+}
+
+void GraphicsSystem::ShaderStorageBufferSubData(size_t dataSize, const void* data)
+{
+	glNamedBufferSubData(m_Ssbo, 0, dataSize, data);
 }
 
 /***************************************************************************/

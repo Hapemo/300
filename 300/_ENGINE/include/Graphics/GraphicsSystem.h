@@ -182,6 +182,12 @@ public:
 	GFX::FBO m_Fbo;						// Editor Scene
 	GFX::FBO m_GameFbo;					// Game Scene
 
+	// -- SSBO -- 
+	unsigned m_Ssbo;
+	void SetupShaderStorageBuffer();
+	void ShaderStorageBufferSubData(size_t dataSize, const void* data);
+	std::vector<mat4> finalBoneMatrices;
+
 	// -- Window --
 	GFX::Window* m_Window;
 	int m_Width;
