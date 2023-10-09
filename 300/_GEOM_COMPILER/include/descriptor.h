@@ -58,10 +58,21 @@ namespace _GEOM
 		/***************************************************************************/
 		/*!
 		\brief
-			loads the descriptor data from the provided filepath
+			loads the descriptor data from the provided descriptor data folderpath.
+			This loads all the fbx in the folder
 		*/
 		/**************************************************************************/
-		static bool LoadDescriptorData(DescriptorData& Desc, std::string filepath) noexcept;
+		static bool LoadDescriptorDataFromFolder(DescriptorData& Desc, std::string folderpath) noexcept;
+
+		/***************************************************************************/
+		/*!
+		\brief
+			loads the descriptor data from the provided descriptor filepath.
+			This loads the fbx from the filepath provided in the descriptor file
+		*/
+		/**************************************************************************/
+		static bool LoadDescriptorDataFromFile(DescriptorData& Desc, std::string filepath) noexcept;
+
 
 		/***************************************************************************/
 		/*!

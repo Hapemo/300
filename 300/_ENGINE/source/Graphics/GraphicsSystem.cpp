@@ -17,6 +17,7 @@
 #include "Debug/EnginePerformance.h"
 #include "GameState/GameStateManager.h"
 
+#include "cstdlib"
 
 /***************************************************************************/
 /*!
@@ -35,22 +36,7 @@ void GraphicsSystem::Init()
 	m_Image2DMesh.Setup2DImageMesh();
 
 	glEnable(GL_MULTISAMPLE);
-#if 0
-#pragma region Camera entity
 
-	// only initialize an editor camera
-	if (systemManager->IsEditor())
-	{
-		Entity CameraEntity = systemManager->ecs->NewEntity(); // creating a new entity
-		systemManager->mGameStateSystem->mCurrentGameState.AddScene("NewScene");
-		systemManager->mGameStateSystem->mCurrentGameState.mScenes[0].mName = "Scene";
-		systemManager->mGameStateSystem->mCurrentGameState.mScenes[0].mEntities.insert(CameraEntity);
-		CameraEntity.GetComponent<General>().name = "Camera";
-		CameraEntity.AddComponent<Camera>();
-	}
-
-#pragma endregion
-#endif
 	// Get Window Handle
 	m_Window = systemManager->GetWindow();
 	m_Width = m_Window->size().x;
@@ -81,6 +67,11 @@ void GraphicsSystem::Init()
 		// only update the game camera if editor mode is not enabled
 		UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_GAME, 0.f);
 	}
+
+	//!< TEST calling the geom compiler exe
+	const char* command = "..\\_GEOM_COMPILER\\_GEOM_COMPILER.exe ..\\_GEOM_COMPILER\\descriptor_files\\test.json";
+	int result = system(command);
+	std::cout << "test";
 
 #if 0
 #pragma region create entity 1

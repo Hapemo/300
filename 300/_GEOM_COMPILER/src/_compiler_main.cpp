@@ -100,25 +100,13 @@ int main(int argc, char* argv[])
 	std::cout << "================================================================================\n";
 
 	std::string descriptorFilepath{};
-	
-
-#if __RELEASE
-	//descriptorFilepath = "../../_GEOM_COMPILER/descriptor_files/default_descriptor_BUILD.json";
-	descriptorFilepath = "./descriptor_files/default_descriptor.json";
-#else
-	descriptorFilepath = "./descriptor_files/default_descriptor.json";
-#endif
-
-
-	// Load the descriptor data
-	std::cout << ">>\t\tLoading Descriptor Data\n";
 	_GEOM::DescriptorData Desc;
-	bool Err = _GEOM::DescriptorData::LoadDescriptorData(Desc, descriptorFilepath);
-	assert(Err);
+	descriptorFilepath = "./descriptor_files/default_descriptor.json";
 
 	std::cout << "\n================================================================================\n";
 	std::cout << ">>\t\tLoading Assets\n";
 
+	
 	// When there is an input filepath argument specified
 	if (argc > 1)
 	{
@@ -127,11 +115,25 @@ int main(int argc, char* argv[])
 		{
 			std::cout << "Argument: " << i << " = " << argv[i] << std::endl;
 		}
+
+		descriptorFilepath = argv[1];
+
+		// Load the descriptor data
+		std::cout << ">>\t\tLoading Descriptor Data For ONE Meshes\n";
+		bool Err = _GEOM::DescriptorData::LoadDescriptorDataFromFile(Desc, descriptorFilepath);
+		assert(Err);
 	}
 
-	else {
-		LoadAndSerializeAllMeshes(Desc);
+	else
+	{
+		// Load the descriptor data
+		std::cout << ">>\t\tLoading Descriptor Data For ALL Meshes\n";
+		bool Err = _GEOM::DescriptorData::LoadDescriptorDataFromFolder(Desc, descriptorFilepath);
+		assert(Err);
 	}
+
+	// Load and serialize all the meshes
+	LoadAndSerializeAllMeshes(Desc);
 
 	return 0;
 }
