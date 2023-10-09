@@ -190,7 +190,7 @@ void ScriptingSystem::ScriptAlive(const Entity& entity)
     auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
     for (Script& script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
     {
-        script.Load(entity);
+        //script.Load(entity);
         script.Run("Alive");
     }
 }
@@ -200,7 +200,6 @@ void ScriptingSystem::ScriptStart(const Entity& entity)
     auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
     for (Script& script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
     {
-        script.Load(entity);
         script.Run("Start");
     }
 }

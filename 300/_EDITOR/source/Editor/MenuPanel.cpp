@@ -270,6 +270,7 @@ void MenuPanel::update()
                 for (Script& script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
                 {
                     script.Load(entity);
+                    script.Run("Alive");
                 }
             }
         }

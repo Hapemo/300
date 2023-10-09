@@ -36,8 +36,6 @@ function Update()
         -- print("Name: ", name)
         --print("Value2: ", test2)
     end
-
-
 end
 
 function Dead()
