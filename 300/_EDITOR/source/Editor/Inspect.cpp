@@ -70,6 +70,7 @@ Inspect display for InputActionMapEditor components.
 #include "Debug/Logger.h"
 #include "Audio/AudioSystem.h"
 #include "Input/InputMapSystem.h"
+#include "Script/Script.h"
 
 
 /***************************************************************************/
@@ -442,6 +443,7 @@ void Scripts::Inspect() {
 					Script script;
 					script.scriptFile = dataScript;
 					script.env = { systemManager->mScriptingSystem->luaState, sol::create, systemManager->mScriptingSystem->luaState.globals() };
+					script.Load(Hierarchy::selectedId);
 					scripts.scriptsContainer.push_back(script);
 					//std::cout << "Script " << script.scriptFile << ".lua added to entity " << std::to_string((int)Hierarchy::selectedId) << std::endl;
 				}
@@ -466,9 +468,13 @@ void Scripts::Inspect() {
 						Script script;
 						script.scriptFile = dataScript;
 						script.env = { systemManager->mScriptingSystem->luaState, sol::create, systemManager->mScriptingSystem->luaState.globals() };
+						
+						script.Load(Hierarchy::selectedId);
+
 						scripts.scriptsContainer.push_back(script);
 						//std::cout << "Script " << script.scriptFile << ".lua added to entity " << std::to_string((int)Hierarchy::selectedId) << std::endl;
 						PINFO("Script %s added to entity %s", script.scriptFile.c_str(), std::to_string((int)Hierarchy::selectedId).c_str());
+
 					}
 				}
 			}
@@ -479,14 +485,16 @@ void Scripts::Inspect() {
 		ImGui::Text("Entity contains scripts: ");
 		for (auto& elem : scripts.scriptsContainer)
 		{
-			bool selected{};
-			ImGui::Selectable(elem.scriptFile.c_str(), &selected);
-			if (ImGui::IsItemClicked(ImGuiMouseButton_Left)) {
+			if (ImGui::TreeNode(elem.scriptFile.c_str())) {
+				InspectScript(elem);
+				if (ImGui::IsItemClicked(1)) {
+					open_popup = true;
+						deleteScript = elem.scriptFile;
+				}
+
+				ImGui::TreePop();
 			}
-			if (ImGui::IsItemClicked(1)) {
-				open_popup = true;
-				deleteScript = elem.scriptFile;
-			}
+			
 		}
 
 		if (open_popup) {

@@ -204,6 +204,7 @@ xcopy "$(SolutionDir)assets\*.*" "$(SolutionDir)x64\assets" /Y /I /E</Command>
     <ClCompile Include="source\Editor\Performance.cpp" />
     <ClCompile Include="source\Editor\PrefabWindow.cpp" />
     <ClCompile Include="source\Editor\SceneWindow.cpp" />
+    <ClCompile Include="source\Editor\Script\Script.cpp" />
     <ClCompile Include="source\Editor\TabWindow.cpp" />
     <ClCompile Include="source\Imgui\imgui.cpp" />
     <ClCompile Include="source\Imgui\ImGuizmo.cpp" />
@@ -229,6 +230,7 @@ xcopy "$(SolutionDir)assets\*.*" "$(SolutionDir)x64\assets" /Y /I /E</Command>
     <ClInclude Include="include\Editor\Performance.h" />
     <ClInclude Include="include\Editor\PrefabWindow.h" />
     <ClInclude Include="include\Editor\SceneWindow.h" />
+    <ClInclude Include="include\Editor\Script\Script.h" />
     <ClInclude Include="include\Editor\TabWindow.h" />
     <ClInclude Include="source\Imgui\imconfig.h" />
     <ClInclude Include="source\Imgui\imgui.h" />

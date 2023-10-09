@@ -22,6 +22,7 @@ Contains main loop for the logic of MenuPanel.
 #include "ECS/ECS_Systems.h"
 #include "GameState/GameStateManager.h"
 #include "Hierarchy.h"
+#include "ScriptingSystem.h"
 
 
 /***************************************************************************/
@@ -259,6 +260,20 @@ void MenuPanel::update()
             Hierarchy::selectionOn = false;
             systemManager->Reset();
         }   
+
+        if (ImGui::Button("RELOAD SCRIPTS"))
+        {
+            auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
+
+            for (Entity entity : scriptEntities)
+            {
+                for (Script& script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
+                {
+                    script.Load(entity);
+                }
+            }
+        }
+
         ImGui::EndMenuBar();
     }
 }

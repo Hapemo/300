@@ -20,6 +20,8 @@ Run any function in the script
 #include "ECS/ECS.h"
 #include "ECS/ECS_Systems.h"
 
+using scriptVariant = std::variant<bool, float, std::string, glm::vec3>;
+
 /***************************************************************************/
 /*!
 \brief
@@ -33,8 +35,18 @@ public:
 	std::string scriptFile{};
 
 	void Load(Entity entityID);
+	// Updates according to the script (so if variables are removed, the check
+	// will be done here and removed.
+	void LoadEnvVar();
 	void Run(const char* funcName);
+	// Check if the type of the variable had changed
+	bool CheckVariableTypeEqual(sol::object& value, const std::type_info& info);
+	// Set the value of the variable stored in the map
+	void SetVariable(const std::string& name, sol::object& obj);
 
 	// Make sure error only print once (WIP)
 	static bool isOnce;
+
+	// Contains variables from LUA
+	std::map<std::string, scriptVariant> variables;
 };

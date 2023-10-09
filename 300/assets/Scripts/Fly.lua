@@ -1,3 +1,4 @@
+
 function Alive()
 
 end
@@ -7,7 +8,7 @@ function Update()
     --systemManager.ecs:NewEntity();
 
     --Test ScriptStart and ScriptUpdate functions
-    print("FLYYYYYY.lua !!")
+    --print("FLYYYYYY.lua !!")
 end
 
 function Dead()
