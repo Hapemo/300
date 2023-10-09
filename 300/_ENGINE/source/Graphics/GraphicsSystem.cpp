@@ -32,6 +32,7 @@ void GraphicsSystem::Init()
 	// -- WIP -- SHADER STORAGE BUFFER OBJECT
 	SetupShaderStorageBuffer();
 	// -- WIP -- SHADER STORAGE BUFFER OBJECT
+	m_Image2DMesh.Setup2DImageMesh();
 
 	glEnable(GL_MULTISAMPLE);
 #if 0
@@ -546,6 +547,7 @@ void GraphicsSystem::GameDraw(float dt)
 /**************************************************************************/
 void GraphicsSystem::Exit()
 {
+	m_Image2DMesh.Destroy();
 }
 
 /***************************************************************************/
@@ -878,6 +880,43 @@ void GraphicsSystem::SetupShaderStorageBuffer()
 void GraphicsSystem::ShaderStorageBufferSubData(size_t dataSize, const void* data)
 {
 	glNamedBufferSubData(m_Ssbo, 0, dataSize, data);
+}
+
+void GraphicsSystem::Add2DImageInstance(float width, float height, vec2 const& position, unsigned texHandle, vec4 const& color, unsigned entityID)
+{
+	mat4 world =
+	{
+		vec4(width, 0.f, 0.f, 0.f),
+		vec4(0.f, height, 0.f, 0.f),
+		vec4(0.f, 0.f, 1.f, 0.f),
+		vec4(position, 0.f, 1.f)
+	};
+
+	int texIndex = StoreTextureIndex(texHandle);
+
+	m_Image2DMesh.mLTW.push_back(world);
+	m_Image2DMesh.mColors.push_back(color);
+	m_Image2DMesh.mTexEntID.push_back(vec4((float)texIndex + 0.5f, (float)entityID + 0.5f, 0, 0));
+}
+
+int GraphicsSystem::StoreTextureIndex(unsigned texHandle)
+{
+	if (m_Image2DStore.size() >= 32)
+	{
+		std::cout << "Too many different textures to be rendered in 1 frame, texture discarded\n";
+		return -1;
+	}
+
+	// Locate if ID already in container
+	auto it = std::find(m_Image2DStore.cbegin(), m_Image2DStore.cend(), (GLint)texHandle);
+	if (it == m_Image2DStore.cend())	// ID not in container
+	{
+		m_Image2DStore.push_back((GLint)texHandle);
+		return (int)m_Image2DStore.size() - 1;
+	}
+
+	// ID is already in container
+	int pos = (int)(it - m_Image2DStore.cbegin());
 }
 
 /***************************************************************************/

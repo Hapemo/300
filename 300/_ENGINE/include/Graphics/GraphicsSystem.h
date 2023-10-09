@@ -182,12 +182,6 @@ public:
 	GFX::FBO m_Fbo;						// Editor Scene
 	GFX::FBO m_GameFbo;					// Game Scene
 
-	// -- SSBO -- 
-	unsigned m_Ssbo;
-	void SetupShaderStorageBuffer();
-	void ShaderStorageBufferSubData(size_t dataSize, const void* data);
-	std::vector<mat4> finalBoneMatrices;
-
 	// -- Window --
 	GFX::Window* m_Window;
 	int m_Width;
@@ -205,6 +199,19 @@ public:
 	bool	m_EditorMode;
 	bool	m_EnableGlobalAnimations{ 1 };
 	bool	m_HasLight{ false };
+
+private:
+	// -- SSBO -- 
+	unsigned m_Ssbo;
+	void SetupShaderStorageBuffer();
+	void ShaderStorageBufferSubData(size_t dataSize, const void* data);
+	std::vector<mat4> finalBoneMatrices;
+
+	// -- 2D Image Rendering --
+	GFX::Mesh m_Image2DMesh;
+	std::vector<unsigned>m_Image2DStore;
+	void Add2DImageInstance(float width, float height, vec2 const& position, unsigned texHandle, vec4 const& color = vec4{ 1.f, 1.f, 1.f, 1.f }, unsigned entityID = 0xFFFFFFFF);
+	int StoreTextureIndex(unsigned texHandle);
 };
 
 #endif

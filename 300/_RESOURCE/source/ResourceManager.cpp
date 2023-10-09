@@ -119,6 +119,7 @@ void Resource::shader_Loader()
 	shaderpaths.emplace_back(std::pair<std::string, std::string>{ "../assets/shader_files/draw_vert.glsl", "../assets/shader_files/draw_frag.glsl" });
 	shaderpaths.emplace_back(std::pair<std::string, std::string>{ "../assets/shader_files/pointLight_vert.glsl", "../assets/shader_files/pointLight_frag.glsl" });
 	shaderpaths.emplace_back(std::pair<std::string, std::string>{ "../assets/shader_files/animations_vert.glsl", "../assets/shader_files/pointLight_frag.glsl" });
+	shaderpaths.emplace_back(std::pair<std::string, std::string>{ "../assets/shader_files/UI_vert.glsl", "../assets/shader_files/UI_frag.glsl" });
 
 
 	// load all the shaders
