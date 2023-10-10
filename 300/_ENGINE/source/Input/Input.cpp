@@ -20,7 +20,6 @@ double Input::mScrollOffset{ 0 };
 GLFWcursor* Input::mCursor;
 
 void Input::Init() {
-
   glfwSetScrollCallback(systemManager->GetWindow()->GetHandle(), scroll_callback);
  }
 

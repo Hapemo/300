@@ -9,6 +9,7 @@ Allows the program to access manually set values from the config file of the
 application
 *******************************************************************************/
 #include "ConfigManager.h"
+#include "Misc.h"
 
 std::unordered_map<std::string, std::string> ConfigManager::mContainer;
 
@@ -21,18 +22,7 @@ void ConfigManager::Init(std::string const& _path) {
     return;
   }
 
-  mContainer = TextFileToMap(file);
-}
-
-std::unordered_map<std::string, std::string> ConfigManager::TextFileToMap(std::fstream& _file) {
-  std::unordered_map<std::string, std::string> data;
-  std::string line{};
-  while (std::getline(_file, line)) {
-    if (!line.size()) continue;
-    size_t midpoint{ line.find(':') };
-    data.insert({ line.substr(0, midpoint), line.substr(midpoint + 2, midpoint + 2 - line.length()) });
-  }
-  return data;
+  mContainer = Misc::TextFileToMap(file);
 }
 
 

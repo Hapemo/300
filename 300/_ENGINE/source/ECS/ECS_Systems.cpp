@@ -47,6 +47,8 @@ void SystemManager::Init(bool isEditor, GFX::Window *window)
 	mScriptingSystem.get()->Init();
 	PINFO("Init Scripting System");
 
+	mInputActionSystem.get()->AddKeybind("Jump", E_KEY::Q);
+	mInputActionSystem.get()->SaveKeybind();
 
 	mResourceSystem.get()->Init();
 	mResourceTySystem.get()->Init();
@@ -90,7 +92,6 @@ void SystemManager::Play()
 
 void SystemManager::Update(float dt)
 {
-	mInputActionSystem.get()->Update();
 	EnginePerformance::StartTrack("Graphics");
 	mGraphicsSystem.get()->Update(dt);
 	mGameStateSystem.get()->UpdateNextGSMState();
