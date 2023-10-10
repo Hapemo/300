@@ -145,7 +145,7 @@ void LuaParent()
 void LuaChildren()
 {
     systemManager->mScriptingSystem->luaState.new_usertype<Children>(
-        "Parent", sol::constructors<>(),
+        "Children", sol::constructors<>(),
         "mNumChildren", &Children::mNumChildren,
         "mFirstChild", &Children::mFirstChild
         );

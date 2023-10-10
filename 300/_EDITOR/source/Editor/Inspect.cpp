@@ -474,7 +474,6 @@ void Scripts::Inspect() {
 						scripts.scriptsContainer.push_back(script);
 						//std::cout << "Script " << script.scriptFile << ".lua added to entity " << std::to_string((int)Hierarchy::selectedId) << std::endl;
 						PINFO("Script %s added to entity %s", script.scriptFile.c_str(), std::to_string((int)Hierarchy::selectedId).c_str());
-
 					}
 				}
 			}
