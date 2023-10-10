@@ -106,13 +106,10 @@ struct MeshRenderer
 
 	void								Inspect();
 
-
-
 	GFX::Mesh							testmesh;
 	//RTTR_ENABLE()
 
 
-	//void								Inspect();
 };
 
 /******************************************************************************/

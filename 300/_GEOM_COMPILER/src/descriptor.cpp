@@ -12,6 +12,12 @@
 ***/
 
 
+#include <RAPID-JSON/writer.h>
+#include "RAPID-JSON/document.h"
+#include "RAPID-JSON/stringbuffer.h"
+#include "RAPID-JSON/filereadstream.h"
+#include "RAPID-JSON/filewritestream.h"
+
 #include "descriptor.h"
 #include <iostream>
 #include <fstream>
@@ -49,7 +55,7 @@ namespace _GEOM
 	loads the descriptor data from the provided descriptordata filepath
 */
 /**************************************************************************/
-	bool DescriptorData::LoadDescriptorDataFromFolder(DescriptorData& Desc, std::string descriptorFilepath) noexcept
+	bool DescriptorData::DeserializeGEOM_DescriptorDataFromFolder(DescriptorData& Desc, std::string descriptorFilepath) noexcept
 	{
 		// Read the json data from the file
 		std::ifstream file(descriptorFilepath);
@@ -139,7 +145,7 @@ namespace _GEOM
 	loads the descriptor data from the provided descriptordata filepath
 */
 /**************************************************************************/
-	bool DescriptorData::LoadDescriptorDataFromFile(DescriptorData& Desc, std::string descriptorFilepath) noexcept
+	bool DescriptorData::DeserializeGEOM_DescriptorDataFromFile(DescriptorData& Desc, std::string descriptorFilepath) noexcept
 	{
 		// Read the json data from the file
 		std::ifstream file(descriptorFilepath);
@@ -211,6 +217,56 @@ namespace _GEOM
 		}
 
 		return true;	// no error
+
+	}
+
+
+	bool DescriptorData::SerializeGEOM_DescriptorDataToFile(std::string geomFilepath, const DescriptorData& GEOM_DescriptorFile) noexcept
+	{
+		return true;
+	}
+
+
+	void FBX_DescriptorData::SerializeFBX_DescriptorFile(std::string fbxFilepath, const FBX_DescriptorData& FBX_DescriptorFile) noexcept
+	{
+		//rapidjson::Document document;
+		//document.SetObject(); // Create an empty object
+
+		//// Add data to the object
+		//rapidjson::Value person;
+		//person.SetObject();
+		//person.AddMember("name", "John", document.GetAllocator());
+		//person.AddMember("age", 30, document.GetAllocator());
+		//person.AddMember("isStudent", false, document.GetAllocator());
+
+		//// Add the "person" object to the main object
+		//document.AddMember("person", person, document.GetAllocator());
+
+		//// Specify the file path where you want to save the JSON data
+		//// Open the file for writing
+		//FILE* fp = fopen(fbxFilepath.c_str(), "w");
+		//if (!fp) {
+		//	std::cerr << "Failed to open file for writing." << std::endl;
+		//	return;
+		//}
+
+		//// Create a FileWriteStream to write JSON to the file
+		//char buffer[4096];
+		//rapidjson::FileWriteStream fileStream(fp, buffer, sizeof(buffer));
+		//rapidjson::Writer<rapidjson::FileWriteStream> writer(fileStream);
+
+		//// Serialize the document to the file
+		//document.Accept(writer);
+
+		//// Close the file
+		//fclose(fp);
+
+		std::cout << "JSON data written to " << fbxFilepath << std::endl;
+	}
+
+
+	void FBX_DescriptorData::LoadFBX_DescriptorFile(std::string fbxFilepath, FBX_DescriptorData& FBX_DescriptorFile) noexcept
+	{
 
 	}
 

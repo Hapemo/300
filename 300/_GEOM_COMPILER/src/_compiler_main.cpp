@@ -120,7 +120,7 @@ int main(int argc, char* argv[])
 
 		// Load the descriptor data
 		std::cout << ">>\t\tLoading Descriptor Data For ONE Meshes\n";
-		bool Err = _GEOM::DescriptorData::LoadDescriptorDataFromFile(Desc, descriptorFilepath);
+		bool Err = _GEOM::DescriptorData::DeserializeGEOM_DescriptorDataFromFile(Desc, descriptorFilepath);
 		assert(Err);
 	}
 
@@ -128,7 +128,7 @@ int main(int argc, char* argv[])
 	{
 		// Load the descriptor data
 		std::cout << ">>\t\tLoading Descriptor Data For ALL Meshes\n";
-		bool Err = _GEOM::DescriptorData::LoadDescriptorDataFromFolder(Desc, descriptorFilepath);
+		bool Err = _GEOM::DescriptorData::DeserializeGEOM_DescriptorDataFromFolder(Desc, descriptorFilepath);
 		assert(Err);
 	}
 

@@ -47,6 +47,10 @@ namespace _GEOM
 		std::string m_sOutputPath;
 		std::string m_sOutputFormat;
 
+		// GUID //
+		unsigned int m_GUID;
+
+
 		/***************************************************************************/
 		/*!
 		\brief
@@ -62,7 +66,7 @@ namespace _GEOM
 			This loads all the fbx in the folder
 		*/
 		/**************************************************************************/
-		static bool LoadDescriptorDataFromFolder(DescriptorData& Desc, std::string folderpath) noexcept;
+		static bool DeserializeGEOM_DescriptorDataFromFolder(DescriptorData& Desc, std::string folderpath) noexcept;
 
 		/***************************************************************************/
 		/*!
@@ -71,7 +75,16 @@ namespace _GEOM
 			This loads the fbx from the filepath provided in the descriptor file
 		*/
 		/**************************************************************************/
-		static bool LoadDescriptorDataFromFile(DescriptorData& Desc, std::string filepath) noexcept;
+		static bool DeserializeGEOM_DescriptorDataFromFile(DescriptorData& Desc, std::string filepath) noexcept;
+
+
+		/***************************************************************************/
+		/*!
+		\brief
+			Serializes the GEOM descriptor data to the provided filepath
+		*/
+		/**************************************************************************/
+		static bool SerializeGEOM_DescriptorDataToFile(std::string geomFilepath, const DescriptorData& GEOM_DescriptorFile) noexcept;
 
 
 		/***************************************************************************/
@@ -82,6 +95,18 @@ namespace _GEOM
 		/**************************************************************************/
 		DescriptorData();
 	};
+
+	struct FBX_DescriptorData
+	{
+		FBX_DescriptorData(unsigned int guid) : m_GUID(guid) {}
+
+		unsigned int m_GUID;
+
+		static void SerializeFBX_DescriptorFile(std::string fbxFilepath, const FBX_DescriptorData& FBX_DescriptorFile) noexcept;
+		static void LoadFBX_DescriptorFile(std::string fbxFilepath, FBX_DescriptorData& FBX_DescriptorFile) noexcept;
+	};
+
+
 }
 
 #endif // !_DESCRIPTOR_H

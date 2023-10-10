@@ -71,6 +71,8 @@ Inspect display for InputActionMapEditor components.
 #include "Audio/AudioSystem.h"
 #include "Input/InputMapSystem.h"
 
+#include <descriptor.h>
+
 
 /***************************************************************************/
 /*!
@@ -565,7 +567,8 @@ void Animator::Inspect()
 
 void MeshRenderer::Inspect() {
 	bool delete_component{ true };
-	if (ImGui::CollapsingHeader("MeshRenderer", &delete_component,ImGuiTreeNodeFlags_DefaultOpen)) {
+	if (ImGui::CollapsingHeader("MeshRenderer", &delete_component,ImGuiTreeNodeFlags_DefaultOpen)) 
+	{
 		
 		int st = static_cast<int>(mMeshPath.find_last_of("/"));
 		int ed = static_cast<int>(mMeshPath.find_last_of("."));
@@ -575,7 +578,8 @@ void MeshRenderer::Inspect() {
 
 		if (ImGui::BeginDragDropTarget())
 		{
-			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_GEOM")) {
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_GEOM")) 
+			{
 
 				const char* data = (const char*)payload->Data;
 				std::string data_str = std::string(data);
@@ -606,13 +610,53 @@ void MeshRenderer::Inspect() {
 
 		if (ImGui::BeginDragDropTarget())
 		{
-			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_FBX")) {
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_FBX")) 
+			{
+
+				auto getFilename = [](const std::string& str) -> std::string
+				{
+					size_t found = str.find_last_of("\\");
+
+					if (found == std::string::npos)
+					{
+						found = str.find_last_of("/");
+					}
+
+					return str.substr(found + 1);
+				};
 
 				const char* data = (const char*)payload->Data;
 				std::string data_str = std::string(data);
 				mMeshPath = data_str;
 
-				uid temp(mMeshPath);
+				uid meshguid(mMeshPath);
+
+				// 1. Check if the FBX Desc file is present
+				std::string fbxFilepath = data_str.substr(0, data_str.find_last_of("/"));
+				std::string FBX_DescFile = getFilename(data_str) + ".fbx.desc";
+				bool descFilePresent = false;
+
+				std::filesystem::path folderpath = fbxFilepath;
+				for (const auto& entry : std::filesystem::directory_iterator(folderpath))
+				{
+					std::cout << "entry: " << getFilename(entry.path().string()) << std::endl;
+					if (getFilename(entry.path().string()) == FBX_DescFile)
+					{
+						descFilePresent = true;
+						break;
+					}
+				}
+
+				// The FBX Descriptor file is not present. We have to create one to serialize the GUID
+				if (!descFilePresent)
+				{
+					_GEOM::FBX_DescriptorData newDescriptor(meshguid.id);
+					std::string descFilepath = fbxFilepath + "/" + FBX_DescFile;
+					_GEOM::FBX_DescriptorData::SerializeFBX_DescriptorFile(descFilepath, newDescriptor);
+				}
+
+
+
 				//mMeshRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(temp.id));
 
 				//GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mMeshRef);
@@ -628,6 +672,8 @@ void MeshRenderer::Inspect() {
 				//	// if the new entity's mesh has no animation, but the entity still has the animator component
 				//	entins.GetComponent<Animator>().mAnimator.m_CurrentAnimation = nullptr;
 				//}
+
+				std::cout << "endtest\n";
 			}
 
 
