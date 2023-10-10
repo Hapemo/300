@@ -53,7 +53,27 @@ void Editor::UIinit(GLFWwindow* window)
 {
     IMGUI_CHECKVERSION();
     ImGui::CreateContext(); 
-    ImGuiIO& io = ImGui::GetIO(); (void)io;
+
+
+    ImGuiIO& io = ImGui::GetIO();
+    io.Fonts->AddFontDefault();
+    float baseFontSize = 13.0f; // 13.0f is the size of the default font. Change to the font size you use.
+    float iconFontSize = baseFontSize * 2.0f / 3.0f; // FontAwesome fonts need to have their sizes reduced by 2.0f/3.0f in order to align correctly
+
+    // merge in icons from Font Awesome
+    static const ImWchar icons_ranges[] = { ICON_MIN_FA, ICON_MAX_16_FA, 0 };
+    ImFontConfig icons_config;
+    icons_config.MergeMode = true;
+    icons_config.PixelSnapH = true;
+    icons_config.GlyphMinAdvanceX = iconFontSize;
+    io.Fonts->AddFontFromFileTTF(FONT_ICON_FILE_NAME_FAS, iconFontSize, &icons_config, icons_ranges);
+
+
+
+
+
+
+   // ImGuiIO& io = ImGui::GetIO(); (void)io;
     //regular = io.Fonts->AddFontFromFileTTF("../Resources/Fonts/Assistant-Regular.ttf", 21.0f);
     //bold = io.Fonts->AddFontFromFileTTF("../Resources/Fonts/Assistant-SemiBold.ttf", 18.0f);
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
@@ -215,7 +235,10 @@ void Editor::UIupdate([[maybe_unused]]GLFWwindow* window) {
    
 
     mMenuwindow->update();
-        
+
+
+
+
     ImGui::PopID();
 
     ImGui::End();

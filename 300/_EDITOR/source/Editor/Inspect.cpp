@@ -603,6 +603,39 @@ void MeshRenderer::Inspect() {
 			ImGui::EndDragDropTarget();
 		}
 
+
+		if (ImGui::BeginDragDropTarget())
+		{
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_FBX")) {
+
+				const char* data = (const char*)payload->Data;
+				std::string data_str = std::string(data);
+				mMeshPath = data_str;
+
+				uid temp(mMeshPath);
+				//mMeshRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(temp.id));
+
+				//GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mMeshRef);
+
+				//Entity entins(Hierarchy::selectedId);
+				//if (entins.HasComponent<Animator>() && meshinst->mHasAnimation)
+				//{
+				//	// if the new entity has both animations and the animator component, update the animator to use the new animation
+				//	entins.GetComponent<Animator>().mAnimator.SetAnimation(&meshinst->mAnimation[0]);
+				//}
+				//else if (entins.HasComponent<Animator>() && !meshinst->mHasAnimation)
+				//{
+				//	// if the new entity's mesh has no animation, but the entity still has the animator component
+				//	entins.GetComponent<Animator>().mAnimator.m_CurrentAnimation = nullptr;
+				//}
+			}
+
+
+			ImGui::EndDragDropTarget();
+		}
+
+
+
 		ImGui::SameLine();
 
 		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcTextSize(tempPath.c_str()).x
