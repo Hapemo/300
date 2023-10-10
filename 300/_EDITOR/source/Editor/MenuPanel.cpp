@@ -255,6 +255,7 @@ void MenuPanel::update()
         if (ImGui::Button("PAUSE")) {
             systemManager->Pause();
         }
+
         if (ImGui::Button("RESET")) {
             Hierarchy::selectionOn = false;
             systemManager->Reset();
