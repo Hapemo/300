@@ -47,9 +47,6 @@ void SystemManager::Init(bool isEditor, GFX::Window *window)
 	mScriptingSystem.get()->Init();
 	PINFO("Init Scripting System");
 
-	mInputActionSystem.get()->AddKeybind("Jump", E_KEY::Q);
-	mInputActionSystem.get()->SaveKeybind();
-
 	mResourceSystem.get()->Init();
 	mResourceTySystem.get()->Init();
 	PINFO("Init Graphics System");
