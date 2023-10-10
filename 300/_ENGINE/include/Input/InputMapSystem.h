@@ -16,16 +16,8 @@ the editor to physical keys.
 
 class InputMapSystem {
 public:
-	/*!*****************************************************************************
-	Initialise input system's static E_KEYMap
-			- Calls upon [Helper Function - EKeyMappingInit()]
-			- This helps with initializing the keys that we have registered in GLFW.
-			- Since the GLFW is not contiguous inside the enumeration.
-			- Used to Cross-Reference the custom-bindings the user chooses.
-	*******************************************************************************/
 	InputMapSystem();
 
-public:
 	/*!*****************************************************************************
 	Initialise the keybind using the keybind text file
 	*******************************************************************************/
@@ -33,12 +25,79 @@ public:
 
 	int CheckEKeyMap(std::string); // Returns the (int equivalent of the enum for E_KEY) -> to be stored in the <InputActionMapEditor> component.
 
+	/*!*****************************************************************************
+	Checks the state of an action. *Current implementation has O(n)*, possible
+	to use enum for optimisation later on when all actions are set and decided for
+	O(1).
+
+	\param actionName
+	- Name of action
+
+	\param state
+	- key state
+
+	\return bool
+	- True if the state of key paired to action is triggered, otherwise false
+	*******************************************************************************/
+	bool CheckButton(std::string const& actionName, E_STATE state);
+
+	/*!*****************************************************************************
+	Check if the ekey linked to an action is hold.
+
+	\param actionName
+	- name of action
+	*******************************************************************************/
+	bool GetButton(std::string const& actionName);
+	
+	/*!*****************************************************************************
+	Check if they ekey linked to an action is released.
+
+	\param actionName
+	- name of action
+	*******************************************************************************/
+	bool GetButtonUp(std::string const& actionName);
+	
+	/*!*****************************************************************************
+	Check if the ekey linked to an action is pressed. Returns true for the first
+	iteration, will not return true until button is released and pressed again
+
+	\param actionName
+	- name of action
+	*******************************************************************************/
+	bool GetButtonDown(std::string const& actionName);
+
+	/*!*****************************************************************************
+	Check if the ekey is hold.
+
+	\param actionName
+	- name of action
+	*******************************************************************************/
+	bool GetKey(E_KEY ekey);
+
+	/*!*****************************************************************************
+	Check if they ekey is released.
+
+	\param actionName
+	- name of action
+	*******************************************************************************/
+	bool GetKeyUp(E_KEY ekey);
+
+	/*!*****************************************************************************
+	Check if the ekey is pressed. Returns true for the first iteration, will not 
+	return true until button is released and pressed again
+
+	\param actionName
+	- name of action
+	*******************************************************************************/
+	bool GetKeyDown(E_KEY ekey);
+
 	//-----------------------------------------------------------------------------
 	// Editor Only Functions
 	//-----------------------------------------------------------------------------
 	/*!*****************************************************************************
 	Add a keybind to the system. If keybind already exists, replace the 
 	existing one.
+	Then save it to file
 
 	\param actionName
 	- name of action
@@ -50,6 +109,7 @@ public:
 
 	/*!*****************************************************************************
 	Remove a keybind from the system. If keybind does not exist, ignore.
+	Then save it to file
 
 	\param actionName
 	- name of action

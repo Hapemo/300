@@ -245,6 +245,13 @@ void MenuPanel::update()
             ImGui::EndMenu();
         }
 
+        if (ImGui::BeginMenu("Setting")) {
+          if (ImGui::MenuItem("Edit Keybind")) {
+
+          }
+          ImGui::EndMenu();
+        }
+
         ImVec2 buttonSize{ 50,50 };
 
         ImGui::SetCursorPosX(ImGui::GetWindowSize().x / 2 - buttonSize.x * 3);

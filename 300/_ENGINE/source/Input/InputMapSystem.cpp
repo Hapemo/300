@@ -17,7 +17,6 @@ the editor to physical keys.
 #include "Debug/Logger.h"
 
 const std::array<std::pair<std::string, E_KEY>, 129> InputMapSystem::mE_KEYMap{ EKeyMappingInit() };
-//std::unordered_map<std::string, E_KEY> InputMapSystem::mKeybindMap;
 
 InputMapSystem::InputMapSystem() {}
 
@@ -45,10 +44,12 @@ void InputMapSystem::Init() {
 
 void InputMapSystem::AddKeybind(std::string const& actionName, E_KEY key) {
 	mKeybindMap[actionName] = key;
+	SaveKeybind();
 }
 
 void InputMapSystem::RemoveKeybind(std::string const& actionName) {
 	mKeybindMap.erase(actionName);
+	SaveKeybind();
 }
 
 void InputMapSystem::SaveKeybind() {
@@ -68,5 +69,42 @@ void InputMapSystem::SaveKeybind() {
 
 int InputMapSystem::CheckEKeyMap(std::string key_string) {
 	return 0;
-	//return e_key_mapping[key_string];
 }
+
+bool InputMapSystem::CheckButton(std::string const& actionName, E_STATE state) {
+	E_KEY ekey{};
+	try {
+		ekey = mKeybindMap.at(actionName);
+	} catch (const std::out_of_range& oor) {
+		PWARNING("Attempted to check for non-existant action \"%s\". Insert the action in setting > Edit Keybind before using it!");
+	}
+	return Input::CheckKey(state, ekey);
+}
+
+bool InputMapSystem::GetButton(std::string const& actionName) {
+	return CheckButton(actionName, HOLD);
+}
+
+bool InputMapSystem::GetButtonUp(std::string const& actionName) {
+	return CheckButton(actionName, RELEASE);
+}
+
+bool InputMapSystem::GetButtonDown(std::string const& actionName) {
+	return CheckButton(actionName, PRESS);
+}
+
+bool InputMapSystem::GetKey(E_KEY ekey) {
+	return Input::CheckKey(HOLD, ekey);
+}
+
+bool InputMapSystem::GetKeyUp(E_KEY ekey) {
+	return Input::CheckKey(RELEASE, ekey);
+}
+
+bool InputMapSystem::GetKeyDown(E_KEY ekey) {
+	return Input::CheckKey(PRESS, ekey);
+}
+
+
+
+
