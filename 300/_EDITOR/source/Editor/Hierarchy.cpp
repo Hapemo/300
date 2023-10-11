@@ -101,6 +101,9 @@ void Hierarchy::update() {
         if (ImGui::TreeNodeEx(allScene[i].mName.c_str(), selectflagscene | ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_OpenOnDoubleClick))
         {
 
+
+
+
             if (ImGui::IsItemClicked(ImGuiMouseButton_Left)) {  
                 selectedScene = i;
             }

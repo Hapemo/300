@@ -23,6 +23,7 @@
     <ClCompile Include="source\main.cpp" />
     <ClCompile Include="source\Editor\GameScene.cpp" />
     <ClCompile Include="source\Editor\TabWindow.cpp" />
+    <ClCompile Include="source\Editor\KeybindWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\EditorApplication.h" />
@@ -49,5 +50,6 @@
     <ClInclude Include="source\Imgui\imstb_truetype.h" />
     <ClInclude Include="include\Editor\GameScene.h" />
     <ClInclude Include="include\Editor\TabWindow.h" />
+    <ClInclude Include="include\Editor\KeybindWindow.h" />
   </ItemGroup>
 </Project>
