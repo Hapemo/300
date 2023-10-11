@@ -101,127 +101,141 @@ void Hierarchy::update() {
         if (ImGui::TreeNodeEx(allScene[i].mName.c_str(), selectflagscene | ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_OpenOnDoubleClick))
         {
 
-            if (ImGui::IsItemClicked(ImGuiMouseButton_Left)) {  
-                selectedScene = i;
-            }
-            //--------------------------------------------------------------------------// Delete Object
-            if (ImGui::IsItemClicked(ImGuiMouseButton_Right)) {
-                RselectedScene = i;
-                sCPopup = true;
-            }
+            ImGui::Button("temo");
+            ImGui::SameLine();
+            if (ImGui::BeginCombo("##name","temp")) {
+                ImGui::Button("temo");
+                ImGui::Button("temo");
+                ImGui::Button("temo");
+                ImGui::Button("temo");
+                ImGui::Button("temo");
 
-            if (ImGui::BeginDragDropTarget()) {
-
-                if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_PREFAB")) {
-                    auto data = (const char*)payload->Data;
-                    std::string newdata(data);
-                    Entity newent = systemManager->ecs->NewEntityFromPrefab(newdata);
-                }
-                ImGui::EndDragDropTarget();
-            }
-
-            int imguid{0};
-            for (Entity ent : allScene[i].mEntities) {
-
-
-                if (ent.HasParent() == false && ent.HasChildren() == false) {
-
-                    General& info = ent.GetComponent<General>();
-                    ImGui::PushID(imguid);
-
-                    ImGuiWindowFlags selectflag{ 0 };
-                    if (ent.id == selectedId)
-                        selectflag |= ImGuiTreeNodeFlags_Selected;
-
-                    ImGui::TreeNodeEx((info.name /*+std::to_string(i)*/).c_str(), selectflag | ImGuiTreeNodeFlags_NoTreePushOnOpen | ImGuiTreeNodeFlags_Leaf);
-                    ImGui::PopID();
-                    imguid++;
-
-                    if (!ent.HasChildren()) {
-
-                        if (ImGui::BeginDragDropSource()) {
-
-                            ImGui::SetDragDropPayload("PARENT_CHILD", &ent.id, sizeof(ent.id), ImGuiCond_Once);
-
-                            ImGui::EndDragDropSource();
-                        }
-
-                    }
-
-                    if (ImGui::BeginDragDropTarget()) {
-
-                        if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("PARENT_CHILD")) {
-
-                            auto data = static_cast<entt::entity*> (payload->Data);    
-                            ent.AddChild(*data);
-                        }
-                        ImGui::EndDragDropTarget();
-                    }
-
-                    if (ImGui::IsItemClicked(ImGuiMouseButton_Left)) {
-                        selectedScene = i;
-                        selectionOn = true;
-                        selectedId = ent.id;
-                    }
-                    //--------------------------------------------------------------------------// Delete Object
-                    if (ImGui::IsItemClicked(ImGuiMouseButton_Right)) {
-                        RselectedScene = i;
-                        mPopup = true;
-                        RselectedId = ent.id;
-                    }
-                }
-
-                if (ent.HasChildren() == true) {
-
-                    ImGuiWindowFlags selectflag{ 0 };
-                    if (ent.id == selectedId)
-                        selectflag |= ImGuiTreeNodeFlags_Selected;
-                    ImGui::PushID(imguid);
-                    if (ImGui::TreeNodeEx((ent.GetComponent<General>().name).c_str(), selectflag | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_DefaultOpen)) {
-
-                        if (ImGui::IsItemClicked(ImGuiMouseButton_Left)) {
-                            selectedScene = i;
-                            selectionOn = true;
-                            selectedId = ent.id;
-                        }
-
-                        if (ImGui::BeginDragDropTarget()) {
-                            if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("PARENT_CHILD")) {
-
-                                auto data = static_cast<entt::entity*> (payload->Data);
-                                ent.AddChild(*data);
-                            }
-                            ImGui::EndDragDropTarget();
-                        }
-                        auto allchild = ent.GetAllChildren();
-
-                        for (auto& child : allchild) {
-                            ImGuiWindowFlags selectflag1{ 0 };
-                            if (child.id == selectedId)
-                                selectflag1 |= ImGuiTreeNodeFlags_Selected;
-
-                            ImGui::TreeNodeEx((child.GetComponent<General>().name).c_str(), selectflag1 | ImGuiTreeNodeFlags_NoTreePushOnOpen | ImGuiTreeNodeFlags_Leaf);
-
-                            if (ImGui::IsItemClicked(ImGuiMouseButton_Right)) {
-                                RselectedScene = i;
-                                RselectedId = child.id;
-                                mCPopup = true;
-                            }
-
-                            if (ImGui::IsItemClicked(ImGuiMouseButton_Left)) {
-                                selectedScene = i;
-                                selectionOn = true;
-                                selectedId = child.id;
-                            }
-
-                        }
-                        ImGui::TreePop();
-
-                    }
-                    ImGui::PopID();
-                }
+                ImGui::EndCombo();
 
             }
+
+
+            //if (ImGui::IsItemClicked(ImGuiMouseButton_Left)) {  
+            //    selectedScene = i;
+            //}
+            ////--------------------------------------------------------------------------// Delete Object
+            //if (ImGui::IsItemClicked(ImGuiMouseButton_Right)) {
+            //    RselectedScene = i;
+            //    sCPopup = true;
+            //}
+
+            //if (ImGui::BeginDragDropTarget()) {
+
+            //    if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_PREFAB")) {
+            //        auto data = (const char*)payload->Data;
+            //        std::string newdata(data);
+            //        Entity newent = systemManager->ecs->NewEntityFromPrefab(newdata);
+            //    }
+            //    ImGui::EndDragDropTarget();
+            //}
+
+            //int imguid{0};
+            //for (Entity ent : allScene[i].mEntities) {
+
+
+            //    if (ent.HasParent() == false && ent.HasChildren() == false) {
+
+            //        General& info = ent.GetComponent<General>();
+            //        ImGui::PushID(imguid);
+
+            //        ImGuiWindowFlags selectflag{ 0 };
+            //        if (ent.id == selectedId)
+            //            selectflag |= ImGuiTreeNodeFlags_Selected;
+
+            //        ImGui::TreeNodeEx((info.name /*+std::to_string(i)*/).c_str(), selectflag | ImGuiTreeNodeFlags_NoTreePushOnOpen | ImGuiTreeNodeFlags_Leaf);
+            //        ImGui::PopID();
+            //        imguid++;
+
+            //        if (!ent.HasChildren()) {
+
+            //            if (ImGui::BeginDragDropSource()) {
+
+            //                ImGui::SetDragDropPayload("PARENT_CHILD", &ent.id, sizeof(ent.id), ImGuiCond_Once);
+
+            //                ImGui::EndDragDropSource();
+            //            }
+
+            //        }
+
+            //        if (ImGui::BeginDragDropTarget()) {
+
+            //            if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("PARENT_CHILD")) {
+
+            //                auto data = static_cast<entt::entity*> (payload->Data);    
+            //                ent.AddChild(*data);
+            //            }
+            //            ImGui::EndDragDropTarget();
+            //        }
+
+            //        if (ImGui::IsItemClicked(ImGuiMouseButton_Left)) {
+            //            selectedScene = i;
+            //            selectionOn = true;
+            //            selectedId = ent.id;
+            //        }
+            //        //--------------------------------------------------------------------------// Delete Object
+            //        if (ImGui::IsItemClicked(ImGuiMouseButton_Right)) {
+            //            RselectedScene = i;
+            //            mPopup = true;
+            //            RselectedId = ent.id;
+            //        }
+            //    }
+
+            //    if (ent.HasChildren() == true) {
+
+            //        ImGuiWindowFlags selectflag{ 0 };
+            //        if (ent.id == selectedId)
+            //            selectflag |= ImGuiTreeNodeFlags_Selected;
+            //        ImGui::PushID(imguid);
+            //        if (ImGui::TreeNodeEx((ent.GetComponent<General>().name).c_str(), selectflag | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_DefaultOpen)) {
+
+            //            if (ImGui::IsItemClicked(ImGuiMouseButton_Left)) {
+            //                selectedScene = i;
+            //                selectionOn = true;
+            //                selectedId = ent.id;
+            //            }
+
+            //            if (ImGui::BeginDragDropTarget()) {
+            //                if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("PARENT_CHILD")) {
+
+            //                    auto data = static_cast<entt::entity*> (payload->Data);
+            //                    ent.AddChild(*data);
+            //                }
+            //                ImGui::EndDragDropTarget();
+            //            }
+            //            auto allchild = ent.GetAllChildren();
+
+            //            for (auto& child : allchild) {
+            //                ImGuiWindowFlags selectflag1{ 0 };
+            //                if (child.id == selectedId)
+            //                    selectflag1 |= ImGuiTreeNodeFlags_Selected;
+
+            //                ImGui::TreeNodeEx((child.GetComponent<General>().name).c_str(), selectflag1 | ImGuiTreeNodeFlags_NoTreePushOnOpen | ImGuiTreeNodeFlags_Leaf);
+
+            //                if (ImGui::IsItemClicked(ImGuiMouseButton_Right)) {
+            //                    RselectedScene = i;
+            //                    RselectedId = child.id;
+            //                    mCPopup = true;
+            //                }
+
+            //                if (ImGui::IsItemClicked(ImGuiMouseButton_Left)) {
+            //                    selectedScene = i;
+            //                    selectionOn = true;
+            //                    selectedId = child.id;
+            //                }
+
+            //            }
+            //            ImGui::TreePop();
+
+            //        }
+            //        ImGui::PopID();
+            //    }
+
+            //}
 
             ImGui::TreePop();
         }

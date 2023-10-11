@@ -115,6 +115,17 @@ struct MeshRenderer
 	//void								Inspect();
 };
 
+struct UIrenderer
+{
+
+
+
+
+
+};
+
+
+
 /******************************************************************************/
 /*!
 	[Component] - RigidBody

@@ -40,7 +40,7 @@ Returns main window for docking
 #include "PrefabWindow.h"
 #include "GameScene.h"
 #include "TabWindow.h"
-
+#include "KeybindWindow.h"
 
 
 /***************************************************************************/
@@ -173,6 +173,7 @@ void Editor::UIinit(GLFWwindow* window)
     mWindowlist["Logger"] = new EditorLogger;
     mWindowlist["PrefabScene"] = new PrefabWindow;
     mWindowlist["GameScene"] = new GameScene;
+    mWindowlist["KeybindWindow"] = new KeybindWindow;
 
     for (auto & windows : mWindowlist ) 
     {
@@ -232,12 +233,8 @@ void Editor::UIupdate([[maybe_unused]]GLFWwindow* window) {
     ImGui::DockSpace(ImGui::GetID("dock_space"), ImVec2(0.0f, 0.0f), ImGuiDockNodeFlags_PassthruCentralNode);
     //// ----------------------------------------------------------------------------- // draw Menu Window
 
-   
-
+  
     mMenuwindow->update();
-
-
-
 
     ImGui::PopID();
 
@@ -253,14 +250,22 @@ void Editor::UIupdate([[maybe_unused]]GLFWwindow* window) {
 
     for (auto& windows : mWindowlist)
     {
+        if (windows.first == "KeybindWindow") {
 
-        if (windows.first == "PrefabScene") {
+            if (KeybindWindow::openWindow ) {
+                ImGui::Begin(windows.first.c_str(),&KeybindWindow::openWindow, windows.second->mWinFlag);
+                windows.second->update();
+                ImGui::End();
+            }
+        }
+
+
+        else if (windows.first == "PrefabScene") {
             
             if (static_cast<unsigned>(PrefabWindow::prefabObj) != 0) {
                 ImGui::Begin(windows.first.c_str(), 0, windows.second->mWinFlag);
                 windows.second->update();
                 ImGui::End();
-
             }
         }
         else {
