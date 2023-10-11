@@ -95,14 +95,15 @@ void ScriptingSystem::Init()
     LuaBoxCollider();
     LuaScript();
     LuaInput();
-
+    LuaAudio();
 
     /******************************************************************************/
     /*!
         Insert input system to LUA
      */
      /******************************************************************************/
-    luaState.new_enum("State", "HOLD", E_STATE::HOLD,
+    luaState.new_enum("State",
+        "HOLD", E_STATE::HOLD,
         "NOTPRESS", E_STATE::NOTPRESS, "PRESS", E_STATE::PRESS,
         "RELEASE", E_STATE::RELEASE);
     luaState.new_enum("Key",
@@ -133,6 +134,12 @@ void ScriptingSystem::Init()
     //    "BULLET", enum_tag::BULLET,
     //    "STATIC", enum_tag::STATIC,
     //    "BUILDING", enum_tag::BUILDING);
+
+    luaState.new_enum("AudioType",
+        "AUDIO_BGM", AUDIOTYPE::AUDIO_BGM,
+        "AUDIO_SFX", AUDIOTYPE::AUDIO_SFX,
+        "AUDIO_NULL", AUDIOTYPE::AUDIO_NULL,
+        "UNDEFINED", AUDIOTYPE::UNDEFINED);
 }
 
 void ScriptingSystem::Update(float dt)

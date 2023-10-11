@@ -30,3 +30,4 @@ void LuaScript();
 void LuaParent();
 void LuaChildren();
 void LuaInput();
+void LuaAudio();

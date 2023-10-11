@@ -85,6 +85,7 @@ public:
 	void Exit();
 	PhysicsSystem *GetPhysicsPointer();
 	ScriptingSystem* GetScriptingPointer();
+	AudioSystem* GetAudioPointer();
 };
 
 extern SystemManager *systemManager;

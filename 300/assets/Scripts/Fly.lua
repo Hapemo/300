@@ -1,24 +1,13 @@
-totaltimer = 100
-
 function Alive()
-    _G.cake = 10000000
-    print("hihihihi")
+
 end
 
 function Update()
-    --Working
-    --systemManager.ecs:NewEntity();
 
-    --Test ScriptStart and ScriptUpdate functions
-    --print("FLYYYYYY.lua !!")
-
-    timer = timer - 1
-
-    if (timer == 0) then
-        timer = totaltimer
-    end
-    print(timer)
-    print(_G.cake)
+    --Audio Sample Test
+    audioSys = systemManager:mAudioSystem();
+    --audioSys:PlayAudio("BGM", AudioType.AUDIO_BGM, 0.5);
+    --audioSys:MuteSFX();
 end
 
 function Dead()

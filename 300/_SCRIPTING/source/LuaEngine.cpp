@@ -4,6 +4,7 @@
 #include "Input/Input.h"
 #include "ECS/ECS_Systems.h"
 #include "ECS/ECS_Components.h"
+#include "Audio/AudioSystem.h"
 
 void LuaComponentContainer()
 {
@@ -17,7 +18,8 @@ void LuaEngine()
     systemManager->mScriptingSystem->luaState.new_usertype<SystemManager>(
         "SystemManager", sol::constructors<>(),
         "ecs", &SystemManager::ecs,
-        "mPhysicsSystem", &SystemManager::GetPhysicsPointer
+        "mPhysicsSystem", &SystemManager::GetPhysicsPointer,
+        "mAudioSystem", &SystemManager::GetAudioPointer
         );
 }
 
@@ -157,5 +159,25 @@ void LuaInput()
         "Input", sol::constructors<>(),
         "CheckKey", &Input::CheckKey,
         "GetScroll", &Input::GetScroll
+        );
+}
+
+void LuaAudio()
+{
+    //systemManager->mScriptingSystem->luaState["mAudioSystem"] = systemManager->GetAudioPointer();
+    systemManager->mScriptingSystem->luaState.new_usertype<AudioSystem>(
+        "mAudioSystem", sol::constructors<>(),
+        "PlayAudio", &AudioSystem::PlayAudio,
+        "PlaySFXAudio", &AudioSystem::PlaySFXAudio,
+        "PlayBGMAudio", &AudioSystem::PlayBGMAudio,
+        "SetSpecificChannelVolume", &AudioSystem::SetSpecificChannelVolume,
+        "SetAllSFXVolume", &AudioSystem::SetAllSFXVolume,
+        "SetAllBGMVolume", &AudioSystem::SetAllBGMVolume,
+        "MuteSFX", &AudioSystem::MuteSFX,
+        "MuteBGM", &AudioSystem::MuteBGM,
+        "TogglePauseAllSounds", &AudioSystem::TogglePauseAllSounds,
+        "TogglePauseSFXSounds", &AudioSystem::TogglePauseSFXSounds,
+        "TogglePauseBGMSounds", &AudioSystem::TogglePauseBGMSounds,
+        "TogglePauseSpecific", &AudioSystem::TogglePauseSpecific
         );
 }
