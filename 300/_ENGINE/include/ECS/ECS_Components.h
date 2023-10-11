@@ -114,6 +114,14 @@ struct MeshRenderer
 	//void								Inspect();
 };
 
+struct UIrenderer
+{
+	std::string							mTexPath; // temporary should be UID
+	void* mTextureRef;
+};
+
+
+
 /******************************************************************************/
 /*!
 	[Component] - RigidBody

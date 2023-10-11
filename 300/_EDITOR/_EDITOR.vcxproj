@@ -200,6 +200,7 @@ xcopy "$(SolutionDir)assets\*.*" "$(SolutionDir)x64\assets" /Y /I /E</Command>
     <ClCompile Include="source\Editor\GameScene.cpp" />
     <ClCompile Include="source\Editor\Hierarchy.cpp" />
     <ClCompile Include="source\Editor\Inspect.cpp" />
+    <ClCompile Include="source\Editor\KeybindWindow.cpp" />
     <ClCompile Include="source\Editor\MenuPanel.cpp" />
     <ClCompile Include="source\Editor\Performance.cpp" />
     <ClCompile Include="source\Editor\PrefabWindow.cpp" />
@@ -226,6 +227,7 @@ xcopy "$(SolutionDir)assets\*.*" "$(SolutionDir)x64\assets" /Y /I /E</Command>
     <ClInclude Include="include\Editor\Hierarchy.h" />
     <ClInclude Include="include\Editor\Inspect.h" />
     <ClInclude Include="include\Editor\EditorLogger.h" />
+    <ClInclude Include="include\Editor\KeybindWindow.h" />
     <ClInclude Include="include\Editor\MenuPanel.h" />
     <ClInclude Include="include\Editor\Performance.h" />
     <ClInclude Include="include\Editor\PrefabWindow.h" />
