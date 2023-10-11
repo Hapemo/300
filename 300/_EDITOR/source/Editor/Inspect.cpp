@@ -629,11 +629,13 @@ void MeshRenderer::Inspect() {
 				std::string data_str = std::string(data);
 				mMeshPath = data_str;
 
+				// GUID is generated here
 				uid meshguid(mMeshPath);
+				_GEOM::FBX_DescriptorData newDescriptor(meshguid.id);
 
-				// 1. Check if the FBX Desc file is present
+				// 1. Check if the FBX Desc file is present using filename
 				std::string fbxFilepath = data_str.substr(0, data_str.find_last_of("/"));
-				std::string FBX_DescFile = getFilename(data_str) + ".fbx.desc";
+				std::string FBX_DescFile = getFilename(data_str) + ".desc";
 				bool descFilePresent = false;
 
 				std::filesystem::path folderpath = fbxFilepath;
@@ -642,6 +644,7 @@ void MeshRenderer::Inspect() {
 					std::cout << "entry: " << getFilename(entry.path().string()) << std::endl;
 					if (getFilename(entry.path().string()) == FBX_DescFile)
 					{
+						// FBX Descriptor file is present
 						descFilePresent = true;
 						break;
 					}
@@ -650,12 +653,15 @@ void MeshRenderer::Inspect() {
 				// The FBX Descriptor file is not present. We have to create one to serialize the GUID
 				if (!descFilePresent)
 				{
-					_GEOM::FBX_DescriptorData newDescriptor(meshguid.id);
 					std::string descFilepath = fbxFilepath + "/" + FBX_DescFile;
 					_GEOM::FBX_DescriptorData::SerializeFBX_DescriptorFile(descFilepath, newDescriptor);
 				}
 
-
+				else
+				{
+					// if the FBX descriptor is present, we deserialize the GUID from the file
+					// >> Note: Do we really need this step? will the guid just be the same as the one generated above?
+				}
 
 				//mMeshRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(temp.id));
 

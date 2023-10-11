@@ -229,39 +229,28 @@ namespace _GEOM
 
 	void FBX_DescriptorData::SerializeFBX_DescriptorFile(std::string fbxFilepath, const FBX_DescriptorData& FBX_DescriptorFile) noexcept
 	{
-		//rapidjson::Document document;
-		//document.SetObject(); // Create an empty object
+		rapidjson::Document doc;
+		doc.SetObject();
+		rapidjson::Document::AllocatorType& allocator = doc.GetAllocator();
 
-		//// Add data to the object
-		//rapidjson::Value person;
-		//person.SetObject();
-		//person.AddMember("name", "John", document.GetAllocator());
-		//person.AddMember("age", 30, document.GetAllocator());
-		//person.AddMember("isStudent", false, document.GetAllocator());
+		doc.AddMember("GUID", FBX_DescriptorFile.m_GUID, allocator);
 
-		//// Add the "person" object to the main object
-		//document.AddMember("person", person, document.GetAllocator());
+		// Serialize to a file
+		std::ofstream file(fbxFilepath.c_str());
+		if (file.is_open()) {
+			rapidjson::StringBuffer buffer;
+			rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+			doc.Accept(writer);
 
-		//// Specify the file path where you want to save the JSON data
-		//// Open the file for writing
-		//FILE* fp = fopen(fbxFilepath.c_str(), "w");
-		//if (!fp) {
-		//	std::cerr << "Failed to open file for writing." << std::endl;
-		//	return;
-		//}
+			file << buffer.GetString() << std::endl;
+			file.close();
 
-		//// Create a FileWriteStream to write JSON to the file
-		//char buffer[4096];
-		//rapidjson::FileWriteStream fileStream(fp, buffer, sizeof(buffer));
-		//rapidjson::Writer<rapidjson::FileWriteStream> writer(fileStream);
+			std::cout << "JSON data serialized to " << fbxFilepath << std::endl;
+		}
+		else {
+			std::cerr << "Failed to open the file for writing." << std::endl;
+		}
 
-		//// Serialize the document to the file
-		//document.Accept(writer);
-
-		//// Close the file
-		//fclose(fp);
-
-		std::cout << "JSON data written to " << fbxFilepath << std::endl;
 	}
 
 
