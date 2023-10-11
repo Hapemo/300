@@ -117,11 +117,8 @@ struct MeshRenderer
 
 struct UIrenderer
 {
-
-
-
-
-
+	std::string							mTexPath; // temporary should be UID
+	void* mTextureRef;
 };
 
 
