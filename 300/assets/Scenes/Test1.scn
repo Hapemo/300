@@ -291,7 +291,8 @@
                 0.5,
                 0.5
             ],
-            "Attenuation": 0.0,
+            "LinearFalloff": 0.0,
+            "QuadraticFalloff": 0.0,
             "Intensity": 3.0
         }
     },

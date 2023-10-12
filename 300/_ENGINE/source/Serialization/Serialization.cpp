@@ -252,7 +252,8 @@ bool EntityJSON::Deserialize(const rapidjson::Value& obj)
 							 (float)obj["PointLight"]["LightColor"][1].GetDouble(),
 							 (float)obj["PointLight"]["LightColor"][2].GetDouble() };
 
-		mPLJ.mAttenuation = (float)obj["PointLight"]["Attenuation"].GetDouble();
+		mPLJ.mLinearFalloff = (float)obj["PointLight"]["LinearFalloff"].GetDouble();
+		mPLJ.mQuadraticFalloff = (float)obj["PointLight"]["QuadraticFalloff"].GetDouble();
 
 		mPLJ.mIntensity = (float)obj["PointLight"]["Intensity"].GetDouble();
 
@@ -532,8 +533,11 @@ bool EntityJSON::Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* wri
 		writer->Double(mPLJ.mLightColor.z);
 		writer->EndArray();
 
-		writer->String("Attenuation");
-		writer->Double(mPLJ.mAttenuation);
+		writer->String("LinearFalloff");
+		writer->Double(mPLJ.mLinearFalloff);
+
+		writer->String("QuadraticFalloff");
+		writer->Double(mPLJ.mQuadraticFalloff);
 
 		writer->String("Intensity");
 		writer->Double(mPLJ.mIntensity);
