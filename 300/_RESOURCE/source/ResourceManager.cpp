@@ -33,9 +33,9 @@ void Resource::Init()
 	mShaderManager.Init();
 	mMaterialInstanceManager.Init();
 
-	mesh_Loader();
+	//mesh_LoadFolder();
 	shader_Loader();
-	MaterialInstance_Loader();
+	//MaterialInstance_Loader();
 }
 /***************************************************************************/
 /*!
@@ -78,7 +78,7 @@ void Resource::ReleaseRscInfo(instance_info& RscInfo)
 	Loads compiled mesh ( geom ) into Engine
 */
 /**************************************************************************/
-void Resource::mesh_Loader() 
+void Resource::mesh_LoadFolder() 
 {
 	std::filesystem::path folderpath = compiled_geom_path.c_str();
 
@@ -119,6 +119,7 @@ void Resource::shader_Loader()
 	shaderpaths.emplace_back(std::pair<std::string, std::string>{ "../assets/shader_files/draw_vert.glsl", "../assets/shader_files/draw_frag.glsl" });
 	shaderpaths.emplace_back(std::pair<std::string, std::string>{ "../assets/shader_files/pointLight_vert.glsl", "../assets/shader_files/pointLight_frag.glsl" });
 	shaderpaths.emplace_back(std::pair<std::string, std::string>{ "../assets/shader_files/animations_vert.glsl", "../assets/shader_files/pointLight_frag.glsl" });
+	shaderpaths.emplace_back(std::pair<std::string, std::string>{ "../assets/shader_files/UI_vert.glsl", "../assets/shader_files/UI_frag.glsl" });
 
 
 	// load all the shaders

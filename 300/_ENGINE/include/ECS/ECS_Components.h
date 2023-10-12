@@ -23,11 +23,15 @@ Components used by the ECS.
 #include "Input/KeyBind.h"
 #include "Input/Input.h"
 //#include "Graphics/GraphicsSystem.h"
-#include "Mesh.hpp"
+//#include "Mesh.hpp"
 
 //#include "rttr/registration.h"
 
 //DECLARE_ENUMSTRING(enum_tag, PLAYER, ENEMY, BULLET, STATIC, BUILDING)
+namespace GFX {
+	struct Mesh;
+
+}
 
 /******************************************************************************/
 /*!
@@ -98,7 +102,9 @@ struct MeshRenderer
 	std::string							mMaterialInstancePath[4] {" "," " ," " ," " };
 	std::string							mMeshPath;
 	
-	void*								mMeshRef{};
+	void*								    mMeshRef{};
+	
+
 	void*								mTextureRef[4];
 	bool								mTextureCont[4];
 
@@ -107,12 +113,15 @@ struct MeshRenderer
 	void								Inspect();
 
 
+	//GFX::Mesh							testmesh;
 
-	GFX::Mesh							testmesh;
+
+
+	//GFX::Mesh							testmesh;
+
 	//RTTR_ENABLE()
 
 
-	//void								Inspect();
 };
 
 struct UIrenderer

@@ -68,6 +68,10 @@ void LoadAndSerializeAllMeshes(_GEOM::DescriptorData& Desc)
 		_GEOM::Mesh_Loader meshLoader;
 		_GEOM::SkinGeom SkinGeom;
 
+		std::string test = Desc.m_Filepaths[Desc.m_iMeshCurrent].substr(Desc.m_Filepaths[Desc.m_iMeshCurrent].find_last_of("."));
+		if(Desc.m_Filepaths[Desc.m_iMeshCurrent].substr(Desc.m_Filepaths[Desc.m_iMeshCurrent].find_last_of(".")) == ".desc")
+			continue;
+
 		meshLoader.getMeshName() = meshLoader.getFileNameWithoutExtension(Desc.m_Filepaths[Desc.m_iMeshCurrent]);
 		bool Err = meshLoader.Load(Desc, &SkinGeom);
 		assert(Err);
@@ -100,38 +104,40 @@ int main(int argc, char* argv[])
 	std::cout << "================================================================================\n";
 
 	std::string descriptorFilepath{};
-	
-
-#if __RELEASE
-	//descriptorFilepath = "../../_GEOM_COMPILER/descriptor_files/default_descriptor_BUILD.json";
-	descriptorFilepath = "./descriptor_files/default_descriptor.json";
-#else
-	descriptorFilepath = "./descriptor_files/default_descriptor.json";
-#endif
-
-
-	// Load the descriptor data
-	std::cout << ">>\t\tLoading Descriptor Data\n";
 	_GEOM::DescriptorData Desc;
-	bool Err = _GEOM::DescriptorData::LoadDescriptorData(Desc, descriptorFilepath);
-	assert(Err);
+	descriptorFilepath = "./descriptor_files/default_descriptor.json";
 
 	std::cout << "\n================================================================================\n";
 	std::cout << ">>\t\tLoading Assets\n";
 
+	
 	// When there is an input filepath argument specified
 	if (argc > 1)
 	{
 		// This is reserved for when I want to implement specific asset loading from the command line
 		for (int i{}; i < argc; ++i)
 		{
-			std::cout << "Argument: " << i << " = " << argv[i] << std::endl;
+			std::cout << argv[i] << " | ";
 		}
+
+		descriptorFilepath = argv[1];
+
+		// Load the descriptor data
+		std::cout << ">>\t\tLoading Descriptor Data For ONE Mesh\n";
+		bool Err = _GEOM::DescriptorData::DeserializeGEOM_DescriptorDataFromFile(Desc, descriptorFilepath);
+		assert(Err);
 	}
 
-	else {
-		LoadAndSerializeAllMeshes(Desc);
+	else
+	{
+		// Load the descriptor data
+		std::cout << ">>\t\tLoading Descriptor Data For ALL Meshes\n";
+		bool Err = _GEOM::DescriptorData::DeserializeGEOM_DescriptorDataFromFolder(Desc, descriptorFilepath);
+		assert(Err);
 	}
+
+	// Load and serialize all the meshes
+	LoadAndSerializeAllMeshes(Desc);
 
 	return 0;
 }

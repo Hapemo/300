@@ -59,6 +59,12 @@ Creates the mesh by initializing the required VAO and VBOs for the mesh
 		void Setup(const _GEOM::Geom& GeomData);
 
 /*!*****************************************************************************
+Creates the mesh by initializing the required VAO and VBOs for the mesh to 
+to render 2D images. Essentially a quad mesh
+*******************************************************************************/
+		void Setup2DImageMesh();
+
+/*!*****************************************************************************
 Binds the VAO to the openGL context to be used for rendering
 *******************************************************************************/
 		void BindVao();

@@ -26,7 +26,24 @@ namespace _GEOM
 /***************************************************************************/
 /*!
 \brief
-	Contains the functionalities and data stored from the descriptor files
+	Contains the functionalities and data stored in the FBX descriptor files
+*/
+/**************************************************************************/
+	struct FBX_DescriptorData
+	{
+		FBX_DescriptorData(unsigned int guid) : m_GUID(guid) {}
+
+		unsigned int m_GUID;
+
+		static void SerializeFBX_DescriptorFile(std::string fbxFilepath, const FBX_DescriptorData& FBX_DescriptorFile) noexcept;
+		static void DeserializeFBX_DescriptorFile(std::string fbxFilepath, FBX_DescriptorData& FBX_DescriptorFile) noexcept;
+	};
+
+
+/***************************************************************************/
+/*!
+\brief
+	Contains the functionalities and data stored in the GEOM descriptor files
 */
 /**************************************************************************/
 	struct DescriptorData
@@ -47,6 +64,10 @@ namespace _GEOM
 		std::string m_sOutputPath;
 		std::string m_sOutputFormat;
 
+		// GUID //
+		unsigned int m_GUID;
+
+
 		/***************************************************************************/
 		/*!
 		\brief
@@ -58,10 +79,39 @@ namespace _GEOM
 		/***************************************************************************/
 		/*!
 		\brief
-			loads the descriptor data from the provided filepath
+			loads the descriptor data from the provided descriptor data folderpath.
+			This loads all the fbx in the folder
 		*/
 		/**************************************************************************/
-		static bool LoadDescriptorData(DescriptorData& Desc, std::string filepath) noexcept;
+		static bool DeserializeGEOM_DescriptorDataFromFolder(DescriptorData& Desc, std::string folderpath) noexcept;
+
+		/***************************************************************************/
+		/*!
+		\brief
+			loads the descriptor data from the provided descriptor filepath.
+			This loads the fbx from the filepath provided in the descriptor file
+		*/
+		/**************************************************************************/
+		static bool DeserializeGEOM_DescriptorDataFromFile(DescriptorData& Desc, std::string filepath) noexcept;
+
+
+		/***************************************************************************/
+		/*!
+		\brief
+			Serializes the GEOM descriptor data to the provided filepath
+		*/
+		/**************************************************************************/
+		static bool SerializeGEOM_DescriptorDataToFile(std::string geomFilepath, const DescriptorData& GEOM_DescriptorFile) noexcept;
+
+
+		/***************************************************************************/
+		/*!
+		\brief
+			Checks the GUID within the provided GEOM desc filepath
+		*/
+		/**************************************************************************/
+		static bool CheckGUID(std::string geomFilepath, const FBX_DescriptorData& GeomDescriptorFile) noexcept;
+
 
 		/***************************************************************************/
 		/*!
@@ -71,6 +121,19 @@ namespace _GEOM
 		/**************************************************************************/
 		DescriptorData();
 	};
+
+	bool CheckAndCreateDescriptorFile(std::string fbxfilepath, std::string& GEOM_Descriptor_Filepath);
+
+	/***************************************************************************/
+	/*!
+	\brief
+		returns the GUID within the provided GEOM desc filepath
+	*/
+	/**************************************************************************/
+	unsigned GetGUID(std::string geomFilepath) noexcept;
+
+
+	static const std::string mGeomFolderpath = "../assets/compiled_geom/";
 }
 
 #endif // !_DESCRIPTOR_H

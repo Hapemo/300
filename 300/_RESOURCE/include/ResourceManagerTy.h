@@ -10,16 +10,34 @@
 #include "Shader.hpp"
 #include "Texture.hpp"
 #include "Mesh.hpp"
+#include <variant>  
 
 
 
+//union ref {
+//
+//    void* data;
+//    unsigned dataid;
+//
+//};
 
-union ref {
+struct p_ref {
+    std::variant<void*, uid<unsigned>> data;
 
-    void* data;
-    unsigned dataid;
+    template <typename T>
+    bool GetVariantData(T* val) {
 
+        try {
+            *val = std::get<T>(data);
+            return true;
+        }
+        catch (...) {
+            return false;
+        }
+    }
+    
 };
+
 
 
 /***************************************************************************/
@@ -81,7 +99,8 @@ public:
         Mesh accessors/initializer functions
     */
     /**************************************************************************/
-    void mesh_Loader();
+    void mesh_LoadFolder();
+    void mesh_Load(std::string filepath, unsigned uid);
     GFX::Mesh* SetupMesh(std::string filepath, unsigned);
     GFX::Mesh* get_mesh(unsigned );
 

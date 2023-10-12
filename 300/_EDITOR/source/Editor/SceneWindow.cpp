@@ -80,22 +80,22 @@ void SceneWindow::update()
 		//std::cout << getid << ": ID \n";
 	}
 	
-
 	ImGui::SetItemAllowOverlap();
 	//wevents = ImGui::IsItemHovered();  /// <-- This returns true if mouse is over the overlaped Test button
-
 
 	ImGui::SetCursorPosX(ImGui::GetWindowContentRegionMax().x-70);
 	ImGui::SetCursorPosY(ImGui::GetWindowContentRegionMin().y+10);
-	//ImGui::Checkbox("Debug",&systemManager->mGraphicsSystem->m_DebugDrawing);
 	
-
 	ImGui::SetItemAllowOverlap();
-	//wevents = ImGui::IsItemHovered();  /// <-- This returns true if mouse is over the overlaped Test button
-
-
 
 	winSize= { ImGui::GetWindowSize().x ,ImGui::GetWindowSize().y};
+
+	if (ImGui::IsWindowHovered()) {
+		systemManager->mGraphicsSystem->m_EnableScroll == true;
+	}
+	else {
+		systemManager->mGraphicsSystem->m_EnableScroll == false;
+	}
 }
 
 static void Square(ImGuiSizeCallbackData* data) { data->DesiredSize.x = data->DesiredSize.y = ImMin(data->DesiredSize.x, data->DesiredSize.y); }

@@ -267,6 +267,43 @@ void GFX::Mesh::ClearInstances()
 	mTexEntID.clear();
 }
 
+void GFX::Mesh::Setup2DImageMesh()
+{
+	// Create VAO
+	mVao.Create();
+
+	/////////////////////////////////////////
+	// COLORS
+	/////////////////////////////////////////
+	// Create VBO for Color data
+	mColorVbo.Create(sizeof(vec4) * MAX_INSTANCES);
+
+	// Attach Color VBO and divisor to VAO
+	mVao.AddAttribute(0, 0, 4, GL_FLOAT);									// location 0, binding vao index 0
+	mVao.AddAttributeDivisor(0, 1);											// divisor at vao index 0
+	mVao.AttachVertexBuffer(mColorVbo.GetID(), 0, 0, sizeof(vec4));			// Attach to index 0
+
+	/////////////////////////////////////////
+	// TEXTURE AND ENTITY ID
+	// Create VBO for Texture ID and Entity ID
+	mTexEntIDVbo.Create(sizeof(vec4) * MAX_INSTANCES);
+	mVao.AddAttribute(1, 1, 4, GL_FLOAT);									// location 1, binding vao index 1
+	mVao.AddAttributeDivisor(1, 1);											// divisor at vao index 1
+	mVao.AttachVertexBuffer(mTexEntIDVbo.GetID(), 1, 0, sizeof(vec4));		// Attach to index 1
+
+	// Create local-to-world VBO
+	mLTWVbo.Create(sizeof(mat4) * MAX_INSTANCES);
+
+	// Add attributes and divisor as vec4
+	for (int i = 0; i < 4; ++i)
+	{
+		mVao.AddAttribute(2 + i, 2, 4, GL_FLOAT, sizeof(vec4) * i);			// location 2, binding vao index 2
+		mVao.AddAttributeDivisor(2, 1);										// divisor at vao index 2
+	}
+	// Attach LTW VBO to VAO
+	mVao.AttachVertexBuffer(mLTWVbo.GetID(), 2, 0, sizeof(vec4) * 4);
+}
+
 void GFX::Mesh::BindVao()
 {
 	mVao.Bind();
