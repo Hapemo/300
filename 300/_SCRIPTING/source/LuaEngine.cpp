@@ -5,6 +5,7 @@
 #include "ECS/ECS_Systems.h"
 #include "ECS/ECS_Components.h"
 #include "Audio/AudioSystem.h"
+#include "Input/InputMapSystem.h"
 
 void LuaComponentContainer()
 {
@@ -19,7 +20,8 @@ void LuaEngine()
         "SystemManager", sol::constructors<>(),
         "ecs", &SystemManager::ecs,
         "mPhysicsSystem", &SystemManager::GetPhysicsPointer,
-        "mAudioSystem", &SystemManager::GetAudioPointer
+        "mAudioSystem", &SystemManager::GetAudioPointer,
+        "mInputActionSystem", &SystemManager::GetInputMapSystemPointer
         );
 }
 
@@ -179,5 +181,18 @@ void LuaAudio()
         "TogglePauseSFXSounds", &AudioSystem::TogglePauseSFXSounds,
         "TogglePauseBGMSounds", &AudioSystem::TogglePauseBGMSounds,
         "TogglePauseSpecific", &AudioSystem::TogglePauseSpecific
+        );
+}
+
+void LuaInputMapSystem()
+{
+    systemManager->mScriptingSystem->luaState.new_usertype<InputMapSystem>(
+        "mInputActionSystem", sol::constructors<>(),
+        "GetButton", &InputMapSystem::GetButton,
+        "GetButtonUp", &InputMapSystem::GetButtonUp,
+        "GetButtonDown", &InputMapSystem::GetButtonDown,
+        "GetKey", &InputMapSystem::GetKey,
+        "GetKeyUp", &InputMapSystem::GetKeyUp,
+        "GetKeyDown", &InputMapSystem::GetKeyDown
         );
 }

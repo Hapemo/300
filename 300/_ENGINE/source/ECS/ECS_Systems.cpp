@@ -144,3 +144,8 @@ ScriptingSystem *SystemManager::GetScriptingPointer()
 {
 	return mScriptingSystem.get();
 }
+
+InputMapSystem* SystemManager::GetInputMapSystemPointer()
+{
+	return mInputActionSystem.get();
+}

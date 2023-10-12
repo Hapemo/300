@@ -38,7 +38,6 @@ public:
 	std::unique_ptr<Logger> mLogger;
 	std::unique_ptr<InputMapSystem> mInputActionSystem;
 
-
 	ECS *ecs;
 
 	std::vector<std::string> mComponents;
@@ -86,6 +85,7 @@ public:
 	PhysicsSystem *GetPhysicsPointer();
 	ScriptingSystem* GetScriptingPointer();
 	AudioSystem* GetAudioPointer();
+	InputMapSystem* GetInputMapSystemPointer();
 };
 
 extern SystemManager *systemManager;
