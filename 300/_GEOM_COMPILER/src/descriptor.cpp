@@ -353,10 +353,6 @@ namespace _GEOM
 			return str.substr(found + 1);
 		};
 
-		//const char* data = (const char*)payload->Data;
-		//std::string data_str = std::string(data);
-		//mMeshPath = data_str;
-
 		// GUID is generated here
 		uid meshguid(fbxfilepath);
 		_GEOM::FBX_DescriptorData fbxDescriptor(meshguid.id);
@@ -420,8 +416,8 @@ namespace _GEOM
 		if (!descFilePresent)
 		{
 			//>> Create a default geom descriptor file
-			std::string geomdescName = getFilename(fbxfilepath);
-			GEOM_Descriptor_Filepath = _GEOM::mGeomFolderpath + geomdescName.substr(0, geomdescName.find_last_of(".") + 1) + "geom.desc";
+			std::string geomdescName = getFilename(fbxfilepath).substr(0, getFilename(fbxfilepath).find_last_of("."));
+			GEOM_Descriptor_Filepath = _GEOM::mGeomFolderpath + geomdescName + ".geom.desc";
 			_GEOM::DescriptorData::SerializeGEOM_DescriptorDataToFile(GEOM_Descriptor_Filepath, geomDescriptor);
 		}
 
