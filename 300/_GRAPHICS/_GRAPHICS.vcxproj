@@ -167,6 +167,7 @@
     <ClCompile Include="source\Random.cpp" />
     <ClCompile Include="source\Shader.cpp" />
     <ClCompile Include="source\Shapes.cpp" />
+    <ClCompile Include="source\Ssbo.cpp" />
     <ClCompile Include="source\Texture.cpp" />
     <ClCompile Include="source\Vao.cpp" />
     <ClCompile Include="source\Vbo.cpp" />
@@ -189,6 +190,7 @@
     <ClInclude Include="include\Random.hpp" />
     <ClInclude Include="include\Shader.hpp" />
     <ClInclude Include="include\Shapes.hpp" />
+    <ClInclude Include="include\Ssbo.hpp" />
     <ClInclude Include="include\Texture.hpp" />
     <ClInclude Include="include\Vao.hpp" />
     <ClInclude Include="include\Vbo.hpp" />

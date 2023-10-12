@@ -31,7 +31,7 @@ float second_entitytime{};
 void GraphicsSystem::Init()
 {
 	// -- WIP -- SHADER STORAGE BUFFER OBJECT
-	SetupShaderStorageBuffer();
+	SetupShaderStorageBuffers();
 	// -- WIP -- SHADER STORAGE BUFFER OBJECT
 	m_Image2DMesh.Setup2DImageMesh();
 
@@ -249,7 +249,7 @@ void GraphicsSystem::Update(float dt)
 		// meshinst.mLTW.push_back(final);
 		AddInstance(meshinst, final, static_cast<unsigned>(inst.id));
 	}
-	ShaderStorageBufferSubData(finalBoneMatrices.size() * sizeof(mat4), finalBoneMatrices.data());
+	m_FinalBoneMatrixSsbo.SubData(finalBoneMatrices.size() * sizeof(mat4), finalBoneMatrices.data());
 	finalBoneMatrices.clear();
 
 #pragma endregion
@@ -860,20 +860,13 @@ void GraphicsSystem::UnpauseGlobalAnimation()
 	m_EnableGlobalAnimations = true;
 }
 
-void GraphicsSystem::SetupShaderStorageBuffer()
+void GraphicsSystem::SetupShaderStorageBuffers()
 {
-	glCreateBuffers(1, &m_Ssbo);
+	// All Point Lights in the Scene -- Location 2
+	m_PointLightSsbo.Create(sizeof(PointLight) * MAX_POINT_LIGHT, 2);
 
-	glBindBuffer(GL_SHADER_STORAGE_BUFFER, m_Ssbo);
-	glNamedBufferData(m_Ssbo, sizeof(mat4) * MAX_NUM_BONES * MAX_INSTANCES, nullptr, GL_DYNAMIC_DRAW);
-	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 3, m_Ssbo);
-
-	glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
-}
-
-void GraphicsSystem::ShaderStorageBufferSubData(size_t dataSize, const void* data)
-{
-	glNamedBufferSubData(m_Ssbo, 0, dataSize, data);
+	// Final Bone Matrix for Animation -- Location 3
+	m_FinalBoneMatrixSsbo.Create(sizeof(mat4) * MAX_NUM_BONES * MAX_INSTANCES, 3);
 }
 
 void GraphicsSystem::Add2DImageInstance(float width, float height, vec2 const& position, unsigned texHandle, vec4 const& color, unsigned entityID)

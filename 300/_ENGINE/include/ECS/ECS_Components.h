@@ -322,7 +322,8 @@ struct Prefab
 struct PointLight
 {
 	vec3	mLightColor{ 1.f, 1.f, 1.f };
-	float	mAttenuation{};
+	float	mLinearFalloff{};
+	float	mQuadraticFalloff{};
 	float	mIntensity{};
 	void Inspect();
 };

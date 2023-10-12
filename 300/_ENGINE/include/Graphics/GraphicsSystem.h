@@ -23,6 +23,7 @@
 #include <Camera.hpp>
 #include <Fbo.hpp>
 #include <Animator.hpp>
+#include <Ssbo.hpp>
 
 /***************************************************************************/
 /*!
@@ -202,10 +203,14 @@ public:
 
 private:
 	// -- SSBO -- 
-	unsigned m_Ssbo;
-	void SetupShaderStorageBuffer();
-	void ShaderStorageBufferSubData(size_t dataSize, const void* data);
+	GFX::SSBO m_FinalBoneMatrixSsbo;
 	std::vector<mat4> finalBoneMatrices;
+
+	const int MAX_POINT_LIGHT = 10;
+	GFX::SSBO m_PointLightSsbo;
+	std::vector<PointLight> pointLights;
+
+	void SetupShaderStorageBuffers();		// Creates all SSBO required
 
 	// -- 2D Image Rendering --
 	GFX::Mesh m_Image2DMesh;

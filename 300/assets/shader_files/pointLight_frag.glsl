@@ -7,6 +7,14 @@ in vec3 TangentFragPos;
 in vec4 Tex_Ent_ID;     // x : Tex ID, y: Entity ID
 in int hasLight;
 
+struct PointLight
+{
+    vec3    position;
+    float   intensity;
+    float   linear;
+    float   quadratic;
+};
+
 uniform sampler2D uTex[5];
 uniform int uDebugDraw;
 uniform bool uHasLight;
@@ -15,6 +23,43 @@ uniform vec3 uLightColor;
 
 layout (location = 0) out vec4 fragColor0;
 layout (location = 1) out uint outEntityID;
+
+vec3 ComputePointLight(vec4 diffColor)
+{
+    vec3 normal = texture(uTex[1], TexCoords).rgb;          // Normal Map
+    normal = normalize(normal * 2.0 - 1.0);
+
+    //vec3 emission = texture(uTex[2], TexCoords).rgb;        // Emission Map
+    //vec3 specular = texture(uTex[3], TexCoords).rgb;        // Specular Map
+    vec3 specular = vec3(0.3);
+
+    // Ambient Color
+    vec3 ambient = 0.1 * diffColor.rgb;
+
+    // Diffuse
+    vec3 lightDir = normalize(TangentLightPos - TangentFragPos);
+    float diff = max(dot(lightDir, normal), 0.0);
+    vec3 diffuse = diff * diffColor.rgb * uLightColor;
+
+    // specular
+    vec3 viewDir = normalize(TangentViewPos - TangentFragPos);
+    vec3 reflectDir = reflect(-lightDir, normal);
+    vec3 halfwayDir = normalize(lightDir + viewDir);  
+    float spec = pow(max(dot(normal, halfwayDir), 0.0), 32.0);
+    vec3 lightIntensity = vec3(uLightIntensity);
+    specular = spec * specular * lightIntensity;
+
+    float distance = length(TangentLightPos - TangentFragPos);
+    float attenuation = 1.0 / (1.0 + 0.0014 * distance + 0.000007 * (distance * distance));
+
+    ambient *= attenuation;
+    diffuse *= attenuation;
+    specular *= attenuation;
+
+    vec3 finalColor = vec3(ambient + diffuse + specular /* + emission*/);
+
+    return finalColor;
+}
 
 void main() 
 {
@@ -29,34 +74,41 @@ void main()
         return;
     }
 
-    vec3 normal = texture(uTex[1], TexCoords).rgb;          // Normal Map
-    normal = normalize(normal * 2.0 - 1.0);
+//    vec3 normal = texture(uTex[1], TexCoords).rgb;          // Normal Map
+//    normal = normalize(normal * 2.0 - 1.0);
+//
+//    //vec3 emission = texture(uTex[2], TexCoords).rgb;        // Emission Map
+//    //vec3 specular = texture(uTex[3], TexCoords).rgb;        // Specular Map
+//    vec3 specular = vec3(0.3);
+//
+//    // Ambient Color
+//    vec3 ambient = 0.1 * uColor.rgb;
+//
+//    // Diffuse
+//    vec3 lightDir = normalize(TangentLightPos - TangentFragPos);
+//    float diff = max(dot(lightDir, normal), 0.0);
+//    vec3 diffuse = diff * uColor.rgb * uLightColor;
+//
+//    // specular
+//    vec3 viewDir = normalize(TangentViewPos - TangentFragPos);
+//    vec3 reflectDir = reflect(-lightDir, normal);
+//    vec3 halfwayDir = normalize(lightDir + viewDir);  
+//    float spec = pow(max(dot(normal, halfwayDir), 0.0), 32.0);
+//    vec3 lightIntensity = vec3(uLightIntensity);
+//    specular = spec * specular * lightIntensity;
+//
+//    vec3 finalColor = vec3(ambient + diffuse + specular /* + emission*/);
 
-    //vec3 emission = texture(uTex[2], TexCoords).rgb;        // Emission Map
-    //vec3 specular = texture(uTex[3], TexCoords).rgb;        // Specular Map
-    vec3 specular = vec3(0.3);
+    vec3 finalColor = vec3(0.0);
 
-    // Ambient Color
-    vec3 ambient = 0.1 * uColor.rgb;
-
-    // Diffuse
-    vec3 lightDir = normalize(TangentLightPos - TangentFragPos);
-    float diff = max(dot(lightDir, normal), 0.0);
-    vec3 diffuse = diff * uColor.rgb * uLightColor;
-
-    // specular
-    vec3 viewDir = normalize(TangentViewPos - TangentFragPos);
-    vec3 reflectDir = reflect(-lightDir, normal);
-    vec3 halfwayDir = normalize(lightDir + viewDir);  
-    float spec = pow(max(dot(normal, halfwayDir), 0.0), 32.0);
-    vec3 lightIntensity = vec3(uLightIntensity);
-    specular = spec * specular * lightIntensity;
-
-    vec3 finalColor = vec3(ambient + diffuse + specular /* + emission*/);
+    for (int i = 0; i < 1; ++i)
+    {
+        finalColor += ComputePointLight(uColor);
+    }
 
     // HDR
-    //float exposure = 1.0;
-    //finalColor = vec3(1.0) - exp(-finalColor * exposure);
+    // float exposure = 1.0;
+    // finalColor = vec3(1.0) - exp(-finalColor * exposure);
 
     // Gamma correction
     float gamma = 2.2;
