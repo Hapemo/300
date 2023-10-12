@@ -9,14 +9,15 @@ layout (location = 6) in vec3 inNormal;			    // Per vertex Normal
 layout (location = 7) in vec4 inTex_Ent_ID;		    // Texture ID, Entity ID of object
 layout (location = 8) in mat4 inLTW;			    // local to world
 
-uniform vec3 uLightPos;
+//uniform vec3 uLightPos;
 uniform vec3 uViewPos;
 uniform mat4 uMatrixVP;
 uniform bool uHasLight;
 
 out vec4 VertexColor;       // for debugging
 out vec2 TexCoords;
-out vec3 TangentLightPos;
+out mat3 TBN;
+//out vec3 TangentLightPos;
 out vec3 TangentViewPos;
 out vec3 TangentFragPos;
 out vec4 Tex_Ent_ID;
@@ -39,10 +40,10 @@ void main()
     vec3 N = normalize(normalMatrix * inNormal);
     T = normalize(T - dot(T, N) * N);
     vec3 B = cross(N, T);
-    mat3 TBN = transpose(mat3(T, B, N));
+    TBN = transpose(mat3(T, B, N));
 
     // Transform position to tangent space
-    TangentLightPos = TBN * uLightPos;
+//    TangentLightPos = TBN * uLightPos;
     TangentViewPos  = TBN * uViewPos;
     TangentFragPos  = TBN * vec3(inLTW * vec4(inPos, 1.0));
 }

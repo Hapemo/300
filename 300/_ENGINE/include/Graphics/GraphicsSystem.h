@@ -39,6 +39,14 @@ enum class CAMERA_TYPE
 	CAMERA_TYPE_ALL
 };
 
+struct PointLightSSBO
+{
+	vec3 mPosition;
+	vec3 mColor{ 1.f, 1.f, 1.f };
+	float mLinear;
+	float mQuadratic;
+	float mIntensity;
+};
 
 /***************************************************************************/
 /*!
@@ -206,9 +214,9 @@ private:
 	GFX::SSBO m_FinalBoneMatrixSsbo;
 	std::vector<mat4> finalBoneMatrices;
 
-	const int MAX_POINT_LIGHT = 10;
+	const int MAX_POINT_LIGHT = 5;
 	GFX::SSBO m_PointLightSsbo;
-	std::vector<PointLight> pointLights;
+	std::vector<PointLightSSBO> pointLights;
 
 	void SetupShaderStorageBuffers();		// Creates all SSBO required
 

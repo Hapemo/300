@@ -16,7 +16,7 @@ layout (location = 8) in mat4   inLTW;			// local to world
 
 const int MAX_BONES = 200;
 const int MAX_BONE_INFLUENCE = 4;
-uniform mat4 finalBoneMatrices[MAX_BONES];
+//uniform mat4 finalBoneMatrices[MAX_BONES];
 
 uniform mat4 uMatrixVP;     // view projection
 uniform vec3 uLightPos;
@@ -28,11 +28,9 @@ layout (std430, binding = 3) buffer boneFinal
 {
   mat4 matrices[];
 };
-out mat4 TestingMatrix1;
-out mat4 TestingMatrix2;
-// for SSBO testing purposes
 
 out vec2 TexCoords;
+out mat3 TBN;
 out vec3 TangentLightPos;
 out vec3 TangentViewPos;
 out vec3 TangentFragPos;
@@ -67,11 +65,6 @@ void main()
     TexCoords           = inQUV;
     Tex_Ent_ID          = inTex_Ent_ID;
 
-    // for SSBO testing purposes
-    TestingMatrix1 = matrices[0];
-    TestingMatrix2 = matrices[1];
-    // for SSBO testing purposes
-
     if (!uHasLight) return;
 
     
@@ -81,7 +74,7 @@ void main()
     vec3 N = normalize(normalMatrix * inNormal);
     T = normalize(T - dot(T, N) * N);
     vec3 B = cross(N, T);
-    mat3 TBN = transpose(mat3(T, B, N));
+    TBN = transpose(mat3(T, B, N));
 
 
     // Set all the output vars

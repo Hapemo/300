@@ -332,21 +332,39 @@ void GraphicsSystem::EditorDraw(float dt)
 
 		if (m_HasLight)
 		{
-			PointLight &lightData = lightEntity.get<PointLight>(lightEntity[0]);
-			Transform &lightTransform = Entity(lightEntity[0]).GetComponent<Transform>();
-
-			GLuint mLightPosShaderLocation = shaderinst.GetUniformLocation("uLightPos");
 			GLuint mViewPosShaderLocation = shaderinst.GetUniformLocation("uViewPos");
-			GLuint mLightIntensityShaderLocation = shaderinst.GetUniformLocation("uLightIntensity");
-			GLuint mLightColorShaderLocation = shaderinst.GetUniformLocation("uLightColor");
-
 			vec3 viewPos = GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR);
-			glUniform3fv(mLightPosShaderLocation, 1, &lightTransform.mTranslate[0]);
 			glUniform3fv(mViewPosShaderLocation, 1, &viewPos[0]);
-			glUniform3fv(mLightColorShaderLocation, 1, &lightData.mLightColor[0]);
-			glUniform1f(mLightIntensityShaderLocation, lightData.mIntensity);
 
-			m_Renderer.AddCube(lightTransform.mTranslate, { 20, 20, 20 });
+			for (int i = 0; i < lightEntity.size(); ++i)
+			{
+				PointLight &lightData = lightEntity.get<PointLight>(lightEntity[i]);
+				Transform &lightTransform = Entity(lightEntity[i]).GetComponent<Transform>();
+
+				PointLightSSBO light;
+				light.mPosition = lightTransform.mTranslate;
+				light.mIntensity = lightData.mIntensity;
+				light.mLinear = lightData.mLinearFalloff;
+				light.mQuadratic = lightData.mQuadraticFalloff;
+
+				pointLights.push_back(light);
+
+				m_Renderer.AddCube(lightTransform.mTranslate, { 20, 20, 20 });
+			}
+			GLuint mLightCountShaderLocation = shaderinst.GetUniformLocation("uLightCount");
+			glUniform1i(mLightCountShaderLocation, (int)pointLights.size());
+
+			m_PointLightSsbo.SubData(pointLights.size() * sizeof(PointLightSSBO), pointLights.data());
+			pointLights.clear();
+
+			//GLuint mLightPosShaderLocation = shaderinst.GetUniformLocation("uLightPos");
+			//GLuint mLightIntensityShaderLocation = shaderinst.GetUniformLocation("uLightIntensity");
+			//GLuint mLightColorShaderLocation = shaderinst.GetUniformLocation("uLightColor");
+
+			//glUniform3fv(mLightPosShaderLocation, 1, &lightTransform.mTranslate[0]);
+			//glUniform3fv(mLightColorShaderLocation, 1, &lightData.mLightColor[0]);
+			//glUniform1f(mLightIntensityShaderLocation, lightData.mIntensity);
+
 		}
 
 		// bind texture unit
@@ -369,19 +387,19 @@ void GraphicsSystem::EditorDraw(float dt)
 		GLuint debug_draw = glGetUniformLocation(shaderID, "uDebugDraw");
 		glUniform1i(debug_draw, m_DebugDrawing);
 
-		// send animation data over to the shader if there is animations
-		if (inst.HasComponent<Animator>() && _ENABLE_ANIMATIONS)
-		{
-			const auto &transform = inst.GetComponent<Animator>().mAnimator.m_FinalBoneMatrices;
-			size_t totaltransform = transform.size();
+		//// send animation data over to the shader if there is animations
+		//if (inst.HasComponent<Animator>() && _ENABLE_ANIMATIONS)
+		//{
+		//	const auto &transform = inst.GetComponent<Animator>().mAnimator.m_FinalBoneMatrices;
+		//	size_t totaltransform = transform.size();
 
-			for (size_t b{}; b < totaltransform; ++b)
-			{
-				// send the bone matrices to the shader via uniforms
-				std::string name = "finalBoneMatrices[" + std::to_string(b) + "]";
-				glUniformMatrix4fv(glGetUniformLocation(shaderID, name.c_str()), 1, GL_FALSE, &transform[b][0][0]);
-			}
-		}
+		//	for (size_t b{}; b < totaltransform; ++b)
+		//	{
+		//		// send the bone matrices to the shader via uniforms
+		//		std::string name = "finalBoneMatrices[" + std::to_string(b) + "]";
+		//		glUniformMatrix4fv(glGetUniformLocation(shaderID, name.c_str()), 1, GL_FALSE, &transform[b][0][0]);
+		//	}
+		//}
 
 		// Bind mesh's VAO, copy render data into VBO, Draw
 		DrawAll(meshinst);
@@ -863,7 +881,7 @@ void GraphicsSystem::UnpauseGlobalAnimation()
 void GraphicsSystem::SetupShaderStorageBuffers()
 {
 	// All Point Lights in the Scene -- Location 2
-	m_PointLightSsbo.Create(sizeof(PointLight) * MAX_POINT_LIGHT, 2);
+	m_PointLightSsbo.Create(sizeof(PointLightSSBO) * MAX_POINT_LIGHT, 2);
 
 	// Final Bone Matrix for Animation -- Location 3
 	m_FinalBoneMatrixSsbo.Create(sizeof(mat4) * MAX_NUM_BONES * MAX_INSTANCES, 3);

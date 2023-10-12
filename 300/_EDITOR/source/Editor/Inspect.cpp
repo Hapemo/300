@@ -397,11 +397,17 @@ void PointLight::Inspect()
 		ImGui::DragFloat3("##Light Color", (float*)&mLightColor);
 
 
-		/*ImGui::Text("Attenuation");
+		ImGui::Text("Linear Falloff");
 		ImGui::SameLine();
 		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
 			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
-		ImGui::DragFloat("##Attenuation", (float*)&mAttenuation);*/
+		ImGui::DragFloat("##Linear Falloff", (float*)&mLinearFalloff);
+
+		ImGui::Text("Quadratic Falloff");
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		ImGui::DragFloat("##Quadratic Falloff", (float*)&mQuadraticFalloff);
 
 		ImGui::Text("Intensity");
 		ImGui::SameLine();
