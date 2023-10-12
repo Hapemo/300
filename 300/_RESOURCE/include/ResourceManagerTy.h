@@ -71,7 +71,8 @@ public:
         Mesh accessors/initializer functions
     */
     /**************************************************************************/
-    void mesh_Loader();
+    void mesh_LoadFolder();
+    void mesh_Load(std::string filepath, unsigned uid);
     GFX::Mesh* SetupMesh(std::string filepath, unsigned);
     GFX::Mesh* get_mesh(unsigned );
 

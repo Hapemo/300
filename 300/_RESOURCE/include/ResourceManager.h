@@ -250,7 +250,7 @@ public:
     */
     /**************************************************************************/
     void Init();
-    void mesh_Loader();
+    void mesh_LoadFolder();
     void shader_Loader();
     void MaterialInstance_Loader();
 

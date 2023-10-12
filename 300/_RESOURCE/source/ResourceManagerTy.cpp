@@ -27,7 +27,7 @@ void ResourceTy::Init()
 	m_pInfoBufferEmptyHead = m_Infobuffer.data();
 
 
-	mesh_Loader();
+	mesh_LoadFolder();
 	MaterialInstance_Loader();
 	MaterialEditor_Loader();
 	std::cout << "Initializing Resource Manager.\n";
@@ -57,7 +57,33 @@ void ResourceTy::Exit() {
 	Loads mesh (geom) from file
 */
 /**************************************************************************/
-void ResourceTy::mesh_Loader()
+void ResourceTy::mesh_Load(std::string filepath, unsigned uid)
+{
+	std::cout << "[NOTE]>> Loading file: \t" << filepath << "\n";
+	std::cout << "[NOTE]>> Loading uid: \t" << uid << "\n";
+
+	++mResouceCnt;
+	GFX::Mesh* meshPtr = SetupMesh(filepath, uid);
+	instance_infos& tempInstance = AllocRscInfo();
+
+	tempInstance.m_pData = reinterpret_cast<void*>(meshPtr);
+	tempInstance.m_Name = filepath;
+	tempInstance.m_GUID = uid;
+	tempInstance.m_Type = _MESH;
+			
+	m_ResourceInstance.emplace(uid, &tempInstance);
+}
+
+bool check_extensions(std::string file, std::string extension) {
+	size_t path_length = file.length();
+	std::string path_extension = file.substr(path_length - extension.length());
+	if (path_extension == extension)
+		return true;
+
+	return false;
+}
+
+void ResourceTy::mesh_LoadFolder()
 {
 	std::filesystem::path folderpath = compiled_geom_path.c_str();
 
@@ -69,25 +95,32 @@ void ResourceTy::mesh_Loader()
 			std::cout << "============================================\n";
 			std::cout << "[NOTE]>> Loading file: \t" << entry.path().filename() << "\n";
 
+			if(!check_extensions(entry.path().filename().string(), ".geom"))
+				continue;
 
 			std::string filepath = compiled_geom_path + entry.path().filename().string();
 
 			++mResouceCnt;
-			uid uids(filepath);
-			GFX::Mesh* meshPtr = SetupMesh(filepath, uids.id);
+			//uid uids(filepath);
+
+			std::string descfilepath = filepath + ".desc";
+			unsigned guid = _GEOM::GetGUID(descfilepath);
+
+			GFX::Mesh* meshPtr = SetupMesh(filepath, guid);
 			instance_infos& tempInstance = AllocRscInfo();
 
 
 			tempInstance.m_pData = reinterpret_cast<void*>(meshPtr);
 			tempInstance.m_Name = filepath;
-			tempInstance.m_GUID = uids.id;
+			tempInstance.m_GUID = guid;
 			tempInstance.m_Type = _MESH;
 
-			
-			m_ResourceInstance.emplace(uids.id, &tempInstance);
+
+			m_ResourceInstance.emplace(guid, &tempInstance);
 		}
 	}
 }
+
 /***************************************************************************/
 /*!
 \brief

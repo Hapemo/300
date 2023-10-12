@@ -18,7 +18,9 @@
 #include "RAPID-JSON/filereadstream.h"
 #include "RAPID-JSON/filewritestream.h"
 
-#include "descriptor.h"
+#include <descriptor.h>
+#include <Guid.h>
+
 #include <iostream>
 #include <fstream>
 
@@ -223,9 +225,208 @@ namespace _GEOM
 
 	bool DescriptorData::SerializeGEOM_DescriptorDataToFile(std::string geomFilepath, const DescriptorData& GEOM_DescriptorFile) noexcept
 	{
+		rapidjson::Document doc;
+		doc.SetObject();
+		rapidjson::Document::AllocatorType& allocator = doc.GetAllocator();
+
+		rapidjson::Value fbxfilepath(GEOM_DescriptorFile.m_Filepaths[0].c_str(), allocator);
+		doc.AddMember("Asset_Filepaths", fbxfilepath, allocator);
+
+		doc.AddMember("GUID", GEOM_DescriptorFile.m_GUID, allocator);
+		doc.AddMember("Asset_OutputPath", "../assets/compiled_geom/", allocator);
+		doc.AddMember("Compiled_Geom_Format", ".geom", allocator);
+
+		rapidjson::Value sclvecObj(rapidjson::kObjectType);
+		sclvecObj.AddMember("x", 1, allocator);
+		sclvecObj.AddMember("y", 1, allocator);
+		sclvecObj.AddMember("z", 1, allocator);
+
+		rapidjson::Value rotvecObj(rapidjson::kObjectType);
+		rotvecObj.AddMember("x", 0, allocator);
+		rotvecObj.AddMember("y", 0, allocator);
+		rotvecObj.AddMember("z", 0, allocator);
+
+		rapidjson::Value trnsvecObj(rapidjson::kObjectType);
+		trnsvecObj.AddMember("x", 0, allocator);
+		trnsvecObj.AddMember("y", 0, allocator);
+		trnsvecObj.AddMember("z", 0, allocator);
+
+		doc.AddMember("Pre_Transform_Scale", sclvecObj, allocator);
+		doc.AddMember("Pre_Transform_Rotate", rotvecObj, allocator);
+		doc.AddMember("Pre_Transform_Translate", trnsvecObj, allocator);
+
+		// Serialize to a file
+		std::ofstream file(geomFilepath.c_str());
+		if (file.is_open()) 
+		{
+			rapidjson::StringBuffer buffer;
+			rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+			doc.Accept(writer);
+
+			file << buffer.GetString() << std::endl;
+			file.close();
+
+			std::cout << "JSON data serialized to " << geomFilepath << std::endl;
+		}
+		else {
+			std::cerr << "Failed to open the file for writing." << std::endl;
+			return false;
+		}
+
 		return true;
 	}
 
+
+
+	bool DescriptorData::CheckGUID(std::string geomFilepath, const FBX_DescriptorData& GeomDescriptorFile) noexcept
+	{
+		// Read the json data from the file
+		std::ifstream file(geomFilepath);
+		assert(file.is_open());
+
+		std::string jsonContent((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
+		file.close();
+
+		// Parse the json data using rapidjson
+		rapidjson::Document document;
+		if (document.Parse(jsonContent.c_str()).HasParseError())
+		{
+			std::cout << "Error parsing json file: " << geomFilepath << std::endl;
+			return false;
+		}
+
+		//!< Access the JSON data
+		if (document.HasMember("GUID"))
+		{
+			rapidjson::Value& assetFilepaths = document["GUID"];
+			assert(assetFilepaths.IsUint());
+			if (GeomDescriptorFile.m_GUID == assetFilepaths.GetUint())
+				return true;
+		}
+
+		// no match is found
+		return false;
+	}
+
+
+	unsigned GetGUID(std::string geomFilepath) noexcept
+	{
+		// Read the json data from the file
+		std::ifstream file(geomFilepath);
+		assert(file.is_open());
+
+		std::string jsonContent((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
+		file.close();
+
+		// Parse the json data using rapidjson
+		rapidjson::Document document;
+		if (document.Parse(jsonContent.c_str()).HasParseError())
+		{
+			std::cout << "Error parsing json file: " << geomFilepath << std::endl;
+			return -1;
+		}
+
+		//!< Access the JSON data
+		if (document.HasMember("GUID"))
+		{
+			rapidjson::Value& assetFilepaths = document["GUID"];
+			assert(assetFilepaths.IsUint());
+
+			return assetFilepaths.GetUint();
+		}
+
+		// no GUID is found
+		return -1;
+	}
+
+	bool CheckAndCreateDescriptorFile(std::string fbxfilepath, std::string& GEOM_Descriptor_Filepath)
+	{
+		auto getFilename = [](const std::string& str) -> std::string
+		{
+			size_t found = str.find_last_of("\\");
+
+			if (found == std::string::npos)
+			{
+				found = str.find_last_of("/");
+			}
+
+			return str.substr(found + 1);
+		};
+
+		//const char* data = (const char*)payload->Data;
+		//std::string data_str = std::string(data);
+		//mMeshPath = data_str;
+
+		// GUID is generated here
+		uid meshguid(fbxfilepath);
+		_GEOM::FBX_DescriptorData fbxDescriptor(meshguid.id);
+
+		//>> 1.0: Check if the FBX Desc file is present using filename
+		std::string fbxFilepath = fbxfilepath.substr(0, fbxfilepath.find_last_of("/"));
+		std::string FBX_DescFile = getFilename(fbxfilepath) + ".desc";
+		bool descFilePresent = false;
+
+		std::filesystem::path FBXfolderpath = fbxFilepath;
+		for (const auto& FBXentry : std::filesystem::directory_iterator(FBXfolderpath))
+		{
+			//std::cout << "FBXentry: " << getFilename(FBXentry.path().string()) << std::endl;
+			if (getFilename(FBXentry.path().string()) == FBX_DescFile)
+			{
+				// FBX Descriptor file is present
+				descFilePresent = true;
+				break;
+			}
+		}
+
+		//>> 2.0: The FBX Descriptor file is not present. We have to create one to serialize the GUID
+		if (!descFilePresent)
+		{
+			std::string descFilepath = fbxFilepath + "/" + FBX_DescFile;
+			_GEOM::FBX_DescriptorData::SerializeFBX_DescriptorFile(descFilepath, fbxDescriptor);
+		}
+
+		// 2.1: if the FBX descriptor is present, we deserialize the GUID from the file
+		else
+		{
+			// >> CHECK: Do we really need this step? will the guid just be the same as the one generated above?
+			std::string descFilepath = fbxFilepath + "/" + FBX_DescFile;
+			_GEOM::FBX_DescriptorData::DeserializeFBX_DescriptorFile(descFilepath, fbxDescriptor);
+		}
+
+		//>> 3.0: Run through the GEOM descriptor files to find a matching GUID
+		std::filesystem::path GEOMfolderpath = _GEOM::mGeomFolderpath;
+		descFilePresent = false;
+		for (const auto& GEOMentry : std::filesystem::directory_iterator(GEOMfolderpath))
+		{
+			// 3.1: Check the GEOM Descriptor whether the GUID is the same
+			std::string geomdesccheck = GEOMentry.path().string().substr(GEOMentry.path().string().find_last_of("."));
+			if (geomdesccheck != ".desc")
+				continue;
+
+			//std::cout << "GEOMentry: " << getFilename(GEOMentry.path().string()) << std::endl;
+			if (_GEOM::DescriptorData::CheckGUID(GEOMentry.path().string(), fbxDescriptor))
+			{
+				GEOM_Descriptor_Filepath = GEOMentry.path().string();
+				descFilePresent = true;
+			}
+		}
+
+		// 3.1: If the GEOM descriptor file is not present
+		_GEOM::DescriptorData geomDescriptor;
+		geomDescriptor.m_GUID = fbxDescriptor.m_GUID;
+		geomDescriptor.m_Filepaths.emplace_back(fbxfilepath);
+
+		// If the descriptor file is not present, then load it
+		if (!descFilePresent)
+		{
+			//>> Create a default geom descriptor file
+			std::string geomdescName = getFilename(fbxfilepath);
+			GEOM_Descriptor_Filepath = _GEOM::mGeomFolderpath + geomdescName.substr(0, geomdescName.find_last_of(".") + 1) + "geom.desc";
+			_GEOM::DescriptorData::SerializeGEOM_DescriptorDataToFile(GEOM_Descriptor_Filepath, geomDescriptor);
+		}
+
+		return descFilePresent;
+	}
 
 	void FBX_DescriptorData::SerializeFBX_DescriptorFile(std::string fbxFilepath, const FBX_DescriptorData& FBX_DescriptorFile) noexcept
 	{
@@ -254,9 +455,30 @@ namespace _GEOM
 	}
 
 
-	void FBX_DescriptorData::LoadFBX_DescriptorFile(std::string fbxFilepath, FBX_DescriptorData& FBX_DescriptorFile) noexcept
+	void FBX_DescriptorData::DeserializeFBX_DescriptorFile(std::string fbxFilepath, FBX_DescriptorData& FBX_DescriptorFile) noexcept
 	{
+		// Read the json data from the file
+		std::ifstream file(fbxFilepath);
+		assert(file.is_open());
 
+		std::string jsonContent((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
+		file.close();
+
+		// Parse the json data using rapidjson
+		rapidjson::Document document;
+		if (document.Parse(jsonContent.c_str()).HasParseError())
+		{
+			std::cout << "Error parsing json file: " << fbxFilepath << std::endl;
+			return;
+		}
+
+		//!< Access the JSON data
+		if (document.HasMember("GUID"))
+		{
+			rapidjson::Value& assetFilepaths = document["GUID"];
+			assert(assetFilepaths.IsUint());
+			FBX_DescriptorFile.m_GUID = assetFilepaths.GetUint();
+		}
 	}
 
 }

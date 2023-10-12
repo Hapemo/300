@@ -72,7 +72,7 @@ Inspect display for InputActionMapEditor components.
 #include "Input/InputMapSystem.h"
 
 #include <descriptor.h>
-
+#include <string>
 
 /***************************************************************************/
 /*!
@@ -585,8 +585,9 @@ void MeshRenderer::Inspect() {
 				std::string data_str = std::string(data);
 				mMeshPath = data_str;
 
-				uid temp(mMeshPath);
-				mMeshRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(temp.id));
+				std::string descfilepath = data_str + ".desc";
+				unsigned guid = _GEOM::GetGUID(descfilepath);
+				mMeshRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(guid));
 
 				GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mMeshRef);
 
@@ -612,74 +613,44 @@ void MeshRenderer::Inspect() {
 		{
 			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_FBX")) 
 			{
-
-				auto getFilename = [](const std::string& str) -> std::string
-				{
-					size_t found = str.find_last_of("\\");
-
-					if (found == std::string::npos)
-					{
-						found = str.find_last_of("/");
-					}
-
-					return str.substr(found + 1);
-				};
-
 				const char* data = (const char*)payload->Data;
 				std::string data_str = std::string(data);
 				mMeshPath = data_str;
+				std::string GEOM_Descriptor_Filepath;
+				unsigned guid;
 
-				// GUID is generated here
-				uid meshguid(mMeshPath);
-				_GEOM::FBX_DescriptorData newDescriptor(meshguid.id);
+				bool descFilePresent = _GEOM::CheckAndCreateDescriptorFile(data_str, GEOM_Descriptor_Filepath);
+				std::string descfilepath = data_str + ".desc";
+				guid = _GEOM::GetGUID(descfilepath);
 
-				// 1. Check if the FBX Desc file is present using filename
-				std::string fbxFilepath = data_str.substr(0, data_str.find_last_of("/"));
-				std::string FBX_DescFile = getFilename(data_str) + ".desc";
-				bool descFilePresent = false;
-
-				std::filesystem::path folderpath = fbxFilepath;
-				for (const auto& entry : std::filesystem::directory_iterator(folderpath))
-				{
-					std::cout << "entry: " << getFilename(entry.path().string()) << std::endl;
-					if (getFilename(entry.path().string()) == FBX_DescFile)
-					{
-						// FBX Descriptor file is present
-						descFilePresent = true;
-						break;
-					}
-				}
-
-				// The FBX Descriptor file is not present. We have to create one to serialize the GUID
+				// If the descriptor file is not present, then load it
 				if (!descFilePresent)
 				{
-					std::string descFilepath = fbxFilepath + "/" + FBX_DescFile;
-					_GEOM::FBX_DescriptorData::SerializeFBX_DescriptorFile(descFilepath, newDescriptor);
+					//!>> Calling the GEOM Compiler to load 
+					std::string command = "..\\_GEOM_COMPILER\\_GEOM_COMPILER.exe ";
+					command += GEOM_Descriptor_Filepath;
+					int result = system(command.c_str());
+
+					std::string geompath = GEOM_Descriptor_Filepath.substr(0, GEOM_Descriptor_Filepath.find_last_of("."));
+
+					systemManager->mResourceTySystem->mesh_Load(geompath, guid);
 				}
 
-				else
+				mMeshRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(guid));
+
+				GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mMeshRef);
+
+				Entity entins(Hierarchy::selectedId);
+				if (entins.HasComponent<Animator>() && meshinst->mHasAnimation)
 				{
-					// if the FBX descriptor is present, we deserialize the GUID from the file
-					// >> Note: Do we really need this step? will the guid just be the same as the one generated above?
+					// if the new entity has both animations and the animator component, update the animator to use the new animation
+					entins.GetComponent<Animator>().mAnimator.SetAnimation(&meshinst->mAnimation[0]);
 				}
-
-				//mMeshRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(temp.id));
-
-				//GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mMeshRef);
-
-				//Entity entins(Hierarchy::selectedId);
-				//if (entins.HasComponent<Animator>() && meshinst->mHasAnimation)
-				//{
-				//	// if the new entity has both animations and the animator component, update the animator to use the new animation
-				//	entins.GetComponent<Animator>().mAnimator.SetAnimation(&meshinst->mAnimation[0]);
-				//}
-				//else if (entins.HasComponent<Animator>() && !meshinst->mHasAnimation)
-				//{
-				//	// if the new entity's mesh has no animation, but the entity still has the animator component
-				//	entins.GetComponent<Animator>().mAnimator.m_CurrentAnimation = nullptr;
-				//}
-
-				std::cout << "endtest\n";
+				else if (entins.HasComponent<Animator>() && !meshinst->mHasAnimation)
+				{
+					// if the new entity's mesh has no animation, but the entity still has the animator component
+					entins.GetComponent<Animator>().mAnimator.m_CurrentAnimation = nullptr;
+				}
 			}
 
 

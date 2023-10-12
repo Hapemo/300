@@ -22,6 +22,7 @@
 #include <algorithm>
 
 #include <meshoptimizer.h>
+
 #pragma comment( lib, "../lib/assimp/BINARIES/Win32/lib/Release/assimp-vc142-mt.lib")
 
 // Artist create different sized models -- units
@@ -63,6 +64,13 @@ namespace _GEOM
 		std::string actualPath = _DData.m_Filepaths[_DData.m_iMeshCurrent];
 		std::cout << ">>[NOTE]: \tReading File\n";
 		m_Scene = importer.ReadFile(actualPath, flag);
+
+#pragma region create descriptor file
+
+		std::string geompath;
+		CheckAndCreateDescriptorFile(actualPath, geompath);
+
+#pragma endregion
 
 		//Failed import
 		if (m_Scene == nullptr)

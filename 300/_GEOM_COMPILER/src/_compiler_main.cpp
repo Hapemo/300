@@ -68,6 +68,10 @@ void LoadAndSerializeAllMeshes(_GEOM::DescriptorData& Desc)
 		_GEOM::Mesh_Loader meshLoader;
 		_GEOM::SkinGeom SkinGeom;
 
+		std::string test = Desc.m_Filepaths[Desc.m_iMeshCurrent].substr(Desc.m_Filepaths[Desc.m_iMeshCurrent].find_last_of("."));
+		if(Desc.m_Filepaths[Desc.m_iMeshCurrent].substr(Desc.m_Filepaths[Desc.m_iMeshCurrent].find_last_of(".")) == ".desc")
+			continue;
+
 		meshLoader.getMeshName() = meshLoader.getFileNameWithoutExtension(Desc.m_Filepaths[Desc.m_iMeshCurrent]);
 		bool Err = meshLoader.Load(Desc, &SkinGeom);
 		assert(Err);
@@ -113,13 +117,13 @@ int main(int argc, char* argv[])
 		// This is reserved for when I want to implement specific asset loading from the command line
 		for (int i{}; i < argc; ++i)
 		{
-			std::cout << "Argument: " << i << " = " << argv[i] << std::endl;
+			std::cout << argv[i] << " | ";
 		}
 
 		descriptorFilepath = argv[1];
 
 		// Load the descriptor data
-		std::cout << ">>\t\tLoading Descriptor Data For ONE Meshes\n";
+		std::cout << ">>\t\tLoading Descriptor Data For ONE Mesh\n";
 		bool Err = _GEOM::DescriptorData::DeserializeGEOM_DescriptorDataFromFile(Desc, descriptorFilepath);
 		assert(Err);
 	}

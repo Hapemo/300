@@ -68,11 +68,6 @@ void GraphicsSystem::Init()
 		UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_GAME, 0.f);
 	}
 
-	//!< TEST calling the geom compiler exe
-	const char* command = "..\\_GEOM_COMPILER\\_GEOM_COMPILER.exe ..\\_GEOM_COMPILER\\descriptor_files\\test.json";
-	int result = system(command);
-	std::cout << "test";
-
 #if 0
 #pragma region create entity 1
 	// Create a new entity here, for testing purposes

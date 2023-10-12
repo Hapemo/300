@@ -33,9 +33,9 @@ void Resource::Init()
 	mShaderManager.Init();
 	mMaterialInstanceManager.Init();
 
-	mesh_Loader();
+	//mesh_LoadFolder();
 	shader_Loader();
-	MaterialInstance_Loader();
+	//MaterialInstance_Loader();
 }
 /***************************************************************************/
 /*!
@@ -78,7 +78,7 @@ void Resource::ReleaseRscInfo(instance_info& RscInfo)
 	Loads compiled mesh ( geom ) into Engine
 */
 /**************************************************************************/
-void Resource::mesh_Loader() 
+void Resource::mesh_LoadFolder() 
 {
 	std::filesystem::path folderpath = compiled_geom_path.c_str();
 
