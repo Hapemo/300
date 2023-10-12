@@ -216,6 +216,7 @@ xcopy "$(SolutionDir)assets\*.*" "$(SolutionDir)x64\assets" /Y /I /E</Command>
     <ClCompile Include="source\Imgui\imgui_tables.cpp" />
     <ClCompile Include="source\Imgui\imgui_widgets.cpp" />
     <ClCompile Include="source\main.cpp" />
+    <ClCompile Include="source\Editor\KeybindWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\EditorApplication.h" />
@@ -232,6 +233,7 @@ xcopy "$(SolutionDir)assets\*.*" "$(SolutionDir)x64\assets" /Y /I /E</Command>
     <ClInclude Include="include\Editor\SceneWindow.h" />
     <ClInclude Include="include\Editor\Script\Script.h" />
     <ClInclude Include="include\Editor\TabWindow.h" />
+    <ClInclude Include="include\Editor\KeybindWindow.h" />
     <ClInclude Include="source\Imgui\imconfig.h" />
     <ClInclude Include="source\Imgui\imgui.h" />
     <ClInclude Include="source\Imgui\ImGuizmo.h" />

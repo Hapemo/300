@@ -30,3 +30,14 @@ std::string Misc::GetFileName(std::string const& _filepath) {
 
   return "";
 }
+
+std::unordered_map<std::string, std::string> Misc::TextFileToMap(std::fstream& _file) {
+  std::unordered_map<std::string, std::string> data;
+  std::string line{};
+  while (std::getline(_file, line)) {
+    if (!line.size()) continue;
+    size_t midpoint{ line.find(':') };
+    data.insert({ line.substr(0, midpoint), line.substr(midpoint + 2, midpoint + 2 - line.length()) });
+  }
+  return data;
+}

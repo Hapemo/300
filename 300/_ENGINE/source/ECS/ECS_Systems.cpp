@@ -47,7 +47,6 @@ void SystemManager::Init(bool isEditor, GFX::Window *window)
 	mScriptingSystem.get()->Init();
 	PINFO("Init Scripting System");
 
-
 	mResourceSystem.get()->Init();
 	mResourceTySystem.get()->Init();
 	PINFO("Init Graphics System");
@@ -90,7 +89,6 @@ void SystemManager::Play()
 
 void SystemManager::Update(float dt)
 {
-	mInputActionSystem.get()->Update();
 	EnginePerformance::StartTrack("Graphics");
 	mGraphicsSystem.get()->Update(dt);
 	mGameStateSystem.get()->UpdateNextGSMState();

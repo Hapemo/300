@@ -40,7 +40,7 @@ Returns main window for docking
 #include "PrefabWindow.h"
 #include "GameScene.h"
 #include "TabWindow.h"
-
+#include "KeybindWindow.h"
 
 
 /***************************************************************************/
@@ -153,6 +153,7 @@ void Editor::UIinit(GLFWwindow* window)
     mWindowlist["Logger"] = new EditorLogger;
     mWindowlist["PrefabScene"] = new PrefabWindow;
     mWindowlist["GameScene"] = new GameScene;
+    mWindowlist["KeybindWindow"] = new KeybindWindow;
 
     for (auto & windows : mWindowlist ) 
     {
