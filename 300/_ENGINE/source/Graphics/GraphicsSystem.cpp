@@ -164,10 +164,10 @@ void GraphicsSystem::Init()
 void GraphicsSystem::Update(float dt)
 {
 	// -- WIP --  SHADER STORAGE BUFFER OBJECT
-	finalBoneMatrices.push_back(mat4(1.0f));
-	finalBoneMatrices.push_back(mat4(2.0f));
-	ShaderStorageBufferSubData(finalBoneMatrices.size() * sizeof(mat4), finalBoneMatrices.data());
-	finalBoneMatrices.clear();
+	//finalBoneMatrices.push_back(mat4(1.0f));
+	//finalBoneMatrices.push_back(mat4(2.0f));
+	//ShaderStorageBufferSubData(finalBoneMatrices.size() * sizeof(mat4), finalBoneMatrices.data());
+	//finalBoneMatrices.clear();
 	// -- WIP --  SHADER STORAGE BUFFER OBJECT
 
 	// update the camera's transformations, and its input
@@ -237,12 +237,20 @@ void GraphicsSystem::Update(float dt)
 			if (inst.GetComponent<Animator>().mAnimator.m_CurrentAnimation != nullptr)
 			{
 				inst.GetComponent<Animator>().mAnimator.UpdateAnimation(dt, mat4(1.f), final); // update the current animation
+
+				// push back matrices into the SSBO
+				for (const auto& x : inst.GetComponent<Animator>().mAnimator.m_FinalBoneMatrices)
+				{
+					finalBoneMatrices.push_back(x);
+				}
 			}
 		}
 
 		// meshinst.mLTW.push_back(final);
 		AddInstance(meshinst, final, static_cast<unsigned>(inst.id));
 	}
+	ShaderStorageBufferSubData(finalBoneMatrices.size() * sizeof(mat4), finalBoneMatrices.data());
+	finalBoneMatrices.clear();
 
 #pragma endregion
 

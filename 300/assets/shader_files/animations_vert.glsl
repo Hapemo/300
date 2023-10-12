@@ -58,9 +58,9 @@ void main()
             break;
         }
 
-        vec4 localPosition = finalBoneMatrices[boneId] * vec4(inQPos, 1.0f);
+        vec4 localPosition = matrices[boneId] * vec4(inQPos, 1.0f);
         totalPosition += localPosition * boneWeights[i];
-        normal = mat3(finalBoneMatrices[boneId]) * inNormal;
+        normal = mat3(matrices[boneId]) * inNormal;
     }
 
     gl_Position         = uMatrixVP * inLTW * totalPosition;

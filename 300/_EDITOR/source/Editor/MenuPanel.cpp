@@ -22,7 +22,7 @@ Contains main loop for the logic of MenuPanel.
 #include "ECS/ECS_Systems.h"
 #include "GameState/GameStateManager.h"
 #include "Hierarchy.h"
-
+#include "KeybindWindow.h"
 
 /***************************************************************************/
 /*!
@@ -59,8 +59,17 @@ void MenuPanel::update()
 
             ImGui::EndMenu();
         }
+        if (ImGui::BeginMenu("Settings"))
+        {
+            if (ImGui::MenuItem("Input"))
+            {
 
+                KeybindWindow::openWindow = true;
 
+            }
+
+            ImGui::EndMenu();
+        }
 
         if (ImGui::BeginMenu("Theme"))
         {
