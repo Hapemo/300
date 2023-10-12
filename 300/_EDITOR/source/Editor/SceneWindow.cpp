@@ -91,10 +91,10 @@ void SceneWindow::update()
 	winSize= { ImGui::GetWindowSize().x ,ImGui::GetWindowSize().y};
 
 	if (ImGui::IsWindowHovered()) {
-		systemManager->mGraphicsSystem->m_EnableScroll == true;
+		systemManager->mGraphicsSystem->m_EnableScroll = true;
 	}
 	else {
-		systemManager->mGraphicsSystem->m_EnableScroll == false;
+		systemManager->mGraphicsSystem->m_EnableScroll = false;
 	}
 }
 
