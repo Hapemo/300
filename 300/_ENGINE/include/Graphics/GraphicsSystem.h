@@ -209,6 +209,7 @@ public:
 	bool	m_EditorMode;
 	bool	m_EnableGlobalAnimations{ 1 };
 	bool	m_HasLight{ false };
+	bool    m_EnableScroll{ false };
 
 private:
 	// -- SSBO -- 

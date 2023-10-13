@@ -166,7 +166,7 @@ void GraphicsSystem::Update(float dt)
 	// -- WIP --  SHADER STORAGE BUFFER OBJECT
 	finalBoneMatrices.push_back(mat4(1.0f));
 	finalBoneMatrices.push_back(mat4(2.0f));
-	ShaderStorageBufferSubData(finalBoneMatrices.size() * sizeof(mat4), finalBoneMatrices.data());
+	//ShaderStorageBufferSubData(finalBoneMatrices.size() * sizeof(mat4), finalBoneMatrices.data());
 	finalBoneMatrices.clear();
 	// -- WIP --  SHADER STORAGE BUFFER OBJECT
 
