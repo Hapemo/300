@@ -44,4 +44,7 @@ void GameScene::update()
 	{
 		systemManager->mGraphicsSystem->m_CameraControl = CAMERA_TYPE::CAMERA_TYPE_GAME;
 	}
+
+	systemManager->mGraphicsSystem->m_EnableScroll |= ImGui::IsWindowHovered();
 }
+

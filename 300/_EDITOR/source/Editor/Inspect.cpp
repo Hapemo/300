@@ -625,6 +625,9 @@ void MeshRenderer::Inspect() {
 				std::string GEOM_Descriptor_Filepath;
 				unsigned guid;
 
+
+
+
 				bool descFilePresent = _GEOM::CheckAndCreateDescriptorFile(data_str, GEOM_Descriptor_Filepath);
 				std::string descfilepath = data_str + ".desc";
 				guid = _GEOM::GetGUID(descfilepath);
