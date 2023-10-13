@@ -39,6 +39,24 @@ struct Channel
 	bool		   mIsPlayingSound;
 };
 
+// [10/13] Interfacing for (Designers) to use in [Scripting] 
+/******************************************************************************/
+/*!
+	[Class] AudioSource
+	 \brief
+	  - Works with <Audio> component for the data.
+	  - Interfaced functions that make it easy to use on scripting side (port to Lua)
+	 \brief (things to note)
+	  - Each <AudioSource> will have their own channel.
+ */
+ /******************************************************************************/
+class AudioSource
+{
+	//std::string 
+	AUDIOTYPE mAudioType;		// Account for [AudioSystem]'s global SFX / BGM functions (e.g. MuteAllSFX())
+
+};
+
 /******************************************************************************/
 /*!
 	[Class] AudioSystem
@@ -81,15 +99,24 @@ public:
 	void TogglePauseBGMSounds();
 	void TogglePauseSpecific(AUDIOTYPE audio_type, int channel_id);
 
+	// Added [10/13] - Audio Specific Functions
+	/*void StopAudio(std::string audio_name);
+	void SetAudioVolume()*/
+
 	// Helper Functions...
 public:
 	Channel& FindChannel(AUDIOTYPE audio_type, int id);
 
 	// Will build as needs require.
+
+public:
+	// Scripting Testing Functions (later port to Lua)
+	
+
 private:
 	// std::unordered_map<AUDIOTYPE, std::vector<FMOD::Channel*>>  mChannels;	// Depreciated [9/25]
-	std::unordered_map<AUDIOTYPE, std::vector<Channel>>         mChannelsNew;
-	std::unordered_map<std::string, FMOD::Sound*>				mSounds;
+	std::unordered_map<AUDIOTYPE, std::vector<Channel>>         mChannelsNew;	// Database of Channels (SFX / BGM)
+	std::unordered_map<std::string, FMOD::Sound*>				mSounds;        // Database of Sounds (SFX/BGM)
 
 	// Global Volume 
 	float sfxVolume;
