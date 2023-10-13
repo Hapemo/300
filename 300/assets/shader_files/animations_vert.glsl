@@ -16,14 +16,11 @@ layout (location = 8) in mat4   inLTW;			// local to world
 
 const int MAX_BONES = 200;
 const int MAX_BONE_INFLUENCE = 4;
-//uniform mat4 finalBoneMatrices[MAX_BONES];
 
 uniform mat4 uMatrixVP;     // view projection
-uniform vec3 uLightPos;
 uniform vec3 uViewPos;
 uniform bool uHasLight;
 
-// for SSBO testing purposes
 layout (std430, binding = 3) buffer boneFinal
 {
   mat4 matrices[];
@@ -31,7 +28,6 @@ layout (std430, binding = 3) buffer boneFinal
 
 out vec2 TexCoords;
 out mat3 TBN;
-out vec3 TangentLightPos;
 out vec3 TangentViewPos;
 out vec3 TangentFragPos;
 out vec4 Tex_Ent_ID;
@@ -79,7 +75,6 @@ void main()
 
     // Set all the output vars
     //gl_Position         = uMatrixVP * inLTW * vec4(inQPos,1.0);
-    TangentLightPos     = TBN * uLightPos;
     TangentViewPos      = TBN * uViewPos;
     TangentFragPos      = TBN * vec3(inLTW * totalPosition);
 }

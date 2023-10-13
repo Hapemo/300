@@ -41,11 +41,12 @@ enum class CAMERA_TYPE
 
 struct PointLightSSBO
 {
-	vec3 mPosition;
-	vec3 mColor{ 1.f, 1.f, 1.f };
+	alignas(16) vec4 mPosition;
+	alignas(16) vec4 mColor{ 1.f, 1.f, 1.f, 0.f};
 	float mLinear;
 	float mQuadratic;
 	float mIntensity;
+	float mPad{};
 };
 
 /***************************************************************************/

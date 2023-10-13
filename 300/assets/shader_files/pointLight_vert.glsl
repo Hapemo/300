@@ -17,11 +17,9 @@ uniform bool uHasLight;
 out vec4 VertexColor;       // for debugging
 out vec2 TexCoords;
 out mat3 TBN;
-//out vec3 TangentLightPos;
 out vec3 TangentViewPos;
 out vec3 TangentFragPos;
 out vec4 Tex_Ent_ID;
-//out int hasLight;
 
 void main() 
 {
@@ -43,7 +41,6 @@ void main()
     TBN = transpose(mat3(T, B, N));
 
     // Transform position to tangent space
-//    TangentLightPos = TBN * uLightPos;
     TangentViewPos  = TBN * uViewPos;
     TangentFragPos  = TBN * vec3(inLTW * vec4(inPos, 1.0));
 }
