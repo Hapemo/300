@@ -84,8 +84,8 @@ public:
     // Serializes the AssimpNodeData into a binary file recursively
 */
 /**************************************************************************/
-template< typename T = unsigned >
-T generateUniqueID() {
+//template< typename T = unsigned >
+unsigned generateUniqueID() {
     // Step 1: Obtain the current system time
     auto currentTime = std::chrono::system_clock::now().time_since_epoch().count();
 
@@ -100,7 +100,7 @@ T generateUniqueID() {
 
     // Step 4: Apply a hashing algorithm
     std::hash<std::string> hasher;
-    T hashedValue = (unsigned)hasher(combinedString);
+    unsigned hashedValue = (unsigned)hasher(combinedString);
 
     // Step 5: Format the ID (optional)
     //std::string uniqueID = std::to_string(hashedValue);
@@ -117,8 +117,8 @@ T generateUniqueID() {
 */
 /**************************************************************************/
 
-template< typename T = unsigned >
-T generateUniqueIDfromString(std::string name) {
+//template< typename T = unsigned >
+unsigned generateUniqueIDfromString(std::string name) {
 
     unsigned hashedValue{ 0 };
 
@@ -132,6 +132,21 @@ T generateUniqueIDfromString(std::string name) {
     return hashedValue;
 }
 
+//template< typename T = unsigned >
+//unsigned generateUniqueIDfromString(const char* name) {
+//
+//    unsigned hashedValue{ 0 };
+//
+//    for (const char& c : name) {
+//
+//        hashedValue += c /** table.ms_Table[counter++]*/;
+//    }
+//
+//    //std::cout << hashedValue;
+//
+//    return hashedValue;
+//}
+
 /***************************************************************************/
 /*!
 \brief
@@ -139,13 +154,15 @@ T generateUniqueIDfromString(std::string name) {
 */
 /**************************************************************************/
 
-template <typename t = unsigned>
+//template <typename t = unsigned>
+
 struct uid {
 
-    constexpr explicit uid() :id{ generateUniqueID() } {  }
-    constexpr explicit uid(std::string str) :id{ generateUniqueIDfromString(str) } {  };
+    uid() :id{ generateUniqueID() } {  }
+    
+    uid(std::string str) :id{ generateUniqueIDfromString(str) } {  }
+    uid(const char* str) :id{ generateUniqueIDfromString(str) } {  }
+    operator unsigned() { return id; }
     uid(unsigned d) :id{ d } {  };
-    //void operator= (t d) { id = d };
-
-    t id;
+    unsigned id;
 };

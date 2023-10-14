@@ -1,3 +1,4 @@
+#include "ECS_Components.h"
 /*!*************************************************************************
 ****
 \file Inspect.cpp
@@ -564,6 +565,11 @@ void Animator::Inspect()
 	Inspector functionality for MeshRenderer
 */
 /***************************************************************************/
+
+//MeshRenderer::MeshRenderer()
+//	: mShaderProgram { "PointLightShader" }
+//{
+//}
 
 void MeshRenderer::Inspect() {
 	bool delete_component{ true };

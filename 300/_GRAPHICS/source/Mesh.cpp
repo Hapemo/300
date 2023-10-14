@@ -10,7 +10,7 @@ creation of the required VBOs and VAO.
 *******************************************************************************/
 
 #include "Mesh.hpp"
-#include "../../_RESOURCE/include/ResourceManager.h"		// for _enable_animations define
+#include "../../_RESOURCE/include/ResourceManagerTy.h"		// for _enable_animations define
 #include <filesystem>
 #include <array>
 
