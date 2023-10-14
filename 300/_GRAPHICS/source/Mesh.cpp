@@ -538,10 +538,12 @@ namespace Deserialization
 				for (int j{}; j < numberofanimations; ++j)
 				{
 					_GEOM::Animation animation;
+					int numberofbones{};
 
-					infile.read((char*)&animation.m_BoneCounter, sizeof(uint32_t));
-					infile.read((char*)&animation.m_Duration, sizeof(float));
-					infile.read((char*)&animation.m_TicksPerSecond, sizeof(float));
+					infile.read((char*)&numberofbones, sizeof(uint32_t));					// number of bones
+					infile.read((char*)&animation.m_BoneCounter, sizeof(uint32_t));			// number of boneinfomaps
+					infile.read((char*)&animation.m_Duration, sizeof(float));				// duration
+					infile.read((char*)&animation.m_TicksPerSecond, sizeof(float));			// ticks per second
 
 					// Bone info map
 					for (int j{}; j < animation.m_BoneCounter; ++j)
@@ -560,8 +562,8 @@ namespace Deserialization
 					}
 
 					// Bones
-					animation.m_Bones.resize(animation.m_BoneCounter);
-					for (int j{}; j < animation.m_BoneCounter; ++j)
+					animation.m_Bones.resize(numberofbones);
+					for (int j{}; j < numberofbones; ++j)
 					{
 						auto& boneinst = animation.m_Bones[j];
 

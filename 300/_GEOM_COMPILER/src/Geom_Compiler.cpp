@@ -67,6 +67,7 @@ namespace _GEOM
 
 #pragma region create descriptor file
 
+		// Handles the creation of the descriptor files
 		std::string geompath;
 		CheckAndCreateDescriptorFile(actualPath, geompath);
 
@@ -81,16 +82,6 @@ namespace _GEOM
 		std::cout << ">>[NOTE]: \tSanity Check\n";
 		assert(SanityCheck());
 
-		//aiVector3D scaling((ai_real)_DData.m_Scale.x, (ai_real)_DData.m_Scale.y, (ai_real)_DData.m_Scale.z);
-		//aiMatrix4x4 scl, rot, trns;
-		//m_DescriptorMatrix.Scaling(scaling, scl);
-		//m_DescriptorMatrix.RotationX((ai_real)_DData.m_Rotate.x, rot);
-		//m_DescriptorMatrix.RotationY((ai_real)_DData.m_Rotate.y, rot);
-		//m_DescriptorMatrix.RotationZ((ai_real)_DData.m_Rotate.z, rot);
-		//aiVector3D translation((ai_real)_DData.m_Translate.x, (ai_real)_DData.m_Translate.y, (ai_real)_DData.m_Translate.z);
-		//m_DescriptorMatrix.Translation(translation, trns);
-		//m_DescriptorMatrix = trns * rot * scl;
-
 		aiVector3D scaling((ai_real)_DData.m_Scale.x, (ai_real)_DData.m_Scale.y, (ai_real)_DData.m_Scale.z);
 		m_DescriptorMatrix.Scaling(scaling, m_DescriptorMatrix);
 		m_DescriptorMatrix.RotationX((ai_real)_DData.m_Rotate.x, m_DescriptorMatrix);
@@ -98,7 +89,6 @@ namespace _GEOM
 		m_DescriptorMatrix.RotationZ((ai_real)_DData.m_Rotate.z, m_DescriptorMatrix);
 		aiVector3D translation((ai_real)_DData.m_Translate.x, (ai_real)_DData.m_Translate.y, (ai_real)_DData.m_Translate.z);
 		m_DescriptorMatrix.Translation(translation, m_DescriptorMatrix);
-
 
 		std::cout << ">>[NOTE]: \tImporting Data\n";
 
@@ -113,7 +103,7 @@ namespace _GEOM
 \brief
 	Import the data, and filter out what kind of mesh is being extracted
 */
-/**************************************************************************/
+/**********************************ImportGeometryValidateMesh****************************************/
 	bool Mesh_Loader::ImportGeometryValidateMesh(const aiMesh& AssimpMesh, int& iTexture, int& iColor) noexcept
 	{
 		if (AssimpMesh.HasPositions() == false)
@@ -374,6 +364,8 @@ namespace _GEOM
 				ReadHierarchyData(m_SkinGeom->m_Animation[numanims].m_RootNode, m_Scene->mRootNode);
 				ReadMissingBones(m_SkinGeom->m_Animation[numanims], animation);
 			}
+
+			CleanAnimationData(m_SkinGeom->m_Animation);
 			std::cout << ">>[NOTE]: \tFinished Importing Bones\n";
 		}
 	}
@@ -894,7 +886,9 @@ namespace _GEOM
 				{
 					auto& animation = meshInst.m_Animation[j];
 
-					outfile.write((char*)&animation.m_BoneCounter, sizeof(uint32_t));		// Number of bones
+					uint32_t numberofbones = static_cast<uint32_t>(animation.m_Bones.size());
+					outfile.write((char*)&numberofbones, sizeof(uint32_t));					// Number of bones
+					outfile.write((char*)&animation.m_BoneCounter, sizeof(uint32_t));		// Number of boneinfomaps
 					outfile.write((char*)&animation.m_Duration, sizeof(float));				// Duration
 					outfile.write((char*)&animation.m_TicksPerSecond, sizeof(float));		// Ticks Per Second
 
@@ -908,7 +902,7 @@ namespace _GEOM
 					}
 
 					// Bones
-					for (int j{}; j < animation.m_BoneCounter; ++j)
+					for (int j{}; j < animation.m_Bones.size(); ++j)
 					{
 						auto& boneinst = animation.m_Bones[j];
 
@@ -949,6 +943,7 @@ namespace _GEOM
 
 		// Submeshes
 		for (uint32_t i{}; i < GeomData.m_nSubMeshes; ++i) {
+			_GEOM::Geom::SubMesh test = GeomData.m_pSubMesh[i];
 			outfile.write((char*)&GeomData.m_pSubMesh[i], sizeof(Geom::SubMesh));
 		}
 
@@ -1174,7 +1169,20 @@ namespace _GEOM
 			}
 
 			// emplace back the bone data, based off the boneinfomap and channel data
-			myanimation.m_Bones.emplace_back(Bone(channel->mNodeName.data, boneInfoMap[channel->mNodeName.data].id, channel));
+			myanimation.m_Bones.emplace_back(Bone(boneName, boneInfoMap[channel->mNodeName.data].id, channel));
 		}
 	};
+
+
+	void Mesh_Loader::CleanAnimationData(std::vector<Animation>& skinGeomAnimation) noexcept
+	{
+		int lastAnimation{};
+		for (; lastAnimation < skinGeomAnimation.size(); ++lastAnimation)
+		{
+			if(skinGeomAnimation[lastAnimation].m_Bones.size() == 0)
+				break;
+		}
+
+		skinGeomAnimation.erase(skinGeomAnimation.begin() + lastAnimation, skinGeomAnimation.end());
+	}
 }

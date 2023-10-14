@@ -68,7 +68,7 @@ void LoadAndSerializeAllMeshes(_GEOM::DescriptorData& Desc)
 		_GEOM::Mesh_Loader meshLoader;
 		_GEOM::SkinGeom SkinGeom;
 
-		std::string test = Desc.m_Filepaths[Desc.m_iMeshCurrent].substr(Desc.m_Filepaths[Desc.m_iMeshCurrent].find_last_of("."));
+		// Isolate out the descriptor files and skip them
 		if(Desc.m_Filepaths[Desc.m_iMeshCurrent].substr(Desc.m_Filepaths[Desc.m_iMeshCurrent].find_last_of(".")) == ".desc")
 			continue;
 
