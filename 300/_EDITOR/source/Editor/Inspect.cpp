@@ -554,11 +554,19 @@ void Animator::Inspect()
 	bool delete_component{ true };
 	if (ImGui::CollapsingHeader("Animator", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
 	{
-		ImGui::Text(std::to_string(mAnimator.m_CurrentTime).c_str());	ImGui::SameLine();
-		ImGui::Text(" / ");												ImGui::SameLine();
-		ImGui::Text(std::to_string(mAnimator.m_CurrentAnimation->m_Duration).c_str());
+		if (mAnimator.m_CurrentAnimation == nullptr)
+		{
+			ImGui::Text("Mesh is not capable of animation");
+		}
+
+		else
+		{
+			ImGui::Text(std::to_string(mAnimator.m_CurrentTime).c_str());	ImGui::SameLine();
+			ImGui::Text(" / ");												ImGui::SameLine();
+			ImGui::Text(std::to_string(mAnimator.m_CurrentAnimation->m_Duration).c_str());
 		
-		ImGui::Checkbox("Pause Animaton", &mAnimator.mIsPaused);
+			ImGui::Checkbox("Pause Animaton", &mAnimator.mIsPaused);
+		}
 	}
 
 	if (delete_component == false)
