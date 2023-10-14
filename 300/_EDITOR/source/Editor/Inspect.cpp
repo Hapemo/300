@@ -845,27 +845,29 @@ void Audio::Inspect() {
 					//std::cout << audio_name << std::endl;
 				}
 
+				// Must be outside (what if i remove and add an already loaded audio)
+				mFilePath = file_path;
+				mFileName = audio_name;
+				mFullPath = file_path + "/" + audio_name;
+
 				// Check if the [Audio file] has been uploaded into the database...
 				if (systemManager->mAudioSystem.get()->CheckAudioExist(audio_name)) // Exists ... 
 				{
 					// For Debugging Purposes
 					PINFO("[Loaded] Audio is already in database.");
+					Entity(Hierarchy::selectedId).GetComponent<Audio>().mIsEmpty = false; // Component is populated with info
 					return;
 				}
 
 				else // Does not exist...
-				{
-					Entity(Hierarchy::selectedId).GetComponent<Audio>().mFilePath = file_path;
-					Entity(Hierarchy::selectedId).GetComponent<Audio>().mFileName = audio_name;
-					
+				{	
 					// Load the Audio File + Check (load status)
 					systemManager->mAudioSystem.get()->UpdateLoadAudio(Entity(Hierarchy::selectedId));
-
-					//Entity(Hierarchy::selectedId).GetComponent<Audio>().mIsEmpty = false; // Component is populated with info
-
-					Audio& audioent = Entity(Hierarchy::selectedId).GetComponent<Audio>();
-					int i = 0;
+					Entity(Hierarchy::selectedId).GetComponent<Audio>().mIsEmpty = false;
+					/*Audio& audioent = Entity(Hierarchy::selectedId).GetComponent<Audio>();
+					int i = 0;*/
 				}
+
 			}
 
 			ImGui::EndDragDropTarget();
@@ -887,14 +889,14 @@ void Audio::Inspect() {
 	{
 		Entity(Hierarchy::selectedId).GetComponent<Audio>().ClearAudioComponent();
 		remove_audio_bool = false;
-
+		PINFO("Successfull Removed Audio.");
 	}
 
-	if (!mIsEmpty && mIsLoaded)
+	if (!mIsEmpty)
 	{
 		ImGui::Checkbox("Play This (start the scene first)", &mIsPlay);
 		ImGui::Checkbox("IsPlaying", &mIsPlaying);
-
+		ImGui::Checkbox("Play on Awake", &mPlayonAwake);
 	}
 
 	// AudioType Selector 

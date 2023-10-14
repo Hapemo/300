@@ -245,14 +245,13 @@ struct Children
 
 struct Audio
 {
-	std::string mFilePath;				// File Path to the Audio File (required for loading)
-	std::string mFileName;				// Name of Audio file (required for loading)
-	std::string mFullPath;				// 
-	AUDIOTYPE mAudioType;				// SFX or BGM
+	std::string mFilePath;				   // File Path to the Audio File (required for loading)
+	std::string mFileName;				   // Name of Audio file (required for loading)
+	std::string mFullPath;				   // 
+	AUDIOTYPE mAudioType;				   // SFX or BGM
 
-
-	bool mIsPlay;						// play audio if true
-	bool mPlayonAwake;					//
+	bool mIsPlay      = false;			   // play audio if true
+	bool mPlayonAwake = false;			   // [10/14] - will play as the scene launches.
 
 	// Don't need to serialize ...
 	std::vector<int> mPlaySFXChannelID;    // Currently playing in SFX Channel...
@@ -266,7 +265,7 @@ struct Audio
 
 	Audio() : mFilePath(""), mFileName(""), mAudioType(AUDIO_NULL), mIsPlaying(false), mIsPlay(false), mIsEmpty(true) {}
 
-	Audio(std::string file_path_to_audio, std::string file_audio_name, AUDIOTYPE audio_type, bool isPlay) : mAudioType(audio_type), mIsPlaying(false), mIsPlay(isPlay)
+	Audio(std::string file_path_to_audio, std::string file_audio_name, AUDIOTYPE audio_type, bool playOnAwake) : mAudioType(audio_type), mIsPlaying(false), mPlayonAwake(playOnAwake)
 	{
 		mFilePath = file_path_to_audio;
 		mFileName = file_audio_name;
@@ -280,7 +279,9 @@ struct Audio
 		mFullPath = "";
 		mAudioType = AUDIO_NULL;
 		mIsPlay = false;
+		mPlayonAwake = false;
 		mIsEmpty = true;
+		mIsLoaded = false;
 	}
 
 

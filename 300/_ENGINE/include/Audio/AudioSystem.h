@@ -21,6 +21,9 @@ This file contains the base AudioSystem class that supports the following functi
 #include "ECS/ECS.h"
 #include "ECS/ECS_Components.h"
 #include "Debug/Logger.h"
+#include "Debug/EnginePerformance.h"
+#include "GameState/GameStateManager.h"
+#include "GameState/Scene.h"
 
 enum AUDIOTYPE : unsigned char;
 
