@@ -814,9 +814,9 @@ void PlaneCollider::Inspect() {
 void Audio::Inspect() {
 	bool delete_component = true;
 	auto audioEntities = systemManager->ecs->GetEntitiesWith<Audio>();
-	std::string full_file_path;  // With the Audio File Name
-	std::string file_path;		 // Only Audio Directory
-	std::string audio_name;
+	std::string full_file_path;  // With the Audio File Name  e.g "../assets\\Audio\\farm_ambience.wav"
+	std::string file_path;		 // Only Audio Directory	  e.g "../assets\\Audio"
+	std::string audio_name;      // Audio Name only.		  e.g "farm_ambience.wav"
 
 	const char* audio_type[] = { "BGM" , "SFX" };
 
@@ -845,10 +845,27 @@ void Audio::Inspect() {
 					//std::cout << audio_name << std::endl;
 				}
 
-				Entity(Hierarchy::selectedId).AddComponent<Audio>({ file_path, audio_name, AUDIO_BGM, false });
+				// Check if the [Audio file] has been uploaded into the database...
+				if (systemManager->mAudioSystem.get()->CheckAudioExist(audio_name)) // Exists ... 
+				{
+					// For Debugging Purposes
+					PINFO("[Loaded] Audio is already in database.");
+					return;
+				}
 
-				Entity(Hierarchy::selectedId).GetComponent<Audio>().mIsEmpty = false; // Component is populated with info
-				systemManager->mAudioSystem.get()->UpdateLoadAudio();
+				else // Does not exist...
+				{
+					Entity(Hierarchy::selectedId).GetComponent<Audio>().mFilePath = file_path;
+					Entity(Hierarchy::selectedId).GetComponent<Audio>().mFileName = audio_name;
+					
+					// Load the Audio File + Check (load status)
+					systemManager->mAudioSystem.get()->UpdateLoadAudio(Entity(Hierarchy::selectedId));
+
+					//Entity(Hierarchy::selectedId).GetComponent<Audio>().mIsEmpty = false; // Component is populated with info
+
+					Audio& audioent = Entity(Hierarchy::selectedId).GetComponent<Audio>();
+					int i = 0;
+				}
 			}
 
 			ImGui::EndDragDropTarget();
@@ -897,17 +914,6 @@ void Audio::Inspect() {
 				}
 			}
 		}
-
-		// Check Which AudioType has been assigned.
-	/*	switch (Entity(Hierarchy::selectedId).GetComponent<Audio>().mAudioType)
-		{
-		case AUDIO_BGM:
-			std::cout << "BGM" << std::endl;
-			break;
-		case AUDIO_SFX:
-			std::cout << "SFX" << std::endl;
-			break;
-		}*/
 
 		ImGui::EndCombo();
 	}

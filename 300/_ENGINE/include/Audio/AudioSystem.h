@@ -42,18 +42,25 @@ struct Channel
 // [10/13] Interfacing for (Designers) to use in [Scripting] 
 /******************************************************************************/
 /*!
-	[Class] AudioSource
+	[Class] AudioSource (Scripting Object)
 	 \brief
-	  - Works with <Audio> component for the data.
 	  - Interfaced functions that make it easy to use on scripting side (port to Lua)
-	 \brief (things to note)
+	  - Container for [Scripting] side to use.
+	  - Works with <Audio> component for the data.
+	 \brief
 	  - Each <AudioSource> will have their own channel.
  */
  /******************************************************************************/
-class AudioSource
+class AudioSource				// Not part of the system.
 {
-	//std::string 
-	AUDIOTYPE mAudioType;		// Account for [AudioSystem]'s global SFX / BGM functions (e.g. MuteAllSFX())
+public:
+	Audio* mAudioComponent;  // Relevant <Audio> component data.
+public:
+	AudioSource() : mAudioComponent(nullptr) {}
+
+	//void Play();
+	//void Stop();
+
 
 };
 
@@ -77,7 +84,7 @@ public:
 	AudioSystem();
 	~AudioSystem();
 
-	void UpdateLoadAudio();																	// [For Engine] - Add Component mid-way
+	void UpdateLoadAudio(Entity id);																	// [For Engine] - Add Component mid-way
 
 public:
 	int  ErrCodeCheck(FMOD_RESULT result);													// Debugging tool
@@ -106,12 +113,13 @@ public:
 	// Helper Functions...
 public:
 	Channel& FindChannel(AUDIOTYPE audio_type, int id);
+	bool	 CheckAudioExist(std::string audio_name); // [W7 - 10/14]
 
 	// Will build as needs require.
 
 public:
 	// Scripting Testing Functions (later port to Lua)
-	
+	void TestAudioSource();
 
 private:
 	// std::unordered_map<AUDIOTYPE, std::vector<FMOD::Channel*>>  mChannels;	// Depreciated [9/25]

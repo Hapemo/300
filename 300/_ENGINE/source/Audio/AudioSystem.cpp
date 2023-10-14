@@ -13,6 +13,8 @@ This file contains the base AudioSystem class that supports the following functi
 #include "Audio/AudioSystem.h"
 #include "Debug/EnginePerformance.h"
 
+#include "GameState/Scene.h"
+
 /******************************************************************************/
 /*!
 	[Default Constructor] AudioSystem()
@@ -101,17 +103,25 @@ void AudioSystem::Init()
 	for (Entity audio : audio_entities)
 	{
 		Audio& audio_component = audio.GetComponent<Audio>();
-		std::string audio_path = audio_component.mFilePath + "/" + audio_component.mFileName;
-		std::string audio_name = audio_component.mFileName;
-		if (LoadAudio(audio_path, audio_name))
+
+		if (!audio_component.mFilePath.empty() && !audio_component.mFileName.empty()) // Accounting for empty <Audio> components.
 		{
-			audio_component.mIsLoaded = true;
-		}
-		else
-		{
-			audio_component.mIsLoaded = false;
+			std::string audio_path = audio_component.mFilePath + "/" + audio_component.mFileName;
+			std::string audio_name = audio_component.mFileName;
+
+			if (LoadAudio(audio_path, audio_name))
+			{
+				audio_component.mIsLoaded = true;
+			}
+			else
+			{
+				audio_component.mIsLoaded = false;
+			}
 		}
 	}
+
+	// [10/14] 
+	TestAudioSource();
 }
 
 
@@ -214,15 +224,42 @@ void AudioSystem::Exit()
 /*!
 	[Helper Function] UpdateLoadAudio()
 	- Support for editor (when a new <Audio> component has been added to an "Entity"
+	[Note] : <Audio> Component must be attached to this for it to load properly.
  */
  /******************************************************************************/
-void AudioSystem::UpdateLoadAudio()
-{
-	auto audio_entities = systemManager->ecs->GetEntitiesWith<Audio>();
+void AudioSystem::UpdateLoadAudio(Entity id)
+{	
+	Audio& audio_component = id.GetComponent<Audio>();
+
+	//audio_component.mFullPath = audio_component.mFilePath + "/" + audio_component.mFileName;
+
+	if (!audio_component.mIsLoaded)
+	{	
+		std::string audio_path = audio_component.mFilePath + "/" + audio_component.mFileName;
+		audio_component.mFullPath = audio_path;
+		std::string audio_name = audio_component.mFileName;
+
+		if (LoadAudio(audio_path, audio_name))
+		{
+			audio_component.mIsLoaded = true;
+			PINFO("Audio Successfully Loaded :)");
+
+		}
+		else
+		{
+			audio_component.mIsLoaded = false;
+			PWARNING("Audio could not be loaded... Please Check (1) Directory Name , (2) File");
+		}
+	}
+
+
+
+	/*auto audio_entities = systemManager->ecs->GetEntitiesWith<Audio>();
 
 	for (Entity audio : audio_entities)
 	{
 		Audio& audio_component = audio.GetComponent<Audio>();
+
 		if (!audio_component.mIsLoaded)
 		{
 			std::string audio_path = audio_component.mFilePath + "/" + audio_component.mFileName;
@@ -239,7 +276,7 @@ void AudioSystem::UpdateLoadAudio()
 				PWARNING("Audio could not be loaded... Please Check (1) Directory Name , (2) File");
 			}
 		}
-	}
+	}*/
 }
 
 /******************************************************************************/
@@ -295,8 +332,7 @@ bool AudioSystem::LoadAudio(std::string file_path, std::string audio_name)
 		PWARNING("Error: Sound Not Loaded.");
 		return 0;
 		//std::cout << "Error: Sound Not Loaded." << std::endl;
-	}
-
+	} // At this point, audio successfully loaded.
 
 	mSounds.insert(std::make_pair(audio_name, new_sound));
 	return true;
@@ -852,3 +888,77 @@ Channel& AudioSystem::FindChannel(AUDIOTYPE audio_type, int channel_id)
 	PERROR("channel not found, assigning default channel");
 	return mChannelsNew[AUDIOTYPE::AUDIO_BGM][0];
 }
+
+bool AudioSystem::CheckAudioExist(std::string audio_name)
+{
+	auto sound_it = mSounds.find(audio_name);
+
+	if (sound_it != mSounds.end())
+	{
+		if (sound_it->first == audio_name) // if the audio name is found in the database.
+		{	
+			return true;
+		}
+	}
+
+	else
+	{
+		return false;
+	}
+}
+
+#pragma region TestFunctions 
+/******************************************************************************/
+/*!
+	 Simulate <AudioSource> creation -> getting data from component. (scripting)
+	 ---------------------------------------------------------------
+	 Notes:
+	 a. In Script, access to "Entity's ID" (stored in a variable (?)) - Ask Michelle (for step 2.)
+	 ---------------------------------------------------------------
+	 
+	 [Use Case]
+	 1. Create <AudioSource> object (empty)
+	 2. Populate data from GetComponent<Audio> into the <AudioSource> object
+	 3. 
+	 
+	 1. Create empty <AudioSource> object
+	 2. Grab <Audio> Component, save pointer reference to it using "script_entity_id" (LUA)
+	 
+	 
+	 AudioSource m_audio;                    // Empty AudioSource (interface for designers to do audio functionality)
+	 Entity entity = new (script_entity_id); 
+	 m_audio = GetComponent<Audio>();        // Populate <AudioSource> with data from <Audio>
+
+ */
+ /******************************************************************************/
+void AudioSystem::TestAudioSource()
+{
+	/*
+		Testing with a "dummy" object that has <Audio> & <Scripting> Component attached to it.
+		- Using "object_id" to access the entity that we will be working on (in the script)
+	*/
+	entt::entity object_id; 
+	auto audioent = systemManager->ecs->GetEntitiesWith<Audio>();
+
+	for (Entity ent : audioent) // Only has 1 entity with <Audio>
+	{
+		object_id = ent.id; 
+	}
+	//---------------------------------------------------------------------------------
+	
+
+	/*
+		Script Start
+	*/
+	AudioSource m_audio;													// Create Empty [AudioSource] object
+	m_audio.mAudioComponent = &(Entity(object_id).GetComponent<Audio>());	// Point to <Audio> Component (for it's data)
+	
+
+	
+	
+
+	//m_audio.mAudioComponent = 
+
+}
+
+#pragma endregion

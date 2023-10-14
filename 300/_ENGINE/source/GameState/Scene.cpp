@@ -72,6 +72,13 @@ void Scene::Load(std::string const& _name) {
 		if (e.HasComponent<Scripts>()) systemManager->GetScriptingPointer()->ScriptAlive(e);
 		e.GetComponent<General>().isPaused = mIsPause;
 	}
+	// [10/14] Testing [Audio] Script stuff
+	Entity testaudio = systemManager->ecs->NewEntity();
+	testaudio.AddComponent<General>().name = "Audio";
+	testaudio.AddComponent<Audio>();
+	Audio& audio = testaudio.GetComponent<Audio>();
+	//testaudio.GetComponent<Audio>().mFileName = "farm_ambience";
+	mEntities.insert(testaudio);
 }
 
 void Scene::Save() {

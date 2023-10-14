@@ -245,22 +245,26 @@ struct Children
 
 struct Audio
 {
-	std::string mFilePath;				// File Path to the Audio File
-	std::string mFileName;				// Name of Audio file
+	std::string mFilePath;				// File Path to the Audio File (required for loading)
+	std::string mFileName;				// Name of Audio file (required for loading)
 	std::string mFullPath;				// 
 	AUDIOTYPE mAudioType;				// SFX or BGM
+
+
 	bool mIsPlay;						// play audio if true
+	bool mPlayonAwake;					//
 
 	// Don't need to serialize ...
 	std::vector<int> mPlaySFXChannelID;    // Currently playing in SFX Channel...
-	std::vector<int> mPlayBGMChannelID;	   // Currently playing in BGM Channel ...
+	std::vector<int> mPlayBGMChannelID;	   // Currently playing in BGM Channel...
 	bool             mIsPlaying;		   // Check if audio is already playing
 
 	// For Editor
 	bool			 mIsEmpty = false;	   // [For Editor] - if empty delete all data in this <Audio> component
 	bool			 mIsLoaded = false;	   // [For Loading]
 
-	Audio() : mFilePath("../assets/Audio"), mFileName("Empty Audio"), mAudioType(AUDIO_NULL), mIsPlaying(false), mIsPlay(false), mIsEmpty(true) {}
+
+	Audio() : mFilePath(""), mFileName(""), mAudioType(AUDIO_NULL), mIsPlaying(false), mIsPlay(false), mIsEmpty(true) {}
 
 	Audio(std::string file_path_to_audio, std::string file_audio_name, AUDIOTYPE audio_type, bool isPlay) : mAudioType(audio_type), mIsPlaying(false), mIsPlay(isPlay)
 	{

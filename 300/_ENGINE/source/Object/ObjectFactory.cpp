@@ -37,6 +37,8 @@ void ObjectFactory::LoadScene(Scene* scene, const std::string& filename)
 
 		idMap.insert({ obj.GetIDJSON(), e.id });
 
+		General& gen_comp = e.GetComponent<General>();
+
 		e.GetComponent<General>() = obj.GetGeneralJSON();
 		e.GetComponent<Transform>() = obj.GetTransformJSON();
 
