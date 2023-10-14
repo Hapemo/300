@@ -51,16 +51,8 @@ struct General : public Serializable
 	{};
 
 	void Inspect();
-	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
-	{
-		writer.StartObject();
-		Serialize(writer, "name", name);
-		Serialize(writer, "tagid", tagid);
-		Serialize(writer, "subtag", static_cast<int>(subtag));
-		Serialize(writer, "isActive", isActive);
-		Serialize(writer, "isPaused", isPaused);
-		writer.EndObject();
-	}
+	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
+
 	//RTTR_ENABLE()
 };
 
@@ -79,14 +71,8 @@ struct Transform : public Serializable
 	glm::quat GetQuaternion() { return glm::quat(mRotate); }
 	void Inspect();
 
-	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
-	{
-		writer.StartObject();
-		Serialize(writer, "scale", mScale);
-		Serialize(writer, "rotate", mRotate);
-		Serialize(writer, "translate", mTranslate);
-		writer.EndObject();
-	}
+	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
+	
 	//RTTR_ENABLE()
 };
 
@@ -122,15 +108,8 @@ struct RigidBody : public Serializable
 	int mMot{ 0 };
 	void							Inspect();
 
-	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
-	{
-		writer.StartObject();
-		Serialize(writer, "density", mDensity);
-		Serialize(writer, "material", static_cast<int>(mMaterial));
-		Serialize(writer, "motion", static_cast<int>(mMotion));
-		Serialize(writer, "velocity", mVelocity);
-		writer.EndObject();
-	}
+	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
+
 };
 
 /******************************************************************************/
@@ -161,17 +140,7 @@ struct MeshRenderer : public Serializable
 
 
 	//void								Inspect();
-	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
-	{
-		writer.StartObject();
-		Serialize(writer, "vert", mShaderPath.first);
-		Serialize(writer, "frag", mShaderPath.second);
-		Serialize(writer, "materialinstance", mMaterialInstancePath, 4);
-		Serialize(writer, "mesh", mMeshPath);
-		Serialize(writer, "texturecont", mTextureCont, 4);
-		Serialize(writer, "guid", mGUID);
-		writer.EndObject();
-	}
+	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
 };
 
 
@@ -190,13 +159,7 @@ struct BoxCollider : public Serializable
 	
 	//RTTR_ENABLE()
 	void							Inspect();
-	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
-	{
-		writer.StartObject();
-		Serialize(writer, "scaleoffset", mScaleOffset);
-		Serialize(writer, "translateoffset", mTranslateOffset);
-		writer.EndObject();
-	}
+	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
 };
 
 /******************************************************************************/
@@ -213,13 +176,7 @@ struct SphereCollider : public Serializable
 
 	//RTTR_ENABLE()
 	void							Inspect();
-	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
-	{
-		writer.StartObject();
-		Serialize(writer, "scaleoffset", mScaleOffset);
-		Serialize(writer, "translateoffset", mTranslateOffset);
-		writer.EndObject();
-	}
+	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
 };
 
 /******************************************************************************/
@@ -236,13 +193,7 @@ struct PlaneCollider : public Serializable //if has plane collider always static
 
 	//RTTR_ENABLE()
 	void							Inspect();
-	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
-	{
-		writer.StartObject();
-		Serialize(writer, "normal", mNormal);
-		Serialize(writer, "translateoffset", mTranslateOffset);
-		writer.EndObject();
-	}
+	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
 };
 
 /******************************************************************************/
@@ -263,13 +214,8 @@ public:
 
 	//RTTR_ENABLE()
 	void Inspect();
-	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
-	{
-		writer.StartObject();
-		Serialize(writer, "scriptfile", mScriptFile);
-		Serialize(writer, "scriptscontainer", scriptsContainer);
-		writer.EndObject();
-	}
+	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
+	
 };
 
 /******************************************************************************/
@@ -284,14 +230,8 @@ struct Parent : public Serializable
 	std::uint32_t mParent;
 
 	Parent() : mPrevSibling(0), mNextSibling(0), mParent(0) {};
-	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
-	{
-		writer.StartObject();
-		Serialize(writer, "prevsibling", mPrevSibling);
-		Serialize(writer, "nextsibling", mNextSibling);
-		Serialize(writer, "parent", mParent);
-		writer.EndObject();
-	}
+	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
+	
 	//RTTR_ENABLE()
 };
 
@@ -306,13 +246,8 @@ struct Children : public Serializable
 	std::uint32_t mFirstChild;
 
 	Children() : mNumChildren(0), mFirstChild(0) {};
-	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
-	{
-		writer.StartObject();
-		Serialize(writer, "numchildren", mNumChildren);
-		Serialize(writer, "firstchild", mFirstChild);
-		writer.EndObject();
-	}
+	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
+	
 	//RTTR_ENABLE()
 };
 
@@ -362,15 +297,7 @@ struct Audio : public Serializable
 
 	int mAudio{ 0 };
 
-	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
-	{
-		writer.StartObject();
-		Serialize(writer, "filename", mFileName);
-		Serialize(writer, "audiotype", static_cast<int>(mAudioType));
-		Serialize(writer, "playing", mIsPlaying);
-		Serialize(writer, "play", mIsPlay);
-		writer.EndObject();
-	}
+	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
 
 	//RTTR_ENABLE()
 	void							Inspect();
@@ -386,16 +313,8 @@ struct Camera : public Serializable
 	GFX::Camera						mCamera;
 	void							Inspect();
 
-	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
-	{
-		writer.StartObject();
-		Serialize(writer, "positon", mCamera.mPosition);
-		Serialize(writer, "target", mCamera.mTarget);
-		Serialize(writer, "size", mCamera.mSize);
-		Serialize(writer, "near", mCamera.mNear);
-		Serialize(writer, "far", mCamera.mFar);
-		writer.EndObject();
-	}
+	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
+	
 };
 
 /******************************************************************************/
@@ -406,12 +325,8 @@ struct Camera : public Serializable
 struct Prefab : public Serializable
 {
 	std::string mPrefab;
-	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
-	{
-		writer.StartObject();
-		Serialize(writer, "prefab", mPrefab);
-		writer.EndObject();
-	}
+	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
+	
 };
 
 /******************************************************************************/
@@ -426,14 +341,8 @@ struct PointLight : public Serializable
 	float	mIntensity{};
 	void Inspect();
 
-	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
-	{
-		writer.StartObject();
-		Serialize(writer, "lightcolor", mLightColor);
-		Serialize(writer, "attenuation", mAttenuation);
-		Serialize(writer, "intensity", mIntensity);
-		writer.EndObject();
-	}
+	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
+	
 };
 
 
