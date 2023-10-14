@@ -210,6 +210,9 @@ public:
 	bool	m_EnableGlobalAnimations{ 1 };
 	bool	m_HasLight{ false };
 
+	// -- Stats --
+	int		m_LightCount{};
+
 private:
 	// -- SSBO -- 
 	GFX::SSBO m_FinalBoneMatrixSsbo;
