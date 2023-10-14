@@ -179,6 +179,8 @@
     <ClInclude Include="include\Physics\PhysicsTypes.h" />
     <ClInclude Include="include\Physics\PhysicsSystem.h" />
     <ClInclude Include="include\Physics\PhysX.h" />
+    <ClInclude Include="include\Serialization\Serializable.h" />
+    <ClInclude Include="include\Serialization\Serialization.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Audio\AudioSystem.cpp" />
@@ -191,7 +193,7 @@
     <ClCompile Include="source\Input\Input.cpp" />
     <ClCompile Include="source\Input\InputMapSystem.cpp" />
     <ClCompile Include="source\Physics\Accumulator.cpp" />
-    <ClInclude Include="include\Serialization\Serialization.h" />
+    <ClCompile Include="source\Serialization\Serialization.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Object\ObjectFactory.h" />
@@ -206,7 +208,6 @@
     <ClCompile Include="source\Object\ObjectFactory.cpp" />
     <ClCompile Include="source\Physics\PhysicsSystem.cpp" />
     <ClCompile Include="source\Physics\PhysX.cpp" />
-    <ClCompile Include="source\Serialization\Serialization.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
