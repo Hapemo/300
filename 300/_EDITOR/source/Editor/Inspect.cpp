@@ -256,6 +256,21 @@ void General::Inspect() {
 	ImGui::InputText("##naming",&name);
 
 
+	//ImGui::Text("Tag");
+
+	//ImGui::SameLine();
+	//ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+	//	- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+
+	//if (ImGui::BeginCombo("##Tag", tag[tagid].c_str())) {
+
+	//	for (int i = 0; i < 5; i++) {
+	//		if (ImGui::Selectable(tag[i].c_str())) {
+	//			tagid = i;
+	//		}
+	//	}
+	//	ImGui::EndCombo();
+	//}
 
 
 	ImGui::Text("Tag");
@@ -264,16 +279,16 @@ void General::Inspect() {
 	ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
 		- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
 
-	if (ImGui::BeginCombo("##Tag", tag[tagid].c_str())) {
+	if (ImGui::BeginCombo("##Tag", enum_tag::ToString(tagid))) {
 
-		for (int i = 0; i < 5; i++) {
-			if (ImGui::Selectable(tag[i].c_str())) {
-				tagid = i;
+		for (int i = 0; i < enum_tag::COUNT; i++) {
+			enum_tag::enum_tag temp = static_cast<enum_tag::enum_tag>(i);
+			if (ImGui::Selectable(enum_tag::ToString(temp))) {
+				tagid = static_cast<enum_tag::enum_tag>(i);
 			}
 		}
 		ImGui::EndCombo();
 	}
-
 }
 
 /***************************************************************************/
