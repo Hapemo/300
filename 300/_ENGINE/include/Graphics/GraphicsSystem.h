@@ -211,6 +211,9 @@ public:
 	bool	m_HasLight{ false };
 	bool    m_EnableScroll{ false };
 
+	// -- Stats --
+	int		m_LightCount{};
+
 private:
 	// -- SSBO -- 
 	GFX::SSBO m_FinalBoneMatrixSsbo;

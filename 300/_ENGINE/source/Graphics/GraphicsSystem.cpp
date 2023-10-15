@@ -244,11 +244,38 @@ void GraphicsSystem::Update(float dt)
 			}
 		}
 
-		// meshinst.mLTW.push_back(final);
 		AddInstance(meshinst, final, static_cast<unsigned>(inst.id));
 	}
 	m_FinalBoneMatrixSsbo.SubData(finalBoneMatrices.size() * sizeof(mat4), finalBoneMatrices.data());
 	finalBoneMatrices.clear();
+
+	// Sending Light source data to GPU
+	auto lightEntity = systemManager->ecs->GetEntitiesWith<PointLight>();
+	m_HasLight = !lightEntity.empty();
+	m_LightCount = lightEntity.size();
+
+	if (m_HasLight)
+	{
+		for (int i = 0; i < lightEntity.size(); ++i)
+		{
+			PointLight& lightData = lightEntity.get<PointLight>(lightEntity[i]);
+			Transform& lightTransform = Entity(lightEntity[i]).GetComponent<Transform>();
+
+			PointLightSSBO light;
+			light.mPosition = vec4(lightTransform.mTranslate, 0.f);
+			light.mColor = vec4(lightData.mLightColor, 0.f);
+			light.mIntensity = lightData.mIntensity;
+			light.mLinear = lightData.mLinearFalloff;
+			light.mQuadratic = lightData.mQuadraticFalloff;
+
+			pointLights.push_back(light);
+
+			m_Renderer.AddCube(lightTransform.mTranslate, { 20, 20, 20 }, vec4(lightData.mLightColor, 1.f));
+		}
+		// Copy light source data into storage buffer
+		m_PointLightSsbo.SubData(pointLights.size() * sizeof(PointLightSSBO), pointLights.data());
+		pointLights.clear();
+	}
 
 #pragma endregion
 }
@@ -316,39 +343,21 @@ void GraphicsSystem::EditorDraw(float dt)
 	
 		shaderinst.Activate();
 		glUniformMatrix4fv(shaderinst.GetUniformVP(), 1, GL_FALSE, &m_EditorCamera.viewProj()[0][0]);
-		// Retrieve Point Light object
-		auto lightEntity = systemManager->ecs->GetEntitiesWith<PointLight>();
-		m_HasLight = !lightEntity.empty();
 
+		// Lighting flag uniform
 		GLuint mHasLightFlagLocation = shaderinst.GetUniformLocation("uHasLight");
 		glUniform1i(mHasLightFlagLocation, m_HasLight);
 
 		if (m_HasLight)
 		{
-			GLuint mViewPosShaderLocation = shaderinst.GetUniformLocation("uViewPos");
+			// View position uniform
 			vec3 viewPos = GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR);
+			GLuint mViewPosShaderLocation = shaderinst.GetUniformLocation("uViewPos");
 			glUniform3fv(mViewPosShaderLocation, 1, &viewPos[0]);
 
-			for (int i = 0; i < lightEntity.size(); ++i)
-			{
-				PointLight &lightData = lightEntity.get<PointLight>(lightEntity[i]);
-				Transform &lightTransform = Entity(lightEntity[i]).GetComponent<Transform>();
-
-				PointLightSSBO light;
-				light.mPosition		= vec4(lightTransform.mTranslate, 0.f);
-				light.mColor		= vec4(lightData.mLightColor, 0.f);
-				light.mIntensity	= lightData.mIntensity;
-				light.mLinear		= lightData.mLinearFalloff;
-				light.mQuadratic	= lightData.mQuadraticFalloff;
-
-				pointLights.push_back(light);
-
-				m_Renderer.AddCube(lightTransform.mTranslate, { 20, 20, 20 }, vec4(lightData.mLightColor, 1.f));
-			}
+			// Light count uniform
 			GLuint mLightCountShaderLocation = shaderinst.GetUniformLocation("uLightCount");
-			glUniform1i(mLightCountShaderLocation, (int)pointLights.size());
-
-			m_PointLightSsbo.SubData(pointLights.size() * sizeof(PointLightSSBO), pointLights.data());
+			glUniform1i(mLightCountShaderLocation, m_LightCount);
 		}
 
 		// bind texture unit
