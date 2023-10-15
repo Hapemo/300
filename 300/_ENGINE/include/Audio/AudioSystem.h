@@ -33,6 +33,10 @@ enum AUDIOTYPE : unsigned char;
 	[Struct] Channel
 	 \brief
 	  - Contains relevant channel information.
+	[Depreciated] - 10/15/2023
+	  - Changing structure to each <Audio> component will hold their own channel. 
+	  - We will retain the [SFX] & [BGM] channels though.
+
  */
  /******************************************************************************/
 struct Channel
@@ -54,18 +58,18 @@ struct Channel
 	  - Each <AudioSource> will have their own channel.
  */
  /******************************************************************************/
-class AudioSource				// Not part of the system.
-{
-public:
-	Audio* mAudioComponent;  // Relevant <Audio> component data.
-public:
-	AudioSource() : mAudioComponent(nullptr) {}
-
-	//void Play();
-	//void Stop();
-
-
-};
+//class AudioSource				// Not part of the system.
+//{
+//public:
+//	Audio* mAudioComponent;  // Relevant <Audio> component data.
+//public:
+//	AudioSource() : mAudioComponent(nullptr) {}
+//
+//	//void Play();
+//	//void Stop();
+//
+//
+//};
 
 /******************************************************************************/
 /*!
@@ -77,17 +81,20 @@ public:
 class AudioSystem
 {
 public:
-	int MAX_AUDIO_FILES_PLAYING = 32;														// Number of Sounds (that are allowed to be played simultaneously)
+	int MAX_AUDIO_FILES_PLAYING = 32;				 // Number of Sounds (that are allowed to be played simultaneously)
 	int NO_OF_BGM_CHANNELS_TO_INIT = 16;
 	int NO_OF_SFX_CHANNELS_TO_INIT = 16;
 public:
 	void Init();
 	void Update(float dt);
+	void PlayOnAwake();								// [For Editor] - Playing sounds on awake. (check for <Audio> component flag : "mPlayonAwake")
+	void Pause();								    // [For Editor] - Pause sounds.
+	void Reset();									// [For Editor] - Reset <Audio> component. Stop Playing all sounds.
 	void Exit();
 	AudioSystem();
 	~AudioSystem();
 
-	void UpdateLoadAudio(Entity id);																	// [For Engine] - Add Component mid-way
+	void UpdateLoadAudio(Entity id);				 // [For Engine] - Add Component mid-way
 
 public:
 	int  ErrCodeCheck(FMOD_RESULT result);													// Debugging tool
@@ -97,7 +104,7 @@ public:
 	void PlayAudio(std::string audio_name, AUDIOTYPE audio_type, float audio_vol = 1.0f);	// Play an audio based on it's name
 	int  PlaySFXAudio(std::string audio_name, float audio_vol = 1.0f);						// Play an SFX Audio (specify volume)
 	int  PlayBGMAudio(std::string audio_name, float audio_vol = 1.0f);						// Play an BGM Audio (specify volume)
-	void SetSpecificChannelVolume(AUDIOTYPE audio_type, int id, float audio_vol);			// Set Specific Volume
+	void SetSpecificChannelVolume(AUDIOTYPE audio_type, int id, float audio_vol);			// Set Specific Volume  (Depreciated) 10/15
 	void SetAllSFXVolume(float audio_vol);													// Global Volume Setting (SFX)
 	void SetAllBGMVolume(float audio_vol);													// Global Volume Setting (BGM)
 	void MuteSFX();
@@ -107,7 +114,7 @@ public:
 	void TogglePauseAllSounds();
 	void TogglePauseSFXSounds();
 	void TogglePauseBGMSounds();
-	void TogglePauseSpecific(AUDIOTYPE audio_type, int channel_id);
+	void TogglePauseSpecific(AUDIOTYPE audio_type, int channel_id);	// Depreciated 10/15
 
 	// Added [10/13] - Audio Specific Functions
 	/*void StopAudio(std::string audio_name);
@@ -116,6 +123,7 @@ public:
 	// Helper Functions...
 public:
 	Channel& FindChannel(AUDIOTYPE audio_type, int id);
+	FMOD::Sound& FindSound(std::string audio_name);
 	bool	 CheckAudioExist(std::string audio_name); // [W7 - 10/14]
 
 	// Will build as needs require.
@@ -125,8 +133,8 @@ public:
 	void TestAudioSource();
 
 private:
-	// std::unordered_map<AUDIOTYPE, std::vector<FMOD::Channel*>>  mChannels;	// Depreciated [9/25]
 	std::unordered_map<AUDIOTYPE, std::vector<Channel>>         mChannelsNew;	// Database of Channels (SFX / BGM)
+	std::unordered_map<AUDIOTYPE, std::vector<FMOD::Channel*>>  mChannelsNewA;
 	std::unordered_map<std::string, FMOD::Sound*>				mSounds;        // Database of Sounds (SFX/BGM)
 
 	// Global Volume 

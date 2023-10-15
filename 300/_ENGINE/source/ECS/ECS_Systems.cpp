@@ -66,6 +66,7 @@ void SystemManager::Init(bool isEditor, GFX::Window *window)
 
 void SystemManager::Reset()
 {
+	mAudioSystem.get()->Reset();
 	mGameStateSystem.get()->Unload();
 	mGameStateSystem.get()->Init();
 	mPhysicsSystem.get()->Init();
@@ -77,6 +78,7 @@ void SystemManager::Pause()
 {
 	mIsPlay = false; 
 	mGraphicsSystem->PauseGlobalAnimation();
+	mAudioSystem->Pause();
 }
 
 void SystemManager::Play()
@@ -85,6 +87,7 @@ void SystemManager::Play()
 	mPhysicsSystem.get()->Init();
 	mGraphicsSystem->UnpauseGlobalAnimation();
 	mGameStateSystem->mCurrentGameState.Save();
+	mAudioSystem->PlayOnAwake(); // Added [10/15]
 }
 
 void SystemManager::Update(float dt)

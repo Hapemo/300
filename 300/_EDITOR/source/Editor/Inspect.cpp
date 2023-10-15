@@ -855,6 +855,8 @@ void Audio::Inspect() {
 				{
 					// For Debugging Purposes
 					PINFO("[Loaded] Audio is already in database.");
+					// Assign the [Sound*] to this component. 
+					mSound = &(systemManager->mAudioSystem.get()->FindSound(audio_name)); 
 					Entity(Hierarchy::selectedId).GetComponent<Audio>().mIsEmpty = false; // Component is populated with info
 					return;
 				}
@@ -863,7 +865,7 @@ void Audio::Inspect() {
 				{	
 					// Load the Audio File + Check (load status)
 					systemManager->mAudioSystem.get()->UpdateLoadAudio(Entity(Hierarchy::selectedId));
-					Entity(Hierarchy::selectedId).GetComponent<Audio>().mIsEmpty = false;
+					Entity(Hierarchy::selectedId).GetComponent<Audio>().mIsEmpty = false; // must be here (editor specific) -> to trigger the other options to appear.
 					/*Audio& audioent = Entity(Hierarchy::selectedId).GetComponent<Audio>();
 					int i = 0;*/
 				}

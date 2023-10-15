@@ -16,13 +16,15 @@ Components used by the ECS.
 #include "Physics/PhysicsTypes.h"
 #include "Tags.h"
 #include "ECS.h"
-#include "Audio/AudioType.h"
 #include <Animator.hpp>
 #include <Camera.hpp>
 #include "EnumStrings.h"
 #include "Input/Input.h"
 //#include "Graphics/GraphicsSystem.h"
 #include "Mesh.hpp"
+#include "Audio/AudioType.h"
+#include "../../../lib/FMOD/core/inc/fmod.hpp"
+
 
 //#include "rttr/registration.h"
 
@@ -248,10 +250,9 @@ struct Audio
 	std::string mFilePath;				   // File Path to the Audio File (required for loading)
 	std::string mFileName;				   // Name of Audio file (required for loading)
 	std::string mFullPath;				   // 
-	AUDIOTYPE mAudioType;				   // SFX or BGM
 
 	bool mIsPlay      = false;			   // play audio if true
-	bool mPlayonAwake = false;			   // [10/14] - will play as the scene launches.
+	bool mPlayonAwake = false;			   // [10/14] - flag to play as the scene launches.
 
 	// Don't need to serialize ...
 	std::vector<int> mPlaySFXChannelID;    // Currently playing in SFX Channel...
@@ -261,7 +262,14 @@ struct Audio
 	// For Editor
 	bool			 mIsEmpty = false;	   // [For Editor] - if empty delete all data in this <Audio> component
 	bool			 mIsLoaded = false;	   // [For Loading]
+	
+	// Pause State [Editor/Pause Menu]
+	bool			 mIsPaused = false;
 
+	// Q. Can a <Audio> entity have their very own channel.
+	FMOD::Channel* mChannel;         	   // Use this to facilitate manipulation of audio.
+	FMOD::Sound*   mSound;				   // Each <Audio> can only hold a reference to the "Audio File" it's attached to.
+	AUDIOTYPE      mAudioType;			   // SFX or BGM (Mute Channels)
 
 	Audio() : mFilePath(""), mFileName(""), mAudioType(AUDIO_NULL), mIsPlaying(false), mIsPlay(false), mIsEmpty(true) {}
 
@@ -272,6 +280,7 @@ struct Audio
 		mFullPath = file_path_to_audio + "/" + mFileName;
 	}
 
+	// For [Editor]
 	void ClearAudioComponent()
 	{
 		mFilePath = "";
@@ -282,6 +291,7 @@ struct Audio
 		mPlayonAwake = false;
 		mIsEmpty = true;
 		mIsLoaded = false;
+		mSound = nullptr;
 	}
 
 

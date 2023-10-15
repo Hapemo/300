@@ -53,43 +53,45 @@ void AudioSystem::Init()
 	PINFO("FMOD System Initialize: +");
 	ErrCodeCheck(system_obj->init(MAX_AUDIO_FILES_PLAYING, FMOD_INIT_NORMAL, nullptr));
 
-	// Create Channels (At Initialization) - NEW (w ID tracking)
-	std::vector<Channel> bgm_channel_new;
-	std::vector<Channel> sfx_channel_new;
-	PINFO("Initializing BGM Channels.");
-	mChannelsNew.emplace(std::make_pair(AUDIO_BGM, bgm_channel_new));
-	PINFO("Initializing SFX Channels.");
-	mChannelsNew.emplace(std::make_pair(AUDIO_SFX, sfx_channel_new));
+	// [10/15] Scraping for now. (Structure Changes)
+	// ---------------------------------------------------------------------
+	// Create Channels (At Initialization) - NEW (w ID tracking) 
+	//std::vector<Channel> bgm_channel_new;
+	//std::vector<Channel> sfx_channel_new;
+	//PINFO("Initializing BGM Channels.");
+	//mChannelsNew.emplace(std::make_pair(AUDIO_BGM, bgm_channel_new));
+	//PINFO("Initializing SFX Channels.");
+	//mChannelsNew.emplace(std::make_pair(AUDIO_SFX, sfx_channel_new));
 
 	// [9/25] Decided to just init a number of channels from the start.
-	auto bgm_channel_it = mChannelsNew.find(AUDIO_BGM);
-	auto sfx_channel_it = mChannelsNew.find(AUDIO_SFX);
+	//auto bgm_channel_it = mChannelsNew.find(AUDIO_BGM);
+	//auto sfx_channel_it = mChannelsNew.find(AUDIO_SFX);
 
 	// [9/25] Populate the (Channel) Object
-	PINFO("Populating BGM Channels.");
-	if (bgm_channel_it != mChannelsNew.end())
-	{
-		for (int i = 0; i < NO_OF_BGM_CHANNELS_TO_INIT; ++i)
-		{
-			FMOD::Channel* new_channel = nullptr;
-			Channel new_bgm_channel = Channel(next_avail_id_bgm, new_channel, false); // We need this for the channel status.
-			next_avail_id_bgm++;
-			bgm_channel_it->second.push_back(new_bgm_channel);
-		}
-	}
+	//PINFO("Populating BGM Channels.");
+	//if (bgm_channel_it != mChannelsNew.end())
+	//{
+	//	for (int i = 0; i < NO_OF_BGM_CHANNELS_TO_INIT; ++i)
+	//	{
+	//		FMOD::Channel* new_channel = nullptr;
+	//		Channel new_bgm_channel = Channel(next_avail_id_bgm, new_channel, false); // We need this for the channel status.
+	//		next_avail_id_bgm++;
+	//		bgm_channel_it->second.push_back(new_bgm_channel);
+	//	}
+	//}
 
-	PINFO("Populating BGM Channels.");
-	if (sfx_channel_it != mChannelsNew.end())
-	{
-		for (int i = 0; i < NO_OF_SFX_CHANNELS_TO_INIT; ++i)
-		{
-			FMOD::Channel* new_channel = nullptr;
-			Channel new_sfx_channel = Channel(next_avail_id_sfx, new_channel, false); // We need this for the channel status.
-			next_avail_id_sfx++;
-			sfx_channel_it->second.push_back(new_sfx_channel);
-		}
-	}
-
+	//PINFO("Populating BGM Channels.");
+	//if (sfx_channel_it != mChannelsNew.end())
+	//{
+	//	for (int i = 0; i < NO_OF_SFX_CHANNELS_TO_INIT; ++i)
+	//	{
+	//		FMOD::Channel* new_channel = nullptr;
+	//		Channel new_sfx_channel = Channel(next_avail_id_sfx, new_channel, false); // We need this for the channel status.
+	//		next_avail_id_sfx++;
+	//		sfx_channel_it->second.push_back(new_sfx_channel);
+	//	}
+	//}
+	// -------------------------------------------------------------
 
 	auto audio_entities = systemManager->ecs->GetEntitiesWith<Audio>();
 
@@ -140,7 +142,15 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 	*/
 	if (systemManager->mGameStateSystem.get()->mGSMState == GameStateManager::E_GSMSTATE::RUNNING)
 	{
-		PINFO("RUNNING GAME");
+		for (Entity audio : audio_entities) // Iterate through all the entities with <Audio> component.
+		{
+			Audio& audio_component = audio.GetComponent<Audio>();
+
+			if (audio_component.mPlayonAwake)
+			{
+
+			}
+		}
 	}
 
 
@@ -224,6 +234,86 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 }
 
 
+/******************************************************************************/
+/*!
+	Play()
+	- Checks for "mPlayonAwake" flag from <Audio> component. 
+	- Plays the respective audio.
+	- Linked to "Start" Button ("Resume" state)
+ */
+ /******************************************************************************/
+void AudioSystem::PlayOnAwake()
+{
+	auto audio_entities = systemManager->ecs->GetEntitiesWith<Audio>();
+
+	for (Entity audio : audio_entities)
+	{
+		Audio& audio_component = audio.GetComponent<Audio>();
+
+		if (audio_component.mPlayonAwake && audio_component.mIsPaused == false) // Truly the first time playing
+		{
+			PINFO("Playing %s on Awake", audio_component.mFileName.c_str());
+			std::cout << "Playing " << audio_component.mFileName << " on Awake." << std::endl;
+			ErrCodeCheck(system_obj->playSound(audio_component.mSound, nullptr, false, &(audio_component.mChannel)));
+		}
+
+		else if(audio_component.mIsPaused)
+		{
+			PINFO("Resuming Audio: %s.", audio_component.mFileName.c_str());
+			ErrCodeCheck(audio_component.mChannel->setPaused(false));
+			audio_component.mIsPaused = false;
+		}
+	}
+}
+
+/******************************************************************************/
+/*!
+	Pause()
+	- Pauses all playing audio.
+ */
+ /******************************************************************************/
+void AudioSystem::Pause()
+{
+	auto audio_entities = systemManager->ecs->GetEntitiesWith<Audio>();
+
+	for (Entity audio : audio_entities)
+	{
+		Audio& audio_component = audio.GetComponent<Audio>();
+
+		bool playing;
+		audio_component.mChannel->isPlaying(&playing);
+
+		if (playing) // check if audio is currently playing...
+		{
+			PINFO("Pausing Audio : %s", audio_component.mFileName);
+			ErrCodeCheck(audio_component.mChannel->setPaused(true));
+			audio_component.mIsPaused = true;
+		}
+
+		audio_component.mChannel->isPlaying(&playing);
+		int i = 3;
+	}
+}
+
+void AudioSystem::Reset()
+{
+	auto audio_entities = systemManager->ecs->GetEntitiesWith<Audio>();
+
+	for (Entity audio : audio_entities)
+	{
+		Audio& audio_component = audio.GetComponent<Audio>();
+
+		bool playing;
+		audio_component.mChannel->isPlaying(&playing);
+
+		if (playing)
+		{
+			ErrCodeCheck(audio_component.mChannel->stop());
+		}
+		
+		audio_component.ClearAudioComponent();
+	}
+}
 
 /******************************************************************************/
 /*!
@@ -252,9 +342,10 @@ void AudioSystem::UpdateLoadAudio(Entity id)
 		std::string audio_path = audio_component.mFilePath + "/" + audio_component.mFileName;
 		std::string audio_name = audio_component.mFileName;
 
-		if (LoadAudio(audio_path, audio_name))
+		if (LoadAudio(audio_path, audio_name)) // What if the sound is loaded? (we have to save a reference in this function also)
 		{
 			audio_component.mIsLoaded = true;
+			audio_component.mSound = &(FindSound(audio_name));  // Save a reference to the sound loaded in.
 			PINFO("Audio Successfully Loaded :)");
 
 		}
@@ -292,6 +383,7 @@ void AudioSystem::UpdateLoadAudio(Entity id)
 	}*/
 }
 
+
 /******************************************************************************/
 /*!
 	[Troubleshooter] ErrCodeCheck(FMOD_RESULT result)
@@ -318,7 +410,8 @@ int AudioSystem::ErrCodeCheck(FMOD_RESULT result)
 			break;
 		}
 
-		return 0; // failure
+		PWARNING("Unregistered Error Code %d", result);
+		return result; // failure
 	}
 	PINFO("FMOD OPERATION OK.");
 	//std::cout << "FMOD OPERATION OK." << std::endl;
@@ -406,7 +499,7 @@ void AudioSystem::PlayAudio(std::string audio_name, AUDIOTYPE audio_type, float 
 
 	if (channel_it != mChannelsNew.end())
 	{
-		for (Channel& channel : channel_it->second)
+		for (auto channel : channel_it->second)
 		{
 			if (!channel.mIsPlayingSound)
 			{
@@ -902,6 +995,17 @@ Channel& AudioSystem::FindChannel(AUDIOTYPE audio_type, int channel_id)
 	return mChannelsNew[AUDIOTYPE::AUDIO_BGM][0];
 }
 
+FMOD::Sound& AudioSystem::FindSound(std::string audio_name)
+{
+	auto sound_it = mSounds.find(audio_name);
+
+	if (sound_it != mSounds.end())
+	{
+		return *(sound_it->second);
+	}
+	
+}
+
 bool AudioSystem::CheckAudioExist(std::string audio_name)
 {
 	auto sound_it = mSounds.find(audio_name);
@@ -963,8 +1067,8 @@ void AudioSystem::TestAudioSource()
 	/*
 		Script Start
 	*/
-	AudioSource m_audio;													// Create Empty [AudioSource] object
-	m_audio.mAudioComponent = &(Entity(object_id).GetComponent<Audio>());	// Point to <Audio> Component (for it's data)
+	//AudioSource m_audio;													// Create Empty [AudioSource] object
+	//m_audio.mAudioComponent = &(Entity(object_id).GetComponent<Audio>());	// Point to <Audio> Component (for it's data)
 	
 
 	
