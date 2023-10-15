@@ -179,13 +179,10 @@
     <ClInclude Include="include\Physics\PhysicsTypes.h" />
     <ClInclude Include="include\Physics\PhysicsSystem.h" />
     <ClInclude Include="include\Physics\PhysX.h" />
-    <ClInclude Include="include\Serialization\Deserialization.h" />
     <ClInclude Include="include\Serialization\Serializable.h" />
     <ClInclude Include="include\Serialization\Serialization.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="source\Serialization\Deserialization.cpp" />
-    <ClCompile Include="source\Serialization\DeserializeSelf.cpp" />
     <ClCompile Include="source\Serialization\SerializeSelf.cpp" />
     <ClCompile Include="source\Audio\AudioSystem.cpp" />
     <ClCompile Include="source\Debug\AssertException.cpp" />

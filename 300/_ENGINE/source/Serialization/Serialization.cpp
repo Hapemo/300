@@ -88,3 +88,65 @@ void WriteToFile(const std::string& filename, const rapidjson::StringBuffer& buf
 	if (of.good()) return;
 	PERROR(("Writing to output file failed! File name: " + filename).c_str());
 }
+
+DESERIALIZE_BASIC(bool)
+{
+	if (reader.HasMember(name))
+		val = reader[name].GetBool();
+}
+
+DESERIALIZE_BASIC(int)
+{
+	if (reader.HasMember(name))
+		val = reader[name].GetInt();
+}
+
+DESERIALIZE_BASIC(std::uint32_t)
+{
+	if (reader.HasMember(name))
+		val = reader[name].GetUint();
+}
+
+DESERIALIZE_BASIC(float)
+{
+	if (reader.HasMember(name))
+		val = reader[name].GetDouble();
+}
+
+DESERIALIZE_BASIC(double)
+{
+	if (reader.HasMember(name))
+		val = reader[name].GetDouble();
+}
+
+DESERIALIZE_BASIC(std::string)
+{
+	if (reader.HasMember(name))
+		val = reader[name].GetString();
+}
+
+DESERIALIZE_BASIC(glm::ivec2)
+{
+	if (reader.HasMember(name))
+	{
+		if (reader[name].HasMember("x"))
+			val.x = reader[name]["x"].GetInt();
+		if (reader[name].HasMember("y"))
+			val.y = reader[name]["y"].GetInt();
+	}
+}
+
+DESERIALIZE_BASIC(glm::vec3)
+{
+
+}
+
+DESERIALIZE_BASIC(Scene)
+{
+
+}
+
+DESERIALIZE_BASIC(Script)
+{
+
+}

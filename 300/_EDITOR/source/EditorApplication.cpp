@@ -68,6 +68,22 @@ void EditorApplication::SystemInit()
 
 void EditorApplication::MainUpdate()
 {
+    Entity e1 = systemManager->ecs->NewEntity();
+    Entity e2 = systemManager->ecs->NewEntity();
+    e1.AddComponent<RigidBody>();
+    e1.AddComponent<PlaneCollider>();
+    e1.AddComponent<BoxCollider>();
+    e1.AddComponent<SphereCollider>();
+    e1.AddComponent<MeshRenderer>();
+    e1.AddComponent<Scripts>();
+    e2.AddComponent<PlaneCollider>();
+    e2.AddComponent<RigidBody>();
+    Scene scn;
+    scn.AddEntity(e1);
+    scn.AddEntity(e2);
+    scn.mName = "testSerialization";
+    ObjectFactory::SaveScene(&scn);
+
     while (!glfwWindowShouldClose(mWindow.GetHandle()))
     {
         EnginePerformance::StartTrack("Editor");
