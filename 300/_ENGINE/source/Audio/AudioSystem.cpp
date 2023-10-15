@@ -11,6 +11,7 @@ This file contains the base AudioSystem class that supports the following functi
 - Manipulating Audio (Play/Pause/Stop)
 ****************************************************************************/
 #include "Audio/AudioSystem.h"
+#include "Audio/AudioTest.h" // Scripting Tests (Audio into Lua)
 
 
 /******************************************************************************/
@@ -120,8 +121,8 @@ void AudioSystem::Init()
 		}
 	}
 
-	// [10/14] 
-	TestAudioSource();
+	// [10/14] Scripting Test
+	TestGetAudioComponent();
 }
 
 
@@ -136,101 +137,80 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 {
 	auto audio_entities = systemManager->ecs->GetEntitiesWith<Audio>();
 
-	/* [10/14]
-		- Loops through <Audio> component.
-		- "mPlayonAwake" flag will allow it to play.
+	/*
+		[Check Play Loop]
+		- Checks for (mIsPlay)    flag : signify that the audio is expected to play.
+		- Checks for (mIsPlaying) flag : signify that it's already playing, so do not play again.
 	*/
-	if (systemManager->mGameStateSystem.get()->mGSMState == GameStateManager::E_GSMSTATE::RUNNING)
+	for (Entity audio : audio_entities)
 	{
-		for (Entity audio : audio_entities) // Iterate through all the entities with <Audio> component.
+		Audio& audio_component = audio.GetComponent<Audio>();
+	
+		if (audio_component.mIsPlay) // if it's supposed to play.
 		{
-			Audio& audio_component = audio.GetComponent<Audio>();
-
-			if (audio_component.mPlayonAwake)
+			if (!audio_component.mIsPlaying)
 			{
-
+				int channel_id;
+	
+				switch (audio_component.mAudioType)
+				{
+				case AUDIO_BGM:
+					channel_id = PlayBGMAudio(audio_component.mFileName, 1.0f);
+					if (channel_id != -1)
+						audio_component.mPlayBGMChannelID.push_back(channel_id);
+					break;
+				case AUDIO_SFX:
+					channel_id = PlaySFXAudio(audio_component.mFileName, 1.0f);
+					if (channel_id != -1)
+						audio_component.mPlaySFXChannelID.push_back(channel_id);
+					break;
+				}
+			}
+	
+			audio_component.mIsPlaying = true; // currently playing.
+			audio_component.mIsPlay = false;   // don't need to play again.
+		}
+	
+		/*
+			[Check if Channel is still Playing]
+			- Iterate through [Audio Component]
+	
+		*/
+	
+		for (Entity audio1 : audio_entities)
+		{
+			Audio& audio_comp = audio1.GetComponent<Audio>();
+	
+			for (int id : audio_comp.mPlayBGMChannelID)
+			{
+				Channel& channel = FindChannel(AUDIO_BGM, id);
+	
+				channel.mChannel->isPlaying(&channel.mIsPlayingSound);
+	
+				if (!channel.mIsPlayingSound) // channel stopped playing
+				{
+					audio_comp.mIsPlaying = false;
+					audio_comp.mIsPlay = false;
+				}
+			}
+	
+			for (int id : audio_comp.mPlaySFXChannelID)
+			{
+				Channel& channel = FindChannel(AUDIO_SFX, id);
+	
+				channel.mChannel->isPlaying(&channel.mIsPlayingSound);
+	
+				if (!channel.mIsPlayingSound) // channel stopped playing
+				{
+					audio_comp.mIsPlaying = false;
+					audio_comp.mIsPlay = false;
+				}
 			}
 		}
 	}
-
-
+	
 	system_obj->update();
 
-	//#pragma region Legacy Audio Update Loop
-	//	/*
-	//		[Check Play Loop]
-	//		- Checks for (mIsPlay)    flag : signify that the audio is expected to play.
-	//		- Checks for (mIsPlaying) flag : signify that it's already playing, so do not play again.
-	//	*/
-	//	for (Entity audio : audio_entities)
-	//	{
-	//		Audio& audio_component = audio.GetComponent<Audio>();
-	//
-	//		if (audio_component.mIsPlay) // if it's supposed to play.
-	//		{
-	//			if (!audio_component.mIsPlaying)
-	//			{
-	//				int channel_id;
-	//
-	//				switch (audio_component.mAudioType)
-	//				{
-	//				case AUDIO_BGM:
-	//					channel_id = PlayBGMAudio(audio_component.mFileName, 1.0f);
-	//					if (channel_id != -1)
-	//						audio_component.mPlayBGMChannelID.push_back(channel_id);
-	//					break;
-	//				case AUDIO_SFX:
-	//					channel_id = PlaySFXAudio(audio_component.mFileName, 1.0f);
-	//					if (channel_id != -1)
-	//						audio_component.mPlaySFXChannelID.push_back(channel_id);
-	//					break;
-	//				}
-	//			}
-	//
-	//			audio_component.mIsPlaying = true; // currently playing.
-	//			audio_component.mIsPlay = false;   // don't need to play again.
-	//		}
-	//
-	//		/*
-	//			[Check if Channel is still Playing]
-	//			- Iterate through [Audio Component]
-	//
-	//		*/
-	//
-	//		for (Entity audio1 : audio_entities)
-	//		{
-	//			Audio& audio_comp = audio1.GetComponent<Audio>();
-	//
-	//			for (int id : audio_comp.mPlayBGMChannelID)
-	//			{
-	//				Channel& channel = FindChannel(AUDIO_BGM, id);
-	//
-	//				channel.mChannel->isPlaying(&channel.mIsPlayingSound);
-	//
-	//				if (!channel.mIsPlayingSound) // channel stopped playing
-	//				{
-	//					audio_comp.mIsPlaying = false;
-	//					audio_comp.mIsPlay = false;
-	//				}
-	//			}
-	//
-	//			for (int id : audio_comp.mPlaySFXChannelID)
-	//			{
-	//				Channel& channel = FindChannel(AUDIO_SFX, id);
-	//
-	//				channel.mChannel->isPlaying(&channel.mIsPlayingSound);
-	//
-	//				if (!channel.mIsPlayingSound) // channel stopped playing
-	//				{
-	//					audio_comp.mIsPlaying = false;
-	//					audio_comp.mIsPlay = false;
-	//				}
-	//			}
-	//		}
-	//	}
-	//
-	//	system_obj->update();
-//#pragma endregion
 }
 
 
@@ -1048,34 +1028,34 @@ bool AudioSystem::CheckAudioExist(std::string audio_name)
 
  */
  /******************************************************************************/
-void AudioSystem::TestAudioSource()
-{
-	/*
-		Testing with a "dummy" object that has <Audio> & <Scripting> Component attached to it.
-		- Using "object_id" to access the entity that we will be working on (in the script)
-	*/
-	entt::entity object_id; 
-	auto audioent = systemManager->ecs->GetEntitiesWith<Audio>();
-
-	for (Entity ent : audioent) // Only has 1 entity with <Audio>
-	{
-		object_id = ent.id; 
-	}
-	//---------------------------------------------------------------------------------
-	
-
-	/*
-		Script Start
-	*/
-	//AudioSource m_audio;													// Create Empty [AudioSource] object
-	//m_audio.mAudioComponent = &(Entity(object_id).GetComponent<Audio>());	// Point to <Audio> Component (for it's data)
-	
-
-	
-	
-
-	//m_audio.mAudioComponent = 
-
-}
+//void AudioSystem::TestAudioSource()
+//{
+//	/*
+//		Testing with a "dummy" object that has <Audio> & <Scripting> Component attached to it.
+//		- Using "object_id" to access the entity that we will be working on (in the script)
+//	*/
+//	entt::entity object_id; 
+//	auto audioent = systemManager->ecs->GetEntitiesWith<Audio>();
+//
+//	for (Entity ent : audioent) // Only has 1 entity with <Audio>
+//	{
+//		object_id = ent.id; 
+//	}
+//	//---------------------------------------------------------------------------------
+//	
+//
+//	/*
+//		Script Start
+//	*/
+//	//AudioSource m_audio;													// Create Empty [AudioSource] object
+//	//m_audio.mAudioComponent = &(Entity(object_id).GetComponent<Audio>());	// Point to <Audio> Component (for it's data)
+//	
+//
+//	
+//	
+//
+//	//m_audio.mAudioComponent = 
+//
+//}
 
 #pragma endregion

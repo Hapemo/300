@@ -77,6 +77,9 @@ void Scene::Load(std::string const& _name) {
 	testaudio.AddComponent<General>().name = "Audio";
 	testaudio.AddComponent<Audio>();
 	Audio& audio = testaudio.GetComponent<Audio>();
+	audio.mFullPath = "../assets\\Audio\\farm_ambience.wav";
+	audio.mFilePath = "../assets\\Audio";
+	audio.mFileName = "farm_ambience.wav";
 	//testaudio.GetComponent<Audio>().mFileName = "farm_ambience";
 	mEntities.insert(testaudio);
 }

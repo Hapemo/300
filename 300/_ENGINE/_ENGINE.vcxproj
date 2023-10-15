@@ -153,7 +153,9 @@
     <ClInclude Include="..\..\..\..\..\Desktop\300\300\_ENGINE\include\Input\InputActionMap.h" />
     <ClInclude Include="..\..\..\..\..\Desktop\300\300\_ENGINE\include\Input\InputMapSystem.h" />
     <ClInclude Include="..\..\..\..\..\Desktop\300\300\_ENGINE\include\Input\KeyBind.h" />
+    <ClInclude Include="include\Audio\AudioSource.h" />
     <ClInclude Include="include\Audio\AudioSystem.h" />
+    <ClInclude Include="include\Audio\AudioTest.h" />
     <ClInclude Include="include\Audio\AudioType.h" />
     <ClInclude Include="include\Debug\AssertException.h" />
     <ClInclude Include="include\Debug\Asserts.h" />
@@ -180,6 +182,7 @@
     <ClInclude Include="include\Physics\PhysX.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="source\Audio\AudioSource.cpp" />
     <ClCompile Include="source\Audio\AudioSystem.cpp" />
     <ClCompile Include="source\Debug\AssertException.cpp" />
     <ClCompile Include="source\Debug\EnginePerformance.cpp" />

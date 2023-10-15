@@ -896,8 +896,8 @@ void Audio::Inspect() {
 
 	if (!mIsEmpty)
 	{
-		ImGui::Checkbox("Play This (start the scene first)", &mIsPlay);
-		ImGui::Checkbox("IsPlaying", &mIsPlaying);
+		//ImGui::Checkbox("Play This (start the scene first)", &mIsPlay);
+		//ImGui::Checkbox("IsPlaying", &mIsPlaying);
 		ImGui::Checkbox("Play on Awake", &mPlayonAwake);
 	}
 

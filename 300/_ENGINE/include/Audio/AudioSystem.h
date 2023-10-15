@@ -25,6 +25,7 @@ This file contains the base AudioSystem class that supports the following functi
 #include "GameState/GameStateManager.h"
 #include "GameState/Scene.h"
 
+
 enum AUDIOTYPE : unsigned char;
 
 // [9/25] Decided that we need this if we want to track if the audio is still playing in a particular channel
@@ -45,31 +46,6 @@ struct Channel
 	FMOD::Channel* mChannel;
 	bool		   mIsPlayingSound;
 };
-
-// [10/13] Interfacing for (Designers) to use in [Scripting] 
-/******************************************************************************/
-/*!
-	[Class] AudioSource (Scripting Object)
-	 \brief
-	  - Interfaced functions that make it easy to use on scripting side (port to Lua)
-	  - Container for [Scripting] side to use.
-	  - Works with <Audio> component for the data.
-	 \brief
-	  - Each <AudioSource> will have their own channel.
- */
- /******************************************************************************/
-//class AudioSource				// Not part of the system.
-//{
-//public:
-//	Audio* mAudioComponent;  // Relevant <Audio> component data.
-//public:
-//	AudioSource() : mAudioComponent(nullptr) {}
-//
-//	//void Play();
-//	//void Stop();
-//
-//
-//};
 
 /******************************************************************************/
 /*!
@@ -128,10 +104,6 @@ public:
 
 	// Will build as needs require.
 
-public:
-	// Scripting Testing Functions (later port to Lua)
-	void TestAudioSource();
-
 private:
 	std::unordered_map<AUDIOTYPE, std::vector<Channel>>         mChannelsNew;	// Database of Channels (SFX / BGM)
 	std::unordered_map<AUDIOTYPE, std::vector<FMOD::Channel*>>  mChannelsNewA;
@@ -155,3 +127,5 @@ private:
 	double startTime = 0.0f;
 	double endTime   = 0.0f;
 };
+
+
