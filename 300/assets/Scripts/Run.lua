@@ -18,6 +18,9 @@ function Update()
     transformComponent = entity:GetTransformComponent()
     -- Change entity name to enemy
     generalComponent.name = "Enemy"
+    -- Get entity Tag
+    -- tag = generalComponent:GetTag();
+    -- print(tag)
 
     -- Make character move x-axis
     if Input.CheckKey(State.HOLD, Key.UP) then
@@ -35,6 +38,11 @@ function Update()
         -- print("VEC Z: ", vec.z)
         -- print("Name: ", name)
         --print("Value2: ", test2)
+
+        --Set entity Tag
+        -- generalComponent:SetTag("Enemy");
+        -- tag = generalComponent:GetTag();
+        -- print(tag)
     end
 end
 

@@ -37,7 +37,7 @@ struct General
 {
 	std::string name;
 	/*TAG tag;*/
-	enum_tag::enum_tag tag{};
+	//enum_tag::enum_tag tag{};
 	enum_tag::enum_tag tagid{};
 	//std::string tag[5] = { "PLAYER","ENEMY","BULLET","STATIC","BUILDING" };
 	//int tagid{ 0 };
@@ -49,6 +49,8 @@ struct General
 	: name(""), subtag(SUBTAG::ACTIVE), isActive(true) 
 	{};
 
+	std::string GetTag() { return enum_tag::ToString(tagid); }
+	void SetTag(const std::string newTag) { tagid = enum_tag::GetEnum(newTag.c_str()); }
 	void Inspect();
 
 	//RTTR_ENABLE()
