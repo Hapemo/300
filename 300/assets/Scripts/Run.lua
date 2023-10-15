@@ -5,7 +5,6 @@ name = "Girl"
 speed = 20
 
 function Alive()
-
 end
 
 function Update()
@@ -21,7 +20,7 @@ function Update()
     -- Get entity Tag
     -- tag = generalComponent:GetTag();
     -- print(tag)
-
+    
     -- Make character move x-axis
     if Input.CheckKey(State.HOLD, Key.UP) then
         transformComponent.mTranslate.y = transformComponent.mTranslate.y + speed
@@ -38,11 +37,15 @@ function Update()
         -- print("VEC Z: ", vec.z)
         -- print("Name: ", name)
         --print("Value2: ", test2)
-
-        --Set entity Tag
-        -- generalComponent:SetTag("staTIC");
-        -- tag = generalComponent:GetTag();
+        
+        -- Set entity Tag
+        generalComponent:SetTag("eneMY");
+        --tag = generalComponent:GetTag();
         -- print(tag)
+
+        -- Physics Set Velocity function
+        --physicsSys = systemManager:mPhysicsSystem();
+        --physicsSys:SetVelocity(entity, vec);
     end
 end
 

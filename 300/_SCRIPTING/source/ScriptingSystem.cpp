@@ -97,6 +97,7 @@ void ScriptingSystem::Init()
     LuaInput();
     LuaAudio();
     LuaInputMapSystem();
+    LuaPhysics();
 
     /******************************************************************************/
     /*!

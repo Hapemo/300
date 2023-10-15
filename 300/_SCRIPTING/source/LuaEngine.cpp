@@ -198,3 +198,11 @@ void LuaInputMapSystem()
         "GetKeyDown", &InputMapSystem::GetKeyDown
         );
 }
+
+void LuaPhysics()
+{
+    systemManager->mScriptingSystem->luaState.new_usertype<PhysicsSystem>(
+        "mPhysicsSystem", sol::constructors<>(),
+        "SetVelocity", &PhysicsSystem::SetVelocity
+        );
+}
