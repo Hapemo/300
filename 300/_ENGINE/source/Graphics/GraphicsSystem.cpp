@@ -188,19 +188,15 @@ void GraphicsSystem::Update(float dt)
 	auto meshRendererInstances = systemManager->ecs->GetEntitiesWith<MeshRenderer>();
 	for (Entity inst : meshRendererInstances)
 	{
-	
-		auto& meshrefptr = inst.GetComponent<MeshRenderer>();
-		if (meshrefptr.mMeshRef == nullptr)
+		MeshRenderer& meshRenderer = inst.GetComponent<MeshRenderer>();
+
+		// if the mesh instance is not active, skip it
+		if (meshRenderer.mMeshRef == nullptr)
 			continue;
 
-		std::string meshstr = inst.GetComponent<MeshRenderer>().mMeshPath;
-		//Animator anim = inst.GetComponent<Animator>();
-
-		void *tt = inst.GetComponent<MeshRenderer>().mMeshRef;
+		// gives me the mesh
+		void *tt = meshRenderer.mMeshRef;
 		GFX::Mesh &meshinst = *reinterpret_cast<GFX::Mesh *>(tt);
-
-		uid temp(meshstr);
-		// GFX::Mesh& meshinst = *(systemManager->mResourceTySystem->get_mesh(temp.id));
 
 		// pushback LTW matrices
 		vec3 trans = inst.GetComponent<Transform>().mTranslate;
@@ -233,13 +229,15 @@ void GraphicsSystem::Update(float dt)
 		// Update the animation
 		if (inst.HasComponent<Animator>() && _ENABLE_ANIMATIONS && systemManager->mGraphicsSystem->m_EnableGlobalAnimations)
 		{
+			Animator& animatorInst = inst.GetComponent<Animator>();
+
 			// skip the mesh that does not have an animation set
-			if (inst.GetComponent<Animator>().mAnimator.m_CurrentAnimation != nullptr)
+			if (animatorInst.mAnimator.m_CurrentAnimation != nullptr)
 			{
-				inst.GetComponent<Animator>().mAnimator.UpdateAnimation(dt, mat4(1.f), final); // update the current animation
+				animatorInst.mAnimator.UpdateAnimation(dt, mat4(1.f), final); // update the current animation
 
 				// push back matrices into the SSBO
-				for (const auto& x : inst.GetComponent<Animator>().mAnimator.m_FinalBoneMatrices)
+				for (const auto& x : animatorInst.mAnimator.m_FinalBoneMatrices)
 				{
 					finalBoneMatrices.push_back(x);
 				}

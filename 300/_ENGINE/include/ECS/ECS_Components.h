@@ -100,23 +100,18 @@ struct MeshRenderer
 	// For now, we store the string to the filepaths. TO CHANGE to uids for efficient referencing
 	std::pair<std::string, std::string> mShaderPath{ "../assets/shader_files/pointLight_vert.glsl", "../assets/shader_files/pointLight_frag.glsl" };
 	std::string							mMaterialInstancePath[4] {" "," " ," " ," " };
-	std::string							mMeshPath;
-	
-	void*								    mMeshRef{};
-	
+
+	void*								mMeshRef{};
 
 	void*								mTextureRef[4];
 	bool								mTextureCont[4];
 
+	std::string							mMeshPath;
 	unsigned							mGUID;
 
 	void								Inspect();
 
-	//GFX::Mesh							testmesh;
-
 	//RTTR_ENABLE()
-
-
 };
 
 struct UIrenderer

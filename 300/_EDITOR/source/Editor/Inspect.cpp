@@ -579,7 +579,8 @@ void Animator::Inspect()
 */
 /***************************************************************************/
 
-void MeshRenderer::Inspect() {
+void MeshRenderer::Inspect() 
+{
 	bool delete_component{ true };
 	if (ImGui::CollapsingHeader("MeshRenderer", &delete_component,ImGuiTreeNodeFlags_DefaultOpen)) 
 	{
@@ -588,6 +589,7 @@ void MeshRenderer::Inspect() {
 		int ed = static_cast<int>(mMeshPath.find_last_of("."));
 		std::string tempPath = mMeshPath.substr(st + 1, ed - (st + 1));
 
+		Entity entins(Hierarchy::selectedId);
 		ImGui::Text("Mesh");
 
 		if (ImGui::BeginDragDropTarget())
@@ -602,8 +604,8 @@ void MeshRenderer::Inspect() {
 				std::string descfilepath = data_str + ".desc";
 				unsigned guid = _GEOM::GetGUID(descfilepath);
 				mMeshRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(guid));
-
 				GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mMeshRef);
+
 
 				Entity entins(Hierarchy::selectedId);
 				if (entins.HasComponent<Animator>() && meshinst->mHasAnimation)
@@ -654,10 +656,8 @@ void MeshRenderer::Inspect() {
 				}
 
 				mMeshRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(guid));
-
 				GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mMeshRef);
 
-				Entity entins(Hierarchy::selectedId);
 				if (entins.HasComponent<Animator>() && meshinst->mHasAnimation)
 				{
 					// if the new entity has both animations and the animator component, update the animator to use the new animation
@@ -674,15 +674,12 @@ void MeshRenderer::Inspect() {
 			ImGui::EndDragDropTarget();
 		}
 
-
-
 		ImGui::SameLine();
 
 		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcTextSize(tempPath.c_str()).x
 			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
 		ImGui::Text(tempPath.c_str());
 
-		
 
 		ImGui::Dummy(ImVec2(0.0f, 10.0f));
 

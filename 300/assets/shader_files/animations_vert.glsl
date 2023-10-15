@@ -12,7 +12,7 @@ layout (location = 4) in vec4   boneWeights;		// Bone Weights
 layout (location = 5) in vec3   inTangent;			// Per vertex Tangent
 layout (location = 6) in vec3   inNormal;			// Per vertex Normal
 layout (location = 7) in vec4   inTex_Ent_ID;		// Texture ID, Entity ID of object
-layout (location = 8) in mat4   inLTW;			// local to world
+layout (location = 8) in mat4   inLTW;			    // local to world
 
 const int MAX_BONES = 200;
 const int MAX_BONE_INFLUENCE = 4;
