@@ -691,9 +691,6 @@ void MeshRenderer::Inspect()
 				std::string GEOM_Descriptor_Filepath;
 				unsigned guid;
 
-
-
-
 				bool descFilePresent = _GEOM::CheckAndCreateDescriptorFile(data_str, GEOM_Descriptor_Filepath);
 				std::string descfilepath = data_str + ".desc";
 				guid = _GEOM::GetGUID(descfilepath);
@@ -792,13 +789,49 @@ void MeshRenderer::Inspect()
 					}
 					ImGui::EndDragDropTarget();
 				}
-				
 			}
 		}
-
-
-
 	}
+
+	// == >> Mesh Renderer GEOM Descriptor File << == //
+	ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+	if (ImGui::TreeNode("GEOM DescirptorFile"))
+	{
+		GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mMeshRef);
+		ImGui::InputText("Desc Filepath", const_cast<char*>(meshinst->mDescriptorPath.c_str()), meshinst->mDescriptorPath.length()+1);
+		ImGui::InputInt("GUID", reinterpret_cast<int*>(&meshinst->mDescriptorData.m_GUID));
+
+		// Vert shader selection
+		int selectedFBX{};
+		_GEOM::DescriptorData& descInst = meshinst->mDescriptorData;
+
+		if (ImGui::BeginCombo("FBX Filepaths", descInst.m_Filepaths[selectedFBX].data(), 0))
+		{
+			for (int i{}; i < descInst.m_Filepaths.size(); ++i)
+			{
+				bool isItemSelected = (selectedFBX == i);
+				if (ImGui::Selectable(descInst.m_Filepaths[i].data(), isItemSelected))
+					selectedFBX = i;
+
+				if (isItemSelected)
+					ImGui::SetItemDefaultFocus();
+			}
+			ImGui::EndCombo();
+		}
+
+		ImGui::DragFloat3("Pre-Transforms", (float*)&descInst.m_Translate, 0.1f);
+		ImGui::DragFloat3("Pre-Scale", (float*)&descInst.m_Scale, 0.1f);
+		ImGui::DragFloat3("Pre-Rotate", (float*)&descInst.m_Rotate, 0.1f);
+
+		if (ImGui::Button("Save Descriptor File"))
+		{
+			std::cout << "Saving Descriptor File to: " << meshinst->mDescriptorPath << std::endl;
+			_GEOM::DescriptorData::SerializeGEOM_DescriptorDataToFile(meshinst->mDescriptorPath, descInst);
+		}
+
+		ImGui::TreePop();
+	}
+
 	if (delete_component == false)
 		Entity(Hierarchy::selectedId).RemoveComponent<MeshRenderer>();
 }
@@ -814,8 +847,6 @@ void RigidBody::Inspect() {
 
 	if (ImGui::CollapsingHeader("RigidBody", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
 	{
-
-
 		ImGui::DragFloat("##Density", (float*)&mDensity);
 
 		ImGui::SameLine();

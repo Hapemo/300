@@ -132,7 +132,6 @@ namespace _GEOM
 	/**************************************************************************/
 	unsigned GetGUID(std::string geomFilepath) noexcept;
 
-
 	static const std::string mGeomFolderpath = "../assets/compiled_geom/";
 }
 

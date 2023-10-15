@@ -218,8 +218,15 @@ namespace _GEOM
 			Desc.m_Translate.z = preTransformTranslate[2].GetFloat();
 		}
 
-		return true;	// no error
+		if (document.HasMember("GUID"))
+		{
+			rapidjson::Value& assetFilepaths = document["GUID"];
+			assert(assetFilepaths.IsUint());
 
+			Desc.m_GUID = assetFilepaths.GetUint();
+		}
+
+		return true;	// no error
 	}
 
 
@@ -236,20 +243,21 @@ namespace _GEOM
 		doc.AddMember("Asset_OutputPath", "../assets/compiled_geom/", allocator);
 		doc.AddMember("Compiled_Geom_Format", ".geom", allocator);
 
-		rapidjson::Value sclvecObj(rapidjson::kObjectType);
-		sclvecObj.AddMember("x", 1, allocator);
-		sclvecObj.AddMember("y", 1, allocator);
-		sclvecObj.AddMember("z", 1, allocator);
+		rapidjson::Value sclvecObj(rapidjson::kArrayType);
+		rapidjson::Value rotvecObj(rapidjson::kArrayType);
+		rapidjson::Value trnsvecObj(rapidjson::kArrayType);
 
-		rapidjson::Value rotvecObj(rapidjson::kObjectType);
-		rotvecObj.AddMember("x", 0, allocator);
-		rotvecObj.AddMember("y", 0, allocator);
-		rotvecObj.AddMember("z", 0, allocator);
+		sclvecObj.PushBack(GEOM_DescriptorFile.m_Scale.x , allocator);
+		sclvecObj.PushBack(GEOM_DescriptorFile.m_Scale.y , allocator);
+		sclvecObj.PushBack(GEOM_DescriptorFile.m_Scale.z , allocator);
 
-		rapidjson::Value trnsvecObj(rapidjson::kObjectType);
-		trnsvecObj.AddMember("x", 0, allocator);
-		trnsvecObj.AddMember("y", 0, allocator);
-		trnsvecObj.AddMember("z", 0, allocator);
+		rotvecObj.PushBack(GEOM_DescriptorFile.m_Rotate.x, allocator);
+		rotvecObj.PushBack(GEOM_DescriptorFile.m_Rotate.y, allocator);
+		rotvecObj.PushBack(GEOM_DescriptorFile.m_Rotate.z, allocator);
+
+		trnsvecObj.PushBack(GEOM_DescriptorFile.m_Translate.x, allocator);
+		trnsvecObj.PushBack(GEOM_DescriptorFile.m_Translate.y, allocator);
+		trnsvecObj.PushBack(GEOM_DescriptorFile.m_Translate.z, allocator);
 
 		doc.AddMember("Pre_Transform_Scale", sclvecObj, allocator);
 		doc.AddMember("Pre_Transform_Rotate", rotvecObj, allocator);
@@ -338,6 +346,7 @@ namespace _GEOM
 		// no GUID is found
 		return -1;
 	}
+
 
 	bool CheckAndCreateDescriptorFile(std::string fbxfilepath, std::string& GEOM_Descriptor_Filepath)
 	{

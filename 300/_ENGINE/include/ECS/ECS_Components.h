@@ -22,6 +22,7 @@ Components used by the ECS.
 #include "EnumStrings.h"
 #include "Input/KeyBind.h"
 #include "Input/Input.h"
+
 //#include "Graphics/GraphicsSystem.h"
 //#include "Mesh.hpp"
 
@@ -98,8 +99,8 @@ struct Animator
 struct MeshRenderer
 {
 	// For now, we store the string to the filepaths. TO CHANGE to uids for efficient referencing
-	//std::pair<std::string, std::string> mShaderPath{ "../assets/shader_files/pointLight_vert.glsl", "../assets/shader_files/pointLight_frag.glsl" };
-	std::pair<std::string, std::string> mShaderPath{ "../assets/shader_files/animations_vert.glsl", "../assets/shader_files/pointLight_frag.glsl" };
+	//std::pair<std::string, std::string> mShaderPath{ "../assets/shader_files/animations_vert.glsl", "../assets/shader_files/pointLight_frag.glsl" };
+	std::pair<std::string, std::string> mShaderPath{ "../assets/shader_files/pointLight_vert.glsl", "../assets/shader_files/pointLight_frag.glsl" };
 	std::string							mMaterialInstancePath[4] {" "," " ," " ," " };
 
 	void*								mMeshRef{};

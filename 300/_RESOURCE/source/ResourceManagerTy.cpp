@@ -107,16 +107,16 @@ void ResourceTy::mesh_LoadFolder()
 			unsigned guid = _GEOM::GetGUID(descfilepath);
 
 			GFX::Mesh* meshPtr = SetupMesh(filepath, guid);
-			instance_infos& tempInstance = AllocRscInfo();
+			meshPtr->mDescriptorPath = descfilepath;
+			_GEOM::DescriptorData::DeserializeGEOM_DescriptorDataFromFile(meshPtr->mDescriptorData, descfilepath);
 
+			instance_infos& meshInstance = AllocRscInfo();
+			meshInstance.m_pData = reinterpret_cast<void*>(meshPtr);
+			meshInstance.m_Name = filepath;
+			meshInstance.m_GUID = guid;
+			meshInstance.m_Type = _MESH;
 
-			tempInstance.m_pData = reinterpret_cast<void*>(meshPtr);
-			tempInstance.m_Name = filepath;
-			tempInstance.m_GUID = guid;
-			tempInstance.m_Type = _MESH;
-
-
-			m_ResourceInstance.emplace(guid, &tempInstance);
+			m_ResourceInstance.emplace(guid, &meshInstance);
 		}
 	}
 }
