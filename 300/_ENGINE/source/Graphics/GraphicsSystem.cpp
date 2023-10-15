@@ -244,7 +244,7 @@ void GraphicsSystem::Update(float dt)
 			}
 		}
 
-		AddInstance(meshinst, final, static_cast<unsigned>(inst.id));
+		AddInstance(meshinst, final, static_cast<unsigned>(inst.id));		// TODO: Animation Instance ID if any
 	}
 	m_FinalBoneMatrixSsbo.SubData(finalBoneMatrices.size() * sizeof(mat4), finalBoneMatrices.data());
 	finalBoneMatrices.clear();
@@ -566,10 +566,12 @@ void GraphicsSystem::AddInstance(GFX::Mesh &mesh, Transform transform, unsigned 
 	mesh.mTexEntID.push_back(vec4(0, (float)entityID + 0.5f, 0, 0));
 }
 
-void GraphicsSystem::AddInstance(GFX::Mesh &mesh, mat4 transform, unsigned entityID)
+void GraphicsSystem::AddInstance(GFX::Mesh &mesh, mat4 transform, unsigned entityID, int animInstanceID)
 {
 	mesh.mLTW.push_back(transform);
-	mesh.mTexEntID.push_back(vec4(0, (float)entityID + 0.5f, 0, 0));
+	if (animInstanceID < 0)
+		animInstanceID = -2;
+	mesh.mTexEntID.push_back(vec4(0, (float)entityID + 0.5f, (float)animInstanceID + 0.5f, 0));
 }
 
 /***************************************************************************/

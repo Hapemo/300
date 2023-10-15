@@ -125,7 +125,7 @@ void GFX::Mesh::Setup(const _GEOM::Geom& GeomData)
 	mVao.AttachVertexBuffer(mTexCoordVbo.GetID(), 2, 0, sizeof(vec2));				// Attach to index 2
 
 	/////////////////////////////////////////
-	// TEXTURE AND ENTITY ID
+	// TEXTURE ID, ENTITY ID, ANIMATION ID
 	// Create VBO for Texture ID and Entity ID
 	mTexEntIDVbo.Create(sizeof(vec4) * MAX_INSTANCES);
 	mVao.AddAttribute(7, 7, 4, GL_FLOAT);									// location 7, binding vao index 7
