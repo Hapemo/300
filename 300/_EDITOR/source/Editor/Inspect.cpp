@@ -499,13 +499,13 @@ void Scripts::Inspect() {
 		ImGui::Text("Entity contains scripts: ");
 		for (auto& elem : scripts.scriptsContainer)
 		{
+			ImGui::SetNextItemOpen(true);
 			if (ImGui::TreeNode(elem.scriptFile.c_str())) {
-				InspectScript(elem);
 				if (ImGui::IsItemClicked(1)) {
 					open_popup = true;
-						deleteScript = elem.scriptFile;
+					deleteScript = elem.scriptFile;
 				}
-
+				InspectScript(elem);
 				ImGui::TreePop();
 			}
 			
