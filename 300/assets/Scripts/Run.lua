@@ -40,7 +40,7 @@ function Update()
         --print("Value2: ", test2)
 
         --Set entity Tag
-        -- generalComponent:SetTag("Enemy");
+        -- generalComponent:SetTag("staTIC");
         -- tag = generalComponent:GetTag();
         -- print(tag)
     end
