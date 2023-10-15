@@ -572,15 +572,30 @@ void Animator::Inspect()
 	if (delete_component == false)
 		Entity(Hierarchy::selectedId).RemoveComponent<MeshRenderer>();
 }
+
+
 /***************************************************************************/
 /*!
 \brief
 	Inspector functionality for MeshRenderer
 */
 /***************************************************************************/
-
 void MeshRenderer::Inspect() 
 {
+	//!< Shader Helper 
+	auto getShaderName = [](std::string shaderpath) -> std::string
+	{
+		// returns pointLight_vert.glsl
+		return shaderpath.substr(shaderpath.find_last_of("/") + 1);
+	};
+
+	//!< Shader Helper 
+	auto getShaderExtension = [](std::string shaderpath) -> std::string
+	{
+		// returns vert.glsl or frag.glsl
+		return shaderpath.substr(shaderpath.find_last_of("_"));
+	};
+
 	bool delete_component{ true };
 	if (ImGui::CollapsingHeader("MeshRenderer", &delete_component,ImGuiTreeNodeFlags_DefaultOpen)) 
 	{
@@ -590,8 +605,67 @@ void MeshRenderer::Inspect()
 		std::string tempPath = mMeshPath.substr(st + 1, ed - (st + 1));
 
 		Entity entins(Hierarchy::selectedId);
-		ImGui::Text("Mesh");
 
+		// == >> Shaders << == //
+		std::vector<std::string> vertShaders, fragShaders;
+		static int selectedVertShader = 0, selectedFragShader = 0;
+
+		// populating vertex shader vector
+		for (const auto& entry : std::filesystem::directory_iterator(systemManager->mResourceTySystem->shader_path))
+		{
+			if (std::filesystem::is_regular_file(entry))
+			{
+				if(getShaderExtension(entry.path().string()) == "_vert.glsl")
+					vertShaders.push_back(entry.path().string());
+
+				else if (getShaderExtension(entry.path().string()) == "_frag.glsl")
+					fragShaders.push_back(entry.path().string());
+			}
+		}
+
+		{
+			// Vert shader selection
+			if (ImGui::BeginCombo("Vertex Shaders", vertShaders[selectedVertShader].data(), 0))
+			{
+				for (int i{}; i < vertShaders.size(); ++i)
+				{
+					bool isItemSelected = (selectedVertShader == i);
+					if(ImGui::Selectable(vertShaders[i].data(), isItemSelected))
+						selectedVertShader = i;
+
+					if (isItemSelected)
+						ImGui::SetItemDefaultFocus();
+				}
+
+				ImGui::EndCombo();
+			}
+
+			// Frag shader selection
+			if (ImGui::BeginCombo("Fragment Shaders", fragShaders[selectedFragShader].data(), 0))
+			{
+				for (int i{}; i < fragShaders.size(); ++i)
+				{
+					bool isItemSelected = (selectedFragShader == i);
+					if (ImGui::Selectable(fragShaders[i].data(), isItemSelected))
+						selectedFragShader = i;
+
+					if (isItemSelected)
+						ImGui::SetItemDefaultFocus();
+				}
+
+				ImGui::EndCombo();
+			}
+		}
+
+		if (ImGui::Button("Compile Shader"))
+		{
+			std::cout << "compile shaders :)\n";
+		}
+
+		ImGui::Separator();
+
+		// == >> Mesh << == //
+		ImGui::Text("Mesh");
 		if (ImGui::BeginDragDropTarget())
 		{
 			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_GEOM")) 
@@ -681,6 +755,7 @@ void MeshRenderer::Inspect()
 		ImGui::Text(tempPath.c_str());
 
 
+		// == >> Textures << == //
 		ImGui::Dummy(ImVec2(0.0f, 10.0f));
 
 		std::string textures[4] = { "DIFFUSE","NORMAL", "EMISSION","SPECULAR"};

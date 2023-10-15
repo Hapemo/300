@@ -186,6 +186,8 @@ void GraphicsSystem::Update(float dt)
 
 	// Retrieve and update the mesh instances to be drawn
 	auto meshRendererInstances = systemManager->ecs->GetEntitiesWith<MeshRenderer>();
+	int animationID{ 0 };
+
 	for (Entity inst : meshRendererInstances)
 	{
 		MeshRenderer& meshRenderer = inst.GetComponent<MeshRenderer>();
@@ -244,7 +246,13 @@ void GraphicsSystem::Update(float dt)
 			}
 		}
 
-		AddInstance(meshinst, final, static_cast<unsigned>(inst.id));		// TODO: Animation Instance ID if any
+		// animations are present
+		if (inst.HasComponent<Animator>()) {
+			AddInstance(meshinst, final, static_cast<unsigned>(inst.id), animationID++);
+		}
+		else {
+			AddInstance(meshinst, final, static_cast<unsigned>(inst.id));
+		}
 	}
 	m_FinalBoneMatrixSsbo.SubData(finalBoneMatrices.size() * sizeof(mat4), finalBoneMatrices.data());
 	finalBoneMatrices.clear();
@@ -299,7 +307,7 @@ void GraphicsSystem::EditorDraw(float dt)
 	// Prepare and bind the Framebuffer to be rendered on
 	m_Fbo.PrepForDraw();
 
-#pragma region render all the mesh instances
+#pragma region render all the mesh instances onto the editor camera framebuffer
 	// Render all instances of a given mesh
 	for (Entity inst : meshRendererInstances)
 	{

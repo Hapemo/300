@@ -208,9 +208,12 @@ void ShaderManager::ReleaseRscInfo(ShaderData& RscInfo)
 	m_pInfoBufferEmptyHead = &RscInfo;
 }
 
-ShaderData& ShaderManager::getShader(unsigned id) {
+ShaderData& ShaderManager::getShader(unsigned id) 
+{
 	return *mSceneShaders[id];
 }
+
+
 /***************************************************************************/
 /*!
 \brief

@@ -129,6 +129,7 @@ public:
     ShaderManager() = default;
     ShaderManager(ShaderManager const&) = delete;
     void operator=(ShaderManager const&) = delete;
+    void SetupShader(std::string vertpath, std::string fragpath, unsigned); 
 
     /***************************************************************************/
     /*!
@@ -146,9 +147,8 @@ public:
         Graphics accessor for ShaderManager
     */
     /**************************************************************************/
-    void SetupShader(std::string vertpath, std::string fragpath, unsigned); 
-    // Accessor
     ShaderData& getShader(unsigned);
+
 
     int mResourceCnt{ 0 };
 
