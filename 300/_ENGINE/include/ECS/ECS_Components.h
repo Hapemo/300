@@ -55,9 +55,7 @@ struct General
 	void SetTag(std::string newTag) { 
 		std::transform(newTag.begin(), newTag.end(), newTag.begin(), ::tolower);
 		newTag[0] = std::toupper(newTag[0]);
-		std::cout << newTag << std::endl;
 		tagid = enum_tag::GetEnum(newTag.c_str()); 
-		std::cout << tagid << std::endl;
 	}
 
 	void Inspect();
