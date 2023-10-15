@@ -335,53 +335,35 @@ void Camera::Inspect()
 		ImGui::DragFloat3("Camera Position", (float*)&mCamera.mPosition);
 		ImGui::DragFloat3("Camera Target", (float*)&mCamera.mTarget);
 
-
-		float aspect{ 1800 };
-		float nearplane{ 60 };
-		float FOV{ 10 };
-		float farplane{ 0 };
-		static bool Orthographic{ 0 };
-		
-
 		ImGui::Text("Aspect Ratio");
 		ImGui::SameLine();
 		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
 			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
-		ImGui::DragFloat("##Aspect", &aspect);
-
+		ImGui::DragFloat("##Aspect", &mCamera.mAspectRatio);
 
 		ImGui::Text("FOV");
 		ImGui::SameLine();
 		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
 			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
-		ImGui::DragFloat("##FOV", &FOV);
-
-
-
+		ImGui::DragFloat("##FOV", &mCamera.mFovDegree, 0.2f, GFX::CameraConstants::minFOV, GFX::CameraConstants::maxFOV);
 
 		ImGui::Text("Far Plane");
 		ImGui::SameLine();
 		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
 			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
-		ImGui::DragFloat("##FP", &farplane);
+		ImGui::DragFloat("##FP", &mCamera.mFar);
 
 		ImGui::Text("Near plane");
 		ImGui::SameLine();
 		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
 			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
-		ImGui::DragFloat("##NP", &nearplane);
+		ImGui::DragFloat("##NP", &mCamera.mNear);
 
-		ImGui::Text("Orthographic");
-		ImGui::SameLine();
-		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
-			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
-		ImGui::Checkbox("##Orth", &Orthographic);
-
-
-
-		//ImGui::Text("Position: %d, %d, %d", mCamera.mPosition.x, mCamera.mPosition.y, mCamera.mPosition.z);
-		//ImGui::Text("Target: %d, %d, %d", mCamera.mTarget.x, mCamera.mTarget.y, mCamera.mTarget.z);
-
+		//ImGui::Text("Orthographic");
+		//ImGui::SameLine();
+		//ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+		//	- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		//ImGui::Checkbox("##Orth", &Orthographic);
 	}
 
 }
@@ -394,7 +376,7 @@ void PointLight::Inspect()
 		ImGui::SameLine();
 		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
 			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
-		ImGui::DragFloat3("##Light Color", (float*)&mLightColor);
+		ImGui::DragFloat3("##Light Color", (float*)&mLightColor, 0.01f);
 
 
 		ImGui::Text("Linear Falloff");

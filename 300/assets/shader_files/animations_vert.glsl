@@ -71,7 +71,8 @@ void main()
     // Compute world-to-tangent space matrix
     mat3 normalMatrix = transpose(inverse(mat3(inLTW)));
     vec3 T = normalize(normalMatrix * inTangent);
-    vec3 N = normalize(normalMatrix * inNormal);
+    vec3 N = normalize(normalMatrix * normal);
+    //vec3 N = normalize(normalMatrix * inNormal);
     T = normalize(T - dot(T, N) * N);
     vec3 B = cross(N, T);
     TBN = transpose(mat3(T, B, N));
