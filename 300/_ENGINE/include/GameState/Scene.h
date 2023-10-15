@@ -61,6 +61,8 @@ public:
 	*******************************************************************************/
 	Entity AddEntity();
 
+	void AddEntity(Entity e);
+
 	/*!*****************************************************************************
 	Remove entity from scene. NOTE: Should not be called on game run-time
 	*EDITOR ONLY FUNCTION*

@@ -13,9 +13,11 @@ and saving of prefabs, scenes and gamestates using serialization.
 ***/
 #pragma once
 #include "pch.h"
-#include "../Serialization/Serialization.h"
+#include "Serialization/Serialization.h"
 
 class GameState;
+class Scene;
+struct Entity;
 
 class ObjectFactory
 {
@@ -44,21 +46,6 @@ The file to deserialize
 /*
 
 \brief
-Function that saves a scene by serializing data from the scene variable
-into a .scn object then serializing it into a file. The filename is created
-by parsing the scene name to a directory.
-
-\param scene
-The scene variable to serialize into a file
-
-*/
-/**************************************************************************/
-	static void SaveScene(Scene* scene);
-
-/***************************************************************************/
-/*
-
-\brief
 Function that loads a gamestate by deserializing data from a file and store
 them into a gamestate.
 
@@ -71,21 +58,6 @@ The file to deserialize
 */
 /**************************************************************************/
 	static void LoadGameState(GameState* gs, const std::string& filename);
-
-/***************************************************************************/
-/*
-
-\brief
-Function that saves a gamestate by serializing data from the gamestate variable
-into a .gs object then serializing it into a file. The filename is created
-by parsing the gamestate name to a directory.
-
-\param gs
-The gamestate variable to serialize into a file
-
-*/
-/**************************************************************************/
-	static void SaveGameState(GameState* gs);
 
 /***************************************************************************/
 /*
@@ -111,6 +83,36 @@ Returns the prefab entity
 /*
 
 \brief
+Function that saves a scene by serializing data from the scene variable
+into a .scn object then serializing it into a file. The filename is created
+by parsing the scene name to a directory.
+
+\param scene
+The scene variable to serialize into a file
+
+*/
+/**************************************************************************/
+	static void SaveScene(Scene* scene);
+
+/***************************************************************************/
+/*
+
+\brief
+Function that saves a gamestate by serializing data from the gamestate variable
+into a .gs object then serializing it into a file. The filename is created
+by parsing the gamestate name to a directory.
+
+\param gs
+The gamestate variable to serialize into a file
+
+*/
+/**************************************************************************/
+	static void SaveGameState(GameState* gs);
+
+/***************************************************************************/
+/*
+
+\brief
 Function that saves creates a prefab of the selected entity.
 
 \param e
@@ -123,4 +125,5 @@ The filename to save the prefab into
 /**************************************************************************/
 	static void SerializePrefab(Entity e, const std::string& filename);
 
+	static void SaveEntity(Entity e, rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer);
 };

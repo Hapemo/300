@@ -2,6 +2,7 @@
 
 void General::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
 {
+	writer.Key("general");
 	writer.StartObject();
 	Serialize(writer, "name", name);
 	Serialize(writer, "tagid", tagid);
@@ -13,6 +14,7 @@ void General::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& wr
 
 void Transform::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
 {
+	writer.String("transform");
 	writer.StartObject();
 	Serialize(writer, "scale", mScale);
 	Serialize(writer, "rotate", mRotate);
@@ -22,6 +24,7 @@ void Transform::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& 
 
 void RigidBody::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
 {
+	writer.String("rigidbody");
 	writer.StartObject();
 	Serialize(writer, "density", mDensity);
 	Serialize(writer, "material", static_cast<int>(mMaterial));
@@ -32,6 +35,8 @@ void RigidBody::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& 
 
 void MeshRenderer::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
 {
+	writer.String("meshrenderer");
+
 	writer.StartObject();
 	Serialize(writer, "vert", mShaderPath.first);
 	Serialize(writer, "frag", mShaderPath.second);
@@ -44,6 +49,8 @@ void MeshRenderer::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer
 
 void BoxCollider::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
 {
+	writer.String("boxcollider");
+
 	writer.StartObject();
 	Serialize(writer, "scaleoffset", mScaleOffset);
 	Serialize(writer, "translateoffset", mTranslateOffset);
@@ -52,6 +59,8 @@ void BoxCollider::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>
 
 void SphereCollider::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
 {
+	writer.String("spherecollider");
+
 	writer.StartObject();
 	Serialize(writer, "scaleoffset", mScaleOffset);
 	Serialize(writer, "translateoffset", mTranslateOffset);
@@ -60,6 +69,8 @@ void SphereCollider::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuff
 
 void PlaneCollider::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
 {
+	writer.String("planecollider");
+
 	writer.StartObject();
 	Serialize(writer, "normal", mNormal);
 	Serialize(writer, "translateoffset", mTranslateOffset);
@@ -68,14 +79,17 @@ void PlaneCollider::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffe
 
 void Scripts::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
 {
+	writer.String("scripts");
+
 	writer.StartObject();
-	Serialize(writer, "scriptfile", mScriptFile);
 	Serialize(writer, "scriptscontainer", scriptsContainer);
 	writer.EndObject();
 }
 
 void Parent::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
 {
+	writer.String("parent");
+
 	writer.StartObject();
 	Serialize(writer, "prevsibling", mPrevSibling);
 	Serialize(writer, "nextsibling", mNextSibling);
@@ -85,6 +99,8 @@ void Parent::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& wri
 
 void Children::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
 {
+	writer.String("children");
+
 	writer.StartObject();
 	Serialize(writer, "numchildren", mNumChildren);
 	Serialize(writer, "firstchild", mFirstChild);
@@ -93,6 +109,8 @@ void Children::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& w
 
 void Audio::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
 {
+	writer.String("audio");
+
 	writer.StartObject();
 	Serialize(writer, "filename", mFileName);
 	Serialize(writer, "audiotype", static_cast<int>(mAudioType));
@@ -103,6 +121,8 @@ void Audio::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writ
 
 void Camera::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
 {
+	writer.String("camera");
+
 	writer.StartObject();
 	Serialize(writer, "positon", mCamera.mPosition);
 	Serialize(writer, "target", mCamera.mTarget);
@@ -114,6 +134,8 @@ void Camera::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& wri
 
 void Prefab::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
 {
+	writer.String("prefab");
+
 	writer.StartObject();
 	Serialize(writer, "prefab", mPrefab);
 	writer.EndObject();
@@ -121,6 +143,8 @@ void Prefab::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& wri
 
 void PointLight::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
 {
+	writer.String("pointlight");
+
 	writer.StartObject();
 	Serialize(writer, "lightcolor", mLightColor);
 	Serialize(writer, "attenuation", mAttenuation);

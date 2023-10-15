@@ -126,7 +126,6 @@ struct Entity
 	*******************************************************************************/
 	template<typename Component>
 	Component& LuaGetComponent(Entity entity);
-
 	//template <typename Component, typename OtherComponent, typename ...Components>
 	/*auto LuaGetComponents(Entity entity);*/
 

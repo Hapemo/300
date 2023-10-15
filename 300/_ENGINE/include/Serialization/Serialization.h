@@ -5,7 +5,8 @@
 #include "glm/glm.hpp"
 
 #define SERIALIZE_BASIC(T) void Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer, const char* name, const T& val)
-
+struct Scene;
+class Script;
 #pragma region basic_types
 SERIALIZE_BASIC(bool);
 SERIALIZE_BASIC(int);
@@ -15,8 +16,9 @@ SERIALIZE_BASIC(double);
 SERIALIZE_BASIC(std::string);
 SERIALIZE_BASIC(glm::ivec2);
 SERIALIZE_BASIC(glm::vec3);
+SERIALIZE_BASIC(Scene);
+SERIALIZE_BASIC(Script);
 #pragma endregion basic_types
-
 // Derived types has to inherit from Serializable
 #pragma region derived_types
 template <typename T>
@@ -33,22 +35,21 @@ void Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer, const c
 #pragma endregion containers
 
 #pragma region file_operations
-void SerializeToFile(const std::string& filename, const rapidjson::StringBuffer& buffer);
+void WriteToFile(const std::string& filename, const rapidjson::StringBuffer& buffer);
 #pragma endregion file_operations
 
+#pragma region implementation
 // Derived types
 template <typename T>
 void Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer, const char* name, const T& val)
 {
 	if (!std::derived_from<T, Serializable>) return;
 	
-	const Serializable& base = static_cast<const Serializable&>(val);
-
 	if (name != nullptr)
 		writer.Key(name);
 
 	writer.StartObject();
-	base.Serialize(writer);
+	val.SerializeSelf(writer);
 	writer.EndObject();
 }
 
@@ -101,3 +102,4 @@ void Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer, const c
 
 	writer.EndArray();
 }
+#pragma endregion implementation

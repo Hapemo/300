@@ -101,6 +101,12 @@ Entity Scene::AddEntity() {
 	return e;
 }
 
+void Scene::AddEntity(Entity e)
+{
+	mEntities.insert(e);
+
+}
+
 void Scene::RemoveChildFromScene(Entity _e) {
 	if (!_e.HasChildren()) return;
 

@@ -1,0 +1,264 @@
+[
+    {
+        "entityid": 1,
+        "general": {
+            "name": "Entity1",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "materialinstance": [
+                " ",
+                " ",
+                " ",
+                " "
+            ],
+            "mesh": "",
+            "texturecont": [
+                false,
+                false,
+                false,
+                false
+            ],
+            "guid": 0
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "spherecollider": {
+            "scaleoffset": 1.0,
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "planecollider": {
+            "normal": {
+                "x": 0.0,
+                "y": 1.0,
+                "z": 0.0
+            },
+            "translateoffset": 0.0
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "parent": {
+            "prevsibling": 0,
+            "nextsibling": 0,
+            "parent": 0
+        },
+        "children": {
+            "numchildren": 0,
+            "firstchild": 0
+        },
+        "audio": {
+            "filename": "Empty Audio",
+            "audiotype": 2,
+            "playing": false,
+            "play": false
+        },
+        "camera": {
+            "positon": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "target": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "size": {
+                "x": 0,
+                "y": 0
+            },
+            "near": 0.0,
+            "far": 0.0
+        },
+        "prefab": {
+            "prefab": ""
+        },
+        "pointlight": {
+            "lightcolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "attenuation": 0.0,
+            "intensity": 0.0
+        }
+    },
+    {
+        "entityid": 2,
+        "general": {
+            "name": "Entity2",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "materialinstance": [
+                " ",
+                " ",
+                " ",
+                " "
+            ],
+            "mesh": "",
+            "texturecont": [
+                false,
+                false,
+                false,
+                false
+            ],
+            "guid": 0
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "spherecollider": {
+            "scaleoffset": 1.0,
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "planecollider": {
+            "normal": {
+                "x": 0.0,
+                "y": 1.0,
+                "z": 0.0
+            },
+            "translateoffset": 0.0
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "parent": {
+            "prevsibling": 0,
+            "nextsibling": 0,
+            "parent": 0
+        },
+        "children": {
+            "numchildren": 0,
+            "firstchild": 0
+        },
+        "audio": {
+            "filename": "Empty Audio",
+            "audiotype": 2,
+            "playing": false,
+            "play": false
+        },
+        "camera": {
+            "positon": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "target": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "size": {
+                "x": 0,
+                "y": 0
+            },
+            "near": 0.0,
+            "far": 0.0
+        },
+        "prefab": {
+            "prefab": ""
+        },
+        "pointlight": {
+            "lightcolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "attenuation": 0.0,
+            "intensity": 0.0
+        }
+    }
+]

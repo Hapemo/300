@@ -1,5 +1,8 @@
 #include "Serialization/Serialization.h"
 #include "Debug/Logger.h"
+#include "GameState/Scene.h"
+#include "Script.h"
+
 SERIALIZE_BASIC(bool)
 {
 	if (name != nullptr)
@@ -62,6 +65,20 @@ SERIALIZE_BASIC(glm::vec3)
 	Serialize(writer, "y", val.y);
 	Serialize(writer, "z", val.z);
 	writer.EndObject();
+}
+
+SERIALIZE_BASIC(Scene)
+{
+	if (name != nullptr)
+		writer.Key(name);
+	Serialize(writer, name, val.mName);
+}
+
+SERIALIZE_BASIC(Script)
+{
+	if (name != nullptr)
+		writer.Key(name);
+	Serialize(writer, name, val.scriptFile);
 }
 
 void WriteToFile(const std::string& filename, const rapidjson::StringBuffer& buffer)

@@ -21,7 +21,9 @@
     <ClCompile Include="source\Input\Input.cpp" />
     <ClCompile Include="source\Input\InputMapSystem.cpp" />
     <ClCompile Include="source\Serialization\Serialization.cpp" />
-    <ClCompile Include="include\Serialization\SerializeSelf.cpp" />
+    <ClCompile Include="source\Serialization\SerializeSelf.cpp" />
+    <ClCompile Include="source\Serialization\DeserializeSelf.cpp" />
+    <ClCompile Include="source\Serialization\Deserialization.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Audio\AudioSystem.h" />
@@ -58,5 +60,6 @@
     <ClInclude Include="include\Input\KeyBind.h" />
     <ClInclude Include="include\Serialization\Serializable.h" />
     <ClInclude Include="include\Serialization\Serialization.h" />
+    <ClInclude Include="include\Serialization\Deserialization.h" />
   </ItemGroup>
 </Project>

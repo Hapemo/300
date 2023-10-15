@@ -424,3 +424,4 @@ void Entity::RemoveChild(Entity e)
 	next.GetComponent<Parent>().mPrevSibling = static_cast<uint32_t>(prev.id);
 	e.RemoveComponent<Parent>();
 }
+

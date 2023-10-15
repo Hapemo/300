@@ -51,8 +51,8 @@ struct General : public Serializable
 	{};
 
 	void Inspect();
-	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
-
+	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& reader) const;
+	void DeserializeSelf(rapidjson::Value& reader);
 	//RTTR_ENABLE()
 };
 
@@ -72,7 +72,7 @@ struct Transform : public Serializable
 	void Inspect();
 
 	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
-	
+	void DeserializeSelf(rapidjson::Value& reader);
 	//RTTR_ENABLE()
 };
 
@@ -109,7 +109,7 @@ struct RigidBody : public Serializable
 	void							Inspect();
 
 	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
-
+	void DeserializeSelf(rapidjson::Value& reader);
 };
 
 /******************************************************************************/
@@ -141,6 +141,7 @@ struct MeshRenderer : public Serializable
 
 	//void								Inspect();
 	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
+	void DeserializeSelf(rapidjson::Value& reader);
 };
 
 
@@ -160,6 +161,7 @@ struct BoxCollider : public Serializable
 	//RTTR_ENABLE()
 	void							Inspect();
 	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
+	void DeserializeSelf(rapidjson::Value& reader);
 };
 
 /******************************************************************************/
@@ -177,6 +179,7 @@ struct SphereCollider : public Serializable
 	//RTTR_ENABLE()
 	void							Inspect();
 	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
+	void DeserializeSelf(rapidjson::Value& reader);
 };
 
 /******************************************************************************/
@@ -194,6 +197,7 @@ struct PlaneCollider : public Serializable //if has plane collider always static
 	//RTTR_ENABLE()
 	void							Inspect();
 	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
+	void DeserializeSelf(rapidjson::Value& reader);
 };
 
 /******************************************************************************/
@@ -215,6 +219,7 @@ public:
 	//RTTR_ENABLE()
 	void Inspect();
 	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
+	void DeserializeSelf(rapidjson::Value& reader);
 	
 };
 
@@ -231,7 +236,7 @@ struct Parent : public Serializable
 
 	Parent() : mPrevSibling(0), mNextSibling(0), mParent(0) {};
 	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
-	
+	void DeserializeSelf(rapidjson::Value& reader);
 	//RTTR_ENABLE()
 };
 
@@ -247,7 +252,7 @@ struct Children : public Serializable
 
 	Children() : mNumChildren(0), mFirstChild(0) {};
 	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
-	
+	void DeserializeSelf(rapidjson::Value& reader);
 	//RTTR_ENABLE()
 };
 
@@ -298,7 +303,7 @@ struct Audio : public Serializable
 	int mAudio{ 0 };
 
 	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
-
+	void DeserializeSelf(rapidjson::Value& reader);
 	//RTTR_ENABLE()
 	void							Inspect();
 };
@@ -314,7 +319,7 @@ struct Camera : public Serializable
 	void							Inspect();
 
 	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
-	
+	void DeserializeSelf(rapidjson::Value& reader);
 };
 
 /******************************************************************************/
@@ -326,7 +331,7 @@ struct Prefab : public Serializable
 {
 	std::string mPrefab;
 	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
-	
+	void DeserializeSelf(rapidjson::Value& reader);
 };
 
 /******************************************************************************/
@@ -342,7 +347,7 @@ struct PointLight : public Serializable
 	void Inspect();
 
 	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
-	
+	void DeserializeSelf(rapidjson::Value& reader);
 };
 
 

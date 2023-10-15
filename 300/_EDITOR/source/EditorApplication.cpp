@@ -26,6 +26,7 @@ start up of window and game system, also runs their update functions.
 #include "ConfigManager.h"
 #include "GameState/GameStateManager.h"
 #include "Debug/EnginePerformance.h"
+#include "Object/ObjectFactory.h"
 
 // Static variables
 GFX::DebugRenderer *EditorApplication::mRenderer;
@@ -67,7 +68,6 @@ void EditorApplication::SystemInit()
 
 void EditorApplication::MainUpdate()
 {
-
     while (!glfwWindowShouldClose(mWindow.GetHandle()))
     {
         EnginePerformance::StartTrack("Editor");
