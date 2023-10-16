@@ -338,7 +338,14 @@ void GraphicsSystem::EditorDraw(float dt)
 		// gets the shader filepathc
 		//uid shaderstr = inst.GetComponent<MeshRenderer>().mShaders;
 		
-		uid shaderstr("PointLightShader");
+		std::string shader{};
+
+		if (meshinst.mHasAnimation)
+			shader = "AnimationShader";
+		else
+			shader = "PointLightShader";
+
+		uid shaderstr(shader);
 		
 		GFX::Shader &shaderinst = *systemManager->mResourceTySystem->get_Shader(shaderstr.id);
 		unsigned shaderID = shaderinst.GetHandle();
