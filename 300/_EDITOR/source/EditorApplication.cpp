@@ -21,7 +21,6 @@ start up of window and game system, also runs their update functions.
 #include "ResourceManagerTy.h"
 #include "Graphics/GraphicsSystem.h"
 #include "SceneWindow.h"
-#include "Guid.h"
 #include "Physics/Accumulator.h"
 #include "ConfigManager.h"
 #include "GameState/GameStateManager.h"

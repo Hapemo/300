@@ -67,9 +67,7 @@ void Hierarchy::update() {
 
     auto& allScene = systemManager->mGameStateSystem->mCurrentGameState.mScenes;
 
-
-
-    if (ImGui::Button("Add", ImVec2(50, 50)))
+    if (ImGui::Button(ICON_FA_PLUS, ImVec2(50, 50)))
     {
 
         if (allScene.size() <= 0) {
@@ -85,7 +83,7 @@ void Hierarchy::update() {
     }
 
     ImGui::SameLine();
-    if (ImGui::Button("Scene", ImVec2(50, 50))) {
+    if (ImGui::Button(ICON_FA_FILE_CIRCLE_PLUS, ImVec2(50, 50))) {
         systemManager->mGameStateSystem->mCurrentGameState.AddScene();
 
     }

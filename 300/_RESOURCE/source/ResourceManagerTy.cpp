@@ -1,6 +1,9 @@
 #include "ResourceManagerTy.h"
 #include <map>
 #include <memory>
+
+
+#define  _ENABLE_ANIMATIONS 1
 /***************************************************************************/
 /*!
 \brief
@@ -28,6 +31,7 @@ void ResourceTy::Init()
 	m_pInfoBufferEmptyHead = m_Infobuffer.data();
 
 
+	shader_Loader();
 	mesh_LoadFolder();
 	MaterialInstance_Loader();
 	MaterialEditor_Loader();
@@ -46,6 +50,8 @@ void ResourceTy::Exit() {
 			delete  reinterpret_cast<GFX::Mesh*>(data.second->m_pData);
 		else if (data.second->m_Type == _TEXTURE)
 			delete  reinterpret_cast<GFX::Texture*>(data.second->m_pData);
+		else if (data.second->m_Type == _SHADER)
+			delete  reinterpret_cast<GFX::Shader*>(data.second->m_pData);
 	}
 
 	for (auto& data : m_EditorTextures) {

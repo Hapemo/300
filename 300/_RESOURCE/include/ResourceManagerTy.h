@@ -2,7 +2,7 @@
 #ifndef _RESOURCEMANAGERTY_H
 #define _RESOURCEMANAGERTY_H
 
-#define  _ENABLE_ANIMATIONS 1
+
 
 
 #include <filesystem>
@@ -36,7 +36,7 @@
 
 //struct ref {
 //
-//    p_ref partial_ref;
+//    p_ref partial_ref;F
 //    unsigned data_uid;
 //
 //};

@@ -9,6 +9,7 @@
 
 ****************************************************************************
 ***/
+#define  _ENABLE_ANIMATIONS 1
 
 #include <Graphics/GraphicsSystem.h>
 #include <ResourceManager.h>
@@ -299,7 +300,10 @@ void GraphicsSystem::EditorDraw(float dt)
 		GFX::Mesh &meshinst = *reinterpret_cast<GFX::Mesh *>(inst.GetComponent<MeshRenderer>().mMeshRef);
 
 		// gets the shader filepathc
-		uid shaderstr = inst.GetComponent<MeshRenderer>().mShaders;
+		//uid shaderstr = inst.GetComponent<MeshRenderer>().mShaders;
+		
+		uid shaderstr("PointLightShader");
+		
 		GFX::Shader *shaderinst = systemManager->mResourceTySystem->get_Shader(shaderstr.id);
 		unsigned shaderID = shaderinst->GetHandle();
 
@@ -447,7 +451,8 @@ void GraphicsSystem::GameDraw(float dt)
 		GFX::Mesh &meshinst = *reinterpret_cast<GFX::Mesh *>(inst.GetComponent<MeshRenderer>().mMeshRef);
 
 		// gets the shader filepath
-		uid shaderstr = inst.GetComponent<MeshRenderer>().mShaders;
+		uid shaderstr("PointLightShader");
+		//uid shaderstr = inst.GetComponent<MeshRenderer>().mShaders;
 		GFX::Shader *shaderinst = systemManager->mResourceTySystem->get_Shader(shaderstr.id);
 
 		GFX::Texture *textureInst[4]{};
