@@ -53,6 +53,20 @@ namespace sol {
 void ScriptingSystem::Init()
 {
     luaState.open_libraries();
+    
+    // Function to set a lua table as readyonly
+    luaState.script(R"(function readonlytable(table)
+                      return setmetatable({}, {
+                             __index = table,
+                             __newindex = function(table, key, value)
+                                         error("Attempt to modify read-only table")
+                                         end,
+                            __metatable = false
+                       });
+                    end)");
+
+    // Load Helper.lua
+    LoadHelper();
 
     /******************************************************************************/
     /*!
@@ -193,6 +207,23 @@ void ScriptingSystem::Update(float dt)
 void ScriptingSystem::Exit()
 {
     // Empty for now
+}
+
+void ScriptingSystem::LoadHelper()
+{
+    sol::environment env = { systemManager->mScriptingSystem->luaState, sol::create, systemManager->mScriptingSystem->luaState.globals() };
+
+    sol::protected_function_result result = systemManager->mScriptingSystem->luaState.script_file("../assets/Scripts/Helper.lua", env);
+    if (!result.valid())
+    {
+        // print what error was invoked when the script was loading
+        sol::error err = result;
+        std::cout << "Error opening file!" << std::endl;
+        std::cout << err.what() << std::endl;
+    }
+
+    luaState["Helper"] = env["Helper"];
+    luaState.script("Helper = readonlytable(Helper)");
 }
 
 void ScriptingSystem::ScriptAlive(const Entity& entity)

@@ -80,6 +80,8 @@ public:
     sol::state luaState;
     bool once;
 
+    void LoadHelper();
+
     // To call selected script init and update functions
     void ScriptAlive(const Entity& script);
     void ScriptStart(const Entity& script);

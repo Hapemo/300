@@ -33,7 +33,8 @@ void Script::Load(Entity entity)
         std::cout << err.what() << std::endl;
     }
 
-    env["script_entity_id"] = entity.id; 
+    env["script_entity"] = env.create_with("id", entity.id);
+    systemManager->mScriptingSystem->luaState.script("script_entity = readonlytable(script_entity)", env);
     LoadEnvVar();
 }
 

@@ -270,6 +270,9 @@ void MenuPanel::update()
 
         if (ImGui::Button("RELOAD SCRIPTS"))
         {
+            // Reload Helper.lua
+            systemManager->GetScriptingPointer()->LoadHelper();
+
             auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
 
             for (Entity entity : scriptEntities)
