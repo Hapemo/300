@@ -31,7 +31,6 @@ void ResourceTy::Init()
 	mesh_LoadFolder();
 	MaterialInstance_Loader();
 	MaterialEditor_Loader();
-	shader_Loader();
 	std::cout << "Initializing Resource Manager.\n";
 }
 /***************************************************************************/

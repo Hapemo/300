@@ -11,6 +11,7 @@
 ***/
 
 #include <Graphics/GraphicsSystem.h>
+#include <ResourceManager.h>
 #include "ResourceManagerTy.h"
 #include <Graphics/Camera_Input.h>
 #include "Debug/EnginePerformance.h"
@@ -294,25 +295,13 @@ void GraphicsSystem::EditorDraw(float dt)
 		// update the map of rendered meshes
 		renderedMesh[meshstr] = 1;
 
-#pragma region 
-		// current region have changed to a temporary system that requires serialization + drag and drop to work before changing back
-
 		// render the mesh and its instances here
 		GFX::Mesh &meshinst = *reinterpret_cast<GFX::Mesh *>(inst.GetComponent<MeshRenderer>().mMeshRef);
 
 		// gets the shader filepathc
-		auto shaderstr = inst.GetComponent<MeshRenderer>().mShaders;
-		uid shader(shaderstr);
-		GFX::Shader shaderinst = *systemManager->mResourceTySystem->get_Shader(shader);
-		unsigned shaderID = shaderinst.GetHandle();
-
-
-		//GFX::Mesh& meshinst = *reinterpret_cast<GFX::Mesh*>(inst.GetComponent<MeshRenderer>().mMeshRef);
-		//uid shaderstr = inst.GetComponent<MeshRenderer>().mShaders;
-		//GFX::Shader* shaderinst = systemManager->mResourceTySystem->get_Shader(shaderstr.id);
-		//unsigned shaderID = shaderinst->GetHandle();
-
-#pragma endregion
+		uid shaderstr = inst.GetComponent<MeshRenderer>().mShaders;
+		GFX::Shader *shaderinst = systemManager->mResourceTySystem->get_Shader(shaderstr.id);
+		unsigned shaderID = shaderinst->GetHandle();
 
 		// bind all texture
 		GFX::Texture *textureInst[4]{};
@@ -324,13 +313,13 @@ void GraphicsSystem::EditorDraw(float dt)
 			}
 		}
 	
-		shaderinst.Activate();
-		glUniformMatrix4fv(shaderinst.GetUniformVP(), 1, GL_FALSE, &m_EditorCamera.viewProj()[0][0]);
+		shaderinst->Activate();
+		glUniformMatrix4fv(shaderinst->GetUniformVP(), 1, GL_FALSE, &m_EditorCamera.viewProj()[0][0]);
 		// Retrieve Point Light object
 		auto lightEntity = systemManager->ecs->GetEntitiesWith<PointLight>();
 		m_HasLight = !lightEntity.empty();
 
-		GLuint mHasLightFlagLocation = shaderinst.GetUniformLocation("uHasLight");
+		GLuint mHasLightFlagLocation = shaderinst->GetUniformLocation("uHasLight");
 		glUniform1i(mHasLightFlagLocation, m_HasLight);
 
 		if (m_HasLight)
@@ -338,10 +327,10 @@ void GraphicsSystem::EditorDraw(float dt)
 			PointLight &lightData = lightEntity.get<PointLight>(lightEntity[0]);
 			Transform &lightTransform = Entity(lightEntity[0]).GetComponent<Transform>();
 
-			GLuint mLightPosShaderLocation = shaderinst.GetUniformLocation("uLightPos");
-			GLuint mViewPosShaderLocation = shaderinst.GetUniformLocation("uViewPos");
-			GLuint mLightIntensityShaderLocation = shaderinst.GetUniformLocation("uLightIntensity");
-			GLuint mLightColorShaderLocation = shaderinst.GetUniformLocation("uLightColor");
+			GLuint mLightPosShaderLocation = shaderinst->GetUniformLocation("uLightPos");
+			GLuint mViewPosShaderLocation = shaderinst->GetUniformLocation("uViewPos");
+			GLuint mLightIntensityShaderLocation = shaderinst->GetUniformLocation("uLightIntensity");
+			GLuint mLightColorShaderLocation = shaderinst->GetUniformLocation("uLightColor");
 
 			vec3 viewPos = GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR);
 			glUniform3fv(mLightPosShaderLocation, 1, &lightTransform.mTranslate[0]);
@@ -389,7 +378,7 @@ void GraphicsSystem::EditorDraw(float dt)
 		// Bind mesh's VAO, copy render data into VBO, Draw
 		DrawAll(meshinst);
 
-		shaderinst.Deactivate();
+		shaderinst->Deactivate();
 		meshinst.UnbindVao();
 		m_Textures.clear();
 

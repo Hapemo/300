@@ -103,19 +103,26 @@ struct MeshRenderer
 	//MeshRenderer();
 
 	// For now, we store the string to the filepaths. TO CHANGE to uids for efficient referencing
-	//uid									mShaders; // temporary disabled 
-	std::string							mShaders{"PointLightShader"};
+	uid									mShaders;
 	std::string							mMaterialInstancePath[4] {" "," " ," " ," " };
 	std::string							mMeshPath;
-		
-	void*								mMeshRef{}; // mesh reference
 	
+	void*								mMeshRef{};
+	
+
 	void*								mTextureRef[4];
 	bool								mTextureCont[4];
 
 	unsigned							mGUID;
 
 	void								Inspect();
+
+
+	//GFX::Mesh							testmesh;
+
+
+	//RTTR_ENABLE()
+
 
 };
 

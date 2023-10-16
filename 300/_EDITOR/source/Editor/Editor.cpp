@@ -41,7 +41,7 @@ Returns main window for docking
 #include "GameScene.h"
 #include "TabWindow.h"
 #include "KeybindWindow.h"
-#include "MenuTab.h"
+
 
 /***************************************************************************/
 /*!
@@ -57,7 +57,7 @@ void Editor::UIinit(GLFWwindow* window)
 
     ImGuiIO& io = ImGui::GetIO();
     io.Fonts->AddFontDefault();
-    float baseFontSize = 16.0f; // 13.0f is the size of the default font. Change to the font size you use.
+    float baseFontSize = 13.0f; // 13.0f is the size of the default font. Change to the font size you use.
     float iconFontSize = baseFontSize * 2.0f / 3.0f; // FontAwesome fonts need to have their sizes reduced by 2.0f/3.0f in order to align correctly
 
     // merge in icons from Font Awesome
@@ -174,7 +174,6 @@ void Editor::UIinit(GLFWwindow* window)
     mWindowlist["PrefabScene"] = new PrefabWindow;
     mWindowlist["GameScene"] = new GameScene;
     mWindowlist["KeybindWindow"] = new KeybindWindow;
-    mWindowlist["MenuTab"] = new MenuTab;
 
     for (auto & windows : mWindowlist ) 
     {
@@ -268,17 +267,6 @@ void Editor::UIupdate([[maybe_unused]]GLFWwindow* window) {
                 windows.second->update();
                 ImGui::End();
             }
-        }
-        else if (windows.first == "MenuTab") {
-
-                ImGuiWindowClass window_class;
-                window_class.DockNodeFlagsOverrideSet = ImGuiDockNodeFlags_AutoHideTabBar;
-                window_class.ViewportFlagsOverrideSet = ImGuiViewportFlags_NoDecoration;
-                ImGui::SetNextWindowClass(&window_class);
-
-                ImGui::Begin(windows.first.c_str(), 0, windows.second->mWinFlag);
-                windows.second->update();
-                ImGui::End();
         }
         else {
 

@@ -17,6 +17,7 @@ start up of window and game system, also runs their update functions.
 #include "SingletonManager.h"
 #include "ScriptingSystem.h"
 #include "Physics/PhysicsSystem.h"
+#include "ResourceManager.h"
 #include "ResourceManagerTy.h"
 #include "Graphics/GraphicsSystem.h"
 #include "SceneWindow.h"

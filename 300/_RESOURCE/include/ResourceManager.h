@@ -1,0 +1,300 @@
+//#pragma once 
+//#ifndef _RESOURCEMANAGER_H
+//#define _RESOURCEMANAGER_H
+//
+//#define  _ENABLE_ANIMATIONS 1
+//#include "Guid.h"
+//#include "Mesh.hpp"
+//#include "Shader.hpp"
+//#include "Texture.hpp"
+//
+//#include <filesystem>
+//
+///***************************************************************************/
+///*!
+//\brief
+//    Resource Types defined 
+//*/
+///**************************************************************************/
+//enum ResourceTypes : unsigned {
+//
+//    MESH = 1234567,
+//    TEXTURE,
+//    SHADER,
+//    MATERIALINSTANCE
+//};
+//
+///***************************************************************************/
+///*!
+//\brief
+//    Datas for instance allocation (Unused temporary)
+//*/
+///**************************************************************************/
+//struct MeshData {
+//    void* m_pData;
+//    GFX::Mesh meshdata;
+//};
+//
+//
+//struct ShaderData
+//{
+//    void* m_pData;
+//    GFX::Shader shaderData;
+//};
+//
+//
+//struct MaterialInstanceData
+//{
+//    void* m_pData;
+//    GFX::Texture materialInstanceData;
+//};
+//
+//
+//
+//
+///***************************************************************************/
+///*!
+//\brief
+//    MaterialInstanceManager 
+//*/
+///**************************************************************************/
+//class MaterialInstanceManager
+//{
+//public:
+//    constexpr static int  MAX_RESOURCE = 2400;
+//    static MaterialInstanceManager& GetInstance()
+//    {
+//        static MaterialInstanceManager instance;
+//        return instance;
+//    }
+//
+///***************************************************************************/
+///*!
+//\brief
+//    Default functions for MaterialInstanceManager
+//*/
+///**************************************************************************/
+//    MaterialInstanceManager() = default;
+//    MaterialInstanceManager(MaterialInstanceManager const&) = delete;
+//    void operator=(MaterialInstanceManager const&) = delete;
+//
+//    void Init();
+///***************************************************************************/
+///*!
+//\brief
+//    Allocation/Deallocation for Material Instance Manager 
+//*/
+///**************************************************************************/
+//    MaterialInstanceData& AllocRscInfo();
+//    void ReleaseRscInfo(MaterialInstanceData& RscInfo);
+//
+///***************************************************************************/
+///*!
+//\brief
+//    Graphics function for Material Instance Manager 
+//*/
+///**************************************************************************/
+//    void SetupMaterialInstance(std::string filepath, unsigned);
+//    MaterialInstanceData& getMaterialInstance(unsigned);
+//
+//    int mResourceCnt{ 0 };
+//
+//private:
+//    std::unordered_map<unsigned, MaterialInstanceData*>     mSceneMaterialInstances;
+//    MaterialInstanceData                                    *m_pInfoBufferEmptyHead{ nullptr };
+//    std::array<MaterialInstanceData, MAX_RESOURCE>          m_MaterialInstancebuffer;
+//};
+//
+///***************************************************************************/
+///*!
+//\brief
+//    ShaderManager 
+//*/
+///**************************************************************************/
+//class ShaderManager
+//{
+//public:
+//    constexpr static int  MAX_RESOURCE = 2400;
+//    static ShaderManager& GetInstance()
+//    {
+//        static ShaderManager instance;
+//        return instance;
+//    }
+//    /***************************************************************************/
+//    /*!
+//    \brief
+//        ShaderManager (constructors)
+//    */
+//    /**************************************************************************/
+//    ShaderManager() = default;
+//    ShaderManager(ShaderManager const&) = delete;
+//    void operator=(ShaderManager const&) = delete;
+//
+//    /***************************************************************************/
+//    /*!
+//    \brief
+//        ShaderManager Data allocations
+//    */
+//    /**************************************************************************/
+//    void Init();
+//    ShaderData& AllocRscInfo();
+//    void ReleaseRscInfo(ShaderData& RscInfo);
+//
+//    /***************************************************************************/
+//    /*!
+//    \brief
+//        Graphics accessor for ShaderManager
+//    */
+//    /**************************************************************************/
+//    void SetupShader(std::string vertpath, std::string fragpath, unsigned); 
+//    // Accessor
+//    ShaderData& getShader(unsigned);
+//
+//    int mResourceCnt{ 0 };
+//
+//private:
+//    std::unordered_map<unsigned, ShaderData*>   mSceneShaders;
+//    ShaderData                                  *m_pInfoBufferEmptyHead{ nullptr };
+//    std::array<ShaderData, MAX_RESOURCE>        m_Shaderbuffer;
+//};
+//
+///***************************************************************************/
+///*!
+//\brief
+//    MeshManager
+//*/
+///**************************************************************************/
+//class MeshManager
+//{
+//public:
+//    constexpr static int  MAX_RESOURCE = 2400;
+//    static MeshManager& GetInstance()
+//    {
+//        static MeshManager instance;
+//        return instance;
+//    }
+//    /***************************************************************************/
+//    /*!
+//    \brief
+//        Constructors
+//    */
+//    /**************************************************************************/
+//    void Init();
+//    MeshManager() = default;
+//    MeshManager(MeshManager const&) = delete;
+//    void operator=(MeshManager const&) = delete;
+//
+//    /***************************************************************************/
+//    /*!
+//    \brief
+//        ShaderManager Resource Allocation
+//    */
+//    /**************************************************************************/
+//    MeshData& AllocRscInfo();
+//    void ReleaseRscInfo(MeshData& RscInfo);
+//   
+//    
+//    /***************************************************************************/
+//    /*!
+//    \brief
+//        Graphics function accessor for Mesh
+//    */
+//    /**************************************************************************/
+//    void SetupMesh(std::string filepath, unsigned);
+//    MeshData& get_Mesh(unsigned);
+//
+//    //void Destroy();
+//    int mResouceCnt{ 0 };
+//
+//private:
+//    std::unordered_map<unsigned, MeshData*>     mSceneMeshes;
+//    MeshData                                    *m_pInfoBufferEmptyHead{ nullptr };
+//    std::array<MeshData, MAX_RESOURCE>          m_Meshbuffer;
+//};
+//
+//
+//struct instance_info 
+//{
+//    std::string     m_Name{};
+//    void            *m_pData{ nullptr };
+//    uid  m_GUID;
+//    unsigned        m_Type;
+//    int             m_RefCount{ 1 };
+//};
+//
+///***************************************************************************/
+///*!
+//\brief
+//    Resource Manager
+//*/
+///**************************************************************************/
+//class Resource 
+//{
+//
+//public:
+//    /***************************************************************************/
+//    /*!
+//    \brief
+//        Constructor for Resource Manager
+//    */
+//    /**************************************************************************/
+//    Resource();
+//    Resource(const Resource&) = delete;
+//    ~Resource() = default;
+//    
+//    
+//    /***************************************************************************/
+//    /*!
+//    \brief
+//        Initializer for all material types
+//    */
+//    /**************************************************************************/
+//    void Init();
+//    void mesh_LoadFolder();
+//    void shader_Loader();
+//    void MaterialInstance_Loader();
+//
+//    //void get_Texture(uid<> id);
+//    //void get_Mesh(uid<> id);
+//
+//    /***************************************************************************/
+//    /*!
+//    \brief
+//        Material accessors
+//    */
+//    /**************************************************************************/
+//    GFX::Texture& get_MaterialInstance(std::string name);
+//    GFX::Mesh& get_Mesh(std::string name);
+//    GFX::Shader& get_Shader(std::string name);
+//    /***************************************************************************/
+//    /*!
+//    \brief
+//        Allocators for Resource Manager
+//    */
+//    /**************************************************************************/
+//    instance_info& AllocRscInfo(void);
+//    void ReleaseRscInfo(instance_info& RscInfo);
+//
+//    constexpr static int  MAX_RESOURCE = 2400;
+//
+//    int mResouceCnt{ 0 };
+//
+//private:
+//    instance_info*                                      m_pInfoBufferEmptyHead{ nullptr };
+//    std::unordered_map<unsigned, instance_info*>        m_Textures;
+//    std::unordered_map<unsigned, instance_info*>        m_Meshes;
+//    std::unordered_map<unsigned, instance_info*>        m_Shaders;
+//    std::unordered_map<unsigned, instance_info*>        m_MaterialInstances;
+//    std::array<instance_info, MAX_RESOURCE>             m_Infobuffer;
+//
+//    const std::string compiled_geom_path = "../assets/compiled_geom/";
+//    const std::string compressed_texture_path = "../assets/Compressed/";
+//
+//    MeshManager             mMeshManager;
+//    ShaderManager           mShaderManager;
+//    MaterialInstanceManager mMaterialInstanceManager;
+//};
+//
+//
+//
+//#endif // !_RESOURCEMANAGER_H
