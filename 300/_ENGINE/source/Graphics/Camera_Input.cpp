@@ -19,6 +19,11 @@
 #include <glm/gtc/quaternion.hpp>
 #include <glm/glm.hpp>
 
+#include <pch.h>
+#include <ECS/ECS_Systems.h>
+#include <ECS/ECS_Components.h>
+#include <ECS/ECS.h>
+#include <Graphics/GraphicsSystem.h>
 
 Camera_Input::Camera_Input()
 	: mCameraSpeed{ 100.f }, mMouseSensitivity{ 0.1f }
@@ -105,13 +110,16 @@ void Camera_Input::updateCameraInput(GFX::Camera& cam, const float& dt)
 	}
 
 	//!< Camera Zoom
-	cam.mFovDegree -= static_cast<float>(Input::GetScroll());
-	if (cam.mFovDegree < 1.0f) {
-		cam.mFovDegree = 1.0f;
-	}
+	if (systemManager->mGraphicsSystem->m_EnableScroll)
+	{
+		cam.mFovDegree -= static_cast<float>(Input::GetScroll());
+		if (cam.mFovDegree < 1.0f) {
+			cam.mFovDegree = 1.0f;
+		}
 
-	if (cam.mFovDegree > 45.0f) {
-		cam.mFovDegree = 45.0f;
+		if (cam.mFovDegree > 45.0f) {
+			cam.mFovDegree = 45.0f;
+		}
 	}
 
 

@@ -4,7 +4,6 @@
 #include "ScriptingSystem.h"
 #include "ECS/ECS.h"
 #include "Guid.h"
-#include "ResourceManager.h"
 #include "ResourceManagerTy.h"
 #include "ECS/ECS_Components.h"
 #include "GameState/GameStateManager.h"
@@ -24,7 +23,7 @@ SystemManager::SystemManager()
 	mGameStateSystem = std::make_unique<GameStateManager>();
 	mGraphicsSystem = std::make_unique<GraphicsSystem>();
 	mResourceTySystem = std::make_unique<ResourceTy>();
-	mResourceSystem = std::make_unique<Resource>();
+	//mResourceSystem = std::make_unique<Resource>();
 	mAudioSystem = std::make_unique<AudioSystem>();
 	mLogger = std::make_unique<Logger>();
 	mInputMapSystem = std::make_unique<InputMapSystem>();
@@ -47,7 +46,8 @@ void SystemManager::Init(bool isEditor, GFX::Window *window)
 	mScriptingSystem.get()->Init();
 	PINFO("Init Scripting System");
 
-	mResourceSystem.get()->Init();
+
+	//mResourceSystem.get()->Init();
 	mResourceTySystem.get()->Init();
 	PINFO("Init Graphics System");
 

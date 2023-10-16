@@ -1,3 +1,4 @@
+#include "ECS_Components.h"
 /*!*************************************************************************
 ****
 \file Inspect.cpp
@@ -71,6 +72,8 @@ Inspect display for InputActionMapEditor components.
 #include "Audio/AudioSystem.h"
 #include "Input/InputMapSystem.h"
 
+#include <descriptor.h>
+#include <string>
 
 /***************************************************************************/
 /*!
@@ -563,9 +566,15 @@ void Animator::Inspect()
 */
 /***************************************************************************/
 
+//MeshRenderer::MeshRenderer()
+//	: mShaderProgram { "PointLightShader" }
+//{
+//}
+
 void MeshRenderer::Inspect() {
 	bool delete_component{ true };
-	if (ImGui::CollapsingHeader("MeshRenderer", &delete_component,ImGuiTreeNodeFlags_DefaultOpen)) {
+	if (ImGui::CollapsingHeader("MeshRenderer", &delete_component,ImGuiTreeNodeFlags_DefaultOpen)) 
+	{
 		
 		int st = static_cast<int>(mMeshPath.find_last_of("/"));
 		int ed = static_cast<int>(mMeshPath.find_last_of("."));
@@ -575,14 +584,16 @@ void MeshRenderer::Inspect() {
 
 		if (ImGui::BeginDragDropTarget())
 		{
-			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_GEOM")) {
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_GEOM")) 
+			{
 
 				const char* data = (const char*)payload->Data;
 				std::string data_str = std::string(data);
 				mMeshPath = data_str;
 
-				uid temp(mMeshPath);
-				mMeshRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(temp.id));
+				std::string descfilepath = data_str + ".desc";
+				unsigned guid = _GEOM::GetGUID(descfilepath);
+				mMeshRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(guid));
 
 				GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mMeshRef);
 
@@ -606,28 +617,49 @@ void MeshRenderer::Inspect() {
 
 		if (ImGui::BeginDragDropTarget())
 		{
-			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_FBX")) {
-
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_FBX")) 
+			{
 				const char* data = (const char*)payload->Data;
 				std::string data_str = std::string(data);
 				mMeshPath = data_str;
+				std::string GEOM_Descriptor_Filepath;
+				unsigned guid;
 
-				uid temp(mMeshPath);
-				//mMeshRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(temp.id));
 
-				//GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mMeshRef);
 
-				//Entity entins(Hierarchy::selectedId);
-				//if (entins.HasComponent<Animator>() && meshinst->mHasAnimation)
-				//{
-				//	// if the new entity has both animations and the animator component, update the animator to use the new animation
-				//	entins.GetComponent<Animator>().mAnimator.SetAnimation(&meshinst->mAnimation[0]);
-				//}
-				//else if (entins.HasComponent<Animator>() && !meshinst->mHasAnimation)
-				//{
-				//	// if the new entity's mesh has no animation, but the entity still has the animator component
-				//	entins.GetComponent<Animator>().mAnimator.m_CurrentAnimation = nullptr;
-				//}
+
+				bool descFilePresent = _GEOM::CheckAndCreateDescriptorFile(data_str, GEOM_Descriptor_Filepath);
+				std::string descfilepath = data_str + ".desc";
+				guid = _GEOM::GetGUID(descfilepath);
+
+				// If the descriptor file is not present, then load it
+				if (!descFilePresent)
+				{
+					//!>> Calling the GEOM Compiler to load 
+					std::string command = "..\\_GEOM_COMPILER\\_GEOM_COMPILER.exe ";
+					command += GEOM_Descriptor_Filepath;
+					int result = system(command.c_str());
+
+					std::string geompath = GEOM_Descriptor_Filepath.substr(0, GEOM_Descriptor_Filepath.find_last_of("."));
+
+					systemManager->mResourceTySystem->mesh_Load(geompath, guid);
+				}
+
+				mMeshRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(guid));
+
+				GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mMeshRef);
+
+				Entity entins(Hierarchy::selectedId);
+				if (entins.HasComponent<Animator>() && meshinst->mHasAnimation)
+				{
+					// if the new entity has both animations and the animator component, update the animator to use the new animation
+					entins.GetComponent<Animator>().mAnimator.SetAnimation(&meshinst->mAnimation[0]);
+				}
+				else if (entins.HasComponent<Animator>() && !meshinst->mHasAnimation)
+				{
+					// if the new entity's mesh has no animation, but the entity still has the animator component
+					entins.GetComponent<Animator>().mAnimator.m_CurrentAnimation = nullptr;
+				}
 			}
 
 

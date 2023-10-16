@@ -51,8 +51,12 @@ void ObjectFactory::LoadScene(Scene* scene, const std::string& filename)
 			e.AddComponent<MeshRenderer>();
 			e.GetComponent<MeshRenderer>() = obj.GetMRJSON();
 			MeshRenderer& mr = e.GetComponent<MeshRenderer>();
-			uid uids(mr.mMeshPath);
-			mr.mMeshRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(uids.id));
+
+			std::string descfilepath = mr.mMeshPath + ".desc";
+			unsigned guid = _GEOM::GetGUID(descfilepath);
+
+			//uid uids(mr.mMeshPath); 
+			mr.mMeshRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(guid));
 			for (int i{ 0 }; i < 4; i++) {
 
 				if (mr.mTextureCont[i] == true) {

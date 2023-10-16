@@ -84,53 +84,32 @@ public:
     // Serializes the AssimpNodeData into a binary file recursively
 */
 /**************************************************************************/
-template< typename T = unsigned >
-T generateUniqueID() {
-    // Step 1: Obtain the current system time
-    auto currentTime = std::chrono::system_clock::now().time_since_epoch().count();
+//template< typename T = unsigned >
 
-    // Step 2: Generate a random number
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dis(0, 9999);
-    auto randomNumber = dis(gen);
-
-    // Step 3: Combine the time and random number
-    std::string combinedString = std::to_string(currentTime) + std::to_string(randomNumber);
-
-    // Step 4: Apply a hashing algorithm
-    std::hash<std::string> hasher;
-    T hashedValue = (unsigned)hasher(combinedString);
-
-    // Step 5: Format the ID (optional)
-    //std::string uniqueID = std::to_string(hashedValue);
-
-    //std::cout << "Generated Unique ID: " << hashedValue << "\n";
-    // Step 6: Use the ID
-    //static_assert(std::is_unsigned_v<T>::id, "Integral required.");
-
-    return hashedValue;
-}/***************************************************************************/
+/***************************************************************************/
 /*!
 \brief
 	// Uid from string ( always unique if name is different )
 */
 /**************************************************************************/
 
-template< typename T = unsigned >
-T generateUniqueIDfromString(std::string name) {
+//template< typename T = unsigned >
 
-    unsigned hashedValue{ 0 };
 
-    for (const char& c : name) {
-
-        hashedValue += c /** table.ms_Table[counter++]*/;
-    }
-
-    //std::cout << hashedValue;
-
-    return hashedValue;
-}
+//template< typename T = unsigned >
+//unsigned generateUniqueIDfromString(const char* name) {
+//
+//    unsigned hashedValue{ 0 };
+//
+//    for (const char& c : name) {
+//
+//        hashedValue += c /** table.ms_Table[counter++]*/;
+//    }
+//
+//    //std::cout << hashedValue;
+//
+//    return hashedValue;
+//}
 
 /***************************************************************************/
 /*!
@@ -139,13 +118,59 @@ T generateUniqueIDfromString(std::string name) {
 */
 /**************************************************************************/
 
-template <typename t = unsigned>
+//template <typename t = unsigned>
+
 struct uid {
+    unsigned generateUniqueID() {
+        // Step 1: Obtain the current system time
+        auto currentTime = std::chrono::system_clock::now().time_since_epoch().count();
 
-    constexpr explicit uid() :id{ generateUniqueID() } {  }
-    constexpr explicit uid(std::string str) :id{ generateUniqueIDfromString(str) } {  };
+        // Step 2: Generate a random number
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::uniform_int_distribution<> dis(0, 9999);
+        auto randomNumber = dis(gen);
+
+        // Step 3: Combine the time and random number
+        std::string combinedString = std::to_string(currentTime) + std::to_string(randomNumber);
+
+        // Step 4: Apply a hashing algorithm
+        std::hash<std::string> hasher;
+        unsigned hashedValue = (unsigned)hasher(combinedString);
+
+        // Step 5: Format the ID (optional)
+        //std::string uniqueID = std::to_string(hashedValue);
+
+        //std::cout << "Generated Unique ID: " << hashedValue << "\n";
+        // Step 6: Use the ID
+        //static_assert(std::is_unsigned_v<T>::id, "Integral required.");
+
+        return hashedValue;
+    }
+
+    unsigned generateUniqueIDfromString(std::string name) {
+
+        unsigned hashedValue{ 0 };
+
+        for (const char& c : name) {
+
+            hashedValue += c /** table.ms_Table[counter++]*/;
+        }
+
+        //std::cout << hashedValue;
+
+        return hashedValue;
+    }
+
+    uid() :id{ generateUniqueID() } {  }
+    
+    uid(std::string str) :id{ generateUniqueIDfromString(str) } {  }
+    uid(const char* str) :id{ generateUniqueIDfromString(str) } {  }
+    operator unsigned() { return id; }
     uid(unsigned d) :id{ d } {  };
-    //void operator= (t d) { id = d };
+    unsigned id;
 
-    t id;
+
+
+
 };

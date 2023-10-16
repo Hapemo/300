@@ -1,9 +1,9 @@
-#include "ResourceManager.h"
+
 
 int main() {
 
-	Resource temp;
+	//Resource temp;
 
-	std::cout << " resource count " << temp.mResouceCnt;
-	return 0;
+	//std::cout << " resource count " << temp.mResouceCnt;
+	//return 0;
 }

@@ -1,4 +1,5 @@
 #include "ResourceManagerTy.h"
+#include <map>
 #include <memory>
 /***************************************************************************/
 /*!
@@ -27,9 +28,10 @@ void ResourceTy::Init()
 	m_pInfoBufferEmptyHead = m_Infobuffer.data();
 
 
-	mesh_Loader();
+	mesh_LoadFolder();
 	MaterialInstance_Loader();
 	MaterialEditor_Loader();
+	shader_Loader();
 	std::cout << "Initializing Resource Manager.\n";
 }
 /***************************************************************************/
@@ -57,7 +59,33 @@ void ResourceTy::Exit() {
 	Loads mesh (geom) from file
 */
 /**************************************************************************/
-void ResourceTy::mesh_Loader()
+void ResourceTy::mesh_Load(std::string filepath, unsigned uid)
+{
+	std::cout << "[NOTE]>> Loading file: \t" << filepath << "\n";
+	std::cout << "[NOTE]>> Loading uid: \t" << uid << "\n";
+
+	++mResouceCnt;
+	GFX::Mesh* meshPtr = SetupMesh(filepath, uid);
+	instance_infos& tempInstance = AllocRscInfo();
+
+	tempInstance.m_pData = reinterpret_cast<void*>(meshPtr);
+	tempInstance.m_Name = filepath;
+	tempInstance.m_GUID = uid;
+	tempInstance.m_Type = _MESH;
+			
+	m_ResourceInstance.emplace(uid, &tempInstance);
+}
+
+bool check_extensions(std::string file, std::string extension) {
+	size_t path_length = file.length();
+	std::string path_extension = file.substr(path_length - extension.length());
+	if (path_extension == extension)
+		return true;
+
+	return false;
+}
+
+void ResourceTy::mesh_LoadFolder()
 {
 	std::filesystem::path folderpath = compiled_geom_path.c_str();
 
@@ -69,25 +97,32 @@ void ResourceTy::mesh_Loader()
 			std::cout << "============================================\n";
 			std::cout << "[NOTE]>> Loading file: \t" << entry.path().filename() << "\n";
 
+			if(!check_extensions(entry.path().filename().string(), ".geom"))
+				continue;
 
 			std::string filepath = compiled_geom_path + entry.path().filename().string();
 
 			++mResouceCnt;
-			uid uids(filepath);
-			GFX::Mesh* meshPtr = SetupMesh(filepath, uids.id);
+			//uid uids(filepath);
+
+			std::string descfilepath = filepath + ".desc";
+			unsigned guid = _GEOM::GetGUID(descfilepath);
+
+			GFX::Mesh* meshPtr = SetupMesh(filepath, guid);
 			instance_infos& tempInstance = AllocRscInfo();
 
 
 			tempInstance.m_pData = reinterpret_cast<void*>(meshPtr);
 			tempInstance.m_Name = filepath;
-			tempInstance.m_GUID = uids.id;
+			tempInstance.m_GUID = guid;
 			tempInstance.m_Type = _MESH;
 
-			
-			m_ResourceInstance.emplace(uids.id, &tempInstance);
+
+			m_ResourceInstance.emplace(guid, &tempInstance);
 		}
 	}
 }
+
 /***************************************************************************/
 /*!
 \brief
@@ -192,7 +227,7 @@ void ResourceTy::MaterialInstance_Loader() {
 		++mResouceCnt;
 		instance_infos& tempInstance = AllocRscInfo();
 		tempInstance.m_Name = materialinstancepath;
-		tempInstance.m_GUID = uids.id;
+		tempInstance.m_GUID = uids;
 		tempInstance.m_pData = reinterpret_cast<void*>(texPtr);
 
 		tempInstance.m_Type = _TEXTURE;
@@ -269,4 +304,54 @@ GFX::Texture* ResourceTy::SetupMaterialInstance(std::string filepath) {
 /**************************************************************************/
 GFX::Texture* ResourceTy::getMaterialInstance(unsigned id) {
 	return reinterpret_cast<GFX::Texture*>(m_ResourceInstance[id]->m_pData);
+}
+
+
+
+
+/***************************************************************************/
+/*!
+\brief
+	Return material instance pointer
+*/
+/**************************************************************************/
+void ResourceTy::shader_Loader() {
+	std::map<std::string,std::pair<std::string, std::string>> shaderpaths;
+	shaderpaths.emplace("DefaultShader",std::pair<std::string, std::string>{ "../assets/shader_files/draw_vert.glsl", "../assets/shader_files/draw_frag.glsl" });
+	shaderpaths.emplace("PointLightShader", std::pair<std::string, std::string>{ "../assets/shader_files/pointLight_vert.glsl", "../assets/shader_files/pointLight_frag.glsl" });
+	shaderpaths.emplace("AnimationShader", std::pair<std::string, std::string>{ "../assets/shader_files/animations_vert.glsl", "../assets/shader_files/pointLight_frag.glsl" });
+	shaderpaths.emplace("UIShader", std::pair<std::string, std::string>{ "../assets/shader_files/UI_vert.glsl", "../assets/shader_files/UI_frag.glsl" });
+
+
+	// load all the shaders
+	for (const auto& x : shaderpaths)
+	{
+		std::string vertPath = x.second.first;
+		std::string fragPath = x.second.second;
+		std::string combinedPath = vertPath + fragPath;
+
+		uid uids(x.first);
+		GFX::Shader localshader;
+		localshader.CreateShaderFromFiles(vertPath.c_str(), fragPath.c_str());
+		auto shaderRef = std::make_unique<GFX::Shader>(localshader);
+		++mResouceCnt;
+		instance_infos& tempInstance = AllocRscInfo();
+		tempInstance.m_Name = x.first;
+		tempInstance.m_GUID = uids;
+		tempInstance.m_pData = reinterpret_cast<void*>(shaderRef.release());
+
+		tempInstance.m_Type = _SHADER;
+		m_ResourceInstance.emplace(uids.id, &tempInstance);
+
+	}
+}
+
+/***************************************************************************/
+/*!
+\brief
+	Return material instance pointer
+*/
+/**************************************************************************/
+GFX::Shader* ResourceTy::get_Shader(unsigned id) {
+	return reinterpret_cast<GFX::Shader*>(m_ResourceInstance[id]->m_pData);
 }

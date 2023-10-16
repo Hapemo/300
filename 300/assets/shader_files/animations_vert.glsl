@@ -23,6 +23,15 @@ uniform vec3 uLightPos;
 uniform vec3 uViewPos;
 uniform bool uHasLight;
 
+// for SSBO testing purposes
+layout (std430, binding = 3) buffer boneFinal
+{
+  mat4 matrices[];
+};
+out mat4 TestingMatrix1;
+out mat4 TestingMatrix2;
+// for SSBO testing purposes
+
 out vec2 TexCoords;
 out vec3 TangentLightPos;
 out vec3 TangentViewPos;
@@ -57,6 +66,12 @@ void main()
     gl_Position         = uMatrixVP * inLTW * totalPosition;
     TexCoords           = inQUV;
     Tex_Ent_ID          = inTex_Ent_ID;
+
+    // for SSBO testing purposes
+    TestingMatrix1 = matrices[0];
+    TestingMatrix2 = matrices[1];
+    // for SSBO testing purposes
+
     if (!uHasLight) return;
 
     

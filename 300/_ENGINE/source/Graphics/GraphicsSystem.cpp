@@ -11,12 +11,12 @@
 ***/
 
 #include <Graphics/GraphicsSystem.h>
-#include <ResourceManager.h>
 #include "ResourceManagerTy.h"
 #include <Graphics/Camera_Input.h>
 #include "Debug/EnginePerformance.h"
 #include "GameState/GameStateManager.h"
 
+#include "cstdlib"
 
 /***************************************************************************/
 /*!
@@ -29,23 +29,13 @@ float second_entitytime{};
 
 void GraphicsSystem::Init()
 {
+	// -- WIP -- SHADER STORAGE BUFFER OBJECT
+	SetupShaderStorageBuffer();
+	// -- WIP -- SHADER STORAGE BUFFER OBJECT
+	m_Image2DMesh.Setup2DImageMesh();
+
 	glEnable(GL_MULTISAMPLE);
-#if 0
-#pragma region Camera entity
 
-	// only initialize an editor camera
-	if (systemManager->IsEditor())
-	{
-		Entity CameraEntity = systemManager->ecs->NewEntity(); // creating a new entity
-		systemManager->mGameStateSystem->mCurrentGameState.AddScene("NewScene");
-		systemManager->mGameStateSystem->mCurrentGameState.mScenes[0].mName = "Scene";
-		systemManager->mGameStateSystem->mCurrentGameState.mScenes[0].mEntities.insert(CameraEntity);
-		CameraEntity.GetComponent<General>().name = "Camera";
-		CameraEntity.AddComponent<Camera>();
-	}
-
-#pragma endregion
-#endif
 	// Get Window Handle
 	m_Window = systemManager->GetWindow();
 	m_Width = m_Window->size().x;
@@ -172,6 +162,13 @@ void GraphicsSystem::Init()
 /**************************************************************************/
 void GraphicsSystem::Update(float dt)
 {
+	// -- WIP --  SHADER STORAGE BUFFER OBJECT
+	finalBoneMatrices.push_back(mat4(1.0f));
+	finalBoneMatrices.push_back(mat4(2.0f));
+	ShaderStorageBufferSubData(finalBoneMatrices.size() * sizeof(mat4), finalBoneMatrices.data());
+	finalBoneMatrices.clear();
+	// -- WIP --  SHADER STORAGE BUFFER OBJECT
+
 	// update the camera's transformations, and its input
 	if (m_EditorMode)
 	{
@@ -297,13 +294,25 @@ void GraphicsSystem::EditorDraw(float dt)
 		// update the map of rendered meshes
 		renderedMesh[meshstr] = 1;
 
+#pragma region 
+		// current region have changed to a temporary system that requires serialization + drag and drop to work before changing back
+
 		// render the mesh and its instances here
 		GFX::Mesh &meshinst = *reinterpret_cast<GFX::Mesh *>(inst.GetComponent<MeshRenderer>().mMeshRef);
 
 		// gets the shader filepathc
-		std::pair<std::string, std::string> shaderstr = inst.GetComponent<MeshRenderer>().mShaderPath;
-		GFX::Shader &shaderinst = systemManager->mResourceSystem->get_Shader(shaderstr.first + shaderstr.second);
+		auto shaderstr = inst.GetComponent<MeshRenderer>().mShaders;
+		uid shader(shaderstr);
+		GFX::Shader shaderinst = *systemManager->mResourceTySystem->get_Shader(shader);
 		unsigned shaderID = shaderinst.GetHandle();
+
+
+		//GFX::Mesh& meshinst = *reinterpret_cast<GFX::Mesh*>(inst.GetComponent<MeshRenderer>().mMeshRef);
+		//uid shaderstr = inst.GetComponent<MeshRenderer>().mShaders;
+		//GFX::Shader* shaderinst = systemManager->mResourceTySystem->get_Shader(shaderstr.id);
+		//unsigned shaderID = shaderinst->GetHandle();
+
+#pragma endregion
 
 		// bind all texture
 		GFX::Texture *textureInst[4]{};
@@ -449,8 +458,8 @@ void GraphicsSystem::GameDraw(float dt)
 		GFX::Mesh &meshinst = *reinterpret_cast<GFX::Mesh *>(inst.GetComponent<MeshRenderer>().mMeshRef);
 
 		// gets the shader filepath
-		std::pair<std::string, std::string> shaderstr = inst.GetComponent<MeshRenderer>().mShaderPath;
-		GFX::Shader &shaderinst = systemManager->mResourceSystem->get_Shader(shaderstr.first + shaderstr.second);
+		uid shaderstr = inst.GetComponent<MeshRenderer>().mShaders;
+		GFX::Shader *shaderinst = systemManager->mResourceTySystem->get_Shader(shaderstr.id);
 
 		GFX::Texture *textureInst[4]{};
 		for (int i{0}; i < 4; i++)
@@ -461,15 +470,15 @@ void GraphicsSystem::GameDraw(float dt)
 			}
 		}
 
-		shaderinst.Activate();
+		shaderinst->Activate();
 		mat4 gameCamVP = camera.GetComponent<Camera>().mCamera.viewProj();
-		glUniformMatrix4fv(shaderinst.GetUniformVP(), 1, GL_FALSE, &gameCamVP[0][0]);
+		glUniformMatrix4fv(shaderinst->GetUniformVP(), 1, GL_FALSE, &gameCamVP[0][0]);
 
 		// Retrieve Point Light object
 		auto lightEntity = systemManager->ecs->GetEntitiesWith<PointLight>();
 		m_HasLight = !lightEntity.empty();
 
-		GLuint mHasLightFlagLocation = shaderinst.GetUniformLocation("uHasLight");
+		GLuint mHasLightFlagLocation = shaderinst->GetUniformLocation("uHasLight");
 		glUniform1i(mHasLightFlagLocation, m_HasLight);
 
 		if (m_HasLight)
@@ -477,10 +486,10 @@ void GraphicsSystem::GameDraw(float dt)
 			PointLight &lightData = lightEntity.get<PointLight>(lightEntity[0]);
 			Transform &lightTransform = Entity(lightEntity[0]).GetComponent<Transform>();
 
-			GLuint mLightPosShaderLocation = shaderinst.GetUniformLocation("uLightPos");
-			GLuint mViewPosShaderLocation = shaderinst.GetUniformLocation("uViewPos");
-			GLuint mLightIntensityShaderLocation = shaderinst.GetUniformLocation("uLightIntensity");
-			GLuint mLightColorShaderLocation = shaderinst.GetUniformLocation("uLightColor");
+			GLuint mLightPosShaderLocation = shaderinst->GetUniformLocation("uLightPos");
+			GLuint mViewPosShaderLocation = shaderinst->GetUniformLocation("uViewPos");
+			GLuint mLightIntensityShaderLocation = shaderinst->GetUniformLocation("uLightIntensity");
+			GLuint mLightColorShaderLocation = shaderinst->GetUniformLocation("uLightColor");
 
 			vec3 viewPos = camera.GetComponent<Camera>().mCamera.position();
 			glUniform3fv(mLightPosShaderLocation, 1, &lightTransform.mTranslate[0]);
@@ -507,7 +516,7 @@ void GraphicsSystem::GameDraw(float dt)
 		// glDrawElementsInstanced(GL_TRIANGLES, meshinst.GetIndexCount(), GL_UNSIGNED_INT, nullptr, meshinst.mLTW.size());
 
 		meshinst.UnbindVao();
-		shaderinst.Deactivate();
+		shaderinst->Deactivate();
 		m_Textures.clear();
 
 		// unbind the textures
@@ -535,6 +544,7 @@ void GraphicsSystem::GameDraw(float dt)
 /**************************************************************************/
 void GraphicsSystem::Exit()
 {
+	m_Image2DMesh.Destroy();
 }
 
 /***************************************************************************/
@@ -851,6 +861,59 @@ void GraphicsSystem::PrintMat4(const glm::mat4 &input)
 void GraphicsSystem::UnpauseGlobalAnimation()
 {
 	m_EnableGlobalAnimations = true;
+}
+
+void GraphicsSystem::SetupShaderStorageBuffer()
+{
+	glCreateBuffers(1, &m_Ssbo);
+
+	glBindBuffer(GL_SHADER_STORAGE_BUFFER, m_Ssbo);
+	glNamedBufferData(m_Ssbo, sizeof(mat4) * MAX_NUM_BONES * MAX_INSTANCES, nullptr, GL_DYNAMIC_DRAW);
+	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 3, m_Ssbo);
+
+	glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
+}
+
+void GraphicsSystem::ShaderStorageBufferSubData(size_t dataSize, const void* data)
+{
+	glNamedBufferSubData(m_Ssbo, 0, dataSize, data);
+}
+
+void GraphicsSystem::Add2DImageInstance(float width, float height, vec2 const& position, unsigned texHandle, vec4 const& color, unsigned entityID)
+{
+	mat4 world =
+	{
+		vec4(width, 0.f, 0.f, 0.f),
+		vec4(0.f, height, 0.f, 0.f),
+		vec4(0.f, 0.f, 1.f, 0.f),
+		vec4(position, 0.f, 1.f)
+	};
+
+	int texIndex = StoreTextureIndex(texHandle);
+
+	m_Image2DMesh.mLTW.push_back(world);
+	m_Image2DMesh.mColors.push_back(color);
+	m_Image2DMesh.mTexEntID.push_back(vec4((float)texIndex + 0.5f, (float)entityID + 0.5f, 0, 0));
+}
+
+int GraphicsSystem::StoreTextureIndex(unsigned texHandle)
+{
+	if (m_Image2DStore.size() >= 32)
+	{
+		std::cout << "Too many different textures to be rendered in 1 frame, texture discarded\n";
+		return -1;
+	}
+
+	// Locate if ID already in container
+	auto it = std::find(m_Image2DStore.cbegin(), m_Image2DStore.cend(), (GLint)texHandle);
+	if (it == m_Image2DStore.cend())	// ID not in container
+	{
+		m_Image2DStore.push_back((GLint)texHandle);
+		return (int)m_Image2DStore.size() - 1;
+	}
+
+	// ID is already in container
+	int pos = (int)(it - m_Image2DStore.cbegin());
 }
 
 /***************************************************************************/

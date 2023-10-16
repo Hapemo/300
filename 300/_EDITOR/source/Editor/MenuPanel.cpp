@@ -46,9 +46,9 @@ void MenuPanel::update()
     if (ImGui::BeginMenuBar())
     {   
 
-        if (ImGui::BeginMenu("Files"))
+        if (ImGui::BeginMenu(ICON_FA_FILE " Files"))
         {       
-            if (ImGui::MenuItem("Save GameState"))
+            if (ImGui::MenuItem(ICON_FA_FILE " Save GameState"))
             {
                 // must save both the scenes and gamestate
                 systemManager->mGameStateSystem->mCurrentGameState.Save();
@@ -59,9 +59,9 @@ void MenuPanel::update()
 
             ImGui::EndMenu();
         }
-        if (ImGui::BeginMenu("Settings"))
+        if (ImGui::BeginMenu(ICON_FA_GEAR " Settings"))
         {
-            if (ImGui::MenuItem("Input"))
+            if (ImGui::MenuItem(ICON_FA_KEY " Input"))
             {
 
                 KeybindWindow::openWindow = true;
@@ -71,7 +71,7 @@ void MenuPanel::update()
             ImGui::EndMenu();
         }
 
-        if (ImGui::BeginMenu("Theme"))
+        if (ImGui::BeginMenu(ICON_FA_VECTOR_SQUARE " Theme"))
         {
 
             ImVec4* colors = ImGui::GetStyle().Colors;
@@ -263,19 +263,6 @@ void MenuPanel::update()
 
         ImVec2 buttonSize{ 50,50 };
 
-        ImGui::SetCursorPosX(ImGui::GetWindowSize().x / 2 - buttonSize.x * 3);
-
-        if (ImGui::Button("PLAY")) {
-            systemManager->Play();
-        }
-        if (ImGui::Button("PAUSE")) {
-            systemManager->Pause();
-        }
-
-        if (ImGui::Button("RESET")) {
-            Hierarchy::selectionOn = false;
-            systemManager->Reset();
-        }   
         ImGui::EndMenuBar();
     }
 }
