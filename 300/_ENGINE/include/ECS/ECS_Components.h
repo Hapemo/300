@@ -102,19 +102,20 @@ struct MeshRenderer
 	//std::pair<std::string, std::string> mShaderPath{ "../assets/shader_files/animations_vert.glsl", "../assets/shader_files/pointLight_frag.glsl" };
 	std::pair<std::string, std::string> mShaderPath{ "../assets/shader_files/pointLight_vert.glsl", "../assets/shader_files/pointLight_frag.glsl" };
 	std::string							mMaterialInstancePath[4] {" "," " ," " ," " };
+	vec4								mInstanceColor{ 1.f, 1.f, 1.f, 1.f };
 
 	void*								mMeshRef{};
-
 	void*								mTextureRef[4];
-	bool								mTextureCont[4];
 
 	std::string							mMeshPath;
 	unsigned							mGUID;
+	bool								mTextureCont[4];
 
 	void								Inspect();
-
+	void								SetColor(const vec4& color);
 	//RTTR_ENABLE()
 };
+
 
 struct UIrenderer
 {

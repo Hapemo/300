@@ -1,3 +1,4 @@
+#include "ECS_Components.h"
 /*!*************************************************************************
 ****
 \file Inspect.cpp
@@ -91,8 +92,6 @@ void Inspect::init() {
 /**************************************************************************/
 void Inspect::update() 
 {
-
-
 	if (Hierarchy::selectionOn) {
 		
 		Entity ent(Hierarchy::selectedId);
@@ -791,6 +790,8 @@ void MeshRenderer::Inspect()
 				}
 			}
 		}
+
+		ImGui::ColorPicker4("MeshColor", (float*)&mInstanceColor);
 	}
 
 	// == >> Mesh Renderer GEOM Descriptor File << == //

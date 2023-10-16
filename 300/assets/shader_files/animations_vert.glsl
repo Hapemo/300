@@ -31,6 +31,7 @@ out mat3 TBN;
 out vec3 TangentViewPos;
 out vec3 TangentFragPos;
 out vec4 Tex_Ent_ID;
+out vec4 VertexColor;
 
 void main() 
 {
@@ -64,6 +65,7 @@ void main()
     gl_Position         = uMatrixVP * inLTW * totalPosition;
     TexCoords           = inQUV;
     Tex_Ent_ID          = inTex_Ent_ID;
+    VertexColor         = inVertexColor;
 
     if (!uHasLight) return;
 
@@ -79,7 +81,7 @@ void main()
 
 
     // Set all the output vars
-    //gl_Position         = uMatrixVP * inLTW * vec4(inQPos,1.0);
-    TangentViewPos      = TBN * uViewPos;
-    TangentFragPos      = TBN * vec3(inLTW * totalPosition);
+    //gl_Position   = uMatrixVP * inLTW * vec4(inQPos,1.0);
+    TangentViewPos  = TBN * uViewPos;
+    TangentFragPos  = TBN * vec3(inLTW * totalPosition);
 }
