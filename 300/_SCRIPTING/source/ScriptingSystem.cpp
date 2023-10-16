@@ -98,6 +98,7 @@ void ScriptingSystem::Init()
     LuaAudio();
     LuaInputMapSystem();
     LuaPhysics();
+    LuaScripting();
 
     /******************************************************************************/
     /*!
@@ -229,6 +230,18 @@ void ScriptingSystem::ScriptDead(const Entity& entity)
     {
         script.Run("Dead");
     }
+}
+
+void ScriptingSystem::AddScript(Entity id, std::string fileName)
+{
+    std::cout << "came to add script" << std::endl;
+    // Check if there is script component, else add it before the script is added
+    if (!id.HasComponent<Scripts>())
+        id.AddComponent<Scripts>();
+    Script temp;
+    temp.scriptFile = fileName;
+    temp.env = { systemManager->mScriptingSystem->luaState, sol::create, systemManager->mScriptingSystem->luaState.globals() };
+    id.GetComponent<Scripts>().scriptsContainer.push_back(temp);
 }
 
 void ScriptingSystem::TestSSSU()

@@ -67,8 +67,6 @@ void Hierarchy::update() {
 
     auto& allScene = systemManager->mGameStateSystem->mCurrentGameState.mScenes;
 
-
-
     if (ImGui::Button("Add", ImVec2(50, 50)))
     {
 
@@ -103,6 +101,7 @@ void Hierarchy::update() {
 
             if (ImGui::IsItemClicked(ImGuiMouseButton_Left)) {  
                 selectedScene = i;
+                systemManager->ecs->SelectedScene = selectedScene;
             }
             //--------------------------------------------------------------------------// Delete Object
             if (ImGui::IsItemClicked(ImGuiMouseButton_Right)) {
@@ -160,6 +159,7 @@ void Hierarchy::update() {
 
                     if (ImGui::IsItemClicked(ImGuiMouseButton_Left)) {
                         selectedScene = i;
+                        systemManager->ecs->SelectedScene = selectedScene;
                         selectionOn = true;
                         selectedId = ent.id;
                     }
@@ -181,6 +181,7 @@ void Hierarchy::update() {
 
                         if (ImGui::IsItemClicked(ImGuiMouseButton_Left)) {
                             selectedScene = i;
+                            systemManager->ecs->SelectedScene = selectedScene;
                             selectionOn = true;
                             selectedId = ent.id;
                         }
@@ -210,6 +211,7 @@ void Hierarchy::update() {
 
                             if (ImGui::IsItemClicked(ImGuiMouseButton_Left)) {
                                 selectedScene = i;
+                                systemManager->ecs->SelectedScene = selectedScene;
                                 selectionOn = true;
                                 selectedId = child.id;
                             }

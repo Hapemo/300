@@ -6,6 +6,7 @@
 #include "ECS/ECS_Components.h"
 #include "Audio/AudioSystem.h"
 #include "Input/InputMapSystem.h"
+#include "GameState/GameStateManager.h"
 
 void LuaComponentContainer()
 {
@@ -20,8 +21,10 @@ void LuaEngine()
         "SystemManager", sol::constructors<>(),
         "ecs", &SystemManager::ecs,
         "mPhysicsSystem", &SystemManager::GetPhysicsPointer,
+        "mScriptingSystem", &SystemManager::GetScriptingPointer,
         "mAudioSystem", &SystemManager::GetAudioPointer,
-        "mInputActionSystem", &SystemManager::GetInputMapSystemPointer
+        "mInputActionSystem", &SystemManager::GetInputMapSystemPointer,
+        "mGameStateSystem", &SystemManager::GetGameStateSystem
         );
 }
 
@@ -30,6 +33,7 @@ void LuaECS()
     systemManager->mScriptingSystem->luaState.new_usertype<ECS>(
         "ecs", sol::constructors<>(),
         "NewEntity", &ECS::NewEntity,
+        "NewEntityByScene", &ECS::NewEntityByScene,
         "DeleteEntity", &ECS::DeleteEntity
         //"GetEntitiesWithGeneral", &ECS::GetEntitiesWith<General>,
         //"GetEntitiesWithTransform", &ECS::GetEntitiesWith<Transform>,
@@ -133,7 +137,6 @@ void LuaScript()
 {
     systemManager->mScriptingSystem->luaState.new_usertype<Scripts>(
         "Scripts", sol::constructors<>(),
-        "AddScript", &Scripts::AddScript,
         "mScriptFile", &Scripts::mScriptFile
         );
 }
@@ -205,4 +208,12 @@ void LuaPhysics()
         "mPhysicsSystem", sol::constructors<>(),
         "SetVelocity", &PhysicsSystem::SetVelocity
         );
+}
+
+void LuaScripting()
+{
+    //systemManager->mScriptingSystem->luaState.new_usertype<ScriptingSystem>(
+    //    "mScriptingSystem", sol::constructors<>(),
+    //    "AddScript", &ScriptingSystem::AddScript
+    //    );
 }

@@ -33,3 +33,4 @@ void LuaInput();
 void LuaAudio();
 void LuaInputMapSystem();
 void LuaPhysics();
+void LuaScripting();

@@ -203,7 +203,6 @@ public:
 	Scripts() = default;
 	~Scripts() = default;
 
-	static void AddScript(Entity id, std::string fileName);
 	//static void LoadRunScript(Entity entity);
 
 	std::string mScriptFile{};

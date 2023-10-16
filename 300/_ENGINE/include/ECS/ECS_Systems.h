@@ -86,6 +86,7 @@ public:
 	ScriptingSystem* GetScriptingPointer();
 	AudioSystem* GetAudioPointer();
 	InputMapSystem* GetInputMapSystemPointer();
+	GameStateManager* GetGameStateSystem();
 };
 
 extern SystemManager *systemManager;

@@ -3,11 +3,14 @@ local test4 = 6.0
 vec = Vec3.new(3, 5, 7)
 name = "Girl"
 speed = 20
+_G.create = 2
 
 function Alive()
+
 end
 
 function Update()
+    --testie = systemManager.ecs:NewEntity();
     --For M1 demo
     entity = Entity.new(script_entity_id)
     if entity == nil then
@@ -51,10 +54,21 @@ function Update()
         generalComponent:SetTag("eneMY");
         tag = generalComponent:GetTag();
         print("Tag is: "..tag)
+        if (_G.create == 2) then
+            for i = 1, 4 do
+                testEntity = systemManager.ecs:NewEntityByScene();
+            end
+            _G.create = _G.create + 1
+            print("came in here!!!")
+        end
 
         -- Physics Set Velocity function
         -- physicsSys = systemManager:mPhysicsSystem();
         -- physicsSys:SetVelocity(entity, vec);
+    elseif Input.CheckKey(State.HOLD, Key.KEY_B) then
+        testEntity = systemManager.ecs:NewEntityByScene();
+        --scriptingSys = systemManager:mScriptingSystem();
+        --scriptingSys:AddScript(testEntity, "../assets\\Scripts\\Run.lua");
     end
 
     -- --initialize array

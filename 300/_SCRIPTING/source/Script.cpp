@@ -33,7 +33,7 @@ void Script::Load(Entity entity)
         std::cout << err.what() << std::endl;
     }
 
-    env["script_entity_id"] = entity.id;
+    env["script_entity_id"] = entity.id; 
     LoadEnvVar();
 }
 
@@ -191,12 +191,4 @@ void Script::LoadEnvVar()
             variables.erase(elem.first);
         }
     }
-}
-
-void Scripts::AddScript(Entity id, std::string fileName)
-{
-    Script temp;
-    temp.scriptFile = fileName;
-    temp.env = { systemManager->mScriptingSystem->luaState, sol::create, systemManager->mScriptingSystem->luaState.globals() };
-    id.GetComponent<Scripts>().scriptsContainer.push_back(temp);
 }

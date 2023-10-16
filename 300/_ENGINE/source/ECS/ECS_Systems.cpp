@@ -149,3 +149,8 @@ InputMapSystem* SystemManager::GetInputMapSystemPointer()
 {
 	return mInputActionSystem.get();
 }
+
+GameStateManager* SystemManager::GetGameStateSystem()
+{
+	return mGameStateSystem.get();
+}
