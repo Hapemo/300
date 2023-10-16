@@ -141,6 +141,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="include\Constants.h" />
     <ClInclude Include="include\Guid.h" />
     <ClInclude Include="include\ResourceManagerTy.h" />
     <ClInclude Include="include\ResourceType.h" />

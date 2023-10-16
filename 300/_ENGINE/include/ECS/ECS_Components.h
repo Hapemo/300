@@ -23,6 +23,8 @@ Components used by the ECS.
 #include "Input/KeyBind.h"
 #include "Input/Input.h"
 #include "Guid.h"
+#include <Constants.h>
+
 //#include "Graphics/GraphicsSystem.h"
 //#include "Mesh.hpp"
 
@@ -100,12 +102,10 @@ struct Animator
 // this struct stores the filepaths for the meshdata, material, and shader. the actual data is stored in the resource manager
 struct MeshRenderer
 {
-	//MeshRenderer();
-
 	// For now, we store the string to the filepaths. TO CHANGE to uids for efficient referencing
+	//uid									mShaders;
 	//std::pair<std::string, std::string> mShaderPath{ "../assets/shader_files/animations_vert.glsl", "../assets/shader_files/pointLight_frag.glsl" };
 	std::pair<std::string, std::string> mShaderPath{ "../assets/shader_files/pointLight_vert.glsl", "../assets/shader_files/pointLight_frag.glsl" };
-	//uid									mShaders;
 	std::string							mMaterialInstancePath[4] {" "," " ," " ," " };
 	vec4								mInstanceColor{ 1.f, 1.f, 1.f, 1.f };
 
@@ -119,6 +119,9 @@ struct MeshRenderer
 
 	void								Inspect();
 	void								SetColor(const vec4& color);
+	void								SetMesh(const std::string& meshName);
+	void								SetTexture(MaterialType type, const std::string& Texturename);
+
 	//RTTR_ENABLE()
 };
 
@@ -336,7 +339,9 @@ struct PointLight
 	float	mLinearFalloff{};
 	float	mQuadraticFalloff{};
 	float	mIntensity{};
+
 	void Inspect();
+	void SetColor(const vec3& color);
 };
 
 

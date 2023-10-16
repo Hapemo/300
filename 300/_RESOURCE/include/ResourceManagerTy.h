@@ -10,6 +10,7 @@
 #include "Shader.hpp"
 #include "Texture.hpp"
 #include "Mesh.hpp"
+#include <Constants.h>
 #include <variant>  
 
 
@@ -54,14 +55,8 @@ enum ResourceType : unsigned {
     _MATERIALINSTANCE
 };
 
-enum MaterialType : unsigned {
 
-    DIFFUSE,
-    NORMAL,
-    EMISSION,
-    SPECULAR
 
-};
 struct instance_infos
 {
     std::string     m_Name{};
@@ -135,6 +130,7 @@ public:
     const std::string compressed_texture_path = "../assets/Compressed/";
     const std::string compressed_Editor_path = "../assets/Editor/Textures_Compressed/";
     const std::string shader_path = "../assets/shader_files/";
+    const std::string fbx_path = "../assets/Models/";
 
     std::unordered_map<std::string, GFX::Texture*> m_EditorTextures;
 

@@ -964,3 +964,31 @@ void MeshRenderer::SetColor(const vec4& color)
 {
 	mInstanceColor = color;
 }
+
+
+void MeshRenderer::SetMesh(const std::string& meshName)
+{
+	std::string descFilepath = systemManager->mResourceTySystem->fbx_path + meshName + ".fbx.desc";
+	unsigned guid = _GEOM::GetGUID(descFilepath);
+
+	mMeshRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(guid));
+	mMeshPath = systemManager->mResourceTySystem->compiled_geom_path + meshName + ".geom";
+}
+
+
+void MeshRenderer::SetTexture(MaterialType MaterialType, const std::string& Texturename)
+{
+	std::string MaterialInstancePath = systemManager->mResourceTySystem->compressed_texture_path + Texturename + ".ctexture";
+	mMaterialInstancePath[MaterialType] = MaterialInstancePath;
+
+	mTextureCont[MaterialType] = true;
+
+	uid guid(MaterialInstancePath);
+	mTextureRef[MaterialType] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(guid.id));
+}
+
+
+void PointLight::SetColor(const vec3& color)
+{
+	mLightColor = color;
+}
