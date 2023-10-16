@@ -1,6 +1,7 @@
 #pragma once
 #include "ECS/ECS_Components.h"
 #include "ECS/ECS.h"
+#include "ECS/ECS_Systems.h"
 
 // [10/13] Interfacing for (Designers) to use in [Scripting] 
 /******************************************************************************/
@@ -26,9 +27,10 @@ public:
 
 public:
 	void GetAudioComponent(Entity id);
+	bool IsSoundAttached();				// [Debug] Checks whether if the Sound Attached is in the <Audio> component.
 
 	void Play();
-	//void Pause();
+	void Pause();
 	//void Stop();
 
 	//void PlayDelayed();

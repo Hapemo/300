@@ -99,10 +99,18 @@ public:
 	// Helper Functions...
 public:
 	Channel& FindChannel(AUDIOTYPE audio_type, int id);
-	FMOD::Sound& FindSound(std::string audio_name);
+	FMOD::Sound* FindSound(std::string audio_name);
 	bool	 CheckAudioExist(std::string audio_name); // [W7 - 10/14]
 
 	// Will build as needs require.
+
+// Scripting Support
+public: 
+	void PlayAudioSource(FMOD::Sound* comp_sound, FMOD::Channel* comp_channel);  // OK.
+	void PlayAudioSource(Audio& audio_component);
+
+public:
+	FMOD::System* system_obj = nullptr;
 
 private:
 	std::unordered_map<AUDIOTYPE, std::vector<Channel>>         mChannelsNew;	// Database of Channels (SFX / BGM)
@@ -120,8 +128,6 @@ private:
 	// Registers (Sound ID) - for channel management
 	int next_avail_id_sfx = 0;
 	int next_avail_id_bgm = 0;
-
-	FMOD::System* system_obj = nullptr;
 
 	// for performance
 	double startTime = 0.0f;

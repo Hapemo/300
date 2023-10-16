@@ -113,6 +113,7 @@ void AudioSystem::Init()
 			if (LoadAudio(audio_path, audio_name))
 			{
 				audio_component.mIsLoaded = true;
+				audio_component.mSound = FindSound(audio_name); // Register [Sound] reference into <Audio> component. (if successfully loaded)
 			}
 			else
 			{
@@ -121,8 +122,7 @@ void AudioSystem::Init()
 		}
 	}
 
-	// [10/14] Scripting Test
-	TestGetAudioComponent();
+
 }
 
 
@@ -135,6 +135,10 @@ void AudioSystem::Init()
  /******************************************************************************/
 void AudioSystem::Update([[maybe_unused]] float dt)
 {
+	// [10/14] Scripting Test
+	if(Input::CheckKey(PRESS, Q))
+		TestGetAudioComponent();
+
 	auto audio_entities = systemManager->ecs->GetEntitiesWith<Audio>();
 
 	/*
@@ -145,69 +149,92 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 	for (Entity audio : audio_entities)
 	{
 		Audio& audio_component = audio.GetComponent<Audio>();
-	
-		if (audio_component.mIsPlay) // if it's supposed to play.
+
+		if (audio_component.mIsPlay && CheckAudioExist(audio_component.mFileName) && !audio_component.mIsPlaying)
 		{
-			if (!audio_component.mIsPlaying)
-			{
-				int channel_id;
-	
-				switch (audio_component.mAudioType)
-				{
-				case AUDIO_BGM:
-					channel_id = PlayBGMAudio(audio_component.mFileName, 1.0f);
-					if (channel_id != -1)
-						audio_component.mPlayBGMChannelID.push_back(channel_id);
-					break;
-				case AUDIO_SFX:
-					channel_id = PlaySFXAudio(audio_component.mFileName, 1.0f);
-					if (channel_id != -1)
-						audio_component.mPlaySFXChannelID.push_back(channel_id);
-					break;
-				}
-			}
-	
-			audio_component.mIsPlaying = true; // currently playing.
-			audio_component.mIsPlay = false;   // don't need to play again.
+			PINFO("Audio Exist");
+			PlayAudioSource(audio_component);
 		}
-	
-		/*
-			[Check if Channel is still Playing]
-			- Iterate through [Audio Component]
-	
-		*/
-	
-		for (Entity audio1 : audio_entities)
+
+		// Every Loop -> check if the <Audio> is still playing.
+		bool channelIsPlay = false;
+		audio_component.mChannel->isPlaying(&channelIsPlay);
+		if (audio_component.mIsPlaying && !channelIsPlay) // Sound finished playing in channel.
 		{
-			Audio& audio_comp = audio1.GetComponent<Audio>();
-	
-			for (int id : audio_comp.mPlayBGMChannelID)
-			{
-				Channel& channel = FindChannel(AUDIO_BGM, id);
-	
-				channel.mChannel->isPlaying(&channel.mIsPlayingSound);
-	
-				if (!channel.mIsPlayingSound) // channel stopped playing
-				{
-					audio_comp.mIsPlaying = false;
-					audio_comp.mIsPlay = false;
-				}
-			}
-	
-			for (int id : audio_comp.mPlaySFXChannelID)
-			{
-				Channel& channel = FindChannel(AUDIO_SFX, id);
-	
-				channel.mChannel->isPlaying(&channel.mIsPlayingSound);
-	
-				if (!channel.mIsPlayingSound) // channel stopped playing
-				{
-					audio_comp.mIsPlaying = false;
-					audio_comp.mIsPlay = false;
-				}
-			}
+			PINFO("Stopped Playing");
+			audio_component.mIsPlaying = false;
 		}
 	}
+
+
+
+
+	//for (Entity audio : audio_entities)
+	//{
+	//	Audio& audio_component = audio.GetComponent<Audio>();
+	//
+	//	if (audio_component.mIsPlay) // if it's supposed to play.
+	//	{
+	//		if (!audio_component.mIsPlaying)
+	//		{
+	//			int channel_id;
+	//
+	//			switch (audio_component.mAudioType)
+	//			{
+	//			case AUDIO_BGM:
+	//				channel_id = PlayBGMAudio(audio_component.mFileName, 1.0f);
+	//				if (channel_id != -1)
+	//					audio_component.mPlayBGMChannelID.push_back(channel_id);
+	//				break;
+	//			case AUDIO_SFX:
+	//				channel_id = PlaySFXAudio(audio_component.mFileName, 1.0f);
+	//				if (channel_id != -1)
+	//					audio_component.mPlaySFXChannelID.push_back(channel_id);
+	//				break;
+	//			}
+	//		}
+	//
+	//		audio_component.mIsPlaying = true; // currently playing.
+	//		audio_component.mIsPlay = false;   // don't need to play again.
+	//	}
+	//
+	//	/*
+	//		[Check if Channel is still Playing]
+	//		- Iterate through [Audio Component]
+	//
+	//	*/
+	//
+	//	for (Entity audio1 : audio_entities)
+	//	{
+	//		Audio& audio_comp = audio1.GetComponent<Audio>();
+	//
+	//		for (int id : audio_comp.mPlayBGMChannelID)
+	//		{
+	//			Channel& channel = FindChannel(AUDIO_BGM, id);
+	//
+	//			channel.mChannel->isPlaying(&channel.mIsPlayingSound);
+	//
+	//			if (!channel.mIsPlayingSound) // channel stopped playing
+	//			{
+	//				audio_comp.mIsPlaying = false;
+	//				audio_comp.mIsPlay = false;
+	//			}
+	//		}
+	//
+	//		for (int id : audio_comp.mPlaySFXChannelID)
+	//		{
+	//			Channel& channel = FindChannel(AUDIO_SFX, id);
+	//
+	//			channel.mChannel->isPlaying(&channel.mIsPlayingSound);
+	//
+	//			if (!channel.mIsPlayingSound) // channel stopped playing
+	//			{
+	//				audio_comp.mIsPlaying = false;
+	//				audio_comp.mIsPlay = false;
+	//			}
+	//		}
+	//	}
+	//}
 	
 	system_obj->update();
 
@@ -325,7 +352,7 @@ void AudioSystem::UpdateLoadAudio(Entity id)
 		if (LoadAudio(audio_path, audio_name)) // What if the sound is loaded? (we have to save a reference in this function also)
 		{
 			audio_component.mIsLoaded = true;
-			audio_component.mSound = &(FindSound(audio_name));  // Save a reference to the sound loaded in.
+			audio_component.mSound = FindSound(audio_name);  // Save a reference to the sound loaded in.
 			PINFO("Audio Successfully Loaded :)");
 
 		}
@@ -475,25 +502,7 @@ void AudioSystem::PlayAudio(std::string audio_name, AUDIOTYPE audio_type, float 
 		//std::cerr << "Can't find the requested audio." << std::endl;
 	}
 
-	auto channel_it = mChannelsNew.find(audio_type);
-
-	if (channel_it != mChannelsNew.end())
-	{
-		for (auto channel : channel_it->second)
-		{
-			if (!channel.mIsPlayingSound)
-			{
-				int check_play = ErrCodeCheck(system_obj->playSound(map_it->second, nullptr, false, &(channel.mChannel)));
-
-				if (check_play)
-				{
-					channel.mChannel->setVolume(audio_vol);
-					channel.mIsPlayingSound = true;
-					break;
-				}
-			}
-		}
-	}
+	//ErrCodeCheck(system_obj->playSound(map_it->second, nullptr, false,
 }
 
 /******************************************************************************/
@@ -975,13 +984,13 @@ Channel& AudioSystem::FindChannel(AUDIOTYPE audio_type, int channel_id)
 	return mChannelsNew[AUDIOTYPE::AUDIO_BGM][0];
 }
 
-FMOD::Sound& AudioSystem::FindSound(std::string audio_name)
+FMOD::Sound* AudioSystem::FindSound(std::string audio_name)
 {
 	auto sound_it = mSounds.find(audio_name);
 
 	if (sound_it != mSounds.end())
 	{
-		return *(sound_it->second);
+		return sound_it->second;
 	}
 	
 }
@@ -1003,6 +1012,34 @@ bool AudioSystem::CheckAudioExist(std::string audio_name)
 		return false;
 	}
 }
+
+/******************************************************************************/
+/*!
+	 [AudioSource Helper] - PlayAudioSource
+	 - Funnel <Audio> component's attached [FMOD::Sound*] & [FMOD::Channel*]
+ */
+ /******************************************************************************/
+void AudioSystem::PlayAudioSource(FMOD::Sound* comp_sound, FMOD::Channel* comp_channel)
+{
+	PINFO("Playing Audio Source...");
+	ErrCodeCheck(system_obj->playSound(comp_sound, nullptr, false, &comp_channel));
+}
+
+void AudioSystem::PlayAudioSource(Audio& audio_component)
+{
+	PINFO("Playing Audio Source from <Audio> Component");
+	ErrCodeCheck(system_obj->playSound(audio_component.mSound, nullptr, false, &audio_component.mChannel));
+
+	bool isPlaying; // check whether if it's playing.
+	ErrCodeCheck(audio_component.mChannel->isPlaying(&isPlaying));
+
+	if (isPlaying)
+	{
+		audio_component.mIsPlaying = true;
+	}
+}
+
+
 
 #pragma region TestFunctions 
 /******************************************************************************/
