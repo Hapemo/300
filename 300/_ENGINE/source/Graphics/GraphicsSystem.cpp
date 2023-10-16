@@ -12,7 +12,6 @@
 #define  _ENABLE_ANIMATIONS 1
 
 #include <Graphics/GraphicsSystem.h>
-#include <ResourceManager.h>
 #include "ResourceManagerTy.h"
 #include <Graphics/Camera_Input.h>
 #include "Debug/EnginePerformance.h"
