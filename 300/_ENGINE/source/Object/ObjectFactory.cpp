@@ -304,7 +304,14 @@ void ObjectFactory::SaveGameState(GameState* gs)
 	rapidjson::StringBuffer buffer;
 	rapidjson::PrettyWriter<rapidjson::StringBuffer> writer{ buffer };
 	writer.StartArray();
-	Serialize(writer, "scenes", gs->mScenes);
+	for (Scene scn : gs->mScenes)
+	{
+		writer.StartObject();
+		Serialize(writer, "scenename", scn.mName);
+		Serialize(writer, "pause", scn.mIsPause);
+		Serialize(writer, "forcerender", scn.mForceRender);
+		writer.EndObject();
+	}
 	writer.EndArray();
 	WriteToFile(ConfigManager::GetValue("GameStatePath") + gs->mName + ".gs", buffer);
 }

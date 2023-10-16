@@ -129,21 +129,27 @@ DESERIALIZE_BASIC(glm::ivec2)
 {
 	if (reader.HasMember(name))
 	{
-		if (reader[name].HasMember("x"))
-			val.x = reader[name]["x"].GetInt();
-		if (reader[name].HasMember("y"))
-			val.y = reader[name]["y"].GetInt();
+		Deserialize(reader, "x", val.x);
+		Deserialize(reader, "y", val.y);
 	}
 }
 
 DESERIALIZE_BASIC(glm::vec3)
 {
-
+	if (reader.HasMember(name))
+	{
+		Deserialize(reader[name], "x", val.x);
+		Deserialize(reader[name], "y", val.y);
+		Deserialize(reader[name], "z", val.z);
+	}
 }
 
 DESERIALIZE_BASIC(Scene)
 {
+	if (reader.HasMember(name))
+	{
 
+	}
 }
 
 DESERIALIZE_BASIC(Script)

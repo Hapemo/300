@@ -122,8 +122,6 @@ DESERIALIZE_BASIC(double);
 DESERIALIZE_BASIC(std::string);
 DESERIALIZE_BASIC(glm::ivec2);
 DESERIALIZE_BASIC(glm::vec3);
-DESERIALIZE_BASIC(Scene);
-DESERIALIZE_BASIC(Script);
 #pragma endregion basic_types
 // Derived types has to inherit from Serializable
 #pragma region derived_types
@@ -144,64 +142,59 @@ void Deserialize(rapidjson::Value& reader, const char* name, const std::map<T1, 
 #pragma endregion file_operations
 
 #pragma region implementation
-//// Derived types
-//template <typename T>
-//void Deserialize(rapidjson::Value& reader, const char* name, const T& val)
-//{
-//	if (!reader.HasMember(name)) return;
-//	if (!std::derived_from<T, Serializable>) return;
-//
-//	val.DeserializeSelf(reader[name]);
-//}
-//
-//// Containers
-//template <typename T>
-//void Deserialize(rapidjson::Value& reader, const char* name, const T* arr, size_t size)
-//{
-//	if (name != nullptr)
-//		reader.Key(name);
-//
-//	writer.StartArray();
-//
-//	for (size_t i = 0; i < size; ++i)
-//		Deserialize(writer, nullptr, arr[i]);
-//
-//	writer.EndArray();
-//}
-//
-//template <typename T>
-//void Deserialize(rapidjson::Value& reader, const char* name, const std::vector<T>& vec)
-//{
-//	if (name != nullptr)
-//		writer.Key(name);
-//
-//	writer.StartArray();
-//
-//	for (const T& t : vec)
-//		Deserialize(writer, nullptr, t);
-//
-//	writer.EndArray();
-//}
-//
-//template <typename T1, typename T2>
-//void Deserialize(rapidjson::Value& reader, const char* name, const std::map<T1, T2>& map)
-//{
-//	if (name != nullptr)
-//		writer.Key(name);
-//
-//	writer.StartArray();
-//
-//	for (auto it = map.begin(); it != map.end(); ++it)
-//	{
-//		writer.StartObject();
-//
-//		Deserialize(writer, "key", it->first);
-//		Deserialize(writer, "value", it->second);
-//
-//		writer.EndObject();
-//	}
-//
-//	writer.EndArray();
-//}
+// Derived types
+template <typename T>
+void Deserialize(rapidjson::Value& reader, const char* name, const T& val)
+{
+	if (!reader.HasMember(name)) return;
+	if (!std::derived_from<T, Serializable>) return;
+
+	val.DeserializeSelf(reader[name]);
+}
+
+// Containers
+template <typename T>
+void Deserialize(rapidjson::Value& reader, const char* name, const T* arr, size_t size)
+{
+	if (!reader.HasMember(name)) return;
+
+	for (size_t i = 0; i < size; ++i)
+		Deserialize(reader[name], "", arr[i]);
+}
+
+template <typename T>
+void Deserialize(rapidjson::Value& reader, const char* name, const std::vector<T>& vec)
+{
+	if (name != nullptr)
+		writer.Key(name);
+
+	writer.StartArray();
+
+	for (const T& t : vec)
+		Deserialize(writer, nullptr, t);
+
+	writer.EndArray();
+}
+
+template <typename T1, typename T2>
+void Deserialize(rapidjson::Value& reader, const char* name, const std::map<T1, T2>& map)
+{
+	if (name != nullptr)
+		writer.Key(name);
+
+	writer.StartArray();
+
+	for (auto it = map.begin(); it != map.end(); ++it)
+	{
+		writer.StartObject();
+
+		Deserialize(writer, "key", it->first);
+		Deserialize(writer, "value", it->second);
+
+		writer.EndObject();
+	}
+
+	writer.EndArray();
+}
 #pragma endregion implementation
 #pragma endregion deserialization
