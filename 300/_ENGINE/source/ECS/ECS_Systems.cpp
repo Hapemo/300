@@ -27,7 +27,7 @@ SystemManager::SystemManager()
 	mResourceSystem = std::make_unique<Resource>();
 	mAudioSystem = std::make_unique<AudioSystem>();
 	mLogger = std::make_unique<Logger>();
-	mInputActionSystem = std::make_unique<InputMapSystem>();
+	mInputMapSystem = std::make_unique<InputMapSystem>();
 	ecs = new ECS();
 }
 
@@ -40,7 +40,7 @@ void SystemManager::Init(bool isEditor, GFX::Window *window)
 {
 	mIsEditor = isEditor;
 	mWindow = window;
-	mInputActionSystem.get()->Init();
+	mInputMapSystem.get()->Init();
 	PINFO("Init Input Action System");
 	mLogger.get()->InitLogging();
 	PINFO("Init Logger");
