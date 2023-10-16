@@ -115,7 +115,6 @@ struct MeshRenderer
 	void*								mTextureRef[4];
 	bool								mTextureCont[4];
 
-	std::string							mMeshPath;
 	unsigned							mGUID;
 
 	void								Inspect();
