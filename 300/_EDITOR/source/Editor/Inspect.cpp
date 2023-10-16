@@ -66,7 +66,7 @@ Inspect display for InputActionMapEditor components.
 #include <math.h>
 #include "imgui_stdlib.h"
 #include "ScriptingSystem.h"
-#include "Guid.h"
+
 #include "ResourceManagerTy.h"
 #include "Debug/Logger.h"
 #include "Audio/AudioSystem.h"
@@ -576,6 +576,7 @@ void MeshRenderer::Inspect()
 		// returns vert.glsl or frag.glsl
 		return shaderpath.substr(shaderpath.find_last_of("_"));
 	};
+
 
 	bool delete_component{ true };
 	if (ImGui::CollapsingHeader("MeshRenderer", &delete_component,ImGuiTreeNodeFlags_DefaultOpen)) 

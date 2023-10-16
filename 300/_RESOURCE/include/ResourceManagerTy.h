@@ -2,7 +2,7 @@
 #ifndef _RESOURCEMANAGERTY_H
 #define _RESOURCEMANAGERTY_H
 
-#define  _ENABLE_ANIMATIONS 1
+
 
 
 #include <filesystem>
@@ -14,32 +14,32 @@
 
 
 
-//union ref {
+
+
+//struct p_ref {
 //
-//    void* data;
-//    unsigned dataid;
+//    std::variant<void*, unsigned> data;
 //
+//    template <typename T>
+//    bool GetVariantData(T* val) {
+//        try {
+//            *val = std::get<T>(data);
+//            return true;
+//        }
+//        catch (...) {
+//            std::cout << " could not get reference to data!"
+//            return false;
+//        }
+//    }   
 //};
 
-struct p_ref {
-    std::variant<void*, uid<unsigned>> data;
 
-    template <typename T>
-    bool GetVariantData(T* val) {
-
-        try {
-            *val = std::get<T>(data);
-            return true;
-        }
-        catch (...) {
-            return false;
-        }
-    }
-    
-};
-
-
-
+//struct ref {
+//
+//    p_ref partial_ref;F
+//    unsigned data_uid;
+//
+//};
 /***************************************************************************/
 /*!
 \brief
@@ -66,7 +66,7 @@ struct instance_infos
 {
     std::string     m_Name{};
     void* m_pData{ nullptr }; // to store data / act as an pointer to link list if not used
-    uid<unsigned>   m_GUID;
+    uid             m_GUID;
     unsigned        m_Type;
     int             m_RefCount{ 1 };
 };
@@ -80,6 +80,10 @@ struct instance_infos
 class ResourceTy
 {
 public:
+
+
+    void shader_Loader();
+    GFX::Shader* get_Shader(unsigned);
     /***************************************************************************/
     /*!
     \brief

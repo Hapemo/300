@@ -22,11 +22,13 @@ Components used by the ECS.
 #include "EnumStrings.h"
 #include "Input/KeyBind.h"
 #include "Input/Input.h"
-
+#include "Guid.h"
 //#include "Graphics/GraphicsSystem.h"
 //#include "Mesh.hpp"
 
 //#include "rttr/registration.h"
+
+struct uid;
 
 //DECLARE_ENUMSTRING(enum_tag, PLAYER, ENEMY, BULLET, STATIC, BUILDING)
 namespace GFX {
@@ -98,16 +100,20 @@ struct Animator
 // this struct stores the filepaths for the meshdata, material, and shader. the actual data is stored in the resource manager
 struct MeshRenderer
 {
+	//MeshRenderer();
+
 	// For now, we store the string to the filepaths. TO CHANGE to uids for efficient referencing
 	//std::pair<std::string, std::string> mShaderPath{ "../assets/shader_files/animations_vert.glsl", "../assets/shader_files/pointLight_frag.glsl" };
 	std::pair<std::string, std::string> mShaderPath{ "../assets/shader_files/pointLight_vert.glsl", "../assets/shader_files/pointLight_frag.glsl" };
+	//uid									mShaders;
 	std::string							mMaterialInstancePath[4] {" "," " ," " ," " };
 	vec4								mInstanceColor{ 1.f, 1.f, 1.f, 1.f };
 
+	std::string							mMeshPath;
+	
 	void*								mMeshRef{};
 	void*								mTextureRef[4];
 
-	std::string							mMeshPath;
 	unsigned							mGUID;
 	bool								mTextureCont[4];
 

@@ -35,10 +35,11 @@ typedef void    (*ImGuiSizeCallback)(ImGuiSizeCallbackData* data);
 
 //bool SceneWindow::follow = false;
 //
-//bool				SceneWindow::Move	={ true };
-//bool				SceneWindow::Scale	={ true };
-//bool				SceneWindow::Rotate	={ true };
+bool				SceneWindow::Move	={ true };
+bool				SceneWindow::Scale	={ true };
+bool				SceneWindow::Rotate	={ true };
 
+bool				SceneWindow::buttonHovered = { false };
 /***************************************************************************/
 /*!
 \brief
@@ -57,30 +58,74 @@ void SceneWindow::init()
 /***************************************************************************/
 void SceneWindow::update()
 {
+
+
 	mWinFlag |= ImGuiWindowFlags_NoScrollbar;
 
-	//ConstrainedResize(nullptr);
 	scene_m_Hovered = ImGui::IsWindowHovered();	
 	const ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
 	ImGui::Image((ImTextureID)(intptr_t)systemManager->mGraphicsSystem->GetEditorAttachment(), viewportPanelSize, ImVec2(0,1), ImVec2(1,0));
-		
-	if (ImGui::IsItemClicked(ImGuiMouseButton_Left)) {
+	
+	//--------------------------------------------------------------------------------------------------// overlapping objects
+	if (ImGui::IsItemClicked(ImGuiMouseButton_Left) && buttonHovered == false) {
 		if (objPicking) {
 			unsigned int getid = systemManager->mGraphicsSystem->GetEntityID(((ImGui::GetMousePos().x - ImGui::GetWindowPos().x) / winSize.x),
 				((ImGui::GetMousePos().y - ImGui::GetWindowPos().y) / winSize.y));
 
-		//std::cout << getid << ": ID \n";
-		systemManager->mGraphicsSystem->m_CameraControl = CAMERA_TYPE::CAMERA_TYPE_EDITOR;
+			systemManager->mGraphicsSystem->m_CameraControl = CAMERA_TYPE::CAMERA_TYPE_EDITOR;
 
 			if (getid != 0) {
 				Hierarchy::selectedId = static_cast<entt::entity>(getid);
 				Hierarchy::selectionOn = true;
 			}
 		}
-		//std::cout << getid << ": ID \n";
 	}
 	
+	ImVec4 ve4scale = (Scale == false) ? ImVec4(0, 0, 0, 0.2) : ImVec4(1, 1, 1, 0.6);
+	ImVec4 vec4rotate = (Rotate == false) ? ImVec4(0, 0, 0, 0.2) : ImVec4(1, 1, 1, 0.6);
+	ImVec4 vec4move = (Move == false) ? ImVec4(0, 0, 0, 0.2) : ImVec4(1, 1, 1, 0.6);
+
+	buttonHovered = false;
+
+	ImGui::SetCursorPos(ImVec2(ImGui::GetWindowSize().x - 120, 40));
+	ImGui::PushStyleColor(ImGuiCol_Button, vec4move);
+	if (ImGui::Button(ICON_FA_ARROWS_UP_DOWN_LEFT_RIGHT)) {
+		Move = (Move == false ) ? true : false;
+	}
+
+	if (ImGui::IsItemHovered())
+		buttonHovered = true;
+
+	ImGui::PopStyleColor();
 	ImGui::SetItemAllowOverlap();
+
+	ImGui::SetCursorPos(ImVec2(ImGui::GetWindowSize().x - 90, 40));
+	ImGui::PushStyleColor(ImGuiCol_Button, vec4rotate);
+	if (ImGui::Button(ICON_FA_CIRCLE_NOTCH)) {
+		Rotate = (Rotate == false) ? true : false;
+	}
+
+	if (ImGui::IsItemHovered())
+		buttonHovered = true;
+
+	ImGui::PopStyleColor();
+	ImGui::SetItemAllowOverlap();
+
+	ImGui::SetCursorPos(ImVec2(ImGui::GetWindowSize().x - 60, 40));
+	ImGui::PushStyleColor(ImGuiCol_Button, ve4scale);
+	if (ImGui::Button(ICON_FA_SQUARE)) {
+		Scale = (Scale == false) ? true : false;
+	}
+
+	if (ImGui::IsItemHovered())
+		buttonHovered = true;
+
+	ImGui::PopStyleColor();
+	ImGui::SetItemAllowOverlap();
+
+	//--------------------------------------------------------------------------------------------------// overlapping objects End
+
+
 	//wevents = ImGui::IsItemHovered();  /// <-- This returns true if mouse is over the overlaped Test button
 
 	ImGui::SetCursorPosX(ImGui::GetWindowContentRegionMax().x-70);
@@ -96,6 +141,7 @@ void SceneWindow::update()
 	else {
 		systemManager->mGraphicsSystem->m_EnableScroll = false;
 	}
+
 }
 
 static void Square(ImGuiSizeCallbackData* data) { data->DesiredSize.x = data->DesiredSize.y = ImMin(data->DesiredSize.x, data->DesiredSize.y); }
@@ -145,19 +191,19 @@ void SceneWindow::RenderGuizmo()
 		ImGuizmo::SetDrawlist();
 		ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y, (float)winSize.x, (float)winSize.y);
 
-		//if (Move == true) {
+		if (Move == true) {
 			ImGuizmo::Manipulate(glm::value_ptr(cameraView), glm::value_ptr(cameraProjection),
 				ImGuizmo::OPERATION::TRANSLATE, ImGuizmo::LOCAL, glm::value_ptr(objectMatrix) /*glm::value_ptr(transformtemp)*/);
 
-	//	//}
-	////	if (Rotate == true) {
-	//		ImGuizmo::Manipulate(glm::value_ptr(cameraView), glm::value_ptr(cameraProjection),
-	//			ImGuizmo::OPERATION::ROTATE, ImGuizmo::LOCAL, glm::value_ptr(objectMatrix) /*glm::value_ptr(transformtemp)*/);
-	////	}
-	////	if (Scale == true) {
-	//		ImGuizmo::Manipulate(glm::value_ptr(cameraView), glm::value_ptr(cameraProjection),
-	//			ImGuizmo::OPERATION::SCALE, ImGuizmo::WORLD, glm::value_ptr(objectMatrix));
-	////	}
+		}
+		if (Rotate == true) {
+			ImGuizmo::Manipulate(glm::value_ptr(cameraView), glm::value_ptr(cameraProjection),
+				ImGuizmo::OPERATION::ROTATE, ImGuizmo::LOCAL, glm::value_ptr(objectMatrix) /*glm::value_ptr(transformtemp)*/);
+		}
+		if (Scale == true) {
+			ImGuizmo::Manipulate(glm::value_ptr(cameraView), glm::value_ptr(cameraProjection),
+				ImGuizmo::OPERATION::SCALE, ImGuizmo::WORLD, glm::value_ptr(objectMatrix));
+		}
 
 		if (ImGuizmo::IsOver()) {
 			objPicking = false;

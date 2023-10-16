@@ -9,10 +9,10 @@
 
 ****************************************************************************
 ***/
+#define  _ENABLE_ANIMATIONS 1
 
 #include <ECS/ECS_Components.h>
 #include <Graphics/GraphicsSystem.h>
-#include <ResourceManager.h>
 #include "ResourceManagerTy.h"
 #include <Graphics/Camera_Input.h>
 #include "Debug/EnginePerformance.h"
@@ -336,8 +336,11 @@ void GraphicsSystem::EditorDraw(float dt)
 		GFX::Mesh &meshinst = *reinterpret_cast<GFX::Mesh *>(inst.GetComponent<MeshRenderer>().mMeshRef);
 
 		// gets the shader filepathc
-		std::pair<std::string, std::string> shaderstr = inst.GetComponent<MeshRenderer>().mShaderPath;
-		GFX::Shader &shaderinst = systemManager->mResourceSystem->get_Shader(shaderstr.first + shaderstr.second);
+		//uid shaderstr = inst.GetComponent<MeshRenderer>().mShaders;
+		
+		uid shaderstr("PointLightShader");
+		
+		GFX::Shader &shaderinst = *systemManager->mResourceTySystem->get_Shader(shaderstr.id);
 		unsigned shaderID = shaderinst.GetHandle();
 
 		// bind all texture
@@ -352,16 +355,25 @@ void GraphicsSystem::EditorDraw(float dt)
 	
 		shaderinst.Activate();
 		glUniformMatrix4fv(shaderinst.GetUniformVP(), 1, GL_FALSE, &m_EditorCamera.viewProj()[0][0]);
+		// Retrieve Point Light object
+		auto lightEntity = systemManager->ecs->GetEntitiesWith<PointLight>();
+		m_HasLight = !lightEntity.empty();
 
-		// Lighting flag uniform
 		GLuint mHasLightFlagLocation = shaderinst.GetUniformLocation("uHasLight");
 		glUniform1i(mHasLightFlagLocation, m_HasLight);
 
 		if (m_HasLight)
 		{
-			// View position uniform
-			vec3 viewPos = GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR);
+			PointLight &lightData = lightEntity.get<PointLight>(lightEntity[0]);
+			Transform &lightTransform = Entity(lightEntity[0]).GetComponent<Transform>();
+
+			GLuint mLightPosShaderLocation = shaderinst.GetUniformLocation("uLightPos");
 			GLuint mViewPosShaderLocation = shaderinst.GetUniformLocation("uViewPos");
+			GLuint mLightIntensityShaderLocation = shaderinst.GetUniformLocation("uLightIntensity");
+			GLuint mLightColorShaderLocation = shaderinst.GetUniformLocation("uLightColor");
+
+			vec3 viewPos = GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR);
+			//GLuint mViewPosShaderLocation = shaderinst.GetUniformLocation("uViewPos");
 			glUniform3fv(mViewPosShaderLocation, 1, &viewPos[0]);
 
 			// Light count uniform
@@ -475,8 +487,9 @@ void GraphicsSystem::GameDraw(float dt)
 		GFX::Mesh &meshinst = *reinterpret_cast<GFX::Mesh *>(inst.GetComponent<MeshRenderer>().mMeshRef);
 
 		// gets the shader filepath
-		std::pair<std::string, std::string> shaderstr = inst.GetComponent<MeshRenderer>().mShaderPath;
-		GFX::Shader &shaderinst = systemManager->mResourceSystem->get_Shader(shaderstr.first + shaderstr.second);
+		uid shaderstr("PointLightShader");
+		//uid shaderstr = inst.GetComponent<MeshRenderer>().mShaders;
+		GFX::Shader &shaderinst = *systemManager->mResourceTySystem->get_Shader(shaderstr.id);
 
 		GFX::Texture *textureInst[4]{};
 		for (int i{0}; i < 4; i++)
@@ -500,7 +513,14 @@ void GraphicsSystem::GameDraw(float dt)
 
 		if (m_HasLight)
 		{
+			PointLight &lightData = lightEntity.get<PointLight>(lightEntity[0]);
+			Transform &lightTransform = Entity(lightEntity[0]).GetComponent<Transform>();
+
+			GLuint mLightPosShaderLocation = shaderinst.GetUniformLocation("uLightPos");
 			GLuint mViewPosShaderLocation = shaderinst.GetUniformLocation("uViewPos");
+			GLuint mLightIntensityShaderLocation = shaderinst.GetUniformLocation("uLightIntensity");
+			GLuint mLightColorShaderLocation = shaderinst.GetUniformLocation("uLightColor");
+
 			vec3 viewPos = camera.GetComponent<Camera>().mCamera.position();
 			glUniform3fv(mViewPosShaderLocation, 1, &viewPos[0]);
 		}
