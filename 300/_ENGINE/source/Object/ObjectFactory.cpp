@@ -307,9 +307,9 @@ void ObjectFactory::SaveGameState(GameState* gs)
 	for (Scene scn : gs->mScenes)
 	{
 		writer.StartObject();
-		Serialize(writer, "scenename", scn.mName);
+		Serialize(writer, "scene_name", scn.mName);
 		Serialize(writer, "pause", scn.mIsPause);
-		Serialize(writer, "forcerender", scn.mForceRender);
+		Serialize(writer, "force_render", scn.mForceRender);
 		writer.EndObject();
 	}
 	writer.EndArray();

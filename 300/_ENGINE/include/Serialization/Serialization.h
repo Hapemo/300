@@ -22,7 +22,7 @@ SERIALIZE_BASIC(double);
 SERIALIZE_BASIC(std::string);
 SERIALIZE_BASIC(glm::ivec2);
 SERIALIZE_BASIC(glm::vec3);
-SERIALIZE_BASIC(Scene);
+//SERIALIZE_BASIC(Scene);
 SERIALIZE_BASIC(Script);
 #pragma endregion basic_types
 // Derived types has to inherit from Serializable
@@ -122,6 +122,7 @@ DESERIALIZE_BASIC(double);
 DESERIALIZE_BASIC(std::string);
 DESERIALIZE_BASIC(glm::ivec2);
 DESERIALIZE_BASIC(glm::vec3);
+DESERIALIZE_BASIC(Script);
 #pragma endregion basic_types
 // Derived types has to inherit from Serializable
 #pragma region derived_types
@@ -159,42 +160,41 @@ void Deserialize(rapidjson::Value& reader, const char* name, const T* arr, size_
 	if (!reader.HasMember(name)) return;
 
 	for (size_t i = 0; i < size; ++i)
-		Deserialize(reader[name], "", arr[i]);
+		Deserialize(reader[name][i], nullptr, arr[i]);
 }
 
 template <typename T>
 void Deserialize(rapidjson::Value& reader, const char* name, const std::vector<T>& vec)
 {
-	if (name != nullptr)
-		writer.Key(name);
+	if (!reader.HasMember(name)) return;
 
-	writer.StartArray();
-
-	for (const T& t : vec)
-		Deserialize(writer, nullptr, t);
-
-	writer.EndArray();
+	// make sure the vector is empty
+	vec.clear();
+	for (auto i = 0; i < reader[name].Size(); ++i)
+	{
+		T item;
+		Deserialize(reader[name][i], nullptr, item);
+		vec.push_back(item);
+	}
 }
 
 template <typename T1, typename T2>
 void Deserialize(rapidjson::Value& reader, const char* name, const std::map<T1, T2>& map)
 {
-	if (name != nullptr)
-		writer.Key(name);
+	if (!reader.HasMember(name)) return;
 
-	writer.StartArray();
-
-	for (auto it = map.begin(); it != map.end(); ++it)
+	for (auto i = 0; i < reader[name].Size(); ++i)
 	{
-		writer.StartObject();
+		if (reader[name][i].HasMember("key") && reader[name][i].HasMember("value")) {
+			T1 key;
+			T2 value;
 
-		Deserialize(writer, "key", it->first);
-		Deserialize(writer, "value", it->second);
+			Deserialize(reader[name][i], "key", key);
+			Deserialize(reader[name][i], "value", value);
 
-		writer.EndObject();
+			map.insert(std::make_pair(key, value));
+		}
 	}
-
-	writer.EndArray();
 }
 #pragma endregion implementation
 #pragma endregion deserialization

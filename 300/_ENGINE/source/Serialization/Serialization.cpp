@@ -67,12 +67,12 @@ SERIALIZE_BASIC(glm::vec3)
 	writer.EndObject();
 }
 
-SERIALIZE_BASIC(Scene)
-{
-	if (name != nullptr)
-		writer.Key(name);
-	Serialize(writer, name, val.mName);
-}
+//SERIALIZE_BASIC(Scene)
+//{
+//	if (name != nullptr)
+//		writer.Key(name);
+//	Serialize(writer, name, val.mName);
+//}
 
 SERIALIZE_BASIC(Script)
 {
@@ -91,37 +91,49 @@ void WriteToFile(const std::string& filename, const rapidjson::StringBuffer& buf
 
 DESERIALIZE_BASIC(bool)
 {
-	if (reader.HasMember(name))
+	if (name == nullptr)
+		val = reader.GetBool();
+	else if (reader.HasMember(name))
 		val = reader[name].GetBool();
 }
 
 DESERIALIZE_BASIC(int)
 {
-	if (reader.HasMember(name))
+	if (name == nullptr)
+		val = reader.GetInt();
+	else if (reader.HasMember(name))
 		val = reader[name].GetInt();
 }
 
 DESERIALIZE_BASIC(std::uint32_t)
 {
-	if (reader.HasMember(name))
+	if (name == nullptr)
+		val = reader.GetUint();
+	else if (reader.HasMember(name))
 		val = reader[name].GetUint();
 }
 
 DESERIALIZE_BASIC(float)
 {
-	if (reader.HasMember(name))
+	if (name == nullptr)
+		val = reader.GetDouble();
+	else if (reader.HasMember(name))
 		val = reader[name].GetDouble();
 }
 
 DESERIALIZE_BASIC(double)
 {
-	if (reader.HasMember(name))
+	if (name == nullptr)
+		val = reader.GetDouble();
+	else if (reader.HasMember(name))
 		val = reader[name].GetDouble();
 }
 
 DESERIALIZE_BASIC(std::string)
 {
-	if (reader.HasMember(name))
+	if (name == nullptr)
+		val = reader.GetString();
+	else if (reader.HasMember(name))
 		val = reader[name].GetString();
 }
 
@@ -144,15 +156,12 @@ DESERIALIZE_BASIC(glm::vec3)
 	}
 }
 
-DESERIALIZE_BASIC(Scene)
-{
-	if (reader.HasMember(name))
-	{
-
-	}
-}
+//DESERIALIZE_BASIC(Scene)
+//{
+//}
 
 DESERIALIZE_BASIC(Script)
 {
-
+	if (reader.HasMember(name))
+		Deserialize(reader, name, val.scriptFile);
 }
