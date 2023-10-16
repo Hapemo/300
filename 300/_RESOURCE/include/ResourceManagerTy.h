@@ -134,6 +134,7 @@ public:
     const std::string compiled_geom_path = "../assets/compiled_geom/";
     const std::string compressed_texture_path = "../assets/Compressed/";
     const std::string compressed_Editor_path = "../assets/Editor/Textures_Compressed/";
+    const std::string shader_path = "../assets/shader_files/";
 
     std::unordered_map<std::string, GFX::Texture*> m_EditorTextures;
 

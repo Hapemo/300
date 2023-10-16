@@ -32,7 +32,7 @@ float second_entitytime{};
 void GraphicsSystem::Init()
 {
 	// -- WIP -- SHADER STORAGE BUFFER OBJECT
-	SetupShaderStorageBuffer();
+	SetupShaderStorageBuffers();
 	// -- WIP -- SHADER STORAGE BUFFER OBJECT
 	m_Image2DMesh.Setup2DImageMesh();
 
@@ -167,7 +167,7 @@ void GraphicsSystem::Update(float dt)
 	// -- WIP --  SHADER STORAGE BUFFER OBJECT
 	finalBoneMatrices.push_back(mat4(1.0f));
 	finalBoneMatrices.push_back(mat4(2.0f));
-	ShaderStorageBufferSubData(finalBoneMatrices.size() * sizeof(mat4), finalBoneMatrices.data());
+	//ShaderStorageBufferSubData(finalBoneMatrices.size() * sizeof(mat4), finalBoneMatrices.data());
 	finalBoneMatrices.clear();
 	// -- WIP --  SHADER STORAGE BUFFER OBJECT
 
@@ -187,21 +187,19 @@ void GraphicsSystem::Update(float dt)
 
 	// Retrieve and update the mesh instances to be drawn
 	auto meshRendererInstances = systemManager->ecs->GetEntitiesWith<MeshRenderer>();
+	int animationID{ 0 };
+
 	for (Entity inst : meshRendererInstances)
 	{
-	
-		auto& meshrefptr = inst.GetComponent<MeshRenderer>();
-		if (meshrefptr.mMeshRef == nullptr)
+		MeshRenderer& meshRenderer = inst.GetComponent<MeshRenderer>();
+
+		// if the mesh instance is not active, skip it
+		if (meshRenderer.mMeshRef == nullptr)
 			continue;
 
-		std::string meshstr = inst.GetComponent<MeshRenderer>().mMeshPath;
-		//Animator anim = inst.GetComponent<Animator>();
-
-		void *tt = inst.GetComponent<MeshRenderer>().mMeshRef;
+		// gives me the mesh
+		void *tt = meshRenderer.mMeshRef;
 		GFX::Mesh &meshinst = *reinterpret_cast<GFX::Mesh *>(tt);
-
-		uid temp(meshstr);
-		// GFX::Mesh& meshinst = *(systemManager->mResourceTySystem->get_mesh(temp.id));
 
 		// pushback LTW matrices
 		vec3 trans = inst.GetComponent<Transform>().mTranslate;
@@ -234,23 +232,61 @@ void GraphicsSystem::Update(float dt)
 		// Update the animation
 		if (inst.HasComponent<Animator>() && _ENABLE_ANIMATIONS && systemManager->mGraphicsSystem->m_EnableGlobalAnimations)
 		{
+			Animator& animatorInst = inst.GetComponent<Animator>();
+
 			// skip the mesh that does not have an animation set
-			if (inst.GetComponent<Animator>().mAnimator.m_CurrentAnimation != nullptr)
+			if (animatorInst.mAnimator.m_CurrentAnimation != nullptr)
 			{
-				inst.GetComponent<Animator>().mAnimator.UpdateAnimation(dt, mat4(1.f), final); // update the current animation
+				animatorInst.mAnimator.UpdateAnimation(dt, mat4(1.f), final); // update the current animation
+
+				// push back matrices into the SSBO
+				for (const auto& x : animatorInst.mAnimator.m_FinalBoneMatrices)
+				{
+					finalBoneMatrices.push_back(x);
+				}
 			}
 		}
 
-		// meshinst.mLTW.push_back(final);
-		AddInstance(meshinst, final, static_cast<unsigned>(inst.id));
+		// animations are present
+		if (inst.HasComponent<Animator>()) {
+			AddInstance(meshinst, final, static_cast<unsigned>(inst.id), animationID++);
+		}
+		else {
+			AddInstance(meshinst, final, static_cast<unsigned>(inst.id));
+		}
+	}
+	m_FinalBoneMatrixSsbo.SubData(finalBoneMatrices.size() * sizeof(mat4), finalBoneMatrices.data());
+	finalBoneMatrices.clear();
+
+	// Sending Light source data to GPU
+	auto lightEntity = systemManager->ecs->GetEntitiesWith<PointLight>();
+	m_HasLight = !lightEntity.empty();
+	m_LightCount = lightEntity.size();
+
+	if (m_HasLight)
+	{
+		for (int i = 0; i < lightEntity.size(); ++i)
+		{
+			PointLight& lightData = lightEntity.get<PointLight>(lightEntity[i]);
+			Transform& lightTransform = Entity(lightEntity[i]).GetComponent<Transform>();
+
+			PointLightSSBO light;
+			light.mPosition = vec4(lightTransform.mTranslate, 0.f);
+			light.mColor = vec4(lightData.mLightColor, 0.f);
+			light.mIntensity = lightData.mIntensity;
+			light.mLinear = lightData.mLinearFalloff;
+			light.mQuadratic = lightData.mQuadraticFalloff;
+
+			pointLights.push_back(light);
+
+			m_Renderer.AddCube(lightTransform.mTranslate, { 20, 20, 20 }, vec4(lightData.mLightColor, 1.f));
+		}
+		// Copy light source data into storage buffer
+		m_PointLightSsbo.SubData(pointLights.size() * sizeof(PointLightSSBO), pointLights.data());
+		pointLights.clear();
 	}
 
 #pragma endregion
-
-	//// test drawing
-	// m_Renderer.AddCube({ -10, 0, 0 }, { 0.5f, 0.5f, 0.5f }, { 1.f, 0., 0.f, 1.f });
-	// m_Renderer.AddLine({ -10, 0, 0 }, { 10, 10, 0 }, { 0.f, 1.f, 0.f, 1.f });
-	// m_Renderer.AddLine({ 10, 10, 0 }, { -10, 10, 0 }, { 1.f, 0.f, 1.f, 1.f });
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -272,7 +308,7 @@ void GraphicsSystem::EditorDraw(float dt)
 	// Prepare and bind the Framebuffer to be rendered on
 	m_Fbo.PrepForDraw();
 
-#pragma region render all the mesh instances
+#pragma region render all the mesh instances onto the editor camera framebuffer
 	// Render all instances of a given mesh
 	for (Entity inst : meshRendererInstances)
 	{
@@ -337,12 +373,12 @@ void GraphicsSystem::EditorDraw(float dt)
 			GLuint mLightColorShaderLocation = shaderinst->GetUniformLocation("uLightColor");
 
 			vec3 viewPos = GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR);
-			glUniform3fv(mLightPosShaderLocation, 1, &lightTransform.mTranslate[0]);
+			GLuint mViewPosShaderLocation = shaderinst.GetUniformLocation("uViewPos");
 			glUniform3fv(mViewPosShaderLocation, 1, &viewPos[0]);
-			glUniform3fv(mLightColorShaderLocation, 1, &lightData.mLightColor[0]);
-			glUniform1f(mLightIntensityShaderLocation, lightData.mIntensity);
 
-			m_Renderer.AddCube(lightTransform.mTranslate, { 20, 20, 20 });
+			// Light count uniform
+			GLuint mLightCountShaderLocation = shaderinst.GetUniformLocation("uLightCount");
+			glUniform1i(mLightCountShaderLocation, m_LightCount);
 		}
 
 		// bind texture unit
@@ -365,19 +401,19 @@ void GraphicsSystem::EditorDraw(float dt)
 		GLuint debug_draw = glGetUniformLocation(shaderID, "uDebugDraw");
 		glUniform1i(debug_draw, m_DebugDrawing);
 
-		// send animation data over to the shader if there is animations
-		if (inst.HasComponent<Animator>() && _ENABLE_ANIMATIONS)
-		{
-			const auto &transform = inst.GetComponent<Animator>().mAnimator.m_FinalBoneMatrices;
-			size_t totaltransform = transform.size();
+		//// send animation data over to the shader if there is animations
+		//if (inst.HasComponent<Animator>() && _ENABLE_ANIMATIONS)
+		//{
+		//	const auto &transform = inst.GetComponent<Animator>().mAnimator.m_FinalBoneMatrices;
+		//	size_t totaltransform = transform.size();
 
-			for (size_t b{}; b < totaltransform; ++b)
-			{
-				// send the bone matrices to the shader via uniforms
-				std::string name = "finalBoneMatrices[" + std::to_string(b) + "]";
-				glUniformMatrix4fv(glGetUniformLocation(shaderID, name.c_str()), 1, GL_FALSE, &transform[b][0][0]);
-			}
-		}
+		//	for (size_t b{}; b < totaltransform; ++b)
+		//	{
+		//		// send the bone matrices to the shader via uniforms
+		//		std::string name = "finalBoneMatrices[" + std::to_string(b) + "]";
+		//		glUniformMatrix4fv(glGetUniformLocation(shaderID, name.c_str()), 1, GL_FALSE, &transform[b][0][0]);
+		//	}
+		//}
 
 		// Bind mesh's VAO, copy render data into VBO, Draw
 		DrawAll(meshinst);
@@ -486,10 +522,7 @@ void GraphicsSystem::GameDraw(float dt)
 			GLuint mLightColorShaderLocation = shaderinst->GetUniformLocation("uLightColor");
 
 			vec3 viewPos = camera.GetComponent<Camera>().mCamera.position();
-			glUniform3fv(mLightPosShaderLocation, 1, &lightTransform.mTranslate[0]);
 			glUniform3fv(mViewPosShaderLocation, 1, &viewPos[0]);
-			glUniform3fv(mLightColorShaderLocation, 1, &lightData.mLightColor[0]);
-			glUniform1f(mLightIntensityShaderLocation, lightData.mIntensity);
 		}
 
 		for (int i{0}; i < 4; i++)
@@ -525,6 +558,7 @@ void GraphicsSystem::GameDraw(float dt)
 		meshinst.ClearInstances();
 		m_Renderer.ClearInstances();
 	}
+	pointLights.clear();
 
 	// TODO: Clears all instances that have been rendered from local buffer
 	m_GameFbo.Unbind();
@@ -561,10 +595,12 @@ void GraphicsSystem::AddInstance(GFX::Mesh &mesh, Transform transform, unsigned 
 	mesh.mTexEntID.push_back(vec4(0, (float)entityID + 0.5f, 0, 0));
 }
 
-void GraphicsSystem::AddInstance(GFX::Mesh &mesh, mat4 transform, unsigned entityID)
+void GraphicsSystem::AddInstance(GFX::Mesh &mesh, mat4 transform, unsigned entityID, int animInstanceID)
 {
 	mesh.mLTW.push_back(transform);
-	mesh.mTexEntID.push_back(vec4(0, (float)entityID + 0.5f, 0, 0));
+	if (animInstanceID < 0)
+		animInstanceID = -2;
+	mesh.mTexEntID.push_back(vec4(0, (float)entityID + 0.5f, (float)animInstanceID + 0.5f, 0));
 }
 
 /***************************************************************************/
@@ -857,20 +893,13 @@ void GraphicsSystem::UnpauseGlobalAnimation()
 	m_EnableGlobalAnimations = true;
 }
 
-void GraphicsSystem::SetupShaderStorageBuffer()
+void GraphicsSystem::SetupShaderStorageBuffers()
 {
-	glCreateBuffers(1, &m_Ssbo);
+	// All Point Lights in the Scene -- Location 2
+	m_PointLightSsbo.Create(sizeof(PointLightSSBO) * MAX_POINT_LIGHT, 2);
 
-	glBindBuffer(GL_SHADER_STORAGE_BUFFER, m_Ssbo);
-	glNamedBufferData(m_Ssbo, sizeof(mat4) * MAX_NUM_BONES * MAX_INSTANCES, nullptr, GL_DYNAMIC_DRAW);
-	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 3, m_Ssbo);
-
-	glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
-}
-
-void GraphicsSystem::ShaderStorageBufferSubData(size_t dataSize, const void* data)
-{
-	glNamedBufferSubData(m_Ssbo, 0, dataSize, data);
+	// Final Bone Matrix for Animation -- Location 3
+	m_FinalBoneMatrixSsbo.Create(sizeof(mat4) * MAX_NUM_BONES * MAX_INSTANCES, 3);
 }
 
 void GraphicsSystem::Add2DImageInstance(float width, float height, vec2 const& position, unsigned texHandle, vec4 const& color, unsigned entityID)

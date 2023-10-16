@@ -11,29 +11,23 @@ layout (location = 3) in vec4   boneIds;			// Bone IDs
 layout (location = 4) in vec4   boneWeights;		// Bone Weights
 layout (location = 5) in vec3   inTangent;			// Per vertex Tangent
 layout (location = 6) in vec3   inNormal;			// Per vertex Normal
-layout (location = 7) in vec4   inTex_Ent_ID;		// Texture ID, Entity ID of object
-layout (location = 8) in mat4   inLTW;			// local to world
+layout (location = 7) in vec4   inTex_Ent_ID;		// x: empty | y: Entity ID | z: Animation Instance ID | w: empty
+layout (location = 8) in mat4   inLTW;			    // local to world
 
 const int MAX_BONES = 200;
 const int MAX_BONE_INFLUENCE = 4;
-uniform mat4 finalBoneMatrices[MAX_BONES];
 
 uniform mat4 uMatrixVP;     // view projection
-uniform vec3 uLightPos;
 uniform vec3 uViewPos;
 uniform bool uHasLight;
 
-// for SSBO testing purposes
 layout (std430, binding = 3) buffer boneFinal
 {
   mat4 matrices[];
 };
-out mat4 TestingMatrix1;
-out mat4 TestingMatrix2;
-// for SSBO testing purposes
 
 out vec2 TexCoords;
-out vec3 TangentLightPos;
+out mat3 TBN;
 out vec3 TangentViewPos;
 out vec3 TangentFragPos;
 out vec4 Tex_Ent_ID;
@@ -43,6 +37,8 @@ void main()
 	// Position
     vec4 totalPosition = vec4(0.f);
     vec3 normal = vec3(0.0f);
+
+    int animInstanceID = int(inTex_Ent_ID.z);
 
     for(int i = 0; i < MAX_BONE_INFLUENCE; ++i)
     {
@@ -58,19 +54,16 @@ void main()
             break;
         }
 
-        vec4 localPosition = finalBoneMatrices[boneId] * vec4(inQPos, 1.0f);
+        int boneIndex = boneId + animInstanceID * MAX_BONES;
+
+        vec4 localPosition = matrices[boneIndex] * vec4(inQPos, 1.0f);
         totalPosition += localPosition * boneWeights[i];
-        normal = mat3(finalBoneMatrices[boneId]) * inNormal;
+        normal = mat3(matrices[boneIndex]) * inNormal;
     }
 
     gl_Position         = uMatrixVP * inLTW * totalPosition;
     TexCoords           = inQUV;
     Tex_Ent_ID          = inTex_Ent_ID;
-
-    // for SSBO testing purposes
-    TestingMatrix1 = matrices[0];
-    TestingMatrix2 = matrices[1];
-    // for SSBO testing purposes
 
     if (!uHasLight) return;
 
@@ -78,15 +71,15 @@ void main()
     // Compute world-to-tangent space matrix
     mat3 normalMatrix = transpose(inverse(mat3(inLTW)));
     vec3 T = normalize(normalMatrix * inTangent);
-    vec3 N = normalize(normalMatrix * inNormal);
+    vec3 N = normalize(normalMatrix * normal);
+    //vec3 N = normalize(normalMatrix * inNormal);
     T = normalize(T - dot(T, N) * N);
     vec3 B = cross(N, T);
-    mat3 TBN = transpose(mat3(T, B, N));
+    TBN = transpose(mat3(T, B, N));
 
 
     // Set all the output vars
     //gl_Position         = uMatrixVP * inLTW * vec4(inQPos,1.0);
-    TangentLightPos     = TBN * uLightPos;
     TangentViewPos      = TBN * uViewPos;
     TangentFragPos      = TBN * vec3(inLTW * totalPosition);
 }

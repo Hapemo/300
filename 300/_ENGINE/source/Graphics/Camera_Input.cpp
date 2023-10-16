@@ -113,17 +113,12 @@ void Camera_Input::updateCameraInput(GFX::Camera& cam, const float& dt)
 	if (systemManager->mGraphicsSystem->m_EnableScroll)
 	{
 		cam.mFovDegree -= static_cast<float>(Input::GetScroll());
-		if (cam.mFovDegree < 1.0f) {
-			cam.mFovDegree = 1.0f;
+		if (cam.mFovDegree < GFX::CameraConstants::minFOV) {
+			cam.mFovDegree = GFX::CameraConstants::minFOV;
 		}
 
-		if (cam.mFovDegree > 45.0f) {
-			cam.mFovDegree = 45.0f;
+		if (cam.mFovDegree > GFX::CameraConstants::maxFOV) {
+			cam.mFovDegree = GFX::CameraConstants::maxFOV;
 		}
 	}
-
-
-	//std::cout << cam.direction().x << ", " << cam.direction().y << ", " << cam.direction().z << "\n";
-	//std::cout << cam.position().x << ", " << cam.position().y << ", " << cam.position().z << "\n";
-	//std::cout << moveVector.x << ", " << moveVector.y << ", " << moveVector.z << "\n";
 }

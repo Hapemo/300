@@ -103,6 +103,7 @@ struct MeshRenderer
 	//MeshRenderer();
 
 	// For now, we store the string to the filepaths. TO CHANGE to uids for efficient referencing
+	//std::pair<std::string, std::string> mShaderPath{ "../assets/shader_files/animations_vert.glsl", "../assets/shader_files/pointLight_frag.glsl" };
 	std::pair<std::string, std::string> mShaderPath{ "../assets/shader_files/pointLight_vert.glsl", "../assets/shader_files/pointLight_frag.glsl" };
 	//uid									mShaders;
 	std::string							mMaterialInstancePath[4] {" "," " ," " ," " };
@@ -114,6 +115,7 @@ struct MeshRenderer
 	void*								mTextureRef[4];
 	bool								mTextureCont[4];
 
+	std::string							mMeshPath;
 	unsigned							mGUID;
 
 	void								Inspect();
@@ -123,8 +125,6 @@ struct MeshRenderer
 
 
 	//RTTR_ENABLE()
-
-
 };
 
 struct UIrenderer
@@ -337,7 +337,8 @@ struct Prefab
 struct PointLight
 {
 	vec3	mLightColor{ 1.f, 1.f, 1.f };
-	float	mAttenuation{};
+	float	mLinearFalloff{};
+	float	mQuadraticFalloff{};
 	float	mIntensity{};
 	void Inspect();
 };

@@ -232,6 +232,15 @@ namespace _GEOM
 		/**************************************************************************/
 		void ReadMissingBones(Animation&, const aiAnimation* ) noexcept;
 
+		/***************************************************************************/
+		/*!
+		\brief
+			some animations reuse the same animation data. this function data ensures
+			that there are no nnecessary duplicates
+		*/
+		/**************************************************************************/
+		void CleanAnimationData(std::vector<Animation>& skinGeomAnimation) noexcept;
+
 
 	private:
 

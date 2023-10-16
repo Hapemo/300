@@ -336,53 +336,35 @@ void Camera::Inspect()
 		ImGui::DragFloat3("Camera Position", (float*)&mCamera.mPosition);
 		ImGui::DragFloat3("Camera Target", (float*)&mCamera.mTarget);
 
-
-		float aspect{ 1800 };
-		float nearplane{ 60 };
-		float FOV{ 10 };
-		float farplane{ 0 };
-		static bool Orthographic{ 0 };
-		
-
 		ImGui::Text("Aspect Ratio");
 		ImGui::SameLine();
 		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
 			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
-		ImGui::DragFloat("##Aspect", &aspect);
-
+		ImGui::DragFloat("##Aspect", &mCamera.mAspectRatio);
 
 		ImGui::Text("FOV");
 		ImGui::SameLine();
 		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
 			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
-		ImGui::DragFloat("##FOV", &FOV);
-
-
-
+		ImGui::DragFloat("##FOV", &mCamera.mFovDegree, 0.2f, GFX::CameraConstants::minFOV, GFX::CameraConstants::maxFOV);
 
 		ImGui::Text("Far Plane");
 		ImGui::SameLine();
 		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
 			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
-		ImGui::DragFloat("##FP", &farplane);
+		ImGui::DragFloat("##FP", &mCamera.mFar);
 
 		ImGui::Text("Near plane");
 		ImGui::SameLine();
 		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
 			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
-		ImGui::DragFloat("##NP", &nearplane);
+		ImGui::DragFloat("##NP", &mCamera.mNear);
 
-		ImGui::Text("Orthographic");
-		ImGui::SameLine();
-		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
-			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
-		ImGui::Checkbox("##Orth", &Orthographic);
-
-
-
-		//ImGui::Text("Position: %d, %d, %d", mCamera.mPosition.x, mCamera.mPosition.y, mCamera.mPosition.z);
-		//ImGui::Text("Target: %d, %d, %d", mCamera.mTarget.x, mCamera.mTarget.y, mCamera.mTarget.z);
-
+		//ImGui::Text("Orthographic");
+		//ImGui::SameLine();
+		//ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+		//	- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		//ImGui::Checkbox("##Orth", &Orthographic);
 	}
 
 }
@@ -395,14 +377,20 @@ void PointLight::Inspect()
 		ImGui::SameLine();
 		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
 			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
-		ImGui::DragFloat3("##Light Color", (float*)&mLightColor);
+		ImGui::DragFloat3("##Light Color", (float*)&mLightColor, 0.01f);
 
 
-		ImGui::Text("Attenuation");
+		ImGui::Text("Linear Falloff");
 		ImGui::SameLine();
 		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
 			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
-		ImGui::DragFloat("##Attenuation", (float*)&mAttenuation);
+		ImGui::DragFloat("##Linear Falloff", (float*)&mLinearFalloff);
+
+		ImGui::Text("Quadratic Falloff");
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		ImGui::DragFloat("##Quadratic Falloff", (float*)&mQuadraticFalloff);
 
 		ImGui::Text("Intensity");
 		ImGui::SameLine();
@@ -549,29 +537,49 @@ void Animator::Inspect()
 	bool delete_component{ true };
 	if (ImGui::CollapsingHeader("Animator", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
 	{
-		ImGui::Text(std::to_string(mAnimator.m_CurrentTime).c_str());	ImGui::SameLine();
-		ImGui::Text(" / ");												ImGui::SameLine();
-		ImGui::Text(std::to_string(mAnimator.m_CurrentAnimation->m_Duration).c_str());
+		if (mAnimator.m_CurrentAnimation == nullptr)
+		{
+			ImGui::Text("Mesh is not capable of animation");
+		}
+
+		else
+		{
+			ImGui::Text(std::to_string(mAnimator.m_CurrentTime).c_str());	ImGui::SameLine();
+			ImGui::Text(" / ");												ImGui::SameLine();
+			ImGui::Text(std::to_string(mAnimator.m_CurrentAnimation->m_Duration).c_str());
 		
-		ImGui::Checkbox("Pause Animaton", &mAnimator.mIsPaused);
+			ImGui::Checkbox("Pause Animaton", &mAnimator.mIsPaused);
+		}
 	}
 
 	if (delete_component == false)
 		Entity(Hierarchy::selectedId).RemoveComponent<MeshRenderer>();
 }
+
+
 /***************************************************************************/
 /*!
 \brief
 	Inspector functionality for MeshRenderer
 */
 /***************************************************************************/
+void MeshRenderer::Inspect() 
+{
+	//!< Shader Helper 
+	auto getShaderName = [](std::string shaderpath) -> std::string
+	{
+		// returns pointLight_vert.glsl
+		return shaderpath.substr(shaderpath.find_last_of("/") + 1);
+	};
 
-//MeshRenderer::MeshRenderer()
-//	: mShaderProgram { "PointLightShader" }
-//{
-//}
+	//!< Shader Helper 
+	auto getShaderExtension = [](std::string shaderpath) -> std::string
+	{
+		// returns vert.glsl or frag.glsl
+		return shaderpath.substr(shaderpath.find_last_of("_"));
+	};
 
-void MeshRenderer::Inspect() {
+
 	bool delete_component{ true };
 	if (ImGui::CollapsingHeader("MeshRenderer", &delete_component,ImGuiTreeNodeFlags_DefaultOpen)) 
 	{
@@ -580,8 +588,68 @@ void MeshRenderer::Inspect() {
 		int ed = static_cast<int>(mMeshPath.find_last_of("."));
 		std::string tempPath = mMeshPath.substr(st + 1, ed - (st + 1));
 
-		ImGui::Text("Mesh");
+		Entity entins(Hierarchy::selectedId);
 
+		// == >> Shaders << == //
+		std::vector<std::string> vertShaders, fragShaders;
+		static int selectedVertShader = 0, selectedFragShader = 0;
+
+		// populating vertex shader vector
+		for (const auto& entry : std::filesystem::directory_iterator(systemManager->mResourceTySystem->shader_path))
+		{
+			if (std::filesystem::is_regular_file(entry))
+			{
+				if(getShaderExtension(entry.path().string()) == "_vert.glsl")
+					vertShaders.push_back(entry.path().string());
+
+				else if (getShaderExtension(entry.path().string()) == "_frag.glsl")
+					fragShaders.push_back(entry.path().string());
+			}
+		}
+
+		{
+			// Vert shader selection
+			if (ImGui::BeginCombo("Vertex Shaders", vertShaders[selectedVertShader].data(), 0))
+			{
+				for (int i{}; i < vertShaders.size(); ++i)
+				{
+					bool isItemSelected = (selectedVertShader == i);
+					if(ImGui::Selectable(vertShaders[i].data(), isItemSelected))
+						selectedVertShader = i;
+
+					if (isItemSelected)
+						ImGui::SetItemDefaultFocus();
+				}
+
+				ImGui::EndCombo();
+			}
+
+			// Frag shader selection
+			if (ImGui::BeginCombo("Fragment Shaders", fragShaders[selectedFragShader].data(), 0))
+			{
+				for (int i{}; i < fragShaders.size(); ++i)
+				{
+					bool isItemSelected = (selectedFragShader == i);
+					if (ImGui::Selectable(fragShaders[i].data(), isItemSelected))
+						selectedFragShader = i;
+
+					if (isItemSelected)
+						ImGui::SetItemDefaultFocus();
+				}
+
+				ImGui::EndCombo();
+			}
+		}
+
+		if (ImGui::Button("Compile Shader"))
+		{
+			std::cout << "compile shaders :)\n";
+		}
+
+		ImGui::Separator();
+
+		// == >> Mesh << == //
+		ImGui::Text("Mesh");
 		if (ImGui::BeginDragDropTarget())
 		{
 			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_GEOM")) 
@@ -594,8 +662,8 @@ void MeshRenderer::Inspect() {
 				std::string descfilepath = data_str + ".desc";
 				unsigned guid = _GEOM::GetGUID(descfilepath);
 				mMeshRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(guid));
-
 				GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mMeshRef);
+
 
 				Entity entins(Hierarchy::selectedId);
 				if (entins.HasComponent<Animator>() && meshinst->mHasAnimation)
@@ -625,9 +693,6 @@ void MeshRenderer::Inspect() {
 				std::string GEOM_Descriptor_Filepath;
 				unsigned guid;
 
-
-
-
 				bool descFilePresent = _GEOM::CheckAndCreateDescriptorFile(data_str, GEOM_Descriptor_Filepath);
 				std::string descfilepath = data_str + ".desc";
 				guid = _GEOM::GetGUID(descfilepath);
@@ -646,10 +711,8 @@ void MeshRenderer::Inspect() {
 				}
 
 				mMeshRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(guid));
-
 				GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mMeshRef);
 
-				Entity entins(Hierarchy::selectedId);
 				if (entins.HasComponent<Animator>() && meshinst->mHasAnimation)
 				{
 					// if the new entity has both animations and the animator component, update the animator to use the new animation
@@ -666,16 +729,14 @@ void MeshRenderer::Inspect() {
 			ImGui::EndDragDropTarget();
 		}
 
-
-
 		ImGui::SameLine();
 
 		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcTextSize(tempPath.c_str()).x
 			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
 		ImGui::Text(tempPath.c_str());
 
-		
 
+		// == >> Textures << == //
 		ImGui::Dummy(ImVec2(0.0f, 10.0f));
 
 		std::string textures[4] = { "DIFFUSE","NORMAL", "EMISSION","SPECULAR"};
@@ -730,13 +791,53 @@ void MeshRenderer::Inspect() {
 					}
 					ImGui::EndDragDropTarget();
 				}
-				
 			}
 		}
-
-
-
 	}
+
+	// == >> Mesh Renderer GEOM Descriptor File << == //
+	ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+	if (ImGui::TreeNode("GEOM DescirptorFile"))
+	{
+		GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mMeshRef);
+
+		// sanity check
+		if (meshinst != nullptr)
+		{
+			ImGui::InputText("Desc Filepath", const_cast<char*>(meshinst->mDescriptorPath.c_str()), meshinst->mDescriptorPath.length() + 1);
+			ImGui::InputInt("GUID", reinterpret_cast<int*>(&meshinst->mDescriptorData.m_GUID));
+
+			// Vert shader selection
+			int selectedFBX{};
+			_GEOM::DescriptorData& descInst = meshinst->mDescriptorData;
+
+			if (ImGui::BeginCombo("FBX Filepaths", descInst.m_Filepaths[selectedFBX].data(), 0))
+			{
+				for (int i{}; i < descInst.m_Filepaths.size(); ++i)
+				{
+					bool isItemSelected = (selectedFBX == i);
+					if (ImGui::Selectable(descInst.m_Filepaths[i].data(), isItemSelected))
+						selectedFBX = i;
+
+					if (isItemSelected)
+						ImGui::SetItemDefaultFocus();
+				}
+				ImGui::EndCombo();
+			}
+
+			ImGui::DragFloat3("Pre-Transforms", (float*)&descInst.m_Translate, 0.1f);
+			ImGui::DragFloat3("Pre-Scale", (float*)&descInst.m_Scale, 0.1f);
+			ImGui::DragFloat3("Pre-Rotate", (float*)&descInst.m_Rotate, 0.1f);
+
+			if (ImGui::Button("Save Descriptor File"))
+			{
+				std::cout << "Saving Descriptor File to: " << meshinst->mDescriptorPath << std::endl;
+				_GEOM::DescriptorData::SerializeGEOM_DescriptorDataToFile(meshinst->mDescriptorPath, descInst);
+			}
+		}
+		ImGui::TreePop();
+	}
+
 	if (delete_component == false)
 		Entity(Hierarchy::selectedId).RemoveComponent<MeshRenderer>();
 }
@@ -752,8 +853,6 @@ void RigidBody::Inspect() {
 
 	if (ImGui::CollapsingHeader("RigidBody", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
 	{
-
-
 		ImGui::DragFloat("##Density", (float*)&mDensity);
 
 		ImGui::SameLine();
