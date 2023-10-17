@@ -28,9 +28,11 @@ uniform sampler2D uTex[5];
 uniform int uDebugDraw;
 uniform bool uHasLight;
 uniform int uLightCount;
+uniform vec3 bloomThreshold;
 
 layout (location = 0) out vec4 fragColor0;
 layout (location = 1) out uint outEntityID;
+layout (location = 2) out vec4 BrightColor;
 
 vec3 ComputePointLight(PointLight light, vec4 diffColor)
 {
@@ -69,7 +71,7 @@ vec3 ComputePointLight(PointLight light, vec4 diffColor)
     diffuse *= attenuation;
     specular *= attenuation;
 
-    vec3 finalColor = vec3(ambient + diffuse + specular /* + VertexColor + emission*/);
+    vec3 finalColor = vec3(ambient + diffuse + specular /* + emission*/);
     finalColor *= vec3(VertexColor);
 
     return finalColor;
@@ -77,36 +79,50 @@ vec3 ComputePointLight(PointLight light, vec4 diffColor)
 
 void main() 
 {
-    
     vec4 uColor = texture(uTex[0], TexCoords);              // Diffuse Color
     if (uColor.a <= 0.1) discard;
+
+    vec3 finalColor = vec3(0.0);
 
     outEntityID = uint(Tex_Ent_ID.y);
     if (!uHasLight)
     {
-        fragColor0 = uColor;
-        return;
+        // No light
+        finalColor = uColor.rgb;
     }
-    
-    // Compute color with all point light sources
-    vec3 finalColor = vec3(0.0);
-    for (int i = 0; i < uLightCount; ++i)
+
+    else if(uHasLight)
     {
-        finalColor += ComputePointLight(pointLights[i], uColor);
+        // Compute color with all point light sources
+        for (int i = 0; i < uLightCount; ++i)
+        {
+            finalColor += ComputePointLight(pointLights[i], uColor);
+        }
     }
 
     // HDR
     // float exposure = 1.0;
     // finalColor = vec3(1.0) - exp(-finalColor * exposure);
 
+
+    // check whether fragment output is higher than threshold, if so output as bright color
+
+    float brightness = dot(finalColor.rgb, bloomThreshold);
+    if(brightness > 1.0)
+        BrightColor = vec4(finalColor.rgb, 1.0);
+    else
+        BrightColor = vec4(0.0, 0.0, 0.0, 1.0);
+
+    // Set the alpha for debug draw
+    if(uDebugDraw == 1) {
+        uColor.a = 0.3f;
+    }
+
     // Gamma correction
     float gamma = 2.2;
     finalColor = pow(finalColor, vec3(1.0/gamma));
 
     // Output
-    if(uDebugDraw == 1) {
-        uColor.a = 0.3f;
-    }
-
     fragColor0 = vec4(finalColor, uColor.a);
+
 }

@@ -2,7 +2,7 @@
 
 layout (location = 0) in vec3 inPos;		        // INPUT_POSITION
 
-layout (location = 1) in vec4   inVertexColor;      // input color
+layout (location = 1) in vec4 inVertexColor;        // input color
 layout (location = 2) in vec2 inUV;			        // Texture Coordinates
 layout (location = 5) in vec3 inTangent;			// Per vertex Tangent
 layout (location = 6) in vec3 inNormal;			    // Per vertex Normal
@@ -43,5 +43,4 @@ void main()
     TangentViewPos  = TBN * uViewPos;
     TangentFragPos  = TBN * vec3(inLTW * vec4(inPos, 1.0));
     VertexColor         = inVertexColor;
-
 }

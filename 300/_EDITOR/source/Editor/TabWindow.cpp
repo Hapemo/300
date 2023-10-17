@@ -69,4 +69,7 @@ void TabWindow::update()
 		systemManager->mGraphicsSystem->m_DebugDrawing = ischecked ? 1 : 0;
 	}
 
+	// the threshold for bloom
+	ImGui::Separator();
+	ImGui::DragFloat3("Bloom Threshold", (float*)&systemManager->mGraphicsSystem->mBloomThreshold, 0.01f, 0.f, 1.f);
 }

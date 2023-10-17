@@ -49,6 +49,7 @@ struct PointLightSSBO
 	float mPad{};
 };
 
+
 /***************************************************************************/
 /*!
 \brief
@@ -100,6 +101,16 @@ public:
 	*/
 	/**************************************************************************/
 	void EditorDraw(float dt);
+
+	/***************************************************************************/
+	/*!
+	\brief
+		the draw function isolated to the editor's framebuffer
+	*/
+	/**************************************************************************/
+	void BlendFramebuffers( GFX::FBO& targetFramebuffer,
+							unsigned int Attachment0, std::string Attachment0Uniform,
+							unsigned int Attachment1, std::string Attachment1Uniform);
 
 	/***************************************************************************/
 	/*!
@@ -191,6 +202,7 @@ public:
 	GFX::DebugRenderer m_Renderer;		// isolated to debug draws
 	GFX::FBO m_Fbo;						// Editor Scene
 	GFX::FBO m_GameFbo;					// Game Scene
+	GFX::PingPongFBO m_PingPongFbo;		// Post Processing
 
 	// -- Window --
 	GFX::Window* m_Window;
@@ -200,6 +212,9 @@ public:
 	// -- Camera --
 	GFX::Camera m_EditorCamera;
 	CAMERA_TYPE m_CameraControl;
+
+	// -- Bloom -- 
+	vec3		mBloomThreshold { 0.2126, 0.7152, 0.0722 };
 
 	// -- Textures --
 	std::vector<int> m_Textures;
@@ -216,18 +231,22 @@ public:
 
 private:
 	// -- SSBO -- 
-	GFX::SSBO m_FinalBoneMatrixSsbo;
-	std::vector<mat4> finalBoneMatrices;
+	GFX::SSBO					m_FinalBoneMatrixSsbo;
+	std::vector<mat4>			finalBoneMatrices;
 
-	const int MAX_POINT_LIGHT = 5;
-	GFX::SSBO m_PointLightSsbo;
+	const int					MAX_POINT_LIGHT = 5;
+	GFX::SSBO					m_PointLightSsbo;
 	std::vector<PointLightSSBO> pointLights;
 
 	void SetupShaderStorageBuffers();		// Creates all SSBO required
 
 	// -- 2D Image Rendering --
-	GFX::Mesh m_Image2DMesh;
-	std::vector<unsigned>m_Image2DStore;
+	GFX::Mesh				m_Image2DMesh;
+	std::vector<unsigned>	m_Image2DStore;
+	GFX::Quad2D				mScreenQuad;
+
+
+
 	void Add2DImageInstance(float width, float height, vec2 const& position, unsigned texHandle, vec4 const& color = vec4{ 1.f, 1.f, 1.f, 1.f }, unsigned entityID = 0xFFFFFFFF);
 	int StoreTextureIndex(unsigned texHandle);
 };

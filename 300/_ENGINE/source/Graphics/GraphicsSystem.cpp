@@ -48,6 +48,7 @@ void GraphicsSystem::Init()
 	// Create FBO, with the width and height of the window
 	m_Fbo.Create(m_Width, m_Height, m_EditorMode);
 	m_GameFbo.Create(m_Width, m_Height, m_EditorMode);
+	m_PingPongFbo.Create(m_Width, m_Height);
 
 	// Set Cameras' starting position
 	SetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR, {0, 0, 20});									// Position of camera
@@ -68,91 +69,6 @@ void GraphicsSystem::Init()
 		// only update the game camera if editor mode is not enabled
 		UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_GAME, 0.f);
 	}
-
-#if 0
-#pragma region create entity 1
-	// Create a new entity here, for testing purposes
-	Entity newentity = systemManager->ecs->NewEntity(); // creating a new entity
-														//	systemManager->mGameStateSystem->mCurrentGameState.AddScene("NewScene");
-	systemManager->mGameStateSystem->mCurrentGameState.mScenes[0].mEntities.insert(newentity);
-
-	newentity.AddComponent<MeshRenderer>();
-	newentity.AddComponent<BoxCollider>();
-	newentity.AddComponent<Animator>();
-
-	newentity.GetComponent<MeshRenderer>().mMeshPath = "../assets/compiled_geom/dancing_vampire.geom";
-	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath[DIFFUSE] = "../assets/Compressed/Vampire_diffuse.ctexture";
-	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath[NORMAL] = "../assets/Compressed/Vampire_normal.ctexture";
-	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath[2] = "../assets/Compressed/Vampire_emission.ctexture";
-	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath[3] = "../assets/Compressed/Vampire_specular.ctexture";
-	newentity.GetComponent<MeshRenderer>().mShaderPath = {"../_GRAPHICS/shader_files/pointLight_vert.glsl", "../_GRAPHICS/shader_files/pointLight_frag.glsl"}; // for point light
-
-	uid temp(newentity.GetComponent<MeshRenderer>().mMeshPath);
-	newentity.GetComponent<MeshRenderer>().mMeshRef = reinterpret_cast<void *>(systemManager->mResourceTySystem->get_mesh(temp.id));
-
-	uid mat1(newentity.GetComponent<MeshRenderer>().mMaterialInstancePath[DIFFUSE]);
-	newentity.GetComponent<MeshRenderer>().mTextureRef[DIFFUSE] = reinterpret_cast<void *>(systemManager->mResourceTySystem->getMaterialInstance(mat1.id));
-	newentity.GetComponent<MeshRenderer>().mTextureCont[DIFFUSE] = true;
-
-	uid mat2(newentity.GetComponent<MeshRenderer>().mMaterialInstancePath[NORMAL]);
-	newentity.GetComponent<MeshRenderer>().mTextureRef[NORMAL] = reinterpret_cast<void *>(systemManager->mResourceTySystem->getMaterialInstance(mat2.id));
-	newentity.GetComponent<MeshRenderer>().mTextureCont[NORMAL] = true;
-	newentity.GetComponent<BoxCollider>().mTranslateOffset = {0.f, 80.f, 0.f};
-	newentity.GetComponent<BoxCollider>().mScaleOffset = {1.f, 0.8f, 1.5f};
-
-	auto &meshinst = systemManager->mResourceSystem->get_Mesh("../assets/compiled_geom/dancing_vampire.geom");
-	newentity.GetComponent<Transform>().mScale = meshinst.mBBOX.m_Max - meshinst.mBBOX.m_Min;
-	if (newentity.HasComponent<Animator>() && _ENABLE_ANIMATIONS)
-	{
-		newentity.GetComponent<MeshRenderer>().mShaderPath = {"../_GRAPHICS/shader_files/animations_vert.glsl", "../_GRAPHICS/shader_files/pointLight_frag.glsl"}; // for point light
-		newentity.GetComponent<Animator>().mAnimator.SetAnimation(&meshinst.mAnimation[0]);
-	}
-#pragma endregion
-#endif
-
-#if 0
-#pragma region create entity 2
-	//Create a new entity here, for testing purposes
-	Entity newentity1 = systemManager->ecs->NewEntity();			// creating a new entity
-	systemManager->mGameStateSystem->mCurrentGameState.mScenes[0].mEntities.insert(newentity1);
-	newentity1.AddComponent<MeshRenderer>();
-	newentity1.AddComponent<BoxCollider>();
-	newentity1.AddComponent<Animator>();
-
-	newentity1.GetComponent<MeshRenderer>().mMeshPath = "../assets/compiled_geom/GirlAnimationWalking.geom";
-	newentity1.GetComponent<MeshRenderer>().mMaterialInstancePath[0] = "../assets/Compressed/Girl_Diffuse.ctexture";
-	newentity1.GetComponent<MeshRenderer>().mMaterialInstancePath[1] = "../assets/Compressed/Girl_Normal.ctexture";
-	newentity1.GetComponent<MeshRenderer>().mMaterialInstancePath[2] = "../assets/Compressed/Girl_Glossiness.ctexture";
-	newentity1.GetComponent<MeshRenderer>().mMaterialInstancePath[3] = "../assets/Compressed/Girl_Specular.ctexture";
-
-	newentity1.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/pointLight_vert.glsl", "../_GRAPHICS/shader_files/pointLight_frag.glsl" };	// for point light
-
-	uid mat3(newentity1.GetComponent<MeshRenderer>().mMaterialInstancePath[DIFFUSE]);
-	newentity1.GetComponent<MeshRenderer>().mTextureRef[DIFFUSE] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(mat3.id));
-	newentity1.GetComponent<MeshRenderer>().mTextureCont[DIFFUSE] = true;
-
-
-	uid mat4(newentity1.GetComponent<MeshRenderer>().mMaterialInstancePath[NORMAL]);
-	newentity1.GetComponent<MeshRenderer>().mTextureRef[NORMAL] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(mat4.id));
-	newentity1.GetComponent<MeshRenderer>().mTextureCont[NORMAL] = true;
-
-
-	uid temp1(newentity1.GetComponent<MeshRenderer>().mMeshPath);
-	newentity1.GetComponent<MeshRenderer>().mMeshRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(temp1.id));
-
-	//newentity1.GetComponent<Transform>().mTranslate = { 300.f, 0.f, 0.f };
-	newentity1.GetComponent<BoxCollider>().mTranslateOffset = { -2.f, 98.f, 0.f };
-	newentity1.GetComponent<BoxCollider>().mScaleOffset = { 0.5f, 4.2f, 0.4f };
-
-	auto& meshinst1 = systemManager->mResourceSystem->get_Mesh("../assets/compiled_geom/GirlAnimationWalking.geom");
-	newentity1.GetComponent<Transform>().mScale = meshinst1.mBBOX.m_Max - meshinst1.mBBOX.m_Min;
-	if (newentity1.HasComponent<Animator>() && _ENABLE_ANIMATIONS)
-	{
-		newentity1.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/animations_vert.glsl", "../_GRAPHICS/shader_files/pointLight_frag.glsl" };// for point light
-		newentity1.GetComponent<Animator>().mAnimator.SetAnimation(&meshinst1.mAnimation[0]);
-	}
-#pragma endregion
-#endif
 }
 
 /***************************************************************************/
@@ -333,11 +249,7 @@ void GraphicsSystem::EditorDraw(float dt)
 		renderedMesh[meshstr] = 1;
 
 		// render the mesh and its instances here
-		GFX::Mesh &meshinst = *reinterpret_cast<GFX::Mesh *>(inst.GetComponent<MeshRenderer>().mMeshRef);
-
-		// gets the shader filepathc
-		//uid shaderstr = inst.GetComponent<MeshRenderer>().mShaders;
-		
+		GFX::Mesh& meshinst = *reinterpret_cast<GFX::Mesh*>(inst.GetComponent<MeshRenderer>().mMeshRef);
 		std::string shader{};
 
 		if (meshinst.mHasAnimation)
@@ -346,22 +258,22 @@ void GraphicsSystem::EditorDraw(float dt)
 			shader = "PointLightShader";
 
 		uid shaderstr(shader);
-		
-		GFX::Shader &shaderinst = *systemManager->mResourceTySystem->get_Shader(shaderstr.id);
+		GFX::Shader& shaderinst = *systemManager->mResourceTySystem->get_Shader(shaderstr.id);
 		unsigned shaderID = shaderinst.GetHandle();
 
 		// bind all texture
-		GFX::Texture *textureInst[4]{};
-		for (int i{0}; i < 4; i++)
+		GFX::Texture* textureInst[4]{};
+		for (int i{ 0 }; i < 4; i++)
 		{
 			if (inst.GetComponent<MeshRenderer>().mTextureCont[i] == true)
 			{
-				textureInst[i] = reinterpret_cast<GFX::Texture *>(inst.GetComponent<MeshRenderer>().mTextureRef[i]);
+				textureInst[i] = reinterpret_cast<GFX::Texture*>(inst.GetComponent<MeshRenderer>().mTextureRef[i]);
 			}
 		}
-	
+
 		shaderinst.Activate();
 		glUniformMatrix4fv(shaderinst.GetUniformVP(), 1, GL_FALSE, &m_EditorCamera.viewProj()[0][0]);
+
 		// Retrieve Point Light object
 		auto lightEntity = systemManager->ecs->GetEntitiesWith<PointLight>();
 		m_HasLight = !lightEntity.empty();
@@ -369,10 +281,13 @@ void GraphicsSystem::EditorDraw(float dt)
 		GLuint mHasLightFlagLocation = shaderinst.GetUniformLocation("uHasLight");
 		glUniform1i(mHasLightFlagLocation, m_HasLight);
 
+		GLuint threshold = shaderinst.GetUniformLocation("bloomThreshold");
+		glUniform3fv(threshold, 1, glm::value_ptr(mBloomThreshold));
+
 		if (m_HasLight)
 		{
-			PointLight &lightData = lightEntity.get<PointLight>(lightEntity[0]);
-			Transform &lightTransform = Entity(lightEntity[0]).GetComponent<Transform>();
+			PointLight& lightData = lightEntity.get<PointLight>(lightEntity[0]);
+			Transform& lightTransform = Entity(lightEntity[0]).GetComponent<Transform>();
 
 			GLuint mLightPosShaderLocation = shaderinst.GetUniformLocation("uLightPos");
 			GLuint mViewPosShaderLocation = shaderinst.GetUniformLocation("uViewPos");
@@ -389,7 +304,7 @@ void GraphicsSystem::EditorDraw(float dt)
 		}
 
 		// bind texture unit
-		for (int i{0}; i < 4; i++)
+		for (int i{ 0 }; i < 4; i++)
 		{
 			if (inst.GetComponent<MeshRenderer>().mTextureCont[i] == true)
 			{
@@ -408,20 +323,6 @@ void GraphicsSystem::EditorDraw(float dt)
 		GLuint debug_draw = glGetUniformLocation(shaderID, "uDebugDraw");
 		glUniform1i(debug_draw, m_DebugDrawing);
 
-		//// send animation data over to the shader if there is animations
-		//if (inst.HasComponent<Animator>() && _ENABLE_ANIMATIONS)
-		//{
-		//	const auto &transform = inst.GetComponent<Animator>().mAnimator.m_FinalBoneMatrices;
-		//	size_t totaltransform = transform.size();
-
-		//	for (size_t b{}; b < totaltransform; ++b)
-		//	{
-		//		// send the bone matrices to the shader via uniforms
-		//		std::string name = "finalBoneMatrices[" + std::to_string(b) + "]";
-		//		glUniformMatrix4fv(glGetUniformLocation(shaderID, name.c_str()), 1, GL_FALSE, &transform[b][0][0]);
-		//	}
-		//}
-
 		// Bind mesh's VAO, copy render data into VBO, Draw
 		DrawAll(meshinst);
 
@@ -439,8 +340,21 @@ void GraphicsSystem::EditorDraw(float dt)
 		}
 	}
 
-	// Debug draw stuffs should be drawn last
 	m_Renderer.RenderAll(m_EditorCamera.viewProj());
+
+#pragma region render bloom
+	m_PingPongFbo.PrepForDraw();
+	
+	// Render the bloom for the Editor Framebuffer
+	uid gaussianshaderstr("GaussianBlurShader");
+	GFX::Shader& gaussianShaderInst = *systemManager->mResourceTySystem->get_Shader(gaussianshaderstr.id);
+	m_PingPongFbo.GaussianBlur(gaussianShaderInst, m_Fbo);
+
+	//BlendFramebuffers(m_Fbo, m_Fbo.GetColorAttachment(), "Scene", m_PingPongFbo.pingpongColorbuffers[0], "BloomBlur");
+	//BlendFramebuffers(m_Fbo, m_Fbo.GetColorAttachment(), "Scene", m_Fbo.GetBrightColorsAttachment(), "BloomBlur");
+	//BlendFramebuffers(m_Fbo, m_Fbo.GetColorAttachment(), "Scene", m_Fbo.GetColorAttachment(), "BloomBlur");
+#pragma endregion
+
 #pragma endregion
 
 	// TODO: Clears all instances that have been rendered from local buffer
@@ -469,8 +383,6 @@ void GraphicsSystem::GameDraw(float dt)
 
 	// Prepare and bind the Framebuffer to be rendered on
 	m_GameFbo.PrepForDraw();
-
-	// m_Renderer.RenderAll(camera.GetComponent<Camera>().mCamera.viewProj());
 
 	// Render all instances of a given mesh
 	for (Entity inst : meshRendererInstances)
@@ -872,6 +784,47 @@ vec3 GraphicsSystem::GetCameraDirection(CAMERA_TYPE type)
 void GraphicsSystem::DrawAll(GFX::Mesh &mesh)
 {
 	mesh.DrawAllInstances();
+}
+
+
+/***************************************************************************/
+/*!
+\brief
+	Perform additive blending on 2 color attachments
+*/
+/**************************************************************************/
+void GraphicsSystem::BlendFramebuffers(	GFX::FBO& targetFramebuffer,
+										unsigned int Attachment0, std::string Attachment0Uniform,
+										unsigned int Attachment1, std::string Attachment1Uniform)
+{
+
+	uid shaderstr("AdditiveBlendShader");
+	GFX::Shader& BlendShader = *systemManager->mResourceTySystem->get_Shader(shaderstr.id);
+
+	BlendShader.Activate();
+	
+	//targetFramebuffer.Bind();
+	glBindTexture(GL_TEXTURE_2D, targetFramebuffer.GetColorAttachment());
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, Attachment0);									// bind the first attachment
+	//glUniform1i(BlendShader.GetUniformLocation(Attachment0Uniform.c_str()), 0); // set the first texture to the shader
+
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, Attachment1);									// bind the second attachment
+	//glUniform1i(BlendShader.GetUniformLocation(Attachment1Uniform.c_str()), 1); // set the second texture to the shader	
+
+	{
+		mScreenQuad.Bind();
+
+		//glClearColor(0.f, 0.f, 0.f, 1.f);
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+
+		mScreenQuad.Unbind();
+	}
+
+	BlendShader.Deactivate();
+	//targetFramebuffer.Unbind();
 }
 
 

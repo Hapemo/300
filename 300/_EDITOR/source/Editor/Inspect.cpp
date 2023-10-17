@@ -255,9 +255,6 @@ void General::Inspect() {
 		- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
 	ImGui::InputText("##naming",&name);
 
-
-
-
 	ImGui::Text("Tag");
 
 	ImGui::SameLine();
@@ -382,19 +379,19 @@ void PointLight::Inspect()
 		ImGui::SameLine();
 		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
 			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
-		ImGui::DragFloat("##Linear Falloff", (float*)&mLinearFalloff);
+		ImGui::DragFloat("##Linear Falloff", (float*)&mLinearFalloff, 0.1f);
 
 		ImGui::Text("Quadratic Falloff");
 		ImGui::SameLine();
 		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
 			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
-		ImGui::DragFloat("##Quadratic Falloff", (float*)&mQuadraticFalloff);
+		ImGui::DragFloat("##Quadratic Falloff", (float*)&mQuadraticFalloff, 0.1f);
 
 		ImGui::Text("Intensity");
 		ImGui::SameLine();
 		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
 			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
-		ImGui::DragFloat("##Intensity", (float*)&mIntensity);
+		ImGui::DragFloat("##Intensity", (float*)&mIntensity, 0.1f);
 
 
 	}
@@ -771,8 +768,6 @@ void MeshRenderer::Inspect()
 				int posend = static_cast<int>(mMaterialInstancePath[i].find_last_of("."));
 
 				std::string newpath = mMaterialInstancePath[i].substr(posstart+1, posend-(posstart+1));
-
-				
 
 				ImGui::SameLine();
 
