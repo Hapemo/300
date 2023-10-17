@@ -2,7 +2,7 @@
 #ifndef _RESOURCEMANAGERTY_H
 #define _RESOURCEMANAGERTY_H
 
-#define  _ENABLE_ANIMATIONS 1
+
 
 
 #include <filesystem>
@@ -10,36 +10,37 @@
 #include "Shader.hpp"
 #include "Texture.hpp"
 #include "Mesh.hpp"
+#include <Constants.h>
 #include <variant>  
 
 
 
-//union ref {
+
+
+//struct p_ref {
 //
-//    void* data;
-//    unsigned dataid;
+//    std::variant<void*, unsigned> data;
 //
+//    template <typename T>
+//    bool GetVariantData(T* val) {
+//        try {
+//            *val = std::get<T>(data);
+//            return true;
+//        }
+//        catch (...) {
+//            std::cout << " could not get reference to data!"
+//            return false;
+//        }
+//    }   
 //};
 
-struct p_ref {
-    std::variant<void*, uid<unsigned>> data;
 
-    template <typename T>
-    bool GetVariantData(T* val) {
-
-        try {
-            *val = std::get<T>(data);
-            return true;
-        }
-        catch (...) {
-            return false;
-        }
-    }
-    
-};
-
-
-
+//struct ref {
+//
+//    p_ref partial_ref;F
+//    unsigned data_uid;
+//
+//};
 /***************************************************************************/
 /*!
 \brief
@@ -54,19 +55,13 @@ enum ResourceType : unsigned {
     _MATERIALINSTANCE
 };
 
-enum MaterialType : unsigned {
 
-    DIFFUSE,
-    NORMAL,
-    EMISSION,
-    SPECULAR
 
-};
 struct instance_infos
 {
     std::string     m_Name{};
     void* m_pData{ nullptr }; // to store data / act as an pointer to link list if not used
-    uid<unsigned>   m_GUID;
+    uid             m_GUID;
     unsigned        m_Type;
     int             m_RefCount{ 1 };
 };
@@ -80,6 +75,13 @@ struct instance_infos
 class ResourceTy
 {
 public:
+
+
+    bool deserialize_Shader(std::string filename);
+    bool serialize_Shader(std::string shaderProgram, std::pair < std::string, std::string> shaderPair);
+    void create_Shader();
+    void shader_Loader();
+    GFX::Shader* get_Shader(unsigned);
     /***************************************************************************/
     /*!
     \brief
@@ -131,6 +133,7 @@ public:
     const std::string compressed_texture_path = "../assets/Compressed/";
     const std::string compressed_Editor_path = "../assets/Editor/Textures_Compressed/";
     const std::string shader_path = "../assets/shader_files/";
+    const std::string fbx_path = "../assets/Models/";
 
     std::unordered_map<std::string, GFX::Texture*> m_EditorTextures;
 

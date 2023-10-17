@@ -1,5 +1,23 @@
 #include "ResourceManagerTy.h"
+#include <map>
 #include <memory>
+
+#include <descriptor.h>
+#include <Guid.h>
+
+#include <iostream>
+#include <fstream>
+
+#include "filereadstream.h"
+#include "filewritestream.h"
+#include <document.h>
+#include <writer.h>
+#include "prettywriter.h"
+#include <stringbuffer.h>
+
+#include <filesystem>
+
+#define  _ENABLE_ANIMATIONS 1
 /***************************************************************************/
 /*!
 \brief
@@ -27,6 +45,7 @@ void ResourceTy::Init()
 	m_pInfoBufferEmptyHead = m_Infobuffer.data();
 
 
+	shader_Loader();
 	mesh_LoadFolder();
 	MaterialInstance_Loader();
 	MaterialEditor_Loader();
@@ -45,6 +64,8 @@ void ResourceTy::Exit() {
 			delete  reinterpret_cast<GFX::Mesh*>(data.second->m_pData);
 		else if (data.second->m_Type == _TEXTURE)
 			delete  reinterpret_cast<GFX::Texture*>(data.second->m_pData);
+		else if (data.second->m_Type == _SHADER)
+			delete  reinterpret_cast<GFX::Shader*>(data.second->m_pData);
 	}
 
 	for (auto& data : m_EditorTextures) {
@@ -225,7 +246,7 @@ void ResourceTy::MaterialInstance_Loader() {
 		++mResouceCnt;
 		instance_infos& tempInstance = AllocRscInfo();
 		tempInstance.m_Name = materialinstancepath;
-		tempInstance.m_GUID = uids.id;
+		tempInstance.m_GUID = uids;
 		tempInstance.m_pData = reinterpret_cast<void*>(texPtr);
 
 		tempInstance.m_Type = _TEXTURE;
@@ -303,3 +324,205 @@ GFX::Texture* ResourceTy::SetupMaterialInstance(std::string filepath) {
 GFX::Texture* ResourceTy::getMaterialInstance(unsigned id) {
 	return reinterpret_cast<GFX::Texture*>(m_ResourceInstance[id]->m_pData);
 }
+
+
+
+
+/***************************************************************************/
+/*!
+\brief
+	Return material instance pointer
+*/
+/**************************************************************************/
+void ResourceTy::shader_Loader() {
+	std::map<std::string,std::pair<std::string, std::string>> shaderpaths;
+	shaderpaths.emplace("DefaultShader",std::pair<std::string, std::string>{ "../assets/shader_files/draw_vert.glsl", "../assets/shader_files/draw_frag.glsl" });
+	shaderpaths.emplace("PointLightShader", std::pair<std::string, std::string>{ "../assets/shader_files/pointLight_vert.glsl", "../assets/shader_files/pointLight_frag.glsl" });
+	shaderpaths.emplace("AnimationShader", std::pair<std::string, std::string>{ "../assets/shader_files/animations_vert.glsl", "../assets/shader_files/pointLight_frag.glsl" });
+	shaderpaths.emplace("UIShader", std::pair<std::string, std::string>{ "../assets/shader_files/UI_vert.glsl", "../assets/shader_files/UI_frag.glsl" });
+
+
+
+	// load all the shaders
+	for (const auto& x : shaderpaths)
+	{
+		std::string vertPath = x.second.first;
+		std::string fragPath = x.second.second;
+		std::string combinedPath = vertPath + fragPath;
+
+		serialize_Shader(x.first, x.second);
+		std::string shaderDe = "../assets/ShaderProgram/" + x.first;
+		deserialize_Shader(shaderDe);
+
+		uid uids(x.first);
+		GFX::Shader localshader;
+		localshader.CreateShaderFromFiles(vertPath.c_str(), fragPath.c_str());
+		auto shaderRef = std::make_unique<GFX::Shader>(localshader);
+		++mResouceCnt;
+		instance_infos& tempInstance = AllocRscInfo();
+		tempInstance.m_Name = x.first;
+		tempInstance.m_GUID = uids;
+		tempInstance.m_pData = reinterpret_cast<void*>(shaderRef.release());
+
+		tempInstance.m_Type = _SHADER;
+		m_ResourceInstance.emplace(uids.id, &tempInstance);
+
+	}
+}
+
+/***************************************************************************/
+/*!
+\brief
+	Return material instance pointer
+*/
+/**************************************************************************/
+GFX::Shader* ResourceTy::get_Shader(unsigned id) {
+	return reinterpret_cast<GFX::Shader*>(m_ResourceInstance[id]->m_pData);
+}
+
+
+void ResourceTy::create_Shader() {
+
+}
+
+
+
+
+
+bool ResourceTy::serialize_Shader(std::string shaderProgram, std::pair < std::string,std::string> shaderPair) {
+
+	rapidjson::Document doc;
+	doc.SetObject();
+	rapidjson::Document::AllocatorType& allocator = doc.GetAllocator();
+	const char* programPathChar = "../assets/ShaderProgram/";
+	std::string programPath(programPathChar);
+	programPath += shaderProgram;
+
+	// Serialize to a file
+	std::ofstream file(programPath.c_str());
+	if (file.is_open())
+	{
+		std::cout << "JSON data serialized to " << programPath << std::endl;
+	}
+	else {
+		std::cerr << "Failed to open the file for writing." << std::endl;
+		return false;
+	}
+
+
+	rapidjson::StringBuffer ss;
+	rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(ss);
+
+	writer.StartArray();
+	writer.StartObject();
+
+	writer.String("ShaderProgram");
+	writer.String(programPath.c_str());
+
+	writer.String("Vertex");
+	writer.String(shaderPair.first.c_str());
+
+	writer.String("Fragment");
+	writer.String(shaderPair.second.c_str());
+	writer.EndObject();
+	writer.EndArray();
+
+	file << ss.GetString();
+
+	file.close();
+
+	return true;
+}
+
+bool ResourceTy::deserialize_Shader(std::string filename) {
+
+	std::ifstream file(filename);
+	if (!file.is_open()) {
+		std::cout << "Failed to DeserializeFile " + filename << '\n';
+		return false;
+	}
+	std::stringstream buffer;
+	buffer << file.rdbuf();
+	file.close();
+
+	rapidjson::Document doc;
+
+
+	if (buffer.str().empty())
+	{
+		return false;
+	}
+
+	std::string validJSON(buffer.str());
+	if (doc.Parse(validJSON.c_str()).HasParseError()) {
+		return false;
+	}
+
+	for (rapidjson::Value::ConstValueIterator ci = doc.Begin(); ci != doc.End(); ++ci)
+	{
+
+		if (ci->HasMember("ShaderProgram"))
+		{
+			std::cout << (*ci)["ShaderProgram"].GetString() << " Completed\n";
+		}
+	}
+
+
+	 return true;
+}
+
+
+//bool DescriptorData::SerializeGEOM_DescriptorDataToFile(std::string geomFilepath, const DescriptorData& GEOM_DescriptorFile) noexcept
+//{
+//	rapidjson::Document doc;
+//	doc.SetObject();
+//	rapidjson::Document::AllocatorType& allocator = doc.GetAllocator();
+//
+	//rapidjson::Value fbxfilepath(GEOM_DescriptorFile.m_Filepaths[0].c_str(), allocator);
+	//doc.AddMember("Asset_Filepaths", fbxfilepath, allocator);
+//
+//	doc.AddMember("GUID", GEOM_DescriptorFile.m_GUID, allocator);
+//	doc.AddMember("Asset_OutputPath", "../assets/compiled_geom/", allocator);
+//	doc.AddMember("Compiled_Geom_Format", ".geom", allocator);
+//
+//	rapidjson::Value sclvecObj(rapidjson::kArrayType);
+//	rapidjson::Value rotvecObj(rapidjson::kArrayType);
+//	rapidjson::Value trnsvecObj(rapidjson::kArrayType);
+//
+//	sclvecObj.PushBack(GEOM_DescriptorFile.m_Scale.x, allocator);
+//	sclvecObj.PushBack(GEOM_DescriptorFile.m_Scale.y, allocator);
+//	sclvecObj.PushBack(GEOM_DescriptorFile.m_Scale.z, allocator);
+//
+//	rotvecObj.PushBack(GEOM_DescriptorFile.m_Rotate.x, allocator);
+//	rotvecObj.PushBack(GEOM_DescriptorFile.m_Rotate.y, allocator);
+//	rotvecObj.PushBack(GEOM_DescriptorFile.m_Rotate.z, allocator);
+//
+//	trnsvecObj.PushBack(GEOM_DescriptorFile.m_Translate.x, allocator);
+//	trnsvecObj.PushBack(GEOM_DescriptorFile.m_Translate.y, allocator);
+//	trnsvecObj.PushBack(GEOM_DescriptorFile.m_Translate.z, allocator);
+//
+//	doc.AddMember("Pre_Transform_Scale", sclvecObj, allocator);
+//	doc.AddMember("Pre_Transform_Rotate", rotvecObj, allocator);
+//	doc.AddMember("Pre_Transform_Translate", trnsvecObj, allocator);
+//
+//	// Serialize to a file
+//	std::ofstream file(geomFilepath.c_str());
+//	if (file.is_open())
+//	{
+//		rapidjson::StringBuffer buffer;
+//		rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+//		doc.Accept(writer);
+//
+//		file << buffer.GetString() << std::endl;
+//		file.close();
+//
+//		std::cout << "JSON data serialized to " << geomFilepath << std::endl;
+//	}
+//	else {
+//		std::cerr << "Failed to open the file for writing." << std::endl;
+//		return false;
+//	}
+//
+//	return true;
+//}
+

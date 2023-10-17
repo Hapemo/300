@@ -116,6 +116,12 @@ Render IMGUIZMO integration
 	static bool			follow;
 	bool				objPicking{ true };
 
+	static bool				Move;
+	static bool				Scale;
+	static bool				Rotate;
+
+	static bool				buttonHovered;
+
 private:
 
 	bool			    scene_m_Hovered     {0};

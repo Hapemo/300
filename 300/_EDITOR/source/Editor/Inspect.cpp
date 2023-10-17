@@ -1,3 +1,4 @@
+#include "ECS_Components.h"
 /*!*************************************************************************
 ****
 \file Inspect.cpp
@@ -65,7 +66,7 @@ Inspect display for InputActionMapEditor components.
 #include <math.h>
 #include "imgui_stdlib.h"
 #include "ScriptingSystem.h"
-#include "Guid.h"
+
 #include "ResourceManagerTy.h"
 #include "Debug/Logger.h"
 #include "Audio/AudioSystem.h"
@@ -91,8 +92,6 @@ void Inspect::init() {
 /**************************************************************************/
 void Inspect::update() 
 {
-
-
 	if (Hierarchy::selectionOn) {
 		
 		Entity ent(Hierarchy::selectedId);
@@ -578,6 +577,16 @@ void MeshRenderer::Inspect()
 		return shaderpath.substr(shaderpath.find_last_of("_"));
 	};
 
+	//!< Helper
+	auto getFilename = [](std::string filepath) -> std::string
+	{
+		// returns AT-AT
+		std::string ret_str = filepath.substr(filepath.find_last_of("/") + 1);
+		ret_str = ret_str.substr(0, ret_str.find_first_of("."));
+		return ret_str;
+	};
+
+
 	bool delete_component{ true };
 	if (ImGui::CollapsingHeader("MeshRenderer", &delete_component,ImGuiTreeNodeFlags_DefaultOpen)) 
 	{
@@ -687,7 +696,7 @@ void MeshRenderer::Inspect()
 			{
 				const char* data = (const char*)payload->Data;
 				std::string data_str = std::string(data);
-				mMeshPath = data_str;
+				mMeshPath = systemManager->mResourceTySystem->compiled_geom_path + getFilename(data_str) + ".geom";
 				std::string GEOM_Descriptor_Filepath;
 				unsigned guid;
 
@@ -739,8 +748,10 @@ void MeshRenderer::Inspect()
 
 		std::string textures[4] = { "DIFFUSE","NORMAL", "EMISSION","SPECULAR"};
 
-		for (int i{ 0 }; i <4; i++) {
-			if (mMaterialInstancePath[i] != "") {
+		for (int i{ 0 }; i <4; i++) 
+		{
+			if (mMaterialInstancePath[i] != "") 
+			{
 				ImGui::Text(textures[i].c_str());
 				if (ImGui::BeginDragDropTarget())
 				{
@@ -791,6 +802,8 @@ void MeshRenderer::Inspect()
 				}
 			}
 		}
+
+		ImGui::ColorPicker4("MeshColor", (float*)&mInstanceColor);
 	}
 
 	// == >> Mesh Renderer GEOM Descriptor File << == //

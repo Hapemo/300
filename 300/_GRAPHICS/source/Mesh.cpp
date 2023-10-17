@@ -8,9 +8,10 @@
 Mesh class implementation. Consists of the loading of serialized geom data, 
 creation of the required VBOs and VAO.
 *******************************************************************************/
+#define  _ENABLE_ANIMATIONS 1
 
 #include "Mesh.hpp"
-#include "../../_RESOURCE/include/ResourceManager.h"		// for _enable_animations define
+//#include "../../_RESOURCE/include/ResourceManagerTy.h"		// for _enable_animations define
 #include <filesystem>
 #include <array>
 

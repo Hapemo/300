@@ -6,6 +6,7 @@ in mat3 TBN;
 in vec3 TangentViewPos;
 in vec3 TangentFragPos;
 in vec4 Tex_Ent_ID;     // x : Tex ID, y: Entity ID
+in vec4 VertexColor;
 in int hasLight;
 
 struct PointLight           // 48 Bytes
@@ -68,7 +69,8 @@ vec3 ComputePointLight(PointLight light, vec4 diffColor)
     diffuse *= attenuation;
     specular *= attenuation;
 
-    vec3 finalColor = vec3(ambient + diffuse + specular /* + emission*/);
+    vec3 finalColor = vec3(ambient + diffuse + specular /* + VertexColor + emission*/);
+    finalColor *= vec3(VertexColor);
 
     return finalColor;
 }

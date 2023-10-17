@@ -9,9 +9,10 @@
 
 ****************************************************************************
 ***/
+#define  _ENABLE_ANIMATIONS 1
 
+#include <ECS/ECS_Components.h>
 #include <Graphics/GraphicsSystem.h>
-#include <ResourceManager.h>
 #include "ResourceManagerTy.h"
 #include <Graphics/Camera_Input.h>
 #include "Debug/EnginePerformance.h"
@@ -248,10 +249,10 @@ void GraphicsSystem::Update(float dt)
 
 		// animations are present
 		if (inst.HasComponent<Animator>()) {
-			AddInstance(meshinst, final, static_cast<unsigned>(inst.id), animationID++);
+			AddInstance(meshinst, final, meshRenderer.mInstanceColor, static_cast<unsigned>(inst.id), animationID++);
 		}
 		else {
-			AddInstance(meshinst, final, static_cast<unsigned>(inst.id));
+			AddInstance(meshinst, final, meshRenderer.mInstanceColor, static_cast<unsigned>(inst.id));
 		}
 	}
 	m_FinalBoneMatrixSsbo.SubData(finalBoneMatrices.size() * sizeof(mat4), finalBoneMatrices.data());
@@ -335,8 +336,18 @@ void GraphicsSystem::EditorDraw(float dt)
 		GFX::Mesh &meshinst = *reinterpret_cast<GFX::Mesh *>(inst.GetComponent<MeshRenderer>().mMeshRef);
 
 		// gets the shader filepathc
-		std::pair<std::string, std::string> shaderstr = inst.GetComponent<MeshRenderer>().mShaderPath;
-		GFX::Shader &shaderinst = systemManager->mResourceSystem->get_Shader(shaderstr.first + shaderstr.second);
+		//uid shaderstr = inst.GetComponent<MeshRenderer>().mShaders;
+		
+		std::string shader{};
+
+		if (meshinst.mHasAnimation)
+			shader = "AnimationShader";
+		else
+			shader = "PointLightShader";
+
+		uid shaderstr(shader);
+		
+		GFX::Shader &shaderinst = *systemManager->mResourceTySystem->get_Shader(shaderstr.id);
 		unsigned shaderID = shaderinst.GetHandle();
 
 		// bind all texture
@@ -351,16 +362,25 @@ void GraphicsSystem::EditorDraw(float dt)
 	
 		shaderinst.Activate();
 		glUniformMatrix4fv(shaderinst.GetUniformVP(), 1, GL_FALSE, &m_EditorCamera.viewProj()[0][0]);
+		// Retrieve Point Light object
+		auto lightEntity = systemManager->ecs->GetEntitiesWith<PointLight>();
+		m_HasLight = !lightEntity.empty();
 
-		// Lighting flag uniform
 		GLuint mHasLightFlagLocation = shaderinst.GetUniformLocation("uHasLight");
 		glUniform1i(mHasLightFlagLocation, m_HasLight);
 
 		if (m_HasLight)
 		{
-			// View position uniform
-			vec3 viewPos = GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR);
+			PointLight &lightData = lightEntity.get<PointLight>(lightEntity[0]);
+			Transform &lightTransform = Entity(lightEntity[0]).GetComponent<Transform>();
+
+			GLuint mLightPosShaderLocation = shaderinst.GetUniformLocation("uLightPos");
 			GLuint mViewPosShaderLocation = shaderinst.GetUniformLocation("uViewPos");
+			GLuint mLightIntensityShaderLocation = shaderinst.GetUniformLocation("uLightIntensity");
+			GLuint mLightColorShaderLocation = shaderinst.GetUniformLocation("uLightColor");
+
+			vec3 viewPos = GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR);
+			//GLuint mViewPosShaderLocation = shaderinst.GetUniformLocation("uViewPos");
 			glUniform3fv(mViewPosShaderLocation, 1, &viewPos[0]);
 
 			// Light count uniform
@@ -474,8 +494,9 @@ void GraphicsSystem::GameDraw(float dt)
 		GFX::Mesh &meshinst = *reinterpret_cast<GFX::Mesh *>(inst.GetComponent<MeshRenderer>().mMeshRef);
 
 		// gets the shader filepath
-		std::pair<std::string, std::string> shaderstr = inst.GetComponent<MeshRenderer>().mShaderPath;
-		GFX::Shader &shaderinst = systemManager->mResourceSystem->get_Shader(shaderstr.first + shaderstr.second);
+		uid shaderstr("PointLightShader");
+		//uid shaderstr = inst.GetComponent<MeshRenderer>().mShaders;
+		GFX::Shader &shaderinst = *systemManager->mResourceTySystem->get_Shader(shaderstr.id);
 
 		GFX::Texture *textureInst[4]{};
 		for (int i{0}; i < 4; i++)
@@ -499,7 +520,14 @@ void GraphicsSystem::GameDraw(float dt)
 
 		if (m_HasLight)
 		{
+			PointLight &lightData = lightEntity.get<PointLight>(lightEntity[0]);
+			Transform &lightTransform = Entity(lightEntity[0]).GetComponent<Transform>();
+
+			GLuint mLightPosShaderLocation = shaderinst.GetUniformLocation("uLightPos");
 			GLuint mViewPosShaderLocation = shaderinst.GetUniformLocation("uViewPos");
+			GLuint mLightIntensityShaderLocation = shaderinst.GetUniformLocation("uLightIntensity");
+			GLuint mLightColorShaderLocation = shaderinst.GetUniformLocation("uLightColor");
+
 			vec3 viewPos = camera.GetComponent<Camera>().mCamera.position();
 			glUniform3fv(mViewPosShaderLocation, 1, &viewPos[0]);
 		}
@@ -560,7 +588,7 @@ void GraphicsSystem::Exit()
 	Adds an instance of a mesh to be drawn, For instancing
 */
 /**************************************************************************/
-void GraphicsSystem::AddInstance(GFX::Mesh &mesh, Transform transform, unsigned entityID)
+void GraphicsSystem::AddInstance(GFX::Mesh &mesh, Transform transform, const vec4& color, unsigned entityID)
 {
 	// Local to world transformation
 	mat4 scale = glm::scale(transform.mScale);
@@ -572,11 +600,13 @@ void GraphicsSystem::AddInstance(GFX::Mesh &mesh, Transform transform, unsigned 
 	mat4 world = translate * rotation * scale;
 	mesh.mLTW.push_back(world);
 	mesh.mTexEntID.push_back(vec4(0, (float)entityID + 0.5f, 0, 0));
+	mesh.mColors.push_back(color);
 }
 
-void GraphicsSystem::AddInstance(GFX::Mesh &mesh, mat4 transform, unsigned entityID, int animInstanceID)
+void GraphicsSystem::AddInstance(GFX::Mesh &mesh, mat4 transform, const vec4& color, unsigned entityID, int animInstanceID)
 {
 	mesh.mLTW.push_back(transform);
+	mesh.mColors.push_back(color);
 	if (animInstanceID < 0)
 		animInstanceID = -2;
 	mesh.mTexEntID.push_back(vec4(0, (float)entityID + 0.5f, (float)animInstanceID + 0.5f, 0));
@@ -927,4 +957,38 @@ int GraphicsSystem::StoreTextureIndex(unsigned texHandle)
 void GraphicsSystem::PauseGlobalAnimation()
 {
 	m_EnableGlobalAnimations = false;
+}
+
+
+void MeshRenderer::SetColor(const vec4& color)
+{
+	mInstanceColor = color;
+}
+
+
+void MeshRenderer::SetMesh(const std::string& meshName)
+{
+	std::string descFilepath = systemManager->mResourceTySystem->fbx_path + meshName + ".fbx.desc";
+	unsigned guid = _GEOM::GetGUID(descFilepath);
+
+	mMeshRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(guid));
+	mMeshPath = systemManager->mResourceTySystem->compiled_geom_path + meshName + ".geom";
+}
+
+
+void MeshRenderer::SetTexture(MaterialType MaterialType, const std::string& Texturename)
+{
+	std::string MaterialInstancePath = systemManager->mResourceTySystem->compressed_texture_path + Texturename + ".ctexture";
+	mMaterialInstancePath[MaterialType] = MaterialInstancePath;
+
+	mTextureCont[MaterialType] = true;
+
+	uid guid(MaterialInstancePath);
+	mTextureRef[MaterialType] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(guid.id));
+}
+
+
+void PointLight::SetColor(const vec3& color)
+{
+	mLightColor = color;
 }
