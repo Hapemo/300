@@ -132,6 +132,12 @@ void SystemManager::Exit()
 	mAudioSystem.get()->Exit();
 }
 
+void SystemManager::DeleteEntity(Entity e)
+{
+	mPhysicsSystem->RemoveActor(e);
+	ecs->DeleteEntity(e);
+}
+
 PhysicsSystem *SystemManager::GetPhysicsPointer()
 {
 	return mPhysicsSystem.get();

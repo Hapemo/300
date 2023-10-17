@@ -42,6 +42,7 @@ public:
 	Set velocity of an entity.
 	*******************************************************************************/
 	void SetVelocity(Entity e, const glm::vec3 &velocity);
+	void RemoveActor(Entity e);
 
 private:
 	PhysX mPX;

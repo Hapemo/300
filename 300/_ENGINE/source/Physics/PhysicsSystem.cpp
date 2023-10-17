@@ -84,6 +84,12 @@ void PhysicsSystem::SetVelocity(Entity e, const glm::vec3& velocity)
 	actor->setLinearVelocity(Convert(velocity));
 }
 
+void PhysicsSystem::RemoveActor(Entity e)
+{
+	mPX.mScene->removeActor(*mActors[static_cast<uint32_t>(e.id)]);
+	mActors.erase(static_cast<uint32_t>(e.id));
+}
+
 physx::PxMaterial* PhysicsSystem::CreateMaterial(float us, float ud, float res)
 {
 	return mPX.mPhysics->createMaterial(us, ud, res);

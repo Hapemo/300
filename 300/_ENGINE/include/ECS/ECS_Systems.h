@@ -22,6 +22,7 @@ class ResourceTy;
 class AudioSystem;
 class Logger;
 class InputMapSystem;
+struct Entity;
 
 class SystemManager {
 	GFX::Window *mWindow;
@@ -83,6 +84,8 @@ public:
 	Cleaning up before exiting.
 	*******************************************************************************/
 	void Exit();
+
+	void DeleteEntity(Entity e);
 	PhysicsSystem *GetPhysicsPointer();
 	ScriptingSystem* GetScriptingPointer();
 };
