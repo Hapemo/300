@@ -80,6 +80,7 @@ void Scene::Load(std::string const& _name) {
 	audio.mFullPath = "../assets\\Audio\\farm_ambience.wav";
 	audio.mFilePath = "../assets\\Audio";
 	audio.mFileName = "farm_ambience.wav";
+	audio.mIsEmpty = false;
 	//testaudio.GetComponent<Audio>().mFileName = "farm_ambience";
 	mEntities.insert(testaudio);
 }

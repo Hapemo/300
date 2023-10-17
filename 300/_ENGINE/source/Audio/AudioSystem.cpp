@@ -137,7 +137,7 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 {
 	// [10/14] Scripting Test
 	if(Input::CheckKey(PRESS, Q))
-		TestGetAudioComponent();
+		TestPlay();
 
 	auto audio_entities = systemManager->ecs->GetEntitiesWith<Audio>();
 

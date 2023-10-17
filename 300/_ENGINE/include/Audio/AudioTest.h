@@ -4,7 +4,7 @@
 
 // Test Functions
 // - Treat these functions as how you would script in C++
-void TestGetAudioComponent()
+void TestPlay()
 {
 	// The object created through hard-coding has the "script_entity_id" of 9.
 	AudioSource footsteps;
@@ -13,3 +13,4 @@ void TestGetAudioComponent()
 	//if(Input::CheckKey(HOLD, P))
 	footsteps.Play();							    // (2) Play the Audio.
 }
+

@@ -17,6 +17,12 @@ bool AudioSource::IsSoundAttached()
 	return false;
 }
 
+bool AudioSource::LoadAudio(std::string file_path, std::string audio_name)
+{
+	bool load_status = systemManager->mAudioSystem.get()->LoadAudio(file_path, audio_name);
+	return load_status;
+}
+
 void AudioSource::Play()
 {
 	/*if (mAudioComponent != nullptr)
@@ -30,11 +36,6 @@ void AudioSource::Play()
 
 		if (mAudioComponent->mSound != nullptr)
 		{   
-			/*if (system->CheckAudioExist(mAudioComponent->mFileName))
-			{
-				system->PlayAudioSource(mAudioComponent->mSound, mAudioComponent->mChannel);
-			}*/
-
 			// The [playing] should be in the [Update()] loop.
 			mAudioComponent->mIsPlay = true;
 		}

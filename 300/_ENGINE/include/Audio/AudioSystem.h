@@ -71,14 +71,15 @@ public:
 	~AudioSystem();
 
 	void UpdateLoadAudio(Entity id);				 // [For Engine] - Add Component mid-way
+	//void UpdateChannelReference(Entity id);		     // [For Engine] - Add Channel to the global [SFX/BGM] channels. (for global control)
 
 public:
-	int  ErrCodeCheck(FMOD_RESULT result);													// Debugging tool
-	bool LoadAudio(std::string file_path, std::string audio_name);
-	void LoadAudioFiles(std::filesystem::path file_path);									// Load single file
-	void LoadAudioFromDirectory(std::filesystem::path file_path);							// Load files from directory
+	int  ErrCodeCheck(FMOD_RESULT result);																	// Debugging tool
+	bool LoadAudio(std::string file_path, std::string audio_name);		
+	void LoadAudioFiles(std::filesystem::path file_path);													// Load single file
+	void LoadAudioFromDirectory(std::filesystem::path file_path);											// Load files from directory
 	void PlayAudio(std::string audio_name, AUDIOTYPE audio_type, float audio_vol = 1.0f);	// Play an audio based on it's name
-	int  PlaySFXAudio(std::string audio_name, float audio_vol = 1.0f);						// Play an SFX Audio (specify volume)
+	int  PlaySFXAudio(std::string audio_name, float audio_vol = 1.0f);										// Play an SFX Audio (specify volume)
 	int  PlayBGMAudio(std::string audio_name, float audio_vol = 1.0f);						// Play an BGM Audio (specify volume)
 	void SetSpecificChannelVolume(AUDIOTYPE audio_type, int id, float audio_vol);			// Set Specific Volume  (Depreciated) 10/15
 	void SetAllSFXVolume(float audio_vol);													// Global Volume Setting (SFX)

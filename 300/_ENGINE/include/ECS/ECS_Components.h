@@ -251,13 +251,14 @@ struct Audio
 	std::string mFileName;				   // Name of Audio file (required for loading)
 	std::string mFullPath;				   // 
 
-	bool mIsPlay      = false;			   // play audio if true
-	bool mPlayonAwake = false;			   // [10/14] - flag to play as the scene launches.
-
 	// Don't need to serialize ...
 	std::vector<int> mPlaySFXChannelID;    // Currently playing in SFX Channel...
 	std::vector<int> mPlayBGMChannelID;	   // Currently playing in BGM Channel...
-	bool             mIsPlaying;		   // Check if audio is already playing
+
+	bool mIsPlay = false;			       // [Flag] - to decide whether to play audio (if true)
+	bool mIsPlaying = false;		       // [Flag] - Check if audio is already playing (Channel Interaction)
+	bool mPlayonAwake = false;		       // [Flag] - flag to play as the scene launches. 
+	bool mIsLooping = false;			       // [Flag] - flag to decide whether if audio is looping.
 
 	// For Editor
 	bool			 mIsEmpty = false;	   // [For Editor] - if empty delete all data in this <Audio> component
@@ -273,7 +274,8 @@ struct Audio
 
 	Audio() : mFilePath(""), mFileName(""), mAudioType(AUDIO_NULL), mIsPlaying(false), mIsPlay(false), mIsEmpty(true) {}
 
-	Audio(std::string file_path_to_audio, std::string file_audio_name, AUDIOTYPE audio_type, bool playOnAwake) : mAudioType(audio_type), mIsPlaying(false), mPlayonAwake(playOnAwake)
+	Audio(std::string file_path_to_audio, std::string file_audio_name, AUDIOTYPE audio_type, bool playOnAwake) : mAudioType(audio_type), mIsPlaying(false), mPlayonAwake(playOnAwake),
+																												 mIsEmpty(false)
 	{
 		mFilePath = file_path_to_audio;
 		mFileName = file_audio_name;
@@ -293,7 +295,6 @@ struct Audio
 		mIsLoaded = false;
 		mSound = nullptr;
 	}
-
 
 	int mAudio{ 0 };
 

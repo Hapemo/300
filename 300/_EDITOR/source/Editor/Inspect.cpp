@@ -818,7 +818,7 @@ void Audio::Inspect() {
 	std::string file_path;		 // Only Audio Directory	  e.g "../assets\\Audio"
 	std::string audio_name;      // Audio Name only.		  e.g "farm_ambience.wav"
 
-	const char* audio_type[] = { "BGM" , "SFX" };
+	const char* audio_type[] = {" ", "BGM" , "SFX" };
 
 	// Audio Component (Bar)
 	if (ImGui::CollapsingHeader("Audio", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
@@ -865,6 +865,7 @@ void Audio::Inspect() {
 				{	
 					// Load the Audio File + Check (load status)
 					systemManager->mAudioSystem.get()->UpdateLoadAudio(Entity(Hierarchy::selectedId));
+					//systemManager->mAudioSystem.get()->UpdateChannelReference(Entity(Hierarchy::selectedId));
 					Entity(Hierarchy::selectedId).GetComponent<Audio>().mIsEmpty = false; // must be here (editor specific) -> to trigger the other options to appear.
 					/*Audio& audioent = Entity(Hierarchy::selectedId).GetComponent<Audio>();
 					int i = 0;*/
@@ -880,6 +881,7 @@ void Audio::Inspect() {
 	ImGui::Text("Drag drop 'Audio' files to header above 'Audio'");
 	ImGui::Text("Audio File Selected: ");
 	ImGui::Text(Entity(Hierarchy::selectedId).GetComponent<Audio>().mFullPath.c_str());
+	Audio& audio = Entity(Hierarchy::selectedId).GetComponent<Audio>();
 
 	static bool remove_audio_bool = false;
 	if (!Entity(Hierarchy::selectedId).GetComponent<Audio>().mIsEmpty)
@@ -891,7 +893,7 @@ void Audio::Inspect() {
 	{
 		Entity(Hierarchy::selectedId).GetComponent<Audio>().ClearAudioComponent();
 		remove_audio_bool = false;
-		PINFO("Successfull Removed Audio.");
+		PINFO("Successfully Removed Audio.");
 	}
 
 	if (!mIsEmpty)
@@ -899,20 +901,21 @@ void Audio::Inspect() {
 		//ImGui::Checkbox("Play This (start the scene first)", &mIsPlay);
 		//ImGui::Checkbox("IsPlaying", &mIsPlaying);
 		ImGui::Checkbox("Play on Awake", &mPlayonAwake);
+		ImGui::Checkbox("Is Looping", &mIsLooping);
 	}
 
 	// AudioType Selector 
 	if (ImGui::BeginCombo("Audio Type", audio_type[mAudio]))
 	{
-		for (unsigned char i{ 0 }; i < 2; i++) {
+		for (unsigned char i{ 0 }; i < 3; i++) {
 			if (ImGui::Selectable(audio_type[i])) {
 				mAudio = i;
 				switch (mAudio)
 				{
-				case 0:
+				case 1:
 					mAudioType = AUDIO_BGM;
 					break;
-				case 1:
+				case 2:
 					mAudioType = AUDIO_BGM;
 					break;
 				}

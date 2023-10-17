@@ -17,23 +17,41 @@
 			  the entity that is attached to.
  */
  /******************************************************************************/
-class AudioSource				// Not part of the system.
+class AudioSource				        // [LUA] - Interface to interact with [AudioSystem] functionality.
 {
 public:
-	Audio* mAudioComponent;  // Relevant <Audio> component data.
-	Entity ent_id = 9;       // Will Remove (ID of the hardcorded object that has <Audio> component)
+	Audio* mAudioComponent;             // Relevant <Audio> component data.
+	Entity ent_id = 9;                  // Will Remove (ID of the hardcorded object that has <Audio> component)
 public:
 	AudioSource();
 
 public:
+	// Data-related functions
 	void GetAudioComponent(Entity id);
-	bool IsSoundAttached();				// [Debug] Checks whether if the Sound Attached is in the <Audio> component.
+	bool IsSoundAttached();										    // [Debug] Checks whether if the Sound Attached is in the <Audio> component.
+	
+	bool LoadAudio(std::string file_path, std::string audio_name);  // Way to LoadAudio in Script.
 
-	void Play();
+
+
+	void Play();				// Play the [Sound] hat is attached to this [AudioSource]
 	void Pause();
+	//void Unpause();
 	//void Stop();
+	//void Mute();
+	//void SetVolume();
+	//void SetIsLoop(float loop);
 
+
+	// Planned (Specialized)
+	// --------------------
 	//void PlayDelayed();
+	//void TransitionBGM(AudioSource* transition_to, float audio_delay);
+	//void SetRandomnizedPitch();  // For Walking
+
+
+
+
 
 
 };
