@@ -202,7 +202,7 @@ public:
 	CAMERA_TYPE m_CameraControl;
 
 	// -- Textures --
-	std::vector<int> m_Textures;
+	std::vector<int> m_Textures;	// 0, 1, ..., 31
 
 	// -- Shader Instance
 	GFX::Shader m_UiShaderInst;
