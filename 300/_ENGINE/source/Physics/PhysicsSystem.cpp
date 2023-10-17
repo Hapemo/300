@@ -16,6 +16,8 @@ PhysicsSystem::PhysicsSystem()
 void PhysicsSystem::Init()
 {
 	//get all entities with physics components
+	for (auto itr = mActors.begin(); itr != mActors.end(); ++itr)
+		mPX.mScene->removeActor(*itr->second);
 	mActors.clear();
 	auto view = systemManager->ecs->GetEntitiesWith<Transform, RigidBody>();
 	
