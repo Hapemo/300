@@ -1,0 +1,7 @@
+[
+    {
+        "ShaderProgram": "../assets/ShaderProgram/AnimationShader",
+        "Vertex": "../assets/shader_files/animations_vert.glsl",
+        "Fragment": "../assets/shader_files/pointLight_frag.glsl"
+    }
+]

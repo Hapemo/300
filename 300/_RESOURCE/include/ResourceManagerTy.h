@@ -77,6 +77,9 @@ class ResourceTy
 public:
 
 
+    bool deserialize_Shader(std::string filename);
+    bool serialize_Shader(std::string shaderProgram, std::pair < std::string, std::string> shaderPair);
+    void create_Shader();
     void shader_Loader();
     GFX::Shader* get_Shader(unsigned);
     /***************************************************************************/
