@@ -17,6 +17,11 @@
 			  the entity that is attached to.
  */
  /******************************************************************************/
+
+// Not Encapsulated in the "AudioSource" object.
+bool LoadAudio(std::string file_path, std::string audio_name);  // Way to LoadAudio in Script. (Have to Load first, then attach)
+
+
 class AudioSource				        // [LUA] - Interface to interact with [AudioSystem] functionality.
 {
 public:
@@ -28,14 +33,11 @@ public:
 public:
 	// Data-related functions
 	void GetAudioComponent(Entity id);
-	bool IsSoundAttached();										    // [Debug] Checks whether if the Sound Attached is in the <Audio> component.
-	
-	bool LoadAudio(std::string file_path, std::string audio_name);  // Way to LoadAudio in Script.
+	bool IsSoundAttached();								// [Debug] Checks whether if the Sound Attached is in the <Audio> component.
+	bool AttachSound(std::string audio_name);			// Can be used to attach a <Sound> object onto this <AudioSource> instance.
 
-
-
-	void Play();				// Play the [Sound] hat is attached to this [AudioSource]
-	void Pause();
+	void Play();				// Play the [Sound] hat is attached to this [AudioSource] (Should run <IsSoundAttached> to make sure audio is there)
+	void Pause();					
 	//void Unpause();
 	//void Stop();
 	//void Mute();

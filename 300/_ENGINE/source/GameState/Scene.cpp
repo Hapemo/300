@@ -61,6 +61,8 @@ void Scene::Pause(bool _pause) {
 	if (!_pause) if (!mInitBefore) Init();
 }
 
+static bool once = false;
+
 void Scene::Load(std::string const& _name) {
 	//LOG_CUSTOM("SCENE", "Loading Scene: " + mName);
 	if (mName.empty()) mName = _name;
@@ -76,12 +78,21 @@ void Scene::Load(std::string const& _name) {
 	Entity testaudio = systemManager->ecs->NewEntity();
 	testaudio.AddComponent<General>().name = "Audio";
 	testaudio.AddComponent<Audio>();
-	Audio& audio = testaudio.GetComponent<Audio>();
-	audio.mFullPath = "../assets\\Audio\\farm_ambience.wav";
-	audio.mFilePath = "../assets\\Audio";
-	audio.mFileName = "farm_ambience.wav";
-	audio.mIsEmpty = false;
-	//testaudio.GetComponent<Audio>().mFileName = "farm_ambience";
+
+	if (!once)
+	{
+		Audio& audio = testaudio.GetComponent<Audio>();
+		audio.mFullPath = "../assets\\Audio\\farm_ambience.wav";
+		audio.mFilePath = "../assets\\Audio";
+		audio.mFileName = "farm_ambience.wav";
+		audio.mIsEmpty = false;
+		audio.mAudioType = AUDIO_BGM;
+		//testaudio.GetComponent<Audio>().mFileName = "farm_ambience";
+		
+
+		once = true;
+	}
+
 	mEntities.insert(testaudio);
 }
 

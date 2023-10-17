@@ -87,6 +87,7 @@ void SystemManager::Play()
 	mPhysicsSystem.get()->Init();
 	mGraphicsSystem->UnpauseGlobalAnimation();
 	mGameStateSystem->mCurrentGameState.Save();
+
 	mAudioSystem->PlayOnAwake(); // Added [10/15]
 }
 

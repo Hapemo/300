@@ -54,45 +54,12 @@ void AudioSystem::Init()
 	PINFO("FMOD System Initialize: +");
 	ErrCodeCheck(system_obj->init(MAX_AUDIO_FILES_PLAYING, FMOD_INIT_NORMAL, nullptr));
 
-	// [10/15] Scraping for now. (Structure Changes)
-	// ---------------------------------------------------------------------
-	// Create Channels (At Initialization) - NEW (w ID tracking) 
-	//std::vector<Channel> bgm_channel_new;
-	//std::vector<Channel> sfx_channel_new;
-	//PINFO("Initializing BGM Channels.");
-	//mChannelsNew.emplace(std::make_pair(AUDIO_BGM, bgm_channel_new));
-	//PINFO("Initializing SFX Channels.");
-	//mChannelsNew.emplace(std::make_pair(AUDIO_SFX, sfx_channel_new));
+	// Channel Initialization (SFX/BGM) - Global Volume Control
+	std::vector<FMOD::Channel*> sfx_channel;
+	std::vector<FMOD::Channel*> bgm_channel;
 
-	// [9/25] Decided to just init a number of channels from the start.
-	//auto bgm_channel_it = mChannelsNew.find(AUDIO_BGM);
-	//auto sfx_channel_it = mChannelsNew.find(AUDIO_SFX);
-
-	// [9/25] Populate the (Channel) Object
-	//PINFO("Populating BGM Channels.");
-	//if (bgm_channel_it != mChannelsNew.end())
-	//{
-	//	for (int i = 0; i < NO_OF_BGM_CHANNELS_TO_INIT; ++i)
-	//	{
-	//		FMOD::Channel* new_channel = nullptr;
-	//		Channel new_bgm_channel = Channel(next_avail_id_bgm, new_channel, false); // We need this for the channel status.
-	//		next_avail_id_bgm++;
-	//		bgm_channel_it->second.push_back(new_bgm_channel);
-	//	}
-	//}
-
-	//PINFO("Populating BGM Channels.");
-	//if (sfx_channel_it != mChannelsNew.end())
-	//{
-	//	for (int i = 0; i < NO_OF_SFX_CHANNELS_TO_INIT; ++i)
-	//	{
-	//		FMOD::Channel* new_channel = nullptr;
-	//		Channel new_sfx_channel = Channel(next_avail_id_sfx, new_channel, false); // We need this for the channel status.
-	//		next_avail_id_sfx++;
-	//		sfx_channel_it->second.push_back(new_sfx_channel);
-	//	}
-	//}
-	// -------------------------------------------------------------
+	mChannelsNewA.insert(std::make_pair(AUDIO_SFX, sfx_channel));
+	mChannelsNewA.insert(std::make_pair(AUDIO_BGM, bgm_channel));
 
 	auto audio_entities = systemManager->ecs->GetEntitiesWith<Audio>();
 
@@ -110,7 +77,7 @@ void AudioSystem::Init()
 			std::string audio_path = audio_component.mFilePath + "/" + audio_component.mFileName;
 			std::string audio_name = audio_component.mFileName;
 
-			if (LoadAudio(audio_path, audio_name))
+			if (LoadAudio(audio_path, audio_name)) // (1) Load Audio + (2) Add [Sound] into Database.
 			{
 				audio_component.mIsLoaded = true;
 				audio_component.mSound = FindSound(audio_name); // Register [Sound] reference into <Audio> component. (if successfully loaded)
@@ -119,6 +86,17 @@ void AudioSystem::Init()
 			{
 				audio_component.mIsLoaded = false;
 			}
+		}
+
+		// (3) Check [AudioType] + Register <Audio> component's Channel into [SFX] / [BGM] global channel
+		switch (audio_component.mAudioType)
+		{
+		case AUDIO_BGM:
+			mChannelsNewA[AUDIO_BGM].push_back(audio_component.mChannel);
+			break;
+		case AUDIO_SFX:
+			mChannelsNewA[AUDIO_SFX].push_back(audio_component.mChannel);
+			break;
 		}
 	}
 
@@ -136,8 +114,8 @@ void AudioSystem::Init()
 void AudioSystem::Update([[maybe_unused]] float dt)
 {
 	// [10/14] Scripting Test
-	if(Input::CheckKey(PRESS, Q))
-		TestPlay();
+	if (Input::CheckKey(PRESS, Q))
+		TestLoadPlaySuccess();
 
 	auto audio_entities = systemManager->ecs->GetEntitiesWith<Audio>();
 
@@ -150,7 +128,14 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 	{
 		Audio& audio_component = audio.GetComponent<Audio>();
 
-		if (audio_component.mIsPlay && CheckAudioExist(audio_component.mFileName) && !audio_component.mIsPlaying)
+		if (audio_component.mIsLooping)
+		{
+			audio_component.mSound->setMode(FMOD_LOOP_NORMAL);
+		}
+
+		if (audio_component.mIsPlay &&							// (1) Check if this <Audio> is set to play.
+			CheckAudioExist(audio_component.mFileName) &&		// (2) Check if the [Sound] that we want to play exists.
+			!audio_component.mIsPlaying)						// (3) Check if the <Audio> is currently already playing...
 		{
 			PINFO("Audio Exist");
 			PlayAudioSource(audio_component);
@@ -158,17 +143,28 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 
 		// Every Loop -> check if the <Audio> is still playing.
 		bool channelIsPlay = false;
-		audio_component.mChannel->isPlaying(&channelIsPlay);
+		if (audio_component.mIsPlaying) // need this to be true (to indicate that there's a sound playing in the channel)
+		{
+			audio_component.mChannel->isPlaying(&channelIsPlay);
+		}
+
+		// Resume Loop
+		if (!audio_component.mIsPaused && audio_component.mWasPaused) // Only will run this when [Start] is triggered again.
+		{
+			audio_component.mChannel->setPaused(false);
+			PINFO("RESUME");
+			audio_component.mIsPaused = false;
+			audio_component.mWasPaused = false;
+		}
+
 		if (audio_component.mIsPlaying && !channelIsPlay) // Sound finished playing in channel.
 		{
-			PINFO("Stopped Playing");
-			audio_component.mIsPlaying = false;
+			PINFO("Finished Playing");
+			audio_component.mIsPlaying = false;	   // Audio finished playing. 
+			audio_component.mIsPlay = false;       // Don't Need to keep playing... (play once) -> if "mIsLooping" is true (channel will continue to play)
 		}
+
 	}
-
-
-
-
 	//for (Entity audio : audio_entities)
 	//{
 	//	Audio& audio_component = audio.GetComponent<Audio>();
@@ -260,11 +256,10 @@ void AudioSystem::PlayOnAwake()
 		if (audio_component.mPlayonAwake && audio_component.mIsPaused == false) // Truly the first time playing
 		{
 			PINFO("Playing %s on Awake", audio_component.mFileName.c_str());
-			std::cout << "Playing " << audio_component.mFileName << " on Awake." << std::endl;
-			ErrCodeCheck(system_obj->playSound(audio_component.mSound, nullptr, false, &(audio_component.mChannel)));
+			audio_component.mIsPlay = true;
 		}
 
-		else if(audio_component.mIsPaused)
+		if(audio_component.mIsPaused)
 		{
 			PINFO("Resuming Audio: %s.", audio_component.mFileName.c_str());
 			ErrCodeCheck(audio_component.mChannel->setPaused(false));
@@ -287,18 +282,20 @@ void AudioSystem::Pause()
 	{
 		Audio& audio_component = audio.GetComponent<Audio>();
 
-		bool playing;
-		audio_component.mChannel->isPlaying(&playing);
+		bool playing = false; // by default.
 
-		if (playing) // check if audio is currently playing...
+		if (audio_component.mIsPlaying)
 		{
-			PINFO("Pausing Audio : %s", audio_component.mFileName);
-			ErrCodeCheck(audio_component.mChannel->setPaused(true));
-			audio_component.mIsPaused = true;
+			audio_component.mChannel->isPlaying(&playing);
 		}
 
-		audio_component.mChannel->isPlaying(&playing);
-		int i = 3;
+		if (playing) // only pause if it's playing.
+		{
+			PINFO("Pausing Audio : %s", audio_component.mFileName);  // I think loop too fast to display on debugger.
+			ErrCodeCheck(audio_component.mChannel->setPaused(true));
+			audio_component.mIsPaused = true;
+			audio_component.mWasPaused = true;
+		}
 	}
 }
 
@@ -310,15 +307,20 @@ void AudioSystem::Reset()
 	{
 		Audio& audio_component = audio.GetComponent<Audio>();
 
-		bool playing;
-		audio_component.mChannel->isPlaying(&playing);
+		bool playing = false;
+
+		if (audio_component.mIsPlaying)
+		{
+			audio_component.mChannel->isPlaying(&playing);
+		}
 
 		if (playing)
 		{
 			ErrCodeCheck(audio_component.mChannel->stop());
 		}
-		
+
 		audio_component.ClearAudioComponent();
+		//int i = 3;
 	}
 }
 
@@ -390,6 +392,18 @@ void AudioSystem::UpdateLoadAudio(Entity id)
 	}*/
 }
 
+void AudioSystem::UpdateChannelReference(Entity id)
+{
+	Audio& audio_component = id.GetComponent<Audio>();
+	
+	AUDIOTYPE type = audio_component.mAudioType;
+
+	if (type != AUDIO_NULL) // Make sure it's a valid <Audio> audiotype
+	{
+		mChannelsNewA[type].push_back(audio_component.mChannel); // Saves a reference of the <Audio>'s dedicated channel into the global database.
+	}
+}
+
 
 /******************************************************************************/
 /*!
@@ -425,43 +439,60 @@ int AudioSystem::ErrCodeCheck(FMOD_RESULT result)
 	return 1; // success (no issues)
 }
 
+
 /******************************************************************************/
 /*!
 	 LoadAudio()
-	 - Load Audio file based on the file path + audio name provided.
+	 --------------------------------------------------------------------------
+	 /brief
+		- Load audio file by taking in user-defined (1) file path, (2) audio name
+		- Saves a reference of the [Sound] into the <Audio> component that loads it (Editor)
+	 /param
+		[1] std::string file_path       - file path leading to the audio name.
+		[2] std::string audio_name      - name of the audio file.
+		[3] Audio*		audio_component - Pointer reference to the <Audio> component.
+	 /return
+		bool : Success code of the loading of audio (if it's successful or not)
  */
  /******************************************************************************/
-bool AudioSystem::LoadAudio(std::string file_path, std::string audio_name)
+bool AudioSystem::LoadAudio(std::string file_path, std::string audio_name, Audio* audio_component)
 {
-	PINFO("File Detected: %s", file_path.c_str());
-	//std::cout << "File Detected: " << file_path << std::endl;
-	PINFO("Creating Sound: +");
-	/*std::cout << "Creating Sound: ";*/
-	FMOD::Sound* new_sound;
-	int check = ErrCodeCheck(system_obj->createSound(file_path.c_str(), FMOD_LOOP_OFF, 0, &new_sound));
+	// Check if <Audio> is already in the database.
+	auto sound_it = mSounds.find(audio_name);
 
-	if (!check)
+	if (sound_it == mSounds.end()) // Audio not in the database.
 	{
-		PWARNING("Error: Sound Not Loaded.");
-		return 0;
-		//std::cout << "Error: Sound Not Loaded." << std::endl;
-	} // At this point, audio successfully loaded.
+		PINFO("File Detected: %s", file_path.c_str());
+		//std::cout << "File Detected: " << file_path << std::endl;
+		PINFO("Creating Sound: +");
+		/*std::cout << "Creating Sound: ";*/
+		FMOD::Sound* new_sound;
+		int check = ErrCodeCheck(system_obj->createSound(file_path.c_str(), FMOD_LOOP_OFF, 0, &new_sound));
 
-	mSounds.insert(std::make_pair(audio_name, new_sound));
-	return true;
+		if (!check)
+		{
+			PWARNING("Error: Sound Not Loaded.");
+			return 0;
+			//std::cout << "Error: Sound Not Loaded." << std::endl;
+		} // At this point, audio successfully loaded.
+
+		mSounds.insert(std::make_pair(audio_name, new_sound));
+
+		if (audio_component != nullptr) // Make sure there is an <Audio> component to save into.
+		{
+			audio_component->mSound = new_sound;  // Save [Sound Reference] into <Audio> component. 
+		}
+
+		return true;
+	}
+
+	else
+	{
+		return false;
+	}
 }
 
-/******************************************************************************/
-/*!
-	 LoadAudioFiles()
-	 - Iterate through provided file path and load every audio related files into the system.
- */
- /******************************************************************************/
-void AudioSystem::LoadAudioFiles(std::filesystem::path file_path)
-{
-	std::string file_name = file_path.filename().string();
-	std::cout << "File Name Requested: " << file_name << std::endl;
-}
+
 
 void AudioSystem::LoadAudioFromDirectory(std::filesystem::path directory_path)
 {
@@ -488,10 +519,11 @@ void AudioSystem::LoadAudioFromDirectory(std::filesystem::path directory_path)
 /******************************************************************************/
 /*!
 	 PlayAudio()
-	 - Play Audio (user provide (1) Audio Name, (2) Audio Type , (3) Audio Volume
+	 - "Flip" the "mIsPlay" to true.
+	 - AudioSystem::Update() will play once it's toggled.
  */
  /******************************************************************************/
-void AudioSystem::PlayAudio(std::string audio_name, AUDIOTYPE audio_type, float audio_vol)
+void AudioSystem::PlayAudio(std::string audio_name, AUDIOTYPE audio_type, float audio_vol, Audio* audio_component)
 {
 	// Find the sound first ...
 	auto map_it = mSounds.find(audio_name); // tries to find the audio with this name...
@@ -499,10 +531,20 @@ void AudioSystem::PlayAudio(std::string audio_name, AUDIOTYPE audio_type, float 
 	if (map_it == mSounds.end()) // true if not found;
 	{
 		PWARNING("Can't find the requested audio.");
-		//std::cerr << "Can't find the requested audio." << std::endl;
+		return; // ends here if [Sound] cannot be found.
 	}
 
-	//ErrCodeCheck(system_obj->playSound(map_it->second, nullptr, false,
+	if (audio_component != nullptr)
+	{
+		PINFO("Flipping (mIsPlay)");
+		audio_component->mIsPlay = true;
+	}
+
+	//else // giving an option to play sound let's say it's not tied to any <Audio> component.
+	//{
+	//	PINFO("Playing without Component");
+	//	ErrCodeCheck(system_obj->playSound(map_it->second, nullptr, false, &audio_component->mChannel));
+	//}
 }
 
 /******************************************************************************/

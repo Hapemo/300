@@ -258,21 +258,22 @@ struct Audio
 	bool mIsPlay = false;			       // [Flag] - to decide whether to play audio (if true)
 	bool mIsPlaying = false;		       // [Flag] - Check if audio is already playing (Channel Interaction)
 	bool mPlayonAwake = false;		       // [Flag] - flag to play as the scene launches. 
-	bool mIsLooping = false;			       // [Flag] - flag to decide whether if audio is looping.
+	bool mIsLooping = false;			   // [Flag] - flag to decide whether if audio is looping.
 
 	// For Editor
-	bool			 mIsEmpty = false;	   // [For Editor] - if empty delete all data in this <Audio> component
+	bool			 mIsEmpty = true;	   // [For Editor] - if empty delete all data in this <Audio> component
 	bool			 mIsLoaded = false;	   // [For Loading]
 	
 	// Pause State [Editor/Pause Menu]
-	bool			 mIsPaused = false;
+	bool			 mIsPaused  = false;
+	bool			 mWasPaused = false;   // [For Unpausing]
 
 	// Q. Can a <Audio> entity have their very own channel.
 	FMOD::Channel* mChannel;         	   // Use this to facilitate manipulation of audio.
 	FMOD::Sound*   mSound;				   // Each <Audio> can only hold a reference to the "Audio File" it's attached to.
 	AUDIOTYPE      mAudioType;			   // SFX or BGM (Mute Channels)
 
-	Audio() : mFilePath(""), mFileName(""), mAudioType(AUDIO_NULL), mIsPlaying(false), mIsPlay(false), mIsEmpty(true) {}
+	Audio() : mFilePath(""), mFileName(""), mAudioType(AUDIO_NULL), mIsEmpty(true) {}
 
 	Audio(std::string file_path_to_audio, std::string file_audio_name, AUDIOTYPE audio_type, bool playOnAwake) : mAudioType(audio_type), mIsPlaying(false), mPlayonAwake(playOnAwake),
 																												 mIsEmpty(false)
