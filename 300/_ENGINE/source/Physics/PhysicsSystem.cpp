@@ -22,7 +22,10 @@ void PhysicsSystem::Init()
 	auto view = systemManager->ecs->GetEntitiesWith<Transform, RigidBody>();
 	
 	for (Entity e : view)
-		CreateRigidBody(e);
+	{
+		if (e.HasComponent<RigidBody>())
+			CreateRigidBody(e);
+	}
 }
 
 void PhysicsSystem::Update(float dt)
@@ -65,7 +68,10 @@ void PhysicsSystem::AddActor(Entity e)
 		PWARNING("Tried to add actor that is already in simulation!");
 		return;
 	}
-	CreateRigidBody(e);
+	if (e.HasComponent<RigidBody>())
+		CreateRigidBody(e);
+	else
+		PWARNING("Tried to add actor without rigid body to simulation!");
 }
 
 void PhysicsSystem::SetVelocity(Entity e, const glm::vec3& velocity)
@@ -87,63 +93,77 @@ physx::PxMaterial* PhysicsSystem::CreateMaterial(float us, float ud, float res)
 
 void PhysicsSystem::CreateRigidBody(Entity e)
 {
-	Transform xform = e.GetComponent<Transform>();
-	glm::vec3 xtraxlate = e.HasParent() ? Entity(e.GetParent()).GetComponent<Transform>().mTranslate : glm::vec3(0);
 	if (e.HasComponent<PlaneCollider>())
 	{
-		RigidBody rbod = e.GetComponent<RigidBody>();
-		PlaneCollider col = e.GetComponent<PlaneCollider>();
-		PxRigidStatic* plane = PxCreatePlane(*mPX.mPhysics, PxPlane(Convert(col.mNormal), glm::length(xform.mTranslate + xtraxlate) + col.mTranslateOffset), *mMaterials[rbod.mMaterial]);
-		mActors[static_cast<uint32_t>(e.id)] = plane;
-		mPX.mScene->addActor(*plane);
+		//PlaneCollider col = e.GetComponent<PlaneCollider>();
+		//PxRigidStatic* plane = PxCreatePlane(*mPX.mPhysics, PxPlane(Convert(col.mNormal), glm::length(xform.mTranslate + xtraxlate) + col.mTranslateOffset), *mMaterials[rbod.mMaterial]);
+		//mActors[static_cast<uint32_t>(e.id)] = plane;
+		//mPX.mScene->addActor(*plane);
 		return;
 	}
-	if (e.HasComponent<BoxCollider>())
+
+	Transform xform = e.GetComponent<Transform>();
+	glm::vec3 xtranslate = e.HasParent() ? Entity(e.GetParent()).GetComponent<Transform>().mTranslate : glm::vec3(0);
+	RigidBody rbod = e.GetComponent<RigidBody>();
+	PxRigidActor* actor{};
+	PxShape* shape{};
+
+	if (e.HasComponent<CapsuleCollider>())
 	{
-		RigidBody rbod = e.GetComponent<RigidBody>();
+		CapsuleCollider cap = e.GetComponent<CapsuleCollider>();
+		shape = mPX.mPhysics->createShape(PxCapsuleGeometry(cap.mRadius, cap.mHalfHeight), *mMaterials[rbod.mMaterial]);
+		if (rbod.mMotion == MOTION::DYNAMIC)
+		{
+			actor = mPX.mPhysics->createRigidDynamic(PxTransform(Convert(xform.mTranslate + cap.mTranslateOffset + xtranslate)));
+			actor->attachShape(*shape);
+			PxRigidBodyExt::updateMassAndInertia(*static_cast<PxRigidDynamic*>(actor), rbod.mDensity);
+			static_cast<PxRigidDynamic*>(actor)->setLinearVelocity(Convert(rbod.mVelocity));
+		}
+		else
+		{
+			actor = mPX.mPhysics->createRigidStatic(PxTransform(Convert(xform.mTranslate + cap.mTranslateOffset + xtranslate)));
+			actor->attachShape(*shape);
+		}
+	}
+	else if (e.HasComponent<BoxCollider>())
+	{
 		BoxCollider col = e.GetComponent<BoxCollider>();
-		PxShape* shape = mPX.mPhysics->createShape(PxBoxGeometry(Convert(xform.mScale * col.mScaleOffset) / 2.f), *mMaterials[rbod.mMaterial]);
-		PxRigidActor* actor{};
+		shape = mPX.mPhysics->createShape(PxBoxGeometry(Convert(xform.mScale * col.mScaleOffset) / 2.f), *mMaterials[rbod.mMaterial]);
 		if (rbod.mMotion == MOTION::DYNAMIC)
 		{
-			actor = mPX.mPhysics->createRigidDynamic(PxTransform(Convert(xform.mTranslate + col.mTranslateOffset + xtraxlate)));
+			actor = mPX.mPhysics->createRigidDynamic(PxTransform(Convert(xform.mTranslate + col.mTranslateOffset + xtranslate)));
 			actor->attachShape(*shape);
 			PxRigidBodyExt::updateMassAndInertia(*static_cast<PxRigidDynamic*>(actor), rbod.mDensity);
 			static_cast<PxRigidDynamic*>(actor)->setLinearVelocity(Convert(rbod.mVelocity));
 		}
 		else
 		{
-			actor = mPX.mPhysics->createRigidStatic(PxTransform(Convert(xform.mTranslate + col.mTranslateOffset + xtraxlate)));
+			actor = mPX.mPhysics->createRigidStatic(PxTransform(Convert(xform.mTranslate + col.mTranslateOffset + xtranslate)));
 			actor->attachShape(*shape);
 		}
-		mActors[static_cast<uint32_t>(e.id)] = actor;
-		mPX.mScene->addActor(*actor);
-		shape->release();
-		return;
 	}
-	if (e.HasComponent<SphereCollider>())
+	else if (e.HasComponent<SphereCollider>())
 	{
-		RigidBody rbod = e.GetComponent<RigidBody>();
 		SphereCollider col = e.GetComponent<SphereCollider>();
-		PxShape* shape = mPX.mPhysics->createShape(PxSphereGeometry(std::max({ xform.mScale.x, xform.mScale.y, xform.mScale.z }) * col.mScaleOffset / 2.f), *mMaterials[rbod.mMaterial]);
-		PxRigidActor* actor{};
+		shape = mPX.mPhysics->createShape(PxSphereGeometry(std::max({ xform.mScale.x, xform.mScale.y, xform.mScale.z }) * col.mScaleOffset / 2.f), *mMaterials[rbod.mMaterial]);
 		if (rbod.mMotion == MOTION::DYNAMIC)
 		{
-			actor = mPX.mPhysics->createRigidDynamic(PxTransform(Convert(xform.mTranslate + col.mTranslateOffset + xtraxlate)));
+			actor = mPX.mPhysics->createRigidDynamic(PxTransform(Convert(xform.mTranslate + col.mTranslateOffset + xtranslate)));
 			actor->attachShape(*shape);
 			PxRigidBodyExt::updateMassAndInertia(*static_cast<PxRigidDynamic*>(actor), rbod.mDensity);
 			static_cast<PxRigidDynamic*>(actor)->setLinearVelocity(Convert(rbod.mVelocity));
 		}
 		else
 		{
-			actor = mPX.mPhysics->createRigidStatic(PxTransform(Convert(xform.mTranslate + col.mTranslateOffset + xtraxlate)));
+			actor = mPX.mPhysics->createRigidStatic(PxTransform(Convert(xform.mTranslate + col.mTranslateOffset + xtranslate)));
 			actor->attachShape(*shape);
 		}
-		mActors[static_cast<uint32_t>(e.id)] = actor;
-		mPX.mScene->addActor(*actor);
-		shape->release();
-		return;
 	}
+
+	mActors[static_cast<uint32_t>(e.id)] = actor;
+	mPX.mScene->addActor(*actor);
+	if (shape != nullptr)
+		shape->release();
 }
 
 physx::PxVec3T<float> PhysicsSystem::Convert(const glm::vec3& vec)

@@ -196,6 +196,14 @@ struct PlaneCollider //if has plane collider always static
 	void							Inspect();
 };
 
+struct CapsuleCollider
+{
+	glm::vec3 mTranslateOffset;
+	float mRadius;
+	float mHalfHeight;
+	CapsuleCollider() : mTranslateOffset(0.f, 0.f, 0.f), mRadius(50.f), mHalfHeight(100.f) {}
+};
+
 /******************************************************************************/
 /*!
 	[Component] - Scripts
