@@ -217,7 +217,10 @@ public:
 	vec3		mBloomThreshold { 0.2126, 0.7152, 0.0722 };
 
 	// -- Textures --
-	std::vector<int> m_Textures;
+	std::vector<int> m_Textures;	// 0, 1, ..., 31
+
+	// -- Shader Instance
+	GFX::Shader m_UiShaderInst;
 
 	// -- Flags --
 	int		m_DebugDrawing{ 1 };			// debug drawing 
@@ -241,13 +244,12 @@ private:
 	void SetupShaderStorageBuffers();		// Creates all SSBO required
 
 	// -- 2D Image Rendering --
-	GFX::Mesh				m_Image2DMesh;
-	std::vector<unsigned>	m_Image2DStore;
+	GFX::Mesh m_Image2DMesh;
+	std::vector<unsigned>m_Image2DStore;
 	GFX::Quad2D				mScreenQuad;
 
-
-
-	void Add2DImageInstance(float width, float height, vec2 const& position, unsigned texHandle, vec4 const& color = vec4{ 1.f, 1.f, 1.f, 1.f }, unsigned entityID = 0xFFFFFFFF);
+	void DrawAll2DInstances(unsigned shaderID);
+	void Add2DImageInstance(float width, float height, vec2 const& position, unsigned texHandle, unsigned entityID = 0xFFFFFFFF, vec4 const& color = vec4{ 1.f, 1.f, 1.f, 1.f });
 	int StoreTextureIndex(unsigned texHandle);
 };
 

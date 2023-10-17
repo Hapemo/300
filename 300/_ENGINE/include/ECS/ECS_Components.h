@@ -25,6 +25,7 @@ Components used by the ECS.
 #include "Guid.h"
 #include <Constants.h>
 
+#include "Texture.hpp"
 //#include "Graphics/GraphicsSystem.h"
 //#include "Mesh.hpp"
 
@@ -103,7 +104,6 @@ struct Animator
 struct MeshRenderer
 {
 	// For now, we store the string to the filepaths. TO CHANGE to uids for efficient referencing
-	//uid									mShaders;
 	//std::pair<std::string, std::string> mShaderPath{ "../assets/shader_files/animations_vert.glsl", "../assets/shader_files/pointLight_frag.glsl" };
 	std::pair<std::string, std::string> mShaderPath{ "../assets/shader_files/pointLight_vert.glsl", "../assets/shader_files/pointLight_frag.glsl" };
 	std::string							mMaterialInstancePath[4] {" "," " ," " ," " };
@@ -129,7 +129,18 @@ struct MeshRenderer
 struct UIrenderer
 {
 	std::string							mTexPath; // temporary should be UID
-	void* mTextureRef;
+	void*								mTextureRef;
+
+	inline unsigned ID() 
+	{
+		if (mTextureRef != nullptr) {
+			int temp = (reinterpret_cast<GFX::Texture*>(mTextureRef))->ID();
+			return temp;
+		}
+
+		return 0;
+	}
+	void Inspect();
 };
 
 
