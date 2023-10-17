@@ -196,6 +196,14 @@ struct PlaneCollider //if has plane collider always static
 	void							Inspect();
 };
 
+struct AABBCollider
+{
+	glm::vec3 mScaleOffset;			// final scale = mScaleOffset * Transform.mScale;
+	glm::vec3 mTranslateOffset;		// final pos = Transform.mTranslate + mTranslateOffset;
+
+	AABBCollider() : mScaleOffset(1.f), mTranslateOffset(0.f) {}
+};
+
 struct CapsuleCollider
 {
 	glm::vec3 mTranslateOffset;
