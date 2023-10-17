@@ -56,6 +56,16 @@ void PhysicsSystem::Exit()
 	mActors.clear();
 }
 
+void PhysicsSystem::AddActor(Entity e)
+{
+	if (mActors.find(static_cast<uint32_t>(e.id)) != mActors.end())
+	{
+		PWARNING("Tried to add actor that is already in simulation!");
+		return;
+	}
+	CreateRigidBody(e);
+}
+
 void PhysicsSystem::SetVelocity(Entity e, const glm::vec3& velocity)
 {
 	if (e.HasComponent<PlaneCollider>()) return;

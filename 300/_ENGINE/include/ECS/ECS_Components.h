@@ -137,6 +137,8 @@ struct RigidBody
 	glm::vec3 mVelocity;
 
 	RigidBody() : mDensity(10.f), mMaterial(MATERIAL::WOOD), mMotion(MOTION::STATIC), mVelocity(0.f) {};
+	RigidBody(float dense, MATERIAL mat, MOTION mot, const glm::vec3& vec)
+		: mDensity(dense), mMaterial(mat), mMotion(mot), mVelocity(vec) {}
 	//RTTR_ENABLE()
 
 
