@@ -137,7 +137,7 @@ void PhysicsSystem::CreateRigidBody(Entity e)
 	shape->release();
 }
 
-void PhysicsSystem::AttachMotionType(PxRigidActor* actor, PxShape* shape, const PxTransform& pxform, const RigidBody& rbod, const glm::ivec3& axisLocks)
+void PhysicsSystem::AttachMotionType(PxRigidActor*& actor, PxShape*& shape, const PxTransform& pxform, const RigidBody& rbod, const glm::ivec3& axisLocks)
 {
 	if (rbod.mMotion == MOTION::DYNAMIC)
 	{
