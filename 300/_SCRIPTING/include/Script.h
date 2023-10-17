@@ -43,7 +43,7 @@ public:
 	bool CheckVariableTypeEqual(sol::object& value, const std::type_info& info);
 	// Set the value of the variable stored in the map
 	void SetVariable(const std::string& name, sol::object& obj);
-
+	//void AddScript(Entity id, std::string fileName);
 	// Make sure error only print once (WIP)
 	static bool isOnce;
 

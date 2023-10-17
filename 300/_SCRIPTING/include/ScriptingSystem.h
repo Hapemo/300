@@ -96,8 +96,11 @@ public:
     // Call in Reload function
     void ScriptReload();
 
+    //Load and run script, used when a script is added to a new entity in scripts
+    void LoadRunScript(Entity& entity);
+
     // AddScripts function that checks for the existence of Script component then attach desired script to entity
-    void AddScript(Entity id, std::string fileName);
+    void AddScript(Entity& entity, std::string fileName);
 
     // To delete after port in to imGui
     void ScriptingInitTest();

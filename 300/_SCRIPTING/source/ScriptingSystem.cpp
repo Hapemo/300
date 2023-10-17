@@ -263,16 +263,31 @@ void ScriptingSystem::ScriptDead(const Entity& entity)
     }
 }
 
-void ScriptingSystem::AddScript(Entity id, std::string fileName)
+void ScriptingSystem::LoadRunScript(Entity& entity)
 {
-    std::cout << "came to add script" << std::endl;
+    auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
+    for (Entity entity : scriptEntities)
+    {
+        for (Script script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
+        {
+            script.Load(entity);
+            script.Run("Alive");
+        }
+    }
+}
+
+void ScriptingSystem::AddScript(Entity& entity, std::string fileName)
+{
     // Check if there is script component, else add it before the script is added
-    if (!id.HasComponent<Scripts>())
-        id.AddComponent<Scripts>();
+    if (!entity.HasComponent<Scripts>())
+        entity.AddComponent<Scripts>();
     Script temp;
+    std::replace(fileName.begin(), fileName.end(), '\\', '/');
     temp.scriptFile = fileName;
     temp.env = { systemManager->mScriptingSystem->luaState, sol::create, systemManager->mScriptingSystem->luaState.globals() };
-    id.GetComponent<Scripts>().scriptsContainer.push_back(temp);
+    temp.Load(entity);
+    ScriptAlive(entity);
+    entity.GetComponent<Scripts>().scriptsContainer.push_back(temp);
 }
 
 void ScriptingSystem::TestSSSU()

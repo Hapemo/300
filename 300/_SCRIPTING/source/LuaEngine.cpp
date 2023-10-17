@@ -212,8 +212,8 @@ void LuaPhysics()
 
 void LuaScripting()
 {
-    //systemManager->mScriptingSystem->luaState.new_usertype<ScriptingSystem>(
-    //    "mScriptingSystem", sol::constructors<>(),
-    //    "AddScript", &ScriptingSystem::AddScript
-    //    );
+    systemManager->mScriptingSystem->luaState.new_usertype<ScriptingSystem>(
+        "mScriptingSystem", sol::constructors<>(),
+        "AddScript", &ScriptingSystem::AddScript
+        );
 }

@@ -4,7 +4,6 @@ vec = Vec3.new(3, 5, 7)
 name = "Girl"
 speed = 20
 create = 2
-testing = 67
 
 function Alive()
 
@@ -68,12 +67,11 @@ function Update()
         -- physicsSys = systemManager:mPhysicsSystem();
         -- physicsSys:SetVelocity(entity, vec);
     elseif Input.CheckKey(State.HOLD, Key.KEY_B) then
-        --testEntity = systemManager.ecs:NewEntityByScene();
-        --scriptingSys = systemManager:mScriptingSystem();
-        --scriptingSys:AddScript(testEntity, "../assets\\Scripts\\Run.lua");
-        Helper.printTest()
+        testEntity = systemManager.ecs:NewEntityByScene();
+        scriptingSys = systemManager:mScriptingSystem();
+        scriptingSys:AddScript(testEntity, "../assets\\Scripts\\Print.lua");
+        --Helper.printTest()
         --Helper.test = 300
-        testing = testing + 1
         --script_entity.id = 60
     end
 
