@@ -612,6 +612,18 @@ void GraphicsSystem::AddInstance(GFX::Mesh &mesh, mat4 transform, const vec4& co
 	mesh.mTexEntID.push_back(vec4(0, (float)entityID + 0.5f, (float)animInstanceID + 0.5f, 0));
 }
 
+void GraphicsSystem::AddInstanceUI(Transform transform, unsigned texID, unsigned entityID, const vec4& color)
+{
+	// Local to world transformation
+	mat4 scale = glm::scale(transform.mScale);
+	mat4 translate = glm::translate(transform.mTranslate);
+
+	glm::quat quatRotate = glm::quat(transform.mRotate); // Retrieve quaternions via euler angles
+	glm::mat4 rotation = glm::toMat4(quatRotate);		 // Retrieve rotation matrix via quaternions
+
+
+}
+
 /***************************************************************************/
 /*!
 \brief
@@ -913,12 +925,15 @@ void GraphicsSystem::SetupShaderStorageBuffers()
 
 void GraphicsSystem::Add2DImageInstance(float width, float height, vec2 const& position, unsigned texHandle, vec4 const& color, unsigned entityID)
 {
+	float half_w = width * 0.5f;
+	float half_h = height * 0.5f;
+
 	mat4 world =
 	{
-		vec4(width, 0.f, 0.f, 0.f),
-		vec4(0.f, height, 0.f, 0.f),
+		vec4(width / m_Width, 0.f, 0.f, 0.f),
+		vec4(0.f, height / m_Height, 0.f, 0.f),
 		vec4(0.f, 0.f, 1.f, 0.f),
-		vec4(position, 0.f, 1.f)
+		vec4(position.x / half_w, position.y / half_h, 0.f, 1.f)
 	};
 
 	int texIndex = StoreTextureIndex(texHandle);
