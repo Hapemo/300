@@ -76,7 +76,7 @@ public:
 
 public:
 	// Retained Functions (Without Linking to <Audio> component)
-	void LoadAudioFromDirectory(std::filesystem::path file_path);					                                        // Load files from directory (Like just load all the audio files first) -> later then link
+	bool LoadAudioFromDirectory(std::filesystem::path file_path);					                                        // Load files from directory (Like just load all the audio files first) -> later then link
 
 
 	// Converted Functions (These functions link to each <Audio> component)

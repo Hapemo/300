@@ -106,7 +106,7 @@ void AudioSystem::Init()
 
 /******************************************************************************/
 /*!
-	Update()
+	Update()w
 	- Iterate through <Audio> Component. 
 	- Decides whether if an audio is going to be played. 
  */
@@ -116,6 +116,17 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 	// [10/14] Scripting Test
 	if (Input::CheckKey(PRESS, Q))
 		TestLoadPlaySuccess();
+	if (Input::CheckKey(PRESS, W))
+		TestLoadAudioDirectory();
+	if (Input::CheckKey(PRESS, E))
+		TestOverrideAttachSound();
+	if (Input::CheckKey(PRESS, R))  // Press 'E' first.
+		TestPauseSound();
+	if (Input::CheckKey(PRESS, T))   // Press 'E' then 'R' then this
+		TestUnpauseSound();
+
+	
+		
 
 	auto audio_entities = systemManager->ecs->GetEntitiesWith<Audio>();
 
@@ -148,6 +159,12 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 			audio_component.mChannel->isPlaying(&channelIsPlay);
 		}
 
+		// Pause Loop
+		if (audio_component.mIsPaused)
+		{
+			audio_component.mChannel->setPaused(true);
+		}
+
 		// Resume Loop
 		if (!audio_component.mIsPaused && audio_component.mWasPaused) // Only will run this when [Start] is triggered again.
 		{
@@ -156,6 +173,8 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 			audio_component.mIsPaused = false;
 			audio_component.mWasPaused = false;
 		}
+
+
 
 		if (audio_component.mIsPlaying && !channelIsPlay) // Sound finished playing in channel.
 		{
@@ -494,7 +513,7 @@ bool AudioSystem::LoadAudio(std::string file_path, std::string audio_name, Audio
 
 
 
-void AudioSystem::LoadAudioFromDirectory(std::filesystem::path directory_path)
+ bool AudioSystem::LoadAudioFromDirectory(std::filesystem::path directory_path)
 {
 	for (auto& file : std::filesystem::directory_iterator(directory_path))
 	{
@@ -502,18 +521,26 @@ void AudioSystem::LoadAudioFromDirectory(std::filesystem::path directory_path)
 		PINFO("File Detected: %s", file_path.string());
 		/*std::cout << "File Detected: " << file_path.string() << std::endl;*/
 		std::string audio_name = file_path.filename().string();
-		size_t extension_pos = audio_name.find_last_of('.');
-		audio_name = audio_name.substr(0, extension_pos);
+		//size_t extension_pos = audio_name.find_last_of('.');
+		//audio_name = audio_name.substr(0, extension_pos);
 		PINFO("Audio Name: %s", audio_name);
 		//std::cout << "Audio Name: " << audio_name << std::endl;
 
 		PINFO("Creating Sound: ");
 		//std::cout << "Creating Sound: ";
 		FMOD::Sound* new_sound;
-		ErrCodeCheck(system_obj->createSound(file_path.string().c_str(), FMOD_LOOP_OFF, 0, &new_sound));
+		bool check = ErrCodeCheck(system_obj->createSound(file_path.string().c_str(), FMOD_LOOP_OFF, 0, &new_sound));
+
+		if (!check)
+		{
+			PWARNING("Failed to created Sound: %s", audio_name.c_str());
+			return false;
+		}
 
 		mSounds.insert(std::make_pair(audio_name, new_sound));
 	}
+
+	return true;
 }
 
 /******************************************************************************/
