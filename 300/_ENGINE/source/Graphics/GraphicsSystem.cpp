@@ -35,6 +35,21 @@ void GraphicsSystem::Init()
 	SetupShaderStorageBuffers();
 	// -- WIP -- SHADER STORAGE BUFFER OBJECT
 	m_Image2DMesh.Setup2DImageMesh();
+	for (int i{}; i < 32; ++i)
+	{
+		m_Textures.emplace_back(i);
+	}
+
+	// Render UI objects
+	std::string uiShader = "UIShader";
+	uid uiShaderstr(uiShader);
+	m_UiShaderInst = *systemManager->mResourceTySystem->get_Shader(uiShaderstr.id);
+
+	// Uniforms of UI Shader
+	m_UiShaderInst.Activate();
+	GLuint uniform_tex = glGetUniformLocation(m_UiShaderInst.GetHandle(), "uTex2d");
+	glUniform1iv(uniform_tex, (GLsizei)m_Textures.size(), m_Textures.data()); // passing Texture ID to the fragment shader
+	m_UiShaderInst.Deactivate();
 
 	glEnable(GL_MULTISAMPLE);
 
@@ -286,6 +301,24 @@ void GraphicsSystem::Update(float dt)
 		pointLights.clear();
 	}
 
+	// UI Objects
+	m_Image2DMesh.ClearInstances();		// Clear data from previous frame
+	m_Image2DStore.clear();
+	auto UiInstances = systemManager->ecs->GetEntitiesWith<UIrenderer>();
+	for (Entity inst : UiInstances)
+	{
+		UIrenderer& uiRenderer = inst.GetComponent<UIrenderer>();
+		Transform& uiTransform = inst.GetComponent<Transform>();
+
+		float uiWidth = uiTransform.mScale.x;
+		float uiHeight = uiTransform.mScale.y;
+		vec2 uiPosition = vec2(uiTransform.mTranslate.x, uiTransform.mTranslate.y);
+
+		Add2DImageInstance(uiWidth, uiHeight, uiPosition, uiRenderer.ID(), static_cast<int>(inst.id));
+	}
+	// Send UI data to GPU
+	m_Image2DMesh.PrepForDraw();
+
 #pragma endregion
 }
 
@@ -397,10 +430,10 @@ void GraphicsSystem::EditorDraw(float dt)
 			}
 		}
 
-		m_Textures.push_back(0);
-		m_Textures.push_back(1);
-		m_Textures.push_back(2);
-		m_Textures.push_back(3);
+		//m_Textures.push_back(0);
+		//m_Textures.push_back(1);
+		//m_Textures.push_back(2);
+		//m_Textures.push_back(3);
 
 		GLuint uniform_tex = glGetUniformLocation(shaderID, "uTex");
 		glUniform1iv(uniform_tex, (GLsizei)m_Textures.size(), m_Textures.data()); // passing Texture ID to the fragment shader
@@ -427,7 +460,7 @@ void GraphicsSystem::EditorDraw(float dt)
 
 		shaderinst.Deactivate();
 		meshinst.UnbindVao();
-		m_Textures.clear();
+		//m_Textures.clear();
 
 		// unbind the textures
 		for (int i{0}; i < 4; i++)
@@ -441,6 +474,12 @@ void GraphicsSystem::EditorDraw(float dt)
 
 	// Debug draw stuffs should be drawn last
 	m_Renderer.RenderAll(m_EditorCamera.viewProj());
+
+	// Render UI objects
+	m_UiShaderInst.Activate();		// Activate shader
+	DrawAll2DInstances(m_UiShaderInst.GetHandle());
+	m_UiShaderInst.Deactivate();	// Deactivate shader
+
 #pragma endregion
 
 	// TODO: Clears all instances that have been rendered from local buffer
@@ -540,10 +579,10 @@ void GraphicsSystem::GameDraw(float dt)
 			}
 		}
 
-		m_Textures.push_back(0);
-		m_Textures.push_back(1);
-		m_Textures.push_back(2);
-		m_Textures.push_back(3);
+		//m_Textures.push_back(0);
+		//m_Textures.push_back(1);
+		//m_Textures.push_back(2);
+		//m_Textures.push_back(3);
 
 		// Bind mesh's VAO, copy render data into VBO, Draw
 		DrawAll(meshinst);
@@ -551,7 +590,7 @@ void GraphicsSystem::GameDraw(float dt)
 
 		meshinst.UnbindVao();
 		shaderinst.Deactivate();
-		m_Textures.clear();
+		//m_Textures.clear();
 
 		// unbind the textures
 		for (int i{0}; i < 4; i++)
@@ -565,7 +604,11 @@ void GraphicsSystem::GameDraw(float dt)
 		meshinst.ClearInstances();
 		m_Renderer.ClearInstances();
 	}
-	pointLights.clear();
+
+	// Render UI objects
+	m_UiShaderInst.Activate();		// Activate shader
+	DrawAll2DInstances(m_UiShaderInst.GetHandle());
+	m_UiShaderInst.Deactivate();	// Deactivate Shader
 
 	// TODO: Clears all instances that have been rendered from local buffer
 	m_GameFbo.Unbind();
@@ -610,18 +653,6 @@ void GraphicsSystem::AddInstance(GFX::Mesh &mesh, mat4 transform, const vec4& co
 	if (animInstanceID < 0)
 		animInstanceID = -2;
 	mesh.mTexEntID.push_back(vec4(0, (float)entityID + 0.5f, (float)animInstanceID + 0.5f, 0));
-}
-
-void GraphicsSystem::AddInstanceUI(Transform transform, unsigned texID, unsigned entityID, const vec4& color)
-{
-	// Local to world transformation
-	mat4 scale = glm::scale(transform.mScale);
-	mat4 translate = glm::translate(transform.mTranslate);
-
-	glm::quat quatRotate = glm::quat(transform.mRotate); // Retrieve quaternions via euler angles
-	glm::mat4 rotation = glm::toMat4(quatRotate);		 // Retrieve rotation matrix via quaternions
-
-
 }
 
 /***************************************************************************/
@@ -923,10 +954,38 @@ void GraphicsSystem::SetupShaderStorageBuffers()
 	m_FinalBoneMatrixSsbo.Create(sizeof(mat4) * MAX_NUM_BONES * MAX_INSTANCES, 3);
 }
 
-void GraphicsSystem::Add2DImageInstance(float width, float height, vec2 const& position, unsigned texHandle, vec4 const& color, unsigned entityID)
+void GraphicsSystem::DrawAll2DInstances(unsigned shaderID)
 {
-	float half_w = width * 0.5f;
-	float half_h = height * 0.5f;
+	// Bind Textures to OpenGL context
+	for (size_t i{}; i < m_Image2DStore.size(); ++i)
+	{
+		glBindTextureUnit(i, m_Image2DStore[i]);
+		//m_Textures.push_back(i);
+	}
+	//GLuint uniform_tex = glGetUniformLocation(shaderID, "uTex2d");
+	//glUniform1iv(uniform_tex, (GLsizei)m_Textures.size(), m_Textures.data()); // passing Texture ID to the fragment shader
+	//m_Textures.clear();
+
+	// Bind 2D quad VAO
+	m_Image2DMesh.BindVao();
+
+	// Draw call
+	glDrawArraysInstanced(GL_TRIANGLE_FAN, 0, 4, m_Image2DMesh.mLTW.size());
+
+	// Unbind 2D quad VAO
+	m_Image2DMesh.UnbindVao();
+
+	// Unbind Textures from openGL context
+	for (size_t i{}; i < m_Image2DStore.size(); ++i)
+	{
+		glBindTextureUnit(i, 0);
+	}
+}
+
+void GraphicsSystem::Add2DImageInstance(float width, float height, vec2 const& position, unsigned texHandle, unsigned entityID, vec4 const& color)
+{
+	float half_w = m_Width * 0.5f;
+	float half_h = m_Height * 0.5f;
 
 	mat4 world =
 	{
@@ -936,7 +995,11 @@ void GraphicsSystem::Add2DImageInstance(float width, float height, vec2 const& p
 		vec4(position.x / half_w, position.y / half_h, 0.f, 1.f)
 	};
 
-	int texIndex = StoreTextureIndex(texHandle);
+	int texIndex{};
+	if (texHandle > 0)
+		texIndex = StoreTextureIndex(texHandle);
+	else
+		texIndex = -2;
 
 	m_Image2DMesh.mLTW.push_back(world);
 	m_Image2DMesh.mColors.push_back(color);

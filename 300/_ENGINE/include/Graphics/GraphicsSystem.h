@@ -204,6 +204,9 @@ public:
 	// -- Textures --
 	std::vector<int> m_Textures;
 
+	// -- Shader Instance
+	GFX::Shader m_UiShaderInst;
+
 	// -- Flags --
 	int		m_DebugDrawing{ 1 };			// debug drawing 
 	bool	m_EditorMode;
@@ -228,7 +231,8 @@ private:
 	// -- 2D Image Rendering --
 	GFX::Mesh m_Image2DMesh;
 	std::vector<unsigned>m_Image2DStore;
-	void Add2DImageInstance(float width, float height, vec2 const& position, unsigned texHandle, vec4 const& color = vec4{ 1.f, 1.f, 1.f, 1.f }, unsigned entityID = 0xFFFFFFFF);
+	void DrawAll2DInstances(unsigned shaderID);
+	void Add2DImageInstance(float width, float height, vec2 const& position, unsigned texHandle, unsigned entityID = 0xFFFFFFFF, vec4 const& color = vec4{ 1.f, 1.f, 1.f, 1.f });
 	int StoreTextureIndex(unsigned texHandle);
 };
 

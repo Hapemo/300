@@ -149,7 +149,10 @@ void Inspect::update()
 			Audio& audio = ent.GetComponent<Audio>();
 			audio.Inspect();
 		}
-
+		if (ent.HasComponent<UIrenderer>()) {
+			UIrenderer& render = ent.GetComponent<UIrenderer>();
+			render.Inspect();
+		}
 		if (ent.HasComponent<InputActionMapEditor>()) {
 			InputActionMapEditor& inputAction = ent.GetComponent<InputActionMapEditor>();
 			inputAction.Inspect();
@@ -227,6 +230,10 @@ void Inspect::Add_component() {
 				Entity meshobj(Hierarchy::selectedId);
 
 			}
+		}
+		if (ImGui::Selectable("UIrenderer")) {
+			if (!Entity(Hierarchy::selectedId).HasComponent<UIrenderer>())
+				Entity(Hierarchy::selectedId).AddComponent<UIrenderer>();
 		}
 
 		if (ImGui::Selectable("InputActionMapEditor")) {
@@ -1196,6 +1203,30 @@ void InputActionMapEditor::Inspect()
 					ImGui::EndCombo();
 				}
 			}
+		}
+	}
+}
+
+
+void UIrenderer::Inspect() {
+	bool delete_component = true;
+
+	if (ImGui::CollapsingHeader("UIrenderer", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
+	{
+		ImGui::Selectable(" ");
+
+		if (ImGui::BeginDragDropTarget())
+		{
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_TEXT")) {
+
+				const char* data = (const char*)payload->Data;
+				std::string data_str = std::string(data);
+				mTexPath = data_str;
+
+				uid temp(mTexPath);
+				mTextureRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(temp.id));
+			}
+			ImGui::EndDragDropTarget();
 		}
 	}
 }

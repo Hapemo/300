@@ -23,6 +23,7 @@ Components used by the ECS.
 #include "Input/KeyBind.h"
 #include "Input/Input.h"
 #include "Guid.h"
+#include "Texture.hpp"
 //#include "Graphics/GraphicsSystem.h"
 //#include "Mesh.hpp"
 
@@ -130,9 +131,14 @@ struct UIrenderer
 
 	inline unsigned ID() 
 	{
-		return (reinterpret_cast<GFX::Texture*>(mTextureRef))->ID();
-	}
+		if (mTextureRef != nullptr) {
+			int temp = (reinterpret_cast<GFX::Texture*>(mTextureRef))->ID();
+			return temp;
+		}
 
+		return 0;
+	}
+	void Inspect();
 };
 
 
