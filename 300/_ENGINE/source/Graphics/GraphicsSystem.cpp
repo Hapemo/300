@@ -94,6 +94,9 @@ void GraphicsSystem::Init()
 /**************************************************************************/
 void GraphicsSystem::Update(float dt)
 {
+	// Check window size for any updates
+	CheckWindowSize();
+
 	// update the camera's transformations, and its input
 	if (m_EditorMode)
 	{
@@ -859,6 +862,34 @@ void GraphicsSystem::PrintMat4(const glm::mat4 &input)
 void GraphicsSystem::UnpauseGlobalAnimation()
 {
 	m_EnableGlobalAnimations = true;
+}
+
+void GraphicsSystem::CheckWindowSize()
+{
+	int width{}, height{};
+
+	glfwGetFramebufferSize(m_Window->GetHandle(), &width, &height);
+
+	if (width != m_Width || height != m_Height)
+	{
+		ResizeWindow({ width, height });
+	}
+}
+
+void GraphicsSystem::ResizeWindow(ivec2 newSize)
+{
+	// Update viewport
+	glViewport(0, 0, newSize.x, newSize.y);
+
+	// Update FBOs
+	m_Fbo.Resize(newSize.x, newSize.y);
+	m_GameFbo.Resize(newSize.x, newSize.y);
+
+	// Update Window
+	m_Window->SetWindowSize(newSize);
+
+	m_Width = newSize.x;
+	m_Height = newSize.y;
 }
 
 void GraphicsSystem::SetupShaderStorageBuffers()

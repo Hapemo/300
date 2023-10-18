@@ -112,6 +112,11 @@ void GFX::Window::CloseWindow()
     glfwSetWindowShouldClose(mWindow, GL_TRUE);
 }
 
+void GFX::Window::SetWindowSize(ivec2 newSize)
+{
+    mSize = newSize;
+}
+
 void GFX::Window::PollEvents()
 {
     glfwPollEvents();
