@@ -70,6 +70,18 @@ void EditorApplication::MainUpdate()
 {
     Entity e1 = systemManager->ecs->NewEntity();
     Entity e2 = systemManager->ecs->NewEntity();
+
+    e1.GetComponent<General>().name = "rubber";
+    e1.GetComponent<General>().tagid = 1;
+    e1.GetComponent<General>().subtag = SUBTAG::ACTIVE;
+    e1.GetComponent<General>().isActive = false;
+    e1.GetComponent<General>().isPaused = true;
+    e2.GetComponent<General>().name = "ducky";
+    e2.GetComponent<General>().tagid = 3;
+    e2.GetComponent<General>().subtag = SUBTAG::BACKGROUND;
+    e2.GetComponent<General>().isActive = true;
+    e2.GetComponent<General>().isPaused = false;
+
     e1.AddComponent<RigidBody>();
     e1.AddComponent<PlaneCollider>();
     e1.AddComponent<BoxCollider>();
@@ -83,6 +95,9 @@ void EditorApplication::MainUpdate()
     scn.AddEntity(e2);
     scn.mName = "testSerialization";
     ObjectFactory::SaveScene(&scn);
+
+    Scene test;
+    ObjectFactory::LoadScene(&test, "testSerialization");
 
     while (!glfwWindowShouldClose(mWindow.GetHandle()))
     {

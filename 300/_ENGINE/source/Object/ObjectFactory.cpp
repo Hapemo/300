@@ -22,16 +22,40 @@ and saving of prefabs, scenes and gamestates using serialization.
 #include "ECS/ECS_Components.h"
 
 #define SERIALIZE_SELF(T) if (e.HasComponent<T>()) e.GetComponent<T>().SerializeSelf(writer)
+#define DESERIALIZE_SELF(T, S) if(reader.HasMember(S)) e.AddComponent<T>().DeserializeSelf(reader[S])
 
-void ObjectFactory::LoadEntity(Entity e, rapidjson::Value & reader)
+void ObjectFactory::LoadEntity(Entity e, rapidjson::Value& reader)
 {
-
+	DESERIALIZE_SELF(General, "general");
+	DESERIALIZE_SELF(Transform, "transform");
+	DESERIALIZE_SELF(RigidBody, "rigidbody");
+	//DESERIALIZE_SELF(MeshRenderer, "meshrenderer");
+	//DESERIALIZE_SELF(BoxCollider, "boxcollider");
+	//DESERIALIZE_SELF(SphereCollider, "spherecollider");
+	//DESERIALIZE_SELF(PlaneCollider, "planecollider");
+	//DESERIALIZE_SELF(Scripts, "scripts");
+	//DESERIALIZE_SELF(Parent, "parent");
+	//DESERIALIZE_SELF(Children, "children");
+	//DESERIALIZE_SELF(Audio, "audio");
+	//DESERIALIZE_SELF(Camera, "camera");
+	//DESERIALIZE_SELF(Prefab, "prefab");
+	//DESERIALIZE_SELF(PointLight, "pointlight");
 }
 
 // deserialize scenes from the Scenes folder
 void ObjectFactory::LoadScene(Scene* scene, const std::string& filename)
 {
+	// the doc is my rapidjson::Value& reader
+	rapidjson::Document doc;
+	ReadFromFile(ConfigManager::GetValue("ScenePath") + filename + ".scn", doc);
 
+	// because an array of objects is contained inside of doc
+	for (rapidjson::Value::ValueIterator ci = doc.Begin(); ci != doc.End(); ++ci)
+	{
+		Entity e = systemManager->ecs->NewEntity();
+		LoadEntity(e, *ci);
+		scene->mEntities.insert(e);
+	}
 }
 
 void ObjectFactory::LoadGameState(GameState* gs, const std::string& _name)

@@ -74,12 +74,32 @@ SERIALIZE_BASIC(Script)
 	Serialize(writer, name, val.scriptFile);
 }
 
-void WriteToFile(const std::string& filename, const rapidjson::StringBuffer& buffer)
+SERIALIZE_BASIC(SUBTAG)
 {
-	std::ofstream of{ filename };
-	of << buffer.GetString();
-	if (of.good()) return;
-	PERROR(("Writing to output file failed! File name: " + filename).c_str());
+	if (name != nullptr)
+		writer.Key(name);
+	Serialize(writer, nullptr, static_cast<int>(val));
+}
+
+SERIALIZE_BASIC(MATERIAL)
+{
+	if (name != nullptr)
+		writer.Key(name);
+	Serialize(writer, nullptr, static_cast<int>(val));
+}
+
+SERIALIZE_BASIC(MOTION)
+{
+	if (name != nullptr)
+		writer.Key(name);
+	Serialize(writer, nullptr, static_cast<int>(val));
+}
+
+SERIALIZE_BASIC(AUDIOTYPE)
+{
+	if (name != nullptr)
+		writer.Key(name);
+	Serialize(writer, nullptr, static_cast<int>(val));
 }
 
 DESERIALIZE_BASIC(bool)
@@ -153,4 +173,76 @@ DESERIALIZE_BASIC(Script)
 {
 	if (reader.HasMember(name))
 		Deserialize(reader, name, val.scriptFile);
+}
+
+DESERIALIZE_BASIC(SUBTAG)
+{
+	if (reader.HasMember(name))
+	{
+		int num;
+		Deserialize(reader, name, num);
+		val = static_cast<SUBTAG>(num);
+	}
+}
+
+DESERIALIZE_BASIC(MATERIAL)
+{
+	if (reader.HasMember(name))
+	{
+		int num;
+		Deserialize(reader, name, num);
+		val = static_cast<MATERIAL>(num);
+	}
+}
+
+DESERIALIZE_BASIC(MOTION)
+{
+	if (reader.HasMember(name))
+	{
+		int num;
+		Deserialize(reader, name, num);
+		val = static_cast<MOTION>(num);
+	}
+}
+
+DESERIALIZE_BASIC(AUDIOTYPE)
+{
+	if (reader.HasMember(name))
+	{
+		int num;
+		Deserialize(reader, name, num);
+		val = static_cast<AUDIOTYPE>(num);
+	}
+}
+
+void WriteToFile(const std::string& filename, const rapidjson::StringBuffer& buffer)
+{
+	std::ofstream of{ filename };
+	of << buffer.GetString();
+	if (of.good()) return;
+	PERROR(("Writing to output file failed! File name: " + filename).c_str());
+}
+
+void ReadFromFile(const std::string& filename, rapidjson::Document& doc)
+{
+	std::ifstream ifs{ filename };
+	if(!ifs.is_open())
+		PERROR(("Reading from input file failed! File name: " + filename).c_str());
+
+	std::stringstream ss;
+	ss << ifs.rdbuf();
+	ifs.close();
+
+	if (!InitDocument(ss.str(), doc) || !doc.IsArray())
+		return;
+}
+
+bool InitDocument(const std::string& s, rapidjson::Document& doc)
+{
+	if (s.empty())
+		return false;
+
+	std::string valid(s);
+
+	return !doc.Parse(valid.c_str()).HasParseError() ? true : false;
 }

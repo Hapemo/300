@@ -3,6 +3,9 @@
 #include "pch.h"
 #include <concepts>
 #include "glm/glm.hpp"
+#include "ECS/Tags.h"
+#include "Physics/PhysicsTypes.h"
+#include "Audio/AudioType.h"
 
 // forward declaration
 struct Scene;
@@ -23,6 +26,10 @@ SERIALIZE_BASIC(std::string);
 SERIALIZE_BASIC(glm::ivec2);
 SERIALIZE_BASIC(glm::vec3);
 SERIALIZE_BASIC(Script);
+SERIALIZE_BASIC(SUBTAG);
+SERIALIZE_BASIC(MATERIAL);
+SERIALIZE_BASIC(MOTION);
+SERIALIZE_BASIC(AUDIOTYPE);
 #pragma endregion basic_types
 // Derived types has to inherit from Serializable
 #pragma region derived_types
@@ -49,6 +56,7 @@ template <typename T>
 void Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer, const char* name, const T& val)
 {
 	if (!std::derived_from<T, Serializable>) return;
+
 	if (name != nullptr) writer.Key(name);
 
 	val.SerializeSelf(writer);
@@ -122,6 +130,10 @@ DESERIALIZE_BASIC(std::string);
 DESERIALIZE_BASIC(glm::ivec2);
 DESERIALIZE_BASIC(glm::vec3);
 DESERIALIZE_BASIC(Script);
+DESERIALIZE_BASIC(SUBTAG);
+DESERIALIZE_BASIC(MATERIAL);
+DESERIALIZE_BASIC(MOTION);
+DESERIALIZE_BASIC(AUDIOTYPE);
 #pragma endregion basic_types
 // Derived types has to inherit from Serializable
 #pragma region derived_types
@@ -139,6 +151,8 @@ void Deserialize(rapidjson::Value& reader, const char* name, const std::map<T1, 
 #pragma endregion containers
 
 #pragma region file_operations
+void ReadFromFile(const std::string& filename, rapidjson::Document& doc);
+bool InitDocument(const std::string& s, rapidjson::Document& doc);
 #pragma endregion file_operations
 
 #pragma region implementation
@@ -147,7 +161,7 @@ template <typename T>
 void Deserialize(rapidjson::Value& reader, const char* name, const T& val)
 {
 	if (!reader.HasMember(name)) return;
-	if (!std::derived_from<T, Serializable>) return;
+	if (std::derived_from<T, Serializable>) return;
 
 	val.DeserializeSelf(reader[name]);
 }
@@ -166,6 +180,9 @@ template <typename T>
 void Deserialize(rapidjson::Value& reader, const char* name, const std::vector<T>& vec)
 {
 	if (!reader.HasMember(name)) return;
+
+	//check if the array is empty
+	if (reader[name].Empty()) return;
 
 	// make sure the vector is empty
 	vec.clear();

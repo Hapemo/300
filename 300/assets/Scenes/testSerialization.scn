@@ -2,11 +2,11 @@
     {
         "entityid": 1,
         "general": {
-            "name": "Entity1",
-            "tagid": 0,
+            "name": "rubber",
+            "tagid": 1,
             "subtag": 0,
-            "isActive": true,
-            "isPaused": false
+            "isActive": false,
+            "isPaused": true
         },
         "transform": {
             "scale": {
@@ -88,9 +88,9 @@
     {
         "entityid": 2,
         "general": {
-            "name": "Entity2",
-            "tagid": 0,
-            "subtag": 0,
+            "name": "ducky",
+            "tagid": 3,
+            "subtag": 1,
             "isActive": true,
             "isPaused": false
         },

@@ -6,7 +6,7 @@ void General::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& wr
 	writer.StartObject();
 	Serialize(writer, "name", name);
 	Serialize(writer, "tagid", tagid);
-	Serialize(writer, "subtag", static_cast<int>(subtag));
+	Serialize(writer, "subtag", subtag);
 	Serialize(writer, "isActive", isActive);
 	Serialize(writer, "isPaused", isPaused);
 	writer.EndObject();
@@ -14,7 +14,11 @@ void General::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& wr
 
 void General::DeserializeSelf(rapidjson::Value& reader)
 {
-
+	Deserialize(reader, "name", name);
+	Deserialize(reader, "tagid", tagid);
+	Deserialize(reader, "subtag", subtag);
+	Deserialize(reader, "isActive", isActive);
+	Deserialize(reader, "isPaused", isPaused);
 }
 
 void Transform::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
@@ -29,7 +33,9 @@ void Transform::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& 
 
 void Transform::DeserializeSelf(rapidjson::Value& reader)
 {
-
+	Deserialize(reader, "scale", mScale);
+	Deserialize(reader, "rotate", mRotate);
+	Deserialize(reader, "translate", mTranslate);
 }
 
 void RigidBody::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
@@ -37,15 +43,18 @@ void RigidBody::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& 
 	writer.Key("rigidbody");
 	writer.StartObject();
 	Serialize(writer, "density", mDensity);
-	Serialize(writer, "material", static_cast<int>(mMaterial));
-	Serialize(writer, "motion", static_cast<int>(mMotion));
+	Serialize(writer, "material", mMaterial);
+	Serialize(writer, "motion", mMotion);
 	Serialize(writer, "velocity", mVelocity);
 	writer.EndObject();
 }
 
 void RigidBody::DeserializeSelf(rapidjson::Value& reader)
 {
-
+	Deserialize(reader, "density", mDensity);
+	Deserialize(reader, "material", mMaterial);
+	Deserialize(reader, "motion", mMotion);
+	Deserialize(reader, "velocity", mVelocity);
 }
 
 void MeshRenderer::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
@@ -63,7 +72,12 @@ void MeshRenderer::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer
 
 void MeshRenderer::DeserializeSelf(rapidjson::Value& reader)
 {
-
+	Deserialize(reader, "vert", mShaderPath.first);
+	Deserialize(reader, "frag", mShaderPath.second);
+	Deserialize(reader, "materialinstance", mMaterialInstancePath, 4);
+	//Deserialize(reader, "mesh", mMeshPath);
+	//Deserialize(reader, "texturecont", mTextureCont, 4);
+	//Deserialize(reader, "guid", mGUID);
 }
 
 void BoxCollider::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
@@ -77,7 +91,8 @@ void BoxCollider::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>
 
 void BoxCollider::DeserializeSelf(rapidjson::Value& reader)
 {
-
+	//Deserialize(reader, "scaleoffset", mScaleOffset);
+	//Deserialize(reader, "translateoffset", mTranslateOffset);
 }
 
 void SphereCollider::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
@@ -91,7 +106,8 @@ void SphereCollider::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuff
 
 void SphereCollider::DeserializeSelf(rapidjson::Value& reader)
 {
-
+	//Deserialize(reader, "scaleoffset", mScaleOffset);
+	//Deserialize(reader, "translateoffset", mTranslateOffset);
 }
 
 void PlaneCollider::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
@@ -105,6 +121,8 @@ void PlaneCollider::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffe
 
 void PlaneCollider::DeserializeSelf(rapidjson::Value& reader)
 {
+	//Deserialize(reader, "normal", mNormal);
+	//Deserialize(reader, "translateoffset", mTranslateOffset);
 }
 
 void Scripts::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
@@ -117,7 +135,7 @@ void Scripts::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& wr
 
 void Scripts::DeserializeSelf(rapidjson::Value& reader)
 {
-
+	//Deserialize(reader, "scriptscontainer", scriptsContainer);
 }
 
 void Parent::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
@@ -132,7 +150,9 @@ void Parent::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& wri
 
 void Parent::DeserializeSelf(rapidjson::Value& reader)
 {
-
+	//Deserialize(reader, "prevsibling", mPrevSibling);
+	//Deserialize(reader, "nextsibling", mNextSibling);
+	//Deserialize(reader, "parent", mParent);
 }
 
 void Children::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
@@ -146,7 +166,8 @@ void Children::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& w
 
 void Children::DeserializeSelf(rapidjson::Value& reader)
 {
-
+	//Deserialize(reader, "numchildren", mNumChildren);
+	//Deserialize(reader, "firstchild", mFirstChild);
 }
 
 void Audio::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
@@ -154,7 +175,7 @@ void Audio::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writ
 	writer.Key("audio");
 	writer.StartObject();
 	Serialize(writer, "filename", mFileName);
-	Serialize(writer, "audiotype", static_cast<int>(mAudioType));
+	Serialize(writer, "audiotype", mAudioType);
 	Serialize(writer, "playing", mIsPlaying);
 	Serialize(writer, "play", mIsPlay);
 	writer.EndObject();
@@ -162,7 +183,10 @@ void Audio::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writ
 
 void Audio::DeserializeSelf(rapidjson::Value& reader)
 {
-
+	//Deserialize(reader, "filename", mFileName);
+	//Deserialize(reader, "audiotype", mAudioType);
+	//Deserialize(reader, "playing", mIsPlaying);
+	//Deserialize(reader, "play", mIsPlay);
 }
 
 void Camera::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
@@ -179,7 +203,11 @@ void Camera::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& wri
 
 void Camera::DeserializeSelf(rapidjson::Value& reader)
 {
-
+	//Deserialize(reader, "positon", mCamera.mPosition);
+	//Deserialize(reader, "target", mCamera.mTarget);
+	//Deserialize(reader, "size", mCamera.mSize);
+	//Deserialize(reader, "near", mCamera.mNear);
+	//Deserialize(reader, "far", mCamera.mFar);
 }
 
 void Prefab::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
@@ -192,7 +220,7 @@ void Prefab::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& wri
 
 void Prefab::DeserializeSelf(rapidjson::Value& reader)
 {
-
+	//Deserialize(reader, "prefab", mPrefab);
 }
 
 void PointLight::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
@@ -207,5 +235,7 @@ void PointLight::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>&
 
 void PointLight::DeserializeSelf(rapidjson::Value& reader)
 {
-
+	//Deserialize(reader, "lightcolor", mLightColor);
+	//Deserialize(reader, "attenuation", mAttenuation);
+	//Deserialize(reader, "intensity", mIntensity);
 }

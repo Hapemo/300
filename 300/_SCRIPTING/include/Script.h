@@ -19,6 +19,7 @@ Run any function in the script
 #include "sol/sol.hpp"
 #include "ECS/ECS.h"
 #include "ECS/ECS_Systems.h"
+#include "Serialization/Serialization.h"
 
 /***************************************************************************/
 /*!
