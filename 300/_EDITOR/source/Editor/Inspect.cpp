@@ -220,6 +220,8 @@ void Inspect::Add_component() {
 		if (ImGui::Selectable("Audio")) {
 			if (!Entity(Hierarchy::selectedId).HasComponent<Audio>())
 				Entity(Hierarchy::selectedId).AddComponent<Audio>();
+
+			systemManager->mAudioSystem.get()->InitAudioChannelReference(Entity(Hierarchy::selectedId));  // Populates this <Audio> component's channel into the global database. 
 		}
 		if (ImGui::Selectable("MeshRenderer")) {
 			if (!Entity(Hierarchy::selectedId).HasComponent<MeshRenderer>()) {
@@ -1087,12 +1089,12 @@ void Audio::Inspect() {
 				mAudio = i;
 				switch (mAudio)
 				{
-				case 0:
+				case 1:
 					mAudioType = AUDIO_SFX;
 					mTypeChanged = true;
 					systemManager->mAudioSystem.get()->UpdateChannelReference(Entity(Hierarchy::selectedId));
 					break;
-				case 1:
+				case 2:
 					mAudioType = AUDIO_BGM;
 					mTypeChanged = true;
 					systemManager->mAudioSystem.get()->UpdateChannelReference(Entity(Hierarchy::selectedId));

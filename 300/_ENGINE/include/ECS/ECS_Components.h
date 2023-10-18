@@ -319,7 +319,7 @@ struct Audio
 	FMOD::Sound*   mSound;				   // Each <Audio> can only hold a reference to the "Audio File" it's attached to.
 
 
-	Audio() : mFilePath(""), mFileName(""), mAudioType(AUDIO_NULL), mIsEmpty(true)
+	Audio() : mFilePath(""), mFileName(""), mAudioType(AUDIO_SFX), mIsEmpty(true)
 	{
 		mChannelID = uid();
 	}

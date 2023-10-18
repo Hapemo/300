@@ -435,16 +435,34 @@ void AudioSystem::UpdateChannelReference(Entity id)
 	{
 		switch (type)
 		{
-			//case AUDIO_BGM:
-			//	for (int i = 0; i < mChannelsNewA[AUDIO_BGM].size(); i++)
-			//	{
-			//		//if(mChannelsNewA[AUDIO_BGM])
-			//	}
-			//	mChannelsNewA[AUDIO_BGM];
-			//case AUDIO_SFX:
+			case AUDIO_BGM:
+				for (int i = 0; i < mChannelsNewA[AUDIO_BGM].size(); i++)
+				{
+					//if(mChannelsNewA[AUDIO_BGM])
+				}
+				mChannelsNewA[AUDIO_BGM];
+		/*	case AUDIO_SFX:*/
 
 		}
 		mChannelsNewA[type].push_back(audio_component.mChannel); // Saves a reference of the <Audio>'s dedicated channel into the global database.
+	}
+}
+
+void AudioSystem::InitAudioChannelReference(Entity id)
+{
+	Audio& audio_component = id.GetComponent<Audio>();
+
+	FMOD::Channel*& channel_ref = audio_component.mChannel;
+	std::pair<uid, FMOD::Channel*&> channel_pair = std::make_pair(audio_component.mChannelID, std::ref(channel_ref));
+
+	switch (audio_component.mAudioType)
+	{
+		case AUDIO_BGM:
+			mChannelswID[AUDIO_BGM].push_back(channel_pair);
+			break;
+		case AUDIO_SFX:
+			mChannelswID[AUDIO_SFX].push_back(channel_pair);
+			break;
 	}
 }
 
@@ -640,15 +658,23 @@ void AudioSystem::SetAllSFXVolume(float audio_vol)
  /******************************************************************************/
 void AudioSystem::SetAllBGMVolume(float audio_vol)
 {
-	auto channel_it = mChannelsNewA.find(AUDIO_BGM);
-	PINFO("Setting BGM Volume: ");
-	//std::cout << "Setting BGM Volume: ";
+	auto channel_id_it = mChannelswID.find(AUDIO_BGM);
 
-	if (channel_it != mChannelsNewA.end())
+	auto audio_entities = systemManager->ecs->GetEntitiesWith<Audio>();
+
+	if (channel_id_it != mChannelswID.end())
 	{
-		for (FMOD::Channel* channel : channel_it->second)
+		for (auto& channel_id_pair : channel_id_it->second)
 		{
-			ErrCodeCheck(channel->setVolume(audio_vol));
+			for (Entity e : audio_entities)
+			{
+				Audio& audio_component = e.GetComponent<Audio>();
+
+				if (audio_component.mIsPlaying) // Only those channels which are playing can be set volume.
+				{
+					ErrCodeCheck(channel_id_pair.second->setVolume(audio_vol));
+				}
+			}
 		}
 	}
 

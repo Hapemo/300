@@ -70,8 +70,10 @@ public:
 	AudioSystem();
 	~AudioSystem();
 
+	// Helper Functions
 	void UpdateLoadAudio(Entity id);				 // [For Engine] - Add Component mid-way
 	void UpdateChannelReference(Entity id);		     // [For Engine] - Add Channel to the global [SFX/BGM] channels. (for global control)
+	void InitAudioChannelReference(Entity id);		 // [For Engine]
 
 public:
 	// Retained Functions (Without Linking to <Audio> component)
