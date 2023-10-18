@@ -474,6 +474,19 @@ void GraphicsSystem::GameDraw(float dt)
 		m_Renderer.ClearInstances();
 	}
 
+#pragma region render bloom
+	m_PingPongFbo.PrepForDraw();
+
+	// Render the bloom for the Editor Framebuffer
+	uid gaussianshaderstr("GaussianBlurShader");
+	GFX::Shader& gaussianShaderInst = *systemManager->mResourceTySystem->get_Shader(gaussianshaderstr.id);
+	m_PingPongFbo.GaussianBlur(gaussianShaderInst, m_GameFbo);
+
+	BlendFramebuffers(m_GameFbo, m_GameFbo.GetColorAttachment(), "Scene", m_PingPongFbo.pingpongColorbuffers[0], "BloomBlur");
+	//BlendFramebuffers(m_Fbo, m_Fbo.GetColorAttachment(), "Scene", m_Fbo.GetBrightColorsAttachment(), "BloomBlur");
+	//BlendFramebuffers(m_Fbo, m_Fbo.GetColorAttachment(), "Scene", m_Fbo.GetColorAttachment(), "BloomBlur");
+#pragma endregion
+
 	// Render UI objects
 	m_UiShaderInst.Activate();		// Activate shader
 	DrawAll2DInstances(m_UiShaderInst.GetHandle());

@@ -1,7 +1,6 @@
 #version 450
 
 in vec2 TexCoords;
-//in vec3 TangentLightPos;
 in mat3 TBN;
 in vec3 TangentViewPos;
 in vec3 TangentFragPos;
@@ -17,6 +16,15 @@ struct PointLight           // 48 Bytes
     float   quadratic;      // 26
     float   intensity;      // 40
     float   padding;        // 44
+};
+
+struct Material
+{
+    int diffuseMap;
+    int normalMap;
+    int specularMap;
+    int shininessMap;
+    int emissionMap;
 };
 
 layout (std430, binding = 2) buffer pointLightBuffer
@@ -59,13 +67,14 @@ vec3 ComputePointLight(PointLight light, vec4 diffColor)
     vec3 halfwayDir = normalize(lightDir + viewDir);  
     float spec = pow(max(dot(normal, halfwayDir), 0.0), 32.0);
     vec3 lightIntensity = vec3(light.intensity);
-    specular = spec * specular * lightIntensity; // Multiply with light intensity
+    specular = spec * specular * light.color.rgb; // Multiply with light color
 
     // Attenuation
     float linear = max(light.linear * 0.001, 0.0);
     float quadratic = max(light.quadratic * 0.00001, 0.0);
     float distance = length(TangentLightPos - TangentFragPos);
     float attenuation = 1.0 / (1.0 + linear * distance + quadratic * (distance * distance));
+    attenuation *= light.intensity;
 
     ambient *= attenuation;
     diffuse *= attenuation;
@@ -84,7 +93,7 @@ void main()
 
     vec3 finalColor = vec3(0.0);
 
-    outEntityID = uint(Tex_Ent_ID.y);
+    //outEntityID = uint(Tex_Ent_ID.y);
     if (!uHasLight)
     {
         // No light
@@ -124,5 +133,5 @@ void main()
 
     // Output
     fragColor0 = vec4(finalColor, uColor.a);
-
+    outEntityID = uint(Tex_Ent_ID.y);
 }

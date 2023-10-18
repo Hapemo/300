@@ -327,7 +327,6 @@ void ResourceTy::shader_Loader() {
 	shaderpaths.emplace("AnimationShader", std::pair<std::string, std::string>{ "../assets/shader_files/animations_vert.glsl", "../assets/shader_files/pointLight_frag.glsl" });
 	shaderpaths.emplace("UIShader", std::pair<std::string, std::string>{ "../assets/shader_files/UI_vert.glsl", "../assets/shader_files/UI_frag.glsl" });
 	shaderpaths.emplace("GaussianBlurShader", std::pair<std::string, std::string>{ "../assets/shader_files/Quad2D_vert.glsl", "../assets/shader_files/GaussianBlur_frag.glsl" });
-	shaderpaths.emplace("GaussianBlurShaderTest", std::pair<std::string, std::string>{ "../assets/shader_files/UI_vert.glsl", "../assets/shader_files/GaussianBlur_frag.glsl" });
 	shaderpaths.emplace("AdditiveBlendShader", std::pair<std::string, std::string>{ "../assets/shader_files/Quad2D_vert.glsl", "../assets/shader_files/AdditiveBlending_frag.glsl" });
 
 	//shaderpaths.emplace("GaussianBlurShader", std::pair<std::string, std::string>{ "../assets/shader_files/pointLight_vert.glsl", "../assets/shader_files/GaussianBlur_frag.glsl" });
