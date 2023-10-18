@@ -159,6 +159,9 @@ void GFX::FBO::Resize(int width, int height)
 
 void GFX::PingPongFBO::Create(int width, int height)
 {
+	mWidth = width;
+	mHeight = height;
+
 	glGenFramebuffers(2, pingpongFBO);
 	glGenTextures(2, pingpongColorbuffers);
 	for (unsigned int i{}; i < 2; ++i)
@@ -223,6 +226,23 @@ void GFX::PingPongFBO::PrepForDraw()
 	glDepthFunc(GL_LEQUAL);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+}
+
+
+void GFX::PingPongFBO::Resize(int width, int height)
+{
+	mWidth = width;
+	mHeight = height;
+
+	for (int i{}; i < 2; ++i)
+	{
+		// Bind Color Attachment to be resized
+		glBindTexture(GL_TEXTURE_2D, pingpongColorbuffers[i]);
+		// Specifying new attachment size
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, width, height, 0, GL_RGBA, GL_FLOAT, NULL);
+		// Unbind 
+		glBindTexture(GL_TEXTURE_2D, 0);
+	}
 }
 
 

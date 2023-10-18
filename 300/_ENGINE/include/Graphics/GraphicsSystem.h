@@ -216,7 +216,7 @@ public:
 	// -- Bloom -- 
 	//vec3		mAmbientBloomThreshold { 0.2126, 0.7152, 0.0722 };
 	vec3		mAmbientBloomThreshold { 0.05, 0.05, 0.005 };
-	float		mAmbientBloomExposure{ 0.05f };
+	float		mAmbientBloomExposure{ 0.4f };
 
 	// -- Textures --
 	std::vector<int> m_Textures;	// 0, 1, ..., 31
