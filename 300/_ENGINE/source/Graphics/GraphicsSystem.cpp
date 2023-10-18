@@ -333,7 +333,7 @@ void GraphicsSystem::EditorDraw(float dt)
 		}
 
 		GLuint uniform_tex = glGetUniformLocation(shaderID, "uTex");
-		glUniform1iv(uniform_tex, (GLsizei)m_Textures.size(), m_Textures.data()); // passing Texture ID to the fragment shader
+		glUniform1iv(uniform_tex, (GLsizei)m_Textures.size(), m_Textures.data()); // passing Texture ID to the fragment  
 
 		GLuint debug_draw = glGetUniformLocation(shaderID, "uDebugDraw");
 		glUniform1i(debug_draw, m_DebugDrawing);
@@ -821,6 +821,9 @@ void GraphicsSystem::BlendFramebuffers(	GFX::FBO& targetFramebuffer, unsigned in
 
 	BlendShader.Activate();
 	targetFramebuffer.Bind();
+
+	// Draw to color attachment only. Otherwise might affect other attachments
+	glDrawBuffer(GL_COLOR_ATTACHMENT0);
 
 	glUniform1f(BlendShader.GetUniformLocation("Exposure"), systemManager->mGraphicsSystem->mAmbientBloomExposure);
 	glBindTexture(GL_TEXTURE_2D, Attachment0);									// bind the first attachment
