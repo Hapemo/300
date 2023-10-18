@@ -157,5 +157,5 @@ ScriptingSystem *SystemManager::GetScriptingPointer()
 
 InputMapSystem* SystemManager::GetInputMapSystemPointer()
 {
-	return mInputActionSystem.get();
+	return mInputMapSystem.get();
 }
