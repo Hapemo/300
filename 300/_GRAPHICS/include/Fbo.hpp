@@ -144,8 +144,15 @@ Destructor of the FBO class. Deletes the resources allocated on the GPU
 		unsigned int pingpongFBO[2];
 		unsigned int pingpongColorbuffers[2];
 		unsigned int mblurAmount = 10;
+		int mWidth{}, mHeight;
 
 		Quad2D       m_Quad;
+
+		~PingPongFBO()
+		{
+			glDeleteFramebuffers(2, pingpongFBO);
+			glDeleteTextures(2, pingpongColorbuffers);
+		}
 	};
 }
 

@@ -364,9 +364,7 @@ void GraphicsSystem::EditorDraw(float dt)
 	GFX::Shader& gaussianShaderInst = *systemManager->mResourceTySystem->get_Shader(gaussianshaderstr.id);
 	m_PingPongFbo.GaussianBlur(gaussianShaderInst, m_Fbo);
 
-	BlendFramebuffers(m_Fbo, m_Fbo.GetColorAttachment(), "Scene", m_PingPongFbo.pingpongColorbuffers[0], "BloomBlur");
-	//BlendFramebuffers(m_Fbo, m_Fbo.GetColorAttachment(), "Scene", m_Fbo.GetBrightColorsAttachment(), "BloomBlur");
-	//BlendFramebuffers(m_Fbo, m_Fbo.GetColorAttachment(), "Scene", m_Fbo.GetColorAttachment(), "BloomBlur");
+	BlendFramebuffers(m_Fbo, m_Fbo.GetColorAttachment(), m_PingPongFbo.pingpongColorbuffers[0]);
 #pragma endregion
 
 
@@ -491,7 +489,7 @@ void GraphicsSystem::GameDraw(float dt)
 	GFX::Shader& gaussianShaderInst = *systemManager->mResourceTySystem->get_Shader(gaussianshaderstr.id);
 	m_PingPongFbo.GaussianBlur(gaussianShaderInst, m_GameFbo);
 
-	BlendFramebuffers(m_GameFbo, m_GameFbo.GetColorAttachment(), "Scene", m_PingPongFbo.pingpongColorbuffers[0], "BloomBlur");
+	BlendFramebuffers(m_GameFbo, m_GameFbo.GetColorAttachment(), m_PingPongFbo.pingpongColorbuffers[0]);
 	//BlendFramebuffers(m_Fbo, m_Fbo.GetColorAttachment(), "Scene", m_Fbo.GetBrightColorsAttachment(), "BloomBlur");
 	//BlendFramebuffers(m_Fbo, m_Fbo.GetColorAttachment(), "Scene", m_Fbo.GetColorAttachment(), "BloomBlur");
 #pragma endregion
@@ -814,9 +812,7 @@ void GraphicsSystem::DrawAll(GFX::Mesh &mesh)
 	Perform additive blending on 2 color attachments
 */
 /**************************************************************************/
-void GraphicsSystem::BlendFramebuffers(	GFX::FBO& targetFramebuffer,
-										unsigned int Attachment0, std::string Attachment0Uniform,
-										unsigned int Attachment1, std::string Attachment1Uniform)
+void GraphicsSystem::BlendFramebuffers(	GFX::FBO& targetFramebuffer, unsigned int Attachment0, unsigned int Attachment1)
 {
 	glBlendFunc(GL_ONE, GL_ONE);
 
@@ -890,6 +886,7 @@ void GraphicsSystem::ResizeWindow(ivec2 newSize)
 	// Update FBOs
 	m_Fbo.Resize(newSize.x, newSize.y);
 	m_GameFbo.Resize(newSize.x, newSize.y);
+	m_PingPongFbo.Resize(newSize.x, newSize.y);
 
 	// Update Window
 	m_Window->SetWindowSize(newSize);

@@ -108,9 +108,7 @@ public:
 		the draw function isolated to the editor's framebuffer
 	*/
 	/**************************************************************************/
-	void BlendFramebuffers( GFX::FBO& targetFramebuffer,
-							unsigned int Attachment0, std::string Attachment0Uniform,
-							unsigned int Attachment1, std::string Attachment1Uniform);
+	void BlendFramebuffers( GFX::FBO& targetFramebuffer, unsigned int Attachment0, unsigned int Attachment1);
 
 	/***************************************************************************/
 	/*!
