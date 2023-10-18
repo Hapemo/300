@@ -193,6 +193,10 @@ public:
 	void PauseGlobalAnimation();
 	void UnpauseGlobalAnimation();
 
+	void CheckWindowSize();
+
+	void ResizeWindow(ivec2 newSize);
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // 
 //		MEMBER VARIABLES MEMBER VARIABLES MEMBER VARIABLES MEMBER VARIABLES MEMBER VARIABLES MEMBER VARIABLES
