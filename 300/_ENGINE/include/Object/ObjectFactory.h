@@ -126,4 +126,5 @@ The filename to save the prefab into
 	static void SerializePrefab(Entity e, const std::string& filename);
 
 	static void SaveEntity(Entity e, rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer);
+	static void LoadEntity(Entity e, rapidjson::Value& reader);
 };

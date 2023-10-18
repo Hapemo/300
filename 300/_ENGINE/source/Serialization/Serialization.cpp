@@ -67,13 +67,6 @@ SERIALIZE_BASIC(glm::vec3)
 	writer.EndObject();
 }
 
-//SERIALIZE_BASIC(Scene)
-//{
-//	if (name != nullptr)
-//		writer.Key(name);
-//	Serialize(writer, name, val.mName);
-//}
-
 SERIALIZE_BASIC(Script)
 {
 	if (name != nullptr)
@@ -155,10 +148,6 @@ DESERIALIZE_BASIC(glm::vec3)
 		Deserialize(reader[name], "z", val.z);
 	}
 }
-
-//DESERIALIZE_BASIC(Scene)
-//{
-//}
 
 DESERIALIZE_BASIC(Script)
 {

@@ -22,7 +22,6 @@ SERIALIZE_BASIC(double);
 SERIALIZE_BASIC(std::string);
 SERIALIZE_BASIC(glm::ivec2);
 SERIALIZE_BASIC(glm::vec3);
-//SERIALIZE_BASIC(Scene);
 SERIALIZE_BASIC(Script);
 #pragma endregion basic_types
 // Derived types has to inherit from Serializable
