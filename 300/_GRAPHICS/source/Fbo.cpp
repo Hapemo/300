@@ -191,8 +191,10 @@ void GFX::PingPongFBO::GaussianBlur(GFX::Shader& blurShader, GFX::FBO& hostFrame
 		horizontal = !horizontal;
 		if (first_iteration)
 			first_iteration = false;
+
 	}
 
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	m_Quad.Unbind();
 	blurShader.Deactivate();
 }

@@ -355,7 +355,7 @@ void GraphicsSystem::EditorDraw(float dt)
 	GFX::Shader& gaussianShaderInst = *systemManager->mResourceTySystem->get_Shader(gaussianshaderstr.id);
 	m_PingPongFbo.GaussianBlur(gaussianShaderInst, m_Fbo);
 
-	//BlendFramebuffers(m_Fbo, m_Fbo.GetColorAttachment(), "Scene", m_PingPongFbo.pingpongColorbuffers[0], "BloomBlur");
+	BlendFramebuffers(m_Fbo, m_Fbo.GetColorAttachment(), "Scene", m_PingPongFbo.pingpongColorbuffers[0], "BloomBlur");
 	//BlendFramebuffers(m_Fbo, m_Fbo.GetColorAttachment(), "Scene", m_Fbo.GetBrightColorsAttachment(), "BloomBlur");
 	//BlendFramebuffers(m_Fbo, m_Fbo.GetColorAttachment(), "Scene", m_Fbo.GetColorAttachment(), "BloomBlur");
 #pragma endregion
@@ -796,34 +796,28 @@ void GraphicsSystem::BlendFramebuffers(	GFX::FBO& targetFramebuffer,
 										unsigned int Attachment0, std::string Attachment0Uniform,
 										unsigned int Attachment1, std::string Attachment1Uniform)
 {
+	glBlendFunc(GL_ONE, GL_ONE);
 
 	uid shaderstr("AdditiveBlendShader");
 	GFX::Shader& BlendShader = *systemManager->mResourceTySystem->get_Shader(shaderstr.id);
 
 	BlendShader.Activate();
 	
-	//targetFramebuffer.Bind();
-	glBindTexture(GL_TEXTURE_2D, targetFramebuffer.GetColorAttachment());
+	targetFramebuffer.Bind();
 
-	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, Attachment0);									// bind the first attachment
-	//glUniform1i(BlendShader.GetUniformLocation(Attachment0Uniform.c_str()), 0); // set the first texture to the shader
-
-	glActiveTexture(GL_TEXTURE1);
 	glBindTexture(GL_TEXTURE_2D, Attachment1);									// bind the second attachment
-	//glUniform1i(BlendShader.GetUniformLocation(Attachment1Uniform.c_str()), 1); // set the second texture to the shader	
 
 	{
 		mScreenQuad.Bind();
 
-		//glClearColor(0.f, 0.f, 0.f, 1.f);
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 
 		mScreenQuad.Unbind();
 	}
 
+	targetFramebuffer.Unbind();
 	BlendShader.Deactivate();
-	//targetFramebuffer.Unbind();
 }
 
 
