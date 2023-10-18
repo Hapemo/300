@@ -71,5 +71,7 @@ void TabWindow::update()
 
 	// the threshold for bloom
 	ImGui::Separator();
+	ImGui::TextColored({ 0.f,0.5f, 1.f, 1.f }, "Bloom Global Values");
 	ImGui::DragFloat3("Bloom Threshold", (float*)&systemManager->mGraphicsSystem->mBloomThreshold, 0.01f, 0.f, 1.f);
+	ImGui::InputFloat("Exposure", &systemManager->mGraphicsSystem->mBloomExposure, 0.01f, 0.1f, "%.2f");
 }

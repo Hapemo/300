@@ -185,7 +185,6 @@ void GFX::PingPongFBO::GaussianBlur(GFX::Shader& blurShader, GFX::FBO& hostFrame
 
 		glBindTexture(GL_TEXTURE_2D, first_iteration ? hostFramebuffer.GetBrightColorsAttachment() : pingpongColorbuffers[!horizontal]);
 		
-		// RenderQuad();
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 
 		horizontal = !horizontal;

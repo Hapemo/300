@@ -802,9 +802,9 @@ void GraphicsSystem::BlendFramebuffers(	GFX::FBO& targetFramebuffer,
 	GFX::Shader& BlendShader = *systemManager->mResourceTySystem->get_Shader(shaderstr.id);
 
 	BlendShader.Activate();
-	
 	targetFramebuffer.Bind();
 
+	glUniform1f(BlendShader.GetUniformLocation("Exposure"), systemManager->mGraphicsSystem->mBloomExposure);
 	glBindTexture(GL_TEXTURE_2D, Attachment0);									// bind the first attachment
 	glBindTexture(GL_TEXTURE_2D, Attachment1);									// bind the second attachment
 

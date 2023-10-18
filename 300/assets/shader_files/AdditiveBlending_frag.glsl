@@ -18,8 +18,7 @@ void main()
 	hdrColor += bloomColor;	
 
 	// tone mapping
-	vec3 result = vec3(1.0) - exp(-hdrColor * 1);
-	//vec3 result = vec3(1.0) - exp(-hdrColor * Exposure);
+	vec3 result = vec3(1.0) - exp(-hdrColor * Exposure);
 
 	// gamma correction to SRGB
 	result = pow(result, vec3(1.0 / gamma));
