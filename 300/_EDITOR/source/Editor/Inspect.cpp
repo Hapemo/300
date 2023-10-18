@@ -153,6 +153,11 @@ void Inspect::update()
 			UIrenderer& render = ent.GetComponent<UIrenderer>();
 			render.Inspect();
 		}
+
+		if (ent.HasComponent<VFX>()) {
+			VFX& vfx = ent.GetComponent<VFX>();
+			vfx.Inspect();
+		}
 		if (ent.HasComponent<InputActionMapEditor>()) {
 			InputActionMapEditor& inputAction = ent.GetComponent<InputActionMapEditor>();
 			inputAction.Inspect();
@@ -222,6 +227,10 @@ void Inspect::Add_component() {
 		if (ImGui::Selectable("Audio")) {
 			if (!Entity(Hierarchy::selectedId).HasComponent<Audio>())
 				Entity(Hierarchy::selectedId).AddComponent<Audio>();
+		}	
+		if (ImGui::Selectable("VFX")) {
+			if (!Entity(Hierarchy::selectedId).HasComponent<VFX>())
+				Entity(Hierarchy::selectedId).AddComponent<VFX>();
 		}
 		if (ImGui::Selectable("MeshRenderer")) {
 			if (!Entity(Hierarchy::selectedId).HasComponent<MeshRenderer>()) {
@@ -1234,5 +1243,14 @@ void UIrenderer::Inspect() {
 			}
 			ImGui::EndDragDropTarget();
 		}
+	}
+}
+
+void VFX::Inspect() {
+	bool delete_component = true;
+	if (ImGui::CollapsingHeader("UIrenderer", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
+	{
+		ImGui::TextColored({ 0.f,1.f, 1.f, 1.f }, "Bloom Variables");
+		ImGui::DragFloat3("Global Bloom Threshold", (float*)&mBloomThreshold, 0.01f, 0.f, 1.f);
 	}
 }

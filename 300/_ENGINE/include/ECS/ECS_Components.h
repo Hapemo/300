@@ -355,6 +355,18 @@ struct PointLight
 	void SetColor(const vec3& color);
 };
 
+/******************************************************************************/
+/*!
+	[Component] - Visual Effects (VFX)
+ */
+ /******************************************************************************/
+struct VFX
+{
+	vec3		mBloomThreshold{ 0.2126, 0.7152, 0.0722 };
+
+	void Inspect();
+};
+
 
 // Added [9/27]
 // Pseudo-Component (Helps InputActionMapEditor)

@@ -301,7 +301,13 @@ void GraphicsSystem::EditorDraw(float dt)
 		glUniform1i(mHasLightFlagLocation, m_HasLight);
 
 		GLuint threshold = shaderinst.GetUniformLocation("bloomThreshold");
-		glUniform3fv(threshold, 1, glm::value_ptr(mBloomThreshold));
+
+		if (inst.HasComponent<VFX>()) {
+			glUniform3fv(threshold, 1, glm::value_ptr(inst.GetComponent<VFX>().mBloomThreshold));
+		}
+		else {
+			glUniform3fv(threshold, 1, glm::value_ptr(mAmbientBloomThreshold));
+		}
 
 		if (m_HasLight)
 		{
@@ -817,7 +823,7 @@ void GraphicsSystem::BlendFramebuffers(	GFX::FBO& targetFramebuffer,
 	BlendShader.Activate();
 	targetFramebuffer.Bind();
 
-	glUniform1f(BlendShader.GetUniformLocation("Exposure"), systemManager->mGraphicsSystem->mBloomExposure);
+	glUniform1f(BlendShader.GetUniformLocation("Exposure"), systemManager->mGraphicsSystem->mAmbientBloomExposure);
 	glBindTexture(GL_TEXTURE_2D, Attachment0);									// bind the first attachment
 	glBindTexture(GL_TEXTURE_2D, Attachment1);									// bind the second attachment
 

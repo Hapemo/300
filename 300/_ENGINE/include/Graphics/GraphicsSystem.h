@@ -214,8 +214,9 @@ public:
 	CAMERA_TYPE m_CameraControl;
 
 	// -- Bloom -- 
-	vec3		mBloomThreshold { 0.2126, 0.7152, 0.0722 };
-	float		mBloomExposure{ 1.0f };
+	//vec3		mAmbientBloomThreshold { 0.2126, 0.7152, 0.0722 };
+	vec3		mAmbientBloomThreshold { 0.05, 0.05, 0.005 };
+	float		mAmbientBloomExposure{ 0.05f };
 
 	// -- Textures --
 	std::vector<int> m_Textures;	// 0, 1, ..., 31

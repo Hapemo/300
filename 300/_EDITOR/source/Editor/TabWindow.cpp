@@ -55,10 +55,6 @@ void TabWindow::update()
 		- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
 	ImGui::DragFloat("##CS", (float*)&Camera_Input::getInstance().mCameraSpeed);
 
-	//const auto& editorcam = systemManager->mGraphicsSystem->m_EditorCamera;
-	//ImGui::Text("Editor Camera Position: %0.2f, %0.2f, %0.2f", editorcam.mPosition.x, editorcam.mPosition.y, editorcam.mPosition.z);
-	//ImGui::Text("Editor Camera Target: %0.2f, %0.2f, %0.2f", editorcam.mTarget.x, editorcam.mTarget.y, editorcam.mTarget.z);
-
 	ImGui::Separator();
 	ImGui::Text("Debug");
 	ImGui::SameLine();
@@ -71,7 +67,10 @@ void TabWindow::update()
 
 	// the threshold for bloom
 	ImGui::Separator();
-	ImGui::TextColored({ 0.f,0.5f, 1.f, 1.f }, "Bloom Global Values");
-	ImGui::DragFloat3("Bloom Threshold", (float*)&systemManager->mGraphicsSystem->mBloomThreshold, 0.01f, 0.f, 1.f);
-	ImGui::InputFloat("Exposure", &systemManager->mGraphicsSystem->mBloomExposure, 0.01f, 0.1f, "%.2f");
+	ImGui::TextColored({ 0.f,0.5f, 1.f, 1.f }, "Global Bloom Variables");
+	ImGui::DragFloat3("Global Bloom Threshold", (float*)&systemManager->mGraphicsSystem->mAmbientBloomThreshold, 0.01f, 0.f, 1.f);
+	ImGui::DragFloat("Global Exposure", &systemManager->mGraphicsSystem->mAmbientBloomExposure, 0.01f, 0.f, 5.f, "%0.2f");
+
+	if(systemManager->mGraphicsSystem->m_PingPongFbo.mblurAmount > 1)
+		ImGui::InputInt("Gaussian Blur Amount", (int*)&systemManager->mGraphicsSystem->m_PingPongFbo.mblurAmount);
 }
