@@ -1,3 +1,4 @@
 ScenePath: ../assets/Scenes/
 GameStatePath: ../assets/GameStates/
-StartingGameState: Test
+StartingGameState: Default
+KeybindPath: ../assets/

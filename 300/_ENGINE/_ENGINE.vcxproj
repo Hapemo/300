@@ -173,7 +173,6 @@
     <ClInclude Include="include\Graphics\GraphicsSystem.h" />
     <ClInclude Include="include\Input\Input.h" />
     <ClInclude Include="include\Input\InputMapSystem.h" />
-    <ClInclude Include="include\Input\KeyBind.h" />
     <ClInclude Include="include\Multithread.h" />
     <ClInclude Include="include\Physics\Accumulator.h" />
     <ClInclude Include="include\Physics\PhysicsTypes.h" />

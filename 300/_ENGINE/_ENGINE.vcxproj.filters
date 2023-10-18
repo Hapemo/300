@@ -55,6 +55,5 @@
     <ClInclude Include="..\..\..\..\..\Desktop\300\300\_ENGINE\include\Input\InputMapSystem.h" />
     <ClInclude Include="include\Input\Input.h" />
     <ClInclude Include="include\Input\InputMapSystem.h" />
-    <ClInclude Include="include\Input\KeyBind.h" />
   </ItemGroup>
 </Project>

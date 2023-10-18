@@ -9,6 +9,7 @@ Miscellaneous helper functions that is useful across the game engine
 *******************************************************************************/
 #pragma once
 #include <string>
+#include <unordered_map>
 
 struct Misc {
   /*!*****************************************************************************
@@ -27,4 +28,19 @@ struct Misc {
   *******************************************************************************/
   static std::string GetFileName(std::string const& _filepath);
 
+	/*!*****************************************************************************
+	\brief
+	Load a text file into a map. The format in text file should be as follows:
+	<key1>: <value1>\n
+	<key2>: <value2>\n
+	<key3>: <value3>\n
+	<key4>: <value4>\n
+
+	\param std::fstream& file
+	- Input file
+
+	\return std::map<std::string, std::string>
+	- Map containing data extracted from file
+	*******************************************************************************/
+	static std::unordered_map<std::string, std::string> TextFileToMap(std::fstream& _file);
 };
