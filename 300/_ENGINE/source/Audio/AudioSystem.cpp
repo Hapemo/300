@@ -619,7 +619,7 @@ void AudioSystem::SetAllSFXVolume(float audio_vol)
 			{
 				Audio& audio_component = e.GetComponent<Audio>();
 
-				if (audio_component.mChannel) // Only those channels which are playing can be set volume.
+				if (audio_component.mIsPlaying) // Only those channels which are playing can be set volume.
 				{
 					ErrCodeCheck(channel_id_pair.second->setVolume(audio_vol));
 				}
