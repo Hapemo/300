@@ -70,52 +70,45 @@ public:
 	AudioSystem();
 	~AudioSystem();
 
-	// Helper Functions
+	// Helper Functions (Loading)
 	void UpdateLoadAudio(Entity id);				 // [For Engine] - Add Component mid-way
 	void UpdateChannelReference(Entity id);		     // [For Engine] - Add Channel to the global [SFX/BGM] channels. (for global control)
 	void InitAudioChannelReference(Entity id);		 // [For Engine]
+
+	// Helper Functions (Sound)
+	FMOD::Sound* FindSound(std::string audio_name);
+	bool	     CheckAudioExist(std::string audio_name); // [W7 - 10/14]
 
 public:
 	// Retained Functions (Without Linking to <Audio> component)
 	bool LoadAudioFromDirectory(std::filesystem::path file_path);					                                        // Load files from directory (Like just load all the audio files first) -> later then link
 	void SetAllSFXVolume(float audio_vol);																				    // Global Volume Setting (SFX)
 	void SetAllBGMVolume(float audio_vol);													                                // Global Volume Setting (BGM)
-
+	void MuteSFX();																											// Global Mute (SFX)
+	void MuteBGM();																										    // Global Mute (BGM)
+	void StopAllSFX();																								        // Global stop playing (SFX)
+	void StopAllBGM();																										// Global stop playing (BGM)
+	void PauseAllSounds();																									// Pause all sounds.
+	void PauseSFXSounds();																									// Pause sfx sounds
+	void PauseBGMSounds();																									// Pause bgm sounds
+	void UnpauseAllSounds();																								// Unpause all sounds. 
+	void UnpauseSFXSounds();																								// Unpause sfx sounds.
+	void UnpauseBGMSounds();																								// Unpause bgm sounds. 
 
 	/* Converted Functions(These functions link to each <Audio> component)
 	* ---------------------------------------------------------------------------------- */
-
-	// Helper 
-	void UpdateSFXComponentVolume(float audio_vol);																		    // Used whenever there is an edit in volume [Audio in SFX]
-	void UpdateBGMComponentVolume(float volume);																			// Used whenever there is an edit in volume [Audio in BGM]
-
 	// Functional 
 	bool LoadAudio(std::string file_path, std::string audio_name, Audio* audio_component = nullptr);			            // Load a single audio. (Will be in [mSounds] database)
 	void PlayAudio(std::string audio_name, AUDIOTYPE audio_type, float audio_vol = 1.0f, Audio* audio_component = nullptr);	// Toggle (mIsPlay) -> Plays in Update() loop.
+	void StopAudio(Audio* audio_component);
+	void PauseAudio(Audio* audio_component);
 
-
+	// Helper (for Global Volume Functions)
+	void UpdateSFXComponentVolume(float audio_vol);																		    // Used whenever there is an edit in volume [Audio in SFX]
+	void UpdateBGMComponentVolume(float volume);																			// Used whenever there is an edit in volume [Audio in BGM]
 
 public:
 	int  ErrCodeCheck(FMOD_RESULT result);																					// Debugging tool				
-
-	void MuteSFX();
-	void MuteBGM();
-	void StopAllSFX();
-	void StopAllBGM();
-	void TogglePauseAllSounds();
-	void TogglePauseSFXSounds();
-	void TogglePauseBGMSounds();
-	void TogglePauseSpecific(AUDIOTYPE audio_type, int channel_id);	// Depreciated 10/15
-
-	// Added [10/13] - Audio Specific Functions
-	/*void StopAudio(std::string audio_name);
-	void SetAudioVolume()*/
-
-	// Helper Functions...
-public:
-	Channel& FindChannel(AUDIOTYPE audio_type, int id);
-	FMOD::Sound* FindSound(std::string audio_name);
-	bool	 CheckAudioExist(std::string audio_name); // [W7 - 10/14]
 
 	// Will build as needs require.
 
@@ -128,9 +121,7 @@ public:
 	FMOD::System* system_obj = nullptr;
 
 private:
-	std::unordered_map<AUDIOTYPE, std::vector<Channel>>                         mChannelsNew;	// Database of Channels (SFX / BGM)
-	std::unordered_map<AUDIOTYPE, std::vector<FMOD::Channel*>>                  mChannelsNewA;
-	std::unordered_map<AUDIOTYPE, std::vector<std::pair<uid, FMOD::Channel*&>>> mChannelswID;   // Add [Channel ID]
+	std::unordered_map<AUDIOTYPE, std::vector<std::pair<uid, FMOD::Channel*&>>> mChannelswID;   // Add [Channel ID] 
 	std::unordered_map<std::string, FMOD::Sound*>				                mSounds;        // Database of Sounds (SFX/BGM)
 
 	// Global Volume 

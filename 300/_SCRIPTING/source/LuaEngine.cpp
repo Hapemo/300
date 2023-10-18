@@ -176,11 +176,11 @@ void LuaAudio()
         "SetAllSFXVolume", &AudioSystem::SetAllSFXVolume,
         "SetAllBGMVolume", &AudioSystem::SetAllBGMVolume,
         "MuteSFX", &AudioSystem::MuteSFX,
-        "MuteBGM", &AudioSystem::MuteBGM,
-        "TogglePauseAllSounds", &AudioSystem::TogglePauseAllSounds,
-        "TogglePauseSFXSounds", &AudioSystem::TogglePauseSFXSounds,
-        "TogglePauseBGMSounds", &AudioSystem::TogglePauseBGMSounds,
-        "TogglePauseSpecific", &AudioSystem::TogglePauseSpecific
+        "MuteBGM", &AudioSystem::MuteBGM
+        //"TogglePauseAllSounds", &AudioSystem::TogglePauseAllSounds,
+        //"TogglePauseSFXSounds", &AudioSystem::TogglePauseSFXSounds,
+        //"TogglePauseBGMSounds", &AudioSystem::TogglePauseBGMSounds,
+        //"TogglePauseSpecific", &AudioSystem::TogglePauseSpecific
         );
 }
 

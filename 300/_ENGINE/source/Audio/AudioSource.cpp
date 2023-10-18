@@ -71,7 +71,7 @@ void AudioSource::Pause()
 		if (mAudioComponent->mSound != nullptr)
 		{
 			// The [playing] should be in the [Update()] loop.
-			mAudioComponent->mIsPaused = true;
+			mAudioComponent->mSetPause = true;
 		}
 	}
 }
@@ -86,8 +86,7 @@ void AudioSource::Unpause()
 		if (mAudioComponent->mSound != nullptr)
 		{
 			// The [playing] should be in the [Update()] loop.
-			mAudioComponent->mIsPaused = false;
-			mAudioComponent->mWasPaused = true;
+			mAudioComponent->mSetUnpause = true;
 		}
 	}
 }

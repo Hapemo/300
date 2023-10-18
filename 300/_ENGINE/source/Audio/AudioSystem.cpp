@@ -61,8 +61,6 @@ void AudioSystem::Init()
 	std::vector<std::pair<uid, FMOD::Channel*&>> sfx_id_channel;
 	std::vector<std::pair<uid, FMOD::Channel*&>> bgm_id_channel;
 
-	mChannelsNewA.insert(std::make_pair(AUDIO_SFX, sfx_channel));    // without ID
-	mChannelsNewA.insert(std::make_pair(AUDIO_BGM, bgm_channel));    // without ID
 	mChannelswID.insert(std::make_pair(AUDIO_SFX, sfx_id_channel));  // w ID
 	mChannelswID.insert(std::make_pair(AUDIO_BGM, bgm_id_channel));  // w ID
 
@@ -100,11 +98,9 @@ void AudioSystem::Init()
 		switch (audio_component.mAudioType)
 		{
 			case AUDIO_BGM:
-				mChannelsNewA[AUDIO_BGM].push_back(audio_component.mChannel);
 				mChannelswID[AUDIO_BGM].push_back(channel_pair);
 				break;
 			case AUDIO_SFX:
-				mChannelsNewA[AUDIO_SFX].push_back(audio_component.mChannel);
 				mChannelswID[AUDIO_SFX].push_back(channel_pair);
 				break;
 		}
@@ -139,6 +135,27 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 	// [10/18] Global Channel Test
 	if (Input::CheckKey(PRESS, _1))
 		SetAllSFXVolume(0.0f);
+	if (Input::CheckKey(PRESS, _2))
+		SetAllBGMVolume(0.0f);
+	if (Input::CheckKey(PRESS, _3))
+		StopAllSFX();
+	if (Input::CheckKey(PRESS, _4))
+		StopAllBGM();
+
+	// [10/18] Pause Functions
+	if (Input::CheckKey(PRESS, _7))
+		PauseAllSounds();
+	if (Input::CheckKey(PRESS, _8))
+		PauseSFXSounds();
+	if (Input::CheckKey(PRESS, _9))
+		PauseBGMSounds();
+	if (Input::CheckKey(PRESS, I))
+		UnpauseAllSounds();
+	if (Input::CheckKey(PRESS, O))
+		UnpauseSFXSounds();
+	if (Input::CheckKey(PRESS, P))
+		UnpauseBGMSounds();
+
 	
 		
 
@@ -174,18 +191,20 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 		}
 
 		// Pause Loop
-		if (audio_component.mIsPaused)
+		if (audio_component.mSetPause)
 		{
 			audio_component.mChannel->setPaused(true);
+			audio_component.mSetPause = false;
+			audio_component.mPaused = true;
 		}
 
 		// Resume Loop
-		if (!audio_component.mIsPaused && audio_component.mWasPaused) // Only will run this when [Start] is triggered again.
+		if (audio_component.mPaused && audio_component.mSetUnpause) // Only will run this when [Start] is triggered again.
 		{
 			audio_component.mChannel->setPaused(false);
 			PINFO("RESUME");
-			audio_component.mIsPaused = false;
-			audio_component.mWasPaused = false;
+			audio_component.mPaused = false;
+			audio_component.mSetUnpause = false;
 		}
 
 
@@ -286,17 +305,17 @@ void AudioSystem::PlayOnAwake()
 	{
 		Audio& audio_component = audio.GetComponent<Audio>();
 
-		if (audio_component.mPlayonAwake && audio_component.mIsPaused == false) // Truly the first time playing
+		if (audio_component.mPlayonAwake && audio_component.mPaused == false) // Truly the first time playing
 		{
 			PINFO("Playing %s on Awake", audio_component.mFileName.c_str());
 			audio_component.mIsPlay = true;
 		}
 
-		if(audio_component.mIsPaused)
+		if(audio_component.mPaused)
 		{
 			PINFO("Resuming Audio: %s.", audio_component.mFileName.c_str());
 			ErrCodeCheck(audio_component.mChannel->setPaused(false));
-			audio_component.mIsPaused = false;
+			audio_component.mPaused = false;
 		}
 	}
 }
@@ -326,8 +345,7 @@ void AudioSystem::Pause()
 		{
 			PINFO("Pausing Audio : %s", audio_component.mFileName);  // I think loop too fast to display on debugger.
 			ErrCodeCheck(audio_component.mChannel->setPaused(true));
-			audio_component.mIsPaused = true;
-			audio_component.mWasPaused = true;
+			audio_component.mSetPause = true;
 		}
 	}
 }
@@ -643,6 +661,30 @@ void AudioSystem::PlayAudio(std::string audio_name, AUDIOTYPE audio_type, float 
 
 /******************************************************************************/
 /*!
+	 StopAudio()
+	 - Stops playing & reset the playback to the start.
+ */
+ /******************************************************************************/
+void AudioSystem::StopAudio(Audio* audio_component)
+{
+	audio_component->mChannel->stop();
+	audio_component->mIsPlaying = false;
+}
+
+void AudioSystem::PauseAudio(Audio* audio_component)
+{
+	bool playing;
+	audio_component->mChannel->isPlaying(&playing);
+
+	if (playing)
+	{
+		audio_component->mChannel->setPaused(true);
+		audio_component->mIsPlaying = false;
+	}
+}
+
+/******************************************************************************/
+/*!
 	 SetAllSFXVolume()
 	 - Set every SFX Channel based on the provided (1) Audio Volume
  */
@@ -767,17 +809,11 @@ void AudioSystem::MuteBGM()
  /******************************************************************************/
 void AudioSystem::StopAllSFX()
 {
-	PINFO("Stopping and Releasing All SFX.");
-	std::cout << "Stopping and Releasing All SFX." << std::endl;
+	PINFO("Stopping All SFX.");
 
-	auto channel_it = mChannelsNew.find(AUDIO_SFX);
-
-	if (channel_it != mChannelsNew.end())
+	for (auto channel_pair : mChannelswID[AUDIO_SFX])
 	{
-		for (Channel& channel : channel_it->second)
-		{
-			channel.mChannel->stop();
-		}
+		channel_pair.second->stop();
 	}
 }
 
@@ -789,17 +825,12 @@ void AudioSystem::StopAllSFX()
  /******************************************************************************/
 void AudioSystem::StopAllBGM()
 {
-	PINFO("Stopping and Releasing All BGM.");
-	//std::cout << "Stopping and Releasing All BGM." << std::endl;
+	PINFO("Stopping All BGM.");
+	std::cout << "Stopping All BGM." << std::endl;
 
-	auto channel_it = mChannelsNew.find(AUDIO_BGM);
-
-	if (channel_it != mChannelsNew.end())
+	for (auto channel_pair : mChannelswID[AUDIO_BGM])
 	{
-		for (Channel& channel : channel_it->second)
-		{
-			channel.mChannel->stop();
-		}
+		channel_pair.second->stop();
 	}
 }
 
@@ -810,64 +841,18 @@ void AudioSystem::StopAllBGM()
 	 - Unpause if paused.
  */
  /******************************************************************************/
-void AudioSystem::TogglePauseAllSounds()
-{
-	auto channel_it_sfx = mChannelsNew.find(AUDIO_SFX);
+void AudioSystem::PauseAllSounds()
+{ 
+	PINFO("Pausing all Sounds.");
+	auto audio_entities = systemManager->ecs->GetEntitiesWith<Audio>();
 
-	if (channel_it_sfx != mChannelsNew.end())
+	for (Entity e : audio_entities)
 	{
-		for (Channel& channel : channel_it_sfx->second)
+		Audio& audio_component = e.GetComponent<Audio>();
+
+		if (audio_component.mIsPlaying) // Only those channels which are playing can be set volume.
 		{
-			if (channel.mIsPlayingSound)
-			{
-				bool paused;
-				PINFO("Checking Channel Pause Status: ");
-				//std::cout << "Checking Channel Pause Status: " << std::endl;
-				ErrCodeCheck(channel.mChannel->getPaused(&paused));
-
-				if (paused)
-				{
-					PINFO("Resuming SFX Channels. ");
-				}
-
-				else
-				{
-					PINFO("Pausing SFX Channels. ");
-				}
-
-
-				ErrCodeCheck(channel.mChannel->setPaused(!paused));
-			}
-		}
-	}
-
-	auto channel_it_bgm = mChannelsNew.find(AUDIO_BGM);
-
-	if (channel_it_bgm != mChannelsNew.end())
-	{
-		for (Channel& channel : channel_it_bgm->second)
-		{
-			if (channel.mIsPlayingSound)
-			{
-				bool paused;
-				PINFO("Checking Channel Pause Status: ");
-				//std::cout << "Checking Channel Pause Status: " << std::endl;
-				ErrCodeCheck(channel.mChannel->getPaused(&paused));
-
-				if (paused)
-				{
-					PINFO("Resuming BGM Channels. ");
-					//std::cout << "Resuming BGM Channels. " << std::endl;
-				}
-
-				else
-				{
-					PINFO("Pausing BGM Channels. ");
-					//std::cout << "Pausing BGM Channels. " << std::endl;
-				}
-
-				ErrCodeCheck(channel.mChannel->setPaused(!paused));
-			}
+			audio_component.mSetPause = true;
 		}
 	}
 }
@@ -879,35 +864,15 @@ void AudioSystem::TogglePauseAllSounds()
 	 - Unpause if paused.
  */
  /******************************************************************************/
-void AudioSystem::TogglePauseSFXSounds()
+void AudioSystem::PauseSFXSounds()
 {
-	auto channel_it_sfx = mChannelsNew.find(AUDIO_SFX);
-
-	if (channel_it_sfx != mChannelsNew.end())
+	for (auto channel_pair : mChannelswID[AUDIO_SFX])
 	{
-		for (Channel& channel : channel_it_sfx->second)
+		bool playing;
+		channel_pair.second->isPlaying(&playing);
+		if (playing)
 		{
-			if (channel.mIsPlayingSound)
-			{
-				bool paused;
-				PINFO("Checking Channel Pause Status: ");
-				//std::cout << "Checking Channel Pause Status: " << std::endl;
-				ErrCodeCheck(channel.mChannel->getPaused(&paused));
-
-				if (paused)
-				{
-					PINFO("Resuming SFX Channels. ");
-					//std::cout << "Resuming SFX Channels. " << std::endl;
-				}
-
-				else
-				{
-					PINFO("Pausing SFX Channels. ");
-					std::cout << "Pausing SFX Channels. " << std::endl;
-				}
-
-				ErrCodeCheck(channel.mChannel->setPaused(!paused));
-			}
+			channel_pair.second->setPaused(true);
 		}
 	}
 }
@@ -919,116 +884,58 @@ void AudioSystem::TogglePauseSFXSounds()
 	 - Unpause if paused.
  */
  /******************************************************************************/
-void AudioSystem::TogglePauseBGMSounds()
+void AudioSystem::PauseBGMSounds()
 {
-	auto channel_it = mChannelsNew.find(AUDIO_BGM);
-
-	if (channel_it != mChannelsNew.end())
+	for (auto channel_pair : mChannelswID[AUDIO_BGM])
 	{
-		for (Channel& channel : channel_it->second)
+		bool playing;
+		channel_pair.second->isPlaying(&playing);
+		if (playing)
 		{
-			if (channel.mIsPlayingSound)
-			{
-				bool paused;
-				PINFO("Checking Channel Pause Status: +");
-				//std::cout << "Checking Channel Pause Status: " << std::endl;
-				ErrCodeCheck(channel.mChannel->getPaused(&paused));
-
-				if (paused)
-				{
-					PINFO("Checking Channel Pause Status: +");
-					//std::cout << "Resuming BGM Channels. " << std::endl;
-				}
-
-				else
-				{
-					PINFO("Pausing BGM Channels. +");
-					//std::cout << "Pausing BGM Channels. " << std::endl;
-				}
-
-
-				ErrCodeCheck(channel.mChannel->setPaused(!paused));
-			}
+			channel_pair.second->setPaused(true);
 		}
 	}
 }
 
-/******************************************************************************/
-/*!
-	 TogglePauseSpecific
-	 - Pause if not Paused.
-	 - Unpause if paused.
-	 - Specific Channel
- */
- /******************************************************************************/
-void AudioSystem::TogglePauseSpecific(AUDIOTYPE audio_type, int channel_id)
+void AudioSystem::UnpauseAllSounds()
 {
-	auto channel_it = mChannelsNew.find(audio_type);
+	auto audio_entities = systemManager->ecs->GetEntitiesWith<Audio>();
 
-	if (channel_it != mChannelsNew.end())
+	for (Entity e : audio_entities)
 	{
-		if (channel_id < channel_it->second.size())
+		Audio& audio_component = e.GetComponent<Audio>();
+
+		audio_component.mSetUnpause = true;
+		
+	}
+}
+
+void AudioSystem::UnpauseSFXSounds()
+{
+	for (auto channel_pair : mChannelswID[AUDIO_SFX])
+	{
+		bool playing;
+		channel_pair.second->isPlaying(&playing);
+		if (playing)
 		{
-			PINFO("CHANNEL REQUEST: %d", channel_id);
-			//std::cout << "CHANNEL REQUEST: " << channel_id << std::endl;
-			bool paused;
-			PINFO("Checking Channel Pause Status: ");
-			//std::cout << "Checking Channel Pause Status: " << std::endl;
-			ErrCodeCheck(FindChannel(audio_type, channel_id).mChannel->getPaused(&paused));
-
-			if (paused)
-			{
-				PINFO("Resuming Selected Channel. ");
-				//std::cout << "Resuming Selected Channel. " << std::endl;
-			}
-
-			else
-			{
-				PINFO("Pausing Selected Channel. ");
-				//std::cout << "Pausing Selected Channel. " << std::endl;
-			}
-
-
-			ErrCodeCheck(FindChannel(audio_type, channel_id).mChannel->setPaused(!paused));
+			channel_pair.second->setPaused(false);
 		}
-		else
+	}
+}
+void AudioSystem::UnpauseBGMSounds()
+{
+
+	for (auto channel_pair : mChannelswID[AUDIO_BGM])
+	{
+		bool playing;
+		channel_pair.second->isPlaying(&playing);
+		if (playing)
 		{
-			PWARNING("Sorry, requested channel ID is invalid.");
-			//std::cout << "Sorry, requested channel ID is invalid." << std::endl;
+			channel_pair.second->setPaused(false);
 		}
 	}
 }
 
-/******************************************************************************/
-/*!
-	 FindChannel()
-	 - Return a reference to a channel based on user request
- */
- /******************************************************************************/
-Channel& AudioSystem::FindChannel(AUDIOTYPE audio_type, int channel_id)
-{
-	if (channel_id > mChannelsNew.size())
-	{
-		PWARNING("Requested Index does not exists...");
-		//ristd::cout << "Requested Index does not exists..." << std::endl;
-		// throw std::out_of_range("Requested Index does not exists...");
-	}
-
-	auto channel_it = mChannelsNew.find(audio_type);
-
-	if (channel_it != mChannelsNew.end())
-	{
-		for (Channel& channel : channel_it->second)
-		{
-			if (channel.mChannelID == (unsigned)channel_id)
-			{
-				return channel;
-			}
-		}
-	}
-	PERROR("channel not found, assigning default channel");
-	return mChannelsNew[AUDIOTYPE::AUDIO_BGM][0];
-}
 
 FMOD::Sound* AudioSystem::FindSound(std::string audio_name)
 {

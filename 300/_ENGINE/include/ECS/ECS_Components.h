@@ -303,8 +303,9 @@ struct Audio
 	bool		   mIsLoaded = false;	   // [For Loading]
 	
 	// Pause State [Editor/Pause Menu]
-	bool		   mIsPaused  = false;
-	bool		   mWasPaused = false;     // [For Unpausing]
+	bool		   mSetPause  = false;     // [Flag] - set pause for channel.
+	bool		   mPaused    = false;     // [For Unpausing]
+	bool		   mSetUnpause = false;    // [Flag] - for unpausing channels.
 
 	// Volume 
 	float		   mVolume = 1.0f;
