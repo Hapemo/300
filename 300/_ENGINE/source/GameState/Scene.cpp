@@ -91,7 +91,7 @@ void Scene::Load(std::string const& _name) {
 		audio.mFilePath = "../assets\\Audio";
 		audio.mFileName = "farm_ambience.wav";
 		audio.mIsEmpty = false;
-		audio.mAudioType = AUDIO_BGM;
+		audio.mAudioType = AUDIO_SFX;
 		//testaudio.GetComponent<Audio>().mFileName = "farm_ambience";
 		
 

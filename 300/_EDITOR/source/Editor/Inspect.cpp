@@ -1089,9 +1089,13 @@ void Audio::Inspect() {
 				{
 				case 0:
 					mAudioType = AUDIO_SFX;
+					mTypeChanged = true;
+					systemManager->mAudioSystem.get()->UpdateChannelReference(Entity(Hierarchy::selectedId));
 					break;
 				case 1:
 					mAudioType = AUDIO_BGM;
+					mTypeChanged = true;
+					systemManager->mAudioSystem.get()->UpdateChannelReference(Entity(Hierarchy::selectedId));
 					break;
 				}
 			}

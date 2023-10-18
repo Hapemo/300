@@ -170,9 +170,9 @@ void LuaAudio()
     systemManager->mScriptingSystem->luaState.new_usertype<AudioSystem>(
         "mAudioSystem", sol::constructors<>(),
         "PlayAudio", &AudioSystem::PlayAudio,
-        "PlaySFXAudio", &AudioSystem::PlaySFXAudio,
+       /* "PlaySFXAudio", &AudioSystem::PlaySFXAudio,
         "PlayBGMAudio", &AudioSystem::PlayBGMAudio,
-        "SetSpecificChannelVolume", &AudioSystem::SetSpecificChannelVolume,
+        "SetSpecificChannelVolume", &AudioSystem::SetSpecificChannelVolume,*/
         "SetAllSFXVolume", &AudioSystem::SetAllSFXVolume,
         "SetAllBGMVolume", &AudioSystem::SetAllBGMVolume,
         "MuteSFX", &AudioSystem::MuteSFX,

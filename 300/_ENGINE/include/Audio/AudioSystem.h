@@ -26,7 +26,6 @@ This file contains the base AudioSystem class that supports the following functi
 #include "GameState/Scene.h"
 
 
-
 enum AUDIOTYPE : unsigned char;
 
 // [9/25] Decided that we need this if we want to track if the audio is still playing in a particular channel
@@ -77,22 +76,26 @@ public:
 public:
 	// Retained Functions (Without Linking to <Audio> component)
 	bool LoadAudioFromDirectory(std::filesystem::path file_path);					                                        // Load files from directory (Like just load all the audio files first) -> later then link
+	void SetAllSFXVolume(float audio_vol);																				    // Global Volume Setting (SFX)
+	void SetAllBGMVolume(float audio_vol);													                                // Global Volume Setting (BGM)
 
 
-	// Converted Functions (These functions link to each <Audio> component)
+	/* Converted Functions(These functions link to each <Audio> component)
+	* ---------------------------------------------------------------------------------- */
+
+	// Helper 
+	void UpdateSFXComponentVolume(float audio_vol);																		    // Used whenever there is an edit in volume [Audio in SFX]
+	void UpdateBGMComponentVolume(float volume);																			// Used whenever there is an edit in volume [Audio in BGM]
+
+	// Functional 
 	bool LoadAudio(std::string file_path, std::string audio_name, Audio* audio_component = nullptr);			            // Load a single audio. (Will be in [mSounds] database)
 	void PlayAudio(std::string audio_name, AUDIOTYPE audio_type, float audio_vol = 1.0f, Audio* audio_component = nullptr);	// Toggle (mIsPlay) -> Plays in Update() loop.
 
-public:
-	int  ErrCodeCheck(FMOD_RESULT result);																	// Debugging tool
 
-	
-	
-	int  PlaySFXAudio(std::string audio_name, float audio_vol = 1.0f);										// Play an SFX Audio (specify volume)
-	int  PlayBGMAudio(std::string audio_name, float audio_vol = 1.0f);						// Play an BGM Audio (specify volume)
-	void SetSpecificChannelVolume(AUDIOTYPE audio_type, int id, float audio_vol);			// Set Specific Volume  (Depreciated) 10/15
-	void SetAllSFXVolume(float audio_vol);													// Global Volume Setting (SFX)
-	void SetAllBGMVolume(float audio_vol);													// Global Volume Setting (BGM)
+
+public:
+	int  ErrCodeCheck(FMOD_RESULT result);																					// Debugging tool				
+
 	void MuteSFX();
 	void MuteBGM();
 	void StopAllSFX();
@@ -123,9 +126,10 @@ public:
 	FMOD::System* system_obj = nullptr;
 
 private:
-	std::unordered_map<AUDIOTYPE, std::vector<Channel>>         mChannelsNew;	// Database of Channels (SFX / BGM)
-	std::unordered_map<AUDIOTYPE, std::vector<FMOD::Channel*>>  mChannelsNewA;
-	std::unordered_map<std::string, FMOD::Sound*>				mSounds;        // Database of Sounds (SFX/BGM)
+	std::unordered_map<AUDIOTYPE, std::vector<Channel>>                         mChannelsNew;	// Database of Channels (SFX / BGM)
+	std::unordered_map<AUDIOTYPE, std::vector<FMOD::Channel*>>                  mChannelsNewA;
+	std::unordered_map<AUDIOTYPE, std::vector<std::pair<uid, FMOD::Channel*&>>> mChannelswID;   // Add [Channel ID]
+	std::unordered_map<std::string, FMOD::Sound*>				                mSounds;        // Database of Sounds (SFX/BGM)
 
 	// Global Volume 
 	float sfxVolume;

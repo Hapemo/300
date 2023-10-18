@@ -58,8 +58,13 @@ void AudioSystem::Init()
 	std::vector<FMOD::Channel*> sfx_channel;
 	std::vector<FMOD::Channel*> bgm_channel;
 
-	mChannelsNewA.insert(std::make_pair(AUDIO_SFX, sfx_channel));
-	mChannelsNewA.insert(std::make_pair(AUDIO_BGM, bgm_channel));
+	std::vector<std::pair<uid, FMOD::Channel*&>> sfx_id_channel;
+	std::vector<std::pair<uid, FMOD::Channel*&>> bgm_id_channel;
+
+	mChannelsNewA.insert(std::make_pair(AUDIO_SFX, sfx_channel));    // without ID
+	mChannelsNewA.insert(std::make_pair(AUDIO_BGM, bgm_channel));    // without ID
+	mChannelswID.insert(std::make_pair(AUDIO_SFX, sfx_id_channel));  // w ID
+	mChannelswID.insert(std::make_pair(AUDIO_BGM, bgm_id_channel));  // w ID
 
 	auto audio_entities = systemManager->ecs->GetEntitiesWith<Audio>();
 
@@ -88,15 +93,20 @@ void AudioSystem::Init()
 			}
 		}
 
+		FMOD::Channel*& channel_ref = audio_component.mChannel;
+		std::pair<uid, FMOD::Channel*&> channel_pair = std::make_pair(audio_component.mChannelID, std::ref(channel_ref));
+
 		// (3) Check [AudioType] + Register <Audio> component's Channel into [SFX] / [BGM] global channel
 		switch (audio_component.mAudioType)
 		{
-		case AUDIO_BGM:
-			mChannelsNewA[AUDIO_BGM].push_back(audio_component.mChannel);
-			break;
-		case AUDIO_SFX:
-			mChannelsNewA[AUDIO_SFX].push_back(audio_component.mChannel);
-			break;
+			case AUDIO_BGM:
+				mChannelsNewA[AUDIO_BGM].push_back(audio_component.mChannel);
+				mChannelswID[AUDIO_BGM].push_back(channel_pair);
+				break;
+			case AUDIO_SFX:
+				mChannelsNewA[AUDIO_SFX].push_back(audio_component.mChannel);
+				mChannelswID[AUDIO_SFX].push_back(channel_pair);
+				break;
 		}
 	}
 
@@ -125,6 +135,10 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 	if (Input::CheckKey(PRESS, T))   // Press 'E' then 'R' then this
 		TestUnpauseSound();
 
+
+	// [10/18] Global Channel Test
+	if (Input::CheckKey(PRESS, _1))
+		SetAllSFXVolume(0.0f);
 	
 		
 
@@ -417,8 +431,19 @@ void AudioSystem::UpdateChannelReference(Entity id)
 	
 	AUDIOTYPE type = audio_component.mAudioType;
 
-	if (type != AUDIO_NULL) // Make sure it's a valid <Audio> audiotype
+	if (type != AUDIO_NULL && audio_component.mTypeChanged) // Make sure it's a valid <Audio> audiotype
 	{
+		switch (type)
+		{
+			//case AUDIO_BGM:
+			//	for (int i = 0; i < mChannelsNewA[AUDIO_BGM].size(); i++)
+			//	{
+			//		//if(mChannelsNewA[AUDIO_BGM])
+			//	}
+			//	mChannelsNewA[AUDIO_BGM];
+			//case AUDIO_SFX:
+
+		}
 		mChannelsNewA[type].push_back(audio_component.mChannel); // Saves a reference of the <Audio>'s dedicated channel into the global database.
 	}
 }
@@ -576,115 +601,35 @@ void AudioSystem::PlayAudio(std::string audio_name, AUDIOTYPE audio_type, float 
 
 /******************************************************************************/
 /*!
-	 PlaySFXAudio()
-	 - Play Audio on a SFX Channel
-	 - User provide (1) Audio Name (2) Audio Volume
- */
- /******************************************************************************/
-int AudioSystem::PlaySFXAudio(std::string audio_name, float audio_vol)
-{
-	// Find the sound first ...
-	auto map_it = mSounds.find(audio_name); // tries to find the audio with this name...
-
-	if (map_it == mSounds.end()) // true if not found;
-	{
-		PWARNING("Can't find the requested audio.");
-		//std::cerr << "Can't find the requested audio." << std::endl;
-		return -1;
-	}
-
-	auto channel_it = mChannelsNew.find(AUDIO_SFX);
-
-	if (channel_it != mChannelsNew.end())
-	{
-
-		for (Channel& channel : channel_it->second)
-		{
-			if (!channel.mIsPlayingSound)
-			{
-				int check_play = ErrCodeCheck(system_obj->playSound(map_it->second, nullptr, false, &(channel.mChannel)));
-
-				if (check_play)
-				{
-					PINFO("Currently Playing (%s) on SFX Channel : #%d", audio_name.c_str(), channel.mChannelID);
-					//std::cout << "Currently Playing (" << audio_name << ") on SFX Channel : #" << channel.mChannelID << std::endl;
-					channel.mChannel->setVolume(audio_vol);
-					channel.mIsPlayingSound = true;
-					return channel.mChannelID;
-					break;
-				}
-			}
-		}
-	}
-	return -1;
-}
-
-/******************************************************************************/
-/*!
-	 PlayBGMAudio()
-	 - Play Audio on a BGM Channel
-	 - User provide (1) Audio Name (2) Audio Volume
- */
- /******************************************************************************/
-int AudioSystem::PlayBGMAudio(std::string audio_name, float audio_vol)
-{
-	// Find the sound first ...
-	auto map_it = mSounds.find(audio_name); // tries to find the audio with this name...
-
-	if (map_it == mSounds.end()) // true if not found;
-	{
-		PWARNING("Can't find the requested audio.");
-		//std::cerr << "Can't find the requested audio." << std::endl;
-		return -1;
-	}
-
-	// auto channel_it = mChannels.find(AUDIO_BGM);
-	auto channel_it = mChannelsNew.find(AUDIO_BGM);
-
-	if (channel_it != mChannelsNew.end())
-	{
-
-		for (Channel& channel : channel_it->second)
-		{
-			if (!channel.mIsPlayingSound)
-			{
-				int check_play = ErrCodeCheck(system_obj->playSound(map_it->second, nullptr, false, &(channel.mChannel)));
-
-				if (check_play)
-				{
-					PINFO("Currently Playing (%s) on BGM Channel : #%d", audio_name.c_str(), channel.mChannelID);
-					//std::cout << "Currently Playing (" << audio_name << ") on BGM Channel : #" << channel.mChannelID << std::endl;
-					channel.mChannel->setVolume(audio_vol);
-					channel.mIsPlayingSound = true;
-					return channel.mChannelID;
-				}
-			}
-		}
-	}
-	return -1;
-}
-
-/******************************************************************************/
-/*!
 	 SetAllSFXVolume()
 	 - Set every SFX Channel based on the provided (1) Audio Volume
  */
  /******************************************************************************/
 void AudioSystem::SetAllSFXVolume(float audio_vol)
 {
-	auto channel_it = mChannelsNew.find(AUDIO_SFX);
-	PINFO("Setting SFX Volume: ");
-	//std::cout << "Setting SFX Volume: ";
+	auto channel_id_it = mChannelswID.find(AUDIO_SFX);
+	
+	auto audio_entities = systemManager->ecs->GetEntitiesWith<Audio>();
 
-	if (channel_it != mChannelsNew.end())
+	if (channel_id_it != mChannelswID.end())
 	{
-		for (Channel& channel : channel_it->second)
+		for (auto& channel_id_pair : channel_id_it->second)
 		{
-			ErrCodeCheck(channel.mChannel->setVolume(audio_vol));
+			for (Entity e : audio_entities)
+			{
+				Audio& audio_component = e.GetComponent<Audio>();
+
+				if (audio_component.mChannel) // Only those channels which are playing can be set volume.
+				{
+					ErrCodeCheck(channel_id_pair.second->setVolume(audio_vol));
+				}
+			}
 		}
 	}
 
 	sfxVolume = audio_vol;
+
+	UpdateSFXComponentVolume(sfxVolume);
 }
 
 /******************************************************************************/
@@ -695,64 +640,46 @@ void AudioSystem::SetAllSFXVolume(float audio_vol)
  /******************************************************************************/
 void AudioSystem::SetAllBGMVolume(float audio_vol)
 {
-	auto channel_it = mChannelsNew.find(AUDIO_BGM);
+	auto channel_it = mChannelsNewA.find(AUDIO_BGM);
 	PINFO("Setting BGM Volume: ");
 	//std::cout << "Setting BGM Volume: ";
 
-	if (channel_it != mChannelsNew.end())
+	if (channel_it != mChannelsNewA.end())
 	{
-		for (Channel& channel : channel_it->second)
+		for (FMOD::Channel* channel : channel_it->second)
 		{
-			ErrCodeCheck(channel.mChannel->setVolume(audio_vol));
+			ErrCodeCheck(channel->setVolume(audio_vol));
 		}
 	}
 
 	bgmVolume = audio_vol;
+
+	UpdateBGMComponentVolume(bgmVolume);
 }
 
-/******************************************************************************/
-/*!
-	 SetSpecificChannelVolume()
-	 - Set volume for a specific audio channel.
- */
- /******************************************************************************/
-void AudioSystem::SetSpecificChannelVolume(AUDIOTYPE audio_type, int channel_id, float audio_vol)
+void AudioSystem::UpdateSFXComponentVolume(float volume)
 {
-	auto channel_it_new = mChannelsNew.find(audio_type);
-
-	if (channel_it_new != mChannelsNew.end())
+	auto audio_entities = systemManager->ecs->GetEntitiesWith<Audio>();
+	
+	for (Entity e : audio_entities)
 	{
-		if (channel_id < channel_it_new->second.size())
-		{
-			PINFO("CHANNEL REQUEST: %d", channel_id);
-			//std::cout << "CHANNEL REQUEST: " << channel_id << std::endl;
-			Channel& channel_found = FindChannel(audio_type, channel_id);
-			PINFO("SETTING VOLUME:");
-			//std::cout << "SETTING VOLUME:";
-			ErrCodeCheck(channel_found.mChannel->setVolume(audio_vol));
+		Audio& audio_components = e.GetComponent<Audio>();
 
-			/*	if (channel_it_new->second[channel_id].mIsPlayingSound)
-				{
-					std::cout << "Attempting to Change Sound @ Channel 0." << std::endl;
-					ErrCodeCheck(FindChannel(audio_type, channel_id).mChannel->setVolume(audio_vol));
-				}*/
-		}
+		if(audio_components.mAudioType == AUDIO_SFX)
+			audio_components.mVolume = volume;
 	}
+}
 
-	else
-	{
-		PWARNING("Sorry, requested channel ID is invalid.");
-		//std::cout << "Sorry, requested channel ID is invalid." << std::endl;
-	}
+void AudioSystem::UpdateBGMComponentVolume(float volume)
+{
+	auto audio_entities = systemManager->ecs->GetEntitiesWith<Audio>();
 
-	switch (audio_type)
+	for (Entity e : audio_entities)
 	{
-	case AUDIO_BGM:
-		bgmVolume = audio_vol;
-		return;
-	case AUDIO_SFX:
-		sfxVolume = audio_vol;
-		return;
+		Audio& audio_components = e.GetComponent<Audio>();
+
+		if (audio_components.mAudioType == AUDIO_BGM)
+			audio_components.mVolume = volume;
 	}
 }
 

@@ -287,7 +287,7 @@ struct Audio
 {
 	std::string mFilePath;				   // File Path to the Audio File (required for loading)
 	std::string mFileName;				   // Name of Audio file (required for loading)
-	std::string mFullPath;				   // 
+	std::string mFullPath;				   // Full Path (File Path + Audio File)
 
 	// Don't need to serialize ...
 	std::vector<int> mPlaySFXChannelID;    // Currently playing in SFX Channel...
@@ -299,19 +299,30 @@ struct Audio
 	bool mIsLooping = false;			   // [Flag] - flag to decide whether if audio is looping.
 
 	// For Editor
-	bool			 mIsEmpty = true;	   // [For Editor] - if empty delete all data in this <Audio> component
-	bool			 mIsLoaded = false;	   // [For Loading]
+	bool		   mIsEmpty = true;	       // [For Editor] - if empty delete all data in this <Audio> component
+	bool		   mIsLoaded = false;	   // [For Loading]
 	
 	// Pause State [Editor/Pause Menu]
-	bool			 mIsPaused  = false;
-	bool			 mWasPaused = false;   // [For Unpausing]
+	bool		   mIsPaused  = false;
+	bool		   mWasPaused = false;     // [For Unpausing]
+
+	// Volume 
+	float		   mVolume = 1.0f;
+
+	// Audio Type [Channel Management]
+	AUDIOTYPE      mAudioType;			   // SFX or BGM (Mute Channels)
+	float		   mTypeChanged = false;   // [For Editor] - trigger type change
 
 	// Q. Can a <Audio> entity have their very own channel.
+	uid            mChannelID;             // Channel ID (Channel Management)
 	FMOD::Channel* mChannel;         	   // Use this to facilitate manipulation of audio.
 	FMOD::Sound*   mSound;				   // Each <Audio> can only hold a reference to the "Audio File" it's attached to.
-	AUDIOTYPE      mAudioType;			   // SFX or BGM (Mute Channels)
 
-	Audio() : mFilePath(""), mFileName(""), mAudioType(AUDIO_NULL), mIsEmpty(true) {}
+
+	Audio() : mFilePath(""), mFileName(""), mAudioType(AUDIO_NULL), mIsEmpty(true)
+	{
+		mChannelID = uid();
+	}
 
 	Audio(std::string file_path_to_audio, std::string file_audio_name, AUDIOTYPE audio_type, bool playOnAwake) : mAudioType(audio_type), mIsPlaying(false), mPlayonAwake(playOnAwake),
 																												 mIsEmpty(false)
@@ -319,6 +330,8 @@ struct Audio
 		mFilePath = file_path_to_audio;
 		mFileName = file_audio_name;
 		mFullPath = file_path_to_audio + "/" + mFileName;
+
+		mChannelID = uid();
 	}
 
 	// For [Editor]
