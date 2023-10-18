@@ -121,6 +121,18 @@ public:
 	*******************************************************************************/
 	void SaveKeybind();
 
+	/*!*****************************************************************************
+	Getter for the list of keybind
+	*******************************************************************************/
+	std::map<std::string, E_KEY>* GetKeybindMap() { return &mKeybindMap; }
+
+	/*!*****************************************************************************
+	Getter for the list of available ekey's name and it's ekey enum
+	*******************************************************************************/
+	const std::array<std::pair<std::string, E_KEY>, 129>* GetEkeyMap() { return &mE_KEYMap; }
+
+	std::string GetEKeyName(E_KEY ekey) { return std::find_if(mE_KEYMap.begin(), mE_KEYMap.end(), [ekey] (std::pair<std::string, E_KEY> item)->bool { return item.second == ekey; })->first; }
+
 private:
 	/*!*****************************************************************************
 	Binding the E_KEY to it's direct name
@@ -260,6 +272,6 @@ private:
 		return map;
 	}
 	
-	std::unordered_map<std::string, E_KEY> mKeybindMap; // Mapping action to E_KEY
+	std::map<std::string, E_KEY> mKeybindMap; // Mapping action to E_KEY
 	static const std::array<std::pair<std::string, E_KEY>, 129> mE_KEYMap; // Mapping E_KEY to it's name
 };

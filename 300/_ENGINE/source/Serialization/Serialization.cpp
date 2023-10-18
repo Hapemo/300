@@ -129,13 +129,13 @@ bool EntityJSON::Deserialize(const rapidjson::Value& obj)
 
 	if (obj.HasMember("MeshRenderer"))
 	{
-		mMRJ.mShaderPath = std::pair<std::string, std::string>(obj["MeshRenderer"]["ShaderPath"][0].GetString(), obj["MeshRenderer"]["ShaderPath"][1].GetString());
-		for(int i = 0; i < 4; ++i) // size 4 because only 4 type of material property can be assigned
-			mMRJ.mMaterialInstancePath[i] = (obj["MeshRenderer"]["MaterialInstancePath"][i].GetString());
-		mMRJ.mMeshPath = obj["MeshRenderer"]["MeshPath"].GetString();
-		mMRJ.mGUID = (unsigned)obj["MeshRenderer"]["GUID"].GetInt();
-		for (int i = 0; i < 4; ++i)
-			mMRJ.mTextureCont[i] = (obj["MeshRenderer"]["TextureCont"][i].GetBool());
+		//mMRJ.mShaderPath = std::pair<std::string, std::string>(obj["MeshRenderer"]["ShaderPath"][0].GetString(), obj["MeshRenderer"]["ShaderPath"][1].GetString());
+		//for(int i = 0; i < 4; ++i) // size 4 because only 4 type of material property can be assigned
+		//	mMRJ.mMaterialInstancePath[i] = (obj["MeshRenderer"]["MaterialInstancePath"][i].GetString());
+		//mMRJ.mMeshPath = obj["MeshRenderer"]["MeshPath"].GetString();
+		//mMRJ.mGUID = (unsigned)obj["MeshRenderer"]["GUID"].GetInt();
+		//for (int i = 0; i < 4; ++i)
+		//	mMRJ.mTextureCont[i] = (obj["MeshRenderer"]["TextureCont"][i].GetBool());
 
 		mmr_t = true;
 	}
@@ -252,7 +252,8 @@ bool EntityJSON::Deserialize(const rapidjson::Value& obj)
 							 (float)obj["PointLight"]["LightColor"][1].GetDouble(),
 							 (float)obj["PointLight"]["LightColor"][2].GetDouble() };
 
-		mPLJ.mAttenuation = (float)obj["PointLight"]["Attenuation"].GetDouble();
+		mPLJ.mLinearFalloff = (float)obj["PointLight"]["LinearFalloff"].GetDouble();
+		mPLJ.mQuadraticFalloff = (float)obj["PointLight"]["QuadraticFalloff"].GetDouble();
 
 		mPLJ.mIntensity = (float)obj["PointLight"]["Intensity"].GetDouble();
 
@@ -341,8 +342,8 @@ bool EntityJSON::Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* wri
 
 		writer->String("ShaderPath");
 		writer->StartArray();
-		writer->String(mMRJ.mShaderPath.first.c_str());
-		writer->String(mMRJ.mShaderPath.second.c_str());
+		//writer->String(mMRJ.mShaderPath.first.c_str());
+		//writer->String(mMRJ.mShaderPath.second.c_str());
 		writer->EndArray();
 
 		writer->String("MaterialInstancePath");
@@ -532,8 +533,11 @@ bool EntityJSON::Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* wri
 		writer->Double(mPLJ.mLightColor.z);
 		writer->EndArray();
 
-		writer->String("Attenuation");
-		writer->Double(mPLJ.mAttenuation);
+		writer->String("LinearFalloff");
+		writer->Double(mPLJ.mLinearFalloff);
+
+		writer->String("QuadraticFalloff");
+		writer->Double(mPLJ.mQuadraticFalloff);
 
 		writer->String("Intensity");
 		writer->Double(mPLJ.mIntensity);

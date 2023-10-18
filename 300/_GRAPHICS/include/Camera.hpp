@@ -17,6 +17,11 @@ instance
 
 namespace GFX 
 {
+    namespace CameraConstants {
+        const float maxFOV = 45.f;
+        const float minFOV = 1.f;
+    }
+
     class Camera
     {
     public:

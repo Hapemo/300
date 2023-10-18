@@ -61,7 +61,7 @@ void InputMapSystem::SaveKeybind() {
 	}
 
 	for (auto [actionName, ekey] : mKeybindMap) {
-		file << actionName << ": " << std::find_if(mE_KEYMap.begin(), mE_KEYMap.end(), [ekey] (std::pair<std::string, E_KEY> item)->bool { return item.second == ekey; })->first << '\n';
+		file << actionName << ": " << GetEKeyName(ekey) << '\n';
 	}
 
 	file.close();

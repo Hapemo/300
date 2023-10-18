@@ -59,6 +59,12 @@ Creates the mesh by initializing the required VAO and VBOs for the mesh
 		void Setup(const _GEOM::Geom& GeomData);
 
 /*!*****************************************************************************
+Creates the mesh by initializing the required VAO and VBOs for the mesh to 
+to render 2D images. Essentially a quad mesh
+*******************************************************************************/
+		void Setup2DImageMesh();
+
+/*!*****************************************************************************
 Binds the VAO to the openGL context to be used for rendering
 *******************************************************************************/
 		void BindVao();
@@ -109,6 +115,9 @@ Destroys the mesh by deleting the VAO and VBOs allocated on th GPU's memory
 		std::vector<_GEOM::Animation>	mAnimation{};
 		bool							mHasAnimation{ false };
 
+		// Stores the descriptor data for this mesh
+		_GEOM::DescriptorData			mDescriptorData;
+		std::string						mDescriptorPath;
 
 	private:
 		// Vertex array object and buffer object for each mesh

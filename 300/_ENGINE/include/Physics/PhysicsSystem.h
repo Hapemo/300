@@ -35,9 +35,14 @@ public:
 	*******************************************************************************/
 	void Exit();
 	/*!*****************************************************************************
+	Adds a new entity to the physics simulation
+	*******************************************************************************/
+	void AddActor(Entity e);
+	/*!*****************************************************************************
 	Set velocity of an entity.
 	*******************************************************************************/
 	void SetVelocity(Entity e, const glm::vec3 &velocity);
+	void RemoveActor(Entity e);
 
 private:
 	PhysX mPX;
@@ -53,6 +58,7 @@ private:
 	*******************************************************************************/
 	void CreateRigidBody(Entity e);
 
+	void AttachMotionType(PxRigidActor*& actor, PxShape*& shape, const PxTransform& pxform, const RigidBody& rbod, const glm::ivec3& axisLocks = glm::ivec3(0, 0, 0));
 	/*!*****************************************************************************
 	Helper functions to convert glm to physx and vice versa.
 	*******************************************************************************/
