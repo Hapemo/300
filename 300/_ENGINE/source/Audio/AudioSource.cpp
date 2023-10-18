@@ -68,7 +68,10 @@ void AudioSource::Pause()
 	{
 		AudioSystem* system = systemManager->mAudioSystem.get();
 
-		if (mAudioComponent->mSound != nullptr)
+		bool playing;
+		mAudioComponent->mChannel->isPlaying(&playing);
+
+		if (playing)
 		{
 			// The [playing] should be in the [Update()] loop.
 			mAudioComponent->mSetPause = true;
@@ -83,7 +86,7 @@ void AudioSource::Unpause()
 	{
 		AudioSystem* system = systemManager->mAudioSystem.get();
 
-		if (mAudioComponent->mSound != nullptr)
+		if (mAudioComponent->mPaused)
 		{
 			// The [playing] should be in the [Update()] loop.
 			mAudioComponent->mSetUnpause = true;
@@ -91,4 +94,39 @@ void AudioSource::Unpause()
 	}
 }
 
+void AudioSource::Stop()
+{
+	if (mAudioComponent != nullptr) // Make sure there is the <Audio> component reference.
+	{
+		AudioSystem* system = systemManager->mAudioSystem.get();
+
+		mAudioComponent->mChannel->stop();		
+	}
+}
+
+void AudioSource::Mute()
+{
+	if (mAudioComponent != nullptr) // Make sure there is the <Audio> component reference.
+	{
+		bool playing; 
+		mAudioComponent->mChannel->isPlaying(&playing);
+		if (playing)
+		{
+			mAudioComponent->mChannel->setVolume(0.0f);
+		}
+	}
+}
+
+void AudioSource::SetVolume(float volume)
+{
+	if (mAudioComponent != nullptr) // Make sure there is the <Audio> component reference.
+	{
+		bool playing;
+		mAudioComponent->mChannel->isPlaying(&playing);
+		if (playing)
+		{
+			mAudioComponent->mChannel->setVolume(volume);
+		}
+	}
+}
 

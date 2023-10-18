@@ -207,82 +207,21 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 			audio_component.mSetUnpause = false;
 		}
 
-
-
 		if (audio_component.mIsPlaying && !channelIsPlay) // Sound finished playing in channel.
 		{
 			PINFO("Finished Playing");
 			audio_component.mIsPlaying = false;	   // Audio finished playing. 
 			audio_component.mIsPlay = false;       // Don't Need to keep playing... (play once) -> if "mIsLooping" is true (channel will continue to play)
+			
+			// Check if looping...
+			if (audio_component.mIsLooping)
+			{
+				audio_component.mIsPlay = true; // make it true again. 
+			}
+		
 		}
 
 	}
-	//for (Entity audio : audio_entities)
-	//{
-	//	Audio& audio_component = audio.GetComponent<Audio>();
-	//
-	//	if (audio_component.mIsPlay) // if it's supposed to play.
-	//	{
-	//		if (!audio_component.mIsPlaying)
-	//		{
-	//			int channel_id;
-	//
-	//			switch (audio_component.mAudioType)
-	//			{
-	//			case AUDIO_BGM:
-	//				channel_id = PlayBGMAudio(audio_component.mFileName, 1.0f);
-	//				if (channel_id != -1)
-	//					audio_component.mPlayBGMChannelID.push_back(channel_id);
-	//				break;
-	//			case AUDIO_SFX:
-	//				channel_id = PlaySFXAudio(audio_component.mFileName, 1.0f);
-	//				if (channel_id != -1)
-	//					audio_component.mPlaySFXChannelID.push_back(channel_id);
-	//				break;
-	//			}
-	//		}
-	//
-	//		audio_component.mIsPlaying = true; // currently playing.
-	//		audio_component.mIsPlay = false;   // don't need to play again.
-	//	}
-	//
-	//	/*
-	//		[Check if Channel is still Playing]
-	//		- Iterate through [Audio Component]
-	//
-	//	*/
-	//
-	//	for (Entity audio1 : audio_entities)
-	//	{
-	//		Audio& audio_comp = audio1.GetComponent<Audio>();
-	//
-	//		for (int id : audio_comp.mPlayBGMChannelID)
-	//		{
-	//			Channel& channel = FindChannel(AUDIO_BGM, id);
-	//
-	//			channel.mChannel->isPlaying(&channel.mIsPlayingSound);
-	//
-	//			if (!channel.mIsPlayingSound) // channel stopped playing
-	//			{
-	//				audio_comp.mIsPlaying = false;
-	//				audio_comp.mIsPlay = false;
-	//			}
-	//		}
-	//
-	//		for (int id : audio_comp.mPlaySFXChannelID)
-	//		{
-	//			Channel& channel = FindChannel(AUDIO_SFX, id);
-	//
-	//			channel.mChannel->isPlaying(&channel.mIsPlayingSound);
-	//
-	//			if (!channel.mIsPlayingSound) // channel stopped playing
-	//			{
-	//				audio_comp.mIsPlaying = false;
-	//				audio_comp.mIsPlay = false;
-	//			}
-	//		}
-	//	}
-	//}
 	
 	system_obj->update();
 

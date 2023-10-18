@@ -39,9 +39,9 @@ public:
 	void Play();								// Play the [Sound] that is attached to this [AudioSource] (Should run <IsSoundAttached> to make sure audio is there)
 	void Pause();								// Pause the Audio.				
 	void Unpause();
-	//void Stop();
-	//void Mute();
-	//void SetVolume();
+	void Stop();
+	void Mute();
+	void SetVolume(float volume);
 	//void SetIsLoop(float loop);
 
 
