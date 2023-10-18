@@ -1042,7 +1042,6 @@ void Audio::Inspect() {
 				{	
 					// Load the Audio File + Check (load status)
 					systemManager->mAudioSystem.get()->UpdateLoadAudio(Entity(Hierarchy::selectedId));
-					systemManager->mAudioSystem.get()->UpdateChannelReference(Entity(Hierarchy::selectedId));
 					Entity(Hierarchy::selectedId).GetComponent<Audio>().mIsEmpty = false; // must be here (editor specific) -> to trigger the other options to appear.
 					/*Audio& audioent = Entity(Hierarchy::selectedId).GetComponent<Audio>();
 					int i = 0;*/
@@ -1089,12 +1088,12 @@ void Audio::Inspect() {
 				mAudio = i;
 				switch (mAudio)
 				{
-				case 1:
+				case 0:
 					mAudioType = AUDIO_SFX;
 					mTypeChanged = true;
 					systemManager->mAudioSystem.get()->UpdateChannelReference(Entity(Hierarchy::selectedId));
 					break;
-				case 2:
+				case 1:
 					mAudioType = AUDIO_BGM;
 					mTypeChanged = true;
 					systemManager->mAudioSystem.get()->UpdateChannelReference(Entity(Hierarchy::selectedId));

@@ -425,26 +425,50 @@ void AudioSystem::UpdateLoadAudio(Entity id)
 	}*/
 }
 
+// Used to transfer the [Channels] between [SFX] & [BGM] database.
 void AudioSystem::UpdateChannelReference(Entity id)
 {
 	Audio& audio_component = id.GetComponent<Audio>();
 	
 	AUDIOTYPE type = audio_component.mAudioType;
+	
 
 	if (type != AUDIO_NULL && audio_component.mTypeChanged) // Make sure it's a valid <Audio> audiotype
 	{
 		switch (type)
 		{
 			case AUDIO_BGM:
-				for (int i = 0; i < mChannelsNewA[AUDIO_BGM].size(); i++)
+				for (int i = 0; i < mChannelswID[AUDIO_SFX].size(); i++)
 				{
-					//if(mChannelsNewA[AUDIO_BGM])
+					if (mChannelswID[AUDIO_SFX][i].first == audio_component.mChannelID) // if corresponding ID... is found in this database.
+					{
+						mChannelswID[AUDIO_SFX].erase(mChannelswID[AUDIO_SFX].begin() + i); // Delete from [BGM] database.
+					}
 				}
-				mChannelsNewA[AUDIO_BGM];
-		/*	case AUDIO_SFX:*/
 
+				break;
+	
+			case AUDIO_SFX:
+
+				for (int i = 0; i < mChannelswID[AUDIO_BGM].size(); i++)
+				{
+					if (mChannelswID[AUDIO_BGM][i].first == audio_component.mChannelID) // if corresponding ID... is found in this database.
+					{
+						mChannelswID[AUDIO_BGM].erase(mChannelswID[AUDIO_BGM].begin() + i); // Delete from [BGM] database.
+					
+					}
+				}
+
+				break;
 		}
-		mChannelsNewA[type].push_back(audio_component.mChannel); // Saves a reference of the <Audio>'s dedicated channel into the global database.
+
+		FMOD::Channel*& channel_ref = audio_component.mChannel;
+		std::pair<uid, FMOD::Channel*&> channel_pair = std::make_pair(audio_component.mChannelID, std::ref(channel_ref));
+		mChannelswID[type].push_back(channel_pair);
+		
+		// Trigger back the boolean to original.
+		audio_component.mTypeChanged = false;
+
 	}
 }
 
