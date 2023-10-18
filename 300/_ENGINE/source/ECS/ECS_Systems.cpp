@@ -89,7 +89,6 @@ void SystemManager::Play()
 
 void SystemManager::Update(float dt)
 {
-	mInputActionSystem.get()->Update();
 	EnginePerformance::StartTrack("Graphics");
 	mGraphicsSystem.get()->Update(dt);
 	mGameStateSystem.get()->UpdateNextGSMState();

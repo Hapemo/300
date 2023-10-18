@@ -148,11 +148,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\..\Desktop\300\300\_ENGINE\include\Input\Input.h" />
-    <ClInclude Include="..\..\..\..\..\Desktop\300\300\_ENGINE\include\Input\InputAction.h" />
-    <ClInclude Include="..\..\..\..\..\Desktop\300\300\_ENGINE\include\Input\InputActionMap.h" />
-    <ClInclude Include="..\..\..\..\..\Desktop\300\300\_ENGINE\include\Input\InputMapSystem.h" />
-    <ClInclude Include="..\..\..\..\..\Desktop\300\300\_ENGINE\include\Input\KeyBind.h" />
     <ClInclude Include="include\Audio\AudioSystem.h" />
     <ClInclude Include="include\Audio\AudioType.h" />
     <ClInclude Include="include\Debug\AssertException.h" />
@@ -173,7 +168,6 @@
     <ClInclude Include="include\Graphics\GraphicsSystem.h" />
     <ClInclude Include="include\Input\Input.h" />
     <ClInclude Include="include\Input\InputMapSystem.h" />
-    <ClInclude Include="include\Input\KeyBind.h" />
     <ClInclude Include="include\Multithread.h" />
     <ClInclude Include="include\Physics\Accumulator.h" />
     <ClInclude Include="include\Physics\PhysicsTypes.h" />
