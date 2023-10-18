@@ -4,7 +4,7 @@
 bool KeybindWindow::openWindow;
 
 void KeybindWindow::init() {
-	openWindow = true;
+	openWindow = false;
 }
 
 

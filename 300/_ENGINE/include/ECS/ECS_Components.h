@@ -106,6 +106,8 @@ struct MeshRenderer
 	//uid									mShaders;
 	//std::pair<std::string, std::string> mShaderPath{ "../assets/shader_files/animations_vert.glsl", "../assets/shader_files/pointLight_frag.glsl" };
 	std::pair<std::string, std::string> mShaderPath{ "../assets/shader_files/pointLight_vert.glsl", "../assets/shader_files/pointLight_frag.glsl" };
+	uid									mShaderid;
+	
 	std::string							mMaterialInstancePath[4] {" "," " ," " ," " };
 	vec4								mInstanceColor{ 1.f, 1.f, 1.f, 1.f };
 

@@ -1,6 +1,6 @@
 [
     {
-        "ShaderProgram": "../assets/ShaderProgram/PointLightShader",
+        "ShaderProgram": "PointLightShader",
         "Vertex": "../assets/shader_files/pointLight_vert.glsl",
         "Fragment": "../assets/shader_files/pointLight_frag.glsl"
     }

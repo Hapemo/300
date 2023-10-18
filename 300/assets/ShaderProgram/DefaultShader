@@ -1,6 +1,6 @@
 [
     {
-        "ShaderProgram": "../assets/ShaderProgram/DefaultShader",
+        "ShaderProgram": "DefaultShader",
         "Vertex": "../assets/shader_files/draw_vert.glsl",
         "Fragment": "../assets/shader_files/draw_frag.glsl"
     }

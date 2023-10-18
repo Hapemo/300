@@ -74,6 +74,7 @@ void GFX::Shader::CreateShaderFromFiles(const char* vertexFile, const char* frag
 		// Reading of whole file into string
 		vertIfs.read(&vertexCode[0], static_cast<std::streamsize>(vertexCode.size()));
 		vertIfs.close();
+
 	}
 	else
 	{

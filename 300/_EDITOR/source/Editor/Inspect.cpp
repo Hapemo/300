@@ -604,55 +604,72 @@ void MeshRenderer::Inspect()
 		// populating vertex shader vector
 		for (const auto& entry : std::filesystem::directory_iterator(systemManager->mResourceTySystem->shader_path))
 		{
-			if (std::filesystem::is_regular_file(entry))
-			{
-				if(getShaderExtension(entry.path().string()) == "_vert.glsl")
-					vertShaders.push_back(entry.path().string());
+			//if (std::filesystem::is_regular_file(entry))
+			//{
+			//	if(getShaderExtension(entry.path().string()) == "_vert.glsl")
+			//		vertShaders.push_back(entry.path().string());
 
-				else if (getShaderExtension(entry.path().string()) == "_frag.glsl")
-					fragShaders.push_back(entry.path().string());
-			}
+			//	else if (getShaderExtension(entry.path().string()) == "_frag.glsl")
+			//		fragShaders.push_back(entry.path().string());
+			//}
 		}
 
-		{
+		//{
 			// Vert shader selection
-			if (ImGui::BeginCombo("Vertex Shaders", vertShaders[selectedVertShader].data(), 0))
-			{
-				for (int i{}; i < vertShaders.size(); ++i)
-				{
-					bool isItemSelected = (selectedVertShader == i);
-					if(ImGui::Selectable(vertShaders[i].data(), isItemSelected))
-						selectedVertShader = i;
+			//if (ImGui::BeginCombo("Vertex Shaders", vertShaders[selectedVertShader].data(), 0))
+			//{
+			//	for (int i{}; i < vertShaders.size(); ++i)
+			//	{
+			//		bool isItemSelected = (selectedVertShader == i);
+			//		if(ImGui::Selectable(vertShaders[i].data(), isItemSelected))
+			//			selectedVertShader = i;
 
-					if (isItemSelected)
-						ImGui::SetItemDefaultFocus();
+			//		if (isItemSelected)
+			//			ImGui::SetItemDefaultFocus();
+			//	}
+
+			//	ImGui::EndCombo();
+			//}
+
+			//// Frag shader selection
+			//if (ImGui::BeginCombo("Fragment Shaders", fragShaders[selectedFragShader].data(), 0))
+			//{
+			//	for (int i{}; i < fragShaders.size(); ++i)
+			//	{
+			//		bool isItemSelected = (selectedFragShader == i);
+			//		if (ImGui::Selectable(fragShaders[i].data(), isItemSelected))
+			//			selectedFragShader = i;
+
+			//		if (isItemSelected)
+			//			ImGui::SetItemDefaultFocus();
+			//	}
+
+			//	ImGui::EndCombo();
+			//}
+		//}
+
+		//if (ImGui::Button("Compile Shader"))
+		//{
+		//	std::cout << "compile shaders :)\n";
+		//}
+
+		std::string shaderstr{" "};
+
+		if (systemManager->mResourceTySystem->m_Shaders.find(mShaderid) != systemManager->mResourceTySystem->m_Shaders.end())
+			shaderstr = systemManager->mResourceTySystem->m_Shaders[mShaderid].first;
+		
+		if (ImGui::BeginCombo("##Shaders", shaderstr.c_str())) {
+
+			for (auto& data : systemManager->mResourceTySystem->m_Shaders) {
+
+				if (ImGui::Selectable(data.second.first.c_str())) {
+					mShaderid = data.first;
 				}
-
-				ImGui::EndCombo();
 			}
 
-			// Frag shader selection
-			if (ImGui::BeginCombo("Fragment Shaders", fragShaders[selectedFragShader].data(), 0))
-			{
-				for (int i{}; i < fragShaders.size(); ++i)
-				{
-					bool isItemSelected = (selectedFragShader == i);
-					if (ImGui::Selectable(fragShaders[i].data(), isItemSelected))
-						selectedFragShader = i;
+			ImGui::EndCombo();
 
-					if (isItemSelected)
-						ImGui::SetItemDefaultFocus();
-				}
-
-				ImGui::EndCombo();
-			}
 		}
-
-		if (ImGui::Button("Compile Shader"))
-		{
-			std::cout << "compile shaders :)\n";
-		}
-
 		ImGui::Separator();
 
 		// == >> Mesh << == //

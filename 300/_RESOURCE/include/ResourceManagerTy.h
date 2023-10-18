@@ -35,12 +35,12 @@
 //};
 
 
-//struct ref {
-//
-//    p_ref partial_ref;F
-//    unsigned data_uid;
-//
-//};
+struct ref {
+
+    void*       data;
+    unsigned    data_uid;
+
+};
 /***************************************************************************/
 /*!
 \brief
@@ -77,9 +77,9 @@ class ResourceTy
 public:
 
 
-    bool deserialize_Shader(std::string filename);
+    std::pair<std::string, std::pair<std::string, std::string>> deserialize_Shader(std::string filename);
     bool serialize_Shader(std::string shaderProgram, std::pair < std::string, std::string> shaderPair);
-    void create_Shader();
+    void create_Shader(std::string ShaderPrgm, std::string vertPath, std::string fragPath);
     void shader_Loader();
     GFX::Shader* get_Shader(unsigned);
     /***************************************************************************/
@@ -133,10 +133,11 @@ public:
     const std::string compressed_texture_path = "../assets/Compressed/";
     const std::string compressed_Editor_path = "../assets/Editor/Textures_Compressed/";
     const std::string shader_path = "../assets/shader_files/";
+    const std::string shader_program_path = "../assets/ShaderProgram/";
     const std::string fbx_path = "../assets/Models/";
 
     std::unordered_map<std::string, GFX::Texture*> m_EditorTextures;
-
+    std::unordered_map<std::uint64_t,std::pair<std::string, ref>> m_Shaders;
     int mResouceCnt;
 private:
 
