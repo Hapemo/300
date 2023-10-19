@@ -173,6 +173,14 @@ void GraphicsSystem::Update(float dt)
 			}
 		}
 
+		// animations are present
+		if (inst.HasComponent<Animator>()) {
+			AddInstance(meshinst, final, meshRenderer.mInstanceColor, static_cast<int>(m_Materials.size()), static_cast<unsigned>(inst.id), animationID++);
+		}
+		else {
+			AddInstance(meshinst, final, meshRenderer.mInstanceColor, static_cast<int>(m_Materials.size()), static_cast<unsigned>(inst.id));
+		}
+
 		MaterialSSBO material{};
 		// Save the materials if it exists
 		material.mDiffuseMap = GetAndStoreBindlessTextureHandle(meshRenderer.GetTexture(DIFFUSE));		
@@ -181,14 +189,6 @@ void GraphicsSystem::Update(float dt)
 		material.mShininessMap = GetAndStoreBindlessTextureHandle(meshRenderer.GetTexture(SHININESS));	
 		material.mEmissionMap = GetAndStoreBindlessTextureHandle(meshRenderer.GetTexture(EMISSION));	
 		m_Materials.emplace_back(material);	// push back
-
-		// animations are present
-		if (inst.HasComponent<Animator>()) {
-			AddInstance(meshinst, final, meshRenderer.mInstanceColor, static_cast<int>(m_Materials.size()), static_cast<unsigned>(inst.id), animationID++);
-		}
-		else {
-			AddInstance(meshinst, final, meshRenderer.mInstanceColor, static_cast<int>(m_Materials.size()), static_cast<unsigned>(inst.id));
-		}
 	}
 	m_FinalBoneMatrixSsbo.SubData(finalBoneMatrices.size() * sizeof(mat4), finalBoneMatrices.data());
 	finalBoneMatrices.clear();
