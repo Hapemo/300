@@ -133,7 +133,7 @@ bool EntityJSON::Deserialize(const rapidjson::Value& obj)
 		for(int i = 0; i < 4; ++i) // size 4 because only 4 type of material property can be assigned
 			mMRJ.mMaterialInstancePath[i] = (obj["MeshRenderer"]["MaterialInstancePath"][i].GetString());
 		mMRJ.mMeshPath = obj["MeshRenderer"]["MeshPath"].GetString();
-		mMRJ.mGUID = (unsigned)obj["MeshRenderer"]["GUID"].GetInt();
+		//mMRJ.mGUID = (unsigned)obj["MeshRenderer"]["GUID"].GetInt();
 		for (int i = 0; i < 4; ++i)
 			mMRJ.mTextureCont[i] = (obj["MeshRenderer"]["TextureCont"][i].GetBool());
 
@@ -356,7 +356,7 @@ bool EntityJSON::Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* wri
 		writer->String(mMRJ.mMeshPath.c_str());
 
 		writer->String("GUID");
-		writer->Int(mMRJ.mGUID);
+		//writer->Int(mMRJ.mGUID);
 
 		writer->String("TextureCont");
 		writer->StartArray();

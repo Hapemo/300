@@ -37,7 +37,7 @@
 
 struct ref {
 
-    void*       data;
+    void*       data {nullptr};
     unsigned    data_uid;
 
 };

@@ -194,11 +194,11 @@ void GraphicsSystem::Update(float dt)
 		MeshRenderer& meshRenderer = inst.GetComponent<MeshRenderer>();
 
 		// if the mesh instance is not active, skip it
-		if (meshRenderer.mMeshRef == nullptr)
+		if (meshRenderer.mMeshRef.data == nullptr)
 			continue;
 
 		// gives me the mesh
-		void *tt = meshRenderer.mMeshRef;
+		void *tt = meshRenderer.mMeshRef.data;
 		GFX::Mesh &meshinst = *reinterpret_cast<GFX::Mesh *>(tt);
 
 		// pushback LTW matrices
@@ -313,7 +313,7 @@ void GraphicsSystem::EditorDraw(float dt)
 	for (Entity inst : meshRendererInstances)
 	{
 		auto& meshrefptr = inst.GetComponent<MeshRenderer>();
-		if (meshrefptr.mMeshRef == nullptr)
+		if (meshrefptr.mMeshRef.data == nullptr)
 			continue;
 
 		//if (inst.HasParent())
@@ -333,7 +333,7 @@ void GraphicsSystem::EditorDraw(float dt)
 		renderedMesh[meshstr] = 1;
 
 		// render the mesh and its instances here
-		GFX::Mesh &meshinst = *reinterpret_cast<GFX::Mesh *>(inst.GetComponent<MeshRenderer>().mMeshRef);
+		GFX::Mesh &meshinst = *reinterpret_cast<GFX::Mesh *>(inst.GetComponent<MeshRenderer>().mMeshRef.data);
 
 		// gets the shader filepathc
 		//uid shaderstr = inst.GetComponent<MeshRenderer>().mShaders;
@@ -354,9 +354,9 @@ void GraphicsSystem::EditorDraw(float dt)
 		GFX::Texture *textureInst[4]{};
 		for (int i{0}; i < 4; i++)
 		{
-			if (inst.GetComponent<MeshRenderer>().mTextureCont[i] == true)
+			if (inst.GetComponent<MeshRenderer>().mTextureRef[i].data != nullptr)
 			{
-				textureInst[i] = reinterpret_cast<GFX::Texture *>(inst.GetComponent<MeshRenderer>().mTextureRef[i]);
+				textureInst[i] = reinterpret_cast<GFX::Texture *>(inst.GetComponent<MeshRenderer>().mTextureRef[i].data);
 			}
 		}
 	
@@ -391,7 +391,7 @@ void GraphicsSystem::EditorDraw(float dt)
 		// bind texture unit
 		for (int i{0}; i < 4; i++)
 		{
-			if (inst.GetComponent<MeshRenderer>().mTextureCont[i] == true)
+			if (inst.GetComponent<MeshRenderer>().mTextureRef[i].data != nullptr)
 			{
 				glBindTextureUnit(i, textureInst[i]->ID());
 			}
@@ -432,7 +432,7 @@ void GraphicsSystem::EditorDraw(float dt)
 		// unbind the textures
 		for (int i{0}; i < 4; i++)
 		{
-			if (inst.GetComponent<MeshRenderer>().mTextureCont[i] == true)
+			if (inst.GetComponent<MeshRenderer>().mTextureRef[i].data != nullptr)
 			{
 				glBindTextureUnit(i, 0);
 			}
@@ -477,7 +477,7 @@ void GraphicsSystem::GameDraw(float dt)
 	{
 
 		auto& meshrefptr = inst.GetComponent<MeshRenderer>();
-		if (meshrefptr.mMeshRef == nullptr)
+		if (meshrefptr.mMeshRef.data != nullptr)
 			continue;
 
 		std::string meshstr = inst.GetComponent<MeshRenderer>().mMeshPath;
@@ -491,7 +491,7 @@ void GraphicsSystem::GameDraw(float dt)
 		renderedMesh[meshstr] = 1;
 
 		// render the mesh and its instances here
-		GFX::Mesh &meshinst = *reinterpret_cast<GFX::Mesh *>(inst.GetComponent<MeshRenderer>().mMeshRef);
+		GFX::Mesh &meshinst = *reinterpret_cast<GFX::Mesh *>(inst.GetComponent<MeshRenderer>().mMeshRef.data);
 
 		// gets the shader filepath
 		uid shaderstr("PointLightShader");
@@ -501,9 +501,9 @@ void GraphicsSystem::GameDraw(float dt)
 		GFX::Texture *textureInst[4]{};
 		for (int i{0}; i < 4; i++)
 		{
-			if (inst.GetComponent<MeshRenderer>().mTextureCont[i] == true)
+			if (inst.GetComponent<MeshRenderer>().mTextureRef[i].data != nullptr)
 			{
-				textureInst[i] = reinterpret_cast<GFX::Texture *>(inst.GetComponent<MeshRenderer>().mTextureRef[i]);
+				textureInst[i] = reinterpret_cast<GFX::Texture *>(inst.GetComponent<MeshRenderer>().mTextureRef[i].data);
 			}
 		}
 
@@ -534,7 +534,7 @@ void GraphicsSystem::GameDraw(float dt)
 
 		for (int i{0}; i < 4; i++)
 		{
-			if (inst.GetComponent<MeshRenderer>().mTextureCont[i] == true)
+			if (inst.GetComponent<MeshRenderer>().mTextureRef[i].data != nullptr)
 			{
 				glBindTextureUnit(i, textureInst[i]->ID());
 			}
@@ -556,7 +556,7 @@ void GraphicsSystem::GameDraw(float dt)
 		// unbind the textures
 		for (int i{0}; i < 4; i++)
 		{
-			if (inst.GetComponent<MeshRenderer>().mTextureCont[i] == true)
+			if (inst.GetComponent<MeshRenderer>().mTextureRef[i].data != nullptr)
 			{
 				glBindTextureUnit(i, 0);
 			}
@@ -971,7 +971,7 @@ void MeshRenderer::SetMesh(const std::string& meshName)
 	std::string descFilepath = systemManager->mResourceTySystem->fbx_path + meshName + ".fbx.desc";
 	unsigned guid = _GEOM::GetGUID(descFilepath);
 
-	mMeshRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(guid));
+	mMeshRef.data = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(guid));
 	mMeshPath = systemManager->mResourceTySystem->compiled_geom_path + meshName + ".geom";
 }
 
@@ -981,10 +981,9 @@ void MeshRenderer::SetTexture(MaterialType MaterialType, const std::string& Text
 	std::string MaterialInstancePath = systemManager->mResourceTySystem->compressed_texture_path + Texturename + ".ctexture";
 	mMaterialInstancePath[MaterialType] = MaterialInstancePath;
 
-	mTextureCont[MaterialType] = true;
 
 	uid guid(MaterialInstancePath);
-	mTextureRef[MaterialType] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(guid.id));
+	mTextureRef[MaterialType].data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(guid.id));
 }
 
 
