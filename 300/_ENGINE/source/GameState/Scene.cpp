@@ -83,6 +83,7 @@ void Scene::Load(std::string const& _name) {
 	Entity testaudio = systemManager->ecs->NewEntity();
 	testaudio.AddComponent<General>().name = "Audio";
 	testaudio.AddComponent<Audio>();
+	Audio& audio = testaudio.GetComponent<Audio>();
 
 	if (!once)
 	{

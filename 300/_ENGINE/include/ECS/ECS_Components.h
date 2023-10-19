@@ -345,7 +345,7 @@ struct Audio
 		mFilePath = "";
 		mFileName = "";
 		mFullPath = "";
-		mAudioType = AUDIO_NULL;
+		mAudioType = AUDIO_SFX;
 		mIsPlay = false;
 		mPlayonAwake = false;
 		mIsEmpty = true;

@@ -26,7 +26,7 @@ class AudioSource								// [LUA] - Interface to interact with [AudioSystem] fun
 {
 public:
 	Audio* mAudioComponent;					    // Relevant <Audio> component data.
-	Entity ent_id = 9;							// Will Remove (ID of the hardcorded object that has <Audio> component)
+	Entity ent_id = 1;							// Will Remove (ID of the hardcorded object that has <Audio> component)
 public:
 	AudioSource();
 

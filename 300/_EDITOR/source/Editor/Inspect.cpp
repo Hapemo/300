@@ -1035,6 +1035,7 @@ void Audio::Inspect() {
 					// Assign the [Sound*] to this component. 
 					mSound = systemManager->mAudioSystem.get()->FindSound(audio_name);
 					Entity(Hierarchy::selectedId).GetComponent<Audio>().mIsEmpty = false; // Component is populated with info
+					Audio& audioent = Entity(Hierarchy::selectedId).GetComponent<Audio>();
 					return;
 				}
 

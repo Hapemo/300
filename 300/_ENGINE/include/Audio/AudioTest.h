@@ -30,7 +30,20 @@ void TestLoadPlaySuccess()
 {
 	// The object created through hard-coding has the "script_entity_id" of 9.
 	AudioSource footsteps;
-	footsteps.GetAudioComponent(footsteps.ent_id);	    // (1) Retrieve <Audio> Component data into the object.
+
+	// [Not in script] - Ignore this part. (the script entity id is different everytime i reset)
+	auto audio_ent = systemManager->ecs->GetEntitiesWith<Audio>();
+
+	Entity ent_id = 0;
+
+	for (Entity ent : audio_ent)
+	{
+		ent_id = ent.id;
+	}
+	// [Not in script] -----------------------------------------------------------------------------
+
+	// [ent_id] will be replaced with "script_entity_id" in Lua.
+	footsteps.GetAudioComponent(ent_id);				 // (1) Retrieve <Audio> Component data into the object.
 
 	//if(Input::CheckKey(HOLD, P))
 	if (footsteps.IsSoundAttached())					// (2a). Check whether if there's a <Sound> object attached to this "AudioSource" object.
@@ -68,7 +81,21 @@ void TestLoadAudioDirectory()
 	LoadAudioFromDirectory("../assets\\Audio");
 	
 	AudioSource footsteps;
-	footsteps.GetAudioComponent(footsteps.ent_id);
+
+	// [Not in script] - Ignore this part. (the script entity id is different everytime i reset)
+	auto audio_ent = systemManager->ecs->GetEntitiesWith<Audio>();
+
+	Entity ent_id = 0;
+
+	for (Entity ent : audio_ent)
+	{
+		ent_id = ent.id;
+	}
+	// [Not in script] -----------------------------------------------------------------------------
+
+	// [ent_id] will be replaced with "script_entity_id" in Lua.
+	footsteps.GetAudioComponent(ent_id);				 // (1) Retrieve <Audio> Component data into the object.
+
 
 	footsteps.AttachSound("footsteps-boots-101657.mp3");
 	footsteps.Play();
@@ -94,7 +121,21 @@ void TestOverrideAttachSound()
 	LoadAudioFromDirectory("../assets\\Audio");
 
 	AudioSource footsteps;
-	footsteps.GetAudioComponent(footsteps.ent_id);
+
+	// [Not in script] - Ignore this part. (the script entity id is different everytime i reset)
+	auto audio_ent = systemManager->ecs->GetEntitiesWith<Audio>();
+
+	Entity ent_id = 0;
+
+	for (Entity ent : audio_ent)
+	{
+		ent_id = ent.id;
+	}
+	// [Not in script] -----------------------------------------------------------------------------
+
+	// [ent_id] will be replaced with "script_entity_id" in Lua.
+	footsteps.GetAudioComponent(ent_id);				 // (1) Retrieve <Audio> Component data into the object.
+
 
 	footsteps.AttachSound("footsteps-boots-101657.mp3");
 	footsteps.AttachSound("tuning-radio-7150.wav");
@@ -117,7 +158,21 @@ void TestOverrideAttachSound()
 void TestPauseSound()
 {
 	AudioSource footsteps;
-	footsteps.GetAudioComponent(footsteps.ent_id);
+
+	// [Not in script] - Ignore this part. (the script entity id is different everytime i reset)
+	auto audio_ent = systemManager->ecs->GetEntitiesWith<Audio>();
+
+	Entity ent_id = 0;
+
+	for (Entity ent : audio_ent) 
+	{
+		ent_id = ent.id;
+	}
+	// [Not in script] -----------------------------------------------------------------------------
+	
+	// [ent_id] will be replaced with "script_entity_id" in Lua.
+	footsteps.GetAudioComponent(ent_id);				 // (1) Retrieve <Audio> Component data into the object.
+
 
 	footsteps.Pause();
 }
@@ -138,7 +193,72 @@ void TestPauseSound()
 void TestUnpauseSound()
 {
 	AudioSource footsteps;
-	footsteps.GetAudioComponent(footsteps.ent_id);
+
+	// [Not in script] - Ignore this part. (the script entity id is different everytime i reset)
+	auto audio_ent = systemManager->ecs->GetEntitiesWith<Audio>();
+
+	Entity ent_id = 0;
+
+	for (Entity ent : audio_ent)
+	{
+		ent_id = ent.id;
+	}
+	// [Not in script] -----------------------------------------------------------------------------
+
+	// [ent_id] will be replaced with "script_entity_id" in Lua.
+	footsteps.GetAudioComponent(ent_id);				 // (1) Retrieve <Audio> Component data into the object.
 
 	footsteps.Unpause();
+}
+
+
+/******************************************************************************/
+/*!
+*   Test Case #6 (Mute)
+*   --------------------------------------------------------------------------
+*	! Require you to run "Test #3" first. !
+*   Q. Testing the "Pause" function on an already playing audio.
+*
+	Tested Functions
+	- Using Test #3 + Test #4
+	--------------------------------------------------------------------------
+	- Mute()						// Mute the [Sound] attached.
+ */
+ /******************************************************************************/
+void TestMuteSound()
+{
+	AudioSource footsteps;
+
+	// [Not in script] - Ignore this part. (the script entity id is different everytime i reset)
+	auto audio_ent = systemManager->ecs->GetEntitiesWith<Audio>();
+
+	Entity ent_id = 0;
+
+	for (Entity ent : audio_ent)
+	{
+		ent_id = ent.id;
+	}
+	// [Not in script] -----------------------------------------------------------------------------
+
+	// [ent_id] will be replaced with "script_entity_id" in Lua.
+	footsteps.GetAudioComponent(ent_id);				 // (1) Retrieve <Audio> Component data into the object.
+
+	footsteps.Mute();
+}
+
+void TestSetVolume()
+{
+	AudioSource footsteps;
+
+	// [Not in script] - Ignore this part. (the script entity id is different everytime i reset)
+	auto audio_ent = systemManager->ecs->GetEntitiesWith<Audio>();
+
+	Entity ent_id = 0;
+
+	for (Entity ent : audio_ent)
+	{
+		ent_id = ent.id;
+	}
+	// [Not in script] -----------------------------------------------------------------------------
+
 }

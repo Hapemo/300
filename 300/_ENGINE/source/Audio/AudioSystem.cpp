@@ -88,6 +88,7 @@ void AudioSystem::Init()
 			else
 			{
 				audio_component.mIsLoaded = false;
+				audio_component.mSound = nullptr;
 			}
 		}
 
@@ -126,10 +127,12 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 		TestLoadAudioDirectory();
 	if (Input::CheckKey(PRESS, E))
 		TestOverrideAttachSound();
-	if (Input::CheckKey(PRESS, R))  // Press 'E' first.
+	if (Input::CheckKey(PRESS, R))   // Press 'E' first.
 		TestPauseSound();
 	if (Input::CheckKey(PRESS, T))   // Press 'E' then 'R' then this
 		TestUnpauseSound();
+	if (Input::CheckKey(PRESS, Y))   // Press 'E'
+		TestMuteSound();
 
 
 	// [10/18] Global Channel Test
@@ -512,7 +515,7 @@ bool AudioSystem::LoadAudio(std::string file_path, std::string audio_name, Audio
 		FMOD::Sound* new_sound;
 		int check = ErrCodeCheck(system_obj->createSound(file_path.c_str(), FMOD_LOOP_OFF, 0, &new_sound));
 
-		if (!check)
+		if (check != 1)
 		{
 			PWARNING("Error: Sound Not Loaded.");
 			return 0;
@@ -524,13 +527,16 @@ bool AudioSystem::LoadAudio(std::string file_path, std::string audio_name, Audio
 		if (audio_component != nullptr) // Make sure there is an <Audio> component to save into.
 		{
 			audio_component->mSound = new_sound;  // Save [Sound Reference] into <Audio> component. 
+			audio_component->mIsLoaded = true;
 		}
 
 		return true;
 	}
 
 	else
-	{
+	{	
+		audio_component->mSound = sound_it->second;
+		audio_component->mIsLoaded = true;
 		return false;
 	}
 }
@@ -884,6 +890,8 @@ FMOD::Sound* AudioSystem::FindSound(std::string audio_name)
 	{
 		return sound_it->second;
 	}
+
+	return nullptr;
 	
 }
 

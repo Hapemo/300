@@ -21,17 +21,12 @@ AudioSource::AudioSource() : mAudioComponent(nullptr) {}
 
 void AudioSource::GetAudioComponent(Entity id)
 {
-	mAudioComponent = &(id.GetComponent<Audio>());
+	mAudioComponent = &(id.GetComponent<Audio>()); // Change to "script_entity_id"
 }
 
 bool AudioSource::IsSoundAttached()
 {
-	if (mAudioComponent->mSound != nullptr)
-	{
-		return true;
-	}
-
-	return false;
+	return mAudioComponent->mIsLoaded;
 }
 
 bool AudioSource::AttachSound(std::string audio_name)
@@ -68,10 +63,7 @@ void AudioSource::Pause()
 	{
 		AudioSystem* system = systemManager->mAudioSystem.get();
 
-		bool playing;
-		mAudioComponent->mChannel->isPlaying(&playing);
-
-		if (playing)
+		if(mAudioComponent->mIsPlaying)
 		{
 			// The [playing] should be in the [Update()] loop.
 			mAudioComponent->mSetPause = true;
