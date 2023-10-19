@@ -208,8 +208,6 @@ void GFX::PingPongFBO::GaussianBlur(GFX::Shader& blurShader, GFX::FBO& hostFrame
 	blurShader.Activate();
 	m_Quad.Bind();
 
-	glBindFramebuffer(GL_FRAMEBUFFER, pingpongFBO);
-
 	for (unsigned int i{}; i < mblurAmount; ++i)
 	{
 		glDrawBuffer(GL_COLOR_ATTACHMENT0 + (int)!horizontal);
