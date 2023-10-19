@@ -112,16 +112,24 @@ struct MeshRenderer
 	std::string							mMeshPath;
 	
 	void*								mMeshRef{};
-	void*								mTextureRef[4];
+	void*								mTextureRef[5];
 
 	unsigned							mGUID;
-	bool								mTextureCont[4];
+	bool								mTextureCont[5];
 
 	void								Inspect();
 	void								SetColor(const vec4& color);
 	void								SetMesh(const std::string& meshName);
 	void								SetTexture(MaterialType type, const std::string& Texturename);
 
+	
+	int									GetTexture(MaterialType type) 
+										{ 
+											if (mTextureRef[static_cast<int>(type)] == nullptr)
+												return -1;
+
+											return static_cast<GFX::Texture*>(mTextureRef[static_cast<int>(type)])->ID(); 
+										}
 	//RTTR_ENABLE()
 };
 

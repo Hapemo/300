@@ -259,6 +259,7 @@ private:
 	GFX::SSBO						m_MaterialSsbo;
 	std::vector<MaterialSSBO>		m_Materials;
 	std::map<unsigned, GLuint64>	m_MaterialHandles;
+	GLuint64 GetAndStoreBindlessTextureHandle(int texID);	// Stores adn Return the 64bit texture handle and makes it resident
 
 	void SetupShaderStorageBuffers();		// Creates all SSBO required
 

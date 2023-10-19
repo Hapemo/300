@@ -114,7 +114,6 @@ void GraphicsSystem::Update(float dt)
 	// Retrieve and update the mesh instances to be drawn
 	auto meshRendererInstances = systemManager->ecs->GetEntitiesWith<MeshRenderer>();
 	int animationID{ 0 };
-	int meshID{ 0 };
 
 	for (Entity inst : meshRendererInstances)
 	{
@@ -174,12 +173,21 @@ void GraphicsSystem::Update(float dt)
 			}
 		}
 
+		MaterialSSBO material{};
+		// Save the materials if it exists
+		material.mDiffuseMap = GetAndStoreBindlessTextureHandle(meshRenderer.GetTexture(DIFFUSE));		
+		material.mNormalMap = GetAndStoreBindlessTextureHandle(meshRenderer.GetTexture(NORMAL));		
+		material.mSpecularMap = GetAndStoreBindlessTextureHandle(meshRenderer.GetTexture(SPECULAR));	
+		material.mShininessMap = GetAndStoreBindlessTextureHandle(meshRenderer.GetTexture(SHININESS));	
+		material.mEmissionMap = GetAndStoreBindlessTextureHandle(meshRenderer.GetTexture(EMISSION));	
+		m_Materials.emplace_back(material);	// push back
+
 		// animations are present
 		if (inst.HasComponent<Animator>()) {
-			AddInstance(meshinst, final, meshRenderer.mInstanceColor, meshID++, static_cast<unsigned>(inst.id), animationID++);
+			AddInstance(meshinst, final, meshRenderer.mInstanceColor, static_cast<int>(m_Materials.size()), static_cast<unsigned>(inst.id), animationID++);
 		}
 		else {
-			AddInstance(meshinst, final, meshRenderer.mInstanceColor, meshID++, static_cast<unsigned>(inst.id));
+			AddInstance(meshinst, final, meshRenderer.mInstanceColor, static_cast<int>(m_Materials.size()), static_cast<unsigned>(inst.id));
 		}
 	}
 	m_FinalBoneMatrixSsbo.SubData(finalBoneMatrices.size() * sizeof(mat4), finalBoneMatrices.data());
@@ -328,13 +336,13 @@ void GraphicsSystem::EditorDraw(float dt)
 		}
 
 		// bind texture unit
-		for (int i{ 0 }; i < 4; i++)
-		{
-			if (inst.GetComponent<MeshRenderer>().mTextureCont[i] == true)
-			{
-				glBindTextureUnit(i, textureInst[i]->ID());
-			}
-		}
+		//for (int i{ 0 }; i < 4; i++)
+		//{
+		//	if (inst.GetComponent<MeshRenderer>().mTextureCont[i] == true)
+		//	{
+		//		glBindTextureUnit(i, textureInst[i]->ID());
+		//	}
+		//}
 
 		GLuint uniform_tex = glGetUniformLocation(shaderID, "uTex");
 		glUniform1iv(uniform_tex, (GLsizei)m_Textures.size(), m_Textures.data()); // passing Texture ID to the fragment  
@@ -480,13 +488,13 @@ void GraphicsSystem::GameDraw(float dt)
 		shaderinst.Deactivate();
 
 		// unbind the textures
-		for (int i{0}; i < 4; i++)
-		{
-			if (inst.GetComponent<MeshRenderer>().mTextureCont[i] == true)
-			{
-				glBindTextureUnit(i, 0);
-			}
-		}
+		//for (int i{0}; i < 4; i++)
+		//{
+		//	if (inst.GetComponent<MeshRenderer>().mTextureCont[i] == true)
+		//	{
+		//		glBindTextureUnit(i, 0);
+		//	}
+		//}
 
 		meshinst.ClearInstances();
 		m_Renderer.ClearInstances();
@@ -906,6 +914,23 @@ void GraphicsSystem::ResizeWindow(ivec2 newSize)
 
 	m_Width = newSize.x;
 	m_Height = newSize.y;
+}
+
+GLuint64 GraphicsSystem::GetAndStoreBindlessTextureHandle(int texID)
+{
+	if (texID < 0)
+		return 0;
+
+	// Store the 64-bit handle
+	GLuint64 handle = glGetTextureHandleARB((unsigned)texID);
+	m_MaterialHandles[(unsigned)texID] = handle;
+
+	if (!glIsTextureHandleResidentARB(handle))
+	{
+		glMakeTextureHandleResidentARB(handle);
+	}
+
+	return handle;
 }
 
 void GraphicsSystem::SetupShaderStorageBuffers()

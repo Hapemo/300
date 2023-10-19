@@ -6,8 +6,9 @@ enum MaterialType : unsigned {
 
     DIFFUSE,
     NORMAL,
+    SPECULAR,
+    SHININESS,
     EMISSION,
-    SPECULAR
 };
 
 #endif
