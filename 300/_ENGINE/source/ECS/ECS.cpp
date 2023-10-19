@@ -118,7 +118,6 @@ void ECS::DeleteEntity(Entity e)
 		PWARNING("tried to delete entitiy with id 0");
 		return;
 	}
-	std::string name = e.GetComponent<General>().name;
 	if (e.HasParent())
 		Entity(e.GetParent()).RemoveChild(e);
 	if (e.HasChildren())

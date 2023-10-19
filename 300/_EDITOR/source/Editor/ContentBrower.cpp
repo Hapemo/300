@@ -201,6 +201,25 @@ void ContentBrowser::update()
 				ImGui::NextColumn();
 
 			}
+			else if (check_extension(path.string(), ".fbx")) {
+				ImGui::PushID(idd);
+				ImGui::ImageButton((ImTextureID)(intptr_t)resourceDatas->m_EditorTextures["PhysicsMaterial"]->ID(), { buttonsize, buttonsize });
+				ImGui::PopID();
+				if (ImGui::BeginDragDropSource()) {
+
+					std::string path_str = path.string();
+
+					//format the string from \\ to /.
+					format_string(path_str);
+					const char* source_path = path_str.c_str();
+					ImGui::SetDragDropPayload("FILE_FBX", source_path, strlen(source_path) * sizeof(wchar_t), ImGuiCond_Once);
+
+					ImGui::EndDragDropSource();
+				}
+				ImGui::Text(filename_string.c_str());
+				ImGui::NextColumn();
+
+			}
 			else if (check_extension(path.string(), ".ctexture")) {
 				ImGui::PushID(idd);
 				ImGui::ImageButton((ImTextureID)(intptr_t)resourceDatas->m_EditorTextures["ImageIcon"]->ID(), { buttonsize, buttonsize });

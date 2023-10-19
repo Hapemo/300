@@ -23,7 +23,7 @@ Contains main loop for the logic of MenuPanel.
 #include "GameState/GameStateManager.h"
 #include "Hierarchy.h"
 #include "ScriptingSystem.h"
-
+#include "KeybindWindow.h"
 
 /***************************************************************************/
 /*!
@@ -47,9 +47,9 @@ void MenuPanel::update()
     if (ImGui::BeginMenuBar())
     {   
 
-        if (ImGui::BeginMenu("Files"))
+        if (ImGui::BeginMenu(ICON_FA_FILE " Files"))
         {       
-            if (ImGui::MenuItem("Save GameState"))
+            if (ImGui::MenuItem(ICON_FA_FILE " Save GameState"))
             {
                 // must save both the scenes and gamestate
                 systemManager->mGameStateSystem->mCurrentGameState.Save();
@@ -60,10 +60,19 @@ void MenuPanel::update()
 
             ImGui::EndMenu();
         }
+        if (ImGui::BeginMenu(ICON_FA_GEAR " Settings"))
+        {
+            if (ImGui::MenuItem(ICON_FA_KEY " Input"))
+            {
 
+                KeybindWindow::openWindow = true;
 
+            }
 
-        if (ImGui::BeginMenu("Theme"))
+            ImGui::EndMenu();
+        }
+
+        if (ImGui::BeginMenu(ICON_FA_VECTOR_SQUARE " Theme"))
         {
 
             ImVec4* colors = ImGui::GetStyle().Colors;
@@ -246,44 +255,45 @@ void MenuPanel::update()
             ImGui::EndMenu();
         }
 
-        if (ImGui::BeginMenu("Setting")) {
-          if (ImGui::MenuItem("Edit Keybind")) {
+        // if (ImGui::BeginMenu("Setting")) {
+        //   if (ImGui::MenuItem("Edit Keybind")) {
 
-          }
-          ImGui::EndMenu();
-        }
+        //   }
+        //   ImGui::EndMenu();
+        // }
 
-        ImVec2 buttonSize{ 50,50 };
+        // ImVec2 buttonSize{ 50,50 };
 
-        ImGui::SetCursorPosX(ImGui::GetWindowSize().x / 2 - buttonSize.x * 3);
+        // ImGui::SetCursorPosX(ImGui::GetWindowSize().x / 2 - buttonSize.x * 3);
 
-        if (ImGui::Button("PLAY")) {
-            systemManager->Play();
-        }
-        if (ImGui::Button("PAUSE")) {
-            systemManager->Pause();
-        }
-        if (ImGui::Button("RESET")) {
-            Hierarchy::selectionOn = false;
-            systemManager->Reset();
-        }   
+        // if (ImGui::Button("PLAY")) {
+        //     systemManager->Play();
+        // }
+        // if (ImGui::Button("PAUSE")) {
+        //     systemManager->Pause();
+        // }
+        // if (ImGui::Button("RESET")) {
+        //     Hierarchy::selectionOn = false;
+        //     systemManager->Reset();
+        // }   
 
-        if (ImGui::Button("RELOAD SCRIPTS"))
-        {
-            // Reload Helper.lua
-            systemManager->GetScriptingPointer()->LoadHelper();
+        // if (ImGui::Button("RELOAD SCRIPTS"))
+        // {
+        //     // Reload Helper.lua
+        //     systemManager->GetScriptingPointer()->LoadHelper();
 
-            auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
+        //     auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
 
-            for (Entity entity : scriptEntities)
-            {
-                for (Script& script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
-                {
-                    script.Load(entity);
-                    script.Run("Alive");
-                }
-            }
-        }
+        //     for (Entity entity : scriptEntities)
+        //     {
+        //         for (Script& script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
+        //         {
+        //             script.Load(entity);
+        //             script.Run("Alive");
+        //         }
+        //     }
+        // }
+
 
         ImGui::EndMenuBar();
     }

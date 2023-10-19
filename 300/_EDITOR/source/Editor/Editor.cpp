@@ -41,8 +41,8 @@ Returns main window for docking
 #include "GameScene.h"
 #include "TabWindow.h"
 #include "KeybindWindow.h"
-
-
+#include "MenuTab.h"
+#include "ShaderCompiler.h"
 /***************************************************************************/
 /*!
 \brief
@@ -53,7 +53,27 @@ void Editor::UIinit(GLFWwindow* window)
 {
     IMGUI_CHECKVERSION();
     ImGui::CreateContext(); 
-    ImGuiIO& io = ImGui::GetIO(); (void)io;
+
+
+    ImGuiIO& io = ImGui::GetIO();
+    io.Fonts->AddFontDefault();
+    float baseFontSize = 16.0f; // 13.0f is the size of the default font. Change to the font size you use.
+    float iconFontSize = baseFontSize * 2.0f / 3.0f; // FontAwesome fonts need to have their sizes reduced by 2.0f/3.0f in order to align correctly
+
+    // merge in icons from Font Awesome
+    static const ImWchar icons_ranges[] = { ICON_MIN_FA, ICON_MAX_16_FA, 0 };
+    ImFontConfig icons_config;
+    icons_config.MergeMode = true;
+    icons_config.PixelSnapH = true;
+    icons_config.GlyphMinAdvanceX = iconFontSize;
+    io.Fonts->AddFontFromFileTTF(FONT_ICON_FILE_NAME_FAS, iconFontSize, &icons_config, icons_ranges);
+
+
+
+
+
+
+   // ImGuiIO& io = ImGui::GetIO(); (void)io;
     //regular = io.Fonts->AddFontFromFileTTF("../Resources/Fonts/Assistant-Regular.ttf", 21.0f);
     //bold = io.Fonts->AddFontFromFileTTF("../Resources/Fonts/Assistant-SemiBold.ttf", 18.0f);
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
@@ -154,11 +174,10 @@ void Editor::UIinit(GLFWwindow* window)
     mWindowlist["PrefabScene"] = new PrefabWindow;
     mWindowlist["GameScene"] = new GameScene;
     mWindowlist["KeybindWindow"] = new KeybindWindow;
-
-    for (auto & windows : mWindowlist ) 
+    mWindowlist["MenuTab"] = new MenuTab;
+    mWindowlist["ShaderCompiler"] = new ShaderCompiler;
     {
         windows.second->init();
-    }
 }
 /***************************************************************************/
 /*!
@@ -213,10 +232,9 @@ void Editor::UIupdate([[maybe_unused]]GLFWwindow* window) {
     ImGui::DockSpace(ImGui::GetID("dock_space"), ImVec2(0.0f, 0.0f), ImGuiDockNodeFlags_PassthruCentralNode);
     //// ----------------------------------------------------------------------------- // draw Menu Window
 
-   
-
+  
     mMenuwindow->update();
-        
+
     ImGui::PopID();
 
     ImGui::End();
@@ -231,15 +249,41 @@ void Editor::UIupdate([[maybe_unused]]GLFWwindow* window) {
 
     for (auto& windows : mWindowlist)
     {
+        if (windows.first == "KeybindWindow") {
 
-        if (windows.first == "PrefabScene") {
+            if (KeybindWindow::openWindow ) {
+                ImGui::Begin(windows.first.c_str(),&KeybindWindow::openWindow, windows.second->mWinFlag);
+                windows.second->update();
+                ImGui::End();
+            }
+        }
+        else if (windows.first == "ShaderCompiler") {
+
+            if (ShaderCompiler::openWindow) {
+                ImGui::Begin(windows.first.c_str(), &ShaderCompiler::openWindow, windows.second->mWinFlag);
+                windows.second->update();
+                ImGui::End();
+            }
+        }
+
+        else if (windows.first == "PrefabScene") {
             
             if (static_cast<unsigned>(PrefabWindow::prefabObj) != 0) {
                 ImGui::Begin(windows.first.c_str(), 0, windows.second->mWinFlag);
                 windows.second->update();
                 ImGui::End();
-
             }
+        }
+        else if (windows.first == "MenuTab") {
+
+                ImGuiWindowClass window_class;
+                window_class.DockNodeFlagsOverrideSet = ImGuiDockNodeFlags_AutoHideTabBar;
+                window_class.ViewportFlagsOverrideSet = ImGuiViewportFlags_NoDecoration;
+                ImGui::SetNextWindowClass(&window_class);
+
+                ImGui::Begin(windows.first.c_str(), 0, windows.second->mWinFlag);
+                windows.second->update();
+                ImGui::End();
         }
         else {
 

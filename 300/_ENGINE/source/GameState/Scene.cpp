@@ -70,6 +70,11 @@ void Scene::Load(std::string const& _name) {
 	ObjectFactory::LoadScene(this, mName);
 	for (auto e : mEntities) {
 		if (e.HasComponent<Scripts>()) systemManager->GetScriptingPointer()->ScriptAlive(e);
+		if (e.HasComponent<MeshRenderer>()) {
+			auto& meshdata = e.GetComponent<MeshRenderer>();
+			
+			
+		}
 		e.GetComponent<General>().isPaused = mIsPause;
 	}
 }
@@ -95,6 +100,9 @@ void Scene::Unload() {
 }
 
 Entity Scene::AddEntity() {
+	
+
+
 	Entity e{ systemManager->ecs->NewEntity() };
 	mEntities.insert(e);
 

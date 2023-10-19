@@ -73,11 +73,11 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
-    <IncludePath>$(SolutionDir)lib/entt;$(SolutionDir)lib/LUA/include;$(SolutionDir)lib\IMGUI\backends;$(SolutionDir)lib\IMGUI\misc\cpp;$(SolutionDir)lib\MESH-OPTIMIZER\src;$(SolutionDir)lib\ASSIMP\BINARIES\Win32\include;$(SolutionDir)lib\ASSIMP\include;$(SolutionDir)lib\ASSIMP\include\assimp;$(SolutionDir)lib/GLFW/include/;$(SolutionDir)lib/GLFW/include/GLFW;$(SolutionDir)lib/GLEW/include/GL;$(SolutionDir)lib/SOL;$(SolutionDir)lib/GLM;$(SolutionDir)_SCRIPTING/include;$(SolutionDir)_GRAPHICS/include;$(SolutionDir)_ENGINE/include;$(SolutionDir)_TOOLS/include;$(SolutionDir)_GEOM_COMPILER/include;$(SolutionDir)lib/STB;$(SolutionDir)lib\IMGUI;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)lib/entt;$(SolutionDir)lib/LUA/include;$(SolutionDir)lib\IMGUI\backends;$(SolutionDir)lib\IMGUI\misc\cpp;$(SolutionDir)lib\MESH-OPTIMIZER\src;$(SolutionDir)lib\ASSIMP\BINARIES\Win32\include;$(SolutionDir)lib\ASSIMP\include;$(SolutionDir)lib\ASSIMP\include\assimp;$(SolutionDir)lib/GLFW/include/;$(SolutionDir)lib/GLFW/include/GLFW;$(SolutionDir)lib/GLEW/include/GL;$(SolutionDir)lib/SOL;$(SolutionDir)_RESOURCE/include;$(SolutionDir)lib/GLM;$(SolutionDir)_SCRIPTING/include;$(SolutionDir)_GRAPHICS/include;$(SolutionDir)_ENGINE/include;$(SolutionDir)_TOOLS/include;$(SolutionDir)_GEOM_COMPILER/include;$(SolutionDir)lib/STB;$(SolutionDir)lib\IMGUI;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
-    <IncludePath>$(SolutionDir)lib/entt;$(SolutionDir)lib/LUA/include;$(SolutionDir)lib\IMGUI\backends;$(SolutionDir)lib\IMGUI\misc\cpp;$(SolutionDir)lib\MESH-OPTIMIZER\src;$(SolutionDir)lib\ASSIMP\BINARIES\Win32\include;$(SolutionDir)lib\ASSIMP\include;$(SolutionDir)lib\ASSIMP\include\assimp;$(SolutionDir)lib/GLFW/include/;$(SolutionDir)lib/GLFW/include/GLFW;$(SolutionDir)lib/GLEW/include/GL;$(SolutionDir)lib/SOL;$(SolutionDir)lib/GLM;$(SolutionDir)_SCRIPTING/include;$(SolutionDir)_GRAPHICS/include;$(SolutionDir)_ENGINE/include;$(SolutionDir)_TOOLS/include;$(SolutionDir)_GEOM_COMPILER/include;$(SolutionDir)lib/STB;$(SolutionDir)lib\IMGUI;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)lib/entt;$(SolutionDir)lib/LUA/include;$(SolutionDir)lib\IMGUI\backends;$(SolutionDir)lib\IMGUI\misc\cpp;$(SolutionDir)lib\MESH-OPTIMIZER\src;$(SolutionDir)lib\ASSIMP\BINARIES\Win32\include;$(SolutionDir)lib\ASSIMP\include;$(SolutionDir)lib\ASSIMP\include\assimp;$(SolutionDir)lib/GLFW/include/;$(SolutionDir)lib/GLFW/include/GLFW;$(SolutionDir)lib/GLEW/include/GL;$(SolutionDir)lib/SOL;$(SolutionDir)_RESOURCE/include;$(SolutionDir)lib/GLM;$(SolutionDir)_SCRIPTING/include;$(SolutionDir)_GRAPHICS/include;$(SolutionDir)_ENGINE/include;$(SolutionDir)_TOOLS/include;$(SolutionDir)_GEOM_COMPILER/include;$(SolutionDir)lib/STB;$(SolutionDir)lib\IMGUI;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Label="Vcpkg">
     <VcpkgEnabled>false</VcpkgEnabled>
@@ -167,6 +167,7 @@
     <ClCompile Include="source\Random.cpp" />
     <ClCompile Include="source\Shader.cpp" />
     <ClCompile Include="source\Shapes.cpp" />
+    <ClCompile Include="source\Ssbo.cpp" />
     <ClCompile Include="source\Texture.cpp" />
     <ClCompile Include="source\Vao.cpp" />
     <ClCompile Include="source\Vbo.cpp" />
@@ -189,6 +190,7 @@
     <ClInclude Include="include\Random.hpp" />
     <ClInclude Include="include\Shader.hpp" />
     <ClInclude Include="include\Shapes.hpp" />
+    <ClInclude Include="include\Ssbo.hpp" />
     <ClInclude Include="include\Texture.hpp" />
     <ClInclude Include="include\Vao.hpp" />
     <ClInclude Include="include\Vbo.hpp" />

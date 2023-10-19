@@ -8,9 +8,10 @@
 Mesh class implementation. Consists of the loading of serialized geom data, 
 creation of the required VBOs and VAO.
 *******************************************************************************/
+#define  _ENABLE_ANIMATIONS 1
 
 #include "Mesh.hpp"
-#include "../../_RESOURCE/include/ResourceManager.h"		// for _enable_animations define
+//#include "../../_RESOURCE/include/ResourceManagerTy.h"		// for _enable_animations define
 #include <filesystem>
 #include <array>
 
@@ -125,7 +126,7 @@ void GFX::Mesh::Setup(const _GEOM::Geom& GeomData)
 	mVao.AttachVertexBuffer(mTexCoordVbo.GetID(), 2, 0, sizeof(vec2));				// Attach to index 2
 
 	/////////////////////////////////////////
-	// TEXTURE AND ENTITY ID
+	// TEXTURE ID, ENTITY ID, ANIMATION ID
 	// Create VBO for Texture ID and Entity ID
 	mTexEntIDVbo.Create(sizeof(vec4) * MAX_INSTANCES);
 	mVao.AddAttribute(7, 7, 4, GL_FLOAT);									// location 7, binding vao index 7
@@ -265,6 +266,43 @@ void GFX::Mesh::ClearInstances()
 	mLTW.clear();
 	mColors.clear();
 	mTexEntID.clear();
+}
+
+void GFX::Mesh::Setup2DImageMesh()
+{
+	// Create VAO
+	mVao.Create();
+
+	/////////////////////////////////////////
+	// COLORS
+	/////////////////////////////////////////
+	// Create VBO for Color data
+	mColorVbo.Create(sizeof(vec4) * MAX_INSTANCES);
+
+	// Attach Color VBO and divisor to VAO
+	mVao.AddAttribute(0, 0, 4, GL_FLOAT);									// location 0, binding vao index 0
+	mVao.AddAttributeDivisor(0, 1);											// divisor at vao index 0
+	mVao.AttachVertexBuffer(mColorVbo.GetID(), 0, 0, sizeof(vec4));			// Attach to index 0
+
+	/////////////////////////////////////////
+	// TEXTURE AND ENTITY ID
+	// Create VBO for Texture ID and Entity ID
+	mTexEntIDVbo.Create(sizeof(vec4) * MAX_INSTANCES);
+	mVao.AddAttribute(1, 1, 4, GL_FLOAT);									// location 1, binding vao index 1
+	mVao.AddAttributeDivisor(1, 1);											// divisor at vao index 1
+	mVao.AttachVertexBuffer(mTexEntIDVbo.GetID(), 1, 0, sizeof(vec4));		// Attach to index 1
+
+	// Create local-to-world VBO
+	mLTWVbo.Create(sizeof(mat4) * MAX_INSTANCES);
+
+	// Add attributes and divisor as vec4
+	for (int i = 0; i < 4; ++i)
+	{
+		mVao.AddAttribute(2 + i, 2, 4, GL_FLOAT, sizeof(vec4) * i);			// location 2, binding vao index 2
+		mVao.AddAttributeDivisor(2, 1);										// divisor at vao index 2
+	}
+	// Attach LTW VBO to VAO
+	mVao.AttachVertexBuffer(mLTWVbo.GetID(), 2, 0, sizeof(vec4) * 4);
 }
 
 void GFX::Mesh::BindVao()
@@ -501,10 +539,12 @@ namespace Deserialization
 				for (int j{}; j < numberofanimations; ++j)
 				{
 					_GEOM::Animation animation;
+					int numberofbones{};
 
-					infile.read((char*)&animation.m_BoneCounter, sizeof(uint32_t));
-					infile.read((char*)&animation.m_Duration, sizeof(float));
-					infile.read((char*)&animation.m_TicksPerSecond, sizeof(float));
+					infile.read((char*)&numberofbones, sizeof(uint32_t));					// number of bones
+					infile.read((char*)&animation.m_BoneCounter, sizeof(uint32_t));			// number of boneinfomaps
+					infile.read((char*)&animation.m_Duration, sizeof(float));				// duration
+					infile.read((char*)&animation.m_TicksPerSecond, sizeof(float));			// ticks per second
 
 					// Bone info map
 					for (int j{}; j < animation.m_BoneCounter; ++j)
@@ -523,8 +563,8 @@ namespace Deserialization
 					}
 
 					// Bones
-					animation.m_Bones.resize(animation.m_BoneCounter);
-					for (int j{}; j < animation.m_BoneCounter; ++j)
+					animation.m_Bones.resize(numberofbones);
+					for (int j{}; j < numberofbones; ++j)
 					{
 						auto& boneinst = animation.m_Bones[j];
 

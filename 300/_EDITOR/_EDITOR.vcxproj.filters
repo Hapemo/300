@@ -24,6 +24,9 @@
     <ClCompile Include="source\Editor\GameScene.cpp" />
     <ClCompile Include="source\Editor\TabWindow.cpp" />
     <ClCompile Include="source\Editor\Script\Script.cpp" />
+    <ClCompile Include="source\Editor\KeybindWindow.cpp" />
+    <ClCompile Include="source\Editor\MenuTab.cpp" />
+    <ClCompile Include="source\Editor\ShaderCompiler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\EditorApplication.h" />
@@ -51,5 +54,8 @@
     <ClInclude Include="include\Editor\GameScene.h" />
     <ClInclude Include="include\Editor\TabWindow.h" />
     <ClInclude Include="include\Editor\Script\Script.h" />
+    <ClInclude Include="include\Editor\KeybindWindow.h" />
+    <ClInclude Include="include\Editor\MenuTab.h" />
+    <ClInclude Include="include\Editor\ShaderCompiler.h" />
   </ItemGroup>
 </Project>

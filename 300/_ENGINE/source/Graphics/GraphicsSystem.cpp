@@ -9,14 +9,16 @@
 
 ****************************************************************************
 ***/
+#define  _ENABLE_ANIMATIONS 1
 
+#include <ECS/ECS_Components.h>
 #include <Graphics/GraphicsSystem.h>
-#include <ResourceManager.h>
 #include "ResourceManagerTy.h"
 #include <Graphics/Camera_Input.h>
 #include "Debug/EnginePerformance.h"
 #include "GameState/GameStateManager.h"
 
+#include "cstdlib"
 
 /***************************************************************************/
 /*!
@@ -29,23 +31,13 @@ float second_entitytime{};
 
 void GraphicsSystem::Init()
 {
+	// -- WIP -- SHADER STORAGE BUFFER OBJECT
+	SetupShaderStorageBuffers();
+	// -- WIP -- SHADER STORAGE BUFFER OBJECT
+	m_Image2DMesh.Setup2DImageMesh();
+
 	glEnable(GL_MULTISAMPLE);
-#if 0
-#pragma region Camera entity
 
-	// only initialize an editor camera
-	if (systemManager->IsEditor())
-	{
-		Entity CameraEntity = systemManager->ecs->NewEntity(); // creating a new entity
-		systemManager->mGameStateSystem->mCurrentGameState.AddScene("NewScene");
-		systemManager->mGameStateSystem->mCurrentGameState.mScenes[0].mName = "Scene";
-		systemManager->mGameStateSystem->mCurrentGameState.mScenes[0].mEntities.insert(CameraEntity);
-		CameraEntity.GetComponent<General>().name = "Camera";
-		CameraEntity.AddComponent<Camera>();
-	}
-
-#pragma endregion
-#endif
 	// Get Window Handle
 	m_Window = systemManager->GetWindow();
 	m_Width = m_Window->size().x;
@@ -172,6 +164,13 @@ void GraphicsSystem::Init()
 /**************************************************************************/
 void GraphicsSystem::Update(float dt)
 {
+	// -- WIP --  SHADER STORAGE BUFFER OBJECT
+	finalBoneMatrices.push_back(mat4(1.0f));
+	finalBoneMatrices.push_back(mat4(2.0f));
+	//ShaderStorageBufferSubData(finalBoneMatrices.size() * sizeof(mat4), finalBoneMatrices.data());
+	finalBoneMatrices.clear();
+	// -- WIP --  SHADER STORAGE BUFFER OBJECT
+
 	// update the camera's transformations, and its input
 	if (m_EditorMode)
 	{
@@ -188,21 +187,19 @@ void GraphicsSystem::Update(float dt)
 
 	// Retrieve and update the mesh instances to be drawn
 	auto meshRendererInstances = systemManager->ecs->GetEntitiesWith<MeshRenderer>();
+	int animationID{ 0 };
+
 	for (Entity inst : meshRendererInstances)
 	{
-	
-		auto& meshrefptr = inst.GetComponent<MeshRenderer>();
-		if (meshrefptr.mMeshRef == nullptr)
+		MeshRenderer& meshRenderer = inst.GetComponent<MeshRenderer>();
+
+		// if the mesh instance is not active, skip it
+		if (meshRenderer.mMeshRef == nullptr)
 			continue;
 
-		std::string meshstr = inst.GetComponent<MeshRenderer>().mMeshPath;
-		//Animator anim = inst.GetComponent<Animator>();
-
-		void *tt = inst.GetComponent<MeshRenderer>().mMeshRef;
+		// gives me the mesh
+		void *tt = meshRenderer.mMeshRef;
 		GFX::Mesh &meshinst = *reinterpret_cast<GFX::Mesh *>(tt);
-
-		uid temp(meshstr);
-		// GFX::Mesh& meshinst = *(systemManager->mResourceTySystem->get_mesh(temp.id));
 
 		// pushback LTW matrices
 		vec3 trans = inst.GetComponent<Transform>().mTranslate;
@@ -235,23 +232,61 @@ void GraphicsSystem::Update(float dt)
 		// Update the animation
 		if (inst.HasComponent<Animator>() && _ENABLE_ANIMATIONS && systemManager->mGraphicsSystem->m_EnableGlobalAnimations)
 		{
+			Animator& animatorInst = inst.GetComponent<Animator>();
+
 			// skip the mesh that does not have an animation set
-			if (inst.GetComponent<Animator>().mAnimator.m_CurrentAnimation != nullptr)
+			if (animatorInst.mAnimator.m_CurrentAnimation != nullptr)
 			{
-				inst.GetComponent<Animator>().mAnimator.UpdateAnimation(dt, mat4(1.f), final); // update the current animation
+				animatorInst.mAnimator.UpdateAnimation(dt, mat4(1.f), final); // update the current animation
+
+				// push back matrices into the SSBO
+				for (const auto& x : animatorInst.mAnimator.m_FinalBoneMatrices)
+				{
+					finalBoneMatrices.push_back(x);
+				}
 			}
 		}
 
-		// meshinst.mLTW.push_back(final);
-		AddInstance(meshinst, final, static_cast<unsigned>(inst.id));
+		// animations are present
+		if (inst.HasComponent<Animator>()) {
+			AddInstance(meshinst, final, meshRenderer.mInstanceColor, static_cast<unsigned>(inst.id), animationID++);
+		}
+		else {
+			AddInstance(meshinst, final, meshRenderer.mInstanceColor, static_cast<unsigned>(inst.id));
+		}
+	}
+	m_FinalBoneMatrixSsbo.SubData(finalBoneMatrices.size() * sizeof(mat4), finalBoneMatrices.data());
+	finalBoneMatrices.clear();
+
+	// Sending Light source data to GPU
+	auto lightEntity = systemManager->ecs->GetEntitiesWith<PointLight>();
+	m_HasLight = !lightEntity.empty();
+	m_LightCount = lightEntity.size();
+
+	if (m_HasLight)
+	{
+		for (int i = 0; i < lightEntity.size(); ++i)
+		{
+			PointLight& lightData = lightEntity.get<PointLight>(lightEntity[i]);
+			Transform& lightTransform = Entity(lightEntity[i]).GetComponent<Transform>();
+
+			PointLightSSBO light;
+			light.mPosition = vec4(lightTransform.mTranslate, 0.f);
+			light.mColor = vec4(lightData.mLightColor, 0.f);
+			light.mIntensity = lightData.mIntensity;
+			light.mLinear = lightData.mLinearFalloff;
+			light.mQuadratic = lightData.mQuadraticFalloff;
+
+			pointLights.push_back(light);
+
+			m_Renderer.AddCube(lightTransform.mTranslate, { 20, 20, 20 }, vec4(lightData.mLightColor, 1.f));
+		}
+		// Copy light source data into storage buffer
+		m_PointLightSsbo.SubData(pointLights.size() * sizeof(PointLightSSBO), pointLights.data());
+		pointLights.clear();
 	}
 
 #pragma endregion
-
-	//// test drawing
-	// m_Renderer.AddCube({ -10, 0, 0 }, { 0.5f, 0.5f, 0.5f }, { 1.f, 0., 0.f, 1.f });
-	// m_Renderer.AddLine({ -10, 0, 0 }, { 10, 10, 0 }, { 0.f, 1.f, 0.f, 1.f });
-	// m_Renderer.AddLine({ 10, 10, 0 }, { -10, 10, 0 }, { 1.f, 0.f, 1.f, 1.f });
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -273,7 +308,7 @@ void GraphicsSystem::EditorDraw(float dt)
 	// Prepare and bind the Framebuffer to be rendered on
 	m_Fbo.PrepForDraw();
 
-#pragma region render all the mesh instances
+#pragma region render all the mesh instances onto the editor camera framebuffer
 	// Render all instances of a given mesh
 	for (Entity inst : meshRendererInstances)
 	{
@@ -301,8 +336,18 @@ void GraphicsSystem::EditorDraw(float dt)
 		GFX::Mesh &meshinst = *reinterpret_cast<GFX::Mesh *>(inst.GetComponent<MeshRenderer>().mMeshRef);
 
 		// gets the shader filepathc
-		std::pair<std::string, std::string> shaderstr = inst.GetComponent<MeshRenderer>().mShaderPath;
-		GFX::Shader &shaderinst = systemManager->mResourceSystem->get_Shader(shaderstr.first + shaderstr.second);
+		//uid shaderstr = inst.GetComponent<MeshRenderer>().mShaders;
+		
+		std::string shader{};
+
+		if (meshinst.mHasAnimation)
+			shader = "AnimationShader";
+		else
+			shader = "PointLightShader";
+
+		uid shaderstr(shader);
+		
+		GFX::Shader &shaderinst = *systemManager->mResourceTySystem->get_Shader(shaderstr.id);
 		unsigned shaderID = shaderinst.GetHandle();
 
 		// bind all texture
@@ -335,12 +380,12 @@ void GraphicsSystem::EditorDraw(float dt)
 			GLuint mLightColorShaderLocation = shaderinst.GetUniformLocation("uLightColor");
 
 			vec3 viewPos = GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR);
-			glUniform3fv(mLightPosShaderLocation, 1, &lightTransform.mTranslate[0]);
+			//GLuint mViewPosShaderLocation = shaderinst.GetUniformLocation("uViewPos");
 			glUniform3fv(mViewPosShaderLocation, 1, &viewPos[0]);
-			glUniform3fv(mLightColorShaderLocation, 1, &lightData.mLightColor[0]);
-			glUniform1f(mLightIntensityShaderLocation, lightData.mIntensity);
 
-			m_Renderer.AddCube(lightTransform.mTranslate, { 20, 20, 20 });
+			// Light count uniform
+			GLuint mLightCountShaderLocation = shaderinst.GetUniformLocation("uLightCount");
+			glUniform1i(mLightCountShaderLocation, m_LightCount);
 		}
 
 		// bind texture unit
@@ -363,19 +408,19 @@ void GraphicsSystem::EditorDraw(float dt)
 		GLuint debug_draw = glGetUniformLocation(shaderID, "uDebugDraw");
 		glUniform1i(debug_draw, m_DebugDrawing);
 
-		// send animation data over to the shader if there is animations
-		if (inst.HasComponent<Animator>() && _ENABLE_ANIMATIONS)
-		{
-			const auto &transform = inst.GetComponent<Animator>().mAnimator.m_FinalBoneMatrices;
-			size_t totaltransform = transform.size();
+		//// send animation data over to the shader if there is animations
+		//if (inst.HasComponent<Animator>() && _ENABLE_ANIMATIONS)
+		//{
+		//	const auto &transform = inst.GetComponent<Animator>().mAnimator.m_FinalBoneMatrices;
+		//	size_t totaltransform = transform.size();
 
-			for (size_t b{}; b < totaltransform; ++b)
-			{
-				// send the bone matrices to the shader via uniforms
-				std::string name = "finalBoneMatrices[" + std::to_string(b) + "]";
-				glUniformMatrix4fv(glGetUniformLocation(shaderID, name.c_str()), 1, GL_FALSE, &transform[b][0][0]);
-			}
-		}
+		//	for (size_t b{}; b < totaltransform; ++b)
+		//	{
+		//		// send the bone matrices to the shader via uniforms
+		//		std::string name = "finalBoneMatrices[" + std::to_string(b) + "]";
+		//		glUniformMatrix4fv(glGetUniformLocation(shaderID, name.c_str()), 1, GL_FALSE, &transform[b][0][0]);
+		//	}
+		//}
 
 		// Bind mesh's VAO, copy render data into VBO, Draw
 		DrawAll(meshinst);
@@ -449,8 +494,9 @@ void GraphicsSystem::GameDraw(float dt)
 		GFX::Mesh &meshinst = *reinterpret_cast<GFX::Mesh *>(inst.GetComponent<MeshRenderer>().mMeshRef);
 
 		// gets the shader filepath
-		std::pair<std::string, std::string> shaderstr = inst.GetComponent<MeshRenderer>().mShaderPath;
-		GFX::Shader &shaderinst = systemManager->mResourceSystem->get_Shader(shaderstr.first + shaderstr.second);
+		uid shaderstr("PointLightShader");
+		//uid shaderstr = inst.GetComponent<MeshRenderer>().mShaders;
+		GFX::Shader &shaderinst = *systemManager->mResourceTySystem->get_Shader(shaderstr.id);
 
 		GFX::Texture *textureInst[4]{};
 		for (int i{0}; i < 4; i++)
@@ -483,10 +529,7 @@ void GraphicsSystem::GameDraw(float dt)
 			GLuint mLightColorShaderLocation = shaderinst.GetUniformLocation("uLightColor");
 
 			vec3 viewPos = camera.GetComponent<Camera>().mCamera.position();
-			glUniform3fv(mLightPosShaderLocation, 1, &lightTransform.mTranslate[0]);
 			glUniform3fv(mViewPosShaderLocation, 1, &viewPos[0]);
-			glUniform3fv(mLightColorShaderLocation, 1, &lightData.mLightColor[0]);
-			glUniform1f(mLightIntensityShaderLocation, lightData.mIntensity);
 		}
 
 		for (int i{0}; i < 4; i++)
@@ -522,6 +565,7 @@ void GraphicsSystem::GameDraw(float dt)
 		meshinst.ClearInstances();
 		m_Renderer.ClearInstances();
 	}
+	pointLights.clear();
 
 	// TODO: Clears all instances that have been rendered from local buffer
 	m_GameFbo.Unbind();
@@ -535,6 +579,7 @@ void GraphicsSystem::GameDraw(float dt)
 /**************************************************************************/
 void GraphicsSystem::Exit()
 {
+	m_Image2DMesh.Destroy();
 }
 
 /***************************************************************************/
@@ -543,7 +588,7 @@ void GraphicsSystem::Exit()
 	Adds an instance of a mesh to be drawn, For instancing
 */
 /**************************************************************************/
-void GraphicsSystem::AddInstance(GFX::Mesh &mesh, Transform transform, unsigned entityID)
+void GraphicsSystem::AddInstance(GFX::Mesh &mesh, Transform transform, const vec4& color, unsigned entityID)
 {
 	// Local to world transformation
 	mat4 scale = glm::scale(transform.mScale);
@@ -555,12 +600,16 @@ void GraphicsSystem::AddInstance(GFX::Mesh &mesh, Transform transform, unsigned 
 	mat4 world = translate * rotation * scale;
 	mesh.mLTW.push_back(world);
 	mesh.mTexEntID.push_back(vec4(0, (float)entityID + 0.5f, 0, 0));
+	mesh.mColors.push_back(color);
 }
 
-void GraphicsSystem::AddInstance(GFX::Mesh &mesh, mat4 transform, unsigned entityID)
+void GraphicsSystem::AddInstance(GFX::Mesh &mesh, mat4 transform, const vec4& color, unsigned entityID, int animInstanceID)
 {
 	mesh.mLTW.push_back(transform);
-	mesh.mTexEntID.push_back(vec4(0, (float)entityID + 0.5f, 0, 0));
+	mesh.mColors.push_back(color);
+	if (animInstanceID < 0)
+		animInstanceID = -2;
+	mesh.mTexEntID.push_back(vec4(0, (float)entityID + 0.5f, (float)animInstanceID + 0.5f, 0));
 }
 
 /***************************************************************************/
@@ -853,6 +902,52 @@ void GraphicsSystem::UnpauseGlobalAnimation()
 	m_EnableGlobalAnimations = true;
 }
 
+void GraphicsSystem::SetupShaderStorageBuffers()
+{
+	// All Point Lights in the Scene -- Location 2
+	m_PointLightSsbo.Create(sizeof(PointLightSSBO) * MAX_POINT_LIGHT, 2);
+
+	// Final Bone Matrix for Animation -- Location 3
+	m_FinalBoneMatrixSsbo.Create(sizeof(mat4) * MAX_NUM_BONES * MAX_INSTANCES, 3);
+}
+
+void GraphicsSystem::Add2DImageInstance(float width, float height, vec2 const& position, unsigned texHandle, vec4 const& color, unsigned entityID)
+{
+	mat4 world =
+	{
+		vec4(width, 0.f, 0.f, 0.f),
+		vec4(0.f, height, 0.f, 0.f),
+		vec4(0.f, 0.f, 1.f, 0.f),
+		vec4(position, 0.f, 1.f)
+	};
+
+	int texIndex = StoreTextureIndex(texHandle);
+
+	m_Image2DMesh.mLTW.push_back(world);
+	m_Image2DMesh.mColors.push_back(color);
+	m_Image2DMesh.mTexEntID.push_back(vec4((float)texIndex + 0.5f, (float)entityID + 0.5f, 0, 0));
+}
+
+int GraphicsSystem::StoreTextureIndex(unsigned texHandle)
+{
+	if (m_Image2DStore.size() >= 32)
+	{
+		std::cout << "Too many different textures to be rendered in 1 frame, texture discarded\n";
+		return -1;
+	}
+
+	// Locate if ID already in container
+	auto it = std::find(m_Image2DStore.cbegin(), m_Image2DStore.cend(), (GLint)texHandle);
+	if (it == m_Image2DStore.cend())	// ID not in container
+	{
+		m_Image2DStore.push_back((GLint)texHandle);
+		return (int)m_Image2DStore.size() - 1;
+	}
+
+	// ID is already in container
+	int pos = (int)(it - m_Image2DStore.cbegin());
+}
+
 /***************************************************************************/
 /*!
 \brief
@@ -862,4 +957,38 @@ void GraphicsSystem::UnpauseGlobalAnimation()
 void GraphicsSystem::PauseGlobalAnimation()
 {
 	m_EnableGlobalAnimations = false;
+}
+
+
+void MeshRenderer::SetColor(const vec4& color)
+{
+	mInstanceColor = color;
+}
+
+
+void MeshRenderer::SetMesh(const std::string& meshName)
+{
+	std::string descFilepath = systemManager->mResourceTySystem->fbx_path + meshName + ".fbx.desc";
+	unsigned guid = _GEOM::GetGUID(descFilepath);
+
+	mMeshRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(guid));
+	mMeshPath = systemManager->mResourceTySystem->compiled_geom_path + meshName + ".geom";
+}
+
+
+void MeshRenderer::SetTexture(MaterialType MaterialType, const std::string& Texturename)
+{
+	std::string MaterialInstancePath = systemManager->mResourceTySystem->compressed_texture_path + Texturename + ".ctexture";
+	mMaterialInstancePath[MaterialType] = MaterialInstancePath;
+
+	mTextureCont[MaterialType] = true;
+
+	uid guid(MaterialInstancePath);
+	mTextureRef[MaterialType] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(guid.id));
+}
+
+
+void PointLight::SetColor(const vec3& color)
+{
+	mLightColor = color;
 }

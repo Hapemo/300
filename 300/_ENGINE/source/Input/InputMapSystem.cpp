@@ -1,8 +1,8 @@
 /*!*************************************************************************
 ****
-\file		   InputMapSystem.cpp
-\author(s)	   Cheong Ming Lun
-\par DP email: m.cheong@digipen.edu
+\file					 InputMapSystem.cpp
+\author(s)	   Cheong Ming Lun, Jazz Teoh Yu Jue
+\par DP email: m.cheong@digipen.edu, j.teoh@digipen.edu
 \date		   16-8-2023
 \brief
 
@@ -15,11 +15,11 @@ the editor to physical keys.
 #include "ConfigManager.h"
 #include "Misc.h"
 #include "Debug/Logger.h"
+#include "SparseSet.h"
 
 const std::array<std::pair<std::string, E_KEY>, 129> InputMapSystem::mE_KEYMap{ EKeyMappingInit() };
 
 InputMapSystem::InputMapSystem() {}
-
 
 void InputMapSystem::Init() {
 	std::fstream file;
@@ -28,6 +28,8 @@ void InputMapSystem::Init() {
 		PASSERTMSG(false, std::string("File " + ConfigManager::GetValue("KeybindPath") + " not found.\n").c_str());
 		return;
 	}
+
+	SparseSet<int, 100> sparseSet{};
 
 	auto tempMap = Misc::TextFileToMap(file);
 	for (auto [action, ekey] : tempMap) {
@@ -61,15 +63,12 @@ void InputMapSystem::SaveKeybind() {
 	}
 
 	for (auto [actionName, ekey] : mKeybindMap) {
-		file << actionName << ": " << std::find_if(mE_KEYMap.begin(), mE_KEYMap.end(), [ekey] (std::pair<std::string, E_KEY> item)->bool { return item.second == ekey; })->first << '\n';
+		file << actionName << ": " << GetEKeyName(ekey) << '\n';
 	}
 
 	file.close();
 }
 
-int InputMapSystem::CheckEKeyMap(std::string key_string) {
-	return 0;
-}
 
 bool InputMapSystem::CheckButton(std::string const& actionName, E_STATE state) {
 	E_KEY ekey{};

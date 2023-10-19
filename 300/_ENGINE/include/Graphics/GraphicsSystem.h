@@ -23,6 +23,7 @@
 #include <Camera.hpp>
 #include <Fbo.hpp>
 #include <Animator.hpp>
+#include <Ssbo.hpp>
 
 /***************************************************************************/
 /*!
@@ -38,6 +39,15 @@ enum class CAMERA_TYPE
 	CAMERA_TYPE_ALL
 };
 
+struct PointLightSSBO
+{
+	alignas(16) vec4 mPosition;
+	alignas(16) vec4 mColor{ 1.f, 1.f, 1.f, 0.f};
+	float mLinear;
+	float mQuadratic;
+	float mIntensity;
+	float mPad{};
+};
 
 /***************************************************************************/
 /*!
@@ -108,8 +118,8 @@ public:
 		This function is essential for instanced rendering
 	*/
 	/**************************************************************************/
-	void AddInstance(GFX::Mesh& mesh, Transform transform, unsigned entityID = 0xFFFFFFFF);		// Adds an instance of a mesh to be drawn
-	void AddInstance(GFX::Mesh& mesh, mat4 transform, unsigned entityID = 0xFFFFFFFF);	// Adds an instance of a mesh to be drawn
+	void AddInstance(GFX::Mesh& mesh, Transform transform, const vec4& color, unsigned entityID = 0xFFFFFFFF);		// Adds an instance of a mesh to be drawn
+	void AddInstance(GFX::Mesh& mesh, mat4 transform, const vec4& color, unsigned entityID = 0xFFFFFFFF, int animInstanceID = -1);	// Adds an instance of a mesh to be drawn
 
 	// -- FBO --
 	/***************************************************************************/
@@ -199,6 +209,27 @@ public:
 	bool	m_EditorMode;
 	bool	m_EnableGlobalAnimations{ 1 };
 	bool	m_HasLight{ false };
+	bool    m_EnableScroll{ false };
+
+	// -- Stats --
+	int		m_LightCount{};
+
+private:
+	// -- SSBO -- 
+	GFX::SSBO m_FinalBoneMatrixSsbo;
+	std::vector<mat4> finalBoneMatrices;
+
+	const int MAX_POINT_LIGHT = 5;
+	GFX::SSBO m_PointLightSsbo;
+	std::vector<PointLightSSBO> pointLights;
+
+	void SetupShaderStorageBuffers();		// Creates all SSBO required
+
+	// -- 2D Image Rendering --
+	GFX::Mesh m_Image2DMesh;
+	std::vector<unsigned>m_Image2DStore;
+	void Add2DImageInstance(float width, float height, vec2 const& position, unsigned texHandle, vec4 const& color = vec4{ 1.f, 1.f, 1.f, 1.f }, unsigned entityID = 0xFFFFFFFF);
+	int StoreTextureIndex(unsigned texHandle);
 };
 
 #endif

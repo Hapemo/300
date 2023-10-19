@@ -22,12 +22,22 @@ Components used by the ECS.
 #include <Camera.hpp>
 #include "EnumStrings.h"
 #include "Input/Input.h"
+#include "Guid.h"
+#include <Constants.h>
+
 //#include "Graphics/GraphicsSystem.h"
-#include "Mesh.hpp"
+//#include "Mesh.hpp"
 
 //#include "rttr/registration.h"
 
 DECLARE_ENUMSTRING(enum_tag, PLAYER, ENEMY, BULLET, STATIC, BUILDING)
+struct uid;
+
+//DECLARE_ENUMSTRING(enum_tag, PLAYER, ENEMY, BULLET, STATIC, BUILDING)
+namespace GFX {
+	struct Mesh;
+
+}
 
 /******************************************************************************/
 /*!
@@ -102,26 +112,38 @@ struct Animator
 struct MeshRenderer
 {
 	// For now, we store the string to the filepaths. TO CHANGE to uids for efficient referencing
+	//uid									mShaders;
+	//std::pair<std::string, std::string> mShaderPath{ "../assets/shader_files/animations_vert.glsl", "../assets/shader_files/pointLight_frag.glsl" };
 	std::pair<std::string, std::string> mShaderPath{ "../assets/shader_files/pointLight_vert.glsl", "../assets/shader_files/pointLight_frag.glsl" };
+	uid									mShaderid;
+	
 	std::string							mMaterialInstancePath[4] {" "," " ," " ," " };
+	vec4								mInstanceColor{ 1.f, 1.f, 1.f, 1.f };
+
 	std::string							mMeshPath;
 	
 	void*								mMeshRef{};
 	void*								mTextureRef[4];
-	bool								mTextureCont[4];
 
 	unsigned							mGUID;
+	bool								mTextureCont[4];
 
 	void								Inspect();
+	void								SetColor(const vec4& color);
+	void								SetMesh(const std::string& meshName);
+	void								SetTexture(MaterialType type, const std::string& Texturename);
 
-
-
-	GFX::Mesh							testmesh;
 	//RTTR_ENABLE()
-
-
-	//void								Inspect();
 };
+
+
+struct UIrenderer
+{
+	std::string							mTexPath; // temporary should be UID
+	void* mTextureRef;
+};
+
+
 
 /******************************************************************************/
 /*!
@@ -136,6 +158,8 @@ struct RigidBody
 	glm::vec3 mVelocity;
 
 	RigidBody() : mDensity(10.f), mMaterial(MATERIAL::WOOD), mMotion(MOTION::STATIC), mVelocity(0.f) {};
+	RigidBody(float dense, MATERIAL mat, MOTION mot, const glm::vec3& vec)
+		: mDensity(dense), mMaterial(mat), mMotion(mot), mVelocity(vec) {}
 	//RTTR_ENABLE()
 
 
@@ -191,6 +215,22 @@ struct PlaneCollider //if has plane collider always static
 
 	//RTTR_ENABLE()
 	void							Inspect();
+};
+
+struct AABBCollider
+{
+	glm::vec3 mScaleOffset;			// final scale = mScaleOffset * Transform.mScale;
+	glm::vec3 mTranslateOffset;		// final pos = Transform.mTranslate + mTranslateOffset;
+
+	AABBCollider() : mScaleOffset(1.f), mTranslateOffset(0.f) {}
+};
+
+struct CapsuleCollider
+{
+	glm::vec3 mTranslateOffset;
+	float mRadius;
+	float mHalfHeight;
+	CapsuleCollider() : mTranslateOffset(0.f, 0.f, 0.f), mRadius(50.f), mHalfHeight(100.f) {}
 };
 
 /******************************************************************************/
@@ -324,9 +364,13 @@ struct Prefab
 struct PointLight
 {
 	vec3	mLightColor{ 1.f, 1.f, 1.f };
-	float	mAttenuation{};
+	float	mLinearFalloff{};
+	float	mQuadraticFalloff{};
 	float	mIntensity{};
+
 	void Inspect();
+	void SetColor(const vec3& color);
 };
+
 
 

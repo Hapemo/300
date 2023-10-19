@@ -1,3 +1,4 @@
+#include "ECS_Components.h"
 /*!*************************************************************************
 ****
 \file Inspect.cpp
@@ -51,9 +52,6 @@ Inspect display for RigidBody components
 
 - Audio::Inspect
 Inspect display for Audio components
-
-- InputActionMapEditor::Inspect
-Inspect display for InputActionMapEditor components.
 ****************************************************************************
 ***/
 
@@ -65,13 +63,15 @@ Inspect display for InputActionMapEditor components.
 #include <math.h>
 #include "imgui_stdlib.h"
 #include "ScriptingSystem.h"
-#include "Guid.h"
+
 #include "ResourceManagerTy.h"
 #include "Debug/Logger.h"
 #include "Audio/AudioSystem.h"
 #include "Input/InputMapSystem.h"
 #include "Script/Script.h"
 
+#include <descriptor.h>
+#include <string>
 
 /***************************************************************************/
 /*!
@@ -90,8 +90,6 @@ void Inspect::init() {
 /**************************************************************************/
 void Inspect::update() 
 {
-
-
 	if (Hierarchy::selectionOn) {
 		
 		Entity ent(Hierarchy::selectedId);
@@ -150,10 +148,6 @@ void Inspect::update()
 			audio.Inspect();
 		}
 
-		//if (ent.HasComponent<InputActionMapEditor>()) {
-		//	InputActionMapEditor& inputAction = ent.GetComponent<InputActionMapEditor>();
-		//	inputAction.Inspect();
-		//}
 		//--------------------------------------------// must be at the LAST OF THIS LOOP
 		Add_component(); 
 	}
@@ -228,11 +222,6 @@ void Inspect::Add_component() {
 
 			}
 		}
-
-		//if (ImGui::Selectable("InputActionMapEditor")) {
-		//	if (!Entity(Hierarchy::selectedId).HasComponent<InputActionMapEditor>())
-		//		Entity(Hierarchy::selectedId).AddComponent<InputActionMapEditor>();
-		//}
 
 		ImGui::EndCombo();
 
@@ -349,53 +338,35 @@ void Camera::Inspect()
 		ImGui::DragFloat3("Camera Position", (float*)&mCamera.mPosition);
 		ImGui::DragFloat3("Camera Target", (float*)&mCamera.mTarget);
 
-
-		float aspect{ 1800 };
-		float nearplane{ 60 };
-		float FOV{ 10 };
-		float farplane{ 0 };
-		static bool Orthographic{ 0 };
-		
-
 		ImGui::Text("Aspect Ratio");
 		ImGui::SameLine();
 		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
 			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
-		ImGui::DragFloat("##Aspect", &aspect);
-
+		ImGui::DragFloat("##Aspect", &mCamera.mAspectRatio);
 
 		ImGui::Text("FOV");
 		ImGui::SameLine();
 		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
 			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
-		ImGui::DragFloat("##FOV", &FOV);
-
-
-
+		ImGui::DragFloat("##FOV", &mCamera.mFovDegree, 0.2f, GFX::CameraConstants::minFOV, GFX::CameraConstants::maxFOV);
 
 		ImGui::Text("Far Plane");
 		ImGui::SameLine();
 		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
 			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
-		ImGui::DragFloat("##FP", &farplane);
+		ImGui::DragFloat("##FP", &mCamera.mFar);
 
 		ImGui::Text("Near plane");
 		ImGui::SameLine();
 		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
 			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
-		ImGui::DragFloat("##NP", &nearplane);
+		ImGui::DragFloat("##NP", &mCamera.mNear);
 
-		ImGui::Text("Orthographic");
-		ImGui::SameLine();
-		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
-			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
-		ImGui::Checkbox("##Orth", &Orthographic);
-
-
-
-		//ImGui::Text("Position: %d, %d, %d", mCamera.mPosition.x, mCamera.mPosition.y, mCamera.mPosition.z);
-		//ImGui::Text("Target: %d, %d, %d", mCamera.mTarget.x, mCamera.mTarget.y, mCamera.mTarget.z);
-
+		//ImGui::Text("Orthographic");
+		//ImGui::SameLine();
+		//ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+		//	- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		//ImGui::Checkbox("##Orth", &Orthographic);
 	}
 
 }
@@ -408,14 +379,20 @@ void PointLight::Inspect()
 		ImGui::SameLine();
 		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
 			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
-		ImGui::DragFloat3("##Light Color", (float*)&mLightColor);
+		ImGui::DragFloat3("##Light Color", (float*)&mLightColor, 0.01f);
 
 
-		ImGui::Text("Attenuation");
+		ImGui::Text("Linear Falloff");
 		ImGui::SameLine();
 		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
 			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
-		ImGui::DragFloat("##Attenuation", (float*)&mAttenuation);
+		ImGui::DragFloat("##Linear Falloff", (float*)&mLinearFalloff);
+
+		ImGui::Text("Quadratic Falloff");
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		ImGui::DragFloat("##Quadratic Falloff", (float*)&mQuadraticFalloff);
 
 		ImGui::Text("Intensity");
 		ImGui::SameLine();
@@ -568,47 +545,208 @@ void Animator::Inspect()
 	bool delete_component{ true };
 	if (ImGui::CollapsingHeader("Animator", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
 	{
-		ImGui::Text(std::to_string(mAnimator.m_CurrentTime).c_str());	ImGui::SameLine();
-		ImGui::Text(" / ");												ImGui::SameLine();
-		ImGui::Text(std::to_string(mAnimator.m_CurrentAnimation->m_Duration).c_str());
+		if (mAnimator.m_CurrentAnimation == nullptr)
+		{
+			ImGui::Text("Mesh is not capable of animation");
+		}
+
+		else
+		{
+			ImGui::Text(std::to_string(mAnimator.m_CurrentTime).c_str());	ImGui::SameLine();
+			ImGui::Text(" / ");												ImGui::SameLine();
+			ImGui::Text(std::to_string(mAnimator.m_CurrentAnimation->m_Duration).c_str());
 		
-		ImGui::Checkbox("Pause Animaton", &mAnimator.mIsPaused);
+			ImGui::Checkbox("Pause Animaton", &mAnimator.mIsPaused);
+		}
 	}
 
 	if (delete_component == false)
 		Entity(Hierarchy::selectedId).RemoveComponent<MeshRenderer>();
 }
+
+
 /***************************************************************************/
 /*!
 \brief
 	Inspector functionality for MeshRenderer
 */
 /***************************************************************************/
+void MeshRenderer::Inspect() 
+{
+	//!< Shader Helper 
+	auto getShaderName = [](std::string shaderpath) -> std::string
+	{
+		// returns pointLight_vert.glsl
+		return shaderpath.substr(shaderpath.find_last_of("/") + 1);
+	};
 
-void MeshRenderer::Inspect() {
+	//!< Shader Helper 
+	auto getShaderExtension = [](std::string shaderpath) -> std::string
+	{
+		// returns vert.glsl or frag.glsl
+		return shaderpath.substr(shaderpath.find_last_of("_"));
+	};
+
+	//!< Helper
+	auto getFilename = [](std::string filepath) -> std::string
+	{
+		// returns AT-AT
+		std::string ret_str = filepath.substr(filepath.find_last_of("/") + 1);
+		ret_str = ret_str.substr(0, ret_str.find_first_of("."));
+		return ret_str;
+	};
+
+
 	bool delete_component{ true };
-	if (ImGui::CollapsingHeader("MeshRenderer", &delete_component,ImGuiTreeNodeFlags_DefaultOpen)) {
+	if (ImGui::CollapsingHeader("MeshRenderer", &delete_component,ImGuiTreeNodeFlags_DefaultOpen)) 
+	{
 		
 		int st = static_cast<int>(mMeshPath.find_last_of("/"));
 		int ed = static_cast<int>(mMeshPath.find_last_of("."));
 		std::string tempPath = mMeshPath.substr(st + 1, ed - (st + 1));
 
-		ImGui::Text("Mesh");
+		Entity entins(Hierarchy::selectedId);
 
+		// == >> Shaders << == //
+		std::vector<std::string> vertShaders, fragShaders;
+		static int selectedVertShader = 0, selectedFragShader = 0;
+
+		// populating vertex shader vector
+		for (const auto& entry : std::filesystem::directory_iterator(systemManager->mResourceTySystem->shader_path))
+		{
+			//if (std::filesystem::is_regular_file(entry))
+			//{
+			//	if(getShaderExtension(entry.path().string()) == "_vert.glsl")
+			//		vertShaders.push_back(entry.path().string());
+
+			//	else if (getShaderExtension(entry.path().string()) == "_frag.glsl")
+			//		fragShaders.push_back(entry.path().string());
+			//}
+		}
+
+		//{
+			// Vert shader selection
+			//if (ImGui::BeginCombo("Vertex Shaders", vertShaders[selectedVertShader].data(), 0))
+			//{
+			//	for (int i{}; i < vertShaders.size(); ++i)
+			//	{
+			//		bool isItemSelected = (selectedVertShader == i);
+			//		if(ImGui::Selectable(vertShaders[i].data(), isItemSelected))
+			//			selectedVertShader = i;
+
+			//		if (isItemSelected)
+			//			ImGui::SetItemDefaultFocus();
+			//	}
+
+			//	ImGui::EndCombo();
+			//}
+
+			//// Frag shader selection
+			//if (ImGui::BeginCombo("Fragment Shaders", fragShaders[selectedFragShader].data(), 0))
+			//{
+			//	for (int i{}; i < fragShaders.size(); ++i)
+			//	{
+			//		bool isItemSelected = (selectedFragShader == i);
+			//		if (ImGui::Selectable(fragShaders[i].data(), isItemSelected))
+			//			selectedFragShader = i;
+
+			//		if (isItemSelected)
+			//			ImGui::SetItemDefaultFocus();
+			//	}
+
+			//	ImGui::EndCombo();
+			//}
+		//}
+
+		//if (ImGui::Button("Compile Shader"))
+		//{
+		//	std::cout << "compile shaders :)\n";
+		//}
+
+		std::string shaderstr{" "};
+
+		if (systemManager->mResourceTySystem->m_Shaders.find(mShaderid) != systemManager->mResourceTySystem->m_Shaders.end())
+			shaderstr = systemManager->mResourceTySystem->m_Shaders[mShaderid].first;
+		
+		if (ImGui::BeginCombo("##Shaders", shaderstr.c_str())) {
+
+			for (auto& data : systemManager->mResourceTySystem->m_Shaders) {
+
+				if (ImGui::Selectable(data.second.first.c_str())) {
+					mShaderid = data.first;
+				}
+			}
+
+			ImGui::EndCombo();
+
+		}
+		ImGui::Separator();
+
+		// == >> Mesh << == //
+		ImGui::Text("Mesh");
 		if (ImGui::BeginDragDropTarget())
 		{
-			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_GEOM")) {
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_GEOM")) 
+			{
 
 				const char* data = (const char*)payload->Data;
 				std::string data_str = std::string(data);
 				mMeshPath = data_str;
 
-				uid temp(mMeshPath);
-				mMeshRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(temp.id));
-
+				std::string descfilepath = data_str + ".desc";
+				unsigned guid = _GEOM::GetGUID(descfilepath);
+				mMeshRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(guid));
 				GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mMeshRef);
 
+
 				Entity entins(Hierarchy::selectedId);
+				if (entins.HasComponent<Animator>() && meshinst->mHasAnimation)
+				{
+					// if the new entity has both animations and the animator component, update the animator to use the new animation
+					entins.GetComponent<Animator>().mAnimator.SetAnimation(&meshinst->mAnimation[0]);
+				}
+				else if (entins.HasComponent<Animator>() && !meshinst->mHasAnimation)
+				{
+					// if the new entity's mesh has no animation, but the entity still has the animator component
+					entins.GetComponent<Animator>().mAnimator.m_CurrentAnimation = nullptr;
+				}
+			}
+
+
+			ImGui::EndDragDropTarget();
+		}
+
+
+		if (ImGui::BeginDragDropTarget())
+		{
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_FBX")) 
+			{
+				const char* data = (const char*)payload->Data;
+				std::string data_str = std::string(data);
+				mMeshPath = systemManager->mResourceTySystem->compiled_geom_path + getFilename(data_str) + ".geom";
+				std::string GEOM_Descriptor_Filepath;
+				unsigned guid;
+
+				bool descFilePresent = _GEOM::CheckAndCreateDescriptorFile(data_str, GEOM_Descriptor_Filepath);
+				std::string descfilepath = data_str + ".desc";
+				guid = _GEOM::GetGUID(descfilepath);
+
+				// If the descriptor file is not present, then load it
+				if (!descFilePresent)
+				{
+					//!>> Calling the GEOM Compiler to load 
+					std::string command = "..\\_GEOM_COMPILER\\_GEOM_COMPILER.exe ";
+					command += GEOM_Descriptor_Filepath;
+					int result = system(command.c_str());
+
+					std::string geompath = GEOM_Descriptor_Filepath.substr(0, GEOM_Descriptor_Filepath.find_last_of("."));
+
+					systemManager->mResourceTySystem->mesh_Load(geompath, guid);
+				}
+
+				mMeshRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(guid));
+				GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mMeshRef);
+
 				if (entins.HasComponent<Animator>() && meshinst->mHasAnimation)
 				{
 					// if the new entity has both animations and the animator component, update the animator to use the new animation
@@ -631,14 +769,16 @@ void MeshRenderer::Inspect() {
 			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
 		ImGui::Text(tempPath.c_str());
 
-		
 
+		// == >> Textures << == //
 		ImGui::Dummy(ImVec2(0.0f, 10.0f));
 
 		std::string textures[4] = { "DIFFUSE","NORMAL", "EMISSION","SPECULAR"};
 
-		for (int i{ 0 }; i <4; i++) {
-			if (mMaterialInstancePath[i] != "") {
+		for (int i{ 0 }; i <4; i++) 
+		{
+			if (mMaterialInstancePath[i] != "") 
+			{
 				ImGui::Text(textures[i].c_str());
 				if (ImGui::BeginDragDropTarget())
 				{
@@ -687,13 +827,55 @@ void MeshRenderer::Inspect() {
 					}
 					ImGui::EndDragDropTarget();
 				}
-				
 			}
 		}
 
-
-
+		ImGui::ColorPicker4("MeshColor", (float*)&mInstanceColor);
 	}
+
+	// == >> Mesh Renderer GEOM Descriptor File << == //
+	ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+	if (ImGui::TreeNode("GEOM DescirptorFile"))
+	{
+		GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mMeshRef);
+
+		// sanity check
+		if (meshinst != nullptr)
+		{
+			ImGui::InputText("Desc Filepath", const_cast<char*>(meshinst->mDescriptorPath.c_str()), meshinst->mDescriptorPath.length() + 1);
+			ImGui::InputInt("GUID", reinterpret_cast<int*>(&meshinst->mDescriptorData.m_GUID));
+
+			// Vert shader selection
+			int selectedFBX{};
+			_GEOM::DescriptorData& descInst = meshinst->mDescriptorData;
+
+			if (ImGui::BeginCombo("FBX Filepaths", descInst.m_Filepaths[selectedFBX].data(), 0))
+			{
+				for (int i{}; i < descInst.m_Filepaths.size(); ++i)
+				{
+					bool isItemSelected = (selectedFBX == i);
+					if (ImGui::Selectable(descInst.m_Filepaths[i].data(), isItemSelected))
+						selectedFBX = i;
+
+					if (isItemSelected)
+						ImGui::SetItemDefaultFocus();
+				}
+				ImGui::EndCombo();
+			}
+
+			ImGui::DragFloat3("Pre-Transforms", (float*)&descInst.m_Translate, 0.1f);
+			ImGui::DragFloat3("Pre-Scale", (float*)&descInst.m_Scale, 0.1f);
+			ImGui::DragFloat3("Pre-Rotate", (float*)&descInst.m_Rotate, 0.1f);
+
+			if (ImGui::Button("Save Descriptor File"))
+			{
+				std::cout << "Saving Descriptor File to: " << meshinst->mDescriptorPath << std::endl;
+				_GEOM::DescriptorData::SerializeGEOM_DescriptorDataToFile(meshinst->mDescriptorPath, descInst);
+			}
+		}
+		ImGui::TreePop();
+	}
+
 	if (delete_component == false)
 		Entity(Hierarchy::selectedId).RemoveComponent<MeshRenderer>();
 }
@@ -709,8 +891,6 @@ void RigidBody::Inspect() {
 
 	if (ImGui::CollapsingHeader("RigidBody", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
 	{
-
-
 		ImGui::DragFloat("##Density", (float*)&mDensity);
 
 		ImGui::SameLine();
@@ -930,132 +1110,3 @@ void Audio::Inspect() {
 	if (delete_component == false)
 		Entity(Hierarchy::selectedId).RemoveComponent<Audio>();
 }
-///***************************************************************************/
-///*!
-//\brief
-//	Inspector functionality for Input action
-//*/
-///***************************************************************************/
-//void InputActionMapEditor::Inspect()
-//{
-//	bool delete_component = true;
-//
-//	const char* action_maps[] = { "PlayerMovement", "MenuControls" };
-//	static std::string newActionMapName;
-//
-//	//std::string selected_map {};
-//
-//	if (ImGui::CollapsingHeader("InputActionMapEditor", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
-//	{
-//		auto ActionMapEntities = systemManager->ecs->GetEntitiesWith<InputActionMapEditor>();
-//		//int size = ActionMapEntities.size();
-//		InputActionMapEditor& editor_component = ActionMapEntities.get<InputActionMapEditor>(Hierarchy::selectedId);
-//
-//		// Create New [InputActionMap]
-//		ImGui::Text("Create new InputActionMap");
-//		ImGui::InputText(".", &newActionMapName);
-//		if (ImGui::Button("Add Action Map"))
-//		{
-//			// Creates a new [ActionMap] - component side.
-//			Entity(Hierarchy::selectedId).GetComponent<InputActionMapEditor>().AddActionMap(newActionMapName);
-//		}
-//
-//		// [InputActionMap] selected
-//		ImGui::Text("Select Action Map (to edit): ");
-//		if (ImGui::BeginCombo("Selected Action Map", mSelectedMapName.c_str()))
-//		{
-//
-//			for (auto& action_pair : editor_component.mActionMap)
-//			{
-//				if (ImGui::Selectable(action_pair.first.c_str()))
-//				{
-//					mSelectedMapName = action_pair.first.c_str();
-//
-//					selected = true;
-//				}
-//			}
-//			ImGui::EndCombo();
-//		}
-//
-//
-//		PseudoInputAction& selected_action = GetAction(mSelectedMapName);
-//
-//
-//		auto& e_key_map = systemManager->mInputActionSystem->e_key_mapping;
-//
-//		if (selected)
-//		{
-//			if (mSelectedMapName != " ")
-//			{
-//				if (ImGui::BeginCombo("Movement (UP)", selected_action.mSelectedBindingUP.c_str()))
-//				{
-//					// Iterate through the [Key Map]
-//					for (auto& e_keypair : e_key_map)
-//					{
-//						std::string key_name = e_keypair.first;
-//						if (ImGui::Selectable(key_name.c_str()))
-//						{
-//							selected_action.mKeyBindUp = (int)(e_key_map[key_name]);
-//							selected_action.LinkKeyBinding(KEY_UP, (E_KEY)selected_action.mKeyBindUp);
-//							selected_action.mSelectedBindingUP = e_keypair.first;
-//						}
-//					}
-//					ImGui::EndCombo();
-//				}
-//
-//				if (ImGui::BeginCombo("Movement (DOWN)", selected_action.mSelectedBindingDOWN.c_str()))
-//				{
-//					// Iterate through the [Key Map]
-//					for (auto& e_keypair : e_key_map)
-//					{
-//						std::string key_name = e_keypair.first;
-//						if (ImGui::Selectable(key_name.c_str()))
-//						{
-//							selected_action.mKeyBindDown = (int)(e_key_map[key_name]);
-//							selected_action.LinkKeyBinding(KEY_DOWN, (E_KEY)selected_action.mKeyBindDown);
-//							selected_action.mSelectedBindingDOWN = e_keypair.first;
-//						}
-//					}
-//
-//					ImGui::EndCombo();
-//				}
-//
-//				if (ImGui::BeginCombo("Movement (LEFT)", selected_action.mSelectedBindingLEFT.c_str()))
-//				{
-//					// Iterate through the [Key Map]
-//					for (auto& e_keypair : e_key_map)
-//					{
-//						std::string key_name = e_keypair.first;
-//						if (ImGui::Selectable(key_name.c_str()))
-//						{
-//							selected_action.mKeyBindLeft = (int)(e_key_map[key_name]);
-//							selected_action.LinkKeyBinding(KEY_LEFT, (E_KEY)selected_action.mKeyBindLeft);
-//							selected_action.mSelectedBindingLEFT = e_keypair.first;
-//						}
-//					}
-//
-//					ImGui::EndCombo();
-//				}
-//
-//				if (ImGui::BeginCombo("Movement (RIGHT)", selected_action.mSelectedBindingRIGHT.c_str()))
-//				{
-//					// Iterate through the [Key Map]
-//					for (auto& e_keypair : e_key_map)
-//					{
-//						std::string key_name = e_keypair.first;
-//						if (ImGui::Selectable(key_name.c_str()))
-//						{
-//							selected_action.mKeyBindRight = (int)(e_key_map[key_name]);
-//							selected_action.LinkKeyBinding(KEY_RIGHT, (E_KEY)selected_action.mKeyBindRight);
-//							selected_action.mSelectedBindingRIGHT = e_keypair.first;
-//						}
-//					}
-//
-//					ImGui::EndCombo();
-//				}
-//			}
-//		}
-//	}
-//}
-
-
