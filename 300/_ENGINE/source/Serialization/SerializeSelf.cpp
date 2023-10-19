@@ -1,4 +1,6 @@
 #include "ECS/ECS_Components.h"
+#include "ResourceManagerTy.h"
+#include "Guid.h"
 
 void General::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
 {
