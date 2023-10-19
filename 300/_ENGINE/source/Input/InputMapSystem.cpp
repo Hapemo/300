@@ -1,8 +1,8 @@
 /*!*************************************************************************
 ****
-\file		   InputMapSystem.cpp
-\author(s)	   Cheong Ming Lun
-\par DP email: m.cheong@digipen.edu
+\file					 InputMapSystem.cpp
+\author(s)	   Cheong Ming Lun, Jazz Teoh Yu Jue
+\par DP email: m.cheong@digipen.edu, j.teoh@digipen.edu
 \date		   16-8-2023
 \brief
 
@@ -19,7 +19,6 @@ the editor to physical keys.
 const std::array<std::pair<std::string, E_KEY>, 129> InputMapSystem::mE_KEYMap{ EKeyMappingInit() };
 
 InputMapSystem::InputMapSystem() {}
-
 
 void InputMapSystem::Init() {
 	std::fstream file;

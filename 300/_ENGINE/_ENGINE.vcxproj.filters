@@ -21,6 +21,7 @@
     <ClCompile Include="source\Physics\Accumulator.cpp" />
     <ClCompile Include="source\Input\Input.cpp" />
     <ClCompile Include="source\Input\InputMapSystem.cpp" />
+    <ClCompile Include="source\AI\AIManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Audio\AudioSystem.h" />
@@ -50,5 +51,6 @@
     <ClInclude Include="include\ECS\EnumStrings.h" />
     <ClInclude Include="include\Input\Input.h" />
     <ClInclude Include="include\Input\InputMapSystem.h" />
+    <ClInclude Include="include\AI\AIManager.h" />
   </ItemGroup>
 </Project>

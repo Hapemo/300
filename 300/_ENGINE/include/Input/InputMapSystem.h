@@ -1,9 +1,9 @@
 #pragma once
 /*!*************************************************************************
 ****
-\file		   InputMapSystem.h
-\author(s)	   Cheong Ming Lun
-\par DP email: m.cheong@digipen.edu
+\file					 InputMapSystem.h
+\author(s)	   Cheong Ming Lun, Jazz Teoh Yu Jue
+\par DP email: m.cheong@digipen.edu, j.teoh@digipen.edu
 \date		   16-8-2023
 \brief
 
