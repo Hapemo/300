@@ -42,8 +42,7 @@ public:
 	void Stop();
 	void Mute();
 	void SetVolume(float volume);
-	//void SetIsLoop(float loop);
-
+	void SetIsLoop(float loop);
 
 	// Planned (Specialized)
 	// --------------------

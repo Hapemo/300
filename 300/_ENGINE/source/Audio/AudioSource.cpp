@@ -130,3 +130,11 @@ void AudioSource::SetVolume(float volume)
 	}
 }
 
+void AudioSource::SetIsLoop(float looping)
+{
+	if (mAudioComponent != nullptr) // Make sure there is the <Audio> component reference.
+	{
+		mAudioComponent->mIsLooping = looping;
+	}
+}
+

@@ -285,28 +285,15 @@ struct Children
 
 struct Audio
 {
-	// Serialize
-	// -----------------------------------------
 	std::string mFilePath;				   // File Path to the Audio File (required for loading)
 	std::string mFileName;				   // Name of Audio file (required for loading)
 	std::string mFullPath;				   // Full Path (File Path + Audio File)
 
+	bool mIsPlay = false;			       // [Flag] - to decide whether to play audio (if true)
+	bool mIsPlaying = false;		       // [Flag] - Check if audio is already playing (Channel Interaction)
 	bool mPlayonAwake = false;		       // [Flag] - flag to play as the scene launches. 
 	bool mIsLooping = false;			   // [Flag] - flag to decide whether if audio is looping.
 
-	// Audio Type [Channel Management]
-	AUDIOTYPE      mAudioType;			   // SFX or BGM (Mute Channels)
-
-	// Volume 
-	float		   mVolume = 1.0f;
-
-
-	// Do not serialize 
-	// ------------------------------------------
-	// Update Loop - Boolean Checks
-	bool mIsPlaying = false;		       // [Flag] - Check if audio is already playing (Channel Interaction)
-	bool mIsPlay = false;			       // [Flag] - to decide whether to play audio (if true)
-	
 	// For Editor
 	bool		   mIsEmpty = true;	       // [For Editor] - if empty delete all data in this <Audio> component
 	bool		   mIsLoaded = false;	   // [For Loading]
@@ -316,6 +303,11 @@ struct Audio
 	bool		   mPaused    = false;     // [For Unpausing]
 	bool		   mSetUnpause = false;    // [Flag] - for unpausing channels.
 
+	// Volume 
+	float		   mVolume = 1.0f;
+
+	// Audio Type [Channel Management]
+	AUDIOTYPE      mAudioType;			   // SFX or BGM (Mute Channels)
 	float		   mTypeChanged = false;   // [For Editor] - trigger type change
 
 	// Q. Can a <Audio> entity have their very own channel.
