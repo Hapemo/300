@@ -69,7 +69,7 @@ namespace _GEOM
 
 		// Handles the creation of the descriptor files
 		std::string geompath;
-		CheckAndCreateDescriptorFile(actualPath, geompath);
+		CheckAndCreateDescriptorFileMESH(actualPath, geompath);
 
 #pragma endregion
 

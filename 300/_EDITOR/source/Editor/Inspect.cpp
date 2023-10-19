@@ -71,7 +71,7 @@ Inspect display for InputActionMapEditor components.
 #include "Debug/Logger.h"
 #include "Audio/AudioSystem.h"
 #include "Input/InputMapSystem.h"
-
+#include <TextureCompressor.h>
 #include <descriptor.h>
 #include <string>
 
@@ -713,7 +713,7 @@ void MeshRenderer::Inspect()
 				std::string GEOM_Descriptor_Filepath;
 				unsigned guid;
 
-				bool descFilePresent = _GEOM::CheckAndCreateDescriptorFile(data_str, GEOM_Descriptor_Filepath);
+				bool descFilePresent = _GEOM::CheckAndCreateDescriptorFileMESH(data_str, GEOM_Descriptor_Filepath);
 				std::string descfilepath = data_str + ".desc";
 				guid = _GEOM::GetGUID(descfilepath);
 
@@ -768,16 +768,51 @@ void MeshRenderer::Inspect()
 				ImGui::Text(textures[i].c_str());
 				if (ImGui::BeginDragDropTarget())
 				{
-					if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_TEXT")) {
-
+					if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_TEXT")) 
+					{
 						const char* data = (const char*)payload->Data;
 						std::string data_str = std::string(data);
+
 						mMaterialInstancePath[i] = data_str;
 
 						uid temp(mMaterialInstancePath[i]);
 						mTextureRef[i] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(temp.id));
 						mTextureCont[i] = true;
 					}
+
+					// file uncompressed texture for objects
+					if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_TEXT_UNCOMPRESS")) 
+					{
+						const char* data = (const char*)payload->Data;
+						std::string data_str = std::string(data);
+
+						std::string texturestr =systemManager->mResourceTySystem->compressed_texture_path + getFilename(data_str) + ".ctexture";
+						mMaterialInstancePath[i] = texturestr;
+
+						std::string TEXTURE_Descriptor_Filepath;
+						unsigned guid;
+
+						// check and ensures that the descriptor file for the materials are created
+						bool descFilePresent = _GEOM::CheckAndCreateDescriptorFileTEXTURE(data_str, TEXTURE_Descriptor_Filepath);
+						std::string descfilepath = data_str + ".desc";
+						guid = _GEOM::GetGUID(descfilepath);
+
+						// If the descriptor file is not present, then load it
+						if (!descFilePresent)
+						{
+							CompressImageFile(data_str.c_str(), systemManager->mResourceTySystem->compressed_texture_path.c_str());
+
+							// Load the textures into the list of usable textures within the engine
+							systemManager->mResourceTySystem->texture_Load(getFilename(data_str), guid);
+							mTextureRef[i] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(guid));
+							mTextureCont[i] = true;
+						}
+
+						uid temp(mMaterialInstancePath[i]);
+						mTextureRef[i] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(temp.id));
+						mTextureCont[i] = true;
+					}
+
 					ImGui::EndDragDropTarget();
 				}
 				int posstart = static_cast<int>(mMaterialInstancePath[i].find_last_of("/"));

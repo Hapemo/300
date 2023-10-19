@@ -111,6 +111,7 @@ public:
     /**************************************************************************/
     void MaterialInstance_Loader();
     void MaterialEditor_Loader();
+    void texture_Load(std::string texturename, unsigned uid);
     GFX::Texture* SetupMaterialInstance(std::string filepath);
     GFX::Texture* getMaterialInstance(unsigned);
     GFX::Texture* SetupEditorlInstance(std::string filepath);

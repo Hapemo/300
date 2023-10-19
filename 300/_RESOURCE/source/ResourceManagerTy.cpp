@@ -272,6 +272,28 @@ void ResourceTy::MaterialEditor_Loader() {
 
 	}
 }
+
+
+void ResourceTy::texture_Load(std::string texturename, unsigned uid)
+{
+	std::cout << "============================================\n";
+	std::cout << "[NOTE]>> Loading Compressed Texture: \t" << texturename << "\n";
+
+	std::string filepath = compressed_texture_path + texturename + ".ctexture";
+	std::string materialinstancepath = filepath;
+
+	auto texPtr = SetupMaterialInstance(materialinstancepath);
+	++mResouceCnt;
+	instance_infos& tempInstance = AllocRscInfo();
+	tempInstance.m_Name = materialinstancepath;
+	tempInstance.m_GUID = uid;
+	tempInstance.m_pData = reinterpret_cast<void*>(texPtr);
+
+	tempInstance.m_Type = _TEXTURE;
+	m_ResourceInstance.emplace(uid, &tempInstance);
+}
+
+
 /***************************************************************************/
 /*!
 \brief
