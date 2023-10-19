@@ -23,6 +23,7 @@ Contains main loop for the logic of MenuPanel.
 #include "GameState/GameStateManager.h"
 #include "Hierarchy.h"
 #include "KeybindWindow.h"
+#include "ShaderCompiler.h"
 
 /***************************************************************************/
 /*!
@@ -249,6 +250,17 @@ void MenuPanel::update()
                 colors[ImGuiCol_NavWindowingHighlight] = ImVec4(1.00f, 1.00f, 1.00f, 0.70f);
                 colors[ImGuiCol_NavWindowingDimBg] = ImVec4(0.80f, 0.80f, 0.80f, 0.20f);
                 colors[ImGuiCol_ModalWindowDimBg] = ImVec4(0.80f, 0.80f, 0.80f, 0.35f);
+
+            }
+            ImGui::EndMenu();
+        }
+
+        if (ImGui::BeginMenu(ICON_FA_ARROW_TREND_DOWN " Shader"))
+        {
+            if (ImGui::MenuItem(ICON_FA_ID_CARD " Compile Shader"))
+            {
+
+                ShaderCompiler::openWindow = true;
 
             }
             ImGui::EndMenu();
