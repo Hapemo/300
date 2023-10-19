@@ -52,9 +52,6 @@ Inspect display for RigidBody components
 
 - Audio::Inspect
 Inspect display for Audio components
-
-- InputActionMapEditor::Inspect
-Inspect display for InputActionMapEditor components.
 ****************************************************************************
 ***/
 
@@ -150,10 +147,6 @@ void Inspect::update()
 			audio.Inspect();
 		}
 
-		if (ent.HasComponent<InputActionMapEditor>()) {
-			InputActionMapEditor& inputAction = ent.GetComponent<InputActionMapEditor>();
-			inputAction.Inspect();
-		}
 		//--------------------------------------------// must be at the LAST OF THIS LOOP
 		Add_component(); 
 	}
@@ -227,11 +220,6 @@ void Inspect::Add_component() {
 				Entity meshobj(Hierarchy::selectedId);
 
 			}
-		}
-
-		if (ImGui::Selectable("InputActionMapEditor")) {
-			if (!Entity(Hierarchy::selectedId).HasComponent<InputActionMapEditor>())
-				Entity(Hierarchy::selectedId).AddComponent<InputActionMapEditor>();
 		}
 
 		ImGui::EndCombo();
@@ -604,55 +592,72 @@ void MeshRenderer::Inspect()
 		// populating vertex shader vector
 		for (const auto& entry : std::filesystem::directory_iterator(systemManager->mResourceTySystem->shader_path))
 		{
-			if (std::filesystem::is_regular_file(entry))
-			{
-				if(getShaderExtension(entry.path().string()) == "_vert.glsl")
-					vertShaders.push_back(entry.path().string());
+			//if (std::filesystem::is_regular_file(entry))
+			//{
+			//	if(getShaderExtension(entry.path().string()) == "_vert.glsl")
+			//		vertShaders.push_back(entry.path().string());
 
-				else if (getShaderExtension(entry.path().string()) == "_frag.glsl")
-					fragShaders.push_back(entry.path().string());
-			}
+			//	else if (getShaderExtension(entry.path().string()) == "_frag.glsl")
+			//		fragShaders.push_back(entry.path().string());
+			//}
 		}
 
-		{
+		//{
 			// Vert shader selection
-			if (ImGui::BeginCombo("Vertex Shaders", vertShaders[selectedVertShader].data(), 0))
-			{
-				for (int i{}; i < vertShaders.size(); ++i)
-				{
-					bool isItemSelected = (selectedVertShader == i);
-					if(ImGui::Selectable(vertShaders[i].data(), isItemSelected))
-						selectedVertShader = i;
+			//if (ImGui::BeginCombo("Vertex Shaders", vertShaders[selectedVertShader].data(), 0))
+			//{
+			//	for (int i{}; i < vertShaders.size(); ++i)
+			//	{
+			//		bool isItemSelected = (selectedVertShader == i);
+			//		if(ImGui::Selectable(vertShaders[i].data(), isItemSelected))
+			//			selectedVertShader = i;
 
-					if (isItemSelected)
-						ImGui::SetItemDefaultFocus();
+			//		if (isItemSelected)
+			//			ImGui::SetItemDefaultFocus();
+			//	}
+
+			//	ImGui::EndCombo();
+			//}
+
+			//// Frag shader selection
+			//if (ImGui::BeginCombo("Fragment Shaders", fragShaders[selectedFragShader].data(), 0))
+			//{
+			//	for (int i{}; i < fragShaders.size(); ++i)
+			//	{
+			//		bool isItemSelected = (selectedFragShader == i);
+			//		if (ImGui::Selectable(fragShaders[i].data(), isItemSelected))
+			//			selectedFragShader = i;
+
+			//		if (isItemSelected)
+			//			ImGui::SetItemDefaultFocus();
+			//	}
+
+			//	ImGui::EndCombo();
+			//}
+		//}
+
+		//if (ImGui::Button("Compile Shader"))
+		//{
+		//	std::cout << "compile shaders :)\n";
+		//}
+
+		std::string shaderstr{" "};
+
+		if (systemManager->mResourceTySystem->m_Shaders.find(mShaderid) != systemManager->mResourceTySystem->m_Shaders.end())
+			shaderstr = systemManager->mResourceTySystem->m_Shaders[mShaderid].first;
+		
+		if (ImGui::BeginCombo("##Shaders", shaderstr.c_str())) {
+
+			for (auto& data : systemManager->mResourceTySystem->m_Shaders) {
+
+				if (ImGui::Selectable(data.second.first.c_str())) {
+					mShaderid = data.first;
 				}
-
-				ImGui::EndCombo();
 			}
 
-			// Frag shader selection
-			if (ImGui::BeginCombo("Fragment Shaders", fragShaders[selectedFragShader].data(), 0))
-			{
-				for (int i{}; i < fragShaders.size(); ++i)
-				{
-					bool isItemSelected = (selectedFragShader == i);
-					if (ImGui::Selectable(fragShaders[i].data(), isItemSelected))
-						selectedFragShader = i;
+			ImGui::EndCombo();
 
-					if (isItemSelected)
-						ImGui::SetItemDefaultFocus();
-				}
-
-				ImGui::EndCombo();
-			}
 		}
-
-		if (ImGui::Button("Compile Shader"))
-		{
-			std::cout << "compile shaders :)\n";
-		}
-
 		ImGui::Separator();
 
 		// == >> Mesh << == //
@@ -1082,131 +1087,4 @@ void Audio::Inspect() {
 
 	if (delete_component == false)
 		Entity(Hierarchy::selectedId).RemoveComponent<Audio>();
-}
-/***************************************************************************/
-/*!
-\brief
-	Inspector functionality for Input action
-*/
-/***************************************************************************/
-void InputActionMapEditor::Inspect()
-{
-	bool delete_component = true;
-
-	const char* action_maps[] = { "PlayerMovement", "MenuControls" };
-	static std::string newActionMapName;
-
-	//std::string selected_map {};
-
-	if (ImGui::CollapsingHeader("InputActionMapEditor", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
-	{
-		auto ActionMapEntities = systemManager->ecs->GetEntitiesWith<InputActionMapEditor>();
-		//int size = ActionMapEntities.size();
-		InputActionMapEditor& editor_component = ActionMapEntities.get<InputActionMapEditor>(Hierarchy::selectedId);
-
-		// Create New [InputActionMap]
-		ImGui::Text("Create new InputActionMap");
-		ImGui::InputText(".", &newActionMapName);
-		if (ImGui::Button("Add Action Map"))
-		{
-			// Creates a new [ActionMap] - component side.
-			Entity(Hierarchy::selectedId).GetComponent<InputActionMapEditor>().AddActionMap(newActionMapName);
-		}
-
-		// [InputActionMap] selected
-		ImGui::Text("Select Action Map (to edit): ");
-		if (ImGui::BeginCombo("Selected Action Map", mSelectedMapName.c_str()))
-		{
-
-			for (auto& action_pair : editor_component.mActionMap)
-			{
-				if (ImGui::Selectable(action_pair.first.c_str()))
-				{
-					mSelectedMapName = action_pair.first.c_str();
-
-					selected = true;
-				}
-			}
-			ImGui::EndCombo();
-		}
-
-
-		PseudoInputAction& selected_action = GetAction(mSelectedMapName);
-
-
-		auto& e_key_map = systemManager->mInputActionSystem->e_key_mapping;
-
-		if (selected)
-		{
-			if (mSelectedMapName != " ")
-			{
-				if (ImGui::BeginCombo("Movement (UP)", selected_action.mSelectedBindingUP.c_str()))
-				{
-					// Iterate through the [Key Map]
-					for (auto& e_keypair : e_key_map)
-					{
-						std::string key_name = e_keypair.first;
-						if (ImGui::Selectable(key_name.c_str()))
-						{
-							selected_action.mKeyBindUp = (int)(e_key_map[key_name]);
-							selected_action.LinkKeyBinding(KEY_UP, (E_KEY)selected_action.mKeyBindUp);
-							selected_action.mSelectedBindingUP = e_keypair.first;
-						}
-					}
-					ImGui::EndCombo();
-				}
-
-				if (ImGui::BeginCombo("Movement (DOWN)", selected_action.mSelectedBindingDOWN.c_str()))
-				{
-					// Iterate through the [Key Map]
-					for (auto& e_keypair : e_key_map)
-					{
-						std::string key_name = e_keypair.first;
-						if (ImGui::Selectable(key_name.c_str()))
-						{
-							selected_action.mKeyBindDown = (int)(e_key_map[key_name]);
-							selected_action.LinkKeyBinding(KEY_DOWN, (E_KEY)selected_action.mKeyBindDown);
-							selected_action.mSelectedBindingDOWN = e_keypair.first;
-						}
-					}
-
-					ImGui::EndCombo();
-				}
-
-				if (ImGui::BeginCombo("Movement (LEFT)", selected_action.mSelectedBindingLEFT.c_str()))
-				{
-					// Iterate through the [Key Map]
-					for (auto& e_keypair : e_key_map)
-					{
-						std::string key_name = e_keypair.first;
-						if (ImGui::Selectable(key_name.c_str()))
-						{
-							selected_action.mKeyBindLeft = (int)(e_key_map[key_name]);
-							selected_action.LinkKeyBinding(KEY_LEFT, (E_KEY)selected_action.mKeyBindLeft);
-							selected_action.mSelectedBindingLEFT = e_keypair.first;
-						}
-					}
-
-					ImGui::EndCombo();
-				}
-
-				if (ImGui::BeginCombo("Movement (RIGHT)", selected_action.mSelectedBindingRIGHT.c_str()))
-				{
-					// Iterate through the [Key Map]
-					for (auto& e_keypair : e_key_map)
-					{
-						std::string key_name = e_keypair.first;
-						if (ImGui::Selectable(key_name.c_str()))
-						{
-							selected_action.mKeyBindRight = (int)(e_key_map[key_name]);
-							selected_action.LinkKeyBinding(KEY_RIGHT, (E_KEY)selected_action.mKeyBindRight);
-							selected_action.mSelectedBindingRIGHT = e_keypair.first;
-						}
-					}
-
-					ImGui::EndCombo();
-				}
-			}
-		}
-	}
 }

@@ -156,6 +156,7 @@
     <ClInclude Include="include\pch.h" />
     <ClInclude Include="include\Singleton.h" />
     <ClInclude Include="include\SingletonManager.h" />
+    <ClInclude Include="include\SparseSet.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\ConfigManager.cpp" />

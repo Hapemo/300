@@ -18,7 +18,7 @@ void MenuTab::update() {
         systemManager->Play();
     }
     ImGui::SameLine();
-    if (ImGui::Button(ICON_FA_CIRCLE_PAUSE, buttonSize)) {
+    if (ImGui::Button(ICON_FA_CIRCLE_PAUSE, buttonSize)) {  
         systemManager->Pause();
     }
     ImGui::SameLine();

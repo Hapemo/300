@@ -20,7 +20,6 @@ double Input::mScrollOffset{ 0 };
 GLFWcursor* Input::mCursor;
 
 void Input::Init() {
-
   glfwSetScrollCallback(systemManager->GetWindow()->GetHandle(), scroll_callback);
  }
 
@@ -48,7 +47,7 @@ bool Input::CheckKey(E_STATE state, E_KEY key) {
   
     switch (mPrevKeyStates[(int)key - mStartingIndex]) {
     case 0: // Prev not pressed
-      return state == PRESS;
+      return (state == PRESS) || (state == HOLD);
       break;
     case 1: // Prev pressed
       return state == HOLD;
