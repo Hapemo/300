@@ -51,11 +51,11 @@ struct PointLightSSBO
 
 struct MaterialSSBO
 {
-	GLuint64 mDiffuseMap	{ -1 };
-	GLuint64 mNormalMap		{ -1 };
-	GLuint64 mSpecularMap	{ -1 };
-	GLuint64 mShininessMap	{ -1 };
-	GLuint64 mEmissionMap	{ -1 };
+	GLuint64 mDiffuseMap	{};
+	GLuint64 mNormalMap		{};
+	GLuint64 mSpecularMap	{};
+	GLuint64 mShininessMap	{};
+	GLuint64 mEmissionMap	{};
 };
 
 
@@ -241,6 +241,7 @@ public:
 	bool	m_EnableGlobalAnimations{ 1 };
 	bool	m_HasLight{ false };
 	bool    m_EnableScroll{ false };
+	bool    m_EnableBloom{ false };
 
 	// -- Stats --
 	int		m_LightCount{};

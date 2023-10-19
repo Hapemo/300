@@ -304,13 +304,16 @@ void GraphicsSystem::EditorDraw(float dt)
 		GLuint mHasLightFlagLocation = shaderinst.GetUniformLocation("uHasLight");
 		glUniform1i(mHasLightFlagLocation, m_HasLight);
 
-		GLuint threshold = shaderinst.GetUniformLocation("bloomThreshold");
+		if (systemManager->mGraphicsSystem->m_EnableBloom)
+		{
+			GLuint threshold = shaderinst.GetUniformLocation("bloomThreshold");
 
-		if (inst.HasComponent<VFX>()) {
-			glUniform3fv(threshold, 1, glm::value_ptr(inst.GetComponent<VFX>().mBloomThreshold));
-		}
-		else {
-			glUniform3fv(threshold, 1, glm::value_ptr(mAmbientBloomThreshold));
+			if (inst.HasComponent<VFX>()) {
+				glUniform3fv(threshold, 1, glm::value_ptr(inst.GetComponent<VFX>().mBloomThreshold));
+			}
+			else {
+				glUniform3fv(threshold, 1, glm::value_ptr(mAmbientBloomThreshold));
+			}
 		}
 
 		if (m_HasLight)
@@ -357,16 +360,17 @@ void GraphicsSystem::EditorDraw(float dt)
 
 	m_Renderer.RenderAll(m_EditorCamera.viewProj());
 
-#pragma region render bloom
-	m_PingPongFbo.PrepForDraw();
+	if (systemManager->mGraphicsSystem->m_EnableBloom)
+	{
+		m_PingPongFbo.PrepForDraw();
 	
-	// Render the bloom for the Editor Framebuffer
-	uid gaussianshaderstr("GaussianBlurShader");
-	GFX::Shader& gaussianShaderInst = *systemManager->mResourceTySystem->get_Shader(gaussianshaderstr.id);
-	m_PingPongFbo.GaussianBlur(gaussianShaderInst, m_Fbo);
+		// Render the bloom for the Editor Framebuffer
+		uid gaussianshaderstr("GaussianBlurShader");
+		GFX::Shader& gaussianShaderInst = *systemManager->mResourceTySystem->get_Shader(gaussianshaderstr.id);
+		m_PingPongFbo.GaussianBlur(gaussianShaderInst, m_Fbo);
 
-	BlendFramebuffers(m_Fbo, m_Fbo.GetColorAttachment(), m_PingPongFbo.pingpongColorbuffers[0]);
-#pragma endregion
+		BlendFramebuffers(m_Fbo, m_Fbo.GetColorAttachment(), m_PingPongFbo.pingpongColorbuffers[0]);
+	}
 
 
 	// Render UI objects
@@ -424,7 +428,13 @@ void GraphicsSystem::GameDraw(float dt)
 		GFX::Mesh &meshinst = *reinterpret_cast<GFX::Mesh *>(inst.GetComponent<MeshRenderer>().mMeshRef);
 
 		// gets the shader filepath
-		uid shaderstr("PointLightShader");
+		std::string shader{};
+		if (meshinst.mHasAnimation)
+			shader = "AnimationShader";
+		else
+			shader = "PointLightShader";
+
+		uid shaderstr(shader);
 		GFX::Shader &shaderinst = *systemManager->mResourceTySystem->get_Shader(shaderstr.id);
 
 		GFX::Texture *textureInst[4]{};
@@ -482,18 +492,17 @@ void GraphicsSystem::GameDraw(float dt)
 		m_Renderer.ClearInstances();
 	}
 
-#pragma region render bloom
-	m_PingPongFbo.PrepForDraw();
+	if (systemManager->mGraphicsSystem->m_EnableBloom)
+	{
+		m_PingPongFbo.PrepForDraw();
 
-	// Render the bloom for the Editor Framebuffer
-	uid gaussianshaderstr("GaussianBlurShader");
-	GFX::Shader& gaussianShaderInst = *systemManager->mResourceTySystem->get_Shader(gaussianshaderstr.id);
-	m_PingPongFbo.GaussianBlur(gaussianShaderInst, m_GameFbo);
+		// Render the bloom for the Editor Framebuffer
+		uid gaussianshaderstr("GaussianBlurShader");
+		GFX::Shader& gaussianShaderInst = *systemManager->mResourceTySystem->get_Shader(gaussianshaderstr.id);
+		m_PingPongFbo.GaussianBlur(gaussianShaderInst, m_GameFbo);
 
-	BlendFramebuffers(m_GameFbo, m_GameFbo.GetColorAttachment(), m_PingPongFbo.pingpongColorbuffers[0]);
-	//BlendFramebuffers(m_Fbo, m_Fbo.GetColorAttachment(), "Scene", m_Fbo.GetBrightColorsAttachment(), "BloomBlur");
-	//BlendFramebuffers(m_Fbo, m_Fbo.GetColorAttachment(), "Scene", m_Fbo.GetColorAttachment(), "BloomBlur");
-#pragma endregion
+		BlendFramebuffers(m_GameFbo, m_GameFbo.GetColorAttachment(), m_PingPongFbo.pingpongColorbuffers[0]);
+	}
 
 	// Render UI objects
 	m_UiShaderInst.Activate();		// Activate shader
