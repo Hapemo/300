@@ -49,6 +49,15 @@ struct PointLightSSBO
 	float mPad{};
 };
 
+struct MaterialSSBO
+{
+	GLuint64 mDiffuseMap	{ -1 };
+	GLuint64 mNormalMap		{ -1 };
+	GLuint64 mSpecularMap	{ -1 };
+	GLuint64 mShininessMap	{ -1 };
+	GLuint64 mEmissionMap	{ -1 };
+};
+
 
 /***************************************************************************/
 /*!
@@ -127,8 +136,8 @@ public:
 		This function is essential for instanced rendering
 	*/
 	/**************************************************************************/
-	void AddInstance(GFX::Mesh& mesh, Transform transform, const vec4& color, unsigned entityID = 0xFFFFFFFF);		// Adds an instance of a mesh to be drawn
-	void AddInstance(GFX::Mesh& mesh, mat4 transform, const vec4& color, unsigned entityID = 0xFFFFFFFF, int animInstanceID = -1);	// Adds an instance of a mesh to be drawn
+	void AddInstance(GFX::Mesh& mesh, Transform transform, const vec4& color, int meshID, unsigned entityID = 0xFFFFFFFF);		// Adds an instance of a mesh to be drawn
+	void AddInstance(GFX::Mesh& mesh, mat4 transform, const vec4& color, int meshID, unsigned entityID = 0xFFFFFFFF, int animInstanceID = -1);	// Adds an instance of a mesh to be drawn
 
 	// -- FBO --
 	/***************************************************************************/
@@ -238,18 +247,23 @@ public:
 
 private:
 	// -- SSBO -- 
-	GFX::SSBO					m_FinalBoneMatrixSsbo;
-	std::vector<mat4>			finalBoneMatrices;
+	const int						MAX_INSTANCES = 1000;
+	GFX::SSBO						m_FinalBoneMatrixSsbo;
+	std::vector<mat4>				finalBoneMatrices;
 
-	const int					MAX_POINT_LIGHT = 5;
-	GFX::SSBO					m_PointLightSsbo;
-	std::vector<PointLightSSBO> pointLights;
+	const int						MAX_POINT_LIGHT = 5;
+	GFX::SSBO						m_PointLightSsbo;
+	std::vector<PointLightSSBO>		pointLights;
+
+	GFX::SSBO						m_MaterialSsbo;
+	std::vector<MaterialSSBO>		m_Materials;
+	std::map<unsigned, GLuint64>	m_MaterialHandles;
 
 	void SetupShaderStorageBuffers();		// Creates all SSBO required
 
 	// -- 2D Image Rendering --
-	GFX::Mesh m_Image2DMesh;
-	std::vector<unsigned>m_Image2DStore;
+	GFX::Mesh				m_Image2DMesh;
+	std::vector<unsigned>	m_Image2DStore;
 	GFX::Quad2D				mScreenQuad;
 
 	void DrawAll2DInstances(unsigned shaderID);

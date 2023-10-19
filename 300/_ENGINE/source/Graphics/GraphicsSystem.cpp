@@ -114,6 +114,7 @@ void GraphicsSystem::Update(float dt)
 	// Retrieve and update the mesh instances to be drawn
 	auto meshRendererInstances = systemManager->ecs->GetEntitiesWith<MeshRenderer>();
 	int animationID{ 0 };
+	int meshID{ 0 };
 
 	for (Entity inst : meshRendererInstances)
 	{
@@ -175,10 +176,10 @@ void GraphicsSystem::Update(float dt)
 
 		// animations are present
 		if (inst.HasComponent<Animator>()) {
-			AddInstance(meshinst, final, meshRenderer.mInstanceColor, static_cast<unsigned>(inst.id), animationID++);
+			AddInstance(meshinst, final, meshRenderer.mInstanceColor, meshID++, static_cast<unsigned>(inst.id), animationID++);
 		}
 		else {
-			AddInstance(meshinst, final, meshRenderer.mInstanceColor, static_cast<unsigned>(inst.id));
+			AddInstance(meshinst, final, meshRenderer.mInstanceColor, meshID++, static_cast<unsigned>(inst.id));
 		}
 	}
 	m_FinalBoneMatrixSsbo.SubData(finalBoneMatrices.size() * sizeof(mat4), finalBoneMatrices.data());
@@ -519,7 +520,7 @@ void GraphicsSystem::Exit()
 	Adds an instance of a mesh to be drawn, For instancing
 */
 /**************************************************************************/
-void GraphicsSystem::AddInstance(GFX::Mesh &mesh, Transform transform, const vec4& color, unsigned entityID)
+void GraphicsSystem::AddInstance(GFX::Mesh &mesh, Transform transform, const vec4& color, int meshID, unsigned entityID)
 {
 	// Local to world transformation
 	mat4 scale = glm::scale(transform.mScale);
@@ -530,17 +531,17 @@ void GraphicsSystem::AddInstance(GFX::Mesh &mesh, Transform transform, const vec
 
 	mat4 world = translate * rotation * scale;
 	mesh.mLTW.push_back(world);
-	mesh.mTexEntID.push_back(vec4(0, (float)entityID + 0.5f, 0, 0));
+	mesh.mTexEntID.push_back(vec4((float)meshID, (float)entityID + 0.5f, 0, 0));
 	mesh.mColors.push_back(color);
 }
 
-void GraphicsSystem::AddInstance(GFX::Mesh &mesh, mat4 transform, const vec4& color, unsigned entityID, int animInstanceID)
+void GraphicsSystem::AddInstance(GFX::Mesh &mesh, mat4 transform, const vec4& color, int meshID, unsigned entityID, int animInstanceID)
 {
 	mesh.mLTW.push_back(transform);
 	mesh.mColors.push_back(color);
 	if (animInstanceID < 0)
 		animInstanceID = -2;
-	mesh.mTexEntID.push_back(vec4(0, (float)entityID + 0.5f, (float)animInstanceID + 0.5f, 0));
+	mesh.mTexEntID.push_back(vec4((float)meshID, (float)entityID + 0.5f, (float)animInstanceID + 0.5f, 0));
 }
 
 /***************************************************************************/
@@ -900,11 +901,15 @@ void GraphicsSystem::ResizeWindow(ivec2 newSize)
 
 void GraphicsSystem::SetupShaderStorageBuffers()
 {
+	// All materials of each instance -- Location 1
+	m_MaterialSsbo.Create(sizeof(MaterialSSBO) * MAX_INSTANCES, 1);
+
 	// All Point Lights in the Scene -- Location 2
 	m_PointLightSsbo.Create(sizeof(PointLightSSBO) * MAX_POINT_LIGHT, 2);
 
 	// Final Bone Matrix for Animation -- Location 3
 	m_FinalBoneMatrixSsbo.Create(sizeof(mat4) * MAX_NUM_BONES * MAX_INSTANCES, 3);
+
 }
 
 void GraphicsSystem::DrawAll2DInstances(unsigned shaderID)
