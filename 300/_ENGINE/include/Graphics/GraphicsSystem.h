@@ -51,11 +51,11 @@ struct PointLightSSBO
 
 struct MaterialSSBO
 {
-	GLuint64 mDiffuseMap	{};
-	GLuint64 mNormalMap		{};
-	GLuint64 mSpecularMap	{};
-	GLuint64 mShininessMap	{};
-	GLuint64 mEmissionMap	{};
+	alignas(8) GLuint64 mDiffuseMap		{};
+	alignas(8) GLuint64 mNormalMap		{};
+	alignas(8) GLuint64 mSpecularMap	{};
+	alignas(8) GLuint64 mShininessMap	{};
+	alignas(8) GLuint64 mEmissionMap	{};
 };
 
 

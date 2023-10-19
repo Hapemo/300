@@ -111,8 +111,8 @@ struct MeshRenderer
 
 	std::string							mMeshPath;
 	
-	void*								mMeshRef{};
-	void*								mTextureRef[5];
+	void*								mMeshRef{nullptr};
+	void* mTextureRef[5]{ nullptr,nullptr,nullptr,nullptr,nullptr };
 
 	unsigned							mGUID;
 	bool								mTextureCont[5];

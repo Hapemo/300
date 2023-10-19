@@ -192,6 +192,8 @@ void GraphicsSystem::Update(float dt)
 	}
 	m_FinalBoneMatrixSsbo.SubData(finalBoneMatrices.size() * sizeof(mat4), finalBoneMatrices.data());
 	finalBoneMatrices.clear();
+	m_MaterialSsbo.SubData(m_Materials.size() * sizeof(MaterialSSBO), m_Materials.data());
+	m_Materials.clear();
 
 	// Sending Light source data to GPU
 	auto lightEntity = systemManager->ecs->GetEntitiesWith<PointLight>();
@@ -548,7 +550,7 @@ void GraphicsSystem::AddInstance(GFX::Mesh &mesh, Transform transform, const vec
 
 	mat4 world = translate * rotation * scale;
 	mesh.mLTW.push_back(world);
-	mesh.mTexEntID.push_back(vec4((float)meshID, (float)entityID + 0.5f, 0, 0));
+	mesh.mTexEntID.push_back(vec4((float)meshID + 0.5f, (float)entityID + 0.5f, 0, 0));
 	mesh.mColors.push_back(color);
 }
 
@@ -558,7 +560,7 @@ void GraphicsSystem::AddInstance(GFX::Mesh &mesh, mat4 transform, const vec4& co
 	mesh.mColors.push_back(color);
 	if (animInstanceID < 0)
 		animInstanceID = -2;
-	mesh.mTexEntID.push_back(vec4((float)meshID, (float)entityID + 0.5f, (float)animInstanceID + 0.5f, 0));
+	mesh.mTexEntID.push_back(vec4((float)meshID + 0.5f, (float)entityID + 0.5f, (float)animInstanceID + 0.5f, 0));
 }
 
 /***************************************************************************/

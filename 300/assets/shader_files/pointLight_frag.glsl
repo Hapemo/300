@@ -1,5 +1,7 @@
 #version 450
 
+#extension GL_ARB_gpu_shader_int64 : enable
+
 in vec2 TexCoords;
 in mat3 TBN;
 in vec3 TangentViewPos;
@@ -20,11 +22,16 @@ struct PointLight           // 48 Bytes
 
 struct Material
 {
-    int diffuseMap;
-    int normalMap;
-    int specularMap;
-    int shininessMap;
-    int emissionMap;
+    uint64_t diffuseMap;
+    uint64_t normalMap;
+    uint64_t specularMap;
+    uint64_t shininessMap;
+    uint64_t emissionMap;
+};
+
+layout (std430, binding = 1) buffer materialBuffers
+{
+    Material materials[];
 };
 
 layout (std430, binding = 2) buffer pointLightBuffer
@@ -42,32 +49,32 @@ layout (location = 0) out vec4 fragColor0;
 layout (location = 1) out uint outEntityID;
 layout (location = 2) out vec4 BrightColor;
 
-vec3 ComputePointLight(PointLight light, vec4 diffColor)
+vec3 diffuseMap = vec3(0.f);
+vec3 normalMap = vec3(0.f);
+vec3 specularMap = vec3(0.f);
+vec3 shininessMap = vec3(1.f);
+vec3 emissionMap = vec3(0.f);
+
+vec3 ComputePointLight(PointLight light)
 {
+    // Compute light directions and reflection             
     vec3 TangentLightPos = TBN * light.position.xyz;
 
-    vec3 normal = texture(uTex[1], TexCoords).rgb;          // Normal Map
-    normal = normalize(normal * 2.0 - 1.0);
-
-    //vec3 emission = texture(uTex[2], TexCoords).rgb;        // Emission Map
-    //vec3 specular = texture(uTex[3], TexCoords).rgb;        // Specular Map
-    vec3 specular = vec3(0.3);
+    vec3 viewDir = normalize(TangentViewPos - TangentFragPos);
+    vec3 lightDir = normalize(TangentLightPos - TangentFragPos);
+    vec3 reflectDir = reflect(-lightDir, normalMap);
+    vec3 halfwayDir = normalize(lightDir + viewDir);  
 
     // Ambient Color
-    vec3 ambient = 0.1 * diffColor.rgb;
+    vec3 ambient = 0.1 * diffuseMap;
 
     // Diffuse
-    vec3 lightDir = normalize(TangentLightPos - TangentFragPos);
-    float diff = max(dot(lightDir, normal), 0.0);
-    vec3 diffuse = diff * diffColor.rgb * light.color.rgb;
+    float diff = max(dot(lightDir, normalMap), 0.0);
+    vec3 diffuse = diff * diffuseMap * light.color.rgb;
 
     // specular
-    vec3 viewDir = normalize(TangentViewPos - TangentFragPos);
-    vec3 reflectDir = reflect(-lightDir, normal);
-    vec3 halfwayDir = normalize(lightDir + viewDir);  
-    float spec = pow(max(dot(normal, halfwayDir), 0.0), 32.0);
-    vec3 lightIntensity = vec3(light.intensity);
-    specular = spec * specular * light.color.rgb; // Multiply with light color
+    float spec = pow(max(dot(normalMap, halfwayDir), 0.0), shininessMap.r); // pow to shininess
+    vec3 specular = spec * specularMap * light.color.rgb; // Multiply with light color
 
     // Attenuation
     float linear = max(light.linear * 0.001, 0.0);
@@ -80,7 +87,7 @@ vec3 ComputePointLight(PointLight light, vec4 diffColor)
     diffuse *= attenuation;
     specular *= attenuation;
 
-    vec3 finalColor = vec3(ambient + diffuse + specular /* + emission*/);
+    vec3 finalColor = vec3(ambient + diffuse + specular + emissionMap);
     finalColor *= vec3(VertexColor);
 
     return finalColor;
@@ -102,10 +109,25 @@ void main()
 
     else if(uHasLight)
     {
+        int ID = int(Tex_Ent_ID.x);
+
+        if (materials[ID].diffuseMap != 0)
+            diffuseMap      = texture(sampler2D(materials[ID].diffuseMap), TexCoords).rgb;
+        if (materials[ID].normalMap != 0)
+            normalMap       = texture(sampler2D(materials[ID].normalMap), TexCoords).rgb;
+        if (materials[ID].specularMap != 0)
+            specularMap     = texture(sampler2D(materials[ID].specularMap), TexCoords).rgb;
+        if (materials[ID].shininessMap != 0)
+            shininessMap    = texture(sampler2D(materials[ID].shininessMap), TexCoords).rgb;
+        if (materials[ID].emissionMap != 0)
+            emissionMap     = texture(sampler2D(materials[ID].emissionMap), TexCoords).rgb;
+
+        normalMap = normalize(normalMap * 2.0 - 1.0);   // Maps normal
+
         // Compute color with all point light sources
         for (int i = 0; i < uLightCount; ++i)
         {
-            finalColor += ComputePointLight(pointLights[i], uColor);
+            finalColor += ComputePointLight(pointLights[i]);
         }
     }
 
