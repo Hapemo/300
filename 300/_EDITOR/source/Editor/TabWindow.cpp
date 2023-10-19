@@ -72,7 +72,7 @@ void TabWindow::update()
 	ImGui::DragFloat("Global Exposure", &systemManager->mGraphicsSystem->mAmbientBloomExposure, 0.01f, 0.f, 5.f, "%0.2f");
 
 	ImGui::InputInt("Gaussian Blur Amount", (int*)&systemManager->mGraphicsSystem->m_PingPongFbo.mblurAmount);
-	if(systemManager->mGraphicsSystem->m_PingPongFbo.mblurAmount < 0)
+	if(systemManager->mGraphicsSystem->m_PingPongFbo.mblurAmount < 1)
 		systemManager->mGraphicsSystem->m_PingPongFbo.mblurAmount = 1;
 
 	ImGui::Checkbox("Enable Bloom", &systemManager->mGraphicsSystem->m_EnableBloom);

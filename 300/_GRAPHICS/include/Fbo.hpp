@@ -141,7 +141,7 @@ Destructor of the FBO class. Deletes the resources allocated on the GPU
 		void PrepForDraw();
 		void Resize(int width, int height);
 
-		unsigned int pingpongFBO[2];
+		unsigned int pingpongFBO;
 		unsigned int pingpongColorbuffers[2];
 		unsigned int mblurAmount = 10;
 		int mWidth{}, mHeight;
@@ -150,7 +150,7 @@ Destructor of the FBO class. Deletes the resources allocated on the GPU
 
 		~PingPongFBO()
 		{
-			glDeleteFramebuffers(2, pingpongFBO);
+			glDeleteFramebuffers(1, &pingpongFBO);
 			glDeleteTextures(2, pingpongColorbuffers);
 		}
 	};
