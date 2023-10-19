@@ -15,9 +15,10 @@ contains existing data that are arranged contiguously.
 *******************************************************************************/
 
 #pragma once
-#include "pch.h"
+#include <array>
+#include <assert.h>
 
-template<typename T>
+template<typename T, uint32_t size>
 class SparseSet {
 private:
 	using DataType = T; // Container's data
@@ -25,7 +26,6 @@ private:
 	// Data's ID must be convertable to int.
 	
 public:
-	SparseSet() = delete;
 	SparseSet(SparseSet const&) = delete;
 
 	/*!*****************************************************************************
@@ -35,7 +35,7 @@ public:
 	\param int
 	- Size of SparseSet
 	*******************************************************************************/
-	SparseSet(int);
+	SparseSet();
 
 	/*!*****************************************************************************
 	\brief
@@ -92,36 +92,33 @@ public:
 	DataType* DenseEnd() { return mDense.begin() + mCapacity; }
 
 private:
-	std::vector<int> mShallow; // Interface container
-	std::vector<DataType> mDense; // Storage container
+	std::array<int, size> mShallow; // Interface container
+	std::array<DataType, size> mDense; // Storage container
 	int mCapacity;
-	const int mSize;
 	const int emptyID;
 };
 
-template<typename T>
-SparseSet<T>::SparseSet(int _size) : mSize(_size), emptyID(INT_MAX), mCapacity(0) {
-	mShallow.resize(mSize);
-	mDense.resize(mSize);
+template<typename T, uint32_t size>
+SparseSet<T, size>::SparseSet() : emptyID(INT_MAX), mCapacity(0) {
 	std::fill(mShallow.begin(), mShallow.end(), emptyID);
 }
 
-template<typename T>
-T& SparseSet<T>::operator[](IndexType const& _index) {
+template<typename T, uint32_t size>
+T& SparseSet<T, size>::operator[](IndexType const& _index) {
 	int deepID{ mShallow[static_cast<int>(_index)] };
 	//BREAKPOINT(deepID == emptyID); // If ECS breaks here, means the ecs is breaking here.
 	assert(deepID == emptyID && std::string("SparseSet cannot find ID: " + std::to_string(deepID)).c_str());
 	return mDense[deepID];
 }
 
-template<typename T>
-void SparseSet<T>::RemoveData(IndexType const& _index) {
+template<typename T, uint32_t size>
+void SparseSet<T, size>::RemoveData(IndexType const& _index) {
 	int& deepID{ mShallow[static_cast<int>(_index)] };
 	assert(deepID == emptyID && std::string("SparseSet cannot find ID: " + std::to_string(deepID)).c_str());
 
 	--mCapacity;
 	mDense[deepID] = mDense[mCapacity];
-	for (int i = 0; i < mSize; ++i) {
+	for (int i = 0; i < size; ++i) {
 		if (mShallow[i] == mCapacity) {
 			mShallow[i] = deepID;
 			break;
@@ -130,27 +127,27 @@ void SparseSet<T>::RemoveData(IndexType const& _index) {
 	deepID = emptyID;
 }
 
-template<typename T>
-void SparseSet<T>::AddData(DataType const& _data, IndexType const& _index) {
+template<typename T, uint32_t size>
+void SparseSet<T, size>::AddData(DataType const& _data, IndexType const& _index) {
 	int& deepID{ mShallow[static_cast<int>(_index)] };
 	//std::string errorMessage{ "ID: " + std::to_string(deepID) + " is already added, you can try operator[] to adjust the data instead" };
 	//ASSERT(deepID == emptyID, errorMessage);
 	if (deepID != emptyID) {
-		std::cout << "Error in AddData\n";
+		std::cout << "Error in SparseSet AddData\n";
 	}
 	deepID = mCapacity;
 	mDense[mCapacity] = _data;
 	++mCapacity;
 }
 
-template<typename T>
-bool SparseSet<T>::CheckData(IndexType const& _index) {
+template<typename T, uint32_t size>
+bool SparseSet<T, size>::CheckData(IndexType const& _index) {
 	return mShallow[static_cast<int>(_index)] != emptyID;
 }
 
-template<typename T>
-void SparseSet<T>::PrintSet() {
-	std::cout << "Size: " << mSize << "\nCapacity: " << mCapacity;
+template<typename T, uint32_t size>
+void SparseSet<T, size>::PrintSet() {
+	std::cout << "Size: " << size << "\nCapacity: " << mCapacity;
 	std::cout << "\nShallow:\n";
 	int shallowCount{};
 	for (int const& pairingID : mShallow) {

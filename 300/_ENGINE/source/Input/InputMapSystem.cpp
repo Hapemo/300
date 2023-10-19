@@ -15,6 +15,7 @@ the editor to physical keys.
 #include "ConfigManager.h"
 #include "Misc.h"
 #include "Debug/Logger.h"
+#include "SparseSet.h"
 
 const std::array<std::pair<std::string, E_KEY>, 129> InputMapSystem::mE_KEYMap{ EKeyMappingInit() };
 
@@ -27,6 +28,8 @@ void InputMapSystem::Init() {
 		PASSERTMSG(false, std::string("File " + ConfigManager::GetValue("KeybindPath") + " not found.\n").c_str());
 		return;
 	}
+
+	SparseSet<int, 100> sparseSet{};
 
 	auto tempMap = Misc::TextFileToMap(file);
 	for (auto [action, ekey] : tempMap) {
