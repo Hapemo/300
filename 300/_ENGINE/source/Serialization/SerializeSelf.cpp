@@ -74,9 +74,9 @@ void MeshRenderer::DeserializeSelf(rapidjson::Value& reader)
 {
 	Deserialize(reader, "vert", mShaderPath.first);
 	Deserialize(reader, "frag", mShaderPath.second);
-	//Deserialize(reader, "materialinstance", mMaterialInstancePath, 4);
+	Deserialize(reader, "materialinstance", mMaterialInstancePath, 4);
 	Deserialize(reader, "mesh", mMeshPath);
-	//Deserialize(reader, "texturecont", mTextureCont, 4);
+	Deserialize(reader, "texturecont", mTextureCont, 4);
 	Deserialize(reader, "guid", mGUID);
 }
 
@@ -135,7 +135,7 @@ void Scripts::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& wr
 
 void Scripts::DeserializeSelf(rapidjson::Value& reader)
 {
-	//Deserialize(reader, "scriptscontainer", scriptsContainer);
+	Deserialize(reader, "scriptscontainer", scriptsContainer);
 }
 
 void Parent::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const

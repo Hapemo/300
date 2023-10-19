@@ -215,6 +215,16 @@ DESERIALIZE_BASIC(AUDIOTYPE)
 	}
 }
 
+DESERIALIZE_BASIC(entt::entity)
+{
+	if (reader.HasMember(name))
+	{
+		int num;
+		Deserialize(reader, name, num);
+		val = static_cast<entt::entity>(num);
+	}
+}
+
 void WriteToFile(const std::string& filename, const rapidjson::StringBuffer& buffer)
 {
 	std::ofstream of{ filename };

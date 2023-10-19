@@ -26,6 +26,7 @@ and saving of prefabs, scenes and gamestates using serialization.
 
 void ObjectFactory::LoadEntity(Entity e, rapidjson::Value& reader)
 {
+	Deserialize(reader, "entityid", e.id);
 	DESERIALIZE_SELF(General, "general");
 	DESERIALIZE_SELF(Transform, "transform");
 	DESERIALIZE_SELF(RigidBody, "rigidbody");
@@ -55,18 +56,44 @@ void ObjectFactory::LoadScene(Scene* scene, const std::string& filename)
 		Entity e = systemManager->ecs->NewEntity();
 		LoadEntity(e, *ci);
 		scene->mEntities.insert(e);
+
+		std::cout << (int)e.id << std::endl;
 	}
 }
 
 void ObjectFactory::LoadGameState(GameState* gs, const std::string& _name)
 {
-	
+	gs->mName = _name;
+
+	// the doc is my rapidjson::Value& reader
+	rapidjson::Document doc;
+	ReadFromFile(ConfigManager::GetValue("GameStatePath") + _name + ".gs", doc);
+
+	Scene scn;
+	// because an array of objects is contained inside of doc
+
+	if (doc.IsArray()) std::cout << "I am array!\n";
+	else std::cout << "I am not array!\n";
+
+	for (rapidjson::Value::ValueIterator ci = doc.Begin(); ci != doc.End(); ++ci)
+	{
+		Deserialize(*ci, "scene_name", scn.mName);
+		Deserialize(*ci, "pause", scn.mIsPause);
+		Deserialize(*ci, "force_render", scn.mForceRender);
+
+		gs->mScenes.push_back(scn);
+	}
 }
 
-Entity ObjectFactory::DeserializePrefab(const std::string& filename, int id)
+Entity ObjectFactory::DeserializePrefab(const std::string& filename)
 {
-	return Entity(0);
-	
+	//return Entity(0);
+	rapidjson::Document doc;
+	ReadFromFile(filename, doc);
+
+	Entity e = systemManager->ecs->NewEntity();
+	LoadEntity(e, doc);
+	return e;
 }
 
 void ObjectFactory::SaveEntity(Entity e, rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer)

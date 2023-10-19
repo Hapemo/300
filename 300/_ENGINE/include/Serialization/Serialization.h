@@ -6,6 +6,7 @@
 #include "ECS/Tags.h"
 #include "Physics/PhysicsTypes.h"
 #include "Audio/AudioType.h"
+#include <entt.hpp>
 
 // forward declaration
 struct Scene;
@@ -44,6 +45,8 @@ template <typename T>
 void Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer, const char* name, const std::vector<T>& vec);
 template <typename T1, typename T2>
 void Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer, const char* name, const std::map<T1, T2>& map);
+template <typename ...T>
+void Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer, const char* name, const std::variant<T...>& var);
 #pragma endregion containers
 
 #pragma region file_operations
@@ -111,6 +114,21 @@ void Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer, const c
 
 	writer.EndArray();
 }
+
+template <typename ...T>
+void Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer, const char* name, const std::variant<T...>& var)
+{
+	if (name != 0)
+		writer.Key(name);
+
+	writer.StartObject();
+	std::visit([&](auto&& val)
+		{
+			Serialize(writer, "type", (int)(typeid(val).hash_code()));
+	Serialize(writer, "value", val);
+		}, var);
+	writer.EndObject();
+}
 #pragma endregion implementation
 #pragma endregion serialization
 
@@ -134,20 +152,25 @@ DESERIALIZE_BASIC(SUBTAG);
 DESERIALIZE_BASIC(MATERIAL);
 DESERIALIZE_BASIC(MOTION);
 DESERIALIZE_BASIC(AUDIOTYPE);
+DESERIALIZE_BASIC(entt::entity);
 #pragma endregion basic_types
 // Derived types has to inherit from Serializable
 #pragma region derived_types
 template <typename T>
-void Deserialize(rapidjson::Value& reader, const char* name, const T& val);
+void Deserialize(rapidjson::Value& reader, const char* name, T& val);
 #pragma endregion derived_types
 
 #pragma region containers
 template <typename T>
-void Deserialize(rapidjson::Value& reader, const char* name, const T* arr, size_t size);
+void Deserialize(rapidjson::Value& reader, const char* name, T* arr, size_t size);
 template <typename T>
-void Deserialize(rapidjson::Value& reader, const char* name, const std::vector<T>& vec);
+void Deserialize(rapidjson::Value& reader, const char* name, std::vector<T>& vec);
 template <typename T1, typename T2>
-void Deserialize(rapidjson::Value& reader, const char* name, const std::map<T1, T2>& map);
+void Deserialize(rapidjson::Value& reader, const char* name, std::map<T1, T2>& map);
+template <typename ...T>
+void Deserialize(rapidjson::Value& reader, const char* name, std::variant<T...>& var);
+template <typename variant, typename T, typename ...Ts>
+void GetVariantValue(rapidjson::Value& reader, int type, variant& _variant);
 #pragma endregion containers
 
 #pragma region file_operations
@@ -158,7 +181,7 @@ bool InitDocument(const std::string& s, rapidjson::Document& doc);
 #pragma region implementation
 // Derived types
 template <typename T>
-void Deserialize(rapidjson::Value& reader, const char* name, const T& val)
+void Deserialize(rapidjson::Value& reader, const char* name, T& val)
 {
 	if (!reader.HasMember(name)) return;
 	if (std::derived_from<T, Serializable>) return;
@@ -168,7 +191,7 @@ void Deserialize(rapidjson::Value& reader, const char* name, const T& val)
 
 // Containers
 template <typename T>
-void Deserialize(rapidjson::Value& reader, const char* name, const T* arr, size_t size)
+void Deserialize(rapidjson::Value& reader, const char* name, T* arr, size_t size)
 {
 	if (!reader.HasMember(name)) return;
 
@@ -177,7 +200,7 @@ void Deserialize(rapidjson::Value& reader, const char* name, const T* arr, size_
 }
 
 template <typename T>
-void Deserialize(rapidjson::Value& reader, const char* name, const std::vector<T>& vec)
+void Deserialize(rapidjson::Value& reader, const char* name, std::vector<T>& vec)
 {
 	if (!reader.HasMember(name)) return;
 
@@ -195,7 +218,7 @@ void Deserialize(rapidjson::Value& reader, const char* name, const std::vector<T
 }
 
 template <typename T1, typename T2>
-void Deserialize(rapidjson::Value& reader, const char* name, const std::map<T1, T2>& map)
+void Deserialize(rapidjson::Value& reader, const char* name, std::map<T1, T2>& map)
 {
 	if (!reader.HasMember(name)) return;
 
@@ -211,6 +234,30 @@ void Deserialize(rapidjson::Value& reader, const char* name, const std::map<T1, 
 			map.insert(std::make_pair(key, value));
 		}
 	}
+}
+
+template <typename ...T>
+void Deserialize(rapidjson::Value& reader, const char* name, std::variant<T...>& var)
+{
+	if (reader.HasMember(name))
+	{
+		int type;
+		Deserialize(reader[name], "type", type);
+		GetVariantValue<std::variant<T...>, T...>(reader[name]["value"], type, var);
+	}
+}
+
+template <typename variant, typename T, typename ...Ts>
+void GetVariantValue(rapidjson::Value& reader, int type, variant& _variant)
+{
+	if (type == (int)(typeid(T).hash_code()))
+	{
+		T value;
+		Deserialize(reader, nullptr, value);
+		_variant = value;
+	}
+	else if constexpr (sizeof...(Ts) > 0)
+		GetVariantValue<variant, Ts...>(reader, type, _variant);
 }
 #pragma endregion implementation
 #pragma endregion deserialization

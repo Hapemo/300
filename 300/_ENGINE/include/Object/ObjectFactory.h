@@ -77,7 +77,7 @@ Returns the prefab entity
 
 */
 /**************************************************************************/
-	static Entity DeserializePrefab(const std::string& filename, int id);
+	static Entity DeserializePrefab(const std::string& filename);
 
 /***************************************************************************/
 /*
