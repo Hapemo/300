@@ -125,7 +125,7 @@ void Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer, const c
 	std::visit([&](auto&& val)
 		{
 			Serialize(writer, "type", (int)(typeid(val).hash_code()));
-	Serialize(writer, "value", val);
+			Serialize(writer, "value", val);
 		}, var);
 	writer.EndObject();
 }

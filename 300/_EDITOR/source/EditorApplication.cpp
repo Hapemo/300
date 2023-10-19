@@ -68,37 +68,6 @@ void EditorApplication::SystemInit()
 
 void EditorApplication::MainUpdate()
 {
-    Entity e1 = systemManager->ecs->NewEntity();
-    Entity e2 = systemManager->ecs->NewEntity();
-
-    e1.GetComponent<General>().name = "rubber";
-    e1.GetComponent<General>().tagid = 1;
-    e1.GetComponent<General>().subtag = SUBTAG::ACTIVE;
-    e1.GetComponent<General>().isActive = false;
-    e1.GetComponent<General>().isPaused = true;
-    e2.GetComponent<General>().name = "ducky";
-    e2.GetComponent<General>().tagid = 3;
-    e2.GetComponent<General>().subtag = SUBTAG::BACKGROUND;
-    e2.GetComponent<General>().isActive = true;
-    e2.GetComponent<General>().isPaused = false;
-
-    e1.AddComponent<RigidBody>();
-    e1.AddComponent<PlaneCollider>();
-    e1.AddComponent<BoxCollider>();
-    e1.AddComponent<SphereCollider>();
-    e1.AddComponent<MeshRenderer>();
-    e1.AddComponent<Scripts>();
-    e2.AddComponent<PlaneCollider>();
-    e2.AddComponent<RigidBody>();
-    Scene scn;
-    scn.AddEntity(e1);
-    scn.AddEntity(e2);
-    scn.mName = "testSerialization";
-    ObjectFactory::SaveScene(&scn);
-
-    Scene test;
-    ObjectFactory::LoadScene(&test, "testSerialization");
-
     while (!glfwWindowShouldClose(mWindow.GetHandle()))
     {
         EnginePerformance::StartTrack("Editor");

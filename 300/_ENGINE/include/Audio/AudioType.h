@@ -15,7 +15,3 @@ enum AUDIOTYPE :unsigned char
 	AUDIO_NULL, // For Empty Instantiation
 	UNDEFINED // for serialization helper functions
 };
-
-// please update here
-static std::unordered_map<std::string, AUDIOTYPE> AudioMap = { {"BGM", AUDIOTYPE::AUDIO_BGM},
-															   {"SFX", AUDIOTYPE::AUDIO_SFX} };
