@@ -363,5 +363,18 @@ struct PointLight
 	void SetColor(const vec3& color);
 };
 
+/******************************************************************************/
+/*!
+	[Component] - AIData
+ */
+/******************************************************************************/
+enum class E_MOVEMENT_TYPE : char;
+enum class E_ATTACK_TYPE : char;
+struct AISetting {
+	E_MOVEMENT_TYPE mMovementType;	// AI's movement type
+	E_ATTACK_TYPE mAttackType;			// AI's attack type
+	float mSpreadOut;								// Degree of spreading out
+	Entity mTarget;									// AI's target
+};
 
 
