@@ -26,6 +26,8 @@ This file contains the base AudioSystem class that supports the following functi
 #include "GameState/Scene.h"
 
 
+//static float fade_timer = 0.0f;
+
 enum AUDIOTYPE : unsigned char;
 
 // [9/25] Decided that we need this if we want to track if the audio is still playing in a particular channel

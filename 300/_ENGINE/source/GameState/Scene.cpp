@@ -81,25 +81,35 @@ void Scene::Load(std::string const& _name) {
 	}
 	// [10/14] Testing [Audio] Script stuff
 	Entity testaudio = systemManager->ecs->NewEntity();
-	testaudio.AddComponent<General>().name = "Audio";
+	Entity testaudio2 = systemManager->ecs->NewEntity();
+	testaudio.AddComponent<General>().name = "Farm";
 	testaudio.AddComponent<Audio>();
-	Audio& audio = testaudio.GetComponent<Audio>();
+
+	testaudio2.AddComponent<General>().name = "Radio";
+	testaudio2.AddComponent<Audio>();
 
 	if (!once)
 	{
-		Audio& audio = testaudio.GetComponent<Audio>();
-		audio.mFullPath = "../assets\\Audio\\farm_ambience.wav";
-		audio.mFilePath = "../assets\\Audio";
-		audio.mFileName = "farm_ambience.wav";
-		audio.mIsEmpty = false;
-		audio.mAudioType = AUDIO_SFX;
+		Audio& audio1 = testaudio.GetComponent<Audio>();
+		audio1.mFullPath = "../assets\\Audio\\farm_ambience.wav";
+		audio1.mFilePath = "../assets\\Audio";
+		audio1.mFileName = "farm_ambience.wav";
+		audio1.mIsEmpty = false;
+		audio1.mAudioType = AUDIO_SFX;
 		//testaudio.GetComponent<Audio>().mFileName = "farm_ambience";
 		
+		Audio& audio2 = testaudio2.GetComponent<Audio>();
+		audio2.mFullPath = "../assets\\Audio\\tuning-radio-7150.wav";
+		audio2.mFilePath = "../assets\\Audio";
+		audio2.mFileName = "tuning-radio-7150.wav";
+		audio2.mIsEmpty = false;
+		audio2.mAudioType = AUDIO_SFX;
 
 		once = true;
 	}
 
 	mEntities.insert(testaudio);
+	mEntities.insert(testaudio2);
 }
 
 void Scene::Save() {

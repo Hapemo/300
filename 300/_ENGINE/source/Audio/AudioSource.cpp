@@ -16,6 +16,43 @@ bool LoadAudioFromDirectory(std::filesystem::path file_path)
 	return load_status;
 }
 
+bool CrossFadeAudio(AudioSource& fade_out, AudioSource& fade_in, float fade_duration)
+{
+	if (fade_out.mAudioComponent != nullptr && fade_in.mAudioComponent != nullptr)
+	{
+		float fade_timer = 0.0f;
+
+		while (fade_timer < fade_duration)
+		{
+			float fadeLevelOut = 1.0f - (fade_timer / fade_duration);
+			float fadeLevelIn = fade_timer / fade_duration;
+
+			// Set Volume 
+			if (fade_out.mAudioComponent->mIsPlaying) // Check if it's playing.
+			{
+				fade_out.mAudioComponent->mChannel->setVolume(fadeLevelOut);
+				
+				if (!fade_in.mAudioComponent->mIsPlaying)
+				{
+					fade_in.mAudioComponent->mIsPlay = true;
+					fade_in.mAudioComponent->mChannel->setVolume(fadeLevelIn);
+				}
+
+				else
+				{
+					return false; // cannot be done (because audio not plaiyng at all)
+				}
+			}
+
+			else
+			{
+				return false; // cannot be done (because audio not plaiyng at all)
+			}
+			
+		}
+	}
+}
+
 
 AudioSource::AudioSource() : mAudioComponent(nullptr) {}
 

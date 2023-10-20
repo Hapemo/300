@@ -304,8 +304,10 @@ struct Audio
 	// Do not serialize 
 	// ------------------------------------------
 	// Update Loop - Boolean Checks
-	bool mIsPlaying = false;		       // [Flag] - Check if audio is already playing (Channel Interaction)
-	bool mIsPlay = false;			       // [Flag] - to decide whether to play audio (if true)
+	bool		   mIsPlaying = false;		       // [Flag] - Check if audio is already playing (Channel Interaction)
+	bool           mIsPlay = false;			       // [Flag] - to decide whether to play audio (if true)
+	bool		   mFadeIn = false;				   // [Flag] - This audio will be faded out. 
+	bool		   mFadeOut = false;			   // [Flag] - This audio will be faded in.
 	
 	// For Editor
 	bool		   mIsEmpty = true;	       // [For Editor] - if empty delete all data in this <Audio> component
@@ -323,6 +325,9 @@ struct Audio
 	FMOD::Channel* mChannel;         	   // Use this to facilitate manipulation of audio.
 	FMOD::Sound*   mSound;				   // Each <Audio> can only hold a reference to the "Audio File" it's attached to.
 
+	// Fade Volume Stuff
+	float fade_timer    = 0.0f;			   // How long the fade has elapsed
+	float fade_duration = 5.0f;			   // How long to fade...
 
 	Audio() : mFilePath(""), mFileName(""), mAudioType(AUDIO_SFX), mIsEmpty(true)
 	{

@@ -1073,12 +1073,15 @@ void Audio::Inspect() {
 		PINFO("Successfully Removed Audio.");
 	}
 
+	static float f1 = 0.123f;
 	if (!mIsEmpty)
 	{
 		//ImGui::Checkbox("Play This (start the scene first)", &mIsPlay);
 		//ImGui::Checkbox("IsPlaying", &mIsPlaying);
 		ImGui::Checkbox("Play on Awake", &mPlayonAwake);
 		ImGui::Checkbox("Is Looping", &mIsLooping);
+		ImGui::SliderFloat("Volume", &f1, 0.0f, 1.0f, "ratio = %.3f");
+	
 	}
 
 	// AudioType Selector 

@@ -127,12 +127,17 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 		TestLoadAudioDirectory();
 	if (Input::CheckKey(PRESS, E))
 		TestOverrideAttachSound();
-	if (Input::CheckKey(PRESS, R))   // Press 'E' first.
+	if (Input::CheckKey(PRESS, R))   // Press 'E' first. (to play)
 		TestPauseSound();
 	if (Input::CheckKey(PRESS, T))   // Press 'E' then 'R' then this
 		TestUnpauseSound();
-	if (Input::CheckKey(PRESS, Y))   // Press 'E'
+	if (Input::CheckKey(PRESS, Y))   // Press 'E' first. (to play)
 		TestMuteSound();
+	if (Input::CheckKey(PRESS, U))   // Press 'E' first. (to play)
+		TestSetVolume();
+
+	if (Input::CheckKey(PRESS, A))
+		TestCrossFade();
 
 
 	// [10/18] Global Channel Test
@@ -222,6 +227,45 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 				audio_component.mIsPlay = true; // make it true again. 
 			}
 		
+		}
+
+		// Fade In / Fade Out 
+		if (audio_component.mFadeOut)
+		{
+			while (audio_component.fade_timer < audio_component.fade_duration)
+			{
+				float fadeLevelOut = 1.0f - (audio_component.fade_timer / audio_component.fade_duration); //  fade level out
+
+				// Set Volume 
+				if (audio_component.mIsPlaying)
+				{
+					audio_component.mChannel->setVolume(fadeLevelOut);
+					audio_component.mVolume = fadeLevelOut; //  fade level out
+					audio_component.fade_timer += dt;
+				}
+
+			}
+		}
+
+		if (audio_component.mFadeIn)
+		{
+			while (audio_component.fade_timer < audio_component.fade_duration)
+			{
+				float fadeLevelIn = audio_component.fade_timer / audio_component.fade_duration;
+
+				audio_component.mChannel->setVolume(fadeLevelIn);
+
+				// (1) Play Sound + Adjust Audio
+				if (!audio_component.mIsPlaying)
+				{
+					PINFO("Playing Fade In");
+					PlayAudioSource(audio_component);
+					audio_component.mIsPlaying = true;
+				}
+
+				
+
+			}
 		}
 
 	}
