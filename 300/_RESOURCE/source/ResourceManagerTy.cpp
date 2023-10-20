@@ -133,8 +133,8 @@ void ResourceTy::mesh_LoadFolder()
 			unsigned guid = _GEOM::GetGUID(descfilepath);
 
 			GFX::Mesh* meshPtr = SetupMesh(filepath, guid);
-			meshPtr->mDescriptorPath = descfilepath;
-			_GEOM::DescriptorData::DeserializeGEOM_DescriptorDataFromFile(meshPtr->mDescriptorData, descfilepath);
+			meshPtr->mMeshDescriptorPath = descfilepath;
+			_GEOM::DescriptorData::DeserializeGEOM_DescriptorDataFromFile(meshPtr->mMeshDescriptorData, descfilepath);
 
 			instance_infos& meshInstance = AllocRscInfo();
 			meshInstance.m_pData = reinterpret_cast<void*>(meshPtr);
@@ -362,23 +362,17 @@ GFX::Texture* ResourceTy::getMaterialInstance(unsigned id) {
 */
 /**************************************************************************/
 void ResourceTy::shader_Loader() {
-	std::map<std::string,std::pair<std::string, std::string>> shaderpaths;
-	shaderpaths.emplace("DefaultShader",std::pair<std::string, std::string>{ "../assets/shader_files/draw_vert.glsl", "../assets/shader_files/draw_frag.glsl" });
-	shaderpaths.emplace("PointLightShader", std::pair<std::string, std::string>{ "../assets/shader_files/pointLight_vert.glsl", "../assets/shader_files/pointLight_frag.glsl" });
-	shaderpaths.emplace("AnimationShader", std::pair<std::string, std::string>{ "../assets/shader_files/animations_vert.glsl", "../assets/shader_files/pointLight_frag.glsl" });
-	shaderpaths.emplace("UIShader", std::pair<std::string, std::string>{ "../assets/shader_files/UI_vert.glsl", "../assets/shader_files/UI_frag.glsl" });
-	shaderpaths.emplace("GaussianBlurShader", std::pair<std::string, std::string>{ "../assets/shader_files/Quad2D_vert.glsl", "../assets/shader_files/GaussianBlur_frag.glsl" });
-	shaderpaths.emplace("AdditiveBlendShader", std::pair<std::string, std::string>{ "../assets/shader_files/Quad2D_vert.glsl", "../assets/shader_files/AdditiveBlending_frag.glsl" });
-
-	//shaderpaths.emplace("GaussianBlurShader", std::pair<std::string, std::string>{ "../assets/shader_files/pointLight_vert.glsl", "../assets/shader_files/GaussianBlur_frag.glsl" });
+	//std::map<std::string,std::pair<std::string, std::string>> shaderpaths;
+	//shaderpaths.emplace("DefaultShader",std::pair<std::string, std::string>{ "../assets/shader_files/draw_vert.glsl", "../assets/shader_files/draw_frag.glsl" });
+	//shaderpaths.emplace("PointLightShader", std::pair<std::string, std::string>{ "../assets/shader_files/pointLight_vert.glsl", "../assets/shader_files/pointLight_frag.glsl" });
+	//shaderpaths.emplace("AnimationShader", std::pair<std::string, std::string>{ "../assets/shader_files/animations_vert.glsl", "../assets/shader_files/pointLight_frag.glsl" });
+	//shaderpaths.emplace("UIShader", std::pair<std::string, std::string>{ "../assets/shader_files/UI_vert.glsl", "../assets/shader_files/UI_frag.glsl" });
+	//shaderpaths.emplace("GaussianBlurShader", std::pair<std::string, std::string>{ "../assets/shader_files/Quad2D_vert.glsl", "../assets/shader_files/GaussianBlur_frag.glsl" });
+	//shaderpaths.emplace("AdditiveBlendShader", std::pair<std::string, std::string>{ "../assets/shader_files/Quad2D_vert.glsl", "../assets/shader_files/AdditiveBlending_frag.glsl" });
 
 	// load all the shaders
 	for (const auto& entry : std::filesystem::directory_iterator(shader_program_path))
 	{
-	//	std::string vertPath = x.second.first;
-	//	std::string fragPath = x.second.second;
-	//	std::string combinedPath = vertPath + fragPath;
-
 	//	serialize_Shader(x.first, x.second);
 		//std::string shaderDe = "../assets/ShaderProgram/" + x.first;
 		std::pair<std::string, std::pair<std::string, std::string>> shaderData;
