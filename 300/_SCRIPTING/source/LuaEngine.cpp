@@ -212,17 +212,17 @@ void LuaAudio()
     systemManager->mScriptingSystem->luaState.new_usertype<AudioSystem>(
         "mAudioSystem", sol::constructors<>(),
         "PlayAudio", &AudioSystem::PlayAudio,
-        "PlaySFXAudio", &AudioSystem::PlaySFXAudio,
-        "PlayBGMAudio", &AudioSystem::PlayBGMAudio,
-        "SetSpecificChannelVolume", &AudioSystem::SetSpecificChannelVolume,
+    /*    "PlaySFXAudio", &AudioSystem::PlaySFXAudio,
+        "PlayBGMAudio", &AudioSystem::PlayBGMAudio,*/
+       //"SetSpecificChannelVolume", &AudioSystem::SetSpecificChannelVolume,
         "SetAllSFXVolume", &AudioSystem::SetAllSFXVolume,
         "SetAllBGMVolume", &AudioSystem::SetAllBGMVolume,
         "MuteSFX", &AudioSystem::MuteSFX,
-        "MuteBGM", &AudioSystem::MuteBGM,
-        "TogglePauseAllSounds", &AudioSystem::TogglePauseAllSounds,
+        "MuteBGM", &AudioSystem::MuteBGM
+     /*   "TogglePauseAllSounds", &AudioSystem::TogglePauseAllSounds,
         "TogglePauseSFXSounds", &AudioSystem::TogglePauseSFXSounds,
         "TogglePauseBGMSounds", &AudioSystem::TogglePauseBGMSounds,
-        "TogglePauseSpecific", &AudioSystem::TogglePauseSpecific
+        "TogglePauseSpecific", &AudioSystem::TogglePauseSpecific*/
     );
 }
 

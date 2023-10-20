@@ -1,4 +1,5 @@
 #include "ECS/ECS_Components.h"
+
 /*!*************************************************************************
 ****
 \file Inspect.cpp
@@ -1063,11 +1064,11 @@ void PlaneCollider::Inspect() {
 void Audio::Inspect() {
 	bool delete_component = true;
 	auto audioEntities = systemManager->ecs->GetEntitiesWith<Audio>();
-	std::string full_file_path;  // With the Audio File Name
-	std::string file_path;		 // Only Audio Directory
-	std::string audio_name;
+	std::string full_file_path;  // With the Audio File Name  e.g "../assets\\Audio\\farm_ambience.wav"
+	std::string file_path;		 // Only Audio Directory	  e.g "../assets\\Audio"
+	std::string audio_name;      // Audio Name only.		  e.g "farm_ambience.wav"
 
-	const char* audio_type[] = { "BGM" , "SFX" };
+	const char* audio_type[] = { "SFX" , "BGM" };
 
 	// Audio Component (Bar)
 	if (ImGui::CollapsingHeader("Audio", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
@@ -1094,10 +1095,32 @@ void Audio::Inspect() {
 					//std::cout << audio_name << std::endl;
 				}
 
-				Entity(Hierarchy::selectedId).AddComponent<Audio>({ file_path, audio_name, AUDIO_BGM, false });
+				// Must be outside (what if i remove and add an already loaded audio)
+				mFilePath = file_path;
+				mFileName = audio_name;
+				mFullPath = file_path + "/" + audio_name;
 
-				Entity(Hierarchy::selectedId).GetComponent<Audio>().mIsEmpty = false; // Component is populated with info
-				systemManager->mAudioSystem.get()->UpdateLoadAudio();
+				// Check if the [Audio file] has been uploaded into the database...
+				if (systemManager->mAudioSystem.get()->CheckAudioExist(audio_name)) // Exists ... 
+				{
+					// For Debugging Purposes
+					PINFO("[Loaded] Audio is already in database.");
+					// Assign the [Sound*] to this component. 
+					mSound = systemManager->mAudioSystem.get()->FindSound(audio_name);
+					Entity(Hierarchy::selectedId).GetComponent<Audio>().mIsEmpty = false; // Component is populated with info
+					Audio& audioent = Entity(Hierarchy::selectedId).GetComponent<Audio>();
+					return;
+				}
+
+				else // Does not exist...
+				{
+					// Load the Audio File + Check (load status)
+					systemManager->mAudioSystem.get()->UpdateLoadAudio(Entity(Hierarchy::selectedId));
+					Entity(Hierarchy::selectedId).GetComponent<Audio>().mIsEmpty = false; // must be here (editor specific) -> to trigger the other options to appear.
+					/*Audio& audioent = Entity(Hierarchy::selectedId).GetComponent<Audio>();
+					int i = 0;*/
+				}
+
 			}
 
 			ImGui::EndDragDropTarget();
@@ -1108,6 +1131,7 @@ void Audio::Inspect() {
 	ImGui::Text("Drag drop 'Audio' files to header above 'Audio'");
 	ImGui::Text("Audio File Selected: ");
 	ImGui::Text(Entity(Hierarchy::selectedId).GetComponent<Audio>().mFullPath.c_str());
+	Audio& audio = Entity(Hierarchy::selectedId).GetComponent<Audio>();
 
 	static bool remove_audio_bool = false;
 	if (!Entity(Hierarchy::selectedId).GetComponent<Audio>().mIsEmpty)
@@ -1119,13 +1143,17 @@ void Audio::Inspect() {
 	{
 		Entity(Hierarchy::selectedId).GetComponent<Audio>().ClearAudioComponent();
 		remove_audio_bool = false;
-
+		PINFO("Successfully Removed Audio.");
 	}
 
-	if (!mIsEmpty && mIsLoaded)
+	static float f1 = 0.123f;
+	if (!mIsEmpty)
 	{
-		ImGui::Checkbox("Play This (start the scene first)", &mIsPlay);
-		ImGui::Checkbox("IsPlaying", &mIsPlaying);
+		//ImGui::Checkbox("Play This (start the scene first)", &mIsPlay);
+		//ImGui::Checkbox("IsPlaying", &mIsPlaying);
+		ImGui::Checkbox("Play on Awake", &mPlayonAwake);
+		ImGui::Checkbox("Is Looping", &mIsLooping);
+		ImGui::SliderFloat("Volume", &f1, 0.0f, 1.0f, "ratio = %.3f");
 
 	}
 
@@ -1138,25 +1166,18 @@ void Audio::Inspect() {
 				switch (mAudio)
 				{
 				case 0:
-					mAudioType = AUDIO_BGM;
+					mAudioType = AUDIO_SFX;
+					mTypeChanged = true;
+					systemManager->mAudioSystem.get()->UpdateChannelReference(Entity(Hierarchy::selectedId));
 					break;
 				case 1:
 					mAudioType = AUDIO_BGM;
+					mTypeChanged = true;
+					systemManager->mAudioSystem.get()->UpdateChannelReference(Entity(Hierarchy::selectedId));
 					break;
 				}
 			}
 		}
-
-		// Check Which AudioType has been assigned.
-	/*	switch (Entity(Hierarchy::selectedId).GetComponent<Audio>().mAudioType)
-		{
-		case AUDIO_BGM:
-			std::cout << "BGM" << std::endl;
-			break;
-		case AUDIO_SFX:
-			std::cout << "SFX" << std::endl;
-			break;
-		}*/
 
 		ImGui::EndCombo();
 	}
