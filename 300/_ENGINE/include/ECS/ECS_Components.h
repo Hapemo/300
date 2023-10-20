@@ -375,7 +375,7 @@ struct AISetting {
 	E_MOVEMENT_TYPE mMovementType;	// AI's movement type
 	E_ATTACK_TYPE mAttackType;			// AI's attack type
 	float mSpreadOut;								// Degree of spreading out
-	Entity mTarget;									// AI's target
+	std::uint32_t mTarget;									// AI's target
 };
 
 

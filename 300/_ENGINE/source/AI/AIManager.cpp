@@ -42,7 +42,7 @@ glm::vec3 AIManager::GetNextPosition(Entity _e) {
 glm::vec3 AIManager::CalcGroundAIDir(Entity _e) {
 	// Calculate basic direction
 	AISetting setting = _e.GetComponent<AISetting>();
-	glm::vec3 tgtPos = setting.mTarget.GetComponent<Transform>().mTranslate;
+	glm::vec3 tgtPos = Entity(setting.mTarget).GetComponent<Transform>().mTranslate;
 	glm::vec3 dir = tgtPos - _e.GetComponent<Transform>().mTranslate;
 	
 	// Advance direction changing
