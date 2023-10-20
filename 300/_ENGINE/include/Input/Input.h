@@ -16,7 +16,7 @@ Input detects keyboard and mouse input states and returns that to caller
 
 // Available keys
 enum E_KEY {
-  UNKNOWN = -1,
+  ERROR_EKEY = 0,
   SPACE = 32,
   APOSTROPHE = 39,/* ' */
   COMMA = 44,/* , */
