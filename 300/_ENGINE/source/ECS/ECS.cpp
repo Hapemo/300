@@ -1,7 +1,7 @@
+#include "pch.h"
 #include "ECS/ECS.h"
 #include "ECS/ECS_Components.h"
 #include "ScriptingSystem.h"
-#include "pch.h"
 #include "Object/ObjectFactory.h"
 #include "GameState/GameStateManager.h"
 #include "Debug/AssertException.h"

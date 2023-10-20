@@ -129,13 +129,13 @@ struct MeshRenderer
 	ref									mMeshRef{};
 	//void*								mMeshRef{};
 
-	ref									mTextureRef[4];
+	//ref									mTextureRef[5];
 	//void*								mTextureRef[4];
 
 	//unsigned							mGUID;
-	bool								mTextureCont[4];
+	//bool								mTextureCont[4];
 	//void*								mMeshRef{nullptr};
-	void* mTextureRef[5]{ nullptr,nullptr,nullptr,nullptr,nullptr };
+	ref									mTextureRef[5]		{ {nullptr,0},{nullptr,0},{nullptr,0},{nullptr,0},{nullptr,0} };
 
 	unsigned							mGUID;
 	bool								mTextureCont[5];
@@ -148,10 +148,10 @@ struct MeshRenderer
 	
 	int									GetTexture(MaterialType type) 
 										{ 
-											if (mTextureRef[static_cast<int>(type)] == nullptr)
+											if (mTextureRef[static_cast<int>(type)].data == nullptr)
 												return -1;
 
-											return static_cast<GFX::Texture*>(mTextureRef[static_cast<int>(type)])->ID(); 
+											return static_cast<GFX::Texture*>(mTextureRef[static_cast<int>(type)].data)->ID();
 										}
 	//RTTR_ENABLE()
 };
