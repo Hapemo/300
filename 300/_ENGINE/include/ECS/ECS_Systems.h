@@ -21,6 +21,7 @@ class ResourceTy;
 class AudioSystem;
 class Logger;
 class InputMapSystem;
+struct Entity;
 
 class SystemManager {
 	GFX::Window *mWindow;
@@ -35,7 +36,6 @@ public:
 	std::unique_ptr<AudioSystem> mAudioSystem;
 	std::unique_ptr<Logger> mLogger;
 	std::unique_ptr<InputMapSystem> mInputActionSystem;
-
 
 	ECS *ecs;
 
@@ -81,8 +81,13 @@ public:
 	Cleaning up before exiting.
 	*******************************************************************************/
 	void Exit();
+
+	void DeleteEntity(Entity e);
 	PhysicsSystem *GetPhysicsPointer();
 	ScriptingSystem* GetScriptingPointer();
+	AudioSystem* GetAudioPointer();
+	InputMapSystem* GetInputMapSystemPointer();
+	GameStateManager* GetGameStateSystem();
 };
 
 extern SystemManager *systemManager;

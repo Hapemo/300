@@ -1,4 +1,4 @@
-#include "ECS_Components.h"
+#include "ECS/ECS_Components.h"
 /*!*************************************************************************
 ****
 \file Inspect.cpp
@@ -52,9 +52,6 @@ Inspect display for RigidBody components
 
 - Audio::Inspect
 Inspect display for Audio components
-
-- InputActionMapEditor::Inspect
-Inspect display for InputActionMapEditor components.
 ****************************************************************************
 ***/
 
@@ -72,6 +69,8 @@ Inspect display for InputActionMapEditor components.
 #include "Audio/AudioSystem.h"
 #include "Input/InputMapSystem.h"
 #include <TextureCompressor.h>
+#include "Script/Script.h"
+
 #include <descriptor.h>
 #include <string>
 
@@ -245,11 +244,6 @@ void Inspect::Add_component() {
 				Entity(Hierarchy::selectedId).AddComponent<UIrenderer>();
 		}
 
-		if (ImGui::Selectable("InputActionMapEditor")) {
-			if (!Entity(Hierarchy::selectedId).HasComponent<InputActionMapEditor>())
-				Entity(Hierarchy::selectedId).AddComponent<InputActionMapEditor>();
-		}
-
 		ImGui::EndCombo();
 
 
@@ -271,22 +265,40 @@ void General::Inspect() {
 		- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
 	ImGui::InputText("##naming",&name);
 
+
+	//ImGui::Text("Tag");
+
+	//ImGui::SameLine();
+	//ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+	//	- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+
+	//if (ImGui::BeginCombo("##Tag", tag[tagid].c_str())) {
+
+	//	for (int i = 0; i < 5; i++) {
+	//		if (ImGui::Selectable(tag[i].c_str())) {
+	//			tagid = i;
+	//		}
+	//	}
+	//	ImGui::EndCombo();
+	//}
+
+
 	ImGui::Text("Tag");
 
 	ImGui::SameLine();
 	ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
 		- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
 
-	if (ImGui::BeginCombo("##Tag", tag[tagid].c_str())) {
+	if (ImGui::BeginCombo("##Tag", enum_tag::ToString(tagid))) {
 
-		for (int i = 0; i < 5; i++) {
-			if (ImGui::Selectable(tag[i].c_str())) {
-				tagid = i;
+		for (int i = 0; i < enum_tag::COUNT; i++) {
+			enum_tag::enum_tag temp = static_cast<enum_tag::enum_tag>(i);
+			if (ImGui::Selectable(enum_tag::ToString(temp))) {
+				tagid = static_cast<enum_tag::enum_tag>(i);
 			}
 		}
 		ImGui::EndCombo();
 	}
-
 }
 
 /***************************************************************************/
@@ -444,8 +456,9 @@ void Scripts::Inspect() {
 					Script script;
 					script.scriptFile = dataScript;
 					script.env = { systemManager->mScriptingSystem->luaState, sol::create, systemManager->mScriptingSystem->luaState.globals() };
+					script.Load(Hierarchy::selectedId);
 					scripts.scriptsContainer.push_back(script);
-					//std::cout << "Script " << script.scriptFile << ".lua added to entity " << std::to_string((int)Hierarchy::selectedId) << std::endl;
+					//std::cout << "Script " << script.scriptFile << " added to entity " << std::to_string((int)Hierarchy::selectedId) << std::endl;
 				}
 				// if entity already has scripts attached, check if duplicate 
 				else
@@ -468,6 +481,9 @@ void Scripts::Inspect() {
 						Script script;
 						script.scriptFile = dataScript;
 						script.env = { systemManager->mScriptingSystem->luaState, sol::create, systemManager->mScriptingSystem->luaState.globals() };
+						
+						script.Load(Hierarchy::selectedId);
+
 						scripts.scriptsContainer.push_back(script);
 						//std::cout << "Script " << script.scriptFile << ".lua added to entity " << std::to_string((int)Hierarchy::selectedId) << std::endl;
 						PINFO("Script %s added to entity %s", script.scriptFile.c_str(), std::to_string((int)Hierarchy::selectedId).c_str());
@@ -481,14 +497,16 @@ void Scripts::Inspect() {
 		ImGui::Text("Entity contains scripts: ");
 		for (auto& elem : scripts.scriptsContainer)
 		{
-			bool selected{};
-			ImGui::Selectable(elem.scriptFile.c_str(), &selected);
-			if (ImGui::IsItemClicked(ImGuiMouseButton_Left)) {
+			ImGui::SetNextItemOpen(true);
+			if (ImGui::TreeNode(elem.scriptFile.c_str())) {
+				if (ImGui::IsItemClicked(1)) {
+					open_popup = true;
+					deleteScript = elem.scriptFile;
+				}
+				InspectScript(elem);
+				ImGui::TreePop();
 			}
-			if (ImGui::IsItemClicked(1)) {
-				open_popup = true;
-				deleteScript = elem.scriptFile;
-			}
+			
 		}
 
 		if (open_popup) {
@@ -617,55 +635,72 @@ void MeshRenderer::Inspect()
 		// populating vertex shader vector
 		for (const auto& entry : std::filesystem::directory_iterator(systemManager->mResourceTySystem->shader_path))
 		{
-			if (std::filesystem::is_regular_file(entry))
-			{
-				if(getShaderExtension(entry.path().string()) == "_vert.glsl")
-					vertShaders.push_back(entry.path().string());
+			//if (std::filesystem::is_regular_file(entry))
+			//{
+			//	if(getShaderExtension(entry.path().string()) == "_vert.glsl")
+			//		vertShaders.push_back(entry.path().string());
 
-				else if (getShaderExtension(entry.path().string()) == "_frag.glsl")
-					fragShaders.push_back(entry.path().string());
-			}
+			//	else if (getShaderExtension(entry.path().string()) == "_frag.glsl")
+			//		fragShaders.push_back(entry.path().string());
+			//}
 		}
 
-		{
+		//{
 			// Vert shader selection
-			if (ImGui::BeginCombo("Vertex Shaders", vertShaders[selectedVertShader].data(), 0))
-			{
-				for (int i{}; i < vertShaders.size(); ++i)
-				{
-					bool isItemSelected = (selectedVertShader == i);
-					if(ImGui::Selectable(vertShaders[i].data(), isItemSelected))
-						selectedVertShader = i;
+			//if (ImGui::BeginCombo("Vertex Shaders", vertShaders[selectedVertShader].data(), 0))
+			//{
+			//	for (int i{}; i < vertShaders.size(); ++i)
+			//	{
+			//		bool isItemSelected = (selectedVertShader == i);
+			//		if(ImGui::Selectable(vertShaders[i].data(), isItemSelected))
+			//			selectedVertShader = i;
 
-					if (isItemSelected)
-						ImGui::SetItemDefaultFocus();
+			//		if (isItemSelected)
+			//			ImGui::SetItemDefaultFocus();
+			//	}
+
+			//	ImGui::EndCombo();
+			//}
+
+			//// Frag shader selection
+			//if (ImGui::BeginCombo("Fragment Shaders", fragShaders[selectedFragShader].data(), 0))
+			//{
+			//	for (int i{}; i < fragShaders.size(); ++i)
+			//	{
+			//		bool isItemSelected = (selectedFragShader == i);
+			//		if (ImGui::Selectable(fragShaders[i].data(), isItemSelected))
+			//			selectedFragShader = i;
+
+			//		if (isItemSelected)
+			//			ImGui::SetItemDefaultFocus();
+			//	}
+
+			//	ImGui::EndCombo();
+			//}
+		//}
+
+		//if (ImGui::Button("Compile Shader"))
+		//{
+		//	std::cout << "compile shaders :)\n";
+		//}
+
+		std::string shaderstr{" "};
+
+		if (systemManager->mResourceTySystem->m_Shaders.find(mShaderid) != systemManager->mResourceTySystem->m_Shaders.end())
+			shaderstr = systemManager->mResourceTySystem->m_Shaders[mShaderid].first;
+		
+		if (ImGui::BeginCombo("##Shaders", shaderstr.c_str())) {
+
+			for (auto& data : systemManager->mResourceTySystem->m_Shaders) {
+
+				if (ImGui::Selectable(data.second.first.c_str())) {
+					mShaderid = data.first;
 				}
-
-				ImGui::EndCombo();
 			}
 
-			// Frag shader selection
-			if (ImGui::BeginCombo("Fragment Shaders", fragShaders[selectedFragShader].data(), 0))
-			{
-				for (int i{}; i < fragShaders.size(); ++i)
-				{
-					bool isItemSelected = (selectedFragShader == i);
-					if (ImGui::Selectable(fragShaders[i].data(), isItemSelected))
-						selectedFragShader = i;
+			ImGui::EndCombo();
 
-					if (isItemSelected)
-						ImGui::SetItemDefaultFocus();
-				}
-
-				ImGui::EndCombo();
-			}
 		}
-
-		if (ImGui::Button("Compile Shader"))
-		{
-			std::cout << "compile shaders :)\n";
-		}
-
 		ImGui::Separator();
 
 		// == >> Mesh << == //

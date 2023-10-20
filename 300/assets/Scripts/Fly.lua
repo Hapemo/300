@@ -3,11 +3,11 @@ function Alive()
 end
 
 function Update()
-    --Working
-    --systemManager.ecs:NewEntity();
 
-    --Test ScriptStart and ScriptUpdate functions
-    print("FLYYYYYY.lua !!")
+    --Audio Sample Test
+    audioSys = systemManager:mAudioSystem();
+    --audioSys:PlayAudio("BGM", AudioType.AUDIO_BGM, 0.5);
+    --audioSys:MuteSFX();
 end
 
 function Dead()

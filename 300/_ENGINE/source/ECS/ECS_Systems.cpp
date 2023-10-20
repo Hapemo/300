@@ -89,7 +89,6 @@ void SystemManager::Play()
 
 void SystemManager::Update(float dt)
 {
-	mInputActionSystem.get()->Update();
 	EnginePerformance::StartTrack("Graphics");
 	mGraphicsSystem.get()->Update(dt);
 	mGameStateSystem.get()->UpdateNextGSMState();
@@ -131,12 +130,33 @@ void SystemManager::Exit()
 	mAudioSystem.get()->Exit();
 }
 
+void SystemManager::DeleteEntity(Entity e)
+{
+	mPhysicsSystem->RemoveActor(e);
+	ecs->DeleteEntity(e);
+}
+
 PhysicsSystem *SystemManager::GetPhysicsPointer()
 {
 	return mPhysicsSystem.get();
 }
 
+AudioSystem* SystemManager::GetAudioPointer()
+{
+	return mAudioSystem.get();
+}
+
 ScriptingSystem *SystemManager::GetScriptingPointer()
 {
 	return mScriptingSystem.get();
+}
+
+InputMapSystem* SystemManager::GetInputMapSystemPointer()
+{
+	return mInputActionSystem.get();
+}
+
+GameStateManager* SystemManager::GetGameStateSystem()
+{
+	return mGameStateSystem.get();
 }
