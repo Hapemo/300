@@ -1,4 +1,4 @@
-#include "ECS_Components.h"
+#include "ECS/ECS_Components.h"
 /*!*************************************************************************
 ****
 \file Inspect.cpp
