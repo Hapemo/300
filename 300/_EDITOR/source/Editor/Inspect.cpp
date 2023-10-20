@@ -157,10 +157,10 @@ void Inspect::update()
 			VFX& vfx = ent.GetComponent<VFX>();
 			vfx.Inspect();
 		}
-		if (ent.HasComponent<InputActionMapEditor>()) {
-			InputActionMapEditor& inputAction = ent.GetComponent<InputActionMapEditor>();
-			inputAction.Inspect();
-		}
+		//if (ent.HasComponent<InputActionMapEditor>()) {
+		//	InputActionMapEditor& inputAction = ent.GetComponent<InputActionMapEditor>();
+		//	inputAction.Inspect();
+		//}
 		//--------------------------------------------// must be at the LAST OF THIS LOOP
 		Add_component(); 
 	}
@@ -1170,127 +1170,127 @@ void Audio::Inspect() {
 	Inspector functionality for Input action
 */
 /***************************************************************************/
-void InputActionMapEditor::Inspect()
-{
-	bool delete_component = true;
-
-	const char* action_maps[] = { "PlayerMovement", "MenuControls" };
-	static std::string newActionMapName;
-
-	//std::string selected_map {};
-
-	if (ImGui::CollapsingHeader("InputActionMapEditor", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
-	{
-		auto ActionMapEntities = systemManager->ecs->GetEntitiesWith<InputActionMapEditor>();
-		//int size = ActionMapEntities.size();
-		InputActionMapEditor& editor_component = ActionMapEntities.get<InputActionMapEditor>(Hierarchy::selectedId);
-
-		// Create New [InputActionMap]
-		ImGui::Text("Create new InputActionMap");
-		ImGui::InputText(".", &newActionMapName);
-		if (ImGui::Button("Add Action Map"))
-		{
-			// Creates a new [ActionMap] - component side.
-			Entity(Hierarchy::selectedId).GetComponent<InputActionMapEditor>().AddActionMap(newActionMapName);
-		}
-
-		// [InputActionMap] selected
-		ImGui::Text("Select Action Map (to edit): ");
-		if (ImGui::BeginCombo("Selected Action Map", mSelectedMapName.c_str()))
-		{
-
-			for (auto& action_pair : editor_component.mActionMap)
-			{
-				if (ImGui::Selectable(action_pair.first.c_str()))
-				{
-					mSelectedMapName = action_pair.first.c_str();
-
-					selected = true;
-				}
-			}
-			ImGui::EndCombo();
-		}
-
-
-		PseudoInputAction& selected_action = GetAction(mSelectedMapName);
-
-
-		auto& e_key_map = systemManager->mInputActionSystem->e_key_mapping;
-
-		if (selected)
-		{
-			if (mSelectedMapName != " ")
-			{
-				if (ImGui::BeginCombo("Movement (UP)", selected_action.mSelectedBindingUP.c_str()))
-				{
-					// Iterate through the [Key Map]
-					for (auto& e_keypair : e_key_map)
-					{
-						std::string key_name = e_keypair.first;
-						if (ImGui::Selectable(key_name.c_str()))
-						{
-							selected_action.mKeyBindUp = (int)(e_key_map[key_name]);
-							selected_action.LinkKeyBinding(KEY_UP, (E_KEY)selected_action.mKeyBindUp);
-							selected_action.mSelectedBindingUP = e_keypair.first;
-						}
-					}
-					ImGui::EndCombo();
-				}
-
-				if (ImGui::BeginCombo("Movement (DOWN)", selected_action.mSelectedBindingDOWN.c_str()))
-				{
-					// Iterate through the [Key Map]
-					for (auto& e_keypair : e_key_map)
-					{
-						std::string key_name = e_keypair.first;
-						if (ImGui::Selectable(key_name.c_str()))
-						{
-							selected_action.mKeyBindDown = (int)(e_key_map[key_name]);
-							selected_action.LinkKeyBinding(KEY_DOWN, (E_KEY)selected_action.mKeyBindDown);
-							selected_action.mSelectedBindingDOWN = e_keypair.first;
-						}
-					}
-
-					ImGui::EndCombo();
-				}
-
-				if (ImGui::BeginCombo("Movement (LEFT)", selected_action.mSelectedBindingLEFT.c_str()))
-				{
-					// Iterate through the [Key Map]
-					for (auto& e_keypair : e_key_map)
-					{
-						std::string key_name = e_keypair.first;
-						if (ImGui::Selectable(key_name.c_str()))
-						{
-							selected_action.mKeyBindLeft = (int)(e_key_map[key_name]);
-							selected_action.LinkKeyBinding(KEY_LEFT, (E_KEY)selected_action.mKeyBindLeft);
-							selected_action.mSelectedBindingLEFT = e_keypair.first;
-						}
-					}
-
-					ImGui::EndCombo();
-				}
-
-				if (ImGui::BeginCombo("Movement (RIGHT)", selected_action.mSelectedBindingRIGHT.c_str()))
-				{
-					// Iterate through the [Key Map]
-					for (auto& e_keypair : e_key_map)
-					{
-						std::string key_name = e_keypair.first;
-						if (ImGui::Selectable(key_name.c_str()))
-						{
-							selected_action.mKeyBindRight = (int)(e_key_map[key_name]);
-							selected_action.LinkKeyBinding(KEY_RIGHT, (E_KEY)selected_action.mKeyBindRight);
-							selected_action.mSelectedBindingRIGHT = e_keypair.first;
-						}
-					}
-
-					ImGui::EndCombo();
-				}
-			}
-		}
-	}
-}
+//void InputActionMapEditor::Inspect()
+//{
+//	bool delete_component = true;
+//
+//	const char* action_maps[] = { "PlayerMovement", "MenuControls" };
+//	static std::string newActionMapName;
+//
+//	//std::string selected_map {};
+//
+//	if (ImGui::CollapsingHeader("InputActionMapEditor", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
+//	{
+//		auto ActionMapEntities = systemManager->ecs->GetEntitiesWith<InputActionMapEditor>();
+//		//int size = ActionMapEntities.size();
+//		InputActionMapEditor& editor_component = ActionMapEntities.get<InputActionMapEditor>(Hierarchy::selectedId);
+//
+//		// Create New [InputActionMap]
+//		ImGui::Text("Create new InputActionMap");
+//		ImGui::InputText(".", &newActionMapName);
+//		if (ImGui::Button("Add Action Map"))
+//		{
+//			// Creates a new [ActionMap] - component side.
+//			Entity(Hierarchy::selectedId).GetComponent<InputActionMapEditor>().AddActionMap(newActionMapName);
+//		}
+//
+//		// [InputActionMap] selected
+//		ImGui::Text("Select Action Map (to edit): ");
+//		if (ImGui::BeginCombo("Selected Action Map", mSelectedMapName.c_str()))
+//		{
+//
+//			for (auto& action_pair : editor_component.mActionMap)
+//			{
+//				if (ImGui::Selectable(action_pair.first.c_str()))
+//				{
+//					mSelectedMapName = action_pair.first.c_str();
+//
+//					selected = true;
+//				}
+//			}
+//			ImGui::EndCombo();
+//		}
+//
+//
+//		PseudoInputAction& selected_action = GetAction(mSelectedMapName);
+//
+//
+//		auto& e_key_map = systemManager->mInputActionSystem->e_key_mapping;
+//
+//		if (selected)
+//		{
+//			if (mSelectedMapName != " ")
+//			{
+//				if (ImGui::BeginCombo("Movement (UP)", selected_action.mSelectedBindingUP.c_str()))
+//				{
+//					// Iterate through the [Key Map]
+//					for (auto& e_keypair : e_key_map)
+//					{
+//						std::string key_name = e_keypair.first;
+//						if (ImGui::Selectable(key_name.c_str()))
+//						{
+//							selected_action.mKeyBindUp = (int)(e_key_map[key_name]);
+//							selected_action.LinkKeyBinding(KEY_UP, (E_KEY)selected_action.mKeyBindUp);
+//							selected_action.mSelectedBindingUP = e_keypair.first;
+//						}
+//					}
+//					ImGui::EndCombo();
+//				}
+//
+//				if (ImGui::BeginCombo("Movement (DOWN)", selected_action.mSelectedBindingDOWN.c_str()))
+//				{
+//					// Iterate through the [Key Map]
+//					for (auto& e_keypair : e_key_map)
+//					{
+//						std::string key_name = e_keypair.first;
+//						if (ImGui::Selectable(key_name.c_str()))
+//						{
+//							selected_action.mKeyBindDown = (int)(e_key_map[key_name]);
+//							selected_action.LinkKeyBinding(KEY_DOWN, (E_KEY)selected_action.mKeyBindDown);
+//							selected_action.mSelectedBindingDOWN = e_keypair.first;
+//						}
+//					}
+//
+//					ImGui::EndCombo();
+//				}
+//
+//				if (ImGui::BeginCombo("Movement (LEFT)", selected_action.mSelectedBindingLEFT.c_str()))
+//				{
+//					// Iterate through the [Key Map]
+//					for (auto& e_keypair : e_key_map)
+//					{
+//						std::string key_name = e_keypair.first;
+//						if (ImGui::Selectable(key_name.c_str()))
+//						{
+//							selected_action.mKeyBindLeft = (int)(e_key_map[key_name]);
+//							selected_action.LinkKeyBinding(KEY_LEFT, (E_KEY)selected_action.mKeyBindLeft);
+//							selected_action.mSelectedBindingLEFT = e_keypair.first;
+//						}
+//					}
+//
+//					ImGui::EndCombo();
+//				}
+//
+//				if (ImGui::BeginCombo("Movement (RIGHT)", selected_action.mSelectedBindingRIGHT.c_str()))
+//				{
+//					// Iterate through the [Key Map]
+//					for (auto& e_keypair : e_key_map)
+//					{
+//						std::string key_name = e_keypair.first;
+//						if (ImGui::Selectable(key_name.c_str()))
+//						{
+//							selected_action.mKeyBindRight = (int)(e_key_map[key_name]);
+//							selected_action.LinkKeyBinding(KEY_RIGHT, (E_KEY)selected_action.mKeyBindRight);
+//							selected_action.mSelectedBindingRIGHT = e_keypair.first;
+//						}
+//					}
+//
+//					ImGui::EndCombo();
+//				}
+//			}
+//		}
+//	}
+//}
 
 
 void UIrenderer::Inspect() {
