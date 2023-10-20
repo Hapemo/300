@@ -146,10 +146,11 @@ struct RigidBody
 	MATERIAL mMaterial;
 	MOTION mMotion;
 	glm::vec3 mVelocity;
+	bool mIsTrigger;
 
-	RigidBody() : mDensity(10.f), mMaterial(MATERIAL::WOOD), mMotion(MOTION::STATIC), mVelocity(0.f) {};
-	RigidBody(float dense, MATERIAL mat, MOTION mot, const glm::vec3& vec)
-		: mDensity(dense), mMaterial(mat), mMotion(mot), mVelocity(vec) {}
+	RigidBody() : mDensity(10.f), mMaterial(MATERIAL::WOOD), mMotion(MOTION::STATIC), mVelocity(0.f), mIsTrigger(false) {};
+	RigidBody(float dense, MATERIAL mat, MOTION mot, const glm::vec3& vec, bool isTrigger)
+		: mDensity(dense), mMaterial(mat), mMotion(mot), mVelocity(vec), mIsTrigger(isTrigger) {}
 	//RTTR_ENABLE()
 
 

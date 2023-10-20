@@ -52,5 +52,6 @@
     <ClInclude Include="include\Input\Input.h" />
     <ClInclude Include="include\Input\InputMapSystem.h" />
     <ClInclude Include="include\AI\AIManager.h" />
+    <ClInclude Include="include\Physics\ContactModifier.h" />
   </ItemGroup>
 </Project>

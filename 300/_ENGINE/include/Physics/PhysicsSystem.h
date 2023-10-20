@@ -58,6 +58,7 @@ private:
 	*******************************************************************************/
 	void CreateRigidBody(Entity e);
 
+	void AttachIsTrigger(PxRigidActor*& actor, PxShape*& shape);
 	void AttachMotionType(PxRigidActor*& actor, PxShape*& shape, const PxTransform& pxform, const RigidBody& rbod, const glm::ivec3& axisLocks = glm::ivec3(0, 0, 0));
 	/*!*****************************************************************************
 	Helper functions to convert glm to physx and vice versa.
