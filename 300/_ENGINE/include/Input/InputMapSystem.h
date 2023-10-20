@@ -13,6 +13,7 @@ the editor to physical keys.
 #include "Input/Input.h"		// Input Keys
 
 #define ADDITEM(x) map[E_KEYMapCounter++] = std::pair<std::string, E_KEY>(#x,x);
+#define ADDITEMARR(x) arr[static_cast<int>(x)] = #x;
 
 class InputMapSystem {
 public:
@@ -115,7 +116,8 @@ public:
 	void RemoveKeybind(std::string const& actionName);
 
 	/*!*****************************************************************************
-	Save the keybind 
+	Save the keybind into external file. Also updates mKeybindMap based on
+	mKeybindMapString
 	*******************************************************************************/
 	void SaveKeybind();
 
@@ -124,12 +126,19 @@ public:
 	*******************************************************************************/
 	std::map<std::string, E_KEY>* GetKeybindMap() { return &mKeybindMap; }
 
+	///*!*****************************************************************************
+	//Getter for the list of available ekey's name and it's ekey enum
+	//*******************************************************************************/
+	//const std::array<std::pair<std::string, E_KEY>, 129>* GetEkeyMap() { return &mE_KEYMap; }
+	
 	/*!*****************************************************************************
-	Getter for the list of available ekey's name and it's ekey enum
+	Getter for the list of available ekey's name and it's ekey enum in array
 	*******************************************************************************/
-	const std::array<std::pair<std::string, E_KEY>, 129>* GetEkeyMap() { return &mE_KEYMap; }
+	const std::array<std::string, E_KEY::KEY_TOTAL>* GetEkeyArray() { return &mE_KEYArray; }
 
-	std::string GetEKeyName(E_KEY ekey) { return std::find_if(mE_KEYMap.begin(), mE_KEYMap.end(), [ekey] (std::pair<std::string, E_KEY> item)->bool { return item.second == ekey; })->first; }
+	std::string GetEKeyName(E_KEY ekey);
+	E_KEY GetEKeyFromName(std::string const& ekeyName);
+	std::string& GetActionEKeyName(std::string const& action);
 
 private:
 	/*!*****************************************************************************
@@ -138,7 +147,7 @@ private:
 	constexpr static const std::array<std::pair<std::string, E_KEY>, 129> EKeyMappingInit() {
 		int E_KEYMapCounter{};
 		std::array<std::pair<std::string, E_KEY>, 129> map;
-		ADDITEM(UNKNOWN);
+		ADDITEM(ERROR_EKEY);
 		ADDITEM(SPACE);
 		ADDITEM(APOSTROPHE);
 		ADDITEM(COMMA);
@@ -269,7 +278,143 @@ private:
 		ADDITEM(M_BUTTON_8);
 		return map;
 	}
-	
+
+	constexpr static const std::array<std::string, E_KEY::KEY_TOTAL> EKeyArrayInit() {
+		std::array<std::string, E_KEY::KEY_TOTAL> arr;
+		ADDITEMARR(ERROR_EKEY);
+		ADDITEMARR(SPACE);
+		ADDITEMARR(APOSTROPHE);
+		ADDITEMARR(COMMA);
+		ADDITEMARR(MINUS);
+		ADDITEMARR(PERIOD);
+		ADDITEMARR(SLASH);
+		ADDITEMARR(_0);
+		ADDITEMARR(_1);
+		ADDITEMARR(_2);
+		ADDITEMARR(_3);
+		ADDITEMARR(_4);
+		ADDITEMARR(_5);
+		ADDITEMARR(_6);
+		ADDITEMARR(_7);
+		ADDITEMARR(_8);
+		ADDITEMARR(_9);
+		ADDITEMARR(SEMICOLON);
+		ADDITEMARR(EQUAL);
+		ADDITEMARR(A);
+		ADDITEMARR(B);
+		ADDITEMARR(C);
+		ADDITEMARR(D);
+		ADDITEMARR(E);
+		ADDITEMARR(F);
+		ADDITEMARR(G);
+		ADDITEMARR(H);
+		ADDITEMARR(I);
+		ADDITEMARR(J);
+		ADDITEMARR(K);
+		ADDITEMARR(L);
+		ADDITEMARR(M);
+		ADDITEMARR(N);
+		ADDITEMARR(O);
+		ADDITEMARR(P);
+		ADDITEMARR(Q);
+		ADDITEMARR(R);
+		ADDITEMARR(S);
+		ADDITEMARR(T);
+		ADDITEMARR(U);
+		ADDITEMARR(V);
+		ADDITEMARR(W);
+		ADDITEMARR(X);
+		ADDITEMARR(Y);
+		ADDITEMARR(Z);
+		ADDITEMARR(LEFT_BRACKET);
+		ADDITEMARR(BACKSLASH);
+		ADDITEMARR(RIGHT_BRACKET);
+		ADDITEMARR(GRAVE_ACCENT);
+		ADDITEMARR(WORLD_1);
+		ADDITEMARR(WORLD_2);
+		ADDITEMARR(ESCAPE);
+		ADDITEMARR(ENTER);
+		ADDITEMARR(TAB);
+		ADDITEMARR(BACKSPACE);
+		ADDITEMARR(INSERT);
+		ADDITEMARR(DELETE);
+		ADDITEMARR(RIGHT);
+		ADDITEMARR(LEFT);
+		ADDITEMARR(DOWN);
+		ADDITEMARR(UP);
+		ADDITEMARR(PAGE_UP);
+		ADDITEMARR(PAGE_DOWN);
+		ADDITEMARR(HOME);
+		ADDITEMARR(END);
+		ADDITEMARR(CAPS_LOCK);
+		ADDITEMARR(SCROLL_LOCK);
+		ADDITEMARR(NUM_LOCK);
+		ADDITEMARR(PRINT_SCREEN);
+		ADDITEMARR(PAUSE);
+		ADDITEMARR(F1);
+		ADDITEMARR(F2);
+		ADDITEMARR(F3);
+		ADDITEMARR(F4);
+		ADDITEMARR(F5);
+		ADDITEMARR(F6);
+		ADDITEMARR(F7);
+		ADDITEMARR(F8);
+		ADDITEMARR(F9);
+		ADDITEMARR(F10);
+		ADDITEMARR(F11);
+		ADDITEMARR(F12);
+		ADDITEMARR(F13);
+		ADDITEMARR(F14);
+		ADDITEMARR(F15);
+		ADDITEMARR(F16);
+		ADDITEMARR(F17);
+		ADDITEMARR(F18);
+		ADDITEMARR(F19);
+		ADDITEMARR(F20);
+		ADDITEMARR(F21);
+		ADDITEMARR(F22);
+		ADDITEMARR(F23);
+		ADDITEMARR(F24);
+		ADDITEMARR(F25);
+		ADDITEMARR(PAD_0);
+		ADDITEMARR(PAD_1);
+		ADDITEMARR(PAD_2);
+		ADDITEMARR(PAD_3);
+		ADDITEMARR(PAD_4);
+		ADDITEMARR(PAD_5);
+		ADDITEMARR(PAD_6);
+		ADDITEMARR(PAD_7);
+		ADDITEMARR(PAD_8);
+		ADDITEMARR(PAD_9);
+		ADDITEMARR(PAD_DECIMAL);
+		ADDITEMARR(PAD_DIVIDE);
+		ADDITEMARR(PAD_MULTIPLY);
+		ADDITEMARR(PAD_SUBTRACT);
+		ADDITEMARR(PAD_ADD);
+		ADDITEMARR(PAD_ENTER);
+		ADDITEMARR(PAD_EQUAL);
+		ADDITEMARR(LEFT_SHIFT);
+		ADDITEMARR(LEFT_CONTROL);
+		ADDITEMARR(LEFT_ALT);
+		ADDITEMARR(LEFT_SUPER);
+		ADDITEMARR(RIGHT_SHIFT);
+		ADDITEMARR(RIGHT_CONTROL);
+		ADDITEMARR(RIGHT_ALT);
+		ADDITEMARR(RIGHT_SUPER);
+		ADDITEMARR(MENU);
+		ADDITEMARR(M_BUTTON_L);
+		ADDITEMARR(M_BUTTON_R);
+		ADDITEMARR(M_BUTTON_M);
+		ADDITEMARR(M_BUTTON_4);
+		ADDITEMARR(M_BUTTON_5);
+		ADDITEMARR(M_BUTTON_6);
+		ADDITEMARR(M_BUTTON_7);
+		ADDITEMARR(M_BUTTON_8);
+		return arr;
+	}
+
 	std::map<std::string, E_KEY> mKeybindMap; // Mapping action to E_KEY
-	static const std::array<std::pair<std::string, E_KEY>, 129> mE_KEYMap; // Mapping E_KEY to it's name
+	std::map<std::string, std::string> mKeybindMapString; // Mapping action to E_KEY's name (for imgui to print only)
+	//static const std::array<std::pair<std::string, E_KEY>, 129> mE_KEYMap;	// Mapping E_KEY to it's name
+	static const std::array<std::string, E_KEY::KEY_TOTAL> mE_KEYArray;		// Mapping E_KEY's name to it's index in array
 };
