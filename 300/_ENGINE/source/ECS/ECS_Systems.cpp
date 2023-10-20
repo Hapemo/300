@@ -141,7 +141,22 @@ PhysicsSystem *SystemManager::GetPhysicsPointer()
 	return mPhysicsSystem.get();
 }
 
+AudioSystem* SystemManager::GetAudioPointer()
+{
+	return mAudioSystem.get();
+}
+
 ScriptingSystem *SystemManager::GetScriptingPointer()
 {
 	return mScriptingSystem.get();
+}
+
+InputMapSystem* SystemManager::GetInputMapSystemPointer()
+{
+	return mInputActionSystem.get();
+}
+
+GameStateManager* SystemManager::GetGameStateSystem()
+{
+	return mGameStateSystem.get();
 }

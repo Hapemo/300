@@ -1,4 +1,4 @@
-#include "ECS_Components.h"
+#include "ECS/ECS_Components.h"
 /*!*************************************************************************
 ****
 \file Inspect.cpp
@@ -68,6 +68,7 @@ Inspect display for Audio components
 #include "Debug/Logger.h"
 #include "Audio/AudioSystem.h"
 #include "Input/InputMapSystem.h"
+#include "Script/Script.h"
 
 #include <descriptor.h>
 #include <string>
@@ -244,6 +245,21 @@ void General::Inspect() {
 	ImGui::InputText("##naming",&name);
 
 
+	//ImGui::Text("Tag");
+
+	//ImGui::SameLine();
+	//ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+	//	- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+
+	//if (ImGui::BeginCombo("##Tag", tag[tagid].c_str())) {
+
+	//	for (int i = 0; i < 5; i++) {
+	//		if (ImGui::Selectable(tag[i].c_str())) {
+	//			tagid = i;
+	//		}
+	//	}
+	//	ImGui::EndCombo();
+	//}
 
 
 	ImGui::Text("Tag");
@@ -252,16 +268,16 @@ void General::Inspect() {
 	ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
 		- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
 
-	if (ImGui::BeginCombo("##Tag", tag[tagid].c_str())) {
+	if (ImGui::BeginCombo("##Tag", enum_tag::ToString(tagid))) {
 
-		for (int i = 0; i < 5; i++) {
-			if (ImGui::Selectable(tag[i].c_str())) {
-				tagid = i;
+		for (int i = 0; i < enum_tag::COUNT; i++) {
+			enum_tag::enum_tag temp = static_cast<enum_tag::enum_tag>(i);
+			if (ImGui::Selectable(enum_tag::ToString(temp))) {
+				tagid = static_cast<enum_tag::enum_tag>(i);
 			}
 		}
 		ImGui::EndCombo();
 	}
-
 }
 
 /***************************************************************************/
@@ -419,8 +435,9 @@ void Scripts::Inspect() {
 					Script script;
 					script.scriptFile = dataScript;
 					script.env = { systemManager->mScriptingSystem->luaState, sol::create, systemManager->mScriptingSystem->luaState.globals() };
+					script.Load(Hierarchy::selectedId);
 					scripts.scriptsContainer.push_back(script);
-					//std::cout << "Script " << script.scriptFile << ".lua added to entity " << std::to_string((int)Hierarchy::selectedId) << std::endl;
+					//std::cout << "Script " << script.scriptFile << " added to entity " << std::to_string((int)Hierarchy::selectedId) << std::endl;
 				}
 				// if entity already has scripts attached, check if duplicate 
 				else
@@ -443,6 +460,9 @@ void Scripts::Inspect() {
 						Script script;
 						script.scriptFile = dataScript;
 						script.env = { systemManager->mScriptingSystem->luaState, sol::create, systemManager->mScriptingSystem->luaState.globals() };
+						
+						script.Load(Hierarchy::selectedId);
+
 						scripts.scriptsContainer.push_back(script);
 						//std::cout << "Script " << script.scriptFile << ".lua added to entity " << std::to_string((int)Hierarchy::selectedId) << std::endl;
 						PINFO("Script %s added to entity %s", script.scriptFile.c_str(), std::to_string((int)Hierarchy::selectedId).c_str());
@@ -456,14 +476,16 @@ void Scripts::Inspect() {
 		ImGui::Text("Entity contains scripts: ");
 		for (auto& elem : scripts.scriptsContainer)
 		{
-			bool selected{};
-			ImGui::Selectable(elem.scriptFile.c_str(), &selected);
-			if (ImGui::IsItemClicked(ImGuiMouseButton_Left)) {
+			ImGui::SetNextItemOpen(true);
+			if (ImGui::TreeNode(elem.scriptFile.c_str())) {
+				if (ImGui::IsItemClicked(1)) {
+					open_popup = true;
+					deleteScript = elem.scriptFile;
+				}
+				InspectScript(elem);
+				ImGui::TreePop();
 			}
-			if (ImGui::IsItemClicked(1)) {
-				open_popup = true;
-				deleteScript = elem.scriptFile;
-			}
+			
 		}
 
 		if (open_popup) {

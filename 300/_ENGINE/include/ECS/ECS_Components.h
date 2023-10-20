@@ -11,6 +11,7 @@ Components used by the ECS.
 
 #pragma once
 #include "glm/glm.hpp"
+#include <algorithm>
 #include "Script.h"
 #include <vector>
 #include "Physics/PhysicsTypes.h"
@@ -29,6 +30,7 @@ Components used by the ECS.
 
 //#include "rttr/registration.h"
 
+DECLARE_ENUMSTRING(enum_tag, PLAYER, ENEMY, BULLET, STATIC, BUILDING)
 struct uid;
 
 //DECLARE_ENUMSTRING(enum_tag, PLAYER, ENEMY, BULLET, STATIC, BUILDING)
@@ -46,10 +48,10 @@ struct General
 {
 	std::string name;
 	/*TAG tag;*/
-	//enum_tag::enum_tag tag;
-	//enum_tag::enum_tag tagid;
-	std::string tag[5] = { "PLAYER","ENEMY","BULLET","STATIC","BUILDING" };
-	int tagid{ 0 };
+	//enum_tag::enum_tag tag{};
+	enum_tag::enum_tag tagid{};
+	//std::string tag[5] = { "PLAYER","ENEMY","BULLET","STATIC","BUILDING" };
+	//int tagid{ 0 };
 	SUBTAG subtag;
 	bool isActive{};
 	bool isPaused{};
@@ -57,6 +59,14 @@ struct General
 	General() 
 	: name(""), subtag(SUBTAG::ACTIVE), isActive(true) 
 	{};
+
+	std::string GetTag() { return enum_tag::ToString(tagid); }
+
+	void SetTag(std::string newTag) { 
+		std::transform(newTag.begin(), newTag.end(), newTag.begin(), ::tolower);
+		newTag[0] = std::toupper(newTag[0]);
+		tagid = enum_tag::GetEnum(newTag.c_str()); 
+	}
 
 	void Inspect();
 
@@ -234,7 +244,6 @@ public:
 	Scripts() = default;
 	~Scripts() = default;
 
-	static void AddScript(Entity id, std::string fileName);
 	//static void LoadRunScript(Entity entity);
 
 	std::string mScriptFile{};

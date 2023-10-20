@@ -13,7 +13,7 @@ The functions
 - Init()
 Registers scripting system and lua state. Data like enums
 will be passed to lua here. Init also calls the functions
-from file LuaEngine, where it contains the passing in 
+from file LuaEngine, where it contains the passing in
 of more data.
 
 - Update()
@@ -54,6 +54,20 @@ void ScriptingSystem::Init()
 {
     luaState.open_libraries();
 
+    // Function to set a lua table as readyonly
+    luaState.script(R"(function readonlytable(table)
+                      return setmetatable({}, {
+                             __index = table,
+                             __newindex = function(table, key, value)
+                                         error("Attempt to modify read-only table")
+                                         end,
+                            __metatable = false
+                       });
+                    end)");
+
+    // Load Helper.lua
+    LoadHelper();
+
     /******************************************************************************/
     /*!
         Vec2 and Vec3 library
@@ -64,14 +78,22 @@ void ScriptingSystem::Init()
         "Vec2", sol::constructors<glm::vec2(), glm::vec2(float, float)>(),
         "x", &glm::vec2::x,
         "y", &glm::vec2::y
-        );
+    );
 
     luaState.new_usertype<glm::vec3>(
         "Vec3", sol::constructors<glm::vec3(), glm::vec3(float, float, float)>(),
         "x", &glm::vec3::x,
         "y", &glm::vec3::y,
         "z", &glm::vec3::z
-        );
+    );
+
+    luaState.new_usertype<glm::vec4>(
+        "Vec4", sol::constructors<glm::vec4(), glm::vec4(float, float, float, float)>(),
+        "x", &glm::vec4::x,
+        "y", &glm::vec4::y,
+        "z", &glm::vec4::z,
+        "w", &glm::vec4::w
+    );
 
 
     luaState.new_usertype<CustomCompCont>("CustomCompCont",
@@ -79,7 +101,7 @@ void ScriptingSystem::Init()
         "begin", &CustomCompCont::begin,
         "end", &CustomCompCont::end,
         "size", &CustomCompCont::size
-        );
+    );
 
     /******************************************************************************/
     /*!
@@ -93,16 +115,26 @@ void ScriptingSystem::Init()
     LuaTransform();
     LuaRigidBody();
     LuaBoxCollider();
+    LuaSphereCollider();
+    LuaPlaneCollider();
     LuaScript();
+    LuaParent();
+    LuaChildren();
     LuaInput();
-
+    LuaAudio();
+    LuaInputMapSystem();
+    LuaPhysics();
+    LuaScripting();
+    LuaPointLight();
+    LuaMeshRenderer();
 
     /******************************************************************************/
     /*!
         Insert input system to LUA
      */
      /******************************************************************************/
-    luaState.new_enum("State", "HOLD", E_STATE::HOLD,
+    luaState.new_enum("State",
+        "HOLD", E_STATE::HOLD,
         "NOTPRESS", E_STATE::NOTPRESS, "PRESS", E_STATE::PRESS,
         "RELEASE", E_STATE::RELEASE);
     luaState.new_enum("Key",
@@ -133,6 +165,18 @@ void ScriptingSystem::Init()
     //    "BULLET", enum_tag::BULLET,
     //    "STATIC", enum_tag::STATIC,
     //    "BUILDING", enum_tag::BUILDING);
+
+    luaState.new_enum("AudioType",
+        "AUDIO_BGM", AUDIOTYPE::AUDIO_BGM,
+        "AUDIO_SFX", AUDIOTYPE::AUDIO_SFX,
+        "AUDIO_NULL", AUDIOTYPE::AUDIO_NULL,
+        "UNDEFINED", AUDIOTYPE::UNDEFINED);
+
+    luaState.new_enum("MaterialType",
+        "DIFFUSE", MaterialType::DIFFUSE,
+        "NORMAL", MaterialType::NORMAL,
+        "EMISSION", MaterialType::EMISSION,
+        "SPECULAR", MaterialType::SPECULAR);
 }
 
 void ScriptingSystem::Update(float dt)
@@ -185,12 +229,29 @@ void ScriptingSystem::Exit()
     // Empty for now
 }
 
+void ScriptingSystem::LoadHelper()
+{
+    sol::environment env = { systemManager->mScriptingSystem->luaState, sol::create, systemManager->mScriptingSystem->luaState.globals() };
+
+    sol::protected_function_result result = systemManager->mScriptingSystem->luaState.script_file("../assets/Scripts/Helper.lua", env);
+    if (!result.valid())
+    {
+        // print what error was invoked when the script was loading
+        sol::error err = result;
+        std::cout << "Error opening file!" << std::endl;
+        std::cout << err.what() << std::endl;
+    }
+
+    luaState["Helper"] = env["Helper"];
+    luaState.script("Helper = readonlytable(Helper)");
+}
+
 void ScriptingSystem::ScriptAlive(const Entity& entity)
 {
     auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
     for (Script& script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
     {
-        script.Load(entity);
+        //script.Load(entity);
         script.Run("Alive");
     }
 }
@@ -200,7 +261,6 @@ void ScriptingSystem::ScriptStart(const Entity& entity)
     auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
     for (Script& script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
     {
-        script.Load(entity);
         script.Run("Start");
     }
 }
@@ -221,6 +281,33 @@ void ScriptingSystem::ScriptDead(const Entity& entity)
     {
         script.Run("Dead");
     }
+}
+
+void ScriptingSystem::LoadRunScript(Entity& entity)
+{
+    auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
+    for (Entity entity : scriptEntities)
+    {
+        for (Script script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
+        {
+            script.Load(entity);
+            script.Run("Alive");
+        }
+    }
+}
+
+void ScriptingSystem::AddScript(Entity& entity, std::string fileName)
+{
+    // Check if there is script component, else add it before the script is added
+    if (!entity.HasComponent<Scripts>())
+        entity.AddComponent<Scripts>();
+    Script temp;
+    std::replace(fileName.begin(), fileName.end(), '\\', '/');
+    temp.scriptFile = fileName;
+    temp.env = { systemManager->mScriptingSystem->luaState, sol::create, systemManager->mScriptingSystem->luaState.globals() };
+    temp.Load(entity);
+    ScriptAlive(entity);
+    entity.GetComponent<Scripts>().scriptsContainer.push_back(temp);
 }
 
 void ScriptingSystem::TestSSSU()
