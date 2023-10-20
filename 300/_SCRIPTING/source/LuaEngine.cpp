@@ -7,6 +7,7 @@
 #include "Audio/AudioSystem.h"
 #include "Input/InputMapSystem.h"
 #include "GameState/GameStateManager.h"
+#include "Graphics/GraphicsSystem.h"
 
 void LuaComponentContainer()
 {
@@ -25,7 +26,7 @@ void LuaEngine()
         "mAudioSystem", &SystemManager::GetAudioPointer,
         "mInputActionSystem", &SystemManager::GetInputMapSystemPointer,
         "mGameStateSystem", &SystemManager::GetGameStateSystem
-        );
+    );
 }
 
 void LuaECS()
@@ -40,35 +41,71 @@ void LuaECS()
         //"GetEntitiesWithRigidBody", &ECS::GetEntitiesWith<RigidBody>,
         //"GetEntitiesWithBoxCollider", &ECS::GetEntitiesWith<BoxCollider>,
         //"GetEntitiesWithScripts", &ECS::GetEntitiesWith<Scripts>
-        );
+    );
 }
 
 #define DECLARE_COMPONENT(str, type) str, sol::resolve<type&()>(&Entity::GetComponent<type>)
+#define ADD_COMPONENT(str, type) str, sol::resolve<type&()>(&Entity::AddComponent<type>)
 
 void LuaEntity()
 {
     systemManager->mScriptingSystem->luaState.new_usertype<Entity>(
         "Entity", sol::constructors<Entity(std::uint32_t)>(),
         "id", &Entity::id,
-        DECLARE_COMPONENT("GetGeneralComponent", General),
-        "HasGeneralComponent", &Entity::HasComponent<General>,
-        DECLARE_COMPONENT("GetTransformComponent", Transform),
-        "HasTransformComponent", &Entity::HasComponent<Transform>,
-        DECLARE_COMPONENT("GetRigidBodyComponent", RigidBody),
-        "HasRigidBodyComponent", &Entity::HasComponent<RigidBody>,
-        DECLARE_COMPONENT("GetBoxColliderComponent", BoxCollider),
-        "HasBoxColliderComponent", &Entity::HasComponent<BoxCollider>,
-        DECLARE_COMPONENT("GetSphereColliderComponent", SphereCollider),
-        "HasSphereColliderComponent", &Entity::HasComponent<SphereCollider>,
-        DECLARE_COMPONENT("GetPlaneColliderComponent", PlaneCollider),
-        "HasPlaneColliderComponent", &Entity::HasComponent<PlaneCollider>,
-        DECLARE_COMPONENT("GetScriptsComponent", Scripts),
-        "HasScriptsComponent", &Entity::HasComponent<Scripts>,
-        DECLARE_COMPONENT("GetParentComponent", Parent),
-        "HasParentComponent", &Entity::HasComponent<Parent>,
-        DECLARE_COMPONENT("GetChildrenComponent", Children),
-        "HasChildrenComponent", &Entity::HasComponent<Children>
-        );
+        DECLARE_COMPONENT("GetGeneral", General),
+        "HasGeneral", &Entity::HasComponent<General>,
+
+        DECLARE_COMPONENT("GetTransform", Transform),
+        "HasTransform", &Entity::HasComponent<Transform>,
+
+        ADD_COMPONENT("AddRigidBody", RigidBody),
+        DECLARE_COMPONENT("GetRigidBody", RigidBody),
+        "HasRigidBody", &Entity::HasComponent<RigidBody>,
+
+        ADD_COMPONENT("AddBoxCollider", BoxCollider),
+        DECLARE_COMPONENT("GetBoxCollider", BoxCollider),
+        "HasBoxCollider", &Entity::HasComponent<BoxCollider>,
+
+        ADD_COMPONENT("AddSphereCollider", SphereCollider),
+        DECLARE_COMPONENT("GetSphereCollider", SphereCollider),
+        "HasSphereCollider", &Entity::HasComponent<SphereCollider>,
+
+        ADD_COMPONENT("AddPlaneCollider", PlaneCollider),
+        DECLARE_COMPONENT("GetPlaneCollider", PlaneCollider),
+        "HasPlaneCollider", &Entity::HasComponent<PlaneCollider>,
+
+        ADD_COMPONENT("AddAABBCollider", AABBCollider),
+        DECLARE_COMPONENT("GetAABBCollider", AABBCollider),
+        "HasAABBCollider", &Entity::HasComponent<AABBCollider>,
+
+        ADD_COMPONENT("AddCapsuleCollider", CapsuleCollider),
+        DECLARE_COMPONENT("GetCapsuleCollider", CapsuleCollider),
+        "HasCapsuleCollider", &Entity::HasComponent<CapsuleCollider>,
+
+        ADD_COMPONENT("AddAudio", Audio),
+        DECLARE_COMPONENT("GetAudio", Audio),
+        "HasAudio", &Entity::HasComponent<Audio>,
+
+        ADD_COMPONENT("AddScripts", Scripts),
+        DECLARE_COMPONENT("GetScripts", Scripts),
+        "HasScripts", &Entity::HasComponent<Scripts>,
+
+        ADD_COMPONENT("AddParent", Parent),
+        DECLARE_COMPONENT("GetParent", Parent),
+        "HasParent", &Entity::HasComponent<Parent>,
+
+        ADD_COMPONENT("AddChildren", Children),
+        DECLARE_COMPONENT("GetChildren", Children),
+        "HasChildren", &Entity::HasComponent<Children>,
+
+        ADD_COMPONENT("AddPointLight", PointLight),
+        DECLARE_COMPONENT("GetPointLight", PointLight),
+        "HasPointLight", &Entity::HasComponent<PointLight>,
+
+        ADD_COMPONENT("AddMeshRenderer", MeshRenderer),
+        DECLARE_COMPONENT("GetMeshRenderer", MeshRenderer),
+        "HasMeshRenderer", &Entity::HasComponent<MeshRenderer>
+    );
 }
 
 
@@ -82,7 +119,7 @@ void LuaGeneral()
         "isActive", &General::isActive,
         "GetTag", &General::GetTag,
         "SetTag", &General::SetTag
-        );
+    );
 }
 
 void LuaTransform()
@@ -92,7 +129,7 @@ void LuaTransform()
         "mScale", &Transform::mScale,
         "mRotate", &Transform::mRotate,
         "mTranslate", &Transform::mTranslate
-        );
+    );
 }
 
 void LuaRigidBody()
@@ -103,7 +140,7 @@ void LuaRigidBody()
         "mMaterial", &RigidBody::mMaterial,
         "mMotion", &RigidBody::mMotion,
         "mVelocity", &RigidBody::mVelocity
-        );
+    );
 }
 
 void LuaBoxCollider()
@@ -112,7 +149,7 @@ void LuaBoxCollider()
         "BoxCollider", sol::constructors<>(),
         "mScaleOffset", &BoxCollider::mScaleOffset,
         "mTranslateOffset", &BoxCollider::mTranslateOffset
-        );
+    );
 }
 
 void LuaSphereCollider()
@@ -121,7 +158,7 @@ void LuaSphereCollider()
         "SphereCollider", sol::constructors<>(),
         "mScaleOffset", &SphereCollider::mScaleOffset,
         "mTranslateOffset", &SphereCollider::mTranslateOffset
-        );
+    );
 }
 
 void LuaPlaneCollider()
@@ -130,7 +167,7 @@ void LuaPlaneCollider()
         "PlaneCollider", sol::constructors<>(),
         "mNormal", &PlaneCollider::mNormal,
         "mTranslateOffset", &PlaneCollider::mTranslateOffset
-        );
+    );
 }
 
 void LuaScript()
@@ -138,7 +175,7 @@ void LuaScript()
     systemManager->mScriptingSystem->luaState.new_usertype<Scripts>(
         "Scripts", sol::constructors<>(),
         "mScriptFile", &Scripts::mScriptFile
-        );
+    );
 }
 
 void LuaParent()
@@ -148,7 +185,7 @@ void LuaParent()
         "mPrevSibling", &Parent::mPrevSibling,
         "mNextSibling", &Parent::mNextSibling,
         "mParent", &Parent::mParent
-        );
+    );
 }
 
 void LuaChildren()
@@ -157,7 +194,7 @@ void LuaChildren()
         "Children", sol::constructors<>(),
         "mNumChildren", &Children::mNumChildren,
         "mFirstChild", &Children::mFirstChild
-        );
+    );
 }
 
 void LuaInput()
@@ -166,7 +203,7 @@ void LuaInput()
         "Input", sol::constructors<>(),
         "CheckKey", &Input::CheckKey,
         "GetScroll", &Input::GetScroll
-        );
+    );
 }
 
 void LuaAudio()
@@ -186,7 +223,7 @@ void LuaAudio()
         "TogglePauseSFXSounds", &AudioSystem::TogglePauseSFXSounds,
         "TogglePauseBGMSounds", &AudioSystem::TogglePauseBGMSounds,
         "TogglePauseSpecific", &AudioSystem::TogglePauseSpecific
-        );
+    );
 }
 
 void LuaInputMapSystem()
@@ -199,7 +236,7 @@ void LuaInputMapSystem()
         "GetKey", &InputMapSystem::GetKey,
         "GetKeyUp", &InputMapSystem::GetKeyUp,
         "GetKeyDown", &InputMapSystem::GetKeyDown
-        );
+    );
 }
 
 void LuaPhysics()
@@ -207,7 +244,7 @@ void LuaPhysics()
     systemManager->mScriptingSystem->luaState.new_usertype<PhysicsSystem>(
         "mPhysicsSystem", sol::constructors<>(),
         "SetVelocity", &PhysicsSystem::SetVelocity
-        );
+    );
 }
 
 void LuaScripting()
@@ -215,5 +252,23 @@ void LuaScripting()
     systemManager->mScriptingSystem->luaState.new_usertype<ScriptingSystem>(
         "mScriptingSystem", sol::constructors<>(),
         "AddScript", &ScriptingSystem::AddScript
-        );
+    );
+}
+
+void LuaPointLight()
+{
+    systemManager->mScriptingSystem->luaState.new_usertype<PointLight>(
+        "PointLight", sol::constructors<>(),
+        "SetColor", &PointLight::SetColor
+    );
+}
+
+void LuaMeshRenderer()
+{
+    systemManager->mScriptingSystem->luaState.new_usertype<MeshRenderer>(
+        "MeshRenderer", sol::constructors<>(),
+        "SetColor", &MeshRenderer::SetColor,
+        "SetMesh", &MeshRenderer::SetMesh,
+        "SetTexture", &MeshRenderer::SetTexture
+    );
 }

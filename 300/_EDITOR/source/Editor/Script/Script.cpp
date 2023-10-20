@@ -24,7 +24,8 @@ void InspectScript(Script& script)
 
 		for (auto& e : script.variables) {
 			std::visit([&](auto&& v) {
-				v = script.env[e.first].get<std::remove_reference<decltype(v)>::type>();
+				//v = script.env[e.first].get<std::remove_reference<decltype(v)>::type>();
+				v = script.env[e.first].get<decltype(v)>();
 				ImGuiHelper::Render(e.first.c_str(), &v);
 				script.env[e.first] = v;
 				}, e.second);

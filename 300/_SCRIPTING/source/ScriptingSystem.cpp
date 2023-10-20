@@ -13,7 +13,7 @@ The functions
 - Init()
 Registers scripting system and lua state. Data like enums
 will be passed to lua here. Init also calls the functions
-from file LuaEngine, where it contains the passing in 
+from file LuaEngine, where it contains the passing in
 of more data.
 
 - Update()
@@ -53,7 +53,7 @@ namespace sol {
 void ScriptingSystem::Init()
 {
     luaState.open_libraries();
-    
+
     // Function to set a lua table as readyonly
     luaState.script(R"(function readonlytable(table)
                       return setmetatable({}, {
@@ -78,14 +78,22 @@ void ScriptingSystem::Init()
         "Vec2", sol::constructors<glm::vec2(), glm::vec2(float, float)>(),
         "x", &glm::vec2::x,
         "y", &glm::vec2::y
-        );
+    );
 
     luaState.new_usertype<glm::vec3>(
         "Vec3", sol::constructors<glm::vec3(), glm::vec3(float, float, float)>(),
         "x", &glm::vec3::x,
         "y", &glm::vec3::y,
         "z", &glm::vec3::z
-        );
+    );
+
+    luaState.new_usertype<glm::vec4>(
+        "Vec4", sol::constructors<glm::vec4(), glm::vec4(float, float, float, float)>(),
+        "x", &glm::vec4::x,
+        "y", &glm::vec4::y,
+        "z", &glm::vec4::z,
+        "w", &glm::vec4::w
+    );
 
 
     luaState.new_usertype<CustomCompCont>("CustomCompCont",
@@ -93,7 +101,7 @@ void ScriptingSystem::Init()
         "begin", &CustomCompCont::begin,
         "end", &CustomCompCont::end,
         "size", &CustomCompCont::size
-        );
+    );
 
     /******************************************************************************/
     /*!
@@ -107,12 +115,18 @@ void ScriptingSystem::Init()
     LuaTransform();
     LuaRigidBody();
     LuaBoxCollider();
+    LuaSphereCollider();
+    LuaPlaneCollider();
     LuaScript();
+    LuaParent();
+    LuaChildren();
     LuaInput();
     LuaAudio();
     LuaInputMapSystem();
     LuaPhysics();
     LuaScripting();
+    LuaPointLight();
+    LuaMeshRenderer();
 
     /******************************************************************************/
     /*!
@@ -157,6 +171,12 @@ void ScriptingSystem::Init()
         "AUDIO_SFX", AUDIOTYPE::AUDIO_SFX,
         "AUDIO_NULL", AUDIOTYPE::AUDIO_NULL,
         "UNDEFINED", AUDIOTYPE::UNDEFINED);
+
+    luaState.new_enum("MaterialType",
+        "DIFFUSE", MaterialType::DIFFUSE,
+        "NORMAL", MaterialType::NORMAL,
+        "EMISSION", MaterialType::EMISSION,
+        "SPECULAR", MaterialType::SPECULAR);
 }
 
 void ScriptingSystem::Update(float dt)

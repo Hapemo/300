@@ -34,3 +34,5 @@ void LuaAudio();
 void LuaInputMapSystem();
 void LuaPhysics();
 void LuaScripting();
+void LuaPointLight();
+void LuaMeshRenderer();

@@ -1,24 +1,27 @@
 test = "HIIIII" 
 local test4 = 6.0
 vec = Vec3.new(3, 5, 7)
+vec4 = Vec4.new(6,7,8,9)
 name = "Girl"
 speed = 20
 create = 2
+testing = 5
 
 function Alive()
 
 end
 
 function Update()
-
+    testing = testing + 1;
     --testie = systemManager.ecs:NewEntity();
     --For M1 demo
-    entity = Entity.new(script_entity.id)
+    --entity = Entity.new(script_entity.id)
+    entity = Helper.GetScriptEntity(script_entity.id)
     if entity == nil then
         print("Entity nil in script!")
     end
-    generalComponent = entity:GetGeneralComponent()
-    transformComponent = entity:GetTransformComponent()
+    generalComponent = entity:GetGeneral()
+    transformComponent = entity:GetTransform()
     -- Change entity name to enemy
     generalComponent.name = "Enemy"
     --[[ Get entity Tag
@@ -60,7 +63,6 @@ function Update()
                 testEntity = systemManager.ecs:NewEntityByScene();
             end
             create = create + 1
-            print("came in here!!!")
         end
 
         -- Physics Set Velocity function
@@ -68,8 +70,15 @@ function Update()
         -- physicsSys:SetVelocity(entity, vec);
     elseif Input.CheckKey(State.HOLD, Key.KEY_B) then
         testEntity = systemManager.ecs:NewEntityByScene();
-        scriptingSys = systemManager:mScriptingSystem();
-        scriptingSys:AddScript(testEntity, "../assets\\Scripts\\Print.lua");
+        -- scriptingSys = systemManager:mScriptingSystem();
+        -- scriptingSys:AddScript(testEntity, "../assets\\Scripts\\Print.lua");
+        rigidBodyComponent = testEntity:AddRigidBody();
+        pointLightComponent = testEntity:AddPointLight();
+        meshComponent = testEntity:AddMeshRenderer();
+        pointLightComponent:SetColor(vec);
+        meshComponent:SetColor(vec4);
+        meshComponent:SetMesh("cube");
+        meshComponent:SetTexture(MaterialType.NORMAL, "Wood Material 15_Normal");
         --Helper.printTest()
         --Helper.test = 300
         --script_entity.id = 60
