@@ -154,6 +154,11 @@ public:
 	Entity NewEntity();
 
 	/*!*****************************************************************************
+	Creates a new entity and assign it to the correct scene.
+	*******************************************************************************/
+	Entity NewEntityByScene();
+
+	/*!*****************************************************************************
 	Deletes an entity and all its components.
 	*******************************************************************************/
 	void DeleteEntity(Entity e);
@@ -222,6 +227,8 @@ public:
 	~ECS();
 
 	const Entity NullEntity;
+
+	int SelectedScene;
 };
 
 

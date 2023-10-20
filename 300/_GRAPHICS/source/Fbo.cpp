@@ -28,6 +28,8 @@ void GFX::FBO::Create(int width, int height, bool editorMode)
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, width, height, 0, GL_RGBA, GL_FLOAT, NULL);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	glBindTexture(GL_TEXTURE_2D, 0);
 	
 	// Creating Entity ID Attachment
@@ -37,13 +39,26 @@ void GFX::FBO::Create(int width, int height, bool editorMode)
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_R32UI, width, height, 0, GL_RED_INTEGER, GL_UNSIGNED_INT, NULL);
 	glBindTexture(GL_TEXTURE_2D, 0);
 
+	// Creating BrightColors Attachment
+	glGenTextures(1, &mBrightColorsAttachment);
+	glBindTexture(GL_TEXTURE_2D, mBrightColorsAttachment);
+	// Specifying size
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, width, height, 0, GL_RGBA, GL_FLOAT, NULL);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
 	// Attach all Attachments to currently bound framebuffer
 	glNamedFramebufferTexture(mID, GL_COLOR_ATTACHMENT0, mColorAttachment, 0);			// 0
 	glNamedFramebufferTexture(mID, GL_COLOR_ATTACHMENT1, mEntityIDAttachment, 0);		// 1
+	glNamedFramebufferTexture(mID, GL_COLOR_ATTACHMENT2, mBrightColorsAttachment, 0);	// 2
 
 	// Creating renderbuffer object for depth testing
 	glCreateRenderbuffers(1, &mRboID);
 	glNamedRenderbufferStorage(mRboID, GL_DEPTH_COMPONENT, width, height);
+
 	// Attaching renderbuffer object to framebuffer
 	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, mRboID);
 
@@ -61,6 +76,15 @@ void GFX::FBO::PrepForDraw()
 	glClearColor(.2f, .2f, .2f, 1.f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	// Clear Bright Colors Attachment
+	glDrawBuffer(GL_COLOR_ATTACHMENT2);
+	glClearColor(0.f, 0.f, 0.f, 0.f);
+	glClear(GL_COLOR_BUFFER_BIT);
+
+	// Renders to Game Attachment by default
+	GLuint attachments[2] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT2 };
+	glDrawBuffers(2, attachments);
+
 	if (mEditorMode)	// Need to render to both color attachments and Entity ID attachment
 	{
 		// Clear Entity ID buffer
@@ -75,10 +99,9 @@ void GFX::FBO::PrepForDraw()
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		// Set all attachments for output
-		GLuint allAttachments[2] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1 };
-		glDrawBuffers(2, allAttachments);
+		GLuint allAttachments[3] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2 };
+		glDrawBuffers(3, allAttachments);
 	}
-	// Renders to Game Attachment by default
 
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LEQUAL);
@@ -121,9 +144,156 @@ void GFX::FBO::Resize(int width, int height)
 	glBindTexture(GL_TEXTURE_2D, mEntityIDAttachment);
 	// Specifying new attachment size
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_R32UI, width, height, 0, GL_RED_INTEGER, GL_UNSIGNED_INT, NULL);
+	// Unbind 
+	glBindTexture(GL_TEXTURE_2D, 0);
 
+	// Bind Bright Color Attachment to be resized
+	glBindTexture(GL_TEXTURE_2D, mBrightColorsAttachment);
+	// Specifying new attachment size
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, width, height, 0, GL_RGBA, GL_FLOAT, NULL);
 	// Unbind 
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 	glNamedRenderbufferStorage(mRboID, GL_DEPTH_COMPONENT, width, height);
+}
+
+void GFX::PingPongFBO::Create(int width, int height)
+{
+	mWidth = width;
+	mHeight = height;
+
+	//glGenFramebuffers(2, pingpongFBO);
+	//glGenTextures(2, pingpongColorbuffers);
+	//for (unsigned int i{}; i < 2; ++i)
+	//{
+	//	glBindFramebuffer(GL_FRAMEBUFFER, pingpongFBO[0]);
+	//	glBindTexture(GL_TEXTURE_2D, pingpongColorbuffers[i]);
+	//	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, width, height, 0, GL_RGBA, GL_FLOAT, NULL);
+	//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	//	glFramebufferTexture2D( GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, pingpongColorbuffers[i], 0 );
+	//}
+
+
+	// Create and bind framebuffer
+	glGenFramebuffers(1, &pingpongFBO);
+	glBindFramebuffer(GL_FRAMEBUFFER, pingpongFBO);
+
+	for (int i{}; i < 2; ++i)
+	{
+		glGenTextures(1, &pingpongColorbuffers[i]);
+		glBindTexture(GL_TEXTURE_2D, pingpongColorbuffers[i]);
+		// Specifying texture size
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, width, height, 0, GL_RGBA, GL_FLOAT, NULL);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+		glBindTexture(GL_TEXTURE_2D, 0);
+	}
+
+	// Attach all Attachments to currently bound framebuffer
+	glNamedFramebufferTexture(pingpongFBO, GL_COLOR_ATTACHMENT0, pingpongColorbuffers[0], 0);		// 0
+	glNamedFramebufferTexture(pingpongFBO, GL_COLOR_ATTACHMENT1, pingpongColorbuffers[1], 0);		// 1
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+}
+
+void GFX::PingPongFBO::GaussianBlur(GFX::Shader& blurShader, GFX::FBO& hostFramebuffer)
+{
+	bool horizontal{ true }, first_iteration{ true };
+
+	blurShader.Activate();
+	m_Quad.Bind();
+
+	for (unsigned int i{}; i < mblurAmount; ++i)
+	{
+		glDrawBuffer(GL_COLOR_ATTACHMENT0 + (int)!horizontal);
+		glUniform1i(blurShader.GetUniformLocation("horizontal"), horizontal);
+
+		glBindTexture(GL_TEXTURE_2D, first_iteration ? hostFramebuffer.GetBrightColorsAttachment() : pingpongColorbuffers[(int)!horizontal]);
+		
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+
+		horizontal = !horizontal;
+		if (first_iteration)
+			first_iteration = false;
+
+	}
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	m_Quad.Unbind();
+	blurShader.Deactivate();
+}
+
+
+void GFX::PingPongFBO::PrepForDraw()
+{
+	// bind framebuffer as buffer to render to
+	glBindFramebuffer(GL_FRAMEBUFFER, pingpongFBO);
+	
+	for (int i{}; i < 2; ++i)
+	{
+		// Clear Color attachments
+		glDrawBuffer(GL_COLOR_ATTACHMENT0 + i);
+		glClearColor(0.f, 0.f, 0.f, 1.f);
+		glClear(GL_COLOR_BUFFER_BIT);
+	}
+
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LEQUAL);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+}
+
+
+void GFX::PingPongFBO::Resize(int width, int height)
+{
+	mWidth = width;
+	mHeight = height;
+
+	for (int i{}; i < 2; ++i)
+	{
+		// Bind Color Attachment to be resized
+		glBindTexture(GL_TEXTURE_2D, pingpongColorbuffers[i]);
+		// Specifying new attachment size
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, width, height, 0, GL_RGBA, GL_FLOAT, NULL);
+		// Unbind 
+		glBindTexture(GL_TEXTURE_2D, 0);
+	}
+}
+
+
+GFX::Quad2D::Quad2D()
+{
+	glGenVertexArrays(1, &quadVAO);
+	glGenBuffers(1, &quadVBO);
+	glBindVertexArray(quadVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), quadVertices, GL_STATIC_DRAW);
+
+	// Set up vertex attribute pointers
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);														// Position attribute
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
+	glEnableVertexAttribArray(1);														// Texture coordinate attribute
+
+	// Unbind VBO and VAO
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
+}
+
+void GFX::Quad2D::Bind()
+{
+	glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
+	glBindVertexArray(quadVAO);
+}
+
+void GFX::Quad2D::Unbind()
+{
+	glBindVertexArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }

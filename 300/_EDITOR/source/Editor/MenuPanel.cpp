@@ -22,6 +22,7 @@ Contains main loop for the logic of MenuPanel.
 #include "ECS/ECS_Systems.h"
 #include "GameState/GameStateManager.h"
 #include "Hierarchy.h"
+#include "ScriptingSystem.h"
 #include "KeybindWindow.h"
 #include "ShaderCompiler.h"
 

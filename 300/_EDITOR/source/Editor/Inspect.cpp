@@ -1,4 +1,4 @@
-#include "ECS_Components.h"
+#include "ECS/ECS_Components.h"
 /*!*************************************************************************
 ****
 \file Inspect.cpp
@@ -52,9 +52,6 @@ Inspect display for RigidBody components
 
 - Audio::Inspect
 Inspect display for Audio components
-
-- InputActionMapEditor::Inspect
-Inspect display for InputActionMapEditor components.
 ****************************************************************************
 ***/
 
@@ -71,6 +68,8 @@ Inspect display for InputActionMapEditor components.
 #include "Debug/Logger.h"
 #include "Audio/AudioSystem.h"
 #include "Input/InputMapSystem.h"
+#include <TextureCompressor.h>
+#include "Script/Script.h"
 
 #include <descriptor.h>
 #include <string>
@@ -149,11 +148,19 @@ void Inspect::update()
 			Audio& audio = ent.GetComponent<Audio>();
 			audio.Inspect();
 		}
-
-		if (ent.HasComponent<InputActionMapEditor>()) {
-			InputActionMapEditor& inputAction = ent.GetComponent<InputActionMapEditor>();
-			inputAction.Inspect();
+		if (ent.HasComponent<UIrenderer>()) {
+			UIrenderer& render = ent.GetComponent<UIrenderer>();
+			render.Inspect();
 		}
+
+		if (ent.HasComponent<VFX>()) {
+			VFX& vfx = ent.GetComponent<VFX>();
+			vfx.Inspect();
+		}
+		//if (ent.HasComponent<InputActionMapEditor>()) {
+		//	InputActionMapEditor& inputAction = ent.GetComponent<InputActionMapEditor>();
+		//	inputAction.Inspect();
+		//}
 		//--------------------------------------------// must be at the LAST OF THIS LOOP
 		Add_component(); 
 	}
@@ -219,6 +226,10 @@ void Inspect::Add_component() {
 		if (ImGui::Selectable("Audio")) {
 			if (!Entity(Hierarchy::selectedId).HasComponent<Audio>())
 				Entity(Hierarchy::selectedId).AddComponent<Audio>();
+		}	
+		if (ImGui::Selectable("VFX")) {
+			if (!Entity(Hierarchy::selectedId).HasComponent<VFX>())
+				Entity(Hierarchy::selectedId).AddComponent<VFX>();
 		}
 		if (ImGui::Selectable("MeshRenderer")) {
 			if (!Entity(Hierarchy::selectedId).HasComponent<MeshRenderer>()) {
@@ -228,10 +239,9 @@ void Inspect::Add_component() {
 
 			}
 		}
-
-		if (ImGui::Selectable("InputActionMapEditor")) {
-			if (!Entity(Hierarchy::selectedId).HasComponent<InputActionMapEditor>())
-				Entity(Hierarchy::selectedId).AddComponent<InputActionMapEditor>();
+		if (ImGui::Selectable("UIrenderer")) {
+			if (!Entity(Hierarchy::selectedId).HasComponent<UIrenderer>())
+				Entity(Hierarchy::selectedId).AddComponent<UIrenderer>();
 		}
 
 		ImGui::EndCombo();
@@ -256,6 +266,21 @@ void General::Inspect() {
 	ImGui::InputText("##naming",&name);
 
 
+	//ImGui::Text("Tag");
+
+	//ImGui::SameLine();
+	//ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+	//	- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+
+	//if (ImGui::BeginCombo("##Tag", tag[tagid].c_str())) {
+
+	//	for (int i = 0; i < 5; i++) {
+	//		if (ImGui::Selectable(tag[i].c_str())) {
+	//			tagid = i;
+	//		}
+	//	}
+	//	ImGui::EndCombo();
+	//}
 
 
 	ImGui::Text("Tag");
@@ -264,16 +289,16 @@ void General::Inspect() {
 	ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
 		- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
 
-	if (ImGui::BeginCombo("##Tag", tag[tagid].c_str())) {
+	if (ImGui::BeginCombo("##Tag", enum_tag::ToString(tagid))) {
 
-		for (int i = 0; i < 5; i++) {
-			if (ImGui::Selectable(tag[i].c_str())) {
-				tagid = i;
+		for (int i = 0; i < enum_tag::COUNT; i++) {
+			enum_tag::enum_tag temp = static_cast<enum_tag::enum_tag>(i);
+			if (ImGui::Selectable(enum_tag::ToString(temp))) {
+				tagid = static_cast<enum_tag::enum_tag>(i);
 			}
 		}
 		ImGui::EndCombo();
 	}
-
 }
 
 /***************************************************************************/
@@ -382,19 +407,19 @@ void PointLight::Inspect()
 		ImGui::SameLine();
 		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
 			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
-		ImGui::DragFloat("##Linear Falloff", (float*)&mLinearFalloff);
+		ImGui::DragFloat("##Linear Falloff", (float*)&mLinearFalloff, 0.1f);
 
 		ImGui::Text("Quadratic Falloff");
 		ImGui::SameLine();
 		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
 			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
-		ImGui::DragFloat("##Quadratic Falloff", (float*)&mQuadraticFalloff);
+		ImGui::DragFloat("##Quadratic Falloff", (float*)&mQuadraticFalloff, 0.1f);
 
 		ImGui::Text("Intensity");
 		ImGui::SameLine();
 		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
 			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
-		ImGui::DragFloat("##Intensity", (float*)&mIntensity);
+		ImGui::DragFloat("##Intensity", (float*)&mIntensity, 0.1f);
 
 
 	}
@@ -431,8 +456,9 @@ void Scripts::Inspect() {
 					Script script;
 					script.scriptFile = dataScript;
 					script.env = { systemManager->mScriptingSystem->luaState, sol::create, systemManager->mScriptingSystem->luaState.globals() };
+					script.Load(Hierarchy::selectedId);
 					scripts.scriptsContainer.push_back(script);
-					//std::cout << "Script " << script.scriptFile << ".lua added to entity " << std::to_string((int)Hierarchy::selectedId) << std::endl;
+					//std::cout << "Script " << script.scriptFile << " added to entity " << std::to_string((int)Hierarchy::selectedId) << std::endl;
 				}
 				// if entity already has scripts attached, check if duplicate 
 				else
@@ -455,6 +481,9 @@ void Scripts::Inspect() {
 						Script script;
 						script.scriptFile = dataScript;
 						script.env = { systemManager->mScriptingSystem->luaState, sol::create, systemManager->mScriptingSystem->luaState.globals() };
+						
+						script.Load(Hierarchy::selectedId);
+
 						scripts.scriptsContainer.push_back(script);
 						//std::cout << "Script " << script.scriptFile << ".lua added to entity " << std::to_string((int)Hierarchy::selectedId) << std::endl;
 						PINFO("Script %s added to entity %s", script.scriptFile.c_str(), std::to_string((int)Hierarchy::selectedId).c_str());
@@ -468,14 +497,16 @@ void Scripts::Inspect() {
 		ImGui::Text("Entity contains scripts: ");
 		for (auto& elem : scripts.scriptsContainer)
 		{
-			bool selected{};
-			ImGui::Selectable(elem.scriptFile.c_str(), &selected);
-			if (ImGui::IsItemClicked(ImGuiMouseButton_Left)) {
+			ImGui::SetNextItemOpen(true);
+			if (ImGui::TreeNode(elem.scriptFile.c_str())) {
+				if (ImGui::IsItemClicked(1)) {
+					open_popup = true;
+					deleteScript = elem.scriptFile;
+				}
+				InspectScript(elem);
+				ImGui::TreePop();
 			}
-			if (ImGui::IsItemClicked(1)) {
-				open_popup = true;
-				deleteScript = elem.scriptFile;
-			}
+			
 		}
 
 		if (open_popup) {
@@ -717,7 +748,7 @@ void MeshRenderer::Inspect()
 				std::string GEOM_Descriptor_Filepath;
 				unsigned guid;
 
-				bool descFilePresent = _GEOM::CheckAndCreateDescriptorFile(data_str, GEOM_Descriptor_Filepath);
+				bool descFilePresent = _GEOM::CheckAndCreateDescriptorFileMESH(data_str, GEOM_Descriptor_Filepath);
 				std::string descfilepath = data_str + ".desc";
 				guid = _GEOM::GetGUID(descfilepath);
 
@@ -773,23 +804,56 @@ void MeshRenderer::Inspect()
 				ImGui::Text(textures[i].c_str());
 				if (ImGui::BeginDragDropTarget())
 				{
-					if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_TEXT")) {
-
+					if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_TEXT")) 
+					{
 						const char* data = (const char*)payload->Data;
 						std::string data_str = std::string(data);
+
 						mMaterialInstancePath[i] = data_str;
 
 						uid temp(mMaterialInstancePath[i]);
 						mTextureRef[i].data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(temp.id));
 					}
+
+					// file uncompressed texture for objects
+					if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_TEXT_UNCOMPRESS")) 
+					{
+						const char* data = (const char*)payload->Data;
+						std::string data_str = std::string(data);
+
+						std::string texturestr =systemManager->mResourceTySystem->compressed_texture_path + getFilename(data_str) + ".ctexture";
+						mMaterialInstancePath[i] = texturestr;
+
+						std::string TEXTURE_Descriptor_Filepath;
+						unsigned guid;
+
+						// check and ensures that the descriptor file for the materials are created
+						bool descFilePresent = _GEOM::CheckAndCreateDescriptorFileTEXTURE(data_str, TEXTURE_Descriptor_Filepath);
+						std::string descfilepath = data_str + ".desc";
+						guid = _GEOM::GetGUID(descfilepath);
+
+						// If the descriptor file is not present, then load it
+						if (!descFilePresent)
+						{
+							CompressImageFile(data_str.c_str(), systemManager->mResourceTySystem->compressed_texture_path.c_str());
+
+							// Load the textures into the list of usable textures within the engine
+							systemManager->mResourceTySystem->texture_Load(getFilename(data_str), guid);
+							mTextureRef[i] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(guid));
+							mTextureCont[i] = true;
+						}
+
+						uid temp(mMaterialInstancePath[i]);
+						mTextureRef[i] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(temp.id));
+						mTextureCont[i] = true;
+					}
+
 					ImGui::EndDragDropTarget();
 				}
 				int posstart = static_cast<int>(mMaterialInstancePath[i].find_last_of("/"));
 				int posend = static_cast<int>(mMaterialInstancePath[i].find_last_of("."));
 
 				std::string newpath = mMaterialInstancePath[i].substr(posstart+1, posend-(posstart+1));
-
-				
 
 				ImGui::SameLine();
 
@@ -1106,124 +1170,157 @@ void Audio::Inspect() {
 	Inspector functionality for Input action
 */
 /***************************************************************************/
-void InputActionMapEditor::Inspect()
-{
+//void InputActionMapEditor::Inspect()
+//{
+//	bool delete_component = true;
+//
+//	const char* action_maps[] = { "PlayerMovement", "MenuControls" };
+//	static std::string newActionMapName;
+//
+//	//std::string selected_map {};
+//
+//	if (ImGui::CollapsingHeader("InputActionMapEditor", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
+//	{
+//		auto ActionMapEntities = systemManager->ecs->GetEntitiesWith<InputActionMapEditor>();
+//		//int size = ActionMapEntities.size();
+//		InputActionMapEditor& editor_component = ActionMapEntities.get<InputActionMapEditor>(Hierarchy::selectedId);
+//
+//		// Create New [InputActionMap]
+//		ImGui::Text("Create new InputActionMap");
+//		ImGui::InputText(".", &newActionMapName);
+//		if (ImGui::Button("Add Action Map"))
+//		{
+//			// Creates a new [ActionMap] - component side.
+//			Entity(Hierarchy::selectedId).GetComponent<InputActionMapEditor>().AddActionMap(newActionMapName);
+//		}
+//
+//		// [InputActionMap] selected
+//		ImGui::Text("Select Action Map (to edit): ");
+//		if (ImGui::BeginCombo("Selected Action Map", mSelectedMapName.c_str()))
+//		{
+//
+//			for (auto& action_pair : editor_component.mActionMap)
+//			{
+//				if (ImGui::Selectable(action_pair.first.c_str()))
+//				{
+//					mSelectedMapName = action_pair.first.c_str();
+//
+//					selected = true;
+//				}
+//			}
+//			ImGui::EndCombo();
+//		}
+//
+//
+//		PseudoInputAction& selected_action = GetAction(mSelectedMapName);
+//
+//
+//		auto& e_key_map = systemManager->mInputActionSystem->e_key_mapping;
+//
+//		if (selected)
+//		{
+//			if (mSelectedMapName != " ")
+//			{
+//				if (ImGui::BeginCombo("Movement (UP)", selected_action.mSelectedBindingUP.c_str()))
+//				{
+//					// Iterate through the [Key Map]
+//					for (auto& e_keypair : e_key_map)
+//					{
+//						std::string key_name = e_keypair.first;
+//						if (ImGui::Selectable(key_name.c_str()))
+//						{
+//							selected_action.mKeyBindUp = (int)(e_key_map[key_name]);
+//							selected_action.LinkKeyBinding(KEY_UP, (E_KEY)selected_action.mKeyBindUp);
+//							selected_action.mSelectedBindingUP = e_keypair.first;
+//						}
+//					}
+//					ImGui::EndCombo();
+//				}
+//
+//				if (ImGui::BeginCombo("Movement (DOWN)", selected_action.mSelectedBindingDOWN.c_str()))
+//				{
+//					// Iterate through the [Key Map]
+//					for (auto& e_keypair : e_key_map)
+//					{
+//						std::string key_name = e_keypair.first;
+//						if (ImGui::Selectable(key_name.c_str()))
+//						{
+//							selected_action.mKeyBindDown = (int)(e_key_map[key_name]);
+//							selected_action.LinkKeyBinding(KEY_DOWN, (E_KEY)selected_action.mKeyBindDown);
+//							selected_action.mSelectedBindingDOWN = e_keypair.first;
+//						}
+//					}
+//
+//					ImGui::EndCombo();
+//				}
+//
+//				if (ImGui::BeginCombo("Movement (LEFT)", selected_action.mSelectedBindingLEFT.c_str()))
+//				{
+//					// Iterate through the [Key Map]
+//					for (auto& e_keypair : e_key_map)
+//					{
+//						std::string key_name = e_keypair.first;
+//						if (ImGui::Selectable(key_name.c_str()))
+//						{
+//							selected_action.mKeyBindLeft = (int)(e_key_map[key_name]);
+//							selected_action.LinkKeyBinding(KEY_LEFT, (E_KEY)selected_action.mKeyBindLeft);
+//							selected_action.mSelectedBindingLEFT = e_keypair.first;
+//						}
+//					}
+//
+//					ImGui::EndCombo();
+//				}
+//
+//				if (ImGui::BeginCombo("Movement (RIGHT)", selected_action.mSelectedBindingRIGHT.c_str()))
+//				{
+//					// Iterate through the [Key Map]
+//					for (auto& e_keypair : e_key_map)
+//					{
+//						std::string key_name = e_keypair.first;
+//						if (ImGui::Selectable(key_name.c_str()))
+//						{
+//							selected_action.mKeyBindRight = (int)(e_key_map[key_name]);
+//							selected_action.LinkKeyBinding(KEY_RIGHT, (E_KEY)selected_action.mKeyBindRight);
+//							selected_action.mSelectedBindingRIGHT = e_keypair.first;
+//						}
+//					}
+//
+//					ImGui::EndCombo();
+//				}
+//			}
+//		}
+//	}
+//}
+
+
+void UIrenderer::Inspect() {
 	bool delete_component = true;
 
-	const char* action_maps[] = { "PlayerMovement", "MenuControls" };
-	static std::string newActionMapName;
-
-	//std::string selected_map {};
-
-	if (ImGui::CollapsingHeader("InputActionMapEditor", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
+	if (ImGui::CollapsingHeader("UIrenderer", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
 	{
-		auto ActionMapEntities = systemManager->ecs->GetEntitiesWith<InputActionMapEditor>();
-		//int size = ActionMapEntities.size();
-		InputActionMapEditor& editor_component = ActionMapEntities.get<InputActionMapEditor>(Hierarchy::selectedId);
+		ImGui::Selectable(" ");
 
-		// Create New [InputActionMap]
-		ImGui::Text("Create new InputActionMap");
-		ImGui::InputText(".", &newActionMapName);
-		if (ImGui::Button("Add Action Map"))
+		if (ImGui::BeginDragDropTarget())
 		{
-			// Creates a new [ActionMap] - component side.
-			Entity(Hierarchy::selectedId).GetComponent<InputActionMapEditor>().AddActionMap(newActionMapName);
-		}
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_TEXT")) {
 
-		// [InputActionMap] selected
-		ImGui::Text("Select Action Map (to edit): ");
-		if (ImGui::BeginCombo("Selected Action Map", mSelectedMapName.c_str()))
-		{
+				const char* data = (const char*)payload->Data;
+				std::string data_str = std::string(data);
+				mTexPath = data_str;
 
-			for (auto& action_pair : editor_component.mActionMap)
-			{
-				if (ImGui::Selectable(action_pair.first.c_str()))
-				{
-					mSelectedMapName = action_pair.first.c_str();
-
-					selected = true;
-				}
+				uid temp(mTexPath);
+				mTextureRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(temp.id));
 			}
-			ImGui::EndCombo();
+			ImGui::EndDragDropTarget();
 		}
+	}
+}
 
-
-		PseudoInputAction& selected_action = GetAction(mSelectedMapName);
-
-
-		auto& e_key_map = systemManager->mInputActionSystem->e_key_mapping;
-
-		if (selected)
-		{
-			if (mSelectedMapName != " ")
-			{
-				if (ImGui::BeginCombo("Movement (UP)", selected_action.mSelectedBindingUP.c_str()))
-				{
-					// Iterate through the [Key Map]
-					for (auto& e_keypair : e_key_map)
-					{
-						std::string key_name = e_keypair.first;
-						if (ImGui::Selectable(key_name.c_str()))
-						{
-							selected_action.mKeyBindUp = (int)(e_key_map[key_name]);
-							selected_action.LinkKeyBinding(KEY_UP, (E_KEY)selected_action.mKeyBindUp);
-							selected_action.mSelectedBindingUP = e_keypair.first;
-						}
-					}
-					ImGui::EndCombo();
-				}
-
-				if (ImGui::BeginCombo("Movement (DOWN)", selected_action.mSelectedBindingDOWN.c_str()))
-				{
-					// Iterate through the [Key Map]
-					for (auto& e_keypair : e_key_map)
-					{
-						std::string key_name = e_keypair.first;
-						if (ImGui::Selectable(key_name.c_str()))
-						{
-							selected_action.mKeyBindDown = (int)(e_key_map[key_name]);
-							selected_action.LinkKeyBinding(KEY_DOWN, (E_KEY)selected_action.mKeyBindDown);
-							selected_action.mSelectedBindingDOWN = e_keypair.first;
-						}
-					}
-
-					ImGui::EndCombo();
-				}
-
-				if (ImGui::BeginCombo("Movement (LEFT)", selected_action.mSelectedBindingLEFT.c_str()))
-				{
-					// Iterate through the [Key Map]
-					for (auto& e_keypair : e_key_map)
-					{
-						std::string key_name = e_keypair.first;
-						if (ImGui::Selectable(key_name.c_str()))
-						{
-							selected_action.mKeyBindLeft = (int)(e_key_map[key_name]);
-							selected_action.LinkKeyBinding(KEY_LEFT, (E_KEY)selected_action.mKeyBindLeft);
-							selected_action.mSelectedBindingLEFT = e_keypair.first;
-						}
-					}
-
-					ImGui::EndCombo();
-				}
-
-				if (ImGui::BeginCombo("Movement (RIGHT)", selected_action.mSelectedBindingRIGHT.c_str()))
-				{
-					// Iterate through the [Key Map]
-					for (auto& e_keypair : e_key_map)
-					{
-						std::string key_name = e_keypair.first;
-						if (ImGui::Selectable(key_name.c_str()))
-						{
-							selected_action.mKeyBindRight = (int)(e_key_map[key_name]);
-							selected_action.LinkKeyBinding(KEY_RIGHT, (E_KEY)selected_action.mKeyBindRight);
-							selected_action.mSelectedBindingRIGHT = e_keypair.first;
-						}
-					}
-
-					ImGui::EndCombo();
-				}
-			}
-		}
+void VFX::Inspect() {
+	bool delete_component = true;
+	if (ImGui::CollapsingHeader("UIrenderer", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
+	{
+		ImGui::TextColored({ 0.f,1.f, 1.f, 1.f }, "Bloom Variables");
+		ImGui::DragFloat3("Global Bloom Threshold", (float*)&mBloomThreshold, 0.01f, 0.f, 1.f);
 	}
 }

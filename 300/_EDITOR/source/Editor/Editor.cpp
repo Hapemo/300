@@ -52,7 +52,7 @@ Returns main window for docking
 void Editor::UIinit(GLFWwindow* window)
 {
     IMGUI_CHECKVERSION();
-    ImGui::CreateContext(); 
+    ImGui::CreateContext();
 
 
     ImGuiIO& io = ImGui::GetIO();
@@ -73,15 +73,15 @@ void Editor::UIinit(GLFWwindow* window)
 
 
 
-   // ImGuiIO& io = ImGui::GetIO(); (void)io;
-    //regular = io.Fonts->AddFontFromFileTTF("../Resources/Fonts/Assistant-Regular.ttf", 21.0f);
-    //bold = io.Fonts->AddFontFromFileTTF("../Resources/Fonts/Assistant-SemiBold.ttf", 18.0f);
+    // ImGuiIO& io = ImGui::GetIO(); (void)io;
+     //regular = io.Fonts->AddFontFromFileTTF("../Resources/Fonts/Assistant-Regular.ttf", 21.0f);
+     //bold = io.Fonts->AddFontFromFileTTF("../Resources/Fonts/Assistant-SemiBold.ttf", 18.0f);
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
 
     // ----------------------------------------------------------------------------- // Style
-    ImGui::StyleColorsDark();                                  
+    ImGui::StyleColorsDark();
     ImGuiStyle& style = ImGui::GetStyle();
-    if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)  
+    if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
     {
         style.WindowRounding = 0.0f;
         style.Colors[ImGuiCol_WindowBg].w = 1.0f;
@@ -92,7 +92,7 @@ void Editor::UIinit(GLFWwindow* window)
     style.FrameRounding = 12.f;
     style.TabRounding = 4.f;
     style.TabBorderSize = 1.5f;
-    style.ItemSpacing = ImVec2( 4.f,4.f);
+    style.ItemSpacing = ImVec2(4.f, 4.f);
     style.WindowBorderSize = 0.f;
 
 
@@ -161,7 +161,7 @@ void Editor::UIinit(GLFWwindow* window)
     ImGui_ImplOpenGL3_Init("#version 450");
 
     // ----------------------------------------------------------------------------- // Add EditorWindows
-    
+
     mMenuwindow = new MenuPanel;
     mWindowlist["Objects"] = new Hierarchy;
     //mWindowlist["Menu"] = new MenuPanel;
@@ -176,8 +176,7 @@ void Editor::UIinit(GLFWwindow* window)
     mWindowlist["KeybindWindow"] = new KeybindWindow;
     mWindowlist["MenuTab"] = new MenuTab;
     mWindowlist["ShaderCompiler"] = new ShaderCompiler;
-
-    for (auto & windows : mWindowlist ) 
+    for (auto& windows : mWindowlist)
     {
         windows.second->init();
     }

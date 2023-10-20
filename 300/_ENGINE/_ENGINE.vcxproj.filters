@@ -21,6 +21,7 @@
     <ClCompile Include="source\Physics\Accumulator.cpp" />
     <ClCompile Include="source\Input\Input.cpp" />
     <ClCompile Include="source\Input\InputMapSystem.cpp" />
+    <ClCompile Include="source\AI\AIManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Audio\AudioSystem.h" />
@@ -48,13 +49,9 @@
     <ClInclude Include="include\Debug\EnginePerformance.h" />
     <ClInclude Include="include\Physics\Accumulator.h" />
     <ClInclude Include="include\ECS\EnumStrings.h" />
-    <ClInclude Include="..\..\..\..\..\Desktop\300\300\_ENGINE\include\Input\KeyBind.h" />
-    <ClInclude Include="..\..\..\..\..\Desktop\300\300\_ENGINE\include\Input\Input.h" />
-    <ClInclude Include="..\..\..\..\..\Desktop\300\300\_ENGINE\include\Input\InputAction.h" />
-    <ClInclude Include="..\..\..\..\..\Desktop\300\300\_ENGINE\include\Input\InputActionMap.h" />
-    <ClInclude Include="..\..\..\..\..\Desktop\300\300\_ENGINE\include\Input\InputMapSystem.h" />
     <ClInclude Include="include\Input\Input.h" />
     <ClInclude Include="include\Input\InputMapSystem.h" />
-    <ClInclude Include="include\Input\KeyBind.h" />
+    <ClInclude Include="include\AI\AIManager.h" />
+    <ClInclude Include="include\Physics\ContactModifier.h" />
   </ItemGroup>
 </Project>

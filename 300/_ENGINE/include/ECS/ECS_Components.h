@@ -11,6 +11,7 @@ Components used by the ECS.
 
 #pragma once
 #include "glm/glm.hpp"
+#include <algorithm>
 #include "Script.h"
 #include <vector>
 #include "Physics/PhysicsTypes.h"
@@ -20,17 +21,18 @@ Components used by the ECS.
 #include <Animator.hpp>
 #include <Camera.hpp>
 #include "EnumStrings.h"
-#include "Input/KeyBind.h"
 #include "Input/Input.h"
 #include "Guid.h"
 #include <Constants.h>
 #include "ResourceManagerTy.h"
 
+#include "Texture.hpp"
 //#include "Graphics/GraphicsSystem.h"
 //#include "Mesh.hpp"
 
 //#include "rttr/registration.h"
 
+DECLARE_ENUMSTRING(enum_tag, PLAYER, ENEMY, BULLET, STATIC, BUILDING)
 struct uid;
 
 //DECLARE_ENUMSTRING(enum_tag, PLAYER, ENEMY, BULLET, STATIC, BUILDING)
@@ -48,10 +50,10 @@ struct General
 {
 	std::string name;
 	/*TAG tag;*/
-	//enum_tag::enum_tag tag;
-	//enum_tag::enum_tag tagid;
-	std::string tag[5] = { "PLAYER","ENEMY","BULLET","STATIC","BUILDING" };
-	int tagid{ 0 };
+	//enum_tag::enum_tag tag{};
+	enum_tag::enum_tag tagid{};
+	//std::string tag[5] = { "PLAYER","ENEMY","BULLET","STATIC","BUILDING" };
+	//int tagid{ 0 };
 	SUBTAG subtag;
 	bool isActive{};
 	bool isPaused{};
@@ -59,6 +61,14 @@ struct General
 	General() 
 	: name(""), subtag(SUBTAG::ACTIVE), isActive(true) 
 	{};
+
+	std::string GetTag() { return enum_tag::ToString(tagid); }
+
+	void SetTag(std::string newTag) { 
+		std::transform(newTag.begin(), newTag.end(), newTag.begin(), ::tolower);
+		newTag[0] = std::toupper(newTag[0]);
+		tagid = enum_tag::GetEnum(newTag.c_str()); 
+	}
 
 	void Inspect();
 
@@ -104,7 +114,6 @@ struct Animator
 struct MeshRenderer
 {
 	// For now, we store the string to the filepaths. TO CHANGE to uids for efficient referencing
-	//uid									mShaders;
 	//std::pair<std::string, std::string> mShaderPath{ "../assets/shader_files/animations_vert.glsl", "../assets/shader_files/pointLight_frag.glsl" };
 	std::pair<std::string, std::string> mShaderPath{ "../assets/shader_files/pointLight_vert.glsl", "../assets/shader_files/pointLight_frag.glsl" };
 	
@@ -125,12 +134,25 @@ struct MeshRenderer
 
 	//unsigned							mGUID;
 	bool								mTextureCont[4];
+	//void*								mMeshRef{nullptr};
+	void* mTextureRef[5]{ nullptr,nullptr,nullptr,nullptr,nullptr };
+
+	unsigned							mGUID;
+	bool								mTextureCont[5];
 
 	void								Inspect();
 	void								SetColor(const vec4& color);
 	void								SetMesh(const std::string& meshName);
 	void								SetTexture(MaterialType type, const std::string& Texturename);
 
+	
+	int									GetTexture(MaterialType type) 
+										{ 
+											if (mTextureRef[static_cast<int>(type)] == nullptr)
+												return -1;
+
+											return static_cast<GFX::Texture*>(mTextureRef[static_cast<int>(type)])->ID(); 
+										}
 	//RTTR_ENABLE()
 };
 
@@ -138,7 +160,18 @@ struct MeshRenderer
 struct UIrenderer
 {
 	std::string							mTexPath; // temporary should be UID
-	void* mTextureRef;
+	void*								mTextureRef;
+
+	inline unsigned ID() 
+	{
+		if (mTextureRef != nullptr) {
+			int temp = (reinterpret_cast<GFX::Texture*>(mTextureRef))->ID();
+			return temp;
+		}
+
+		return 0;
+	}
+	void Inspect();
 };
 
 
@@ -154,10 +187,11 @@ struct RigidBody
 	MATERIAL mMaterial;
 	MOTION mMotion;
 	glm::vec3 mVelocity;
+	bool mIsTrigger;
 
-	RigidBody() : mDensity(10.f), mMaterial(MATERIAL::WOOD), mMotion(MOTION::STATIC), mVelocity(0.f) {};
-	RigidBody(float dense, MATERIAL mat, MOTION mot, const glm::vec3& vec)
-		: mDensity(dense), mMaterial(mat), mMotion(mot), mVelocity(vec) {}
+	RigidBody() : mDensity(10.f), mMaterial(MATERIAL::WOOD), mMotion(MOTION::STATIC), mVelocity(0.f), mIsTrigger(false) {};
+	RigidBody(float dense, MATERIAL mat, MOTION mot, const glm::vec3& vec, bool isTrigger)
+		: mDensity(dense), mMaterial(mat), mMotion(mot), mVelocity(vec), mIsTrigger(isTrigger) {}
 	//RTTR_ENABLE()
 
 
@@ -241,7 +275,6 @@ public:
 	Scripts() = default;
 	~Scripts() = default;
 
-	static void AddScript(Entity id, std::string fileName);
 	//static void LoadRunScript(Entity entity);
 
 	std::string mScriptFile{};
@@ -371,154 +404,34 @@ struct PointLight
 	void SetColor(const vec3& color);
 };
 
+/******************************************************************************/
+/*!
+	[Component] - Visual Effects (VFX)
+ */
+ /******************************************************************************/
+struct VFX
+{
+	vec3		mBloomThreshold{ 0.2126, 0.7152, 0.0722 };
+
+	void Inspect();
+};
+
 
 // Added [9/27]
 // Pseudo-Component (Helps InputActionMapEditor)
 
 /******************************************************************************/
 /*!
-	[Support] InputActionMap()
+	[Component] - AIData
  */
- /******************************************************************************/
-struct PseudoInputAction
-{
-	std::string							      mActionName;
-	std::unordered_map<KEY_BIND, E_KEY>       mDefinedKeyMap;
-	std::unordered_map<KEY_BIND, MAP_TO_AXIS> mMapToAxis;
-
-	PseudoInputAction() : mActionName("Sample Action")
-	{
-		mDefinedKeyMap[KEY_BIND::KEY_UP] = E_KEY::UNKNOWN;
-		mDefinedKeyMap[KEY_BIND::KEY_DOWN] = E_KEY::UNKNOWN;
-		mDefinedKeyMap[KEY_BIND::KEY_LEFT] = E_KEY::UNKNOWN;
-		mDefinedKeyMap[KEY_BIND::KEY_RIGHT] = E_KEY::UNKNOWN;
-
-		mMapToAxis[KEY_BIND::KEY_UP] = Y_POSITIVE;
-		mMapToAxis[KEY_BIND::KEY_DOWN] = Y_NEGATIVE;
-		mMapToAxis[KEY_BIND::KEY_LEFT] = X_NEGATIVE;
-		mMapToAxis[KEY_BIND::KEY_RIGHT] = X_POSITIVE;
-	}
-
-	PseudoInputAction(std::string action_name) : mActionName(action_name)
-	{
-		mDefinedKeyMap[KEY_BIND::KEY_UP] = E_KEY::UNKNOWN;
-		mDefinedKeyMap[KEY_BIND::KEY_DOWN] = E_KEY::UNKNOWN;
-		mDefinedKeyMap[KEY_BIND::KEY_LEFT] = E_KEY::UNKNOWN;
-		mDefinedKeyMap[KEY_BIND::KEY_RIGHT] = E_KEY::UNKNOWN;
-
-		mMapToAxis[KEY_BIND::KEY_UP] = Y_POSITIVE;
-		mMapToAxis[KEY_BIND::KEY_DOWN] = Y_NEGATIVE;
-		mMapToAxis[KEY_BIND::KEY_LEFT] = X_NEGATIVE;
-		mMapToAxis[KEY_BIND::KEY_RIGHT] = X_POSITIVE;
-	}
-
-	void AddKeyBinding(KEY_BIND key_bind, E_KEY key)
-	{
-		mDefinedKeyMap[key_bind] = key;
-	}
-
-	void RemoveKeyBinding(KEY_BIND key_bind)
-	{
-		mDefinedKeyMap[key_bind] = E_KEY::UNKNOWN;
-	}
-
-	void LinkKeyBinding(KEY_BIND key_bind, E_KEY key)
-	{
-		mDefinedKeyMap[key_bind] = key;
-	}
-
-	glm::vec2 ReadValue(E_KEY key_pressed) const
-	{
-		glm::vec2 vec;
-		KEY_BIND key_bind;
-
-		for (auto& defined_key_pair : mDefinedKeyMap)
-		{
-			if (defined_key_pair.second == key_pressed)
-			{
-				key_bind = defined_key_pair.first;
-			}
-		}
-
-		auto map_axis_it = mMapToAxis.find(key_bind);
-
-		if (map_axis_it != mMapToAxis.end())
-		{
-			switch (map_axis_it->second)
-			{
-				case X_POSITIVE:
-					vec = { 1.0f, 0.0f };
-					return vec;
-				case X_NEGATIVE:
-					vec = { -1.0f, 0.0f };
-					return vec;
-				case Y_POSITIVE:
-					vec = { 0.0f , 1.0f };
-					return vec;
-				case Y_NEGATIVE:
-					vec = { 0.0f , -1.0f };
-					return vec;
-			}
-		}
-		vec = { 0.0f, 0.0f };
-		return vec;
-	}
-
-	int mKeyBindUp{ 0 };
-	int mKeyBindDown{ 0 };
-	int mKeyBindLeft{ 0 };
-	int mKeyBindRight{ 0 };
-
-	// [For Editor]
-	std::string mSelectedBindingUP{ " " };
-	std::string mSelectedBindingDOWN{ " " };
-	std::string mSelectedBindingLEFT{ " " };
-	std::string mSelectedBindingRIGHT{ " " };
-	// [For Update]
-	bool isEnabled = true;
-};
-
 /******************************************************************************/
-/*!
-	[Component] InputActionMapEditor
- */
- /******************************************************************************/
-struct InputActionMapEditor
-{
-	// Action Map -> contains (Action) -> contains (E_KEY)
-	// std::unordered_map<std::string, E_KEY> mActionMapNew;
-	std::unordered_map <std::string, PseudoInputAction> mActionMap;
-
-	InputActionMapEditor() {} // Just Initalizes the mActionMap.
-
-	InputActionMapEditor(std::string action_name) {
-		mActionMap[action_name] = PseudoInputAction();
-	}
-
-	void AddAction(std::string action_name)
-	{
-		PseudoInputAction new_action = PseudoInputAction(action_name);
-		mActionMap[action_name] = new_action;
-	}
-
-	void AddActionMap(std::string map_name)
-	{
-		mActionMap[map_name] = PseudoInputAction();
-	}
-
-	PseudoInputAction& GetAction(std::string action_name)
-	{
-		return mActionMap[action_name];
-	}
-
-
-	void Inspect();
-
-	// [For Editor]
-	int mAction{ 0 };
-	std::string mSelectedMapName{ " " };
-	bool selected = false;
-
+enum class E_MOVEMENT_TYPE : char;
+enum class E_ATTACK_TYPE : char;
+struct AISetting {
+	E_MOVEMENT_TYPE mMovementType;	// AI's movement type
+	E_ATTACK_TYPE mAttackType;			// AI's attack type
+	float mSpreadOut;								// Degree of spreading out
+	std::uint32_t mTarget;									// AI's target
 };
 
 

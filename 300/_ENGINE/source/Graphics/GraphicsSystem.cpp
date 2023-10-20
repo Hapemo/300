@@ -31,12 +31,26 @@ float second_entitytime{};
 
 void GraphicsSystem::Init()
 {
-	// -- WIP -- SHADER STORAGE BUFFER OBJECT
+	// -- Setup Storage Buffer Object
 	SetupShaderStorageBuffers();
-	// -- WIP -- SHADER STORAGE BUFFER OBJECT
-	m_Image2DMesh.Setup2DImageMesh();
 
-	glEnable(GL_MULTISAMPLE);
+	// -- Setup UI stuffs
+	m_Image2DMesh.Setup2DImageMesh();
+	for (int i{}; i < 32; ++i)
+	{
+		m_Textures.emplace_back(i);
+	}
+
+	// Initialize the UI Shader
+	std::string uiShader = "UIShader";
+	uid uiShaderstr(uiShader);
+	m_UiShaderInst = *systemManager->mResourceTySystem->get_Shader(uiShaderstr.id);
+
+	// Uniforms of UI Shader
+	m_UiShaderInst.Activate();
+	GLuint uniform_tex = glGetUniformLocation(m_UiShaderInst.GetHandle(), "uTex2d");
+	glUniform1iv(uniform_tex, (GLsizei)m_Textures.size(), m_Textures.data()); // Passing texture Binding units to frag shader [0 - 31]
+	m_UiShaderInst.Deactivate();
 
 	// Get Window Handle
 	m_Window = systemManager->GetWindow();
@@ -48,6 +62,7 @@ void GraphicsSystem::Init()
 	// Create FBO, with the width and height of the window
 	m_Fbo.Create(m_Width, m_Height, m_EditorMode);
 	m_GameFbo.Create(m_Width, m_Height, m_EditorMode);
+	m_PingPongFbo.Create(m_Width, m_Height);
 
 	// Set Cameras' starting position
 	SetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR, {0, 0, 20});									// Position of camera
@@ -68,91 +83,6 @@ void GraphicsSystem::Init()
 		// only update the game camera if editor mode is not enabled
 		UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_GAME, 0.f);
 	}
-
-#if 0
-#pragma region create entity 1
-	// Create a new entity here, for testing purposes
-	Entity newentity = systemManager->ecs->NewEntity(); // creating a new entity
-														//	systemManager->mGameStateSystem->mCurrentGameState.AddScene("NewScene");
-	systemManager->mGameStateSystem->mCurrentGameState.mScenes[0].mEntities.insert(newentity);
-
-	newentity.AddComponent<MeshRenderer>();
-	newentity.AddComponent<BoxCollider>();
-	newentity.AddComponent<Animator>();
-
-	newentity.GetComponent<MeshRenderer>().mMeshPath = "../assets/compiled_geom/dancing_vampire.geom";
-	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath[DIFFUSE] = "../assets/Compressed/Vampire_diffuse.ctexture";
-	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath[NORMAL] = "../assets/Compressed/Vampire_normal.ctexture";
-	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath[2] = "../assets/Compressed/Vampire_emission.ctexture";
-	newentity.GetComponent<MeshRenderer>().mMaterialInstancePath[3] = "../assets/Compressed/Vampire_specular.ctexture";
-	newentity.GetComponent<MeshRenderer>().mShaderPath = {"../_GRAPHICS/shader_files/pointLight_vert.glsl", "../_GRAPHICS/shader_files/pointLight_frag.glsl"}; // for point light
-
-	uid temp(newentity.GetComponent<MeshRenderer>().mMeshPath);
-	newentity.GetComponent<MeshRenderer>().mMeshRef = reinterpret_cast<void *>(systemManager->mResourceTySystem->get_mesh(temp.id));
-
-	uid mat1(newentity.GetComponent<MeshRenderer>().mMaterialInstancePath[DIFFUSE]);
-	newentity.GetComponent<MeshRenderer>().mTextureRef[DIFFUSE] = reinterpret_cast<void *>(systemManager->mResourceTySystem->getMaterialInstance(mat1.id));
-	newentity.GetComponent<MeshRenderer>().mTextureCont[DIFFUSE] = true;
-
-	uid mat2(newentity.GetComponent<MeshRenderer>().mMaterialInstancePath[NORMAL]);
-	newentity.GetComponent<MeshRenderer>().mTextureRef[NORMAL] = reinterpret_cast<void *>(systemManager->mResourceTySystem->getMaterialInstance(mat2.id));
-	newentity.GetComponent<MeshRenderer>().mTextureCont[NORMAL] = true;
-	newentity.GetComponent<BoxCollider>().mTranslateOffset = {0.f, 80.f, 0.f};
-	newentity.GetComponent<BoxCollider>().mScaleOffset = {1.f, 0.8f, 1.5f};
-
-	auto &meshinst = systemManager->mResourceSystem->get_Mesh("../assets/compiled_geom/dancing_vampire.geom");
-	newentity.GetComponent<Transform>().mScale = meshinst.mBBOX.m_Max - meshinst.mBBOX.m_Min;
-	if (newentity.HasComponent<Animator>() && _ENABLE_ANIMATIONS)
-	{
-		newentity.GetComponent<MeshRenderer>().mShaderPath = {"../_GRAPHICS/shader_files/animations_vert.glsl", "../_GRAPHICS/shader_files/pointLight_frag.glsl"}; // for point light
-		newentity.GetComponent<Animator>().mAnimator.SetAnimation(&meshinst.mAnimation[0]);
-	}
-#pragma endregion
-#endif
-
-#if 0
-#pragma region create entity 2
-	//Create a new entity here, for testing purposes
-	Entity newentity1 = systemManager->ecs->NewEntity();			// creating a new entity
-	systemManager->mGameStateSystem->mCurrentGameState.mScenes[0].mEntities.insert(newentity1);
-	newentity1.AddComponent<MeshRenderer>();
-	newentity1.AddComponent<BoxCollider>();
-	newentity1.AddComponent<Animator>();
-
-	newentity1.GetComponent<MeshRenderer>().mMeshPath = "../assets/compiled_geom/GirlAnimationWalking.geom";
-	newentity1.GetComponent<MeshRenderer>().mMaterialInstancePath[0] = "../assets/Compressed/Girl_Diffuse.ctexture";
-	newentity1.GetComponent<MeshRenderer>().mMaterialInstancePath[1] = "../assets/Compressed/Girl_Normal.ctexture";
-	newentity1.GetComponent<MeshRenderer>().mMaterialInstancePath[2] = "../assets/Compressed/Girl_Glossiness.ctexture";
-	newentity1.GetComponent<MeshRenderer>().mMaterialInstancePath[3] = "../assets/Compressed/Girl_Specular.ctexture";
-
-	newentity1.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/pointLight_vert.glsl", "../_GRAPHICS/shader_files/pointLight_frag.glsl" };	// for point light
-
-	uid mat3(newentity1.GetComponent<MeshRenderer>().mMaterialInstancePath[DIFFUSE]);
-	newentity1.GetComponent<MeshRenderer>().mTextureRef[DIFFUSE] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(mat3.id));
-	newentity1.GetComponent<MeshRenderer>().mTextureCont[DIFFUSE] = true;
-
-
-	uid mat4(newentity1.GetComponent<MeshRenderer>().mMaterialInstancePath[NORMAL]);
-	newentity1.GetComponent<MeshRenderer>().mTextureRef[NORMAL] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(mat4.id));
-	newentity1.GetComponent<MeshRenderer>().mTextureCont[NORMAL] = true;
-
-
-	uid temp1(newentity1.GetComponent<MeshRenderer>().mMeshPath);
-	newentity1.GetComponent<MeshRenderer>().mMeshRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(temp1.id));
-
-	//newentity1.GetComponent<Transform>().mTranslate = { 300.f, 0.f, 0.f };
-	newentity1.GetComponent<BoxCollider>().mTranslateOffset = { -2.f, 98.f, 0.f };
-	newentity1.GetComponent<BoxCollider>().mScaleOffset = { 0.5f, 4.2f, 0.4f };
-
-	auto& meshinst1 = systemManager->mResourceSystem->get_Mesh("../assets/compiled_geom/GirlAnimationWalking.geom");
-	newentity1.GetComponent<Transform>().mScale = meshinst1.mBBOX.m_Max - meshinst1.mBBOX.m_Min;
-	if (newentity1.HasComponent<Animator>() && _ENABLE_ANIMATIONS)
-	{
-		newentity1.GetComponent<MeshRenderer>().mShaderPath = { "../_GRAPHICS/shader_files/animations_vert.glsl", "../_GRAPHICS/shader_files/pointLight_frag.glsl" };// for point light
-		newentity1.GetComponent<Animator>().mAnimator.SetAnimation(&meshinst1.mAnimation[0]);
-	}
-#pragma endregion
-#endif
 }
 
 /***************************************************************************/
@@ -164,12 +94,8 @@ void GraphicsSystem::Init()
 /**************************************************************************/
 void GraphicsSystem::Update(float dt)
 {
-	// -- WIP --  SHADER STORAGE BUFFER OBJECT
-	finalBoneMatrices.push_back(mat4(1.0f));
-	finalBoneMatrices.push_back(mat4(2.0f));
-	//ShaderStorageBufferSubData(finalBoneMatrices.size() * sizeof(mat4), finalBoneMatrices.data());
-	finalBoneMatrices.clear();
-	// -- WIP --  SHADER STORAGE BUFFER OBJECT
+	// Check window size for any updates
+	CheckWindowSize();
 
 	// update the camera's transformations, and its input
 	if (m_EditorMode)
@@ -249,14 +175,25 @@ void GraphicsSystem::Update(float dt)
 
 		// animations are present
 		if (inst.HasComponent<Animator>()) {
-			AddInstance(meshinst, final, meshRenderer.mInstanceColor, static_cast<unsigned>(inst.id), animationID++);
+			AddInstance(meshinst, final, meshRenderer.mInstanceColor, static_cast<int>(m_Materials.size()), static_cast<unsigned>(inst.id), animationID++);
 		}
 		else {
-			AddInstance(meshinst, final, meshRenderer.mInstanceColor, static_cast<unsigned>(inst.id));
+			AddInstance(meshinst, final, meshRenderer.mInstanceColor, static_cast<int>(m_Materials.size()), static_cast<unsigned>(inst.id));
 		}
+
+		MaterialSSBO material{};
+		// Save the materials if it exists
+		material.mDiffuseMap = GetAndStoreBindlessTextureHandle(meshRenderer.GetTexture(DIFFUSE));		
+		material.mNormalMap = GetAndStoreBindlessTextureHandle(meshRenderer.GetTexture(NORMAL));		
+		material.mSpecularMap = GetAndStoreBindlessTextureHandle(meshRenderer.GetTexture(SPECULAR));	
+		material.mShininessMap = GetAndStoreBindlessTextureHandle(meshRenderer.GetTexture(SHININESS));	
+		material.mEmissionMap = GetAndStoreBindlessTextureHandle(meshRenderer.GetTexture(EMISSION));	
+		m_Materials.emplace_back(material);	// push back
 	}
 	m_FinalBoneMatrixSsbo.SubData(finalBoneMatrices.size() * sizeof(mat4), finalBoneMatrices.data());
 	finalBoneMatrices.clear();
+	m_MaterialSsbo.SubData(m_Materials.size() * sizeof(MaterialSSBO), m_Materials.data());
+	m_Materials.clear();
 
 	// Sending Light source data to GPU
 	auto lightEntity = systemManager->ecs->GetEntitiesWith<PointLight>();
@@ -285,6 +222,24 @@ void GraphicsSystem::Update(float dt)
 		m_PointLightSsbo.SubData(pointLights.size() * sizeof(PointLightSSBO), pointLights.data());
 		pointLights.clear();
 	}
+
+	// UI Objects
+	m_Image2DMesh.ClearInstances();		// Clear data from previous frame
+	m_Image2DStore.clear();
+	auto UiInstances = systemManager->ecs->GetEntitiesWith<UIrenderer>();
+	for (Entity inst : UiInstances)
+	{
+		UIrenderer& uiRenderer = inst.GetComponent<UIrenderer>();
+		Transform& uiTransform = inst.GetComponent<Transform>();
+
+		float uiWidth = uiTransform.mScale.x;
+		float uiHeight = uiTransform.mScale.y;
+		vec2 uiPosition = vec2(uiTransform.mTranslate.x, uiTransform.mTranslate.y);
+
+		Add2DImageInstance(uiWidth, uiHeight, uiPosition, uiRenderer.ID(), static_cast<int>(inst.id));
+	}
+	// Send UI data to GPU
+	m_Image2DMesh.PrepForDraw();
 
 #pragma endregion
 }
@@ -316,12 +271,6 @@ void GraphicsSystem::EditorDraw(float dt)
 		if (meshrefptr.mMeshRef.data == nullptr)
 			continue;
 
-		//if (inst.HasParent())
-		//{
-		//	Transform xform = inst.GetComponent<Transform>();
-		//	xform.mTranslate += Entity(inst.GetParent()).GetComponent<Transform>().mTranslate;
-		//}
-
 		std::string meshstr = inst.GetComponent<MeshRenderer>().mMeshPath;
 		if (renderedMesh.find(meshstr) != renderedMesh.end())
 		{
@@ -346,22 +295,22 @@ void GraphicsSystem::EditorDraw(float dt)
 			shader = "PointLightShader";
 
 		uid shaderstr(shader);
-		
-		GFX::Shader &shaderinst = *systemManager->mResourceTySystem->get_Shader(shaderstr.id);
+		GFX::Shader& shaderinst = *systemManager->mResourceTySystem->get_Shader(shaderstr.id);
 		unsigned shaderID = shaderinst.GetHandle();
 
 		// bind all texture
-		GFX::Texture *textureInst[4]{};
-		for (int i{0}; i < 4; i++)
+		GFX::Texture* textureInst[4]{};
+		for (int i{ 0 }; i < 4; i++)
 		{
 			if (inst.GetComponent<MeshRenderer>().mTextureRef[i].data != nullptr)
 			{
 				textureInst[i] = reinterpret_cast<GFX::Texture *>(inst.GetComponent<MeshRenderer>().mTextureRef[i].data);
 			}
 		}
-	
+
 		shaderinst.Activate();
 		glUniformMatrix4fv(shaderinst.GetUniformVP(), 1, GL_FALSE, &m_EditorCamera.viewProj()[0][0]);
+
 		// Retrieve Point Light object
 		auto lightEntity = systemManager->ecs->GetEntitiesWith<PointLight>();
 		m_HasLight = !lightEntity.empty();
@@ -369,18 +318,22 @@ void GraphicsSystem::EditorDraw(float dt)
 		GLuint mHasLightFlagLocation = shaderinst.GetUniformLocation("uHasLight");
 		glUniform1i(mHasLightFlagLocation, m_HasLight);
 
+		if (systemManager->mGraphicsSystem->m_EnableBloom)
+		{
+			GLuint threshold = shaderinst.GetUniformLocation("bloomThreshold");
+
+			if (inst.HasComponent<VFX>()) {
+				glUniform3fv(threshold, 1, glm::value_ptr(inst.GetComponent<VFX>().mBloomThreshold));
+			}
+			else {
+				glUniform3fv(threshold, 1, glm::value_ptr(mAmbientBloomThreshold));
+			}
+		}
+
 		if (m_HasLight)
 		{
-			PointLight &lightData = lightEntity.get<PointLight>(lightEntity[0]);
-			Transform &lightTransform = Entity(lightEntity[0]).GetComponent<Transform>();
-
-			GLuint mLightPosShaderLocation = shaderinst.GetUniformLocation("uLightPos");
 			GLuint mViewPosShaderLocation = shaderinst.GetUniformLocation("uViewPos");
-			GLuint mLightIntensityShaderLocation = shaderinst.GetUniformLocation("uLightIntensity");
-			GLuint mLightColorShaderLocation = shaderinst.GetUniformLocation("uLightColor");
-
 			vec3 viewPos = GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR);
-			//GLuint mViewPosShaderLocation = shaderinst.GetUniformLocation("uViewPos");
 			glUniform3fv(mViewPosShaderLocation, 1, &viewPos[0]);
 
 			// Light count uniform
@@ -403,31 +356,16 @@ void GraphicsSystem::EditorDraw(float dt)
 		m_Textures.push_back(3);
 
 		GLuint uniform_tex = glGetUniformLocation(shaderID, "uTex");
-		glUniform1iv(uniform_tex, (GLsizei)m_Textures.size(), m_Textures.data()); // passing Texture ID to the fragment shader
+		glUniform1iv(uniform_tex, (GLsizei)m_Textures.size(), m_Textures.data()); // passing Texture ID to the fragment  
 
 		GLuint debug_draw = glGetUniformLocation(shaderID, "uDebugDraw");
 		glUniform1i(debug_draw, m_DebugDrawing);
-
-		//// send animation data over to the shader if there is animations
-		//if (inst.HasComponent<Animator>() && _ENABLE_ANIMATIONS)
-		//{
-		//	const auto &transform = inst.GetComponent<Animator>().mAnimator.m_FinalBoneMatrices;
-		//	size_t totaltransform = transform.size();
-
-		//	for (size_t b{}; b < totaltransform; ++b)
-		//	{
-		//		// send the bone matrices to the shader via uniforms
-		//		std::string name = "finalBoneMatrices[" + std::to_string(b) + "]";
-		//		glUniformMatrix4fv(glGetUniformLocation(shaderID, name.c_str()), 1, GL_FALSE, &transform[b][0][0]);
-		//	}
-		//}
 
 		// Bind mesh's VAO, copy render data into VBO, Draw
 		DrawAll(meshinst);
 
 		shaderinst.Deactivate();
 		meshinst.UnbindVao();
-		m_Textures.clear();
 
 		// unbind the textures
 		for (int i{0}; i < 4; i++)
@@ -439,11 +377,28 @@ void GraphicsSystem::EditorDraw(float dt)
 		}
 	}
 
-	// Debug draw stuffs should be drawn last
 	m_Renderer.RenderAll(m_EditorCamera.viewProj());
+
+	if (systemManager->mGraphicsSystem->m_EnableBloom)
+	{
+		m_PingPongFbo.PrepForDraw();
+	
+		// Render the bloom for the Editor Framebuffer
+		uid gaussianshaderstr("GaussianBlurShader");
+		GFX::Shader& gaussianShaderInst = *systemManager->mResourceTySystem->get_Shader(gaussianshaderstr.id);
+		m_PingPongFbo.GaussianBlur(gaussianShaderInst, m_Fbo);
+
+		BlendFramebuffers(m_Fbo, m_Fbo.GetColorAttachment(), m_PingPongFbo.pingpongColorbuffers[0]);
+	}
+
+
+	// Render UI objects
+	m_UiShaderInst.Activate();		// Activate shader
+	DrawAll2DInstances(m_UiShaderInst.GetHandle());
+	m_UiShaderInst.Deactivate();	// Deactivate shader
+
 #pragma endregion
 
-	// TODO: Clears all instances that have been rendered from local buffer
 	m_Fbo.Unbind();
 }
 
@@ -470,8 +425,6 @@ void GraphicsSystem::GameDraw(float dt)
 	// Prepare and bind the Framebuffer to be rendered on
 	m_GameFbo.PrepForDraw();
 
-	// m_Renderer.RenderAll(camera.GetComponent<Camera>().mCamera.viewProj());
-
 	// Render all instances of a given mesh
 	for (Entity inst : meshRendererInstances)
 	{
@@ -494,8 +447,13 @@ void GraphicsSystem::GameDraw(float dt)
 		GFX::Mesh &meshinst = *reinterpret_cast<GFX::Mesh *>(inst.GetComponent<MeshRenderer>().mMeshRef.data);
 
 		// gets the shader filepath
-		uid shaderstr("PointLightShader");
-		//uid shaderstr = inst.GetComponent<MeshRenderer>().mShaders;
+		std::string shader{};
+		if (meshinst.mHasAnimation)
+			shader = "AnimationShader";
+		else
+			shader = "PointLightShader";
+
+		uid shaderstr(shader);
 		GFX::Shader &shaderinst = *systemManager->mResourceTySystem->get_Shader(shaderstr.id);
 
 		GFX::Texture *textureInst[4]{};
@@ -518,16 +476,10 @@ void GraphicsSystem::GameDraw(float dt)
 		GLuint mHasLightFlagLocation = shaderinst.GetUniformLocation("uHasLight");
 		glUniform1i(mHasLightFlagLocation, m_HasLight);
 
+		// Factor in Lighting if any
 		if (m_HasLight)
 		{
-			PointLight &lightData = lightEntity.get<PointLight>(lightEntity[0]);
-			Transform &lightTransform = Entity(lightEntity[0]).GetComponent<Transform>();
-
-			GLuint mLightPosShaderLocation = shaderinst.GetUniformLocation("uLightPos");
 			GLuint mViewPosShaderLocation = shaderinst.GetUniformLocation("uViewPos");
-			GLuint mLightIntensityShaderLocation = shaderinst.GetUniformLocation("uLightIntensity");
-			GLuint mLightColorShaderLocation = shaderinst.GetUniformLocation("uLightColor");
-
 			vec3 viewPos = camera.GetComponent<Camera>().mCamera.position();
 			glUniform3fv(mViewPosShaderLocation, 1, &viewPos[0]);
 		}
@@ -540,18 +492,11 @@ void GraphicsSystem::GameDraw(float dt)
 			}
 		}
 
-		m_Textures.push_back(0);
-		m_Textures.push_back(1);
-		m_Textures.push_back(2);
-		m_Textures.push_back(3);
-
 		// Bind mesh's VAO, copy render data into VBO, Draw
 		DrawAll(meshinst);
-		// glDrawElementsInstanced(GL_TRIANGLES, meshinst.GetIndexCount(), GL_UNSIGNED_INT, nullptr, meshinst.mLTW.size());
 
 		meshinst.UnbindVao();
 		shaderinst.Deactivate();
-		m_Textures.clear();
 
 		// unbind the textures
 		for (int i{0}; i < 4; i++)
@@ -561,13 +506,35 @@ void GraphicsSystem::GameDraw(float dt)
 				glBindTextureUnit(i, 0);
 			}
 		}
+		//for (int i{0}; i < 4; i++)
+		//{
+		//	if (inst.GetComponent<MeshRenderer>().mTextureCont[i] == true)
+		//	{
+		//		glBindTextureUnit(i, 0);
+		//	}
+		//}
 
 		meshinst.ClearInstances();
 		m_Renderer.ClearInstances();
 	}
-	pointLights.clear();
 
-	// TODO: Clears all instances that have been rendered from local buffer
+	if (systemManager->mGraphicsSystem->m_EnableBloom)
+	{
+		m_PingPongFbo.PrepForDraw();
+
+		// Render the bloom for the Editor Framebuffer
+		uid gaussianshaderstr("GaussianBlurShader");
+		GFX::Shader& gaussianShaderInst = *systemManager->mResourceTySystem->get_Shader(gaussianshaderstr.id);
+		m_PingPongFbo.GaussianBlur(gaussianShaderInst, m_GameFbo);
+
+		BlendFramebuffers(m_GameFbo, m_GameFbo.GetColorAttachment(), m_PingPongFbo.pingpongColorbuffers[0]);
+	}
+
+	// Render UI objects
+	m_UiShaderInst.Activate();		// Activate shader
+	DrawAll2DInstances(m_UiShaderInst.GetHandle());
+	m_UiShaderInst.Deactivate();	// Deactivate Shader
+
 	m_GameFbo.Unbind();
 }
 
@@ -588,7 +555,7 @@ void GraphicsSystem::Exit()
 	Adds an instance of a mesh to be drawn, For instancing
 */
 /**************************************************************************/
-void GraphicsSystem::AddInstance(GFX::Mesh &mesh, Transform transform, const vec4& color, unsigned entityID)
+void GraphicsSystem::AddInstance(GFX::Mesh &mesh, Transform transform, const vec4& color, int meshID, unsigned entityID)
 {
 	// Local to world transformation
 	mat4 scale = glm::scale(transform.mScale);
@@ -599,17 +566,17 @@ void GraphicsSystem::AddInstance(GFX::Mesh &mesh, Transform transform, const vec
 
 	mat4 world = translate * rotation * scale;
 	mesh.mLTW.push_back(world);
-	mesh.mTexEntID.push_back(vec4(0, (float)entityID + 0.5f, 0, 0));
+	mesh.mTexEntID.push_back(vec4((float)meshID + 0.5f, (float)entityID + 0.5f, 0, 0));
 	mesh.mColors.push_back(color);
 }
 
-void GraphicsSystem::AddInstance(GFX::Mesh &mesh, mat4 transform, const vec4& color, unsigned entityID, int animInstanceID)
+void GraphicsSystem::AddInstance(GFX::Mesh &mesh, mat4 transform, const vec4& color, int meshID, unsigned entityID, int animInstanceID)
 {
 	mesh.mLTW.push_back(transform);
 	mesh.mColors.push_back(color);
 	if (animInstanceID < 0)
 		animInstanceID = -2;
-	mesh.mTexEntID.push_back(vec4(0, (float)entityID + 0.5f, (float)animInstanceID + 0.5f, 0));
+	mesh.mTexEntID.push_back(vec4((float)meshID + 0.5f, (float)entityID + 0.5f, (float)animInstanceID + 0.5f, 0));
 }
 
 /***************************************************************************/
@@ -859,7 +826,7 @@ vec3 GraphicsSystem::GetCameraDirection(CAMERA_TYPE type)
 		return vec3();
 		break;
 	}
-	PERROR("camera spoil - graphicssystem.cpp line 809");
+	PERROR("camera spoil - graphicssystem.cpp GetCameraDirection()");
 	return {};
 }
 
@@ -872,6 +839,42 @@ vec3 GraphicsSystem::GetCameraDirection(CAMERA_TYPE type)
 void GraphicsSystem::DrawAll(GFX::Mesh &mesh)
 {
 	mesh.DrawAllInstances();
+}
+
+
+/***************************************************************************/
+/*!
+\brief
+	Perform additive blending on 2 color attachments
+*/
+/**************************************************************************/
+void GraphicsSystem::BlendFramebuffers(	GFX::FBO& targetFramebuffer, unsigned int Attachment0, unsigned int Attachment1)
+{
+	glBlendFunc(GL_ONE, GL_ONE);
+
+	uid shaderstr("AdditiveBlendShader");
+	GFX::Shader& BlendShader = *systemManager->mResourceTySystem->get_Shader(shaderstr.id);
+
+	BlendShader.Activate();
+	targetFramebuffer.Bind();
+
+	// Draw to color attachment only. Otherwise might affect other attachments
+	glDrawBuffer(GL_COLOR_ATTACHMENT0);
+
+	glUniform1f(BlendShader.GetUniformLocation("Exposure"), systemManager->mGraphicsSystem->mAmbientBloomExposure);
+	glBindTexture(GL_TEXTURE_2D, Attachment0);									// bind the first attachment
+	glBindTexture(GL_TEXTURE_2D, Attachment1);									// bind the second attachment
+
+	{
+		mScreenQuad.Bind();
+
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+
+		mScreenQuad.Unbind();
+	}
+
+	targetFramebuffer.Unbind();
+	BlendShader.Deactivate();
 }
 
 
@@ -902,26 +905,111 @@ void GraphicsSystem::UnpauseGlobalAnimation()
 	m_EnableGlobalAnimations = true;
 }
 
+void GraphicsSystem::CheckWindowSize()
+{
+	int width{}, height{};
+
+	glfwGetFramebufferSize(m_Window->GetHandle(), &width, &height);
+
+	if (width != m_Width || height != m_Height)
+	{
+		ResizeWindow({ width, height });
+	}
+}
+
+void GraphicsSystem::ResizeWindow(ivec2 newSize)
+{
+	// Update viewport
+	glViewport(0, 0, newSize.x, newSize.y);
+
+	// Update FBOs
+	m_Fbo.Resize(newSize.x, newSize.y);
+	m_GameFbo.Resize(newSize.x, newSize.y);
+	m_PingPongFbo.Resize(newSize.x, newSize.y);
+
+	// Update Window
+	m_Window->SetWindowSize(newSize);
+
+	m_Width = newSize.x;
+	m_Height = newSize.y;
+}
+
+GLuint64 GraphicsSystem::GetAndStoreBindlessTextureHandle(int texID)
+{
+	if (texID < 0)
+		return 0;
+
+	// Store the 64-bit handle
+	GLuint64 handle = glGetTextureHandleARB((unsigned)texID);
+	m_MaterialHandles[(unsigned)texID] = handle;
+
+	if (!glIsTextureHandleResidentARB(handle))
+	{
+		glMakeTextureHandleResidentARB(handle);
+	}
+
+	return handle;
+}
+
 void GraphicsSystem::SetupShaderStorageBuffers()
 {
+	// All materials of each instance -- Location 1
+	m_MaterialSsbo.Create(sizeof(MaterialSSBO) * MAX_INSTANCES, 1);
+
 	// All Point Lights in the Scene -- Location 2
 	m_PointLightSsbo.Create(sizeof(PointLightSSBO) * MAX_POINT_LIGHT, 2);
 
 	// Final Bone Matrix for Animation -- Location 3
 	m_FinalBoneMatrixSsbo.Create(sizeof(mat4) * MAX_NUM_BONES * MAX_INSTANCES, 3);
+
 }
 
-void GraphicsSystem::Add2DImageInstance(float width, float height, vec2 const& position, unsigned texHandle, vec4 const& color, unsigned entityID)
+void GraphicsSystem::DrawAll2DInstances(unsigned shaderID)
 {
+	// Bind Textures to OpenGL context
+	for (size_t i{}; i < m_Image2DStore.size(); ++i)
+	{
+		glBindTextureUnit(i, m_Image2DStore[i]);
+		//m_Textures.push_back(i);
+	}
+	//GLuint uniform_tex = glGetUniformLocation(shaderID, "uTex2d");
+	//glUniform1iv(uniform_tex, (GLsizei)m_Textures.size(), m_Textures.data()); // passing Texture ID to the fragment shader
+	//m_Textures.clear();
+
+	// Bind 2D quad VAO
+	m_Image2DMesh.BindVao();
+
+	// Draw call
+	glDrawArraysInstanced(GL_TRIANGLE_FAN, 0, 4, m_Image2DMesh.mLTW.size());
+
+	// Unbind 2D quad VAO
+	m_Image2DMesh.UnbindVao();
+
+	// Unbind Textures from openGL context
+	for (size_t i{}; i < m_Image2DStore.size(); ++i)
+	{
+		glBindTextureUnit(i, 0);
+	}
+}
+
+void GraphicsSystem::Add2DImageInstance(float width, float height, vec2 const& position, unsigned texHandle, unsigned entityID, vec4 const& color)
+{
+	float half_w = m_Width * 0.5f;
+	float half_h = m_Height * 0.5f;
+
 	mat4 world =
 	{
-		vec4(width, 0.f, 0.f, 0.f),
-		vec4(0.f, height, 0.f, 0.f),
+		vec4(width / m_Width, 0.f, 0.f, 0.f),
+		vec4(0.f, height / m_Height, 0.f, 0.f),
 		vec4(0.f, 0.f, 1.f, 0.f),
-		vec4(position, 0.f, 1.f)
+		vec4(position.x / half_w, position.y / half_h, 0.f, 1.f)
 	};
 
-	int texIndex = StoreTextureIndex(texHandle);
+	int texIndex{};
+	if (texHandle > 0)
+		texIndex = StoreTextureIndex(texHandle);
+	else
+		texIndex = -2;
 
 	m_Image2DMesh.mLTW.push_back(world);
 	m_Image2DMesh.mColors.push_back(color);

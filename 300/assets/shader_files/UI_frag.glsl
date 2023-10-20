@@ -18,7 +18,9 @@ void main()
 	uint entID = uint(fTexId_EntId.y);
 
 	// Get fragment color
-	vec4 outColor = texture(uTex2d[texIndex], fTexCoords);
+	vec4 outColor = vec4(1.0f);
+	if (texIndex >= 0)
+		outColor = texture(uTex2d[texIndex], fTexCoords);
 	outColor = outColor * fColor;
 
 	fragColor = outColor;

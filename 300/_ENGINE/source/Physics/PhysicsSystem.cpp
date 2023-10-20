@@ -41,13 +41,25 @@ void PhysicsSystem::Update(float dt)
 
 	for (auto itr = mActors.begin(); itr != mActors.end(); ++itr)
 	{
+		// retrieving positions in physx
 		physx::PxTransform PXform = itr->second->getGlobalPose();
-		Transform& xform = Entity(itr->first).GetComponent<Transform>();
+		Entity e = Entity(itr->first);
+		Transform& xform = e.GetComponent<Transform>();
+
+		// overwriting entities with updated positions
 		xform.mTranslate = Convert(PXform.p);
-		if (Entity(itr->first).HasComponent<BoxCollider>())
-			xform.mTranslate -= Entity(itr->first).GetComponent<BoxCollider>().mTranslateOffset;
-		xform.mRotate = glm::vec3(0,0,0);
-		RigidBody& rbod = Entity(itr->first).GetComponent<RigidBody>();
+		xform.mRotate = glm::eulerAngles(Convert(PXform.q));
+		if (e.HasComponent<BoxCollider>())
+			xform.mTranslate -= e.GetComponent<BoxCollider>().mTranslateOffset;
+		else if (e.HasComponent<SphereCollider>())
+			xform.mTranslate -= e.GetComponent<SphereCollider>().mTranslateOffset;
+		else if (e.HasComponent<CapsuleCollider>())
+			xform.mTranslate -= e.GetComponent<CapsuleCollider>().mTranslateOffset;
+		else if (e.HasComponent<AABBCollider>())
+			xform.mTranslate -= e.GetComponent<AABBCollider>().mTranslateOffset;
+
+		// update velocity
+		RigidBody& rbod = e.GetComponent<RigidBody>();
 		if (rbod.mMotion != MOTION::DYNAMIC)
 			continue;
 		rbod.mVelocity = Convert(static_cast<physx::PxRigidDynamic*>(itr->second)->getLinearVelocity());
@@ -74,6 +86,7 @@ void PhysicsSystem::AddActor(Entity e)
 
 void PhysicsSystem::SetVelocity(Entity e, const glm::vec3& velocity)
 {
+	std::cout << "Set velocity to: " << velocity.x << " " << velocity.y << " " << velocity.z << std::endl;
 	if (e.HasComponent<PlaneCollider>()) return;
 	if (!e.HasComponent<RigidBody>()) return;
 	RigidBody rbod = e.GetComponent<RigidBody>();
@@ -143,8 +156,13 @@ void PhysicsSystem::CreateRigidBody(Entity e)
 	shape->release();
 }
 
+void PhysicsSystem::AttachIsTrigger(PxRigidActor*& actor, PxShape*& shape)
+{
+}
+
 void PhysicsSystem::AttachMotionType(PxRigidActor*& actor, PxShape*& shape, const PxTransform& pxform, const RigidBody& rbod, const glm::ivec3& axisLocks)
 {
+	//shape->setBaseFlag()
 	if (rbod.mMotion == MOTION::DYNAMIC)
 	{
 		actor = mPX.mPhysics->createRigidDynamic(pxform);

@@ -80,6 +80,8 @@ public:
     sol::state luaState;
     bool once;
 
+    void LoadHelper();
+
     // To call selected script init and update functions
     void ScriptAlive(const Entity& script);
     void ScriptStart(const Entity& script);
@@ -93,6 +95,12 @@ public:
 
     // Call in Reload function
     void ScriptReload();
+
+    //Load and run script, used when a script is added to a new entity in scripts
+    void LoadRunScript(Entity& entity);
+
+    // AddScripts function that checks for the existence of Script component then attach desired script to entity
+    void AddScript(Entity& entity, std::string fileName);
 
     // To delete after port in to imGui
     void ScriptingInitTest();

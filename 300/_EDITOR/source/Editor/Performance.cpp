@@ -50,7 +50,7 @@ void Performance::update()
     static int values_offset = 0;
     if (FPSManager::trigger)
     {
-        Performance::values[fpsCount++] = static_cast<float>(FPSManager::fps);
+        Performance::values[fpsCount] = static_cast<float>(FPSManager::fps);
         //std::cout << static_cast<float>(FPSManager::fps) << std::endl;
         FPSManager::trigger = !FPSManager::trigger;
     }
@@ -145,7 +145,7 @@ void Performance::update()
         }
     }
 
-    if (fpsCount == INTERVALS)
+    if (++fpsCount == INTERVALS)
         fpsCount = 0;
 
     if (sysCount == INTERVALS)
