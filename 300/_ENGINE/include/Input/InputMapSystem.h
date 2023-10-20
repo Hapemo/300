@@ -126,6 +126,11 @@ public:
 	*******************************************************************************/
 	std::map<std::string, E_KEY>* GetKeybindMap() { return &mKeybindMap; }
 
+	/*!*****************************************************************************
+	Getter for the list of keybind in string
+	*******************************************************************************/
+	std::map<std::string, std::string >* GetKeybindMapString() { return &mKeybindMapString; }
+
 	///*!*****************************************************************************
 	//Getter for the list of available ekey's name and it's ekey enum
 	//*******************************************************************************/

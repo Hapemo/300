@@ -18,9 +18,6 @@ void KeybindWindow::update() {
       ImGui::Text(action.c_str());
       ImGui::SameLine();
 
-      auto ekeyMap = inputSystem->GetEkeyMap();
-      auto ekeyRecurr = ekeyMap->begin();
-
       if (ImGui::InputText("Name", &inputSystem->GetActionEKeyName(action)));
 
       //if (ImGui::BeginCombo("##combo", ekeyName.c_str())) // The second parameter is the label previewed before opening the combo.
