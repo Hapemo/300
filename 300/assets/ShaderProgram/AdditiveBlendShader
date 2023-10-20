@@ -1,0 +1,7 @@
+[
+    {
+        "ShaderProgram": "AdditiveBlendShader",
+        "Vertex": "../assets/shader_files/Quad2D_vert.glsl",
+        "Fragment": "../assets/shader_files/AdditiveBlending_frag.glsl"
+    }
+]
