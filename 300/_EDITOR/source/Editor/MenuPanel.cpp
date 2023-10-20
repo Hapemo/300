@@ -22,6 +22,7 @@ Contains main loop for the logic of MenuPanel.
 #include "ECS/ECS_Systems.h"
 #include "GameState/GameStateManager.h"
 #include "Hierarchy.h"
+#include "ScriptingSystem.h"
 #include "KeybindWindow.h"
 
 /***************************************************************************/
@@ -253,6 +254,45 @@ void MenuPanel::update()
             }
             ImGui::EndMenu();
         }
+
+        // if (ImGui::BeginMenu("Setting")) {
+        //   if (ImGui::MenuItem("Edit Keybind")) {
+
+        //   }
+        //   ImGui::EndMenu();
+        // }
+
+        // ImVec2 buttonSize{ 50,50 };
+
+        // ImGui::SetCursorPosX(ImGui::GetWindowSize().x / 2 - buttonSize.x * 3);
+
+        // if (ImGui::Button("PLAY")) {
+        //     systemManager->Play();
+        // }
+        // if (ImGui::Button("PAUSE")) {
+        //     systemManager->Pause();
+        // }
+        // if (ImGui::Button("RESET")) {
+        //     Hierarchy::selectionOn = false;
+        //     systemManager->Reset();
+        // }   
+
+        // if (ImGui::Button("RELOAD SCRIPTS"))
+        // {
+        //     // Reload Helper.lua
+        //     systemManager->GetScriptingPointer()->LoadHelper();
+
+        //     auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
+
+        //     for (Entity entity : scriptEntities)
+        //     {
+        //         for (Script& script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
+        //         {
+        //             script.Load(entity);
+        //             script.Run("Alive");
+        //         }
+        //     }
+        // }
 
 
         ImGui::EndMenuBar();

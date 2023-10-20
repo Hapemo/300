@@ -255,7 +255,7 @@ int AudioSystem::ErrCodeCheck(FMOD_RESULT result)
 	{
 		// PWARNING("FMOD OPERATION ERROR: %d", result);
 		//std::cout << "FMOD OPERATION ERROR: " << result << std::endl;
-		PINFO(" "); // concatanate nothing...
+		//PINFO(" "); // concatanate nothing...
 
 		switch (result)
 		{
@@ -344,7 +344,6 @@ void AudioSystem::LoadAudioFromDirectory(std::filesystem::path directory_path)
  /******************************************************************************/
 void AudioSystem::PlayAudio(std::string audio_name, AUDIOTYPE audio_type, float audio_vol)
 {
-
 	// Find the sound first ...
 	auto map_it = mSounds.find(audio_name); // tries to find the audio with this name...
 
@@ -565,7 +564,7 @@ void AudioSystem::SetSpecificChannelVolume(AUDIOTYPE audio_type, int channel_id,
  /******************************************************************************/
 void AudioSystem::MuteSFX()
 {
-	PINFO("Muting Global SFX.");
+	PINFO("Muting Global SFX.")
 	//std::cout << "Muting Global SFX." << std::endl;
 	SetAllSFXVolume(0.0f);
 }

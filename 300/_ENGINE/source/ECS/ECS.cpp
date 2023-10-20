@@ -93,6 +93,21 @@ Entity ECS::NewEntity()
 	return e;
 }
 
+Entity ECS::NewEntityByScene()
+{
+	auto& allScene = systemManager->mGameStateSystem->mCurrentGameState.mScenes;
+
+	if (allScene.size() <= 0) {
+		systemManager->mGameStateSystem->mCurrentGameState.AddScene("NewScene");
+		Entity newEntity = allScene[0].AddEntity();
+		return newEntity;
+	}
+	else {
+		Entity newEntity = allScene[SelectedScene].AddEntity();
+		return newEntity;
+	}
+}
+
 void ECS::DeleteEntity(Entity e)
 {
 //#ifdef _DEBUG

@@ -86,6 +86,7 @@ void PhysicsSystem::AddActor(Entity e)
 
 void PhysicsSystem::SetVelocity(Entity e, const glm::vec3& velocity)
 {
+	std::cout << "Set velocity to: " << velocity.x << " " << velocity.y << " " << velocity.z << std::endl;
 	if (e.HasComponent<PlaneCollider>()) return;
 	if (!e.HasComponent<RigidBody>()) return;
 	RigidBody rbod = e.GetComponent<RigidBody>();
