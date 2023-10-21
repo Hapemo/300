@@ -41,6 +41,7 @@ public:
 	void GetAudioComponent(Entity id);
 	bool IsSoundAttached();						// [Debug] Checks whether if the Sound Attached is in the <Audio> component.
 	bool AttachSound(std::string audio_name);	// Can be used to attach a <Sound> object onto this <AudioSource> instance.
+	bool IsPlaying();							// [10/22] Retrieves whether this audio is playing.
 
 	void Play();								// Play the [Sound] that is attached to this [AudioSource] (Should run <IsSoundAttached> to make sure audio is there)
 	void Pause();								// Pause the Audio.				
@@ -49,6 +50,8 @@ public:
 	void Mute();
 	void SetVolume(float volume);
 	void SetIsLoop(float loop);
+
+	
 
 	// Planned (Specialized)
 	// --------------------

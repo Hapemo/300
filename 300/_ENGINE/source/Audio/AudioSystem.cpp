@@ -143,11 +143,13 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 		TestCrossFadeBack();		 // Test OK
 
 	if (Input::CheckKey(PRESS, D))
-		TestFadeIn();	
+		TestFadeIn();				 // Test OK
 
 	if (Input::CheckKey(PRESS, F))
-		TestFadeOut();
+		TestFadeOut();				 // Test OK
 
+	//TestFootsteps();
+	TestFootstepsFade(dt);
 
 	// [10/18] Global Channel Test
 	if (Input::CheckKey(PRESS, _1))

@@ -98,6 +98,11 @@ bool AudioSource::AttachSound(std::string audio_name)
 	return false;
 }
 
+bool AudioSource::IsPlaying()
+{
+	return mAudioComponent->mIsPlaying;
+}
+
 
 
 void AudioSource::Play()
