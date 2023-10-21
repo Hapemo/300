@@ -183,9 +183,12 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 			audio_component.mSound->setMode(FMOD_LOOP_NORMAL);
 		}
 
+		// Play Cycle
 		if (audio_component.mIsPlay &&							// (1) Check if this <Audio> is set to play.
 			CheckAudioExist(audio_component.mFileName) &&		// (2) Check if the [Sound] that we want to play exists.
-			!audio_component.mIsPlaying)						// (3) Check if the <Audio> is currently already playing...
+			!audio_component.mIsPlaying &&						// (3) Check if the <Audio> is currently already playing...
+			!audio_component.mWasPaused &&						// (4) Check if it was [Paused] before. If yes resume.
+			!audio_component.mPaused)							// (5) Cannot be paused...
 		{
 			PINFO("Audio Exist");
 			PlayAudioSource(audio_component);
@@ -196,23 +199,6 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 		if (audio_component.mIsPlaying) // need this to be true (to indicate that there's a sound playing in the channel)
 		{
 			audio_component.mChannel->isPlaying(&channelIsPlay);
-		}
-
-		// Pause Loop
-		if (audio_component.mSetPause)
-		{
-			audio_component.mChannel->setPaused(true);
-			audio_component.mSetPause = false;
-			audio_component.mPaused = true;
-		}
-
-		// Resume Loop
-		if (audio_component.mPaused && audio_component.mSetUnpause) // Only will run this when [Start] is triggered again.
-		{
-			audio_component.mChannel->setPaused(false);
-			PINFO("RESUME");
-			audio_component.mPaused = false;
-			audio_component.mSetUnpause = false;
 		}
 
 		if (audio_component.mIsPlaying && !channelIsPlay) // Sound finished playing in channel.
@@ -302,6 +288,7 @@ void AudioSystem::PlayOnAwake()
 			PINFO("Resuming Audio: %s.", audio_component.mFileName.c_str());
 			ErrCodeCheck(audio_component.mChannel->setPaused(false));
 			audio_component.mPaused = false;
+			audio_component.mWasPaused = true;  // to prevent replaying of clip (if update())
 		}
 	}
 }
@@ -322,16 +309,14 @@ void AudioSystem::Pause()
 
 		bool playing = false; // by default.
 
-		if (audio_component.mIsPlaying)
-		{
-			audio_component.mChannel->isPlaying(&playing);
-		}
-
+		audio_component.mChannel->isPlaying(&playing); // will still be true when it's setPaused() -> but this is to check whether if the channel has any sound playing the clip.
+		
 		if (playing) // only pause if it's playing.
 		{
 			PINFO("Pausing Audio : %s", audio_component.mFileName);  // I think loop too fast to display on debugger.
-			ErrCodeCheck(audio_component.mChannel->setPaused(true));
-			audio_component.mSetPause = true;
+			ErrCodeCheck(audio_component.mChannel->setPaused(true)); // [Cannot be done in Update() loop]
+			audio_component.mPaused = true;
+			audio_component.mIsPlaying = false;
 		}
 	}
 }

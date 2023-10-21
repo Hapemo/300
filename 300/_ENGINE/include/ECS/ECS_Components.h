@@ -356,7 +356,8 @@ struct Audio
 
 	// Pause State [Editor/Pause Menu]
 	bool		   mSetPause = false;      // [Flag] - set pause for channel.
-	bool		   mPaused = false;        // [For Unpausing]
+	bool		   mPaused = false;        // [For Resuming Logic]
+	bool		   mWasPaused = false;     // [For Resuming Logic]
 	bool		   mSetUnpause = false;    // [Flag] - for unpausing channels.
 	float		   mTypeChanged = false;   // [For Editor] - trigger type change
 

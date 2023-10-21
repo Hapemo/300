@@ -122,6 +122,9 @@ public:
 public:
 	FMOD::System* system_obj = nullptr;
 
+	// For Editor (Pausing State)
+	float system_paused = true; // initial yes.
+
 private:
 	std::unordered_map<AUDIOTYPE, std::vector<std::pair<uid, FMOD::Channel*&>>> mChannelswID;   // Add [Channel ID] 
 	std::unordered_map<std::string, FMOD::Sound*>				                mSounds;        // Database of Sounds (SFX/BGM)
@@ -141,6 +144,7 @@ private:
 	// for performance
 	double startTime = 0.0f;
 	double endTime = 0.0f;
+
 };
 
 
