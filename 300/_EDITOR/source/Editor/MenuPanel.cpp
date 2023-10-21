@@ -24,6 +24,7 @@ Contains main loop for the logic of MenuPanel.
 #include "Hierarchy.h"
 #include "ScriptingSystem.h"
 #include "KeybindWindow.h"
+#include "ShaderCompiler.h"
 
 /***************************************************************************/
 /*!
@@ -255,44 +256,16 @@ void MenuPanel::update()
             ImGui::EndMenu();
         }
 
-        // if (ImGui::BeginMenu("Setting")) {
-        //   if (ImGui::MenuItem("Edit Keybind")) {
+        if (ImGui::BeginMenu(ICON_FA_ARROW_TREND_DOWN " Shader"))
+        {
+            if (ImGui::MenuItem(ICON_FA_ID_CARD " Compile Shader"))
+            {
 
-        //   }
-        //   ImGui::EndMenu();
-        // }
+                ShaderCompiler::openWindow = true;
 
-        // ImVec2 buttonSize{ 50,50 };
-
-        // ImGui::SetCursorPosX(ImGui::GetWindowSize().x / 2 - buttonSize.x * 3);
-
-        // if (ImGui::Button("PLAY")) {
-        //     systemManager->Play();
-        // }
-        // if (ImGui::Button("PAUSE")) {
-        //     systemManager->Pause();
-        // }
-        // if (ImGui::Button("RESET")) {
-        //     Hierarchy::selectionOn = false;
-        //     systemManager->Reset();
-        // }   
-
-        // if (ImGui::Button("RELOAD SCRIPTS"))
-        // {
-        //     // Reload Helper.lua
-        //     systemManager->GetScriptingPointer()->LoadHelper();
-
-        //     auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
-
-        //     for (Entity entity : scriptEntities)
-        //     {
-        //         for (Script& script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
-        //         {
-        //             script.Load(entity);
-        //             script.Run("Alive");
-        //         }
-        //     }
-        // }
+            }
+            ImGui::EndMenu();
+        }
 
 
         ImGui::EndMenuBar();

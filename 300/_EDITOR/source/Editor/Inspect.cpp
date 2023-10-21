@@ -687,15 +687,15 @@ void MeshRenderer::Inspect()
 
 		std::string shaderstr{" "};
 
-		if (systemManager->mResourceTySystem->m_Shaders.find(mShaderid) != systemManager->mResourceTySystem->m_Shaders.end())
-			shaderstr = systemManager->mResourceTySystem->m_Shaders[mShaderid].first;
+		if (systemManager->mResourceTySystem->m_Shaders.find(mShaderRef.data_uid) != systemManager->mResourceTySystem->m_Shaders.end())
+			shaderstr = systemManager->mResourceTySystem->m_Shaders[mShaderRef.data_uid].first;
 		
 		if (ImGui::BeginCombo("##Shaders", shaderstr.c_str())) {
 
 			for (auto& data : systemManager->mResourceTySystem->m_Shaders) {
 
 				if (ImGui::Selectable(data.second.first.c_str())) {
-					mShaderid = data.first;
+					mShaderRef.data_uid = data.first;
 				}
 			}
 
@@ -717,8 +717,8 @@ void MeshRenderer::Inspect()
 
 				std::string descfilepath = data_str + ".desc";
 				unsigned guid = _GEOM::GetGUID(descfilepath);
-				mMeshRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(guid));
-				GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mMeshRef);
+				mMeshRef.data = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(guid));
+				GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mMeshRef.data);
 
 
 				Entity entins(Hierarchy::selectedId);
@@ -766,8 +766,9 @@ void MeshRenderer::Inspect()
 					systemManager->mResourceTySystem->mesh_Load(geompath, guid);
 				}
 
-				mMeshRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(guid));
-				GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mMeshRef);
+
+				mMeshRef.data = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(guid));
+				GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mMeshRef.data);
 
 				if (entins.HasComponent<Animator>() && meshinst->mHasAnimation)
 				{
@@ -812,8 +813,7 @@ void MeshRenderer::Inspect()
 						mMaterialInstancePath[i] = data_str;
 
 						uid temp(mMaterialInstancePath[i]);
-						mTextureRef[i] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(temp.id));
-						mTextureCont[i] = true;
+						mTextureRef[i].data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(temp.id));
 					}
 
 					// file uncompressed texture for objects
@@ -840,12 +840,12 @@ void MeshRenderer::Inspect()
 
 							// Load the textures into the list of usable textures within the engine
 							systemManager->mResourceTySystem->texture_Load(getFilename(data_str), guid);
-							mTextureRef[i] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(guid));
+							mTextureRef[i].data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(guid));
 							mTextureCont[i] = true;
 						}
 
 						uid temp(mMaterialInstancePath[i]);
-						mTextureRef[i] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(temp.id));
+						mTextureRef[i].data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(temp.id));
 						mTextureCont[i] = true;
 					}
 
@@ -877,8 +877,8 @@ void MeshRenderer::Inspect()
 						mMaterialInstancePath[i] = data_str;
 
 						uid temp(mMaterialInstancePath[i]);
-						mTextureRef[i] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(temp.id));
-						mTextureCont[i] = true;
+						mTextureRef[i].data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(temp.id));
+
 					}
 					ImGui::EndDragDropTarget();
 				}
@@ -892,7 +892,7 @@ void MeshRenderer::Inspect()
 	ImGui::SetNextItemOpen(true, ImGuiCond_Once);
 	if (ImGui::TreeNode("GEOM DescirptorFile"))
 	{
-		GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mMeshRef);
+		GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mMeshRef.data);
 
 		// sanity check
 		if (meshinst != nullptr)

@@ -25,6 +25,7 @@ Components used by the ECS.
 #include "Input/Input.h"
 #include "Guid.h"
 #include <Constants.h>
+#include "ResourceManagerTy.h"
 
 #include "Texture.hpp"
 //#include "Graphics/GraphicsSystem.h"
@@ -116,15 +117,26 @@ struct MeshRenderer
 	// For now, we store the string to the filepaths. TO CHANGE to uids for efficient referencing
 	//std::pair<std::string, std::string> mShaderPath{ "../assets/shader_files/animations_vert.glsl", "../assets/shader_files/pointLight_frag.glsl" };
 	std::pair<std::string, std::string> mShaderPath{ "../assets/shader_files/pointLight_vert.glsl", "../assets/shader_files/pointLight_frag.glsl" };
-	uid									mShaderid;
 	
+	//uid									mShaderid;
+	ref									mShaderRef;
+
 	std::string							mMaterialInstancePath[4] {" "," " ," " ," " };
 	vec4								mInstanceColor{ 1.f, 1.f, 1.f, 1.f };
 
 	std::string							mMeshPath;
 	
-	void*								mMeshRef{nullptr};
-	void* mTextureRef[5]{ nullptr,nullptr,nullptr,nullptr,nullptr };
+
+	ref									mMeshRef{};
+	//void*								mMeshRef{};
+
+	//ref									mTextureRef[5];
+	//void*								mTextureRef[4];
+
+	//unsigned							mGUID;
+	//bool								mTextureCont[4];
+	//void*								mMeshRef{nullptr};
+	ref									mTextureRef[5]		{ {nullptr,0},{nullptr,0},{nullptr,0},{nullptr,0},{nullptr,0} };
 
 	unsigned							mGUID;
 	bool								mTextureCont[5];
@@ -137,10 +149,10 @@ struct MeshRenderer
 	
 	int									GetTexture(MaterialType type) 
 										{ 
-											if (mTextureRef[static_cast<int>(type)] == nullptr)
+											if (mTextureRef[static_cast<int>(type)].data == nullptr)
 												return -1;
 
-											return static_cast<GFX::Texture*>(mTextureRef[static_cast<int>(type)])->ID(); 
+											return static_cast<GFX::Texture*>(mTextureRef[static_cast<int>(type)].data)->ID();
 										}
 	//RTTR_ENABLE()
 };
