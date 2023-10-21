@@ -71,6 +71,7 @@ bool AudioSource::AttachSound(std::string audio_name)
 	if (systemManager->mAudioSystem.get()->CheckAudioExist(audio_name)) // Check if the audio exists in the database...
 	{
 		mAudioComponent->mSound = systemManager->mAudioSystem.get()->FindSound(audio_name);
+		mAudioComponent->mFileName = audio_name; // for play check in Update() -> CheckAudioExist
 		return true;
 	}
 
@@ -102,8 +103,10 @@ void AudioSource::Pause()
 
 		if(mAudioComponent->mIsPlaying)
 		{
-			// The [playing] should be in the [Update()] loop.
-			mAudioComponent->mSetPause = true;
+			// Doesn't Pause in Update() loop (coz AudioSystem doesnt run in "pause" button)
+			mAudioComponent->mChannel->setPaused(true);
+			mAudioComponent->mPaused = true;
+			mAudioComponent->mIsPlaying = false;
 		}
 	}
 }
@@ -118,7 +121,9 @@ void AudioSource::Unpause()
 		if (mAudioComponent->mPaused)
 		{
 			// The [playing] should be in the [Update()] loop.
-			mAudioComponent->mSetUnpause = true;
+			mAudioComponent->mChannel->setPaused(false);
+			mAudioComponent->mPaused = false;
+			mAudioComponent->mWasPaused = true;  // to prevent replaying of clip (if update())
 		}
 	}
 }

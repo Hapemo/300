@@ -122,22 +122,22 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 {
 	// [10/14] Scripting Test
 	if (Input::CheckKey(PRESS, Q))
-		TestLoadPlaySuccess();
+		TestLoadPlaySuccess();		 // Test OK. (must have component to play)
 	if (Input::CheckKey(PRESS, W))
-		TestLoadAudioDirectory();
+		TestLoadAudioDirectory();	 // Test OK.
 	if (Input::CheckKey(PRESS, E))
-		TestOverrideAttachSound();
+		TestOverrideAttachSound();   // Test OK. (must have component to play)
 	if (Input::CheckKey(PRESS, R))   // Press 'E' first. (to play)
-		TestPauseSound();
+		TestPauseSound();			 // Test OK.
 	if (Input::CheckKey(PRESS, T))   // Press 'E' then 'R' then this
-		TestUnpauseSound();
+		TestUnpauseSound();			 // Test OK.
 	if (Input::CheckKey(PRESS, Y))   // Press 'E' first. (to play)
-		TestMuteSound();
+		TestMuteSound();			 // Test OK
 	if (Input::CheckKey(PRESS, U))   // Press 'E' first. (to play)
-		TestSetVolume();
+		TestSetVolume();			 // Test OK
 
 	if (Input::CheckKey(PRESS, A))
-		TestCrossFade();
+		TestCrossFade();			 // Test OK
 
 
 	// [10/18] Global Channel Test
@@ -370,7 +370,7 @@ void AudioSystem::UpdateLoadAudio(Entity id)
 
 	if (!audio_component.mIsLoaded)
 	{	
-		std::string audio_path = audio_component.mFilePath + "/" + audio_component.mFileName;
+		std::string audio_path = audio_component.mFilePath;
 		std::string audio_name = audio_component.mFileName;
 
 		if (LoadAudio(audio_path, audio_name)) // What if the sound is loaded? (we have to save a reference in this function also)
@@ -541,8 +541,9 @@ bool AudioSystem::LoadAudio(std::string file_path, std::string audio_name, Audio
 		//std::cout << "File Detected: " << file_path << std::endl;
 		PINFO("Creating Sound: +");
 		/*std::cout << "Creating Sound: ";*/
+		std::string full_path = file_path + "/" + audio_name;
 		FMOD::Sound* new_sound;
-		int check = ErrCodeCheck(system_obj->createSound(file_path.c_str(), FMOD_LOOP_OFF, 0, &new_sound));
+		int check = ErrCodeCheck(system_obj->createSound(full_path.c_str(), FMOD_LOOP_OFF, 0, &new_sound));
 
 		if (check != 1)
 		{

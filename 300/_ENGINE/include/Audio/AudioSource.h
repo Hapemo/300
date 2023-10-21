@@ -10,7 +10,7 @@
 	 \brief
 	  - Interfaced functions that make it easy to use on scripting side (port to Lua)
 	  - Container for [Scripting] side to use.
-	  - Works with <Audio> component for the data.
+	  - Works with <Audio> component for the data. -> must have an <Audio> component attached in order to work.
 	 \brief
 	  - Each <AudioSource> will have their own channel.
 	 [Note] - Retrieve "script_entity_id" is used to retrieve the <Audio> component of 
