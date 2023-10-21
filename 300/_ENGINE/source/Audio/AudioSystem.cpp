@@ -614,6 +614,31 @@ bool AudioSystem::LoadAudio(std::string file_path, std::string audio_name, Audio
 	return true;
 }
 
+ bool AudioSystem::LoadAudioFromDirectory(std::string directory_path)
+ {
+	 for (const auto& file : std::filesystem::directory_iterator(directory_path))
+	 {
+		 std::string file_path = file.path().string();
+		 PINFO("File Detected: %s", file_path.c_str());
+		 std::string audio_name = file.path().filename().string();
+		 PINFO("Audio Name: %s", audio_name.c_str());
+
+		 PINFO("Creating Sound: ");
+		 FMOD::Sound* new_sound;
+		 bool check = ErrCodeCheck(system_obj->createSound(file_path.c_str(), FMOD_LOOP_OFF, 0, &new_sound));
+
+		 if (!check)
+		 {
+			 PWARNING("Failed to create Sound: %s", audio_name.c_str());
+			 return false;
+		 }
+
+		 mSounds.insert(std::make_pair(audio_name, new_sound));
+	 }
+
+	 return true;
+ }
+
 /******************************************************************************/
 /*!
 	 PlayAudio()
@@ -970,10 +995,12 @@ void AudioSystem::PlayAudioSource(FMOD::Sound* comp_sound, FMOD::Channel* comp_c
 
 void AudioSystem::PlayAudioSource(Audio& audio_component, float volume)
 {
-	audio_component.mChannel->setVolume(volume);
+	
 
 	PINFO("Playing Audio Source from <Audio> Component");
 	ErrCodeCheck(system_obj->playSound(audio_component.mSound, nullptr, false, &audio_component.mChannel));
+	
+	audio_component.mChannel->setVolume(volume); // After because in [release] mode got undefined behaviour complaining access violation. OK in Debug mode though.
 
 	bool isPlaying; // check whether if it's playing.
 	ErrCodeCheck(audio_component.mChannel->isPlaying(&isPlaying));
