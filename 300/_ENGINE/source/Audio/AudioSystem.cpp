@@ -142,6 +142,12 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 	if (Input::CheckKey(PRESS, S))
 		TestCrossFadeBack();		 // Test OK
 
+	if (Input::CheckKey(PRESS, D))
+		TestFadeIn();	
+
+	if (Input::CheckKey(PRESS, F))
+		TestFadeOut();
+
 
 	// [10/18] Global Channel Test
 	if (Input::CheckKey(PRESS, _1))
@@ -224,20 +230,29 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 		{
 			if (fade_timer < audio_component.fade_duration)
 			{
-				float fade_slower_dt = 0.2 * dt;
+				float fade_step = audio_component.mVolume / audio_component.fade_duration;
 
-				fade_timer += fade_slower_dt;
+			/*	float fade_slower_dt = 0.2 * dt;
 
+				fade_timer += fade_slower_dt;*/
 
-				float fadeLevelOut = 1.0f - (fade_timer / audio_component.fade_duration); //  fade level out
+				float fadeLevelOut = audio_component.mVolume - (fade_step * dt);
 
-				// Set Volume 
-			/*	if (audio_component.mIsPlaying)
-				{*/ 
-				audio_component.mChannel->setVolume(fadeLevelOut);
-				audio_component.mVolume = fadeLevelOut; //  fade level out
-				//PINFO("Fade Out Volume: %f", audio_component.mVolume);
-				//}
+				//float fadeLevelOut = audio_component.mVolume - (fade_timer / audio_component.fade_duration); //  fade level out (volume each fade out step)
+
+				if (fadeLevelOut > audio_component.mFadeOutToVol)  // Have yet to reach the desired fade out volume
+				{
+					audio_component.mChannel->setVolume(fadeLevelOut);
+					audio_component.mVolume = fadeLevelOut; //  fade level out
+				}
+
+				else // reached and exceeded the fade out volume...
+				{
+					audio_component.mChannel->setVolume(audio_component.mFadeOutToVol);
+					audio_component.mVolume = audio_component.mFadeOutToVol; //  fade level out
+				}
+				
+				PINFO("Fade Out Volume: %f", audio_component.mVolume);
 
 			}
 		}
@@ -246,19 +261,15 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 		{
 			if (fade_timer < audio_component.fade_duration)
 			{
-				float fade_slower_dt = 0.2 * dt;
+				float fade_step = audio_component.mFadeInMaxVol / audio_component.fade_duration;
+				float fadeLevelIn = audio_component.mVolume + (fade_step * dt);
 
-				fade_timer += fade_slower_dt;
-
-				float fadeLevelIn = fade_timer / audio_component.fade_duration;
-
-				if (fadeLevelIn < audio_component.mFadeInMaxVol) // compare with volume limit.
+				if (fadeLevelIn < audio_component.mFadeInMaxVol)
 				{
 					audio_component.mChannel->setVolume(fadeLevelIn);
 					audio_component.mVolume = fadeLevelIn;
 				}
-
-				else // if it exceeds volume limit.
+				else
 				{
 					audio_component.mChannel->setVolume(audio_component.mFadeInMaxVol);
 					audio_component.mVolume = audio_component.mFadeInMaxVol;
