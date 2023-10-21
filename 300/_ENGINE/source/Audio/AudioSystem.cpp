@@ -194,7 +194,8 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 			!audio_component.mPaused)							// (5) Cannot be paused...
 		{
 			PINFO("Audio Exist");
-			PlayAudioSource(audio_component);
+			PINFO("PLAYING AUDIO AT: %f", audio_component.mVolume);
+			PlayAudioSource(audio_component, audio_component.mVolume);
 		}
 
 		// Every Loop -> check if the <Audio> is still playing.

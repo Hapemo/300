@@ -1152,7 +1152,7 @@ void Audio::Inspect() {
 		//ImGui::Checkbox("IsPlaying", &mIsPlaying);
 		ImGui::Checkbox("Play on Awake", &mPlayonAwake);
 		ImGui::Checkbox("Is Looping", &mIsLooping);
-		ImGui::SliderFloat("Volume", &f1, 0.0f, 1.0f, "ratio = %.3f");
+		ImGui::SliderFloat("Volume", &mVolume, 0.0f, 1.0f, "volume = %.3f");
 
 	}
 
