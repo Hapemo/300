@@ -230,7 +230,7 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 		{
 			if (fade_timer < audio_component.fade_duration)
 			{
-				float fade_step = audio_component.mVolume / audio_component.fade_duration;
+				float fade_step = audio_component.mFadeSpeedModifier * (audio_component.mVolume / audio_component.fade_duration);
 
 			/*	float fade_slower_dt = 0.2 * dt;
 
@@ -261,7 +261,7 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 		{
 			if (fade_timer < audio_component.fade_duration)
 			{
-				float fade_step = audio_component.mFadeInMaxVol / audio_component.fade_duration;
+				float fade_step = audio_component.mFadeSpeedModifier * (audio_component.mFadeInMaxVol / audio_component.fade_duration);
 				float fadeLevelIn = audio_component.mVolume + (fade_step * dt);
 
 				if (fadeLevelIn < audio_component.mFadeInMaxVol)
