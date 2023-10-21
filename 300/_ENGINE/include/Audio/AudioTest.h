@@ -295,7 +295,7 @@ void TestCrossFade()
 		//}
 		// [Not in script] -----------------------------------------------------------------------------
 		PINFO("CROSS FADING");
-		CrossFadeAudio(farm, battle, 5.0);
+		CrossFadeAudio(farm, battle, 5.0, 0.9f);
 	}
 }
 

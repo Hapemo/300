@@ -16,7 +16,7 @@ bool LoadAudioFromDirectory(std::string directory_path)
 	return load_status;
 }
 
-bool CrossFadeAudio(AudioSource& fade_out, AudioSource& fade_in, float fade_duration)
+bool CrossFadeAudio(AudioSource& fade_out, AudioSource& fade_in, float fade_duration, float fade_max_vol)
 {
 	if (fade_out.mAudioComponent != nullptr && fade_in.mAudioComponent != nullptr)
 	{
@@ -28,6 +28,7 @@ bool CrossFadeAudio(AudioSource& fade_out, AudioSource& fade_in, float fade_dura
 		fade_in.mAudioComponent->fade_duration = fade_duration;
 		fade_in.mAudioComponent->mFadeIn = true;
 		fade_in.mAudioComponent->mFadeOut = false;
+		fade_in.mAudioComponent->mFadeInMaxVol = fade_max_vol;
 		systemManager->mAudioSystem.get()->fade_timer = 0.0f; // reset timer. (in case it was used before) -> this is in AudioSystem.h (static bool)
 	
 		return true;

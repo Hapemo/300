@@ -351,6 +351,7 @@ struct Audio
 	// Update Loop - Fade In / Fade out data
 	bool		   mFadeIn = false;				   // [Flag] - This audio will be faded out. 
 	bool		   mFadeOut = false;			   // [Flag] - This audio will be faded in.
+	float		   mFadeInMaxVol = 1.0f;		   // Flexibility with audio volume fade in (control over volume)
 
 	// For Editor
 	bool		   mIsEmpty = true;	       // [For Editor] - if empty delete all data in this <Audio> component

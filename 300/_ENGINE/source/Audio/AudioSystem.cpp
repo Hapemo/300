@@ -236,7 +236,7 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 				{*/ 
 				audio_component.mChannel->setVolume(fadeLevelOut);
 				audio_component.mVolume = fadeLevelOut; //  fade level out
-				PINFO("Fade Out Volume: %f", audio_component.mVolume);
+				//PINFO("Fade Out Volume: %f", audio_component.mVolume);
 				//}
 
 			}
@@ -252,9 +252,20 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 
 				float fadeLevelIn = fade_timer / audio_component.fade_duration;
 
-				audio_component.mChannel->setVolume(fadeLevelIn);
-				audio_component.mVolume = fadeLevelIn;
-				PINFO("Fade In Volume: %d", audio_component.mVolume);
+				if (fadeLevelIn < audio_component.mFadeInMaxVol) // compare with volume limit.
+				{
+					audio_component.mChannel->setVolume(fadeLevelIn);
+					audio_component.mVolume = fadeLevelIn;
+				}
+
+				else // if it exceeds volume limit.
+				{
+					audio_component.mChannel->setVolume(audio_component.mFadeInMaxVol);
+					audio_component.mVolume = audio_component.mFadeInMaxVol;
+				}
+			
+			
+				PINFO("Fade In Volume: %f", audio_component.mVolume);
 
 				// (1) Play Sound + Adjust Audio
 				if (!audio_component.mIsPlaying)
