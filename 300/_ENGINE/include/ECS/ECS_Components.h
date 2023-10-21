@@ -105,8 +105,8 @@ struct MeshRenderer
 {
 	// For now, we store the string to the filepaths. TO CHANGE to uids for efficient referencing
 	//uid									mShaders;
-	//std::pair<std::string, std::string> mShaderPath{ "../assets/shader_files/animations_vert.glsl", "../assets/shader_files/pointLight_frag.glsl" };
-	std::pair<std::string, std::string> mShaderPath{ "../assets/shader_files/pointLight_vert.glsl", "../assets/shader_files/pointLight_frag.glsl" };
+	std::pair<std::string, std::string> mShaderPath{ "../assets/shader_files/animations_vert.glsl", "../assets/shader_files/pointLight_frag.glsl" };
+	//std::pair<std::string, std::string> mShaderPath{ "../assets/shader_files/pointLight_vert.glsl", "../assets/shader_files/pointLight_frag.glsl" };
 	
 	//uid									mShaderid;
 	ref									mShaderRef;
@@ -120,7 +120,7 @@ struct MeshRenderer
 	ref									mMeshRef{};
 	//void*								mMeshRef{};
 
-	ref									mTextureRef[4];
+	ref									mTextureRef[4]{ {nullptr,0},{nullptr,0},{nullptr,0},{nullptr,0} };
 	//void*								mTextureRef[4];
 
 	//unsigned							mGUID;
