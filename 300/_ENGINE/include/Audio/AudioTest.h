@@ -280,19 +280,23 @@ void TestCrossFade()
 	{
 		int hi = 3;
 	}
-	auto audio1 = audio_ent[0];
-	auto audio2 = audio_ent[1];
 
-	battle.GetAudioComponent(audio1);
-	farm.GetAudioComponent(audio2);
+	if (audio_ent.size() >= 2)				// Need the guard (temporarily) -> this is just for me to retrieve the 2 audio components. through subscript
+	{ 
+		auto audio1 = audio_ent[0];		
+		auto audio2 = audio_ent[1];
 
-	//for (Entity ent : audio_ent)
-	//{
-	//	ent_id = ent.id;
-	//}
-	// [Not in script] -----------------------------------------------------------------------------
-	PINFO("CROSS FADING");
-	CrossFadeAudio(farm, battle, 5.0);
+		battle.GetAudioComponent(audio1);
+		farm.GetAudioComponent(audio2);
+
+		//for (Entity ent : audio_ent)
+		//{
+		//	ent_id = ent.id;
+		//}
+		// [Not in script] -----------------------------------------------------------------------------
+		PINFO("CROSS FADING");
+		CrossFadeAudio(farm, battle, 5.0);
+	}
 }
 
 void TestCrossFadeBack()
@@ -307,16 +311,20 @@ void TestCrossFadeBack()
 	{
 		int hi = 3;
 	}
-	auto audio1 = audio_ent[0];
-	auto audio2 = audio_ent[1];
 
-	battle.GetAudioComponent(audio1);
-	farm.GetAudioComponent(audio2);
+	if (audio_ent.size() >= 2)				// Need the guard (temporarily) -> this is just for me to retrieve the 2 audio components. through subscript
+	{
+		auto audio1 = audio_ent[0];
+		auto audio2 = audio_ent[1];
 
-	//for (Entity ent : audio_ent)
-	//{
-	//	ent_id = ent.id;
-	//}
-	// [Not in script] -----------------------------------------------------------------------------
-	CrossFadeAudio(battle, farm, 5.0);
+		battle.GetAudioComponent(audio1);
+		farm.GetAudioComponent(audio2);
+
+		//for (Entity ent : audio_ent)
+		//{
+		//	ent_id = ent.id;
+		//}
+		// [Not in script] -----------------------------------------------------------------------------
+		CrossFadeAudio(battle, farm, 5.0);
+	}
 }
