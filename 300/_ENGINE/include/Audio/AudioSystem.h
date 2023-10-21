@@ -26,7 +26,6 @@ This file contains the base AudioSystem class that supports the following functi
 #include "GameState/Scene.h"
 
 
-//static float fade_timer = 0.0f;
 
 enum AUDIOTYPE : unsigned char;
 
@@ -116,14 +115,15 @@ public:
 
 // Scripting Support
 public:
-	void PlayAudioSource(FMOD::Sound* comp_sound, FMOD::Channel* comp_channel);  // OK.
-	void PlayAudioSource(Audio& audio_component);
+	void PlayAudioSource(FMOD::Sound* comp_sound, FMOD::Channel* comp_channel, float vol = 1.0f);  // OK.
+	void PlayAudioSource(Audio& audio_component, float vol = 1.0f);
 
 public:
 	FMOD::System* system_obj = nullptr;
 
 	// For Editor (Pausing State)
 	float system_paused = true; // initial yes.
+	float fade_timer = 0.0f;
 
 private:
 	std::unordered_map<AUDIOTYPE, std::vector<std::pair<uid, FMOD::Channel*&>>> mChannelswID;   // Add [Channel ID] 

@@ -271,7 +271,7 @@ void TestSetVolume()
 void TestCrossFade()
 {
 	AudioSource farm;		// Have it's specific "entity id"
-	AudioSource radio;		// Have it's specific "entity id"
+	AudioSource battle;		// Have it's specific "entity id"
 
 	// [Not in script] - Ignore this part. (the script entity id is different everytime i reset)
 	auto audio_ent = systemManager->ecs->GetEntitiesWith<Audio>();
@@ -283,13 +283,40 @@ void TestCrossFade()
 	auto audio1 = audio_ent[0];
 	auto audio2 = audio_ent[1];
 
-	farm.GetAudioComponent(audio1);
-	radio.GetAudioComponent(audio2);
+	battle.GetAudioComponent(audio1);
+	farm.GetAudioComponent(audio2);
 
 	//for (Entity ent : audio_ent)
 	//{
 	//	ent_id = ent.id;
 	//}
 	// [Not in script] -----------------------------------------------------------------------------
-	CrossFadeAudio(farm, radio, 5.0);
+	PINFO("CROSS FADING");
+	CrossFadeAudio(farm, battle, 5.0);
+}
+
+void TestCrossFadeBack()
+{
+	AudioSource farm;		// Have it's specific "entity id"
+	AudioSource battle;		// Have it's specific "entity id"
+
+	// [Not in script] - Ignore this part. (the script entity id is different everytime i reset)
+	auto audio_ent = systemManager->ecs->GetEntitiesWith<Audio>();
+
+	for (Entity e : audio_ent)
+	{
+		int hi = 3;
+	}
+	auto audio1 = audio_ent[0];
+	auto audio2 = audio_ent[1];
+
+	battle.GetAudioComponent(audio1);
+	farm.GetAudioComponent(audio2);
+
+	//for (Entity ent : audio_ent)
+	//{
+	//	ent_id = ent.id;
+	//}
+	// [Not in script] -----------------------------------------------------------------------------
+	CrossFadeAudio(battle, farm, 5.0);
 }

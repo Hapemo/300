@@ -1088,11 +1088,10 @@ void Audio::Inspect() {
 				}
 
 				size_t audio_name_start = full_file_path.find_last_of("\\");
-				size_t audio_name_end = full_file_path.find_last_of(".wav");
+				std::string audio_name;
 
-				if (audio_name_start != std::string::npos && audio_name_end != std::string::npos && audio_name_start < audio_name_end) {
-					audio_name = full_file_path.substr(audio_name_start + 1, audio_name_end - audio_name_start);
-					//std::cout << audio_name << std::endl;
+				if (audio_name_start != std::string::npos) {
+					audio_name = full_file_path.substr(audio_name_start + 1);
 				}
 
 				// Must be outside (what if i remove and add an already loaded audio)

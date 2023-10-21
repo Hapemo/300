@@ -138,6 +138,9 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 
 	if (Input::CheckKey(PRESS, A))
 		TestCrossFade();			 // Test OK
+	
+	if (Input::CheckKey(PRESS, S))
+		TestCrossFadeBack();		 // Test OK
 
 
 	// [10/18] Global Channel Test
@@ -218,39 +221,47 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 		// Fade In / Fade Out 
 		if (audio_component.mFadeOut)
 		{
-			while (audio_component.fade_timer < audio_component.fade_duration)
+			if (fade_timer < audio_component.fade_duration)
 			{
-				float fadeLevelOut = 1.0f - (audio_component.fade_timer / audio_component.fade_duration); //  fade level out
+				float fade_slower_dt = 0.2 * dt;
+
+				fade_timer += fade_slower_dt;
+
+
+				float fadeLevelOut = 1.0f - (fade_timer / audio_component.fade_duration); //  fade level out
 
 				// Set Volume 
-				if (audio_component.mIsPlaying)
-				{
-					audio_component.mChannel->setVolume(fadeLevelOut);
-					audio_component.mVolume = fadeLevelOut; //  fade level out
-					audio_component.fade_timer += dt;
-				}
+			/*	if (audio_component.mIsPlaying)
+				{*/ 
+				audio_component.mChannel->setVolume(fadeLevelOut);
+				audio_component.mVolume = fadeLevelOut; //  fade level out
+				PINFO("Fade Out Volume: %f", audio_component.mVolume);
+				//}
 
 			}
 		}
 
 		if (audio_component.mFadeIn)
 		{
-			while (audio_component.fade_timer < audio_component.fade_duration)
+			if (fade_timer < audio_component.fade_duration)
 			{
-				float fadeLevelIn = audio_component.fade_timer / audio_component.fade_duration;
+				float fade_slower_dt = 0.2 * dt;
+
+				fade_timer += fade_slower_dt;
+
+				float fadeLevelIn = fade_timer / audio_component.fade_duration;
 
 				audio_component.mChannel->setVolume(fadeLevelIn);
+				audio_component.mVolume = fadeLevelIn;
+				PINFO("Fade In Volume: %d", audio_component.mVolume);
 
 				// (1) Play Sound + Adjust Audio
 				if (!audio_component.mIsPlaying)
 				{
 					PINFO("Playing Fade In");
-					PlayAudioSource(audio_component);
+					PlayAudioSource(audio_component, audio_component.mVolume);
 					audio_component.mIsPlaying = true;
 				}
-
-				
-
 			}
 		}
 
@@ -949,14 +960,18 @@ bool AudioSystem::CheckAudioExist(std::string audio_name)
 	 - Funnel <Audio> component's attached [FMOD::Sound*] & [FMOD::Channel*]
  */
  /******************************************************************************/
-void AudioSystem::PlayAudioSource(FMOD::Sound* comp_sound, FMOD::Channel* comp_channel)
+void AudioSystem::PlayAudioSource(FMOD::Sound* comp_sound, FMOD::Channel* comp_channel, float volume)
 {
+	comp_channel->setVolume(volume);
+
 	PINFO("Playing Audio Source...");
 	ErrCodeCheck(system_obj->playSound(comp_sound, nullptr, false, &comp_channel));
 }
 
-void AudioSystem::PlayAudioSource(Audio& audio_component)
+void AudioSystem::PlayAudioSource(Audio& audio_component, float volume)
 {
+	audio_component.mChannel->setVolume(volume);
+
 	PINFO("Playing Audio Source from <Audio> Component");
 	ErrCodeCheck(system_obj->playSound(audio_component.mSound, nullptr, false, &audio_component.mChannel));
 

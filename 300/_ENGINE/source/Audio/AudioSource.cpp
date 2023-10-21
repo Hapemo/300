@@ -20,37 +20,20 @@ bool CrossFadeAudio(AudioSource& fade_out, AudioSource& fade_in, float fade_dura
 {
 	if (fade_out.mAudioComponent != nullptr && fade_in.mAudioComponent != nullptr)
 	{
-		float fade_timer = 0.0f;
-
-		while (fade_timer < fade_duration)
-		{
-			float fadeLevelOut = 1.0f - (fade_timer / fade_duration);
-			float fadeLevelIn = fade_timer / fade_duration;
-
-			// Set Volume 
-			if (fade_out.mAudioComponent->mIsPlaying) // Check if it's playing.
-			{
-				fade_out.mAudioComponent->mChannel->setVolume(fadeLevelOut);
-				
-				if (!fade_in.mAudioComponent->mIsPlaying)
-				{
-					fade_in.mAudioComponent->mIsPlay = true;
-					fade_in.mAudioComponent->mChannel->setVolume(fadeLevelIn);
-				}
-
-				else
-				{
-					return false; // cannot be done (because audio not plaiyng at all)
-				}
-			}
-
-			else
-			{
-				return false; // cannot be done (because audio not plaiyng at all)
-			}
-			
-		}
+		// Fading functionaltiy (done in update() loop)
+		fade_out.mAudioComponent->fade_duration = fade_duration;
+		
+		fade_out.mAudioComponent->mFadeOut = true;
+		fade_out.mAudioComponent->mFadeIn = false;
+		fade_in.mAudioComponent->fade_duration = fade_duration;
+		fade_in.mAudioComponent->mFadeIn = true;
+		fade_in.mAudioComponent->mFadeOut = false;
+		systemManager->mAudioSystem.get()->fade_timer = 0.0f; // reset timer. (in case it was used before) -> this is in AudioSystem.h (static bool)
+	
+		return true;
 	}
+
+	return false;
 }
 
 

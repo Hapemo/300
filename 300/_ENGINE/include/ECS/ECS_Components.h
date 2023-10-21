@@ -347,6 +347,8 @@ struct Audio
 	// Update Loop - Boolean Checks
 	bool		   mIsPlaying = false;		      // [Flag] - Check if audio is already playing (Channel Interaction)
 	bool           mIsPlay = false;			       // [Flag] - to decide whether to play audio (if true)
+
+	// Update Loop - Fade In / Fade out data
 	bool		   mFadeIn = false;				   // [Flag] - This audio will be faded out. 
 	bool		   mFadeOut = false;			   // [Flag] - This audio will be faded in.
 
