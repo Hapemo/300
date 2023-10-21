@@ -430,7 +430,7 @@ void GraphicsSystem::GameDraw(float dt)
 	{
 
 		auto& meshrefptr = inst.GetComponent<MeshRenderer>();
-		if (meshrefptr.mMeshRef.data != nullptr)
+		if (meshrefptr.mMeshRef.data == nullptr)
 			continue;
 
 		std::string meshstr = inst.GetComponent<MeshRenderer>().mMeshPath;
