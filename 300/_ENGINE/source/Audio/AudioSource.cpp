@@ -83,7 +83,16 @@ void AudioSource::GetAudioComponent(Entity id)
 
 bool AudioSource::IsSoundAttached()
 {
-	return mAudioComponent->mIsLoaded;
+	if (mAudioComponent != nullptr)
+	{
+		if (mAudioComponent->mSound != nullptr)
+		{
+			return true;
+		}
+	}
+
+	return false;
+
 }
 
 bool AudioSource::AttachSound(std::string audio_name)
