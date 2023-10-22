@@ -211,7 +211,7 @@ struct BoxCollider
 	glm::vec3 mTranslateOffset;		// final pos = Transform.mTranslate + mTranslateOffset;
 	bool mIsTrigger;
 	bool mIsTriggerCollide;
-	std::string mTriggerCollidingWith;
+	uint32_t mTriggerCollidingWith;
 
 	BoxCollider() : mScaleOffset(1.f), mTranslateOffset(0.f) {}
 	
@@ -230,7 +230,7 @@ struct SphereCollider
 	glm::vec3 mTranslateOffset;		// final pos = Transform.mTranslate + mTranslateOffset;
 	bool mIsTrigger;
 	bool mIsTriggerCollide;
-	std::string mTriggerCollidingWith;
+	uint32_t mTriggerCollidingWith;
 
 	SphereCollider() : mScaleOffset(1.f), mTranslateOffset(0.f) {};
 
@@ -245,7 +245,7 @@ struct CapsuleCollider
 	float mHalfHeight;
 	bool mIsTrigger;
 	bool mIsTriggerCollide;
-	std::string mTriggerCollidingWith;
+	uint32_t mTriggerCollidingWith;
 
 
 	CapsuleCollider() : mTranslateOffset(0.f, 0.f, 0.f), mRadius(50.f), mHalfHeight(100.f) {}
