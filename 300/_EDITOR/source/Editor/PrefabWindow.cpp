@@ -63,10 +63,6 @@ void PrefabWindow::update() {
 			SphereCollider& sphereCollider = ent.GetComponent<SphereCollider>();
 			sphereCollider.Inspect();
 		}
-		if (ent.HasComponent<PlaneCollider>()) {
-			PlaneCollider& planeCollider = ent.GetComponent<PlaneCollider>();
-			planeCollider.Inspect();
-		}
 
 
 

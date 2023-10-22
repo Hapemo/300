@@ -25,7 +25,6 @@ void LuaTransform();
 void LuaRigidBody();
 void LuaBoxCollider();
 void LuaSphereCollider();
-void LuaPlaneCollider();
 void LuaScript();
 void LuaParent();
 void LuaChildren();

@@ -84,12 +84,6 @@ void ObjectFactory::LoadScene(Scene* scene, const std::string& filename)
 			e.GetComponent<SphereCollider>() = obj.GetSCJSON();
 		}
 
-		if (obj.mpc_t)
-		{
-			e.AddComponent<PlaneCollider>();
-			e.GetComponent<PlaneCollider>() = obj.GetPCJSON();
-		}
-
 		if (obj.ms_t)
 		{
 			e.AddComponent<Scripts>();
@@ -196,10 +190,6 @@ void ObjectFactory::SaveScene(Scene* scene)
 		if (e.HasComponent<SphereCollider>())
 			ent.SetSCJSON(e.GetComponent<SphereCollider>());
 		else ent.msc_t = false;
-
-		if (e.HasComponent<PlaneCollider>())
-			ent.SetPCJSON(e.GetComponent<PlaneCollider>());
-		else ent.mpc_t = false;
 
 		if (e.HasComponent<Scripts>())
 			ent.SetSJSON(e.GetComponent<Scripts>());
@@ -350,12 +340,6 @@ Entity ObjectFactory::DeserializePrefab(const std::string& filename, int id)
 		e.GetComponent<SphereCollider>() = eJ.GetSCJSON();
 	}
 
-	if (eJ.mpc_t)
-	{
-		e.AddComponent<PlaneCollider>();
-		e.GetComponent<PlaneCollider>() = eJ.GetPCJSON();
-	}
-
 	if (eJ.ms_t)
 	{
 		e.AddComponent<Scripts>();
@@ -419,10 +403,6 @@ void ObjectFactory::SerializePrefab(Entity e, const std::string& filename)
 	if (e.HasComponent<SphereCollider>())
 		ent.SetSCJSON(e.GetComponent<SphereCollider>());
 	else ent.msc_t = false;
-
-	if (e.HasComponent<PlaneCollider>())
-		ent.SetPCJSON(e.GetComponent<PlaneCollider>());
-	else ent.mpc_t = false;
 
 	if (e.HasComponent<Scripts>())
 		ent.SetSJSON(e.GetComponent<Scripts>());

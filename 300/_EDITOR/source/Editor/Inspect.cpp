@@ -127,11 +127,6 @@ void Inspect::update()
 			SphereCollider& sphereCollider = ent.GetComponent<SphereCollider>();
 			sphereCollider.Inspect();
 		}
-		if (ent.HasComponent<PlaneCollider>()) {
-			PlaneCollider& planeCollider = ent.GetComponent<PlaneCollider>();
-			planeCollider.Inspect();
-
-		}
 		if (ent.HasComponent<PointLight>()) {
 			PointLight& pointLight = ent.GetComponent<PointLight>();
 			pointLight.Inspect();
@@ -192,11 +187,6 @@ void Inspect::Add_component() {
 		if (ImGui::Selectable("SphereCollider")) {
 			if (!Entity(Hierarchy::selectedId).HasComponent<SphereCollider>())
 				Entity(Hierarchy::selectedId).AddComponent<SphereCollider>();
-		}
-
-		if (ImGui::Selectable("PlaneCollider")) {
-			if (!Entity(Hierarchy::selectedId).HasComponent<PlaneCollider>())
-				Entity(Hierarchy::selectedId).AddComponent<PlaneCollider>();
 		}
 
 		if (ImGui::Selectable("Animator")) {
@@ -954,30 +944,7 @@ void SphereCollider::Inspect() {
 	if (delete_component == false)
 		Entity(Hierarchy::selectedId).RemoveComponent<SphereCollider>();
 }
-/***************************************************************************/
-/*!
-\brief
-	Inspector functionality for PlaneCollider
-*/
-/***************************************************************************/
 
-void PlaneCollider::Inspect() {
-	bool delete_component{ true };
-	if (ImGui::CollapsingHeader("PlaneCollider",&delete_component, ImGuiTreeNodeFlags_DefaultOpen)) {
-		ImGui::DragFloat3("##Scale", (float*)&mNormal);
-		ImGui::SameLine();
-		ImGui::Text("Scale");
-		ImGui::Separator();
-
-		ImGui::DragFloat("##Translate", (float*)&mTranslateOffset);
-		ImGui::SameLine();
-		ImGui::Text("Translate");
-		ImGui::Separator();
-
-	}
-	if (delete_component == false)
-		Entity(Hierarchy::selectedId).RemoveComponent<PlaneCollider>();
-}
 /***************************************************************************/
 /*!
 \brief
