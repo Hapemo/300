@@ -190,6 +190,8 @@
     <ClCompile Include="source\Input\Input.cpp" />
     <ClCompile Include="source\Input\InputMapSystem.cpp" />
     <ClCompile Include="source\Physics\Accumulator.cpp" />
+    <ClCompile Include="source\Serialization\SerializeSelf.cpp" />
+    <ClInclude Include="include\Serialization\Serializable.h" />
     <ClInclude Include="include\Serialization\Serialization.h" />
   </ItemGroup>
   <ItemGroup>
