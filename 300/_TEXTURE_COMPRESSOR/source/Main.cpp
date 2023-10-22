@@ -1,12 +1,7 @@
 #include <filesystem>
 #include <iostream>
 #include <string>
-
-// Forward Declaration
-void Init();
-void LoadAndSerializeImageFile(const char* filepath, const char* outputFolder);
-void CompressImageFile(const char* filepath, const char* outputFolder);
-void LoadAndSerializeFontFile(const char* filepath, const char* outputFolder);
+#include <TextureCompressor.h>
 
 int main()
 {

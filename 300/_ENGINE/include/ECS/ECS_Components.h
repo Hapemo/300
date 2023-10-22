@@ -11,24 +11,29 @@ Components used by the ECS.
 
 #pragma once
 #include "glm/glm.hpp"
+#include <algorithm>
 #include "Script.h"
 #include <vector>
 #include "Physics/PhysicsTypes.h"
 #include "Tags.h"
 #include "ECS.h"
 #include "Audio/AudioType.h"
+#include "../../../lib/FMOD/core/inc/fmod.hpp"
 #include <Animator.hpp>
 #include <Camera.hpp>
 #include "EnumStrings.h"
 #include "Input/Input.h"
 #include "Guid.h"
 #include <Constants.h>
+#include "ResourceManagerTy.h"
 
+#include "Texture.hpp"
 //#include "Graphics/GraphicsSystem.h"
 //#include "Mesh.hpp"
 
 //#include "rttr/registration.h"
 
+DECLARE_ENUMSTRING(enum_tag, PLAYER, ENEMY, BULLET, STATIC, BUILDING)
 struct uid;
 
 //DECLARE_ENUMSTRING(enum_tag, PLAYER, ENEMY, BULLET, STATIC, BUILDING)
@@ -46,10 +51,10 @@ struct General
 {
 	std::string name;
 	/*TAG tag;*/
-	//enum_tag::enum_tag tag;
-	//enum_tag::enum_tag tagid;
-	std::string tag[5] = { "PLAYER","ENEMY","BULLET","STATIC","BUILDING" };
-	int tagid{ 0 };
+	//enum_tag::enum_tag tag{};
+	enum_tag::enum_tag tagid{};
+	//std::string tag[5] = { "PLAYER","ENEMY","BULLET","STATIC","BUILDING" };
+	//int tagid{ 0 };
 	SUBTAG subtag;
 	bool isActive{};
 	bool isPaused{};
@@ -57,6 +62,14 @@ struct General
 	General() 
 	: name(""), subtag(SUBTAG::ACTIVE), isActive(true) 
 	{};
+
+	std::string GetTag() { return enum_tag::ToString(tagid); }
+
+	void SetTag(std::string newTag) { 
+		std::transform(newTag.begin(), newTag.end(), newTag.begin(), ::tolower);
+		newTag[0] = std::toupper(newTag[0]);
+		tagid = enum_tag::GetEnum(newTag.c_str()); 
+	}
 
 	void Inspect();
 
@@ -102,27 +115,45 @@ struct Animator
 struct MeshRenderer
 {
 	// For now, we store the string to the filepaths. TO CHANGE to uids for efficient referencing
-	//uid									mShaders;
 	//std::pair<std::string, std::string> mShaderPath{ "../assets/shader_files/animations_vert.glsl", "../assets/shader_files/pointLight_frag.glsl" };
 	std::pair<std::string, std::string> mShaderPath{ "../assets/shader_files/pointLight_vert.glsl", "../assets/shader_files/pointLight_frag.glsl" };
-	uid									mShaderid;
 	
+	//uid									mShaderid;
+	ref									mShaderRef;
+
 	std::string							mMaterialInstancePath[4] {" "," " ," " ," " };
 	vec4								mInstanceColor{ 1.f, 1.f, 1.f, 1.f };
 
 	std::string							mMeshPath;
 	
-	void*								mMeshRef{};
-	void*								mTextureRef[4];
+
+	ref									mMeshRef{};
+	//void*								mMeshRef{};
+
+	//ref									mTextureRef[5];
+	//void*								mTextureRef[4];
+
+	//unsigned							mGUID;
+	//bool								mTextureCont[4];
+	//void*								mMeshRef{nullptr};
+	ref									mTextureRef[5]		{ {nullptr,0},{nullptr,0},{nullptr,0},{nullptr,0},{nullptr,0} };
 
 	unsigned							mGUID;
-	bool								mTextureCont[4];
+	bool								mTextureCont[5];
 
 	void								Inspect();
 	void								SetColor(const vec4& color);
 	void								SetMesh(const std::string& meshName);
 	void								SetTexture(MaterialType type, const std::string& Texturename);
 
+	
+	int									GetTexture(MaterialType type) 
+										{ 
+											if (mTextureRef[static_cast<int>(type)].data == nullptr)
+												return -1;
+
+											return static_cast<GFX::Texture*>(mTextureRef[static_cast<int>(type)].data)->ID();
+										}
 	//RTTR_ENABLE()
 };
 
@@ -130,7 +161,18 @@ struct MeshRenderer
 struct UIrenderer
 {
 	std::string							mTexPath; // temporary should be UID
-	void* mTextureRef;
+	void*								mTextureRef;
+
+	inline unsigned ID() 
+	{
+		if (mTextureRef != nullptr) {
+			int temp = (reinterpret_cast<GFX::Texture*>(mTextureRef))->ID();
+			return temp;
+		}
+
+		return 0;
+	}
+	void Inspect();
 };
 
 
@@ -219,7 +261,6 @@ public:
 	Scripts() = default;
 	~Scripts() = default;
 
-	static void AddScript(Entity id, std::string fileName);
 	//static void LoadRunScript(Entity entity);
 
 	std::string mScriptFile{};
@@ -270,46 +311,88 @@ struct Children
 
 struct Audio
 {
-	std::string mFilePath;				// File Path to the Audio File
-	std::string mFileName;				// Name of Audio file
-	std::string mFullPath;				// 
-	AUDIOTYPE mAudioType;				// SFX or BGM
-	bool mIsPlay;						// play audio if true
+	// Serialize
+	// -----------------------------------------
+	std::string mFilePath;				   // File Path to the Audio File (required for loading)
+	std::string mFileName;				   // Name of Audio file (required for loading)
+	std::string mFullPath;				   // Full Path (File Path + Audio File)
 
-	// Don't need to serialize ...
-	std::vector<int> mPlaySFXChannelID;    // Currently playing in SFX Channel...
-	std::vector<int> mPlayBGMChannelID;	   // Currently playing in BGM Channel ...
-	bool             mIsPlaying;		   // Check if audio is already playing
+	bool mPlayonAwake = false;		       // [Flag] - flag to play as the scene launches. 
+	bool mIsLooping = false;			   // [Flag] - flag to decide whether if audio is looping.
+	
+	// Audio Type [Channel Management]
+	AUDIOTYPE      mAudioType;			   // SFX or BGM (Mute Channels)
+
+	// Volume 
+	float		   mVolume = 1.0f;
+
+
+	// Do not serialize 
+	// ------------------------------------------
+	// Update Loop - Boolean Checks
+	bool		   mIsPlaying = false;		      // [Flag] - Check if audio is already playing (Channel Interaction)
+	bool           mIsPlay = false;			       // [Flag] - to decide whether to play audio (if true)
+
+	// Update Loop - Fade In / Fade out data
+	bool		   mFadeIn = false;				   // [Flag] - This audio will be faded out. 
+	bool		   mFadeOut = false;			   // [Flag] - This audio will be faded in.
 
 	// For Editor
-	bool			 mIsEmpty = false;	   // [For Editor] - if empty delete all data in this <Audio> component
-	bool			 mIsLoaded = false;	   // [For Loading]
+	bool		   mIsEmpty = true;	       // [For Editor] - if empty delete all data in this <Audio> component
+	bool		   mIsLoaded = false;	   // [For Loading]
 
-	Audio() : mFilePath("../assets/Audio"), mFileName("Empty Audio"), mAudioType(AUDIO_NULL), mIsPlaying(false), mIsPlay(false), mIsEmpty(true) {}
+	// Pause State [Editor/Pause Menu]
+	bool		   mSetPause = false;      // [Flag] - set pause for channel.
+	bool		   mPaused = false;        // [For Resuming Logic]
+	bool		   mWasPaused = false;     // [For Resuming Logic]
+	bool		   mSetUnpause = false;    // [Flag] - for unpausing channels.
+	float		   mTypeChanged = false;   // [For Editor] - trigger type change
 
-	Audio(std::string file_path_to_audio, std::string file_audio_name, AUDIOTYPE audio_type, bool isPlay) : mAudioType(audio_type), mIsPlaying(false), mIsPlay(isPlay)
+	// Q. Can a <Audio> entity have their very own channel.
+	uid            mChannelID;             // Channel ID (Channel Management)
+	FMOD::Channel* mChannel;         	   // Use this to facilitate manipulation of audio.
+	FMOD::Sound* mSound;				   // Each <Audio> can only hold a reference to the "Audio File" it's attached to.
+
+	// Fade Volume Stuff
+	float fade_timer = 0.0f;			   // How long the fade has elapsed
+	float fade_duration = 5.0f;			   // How long to fade...
+
+	Audio() : mFilePath(""), mFileName(""), mAudioType(AUDIO_SFX), mIsEmpty(true)
+	{
+		mChannelID = uid();
+	}
+
+	Audio(std::string file_path_to_audio, std::string file_audio_name, AUDIOTYPE audio_type, bool playOnAwake) : mAudioType(audio_type), mIsPlaying(false), mPlayonAwake(playOnAwake),
+		mIsEmpty(false)
 	{
 		mFilePath = file_path_to_audio;
 		mFileName = file_audio_name;
 		mFullPath = file_path_to_audio + "/" + mFileName;
+
+		mChannelID = uid();
 	}
 
+	// For [Editor]
 	void ClearAudioComponent()
 	{
 		mFilePath = "";
 		mFileName = "";
 		mFullPath = "";
-		mAudioType = AUDIO_NULL;
+		mAudioType = AUDIO_SFX;
 		mIsPlay = false;
+		mPlayonAwake = false;
 		mIsEmpty = true;
+		mIsLoaded = false;
+		mSound = nullptr;
 	}
-
 
 	int mAudio{ 0 };
 
 	//RTTR_ENABLE()
 	void							Inspect();
 };
+
+
 
 /******************************************************************************/
 /*!
@@ -349,5 +432,34 @@ struct PointLight
 	void SetColor(const vec3& color);
 };
 
+/******************************************************************************/
+/*!
+	[Component] - Visual Effects (VFX)
+ */
+ /******************************************************************************/
+struct VFX
+{
+	vec3		mBloomThreshold{ 0.2126, 0.7152, 0.0722 };
+
+	void Inspect();
+};
+
+
+// Added [9/27]
+// Pseudo-Component (Helps InputActionMapEditor)
+
+/******************************************************************************/
+/*!
+	[Component] - AIData
+ */
+/******************************************************************************/
+enum class E_MOVEMENT_TYPE : char;
+enum class E_ATTACK_TYPE : char;
+struct AISetting {
+	E_MOVEMENT_TYPE mMovementType;	// AI's movement type
+	E_ATTACK_TYPE mAttackType;			// AI's attack type
+	float mSpreadOut;								// Degree of spreading out
+	std::uint32_t mTarget;									// AI's target
+};
 
 

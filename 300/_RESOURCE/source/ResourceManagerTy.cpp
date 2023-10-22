@@ -291,6 +291,28 @@ void ResourceTy::MaterialEditor_Loader() {
 
 	}
 }
+
+
+void ResourceTy::texture_Load(std::string texturename, unsigned uid)
+{
+	std::cout << "============================================\n";
+	std::cout << "[NOTE]>> Loading Compressed Texture: \t" << texturename << "\n";
+
+	std::string filepath = compressed_texture_path + texturename + ".ctexture";
+	std::string materialinstancepath = filepath;
+
+	auto texPtr = SetupMaterialInstance(materialinstancepath);
+	++mResouceCnt;
+	instance_infos& tempInstance = AllocRscInfo();
+	tempInstance.m_Name = materialinstancepath;
+	tempInstance.m_GUID = uid;
+	tempInstance.m_pData = reinterpret_cast<void*>(texPtr);
+
+	tempInstance.m_Type = _TEXTURE;
+	m_ResourceInstance.emplace(uid, &tempInstance);
+}
+
+
 /***************************************************************************/
 /*!
 \brief
@@ -341,12 +363,14 @@ GFX::Texture* ResourceTy::getMaterialInstance(unsigned id) {
 /**************************************************************************/
 void ResourceTy::shader_Loader() {
 	std::map<std::string,std::pair<std::string, std::string>> shaderpaths;
-//	shaderpaths.emplace("DefaultShader",std::pair<std::string, std::string>{ "../assets/shader_files/draw_vert.glsl", "../assets/shader_files/draw_frag.glsl" });
-//	shaderpaths.emplace("PointLightShader", std::pair<std::string, std::string>{ "../assets/shader_files/pointLight_vert.glsl", "../assets/shader_files/pointLight_frag.glsl" });
-//	shaderpaths.emplace("AnimationShader", std::pair<std::string, std::string>{ "../assets/shader_files/animations_vert.glsl", "../assets/shader_files/pointLight_frag.glsl" });
-//	shaderpaths.emplace("UIShader", std::pair<std::string, std::string>{ "../assets/shader_files/UI_vert.glsl", "../assets/shader_files/UI_frag.glsl" });
+	shaderpaths.emplace("DefaultShader",std::pair<std::string, std::string>{ "../assets/shader_files/draw_vert.glsl", "../assets/shader_files/draw_frag.glsl" });
+	shaderpaths.emplace("PointLightShader", std::pair<std::string, std::string>{ "../assets/shader_files/pointLight_vert.glsl", "../assets/shader_files/pointLight_frag.glsl" });
+	shaderpaths.emplace("AnimationShader", std::pair<std::string, std::string>{ "../assets/shader_files/animations_vert.glsl", "../assets/shader_files/pointLight_frag.glsl" });
+	shaderpaths.emplace("UIShader", std::pair<std::string, std::string>{ "../assets/shader_files/UI_vert.glsl", "../assets/shader_files/UI_frag.glsl" });
+	shaderpaths.emplace("GaussianBlurShader", std::pair<std::string, std::string>{ "../assets/shader_files/Quad2D_vert.glsl", "../assets/shader_files/GaussianBlur_frag.glsl" });
+	shaderpaths.emplace("AdditiveBlendShader", std::pair<std::string, std::string>{ "../assets/shader_files/Quad2D_vert.glsl", "../assets/shader_files/AdditiveBlending_frag.glsl" });
 
-
+	//shaderpaths.emplace("GaussianBlurShader", std::pair<std::string, std::string>{ "../assets/shader_files/pointLight_vert.glsl", "../assets/shader_files/GaussianBlur_frag.glsl" });
 
 	// load all the shaders
 	for (const auto& entry : std::filesystem::directory_iterator(shader_program_path))

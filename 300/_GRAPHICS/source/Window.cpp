@@ -17,7 +17,7 @@ GFX::Window::Window(ivec2 windowSize)
     mSize = windowSize;
 
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 4);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE);
     glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
@@ -110,6 +110,11 @@ int GFX::Window::ShouldClose()
 void GFX::Window::CloseWindow()
 {
     glfwSetWindowShouldClose(mWindow, GL_TRUE);
+}
+
+void GFX::Window::SetWindowSize(ivec2 newSize)
+{
+    mSize = newSize;
 }
 
 void GFX::Window::PollEvents()

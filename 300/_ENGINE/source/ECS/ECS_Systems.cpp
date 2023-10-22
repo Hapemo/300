@@ -66,6 +66,7 @@ void SystemManager::Init(bool isEditor, GFX::Window *window)
 
 void SystemManager::Reset()
 {
+	mAudioSystem.get()->Reset();				// Using <Audio> component, must happen before clearing of entities.
 	mGameStateSystem.get()->Unload();
 	mGameStateSystem.get()->Init();
 	mPhysicsSystem.get()->Init();
@@ -77,6 +78,7 @@ void SystemManager::Pause()
 {
 	mIsPlay = false; 
 	mGraphicsSystem->PauseGlobalAnimation();
+	mAudioSystem->Pause();
 }
 
 void SystemManager::Play()
@@ -85,6 +87,8 @@ void SystemManager::Play()
 	mPhysicsSystem.get()->Init();
 	mGraphicsSystem->UnpauseGlobalAnimation();
 	mGameStateSystem->mCurrentGameState.Save();
+	mAudioSystem.get()->PlayOnAwake();
+	mAudioSystem.get()->system_paused = false;
 }
 
 void SystemManager::Update(float dt)
@@ -141,7 +145,22 @@ PhysicsSystem *SystemManager::GetPhysicsPointer()
 	return mPhysicsSystem.get();
 }
 
+AudioSystem* SystemManager::GetAudioPointer()
+{
+	return mAudioSystem.get();
+}
+
 ScriptingSystem *SystemManager::GetScriptingPointer()
 {
 	return mScriptingSystem.get();
+}
+
+InputMapSystem* SystemManager::GetInputMapSystemPointer()
+{
+	return mInputActionSystem.get();
+}
+
+GameStateManager* SystemManager::GetGameStateSystem()
+{
+	return mGameStateSystem.get();
 }

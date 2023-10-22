@@ -239,6 +239,25 @@ void ContentBrowser::update()
 				ImGui::NextColumn();
 
 			}
+			else if (check_extension(path.string(), ".png") || check_extension(path.string(), ".jpg") || check_extension(path.string(), ".jpeg")) {
+				ImGui::PushID(idd);
+				ImGui::ImageButton((ImTextureID)(intptr_t)resourceDatas->m_EditorTextures["ImageIcon"]->ID(), { buttonsize, buttonsize });
+				ImGui::PopID();
+				if (ImGui::BeginDragDropSource()) {
+
+					std::string path_str = path.string();
+
+					//format the string from \\ to /.
+					format_string(path_str);
+					const char* source_path = path_str.c_str();
+					ImGui::SetDragDropPayload("FILE_TEXT_UNCOMPRESS", source_path, strlen(source_path) * sizeof(wchar_t), ImGuiCond_Once);
+
+					ImGui::EndDragDropSource();
+				}
+				ImGui::Text(filename_string.c_str());
+				ImGui::NextColumn();
+
+				}
 			else if (check_extension(path.string(), ".scn")) {
 				ImGui::PushID(idd);
 				ImGui::ImageButton((ImTextureID)(intptr_t)resourceDatas->m_EditorTextures["Electro"]->ID(), { buttonsize, buttonsize });
@@ -282,6 +301,31 @@ void ContentBrowser::update()
 			ImGui::Text(filename_string.c_str());
 			ImGui::NextColumn();
 			}
+
+
+			else if (check_extension(path.string(), ".mp3")) {
+
+				ImGui::PushID(idd);
+				ImGui::ImageButton((ImTextureID)(intptr_t)resourceDatas->m_EditorTextures["Electro"]->ID(), { buttonsize, buttonsize });
+				ImGui::PopID();
+				if (ImGui::BeginDragDropSource()) {
+
+					std::string path_str = path.string();
+
+					int posstart = (int)path_str.find_last_of("\\");
+					int posend = (int)path_str.find_last_of(".");
+
+					std::string newpath = path_str.substr(posstart + 1, posend - (posstart + 1));
+
+					//const char* audio_file_name = newpath.c_str();
+
+					ImGui::SetDragDropPayload("FILE_AUDIO", path_str.c_str(), strlen(path_str.c_str()) * sizeof(wchar_t), ImGuiCond_Once);
+
+					ImGui::EndDragDropSource();
+				}
+				ImGui::Text(filename_string.c_str());
+				ImGui::NextColumn();
+				}
 		}
 
 		idd++;

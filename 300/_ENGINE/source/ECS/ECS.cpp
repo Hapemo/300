@@ -1,7 +1,7 @@
+#include "pch.h"
 #include "ECS/ECS.h"
 #include "ECS/ECS_Components.h"
 #include "ScriptingSystem.h"
-#include "pch.h"
 #include "Object/ObjectFactory.h"
 #include "GameState/GameStateManager.h"
 #include "Debug/AssertException.h"
@@ -91,6 +91,21 @@ Entity ECS::NewEntity()
 	e.AddComponent<General>().name = "Entity" + std::to_string(static_cast<uint32_t>(e.id));
 	e.AddComponent<Transform>();
 	return e;
+}
+
+Entity ECS::NewEntityByScene()
+{
+	auto& allScene = systemManager->mGameStateSystem->mCurrentGameState.mScenes;
+
+	if (allScene.size() <= 0) {
+		systemManager->mGameStateSystem->mCurrentGameState.AddScene("NewScene");
+		Entity newEntity = allScene[0].AddEntity();
+		return newEntity;
+	}
+	else {
+		Entity newEntity = allScene[SelectedScene].AddEntity();
+		return newEntity;
+	}
 }
 
 void ECS::DeleteEntity(Entity e)
@@ -239,15 +254,15 @@ Entity ECS::PasteEntity(int scene)
 		e.GetComponent<MeshRenderer>() = mClipboard.GetComponent<MeshRenderer>();
 		MeshRenderer& mr = e.GetComponent<MeshRenderer>();
 		uid uids(mr.mMeshPath);
-		mr.mMeshRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(uids.id));
+		mr.mMeshRef.data = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(uids.id));
 		for (int i{ 0 }; i < 4; i++) {
 
-			if (mr.mTextureCont[i] == true) {
+			if (mr.mTextureRef[i].data != nullptr) {
 				uid localuids(mr.mMaterialInstancePath[i]);
-				mr.mTextureRef[i] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(localuids.id));
+				mr.mTextureRef[i].data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(localuids.id));
 			}
 		}
-		GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mr.mMeshRef);
+		GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mr.mMeshRef.data);
 		if (meshinst->mHasAnimation)
 		{
 			e.AddComponent<Animator>();

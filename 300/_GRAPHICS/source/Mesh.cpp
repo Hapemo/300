@@ -394,18 +394,8 @@ void GFX::MeshManager::Init()
 			std::cout << "============================================\n";
 			std::cout << "[NOTE]>> Loading file: \t" << entry.path().filename() << "\n";
 
-			//uid uids("dasdsadsadasdassssssssssadaddddddddddddddddddddddddddddddddddddddddddddddddddddadadsd");
-			//std::cout << uids.id<< "\n";
-
 			std::string filepath = compiled_geom_path + entry.path().filename().string();
 			SetupMesh(filepath);
-
-			//uid uidd(entry.path().filename().string());
-			//uid uids("gayed");
-			//MeshData&  temp =AllocRscInfo();
-			//temp.meshdata = std::move(localmesh);
-			//mSceneMeshes.emplace(std::make_pair(uids.id, &temp));
-
 		}
 	}
 }

@@ -29,14 +29,37 @@ namespace _GEOM
 	Contains the functionalities and data stored in the FBX descriptor files
 */
 /**************************************************************************/
-	struct FBX_DescriptorData
+	struct Asset_DescriptorData
 	{
-		FBX_DescriptorData(unsigned int guid) : m_GUID(guid) {}
+		Asset_DescriptorData(unsigned int guid) : m_GUID(guid) {}
 
 		unsigned int m_GUID;
 
-		static void SerializeFBX_DescriptorFile(std::string fbxFilepath, const FBX_DescriptorData& FBX_DescriptorFile) noexcept;
-		static void DeserializeFBX_DescriptorFile(std::string fbxFilepath, FBX_DescriptorData& FBX_DescriptorFile) noexcept;
+		static void SerializeASSET_DescriptorFile(std::string AssetFilepath, const Asset_DescriptorData& Asset_DescriptorFile) noexcept;
+		static void DeSerializeASSET_DescriptorFile(std::string AssetFilepath, Asset_DescriptorData& Asset_DescriptorFile) noexcept;
+	};
+
+
+/***************************************************************************/
+/*!
+\brief
+	Contains the functionalities and data stored in the Texture descriptor
+	files
+*/
+/**************************************************************************/
+	enum class CompressionType : int
+	{
+		SRGB = 0,
+		RGB
+	};
+
+	struct Texture_DescriptorData
+	{
+		CompressionType	mCompressionType;
+		unsigned int	mGUID;
+
+		static bool DeserializeTEXTURE_DescriptorDataFromFile(Texture_DescriptorData& Desc, std::string textureFilepath) noexcept;
+		static bool SerializeTEXTURE_DescriptorDataToFile(std::string textureFilepath, const Texture_DescriptorData& textureDesc) noexcept;
 	};
 
 
@@ -110,7 +133,7 @@ namespace _GEOM
 			Checks the GUID within the provided GEOM desc filepath
 		*/
 		/**************************************************************************/
-		static bool CheckGUID(std::string geomFilepath, const FBX_DescriptorData& GeomDescriptorFile) noexcept;
+		static bool CheckGUID(std::string geomFilepath, const Asset_DescriptorData& GeomDescriptorFile) noexcept;
 
 
 		/***************************************************************************/
@@ -122,7 +145,8 @@ namespace _GEOM
 		DescriptorData();
 	};
 
-	bool CheckAndCreateDescriptorFile(std::string fbxfilepath, std::string& GEOM_Descriptor_Filepath);
+	bool CheckAndCreateDescriptorFileMESH(std::string fbxfilepath, std::string& GEOM_Descriptor_Filepath);
+	bool CheckAndCreateDescriptorFileTEXTURE(std::string uncompressedfilepath, std::string& Texture_Descriptor_Filepath);
 
 	/***************************************************************************/
 	/*!
@@ -133,6 +157,7 @@ namespace _GEOM
 	unsigned GetGUID(std::string geomFilepath) noexcept;
 
 	static const std::string mGeomFolderpath = "../assets/compiled_geom/";
+	static const std::string mCompressedTextureFolderpath = "../assets/Compressed/";
 }
 
 #endif // !_DESCRIPTOR_H

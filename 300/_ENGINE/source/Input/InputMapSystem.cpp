@@ -17,7 +17,8 @@ the editor to physical keys.
 #include "Debug/Logger.h"
 #include "SparseSet.h"
 
-const std::array<std::pair<std::string, E_KEY>, 129> InputMapSystem::mE_KEYMap{ EKeyMappingInit() };
+//const std::array<std::pair<std::string, E_KEY>, 129> InputMapSystem::mE_KEYMap{ EKeyMappingInit() };
+const std::array<std::string, E_KEY::KEY_TOTAL> InputMapSystem::mE_KEYArray{ EKeyArrayInit() };
 
 InputMapSystem::InputMapSystem() {}
 
@@ -32,25 +33,29 @@ void InputMapSystem::Init() {
 	SparseSet<int, 100> sparseSet{};
 
 	auto tempMap = Misc::TextFileToMap(file);
-	for (auto [action, ekey] : tempMap) {
-		auto correctEkey = std::find_if(mE_KEYMap.begin(), mE_KEYMap.end(), [ekey] (std::pair<std::string, E_KEY> item)->bool { return item.first == ekey; });
-		if (correctEkey == mE_KEYMap.end()) {
-			PWARNING("InputSystem Error: unable to load %s as it does not exist. Check the name in E_KEY list again!", ekey.c_str());
+	for (auto [action, ekeyName] : tempMap) {
+
+		auto correctEkey = GetEKeyFromName(ekeyName);
+		if (correctEkey == E_KEY::ERROR_EKEY) {
+			PWARNING("InputSystem Error: unable to load %s as it does not exist. Check the name in E_KEY list again!", ekeyName.c_str());
 			continue;
 		}
 
-		mKeybindMap.insert(std::pair<std::string, E_KEY>(action, correctEkey->second));
+		mKeybindMap.insert(std::pair<std::string, E_KEY>(action, correctEkey));
+		mKeybindMapString.insert({ action, ekeyName });
 	}
 
 }
 
 void InputMapSystem::AddKeybind(std::string const& actionName, E_KEY key) {
 	mKeybindMap[actionName] = key;
+	mKeybindMapString[actionName] = GetEKeyName(key);
 	SaveKeybind();
 }
 
 void InputMapSystem::RemoveKeybind(std::string const& actionName) {
 	mKeybindMap.erase(actionName);
+	mKeybindMapString.erase(actionName);
 	SaveKeybind();
 }
 
@@ -62,8 +67,9 @@ void InputMapSystem::SaveKeybind() {
 		return;
 	}
 
-	for (auto [actionName, ekey] : mKeybindMap) {
-		file << actionName << ": " << GetEKeyName(ekey) << '\n';
+	for (auto [actionName, ekeyName] : mKeybindMapString) {
+		file << actionName << ": " << ekeyName << '\n';
+		mKeybindMap[actionName] = GetEKeyFromName(ekeyName);
 	}
 
 	file.close();
@@ -104,6 +110,22 @@ bool InputMapSystem::GetKeyDown(E_KEY ekey) {
 	return Input::CheckKey(PRESS, ekey);
 }
 
+std::string InputMapSystem::GetEKeyName(E_KEY ekey) { 
+	return mE_KEYArray[ekey];
+	//return std::find_if(mE_KEYMap.begin(), mE_KEYMap.end(), [ekey] (std::pair<std::string, E_KEY> item)->bool { return item.second == ekey; })->first; 
+}
+
+E_KEY InputMapSystem::GetEKeyFromName(std::string const& ekeyName) { 
+	for (int i = 0; i < mE_KEYArray.size(); ++i)
+		if (mE_KEYArray[i] == ekeyName)
+			return static_cast<E_KEY>(i);
+	
+	return E_KEY::ERROR_EKEY;
+}
+
+std::string& InputMapSystem::GetActionEKeyName(std::string const& action) { 
+	return mKeybindMapString[action];
+}
 
 
 

@@ -56,15 +56,15 @@ void ObjectFactory::LoadScene(Scene* scene, const std::string& filename)
 			unsigned guid = _GEOM::GetGUID(descfilepath);
 
 			//uid uids(mr.mMeshPath); 
-			mr.mMeshRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(guid));
+			mr.mMeshRef.data = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(guid));
 			for (int i{ 0 }; i < 4; i++) {
 
 				if (mr.mTextureCont[i] == true) {
 					uid uidss(mr.mMaterialInstancePath[i]);
-					mr.mTextureRef[i] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(uidss.id));
+					mr.mTextureRef[i].data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(uidss.id));
 				}
 			}
-			GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mr.mMeshRef);
+			GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mr.mMeshRef.data);
 			if (meshinst->mHasAnimation)
 			{
 				e.AddComponent<Animator>();
@@ -312,15 +312,15 @@ Entity ObjectFactory::DeserializePrefab(const std::string& filename, int id)
 		e.GetComponent<MeshRenderer>() = eJ.GetMRJSON();
 		MeshRenderer& mr = e.GetComponent<MeshRenderer>();
 		uid uids(mr.mMeshPath);
-		mr.mMeshRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(uids.id));
+		mr.mMeshRef.data = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(uids.id));
 		for (int i{ 0 }; i < 4; i++) {
 
 			if (mr.mTextureCont[i] == true) {
 				uid uidss(mr.mMaterialInstancePath[i]);
-				mr.mTextureRef[i] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(uidss.id));
+				mr.mTextureRef[i].data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(uidss.id));
 			}
 		}
-		GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mr.mMeshRef);
+		GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mr.mMeshRef.data);
 		if (meshinst->mHasAnimation)
 		{
 			e.AddComponent<Animator>();

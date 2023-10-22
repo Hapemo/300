@@ -21,6 +21,11 @@ This file contains the base AudioSystem class that supports the following functi
 #include "ECS/ECS.h"
 #include "ECS/ECS_Components.h"
 #include "Debug/Logger.h"
+#include "Debug/EnginePerformance.h"
+#include "GameState/GameStateManager.h"
+#include "GameState/Scene.h"
+
+
 
 enum AUDIOTYPE : unsigned char;
 
@@ -30,6 +35,10 @@ enum AUDIOTYPE : unsigned char;
 	[Struct] Channel
 	 \brief
 	  - Contains relevant channel information.
+	[Depreciated] - 10/15/2023
+	  - Changing structure to each <Audio> component will hold their own channel.
+	  - We will retain the [SFX] & [BGM] channels though.
+
  */
  /******************************************************************************/
 struct Channel
@@ -49,47 +58,76 @@ struct Channel
 class AudioSystem
 {
 public:
-	int MAX_AUDIO_FILES_PLAYING = 32;														// Number of Sounds (that are allowed to be played simultaneously)
+	int MAX_AUDIO_FILES_PLAYING = 32;				 // Number of Sounds (that are allowed to be played simultaneously)
 	int NO_OF_BGM_CHANNELS_TO_INIT = 16;
 	int NO_OF_SFX_CHANNELS_TO_INIT = 16;
 public:
 	void Init();
 	void Update(float dt);
+	void PlayOnAwake();								// [For Editor] - Playing sounds on awake. (check for <Audio> component flag : "mPlayonAwake")
+	void Pause();								    // [For Editor] - Pause sounds.
+	void Reset();									// [For Editor] - Reset <Audio> component. Stop Playing all sounds.
 	void Exit();
 	AudioSystem();
 	~AudioSystem();
 
-	void UpdateLoadAudio();																	// [For Engine] - Add Component mid-way
+	// Helper Functions (Loading)
+	void UpdateLoadAudio(Entity id);				 // [For Engine] - Add Component mid-way
+	void UpdateChannelReference(Entity id);		     // [For Engine] - Add Channel to the global [SFX/BGM] channels. (for global control)
+	void InitAudioChannelReference(Entity id);		 // [For Engine]
+
+	// Helper Functions (Sound)
+	FMOD::Sound* FindSound(std::string audio_name);
+	bool	     CheckAudioExist(std::string audio_name); // [W7 - 10/14]
 
 public:
-	int  ErrCodeCheck(FMOD_RESULT result);													// Debugging tool
-	bool LoadAudio(std::string file_path, std::string audio_name);
-	void LoadAudioFiles(std::filesystem::path file_path);									// Load single file
-	void LoadAudioFromDirectory(std::filesystem::path file_path);							// Load files from directory
-	void PlayAudio(std::string audio_name, AUDIOTYPE audio_type, float audio_vol = 1.0f);	// Play an audio based on it's name
-	int  PlaySFXAudio(std::string audio_name, float audio_vol = 1.0f);						// Play an SFX Audio (specify volume)
-	int  PlayBGMAudio(std::string audio_name, float audio_vol = 1.0f);						// Play an BGM Audio (specify volume)
-	void SetSpecificChannelVolume(AUDIOTYPE audio_type, int id, float audio_vol);			// Set Specific Volume
-	void SetAllSFXVolume(float audio_vol);													// Global Volume Setting (SFX)
-	void SetAllBGMVolume(float audio_vol);													// Global Volume Setting (BGM)
-	void MuteSFX();
-	void MuteBGM();
-	void StopAllSFX();
-	void StopAllBGM();
-	void TogglePauseAllSounds();
-	void TogglePauseSFXSounds();
-	void TogglePauseBGMSounds();
-	void TogglePauseSpecific(AUDIOTYPE audio_type, int channel_id);
+	// Retained Functions (Without Linking to <Audio> component)
+	bool LoadAudioFromDirectory(std::filesystem::path file_path);					                                        // Load files from directory (Like just load all the audio files first) -> later then link
+	void SetAllSFXVolume(float audio_vol);																				    // Global Volume Setting (SFX)
+	void SetAllBGMVolume(float audio_vol);													                                // Global Volume Setting (BGM)
+	void MuteSFX();																											// Global Mute (SFX)
+	void MuteBGM();																										    // Global Mute (BGM)
+	void StopAllSFX();																								        // Global stop playing (SFX)
+	void StopAllBGM();																										// Global stop playing (BGM)
+	void PauseAllSounds();																									// Pause all sounds.
+	void PauseSFXSounds();																									// Pause sfx sounds
+	void PauseBGMSounds();																									// Pause bgm sounds
+	void UnpauseAllSounds();																								// Unpause all sounds. 
+	void UnpauseSFXSounds();																								// Unpause sfx sounds.
+	void UnpauseBGMSounds();																								// Unpause bgm sounds. 
 
-	// Helper Functions...
+	/* Converted Functions(These functions link to each <Audio> component)
+	* ---------------------------------------------------------------------------------- */
+	// Functional 
+	bool LoadAudio(std::string file_path, std::string audio_name, Audio* audio_component = nullptr);			            // Load a single audio. (Will be in [mSounds] database)
+	void PlayAudio(std::string audio_name, AUDIOTYPE audio_type, float audio_vol = 1.0f, Audio* audio_component = nullptr);	// Toggle (mIsPlay) -> Plays in Update() loop.
+	void StopAudio(Audio* audio_component);
+	void PauseAudio(Audio* audio_component);
+
+	// Helper (for Global Volume Functions)
+	void UpdateSFXComponentVolume(float audio_vol);																		    // Used whenever there is an edit in volume [Audio in SFX]
+	void UpdateBGMComponentVolume(float volume);																			// Used whenever there is an edit in volume [Audio in BGM]
+
 public:
-	Channel& FindChannel(AUDIOTYPE audio_type, int id);
+	int  ErrCodeCheck(FMOD_RESULT result);																					// Debugging tool				
 
 	// Will build as needs require.
+
+// Scripting Support
+public:
+	void PlayAudioSource(FMOD::Sound* comp_sound, FMOD::Channel* comp_channel, float vol = 1.0f);  // OK.
+	void PlayAudioSource(Audio& audio_component, float vol = 1.0f);
+
+public:
+	FMOD::System* system_obj = nullptr;
+
+	// For Editor (Pausing State)
+	float system_paused = true; // initial yes.
+	float fade_timer = 0.0f;
+
 private:
-	// std::unordered_map<AUDIOTYPE, std::vector<FMOD::Channel*>>  mChannels;	// Depreciated [9/25]
-	std::unordered_map<AUDIOTYPE, std::vector<Channel>>         mChannelsNew;
-	std::unordered_map<std::string, FMOD::Sound*>				mSounds;
+	std::unordered_map<AUDIOTYPE, std::vector<std::pair<uid, FMOD::Channel*&>>> mChannelswID;   // Add [Channel ID] 
+	std::unordered_map<std::string, FMOD::Sound*>				                mSounds;        // Database of Sounds (SFX/BGM)
 
 	// Global Volume 
 	float sfxVolume;
@@ -103,9 +141,10 @@ private:
 	int next_avail_id_sfx = 0;
 	int next_avail_id_bgm = 0;
 
-	FMOD::System* system_obj = nullptr;
-
 	// for performance
 	double startTime = 0.0f;
-	double endTime   = 0.0f;
+	double endTime = 0.0f;
+
 };
+
+

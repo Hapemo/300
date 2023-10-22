@@ -14,9 +14,34 @@ to handle resizing of framebuffers and object picking
 
 #include "Common.hpp"
 #include <xkeycheck.h>
+#include <Shader.hpp>
+#include <Mesh.hpp>
+
 
 namespace GFX
 {
+	struct Quad2D
+	{
+		float quadVertices[24] =
+		{
+			// Positions    // Texture coordinates
+			-1.0f,  1.0f,    0.0f, 1.0f,
+			-1.0f, -1.0f,    0.0f, 0.0f,
+			 1.0f, -1.0f,    1.0f, 0.0f,
+
+			-1.0f,  1.0f,    0.0f, 1.0f,
+			 1.0f, -1.0f,    1.0f, 0.0f,
+			 1.0f,  1.0f,    1.0f, 1.0f
+		};
+
+		unsigned int quadVAO, quadVBO;
+
+		Quad2D();
+		void Bind();
+		void Unbind();
+	};
+
+
 	class FBO
 	{
 	public:
@@ -58,6 +83,11 @@ Returns the ID of the color attachment
 Returns the ID of the entity ID attachment
 *******************************************************************************/
 		unsigned int GetEntityIDAttachment()	{ return mEntityIDAttachment; }
+
+/*!*****************************************************************************
+Returns the Bright Color Attachment array
+*******************************************************************************/
+		unsigned int GetBrightColorsAttachment() { return mBrightColorsAttachment; }
 		
 /*!*****************************************************************************
 Returns the width of the framebuffer
@@ -86,16 +116,43 @@ Destructor of the FBO class. Deletes the resources allocated on the GPU
 		}
 
 	private:
-		unsigned int mID{};						// Framebuffer Object ID
-		unsigned int mRboID{};					// Renderbuffer Object ID
-		unsigned int mColorAttachment{};		// Color Attachment of scene
-		unsigned int mEntityIDAttachment{};		// Attachment that contains Entity ID of each corresponding pixel
+		unsigned int mID{};							// Framebuffer Object ID
+		unsigned int mRboID{};						// Renderbuffer Object ID
+		unsigned int mColorAttachment{};			// Color Attachment of scene
+		unsigned int mEntityIDAttachment{};			// Attachment that contains Entity ID of each corresponding pixel
+		unsigned int mBrightColorsAttachment;		// Bloom attachment
 
 		int mWidth{};
 		int mHeight{};
 
 		// -- Flags --
 		bool mEditorMode;		// True: Writes to all attachments
+	};
+
+
+/*!*****************************************************************************
+	FBO For Bloom
+*******************************************************************************/
+	class PingPongFBO
+	{
+	public:
+		void Create(int width, int height);
+		void GaussianBlur(GFX::Shader& blurShader, GFX::FBO& hostFramebuffer);
+		void PrepForDraw();
+		void Resize(int width, int height);
+
+		unsigned int pingpongFBO;
+		unsigned int pingpongColorbuffers[2];
+		unsigned int mblurAmount = 10;
+		int mWidth{}, mHeight;
+
+		Quad2D       m_Quad;
+
+		~PingPongFBO()
+		{
+			glDeleteFramebuffers(1, &pingpongFBO);
+			glDeleteTextures(2, pingpongColorbuffers);
+		}
 	};
 }
 

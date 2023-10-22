@@ -37,7 +37,6 @@ public:
 	std::unique_ptr<Logger> mLogger;
 	std::unique_ptr<InputMapSystem> mInputActionSystem;
 
-
 	ECS *ecs;
 
 	std::vector<std::string> mComponents;
@@ -86,6 +85,9 @@ public:
 	void DeleteEntity(Entity e);
 	PhysicsSystem *GetPhysicsPointer();
 	ScriptingSystem* GetScriptingPointer();
+	AudioSystem* GetAudioPointer();
+	InputMapSystem* GetInputMapSystemPointer();
+	GameStateManager* GetGameStateSystem();
 };
 
 extern SystemManager *systemManager;

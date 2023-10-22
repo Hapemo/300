@@ -40,13 +40,13 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -71,11 +71,11 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)lib/GLM;$(SolutionDir)lib\GLEW\include\GL;$(SolutionDir)lib\GLFW\include\GLFW;$(SolutionDir)lib\STB;$(SolutionDir)lib\FREETYPE;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)lib/GLM;$(SolutionDir)lib\GLEW\include\GL;$(SolutionDir)lib\GLFW\include\GLFW;$(SolutionDir)lib\STB;$(SolutionDir)lib\FREETYPE;$(SolutionDir)_TEXTURE_COMPRESSOR\include</IncludePath>
     <LibraryPath>$(SolutionDir)lib\GLEW\lib\Release\x64;$(SolutionDir)lib\GLFW\lib-vc2022;$(SolutionDir)lib\FREETYPE;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(SolutionDir)lib/GLM;$(SolutionDir)lib\GLEW\include\GL;$(SolutionDir)lib\GLFW\include\GLFW;$(SolutionDir)lib\STB;$(SolutionDir)lib\FREETYPE;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)lib/GLM;$(SolutionDir)lib\GLEW\include\GL;$(SolutionDir)lib\GLFW\include\GLFW;$(SolutionDir)lib\STB;$(SolutionDir)lib\FREETYPE;$(SolutionDir)_TEXTURE_COMPRESSOR\include</IncludePath>
     <LibraryPath>$(SolutionDir)lib\GLEW\lib\Release\x64;$(SolutionDir)lib\GLFW\lib-vc2022;$(SolutionDir)lib\FREETYPE;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -158,6 +158,9 @@ copy "$(SolutionDir)lib\GLEW\bin\Release\x64\glew32.dll" "$(TargetDir)glew32.dll
     <ClCompile Include="source\Main.cpp" />
     <ClCompile Include="source\stb.cpp" />
     <ClCompile Include="source\TextureCompressor.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\TextureCompressor.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

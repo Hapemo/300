@@ -286,7 +286,7 @@ namespace _GEOM
 
 
 
-	bool DescriptorData::CheckGUID(std::string geomFilepath, const FBX_DescriptorData& GeomDescriptorFile) noexcept
+	bool DescriptorData::CheckGUID(std::string geomFilepath, const Asset_DescriptorData& GeomDescriptorFile) noexcept
 	{
 		// Read the json data from the file
 		std::ifstream file(geomFilepath);
@@ -348,7 +348,7 @@ namespace _GEOM
 	}
 
 
-	bool CheckAndCreateDescriptorFile(std::string fbxfilepath, std::string& GEOM_Descriptor_Filepath)
+	bool CheckAndCreateDescriptorFileMESH(std::string fbxfilepath, std::string& GEOM_Descriptor_Filepath)
 	{
 		auto getFilename = [](const std::string& str) -> std::string
 		{
@@ -364,7 +364,7 @@ namespace _GEOM
 
 		// GUID is generated here
 		uid meshguid(fbxfilepath);
-		_GEOM::FBX_DescriptorData fbxDescriptor(meshguid.id);
+		_GEOM::Asset_DescriptorData fbxDescriptor(meshguid.id);
 
 		//>> 1.0: Check if the FBX Desc file is present using filename
 		std::string fbxFilepath = fbxfilepath.substr(0, fbxfilepath.find_last_of("/"));
@@ -387,7 +387,7 @@ namespace _GEOM
 		if (!descFilePresent)
 		{
 			std::string descFilepath = fbxFilepath + "/" + FBX_DescFile;
-			_GEOM::FBX_DescriptorData::SerializeFBX_DescriptorFile(descFilepath, fbxDescriptor);
+			_GEOM::Asset_DescriptorData::SerializeASSET_DescriptorFile(descFilepath, fbxDescriptor);
 		}
 
 		// 2.1: if the FBX descriptor is present, we deserialize the GUID from the file
@@ -395,7 +395,7 @@ namespace _GEOM
 		{
 			// >> CHECK: Do we really need this step? will the guid just be the same as the one generated above?
 			std::string descFilepath = fbxFilepath + "/" + FBX_DescFile;
-			_GEOM::FBX_DescriptorData::DeserializeFBX_DescriptorFile(descFilepath, fbxDescriptor);
+			_GEOM::Asset_DescriptorData::DeSerializeASSET_DescriptorFile(descFilepath, fbxDescriptor);
 		}
 
 		//>> 3.0: Run through the GEOM descriptor files to find a matching GUID
@@ -433,7 +433,92 @@ namespace _GEOM
 		return descFilePresent;
 	}
 
-	void FBX_DescriptorData::SerializeFBX_DescriptorFile(std::string fbxFilepath, const FBX_DescriptorData& FBX_DescriptorFile) noexcept
+	bool CheckAndCreateDescriptorFileTEXTURE(std::string uncompressedfilepath, std::string& CompressedTexture_Descriptor_Filepath)
+	{
+		auto getFilename = [](const std::string& str) -> std::string
+		{
+			size_t found = str.find_last_of("\\");
+
+			if (found == std::string::npos)
+			{
+				found = str.find_last_of("/");
+			}
+
+			return str.substr(found + 1);
+		};
+
+		// GUID is generated here
+		uid uncompressedguid(uncompressedfilepath);
+		_GEOM::Asset_DescriptorData uncompressedDesc(uncompressedguid.id);
+
+		//>> 1.0: Check if the UNCOMPRESSED Desc file is present using filename
+		std::string UncompressedFilepath = uncompressedfilepath.substr(0, uncompressedfilepath.find_last_of("/"));
+		std::string Uncompressed_Filename = getFilename(uncompressedfilepath);
+		std::string Uncompressed_DescFile = Uncompressed_Filename + ".desc";
+		bool descFilePresent = false;
+
+		std::filesystem::path TextureFolderpath = UncompressedFilepath;
+		for (const auto& UNCOMPRESSEDentry : std::filesystem::directory_iterator(TextureFolderpath))
+		{
+			//std::cout << "UNCOMPRESSEDentry: " << getFilename(UNCOMPRESSEDentry.path().string()) << std::endl;
+			if (getFilename(UNCOMPRESSEDentry.path().string()) == Uncompressed_DescFile)
+			{
+				// FBX Descriptor file is present
+				descFilePresent = true;
+				break;
+			}
+		}
+
+		//>> 2.0: The FBX Descriptor file is not present. We have to create one to serialize the GUID
+		if (!descFilePresent)
+		{
+			std::string descFilepath = UncompressedFilepath + "/" + Uncompressed_DescFile;
+			_GEOM::Asset_DescriptorData::SerializeASSET_DescriptorFile(descFilepath, uncompressedDesc);
+		}
+
+		// 2.1: if the FBX descriptor is present, we use the deserialized GUID from the file
+		else
+		{
+			std::string descFilepath = UncompressedFilepath + "/" + Uncompressed_DescFile;
+			_GEOM::Asset_DescriptorData::DeSerializeASSET_DescriptorFile(descFilepath, uncompressedDesc);
+		}
+
+		//>> 3.0: Run through the GEOM descriptor files to find a matching GUID
+		std::filesystem::path COMPRESSEDfolderpath = _GEOM::mCompressedTextureFolderpath;
+		descFilePresent = false;	// reset the boolean
+		for (const auto& COMPRESSEDentry : std::filesystem::directory_iterator(COMPRESSEDfolderpath))
+		{
+			// 3.1: Check the COMPRESSED Descriptor whether the GUID is the same
+			std::string compdesccheck = COMPRESSEDentry.path().string().substr(COMPRESSEDentry.path().string().find_last_of("."));
+			if (compdesccheck != ".desc")
+				continue;
+
+			if (_GEOM::DescriptorData::CheckGUID(COMPRESSEDentry.path().string(), uncompressedDesc))
+			{
+				CompressedTexture_Descriptor_Filepath = COMPRESSEDentry.path().string();
+				descFilePresent = true;
+				break;
+			}
+		}
+
+		// Populate the local texture descriptor data
+		_GEOM::Texture_DescriptorData TextureDesc;
+		TextureDesc.mGUID = uncompressedDesc.m_GUID;
+		TextureDesc.mCompressionType = CompressionType::SRGB;
+
+		// 3.1: If the COMPRESSED descriptor file is not present, then load it
+		if (!descFilePresent)
+		{
+			//>> Create a default geom descriptor file
+			std::string Texture_name = Uncompressed_Filename.substr(0, Uncompressed_Filename.find_last_of("."));
+			CompressedTexture_Descriptor_Filepath = _GEOM::mCompressedTextureFolderpath + Texture_name + ".ctexture.desc";
+			_GEOM::Texture_DescriptorData::SerializeTEXTURE_DescriptorDataToFile(CompressedTexture_Descriptor_Filepath, TextureDesc);
+		}
+
+		return descFilePresent;
+	}
+
+	void Asset_DescriptorData::SerializeASSET_DescriptorFile(std::string fbxFilepath, const Asset_DescriptorData& FBX_DescriptorFile) noexcept
 	{
 		rapidjson::Document doc;
 		doc.SetObject();
@@ -460,7 +545,7 @@ namespace _GEOM
 	}
 
 
-	void FBX_DescriptorData::DeserializeFBX_DescriptorFile(std::string fbxFilepath, FBX_DescriptorData& FBX_DescriptorFile) noexcept
+	void Asset_DescriptorData::DeSerializeASSET_DescriptorFile(std::string fbxFilepath, Asset_DescriptorData& FBX_DescriptorFile) noexcept
 	{
 		// Read the json data from the file
 		std::ifstream file(fbxFilepath);
@@ -484,6 +569,16 @@ namespace _GEOM
 			assert(assetFilepaths.IsUint());
 			FBX_DescriptorFile.m_GUID = assetFilepaths.GetUint();
 		}
+	}
+
+	bool Texture_DescriptorData::DeserializeTEXTURE_DescriptorDataFromFile(Texture_DescriptorData& Desc, std::string textureFilepath) noexcept
+	{
+		return false;
+	}
+
+	bool Texture_DescriptorData::SerializeTEXTURE_DescriptorDataToFile(std::string textureFilepath, const Texture_DescriptorData& textureDesc) noexcept
+	{
+		return false;
 	}
 
 }

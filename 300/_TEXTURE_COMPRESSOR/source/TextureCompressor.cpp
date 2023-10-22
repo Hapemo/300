@@ -9,6 +9,8 @@
 #include <algorithm>
 #include <vector>
 #include <ft2build.h>		// Freetype
+#include <TextureCompressor.h>
+
 #include FT_FREETYPE_H
 
 #define FONT_LOAD_SIZE 50	// Default font loading size

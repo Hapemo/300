@@ -49,6 +49,16 @@ struct PointLightSSBO
 	float mPad{};
 };
 
+struct MaterialSSBO
+{
+	alignas(8) GLuint64 mDiffuseMap		{};
+	alignas(8) GLuint64 mNormalMap		{};
+	alignas(8) GLuint64 mSpecularMap	{};
+	alignas(8) GLuint64 mShininessMap	{};
+	alignas(8) GLuint64 mEmissionMap	{};
+};
+
+
 /***************************************************************************/
 /*!
 \brief
@@ -104,6 +114,14 @@ public:
 	/***************************************************************************/
 	/*!
 	\brief
+		the draw function isolated to the editor's framebuffer
+	*/
+	/**************************************************************************/
+	void BlendFramebuffers( GFX::FBO& targetFramebuffer, unsigned int Attachment0, unsigned int Attachment1);
+
+	/***************************************************************************/
+	/*!
+	\brief
 		exit the graphics system. unallocates resources
 	*/
 	/**************************************************************************/
@@ -118,8 +136,8 @@ public:
 		This function is essential for instanced rendering
 	*/
 	/**************************************************************************/
-	void AddInstance(GFX::Mesh& mesh, Transform transform, const vec4& color, unsigned entityID = 0xFFFFFFFF);		// Adds an instance of a mesh to be drawn
-	void AddInstance(GFX::Mesh& mesh, mat4 transform, const vec4& color, unsigned entityID = 0xFFFFFFFF, int animInstanceID = -1);	// Adds an instance of a mesh to be drawn
+	void AddInstance(GFX::Mesh& mesh, Transform transform, const vec4& color, int meshID, unsigned entityID = 0xFFFFFFFF);		// Adds an instance of a mesh to be drawn
+	void AddInstance(GFX::Mesh& mesh, mat4 transform, const vec4& color, int meshID, unsigned entityID = 0xFFFFFFFF, int animInstanceID = -1);	// Adds an instance of a mesh to be drawn
 
 	// -- FBO --
 	/***************************************************************************/
@@ -182,6 +200,10 @@ public:
 	void PauseGlobalAnimation();
 	void UnpauseGlobalAnimation();
 
+	void CheckWindowSize();
+
+	void ResizeWindow(ivec2 newSize);
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // 
 //		MEMBER VARIABLES MEMBER VARIABLES MEMBER VARIABLES MEMBER VARIABLES MEMBER VARIABLES MEMBER VARIABLES
@@ -191,6 +213,7 @@ public:
 	GFX::DebugRenderer m_Renderer;		// isolated to debug draws
 	GFX::FBO m_Fbo;						// Editor Scene
 	GFX::FBO m_GameFbo;					// Game Scene
+	GFX::PingPongFBO m_PingPongFbo;		// Post Processing
 
 	// -- Window --
 	GFX::Window* m_Window;
@@ -201,8 +224,16 @@ public:
 	GFX::Camera m_EditorCamera;
 	CAMERA_TYPE m_CameraControl;
 
+	// -- Bloom -- 
+	//vec3		mAmbientBloomThreshold { 0.2126, 0.7152, 0.0722 };
+	vec3		mAmbientBloomThreshold { 0.05, 0.05, 0.005 };
+	float		mAmbientBloomExposure{ 0.4f };
+
 	// -- Textures --
-	std::vector<int> m_Textures;
+	std::vector<int> m_Textures;	// 0, 1, ..., 31
+
+	// -- Shader Instance
+	GFX::Shader m_UiShaderInst;
 
 	// -- Flags --
 	int		m_DebugDrawing{ 1 };			// debug drawing 
@@ -210,25 +241,35 @@ public:
 	bool	m_EnableGlobalAnimations{ 1 };
 	bool	m_HasLight{ false };
 	bool    m_EnableScroll{ false };
+	bool    m_EnableBloom{ false };
 
 	// -- Stats --
 	int		m_LightCount{};
 
 private:
 	// -- SSBO -- 
-	GFX::SSBO m_FinalBoneMatrixSsbo;
-	std::vector<mat4> finalBoneMatrices;
+	const int						MAX_INSTANCES = 1000;
+	GFX::SSBO						m_FinalBoneMatrixSsbo;
+	std::vector<mat4>				finalBoneMatrices;
 
-	const int MAX_POINT_LIGHT = 5;
-	GFX::SSBO m_PointLightSsbo;
-	std::vector<PointLightSSBO> pointLights;
+	const int						MAX_POINT_LIGHT = 5;
+	GFX::SSBO						m_PointLightSsbo;
+	std::vector<PointLightSSBO>		pointLights;
+
+	GFX::SSBO						m_MaterialSsbo;
+	std::vector<MaterialSSBO>		m_Materials;
+	std::map<unsigned, GLuint64>	m_MaterialHandles;
+	GLuint64 GetAndStoreBindlessTextureHandle(int texID);	// Stores adn Return the 64bit texture handle and makes it resident
 
 	void SetupShaderStorageBuffers();		// Creates all SSBO required
 
 	// -- 2D Image Rendering --
-	GFX::Mesh m_Image2DMesh;
-	std::vector<unsigned>m_Image2DStore;
-	void Add2DImageInstance(float width, float height, vec2 const& position, unsigned texHandle, vec4 const& color = vec4{ 1.f, 1.f, 1.f, 1.f }, unsigned entityID = 0xFFFFFFFF);
+	GFX::Mesh				m_Image2DMesh;
+	std::vector<unsigned>	m_Image2DStore;
+	GFX::Quad2D				mScreenQuad;
+
+	void DrawAll2DInstances(unsigned shaderID);
+	void Add2DImageInstance(float width, float height, vec2 const& position, unsigned texHandle, unsigned entityID = 0xFFFFFFFF, vec4 const& color = vec4{ 1.f, 1.f, 1.f, 1.f });
 	int StoreTextureIndex(unsigned texHandle);
 };
 
