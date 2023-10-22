@@ -84,6 +84,9 @@ function Update()
         --script_entity.id = 60
     end
 
+    --Test Default Param
+    --Testing()
+
     -- --initialize array
     -- array = {}
     -- --its able to store any type in the same array (give it a key, then value)
@@ -104,4 +107,14 @@ end
 
 function Dead()
 
+end
+
+function Testing(a,b,c)
+    a = a or 6
+    b = b or 8
+    c = c or "cat"
+
+    print(a)
+    print(b)
+    print(c)
 end
