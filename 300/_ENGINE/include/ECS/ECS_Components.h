@@ -328,24 +328,27 @@ struct Audio
 {
 	// Serialize
 	// -----------------------------------------
-	std::string mFilePath;				           // File Path to the Audio File (required for loading)
-	std::string mFileName;				           // Name of Audio file (required for loading)
-	std::string mFullPath;				           // Full Path (File Path + Audio File)
+	std::string mFilePath;				                // File Path to the Audio File (required for loading)
+	std::string mFileName;				                // Name of Audio file (required for loading)
+	std::string mFullPath;				                // Full Path (File Path + Audio File)
 
-	bool           mPlayonAwake = false;		   // [Flag] - flag to play as the scene launches. 
-	bool           mIsLooping = false;			   // [Flag] - flag to decide whether if audio is looping.
+	bool           mPlayonAwake = false;		        // [Flag] - flag to play as the scene launches. 
+	bool           mIsLooping = false;			        // [Flag] - flag to decide whether if audio is looping.
 	
 	// Audio Type [Channel Management]
-	AUDIOTYPE      mAudioType;			           // SFX or BGM (Mute Channels)
+	AUDIOTYPE      mAudioType;			                // SFX or BGM (Mute Channels)
 
 	// Volume 
 	float		   mVolume = 1.0f;
 
 	// 3D Audio
 	bool		   m3DAudio      = false;
-	float		   mMinDistance  = 0.5f;		   // Testing Values
-	float		   mMaxDistance  = 3000.0f;		   // Testing Values
+	float		   mMinDistance  = 0.5f;		         // Testing Values
+	float		   mMaxDistance  = 3000.0f;		         // Testing Values
 
+	// Position
+	glm::vec3	   mPosition	 = { 0.0f, 0.0f, 0.0f }; // Q. <Transform> or glm::vec3
+	glm::vec3      mVelocity     = { 0.0f, 0.0f, 0.0f }; // For [Doppler] effect. 
 
 	// Do not serialize 
 	// ------------------------------------------
