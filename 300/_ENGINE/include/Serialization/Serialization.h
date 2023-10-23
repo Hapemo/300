@@ -8,6 +8,7 @@
 #include "Audio/AudioType.h"
 #include <entt.hpp>
 #include "ECS/ECS_Components.h"
+#include "ECS/EnumStrings.h"
 
 // forward declaration
 struct Scene;

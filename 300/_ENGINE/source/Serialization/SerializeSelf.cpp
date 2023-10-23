@@ -7,7 +7,7 @@ void General::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& wr
 	writer.Key("general");
 	writer.StartObject();
 	Serialize(writer, "name", name);
-	//Serialize(writer, "tagid", (int)tagid);
+	Serialize(writer, "tagid", (int)tagid);
 	Serialize(writer, "subtag", subtag);
 	Serialize(writer, "isActive", isActive);
 	Serialize(writer, "isPaused", isPaused);
@@ -46,7 +46,7 @@ void MeshRenderer::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer
 	writer.StartObject();
 	Serialize(writer, "vert", mShaderPath.first);
 	Serialize(writer, "frag", mShaderPath.second);
-	Serialize(writer, "materialinstance", mMaterialInstancePath, 5);
+	Serialize(writer, "materialinstance", mMaterialInstancePath, 4);
 	Serialize(writer, "mesh", mMeshPath);
 	Serialize(writer, "texturecont", mTextureCont, 5);
 	Serialize(writer, "guid", mGUID);
@@ -59,7 +59,7 @@ void MeshRenderer::DeserializeSelf(rapidjson::Value& reader)
 	Deserialize(reader, "frag", mShaderPath.second);
 	Deserialize(reader, "materialinstance", mMaterialInstancePath, 4);
 	Deserialize(reader, "mesh", mMeshPath);
-	Deserialize(reader, "texturecont", mTextureCont, 4);
+	Deserialize(reader, "texturecont", mTextureCont, 5);
 	Deserialize(reader, "guid", mGUID);
 }
 
