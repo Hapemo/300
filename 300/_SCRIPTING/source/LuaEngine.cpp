@@ -8,6 +8,7 @@
 #include "Input/InputMapSystem.h"
 #include "GameState/GameStateManager.h"
 #include "Graphics/GraphicsSystem.h"
+#include "Audio/AudioSource.h"
 
 void LuaComponentContainer()
 {
@@ -206,24 +207,44 @@ void LuaInput()
     );
 }
 
-void LuaAudio()
+void LuaAudioSystem()
 {
-    //systemManager->mScriptingSystem->luaState["mAudioSystem"] = systemManager->GetAudioPointer();
     systemManager->mScriptingSystem->luaState.new_usertype<AudioSystem>(
         "mAudioSystem", sol::constructors<>(),
         "PlayAudio", &AudioSystem::PlayAudio,
-    /*    "PlaySFXAudio", &AudioSystem::PlaySFXAudio,
-        "PlayBGMAudio", &AudioSystem::PlayBGMAudio,*/
-       //"SetSpecificChannelVolume", &AudioSystem::SetSpecificChannelVolume,
         "SetAllSFXVolume", &AudioSystem::SetAllSFXVolume,
         "SetAllBGMVolume", &AudioSystem::SetAllBGMVolume,
         "MuteSFX", &AudioSystem::MuteSFX,
-        "MuteBGM", &AudioSystem::MuteBGM
-     /*   "TogglePauseAllSounds", &AudioSystem::TogglePauseAllSounds,
-        "TogglePauseSFXSounds", &AudioSystem::TogglePauseSFXSounds,
-        "TogglePauseBGMSounds", &AudioSystem::TogglePauseBGMSounds,
-        "TogglePauseSpecific", &AudioSystem::TogglePauseSpecific*/
+        "MuteBGM", &AudioSystem::MuteBGM,
+        "LoadAudio", &AudioSystem::LoadAudio,
+        "LoadAudioFromDirectory", &AudioSystem::LoadAudioFromDirectory
     );
+}
+
+void LuaAudioSource()
+{
+    systemManager->mScriptingSystem->luaState["CrossFadeAudio"] = &CrossFadeAudio;
+    systemManager->mScriptingSystem->luaState.new_usertype<AudioSource>(
+        "AudioSource", sol::constructors<AudioSource()>(),
+        "GetAudio", &AudioSource::GetAudioComponent,
+        "IsSoundAttached", &AudioSource::IsSoundAttached,
+        "AttachSound", &AudioSource::AttachSound,
+        "IsPlaying", &AudioSource::IsPlaying,
+        "Play", &AudioSource::Play,
+        "Pause", &AudioSource::Pause,
+        "Unpause", &AudioSource::Unpause,
+        "Stop", &AudioSource::Stop,
+        "Mute", &AudioSource::Mute,
+        "SetVolume", &AudioSource::SetVolume,
+        "SetIsLoop", &AudioSource::SetIsLoop
+        );
+}
+
+void LuaAudio()
+{
+    systemManager->mScriptingSystem->luaState.new_usertype<Audio>(
+        "Audio", sol::constructors<>()
+        );
 }
 
 void LuaInputMapSystem()

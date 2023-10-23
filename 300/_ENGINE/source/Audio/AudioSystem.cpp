@@ -13,7 +13,6 @@ This file contains the base AudioSystem class that supports the following functi
 #include "Audio/AudioSystem.h"
 #include "Audio/AudioTest.h" // Scripting Tests (Audio into Lua)
 
-
 /******************************************************************************/
 /*!
 	[Default Constructor] AudioSystem()
@@ -122,7 +121,7 @@ void AudioSystem::Init()
 
 }
 
-
+static bool testfootstep = false;
 /******************************************************************************/
 /*!
 	Update()w
@@ -161,7 +160,11 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 		TestFadeOut();				 // Test OK
 
 	//TestFootsteps();
-	TestFootstepsFade(dt);
+	if (Input::CheckKey(PRESS, E_KEY::COMMA))
+		testfootstep = true;
+
+	if (testfootstep)
+		TestFootstepsFade(dt);
 
 	// [10/18] Global Channel Test
 	if (Input::CheckKey(PRESS, _1))
@@ -627,37 +630,35 @@ bool AudioSystem::LoadAudio(std::string file_path, std::string audio_name, Audio
 	}
 }
 
-
-
- bool AudioSystem::LoadAudioFromDirectory(std::filesystem::path directory_path)
-{
-	for (auto& file : std::filesystem::directory_iterator(directory_path))
-	{
-		std::filesystem::path file_path = file.path();
-		PINFO("File Detected: %s", file_path.string());
-		/*std::cout << "File Detected: " << file_path.string() << std::endl;*/
-		std::string audio_name = file_path.filename().string();
-		//size_t extension_pos = audio_name.find_last_of('.');
-		//audio_name = audio_name.substr(0, extension_pos);
-		PINFO("Audio Name: %s", audio_name);
-		//std::cout << "Audio Name: " << audio_name << std::endl;
-
-		PINFO("Creating Sound: ");
-		//std::cout << "Creating Sound: ";
-		FMOD::Sound* new_sound;
-		bool check = ErrCodeCheck(system_obj->createSound(file_path.string().c_str(), FMOD_LOOP_OFF, 0, &new_sound));
-
-		if (!check)
-		{
-			PWARNING("Failed to created Sound: %s", audio_name.c_str());
-			return false;
-		}
-
-		mSounds.insert(std::make_pair(audio_name, new_sound));
-	}
-
-	return true;
-}
+// bool AudioSystem::LoadAudioFromDirectory(std::filesystem::path directory_path)
+//{
+//	for (auto& file : std::filesystem::directory_iterator(directory_path))
+//	{
+//		std::filesystem::path file_path = file.path();
+//		PINFO("File Detected: %s", file_path.string());
+//		/*std::cout << "File Detected: " << file_path.string() << std::endl;*/
+//		std::string audio_name = file_path.filename().string();
+//		//size_t extension_pos = audio_name.find_last_of('.');
+//		//audio_name = audio_name.substr(0, extension_pos);
+//		PINFO("Audio Name: %s", audio_name);
+//		//std::cout << "Audio Name: " << audio_name << std::endl;
+//
+//		PINFO("Creating Sound: ");
+//		//std::cout << "Creating Sound: ";
+//		FMOD::Sound* new_sound;
+//		bool check = ErrCodeCheck(system_obj->createSound(file_path.string().c_str(), FMOD_LOOP_OFF, 0, &new_sound));
+//
+//		if (!check)
+//		{
+//			PWARNING("Failed to created Sound: %s", audio_name.c_str());
+//			return false;
+//		}
+//
+//		mSounds.insert(std::make_pair(audio_name, new_sound));
+//	}
+//
+//	return true;
+//}
 
  bool AudioSystem::LoadAudioFromDirectory(std::string directory_path)
  {

@@ -121,6 +121,8 @@ void ScriptingSystem::Init()
     LuaParent();
     LuaChildren();
     LuaInput();
+    LuaAudioSystem();
+    LuaAudioSource();
     LuaAudio();
     LuaInputMapSystem();
     LuaPhysics();

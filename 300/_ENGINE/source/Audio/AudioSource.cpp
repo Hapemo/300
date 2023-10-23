@@ -18,6 +18,7 @@ bool LoadAudioFromDirectory(std::string directory_path)
 
 bool CrossFadeAudio(AudioSource& fade_out, AudioSource& fade_in, float fade_duration, float fade_max_vol)
 {
+	std::cout << "CrossFadeAudio" << std::endl;
 	if (fade_out.mAudioComponent != nullptr && fade_in.mAudioComponent != nullptr)
 	{
 		// Fading functionaltiy (done in update() loop)
@@ -193,6 +194,7 @@ void AudioSource::SetVolume(float volume)
 		if (playing)
 		{
 			mAudioComponent->mChannel->setVolume(volume);
+			mAudioComponent->mVolume = volume;
 		}
 	}
 }
