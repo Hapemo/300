@@ -347,7 +347,12 @@ void Camera::Inspect()
 
 		ImGui::Separator();
 
-		ImGui::DragFloat3("Camera Position", (float*)&mCamera.mPosition);
+		vec3 temp = mCamera.mPosition;
+		ImGui::DragFloat3("Camera Position", (float*)&temp);
+
+		mCamera.mTarget += temp - mCamera.mPosition;
+		mCamera.mPosition = temp;
+
 		ImGui::DragFloat3("Camera Target", (float*)&mCamera.mTarget);
 
 		ImGui::Text("Aspect Ratio");

@@ -718,37 +718,48 @@ void GraphicsSystem::SetCameraSize(CAMERA_TYPE type, ivec2 size)
 void GraphicsSystem::UpdateCamera(CAMERA_TYPE type, const float &dt)
 {
 	auto localcamera = systemManager->ecs->GetEntitiesWith<Camera>();
-	if (localcamera.empty())
-		return; // Cannot find camera Richmond
-	Entity camera = localcamera.front();
+	Entity camera;
 
 	switch (type)
 	{
 	case CAMERA_TYPE::CAMERA_TYPE_GAME:
-		Camera_Input::getInstance().updateCameraInput(camera.GetComponent<Camera>().mCamera, dt);
-		camera.GetComponent<Camera>().mCamera.Update();
-		camera.GetComponent<Transform>().mTranslate = camera.GetComponent<Camera>().mCamera.mPosition;
-		break;
+		{
+			if (localcamera.empty())
+				return;
+			camera = localcamera.front();		// there will only be one game camera
+
+			Camera_Input::getInstance().updateCameraInput(camera.GetComponent<Camera>().mCamera, dt);
+			camera.GetComponent<Camera>().mCamera.Update();
+			camera.GetComponent<Transform>().mTranslate = camera.GetComponent<Camera>().mCamera.mPosition;
+			break;
+		}
 
 	case CAMERA_TYPE::CAMERA_TYPE_EDITOR:
-		Camera_Input::getInstance().updateCameraInput(m_EditorCamera, dt);
-		m_EditorCamera.Update();
-		break;
+		{
+			Camera_Input::getInstance().updateCameraInput(m_EditorCamera, dt);
+			m_EditorCamera.Update();
+			break;
+		}
 
 	case CAMERA_TYPE::CAMERA_TYPE_ALL:
-		m_EditorCamera.Update();
-		camera.GetComponent<Camera>().mCamera.Update();
+		{
+			m_EditorCamera.Update();
+			if (m_CameraControl == CAMERA_TYPE::CAMERA_TYPE_EDITOR) {
+				Camera_Input::getInstance().updateCameraInput(m_EditorCamera, dt);
+			}
 
-		if (m_CameraControl == CAMERA_TYPE::CAMERA_TYPE_EDITOR) {
-			Camera_Input::getInstance().updateCameraInput(m_EditorCamera, dt);
+			if (localcamera.empty())
+				return;
+			camera = localcamera.front();		// there will only be one game camera
+
+			camera.GetComponent<Camera>().mCamera.Update();
+			if (m_CameraControl == CAMERA_TYPE::CAMERA_TYPE_GAME) {
+				Camera_Input::getInstance().updateCameraInput(camera.GetComponent<Camera>().mCamera, dt);
+				camera.GetComponent<Transform>().mTranslate = camera.GetComponent<Camera>().mCamera.mPosition;
+			}
+
+			break;
 		}
-
-		else if (m_CameraControl == CAMERA_TYPE::CAMERA_TYPE_GAME) {
-			Camera_Input::getInstance().updateCameraInput(camera.GetComponent<Camera>().mCamera, dt);
-			camera.GetComponent<Transform>().mTranslate = camera.GetComponent<Camera>().mCamera.mPosition;
-		}
-
-		break;
 	}
 }
 
