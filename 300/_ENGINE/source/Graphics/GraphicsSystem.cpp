@@ -1078,9 +1078,10 @@ void MeshRenderer::SetTexture(MaterialType MaterialType, const std::string& Text
 	std::string MaterialInstancePath = systemManager->mResourceTySystem->compressed_texture_path + Texturename + ".ctexture";
 	mMaterialInstancePath[MaterialType] = MaterialInstancePath;
 
+	std::string descFilepath = MaterialInstancePath + ".desc";
+	unsigned guid = _GEOM::GetGUID(descFilepath);
 
-	uid guid(MaterialInstancePath);
-	mTextureRef[MaterialType].data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(guid.id));
+	mTextureRef[MaterialType].data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(guid));
 }
 
 
