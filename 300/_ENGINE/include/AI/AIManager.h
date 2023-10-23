@@ -1,7 +1,8 @@
 #pragma once
 #include "pch.h"
 #include "glm/glm.hpp"
-
+#include "ECS/ECS.h"
+#include "ECS/ECS_Components.h"
 // TODO
 // - How to set up target
 // - How to add ground entities and flying entities to container to keep track
@@ -10,10 +11,6 @@
 // Testing needed
 // - Test the spreadout
 // 
-
-
-
-struct Entity;
 
 // All the label for names of container of AIs
 #define GROUND_ENEMY "GroundEnemy"

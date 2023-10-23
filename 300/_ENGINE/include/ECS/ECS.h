@@ -20,7 +20,7 @@ struct Entity
 {
 	entt::entity id;
 
-	Entity() = delete;
+	Entity() : id(entt::null) {};
 
 	/*!*****************************************************************************
 	Copy and conversion constructors.

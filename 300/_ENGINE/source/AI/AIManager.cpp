@@ -5,7 +5,7 @@
 //--------------------------------------------------
 // Public functions
 //--------------------------------------------------
-AIManager::AIManager() : mPlayerEntity(entt::null), mPlayerTransform(nullptr), mPlayerArrayIndex(0), mPlayerHistory(), mAILists() {
+AIManager::AIManager() : mPlayerEntity(), mPlayerTransform(nullptr), mPlayerArrayIndex(0), mPlayerHistory(), mAILists() {
 	mAILists[GROUND_ENEMY];
 	mAILists[AIR_ENEMY];
 }
@@ -27,7 +27,7 @@ glm::vec3 AIManager::GetDirection(Entity _e) {
 }
 
 void AIManager::TrackPlayerPosition() {
-	if (mPlayerEntity == entt::null) return;
+	if (mPlayerEntity.id == entt::null) return;
 	
 	mPlayerHistory[mPlayerArrayIndex] = mPlayerTransform->mTranslate;
 	if (++mPlayerArrayIndex == MAX_DECISECOND_PLAYER_HISTORY) mPlayerArrayIndex = 0;
@@ -40,7 +40,7 @@ void AIManager::SetPlayer(Entity _e) {
 }
 
 void AIManager::ResetPlayerTracking() {
-	mPlayerEntity = entt::null;
+	mPlayerEntity.id = entt::null;
 	mPlayerTransform = nullptr;
 	mPlayerHistorySize = 0;
 }
