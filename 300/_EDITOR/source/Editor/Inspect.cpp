@@ -149,6 +149,12 @@ void Inspect::update()
 			Audio& audio = ent.GetComponent<Audio>();
 			audio.Inspect();
 		}
+
+		if (ent.HasComponent<AudioListener>()) {
+			AudioListener& audio_listener = ent.GetComponent<AudioListener>();
+			audio_listener.Inspect();
+		}
+
 		if (ent.HasComponent<UIrenderer>()) {
 			UIrenderer& render = ent.GetComponent<UIrenderer>();
 			render.Inspect();
@@ -228,6 +234,12 @@ void Inspect::Add_component() {
 			if (!Entity(Hierarchy::selectedId).HasComponent<Audio>())
 				Entity(Hierarchy::selectedId).AddComponent<Audio>();
 		}	
+
+		if (ImGui::Selectable("AudioListener")) {
+			if (!Entity(Hierarchy::selectedId).HasComponent<AudioListener>())
+				Entity(Hierarchy::selectedId).AddComponent<AudioListener>();
+		}
+
 		if (ImGui::Selectable("VFX")) {
 			if (!Entity(Hierarchy::selectedId).HasComponent<VFX>())
 				Entity(Hierarchy::selectedId).AddComponent<VFX>();
@@ -1160,7 +1172,10 @@ void Audio::Inspect() {
 		{
 			ImGui::SliderFloat("Min Distance", &mMinDistance, 0.0f, 3000.0f, "%.3f");
 			ImGui::SliderFloat("Max Distance", &mMaxDistance, 0.0f, 3000.0f, "%.3f");
+
+			systemManager->mAudioSystem.get()->Update3DSettings(Entity(Hierarchy::selectedId)); 
 		}
+
 	}
 
 	// AudioType Selector 
@@ -1190,6 +1205,20 @@ void Audio::Inspect() {
 
 	if (delete_component == false)
 		Entity(Hierarchy::selectedId).RemoveComponent<Audio>();
+}
+
+
+/***************************************************************************/
+/*!
+\brief
+	Inspector functionality for AudioListener
+*/
+/***************************************************************************/
+void AudioListener::Inspect() {
+	bool delete_component = true;
+	
+	if (delete_component == false)
+		Entity(Hierarchy::selectedId).RemoveComponent<AudioListener>();
 }
 /***************************************************************************/
 /*!

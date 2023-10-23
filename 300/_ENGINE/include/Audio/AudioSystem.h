@@ -71,10 +71,11 @@ public:
 	AudioSystem();
 	~AudioSystem();
 
-	// Helper Functions (Loading)
+	// Helper Functions (Re-load - after changing info in editor side)
 	void UpdateLoadAudio(Entity id);				 // [For Engine] - Add Component mid-way
 	void UpdateChannelReference(Entity id);		     // [For Engine] - Add Channel to the global [SFX/BGM] channels. (for global control)
 	void InitAudioChannelReference(Entity id);		 // [For Engine]
+	void Update3DSettings(Entity id);				 // [For Engine] - Updates 3D audio information. 
 
 	// Helper Functions (Sound)
 	FMOD::Sound* FindSound(std::string audio_name);
@@ -119,16 +120,18 @@ public:
 	void PlayAudioSource(FMOD::Sound* comp_sound, FMOD::Channel* comp_channel, float vol = 1.0f);  // OK.
 	void PlayAudioSource(Audio& audio_component, float vol = 1.0f);
 
+
+// 3D Audio Stuff
+public:
+	float distance_factor = 1.0f;  // Units per meter. (per unit reference in game world)
+
+
 public:
 	FMOD::System* system_obj = nullptr;
 
 	// For Editor (Pausing State)
 	float system_paused = true; // initial yes.
 	float fade_timer = 0.0f;
-
-// 3D Audio Stuff
-public:
-	float distance_factor = 1.0f;  // Units per meter. (per unit reference in game world)
 
 private:
 	std::unordered_map<AUDIOTYPE, std::vector<std::pair<uid, FMOD::Channel*&>>> mChannelswID;   // Add [Channel ID] 

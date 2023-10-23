@@ -328,57 +328,60 @@ struct Audio
 {
 	// Serialize
 	// -----------------------------------------
-	std::string mFilePath;				           // File Path to the Audio File (required for loading)
-	std::string mFileName;				           // Name of Audio file (required for loading)
-	std::string mFullPath;				           // Full Path (File Path + Audio File)
+	std::string    mFilePath;				            // File Path to the Audio File (required for loading)
+	std::string    mFileName;				            // Name of Audio file (required for loading)
+	std::string    mFullPath;				            // Full Path (File Path + Audio File)
 
-	bool           mPlayonAwake = false;		   // [Flag] - flag to play as the scene launches. 
-	bool           mIsLooping = false;			   // [Flag] - flag to decide whether if audio is looping.
-	
+	bool           mPlayonAwake = false;		        // [Flag] - flag to play as the scene launches. 
+	bool           mIsLooping = false;			        // [Flag] - flag to decide whether if audio is looping.
+
 	// Audio Type [Channel Management]
-	AUDIOTYPE      mAudioType;			           // SFX or BGM (Mute Channels)
+	AUDIOTYPE      mAudioType;			                // SFX or BGM (Mute Channels)
 
 	// Volume 
 	float		   mVolume = 1.0f;
 
 	// 3D Audio
-	bool		   m3DAudio      = false;
-	float		   mMinDistance  = 0.5f;		   // Testing Values
-	float		   mMaxDistance  = 3000.0f;		   // Testing Values
+	bool		   m3DAudio = false;
+	float		   mMinDistance = 0.5f;		         // Testing Values
+	float		   mMaxDistance = 3000.0f;		         // Testing Values
 
+	// Position
+	glm::vec3	   mPosition = { 0.0f, 0.0f, 0.0f }; // Q. <Transform> or glm::vec3
+	glm::vec3      mVelocity = { 0.0f, 0.0f, 0.0f }; // For [Doppler] effect. 
 
 	// Do not serialize 
 	// ------------------------------------------
 	// Update Loop - Boolean Checks
-	bool		   mIsPlaying = false;		       // [Flag] - Check if audio is already playing (Channel Interaction)
-	bool           mIsPlay = false;			       // [Flag] - to decide whether to play audio (if true)
+	bool		   mIsPlaying = false;					 // [Flag] - Check if audio is already playing (Channel Interaction)
+	bool           mIsPlay = false;						 // [Flag] - to decide whether to play audio (if true)
 
 	// Update Loop - Fade In / Fade out data
-	bool		   mFadeIn = false;				   // [Flag] - This audio will be faded out. 
-	bool		   mFadeOut = false;			   // [Flag] - This audio will be faded in.
-	float		   mFadeInMaxVol = 1.0f;		   // Flexibility with audio volume fade in (control over volume)
-	float		   mFadeOutToVol = 0.0f;		   // Flexibility to adjust the audio volume as it fades out (don't have to be 0.0f)
-	float		   mFadeSpeedModifier = 0.2f;	   // How fast the fading goes (modifier * dt)
+	bool		   mFadeIn = false;						 // [Flag] - This audio will be faded out. 
+	bool		   mFadeOut = false;					 // [Flag] - This audio will be faded in.
+	float		   mFadeInMaxVol = 1.0f;				 // Flexibility with audio volume fade in (control over volume)
+	float		   mFadeOutToVol = 0.0f;				 // Flexibility to adjust the audio volume as it fades out (don't have to be 0.0f)
+	float		   mFadeSpeedModifier = 0.2f;			 // How fast the fading goes (modifier * dt)
 
 	// For Editor
-	bool		   mIsEmpty = true;	               // [For Editor] - if empty delete all data in this <Audio> component
-	bool		   mIsLoaded = false;	           // [For Loading]
+	bool		   mIsEmpty = true;						 // [For Editor] - if empty delete all data in this <Audio> component
+	bool		   mIsLoaded = false;					 // [For Loading]
 
 	// Pause State [Editor/Pause Menu]
-	bool		   mSetPause = false;              // [Flag] - set pause for channel.
-	bool		   mPaused = false;                // [For Resuming Logic]
-	bool		   mWasPaused = false;             // [For Resuming Logic]
-	bool		   mSetUnpause = false;            // [Flag] - for unpausing channels.
-	float		   mTypeChanged = false;           // [For Editor] - trigger type change
+	bool		   mSetPause = false;					 // [Flag] - set pause for channel.
+	bool		   mPaused = false;						 // [For Resuming Logic]
+	bool		   mWasPaused = false;					 // [For Resuming Logic]
+	bool		   mSetUnpause = false;					 // [Flag] - for unpausing channels.
+	float		   mTypeChanged = false;				 // [For Editor] - trigger type change
 
 	// Q. Can a <Audio> entity have their very own channel.
-	uid            mChannelID;                     // Channel ID (Channel Management)
-	FMOD::Channel* mChannel;         	           // Use this to facilitate manipulation of audio.
-	FMOD::Sound*   mSound;				           // Each <Audio> can only hold a reference to the "Audio File" it's attached to.
+	uid            mChannelID;							 // Channel ID (Channel Management)
+	FMOD::Channel* mChannel;         					 // Use this to facilitate manipulation of audio.
+	FMOD::Sound* mSound = nullptr;					 // Each <Audio> can only hold a reference to the "Audio File" it's attached to.
 
 	// Fade Volume Stuff
-	float fade_timer = 0.0f;			           // How long the fade has elapsed
-	float fade_duration = 5.0f;			           // How long to fade...
+	float fade_timer = 0.0f;							 // How long the fade has elapsed
+	float fade_duration = 5.0f;							 // How long to fade...
 
 	Audio() : mFilePath(""), mFileName(""), mAudioType(AUDIO_SFX), mIsEmpty(true)
 	{
@@ -415,17 +418,16 @@ struct Audio
 	void							Inspect();
 };
 
-// Added [10/23] 
 struct AudioListener
 {
-	uid       mListenerID;								// [Unique Identifier] - Used for fmod->set3DListenerAttributes()
-	bool      mListenerflag = true;
-	glm::vec3 mPosition     = { 0.0f, 0.0f, 0.0f };
-	
-	/*glm::vec3 velocity = {0.0f, 0.0f, 0.0f};
-	glm::vec3 forward  = {0.0f, 0.0f, 1.0f};
-	glm::vec3 up       = { 0.0f, 1.0f, 0.0f };*/
+	int mAudioListener{ 0 };
+
+	//RTTR_ENABLE()
+	void							Inspect();
 };
+
+
+
 
 /******************************************************************************/
 /*!
