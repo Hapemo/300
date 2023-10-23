@@ -83,6 +83,7 @@ public:
 public:
 	// Retained Functions (Without Linking to <Audio> component)
 	bool LoadAudioFromDirectory(std::filesystem::path file_path);					                                        // Load files from directory (Like just load all the audio files first) -> later then link
+	bool LoadAudioFromDirectory(std::string directory_path);															    // [10/22] [For Lua]
 	void SetAllSFXVolume(float audio_vol);																				    // Global Volume Setting (SFX)
 	void SetAllBGMVolume(float audio_vol);													                                // Global Volume Setting (BGM)
 	void MuteSFX();																											// Global Mute (SFX)
@@ -124,6 +125,10 @@ public:
 	// For Editor (Pausing State)
 	float system_paused = true; // initial yes.
 	float fade_timer = 0.0f;
+
+// 3D Audio Stuff
+public:
+	float distance_factor = 1.0f;  // Units per meter. (per unit reference in game world)
 
 private:
 	std::unordered_map<AUDIOTYPE, std::vector<std::pair<uid, FMOD::Channel*&>>> mChannelswID;   // Add [Channel ID] 

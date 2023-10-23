@@ -107,6 +107,18 @@ void AudioSystem::Init()
 		}
 	}
 
+	// 3D Audio Settings
+	PINFO("INITIALIZING 3D AUDIO SETTINGS:");
+	ErrCodeCheck(system_obj->set3DSettings(1.0, distance_factor, 1.0)); // [Distance Factor] = 1.0f 
+
+
+
+
+
+
+
+
+
 
 }
 
@@ -142,6 +154,14 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 	if (Input::CheckKey(PRESS, S))
 		TestCrossFadeBack();		 // Test OK
 
+	if (Input::CheckKey(PRESS, D))
+		TestFadeIn();				 // Test OK
+
+	if (Input::CheckKey(PRESS, F))
+		TestFadeOut();				 // Test OK
+
+	//TestFootsteps();
+	TestFootstepsFade(dt);
 
 	// [10/18] Global Channel Test
 	if (Input::CheckKey(PRESS, _1))
@@ -194,7 +214,8 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 			!audio_component.mPaused)							// (5) Cannot be paused...
 		{
 			PINFO("Audio Exist");
-			PlayAudioSource(audio_component);
+			PINFO("PLAYING AUDIO AT: %f", audio_component.mVolume);
+			PlayAudioSource(audio_component, audio_component.mVolume);
 		}
 
 		// Every Loop -> check if the <Audio> is still playing.
@@ -223,37 +244,53 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 		{
 			if (fade_timer < audio_component.fade_duration)
 			{
-				float fade_slower_dt = 0.2 * dt;
+				float fade_step = audio_component.mFadeSpeedModifier * (audio_component.mVolume / audio_component.fade_duration);
 
-				fade_timer += fade_slower_dt;
+			/*	float fade_slower_dt = 0.2 * dt;
 
+				fade_timer += fade_slower_dt;*/
 
-				float fadeLevelOut = 1.0f - (fade_timer / audio_component.fade_duration); //  fade level out
+				float fadeLevelOut = audio_component.mVolume - (fade_step * dt);
 
-				// Set Volume 
-			/*	if (audio_component.mIsPlaying)
-				{*/ 
-				audio_component.mChannel->setVolume(fadeLevelOut);
-				audio_component.mVolume = fadeLevelOut; //  fade level out
+				//float fadeLevelOut = audio_component.mVolume - (fade_timer / audio_component.fade_duration); //  fade level out (volume each fade out step)
+
+				if (fadeLevelOut > audio_component.mFadeOutToVol)  // Have yet to reach the desired fade out volume
+				{
+					audio_component.mChannel->setVolume(fadeLevelOut);
+					audio_component.mVolume = fadeLevelOut; //  fade level out
+				}
+
+				else // reached and exceeded the fade out volume...
+				{
+					audio_component.mChannel->setVolume(audio_component.mFadeOutToVol);
+					audio_component.mVolume = audio_component.mFadeOutToVol; //  fade level out
+				}
+				
 				PINFO("Fade Out Volume: %f", audio_component.mVolume);
-				//}
 
 			}
 		}
 
 		if (audio_component.mFadeIn)
-		{
+		{   
 			if (fade_timer < audio_component.fade_duration)
 			{
-				float fade_slower_dt = 0.2 * dt;
+				float fade_step = audio_component.mFadeSpeedModifier * (audio_component.mFadeInMaxVol / audio_component.fade_duration);
+				float fadeLevelIn = audio_component.mVolume + (fade_step * dt);
 
-				fade_timer += fade_slower_dt;
-
-				float fadeLevelIn = fade_timer / audio_component.fade_duration;
-
-				audio_component.mChannel->setVolume(fadeLevelIn);
-				audio_component.mVolume = fadeLevelIn;
-				PINFO("Fade In Volume: %d", audio_component.mVolume);
+				if (fadeLevelIn < audio_component.mFadeInMaxVol)
+				{
+					audio_component.mChannel->setVolume(fadeLevelIn);
+					audio_component.mVolume = fadeLevelIn;
+				}
+				else
+				{
+					audio_component.mChannel->setVolume(audio_component.mFadeInMaxVol);
+					audio_component.mVolume = audio_component.mFadeInMaxVol;
+				}
+			
+			
+				PINFO("Fade In Volume: %f", audio_component.mVolume);
 
 				// (1) Play Sound + Adjust Audio
 				if (!audio_component.mIsPlaying)
@@ -554,7 +591,15 @@ bool AudioSystem::LoadAudio(std::string file_path, std::string audio_name, Audio
 		/*std::cout << "Creating Sound: ";*/
 		std::string full_path = file_path + "/" + audio_name;
 		FMOD::Sound* new_sound;
-		int check = ErrCodeCheck(system_obj->createSound(full_path.c_str(), FMOD_LOOP_OFF, 0, &new_sound));
+
+		FMOD_MODE selected = FMOD_LOOP_OFF;
+
+		if (audio_component != nullptr)
+		{
+			selected = audio_component->m3DAudio ? FMOD_3D : FMOD_LOOP_OFF;
+		}
+
+		int check = ErrCodeCheck(system_obj->createSound(full_path.c_str(), selected, 0, &new_sound));
 
 		if (check != 1)
 		{
@@ -613,6 +658,31 @@ bool AudioSystem::LoadAudio(std::string file_path, std::string audio_name, Audio
 
 	return true;
 }
+
+ bool AudioSystem::LoadAudioFromDirectory(std::string directory_path)
+ {
+	 for (const auto& file : std::filesystem::directory_iterator(directory_path))
+	 {
+		 std::string file_path = file.path().string();
+		 PINFO("File Detected: %s", file_path.c_str());
+		 std::string audio_name = file.path().filename().string();
+		 PINFO("Audio Name: %s", audio_name.c_str());
+
+		 PINFO("Creating Sound: ");
+		 FMOD::Sound* new_sound;
+		 bool check = ErrCodeCheck(system_obj->createSound(file_path.c_str(), FMOD_LOOP_OFF, 0, &new_sound));
+
+		 if (!check)
+		 {
+			 PWARNING("Failed to create Sound: %s", audio_name.c_str());
+			 return false;
+		 }
+
+		 mSounds.insert(std::make_pair(audio_name, new_sound));
+	 }
+
+	 return true;
+ }
 
 /******************************************************************************/
 /*!
@@ -970,10 +1040,12 @@ void AudioSystem::PlayAudioSource(FMOD::Sound* comp_sound, FMOD::Channel* comp_c
 
 void AudioSystem::PlayAudioSource(Audio& audio_component, float volume)
 {
-	audio_component.mChannel->setVolume(volume);
+	
 
 	PINFO("Playing Audio Source from <Audio> Component");
 	ErrCodeCheck(system_obj->playSound(audio_component.mSound, nullptr, false, &audio_component.mChannel));
+	
+	audio_component.mChannel->setVolume(volume); // After because in [release] mode got undefined behaviour complaining access violation. OK in Debug mode though.
 
 	bool isPlaying; // check whether if it's playing.
 	ErrCodeCheck(audio_component.mChannel->isPlaying(&isPlaying));

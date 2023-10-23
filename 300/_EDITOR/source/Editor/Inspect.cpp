@@ -1150,10 +1150,17 @@ void Audio::Inspect() {
 	{
 		//ImGui::Checkbox("Play This (start the scene first)", &mIsPlay);
 		//ImGui::Checkbox("IsPlaying", &mIsPlaying);
+		ImGui::Checkbox("3D Audio", &m3DAudio);
 		ImGui::Checkbox("Play on Awake", &mPlayonAwake);
 		ImGui::Checkbox("Is Looping", &mIsLooping);
-		ImGui::SliderFloat("Volume", &f1, 0.0f, 1.0f, "ratio = %.3f");
+		ImGui::SliderFloat("Volume", &mVolume, 0.0f, 1.0f, "volume = %.3f");
+		ImGui::SliderFloat("Fade Speed", &mFadeSpeedModifier, 0.0f, 1.0f, "fade = %.3f");
 
+		if (m3DAudio)
+		{
+			ImGui::SliderFloat("Min Distance", &mMinDistance, 0.0f, 3000.0f, "%.3f");
+			ImGui::SliderFloat("Max Distance", &mMaxDistance, 0.0f, 3000.0f, "%.3f");
+		}
 	}
 
 	// AudioType Selector 
