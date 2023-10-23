@@ -2,6 +2,7 @@
 #include "ECS/ECS.h"
 #include "Debug/EnginePerformance.h"
 #include "Physics/Accumulator.h"
+#include "Physics/PhysXUtils.h"
 
 PhysicsSystem::PhysicsSystem()
 {
@@ -17,15 +18,12 @@ void PhysicsSystem::Init()
 {
 	//get all entities with physics components
 	for (auto itr = mActors.begin(); itr != mActors.end(); ++itr)
-		mPX.mScene->removeActor(*itr->second);
+		mPX.mScene->removeActor(*itr->second.mActor);
 	mActors.clear();
+
 	auto view = systemManager->ecs->GetEntitiesWith<Transform, RigidBody>();
-	
 	for (Entity e : view)
-	{
-		if (e.HasComponent<RigidBody>())
-			CreateRigidBody(e);
-	}
+		CreateRigidBody(e);
 }
 
 void PhysicsSystem::Update(float dt)
@@ -33,37 +31,15 @@ void PhysicsSystem::Update(float dt)
 	if (dt <= 0)
 		return;
 
+	// fixed time step
 	for (unsigned step = 0; step < Accumulator::mSteps; ++step)
 	{
 		mPX.mScene->simulate(Accumulator::mFixedDT);
 		mPX.mScene->fetchResults(true);
 	}
 
-	for (auto itr = mActors.begin(); itr != mActors.end(); ++itr)
-	{
-		// retrieving positions in physx
-		physx::PxTransform PXform = itr->second->getGlobalPose();
-		Entity e = Entity(itr->first);
-		Transform& xform = e.GetComponent<Transform>();
-
-		// overwriting entities with updated positions
-		xform.mTranslate = Convert(PXform.p);
-		xform.mRotate = glm::eulerAngles(Convert(PXform.q));
-		if (e.HasComponent<BoxCollider>())
-			xform.mTranslate -= e.GetComponent<BoxCollider>().mTranslateOffset;
-		else if (e.HasComponent<SphereCollider>())
-			xform.mTranslate -= e.GetComponent<SphereCollider>().mTranslateOffset;
-		else if (e.HasComponent<CapsuleCollider>())
-			xform.mTranslate -= e.GetComponent<CapsuleCollider>().mTranslateOffset;
-		else if (e.HasComponent<AABBCollider>())
-			xform.mTranslate -= e.GetComponent<AABBCollider>().mTranslateOffset;
-
-		// update velocity
-		RigidBody& rbod = e.GetComponent<RigidBody>();
-		if (rbod.mMotion != MOTION::DYNAMIC)
-			continue;
-		rbod.mVelocity = Convert(static_cast<physx::PxRigidDynamic*>(itr->second)->getLinearVelocity());
-	}
+	// sync with ecs
+	Synchronize();
 }
 
 void PhysicsSystem::Exit()
@@ -71,7 +47,7 @@ void PhysicsSystem::Exit()
 	mActors.clear();
 }
 
-void PhysicsSystem::AddActor(Entity e)
+void PhysicsSystem::AddEntity(Entity e)
 {
 	if (mActors.find(static_cast<uint32_t>(e.id)) != mActors.end())
 	{
@@ -86,20 +62,18 @@ void PhysicsSystem::AddActor(Entity e)
 
 void PhysicsSystem::SetVelocity(Entity e, const glm::vec3& velocity)
 {
-	std::cout << "Set velocity to: " << velocity.x << " " << velocity.y << " " << velocity.z << std::endl;
-	if (e.HasComponent<PlaneCollider>()) return;
 	if (!e.HasComponent<RigidBody>()) return;
 	RigidBody rbod = e.GetComponent<RigidBody>();
 	if (rbod.mMotion == MOTION::STATIC) return;
 
-	physx::PxRigidDynamic* actor = (physx::PxRigidDynamic*)(mActors[static_cast<uint32_t>(e.id)]);
+	physx::PxRigidDynamic* actor = (physx::PxRigidDynamic*)(mActors[static_cast<uint32_t>(e.id)].mActor);
 	actor->setAngularDamping(0.5f);
 	actor->setLinearVelocity(Convert(velocity));
 }
 
 void PhysicsSystem::RemoveActor(Entity e)
 {
-	mPX.mScene->removeActor(*mActors[static_cast<uint32_t>(e.id)]);
+	mPX.mScene->removeActor(*mActors[static_cast<uint32_t>(e.id)].mActor);
 	mActors.erase(static_cast<uint32_t>(e.id));
 }
 
@@ -110,97 +84,122 @@ physx::PxMaterial* PhysicsSystem::CreateMaterial(float us, float ud, float res)
 
 void PhysicsSystem::CreateRigidBody(Entity e)
 {
-	if (e.HasComponent<PlaneCollider>())
-	{
-		//PlaneCollider col = e.GetComponent<PlaneCollider>();
-		//PxRigidStatic* plane = PxCreatePlane(*mPX.mPhysics, PxPlane(Convert(col.mNormal), glm::length(xform.mTranslate + xtraxlate) + col.mTranslateOffset), *mMaterials[rbod.mMaterial]);
-		//mActors[static_cast<uint32_t>(e.id)] = plane;
-		//mPX.mScene->addActor(*plane);
-		return;
-	}
-
+	// retrieve entity info
 	Transform xform = e.GetComponent<Transform>();
-	glm::vec3 xtranslate = e.HasParent() ? Entity(e.GetParent()).GetComponent<Transform>().mTranslate : glm::vec3(0);
 	RigidBody rbod = e.GetComponent<RigidBody>();
+	glm::vec3 childOffset = e.HasParent() ? Entity(e.GetParent()).GetComponent<Transform>().mTranslate : glm::vec3(0);
+
 	PxRigidActor* actor{};
-	PxShape* shape{};
+	CreateActor(actor, PxTransform(Convert(xform.mTranslate + childOffset)), rbod);
 
 	if (e.HasComponent<CapsuleCollider>())
 	{
+		PxShape* shape{};
 		CapsuleCollider cap = e.GetComponent<CapsuleCollider>();
-		shape = mPX.mPhysics->createShape(PxCapsuleGeometry(cap.mRadius, cap.mHalfHeight), *mMaterials[rbod.mMaterial]);
-		AttachMotionType(actor, shape, PxTransform(Convert(xform.mTranslate + cap.mTranslateOffset + xtranslate)), rbod, glm::ivec3(1, 1, 1));
+		CreateShape(shape, 
+			PxCapsuleGeometry(cap.mRadius, cap.mHalfHeight), 
+			rbod, 
+			cap.mIsTrigger);
+		AttachShape(actor, 
+			shape, 
+			PxTransform(Convert(cap.mTranslateOffset)));
 	}
-	else if (e.HasComponent<BoxCollider>())
+
+	if (e.HasComponent<BoxCollider>())
 	{
+		PxShape* shape{};
 		BoxCollider col = e.GetComponent<BoxCollider>();
-		shape = mPX.mPhysics->createShape(PxBoxGeometry(Convert(xform.mScale * col.mScaleOffset) / 2.f), *mMaterials[rbod.mMaterial]);
-		AttachMotionType(actor, shape, PxTransform(Convert(xform.mTranslate + col.mTranslateOffset + xtranslate)), rbod);
+		CreateShape(shape, 
+			PxBoxGeometry(Convert(xform.mScale * col.mScaleOffset) / 2.f), 
+			rbod, 
+			col.mIsTrigger);
+		AttachShape(actor, 
+			shape, 
+			PxTransform(Convert(col.mTranslateOffset)));
 	}
-	else if (e.HasComponent<SphereCollider>())
+
+	if (e.HasComponent<SphereCollider>())
 	{
+		PxShape* shape{};
 		SphereCollider col = e.GetComponent<SphereCollider>();
-		shape = mPX.mPhysics->createShape(PxSphereGeometry(std::max({ xform.mScale.x, xform.mScale.y, xform.mScale.z }) * col.mScaleOffset / 2.f), *mMaterials[rbod.mMaterial]);
-		AttachMotionType(actor, shape, PxTransform(Convert(xform.mTranslate + col.mTranslateOffset + xtranslate)), rbod);
+		CreateShape(shape, 
+			PxSphereGeometry(std::max({ xform.mScale.x, xform.mScale.y, xform.mScale.z }) * col.mScaleOffset / 2.f), 
+			rbod, 
+			col.mIsTrigger);
+		AttachShape(actor,
+			shape,
+			PxTransform(Convert(col.mTranslateOffset)));
 	}
-	else if (e.HasComponent<AABBCollider>())
-	{
-		AABBCollider col = e.GetComponent<AABBCollider>();
-		shape = mPX.mPhysics->createShape(PxBoxGeometry(Convert(xform.mScale * col.mScaleOffset) / 2.f), *mMaterials[rbod.mMaterial]);
-		AttachMotionType(actor, shape, PxTransform(Convert(xform.mTranslate + col.mTranslateOffset + xtranslate)), rbod, glm::ivec3(1, 1, 1));
-	}
-	else return;
+	
+	// create actor object
+	Actor actorObject;
+	actorObject.mEntity = static_cast<uint32_t>(e.id);
+	actorObject.mActor = actor;
 
-	mActors[static_cast<uint32_t>(e.id)] = actor;
-	mPX.mScene->addActor(*actor);
-	shape->release();
+	// assign user data
+	actorObject.mActor->userData = &actorObject.mEntity;
+
+	// add to scene
+	mActors[static_cast<uint32_t>(e.id)] = actorObject;
+	mPX.mScene->addActor(*actorObject.mActor);
 }
 
-void PhysicsSystem::AttachIsTrigger(PxRigidActor*& actor, PxShape*& shape)
+void PhysicsSystem::CreateActor(PxRigidActor*& actor, const PxTransform& pxform, const RigidBody& rbod)
 {
-}
-
-void PhysicsSystem::AttachMotionType(PxRigidActor*& actor, PxShape*& shape, const PxTransform& pxform, const RigidBody& rbod, const glm::ivec3& axisLocks)
-{
-	//shape->setBaseFlag()
 	if (rbod.mMotion == MOTION::DYNAMIC)
 	{
 		actor = mPX.mPhysics->createRigidDynamic(pxform);
-		actor->attachShape(*shape);
 		PxRigidBodyExt::updateMassAndInertia(*static_cast<PxRigidDynamic*>(actor), rbod.mDensity);
 		static_cast<PxRigidDynamic*>(actor)->setLinearVelocity(Convert(rbod.mVelocity));
+
 		PxRigidDynamicLockFlags axis;
-		if (axisLocks.x)
-			axis |= PxRigidDynamicLockFlag::eLOCK_ANGULAR_X;
-		if (axisLocks.y)
-			axis |= PxRigidDynamicLockFlag::eLOCK_ANGULAR_Y;
-		if (axisLocks.z)
-			axis |= PxRigidDynamicLockFlag::eLOCK_ANGULAR_Z;
+		axis |= PxRigidDynamicLockFlag::eLOCK_ANGULAR_X;
+		axis |= PxRigidDynamicLockFlag::eLOCK_ANGULAR_Y;
+		axis |= PxRigidDynamicLockFlag::eLOCK_ANGULAR_Z;
 		static_cast<PxRigidDynamic*>(actor)->setRigidDynamicLockFlags(axis);
+
+		return;
 	}
-	else
+	actor = mPX.mPhysics->createRigidStatic(pxform);
+}
+
+void PhysicsSystem::AttachShape(PxRigidActor*& actor, PxShape*& shape, const PxTransform& localPose)
+{
+	shape->setLocalPose(localPose);
+	actor->attachShape(*shape);
+	shape->release();
+}
+
+void PhysicsSystem::Synchronize()
+{
+	for (auto itr = mActors.begin(); itr != mActors.end(); ++itr)
 	{
-		actor = mPX.mPhysics->createRigidStatic(pxform);
-		actor->attachShape(*shape);
+		Entity e = itr->first;
+
+		if (e.GetComponent<RigidBody>().mMotion == MOTION::STATIC)
+			continue;
+
+		PxRigidActor* actor = itr->second.mActor;
+
+		// retrieving positions in physx
+		PxTransform PXform = actor->getGlobalPose();
+		Transform& refXform = e.GetComponent<Transform>();
+
+		// overwriting entities with updated positions
+		if (e.HasParent())
+		{
+			Transform parentXform = e.GetParent().GetComponent<Transform>();
+			refXform.mTranslate = Convert(PXform.p) - parentXform.mTranslate;
+			refXform.mRotate = glm::eulerAngles(Convert(PXform.q));
+		}
+		else
+		{
+			refXform.mTranslate = Convert(PXform.p);
+			refXform.mRotate = glm::eulerAngles(Convert(PXform.q));
+		}
+
+		// update velocity
+		RigidBody& rbod = e.GetComponent<RigidBody>();
+		rbod.mVelocity = Convert(static_cast<physx::PxRigidDynamic*>(itr->second.mActor)->getLinearVelocity());
 	}
-}
-
-physx::PxVec3T<float> PhysicsSystem::Convert(const glm::vec3& vec)
-{
-	return physx::PxVec3T<float>(vec.x, vec.y, vec.z);
-}
-
-physx::PxVec4T<float> PhysicsSystem::Convert(const glm::vec4& vec)
-{
-	return physx::PxVec4T<float>(vec.x, vec.y, vec.z, vec.w);
-}
-
-glm::vec3 PhysicsSystem::Convert(const physx::PxVec3T<float>& vec)
-{
-	return { vec.x, vec.y, vec.z };
-}
-
-glm::quat PhysicsSystem::Convert(const physx::PxQuatT<float>& vec)
-{
-	return { vec.x, vec.y, vec.z, vec.w };
 }

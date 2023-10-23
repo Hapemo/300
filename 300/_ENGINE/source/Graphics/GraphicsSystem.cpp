@@ -350,13 +350,13 @@ void GraphicsSystem::EditorDraw(float dt)
 			}
 		}
 
-		m_Textures.push_back(0);
-		m_Textures.push_back(1);
-		m_Textures.push_back(2);
-		m_Textures.push_back(3);
-
-		GLuint uniform_tex = glGetUniformLocation(shaderID, "uTex");
-		glUniform1iv(uniform_tex, (GLsizei)m_Textures.size(), m_Textures.data()); // passing Texture ID to the fragment  
+		//m_Textures.push_back(0);
+		//m_Textures.push_back(1);
+		//m_Textures.push_back(2);
+		//m_Textures.push_back(3);
+		//
+		//GLuint uniform_tex = glGetUniformLocation(shaderID, "uTex");
+		//glUniform1iv(uniform_tex, (GLsizei)m_Textures.size(), m_Textures.data()); // passing Texture ID to the fragment  
 
 		GLuint debug_draw = glGetUniformLocation(shaderID, "uDebugDraw");
 		glUniform1i(debug_draw, m_DebugDrawing);
@@ -430,7 +430,7 @@ void GraphicsSystem::GameDraw(float dt)
 	{
 
 		auto& meshrefptr = inst.GetComponent<MeshRenderer>();
-		if (meshrefptr.mMeshRef.data != nullptr)
+		if (meshrefptr.mMeshRef.data == nullptr)
 			continue;
 
 		std::string meshstr = inst.GetComponent<MeshRenderer>().mMeshPath;

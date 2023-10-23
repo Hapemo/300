@@ -70,14 +70,6 @@ void LuaEntity()
         DECLARE_COMPONENT("GetSphereCollider", SphereCollider),
         "HasSphereCollider", &Entity::HasComponent<SphereCollider>,
 
-        ADD_COMPONENT("AddPlaneCollider", PlaneCollider),
-        DECLARE_COMPONENT("GetPlaneCollider", PlaneCollider),
-        "HasPlaneCollider", &Entity::HasComponent<PlaneCollider>,
-
-        ADD_COMPONENT("AddAABBCollider", AABBCollider),
-        DECLARE_COMPONENT("GetAABBCollider", AABBCollider),
-        "HasAABBCollider", &Entity::HasComponent<AABBCollider>,
-
         ADD_COMPONENT("AddCapsuleCollider", CapsuleCollider),
         DECLARE_COMPONENT("GetCapsuleCollider", CapsuleCollider),
         "HasCapsuleCollider", &Entity::HasComponent<CapsuleCollider>,
@@ -161,15 +153,6 @@ void LuaSphereCollider()
     );
 }
 
-void LuaPlaneCollider()
-{
-    systemManager->mScriptingSystem->luaState.new_usertype<PlaneCollider>(
-        "PlaneCollider", sol::constructors<>(),
-        "mNormal", &PlaneCollider::mNormal,
-        "mTranslateOffset", &PlaneCollider::mTranslateOffset
-    );
-}
-
 void LuaScript()
 {
     systemManager->mScriptingSystem->luaState.new_usertype<Scripts>(
@@ -212,17 +195,17 @@ void LuaAudio()
     systemManager->mScriptingSystem->luaState.new_usertype<AudioSystem>(
         "mAudioSystem", sol::constructors<>(),
         "PlayAudio", &AudioSystem::PlayAudio,
-        "PlaySFXAudio", &AudioSystem::PlaySFXAudio,
-        "PlayBGMAudio", &AudioSystem::PlayBGMAudio,
-        "SetSpecificChannelVolume", &AudioSystem::SetSpecificChannelVolume,
+    /*    "PlaySFXAudio", &AudioSystem::PlaySFXAudio,
+        "PlayBGMAudio", &AudioSystem::PlayBGMAudio,*/
+       //"SetSpecificChannelVolume", &AudioSystem::SetSpecificChannelVolume,
         "SetAllSFXVolume", &AudioSystem::SetAllSFXVolume,
         "SetAllBGMVolume", &AudioSystem::SetAllBGMVolume,
         "MuteSFX", &AudioSystem::MuteSFX,
-        "MuteBGM", &AudioSystem::MuteBGM,
-        "TogglePauseAllSounds", &AudioSystem::TogglePauseAllSounds,
+        "MuteBGM", &AudioSystem::MuteBGM
+     /*   "TogglePauseAllSounds", &AudioSystem::TogglePauseAllSounds,
         "TogglePauseSFXSounds", &AudioSystem::TogglePauseSFXSounds,
         "TogglePauseBGMSounds", &AudioSystem::TogglePauseBGMSounds,
-        "TogglePauseSpecific", &AudioSystem::TogglePauseSpecific
+        "TogglePauseSpecific", &AudioSystem::TogglePauseSpecific*/
     );
 }
 
