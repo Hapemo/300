@@ -21,7 +21,7 @@
             },
             "translate": {
                 "x": 0.0,
-                "y": 0.0,
+                "y": -0.689213752746582,
                 "z": 0.0
             }
         },
@@ -45,9 +45,16 @@
                 "z": 1.0,
                 "w": 1.0
             },
+            "materialinstance": [
+                "../assets/Compressed/Wood Material 15_BaseColor.ctexture",
+                "../assets/Compressed/Wood Material 15_Normal.ctexture",
+                " ",
+                " ",
+                " "
+            ],
             "texturecont": [
-                false,
-                false,
+                true,
+                true,
                 false,
                 false,
                 false
@@ -117,8 +124,32 @@
     },
     {
         "entityid": 3,
+        "general": {
+            "name": "Entity3",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 16.218000411987305,
+                "y": 474.85400390625,
+                "z": 748.7139892578125
+            }
+        },
         "camera": {
-            "position": {
+            "positon": {
                 "x": 16.218000411987305,
                 "y": 474.85400390625,
                 "z": 748.7139892578125
@@ -129,8 +160,8 @@
                 "z": 747.7139892578125
             },
             "size": {
-                "x": 703,
-                "y": 607
+                "x": 635,
+                "y": 529
             },
             "near": 0.10000000149011612,
             "far": 900.0
