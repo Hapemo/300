@@ -8,28 +8,32 @@ function Update()
     if entity == nil then
         print("Entity nil in script!")
     end
+    entityAudio = entity:AddAudio();
 
     -- Get other entity by name
     gameStateSys = systemManager:mGameStateSystem();
-    Light = gameStateSys:GetEntity("Light", "Test1")
-    rigidBodyComponent = Light:AddRigidBody();
+    floorEntity = gameStateSys:GetEntity("Floor", "Test1")
+    floorAudio = floorEntity:AddAudio();
 
-    -- audioEntity = AudioSource.new();
-    -- get the entity (either by calling the getEntityByName function or script_entity created)
-    -- audioEntity2 = AudioSource.new();
-    -- get the entity (either by calling the getEntityByName function or script_entity created)
+    -- Audio Test
+    entityAudioSource = Helper.CreateAudioSource(entity)
+    floorAudioSource = Helper.CreateAudioSource(floorEntity)
 
     -- CrossFadeAudio();
-    -- audioEntity:GetAudio(entity);
     -- audioEntity:IsSoundAttached();
-    -- audioEntity:AttachSound("farm_ambience.wav");
+    entityAudioSource:AttachSound("farm_ambience.wav");
     -- audioEntity:IsPlaying();
-    -- audioEntity:Play();
     -- audioEntity:Pause();
     -- audioEntity:Stop();
     -- audioEntity:Mute();
-    -- audioEntity:SetVolume(0.3);
-    -- audioEntity:SetIsLoop(1);
+    entityAudioSource:SetVolume(0.5);
+    entityAudioSource:SetIsLoop(1);
+
+    if Input.CheckKey(State.HOLD, Key.KEY_C) then
+        entityAudioSource:Play();
+    elseif Input.CheckKey(State.HOLD, Key.KEY_X) then
+        entityAudioSource:Pause();
+    end
     -- audioSys = systemManager:mAudioSystem();
     -- audioSys:LoadAudioFromDirectory("../assets\\Audio")
 end
