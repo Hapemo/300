@@ -149,7 +149,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="include\AI\AIManager.h" />
+    <ClInclude Include="include\Audio\AudioSource.h" />
     <ClInclude Include="include\Audio\AudioSystem.h" />
+    <ClInclude Include="include\Audio\AudioTest.h" />
     <ClInclude Include="include\Audio\AudioType.h" />
     <ClInclude Include="include\Debug\AssertException.h" />
     <ClInclude Include="include\Debug\Asserts.h" />
@@ -170,13 +172,18 @@
     <ClInclude Include="include\Input\Input.h" />
     <ClInclude Include="include\Input\InputMapSystem.h" />
     <ClInclude Include="include\Multithread.h" />
+    <ClInclude Include="include\Physics\Actor.h" />
     <ClInclude Include="include\Physics\Accumulator.h" />
+    <ClInclude Include="include\Physics\ContactCallback.h" />
     <ClInclude Include="include\Physics\PhysicsTypes.h" />
     <ClInclude Include="include\Physics\PhysicsSystem.h" />
     <ClInclude Include="include\Physics\PhysX.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="include\Physics\ContactCallback.cpp" />
+    <ClCompile Include="source\Physics\PhysXUtils.cpp" />
     <ClCompile Include="source\AI\AIManager.cpp" />
+    <ClCompile Include="source\Audio\AudioSource.cpp" />
     <ClCompile Include="source\Audio\AudioSystem.cpp" />
     <ClCompile Include="source\Debug\AssertException.cpp" />
     <ClCompile Include="source\Debug\EnginePerformance.cpp" />
@@ -187,6 +194,7 @@
     <ClCompile Include="source\Input\Input.cpp" />
     <ClCompile Include="source\Input\InputMapSystem.cpp" />
     <ClCompile Include="source\Physics\Accumulator.cpp" />
+    <ClInclude Include="include\Physics\PhysXUtils.h" />
     <ClInclude Include="include\Serialization\Serialization.h" />
   </ItemGroup>
   <ItemGroup>

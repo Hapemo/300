@@ -32,7 +32,7 @@ Returns main window for docking
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 
-#include "../../../lib/ICON-FONT/IconsFontAwesome6.h"
+#include "IconsFontAwesome6.h"
 #include <map>
 #include <string>
 #include "MenuPanel.h"

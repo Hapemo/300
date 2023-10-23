@@ -366,17 +366,6 @@ of the existence of the components.
 		msc_t = true;
 	}
 
-	const PlaneCollider GetPCJSON() const
-	{
-		return mPCJ;
-	}
-
-	void SetPCJSON(const PlaneCollider pcj)
-	{
-		mPCJ = pcj;
-		mpc_t = true;
-	}
-
 	const Scripts GetSJSON() const
 	{
 		return mSJ;
@@ -457,7 +446,6 @@ private:
 	MeshRenderer mMRJ;
 	BoxCollider mBCJ;
 	SphereCollider mSCJ;
-	PlaneCollider mPCJ;
 	Scripts mSJ;
 	Parent mPJ;
 	Children mCJ;

@@ -1,7 +1,7 @@
+#include "pch.h"
 #include "ECS/ECS.h"
 #include "ECS/ECS_Components.h"
 #include "ScriptingSystem.h"
-#include "pch.h"
 #include "Object/ObjectFactory.h"
 #include "GameState/GameStateManager.h"
 #include "Debug/AssertException.h"
@@ -190,8 +190,6 @@ void ECS::UpdatePrefabEntities(std::string prefabName)
 			e.AddComponent<BoxCollider>() = temp.GetComponent<BoxCollider>();
 		if (temp.HasComponent<SphereCollider>())
 			e.AddComponent<SphereCollider>() = temp.GetComponent<SphereCollider>();
-		if (temp.HasComponent<PlaneCollider>())
-			e.AddComponent<PlaneCollider>() = temp.GetComponent<PlaneCollider>();
 		if (temp.HasComponent<Scripts>())
 			e.AddComponent<Scripts>() = temp.GetComponent<Scripts>();
 		if (temp.HasComponent<Audio>())
@@ -256,15 +254,15 @@ Entity ECS::PasteEntity(int scene)
 		e.GetComponent<MeshRenderer>() = mClipboard.GetComponent<MeshRenderer>();
 		MeshRenderer& mr = e.GetComponent<MeshRenderer>();
 		uid uids(mr.mMeshPath);
-		mr.mMeshRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(uids.id));
+		mr.mMeshRef.data = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(uids.id));
 		for (int i{ 0 }; i < 4; i++) {
 
-			if (mr.mTextureCont[i] == true) {
+			if (mr.mTextureRef[i].data != nullptr) {
 				uid localuids(mr.mMaterialInstancePath[i]);
-				mr.mTextureRef[i] = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(localuids.id));
+				mr.mTextureRef[i].data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(localuids.id));
 			}
 		}
-		GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mr.mMeshRef);
+		GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mr.mMeshRef.data);
 		if (meshinst->mHasAnimation)
 		{
 			e.AddComponent<Animator>();
@@ -285,11 +283,6 @@ Entity ECS::PasteEntity(int scene)
 	{
 		e.AddComponent<SphereCollider>();
 		e.GetComponent<SphereCollider>() = mClipboard.GetComponent<SphereCollider>();
-	}
-	if (mClipboard.HasComponent<PlaneCollider>())
-	{
-		e.AddComponent<PlaneCollider>();
-		e.GetComponent<PlaneCollider>() = mClipboard.GetComponent<PlaneCollider>();
 	}
 	if (mClipboard.HasComponent<Scripts>())
 	{

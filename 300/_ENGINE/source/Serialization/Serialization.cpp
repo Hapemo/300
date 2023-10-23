@@ -133,7 +133,7 @@ bool EntityJSON::Deserialize(const rapidjson::Value& obj)
 		for(int i = 0; i < 4; ++i) // size 4 because only 4 type of material property can be assigned
 			mMRJ.mMaterialInstancePath[i] = (obj["MeshRenderer"]["MaterialInstancePath"][i].GetString());
 		mMRJ.mMeshPath = obj["MeshRenderer"]["MeshPath"].GetString();
-		mMRJ.mGUID = (unsigned)obj["MeshRenderer"]["GUID"].GetInt();
+		//mMRJ.mGUID = (unsigned)obj["MeshRenderer"]["GUID"].GetInt();
 		for (int i = 0; i < 4; ++i)
 			mMRJ.mTextureCont[i] = (obj["MeshRenderer"]["TextureCont"][i].GetBool());
 
@@ -167,18 +167,6 @@ bool EntityJSON::Deserialize(const rapidjson::Value& obj)
 		msc_t = true;
 	}
 	else msc_t = false;
-
-	if (obj.HasMember("PlaneCollider"))
-	{
-		mPCJ.mNormal = { (float)obj["PlaneCollider"]["Normal"][0].GetDouble(),
-						 (float)obj["PlaneCollider"]["Normal"][1].GetDouble(),
-						 (float)obj["PlaneCollider"]["Normal"][2].GetDouble() };
-
-		mPCJ.mTranslateOffset = (float)obj["PlaneCollider"]["TranslateOffset"].GetDouble();
-
-		mpc_t = true;
-	}
-	else mpc_t = false;
 
 	if (obj.HasMember("Scripts"))
 	{
@@ -356,7 +344,7 @@ bool EntityJSON::Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* wri
 		writer->String(mMRJ.mMeshPath.c_str());
 
 		writer->String("GUID");
-		writer->Int(mMRJ.mGUID);
+		//writer->Int(mMRJ.mGUID);
 
 		writer->String("TextureCont");
 		writer->StartArray();
@@ -403,24 +391,6 @@ bool EntityJSON::Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* wri
 		writer->Double(mSCJ.mTranslateOffset.y);
 		writer->Double(mSCJ.mTranslateOffset.z);
 		writer->EndArray();
-
-		writer->EndObject();
-	}
-
-	if (mpc_t)
-	{
-		writer->String("PlaneCollider");
-		writer->StartObject();
-
-		writer->String("Normal");
-		writer->StartArray();
-		writer->Double(mPCJ.mNormal.x);
-		writer->Double(mPCJ.mNormal.y);
-		writer->Double(mPCJ.mNormal.z);
-		writer->EndArray();
-
-		writer->String("TranslateOffset");
-		writer->Double(mPCJ.mTranslateOffset);
 
 		writer->EndObject();
 	}
