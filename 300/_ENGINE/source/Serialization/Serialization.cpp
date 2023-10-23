@@ -84,6 +84,7 @@ SERIALIZE_BASIC(Script)
 	if (name != nullptr)
 		writer.Key(name);
 	Serialize(writer, name, val.scriptFile);
+	Serialize(writer, "variables", val.variables);
 }
 
 SERIALIZE_BASIC(SUBTAG)
@@ -92,7 +93,7 @@ SERIALIZE_BASIC(SUBTAG)
 		writer.Key(name);
 	Serialize(writer, nullptr, static_cast<int>(val));
 }
-
+	
 SERIALIZE_BASIC(MATERIAL)
 {
 	if (name != nullptr)
@@ -195,7 +196,10 @@ DESERIALIZE_BASIC(glm::vec4)
 DESERIALIZE_BASIC(Script)
 {
 	if (reader.HasMember(name))
+	{
 		Deserialize(reader, name, val.scriptFile);
+		Deserialize(reader, "variables", val.variables);
+	}
 }
 
 DESERIALIZE_BASIC(SUBTAG)
