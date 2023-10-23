@@ -48,7 +48,7 @@ void MeshRenderer::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer
 	Serialize(writer, "frag", mShaderPath.second);
 	Serialize(writer, "meshrefid", mMeshRef.data_uid);
 	Serialize(writer, "instancecolor", mInstanceColor);
-	//Serialize(writer, "materialinstance", mMaterialInstancePath, 4);
+	Serialize(writer, "materialinstance", mMaterialInstancePath, 5);
 	//Serialize(writer, "mesh", mMeshPath);
 	Serialize(writer, "texturecont", mTextureCont, 5);
 	Serialize(writer, "textureref", mTextureRef->data_uid);
@@ -61,7 +61,7 @@ void MeshRenderer::DeserializeSelf(rapidjson::Value& reader)
 	Deserialize(reader, "frag", mShaderPath.second);
 	Deserialize(reader, "meshrefid", mMeshRef.data_uid);
 	Deserialize(reader, "instancecolor", mInstanceColor);
-	//Deserialize(reader, "materialinstance", mMaterialInstancePath, 4);
+	Deserialize(reader, "materialinstance", mMaterialInstancePath, 5);
 	//Deserialize(reader, "mesh", mMeshPath);
 	Deserialize(reader, "texturecont", mTextureCont, 5);
 	Deserialize(reader, "textureref", mTextureRef->data_uid);
