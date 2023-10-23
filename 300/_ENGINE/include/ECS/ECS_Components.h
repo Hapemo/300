@@ -198,11 +198,10 @@ struct RigidBody : public Serializable
 	MATERIAL mMaterial;
 	MOTION mMotion;
 	glm::vec3 mVelocity;
-	bool mIsTrigger;
 
-	RigidBody() : mDensity(10.f), mMaterial(MATERIAL::WOOD), mMotion(MOTION::STATIC), mVelocity(0.f), mIsTrigger(false) {};
-	RigidBody(float dense, MATERIAL mat, MOTION mot, const glm::vec3& vec, bool isTrigger)
-		: mDensity(dense), mMaterial(mat), mMotion(mot), mVelocity(vec), mIsTrigger(isTrigger) {}
+	RigidBody() : mDensity(10.f), mMaterial(MATERIAL::WOOD), mMotion(MOTION::STATIC), mVelocity(0.f){};
+	RigidBody(float dense, MATERIAL mat, MOTION mot, const glm::vec3& vec)
+		: mDensity(dense), mMaterial(mat), mMotion(mot), mVelocity(vec){}
 	//RTTR_ENABLE()
 
 
@@ -222,7 +221,9 @@ struct BoxCollider : public Serializable
 {
 	glm::vec3 mScaleOffset;			// final scale = mScaleOffset * Transform.mScale;
 	glm::vec3 mTranslateOffset;		// final pos = Transform.mTranslate + mTranslateOffset;
-	
+	bool mIsTrigger;
+	bool mIsTriggerCollide;
+	uint32_t mTriggerCollidingWith;
 
 	BoxCollider() : mScaleOffset(1.f), mTranslateOffset(0.f) {}
 	
@@ -241,6 +242,9 @@ struct SphereCollider : public Serializable
 {
 	float mScaleOffset;				// final scale = mScaleOffset * std::max(Transform.mScale.x, Transform.mScale.y, Transform.mScale.z);
 	glm::vec3 mTranslateOffset;		// final pos = Transform.mTranslate + mTranslateOffset;
+	bool mIsTrigger;
+	bool mIsTriggerCollide;
+	uint32_t mTriggerCollidingWith;
 
 	SphereCollider() : mScaleOffset(1.f), mTranslateOffset(0.f) {};
 
@@ -250,40 +254,16 @@ struct SphereCollider : public Serializable
 	void DeserializeSelf(rapidjson::Value& reader);
 };
 
-/******************************************************************************/
-/*!
-	[Component] - PlaneCollider
- */
- /******************************************************************************/
-struct PlaneCollider : public Serializable //if has plane collider always static
-{
-	glm::vec3 mNormal;				// direction of plane
-	float mTranslateOffset;			// final pos = magnitude(Transform.mTranslate) + mTranslateOffset;
-
-	PlaneCollider() : mNormal(0.f, 1.f, 0.f), mTranslateOffset(0.f) {};
-
-	//RTTR_ENABLE()
-	void							Inspect();
-	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
-	void DeserializeSelf(rapidjson::Value& reader);
-};
-
-struct AABBCollider : public Serializable
-{
-	glm::vec3 mScaleOffset;			// final scale = mScaleOffset * Transform.mScale;
-	glm::vec3 mTranslateOffset;		// final pos = Transform.mTranslate + mTranslateOffset;
-
-	AABBCollider() : mScaleOffset(1.f), mTranslateOffset(0.f) {}
-
-	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
-	void DeserializeSelf(rapidjson::Value& reader);
-};
-
 struct CapsuleCollider : public Serializable
 {
 	glm::vec3 mTranslateOffset;
 	float mRadius;
 	float mHalfHeight;
+	bool mIsTrigger;
+	bool mIsTriggerCollide;
+	uint32_t mTriggerCollidingWith;
+
+
 	CapsuleCollider() : mTranslateOffset(0.f, 0.f, 0.f), mRadius(50.f), mHalfHeight(100.f) {}
 	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
 	void DeserializeSelf(rapidjson::Value& reader);
@@ -513,12 +493,11 @@ struct VFX : public Serializable
  */
 /******************************************************************************/
 enum class E_MOVEMENT_TYPE : char;
-enum class E_ATTACK_TYPE : char;
 struct AISetting {
 	E_MOVEMENT_TYPE mMovementType;	// AI's movement type
-	E_ATTACK_TYPE mAttackType;			// AI's attack type
+	bool mShotPrediction;						// AI's bullet predict target's movement
 	float mSpreadOut;								// Degree of spreading out
-	std::uint32_t mTarget;									// AI's target
+	std::uint32_t mTarget;					// AI's target
 };
 
 

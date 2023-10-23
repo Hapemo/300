@@ -190,8 +190,6 @@ void ECS::UpdatePrefabEntities(std::string prefabName)
 			e.AddComponent<BoxCollider>() = temp.GetComponent<BoxCollider>();
 		if (temp.HasComponent<SphereCollider>())
 			e.AddComponent<SphereCollider>() = temp.GetComponent<SphereCollider>();
-		if (temp.HasComponent<PlaneCollider>())
-			e.AddComponent<PlaneCollider>() = temp.GetComponent<PlaneCollider>();
 		if (temp.HasComponent<Scripts>())
 			e.AddComponent<Scripts>() = temp.GetComponent<Scripts>();
 		if (temp.HasComponent<Audio>())
@@ -285,11 +283,6 @@ Entity ECS::PasteEntity(int scene)
 	{
 		e.AddComponent<SphereCollider>();
 		e.GetComponent<SphereCollider>() = mClipboard.GetComponent<SphereCollider>();
-	}
-	if (mClipboard.HasComponent<PlaneCollider>())
-	{
-		e.AddComponent<PlaneCollider>();
-		e.GetComponent<PlaneCollider>() = mClipboard.GetComponent<PlaneCollider>();
 	}
 	if (mClipboard.HasComponent<Scripts>())
 	{
