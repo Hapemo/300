@@ -1,5 +1,6 @@
-up: W
-left: A
+Jump: SPACE
+Throw: G
 down: S
+left: A
 right: D
-Jump: Q
+up: W

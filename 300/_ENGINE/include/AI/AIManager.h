@@ -83,6 +83,17 @@ private:
 	glm::vec3 CalcGroundAIDir(Entity _e);
 
 	/*!*****************************************************************************
+	Calculate the ground AI next direction
+
+	\param _e
+	- Entity
+
+	\return glm::vec3
+	- Direction
+	*******************************************************************************/
+	glm::vec3 CalcAirAIDir(Entity _e);
+
+	/*!*****************************************************************************
 	Change the input direction of an AI with respect to other AIs from it's 
 	catagory. Degree of spread is determined by mSpreadOut ratio in AISetting.
 

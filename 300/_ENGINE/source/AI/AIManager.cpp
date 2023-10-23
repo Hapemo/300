@@ -1,6 +1,7 @@
 #include "AI/AIManager.h"
 #include "ECS/ECS.h"
 #include "ECS/ECS_Components.h"
+#include "FPSManager.h"
 
 //--------------------------------------------------
 // Public functions
@@ -16,7 +17,7 @@ glm::vec3 AIManager::GetDirection(Entity _e) {
 	switch (_e.GetComponent<AISetting>().mMovementType) {
 	case E_MOVEMENT_TYPE::GROUND_DIRECT: dir = CalcGroundAIDir(_e);
 		break;
-	case E_MOVEMENT_TYPE::AIR_HOVER:
+	case E_MOVEMENT_TYPE::AIR_HOVER: dir = CalcAirAIDir(_e);
 		break;
 	}
 
@@ -29,6 +30,11 @@ glm::vec3 AIManager::GetDirection(Entity _e) {
 void AIManager::TrackPlayerPosition() {
 	if (mPlayerEntity.id == entt::null) return;
 	
+	static float timePassed{};
+	timePassed += FPSManager::dt;
+	if (timePassed >= 0.1) timePassed = 0;
+	else return;
+
 	mPlayerHistory[mPlayerArrayIndex] = mPlayerTransform->mTranslate;
 	if (++mPlayerArrayIndex == MAX_DECISECOND_PLAYER_HISTORY) mPlayerArrayIndex = 0;
 	if (mPlayerHistorySize != MAX_DECISECOND_PLAYER_HISTORY) ++mPlayerHistorySize;
@@ -120,6 +126,33 @@ glm::vec3 AIManager::CalcGroundAIDir(Entity _e) {
 	glm::vec3 dir = tgtPos - _e.GetComponent<Transform>().mTranslate;
 	
 	return dir;
+}
+
+glm::vec3 AIManager::CalcAirAIDir(Entity _e) {
+	AISetting const& _eSetting = _e.GetComponent<AISetting>();
+	Transform const& _eTrans = _e.GetComponent<Transform>();
+	Transform const& _tgtTrans = _eSetting.mTarget.GetComponent<Transform>();
+
+	// if AI is not above the target yet, gain height first, fly to mStayAway distance away.
+	if (_eTrans.mTranslate.y <= _eSetting.mStayAway + _tgtTrans.mTranslate.y) return glm::vec3(0, 1, 0);
+
+	float _eEdgeDistance = glm::length(_eTrans.mScale/2.f);
+	float _tgtEdgeDistance = glm::length(_tgtTrans.mScale/2.f);
+	float DistanceInBetween = abs(glm::length(_eTrans.mTranslate - _tgtTrans.mTranslate)) - (_eEdgeDistance + _tgtEdgeDistance);
+	
+	// When near the target's head, like 1.5x the stay away distance, move directly to the target until stay away distance
+	if (DistanceInBetween > (_eSetting.mStayAway * 1.5f)) {
+		// Move directly to the target's top
+		glm::vec3 aboveTgtPos = _tgtTrans.mTranslate + glm::vec3(0, _eSetting.mStayAway, 0);
+
+		return glm::normalize(aboveTgtPos - _eTrans.mTranslate);
+	}
+
+	// Move directly to the target if too far from player
+	if (DistanceInBetween > _eSetting.mStayAway)
+		return glm::normalize(_tgtTrans.mTranslate - _eTrans.mTranslate);
+
+	return glm::vec3();
 }
 
 void AIManager::SpreadOut(Entity _e, glm::vec3& dir) {

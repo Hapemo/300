@@ -457,8 +457,9 @@ enum class E_MOVEMENT_TYPE : char;
 struct AISetting {
 	E_MOVEMENT_TYPE mMovementType;	// AI's movement type
 	bool mShotPrediction;						// AI's bullet predict target's movement
-	float mSpreadOut;								// Degree of spreading out
-	std::uint32_t mTarget;					// AI's target
+	float mSpreadOut;								// Degree of spreading out from another entity
+	float mStayAway;								// Distance to stay away from player
+	Entity mTarget;					// AI's target
 };
 
 
