@@ -1,12 +1,12 @@
 [
     {
-        "entityid": 3,
+        "entityid": 1,
         "general": {
             "name": "rubber",
-            "tagid": 1,
+            "tagid": 2,
             "subtag": 0,
             "isActive": false,
-            "isPaused": true
+            "isPaused": false
         },
         "transform": {
             "scale": {
@@ -74,23 +74,15 @@
                 "z": 0.0
             }
         },
-        "planecollider": {
-            "normal": {
-                "x": 0.0,
-                "y": 1.0,
-                "z": 0.0
-            },
-            "translateoffset": 0.0
-        },
         "scripts": {
             "scriptscontainer": []
         }
     },
     {
-        "entityid": 4,
+        "entityid": 2,
         "general": {
             "name": "ducky",
-            "tagid": 3,
+            "tagid": 0,
             "subtag": 1,
             "isActive": true,
             "isPaused": false
@@ -121,14 +113,6 @@
                 "y": 0.0,
                 "z": 0.0
             }
-        },
-        "planecollider": {
-            "normal": {
-                "x": 0.0,
-                "y": 1.0,
-                "z": 0.0
-            },
-            "translateoffset": 0.0
         }
     }
 ]

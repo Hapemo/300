@@ -21,7 +21,8 @@ Components used by the ECS.
 #include "../../../lib/FMOD/core/inc/fmod.hpp"
 #include <Animator.hpp>
 #include <Camera.hpp>
-#include "EnumStrings.h"
+//#include "EnumStrings.h"
+#include "EnumTags.h"
 #include "Input/Input.h"
 #include "Guid.h"
 #include <Constants.h>
@@ -34,7 +35,7 @@ Components used by the ECS.
 
 //#include "rttr/registration.h"
 
-DECLARE_ENUMSTRING(enum_tag, PLAYER, ENEMY, BULLET, STATIC, BUILDING)
+//DECLARE_ENUMSTRING(enum_tag, PLAYER, ENEMY, BULLET, STATIC, BUILDING)
 struct uid;
 
 //DECLARE_ENUMSTRING(enum_tag, PLAYER, ENEMY, BULLET, STATIC, BUILDING)

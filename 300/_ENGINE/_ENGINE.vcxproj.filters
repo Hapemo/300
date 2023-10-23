@@ -62,5 +62,6 @@
     <ClInclude Include="include\Audio\AudioSource.h" />
     <ClInclude Include="include\Audio\AudioTest.h" />
     <ClInclude Include="include\Serialization\Serializable.h" />
+    <ClInclude Include="include\ECS\EnumTags.h" />
   </ItemGroup>
 </Project>

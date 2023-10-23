@@ -17,7 +17,7 @@ void General::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& wr
 void General::DeserializeSelf(rapidjson::Value& reader)
 {
 	Deserialize(reader, "name", name);
-	//Deserialize(reader, "tagid", tagid);
+	Deserialize(reader, "tagid", tagid);
 	Deserialize(reader, "subtag", subtag);
 	Deserialize(reader, "isActive", isActive);
 	Deserialize(reader, "isPaused", isPaused);
@@ -84,7 +84,6 @@ void RigidBody::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& 
 	Serialize(writer, "material", mMaterial);
 	Serialize(writer, "motion", mMotion);
 	Serialize(writer, "velocity", mVelocity);
-	//Serialize(writer, "istrigger", mIsTrigger);
 	writer.EndObject();
 }
 
@@ -94,7 +93,6 @@ void RigidBody::DeserializeSelf(rapidjson::Value& reader)
 	Deserialize(reader, "material", mMaterial);
 	Deserialize(reader, "motion", mMotion);
 	Deserialize(reader, "velocity", mVelocity);
-	//Deserialize(reader, "istrigger", mIsTrigger);
 }
 
 void BoxCollider::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const

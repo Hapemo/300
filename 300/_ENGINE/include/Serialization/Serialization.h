@@ -7,8 +7,11 @@
 #include "Physics/PhysicsTypes.h"
 #include "Audio/AudioType.h"
 #include <entt.hpp>
-#include "ECS/ECS_Components.h"
-#include "ECS/EnumStrings.h"
+#include <variant>
+#include <typeinfo>
+//#include "ECS/ECS_Components.h"
+//#include "ECS/EnumStrings.h"
+#include "ECS/EnumTags.h"
 
 // forward declaration
 struct Scene;
@@ -155,7 +158,7 @@ DESERIALIZE_BASIC(MATERIAL);
 DESERIALIZE_BASIC(MOTION);
 DESERIALIZE_BASIC(AUDIOTYPE);
 DESERIALIZE_BASIC(entt::entity);
-//DESERIALIZE_BASIC(enum_tag::enum_tag);
+DESERIALIZE_BASIC(enum_tag::enum_tag);
 #pragma endregion basic_types
 // Derived types has to inherit from Serializable
 #pragma region derived_types
