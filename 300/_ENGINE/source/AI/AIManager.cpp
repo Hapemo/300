@@ -35,6 +35,7 @@ void AIManager::TrackPlayerPosition() {
 }
 
 void AIManager::SetPlayer(Entity _e) {
+	if (_e.id == entt::null) return;
 	mPlayerEntity = _e;
 	mPlayerTransform = &_e.GetComponent<Transform>();
 }
