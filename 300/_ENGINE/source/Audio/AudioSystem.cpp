@@ -216,15 +216,6 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 			PINFO("Audio Exist");
 			PINFO("PLAYING AUDIO AT: %f", audio_component.mVolume);
 			PlayAudioSource(audio_component, audio_component.mVolume);
-
-			if (audio_component.m3DAudio) // if this is a 3D audio 
-			{
-				FMOD_VECTOR position = { audio_component.mPosition.x ,audio_component.mPosition.y , audio_component.mPosition.z };
-				FMOD_VECTOR velocity = { audio_component.mVelocity.x ,audio_component.mVelocity.y , audio_component.mVelocity.z };
-
-				PINFO("SETTING 3D ATTRIBUTES");
-				ErrCodeCheck(audio_component.mChannel->set3DAttributes(&position, &velocity));
-			}
 		}
 
 		// Every Loop -> check if the <Audio> is still playing.
