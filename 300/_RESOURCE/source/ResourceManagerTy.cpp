@@ -444,6 +444,7 @@ bool ResourceTy::serialize_Shader(std::string shaderProgram, std::pair < std::st
 	const char* programPathChar = "../assets/ShaderProgram/";
 	std::string programPath(programPathChar);
 	programPath += shaderProgram;
+	programPath += ".shdr";
 
 	// Serialize to a file
 	std::ofstream file(programPath.c_str());
