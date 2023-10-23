@@ -38,3 +38,4 @@ void LuaPhysics();
 void LuaScripting();
 void LuaPointLight();
 void LuaMeshRenderer();
+void LuaGameState();

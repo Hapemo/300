@@ -129,6 +129,7 @@ void ScriptingSystem::Init()
     LuaScripting();
     LuaPointLight();
     LuaMeshRenderer();
+    LuaGameState();
 
     /******************************************************************************/
     /*!

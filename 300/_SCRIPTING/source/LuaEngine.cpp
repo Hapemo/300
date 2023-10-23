@@ -301,3 +301,11 @@ void LuaMeshRenderer()
         "SetTexture", &MeshRenderer::SetTexture
     );
 }
+
+void LuaGameState()
+{
+    systemManager->mScriptingSystem->luaState.new_usertype<GameStateManager>(
+        "mGameStateSystem", sol::constructors<>(),
+        "GetEntity", &GameStateManager::GetEntity
+        );
+}
