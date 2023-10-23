@@ -436,7 +436,7 @@ void TestFootstepsFade(float deltaTime)
 		if (Input::CheckKey(HOLD, UP))
 		{
 			footstep.Play();
-			footstep.SetVolume(1.0f);
+			footstep.SetVolume(footstep.mAudioComponent->mVolume);
 			fadeOutTimer = 0.0f; // Reset the timer when the button is pressed
 		}
 		else

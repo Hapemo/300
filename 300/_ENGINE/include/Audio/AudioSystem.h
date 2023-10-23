@@ -126,6 +126,10 @@ public:
 	float system_paused = true; // initial yes.
 	float fade_timer = 0.0f;
 
+// 3D Audio Stuff
+public:
+	float distance_factor = 1.0f;  // Units per meter. (per unit reference in game world)
+
 private:
 	std::unordered_map<AUDIOTYPE, std::vector<std::pair<uid, FMOD::Channel*&>>> mChannelswID;   // Add [Channel ID] 
 	std::unordered_map<std::string, FMOD::Sound*>				                mSounds;        // Database of Sounds (SFX/BGM)
