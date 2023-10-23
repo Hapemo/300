@@ -125,7 +125,7 @@
     {
         "entityid": 3,
         "general": {
-            "name": "Entity3",
+            "name": "Camera",
             "tagid": 0,
             "subtag": 0,
             "isActive": true,
@@ -161,7 +161,7 @@
             },
             "size": {
                 "x": 635,
-                "y": 529
+                "y": 601
             },
             "near": 0.10000000149011612,
             "far": 900.0
