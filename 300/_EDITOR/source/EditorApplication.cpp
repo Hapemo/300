@@ -37,12 +37,37 @@ void EditorApplication::Init()
     StartUp();
     SystemInit();
 
+    Entity trigger = systemManager->ecs->NewEntity();
+    RigidBody& rbod = trigger.AddComponent<RigidBody>();
+    rbod.mMotion = MOTION::DYNAMIC;
+    BoxCollider& box = trigger.AddComponent<BoxCollider>();
+    box.mIsTrigger = false;
+    trigger.GetComponent<Transform>().mScale = glm::vec3(60, 40, 60);
+    trigger.GetComponent<Transform>().mRotate = glm::vec3(0);
+    trigger.GetComponent<Transform>().mTranslate = glm::vec3(100, 200, 100);
+
+    //BoxCollider& col = trigger.AddComponent<BoxCollider>();
+    //col.mIsTrigger = true;
+
+
+    //Entity testTrigger = systemManager->ecs->NewEntity();
+    //rbod = testTrigger.AddComponent<RigidBody>();
+    //rbod.mMotion = MOTION::DYNAMIC;
+    //box = testTrigger.AddComponent<CapsuleCollider>();
+    //box.mIsTrigger = false;
+    //box.mHalfHeight = 10.f;
+    //box.mRadius = 20.f;
+    //testTrigger.GetComponent<Transform>().mScale = glm::vec3(60, 40, 60);
+    //testTrigger.GetComponent<Transform>().mRotate = glm::vec3(0);
+    //testTrigger.GetComponent<Transform>().mTranslate = glm::vec3(70, 200, 70);
+    //SphereCollider& sphere = trigger.AddComponent<SphereCollider>();
+    //sphere.mIsTrigger = false;
+    //sphere.mScaleOffset = 0.5f;
+};
     // create new entity
     /*Entity mEntity = systemManager->ecs->NewEntity();
     mEntity.GetComponent<General>().name = "DefaultTestObj";
     mEntity.GetComponent<MeshRenderer>().mMeshPath = "../compiled_geom/Skull_textured.geom";*/
-}
-
 void EditorApplication::StartUp()
 {
     // gfx glew and glfw startup
@@ -66,7 +91,6 @@ void EditorApplication::SystemInit()
 
 void EditorApplication::MainUpdate()
 {
-
     while (!glfwWindowShouldClose(mWindow.GetHandle()))
     {
         EnginePerformance::StartTrack("Editor");

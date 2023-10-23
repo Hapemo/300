@@ -180,7 +180,7 @@
     <ClInclude Include="include\Physics\PhysX.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="include\Physics\ContactCallback.cpp" />
+    <ClCompile Include="source\Physics\ContactCallback.cpp" />
     <ClCompile Include="source\Physics\PhysXUtils.cpp" />
     <ClCompile Include="source\AI\AIManager.cpp" />
     <ClCompile Include="source\Audio\AudioSource.cpp" />

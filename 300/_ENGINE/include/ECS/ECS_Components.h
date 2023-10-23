@@ -213,7 +213,7 @@ struct BoxCollider
 	bool mIsTriggerCollide;
 	uint32_t mTriggerCollidingWith;
 
-	BoxCollider() : mScaleOffset(1.f), mTranslateOffset(0.f) {}
+	BoxCollider() : mScaleOffset(1.f), mTranslateOffset(0.f), mIsTrigger(false), mIsTriggerCollide(false), mTriggerCollidingWith(0) {}
 	
 	//RTTR_ENABLE()
 	void							Inspect();
@@ -232,7 +232,7 @@ struct SphereCollider
 	bool mIsTriggerCollide;
 	uint32_t mTriggerCollidingWith;
 
-	SphereCollider() : mScaleOffset(1.f), mTranslateOffset(0.f) {};
+	SphereCollider() : mScaleOffset(1.f), mTranslateOffset(0.f), mIsTrigger(false), mIsTriggerCollide(false), mTriggerCollidingWith(0) {};
 
 	//RTTR_ENABLE()
 	void							Inspect();
@@ -248,7 +248,7 @@ struct CapsuleCollider
 	uint32_t mTriggerCollidingWith;
 
 
-	CapsuleCollider() : mTranslateOffset(0.f, 0.f, 0.f), mRadius(50.f), mHalfHeight(100.f) {}
+	CapsuleCollider() : mTranslateOffset(0.f, 0.f, 0.f), mRadius(50.f), mHalfHeight(100.f), mIsTrigger(false), mIsTriggerCollide(false), mTriggerCollidingWith(0) {}
 };
 
 /******************************************************************************/

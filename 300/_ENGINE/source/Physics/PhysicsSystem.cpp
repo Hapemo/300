@@ -100,9 +100,9 @@ void PhysicsSystem::CreateRigidBody(Entity e)
 			PxCapsuleGeometry(cap.mRadius, cap.mHalfHeight), 
 			rbod, 
 			cap.mIsTrigger);
-		AttachShape(actor, 
-			shape, 
-			PxTransform(Convert(cap.mTranslateOffset)));
+		AttachShape(actor,
+			shape,
+			PxTransform(Convert(cap.mTranslateOffset), PxQuat(PxHalfPi, PxVec3T<float>(0, 0, 1))));
 	}
 
 	if (e.HasComponent<BoxCollider>())
@@ -112,7 +112,7 @@ void PhysicsSystem::CreateRigidBody(Entity e)
 		CreateShape(shape, 
 			PxBoxGeometry(Convert(xform.mScale * col.mScaleOffset) / 2.f), 
 			rbod, 
-			col.mIsTrigger);
+			col.mIsTrigger); //PxRigidActorExt::createExclusiveShape();
 		AttachShape(actor, 
 			shape, 
 			PxTransform(Convert(col.mTranslateOffset)));
@@ -131,6 +131,9 @@ void PhysicsSystem::CreateRigidBody(Entity e)
 			PxTransform(Convert(col.mTranslateOffset)));
 	}
 	
+	if (rbod.mMotion == MOTION::DYNAMIC)
+		PxRigidBodyExt::updateMassAndInertia(*static_cast<PxRigidDynamic*>(actor), rbod.mDensity);
+
 	// create actor object
 	Actor actorObject;
 	actorObject.mEntity = static_cast<uint32_t>(e.id);
@@ -149,7 +152,7 @@ void PhysicsSystem::CreateActor(PxRigidActor*& actor, const PxTransform& pxform,
 	if (rbod.mMotion == MOTION::DYNAMIC)
 	{
 		actor = mPX.mPhysics->createRigidDynamic(pxform);
-		PxRigidBodyExt::updateMassAndInertia(*static_cast<PxRigidDynamic*>(actor), rbod.mDensity);
+		float temp = rbod.mDensity;
 		static_cast<PxRigidDynamic*>(actor)->setLinearVelocity(Convert(rbod.mVelocity));
 
 		PxRigidDynamicLockFlags axis;
@@ -190,12 +193,10 @@ void PhysicsSystem::Synchronize()
 		{
 			Transform parentXform = e.GetParent().GetComponent<Transform>();
 			refXform.mTranslate = Convert(PXform.p) - parentXform.mTranslate;
-			refXform.mRotate = glm::eulerAngles(Convert(PXform.q));
 		}
 		else
 		{
 			refXform.mTranslate = Convert(PXform.p);
-			refXform.mRotate = glm::eulerAngles(Convert(PXform.q));
 		}
 
 		// update velocity

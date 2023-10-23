@@ -1,4 +1,5 @@
 #include "Physics/PhysX.h"
+#include "Physics/ContactCallback.h"
 
 PhysX::PhysX()
 {
@@ -13,9 +14,10 @@ PhysX::PhysX()
 	mPhysics = PxCreatePhysics(PX_PHYSICS_VERSION, *mFoundation, mToleranceScale, true, mPvd);
 
 	physx::PxSceneDesc sceneDesc(mPhysics->getTolerancesScale());
-	mDispatcher = physx::PxDefaultCpuDispatcherCreate(4);
 	sceneDesc.gravity = physx::PxVec3(0.f, -98.1f, 0.f);
+	mDispatcher = physx::PxDefaultCpuDispatcherCreate(2);
 	sceneDesc.cpuDispatcher = mDispatcher;
+	//sceneDesc.simulationEventCallback = &gContactCallback;
 	sceneDesc.filterShader = physx::PxDefaultSimulationFilterShader;
 	mScene = mPhysics->createScene(sceneDesc);
 	physx::PxPvdSceneClient* pvdClient = mScene->getScenePvdClient();

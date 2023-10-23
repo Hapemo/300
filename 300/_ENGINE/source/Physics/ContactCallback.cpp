@@ -1,6 +1,19 @@
-#include "ContactCallback.h"
+#include "Physics/ContactCallback.h"
 #include "ECS/ECS.h"
 #include "ECS/ECS_Components.h"
+#include "Debug/AssertException.h"
+
+void ContactCallback::onConstraintBreak(PxConstraintInfo*, PxU32)
+{
+}
+
+void ContactCallback::onWake(PxActor**, PxU32)
+{
+}
+
+void ContactCallback::onContact(const PxContactPairHeader&, const PxContactPair* pairs, PxU32 count)
+{
+}
 
 void ContactCallback::onTrigger(PxTriggerPair* pairs, PxU32 count)
 {
@@ -9,6 +22,9 @@ void ContactCallback::onTrigger(PxTriggerPair* pairs, PxU32 count)
 		PxTriggerPair& current = *pairs++;
 		Entity triggerEntity = *static_cast<uint32_t*>(current.triggerActor->userData);
 		uint32_t otherEntity = *static_cast<uint32_t*>(current.otherActor->userData);
+
+		if (static_cast<uint32_t>(triggerEntity.id) == otherEntity)
+			continue;
 
 		if (pairs->status == PxPairFlag::eNOTIFY_TOUCH_FOUND)
 		{
@@ -30,6 +46,8 @@ void ContactCallback::onTrigger(PxTriggerPair* pairs, PxU32 count)
 				trigger.mIsTriggerCollide = true;
 				trigger.mTriggerCollidingWith = otherEntity;
 			}
+			else
+				PWARNING("OnTrigger callback called for entities without OnTrigger events!")
 		}
 		else if (pairs->status == physx::PxPairFlag::eNOTIFY_TOUCH_LOST)
 		{
@@ -51,6 +69,16 @@ void ContactCallback::onTrigger(PxTriggerPair* pairs, PxU32 count)
 				trigger.mIsTriggerCollide = false;
 				trigger.mTriggerCollidingWith = 0;
 			}
+			else
+				PWARNING("OnTrigger callback called for entities without OnTrigger events!")
 		}
 	}
+}
+
+void ContactCallback::onAdvance(const PxRigidBody* const*, const PxTransform*, const PxU32)
+{
+}
+
+void ContactCallback::onSleep(PxActor**, PxU32)
+{
 }
