@@ -107,18 +107,6 @@ void AudioSystem::Init()
 		}
 	}
 
-	// 3D Audio Settings
-	PINFO("INITIALIZING 3D AUDIO SETTINGS:");
-	ErrCodeCheck(system_obj->set3DSettings(1.0, distance_factor, 1.0)); // [Distance Factor] = 1.0f 
-
-
-
-
-
-
-
-
-
 
 }
 
@@ -272,7 +260,7 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 		}
 
 		if (audio_component.mFadeIn)
-		{   
+		{
 			if (fade_timer < audio_component.fade_duration)
 			{
 				float fade_step = audio_component.mFadeSpeedModifier * (audio_component.mFadeInMaxVol / audio_component.fade_duration);
@@ -591,15 +579,7 @@ bool AudioSystem::LoadAudio(std::string file_path, std::string audio_name, Audio
 		/*std::cout << "Creating Sound: ";*/
 		std::string full_path = file_path + "/" + audio_name;
 		FMOD::Sound* new_sound;
-
-		FMOD_MODE selected = FMOD_LOOP_OFF;
-
-		if (audio_component != nullptr)
-		{
-			selected = audio_component->m3DAudio ? FMOD_3D : FMOD_LOOP_OFF;
-		}
-
-		int check = ErrCodeCheck(system_obj->createSound(full_path.c_str(), selected, 0, &new_sound));
+		int check = ErrCodeCheck(system_obj->createSound(full_path.c_str(), FMOD_LOOP_OFF, 0, &new_sound));
 
 		if (check != 1)
 		{

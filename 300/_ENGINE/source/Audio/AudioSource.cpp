@@ -25,7 +25,6 @@ bool CrossFadeAudio(AudioSource& fade_out, AudioSource& fade_in, float fade_dura
 		
 		fade_out.mAudioComponent->mFadeOut = true;
 		fade_out.mAudioComponent->mFadeIn = false;
-		fade_in.mAudioComponent->mVolume = 0.0f; // Start from volume : 0.
 		fade_in.mAudioComponent->fade_duration = fade_duration;
 		fade_in.mAudioComponent->mFadeIn = true;
 		fade_in.mAudioComponent->mFadeOut = false;
@@ -71,6 +70,8 @@ bool FadeOutAudio(AudioSource& fade_out, float fade_duration, float fade_down_vo
 
 	return false;
 }
+
+
 
 
 AudioSource::AudioSource() : mAudioComponent(nullptr) {}
