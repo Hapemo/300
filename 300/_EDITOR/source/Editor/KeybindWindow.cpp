@@ -20,15 +20,17 @@ void KeybindWindow::update() {
   // 
 
   std::string toDelete{};
-
+  int id{ 0 };
   if (ImGui::TreeNodeEx("Keybind Mapping", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_OpenOnDoubleClick)) {
     for (auto& [action, ekey] : *keybindMap) {
-      //ImGui::Text(action.c_str());
-
       ImGui::InputText(action.c_str(), &inputSystem->GetActionEKeyName(action));
 
-      if (ImGui::Button("Delete"))
-        toDelete = action;
+      ImGui::SameLine();
+      
+      ImGui::PushID(id);
+      if (ImGui::Button("Delete")) toDelete = action;
+      ImGui::PopID();
+      id++;
     }
 
     ImGui::TreePop();
