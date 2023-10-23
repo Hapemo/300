@@ -217,7 +217,15 @@ void LuaAudioSystem()
         "MuteSFX", &AudioSystem::MuteSFX,
         "MuteBGM", &AudioSystem::MuteBGM,
         "LoadAudio", &AudioSystem::LoadAudio,
-        "LoadAudioFromDirectory", &AudioSystem::LoadAudioFromDirectory
+        "LoadAudioFromDirectory", &AudioSystem::LoadAudioFromDirectory,
+        "StopAllSFX", &AudioSystem::StopAllSFX,
+        "StopAllBGM", &AudioSystem::StopAllBGM,
+        "PauseAllSounds", &AudioSystem::PauseAllSounds,
+        "PauseSFXSounds", &AudioSystem::PauseSFXSounds,
+        "PauseBGMSounds", &AudioSystem::PauseBGMSounds,
+        "UnpauseAllSounds", &AudioSystem::UnpauseAllSounds,
+        "UnpauseSFXSounds", &AudioSystem::UnpauseSFXSounds,
+        "UnpauseBGMSounds", &AudioSystem::UnpauseBGMSounds
     );
 }
 
