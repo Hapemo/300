@@ -71,10 +71,11 @@ public:
 	AudioSystem();
 	~AudioSystem();
 
-	// Helper Functions (Loading)
+	// Helper Functions (Re-load - after changing info in editor side)
 	void UpdateLoadAudio(Entity id);				 // [For Engine] - Add Component mid-way
 	void UpdateChannelReference(Entity id);		     // [For Engine] - Add Channel to the global [SFX/BGM] channels. (for global control)
 	void InitAudioChannelReference(Entity id);		 // [For Engine]
+	void Update3DSettings(Entity id);				 // [For Engine] - Updates 3D audio information. 
 
 	// Helper Functions (Sound)
 	FMOD::Sound* FindSound(std::string audio_name);

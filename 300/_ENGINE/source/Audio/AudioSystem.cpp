@@ -111,9 +111,6 @@ void AudioSystem::Init()
 	PINFO("INITIALIZING 3D AUDIO SETTINGS:");
 	ErrCodeCheck(system_obj->set3DSettings(1.0, distance_factor, 1.0)); // [Distance Factor] = 1.0f 
 
-
-
-
 }
 
 static bool testfootstep = false;
@@ -186,9 +183,6 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 	if (Input::CheckKey(PRESS, P))
 		UnpauseBGMSounds();
 
-	
-		
-
 	auto audio_entities = systemManager->ecs->GetEntitiesWith<Audio>();
 
 	/*
@@ -224,6 +218,8 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 				PINFO("SETTING 3D ATTRIBUTES");
 				ErrCodeCheck(audio_component.mChannel->set3DAttributes(&position, &velocity));
 			}
+
+		
 		}
 
 		// Every Loop -> check if the <Audio> is still playing.
@@ -250,64 +246,95 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 		// Fade In / Fade Out 
 		if (audio_component.mFadeOut)
 		{
-			if (fade_timer < audio_component.fade_duration)
+			if (audio_component.mSound != nullptr)
 			{
-				float fade_step = audio_component.mFadeSpeedModifier * (audio_component.mVolume / audio_component.fade_duration);
-
-			/*	float fade_slower_dt = 0.2 * dt;
-
-				fade_timer += fade_slower_dt;*/
-
-				float fadeLevelOut = audio_component.mVolume - (fade_step * dt);
-
-				//float fadeLevelOut = audio_component.mVolume - (fade_timer / audio_component.fade_duration); //  fade level out (volume each fade out step)
-
-				if (fadeLevelOut > audio_component.mFadeOutToVol)  // Have yet to reach the desired fade out volume
+				if (fade_timer < audio_component.fade_duration)
 				{
-					audio_component.mChannel->setVolume(fadeLevelOut);
-					audio_component.mVolume = fadeLevelOut; //  fade level out
-				}
+					float fade_step = audio_component.mFadeSpeedModifier * (audio_component.mVolume / audio_component.fade_duration);
 
-				else // reached and exceeded the fade out volume...
-				{
-					audio_component.mChannel->setVolume(audio_component.mFadeOutToVol);
-					audio_component.mVolume = audio_component.mFadeOutToVol; //  fade level out
-				}
-				
-				PINFO("Fade Out Volume: %f", audio_component.mVolume);
+					/*	float fade_slower_dt = 0.2 * dt;
 
+						fade_timer += fade_slower_dt;*/
+
+					float fadeLevelOut = audio_component.mVolume - (fade_step * dt);
+
+					//float fadeLevelOut = audio_component.mVolume - (fade_timer / audio_component.fade_duration); //  fade level out (volume each fade out step)
+
+					if (fadeLevelOut > audio_component.mFadeOutToVol)  // Have yet to reach the desired fade out volume
+					{
+						audio_component.mChannel->setVolume(fadeLevelOut);
+						audio_component.mVolume = fadeLevelOut; //  fade level out
+					}
+
+					else // reached and exceeded the fade out volume...
+					{
+						audio_component.mChannel->setVolume(audio_component.mFadeOutToVol);
+						audio_component.mVolume = audio_component.mFadeOutToVol; //  fade level out
+					}
+
+					PINFO("Fade Out Volume: %f", audio_component.mVolume);
+
+				}
+			}
+			
+			else
+			{
+				PINFO("Please insert your sound clip first.");
+				audio_component.mFadeOut = false;
 			}
 		}
 
 		if (audio_component.mFadeIn)
 		{
-			if (fade_timer < audio_component.fade_duration)
+			if (audio_component.mSound != nullptr)
 			{
-				float fade_step = audio_component.mFadeSpeedModifier * (audio_component.mFadeInMaxVol / audio_component.fade_duration);
-				float fadeLevelIn = audio_component.mVolume + (fade_step * dt);
+				if (fade_timer < audio_component.fade_duration)
+				{
+					float fade_step = audio_component.mFadeSpeedModifier * (audio_component.mFadeInMaxVol / audio_component.fade_duration);
+					float fadeLevelIn = audio_component.mVolume + (fade_step * dt);
 
-				if (fadeLevelIn < audio_component.mFadeInMaxVol)
-				{
-					audio_component.mChannel->setVolume(fadeLevelIn);
-					audio_component.mVolume = fadeLevelIn;
-				}
-				else
-				{
-					audio_component.mChannel->setVolume(audio_component.mFadeInMaxVol);
-					audio_component.mVolume = audio_component.mFadeInMaxVol;
-				}
-			
-			
-				PINFO("Fade In Volume: %f", audio_component.mVolume);
+					if (fadeLevelIn < audio_component.mFadeInMaxVol)
+					{
+						bool playing;
+						playing = audio_component.mChannel->isPlaying(&playing);
 
-				// (1) Play Sound + Adjust Audio
-				if (!audio_component.mIsPlaying)
-				{
-					PINFO("Playing Fade In");
-					PlayAudioSource(audio_component, audio_component.mVolume);
-					audio_component.mIsPlaying = true;
+						if (playing)
+						{
+							audio_component.mChannel->setVolume(fadeLevelIn);
+							audio_component.mVolume = fadeLevelIn;
+						}
+
+					}
+					else
+					{
+						bool playing;
+						playing = audio_component.mChannel->isPlaying(&playing);
+
+						if (playing)
+						{
+							audio_component.mChannel->setVolume(audio_component.mFadeInMaxVol);
+							audio_component.mVolume = audio_component.mFadeInMaxVol;
+						}
+					}
+
+					PINFO("Fade In Volume: %f", audio_component.mVolume);
+
+					// (1) Play Sound + Adjust Audio
+					if (!audio_component.mIsPlaying)
+					{
+						PINFO("Playing Fade In");
+						PlayAudioSource(audio_component, audio_component.mVolume);
+						audio_component.mIsPlaying = true;
+					}
 				}
 			}
+
+			else
+			{
+				PINFO("Please insert your sound clip first.");
+				audio_component.mFadeIn = false;
+			}
+			
 		}
 
 	}
@@ -533,6 +560,18 @@ void AudioSystem::InitAudioChannelReference(Entity id)
 			mChannelswID[AUDIO_SFX].push_back(channel_pair);
 			break;
 	}
+}
+
+// Updates the [3D audio information]
+void AudioSystem::Update3DSettings(Entity id)
+{
+	Audio& audio_component = id.GetComponent<Audio>();
+
+	FMOD_VECTOR pos = { audio_component.mPosition.x, audio_component.mPosition.y , audio_component.mPosition.z };
+	FMOD_VECTOR vel = { audio_component.mVelocity.x, audio_component.mVelocity.y , audio_component.mVelocity.z };
+	
+	PINFO("Setting 3D Attributes for this <Audio> component.");
+	ErrCodeCheck(audio_component.mChannel->set3DAttributes(&pos, &vel));
 }
 
 
@@ -1040,20 +1079,24 @@ void AudioSystem::PlayAudioSource(FMOD::Sound* comp_sound, FMOD::Channel* comp_c
 
 void AudioSystem::PlayAudioSource(Audio& audio_component, float volume)
 {
-	
 
-	PINFO("Playing Audio Source from <Audio> Component");
-	ErrCodeCheck(system_obj->playSound(audio_component.mSound, nullptr, false, &audio_component.mChannel));
-	
-	audio_component.mChannel->setVolume(volume); // After because in [release] mode got undefined behaviour complaining access violation. OK in Debug mode though.
-
-	bool isPlaying; // check whether if it's playing.
-	ErrCodeCheck(audio_component.mChannel->isPlaying(&isPlaying));
-
-	if (isPlaying)
+	if (audio_component.mSound != nullptr)
 	{
-		audio_component.mIsPlaying = true;
+		PINFO("Playing Audio Source from <Audio> Component");
+		ErrCodeCheck(system_obj->playSound(audio_component.mSound, nullptr, false, &audio_component.mChannel));
+
+		audio_component.mChannel->setVolume(volume); // After because in [release] mode got undefined behaviour complaining access violation. OK in Debug mode though.
+
+		bool isPlaying; // check whether if it's playing.
+		ErrCodeCheck(audio_component.mChannel->isPlaying(&isPlaying));
+
+		if (isPlaying)
+		{
+			audio_component.mIsPlaying = true;
+		}
 	}
+
+
 }
 
 

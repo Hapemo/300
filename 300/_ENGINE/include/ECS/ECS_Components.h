@@ -418,6 +418,14 @@ struct Audio
 	void							Inspect();
 };
 
+struct AudioListener
+{
+	int mAudioListener{ 0 };
+
+	//RTTR_ENABLE()
+	void							Inspect();
+};
+
 
 
 
