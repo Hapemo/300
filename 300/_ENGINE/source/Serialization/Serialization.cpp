@@ -67,6 +67,18 @@ SERIALIZE_BASIC(glm::vec3)
 	writer.EndObject();
 }
 
+SERIALIZE_BASIC(glm::vec4)
+{
+	if (name != nullptr)
+		writer.Key(name);
+	writer.StartObject();
+	Serialize(writer, "x", val.x);
+	Serialize(writer, "y", val.y);
+	Serialize(writer, "z", val.z);
+	Serialize(writer, "w", val.w);
+	writer.EndObject();
+}
+
 SERIALIZE_BASIC(Script)
 {
 	if (name != nullptr)
@@ -166,6 +178,17 @@ DESERIALIZE_BASIC(glm::vec3)
 		Deserialize(reader[name], "x", val.x);
 		Deserialize(reader[name], "y", val.y);
 		Deserialize(reader[name], "z", val.z);
+	}
+}
+
+DESERIALIZE_BASIC(glm::vec4)
+{
+	if (reader.HasMember(name))
+	{
+		Deserialize(reader[name], "x", val.x);
+		Deserialize(reader[name], "y", val.y);
+		Deserialize(reader[name], "z", val.z);
+		Deserialize(reader[name], "w", val.w);
 	}
 }
 

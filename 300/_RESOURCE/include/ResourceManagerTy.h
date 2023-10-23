@@ -33,12 +33,33 @@
 //        }
 //    }   
 //};
-
+struct instance_infos
+{
+    std::string     m_Name{};
+    void* m_pData{ nullptr }; // to store data / act as an pointer to link list if not used
+    uid             m_GUID;
+    unsigned        m_Type;
+    int             m_RefCount{ 1 };
+};
 
 struct ref {
 
     void*       data {nullptr};
     unsigned    data_uid;
+
+    void* get(std::unordered_map<std::uint64_t, instance_infos*>& m_ResourceInstance) {
+        
+
+        if (data == nullptr) {
+            auto it = m_ResourceInstance.find(data_uid);
+            if(it == m_ResourceInstance.end())
+                return nullptr;
+        }
+
+        return &( * m_ResourceInstance.find(data_uid));
+    };
+
+    
 
 };
 /***************************************************************************/
@@ -57,14 +78,7 @@ enum ResourceType : unsigned {
 
 
 
-struct instance_infos
-{
-    std::string     m_Name{};
-    void* m_pData{ nullptr }; // to store data / act as an pointer to link list if not used
-    uid             m_GUID;
-    unsigned        m_Type;
-    int             m_RefCount{ 1 };
-};
+
 
 /***************************************************************************/
 /*!
@@ -139,12 +153,14 @@ public:
 
     std::unordered_map<std::string, GFX::Texture*> m_EditorTextures;
     std::unordered_map<std::uint64_t,std::pair<std::string, ref>> m_Shaders;
+    std::unordered_map<std::uint64_t, instance_infos*>      m_ResourceInstance;
+
     int mResouceCnt;
 private:
 
 
     instance_infos*                                         m_pInfoBufferEmptyHead{ nullptr };
-    std::unordered_map<std::uint64_t, instance_infos*>      m_ResourceInstance;
+
     std::array<instance_infos, MAX_RESOURCE>                m_Infobuffer;
 };
 

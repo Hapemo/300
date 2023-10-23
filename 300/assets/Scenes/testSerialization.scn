@@ -38,13 +38,13 @@
         "meshrenderer": {
             "vert": "../assets/shader_files/pointLight_vert.glsl",
             "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "materialinstance": [
-                " ",
-                " ",
-                " ",
-                " "
-            ],
-            "mesh": "",
+            "meshrefid": 0,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
             "texturecont": [
                 false,
                 false,
@@ -52,7 +52,7 @@
                 false,
                 false
             ],
-            "guid": 0
+            "textureref": 0
         },
         "boxcollider": {
             "scaleoffset": {

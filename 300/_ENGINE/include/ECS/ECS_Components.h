@@ -122,26 +122,19 @@ struct MeshRenderer : public Serializable
 {
 	// For now, we store the string to the filepaths. TO CHANGE to uids for efficient referencing
 	//std::pair<std::string, std::string> mShaderPath{ "../assets/shader_files/animations_vert.glsl", "../assets/shader_files/pointLight_frag.glsl" };
+	
 	std::pair<std::string, std::string> mShaderPath{ "../assets/shader_files/pointLight_vert.glsl", "../assets/shader_files/pointLight_frag.glsl" };
 	
 	//uid									mShaderid;
 	ref									mShaderRef;
 
-	std::string							mMaterialInstancePath[4] {" "," " ," " ," " };
+	std::string							mMaterialInstancePath[5] {" "," " ," " ," ", " "};
 	vec4								mInstanceColor{ 1.f, 1.f, 1.f, 1.f };
 
 	std::string							mMeshPath;
 	
 
 	ref									mMeshRef{};
-	//void*								mMeshRef{};
-
-	//ref									mTextureRef[5];
-	//void*								mTextureRef[4];
-
-	//unsigned							mGUID;
-	//bool								mTextureCont[4];
-	//void*								mMeshRef{nullptr};
 	ref									mTextureRef[5]		{ {nullptr,0},{nullptr,0},{nullptr,0},{nullptr,0},{nullptr,0} };
 
 	unsigned							mGUID;
