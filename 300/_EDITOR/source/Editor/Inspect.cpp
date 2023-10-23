@@ -653,7 +653,7 @@ void MeshRenderer::Inspect()
 		ImGui::Separator();
 
 		// == >> Mesh << == //
-		ImGui::Text("Mesh");
+		ImGui::Text("MESH");
 		if (ImGui::BeginDragDropTarget())
 		{
 			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_GEOM"))
@@ -734,16 +734,23 @@ void MeshRenderer::Inspect()
 			ImGui::EndDragDropTarget();
 		}
 
+
+		ImGui::Dummy(ImVec2(0.0f, 10.0f));
+
 		ImGui::SameLine();
 
 		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcTextSize(tempPath.c_str()).x
 			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+
+		if( tempPath.size()>0){
 		ImGui::Selectable(tempPath.c_str());
 
 		//--------------------------------------------------------------------------------------------------------------// delete the mesh 
 		if (ImGui::IsItemClicked(ImGuiMouseButton_Right)) {
 
 			meshbool = true;
+		}
+
 		}
 		popup("Delete", mMeshRef, meshbool);
 
@@ -817,12 +824,14 @@ void MeshRenderer::Inspect()
 				ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcTextSize(newpath.c_str()).x
 					- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
 
-				ImGui::Selectable(newpath.c_str());
+				if (newpath.size() > 0) {
+					ImGui::Selectable(newpath.c_str());
 
-				//--------------------------------------------------------------------------------------------------------------// delete the texture 
-				if (ImGui::IsItemClicked(ImGuiMouseButton_Right)) {
-					texIndex = i;
-					textbool = true;
+					//--------------------------------------------------------------------------------------------------------------// delete the texture 
+					if (ImGui::IsItemClicked(ImGuiMouseButton_Right)) {
+						texIndex = i;
+						textbool = true;
+					}
 				}
 				
 
