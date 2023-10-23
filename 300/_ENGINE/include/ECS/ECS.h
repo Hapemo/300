@@ -12,6 +12,8 @@ and prefabs.
 #include "entt.hpp"
 #include "ECS_Systems.h"
 #include "Debug/AssertException.h"
+#include <vector>
+#include <string>
 
 struct Children;
 struct Parent;
@@ -229,6 +231,8 @@ public:
 	const Entity NullEntity;
 
 	int SelectedScene;
+
+	static std::vector<std::string> entityTags;
 };
 
 

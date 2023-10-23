@@ -47,7 +47,7 @@ void ContactCallback::onTrigger(PxTriggerPair* pairs, PxU32 count)
 				trigger.mTriggerCollidingWith = otherEntity;
 			}
 			else
-				PWARNING("OnTrigger callback called for entities without OnTrigger events!")
+				PWARNING("OnTrigger callback called for entities without OnTrigger events!");
 		}
 		else if (pairs->status == physx::PxPairFlag::eNOTIFY_TOUCH_LOST)
 		{
@@ -70,7 +70,7 @@ void ContactCallback::onTrigger(PxTriggerPair* pairs, PxU32 count)
 				trigger.mTriggerCollidingWith = 0;
 			}
 			else
-				PWARNING("OnTrigger callback called for entities without OnTrigger events!")
+				PWARNING("OnTrigger callback called for entities without OnTrigger events!");
 		}
 	}
 }

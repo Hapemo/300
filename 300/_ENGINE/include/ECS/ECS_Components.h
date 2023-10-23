@@ -10,6 +10,9 @@ Components used by the ECS.
 ****************************************************************************/
 
 #pragma once
+
+#define TAGCOUNT 32
+
 #include "glm/glm.hpp"
 #include <algorithm>
 #include "Script.h"
@@ -21,6 +24,7 @@ Components used by the ECS.
 #include "../../../lib/FMOD/core/inc/fmod.hpp"
 #include <Animator.hpp>
 #include <Camera.hpp>
+#include <string>
 #include "EnumStrings.h"
 #include "Input/Input.h"
 #include "Guid.h"
@@ -33,10 +37,10 @@ Components used by the ECS.
 
 //#include "rttr/registration.h"
 
-DECLARE_ENUMSTRING(enum_tag, PLAYER, ENEMY, BULLET, STATIC, BUILDING)
+//DECLARE_ENUMSTRING(enum_tag, PLAYER, ENEMY, BULLET, STATIC, BUILDING)
+
 struct uid;
 
-//DECLARE_ENUMSTRING(enum_tag, PLAYER, ENEMY, BULLET, STATIC, BUILDING)
 namespace GFX {
 	struct Mesh;
 
@@ -52,9 +56,10 @@ struct General
 	std::string name;
 	/*TAG tag;*/
 	//enum_tag::enum_tag tag{};
-	enum_tag::enum_tag tagid{};
+	//enum_tag::enum_tag tagid{};
 	//std::string tag[5] = { "PLAYER","ENEMY","BULLET","STATIC","BUILDING" };
 	//int tagid{ 0 };
+	short tagid = 0;
 	SUBTAG subtag;
 	bool isActive{};
 	bool isPaused{};
@@ -63,12 +68,19 @@ struct General
 	: name(""), subtag(SUBTAG::ACTIVE), isActive(true) 
 	{};
 
-	std::string GetTag() { return enum_tag::ToString(tagid); }
+	std::string GetTag() { return ECS::entityTags[tagid]; }
 
 	void SetTag(std::string newTag) { 
-		std::transform(newTag.begin(), newTag.end(), newTag.begin(), ::tolower);
-		newTag[0] = std::toupper(newTag[0]);
-		tagid = enum_tag::GetEnum(newTag.c_str()); 
+		std::transform(newTag.begin(), newTag.end(), newTag.begin(), ::toupper);
+		//newTag[0] = std::toupper(newTag[0]);
+		for (short i = 0; i < ECS::entityTags.size(); ++i)
+		{
+			if (ECS::entityTags[i] == newTag)
+			{
+				tagid = i;
+				break;
+			}
+		}
 	}
 
 	void Inspect();

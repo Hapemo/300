@@ -82,6 +82,8 @@ function Update()
         --Helper.printTest()
         --Helper.test = 300
         --script_entity.id = 60
+        generalComponent:SetTag("static");
+        tag = generalComponent:GetTag();
     end
 
     -- --initialize array

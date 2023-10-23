@@ -7,6 +7,7 @@
 #include "Debug/AssertException.h"
 #include "ResourceManagerTy.h"
 
+std::vector<std::string> ECS::entityTags{ "PLAYER", "ENEMY", "BULLET", "STATIC", "BUILDING" };
 
 bool Entity::ShouldRun() {
 	assert(HasComponent<General>() && std::string("There is no general component when attempting to change Entity's isActive").c_str());
