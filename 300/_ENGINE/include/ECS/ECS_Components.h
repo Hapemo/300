@@ -426,12 +426,11 @@ struct VFX
  */
 /******************************************************************************/
 enum class E_MOVEMENT_TYPE : char;
-enum class E_ATTACK_TYPE : char;
 struct AISetting {
 	E_MOVEMENT_TYPE mMovementType;	// AI's movement type
-	E_ATTACK_TYPE mAttackType;			// AI's attack type
+	bool mShotPrediction;						// AI's bullet predict target's movement
 	float mSpreadOut;								// Degree of spreading out
-	std::uint32_t mTarget;									// AI's target
+	std::uint32_t mTarget;					// AI's target
 };
 
 

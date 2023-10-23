@@ -13,6 +13,12 @@ void KeybindWindow::update() {
   auto inputSystem = systemManager->GetInputMapSystemPointer();
 
   auto keybindMap = inputSystem->GetKeybindMap();
+
+  // Need to print 2 columns, action and the keyName inputable by imgui.
+  // Another button to save the keybind. This will save the keybind to the file and also
+  // update all existing keys.
+  // 
+
   if (ImGui::TreeNodeEx("Keybind Mapping", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_OpenOnDoubleClick)) {
     for (auto& [action, ekey] : *keybindMap) {
       ImGui::Text(action.c_str());
