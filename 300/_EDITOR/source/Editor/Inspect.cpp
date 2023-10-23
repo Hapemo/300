@@ -75,6 +75,9 @@ Inspect display for Audio components
 #include <descriptor.h>
 #include <string>
 
+
+void popup(std::string name, ref& data, bool& trigger);
+
 /***************************************************************************/
 /*!
 \brief
@@ -585,6 +588,10 @@ void Animator::Inspect()
 /***************************************************************************/
 void MeshRenderer::Inspect() 
 {
+	static bool meshbool {false}; // for deleting mesh
+	static bool textbool{ false }; // for deleting texture (material)
+	static int texIndex{ 0 }; // for deleting texture
+
 	//!< Shader Helper 
 	auto getShaderName = [](std::string shaderpath) -> std::string
 	{
@@ -624,56 +631,7 @@ void MeshRenderer::Inspect()
 		static int selectedVertShader = 0, selectedFragShader = 0;
 
 		// populating vertex shader vector
-		for (const auto& entry : std::filesystem::directory_iterator(systemManager->mResourceTySystem->shader_path))
-		{
-			//if (std::filesystem::is_regular_file(entry))
-			//{
-			//	if(getShaderExtension(entry.path().string()) == "_vert.glsl")
-			//		vertShaders.push_back(entry.path().string());
 
-			//	else if (getShaderExtension(entry.path().string()) == "_frag.glsl")
-			//		fragShaders.push_back(entry.path().string());
-			//}
-		}
-
-		//{
-			// Vert shader selection
-			//if (ImGui::BeginCombo("Vertex Shaders", vertShaders[selectedVertShader].data(), 0))
-			//{
-			//	for (int i{}; i < vertShaders.size(); ++i)
-			//	{
-			//		bool isItemSelected = (selectedVertShader == i);
-			//		if(ImGui::Selectable(vertShaders[i].data(), isItemSelected))
-			//			selectedVertShader = i;
-
-			//		if (isItemSelected)
-			//			ImGui::SetItemDefaultFocus();
-			//	}
-
-			//	ImGui::EndCombo();
-			//}
-
-			//// Frag shader selection
-			//if (ImGui::BeginCombo("Fragment Shaders", fragShaders[selectedFragShader].data(), 0))
-			//{
-			//	for (int i{}; i < fragShaders.size(); ++i)
-			//	{
-			//		bool isItemSelected = (selectedFragShader == i);
-			//		if (ImGui::Selectable(fragShaders[i].data(), isItemSelected))
-			//			selectedFragShader = i;
-
-			//		if (isItemSelected)
-			//			ImGui::SetItemDefaultFocus();
-			//	}
-
-			//	ImGui::EndCombo();
-			//}
-		//}
-
-		//if (ImGui::Button("Compile Shader"))
-		//{
-		//	std::cout << "compile shaders :)\n";
-		//}
 
 		std::string shaderstr{" "};
 
@@ -695,10 +653,10 @@ void MeshRenderer::Inspect()
 		ImGui::Separator();
 
 		// == >> Mesh << == //
-		ImGui::Text("Mesh");
+		ImGui::Text("MESH");
 		if (ImGui::BeginDragDropTarget())
 		{
-			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_GEOM")) 
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_GEOM"))
 			{
 
 				const char* data = (const char*)payload->Data;
@@ -731,7 +689,7 @@ void MeshRenderer::Inspect()
 
 		if (ImGui::BeginDragDropTarget())
 		{
-			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_FBX")) 
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_FBX"))
 			{
 				const char* data = (const char*)payload->Data;
 				std::string data_str = std::string(data);
@@ -776,11 +734,26 @@ void MeshRenderer::Inspect()
 			ImGui::EndDragDropTarget();
 		}
 
+
+		ImGui::Dummy(ImVec2(0.0f, 10.0f));
+
 		ImGui::SameLine();
 
 		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcTextSize(tempPath.c_str()).x
 			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
-		ImGui::Text(tempPath.c_str());
+
+		if( tempPath.size()>0){
+		ImGui::Selectable(tempPath.c_str());
+
+		//--------------------------------------------------------------------------------------------------------------// delete the mesh 
+		if (ImGui::IsItemClicked(ImGuiMouseButton_Right)) {
+
+			meshbool = true;
+		}
+
+		}
+		popup("Delete", mMeshRef, meshbool);
+
 
 
 		// == >> Textures << == //
@@ -851,7 +824,19 @@ void MeshRenderer::Inspect()
 				ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcTextSize(newpath.c_str()).x
 					- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
 
-				ImGui::Selectable(newpath.c_str());
+				if (newpath.size() > 0) {
+					ImGui::Selectable(newpath.c_str());
+
+					//--------------------------------------------------------------------------------------------------------------// delete the texture 
+					if (ImGui::IsItemClicked(ImGuiMouseButton_Right)) {
+						texIndex = i;
+						textbool = true;
+					}
+				}
+				
+
+
+
 
 				ImGui::Dummy(ImVec2(0.0f, 10.0f));
 			}
@@ -874,6 +859,7 @@ void MeshRenderer::Inspect()
 				}
 			}
 		}
+		popup("DeleteTexture", mTextureRef[texIndex], textbool);
 
 		ImGui::ColorPicker4("MeshColor", (float*)&mInstanceColor);
 	}
@@ -1310,4 +1296,25 @@ void VFX::Inspect() {
 		ImGui::TextColored({ 0.f,1.f, 1.f, 1.f }, "Bloom Variables");
 		ImGui::DragFloat3("Global Bloom Threshold", (float*)&mBloomThreshold, 0.01f, 0.f, 1.f);
 	}
+}
+
+
+
+void popup(std::string name, ref& data, bool& trigger) {
+	std::string hash ="##to"+name;
+	if (trigger == true) {
+		ImGui::OpenPopup(hash.c_str());
+	}
+	if (ImGui::BeginPopup(hash.c_str())) {
+		
+		if (ImGui::Selectable("Delete")) {
+			data.data = nullptr;
+			trigger = false;
+		}
+
+		ImGui::EndPopup();
+
+	}
+	trigger = false;
+	
 }
