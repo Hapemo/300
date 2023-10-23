@@ -1259,9 +1259,9 @@ void UIrenderer::Inspect() {
 
 void VFX::Inspect() {
 	bool delete_component = true;
-	if (ImGui::CollapsingHeader("UIrenderer", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
+	if (ImGui::CollapsingHeader("VFX", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
 	{
 		ImGui::TextColored({ 0.f,1.f, 1.f, 1.f }, "Bloom Variables");
-		ImGui::DragFloat3("Global Bloom Threshold", (float*)&mBloomThreshold, 0.01f, 0.f, 1.f);
+		ImGui::DragFloat3("Entity Bloom Threshold", (float*)&mBloomThreshold, 0.01f, 0.f, 1.f);
 	}
 }

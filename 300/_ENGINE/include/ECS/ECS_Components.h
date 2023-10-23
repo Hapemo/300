@@ -104,6 +104,8 @@ struct Animator
 	GFX::Animator	mAnimator;
 
 	void Inspect();
+	void PauseAnimation() { mAnimator.mIsPaused = true; }
+	void UnpauseAnimation() { mAnimator.mIsPaused = false; }
 };
 
 /******************************************************************************/
@@ -125,7 +127,6 @@ struct MeshRenderer
 	vec4								mInstanceColor{ 1.f, 1.f, 1.f, 1.f };
 
 	std::string							mMeshPath;
-	
 
 	ref									mMeshRef{};
 	//void*								mMeshRef{};
@@ -440,8 +441,12 @@ struct PointLight
 struct VFX
 {
 	vec3		mBloomThreshold{ 0.2126, 0.7152, 0.0722 };
+	bool		isObjectBloom{ 1 };
 
 	void Inspect();
+	void EnableObjectBloom() { isObjectBloom = true; }
+	void DisableObjectBloom() { isObjectBloom = false; }
+	void SetEntityBloomThreshold(glm::vec3 threshold) { mBloomThreshold = threshold; }
 };
 
 

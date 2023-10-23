@@ -19,7 +19,6 @@
 #include "GameState/GameStateManager.h"
 
 #include "cstdlib"
-
 /***************************************************************************/
 /*!
 \brief
@@ -323,7 +322,9 @@ void GraphicsSystem::EditorDraw(float dt)
 			GLuint threshold = shaderinst.GetUniformLocation("bloomThreshold");
 
 			if (inst.HasComponent<VFX>()) {
-				glUniform3fv(threshold, 1, glm::value_ptr(inst.GetComponent<VFX>().mBloomThreshold));
+				if (inst.GetComponent<VFX>().isObjectBloom) {
+					glUniform3fv(threshold, 1, glm::value_ptr(inst.GetComponent<VFX>().mBloomThreshold));	
+				}
 			}
 			else {
 				glUniform3fv(threshold, 1, glm::value_ptr(mAmbientBloomThreshold));
@@ -466,6 +467,21 @@ void GraphicsSystem::GameDraw(float dt)
 		}
 
 		shaderinst.Activate();
+
+		if (systemManager->mGraphicsSystem->m_EnableBloom)
+		{
+			GLuint threshold = shaderinst.GetUniformLocation("bloomThreshold");
+
+			if (inst.HasComponent<VFX>()) {
+				if (inst.GetComponent<VFX>().isObjectBloom) {
+					glUniform3fv(threshold, 1, glm::value_ptr(inst.GetComponent<VFX>().mBloomThreshold));
+				}
+			}
+			else {
+				glUniform3fv(threshold, 1, glm::value_ptr(mAmbientBloomThreshold));
+			}
+		}
+
 		mat4 gameCamVP = camera.GetComponent<Camera>().mCamera.viewProj();
 		glUniformMatrix4fv(shaderinst.GetUniformVP(), 1, GL_FALSE, &gameCamVP[0][0]);
 
@@ -506,13 +522,6 @@ void GraphicsSystem::GameDraw(float dt)
 				glBindTextureUnit(i, 0);
 			}
 		}
-		//for (int i{0}; i < 4; i++)
-		//{
-		//	if (inst.GetComponent<MeshRenderer>().mTextureCont[i] == true)
-		//	{
-		//		glBindTextureUnit(i, 0);
-		//	}
-		//}
 
 		meshinst.ClearInstances();
 		m_Renderer.ClearInstances();
@@ -522,7 +531,7 @@ void GraphicsSystem::GameDraw(float dt)
 	{
 		m_PingPongFbo.PrepForDraw();
 
-		// Render the bloom for the Editor Framebuffer
+		// Render the bloom for the Game Framebuffer
 		uid gaussianshaderstr("GaussianBlurShader");
 		GFX::Shader& gaussianShaderInst = *systemManager->mResourceTySystem->get_Shader(gaussianshaderstr.id);
 		m_PingPongFbo.GaussianBlur(gaussianShaderInst, m_GameFbo);
