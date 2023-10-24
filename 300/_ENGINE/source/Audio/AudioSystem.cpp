@@ -106,9 +106,14 @@ void AudioSystem::Init()
 		}
 	}
 
+	// Load all Sounds
+	LoadAudioFromDirectory("../assets\\Audio");
+
 	// 3D Audio Settings
 	PINFO("INITIALIZING 3D AUDIO SETTINGS:");
 	ErrCodeCheck(system_obj->set3DSettings(1.0, distance_factor, 1.0)); // [Distance Factor] = 1.0f 
+
+
 
 }
 
@@ -193,11 +198,6 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 	{
 		Audio& audio_component = audio.GetComponent<Audio>();
 
-		if (audio_component.mIsLooping)
-		{
-			audio_component.mSound->setMode(FMOD_LOOP_NORMAL);
-		}
-
 		// Play Cycle
 		if (audio_component.mIsPlay &&							// (1) Check if this <Audio> is set to play.
 			CheckAudioExist(audio_component.mFileName) &&		// (2) Check if the [Sound] that we want to play exists.
@@ -217,9 +217,8 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 				PINFO("SETTING 3D ATTRIBUTES");
 				ErrCodeCheck(audio_component.mChannel->set3DAttributes(&position, &velocity));
 			}
-
-		
 		}
+	
 
 		// Every Loop -> check if the <Audio> is still playing.
 		bool channelIsPlay = false;
@@ -695,30 +694,35 @@ bool AudioSystem::LoadAudio(std::string file_path, std::string audio_name, Audio
 //	return true;
 //}
 
- bool AudioSystem::LoadAudioFromDirectory(std::string directory_path)
- {
-	 for (const auto& file : std::filesystem::directory_iterator(directory_path))
-	 {
-		 std::string file_path = file.path().string();
-		 PINFO("File Detected: %s", file_path.c_str());
-		 std::string audio_name = file.path().filename().string();
-		 PINFO("Audio Name: %s", audio_name.c_str());
+bool AudioSystem::LoadAudioFromDirectory(std::string directory_path)
+{
+	for (const auto& file : std::filesystem::directory_iterator(directory_path))
+	{
+		std::string audio_name = file.path().filename().string();
 
-		 PINFO("Creating Sound: ");
-		 FMOD::Sound* new_sound;
-		 bool check = ErrCodeCheck(system_obj->createSound(file_path.c_str(), FMOD_LOOP_OFF, 0, &new_sound));
+		if (!FindSound(audio_name))
+		{
+			PINFO("Audio Name: %s", audio_name.c_str());
 
-		 if (!check)
-		 {
-			 PWARNING("Failed to create Sound: %s", audio_name.c_str());
-			 return false;
-		 }
+			std::string file_path = file.path().string();
+			PINFO("File Detected: %s", file_path.c_str());
 
-		 mSounds.insert(std::make_pair(audio_name, new_sound));
-	 }
+			PINFO("Creating Sound: ");
+			FMOD::Sound* new_sound;
+			bool check = ErrCodeCheck(system_obj->createSound(file_path.c_str(), FMOD_LOOP_OFF, 0, &new_sound));
 
-	 return true;
- }
+			if (!check)
+			{
+				PWARNING("Failed to create Sound: %s", audio_name.c_str());
+				return false;
+			}
+
+			mSounds.insert(std::make_pair(audio_name, new_sound));
+		}
+	}
+
+	return true;
+}
 
 /******************************************************************************/
 /*!

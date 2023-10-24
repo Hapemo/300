@@ -103,6 +103,11 @@ bool AudioSource::AttachSound(std::string audio_name)
 	{
 		mAudioComponent->mSound = systemManager->mAudioSystem.get()->FindSound(audio_name);
 		mAudioComponent->mFileName = audio_name; // for play check in Update() -> CheckAudioExist
+		
+		// For Editor side 
+		mAudioComponent->mIsEmpty = false; // no longer empty anymore...
+		mAudioComponent->mFullPath = "../assets\\Audio/" + audio_name; // Temporary 
+
 		return true;
 	}
 
@@ -170,7 +175,11 @@ void AudioSource::Stop()
 	{
 		AudioSystem* system = systemManager->mAudioSystem.get();
 
-		mAudioComponent->mChannel->stop();		
+		mAudioComponent->mChannel->stop();	
+		mAudioComponent->mIsPlaying = false;
+		mAudioComponent->mWasPaused = false;
+		mAudioComponent->mPaused = false;
+		mAudioComponent->mIsPlay = false;
 	}
 }
 

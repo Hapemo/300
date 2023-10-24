@@ -37,6 +37,10 @@ function Update()
         entityAudioSource:Play();
     elseif Input.CheckKey(State.HOLD, Key.KEY_X) then
         entityAudioSource:Pause();
+    elseif Input.CheckKey(State.HOLD, Key.KEY_Z) then
+        entityAudioSource:Unpause();
+    elseif Input.CheckKey(State.HOLD, Key.KEY_V) then
+        entityAudioSource:Stop();
     end
     --audioSys = systemManager:mAudioSystem();
     --audioSys:LoadAudioFromDirectory("../assets\\Audio")
