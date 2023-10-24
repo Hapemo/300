@@ -22,6 +22,8 @@
     <ClCompile Include="source\Input\Input.cpp" />
     <ClCompile Include="source\Input\InputMapSystem.cpp" />
     <ClCompile Include="source\AI\AIManager.cpp" />
+    <ClCompile Include="source\Physics\PhysXUtils.cpp" />
+    <ClCompile Include="include\Physics\ContactCallback.cpp" />
     <ClCompile Include="source\Audio\AudioSource.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -53,6 +55,9 @@
     <ClInclude Include="include\Input\Input.h" />
     <ClInclude Include="include\Input\InputMapSystem.h" />
     <ClInclude Include="include\AI\AIManager.h" />
+    <ClInclude Include="include\Physics\PhysXUtils.h" />
+    <ClInclude Include="include\Physics\ContactCallback.h" />
+    <ClInclude Include="include\Physics\Actor.h" />
     <ClInclude Include="include\Audio\AudioSource.h" />
     <ClInclude Include="include\Audio\AudioTest.h" />
   </ItemGroup>

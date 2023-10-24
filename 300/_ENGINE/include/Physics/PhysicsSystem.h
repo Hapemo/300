@@ -12,6 +12,7 @@ Physics system.
 #include "pch.h"
 #include "PhysicsTypes.h"
 #include "ECS/ECS_Components.h"
+#include "Actor.h"
 
 using namespace physx;
 
@@ -37,7 +38,8 @@ public:
 	/*!*****************************************************************************
 	Adds a new entity to the physics simulation
 	*******************************************************************************/
-	void AddActor(Entity e);
+	void AddEntity(Entity e);
+
 	/*!*****************************************************************************
 	Set velocity of an entity.
 	*******************************************************************************/
@@ -47,8 +49,9 @@ public:
 private:
 	PhysX mPX;
 	float mFixedDT;
-	std::unordered_map<std::uint32_t, PxRigidActor*> mActors;
+	std::unordered_map<std::uint32_t, Actor> mActors;
 	std::unordered_map<MATERIAL, PxMaterial*> mMaterials;
+
 	/*!*****************************************************************************
 	Create materials for entities.
 	*******************************************************************************/
@@ -58,16 +61,24 @@ private:
 	*******************************************************************************/
 	void CreateRigidBody(Entity e);
 
-	void AttachIsTrigger(PxRigidActor*& actor, PxShape*& shape);
-	void AttachMotionType(PxRigidActor*& actor, PxShape*& shape, const PxTransform& pxform, const RigidBody& rbod, const glm::ivec3& axisLocks = glm::ivec3(0, 0, 0));
-	/*!*****************************************************************************
-	Helper functions to convert glm to physx and vice versa.
-	*******************************************************************************/
-	PxVec3T<float> Convert(const glm::vec3 &vec);
-	PxVec4T<float> Convert(const glm::vec4 &vec);
-	glm::vec3 Convert(const PxVec3T<float> &vec);
-	glm::quat Convert(const PxQuatT<float> &vec);
+	void CreateActor(PxRigidActor*& actor, const PxTransform& pxform, const RigidBody& rbod);
+
+	template <typename T>
+	void CreateShape(PxShape*& shape, const T& geometry, const RigidBody& rbod, bool isTrigger);
+
+	void AttachShape(PxRigidActor*& actor, PxShape*& shape, const PxTransform& localPose);
+	
+	void Synchronize();
+	//PxRigidDynamicLockFlags Convert(const glm::ivec3& vec);
 
 	// for performance
 	double startTime, endTime;
 };
+
+template <typename T>
+void PhysicsSystem::CreateShape(PxShape*& shape, const T& geometry, const RigidBody& rbod, bool isTrigger)
+{
+	shape = mPX.mPhysics->createShape(geometry, *mMaterials[rbod.mMaterial]);
+	shape->setFlag(PxShapeFlag::Enum::eSIMULATION_SHAPE, !isTrigger);
+	shape->setFlag(PxShapeFlag::Enum::eTRIGGER_SHAPE, isTrigger);
+}

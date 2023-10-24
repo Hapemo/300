@@ -19,7 +19,6 @@
 #include "GameState/GameStateManager.h"
 
 #include "cstdlib"
-
 /***************************************************************************/
 /*!
 \brief
@@ -323,7 +322,9 @@ void GraphicsSystem::EditorDraw(float dt)
 			GLuint threshold = shaderinst.GetUniformLocation("bloomThreshold");
 
 			if (inst.HasComponent<VFX>()) {
-				glUniform3fv(threshold, 1, glm::value_ptr(inst.GetComponent<VFX>().mBloomThreshold));
+				if (inst.GetComponent<VFX>().isObjectBloom) {
+					glUniform3fv(threshold, 1, glm::value_ptr(inst.GetComponent<VFX>().mBloomThreshold));	
+				}
 			}
 			else {
 				glUniform3fv(threshold, 1, glm::value_ptr(mAmbientBloomThreshold));
@@ -466,6 +467,21 @@ void GraphicsSystem::GameDraw(float dt)
 		}
 
 		shaderinst.Activate();
+
+		if (systemManager->mGraphicsSystem->m_EnableBloom)
+		{
+			GLuint threshold = shaderinst.GetUniformLocation("bloomThreshold");
+
+			if (inst.HasComponent<VFX>()) {
+				if (inst.GetComponent<VFX>().isObjectBloom) {
+					glUniform3fv(threshold, 1, glm::value_ptr(inst.GetComponent<VFX>().mBloomThreshold));
+				}
+			}
+			else {
+				glUniform3fv(threshold, 1, glm::value_ptr(mAmbientBloomThreshold));
+			}
+		}
+
 		mat4 gameCamVP = camera.GetComponent<Camera>().mCamera.viewProj();
 		glUniformMatrix4fv(shaderinst.GetUniformVP(), 1, GL_FALSE, &gameCamVP[0][0]);
 
@@ -506,13 +522,6 @@ void GraphicsSystem::GameDraw(float dt)
 				glBindTextureUnit(i, 0);
 			}
 		}
-		//for (int i{0}; i < 4; i++)
-		//{
-		//	if (inst.GetComponent<MeshRenderer>().mTextureCont[i] == true)
-		//	{
-		//		glBindTextureUnit(i, 0);
-		//	}
-		//}
 
 		meshinst.ClearInstances();
 		m_Renderer.ClearInstances();
@@ -522,7 +531,7 @@ void GraphicsSystem::GameDraw(float dt)
 	{
 		m_PingPongFbo.PrepForDraw();
 
-		// Render the bloom for the Editor Framebuffer
+		// Render the bloom for the Game Framebuffer
 		uid gaussianshaderstr("GaussianBlurShader");
 		GFX::Shader& gaussianShaderInst = *systemManager->mResourceTySystem->get_Shader(gaussianshaderstr.id);
 		m_PingPongFbo.GaussianBlur(gaussianShaderInst, m_GameFbo);
@@ -709,37 +718,48 @@ void GraphicsSystem::SetCameraSize(CAMERA_TYPE type, ivec2 size)
 void GraphicsSystem::UpdateCamera(CAMERA_TYPE type, const float &dt)
 {
 	auto localcamera = systemManager->ecs->GetEntitiesWith<Camera>();
-	if (localcamera.empty())
-		return; // Cannot find camera Richmond
-	Entity camera = localcamera.front();
+	Entity camera;
 
 	switch (type)
 	{
 	case CAMERA_TYPE::CAMERA_TYPE_GAME:
-		Camera_Input::getInstance().updateCameraInput(camera.GetComponent<Camera>().mCamera, dt);
-		camera.GetComponent<Camera>().mCamera.Update();
-		camera.GetComponent<Transform>().mTranslate = camera.GetComponent<Camera>().mCamera.mPosition;
-		break;
+		{
+			if (localcamera.empty())
+				return;
+			camera = localcamera.front();		// there will only be one game camera
+
+			Camera_Input::getInstance().updateCameraInput(camera.GetComponent<Camera>().mCamera, dt);
+			camera.GetComponent<Camera>().mCamera.Update();
+			camera.GetComponent<Transform>().mTranslate = camera.GetComponent<Camera>().mCamera.mPosition;
+			break;
+		}
 
 	case CAMERA_TYPE::CAMERA_TYPE_EDITOR:
-		Camera_Input::getInstance().updateCameraInput(m_EditorCamera, dt);
-		m_EditorCamera.Update();
-		break;
+		{
+			Camera_Input::getInstance().updateCameraInput(m_EditorCamera, dt);
+			m_EditorCamera.Update();
+			break;
+		}
 
 	case CAMERA_TYPE::CAMERA_TYPE_ALL:
-		m_EditorCamera.Update();
-		camera.GetComponent<Camera>().mCamera.Update();
+		{
+			m_EditorCamera.Update();
+			if (m_CameraControl == CAMERA_TYPE::CAMERA_TYPE_EDITOR) {
+				Camera_Input::getInstance().updateCameraInput(m_EditorCamera, dt);
+			}
 
-		if (m_CameraControl == CAMERA_TYPE::CAMERA_TYPE_EDITOR) {
-			Camera_Input::getInstance().updateCameraInput(m_EditorCamera, dt);
+			if (localcamera.empty())
+				return;
+			camera = localcamera.front();		// there will only be one game camera
+
+			camera.GetComponent<Camera>().mCamera.Update();
+			if (m_CameraControl == CAMERA_TYPE::CAMERA_TYPE_GAME) {
+				Camera_Input::getInstance().updateCameraInput(camera.GetComponent<Camera>().mCamera, dt);
+				camera.GetComponent<Transform>().mTranslate = camera.GetComponent<Camera>().mCamera.mPosition;
+			}
+
+			break;
 		}
-
-		else if (m_CameraControl == CAMERA_TYPE::CAMERA_TYPE_GAME) {
-			Camera_Input::getInstance().updateCameraInput(camera.GetComponent<Camera>().mCamera, dt);
-			camera.GetComponent<Transform>().mTranslate = camera.GetComponent<Camera>().mCamera.mPosition;
-		}
-
-		break;
 	}
 }
 
@@ -1069,9 +1089,10 @@ void MeshRenderer::SetTexture(MaterialType MaterialType, const std::string& Text
 	std::string MaterialInstancePath = systemManager->mResourceTySystem->compressed_texture_path + Texturename + ".ctexture";
 	mMaterialInstancePath[MaterialType] = MaterialInstancePath;
 
+	std::string descFilepath = MaterialInstancePath + ".desc";
+	unsigned guid = _GEOM::GetGUID(descFilepath);
 
-	uid guid(MaterialInstancePath);
-	mTextureRef[MaterialType].data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(guid.id));
+	mTextureRef[MaterialType].data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(guid));
 }
 
 

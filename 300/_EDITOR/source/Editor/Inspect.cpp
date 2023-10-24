@@ -130,11 +130,6 @@ void Inspect::update()
 			SphereCollider& sphereCollider = ent.GetComponent<SphereCollider>();
 			sphereCollider.Inspect();
 		}
-		if (ent.HasComponent<PlaneCollider>()) {
-			PlaneCollider& planeCollider = ent.GetComponent<PlaneCollider>();
-			planeCollider.Inspect();
-
-		}
 		if (ent.HasComponent<PointLight>()) {
 			PointLight& pointLight = ent.GetComponent<PointLight>();
 			pointLight.Inspect();
@@ -213,11 +208,6 @@ void Inspect::Add_component() {
 		if (ImGui::Selectable("SphereCollider")) {
 			if (!Entity(Hierarchy::selectedId).HasComponent<SphereCollider>())
 				Entity(Hierarchy::selectedId).AddComponent<SphereCollider>();
-		}
-
-		if (ImGui::Selectable("PlaneCollider")) {
-			if (!Entity(Hierarchy::selectedId).HasComponent<PlaneCollider>())
-				Entity(Hierarchy::selectedId).AddComponent<PlaneCollider>();
 		}
 
 		if (ImGui::Selectable("Animator")) {
@@ -369,7 +359,12 @@ void Camera::Inspect()
 
 		ImGui::Separator();
 
-		ImGui::DragFloat3("Camera Position", (float*)&mCamera.mPosition);
+		vec3 temp = mCamera.mPosition;
+		ImGui::DragFloat3("Camera Position", (float*)&temp);
+
+		mCamera.mTarget += temp - mCamera.mPosition;
+		mCamera.mPosition = temp;
+
 		ImGui::DragFloat3("Camera Target", (float*)&mCamera.mTarget);
 
 		ImGui::Text("Aspect Ratio");
@@ -642,61 +637,6 @@ void MeshRenderer::Inspect()
 		Entity entins(Hierarchy::selectedId);
 
 		// == >> Shaders << == //
-		std::vector<std::string> vertShaders, fragShaders;
-		static int selectedVertShader = 0, selectedFragShader = 0;
-
-		// populating vertex shader vector
-		for (const auto& entry : std::filesystem::directory_iterator(systemManager->mResourceTySystem->shader_path))
-		{
-			//if (std::filesystem::is_regular_file(entry))
-			//{
-			//	if(getShaderExtension(entry.path().string()) == "_vert.glsl")
-			//		vertShaders.push_back(entry.path().string());
-
-			//	else if (getShaderExtension(entry.path().string()) == "_frag.glsl")
-			//		fragShaders.push_back(entry.path().string());
-			//}
-		}
-
-		//{
-			// Vert shader selection
-			//if (ImGui::BeginCombo("Vertex Shaders", vertShaders[selectedVertShader].data(), 0))
-			//{
-			//	for (int i{}; i < vertShaders.size(); ++i)
-			//	{
-			//		bool isItemSelected = (selectedVertShader == i);
-			//		if(ImGui::Selectable(vertShaders[i].data(), isItemSelected))
-			//			selectedVertShader = i;
-
-			//		if (isItemSelected)
-			//			ImGui::SetItemDefaultFocus();
-			//	}
-
-			//	ImGui::EndCombo();
-			//}
-
-			//// Frag shader selection
-			//if (ImGui::BeginCombo("Fragment Shaders", fragShaders[selectedFragShader].data(), 0))
-			//{
-			//	for (int i{}; i < fragShaders.size(); ++i)
-			//	{
-			//		bool isItemSelected = (selectedFragShader == i);
-			//		if (ImGui::Selectable(fragShaders[i].data(), isItemSelected))
-			//			selectedFragShader = i;
-
-			//		if (isItemSelected)
-			//			ImGui::SetItemDefaultFocus();
-			//	}
-
-			//	ImGui::EndCombo();
-			//}
-		//}
-
-		//if (ImGui::Button("Compile Shader"))
-		//{
-		//	std::cout << "compile shaders :)\n";
-		//}
-
 		std::string shaderstr{" "};
 
 		if (systemManager->mResourceTySystem->m_Shaders.find(mShaderRef.data_uid) != systemManager->mResourceTySystem->m_Shaders.end())
@@ -817,6 +757,7 @@ void MeshRenderer::Inspect()
 				ImGui::Text(textures[i].c_str());
 				if (ImGui::BeginDragDropTarget())
 				{
+					// loading compressed texture
 					if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_TEXT")) 
 					{
 						const char* data = (const char*)payload->Data;
@@ -841,9 +782,9 @@ void MeshRenderer::Inspect()
 						unsigned guid;
 
 						// check and ensures that the descriptor file for the materials are created
-						bool descFilePresent = _GEOM::CheckAndCreateDescriptorFileTEXTURE(data_str, TEXTURE_Descriptor_Filepath);
+						bool descFilePresent = _GEOM::CheckAndCreateDescriptorFileTEXTURE(data_str, TEXTURE_Descriptor_Filepath, texturestr);
 						std::string descfilepath = data_str + ".desc";
-						guid = _GEOM::GetGUID(descfilepath);
+						guid = _GEOM::GetGUID(descfilepath);	// gets the guid from the png desc
 
 						// If the descriptor file is not present, then load it
 						if (!descFilePresent)
@@ -863,6 +804,7 @@ void MeshRenderer::Inspect()
 
 					ImGui::EndDragDropTarget();
 				}
+
 				int posstart = static_cast<int>(mMaterialInstancePath[i].find_last_of("/"));
 				int posend = static_cast<int>(mMaterialInstancePath[i].find_last_of("."));
 
@@ -874,6 +816,13 @@ void MeshRenderer::Inspect()
 					- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
 
 				ImGui::Selectable(newpath.c_str());
+
+				// The Descriptor data for the selected texture
+				if (ImGui::TreeNode("DescriptorFile"))
+				{
+					ImGui::Text(getFilename(mMaterialInstancePath[i]).c_str());
+					ImGui::TreePop();
+				}
 
 				ImGui::Dummy(ImVec2(0.0f, 10.0f));
 			}
@@ -901,7 +850,7 @@ void MeshRenderer::Inspect()
 	}
 
 	// == >> Mesh Renderer GEOM Descriptor File << == //
-	ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+	//ImGui::SetNextItemOpen(true, ImGuiCond_Once);
 	if (ImGui::TreeNode("GEOM DescirptorFile"))
 	{
 		GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mMeshRef.data);
@@ -909,12 +858,12 @@ void MeshRenderer::Inspect()
 		// sanity check
 		if (meshinst != nullptr)
 		{
-			ImGui::InputText("Desc Filepath", const_cast<char*>(meshinst->mDescriptorPath.c_str()), meshinst->mDescriptorPath.length() + 1);
-			ImGui::InputInt("GUID", reinterpret_cast<int*>(&meshinst->mDescriptorData.m_GUID));
+			ImGui::InputText("Desc Filepath", const_cast<char*>(meshinst->mMeshDescriptorPath.c_str()), meshinst->mMeshDescriptorPath.length() + 1);
+			ImGui::InputInt("GUID", reinterpret_cast<int*>(&meshinst->mMeshDescriptorData.m_GUID));
 
 			// Vert shader selection
 			int selectedFBX{};
-			_GEOM::DescriptorData& descInst = meshinst->mDescriptorData;
+			_GEOM::DescriptorData& descInst = meshinst->mMeshDescriptorData;
 
 			if (ImGui::BeginCombo("FBX Filepaths", descInst.m_Filepaths[selectedFBX].data(), 0))
 			{
@@ -936,8 +885,8 @@ void MeshRenderer::Inspect()
 
 			if (ImGui::Button("Save Descriptor File"))
 			{
-				std::cout << "Saving Descriptor File to: " << meshinst->mDescriptorPath << std::endl;
-				_GEOM::DescriptorData::SerializeGEOM_DescriptorDataToFile(meshinst->mDescriptorPath, descInst);
+				std::cout << "Saving Descriptor File to: " << meshinst->mMeshDescriptorPath << std::endl;
+				_GEOM::DescriptorData::SerializeGEOM_DescriptorDataToFile(meshinst->mMeshDescriptorPath, descInst);
 			}
 		}
 		ImGui::TreePop();
@@ -1043,30 +992,7 @@ void SphereCollider::Inspect() {
 	if (delete_component == false)
 		Entity(Hierarchy::selectedId).RemoveComponent<SphereCollider>();
 }
-/***************************************************************************/
-/*!
-\brief
-	Inspector functionality for PlaneCollider
-*/
-/***************************************************************************/
 
-void PlaneCollider::Inspect() {
-	bool delete_component{ true };
-	if (ImGui::CollapsingHeader("PlaneCollider",&delete_component, ImGuiTreeNodeFlags_DefaultOpen)) {
-		ImGui::DragFloat3("##Scale", (float*)&mNormal);
-		ImGui::SameLine();
-		ImGui::Text("Scale");
-		ImGui::Separator();
-
-		ImGui::DragFloat("##Translate", (float*)&mTranslateOffset);
-		ImGui::SameLine();
-		ImGui::Text("Translate");
-		ImGui::Separator();
-
-	}
-	if (delete_component == false)
-		Entity(Hierarchy::selectedId).RemoveComponent<PlaneCollider>();
-}
 /***************************************************************************/
 /*!
 \brief
@@ -1374,9 +1300,9 @@ void UIrenderer::Inspect() {
 
 void VFX::Inspect() {
 	bool delete_component = true;
-	if (ImGui::CollapsingHeader("UIrenderer", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
+	if (ImGui::CollapsingHeader("VFX", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
 	{
 		ImGui::TextColored({ 0.f,1.f, 1.f, 1.f }, "Bloom Variables");
-		ImGui::DragFloat3("Global Bloom Threshold", (float*)&mBloomThreshold, 0.01f, 0.f, 1.f);
+		ImGui::DragFloat3("Entity Bloom Threshold", (float*)&mBloomThreshold, 0.01f, 0.f, 1.f);
 	}
 }

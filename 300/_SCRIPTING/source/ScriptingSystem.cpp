@@ -116,7 +116,6 @@ void ScriptingSystem::Init()
     LuaRigidBody();
     LuaBoxCollider();
     LuaSphereCollider();
-    LuaPlaneCollider();
     LuaScript();
     LuaParent();
     LuaChildren();

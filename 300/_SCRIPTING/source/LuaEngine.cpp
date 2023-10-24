@@ -71,14 +71,6 @@ void LuaEntity()
         DECLARE_COMPONENT("GetSphereCollider", SphereCollider),
         "HasSphereCollider", &Entity::HasComponent<SphereCollider>,
 
-        ADD_COMPONENT("AddPlaneCollider", PlaneCollider),
-        DECLARE_COMPONENT("GetPlaneCollider", PlaneCollider),
-        "HasPlaneCollider", &Entity::HasComponent<PlaneCollider>,
-
-        ADD_COMPONENT("AddAABBCollider", AABBCollider),
-        DECLARE_COMPONENT("GetAABBCollider", AABBCollider),
-        "HasAABBCollider", &Entity::HasComponent<AABBCollider>,
-
         ADD_COMPONENT("AddCapsuleCollider", CapsuleCollider),
         DECLARE_COMPONENT("GetCapsuleCollider", CapsuleCollider),
         "HasCapsuleCollider", &Entity::HasComponent<CapsuleCollider>,
@@ -159,15 +151,6 @@ void LuaSphereCollider()
         "SphereCollider", sol::constructors<>(),
         "mScaleOffset", &SphereCollider::mScaleOffset,
         "mTranslateOffset", &SphereCollider::mTranslateOffset
-    );
-}
-
-void LuaPlaneCollider()
-{
-    systemManager->mScriptingSystem->luaState.new_usertype<PlaneCollider>(
-        "PlaneCollider", sol::constructors<>(),
-        "mNormal", &PlaneCollider::mNormal,
-        "mTranslateOffset", &PlaneCollider::mTranslateOffset
     );
 }
 

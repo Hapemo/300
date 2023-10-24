@@ -104,6 +104,8 @@ struct Animator
 	GFX::Animator	mAnimator;
 
 	void Inspect();
+	void PauseAnimation() { mAnimator.mIsPaused = true; }
+	void UnpauseAnimation() { mAnimator.mIsPaused = false; }
 };
 
 /******************************************************************************/
@@ -125,7 +127,6 @@ struct MeshRenderer
 	vec4								mInstanceColor{ 1.f, 1.f, 1.f, 1.f };
 
 	std::string							mMeshPath;
-	
 
 	ref									mMeshRef{};
 	//void*								mMeshRef{};
@@ -188,11 +189,10 @@ struct RigidBody
 	MATERIAL mMaterial;
 	MOTION mMotion;
 	glm::vec3 mVelocity;
-	bool mIsTrigger;
 
-	RigidBody() : mDensity(10.f), mMaterial(MATERIAL::WOOD), mMotion(MOTION::STATIC), mVelocity(0.f), mIsTrigger(false) {};
-	RigidBody(float dense, MATERIAL mat, MOTION mot, const glm::vec3& vec, bool isTrigger)
-		: mDensity(dense), mMaterial(mat), mMotion(mot), mVelocity(vec), mIsTrigger(isTrigger) {}
+	RigidBody() : mDensity(10.f), mMaterial(MATERIAL::WOOD), mMotion(MOTION::STATIC), mVelocity(0.f){};
+	RigidBody(float dense, MATERIAL mat, MOTION mot, const glm::vec3& vec)
+		: mDensity(dense), mMaterial(mat), mMotion(mot), mVelocity(vec){}
 	//RTTR_ENABLE()
 
 
@@ -210,7 +210,9 @@ struct BoxCollider
 {
 	glm::vec3 mScaleOffset;			// final scale = mScaleOffset * Transform.mScale;
 	glm::vec3 mTranslateOffset;		// final pos = Transform.mTranslate + mTranslateOffset;
-	
+	bool mIsTrigger;
+	bool mIsTriggerCollide;
+	uint32_t mTriggerCollidingWith;
 
 	BoxCollider() : mScaleOffset(1.f), mTranslateOffset(0.f) {}
 	
@@ -227,6 +229,9 @@ struct SphereCollider
 {
 	float mScaleOffset;				// final scale = mScaleOffset * std::max(Transform.mScale.x, Transform.mScale.y, Transform.mScale.z);
 	glm::vec3 mTranslateOffset;		// final pos = Transform.mTranslate + mTranslateOffset;
+	bool mIsTrigger;
+	bool mIsTriggerCollide;
+	uint32_t mTriggerCollidingWith;
 
 	SphereCollider() : mScaleOffset(1.f), mTranslateOffset(0.f) {};
 
@@ -234,35 +239,16 @@ struct SphereCollider
 	void							Inspect();
 };
 
-/******************************************************************************/
-/*!
-	[Component] - PlaneCollider
- */
- /******************************************************************************/
-struct PlaneCollider //if has plane collider always static
-{
-	glm::vec3 mNormal;				// direction of plane
-	float mTranslateOffset;			// final pos = magnitude(Transform.mTranslate) + mTranslateOffset;
-
-	PlaneCollider() : mNormal(0.f, 1.f, 0.f), mTranslateOffset(0.f) {};
-
-	//RTTR_ENABLE()
-	void							Inspect();
-};
-
-struct AABBCollider
-{
-	glm::vec3 mScaleOffset;			// final scale = mScaleOffset * Transform.mScale;
-	glm::vec3 mTranslateOffset;		// final pos = Transform.mTranslate + mTranslateOffset;
-
-	AABBCollider() : mScaleOffset(1.f), mTranslateOffset(0.f) {}
-};
-
 struct CapsuleCollider
 {
 	glm::vec3 mTranslateOffset;
 	float mRadius;
 	float mHalfHeight;
+	bool mIsTrigger;
+	bool mIsTriggerCollide;
+	uint32_t mTriggerCollidingWith;
+
+
 	CapsuleCollider() : mTranslateOffset(0.f, 0.f, 0.f), mRadius(50.f), mHalfHeight(100.f) {}
 };
 
@@ -475,8 +461,12 @@ struct PointLight
 struct VFX
 {
 	vec3		mBloomThreshold{ 0.2126, 0.7152, 0.0722 };
+	bool		isObjectBloom{ 1 };
 
 	void Inspect();
+	void EnableObjectBloom() { isObjectBloom = true; }
+	void DisableObjectBloom() { isObjectBloom = false; }
+	void SetEntityBloomThreshold(glm::vec3 threshold) { mBloomThreshold = threshold; }
 };
 
 
@@ -489,12 +479,11 @@ struct VFX
  */
 /******************************************************************************/
 enum class E_MOVEMENT_TYPE : char;
-enum class E_ATTACK_TYPE : char;
 struct AISetting {
 	E_MOVEMENT_TYPE mMovementType;	// AI's movement type
-	E_ATTACK_TYPE mAttackType;			// AI's attack type
+	bool mShotPrediction;						// AI's bullet predict target's movement
 	float mSpreadOut;								// Degree of spreading out
-	std::uint32_t mTarget;									// AI's target
+	std::uint32_t mTarget;					// AI's target
 };
 
 

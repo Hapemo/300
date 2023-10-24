@@ -214,6 +214,12 @@ void GFX::DebugRenderer::AddSphere(vec3 const& camPos, vec3 const& center, float
 	mSphereMesh.mLTW.push_back(horizonModelToWorld);
 }
 
+void GFX::DebugRenderer::AddCapsule(vec3 const& camPos, vec3 const& center1, vec3 const& center2, float radius, vec4 const& color)
+{
+	AddSphere(camPos, center1, radius, color);
+	AddSphere(camPos, center2, radius, color);
+}
+
 void GFX::DebugRenderer::RenderAll(mat4 viewProj)
 {
 	if (mPointMesh.mLTW.size())

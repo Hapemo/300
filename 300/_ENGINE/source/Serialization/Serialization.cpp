@@ -168,18 +168,6 @@ bool EntityJSON::Deserialize(const rapidjson::Value& obj)
 	}
 	else msc_t = false;
 
-	if (obj.HasMember("PlaneCollider"))
-	{
-		mPCJ.mNormal = { (float)obj["PlaneCollider"]["Normal"][0].GetDouble(),
-						 (float)obj["PlaneCollider"]["Normal"][1].GetDouble(),
-						 (float)obj["PlaneCollider"]["Normal"][2].GetDouble() };
-
-		mPCJ.mTranslateOffset = (float)obj["PlaneCollider"]["TranslateOffset"].GetDouble();
-
-		mpc_t = true;
-	}
-	else mpc_t = false;
-
 	if (obj.HasMember("Scripts"))
 	{
 		Script tmp;
@@ -403,24 +391,6 @@ bool EntityJSON::Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>* wri
 		writer->Double(mSCJ.mTranslateOffset.y);
 		writer->Double(mSCJ.mTranslateOffset.z);
 		writer->EndArray();
-
-		writer->EndObject();
-	}
-
-	if (mpc_t)
-	{
-		writer->String("PlaneCollider");
-		writer->StartObject();
-
-		writer->String("Normal");
-		writer->StartArray();
-		writer->Double(mPCJ.mNormal.x);
-		writer->Double(mPCJ.mNormal.y);
-		writer->Double(mPCJ.mNormal.z);
-		writer->EndArray();
-
-		writer->String("TranslateOffset");
-		writer->Double(mPCJ.mTranslateOffset);
 
 		writer->EndObject();
 	}

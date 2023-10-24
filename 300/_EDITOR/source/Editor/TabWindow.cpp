@@ -53,7 +53,7 @@ void TabWindow::update()
 	ImGui::SameLine();
 	ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
 		- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
-	ImGui::DragFloat("##CS", (float*)&Camera_Input::getInstance().mCameraSpeed);
+	ImGui::DragFloat("##CS", (float*)&systemManager->mGraphicsSystem->m_EditorCamera.mCameraSpeed);
 
 	ImGui::Separator();
 	ImGui::Text("Debug");
