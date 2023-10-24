@@ -150,6 +150,12 @@ public:
 
 	entt::registry registry;
 
+	static void AddTag(const std::string& tag);
+
+	static std::string GetTag(unsigned char id);
+
+	static unsigned char GetTag(const std::string& tag);
+
 	/*!*****************************************************************************
 	Creates a new entity.
 	*******************************************************************************/
@@ -232,7 +238,7 @@ public:
 
 	int SelectedScene;
 
-	static std::vector<std::string> entityTags;
+	static std::vector<std::string> mEntityTags;
 };
 
 

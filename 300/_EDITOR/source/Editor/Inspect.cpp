@@ -274,21 +274,21 @@ void General::Inspect() {
 	//}
 
 
-	ImGui::Text("Tag");
+	//ImGui::Text("Tag");
 
-	ImGui::SameLine();
-	ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
-		- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+	//ImGui::SameLine();
+	//ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+	//	- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
 
-	if (ImGui::BeginCombo("##Tag", ECS::entityTags[tagid].c_str())) {
+	//if (ImGui::BeginCombo("##Tag", ECS::entityTags[tagid].c_str())) {
 
-		for (short i{}; i < ECS::entityTags.size(); ++i)
-		{
-			if (ImGui::Selectable(ECS::entityTags[i].c_str()))
-				tagid = i;
-		}
-		ImGui::EndCombo();
-	}
+	//	for (short i{}; i < ECS::entityTags.size(); ++i)
+	//	{
+	//		if (ImGui::Selectable(ECS::entityTags[i].c_str()))
+	//			tagid = i;
+	//	}
+	//	ImGui::EndCombo();
+	//}
 }
 
 /***************************************************************************/
@@ -946,7 +946,7 @@ void RigidBody::Inspect() {
 		const char* motions[] = { "STATIC", "DYNAMIC" };
 
 
-		if (ImGui::BeginCombo("Material", (materials[mMat]))) {
+		/*if (ImGui::BeginCombo("Material", (materials[mMat]))) {
 
 			for (unsigned char i{ 0 }; i < 6; i++) {
 				if (ImGui::Selectable(materials[i])) {
@@ -966,7 +966,7 @@ void RigidBody::Inspect() {
 				}
 			}
 			ImGui::EndCombo();
-		}
+		}*/
 
 	}
 

@@ -59,7 +59,7 @@ struct General
 	//enum_tag::enum_tag tagid{};
 	//std::string tag[5] = { "PLAYER","ENEMY","BULLET","STATIC","BUILDING" };
 	//int tagid{ 0 };
-	short tagid = 0;
+	unsigned char tagid = 0;
 	SUBTAG subtag;
 	bool isActive{};
 	bool isPaused{};
@@ -68,20 +68,7 @@ struct General
 	: name(""), subtag(SUBTAG::ACTIVE), isActive(true) 
 	{};
 
-	std::string GetTag() { return ECS::entityTags[tagid]; }
-
-	void SetTag(std::string newTag) { 
-		std::transform(newTag.begin(), newTag.end(), newTag.begin(), ::toupper);
-		//newTag[0] = std::toupper(newTag[0]);
-		for (short i = 0; i < ECS::entityTags.size(); ++i)
-		{
-			if (ECS::entityTags[i] == newTag)
-			{
-				tagid = i;
-				break;
-			}
-		}
-	}
+	std::string GetTag() { return ECS::GetTag(tagid); }
 
 	void Inspect();
 
@@ -200,15 +187,13 @@ struct RigidBody
 	MATERIAL mMaterial;
 	MOTION mMotion;
 	glm::vec3 mVelocity;
+	glm::bvec3 mRotationConstraints;
 
-	RigidBody() : mDensity(10.f), mMaterial(MATERIAL::WOOD), mMotion(MOTION::STATIC), mVelocity(0.f){};
-	RigidBody(float dense, MATERIAL mat, MOTION mot, const glm::vec3& vec)
-		: mDensity(dense), mMaterial(mat), mMotion(mot), mVelocity(vec){}
+	RigidBody() : mDensity(10.f), mMaterial(MATERIAL::WOOD), mVelocity(0.f), mRotationConstraints({ false }), mMotion(MOTION::STATIC) {};
+	RigidBody(float dense, MATERIAL mat, MOTION mot, const glm::vec3& vec, const glm::bvec3& constraints)
+		: mDensity(dense), mMaterial(mat), mMotion(mot), mVelocity(vec), mRotationConstraints(constraints) {}
 	//RTTR_ENABLE()
 
-
-	int mMat{ 0 };
-	int mMot{ 0 };
 	void							Inspect();
 };
 
@@ -216,16 +201,14 @@ struct RigidBody
 /*!
 	[Component] - BoxCollider
  */
- /******************************************************************************/
+/******************************************************************************/
 struct BoxCollider
 {
 	glm::vec3 mScaleOffset;			// final scale = mScaleOffset * Transform.mScale;
 	glm::vec3 mTranslateOffset;		// final pos = Transform.mTranslate + mTranslateOffset;
 	bool mIsTrigger;
-	bool mIsTriggerCollide;
-	uint32_t mTriggerCollidingWith;
 
-	BoxCollider() : mScaleOffset(1.f), mTranslateOffset(0.f), mIsTrigger(false), mIsTriggerCollide(false), mTriggerCollidingWith(0) {}
+	BoxCollider() : mScaleOffset(1.f), mTranslateOffset(0.f), mIsTrigger(false){}
 	
 	//RTTR_ENABLE()
 	void							Inspect();
@@ -241,10 +224,8 @@ struct SphereCollider
 	float mScaleOffset;				// final scale = mScaleOffset * std::max(Transform.mScale.x, Transform.mScale.y, Transform.mScale.z);
 	glm::vec3 mTranslateOffset;		// final pos = Transform.mTranslate + mTranslateOffset;
 	bool mIsTrigger;
-	bool mIsTriggerCollide;
-	uint32_t mTriggerCollidingWith;
 
-	SphereCollider() : mScaleOffset(1.f), mTranslateOffset(0.f), mIsTrigger(false), mIsTriggerCollide(false), mTriggerCollidingWith(0) {};
+	SphereCollider() : mScaleOffset(1.f), mTranslateOffset(0.f), mIsTrigger(false) {};
 
 	//RTTR_ENABLE()
 	void							Inspect();
@@ -256,11 +237,9 @@ struct CapsuleCollider
 	float mRadius;
 	float mHalfHeight;
 	bool mIsTrigger;
-	bool mIsTriggerCollide;
-	uint32_t mTriggerCollidingWith;
 
 
-	CapsuleCollider() : mTranslateOffset(0.f, 0.f, 0.f), mRadius(50.f), mHalfHeight(100.f), mIsTrigger(false), mIsTriggerCollide(false), mTriggerCollidingWith(0) {}
+	CapsuleCollider() : mTranslateOffset(0.f, 0.f, 0.f), mRadius(50.f), mHalfHeight(100.f), mIsTrigger(false){}
 };
 
 /******************************************************************************/

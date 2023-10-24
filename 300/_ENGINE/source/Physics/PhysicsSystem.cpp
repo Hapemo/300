@@ -156,9 +156,12 @@ void PhysicsSystem::CreateActor(PxRigidActor*& actor, const PxTransform& pxform,
 		static_cast<PxRigidDynamic*>(actor)->setLinearVelocity(Convert(rbod.mVelocity));
 
 		PxRigidDynamicLockFlags axis;
-		axis |= PxRigidDynamicLockFlag::eLOCK_ANGULAR_X;
-		axis |= PxRigidDynamicLockFlag::eLOCK_ANGULAR_Y;
-		axis |= PxRigidDynamicLockFlag::eLOCK_ANGULAR_Z;
+		if (rbod.mRotationConstraints.x)
+			axis |= PxRigidDynamicLockFlag::eLOCK_ANGULAR_X;
+		if (rbod.mRotationConstraints.y)
+			axis |= PxRigidDynamicLockFlag::eLOCK_ANGULAR_Y;
+		if (rbod.mRotationConstraints.z)
+			axis |= PxRigidDynamicLockFlag::eLOCK_ANGULAR_Z;
 		static_cast<PxRigidDynamic*>(actor)->setRigidDynamicLockFlags(axis);
 
 		return;
@@ -199,8 +202,17 @@ void PhysicsSystem::Synchronize()
 			refXform.mTranslate = Convert(PXform.p);
 		}
 
-		// update velocity
 		RigidBody& rbod = e.GetComponent<RigidBody>();
+		glm::vec3 rotation = glm::eulerAngles(Convert(PXform.q));
+		
+		if (!rbod.mRotationConstraints.x)
+			refXform.mRotate.x = rotation.x;
+		if (!rbod.mRotationConstraints.y)
+			refXform.mRotate.y = rotation.y;
+		if (!rbod.mRotationConstraints.z)
+			refXform.mRotate.z = rotation.z;
+
+		// update velocity
 		rbod.mVelocity = Convert(static_cast<physx::PxRigidDynamic*>(itr->second.mActor)->getLinearVelocity());
 	}
 }

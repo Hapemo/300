@@ -11,6 +11,8 @@ Functions for setting up, initialize and cleaning up PhysX.
 #include "PxPhysics.h"
 #include "PxPhysicsAPI.h"
 
+using namespace physx;
+
 struct PhysX
 {
 	physx::PxDefaultAllocator mDefaultAllocator;

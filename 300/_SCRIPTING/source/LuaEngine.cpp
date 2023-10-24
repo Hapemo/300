@@ -109,8 +109,7 @@ void LuaGeneral()
         "tagid", &General::tagid,
         "subtag", &General::subtag,
         "isActive", &General::isActive,
-        "GetTag", &General::GetTag,
-        "SetTag", &General::SetTag
+        "GetTag", &General::GetTag
     );
 }
 

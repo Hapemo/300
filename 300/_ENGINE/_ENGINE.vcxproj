@@ -175,6 +175,7 @@
     <ClInclude Include="include\Physics\Actor.h" />
     <ClInclude Include="include\Physics\Accumulator.h" />
     <ClInclude Include="include\Physics\ContactCallback.h" />
+    <ClInclude Include="include\Physics\FilterShader.h" />
     <ClInclude Include="include\Physics\PhysicsTypes.h" />
     <ClInclude Include="include\Physics\PhysicsSystem.h" />
     <ClInclude Include="include\Physics\PhysX.h" />
