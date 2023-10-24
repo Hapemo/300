@@ -60,5 +60,6 @@
     <ClInclude Include="include\Physics\Actor.h" />
     <ClInclude Include="include\Audio\AudioSource.h" />
     <ClInclude Include="include\Audio\AudioTest.h" />
+    <ClInclude Include="include\Audio\Audio3DTest.h" />
   </ItemGroup>
 </Project>

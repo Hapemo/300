@@ -12,6 +12,7 @@ This file contains the base AudioSystem class that supports the following functi
 ****************************************************************************/
 #include "Audio/AudioSystem.h"
 #include "Audio/AudioTest.h" // Scripting Tests (Audio into Lua)
+#include "Audio/Audio3DTest.h"
 
 /******************************************************************************/
 /*!
@@ -118,6 +119,7 @@ void AudioSystem::Init()
 }
 
 static bool testfootstep = false;
+static bool testListener = false;
 /******************************************************************************/
 /*!
 	Update()w
@@ -187,6 +189,12 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 	if (Input::CheckKey(PRESS, P))
 		UnpauseBGMSounds();
 
+	if (Input::CheckKey(PRESS, _5))
+		testListener = true;
+
+	if (testListener)
+		TestMovementAroundAudioSource();
+
 	auto audio_entities = systemManager->ecs->GetEntitiesWith<Audio>();
 
 	/*
@@ -215,7 +223,7 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 				FMOD_VECTOR velocity = { audio_component.mVelocity.x ,audio_component.mVelocity.y , audio_component.mVelocity.z };
 
 				PINFO("SETTING 3D ATTRIBUTES");
-				ErrCodeCheck(audio_component.mChannel->set3DAttributes(&position, &velocity));
+				ErrCodeCheck(audio_component.mChannel->set3DAttributes(&position, &velocity)); // Need to
 			}
 		}
 	
@@ -609,6 +617,9 @@ int AudioSystem::ErrCodeCheck(FMOD_RESULT result)
 		case FMOD_ERR_HEADER_MISMATCH:
 			PWARNING("(20) [FMOD_ERR_HEADER_MISMATCH] : There is a version mismatch between the FMOD header and either the FMOD Studio library or the FMOD Low Level library.");
 			//std::cout << "(20) [FMOD_ERR_HEADER_MISMATCH] : There is a version mismatch between the FMOD header and either the FMOD Studio library or the FMOD Low Level library." << std::endl;
+			break;
+		case FMOD_ERR_INVALID_HANDLE:
+			PWARNING("(30) [FMOD_ERR_INVALID_HANDLE] : An invalid object has been passed into the FMOD function (check for nullptr)");
 			break;
 		}
 
