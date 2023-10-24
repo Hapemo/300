@@ -45,22 +45,19 @@ struct instance_infos
 struct ref {
 
     void*       data {nullptr};
-    unsigned    data_uid;
-
-    void* get(std::unordered_map<std::uint64_t, instance_infos*>& m_ResourceInstance) {
-        
+    unsigned    data_uid {0};
+    
+    void* getdata(std::unordered_map<std::uint64_t, instance_infos*>& m_ResourceInstance) {
 
         if (data == nullptr) {
             auto it = m_ResourceInstance.find(data_uid);
-            if(it == m_ResourceInstance.end())
+            if (it == m_ResourceInstance.end())
                 return nullptr;
+
+            data = it->second->m_pData;
         }
-
-        return &( * m_ResourceInstance.find(data_uid));
+        return data;
     };
-
-    
-
 };
 /***************************************************************************/
 /*!

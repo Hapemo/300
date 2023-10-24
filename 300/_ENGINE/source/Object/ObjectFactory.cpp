@@ -30,6 +30,8 @@ void ObjectFactory::LoadEntity(Entity e, rapidjson::Value& reader)
 	DESERIALIZE_SELF(Transform, "transform");
 	DESERIALIZE_SELF(RigidBody, "rigidbody");
 	DESERIALIZE_SELF(MeshRenderer, "meshrenderer");
+	if (e.HasComponent<MeshRenderer>())
+		e.AddComponent<Animator>();
 	DESERIALIZE_SELF(BoxCollider, "boxcollider");
 	DESERIALIZE_SELF(SphereCollider, "spherecollider");
 	DESERIALIZE_SELF(CapsuleCollider, "capsulecollider");
