@@ -155,8 +155,7 @@ void LuaSphereCollider()
 void LuaScript()
 {
     systemManager->mScriptingSystem->luaState.new_usertype<Scripts>(
-        "Scripts", sol::constructors<>(),
-        "mScriptFile", &Scripts::mScriptFile
+        "Scripts", sol::constructors<>()
     );
 }
 

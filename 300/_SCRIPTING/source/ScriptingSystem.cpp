@@ -42,6 +42,7 @@ has to be done (Attachment of scripts and running of scripts)
 #include "Debug/Logger.h"
 #include "CustomCompCont.h"
 #include "Debug/EnginePerformance.h"
+#include "GameState/GameStateManager.h"
 
 bool ScriptingSystem::printOnce = false;
 
@@ -221,6 +222,12 @@ void ScriptingSystem::Update(float dt)
     //    //    } 
     //    once = false;
     //}
+
+    //Test Collide (To delete)
+    //Entity girl = systemManager->mGameStateSystem->GetEntity("Girl", "Test1");
+    //Entity floor = systemManager->mGameStateSystem->GetEntity("Floor", "Test1");
+    //girl.GetComponent<Scripts>().RunFunctionForAllScripts("OnTriggerExit", floor.id);
+    //std::cout << "id is : " << (int32_t)floor.id << std::endl;
 }
 
 void ScriptingSystem::Exit()

@@ -11,7 +11,7 @@ Components used by the ECS.
 
 #pragma once
 
-#define TAGCOUNT 32
+//#define TAGCOUNT 32
 
 #include "glm/glm.hpp"
 #include <algorithm>
@@ -254,8 +254,17 @@ public:
 
 	//static void LoadRunScript(Entity entity);
 
-	std::string mScriptFile{};
+	//std::string mScriptFile{};
 	std::vector <Script> scriptsContainer;
+
+	template<typename ...args>
+	void RunFunctionForAllScripts(const char* funcName, args... arguments)
+	{
+		for (auto& elem : scriptsContainer)
+		{
+			elem.Run(funcName, arguments...);
+		}
+	}
 
 	//RTTR_ENABLE()
 	void Inspect();
