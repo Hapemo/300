@@ -120,11 +120,11 @@ void GraphicsSystem::Update(float dt)
 		MeshRenderer& meshRenderer = inst.GetComponent<MeshRenderer>();
 
 		// if the mesh instance is not active, skip it
-		if (meshRenderer.mMeshRef.data == nullptr)
+		if (meshRenderer.mMeshRef.getdata(systemManager->mResourceTySystem->m_ResourceInstance) == nullptr)
 			continue;
 
 		// gives me the mesh
-		void *tt = meshRenderer.mMeshRef.data;
+		void *tt = meshRenderer.mMeshRef.getdata(systemManager->mResourceTySystem->m_ResourceInstance);
 		GFX::Mesh &meshinst = *reinterpret_cast<GFX::Mesh *>(tt);
 
 		// pushback LTW matrices
@@ -268,7 +268,7 @@ void GraphicsSystem::EditorDraw(float dt)
 	for (Entity inst : meshRendererInstances)
 	{
 		auto& meshrefptr = inst.GetComponent<MeshRenderer>();
-		if (meshrefptr.mMeshRef.data == nullptr)
+		if (meshrefptr.mMeshRef.getdata(systemManager->mResourceTySystem->m_ResourceInstance) == nullptr)
 			continue;
 
 		std::string meshstr = inst.GetComponent<MeshRenderer>().mMeshPath;
@@ -302,7 +302,7 @@ void GraphicsSystem::EditorDraw(float dt)
 		GFX::Texture* textureInst[4]{};
 		for (int i{ 0 }; i < 4; i++)
 		{
-			if (inst.GetComponent<MeshRenderer>().mTextureRef[i].data != nullptr)
+			if (inst.GetComponent<MeshRenderer>().mTextureRef[i].getdata(systemManager->mResourceTySystem->m_ResourceInstance) != nullptr)
 			{
 				textureInst[i] = reinterpret_cast<GFX::Texture *>(inst.GetComponent<MeshRenderer>().mTextureRef[i].data);
 			}
@@ -344,7 +344,7 @@ void GraphicsSystem::EditorDraw(float dt)
 		// bind texture unit
 		for (int i{0}; i < 4; i++)
 		{
-			if (inst.GetComponent<MeshRenderer>().mTextureRef[i].data != nullptr)
+			if (inst.GetComponent<MeshRenderer>().mTextureRef[i].getdata(systemManager->mResourceTySystem->m_ResourceInstance) != nullptr)
 			{
 				glBindTextureUnit(i, textureInst[i]->ID());
 			}
@@ -430,7 +430,7 @@ void GraphicsSystem::GameDraw(float dt)
 	{
 
 		auto& meshrefptr = inst.GetComponent<MeshRenderer>();
-		if (meshrefptr.mMeshRef.data == nullptr)
+		if (meshrefptr.mMeshRef.getdata(systemManager->mResourceTySystem->m_ResourceInstance) == nullptr)
 			continue;
 
 		std::string meshstr = inst.GetComponent<MeshRenderer>().mMeshPath;
@@ -444,7 +444,7 @@ void GraphicsSystem::GameDraw(float dt)
 		renderedMesh[meshstr] = 1;
 
 		// render the mesh and its instances here
-		GFX::Mesh &meshinst = *reinterpret_cast<GFX::Mesh *>(inst.GetComponent<MeshRenderer>().mMeshRef.data);
+		GFX::Mesh &meshinst = *reinterpret_cast<GFX::Mesh *>(inst.GetComponent<MeshRenderer>().mMeshRef.getdata(systemManager->mResourceTySystem->m_ResourceInstance));
 
 		// gets the shader filepath
 		std::string shader{};
@@ -459,7 +459,7 @@ void GraphicsSystem::GameDraw(float dt)
 		GFX::Texture *textureInst[4]{};
 		for (int i{0}; i < 4; i++)
 		{
-			if (inst.GetComponent<MeshRenderer>().mTextureRef[i].data != nullptr)
+			if (inst.GetComponent<MeshRenderer>().mTextureRef[i].getdata(systemManager->mResourceTySystem->m_ResourceInstance) != nullptr)
 			{
 				textureInst[i] = reinterpret_cast<GFX::Texture *>(inst.GetComponent<MeshRenderer>().mTextureRef[i].data);
 			}
@@ -486,7 +486,7 @@ void GraphicsSystem::GameDraw(float dt)
 
 		for (int i{0}; i < 4; i++)
 		{
-			if (inst.GetComponent<MeshRenderer>().mTextureRef[i].data != nullptr)
+			if (inst.GetComponent<MeshRenderer>().mTextureRef[i].getdata(systemManager->mResourceTySystem->m_ResourceInstance) != nullptr)
 			{
 				glBindTextureUnit(i, textureInst[i]->ID());
 			}
