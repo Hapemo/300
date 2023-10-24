@@ -1,6 +1,6 @@
 test = "HIIIII" 
 local test4 = 6.0
-vec = Vec3.new(3, 5, 7)
+vec = Vec3.new(0.3, 0.5, 0.7)
 vec4 = Vec4.new(6,7,8,9)
 name = "Girl"
 speed = 20
@@ -22,6 +22,7 @@ function Update()
     end
     generalComponent = entity:GetGeneral()
     transformComponent = entity:GetTransform()
+    --vfxComponent = entity:GetVFX();
     -- Change entity name to enemy
     generalComponent.name = "Enemy"
     --[[ Get entity Tag
@@ -65,6 +66,10 @@ function Update()
             create = create + 1
         end
 
+        --Test VFX Component
+        --vfxComponent:EnableObjectBloom();
+        --vfxComponent:SetEntityBloomThreshold(vec);
+
         -- Physics Set Velocity function
         -- physicsSys = systemManager:mPhysicsSystem();
         -- physicsSys:SetVelocity(entity, vec);
@@ -103,6 +108,15 @@ function Update()
     --     print("yes")
     -- end
     -- print("End")
+
+    -- Test animation
+    -- animationComponent = entity:GetAnimator()
+    -- animationComponent:PauseAnimation()
+
+    -- Test Bloom
+    --graphicsSys = systemManager:mGraphicsSystem();
+    --graphicsSys:SetGlobalBloomThreshold(vec)
+    --graphicsSys:SetGlobalBloomExposure(0.5)
 end
 
 function Dead()

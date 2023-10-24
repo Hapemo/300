@@ -8,12 +8,16 @@ function Update()
     if entity == nil then
         print("Entity nil in script!")
     end
-    entityAudio = entity:AddAudio();
+    if entity:HasAudio() == false then
+        entityAudio = entity:AddAudio();
+    end
 
     -- Get other entity by name
     gameStateSys = systemManager:mGameStateSystem();
     floorEntity = gameStateSys:GetEntity("Floor", "Test1")
-    floorAudio = floorEntity:AddAudio();
+    if entity:HasAudio() == false then
+        floorAudio = floorEntity:AddAudio();
+    end
 
     -- Audio Test
     entityAudioSource = Helper.CreateAudioSource(entity)
@@ -34,8 +38,8 @@ function Update()
     elseif Input.CheckKey(State.HOLD, Key.KEY_X) then
         entityAudioSource:Pause();
     end
-    -- audioSys = systemManager:mAudioSystem();
-    -- audioSys:LoadAudioFromDirectory("../assets\\Audio")
+    --audioSys = systemManager:mAudioSystem();
+    --audioSys:LoadAudioFromDirectory("../assets\\Audio")
 end
 
 function Dead()

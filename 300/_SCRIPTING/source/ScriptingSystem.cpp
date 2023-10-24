@@ -113,6 +113,7 @@ void ScriptingSystem::Init()
     LuaEntity();
     LuaGeneral();
     LuaTransform();
+    LuaAnimator();
     LuaRigidBody();
     LuaBoxCollider();
     LuaSphereCollider();
@@ -124,10 +125,12 @@ void ScriptingSystem::Init()
     LuaAudioSource();
     LuaAudio();
     LuaInputMapSystem();
+    LuaGraphicsSystem();
     LuaPhysics();
     LuaScripting();
     LuaPointLight();
     LuaMeshRenderer();
+    LuaVFX();
     LuaGameState();
 
     /******************************************************************************/

@@ -26,7 +26,8 @@ void LuaEngine()
         "mScriptingSystem", &SystemManager::GetScriptingPointer,
         "mAudioSystem", &SystemManager::GetAudioPointer,
         "mInputActionSystem", &SystemManager::GetInputMapSystemPointer,
-        "mGameStateSystem", &SystemManager::GetGameStateSystem
+        "mGameStateSystem", &SystemManager::GetGameStateSystem,
+        "mGraphicsSystem", &SystemManager::GetGraphicsSystem
     );
 }
 
@@ -58,6 +59,10 @@ void LuaEntity()
 
         DECLARE_COMPONENT("GetTransform", Transform),
         "HasTransform", &Entity::HasComponent<Transform>,
+
+        ADD_COMPONENT("AddAnimator", Animator),
+        DECLARE_COMPONENT("GetAnimator", Animator),
+        "HasAnimator", & Entity::HasComponent<Animator>,
 
         ADD_COMPONENT("AddRigidBody", RigidBody),
         DECLARE_COMPONENT("GetRigidBody", RigidBody),
@@ -97,7 +102,11 @@ void LuaEntity()
 
         ADD_COMPONENT("AddMeshRenderer", MeshRenderer),
         DECLARE_COMPONENT("GetMeshRenderer", MeshRenderer),
-        "HasMeshRenderer", &Entity::HasComponent<MeshRenderer>
+        "HasMeshRenderer", &Entity::HasComponent<MeshRenderer>,
+
+        ADD_COMPONENT("AddVFX", VFX),
+        DECLARE_COMPONENT("GetVFX", VFX),
+        "HasVFX", & Entity::HasComponent<VFX>
     );
 }
 
@@ -123,6 +132,15 @@ void LuaTransform()
         "mRotate", &Transform::mRotate,
         "mTranslate", &Transform::mTranslate
     );
+}
+
+void LuaAnimator()
+{
+    systemManager->mScriptingSystem->luaState.new_usertype<Animator>(
+        "Animator", sol::constructors<>(),
+        "PauseAnimation", &Animator::PauseAnimation,
+        "UnpauseAnimation", &Animator::UnpauseAnimation
+        );
 }
 
 void LuaRigidBody()
@@ -251,6 +269,17 @@ void LuaInputMapSystem()
     );
 }
 
+void LuaGraphicsSystem()
+{
+    systemManager->mScriptingSystem->luaState.new_usertype<GraphicsSystem>(
+        "mGraphicsSystem", sol::constructors<>(),
+        "EnableGlobalBloom", &GraphicsSystem::EnableGlobalBloom,
+        "DisableGlobalBloom", &GraphicsSystem::DisableGlobalBloom,
+        "SetGlobalBloomThreshold", &GraphicsSystem::SetGlobalBloomThreshold,
+        "SetGlobalBloomExposure", &GraphicsSystem::SetGlobalBloomExposure
+        );
+}
+
 void LuaPhysics()
 {
     systemManager->mScriptingSystem->luaState.new_usertype<PhysicsSystem>(
@@ -283,6 +312,16 @@ void LuaMeshRenderer()
         "SetMesh", &MeshRenderer::SetMesh,
         "SetTexture", &MeshRenderer::SetTexture
     );
+}
+
+void LuaVFX()
+{
+    systemManager->mScriptingSystem->luaState.new_usertype<VFX>(
+        "VFX", sol::constructors<>(),
+        "EnableObjectBloom", &VFX::EnableObjectBloom,
+        "DisableObjectBloom", &VFX::DisableObjectBloom,
+        "SetEntityBloomThreshold", &VFX::SetEntityBloomThreshold
+        );
 }
 
 void LuaGameState()
