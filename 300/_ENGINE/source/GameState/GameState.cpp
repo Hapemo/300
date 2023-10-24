@@ -14,12 +14,14 @@ time.
 #include "Object/ObjectFactory.h"
 #include "ECS/ECS.h"
 #include "GameState/GameStateManager.h"
+#include "AI/AIManager.h"
 
 void GameState::Init() {
 	//LOG_INFO("Init() called for gamestate: " + mName + +" ==================");
 	for (auto& scene : mScenes) {
 		if (!scene.mIsPause) scene.Init();
 	}
+	systemManager->mAISystem->InitAIs();
 }
 
 void GameState::Exit() {
@@ -28,6 +30,7 @@ void GameState::Exit() {
 		for (auto e : scene.mEntities)
 			if (e.HasComponent<Scripts>()) systemManager->GetScriptingPointer()->ScriptDead(e);
 	}
+	systemManager->mAISystem->ClearAIs();
 }
 
 

@@ -4,20 +4,18 @@
 #include "ECS/ECS.h"
 #include "ECS/ECS_Components.h"
 // TODO
-// - How to set up target
-// - How to add ground entities and flying entities to container to keep track
 // 
 // 
 // Testing needed
 // - Test the spreadout
+// - Test the shot prediction
+// - Test flying enemy movement
 // 
 
 #define ADDITEMARR_E_MOVEMENT_TYPE(x) arr[static_cast<int>(E_MOVEMENT_TYPE::x)] = #x;
 
-// All the label for names of container of AIs
-#define GROUND_ENEMY "GroundEnemy"
-#define AIR_ENEMY "AirEnemy"
 #define MAX_DECISECOND_PLAYER_HISTORY 30
+#define PLAYER_NAME "Player"
 
 enum class E_MOVEMENT_TYPE : char {
 	BEGIN,
@@ -38,28 +36,17 @@ public:
 	AIManager();
 
 	/*!*****************************************************************************
-	Get the direction of entity which movement is dictated by AI.
-
-	\param _e
-	- Entity to find direction of
-
-	\return glm::vec3
-	- Direction of movement dictated by AI
+	Does the following tasks:
+	- track player position
 	*******************************************************************************/
-	glm::vec3 GetDirection(Entity _e);
+	void Update(float _dt);
 
 	/*!*****************************************************************************
 	Takes the position of player every 0.1s and keep a history of it. Will not run
 	if mPlayer is entt::null
 	* This function has to be ran every loop. *
-
-	\param _e
-	- Entity to find direction of
-
-	\return glm::vec3
-	- Next position of the entity dictated by AI
 	*******************************************************************************/
-	void TrackPlayerPosition();
+	void TrackPlayerPosition(float _dt);
 
 	/*!*****************************************************************************
 	Set the player entity in AIManager
@@ -75,8 +62,79 @@ public:
 	*******************************************************************************/
 	void ResetPlayerTracking();
 
+	/*!*****************************************************************************
+	Initialise the AI data of all the AI in active gamestate.
+	Initialise player if it exists.
+	* Player name has to be same as macro PLAYER_NAME *
+	* Has to be called at start of every game state with AI component*
+	*******************************************************************************/
+	void InitAIs();
+
+	/*!*****************************************************************************
+	Wipe out all the data of entities in AI Manager
+	* Has to be called at end of every game state with AI component*
+	*******************************************************************************/
+	void ClearAIs();
+
 	std::array<std::string, static_cast<size_t>(E_MOVEMENT_TYPE::SIZE)> const& GetMovementTypeArray() { return mMovementTypeArray; }
+
+public:
+	// Script Functions
+
+	/*!*****************************************************************************
+	Predict target's final position when the projectile is launched, based on
+	target's current position and velocity. Automatically update projectile's
+	velocity
+
+	\param projectile
+	- Entity id of projectile
+
+	\param target
+	- Entity id of target
+
+	\param speed
+	- Speed of projectile
+	*******************************************************************************/
+	void SetPredictiveVelocity(Entity projectile, Entity target, float speed);
+
+	/*!*****************************************************************************
+	Predict player's final position when the projectile is launched, based on
+	player's past few positions. Automatically update projectile's velocity.
+	Player's current direction takes 50% weightage, while history takes the other 50.
+
+	*Require
+
+	\param projectile
+	- Entity id of projectile
+
+	\param speed
+	- Speed of projectile
+
+	\param deciseconds
+	- Amount of time to take account of player's past position (in scale of 1/10)
+	*******************************************************************************/
+	void PredictiveShootPlayer(Entity projectile, float speed, short deciseconds, unsigned weightage);
+
+	/*!*****************************************************************************
+	Get the direction of entity which movement is dictated by AI.
+
+	\param _e
+	- Entity to find direction of
+
+	\return glm::vec3
+	- Direction of movement dictated by AI
+	*******************************************************************************/
+	glm::vec3 GetDirection(Entity _e);
+
 private:
+
+	/*!*****************************************************************************
+	Does the following procedures to initialise the AI
+	- Adds the AI to AI Manager to keep track
+	- Initialises the Target entity ID with the target name
+	* Must be called when AI Setting component is added to an entity *
+	*******************************************************************************/
+	void InitialiseAI(Entity _e);
 
 	/*!*****************************************************************************
 	Calculate the ground AI next direction
@@ -113,42 +171,25 @@ private:
 	void SpreadOut(Entity _e, glm::vec3& dir);
 
 	/*!*****************************************************************************
-	Predict target's final position when the projectile is launched, based on
-	target's current position and velocity. Automatically update projectile's
-	velocity
+	Calculate the predictive velocity to hit target
+	index 0 being target, index 1 being projectile
+	\param p1p0
+	- Vector of projectile position to target position
 
-	\param projectile
-	- Entity id of projectile
+	\param v0
+	- Velocity of target
 
-	\param target
-	- Entity id of target
-
-	\param speed
-	- Speed of projectile
-	*******************************************************************************/
-	void SetPredictiveVelocity(Entity projectile, Entity target, float speed);
-
-	/*!*****************************************************************************
-	Predict player's final position when the projectile is launched, based on
-	player's past few positions. Automatically update projectile's velocity.
-	Player's current direction takes 50% weightage, while history takes the other 50.
-
-	*Require
-
-	\param projectile
-	- Entity id of projectile
-
-	\param speed
+	\param s1
 	- Speed of projectile
 
-	\param deciseconds
-	- Amount of time to take account of player's past position (in scale of 1/10)
+	\return glm::vec3
+	- Predictive velocity of projectile
 	*******************************************************************************/
-	void PredictiveShootPlayer(Entity projectile, float speed, short deciseconds, unsigned weightage);
-
 	glm::vec3 CalculatePredictiveVelocity(glm::vec3 const& p1p0, glm::vec3 const& v0, const float s1);
 
-
+	/*!*****************************************************************************
+	Initialise mMovementTypeArray
+	*******************************************************************************/
 	static std::array<std::string, static_cast<size_t>(E_MOVEMENT_TYPE::SIZE)> MovementTypeArrayInit() {
 		std::array<std::string, static_cast<size_t>(E_MOVEMENT_TYPE::SIZE)> arr;
 
@@ -161,13 +202,12 @@ private:
 private:
 	Entity mPlayerEntity;
 	Transform* mPlayerTransform;
-	short mPlayerArrayFirstCounter;
 	short mPlayerHistorySize;																											// Counting the size of mPlayerHistory container
 	short mPlayerArrayIndex;																											// Indicating the latest index in the array to replace
 	std::array<glm::vec3, MAX_DECISECOND_PLAYER_HISTORY> mPlayerHistory;					// Contains the player's position for the past 3 seconds, storing every deciseconds
 	std::unordered_map<std::string, std::set<Entity>> mAILists;										// Contains the different list of AIs of different classification. string is the name of container
 
-	static const std::array<std::string, static_cast<size_t>(E_MOVEMENT_TYPE::SIZE)> mMovementTypeArray;
+	static const std::array<std::string, static_cast<size_t>(E_MOVEMENT_TYPE::SIZE)> mMovementTypeArray; // Contains all the name of E_MOVEMENT_TYPE
 
 };
 
