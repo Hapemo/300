@@ -227,7 +227,7 @@ void Inspect::Add_component() {
 
 		if (ImGui::Selectable("AudioListener")) {
 			if (!Entity(Hierarchy::selectedId).HasComponent<AudioListener>())
-				Entity(Hierarchy::selectedId).AddComponent<AudioListener>();
+				Entity(Hierarchy::selectedId).AddComponent<AudioListener>();				
 		}
 
 		if (ImGui::Selectable("VFX")) {
@@ -1006,6 +1006,8 @@ void Audio::Inspect() {
 	std::string file_path;		 // Only Audio Directory	  e.g "../assets\\Audio"
 	std::string audio_name;      // Audio Name only.		  e.g "farm_ambience.wav"
 
+	float vol_changed = false; 
+
 	const char* audio_type[] = { "SFX" , "BGM" };
 
 	// Audio Component (Bar)
@@ -1092,6 +1094,12 @@ void Audio::Inspect() {
 		ImGui::Checkbox("Play on Awake", &mPlayonAwake);
 		ImGui::Checkbox("Is Looping", &mIsLooping);
 		ImGui::SliderFloat("Volume", &mVolume, 0.0f, 1.0f, "volume = %.3f");
+
+		if (ImGui::IsItemEdited())
+		{
+			mChannel->setVolume(mVolume);
+		}
+
 		ImGui::SliderFloat("Fade Speed", &mFadeSpeedModifier, 0.0f, 1.0f, "fade = %.3f");
 
 		if (m3DAudio)
@@ -1099,7 +1107,7 @@ void Audio::Inspect() {
 			ImGui::SliderFloat("Min Distance", &mMinDistance, 0.0f, 3000.0f, "%.3f");
 			ImGui::SliderFloat("Max Distance", &mMaxDistance, 0.0f, 3000.0f, "%.3f");
 
-			systemManager->mAudioSystem.get()->Update3DSettings(Entity(Hierarchy::selectedId)); 
+			systemManager->mAudioSystem.get()->Update3DChannelSettings(Entity(Hierarchy::selectedId)); 
 		}
 
 	}
@@ -1142,6 +1150,13 @@ void Audio::Inspect() {
 /***************************************************************************/
 void AudioListener::Inspect() {
 	bool delete_component = true;
+
+	// Audio Component (Bar)
+	if (ImGui::CollapsingHeader("Audio Listener", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
+	{
+
+	}
+
 	
 	if (delete_component == false)
 		Entity(Hierarchy::selectedId).RemoveComponent<AudioListener>();

@@ -560,16 +560,29 @@ void AudioSystem::InitAudioChannelReference(Entity id)
 	}
 }
 
-// Updates the [3D audio information]
-void AudioSystem::Update3DSettings(Entity id)
+// Updates the [3D Channel information]
+void AudioSystem::Update3DChannelSettings(Entity id)
 {
 	Audio& audio_component = id.GetComponent<Audio>();
 
 	FMOD_VECTOR pos = { audio_component.mPosition.x, audio_component.mPosition.y , audio_component.mPosition.z };
 	FMOD_VECTOR vel = { audio_component.mVelocity.x, audio_component.mVelocity.y , audio_component.mVelocity.z };
 	
-	PINFO("Setting 3D Attributes for this <Audio> component.");
+	PINFO("Setting 3D Attributes for channel that exists in this <Audio> component."); 
 	ErrCodeCheck(audio_component.mChannel->set3DAttributes(&pos, &vel));
+}
+
+void AudioSystem::SetupListenerAttributes(Entity id)
+{
+	AudioListener& listener_component = id.GetComponent<AudioListener>();
+
+	FMOD_VECTOR listener_position = { listener_component.mPosition.x, listener_component.mPosition.y , listener_component.mPosition.z };
+	FMOD_VECTOR listener_velocity = { listener_component.mVelocity.x, listener_component.mVelocity.y , listener_component.mVelocity.z };
+	FMOD_VECTOR listener_forward  = { listener_component.mForward.x, listener_component.mForward.y , listener_component.mForward.z };
+	FMOD_VECTOR listener_up       = { listener_component.mUp.x, listener_component.mUp.y , listener_component.mUp.z };
+
+	PINFO("Initializing 3D AudioListener Parameters."); 
+	ErrCodeCheck(system_obj->set3DListenerAttributes(0, &listener_position, &listener_velocity, &listener_forward, &listener_up)); // 1st param = 0 (means only 1 Listener can exist at one time)
 }
 
 
@@ -694,6 +707,7 @@ bool AudioSystem::LoadAudio(std::string file_path, std::string audio_name, Audio
 //	return true;
 //}
 
+
 bool AudioSystem::LoadAudioFromDirectory(std::string directory_path)
 {
 	for (const auto& file : std::filesystem::directory_iterator(directory_path))
@@ -709,7 +723,7 @@ bool AudioSystem::LoadAudioFromDirectory(std::string directory_path)
 
 			PINFO("Creating Sound: ");
 			FMOD::Sound* new_sound;
-			bool check = ErrCodeCheck(system_obj->createSound(file_path.c_str(), FMOD_LOOP_OFF, 0, &new_sound));
+			bool check = ErrCodeCheck(system_obj->createSound(file_path.c_str(), FMOD_DEFAULT, 0, &new_sound));
 
 			if (!check)
 			{
