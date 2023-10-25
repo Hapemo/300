@@ -477,10 +477,6 @@ struct VFX : public Serializable
 	void DeserializeSelf(rapidjson::Value& reader);
 };
 
-
-// Added [9/27]
-// Pseudo-Component (Helps InputActionMapEditor)
-
 /******************************************************************************/
 /*!
 	[Component] - AIData
@@ -492,7 +488,15 @@ struct AISetting {
 	bool mShotPrediction;						// AI's bullet predict target's movement
 	float mSpreadOut;								// Degree of spreading out from another entity
 	float mStayAway;								// Distance to stay away from player
-	Entity mTarget;					// AI's target
+	std::string mTargetName;				// Name of target (Will be searching via gamestate, not scene)
+
+	void Inspect();
+	Entity GetTarget() { return mTarget; }
+	Entity GetTarget() const { return mTarget; }
+	void SetTarget(Entity _e) { mTarget = _e; }
+
+private: 
+	Entity mTarget;									// AI's target
 };
 
 

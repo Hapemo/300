@@ -83,7 +83,7 @@ void Entity::Deactivate() {
 	//------------------------------------------------------------------
 }
 
-ECS::ECS() : registry(), NullEntity(registry.create()), mClipboard(0) {} 
+ECS::ECS() : registry(), mClipboard(0) {} 
 
 Entity ECS::NewEntity()
 {
