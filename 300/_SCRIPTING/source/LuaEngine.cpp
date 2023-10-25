@@ -119,8 +119,7 @@ void LuaGeneral()
         "tagid", &General::tagid,
         "subtag", &General::subtag,
         "isActive", &General::isActive,
-        "GetTag", &General::GetTag,
-        "SetTag", &General::SetTag
+        "GetTag", &General::GetTag
     );
 }
 
@@ -175,8 +174,7 @@ void LuaSphereCollider()
 void LuaScript()
 {
     systemManager->mScriptingSystem->luaState.new_usertype<Scripts>(
-        "Scripts", sol::constructors<>(),
-        "mScriptFile", &Scripts::mScriptFile
+        "Scripts", sol::constructors<>()
     );
 }
 

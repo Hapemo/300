@@ -87,6 +87,8 @@ function Update()
         --Helper.printTest()
         --Helper.test = 300
         --script_entity.id = 60
+        generalComponent:SetTag("static");
+        tag = generalComponent:GetTag();
     end
 
     --Test Default Param
@@ -131,4 +133,14 @@ function Testing(a,b,c)
     print(a)
     print(b)
     print(c)
+function OnTriggerEnter(Entity)
+    
+end
+
+function OnTrigger(Entity)
+    
+end
+
+function OnTriggerExit(Entity)
+    
 end

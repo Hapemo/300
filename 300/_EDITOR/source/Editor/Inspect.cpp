@@ -286,22 +286,21 @@ void General::Inspect() {
 	//}
 
 
-	ImGui::Text("Tag");
+	//ImGui::Text("Tag");
 
-	ImGui::SameLine();
-	ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
-		- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+	//ImGui::SameLine();
+	//ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+	//	- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
 
-	if (ImGui::BeginCombo("##Tag", enum_tag::ToString(tagid))) {
+	//if (ImGui::BeginCombo("##Tag", ECS::entityTags[tagid].c_str())) {
 
-		for (int i = 0; i < enum_tag::COUNT; i++) {
-			enum_tag::enum_tag temp = static_cast<enum_tag::enum_tag>(i);
-			if (ImGui::Selectable(enum_tag::ToString(temp))) {
-				tagid = static_cast<enum_tag::enum_tag>(i);
-			}
-		}
-		ImGui::EndCombo();
-	}
+	//	for (short i{}; i < ECS::entityTags.size(); ++i)
+	//	{
+	//		if (ImGui::Selectable(ECS::entityTags[i].c_str()))
+	//			tagid = i;
+	//	}
+	//	ImGui::EndCombo();
+	//}
 }
 
 /***************************************************************************/
@@ -455,7 +454,7 @@ void Scripts::Inspect() {
 			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_LUA"))
 			{
 				data_script = (const char*)payload->Data;
-				scripts.mScriptFile = std::string(data_script);
+				//scripts.mScriptFile = std::string(data_script);
 				std::string dataScript = std::string(data_script);
 
 				// if entity does not contain any script, just add 
@@ -475,7 +474,7 @@ void Scripts::Inspect() {
 
 					for (auto& elem : scripts.scriptsContainer)
 					{
-						if (elem.scriptFile == scripts.mScriptFile)
+						if (elem.scriptFile == dataScript)
 						{
 							hasScript = true;
 							//std::cout << "Script is already attached! " << std::endl;
@@ -918,7 +917,7 @@ void RigidBody::Inspect() {
 		const char* motions[] = { "STATIC", "DYNAMIC" };
 
 
-		if (ImGui::BeginCombo("Material", (materials[mMat]))) {
+		/*if (ImGui::BeginCombo("Material", (materials[mMat]))) {
 
 			for (unsigned char i{ 0 }; i < 6; i++) {
 				if (ImGui::Selectable(materials[i])) {
@@ -938,7 +937,7 @@ void RigidBody::Inspect() {
 				}
 			}
 			ImGui::EndCombo();
-		}
+		}*/
 
 	}
 

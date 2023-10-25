@@ -66,6 +66,7 @@ private:
 	template <typename T>
 	void CreateShape(PxShape*& shape, const T& geometry, const RigidBody& rbod, bool isTrigger);
 
+
 	void AttachShape(PxRigidActor*& actor, PxShape*& shape, const PxTransform& localPose);
 	
 	void Synchronize();

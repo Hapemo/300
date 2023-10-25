@@ -10,6 +10,9 @@ Components used by the ECS.
 ****************************************************************************/
 
 #pragma once
+
+//#define TAGCOUNT 32
+
 #include "glm/glm.hpp"
 #include <algorithm>
 #include "Script.h"
@@ -21,6 +24,7 @@ Components used by the ECS.
 #include "../../../lib/FMOD/core/inc/fmod.hpp"
 #include <Animator.hpp>
 #include <Camera.hpp>
+#include <string>
 #include "EnumStrings.h"
 #include "Input/Input.h"
 #include "Guid.h"
@@ -33,10 +37,10 @@ Components used by the ECS.
 
 //#include "rttr/registration.h"
 
-DECLARE_ENUMSTRING(enum_tag, PLAYER, ENEMY, BULLET, STATIC, BUILDING)
+//DECLARE_ENUMSTRING(enum_tag, PLAYER, ENEMY, BULLET, STATIC, BUILDING)
+
 struct uid;
 
-//DECLARE_ENUMSTRING(enum_tag, PLAYER, ENEMY, BULLET, STATIC, BUILDING)
 namespace GFX {
 	struct Mesh;
 
@@ -52,9 +56,10 @@ struct General
 	std::string name;
 	/*TAG tag;*/
 	//enum_tag::enum_tag tag{};
-	enum_tag::enum_tag tagid{};
+	//enum_tag::enum_tag tagid{};
 	//std::string tag[5] = { "PLAYER","ENEMY","BULLET","STATIC","BUILDING" };
 	//int tagid{ 0 };
+	unsigned char tagid = 0;
 	SUBTAG subtag;
 	bool isActive{};
 	bool isPaused{};
@@ -63,13 +68,7 @@ struct General
 	: name(""), subtag(SUBTAG::ACTIVE), isActive(true) 
 	{};
 
-	std::string GetTag() { return enum_tag::ToString(tagid); }
-
-	void SetTag(std::string newTag) { 
-		std::transform(newTag.begin(), newTag.end(), newTag.begin(), ::tolower);
-		newTag[0] = std::toupper(newTag[0]);
-		tagid = enum_tag::GetEnum(newTag.c_str()); 
-	}
+	std::string GetTag() { return ECS::GetTag(tagid); }
 
 	void Inspect();
 
@@ -189,15 +188,13 @@ struct RigidBody
 	MATERIAL mMaterial;
 	MOTION mMotion;
 	glm::vec3 mVelocity;
+	glm::bvec3 mRotationConstraints;
 
-	RigidBody() : mDensity(10.f), mMaterial(MATERIAL::WOOD), mMotion(MOTION::STATIC), mVelocity(0.f){};
-	RigidBody(float dense, MATERIAL mat, MOTION mot, const glm::vec3& vec)
-		: mDensity(dense), mMaterial(mat), mMotion(mot), mVelocity(vec){}
+	RigidBody() : mDensity(10.f), mMaterial(MATERIAL::WOOD), mVelocity(0.f), mRotationConstraints({ false }), mMotion(MOTION::STATIC) {};
+	RigidBody(float dense, MATERIAL mat, MOTION mot, const glm::vec3& vec, const glm::bvec3& constraints)
+		: mDensity(dense), mMaterial(mat), mMotion(mot), mVelocity(vec), mRotationConstraints(constraints) {}
 	//RTTR_ENABLE()
 
-
-	int mMat{ 0 };
-	int mMot{ 0 };
 	void							Inspect();
 };
 
@@ -205,16 +202,14 @@ struct RigidBody
 /*!
 	[Component] - BoxCollider
  */
- /******************************************************************************/
+/******************************************************************************/
 struct BoxCollider
 {
 	glm::vec3 mScaleOffset;			// final scale = mScaleOffset * Transform.mScale;
 	glm::vec3 mTranslateOffset;		// final pos = Transform.mTranslate + mTranslateOffset;
 	bool mIsTrigger;
-	bool mIsTriggerCollide;
-	uint32_t mTriggerCollidingWith;
 
-	BoxCollider() : mScaleOffset(1.f), mTranslateOffset(0.f) {}
+	BoxCollider() : mScaleOffset(1.f), mTranslateOffset(0.f), mIsTrigger(false){}
 	
 	//RTTR_ENABLE()
 	void							Inspect();
@@ -230,10 +225,8 @@ struct SphereCollider
 	float mScaleOffset;				// final scale = mScaleOffset * std::max(Transform.mScale.x, Transform.mScale.y, Transform.mScale.z);
 	glm::vec3 mTranslateOffset;		// final pos = Transform.mTranslate + mTranslateOffset;
 	bool mIsTrigger;
-	bool mIsTriggerCollide;
-	uint32_t mTriggerCollidingWith;
 
-	SphereCollider() : mScaleOffset(1.f), mTranslateOffset(0.f) {};
+	SphereCollider() : mScaleOffset(1.f), mTranslateOffset(0.f), mIsTrigger(false) {};
 
 	//RTTR_ENABLE()
 	void							Inspect();
@@ -245,11 +238,9 @@ struct CapsuleCollider
 	float mRadius;
 	float mHalfHeight;
 	bool mIsTrigger;
-	bool mIsTriggerCollide;
-	uint32_t mTriggerCollidingWith;
 
 
-	CapsuleCollider() : mTranslateOffset(0.f, 0.f, 0.f), mRadius(50.f), mHalfHeight(100.f) {}
+	CapsuleCollider() : mTranslateOffset(0.f, 0.f, 0.f), mRadius(50.f), mHalfHeight(100.f), mIsTrigger(false){}
 };
 
 /******************************************************************************/
@@ -264,8 +255,17 @@ public:
 
 	//static void LoadRunScript(Entity entity);
 
-	std::string mScriptFile{};
+	//std::string mScriptFile{};
 	std::vector <Script> scriptsContainer;
+
+	template<typename ...args>
+	void RunFunctionForAllScripts(const char* funcName, args... arguments)
+	{
+		for (auto& elem : scriptsContainer)
+		{
+			elem.Run(funcName, arguments...);
+		}
+	}
 
 	//RTTR_ENABLE()
 	void Inspect();
