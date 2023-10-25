@@ -25,11 +25,13 @@ class Script;
 #pragma region basic_types
 SERIALIZE_BASIC(bool);
 SERIALIZE_BASIC(int);
+SERIALIZE_BASIC(unsigned char);
 SERIALIZE_BASIC(std::uint32_t);
 SERIALIZE_BASIC(float);
 SERIALIZE_BASIC(double);
 SERIALIZE_BASIC(std::string);
 SERIALIZE_BASIC(glm::ivec2);
+SERIALIZE_BASIC(glm::bvec3);
 SERIALIZE_BASIC(glm::vec3);
 SERIALIZE_BASIC(glm::vec4);
 SERIALIZE_BASIC(Script);
@@ -147,11 +149,13 @@ void Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer, const c
 #pragma region basic_types
 DESERIALIZE_BASIC(bool);
 DESERIALIZE_BASIC(int);
+DESERIALIZE_BASIC(unsigned char);
 DESERIALIZE_BASIC(std::uint32_t);
 DESERIALIZE_BASIC(float);
 DESERIALIZE_BASIC(double);
 DESERIALIZE_BASIC(std::string);
 DESERIALIZE_BASIC(glm::ivec2);
+DESERIALIZE_BASIC(glm::bvec3);
 DESERIALIZE_BASIC(glm::vec3);
 DESERIALIZE_BASIC(glm::vec4);
 DESERIALIZE_BASIC(Script);

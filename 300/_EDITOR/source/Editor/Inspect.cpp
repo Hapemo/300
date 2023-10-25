@@ -282,7 +282,7 @@ void General::Inspect() {
 	//}
 
 
-	ImGui::Text("Tag");
+	/*ImGui::Text("Tag");
 
 	ImGui::SameLine();
 	ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
@@ -297,7 +297,7 @@ void General::Inspect() {
 			}
 		}
 		ImGui::EndCombo();
-	}
+	}*/
 }
 
 /***************************************************************************/
@@ -959,31 +959,31 @@ void RigidBody::Inspect() {
 		ImGui::Separator();
 
 
-		const char* materials[] = { "RUBBER", "WOOD", "METAL", "ICE","CONCRETE","GLASS" };
-		const char* motions[] = { "STATIC", "DYNAMIC" };
+		//const char* materials[] = { "RUBBER", "WOOD", "METAL", "ICE","CONCRETE","GLASS" };
+		//const char* motions[] = { "STATIC", "DYNAMIC" };
 
 
-		if (ImGui::BeginCombo("Material", (materials[mMat]))) {
+		//if (ImGui::BeginCombo("Material", (materials[mMat]))) {
 
-			for (unsigned char i{ 0 }; i < 6; i++) {
-				if (ImGui::Selectable(materials[i])) {
-					mMat = i;
-					mMaterial = (MATERIAL)i;
-				}
-			}
-			ImGui::EndCombo();
-		}
+		//	for (unsigned char i{ 0 }; i < 6; i++) {
+		//		if (ImGui::Selectable(materials[i])) {
+		//			mMat = i;
+		//			mMaterial = (MATERIAL)i;
+		//		}
+		//	}
+		//	ImGui::EndCombo();
+		//}
 
-		if (ImGui::BeginCombo("Motions", (motions[mMot]))) {
+		//if (ImGui::BeginCombo("Motions", (motions[mMot]))) {
 
-			for (unsigned char i{ 0 }; i < 2; i++) {
-				if (ImGui::Selectable(motions[i])) {
-					mMot = i;
-					mMotion = (MOTION)i;
-				}
-			}
-			ImGui::EndCombo();
-		}
+		//	for (unsigned char i{ 0 }; i < 2; i++) {
+		//		if (ImGui::Selectable(motions[i])) {
+		//			mMot = i;
+		//			mMotion = (MOTION)i;
+		//		}
+		//	}
+		//	ImGui::EndCombo();
+		//}
 
 	}
 

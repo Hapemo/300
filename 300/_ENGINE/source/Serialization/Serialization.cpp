@@ -17,6 +17,13 @@ SERIALIZE_BASIC(int)
 	writer.Int(val);
 }
 
+SERIALIZE_BASIC(unsigned char)
+{
+	if (name != nullptr)
+		writer.Key(name);
+	writer.Uint(val);
+}
+
 SERIALIZE_BASIC(std::uint32_t)
 {
 	if (name != nullptr)
@@ -53,6 +60,17 @@ SERIALIZE_BASIC(glm::ivec2)
 	writer.StartObject();
 	Serialize(writer, "x", val.x);
 	Serialize(writer, "y", val.y);
+	writer.EndObject();
+}
+
+SERIALIZE_BASIC(glm::bvec3)
+{
+	if (name != nullptr)
+		writer.Key(name);
+	writer.StartObject();
+	Serialize(writer, "x", val.x);
+	Serialize(writer, "y", val.y);
+	Serialize(writer, "z", val.z);
 	writer.EndObject();
 }
 
@@ -131,6 +149,14 @@ DESERIALIZE_BASIC(int)
 		val = reader[name].GetInt();
 }
 
+DESERIALIZE_BASIC(unsigned char)
+{
+	if (name == nullptr)
+		val = reader.GetUint();
+	else if (reader.HasMember(name))
+		val = reader[name].GetUint();
+}
+
 DESERIALIZE_BASIC(std::uint32_t)
 {
 	if (name == nullptr)
@@ -169,6 +195,17 @@ DESERIALIZE_BASIC(glm::ivec2)
 	{
 		Deserialize(reader, "x", val.x);
 		Deserialize(reader, "y", val.y);
+	}
+}
+
+DESERIALIZE_BASIC(glm::bvec3)
+{
+	if (reader.HasMember(name))
+	{
+		Deserialize(reader, "x", val.x);
+		Deserialize(reader, "y", val.y);
+		Deserialize(reader, "z", val.z);
+
 	}
 }
 

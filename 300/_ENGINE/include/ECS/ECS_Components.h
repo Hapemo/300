@@ -22,7 +22,7 @@ Components used by the ECS.
 #include <Animator.hpp>
 #include <Camera.hpp>
 //#include "EnumStrings.h"
-#include "EnumTags.h"
+//#include "EnumTags.h"
 #include "Input/Input.h"
 #include "Guid.h"
 #include <Constants.h>
@@ -54,7 +54,7 @@ struct General : public Serializable
 	std::string name;
 	/*TAG tag;*/
 	//enum_tag::enum_tag tag{};
-	enum_tag::enum_tag tagid{};
+	unsigned char tagid = 0;
 	//std::string tag[5] = { "PLAYER","ENEMY","BULLET","STATIC","BUILDING" };
 	//int tagid{ 0 };
 	SUBTAG subtag;
@@ -65,13 +65,10 @@ struct General : public Serializable
 	: name(""), subtag(SUBTAG::ACTIVE), isActive(true) 
 	{};
 
-	std::string GetTag() { return enum_tag::ToString(tagid); }
+	std::string GetTag() { return ECS::GetTag(tagid); }
 
-	void SetTag(std::string newTag) { 
-		std::transform(newTag.begin(), newTag.end(), newTag.begin(), ::tolower);
-		newTag[0] = std::toupper(newTag[0]);
-		tagid = enum_tag::GetEnum(newTag.c_str()); 
-	}
+	void SetTag(const std::string& tagName) { tagid = ECS::GetTag(tagName); }
+
 
 	void Inspect();
 	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
@@ -193,15 +190,13 @@ struct RigidBody : public Serializable
 	MATERIAL mMaterial;
 	MOTION mMotion;
 	glm::vec3 mVelocity;
+	glm::bvec3 mRotationConstraints;
 
 	RigidBody() : mDensity(10.f), mMaterial(MATERIAL::WOOD), mMotion(MOTION::STATIC), mVelocity(0.f){};
 	RigidBody(float dense, MATERIAL mat, MOTION mot, const glm::vec3& vec)
 		: mDensity(dense), mMaterial(mat), mMotion(mot), mVelocity(vec){}
 	//RTTR_ENABLE()
 
-
-	int mMat{ 0 };
-	int mMot{ 0 };
 	void							Inspect();
 	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
 	void DeserializeSelf(rapidjson::Value& reader);
@@ -217,8 +212,6 @@ struct BoxCollider : public Serializable
 	glm::vec3 mScaleOffset;			// final scale = mScaleOffset * Transform.mScale;
 	glm::vec3 mTranslateOffset;		// final pos = Transform.mTranslate + mTranslateOffset;
 	bool mIsTrigger;
-	bool mIsTriggerCollide;
-	uint32_t mTriggerCollidingWith;
 
 	BoxCollider() : mScaleOffset(1.f), mTranslateOffset(0.f) {}
 	
@@ -238,8 +231,6 @@ struct SphereCollider : public Serializable
 	float mScaleOffset;				// final scale = mScaleOffset * std::max(Transform.mScale.x, Transform.mScale.y, Transform.mScale.z);
 	glm::vec3 mTranslateOffset;		// final pos = Transform.mTranslate + mTranslateOffset;
 	bool mIsTrigger;
-	bool mIsTriggerCollide;
-	uint32_t mTriggerCollidingWith;
 
 	SphereCollider() : mScaleOffset(1.f), mTranslateOffset(0.f) {};
 
@@ -255,8 +246,6 @@ struct CapsuleCollider : public Serializable
 	float mRadius;
 	float mHalfHeight;
 	bool mIsTrigger;
-	bool mIsTriggerCollide;
-	uint32_t mTriggerCollidingWith;
 
 
 	CapsuleCollider() : mTranslateOffset(0.f, 0.f, 0.f), mRadius(50.f), mHalfHeight(100.f) {}
