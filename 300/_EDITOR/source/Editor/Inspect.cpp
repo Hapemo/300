@@ -458,7 +458,7 @@ void Scripts::Inspect() {
 				if (scriptEntities.get<Scripts>(Hierarchy::selectedId).scriptsContainer.size() == 0)
 				{
 					Script script;
-					//script.scriptFile = dataScript;
+					script.scriptFile = dataScript;
 					script.env = { systemManager->mScriptingSystem->luaState, sol::create, systemManager->mScriptingSystem->luaState.globals() };
 					script.Load(Hierarchy::selectedId);
 					scripts.scriptsContainer.push_back(script);
@@ -485,7 +485,7 @@ void Scripts::Inspect() {
 						Script script;
 						script.scriptFile = dataScript;
 						script.env = { systemManager->mScriptingSystem->luaState, sol::create, systemManager->mScriptingSystem->luaState.globals() };
-						
+
 						script.Load(Hierarchy::selectedId);
 
 						scripts.scriptsContainer.push_back(script);
@@ -510,7 +510,7 @@ void Scripts::Inspect() {
 				InspectScript(elem);
 				ImGui::TreePop();
 			}
-			
+
 		}
 
 		if (open_popup) {
