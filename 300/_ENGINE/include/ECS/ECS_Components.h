@@ -54,7 +54,7 @@ struct General : public Serializable
 	std::string name;
 	/*TAG tag;*/
 	//enum_tag::enum_tag tag{};
-	unsigned char tagid = 0;
+	unsigned char tagid = 0; //@han
 	//std::string tag[5] = { "PLAYER","ENEMY","BULLET","STATIC","BUILDING" };
 	//int tagid{ 0 };
 	SUBTAG subtag;
@@ -184,7 +184,7 @@ struct UIrenderer : public Serializable
 	[Component] - RigidBody
  */
  /******************************************************************************/
-struct RigidBody : public Serializable
+struct RigidBody : public Serializable //@han
 {
 	float mDensity;
 	MATERIAL mMaterial;
@@ -207,7 +207,7 @@ struct RigidBody : public Serializable
 	[Component] - BoxCollider
  */
  /******************************************************************************/
-struct BoxCollider : public Serializable
+struct BoxCollider : public Serializable //@han
 {
 	glm::vec3 mScaleOffset;			// final scale = mScaleOffset * Transform.mScale;
 	glm::vec3 mTranslateOffset;		// final pos = Transform.mTranslate + mTranslateOffset;
@@ -226,7 +226,7 @@ struct BoxCollider : public Serializable
 	[Component] - SphereCollider
  */
  /******************************************************************************/
-struct SphereCollider : public Serializable
+struct SphereCollider : public Serializable //@han
 {
 	float mScaleOffset;				// final scale = mScaleOffset * std::max(Transform.mScale.x, Transform.mScale.y, Transform.mScale.z);
 	glm::vec3 mTranslateOffset;		// final pos = Transform.mTranslate + mTranslateOffset;
@@ -240,7 +240,7 @@ struct SphereCollider : public Serializable
 	void DeserializeSelf(rapidjson::Value& reader);
 };
 
-struct CapsuleCollider : public Serializable
+struct CapsuleCollider : public Serializable //@han
 {
 	glm::vec3 mTranslateOffset;
 	float mRadius;
