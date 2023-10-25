@@ -23,7 +23,7 @@
     <ClCompile Include="source\Input\InputMapSystem.cpp" />
     <ClCompile Include="source\AI\AIManager.cpp" />
     <ClCompile Include="source\Physics\PhysXUtils.cpp" />
-    <ClCompile Include="include\Physics\ContactCallback.cpp" />
+    <ClCompile Include="source\Physics\ContactCallback.cpp" />
     <ClCompile Include="source\Audio\AudioSource.cpp" />
     <ClCompile Include="source\Serialization\SerializeSelf.cpp" />
   </ItemGroup>
@@ -61,6 +61,7 @@
     <ClInclude Include="include\Physics\Actor.h" />
     <ClInclude Include="include\Audio\AudioSource.h" />
     <ClInclude Include="include\Audio\AudioTest.h" />
+    <ClInclude Include="include\Physics\FilterShader.h" />
     <ClInclude Include="include\Serialization\Serializable.h" />
     <ClInclude Include="include\ECS\EnumTags.h" />
   </ItemGroup>

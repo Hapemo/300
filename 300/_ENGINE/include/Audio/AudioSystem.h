@@ -71,10 +71,11 @@ public:
 	AudioSystem();
 	~AudioSystem();
 
-	// Helper Functions (Loading)
+	// Helper Functions (Re-load - after changing info in editor side)
 	void UpdateLoadAudio(Entity id);				 // [For Engine] - Add Component mid-way
 	void UpdateChannelReference(Entity id);		     // [For Engine] - Add Channel to the global [SFX/BGM] channels. (for global control)
 	void InitAudioChannelReference(Entity id);		 // [For Engine]
+	void Update3DSettings(Entity id);				 // [For Engine] - Updates 3D audio information. 
 
 	// Helper Functions (Sound)
 	FMOD::Sound* FindSound(std::string audio_name);
@@ -82,7 +83,8 @@ public:
 
 public:
 	// Retained Functions (Without Linking to <Audio> component)
-	bool LoadAudioFromDirectory(std::filesystem::path file_path);					                                        // Load files from directory (Like just load all the audio files first) -> later then link
+	//bool LoadAudioFromDirectory(std::filesystem::path file_path);					                                        // Load files from directory (Like just load all the audio files first) -> later then link
+	bool LoadAudioFromDirectory(std::string directory_path);															    // [10/22] [For Lua]
 	void SetAllSFXVolume(float audio_vol);																				    // Global Volume Setting (SFX)
 	void SetAllBGMVolume(float audio_vol);													                                // Global Volume Setting (BGM)
 	void MuteSFX();																											// Global Mute (SFX)
@@ -117,6 +119,12 @@ public:
 public:
 	void PlayAudioSource(FMOD::Sound* comp_sound, FMOD::Channel* comp_channel, float vol = 1.0f);  // OK.
 	void PlayAudioSource(Audio& audio_component, float vol = 1.0f);
+
+
+// 3D Audio Stuff
+public:
+	float distance_factor = 1.0f;  // Units per meter. (per unit reference in game world)
+
 
 public:
 	FMOD::System* system_obj = nullptr;

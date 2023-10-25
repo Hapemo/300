@@ -2,6 +2,7 @@
 #include "Debug/Logger.h"
 #include "GameState/Scene.h"
 #include "Script.h"
+#include "ECS/ECS.h"
 
 SERIALIZE_BASIC(bool)
 {
@@ -113,6 +114,13 @@ SERIALIZE_BASIC(AUDIOTYPE)
 	if (name != nullptr)
 		writer.Key(name);
 	Serialize(writer, nullptr, static_cast<int>(val));
+}
+
+SERIALIZE_BASIC(unsigned char)
+{
+	if (name != nullptr)
+		writer.Key(name);
+	writer.Int(val);
 }
 
 DESERIALIZE_BASIC(bool)
@@ -252,13 +260,13 @@ DESERIALIZE_BASIC(entt::entity)
 	}
 }
 
-DESERIALIZE_BASIC(enum_tag::enum_tag)
+DESERIALIZE_BASIC(unsigned char)
 {
 	if (reader.HasMember(name))
 	{
 		int num;
 		Deserialize(reader, name, num);
-		val = static_cast<enum_tag::enum_tag>(num);
+		val = static_cast<unsigned char>(num);
 	}
 }
 

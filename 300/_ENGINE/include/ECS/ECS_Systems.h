@@ -90,6 +90,7 @@ public:
 	AudioSystem* GetAudioPointer();
 	InputMapSystem* GetInputMapSystemPointer();
 	GameStateManager* GetGameStateSystem();
+	GraphicsSystem* GetGraphicsSystem();
 };
 
 extern SystemManager *systemManager;

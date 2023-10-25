@@ -168,3 +168,8 @@ GameStateManager* SystemManager::GetGameStateSystem()
 {
 	return mGameStateSystem.get();
 }
+
+GraphicsSystem* SystemManager::GetGraphicsSystem()
+{
+	return mGraphicsSystem.get();
+}

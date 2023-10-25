@@ -37,6 +37,7 @@ SERIALIZE_BASIC(SUBTAG);
 SERIALIZE_BASIC(MATERIAL);
 SERIALIZE_BASIC(MOTION);
 SERIALIZE_BASIC(AUDIOTYPE);
+SERIALIZE_BASIC(unsigned char);
 #pragma endregion basic_types
 // Derived types has to inherit from Serializable
 #pragma region derived_types
@@ -160,7 +161,7 @@ DESERIALIZE_BASIC(MATERIAL);
 DESERIALIZE_BASIC(MOTION);
 DESERIALIZE_BASIC(AUDIOTYPE);
 DESERIALIZE_BASIC(entt::entity);
-DESERIALIZE_BASIC(enum_tag::enum_tag);
+DESERIALIZE_BASIC(unsigned char);
 #pragma endregion basic_types
 // Derived types has to inherit from Serializable
 #pragma region derived_types
