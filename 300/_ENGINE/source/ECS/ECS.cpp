@@ -85,7 +85,7 @@ void Entity::Deactivate()
 	//------------------------------------------------------------------
 }
 
-ECS::ECS() : registry(), NullEntity(registry.create()), mClipboard(0) {}
+ECS::ECS() : registry(), mClipboard(0) {}
 
 void ECS::AddTag(const std::string &tag)
 {
