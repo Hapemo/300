@@ -82,6 +82,12 @@
         },
         "scripts": {
             "scriptscontainer": []
+        },
+        "aisetting": {
+            "shotprediction": false,
+            "spreadout": 0.0,
+            "stayaway": 0.0,
+            "targetname": ""
         }
     },
     {

@@ -12,6 +12,7 @@
 //#include "ECS/ECS_Components.h"
 //#include "ECS/EnumStrings.h"
 #include "ECS/EnumTags.h"
+//#include "AI/AIManager.h"
 
 // forward declaration
 struct Scene;
@@ -37,6 +38,7 @@ SERIALIZE_BASIC(SUBTAG);
 SERIALIZE_BASIC(MATERIAL);
 SERIALIZE_BASIC(MOTION);
 SERIALIZE_BASIC(AUDIOTYPE);
+//SERIALIZE_BASIC(E_MOVEMENT_TYPE);
 #pragma endregion basic_types
 // Derived types has to inherit from Serializable
 #pragma region derived_types
@@ -159,6 +161,7 @@ DESERIALIZE_BASIC(SUBTAG);
 DESERIALIZE_BASIC(MATERIAL);
 DESERIALIZE_BASIC(MOTION);
 DESERIALIZE_BASIC(AUDIOTYPE);
+//DESERIALIZE_BASIC(E_MOVEMENT_TYPE);
 DESERIALIZE_BASIC(entt::entity);
 DESERIALIZE_BASIC(enum_tag::enum_tag);
 #pragma endregion basic_types

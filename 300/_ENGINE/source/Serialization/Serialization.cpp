@@ -115,6 +115,13 @@ SERIALIZE_BASIC(AUDIOTYPE)
 	Serialize(writer, nullptr, static_cast<int>(val));
 }
 
+//SERIALIZE_BASIC(E_MOVEMENT_TYPE)
+//{
+//	if (name != nullptr)
+//		writer.Key(name);
+//	Serialize(writer, nullptr, static_cast<int>(val));
+//}
+
 DESERIALIZE_BASIC(bool)
 {
 	if (name == nullptr)
@@ -241,6 +248,16 @@ DESERIALIZE_BASIC(AUDIOTYPE)
 		val = static_cast<AUDIOTYPE>(num);
 	}
 }
+
+//DESERIALIZE_BASIC(E_MOVEMENT_TYPE)
+//{
+//	if (reader.HasMember(name))
+//	{
+//		int num;
+//		Deserialize(reader, name, num);
+//		val = static_cast<E_MOVEMENT_TYPE>(num);
+//	}
+//}
 
 DESERIALIZE_BASIC(entt::entity)
 {
