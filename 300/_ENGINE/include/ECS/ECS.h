@@ -234,8 +234,6 @@ public:
 	*******************************************************************************/
 	~ECS();
 
-	const Entity NullEntity;
-
 	int SelectedScene;
 
 	static std::vector<std::string> mEntityTags;

@@ -7,68 +7,71 @@
 #include "Debug/AssertException.h"
 #include "ResourceManagerTy.h"
 
-std::vector<std::string> ECS::mEntityTags({ "PLAYER", "ENEMY", "BULLET", "FLOOR", "WALL" });
+std::vector<std::string> ECS::mEntityTags({"PLAYER", "ENEMY", "BULLET", "FLOOR", "WALL"});
 
-bool Entity::ShouldRun() {
+bool Entity::ShouldRun()
+{
 	assert(HasComponent<General>() && std::string("There is no general component when attempting to change Entity's isActive").c_str());
 
-	General const& genComponent = GetComponent<General>();
+	General const &genComponent = GetComponent<General>();
 	return !genComponent.isPaused && genComponent.isActive;
 }
 
-void Entity::Activate() {
-	if (!HasComponent<General>()) {
-		//LOG_ERROR("There is no general component when attempting to activate, entity ID: " + std::to_string(id));
+void Entity::Activate()
+{
+	if (!HasComponent<General>())
+	{
+		// LOG_ERROR("There is no general component when attempting to activate, entity ID: " + std::to_string(id));
 		assert(false && std::string("There is no general component when attempting to activate, entity ID: " + std::to_string(static_cast<uint32_t>(id))).c_str());
 		return;
 	}
-	General& genComp{ GetComponent<General>() };
+	General &genComp{GetComponent<General>()};
 
 	//------------------------------------------------------------------
 	// Codes that should run when activating entity halfway through game
 
 	// Scripting
 #ifdef _EDITOR
-	if (editorManager->IsScenePaused()) return;
+	if (editorManager->IsScenePaused())
+		return;
 #endif
-	//if (!editorManager->IsScenePaused())
+	// if (!editorManager->IsScenePaused())
 	if (HasComponent<Script>())
 		systemManager->GetScriptingPointer()->ScriptStart(*this);
-
 
 	// General
 	genComp.isActive = true;
 
 	// Parent Child
 	/*if (HasComponent<)
-	Entity firstChild = 
+	Entity firstChild =
 
 	for (Entity e : genComp.children) e.Activate();*/
-
-
 
 	//------------------------------------------------------------------
 }
 
-void Entity::Deactivate() {
-	if (!HasComponent<General>()) {
-		//LOG_ERROR("There is no general component when attempting to activate, entity ID: " + std::to_string(id));
+void Entity::Deactivate()
+{
+	if (!HasComponent<General>())
+	{
+		// LOG_ERROR("There is no general component when attempting to activate, entity ID: " + std::to_string(id));
 		assert(false && std::string("There is no general component when attempting to deactivate, entity ID: " + std::to_string(static_cast<uint32_t>(id))).c_str());
 		return;
 	}
-	General& genComp{ GetComponent<General>() };
+	General &genComp{GetComponent<General>()};
 
 	//------------------------------------------------------------------
 	// Codes that should run when activating entity halfway through game
 
 	// Scripting
 #ifdef _EDITOR
-	if (editorManager->IsScenePaused()) return;
+	if (editorManager->IsScenePaused())
+		return;
 #endif
-	//if (!editorManager->IsScenePaused())
+	// if (!editorManager->IsScenePaused())
 	if (HasComponent<Script>())
 		systemManager->GetScriptingPointer()->ScriptExit(*this);
-
 
 	// General
 	genComp.isActive = true;
@@ -79,14 +82,12 @@ void Entity::Deactivate() {
 
 	for (Entity e : genComp.children) e.Deactivate();*/
 
-
-
 	//------------------------------------------------------------------
 }
 
 ECS::ECS() : registry(), NullEntity(registry.create()), mClipboard(0) {}
 
-void ECS::AddTag(const std::string& tag)
+void ECS::AddTag(const std::string &tag)
 {
 	std::string temp = tag;
 	std::transform(temp.begin(), temp.end(), temp.begin(), ::toupper);
@@ -103,7 +104,7 @@ std::string ECS::GetTag(unsigned char id)
 	return mEntityTags[id];
 }
 
-unsigned char ECS::GetTag(const std::string& tag)
+unsigned char ECS::GetTag(const std::string &tag)
 {
 	std::string temp = tag;
 	std::transform(temp.begin(), temp.end(), temp.begin(), ::toupper);
@@ -113,7 +114,6 @@ unsigned char ECS::GetTag(const std::string& tag)
 	PWARNING("Tag not found!")
 	return 0;
 }
-
 
 Entity ECS::NewEntity()
 {
@@ -125,14 +125,16 @@ Entity ECS::NewEntity()
 
 Entity ECS::NewEntityByScene()
 {
-	auto& allScene = systemManager->mGameStateSystem->mCurrentGameState.mScenes;
+	auto &allScene = systemManager->mGameStateSystem->mCurrentGameState.mScenes;
 
-	if (allScene.size() <= 0) {
+	if (allScene.size() <= 0)
+	{
 		systemManager->mGameStateSystem->mCurrentGameState.AddScene("NewScene");
 		Entity newEntity = allScene[0].AddEntity();
 		return newEntity;
 	}
-	else {
+	else
+	{
 		Entity newEntity = allScene[SelectedScene].AddEntity();
 		return newEntity;
 	}
@@ -140,9 +142,9 @@ Entity ECS::NewEntityByScene()
 
 void ECS::DeleteEntity(Entity e)
 {
-//#ifdef _DEBUG
-//	assert(static_cast<std::uint32_t>(e.id) != 0);
-//#endif
+	// #ifdef _DEBUG
+	//	assert(static_cast<std::uint32_t>(e.id) != 0);
+	// #endif
 	if (static_cast<std::uint32_t>(e.id) == 0)
 	{
 		PWARNING("tried to delete entitiy with id 0");
@@ -168,14 +170,14 @@ void ECS::NewPrefab(Entity e)
 
 	// void ObjectFactory::SerializePrefab(Entity e, const std::string& filename) call here
 	// store to resources/prefabs/e.getcomponent<general>().name
-	// general flow 
+	// general flow
 	// 1) serialize prefab based on entity
 	// 2) have a list of entities tied to a prefab
 	// for now, use member map
 	if (static_cast<std::uint32_t>(e.id) == 0)
 	{
-		 PWARNING("trying to make prefab from null entity - prefab not created");
-		 return;
+		PWARNING("trying to make prefab from null entity - prefab not created");
+		return;
 	}
 	std::string name = e.GetComponent<General>().name;
 	if (mPrefabs.count(name))
@@ -192,12 +194,12 @@ Entity ECS::NewEntityFromPrefab(std::string prefabName)
 {
 	// void ObjectFactory::DeserializeScene(const std::string& filename)
 	// creation of new entity done inside deserializescene function
-	Entity e(ObjectFactory::DeserializePrefab("../assets/Prefabs/" + prefabName + ".prefab", static_cast<int>(mPrefabs[prefabName].size())));
+	Entity e(ObjectFactory::DeserializePrefab("../assets/Prefabs/" + prefabName + ".prefab"));
 	e.AddComponent<Prefab>().mPrefab = prefabName;
 	systemManager->mGameStateSystem->mCurrentGameState.mScenes[0].mEntities.insert(e);
-	//copy all prefab components (except transform) to new entity
-	//General temp1 = e.GetComponent<General>();
-	//MeshRenderer temp = e.GetComponent<MeshRenderer>();
+	// copy all prefab components (except transform) to new entity
+	// General temp1 = e.GetComponent<General>();
+	// MeshRenderer temp = e.GetComponent<MeshRenderer>();
 	mPrefabs[prefabName].push_back(e);
 	PASSERT(static_cast<uint32_t>(e.id) != 0);
 	return e;
@@ -205,8 +207,8 @@ Entity ECS::NewEntityFromPrefab(std::string prefabName)
 
 void ECS::UpdatePrefabEntities(std::string prefabName)
 {
-	Entity temp(ObjectFactory::DeserializePrefab("../assets/Prefabs/" + prefabName + ".prefab", 0));
-	
+	Entity temp(ObjectFactory::DeserializePrefab("../assets/Prefabs/" + prefabName + ".prefab"));
+
 	for (Entity e : mPrefabs[prefabName])
 	{
 		e.GetComponent<Transform>().mScale = temp.GetComponent<Transform>().mScale;
@@ -232,7 +234,7 @@ void ECS::UpdatePrefabEntities(std::string prefabName)
 void ECS::CopyEntity(Entity e)
 {
 	if (static_cast<std::uint32_t>(e.id) == 0)
-		PASSERT ("trying to copy null entity");
+		PASSERT("trying to copy null entity");
 	mClipboard = e;
 }
 
@@ -240,17 +242,16 @@ Entity ECS::StartEditPrefab(std::string prefabName)
 {
 	// void ObjectFactory::DeserializeScene(const std::string& filename)
 	// creation of new entity done inside deserializescene function
-	Entity e(ObjectFactory::DeserializePrefab("../assets/Prefabs/" + prefabName + ".prefab", static_cast<int>(mPrefabs[prefabName].size())));
+	Entity e(ObjectFactory::DeserializePrefab("../assets/Prefabs/" + prefabName + ".prefab"));
 	e.AddComponent<Prefab>().mPrefab = prefabName;
-	//copy all prefab components (except transform) to new entity
-	//General temp1 = e.GetComponent<General>();
-	//MeshRenderer temp = e.GetComponent<MeshRenderer>();
+	// copy all prefab components (except transform) to new entity
+	// General temp1 = e.GetComponent<General>();
+	// MeshRenderer temp = e.GetComponent<MeshRenderer>();
 	mPrefabs[prefabName].push_back(e);
 	e.GetComponent<General>().name = prefabName;
 	PASSERT(static_cast<uint32_t>(e.id) != 0);
 	return e;
 }
-
 
 void ECS::EndEditPrefab(Entity e)
 {
@@ -269,30 +270,29 @@ Entity ECS::PasteEntity(int scene)
 	if (static_cast<uint32_t>(mClipboard.id) == 0)
 		return Entity(0);
 
-
-
-	//Entity e = NewEntity();
-	Entity e =systemManager->mGameStateSystem->mCurrentGameState.mScenes[scene].AddEntity();
+	// Entity e = NewEntity();
+	Entity e = systemManager->mGameStateSystem->mCurrentGameState.mScenes[scene].AddEntity();
 
 	e.GetComponent<Transform>().mScale = Entity(mClipboard).GetComponent<Transform>().mScale;
 	e.GetComponent<Transform>().mRotate = Entity(mClipboard).GetComponent<Transform>().mRotate;
-
 
 	if (mClipboard.HasComponent<MeshRenderer>())
 	{
 		e.AddComponent<MeshRenderer>();
 		e.GetComponent<MeshRenderer>() = mClipboard.GetComponent<MeshRenderer>();
-		MeshRenderer& mr = e.GetComponent<MeshRenderer>();
+		MeshRenderer &mr = e.GetComponent<MeshRenderer>();
 		uid uids(mr.mMeshPath);
-		mr.mMeshRef.data = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(uids.id));
-		for (int i{ 0 }; i < 4; i++) {
+		mr.mMeshRef.data = reinterpret_cast<void *>(systemManager->mResourceTySystem->get_mesh(uids.id));
+		for (int i{0}; i < 4; i++)
+		{
 
-			if (mr.mTextureRef[i].data != nullptr) {
+			if (mr.mTextureRef[i].data != nullptr)
+			{
 				uid localuids(mr.mMaterialInstancePath[i]);
-				mr.mTextureRef[i].data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(localuids.id));
+				mr.mTextureRef[i].data = reinterpret_cast<void *>(systemManager->mResourceTySystem->getMaterialInstance(localuids.id));
 			}
 		}
-		GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mr.mMeshRef.data);
+		GFX::Mesh *meshinst = reinterpret_cast<GFX::Mesh *>(mr.mMeshRef.data);
 		if (meshinst->mHasAnimation)
 		{
 			e.AddComponent<Animator>();
@@ -332,8 +332,6 @@ ECS::~ECS()
 {
 }
 
-
-
 void ECS::UnlinkPrefab(Entity e)
 {
 	if (!e.HasComponent<Prefab>())
@@ -348,9 +346,9 @@ void ECS::UnlinkPrefab(Entity e)
 
 Entity::Entity(entt::entity id) : id(id) {}
 Entity::Entity(std::uint32_t id) : id(entt::entity(id)) {}
-Entity::Entity(const Entity& entity) : id(entity.id) {}
+Entity::Entity(const Entity &entity) : id(entity.id) {}
 
-void Entity::operator=(const Entity& entity)
+void Entity::operator=(const Entity &entity)
 {
 	this->id = entity.id;
 }
@@ -381,11 +379,11 @@ void Entity::AddChild(Entity e)
 		systemManager->ecs->UnlinkPrefab(e);
 	if (this->HasComponent<Prefab>())
 		systemManager->ecs->UnlinkPrefab(*this);
-	
+
 	std::uint32_t eID = static_cast<std::uint32_t>(e.id);
-	Children& children = this->HasComponent<Children>() ? this->GetComponent<Children>() : this->AddComponent<Children>();
-	Parent& parent = e.HasComponent<Parent>() ? e.GetComponent<Parent>() : e.AddComponent<Parent>();
-	
+	Children &children = this->HasComponent<Children>() ? this->GetComponent<Children>() : this->AddComponent<Children>();
+	Parent &parent = e.HasComponent<Parent>() ? e.GetComponent<Parent>() : e.AddComponent<Parent>();
+
 	++children.mNumChildren;
 	parent.mParent = static_cast<std::uint32_t>(this->id);
 	if (children.mNumChildren == 1) // this entity is a new parent
@@ -425,7 +423,7 @@ Entity Entity::GetParent()
 	return this->GetComponent<Parent>().mParent;
 }
 
-bool Entity::HasChildren() 
+bool Entity::HasChildren()
 {
 	return this->HasComponent<Children>();
 }
@@ -443,8 +441,8 @@ void Entity::RemoveChild(Entity e)
 		return;
 	if (e.GetComponent<Parent>().mParent != static_cast<uint32_t>(this->id))
 		return;
-	
-	Children& thisChildren = this->GetComponent<Children>();
+
+	Children &thisChildren = this->GetComponent<Children>();
 	if (thisChildren.mNumChildren == 1)
 	{
 		e.RemoveComponent<Parent>();
@@ -452,7 +450,7 @@ void Entity::RemoveChild(Entity e)
 		return;
 	}
 	--thisChildren.mNumChildren;
-	Parent& eParent = e.GetComponent<Parent>();
+	Parent &eParent = e.GetComponent<Parent>();
 	Entity prev = eParent.mPrevSibling;
 	Entity next = eParent.mNextSibling;
 	if (thisChildren.mFirstChild == static_cast<uint32_t>(e.id))

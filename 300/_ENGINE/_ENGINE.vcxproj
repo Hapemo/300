@@ -162,6 +162,7 @@
     <ClInclude Include="include\ECS\ECS_Components.h" />
     <ClInclude Include="include\ECS\ECS_Systems.h" />
     <ClInclude Include="include\ECS\EnumStrings.h" />
+    <ClInclude Include="include\ECS\EnumTags.h" />
     <ClInclude Include="include\ECS\Prefab.h" />
     <ClInclude Include="include\ECS\Tags.h" />
     <ClInclude Include="include\GameState\GameState.h" />
@@ -195,6 +196,8 @@
     <ClCompile Include="source\Input\Input.cpp" />
     <ClCompile Include="source\Input\InputMapSystem.cpp" />
     <ClCompile Include="source\Physics\Accumulator.cpp" />
+    <ClCompile Include="source\Serialization\SerializeSelf.cpp" />
+    <ClInclude Include="include\Serialization\Serializable.h" />
     <ClInclude Include="include\Physics\PhysXUtils.h" />
     <ClInclude Include="include\Serialization\Serialization.h" />
   </ItemGroup>

@@ -1,0 +1,170 @@
+[
+    {
+        "entityid": 1,
+        "general": {
+            "name": "rubber",
+            "tagid": 2,
+            "subtag": 0,
+            "isActive": false,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": -0.689213752746582,
+                "z": 0.0
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 0,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Wood Material 15_BaseColor.ctexture",
+                "../assets/Compressed/Wood Material 15_Normal.ctexture",
+                " ",
+                " ",
+                " "
+            ],
+            "texturecont": [
+                true,
+                true,
+                false,
+                false,
+                false
+            ],
+            "textureref": 0
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "spherecollider": {
+            "scaleoffset": 1.0,
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "scripts": {
+            "scriptscontainer": []
+        }
+    },
+    {
+        "entityid": 2,
+        "general": {
+            "name": "ducky",
+            "tagid": 0,
+            "subtag": 1,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        }
+    },
+    {
+        "entityid": 3,
+        "general": {
+            "name": "Camera",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 16.218000411987305,
+                "y": 474.85400390625,
+                "z": 748.7139892578125
+            }
+        },
+        "camera": {
+            "positon": {
+                "x": 16.218000411987305,
+                "y": 474.85400390625,
+                "z": 748.7139892578125
+            },
+            "target": {
+                "x": 16.218000411987305,
+                "y": 474.85400390625,
+                "z": 747.7139892578125
+            },
+            "size": {
+                "x": 635,
+                "y": 601
+            },
+            "near": 0.10000000149011612,
+            "far": 900.0
+        }
+    }
+]
