@@ -2,6 +2,7 @@
 #include "ECS/ECS.h"
 #include "ECS/ECS_Components.h"
 #include "FPSManager.h"
+#include "GameState/GameStateManager.h"
 
 
 const std::array<std::string, static_cast<size_t>(E_MOVEMENT_TYPE::SIZE)> AIManager::mMovementTypeArray{ MovementTypeArrayInit() };
@@ -20,6 +21,10 @@ AIManager::AIManager() : mPlayerEntity(), mPlayerTransform(nullptr), mPlayerArra
 		mAILists[mMovementTypeArray[static_cast<int>(i)]];
 }
 
+void AIManager::Update(float _dt) {
+	TrackPlayerPosition(_dt);
+}
+
 
 glm::vec3 AIManager::GetDirection(Entity _e) {
 	glm::vec3 dir{};
@@ -36,11 +41,11 @@ glm::vec3 AIManager::GetDirection(Entity _e) {
 	return dir;
 }
 
-void AIManager::TrackPlayerPosition() {
+void AIManager::TrackPlayerPosition(float _dt) {
 	if (mPlayerEntity.id == entt::null) return;
 	
 	static float timePassed{};
-	timePassed += FPSManager::dt;
+	timePassed += _dt;
 	if (timePassed >= 0.1) timePassed = 0;
 	else return;
 
@@ -58,7 +63,38 @@ void AIManager::SetPlayer(Entity _e) {
 void AIManager::ResetPlayerTracking() {
 	mPlayerEntity.id = entt::null;
 	mPlayerTransform = nullptr;
-	mPlayerHistorySize = 0;
+	mPlayerHistorySize = mPlayerArrayIndex = 0;
+	const glm::vec3 empty{ 0,0,0 };
+	mPlayerHistory.fill(empty);
+}
+
+void AIManager::InitialiseAI(Entity _e) {
+#if _DEBUG
+	if (!_e.HasComponent<AISetting>()) {
+		PWARNING("Attempted to initialise AI in entity with no AI Setting component. Entity name: %s", _e.GetComponent<General>().name);
+		return;
+	}
+#endif
+	AISetting& setting{ _e.GetComponent<AISetting>() };
+	mAILists[mMovementTypeArray[static_cast<int>(setting.mMovementType)]].insert(_e);
+	setting.SetTarget(systemManager->mGameStateSystem->GetEntity(setting.mTargetName));
+}
+
+void AIManager::InitAIs() {
+	GameState* gs = systemManager->GetGameStateSystem()->GetCurrentGameState();
+	auto const& entities = systemManager->ecs->GetEntitiesWith<AISetting>();
+	for (auto entity : entities)
+		InitialiseAI(Entity(entity));
+	
+	Entity player = systemManager->GetGameStateSystem()->GetEntity(PLAYER_NAME);
+	if (player.id != entt::null) SetPlayer(player);
+	else PWARNING("Attempted to set player in AI Manager, but was unable to find player");
+}
+
+void AIManager::ClearAIs() {
+	ResetPlayerTracking();
+	for (auto& EntityList : mAILists)
+		EntityList.second.clear();
 }
 
 void AIManager::SetPredictiveVelocity(Entity projectile, Entity target, float speed) {

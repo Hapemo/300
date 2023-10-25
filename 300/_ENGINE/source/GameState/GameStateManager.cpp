@@ -122,7 +122,7 @@ Entity GameStateManager::GetEntity(std::string const& _entityName, std::string c
 				return e;
 			}
 	}
-	assert(false && std::string("Unable to get entity: " + _entityName).c_str());
+	PWARNING("Unable to get entity: %s", _entityName.c_str());
 
 	return Entity();
 }

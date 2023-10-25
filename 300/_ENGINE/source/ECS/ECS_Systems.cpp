@@ -114,6 +114,8 @@ void SystemManager::Update(float dt)
 	EnginePerformance::EndTrack("Physics");
 	EnginePerformance::UpdateSystemMs("Physics");
 
+	mAISystem.get()->Update(dt);
+
 	EnginePerformance::StartTrack("Scripting");
 	mScriptingSystem.get()->Update(dt);
 	EnginePerformance::EndTrack("Scripting");
