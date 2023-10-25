@@ -18,6 +18,13 @@ SERIALIZE_BASIC(int)
 	writer.Int(val);
 }
 
+SERIALIZE_BASIC(unsigned char)
+{
+	if (name != nullptr)
+		writer.Key(name);
+	writer.Uint(val);
+}
+
 SERIALIZE_BASIC(std::uint32_t)
 {
 	if (name != nullptr)
@@ -54,6 +61,17 @@ SERIALIZE_BASIC(glm::ivec2)
 	writer.StartObject();
 	Serialize(writer, "x", val.x);
 	Serialize(writer, "y", val.y);
+	writer.EndObject();
+}
+
+SERIALIZE_BASIC(glm::bvec3)
+{
+	if (name != nullptr)
+		writer.Key(name);
+	writer.StartObject();
+	Serialize(writer, "x", val.x);
+	Serialize(writer, "y", val.y);
+	Serialize(writer, "z", val.z);
 	writer.EndObject();
 }
 
@@ -116,12 +134,12 @@ SERIALIZE_BASIC(AUDIOTYPE)
 	Serialize(writer, nullptr, static_cast<int>(val));
 }
 
-SERIALIZE_BASIC(unsigned char)
-{
-	if (name != nullptr)
-		writer.Key(name);
-	writer.Int(val);
-}
+//SERIALIZE_BASIC(E_MOVEMENT_TYPE)
+//{
+//	if (name != nullptr)
+//		writer.Key(name);
+//	Serialize(writer, nullptr, static_cast<int>(val));
+//}
 
 DESERIALIZE_BASIC(bool)
 {
@@ -137,6 +155,14 @@ DESERIALIZE_BASIC(int)
 		val = reader.GetInt();
 	else if (reader.HasMember(name))
 		val = reader[name].GetInt();
+}
+
+DESERIALIZE_BASIC(unsigned char)
+{
+	if (name == nullptr)
+		val = reader.GetUint();
+	else if (reader.HasMember(name))
+		val = reader[name].GetUint();
 }
 
 DESERIALIZE_BASIC(std::uint32_t)
@@ -177,6 +203,17 @@ DESERIALIZE_BASIC(glm::ivec2)
 	{
 		Deserialize(reader, "x", val.x);
 		Deserialize(reader, "y", val.y);
+	}
+}
+
+DESERIALIZE_BASIC(glm::bvec3)
+{
+	if (reader.HasMember(name))
+	{
+		Deserialize(reader, "x", val.x);
+		Deserialize(reader, "y", val.y);
+		Deserialize(reader, "z", val.z);
+
 	}
 }
 
@@ -249,6 +286,16 @@ DESERIALIZE_BASIC(AUDIOTYPE)
 		val = static_cast<AUDIOTYPE>(num);
 	}
 }
+
+//DESERIALIZE_BASIC(E_MOVEMENT_TYPE)
+//{
+//	if (reader.HasMember(name))
+//	{
+//		int num;
+//		Deserialize(reader, name, num);
+//		val = static_cast<E_MOVEMENT_TYPE>(num);
+//	}
+//}
 
 DESERIALIZE_BASIC(entt::entity)
 {

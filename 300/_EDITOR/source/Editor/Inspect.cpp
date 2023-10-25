@@ -146,12 +146,6 @@ void Inspect::update()
 			Audio& audio = ent.GetComponent<Audio>();
 			audio.Inspect();
 		}
-
-		if (ent.HasComponent<AudioListener>()) {
-			AudioListener& audio_listener = ent.GetComponent<AudioListener>();
-			audio_listener.Inspect();
-		}
-
 		if (ent.HasComponent<UIrenderer>()) {
 			UIrenderer& render = ent.GetComponent<UIrenderer>();
 			render.Inspect();
@@ -228,12 +222,6 @@ void Inspect::Add_component() {
 			if (!Entity(Hierarchy::selectedId).HasComponent<Audio>())
 				Entity(Hierarchy::selectedId).AddComponent<Audio>();
 		}	
-
-		if (ImGui::Selectable("AudioListener")) {
-			if (!Entity(Hierarchy::selectedId).HasComponent<AudioListener>())
-				Entity(Hierarchy::selectedId).AddComponent<AudioListener>();
-		}
-
 		if (ImGui::Selectable("VFX")) {
 			if (!Entity(Hierarchy::selectedId).HasComponent<VFX>())
 				Entity(Hierarchy::selectedId).AddComponent<VFX>();
@@ -294,21 +282,22 @@ void General::Inspect() {
 	//}
 
 
-	//ImGui::Text("Tag");
+	/*ImGui::Text("Tag");
 
-	//ImGui::SameLine();
-	//ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
-	//	- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+	ImGui::SameLine();
+	ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+		- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
 
-	//if (ImGui::BeginCombo("##Tag", ECS::entityTags[tagid].c_str())) {
+	if (ImGui::BeginCombo("##Tag", enum_tag::ToString(tagid))) {
 
-	//	for (short i{}; i < ECS::entityTags.size(); ++i)
-	//	{
-	//		if (ImGui::Selectable(ECS::entityTags[i].c_str()))
-	//			tagid = i;
-	//	}
-	//	ImGui::EndCombo();
-	//}
+		for (int i = 0; i < enum_tag::COUNT; i++) {
+			enum_tag::enum_tag temp = static_cast<enum_tag::enum_tag>(i);
+			if (ImGui::Selectable(enum_tag::ToString(temp))) {
+				tagid = static_cast<enum_tag::enum_tag>(i);
+			}
+		}
+		ImGui::EndCombo();
+	}*/
 }
 
 /***************************************************************************/
@@ -496,7 +485,7 @@ void Scripts::Inspect() {
 						Script script;
 						script.scriptFile = dataScript;
 						script.env = { systemManager->mScriptingSystem->luaState, sol::create, systemManager->mScriptingSystem->luaState.globals() };
-						
+
 						script.Load(Hierarchy::selectedId);
 
 						scripts.scriptsContainer.push_back(script);
@@ -521,7 +510,7 @@ void Scripts::Inspect() {
 				InspectScript(elem);
 				ImGui::TreePop();
 			}
-			
+
 		}
 
 		if (open_popup) {
@@ -648,12 +637,6 @@ void MeshRenderer::Inspect()
 		Entity entins(Hierarchy::selectedId);
 
 		// == >> Shaders << == //
-		std::vector<std::string> vertShaders, fragShaders;
-		static int selectedVertShader = 0, selectedFragShader = 0;
-
-		// populating vertex shader vector
-
-
 		std::string shaderstr{" "};
 
 		if (systemManager->mResourceTySystem->m_Shaders.find(mShaderRef.data_uid) != systemManager->mResourceTySystem->m_Shaders.end())
@@ -686,6 +669,7 @@ void MeshRenderer::Inspect()
 
 				std::string descfilepath = data_str + ".desc";
 				unsigned guid = _GEOM::GetGUID(descfilepath);
+				mMeshRef.data_uid = guid;
 				mMeshRef.data = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(guid));
 				GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mMeshRef.data);
 
@@ -735,7 +719,7 @@ void MeshRenderer::Inspect()
 					systemManager->mResourceTySystem->mesh_Load(geompath, guid);
 				}
 
-
+				mMeshRef.data_uid = guid;
 				mMeshRef.data = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(guid));
 				GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mMeshRef.data);
 
@@ -780,9 +764,11 @@ void MeshRenderer::Inspect()
 		// == >> Textures << == //
 		ImGui::Dummy(ImVec2(0.0f, 10.0f));
 
-		std::string textures[4] = { "DIFFUSE","NORMAL", "EMISSION","SPECULAR"};
 
-		for (int i{ 0 }; i <4; i++) 
+
+		std::string textures[5] = { "DIFFUSE","NORMAL", "SPECULAR","SHININESS","EMISSION"};
+
+		for (int i{ 0 }; i <5; i++) 
 		{
 			if (mMaterialInstancePath[i] != "") 
 			{
@@ -795,10 +781,21 @@ void MeshRenderer::Inspect()
 						const char* data = (const char*)payload->Data;
 						std::string data_str = std::string(data);
 
-						mMaterialInstancePath[i] = data_str;
+						//mMaterialInstancePath[i] = data_str;
 
-						uid temp(mMaterialInstancePath[i]);
-						mTextureRef[i].data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(temp.id));
+						std::string texturestr = systemManager->mResourceTySystem->compressed_texture_path + getFilename(data_str) + ".ctexture";
+						mMaterialInstancePath[i] = texturestr;
+						std::string TEXTURE_Descriptor_Filepath;
+						unsigned guid;
+						// check and ensures that the descriptor file for the materials are created
+						bool descFilePresent = _GEOM::CheckAndCreateDescriptorFileTEXTURE(data_str, TEXTURE_Descriptor_Filepath, texturestr);
+						std::string descfilepath = data_str + ".desc";
+						guid = _GEOM::GetGUID(descfilepath);
+						mTextureRef[i].data_uid = guid;
+						mTextureRef[i].data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(guid));
+
+						//uid temp(mMaterialInstancePath[i]);
+						//mTextureRef[i].data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(temp.id));
 					}
 
 					// file uncompressed texture for objects
@@ -825,13 +822,15 @@ void MeshRenderer::Inspect()
 
 							// Load the textures into the list of usable textures within the engine
 							systemManager->mResourceTySystem->texture_Load(getFilename(data_str), guid);
+							mTextureRef[i].data_uid = guid;
 							mTextureRef[i].data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(guid));
-							mTextureCont[i] = true;
+							//mTextureCont[i] = true;
 						}
 
-						uid temp(mMaterialInstancePath[i]);
-						mTextureRef[i].data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(temp.id));
-						mTextureCont[i] = true;
+						//uid temp(mMaterialInstancePath[i]);
+						mTextureRef[i].data_uid = guid;
+						mTextureRef[i].data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(guid));
+						//mTextureCont[i] = true;
 					}
 
 					ImGui::EndDragDropTarget();
@@ -857,17 +856,6 @@ void MeshRenderer::Inspect()
 					}
 				}
 				
-
-
-
-
-				// The Descriptor data for the selected texture
-				if (ImGui::TreeNode("DescriptorFile"))
-				{
-					ImGui::Text(getFilename(mMaterialInstancePath[i]).c_str());
-					ImGui::TreePop();
-				}
-
 				ImGui::Dummy(ImVec2(0.0f, 10.0f));
 			}
 			else {
@@ -881,8 +869,20 @@ void MeshRenderer::Inspect()
 						std::string data_str = std::string(data);
 						mMaterialInstancePath[i] = data_str;
 
-						uid temp(mMaterialInstancePath[i]);
-						mTextureRef[i].data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(temp.id));
+
+						std::string texturestr = systemManager->mResourceTySystem->compressed_texture_path + getFilename(data_str) + ".ctexture";
+						mMaterialInstancePath[i] = texturestr;
+						std::string TEXTURE_Descriptor_Filepath;
+						unsigned guid;
+						// check and ensures that the descriptor file for the materials are created
+						bool descFilePresent = _GEOM::CheckAndCreateDescriptorFileTEXTURE(data_str, TEXTURE_Descriptor_Filepath, texturestr);
+						std::string descfilepath = data_str + ".desc";
+						guid = _GEOM::GetGUID(descfilepath);
+						mTextureRef[i].data_uid = guid;
+						mTextureRef[i].data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(guid));
+
+						//uid temp(mMaterialInstancePath[i]);
+						//mTextureRef[i].data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(temp.id));
 
 					}
 					ImGui::EndDragDropTarget();
@@ -959,31 +959,31 @@ void RigidBody::Inspect() {
 		ImGui::Separator();
 
 
-		const char* materials[] = { "RUBBER", "WOOD", "METAL", "ICE","CONCRETE","GLASS" };
-		const char* motions[] = { "STATIC", "DYNAMIC" };
+		//const char* materials[] = { "RUBBER", "WOOD", "METAL", "ICE","CONCRETE","GLASS" };
+		//const char* motions[] = { "STATIC", "DYNAMIC" };
 
 
-		/*if (ImGui::BeginCombo("Material", (materials[mMat]))) {
+		//if (ImGui::BeginCombo("Material", (materials[mMat]))) {
 
-			for (unsigned char i{ 0 }; i < 6; i++) {
-				if (ImGui::Selectable(materials[i])) {
-					mMat = i;
-					mMaterial = (MATERIAL)i;
-				}
-			}
-			ImGui::EndCombo();
-		}
+		//	for (unsigned char i{ 0 }; i < 6; i++) {
+		//		if (ImGui::Selectable(materials[i])) {
+		//			mMat = i;
+		//			mMaterial = (MATERIAL)i;
+		//		}
+		//	}
+		//	ImGui::EndCombo();
+		//}
 
-		if (ImGui::BeginCombo("Motions", (motions[mMot]))) {
+		//if (ImGui::BeginCombo("Motions", (motions[mMot]))) {
 
-			for (unsigned char i{ 0 }; i < 2; i++) {
-				if (ImGui::Selectable(motions[i])) {
-					mMot = i;
-					mMotion = (MOTION)i;
-				}
-			}
-			ImGui::EndCombo();
-		}*/
+		//	for (unsigned char i{ 0 }; i < 2; i++) {
+		//		if (ImGui::Selectable(motions[i])) {
+		//			mMot = i;
+		//			mMotion = (MOTION)i;
+		//		}
+		//	}
+		//	ImGui::EndCombo();
+		//}
 
 	}
 
@@ -1133,19 +1133,9 @@ void Audio::Inspect() {
 	{
 		//ImGui::Checkbox("Play This (start the scene first)", &mIsPlay);
 		//ImGui::Checkbox("IsPlaying", &mIsPlaying);
-		ImGui::Checkbox("3D Audio", &m3DAudio);
 		ImGui::Checkbox("Play on Awake", &mPlayonAwake);
 		ImGui::Checkbox("Is Looping", &mIsLooping);
-		ImGui::SliderFloat("Volume", &mVolume, 0.0f, 1.0f, "volume = %.3f");
-		ImGui::SliderFloat("Fade Speed", &mFadeSpeedModifier, 0.0f, 1.0f, "fade = %.3f");
-
-		if (m3DAudio)
-		{
-			ImGui::SliderFloat("Min Distance", &mMinDistance, 0.0f, 3000.0f, "%.3f");
-			ImGui::SliderFloat("Max Distance", &mMaxDistance, 0.0f, 3000.0f, "%.3f");
-
-			systemManager->mAudioSystem.get()->Update3DSettings(Entity(Hierarchy::selectedId)); 
-		}
+		ImGui::SliderFloat("Volume", &f1, 0.0f, 1.0f, "ratio = %.3f");
 
 	}
 
@@ -1176,20 +1166,6 @@ void Audio::Inspect() {
 
 	if (delete_component == false)
 		Entity(Hierarchy::selectedId).RemoveComponent<Audio>();
-}
-
-void AudioListener::Inspect() {
-	bool delete_component = true;
-
-	// Audio Component (Bar)
-	if (ImGui::CollapsingHeader("Audio Listener", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
-	{
-
-	}
-
-
-	if (delete_component == false)
-		Entity(Hierarchy::selectedId).RemoveComponent<AudioListener>();
 }
 
 void UIrenderer::Inspect() {

@@ -4,6 +4,8 @@
 #include "Physics/Accumulator.h"
 #include "Physics/PhysXUtils.h"
 
+std::unordered_map<std::uint32_t, std::vector<uint32_t>> PhysicsSystem::mTriggerCollisions;
+
 PhysicsSystem::PhysicsSystem()
 {
 	mMaterials[MATERIAL::RUBBER] = CreateMaterial(0.9f, 0.8f, 0.2f);
@@ -20,6 +22,7 @@ void PhysicsSystem::Init()
 	for (auto itr = mActors.begin(); itr != mActors.end(); ++itr)
 		mPX.mScene->removeActor(*itr->second.mActor);
 	mActors.clear();
+	mTriggerCollisions.clear();
 
 	auto view = systemManager->ecs->GetEntitiesWith<Transform, RigidBody>();
 	for (Entity e : view)
@@ -45,6 +48,7 @@ void PhysicsSystem::Update(float dt)
 void PhysicsSystem::Exit()
 {
 	mActors.clear();
+	mTriggerCollisions.clear();
 }
 
 void PhysicsSystem::AddEntity(Entity e)
@@ -60,6 +64,26 @@ void PhysicsSystem::AddEntity(Entity e)
 		PWARNING("Tried to add actor without rigid body to simulation!");
 }
 
+void PhysicsSystem::SetPosition(Entity e, const glm::vec3& globalpose)
+{
+	if (!e.HasComponent<RigidBody>()) return;
+	RigidBody rbod = e.GetComponent<RigidBody>();
+	if (rbod.mMotion == MOTION::STATIC) return;
+
+	PxRigidDynamic* actor = (physx::PxRigidDynamic*)(mActors[static_cast<uint32_t>(e.id)].mActor);
+	actor->setGlobalPose(PxTransform(Convert(globalpose), Convert(glm::quat(e.GetComponent<Transform>().mRotate))));
+}
+
+void PhysicsSystem::SetRotation(Entity e, const glm::vec3& rotation)
+{
+	if (!e.HasComponent<RigidBody>()) return;
+	RigidBody rbod = e.GetComponent<RigidBody>();
+	if (rbod.mMotion == MOTION::STATIC) return;
+
+	PxRigidDynamic* actor = (physx::PxRigidDynamic*)(mActors[static_cast<uint32_t>(e.id)].mActor);
+	actor->setGlobalPose(PxTransform(Convert(e.GetComponent<Transform>().mTranslate), Convert(glm::quat(rotation))));
+}
+
 void PhysicsSystem::SetVelocity(Entity e, const glm::vec3& velocity)
 {
 	if (!e.HasComponent<RigidBody>()) return;
@@ -73,6 +97,24 @@ void PhysicsSystem::SetVelocity(Entity e, const glm::vec3& velocity)
 
 void PhysicsSystem::RemoveActor(Entity e)
 {
+	auto itr = mTriggerCollisions.find(static_cast<uint32_t>(e.id));
+	if (itr != mTriggerCollisions.end())
+	{
+		mTriggerCollisions.erase(itr);
+	}
+	else
+	{
+		for (itr = mTriggerCollisions.begin(); itr != mTriggerCollisions.end(); ++itr)
+		{
+			Entity trigger = itr->first;
+			std::vector<uint32_t>& vec = itr->second;
+			auto temp = std::find(vec.begin(), vec.end(), static_cast<uint32_t>(e.id));
+			if (temp == vec.end())
+				continue;
+			trigger.GetComponent<Scripts>().RunFunctionForAllScripts("OnTriggerExit", e);
+			vec.erase(temp);
+		}
+	}
 	mPX.mScene->removeActor(*mActors[static_cast<uint32_t>(e.id)].mActor);
 	mActors.erase(static_cast<uint32_t>(e.id));
 }
@@ -90,45 +132,48 @@ void PhysicsSystem::CreateRigidBody(Entity e)
 	glm::vec3 childOffset = e.HasParent() ? Entity(e.GetParent()).GetComponent<Transform>().mTranslate : glm::vec3(0);
 
 	PxRigidActor* actor{};
-	CreateActor(actor, PxTransform(Convert(xform.mTranslate + childOffset)), rbod);
+	CreateActor(actor, PxTransform(Convert(xform.mTranslate + childOffset), Convert(glm::quat(xform.mRotate))), rbod);
 
 	if (e.HasComponent<CapsuleCollider>())
 	{
 		PxShape* shape{};
 		CapsuleCollider cap = e.GetComponent<CapsuleCollider>();
-		CreateShape(shape, 
+		CreateAndAttachShape(actor,
+			shape, 
 			PxCapsuleGeometry(cap.mRadius, cap.mHalfHeight), 
+			PxTransform(Convert(cap.mTranslateOffset), PxQuat(PxHalfPi, PxVec3T<float>(0, 0, 1))),
 			rbod, 
 			cap.mIsTrigger);
-		AttachShape(actor,
-			shape,
-			PxTransform(Convert(cap.mTranslateOffset), PxQuat(PxHalfPi, PxVec3T<float>(0, 0, 1))));
+		if (cap.mIsTrigger)
+			mTriggerCollisions[static_cast<uint32_t>(e.id)] = std::vector<uint32_t>();
 	}
 
 	if (e.HasComponent<BoxCollider>())
 	{
 		PxShape* shape{};
 		BoxCollider col = e.GetComponent<BoxCollider>();
-		CreateShape(shape, 
+		CreateAndAttachShape(actor,
+			shape, 
 			PxBoxGeometry(Convert(xform.mScale * col.mScaleOffset) / 2.f), 
+			PxTransform(Convert(col.mTranslateOffset)),
 			rbod, 
 			col.mIsTrigger); //PxRigidActorExt::createExclusiveShape();
-		AttachShape(actor, 
-			shape, 
-			PxTransform(Convert(col.mTranslateOffset)));
+		if (col.mIsTrigger)
+			mTriggerCollisions[static_cast<uint32_t>(e.id)] = std::vector<uint32_t>();
 	}
 
 	if (e.HasComponent<SphereCollider>())
 	{
 		PxShape* shape{};
 		SphereCollider col = e.GetComponent<SphereCollider>();
-		CreateShape(shape, 
+		CreateAndAttachShape(actor,
+			shape, 
 			PxSphereGeometry(std::max({ xform.mScale.x, xform.mScale.y, xform.mScale.z }) * col.mScaleOffset / 2.f), 
+			PxTransform(Convert(col.mTranslateOffset)),
 			rbod, 
 			col.mIsTrigger);
-		AttachShape(actor,
-			shape,
-			PxTransform(Convert(col.mTranslateOffset)));
+		if (col.mIsTrigger)
+			mTriggerCollisions[static_cast<uint32_t>(e.id)] = std::vector<uint32_t>();
 	}
 	
 	if (rbod.mMotion == MOTION::DYNAMIC)
@@ -139,11 +184,13 @@ void PhysicsSystem::CreateRigidBody(Entity e)
 	actorObject.mEntity = static_cast<uint32_t>(e.id);
 	actorObject.mActor = actor;
 
-	// assign user data
-	actorObject.mActor->userData = &actorObject.mEntity;
 
 	// add to scene
 	mActors[static_cast<uint32_t>(e.id)] = actorObject;
+
+	// assign user data
+	actorObject.mActor->userData = &mActors[static_cast<uint32_t>(e.id)].mEntity;
+
 	mPX.mScene->addActor(*actorObject.mActor);
 }
 
@@ -167,13 +214,6 @@ void PhysicsSystem::CreateActor(PxRigidActor*& actor, const PxTransform& pxform,
 		return;
 	}
 	actor = mPX.mPhysics->createRigidStatic(pxform);
-}
-
-void PhysicsSystem::AttachShape(PxRigidActor*& actor, PxShape*& shape, const PxTransform& localPose)
-{
-	shape->setLocalPose(localPose);
-	actor->attachShape(*shape);
-	shape->release();
 }
 
 void PhysicsSystem::Synchronize()

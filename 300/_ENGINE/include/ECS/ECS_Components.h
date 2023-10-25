@@ -26,7 +26,7 @@ Components used by the ECS.
 #include <Camera.hpp>
 #include <string>
 //#include "EnumStrings.h"
-#include "EnumTags.h"
+//#include "EnumTags.h"
 #include "Input/Input.h"
 #include "Guid.h"
 #include <Constants.h>
@@ -56,7 +56,7 @@ struct General : public Serializable
 	std::string name;
 	/*TAG tag;*/
 	//enum_tag::enum_tag tag{};
-	//enum_tag::enum_tag tagid{};
+	unsigned char tagid = 0; //@han
 	//std::string tag[5] = { "PLAYER","ENEMY","BULLET","STATIC","BUILDING" };
 	//int tagid{ 0 };
 	unsigned char tagid = 0;
@@ -69,6 +69,9 @@ struct General : public Serializable
 	{};
 
 	std::string GetTag() { return ECS::GetTag(tagid); }
+
+	void SetTag(const std::string& tagName) { tagid = ECS::GetTag(tagName); }
+
 
 	void Inspect();
 	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
@@ -136,7 +139,7 @@ struct MeshRenderer : public Serializable
 	ref									mTextureRef[5]		{ {nullptr,0},{nullptr,0},{nullptr,0},{nullptr,0},{nullptr,0} };
 
 	unsigned							mGUID;
-	bool								mTextureCont[5];
+	//bool								mTextureCont[5];
 
 	void								Inspect();
 	void								SetColor(const vec4& color);
@@ -184,7 +187,7 @@ struct UIrenderer : public Serializable
 	[Component] - RigidBody
  */
  /******************************************************************************/
-struct RigidBody : public Serializable
+struct RigidBody : public Serializable //@han
 {
 	float mDensity;
 	MATERIAL mMaterial;
@@ -207,7 +210,7 @@ struct RigidBody : public Serializable
 	[Component] - BoxCollider
  */
  /******************************************************************************/
-struct BoxCollider : public Serializable
+struct BoxCollider : public Serializable //@han
 {
 	glm::vec3 mScaleOffset;			// final scale = mScaleOffset * Transform.mScale;
 	glm::vec3 mTranslateOffset;		// final pos = Transform.mTranslate + mTranslateOffset;
@@ -226,7 +229,7 @@ struct BoxCollider : public Serializable
 	[Component] - SphereCollider
  */
  /******************************************************************************/
-struct SphereCollider : public Serializable
+struct SphereCollider : public Serializable //@han
 {
 	float mScaleOffset;				// final scale = mScaleOffset * std::max(Transform.mScale.x, Transform.mScale.y, Transform.mScale.z);
 	glm::vec3 mTranslateOffset;		// final pos = Transform.mTranslate + mTranslateOffset;
@@ -240,7 +243,7 @@ struct SphereCollider : public Serializable
 	void DeserializeSelf(rapidjson::Value& reader);
 };
 
-struct CapsuleCollider : public Serializable
+struct CapsuleCollider : public Serializable //@han
 {
 	glm::vec3 mTranslateOffset;
 	float mRadius;
@@ -471,7 +474,7 @@ struct PointLight : public Serializable
 	vec3	mLightColor{ 1.f, 1.f, 1.f };
 	float	mLinearFalloff{};
 	float	mQuadraticFalloff{};
-	float	mIntensity{};
+	float	mIntensity{ 1.5f };
 
 	void Inspect();
 
@@ -492,12 +495,13 @@ struct VFX : public Serializable
 	bool		isObjectBloom{ 1 };
 
 	void Inspect();
-	void EnableObjectBloom() { isObjectBloom = true; }
-	void DisableObjectBloom() { isObjectBloom = false; }
-	void SetEntityBloomThreshold(glm::vec3 threshold) { mBloomThreshold = threshold; }
 
 	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
 	void DeserializeSelf(rapidjson::Value& reader);
+
+	void EnableObjectBloom() { isObjectBloom = true; }
+	void DisableObjectBloom() { isObjectBloom = false; }
+	void SetEntityBloomThreshold(glm::vec3 threshold) { mBloomThreshold = threshold; }
 };
 
 /******************************************************************************/
@@ -517,6 +521,9 @@ struct AISetting {
 	Entity GetTarget() { return mTarget; }
 	Entity GetTarget() const { return mTarget; }
 	void SetTarget(Entity _e) { mTarget = _e; }
+
+	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
+	void DeserializeSelf(rapidjson::Value& reader);
 
 private: 
 	Entity mTarget;									// AI's target

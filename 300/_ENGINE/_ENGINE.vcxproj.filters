@@ -64,5 +64,6 @@
     <ClInclude Include="include\Physics\FilterShader.h" />
     <ClInclude Include="include\Serialization\Serializable.h" />
     <ClInclude Include="include\ECS\EnumTags.h" />
+    <ClInclude Include="include\Physics\FilterShader.h" />
   </ItemGroup>
 </Project>

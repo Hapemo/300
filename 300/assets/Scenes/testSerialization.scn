@@ -1,9 +1,9 @@
 [
     {
-        "entityid": 1,
+        "entityid": 0,
         "general": {
             "name": "rubber",
-            "tagid": 2,
+            "tagid": 0,
             "subtag": 0,
             "isActive": false,
             "isPaused": false
@@ -20,8 +20,8 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 0.0,
-                "y": -0.689213752746582,
+                "x": -1.935215711593628,
+                "y": 1.2816816568374634,
                 "z": 0.0
             }
         },
@@ -33,6 +33,11 @@
                 "x": 0.0,
                 "y": 0.0,
                 "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": false,
+                "z": false
             }
         },
         "meshrenderer": {
@@ -46,20 +51,19 @@
                 "w": 1.0
             },
             "materialinstance": [
-                "../assets/Compressed/Wood Material 15_BaseColor.ctexture",
-                "../assets/Compressed/Wood Material 15_Normal.ctexture",
+                " ",
+                " ",
                 " ",
                 " ",
                 " "
             ],
-            "texturecont": [
-                true,
-                true,
-                false,
-                false,
-                false
-            ],
-            "textureref": 0
+            "texturerefid": [
+                0,
+                0,
+                0,
+                0,
+                0
+            ]
         },
         "boxcollider": {
             "scaleoffset": {
@@ -71,7 +75,8 @@
                 "x": 0.0,
                 "y": 0.0,
                 "z": 0.0
-            }
+            },
+            "istrigger": true
         },
         "spherecollider": {
             "scaleoffset": 1.0,
@@ -79,14 +84,21 @@
                 "x": 0.0,
                 "y": 0.0,
                 "z": 0.0
-            }
+            },
+            "istrigger": false
         },
         "scripts": {
             "scriptscontainer": []
+        },
+        "aisetting": {
+            "shotprediction": false,
+            "spreadout": 0.0,
+            "stayaway": 0.0,
+            "targetname": ""
         }
     },
     {
-        "entityid": 2,
+        "entityid": 1,
         "general": {
             "name": "ducky",
             "tagid": 0,
@@ -106,8 +118,8 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 0.0,
-                "y": 0.0,
+                "x": -2.968045949935913,
+                "y": 2.2499635219573975,
                 "z": 0.0
             }
         },
@@ -119,11 +131,16 @@
                 "x": 0.0,
                 "y": 0.0,
                 "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": false,
+                "z": false
             }
         }
     },
     {
-        "entityid": 3,
+        "entityid": 2,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -133,8 +150,8 @@
         },
         "transform": {
             "scale": {
-                "x": 1.0,
-                "y": 1.0,
+                "x": 0.9999998211860657,
+                "y": 0.9999998211860657,
                 "z": 1.0
             },
             "rotate": {
@@ -160,8 +177,8 @@
                 "z": 747.7139892578125
             },
             "size": {
-                "x": 635,
-                "y": 601
+                "x": 428,
+                "y": 625
             },
             "near": 0.10000000149011612,
             "far": 900.0

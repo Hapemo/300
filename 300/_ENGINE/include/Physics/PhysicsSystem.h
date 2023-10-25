@@ -39,12 +39,14 @@ public:
 	Adds a new entity to the physics simulation
 	*******************************************************************************/
 	void AddEntity(Entity e);
-
+	void SetPosition(Entity e, const glm::vec3& globalpose);
+	void SetRotation(Entity e, const glm::vec3& rotation);
 	/*!*****************************************************************************
 	Set velocity of an entity.
 	*******************************************************************************/
 	void SetVelocity(Entity e, const glm::vec3 &velocity);
 	void RemoveActor(Entity e);
+	static std::unordered_map<std::uint32_t, std::vector<uint32_t>> mTriggerCollisions; // key: trigger, val: entites colliding with trigger
 
 private:
 	PhysX mPX;
@@ -64,22 +66,26 @@ private:
 	void CreateActor(PxRigidActor*& actor, const PxTransform& pxform, const RigidBody& rbod);
 
 	template <typename T>
-	void CreateShape(PxShape*& shape, const T& geometry, const RigidBody& rbod, bool isTrigger);
+	void CreateAndAttachShape(PxRigidActor*& actor, PxShape*& shape, 
+		const T& geometry, const PxTransform& pose, 
+		const RigidBody& rbod, bool isTrigger);
 
-
-	void AttachShape(PxRigidActor*& actor, PxShape*& shape, const PxTransform& localPose);
-	
 	void Synchronize();
 	//PxRigidDynamicLockFlags Convert(const glm::ivec3& vec);
-
-	// for performance
-	double startTime, endTime;
 };
 
 template <typename T>
-void PhysicsSystem::CreateShape(PxShape*& shape, const T& geometry, const RigidBody& rbod, bool isTrigger)
+void PhysicsSystem::CreateAndAttachShape(PxRigidActor*& actor, PxShape*& shape,
+	const T& geometry, const PxTransform& pose,
+	const RigidBody& rbod, bool isTrigger)
 {
-	shape = mPX.mPhysics->createShape(geometry, *mMaterials[rbod.mMaterial]);
-	shape->setFlag(PxShapeFlag::Enum::eSIMULATION_SHAPE, !isTrigger);
-	shape->setFlag(PxShapeFlag::Enum::eTRIGGER_SHAPE, isTrigger);
+	PxShapeFlags flags = PxShapeFlag::eVISUALIZATION | PxShapeFlag::eSCENE_QUERY_SHAPE;
+	if (isTrigger)
+		flags |= PxShapeFlag::eTRIGGER_SHAPE;
+	else
+		flags |= PxShapeFlag::eSIMULATION_SHAPE;
+	shape = PxRigidActorExt::createExclusiveShape(*actor, geometry, *mMaterials[rbod.mMaterial], flags);
+	PxFilterData motionFilter(static_cast<uint32_t>(rbod.mMotion), 0, 0, 0);
+	shape->setSimulationFilterData(motionFilter);
+	shape->setLocalPose(pose);
 }

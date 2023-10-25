@@ -12,6 +12,7 @@
 //#include "ECS/ECS_Components.h"
 //#include "ECS/EnumStrings.h"
 #include "ECS/EnumTags.h"
+//#include "AI/AIManager.h"
 
 // forward declaration
 struct Scene;
@@ -25,11 +26,13 @@ class Script;
 #pragma region basic_types
 SERIALIZE_BASIC(bool);
 SERIALIZE_BASIC(int);
+SERIALIZE_BASIC(unsigned char);
 SERIALIZE_BASIC(std::uint32_t);
 SERIALIZE_BASIC(float);
 SERIALIZE_BASIC(double);
 SERIALIZE_BASIC(std::string);
 SERIALIZE_BASIC(glm::ivec2);
+SERIALIZE_BASIC(glm::bvec3);
 SERIALIZE_BASIC(glm::vec3);
 SERIALIZE_BASIC(glm::vec4);
 SERIALIZE_BASIC(Script);
@@ -37,7 +40,7 @@ SERIALIZE_BASIC(SUBTAG);
 SERIALIZE_BASIC(MATERIAL);
 SERIALIZE_BASIC(MOTION);
 SERIALIZE_BASIC(AUDIOTYPE);
-SERIALIZE_BASIC(unsigned char);
+//SERIALIZE_BASIC(E_MOVEMENT_TYPE);
 #pragma endregion basic_types
 // Derived types has to inherit from Serializable
 #pragma region derived_types
@@ -148,11 +151,13 @@ void Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer, const c
 #pragma region basic_types
 DESERIALIZE_BASIC(bool);
 DESERIALIZE_BASIC(int);
+DESERIALIZE_BASIC(unsigned char);
 DESERIALIZE_BASIC(std::uint32_t);
 DESERIALIZE_BASIC(float);
 DESERIALIZE_BASIC(double);
 DESERIALIZE_BASIC(std::string);
 DESERIALIZE_BASIC(glm::ivec2);
+DESERIALIZE_BASIC(glm::bvec3);
 DESERIALIZE_BASIC(glm::vec3);
 DESERIALIZE_BASIC(glm::vec4);
 DESERIALIZE_BASIC(Script);
@@ -160,6 +165,7 @@ DESERIALIZE_BASIC(SUBTAG);
 DESERIALIZE_BASIC(MATERIAL);
 DESERIALIZE_BASIC(MOTION);
 DESERIALIZE_BASIC(AUDIOTYPE);
+//DESERIALIZE_BASIC(E_MOVEMENT_TYPE);
 DESERIALIZE_BASIC(entt::entity);
 DESERIALIZE_BASIC(unsigned char);
 #pragma endregion basic_types
