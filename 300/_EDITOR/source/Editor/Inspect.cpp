@@ -1178,6 +1178,20 @@ void Audio::Inspect() {
 		Entity(Hierarchy::selectedId).RemoveComponent<Audio>();
 }
 
+void AudioListener::Inspect() {
+	bool delete_component = true;
+
+	// Audio Component (Bar)
+	if (ImGui::CollapsingHeader("Audio Listener", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
+	{
+
+	}
+
+
+	if (delete_component == false)
+		Entity(Hierarchy::selectedId).RemoveComponent<AudioListener>();
+}
+
 void UIrenderer::Inspect() {
 	bool delete_component = true;
 
