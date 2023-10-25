@@ -1,4 +1,5 @@
 #include "Physics/ContactCallback.h"
+#include "Physics/PhysicsSystem.h"
 #include "ECS/ECS.h"
 #include "ECS/ECS_Components.h"
 #include "Debug/AssertException.h"
@@ -53,13 +54,22 @@ void ContactCallback::onTrigger(PxTriggerPair* pairs, PxU32 count)
 		if (triggerEntity.id == otherEntity.id)
 			continue;
 
+		std::vector<uint32_t>& triggeredEntities = PhysicsSystem::mTriggerCollisions[static_cast<uint32_t>(triggerEntity.id)];
+		uint32_t otherID = static_cast<uint32_t>(otherEntity.id);
+
 		if (pairs->status == PxPairFlag::eNOTIFY_TOUCH_FOUND)
 		{
 			triggerEntity.GetComponent<Scripts>().RunFunctionForAllScripts("OnTriggerEnter", otherEntity);
+			triggeredEntities.push_back(otherID);
 		}
 		else if (pairs->status == physx::PxPairFlag::eNOTIFY_TOUCH_LOST)
 		{
-			triggerEntity.GetComponent<Scripts>().RunFunctionForAllScripts("OnTriggerExit", otherEntity);
+			auto itr = std::find(triggeredEntities.begin(), triggeredEntities.end(), otherID);
+			if (itr != triggeredEntities.end())
+			{
+				triggerEntity.GetComponent<Scripts>().RunFunctionForAllScripts("OnTriggerExit", otherEntity);
+				triggeredEntities.erase(itr);
+			}
 		}
 	}
 }

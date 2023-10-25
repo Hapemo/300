@@ -12,14 +12,8 @@ static PxFilterFlags FilterShader(PxFilterObjectAttributes attributes0, PxFilter
         pairFlags = PxPairFlag::eTRIGGER_DEFAULT;
         return PxFilterFlag::eDEFAULT;
     }
-    pairFlags = PxPairFlag::eCONTACT_DEFAULT;
-
-    // ignore static/static collision
-    if (filterData0.word0 == static_cast<unsigned char>(MOTION::STATIC) 
-     && filterData1.word0 == static_cast<unsigned char>(MOTION::STATIC))
-        return PxFilterFlag::eKILL;
 
     // generate contacts between dynamic/static and dynamic/dynamic that were not filtered above
-    pairFlags |= PxPairFlag::eNOTIFY_TOUCH_FOUND | PxPairFlag::eNOTIFY_TOUCH_LOST;
+    pairFlags = PxPairFlag::eCONTACT_DEFAULT | PxPairFlag::eNOTIFY_TOUCH_FOUND | PxPairFlag::eNOTIFY_TOUCH_LOST;
     return PxFilterFlag::eDEFAULT;
 }
