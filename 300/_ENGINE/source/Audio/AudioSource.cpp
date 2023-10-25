@@ -45,6 +45,7 @@ bool FadeInAudio(AudioSource& fade_in, float fade_duration, float fade_max_vol)
 	{
 		// Fading functionaltiy (done in update() loop)
 		fade_in.mAudioComponent->fade_duration = fade_duration;
+		fade_in.mAudioComponent->mVolume = 0.0f; // Start from volume : 0.
 		fade_in.mAudioComponent->mFadeIn = true;
 		fade_in.mAudioComponent->mFadeOut = false;
 		fade_in.mAudioComponent->mFadeInMaxVol = fade_max_vol;
