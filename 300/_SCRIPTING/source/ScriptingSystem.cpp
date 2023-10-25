@@ -233,8 +233,8 @@ void ScriptingSystem::Update(float dt)
     //}
 
     //Test Collide (To delete)
-    Entity entity0 = systemManager->mGameStateSystem->GetEntity("Entity0", "testSerialization");
-    Entity entity1 = systemManager->mGameStateSystem->GetEntity("Entity1", "testSerialization");
+    Entity entity0 = systemManager->mGameStateSystem->GetEntity("rubber", "testSerialization");
+    Entity entity1 = systemManager->mGameStateSystem->GetEntity("ducky", "testSerialization");
     entity0.GetComponent<Scripts>().RunFunctionForAllScripts("OnTriggerEnter", entity1.id);
     //std::cout << "id is : " << (int32_t)floor.id << std::endl;
 }
