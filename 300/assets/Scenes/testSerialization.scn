@@ -3,7 +3,7 @@
         "entityid": 0,
         "general": {
             "name": "rubber",
-            "tagid": 2,
+            "tagid": 0,
             "subtag": 0,
             "isActive": false,
             "isPaused": false
@@ -33,6 +33,11 @@
                 "x": 0.0,
                 "y": 0.0,
                 "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": false,
+                "z": false
             }
         },
         "meshrenderer": {
@@ -64,7 +69,8 @@
                 "x": 0.0,
                 "y": 0.0,
                 "z": 0.0
-            }
+            },
+            "istrigger": true
         },
         "spherecollider": {
             "scaleoffset": 1.0,
@@ -72,7 +78,8 @@
                 "x": 0.0,
                 "y": 0.0,
                 "z": 0.0
-            }
+            },
+            "istrigger": false
         },
         "scripts": {
             "scriptscontainer": []
@@ -112,6 +119,11 @@
                 "x": 0.0,
                 "y": 0.0,
                 "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": false,
+                "z": false
             }
         }
     },
@@ -153,7 +165,7 @@
                 "z": 747.7139892578125
             },
             "size": {
-                "x": 278,
+                "x": 428,
                 "y": 625
             },
             "near": 0.10000000149011612,

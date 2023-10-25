@@ -26,7 +26,7 @@ and saving of prefabs, scenes and gamestates using serialization.
 
 void ObjectFactory::LoadEntity(Entity e, rapidjson::Value& reader)
 {
-	/*DESERIALIZE_SELF(General, "general");
+	DESERIALIZE_SELF(General, "general");
 	DESERIALIZE_SELF(Transform, "transform");
 	DESERIALIZE_SELF(RigidBody, "rigidbody");
 	DESERIALIZE_SELF(MeshRenderer, "meshrenderer");
@@ -49,7 +49,7 @@ void ObjectFactory::LoadEntity(Entity e, rapidjson::Value& reader)
 	DESERIALIZE_SELF(Audio, "audio");
 	DESERIALIZE_SELF(Camera, "camera");
 	DESERIALIZE_SELF(Prefab, "prefab");
-	DESERIALIZE_SELF(PointLight, "pointlight");*/
+	DESERIALIZE_SELF(PointLight, "pointlight");
 }
 
 // deserialize scenes from the Scenes folder

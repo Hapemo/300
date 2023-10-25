@@ -34,11 +34,11 @@ void ContactCallback::onContact(const PxContactPairHeader& pairHeader, const PxC
 
 		if (current.events & (PxPairFlag::eNOTIFY_TOUCH_FOUND))
 		{
-			// call scripting
+			playerEntity.GetComponent<Scripts>().RunFunctionForAllScripts("OnContactEnter", otherEntity);
 		}
 		else if (current.events & PxPairFlag::eNOTIFY_TOUCH_LOST)
 		{
-			// call scripting
+			playerEntity.GetComponent<Scripts>().RunFunctionForAllScripts("OnContactExit", otherEntity);
 		}
 	}
 }
