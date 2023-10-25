@@ -50,6 +50,7 @@ void ObjectFactory::LoadEntity(Entity e, rapidjson::Value& reader)
 	DESERIALIZE_SELF(Camera, "camera");
 	DESERIALIZE_SELF(Prefab, "prefab");
 	DESERIALIZE_SELF(PointLight, "pointlight");
+	DESERIALIZE_SELF(AISetting, "aisetting");
 }
 
 // deserialize scenes from the Scenes folder
@@ -148,6 +149,7 @@ void ObjectFactory::SaveEntity(Entity e, rapidjson::PrettyWriter<rapidjson::Stri
 	SERIALIZE_SELF(Camera);
 	SERIALIZE_SELF(Prefab);
 	SERIALIZE_SELF(PointLight);
+	SERIALIZE_SELF(AISetting);
 	writer.EndObject();
 }
 

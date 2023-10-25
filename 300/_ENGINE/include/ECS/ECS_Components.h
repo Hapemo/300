@@ -501,6 +501,9 @@ struct AISetting {
 	Entity GetTarget() const { return mTarget; }
 	void SetTarget(Entity _e) { mTarget = _e; }
 
+	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
+	void DeserializeSelf(rapidjson::Value& reader);
+
 private: 
 	Entity mTarget;									// AI's target
 };

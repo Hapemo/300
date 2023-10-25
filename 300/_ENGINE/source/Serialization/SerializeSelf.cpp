@@ -291,3 +291,24 @@ void VFX::DeserializeSelf(rapidjson::Value& reader)
 {
 	Deserialize(reader, "bloomthreshold", mBloomThreshold);
 }
+
+void AISetting::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
+{
+	writer.Key("aisetting");
+	writer.StartObject();
+	Serialize(writer, "movementtype", mMovementType);
+	Serialize(writer, "shotprediction", mShotPrediction);
+	Serialize(writer, "spreadout", mSpreadOut);
+	Serialize(writer, "stayaway", mStayAway);
+	Serialize(writer, "targetname", mTargetName);
+	writer.EndObject();
+}
+
+void AISetting::DeserializeSelf(rapidjson::Value& reader)
+{
+	Deserialize(reader, "movementtype", mMovementType);
+	Deserialize(reader, "shotprediction", mShotPrediction);
+	Deserialize(reader, "spreadout", mSpreadOut);
+	Deserialize(reader, "stayaway", mStayAway);
+	Deserialize(reader, "targetname", mTargetName);
+}
