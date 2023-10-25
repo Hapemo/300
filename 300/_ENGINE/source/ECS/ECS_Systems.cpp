@@ -173,3 +173,8 @@ GraphicsSystem* SystemManager::GetGraphicsSystem()
 {
 	return mGraphicsSystem.get();
 }
+
+AIManager* SystemManager::GetAIManager()
+{
+	return mAISystem.get();
+}
