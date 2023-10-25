@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 1,
+        "entityid": 0,
         "general": {
             "name": "rubber",
             "tagid": 2,
@@ -48,8 +48,8 @@
             "materialinstance": [
                 "../assets/Compressed/Brick wall 4_baseColor.ctexture",
                 "../assets/Compressed/Brick wall 4_normal.ctexture",
-                " ",
-                " ",
+                "../assets/Compressed/Brick wall 4_normal.ctexture",
+                "../assets/Compressed/Brick wall 4_normal.ctexture",
                 " "
             ],
             "textureref": 4923
@@ -79,7 +79,7 @@
         }
     },
     {
-        "entityid": 2,
+        "entityid": 1,
         "general": {
             "name": "ducky",
             "tagid": 0,
@@ -116,7 +116,7 @@
         }
     },
     {
-        "entityid": 3,
+        "entityid": 2,
         "general": {
             "name": "Camera",
             "tagid": 0,

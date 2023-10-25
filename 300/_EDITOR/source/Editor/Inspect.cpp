@@ -765,9 +765,11 @@ void MeshRenderer::Inspect()
 		// == >> Textures << == //
 		ImGui::Dummy(ImVec2(0.0f, 10.0f));
 
-		std::string textures[4] = { "DIFFUSE","NORMAL", "EMISSION","SPECULAR"};
 
-		for (int i{ 0 }; i <4; i++) 
+
+		std::string textures[5] = { "DIFFUSE","NORMAL", "SPECULAR","SHININESS","EMISSION"};
+
+		for (int i{ 0 }; i <5; i++) 
 		{
 			if (mMaterialInstancePath[i] != "") 
 			{
@@ -853,10 +855,6 @@ void MeshRenderer::Inspect()
 					}
 				}
 				
-
-
-
-
 				ImGui::Dummy(ImVec2(0.0f, 10.0f));
 			}
 			else {
