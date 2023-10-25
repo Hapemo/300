@@ -8,6 +8,8 @@
 #include "Input/InputMapSystem.h"
 #include "GameState/GameStateManager.h"
 #include "Graphics/GraphicsSystem.h"
+#include "Audio/AudioSource.h"
+#include "AI/AIManager.h"
 
 void LuaComponentContainer()
 {
@@ -25,7 +27,9 @@ void LuaEngine()
         "mScriptingSystem", &SystemManager::GetScriptingPointer,
         "mAudioSystem", &SystemManager::GetAudioPointer,
         "mInputActionSystem", &SystemManager::GetInputMapSystemPointer,
-        "mGameStateSystem", &SystemManager::GetGameStateSystem
+        "mGameStateSystem", &SystemManager::GetGameStateSystem,
+        "mGraphicsSystem", &SystemManager::GetGraphicsSystem,
+        "mAISystem", &SystemManager::GetAIManager
     );
 }
 
@@ -57,6 +61,13 @@ void LuaEntity()
 
         DECLARE_COMPONENT("GetTransform", Transform),
         "HasTransform", &Entity::HasComponent<Transform>,
+
+        DECLARE_COMPONENT("GetCamera", Camera),
+        "HasCamera", & Entity::HasComponent<Camera>,
+
+        ADD_COMPONENT("AddAnimator", Animator),
+        DECLARE_COMPONENT("GetAnimator", Animator),
+        "HasAnimator", & Entity::HasComponent<Animator>,
 
         ADD_COMPONENT("AddRigidBody", RigidBody),
         DECLARE_COMPONENT("GetRigidBody", RigidBody),
@@ -96,7 +107,11 @@ void LuaEntity()
 
         ADD_COMPONENT("AddMeshRenderer", MeshRenderer),
         DECLARE_COMPONENT("GetMeshRenderer", MeshRenderer),
-        "HasMeshRenderer", &Entity::HasComponent<MeshRenderer>
+        "HasMeshRenderer", &Entity::HasComponent<MeshRenderer>,
+
+        ADD_COMPONENT("AddVFX", VFX),
+        DECLARE_COMPONENT("GetVFX", VFX),
+        "HasVFX", & Entity::HasComponent<VFX>
     );
 }
 
@@ -109,9 +124,33 @@ void LuaGeneral()
         "tagid", &General::tagid,
         "subtag", &General::subtag,
         "isActive", &General::isActive,
-        "GetTag", &General::GetTag,
-        "SetTag", &General::SetTag
+        "GetTag", &General::GetTag
     );
+}
+
+void LuaCamera()
+{
+    //systemManager->mScriptingSystem->luaState.new_usertype<Camera>(
+    //    "Camera", sol::constructors<>(),
+    //    "mCamera", &Camera::mCamera
+    //    );
+}
+
+void LuaGFXCamera()
+{
+    //systemManager->mScriptingSystem->luaState.new_usertype<GFX::Camera>(
+    //    "GFXCamera", sol::constructors<GFX::Camera()>(),
+    //    "RotateCameraView", &GFX::Camera::RotateCameraView,
+    //    "SetCameraSpeed", &GFX::Camera::SetCameraSpeed,
+    //    "SetSensitivity", &GFX::Camera::SetSensitivity,
+    //    "GetCameraSpeed", &GFX::Camera::GetCameraSpeed,
+    //    "GetSensitivity", &GFX::Camera::GetSensitivity,
+    //    "SetTarget", &GFX::Camera::SetTarget,
+    //    "SetPosition", &GFX::Camera::SetPosition,
+    //    "position", &GFX::Camera::position,
+    //    "target", &GFX::Camera::target,
+    //    "direction", &GFX::Camera::direction
+    //    );
 }
 
 void LuaTransform()
@@ -122,6 +161,15 @@ void LuaTransform()
         "mRotate", &Transform::mRotate,
         "mTranslate", &Transform::mTranslate
     );
+}
+
+void LuaAnimator()
+{
+    systemManager->mScriptingSystem->luaState.new_usertype<Animator>(
+        "Animator", sol::constructors<>(),
+        "PauseAnimation", &Animator::PauseAnimation,
+        "UnpauseAnimation", &Animator::UnpauseAnimation
+        );
 }
 
 void LuaRigidBody()
@@ -156,8 +204,7 @@ void LuaSphereCollider()
 void LuaScript()
 {
     systemManager->mScriptingSystem->luaState.new_usertype<Scripts>(
-        "Scripts", sol::constructors<>(),
-        "mScriptFile", &Scripts::mScriptFile
+        "Scripts", sol::constructors<>()
     );
 }
 
@@ -189,24 +236,52 @@ void LuaInput()
     );
 }
 
-void LuaAudio()
+void LuaAudioSystem()
 {
-    //systemManager->mScriptingSystem->luaState["mAudioSystem"] = systemManager->GetAudioPointer();
-    systemManager->mScriptingSystem->luaState.new_usertype<AudioSystem>(
+ /*   systemManager->mScriptingSystem->luaState.new_usertype<AudioSystem>(
         "mAudioSystem", sol::constructors<>(),
         "PlayAudio", &AudioSystem::PlayAudio,
-    /*    "PlaySFXAudio", &AudioSystem::PlaySFXAudio,
-        "PlayBGMAudio", &AudioSystem::PlayBGMAudio,*/
-       //"SetSpecificChannelVolume", &AudioSystem::SetSpecificChannelVolume,
         "SetAllSFXVolume", &AudioSystem::SetAllSFXVolume,
         "SetAllBGMVolume", &AudioSystem::SetAllBGMVolume,
         "MuteSFX", &AudioSystem::MuteSFX,
-        "MuteBGM", &AudioSystem::MuteBGM
-     /*   "TogglePauseAllSounds", &AudioSystem::TogglePauseAllSounds,
-        "TogglePauseSFXSounds", &AudioSystem::TogglePauseSFXSounds,
-        "TogglePauseBGMSounds", &AudioSystem::TogglePauseBGMSounds,
-        "TogglePauseSpecific", &AudioSystem::TogglePauseSpecific*/
-    );
+        "MuteBGM", &AudioSystem::MuteBGM,
+        "LoadAudio", &AudioSystem::LoadAudio,
+        "LoadAudioFromDirectory", &AudioSystem::LoadAudioFromDirectory,
+        "StopAllSFX", &AudioSystem::StopAllSFX,
+        "StopAllBGM", &AudioSystem::StopAllBGM,
+        "PauseAllSounds", &AudioSystem::PauseAllSounds,
+        "PauseSFXSounds", &AudioSystem::PauseSFXSounds,
+        "PauseBGMSounds", &AudioSystem::PauseBGMSounds,
+        "UnpauseAllSounds", &AudioSystem::UnpauseAllSounds,
+        "UnpauseSFXSounds", &AudioSystem::UnpauseSFXSounds,
+        "UnpauseBGMSounds", &AudioSystem::UnpauseBGMSounds
+    );*/
+}
+
+void LuaAudioSource()
+{
+    systemManager->mScriptingSystem->luaState["CrossFadeAudio"] = &CrossFadeAudio;
+    systemManager->mScriptingSystem->luaState.new_usertype<AudioSource>(
+        "AudioSource", sol::constructors<AudioSource()>(),
+        "GetAudio", &AudioSource::GetAudioComponent,
+        "IsSoundAttached", &AudioSource::IsSoundAttached,
+        "AttachSound", &AudioSource::AttachSound,
+        //"IsPlaying", &AudioSource::IsPlaying,
+        "Play", &AudioSource::Play,
+        "Pause", &AudioSource::Pause,
+        "Unpause", &AudioSource::Unpause,
+        "Stop", &AudioSource::Stop,
+        "Mute", &AudioSource::Mute,
+        "SetVolume", &AudioSource::SetVolume,
+        "SetIsLoop", &AudioSource::SetIsLoop
+        );
+}
+
+void LuaAudio()
+{
+    systemManager->mScriptingSystem->luaState.new_usertype<Audio>(
+        "Audio", sol::constructors<>()
+        );
 }
 
 void LuaInputMapSystem()
@@ -220,6 +295,17 @@ void LuaInputMapSystem()
         "GetKeyUp", &InputMapSystem::GetKeyUp,
         "GetKeyDown", &InputMapSystem::GetKeyDown
     );
+}
+
+void LuaGraphicsSystem()
+{
+    //systemManager->mScriptingSystem->luaState.new_usertype<GraphicsSystem>(
+    //    "mGraphicsSystem", sol::constructors<>(),
+    //    "EnableGlobalBloom", &GraphicsSystem::EnableGlobalBloom,
+    //    "DisableGlobalBloom", &GraphicsSystem::DisableGlobalBloom,
+    //    "SetGlobalBloomThreshold", &GraphicsSystem::SetGlobalBloomThreshold,
+    //    "SetGlobalBloomExposure", &GraphicsSystem::SetGlobalBloomExposure
+    //    );
 }
 
 void LuaPhysics()
@@ -254,4 +340,32 @@ void LuaMeshRenderer()
         "SetMesh", &MeshRenderer::SetMesh,
         "SetTexture", &MeshRenderer::SetTexture
     );
+}
+
+void LuaVFX()
+{
+    //systemManager->mScriptingSystem->luaState.new_usertype<VFX>(
+    //    "VFX", sol::constructors<>(),
+    //    "EnableObjectBloom", &VFX::EnableObjectBloom,
+    //    "DisableObjectBloom", &VFX::DisableObjectBloom,
+    //    "SetEntityBloomThreshold", &VFX::SetEntityBloomThreshold
+    //    );
+}
+
+void LuaGameState()
+{
+    systemManager->mScriptingSystem->luaState.new_usertype<GameStateManager>(
+        "mGameStateSystem", sol::constructors<>(),
+        "GetEntity", &GameStateManager::GetEntity
+        );
+}
+
+void LuaAIManager()
+{
+    //systemManager->mScriptingSystem->luaState.new_usertype<AIManager>(
+    //    "mAISystem", sol::constructors<>(),
+    //    "SetPredictiveVelocity", &AIManager::SetPredictiveVelocity,
+    //    "PredictiveShootPlayer", &AIManager::PredictiveShootPlayer,
+    //    "GetDirection", &AIManager::GetDirection
+    //    );
 }

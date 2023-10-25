@@ -451,14 +451,14 @@ void Scripts::Inspect() {
 			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_LUA"))
 			{
 				data_script = (const char*)payload->Data;
-				scripts.mScriptFile = std::string(data_script);
+				//scripts.mScriptFile = std::string(data_script);
 				std::string dataScript = std::string(data_script);
 
 				// if entity does not contain any script, just add 
 				if (scriptEntities.get<Scripts>(Hierarchy::selectedId).scriptsContainer.size() == 0)
 				{
 					Script script;
-					script.scriptFile = dataScript;
+					//script.scriptFile = dataScript;
 					script.env = { systemManager->mScriptingSystem->luaState, sol::create, systemManager->mScriptingSystem->luaState.globals() };
 					script.Load(Hierarchy::selectedId);
 					scripts.scriptsContainer.push_back(script);
@@ -471,7 +471,7 @@ void Scripts::Inspect() {
 
 					for (auto& elem : scripts.scriptsContainer)
 					{
-						if (elem.scriptFile == scripts.mScriptFile)
+						if (elem.scriptFile == dataScript)
 						{
 							hasScript = true;
 							//std::cout << "Script is already attached! " << std::endl;
