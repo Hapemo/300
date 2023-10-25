@@ -9,7 +9,7 @@ static PxFilterFlags FilterShader(PxFilterObjectAttributes attributes0, PxFilter
     // let triggers through
     if (PxFilterObjectIsTrigger(attributes0) || PxFilterObjectIsTrigger(attributes1))
     {
-        pairFlags = PxPairFlag::eTRIGGER_DEFAULT | PxPairFlag::eNOTIFY_TOUCH_PERSISTS;
+        pairFlags = PxPairFlag::eTRIGGER_DEFAULT;
         return PxFilterFlag::eDEFAULT;
     }
     pairFlags = PxPairFlag::eCONTACT_DEFAULT;
@@ -20,6 +20,6 @@ static PxFilterFlags FilterShader(PxFilterObjectAttributes attributes0, PxFilter
         return PxFilterFlag::eKILL;
 
     // generate contacts between dynamic/static and dynamic/dynamic that were not filtered above
-    pairFlags |= PxPairFlag::eNOTIFY_TOUCH_PERSISTS | PxPairFlag::eNOTIFY_TOUCH_FOUND | PxPairFlag::eNOTIFY_TOUCH_LOST;
+    pairFlags |= PxPairFlag::eNOTIFY_TOUCH_FOUND | PxPairFlag::eNOTIFY_TOUCH_LOST;
     return PxFilterFlag::eDEFAULT;
 }

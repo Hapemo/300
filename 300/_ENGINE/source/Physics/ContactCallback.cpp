@@ -35,10 +35,6 @@ void ContactCallback::onContact(const PxContactPairHeader& pairHeader, const PxC
 		{
 			// call scripting
 		}
-		else if (current.events & (PxPairFlag::eNOTIFY_TOUCH_PERSISTS))
-		{
-			// call scripting
-		}
 		else if (current.events & PxPairFlag::eNOTIFY_TOUCH_LOST)
 		{
 			// call scripting
@@ -60,10 +56,6 @@ void ContactCallback::onTrigger(PxTriggerPair* pairs, PxU32 count)
 		if (pairs->status == PxPairFlag::eNOTIFY_TOUCH_FOUND)
 		{
 			triggerEntity.GetComponent<Scripts>().RunFunctionForAllScripts("OnTriggerEnter", otherEntity);
-		}
-		else if (pairs->status == PxPairFlag::eNOTIFY_TOUCH_PERSISTS)
-		{
-			triggerEntity.GetComponent<Scripts>().RunFunctionForAllScripts("OnTrigger", otherEntity);
 		}
 		else if (pairs->status == physx::PxPairFlag::eNOTIFY_TOUCH_LOST)
 		{
