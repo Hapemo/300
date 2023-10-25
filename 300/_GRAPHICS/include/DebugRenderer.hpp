@@ -92,11 +92,6 @@ Adds an instance of a sphere to be drawn
 		void AddSphere(vec3 const& camPos, vec3 const& center, float radius, vec4 const& color = vec4{ 1.f, 1.f, 1.f, 1.f });
 
 /*!*****************************************************************************
-Adds an instance of a sphere to be drawn
-*******************************************************************************/
-		void AddCapsule(vec3 const& camPos, vec3 const& center1, vec3 const& center2, float radius, vec4 const& color = vec4{ 1.f, 1.f, 1.f, 1.f });
-
-/*!*****************************************************************************
 Renders all instances of all debug shapes
 *******************************************************************************/
 		void RenderAll(mat4 viewProj);

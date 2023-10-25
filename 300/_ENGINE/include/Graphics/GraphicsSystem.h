@@ -161,11 +161,6 @@ public:
 	unsigned int GetEntityID(float x, float y) {
 		return m_Fbo.ReadEntityID(x, y); 
 	}
-	void EnableGlobalBloom() { m_EnableBloom = true; }
-	void DisableGlobalBloom() { m_EnableBloom = false; }
-
-	void SetGlobalBloomThreshold(glm::vec3 threshold) { mAmbientBloomThreshold = threshold; }
-	void SetGlobalBloomExposure(float exp) { mAmbientBloomExposure = exp; }
 
 	// -- Camera Functions --
 	/***************************************************************************/

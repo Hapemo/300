@@ -116,10 +116,8 @@ Destroys the mesh by deleting the VAO and VBOs allocated on th GPU's memory
 		bool							mHasAnimation{ false };
 
 		// Stores the descriptor data for this mesh
-		_GEOM::DescriptorData			mMeshDescriptorData;
-		_GEOM::Texture_DescriptorData	mTextureDescriptorData;
-		std::string						mMeshDescriptorPath;
-		std::string						mTextureDescriptorPath;
+		_GEOM::DescriptorData			mDescriptorData;
+		std::string						mDescriptorPath;
 
 	private:
 		// Vertex array object and buffer object for each mesh

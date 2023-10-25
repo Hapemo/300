@@ -95,9 +95,7 @@ vec3 ComputePointLight(PointLight light)
 
 void main() 
 {
-    int ID = int(Tex_Ent_ID.x);
-
-    vec4 uColor = texture(sampler2D(materials[ID].diffuseMap), TexCoords);              // Diffuse Color
+    vec4 uColor = texture(uTex[0], TexCoords);              // Diffuse Color
     if (uColor.a <= 0.1) discard;
 
     vec3 finalColor = vec3(0.0);
@@ -106,11 +104,12 @@ void main()
     if (!uHasLight)
     {
         // No light
-        finalColor = uColor.rgb; // * vec3(VertexColor);
+        finalColor = uColor.rgb;
     }
 
     else if(uHasLight)
     {
+        int ID = int(Tex_Ent_ID.x);
 
         if (materials[ID].diffuseMap != 0)
             diffuseMap      = texture(sampler2D(materials[ID].diffuseMap), TexCoords).rgb;
@@ -133,6 +132,10 @@ void main()
     }
 
     // HDR
+    // float exposure = 1.0;
+    // finalColor = vec3(1.0) - exp(-finalColor * exposure);
+
+
     // check whether fragment output is higher than threshold, if so output as bright color
 
     float brightness = dot(finalColor.rgb, bloomThreshold);

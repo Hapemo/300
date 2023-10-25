@@ -106,8 +106,6 @@ public:
 	*******************************************************************************/
 	void AddKeybind(std::string const& actionName, E_KEY key);
 
-	void AddEmptyKeybind(std::string const& actionName);
-
 	/*!*****************************************************************************
 	Remove a keybind from the system. If keybind does not exist, ignore.
 	Then save it to file

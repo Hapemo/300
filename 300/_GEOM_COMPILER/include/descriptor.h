@@ -146,7 +146,7 @@ namespace _GEOM
 	};
 
 	bool CheckAndCreateDescriptorFileMESH(std::string fbxfilepath, std::string& GEOM_Descriptor_Filepath);
-	bool CheckAndCreateDescriptorFileTEXTURE(std::string uncompressedfilepath, std::string& Texture_Descriptor_Filepath, const std::string& guid);
+	bool CheckAndCreateDescriptorFileTEXTURE(std::string uncompressedfilepath, std::string& Texture_Descriptor_Filepath);
 
 	/***************************************************************************/
 	/*!

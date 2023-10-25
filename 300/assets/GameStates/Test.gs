@@ -1,7 +1,9 @@
 [
     {
-        "scene_name": "testSerialization",
-        "pause": false,
-        "force_render": true
+        "Scene": {
+            "SceneName": "Test1",
+            "Pause": false,
+            "ForceRender": true
+        }
     }
 ]

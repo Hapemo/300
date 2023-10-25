@@ -22,7 +22,7 @@ struct Entity
 {
 	entt::entity id;
 
-	Entity() : id(entt::null) {};
+	Entity() = delete;
 
 	/*!*****************************************************************************
 	Copy and conversion constructors.
@@ -233,6 +233,8 @@ public:
 	Destructor.
 	*******************************************************************************/
 	~ECS();
+
+	const Entity NullEntity;
 
 	int SelectedScene;
 

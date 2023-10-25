@@ -159,31 +159,3 @@ glm::mat4 GFX::Camera::Proj()
 {
 	return mProjection;
 }
-
-void GFX::Camera::RotateCameraView(vec2 cursorposition)
-{
-	vec2 delta = mCursorPos - cursorposition;
-	if (delta == vec2(0.f, 0.f))
-		return;
-
-	delta *= mSensitivity;		// adjust the mouse movement sensitivity
-	mYaw += delta.x;
-	mPitch += delta.y;
-
-	if (mPitch > 89.0f) {
-		mPitch = 89.0f;
-	}
-
-	if (mPitch < -89.0f) {
-		mPitch = -89.0f;
-	}
-
-	glm::vec3 direction;
-	direction.x = cos(glm::radians(mYaw)) * cos(glm::radians(mPitch));
-	direction.y = sin(glm::radians(mPitch));
-	direction.z = sin(glm::radians(mYaw)) * cos(glm::radians(mPitch));
-	direction.y *= -1;
-
-	// update the camera's target based on the normalized direction
-	SetTarget(position() + glm::normalize(direction));
-}

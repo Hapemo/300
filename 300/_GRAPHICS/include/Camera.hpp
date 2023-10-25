@@ -87,15 +87,6 @@ Sets the projection matrix of the camera
 *******************************************************************************/
         void SetProjection(float fovDegree, ivec2 size, float nearZ, float farZ);
 
-        // scripting function to rotate the camera based on the delta of the cursor position
-        void RotateCameraView(vec2 cursorposition);
-
-        void SetCameraSpeed(float speed) { mCameraSpeed = speed; }
-        void SetSensitivity(float sensitivity) { mSensitivity = sensitivity; }
-
-        float GetCameraSpeed() { return mCameraSpeed; }
-        float GetSensitivity() { return mSensitivity; }
-
 /*!*****************************************************************************
 Updates projection and view projection matrix of the camera
 *******************************************************************************/
@@ -110,8 +101,6 @@ Updates projection and view projection matrix of the camera
         vec3    mTarget;   //save
         vec2    mCursorPos;
         ivec2   mSize;    //save
-        float   mSensitivity{ 0.1f };
-        float   mCameraSpeed{ 100.f };
         float   mAspectRatio;
         float   mNear;    //save
         float   mFar;     //save

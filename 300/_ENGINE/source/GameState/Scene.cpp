@@ -64,12 +64,16 @@ void Scene::Pause(bool _pause) {
 void Scene::Load(std::string const& _name) {
 	//LOG_CUSTOM("SCENE", "Loading Scene: " + mName);
 	if (mName.empty()) mName = _name;
+
+
 	
 	ObjectFactory::LoadScene(this, mName);
 	for (auto e : mEntities) {
 		if (e.HasComponent<Scripts>()) systemManager->GetScriptingPointer()->ScriptAlive(e);
 		if (e.HasComponent<MeshRenderer>()) {
 			auto& meshdata = e.GetComponent<MeshRenderer>();
+			
+			
 		}
 		e.GetComponent<General>().isPaused = mIsPause;
 	}
