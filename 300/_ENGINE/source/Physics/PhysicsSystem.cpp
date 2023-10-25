@@ -64,6 +64,26 @@ void PhysicsSystem::AddEntity(Entity e)
 		PWARNING("Tried to add actor without rigid body to simulation!");
 }
 
+void PhysicsSystem::SetPosition(Entity e, const glm::vec3& globalpose)
+{
+	if (!e.HasComponent<RigidBody>()) return;
+	RigidBody rbod = e.GetComponent<RigidBody>();
+	if (rbod.mMotion == MOTION::STATIC) return;
+
+	PxRigidDynamic* actor = (physx::PxRigidDynamic*)(mActors[static_cast<uint32_t>(e.id)].mActor);
+	actor->setGlobalPose(PxTransform(Convert(globalpose), Convert(glm::quat(e.GetComponent<Transform>().mRotate))));
+}
+
+void PhysicsSystem::SetRotation(Entity e, const glm::vec3& rotation)
+{
+	if (!e.HasComponent<RigidBody>()) return;
+	RigidBody rbod = e.GetComponent<RigidBody>();
+	if (rbod.mMotion == MOTION::STATIC) return;
+
+	PxRigidDynamic* actor = (physx::PxRigidDynamic*)(mActors[static_cast<uint32_t>(e.id)].mActor);
+	actor->setGlobalPose(PxTransform(Convert(e.GetComponent<Transform>().mTranslate), Convert(glm::quat(rotation))));
+}
+
 void PhysicsSystem::SetVelocity(Entity e, const glm::vec3& velocity)
 {
 	if (!e.HasComponent<RigidBody>()) return;
@@ -112,7 +132,7 @@ void PhysicsSystem::CreateRigidBody(Entity e)
 	glm::vec3 childOffset = e.HasParent() ? Entity(e.GetParent()).GetComponent<Transform>().mTranslate : glm::vec3(0);
 
 	PxRigidActor* actor{};
-	CreateActor(actor, PxTransform(Convert(xform.mTranslate + childOffset)), rbod);
+	CreateActor(actor, PxTransform(Convert(xform.mTranslate + childOffset), Convert(glm::quat(xform.mRotate))), rbod);
 
 	if (e.HasComponent<CapsuleCollider>())
 	{

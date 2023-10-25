@@ -39,7 +39,8 @@ public:
 	Adds a new entity to the physics simulation
 	*******************************************************************************/
 	void AddEntity(Entity e);
-
+	void SetPosition(Entity e, const glm::vec3& globalpose);
+	void SetRotation(Entity e, const glm::vec3& rotation);
 	/*!*****************************************************************************
 	Set velocity of an entity.
 	*******************************************************************************/
