@@ -1,5 +1,3 @@
-#include "ECS/ECS_Components.h"
-
 /*!*************************************************************************
 ****
 \file Inspect.cpp
@@ -71,9 +69,13 @@ Inspect display for Audio components
 #include "Input/InputMapSystem.h"
 #include <TextureCompressor.h>
 #include "Script/Script.h"
+#include "AI/AIManager.h"
 
 #include <descriptor.h>
 #include <string>
+
+
+void popup(std::string name, ref& data, bool& trigger);
 
 /***************************************************************************/
 /*!
@@ -153,10 +155,12 @@ void Inspect::update()
 			VFX& vfx = ent.GetComponent<VFX>();
 			vfx.Inspect();
 		}
-		//if (ent.HasComponent<InputActionMapEditor>()) {
-		//	InputActionMapEditor& inputAction = ent.GetComponent<InputActionMapEditor>();
-		//	inputAction.Inspect();
-		//}
+
+		if (ent.HasComponent<AISetting>()) {
+			AISetting& aiSetting = ent.GetComponent<AISetting>();
+			aiSetting.Inspect();
+		}
+
 		//--------------------------------------------// must be at the LAST OF THIS LOOP
 		Add_component(); 
 	}
@@ -233,6 +237,10 @@ void Inspect::Add_component() {
 		if (ImGui::Selectable("UIrenderer")) {
 			if (!Entity(Hierarchy::selectedId).HasComponent<UIrenderer>())
 				Entity(Hierarchy::selectedId).AddComponent<UIrenderer>();
+		}
+		if (ImGui::Selectable("AISetting")) {
+			if (!Entity(Hierarchy::selectedId).HasComponent<AISetting>())
+				Entity(Hierarchy::selectedId).AddComponent<AISetting>();
 		}
 
 		ImGui::EndCombo();
@@ -346,7 +354,12 @@ void Camera::Inspect()
 
 		ImGui::Separator();
 
-		ImGui::DragFloat3("Camera Position", (float*)&mCamera.mPosition);
+		vec3 temp = mCamera.mPosition;
+		ImGui::DragFloat3("Camera Position", (float*)&temp);
+
+		mCamera.mTarget += temp - mCamera.mPosition;
+		mCamera.mPosition = temp;
+
 		ImGui::DragFloat3("Camera Target", (float*)&mCamera.mTarget);
 
 		ImGui::Text("Aspect Ratio");
@@ -584,6 +597,10 @@ void Animator::Inspect()
 /***************************************************************************/
 void MeshRenderer::Inspect() 
 {
+	static bool meshbool {false}; // for deleting mesh
+	static bool textbool{ false }; // for deleting texture (material)
+	static int texIndex{ 0 }; // for deleting texture
+
 	//!< Shader Helper 
 	auto getShaderName = [](std::string shaderpath) -> std::string
 	{
@@ -619,61 +636,6 @@ void MeshRenderer::Inspect()
 		Entity entins(Hierarchy::selectedId);
 
 		// == >> Shaders << == //
-		std::vector<std::string> vertShaders, fragShaders;
-		static int selectedVertShader = 0, selectedFragShader = 0;
-
-		// populating vertex shader vector
-		for (const auto& entry : std::filesystem::directory_iterator(systemManager->mResourceTySystem->shader_path))
-		{
-			//if (std::filesystem::is_regular_file(entry))
-			//{
-			//	if(getShaderExtension(entry.path().string()) == "_vert.glsl")
-			//		vertShaders.push_back(entry.path().string());
-
-			//	else if (getShaderExtension(entry.path().string()) == "_frag.glsl")
-			//		fragShaders.push_back(entry.path().string());
-			//}
-		}
-
-		//{
-			// Vert shader selection
-			//if (ImGui::BeginCombo("Vertex Shaders", vertShaders[selectedVertShader].data(), 0))
-			//{
-			//	for (int i{}; i < vertShaders.size(); ++i)
-			//	{
-			//		bool isItemSelected = (selectedVertShader == i);
-			//		if(ImGui::Selectable(vertShaders[i].data(), isItemSelected))
-			//			selectedVertShader = i;
-
-			//		if (isItemSelected)
-			//			ImGui::SetItemDefaultFocus();
-			//	}
-
-			//	ImGui::EndCombo();
-			//}
-
-			//// Frag shader selection
-			//if (ImGui::BeginCombo("Fragment Shaders", fragShaders[selectedFragShader].data(), 0))
-			//{
-			//	for (int i{}; i < fragShaders.size(); ++i)
-			//	{
-			//		bool isItemSelected = (selectedFragShader == i);
-			//		if (ImGui::Selectable(fragShaders[i].data(), isItemSelected))
-			//			selectedFragShader = i;
-
-			//		if (isItemSelected)
-			//			ImGui::SetItemDefaultFocus();
-			//	}
-
-			//	ImGui::EndCombo();
-			//}
-		//}
-
-		//if (ImGui::Button("Compile Shader"))
-		//{
-		//	std::cout << "compile shaders :)\n";
-		//}
-
 		std::string shaderstr{" "};
 
 		if (systemManager->mResourceTySystem->m_Shaders.find(mShaderRef.data_uid) != systemManager->mResourceTySystem->m_Shaders.end())
@@ -694,10 +656,10 @@ void MeshRenderer::Inspect()
 		ImGui::Separator();
 
 		// == >> Mesh << == //
-		ImGui::Text("Mesh");
+		ImGui::Text("MESH");
 		if (ImGui::BeginDragDropTarget())
 		{
-			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_GEOM")) 
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_GEOM"))
 			{
 
 				const char* data = (const char*)payload->Data;
@@ -706,6 +668,7 @@ void MeshRenderer::Inspect()
 
 				std::string descfilepath = data_str + ".desc";
 				unsigned guid = _GEOM::GetGUID(descfilepath);
+				mMeshRef.data_uid = guid;
 				mMeshRef.data = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(guid));
 				GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mMeshRef.data);
 
@@ -730,7 +693,7 @@ void MeshRenderer::Inspect()
 
 		if (ImGui::BeginDragDropTarget())
 		{
-			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_FBX")) 
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_FBX"))
 			{
 				const char* data = (const char*)payload->Data;
 				std::string data_str = std::string(data);
@@ -755,7 +718,7 @@ void MeshRenderer::Inspect()
 					systemManager->mResourceTySystem->mesh_Load(geompath, guid);
 				}
 
-
+				mMeshRef.data_uid = guid;
 				mMeshRef.data = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(guid));
 				GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mMeshRef.data);
 
@@ -775,34 +738,63 @@ void MeshRenderer::Inspect()
 			ImGui::EndDragDropTarget();
 		}
 
+
+		ImGui::Dummy(ImVec2(0.0f, 10.0f));
+
 		ImGui::SameLine();
 
 		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcTextSize(tempPath.c_str()).x
 			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
-		ImGui::Text(tempPath.c_str());
+
+		if( tempPath.size()>0){
+		ImGui::Selectable(tempPath.c_str());
+
+		//--------------------------------------------------------------------------------------------------------------// delete the mesh 
+		if (ImGui::IsItemClicked(ImGuiMouseButton_Right)) {
+
+			meshbool = true;
+		}
+
+		}
+		popup("Delete", mMeshRef, meshbool);
+
 
 
 		// == >> Textures << == //
 		ImGui::Dummy(ImVec2(0.0f, 10.0f));
 
-		std::string textures[4] = { "DIFFUSE","NORMAL", "EMISSION","SPECULAR"};
 
-		for (int i{ 0 }; i <4; i++) 
+
+		std::string textures[5] = { "DIFFUSE","NORMAL", "SPECULAR","SHININESS","EMISSION"};
+
+		for (int i{ 0 }; i <5; i++) 
 		{
 			if (mMaterialInstancePath[i] != "") 
 			{
 				ImGui::Text(textures[i].c_str());
 				if (ImGui::BeginDragDropTarget())
 				{
+					// loading compressed texture
 					if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_TEXT")) 
 					{
 						const char* data = (const char*)payload->Data;
 						std::string data_str = std::string(data);
 
-						mMaterialInstancePath[i] = data_str;
+						//mMaterialInstancePath[i] = data_str;
 
-						uid temp(mMaterialInstancePath[i]);
-						mTextureRef[i].data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(temp.id));
+						std::string texturestr = systemManager->mResourceTySystem->compressed_texture_path + getFilename(data_str) + ".ctexture";
+						mMaterialInstancePath[i] = texturestr;
+						std::string TEXTURE_Descriptor_Filepath;
+						unsigned guid;
+						// check and ensures that the descriptor file for the materials are created
+						bool descFilePresent = _GEOM::CheckAndCreateDescriptorFileTEXTURE(data_str, TEXTURE_Descriptor_Filepath, texturestr);
+						std::string descfilepath = data_str + ".desc";
+						guid = _GEOM::GetGUID(descfilepath);
+						mTextureRef[i].data_uid = guid;
+						mTextureRef[i].data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(guid));
+
+						//uid temp(mMaterialInstancePath[i]);
+						//mTextureRef[i].data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(temp.id));
 					}
 
 					// file uncompressed texture for objects
@@ -818,9 +810,9 @@ void MeshRenderer::Inspect()
 						unsigned guid;
 
 						// check and ensures that the descriptor file for the materials are created
-						bool descFilePresent = _GEOM::CheckAndCreateDescriptorFileTEXTURE(data_str, TEXTURE_Descriptor_Filepath);
+						bool descFilePresent = _GEOM::CheckAndCreateDescriptorFileTEXTURE(data_str, TEXTURE_Descriptor_Filepath, texturestr);
 						std::string descfilepath = data_str + ".desc";
-						guid = _GEOM::GetGUID(descfilepath);
+						guid = _GEOM::GetGUID(descfilepath);	// gets the guid from the png desc
 
 						// If the descriptor file is not present, then load it
 						if (!descFilePresent)
@@ -829,17 +821,20 @@ void MeshRenderer::Inspect()
 
 							// Load the textures into the list of usable textures within the engine
 							systemManager->mResourceTySystem->texture_Load(getFilename(data_str), guid);
+							mTextureRef[i].data_uid = guid;
 							mTextureRef[i].data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(guid));
-							mTextureCont[i] = true;
+							//mTextureCont[i] = true;
 						}
 
-						uid temp(mMaterialInstancePath[i]);
-						mTextureRef[i].data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(temp.id));
-						mTextureCont[i] = true;
+						//uid temp(mMaterialInstancePath[i]);
+						mTextureRef[i].data_uid = guid;
+						mTextureRef[i].data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(guid));
+						//mTextureCont[i] = true;
 					}
 
 					ImGui::EndDragDropTarget();
 				}
+
 				int posstart = static_cast<int>(mMaterialInstancePath[i].find_last_of("/"));
 				int posend = static_cast<int>(mMaterialInstancePath[i].find_last_of("."));
 
@@ -850,8 +845,16 @@ void MeshRenderer::Inspect()
 				ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcTextSize(newpath.c_str()).x
 					- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
 
-				ImGui::Selectable(newpath.c_str());
+				if (newpath.size() > 0) {
+					ImGui::Selectable(newpath.c_str());
 
+					//--------------------------------------------------------------------------------------------------------------// delete the texture 
+					if (ImGui::IsItemClicked(ImGuiMouseButton_Right)) {
+						texIndex = i;
+						textbool = true;
+					}
+				}
+				
 				ImGui::Dummy(ImVec2(0.0f, 10.0f));
 			}
 			else {
@@ -865,20 +868,33 @@ void MeshRenderer::Inspect()
 						std::string data_str = std::string(data);
 						mMaterialInstancePath[i] = data_str;
 
-						uid temp(mMaterialInstancePath[i]);
-						mTextureRef[i].data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(temp.id));
+
+						std::string texturestr = systemManager->mResourceTySystem->compressed_texture_path + getFilename(data_str) + ".ctexture";
+						mMaterialInstancePath[i] = texturestr;
+						std::string TEXTURE_Descriptor_Filepath;
+						unsigned guid;
+						// check and ensures that the descriptor file for the materials are created
+						bool descFilePresent = _GEOM::CheckAndCreateDescriptorFileTEXTURE(data_str, TEXTURE_Descriptor_Filepath, texturestr);
+						std::string descfilepath = data_str + ".desc";
+						guid = _GEOM::GetGUID(descfilepath);
+						mTextureRef[i].data_uid = guid;
+						mTextureRef[i].data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(guid));
+
+						//uid temp(mMaterialInstancePath[i]);
+						//mTextureRef[i].data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(temp.id));
 
 					}
 					ImGui::EndDragDropTarget();
 				}
 			}
 		}
+		popup("DeleteTexture", mTextureRef[texIndex], textbool);
 
 		ImGui::ColorPicker4("MeshColor", (float*)&mInstanceColor);
 	}
 
 	// == >> Mesh Renderer GEOM Descriptor File << == //
-	ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+	//ImGui::SetNextItemOpen(true, ImGuiCond_Once);
 	if (ImGui::TreeNode("GEOM DescirptorFile"))
 	{
 		GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mMeshRef.data);
@@ -886,12 +902,12 @@ void MeshRenderer::Inspect()
 		// sanity check
 		if (meshinst != nullptr)
 		{
-			ImGui::InputText("Desc Filepath", const_cast<char*>(meshinst->mDescriptorPath.c_str()), meshinst->mDescriptorPath.length() + 1);
-			ImGui::InputInt("GUID", reinterpret_cast<int*>(&meshinst->mDescriptorData.m_GUID));
+			ImGui::InputText("Desc Filepath", const_cast<char*>(meshinst->mMeshDescriptorPath.c_str()), meshinst->mMeshDescriptorPath.length() + 1);
+			ImGui::InputInt("GUID", reinterpret_cast<int*>(&meshinst->mMeshDescriptorData.m_GUID));
 
 			// Vert shader selection
 			int selectedFBX{};
-			_GEOM::DescriptorData& descInst = meshinst->mDescriptorData;
+			_GEOM::DescriptorData& descInst = meshinst->mMeshDescriptorData;
 
 			if (ImGui::BeginCombo("FBX Filepaths", descInst.m_Filepaths[selectedFBX].data(), 0))
 			{
@@ -913,8 +929,8 @@ void MeshRenderer::Inspect()
 
 			if (ImGui::Button("Save Descriptor File"))
 			{
-				std::cout << "Saving Descriptor File to: " << meshinst->mDescriptorPath << std::endl;
-				_GEOM::DescriptorData::SerializeGEOM_DescriptorDataToFile(meshinst->mDescriptorPath, descInst);
+				std::cout << "Saving Descriptor File to: " << meshinst->mMeshDescriptorPath << std::endl;
+				_GEOM::DescriptorData::SerializeGEOM_DescriptorDataToFile(meshinst->mMeshDescriptorPath, descInst);
 			}
 		}
 		ImGui::TreePop();
@@ -1150,134 +1166,6 @@ void Audio::Inspect() {
 	if (delete_component == false)
 		Entity(Hierarchy::selectedId).RemoveComponent<Audio>();
 }
-/***************************************************************************/
-/*!
-\brief
-	Inspector functionality for Input action
-*/
-/***************************************************************************/
-//void InputActionMapEditor::Inspect()
-//{
-//	bool delete_component = true;
-//
-//	const char* action_maps[] = { "PlayerMovement", "MenuControls" };
-//	static std::string newActionMapName;
-//
-//	//std::string selected_map {};
-//
-//	if (ImGui::CollapsingHeader("InputActionMapEditor", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
-//	{
-//		auto ActionMapEntities = systemManager->ecs->GetEntitiesWith<InputActionMapEditor>();
-//		//int size = ActionMapEntities.size();
-//		InputActionMapEditor& editor_component = ActionMapEntities.get<InputActionMapEditor>(Hierarchy::selectedId);
-//
-//		// Create New [InputActionMap]
-//		ImGui::Text("Create new InputActionMap");
-//		ImGui::InputText(".", &newActionMapName);
-//		if (ImGui::Button("Add Action Map"))
-//		{
-//			// Creates a new [ActionMap] - component side.
-//			Entity(Hierarchy::selectedId).GetComponent<InputActionMapEditor>().AddActionMap(newActionMapName);
-//		}
-//
-//		// [InputActionMap] selected
-//		ImGui::Text("Select Action Map (to edit): ");
-//		if (ImGui::BeginCombo("Selected Action Map", mSelectedMapName.c_str()))
-//		{
-//
-//			for (auto& action_pair : editor_component.mActionMap)
-//			{
-//				if (ImGui::Selectable(action_pair.first.c_str()))
-//				{
-//					mSelectedMapName = action_pair.first.c_str();
-//
-//					selected = true;
-//				}
-//			}
-//			ImGui::EndCombo();
-//		}
-//
-//
-//		PseudoInputAction& selected_action = GetAction(mSelectedMapName);
-//
-//
-//		auto& e_key_map = systemManager->mInputActionSystem->e_key_mapping;
-//
-//		if (selected)
-//		{
-//			if (mSelectedMapName != " ")
-//			{
-//				if (ImGui::BeginCombo("Movement (UP)", selected_action.mSelectedBindingUP.c_str()))
-//				{
-//					// Iterate through the [Key Map]
-//					for (auto& e_keypair : e_key_map)
-//					{
-//						std::string key_name = e_keypair.first;
-//						if (ImGui::Selectable(key_name.c_str()))
-//						{
-//							selected_action.mKeyBindUp = (int)(e_key_map[key_name]);
-//							selected_action.LinkKeyBinding(KEY_UP, (E_KEY)selected_action.mKeyBindUp);
-//							selected_action.mSelectedBindingUP = e_keypair.first;
-//						}
-//					}
-//					ImGui::EndCombo();
-//				}
-//
-//				if (ImGui::BeginCombo("Movement (DOWN)", selected_action.mSelectedBindingDOWN.c_str()))
-//				{
-//					// Iterate through the [Key Map]
-//					for (auto& e_keypair : e_key_map)
-//					{
-//						std::string key_name = e_keypair.first;
-//						if (ImGui::Selectable(key_name.c_str()))
-//						{
-//							selected_action.mKeyBindDown = (int)(e_key_map[key_name]);
-//							selected_action.LinkKeyBinding(KEY_DOWN, (E_KEY)selected_action.mKeyBindDown);
-//							selected_action.mSelectedBindingDOWN = e_keypair.first;
-//						}
-//					}
-//
-//					ImGui::EndCombo();
-//				}
-//
-//				if (ImGui::BeginCombo("Movement (LEFT)", selected_action.mSelectedBindingLEFT.c_str()))
-//				{
-//					// Iterate through the [Key Map]
-//					for (auto& e_keypair : e_key_map)
-//					{
-//						std::string key_name = e_keypair.first;
-//						if (ImGui::Selectable(key_name.c_str()))
-//						{
-//							selected_action.mKeyBindLeft = (int)(e_key_map[key_name]);
-//							selected_action.LinkKeyBinding(KEY_LEFT, (E_KEY)selected_action.mKeyBindLeft);
-//							selected_action.mSelectedBindingLEFT = e_keypair.first;
-//						}
-//					}
-//
-//					ImGui::EndCombo();
-//				}
-//
-//				if (ImGui::BeginCombo("Movement (RIGHT)", selected_action.mSelectedBindingRIGHT.c_str()))
-//				{
-//					// Iterate through the [Key Map]
-//					for (auto& e_keypair : e_key_map)
-//					{
-//						std::string key_name = e_keypair.first;
-//						if (ImGui::Selectable(key_name.c_str()))
-//						{
-//							selected_action.mKeyBindRight = (int)(e_key_map[key_name]);
-//							selected_action.LinkKeyBinding(KEY_RIGHT, (E_KEY)selected_action.mKeyBindRight);
-//							selected_action.mSelectedBindingRIGHT = e_keypair.first;
-//						}
-//					}
-//
-//					ImGui::EndCombo();
-//				}
-//			}
-//		}
-//	}
-//}
-
 
 void UIrenderer::Inspect() {
 	bool delete_component = true;
@@ -1304,9 +1192,74 @@ void UIrenderer::Inspect() {
 
 void VFX::Inspect() {
 	bool delete_component = true;
-	if (ImGui::CollapsingHeader("UIrenderer", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
+	if (ImGui::CollapsingHeader("VFX", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
 	{
 		ImGui::TextColored({ 0.f,1.f, 1.f, 1.f }, "Bloom Variables");
-		ImGui::DragFloat3("Global Bloom Threshold", (float*)&mBloomThreshold, 0.01f, 0.f, 1.f);
+		ImGui::DragFloat3("Entity Bloom Threshold", (float*)&mBloomThreshold, 0.01f, 0.f, 1.f);
 	}
+}
+
+void AISetting::Inspect() {
+	bool delete_component = true;
+	if (ImGui::CollapsingHeader("AI Setting", &delete_component, ImGuiTreeNodeFlags_DefaultOpen)) {
+		
+		// E_MOVEMENT_TYPE mMovementType;	// AI's movement type
+
+		auto const& movementTypeArr = systemManager->mAISystem->GetMovementTypeArray();
+		
+		if (ImGui::BeginCombo("Movement Type", movementTypeArr[static_cast<int>(mMovementType)].c_str())) {
+			for (unsigned char i{ static_cast<int>(E_MOVEMENT_TYPE::BEGIN) + 1}; i < movementTypeArr.size(); i++) {
+				if (ImGui::Selectable(movementTypeArr[i].c_str())) {
+					mMovementType = static_cast<E_MOVEMENT_TYPE>(i);
+				}
+			}
+			ImGui::EndCombo();
+		}
+
+		// bool mShotPrediction;						// AI's bullet predict target's movement
+		ImGui::Checkbox("Shooting Prediction", &mShotPrediction);
+		ImGui::Separator();
+		
+		// float mSpreadOut;								// Degree of spreading out from another entity
+		ImGui::Text("Degree of Spreading Out");
+		ImGui::DragFloat("##Degree of Spreading Out", &mSpreadOut);
+		ImGui::Separator();
+
+		// float mStayAway;								// Distance to stay away from player
+		ImGui::Text("Distance From Target");
+		ImGui::DragFloat("##Distance From Target", &mStayAway);
+		ImGui::Separator();
+
+		// Entity mTarget;								// AI's target
+		ImGui::InputText("Target Name", &mTargetName);
+
+		if (ImGui::Button("Update Target"))
+			mTarget = systemManager->mGameStateSystem->GetEntity(mTargetName);
+	}
+	
+	//if (ImGui::CollapsingHeader("UIrenderer", &delete_component, ImGuiTreeNodeFlags_DefaultOpen)) {
+	//	ImGui::TextColored({ 0.f,1.f, 1.f, 1.f }, "Bloom Variables");
+	//	ImGui::DragFloat3("Global Bloom Threshold", (float*)&mBloomThreshold, 0.01f, 0.f, 1.f);
+	//}
+}
+
+
+
+void popup(std::string name, ref& data, bool& trigger) {
+	std::string hash ="##to"+name;
+	if (trigger == true) {
+		ImGui::OpenPopup(hash.c_str());
+	}
+	if (ImGui::BeginPopup(hash.c_str())) {
+		
+		if (ImGui::Selectable("Delete")) {
+			data.data = nullptr;
+			trigger = false;
+		}
+
+		ImGui::EndPopup();
+
+	}
+	trigger = false;
+	
 }

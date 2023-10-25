@@ -36,13 +36,10 @@ void InputMapSystem::Init() {
 	for (auto [action, ekeyName] : tempMap) {
 
 		auto correctEkey = GetEKeyFromName(ekeyName);
-		if (correctEkey == E_KEY::ERROR_EKEY) {
-			PWARNING("InputSystem Error: unable to load %s as it does not exist. Check the name in E_KEY list again!", ekeyName.c_str());
-			continue;
-		}
-
-		mKeybindMap.insert(std::pair<std::string, E_KEY>(action, correctEkey));
 		mKeybindMapString.insert({ action, ekeyName });
+		mKeybindMap.insert(std::pair<std::string, E_KEY>(action, correctEkey));
+		if (correctEkey == E_KEY::ERROR_EKEY)
+			PWARNING("InputSystem Error: unable to load %s as it does not exist. Check the name in E_KEY list again!", ekeyName.c_str());
 	}
 
 }
@@ -50,13 +47,16 @@ void InputMapSystem::Init() {
 void InputMapSystem::AddKeybind(std::string const& actionName, E_KEY key) {
 	mKeybindMap[actionName] = key;
 	mKeybindMapString[actionName] = GetEKeyName(key);
-	SaveKeybind();
+}
+
+void InputMapSystem::AddEmptyKeybind(std::string const& actionName) {
+	mKeybindMap[actionName] = E_KEY::ERROR_EKEY;
+	mKeybindMapString[actionName] = "";
 }
 
 void InputMapSystem::RemoveKeybind(std::string const& actionName) {
 	mKeybindMap.erase(actionName);
 	mKeybindMapString.erase(actionName);
-	SaveKeybind();
 }
 
 void InputMapSystem::SaveKeybind() {

@@ -124,7 +124,7 @@ Entity GameStateManager::GetEntity(std::string const& _entityName, std::string c
 	}
 	assert(false && std::string("Unable to get entity: " + _entityName).c_str());
 
-	return systemManager->ecs->NullEntity;
+	return Entity();
 }
 
 void GameStateManager::Unload() {

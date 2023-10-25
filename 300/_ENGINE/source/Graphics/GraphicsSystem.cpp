@@ -19,7 +19,6 @@
 #include "GameState/GameStateManager.h"
 
 #include "cstdlib"
-
 /***************************************************************************/
 /*!
 \brief
@@ -120,11 +119,11 @@ void GraphicsSystem::Update(float dt)
 		MeshRenderer& meshRenderer = inst.GetComponent<MeshRenderer>();
 
 		// if the mesh instance is not active, skip it
-		if (meshRenderer.mMeshRef.data == nullptr)
+		if (meshRenderer.mMeshRef.getdata(systemManager->mResourceTySystem->m_ResourceInstance) == nullptr)
 			continue;
 
 		// gives me the mesh
-		void *tt = meshRenderer.mMeshRef.data;
+		void *tt = meshRenderer.mMeshRef.getdata(systemManager->mResourceTySystem->m_ResourceInstance);
 		GFX::Mesh &meshinst = *reinterpret_cast<GFX::Mesh *>(tt);
 
 		// pushback LTW matrices
@@ -183,11 +182,11 @@ void GraphicsSystem::Update(float dt)
 
 		MaterialSSBO material{};
 		// Save the materials if it exists
-		material.mDiffuseMap = GetAndStoreBindlessTextureHandle(meshRenderer.GetTexture(DIFFUSE));		
-		material.mNormalMap = GetAndStoreBindlessTextureHandle(meshRenderer.GetTexture(NORMAL));		
-		material.mSpecularMap = GetAndStoreBindlessTextureHandle(meshRenderer.GetTexture(SPECULAR));	
-		material.mShininessMap = GetAndStoreBindlessTextureHandle(meshRenderer.GetTexture(SHININESS));	
-		material.mEmissionMap = GetAndStoreBindlessTextureHandle(meshRenderer.GetTexture(EMISSION));	
+		material.mDiffuseMap	= GetAndStoreBindlessTextureHandle(meshRenderer.GetTexture(DIFFUSE));		
+		material.mNormalMap		= GetAndStoreBindlessTextureHandle(meshRenderer.GetTexture(NORMAL));		
+		material.mSpecularMap	= GetAndStoreBindlessTextureHandle(meshRenderer.GetTexture(SPECULAR));	
+		material.mShininessMap	= GetAndStoreBindlessTextureHandle(meshRenderer.GetTexture(SHININESS));	
+		material.mEmissionMap	= GetAndStoreBindlessTextureHandle(meshRenderer.GetTexture(EMISSION));	
 		m_Materials.emplace_back(material);	// push back
 	}
 	m_FinalBoneMatrixSsbo.SubData(finalBoneMatrices.size() * sizeof(mat4), finalBoneMatrices.data());
@@ -268,7 +267,7 @@ void GraphicsSystem::EditorDraw(float dt)
 	for (Entity inst : meshRendererInstances)
 	{
 		auto& meshrefptr = inst.GetComponent<MeshRenderer>();
-		if (meshrefptr.mMeshRef.data == nullptr)
+		if (meshrefptr.mMeshRef.getdata(systemManager->mResourceTySystem->m_ResourceInstance) == nullptr)
 			continue;
 
 		std::string meshstr = inst.GetComponent<MeshRenderer>().mMeshPath;
@@ -283,9 +282,6 @@ void GraphicsSystem::EditorDraw(float dt)
 
 		// render the mesh and its instances here
 		GFX::Mesh &meshinst = *reinterpret_cast<GFX::Mesh *>(inst.GetComponent<MeshRenderer>().mMeshRef.data);
-
-		// gets the shader filepathc
-		//uid shaderstr = inst.GetComponent<MeshRenderer>().mShaders;
 		
 		std::string shader{};
 
@@ -298,15 +294,15 @@ void GraphicsSystem::EditorDraw(float dt)
 		GFX::Shader& shaderinst = *systemManager->mResourceTySystem->get_Shader(shaderstr.id);
 		unsigned shaderID = shaderinst.GetHandle();
 
-		// bind all texture
-		GFX::Texture* textureInst[4]{};
-		for (int i{ 0 }; i < 4; i++)
-		{
-			if (inst.GetComponent<MeshRenderer>().mTextureRef[i].data != nullptr)
-			{
-				textureInst[i] = reinterpret_cast<GFX::Texture *>(inst.GetComponent<MeshRenderer>().mTextureRef[i].data);
-			}
-		}
+		//// bind all texture
+		//GFX::Texture* textureInst[4]{};
+		//for (int i{ 0 }; i < 4; i++)
+		//{
+		//	if (inst.GetComponent<MeshRenderer>().mTextureRef[i].getdata(systemManager->mResourceTySystem->m_ResourceInstance) != nullptr)
+		//	{
+		//		textureInst[i] = reinterpret_cast<GFX::Texture *>(inst.GetComponent<MeshRenderer>().mTextureRef[i].data);
+		//	}
+		//}
 
 		shaderinst.Activate();
 		glUniformMatrix4fv(shaderinst.GetUniformVP(), 1, GL_FALSE, &m_EditorCamera.viewProj()[0][0]);
@@ -323,7 +319,9 @@ void GraphicsSystem::EditorDraw(float dt)
 			GLuint threshold = shaderinst.GetUniformLocation("bloomThreshold");
 
 			if (inst.HasComponent<VFX>()) {
-				glUniform3fv(threshold, 1, glm::value_ptr(inst.GetComponent<VFX>().mBloomThreshold));
+				if (inst.GetComponent<VFX>().isObjectBloom) {
+					glUniform3fv(threshold, 1, glm::value_ptr(inst.GetComponent<VFX>().mBloomThreshold));	
+				}
 			}
 			else {
 				glUniform3fv(threshold, 1, glm::value_ptr(mAmbientBloomThreshold));
@@ -341,22 +339,15 @@ void GraphicsSystem::EditorDraw(float dt)
 			glUniform1i(mLightCountShaderLocation, m_LightCount);
 		}
 
-		// bind texture unit
-		for (int i{0}; i < 4; i++)
-		{
-			if (inst.GetComponent<MeshRenderer>().mTextureRef[i].data != nullptr)
-			{
-				glBindTextureUnit(i, textureInst[i]->ID());
-			}
-		}
+		//// bind texture unit
+		//for (int i{0}; i < 4; i++)
+		//{
+		//	if (inst.GetComponent<MeshRenderer>().mTextureRef[i].getdata(systemManager->mResourceTySystem->m_ResourceInstance) != nullptr)
+		//	{
+		//		glBindTextureUnit(i, textureInst[i]->ID());
+		//	}
+		//}
 
-		//m_Textures.push_back(0);
-		//m_Textures.push_back(1);
-		//m_Textures.push_back(2);
-		//m_Textures.push_back(3);
-		//
-		//GLuint uniform_tex = glGetUniformLocation(shaderID, "uTex");
-		//glUniform1iv(uniform_tex, (GLsizei)m_Textures.size(), m_Textures.data()); // passing Texture ID to the fragment  
 
 		GLuint debug_draw = glGetUniformLocation(shaderID, "uDebugDraw");
 		glUniform1i(debug_draw, m_DebugDrawing);
@@ -367,14 +358,14 @@ void GraphicsSystem::EditorDraw(float dt)
 		shaderinst.Deactivate();
 		meshinst.UnbindVao();
 
-		// unbind the textures
-		for (int i{0}; i < 4; i++)
-		{
-			if (inst.GetComponent<MeshRenderer>().mTextureRef[i].data != nullptr)
-			{
-				glBindTextureUnit(i, 0);
-			}
-		}
+		//// unbind the textures
+		//for (int i{0}; i < 4; i++)
+		//{
+		//	if (inst.GetComponent<MeshRenderer>().mTextureRef[i].data != nullptr)
+		//	{
+		//		glBindTextureUnit(i, 0);
+		//	}
+		//}
 	}
 
 	m_Renderer.RenderAll(m_EditorCamera.viewProj());
@@ -430,7 +421,7 @@ void GraphicsSystem::GameDraw(float dt)
 	{
 
 		auto& meshrefptr = inst.GetComponent<MeshRenderer>();
-		if (meshrefptr.mMeshRef.data == nullptr)
+		if (meshrefptr.mMeshRef.getdata(systemManager->mResourceTySystem->m_ResourceInstance) == nullptr)
 			continue;
 
 		std::string meshstr = inst.GetComponent<MeshRenderer>().mMeshPath;
@@ -444,7 +435,7 @@ void GraphicsSystem::GameDraw(float dt)
 		renderedMesh[meshstr] = 1;
 
 		// render the mesh and its instances here
-		GFX::Mesh &meshinst = *reinterpret_cast<GFX::Mesh *>(inst.GetComponent<MeshRenderer>().mMeshRef.data);
+		GFX::Mesh &meshinst = *reinterpret_cast<GFX::Mesh *>(inst.GetComponent<MeshRenderer>().mMeshRef.getdata(systemManager->mResourceTySystem->m_ResourceInstance));
 
 		// gets the shader filepath
 		std::string shader{};
@@ -456,16 +447,31 @@ void GraphicsSystem::GameDraw(float dt)
 		uid shaderstr(shader);
 		GFX::Shader &shaderinst = *systemManager->mResourceTySystem->get_Shader(shaderstr.id);
 
-		GFX::Texture *textureInst[4]{};
-		for (int i{0}; i < 4; i++)
+		//GFX::Texture *textureInst[4]{};
+		//for (int i{0}; i < 4; i++)
+		//{
+		//	if (inst.GetComponent<MeshRenderer>().mTextureRef[i].getdata(systemManager->mResourceTySystem->m_ResourceInstance) != nullptr)
+		//	{
+		//		textureInst[i] = reinterpret_cast<GFX::Texture *>(inst.GetComponent<MeshRenderer>().mTextureRef[i].data);
+		//	}
+		//}
+
+		shaderinst.Activate();
+
+		if (systemManager->mGraphicsSystem->m_EnableBloom)
 		{
-			if (inst.GetComponent<MeshRenderer>().mTextureRef[i].data != nullptr)
-			{
-				textureInst[i] = reinterpret_cast<GFX::Texture *>(inst.GetComponent<MeshRenderer>().mTextureRef[i].data);
+			GLuint threshold = shaderinst.GetUniformLocation("bloomThreshold");
+
+			if (inst.HasComponent<VFX>()) {
+				if (inst.GetComponent<VFX>().isObjectBloom) {
+					glUniform3fv(threshold, 1, glm::value_ptr(inst.GetComponent<VFX>().mBloomThreshold));
+				}
+			}
+			else {
+				glUniform3fv(threshold, 1, glm::value_ptr(mAmbientBloomThreshold));
 			}
 		}
 
-		shaderinst.Activate();
 		mat4 gameCamVP = camera.GetComponent<Camera>().mCamera.viewProj();
 		glUniformMatrix4fv(shaderinst.GetUniformVP(), 1, GL_FALSE, &gameCamVP[0][0]);
 
@@ -484,13 +490,13 @@ void GraphicsSystem::GameDraw(float dt)
 			glUniform3fv(mViewPosShaderLocation, 1, &viewPos[0]);
 		}
 
-		for (int i{0}; i < 4; i++)
-		{
-			if (inst.GetComponent<MeshRenderer>().mTextureRef[i].data != nullptr)
-			{
-				glBindTextureUnit(i, textureInst[i]->ID());
-			}
-		}
+		//for (int i{0}; i < 4; i++)
+		//{
+		//	if (inst.GetComponent<MeshRenderer>().mTextureRef[i].getdata(systemManager->mResourceTySystem->m_ResourceInstance) != nullptr)
+		//	{
+		//		glBindTextureUnit(i, textureInst[i]->ID());
+		//	}
+		//}
 
 		// Bind mesh's VAO, copy render data into VBO, Draw
 		DrawAll(meshinst);
@@ -506,13 +512,6 @@ void GraphicsSystem::GameDraw(float dt)
 				glBindTextureUnit(i, 0);
 			}
 		}
-		//for (int i{0}; i < 4; i++)
-		//{
-		//	if (inst.GetComponent<MeshRenderer>().mTextureCont[i] == true)
-		//	{
-		//		glBindTextureUnit(i, 0);
-		//	}
-		//}
 
 		meshinst.ClearInstances();
 		m_Renderer.ClearInstances();
@@ -522,7 +521,7 @@ void GraphicsSystem::GameDraw(float dt)
 	{
 		m_PingPongFbo.PrepForDraw();
 
-		// Render the bloom for the Editor Framebuffer
+		// Render the bloom for the Game Framebuffer
 		uid gaussianshaderstr("GaussianBlurShader");
 		GFX::Shader& gaussianShaderInst = *systemManager->mResourceTySystem->get_Shader(gaussianshaderstr.id);
 		m_PingPongFbo.GaussianBlur(gaussianShaderInst, m_GameFbo);
@@ -709,37 +708,48 @@ void GraphicsSystem::SetCameraSize(CAMERA_TYPE type, ivec2 size)
 void GraphicsSystem::UpdateCamera(CAMERA_TYPE type, const float &dt)
 {
 	auto localcamera = systemManager->ecs->GetEntitiesWith<Camera>();
-	if (localcamera.empty())
-		return; // Cannot find camera Richmond
-	Entity camera = localcamera.front();
+	Entity camera;
 
 	switch (type)
 	{
 	case CAMERA_TYPE::CAMERA_TYPE_GAME:
-		Camera_Input::getInstance().updateCameraInput(camera.GetComponent<Camera>().mCamera, dt);
-		camera.GetComponent<Camera>().mCamera.Update();
-		camera.GetComponent<Transform>().mTranslate = camera.GetComponent<Camera>().mCamera.mPosition;
-		break;
+		{
+			if (localcamera.empty())
+				return;
+			camera = localcamera.front();		// there will only be one game camera
+
+			Camera_Input::getInstance().updateCameraInput(camera.GetComponent<Camera>().mCamera, dt);
+			camera.GetComponent<Camera>().mCamera.Update();
+			camera.GetComponent<Transform>().mTranslate = camera.GetComponent<Camera>().mCamera.mPosition;
+			break;
+		}
 
 	case CAMERA_TYPE::CAMERA_TYPE_EDITOR:
-		Camera_Input::getInstance().updateCameraInput(m_EditorCamera, dt);
-		m_EditorCamera.Update();
-		break;
+		{
+			Camera_Input::getInstance().updateCameraInput(m_EditorCamera, dt);
+			m_EditorCamera.Update();
+			break;
+		}
 
 	case CAMERA_TYPE::CAMERA_TYPE_ALL:
-		m_EditorCamera.Update();
-		camera.GetComponent<Camera>().mCamera.Update();
+		{
+			m_EditorCamera.Update();
+			if (m_CameraControl == CAMERA_TYPE::CAMERA_TYPE_EDITOR) {
+				Camera_Input::getInstance().updateCameraInput(m_EditorCamera, dt);
+			}
 
-		if (m_CameraControl == CAMERA_TYPE::CAMERA_TYPE_EDITOR) {
-			Camera_Input::getInstance().updateCameraInput(m_EditorCamera, dt);
+			if (localcamera.empty())
+				return;
+			camera = localcamera.front();		// there will only be one game camera
+
+			camera.GetComponent<Camera>().mCamera.Update();
+			if (m_CameraControl == CAMERA_TYPE::CAMERA_TYPE_GAME) {
+				Camera_Input::getInstance().updateCameraInput(camera.GetComponent<Camera>().mCamera, dt);
+				camera.GetComponent<Transform>().mTranslate = camera.GetComponent<Camera>().mCamera.mPosition;
+			}
+
+			break;
 		}
-
-		else if (m_CameraControl == CAMERA_TYPE::CAMERA_TYPE_GAME) {
-			Camera_Input::getInstance().updateCameraInput(camera.GetComponent<Camera>().mCamera, dt);
-			camera.GetComponent<Transform>().mTranslate = camera.GetComponent<Camera>().mCamera.mPosition;
-		}
-
-		break;
 	}
 }
 
@@ -1069,9 +1079,10 @@ void MeshRenderer::SetTexture(MaterialType MaterialType, const std::string& Text
 	std::string MaterialInstancePath = systemManager->mResourceTySystem->compressed_texture_path + Texturename + ".ctexture";
 	mMaterialInstancePath[MaterialType] = MaterialInstancePath;
 
+	std::string descFilepath = MaterialInstancePath + ".desc";
+	unsigned guid = _GEOM::GetGUID(descFilepath);
 
-	uid guid(MaterialInstancePath);
-	mTextureRef[MaterialType].data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(guid.id));
+	mTextureRef[MaterialType].data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(guid));
 }
 
 

@@ -433,7 +433,7 @@ namespace _GEOM
 		return descFilePresent;
 	}
 
-	bool CheckAndCreateDescriptorFileTEXTURE(std::string uncompressedfilepath, std::string& CompressedTexture_Descriptor_Filepath)
+	bool CheckAndCreateDescriptorFileTEXTURE(std::string uncompressedfilepath, std::string& CompressedTexture_Descriptor_Filepath, const std::string& guidstr)
 	{
 		auto getFilename = [](const std::string& str) -> std::string
 		{
@@ -448,8 +448,8 @@ namespace _GEOM
 		};
 
 		// GUID is generated here
-		uid uncompressedguid(uncompressedfilepath);
-		_GEOM::Asset_DescriptorData uncompressedDesc(uncompressedguid.id);
+		uid guid(guidstr);
+		_GEOM::Asset_DescriptorData uncompressedDesc(guid.id);
 
 		//>> 1.0: Check if the UNCOMPRESSED Desc file is present using filename
 		std::string UncompressedFilepath = uncompressedfilepath.substr(0, uncompressedfilepath.find_last_of("/"));
@@ -501,7 +501,7 @@ namespace _GEOM
 			}
 		}
 
-		// Populate the local texture descriptor data
+		// Populate the local texture descriptor data with default data
 		_GEOM::Texture_DescriptorData TextureDesc;
 		TextureDesc.mGUID = uncompressedDesc.m_GUID;
 		TextureDesc.mCompressionType = CompressionType::SRGB;
@@ -578,7 +578,46 @@ namespace _GEOM
 
 	bool Texture_DescriptorData::SerializeTEXTURE_DescriptorDataToFile(std::string textureFilepath, const Texture_DescriptorData& textureDesc) noexcept
 	{
-		return false;
+		rapidjson::Document doc;
+		rapidjson::Document::AllocatorType& allocator = doc.GetAllocator();
+
+		std::string comp;
+		switch (textureDesc.mCompressionType)
+		{
+		case CompressionType::SRGB:
+			comp = "SRGB";
+			break;
+			
+		case CompressionType::RGB:
+			comp = "RGB";
+			break;
+		}
+
+		doc.SetObject();
+		rapidjson::Value Image_Type;
+		Image_Type.SetString(comp.c_str(), allocator);			// allocate SRGB RGB enum
+
+		doc.AddMember("GUID", textureDesc.mGUID, allocator);	// allocate GUID
+
+		// Serialize to a file
+		std::ofstream file(textureFilepath.c_str());
+		if (file.is_open())
+		{
+			rapidjson::StringBuffer buffer;
+			rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+			doc.Accept(writer);
+
+			file << buffer.GetString() << std::endl;
+			file.close();
+
+			std::cout << "JSON data serialized to: " << textureFilepath << std::endl;
+		}
+		else {
+			std::cerr << "Failed to open the file for writing." << std::endl;
+			return false;
+		}
+
+		return true;
 	}
 
 }
