@@ -377,7 +377,8 @@ void GraphicsSystem::EditorDraw(float dt)
 		// Render the bloom for the Editor Framebuffer
 		uid gaussianshaderstr("GaussianBlurShader");
 		GFX::Shader& gaussianShaderInst = *systemManager->mResourceTySystem->get_Shader(gaussianshaderstr.id);
-		m_PingPongFbo.GaussianBlur(gaussianShaderInst, m_Fbo);
+
+		m_PingPongFbo.GaussianBlur(gaussianShaderInst, m_Fbo, systemManager->mGraphicsSystem->mTexelOffset);
 
 		BlendFramebuffers(m_Fbo, m_Fbo.GetColorAttachment(), m_PingPongFbo.pingpongColorbuffers[0]);
 	}
@@ -524,7 +525,7 @@ void GraphicsSystem::GameDraw(float dt)
 		// Render the bloom for the Game Framebuffer
 		uid gaussianshaderstr("GaussianBlurShader");
 		GFX::Shader& gaussianShaderInst = *systemManager->mResourceTySystem->get_Shader(gaussianshaderstr.id);
-		m_PingPongFbo.GaussianBlur(gaussianShaderInst, m_GameFbo);
+		m_PingPongFbo.GaussianBlur(gaussianShaderInst, m_GameFbo, systemManager->mGraphicsSystem->mTexelOffset);
 
 		BlendFramebuffers(m_GameFbo, m_GameFbo.GetColorAttachment(), m_PingPongFbo.pingpongColorbuffers[0]);
 	}
