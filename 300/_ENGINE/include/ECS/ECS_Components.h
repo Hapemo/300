@@ -452,7 +452,7 @@ struct PointLight : public Serializable
 	vec3	mLightColor{ 1.f, 1.f, 1.f };
 	float	mLinearFalloff{};
 	float	mQuadraticFalloff{};
-	float	mIntensity{};
+	float	mIntensity{ 1.5f };
 
 	void Inspect();
 
