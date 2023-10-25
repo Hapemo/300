@@ -70,6 +70,8 @@ struct General
 
 	std::string GetTag() { return ECS::GetTag(tagid); }
 
+	void SetTag(const std::string& tagName) { tagid = ECS::GetTag(tagName); }
+
 	void Inspect();
 
 	//RTTR_ENABLE()

@@ -13,8 +13,8 @@ enum class MATERIAL : unsigned char
 
 enum class MOTION : unsigned char
 {
-	STATIC,
-	DYNAMIC,
+	STATIC = static_cast<unsigned char>(1U << 0),
+	DYNAMIC = static_cast<unsigned char>(1U << 1),
 	UNDEFINED // for serialization helper functions
 };
 

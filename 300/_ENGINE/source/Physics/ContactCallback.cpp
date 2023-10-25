@@ -13,8 +13,37 @@ void ContactCallback::onWake(PxActor**, PxU32)
 
 void ContactCallback::onContact(const PxContactPairHeader& pairHeader, const PxContactPair* pairs, PxU32 count)
 {
-	int countt = count;
-	countt -= 0;
+	while (count--)
+	{
+		const PxContactPair& current = *pairs++;
+		Entity playerEntity = *static_cast<uint32_t*>(current.shapes[0]->getActor()->userData);
+		Entity otherEntity = *static_cast<uint32_t*>(current.shapes[1]->getActor()->userData);
+		
+		if (playerEntity.id == otherEntity.id)
+			continue;
+
+		if (playerEntity.GetComponent<General>().GetTag() != "PLAYER")
+		{
+			if (otherEntity.GetComponent<General>().GetTag() != "PLAYER")
+				continue;
+			Entity temp = playerEntity;
+			playerEntity = otherEntity;
+			otherEntity = temp;
+		}
+
+		if (current.events & (PxPairFlag::eNOTIFY_TOUCH_FOUND))
+		{
+			// call scripting
+		}
+		else if (current.events & (PxPairFlag::eNOTIFY_TOUCH_PERSISTS))
+		{
+			// call scripting
+		}
+		else if (current.events & PxPairFlag::eNOTIFY_TOUCH_LOST)
+		{
+			// call scripting
+		}
+	}
 }
 
 void ContactCallback::onTrigger(PxTriggerPair* pairs, PxU32 count)
@@ -22,23 +51,23 @@ void ContactCallback::onTrigger(PxTriggerPair* pairs, PxU32 count)
 	while (count--)
 	{
 		PxTriggerPair& current = *pairs++;
-		uint32_t triggerEntity = *static_cast<uint32_t*>(current.triggerActor->userData);
-		uint32_t otherEntity = *static_cast<uint32_t*>(current.otherActor->userData);
+		Entity triggerEntity = *static_cast<uint32_t*>(current.triggerActor->userData);
+		Entity otherEntity = *static_cast<uint32_t*>(current.otherActor->userData);
 
-		if (triggerEntity == otherEntity)
+		if (triggerEntity.id == otherEntity.id)
 			continue;
 
 		if (pairs->status == PxPairFlag::eNOTIFY_TOUCH_FOUND)
 		{
-			//lua OnTriggerEnter(thisEntity, otherEntity)
+			triggerEntity.GetComponent<Scripts>().RunFunctionForAllScripts("OnTriggerEnter", otherEntity);
 		}
 		else if (pairs->status == PxPairFlag::eNOTIFY_TOUCH_PERSISTS)
 		{
-			//lua OnTrigger(thisEntity, otherEntity)
+			triggerEntity.GetComponent<Scripts>().RunFunctionForAllScripts("OnTrigger", otherEntity);
 		}
 		else if (pairs->status == physx::PxPairFlag::eNOTIFY_TOUCH_LOST)
 		{
-			//lua OnTriggerExit(thisEntity, otherEntity)
+			triggerEntity.GetComponent<Scripts>().RunFunctionForAllScripts("OnTriggerExit", otherEntity);
 		}
 	}
 }

@@ -82,4 +82,6 @@ void PhysicsSystem::CreateShape(PxShape*& shape, const T& geometry, const RigidB
 	shape = mPX.mPhysics->createShape(geometry, *mMaterials[rbod.mMaterial]);
 	shape->setFlag(PxShapeFlag::Enum::eSIMULATION_SHAPE, !isTrigger);
 	shape->setFlag(PxShapeFlag::Enum::eTRIGGER_SHAPE, isTrigger);
+	PxFilterData motionFilter(static_cast<uint32_t>(rbod.mMotion), 0, 0, 0);
+	shape->setSimulationFilterData(motionFilter);
 }
