@@ -26,7 +26,6 @@
 #include <Graphics/GraphicsSystem.h>
 
 Camera_Input::Camera_Input()
-	: mCameraSpeed{ 100.f }, mMouseSensitivity{ 0.1f }
 {}
 
 
@@ -40,32 +39,32 @@ void Camera_Input::updateCameraInput(GFX::Camera& cam, const float& dt)
 	{
 		// camera move forward
 		if (Input::CheckKey(E_STATE::HOLD, E_KEY::W)) {
-			moveVector += glm::normalize(cam.direction()) * dt * mCameraSpeed;
+			moveVector += glm::normalize(cam.direction()) * dt * cam.mCameraSpeed;
 		}
 
 		// camera move backwards
 		if (Input::CheckKey(E_STATE::HOLD, E_KEY::S)) {
-			moveVector -= glm::normalize(cam.direction()) * dt * mCameraSpeed;
+			moveVector -= glm::normalize(cam.direction()) * dt * cam.mCameraSpeed;
 		}
 
 		// camera move right
 		if (Input::CheckKey(E_STATE::HOLD, E_KEY::D)) {
-			moveVector += side * dt * mCameraSpeed;
+			moveVector += side * dt * cam.mCameraSpeed;
 		}
 
 		// camera move left
 		if (Input::CheckKey(E_STATE::HOLD, E_KEY::A)) {
-			moveVector -= side * dt * mCameraSpeed;
+			moveVector -= side * dt * cam.mCameraSpeed;
 		}
 
 		// camera move up
 		if (Input::CheckKey(E_STATE::HOLD, E_KEY::SPACE)) {
-			moveVector += up * dt * mCameraSpeed;
+			moveVector += up * dt * cam.mCameraSpeed;
 		}
 
 		// camera move down
 		if (Input::CheckKey(E_STATE::HOLD, E_KEY::LEFT_SHIFT)) {
-			moveVector -= up * dt * mCameraSpeed;
+			moveVector -= up * dt * cam.mCameraSpeed;
 		}
 
 		cam.SetPosition(cam.position() + moveVector);
@@ -81,7 +80,7 @@ void Camera_Input::updateCameraInput(GFX::Camera& cam, const float& dt)
 			vec2 delta = Input::CursorPos() - cam.cursorPosition();
 			if (delta != vec2(0.f, 0.f))
 			{
-				delta *= mMouseSensitivity;		// adjust the mouse movement sensitivity
+				delta *= cam.mSensitivity;		// adjust the mouse movement sensitivity
 
 				cam.mYaw += delta.x;
 				cam.mPitch += delta.y;

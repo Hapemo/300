@@ -355,7 +355,12 @@ void Camera::Inspect()
 
 		ImGui::Separator();
 
-		ImGui::DragFloat3("Camera Position", (float*)&mCamera.mPosition);
+		vec3 temp = mCamera.mPosition;
+		ImGui::DragFloat3("Camera Position", (float*)&temp);
+
+		mCamera.mTarget += temp - mCamera.mPosition;
+		mCamera.mPosition = temp;
+
 		ImGui::DragFloat3("Camera Target", (float*)&mCamera.mTarget);
 
 		ImGui::Text("Aspect Ratio");
@@ -632,12 +637,6 @@ void MeshRenderer::Inspect()
 		Entity entins(Hierarchy::selectedId);
 
 		// == >> Shaders << == //
-		std::vector<std::string> vertShaders, fragShaders;
-		static int selectedVertShader = 0, selectedFragShader = 0;
-
-		// populating vertex shader vector
-
-
 		std::string shaderstr{" "};
 
 		if (systemManager->mResourceTySystem->m_Shaders.find(mShaderRef.data_uid) != systemManager->mResourceTySystem->m_Shaders.end())
@@ -776,6 +775,7 @@ void MeshRenderer::Inspect()
 				ImGui::Text(textures[i].c_str());
 				if (ImGui::BeginDragDropTarget())
 				{
+					// loading compressed texture
 					if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_TEXT")) 
 					{
 						const char* data = (const char*)payload->Data;
@@ -788,7 +788,7 @@ void MeshRenderer::Inspect()
 						std::string TEXTURE_Descriptor_Filepath;
 						unsigned guid;
 						// check and ensures that the descriptor file for the materials are created
-						bool descFilePresent = _GEOM::CheckAndCreateDescriptorFileTEXTURE(data_str, TEXTURE_Descriptor_Filepath);
+						bool descFilePresent = _GEOM::CheckAndCreateDescriptorFileTEXTURE(data_str, TEXTURE_Descriptor_Filepath, texturestr);
 						std::string descfilepath = data_str + ".desc";
 						guid = _GEOM::GetGUID(descfilepath);
 						mTextureRef[i].data_uid = guid;
@@ -811,9 +811,9 @@ void MeshRenderer::Inspect()
 						unsigned guid;
 
 						// check and ensures that the descriptor file for the materials are created
-						bool descFilePresent = _GEOM::CheckAndCreateDescriptorFileTEXTURE(data_str, TEXTURE_Descriptor_Filepath);
+						bool descFilePresent = _GEOM::CheckAndCreateDescriptorFileTEXTURE(data_str, TEXTURE_Descriptor_Filepath, texturestr);
 						std::string descfilepath = data_str + ".desc";
-						guid = _GEOM::GetGUID(descfilepath);
+						guid = _GEOM::GetGUID(descfilepath);	// gets the guid from the png desc
 
 						// If the descriptor file is not present, then load it
 						if (!descFilePresent)
@@ -835,6 +835,7 @@ void MeshRenderer::Inspect()
 
 					ImGui::EndDragDropTarget();
 				}
+
 				int posstart = static_cast<int>(mMaterialInstancePath[i].find_last_of("/"));
 				int posend = static_cast<int>(mMaterialInstancePath[i].find_last_of("."));
 
@@ -874,7 +875,7 @@ void MeshRenderer::Inspect()
 						std::string TEXTURE_Descriptor_Filepath;
 						unsigned guid;
 						// check and ensures that the descriptor file for the materials are created
-						bool descFilePresent = _GEOM::CheckAndCreateDescriptorFileTEXTURE(data_str, TEXTURE_Descriptor_Filepath);
+						bool descFilePresent = _GEOM::CheckAndCreateDescriptorFileTEXTURE(data_str, TEXTURE_Descriptor_Filepath, texturestr);
 						std::string descfilepath = data_str + ".desc";
 						guid = _GEOM::GetGUID(descfilepath);
 						mTextureRef[i].data_uid = guid;
@@ -894,7 +895,7 @@ void MeshRenderer::Inspect()
 	}
 
 	// == >> Mesh Renderer GEOM Descriptor File << == //
-	ImGui::SetNextItemOpen(true, ImGuiCond_Once);
+	//ImGui::SetNextItemOpen(true, ImGuiCond_Once);
 	if (ImGui::TreeNode("GEOM DescirptorFile"))
 	{
 		GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mMeshRef.data);
@@ -902,12 +903,12 @@ void MeshRenderer::Inspect()
 		// sanity check
 		if (meshinst != nullptr)
 		{
-			ImGui::InputText("Desc Filepath", const_cast<char*>(meshinst->mDescriptorPath.c_str()), meshinst->mDescriptorPath.length() + 1);
-			ImGui::InputInt("GUID", reinterpret_cast<int*>(&meshinst->mDescriptorData.m_GUID));
+			ImGui::InputText("Desc Filepath", const_cast<char*>(meshinst->mMeshDescriptorPath.c_str()), meshinst->mMeshDescriptorPath.length() + 1);
+			ImGui::InputInt("GUID", reinterpret_cast<int*>(&meshinst->mMeshDescriptorData.m_GUID));
 
 			// Vert shader selection
 			int selectedFBX{};
-			_GEOM::DescriptorData& descInst = meshinst->mDescriptorData;
+			_GEOM::DescriptorData& descInst = meshinst->mMeshDescriptorData;
 
 			if (ImGui::BeginCombo("FBX Filepaths", descInst.m_Filepaths[selectedFBX].data(), 0))
 			{
@@ -929,8 +930,8 @@ void MeshRenderer::Inspect()
 
 			if (ImGui::Button("Save Descriptor File"))
 			{
-				std::cout << "Saving Descriptor File to: " << meshinst->mDescriptorPath << std::endl;
-				_GEOM::DescriptorData::SerializeGEOM_DescriptorDataToFile(meshinst->mDescriptorPath, descInst);
+				std::cout << "Saving Descriptor File to: " << meshinst->mMeshDescriptorPath << std::endl;
+				_GEOM::DescriptorData::SerializeGEOM_DescriptorDataToFile(meshinst->mMeshDescriptorPath, descInst);
 			}
 		}
 		ImGui::TreePop();
@@ -1192,10 +1193,10 @@ void UIrenderer::Inspect() {
 
 void VFX::Inspect() {
 	bool delete_component = true;
-	if (ImGui::CollapsingHeader("UIrenderer", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
+	if (ImGui::CollapsingHeader("VFX", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
 	{
 		ImGui::TextColored({ 0.f,1.f, 1.f, 1.f }, "Bloom Variables");
-		ImGui::DragFloat3("Global Bloom Threshold", (float*)&mBloomThreshold, 0.01f, 0.f, 1.f);
+		ImGui::DragFloat3("Entity Bloom Threshold", (float*)&mBloomThreshold, 0.01f, 0.f, 1.f);
 	}
 }
 

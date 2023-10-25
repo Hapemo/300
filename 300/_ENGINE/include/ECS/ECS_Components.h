@@ -110,6 +110,8 @@ struct Animator
 	GFX::Animator	mAnimator;
 
 	void Inspect();
+	void PauseAnimation() { mAnimator.mIsPaused = true; }
+	void UnpauseAnimation() { mAnimator.mIsPaused = false; }
 };
 
 /******************************************************************************/
@@ -132,7 +134,6 @@ struct MeshRenderer : public Serializable
 	vec4								mInstanceColor{ 1.f, 1.f, 1.f, 1.f };
 
 	std::string							mMeshPath;
-	
 
 	ref									mMeshRef{};
 	ref									mTextureRef[5]		{ {nullptr,0},{nullptr,0},{nullptr,0},{nullptr,0},{nullptr,0} };
@@ -470,11 +471,16 @@ struct PointLight : public Serializable
 struct VFX : public Serializable
 {
 	vec3		mBloomThreshold{ 0.2126, 0.7152, 0.0722 };
+	bool		isObjectBloom{ 1 };
 
 	void Inspect();
 
 	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
 	void DeserializeSelf(rapidjson::Value& reader);
+
+	void EnableObjectBloom() { isObjectBloom = true; }
+	void DisableObjectBloom() { isObjectBloom = false; }
+	void SetEntityBloomThreshold(glm::vec3 threshold) { mBloomThreshold = threshold; }
 };
 
 /******************************************************************************/

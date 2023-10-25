@@ -65,6 +65,7 @@ void MeshRenderer::DeserializeSelf(rapidjson::Value& reader)
 	//Deserialize(reader, "mesh", mMeshPath);
 	//Deserialize(reader, "texturecont", mTextureCont, 5);
 	Deserialize(reader, "textureref", mTextureRef->data_uid);
+	mTextureRef->data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(mTextureRef->data_uid));
 }
 
 void UIrenderer::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
