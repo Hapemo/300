@@ -39,6 +39,25 @@ public:
 	// will be done here and removed.
 	void LoadEnvVar();
 	void Run(const char* funcName);
+	template<typename ...args>
+	void Run(const char* funcName, args... arguments)
+	{
+		sol::protected_function func = env[funcName];
+		//if (func == nullptr)
+		//	PWARNING("FUNCTION IS NULL POINTER");
+		//if (func)
+		//{
+			sol::protected_function_result result = func(arguments...);
+
+			if (!result.valid())
+			{
+				sol::error err = result;
+				std::cout << "Error running function! From " << scriptFile << " of function " << funcName << std::endl;
+				std::cout << err.what() << std::endl;
+				return;
+			}
+		//}
+	}
 	// Check if the type of the variable had changed
 	bool CheckVariableTypeEqual(sol::object& value, const std::type_info& info);
 	// Set the value of the variable stored in the map

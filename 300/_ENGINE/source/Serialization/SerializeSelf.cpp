@@ -7,7 +7,7 @@ void General::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& wr
 	writer.Key("general");
 	writer.StartObject();
 	Serialize(writer, "name", name);
-	Serialize(writer, "tagid", (int)tagid);
+	Serialize(writer, "tagid", tagid);
 	Serialize(writer, "subtag", subtag);
 	Serialize(writer, "isActive", isActive);
 	Serialize(writer, "isPaused", isPaused);
@@ -98,6 +98,7 @@ void RigidBody::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& 
 	Serialize(writer, "material", mMaterial);
 	Serialize(writer, "motion", mMotion);
 	Serialize(writer, "velocity", mVelocity);
+	Serialize(writer, "rotationconstraints", mRotationConstraints);
 	writer.EndObject();
 }
 
@@ -107,6 +108,7 @@ void RigidBody::DeserializeSelf(rapidjson::Value& reader)
 	Deserialize(reader, "material", mMaterial);
 	Deserialize(reader, "motion", mMotion);
 	Deserialize(reader, "velocity", mVelocity);
+	Deserialize(reader, "rotationconstraints", mRotationConstraints);
 }
 
 void BoxCollider::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
@@ -115,6 +117,7 @@ void BoxCollider::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>
 	writer.StartObject();
 	Serialize(writer, "scaleoffset", mScaleOffset);
 	Serialize(writer, "translateoffset", mTranslateOffset);
+	Serialize(writer, "istrigger", mIsTrigger);
 	writer.EndObject();
 }
 
@@ -122,6 +125,7 @@ void BoxCollider::DeserializeSelf(rapidjson::Value& reader)
 {
 	Deserialize(reader, "scaleoffset", mScaleOffset);
 	Deserialize(reader, "translateoffset", mTranslateOffset);
+	Deserialize(reader, "istrigger", mIsTrigger);
 }
 
 void SphereCollider::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
@@ -130,6 +134,7 @@ void SphereCollider::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuff
 	writer.StartObject();
 	Serialize(writer, "scaleoffset", mScaleOffset);
 	Serialize(writer, "translateoffset", mTranslateOffset);
+	Serialize(writer, "istrigger", mIsTrigger);
 	writer.EndObject();
 }
 
@@ -137,6 +142,8 @@ void SphereCollider::DeserializeSelf(rapidjson::Value& reader)
 {
 	Deserialize(reader, "scaleoffset", mScaleOffset);
 	Deserialize(reader, "translateoffset", mTranslateOffset);
+	Deserialize(reader, "istrigger", mIsTrigger);
+
 }
 
 void CapsuleCollider::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
@@ -146,6 +153,7 @@ void CapsuleCollider::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuf
 	Serialize(writer, "translateoffset", mTranslateOffset);
 	Serialize(writer, "radius", mRadius);
 	Serialize(writer, "halfheight", mHalfHeight);
+	Serialize(writer, "istrigger", mIsTrigger);
 	writer.EndObject();
 }
 
@@ -154,6 +162,7 @@ void CapsuleCollider::DeserializeSelf(rapidjson::Value& reader)
 	Deserialize(reader, "translateoffset", mTranslateOffset);
 	Deserialize(reader, "radius", mRadius);
 	Deserialize(reader, "halfheight", mHalfHeight);
+	Deserialize(reader, "istrigger", mIsTrigger);
 }
 
 void Scripts::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const

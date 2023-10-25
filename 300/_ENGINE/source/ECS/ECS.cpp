@@ -7,6 +7,7 @@
 #include "Debug/AssertException.h"
 #include "ResourceManagerTy.h"
 
+std::vector<std::string> ECS::mEntityTags({ "PLAYER", "ENEMY", "BULLET", "FLOOR", "WALL" });
 
 bool Entity::ShouldRun() {
 	assert(HasComponent<General>() && std::string("There is no general component when attempting to change Entity's isActive").c_str());
@@ -84,6 +85,34 @@ void Entity::Deactivate() {
 }
 
 ECS::ECS() : registry(), mClipboard(0) {} 
+
+void ECS::AddTag(const std::string& tag)
+{
+	std::string temp = tag;
+	std::transform(temp.begin(), temp.end(), temp.begin(), ::toupper);
+	mEntityTags.push_back(temp);
+}
+
+std::string ECS::GetTag(unsigned char id)
+{
+	if (id < 0 || id >= mEntityTags.size())
+	{
+		PWARNING("Tag id is out of vector bounds!")
+		return "";
+	}
+	return mEntityTags[id];
+}
+
+unsigned char ECS::GetTag(const std::string& tag)
+{
+	std::string temp = tag;
+	std::transform(temp.begin(), temp.end(), temp.begin(), ::toupper);
+	for (unsigned char i = 0; i < (unsigned char)mEntityTags.size(); ++i)
+		if (mEntityTags[i] == temp)
+			return i;
+	PWARNING("Tag not found!")
+	return 0;
+}
 
 Entity ECS::NewEntity()
 {

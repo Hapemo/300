@@ -36,7 +36,14 @@ void EditorApplication::Init()
 {
     StartUp();
     SystemInit();
-
+   /* Entity trigger = systemManager->ecs->NewEntity();
+    RigidBody& rbod = trigger.AddComponent<RigidBody>();
+    rbod.mMotion = MOTION::DYNAMIC;
+    BoxCollider& box = trigger.AddComponent<BoxCollider>();
+    box.mIsTrigger = false;
+    trigger.GetComponent<Transform>().mScale = glm::vec3(60, 40, 60);
+    trigger.GetComponent<Transform>().mRotate = glm::vec3(0);
+    trigger.GetComponent<Transform>().mTranslate = glm::vec3(100, 200, 100);*/
     // create new entity
     /*Entity mEntity = systemManager->ecs->NewEntity();
     mEntity.GetComponent<General>().name = "DefaultTestObj";
