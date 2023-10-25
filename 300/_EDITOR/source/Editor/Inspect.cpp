@@ -665,6 +665,7 @@ void MeshRenderer::Inspect()
 
 				std::string descfilepath = data_str + ".desc";
 				unsigned guid = _GEOM::GetGUID(descfilepath);
+				mMeshRef.data_uid = guid;
 				mMeshRef.data = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(guid));
 				GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mMeshRef.data);
 
@@ -714,7 +715,7 @@ void MeshRenderer::Inspect()
 					systemManager->mResourceTySystem->mesh_Load(geompath, guid);
 				}
 
-
+				mMeshRef.data_uid = guid;
 				mMeshRef.data = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(guid));
 				GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mMeshRef.data);
 
@@ -773,10 +774,21 @@ void MeshRenderer::Inspect()
 						const char* data = (const char*)payload->Data;
 						std::string data_str = std::string(data);
 
-						mMaterialInstancePath[i] = data_str;
+						//mMaterialInstancePath[i] = data_str;
 
-						uid temp(mMaterialInstancePath[i]);
-						mTextureRef[i].data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(temp.id));
+						std::string texturestr = systemManager->mResourceTySystem->compressed_texture_path + getFilename(data_str) + ".ctexture";
+						mMaterialInstancePath[i] = texturestr;
+						std::string TEXTURE_Descriptor_Filepath;
+						unsigned guid;
+						// check and ensures that the descriptor file for the materials are created
+						bool descFilePresent = _GEOM::CheckAndCreateDescriptorFileTEXTURE(data_str, TEXTURE_Descriptor_Filepath);
+						std::string descfilepath = data_str + ".desc";
+						guid = _GEOM::GetGUID(descfilepath);
+						mTextureRef[i].data_uid = guid;
+						mTextureRef[i].data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(guid));
+
+						//uid temp(mMaterialInstancePath[i]);
+						//mTextureRef[i].data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(temp.id));
 					}
 
 					// file uncompressed texture for objects
@@ -803,13 +815,15 @@ void MeshRenderer::Inspect()
 
 							// Load the textures into the list of usable textures within the engine
 							systemManager->mResourceTySystem->texture_Load(getFilename(data_str), guid);
+							mTextureRef[i].data_uid = guid;
 							mTextureRef[i].data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(guid));
-							mTextureCont[i] = true;
+							//mTextureCont[i] = true;
 						}
 
-						uid temp(mMaterialInstancePath[i]);
-						mTextureRef[i].data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(temp.id));
-						mTextureCont[i] = true;
+						//uid temp(mMaterialInstancePath[i]);
+						mTextureRef[i].data_uid = guid;
+						mTextureRef[i].data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(guid));
+						//mTextureCont[i] = true;
 					}
 
 					ImGui::EndDragDropTarget();
@@ -851,8 +865,20 @@ void MeshRenderer::Inspect()
 						std::string data_str = std::string(data);
 						mMaterialInstancePath[i] = data_str;
 
-						uid temp(mMaterialInstancePath[i]);
-						mTextureRef[i].data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(temp.id));
+
+						std::string texturestr = systemManager->mResourceTySystem->compressed_texture_path + getFilename(data_str) + ".ctexture";
+						mMaterialInstancePath[i] = texturestr;
+						std::string TEXTURE_Descriptor_Filepath;
+						unsigned guid;
+						// check and ensures that the descriptor file for the materials are created
+						bool descFilePresent = _GEOM::CheckAndCreateDescriptorFileTEXTURE(data_str, TEXTURE_Descriptor_Filepath);
+						std::string descfilepath = data_str + ".desc";
+						guid = _GEOM::GetGUID(descfilepath);
+						mTextureRef[i].data_uid = guid;
+						mTextureRef[i].data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(guid));
+
+						//uid temp(mMaterialInstancePath[i]);
+						//mTextureRef[i].data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(temp.id));
 
 					}
 					ImGui::EndDragDropTarget();

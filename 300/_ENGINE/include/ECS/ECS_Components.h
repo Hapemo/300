@@ -138,7 +138,7 @@ struct MeshRenderer : public Serializable
 	ref									mTextureRef[5]		{ {nullptr,0},{nullptr,0},{nullptr,0},{nullptr,0},{nullptr,0} };
 
 	unsigned							mGUID;
-	bool								mTextureCont[5];
+	//bool								mTextureCont[5];
 
 	void								Inspect();
 	void								SetColor(const vec4& color);

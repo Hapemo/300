@@ -20,8 +20,8 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 0.0,
-                "y": -0.689213752746582,
+                "x": -1.935215711593628,
+                "y": 1.2816816568374634,
                 "z": 0.0
             }
         },
@@ -38,7 +38,7 @@
         "meshrenderer": {
             "vert": "../assets/shader_files/pointLight_vert.glsl",
             "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 0,
+            "meshrefid": 2285,
             "instancecolor": {
                 "x": 1.0,
                 "y": 1.0,
@@ -46,20 +46,13 @@
                 "w": 1.0
             },
             "materialinstance": [
-                "../assets/Compressed/Wood Material 15_BaseColor.ctexture",
-                "../assets/Compressed/Wood Material 15_Normal.ctexture",
+                "../assets/Compressed/Brick wall 4_baseColor.ctexture",
+                "../assets/Compressed/Brick wall 4_normal.ctexture",
                 " ",
                 " ",
                 " "
             ],
-            "texturecont": [
-                true,
-                true,
-                false,
-                false,
-                false
-            ],
-            "textureref": 0
+            "textureref": 4923
         },
         "boxcollider": {
             "scaleoffset": {
@@ -106,8 +99,8 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 0.0,
-                "y": 0.0,
+                "x": -2.968045949935913,
+                "y": 2.2499635219573975,
                 "z": 0.0
             }
         },
@@ -133,8 +126,8 @@
         },
         "transform": {
             "scale": {
-                "x": 1.0,
-                "y": 1.0,
+                "x": 0.9999998211860657,
+                "y": 0.9999998211860657,
                 "z": 1.0
             },
             "rotate": {
@@ -160,8 +153,8 @@
                 "z": 747.7139892578125
             },
             "size": {
-                "x": 635,
-                "y": 601
+                "x": 278,
+                "y": 625
             },
             "near": 0.10000000149011612,
             "far": 900.0
