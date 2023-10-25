@@ -31,7 +31,15 @@ void ObjectFactory::LoadEntity(Entity e, rapidjson::Value& reader)
 	DESERIALIZE_SELF(RigidBody, "rigidbody");
 	DESERIALIZE_SELF(MeshRenderer, "meshrenderer");
 	if (e.HasComponent<MeshRenderer>())
-		e.AddComponent<Animator>();
+	{
+		if (e.GetComponent<MeshRenderer>().mMeshRef.getdata(systemManager->mResourceTySystem->m_ResourceInstance) != nullptr)
+		{
+			GFX::Mesh& meshinst = *reinterpret_cast<GFX::Mesh*>(e.GetComponent<MeshRenderer>().mMeshRef.data);
+			if (meshinst.mHasAnimation) {
+				e.AddComponent<Animator>();
+			}
+		}
+	}
 	DESERIALIZE_SELF(BoxCollider, "boxcollider");
 	DESERIALIZE_SELF(SphereCollider, "spherecollider");
 	DESERIALIZE_SELF(CapsuleCollider, "capsulecollider");
