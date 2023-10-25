@@ -9,6 +9,7 @@
 #include "GameState/GameStateManager.h"
 #include "Graphics/GraphicsSystem.h"
 #include "Audio/AudioSource.h"
+#include "AI/AIManager.h"
 
 void LuaComponentContainer()
 {
@@ -27,7 +28,8 @@ void LuaEngine()
         "mAudioSystem", &SystemManager::GetAudioPointer,
         "mInputActionSystem", &SystemManager::GetInputMapSystemPointer,
         "mGameStateSystem", &SystemManager::GetGameStateSystem,
-        "mGraphicsSystem", &SystemManager::GetGraphicsSystem
+        "mGraphicsSystem", &SystemManager::GetGraphicsSystem,
+        "mAISystem", &SystemManager::GetAIManager
     );
 }
 
@@ -327,5 +329,15 @@ void LuaGameState()
     systemManager->mScriptingSystem->luaState.new_usertype<GameStateManager>(
         "mGameStateSystem", sol::constructors<>(),
         "GetEntity", &GameStateManager::GetEntity
+        );
+}
+
+void LuaAIManager()
+{
+    systemManager->mScriptingSystem->luaState.new_usertype<AIManager>(
+        "mAISystem", sol::constructors<>(),
+        "SetPredictiveVelocity", &AIManager::SetPredictiveVelocity,
+        "PredictiveShootPlayer", &AIManager::PredictiveShootPlayer,
+        "GetDirection", &AIManager::GetDirection
         );
 }

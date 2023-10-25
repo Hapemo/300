@@ -133,6 +133,7 @@ void ScriptingSystem::Init()
     LuaMeshRenderer();
     LuaVFX();
     LuaGameState();
+    LuaAIManager();
 
     /******************************************************************************/
     /*!
