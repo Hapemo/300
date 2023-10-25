@@ -62,6 +62,9 @@ void LuaEntity()
         DECLARE_COMPONENT("GetTransform", Transform),
         "HasTransform", &Entity::HasComponent<Transform>,
 
+        DECLARE_COMPONENT("GetCamera", Camera),
+        "HasCamera", & Entity::HasComponent<Camera>,
+
         ADD_COMPONENT("AddAnimator", Animator),
         DECLARE_COMPONENT("GetAnimator", Animator),
         "HasAnimator", & Entity::HasComponent<Animator>,
@@ -123,6 +126,31 @@ void LuaGeneral()
         "isActive", &General::isActive,
         "GetTag", &General::GetTag
     );
+}
+
+void LuaCamera()
+{
+    systemManager->mScriptingSystem->luaState.new_usertype<Camera>(
+        "Camera", sol::constructors<>(),
+        "mCamera", &Camera::mCamera
+        );
+}
+
+void LuaGFXCamera()
+{
+    systemManager->mScriptingSystem->luaState.new_usertype<GFX::Camera>(
+        "GFXCamera", sol::constructors<GFX::Camera()>(),
+        "RotateCameraView", &GFX::Camera::RotateCameraView,
+        "SetCameraSpeed", &GFX::Camera::SetCameraSpeed,
+        "SetSensitivity", &GFX::Camera::SetSensitivity,
+        "GetCameraSpeed", &GFX::Camera::GetCameraSpeed,
+        "GetSensitivity", &GFX::Camera::GetSensitivity,
+        "SetTarget", &GFX::Camera::SetTarget,
+        "SetPosition", &GFX::Camera::SetPosition,
+        "position", &GFX::Camera::position,
+        "target", &GFX::Camera::target,
+        "direction", &GFX::Camera::direction
+        );
 }
 
 void LuaTransform()

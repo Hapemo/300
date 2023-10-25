@@ -113,6 +113,8 @@ void ScriptingSystem::Init()
     LuaECS();
     LuaEntity();
     LuaGeneral();
+    LuaCamera();
+    LuaGFXCamera();
     LuaTransform();
     LuaAnimator();
     LuaRigidBody();
