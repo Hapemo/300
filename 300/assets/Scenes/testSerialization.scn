@@ -38,7 +38,7 @@
         "meshrenderer": {
             "vert": "../assets/shader_files/pointLight_vert.glsl",
             "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 2285,
+            "meshrefid": 0,
             "instancecolor": {
                 "x": 1.0,
                 "y": 1.0,
@@ -46,13 +46,19 @@
                 "w": 1.0
             },
             "materialinstance": [
-                "../assets/Compressed/Brick wall 4_baseColor.ctexture",
-                "../assets/Compressed/Brick wall 4_normal.ctexture",
-                "../assets/Compressed/Brick wall 4_normal.ctexture",
-                "../assets/Compressed/Brick wall 4_normal.ctexture",
+                " ",
+                " ",
+                " ",
+                " ",
                 " "
             ],
-            "textureref": 4923
+            "texturerefid": [
+                0,
+                0,
+                0,
+                0,
+                0
+            ]
         },
         "boxcollider": {
             "scaleoffset": {
