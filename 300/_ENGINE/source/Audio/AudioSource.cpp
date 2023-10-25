@@ -99,18 +99,21 @@ bool AudioSource::IsSoundAttached()
 
 bool AudioSource::AttachSound(std::string audio_name)
 {
-	if (systemManager->mAudioSystem.get()->CheckAudioExist(audio_name)) // Check if the audio exists in the database...
+	if (mAudioComponent->mIsEmpty)
 	{
-		mAudioComponent->mSound = systemManager->mAudioSystem.get()->FindSound(audio_name);
-		mAudioComponent->mFileName = audio_name; // for play check in Update() -> CheckAudioExist
-		
-		// For Editor side 
-		mAudioComponent->mIsEmpty = false; // no longer empty anymore...
-		mAudioComponent->mFullPath = "../assets\\Audio/" + audio_name; // Temporary 
+		if (systemManager->mAudioSystem.get()->CheckAudioExist(audio_name)) // Check if the audio exists in the database...
+		{
+			mAudioComponent->mSound = systemManager->mAudioSystem.get()->FindSound(audio_name);
+			mAudioComponent->mFileName = audio_name; // for play check in Update() -> CheckAudioExist
 
-		return true;
+			// For Editor side 
+			mAudioComponent->mIsEmpty = false; // no longer empty anymore...
+			mAudioComponent->mFullPath = "../assets\\Audio/" + audio_name; // Temporary 
+
+			return true;
+		}
 	}
-
+	
 	return false;
 }
 
@@ -125,12 +128,13 @@ void AudioSource::Play()
 {
 	if (mAudioComponent != nullptr) // Make sure there is the <Audio> component reference.
 	{	
-		AudioSystem* system = systemManager->mAudioSystem.get();
-
-		if (mAudioComponent->mSound != nullptr)
-		{   
-			// The [playing] should be in the [Update()] loop.
-			mAudioComponent->mIsPlay = true;
+		if (!mAudioComponent->mIsPlaying)
+		{
+			if (mAudioComponent->mSound != nullptr)
+			{
+				// The [playing] should be in the [Update()] loop.
+				mAudioComponent->mIsPlay = true;
+			}
 		}
 	}
 }

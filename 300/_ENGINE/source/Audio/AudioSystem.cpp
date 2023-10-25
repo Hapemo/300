@@ -147,7 +147,7 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 
 	if (Input::CheckKey(PRESS, A))
 		TestCrossFade();			 // Test OK
-	
+
 	if (Input::CheckKey(PRESS, S))
 		TestCrossFadeBack();		 // Test OK
 
@@ -158,11 +158,11 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 		TestFadeOut();				 // Test OK
 
 	//TestFootsteps();
-	
+
 	if (Input::CheckKey(PRESS, E_KEY::COMMA))
 		testfootstep = true;
 
-	if(testfootstep)
+	if (testfootstep)
 		TestFootstepsFade(dt);
 
 	// [10/18] Global Channel Test
@@ -226,7 +226,7 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 				ErrCodeCheck(audio_component.mChannel->set3DAttributes(&position, &velocity)); // Need to
 			}
 		}
-	
+
 
 		// Every Loop -> check if the <Audio> is still playing.
 		bool channelIsPlay = false;
@@ -240,13 +240,13 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 			PINFO("Finished Playing");
 			audio_component.mIsPlaying = false;	   // Audio finished playing. 
 			audio_component.mIsPlay = false;       // Don't Need to keep playing... (play once) -> if "mIsLooping" is true (channel will continue to play)
-			
+
 			// Check if looping...
 			if (audio_component.mIsLooping)
 			{
 				audio_component.mIsPlay = true; // make it true again. 
 			}
-		
+
 		}
 
 		// Fade In / Fade Out 
@@ -282,7 +282,7 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 
 				}
 			}
-			
+
 			else
 			{
 				PINFO("Please insert your sound clip first.");
@@ -301,10 +301,7 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 
 					if (fadeLevelIn < audio_component.mFadeInMaxVol)
 					{
-						bool playing;
-						playing = audio_component.mChannel->isPlaying(&playing);
-
-						if (playing)
+						if (audio_component.mIsPlaying)
 						{
 							audio_component.mChannel->setVolume(fadeLevelIn);
 							audio_component.mVolume = fadeLevelIn;
@@ -313,10 +310,7 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 					}
 					else
 					{
-						bool playing;
-						playing = audio_component.mChannel->isPlaying(&playing);
-
-						if (playing)
+						if (audio_component.mIsPlaying)
 						{
 							audio_component.mChannel->setVolume(audio_component.mFadeInMaxVol);
 							audio_component.mVolume = audio_component.mFadeInMaxVol;
@@ -340,15 +334,14 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 				PINFO("Please insert your sound clip first.");
 				audio_component.mFadeIn = false;
 			}
-			
+
 		}
 
 	}
-	
+
 	system_obj->update();
 
 }
-
 
 /******************************************************************************/
 /*!
@@ -650,42 +643,47 @@ int AudioSystem::ErrCodeCheck(FMOD_RESULT result)
 bool AudioSystem::LoadAudio(std::string file_path, std::string audio_name, Audio* audio_component)
 {
 	// Check if <Audio> is already in the database.
-	auto sound_it = mSounds.find(audio_name);
-
-	if (sound_it == mSounds.end()) // Audio not in the database.
+	if (audio_component != nullptr)
 	{
-		PINFO("File Detected: %s", file_path.c_str());
-		//std::cout << "File Detected: " << file_path << std::endl;
-		PINFO("Creating Sound: +");
-		/*std::cout << "Creating Sound: ";*/
-		std::string full_path = file_path + "/" + audio_name;
-		FMOD::Sound* new_sound;
-		int check = ErrCodeCheck(system_obj->createSound(full_path.c_str(), FMOD_LOOP_OFF, 0, &new_sound));
+		auto sound_it = mSounds.find(audio_name);
 
-		if (check != 1)
+		if (sound_it == mSounds.end()) // Audio not in the database.
 		{
-			PWARNING("Error: Sound Not Loaded.");
-			return 0;
-			//std::cout << "Error: Sound Not Loaded." << std::endl;
-		} // At this point, audio successfully loaded.
+			PINFO("File Detected: %s", file_path.c_str());
+			//std::cout << "File Detected: " << file_path << std::endl;
+			PINFO("Creating Sound: +");
+			/*std::cout << "Creating Sound: ";*/
+			std::string full_path = file_path + "/" + audio_name;
+			FMOD::Sound* new_sound;
+			int check = ErrCodeCheck(system_obj->createSound(full_path.c_str(), FMOD_LOOP_OFF, 0, &new_sound));
 
-		mSounds.insert(std::make_pair(audio_name, new_sound));
+			if (check != 1)
+			{
+				PWARNING("Error: Sound Not Loaded.");
+				return 0;
+				//std::cout << "Error: Sound Not Loaded." << std::endl;
+			} // At this point, audio successfully loaded.
 
-		if (audio_component != nullptr) // Make sure there is an <Audio> component to save into.
-		{
-			audio_component->mSound = new_sound;  // Save [Sound Reference] into <Audio> component. 
-			audio_component->mIsLoaded = true;
+			mSounds.insert(std::make_pair(audio_name, new_sound));
+
+			if (audio_component != nullptr) // Make sure there is an <Audio> component to save into.
+			{
+				audio_component->mSound = new_sound;  // Save [Sound Reference] into <Audio> component. 
+				audio_component->mIsLoaded = true;
+			}
+
+			return true;
 		}
 
-		return true;
+		else
+		{
+			audio_component->mSound = FindSound(audio_name);
+			audio_component->mIsLoaded = true;
+			return false;
+		}
 	}
 
-	else
-	{	
-		audio_component->mSound = sound_it->second;
-		audio_component->mIsLoaded = true;
-		return false;
-	}
+	
 }
 
 // bool AudioSystem::LoadAudioFromDirectory(std::filesystem::path directory_path)
