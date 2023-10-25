@@ -297,7 +297,7 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 						bool playing;
 						playing = audio_component.mChannel->isPlaying(&playing);
 
-						if (playing)
+						if (audio_component.mIsPlaying)
 						{
 							audio_component.mChannel->setVolume(fadeLevelIn);
 							audio_component.mVolume = fadeLevelIn;
