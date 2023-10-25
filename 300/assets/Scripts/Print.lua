@@ -23,3 +23,15 @@ end
 function OnTriggerExit(Entity)
     
 end
+
+function OnContactEnter(Entity)
+
+end
+
+function OnContact(Entity)
+
+end
+
+function OnContactExit(Entity)
+
+end

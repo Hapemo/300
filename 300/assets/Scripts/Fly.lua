@@ -15,7 +15,7 @@ function Dead()
 end
 
 function OnTriggerEnter(Entity)
-    
+    print("From Fly.lua OnTriggerEnter")
 end
 
 function OnTrigger(Entity)
@@ -24,4 +24,16 @@ end
 
 function OnTriggerExit(Entity)
     
-en
+end
+
+function OnContactEnter(Entity)
+
+end
+
+function OnContact(Entity)
+
+end
+
+function OnContactExit(Entity)
+
+end

@@ -224,10 +224,10 @@ void ScriptingSystem::Update(float dt)
     //}
 
     //Test Collide (To delete)
-    //Entity girl = systemManager->mGameStateSystem->GetEntity("Girl", "Test1");
-    //Entity floor = systemManager->mGameStateSystem->GetEntity("Floor", "Test1");
-    //girl.GetComponent<Scripts>().RunFunctionForAllScripts("OnTriggerExit", floor.id);
-    //std::cout << "id is : " << (int32_t)floor.id << std::endl;
+    Entity girl = systemManager->mGameStateSystem->GetEntity("Girl", "Test1");
+    Entity floor = systemManager->mGameStateSystem->GetEntity("Floor", "Test1");
+    girl.GetComponent<Scripts>().RunFunctionForAllScripts("OnTriggerEnter", floor.id);
+    std::cout << "id is : " << (int32_t)floor.id << std::endl;
 }
 
 void ScriptingSystem::Exit()
