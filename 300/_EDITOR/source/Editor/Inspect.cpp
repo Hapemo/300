@@ -786,7 +786,7 @@ void MeshRenderer::Inspect()
 						std::string TEXTURE_Descriptor_Filepath;
 						unsigned guid;
 						// check and ensures that the descriptor file for the materials are created
-						bool descFilePresent = _GEOM::CheckAndCreateDescriptorFileTEXTURE(data_str, TEXTURE_Descriptor_Filepath);
+						bool descFilePresent = _GEOM::CheckAndCreateDescriptorFileTEXTURE(data_str, TEXTURE_Descriptor_Filepath, texturestr);
 						std::string descfilepath = data_str + ".desc";
 						guid = _GEOM::GetGUID(descfilepath);
 						mTextureRef[i].data_uid = guid;
@@ -877,7 +877,7 @@ void MeshRenderer::Inspect()
 						std::string TEXTURE_Descriptor_Filepath;
 						unsigned guid;
 						// check and ensures that the descriptor file for the materials are created
-						bool descFilePresent = _GEOM::CheckAndCreateDescriptorFileTEXTURE(data_str, TEXTURE_Descriptor_Filepath);
+						bool descFilePresent = _GEOM::CheckAndCreateDescriptorFileTEXTURE(data_str, TEXTURE_Descriptor_Filepath, texturestr);
 						std::string descfilepath = data_str + ".desc";
 						guid = _GEOM::GetGUID(descfilepath);
 						mTextureRef[i].data_uid = guid;
