@@ -3,7 +3,7 @@
 #include "ECS/ECS_Components.h"
 #include "FPSManager.h"
 #include "GameState/GameStateManager.h"
-
+#include "Graph.h"
 
 const std::array<std::string, static_cast<size_t>(E_MOVEMENT_TYPE::SIZE)> AIManager::mMovementTypeArray{ MovementTypeArrayInit() };
 
@@ -19,6 +19,8 @@ AIManager::AIManager() : mPlayerEntity(), mPlayerTransform(nullptr), mPlayerArra
 	E_MOVEMENT_TYPE i{ E_MOVEMENT_TYPE::BEGIN };
 	while (++i != E_MOVEMENT_TYPE::SIZE)
 		mAILists[mMovementTypeArray[static_cast<int>(i)]];
+
+	Graph graph{10};
 }
 
 void AIManager::Update(float _dt) {
