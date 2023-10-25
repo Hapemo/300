@@ -12,6 +12,7 @@ This file contains the base AudioSystem class that supports the following functi
 ****************************************************************************/
 #include "Audio/AudioSystem.h"
 #include "Audio/AudioTest.h" // Scripting Tests (Audio into Lua)
+#include "Audio/Audio3DTest.h"
 
 /******************************************************************************/
 /*!
@@ -106,13 +107,19 @@ void AudioSystem::Init()
 		}
 	}
 
+	// Load all Sounds
+	LoadAudioFromDirectory("../assets\\Audio");
+
 	// 3D Audio Settings
 	PINFO("INITIALIZING 3D AUDIO SETTINGS:");
 	ErrCodeCheck(system_obj->set3DSettings(1.0, distance_factor, 1.0)); // [Distance Factor] = 1.0f 
 
+
+
 }
 
 static bool testfootstep = false;
+static bool testListener = false;
 /******************************************************************************/
 /*!
 	Update()w
@@ -182,6 +189,12 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 	if (Input::CheckKey(PRESS, P))
 		UnpauseBGMSounds();
 
+	if (Input::CheckKey(PRESS, _5))
+		testListener = true;
+
+	if (testListener)
+		TestMovementAroundAudioSource();
+
 	auto audio_entities = systemManager->ecs->GetEntitiesWith<Audio>();
 
 	/*
@@ -192,11 +205,6 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 	for (Entity audio : audio_entities)
 	{
 		Audio& audio_component = audio.GetComponent<Audio>();
-
-		if (audio_component.mIsLooping)
-		{
-			audio_component.mSound->setMode(FMOD_LOOP_NORMAL);
-		}
 
 		// Play Cycle
 		if (audio_component.mIsPlay &&							// (1) Check if this <Audio> is set to play.
@@ -215,11 +223,10 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 				FMOD_VECTOR velocity = { audio_component.mVelocity.x ,audio_component.mVelocity.y , audio_component.mVelocity.z };
 
 				PINFO("SETTING 3D ATTRIBUTES");
-				ErrCodeCheck(audio_component.mChannel->set3DAttributes(&position, &velocity));
+				ErrCodeCheck(audio_component.mChannel->set3DAttributes(&position, &velocity)); // Need to
 			}
-
-		
 		}
+	
 
 		// Every Loop -> check if the <Audio> is still playing.
 		bool channelIsPlay = false;
@@ -561,16 +568,29 @@ void AudioSystem::InitAudioChannelReference(Entity id)
 	}
 }
 
-// Updates the [3D audio information]
-void AudioSystem::Update3DSettings(Entity id)
+// Updates the [3D Channel information]
+void AudioSystem::Update3DChannelSettings(Entity id)
 {
 	Audio& audio_component = id.GetComponent<Audio>();
 
 	FMOD_VECTOR pos = { audio_component.mPosition.x, audio_component.mPosition.y , audio_component.mPosition.z };
 	FMOD_VECTOR vel = { audio_component.mVelocity.x, audio_component.mVelocity.y , audio_component.mVelocity.z };
 	
-	PINFO("Setting 3D Attributes for this <Audio> component.");
+	PINFO("Setting 3D Attributes for channel that exists in this <Audio> component."); 
 	ErrCodeCheck(audio_component.mChannel->set3DAttributes(&pos, &vel));
+}
+
+void AudioSystem::SetupListenerAttributes(Entity id)
+{
+	AudioListener& listener_component = id.GetComponent<AudioListener>();
+
+	FMOD_VECTOR listener_position = { listener_component.mPosition.x, listener_component.mPosition.y , listener_component.mPosition.z };
+	FMOD_VECTOR listener_velocity = { listener_component.mVelocity.x, listener_component.mVelocity.y , listener_component.mVelocity.z };
+	FMOD_VECTOR listener_forward  = { listener_component.mForward.x, listener_component.mForward.y , listener_component.mForward.z };
+	FMOD_VECTOR listener_up       = { listener_component.mUp.x, listener_component.mUp.y , listener_component.mUp.z };
+
+	PINFO("Initializing 3D AudioListener Parameters."); 
+	ErrCodeCheck(system_obj->set3DListenerAttributes(0, &listener_position, &listener_velocity, &listener_forward, &listener_up)); // 1st param = 0 (means only 1 Listener can exist at one time)
 }
 
 
@@ -597,6 +617,9 @@ int AudioSystem::ErrCodeCheck(FMOD_RESULT result)
 		case FMOD_ERR_HEADER_MISMATCH:
 			PWARNING("(20) [FMOD_ERR_HEADER_MISMATCH] : There is a version mismatch between the FMOD header and either the FMOD Studio library or the FMOD Low Level library.");
 			//std::cout << "(20) [FMOD_ERR_HEADER_MISMATCH] : There is a version mismatch between the FMOD header and either the FMOD Studio library or the FMOD Low Level library." << std::endl;
+			break;
+		case FMOD_ERR_INVALID_HANDLE:
+			PWARNING("(30) [FMOD_ERR_INVALID_HANDLE] : An invalid object has been passed into the FMOD function (check for nullptr)");
 			break;
 		}
 
@@ -695,30 +718,36 @@ bool AudioSystem::LoadAudio(std::string file_path, std::string audio_name, Audio
 //	return true;
 //}
 
- bool AudioSystem::LoadAudioFromDirectory(std::string directory_path)
- {
-	 for (const auto& file : std::filesystem::directory_iterator(directory_path))
-	 {
-		 std::string file_path = file.path().string();
-		 PINFO("File Detected: %s", file_path.c_str());
-		 std::string audio_name = file.path().filename().string();
-		 PINFO("Audio Name: %s", audio_name.c_str());
 
-		 PINFO("Creating Sound: ");
-		 FMOD::Sound* new_sound;
-		 bool check = ErrCodeCheck(system_obj->createSound(file_path.c_str(), FMOD_LOOP_OFF, 0, &new_sound));
+bool AudioSystem::LoadAudioFromDirectory(std::string directory_path)
+{
+	for (const auto& file : std::filesystem::directory_iterator(directory_path))
+	{
+		std::string audio_name = file.path().filename().string();
 
-		 if (!check)
-		 {
-			 PWARNING("Failed to create Sound: %s", audio_name.c_str());
-			 return false;
-		 }
+		if (!FindSound(audio_name))
+		{
+			PINFO("Audio Name: %s", audio_name.c_str());
 
-		 mSounds.insert(std::make_pair(audio_name, new_sound));
-	 }
+			std::string file_path = file.path().string();
+			PINFO("File Detected: %s", file_path.c_str());
 
-	 return true;
- }
+			PINFO("Creating Sound: ");
+			FMOD::Sound* new_sound;
+			bool check = ErrCodeCheck(system_obj->createSound(file_path.c_str(), FMOD_DEFAULT, 0, &new_sound));
+
+			if (!check)
+			{
+				PWARNING("Failed to create Sound: %s", audio_name.c_str());
+				return false;
+			}
+
+			mSounds.insert(std::make_pair(audio_name, new_sound));
+		}
+	}
+
+	return true;
+}
 
 /******************************************************************************/
 /*!
