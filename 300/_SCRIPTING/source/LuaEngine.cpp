@@ -130,27 +130,27 @@ void LuaGeneral()
 
 void LuaCamera()
 {
-    //systemManager->mScriptingSystem->luaState.new_usertype<Camera>(
-    //    "Camera", sol::constructors<>(),
-    //    "mCamera", &Camera::mCamera
-    //    );
+    systemManager->mScriptingSystem->luaState.new_usertype<Camera>(
+        "Camera", sol::constructors<>(),
+        "mCamera", &Camera::mCamera
+        );
 }
 
 void LuaGFXCamera()
 {
-    //systemManager->mScriptingSystem->luaState.new_usertype<GFX::Camera>(
-    //    "GFXCamera", sol::constructors<GFX::Camera()>(),
-    //    "RotateCameraView", &GFX::Camera::RotateCameraView,
-    //    "SetCameraSpeed", &GFX::Camera::SetCameraSpeed,
-    //    "SetSensitivity", &GFX::Camera::SetSensitivity,
-    //    "GetCameraSpeed", &GFX::Camera::GetCameraSpeed,
-    //    "GetSensitivity", &GFX::Camera::GetSensitivity,
-    //    "SetTarget", &GFX::Camera::SetTarget,
-    //    "SetPosition", &GFX::Camera::SetPosition,
-    //    "position", &GFX::Camera::position,
-    //    "target", &GFX::Camera::target,
-    //    "direction", &GFX::Camera::direction
-    //    );
+    systemManager->mScriptingSystem->luaState.new_usertype<GFX::Camera>(
+        "GFXCamera", sol::constructors<GFX::Camera()>(),
+        "RotateCameraView", &GFX::Camera::RotateCameraView,
+        "SetCameraSpeed", &GFX::Camera::SetCameraSpeed,
+        "SetSensitivity", &GFX::Camera::SetSensitivity,
+        "GetCameraSpeed", &GFX::Camera::GetCameraSpeed,
+        "GetSensitivity", &GFX::Camera::GetSensitivity,
+        "SetTarget", &GFX::Camera::SetTarget,
+        "SetPosition", &GFX::Camera::SetPosition,
+        "position", &GFX::Camera::position,
+        "target", &GFX::Camera::target,
+        "direction", &GFX::Camera::direction
+        );
 }
 
 void LuaTransform()
@@ -299,13 +299,13 @@ void LuaInputMapSystem()
 
 void LuaGraphicsSystem()
 {
-    //systemManager->mScriptingSystem->luaState.new_usertype<GraphicsSystem>(
-    //    "mGraphicsSystem", sol::constructors<>(),
-    //    "EnableGlobalBloom", &GraphicsSystem::EnableGlobalBloom,
-    //    "DisableGlobalBloom", &GraphicsSystem::DisableGlobalBloom,
-    //    "SetGlobalBloomThreshold", &GraphicsSystem::SetGlobalBloomThreshold,
-    //    "SetGlobalBloomExposure", &GraphicsSystem::SetGlobalBloomExposure
-    //    );
+    systemManager->mScriptingSystem->luaState.new_usertype<GraphicsSystem>(
+        "mGraphicsSystem", sol::constructors<>(),
+        "EnableGlobalBloom", &GraphicsSystem::EnableGlobalBloom,
+        "DisableGlobalBloom", &GraphicsSystem::DisableGlobalBloom,
+        "SetGlobalBloomThreshold", &GraphicsSystem::SetGlobalBloomThreshold,
+        "SetGlobalBloomExposure", &GraphicsSystem::SetGlobalBloomExposure
+        );
 }
 
 void LuaPhysics()
@@ -344,12 +344,12 @@ void LuaMeshRenderer()
 
 void LuaVFX()
 {
-    //systemManager->mScriptingSystem->luaState.new_usertype<VFX>(
-    //    "VFX", sol::constructors<>(),
-    //    "EnableObjectBloom", &VFX::EnableObjectBloom,
-    //    "DisableObjectBloom", &VFX::DisableObjectBloom,
-    //    "SetEntityBloomThreshold", &VFX::SetEntityBloomThreshold
-    //    );
+    systemManager->mScriptingSystem->luaState.new_usertype<VFX>(
+        "VFX", sol::constructors<>(),
+        "EnableObjectBloom", &VFX::EnableObjectBloom,
+        "DisableObjectBloom", &VFX::DisableObjectBloom,
+        "SetEntityBloomThreshold", &VFX::SetEntityBloomThreshold
+        );
 }
 
 void LuaGameState()

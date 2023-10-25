@@ -133,14 +133,19 @@ function Testing(a,b,c)
     print(a)
     print(b)
     print(c)
-function OnTriggerEnter(Entity)
-    
 end
 
-function OnTrigger(Entity)
-    
+function OnTriggerEnter(Entity)
+    print("From CollideTest.lua OnTriggerEnter")
 end
 
 function OnTriggerExit(Entity)
-    
+    print("OnTriggerExit")
+end
+
+function OnContactEnter(Entity)
+end
+
+function OnContactExit(Entity)
+
 end
