@@ -232,9 +232,9 @@ void ScriptingSystem::Update(float dt)
     //    once = false;
     //}
 
-    Entity rubber = systemManager->mGameStateSystem->GetEntity("rubber", "testSerialization");
-    Entity ducky = systemManager->mGameStateSystem->GetEntity("ducky", "testSerialization");
-    rubber.GetComponent<Scripts>().RunFunctionForAllScripts("OnContactEnter", ducky.id);
+    //Entity rubber = systemManager->mGameStateSystem->GetEntity("rubber", "testSerialization");
+    //Entity ducky = systemManager->mGameStateSystem->GetEntity("ducky", "testSerialization");
+    //rubber.GetComponent<Scripts>().RunFunctionForAllScripts("OnContactEnter", ducky.id);
     //std::cout << "id is : " << (int32_t)floor.id << std::endl;
 }
 
