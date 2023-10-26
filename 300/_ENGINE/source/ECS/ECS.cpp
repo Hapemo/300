@@ -202,7 +202,6 @@ Entity ECS::NewEntityFromPrefab(std::string prefabName)
 	//copy all prefab components (except transform) to new entity
 	//General temp1 = e.GetComponent<General>();
 	//MeshRenderer temp = e.GetComponent<MeshRenderer>();
-	mPrefabs[prefabName].push_back(e);
 	PASSERT(static_cast<uint32_t>(e.id) != 0);
 	return e;
 }
