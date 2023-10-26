@@ -12,6 +12,7 @@ function Alive()
 end
 
 function Update()
+    print(name)
     testing = testing + 1;
     --testie = systemManager.ecs:NewEntity();
     --For M1 demo

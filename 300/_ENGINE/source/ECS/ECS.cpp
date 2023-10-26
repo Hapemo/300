@@ -162,6 +162,13 @@ void ECS::DeleteAllEntities()
 	registry.clear();
 }
 
+void ECS::CopyEntity(Entity e)
+{
+	if (static_cast<std::uint32_t>(e.id) == 0)
+		PASSERT("trying to copy null entity");
+	mClipboard = e;
+}
+
 void ECS::NewPrefab(Entity e)
 {
 
@@ -177,13 +184,12 @@ void ECS::NewPrefab(Entity e)
 		 return;
 	}
 	std::string name = e.GetComponent<General>().name;
-	if (mPrefabs.count(name))
-	{
-		PWARNING("prefab of the same name exists! - prefab not created");
-		return;
-	}
-	ObjectFactory::SerializePrefab(e, "../assets/Prefabs/" + name + ".prefab");
+	bool isExistingPrefab = e.HasComponent<Prefab>();
 	e.AddComponent<Prefab>().mPrefab = name;
+	ObjectFactory::SerializePrefab(e, "../assets/Prefabs/" + name + ".prefab");
+	if (mPrefabs.count(name))
+		UpdatePrefabEntities(name);
+	if (isExistingPrefab) return;
 	mPrefabs[name].push_back(e);
 }
 
@@ -192,7 +198,6 @@ Entity ECS::NewEntityFromPrefab(std::string prefabName)
 	// void ObjectFactory::DeserializeScene(const std::string& filename)
 	// creation of new entity done inside deserializescene function
 	Entity e(ObjectFactory::DeserializePrefab("../assets/Prefabs/" + prefabName + ".prefab"));
-	e.AddComponent<Prefab>().mPrefab = prefabName;
 	systemManager->mGameStateSystem->mCurrentGameState.mScenes[0].mEntities.insert(e);
 	//copy all prefab components (except transform) to new entity
 	//General temp1 = e.GetComponent<General>();
@@ -219,6 +224,8 @@ void ECS::UpdatePrefabEntities(std::string prefabName)
 			e.AddComponent<BoxCollider>() = temp.GetComponent<BoxCollider>();
 		if (temp.HasComponent<SphereCollider>())
 			e.AddComponent<SphereCollider>() = temp.GetComponent<SphereCollider>();
+		if (temp.HasComponent<CapsuleCollider>())
+			e.AddComponent<CapsuleCollider>() = temp.GetComponent<CapsuleCollider>();
 		if (temp.HasComponent<Scripts>())
 			e.AddComponent<Scripts>() = temp.GetComponent<Scripts>();
 		if (temp.HasComponent<Audio>())
@@ -228,23 +235,14 @@ void ECS::UpdatePrefabEntities(std::string prefabName)
 	systemManager->ecs->DeleteEntity(temp);
 }
 
-void ECS::CopyEntity(Entity e)
-{
-	if (static_cast<std::uint32_t>(e.id) == 0)
-		PASSERT ("trying to copy null entity");
-	mClipboard = e;
-}
-
 Entity ECS::StartEditPrefab(std::string prefabName)
 {
 	// void ObjectFactory::DeserializeScene(const std::string& filename)
 	// creation of new entity done inside deserializescene function
 	Entity e(ObjectFactory::DeserializePrefab("../assets/Prefabs/" + prefabName + ".prefab"));
-	e.AddComponent<Prefab>().mPrefab = prefabName;
 	//copy all prefab components (except transform) to new entity
 	//General temp1 = e.GetComponent<General>();
 	//MeshRenderer temp = e.GetComponent<MeshRenderer>();
-	mPrefabs[prefabName].push_back(e);
 	e.GetComponent<General>().name = prefabName;
 	PASSERT(static_cast<uint32_t>(e.id) != 0);
 	return e;
@@ -261,6 +259,18 @@ void ECS::EndEditPrefab(Entity e)
 void ECS::EndEditPrefabNoSave(Entity e)
 {
 	DeleteEntity(e);
+}
+
+void ECS::UnlinkPrefab(Entity e)
+{
+	if (!e.HasComponent<Prefab>())
+		return;
+	std::string name = e.GetComponent<Prefab>().mPrefab;
+	auto temp = std::find(mPrefabs[name].begin(), mPrefabs[name].end(), e);
+	if (temp == mPrefabs[name].end())
+		return;
+	mPrefabs[name].erase(temp);
+	e.RemoveComponent<Prefab>();
 }
 
 Entity ECS::PasteEntity(int scene)
@@ -329,20 +339,6 @@ Entity ECS::PasteEntity(int scene)
 
 ECS::~ECS()
 {
-}
-
-
-
-void ECS::UnlinkPrefab(Entity e)
-{
-	if (!e.HasComponent<Prefab>())
-		return;
-	std::string name = e.GetComponent<Prefab>().mPrefab;
-	auto temp = std::find(mPrefabs[name].begin(), mPrefabs[name].end(), e);
-	if (temp == mPrefabs[name].end())
-		return;
-	mPrefabs[name].erase(temp);
-	e.RemoveComponent<Prefab>();
 }
 
 Entity::Entity(entt::entity id) : id(id) {}

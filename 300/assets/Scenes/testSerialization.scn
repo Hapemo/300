@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 0,
+        "entityid": 1,
         "general": {
             "name": "rubber",
             "tagid": 0,
@@ -43,7 +43,7 @@
         "meshrenderer": {
             "vert": "../assets/shader_files/pointLight_vert.glsl",
             "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 0,
+            "meshrefid": 4436,
             "instancecolor": {
                 "x": 1.0,
                 "y": 1.0,
@@ -51,15 +51,16 @@
                 "w": 1.0
             },
             "materialinstance": [
-                " ",
-                " ",
+                "../assets/Compressed/Cube_Texture_1.ctexture",
+                "../assets/Compressed/Brick wall 4_normal.ctexture",
                 " ",
                 " ",
                 " "
             ],
+            "mesh": "../assets/compiled_geom/Wall_Partition(No Material).geom",
             "texturerefid": [
-                0,
-                0,
+                4242,
+                4650,
                 0,
                 0,
                 0
@@ -88,9 +89,70 @@
             "istrigger": false
         },
         "scripts": {
-            "scriptscontainer": []
+            "scriptscontainer": [
+                "../assets/Scripts/Run.lua",
+                "../assets/Scripts/CollideTest.lua"
+            ],
+            "../assets/Scripts/Run.lua": [
+                {
+                    "key": "create",
+                    "val": {
+                        "type": 694561268,
+                        "value": 2.0
+                    }
+                },
+                {
+                    "key": "name",
+                    "val": {
+                        "type": -734751724,
+                        "value": "AJDBCJADBH"
+                    }
+                },
+                {
+                    "key": "speed",
+                    "val": {
+                        "type": 694561268,
+                        "value": 20.0
+                    }
+                },
+                {
+                    "key": "test",
+                    "val": {
+                        "type": -734751724,
+                        "value": "HIIIII"
+                    }
+                },
+                {
+                    "key": "testing",
+                    "val": {
+                        "type": 694561268,
+                        "value": 5.0
+                    }
+                },
+                {
+                    "key": "vec",
+                    "val": {
+                        "type": -655306154,
+                        "value": {
+                            "x": 0.30000001192092896,
+                            "y": 0.8999999761581421,
+                            "z": 0.699999988079071
+                        }
+                    }
+                }
+            ],
+            "../assets/Scripts/CollideTest.lua": [
+                {
+                    "key": "test",
+                    "val": {
+                        "type": 694561268,
+                        "value": 5.050000190734863
+                    }
+                }
+            ]
         },
         "aisetting": {
+            "movementtype": 2,
             "shotprediction": false,
             "spreadout": 0.0,
             "stayaway": 0.0,
@@ -98,7 +160,7 @@
         }
     },
     {
-        "entityid": 1,
+        "entityid": 2,
         "general": {
             "name": "ducky",
             "tagid": 0,
@@ -137,10 +199,63 @@
                 "y": false,
                 "z": false
             }
+        },
+        "scripts": {
+            "scriptscontainer": [
+                "../assets/Scripts/Run.lua"
+            ],
+            "../assets/Scripts/Run.lua": [
+                {
+                    "key": "create",
+                    "val": {
+                        "type": 694561268,
+                        "value": 2.0
+                    }
+                },
+                {
+                    "key": "name",
+                    "val": {
+                        "type": -734751724,
+                        "value": "Girl"
+                    }
+                },
+                {
+                    "key": "speed",
+                    "val": {
+                        "type": 694561268,
+                        "value": 20.0
+                    }
+                },
+                {
+                    "key": "test",
+                    "val": {
+                        "type": -734751724,
+                        "value": "hfufhufu"
+                    }
+                },
+                {
+                    "key": "testing",
+                    "val": {
+                        "type": 694561268,
+                        "value": 5.0
+                    }
+                },
+                {
+                    "key": "vec",
+                    "val": {
+                        "type": -655306154,
+                        "value": {
+                            "x": 5.0,
+                            "y": 0.5,
+                            "z": 0.699999988079071
+                        }
+                    }
+                }
+            ]
         }
     },
     {
-        "entityid": 2,
+        "entityid": 3,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -177,7 +292,7 @@
                 "z": 747.7139892578125
             },
             "size": {
-                "x": 428,
+                "x": 103,
                 "y": 625
             },
             "near": 0.10000000149011612,

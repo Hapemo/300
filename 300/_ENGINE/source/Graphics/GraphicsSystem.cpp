@@ -154,6 +154,23 @@ void GraphicsSystem::Update(float dt)
 			m_Renderer.AddSphere(m_EditorCamera.position(), inst.GetComponent<Transform>().mTranslate, 0.5f, {1.f, 1.f, 0.f, 1.f});
 		}
 
+		if (m_DebugDrawing && inst.HasComponent<CapsuleCollider>())
+		{
+			CapsuleCollider cap = inst.GetComponent<CapsuleCollider>();
+			Transform xform = inst.GetComponent<Transform>();
+			if (inst.HasParent())
+				xform.mTranslate += static_cast<Entity>(inst.GetParent()).GetComponent<Transform>().mTranslate;
+
+			glm::vec3 capPos = xform.mTranslate + cap.mTranslateOffset;
+
+			glm::vec3 first = capPos;
+			glm::vec3 second = capPos;
+			first.y -= cap.mHalfHeight;
+			second.y += cap.mHalfHeight;
+
+			m_Renderer.AddCapsule(m_EditorCamera.position(), first, second, cap.mRadius, glm::vec4(0.f, 1.f, 0.f, 1.f));
+		}
+
 		// Update the animation
 		if (inst.HasComponent<Animator>() && _ENABLE_ANIMATIONS && systemManager->mGraphicsSystem->m_EnableGlobalAnimations)
 		{
@@ -182,11 +199,29 @@ void GraphicsSystem::Update(float dt)
 
 		MaterialSSBO material{};
 		// Save the materials if it exists
-		material.mDiffuseMap	= GetAndStoreBindlessTextureHandle(meshRenderer.GetTexture(DIFFUSE));		
-		material.mNormalMap		= GetAndStoreBindlessTextureHandle(meshRenderer.GetTexture(NORMAL));		
-		material.mSpecularMap	= GetAndStoreBindlessTextureHandle(meshRenderer.GetTexture(SPECULAR));	
-		material.mShininessMap	= GetAndStoreBindlessTextureHandle(meshRenderer.GetTexture(SHININESS));	
-		material.mEmissionMap	= GetAndStoreBindlessTextureHandle(meshRenderer.GetTexture(EMISSION));	
+		//material.mDiffuseMap	= GetAndStoreBindlessTextureHandle(meshRenderer.GetTexture(DIFFUSE));		
+		//material.mNormalMap		= GetAndStoreBindlessTextureHandle(meshRenderer.GetTexture(NORMAL));		
+		//material.mSpecularMap	= GetAndStoreBindlessTextureHandle(meshRenderer.GetTexture(SPECULAR));	
+		//material.mShininessMap	= GetAndStoreBindlessTextureHandle(meshRenderer.GetTexture(SHININESS));	
+		//material.mEmissionMap	= GetAndStoreBindlessTextureHandle(meshRenderer.GetTexture(EMISSION));	
+
+		auto getID = [&](MaterialType type, MeshRenderer& meshrenderer) ->int {
+
+			if (meshrenderer.mTextureRef[static_cast<int>(type)].getdata(systemManager->mResourceTySystem->m_ResourceInstance) == nullptr)
+				return -1;
+
+			return static_cast<GFX::Texture*>(meshrenderer.mTextureRef[static_cast<int>(type)].data)->ID();
+
+
+		};
+
+
+		material.mDiffuseMap = GetAndStoreBindlessTextureHandle(getID(DIFFUSE, meshRenderer));
+		material.mNormalMap = GetAndStoreBindlessTextureHandle(getID(NORMAL, meshRenderer));
+		material.mSpecularMap = GetAndStoreBindlessTextureHandle(getID(SPECULAR, meshRenderer));
+		material.mShininessMap = GetAndStoreBindlessTextureHandle(getID(SHININESS, meshRenderer));
+		material.mEmissionMap = GetAndStoreBindlessTextureHandle(getID(EMISSION, meshRenderer));
+
 		m_Materials.emplace_back(material);	// push back
 	}
 	m_FinalBoneMatrixSsbo.SubData(finalBoneMatrices.size() * sizeof(mat4), finalBoneMatrices.data());

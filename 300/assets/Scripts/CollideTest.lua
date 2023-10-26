@@ -1,3 +1,5 @@
+test = 5.05
+
 function Alive()
 
 end

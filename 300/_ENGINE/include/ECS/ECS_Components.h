@@ -251,6 +251,8 @@ struct CapsuleCollider : public Serializable //@han
 	CapsuleCollider() : mTranslateOffset(0.f, 0.f, 0.f), mRadius(50.f), mHalfHeight(100.f) {}
 	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
 	void DeserializeSelf(rapidjson::Value& reader);
+
+	void Inspect();
 };
 
 /******************************************************************************/
