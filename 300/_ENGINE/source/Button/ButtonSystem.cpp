@@ -36,6 +36,15 @@ void ButtonSystem::Update()
 
 void ButtonSystem::Reset()
 {
+	auto entities = systemManager->ecs->GetEntitiesWith<Button>();
+	for (Entity ent : entities)
+	{
+		Button &button = ent.GetComponent<Button>();
+
+		button.mIsHover = false;
+		button.mIsClick = false;
+		button.mActivated = false;
+	}
 }
 
 bool ButtonSystem::CheckHover(Entity e, vec2 mousePos)
@@ -52,10 +61,10 @@ bool ButtonSystem::CheckHover(Entity e, vec2 mousePos)
 
 bool ButtonSystem::CheckClick(Entity e, vec2 mousePos)
 {
-	return false;
+	return (CheckHover(e, mousePos) && Input::CheckKey(E_STATE::PRESS, E_KEY::M_BUTTON_L));
 }
 
 bool ButtonSystem::CheckActivate(Entity e, vec2 mousePos)
 {
-	return false;
+	return (CheckHover(e, mousePos) && Input::CheckKey(E_STATE::RELEASE, E_KEY::M_BUTTON_L));
 }
