@@ -77,5 +77,6 @@ void TabWindow::update()
 	if(systemManager->mGraphicsSystem->m_PingPongFbo.mblurAmount < 1)
 		systemManager->mGraphicsSystem->m_PingPongFbo.mblurAmount = 1;
 
-	ImGui::Checkbox("Enable Bloom", &systemManager->mGraphicsSystem->m_EnableBloom);
+	ImGui::Checkbox("Enable Bloom", &systemManager->mGraphicsSystem->m_EnableBloom); 
+	ImGui::Checkbox("Enable Chromatic Abberation", &systemManager->mGraphicsSystem->m_EnableChromaticAbberation);
 }

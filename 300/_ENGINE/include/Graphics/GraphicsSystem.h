@@ -230,7 +230,6 @@ public:
 	CAMERA_TYPE m_CameraControl;
 
 	// -- Bloom -- 
-	//vec3		mAmbientBloomThreshold { 0.2126, 0.7152, 0.0722 };
 	vec3		mAmbientBloomThreshold { 0.05, 0.05, 0.005 };
 	float		mAmbientBloomExposure{ 0.4f };
 	float		mTexelOffset{ 1.f };
@@ -249,6 +248,7 @@ public:
 	bool	m_HasLight{ false };
 	bool    m_EnableScroll{ false };
 	bool    m_EnableBloom{ false };
+	bool	m_EnableChromaticAbberation{ false };
 
 	// -- Stats --
 	int		m_LightCount{};

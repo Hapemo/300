@@ -384,6 +384,13 @@ void GraphicsSystem::EditorDraw(float dt)
 	}
 
 
+	if (systemManager->mGraphicsSystem->m_EnableChromaticAbberation)
+	{
+		uid chromaticAbbreation("ChromaticAbberation");
+		GFX::Shader& chromaticAbberationShaderInst = *systemManager->mResourceTySystem->get_Shader(chromaticAbbreation.id);
+		
+	}
+
 	// Render UI objects
 	m_UiShaderInst.Activate();		// Activate shader
 	DrawAll2DInstances(m_UiShaderInst.GetHandle());
