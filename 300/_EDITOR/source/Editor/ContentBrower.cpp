@@ -67,272 +67,296 @@ void format_string(std::string& path) {
 void ContentBrowser::update() 
 {
 
-	ImVec2 maxpos;
-
-	if (current_Directory != std::filesystem::path(s_asset_directory))
+	if (ImGui::BeginTable("Table", 2, ImGuiTableFlags_Resizable))
 	{
-		if (ImGui::Button("<<",ImVec2(40,40)))
+		ImGui::TableNextRow();
+
+		//left menu
+		ImGui::TableSetColumnIndex(0);
+
+		for (auto const& directory : std::filesystem::directory_iterator{ current_Directory }) {
+			const auto& path = directory.path(); // directory path
+			auto relativepath = std::filesystem::relative(path, current_Directory);
+			std::string filename_string = relativepath.filename().string();
+
+			if (directory.is_directory()) {
+				ImGui::Selectable(filename_string.c_str());
+
+			}
+
+		}
+
+		ImGui::TableSetColumnIndex(1);
+		ImVec2 maxpos;
+
+		if (current_Directory != std::filesystem::path(s_asset_directory))
 		{
-			current_Directory = current_Directory.parent_path();
+			if (ImGui::Button("<<", ImVec2(40, 40)))
+			{
+				current_Directory = current_Directory.parent_path();
+			}
 		}
-	}
 
-	static float padding{ 10 };
-	static float buttonsize{ 70 };
-	float cellsize = buttonsize + padding;
+		static float padding{ 10 };
+		static float buttonsize{ 60 };
+		float cellsize = buttonsize + padding;
 
-	float panelwidth = ImGui::GetContentRegionAvail().x;
-	int columncount = (int)(panelwidth / cellsize);
-	if (columncount < 1) {
-		columncount = 1;
-	}
+		float panelwidth = ImGui::GetContentRegionAvail().x;
+		int columncount = (int)(panelwidth / cellsize);
+		if (columncount < 1) {
+			columncount = 1;
+		}
 
 
-	ImGui::Columns(columncount, 0, false);
+		ImGui::Columns(columncount, 0, false);
 
-	auto& resourceDatas = systemManager->mResourceTySystem;
-	int idd{ 0 };
+		auto& resourceDatas = systemManager->mResourceTySystem;
+		int idd{ 0 };
 
-	// looping through filesystem
-	for (auto const& directory : std::filesystem::directory_iterator{ current_Directory }) {
-		const auto& path = directory.path(); // directory path
+		// looping through filesystem
+		for (auto const& directory : std::filesystem::directory_iterator{ current_Directory }) {
+			const auto& path = directory.path(); // directory path
 
-		auto relativepath = std::filesystem::relative(path, current_Directory);
-		std::string filename_string = relativepath.filename().string();
+			auto relativepath = std::filesystem::relative(path, current_Directory);
+			std::string filename_string = relativepath.filename().string();
 
-		if (directory.is_directory()) {
-	
-			ImGui::PushID(idd);
-			ImGui::ImageButton((ImTextureID)(intptr_t)resourceDatas->m_EditorTextures["Folder"]->ID(), {buttonsize, buttonsize});
-			ImGui::PopID();
-			if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) {
+			if (directory.is_directory()) {
+
+				ImGui::PushID(idd);
+				ImGui::ImageButton((ImTextureID)(intptr_t)resourceDatas->m_EditorTextures["Folder"]->ID(), { buttonsize, buttonsize });
+				ImGui::PopID();
+				if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) {
 					current_Directory /= path.filename();
+				}
+				ImGui::Text(filename_string.c_str());
+				ImGui::NextColumn();
+
 			}
-			ImGui::Text(filename_string.c_str());
-			ImGui::NextColumn();
+			else if (!directory.is_directory()) {
+
+				if (check_extension(path.string(), ".prefab")) {
+					ImGui::PushID(idd);
+					ImGui::ImageButton((ImTextureID)(intptr_t)resourceDatas->m_EditorTextures["3DFileIcon"]->ID(), { buttonsize, buttonsize });
+					ImGui::PopID();
+					if (ImGui::BeginDragDropSource()) {
+
+						std::string path_str = path.string();
+
+
+						int posstart = static_cast<int>(path_str.find_last_of("\\"));
+						int posend = static_cast<int>(path_str.find_last_of("."));
+
+						std::string newpath = path_str.substr(posstart + 1, posend - (posstart + 1));
+
+						const char* source_path = newpath.c_str();
+						ImGui::SetDragDropPayload("FILE_PREFAB", source_path, strlen(source_path) * sizeof(wchar_t), ImGuiCond_Once);
+
+						ImGui::EndDragDropSource();
+					}
+
+					if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) {
+
+
+						int posstart = static_cast<int>(filename_string.find_last_of("\\"));
+						int posend = static_cast<int>(filename_string.find_last_of("."));
+						std::string newpath = filename_string.substr(posstart + 1, posend);
+
+						Entity toEdit = systemManager->ecs->StartEditPrefab(newpath);
+						PrefabWindow::prefabObj = toEdit.id;
+
+					}
+					ImGui::Text(filename_string.c_str());
+					ImGui::NextColumn();
+
+				}
+				else if (check_extension(path.string(), ".gs")) {
+
+					ImGui::ImageButton((ImTextureID)(intptr_t)resourceDatas->m_EditorTextures["3DFileIcon"]->ID(), { buttonsize, buttonsize });
+					if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) {
+						systemManager->mGameStateSystem->GetCurrentGameState()->Save();
+						systemManager->mGameStateSystem->ChangeGameState(Misc::GetFileName(path.string()));
+					}
+					ImGui::Text(filename_string.c_str());
+					ImGui::NextColumn();
+
+				}
+
+				else if (check_extension(path.string(), ".lua")) {
+					ImGui::PushID(idd);
+					ImGui::ImageButton((ImTextureID)(intptr_t)resourceDatas->m_EditorTextures["UnknownIcon"]->ID(), { buttonsize, buttonsize });
+					ImGui::PopID();
+					if (ImGui::BeginDragDropSource()) {
+
+						std::string path_str = path.string();
+
+						format_string(path_str);
+
+						const char* source_path = path_str.c_str();
+						ImGui::SetDragDropPayload("FILE_LUA", source_path, strlen(source_path) * sizeof(wchar_t), ImGuiCond_Once);
+
+						ImGui::EndDragDropSource();
+					}
+					ImGui::Text(filename_string.c_str());
+					ImGui::NextColumn();
+
+				}
+
+
+				else if (check_extension(path.string(), ".geom")) {
+					ImGui::PushID(idd);
+					ImGui::ImageButton((ImTextureID)(intptr_t)resourceDatas->m_EditorTextures["PhysicsMaterial"]->ID(), { buttonsize, buttonsize });
+					ImGui::PopID();
+					if (ImGui::BeginDragDropSource()) {
+
+						std::string path_str = path.string();
+
+						//format the string from \\ to /.
+						format_string(path_str);
+						const char* source_path = path_str.c_str();
+						ImGui::SetDragDropPayload("FILE_GEOM", source_path, strlen(source_path) * sizeof(wchar_t), ImGuiCond_Once);
+
+						ImGui::EndDragDropSource();
+					}
+					ImGui::Text(filename_string.c_str());
+					ImGui::NextColumn();
+
+				}
+				else if (check_extension(path.string(), ".fbx")) {
+					ImGui::PushID(idd);
+					ImGui::ImageButton((ImTextureID)(intptr_t)resourceDatas->m_EditorTextures["PhysicsMaterial"]->ID(), { buttonsize, buttonsize });
+					ImGui::PopID();
+					if (ImGui::BeginDragDropSource()) {
+
+						std::string path_str = path.string();
+
+						//format the string from \\ to /.
+						format_string(path_str);
+						const char* source_path = path_str.c_str();
+						ImGui::SetDragDropPayload("FILE_FBX", source_path, strlen(source_path) * sizeof(wchar_t), ImGuiCond_Once);
+
+						ImGui::EndDragDropSource();
+					}
+					ImGui::Text(filename_string.c_str());
+					ImGui::NextColumn();
+
+				}
+				else if (check_extension(path.string(), ".ctexture")) {
+					ImGui::PushID(idd);
+					ImGui::ImageButton((ImTextureID)(intptr_t)resourceDatas->m_EditorTextures["ImageIcon"]->ID(), { buttonsize, buttonsize });
+					ImGui::PopID();
+					if (ImGui::BeginDragDropSource()) {
+
+						std::string path_str = path.string();
+
+						//format the string from \\ to /.
+						format_string(path_str);
+						const char* source_path = path_str.c_str();
+						ImGui::SetDragDropPayload("FILE_TEXT", source_path, strlen(source_path) * sizeof(wchar_t), ImGuiCond_Once);
+
+						ImGui::EndDragDropSource();
+					}
+					ImGui::Text(filename_string.c_str());
+					ImGui::NextColumn();
+
+				}
+				else if (check_extension(path.string(), ".png") || check_extension(path.string(), ".jpg") || check_extension(path.string(), ".jpeg")) {
+					ImGui::PushID(idd);
+					ImGui::ImageButton((ImTextureID)(intptr_t)resourceDatas->m_EditorTextures["ImageIcon"]->ID(), { buttonsize, buttonsize });
+					ImGui::PopID();
+					if (ImGui::BeginDragDropSource()) {
+
+						std::string path_str = path.string();
+
+						//format the string from \\ to /.
+						format_string(path_str);
+						const char* source_path = path_str.c_str();
+						ImGui::SetDragDropPayload("FILE_TEXT_UNCOMPRESS", source_path, strlen(source_path) * sizeof(wchar_t), ImGuiCond_Once);
+
+						ImGui::EndDragDropSource();
+					}
+					ImGui::Text(filename_string.c_str());
+					ImGui::NextColumn();
+
+				}
+				else if (check_extension(path.string(), ".scn")) {
+					ImGui::PushID(idd);
+					ImGui::ImageButton((ImTextureID)(intptr_t)resourceDatas->m_EditorTextures["Electro"]->ID(), { buttonsize, buttonsize });
+					ImGui::PopID();
+					if (ImGui::BeginDragDropSource()) {
+
+						std::string path_str = path.string();
+
+						//format the string from \\ to /.
+						format_string(path_str);
+						const char* source_path = path_str.c_str();
+						ImGui::SetDragDropPayload("FILE_SCN", source_path, strlen(source_path) * sizeof(wchar_t), ImGuiCond_Once);
+
+						ImGui::EndDragDropSource();
+					}
+					ImGui::Text(filename_string.c_str());
+					ImGui::NextColumn();
+
+				}
+
+				else if (check_extension(path.string(), ".wav")) {
+
+					ImGui::PushID(idd);
+					ImGui::ImageButton((ImTextureID)(intptr_t)resourceDatas->m_EditorTextures["Electro"]->ID(), { buttonsize, buttonsize });
+					ImGui::PopID();
+					if (ImGui::BeginDragDropSource()) {
+
+						std::string path_str = path.string();
+
+						int posstart = (int)path_str.find_last_of("\\");
+						int posend = (int)path_str.find_last_of(".");
+
+						std::string newpath = path_str.substr(posstart + 1, posend - (posstart + 1));
+
+						//const char* audio_file_name = newpath.c_str();
+
+						ImGui::SetDragDropPayload("FILE_AUDIO", path_str.c_str(), strlen(path_str.c_str()) * sizeof(wchar_t), ImGuiCond_Once);
+
+						ImGui::EndDragDropSource();
+					}
+					ImGui::Text(filename_string.c_str());
+					ImGui::NextColumn();
+				}
+
+
+				else if (check_extension(path.string(), ".mp3")) {
+
+					ImGui::PushID(idd);
+					ImGui::ImageButton((ImTextureID)(intptr_t)resourceDatas->m_EditorTextures["Electro"]->ID(), { buttonsize, buttonsize });
+					ImGui::PopID();
+					if (ImGui::BeginDragDropSource()) {
+
+						std::string path_str = path.string();
+
+						int posstart = (int)path_str.find_last_of("\\");
+						int posend = (int)path_str.find_last_of(".");
+
+						std::string newpath = path_str.substr(posstart + 1, posend - (posstart + 1));
+
+						//const char* audio_file_name = newpath.c_str();
+
+						ImGui::SetDragDropPayload("FILE_AUDIO", path_str.c_str(), strlen(path_str.c_str()) * sizeof(wchar_t), ImGuiCond_Once);
+
+						ImGui::EndDragDropSource();
+					}
+					ImGui::Text(filename_string.c_str());
+					ImGui::NextColumn();
+				}
+			}
+
+			idd++;
+
 
 		}
-		else if(!directory.is_directory()) {
-
-			if (check_extension(path.string(), ".prefab")) {
-				ImGui::PushID(idd);
-				ImGui::ImageButton((ImTextureID)(intptr_t)resourceDatas->m_EditorTextures["3DFileIcon"]->ID(), { buttonsize, buttonsize });
-				ImGui::PopID();
-				if (ImGui::BeginDragDropSource()) {
-
-					std::string path_str = path.string();
-
-
-					int posstart = static_cast<int>(path_str.find_last_of("\\"));
-					int posend = static_cast<int>(path_str.find_last_of("."));
-
-					std::string newpath = path_str.substr(posstart + 1, posend - (posstart + 1));
-
-					const char* source_path = newpath.c_str();
-					ImGui::SetDragDropPayload("FILE_PREFAB", source_path, strlen(source_path) * sizeof(wchar_t), ImGuiCond_Once);
-
-					ImGui::EndDragDropSource();
-				}
-
-				if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) {
-
-
-					int posstart = static_cast<int>(filename_string.find_last_of("\\"));
-					int posend = static_cast<int>(filename_string.find_last_of("."));
-					std::string newpath = filename_string.substr(posstart + 1, posend);
-
-					Entity toEdit = systemManager->ecs->StartEditPrefab(newpath);
-					PrefabWindow::prefabObj = toEdit.id;
-					
-				}
-				ImGui::Text(filename_string.c_str());
-				ImGui::NextColumn();
-
-			}
-			else if (check_extension(path.string(), ".gs")) {
-
-				ImGui::ImageButton((ImTextureID)(intptr_t)resourceDatas->m_EditorTextures["3DFileIcon"]->ID(), { buttonsize, buttonsize });
-				if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) {
-					systemManager->mGameStateSystem->GetCurrentGameState()->Save();
-					systemManager->mGameStateSystem->ChangeGameState(Misc::GetFileName(path.string()));
-				}
-				ImGui::Text(filename_string.c_str());
-				ImGui::NextColumn();
-
-			}
-
-			else if (check_extension(path.string(), ".lua")) {
-				ImGui::PushID(idd);
-				ImGui::ImageButton((ImTextureID)(intptr_t)resourceDatas->m_EditorTextures["UnknownIcon"]->ID(), { buttonsize, buttonsize });
-				ImGui::PopID();
-				if (ImGui::BeginDragDropSource()) {
-
-					std::string path_str = path.string();
-
-					format_string(path_str);
-
-					const char* source_path = path_str.c_str();
-					ImGui::SetDragDropPayload("FILE_LUA", source_path, strlen(source_path) * sizeof(wchar_t), ImGuiCond_Once);
-
-					ImGui::EndDragDropSource();
-				}
-				ImGui::Text(filename_string.c_str());
-				ImGui::NextColumn();
-
-			}
-
-
-			else if (check_extension(path.string(), ".geom")) {
-				ImGui::PushID(idd);
-				ImGui::ImageButton((ImTextureID)(intptr_t)resourceDatas->m_EditorTextures["PhysicsMaterial"]->ID(), { buttonsize, buttonsize });
-				ImGui::PopID();
-				if (ImGui::BeginDragDropSource()) {
-
-					std::string path_str = path.string();
-					
-					//format the string from \\ to /.
-					format_string(path_str);
-					const char* source_path = path_str.c_str();
-					ImGui::SetDragDropPayload("FILE_GEOM", source_path, strlen(source_path) * sizeof(wchar_t), ImGuiCond_Once);
-
-					ImGui::EndDragDropSource();
-				}
-				ImGui::Text(filename_string.c_str());
-				ImGui::NextColumn();
-
-			}
-			else if (check_extension(path.string(), ".fbx")) {
-				ImGui::PushID(idd);
-				ImGui::ImageButton((ImTextureID)(intptr_t)resourceDatas->m_EditorTextures["PhysicsMaterial"]->ID(), { buttonsize, buttonsize });
-				ImGui::PopID();
-				if (ImGui::BeginDragDropSource()) {
-
-					std::string path_str = path.string();
-
-					//format the string from \\ to /.
-					format_string(path_str);
-					const char* source_path = path_str.c_str();
-					ImGui::SetDragDropPayload("FILE_FBX", source_path, strlen(source_path) * sizeof(wchar_t), ImGuiCond_Once);
-
-					ImGui::EndDragDropSource();
-				}
-				ImGui::Text(filename_string.c_str());
-				ImGui::NextColumn();
-
-			}
-			else if (check_extension(path.string(), ".ctexture")) {
-				ImGui::PushID(idd);
-				ImGui::ImageButton((ImTextureID)(intptr_t)resourceDatas->m_EditorTextures["ImageIcon"]->ID(), { buttonsize, buttonsize });
-				ImGui::PopID();
-				if (ImGui::BeginDragDropSource()) {
-
-					std::string path_str = path.string();
-
-					//format the string from \\ to /.
-					format_string(path_str);
-					const char* source_path = path_str.c_str();
-					ImGui::SetDragDropPayload("FILE_TEXT", source_path, strlen(source_path) * sizeof(wchar_t), ImGuiCond_Once);
-
-					ImGui::EndDragDropSource();
-				}
-				ImGui::Text(filename_string.c_str());
-				ImGui::NextColumn();
-
-			}
-			else if (check_extension(path.string(), ".png") || check_extension(path.string(), ".jpg") || check_extension(path.string(), ".jpeg")) {
-				ImGui::PushID(idd);
-				ImGui::ImageButton((ImTextureID)(intptr_t)resourceDatas->m_EditorTextures["ImageIcon"]->ID(), { buttonsize, buttonsize });
-				ImGui::PopID();
-				if (ImGui::BeginDragDropSource()) {
-
-					std::string path_str = path.string();
-
-					//format the string from \\ to /.
-					format_string(path_str);
-					const char* source_path = path_str.c_str();
-					ImGui::SetDragDropPayload("FILE_TEXT_UNCOMPRESS", source_path, strlen(source_path) * sizeof(wchar_t), ImGuiCond_Once);
-
-					ImGui::EndDragDropSource();
-				}
-				ImGui::Text(filename_string.c_str());
-				ImGui::NextColumn();
-
-				}
-			else if (check_extension(path.string(), ".scn")) {
-				ImGui::PushID(idd);
-				ImGui::ImageButton((ImTextureID)(intptr_t)resourceDatas->m_EditorTextures["Electro"]->ID(), { buttonsize, buttonsize });
-				ImGui::PopID();
-				if (ImGui::BeginDragDropSource()) {
-
-					std::string path_str = path.string();
-
-					//format the string from \\ to /.
-					format_string(path_str);
-					const char* source_path = path_str.c_str();
-					ImGui::SetDragDropPayload("FILE_SCN", source_path, strlen(source_path) * sizeof(wchar_t), ImGuiCond_Once);
-
-					ImGui::EndDragDropSource();
-				}
-				ImGui::Text(filename_string.c_str());
-				ImGui::NextColumn();
-
-			}
-
-			else if (check_extension(path.string(), ".wav")) {
-
-			ImGui::PushID(idd);
-			ImGui::ImageButton((ImTextureID)(intptr_t)resourceDatas->m_EditorTextures["Electro"]->ID(), { buttonsize, buttonsize });
-			ImGui::PopID();
-			if (ImGui::BeginDragDropSource()) {
-
-				std::string path_str = path.string();
-
-				int posstart = (int)path_str.find_last_of("\\");
-				int posend = (int)path_str.find_last_of(".");
-
-				std::string newpath = path_str.substr(posstart + 1, posend - (posstart + 1));
-
-				//const char* audio_file_name = newpath.c_str();
-
-				ImGui::SetDragDropPayload("FILE_AUDIO", path_str.c_str(), strlen(path_str.c_str()) * sizeof(wchar_t), ImGuiCond_Once);
-
-				ImGui::EndDragDropSource();
-			}
-			ImGui::Text(filename_string.c_str());
-			ImGui::NextColumn();
-			}
-
-
-			else if (check_extension(path.string(), ".mp3")) {
-
-				ImGui::PushID(idd);
-				ImGui::ImageButton((ImTextureID)(intptr_t)resourceDatas->m_EditorTextures["Electro"]->ID(), { buttonsize, buttonsize });
-				ImGui::PopID();
-				if (ImGui::BeginDragDropSource()) {
-
-					std::string path_str = path.string();
-
-					int posstart = (int)path_str.find_last_of("\\");
-					int posend = (int)path_str.find_last_of(".");
-
-					std::string newpath = path_str.substr(posstart + 1, posend - (posstart + 1));
-
-					//const char* audio_file_name = newpath.c_str();
-
-					ImGui::SetDragDropPayload("FILE_AUDIO", path_str.c_str(), strlen(path_str.c_str()) * sizeof(wchar_t), ImGuiCond_Once);
-
-					ImGui::EndDragDropSource();
-				}
-				ImGui::Text(filename_string.c_str());
-				ImGui::NextColumn();
-				}
-		}
-
-		idd++;
-
-		
+		ImGui::Columns(1);
+		ImGui::EndTable();
 	}
-	ImGui::Columns(1);
+
+
 }
 
 /***************************************************************************/

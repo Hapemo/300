@@ -181,7 +181,7 @@ void Inspect::Add_component() {
 	ImGui::SetCursorPosX(centralizedCursorpos);
 
 
-	ImGui::SetCursorPosX((ImGui::GetWindowSize().x )/2 - ImGui::CalcTextSize("      ComponentList ").x);
+	ImGui::SetCursorPosX((ImGui::GetWindowSize().x )/2 - ImGui::CalcTextSize(" ComponentList ").x);
 
 	if (ImGui::BeginCombo("##add","ComponentList"))
 	{
@@ -289,8 +289,8 @@ void General::Inspect() {
 	//if (onselect)
 	//	e.general.settag(onselect.string)
 
-	if (addnewtag)
-		ecs::addtag(addnewtag.string)
+	//if (addnewtag)
+	//	ecs::addtag(addnewtag.string)
 
 	/*ImGui::Text("Tag");
 
@@ -345,8 +345,50 @@ void Transform::Inspect() {
 		ImGui::DragFloat3("##Rotation", (float*)&mRotate, 1);
 
 
-		
+		//if (ImGui::BeginTable("table1", 2))
+		//{
+		//	//for (int row = 0; row < 4; row++)
+		//	//{
+		//		ImGui::TableNextRow();
+		//		ImGui::TableSetColumnIndex(0);
+		//		ImGui::Text("Position");
+		//		ImGui::TableSetColumnIndex(1);
+		//		ImGui::DragFloat3("##Position", (float*)&mTranslate, 1);
+
+		//		ImGui::TableNextRow();
+
+		//		ImGui::TableSetColumnIndex(0);
+		//		ImGui::Text("Scale");
+		//		ImGui::TableSetColumnIndex(1);
+		//		ImGui::DragFloat3("##Scale", (float*)&mScale, 1);
+
+		//		ImGui::TableNextRow();
+
+		//		ImGui::TableSetColumnIndex(0);
+		//		ImGui::Text("Rotation");
+		//		ImGui::TableSetColumnIndex(1);
+		//		ImGui::DragFloat3("##Rotation", (float*)&mRotate, 1);
+		//			//ImGui::Text("Row %d Column %d", row, column);
+		//		//}
+		//	//}
+		//	ImGui::EndTable();
+		//}
+
+
+		//ImGui::Columns(2,"array",true);
+		//ImGui::Text("Position");
+		//ImGui::Text("Scale");
+		//ImGui::Text("Rotation");
+		//
+		//ImGui::NextColumn();
+
+		//ImGui::DragFloat3("##Position", (float*)&mTranslate, 1);
+		//ImGui::DragFloat3("##Scale", (float*)&mScale, 1);
+		//ImGui::DragFloat3("##Rotation", (float*)&mRotate, 1);
+
+		//ImGui::Columns(1);
 	}
+		
 
 }
 /***************************************************************************/
