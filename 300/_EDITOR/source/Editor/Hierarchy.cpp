@@ -71,7 +71,7 @@ void Hierarchy::update() {
     {
 
         if (allScene.size() <= 0) {
-            systemManager->mGameStateSystem->mCurrentGameState.AddScene("NewScene");
+            systemManager->mGameStateSystem->mCurrentGameState.AddScene();
             Entity newEntity = allScene[0].AddEntity();
 
         }

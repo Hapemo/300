@@ -96,9 +96,6 @@ void Scene::Unload() {
 }
 
 Entity Scene::AddEntity() {
-	
-
-
 	Entity e{ systemManager->ecs->NewEntity() };
 	mEntities.insert(e);
 
