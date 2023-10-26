@@ -312,7 +312,9 @@ void LuaPhysics()
 {
     systemManager->mScriptingSystem->luaState.new_usertype<PhysicsSystem>(
         "mPhysicsSystem", sol::constructors<>(),
-        "SetVelocity", &PhysicsSystem::SetVelocity
+        "SetVelocity", &PhysicsSystem::SetVelocity,
+        "SetPosition", &PhysicsSystem::SetPosition,
+        "SetRotation", &PhysicsSystem::SetRotation
     );
 }
 
