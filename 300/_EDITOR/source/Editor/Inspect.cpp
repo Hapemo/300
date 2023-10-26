@@ -289,8 +289,8 @@ void General::Inspect() {
 	//if (onselect)
 	//	e.general.settag(onselect.string)
 
-	if (addnewtag)
-		ecs::addtag(addnewtag.string)
+	//if (addnewtag)
+	//	ecs::addtag(addnewtag.string)
 
 	/*ImGui::Text("Tag");
 
