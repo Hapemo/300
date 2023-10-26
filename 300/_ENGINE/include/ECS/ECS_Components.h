@@ -281,7 +281,7 @@ public:
 	}
 
 	//RTTR_ENABLE()
-	void Inspect();
+	void Inspect(entt::entity entityID);
 	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
 	void DeserializeSelf(rapidjson::Value& reader);
 

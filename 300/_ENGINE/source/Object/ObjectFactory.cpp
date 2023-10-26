@@ -97,8 +97,6 @@ void ObjectFactory::LoadScene(Scene* scene, const std::string& filename)
 
 		std::cout << "tmp_id: " << (int)tmp_id << ", entity_id: " << (int)e.id << ", entity_name: " << e.GetComponent<General>().name << std::endl;
 		scene->mEntities.insert(e);
-
-		std::cout << (int)e.id << std::endl;
 	}
 }
 

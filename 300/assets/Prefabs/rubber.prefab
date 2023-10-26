@@ -1,0 +1,123 @@
+{
+    "entityid": 1,
+    "general": {
+        "name": "rubber",
+        "tagid": 0,
+        "subtag": 0,
+        "isActive": false,
+        "isPaused": false
+    },
+    "transform": {
+        "scale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+        },
+        "rotate": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "translate": {
+            "x": -1.935215711593628,
+            "y": 1.2816816568374634,
+            "z": 0.0
+        }
+    },
+    "rigidbody": {
+        "density": 10.0,
+        "material": 1,
+        "motion": 0,
+        "velocity": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "rotationconstraints": {
+            "x": true,
+            "y": false,
+            "z": false
+        }
+    },
+    "meshrenderer": {
+        "vert": "../assets/shader_files/pointLight_vert.glsl",
+        "frag": "../assets/shader_files/pointLight_frag.glsl",
+        "meshrefid": 4436,
+        "instancecolor": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+        },
+        "materialinstance": [
+            "../assets/Compressed/Cube_Texture_1.ctexture",
+            "../assets/Compressed/Brick wall 4_normal.ctexture",
+            " ",
+            " ",
+            " "
+        ],
+        "mesh": "../assets/compiled_geom/Wall_Partition(No Material).geom",
+        "texturerefid": [
+            4242,
+            4650,
+            0,
+            0,
+            0
+        ]
+    },
+    "boxcollider": {
+        "scaleoffset": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+        },
+        "translateoffset": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "istrigger": true
+    },
+    "spherecollider": {
+        "scaleoffset": 1.0,
+        "translateoffset": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "istrigger": false
+    },
+    "scripts": {
+        "scriptscontainer": [
+            
+        ],
+        "../assets/Scripts/CollideTest.lua": [
+            {
+                
+            }
+        ]
+    },
+    "scripts": {
+        "scriptscontainer": [
+            {
+                "scriptFile": "../assets/Scripts/CollideTest.lua",
+                "variables": [
+                    {
+                        "key": "test",
+                        "val": {
+                        "type": 694561268,
+                        "value": 5.050000190734863
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    "aisetting": {
+        "movementtype": 2,
+        "shotprediction": false,
+        "spreadout": 0.0,
+        "stayaway": 0.0,
+        "targetname": ""
+    }
+}

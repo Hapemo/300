@@ -44,7 +44,7 @@ void PrefabWindow::update() {
 		if (ent.HasComponent<Scripts>())
 		{
 			Scripts& scripts = ent.GetComponent<Scripts>();
-			scripts.Inspect();
+			scripts.Inspect(ent.id);
 		}
 
 		if (ent.HasComponent<MeshRenderer>()) {

@@ -173,8 +173,6 @@ void Scripts::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& wr
 	writer.StartObject();
 	Serialize(writer, "scriptscontainer", scriptsContainer);
 
-	for (int i = 0; i < scriptsContainer.size(); ++i)
-		Serialize(writer, scriptsContainer[i].scriptFile.c_str(), scriptsContainer[i].variables);
 	writer.EndObject();
 }
 
