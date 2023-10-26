@@ -131,7 +131,7 @@ void GameStateManager::Unload() {
 	//LOG_CUSTOM("GAMESTATEMANAGER", "Unload GameStateManager");
 	mCurrentGameState.Exit();
 	mCurrentGameState.Unload();
-	mNextGSName = "";
+	//mNextGSName = "";
 }
 
 void GameStateManager::EditorRestartGameState() { mGSMState = E_GSMSTATE::CHANGING; }

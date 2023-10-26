@@ -20,11 +20,17 @@ function Update()
 
     -- Must call this before calling AISystem functions
     aiSys = systemManager:mAISystem();
+    phySys = systemManager:mPhysicsSystem();
+    -- vec = Vec3.new(50,0,50)
+    vec = aiSys:GetDirection(entity)
+    vec.x = vec.x * 20;
+    vec.y = vec.y * 20;
+    vec.z = vec.z * 20;
+    phySys:SetVelocity(entity, vec);
 
     -- AI functions
     -- aiSys:SetPredictiveVelocity(entity, entity, 0.5)
     -- aiSys:PredictiveShootPlayer(entity, 0.5, 2, 4)
-    vec = aiSys:GetDirection(entity)
 
     --print("Jiayou Jazzi")
 end
@@ -43,4 +49,12 @@ end
 
 function OnTriggerExit(Entity)
     
+end
+
+function OnContactEnter(Entity)
+
+end
+
+function OnContactExit(Entity)
+
 end

@@ -76,7 +76,8 @@ void AIManager::InitialiseAI(Entity _e) {
 	}
 #endif
 	AISetting& setting{ _e.GetComponent<AISetting>() };
-	mAILists[mMovementTypeArray[static_cast<int>(setting.mMovementType)]].insert(_e);
+	if (setting.mMovementType != E_MOVEMENT_TYPE::BEGIN)
+		mAILists[mMovementTypeArray[static_cast<int>(setting.mMovementType)]].insert(_e);
 	setting.SetTarget(systemManager->mGameStateSystem->GetEntity(setting.mTargetName));
 }
 
@@ -169,8 +170,12 @@ glm::vec3 AIManager::CalcGroundAIDir(Entity _e) {
 	// Calculate basic direction
 	glm::vec3 tgtPos = Entity(_e.GetComponent<AISetting>().GetTarget()).GetComponent<Transform>().mTranslate;
 	glm::vec3 dir = tgtPos - _e.GetComponent<Transform>().mTranslate;
-	
-	return dir;
+#if 0
+	std::cout << "tgtPos: " << tgtPos;
+	std::cout << "currPos: " << _e.GetComponent<Transform>().mTranslate;
+	std::cout << "dir" << dir << '\n';
+#endif
+	return glm::normalize(dir);
 }
 
 glm::vec3 AIManager::CalcAirAIDir(Entity _e) {
@@ -185,6 +190,12 @@ glm::vec3 AIManager::CalcAirAIDir(Entity _e) {
 	float _tgtEdgeDistance = glm::length(_tgtTrans.mScale/2.f);
 	float DistanceInBetween = abs(glm::length(_eTrans.mTranslate - _tgtTrans.mTranslate)) - (_eEdgeDistance + _tgtEdgeDistance);
 	
+#if 0
+	std::cout << "Mid point to mid point: " << glm::length(_eTrans.mTranslate - _tgtTrans.mTranslate) << '\n';
+	std::cout << "Total edge distance: " << _eEdgeDistance + _tgtEdgeDistance << '\n';
+	std::cout << "Distance between: " << DistanceInBetween << '\n';
+#endif
+
 	// When near the target's head, like 1.5x the stay away distance, move directly to the target until stay away distance
 	if (DistanceInBetween > (_eSetting.mStayAway * 1.5f)) {
 		// Move directly to the target's top
@@ -192,6 +203,8 @@ glm::vec3 AIManager::CalcAirAIDir(Entity _e) {
 
 		return glm::normalize(aboveTgtPos - _eTrans.mTranslate);
 	}
+
+	// std::cout << "Distance between 2: " << DistanceInBetween << '\n';
 
 	// Move directly to the target if too far from player
 	if (DistanceInBetween > _eSetting.mStayAway)
@@ -201,7 +214,7 @@ glm::vec3 AIManager::CalcAirAIDir(Entity _e) {
 }
 
 void AIManager::SpreadOut(Entity _e, glm::vec3& dir) {
-	AISetting setting{ _e.GetComponent<AISetting>() };
+	AISetting& setting{ _e.GetComponent<AISetting>() };
 	// Get list of AIs from same catagory
 	std::set<Entity>& aiList = mAILists[mMovementTypeArray[static_cast<int>(setting.mMovementType)]];
 
@@ -209,14 +222,19 @@ void AIManager::SpreadOut(Entity _e, glm::vec3& dir) {
 	glm::vec3 allDeviatedDir{};
 	glm::vec3 ePos{ _e.GetComponent<Transform>().mTranslate };
 	for (Entity e : aiList) {
+		if (e == _e) continue;
 		// Add all vector of e to _e
 		glm::vec3 direction{ ePos - e.GetComponent<Transform>().mTranslate };
-		allDeviatedDir += (direction / (glm::length(direction) * 10));
+		allDeviatedDir += (direction / (glm::length(direction) * 10)); // 10 determines the degree of which distance between enemy and player will affect the direction change.
+																																	 // Higher number means closer entities will affect direction more than further enemies
 	}
-	allDeviatedDir = glm::normalize(allDeviatedDir);
+	if (glm::length(allDeviatedDir) != 0)
+		allDeviatedDir = glm::normalize(allDeviatedDir);
 
+	if (setting.mSpreadOut > 100.f) setting.mSpreadOut = 100.f;
+	else if (setting.mSpreadOut < 0.f) setting.mSpreadOut = 0.f;
 	// Add deviation to direction with respect to spreadout ratio
-	dir = glm::normalize(dir + (allDeviatedDir * setting.mSpreadOut));
+	dir = glm::normalize(dir*(100 - setting.mSpreadOut) + allDeviatedDir * setting.mSpreadOut);
 }
 
 
