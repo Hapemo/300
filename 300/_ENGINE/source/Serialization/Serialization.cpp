@@ -2,6 +2,7 @@
 #include "Debug/Logger.h"
 #include "GameState/Scene.h"
 #include "Script.h"
+#include "AI/AIManager.h"
 
 SERIALIZE_BASIC(bool)
 {
@@ -133,12 +134,12 @@ SERIALIZE_BASIC(AUDIOTYPE)
 	Serialize(writer, nullptr, static_cast<int>(val));
 }
 
-//SERIALIZE_BASIC(E_MOVEMENT_TYPE)
-//{
-//	if (name != nullptr)
-//		writer.Key(name);
-//	Serialize(writer, nullptr, static_cast<int>(val));
-//}
+SERIALIZE_BASIC(E_MOVEMENT_TYPE)
+{
+	if (name != nullptr)
+		writer.Key(name);
+	Serialize(writer, nullptr, static_cast<int>(val));
+}
 
 DESERIALIZE_BASIC(bool)
 {
@@ -291,15 +292,15 @@ DESERIALIZE_BASIC(AUDIOTYPE)
 	}
 }
 
-//DESERIALIZE_BASIC(E_MOVEMENT_TYPE)
-//{
-//	if (reader.HasMember(name))
-//	{
-//		int num;
-//		Deserialize(reader, name, num);
-//		val = static_cast<E_MOVEMENT_TYPE>(num);
-//	}
-//}
+DESERIALIZE_BASIC(E_MOVEMENT_TYPE)
+{
+	if (reader.HasMember(name))
+	{
+		int num;
+		Deserialize(reader, name, num);
+		val = static_cast<E_MOVEMENT_TYPE>(num);
+	}
+}
 
 DESERIALIZE_BASIC(entt::entity)
 {
