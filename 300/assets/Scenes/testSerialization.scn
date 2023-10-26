@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 0,
+        "entityid": 1,
         "general": {
             "name": "rubber",
             "tagid": 0,
@@ -43,7 +43,7 @@
         "meshrenderer": {
             "vert": "../assets/shader_files/pointLight_vert.glsl",
             "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 0,
+            "meshrefid": 4436,
             "instancecolor": {
                 "x": 1.0,
                 "y": 1.0,
@@ -51,16 +51,16 @@
                 "w": 1.0
             },
             "materialinstance": [
-                " ",
-                " ",
+                "../assets/Compressed/Cube_Texture_1.ctexture",
+                "../assets/Compressed/Brick wall 4_normal.ctexture",
                 " ",
                 " ",
                 " "
             ],
-            "mesh": "",
+            "mesh": "../assets/compiled_geom/Wall_Partition(No Material).geom",
             "texturerefid": [
-                0,
-                0,
+                4242,
+                4650,
                 0,
                 0,
                 0
@@ -159,7 +159,7 @@
         }
     },
     {
-        "entityid": 1,
+        "entityid": 2,
         "general": {
             "name": "ducky",
             "tagid": 0,
@@ -254,7 +254,7 @@
         }
     },
     {
-        "entityid": 2,
+        "entityid": 3,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -276,22 +276,22 @@
             "translate": {
                 "x": 16.218000411987305,
                 "y": 474.85400390625,
-                "z": 748.7139892578125
+                "z": 685.0215454101563
             }
         },
         "camera": {
             "positon": {
                 "x": 16.218000411987305,
                 "y": 474.85400390625,
-                "z": 748.7139892578125
+                "z": 685.0215454101563
             },
             "target": {
                 "x": 16.218000411987305,
                 "y": 474.85400390625,
-                "z": 747.7139892578125
+                "z": 684.0215454101563
             },
             "size": {
-                "x": 278,
+                "x": 242,
                 "y": 625
             },
             "near": 0.10000000149011612,
