@@ -124,7 +124,8 @@ void LuaGeneral()
         "tagid", &General::tagid,
         "subtag", &General::subtag,
         "isActive", &General::isActive,
-        "GetTag", &General::GetTag
+        "GetTag", &General::GetTag,
+        "SetTag", &General::SetTag
     );
 }
 
@@ -358,7 +359,8 @@ void LuaGameState()
 {
     systemManager->mScriptingSystem->luaState.new_usertype<GameStateManager>(
         "mGameStateSystem", sol::constructors<>(),
-        "GetEntity", &GameStateManager::GetEntity
+        "GetEntity", &GameStateManager::GetEntity,
+        "DeleteEntity", &GameStateManager::DeleteEntity
         );
 }
 

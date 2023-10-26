@@ -62,6 +62,8 @@ function Update()
         if (create == 2) then
             for i = 1, 4 do
                 testEntity = systemManager.ecs:NewEntityByScene();
+                gameStateSys = systemManager:mGameStateSystem();
+                gameStateSys:DeleteEntity(testEntity)
             end
             create = create + 1
         end
