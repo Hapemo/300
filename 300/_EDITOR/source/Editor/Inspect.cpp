@@ -586,7 +586,7 @@ void Animator::Inspect()
 	}
 
 	if (delete_component == false)
-		Entity(Hierarchy::selectedId).RemoveComponent<MeshRenderer>();
+		Entity(Hierarchy::selectedId).RemoveComponent<Animator>();
 }
 
 
