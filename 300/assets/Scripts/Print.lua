@@ -1,11 +1,11 @@
 tester = 10
 
 function Alive()
-    print("Came to alive")
+    -- print("Came to alive")
 end
 
 function Update()
-    print("Works")
+    -- print("Works")
 end
 
 function Dead()

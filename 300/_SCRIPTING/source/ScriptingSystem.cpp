@@ -193,18 +193,18 @@ void ScriptingSystem::Update(float dt)
     auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
 
     // Load the scripts and call the "Start" function 
-    if (!once)
-    {
-        for (Entity entity : scriptEntities)
-        {
-            for (Script script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
-            {
-                script.Load(entity);
-                script.Run("Alive");
-            }
-        }
-        once = true;
-    }
+    //if (!once)
+    //{
+    //    for (Entity entity : scriptEntities)
+    //    {
+    //        for (Script script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
+    //        {
+    //            script.Load(entity);
+    //            script.Run("Alive");
+    //        }
+    //    }
+    //    once = true;
+    //}
 
     // Call the "Update" function 
     for (Entity entity : scriptEntities)
@@ -214,28 +214,6 @@ void ScriptingSystem::Update(float dt)
             script.Run("Update");
         }
     }
-    /******************************************************************************/
-    /*!
-        Load scripts when scene is not playing & left-shift is pressed
-     */
-     /******************************************************************************/
-    //if (Input::CheckKey(E_STATE::PRESS, E_KEY::LEFT_SHIFT))
-    //{
-    //    //    for (Entity entity : ECS::GetInstance()->GetEntitiesWith<Scripts>()) 
-    //    //    { 
-    //    //        for (auto& script : entity.GetComponent<Scripts>().scriptsContainer) 
-    //    //        { 
-    //    //            int entityid = entity.id; 
-    //    //            script.Load(entityid); 
-    //    //        } 
-    //    //    } 
-    //    once = false;
-    //}
-
-    //Entity rubber = systemManager->mGameStateSystem->GetEntity("rubber", "testSerialization");
-    //Entity ducky = systemManager->mGameStateSystem->GetEntity("ducky", "testSerialization");
-    //rubber.GetComponent<Scripts>().RunFunctionForAllScripts("OnContactEnter", ducky.id);
-    //std::cout << "id is : " << (int32_t)floor.id << std::endl;
 }
 
 void ScriptingSystem::Exit()
