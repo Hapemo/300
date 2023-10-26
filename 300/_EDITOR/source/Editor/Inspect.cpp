@@ -454,7 +454,6 @@ void Scripts::Inspect(entt::entity entityID) {
 	//auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
 	////Scripts& scripts = scriptEntities.get<Scripts>(Hierarchy::selectedId);
 
-	std::cout << delete_component << std::endl;
 	if (ImGui::CollapsingHeader("Scripts", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
 	{
 		if (ImGui::BeginDragDropTarget())
