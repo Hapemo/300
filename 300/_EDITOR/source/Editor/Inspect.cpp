@@ -265,22 +265,32 @@ void General::Inspect() {
 	ImGui::InputText("##naming",&name);
 
 
-	//ImGui::Text("Tag");
+	ImGui::Text("Tag");
 
-	//ImGui::SameLine();
-	//ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
-	//	- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+	ImGui::SameLine();
+	ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+		- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
 
-	//if (ImGui::BeginCombo("##Tag", tag[tagid].c_str())) {
+	if (ImGui::BeginCombo("##Tag", ECS::mEntityTags[tagid].c_str())) {
 
-	//	for (int i = 0; i < 5; i++) {
-	//		if (ImGui::Selectable(tag[i].c_str())) {
-	//			tagid = i;
-	//		}
-	//	}
-	//	ImGui::EndCombo();
-	//}
+		for (int i = 0; i < ECS::mEntityTags.size(); i++) {
 
+			if (tagid == i)
+				continue;
+
+			if (ImGui::Selectable(ECS::mEntityTags[i].c_str())) {
+				tagid = i;
+			}
+		}
+		ImGui::EndCombo();
+	}
+
+	 
+	//if (onselect)
+	//	e.general.settag(onselect.string)
+
+	//if (addnewtag)
+	//	ecs::addtag(addnewtag.string)
 
 	/*ImGui::Text("Tag");
 
@@ -586,7 +596,7 @@ void Animator::Inspect()
 	}
 
 	if (delete_component == false)
-		Entity(Hierarchy::selectedId).RemoveComponent<Animator>();
+		Entity(Hierarchy::selectedId).RemoveComponent<Animator	>();
 }
 
 
@@ -1031,7 +1041,11 @@ void RigidBody::Inspect() {
 		ImGui::SameLine();
 		ImGui::Text("Z");
 
-
+		ImGui::Text("Gravity");
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		ImGui::Checkbox("##Gravity", &mGravity);
 
 
 	}

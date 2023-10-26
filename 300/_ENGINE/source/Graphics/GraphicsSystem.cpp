@@ -132,11 +132,10 @@ void GraphicsSystem::Update(float dt)
 		{
 			trans += Entity(inst.GetParent()).GetComponent<Transform>().mTranslate;
 		}
-		glm::mat4 trns = glm::translate(trans);
-		glm::mat4 scale = glm::scale(trns, inst.GetComponent<Transform>().mScale / (meshinst.mBBOX.m_Max - meshinst.mBBOX.m_Min));
-		glm::mat4 final = glm::rotate(scale, glm::radians(inst.GetComponent<Transform>().mRotate.x), glm::vec3(1.f, 0.f, 0.f));
-		final = glm::rotate(final, glm::radians(inst.GetComponent<Transform>().mRotate.y), glm::vec3(0.f, 1.f, 0.f));
-		final = glm::rotate(final, glm::radians(inst.GetComponent<Transform>().mRotate.z), glm::vec3(0.f, 0.f, 1.f));
+		mat4 S = glm::scale(inst.GetComponent<Transform>().mScale / (meshinst.mBBOX.m_Max - meshinst.mBBOX.m_Min));
+		mat4 R = glm::toMat4(glm::quat(glm::radians(inst.GetComponent<Transform>().mRotate)));
+		mat4 T = glm::translate(trans);
+		mat4 final = T * R * S;
 
 		// if the debug drawing is turned on
 		if (m_DebugDrawing && inst.HasComponent<BoxCollider>())
