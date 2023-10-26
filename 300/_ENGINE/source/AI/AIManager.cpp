@@ -183,12 +183,17 @@ glm::vec3 AIManager::CalcAirAIDir(Entity _e) {
 	Transform const& _eTrans = _e.GetComponent<Transform>();
 	Transform const& _tgtTrans = _eSetting.GetTarget().GetComponent<Transform>();
 
-	// if AI is not above the target yet, gain height first, fly to mStayAway distance away.
-	if (_eTrans.mTranslate.y <= _eSetting.mStayAway + _tgtTrans.mTranslate.y) return glm::vec3(0, 1, 0);
-
 	float _eEdgeDistance = glm::length(_eTrans.mScale/2.f);
 	float _tgtEdgeDistance = glm::length(_tgtTrans.mScale/2.f);
 	float DistanceInBetween = abs(glm::length(_eTrans.mTranslate - _tgtTrans.mTranslate)) - (_eEdgeDistance + _tgtEdgeDistance);
+
+	// If reached the player, return nothing
+	if (DistanceInBetween <= _eSetting.mStayAway) {
+		std::cout << "Reached player\n";
+		return glm::vec3();
+	}
+	// if AI is not above the target yet, gain height first, fly to mStayAway distance away.
+	if (_eTrans.mTranslate.y <= _eSetting.mStayAway + _tgtTrans.mTranslate.y) return glm::vec3(0, 1, 0);
 	
 #if 0
 	std::cout << "Mid point to mid point: " << glm::length(_eTrans.mTranslate - _tgtTrans.mTranslate) << '\n';
@@ -204,13 +209,9 @@ glm::vec3 AIManager::CalcAirAIDir(Entity _e) {
 		return glm::normalize(aboveTgtPos - _eTrans.mTranslate);
 	}
 
-	// std::cout << "Distance between 2: " << DistanceInBetween << '\n';
+	//std::cout << "Distance between 2: " << DistanceInBetween << '\n';
 
-	// Move directly to the target if too far from player
-	if (DistanceInBetween > _eSetting.mStayAway)
-		return glm::normalize(_tgtTrans.mTranslate - _eTrans.mTranslate);
-
-	return glm::vec3();
+	return glm::normalize(_tgtTrans.mTranslate - _eTrans.mTranslate);
 }
 
 void AIManager::SpreadOut(Entity _e, glm::vec3& dir) {

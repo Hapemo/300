@@ -38,7 +38,8 @@
                 "x": false,
                 "y": false,
                 "z": false
-            }
+            },
+            "gravity": true
         },
         "meshrenderer": {
             "vert": "../assets/shader_files/pointLight_vert.glsl",
@@ -164,7 +165,8 @@
                 "x": false,
                 "y": false,
                 "z": false
-            }
+            },
+            "gravity": true
         },
         "meshrenderer": {
             "vert": "../assets/shader_files/pointLight_vert.glsl",
@@ -232,7 +234,8 @@
                 "x": false,
                 "y": false,
                 "z": false
-            }
+            },
+            "gravity": true
         },
         "meshrenderer": {
             "vert": "../assets/shader_files/pointLight_vert.glsl",
@@ -354,7 +357,8 @@
                 "x": false,
                 "y": false,
                 "z": false
-            }
+            },
+            "gravity": true
         },
         "meshrenderer": {
             "vert": "../assets/shader_files/pointLight_vert.glsl",
@@ -476,7 +480,8 @@
                 "x": false,
                 "y": false,
                 "z": false
-            }
+            },
+            "gravity": true
         },
         "meshrenderer": {
             "vert": "../assets/shader_files/pointLight_vert.glsl",
@@ -598,7 +603,8 @@
                 "x": false,
                 "y": false,
                 "z": false
-            }
+            },
+            "gravity": true
         },
         "meshrenderer": {
             "vert": "../assets/shader_files/pointLight_vert.glsl",
@@ -720,7 +726,8 @@
                 "x": false,
                 "y": false,
                 "z": false
-            }
+            },
+            "gravity": false
         },
         "meshrenderer": {
             "vert": "../assets/shader_files/pointLight_vert.glsl",
