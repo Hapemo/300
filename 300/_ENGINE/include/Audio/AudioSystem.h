@@ -119,13 +119,15 @@ public:
 // Scripting Support
 public:
 	void PlayAudioSource(FMOD::Sound* comp_sound, FMOD::Channel* comp_channel, float vol = 1.0f);  // OK.
-	void PlayAudioSource(Audio& audio_component, float vol = 1.0f);
+	void PlayAudioSource(Audio& audio_component, float vol = 1.0f, bool audio_3d = false);
 
 
 // 3D Audio Stuff
 public:
 	float distance_factor = 1.0f;  // Units per meter. (per unit reference in game world)
 
+// Fading Stuff
+	float fadeLevelIn = 0.0f;
 
 public:
 	FMOD::System* system_obj = nullptr;

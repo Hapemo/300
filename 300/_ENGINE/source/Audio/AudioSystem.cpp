@@ -105,6 +105,7 @@ void AudioSystem::Init()
 				mChannelswID[AUDIO_SFX].push_back(channel_pair);
 				break;
 		}
+
 	}
 
 	// Load all Sounds
@@ -120,6 +121,7 @@ void AudioSystem::Init()
 
 static bool testfootstep = false;
 static bool testListener = false;
+static bool fadeintempfix = false;
 /******************************************************************************/
 /*!
 	Update()w
@@ -193,7 +195,7 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 		testListener = true;
 
 	if (testListener)
-		TestMovementAroundAudioSource();
+		TestListener();
 
 	auto audio_entities = systemManager->ecs->GetEntitiesWith<Audio>();
 
@@ -215,15 +217,21 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 		{
 			PINFO("Audio Exist");
 			PINFO("PLAYING AUDIO AT: %f", audio_component.mVolume);
-			PlayAudioSource(audio_component, audio_component.mVolume);
+			
+			PlayAudioSource(audio_component, audio_component.mVolume, audio_component.m3DAudio); 
 
-			if (audio_component.m3DAudio) // if this is a 3D audio 
+			if (audio_component.m3DAudio && audio_component.mIsPlaying) // if this is a 3D audio + can only set [3D settings] if the audio is playing.
 			{
 				FMOD_VECTOR position = { audio_component.mPosition.x ,audio_component.mPosition.y , audio_component.mPosition.z };
 				FMOD_VECTOR velocity = { audio_component.mVelocity.x ,audio_component.mVelocity.y , audio_component.mVelocity.z };
 
+				// All this can only be set after audio has played.
 				PINFO("SETTING 3D ATTRIBUTES");
-				ErrCodeCheck(audio_component.mChannel->set3DAttributes(&position, &velocity)); // Need to
+				ErrCodeCheck(audio_component.mChannel->set3DAttributes(&position, &velocity)); // Need to set this for dynamic spatialization + attenuation effects.
+				PINFO("SETTING 3D MIN MAX SETTINGS")
+				ErrCodeCheck(audio_component.mChannel->set3DMinMaxDistance(audio_component.mMinDistance, audio_component.mMaxDistance));
+
+				ErrCodeCheck(audio_component.mChannel->setPaused(false)); // sound is paused in "PlayAudioSource" if it's 3D audio, to setup 3D parameters first.
 			}
 		}
 
@@ -290,6 +298,7 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 			}
 		}
 
+	
 		if (audio_component.mFadeIn)
 		{
 			if (audio_component.mSound != nullptr)
@@ -297,7 +306,8 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 				if (fade_timer < audio_component.fade_duration)
 				{
 					float fade_step = audio_component.mFadeSpeedModifier * (audio_component.mFadeInMaxVol / audio_component.fade_duration);
-					float fadeLevelIn = audio_component.mVolume + (fade_step * dt);
+
+					fadeLevelIn += fade_step * dt;
 
 					if (fadeLevelIn < audio_component.mFadeInMaxVol)
 					{
@@ -314,6 +324,7 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 						{
 							audio_component.mChannel->setVolume(audio_component.mFadeInMaxVol);
 							audio_component.mVolume = audio_component.mFadeInMaxVol;
+
 						}
 					}
 
@@ -730,9 +741,20 @@ bool AudioSystem::LoadAudioFromDirectory(std::string directory_path)
 			std::string file_path = file.path().string();
 			PINFO("File Detected: %s", file_path.c_str());
 
+			bool is3D = audio_name.find("3D") != std::string::npos; // Added [10/26] - label (3D) somewhere on audio file to load as a 3D audio
+
+			FMOD_MODE mode = FMOD_DEFAULT;
+
+			if (is3D)
+			{
+				mode = FMOD_3D;
+			}
+
+		
 			PINFO("Creating Sound: ");
 			FMOD::Sound* new_sound;
-			bool check = ErrCodeCheck(system_obj->createSound(file_path.c_str(), FMOD_DEFAULT, 0, &new_sound));
+			bool check = ErrCodeCheck(system_obj->createSound(file_path.c_str(), mode , 0, &new_sound));
+			
 
 			if (!check)
 			{
@@ -1101,13 +1123,12 @@ void AudioSystem::PlayAudioSource(FMOD::Sound* comp_sound, FMOD::Channel* comp_c
 	ErrCodeCheck(system_obj->playSound(comp_sound, nullptr, false, &comp_channel));
 }
 
-void AudioSystem::PlayAudioSource(Audio& audio_component, float volume)
+void AudioSystem::PlayAudioSource(Audio& audio_component, float volume, bool audio_3d)
 {
-
 	if (audio_component.mSound != nullptr)
 	{
 		PINFO("Playing Audio Source from <Audio> Component");
-		ErrCodeCheck(system_obj->playSound(audio_component.mSound, nullptr, false, &audio_component.mChannel));
+		ErrCodeCheck(system_obj->playSound(audio_component.mSound, nullptr, audio_3d, &audio_component.mChannel));
 
 		audio_component.mChannel->setVolume(volume); // After because in [release] mode got undefined behaviour complaining access violation. OK in Debug mode though.
 
