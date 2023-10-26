@@ -132,70 +132,70 @@ static bool fadeintempfix = false;
 void AudioSystem::Update([[maybe_unused]] float dt)
 {
 	// [10/14] Scripting Test
-	if (Input::CheckKey(PRESS, Q))
-		TestLoadPlaySuccess();		 // Test OK. (must have component to play)
-	if (Input::CheckKey(PRESS, W))
-		TestLoadAudioDirectory();	 // Test OK.
-	if (Input::CheckKey(PRESS, E))
-		TestOverrideAttachSound();   // Test OK. (must have component to play)
-	if (Input::CheckKey(PRESS, R))   // Press 'E' first. (to play)
-		TestPauseSound();			 // Test OK.
-	if (Input::CheckKey(PRESS, T))   // Press 'E' then 'R' then this
-		TestUnpauseSound();			 // Test OK.
-	if (Input::CheckKey(PRESS, Y))   // Press 'E' first. (to play)
-		TestMuteSound();			 // Test OK
-	if (Input::CheckKey(PRESS, U))   // Press 'E' first. (to play)
-		TestSetVolume();			 // Test OK
+	//if (Input::CheckKey(PRESS, Q))
+	//	TestLoadPlaySuccess();		 // Test OK. (must have component to play)
+	//if (Input::CheckKey(PRESS, W))
+	//	TestLoadAudioDirectory();	 // Test OK.
+	//if (Input::CheckKey(PRESS, E))
+	//	TestOverrideAttachSound();   // Test OK. (must have component to play)
+	//if (Input::CheckKey(PRESS, R))   // Press 'E' first. (to play)
+	//	TestPauseSound();			 // Test OK.
+	//if (Input::CheckKey(PRESS, T))   // Press 'E' then 'R' then this
+	//	TestUnpauseSound();			 // Test OK.
+	//if (Input::CheckKey(PRESS, Y))   // Press 'E' first. (to play)
+	//	TestMuteSound();			 // Test OK
+	//if (Input::CheckKey(PRESS, U))   // Press 'E' first. (to play)
+	//	TestSetVolume();			 // Test OK
 
-	if (Input::CheckKey(PRESS, A))
-		TestCrossFade();			 // Test OK
+	//if (Input::CheckKey(PRESS, A))
+	//	TestCrossFade();			 // Test OK
 
-	if (Input::CheckKey(PRESS, S))
-		TestCrossFadeBack();		 // Test OK
+	//if (Input::CheckKey(PRESS, S))
+	//	TestCrossFadeBack();		 // Test OK
 
-	if (Input::CheckKey(PRESS, D))
-		TestFadeIn();				 // Test OK
+	//if (Input::CheckKey(PRESS, D))
+	//	TestFadeIn();				 // Test OK
 
-	if (Input::CheckKey(PRESS, F))
-		TestFadeOut();				 // Test OK
+	//if (Input::CheckKey(PRESS, F))
+	//	TestFadeOut();				 // Test OK
 
-	//TestFootsteps();
+	////TestFootsteps();
 
-	if (Input::CheckKey(PRESS, E_KEY::COMMA))
-		testfootstep = true;
+	//if (Input::CheckKey(PRESS, E_KEY::COMMA))
+	//	testfootstep = true;
 
-	if (testfootstep)
-		TestFootstepsFade(dt);
+	//if (testfootstep)
+	//	TestFootstepsFade(dt);
 
-	// [10/18] Global Channel Test
-	if (Input::CheckKey(PRESS, _1))
-		SetAllSFXVolume(0.0f);
-	if (Input::CheckKey(PRESS, _2))
-		SetAllBGMVolume(0.0f);
-	if (Input::CheckKey(PRESS, _3))
-		StopAllSFX();
-	if (Input::CheckKey(PRESS, _4))
-		StopAllBGM();
+	//// [10/18] Global Channel Test
+	//if (Input::CheckKey(PRESS, _1))
+	//	SetAllSFXVolume(0.0f);
+	//if (Input::CheckKey(PRESS, _2))
+	//	SetAllBGMVolume(0.0f);
+	//if (Input::CheckKey(PRESS, _3))
+	//	StopAllSFX();
+	//if (Input::CheckKey(PRESS, _4))
+	//	StopAllBGM();
 
-	// [10/18] Pause Functions
-	if (Input::CheckKey(PRESS, _7))
-		PauseAllSounds();
-	if (Input::CheckKey(PRESS, _8))
-		PauseSFXSounds();
-	if (Input::CheckKey(PRESS, _9))
-		PauseBGMSounds();
-	if (Input::CheckKey(PRESS, I))
-		UnpauseAllSounds();
-	if (Input::CheckKey(PRESS, O))
-		UnpauseSFXSounds();
-	if (Input::CheckKey(PRESS, P))
-		UnpauseBGMSounds();
+	//// [10/18] Pause Functions
+	//if (Input::CheckKey(PRESS, _7))
+	//	PauseAllSounds();
+	//if (Input::CheckKey(PRESS, _8))
+	//	PauseSFXSounds();
+	//if (Input::CheckKey(PRESS, _9))
+	//	PauseBGMSounds();
+	//if (Input::CheckKey(PRESS, I))
+	//	UnpauseAllSounds();
+	//if (Input::CheckKey(PRESS, O))
+	//	UnpauseSFXSounds();
+	//if (Input::CheckKey(PRESS, P))
+	//	UnpauseBGMSounds();
 
-	if (Input::CheckKey(PRESS, _5))
-		testListener = true;
+	//if (Input::CheckKey(PRESS, _5))
+	//	testListener = true;
 
-	if (testListener)
-		TestListener();
+	//if (testListener)
+	//	TestListener();
 
 
 	/* Constantly updating the[AudioListener]'s attributes based on... -> using set3DListenerAttributes()
@@ -206,54 +206,65 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 
 	auto listener_object = systemManager->ecs->GetEntitiesWith<AudioListener>();
 
-	AudioListener* listener = nullptr;
+	AudioListener* listener = nullptr;	 // There might not be an <AudioListener> 
+
+	FMOD_VECTOR listener_pos;
+	FMOD_VECTOR velocity;
+	FMOD_VECTOR camera_forward;
+	FMOD_VECTOR up_vector;
 
 	if (listener_object.size() != 0)
 	{
 		for (Entity e : listener_object)
 		{
 			listener = &(e.GetComponent<AudioListener>());
+			listener_pos = { listener->mPosition.x , listener->mPosition.y , listener->mPosition.z };
+
+			velocity.x = (listener_pos.x - previous_position.x) / dt;
+			velocity.y = (listener_pos.y - previous_position.y) / dt;
+			velocity.z = (listener_pos.z - previous_position.z) / dt;
+
+			previous_position = listener_pos;
 		}
 	}
 		
 	if (Input::CheckKey(PRESS, UP))
 	{
-		listener->mPosition.z += 0.5f;
+		listener->mPosition.z += 0.1f;
 		PINFO("Listener at: (%f, %f, %f)", listener->mPosition.x, listener->mPosition.y, listener->mPosition.z);
 	}
 
 	if (Input::CheckKey(PRESS, DOWN))
 	{
-		listener->mPosition.z -= 0.5f;
+		listener->mPosition.z -= 0.1f;
+		PINFO("Listener at: (%f, %f, %f)", listener->mPosition.x, listener->mPosition.y, listener->mPosition.z);
+	}
+
+	if (Input::CheckKey(PRESS, LEFT))
+	{
+		listener->mPosition.x -= 0.1f;
+		PINFO("Listener at: (%f, %f, %f)", listener->mPosition.x, listener->mPosition.y, listener->mPosition.z);
+	}
+
+	if (Input::CheckKey(PRESS, RIGHT))
+	{
+		listener->mPosition.x += 0.1f;
 		PINFO("Listener at: (%f, %f, %f)", listener->mPosition.x, listener->mPosition.y, listener->mPosition.z);
 	}
 
 	if (Input::CheckKey(PRESS, SPACE))
 	{
-		listener->mPosition.y += 0.5f;
+		listener->mPosition.y += 0.1f;
 		PINFO("Listener at: (%f, %f, %f)", listener->mPosition.x, listener->mPosition.y, listener->mPosition.z);
 	}
 
-
-
-
-
-
-	FMOD_VECTOR listener_pos = { listener->mPosition.x , listener->mPosition.y , listener->mPosition.z };
-
-	FMOD_VECTOR velocity;
-		
 	// Do we use (1) where the camera is facing or (2) we're using a {0.0f, 0.0f, 1.0f} -> standard vector
 	glm::vec3 cam_dir = systemManager->mGraphicsSystem.get()->GetCameraDirection(CAMERA_TYPE::CAMERA_TYPE_GAME);
-	FMOD_VECTOR camera_forward = { cam_dir.x ,cam_dir.y , cam_dir.z };
+	camera_forward = { cam_dir.x ,cam_dir.y , cam_dir.z };
 
-	velocity.x = (listener_pos.x - previous_position.x) / dt;
-	velocity.y = (listener_pos.y - previous_position.y) / dt; 
-	velocity.z = (listener_pos.z - previous_position.z) / dt;
+	up_vector = { 0.0f, 1.0f, 0.0f };
 
-	FMOD_VECTOR up = { 0.0f, 1.0f, 0.0f };
-
-	system_obj->set3DListenerAttributes(0, &listener_pos, &velocity, &camera_forward, &up);      // This updates every loop. 
+	system_obj->set3DListenerAttributes(0, &listener_pos, &velocity, &camera_forward, &up_vector);      // This updates every loop. 
 	 
 	AudioPlayLoop(dt);
 
@@ -1053,7 +1064,7 @@ void AudioSystem::AudioPlayLoop(float dt)
 				PINFO("SETTING 3D ATTRIBUTES");
 				ErrCodeCheck(audio_component.mChannel->set3DAttributes(&position, &velocity)); // Need to set this for dynamic spatialization + attenuation effects.
 				PINFO("SETTING 3D MIN MAX SETTINGS")
-					ErrCodeCheck(audio_component.mChannel->set3DMinMaxDistance(audio_component.mMinDistance, audio_component.mMaxDistance));
+				ErrCodeCheck(audio_component.mChannel->set3DMinMaxDistance(audio_component.mMinDistance, audio_component.mMaxDistance));
 
 				ErrCodeCheck(audio_component.mChannel->setPaused(false)); // sound is paused in "PlayAudioSource" if it's 3D audio, to setup 3D parameters first.
 			}

@@ -1032,6 +1032,12 @@ void Audio::Inspect() {
 					audio_name = full_file_path.substr(audio_name_start + 1);
 				}
 
+				// <Audio> Component - assign m3DAudio flag
+				if (audio_name.find("3D") != std::string::npos)
+				{
+					m3DAudio = true;
+				}
+
 				// Must be outside (what if i remove and add an already loaded audio)
 				mFilePath = file_path;
 				mFileName = audio_name;
@@ -1070,6 +1076,11 @@ void Audio::Inspect() {
 	ImGui::Text(Entity(Hierarchy::selectedId).GetComponent<Audio>().mFullPath.c_str());
 	Audio& audio = Entity(Hierarchy::selectedId).GetComponent<Audio>();
 
+	if (!mIsEmpty && m3DAudio)
+	{
+		ImGui::Text("This is a 3D Audio");
+	}
+
 	static bool remove_audio_bool = false;
 	if (!Entity(Hierarchy::selectedId).GetComponent<Audio>().mIsEmpty)
 	{
@@ -1088,7 +1099,6 @@ void Audio::Inspect() {
 	{
 		//ImGui::Checkbox("Play This (start the scene first)", &mIsPlay);
 		//ImGui::Checkbox("IsPlaying", &mIsPlaying);
-		ImGui::Checkbox("3D Audio", &m3DAudio);
 		ImGui::Checkbox("Play on Awake", &mPlayonAwake);
 		ImGui::Checkbox("Is Looping", &mIsLooping);
 		ImGui::SliderFloat("Volume", &mVolume, 0.0f, 1.0f, "volume = %.3f");
@@ -1102,8 +1112,10 @@ void Audio::Inspect() {
 
 		if (m3DAudio)
 		{
-			ImGui::SliderFloat("Min Distance", &mMinDistance, 0.0f, 3000.0f, "%.3f");
-			ImGui::SliderFloat("Max Distance", &mMaxDistance, 0.0f, 3000.0f, "%.3f");
+			ImGui::DragFloat("Min Distance", (float*)&mMinDistance);
+			ImGui::DragFloat("Max Distance", (float*)&mMaxDistance);
+			/*ImGui::SliderFloat("Min Distance", &mMinDistance, 0.0f, 3000.0f, "%.3f");
+			ImGui::SliderFloat("Max Distance", &mMaxDistance, 0.0f, 3000.0f, "%.3f");*/
 
 			//systemManager->mAudioSystem.get()->Update3DChannelSettings(Entity(Hierarchy::selectedId)); 
 		}

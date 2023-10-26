@@ -396,6 +396,7 @@ struct Audio
 		mIsEmpty = true;
 		mIsLoaded = false;
 		mSound = nullptr;
+		m3DAudio = false; // Added [10/26]
 	}
 
 	int mAudio{ 0 };
