@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 0,
+        "entityid": 1,
         "general": {
             "name": "rubber",
             "tagid": 0,
@@ -20,8 +20,8 @@
                 "z": 0.0
             },
             "translate": {
-                "x": -1.935215711593628,
-                "y": 1.2816816568374634,
+                "x": -1.7225768566131592,
+                "y": 0.8752180337905884,
                 "z": 0.0
             }
         },
@@ -43,7 +43,7 @@
         "meshrenderer": {
             "vert": "../assets/shader_files/pointLight_vert.glsl",
             "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 0,
+            "meshrefid": 2199,
             "instancecolor": {
                 "x": 1.0,
                 "y": 1.0,
@@ -51,14 +51,14 @@
                 "w": 1.0
             },
             "materialinstance": [
-                " ",
+                "../assets/Compressed/Brick wall 4_baseColor.ctexture",
                 " ",
                 " ",
                 " ",
                 " "
             ],
             "texturerefid": [
-                0,
+                4923,
                 0,
                 0,
                 0,
@@ -98,7 +98,7 @@
         }
     },
     {
-        "entityid": 1,
+        "entityid": 2,
         "general": {
             "name": "ducky",
             "tagid": 0,
@@ -140,7 +140,7 @@
         }
     },
     {
-        "entityid": 2,
+        "entityid": 3,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -177,7 +177,7 @@
                 "z": 747.7139892578125
             },
             "size": {
-                "x": 428,
+                "x": 103,
                 "y": 625
             },
             "near": 0.10000000149011612,
