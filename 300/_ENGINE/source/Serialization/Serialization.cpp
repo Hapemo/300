@@ -3,6 +3,7 @@
 #include "GameState/Scene.h"
 #include "Script.h"
 #include "ECS/ECS.h"
+#include "AI/AIManager.h"
 
 SERIALIZE_BASIC(bool)
 {
@@ -102,8 +103,8 @@ SERIALIZE_BASIC(Script)
 {
 	if (name != nullptr)
 		writer.Key(name);
-	Serialize(writer, name, val.scriptFile);
-	Serialize(writer, "variables", val.variables);
+	Serialize(writer, nullptr, val.scriptFile);
+	//Serialize(writer, "variables", val.variables);
 }
 
 SERIALIZE_BASIC(SUBTAG)
@@ -134,12 +135,12 @@ SERIALIZE_BASIC(AUDIOTYPE)
 	Serialize(writer, nullptr, static_cast<int>(val));
 }
 
-//SERIALIZE_BASIC(E_MOVEMENT_TYPE)
-//{
-//	if (name != nullptr)
-//		writer.Key(name);
-//	Serialize(writer, nullptr, static_cast<int>(val));
-//}
+SERIALIZE_BASIC(E_MOVEMENT_TYPE)
+{
+	if (name != nullptr)
+		writer.Key(name);
+	Serialize(writer, nullptr, static_cast<int>(val));
+}
 
 DESERIALIZE_BASIC(bool)
 {
@@ -219,11 +220,20 @@ DESERIALIZE_BASIC(glm::bvec3)
 
 DESERIALIZE_BASIC(glm::vec3)
 {
-	if (reader.HasMember(name))
+	if (name == nullptr)
 	{
-		Deserialize(reader[name], "x", val.x);
-		Deserialize(reader[name], "y", val.y);
-		Deserialize(reader[name], "z", val.z);
+		Deserialize(reader, "x", val.x);
+		Deserialize(reader, "y", val.y);
+		Deserialize(reader, "z", val.z);
+	}
+	else
+	{
+		if (reader.HasMember(name))
+		{
+			Deserialize(reader[name], "x", val.x);
+			Deserialize(reader[name], "y", val.y);
+			Deserialize(reader[name], "z", val.z);
+		}
 	}
 }
 
@@ -240,11 +250,7 @@ DESERIALIZE_BASIC(glm::vec4)
 
 DESERIALIZE_BASIC(Script)
 {
-	if (reader.HasMember(name))
-	{
-		Deserialize(reader, name, val.scriptFile);
-		Deserialize(reader, "variables", val.variables);
-	}
+	Deserialize(reader, nullptr, val.scriptFile);
 }
 
 DESERIALIZE_BASIC(SUBTAG)
@@ -287,15 +293,15 @@ DESERIALIZE_BASIC(AUDIOTYPE)
 	}
 }
 
-//DESERIALIZE_BASIC(E_MOVEMENT_TYPE)
-//{
-//	if (reader.HasMember(name))
-//	{
-//		int num;
-//		Deserialize(reader, name, num);
-//		val = static_cast<E_MOVEMENT_TYPE>(num);
-//	}
-//}
+DESERIALIZE_BASIC(E_MOVEMENT_TYPE)
+{
+	if (reader.HasMember(name))
+	{
+		int num;
+		Deserialize(reader, name, num);
+		val = static_cast<E_MOVEMENT_TYPE>(num);
+	}
+}
 
 DESERIALIZE_BASIC(entt::entity)
 {

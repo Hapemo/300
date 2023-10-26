@@ -232,10 +232,9 @@ void ScriptingSystem::Update(float dt)
     //    once = false;
     //}
 
-    //Test Collide (To delete)
-    //Entity girl = systemManager->mGameStateSystem->GetEntity("Girl", "Test1");
-    //Entity floor = systemManager->mGameStateSystem->GetEntity("Floor", "Test1");
-    //girl.GetComponent<Scripts>().RunFunctionForAllScripts("OnTriggerExit", floor.id);
+    //Entity rubber = systemManager->mGameStateSystem->GetEntity("rubber", "testSerialization");
+    //Entity ducky = systemManager->mGameStateSystem->GetEntity("ducky", "testSerialization");
+    //rubber.GetComponent<Scripts>().RunFunctionForAllScripts("OnContactEnter", ducky.id);
     //std::cout << "id is : " << (int32_t)floor.id << std::endl;
 }
 
@@ -266,7 +265,7 @@ void ScriptingSystem::ScriptAlive(const Entity& entity)
     auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
     for (Script& script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
     {
-        //script.Load(entity);
+        script.Load(entity);
         script.Run("Alive");
     }
 }

@@ -233,6 +233,7 @@ public:
 	//vec3		mAmbientBloomThreshold { 0.2126, 0.7152, 0.0722 };
 	vec3		mAmbientBloomThreshold { 0.05, 0.05, 0.005 };
 	float		mAmbientBloomExposure{ 0.4f };
+	float		mTexelOffset{ 1.f };
 
 	// -- Textures --
 	std::vector<int> m_Textures;	// 0, 1, ..., 31

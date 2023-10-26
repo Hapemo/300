@@ -96,7 +96,9 @@ void Hierarchy::update() {
         if (i == selectedScene)
             selectflagscene |= ImGuiTreeNodeFlags_Selected;
 
-        if (ImGui::TreeNodeEx(allScene[i].mName.c_str(), selectflagscene | ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_OpenOnDoubleClick))
+        std::string sceneName = " " + allScene[i].mName;
+
+        if (ImGui::TreeNodeEx(sceneName.c_str(), selectflagscene | ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_OpenOnDoubleClick))
         {
 
 

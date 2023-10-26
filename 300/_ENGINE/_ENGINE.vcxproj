@@ -153,6 +153,7 @@
     <ClInclude Include="include\Audio\AudioSystem.h" />
     <ClInclude Include="include\Audio\AudioTest.h" />
     <ClInclude Include="include\Audio\AudioType.h" />
+    <ClInclude Include="include\Button\ButtonSystem.h" />
     <ClInclude Include="include\Debug\AssertException.h" />
     <ClInclude Include="include\Debug\Asserts.h" />
     <ClInclude Include="include\Debug\EnginePerformance.h" />
@@ -182,6 +183,7 @@
     <ClInclude Include="include\Physics\PhysX.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="source\Button\ButtonSystem.cpp" />
     <ClCompile Include="source\Physics\ContactCallback.cpp" />
     <ClCompile Include="source\Physics\PhysXUtils.cpp" />
     <ClCompile Include="source\AI\AIManager.cpp" />
