@@ -154,6 +154,7 @@
     <ClInclude Include="include\Audio\AudioSystem.h" />
     <ClInclude Include="include\Audio\AudioTest.h" />
     <ClInclude Include="include\Audio\AudioType.h" />
+    <ClInclude Include="include\Button\ButtonSystem.h" />
     <ClInclude Include="include\Debug\AssertException.h" />
     <ClInclude Include="include\Debug\Asserts.h" />
     <ClInclude Include="include\Debug\EnginePerformance.h" />
@@ -163,6 +164,7 @@
     <ClInclude Include="include\ECS\ECS_Components.h" />
     <ClInclude Include="include\ECS\ECS_Systems.h" />
     <ClInclude Include="include\ECS\EnumStrings.h" />
+    <ClInclude Include="include\ECS\EnumTags.h" />
     <ClInclude Include="include\ECS\Prefab.h" />
     <ClInclude Include="include\ECS\Tags.h" />
     <ClInclude Include="include\GameState\GameState.h" />
@@ -176,12 +178,14 @@
     <ClInclude Include="include\Physics\Actor.h" />
     <ClInclude Include="include\Physics\Accumulator.h" />
     <ClInclude Include="include\Physics\ContactCallback.h" />
+    <ClInclude Include="include\Physics\FilterShader.h" />
     <ClInclude Include="include\Physics\PhysicsTypes.h" />
     <ClInclude Include="include\Physics\PhysicsSystem.h" />
     <ClInclude Include="include\Physics\PhysX.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="include\Physics\ContactCallback.cpp" />
+    <ClCompile Include="source\Button\ButtonSystem.cpp" />
+    <ClCompile Include="source\Physics\ContactCallback.cpp" />
     <ClCompile Include="source\Physics\PhysXUtils.cpp" />
     <ClCompile Include="source\AI\AIManager.cpp" />
     <ClCompile Include="source\Audio\AudioSource.cpp" />
@@ -195,6 +199,8 @@
     <ClCompile Include="source\Input\Input.cpp" />
     <ClCompile Include="source\Input\InputMapSystem.cpp" />
     <ClCompile Include="source\Physics\Accumulator.cpp" />
+    <ClCompile Include="source\Serialization\SerializeSelf.cpp" />
+    <ClInclude Include="include\Serialization\Serializable.h" />
     <ClInclude Include="include\Physics\PhysXUtils.h" />
     <ClInclude Include="include\Serialization\Serialization.h" />
   </ItemGroup>

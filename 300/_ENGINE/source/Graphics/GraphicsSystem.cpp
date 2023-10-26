@@ -119,11 +119,11 @@ void GraphicsSystem::Update(float dt)
 		MeshRenderer& meshRenderer = inst.GetComponent<MeshRenderer>();
 
 		// if the mesh instance is not active, skip it
-		if (meshRenderer.mMeshRef.data == nullptr)
+		if (meshRenderer.mMeshRef.getdata(systemManager->mResourceTySystem->m_ResourceInstance) == nullptr)
 			continue;
 
 		// gives me the mesh
-		void *tt = meshRenderer.mMeshRef.data;
+		void *tt = meshRenderer.mMeshRef.getdata(systemManager->mResourceTySystem->m_ResourceInstance);
 		GFX::Mesh &meshinst = *reinterpret_cast<GFX::Mesh *>(tt);
 
 		// pushback LTW matrices
@@ -182,11 +182,29 @@ void GraphicsSystem::Update(float dt)
 
 		MaterialSSBO material{};
 		// Save the materials if it exists
-		material.mDiffuseMap = GetAndStoreBindlessTextureHandle(meshRenderer.GetTexture(DIFFUSE));		
-		material.mNormalMap = GetAndStoreBindlessTextureHandle(meshRenderer.GetTexture(NORMAL));		
-		material.mSpecularMap = GetAndStoreBindlessTextureHandle(meshRenderer.GetTexture(SPECULAR));	
-		material.mShininessMap = GetAndStoreBindlessTextureHandle(meshRenderer.GetTexture(SHININESS));	
-		material.mEmissionMap = GetAndStoreBindlessTextureHandle(meshRenderer.GetTexture(EMISSION));	
+		//material.mDiffuseMap	= GetAndStoreBindlessTextureHandle(meshRenderer.GetTexture(DIFFUSE));		
+		//material.mNormalMap		= GetAndStoreBindlessTextureHandle(meshRenderer.GetTexture(NORMAL));		
+		//material.mSpecularMap	= GetAndStoreBindlessTextureHandle(meshRenderer.GetTexture(SPECULAR));	
+		//material.mShininessMap	= GetAndStoreBindlessTextureHandle(meshRenderer.GetTexture(SHININESS));	
+		//material.mEmissionMap	= GetAndStoreBindlessTextureHandle(meshRenderer.GetTexture(EMISSION));	
+
+		auto getID = [&](MaterialType type, MeshRenderer& meshrenderer) ->int {
+
+			if (meshrenderer.mTextureRef[static_cast<int>(type)].getdata(systemManager->mResourceTySystem->m_ResourceInstance) == nullptr)
+				return -1;
+
+			return static_cast<GFX::Texture*>(meshrenderer.mTextureRef[static_cast<int>(type)].data)->ID();
+
+
+		};
+
+
+		material.mDiffuseMap = GetAndStoreBindlessTextureHandle(getID(DIFFUSE, meshRenderer));
+		material.mNormalMap = GetAndStoreBindlessTextureHandle(getID(NORMAL, meshRenderer));
+		material.mSpecularMap = GetAndStoreBindlessTextureHandle(getID(SPECULAR, meshRenderer));
+		material.mShininessMap = GetAndStoreBindlessTextureHandle(getID(SHININESS, meshRenderer));
+		material.mEmissionMap = GetAndStoreBindlessTextureHandle(getID(EMISSION, meshRenderer));
+
 		m_Materials.emplace_back(material);	// push back
 	}
 	m_FinalBoneMatrixSsbo.SubData(finalBoneMatrices.size() * sizeof(mat4), finalBoneMatrices.data());
@@ -267,7 +285,7 @@ void GraphicsSystem::EditorDraw(float dt)
 	for (Entity inst : meshRendererInstances)
 	{
 		auto& meshrefptr = inst.GetComponent<MeshRenderer>();
-		if (meshrefptr.mMeshRef.data == nullptr)
+		if (meshrefptr.mMeshRef.getdata(systemManager->mResourceTySystem->m_ResourceInstance) == nullptr)
 			continue;
 
 		std::string meshstr = inst.GetComponent<MeshRenderer>().mMeshPath;
@@ -282,9 +300,6 @@ void GraphicsSystem::EditorDraw(float dt)
 
 		// render the mesh and its instances here
 		GFX::Mesh &meshinst = *reinterpret_cast<GFX::Mesh *>(inst.GetComponent<MeshRenderer>().mMeshRef.data);
-
-		// gets the shader filepathc
-		//uid shaderstr = inst.GetComponent<MeshRenderer>().mShaders;
 		
 		std::string shader{};
 
@@ -297,15 +312,15 @@ void GraphicsSystem::EditorDraw(float dt)
 		GFX::Shader& shaderinst = *systemManager->mResourceTySystem->get_Shader(shaderstr.id);
 		unsigned shaderID = shaderinst.GetHandle();
 
-		// bind all texture
-		GFX::Texture* textureInst[4]{};
-		for (int i{ 0 }; i < 4; i++)
-		{
-			if (inst.GetComponent<MeshRenderer>().mTextureRef[i].data != nullptr)
-			{
-				textureInst[i] = reinterpret_cast<GFX::Texture *>(inst.GetComponent<MeshRenderer>().mTextureRef[i].data);
-			}
-		}
+		//// bind all texture
+		//GFX::Texture* textureInst[4]{};
+		//for (int i{ 0 }; i < 4; i++)
+		//{
+		//	if (inst.GetComponent<MeshRenderer>().mTextureRef[i].getdata(systemManager->mResourceTySystem->m_ResourceInstance) != nullptr)
+		//	{
+		//		textureInst[i] = reinterpret_cast<GFX::Texture *>(inst.GetComponent<MeshRenderer>().mTextureRef[i].data);
+		//	}
+		//}
 
 		shaderinst.Activate();
 		glUniformMatrix4fv(shaderinst.GetUniformVP(), 1, GL_FALSE, &m_EditorCamera.viewProj()[0][0]);
@@ -342,22 +357,15 @@ void GraphicsSystem::EditorDraw(float dt)
 			glUniform1i(mLightCountShaderLocation, m_LightCount);
 		}
 
-		// bind texture unit
-		for (int i{0}; i < 4; i++)
-		{
-			if (inst.GetComponent<MeshRenderer>().mTextureRef[i].data != nullptr)
-			{
-				glBindTextureUnit(i, textureInst[i]->ID());
-			}
-		}
+		//// bind texture unit
+		//for (int i{0}; i < 4; i++)
+		//{
+		//	if (inst.GetComponent<MeshRenderer>().mTextureRef[i].getdata(systemManager->mResourceTySystem->m_ResourceInstance) != nullptr)
+		//	{
+		//		glBindTextureUnit(i, textureInst[i]->ID());
+		//	}
+		//}
 
-		//m_Textures.push_back(0);
-		//m_Textures.push_back(1);
-		//m_Textures.push_back(2);
-		//m_Textures.push_back(3);
-		//
-		//GLuint uniform_tex = glGetUniformLocation(shaderID, "uTex");
-		//glUniform1iv(uniform_tex, (GLsizei)m_Textures.size(), m_Textures.data()); // passing Texture ID to the fragment  
 
 		GLuint debug_draw = glGetUniformLocation(shaderID, "uDebugDraw");
 		glUniform1i(debug_draw, m_DebugDrawing);
@@ -368,14 +376,14 @@ void GraphicsSystem::EditorDraw(float dt)
 		shaderinst.Deactivate();
 		meshinst.UnbindVao();
 
-		// unbind the textures
-		for (int i{0}; i < 4; i++)
-		{
-			if (inst.GetComponent<MeshRenderer>().mTextureRef[i].data != nullptr)
-			{
-				glBindTextureUnit(i, 0);
-			}
-		}
+		//// unbind the textures
+		//for (int i{0}; i < 4; i++)
+		//{
+		//	if (inst.GetComponent<MeshRenderer>().mTextureRef[i].data != nullptr)
+		//	{
+		//		glBindTextureUnit(i, 0);
+		//	}
+		//}
 	}
 
 	m_Renderer.RenderAll(m_EditorCamera.viewProj());
@@ -387,7 +395,8 @@ void GraphicsSystem::EditorDraw(float dt)
 		// Render the bloom for the Editor Framebuffer
 		uid gaussianshaderstr("GaussianBlurShader");
 		GFX::Shader& gaussianShaderInst = *systemManager->mResourceTySystem->get_Shader(gaussianshaderstr.id);
-		m_PingPongFbo.GaussianBlur(gaussianShaderInst, m_Fbo);
+
+		m_PingPongFbo.GaussianBlur(gaussianShaderInst, m_Fbo, systemManager->mGraphicsSystem->mTexelOffset);
 
 		BlendFramebuffers(m_Fbo, m_Fbo.GetColorAttachment(), m_PingPongFbo.pingpongColorbuffers[0]);
 	}
@@ -431,7 +440,7 @@ void GraphicsSystem::GameDraw(float dt)
 	{
 
 		auto& meshrefptr = inst.GetComponent<MeshRenderer>();
-		if (meshrefptr.mMeshRef.data == nullptr)
+		if (meshrefptr.mMeshRef.getdata(systemManager->mResourceTySystem->m_ResourceInstance) == nullptr)
 			continue;
 
 		std::string meshstr = inst.GetComponent<MeshRenderer>().mMeshPath;
@@ -445,7 +454,7 @@ void GraphicsSystem::GameDraw(float dt)
 		renderedMesh[meshstr] = 1;
 
 		// render the mesh and its instances here
-		GFX::Mesh &meshinst = *reinterpret_cast<GFX::Mesh *>(inst.GetComponent<MeshRenderer>().mMeshRef.data);
+		GFX::Mesh &meshinst = *reinterpret_cast<GFX::Mesh *>(inst.GetComponent<MeshRenderer>().mMeshRef.getdata(systemManager->mResourceTySystem->m_ResourceInstance));
 
 		// gets the shader filepath
 		std::string shader{};
@@ -457,14 +466,14 @@ void GraphicsSystem::GameDraw(float dt)
 		uid shaderstr(shader);
 		GFX::Shader &shaderinst = *systemManager->mResourceTySystem->get_Shader(shaderstr.id);
 
-		GFX::Texture *textureInst[4]{};
-		for (int i{0}; i < 4; i++)
-		{
-			if (inst.GetComponent<MeshRenderer>().mTextureRef[i].data != nullptr)
-			{
-				textureInst[i] = reinterpret_cast<GFX::Texture *>(inst.GetComponent<MeshRenderer>().mTextureRef[i].data);
-			}
-		}
+		//GFX::Texture *textureInst[4]{};
+		//for (int i{0}; i < 4; i++)
+		//{
+		//	if (inst.GetComponent<MeshRenderer>().mTextureRef[i].getdata(systemManager->mResourceTySystem->m_ResourceInstance) != nullptr)
+		//	{
+		//		textureInst[i] = reinterpret_cast<GFX::Texture *>(inst.GetComponent<MeshRenderer>().mTextureRef[i].data);
+		//	}
+		//}
 
 		shaderinst.Activate();
 
@@ -500,13 +509,13 @@ void GraphicsSystem::GameDraw(float dt)
 			glUniform3fv(mViewPosShaderLocation, 1, &viewPos[0]);
 		}
 
-		for (int i{0}; i < 4; i++)
-		{
-			if (inst.GetComponent<MeshRenderer>().mTextureRef[i].data != nullptr)
-			{
-				glBindTextureUnit(i, textureInst[i]->ID());
-			}
-		}
+		//for (int i{0}; i < 4; i++)
+		//{
+		//	if (inst.GetComponent<MeshRenderer>().mTextureRef[i].getdata(systemManager->mResourceTySystem->m_ResourceInstance) != nullptr)
+		//	{
+		//		glBindTextureUnit(i, textureInst[i]->ID());
+		//	}
+		//}
 
 		// Bind mesh's VAO, copy render data into VBO, Draw
 		DrawAll(meshinst);
@@ -534,7 +543,7 @@ void GraphicsSystem::GameDraw(float dt)
 		// Render the bloom for the Game Framebuffer
 		uid gaussianshaderstr("GaussianBlurShader");
 		GFX::Shader& gaussianShaderInst = *systemManager->mResourceTySystem->get_Shader(gaussianshaderstr.id);
-		m_PingPongFbo.GaussianBlur(gaussianShaderInst, m_GameFbo);
+		m_PingPongFbo.GaussianBlur(gaussianShaderInst, m_GameFbo, systemManager->mGraphicsSystem->mTexelOffset);
 
 		BlendFramebuffers(m_GameFbo, m_GameFbo.GetColorAttachment(), m_PingPongFbo.pingpongColorbuffers[0]);
 	}

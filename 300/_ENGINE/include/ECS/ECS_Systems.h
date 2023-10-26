@@ -21,6 +21,7 @@ class ResourceTy;
 class AudioSystem;
 class Logger;
 class InputMapSystem;
+class AIManager;
 struct Entity;
 
 class SystemManager {
@@ -36,6 +37,7 @@ public:
 	std::unique_ptr<AudioSystem> mAudioSystem;
 	std::unique_ptr<Logger> mLogger;
 	std::unique_ptr<InputMapSystem> mInputActionSystem;
+	std::unique_ptr<AIManager> mAISystem;
 
 	ECS *ecs;
 
@@ -89,6 +91,7 @@ public:
 	InputMapSystem* GetInputMapSystemPointer();
 	GameStateManager* GetGameStateSystem();
 	GraphicsSystem* GetGraphicsSystem();
+	AIManager* GetAIManager();
 };
 
 extern SystemManager *systemManager;

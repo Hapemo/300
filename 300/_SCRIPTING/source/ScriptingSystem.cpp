@@ -42,6 +42,7 @@ has to be done (Attachment of scripts and running of scripts)
 #include "Debug/Logger.h"
 #include "CustomCompCont.h"
 #include "Debug/EnginePerformance.h"
+#include "GameState/GameStateManager.h"
 
 bool ScriptingSystem::printOnce = false;
 
@@ -112,6 +113,8 @@ void ScriptingSystem::Init()
     LuaECS();
     LuaEntity();
     LuaGeneral();
+    LuaCamera();
+    LuaGFXCamera();
     LuaTransform();
     LuaAnimator();
     LuaRigidBody();
@@ -132,6 +135,7 @@ void ScriptingSystem::Init()
     LuaMeshRenderer();
     LuaVFX();
     LuaGameState();
+    LuaAIManager();
 
     /******************************************************************************/
     /*!
@@ -227,6 +231,11 @@ void ScriptingSystem::Update(float dt)
     //    //    } 
     //    once = false;
     //}
+
+    //Entity rubber = systemManager->mGameStateSystem->GetEntity("rubber", "testSerialization");
+    //Entity ducky = systemManager->mGameStateSystem->GetEntity("ducky", "testSerialization");
+    //rubber.GetComponent<Scripts>().RunFunctionForAllScripts("OnContactEnter", ducky.id);
+    //std::cout << "id is : " << (int32_t)floor.id << std::endl;
 }
 
 void ScriptingSystem::Exit()
@@ -256,7 +265,7 @@ void ScriptingSystem::ScriptAlive(const Entity& entity)
     auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
     for (Script& script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
     {
-        //script.Load(entity);
+        script.Load(entity);
         script.Run("Alive");
     }
 }

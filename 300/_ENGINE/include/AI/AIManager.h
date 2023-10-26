@@ -12,15 +12,21 @@
 // - Test the spreadout
 // 
 
+#define ADDITEMARR_E_MOVEMENT_TYPE(x) arr[static_cast<int>(E_MOVEMENT_TYPE::x)] = #x;
+
 // All the label for names of container of AIs
 #define GROUND_ENEMY "GroundEnemy"
 #define AIR_ENEMY "AirEnemy"
 #define MAX_DECISECOND_PLAYER_HISTORY 30
 
 enum class E_MOVEMENT_TYPE : char {
-	GROUND_DIRECT = 1,		// Directly moving to target on ground
-	AIR_HOVER							// Hover around the target
+	BEGIN,
+	GROUND_DIRECT,		// Directly moving to target on ground
+	AIR_HOVER,						// Hover around the target
+	SIZE
+
 };
+E_MOVEMENT_TYPE& operator++(E_MOVEMENT_TYPE& _enum);
 
 //enum class E_ATTACK_TYPE : char {
 //	CONTACT = 1,
@@ -69,6 +75,7 @@ public:
 	*******************************************************************************/
 	void ResetPlayerTracking();
 
+	std::array<std::string, static_cast<size_t>(E_MOVEMENT_TYPE::SIZE)> const& GetMovementTypeArray() { return mMovementTypeArray; }
 private:
 
 	/*!*****************************************************************************
@@ -81,6 +88,17 @@ private:
 	- Direction
 	*******************************************************************************/
 	glm::vec3 CalcGroundAIDir(Entity _e);
+
+	/*!*****************************************************************************
+	Calculate the ground AI next direction
+
+	\param _e
+	- Entity
+
+	\return glm::vec3
+	- Direction
+	*******************************************************************************/
+	glm::vec3 CalcAirAIDir(Entity _e);
 
 	/*!*****************************************************************************
 	Change the input direction of an AI with respect to other AIs from it's 
@@ -130,6 +148,16 @@ private:
 
 	glm::vec3 CalculatePredictiveVelocity(glm::vec3 const& p1p0, glm::vec3 const& v0, const float s1);
 
+
+	static std::array<std::string, static_cast<size_t>(E_MOVEMENT_TYPE::SIZE)> MovementTypeArrayInit() {
+		std::array<std::string, static_cast<size_t>(E_MOVEMENT_TYPE::SIZE)> arr;
+
+		ADDITEMARR_E_MOVEMENT_TYPE(GROUND_DIRECT);
+		ADDITEMARR_E_MOVEMENT_TYPE(AIR_HOVER);
+
+		return arr;
+	}
+
 private:
 	Entity mPlayerEntity;
 	Transform* mPlayerTransform;
@@ -138,6 +166,9 @@ private:
 	short mPlayerArrayIndex;																											// Indicating the latest index in the array to replace
 	std::array<glm::vec3, MAX_DECISECOND_PLAYER_HISTORY> mPlayerHistory;					// Contains the player's position for the past 3 seconds, storing every deciseconds
 	std::unordered_map<std::string, std::set<Entity>> mAILists;										// Contains the different list of AIs of different classification. string is the name of container
+
+	static const std::array<std::string, static_cast<size_t>(E_MOVEMENT_TYPE::SIZE)> mMovementTypeArray;
+
 };
 
 

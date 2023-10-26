@@ -12,6 +12,7 @@ function Alive()
 end
 
 function Update()
+    print(name)
     testing = testing + 1;
     --testie = systemManager.ecs:NewEntity();
     --For M1 demo
@@ -87,6 +88,8 @@ function Update()
         --Helper.printTest()
         --Helper.test = 300
         --script_entity.id = 60
+        generalComponent:SetTag("static");
+        tag = generalComponent:GetTag();
     end
 
     --Test Default Param
@@ -131,4 +134,19 @@ function Testing(a,b,c)
     print(a)
     print(b)
     print(c)
+end
+
+function OnTriggerEnter(Entity)
+    print("From CollideTest.lua OnTriggerEnter")
+end
+
+function OnTriggerExit(Entity)
+    print("OnTriggerExit")
+end
+
+function OnContactEnter(Entity)
+end
+
+function OnContactExit(Entity)
+
 end

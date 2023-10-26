@@ -201,12 +201,15 @@ void GFX::PingPongFBO::Create(int width, int height)
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-void GFX::PingPongFBO::GaussianBlur(GFX::Shader& blurShader, GFX::FBO& hostFramebuffer)
+void GFX::PingPongFBO::GaussianBlur(GFX::Shader& blurShader, GFX::FBO& hostFramebuffer, float texelOffset)
 {
 	bool horizontal{ true }, first_iteration{ true };
 
 	blurShader.Activate();
 	m_Quad.Bind();
+
+	// set the texel offset (test)
+	glUniform1f(blurShader.GetUniformLocation("TexOffset"), texelOffset);
 
 	for (unsigned int i{}; i < mblurAmount; ++i)
 	{

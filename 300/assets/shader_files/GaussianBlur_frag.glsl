@@ -9,12 +9,14 @@ in vec2 TexCoords;
 uniform sampler2D image;
   
 uniform bool horizontal;
+uniform float TexOffset;
 uniform float weight[5] = float[] (0.227027, 0.1945946, 0.1216216, 0.054054, 0.016216);
 
 void main()
 {             
     // gets size of single texel
-    vec2 tex_offset = 1.0 / textureSize(image, 0);
+    //vec2 tex_offset = 1.0 / textureSize(image, 0);
+    vec2 tex_offset = TexOffset / textureSize(image, 0);
 
     // current fragment's contribution
     vec3 result = texture(image, TexCoords).rgb * weight[0]; 

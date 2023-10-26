@@ -12,6 +12,8 @@ and prefabs.
 #include "entt.hpp"
 #include "ECS_Systems.h"
 #include "Debug/AssertException.h"
+#include <vector>
+#include <string>
 
 struct Children;
 struct Parent;
@@ -148,6 +150,12 @@ public:
 
 	entt::registry registry;
 
+	static void AddTag(const std::string& tag);
+
+	static std::string GetTag(unsigned char id);
+
+	static unsigned char GetTag(const std::string& tag);
+
 	/*!*****************************************************************************
 	Creates a new entity.
 	*******************************************************************************/
@@ -226,9 +234,9 @@ public:
 	*******************************************************************************/
 	~ECS();
 
-	const Entity NullEntity;
-
 	int SelectedScene;
+
+	static std::vector<std::string> mEntityTags;
 };
 
 

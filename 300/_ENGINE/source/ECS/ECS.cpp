@@ -7,6 +7,7 @@
 #include "Debug/AssertException.h"
 #include "ResourceManagerTy.h"
 
+std::vector<std::string> ECS::mEntityTags({ "PLAYER", "ENEMY", "BULLET", "FLOOR", "WALL" });
 
 bool Entity::ShouldRun() {
 	assert(HasComponent<General>() && std::string("There is no general component when attempting to change Entity's isActive").c_str());
@@ -83,7 +84,35 @@ void Entity::Deactivate() {
 	//------------------------------------------------------------------
 }
 
-ECS::ECS() : registry(), NullEntity(registry.create()), mClipboard(0) {} 
+ECS::ECS() : registry(), mClipboard(0) { PASSERT(static_cast<int>(registry.create()) == 0); }
+
+void ECS::AddTag(const std::string& tag)
+{
+	std::string temp = tag;
+	std::transform(temp.begin(), temp.end(), temp.begin(), ::toupper);
+	mEntityTags.push_back(temp);
+}
+
+std::string ECS::GetTag(unsigned char id)
+{
+	if (id < 0 || id >= mEntityTags.size())
+	{
+		PWARNING("Tag id is out of vector bounds!")
+		return "";
+	}
+	return mEntityTags[id];
+}
+
+unsigned char ECS::GetTag(const std::string& tag)
+{
+	std::string temp = tag;
+	std::transform(temp.begin(), temp.end(), temp.begin(), ::toupper);
+	for (unsigned char i = 0; i < (unsigned char)mEntityTags.size(); ++i)
+		if (mEntityTags[i] == temp)
+			return i;
+	PWARNING("Tag not found!")
+	return 0;
+}
 
 Entity ECS::NewEntity()
 {
@@ -162,7 +191,7 @@ Entity ECS::NewEntityFromPrefab(std::string prefabName)
 {
 	// void ObjectFactory::DeserializeScene(const std::string& filename)
 	// creation of new entity done inside deserializescene function
-	Entity e(ObjectFactory::DeserializePrefab("../assets/Prefabs/" + prefabName + ".prefab", static_cast<int>(mPrefabs[prefabName].size())));
+	Entity e(ObjectFactory::DeserializePrefab("../assets/Prefabs/" + prefabName + ".prefab"));
 	e.AddComponent<Prefab>().mPrefab = prefabName;
 	systemManager->mGameStateSystem->mCurrentGameState.mScenes[0].mEntities.insert(e);
 	//copy all prefab components (except transform) to new entity
@@ -175,7 +204,7 @@ Entity ECS::NewEntityFromPrefab(std::string prefabName)
 
 void ECS::UpdatePrefabEntities(std::string prefabName)
 {
-	Entity temp(ObjectFactory::DeserializePrefab("../assets/Prefabs/" + prefabName + ".prefab", 0));
+	Entity temp(ObjectFactory::DeserializePrefab("../assets/Prefabs/" + prefabName + ".prefab"));
 	
 	for (Entity e : mPrefabs[prefabName])
 	{
@@ -210,7 +239,7 @@ Entity ECS::StartEditPrefab(std::string prefabName)
 {
 	// void ObjectFactory::DeserializeScene(const std::string& filename)
 	// creation of new entity done inside deserializescene function
-	Entity e(ObjectFactory::DeserializePrefab("../assets/Prefabs/" + prefabName + ".prefab", static_cast<int>(mPrefabs[prefabName].size())));
+	Entity e(ObjectFactory::DeserializePrefab("../assets/Prefabs/" + prefabName + ".prefab"));
 	e.AddComponent<Prefab>().mPrefab = prefabName;
 	//copy all prefab components (except transform) to new entity
 	//General temp1 = e.GetComponent<General>();

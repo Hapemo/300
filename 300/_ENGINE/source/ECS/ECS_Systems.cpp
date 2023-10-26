@@ -12,6 +12,7 @@
 #include "Debug/Logger.h"
 #include "Input/InputMapSystem.h"
 #include "Debug/EnginePerformance.h"
+#include "AI/AIManager.h"
 
 SystemManager *systemManager;
 
@@ -27,6 +28,7 @@ SystemManager::SystemManager()
 	mAudioSystem = std::make_unique<AudioSystem>();
 	mLogger = std::make_unique<Logger>();
 	mInputActionSystem = std::make_unique<InputMapSystem>();
+	mAISystem = std::make_unique<AIManager>();
 	ecs = new ECS();
 }
 
@@ -168,4 +170,9 @@ GameStateManager* SystemManager::GetGameStateSystem()
 GraphicsSystem* SystemManager::GetGraphicsSystem()
 {
 	return mGraphicsSystem.get();
+}
+
+AIManager* SystemManager::GetAIManager()
+{
+	return mAISystem.get();
 }
