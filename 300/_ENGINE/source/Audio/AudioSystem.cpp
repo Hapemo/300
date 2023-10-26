@@ -222,14 +222,17 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 		for (Entity e : listener_object)
 		{
 			listener = &(e.GetComponent<AudioListener>());
-			// listener_pos = { listener->mPosition.x , listener->mPosition.y , listener->mPosition.z };  
-			listener_pos = { cam_trans.mTranslate.x , cam_trans.mTranslate.y, cam_trans.mTranslate.z };   // Constantly updating with <Camera>'s position. 
 
-			velocity.x = (listener_pos.x - previous_position.x) / dt;
-			velocity.y = (listener_pos.y - previous_position.y) / dt;
-			velocity.z = (listener_pos.z - previous_position.z) / dt;
+			if (listener != nullptr)
+			{
+				listener_pos = { cam_trans.mTranslate.x , cam_trans.mTranslate.y, cam_trans.mTranslate.z };   // Constantly updating with <Camera>'s position. 
 
-			previous_position = listener_pos;
+				velocity.x = (listener_pos.x - previous_position.x) / dt;
+				velocity.y = (listener_pos.y - previous_position.y) / dt;
+				velocity.z = (listener_pos.z - previous_position.z) / dt;
+
+				previous_position = listener_pos;
+			}
 		}
 	}
 		
