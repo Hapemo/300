@@ -117,7 +117,7 @@ void Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer, const c
 		writer.StartObject();
 
 		Serialize(writer, "key", it->first);
-		Serialize(writer, "value", it->second);
+		Serialize(writer, "val", it->second);
 
 		writer.EndObject();
 	}
@@ -135,7 +135,7 @@ void Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer, const c
 	std::visit([&](auto&& val)
 		{
 			Serialize(writer, "type", (int)(typeid(val).hash_code()));
-	Serialize(writer, "value", val);
+			Serialize(writer, "value", val);
 		}, var);
 	writer.EndObject();
 }
@@ -217,18 +217,30 @@ void Deserialize(rapidjson::Value& reader, const char* name, T* arr, size_t size
 template <typename T>
 void Deserialize(rapidjson::Value& reader, const char* name, std::vector<T>& vec)
 {
-	if (!reader.HasMember(name)) return;
-
-	//check if the array is empty
-	if (reader[name].Empty()) return;
-
-	// make sure the vector is empty
-	vec.clear();
-	for (auto i = 0; i < reader[name].Size(); ++i)
+	if (name != nullptr)
 	{
-		T item;
-		Deserialize(reader[name][i], nullptr, item);
-		vec.push_back(item);
+		if (!reader.HasMember(name)) return;
+
+		//check if the array is empty
+		if (reader[name].Empty()) return;
+
+		// make sure the vector is empty
+		//vec.clear();
+		for (auto i = 0; i < reader[name].Size(); ++i)
+		{
+			T item;
+			Deserialize(reader[name][i], nullptr, item);
+			vec.push_back(item);
+		}
+	}
+	else if(name == nullptr)
+	{
+		for (auto i = 0; i < reader.Size(); ++i)
+		{
+			T item;
+			Deserialize(reader[i], nullptr, item);
+			vec.push_back(item);
+		}
 	}
 }
 
@@ -239,12 +251,12 @@ void Deserialize(rapidjson::Value& reader, const char* name, std::map<T1, T2>& m
 
 	for (auto i = 0; i < reader[name].Size(); ++i)
 	{
-		if (reader[name][i].HasMember("key") && reader[name][i].HasMember("value")) {
+		if (reader[name][i].HasMember("key") && reader[name][i].HasMember("val")) {
 			T1 key;
 			T2 value;
 
 			Deserialize(reader[name][i], "key", key);
-			Deserialize(reader[name][i], "value", value);
+			Deserialize(reader[name][i], "val", value);
 
 			map.insert(std::make_pair(key, value));
 		}
@@ -254,11 +266,20 @@ void Deserialize(rapidjson::Value& reader, const char* name, std::map<T1, T2>& m
 template <typename ...T>
 void Deserialize(rapidjson::Value& reader, const char* name, std::variant<T...>& var)
 {
-	if (reader.HasMember(name))
+	if (name != nullptr)
+	{
+		if (reader.HasMember(name))
+		{
+			int type;
+			Deserialize(reader[name], "type", type);
+			GetVariantValue<std::variant<T...>, T...>(reader[name]["value"], type, var);
+		}
+	}
+	else if(name == nullptr)
 	{
 		int type;
-		Deserialize(reader[name], "type", type);
-		GetVariantValue<std::variant<T...>, T...>(reader[name]["value"], type, var);
+		Deserialize(reader, "type", type);
+		GetVariantValue<std::variant<T...>, T...>(reader["value"], type, var);
 	}
 }
 

@@ -101,8 +101,8 @@ SERIALIZE_BASIC(Script)
 {
 	if (name != nullptr)
 		writer.Key(name);
-	Serialize(writer, name, val.scriptFile);
-	Serialize(writer, "variables", val.variables);
+	Serialize(writer, nullptr, val.scriptFile);
+	//Serialize(writer, "variables", val.variables);
 }
 
 SERIALIZE_BASIC(SUBTAG)
@@ -218,11 +218,20 @@ DESERIALIZE_BASIC(glm::bvec3)
 
 DESERIALIZE_BASIC(glm::vec3)
 {
-	if (reader.HasMember(name))
+	if (name == nullptr)
 	{
-		Deserialize(reader[name], "x", val.x);
-		Deserialize(reader[name], "y", val.y);
-		Deserialize(reader[name], "z", val.z);
+		Deserialize(reader, "x", val.x);
+		Deserialize(reader, "y", val.y);
+		Deserialize(reader, "z", val.z);
+	}
+	else
+	{
+		if (reader.HasMember(name))
+		{
+			Deserialize(reader[name], "x", val.x);
+			Deserialize(reader[name], "y", val.y);
+			Deserialize(reader[name], "z", val.z);
+		}
 	}
 }
 
@@ -239,11 +248,7 @@ DESERIALIZE_BASIC(glm::vec4)
 
 DESERIALIZE_BASIC(Script)
 {
-	if (reader.HasMember(name))
-	{
-		Deserialize(reader, name, val.scriptFile);
-		Deserialize(reader, "variables", val.variables);
-	}
+	Deserialize(reader, nullptr, val.scriptFile);
 }
 
 DESERIALIZE_BASIC(SUBTAG)

@@ -49,7 +49,7 @@ void MeshRenderer::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer
 	Serialize(writer, "meshrefid", mMeshRef.data_uid);
 	Serialize(writer, "instancecolor", mInstanceColor);
 	Serialize(writer, "materialinstance", mMaterialInstancePath, 5);
-	//Serialize(writer, "mesh", mMeshPath);
+	Serialize(writer, "mesh", mMeshPath);
 	//Serialize(writer, "texturecont", mTextureCont, 5);
 	writer.Key("texturerefid");
 	writer.StartArray();
@@ -68,7 +68,7 @@ void MeshRenderer::DeserializeSelf(rapidjson::Value& reader)
 	Deserialize(reader, "meshrefid", mMeshRef.data_uid);
 	Deserialize(reader, "instancecolor", mInstanceColor);
 	Deserialize(reader, "materialinstance", mMaterialInstancePath, 5);
-	//Deserialize(reader, "mesh", mMeshPath);
+	Deserialize(reader, "mesh", mMeshPath);
 	//Deserialize(reader, "texturecont", mTextureCont, 5);
 	for (int i = 0; i < 5; ++i)
 	{
@@ -170,12 +170,17 @@ void Scripts::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& wr
 	writer.Key("scripts");
 	writer.StartObject();
 	Serialize(writer, "scriptscontainer", scriptsContainer);
+
+	for (int i = 0; i < scriptsContainer.size(); ++i)
+		Serialize(writer, scriptsContainer[i].scriptFile.c_str(), scriptsContainer[i].variables);
 	writer.EndObject();
 }
 
 void Scripts::DeserializeSelf(rapidjson::Value& reader)
 {
 	Deserialize(reader, "scriptscontainer", scriptsContainer);
+	for (int i = 0; i < scriptsContainer.size(); ++i)
+		Deserialize(reader, scriptsContainer[i].scriptFile.c_str(), scriptsContainer[i].variables);
 }
 
 void Parent::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const

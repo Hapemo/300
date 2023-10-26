@@ -57,6 +57,7 @@
                 " ",
                 " "
             ],
+            "mesh": "",
             "texturerefid": [
                 0,
                 0,
@@ -88,7 +89,67 @@
             "istrigger": false
         },
         "scripts": {
-            "scriptscontainer": []
+            "scriptscontainer": [
+                "../assets/Scripts/Run.lua",
+                "../assets/Scripts/CollideTest.lua"
+            ],
+            "../assets/Scripts/Run.lua": [
+                {
+                    "key": "create",
+                    "val": {
+                        "type": 694561268,
+                        "value": 2.0
+                    }
+                },
+                {
+                    "key": "name",
+                    "val": {
+                        "type": -734751724,
+                        "value": "AJDBCJADBH"
+                    }
+                },
+                {
+                    "key": "speed",
+                    "val": {
+                        "type": 694561268,
+                        "value": 20.0
+                    }
+                },
+                {
+                    "key": "test",
+                    "val": {
+                        "type": -734751724,
+                        "value": "HIIIII"
+                    }
+                },
+                {
+                    "key": "testing",
+                    "val": {
+                        "type": 694561268,
+                        "value": 5.0
+                    }
+                },
+                {
+                    "key": "vec",
+                    "val": {
+                        "type": -655306154,
+                        "value": {
+                            "x": 0.30000001192092896,
+                            "y": 0.8999999761581421,
+                            "z": 0.699999988079071
+                        }
+                    }
+                }
+            ],
+            "../assets/Scripts/CollideTest.lua": [
+                {
+                    "key": "test",
+                    "val": {
+                        "type": 694561268,
+                        "value": 5.050000190734863
+                    }
+                }
+            ]
         },
         "aisetting": {
             "shotprediction": false,
@@ -137,6 +198,59 @@
                 "y": false,
                 "z": false
             }
+        },
+        "scripts": {
+            "scriptscontainer": [
+                "../assets/Scripts/Run.lua"
+            ],
+            "../assets/Scripts/Run.lua": [
+                {
+                    "key": "create",
+                    "val": {
+                        "type": 694561268,
+                        "value": 2.0
+                    }
+                },
+                {
+                    "key": "name",
+                    "val": {
+                        "type": -734751724,
+                        "value": "Girl"
+                    }
+                },
+                {
+                    "key": "speed",
+                    "val": {
+                        "type": 694561268,
+                        "value": 20.0
+                    }
+                },
+                {
+                    "key": "test",
+                    "val": {
+                        "type": -734751724,
+                        "value": "hfufhufu"
+                    }
+                },
+                {
+                    "key": "testing",
+                    "val": {
+                        "type": 694561268,
+                        "value": 5.0
+                    }
+                },
+                {
+                    "key": "vec",
+                    "val": {
+                        "type": -655306154,
+                        "value": {
+                            "x": 5.0,
+                            "y": 0.5,
+                            "z": 0.699999988079071
+                        }
+                    }
+                }
+            ]
         }
     },
     {
@@ -177,7 +291,7 @@
                 "z": 747.7139892578125
             },
             "size": {
-                "x": 428,
+                "x": 278,
                 "y": 625
             },
             "near": 0.10000000149011612,
