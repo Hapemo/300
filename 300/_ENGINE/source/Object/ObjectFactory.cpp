@@ -49,6 +49,8 @@ void ObjectFactory::LoadEntity(Entity e, rapidjson::Value& reader)
 	DESERIALIZE_SELF(Audio, "audio");
 	DESERIALIZE_SELF(Camera, "camera");
 	DESERIALIZE_SELF(Prefab, "prefab");
+	if (e.HasComponent<Prefab>())
+		systemManager->ecs->mPrefabs[e.GetComponent<Prefab>().mPrefab].push_back(e);
 	DESERIALIZE_SELF(PointLight, "pointlight");
 	DESERIALIZE_SELF(AISetting, "aisetting");
 }
