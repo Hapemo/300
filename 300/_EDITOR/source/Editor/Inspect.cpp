@@ -99,8 +99,6 @@ void Inspect::update()
 		General& Inspector = ent.GetComponent<General>();
 		Inspector.Inspect();
 
-
-
 		if (ent.HasComponent<Transform>()) {
 			Transform& transform = ent.GetComponent<Transform>();
 			transform.Inspect();

@@ -24,8 +24,9 @@ This file contains the base AudioSystem class that supports the following functi
 #include "Debug/EnginePerformance.h"
 #include "GameState/GameStateManager.h"
 #include "GameState/Scene.h"
+#include "Graphics/GraphicsSystem.h"
 
-
+static FMOD_VECTOR previous_position = { 0.0f, 0.0f, 0.0f };
 
 enum AUDIOTYPE : unsigned char;
 
@@ -81,6 +82,9 @@ public:
 	// Helper Functions (Sound)
 	FMOD::Sound* FindSound(std::string audio_name);
 	bool	     CheckAudioExist(std::string audio_name); // [W7 - 10/14]
+
+	// Core Loops (For Organization)
+	void AudioPlayLoop(float dt);
 
 public:
 	// Retained Functions (Without Linking to <Audio> component)

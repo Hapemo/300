@@ -197,158 +197,65 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 	if (testListener)
 		TestListener();
 
-	auto audio_entities = systemManager->ecs->GetEntitiesWith<Audio>();
 
-	/*
-		[Check Play Loop]
-		- Checks for (mIsPlay)    flag : signify that the audio is expected to play.
-		- Checks for (mIsPlaying) flag : signify that it's already playing, so do not play again.
+	/* Constantly updating the[AudioListener]'s attributes based on... -> using set3DListenerAttributes()
+	*  1. Player's Position in the game space.
+	*  2. Camera's Direction (where it is facing) 
+	* 
 	*/
-	for (Entity audio : audio_entities)
+
+	auto listener_object = systemManager->ecs->GetEntitiesWith<AudioListener>();
+
+	AudioListener* listener = nullptr;
+
+	if (listener_object.size() != 0)
 	{
-		Audio& audio_component = audio.GetComponent<Audio>();
-
-		// Play Cycle
-		if (audio_component.mIsPlay &&							// (1) Check if this <Audio> is set to play.
-			CheckAudioExist(audio_component.mFileName) &&		// (2) Check if the [Sound] that we want to play exists.
-			!audio_component.mIsPlaying &&						// (3) Check if the <Audio> is currently already playing...
-			!audio_component.mWasPaused &&						// (4) Check if it was [Paused] before. If yes resume.
-			!audio_component.mPaused)							// (5) Cannot be paused...
+		for (Entity e : listener_object)
 		{
-			PINFO("Audio Exist");
-			PINFO("PLAYING AUDIO AT: %f", audio_component.mVolume);
-			
-			PlayAudioSource(audio_component, audio_component.mVolume, audio_component.m3DAudio); 
-
-			if (audio_component.m3DAudio && audio_component.mIsPlaying) // if this is a 3D audio + can only set [3D settings] if the audio is playing.
-			{
-				FMOD_VECTOR position = { audio_component.mPosition.x ,audio_component.mPosition.y , audio_component.mPosition.z };
-				FMOD_VECTOR velocity = { audio_component.mVelocity.x ,audio_component.mVelocity.y , audio_component.mVelocity.z };
-
-				// All this can only be set after audio has played.
-				PINFO("SETTING 3D ATTRIBUTES");
-				ErrCodeCheck(audio_component.mChannel->set3DAttributes(&position, &velocity)); // Need to set this for dynamic spatialization + attenuation effects.
-				PINFO("SETTING 3D MIN MAX SETTINGS")
-				ErrCodeCheck(audio_component.mChannel->set3DMinMaxDistance(audio_component.mMinDistance, audio_component.mMaxDistance));
-
-				ErrCodeCheck(audio_component.mChannel->setPaused(false)); // sound is paused in "PlayAudioSource" if it's 3D audio, to setup 3D parameters first.
-			}
+			listener = &(e.GetComponent<AudioListener>());
 		}
-
-
-		// Every Loop -> check if the <Audio> is still playing.
-		bool channelIsPlay = false;
-		if (audio_component.mIsPlaying) // need this to be true (to indicate that there's a sound playing in the channel)
-		{
-			audio_component.mChannel->isPlaying(&channelIsPlay);
-		}
-
-		if (audio_component.mIsPlaying && !channelIsPlay) // Sound finished playing in channel.
-		{
-			PINFO("Finished Playing");
-			audio_component.mIsPlaying = false;	   // Audio finished playing. 
-			audio_component.mIsPlay = false;       // Don't Need to keep playing... (play once) -> if "mIsLooping" is true (channel will continue to play)
-
-			// Check if looping...
-			if (audio_component.mIsLooping)
-			{
-				audio_component.mIsPlay = true; // make it true again. 
-			}
-
-		}
-
-		// Fade In / Fade Out 
-		if (audio_component.mFadeOut)
-		{
-			if (audio_component.mSound != nullptr)
-			{
-				if (fade_timer < audio_component.fade_duration)
-				{
-					float fade_step = audio_component.mFadeSpeedModifier * (audio_component.mVolume / audio_component.fade_duration);
-
-					/*	float fade_slower_dt = 0.2 * dt;
-
-						fade_timer += fade_slower_dt;*/
-
-					float fadeLevelOut = audio_component.mVolume - (fade_step * dt);
-
-					//float fadeLevelOut = audio_component.mVolume - (fade_timer / audio_component.fade_duration); //  fade level out (volume each fade out step)
-
-					if (fadeLevelOut > audio_component.mFadeOutToVol)  // Have yet to reach the desired fade out volume
-					{
-						audio_component.mChannel->setVolume(fadeLevelOut);
-						audio_component.mVolume = fadeLevelOut; //  fade level out
-					}
-
-					else // reached and exceeded the fade out volume...
-					{
-						audio_component.mChannel->setVolume(audio_component.mFadeOutToVol);
-						audio_component.mVolume = audio_component.mFadeOutToVol; //  fade level out
-					}
-
-					PINFO("Fade Out Volume: %f", audio_component.mVolume);
-
-				}
-			}
-
-			else
-			{
-				PINFO("Please insert your sound clip first.");
-				audio_component.mFadeOut = false;
-			}
-		}
-
-	
-		if (audio_component.mFadeIn)
-		{
-			if (audio_component.mSound != nullptr)
-			{
-				if (fade_timer < audio_component.fade_duration)
-				{
-					float fade_step = audio_component.mFadeSpeedModifier * (audio_component.mFadeInMaxVol / audio_component.fade_duration);
-
-					fadeLevelIn += fade_step * dt;
-
-					if (fadeLevelIn < audio_component.mFadeInMaxVol)
-					{
-						if (audio_component.mIsPlaying)
-						{
-							audio_component.mChannel->setVolume(fadeLevelIn);
-							audio_component.mVolume = fadeLevelIn;
-						}
-
-					}
-					else
-					{
-						if (audio_component.mIsPlaying)
-						{
-							audio_component.mChannel->setVolume(audio_component.mFadeInMaxVol);
-							audio_component.mVolume = audio_component.mFadeInMaxVol;
-
-						}
-					}
-
-					PINFO("Fade In Volume: %f", audio_component.mVolume);
-
-					// (1) Play Sound + Adjust Audio
-					if (!audio_component.mIsPlaying)
-					{
-						PINFO("Playing Fade In");
-						PlayAudioSource(audio_component, audio_component.mVolume);
-						audio_component.mIsPlaying = true;
-					}
-				}
-			}
-
-			else
-			{
-				PINFO("Please insert your sound clip first.");
-				audio_component.mFadeIn = false;
-			}
-
-		}
-
 	}
+		
+	if (Input::CheckKey(PRESS, UP))
+	{
+		listener->mPosition.z += 0.5f;
+		PINFO("Listener at: (%f, %f, %f)", listener->mPosition.x, listener->mPosition.y, listener->mPosition.z);
+	}
+
+	if (Input::CheckKey(PRESS, DOWN))
+	{
+		listener->mPosition.z -= 0.5f;
+		PINFO("Listener at: (%f, %f, %f)", listener->mPosition.x, listener->mPosition.y, listener->mPosition.z);
+	}
+
+	if (Input::CheckKey(PRESS, SPACE))
+	{
+		listener->mPosition.y += 0.5f;
+		PINFO("Listener at: (%f, %f, %f)", listener->mPosition.x, listener->mPosition.y, listener->mPosition.z);
+	}
+
+
+
+
+
+
+	FMOD_VECTOR listener_pos = { listener->mPosition.x , listener->mPosition.y , listener->mPosition.z };
+
+	FMOD_VECTOR velocity;
+		
+	// Do we use (1) where the camera is facing or (2) we're using a {0.0f, 0.0f, 1.0f} -> standard vector
+	glm::vec3 cam_dir = systemManager->mGraphicsSystem.get()->GetCameraDirection(CAMERA_TYPE::CAMERA_TYPE_GAME);
+	FMOD_VECTOR camera_forward = { cam_dir.x ,cam_dir.y , cam_dir.z };
+
+	velocity.x = (listener_pos.x - previous_position.x) / dt;
+	velocity.y = (listener_pos.y - previous_position.y) / dt; 
+	velocity.z = (listener_pos.z - previous_position.z) / dt;
+
+	FMOD_VECTOR up = { 0.0f, 1.0f, 0.0f };
+
+	system_obj->set3DListenerAttributes(0, &listener_pos, &velocity, &camera_forward, &up);      // This updates every loop. 
+	 
+	AudioPlayLoop(dt);
 
 	system_obj->update();
 
@@ -1107,6 +1014,167 @@ bool AudioSystem::CheckAudioExist(std::string audio_name)
 	{
 		return false;
 	}
+}
+
+
+
+/*
+	[Check Play Loop]
+	- Checks for (mIsPlay)    flag : signify that the audio is expected to play.
+	- Checks for (mIsPlaying) flag : signify that it's already playing, so do not play again.
+*/
+
+void AudioSystem::AudioPlayLoop(float dt)
+{
+	auto audio_entities = systemManager->ecs->GetEntitiesWith<Audio>();
+
+	for (Entity audio : audio_entities)
+	{
+		Audio& audio_component = audio.GetComponent<Audio>();
+
+		// Play Cycle
+		if (audio_component.mIsPlay &&							// (1) Check if this <Audio> is set to play.
+			CheckAudioExist(audio_component.mFileName) &&		// (2) Check if the [Sound] that we want to play exists.
+			!audio_component.mIsPlaying &&						// (3) Check if the <Audio> is currently already playing...
+			!audio_component.mWasPaused &&						// (4) Check if it was [Paused] before. If yes resume.
+			!audio_component.mPaused)							// (5) Cannot be paused...
+		{
+			PINFO("Audio Exist");
+			PINFO("PLAYING AUDIO AT: %f", audio_component.mVolume);
+
+			PlayAudioSource(audio_component, audio_component.mVolume, audio_component.m3DAudio);
+
+			if (audio_component.m3DAudio && audio_component.mIsPlaying) // if this is a 3D audio + can only set [3D settings] if the audio is playing.
+			{
+				FMOD_VECTOR position = { audio_component.mPosition.x ,audio_component.mPosition.y , audio_component.mPosition.z };
+				FMOD_VECTOR velocity = { audio_component.mVelocity.x ,audio_component.mVelocity.y , audio_component.mVelocity.z };
+
+				// All this can only be set after audio has played.
+				PINFO("SETTING 3D ATTRIBUTES");
+				ErrCodeCheck(audio_component.mChannel->set3DAttributes(&position, &velocity)); // Need to set this for dynamic spatialization + attenuation effects.
+				PINFO("SETTING 3D MIN MAX SETTINGS")
+					ErrCodeCheck(audio_component.mChannel->set3DMinMaxDistance(audio_component.mMinDistance, audio_component.mMaxDistance));
+
+				ErrCodeCheck(audio_component.mChannel->setPaused(false)); // sound is paused in "PlayAudioSource" if it's 3D audio, to setup 3D parameters first.
+			}
+		}
+
+
+		// Every Loop -> check if the <Audio> is still playing.
+		bool channelIsPlay = false;
+		if (audio_component.mIsPlaying) // need this to be true (to indicate that there's a sound playing in the channel)
+		{
+			audio_component.mChannel->isPlaying(&channelIsPlay);
+		}
+
+		if (audio_component.mIsPlaying && !channelIsPlay) // Sound finished playing in channel.
+		{
+			PINFO("Finished Playing");
+			audio_component.mIsPlaying = false;	   // Audio finished playing. 
+			audio_component.mIsPlay = false;       // Don't Need to keep playing... (play once) -> if "mIsLooping" is true (channel will continue to play)
+
+			// Check if looping...
+			if (audio_component.mIsLooping)
+			{
+				audio_component.mIsPlay = true; // make it true again. 
+			}
+
+		}
+
+		// Fade In / Fade Out 
+		if (audio_component.mFadeOut)
+		{
+			if (audio_component.mSound != nullptr)
+			{
+				if (fade_timer < audio_component.fade_duration)
+				{
+					float fade_step = audio_component.mFadeSpeedModifier * (audio_component.mVolume / audio_component.fade_duration);
+
+					/*	float fade_slower_dt = 0.2 * dt;
+
+						fade_timer += fade_slower_dt;*/
+
+					float fadeLevelOut = audio_component.mVolume - (fade_step * dt);
+
+					//float fadeLevelOut = audio_component.mVolume - (fade_timer / audio_component.fade_duration); //  fade level out (volume each fade out step)
+
+					if (fadeLevelOut > audio_component.mFadeOutToVol)  // Have yet to reach the desired fade out volume
+					{
+						audio_component.mChannel->setVolume(fadeLevelOut);
+						audio_component.mVolume = fadeLevelOut; //  fade level out
+					}
+
+					else // reached and exceeded the fade out volume...
+					{
+						audio_component.mChannel->setVolume(audio_component.mFadeOutToVol);
+						audio_component.mVolume = audio_component.mFadeOutToVol; //  fade level out
+					}
+
+					PINFO("Fade Out Volume: %f", audio_component.mVolume);
+
+				}
+			}
+
+			else
+			{
+				PINFO("Please insert your sound clip first.");
+				audio_component.mFadeOut = false;
+			}
+		}
+
+
+		if (audio_component.mFadeIn)
+		{
+			if (audio_component.mSound != nullptr)
+			{
+				if (fade_timer < audio_component.fade_duration)
+				{
+					float fade_step = audio_component.mFadeSpeedModifier * (audio_component.mFadeInMaxVol / audio_component.fade_duration);
+
+					fadeLevelIn += fade_step * dt;
+
+					if (fadeLevelIn < audio_component.mFadeInMaxVol)
+					{
+						if (audio_component.mIsPlaying)
+						{
+							audio_component.mChannel->setVolume(fadeLevelIn);
+							audio_component.mVolume = fadeLevelIn;
+						}
+
+					}
+					else
+					{
+						if (audio_component.mIsPlaying)
+						{
+							audio_component.mChannel->setVolume(audio_component.mFadeInMaxVol);
+							audio_component.mVolume = audio_component.mFadeInMaxVol;
+
+						}
+					}
+
+					PINFO("Fade In Volume: %f", audio_component.mVolume);
+
+					// (1) Play Sound + Adjust Audio
+					if (!audio_component.mIsPlaying)
+					{
+						PINFO("Playing Fade In");
+						PlayAudioSource(audio_component, audio_component.mVolume);
+						audio_component.mIsPlaying = true;
+					}
+				}
+			}
+
+			else
+			{
+				PINFO("Please insert your sound clip first.");
+				audio_component.mFadeIn = false;
+			}
+
+		}
+
+	}
+
+
 }
 
 /******************************************************************************/
