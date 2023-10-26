@@ -22,7 +22,8 @@ class AudioSource;
 
 // Not Encapsulated in the "AudioSource" object.
 bool LoadAudio(std::string file_path, std::string audio_name);  // Way to LoadAudio in Script. (Have to Load first, then attach)
-bool LoadAudioFromDirectory(std::filesystem::path file_path);
+//bool LoadAudioFromDirectory(std::filesystem::path file_path);
+bool LoadAudioFromDirectory(std::string file_path);
 
 bool CrossFadeAudio(AudioSource& fade_out, AudioSource& fade_in, float fade_duration);
 

@@ -238,7 +238,7 @@ void LuaInput()
 
 void LuaAudioSystem()
 {
- /*   systemManager->mScriptingSystem->luaState.new_usertype<AudioSystem>(
+    systemManager->mScriptingSystem->luaState.new_usertype<AudioSystem>(
         "mAudioSystem", sol::constructors<>(),
         "PlayAudio", &AudioSystem::PlayAudio,
         "SetAllSFXVolume", &AudioSystem::SetAllSFXVolume,
@@ -255,7 +255,7 @@ void LuaAudioSystem()
         "UnpauseAllSounds", &AudioSystem::UnpauseAllSounds,
         "UnpauseSFXSounds", &AudioSystem::UnpauseSFXSounds,
         "UnpauseBGMSounds", &AudioSystem::UnpauseBGMSounds
-    );*/
+    );
 }
 
 void LuaAudioSource()
