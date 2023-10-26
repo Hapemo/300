@@ -154,6 +154,23 @@ void GraphicsSystem::Update(float dt)
 			m_Renderer.AddSphere(m_EditorCamera.position(), inst.GetComponent<Transform>().mTranslate, 0.5f, {1.f, 1.f, 0.f, 1.f});
 		}
 
+		if (m_DebugDrawing && inst.HasComponent<CapsuleCollider>())
+		{
+			CapsuleCollider cap = inst.GetComponent<CapsuleCollider>();
+			Transform xform = inst.GetComponent<Transform>();
+			if (inst.HasParent())
+				xform.mTranslate += static_cast<Entity>(inst.GetParent()).GetComponent<Transform>().mTranslate;
+
+			glm::vec3 capPos = xform.mTranslate + cap.mTranslateOffset;
+
+			glm::vec3 first = capPos;
+			glm::vec3 second = capPos;
+			first.y -= cap.mHalfHeight;
+			second.y += cap.mHalfHeight;
+
+			m_Renderer.AddCapsule(m_EditorCamera.position(), first, second, cap.mRadius, glm::vec4(0.f, 1.f, 0.f, 1.f));
+		}
+
 		// Update the animation
 		if (inst.HasComponent<Animator>() && _ENABLE_ANIMATIONS && systemManager->mGraphicsSystem->m_EnableGlobalAnimations)
 		{
