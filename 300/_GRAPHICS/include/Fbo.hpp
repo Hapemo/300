@@ -137,7 +137,7 @@ Destructor of the FBO class. Deletes the resources allocated on the GPU
 	{
 	public:
 		void Create(int width, int height);
-		void GaussianBlur(GFX::Shader& blurShader, GFX::FBO& hostFramebuffer);
+		void GaussianBlur(GFX::Shader& blurShader, GFX::FBO& hostFramebuffer, float texelOffset);
 		void PrepForDraw();
 		void Resize(int width, int height);
 

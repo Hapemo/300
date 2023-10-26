@@ -952,11 +952,16 @@ void RigidBody::Inspect() {
 
 	if (ImGui::CollapsingHeader("RigidBody", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
 	{
+
+
+		ImGui::Text("Density");
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
 		ImGui::DragFloat("##Density", (float*)&mDensity);
 
-		ImGui::SameLine();
-		ImGui::Text("Density");
 		ImGui::Separator();
+
 
 
 		//const char* materials[] = { "RUBBER", "WOOD", "METAL", "ICE","CONCRETE","GLASS" };

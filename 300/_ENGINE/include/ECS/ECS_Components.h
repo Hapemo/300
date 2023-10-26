@@ -506,4 +506,16 @@ private:
 	Entity mTarget;									// AI's target
 };
 
-
+/******************************************************************************/
+/*!
+	[Component] - Button
+ */
+ /******************************************************************************/
+struct Button
+{
+	bool mInteractable{ true };
+	bool mIsHover{ false };
+	bool mIsClick{ false };
+	bool mActivated{ false };
+	bool mRenderFlag{ true };
+};

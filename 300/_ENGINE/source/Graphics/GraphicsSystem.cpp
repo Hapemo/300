@@ -182,11 +182,29 @@ void GraphicsSystem::Update(float dt)
 
 		MaterialSSBO material{};
 		// Save the materials if it exists
-		material.mDiffuseMap	= GetAndStoreBindlessTextureHandle(meshRenderer.GetTexture(DIFFUSE));		
-		material.mNormalMap		= GetAndStoreBindlessTextureHandle(meshRenderer.GetTexture(NORMAL));		
-		material.mSpecularMap	= GetAndStoreBindlessTextureHandle(meshRenderer.GetTexture(SPECULAR));	
-		material.mShininessMap	= GetAndStoreBindlessTextureHandle(meshRenderer.GetTexture(SHININESS));	
-		material.mEmissionMap	= GetAndStoreBindlessTextureHandle(meshRenderer.GetTexture(EMISSION));	
+		//material.mDiffuseMap	= GetAndStoreBindlessTextureHandle(meshRenderer.GetTexture(DIFFUSE));		
+		//material.mNormalMap		= GetAndStoreBindlessTextureHandle(meshRenderer.GetTexture(NORMAL));		
+		//material.mSpecularMap	= GetAndStoreBindlessTextureHandle(meshRenderer.GetTexture(SPECULAR));	
+		//material.mShininessMap	= GetAndStoreBindlessTextureHandle(meshRenderer.GetTexture(SHININESS));	
+		//material.mEmissionMap	= GetAndStoreBindlessTextureHandle(meshRenderer.GetTexture(EMISSION));	
+
+		auto getID = [&](MaterialType type, MeshRenderer& meshrenderer) ->int {
+
+			if (meshrenderer.mTextureRef[static_cast<int>(type)].getdata(systemManager->mResourceTySystem->m_ResourceInstance) == nullptr)
+				return -1;
+
+			return static_cast<GFX::Texture*>(meshrenderer.mTextureRef[static_cast<int>(type)].data)->ID();
+
+
+		};
+
+
+		material.mDiffuseMap = GetAndStoreBindlessTextureHandle(getID(DIFFUSE, meshRenderer));
+		material.mNormalMap = GetAndStoreBindlessTextureHandle(getID(NORMAL, meshRenderer));
+		material.mSpecularMap = GetAndStoreBindlessTextureHandle(getID(SPECULAR, meshRenderer));
+		material.mShininessMap = GetAndStoreBindlessTextureHandle(getID(SHININESS, meshRenderer));
+		material.mEmissionMap = GetAndStoreBindlessTextureHandle(getID(EMISSION, meshRenderer));
+
 		m_Materials.emplace_back(material);	// push back
 	}
 	m_FinalBoneMatrixSsbo.SubData(finalBoneMatrices.size() * sizeof(mat4), finalBoneMatrices.data());
@@ -377,7 +395,8 @@ void GraphicsSystem::EditorDraw(float dt)
 		// Render the bloom for the Editor Framebuffer
 		uid gaussianshaderstr("GaussianBlurShader");
 		GFX::Shader& gaussianShaderInst = *systemManager->mResourceTySystem->get_Shader(gaussianshaderstr.id);
-		m_PingPongFbo.GaussianBlur(gaussianShaderInst, m_Fbo);
+
+		m_PingPongFbo.GaussianBlur(gaussianShaderInst, m_Fbo, systemManager->mGraphicsSystem->mTexelOffset);
 
 		BlendFramebuffers(m_Fbo, m_Fbo.GetColorAttachment(), m_PingPongFbo.pingpongColorbuffers[0]);
 	}
@@ -524,7 +543,7 @@ void GraphicsSystem::GameDraw(float dt)
 		// Render the bloom for the Game Framebuffer
 		uid gaussianshaderstr("GaussianBlurShader");
 		GFX::Shader& gaussianShaderInst = *systemManager->mResourceTySystem->get_Shader(gaussianshaderstr.id);
-		m_PingPongFbo.GaussianBlur(gaussianShaderInst, m_GameFbo);
+		m_PingPongFbo.GaussianBlur(gaussianShaderInst, m_GameFbo, systemManager->mGraphicsSystem->mTexelOffset);
 
 		BlendFramebuffers(m_GameFbo, m_GameFbo.GetColorAttachment(), m_PingPongFbo.pingpongColorbuffers[0]);
 	}
