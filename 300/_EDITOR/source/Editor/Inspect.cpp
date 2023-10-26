@@ -949,7 +949,8 @@ void MeshRenderer::Inspect()
 /***************************************************************************/
 void RigidBody::Inspect() {
 	bool delete_component{ true };
-
+	static const char* materials[] = { "RUBBER", "WOOD", "METAL", "ICE","CONCRETE","GLASS","UNDEFINED" };
+	static const char* motions[] = { "STATIC", "DYNAMIC", "UNDEFINED" };
 	if (ImGui::CollapsingHeader("RigidBody", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
 	{
 
@@ -964,31 +965,74 @@ void RigidBody::Inspect() {
 
 
 
-		//const char* materials[] = { "RUBBER", "WOOD", "METAL", "ICE","CONCRETE","GLASS" };
-		//const char* motions[] = { "STATIC", "DYNAMIC" };
 
 
-		//if (ImGui::BeginCombo("Material", (materials[mMat]))) {
+		
 
-		//	for (unsigned char i{ 0 }; i < 6; i++) {
-		//		if (ImGui::Selectable(materials[i])) {
-		//			mMat = i;
-		//			mMaterial = (MATERIAL)i;
-		//		}
-		//	}
-		//	ImGui::EndCombo();
-		//}
+		ImGui::Text("Material");
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
 
-		//if (ImGui::BeginCombo("Motions", (motions[mMot]))) {
+		if (ImGui::BeginCombo("##Material", (materials[static_cast<int>(mMaterial)]))) {
 
-		//	for (unsigned char i{ 0 }; i < 2; i++) {
-		//		if (ImGui::Selectable(motions[i])) {
-		//			mMot = i;
-		//			mMotion = (MOTION)i;
-		//		}
-		//	}
-		//	ImGui::EndCombo();
-		//}
+			for (unsigned char i{ 0 }; i < 6; i++) {
+
+				if (i == static_cast<int>(mMaterial))
+					continue;
+
+				if (ImGui::Selectable(materials[i])) {
+					mMaterial = static_cast<MATERIAL>(i);
+					//mMaterial = (MATERIAL)i;
+				}
+			}
+
+			ImGui::EndCombo();
+		}
+
+		ImGui::Text("Motion");
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+
+		if (ImGui::BeginCombo("##Motions", (motions[static_cast<int>(mMotion)]))) {
+
+				for (unsigned char i{ 0 }; i < 2; i++) {
+					if (ImGui::Selectable(motions[i])) {
+
+						mMotion = (MOTION)i;
+					}
+				}
+
+			ImGui::EndCombo();
+		}
+
+		ImGui::Text("Velocity");
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		ImGui::DragFloat3("##velocity", (float*) & mVelocity);
+
+
+
+		ImGui::Text("Rotation Constraints");
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		ImGui::Checkbox("##X", &mRotationConstraints[0]);
+		ImGui::SameLine();
+		ImGui::Text("X");
+		ImGui::SameLine();
+		ImGui::Checkbox("##Y", &mRotationConstraints[1]);
+		ImGui::SameLine();
+		ImGui::Text("Y");
+		ImGui::SameLine();
+		ImGui::Checkbox("##Z", &mRotationConstraints[2]);
+		ImGui::SameLine();
+		ImGui::Text("Z");
+
+
+
 
 	}
 
@@ -1005,15 +1049,28 @@ void BoxCollider::Inspect() {
 	bool delete_component{ true };
 	if (ImGui::CollapsingHeader("BoxCollider", &delete_component, ImGuiTreeNodeFlags_DefaultOpen)) {
 
-		ImGui::DragFloat3("Boxcollider Scale", (float*)&mScaleOffset, 0.1f);
+
+		ImGui::Text("Scale Offset");
 		ImGui::SameLine();
-		ImGui::Text("Scale");
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		ImGui::DragFloat3("##ScaleBC", (float*)&mScaleOffset, 0.1f);
+
+		ImGui::Separator();
+		ImGui::Text("Translate Offset");
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		ImGui::DragFloat3("##TranslateBC", (float*)&mTranslateOffset);
 		ImGui::Separator();
 
-		ImGui::DragFloat3("Boxcollider Translate", (float*)&mTranslateOffset);
+
+		ImGui::Text("isTrigger");
 		ImGui::SameLine();
-		ImGui::Text("Translate");
-		ImGui::Separator();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		ImGui::Checkbox("##isTriggerBC", &mIsTrigger);
+
 	}
 	if (delete_component == false)
 		Entity(Hierarchy::selectedId).RemoveComponent<BoxCollider>();
@@ -1029,15 +1086,67 @@ void SphereCollider::Inspect() {
 	bool delete_component{ true };
 	if (ImGui::CollapsingHeader("SphereCollider", &delete_component, ImGuiTreeNodeFlags_DefaultOpen)) {
 		
-		ImGui::DragFloat("##Scale", (float*)&mScaleOffset);
+		ImGui::Text("Scale Offset");
 		ImGui::SameLine();
-		ImGui::Text("Scale");
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		ImGui::DragFloat3("##ScaleSC", (float*)&mScaleOffset, 0.1f);
+
+		ImGui::Separator();
+		ImGui::Text("Translate Offset");
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		ImGui::DragFloat3("##TranslateSC", (float*)&mTranslateOffset);
 		ImGui::Separator();
 
-		ImGui::DragFloat3("##Translate", (float*)&mTranslateOffset);
+		ImGui::Text("isTrigger");
 		ImGui::SameLine();
-		ImGui::Text("Translate");
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		ImGui::Checkbox("##isTriggerSC", &mIsTrigger);
+	}
+	if (delete_component == false)
+		Entity(Hierarchy::selectedId).RemoveComponent<SphereCollider>();
+}
+
+
+/***************************************************************************/
+/*!
+\brief
+	Inspector functionality for SphereCollider
+*/
+/***************************************************************************/
+void CapsuleCollider::Inspect() {
+	bool delete_component{ true };
+	if (ImGui::CollapsingHeader("SphereCollider", &delete_component, ImGuiTreeNodeFlags_DefaultOpen)) {
+
+		ImGui::Text("Translate Offset");
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		ImGui::DragFloat3("##ScaleCC", (float*)&mTranslateOffset, 0.1f);
+
 		ImGui::Separator();
+		ImGui::Text("Radius");
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		ImGui::DragFloat("##radius", (float*)&mRadius);
+		ImGui::Separator();
+
+		ImGui::Text("Half-Height");
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		ImGui::DragFloat("##HalfHeight", (float*)&mHalfHeight);
+		ImGui::Separator();
+
+		ImGui::Text("isTrigger");
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		ImGui::Checkbox("##isTriggerCC", &mIsTrigger);
 	}
 	if (delete_component == false)
 		Entity(Hierarchy::selectedId).RemoveComponent<SphereCollider>();
