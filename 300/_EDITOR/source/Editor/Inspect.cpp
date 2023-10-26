@@ -1041,7 +1041,11 @@ void RigidBody::Inspect() {
 		ImGui::SameLine();
 		ImGui::Text("Z");
 
-
+		ImGui::Text("Gravity");
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		ImGui::Checkbox("##Gravity", &mGravity);
 
 
 	}

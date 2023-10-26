@@ -210,7 +210,7 @@ void PhysicsSystem::CreateActor(PxRigidActor*& actor, const PxTransform& pxform,
 		if (rbod.mRotationConstraints.z)
 			axis |= PxRigidDynamicLockFlag::eLOCK_ANGULAR_Z;
 		static_cast<PxRigidDynamic*>(actor)->setRigidDynamicLockFlags(axis);
-
+		static_cast<PxRigidDynamic*>(actor)->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, !rbod.mGravity);
 		return;
 	}
 	actor = mPX.mPhysics->createRigidStatic(pxform);

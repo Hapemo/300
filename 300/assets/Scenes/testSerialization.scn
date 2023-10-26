@@ -38,7 +38,8 @@
                 "x": true,
                 "y": false,
                 "z": false
-            }
+            },
+            "gravity": true
         },
         "meshrenderer": {
             "vert": "../assets/shader_files/pointLight_vert.glsl",
@@ -198,7 +199,8 @@
                 "x": true,
                 "y": false,
                 "z": false
-            }
+            },
+            "gravity": true
         },
         "scripts": {
             "scriptscontainer": [

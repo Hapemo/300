@@ -191,8 +191,9 @@ struct RigidBody : public Serializable //@han
 	MOTION mMotion;
 	glm::vec3 mVelocity;
 	glm::bvec3 mRotationConstraints;
+	bool mGravity;
 
-	RigidBody() : mDensity(10.f), mMaterial(MATERIAL::WOOD), mMotion(MOTION::STATIC), mVelocity(0.f){};
+	RigidBody() : mDensity(10.f), mMaterial(MATERIAL::WOOD), mMotion(MOTION::STATIC), mVelocity(0.f), mGravity(true) {};
 	RigidBody(float dense, MATERIAL mat, MOTION mot, const glm::vec3& vec)
 		: mDensity(dense), mMaterial(mat), mMotion(mot), mVelocity(vec){}
 	//RTTR_ENABLE()
