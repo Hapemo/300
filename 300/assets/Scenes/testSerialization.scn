@@ -1,9 +1,9 @@
 [
     {
-        "entityid": 1,
+        "entityid": 0,
         "general": {
             "name": "rubber",
-            "tagid": 2,
+            "tagid": 0,
             "subtag": 0,
             "isActive": false,
             "isPaused": false
@@ -33,12 +33,17 @@
                 "x": 0.0,
                 "y": 0.0,
                 "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": false,
+                "z": false
             }
         },
         "meshrenderer": {
             "vert": "../assets/shader_files/pointLight_vert.glsl",
             "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 2285,
+            "meshrefid": 0,
             "instancecolor": {
                 "x": 1.0,
                 "y": 1.0,
@@ -46,13 +51,19 @@
                 "w": 1.0
             },
             "materialinstance": [
-                "../assets/Compressed/Brick wall 4_baseColor.ctexture",
-                "../assets/Compressed/Brick wall 4_normal.ctexture",
+                " ",
+                " ",
                 " ",
                 " ",
                 " "
             ],
-            "textureref": 4923
+            "texturerefid": [
+                0,
+                0,
+                0,
+                0,
+                0
+            ]
         },
         "boxcollider": {
             "scaleoffset": {
@@ -64,7 +75,8 @@
                 "x": 0.0,
                 "y": 0.0,
                 "z": 0.0
-            }
+            },
+            "istrigger": true
         },
         "spherecollider": {
             "scaleoffset": 1.0,
@@ -72,14 +84,21 @@
                 "x": 0.0,
                 "y": 0.0,
                 "z": 0.0
-            }
+            },
+            "istrigger": false
         },
         "scripts": {
             "scriptscontainer": []
+        },
+        "aisetting": {
+            "shotprediction": false,
+            "spreadout": 0.0,
+            "stayaway": 0.0,
+            "targetname": ""
         }
     },
     {
-        "entityid": 2,
+        "entityid": 1,
         "general": {
             "name": "ducky",
             "tagid": 0,
@@ -112,11 +131,16 @@
                 "x": 0.0,
                 "y": 0.0,
                 "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": false,
+                "z": false
             }
         }
     },
     {
-        "entityid": 3,
+        "entityid": 2,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -153,7 +177,7 @@
                 "z": 747.7139892578125
             },
             "size": {
-                "x": 278,
+                "x": 428,
                 "y": 625
             },
             "near": 0.10000000149011612,

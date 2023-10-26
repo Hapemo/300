@@ -282,7 +282,7 @@ void General::Inspect() {
 	//}
 
 
-	ImGui::Text("Tag");
+	/*ImGui::Text("Tag");
 
 	ImGui::SameLine();
 	ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
@@ -297,7 +297,7 @@ void General::Inspect() {
 			}
 		}
 		ImGui::EndCombo();
-	}
+	}*/
 }
 
 /***************************************************************************/
@@ -451,7 +451,7 @@ void Scripts::Inspect() {
 			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_LUA"))
 			{
 				data_script = (const char*)payload->Data;
-				scripts.mScriptFile = std::string(data_script);
+				//scripts.mScriptFile = std::string(data_script);
 				std::string dataScript = std::string(data_script);
 
 				// if entity does not contain any script, just add 
@@ -471,7 +471,7 @@ void Scripts::Inspect() {
 
 					for (auto& elem : scripts.scriptsContainer)
 					{
-						if (elem.scriptFile == scripts.mScriptFile)
+						if (elem.scriptFile == dataScript)
 						{
 							hasScript = true;
 							//std::cout << "Script is already attached! " << std::endl;
@@ -485,7 +485,7 @@ void Scripts::Inspect() {
 						Script script;
 						script.scriptFile = dataScript;
 						script.env = { systemManager->mScriptingSystem->luaState, sol::create, systemManager->mScriptingSystem->luaState.globals() };
-						
+
 						script.Load(Hierarchy::selectedId);
 
 						scripts.scriptsContainer.push_back(script);
@@ -510,7 +510,7 @@ void Scripts::Inspect() {
 				InspectScript(elem);
 				ImGui::TreePop();
 			}
-			
+
 		}
 
 		if (open_popup) {
@@ -764,9 +764,11 @@ void MeshRenderer::Inspect()
 		// == >> Textures << == //
 		ImGui::Dummy(ImVec2(0.0f, 10.0f));
 
-		std::string textures[4] = { "DIFFUSE","NORMAL", "EMISSION","SPECULAR"};
 
-		for (int i{ 0 }; i <4; i++) 
+
+		std::string textures[5] = { "DIFFUSE","NORMAL", "SPECULAR","SHININESS","EMISSION"};
+
+		for (int i{ 0 }; i <5; i++) 
 		{
 			if (mMaterialInstancePath[i] != "") 
 			{
@@ -854,10 +856,6 @@ void MeshRenderer::Inspect()
 					}
 				}
 				
-
-
-
-
 				ImGui::Dummy(ImVec2(0.0f, 10.0f));
 			}
 			else {
@@ -961,31 +959,31 @@ void RigidBody::Inspect() {
 		ImGui::Separator();
 
 
-		const char* materials[] = { "RUBBER", "WOOD", "METAL", "ICE","CONCRETE","GLASS" };
-		const char* motions[] = { "STATIC", "DYNAMIC" };
+		//const char* materials[] = { "RUBBER", "WOOD", "METAL", "ICE","CONCRETE","GLASS" };
+		//const char* motions[] = { "STATIC", "DYNAMIC" };
 
 
-		if (ImGui::BeginCombo("Material", (materials[mMat]))) {
+		//if (ImGui::BeginCombo("Material", (materials[mMat]))) {
 
-			for (unsigned char i{ 0 }; i < 6; i++) {
-				if (ImGui::Selectable(materials[i])) {
-					mMat = i;
-					mMaterial = (MATERIAL)i;
-				}
-			}
-			ImGui::EndCombo();
-		}
+		//	for (unsigned char i{ 0 }; i < 6; i++) {
+		//		if (ImGui::Selectable(materials[i])) {
+		//			mMat = i;
+		//			mMaterial = (MATERIAL)i;
+		//		}
+		//	}
+		//	ImGui::EndCombo();
+		//}
 
-		if (ImGui::BeginCombo("Motions", (motions[mMot]))) {
+		//if (ImGui::BeginCombo("Motions", (motions[mMot]))) {
 
-			for (unsigned char i{ 0 }; i < 2; i++) {
-				if (ImGui::Selectable(motions[i])) {
-					mMot = i;
-					mMotion = (MOTION)i;
-				}
-			}
-			ImGui::EndCombo();
-		}
+		//	for (unsigned char i{ 0 }; i < 2; i++) {
+		//		if (ImGui::Selectable(motions[i])) {
+		//			mMot = i;
+		//			mMotion = (MOTION)i;
+		//		}
+		//	}
+		//	ImGui::EndCombo();
+		//}
 
 	}
 

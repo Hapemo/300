@@ -166,3 +166,13 @@ GameStateManager* SystemManager::GetGameStateSystem()
 {
 	return mGameStateSystem.get();
 }
+
+GraphicsSystem* SystemManager::GetGraphicsSystem()
+{
+	return mGraphicsSystem.get();
+}
+
+AIManager* SystemManager::GetAIManager()
+{
+	return mAISystem.get();
+}

@@ -42,6 +42,7 @@ has to be done (Attachment of scripts and running of scripts)
 #include "Debug/Logger.h"
 #include "CustomCompCont.h"
 #include "Debug/EnginePerformance.h"
+#include "GameState/GameStateManager.h"
 
 bool ScriptingSystem::printOnce = false;
 
@@ -112,7 +113,10 @@ void ScriptingSystem::Init()
     LuaECS();
     LuaEntity();
     LuaGeneral();
+    LuaCamera();
+    LuaGFXCamera();
     LuaTransform();
+    LuaAnimator();
     LuaRigidBody();
     LuaBoxCollider();
     LuaSphereCollider();
@@ -120,12 +124,18 @@ void ScriptingSystem::Init()
     LuaParent();
     LuaChildren();
     LuaInput();
+    LuaAudioSystem();
+    LuaAudioSource();
     LuaAudio();
     LuaInputMapSystem();
+    LuaGraphicsSystem();
     LuaPhysics();
     LuaScripting();
     LuaPointLight();
     LuaMeshRenderer();
+    LuaVFX();
+    LuaGameState();
+    LuaAIManager();
 
     /******************************************************************************/
     /*!
@@ -221,6 +231,11 @@ void ScriptingSystem::Update(float dt)
     //    //    } 
     //    once = false;
     //}
+
+    Entity rubber = systemManager->mGameStateSystem->GetEntity("rubber", "testSerialization");
+    Entity ducky = systemManager->mGameStateSystem->GetEntity("ducky", "testSerialization");
+    rubber.GetComponent<Scripts>().RunFunctionForAllScripts("OnContactEnter", ducky.id);
+    //std::cout << "id is : " << (int32_t)floor.id << std::endl;
 }
 
 void ScriptingSystem::Exit()
