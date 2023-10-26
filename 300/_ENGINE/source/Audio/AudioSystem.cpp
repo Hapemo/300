@@ -204,6 +204,10 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 	* 
 	*/
 
+	// Assuming that the <Listener> follows the <Camera>'s position. 
+	Entity camera_ent = systemManager->ecs->GetEntitiesWith<Camera>().front();
+	Transform& cam_trans = camera_ent.GetComponent<Transform>(); // In Game Camera
+
 	auto listener_object = systemManager->ecs->GetEntitiesWith<AudioListener>();
 
 	AudioListener* listener = nullptr;	 // There might not be an <AudioListener> 
@@ -218,7 +222,8 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 		for (Entity e : listener_object)
 		{
 			listener = &(e.GetComponent<AudioListener>());
-			listener_pos = { listener->mPosition.x , listener->mPosition.y , listener->mPosition.z };
+			// listener_pos = { listener->mPosition.x , listener->mPosition.y , listener->mPosition.z };  
+			listener_pos = { cam_trans.mTranslate.x , cam_trans.mTranslate.y, cam_trans.mTranslate.z };   // Constantly updating with <Camera>'s position. 
 
 			velocity.x = (listener_pos.x - previous_position.x) / dt;
 			velocity.y = (listener_pos.y - previous_position.y) / dt;
@@ -228,38 +233,9 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 		}
 	}
 		
-	if (Input::CheckKey(PRESS, UP))
-	{
-		listener->mPosition.z += 0.1f;
-		PINFO("Listener at: (%f, %f, %f)", listener->mPosition.x, listener->mPosition.y, listener->mPosition.z);
-	}
-
-	if (Input::CheckKey(PRESS, DOWN))
-	{
-		listener->mPosition.z -= 0.1f;
-		PINFO("Listener at: (%f, %f, %f)", listener->mPosition.x, listener->mPosition.y, listener->mPosition.z);
-	}
-
-	if (Input::CheckKey(PRESS, LEFT))
-	{
-		listener->mPosition.x -= 0.1f;
-		PINFO("Listener at: (%f, %f, %f)", listener->mPosition.x, listener->mPosition.y, listener->mPosition.z);
-	}
-
-	if (Input::CheckKey(PRESS, RIGHT))
-	{
-		listener->mPosition.x += 0.1f;
-		PINFO("Listener at: (%f, %f, %f)", listener->mPosition.x, listener->mPosition.y, listener->mPosition.z);
-	}
-
-	if (Input::CheckKey(PRESS, SPACE))
-	{
-		listener->mPosition.y += 0.1f;
-		PINFO("Listener at: (%f, %f, %f)", listener->mPosition.x, listener->mPosition.y, listener->mPosition.z);
-	}
-
 	// Do we use (1) where the camera is facing or (2) we're using a {0.0f, 0.0f, 1.0f} -> standard vector
 	glm::vec3 cam_dir = systemManager->mGraphicsSystem.get()->GetCameraDirection(CAMERA_TYPE::CAMERA_TYPE_GAME);
+	
 	camera_forward = { cam_dir.x ,cam_dir.y , cam_dir.z };
 
 	up_vector = { 0.0f, 1.0f, 0.0f };
