@@ -307,16 +307,6 @@ DESERIALIZE_BASIC(entt::entity)
 	}
 }
 
-DESERIALIZE_BASIC(unsigned char)
-{
-	if (reader.HasMember(name))
-	{
-		int num;
-		Deserialize(reader, name, num);
-		val = static_cast<unsigned char>(num);
-	}
-}
-
 void WriteToFile(const std::string& filename, const rapidjson::StringBuffer& buffer)
 {
 	std::ofstream of{ filename };

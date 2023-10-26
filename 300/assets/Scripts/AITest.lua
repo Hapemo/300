@@ -22,8 +22,8 @@ function Update()
     aiSys = systemManager:mAISystem();
 
     -- AI functions
-    aiSys:SetPredictiveVelocity(entity, entity, 0.5)
-    aiSys:PredictiveShootPlayer(entity, 0.5, 2, 4)
+    -- aiSys:SetPredictiveVelocity(entity, entity, 0.5)
+    -- aiSys:PredictiveShootPlayer(entity, 0.5, 2, 4)
     vec = aiSys:GetDirection(entity)
 
     --print("Jiayou Jazzi")

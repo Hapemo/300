@@ -59,7 +59,6 @@ struct General : public Serializable
 	unsigned char tagid = 0; //@han
 	//std::string tag[5] = { "PLAYER","ENEMY","BULLET","STATIC","BUILDING" };
 	//int tagid{ 0 };
-	unsigned char tagid = 0;
 	SUBTAG subtag;
 	bool isActive{};
 	bool isPaused{};
