@@ -26,6 +26,7 @@
     <ClCompile Include="source\Audio\AudioSource.cpp" />
     <ClCompile Include="source\Serialization\SerializeSelf.cpp" />
     <ClCompile Include="source\Physics\ContactCallback.cpp" />
+    <ClCompile Include="source\Button\ButtonSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Audio\AudioSystem.h" />
@@ -64,5 +65,6 @@
     <ClInclude Include="include\Serialization\Serializable.h" />
     <ClInclude Include="include\ECS\EnumTags.h" />
     <ClInclude Include="include\Physics\FilterShader.h" />
+    <ClInclude Include="include\Button\ButtonSystem.h" />
   </ItemGroup>
 </Project>

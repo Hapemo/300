@@ -1,0 +1,61 @@
+#include <Button/ButtonSystem.h>
+
+void ButtonSystem::Init()
+{
+	mWindowWidth = systemManager->GetWindow()->GetScreenWidth();
+	mWindowHeight = systemManager->GetWindow()->GetScreenHeight();
+}
+
+void ButtonSystem::Update()
+{
+	// Update the screen size
+	mWindowWidth = systemManager->GetWindow()->GetScreenWidth();
+	mWindowHeight = systemManager->GetWindow()->GetScreenHeight();
+
+	// Get Mouse Position
+	double mouseX{}, mouseY{};
+	systemManager->GetWindow()->GetCursorPos(&mouseX, &mouseY);
+
+	// Map the Mouse Position (top left origin[0, 1] to center origin)
+	mouseX -= 0.5;
+	mouseY -= 0.5;
+	mouseX *= mWindowWidth;
+	mouseY *= -mWindowHeight;
+
+	// Update all Button
+	auto entities = systemManager->ecs->GetEntitiesWith<Button>();
+	for (Entity ent : entities)
+	{
+		Button &button = ent.GetComponent<Button>();
+
+		button.mIsHover = CheckHover(ent, { mouseX, mouseY });
+		button.mIsClick = CheckClick(ent, { mouseX, mouseY });
+		button.mActivated = CheckActivate(ent, { mouseX, mouseY });
+	}
+}
+
+void ButtonSystem::Reset()
+{
+}
+
+bool ButtonSystem::CheckHover(Entity e, vec2 mousePos)
+{
+	// Get Transform of button
+	Transform buttonTransform = e.GetComponent<Transform>();
+	if (mousePos.x < buttonTransform.mTranslate.x - 0.5f * buttonTransform.mScale.x) return false;
+	if (mousePos.x > buttonTransform.mTranslate.x + 0.5f * buttonTransform.mScale.x) return false;	
+	if (mousePos.y < buttonTransform.mTranslate.y - 0.5f * buttonTransform.mScale.y) return false;
+	if (mousePos.y > buttonTransform.mTranslate.y + 0.5f * buttonTransform.mScale.y) return false;
+
+	return true;
+}
+
+bool ButtonSystem::CheckClick(Entity e, vec2 mousePos)
+{
+	return false;
+}
+
+bool ButtonSystem::CheckActivate(Entity e, vec2 mousePos)
+{
+	return false;
+}
