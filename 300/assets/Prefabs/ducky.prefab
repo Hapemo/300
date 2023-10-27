@@ -1,0 +1,95 @@
+{
+    "entityid": 2,
+    "general": {
+        "name": "ducky",
+        "tagid": 0,
+        "subtag": 1,
+        "isActive": true,
+        "isPaused": false
+    },
+    "transform": {
+        "scale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+        },
+        "rotate": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "translate": {
+            "x": -2.968045949935913,
+            "y": 2.2499635219573975,
+            "z": 0.0
+        }
+    },
+    "rigidbody": {
+        "density": 10.0,
+        "material": 1,
+        "motion": 0,
+        "velocity": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "rotationconstraints": {
+            "x": true,
+            "y": false,
+            "z": false
+        }
+    },
+    "scripts": {
+        "scriptscontainer": [
+            "../assets/Scripts/Run.lua"
+        ],
+        "../assets/Scripts/Run.lua": [
+            {
+                "key": "create",
+                "val": {
+                    "type": 694561268,
+                    "value": 2.0
+                }
+            },
+            {
+                "key": "name",
+                "val": {
+                    "type": -734751724,
+                    "value": "Girl"
+                }
+            },
+            {
+                "key": "speed",
+                "val": {
+                    "type": 694561268,
+                    "value": 20.0
+                }
+            },
+            {
+                "key": "test",
+                "val": {
+                    "type": -734751724,
+                    "value": "hfufhufu"
+                }
+            },
+            {
+                "key": "testing",
+                "val": {
+                    "type": 694561268,
+                    "value": 5.0
+                }
+            },
+            {
+                "key": "vec",
+                "val": {
+                    "type": -655306154,
+                    "value": {
+                        "x": 5.0,
+                        "y": 0.5,
+                        "z": 0.699999988079071
+                    }
+                }
+            }
+        ]
+    }
+}

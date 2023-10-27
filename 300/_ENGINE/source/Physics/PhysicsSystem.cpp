@@ -71,7 +71,7 @@ void PhysicsSystem::SetPosition(Entity e, const glm::vec3& globalpose)
 	if (rbod.mMotion == MOTION::STATIC) return;
 
 	PxRigidDynamic* actor = (physx::PxRigidDynamic*)(mActors[static_cast<uint32_t>(e.id)].mActor);
-	actor->setGlobalPose(PxTransform(Convert(globalpose), Convert(glm::quat(e.GetComponent<Transform>().mRotate))));
+	actor->setGlobalPose(PxTransform(Convert(globalpose), Convert(glm::quat(glm::radians(e.GetComponent<Transform>().mRotate)))));
 }
 
 void PhysicsSystem::SetRotation(Entity e, const glm::vec3& rotation)
@@ -81,7 +81,7 @@ void PhysicsSystem::SetRotation(Entity e, const glm::vec3& rotation)
 	if (rbod.mMotion == MOTION::STATIC) return;
 
 	PxRigidDynamic* actor = (physx::PxRigidDynamic*)(mActors[static_cast<uint32_t>(e.id)].mActor);
-	actor->setGlobalPose(PxTransform(Convert(e.GetComponent<Transform>().mTranslate), Convert(glm::quat(rotation))));
+	actor->setGlobalPose(PxTransform(Convert(e.GetComponent<Transform>().mTranslate), Convert(glm::quat(glm::radians(rotation)))));
 }
 
 void PhysicsSystem::SetVelocity(Entity e, const glm::vec3& velocity)
@@ -132,7 +132,8 @@ void PhysicsSystem::CreateRigidBody(Entity e)
 	glm::vec3 childOffset = e.HasParent() ? Entity(e.GetParent()).GetComponent<Transform>().mTranslate : glm::vec3(0);
 
 	PxRigidActor* actor{};
-	CreateActor(actor, PxTransform(Convert(xform.mTranslate + childOffset), Convert(glm::quat(xform.mRotate))), rbod);
+	CreateActor(actor, PxTransform(Convert(xform.mTranslate + childOffset), 
+		Convert(glm::quat(glm::radians(xform.mRotate)))), rbod);
 
 	if (e.HasComponent<CapsuleCollider>())
 	{
@@ -210,7 +211,7 @@ void PhysicsSystem::CreateActor(PxRigidActor*& actor, const PxTransform& pxform,
 		if (rbod.mRotationConstraints.z)
 			axis |= PxRigidDynamicLockFlag::eLOCK_ANGULAR_Z;
 		static_cast<PxRigidDynamic*>(actor)->setRigidDynamicLockFlags(axis);
-
+		static_cast<PxRigidDynamic*>(actor)->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, !rbod.mGravity);
 		return;
 	}
 	actor = mPX.mPhysics->createRigidStatic(pxform);

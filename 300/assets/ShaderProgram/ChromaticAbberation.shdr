@@ -1,0 +1,7 @@
+[
+    {
+        "ShaderProgram": "ChromaticAbberation",
+        "Vertex": "../assets/shader_files/Quad2D_vert.glsl",
+        "Fragment": "../assets/shader_files/ChromaticAbberation_frag.glsl"
+    }
+]

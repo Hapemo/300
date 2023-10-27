@@ -200,6 +200,13 @@ void GameStateManager::DeleteEntityFromScene(int _sceneID, Entity _e) {
 	mCurrentGameState.mScenes[_sceneID].RemoveEntity(_e);
 }
 
+void GameStateManager::DeleteEntity(Entity _e) {
+	for (Scene& scene : mCurrentGameState.mScenes)
+		if (std::find(scene.mEntities.begin(), scene.mEntities.end(), _e) != scene.mEntities.end()) {
+			scene.RemoveEntity(_e);
+			return;
+		}
+}
 
 
 

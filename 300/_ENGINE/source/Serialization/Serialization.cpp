@@ -102,8 +102,11 @@ SERIALIZE_BASIC(Script)
 {
 	if (name != nullptr)
 		writer.Key(name);
-	Serialize(writer, nullptr, val.scriptFile);
-	//Serialize(writer, "variables", val.variables);
+
+	writer.StartObject();
+	Serialize(writer, "scriptFile", val.scriptFile);
+	Serialize(writer, "variables", val.variables);
+	writer.EndObject();
 }
 
 SERIALIZE_BASIC(SUBTAG)
@@ -112,7 +115,7 @@ SERIALIZE_BASIC(SUBTAG)
 		writer.Key(name);
 	Serialize(writer, nullptr, static_cast<int>(val));
 }
-	
+
 SERIALIZE_BASIC(MATERIAL)
 {
 	if (name != nullptr)
@@ -199,21 +202,37 @@ DESERIALIZE_BASIC(std::string)
 
 DESERIALIZE_BASIC(glm::ivec2)
 {
-	if (reader.HasMember(name))
+	if (name == nullptr)
 	{
 		Deserialize(reader, "x", val.x);
 		Deserialize(reader, "y", val.y);
+	}
+	else
+	{
+		if (reader.HasMember(name))
+		{
+			Deserialize(reader[name], "x", val.x);
+			Deserialize(reader[name], "y", val.y);
+		}
 	}
 }
 
 DESERIALIZE_BASIC(glm::bvec3)
 {
-	if (reader.HasMember(name))
+	if (name == nullptr)
 	{
 		Deserialize(reader, "x", val.x);
 		Deserialize(reader, "y", val.y);
 		Deserialize(reader, "z", val.z);
-
+	}
+	else
+	{
+		if (reader.HasMember(name))
+		{
+			Deserialize(reader[name], "x", val.x);
+			Deserialize(reader[name], "y", val.y);
+			Deserialize(reader[name], "z", val.z);
+		}
 	}
 }
 
@@ -238,18 +257,29 @@ DESERIALIZE_BASIC(glm::vec3)
 
 DESERIALIZE_BASIC(glm::vec4)
 {
-	if (reader.HasMember(name))
+	if (name == nullptr)
 	{
-		Deserialize(reader[name], "x", val.x);
-		Deserialize(reader[name], "y", val.y);
-		Deserialize(reader[name], "z", val.z);
-		Deserialize(reader[name], "w", val.w);
+		Deserialize(reader, "x", val.x);
+		Deserialize(reader, "y", val.y);
+		Deserialize(reader, "z", val.z);
+		Deserialize(reader, "w", val.w);
+	}
+	else
+	{
+		if (reader.HasMember(name))
+		{
+			Deserialize(reader[name], "x", val.x);
+			Deserialize(reader[name], "y", val.y);
+			Deserialize(reader[name], "z", val.z);
+			Deserialize(reader[name], "w", val.w);
+		}
 	}
 }
 
 DESERIALIZE_BASIC(Script)
 {
-	Deserialize(reader, nullptr, val.scriptFile);
+	Deserialize(reader, "scriptFile", val.scriptFile);
+	Deserialize(reader, "variables", val.variables);
 }
 
 DESERIALIZE_BASIC(SUBTAG)
@@ -322,17 +352,18 @@ DESERIALIZE_BASIC(enum_tag::enum_tag)
 	}
 }
 
-void WriteToFile(const std::string& filename, const rapidjson::StringBuffer& buffer)
+void WriteToFile(const std::string &filename, const rapidjson::StringBuffer &buffer)
 {
-	std::ofstream of{ filename };
+	std::ofstream of{filename};
 	of << buffer.GetString();
-	if (of.good()) return;
+	if (of.good())
+		return;
 	PERROR(("Writing to output file failed! File name: " + filename).c_str());
 }
 
-void ReadFromFile(const std::string& filename, rapidjson::Document& doc)
+void ReadFromFile(const std::string &filename, rapidjson::Document &doc)
 {
-	std::ifstream ifs{ filename };
+	std::ifstream ifs{filename};
 	if (!ifs.is_open())
 		PERROR(("Reading from input file failed! File name: " + filename).c_str());
 
@@ -344,7 +375,7 @@ void ReadFromFile(const std::string& filename, rapidjson::Document& doc)
 		return;
 }
 
-bool InitDocument(const std::string& s, rapidjson::Document& doc)
+bool InitDocument(const std::string &s, rapidjson::Document &doc)
 {
 	if (s.empty())
 		return false;

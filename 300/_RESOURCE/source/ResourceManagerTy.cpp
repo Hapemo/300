@@ -233,29 +233,56 @@ void ResourceTy::ReleaseRscInfo(instance_infos& RscInfo)
 /**************************************************************************/
 void ResourceTy::MaterialInstance_Loader() {
 
+	auto getFilename = [](std::string filepath) -> std::string
+	{
+		// returns AT-AT
+		std::string ret_str = filepath.substr(filepath.find_last_of("/") + 1);
+		ret_str = ret_str.substr(0, ret_str.find_first_of("."));
+		return ret_str;
+	};
+
 	std::filesystem::path folderpath = compressed_texture_path.c_str();
 
 	// Reads through all the files in the folder, and loads them into the mesh
 	for (const auto& entry : std::filesystem::directory_iterator(folderpath))
 	{
+
+		if (!check_extensions(entry.path().filename().string(), ".ctexture"))
+			continue;
+
 		std::cout << "============================================\n";
 		std::cout << "[NOTE]>> Loading Compressed Texture: \t" << entry.path().filename() << "\n";
+
 
 		std::string filepath = compressed_texture_path + entry.path().filename().string();
 		std::string materialinstancepath = filepath;
 
-		std::cout << " i neeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed texture " << filepath << " \n";
 
-		uid uids(materialinstancepath);
+
+		std::string descfilepath = filepath + ".desc";
+
+		unsigned guid = _GEOM::GetGUID(descfilepath);
+
+
+		//GFX::Mesh* meshPtr = SetupMesh(filepath, guid);
 		auto texPtr = SetupMaterialInstance(materialinstancepath);
+		//texPtr-> = descfilepath;
+		//_GEOM::DescriptorData::DeserializeGEOM_DescriptorDataFromFile(meshPtr->mMeshDescriptorData, descfilepath);
+
+		bool descFilePresent = _GEOM::CheckAndCreateDescriptorFileTEXTURE(filepath, descfilepath, filepath);
+
+
+
+		//uid uids(materialinstancepath);
+
 		++mResouceCnt;
 		instance_infos& tempInstance = AllocRscInfo();
 		tempInstance.m_Name = materialinstancepath;
-		tempInstance.m_GUID = uids;
+		tempInstance.m_GUID = guid;
 		tempInstance.m_pData = reinterpret_cast<void*>(texPtr);
 
 		tempInstance.m_Type = _TEXTURE;
-		m_ResourceInstance.emplace(uids.id, &tempInstance);
+		m_ResourceInstance.emplace(guid, &tempInstance);
 	}
 }
 /***************************************************************************/

@@ -121,6 +121,7 @@ void Scene::RemoveEntity(Entity _e) {
 
 	mEntities.erase(_e);
 	systemManager->ecs->DeleteEntity(_e);
+	PINFO("Removed Entity (%s) from Scene (%s)", std::to_string(static_cast<int>(_e.id)).c_str(), mName.c_str());
 }
 
 bool Scene::IsError() {

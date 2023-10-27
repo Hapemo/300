@@ -124,7 +124,8 @@ void LuaGeneral()
         "tagid", &General::tagid,
         "subtag", &General::subtag,
         "isActive", &General::isActive,
-        "GetTag", &General::GetTag
+        "GetTag", &General::GetTag,
+        "SetTag", &General::SetTag
     );
 }
 
@@ -238,7 +239,7 @@ void LuaInput()
 
 void LuaAudioSystem()
 {
- /*   systemManager->mScriptingSystem->luaState.new_usertype<AudioSystem>(
+    systemManager->mScriptingSystem->luaState.new_usertype<AudioSystem>(
         "mAudioSystem", sol::constructors<>(),
         "PlayAudio", &AudioSystem::PlayAudio,
         "SetAllSFXVolume", &AudioSystem::SetAllSFXVolume,
@@ -255,7 +256,7 @@ void LuaAudioSystem()
         "UnpauseAllSounds", &AudioSystem::UnpauseAllSounds,
         "UnpauseSFXSounds", &AudioSystem::UnpauseSFXSounds,
         "UnpauseBGMSounds", &AudioSystem::UnpauseBGMSounds
-    );*/
+    );
 }
 
 void LuaAudio()
@@ -312,7 +313,9 @@ void LuaPhysics()
 {
     systemManager->mScriptingSystem->luaState.new_usertype<PhysicsSystem>(
         "mPhysicsSystem", sol::constructors<>(),
-        "SetVelocity", &PhysicsSystem::SetVelocity
+        "SetVelocity", &PhysicsSystem::SetVelocity,
+        "SetPosition", &PhysicsSystem::SetPosition,
+        "SetRotation", &PhysicsSystem::SetRotation
     );
 }
 
@@ -356,7 +359,8 @@ void LuaGameState()
 {
     systemManager->mScriptingSystem->luaState.new_usertype<GameStateManager>(
         "mGameStateSystem", sol::constructors<>(),
-        "GetEntity", &GameStateManager::GetEntity
+        "GetEntity", &GameStateManager::GetEntity,
+        "DeleteEntity", &GameStateManager::DeleteEntity
         );
 }
 

@@ -69,8 +69,8 @@ void GraphicsSystem::Init()
 	SetCameraProjection(CAMERA_TYPE::CAMERA_TYPE_ALL, 60.f, m_Window->size(), 0.1f, 900.f);			// Projection of camera
 
 	// init game camera
-	SetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_GAME, { 16.218f, 474.854f, 748.714f });
-	SetCameraTarget(CAMERA_TYPE::CAMERA_TYPE_GAME, { 16.21f, 473.694f, 739.714f });
+	/*SetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_GAME, { 16.218f, 474.854f, 748.714f });
+	SetCameraTarget(CAMERA_TYPE::CAMERA_TYPE_GAME, { 16.21f, 473.694f, 739.714f });*/
 
 	if (m_EditorMode)
 	{
@@ -132,11 +132,10 @@ void GraphicsSystem::Update(float dt)
 		{
 			trans += Entity(inst.GetParent()).GetComponent<Transform>().mTranslate;
 		}
-		glm::mat4 trns = glm::translate(trans);
-		glm::mat4 scale = glm::scale(trns, inst.GetComponent<Transform>().mScale / (meshinst.mBBOX.m_Max - meshinst.mBBOX.m_Min));
-		glm::mat4 final = glm::rotate(scale, glm::radians(inst.GetComponent<Transform>().mRotate.x), glm::vec3(1.f, 0.f, 0.f));
-		final = glm::rotate(final, glm::radians(inst.GetComponent<Transform>().mRotate.y), glm::vec3(0.f, 1.f, 0.f));
-		final = glm::rotate(final, glm::radians(inst.GetComponent<Transform>().mRotate.z), glm::vec3(0.f, 0.f, 1.f));
+		mat4 S = glm::scale(inst.GetComponent<Transform>().mScale / (meshinst.mBBOX.m_Max - meshinst.mBBOX.m_Min));
+		mat4 R = glm::toMat4(glm::quat(glm::radians(inst.GetComponent<Transform>().mRotate)));
+		mat4 T = glm::translate(trans);
+		mat4 final = T * R * S;
 
 		// if the debug drawing is turned on
 		if (m_DebugDrawing && inst.HasComponent<BoxCollider>())
@@ -152,6 +151,23 @@ void GraphicsSystem::Update(float dt)
 
 			// draw the mesh's origin
 			m_Renderer.AddSphere(m_EditorCamera.position(), inst.GetComponent<Transform>().mTranslate, 0.5f, {1.f, 1.f, 0.f, 1.f});
+		}
+
+		if (m_DebugDrawing && inst.HasComponent<CapsuleCollider>())
+		{
+			CapsuleCollider cap = inst.GetComponent<CapsuleCollider>();
+			Transform xform = inst.GetComponent<Transform>();
+			if (inst.HasParent())
+				xform.mTranslate += static_cast<Entity>(inst.GetParent()).GetComponent<Transform>().mTranslate;
+
+			glm::vec3 capPos = xform.mTranslate + cap.mTranslateOffset;
+
+			glm::vec3 first = capPos;
+			glm::vec3 second = capPos;
+			first.y -= cap.mHalfHeight;
+			second.y += cap.mHalfHeight;
+
+			m_Renderer.AddCapsule(m_EditorCamera.position(), first, second, cap.mRadius, glm::vec4(0.f, 1.f, 0.f, 1.f));
 		}
 
 		// Update the animation
@@ -396,11 +412,16 @@ void GraphicsSystem::EditorDraw(float dt)
 		uid gaussianshaderstr("GaussianBlurShader");
 		GFX::Shader& gaussianShaderInst = *systemManager->mResourceTySystem->get_Shader(gaussianshaderstr.id);
 
-		m_PingPongFbo.GaussianBlur(gaussianShaderInst, m_Fbo, systemManager->mGraphicsSystem->mTexelOffset);
+		m_PingPongFbo.GaussianBlur(gaussianShaderInst, m_Fbo, systemManager->mGraphicsSystem->mTexelOffset, systemManager->mGraphicsSystem->mSamplingWeight);
 
-		BlendFramebuffers(m_Fbo, m_Fbo.GetColorAttachment(), m_PingPongFbo.pingpongColorbuffers[0]);
+		AdditiveBlendFramebuffers(m_Fbo, m_Fbo.GetColorAttachment(), m_PingPongFbo.pingpongColorbuffers[0]);
 	}
 
+
+	if (systemManager->mGraphicsSystem->m_EnableChromaticAbberation)
+	{
+		ChromaticAbbrebationBlendFramebuffers(m_Fbo, m_Fbo.GetColorAttachment(), m_PingPongFbo.pingpongColorbuffers[0]);
+	}
 
 	// Render UI objects
 	m_UiShaderInst.Activate();		// Activate shader
@@ -543,9 +564,14 @@ void GraphicsSystem::GameDraw(float dt)
 		// Render the bloom for the Game Framebuffer
 		uid gaussianshaderstr("GaussianBlurShader");
 		GFX::Shader& gaussianShaderInst = *systemManager->mResourceTySystem->get_Shader(gaussianshaderstr.id);
-		m_PingPongFbo.GaussianBlur(gaussianShaderInst, m_GameFbo, systemManager->mGraphicsSystem->mTexelOffset);
+		m_PingPongFbo.GaussianBlur(gaussianShaderInst, m_GameFbo, systemManager->mGraphicsSystem->mTexelOffset, systemManager->mGraphicsSystem->mSamplingWeight);
 
-		BlendFramebuffers(m_GameFbo, m_GameFbo.GetColorAttachment(), m_PingPongFbo.pingpongColorbuffers[0]);
+		AdditiveBlendFramebuffers(m_GameFbo, m_GameFbo.GetColorAttachment(), m_PingPongFbo.pingpongColorbuffers[0]);
+	}
+
+	if (systemManager->mGraphicsSystem->m_EnableChromaticAbberation)
+	{
+		ChromaticAbbrebationBlendFramebuffers(m_GameFbo, m_GameFbo.GetColorAttachment(), m_PingPongFbo.pingpongColorbuffers[0]);
 	}
 
 	// Render UI objects
@@ -555,6 +581,37 @@ void GraphicsSystem::GameDraw(float dt)
 
 	m_GameFbo.Unbind();
 }
+
+
+void GraphicsSystem::ChromaticAbbrebationBlendFramebuffers(GFX::FBO& targetFramebuffer, unsigned int Attachment0, unsigned int Attachment1)
+{
+	glBlendFunc(GL_ONE, GL_ONE);
+
+	uid shaderstr("ChromaticAbberation");
+	GFX::Shader& BlendShader = *systemManager->mResourceTySystem->get_Shader(shaderstr.id);
+
+	BlendShader.Activate();
+	targetFramebuffer.Bind();
+
+	// Draw to color attachment only. Otherwise might affect other attachments
+	glDrawBuffer(GL_COLOR_ATTACHMENT0);
+
+	glUniform1f(BlendShader.GetUniformLocation("ChromaticAbberationStrength"), systemManager->mGraphicsSystem->mChromaticStrength);
+	glBindTexture(GL_TEXTURE_2D, Attachment0);									// bind the first attachment
+	glBindTexture(GL_TEXTURE_2D, Attachment1);									// bind the second attachment
+
+	{
+		mScreenQuad.Bind();
+
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+
+		mScreenQuad.Unbind();
+	}
+
+	targetFramebuffer.Unbind();
+	BlendShader.Deactivate();
+}
+
 
 /***************************************************************************/
 /*!
@@ -877,7 +934,7 @@ void GraphicsSystem::DrawAll(GFX::Mesh &mesh)
 	Perform additive blending on 2 color attachments
 */
 /**************************************************************************/
-void GraphicsSystem::BlendFramebuffers(	GFX::FBO& targetFramebuffer, unsigned int Attachment0, unsigned int Attachment1)
+void GraphicsSystem::AdditiveBlendFramebuffers(	GFX::FBO& targetFramebuffer, unsigned int Attachment0, unsigned int Attachment1)
 {
 	glBlendFunc(GL_ONE, GL_ONE);
 

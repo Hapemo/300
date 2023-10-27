@@ -49,6 +49,8 @@ void ObjectFactory::LoadEntity(Entity e, rapidjson::Value& reader)
 	DESERIALIZE_SELF(Audio, "audio");
 	DESERIALIZE_SELF(Camera, "camera");
 	DESERIALIZE_SELF(Prefab, "prefab");
+	if (e.HasComponent<Prefab>())
+		systemManager->ecs->mPrefabs[e.GetComponent<Prefab>().mPrefab].push_back(e);
 	DESERIALIZE_SELF(PointLight, "pointlight");
 	DESERIALIZE_SELF(AISetting, "aisetting");
 }
@@ -95,8 +97,6 @@ void ObjectFactory::LoadScene(Scene* scene, const std::string& filename)
 
 		std::cout << "tmp_id: " << (int)tmp_id << ", entity_id: " << (int)e.id << ", entity_name: " << e.GetComponent<General>().name << std::endl;
 		scene->mEntities.insert(e);
-
-		std::cout << (int)e.id << std::endl;
 	}
 }
 
