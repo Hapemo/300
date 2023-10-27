@@ -190,11 +190,6 @@ void ScriptingSystem::Init()
         "CONCRETE", MATERIAL::CONCRETE,
         "GLASS", MATERIAL::GLASS,
         "UNDEFINED", MATERIAL::UNDEFINED);
-
-    luaState.new_enum("MOTION",
-        "STATIC", MOTION::STATIC,
-        "DYNAMIC", MOTION::DYNAMIC,
-        "UNDEFINED", MOTION::UNDEFINED);
 }
 
 void ScriptingSystem::Update(float dt)

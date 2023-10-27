@@ -131,8 +131,6 @@ function Update()
     -- Test RigidBody
     --rigidBodyComponent = entity:GetRigidBody()
     --print(rigidBodyComponent.mMaterial)
-    --mMOTION not working as of 27/10
-    --rigidBodyComponent.mMotion = MOTION.DYNAMIC
     -- rigidBodyComponent.mMaterial = MATERIAL.CONCRETE
     -- rigidBodyComponent.mVelocity.x = 4.0
     -- print(rigidBodyComponent.mVelocity.x)
