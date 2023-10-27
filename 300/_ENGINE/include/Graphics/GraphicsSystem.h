@@ -114,10 +114,19 @@ public:
 	/***************************************************************************/
 	/*!
 	\brief
-		the draw function isolated to the editor's framebuffer
+		the additive draw function isolated to the editor's framebuffer
 	*/
 	/**************************************************************************/
-	void BlendFramebuffers( GFX::FBO& targetFramebuffer, unsigned int Attachment0, unsigned int Attachment1);
+	void AdditiveBlendFramebuffers( GFX::FBO& targetFramebuffer, unsigned int Attachment0, unsigned int Attachment1);
+
+
+	/***************************************************************************/
+	/*!
+	\brief
+		the additive blend function for the chromatic abbrebation
+	*/
+	/**************************************************************************/
+	void ChromaticAbbrebationBlendFramebuffers(GFX::FBO& targetFramebuffer, unsigned int Attachment0, unsigned int Attachment1);
 
 	/***************************************************************************/
 	/*!
@@ -234,6 +243,9 @@ public:
 	float		mAmbientBloomExposure{ 0.4f };
 	float		mTexelOffset{ 1.f };
 	float		mSamplingWeight{ 1.f };
+
+	// -- Chromatic Abbreation --
+	float		mChromaticStrength{ 0.006f };
 
 	// -- Textures --
 	std::vector<int> m_Textures;	// 0, 1, ..., 31

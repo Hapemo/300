@@ -415,15 +415,13 @@ void GraphicsSystem::EditorDraw(float dt)
 
 		m_PingPongFbo.GaussianBlur(gaussianShaderInst, m_Fbo, systemManager->mGraphicsSystem->mTexelOffset, systemManager->mGraphicsSystem->mSamplingWeight);
 
-		BlendFramebuffers(m_Fbo, m_Fbo.GetColorAttachment(), m_PingPongFbo.pingpongColorbuffers[0]);
+		AdditiveBlendFramebuffers(m_Fbo, m_Fbo.GetColorAttachment(), m_PingPongFbo.pingpongColorbuffers[0]);
 	}
 
 
 	if (systemManager->mGraphicsSystem->m_EnableChromaticAbberation)
 	{
-		uid chromaticAbbreation("ChromaticAbberation");
-		GFX::Shader& chromaticAbberationShaderInst = *systemManager->mResourceTySystem->get_Shader(chromaticAbbreation.id);
-		
+		ChromaticAbbrebationBlendFramebuffers(m_Fbo, m_Fbo.GetColorAttachment(), m_PingPongFbo.pingpongColorbuffers[0]);
 	}
 
 	// Render UI objects
@@ -569,7 +567,12 @@ void GraphicsSystem::GameDraw(float dt)
 		GFX::Shader& gaussianShaderInst = *systemManager->mResourceTySystem->get_Shader(gaussianshaderstr.id);
 		m_PingPongFbo.GaussianBlur(gaussianShaderInst, m_GameFbo, systemManager->mGraphicsSystem->mTexelOffset, systemManager->mGraphicsSystem->mSamplingWeight);
 
-		BlendFramebuffers(m_GameFbo, m_GameFbo.GetColorAttachment(), m_PingPongFbo.pingpongColorbuffers[0]);
+		AdditiveBlendFramebuffers(m_GameFbo, m_GameFbo.GetColorAttachment(), m_PingPongFbo.pingpongColorbuffers[0]);
+	}
+
+	if (systemManager->mGraphicsSystem->m_EnableChromaticAbberation)
+	{
+		ChromaticAbbrebationBlendFramebuffers(m_GameFbo, m_GameFbo.GetColorAttachment(), m_PingPongFbo.pingpongColorbuffers[0]);
 	}
 
 	// Render UI objects
@@ -579,6 +582,37 @@ void GraphicsSystem::GameDraw(float dt)
 
 	m_GameFbo.Unbind();
 }
+
+
+void GraphicsSystem::ChromaticAbbrebationBlendFramebuffers(GFX::FBO& targetFramebuffer, unsigned int Attachment0, unsigned int Attachment1)
+{
+	glBlendFunc(GL_ONE, GL_ONE);
+
+	uid shaderstr("ChromaticAbberation");
+	GFX::Shader& BlendShader = *systemManager->mResourceTySystem->get_Shader(shaderstr.id);
+
+	BlendShader.Activate();
+	targetFramebuffer.Bind();
+
+	// Draw to color attachment only. Otherwise might affect other attachments
+	glDrawBuffer(GL_COLOR_ATTACHMENT0);
+
+	glUniform1f(BlendShader.GetUniformLocation("ChromaticAbberationStrength"), systemManager->mGraphicsSystem->mChromaticStrength);
+	glBindTexture(GL_TEXTURE_2D, Attachment0);									// bind the first attachment
+	glBindTexture(GL_TEXTURE_2D, Attachment1);									// bind the second attachment
+
+	{
+		mScreenQuad.Bind();
+
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+
+		mScreenQuad.Unbind();
+	}
+
+	targetFramebuffer.Unbind();
+	BlendShader.Deactivate();
+}
+
 
 /***************************************************************************/
 /*!
@@ -901,7 +935,7 @@ void GraphicsSystem::DrawAll(GFX::Mesh &mesh)
 	Perform additive blending on 2 color attachments
 */
 /**************************************************************************/
-void GraphicsSystem::BlendFramebuffers(	GFX::FBO& targetFramebuffer, unsigned int Attachment0, unsigned int Attachment1)
+void GraphicsSystem::AdditiveBlendFramebuffers(	GFX::FBO& targetFramebuffer, unsigned int Attachment0, unsigned int Attachment1)
 {
 	glBlendFunc(GL_ONE, GL_ONE);
 
