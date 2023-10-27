@@ -10,6 +10,7 @@
 ****************************************************************************
 ***/
 #define  _ENABLE_ANIMATIONS 1
+#define  _TEST_PIE_SHADER 0
 
 #include <ECS/ECS_Components.h>
 #include <Graphics/GraphicsSystem.h>
@@ -427,6 +428,25 @@ void GraphicsSystem::EditorDraw(float dt)
 	m_UiShaderInst.Activate();		// Activate shader
 	DrawAll2DInstances(m_UiShaderInst.GetHandle());
 	m_UiShaderInst.Deactivate();	// Deactivate shader
+
+#if _TEST_PIE_SHADER
+	std::string CircularShaderStr{"PieShaderTest"};
+	uid circularShaderUID(CircularShaderStr);
+	GFX::Shader& circularShaderInst = *systemManager->mResourceTySystem->get_Shader(circularShaderUID.id);
+
+	circularShaderInst.Activate();		// activate shader
+	GLuint degrees_uniform = glGetUniformLocation(circularShaderInst.GetHandle(), "uDegrees");
+	glUniform1f(degrees_uniform, glm::radians(m_DegreeTest));
+
+	// Bind 2D quad VAO
+	m_Image2DMesh.BindVao();
+	// Draw call
+	glDrawArraysInstanced(GL_TRIANGLE_FAN, 0, 4, 1);
+	// Unbind 2D quad VAO
+	m_Image2DMesh.UnbindVao();
+
+	circularShaderInst.Deactivate();	// Deactivate shader
+#endif
 
 #pragma endregion
 

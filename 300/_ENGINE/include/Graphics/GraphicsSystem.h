@@ -265,6 +265,9 @@ public:
 	// -- Stats --
 	int		m_LightCount{};
 
+	// -- TEST --
+	float m_DegreeTest{};
+
 private:
 	// -- SSBO -- 
 	const int						MAX_INSTANCES = 1000;

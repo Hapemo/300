@@ -81,4 +81,11 @@ void TabWindow::update()
 
 	ImGui::Checkbox("Enable Bloom", &systemManager->mGraphicsSystem->m_EnableBloom); 
 	ImGui::Checkbox("Enable Chromatic Abberation", &systemManager->mGraphicsSystem->m_EnableChromaticAbberation);
+
+	ImGui::Separator();
+	ImGui::Text("Circle Degree Test");
+	ImGui::SameLine();
+	ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+		- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+	ImGui::DragFloat("##CS", (float*)&systemManager->mGraphicsSystem->m_DegreeTest);
 }
