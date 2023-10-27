@@ -12,7 +12,6 @@ function Alive()
 end
 
 function Update()
-    print(name)
     testing = testing + 1;
     --testie = systemManager.ecs:NewEntity();
     --For M1 demo
@@ -63,6 +62,8 @@ function Update()
         if (create == 2) then
             for i = 1, 4 do
                 testEntity = systemManager.ecs:NewEntityByScene();
+                gameStateSys = systemManager:mGameStateSystem();
+                gameStateSys:DeleteEntity(testEntity)
             end
             create = create + 1
         end
@@ -88,7 +89,7 @@ function Update()
         --Helper.printTest()
         --Helper.test = 300
         --script_entity.id = 60
-        generalComponent:SetTag("static");
+        generalComponent:SetTag("enEmy");
         tag = generalComponent:GetTag();
     end
 

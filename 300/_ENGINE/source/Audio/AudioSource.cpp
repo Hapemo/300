@@ -10,9 +10,9 @@ bool LoadAudio(std::string file_path, std::string audio_name)
 	return load_status;
 }
 
-bool LoadAudioFromDirectory(std::filesystem::path file_path)
+bool LoadAudioFromDirectory(std::string directory_path)
 {
-	bool load_status = systemManager->mAudioSystem.get()->LoadAudioFromDirectory(file_path);
+	bool load_status = systemManager->mAudioSystem.get()->LoadAudioFromDirectory(directory_path);
 	return load_status;
 }
 
