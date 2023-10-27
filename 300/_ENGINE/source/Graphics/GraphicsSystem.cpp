@@ -144,11 +144,16 @@ void GraphicsSystem::Update(float dt)
 			// draw the AABB of the mesh
 			glm::vec3 bbox_dimens = inst.GetComponent<Transform>().mScale * inst.GetComponent<BoxCollider>().mScaleOffset;
 			glm::vec3 bbox_xlate = inst.GetComponent<Transform>().mTranslate + inst.GetComponent<BoxCollider>().mTranslateOffset;
-			if (inst.HasParent())
-			{
+			if (inst.HasParent()) {
 				bbox_xlate += Entity(inst.GetParent()).GetComponent<Transform>().mTranslate;
 			}
-			m_Renderer.AddAabb(bbox_xlate, bbox_dimens, {1.f, 0.f, 0.f, 1.f});
+
+			// calculate the transformations
+			glm::mat4 bboxScale = glm::scale(bbox_dimens);
+			glm::mat4 bboxTranslate = glm::translate(bbox_xlate);
+			glm::mat4 bboxFinal = bboxTranslate * R * bboxScale;
+
+			m_Renderer.AddAabb(bboxFinal, {1.f, 0.f, 0.f, 1.f});
 
 			// draw the mesh's origin
 			m_Renderer.AddSphere(m_EditorCamera.position(), inst.GetComponent<Transform>().mTranslate, 0.5f, {1.f, 1.f, 0.f, 1.f});

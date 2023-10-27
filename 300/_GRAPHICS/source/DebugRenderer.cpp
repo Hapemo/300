@@ -144,6 +144,20 @@ void GFX::DebugRenderer::AddAabb(vec3 const& center, vec3 const& size, vec4 cons
 	mAabbMesh.mColors.push_back(color);
 }
 
+
+void GFX::DebugRenderer::AddAabb(const mat4& transform, vec4 const& color)
+{
+	if (mAabbMesh.mLTW.size() >= MAX_INSTANCES)
+	{
+		//std::cout << "Max Instances of Objects Reached!\n";
+		return;
+	}
+
+	mAabbMesh.mLTW.push_back(transform);
+	mAabbMesh.mColors.push_back(color);
+}
+
+
 void GFX::DebugRenderer::AddCube(vec3 const& center, vec3 const& size, vec4 const& color)
 {
 	if (mCubeMesh.mLTW.size() >= MAX_INSTANCES)
