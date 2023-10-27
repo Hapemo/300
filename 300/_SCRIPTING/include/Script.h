@@ -33,6 +33,7 @@ public:
 	// Environment
 	sol::environment env{};
 	std::string scriptFile{};
+	int id{};
 
 	void Load(Entity entityID);
 	// Updates according to the script (so if variables are removed, the check

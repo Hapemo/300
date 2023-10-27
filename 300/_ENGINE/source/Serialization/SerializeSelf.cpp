@@ -99,6 +99,7 @@ void RigidBody::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& 
 	Serialize(writer, "motion", mMotion);
 	Serialize(writer, "velocity", mVelocity);
 	Serialize(writer, "rotationconstraints", mRotationConstraints);
+	Serialize(writer, "gravity", mGravity);
 	writer.EndObject();
 }
 
@@ -109,6 +110,7 @@ void RigidBody::DeserializeSelf(rapidjson::Value& reader)
 	Deserialize(reader, "motion", mMotion);
 	Deserialize(reader, "velocity", mVelocity);
 	Deserialize(reader, "rotationconstraints", mRotationConstraints);
+	Deserialize(reader, "gravity", mGravity);
 }
 
 void BoxCollider::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
@@ -171,8 +173,6 @@ void Scripts::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& wr
 	writer.StartObject();
 	Serialize(writer, "scriptscontainer", scriptsContainer);
 
-	for (int i = 0; i < scriptsContainer.size(); ++i)
-		Serialize(writer, scriptsContainer[i].scriptFile.c_str(), scriptsContainer[i].variables);
 	writer.EndObject();
 }
 

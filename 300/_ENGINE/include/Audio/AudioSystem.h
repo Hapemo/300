@@ -82,7 +82,8 @@ public:
 
 public:
 	// Retained Functions (Without Linking to <Audio> component)
-	bool LoadAudioFromDirectory(std::filesystem::path file_path);					                                        // Load files from directory (Like just load all the audio files first) -> later then link
+	bool LoadAudioFromDirectory(std::string directory_path);
+	//bool LoadAudioFromDirectory(std::filesystem::path file_path);					                                        // Load files from directory (Like just load all the audio files first) -> later then link
 	void SetAllSFXVolume(float audio_vol);																				    // Global Volume Setting (SFX)
 	void SetAllBGMVolume(float audio_vol);													                                // Global Volume Setting (BGM)
 	void MuteSFX();																											// Global Mute (SFX)

@@ -110,7 +110,7 @@ void Inspect::update()
 		if (ent.HasComponent<Scripts>())
 		{
 			Scripts& scripts = ent.GetComponent<Scripts>();
-			scripts.Inspect();
+			scripts.Inspect(ent.id);
 		}
 		if (ent.HasComponent<Animator>()) {
 			Animator& ani = ent.GetComponent<Animator>();
@@ -131,6 +131,10 @@ void Inspect::update()
 		if (ent.HasComponent<SphereCollider>()) {
 			SphereCollider& sphereCollider = ent.GetComponent<SphereCollider>();
 			sphereCollider.Inspect();
+		}
+		if (ent.HasComponent<CapsuleCollider>()) {
+			CapsuleCollider& capsuleCollider = ent.GetComponent<CapsuleCollider>();
+			capsuleCollider.Inspect();
 		}
 		if (ent.HasComponent<PointLight>()) {
 			PointLight& pointLight = ent.GetComponent<PointLight>();
@@ -207,7 +211,10 @@ void Inspect::Add_component() {
 			if (!Entity(Hierarchy::selectedId).HasComponent<SphereCollider>())
 				Entity(Hierarchy::selectedId).AddComponent<SphereCollider>();
 		}
-
+		if (ImGui::Selectable("CapsuleCollider")) {
+			if (!Entity(Hierarchy::selectedId).HasComponent<CapsuleCollider>())
+				Entity(Hierarchy::selectedId).AddComponent<CapsuleCollider>();
+		}
 		if (ImGui::Selectable("Animator")) {
 			if (!Entity(Hierarchy::selectedId).HasComponent<Animator>())
 				Entity(Hierarchy::selectedId).AddComponent<Animator>();
@@ -444,15 +451,15 @@ void PointLight::Inspect()
 	Inspector functionality for Script
 */
 /**************************************************************************/
-void Scripts::Inspect() {
+void Scripts::Inspect(entt::entity entityID) {
 	bool delete_component = true;
 	const char* data_script{};
 	static std::string newScript;
 	static bool open_popup{ false };
 	static std::string deleteScript;
 
-	auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
-	Scripts& scripts = scriptEntities.get<Scripts>(Hierarchy::selectedId);
+	//auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
+	////Scripts& scripts = scriptEntities.get<Scripts>(Hierarchy::selectedId);
 
 	if (ImGui::CollapsingHeader("Scripts", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
 	{
@@ -465,13 +472,13 @@ void Scripts::Inspect() {
 				std::string dataScript = std::string(data_script);
 
 				// if entity does not contain any script, just add 
-				if (scriptEntities.get<Scripts>(Hierarchy::selectedId).scriptsContainer.size() == 0)
+				if (scriptsContainer.size() == 0)
 				{
 					Script script;
 					script.scriptFile = dataScript;
 					script.env = { systemManager->mScriptingSystem->luaState, sol::create, systemManager->mScriptingSystem->luaState.globals() };
-					script.Load(Hierarchy::selectedId);
-					scripts.scriptsContainer.push_back(script);
+					script.Load(entityID);
+					scriptsContainer.push_back(script);
 					//std::cout << "Script " << script.scriptFile << " added to entity " << std::to_string((int)Hierarchy::selectedId) << std::endl;
 				}
 				// if entity already has scripts attached, check if duplicate 
@@ -479,7 +486,7 @@ void Scripts::Inspect() {
 				{
 					bool hasScript{ };
 
-					for (auto& elem : scripts.scriptsContainer)
+					for (auto& elem : scriptsContainer)
 					{
 						if (elem.scriptFile == dataScript)
 						{
@@ -496,9 +503,9 @@ void Scripts::Inspect() {
 						script.scriptFile = dataScript;
 						script.env = { systemManager->mScriptingSystem->luaState, sol::create, systemManager->mScriptingSystem->luaState.globals() };
 
-						script.Load(Hierarchy::selectedId);
+						script.Load(entityID);
 
-						scripts.scriptsContainer.push_back(script);
+						scriptsContainer.push_back(script);
 						//std::cout << "Script " << script.scriptFile << ".lua added to entity " << std::to_string((int)Hierarchy::selectedId) << std::endl;
 						PINFO("Script %s added to entity %s", script.scriptFile.c_str(), std::to_string((int)Hierarchy::selectedId).c_str());
 					}
@@ -509,7 +516,7 @@ void Scripts::Inspect() {
 
 		ImGui::Text("Drag drop scripts to header above 'Scripts'");
 		ImGui::Text("Entity contains scripts: ");
-		for (auto& elem : scripts.scriptsContainer)
+		for (auto& elem : scriptsContainer)
 		{
 			ImGui::SetNextItemOpen(true);
 			if (ImGui::TreeNode(elem.scriptFile.c_str())) {
@@ -530,11 +537,11 @@ void Scripts::Inspect() {
 		{
 			if (ImGui::Selectable("Delete"))
 			{
-				for (auto i = 0; i < scripts.scriptsContainer.size(); i++)
+				for (auto i = 0; i < scriptsContainer.size(); i++)
 				{
-					if (scripts.scriptsContainer[i].scriptFile == deleteScript)
+					if (scriptsContainer[i].scriptFile == deleteScript)
 					{
-						scripts.scriptsContainer.erase(scripts.scriptsContainer.begin() + i);
+						scriptsContainer.erase(scriptsContainer.begin() + i);
 					}
 				}
 				open_popup = false;
@@ -1041,7 +1048,11 @@ void RigidBody::Inspect() {
 		ImGui::SameLine();
 		ImGui::Text("Z");
 
-
+		ImGui::Text("Gravity");
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		ImGui::Checkbox("##Gravity", &mGravity);
 
 
 	}
