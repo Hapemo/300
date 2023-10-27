@@ -123,8 +123,8 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 	// [10/14] Scripting Test
 	if (Input::CheckKey(PRESS, Q))
 		TestLoadPlaySuccess();		 // Test OK. (must have component to play)
-	if (Input::CheckKey(PRESS, W))
-		TestLoadAudioDirectory();	 // Test OK.
+	//if (Input::CheckKey(PRESS, W))
+	//	TestLoadAudioDirectory();	 // Test OK.
 	if (Input::CheckKey(PRESS, E))
 		TestOverrideAttachSound();   // Test OK. (must have component to play)
 	if (Input::CheckKey(PRESS, R))   // Press 'E' first. (to play)
