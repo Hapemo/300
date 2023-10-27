@@ -1140,7 +1140,7 @@ void SphereCollider::Inspect() {
 /***************************************************************************/
 void CapsuleCollider::Inspect() {
 	bool delete_component{ true };
-	if (ImGui::CollapsingHeader("SphereCollider", &delete_component, ImGuiTreeNodeFlags_DefaultOpen)) {
+	if (ImGui::CollapsingHeader("CapsuleCollider", &delete_component, ImGuiTreeNodeFlags_DefaultOpen)) {
 
 		ImGui::Text("Translate Offset");
 		ImGui::SameLine();
@@ -1153,7 +1153,7 @@ void CapsuleCollider::Inspect() {
 		ImGui::SameLine();
 		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
 			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
-		ImGui::DragFloat("##radius", (float*)&mRadius);
+		ImGui::DragFloat("##radiusCC", (float*)&mRadius);
 		ImGui::Separator();
 
 		ImGui::Text("Half-Height");
@@ -1170,7 +1170,7 @@ void CapsuleCollider::Inspect() {
 		ImGui::Checkbox("##isTriggerCC", &mIsTrigger);
 	}
 	if (delete_component == false)
-		Entity(Hierarchy::selectedId).RemoveComponent<SphereCollider>();
+		Entity(Hierarchy::selectedId).RemoveComponent<CapsuleCollider>();
 }
 
 /***************************************************************************/
