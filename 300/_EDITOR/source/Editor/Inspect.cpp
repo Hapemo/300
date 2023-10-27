@@ -132,6 +132,10 @@ void Inspect::update()
 			SphereCollider& sphereCollider = ent.GetComponent<SphereCollider>();
 			sphereCollider.Inspect();
 		}
+		if (ent.HasComponent<CapsuleCollider>()) {
+			CapsuleCollider& capsuleCollider = ent.GetComponent<CapsuleCollider>();
+			capsuleCollider.Inspect();
+		}
 		if (ent.HasComponent<PointLight>()) {
 			PointLight& pointLight = ent.GetComponent<PointLight>();
 			pointLight.Inspect();
@@ -207,7 +211,10 @@ void Inspect::Add_component() {
 			if (!Entity(Hierarchy::selectedId).HasComponent<SphereCollider>())
 				Entity(Hierarchy::selectedId).AddComponent<SphereCollider>();
 		}
-
+		if (ImGui::Selectable("CapsuleCollider")) {
+			if (!Entity(Hierarchy::selectedId).HasComponent<CapsuleCollider>())
+				Entity(Hierarchy::selectedId).AddComponent<CapsuleCollider>();
+		}
 		if (ImGui::Selectable("Animator")) {
 			if (!Entity(Hierarchy::selectedId).HasComponent<Animator>())
 				Entity(Hierarchy::selectedId).AddComponent<Animator>();
