@@ -22,6 +22,7 @@ function Update()
     end
     generalComponent = entity:GetGeneral()
     transformComponent = entity:GetTransform()
+
     --vfxComponent = entity:GetVFX();
     -- Change entity name to enemy
     generalComponent.name = "Enemy"
@@ -77,8 +78,9 @@ function Update()
         -- physicsSys:SetVelocity(entity, vec);
     elseif Input.CheckKey(State.HOLD, Key.KEY_B) then
         testEntity = systemManager.ecs:NewEntityByScene();
-        -- scriptingSys = systemManager:mScriptingSystem();
-        -- scriptingSys:AddScript(testEntity, "../assets\\Scripts\\Print.lua");
+        --scriptingSys = systemManager:mScriptingSystem();
+        --scriptingSys:AddScript(testEntity, "../assets\\Scripts\\Print.lua");
+        scriptsComponent = testEntity:AddScripts();
         rigidBodyComponent = testEntity:AddRigidBody();
         pointLightComponent = testEntity:AddPointLight();
         meshComponent = testEntity:AddMeshRenderer();
@@ -91,6 +93,10 @@ function Update()
         --script_entity.id = 60
         generalComponent:SetTag("enEmy");
         tag = generalComponent:GetTag();
+
+        if testEntity:HasRigidBody() then
+            print("has rigidbody")
+        end
     end
 
     --Test Default Param
@@ -121,6 +127,27 @@ function Update()
     --graphicsSys = systemManager:mGraphicsSystem();
     --graphicsSys:SetGlobalBloomThreshold(vec)
     --graphicsSys:SetGlobalBloomExposure(0.5)
+
+    -- Test RigidBody
+    --rigidBodyComponent = entity:GetRigidBody()
+    --print(rigidBodyComponent.mMaterial)
+    --mMOTION not working as of 27/10
+    --rigidBodyComponent.mMotion = MOTION.DYNAMIC
+    -- rigidBodyComponent.mMaterial = MATERIAL.CONCRETE
+    -- rigidBodyComponent.mVelocity.x = 4.0
+    -- print(rigidBodyComponent.mVelocity.x)
+    -- print(rigidBodyComponent.mVelocity.y)
+    -- print(rigidBodyComponent.mVelocity.z)
+
+    -- Test BoxCollider
+    -- boxColliderComponent = entity:GetBoxCollider()
+    -- boxColliderComponent.mScaleOffset.y = 5
+    -- boxColliderComponent.mTranslateOffset.x = 3
+
+    -- Test Point Light
+    -- pointLightComponent = entity:GetPointLight()
+    -- pointLightComponent:SetColor(vec)
+
 end
 
 function Dead()
