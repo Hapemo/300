@@ -728,7 +728,7 @@ void MeshRenderer::Inspect()
 				guid = _GEOM::GetGUID(descfilepath);
 
 				// If the descriptor file is not present, then load it
-				if (!descFilePresent)
+				//if (!descFilePresent)
 				{
 					//!>> Calling the GEOM Compiler to load 
 					std::string command = "..\\_GEOM_COMPILER\\_GEOM_COMPILER.exe ";
@@ -743,6 +743,9 @@ void MeshRenderer::Inspect()
 				mMeshRef.data_uid = guid;
 				mMeshRef.data = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(guid));
 				GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mMeshRef.data);
+				
+				// load the descriptor data into the GFX::mesh instance
+				_GEOM::DescriptorData::DeserializeGEOM_DescriptorDataFromFile(meshinst->mMeshDescriptorData, GEOM_Descriptor_Filepath);
 
 				if (entins.HasComponent<Animator>() && meshinst->mHasAnimation)
 				{
@@ -809,11 +812,13 @@ void MeshRenderer::Inspect()
 						std::string TEXTURE_Descriptor_Filepath;
 						unsigned guid;
 						// check and ensures that the descriptor file for the materials are created
-						bool descFilePresent = _GEOM::CheckAndCreateDescriptorFileTEXTURE(data_str, TEXTURE_Descriptor_Filepath, texturestr);
+						//bool descFilePresent = _GEOM::CheckAndCreateDescriptorFileTEXTURE(data_str, TEXTURE_Descriptor_Filepath, texturestr);
 						std::string descfilepath = data_str + ".desc";
 						guid = _GEOM::GetGUID(descfilepath);
 						mTextureRef[i].data_uid = guid;
 						mTextureRef[i].data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(guid));
+
+						_GEOM::Texture_DescriptorData::DeserializeTEXTURE_DescriptorDataFromFile(mTextureDescriptorData[i], TEXTURE_Descriptor_Filepath);
 
 						//uid temp(mMaterialInstancePath[i]);
 						//mTextureRef[i].data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(temp.id));
@@ -836,10 +841,12 @@ void MeshRenderer::Inspect()
 						std::string descfilepath = data_str + ".desc";
 						guid = _GEOM::GetGUID(descfilepath);	// gets the guid from the png desc
 
+						_GEOM::Texture_DescriptorData::DeserializeTEXTURE_DescriptorDataFromFile(mTextureDescriptorData[i], TEXTURE_Descriptor_Filepath);
+
 						// If the descriptor file is not present, then load it
-						if (!descFilePresent)
+						//if (!descFilePresent)
 						{
-							CompressImageFile(data_str.c_str(), systemManager->mResourceTySystem->compressed_texture_path.c_str());
+							CompressImageFile(data_str.c_str(), systemManager->mResourceTySystem->compressed_texture_path.c_str(), _GEOM::Texture_DescriptorData::isGammaSpace(TEXTURE_Descriptor_Filepath));
 
 							// Load the textures into the list of usable textures within the engine
 							systemManager->mResourceTySystem->texture_Load(getFilename(data_str), guid);
@@ -849,8 +856,11 @@ void MeshRenderer::Inspect()
 						}
 
 						//uid temp(mMaterialInstancePath[i]);
-						mTextureRef[i].data_uid = guid;
-						mTextureRef[i].data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(guid));
+						//mTextureRef[i].data_uid = guid;
+						//mTextureRef[i].data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(guid));
+
+						//_GEOM::Texture_DescriptorData::DeserializeTEXTURE_DescriptorDataFromFile(mTextureDescriptorData[i], TEXTURE_Descriptor_Filepath);
+
 						//mTextureCont[i] = true;
 					}
 
@@ -877,6 +887,39 @@ void MeshRenderer::Inspect()
 					}
 				}
 				
+
+				ImGui::Dummy(ImVec2(0.0f, 3.0f));
+				std::string nodename = getFilename(mMaterialInstancePath[i]) + " DescriptorFile";
+				if (ImGui::TreeNode(nodename.c_str()))
+				{
+					_GEOM::Texture_DescriptorData& texturedesc = mTextureDescriptorData[i];
+					if (texturedesc.mGUID)
+					{
+						ImGui::Text("%d", texturedesc.mGUID);
+
+						bool isSRGB = (texturedesc.mCompressionType == _GEOM::CompressionType::SRGB);
+						ImGui::Checkbox("isSRGB", &isSRGB);
+
+						// RGB
+						if (isSRGB) {
+							texturedesc.mCompressionType = _GEOM::CompressionType::SRGB;
+						}
+						else {
+							texturedesc.mCompressionType = _GEOM::CompressionType::RGB;
+						}
+
+						if (texturedesc.mDescFilepath.size() > 0)
+							ImGui::Text("%s", texturedesc.mDescFilepath.c_str());
+
+						if (ImGui::Button("Save Descriptor Data"))
+						{
+							_GEOM::Texture_DescriptorData::SerializeTEXTURE_DescriptorDataToFile(mTextureDescriptorData[i].mDescFilepath, texturedesc);
+						}
+					}
+					ImGui::TreePop();
+				}
+
+
 				ImGui::Dummy(ImVec2(0.0f, 10.0f));
 			}
 			else {
@@ -896,7 +939,7 @@ void MeshRenderer::Inspect()
 						std::string TEXTURE_Descriptor_Filepath;
 						unsigned guid;
 						// check and ensures that the descriptor file for the materials are created
-						bool descFilePresent = _GEOM::CheckAndCreateDescriptorFileTEXTURE(data_str, TEXTURE_Descriptor_Filepath, texturestr);
+						//bool descFilePresent = _GEOM::CheckAndCreateDescriptorFileTEXTURE(data_str, TEXTURE_Descriptor_Filepath, texturestr);
 						std::string descfilepath = data_str + ".desc";
 						guid = _GEOM::GetGUID(descfilepath);
 						mTextureRef[i].data_uid = guid;
@@ -914,6 +957,8 @@ void MeshRenderer::Inspect()
 
 		ImGui::ColorPicker4("MeshColor", (float*)&mInstanceColor);
 	}
+
+	ImGui::Dummy(ImVec2(0.0f, 10.0f));
 
 	// == >> Mesh Renderer GEOM Descriptor File << == //
 	//ImGui::SetNextItemOpen(true, ImGuiCond_Once);

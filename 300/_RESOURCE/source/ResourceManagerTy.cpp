@@ -241,43 +241,31 @@ void ResourceTy::MaterialInstance_Loader() {
 		return ret_str;
 	};
 
-	std::filesystem::path folderpath = compressed_texture_path.c_str();
+	std::filesystem::path folderpath = uncompressed_texture_path.c_str();
 
 	// Reads through all the files in the folder, and loads them into the mesh
 	for (const auto& entry : std::filesystem::directory_iterator(folderpath))
 	{
 
-		if (!check_extensions(entry.path().filename().string(), ".ctexture"))
+		if (check_extensions(entry.path().filename().string(), ".desc"))
 			continue;
 
 		std::cout << "============================================\n";
 		std::cout << "[NOTE]>> Loading Compressed Texture: \t" << entry.path().filename() << "\n";
 
 
-		std::string filepath = compressed_texture_path + entry.path().filename().string();
-		std::string materialinstancepath = filepath;
+		std::string compressedfilepath = compressed_texture_path + getFilename(entry.path().filename().string()) + ".ctexture";
+		std::string uncompressedfilepath = uncompressed_texture_path + entry.path().filename().string();
+		std::string descfilepath;
 
-
-
-		std::string descfilepath = filepath + ".desc";
-
+		bool descFilePresent = _GEOM::CheckAndCreateDescriptorFileTEXTURE(uncompressedfilepath, descfilepath, compressedfilepath);
 		unsigned guid = _GEOM::GetGUID(descfilepath);
 
-
-		//GFX::Mesh* meshPtr = SetupMesh(filepath, guid);
-		auto texPtr = SetupMaterialInstance(materialinstancepath);
-		//texPtr-> = descfilepath;
-		//_GEOM::DescriptorData::DeserializeGEOM_DescriptorDataFromFile(meshPtr->mMeshDescriptorData, descfilepath);
-
-		bool descFilePresent = _GEOM::CheckAndCreateDescriptorFileTEXTURE(filepath, descfilepath, filepath);
-
-
-
-		//uid uids(materialinstancepath);
+		auto texPtr = SetupMaterialInstance(compressedfilepath);
 
 		++mResouceCnt;
 		instance_infos& tempInstance = AllocRscInfo();
-		tempInstance.m_Name = materialinstancepath;
+		tempInstance.m_Name = compressedfilepath;
 		tempInstance.m_GUID = guid;
 		tempInstance.m_pData = reinterpret_cast<void*>(texPtr);
 

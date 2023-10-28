@@ -56,8 +56,10 @@ namespace _GEOM
 	struct Texture_DescriptorData
 	{
 		CompressionType	mCompressionType;
+		std::string		mDescFilepath;
 		unsigned int	mGUID;
 
+		static bool isGammaSpace(std::string descriptorfilepath) noexcept;
 		static bool DeserializeTEXTURE_DescriptorDataFromFile(Texture_DescriptorData& Desc, std::string textureFilepath) noexcept;
 		static bool SerializeTEXTURE_DescriptorDataToFile(std::string textureFilepath, const Texture_DescriptorData& textureDesc) noexcept;
 	};
@@ -158,6 +160,7 @@ namespace _GEOM
 
 	static const std::string mGeomFolderpath = "../assets/compiled_geom/";
 	static const std::string mCompressedTextureFolderpath = "../assets/Compressed/";
+	static const std::string mUncompressedTextureFolderpath = "../assets/Textures/";
 }
 
 #endif // !_DESCRIPTOR_H
