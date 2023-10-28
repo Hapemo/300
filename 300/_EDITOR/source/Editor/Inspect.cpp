@@ -1272,12 +1272,6 @@ void Audio::Inspect() {
 	if (!mIsEmpty)
 	{
 		ImGui::Checkbox("Play on Awake", &mPlayonAwake);
-
-		if (mPlayonAwake && (mState != Audio::PLAYING) && (mState != Audio::PAUSED) && (mState != Audio::STOPPED))
-		{
-			mNextActionState = Audio::SET_TO_PLAY;
-		}
-
 		ImGui::Checkbox("Is Looping", &mIsLooping);
 		ImGui::SliderFloat("Volume", &mVolume, 0.0f, 1.0f, "volume = %.3f");
 

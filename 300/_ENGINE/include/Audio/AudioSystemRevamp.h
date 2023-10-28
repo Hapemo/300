@@ -48,6 +48,8 @@ public:
 	bool		 UpdateVolume(uid channel_id, AUDIOTYPE type, float volume);
 	void         SetAllSFXVolume(float volume);											// Built for Sound Settings
 	void		 SetAllBGMVolume(float volume);											// Built for Sound Settings
+	void		 PauseAllSounds();
+
 
 	// Audio Fade Functions 
 public:
@@ -63,6 +65,7 @@ public:
 public:
 	float sfx_global_vol = 1.0f;
 	float bgm_global_vol = 1.0f;
+	bool  pause_state = false;
 
 	// Databases (Sounds + Channels) + FMOD System
 public:
