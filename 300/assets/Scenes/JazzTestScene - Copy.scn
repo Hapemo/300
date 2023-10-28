@@ -88,12 +88,6 @@
             },
             "istrigger": false
         },
-        "scripts": {
-            "scriptscontainer": [
-                "../assets/Scripts/AITest.lua"
-            ],
-            "../assets/Scripts/AITest.lua": []
-        },
         "audio": {
             "filepath": "",
             "filename": "",

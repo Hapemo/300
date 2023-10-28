@@ -295,7 +295,7 @@ void TestCrossFade()
 		//}
 		// [Not in script] -----------------------------------------------------------------------------
 		PINFO("CROSS FADING");
-		CrossFadeAudio(farm, battle, 5.0, 0.9f);
+		CrossFadeAudio(farm, battle, 5.0);
 	}
 }
 
@@ -317,140 +317,14 @@ void TestCrossFadeBack()
 		auto audio1 = audio_ent[0];
 		auto audio2 = audio_ent[1];
 
-
-
-		//for (Entity ent : audio_ent)
-		//{
-		//	ent_id = ent.id;
-		//}
-		// [Not in script] -----------------------------------------------------------------------------
-
 		battle.GetAudioComponent(audio1);
 		farm.GetAudioComponent(audio2);
+
+		//for (Entity ent : audio_ent)
+		//{
+		//	ent_id = ent.id;
+		//}
+		// [Not in script] -----------------------------------------------------------------------------
 		CrossFadeAudio(battle, farm, 5.0);
-	}
-}
-
-
-void TestFadeIn()
-{
-	AudioSource battle;
-
-	auto audio_ent = systemManager->ecs->GetEntitiesWith<Audio>();
-
-	if (audio_ent.size() >= 1)				// Need the guard (temporarily) -> this is just for me to retrieve the 2 audio components. through subscript
-	{
-		auto audio1 = audio_ent[0];
-
-		//for (Entity ent : audio_ent)
-		//{
-		//	ent_id = ent.id;
-		//}
-		// [Not in script] -----------------------------------------------------------------------------
-		battle.GetAudioComponent(audio1);
-		FadeInAudio(battle, 5.0, 0.8);
-	}
-}
-
-
-void TestFadeOut()
-{
-	AudioSource battle;
-
-	auto audio_ent = systemManager->ecs->GetEntitiesWith<Audio>();
-
-	if (audio_ent.size() >= 1)				// Need the guard (temporarily) -> this is just for me to retrieve the 2 audio components. through subscript
-	{
-		auto audio1 = audio_ent[0];
-
-		//for (Entity ent : audio_ent)
-		//{
-		//	ent_id = ent.id;
-		//}
-		// [Not in script] -----------------------------------------------------------------------------
-		battle.GetAudioComponent(audio1);
-		FadeOutAudio(battle, 5.0, 0.2);
-	}
-}
-
-void TestFootsteps()
-{
-	AudioSource footstep;
-
-	auto audio_ent = systemManager->ecs->GetEntitiesWith<Audio>();
-
-	if (audio_ent.size() >= 1)				// Need the guard (temporarily) -> this is just for me to retrieve the 2 audio components. through subscript
-	{
-		auto audio1 = audio_ent[0];
-
-		//for (Entity ent : audio_ent)
-		//{
-		//	ent_id = ent.id;
-		//}
-		// [Not in script] -----------------------------------------------------------------------------
-		footstep.GetAudioComponent(audio1);
-	}
-
-	footstep.SetVolume(0.0f);
-	footstep.Play();
-
-	if (footstep.IsSoundAttached())
-	{
-		if (Input::CheckKey(HOLD, UP)) // pressing... 
-		{
-			footstep.SetVolume(1.0f);
-		}
-		
-
-		else  // not pressing anymore...
-		{
-			footstep.SetVolume(0.0f);
-		}
-	}
-
-	
-
-	
-	
-}
-
-void TestFootstepsFade(float deltaTime)
-{
-	static float fadeOutDuration = 0.5f; // Set the duration of the fade-out (in seconds)
-	static float fadeOutTimer = 0.0f;   // Initialize the timer
-
-	AudioSource footstep;
-
-	auto audio_ent = systemManager->ecs->GetEntitiesWith<Audio>();
-
-	if (audio_ent.size() >= 1)
-	{
-		auto audio1 = audio_ent[0];
-		footstep.GetAudioComponent(audio1);
-	}
-
-	footstep.SetVolume(0.0f);
-
-	if (footstep.IsSoundAttached())
-	{
-		if (Input::CheckKey(HOLD, UP))
-		{
-			footstep.Play();
-			footstep.SetVolume(footstep.mAudioComponent->mVolume);
-			fadeOutTimer = 0.0f; // Reset the timer when the button is pressed
-		}
-		else
-		{
-			if (fadeOutTimer < fadeOutDuration)
-			{
-				float volume = 1.0f - (fadeOutTimer / fadeOutDuration);
-				footstep.SetVolume(volume);
-				fadeOutTimer += deltaTime; // deltaTime is the time since the last frame
-			}
-			else
-			{
-				footstep.SetVolume(0.0f);
-			}
-		}
 	}
 }

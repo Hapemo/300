@@ -285,12 +285,6 @@
             },
             "istrigger": false
         },
-        "scripts": {
-            "scriptscontainer": [
-                "../assets/Scripts/AITest.lua"
-            ],
-            "../assets/Scripts/AITest.lua": []
-        },
         "audio": {
             "filepath": "",
             "filename": "",
@@ -407,12 +401,6 @@
                 "z": 0.0
             },
             "istrigger": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                "../assets/Scripts/AITest.lua"
-            ],
-            "../assets/Scripts/AITest.lua": []
         },
         "audio": {
             "filepath": "",
@@ -531,12 +519,6 @@
             },
             "istrigger": false
         },
-        "scripts": {
-            "scriptscontainer": [
-                "../assets/Scripts/AITest.lua"
-            ],
-            "../assets/Scripts/AITest.lua": []
-        },
         "audio": {
             "filepath": "",
             "filename": "",
@@ -654,12 +636,6 @@
             },
             "istrigger": false
         },
-        "scripts": {
-            "scriptscontainer": [
-                "../assets/Scripts/AITest.lua"
-            ],
-            "../assets/Scripts/AITest.lua": []
-        },
         "audio": {
             "filepath": "",
             "filename": "",
@@ -776,12 +752,6 @@
                 "z": 0.0
             },
             "istrigger": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                "../assets/Scripts/AITest.lua"
-            ],
-            "../assets/Scripts/AITest.lua": []
         },
         "audio": {
             "filepath": "",

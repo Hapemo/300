@@ -167,6 +167,7 @@ DESERIALIZE_BASIC(MOTION);
 DESERIALIZE_BASIC(AUDIOTYPE);
 DESERIALIZE_BASIC(E_MOVEMENT_TYPE);
 DESERIALIZE_BASIC(entt::entity);
+DESERIALIZE_BASIC(enum_tag::enum_tag);
 #pragma endregion basic_types
 // Derived types has to inherit from Serializable
 #pragma region derived_types

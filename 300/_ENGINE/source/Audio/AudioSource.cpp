@@ -16,9 +16,8 @@ bool LoadAudioFromDirectory(std::string directory_path)
 	return load_status;
 }
 
-bool CrossFadeAudio(AudioSource& fade_out, AudioSource& fade_in, float fade_duration, float fade_max_vol)
+bool CrossFadeAudio(AudioSource& fade_out, AudioSource& fade_in, float fade_duration)
 {
-	std::cout << "CrossFadeAudio" << std::endl;
 	if (fade_out.mAudioComponent != nullptr && fade_in.mAudioComponent != nullptr)
 	{
 		// Fading functionaltiy (done in update() loop)
@@ -26,11 +25,9 @@ bool CrossFadeAudio(AudioSource& fade_out, AudioSource& fade_in, float fade_dura
 		
 		fade_out.mAudioComponent->mFadeOut = true;
 		fade_out.mAudioComponent->mFadeIn = false;
-		fade_in.mAudioComponent->mVolume = 0.0f; // Start from volume : 0.
 		fade_in.mAudioComponent->fade_duration = fade_duration;
 		fade_in.mAudioComponent->mFadeIn = true;
 		fade_in.mAudioComponent->mFadeOut = false;
-		fade_in.mAudioComponent->mFadeInMaxVol = fade_max_vol;
 		systemManager->mAudioSystem.get()->fade_timer = 0.0f; // reset timer. (in case it was used before) -> this is in AudioSystem.h (static bool)
 	
 		return true;
@@ -38,42 +35,6 @@ bool CrossFadeAudio(AudioSource& fade_out, AudioSource& fade_in, float fade_dura
 
 	return false;
 }
-
-bool FadeInAudio(AudioSource& fade_in, float fade_duration, float fade_max_vol)
-{
-	if (fade_in.mAudioComponent != nullptr)
-	{
-		// Fading functionaltiy (done in update() loop)
-		fade_in.mAudioComponent->fade_duration = fade_duration;
-		fade_in.mAudioComponent->mFadeIn = true;
-		fade_in.mAudioComponent->mFadeOut = false;
-		fade_in.mAudioComponent->mFadeInMaxVol = fade_max_vol;
-		systemManager->mAudioSystem.get()->fade_timer = 0.0f; // reset timer. (in case it was used before) -> this is in AudioSystem.h (static bool)
-
-		return true;
-	}
-
-	return false;
-}
-
-bool FadeOutAudio(AudioSource& fade_out, float fade_duration, float fade_down_vol)
-{
-	if (fade_out.mAudioComponent != nullptr)
-	{
-		// Fading functionaltiy (done in update() loop)
-		fade_out.mAudioComponent->fade_duration = fade_duration;
-		fade_out.mAudioComponent->mFadeIn = false;
-		fade_out.mAudioComponent->mFadeOut = true;
-		fade_out.mAudioComponent->mFadeOutToVol = fade_down_vol;
-		systemManager->mAudioSystem.get()->fade_timer = 0.0f; // reset timer. (in case it was used before) -> this is in AudioSystem.h (static bool)
-
-		return true;
-	}
-
-	return false;
-}
-
-
 
 
 AudioSource::AudioSource() : mAudioComponent(nullptr) {}
@@ -85,16 +46,7 @@ void AudioSource::GetAudioComponent(Entity id)
 
 bool AudioSource::IsSoundAttached()
 {
-	if (mAudioComponent != nullptr)
-	{
-		if (mAudioComponent->mSound != nullptr)
-		{
-			return true;
-		}
-	}
-
-	return false;
-
+	return mAudioComponent->mIsLoaded;
 }
 
 bool AudioSource::AttachSound(std::string audio_name)
@@ -107,11 +59,6 @@ bool AudioSource::AttachSound(std::string audio_name)
 	}
 
 	return false;
-}
-
-bool AudioSource::IsPlaying()
-{
-	return mAudioComponent->mIsPlaying;
 }
 
 
@@ -196,7 +143,6 @@ void AudioSource::SetVolume(float volume)
 		if (playing)
 		{
 			mAudioComponent->mChannel->setVolume(volume);
-			mAudioComponent->mVolume = volume;
 		}
 	}
 }
