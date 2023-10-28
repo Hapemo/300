@@ -97,6 +97,13 @@ function Update()
         if testEntity:HasRigidBody() then
             print("has rigidbody")
         end
+
+        testVec = Vec3.new()
+        testVec.x = 4
+        testVec.y = 4.2
+        testVec.z = 0
+        -- Test Helper Translate
+        Helper.Translate(entity, testVec)
     end
 
     --Test Default Param
@@ -131,8 +138,6 @@ function Update()
     -- Test RigidBody
     --rigidBodyComponent = entity:GetRigidBody()
     --print(rigidBodyComponent.mMaterial)
-    --mMOTION not working as of 27/10
-    --rigidBodyComponent.mMotion = MOTION.DYNAMIC
     -- rigidBodyComponent.mMaterial = MATERIAL.CONCRETE
     -- rigidBodyComponent.mVelocity.x = 4.0
     -- print(rigidBodyComponent.mVelocity.x)
@@ -147,6 +152,7 @@ function Update()
     -- Test Point Light
     -- pointLightComponent = entity:GetPointLight()
     -- pointLightComponent:SetColor(vec)
+    
 
 end
 
@@ -155,13 +161,13 @@ function Dead()
 end
 
 function Testing(a,b,c)
-    a = a or 6
-    b = b or 8
-    c = c or "cat"
+    varX = a or 6
+    varY = b or 8
+    varZ = c or "cat"
 
-    print(a)
-    print(b)
-    print(c)
+    print(varX)
+    print(varY)
+    print(varZ)
 end
 
 function OnTriggerEnter(Entity)

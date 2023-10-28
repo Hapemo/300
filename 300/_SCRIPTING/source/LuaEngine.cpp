@@ -179,7 +179,6 @@ void LuaRigidBody()
         "RigidBody", sol::constructors<>(),
         "mDensity", &RigidBody::mDensity,
         "mMaterial", &RigidBody::mMaterial,
-        "mMotion", &RigidBody::mMotion,
         "mVelocity", &RigidBody::mVelocity
     );
 }
