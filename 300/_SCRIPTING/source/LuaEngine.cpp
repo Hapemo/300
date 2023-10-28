@@ -10,6 +10,7 @@
 #include "Graphics/GraphicsSystem.h"
 #include "Audio/AudioSource.h"
 #include "AI/AIManager.h"
+#include "Graphics/Camera_Input.h"
 
 void LuaComponentContainer()
 {
@@ -131,28 +132,37 @@ void LuaGeneral()
 
 void LuaCamera()
 {
-    systemManager->mScriptingSystem->luaState.new_usertype<Camera>(
-        "Camera", sol::constructors<>(),
-        "mCamera", &Camera::mCamera
+    systemManager->mScriptingSystem->luaState.new_usertype<Camera_Scripting>(
+        "Camera_Scripting", sol::constructors<>(),
+        "SetPosition", &Camera_Scripting::SetPosition,
+        "SetTarget", &Camera_Scripting::SetTarget,
+        "SetCameraSpeed", &Camera_Scripting::SetCameraSpeed,
+        "SetSensitivity", &Camera_Scripting::SetSensitivity,
+        "GetPosition", &Camera_Scripting::GetPosition,
+        "GetTarget", &Camera_Scripting::GetTarget,
+        "GetDirection", &Camera_Scripting::GetDirection,
+        "GetCameraSpeed", &Camera_Scripting::GetCameraSpeed,
+        "GetSensitivity", &Camera_Scripting::GetSensitivity,
+        "RotateCameraView", &Camera_Scripting::RotateCameraView
         );
 }
 
-void LuaGFXCamera()
-{
-    systemManager->mScriptingSystem->luaState.new_usertype<GFX::Camera>(
-        "GFXCamera", sol::constructors<GFX::Camera()>(),
-        "RotateCameraView", &GFX::Camera::RotateCameraView,
-        "SetCameraSpeed", &GFX::Camera::SetCameraSpeed,
-        "SetSensitivity", &GFX::Camera::SetSensitivity,
-        "GetCameraSpeed", &GFX::Camera::GetCameraSpeed,
-        "GetSensitivity", &GFX::Camera::GetSensitivity,
-        "SetTarget", &GFX::Camera::SetTarget,
-        "SetPosition", &GFX::Camera::SetPosition,
-        "position", &GFX::Camera::position,
-        "target", &GFX::Camera::target,
-        "direction", &GFX::Camera::direction
-        );
-}
+//void LuaGFXCamera()
+//{
+//    systemManager->mScriptingSystem->luaState.new_usertype<GFX::Camera>(
+//        "GFXCamera", sol::constructors<GFX::Camera()>(),
+//        "RotateCameraView", &GFX::Camera::RotateCameraView,
+//        "SetCameraSpeed", &GFX::Camera::SetCameraSpeed,
+//        "SetSensitivity", &GFX::Camera::SetSensitivity,
+//        "GetCameraSpeed", &GFX::Camera::GetCameraSpeed,
+//        "GetSensitivity", &GFX::Camera::GetSensitivity,
+//        "SetTarget", &GFX::Camera::SetTarget,
+//        "SetPosition", &GFX::Camera::SetPosition,
+//        "position", &GFX::Camera::position,
+//        "target", &GFX::Camera::target,
+//        "direction", &GFX::Camera::direction
+//        );
+//}
 
 void LuaTransform()
 {

@@ -22,7 +22,7 @@ void LuaECS();
 void LuaEntity();
 void LuaGeneral();
 void LuaCamera();
-void LuaGFXCamera();
+//void LuaGFXCamera();
 void LuaTransform();
 void LuaAnimator();
 void LuaRigidBody();

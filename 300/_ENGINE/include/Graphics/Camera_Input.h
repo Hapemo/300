@@ -29,6 +29,7 @@ public:
 
 class Camera_Scripting
 {
+public:
 	// Setters
 	static void SetPosition(Entity cameraEntity, const vec3& newposition);
 	static void SetTarget(Entity cameraEntity, const vec3& newtarget);
