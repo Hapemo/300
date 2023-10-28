@@ -68,10 +68,11 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 	{
 		Audio& audio_component = audio.GetComponent<Audio>();
 
-		switch (audio_component.mState)
+		// Test Cases - to test functionality (will remove)
+		TestCases(audio_component);
+		
+		switch (audio_component.mNextActionState)
 		{
-			case Audio::INACTIVE:
-				break;
 			case Audio::SET_TO_PLAY:
 				if (FindSound(audio_component.mFileName) != nullptr) // Sound Exists ...
 				{
@@ -83,12 +84,28 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 					{
 						audio_component.mState = Audio::PLAYING; // Update State 
 						audio_component.mChannelID = play_bool;
+						audio_component.mNextActionState = Audio::INACTIVE;
 					}
 					else
 						audio_component.mState = Audio::FAILED;
 				}
 
 				break;
+
+			case Audio::SET_TO_PAUSE:
+				if (PauseSound(audio_component.mChannelID, audio_component.mAudioType))
+				{
+					audio_component.mState = Audio::PAUSED;
+					audio_component.mNextActionState = Audio::INACTIVE;
+				}
+				break;
+		}
+
+		switch (audio_component.mState)
+		{
+			case Audio::INACTIVE:
+				break;
+			
 			case Audio::PLAYING:
 				// Check if the current sound has finished playing...
 				if (!IsChannelPlaying(audio_component.mChannelID, audio_component.mAudioType))	// If finished playing...
@@ -96,7 +113,9 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 					audio_component.mState = Audio::FINISHED;
 				}
 				break;
+
 			case Audio::PAUSED:
+				
 				break;
 
 			case Audio::FINISHED:
@@ -108,8 +127,6 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 			case Audio::FAILED:
 				break;
 		}
-
-		
 	}
 }
 
@@ -282,6 +299,40 @@ unsigned int AudioSystem::PlaySound(std::string audio_name, AUDIOTYPE type, floa
 	return 0; // failed.
 }
 
+/******************************************************************************/
+/*!
+	PauseSound()
+	- Pauses the audio file on the user-specified channel (SFX / BGM)
+	- Searches for "FMOD::Sound*" stored in "mSound" through given audio name (parameters)
+	- Finds an available channel and plays that audio.
+ */
+ /******************************************************************************/
+bool AudioSystem::PauseSound(uid channel_id, AUDIOTYPE type)
+{
+	for (auto& channel : mChannels[type])
+	{
+		if (channel.first == channel_id)
+		{
+			FMOD::Sound* current_sound;
+			channel.second->getCurrentSound(&current_sound);
+
+			if (current_sound)
+			{
+				bool playing = false;
+				channel.second->isPlaying(&playing);
+
+				if (playing)
+				{
+					channel.second->setPaused(true);
+					return true;
+				}
+			}
+		}
+	}
+
+	return false;
+}
+
 
 bool AudioSystem::IsChannelPlaying(uid id, AUDIOTYPE type)
 {
@@ -342,5 +393,12 @@ int AudioSystem::ErrCodeCheck(FMOD_RESULT result)
 	}
 	PINFO("FMOD OPERATION OK.");
 	//std::cout << "FMOD OPERATION OK." << std::endl;
-	return 1; // success (no issues)
+	return 1; // success (no issue)
+}
+
+void AudioSystem::TestCases(Audio& audio_component)
+{
+	if (Input::CheckKey(PRESS, P))
+		audio_component.SetPause();
+
 }

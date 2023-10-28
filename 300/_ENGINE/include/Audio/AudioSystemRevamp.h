@@ -19,7 +19,6 @@ enum STATE : unsigned char;
 
 class AudioSystem
 {
-
 public:
 	int MAX_AUDIO_FILES_PLAYING = 128;				                  // Number of Sounds (that are allowed to be played simultaneously)
 	int NO_OF_BGM_CHANNELS_TO_INIT = 16;                              // we do not need so many channels for BGM
@@ -40,13 +39,14 @@ public:
 	bool         LoadAudioFromDirectory(std::string directory_path);
 	FMOD::Sound* FindSound(std::string audio_name);
 
-	// Playback Functions
+	// Playback Functions (Used Internally)
 public:
 	unsigned int PlaySound(std::string audio_name, AUDIOTYPE type, float vol = 1.0f);	// Finds the next available in (specified sfx/bgm) channel and plays it in there. 
+	bool		 PauseSound(uid channel_id, AUDIOTYPE type);
 
 	// Channel Check (still playing or not)
 public:
-	bool IsChannelPlaying(uid id, AUDIOTYPE type);
+	bool         IsChannelPlaying(uid id, AUDIOTYPE type);
 
 
 	// Data Members (Global Volume Multiplier)
@@ -61,5 +61,9 @@ public:
 	std::unordered_map<std::string, FMOD::Sound*>							      mSounds;
 	//static std::unordered_map< 
 	/*std::unordered_map<AUDIOTYPE, std::vector*/
+
+	// Test Case (will remove)
+public:
+	void TestCases(Audio& comp);
 
 };
