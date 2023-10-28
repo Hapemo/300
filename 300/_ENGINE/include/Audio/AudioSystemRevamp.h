@@ -43,6 +43,7 @@ public:
 public:
 	unsigned int PlaySound(std::string audio_name, AUDIOTYPE type, float vol = 1.0f);	// Finds the next available in (specified sfx/bgm) channel and plays it in there. 
 	bool		 PauseSound(uid channel_id, AUDIOTYPE type);
+	bool		 UnpauseSound(uid channel_id, AUDIOTYPE type);
 
 	// Channel Check (still playing or not)
 public:

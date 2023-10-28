@@ -336,9 +336,10 @@ struct Audio : public Serializable
 	{
 		INACTIVE,			// Used for Stopped.
 		SET_TO_PLAY,        // mPlayonAwake
-		PLAYING, 
+		PLAYING,
 		SET_TO_PAUSE,
-		PAUSED, 
+		PAUSED,
+		SET_UNPAUSE,
 		FINISHED,		    // mIsLooping
 		FAILED				// When the audio fails to play...
 	};
@@ -370,15 +371,21 @@ struct Audio : public Serializable
 	STATE          mState = STATE::INACTIVE;		    // Initial State - Inactive (do nothing first)
 	STATE		   mNextActionState = STATE::INACTIVE;  // Preface the next cause of action.
 
-	// This is okay - because it's just editing data.
+	// This is okay - because it's just editing data (use through component)
+
+	void SetPlay()
+	{
+		mNextActionState = STATE::SET_TO_PLAY;
+	}
+
 	void SetPause() // Interface for Script
 	{
 		mNextActionState = STATE::SET_TO_PAUSE;
 	}
 
-	void SetPlay()
+	void SetUnpause()
 	{
-		mNextActionState = STATE::SET_TO_PLAY;
+		mNextActionState = STATE::SET_UNPAUSE;
 	}
 
 	

@@ -1277,6 +1277,7 @@ void Audio::Inspect() {
 		{
 			mNextActionState = Audio::SET_TO_PLAY;
 		}
+
 		ImGui::Checkbox("Is Looping", &mIsLooping);
 		ImGui::SliderFloat("Volume", &mVolume, 0.0f, 1.0f, "volume = %.3f");
 

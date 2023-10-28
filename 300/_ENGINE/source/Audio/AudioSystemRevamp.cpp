@@ -99,6 +99,13 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 					audio_component.mNextActionState = Audio::INACTIVE;
 				}
 				break;
+
+			case Audio::SET_UNPAUSE:
+				if (UnpauseSound(audio_component.mChannelID, audio_component.mAudioType))
+				{
+					audio_component.mState = Audio::PLAYING;
+					audio_component.mNextActionState = Audio::INACTIVE;
+				}
 		}
 
 		switch (audio_component.mState)
@@ -333,6 +340,40 @@ bool AudioSystem::PauseSound(uid channel_id, AUDIOTYPE type)
 	return false;
 }
 
+/******************************************************************************/
+/*!
+	UnpauseSound()
+	- Unpauses the audio file on the user-specified channel (SFX / BGM)
+	- Searches for "FMOD::Sound*" stored in "mSound" through given audio name (parameters)
+	- Finds an available channel and plays that audio.
+ */
+ /******************************************************************************/
+bool AudioSystem::UnpauseSound(uid channel_id, AUDIOTYPE type)
+{
+	for (auto& channel : mChannels[type])
+	{
+		if (channel.first == channel_id)
+		{
+			FMOD::Sound* current_sound;
+			channel.second->getCurrentSound(&current_sound);
+
+			if (current_sound)
+			{
+				bool playing = false;
+				channel.second->isPlaying(&playing);
+
+				if (playing)
+				{
+					channel.second->setPaused(false);
+					return true;
+				}
+			}
+		}
+	}
+
+	return false;
+}
+
 
 bool AudioSystem::IsChannelPlaying(uid id, AUDIOTYPE type)
 {
@@ -400,5 +441,6 @@ void AudioSystem::TestCases(Audio& audio_component)
 {
 	if (Input::CheckKey(PRESS, P))
 		audio_component.SetPause();
-
+	if (Input::CheckKey(PRESS, O))
+		audio_component.SetUnpause();
 }
