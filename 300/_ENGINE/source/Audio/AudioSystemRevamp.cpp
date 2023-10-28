@@ -106,6 +106,14 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 					audio_component.mState = Audio::PLAYING;
 					audio_component.mNextActionState = Audio::INACTIVE;
 				}
+
+			case Audio::SET_STOP:
+				if (StopSound(audio_component.mChannelID, audio_component.mAudioType))
+				{
+					audio_component.mState = Audio::STOPPED;
+					audio_component.mNextActionState = Audio::INACTIVE;
+				}
+
 		}
 
 		switch (audio_component.mState)
@@ -124,6 +132,8 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 			case Audio::PAUSED:
 				
 				break;
+			case Audio::STOPPED:
+				break;
 
 			case Audio::FINISHED:
 				if (audio_component.mIsLooping)
@@ -133,6 +143,7 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 				break;
 			case Audio::FAILED:
 				break;
+
 		}
 	}
 }
@@ -375,6 +386,28 @@ bool AudioSystem::UnpauseSound(uid channel_id, AUDIOTYPE type)
 }
 
 
+
+/******************************************************************************/
+/*!
+	StopSound()
+	- Stops the Sound (reset playback)
+ */
+ /******************************************************************************/
+bool AudioSystem::StopSound(uid channel_id, AUDIOTYPE type)
+{
+	for (auto& channel : mChannels[type])
+	{
+		if (channel.first == channel_id)
+		{
+			channel.second->stop();
+			return true;
+		}
+	}
+
+	return false;
+}
+
+
 bool AudioSystem::IsChannelPlaying(uid id, AUDIOTYPE type)
 {
 	std::vector<std::pair<uid, FMOD::Channel*>> sfx_or_bgm = mChannels[type];
@@ -443,4 +476,6 @@ void AudioSystem::TestCases(Audio& audio_component)
 		audio_component.SetPause();
 	if (Input::CheckKey(PRESS, O))
 		audio_component.SetUnpause();
+	if (Input::CheckKey(PRESS, I))
+		audio_component.SetStop();
 }

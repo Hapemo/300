@@ -20,9 +20,9 @@ enum STATE : unsigned char;
 class AudioSystem
 {
 public:
-	int MAX_AUDIO_FILES_PLAYING = 128;				                  // Number of Sounds (that are allowed to be played simultaneously)
+	int MAX_AUDIO_FILES_PLAYING = 256;				                  // Number of Sounds (that are allowed to be played simultaneously)
 	int NO_OF_BGM_CHANNELS_TO_INIT = 16;                              // we do not need so many channels for BGM
-	int NO_OF_SFX_CHANNELS_TO_INIT = 112; 
+	int NO_OF_SFX_CHANNELS_TO_INIT = 240; 
 
 public:
 	AudioSystem() = default;
@@ -44,6 +44,7 @@ public:
 	unsigned int PlaySound(std::string audio_name, AUDIOTYPE type, float vol = 1.0f);	// Finds the next available in (specified sfx/bgm) channel and plays it in there. 
 	bool		 PauseSound(uid channel_id, AUDIOTYPE type);
 	bool		 UnpauseSound(uid channel_id, AUDIOTYPE type);
+	bool		 StopSound(uid channel_id, AUDIOTYPE type);
 
 	// Channel Check (still playing or not)
 public:

@@ -1273,7 +1273,7 @@ void Audio::Inspect() {
 	{
 		ImGui::Checkbox("Play on Awake", &mPlayonAwake);
 
-		if (mPlayonAwake && (mState != Audio::PLAYING) && (mState != Audio::PAUSED))
+		if (mPlayonAwake && (mState != Audio::PLAYING) && (mState != Audio::PAUSED) && (mState != Audio::STOPPED))
 		{
 			mNextActionState = Audio::SET_TO_PLAY;
 		}
