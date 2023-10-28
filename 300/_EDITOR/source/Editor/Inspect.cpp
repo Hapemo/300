@@ -336,6 +336,13 @@ void Transform::Inspect() {
 		ImGui::Separator();
 
 
+		ImGui::Text("Rotation");
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		ImGui::DragFloat3("##Rotation", (float*)&mRotate, 1);
+
+
 		ImGui::Text("Scale");
 		ImGui::SameLine();
 		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
@@ -344,15 +351,6 @@ void Transform::Inspect() {
 
 		ImGui::Separator();
 
-
-		ImGui::Text("Rotation");
-		ImGui::SameLine();
-		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
-			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
-		ImGui::DragFloat3("##Rotation", (float*)&mRotate, 1);
-
-
-		
 	}
 
 }
@@ -372,19 +370,18 @@ void Camera::Inspect()
 
 		ImGui::Separator();
 
-		vec3 temp = mCamera.mPosition;
-		ImGui::DragFloat3("Camera Position", (float*)&temp);
-
-		mCamera.mTarget += temp - mCamera.mPosition;
-		mCamera.mPosition = temp;
-
-		ImGui::DragFloat3("Camera Target", (float*)&mCamera.mTarget);
+		vec3 camdir = mCamera.direction();
+		ImGui::Text("Camera Direction");
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		ImGui::Text("%0.2f, %0.2f, %0.2f", camdir.x, camdir.y, camdir.z);
 
 		ImGui::Text("Aspect Ratio");
 		ImGui::SameLine();
 		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
 			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
-		ImGui::DragFloat("##Aspect", &mCamera.mAspectRatio);
+		ImGui::Text("%0.2f", &mCamera.mAspectRatio);
 
 		ImGui::Text("FOV");
 		ImGui::SameLine();
@@ -403,6 +400,13 @@ void Camera::Inspect()
 		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
 			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
 		ImGui::DragFloat("##NP", &mCamera.mNear);
+
+		ImGui::Text("Camera Speed");
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		ImGui::DragFloat("##CSG", &mCamera.mCameraSpeed);
+
 
 		//ImGui::Text("Orthographic");
 		//ImGui::SameLine();

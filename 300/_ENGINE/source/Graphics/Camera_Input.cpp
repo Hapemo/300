@@ -89,23 +89,6 @@ void Camera_Input::updateCameraInput(GFX::Camera& cam, const float& dt)
 		
 		// update previous cursor pos
 		cam.SetCursorPosition(Input::CursorPos());
-
-		if (cam.mPitch > 89.0f) {
-			cam.mPitch = 89.0f;
-		}
-
-		if (cam.mPitch < -89.0f) {
-			cam.mPitch = -89.0f;
-		}
-
-		glm::vec3 direction;
-		direction.x = cos(glm::radians(cam.mYaw)) * cos(glm::radians(cam.mPitch));
-		direction.y = sin(glm::radians(cam.mPitch));
-		direction.z = sin(glm::radians(cam.mYaw)) * cos(glm::radians(cam.mPitch));
-		direction.y *= -1;
-
-		// update the camera's target based on the normalized direction
-		cam.SetTarget(cam.position() + glm::normalize(direction));
 	}
 
 	//!< Camera Zoom
@@ -120,4 +103,100 @@ void Camera_Input::updateCameraInput(GFX::Camera& cam, const float& dt)
 			cam.mFovDegree = GFX::CameraConstants::maxFOV;
 		}
 	}
+}
+
+
+void Camera_Scripting::SetPosition(Entity cameraEntity, const vec3& newposition)
+{
+	assert(cameraEntity.HasComponent<Transform>());
+	cameraEntity.GetComponent<Transform>().mTranslate = newposition;
+}
+
+
+void Camera_Scripting::SetTarget(Entity cameraEntity, const vec3& newtarget)
+{
+	assert(cameraEntity.HasComponent<Camera>());
+	cameraEntity.GetComponent<Camera>().mCamera.mTarget = newtarget;
+}
+
+
+void Camera_Scripting::SetCameraSpeed(Entity cameraEntity, const float& speed)
+{
+	assert(cameraEntity.HasComponent<Camera>());
+	cameraEntity.GetComponent<Camera>().mCamera.mCameraSpeed = speed;
+}
+
+
+void Camera_Scripting::SetSensitivity(Entity cameraEntity, const float& sensitivity)
+{
+	assert(cameraEntity.HasComponent<Camera>());
+	cameraEntity.GetComponent<Camera>().mCamera.mSensitivity = sensitivity;
+}
+
+
+glm::vec3 Camera_Scripting::GetPosition(Entity cameraEntity)
+{
+	assert(cameraEntity.HasComponent<Transform>());
+	return cameraEntity.GetComponent<Transform>().mTranslate;
+}
+
+
+glm::vec3 Camera_Scripting::GetTarget(Entity cameraEntity)
+{
+	assert(cameraEntity.HasComponent<Camera>());
+	return cameraEntity.GetComponent<Camera>().mCamera.mTarget;
+}
+
+
+glm::vec3 Camera_Scripting::GetDirection(Entity cameraEntity)
+{
+	assert(cameraEntity.HasComponent<Camera>());
+	return cameraEntity.GetComponent<Camera>().mCamera.direction();
+}
+
+
+float Camera_Scripting::GetCameraSpeed(Entity cameraEntity)
+{
+	assert(cameraEntity.HasComponent<Camera>());
+	return cameraEntity.GetComponent<Camera>().mCamera.mCameraSpeed;
+}
+
+
+float Camera_Scripting::GetSensitivity(Entity cameraEntity)
+{
+	assert(cameraEntity.HasComponent<Camera>());
+	return cameraEntity.GetComponent<Camera>().mCamera.mSensitivity;
+}
+
+
+void Camera_Scripting::RotateCameraView(Entity cameraEntity, const vec2& cursorposition)
+{
+	assert(cameraEntity.HasComponent<Camera>());
+	auto& caminst = cameraEntity.GetComponent<Camera>().mCamera;
+
+
+	vec2 delta = caminst.mCursorPos - cursorposition;
+	if (delta == vec2(0.f, 0.f))
+		return;
+
+	delta *= caminst.mSensitivity;		// adjust the mouse movement sensitivity
+	caminst.mYaw += delta.x;
+	caminst.mPitch += delta.y;
+
+	if (caminst.mPitch > 89.0f) {
+		caminst.mPitch = 89.0f;
+	}
+
+	if (caminst.mPitch < -89.0f) {
+		caminst.mPitch = -89.0f;
+	}
+
+	glm::vec3 direction;
+	direction.x = cos(glm::radians(caminst.mYaw)) * cos(glm::radians(caminst.mPitch));
+	direction.y = sin(glm::radians(caminst.mPitch));
+	direction.z = sin(glm::radians(caminst.mYaw)) * cos(glm::radians(caminst.mPitch));
+	direction.y *= -1;
+
+	// update the camera's target based on the normalized direction
+	caminst.SetTarget(caminst.mPosition + glm::normalize(direction));
 }

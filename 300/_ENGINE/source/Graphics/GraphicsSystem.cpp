@@ -800,6 +800,66 @@ void GraphicsSystem::SetCameraSize(CAMERA_TYPE type, ivec2 size)
 	}
 }
 
+
+inline void drawViewFrustum(Entity gameCamera)
+{
+	auto& camera = gameCamera.GetComponent<Camera>().mCamera;
+
+	mat4 inv = glm::inverse(camera.mView);
+
+	float halfHeight = tanf(glm::radians(camera.mFovDegree / 2.f));
+	float halfWidth = halfHeight * camera.mAspectRatio;
+
+	float near = camera.mNear;
+	float far = camera.mFar;
+	float xn = halfWidth * near;
+	float xf = halfWidth * far;
+	float yn = halfHeight * near;
+	float yf = halfHeight * far;
+
+	glm::vec4 f[8u] =
+	{
+		// near face
+		{xn, yn,	-near, 1.f},
+		{-xn, yn,	-near, 1.f},
+		{xn, -yn,	-near, 1.f},
+		{-xn, -yn,	-near , 1.f},
+
+		// far face
+		{xf, yf,	-far, 1.f},
+		{-xf, yf,	-far , 1.f},
+		{xf, -yf,	-far , 1.f},
+		{-xf, -yf,	-far, 1.f},
+	};
+
+	glm::vec3 v[8];
+	for (int i = 0; i < 8; i++)
+	{
+		vec4 ff = inv * f[i];
+		v[i].x = ff.x / ff.w;
+		v[i].y = ff.y / ff.w;
+		v[i].z = ff.z / ff.w;
+	}
+
+	//glm::vec4 color = {1.f, 0.38f, 0.01f, 1.f};
+	glm::vec4 color = {1.f, 1.f, 0.5f, 1.f};
+	systemManager->mGraphicsSystem->m_Renderer.AddLine(v[0], v[1], color);
+	systemManager->mGraphicsSystem->m_Renderer.AddLine(v[0], v[2], color);
+	systemManager->mGraphicsSystem->m_Renderer.AddLine(v[3], v[1], color);
+	systemManager->mGraphicsSystem->m_Renderer.AddLine(v[3], v[2], color);
+
+	systemManager->mGraphicsSystem->m_Renderer.AddLine(v[4], v[5], color);
+	systemManager->mGraphicsSystem->m_Renderer.AddLine(v[4], v[6], color);
+	systemManager->mGraphicsSystem->m_Renderer.AddLine(v[7], v[5], color);
+	systemManager->mGraphicsSystem->m_Renderer.AddLine(v[7], v[6], color);
+
+	systemManager->mGraphicsSystem->m_Renderer.AddLine(v[0], v[4], color);
+	systemManager->mGraphicsSystem->m_Renderer.AddLine(v[1], v[5], color);
+	systemManager->mGraphicsSystem->m_Renderer.AddLine(v[3], v[7], color);
+	systemManager->mGraphicsSystem->m_Renderer.AddLine(v[2], v[6], color);
+}
+
+
 /***************************************************************************/
 /*!
 \brief
@@ -809,7 +869,7 @@ void GraphicsSystem::SetCameraSize(CAMERA_TYPE type, ivec2 size)
 void GraphicsSystem::UpdateCamera(CAMERA_TYPE type, const float &dt)
 {
 	auto localcamera = systemManager->ecs->GetEntitiesWith<Camera>();
-	Entity camera;
+	Entity GameCamera;
 
 	switch (type)
 	{
@@ -817,11 +877,21 @@ void GraphicsSystem::UpdateCamera(CAMERA_TYPE type, const float &dt)
 		{
 			if (localcamera.empty())
 				return;
-			camera = localcamera.front();		// there will only be one game camera
+			GameCamera = localcamera.front();		// there will only be one game camera
 
-			Camera_Input::getInstance().updateCameraInput(camera.GetComponent<Camera>().mCamera, dt);
-			camera.GetComponent<Camera>().mCamera.Update();
-			camera.GetComponent<Transform>().mTranslate = camera.GetComponent<Camera>().mCamera.mPosition;
+			//Camera_Input::getInstance().updateCameraInput(camera.GetComponent<Camera>().mCamera, dt);
+			
+			//camera.GetComponent<Transform>().mTranslate = camera.GetComponent<Camera>().mCamera.mPosition;
+			GameCamera.GetComponent<Camera>().mCamera.mTarget += (GameCamera.GetComponent<Transform>().mTranslate - GameCamera.GetComponent<Camera>().mCamera.mPosition);
+			GameCamera.GetComponent<Camera>().mCamera.mPosition = GameCamera.GetComponent<Transform>().mTranslate;
+			GameCamera.GetComponent<Camera>().mCamera.mPitch = GameCamera.GetComponent<Transform>().mRotate.y;
+			GameCamera.GetComponent<Camera>().mCamera.mYaw = GameCamera.GetComponent<Transform>().mRotate.x;
+			GameCamera.GetComponent<Camera>().mCamera.Update();
+
+			// debug drawing
+			if (systemManager->mGraphicsSystem->m_DebugDrawing) {
+				drawViewFrustum(GameCamera);
+			}
 			break;
 		}
 
@@ -834,21 +904,26 @@ void GraphicsSystem::UpdateCamera(CAMERA_TYPE type, const float &dt)
 
 	case CAMERA_TYPE::CAMERA_TYPE_ALL:
 		{
+			// == update editor camera ==
+			Camera_Input::getInstance().updateCameraInput(m_EditorCamera, dt);
 			m_EditorCamera.Update();
-			if (m_CameraControl == CAMERA_TYPE::CAMERA_TYPE_EDITOR) {
-				Camera_Input::getInstance().updateCameraInput(m_EditorCamera, dt);
-			}
 
+			// == update game camera ==
 			if (localcamera.empty())
 				return;
-			camera = localcamera.front();		// there will only be one game camera
+			GameCamera = localcamera.front();		// there will only be one game camera
 
-			camera.GetComponent<Camera>().mCamera.Update();
-			if (m_CameraControl == CAMERA_TYPE::CAMERA_TYPE_GAME) {
-				Camera_Input::getInstance().updateCameraInput(camera.GetComponent<Camera>().mCamera, dt);
-				camera.GetComponent<Transform>().mTranslate = camera.GetComponent<Camera>().mCamera.mPosition;
+			//camera.GetComponent<Transform>().mTranslate = camera.GetComponent<Camera>().mCamera.mPosition;
+			GameCamera.GetComponent<Camera>().mCamera.mTarget += (GameCamera.GetComponent<Transform>().mTranslate - GameCamera.GetComponent<Camera>().mCamera.mPosition);
+			GameCamera.GetComponent<Camera>().mCamera.mPosition = GameCamera.GetComponent<Transform>().mTranslate;
+			GameCamera.GetComponent<Camera>().mCamera.mPitch = GameCamera.GetComponent<Transform>().mRotate.y;
+			GameCamera.GetComponent<Camera>().mCamera.mYaw = GameCamera.GetComponent<Transform>().mRotate.x;
+			GameCamera.GetComponent<Camera>().mCamera.Update();
+
+			// debug drawing
+			if (systemManager->mGraphicsSystem->m_DebugDrawing) {
+				drawViewFrustum(GameCamera);
 			}
-
 			break;
 		}
 	}
