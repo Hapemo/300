@@ -71,6 +71,9 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 		// Test Cases - to test functionality (will remove)
 		TestCases(audio_component);
 		
+		// Update Volume (every loop)
+		UpdateVolume(audio_component.mChannelID, audio_component.mAudioType, audio_component.mVolume);
+		
 		switch (audio_component.mNextActionState)
 		{
 			case Audio::SET_TO_PLAY:
@@ -406,6 +409,33 @@ bool AudioSystem::StopSound(uid channel_id, AUDIOTYPE type)
 
 	return false;
 }
+
+bool AudioSystem::UpdateVolume(uid channel_id, AUDIOTYPE type, float volume)
+{
+	for (auto& channel : mChannels[type])
+	{
+		if (channel.first == channel_id)
+		{
+			FMOD::Sound* current_sound;
+			channel.second->getCurrentSound(&current_sound);
+
+			if (current_sound)
+			{
+				bool playing = false;
+				channel.second->isPlaying(&playing);
+
+				if (playing)
+				{
+					channel.second->setVolume(volume);
+					return true;
+				}
+			}
+		}
+	}
+
+	return false;
+}
+
 
 
 bool AudioSystem::IsChannelPlaying(uid id, AUDIOTYPE type)

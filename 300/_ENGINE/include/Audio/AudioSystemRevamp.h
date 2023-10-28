@@ -45,6 +45,12 @@ public:
 	bool		 PauseSound(uid channel_id, AUDIOTYPE type);
 	bool		 UnpauseSound(uid channel_id, AUDIOTYPE type);
 	bool		 StopSound(uid channel_id, AUDIOTYPE type);
+	bool		 UpdateVolume(uid channel_id, AUDIOTYPE type, float volume);
+
+	// Audio Fade Functions 
+public:
+
+
 
 	// Channel Check (still playing or not)
 public:

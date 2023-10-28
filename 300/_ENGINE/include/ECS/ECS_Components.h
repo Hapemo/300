@@ -395,6 +395,10 @@ struct Audio : public Serializable
 		mNextActionState = STATE::SET_STOP;
 	}
 
+	void UpdateVolume(float volume)
+	{
+		mVolume = volume;
+	}
 	
 
 
