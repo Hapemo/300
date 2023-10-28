@@ -46,6 +46,8 @@ public:
 	bool		 UnpauseSound(uid channel_id, AUDIOTYPE type);
 	bool		 StopSound(uid channel_id, AUDIOTYPE type);
 	bool		 UpdateVolume(uid channel_id, AUDIOTYPE type, float volume);
+	void         SetAllSFXVolume(float volume);											// Built for Sound Settings
+	void		 SetAllBGMVolume(float volume);											// Built for Sound Settings
 
 	// Audio Fade Functions 
 public:

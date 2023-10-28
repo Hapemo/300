@@ -71,8 +71,19 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 		// Test Cases - to test functionality (will remove)
 		TestCases(audio_component);
 		
-		// Update Volume (every loop)
-		UpdateVolume(audio_component.mChannelID, audio_component.mAudioType, audio_component.mVolume);
+		// Update Volume (every loop) - based on global volume also 
+		float global_modifier = 1.0f;
+		switch (audio_component.mAudioType)
+		{
+			case AUDIO_BGM:
+				global_modifier = bgm_global_vol;
+				break;
+			case AUDIO_SFX:
+				global_modifier = sfx_global_vol;
+				break;
+		}
+
+		UpdateVolume(audio_component.mChannelID, audio_component.mAudioType, audio_component.mVolume * global_modifier);
 		
 		switch (audio_component.mNextActionState)
 		{
@@ -436,6 +447,16 @@ bool AudioSystem::UpdateVolume(uid channel_id, AUDIOTYPE type, float volume)
 	return false;
 }
 
+void AudioSystem::SetAllSFXVolume(float volume)
+{
+	sfx_global_vol = volume;
+}
+
+void AudioSystem::SetAllBGMVolume(float volume)
+{
+	bgm_global_vol = volume;
+}
+
 
 
 bool AudioSystem::IsChannelPlaying(uid id, AUDIOTYPE type)
@@ -508,4 +529,13 @@ void AudioSystem::TestCases(Audio& audio_component)
 		audio_component.SetUnpause();
 	if (Input::CheckKey(PRESS, I))
 		audio_component.SetStop();
+	if (Input::CheckKey(PRESS, U))
+		SetAllSFXVolume(0.0f);
+	if (Input::CheckKey(PRESS, Y))
+		SetAllSFXVolume(1.0f);
+	if (Input::CheckKey(PRESS, L))
+		SetAllBGMVolume(0.0f);
+	if (Input::CheckKey(PRESS, K))
+		SetAllBGMVolume(1.0f);
+
 }

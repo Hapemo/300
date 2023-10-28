@@ -111,8 +111,36 @@ void ObjectFactory::LoadScene(Scene* scene, const std::string& filename)
 	audio.mAudioType = AUDIO_SFX;
 	audio.mIsLooping = true;
 	audio.mState = Audio::INACTIVE;
+	audio.mPlayonAwake = true;
+
+	Entity e2 = systemManager->ecs->NewEntity();
+	Audio& audio2 = e2.GetComponent<Audio>();
+	General& general2 = e2.GetComponent<General>();
+	general2.name = "SFX #2";
+	audio2.mFilePath = "../assets\\Audio";
+	audio2.mFileName = "Girl-Humming.wav";
+	audio2.mFullPath = audio.mFilePath + "/" + audio.mFileName;
+	audio2.mAudioType = AUDIO_SFX;
+	audio2.mIsLooping = true;
+	audio2.mState = Audio::INACTIVE;
+	audio2.mPlayonAwake = true;
+
+	Entity e3 = systemManager->ecs->NewEntity();
+	Audio& audio3 = e3.GetComponent<Audio>();
+	General& general3 = e3.GetComponent<General>();
+	general3.name = "BGM #1";
+	audio3.mFilePath = "../assets\\Audio";
+	audio3.mFileName = "cruising-down-8bit-lane-159615.mp3";
+	audio3.mFullPath = audio.mFilePath + "/" + audio.mFileName;
+	audio3.mAudioType = AUDIO_BGM;
+	audio3.mIsLooping = true;
+	audio3.mState = Audio::INACTIVE;
+	audio3.mPlayonAwake = true;
 
 	scene->mEntities.insert(e);
+	scene->mEntities.insert(e2);
+	scene->mEntities.insert(e3);
+
 }
 
 void ObjectFactory::LoadGameState(GameState* gs, const std::string& _name)
