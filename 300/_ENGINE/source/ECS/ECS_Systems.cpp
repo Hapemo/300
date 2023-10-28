@@ -8,7 +8,7 @@
 #include "ECS/ECS_Components.h"
 #include "GameState/GameStateManager.h"
 #include "GameState/GameState.h"
-#include "Audio/AudioSystem.h"
+#include "Audio/AudioSystemRevamp.h"
 #include "Debug/Logger.h"
 #include "Input/InputMapSystem.h"
 #include "Debug/EnginePerformance.h"
@@ -68,7 +68,7 @@ void SystemManager::Init(bool isEditor, GFX::Window *window)
 
 void SystemManager::Reset()
 {
-	mAudioSystem.get()->Reset();				// Using <Audio> component, must happen before clearing of entities.
+	//mAudioSystem.get()->Reset();				// Using <Audio> component, must happen before clearing of entities.
 	mGameStateSystem.get()->Unload();
 	mGameStateSystem.get()->Init();
 	mPhysicsSystem.get()->Init();
@@ -80,7 +80,7 @@ void SystemManager::Pause()
 {
 	mIsPlay = false; 
 	mGraphicsSystem->PauseGlobalAnimation();
-	mAudioSystem->Pause();
+	//mAudioSystem->Pause(); 
 }
 
 void SystemManager::Play()
@@ -89,8 +89,8 @@ void SystemManager::Play()
 	mPhysicsSystem.get()->Init();
 	mGraphicsSystem->UnpauseGlobalAnimation();
 	mGameStateSystem->mCurrentGameState.Save();
-	mAudioSystem.get()->PlayOnAwake();
-	mAudioSystem.get()->system_paused = false;
+	//mAudioSystem.get()->PlayOnAwake();
+	//mAudioSystem.get()->system_paused = false;
 }
 
 void SystemManager::Update(float dt)
@@ -120,7 +120,7 @@ void SystemManager::Update(float dt)
 	EnginePerformance::UpdateSystemMs("Scripting");
 
 	EnginePerformance::StartTrack("Audio");
-	mAudioSystem.get()->Update(dt);					// [10/26] Inclusion of 3D Audio -> must always be after (Positional Update) 
+	//mAudioSystem.get()->Update(dt);					// [10/26] Inclusion of 3D Audio -> must always be after (Positional Update) 
 	EnginePerformance::EndTrack("Audio");
 	EnginePerformance::UpdateSystemMs("Audio");
 	//	mResourceSystem.get()->Update();
@@ -133,7 +133,7 @@ void SystemManager::Exit()
 	mGraphicsSystem.get()->Exit();
 	mResourceTySystem.get()->Exit();
 	mGameStateSystem.get()->Unload();
-	mAudioSystem.get()->Exit();
+	//mAudioSystem.get()->Exit();
 }
 
 void SystemManager::DeleteEntity(Entity e)

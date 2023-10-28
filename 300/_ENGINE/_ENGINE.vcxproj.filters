@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="source\Audio\AudioSystem.cpp" />
     <ClCompile Include="source\Debug\AssertException.cpp" />
     <ClCompile Include="source\Debug\LogException.cpp" />
     <ClCompile Include="source\Debug\Logger.cpp" />
@@ -27,9 +26,9 @@
     <ClCompile Include="source\Serialization\SerializeSelf.cpp" />
     <ClCompile Include="source\Physics\ContactCallback.cpp" />
     <ClCompile Include="source\Button\ButtonSystem.cpp" />
+    <ClCompile Include="source\Audio\AudioSystemRevamp.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\Audio\AudioSystem.h" />
     <ClInclude Include="include\Audio\AudioType.h" />
     <ClInclude Include="include\Debug\AssertException.h" />
     <ClInclude Include="include\Debug\Asserts.h" />
@@ -67,5 +66,6 @@
     <ClInclude Include="include\ECS\EnumTags.h" />
     <ClInclude Include="include\Physics\FilterShader.h" />
     <ClInclude Include="include\Button\ButtonSystem.h" />
+    <ClInclude Include="include\Audio\AudioSystemRevamp.h" />
   </ItemGroup>
 </Project>

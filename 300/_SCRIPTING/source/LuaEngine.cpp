@@ -4,7 +4,7 @@
 #include "Input/Input.h"
 #include "ECS/ECS_Systems.h"
 #include "ECS/ECS_Components.h"
-#include "Audio/AudioSystem.h"
+#include "Audio/AudioSystemRevamp.h"
 #include "Input/InputMapSystem.h"
 #include "GameState/GameStateManager.h"
 #include "Graphics/GraphicsSystem.h"
@@ -239,7 +239,7 @@ void LuaInput()
 
 void LuaAudioSystem()
 {
-    systemManager->mScriptingSystem->luaState.new_usertype<AudioSystem>(
+    /*systemManager->mScriptingSystem->luaState.new_usertype<AudioSystem>(
         "mAudioSystem", sol::constructors<>(),
         "PlayAudio", &AudioSystem::PlayAudio,
         "SetAllSFXVolume", &AudioSystem::SetAllSFXVolume,
@@ -256,7 +256,7 @@ void LuaAudioSystem()
         "UnpauseAllSounds", &AudioSystem::UnpauseAllSounds,
         "UnpauseSFXSounds", &AudioSystem::UnpauseSFXSounds,
         "UnpauseBGMSounds", &AudioSystem::UnpauseBGMSounds
-    );
+    );*/
 }
 
 void LuaAudio()
@@ -268,7 +268,7 @@ void LuaAudio()
 
 void LuaAudioSource()
 {
-    systemManager->mScriptingSystem->luaState["CrossFadeAudio"] = &CrossFadeAudio;
+ /*   systemManager->mScriptingSystem->luaState["CrossFadeAudio"] = &CrossFadeAudio;
     systemManager->mScriptingSystem->luaState.new_usertype<AudioSource>(
         "AudioSource", sol::constructors<AudioSource()>(),
         "GetAudio", &AudioSource::GetAudioComponent,
@@ -282,7 +282,7 @@ void LuaAudioSource()
         "Mute", &AudioSource::Mute,
         "SetVolume", &AudioSource::SetVolume,
         "SetIsLoop", &AudioSource::SetIsLoop
-        );
+        );*/
 }
 
 void LuaInputMapSystem()
