@@ -1201,105 +1201,85 @@ void Audio::Inspect() {
 
 	const char* audio_type[] = { "SFX" , "BGM" };
 
+	// Check if there's an attached information relating to the audio file.
+	if (!mFullPath.empty())
+		mIsEmpty = false;
+
 	// Audio Component (Bar)
 	if (ImGui::CollapsingHeader("Audio", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
 	{
-		//if (ImGui::BeginDragDropTarget())
-		//{
-		//	if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_AUDIO"))
-		//	{
-		//		full_file_path = std::string((const char*)payload->Data);
+		if (ImGui::BeginDragDropTarget())
+		{
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_AUDIO"))
+			{
+				full_file_path = std::string((const char*)payload->Data);
 
-		//		size_t audio_dir_pos = full_file_path.find_first_of("Audio");
+				size_t audio_dir_pos = full_file_path.find_first_of("Audio");
 
-		//		if (audio_dir_pos != std::string::npos) {
-		//			// Use substr to extract the substring up to the found position
-		//			file_path = full_file_path.substr(0, audio_dir_pos + 5); // Account for "Audio"
-		//			//std::cout << result << std::endl;
-		//		}
+				if (audio_dir_pos != std::string::npos) {
+					// Use substr to extract the substring up to the found position
+					file_path = full_file_path.substr(0, audio_dir_pos + 5); // Account for "Audio"
+					//std::cout << result << std::endl;
+				}
 
-		//		size_t audio_name_start = full_file_path.find_last_of("\\");
-		//		std::string audio_name;
+				size_t audio_name_start = full_file_path.find_last_of("\\");
+				std::string audio_name;
 
-		//		if (audio_name_start != std::string::npos) {
-		//			audio_name = full_file_path.substr(audio_name_start + 1);
-		//		}
+				if (audio_name_start != std::string::npos) {
+					audio_name = full_file_path.substr(audio_name_start + 1);
+				}
 
-		//		// <Audio> Component - assign m3DAudio flag
-		//		if (audio_name.find("3D") != std::string::npos)
-		//		{
-		//			m3DAudio = true;
-		//		}
+				// <Audio> Component - assign m3DAudio flag
+				/*if (audio_name.find("3D") != std::string::npos)
+				{
+					m3DAudio = true;
+				}*/
 
-		//		// Must be outside (what if i remove and add an already loaded audio)
-		//		mFilePath = file_path;
-		//		mFileName = audio_name;
-		//		mFullPath = file_path + "/" + audio_name;
+				// Must be outside (what if i remove and add an already loaded audio)
+				mFilePath = file_path;
+				mFileName = audio_name;
+				mFullPath = file_path + "/" + audio_name;		
 
-		//		// Check if the [Audio file] has been uploaded into the database...
-		//		if (systemManager->mAudioSystem.get()->CheckAudioExist(audio_name)) // Exists ... 
-		//		{
-		//			// For Debugging Purposes
-		//			PINFO("[Loaded] Audio is already in database.");
-		//			// Assign the [Sound*] to this component. 
-		//			mSound = systemManager->mAudioSystem.get()->FindSound(audio_name);
-		//			Entity(Hierarchy::selectedId).GetComponent<Audio>().mIsEmpty = false; // Component is populated with info
-		//			Audio& audioent = Entity(Hierarchy::selectedId).GetComponent<Audio>();
-		//			return;
-		//		}
+			}
 
-		//		else // Does not exist...
-		//		{
-		//			// Load the Audio File + Check (load status)
-		//			systemManager->mAudioSystem.get()->UpdateLoadAudio(Entity(Hierarchy::selectedId));
-		//			Entity(Hierarchy::selectedId).GetComponent<Audio>().mIsEmpty = false; // must be here (editor specific) -> to trigger the other options to appear.
-		//			/*Audio& audioent = Entity(Hierarchy::selectedId).GetComponent<Audio>();
-		//			int i = 0;*/
-		//		}
-
-		//	}
-
-		//	ImGui::EndDragDropTarget();
-		//}
-
+			ImGui::EndDragDropTarget();
+		}
 	}
 
-	//ImGui::Text("Drag drop 'Audio' files to header above 'Audio'");
-	//ImGui::Text("Audio File Selected: ");
-	//ImGui::Text(Entity(Hierarchy::selectedId).GetComponent<Audio>().mFullPath.c_str());
-	//Audio& audio = Entity(Hierarchy::selectedId).GetComponent<Audio>();
+	ImGui::Text("Drag drop 'Audio' files to header above 'Audio'");
+	ImGui::Text("Audio File Selected: ");
+	ImGui::Text(Entity(Hierarchy::selectedId).GetComponent<Audio>().mFullPath.c_str());
+	Audio& audio = Entity(Hierarchy::selectedId).GetComponent<Audio>();
 
 	//if (!mIsEmpty && m3DAudio)
 	//{
 	//	ImGui::Text("This is a 3D Audio");
 	//}
 
-	//static bool remove_audio_bool = false;
-	//if (!Entity(Hierarchy::selectedId).GetComponent<Audio>().mIsEmpty)
-	//{
-	//	ImGui::Checkbox("Remove Audio File.", &remove_audio_bool);
-	//}
+	static bool remove_audio_bool = false;
+	if (!mIsEmpty)
+	{
+		ImGui::Checkbox("Remove Audio File.", &remove_audio_bool);
+	}
 
-	//if (!mIsEmpty && remove_audio_bool) // if not empty
-	//{
-	//	Entity(Hierarchy::selectedId).GetComponent<Audio>().ClearAudioComponent();
-	//	remove_audio_bool = false;
-	//	PINFO("Successfully Removed Audio.");
-	//}
+	if (!mIsEmpty && remove_audio_bool) // if not empty
+	{
+		Entity(Hierarchy::selectedId).GetComponent<Audio>().ClearAudioComponent();
+		remove_audio_bool = false;
+		PINFO("Successfully Removed Audio.");
+	}
 
-	//static float f1 = 0.123f;
-	//if (!mIsEmpty)
-	//{
-	//	//ImGui::Checkbox("Play This (start the scene first)", &mIsPlay);
-	//	//ImGui::Checkbox("IsPlaying", &mIsPlaying);
-	//	ImGui::Checkbox("Play on Awake", &mPlayonAwake);
-	//	ImGui::Checkbox("Is Looping", &mIsLooping);
-	//	ImGui::SliderFloat("Volume", &mVolume, 0.0f, 1.0f, "volume = %.3f");
+	if (!mIsEmpty)
+	{
+		ImGui::Checkbox("Play on Awake", &mPlayonAwake);
 
-	//	if (ImGui::IsItemEdited())
-	//	{
-	//		mChannel->setVolume(mVolume);
-	//	}
+		if (mPlayonAwake && (mState != Audio::PLAYING))
+		{
+			mState = Audio::SET_TO_PLAY;
+		}
+		ImGui::Checkbox("Is Looping", &mIsLooping);
+		ImGui::SliderFloat("Volume", &mVolume, 0.0f, 1.0f, "volume = %.3f");
+
 
 	//	ImGui::SliderFloat("Fade Speed", &mFadeSpeedModifier, 0.0f, 1.0f, "fade = %.3f");
 
@@ -1313,32 +1293,32 @@ void Audio::Inspect() {
 	//		//systemManager->mAudioSystem.get()->Update3DChannelSettings(Entity(Hierarchy::selectedId)); 
 	//	}
 
-	//}
+	}
 
-	//// AudioType Selector 
-	//if (ImGui::BeginCombo("Audio Type", audio_type[mAudio]))
-	//{
-	//	for (unsigned char i{ 0 }; i < 2; i++) {
-	//		if (ImGui::Selectable(audio_type[i])) {
-	//			mAudio = i;
-	//			switch (mAudio)
-	//			{
-	//			case 0:
-	//				mAudioType = AUDIO_SFX;
-	//				mTypeChanged = true;
-	//				systemManager->mAudioSystem.get()->UpdateChannelReference(Entity(Hierarchy::selectedId));
-	//				break;
-	//			case 1:
-	//				mAudioType = AUDIO_BGM;
-	//				mTypeChanged = true;
-	//				systemManager->mAudioSystem.get()->UpdateChannelReference(Entity(Hierarchy::selectedId));
-	//				break;
-	//			}
-	//		}
-	//	}
+	// AudioType Selector 
+	if (ImGui::BeginCombo("Audio Type", audio_type[mAudio]))
+	{
+		for (unsigned char i{ 0 }; i < 2; i++) {
+			if (ImGui::Selectable(audio_type[i])) {
+				mAudio = i;
+				switch (mAudio)
+				{
+				case 0:
+					mAudioType = AUDIO_SFX;
+					mTypeChanged = true;
+					//systemManager->mAudioSystem.get()->UpdateChannelReference(Entity(Hierarchy::selectedId));
+					break;
+				case 1:
+					mAudioType = AUDIO_BGM;
+					mTypeChanged = true;
+					//systemManager->mAudioSystem.get()->UpdateChannelReference(Entity(Hierarchy::selectedId));
+					break;
+				}
+			}
+		}
 
-	//	ImGui::EndCombo();
-	//}
+		ImGui::EndCombo();
+	}
 
 	if (delete_component == false)
 		Entity(Hierarchy::selectedId).RemoveComponent<Audio>();

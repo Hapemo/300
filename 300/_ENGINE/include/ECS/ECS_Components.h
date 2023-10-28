@@ -334,12 +334,12 @@ struct Audio : public Serializable
 {	
 	enum STATE : unsigned char
 	{
-		INACTIVE,
-		SET_TO_PLAY,
-		PLAYING,
-		PAUSED,
-		STOPPED, 
-		FAILED     // When the audio fails to play...
+		INACTIVE,			// Used for Stopped.
+		SET_TO_PLAY,        // mPlayonAwake
+		PLAYING,            
+		PAUSED, 
+		FINISHED,		    // mIsLooping
+		FAILED				// When the audio fails to play...
 	};
 
 	// Serialize
@@ -367,10 +367,8 @@ struct Audio : public Serializable
 	// Do not serialize 
 	// ------------------------------------------
 	STATE          mState = STATE::INACTIVE;		 // Initial State - Inactive (do nothing first)
+	
 
-	// Update Loop - Boolean Checks
-	bool		   mIsPlaying = false;					 // [Flag] - Check if audio is already playing (Channel Interaction)
-	bool           mIsPlay    = false;					 // [Flag] - to decide whether to play audio (if true)
 
 	// Update Loop - Fade In / Fade out data
 	bool		   mFadeIn = false;						 // [Flag] - This audio will be faded out. 
@@ -391,7 +389,7 @@ struct Audio : public Serializable
 	float		   mTypeChanged = false;				 // [For Editor] - trigger type change
 
 	// Q. Can a <Audio> entity have their very own channel.
-	//uid            mChannelID;							 // Channel ID (Channel Management)
+	uid            mChannelID;							 // Channel ID (this is being played in which channel...) 
 	//FMOD::Channel* mChannel;         					 // Use this to facilitate manipulation of audio.
 	//FMOD::Sound* mSound = nullptr;					 // Each <Audio> can only hold a reference to the "Audio File" it's attached to.
 
@@ -404,7 +402,7 @@ struct Audio : public Serializable
 		//mChannelID = uid();
 	}
 
-	Audio(std::string file_path_to_audio, std::string file_audio_name, AUDIOTYPE audio_type, bool playOnAwake) : mAudioType(audio_type), mIsPlaying(false), mPlayonAwake(playOnAwake),
+	Audio(std::string file_path_to_audio, std::string file_audio_name, AUDIOTYPE audio_type, bool playOnAwake) : mAudioType(audio_type), mPlayonAwake(playOnAwake),
 		mIsEmpty(false)
 	{
 		mFilePath = file_path_to_audio;
@@ -421,11 +419,9 @@ struct Audio : public Serializable
 		mFileName = "";
 		mFullPath = "";
 		mAudioType = AUDIO_SFX;
-		mIsPlay = false;
 		mPlayonAwake = false;
 		mIsEmpty = true;
 		mIsLoaded = false;
-		//mSound = nullptr;
 		//m3DAudio = false; // Added [10/26]
 	}
 

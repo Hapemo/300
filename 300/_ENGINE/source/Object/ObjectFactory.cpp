@@ -110,7 +110,7 @@ void ObjectFactory::LoadScene(Scene* scene, const std::string& filename)
 	audio.mFullPath = audio.mFilePath + "/" + audio.mFileName;
 	audio.mAudioType = AUDIO_SFX;
 	audio.mIsLooping = true;
-	audio.mState = Audio::SET_TO_PLAY;
+	audio.mState = Audio::INACTIVE;
 
 	scene->mEntities.insert(e);
 }

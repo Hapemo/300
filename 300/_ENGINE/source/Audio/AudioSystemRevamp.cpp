@@ -25,22 +25,26 @@ void AudioSystem::Init()
 	ErrCodeCheck(system_obj->init(MAX_AUDIO_FILES_PLAYING, FMOD_INIT_NORMAL, nullptr));
 
 	// Channel Initialization (SFX/BGM) - Global Volume Control
-	std::vector<FMOD::Channel*> sfx_channels;
-	std::vector<FMOD::Channel*> bgm_channels;
+	std::vector<std::pair<uid, FMOD::Channel*>> sfx_channels;
+	std::vector<std::pair<uid, FMOD::Channel*>> bgm_channels;
 
-	mChannels.insert(std::make_pair(AUDIO_SFX, sfx_channels));  
-	mChannels.insert(std::make_pair(AUDIO_BGM, bgm_channels)); 
+	mChannels.insert(std::make_pair(AUDIO_SFX, sfx_channels));
+	mChannels.insert(std::make_pair(AUDIO_BGM, bgm_channels));
 
 	// Populate Channels
 	for (int i = 0; i < NO_OF_SFX_CHANNELS_TO_INIT; ++i)
 	{
+		uid id;
 		FMOD::Channel* new_channel;
-		mChannels[AUDIO_SFX].push_back(new_channel);
+		std::pair<uid, FMOD::Channel*> channel_pair = std::make_pair(id, new_channel);
+		mChannels[AUDIO_SFX].push_back(channel_pair);
 	}
 	for (int i = 0; i < NO_OF_BGM_CHANNELS_TO_INIT; ++i)
 	{
+		uid id;
 		FMOD::Channel* new_channel;
-		mChannels[AUDIO_BGM].push_back(new_channel);
+		std::pair<uid, FMOD::Channel*> channel_pair = std::make_pair(id, new_channel);
+		mChannels[AUDIO_BGM].push_back(channel_pair);
 	}
 
 	// Load all Sounds from Directory... (at startup)
@@ -74,18 +78,37 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 					PINFO("AUDIO EXISTS");
 					PINFO("PLAYING AUDIO AT: %f", audio_component.mVolume);
 
-					if (PlaySound(audio_component.mFileName, audio_component.mAudioType, audio_component.mVolume))  // Plays the sound based on parameters
+					unsigned int play_bool = PlaySound(audio_component.mFileName, audio_component.mAudioType, audio_component.mVolume);
+					if (play_bool)  // Plays the sound based on parameters
+					{
 						audio_component.mState = Audio::PLAYING; // Update State 
+						audio_component.mChannelID = play_bool;
+					}
 					else
 						audio_component.mState = Audio::FAILED;
 				}
 
 				break;
 			case Audio::PLAYING:
+				// Check if the current sound has finished playing...
+				if (!IsChannelPlaying(audio_component.mChannelID, audio_component.mAudioType))	// If finished playing...
+				{
+					audio_component.mState = Audio::FINISHED;
+				}
 				break;
-			case Audio::STOPPED:
+			case Audio::PAUSED:
+				break;
+
+			case Audio::FINISHED:
+				if (audio_component.mIsLooping)
+				{
+					audio_component.mState = Audio::SET_TO_PLAY;
+				}
+				break;
+			case Audio::FAILED:
 				break;
 		}
+
 		
 	}
 }
@@ -233,13 +256,13 @@ FMOD::Sound* AudioSystem::FindSound(std::string audio_name)
 	- Finds an available channel and plays that audio.
  */
  /******************************************************************************/
-bool AudioSystem::PlaySound(std::string audio_name, AUDIOTYPE type, float vol)
+unsigned int AudioSystem::PlaySound(std::string audio_name, AUDIOTYPE type, float vol)
 {
-	for (FMOD::Channel* channel : mChannels[type])
+	for (auto& channel : mChannels[type])
 	{
 		FMOD::Sound* current_sound;
-		channel->getCurrentSound(&current_sound); 
-		
+		channel.second->getCurrentSound(&current_sound);
+
 		if (!current_sound)
 		{
 			// This channel is free to play
@@ -247,17 +270,43 @@ bool AudioSystem::PlaySound(std::string audio_name, AUDIOTYPE type, float vol)
 			FMOD::Sound* sound = FindSound(audio_name);
 			if (sound != nullptr) // Safeguard ...
 			{
-				system_obj->playSound(sound, 0, false, &channel);
-				channel->setVolume(vol);
+				system_obj->playSound(sound, 0, false, &channel.second);
+				channel.second->setVolume(vol);
 			}
+
+			return (unsigned int)(channel.first);
+		}
 		
-			return true;
+	}
+
+	return 0; // failed.
+}
+
+
+bool AudioSystem::IsChannelPlaying(uid id, AUDIOTYPE type)
+{
+	std::vector<std::pair<uid, FMOD::Channel*>> sfx_or_bgm = mChannels[type];
+	
+	for (auto& channel_pair : sfx_or_bgm)
+	{
+		if (channel_pair.first == id)
+		{
+			FMOD::Sound* current_sound;
+			channel_pair.second->getCurrentSound(&current_sound);
+			
+			if (current_sound)  // not empty..
+			{
+				bool playing = false;
+				channel_pair.second->isPlaying(&playing);
+				
+				return playing;
+			}
 		}
 	}
 
 	return false;
-}
 
+}
 
 /******************************************************************************/
 /*!

@@ -16,6 +16,7 @@
 enum AUDIOTYPE :unsigned char;
 enum STATE : unsigned char;
 
+
 class AudioSystem
 {
 
@@ -41,8 +42,11 @@ public:
 
 	// Playback Functions
 public:
-	bool PlaySound(std::string audio_name, AUDIOTYPE type, float vol = 1.0f);	// Finds the next available in (specified sfx/bgm) channel and plays it in there. 
+	unsigned int PlaySound(std::string audio_name, AUDIOTYPE type, float vol = 1.0f);	// Finds the next available in (specified sfx/bgm) channel and plays it in there. 
 
+	// Channel Check (still playing or not)
+public:
+	bool IsChannelPlaying(uid id, AUDIOTYPE type);
 
 
 	// Data Members (Global Volume Multiplier)
@@ -53,9 +57,9 @@ public:
 	// Databases (Sounds + Channels) + FMOD System
 public:
 	FMOD::System* system_obj = nullptr;
-	std::unordered_map<AUDIOTYPE, std::vector<FMOD::Channel*>>        mChannels;
-	std::unordered_map<std::string, FMOD::Sound*>					  mSounds;
-	//static std::unordered_map<
+	std::unordered_map<AUDIOTYPE, std::vector<std::pair<uid,FMOD::Channel*>>>     mChannels;
+	std::unordered_map<std::string, FMOD::Sound*>							      mSounds;
+	//static std::unordered_map< 
 	/*std::unordered_map<AUDIOTYPE, std::vector*/
 
 };
