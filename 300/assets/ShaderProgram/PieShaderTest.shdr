@@ -1,0 +1,7 @@
+[
+    {
+        "ShaderProgram": "PieShaderTest",
+        "Vertex": "../assets/shader_files/PieShaderTest_vert.glsl",
+        "Fragment": "../assets/shader_files/PieShaderTest_frag.glsl"
+    }
+]

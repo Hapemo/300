@@ -20,16 +20,19 @@ This file contains the logic to Load and Run scripts.
 
 void Script::Load(Entity entity)
 {
+    id = (int)entity.id;
+
     PINFO("Script Loaded")
 
     env = { systemManager->mScriptingSystem->luaState, sol::create, systemManager->mScriptingSystem->luaState.globals() };
 
     sol::protected_function_result result = systemManager->mScriptingSystem->luaState.script_file(scriptFile, env);
+
     if (!result.valid())
     {
         // print what error was invoked when the script was loading
         sol::error err = result;
-        std::cout << "Error opening file!" << std::endl;
+        std::cout << "Error opening file! " << "Entity ID: " << (int)entity.id << " FileName: " << scriptFile << std::endl;
         std::cout << err.what() << std::endl;
     }
 
@@ -42,6 +45,13 @@ void Script::Run(const char* funcName)
 {
     // Calling a function in lua
     sol::protected_function func = env[funcName];
+
+    if (!func)
+    {
+        std::cout << "not func: " << funcName << std::endl;
+        return;
+    }
+
     sol::protected_function_result result = func();
 
     // Will throw error if type is different
@@ -205,3 +215,4 @@ void Script::LoadEnvVar()
 //    temp.env = { systemManager->mScriptingSystem->luaState, sol::create, systemManager->mScriptingSystem->luaState.globals() };
 //    id.GetComponent<Scripts>().scriptsContainer.push_back(temp);
 //}
+

@@ -110,7 +110,7 @@ void Inspect::update()
 		if (ent.HasComponent<Scripts>())
 		{
 			Scripts& scripts = ent.GetComponent<Scripts>();
-			scripts.Inspect();
+			scripts.Inspect(ent.id);
 		}
 		if (ent.HasComponent<Animator>()) {
 			Animator& ani = ent.GetComponent<Animator>();
@@ -131,6 +131,10 @@ void Inspect::update()
 		if (ent.HasComponent<SphereCollider>()) {
 			SphereCollider& sphereCollider = ent.GetComponent<SphereCollider>();
 			sphereCollider.Inspect();
+		}
+		if (ent.HasComponent<CapsuleCollider>()) {
+			CapsuleCollider& capsuleCollider = ent.GetComponent<CapsuleCollider>();
+			capsuleCollider.Inspect();
 		}
 		if (ent.HasComponent<PointLight>()) {
 			PointLight& pointLight = ent.GetComponent<PointLight>();
@@ -207,7 +211,10 @@ void Inspect::Add_component() {
 			if (!Entity(Hierarchy::selectedId).HasComponent<SphereCollider>())
 				Entity(Hierarchy::selectedId).AddComponent<SphereCollider>();
 		}
-
+		if (ImGui::Selectable("CapsuleCollider")) {
+			if (!Entity(Hierarchy::selectedId).HasComponent<CapsuleCollider>())
+				Entity(Hierarchy::selectedId).AddComponent<CapsuleCollider>();
+		}
 		if (ImGui::Selectable("Animator")) {
 			if (!Entity(Hierarchy::selectedId).HasComponent<Animator>())
 				Entity(Hierarchy::selectedId).AddComponent<Animator>();
@@ -329,6 +336,13 @@ void Transform::Inspect() {
 		ImGui::Separator();
 
 
+		ImGui::Text("Rotation");
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		ImGui::DragFloat3("##Rotation", (float*)&mRotate, 1);
+
+
 		ImGui::Text("Scale");
 		ImGui::SameLine();
 		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
@@ -337,15 +351,6 @@ void Transform::Inspect() {
 
 		ImGui::Separator();
 
-
-		ImGui::Text("Rotation");
-		ImGui::SameLine();
-		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
-			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
-		ImGui::DragFloat3("##Rotation", (float*)&mRotate, 1);
-
-
-		
 	}
 
 }
@@ -365,19 +370,18 @@ void Camera::Inspect()
 
 		ImGui::Separator();
 
-		vec3 temp = mCamera.mPosition;
-		ImGui::DragFloat3("Camera Position", (float*)&temp);
-
-		mCamera.mTarget += temp - mCamera.mPosition;
-		mCamera.mPosition = temp;
-
-		ImGui::DragFloat3("Camera Target", (float*)&mCamera.mTarget);
+		vec3 camdir = mCamera.direction();
+		ImGui::Text("Camera Direction");
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		ImGui::Text("%0.2f, %0.2f, %0.2f", camdir.x, camdir.y, camdir.z);
 
 		ImGui::Text("Aspect Ratio");
 		ImGui::SameLine();
 		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
 			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
-		ImGui::DragFloat("##Aspect", &mCamera.mAspectRatio);
+		ImGui::Text("%0.2f", &mCamera.mAspectRatio);
 
 		ImGui::Text("FOV");
 		ImGui::SameLine();
@@ -396,6 +400,13 @@ void Camera::Inspect()
 		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
 			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
 		ImGui::DragFloat("##NP", &mCamera.mNear);
+
+		ImGui::Text("Camera Speed");
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		ImGui::DragFloat("##CSG", &mCamera.mCameraSpeed);
+
 
 		//ImGui::Text("Orthographic");
 		//ImGui::SameLine();
@@ -444,15 +455,15 @@ void PointLight::Inspect()
 	Inspector functionality for Script
 */
 /**************************************************************************/
-void Scripts::Inspect() {
+void Scripts::Inspect(entt::entity entityID) {
 	bool delete_component = true;
 	const char* data_script{};
 	static std::string newScript;
 	static bool open_popup{ false };
 	static std::string deleteScript;
 
-	auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
-	Scripts& scripts = scriptEntities.get<Scripts>(Hierarchy::selectedId);
+	//auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
+	////Scripts& scripts = scriptEntities.get<Scripts>(Hierarchy::selectedId);
 
 	if (ImGui::CollapsingHeader("Scripts", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
 	{
@@ -465,13 +476,13 @@ void Scripts::Inspect() {
 				std::string dataScript = std::string(data_script);
 
 				// if entity does not contain any script, just add 
-				if (scriptEntities.get<Scripts>(Hierarchy::selectedId).scriptsContainer.size() == 0)
+				if (scriptsContainer.size() == 0)
 				{
 					Script script;
 					script.scriptFile = dataScript;
 					script.env = { systemManager->mScriptingSystem->luaState, sol::create, systemManager->mScriptingSystem->luaState.globals() };
-					script.Load(Hierarchy::selectedId);
-					scripts.scriptsContainer.push_back(script);
+					script.Load(entityID);
+					scriptsContainer.push_back(script);
 					//std::cout << "Script " << script.scriptFile << " added to entity " << std::to_string((int)Hierarchy::selectedId) << std::endl;
 				}
 				// if entity already has scripts attached, check if duplicate 
@@ -479,7 +490,7 @@ void Scripts::Inspect() {
 				{
 					bool hasScript{ };
 
-					for (auto& elem : scripts.scriptsContainer)
+					for (auto& elem : scriptsContainer)
 					{
 						if (elem.scriptFile == dataScript)
 						{
@@ -496,9 +507,9 @@ void Scripts::Inspect() {
 						script.scriptFile = dataScript;
 						script.env = { systemManager->mScriptingSystem->luaState, sol::create, systemManager->mScriptingSystem->luaState.globals() };
 
-						script.Load(Hierarchy::selectedId);
+						script.Load(entityID);
 
-						scripts.scriptsContainer.push_back(script);
+						scriptsContainer.push_back(script);
 						//std::cout << "Script " << script.scriptFile << ".lua added to entity " << std::to_string((int)Hierarchy::selectedId) << std::endl;
 						PINFO("Script %s added to entity %s", script.scriptFile.c_str(), std::to_string((int)Hierarchy::selectedId).c_str());
 					}
@@ -509,7 +520,7 @@ void Scripts::Inspect() {
 
 		ImGui::Text("Drag drop scripts to header above 'Scripts'");
 		ImGui::Text("Entity contains scripts: ");
-		for (auto& elem : scripts.scriptsContainer)
+		for (auto& elem : scriptsContainer)
 		{
 			ImGui::SetNextItemOpen(true);
 			if (ImGui::TreeNode(elem.scriptFile.c_str())) {
@@ -530,11 +541,11 @@ void Scripts::Inspect() {
 		{
 			if (ImGui::Selectable("Delete"))
 			{
-				for (auto i = 0; i < scripts.scriptsContainer.size(); i++)
+				for (auto i = 0; i < scriptsContainer.size(); i++)
 				{
-					if (scripts.scriptsContainer[i].scriptFile == deleteScript)
+					if (scriptsContainer[i].scriptFile == deleteScript)
 					{
-						scripts.scriptsContainer.erase(scripts.scriptsContainer.begin() + i);
+						scriptsContainer.erase(scriptsContainer.begin() + i);
 					}
 				}
 				open_popup = false;
@@ -717,7 +728,7 @@ void MeshRenderer::Inspect()
 				guid = _GEOM::GetGUID(descfilepath);
 
 				// If the descriptor file is not present, then load it
-				if (!descFilePresent)
+				//if (!descFilePresent)
 				{
 					//!>> Calling the GEOM Compiler to load 
 					std::string command = "..\\_GEOM_COMPILER\\_GEOM_COMPILER.exe ";
@@ -732,6 +743,9 @@ void MeshRenderer::Inspect()
 				mMeshRef.data_uid = guid;
 				mMeshRef.data = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(guid));
 				GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mMeshRef.data);
+				
+				// load the descriptor data into the GFX::mesh instance
+				_GEOM::DescriptorData::DeserializeGEOM_DescriptorDataFromFile(meshinst->mMeshDescriptorData, GEOM_Descriptor_Filepath);
 
 				if (entins.HasComponent<Animator>() && meshinst->mHasAnimation)
 				{
@@ -798,11 +812,13 @@ void MeshRenderer::Inspect()
 						std::string TEXTURE_Descriptor_Filepath;
 						unsigned guid;
 						// check and ensures that the descriptor file for the materials are created
-						bool descFilePresent = _GEOM::CheckAndCreateDescriptorFileTEXTURE(data_str, TEXTURE_Descriptor_Filepath, texturestr);
+						//bool descFilePresent = _GEOM::CheckAndCreateDescriptorFileTEXTURE(data_str, TEXTURE_Descriptor_Filepath, texturestr);
 						std::string descfilepath = data_str + ".desc";
 						guid = _GEOM::GetGUID(descfilepath);
 						mTextureRef[i].data_uid = guid;
 						mTextureRef[i].data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(guid));
+
+						_GEOM::Texture_DescriptorData::DeserializeTEXTURE_DescriptorDataFromFile(mTextureDescriptorData[i], TEXTURE_Descriptor_Filepath);
 
 						//uid temp(mMaterialInstancePath[i]);
 						//mTextureRef[i].data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(temp.id));
@@ -825,10 +841,12 @@ void MeshRenderer::Inspect()
 						std::string descfilepath = data_str + ".desc";
 						guid = _GEOM::GetGUID(descfilepath);	// gets the guid from the png desc
 
+						_GEOM::Texture_DescriptorData::DeserializeTEXTURE_DescriptorDataFromFile(mTextureDescriptorData[i], TEXTURE_Descriptor_Filepath);
+
 						// If the descriptor file is not present, then load it
-						if (!descFilePresent)
+						//if (!descFilePresent)
 						{
-							CompressImageFile(data_str.c_str(), systemManager->mResourceTySystem->compressed_texture_path.c_str());
+							CompressImageFile(data_str.c_str(), systemManager->mResourceTySystem->compressed_texture_path.c_str(), _GEOM::Texture_DescriptorData::isGammaSpace(TEXTURE_Descriptor_Filepath));
 
 							// Load the textures into the list of usable textures within the engine
 							systemManager->mResourceTySystem->texture_Load(getFilename(data_str), guid);
@@ -838,8 +856,11 @@ void MeshRenderer::Inspect()
 						}
 
 						//uid temp(mMaterialInstancePath[i]);
-						mTextureRef[i].data_uid = guid;
-						mTextureRef[i].data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(guid));
+						//mTextureRef[i].data_uid = guid;
+						//mTextureRef[i].data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(guid));
+
+						//_GEOM::Texture_DescriptorData::DeserializeTEXTURE_DescriptorDataFromFile(mTextureDescriptorData[i], TEXTURE_Descriptor_Filepath);
+
 						//mTextureCont[i] = true;
 					}
 
@@ -866,6 +887,39 @@ void MeshRenderer::Inspect()
 					}
 				}
 				
+
+				ImGui::Dummy(ImVec2(0.0f, 3.0f));
+				std::string nodename = getFilename(mMaterialInstancePath[i]) + " DescriptorFile";
+				if (ImGui::TreeNode(nodename.c_str()))
+				{
+					_GEOM::Texture_DescriptorData& texturedesc = mTextureDescriptorData[i];
+					if (texturedesc.mGUID)
+					{
+						ImGui::Text("%d", texturedesc.mGUID);
+
+						bool isSRGB = (texturedesc.mCompressionType == _GEOM::CompressionType::SRGB);
+						ImGui::Checkbox("isSRGB", &isSRGB);
+
+						// RGB
+						if (isSRGB) {
+							texturedesc.mCompressionType = _GEOM::CompressionType::SRGB;
+						}
+						else {
+							texturedesc.mCompressionType = _GEOM::CompressionType::RGB;
+						}
+
+						if (texturedesc.mDescFilepath.size() > 0)
+							ImGui::Text("%s", texturedesc.mDescFilepath.c_str());
+
+						if (ImGui::Button("Save Descriptor Data"))
+						{
+							_GEOM::Texture_DescriptorData::SerializeTEXTURE_DescriptorDataToFile(mTextureDescriptorData[i].mDescFilepath, texturedesc);
+						}
+					}
+					ImGui::TreePop();
+				}
+
+
 				ImGui::Dummy(ImVec2(0.0f, 10.0f));
 			}
 			else {
@@ -885,7 +939,7 @@ void MeshRenderer::Inspect()
 						std::string TEXTURE_Descriptor_Filepath;
 						unsigned guid;
 						// check and ensures that the descriptor file for the materials are created
-						bool descFilePresent = _GEOM::CheckAndCreateDescriptorFileTEXTURE(data_str, TEXTURE_Descriptor_Filepath, texturestr);
+						//bool descFilePresent = _GEOM::CheckAndCreateDescriptorFileTEXTURE(data_str, TEXTURE_Descriptor_Filepath, texturestr);
 						std::string descfilepath = data_str + ".desc";
 						guid = _GEOM::GetGUID(descfilepath);
 						mTextureRef[i].data_uid = guid;
@@ -903,6 +957,8 @@ void MeshRenderer::Inspect()
 
 		ImGui::ColorPicker4("MeshColor", (float*)&mInstanceColor);
 	}
+
+	ImGui::Dummy(ImVec2(0.0f, 10.0f));
 
 	// == >> Mesh Renderer GEOM Descriptor File << == //
 	//ImGui::SetNextItemOpen(true, ImGuiCond_Once);
@@ -1133,7 +1189,7 @@ void SphereCollider::Inspect() {
 /***************************************************************************/
 void CapsuleCollider::Inspect() {
 	bool delete_component{ true };
-	if (ImGui::CollapsingHeader("SphereCollider", &delete_component, ImGuiTreeNodeFlags_DefaultOpen)) {
+	if (ImGui::CollapsingHeader("CapsuleCollider", &delete_component, ImGuiTreeNodeFlags_DefaultOpen)) {
 
 		ImGui::Text("Translate Offset");
 		ImGui::SameLine();
@@ -1146,7 +1202,7 @@ void CapsuleCollider::Inspect() {
 		ImGui::SameLine();
 		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
 			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
-		ImGui::DragFloat("##radius", (float*)&mRadius);
+		ImGui::DragFloat("##radiusCC", (float*)&mRadius);
 		ImGui::Separator();
 
 		ImGui::Text("Half-Height");
@@ -1163,7 +1219,7 @@ void CapsuleCollider::Inspect() {
 		ImGui::Checkbox("##isTriggerCC", &mIsTrigger);
 	}
 	if (delete_component == false)
-		Entity(Hierarchy::selectedId).RemoveComponent<SphereCollider>();
+		Entity(Hierarchy::selectedId).RemoveComponent<CapsuleCollider>();
 }
 
 /***************************************************************************/

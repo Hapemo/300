@@ -201,7 +201,7 @@ void GFX::PingPongFBO::Create(int width, int height)
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-void GFX::PingPongFBO::GaussianBlur(GFX::Shader& blurShader, GFX::FBO& hostFramebuffer, float texelOffset)
+void GFX::PingPongFBO::GaussianBlur(GFX::Shader& blurShader, GFX::FBO& hostFramebuffer, float texelOffset, float SamplingWeight)
 {
 	bool horizontal{ true }, first_iteration{ true };
 
@@ -210,20 +210,31 @@ void GFX::PingPongFBO::GaussianBlur(GFX::Shader& blurShader, GFX::FBO& hostFrame
 
 	// set the texel offset (test)
 	glUniform1f(blurShader.GetUniformLocation("TexOffset"), texelOffset);
+	glUniform1f(blurShader.GetUniformLocation("SamplingWeight"), SamplingWeight);
 
 	for (unsigned int i{}; i < mblurAmount; ++i)
 	{
-		glDrawBuffer(GL_COLOR_ATTACHMENT0 + (int)!horizontal);
 		glUniform1i(blurShader.GetUniformLocation("horizontal"), horizontal);
 
-		glBindTexture(GL_TEXTURE_2D, first_iteration ? hostFramebuffer.GetBrightColorsAttachment() : pingpongColorbuffers[(int)!horizontal]);
-		
+		GLenum attachments [] = {GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1};
+		glDrawBuffers(2, attachments);
+		if (horizontal)
+		{
+			//glDrawBuffer(GL_COLOR_ATTACHMENT0);
+			glBindTexture(GL_TEXTURE_2D, first_iteration ? hostFramebuffer.GetBrightColorsAttachment() : pingpongColorbuffers[1]);
+		}
+		else
+		{
+			//glDrawBuffer(GL_COLOR_ATTACHMENT1);
+			glBindTexture(GL_TEXTURE_2D, first_iteration ? hostFramebuffer.GetBrightColorsAttachment() : pingpongColorbuffers[0]);
+			
+			if (first_iteration)
+				first_iteration = false;
+		}
+
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 
 		horizontal = !horizontal;
-		if (first_iteration)
-			first_iteration = false;
-
 	}
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);

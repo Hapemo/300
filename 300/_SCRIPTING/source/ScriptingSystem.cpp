@@ -114,7 +114,7 @@ void ScriptingSystem::Init()
     LuaEntity();
     LuaGeneral();
     LuaCamera();
-    LuaGFXCamera();
+    //LuaGFXCamera();
     LuaTransform();
     LuaAnimator();
     LuaRigidBody();
@@ -168,12 +168,6 @@ void ScriptingSystem::Init()
         "KEY_Y", E_KEY::Y, "KEY_Z", E_KEY::Z,
         "KEY_SPACE", E_KEY::SPACE, "KEY_ESCAPE", E_KEY::ESCAPE,
         "UP", E_KEY::UP, "DOWN", E_KEY::DOWN, "LEFT", E_KEY::LEFT, "RIGHT", E_KEY::RIGHT);
-    //luaState.new_enum("enum_tag",
-    //    "PLAYER", enum_tag::PLAYER,
-    //    "ENEMY", enum_tag::ENEMY,
-    //    "BULLET", enum_tag::BULLET,
-    //    "STATIC", enum_tag::STATIC,
-    //    "BUILDING", enum_tag::BUILDING);
 
     luaState.new_enum("AudioType",
         "AUDIO_BGM", AUDIOTYPE::AUDIO_BGM,
@@ -184,8 +178,18 @@ void ScriptingSystem::Init()
     luaState.new_enum("MaterialType",
         "DIFFUSE", MaterialType::DIFFUSE,
         "NORMAL", MaterialType::NORMAL,
+        "SHININESS", MaterialType::SHININESS,
         "EMISSION", MaterialType::EMISSION,
         "SPECULAR", MaterialType::SPECULAR);
+
+    luaState.new_enum("MATERIAL",
+        "RUBBER", MATERIAL::RUBBER,
+        "WOOD", MATERIAL::WOOD,
+        "METAL", MATERIAL::METAL,
+        "ICE", MATERIAL::ICE,
+        "CONCRETE", MATERIAL::CONCRETE,
+        "GLASS", MATERIAL::GLASS,
+        "UNDEFINED", MATERIAL::UNDEFINED);
 }
 
 void ScriptingSystem::Update(float dt)
@@ -193,18 +197,18 @@ void ScriptingSystem::Update(float dt)
     auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
 
     // Load the scripts and call the "Start" function 
-    if (!once)
-    {
-        for (Entity entity : scriptEntities)
-        {
-            for (Script script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
-            {
-                script.Load(entity);
-                script.Run("Alive");
-            }
-        }
-        once = true;
-    }
+    //if (!once)
+    //{
+    //    for (Entity entity : scriptEntities)
+    //    {
+    //        for (Script script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
+    //        {
+    //            script.Load(entity);
+    //            script.Run("Alive");
+    //        }
+    //    }
+    //    once = true;
+    //}
 
     // Call the "Update" function 
     for (Entity entity : scriptEntities)
@@ -214,28 +218,6 @@ void ScriptingSystem::Update(float dt)
             script.Run("Update");
         }
     }
-    /******************************************************************************/
-    /*!
-        Load scripts when scene is not playing & left-shift is pressed
-     */
-     /******************************************************************************/
-    //if (Input::CheckKey(E_STATE::PRESS, E_KEY::LEFT_SHIFT))
-    //{
-    //    //    for (Entity entity : ECS::GetInstance()->GetEntitiesWith<Scripts>()) 
-    //    //    { 
-    //    //        for (auto& script : entity.GetComponent<Scripts>().scriptsContainer) 
-    //    //        { 
-    //    //            int entityid = entity.id; 
-    //    //            script.Load(entityid); 
-    //    //        } 
-    //    //    } 
-    //    once = false;
-    //}
-
-    //Entity rubber = systemManager->mGameStateSystem->GetEntity("rubber", "testSerialization");
-    //Entity ducky = systemManager->mGameStateSystem->GetEntity("ducky", "testSerialization");
-    //rubber.GetComponent<Scripts>().RunFunctionForAllScripts("OnContactEnter", ducky.id);
-    //std::cout << "id is : " << (int32_t)floor.id << std::endl;
 }
 
 void ScriptingSystem::Exit()

@@ -120,6 +120,8 @@ void Hierarchy::update() {
                     auto data = (const char*)payload->Data;
                     std::string newdata(data);
                     Entity newent = systemManager->ecs->NewEntityFromPrefab(newdata);
+                  
+                    
                 }
                 ImGui::EndDragDropTarget();
             }

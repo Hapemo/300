@@ -30,23 +30,20 @@ void TabWindow::init() {
 	Update function for tan window
 */
 /***************************************************************************/
-void TabWindow::update() 
+void TabWindow::update()
 {
 
 	auto& editorcam = systemManager->mGraphicsSystem->m_EditorCamera;
 
 	ImGui::Text("Editor Camera");
-	//ImGui::SameLine();
-	//ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
-	//	- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
-	ImGui::DragFloat3("Position", (float*)&editorcam.mPosition);
+
+	vec3 editorcampos = editorcam.mPosition;
+	ImGui::TextColored({ 0.8f, 0.9f, 0.9f, 1.f }, "Editor Camera Position: %0.2f, 0.2f, 0.2f", editorcampos.x, editorcampos.y, editorcampos.z);
 
 	ImGui::Separator();
-	//ImGui::Text("Target");
-	//ImGui::SameLine();
-	//ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
-	//	- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
-	ImGui::DragFloat3("Target", (float*)&editorcam.mTarget);
+	
+	vec3 editorcamdir = editorcam.direction();
+	ImGui::TextColored({ 0.8f, 0.9f, 0.9f, 1.f }, "Editor Camera Direction: %0.2f, 0.2f, 0.2f", editorcamdir.x, editorcamdir.y, editorcamdir.z);
 
 	ImGui::Separator();
 	ImGui::Text("Camera Speed");
@@ -71,10 +68,21 @@ void TabWindow::update()
 	ImGui::DragFloat3("Global Bloom Threshold", (float*)&systemManager->mGraphicsSystem->mAmbientBloomThreshold, 0.01f, 0.f, 1.f);
 	ImGui::DragFloat("Global Exposure", &systemManager->mGraphicsSystem->mAmbientBloomExposure, 0.01f, 0.f, 5.f, "%0.2f");
 	ImGui::DragFloat("Texel Offset", &systemManager->mGraphicsSystem->mTexelOffset, 0.01f, 0.f, 5.f, "%0.2f");
+	ImGui::DragFloat("Sampling Weight", &systemManager->mGraphicsSystem->mSamplingWeight, 0.001f, 0.f, 5.f, "%0.4f");
 
 	ImGui::InputInt("Gaussian Blur Amount", (int*)&systemManager->mGraphicsSystem->m_PingPongFbo.mblurAmount);
 	if(systemManager->mGraphicsSystem->m_PingPongFbo.mblurAmount < 1)
 		systemManager->mGraphicsSystem->m_PingPongFbo.mblurAmount = 1;
 
-	ImGui::Checkbox("Enable Bloom", &systemManager->mGraphicsSystem->m_EnableBloom);
+	ImGui::DragFloat("Chromatic Abberation Strength", &systemManager->mGraphicsSystem->mChromaticStrength, 0.001f, 0.0f, 1.f);
+
+	ImGui::Checkbox("Enable Bloom", &systemManager->mGraphicsSystem->m_EnableBloom); 
+	ImGui::Checkbox("Enable Chromatic Abberation", &systemManager->mGraphicsSystem->m_EnableChromaticAbberation);
+
+	ImGui::Separator();
+	ImGui::Text("Circle Degree Test");
+	ImGui::SameLine();
+	ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+		- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+	ImGui::DragFloat("##CS", (float*)&systemManager->mGraphicsSystem->m_DegreeTest);
 }

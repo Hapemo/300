@@ -20,6 +20,7 @@ function Update()
     end
 
     -- Audio Test
+    -- Create Audio Source
     entityAudioSource = Helper.CreateAudioSource(entity)
     floorAudioSource = Helper.CreateAudioSource(floorEntity)
 

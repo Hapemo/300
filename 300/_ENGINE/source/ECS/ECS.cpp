@@ -203,6 +203,11 @@ Entity ECS::NewEntityFromPrefab(std::string prefabName)
 	//General temp1 = e.GetComponent<General>();
 	//MeshRenderer temp = e.GetComponent<MeshRenderer>();
 	PASSERT(static_cast<uint32_t>(e.id) != 0);
+	Scripts& scripts = e.GetComponent<Scripts>();
+	for (auto& elem : scripts.scriptsContainer)
+	{
+		elem.Load(e.id);
+	}
 	return e;
 }
 

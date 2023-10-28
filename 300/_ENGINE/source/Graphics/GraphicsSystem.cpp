@@ -10,6 +10,7 @@
 ****************************************************************************
 ***/
 #define  _ENABLE_ANIMATIONS 1
+#define  _TEST_PIE_SHADER 0
 
 #include <ECS/ECS_Components.h>
 #include <Graphics/GraphicsSystem.h>
@@ -69,8 +70,8 @@ void GraphicsSystem::Init()
 	SetCameraProjection(CAMERA_TYPE::CAMERA_TYPE_ALL, 60.f, m_Window->size(), 0.1f, 900.f);			// Projection of camera
 
 	// init game camera
-	SetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_GAME, { 16.218f, 474.854f, 748.714f });
-	SetCameraTarget(CAMERA_TYPE::CAMERA_TYPE_GAME, { 16.21f, 473.694f, 739.714f });
+	/*SetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_GAME, { 16.218f, 474.854f, 748.714f });
+	SetCameraTarget(CAMERA_TYPE::CAMERA_TYPE_GAME, { 16.21f, 473.694f, 739.714f });*/
 
 	if (m_EditorMode)
 	{
@@ -143,11 +144,16 @@ void GraphicsSystem::Update(float dt)
 			// draw the AABB of the mesh
 			glm::vec3 bbox_dimens = inst.GetComponent<Transform>().mScale * inst.GetComponent<BoxCollider>().mScaleOffset;
 			glm::vec3 bbox_xlate = inst.GetComponent<Transform>().mTranslate + inst.GetComponent<BoxCollider>().mTranslateOffset;
-			if (inst.HasParent())
-			{
+			if (inst.HasParent()) {
 				bbox_xlate += Entity(inst.GetParent()).GetComponent<Transform>().mTranslate;
 			}
-			m_Renderer.AddAabb(bbox_xlate, bbox_dimens, {1.f, 0.f, 0.f, 1.f});
+
+			// calculate the transformations
+			glm::mat4 bboxScale = glm::scale(bbox_dimens);
+			glm::mat4 bboxTranslate = glm::translate(bbox_xlate);
+			glm::mat4 bboxFinal = bboxTranslate * R * bboxScale;
+
+			m_Renderer.AddAabb(bboxFinal, {1.f, 0.f, 0.f, 1.f});
 
 			// draw the mesh's origin
 			m_Renderer.AddSphere(m_EditorCamera.position(), inst.GetComponent<Transform>().mTranslate, 0.5f, {1.f, 1.f, 0.f, 1.f});
@@ -412,16 +418,40 @@ void GraphicsSystem::EditorDraw(float dt)
 		uid gaussianshaderstr("GaussianBlurShader");
 		GFX::Shader& gaussianShaderInst = *systemManager->mResourceTySystem->get_Shader(gaussianshaderstr.id);
 
-		m_PingPongFbo.GaussianBlur(gaussianShaderInst, m_Fbo, systemManager->mGraphicsSystem->mTexelOffset);
+		m_PingPongFbo.GaussianBlur(gaussianShaderInst, m_Fbo, systemManager->mGraphicsSystem->mTexelOffset, systemManager->mGraphicsSystem->mSamplingWeight);
 
-		BlendFramebuffers(m_Fbo, m_Fbo.GetColorAttachment(), m_PingPongFbo.pingpongColorbuffers[0]);
+		AdditiveBlendFramebuffers(m_Fbo, m_Fbo.GetColorAttachment(), m_PingPongFbo.pingpongColorbuffers[0]);
 	}
 
+
+	if (systemManager->mGraphicsSystem->m_EnableChromaticAbberation)
+	{
+		ChromaticAbbrebationBlendFramebuffers(m_Fbo, m_Fbo.GetColorAttachment(), m_PingPongFbo.pingpongColorbuffers[0]);
+	}
 
 	// Render UI objects
 	m_UiShaderInst.Activate();		// Activate shader
 	DrawAll2DInstances(m_UiShaderInst.GetHandle());
 	m_UiShaderInst.Deactivate();	// Deactivate shader
+
+#if _TEST_PIE_SHADER
+	std::string CircularShaderStr{"PieShaderTest"};
+	uid circularShaderUID(CircularShaderStr);
+	GFX::Shader& circularShaderInst = *systemManager->mResourceTySystem->get_Shader(circularShaderUID.id);
+
+	circularShaderInst.Activate();		// activate shader
+	GLuint degrees_uniform = glGetUniformLocation(circularShaderInst.GetHandle(), "uDegrees");
+	glUniform1f(degrees_uniform, glm::radians(m_DegreeTest));
+
+	// Bind 2D quad VAO
+	m_Image2DMesh.BindVao();
+	// Draw call
+	glDrawArraysInstanced(GL_TRIANGLE_FAN, 0, 4, 1);
+	// Unbind 2D quad VAO
+	m_Image2DMesh.UnbindVao();
+
+	circularShaderInst.Deactivate();	// Deactivate shader
+#endif
 
 #pragma endregion
 
@@ -559,9 +589,14 @@ void GraphicsSystem::GameDraw(float dt)
 		// Render the bloom for the Game Framebuffer
 		uid gaussianshaderstr("GaussianBlurShader");
 		GFX::Shader& gaussianShaderInst = *systemManager->mResourceTySystem->get_Shader(gaussianshaderstr.id);
-		m_PingPongFbo.GaussianBlur(gaussianShaderInst, m_GameFbo, systemManager->mGraphicsSystem->mTexelOffset);
+		m_PingPongFbo.GaussianBlur(gaussianShaderInst, m_GameFbo, systemManager->mGraphicsSystem->mTexelOffset, systemManager->mGraphicsSystem->mSamplingWeight);
 
-		BlendFramebuffers(m_GameFbo, m_GameFbo.GetColorAttachment(), m_PingPongFbo.pingpongColorbuffers[0]);
+		AdditiveBlendFramebuffers(m_GameFbo, m_GameFbo.GetColorAttachment(), m_PingPongFbo.pingpongColorbuffers[0]);
+	}
+
+	if (systemManager->mGraphicsSystem->m_EnableChromaticAbberation)
+	{
+		ChromaticAbbrebationBlendFramebuffers(m_GameFbo, m_GameFbo.GetColorAttachment(), m_PingPongFbo.pingpongColorbuffers[0]);
 	}
 
 	// Render UI objects
@@ -571,6 +606,37 @@ void GraphicsSystem::GameDraw(float dt)
 
 	m_GameFbo.Unbind();
 }
+
+
+void GraphicsSystem::ChromaticAbbrebationBlendFramebuffers(GFX::FBO& targetFramebuffer, unsigned int Attachment0, unsigned int Attachment1)
+{
+	glBlendFunc(GL_ONE, GL_ONE);
+
+	uid shaderstr("ChromaticAbberation");
+	GFX::Shader& BlendShader = *systemManager->mResourceTySystem->get_Shader(shaderstr.id);
+
+	BlendShader.Activate();
+	targetFramebuffer.Bind();
+
+	// Draw to color attachment only. Otherwise might affect other attachments
+	glDrawBuffer(GL_COLOR_ATTACHMENT0);
+
+	glUniform1f(BlendShader.GetUniformLocation("ChromaticAbberationStrength"), systemManager->mGraphicsSystem->mChromaticStrength);
+	glBindTexture(GL_TEXTURE_2D, Attachment0);									// bind the first attachment
+	glBindTexture(GL_TEXTURE_2D, Attachment1);									// bind the second attachment
+
+	{
+		mScreenQuad.Bind();
+
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+
+		mScreenQuad.Unbind();
+	}
+
+	targetFramebuffer.Unbind();
+	BlendShader.Deactivate();
+}
+
 
 /***************************************************************************/
 /*!
@@ -734,6 +800,66 @@ void GraphicsSystem::SetCameraSize(CAMERA_TYPE type, ivec2 size)
 	}
 }
 
+
+inline void drawViewFrustum(Entity gameCamera)
+{
+	auto& camera = gameCamera.GetComponent<Camera>().mCamera;
+
+	mat4 inv = glm::inverse(camera.mView);
+
+	float halfHeight = tanf(glm::radians(camera.mFovDegree / 2.f));
+	float halfWidth = halfHeight * camera.mAspectRatio;
+
+	float near = camera.mNear;
+	float far = camera.mFar;
+	float xn = halfWidth * near;
+	float xf = halfWidth * far;
+	float yn = halfHeight * near;
+	float yf = halfHeight * far;
+
+	glm::vec4 f[8u] =
+	{
+		// near face
+		{xn, yn,	-near, 1.f},
+		{-xn, yn,	-near, 1.f},
+		{xn, -yn,	-near, 1.f},
+		{-xn, -yn,	-near , 1.f},
+
+		// far face
+		{xf, yf,	-far, 1.f},
+		{-xf, yf,	-far , 1.f},
+		{xf, -yf,	-far , 1.f},
+		{-xf, -yf,	-far, 1.f},
+	};
+
+	glm::vec3 v[8];
+	for (int i = 0; i < 8; i++)
+	{
+		vec4 ff = inv * f[i];
+		v[i].x = ff.x / ff.w;
+		v[i].y = ff.y / ff.w;
+		v[i].z = ff.z / ff.w;
+	}
+
+	//glm::vec4 color = {1.f, 0.38f, 0.01f, 1.f};
+	glm::vec4 color = {1.f, 1.f, 0.5f, 1.f};
+	systemManager->mGraphicsSystem->m_Renderer.AddLine(v[0], v[1], color);
+	systemManager->mGraphicsSystem->m_Renderer.AddLine(v[0], v[2], color);
+	systemManager->mGraphicsSystem->m_Renderer.AddLine(v[3], v[1], color);
+	systemManager->mGraphicsSystem->m_Renderer.AddLine(v[3], v[2], color);
+
+	systemManager->mGraphicsSystem->m_Renderer.AddLine(v[4], v[5], color);
+	systemManager->mGraphicsSystem->m_Renderer.AddLine(v[4], v[6], color);
+	systemManager->mGraphicsSystem->m_Renderer.AddLine(v[7], v[5], color);
+	systemManager->mGraphicsSystem->m_Renderer.AddLine(v[7], v[6], color);
+
+	systemManager->mGraphicsSystem->m_Renderer.AddLine(v[0], v[4], color);
+	systemManager->mGraphicsSystem->m_Renderer.AddLine(v[1], v[5], color);
+	systemManager->mGraphicsSystem->m_Renderer.AddLine(v[3], v[7], color);
+	systemManager->mGraphicsSystem->m_Renderer.AddLine(v[2], v[6], color);
+}
+
+
 /***************************************************************************/
 /*!
 \brief
@@ -743,7 +869,7 @@ void GraphicsSystem::SetCameraSize(CAMERA_TYPE type, ivec2 size)
 void GraphicsSystem::UpdateCamera(CAMERA_TYPE type, const float &dt)
 {
 	auto localcamera = systemManager->ecs->GetEntitiesWith<Camera>();
-	Entity camera;
+	Entity GameCamera;
 
 	switch (type)
 	{
@@ -751,11 +877,21 @@ void GraphicsSystem::UpdateCamera(CAMERA_TYPE type, const float &dt)
 		{
 			if (localcamera.empty())
 				return;
-			camera = localcamera.front();		// there will only be one game camera
+			GameCamera = localcamera.front();		// there will only be one game camera
 
-			Camera_Input::getInstance().updateCameraInput(camera.GetComponent<Camera>().mCamera, dt);
-			camera.GetComponent<Camera>().mCamera.Update();
-			camera.GetComponent<Transform>().mTranslate = camera.GetComponent<Camera>().mCamera.mPosition;
+			//Camera_Input::getInstance().updateCameraInput(camera.GetComponent<Camera>().mCamera, dt);
+			
+			//camera.GetComponent<Transform>().mTranslate = camera.GetComponent<Camera>().mCamera.mPosition;
+			GameCamera.GetComponent<Camera>().mCamera.mTarget += (GameCamera.GetComponent<Transform>().mTranslate - GameCamera.GetComponent<Camera>().mCamera.mPosition);
+			GameCamera.GetComponent<Camera>().mCamera.mPosition = GameCamera.GetComponent<Transform>().mTranslate;
+			GameCamera.GetComponent<Camera>().mCamera.mPitch = GameCamera.GetComponent<Transform>().mRotate.y;
+			GameCamera.GetComponent<Camera>().mCamera.mYaw = GameCamera.GetComponent<Transform>().mRotate.x;
+			GameCamera.GetComponent<Camera>().mCamera.Update();
+
+			// debug drawing
+			if (systemManager->mGraphicsSystem->m_DebugDrawing) {
+				drawViewFrustum(GameCamera);
+			}
 			break;
 		}
 
@@ -768,21 +904,26 @@ void GraphicsSystem::UpdateCamera(CAMERA_TYPE type, const float &dt)
 
 	case CAMERA_TYPE::CAMERA_TYPE_ALL:
 		{
+			// == update editor camera ==
+			Camera_Input::getInstance().updateCameraInput(m_EditorCamera, dt);
 			m_EditorCamera.Update();
-			if (m_CameraControl == CAMERA_TYPE::CAMERA_TYPE_EDITOR) {
-				Camera_Input::getInstance().updateCameraInput(m_EditorCamera, dt);
-			}
 
+			// == update game camera ==
 			if (localcamera.empty())
 				return;
-			camera = localcamera.front();		// there will only be one game camera
+			GameCamera = localcamera.front();		// there will only be one game camera
 
-			camera.GetComponent<Camera>().mCamera.Update();
-			if (m_CameraControl == CAMERA_TYPE::CAMERA_TYPE_GAME) {
-				Camera_Input::getInstance().updateCameraInput(camera.GetComponent<Camera>().mCamera, dt);
-				camera.GetComponent<Transform>().mTranslate = camera.GetComponent<Camera>().mCamera.mPosition;
+			//camera.GetComponent<Transform>().mTranslate = camera.GetComponent<Camera>().mCamera.mPosition;
+			GameCamera.GetComponent<Camera>().mCamera.mTarget += (GameCamera.GetComponent<Transform>().mTranslate - GameCamera.GetComponent<Camera>().mCamera.mPosition);
+			GameCamera.GetComponent<Camera>().mCamera.mPosition = GameCamera.GetComponent<Transform>().mTranslate;
+			GameCamera.GetComponent<Camera>().mCamera.mPitch = GameCamera.GetComponent<Transform>().mRotate.y;
+			GameCamera.GetComponent<Camera>().mCamera.mYaw = GameCamera.GetComponent<Transform>().mRotate.x;
+			GameCamera.GetComponent<Camera>().mCamera.Update();
+
+			// debug drawing
+			if (systemManager->mGraphicsSystem->m_DebugDrawing) {
+				drawViewFrustum(GameCamera);
 			}
-
 			break;
 		}
 	}
@@ -893,7 +1034,7 @@ void GraphicsSystem::DrawAll(GFX::Mesh &mesh)
 	Perform additive blending on 2 color attachments
 */
 /**************************************************************************/
-void GraphicsSystem::BlendFramebuffers(	GFX::FBO& targetFramebuffer, unsigned int Attachment0, unsigned int Attachment1)
+void GraphicsSystem::AdditiveBlendFramebuffers(	GFX::FBO& targetFramebuffer, unsigned int Attachment0, unsigned int Attachment1)
 {
 	glBlendFunc(GL_ONE, GL_ONE);
 

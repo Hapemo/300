@@ -1,3 +1,5 @@
+vec = Vec3.new(1.5,8,9)
+vec2 = Vec2.new(100,100)
 function Alive()
 
 end
@@ -5,11 +7,8 @@ end
 function Update()
     gameStateSys = systemManager:mGameStateSystem()
     cameraEntity = gameStateSys:GetEntity("Camera", "testSerialization")
-    cameraComponent = cameraEntity:GetCamera()
-    target = cameraComponent.mCamera:target()
-    print("X: ", target.x)
-    print("Y: ", target.y)
-    print("Z: ", target.z)
+    Camera_Scripting.SetPosition(cameraEntity, vec)
+    Camera_Scripting.RotateCameraView(cameraEntity, vec2)
 end
 
 function Dead()

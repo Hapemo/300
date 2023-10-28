@@ -10,6 +10,7 @@
 #include "Graphics/GraphicsSystem.h"
 #include "Audio/AudioSource.h"
 #include "AI/AIManager.h"
+#include "Graphics/Camera_Input.h"
 
 void LuaComponentContainer()
 {
@@ -61,6 +62,9 @@ void LuaEntity()
 
         DECLARE_COMPONENT("GetTransform", Transform),
         "HasTransform", &Entity::HasComponent<Transform>,
+
+        DECLARE_COMPONENT("GetCamera", Camera),
+        "HasCamera", & Entity::HasComponent<Camera>,
 
         ADD_COMPONENT("AddAnimator", Animator),
         DECLARE_COMPONENT("GetAnimator", Animator),
@@ -121,32 +125,44 @@ void LuaGeneral()
         "tagid", &General::tagid,
         "subtag", &General::subtag,
         "isActive", &General::isActive,
-        "GetTag", &General::GetTag
+        "GetTag", &General::GetTag,
+        "SetTag", &General::SetTag
     );
 }
 
-void LuaCamera() {
-  systemManager->mScriptingSystem->luaState.new_usertype<Camera>(
-    "Camera", sol::constructors<>(),
-    "mCamera", &Camera::mCamera
-  );
+void LuaCamera()
+{
+    systemManager->mScriptingSystem->luaState.new_usertype<Camera_Scripting>(
+        "Camera_Scripting", sol::constructors<>(),
+        "SetPosition", &Camera_Scripting::SetPosition,
+        "SetTarget", &Camera_Scripting::SetTarget,
+        "SetCameraSpeed", &Camera_Scripting::SetCameraSpeed,
+        "SetSensitivity", &Camera_Scripting::SetSensitivity,
+        "GetPosition", &Camera_Scripting::GetPosition,
+        "GetTarget", &Camera_Scripting::GetTarget,
+        "GetDirection", &Camera_Scripting::GetDirection,
+        "GetCameraSpeed", &Camera_Scripting::GetCameraSpeed,
+        "GetSensitivity", &Camera_Scripting::GetSensitivity,
+        "RotateCameraView", &Camera_Scripting::RotateCameraView
+        );
 }
 
-void LuaGFXCamera() {
-  systemManager->mScriptingSystem->luaState.new_usertype<GFX::Camera>(
-    "GFXCamera", sol::constructors<GFX::Camera()>(),
-    "RotateCameraView", &GFX::Camera::RotateCameraView,
-    "SetCameraSpeed", &GFX::Camera::SetCameraSpeed,
-    "SetSensitivity", &GFX::Camera::SetSensitivity,
-    "GetCameraSpeed", &GFX::Camera::GetCameraSpeed,
-    "GetSensitivity", &GFX::Camera::GetSensitivity,
-    "SetTarget", &GFX::Camera::SetTarget,
-    "SetPosition", &GFX::Camera::SetPosition,
-    "position", &GFX::Camera::position,
-    "target", &GFX::Camera::target,
-    "direction", &GFX::Camera::direction
-  );
-}
+//void LuaGFXCamera()
+//{
+//    systemManager->mScriptingSystem->luaState.new_usertype<GFX::Camera>(
+//        "GFXCamera", sol::constructors<GFX::Camera()>(),
+//        "RotateCameraView", &GFX::Camera::RotateCameraView,
+//        "SetCameraSpeed", &GFX::Camera::SetCameraSpeed,
+//        "SetSensitivity", &GFX::Camera::SetSensitivity,
+//        "GetCameraSpeed", &GFX::Camera::GetCameraSpeed,
+//        "GetSensitivity", &GFX::Camera::GetSensitivity,
+//        "SetTarget", &GFX::Camera::SetTarget,
+//        "SetPosition", &GFX::Camera::SetPosition,
+//        "position", &GFX::Camera::position,
+//        "target", &GFX::Camera::target,
+//        "direction", &GFX::Camera::direction
+//        );
+//}
 
 void LuaTransform()
 {
@@ -173,7 +189,6 @@ void LuaRigidBody()
         "RigidBody", sol::constructors<>(),
         "mDensity", &RigidBody::mDensity,
         "mMaterial", &RigidBody::mMaterial,
-        "mMotion", &RigidBody::mMotion,
         "mVelocity", &RigidBody::mVelocity
     );
 }
@@ -261,7 +276,7 @@ void LuaAudioSource()
         "GetAudio", &AudioSource::GetAudioComponent,
         "IsSoundAttached", &AudioSource::IsSoundAttached,
         "AttachSound", &AudioSource::AttachSound,
-        "IsPlaying", &AudioSource::IsPlaying,
+        //"IsPlaying", &AudioSource::IsPlaying,
         "Play", &AudioSource::Play,
         "Pause", &AudioSource::Pause,
         "Unpause", &AudioSource::Unpause,
@@ -307,7 +322,9 @@ void LuaPhysics()
 {
     systemManager->mScriptingSystem->luaState.new_usertype<PhysicsSystem>(
         "mPhysicsSystem", sol::constructors<>(),
-        "SetVelocity", &PhysicsSystem::SetVelocity
+        "SetVelocity", &PhysicsSystem::SetVelocity,
+        "SetPosition", &PhysicsSystem::SetPosition,
+        "SetRotation", &PhysicsSystem::SetRotation
     );
 }
 
@@ -351,16 +368,17 @@ void LuaGameState()
 {
     systemManager->mScriptingSystem->luaState.new_usertype<GameStateManager>(
         "mGameStateSystem", sol::constructors<>(),
-        "GetEntity", &GameStateManager::GetEntity
+        "GetEntity", &GameStateManager::GetEntity,
+        "DeleteEntity", &GameStateManager::DeleteEntity
         );
 }
 
 void LuaAIManager()
 {
-    systemManager->mScriptingSystem->luaState.new_usertype<AIManager>(
-        "mAISystem", sol::constructors<>(),
-        "SetPredictiveVelocity", &AIManager::SetPredictiveVelocity,
-        "PredictiveShootPlayer", &AIManager::PredictiveShootPlayer,
-        "GetDirection", &AIManager::GetDirection
-        );
+    //systemManager->mScriptingSystem->luaState.new_usertype<AIManager>(
+    //    "mAISystem", sol::constructors<>(),
+    //    "SetPredictiveVelocity", &AIManager::SetPredictiveVelocity,
+    //    "PredictiveShootPlayer", &AIManager::PredictiveShootPlayer,
+    //    "GetDirection", &AIManager::GetDirection
+    //    );
 }

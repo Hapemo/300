@@ -2,7 +2,6 @@
 #include "Debug/Logger.h"
 #include "GameState/Scene.h"
 #include "Script.h"
-#include "ECS/ECS.h"
 #include "AI/AIManager.h"
 
 SERIALIZE_BASIC(bool)
@@ -103,7 +102,11 @@ SERIALIZE_BASIC(Script)
 {
 	if (name != nullptr)
 		writer.Key(name);
-	Serialize(writer, nullptr, val.scriptFile);
+
+	writer.StartObject();
+	Serialize(writer, "scriptFile", val.scriptFile);
+	Serialize(writer, "variables", val.variables);
+	writer.EndObject();
 }
 
 SERIALIZE_BASIC(SUBTAG)
@@ -112,7 +115,7 @@ SERIALIZE_BASIC(SUBTAG)
 		writer.Key(name);
 	Serialize(writer, nullptr, static_cast<int>(val));
 }
-	
+
 SERIALIZE_BASIC(MATERIAL)
 {
 	if (name != nullptr)
@@ -275,7 +278,8 @@ DESERIALIZE_BASIC(glm::vec4)
 
 DESERIALIZE_BASIC(Script)
 {
-	Deserialize(reader, nullptr, val.scriptFile);
+	Deserialize(reader, "scriptFile", val.scriptFile);
+	Deserialize(reader, "variables", val.variables);
 }
 
 DESERIALIZE_BASIC(SUBTAG)
@@ -338,17 +342,28 @@ DESERIALIZE_BASIC(entt::entity)
 	}
 }
 
-void WriteToFile(const std::string& filename, const rapidjson::StringBuffer& buffer)
+DESERIALIZE_BASIC(enum_tag::enum_tag)
 {
-	std::ofstream of{ filename };
+	if (reader.HasMember(name))
+	{
+		int num;
+		Deserialize(reader, name, num);
+		val = static_cast<enum_tag::enum_tag>(num);
+	}
+}
+
+void WriteToFile(const std::string &filename, const rapidjson::StringBuffer &buffer)
+{
+	std::ofstream of{filename};
 	of << buffer.GetString();
-	if (of.good()) return;
+	if (of.good())
+		return;
 	PERROR(("Writing to output file failed! File name: " + filename).c_str());
 }
 
-void ReadFromFile(const std::string& filename, rapidjson::Document& doc)
+void ReadFromFile(const std::string &filename, rapidjson::Document &doc)
 {
-	std::ifstream ifs{ filename };
+	std::ifstream ifs{filename};
 	if (!ifs.is_open())
 		PERROR(("Reading from input file failed! File name: " + filename).c_str());
 
@@ -360,7 +375,7 @@ void ReadFromFile(const std::string& filename, rapidjson::Document& doc)
 		return;
 }
 
-bool InitDocument(const std::string& s, rapidjson::Document& doc)
+bool InitDocument(const std::string &s, rapidjson::Document &doc)
 {
 	if (s.empty())
 		return false;

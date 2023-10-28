@@ -413,6 +413,7 @@ namespace _GEOM
 			{
 				GEOM_Descriptor_Filepath = GEOMentry.path().string();
 				descFilePresent = true;
+				break;
 			}
 		}
 
@@ -571,9 +572,82 @@ namespace _GEOM
 		}
 	}
 
+
+	bool Texture_DescriptorData::isGammaSpace(std::string descriptorfilepath) noexcept
+	{
+		std::ifstream file(descriptorfilepath);
+		assert(file.is_open());
+
+		std::string jsonContent((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
+		file.close();
+
+		// Parse the json data using rapidjson
+		rapidjson::Document document;
+		if (document.Parse(jsonContent.c_str()).HasParseError())
+		{
+			std::cout << "Error parsing json file: " << descriptorfilepath << std::endl;
+			return false;
+		}
+
+		if (document.HasMember("CompressionType"))
+		{
+			rapidjson::Value& assetFilepaths = document["CompressionType"];
+			assert(assetFilepaths.IsString());
+			std::string comp = assetFilepaths.GetString();
+			if (comp == "SRGB")
+				return true;
+			return false;
+		}
+
+		return false;
+	}
+
+
 	bool Texture_DescriptorData::DeserializeTEXTURE_DescriptorDataFromFile(Texture_DescriptorData& Desc, std::string textureFilepath) noexcept
 	{
-		return false;
+		// Read the json data from the file
+		std::ifstream file(textureFilepath);
+		if (!file.is_open())
+			return false;
+
+		std::string jsonContent((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
+		file.close();
+
+		// Parse the json data using rapidjson
+		rapidjson::Document document;
+		if (document.Parse(jsonContent.c_str()).HasParseError())
+		{
+			std::cout << "Error parsing json file: " << textureFilepath << std::endl;
+			return false;	// error
+		}
+
+		//!< Access the JSON data
+		if (document.HasMember("GUID"))
+		{
+			rapidjson::Value& assetFilepaths = document["GUID"];
+			assert(assetFilepaths.IsUint());
+			Desc.mGUID = assetFilepaths.GetUint();
+		}
+
+		if (document.HasMember("CompressionType"))
+		{
+			rapidjson::Value& assetFilepaths = document["CompressionType"];
+			assert(assetFilepaths.IsString());
+			std::string comp = assetFilepaths.GetString();
+			if (comp == "SRGB")
+				Desc.mCompressionType = CompressionType::SRGB;
+			else if (comp == "RGB")
+				Desc.mCompressionType = CompressionType::RGB;
+		}
+
+		if (document.HasMember("Descriptor_Filepath"))
+		{
+			rapidjson::Value& assetFilepaths = document["Descriptor_Filepath"];
+			assert(assetFilepaths.IsString());
+			Desc.mDescFilepath = assetFilepaths.GetString();
+		}
+
+		return true; // success
 	}
 
 	bool Texture_DescriptorData::SerializeTEXTURE_DescriptorDataToFile(std::string textureFilepath, const Texture_DescriptorData& textureDesc) noexcept
@@ -594,10 +668,12 @@ namespace _GEOM
 		}
 
 		doc.SetObject();
-		rapidjson::Value Image_Type;
-		Image_Type.SetString(comp.c_str(), allocator);			// allocate SRGB RGB enum
+		rapidjson::Value compressionType(comp.c_str(), allocator);
+		rapidjson::Value textureFilepathValue(textureFilepath.c_str(), allocator);
 
-		doc.AddMember("GUID", textureDesc.mGUID, allocator);	// allocate GUID
+		doc.AddMember("GUID", textureDesc.mGUID, allocator);						// allocate GUID
+		doc.AddMember("CompressionType", compressionType, allocator);				// allocate CompressionType (SRGB or RGB
+		doc.AddMember("Descriptor_Filepath", textureFilepathValue, allocator);		// allocate Descriptor_Filepath (the filepath to the .ctexture.desc file
 
 		// Serialize to a file
 		std::ofstream file(textureFilepath.c_str());

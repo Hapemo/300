@@ -162,6 +162,14 @@ public:
 	void DeleteEntityFromScene(int _sceneID, Entity _e);
 
 	/*!*****************************************************************************
+	Delete an entity from gamestate
+
+	\param _e
+	- Entity to delete
+	*******************************************************************************/
+	void DeleteEntity(Entity _e);
+
+	/*!*****************************************************************************
 	Adds scene to current game state. If scene can be found in scene folder in
 	asset, add that scene.
 	

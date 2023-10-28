@@ -22,11 +22,11 @@ class AudioSource;
 
 // Not Encapsulated in the "AudioSource" object.
 bool LoadAudio(std::string file_path, std::string audio_name);  // Way to LoadAudio in Script. (Have to Load first, then attach)
-bool LoadAudioFromDirectory(std::string directory_path);
+//bool LoadAudioFromDirectory(std::filesystem::path file_path);
+bool LoadAudioFromDirectory(std::string file_path);
 
-bool CrossFadeAudio(AudioSource& fade_out, AudioSource& fade_in, float fade_duration, float fade_max_vol = 1.0f);		// Cross Fade between 2 <AudioSource>
-bool FadeInAudio(AudioSource& fade_in, float fade_duration, float fade_max_vol = 1.0f);									// Fade in 1 <AudioSource>
-bool FadeOutAudio(AudioSource& fade_out, float fade_duration, float fade_down_vol = 0.0f);
+bool CrossFadeAudio(AudioSource& fade_out, AudioSource& fade_in, float fade_duration);
+
 
 class AudioSource								// [LUA] - Interface to interact with [AudioSystem] functionality.
 {
@@ -41,7 +41,6 @@ public:
 	void GetAudioComponent(Entity id);
 	bool IsSoundAttached();						// [Debug] Checks whether if the Sound Attached is in the <Audio> component.
 	bool AttachSound(std::string audio_name);	// Can be used to attach a <Sound> object onto this <AudioSource> instance.
-	bool IsPlaying();							// [10/22] Retrieves whether this audio is playing.
 
 	void Play();								// Play the [Sound] that is attached to this [AudioSource] (Should run <IsSoundAttached> to make sure audio is there)
 	void Pause();								// Pause the Audio.				
@@ -50,8 +49,6 @@ public:
 	void Mute();
 	void SetVolume(float volume);
 	void SetIsLoop(float loop);
-
-	
 
 	// Planned (Specialized)
 	// --------------------
