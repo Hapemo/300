@@ -98,6 +98,21 @@ void ObjectFactory::LoadScene(Scene* scene, const std::string& filename)
 		std::cout << "tmp_id: " << (int)tmp_id << ", entity_id: " << (int)e.id << ", entity_name: " << e.GetComponent<General>().name << std::endl;
 		scene->mEntities.insert(e);
 	}
+
+
+	// Create a dummy <Audio> Component ...
+	Entity e = systemManager->ecs->NewEntity();
+	Audio& audio = e.GetComponent<Audio>();
+	General& general = e.GetComponent<General>();
+	general.name = "DUMMY AUDIO";
+	audio.mFilePath = "../assets\\Audio";
+	audio.mFileName = "tuning-radio-7150.wav";
+	audio.mFullPath = audio.mFilePath + "/" + audio.mFileName;
+	audio.mAudioType = AUDIO_SFX;
+	audio.mIsLooping = true;
+	audio.mState = Audio::SET_TO_PLAY;
+
+	scene->mEntities.insert(e);
 }
 
 void ObjectFactory::LoadGameState(GameState* gs, const std::string& _name)

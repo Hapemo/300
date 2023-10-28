@@ -45,6 +45,8 @@ void AudioSystem::Init()
 
 	// Load all Sounds from Directory... (at startup)
 	LoadAudioFromDirectory("../assets\\Audio");
+
+
 }
 
 /******************************************************************************/
@@ -56,7 +58,36 @@ void AudioSystem::Init()
  /******************************************************************************/
 void AudioSystem::Update([[maybe_unused]] float dt)
 {
+	auto audio_entities = systemManager->ecs->GetEntitiesWith<Audio>();
 
+	for (Entity audio : audio_entities)
+	{
+		Audio& audio_component = audio.GetComponent<Audio>();
+
+		switch (audio_component.mState)
+		{
+			case Audio::INACTIVE:
+				break;
+			case Audio::SET_TO_PLAY:
+				if (FindSound(audio_component.mFileName) != nullptr) // Sound Exists ...
+				{
+					PINFO("AUDIO EXISTS");
+					PINFO("PLAYING AUDIO AT: %f", audio_component.mVolume);
+
+					if (PlaySound(audio_component.mFileName, audio_component.mAudioType, audio_component.mVolume))  // Plays the sound based on parameters
+						audio_component.mState = Audio::PLAYING; // Update State 
+					else
+						audio_component.mState = Audio::FAILED;
+				}
+
+				break;
+			case Audio::PLAYING:
+				break;
+			case Audio::STOPPED:
+				break;
+		}
+		
+	}
 }
 
 
@@ -131,6 +162,102 @@ FMOD::Sound* AudioSystem::FindSound(std::string audio_name)
 	return nullptr;
 
 }
+
+/******************************************************************************/
+/*!
+	SFXPlay()
+	- Plays the audio file on a SFX channel.
+	- Searches for "FMOD::Sound*" stored in "mSound" through given audio name (parameters)
+	- Finds an available channel and plays that audio.
+ */
+ /******************************************************************************/
+//void AudioSystem::SFXPlay(std::string audio_name, float vol)
+//{
+//	for (FMOD::Channel* channel : mChannels[AUDIO_SFX])
+//	{
+//		bool isPlaying;
+//		channel->isPlaying(&isPlaying);
+//
+//		if (!isPlaying)
+//		{
+//			// This channel is free to play
+//			// Play the sound here using FMOD::System and FMOD::Sound
+//			FMOD::Sound* sound = FindSound(audio_name);
+//			if (sound != nullptr) // Safeguard ...
+//			{
+//				system_obj->playSound(sound, 0, false, &channel);
+//				channel->setVolume(vol);
+//			}
+//
+//			return;
+//		}
+//	}
+//}
+
+/******************************************************************************/
+/*!
+	BGMPlay()
+	- Plays the audio file on a BGM channel.
+	- Searches for "FMOD::Sound*" stored in "mSound" through given audio name (parameters)
+	- Finds an available channel and plays that audio.
+ */
+ /******************************************************************************/
+//void AudioSystem::BGMPlay(std::string audio_name, float vol)
+//{
+//	for (FMOD::Channel* channel : mChannels[AUDIO_BGM])
+//	{
+//		bool isPlaying;
+//		channel->isPlaying(&isPlaying);
+//
+//		if (!isPlaying)
+//		{
+//			// This channel is free to play
+//			// Play the sound here using FMOD::System and FMOD::Sound
+//			FMOD::Sound* sound = FindSound(audio_name);
+//			if (sound != nullptr) // Safeguard ...
+//			{
+//				system_obj->playSound(sound, 0, false, &channel);
+//				channel->setVolume(vol);
+//			}
+//
+//			return;
+//		}
+//	}
+//}
+
+/******************************************************************************/
+/*!
+	PlaySound()
+	- Plays the audio file on the user-specified channel (SFX / BGM)
+	- Searches for "FMOD::Sound*" stored in "mSound" through given audio name (parameters)
+	- Finds an available channel and plays that audio.
+ */
+ /******************************************************************************/
+bool AudioSystem::PlaySound(std::string audio_name, AUDIOTYPE type, float vol)
+{
+	for (FMOD::Channel* channel : mChannels[type])
+	{
+		FMOD::Sound* current_sound;
+		channel->getCurrentSound(&current_sound); 
+		
+		if (!current_sound)
+		{
+			// This channel is free to play
+			// Play the sound here using FMOD::System and FMOD::Sound
+			FMOD::Sound* sound = FindSound(audio_name);
+			if (sound != nullptr) // Safeguard ...
+			{
+				system_obj->playSound(sound, 0, false, &channel);
+				channel->setVolume(vol);
+			}
+		
+			return true;
+		}
+	}
+
+	return false;
+}
+
 
 /******************************************************************************/
 /*!

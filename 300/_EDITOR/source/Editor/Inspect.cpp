@@ -1191,78 +1191,78 @@ void CapsuleCollider::Inspect() {
 */
 /***************************************************************************/
 void Audio::Inspect() {
-	//bool delete_component = true;
-	//auto audioEntities = systemManager->ecs->GetEntitiesWith<Audio>();
-	//std::string full_file_path;  // With the Audio File Name  e.g "../assets\\Audio\\farm_ambience.wav"
-	//std::string file_path;		 // Only Audio Directory	  e.g "../assets\\Audio"
-	//std::string audio_name;      // Audio Name only.		  e.g "farm_ambience.wav"
+	bool delete_component = true;
+	auto audioEntities = systemManager->ecs->GetEntitiesWith<Audio>();
+	std::string full_file_path;  // With the Audio File Name  e.g "../assets\\Audio\\farm_ambience.wav"
+	std::string file_path;		 // Only Audio Directory	  e.g "../assets\\Audio"
+	std::string audio_name;      // Audio Name only.		  e.g "farm_ambience.wav"
 
-	//float vol_changed = false; 
+	float vol_changed = false; 
 
-	//const char* audio_type[] = { "SFX" , "BGM" };
+	const char* audio_type[] = { "SFX" , "BGM" };
 
-	//// Audio Component (Bar)
-	//if (ImGui::CollapsingHeader("Audio", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
-	//{
-	//	if (ImGui::BeginDragDropTarget())
-	//	{
-	//		if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_AUDIO"))
-	//		{
-	//			full_file_path = std::string((const char*)payload->Data);
+	// Audio Component (Bar)
+	if (ImGui::CollapsingHeader("Audio", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
+	{
+		//if (ImGui::BeginDragDropTarget())
+		//{
+		//	if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_AUDIO"))
+		//	{
+		//		full_file_path = std::string((const char*)payload->Data);
 
-	//			size_t audio_dir_pos = full_file_path.find_first_of("Audio");
+		//		size_t audio_dir_pos = full_file_path.find_first_of("Audio");
 
-	//			if (audio_dir_pos != std::string::npos) {
-	//				// Use substr to extract the substring up to the found position
-	//				file_path = full_file_path.substr(0, audio_dir_pos + 5); // Account for "Audio"
-	//				//std::cout << result << std::endl;
-	//			}
+		//		if (audio_dir_pos != std::string::npos) {
+		//			// Use substr to extract the substring up to the found position
+		//			file_path = full_file_path.substr(0, audio_dir_pos + 5); // Account for "Audio"
+		//			//std::cout << result << std::endl;
+		//		}
 
-	//			size_t audio_name_start = full_file_path.find_last_of("\\");
-	//			std::string audio_name;
+		//		size_t audio_name_start = full_file_path.find_last_of("\\");
+		//		std::string audio_name;
 
-	//			if (audio_name_start != std::string::npos) {
-	//				audio_name = full_file_path.substr(audio_name_start + 1);
-	//			}
+		//		if (audio_name_start != std::string::npos) {
+		//			audio_name = full_file_path.substr(audio_name_start + 1);
+		//		}
 
-	//			// <Audio> Component - assign m3DAudio flag
-	//			if (audio_name.find("3D") != std::string::npos)
-	//			{
-	//				m3DAudio = true;
-	//			}
+		//		// <Audio> Component - assign m3DAudio flag
+		//		if (audio_name.find("3D") != std::string::npos)
+		//		{
+		//			m3DAudio = true;
+		//		}
 
-	//			// Must be outside (what if i remove and add an already loaded audio)
-	//			mFilePath = file_path;
-	//			mFileName = audio_name;
-	//			mFullPath = file_path + "/" + audio_name;
+		//		// Must be outside (what if i remove and add an already loaded audio)
+		//		mFilePath = file_path;
+		//		mFileName = audio_name;
+		//		mFullPath = file_path + "/" + audio_name;
 
-	//			// Check if the [Audio file] has been uploaded into the database...
-	//			if (systemManager->mAudioSystem.get()->CheckAudioExist(audio_name)) // Exists ... 
-	//			{
-	//				// For Debugging Purposes
-	//				PINFO("[Loaded] Audio is already in database.");
-	//				// Assign the [Sound*] to this component. 
-	//				mSound = systemManager->mAudioSystem.get()->FindSound(audio_name);
-	//				Entity(Hierarchy::selectedId).GetComponent<Audio>().mIsEmpty = false; // Component is populated with info
-	//				Audio& audioent = Entity(Hierarchy::selectedId).GetComponent<Audio>();
-	//				return;
-	//			}
+		//		// Check if the [Audio file] has been uploaded into the database...
+		//		if (systemManager->mAudioSystem.get()->CheckAudioExist(audio_name)) // Exists ... 
+		//		{
+		//			// For Debugging Purposes
+		//			PINFO("[Loaded] Audio is already in database.");
+		//			// Assign the [Sound*] to this component. 
+		//			mSound = systemManager->mAudioSystem.get()->FindSound(audio_name);
+		//			Entity(Hierarchy::selectedId).GetComponent<Audio>().mIsEmpty = false; // Component is populated with info
+		//			Audio& audioent = Entity(Hierarchy::selectedId).GetComponent<Audio>();
+		//			return;
+		//		}
 
-	//			else // Does not exist...
-	//			{
-	//				// Load the Audio File + Check (load status)
-	//				systemManager->mAudioSystem.get()->UpdateLoadAudio(Entity(Hierarchy::selectedId));
-	//				Entity(Hierarchy::selectedId).GetComponent<Audio>().mIsEmpty = false; // must be here (editor specific) -> to trigger the other options to appear.
-	//				/*Audio& audioent = Entity(Hierarchy::selectedId).GetComponent<Audio>();
-	//				int i = 0;*/
-	//			}
+		//		else // Does not exist...
+		//		{
+		//			// Load the Audio File + Check (load status)
+		//			systemManager->mAudioSystem.get()->UpdateLoadAudio(Entity(Hierarchy::selectedId));
+		//			Entity(Hierarchy::selectedId).GetComponent<Audio>().mIsEmpty = false; // must be here (editor specific) -> to trigger the other options to appear.
+		//			/*Audio& audioent = Entity(Hierarchy::selectedId).GetComponent<Audio>();
+		//			int i = 0;*/
+		//		}
 
-	//		}
+		//	}
 
-	//		ImGui::EndDragDropTarget();
-	//	}
+		//	ImGui::EndDragDropTarget();
+		//}
 
-	//}
+	}
 
 	//ImGui::Text("Drag drop 'Audio' files to header above 'Audio'");
 	//ImGui::Text("Audio File Selected: ");
@@ -1340,8 +1340,8 @@ void Audio::Inspect() {
 	//	ImGui::EndCombo();
 	//}
 
-	//if (delete_component == false)
-	//	Entity(Hierarchy::selectedId).RemoveComponent<Audio>();
+	if (delete_component == false)
+		Entity(Hierarchy::selectedId).RemoveComponent<Audio>();
 }
 
 
@@ -1352,17 +1352,17 @@ void Audio::Inspect() {
 */
 /***************************************************************************/
 void AudioListener::Inspect() {
-	//bool delete_component = true;
+	bool delete_component = true;
 
-	//// Audio Component (Bar)
-	//if (ImGui::CollapsingHeader("Audio Listener", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
-	//{
+	// Audio Component (Bar)
+	if (ImGui::CollapsingHeader("Audio Listener", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
+	{
 
-	//}
+	}
 
-	//
-	//if (delete_component == false)
-	//	Entity(Hierarchy::selectedId).RemoveComponent<AudioListener>();
+	
+	if (delete_component == false)
+		Entity(Hierarchy::selectedId).RemoveComponent<AudioListener>();
 }
 
 void UIrenderer::Inspect() {

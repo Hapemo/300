@@ -331,7 +331,17 @@ struct Children : public Serializable
  /******************************************************************************/
 
 struct Audio : public Serializable
-{
+{	
+	enum STATE : unsigned char
+	{
+		INACTIVE,
+		SET_TO_PLAY,
+		PLAYING,
+		PAUSED,
+		STOPPED, 
+		FAILED     // When the audio fails to play...
+	};
+
 	// Serialize
 	// -----------------------------------------
 	std::string    mFilePath;				            // File Path to the Audio File (required for loading)
@@ -339,8 +349,9 @@ struct Audio : public Serializable
 	std::string    mFullPath;				            // Full Path (File Path + Audio File)
 
 	bool           mPlayonAwake = false;		        // [Flag] - flag to play as the scene launches. 
-	bool           mIsLooping = false;			        // [Flag] - flag to decide whether if audio is looping.
-
+	bool           mIsLooping   = false;			    // [Flag] - flag to decide whether if audio is looping.
+	bool		   mUniqueSound = false;				// [Flag] - flag to decide if I want multiple instance of this sound being played at the same time.
+	
 	// Audio Type [Channel Management]
 	AUDIOTYPE      mAudioType;			                // SFX or BGM (Mute Channels)
 
@@ -348,19 +359,18 @@ struct Audio : public Serializable
 	float		   mVolume = 1.0f;
 
 	// 3D Audio
-	bool		   m3DAudio = false;
-	float		   mMinDistance = 0.5f;		         // Testing Values
-	float		   mMaxDistance = 3000.0f;		         // Testing Values
+	//bool		   m3DAudio = false;
+	//float		   mMinDistance = 0.5f;		         // Testing Values
+	//float		   mMaxDistance = 3000.0f;		         // Testing Values
 
-	// Position
-	glm::vec3	   mPosition = { 0.0f, 0.0f, 0.0f }; // Q. <Transform> or glm::vec3
-	glm::vec3      mVelocity = { 0.0f, 0.0f, 0.0f }; // For [Doppler] effect. 
-
+	
 	// Do not serialize 
 	// ------------------------------------------
+	STATE          mState = STATE::INACTIVE;		 // Initial State - Inactive (do nothing first)
+
 	// Update Loop - Boolean Checks
 	bool		   mIsPlaying = false;					 // [Flag] - Check if audio is already playing (Channel Interaction)
-	bool           mIsPlay = false;						 // [Flag] - to decide whether to play audio (if true)
+	bool           mIsPlay    = false;					 // [Flag] - to decide whether to play audio (if true)
 
 	// Update Loop - Fade In / Fade out data
 	bool		   mFadeIn = false;						 // [Flag] - This audio will be faded out. 
@@ -381,9 +391,9 @@ struct Audio : public Serializable
 	float		   mTypeChanged = false;				 // [For Editor] - trigger type change
 
 	// Q. Can a <Audio> entity have their very own channel.
-	uid            mChannelID;							 // Channel ID (Channel Management)
-	FMOD::Channel* mChannel;         					 // Use this to facilitate manipulation of audio.
-	FMOD::Sound* mSound = nullptr;					 // Each <Audio> can only hold a reference to the "Audio File" it's attached to.
+	//uid            mChannelID;							 // Channel ID (Channel Management)
+	//FMOD::Channel* mChannel;         					 // Use this to facilitate manipulation of audio.
+	//FMOD::Sound* mSound = nullptr;					 // Each <Audio> can only hold a reference to the "Audio File" it's attached to.
 
 	// Fade Volume Stuff
 	float fade_timer = 0.0f;							 // How long the fade has elapsed
@@ -391,7 +401,7 @@ struct Audio : public Serializable
 
 	Audio() : mFilePath(""), mFileName(""), mAudioType(AUDIO_SFX), mIsEmpty(true)
 	{
-		mChannelID = uid();
+		//mChannelID = uid();
 	}
 
 	Audio(std::string file_path_to_audio, std::string file_audio_name, AUDIOTYPE audio_type, bool playOnAwake) : mAudioType(audio_type), mIsPlaying(false), mPlayonAwake(playOnAwake),
@@ -401,7 +411,7 @@ struct Audio : public Serializable
 		mFileName = file_audio_name;
 		mFullPath = file_path_to_audio + "/" + mFileName;
 
-		mChannelID = uid();
+		//mChannelID = uid();
 	}
 
 	// For [Editor]
@@ -415,8 +425,8 @@ struct Audio : public Serializable
 		mPlayonAwake = false;
 		mIsEmpty = true;
 		mIsLoaded = false;
-		mSound = nullptr;
-		m3DAudio = false; // Added [10/26]
+		//mSound = nullptr;
+		//m3DAudio = false; // Added [10/26]
 	}
 
 	int mAudio{ 0 };

@@ -14,6 +14,7 @@
 #include "Audio/AudioType.h"
 
 enum AUDIOTYPE :unsigned char;
+enum STATE : unsigned char;
 
 class AudioSystem
 {
@@ -38,8 +39,13 @@ public:
 	bool         LoadAudioFromDirectory(std::string directory_path);
 	FMOD::Sound* FindSound(std::string audio_name);
 
+	// Playback Functions
+public:
+	bool PlaySound(std::string audio_name, AUDIOTYPE type, float vol = 1.0f);	// Finds the next available in (specified sfx/bgm) channel and plays it in there. 
 
-	// Data Members (Audio System)
+
+
+	// Data Members (Global Volume Multiplier)
 public:
 	float sfx_global_vol = 1.0f;
 	float bgm_global_vol = 1.0f;
