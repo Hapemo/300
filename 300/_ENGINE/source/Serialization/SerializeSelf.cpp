@@ -68,6 +68,17 @@ void MeshRenderer::DeserializeSelf(rapidjson::Value& reader)
 	Deserialize(reader, "meshrefid", mMeshRef.data_uid);
 	Deserialize(reader, "instancecolor", mInstanceColor);
 	Deserialize(reader, "materialinstance", mMaterialInstancePath, 5);
+
+	for (int i{}; i < 5; ++i)
+	{
+		// deserialize the texture descriptor files
+		if (mMaterialInstancePath[i] == " ")
+			continue;
+
+		std::string texturedescFilepath = mMaterialInstancePath[i] + ".desc";
+		_GEOM::Texture_DescriptorData::DeserializeTEXTURE_DescriptorDataFromFile(mTextureDescriptorData[i], texturedescFilepath);
+	}
+
 	Deserialize(reader, "mesh", mMeshPath);
 	//Deserialize(reader, "texturecont", mTextureCont, 5);
 	for (int i = 0; i < 5; ++i)

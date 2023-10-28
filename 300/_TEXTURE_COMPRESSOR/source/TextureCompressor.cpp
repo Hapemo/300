@@ -108,7 +108,7 @@ void LoadAndSerializeImageFile(const char* filepath, const char* outputFolder)
 	stbi_image_free(texData);
 }
 
-void CompressImageFile(const char* filepath, const char* outputFolder)
+void CompressImageFile(const char* filepath, const char* outputFolder, bool gammaSpace)
 {
 	// Image stats
 	int width, height, channel;
@@ -127,8 +127,12 @@ void CompressImageFile(const char* filepath, const char* outputFolder)
 	glBindTexture(GL_TEXTURE_2D, tex);
 
 	// Default format supports 4 channels
-	GLint internalFormat{ GL_COMPRESSED_RGBA_ARB };
+	//GLint internalFormat{ GL_COMPRESSED_RGBA_ARB };
+	GLint internalFormat{ GL_COMPRESSED_RGBA };
 	GLint format{ GL_RGBA };
+
+	if (gammaSpace)
+		internalFormat = GL_COMPRESSED_SRGB_ALPHA;
 
 	if (channel == 1)		// RED, 1 component
 	{
@@ -137,7 +141,10 @@ void CompressImageFile(const char* filepath, const char* outputFolder)
 	}
 	else if (channel == 3)		// RGB
 	{
-		internalFormat = GL_COMPRESSED_RGB_ARB;
+		if (gammaSpace)
+			internalFormat = GL_COMPRESSED_SRGB;
+		else
+			internalFormat = GL_COMPRESSED_RGB;
 		format = GL_RGB;
 	}
 

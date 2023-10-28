@@ -144,6 +144,7 @@ public:
     const std::string compiled_geom_path = "../assets/compiled_geom/";
     const std::string compressed_texture_path = "../assets/Compressed/";
     const std::string compressed_Editor_path = "../assets/Editor/Textures_Compressed/";
+    const std::string uncompressed_texture_path = "../assets/Textures/";
     const std::string shader_path = "../assets/shader_files/";
     const std::string shader_program_path = "../assets/ShaderProgram/";
     const std::string fbx_path = "../assets/Models/";

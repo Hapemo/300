@@ -124,7 +124,6 @@ struct MeshRenderer : public Serializable
 	
 	std::pair<std::string, std::string> mShaderPath{ "../assets/shader_files/pointLight_vert.glsl", "../assets/shader_files/pointLight_frag.glsl" };
 	
-	//uid									mShaderid;
 	ref									mShaderRef;
 
 	std::string							mMaterialInstancePath[5] {" "," " ," " ," ", " "};
@@ -134,6 +133,10 @@ struct MeshRenderer : public Serializable
 
 	ref									mMeshRef{};
 	ref									mTextureRef[5]		{ {nullptr,0},{nullptr,0},{nullptr,0},{nullptr,0},{nullptr,0} };
+
+	// store the descriptor data for the material instance per mesh renderer instance
+	_GEOM::Texture_DescriptorData		mTextureDescriptorData[5];
+	
 
 	unsigned							mGUID;
 	//bool								mTextureCont[5];

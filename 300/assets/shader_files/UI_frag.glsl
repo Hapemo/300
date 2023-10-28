@@ -23,6 +23,10 @@ void main()
 		outColor = texture(uTex2d[texIndex], fTexCoords);
 	outColor = outColor * fColor;
 
-	fragColor = outColor;
+	// Gamma correction
+    float gamma = 2.2;
+    vec3 finalColor = pow(outColor.rgb, vec3(1.0/gamma));
+
+	fragColor = vec4(finalColor, outColor.a);
 	outEntityID = entID;
 }
