@@ -7,6 +7,9 @@
 \brief
 main file of the whole program
 *******************************************************************************/
+
+#define _EDITOR
+
 #include "EditorApplication.h"
 #include "Misc.h"
 #include "pch.h"

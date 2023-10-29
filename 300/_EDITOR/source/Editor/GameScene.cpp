@@ -46,5 +46,9 @@ void GameScene::update()
 	}
 
 	systemManager->mGraphicsSystem->m_EnableScroll |= ImGui::IsWindowHovered();
+
+	if (ImGui::IsWindowHovered()) {
+		Input::mosposEditor = glm::vec2 { ImGui::GetMousePos().x ,ImGui::GetMousePos().y};
+	}
 }
 

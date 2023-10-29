@@ -8,6 +8,9 @@
 Main application that gets called in the main loop. It handles the creation and
 start up of window and game system, also runs their update functions.
 *******************************************************************************/
+
+#define _GAMEPLAY
+
 #include "Application.h"
 #include "FPSManager.h"
 #include "ECS/ECS.h"
