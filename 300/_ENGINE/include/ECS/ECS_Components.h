@@ -164,14 +164,15 @@ struct MeshRenderer : public Serializable
 struct UIrenderer : public Serializable
 {
 	std::string							mTexPath; // temporary should be UID
-	void*								mTextureRef;
+	ref									mTextureRef;
+	float								mDegree;
 
 	inline unsigned ID() 
 	{
-		if (mTextureRef != nullptr) {
-			int temp = (reinterpret_cast<GFX::Texture*>(mTextureRef))->ID();
-			return temp;
-		}
+		//if (mTextureRef != nullptr) {
+		//	int temp = (reinterpret_cast<GFX::Texture*>(mTextureRef))->ID();
+		//	return temp;
+		//}
 
 		return 0;
 	}

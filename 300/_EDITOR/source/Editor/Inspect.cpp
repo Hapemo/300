@@ -1391,7 +1391,7 @@ void UIrenderer::Inspect() {
 				mTexPath = data_str;
 
 				uid temp(mTexPath);
-				mTextureRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(temp.id));
+				mTextureRef.data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(temp.id));
 			}
 			ImGui::EndDragDropTarget();
 		}
