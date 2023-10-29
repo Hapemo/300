@@ -89,6 +89,7 @@ glm::vec2 Input::CursorPos() {
   return mosposEditor;
 #endif // _EDITOR
 
+  return glm::vec2{};
 }
 
 void Input::scroll_callback(GLFWwindow* _window, double _xoffset, double _yoffset)

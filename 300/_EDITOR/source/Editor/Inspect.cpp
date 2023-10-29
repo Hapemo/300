@@ -461,6 +461,7 @@ void Scripts::Inspect(entt::entity entityID) {
 	static std::string newScript;
 	static bool open_popup{ false };
 	static std::string deleteScript;
+	bool emptyFile = false;
 
 	//auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
 	////Scripts& scripts = scriptEntities.get<Scripts>(Hierarchy::selectedId);
@@ -559,29 +560,45 @@ void Scripts::Inspect(entt::entity entityID) {
 		ImGui::InputText(".lua", &newScript);
 		if (ImGui::Button("Add Lua Script"))
 		{
-			std::ofstream output;
-			std::ifstream input{ "../assets/Scripts/DefaultTemplate.lua" };
-			std::stringstream ss;
-			std::string lua = ".lua";
-			std::string line;
-			ss << "../assets/Scripts/" << newScript << ".lua";
-			std::cout << ss.str() << std::endl;
-			std::string pathInString = ss.str();
-			const char* path = pathInString.c_str();
-			output.open(path, std::ios_base::out);
-			while (getline(input, line))
+			// check if script name was empty
+			if (newScript == "" || newScript == " ")
 			{
-				output << line << std::endl;
+				ImGui::OpenPopup("EmptyScript");
+				emptyFile = true;
 			}
-			input.close();
-			Script script;
-			script.scriptFile = ss.str();
-			script.env = { systemManager->mScriptingSystem->luaState, sol::create, systemManager->mScriptingSystem->luaState.globals() };
-			script.Load(Hierarchy::selectedId);
-			scriptsContainer.push_back(script);
-			newScript = " ";
+			if (!emptyFile)
+			{
+				std::ofstream output;
+				std::ifstream input{ "../assets/Scripts/DefaultTemplate.lua" };
+				std::stringstream ss;
+				std::string lua = ".lua";
+				std::string line;
+				ss << "../assets/Scripts/" << newScript << ".lua";
+				std::cout << ss.str() << std::endl;
+				std::string pathInString = ss.str();
+				const char* path = pathInString.c_str();
+				output.open(path, std::ios_base::out);
+				while (getline(input, line))
+				{
+					output << line << std::endl;
+				}
+				input.close();
+				Script script;
+				script.scriptFile = ss.str();
+				script.env = { systemManager->mScriptingSystem->luaState, sol::create, systemManager->mScriptingSystem->luaState.globals() };
+				script.Load(Hierarchy::selectedId);
+				scriptsContainer.push_back(script);
+				newScript = " ";
+			}
 			ImGui::InputText(".lua", &newScript);
 		}
+	}
+	if (ImGui::BeginPopupModal("EmptyScript", NULL, ImGuiWindowFlags_AlwaysAutoResize))
+	{
+		ImGui::Text("Script file name is EMPTY !");
+		if (ImGui::Button("OK", ImVec2(120, 0))) { ImGui::CloseCurrentPopup(); }
+		ImGui::SetItemDefaultFocus();
+		ImGui::EndPopup();
 	}
 	if (delete_component == false)
 		Entity(Hierarchy::selectedId).RemoveComponent<Scripts>();
