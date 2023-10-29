@@ -1,5 +1,6 @@
 vec2 = Vec2.new()
 function Alive()
+    gameStateSys = systemManager:mGameStateSystem();
     cameraEntity = gameStateSys:GetEntity("Camera", "testSerialization")
     print(cameraEntity.id)
 end
