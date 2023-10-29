@@ -224,15 +224,15 @@ public:
 // 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// -- Renderer --
-	GFX::DebugRenderer m_Renderer;		// isolated to debug draws
-	GFX::FBO m_Fbo;						// Editor Scene
-	GFX::FBO m_GameFbo;					// Game Scene
-	GFX::PingPongFBO m_PingPongFbo;		// Post Processing
+	GFX::DebugRenderer	m_Renderer;			// isolated to debug draws
+	GFX::FBO			m_Fbo;				// Editor Scene
+	GFX::FBO			m_GameFbo;			// Game Scene
+	GFX::PingPongFBO	m_PingPongFbo;		// Post Processing
 
 	// -- Window --
-	GFX::Window* m_Window;
-	int m_Width;
-	int m_Height;
+	GFX::Window*		m_Window;
+	int					m_Width;
+	int					m_Height;
 
 	// -- Camera --
 	GFX::Camera m_EditorCamera;
@@ -248,8 +248,8 @@ public:
 	// -- Chromatic Abbreation --
 	float		mChromaticStrength{ 0.006f };						// this yj
 
-	bool    m_EnableBloom{ false };									// this yj
-	bool	m_EnableChromaticAbberation{ false };					// this yj
+	bool		m_EnableBloom{ false };									// this yj
+	bool		m_EnableChromaticAbberation{ false };					// this yj
 
 
 	// -- Textures --
@@ -292,9 +292,9 @@ private:
 	void SetupShaderStorageBuffers();		// Creates all SSBO required
 
 	// -- 2D Image Rendering --
-	GFX::Mesh				m_Image2DMesh;
-	std::vector<unsigned>	m_Image2DStore;
-	GFX::Quad2D				mScreenQuad;
+	GFX::Mesh						m_Image2DMesh;
+	std::vector<unsigned>			m_Image2DStore;
+	GFX::Quad2D						mScreenQuad;
 
 	void DrawAll2DInstances(unsigned shaderID);
 	void Add2DImageInstance(float width, float height, vec2 const& position, unsigned texHandle, unsigned entityID = 0xFFFFFFFF, vec4 const& color = vec4{ 1.f, 1.f, 1.f, 1.f });
