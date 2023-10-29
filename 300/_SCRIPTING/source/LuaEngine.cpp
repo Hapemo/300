@@ -370,7 +370,8 @@ void LuaGameState()
     systemManager->mScriptingSystem->luaState.new_usertype<GameStateManager>(
         "mGameStateSystem", sol::constructors<>(),
         "GetEntity", &GameStateManager::GetEntity,
-        "DeleteEntity", &GameStateManager::DeleteEntity
+        "DeleteEntity", &GameStateManager::DeleteEntity,
+        "ChangeGameState", sol::resolve<void(const std::string&)>(&GameStateManager::ChangeGameState)
         );
 }
 

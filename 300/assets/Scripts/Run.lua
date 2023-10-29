@@ -65,6 +65,7 @@ function Update()
                 testEntity = systemManager.ecs:NewEntityByScene();
                 gameStateSys = systemManager:mGameStateSystem();
                 gameStateSys:DeleteEntity(testEntity)
+                --gameStateSys:ChangeGameState("exit")
             end
             create = create + 1
         end
