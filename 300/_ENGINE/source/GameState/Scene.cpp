@@ -14,6 +14,7 @@ a group of entities and operates on them.
 #include "Object/ObjectFactory.h"
 //#include "LogicSystem.h"
 #include "GameState/GameStateManager.h"
+#include "Graphics/GraphicsSystem.h"
 
 
 Scene::Scene() : mEntities(), mIsPause(false), mName() {
@@ -118,6 +119,7 @@ void Scene::RemoveChildFromScene(Entity _e) {
 void Scene::RemoveEntity(Entity _e) {
 	// if (_e.GetComponent<General>().isActive) _e.Deactivate(); // Temporary remove - Han
 	RemoveChildFromScene(_e);
+	systemManager->mGraphicsSystem->Unload();
 
 	mEntities.erase(_e);
 	systemManager->ecs->DeleteEntity(_e);

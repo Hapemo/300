@@ -268,6 +268,8 @@ public:
 	// -- TEST --
 	float m_DegreeTest{};
 
+	void Unload();
+
 private:
 	// -- SSBO -- 
 	const int						MAX_INSTANCES = 1000;

@@ -1120,6 +1120,18 @@ void GraphicsSystem::ResizeWindow(ivec2 newSize)
 	m_Height = newSize.y;
 }
 
+void GraphicsSystem::Unload()
+{
+	auto meshRendererInstances = systemManager->ecs->GetEntitiesWith<MeshRenderer>();
+
+	for (Entity inst : meshRendererInstances)
+	{
+		GFX::Mesh& meshinst = *reinterpret_cast<GFX::Mesh*>(inst.GetComponent<MeshRenderer>().mMeshRef.getdata(systemManager->mResourceTySystem->m_ResourceInstance));
+		meshinst.ClearInstances();
+	}
+	m_Renderer.ClearInstances();
+}
+
 GLuint64 GraphicsSystem::GetAndStoreBindlessTextureHandle(int texID)
 {
 	if (texID < 0)

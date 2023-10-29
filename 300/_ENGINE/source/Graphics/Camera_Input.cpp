@@ -174,8 +174,9 @@ void Camera_Scripting::RotateCameraView(Entity cameraEntity, const vec2& cursorp
 	assert(cameraEntity.HasComponent<Camera>());
 	auto& caminst = cameraEntity.GetComponent<Camera>().mCamera;
 
-
-	vec2 delta = caminst.mCursorPos - cursorposition;
+	
+	//vec2 delta = caminst.mCursorPos - cursorposition;
+	vec2 delta = cursorposition - caminst.mCursorPos;
 	if (delta == vec2(0.f, 0.f))
 		return;
 

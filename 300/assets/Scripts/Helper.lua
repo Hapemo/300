@@ -44,3 +44,11 @@ function Helper.Rotate(Entity, Vec3)
     physicsSys = systemManager:mPhysicsSystem();
     physicsSys:SetRotation(Entity, vec);
 end
+
+function Helper.Normalize(Vec3)
+    magnitude = (Vec3.x ^ 2 + Vec3.y ^ 2 + Vec3.z ^ 2) ^ 0.5
+    Vec3.x = Vec3.x / magnitude
+    Vec3.y = Vec3.y / magnitude
+    Vec3.z = Vec3.z / magnitude
+    return Vec3
+end
