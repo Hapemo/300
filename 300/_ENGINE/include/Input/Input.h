@@ -115,13 +115,13 @@ private:
   static GLFWcursor* mCursor;
   static double mScrollTotal;
   static double mScrollOffset;
-  static bool mIsEditor;
+
 
 
 
 
 public:
-
+	static bool mIsEditor;
 	static glm::vec2 mosposEditor;
 	
 

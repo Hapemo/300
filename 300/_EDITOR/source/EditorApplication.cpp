@@ -34,6 +34,7 @@ Editor EditorApplication::mMaineditor;
 
 void EditorApplication::Init()
 {
+    Input::mIsEditor = true;
     StartUp();
     SystemInit();
    /* Entity trigger = systemManager->ecs->NewEntity();

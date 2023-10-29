@@ -83,7 +83,9 @@ void GameStateManager::ChangeGameState(std::string const& _name) {
 	//LOG_CUSTOM("GAMESTATEMANAGER", "Set gamestate to change to: " + _name);
 	//audioManager->StopAllSound(); TODO minglun
 	mNextGSName = _name;
-	mGSMState = E_GSMSTATE::CHANGING;
+	if (_name == "exit") mGSMState = E_GSMSTATE::EXIT;
+	else if (_name == "restart") mGSMState = E_GSMSTATE::RESTART;
+	else mGSMState = E_GSMSTATE::CHANGING;
 }
 
 void GameStateManager::ChangeGameState(E_GSMSTATE const& _state) {
