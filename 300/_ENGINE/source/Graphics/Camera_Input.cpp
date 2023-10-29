@@ -174,14 +174,13 @@ float Camera_Scripting::GetSensitivity(Entity cameraEntity)
 void Camera_Scripting::RotateCameraView(Entity cameraEntity, const vec2& cursorposition)
 {
 	assert(cameraEntity.HasComponent<Camera>());
-	auto& caminst = cameraEntity.GetComponent<Camera>().mCamera;
-
 	
-	//vec2 delta = caminst.mCursorPos - cursorposition;
-	vec2 delta = cursorposition - caminst.mCursorPos;
+	auto& caminst = cameraEntity.GetComponent<Camera>().mCamera;
+	vec2 delta = cursorposition;
+	
 	if (delta == vec2(0.f, 0.f))
 		return;
-
+	
 	delta *= caminst.mSensitivity;		// adjust the mouse movement sensitivity
 	caminst.mYaw += delta.x;
 	caminst.mPitch += delta.y;

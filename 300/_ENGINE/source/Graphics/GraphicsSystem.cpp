@@ -133,10 +133,12 @@ void GraphicsSystem::Update(float dt)
 		// if the mesh instance is not active, skip it
 		if (meshRenderer.mMeshRef.getdata(systemManager->mResourceTySystem->m_ResourceInstance) == nullptr)
 			continue;
+		
 
 		// gives me the mesh
 		void *tt = meshRenderer.mMeshRef.getdata(systemManager->mResourceTySystem->m_ResourceInstance);
 		GFX::Mesh &meshinst = *reinterpret_cast<GFX::Mesh *>(tt);
+
 
 		// pushback LTW matrices
 		vec3 trans = inst.GetComponent<Transform>().mTranslate;
@@ -1280,13 +1282,21 @@ void MeshRenderer::SetColor(const vec4& color)
 }
 
 
-void MeshRenderer::SetMesh(const std::string& meshName)
+void MeshRenderer::SetMesh(const std::string& meshName, Entity inst)
 {
+	// gets the guid from the fbx descriptor file
 	std::string descFilepath = systemManager->mResourceTySystem->fbx_path + meshName + ".fbx.desc";
 	unsigned guid = _GEOM::GetGUID(descFilepath);
 
 	mMeshRef.data = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(guid));
 	mMeshPath = systemManager->mResourceTySystem->compiled_geom_path + meshName + ".geom";
+
+	GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mMeshRef.data);
+	if (inst.HasComponent<Animator>() && meshinst->mHasAnimation)
+	{
+		// change the animation to the new mesh's
+		inst.GetComponent<Animator>().mAnimator.SetAnimation(&meshinst->mAnimation[0]);
+	}
 }
 
 

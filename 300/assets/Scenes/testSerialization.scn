@@ -440,7 +440,7 @@
         }
     },
     {
-        "entityid": 7,
+        "entityid": 6,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -460,9 +460,9 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 31.172670364379883,
-                "y": 6.502918243408203,
-                "z": 33.62534713745117
+                "x": 88.0,
+                "y": 6.499999523162842,
+                "z": 40.93459701538086
             }
         },
         "rigidbody": {
@@ -470,9 +470,9 @@
             "material": 1,
             "motion": 1,
             "velocity": {
-                "x": -0.0000052731556934304535,
-                "y": -0.7007216811180115,
-                "z": -0.000010526986443437636
+                "x": 0.0,
+                "y": 0.0,
+                "z": -4.312807888595671e-9
             },
             "rotationconstraints": {
                 "x": true,
@@ -678,14 +678,14 @@
         },
         "camera": {
             "positon": {
-                "x": 31.172670364379883,
-                "y": 6.502918243408203,
-                "z": 33.62534713745117
+                "x": 88.0,
+                "y": 6.499999523162842,
+                "z": 40.93459701538086
             },
             "target": {
-                "x": 31.172670364379883,
-                "y": 6.502918243408203,
-                "z": 32.62534713745117
+                "x": 88.0,
+                "y": 6.499999523162842,
+                "z": 39.93459701538086
             },
             "size": {
                 "x": 1334,
@@ -696,7 +696,7 @@
         }
     },
     {
-        "entityid": 8,
+        "entityid": 7,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -784,7 +784,7 @@
         }
     },
     {
-        "entityid": 9,
+        "entityid": 8,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -872,7 +872,7 @@
         }
     },
     {
-        "entityid": 10,
+        "entityid": 9,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -960,7 +960,7 @@
         }
     },
     {
-        "entityid": 11,
+        "entityid": 10,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -1048,7 +1048,7 @@
         }
     },
     {
-        "entityid": 12,
+        "entityid": 11,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -1136,7 +1136,7 @@
         }
     },
     {
-        "entityid": 13,
+        "entityid": 12,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -1224,7 +1224,7 @@
         }
     },
     {
-        "entityid": 14,
+        "entityid": 13,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -1312,7 +1312,7 @@
         }
     },
     {
-        "entityid": 15,
+        "entityid": 14,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -1428,7 +1428,7 @@
         }
     },
     {
-        "entityid": 16,
+        "entityid": 15,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -1516,7 +1516,7 @@
         }
     },
     {
-        "entityid": 17,
+        "entityid": 16,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -1604,7 +1604,7 @@
         }
     },
     {
-        "entityid": 18,
+        "entityid": 17,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -1692,7 +1692,7 @@
         }
     },
     {
-        "entityid": 19,
+        "entityid": 18,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -1780,7 +1780,7 @@
         }
     },
     {
-        "entityid": 20,
+        "entityid": 19,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -1868,7 +1868,7 @@
         }
     },
     {
-        "entityid": 21,
+        "entityid": 20,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -1956,7 +1956,7 @@
         }
     },
     {
-        "entityid": 22,
+        "entityid": 21,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -2044,7 +2044,7 @@
         }
     },
     {
-        "entityid": 23,
+        "entityid": 22,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -2132,7 +2132,7 @@
         }
     },
     {
-        "entityid": 24,
+        "entityid": 23,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -2220,7 +2220,7 @@
         }
     },
     {
-        "entityid": 25,
+        "entityid": 24,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -2308,7 +2308,7 @@
         }
     },
     {
-        "entityid": 26,
+        "entityid": 25,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -2396,7 +2396,7 @@
         }
     },
     {
-        "entityid": 27,
+        "entityid": 26,
         "general": {
             "name": "Light",
             "tagid": 2,
@@ -2436,7 +2436,7 @@
         }
     },
     {
-        "entityid": 28,
+        "entityid": 27,
         "general": {
             "name": "Light",
             "tagid": 2,
@@ -2479,7 +2479,7 @@
         }
     },
     {
-        "entityid": 29,
+        "entityid": 28,
         "general": {
             "name": "gun",
             "tagid": 0,
@@ -2532,7 +2532,7 @@
         }
     },
     {
-        "entityid": 31,
+        "entityid": 29,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -2620,7 +2620,7 @@
         }
     },
     {
-        "entityid": 32,
+        "entityid": 30,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -2708,7 +2708,7 @@
         }
     },
     {
-        "entityid": 33,
+        "entityid": 31,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -2796,7 +2796,7 @@
         }
     },
     {
-        "entityid": 34,
+        "entityid": 32,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -2884,7 +2884,7 @@
         }
     },
     {
-        "entityid": 35,
+        "entityid": 33,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -2972,7 +2972,7 @@
         }
     },
     {
-        "entityid": 36,
+        "entityid": 34,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -3060,7 +3060,7 @@
         }
     },
     {
-        "entityid": 37,
+        "entityid": 35,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -3148,7 +3148,7 @@
         }
     },
     {
-        "entityid": 38,
+        "entityid": 36,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -3236,7 +3236,7 @@
         }
     },
     {
-        "entityid": 39,
+        "entityid": 37,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -3324,7 +3324,7 @@
         }
     },
     {
-        "entityid": 40,
+        "entityid": 38,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -3412,7 +3412,7 @@
         }
     },
     {
-        "entityid": 41,
+        "entityid": 39,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -3500,7 +3500,7 @@
         }
     },
     {
-        "entityid": 42,
+        "entityid": 40,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -3588,7 +3588,7 @@
         }
     },
     {
-        "entityid": 43,
+        "entityid": 41,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -3676,7 +3676,7 @@
         }
     },
     {
-        "entityid": 44,
+        "entityid": 42,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -3764,7 +3764,7 @@
         }
     },
     {
-        "entityid": 45,
+        "entityid": 43,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -3852,7 +3852,7 @@
         }
     },
     {
-        "entityid": 46,
+        "entityid": 44,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -3940,7 +3940,7 @@
         }
     },
     {
-        "entityid": 47,
+        "entityid": 45,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -4028,7 +4028,7 @@
         }
     },
     {
-        "entityid": 48,
+        "entityid": 46,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -4116,7 +4116,7 @@
         }
     },
     {
-        "entityid": 49,
+        "entityid": 47,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -4204,7 +4204,7 @@
         }
     },
     {
-        "entityid": 50,
+        "entityid": 48,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -4292,7 +4292,7 @@
         }
     },
     {
-        "entityid": 51,
+        "entityid": 49,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -4380,7 +4380,7 @@
         }
     },
     {
-        "entityid": 52,
+        "entityid": 50,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -4468,7 +4468,7 @@
         }
     },
     {
-        "entityid": 53,
+        "entityid": 51,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -4556,7 +4556,7 @@
         }
     },
     {
-        "entityid": 54,
+        "entityid": 52,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -4644,7 +4644,7 @@
         }
     },
     {
-        "entityid": 55,
+        "entityid": 53,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -4732,183 +4732,183 @@
         }
     },
     {
+        "entityid": 54,
+        "general": {
+            "name": "Wall",
+            "tagid": 4,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 60.0,
+                "y": 50.0,
+                "z": 5.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 72.5,
+                "z": -77.5
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": false,
+                "z": false
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3442,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
+                " ",
+                " ",
+                " ",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/Model_Wall_12x10x1.geom",
+            "texturerefid": [
+                4695,
+                0,
+                0,
+                0,
+                0
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Wall"
+        }
+    },
+    {
+        "entityid": 55,
+        "general": {
+            "name": "Wall",
+            "tagid": 4,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 60.0,
+                "y": 50.0,
+                "z": 5.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 60.0,
+                "y": 72.5,
+                "z": -77.5
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": false,
+                "z": false
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3442,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
+                " ",
+                " ",
+                " ",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/Model_Wall_12x10x1.geom",
+            "texturerefid": [
+                4695,
+                0,
+                0,
+                0,
+                0
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Wall"
+        }
+    },
+    {
         "entityid": 56,
-        "general": {
-            "name": "Wall",
-            "tagid": 4,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 60.0,
-                "y": 50.0,
-                "z": 5.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 72.5,
-                "z": -77.5
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 0,
-            "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": true,
-                "y": false,
-                "z": false
-            },
-            "gravity": true
-        },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 3442,
-            "instancecolor": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "materialinstance": [
-                "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
-                " ",
-                " ",
-                " ",
-                " "
-            ],
-            "mesh": "../assets/compiled_geom/Model_Wall_12x10x1.geom",
-            "texturerefid": [
-                4695,
-                0,
-                0,
-                0,
-                0
-            ]
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "translateoffset": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "istrigger": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Wall"
-        }
-    },
-    {
-        "entityid": 57,
-        "general": {
-            "name": "Wall",
-            "tagid": 4,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 60.0,
-                "y": 50.0,
-                "z": 5.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 60.0,
-                "y": 72.5,
-                "z": -77.5
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 0,
-            "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": true,
-                "y": false,
-                "z": false
-            },
-            "gravity": true
-        },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 3442,
-            "instancecolor": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "materialinstance": [
-                "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
-                " ",
-                " ",
-                " ",
-                " "
-            ],
-            "mesh": "../assets/compiled_geom/Model_Wall_12x10x1.geom",
-            "texturerefid": [
-                4695,
-                0,
-                0,
-                0,
-                0
-            ]
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "translateoffset": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "istrigger": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Wall"
-        }
-    },
-    {
-        "entityid": 58,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -4996,7 +4996,7 @@
         }
     },
     {
-        "entityid": 59,
+        "entityid": 57,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -5084,7 +5084,7 @@
         }
     },
     {
-        "entityid": 60,
+        "entityid": 58,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -5172,7 +5172,7 @@
         }
     },
     {
-        "entityid": 61,
+        "entityid": 59,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -5260,7 +5260,7 @@
         }
     },
     {
-        "entityid": 62,
+        "entityid": 60,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -5348,7 +5348,7 @@
         }
     },
     {
-        "entityid": 63,
+        "entityid": 61,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -5436,7 +5436,7 @@
         }
     },
     {
-        "entityid": 64,
+        "entityid": 62,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -5524,7 +5524,7 @@
         }
     },
     {
-        "entityid": 65,
+        "entityid": 63,
         "general": {
             "name": "Floor",
             "tagid": 4,
@@ -5612,7 +5612,7 @@
         }
     },
     {
-        "entityid": 66,
+        "entityid": 64,
         "general": {
             "name": "Floor",
             "tagid": 4,
@@ -5700,7 +5700,7 @@
         }
     },
     {
-        "entityid": 67,
+        "entityid": 65,
         "general": {
             "name": "Floor",
             "tagid": 4,
@@ -5788,7 +5788,7 @@
         }
     },
     {
-        "entityid": 68,
+        "entityid": 66,
         "general": {
             "name": "Floor",
             "tagid": 4,
@@ -5876,7 +5876,7 @@
         }
     },
     {
-        "entityid": 69,
+        "entityid": 67,
         "general": {
             "name": "Floor",
             "tagid": 4,
@@ -5964,7 +5964,7 @@
         }
     },
     {
-        "entityid": 70,
+        "entityid": 68,
         "general": {
             "name": "Floor",
             "tagid": 4,
@@ -6052,7 +6052,7 @@
         }
     },
     {
-        "entityid": 71,
+        "entityid": 69,
         "general": {
             "name": "Floor",
             "tagid": 4,
@@ -6140,7 +6140,7 @@
         }
     },
     {
-        "entityid": 72,
+        "entityid": 70,
         "general": {
             "name": "Floor",
             "tagid": 4,
@@ -6228,7 +6228,7 @@
         }
     },
     {
-        "entityid": 73,
+        "entityid": 71,
         "general": {
             "name": "Floor",
             "tagid": 4,
@@ -6316,7 +6316,7 @@
         }
     },
     {
-        "entityid": 74,
+        "entityid": 72,
         "general": {
             "name": "Floor",
             "tagid": 4,
@@ -6401,6 +6401,523 @@
         },
         "prefab": {
             "prefab": "Floor"
+        }
+    },
+    {
+        "entityid": 73,
+        "general": {
+            "name": "NewObject",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 50.0,
+                "y": 50.0,
+                "z": 50.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 46.637542724609375,
+                "y": 10.278325080871582,
+                "z": -25.249183654785156
+            }
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3124,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Enemy1_Base Color.ctexture",
+                " ",
+                " ",
+                " ",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/Enemy1_Attack.geom",
+            "texturerefid": [
+                4443,
+                0,
+                0,
+                0,
+                0
+            ]
+        }
+    },
+    {
+        "entityid": 74,
+        "general": {
+            "name": "bullet",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 39.98199462890625,
+                "y": -0.0,
+                "z": 2.443775177001953
+            },
+            "translate": {
+                "x": 38.76375198364258,
+                "y": 5.845034122467041,
+                "z": 34.47640609741211
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 1,
+            "velocity": {
+                "x": 0.9901371002197266,
+                "y": -0.08541679382324219,
+                "z": 0.11106109619140625
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": false,
+                "z": false
+            },
+            "gravity": false
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 2285,
+            "instancecolor": {
+                "x": 0.95652174949646,
+                "y": 1.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Cube_Texture_White.ctexture",
+                " ",
+                " ",
+                " ",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/cube.geom",
+            "texturerefid": [
+                4706,
+                0,
+                0,
+                0,
+                0
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": true
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/Bullet.lua",
+                    "variables": [
+                        {
+                            "key": "movement",
+                            "val": {
+                                "type": -655306154,
+                                "value": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0
+                                }
+                            }
+                        },
+                        {
+                            "key": "viewVec",
+                            "val": {
+                                "type": -655306154,
+                                "value": {
+                                    "x": 0.0,
+                                    "y": 1.0,
+                                    "z": 0.0
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        "prefab": {
+            "prefab": "bullet"
+        }
+    },
+    {
+        "entityid": 75,
+        "general": {
+            "name": "bullet",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 31.869964599609375,
+                "y": 9.313225746154785e-10,
+                "z": 2.5853569507598877
+            },
+            "translate": {
+                "x": 37.918067932128906,
+                "y": 5.883665561676025,
+                "z": 34.2276725769043
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 1,
+            "velocity": {
+                "x": 0.991943359375,
+                "y": -0.09063243865966797,
+                "z": 0.08852767944335938
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": false,
+                "z": false
+            },
+            "gravity": false
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 2285,
+            "instancecolor": {
+                "x": 0.95652174949646,
+                "y": 1.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Cube_Texture_White.ctexture",
+                " ",
+                " ",
+                " ",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/cube.geom",
+            "texturerefid": [
+                4706,
+                0,
+                0,
+                0,
+                0
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": true
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/Bullet.lua",
+                    "variables": [
+                        {
+                            "key": "movement",
+                            "val": {
+                                "type": -655306154,
+                                "value": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0
+                                }
+                            }
+                        },
+                        {
+                            "key": "viewVec",
+                            "val": {
+                                "type": -655306154,
+                                "value": {
+                                    "x": 0.0,
+                                    "y": 1.0,
+                                    "z": 0.0
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        "prefab": {
+            "prefab": "bullet"
+        }
+    },
+    {
+        "entityid": 76,
+        "general": {
+            "name": "bullet",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": -254.75372314453125,
+                "y": -0.0,
+                "z": 3.1415927410125732
+            },
+            "translate": {
+                "x": 61.76622009277344,
+                "y": 6.148248195648193,
+                "z": 38.853981018066406
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 1,
+            "velocity": {
+                "x": 0.6857566833496094,
+                "y": -0.17020940780639648,
+                "z": -0.7076492309570313
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": false,
+                "z": false
+            },
+            "gravity": false
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 2285,
+            "instancecolor": {
+                "x": 0.95652174949646,
+                "y": 1.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Cube_Texture_White.ctexture",
+                " ",
+                " ",
+                " ",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/cube.geom",
+            "texturerefid": [
+                4706,
+                0,
+                0,
+                0,
+                0
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": true
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/Bullet.lua",
+                    "variables": [
+                        {
+                            "key": "movement",
+                            "val": {
+                                "type": -655306154,
+                                "value": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0
+                                }
+                            }
+                        },
+                        {
+                            "key": "viewVec",
+                            "val": {
+                                "type": -655306154,
+                                "value": {
+                                    "x": 0.0,
+                                    "y": 1.0,
+                                    "z": 0.0
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        "prefab": {
+            "prefab": "bullet"
+        }
+    },
+    {
+        "entityid": 77,
+        "general": {
+            "name": "bullet",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 44.210357666015625,
+                "y": -0.0,
+                "z": 3.1415927410125732
+            },
+            "translate": {
+                "x": 88.06573486328125,
+                "y": 6.492452144622803,
+                "z": 40.94279098510742
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 1,
+            "velocity": {
+                "x": 0.9859542846679688,
+                "y": -0.11320304870605469,
+                "z": 0.12280654907226563
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": false,
+                "z": false
+            },
+            "gravity": false
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 2285,
+            "instancecolor": {
+                "x": 0.95652174949646,
+                "y": 1.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Cube_Texture_White.ctexture",
+                " ",
+                " ",
+                " ",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/cube.geom",
+            "texturerefid": [
+                4706,
+                0,
+                0,
+                0,
+                0
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": true
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/Bullet.lua",
+                    "variables": [
+                        {
+                            "key": "movement",
+                            "val": {
+                                "type": -655306154,
+                                "value": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0
+                                }
+                            }
+                        },
+                        {
+                            "key": "viewVec",
+                            "val": {
+                                "type": -655306154,
+                                "value": {
+                                    "x": 0.0,
+                                    "y": 1.0,
+                                    "z": 0.0
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        "prefab": {
+            "prefab": "bullet"
         }
     }
 ]
