@@ -57,7 +57,10 @@ void MenuPanel::update()
                 for(int i = 0; i < systemManager->mGameStateSystem->mCurrentGameState.mScenes.size(); ++i)
                     systemManager->mGameStateSystem->mCurrentGameState.mScenes[i].Save();
             }
+            if (ImGui::MenuItem(ICON_FA_FILE_ARROW_DOWN " Change GameState"))
+            {
 
+            }
 
             ImGui::EndMenu();
         }
