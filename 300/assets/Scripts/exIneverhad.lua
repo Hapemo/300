@@ -3,7 +3,7 @@ function Alive()
 end
 
 function Update()
-    
+    print("Attched")
 end
 
 function Dead()
