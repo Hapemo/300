@@ -1,3 +1,4 @@
+vec2 = Vec2.new()
 function Alive()
 end
 
@@ -10,6 +11,10 @@ function Update()
     elseif (inputMapSys:GetKeyDown(Key.KEY_SPACE)) then
         print ("space key down")
     end
+
+    vec2 = Input.CursorPos();
+    print(vec2.x)
+    print(vec2.y)
 end
 
 function Dead()

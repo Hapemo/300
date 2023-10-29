@@ -242,7 +242,8 @@ void LuaInput()
     systemManager->mScriptingSystem->luaState.new_usertype<Input>(
         "Input", sol::constructors<>(),
         "CheckKey", &Input::CheckKey,
-        "GetScroll", &Input::GetScroll
+        "GetScroll", &Input::GetScroll,
+        "CursorPos", &Input::CursorPos
     );
 }
 

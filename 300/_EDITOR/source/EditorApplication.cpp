@@ -64,7 +64,7 @@ void EditorApplication::SystemInit()
 {
     systemManager->Init(true, &mWindow);
     FPSManager::Init();
-    Input::Init();
+    Input::Init(true);
     // gfx init
 
     mMaineditor.UIinit(mWindow.GetHandle());

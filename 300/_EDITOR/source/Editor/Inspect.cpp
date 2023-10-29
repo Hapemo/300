@@ -505,6 +505,7 @@ void Scripts::Inspect(entt::entity entityID) {
 					{
 						Script script;
 						script.scriptFile = dataScript;
+						std::cout << script.scriptFile << std::endl;
 						script.env = { systemManager->mScriptingSystem->luaState, sol::create, systemManager->mScriptingSystem->luaState.globals() };
 
 						script.Load(entityID);
@@ -573,6 +574,11 @@ void Scripts::Inspect(entt::entity entityID) {
 				output << line << std::endl;
 			}
 			input.close();
+			Script script;
+			script.scriptFile = ss.str();
+			script.env = { systemManager->mScriptingSystem->luaState, sol::create, systemManager->mScriptingSystem->luaState.globals() };
+			script.Load(Hierarchy::selectedId);
+			scriptsContainer.push_back(script);
 			newScript = " ";
 			ImGui::InputText(".lua", &newScript);
 		}

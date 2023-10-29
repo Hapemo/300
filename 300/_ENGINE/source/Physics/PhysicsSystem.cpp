@@ -137,6 +137,7 @@ void PhysicsSystem::CreateRigidBody(Entity e)
 
 	if (e.HasComponent<CapsuleCollider>())
 	{
+		actor->setGlobalPose(PxTransform(Convert(xform.mTranslate + childOffset)));
 		PxShape* shape{};
 		CapsuleCollider cap = e.GetComponent<CapsuleCollider>();
 		CreateAndAttachShape(actor,

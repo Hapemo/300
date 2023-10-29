@@ -115,12 +115,20 @@ private:
   static GLFWcursor* mCursor;
   static double mScrollTotal;
   static double mScrollOffset;
-  
+  static bool mIsEditor;
+
+
+
+
 public:
+
+	static glm::vec2 mosposEditor;
+	
+
   /*!*****************************************************************************
   Initialises the Input system
   *******************************************************************************/
-  static void Init();
+  static void Init(bool isEditor);
 
   //-------------------------------------------------------------
   // Keyboard controls
@@ -153,6 +161,10 @@ public:
   - Position of mouse cursor
   *******************************************************************************/
   static glm::vec2 CursorPos();
+
+
+
+
 
   static void scroll_callback(GLFWwindow* _window, double _xoffset, double _yoffset);
   static double GetScroll();

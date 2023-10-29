@@ -72,6 +72,7 @@ void SystemManager::Reset()
 	mGameStateSystem.get()->Unload();
 	mGameStateSystem.get()->Init();
 	mPhysicsSystem.get()->Init();
+	mGraphicsSystem.get()->Init();
 	//mScriptingSystem.get()->ScriptReload();
 	mIsPlay = false;
 }
