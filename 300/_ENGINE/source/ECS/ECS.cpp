@@ -193,7 +193,7 @@ void ECS::NewPrefab(Entity e)
 	mPrefabs[name].push_back(e);
 }
 
-Entity ECS::NewEntityFromPrefab(std::string prefabName)
+Entity ECS::NewEntityFromPrefab(std::string prefabName, const glm::vec3& pos)
 {
 	// void ObjectFactory::DeserializeScene(const std::string& filename)
 	// creation of new entity done inside deserializescene function
@@ -204,6 +204,7 @@ Entity ECS::NewEntityFromPrefab(std::string prefabName)
 	//MeshRenderer temp = e.GetComponent<MeshRenderer>();
 	PASSERT(static_cast<uint32_t>(e.id) != 0);
 	Scripts& scripts = e.GetComponent<Scripts>();
+	e.GetComponent<Transform>().mTranslate = pos;
 	for (auto& elem : scripts.scriptsContainer)
 	{
 		elem.Load(e.id);
