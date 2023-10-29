@@ -84,6 +84,8 @@ public:
 	*******************************************************************************/
 	void Exit();
 
+	bool isSystemPaused() {return !mIsPlay; }
+
 	void DeleteEntity(Entity e);
 	PhysicsSystem *GetPhysicsPointer();
 	ScriptingSystem* GetScriptingPointer();
