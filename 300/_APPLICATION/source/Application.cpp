@@ -9,7 +9,7 @@ Main application that gets called in the main loop. It handles the creation and
 start up of window and game system, also runs their update functions.
 *******************************************************************************/
 
-#define _GAMEPLAY
+
 
 #include "Application.h"
 #include "FPSManager.h"
@@ -54,6 +54,8 @@ void Application::StartUp()
 
 void Application::SystemInit()
 {
+    Input::mIsEditor = false;
+
 
 #pragma region AudioComponent Test
     Entity entAudio = systemManager->ecs->NewEntity();
