@@ -11,6 +11,7 @@
 #include "Audio/AudioSource.h"
 #include "AI/AIManager.h"
 #include "Graphics/Camera_Input.h"
+#include "FPSManager.h"
 
 void LuaComponentContainer()
 {

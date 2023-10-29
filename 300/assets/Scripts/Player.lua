@@ -5,40 +5,70 @@ forward = Vec3.new()
 back = Vec3.new()
 left = Vec3.new()
 right = Vec3.new()
-speed = 10
+mul = 20.0
+floorCount = 0
+totaltime = 0.0
+isDashing = false;
 
 function Alive()
     gameStateSys = systemManager:mGameStateSystem();
     inputMapSys = systemManager:mInputActionSystem();
     physicsSys = systemManager:mPhysicsSystem();
     cameraEntity = Helper.GetScriptEntity(script_entity.id)
+    totaltime = 3.0
+
 end
 
 function Update()
+    totaltime = totaltime + 0.016;
     Camera_Scripting.RotateCameraView(cameraEntity, Input.CursorPos())
     viewVec = Camera_Scripting.GetDirection(cameraEntity)
     viewVec.y = 0;
     viewVec = Helper.Normalize(viewVec)
+
     movement.x = 0;
-    movement.y = cameraEntity:GetRigidBody().mVelocity.y;
+    movement.y = cameraEntity:GetRigidBody().mVelocity.y
     movement.z = 0;
 
-    if (inputMapSys:GetButton("up")) then
-        movement.x = movement.x + viewVec.x * speed;
-        movement.z = movement.z + viewVec.z * speed;
+    if (isDashing) then
+        if (totaltime > 0.1) then
+            isDashing = false
+            totaltime = 0
+        else
+            movement.x = movement.x + (viewVec.x * 300.0)
+            movement.z = movement.z + (viewVec.z * 300.0);
+        end
+    else 
+        if (inputMapSys:GetButtonDown("Dash")) then
+            if (totaltime > 3.0) then
+                totaltime = 0
+                isDashing = true
+            end
+        else
+            if (inputMapSys:GetButton("up")) then
+                movement.x = movement.x + (viewVec.x * mul);
+                movement.z = movement.z + (viewVec.z * mul);
+            end
+            if (inputMapSys:GetButton("down")) then
+                movement.x = movement.x - (viewVec.x * mul);
+                movement.z = movement.z - (viewVec.z * mul);
+            end
+            if (inputMapSys:GetButton("left")) then
+                movement.x = movement.x + (viewVec.z * mul);
+                movement.z = movement.z - (viewVec.x * mul);
+            end
+            if (inputMapSys:GetButton("right")) then
+                movement.x = movement.x - viewVec.z * mul;
+                movement.z = movement.z + viewVec.x * mul;
+            end
+            if (floorCount > 0) then
+                if (inputMapSys:GetButtonDown("Jump")) then
+                    movement.y = movement.y + 50.0;
+                end
+            end
+        end
     end
-    if (inputMapSys:GetButton("down")) then
-        movement.x = movement.x - viewVec.x * speed;
-        movement.z = movement.z - viewVec.z * speed;
-    end
-    if (inputMapSys:GetButton("left")) then
-        movement.x = movement.x + viewVec.z * speed;
-        movement.z = movement.z - viewVec.x * speed;
-    end
-    if (inputMapSys:GetButton("right")) then
-        movement.x = movement.x - viewVec.z * speed;
-        movement.z = movement.z + viewVec.x * speed;
-    end
+
     physicsSys:SetVelocity(cameraEntity, movement)
 
 end
@@ -48,10 +78,19 @@ function Dead()
 end
 
 function OnTriggerEnter(Entity)
-    
+    generalComponent = Entity:GetGeneral()
+    tagid = generalComponent.tagid
+    if (tagid == 3) then
+        floorCount = floorCount + 1;
+    end
 end
 
 function OnTriggerExit(Entity)
+    generalComponent = Entity:GetGeneral()
+    tagid = generalComponent.tagid
+    if (tagid == 3) then
+        floorCount = floorCount - 1;
+    end
 end
 
 function OnContactEnter(Entity)

@@ -61,12 +61,12 @@ void ContactCallback::onTrigger(PxTriggerPair* pairs, PxU32 count)
 		std::vector<uint32_t>& triggeredEntities = PhysicsSystem::mTriggerCollisions[static_cast<uint32_t>(triggerEntity.id)];
 		uint32_t otherID = static_cast<uint32_t>(otherEntity.id);
 
-		if (pairs->status & PxPairFlag::eNOTIFY_TOUCH_FOUND)
+		if (current.status & PxPairFlag::eNOTIFY_TOUCH_FOUND)
 		{
 			triggerEntity.GetComponent<Scripts>().RunFunctionForAllScripts("OnTriggerEnter", otherEntity);
 			triggeredEntities.push_back(otherID);
 		}
-		else if (pairs->status & physx::PxPairFlag::eNOTIFY_TOUCH_LOST)
+		else if (current.status & physx::PxPairFlag::eNOTIFY_TOUCH_LOST)
 		{
 			auto itr = std::find(triggeredEntities.begin(), triggeredEntities.end(), otherID);
 			if (itr != triggeredEntities.end())
