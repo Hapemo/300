@@ -19,7 +19,9 @@
 #include "Debug/EnginePerformance.h"
 #include "GameState/GameStateManager.h"
 #include "Input/InputMapSystem.h"
+
 #include "cstdlib"
+
 /***************************************************************************/
 /*!
 \brief
@@ -134,7 +136,7 @@ void GraphicsSystem::Update(float dt)
 		if (meshRenderer.mMeshRef.getdata(systemManager->mResourceTySystem->m_ResourceInstance) == nullptr)
 			continue;
 		
-
+		
 		// gives me the mesh
 		void *tt = meshRenderer.mMeshRef.getdata(systemManager->mResourceTySystem->m_ResourceInstance);
 		GFX::Mesh &meshinst = *reinterpret_cast<GFX::Mesh *>(tt);
@@ -189,6 +191,15 @@ void GraphicsSystem::Update(float dt)
 			m_Renderer.AddCapsule(m_EditorCamera.position(), first, second, cap.mRadius, glm::vec4(0.f, 1.f, 0.f, 1.f));
 		}
 
+		if (m_DebugDrawing)
+		{
+			// Draw the axes
+			static const vec3 origin{-180.f, -100.f, 250.f};
+			m_Renderer.AddLine(origin, origin + vec3{ 100.f, 0.f, 0.f }, { 1.f, 0.f, 0.f, 1.f });
+			m_Renderer.AddLine(origin, origin + vec3{ 0.f, 100.f, 0.f }, { 0.f, 1.f, 0.f, 1.f });
+			m_Renderer.AddLine(origin, origin + vec3{ 0.f, 0.f, 100.f }, { 0.f, 0.f, 1.f, 1.f });
+		}
+
 		// Update the animation
 		if (inst.HasComponent<Animator>() && _ENABLE_ANIMATIONS && systemManager->mGraphicsSystem->m_EnableGlobalAnimations)
 		{
@@ -229,8 +240,6 @@ void GraphicsSystem::Update(float dt)
 				return -1;
 
 			return static_cast<GFX::Texture*>(meshrenderer.mTextureRef[static_cast<int>(type)].data)->ID();
-
-
 		};
 
 

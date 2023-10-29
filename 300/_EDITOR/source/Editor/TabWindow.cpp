@@ -38,12 +38,12 @@ void TabWindow::update()
 	ImGui::Text("Editor Camera");
 
 	vec3 editorcampos = editorcam.mPosition;
-	ImGui::TextColored({ 0.8f, 0.9f, 0.9f, 1.f }, "Editor Camera Position: %0.2f, 0.2f, 0.2f", editorcampos.x, editorcampos.y, editorcampos.z);
+	ImGui::TextColored({ 0.8f, 0.9f, 0.9f, 1.f }, "Editor Camera Position: %0.2f, %0.2f, %0.2f", editorcampos.x, editorcampos.y, editorcampos.z);
 
 	ImGui::Separator();
 	
 	vec3 editorcamdir = editorcam.direction();
-	ImGui::TextColored({ 0.8f, 0.9f, 0.9f, 1.f }, "Editor Camera Direction: %0.2f, 0.2f, 0.2f", editorcamdir.x, editorcamdir.y, editorcamdir.z);
+	ImGui::TextColored({ 0.8f, 0.9f, 0.9f, 1.f }, "Editor Camera Direction: %0.2f, %0.2f, %0.2f", editorcamdir.x, editorcamdir.y, editorcamdir.z);
 
 	ImGui::Separator();
 	ImGui::Text("Camera Speed");
