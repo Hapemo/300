@@ -39,7 +39,8 @@ void GameState::AddScene(std::string const& _name) { // filesystem
 		static int newSceneCount = 1;
 		latestScene.mName = "New Scene " + std::to_string(newSceneCount++);  //cannot have same GS name
 		//LOG_CUSTOM("GAMESTATE", "Adding NEW scene to gamestate: " + mName);
-	} else {
+	} 
+	else {
 		std::string newName{};
 		int counter = 0;
 		if (std::find_if(mScenes.begin(), mScenes.end(), [_name](Scene& scene) -> bool { return scene.mName == _name; }) != mScenes.end()) {
