@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 3145729,
+        "entityid": 1,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -51,6 +51,14 @@
             "halfheight": 2.0,
             "istrigger": false
         },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/Player.lua",
+                    "variables": []
+                }
+            ]
+        },
         "camera": {
             "positon": {
                 "x": 30.0,
@@ -63,15 +71,15 @@
                 "z": 164.0
             },
             "size": {
-                "x": 1078,
-                "y": 625
+                "x": 539,
+                "y": 620
             },
             "near": 0.10000000149011612,
             "far": 900.0
         }
     },
     {
-        "entityid": 3145730,
+        "entityid": 2,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -159,7 +167,7 @@
         }
     },
     {
-        "entityid": 3145731,
+        "entityid": 3,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -247,7 +255,7 @@
         }
     },
     {
-        "entityid": 3145732,
+        "entityid": 4,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -335,7 +343,7 @@
         }
     },
     {
-        "entityid": 3145733,
+        "entityid": 5,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -423,7 +431,7 @@
         }
     },
     {
-        "entityid": 3145734,
+        "entityid": 6,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -511,7 +519,7 @@
         }
     },
     {
-        "entityid": 3145735,
+        "entityid": 7,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -599,7 +607,7 @@
         }
     },
     {
-        "entityid": 3145736,
+        "entityid": 8,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -687,7 +695,7 @@
         }
     },
     {
-        "entityid": 3145737,
+        "entityid": 9,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -775,7 +783,7 @@
         }
     },
     {
-        "entityid": 3145738,
+        "entityid": 10,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -863,7 +871,7 @@
         }
     },
     {
-        "entityid": 3145739,
+        "entityid": 11,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -951,7 +959,7 @@
         }
     },
     {
-        "entityid": 3145740,
+        "entityid": 12,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -1039,7 +1047,7 @@
         }
     },
     {
-        "entityid": 3145741,
+        "entityid": 13,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -1127,7 +1135,7 @@
         }
     },
     {
-        "entityid": 3145742,
+        "entityid": 14,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -1215,7 +1223,7 @@
         }
     },
     {
-        "entityid": 3145743,
+        "entityid": 15,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -1303,7 +1311,7 @@
         }
     },
     {
-        "entityid": 3145744,
+        "entityid": 16,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -1391,7 +1399,7 @@
         }
     },
     {
-        "entityid": 3145745,
+        "entityid": 17,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -1479,7 +1487,7 @@
         }
     },
     {
-        "entityid": 3145746,
+        "entityid": 18,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -1567,7 +1575,7 @@
         }
     },
     {
-        "entityid": 3145747,
+        "entityid": 19,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -1655,7 +1663,7 @@
         }
     },
     {
-        "entityid": 3145748,
+        "entityid": 20,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -1743,7 +1751,7 @@
         }
     },
     {
-        "entityid": 3145749,
+        "entityid": 21,
         "general": {
             "name": "Light",
             "tagid": 2,
@@ -1783,7 +1791,7 @@
         }
     },
     {
-        "entityid": 3145750,
+        "entityid": 22,
         "general": {
             "name": "Light",
             "tagid": 2,
