@@ -57,6 +57,11 @@ void GameStateManager::UpdateNextGSMState() {
 		break;
 	case E_GSMSTATE::CHANGING:
 		mCurrentGameState.Unload();
+		std::ifstream file{ ConfigManager::GetValue("GameStatePath") + mNextGSName + ".gs" };
+		if (!file.is_open()) {
+			PERROR("Unable to open gamestate file %s, please restart the application", mNextGSName.c_str());
+			break;
+		}
 		mCurrentGameState.Load(mNextGSName);
 		mCurrentGameState.Init();
 		break;
