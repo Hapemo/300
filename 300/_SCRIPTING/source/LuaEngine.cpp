@@ -375,10 +375,10 @@ void LuaGameState()
 
 void LuaAIManager()
 {
-    //systemManager->mScriptingSystem->luaState.new_usertype<AIManager>(
-    //    "mAISystem", sol::constructors<>(),
-    //    "SetPredictiveVelocity", &AIManager::SetPredictiveVelocity,
-    //    "PredictiveShootPlayer", &AIManager::PredictiveShootPlayer,
-    //    "GetDirection", &AIManager::GetDirection
-    //    );
+    systemManager->mScriptingSystem->luaState.new_usertype<AIManager>(
+        "mAISystem", sol::constructors<>(),
+        "SetPredictiveVelocity", &AIManager::SetPredictiveVelocity,
+        "PredictiveShootPlayer", &AIManager::PredictiveShootPlayer,
+        "GetDirection", &AIManager::GetDirection
+        );
 }

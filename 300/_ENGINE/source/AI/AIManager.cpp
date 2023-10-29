@@ -189,11 +189,10 @@ glm::vec3 AIManager::CalcAirAIDir(Entity _e) {
 
 	// If reached the player, return nothing
 	if (DistanceInBetween <= _eSetting.mStayAway) {
-		std::cout << "Reached player\n";
 		return glm::vec3();
 	}
 	// if AI is not above the target yet, gain height first, fly to mStayAway distance away.
-	if (_eTrans.mTranslate.y <= _eSetting.mStayAway + _tgtTrans.mTranslate.y) return glm::vec3(0, 1, 0);
+	if (_eTrans.mTranslate.y <= _eSetting.mStayAway + _tgtTrans.mTranslate.y + _tgtTrans.mScale.y/2.f) return glm::vec3(0, 1, 0);
 	
 #if 0
 	std::cout << "Mid point to mid point: " << glm::length(_eTrans.mTranslate - _tgtTrans.mTranslate) << '\n';
@@ -202,7 +201,7 @@ glm::vec3 AIManager::CalcAirAIDir(Entity _e) {
 #endif
 
 	// When near the target's head, like 1.5x the stay away distance, move directly to the target until stay away distance
-	if (DistanceInBetween > (_eSetting.mStayAway * 1.5f)) {
+	if (DistanceInBetween > (_eSetting.mStayAway * 2.f)) {
 		// Move directly to the target's top
 		glm::vec3 aboveTgtPos = _tgtTrans.mTranslate + glm::vec3(0, _eSetting.mStayAway, 0);
 
@@ -235,7 +234,9 @@ void AIManager::SpreadOut(Entity _e, glm::vec3& dir) {
 	if (setting.mSpreadOut > 100.f) setting.mSpreadOut = 100.f;
 	else if (setting.mSpreadOut < 0.f) setting.mSpreadOut = 0.f;
 	// Add deviation to direction with respect to spreadout ratio
-	dir = glm::normalize(dir*(100 - setting.mSpreadOut) + allDeviatedDir * setting.mSpreadOut);
+	glm::vec3 tempVec = dir*(100 - setting.mSpreadOut) + allDeviatedDir * setting.mSpreadOut;
+	if (glm::length(tempVec) != 0) dir = glm::normalize(tempVec);
+	else dir = tempVec;
 }
 
 
