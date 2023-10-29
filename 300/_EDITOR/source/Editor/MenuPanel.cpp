@@ -25,6 +25,7 @@ Contains main loop for the logic of MenuPanel.
 #include "ScriptingSystem.h"
 #include "KeybindWindow.h"
 #include "ShaderCompiler.h"
+#include "imgui_stdlib.h"
 
 /***************************************************************************/
 /*!
@@ -44,7 +45,7 @@ void MenuPanel::init() {
 /***************************************************************************/
 void MenuPanel::update() 
 {
-
+    static std::string nextGS{};
     if (ImGui::BeginMenuBar())
     {   
 
@@ -59,8 +60,35 @@ void MenuPanel::update()
             }
             if (ImGui::MenuItem(ICON_FA_FILE_ARROW_DOWN " Change GameState"))
             {
+            }
+            if (ImGui::IsItemClicked()) {
+                ImGui::OpenPopup("ChangeState");
 
             }
+
+            if (ImGui::BeginPopupModal("ChangeState", NULL, ImGuiWindowFlags_AlwaysAutoResize))
+            {
+                ImGui::Text("Name: ");
+                ImGui::InputText("##SceneName", &nextGS);
+                ImGui::Separator();
+
+                static bool dont_ask_me_next_time = false;
+                ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(0, 0));
+                ImGui::Checkbox("Don't ask me next time", &dont_ask_me_next_time);
+                ImGui::PopStyleVar();
+
+                if (ImGui::Button("OK", ImVec2(120, 0))) { 
+                    systemManager->mGameStateSystem->ChangeGameState(nextGS);
+                    nextGS = {};
+                    ImGui::CloseCurrentPopup(); }
+                ImGui::SetItemDefaultFocus();
+                ImGui::SameLine();
+                if (ImGui::Button("Cancel", ImVec2(120, 0))) { 
+                    nextGS = {};
+                    ImGui::CloseCurrentPopup(); }
+                ImGui::EndPopup();
+            }
+
 
             ImGui::EndMenu();
         }
