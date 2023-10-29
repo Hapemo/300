@@ -62,116 +62,141 @@ void AudioSystem::Init()
  /******************************************************************************/
 void AudioSystem::Update([[maybe_unused]] float dt)
 {
-	if (!pause_state)
+	auto audio_entities = systemManager->ecs->GetEntitiesWith<Audio>();
+
+	for (Entity audio : audio_entities)
 	{
-		auto audio_entities = systemManager->ecs->GetEntitiesWith<Audio>();
+		Audio& audio_component = audio.GetComponent<Audio>();
 
-		for (Entity audio : audio_entities)
+		if (pause_state) // was set to pause before resuming...
 		{
-			Audio& audio_component = audio.GetComponent<Audio>();
+			if (audio_component.mState == Audio::PAUSED)
+				audio_component.mNextActionState = Audio::RESUME;
+		}
 
-			// On Awake Play
-			if (audio_component.mPlayonAwake && (audio_component.mState != Audio::PLAYING) && (audio_component.mState != Audio::PAUSED) && (audio_component.mState != Audio::STOPPED))
+		// On Awake Play
+		if (audio_component.mPlayonAwake && (audio_component.mState != Audio::PLAYING) && (audio_component.mState != Audio::PAUSED) && (audio_component.mState != Audio::STOPPED))
+		{
+			audio_component.mNextActionState = Audio::SET_TO_PLAY;
+		}
+
+		// Test Cases - to test functionality (will remove)
+		TestCases(audio_component);
+
+		// Update Volume (every loop) - based on global volume also 
+		float global_modifier = 1.0f;
+		switch (audio_component.mAudioType)
+		{
+		case AUDIO_BGM:
+			global_modifier = bgm_global_vol;
+			break;
+		case AUDIO_SFX:
+			global_modifier = sfx_global_vol;
+			break;
+		}
+
+		UpdateVolume(audio_component.mChannelID, audio_component.mAudioType, audio_component.mVolume * global_modifier);
+
+		switch (audio_component.mNextActionState)
+		{
+		case Audio::SET_TO_PLAY:
+			if (FindSound(audio_component.mFileName) != nullptr) // Sound Exists ...
 			{
-				audio_component.mNextActionState = Audio::SET_TO_PLAY;
-			}
+				PINFO("AUDIO EXISTS");
+				PINFO("PLAYING AUDIO %s AT: %f", audio_component.mFileName,  audio_component.mVolume);
 
-			// Test Cases - to test functionality (will remove)
-			TestCases(audio_component);
-
-			// Update Volume (every loop) - based on global volume also 
-			float global_modifier = 1.0f;
-			switch (audio_component.mAudioType)
-			{
-			case AUDIO_BGM:
-				global_modifier = bgm_global_vol;
-				break;
-			case AUDIO_SFX:
-				global_modifier = sfx_global_vol;
-				break;
-			}
-
-			UpdateVolume(audio_component.mChannelID, audio_component.mAudioType, audio_component.mVolume * global_modifier);
-
-
-			switch (audio_component.mNextActionState)
-			{
-			case Audio::SET_TO_PLAY:
-				if (FindSound(audio_component.mFileName) != nullptr) // Sound Exists ...
+				unsigned int play_bool = PlaySound(audio_component.mFileName, audio_component.mAudioType, audio_component.mVolume);
+				if (play_bool)  // Plays the sound based on parameters
 				{
-					PINFO("AUDIO EXISTS");
-					PINFO("PLAYING AUDIO %s AT: %f", audio_component.mFileName,  audio_component.mVolume);
-
-					unsigned int play_bool = PlaySound(audio_component.mFileName, audio_component.mAudioType, audio_component.mVolume);
-					if (play_bool)  // Plays the sound based on parameters
-					{
-						audio_component.mState = Audio::PLAYING; // Update State 
-						audio_component.mChannelID = play_bool;
-						audio_component.mNextActionState = Audio::INACTIVE;
-					}
-					else
-						audio_component.mState = Audio::FAILED;
-				}
-
-				break;
-
-			case Audio::SET_TO_PAUSE:
-				if (PauseSound(audio_component.mChannelID, audio_component.mAudioType))
-				{
-					audio_component.mState = Audio::PAUSED;
+					audio_component.mState = Audio::PLAYING; // Update State 
+					audio_component.mChannelID = play_bool;
 					audio_component.mNextActionState = Audio::INACTIVE;
 				}
-				break;
-
-			case Audio::SET_UNPAUSE:
-				if (UnpauseSound(audio_component.mChannelID, audio_component.mAudioType))
-				{
-					audio_component.mState = Audio::PLAYING;
-					audio_component.mNextActionState = Audio::INACTIVE;
-				}
-
-			case Audio::SET_STOP:
-				if (StopSound(audio_component.mChannelID, audio_component.mAudioType))
-				{
-					audio_component.mState = Audio::STOPPED;
-					audio_component.mNextActionState = Audio::INACTIVE;
-				}
-
+				else
+					audio_component.mState = Audio::FAILED;
 			}
 
-			switch (audio_component.mState)
+			break;
+
+		case Audio::SET_TO_PAUSE:
+			if (PauseSound(audio_component.mChannelID, audio_component.mAudioType))
 			{
-			case Audio::INACTIVE:
-				break;
-
-			case Audio::PLAYING:
-				// Check if the current sound has finished playing...
-				if (!IsChannelPlaying(audio_component.mChannelID, audio_component.mAudioType))	// If finished playing...
-				{
-					audio_component.mState = Audio::FINISHED;
-				}
-				break;
-
-			case Audio::PAUSED:
-
-				break;
-			case Audio::STOPPED:
-				break;
-
-			case Audio::FINISHED:
-				if (audio_component.mIsLooping)
-				{
-					audio_component.mState = Audio::SET_TO_PLAY;
-				}
-				break;
-			case Audio::FAILED:
-				break;
-
+				audio_component.mState = Audio::PAUSED;
+				audio_component.mNextActionState = Audio::INACTIVE;
 			}
+			break;
+
+		case Audio::RESUME:
+			if (ResumeSound(audio_component.mChannelID, audio_component.mAudioType))
+			{
+				audio_component.mState = Audio::PLAYING;
+				audio_component.mNextActionState = Audio::INACTIVE;
+			}
+
+			else
+			{
+				audio_component.mState = Audio::FAILED;
+			}
+
+			break;
+
+		case Audio::SET_STOP:
+			if (StopSound(audio_component.mChannelID, audio_component.mAudioType))
+			{
+				audio_component.mState = Audio::STOPPED;
+				audio_component.mNextActionState = Audio::INACTIVE;
+			}
+
+		}
+
+		switch (audio_component.mState)
+		{
+		case Audio::INACTIVE:
+			break;
+
+		case Audio::PLAYING:
+			// Check if the current sound has finished playing...
+			if (!IsChannelPlaying(audio_component.mChannelID, audio_component.mAudioType))	// If finished playing...
+			{
+				audio_component.mState = Audio::FINISHED;
+			}
+			break;
+
+		case Audio::PAUSED:
+			
+			break;
+		case Audio::STOPPED:
+			break;
+
+		case Audio::FINISHED:
+			if (audio_component.mIsLooping)
+			{
+				audio_component.mState = Audio::SET_TO_PLAY;
+			}
+			break;
+		case Audio::FAILED:
+			break;
+
 		}
 	}
 }
 
+void AudioSystem::Pause()
+{
+	pause_state = true;  // toggle back in update() loop when game loop resumes.
+
+	auto audio_entities = systemManager->ecs->GetEntitiesWith<Audio>();
+
+	for (Entity audio : audio_entities)
+	{
+		Audio& audio_component = audio.GetComponent<Audio>();
+
+		audio_component.mState = Audio::PAUSED;
+
+	}
+
+	PauseAllSounds();
+}
 
 /******************************************************************************/
 /*!
@@ -383,7 +408,7 @@ bool AudioSystem::PauseSound(uid channel_id, AUDIOTYPE type)
 	- Finds an available channel and plays that audio.
  */
  /******************************************************************************/
-bool AudioSystem::UnpauseSound(uid channel_id, AUDIOTYPE type)
+bool AudioSystem::ResumeSound(uid channel_id, AUDIOTYPE type)
 {
 	for (auto& channel : mChannels[type])
 	{
@@ -469,7 +494,59 @@ void AudioSystem::SetAllBGMVolume(float volume)
 
 void AudioSystem::PauseAllSounds()
 {
-	pause_state = true;
+	// Need to pause every channel.
+	for (auto& channel_pair : mChannels[AUDIO_SFX])
+	{
+		FMOD::Sound* current_sound;
+		channel_pair.second->getCurrentSound(&current_sound);
+
+		if (current_sound)  // not empty..
+		{
+			bool playing = false;
+			channel_pair.second->setPaused(true);
+		}
+	}
+
+	for (auto& channel_pair : mChannels[AUDIO_BGM])
+	{
+		FMOD::Sound* current_sound;
+		channel_pair.second->getCurrentSound(&current_sound);
+
+		if (current_sound)  // not empty..
+		{
+			bool playing = false;
+			channel_pair.second->setPaused(true);
+		}
+	}
+}
+
+
+void AudioSystem::UnpauseAllSounds()
+{
+	// Need to pause every channel.
+	for (auto& channel_pair : mChannels[AUDIO_SFX])
+	{
+		FMOD::Sound* current_sound;
+		channel_pair.second->getCurrentSound(&current_sound);
+
+		if (current_sound)  // not empty..
+		{
+			bool playing = false;
+			channel_pair.second->setPaused(false);
+		}
+	}
+
+	for (auto& channel_pair : mChannels[AUDIO_BGM])
+	{
+		FMOD::Sound* current_sound;
+		channel_pair.second->getCurrentSound(&current_sound);
+
+		if (current_sound)  // not empty..
+		{
+			bool playing = false;
+			channel_pair.second->setPaused(false);
+		}
+	}
 }
 
 
@@ -497,6 +574,30 @@ bool AudioSystem::IsChannelPlaying(uid id, AUDIOTYPE type)
 
 	return false;
 
+}
+
+bool AudioSystem::IsChannelPaused(uid id, AUDIOTYPE type)
+{
+	std::vector<std::pair<uid, FMOD::Channel*>> sfx_or_bgm = mChannels[type];
+
+	for (auto& channel_pair : sfx_or_bgm)
+	{
+		if (channel_pair.first == id)
+		{
+			FMOD::Sound* current_sound;
+			channel_pair.second->getCurrentSound(&current_sound);
+
+			if (current_sound)  // not empty..
+			{
+				bool paused = false;
+				channel_pair.second->getPaused(&paused);
+
+				return paused;
+			}
+		}
+	}
+
+	return false;
 }
 
 /******************************************************************************/
@@ -541,7 +642,7 @@ void AudioSystem::TestCases(Audio& audio_component)
 	if (Input::CheckKey(PRESS, P))
 		audio_component.SetPause();
 	if (Input::CheckKey(PRESS, O))
-		audio_component.SetUnpause();
+		audio_component.SetResume();
 	if (Input::CheckKey(PRESS, I))
 		audio_component.SetStop();
 	if (Input::CheckKey(PRESS, U))
@@ -552,5 +653,6 @@ void AudioSystem::TestCases(Audio& audio_component)
 		SetAllBGMVolume(0.0f);
 	if (Input::CheckKey(PRESS, K))
 		SetAllBGMVolume(1.0f);
-
+	/*if (Input::CheckKey(PRESS, J))*/
+		
 }

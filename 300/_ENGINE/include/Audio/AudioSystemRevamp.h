@@ -32,6 +32,7 @@ public:
 public:
 	void Init();
 	void Update(float dt);
+	void Pause();
 	int  ErrCodeCheck(FMOD_RESULT result);																					// Debugging tool				
 
 	// Loading Sounds
@@ -39,16 +40,17 @@ public:
 	bool         LoadAudioFromDirectory(std::string directory_path);
 	FMOD::Sound* FindSound(std::string audio_name);
 
-	// Playback Functions (Used Internally)
+	// Playback Functions (Used Internally) - Update() Loop
 public:
 	unsigned int PlaySound(std::string audio_name, AUDIOTYPE type, float vol = 1.0f);	// Finds the next available in (specified sfx/bgm) channel and plays it in there. 
 	bool		 PauseSound(uid channel_id, AUDIOTYPE type);
-	bool		 UnpauseSound(uid channel_id, AUDIOTYPE type);
+	bool		 ResumeSound(uid channel_id, AUDIOTYPE type);
 	bool		 StopSound(uid channel_id, AUDIOTYPE type);
 	bool		 UpdateVolume(uid channel_id, AUDIOTYPE type, float volume);
 	void         SetAllSFXVolume(float volume);											// Built for Sound Settings
 	void		 SetAllBGMVolume(float volume);											// Built for Sound Settings
 	void		 PauseAllSounds();
+	void		 UnpauseAllSounds();
 
 
 	// Audio Fade Functions 
@@ -59,6 +61,7 @@ public:
 	// Channel Check (still playing or not)
 public:
 	bool         IsChannelPlaying(uid id, AUDIOTYPE type);
+	bool		 IsChannelPaused(uid id, AUDIOTYPE type);
 
 
 	// Data Members (Global Volume Multiplier)

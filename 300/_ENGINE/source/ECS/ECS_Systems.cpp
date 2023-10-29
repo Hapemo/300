@@ -80,7 +80,7 @@ void SystemManager::Pause()
 {
 	mIsPlay = false; 
 	mGraphicsSystem->PauseGlobalAnimation();
-	//mAudioSystem->Pause(); 
+	mAudioSystem->Pause(); 
 }
 
 void SystemManager::Play()
@@ -89,8 +89,6 @@ void SystemManager::Play()
 	mPhysicsSystem.get()->Init();
 	mGraphicsSystem->UnpauseGlobalAnimation();
 	mGameStateSystem->mCurrentGameState.Save();
-	//mAudioSystem.get()->PlayOnAwake();
-	//mAudioSystem.get()->system_paused = false;
 }
 
 void SystemManager::Update(float dt)

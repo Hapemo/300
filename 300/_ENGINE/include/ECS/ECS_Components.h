@@ -339,7 +339,7 @@ struct Audio : public Serializable
 		PLAYING,
 		SET_TO_PAUSE,
 		PAUSED,
-		SET_UNPAUSE,
+		RESUME,
 		SET_STOP,
 		STOPPED,
 		FINISHED,		    // mIsLooping
@@ -385,9 +385,9 @@ struct Audio : public Serializable
 		mNextActionState = STATE::SET_TO_PAUSE;
 	}
 
-	void SetUnpause()
+	void SetResume()
 	{
-		mNextActionState = STATE::SET_UNPAUSE;
+		mNextActionState = STATE::RESUME;
 	}
 	
 	void SetStop()
