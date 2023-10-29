@@ -18,7 +18,7 @@
 #include <Graphics/Camera_Input.h>
 #include "Debug/EnginePerformance.h"
 #include "GameState/GameStateManager.h"
-
+#include "Input/InputMapSystem.h"
 #include "cstdlib"
 /***************************************************************************/
 /*!
@@ -95,10 +95,13 @@ void GraphicsSystem::Init()
 void GraphicsSystem::Update(float dt)
 {
 	// Check window size for any updates
+
+	m_RightClickHeld = systemManager->mInputActionSystem->GetKey(M_BUTTON_R);
+
 	CheckWindowSize();
 
 	// update the camera's transformations, and its input
-	if (m_EditorMode)
+	if (m_EditorMode && m_RightClickHeld)
 	{
 		// update both the editor and game camera
 		UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_ALL, dt);

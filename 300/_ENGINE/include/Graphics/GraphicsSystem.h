@@ -264,8 +264,8 @@ public:
 	bool	m_EnableGlobalAnimations{ 1 };
 	bool	m_HasLight{ false };
 	bool    m_EnableScroll{ false };
-
-
+	bool	m_EditorSceneHovered{ false };
+	bool    m_RightClickHeld	{ false };
 	// -- Stats --
 	int		m_LightCount{};
 
