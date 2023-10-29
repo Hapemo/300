@@ -26,6 +26,9 @@ function Update()
     --vfxComponent = entity:GetVFX();
     -- Change entity name to enemy
     generalComponent.name = "Enemy"
+    subtag = generalComponent.subtag
+    generalComponent.subtag = SUBTAG.BACKGROUND
+    print(subtag)
     --[[ Get entity Tag
     tag = generalComponent:GetTag();
     print(tag) 
