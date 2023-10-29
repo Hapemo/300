@@ -8,10 +8,10 @@
             "y": 1.0,
             "z": 1.0
         },
-        "bloom_exposure": 0.44999998807907104,
-        "bloom_offset": 1.0700000524520874,
-        "bloom_sampleweight": 1.0260000228881836,
-        "chroma_strength": 0.017000000923871994,
+        "bloom_exposure": 0.5299999713897705,
+        "bloom_offset": 1.309999942779541,
+        "bloom_sampleweight": 0.9490000009536743,
+        "chroma_strength": 0.020999999716877937,
         "bloom_enable": true,
         "chroma_enable": true
     }
