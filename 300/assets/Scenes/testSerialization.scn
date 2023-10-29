@@ -1,6 +1,133 @@
 [
     {
-        "entityid": 1,
+        "entityid": 25,
+        "general": {
+            "name": "bullet2",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": -5.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 8.0,
+                "y": 14.0,
+                "z": 6.0
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 1,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": false,
+                "z": false
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 2285,
+            "instancecolor": {
+                "x": 0.95652174949646,
+                "y": 1.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Cube_Texture_White.ctexture",
+                " ",
+                " ",
+                " ",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/cube.geom",
+            "texturerefid": [
+                4706,
+                0,
+                0,
+                0,
+                0
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": true
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/Bullet.lua",
+                    "variables": [
+                        {
+                            "key": "movement",
+                            "val": {
+                                "type": -655306154,
+                                "value": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0
+                                }
+                            }
+                        },
+                        {
+                            "key": "multiplier",
+                            "val": {
+                                "type": -655306154,
+                                "value": {
+                                    "x": 0.4000000059604645,
+                                    "y": 0.4000000059604645,
+                                    "z": 0.4000000059604645
+                                }
+                            }
+                        },
+                        {
+                            "key": "viewVec",
+                            "val": {
+                                "type": -655306154,
+                                "value": {
+                                    "x": 0.0,
+                                    "y": 1.0,
+                                    "z": 0.0
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        "prefab": {
+            "prefab": "bullet"
+        }
+    },
+    {
+        "entityid": 8388609,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -20,9 +147,9 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 30.543455123901367,
+                "x": 31.172670364379883,
                 "y": 6.502918243408203,
-                "z": 33.16360855102539
+                "z": 33.62534713745117
             }
         },
         "rigidbody": {
@@ -32,7 +159,7 @@
             "velocity": {
                 "x": -0.0000052731556934304535,
                 "y": -0.7007216811180115,
-                "z": -0.000010526877304073423
+                "z": -0.000010526986443437636
             },
             "rotationconstraints": {
                 "x": true,
@@ -77,13 +204,6 @@
                             }
                         },
                         {
-                            "key": "floorCount",
-                            "val": {
-                                "type": 694561268,
-                                "value": 0.0
-                            }
-                        },
-                        {
                             "key": "forward",
                             "val": {
                                 "type": -655306154,
@@ -92,13 +212,6 @@
                                     "y": 0.0,
                                     "z": 0.0
                                 }
-                            }
-                        },
-                        {
-                            "key": "isDashing",
-                            "val": {
-                                "type": -1129103353,
-                                "value": false
                             }
                         },
                         {
@@ -124,13 +237,6 @@
                             }
                         },
                         {
-                            "key": "mul",
-                            "val": {
-                                "type": 694561268,
-                                "value": 20.0
-                            }
-                        },
-                        {
                             "key": "right",
                             "val": {
                                 "type": -655306154,
@@ -142,10 +248,10 @@
                             }
                         },
                         {
-                            "key": "totaltime",
+                            "key": "speed",
                             "val": {
                                 "type": 694561268,
-                                "value": 0.0
+                                "value": 10.0
                             }
                         },
                         {
@@ -176,25 +282,25 @@
         },
         "camera": {
             "positon": {
-                "x": 30.543455123901367,
+                "x": 31.172670364379883,
                 "y": 6.502918243408203,
-                "z": 33.16360855102539
+                "z": 33.62534713745117
             },
             "target": {
-                "x": 30.543455123901367,
+                "x": 31.172670364379883,
                 "y": 6.502918243408203,
-                "z": 32.16360855102539
+                "z": 32.62534713745117
             },
             "size": {
-                "x": 1334,
-                "y": 538
+                "x": 842,
+                "y": 512
             },
             "near": 0.10000000149011612,
             "far": 900.0
         }
     },
     {
-        "entityid": 2,
+        "entityid": 8388610,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -282,7 +388,7 @@
         }
     },
     {
-        "entityid": 3,
+        "entityid": 8388611,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -370,7 +476,7 @@
         }
     },
     {
-        "entityid": 4,
+        "entityid": 8388612,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -458,7 +564,7 @@
         }
     },
     {
-        "entityid": 5,
+        "entityid": 8388613,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -546,7 +652,7 @@
         }
     },
     {
-        "entityid": 6,
+        "entityid": 8388614,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -634,7 +740,7 @@
         }
     },
     {
-        "entityid": 7,
+        "entityid": 8388615,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -722,7 +828,7 @@
         }
     },
     {
-        "entityid": 8,
+        "entityid": 8388616,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -810,7 +916,7 @@
         }
     },
     {
-        "entityid": 9,
+        "entityid": 8388617,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -894,7 +1000,41 @@
             "scriptscontainer": [
                 {
                     "scriptFile": "../assets/Scripts/Bullet.lua",
-                    "variables": []
+                    "variables": [
+                        {
+                            "key": "movement",
+                            "val": {
+                                "type": -655306154,
+                                "value": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0
+                                }
+                            }
+                        },
+                        {
+                            "key": "multiplier",
+                            "val": {
+                                "type": -655306154,
+                                "value": {
+                                    "x": 0.4000000059604645,
+                                    "y": 0.4000000059604645,
+                                    "z": 0.4000000059604645
+                                }
+                            }
+                        },
+                        {
+                            "key": "viewVec",
+                            "val": {
+                                "type": -655306154,
+                                "value": {
+                                    "x": 0.0,
+                                    "y": 1.0,
+                                    "z": 0.0
+                                }
+                            }
+                        }
+                    ]
                 }
             ]
         },
@@ -903,7 +1043,7 @@
         }
     },
     {
-        "entityid": 10,
+        "entityid": 8388618,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -991,7 +1131,7 @@
         }
     },
     {
-        "entityid": 11,
+        "entityid": 8388619,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -1079,7 +1219,7 @@
         }
     },
     {
-        "entityid": 12,
+        "entityid": 8388620,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -1167,7 +1307,7 @@
         }
     },
     {
-        "entityid": 13,
+        "entityid": 8388621,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -1255,7 +1395,7 @@
         }
     },
     {
-        "entityid": 14,
+        "entityid": 8388622,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -1343,7 +1483,7 @@
         }
     },
     {
-        "entityid": 15,
+        "entityid": 8388623,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -1431,7 +1571,7 @@
         }
     },
     {
-        "entityid": 16,
+        "entityid": 8388624,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -1519,7 +1659,7 @@
         }
     },
     {
-        "entityid": 17,
+        "entityid": 8388625,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -1607,7 +1747,7 @@
         }
     },
     {
-        "entityid": 18,
+        "entityid": 8388626,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -1695,7 +1835,7 @@
         }
     },
     {
-        "entityid": 19,
+        "entityid": 8388627,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -1783,7 +1923,7 @@
         }
     },
     {
-        "entityid": 20,
+        "entityid": 8388628,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -1871,7 +2011,7 @@
         }
     },
     {
-        "entityid": 21,
+        "entityid": 8388629,
         "general": {
             "name": "Light",
             "tagid": 2,
@@ -1911,7 +2051,7 @@
         }
     },
     {
-        "entityid": 22,
+        "entityid": 8388630,
         "general": {
             "name": "Light",
             "tagid": 2,
@@ -1954,7 +2094,7 @@
         }
     },
     {
-        "entityid": 23,
+        "entityid": 8388631,
         "general": {
             "name": "gun",
             "tagid": 0,
@@ -2007,7 +2147,7 @@
         }
     },
     {
-        "entityid": 24,
+        "entityid": 8388632,
         "general": {
             "name": "bullet",
             "tagid": 0,
@@ -2031,6 +2171,22 @@
                 "y": 10.797821998596191,
                 "z": 15.376813888549805
             }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 1,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": false,
+                "z": false
+            },
+            "gravity": true
         },
         "meshrenderer": {
             "vert": "../assets/shader_files/pointLight_vert.glsl",
@@ -2058,8 +2214,63 @@
                 0
             ]
         },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": true
+        },
         "scripts": {
-            "scriptscontainer": []
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/Bullet.lua",
+                    "variables": [
+                        {
+                            "key": "movement",
+                            "val": {
+                                "type": -655306154,
+                                "value": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0
+                                }
+                            }
+                        },
+                        {
+                            "key": "multiplier",
+                            "val": {
+                                "type": -655306154,
+                                "value": {
+                                    "x": 0.4000000059604645,
+                                    "y": 0.4000000059604645,
+                                    "z": 0.4000000059604645
+                                }
+                            }
+                        },
+                        {
+                            "key": "viewVec",
+                            "val": {
+                                "type": -655306154,
+                                "value": {
+                                    "x": 0.0,
+                                    "y": 1.0,
+                                    "z": 0.0
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        "prefab": {
+            "prefab": "bullet"
         }
     }
 ]

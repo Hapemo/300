@@ -1,6 +1,9 @@
 #include "pch.h"
 #include "ECS/ECS.h"
 #include "ECS/ECS_Components.h"
+#include "ECS/ECS_Systems.h"
+#include "Physics/PhysicsSystem.h"
+
 #include "ScriptingSystem.h"
 #include "Object/ObjectFactory.h"
 #include "GameState/GameStateManager.h"
@@ -209,6 +212,9 @@ Entity ECS::NewEntityFromPrefab(std::string prefabName, const glm::vec3& pos)
 	{
 		elem.Load(e.id);
 	}
+
+	if (e.HasComponent<RigidBody>())
+		systemManager->mPhysicsSystem->AddEntity(e);
 	return e;
 }
 
