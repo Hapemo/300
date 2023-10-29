@@ -1,6 +1,9 @@
 movement = Vec3.new()
 zeroVector = Vec3.new(0,0,0)
 viewVec = Vec3.new()
+viewVecCam = Vec3.new()
+rotationCam = Vec3.new()
+
 forward = Vec3.new()
 back = Vec3.new()
 left = Vec3.new()
@@ -25,9 +28,11 @@ end
 
 function Update()
     totaltime = totaltime + 0.016;
-    --positions = cameraEntity:GetTransform().mTranslate
+    positions = cameraEntity:GetTransform().mTranslate
     Camera_Scripting.RotateCameraView(cameraEntity, Input.CursorPos())
     viewVec = Camera_Scripting.GetDirection(cameraEntity)
+    viewVecCam = Camera_Scripting.GetDirection(cameraEntity)
+    rotationCam = Camera_Scripting.GetDirection(cameraEntity)
     viewVec.y = 0;
     viewVec = Helper.Normalize(viewVec)
 
@@ -86,6 +91,15 @@ function Update()
     
     if(inputMapSys:GetKeyDown(349)) then
         prefabEntity = systemManager.ecs:NewEntityFromPrefab("bullet", positions)
+        rotationCam.x = rotationCam.z *360
+        rotationCam.y = rotationCam.x *0
+        rotationCam.z = rotationCam.z *0
+        prefabEntity:GetTransform().mRotate = rotationCam    
+        viewVecCam.x = viewVecCam.x*1
+        viewVecCam.y=viewVecCam.y *1
+        viewVecCam.z=viewVecCam.z *1
+
+        physicsSys:SetVelocity(prefabEntity, viewVecCam)
     end
 
 

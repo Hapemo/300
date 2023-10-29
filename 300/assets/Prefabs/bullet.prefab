@@ -1,5 +1,5 @@
 {
-    "entityid": 6291458,
+    "entityid": 4194314,
     "general": {
         "name": "bullet",
         "tagid": 0,
@@ -38,7 +38,7 @@
             "y": false,
             "z": false
         },
-        "gravity": true
+        "gravity": false
     },
     "meshrenderer": {
         "vert": "../assets/shader_files/pointLight_vert.glsl",
