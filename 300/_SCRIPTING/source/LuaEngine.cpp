@@ -40,7 +40,8 @@ void LuaECS()
         "ecs", sol::constructors<>(),
         "NewEntity", &ECS::NewEntity,
         "NewEntityByScene", &ECS::NewEntityByScene,
-        "DeleteEntity", &ECS::DeleteEntity
+        "DeleteEntity", &ECS::DeleteEntity,
+        "NewEntityFromPrefab", &ECS::NewEntityFromPrefab
         //"GetEntitiesWithGeneral", &ECS::GetEntitiesWith<General>,
         //"GetEntitiesWithTransform", &ECS::GetEntitiesWith<Transform>,
         //"GetEntitiesWithRigidBody", &ECS::GetEntitiesWith<RigidBody>,

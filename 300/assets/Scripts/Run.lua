@@ -66,6 +66,7 @@ function Update()
                 gameStateSys = systemManager:mGameStateSystem();
                 gameStateSys:DeleteEntity(testEntity)
                 --gameStateSys:ChangeGameState("exit")
+                prefabEntity = systemManager.ecs:NewEntityFromPrefab("Floor", vec)
             end
             create = create + 1
         end
