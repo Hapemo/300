@@ -74,7 +74,8 @@ void Camera_Input::updateCameraInput(GFX::Camera& cam, const float& dt)
 	//!< Mouse Movement
 	{
 		// if the right mouse button is being pressed
-		if (Input::CheckKey(E_STATE::HOLD, E_KEY::M_BUTTON_R))
+		//if (Input::CheckKey(E_STATE::HOLD, E_KEY::M_BUTTON_R))
+		if (systemManager->mGraphicsSystem->m_RightClickHeld)
 		{
 			// if the cursor is moving relative to its old position
 			vec2 delta = Input::CursorPos() - cam.cursorPosition();

@@ -101,7 +101,7 @@ void GraphicsSystem::Update(float dt)
 	CheckWindowSize();
 
 	// update the camera's transformations, and its input
-	if (m_EditorMode && m_RightClickHeld)
+	if (m_EditorMode)
 	{
 		// update both the editor and game camera
 		UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_ALL, dt);
