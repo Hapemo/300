@@ -63,7 +63,6 @@ void MenuPanel::update()
             }
             if (ImGui::IsItemClicked()) {
                 ImGui::OpenPopup("ChangeState");
-
             }
 
             if (ImGui::BeginPopupModal("ChangeState", NULL, ImGuiWindowFlags_AlwaysAutoResize))
