@@ -105,7 +105,7 @@ void Application::SystemInit()
 
     systemManager->Init(false, &mWindow);
     FPSManager::Init();
-    Input::Init();
+    Input::Init(false);
 #pragma region testserialization
     //ObjectFactory::DeserializeScene("../assets/Scenes/test.json");
 

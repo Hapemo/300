@@ -115,12 +115,13 @@ private:
   static GLFWcursor* mCursor;
   static double mScrollTotal;
   static double mScrollOffset;
+  static bool mIsEditor;
   
 public:
   /*!*****************************************************************************
   Initialises the Input system
   *******************************************************************************/
-  static void Init();
+  static void Init(bool isEditor);
 
   //-------------------------------------------------------------
   // Keyboard controls

@@ -19,7 +19,8 @@ double Input::mScrollTotal{ 0 };
 double Input::mScrollOffset{ 0 };
 GLFWcursor* Input::mCursor;
 
-void Input::Init() {
+void Input::Init(bool isEditor) {
+    mIsEditor = isEditor;
   glfwSetScrollCallback(systemManager->GetWindow()->GetHandle(), scroll_callback);
  }
 
