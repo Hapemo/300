@@ -20,7 +20,7 @@ function Update()
     viewVec.y = 0;
     viewVec = Helper.Normalize(viewVec)
     movement.x = 0;
-    movement.y = 0;
+    movement.y = cameraEntity:GetRigidBody().mVelocity.y;
     movement.z = 0;
 
     if (inputMapSys:GetButton("up")) then
@@ -48,11 +48,10 @@ function Dead()
 end
 
 function OnTriggerEnter(Entity)
-
+    
 end
 
 function OnTriggerExit(Entity)
-    
 end
 
 function OnContactEnter(Entity)

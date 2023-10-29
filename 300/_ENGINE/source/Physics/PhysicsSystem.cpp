@@ -170,7 +170,7 @@ void PhysicsSystem::CreateRigidBody(Entity e)
 		SphereCollider col = e.GetComponent<SphereCollider>();
 		CreateAndAttachShape(actor,
 			shape, 
-			PxSphereGeometry(std::max({ xform.mScale.x, xform.mScale.y, xform.mScale.z }) * col.mScaleOffset / 2.f), 
+			PxSphereGeometry(col.mScaleOffset), 
 			PxTransform(Convert(col.mTranslateOffset)),
 			rbod, 
 			col.mIsTrigger);
