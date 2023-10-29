@@ -102,8 +102,16 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 		case Audio::SET_TO_PLAY:
 			if (FindSound(audio_component.mFileName) != nullptr) // Sound Exists ...
 			{
+				if (audio_component.mIsUnique) // Only 1 instance of this sound can be played at a time.
+				{
+					if (IsUniqueAudioPlaying(audio_component.mFileName)) // if there is already a channel playing this sound.. break out. (don't play)
+					{
+						audio_component.mState = Audio::UNIQUE_PLAYING_ALREADY;
+					}
+				}
+
 				PINFO("AUDIO EXISTS");
-				PINFO("PLAYING AUDIO %s AT: %f", audio_component.mFileName,  audio_component.mVolume);
+				PINFO("PLAYING AUDIO %s AT: %f", audio_component.mFileName, audio_component.mVolume);
 
 				unsigned int play_bool = PlaySound(audio_component.mFileName, audio_component.mAudioType, audio_component.mVolume);
 				if (play_bool)  // Plays the sound based on parameters
@@ -114,6 +122,7 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 				}
 				else
 					audio_component.mState = Audio::FAILED;
+			
 			}
 
 			break;
@@ -198,6 +207,19 @@ void AudioSystem::Pause()
 	PauseAllSounds();
 }
 
+
+void AudioSystem::Reset()
+{
+	auto audio_entities = systemManager->ecs->GetEntitiesWith<Audio>();
+
+	for (Entity audio : audio_entities)
+	{
+		Audio& audio_component = audio.GetComponent<Audio>();
+
+		audio_component.mState = Audio::INACTIVE;
+		audio_component.mNextActionState = Audio::INACTIVE;
+	}
+}
 /******************************************************************************/
 /*!
 	LoadAudioFromDirectory()
@@ -597,6 +619,58 @@ bool AudioSystem::IsChannelPaused(uid id, AUDIOTYPE type)
 		}
 	}
 
+	return false;
+}
+
+bool AudioSystem::IsUniqueAudioPlaying(std::string audio_name)
+{
+	for (auto& channel_pair : mChannels[AUDIO_SFX])
+	{
+		FMOD::Sound* current_sound;
+		channel_pair.second->getCurrentSound(&current_sound);
+
+		auto sound_it = mSounds.find(audio_name);
+		if (sound_it != mSounds.end()) // sound exist
+		{
+			FMOD::Sound* current_sound;
+			channel_pair.second->getCurrentSound(&current_sound);
+
+			if (current_sound)
+			{
+				bool playing = false;
+				channel_pair.second->isPlaying(&playing);
+
+				if (playing)
+				{
+					return true;
+				}
+			}
+		}
+	}
+
+	for (auto& channel_pair : mChannels[AUDIO_BGM])
+	{
+		FMOD::Sound* current_sound;
+		channel_pair.second->getCurrentSound(&current_sound);
+
+		auto sound_it = mSounds.find(audio_name);
+		if (sound_it != mSounds.end()) // sound exist
+		{
+			FMOD::Sound* current_sound;
+			channel_pair.second->getCurrentSound(&current_sound);
+
+			if (current_sound)
+			{
+				bool playing = false;
+				channel_pair.second->isPlaying(&playing);
+
+				if (playing)
+				{
+					return true;
+				}
+			}
+		}
+	}
 	return false;
 }
 

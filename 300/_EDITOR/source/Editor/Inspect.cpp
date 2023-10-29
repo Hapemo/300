@@ -1199,9 +1199,10 @@ void Audio::Inspect() {
 
 	float vol_changed = false; 
 
-	const char* audio_type[] = { "SFX" , "BGM" };
+	const char* audio_type[] = {"BGM", "SFX" };
 
 	// Check if there's an attached information relating to the audio file.
+	Audio& audio1 = Entity(Hierarchy::selectedId).GetComponent<Audio>();
 	if (!mFullPath.empty())
 		mIsEmpty = false;
 
@@ -1238,7 +1239,7 @@ void Audio::Inspect() {
 				// Must be outside (what if i remove and add an already loaded audio)
 				mFilePath = file_path;
 				mFileName = audio_name;
-				mFullPath = file_path + "/" + audio_name;		
+				mFullPath = file_path + "/" + audio_name;	
 
 			}
 
@@ -1249,7 +1250,26 @@ void Audio::Inspect() {
 	ImGui::Text("Drag drop 'Audio' files to header above 'Audio'");
 	ImGui::Text("Audio File Selected: ");
 	ImGui::Text(Entity(Hierarchy::selectedId).GetComponent<Audio>().mFullPath.c_str());
+	mFullPath = mFilePath + "/" + mFileName; // Update again after payload (in case)
 	Audio& audio = Entity(Hierarchy::selectedId).GetComponent<Audio>();
+
+	// Debugging (to show which audio are playing) - on editor
+	if (mState == Audio::PLAYING)
+	{
+		ImGui::Text("This Audio is currently playing on (ID = %u)", mChannelID);
+		std::string audio_type;
+		switch (mAudioType)
+		{
+			case AUDIO_SFX:
+				audio_type = "SFX";
+				break;
+			case AUDIO_BGM:
+				audio_type = "BGM";
+				break;
+		}
+		ImGui::Text("On the %s group", audio_type.c_str());
+	}
+		
 
 	//if (!mIsEmpty && m3DAudio)
 	//{
@@ -1273,6 +1293,7 @@ void Audio::Inspect() {
 	{
 		ImGui::Checkbox("Play on Awake", &mPlayonAwake);
 		ImGui::Checkbox("Is Looping", &mIsLooping);
+		ImGui::Checkbox("Is Unique", &mIsUnique);
 		ImGui::SliderFloat("Volume", &mVolume, 0.0f, 1.0f, "volume = %.3f");
 
 
@@ -1290,22 +1311,39 @@ void Audio::Inspect() {
 
 	}
 
-	// AudioType Selector 
+	// AudioType (Initial) - based on component
+	
+	switch (mAudioType) // depending on what is the audio type
+	{
+	case AUDIO_BGM:
+		mAudio = 0;
+		//mTypeChanged = true;
+		//systemManager->mAudioSystem.get()->UpdateChannelReference(Entity(Hierarchy::selectedId));
+		break;
+	case AUDIO_SFX:
+		mAudio = 1;
+		//mTypeChanged = true;
+		//systemManager->mAudioSystem.get()->UpdateChannelReference(Entity(Hierarchy::selectedId));
+		break;
+	}
+	
+
+	//mAudio = mAudioType;
 	if (ImGui::BeginCombo("Audio Type", audio_type[mAudio]))
 	{
 		for (unsigned char i{ 0 }; i < 2; i++) {
 			if (ImGui::Selectable(audio_type[i])) {
 				mAudio = i;
-				switch (mAudio)
+				switch (mAudio) // depending on what is the audio type
 				{
 				case 0:
-					mAudioType = AUDIO_SFX;
-					mTypeChanged = true;
+					mAudioType = AUDIO_BGM;
+					//mTypeChanged = true;
 					//systemManager->mAudioSystem.get()->UpdateChannelReference(Entity(Hierarchy::selectedId));
 					break;
 				case 1:
-					mAudioType = AUDIO_BGM;
-					mTypeChanged = true;
+					mAudioType = AUDIO_SFX;
+					//mTypeChanged = true;
 					//systemManager->mAudioSystem.get()->UpdateChannelReference(Entity(Hierarchy::selectedId));
 					break;
 				}

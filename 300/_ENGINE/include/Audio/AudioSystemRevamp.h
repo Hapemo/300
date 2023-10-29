@@ -33,6 +33,7 @@ public:
 	void Init();
 	void Update(float dt);
 	void Pause();
+	void Reset();
 	int  ErrCodeCheck(FMOD_RESULT result);																					// Debugging tool				
 
 	// Loading Sounds
@@ -62,6 +63,7 @@ public:
 public:
 	bool         IsChannelPlaying(uid id, AUDIOTYPE type);
 	bool		 IsChannelPaused(uid id, AUDIOTYPE type);
+	bool		 IsUniqueAudioPlaying(std::string audio_name);   // Unique Audio check
 
 
 	// Data Members (Global Volume Multiplier)

@@ -332,9 +332,11 @@ struct Children : public Serializable
 
 struct Audio : public Serializable
 {	
+	// Don't need to serialize
 	enum STATE : unsigned char
 	{
 		INACTIVE,			// Used for Stopped.
+		UNIQUE_PLAYING_ALREADY,
 		SET_TO_PLAY,        // mPlayonAwake
 		PLAYING,
 		SET_TO_PAUSE,
@@ -345,6 +347,7 @@ struct Audio : public Serializable
 		FINISHED,		    // mIsLooping
 		FAILED				// When the audio fails to play...
 	};
+	//----------------------------------------------------
 
 	// Serialize
 	// -----------------------------------------
@@ -354,13 +357,15 @@ struct Audio : public Serializable
 
 	bool           mPlayonAwake = false;		        // [Flag] - flag to play as the scene launches. 
 	bool           mIsLooping   = false;			    // [Flag] - flag to decide whether if audio is looping.
-	bool		   mUniqueSound = false;				// [Flag] - flag to decide if I want multiple instance of this sound being played at the same time.
-	
+	bool		   mIsUnique    = false;				// [Flag] - true if you only want 1 instance of this to exist at one time
+
 	// Audio Type [Channel Management]
 	AUDIOTYPE      mAudioType;			                // SFX or BGM (Mute Channels)
 
 	// Volume 
 	float		   mVolume = 1.0f;
+	// ----------------------------------------
+	
 
 	// 3D Audio
 	//bool		   m3DAudio = false;
@@ -372,6 +377,8 @@ struct Audio : public Serializable
 	// ------------------------------------------
 	STATE          mState = STATE::INACTIVE;		    // Initial State - Inactive (do nothing first)
 	STATE		   mNextActionState = STATE::INACTIVE;  // Preface the next cause of action.
+
+	bool		   mUniqueChannel = false;				// Makes sure there's only 1 instance of this (works with 'mIsUnique')
 
 	// This is okay - because it's just editing data (use through component)
 
@@ -400,8 +407,6 @@ struct Audio : public Serializable
 		mVolume = volume;
 	}
 	
-
-
 	// Update Loop - Fade In / Fade out data
 	bool		   mFadeIn = false;						 // [Flag] - This audio will be faded out. 
 	bool		   mFadeOut = false;					 // [Flag] - This audio will be faded in.

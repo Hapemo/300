@@ -101,7 +101,7 @@ void ObjectFactory::LoadScene(Scene* scene, const std::string& filename)
 
 
 	// Create a dummy <Audio> Component ...
-	Entity e = systemManager->ecs->NewEntity();
+	/*Entity e = systemManager->ecs->NewEntity();
 	Audio& audio = e.GetComponent<Audio>();
 	General& general = e.GetComponent<General>();
 	general.name = "DUMMY AUDIO";
@@ -139,7 +139,7 @@ void ObjectFactory::LoadScene(Scene* scene, const std::string& filename)
 
 	scene->mEntities.insert(e);
 	scene->mEntities.insert(e2);
-	scene->mEntities.insert(e3);
+	scene->mEntities.insert(e3);*/
 
 }
 

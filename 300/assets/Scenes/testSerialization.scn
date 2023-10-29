@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 1048599,
+        "entityid": 1,
         "general": {
             "name": "NewObject",
             "tagid": 0,
@@ -62,7 +62,7 @@
         }
     },
     {
-        "entityid": 3145729,
+        "entityid": 2,
         "general": {
             "name": "Light",
             "tagid": 2,
@@ -105,7 +105,7 @@
         }
     },
     {
-        "entityid": 3145730,
+        "entityid": 3,
         "general": {
             "name": "Light",
             "tagid": 2,
@@ -145,7 +145,7 @@
         }
     },
     {
-        "entityid": 3145731,
+        "entityid": 4,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -233,7 +233,7 @@
         }
     },
     {
-        "entityid": 3145732,
+        "entityid": 5,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -321,7 +321,7 @@
         }
     },
     {
-        "entityid": 3145733,
+        "entityid": 6,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -409,7 +409,7 @@
         }
     },
     {
-        "entityid": 3145734,
+        "entityid": 7,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -497,7 +497,7 @@
         }
     },
     {
-        "entityid": 3145735,
+        "entityid": 8,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -585,7 +585,7 @@
         }
     },
     {
-        "entityid": 3145736,
+        "entityid": 9,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -673,7 +673,7 @@
         }
     },
     {
-        "entityid": 3145737,
+        "entityid": 10,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -761,7 +761,7 @@
         }
     },
     {
-        "entityid": 3145738,
+        "entityid": 11,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -849,7 +849,7 @@
         }
     },
     {
-        "entityid": 3145739,
+        "entityid": 12,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -937,7 +937,7 @@
         }
     },
     {
-        "entityid": 3145740,
+        "entityid": 13,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -1025,7 +1025,7 @@
         }
     },
     {
-        "entityid": 3145741,
+        "entityid": 14,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -1113,7 +1113,7 @@
         }
     },
     {
-        "entityid": 3145742,
+        "entityid": 15,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -1201,7 +1201,7 @@
         }
     },
     {
-        "entityid": 3145743,
+        "entityid": 16,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -1289,7 +1289,7 @@
         }
     },
     {
-        "entityid": 3145744,
+        "entityid": 17,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -1377,7 +1377,7 @@
         }
     },
     {
-        "entityid": 3145745,
+        "entityid": 18,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -1465,7 +1465,7 @@
         }
     },
     {
-        "entityid": 3145746,
+        "entityid": 19,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -1553,7 +1553,7 @@
         }
     },
     {
-        "entityid": 3145747,
+        "entityid": 20,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -1641,7 +1641,7 @@
         }
     },
     {
-        "entityid": 3145748,
+        "entityid": 21,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -1729,7 +1729,7 @@
         }
     },
     {
-        "entityid": 3145749,
+        "entityid": 22,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -1817,7 +1817,7 @@
         }
     },
     {
-        "entityid": 3145750,
+        "entityid": 23,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -1854,11 +1854,122 @@
                 "z": -1.0
             },
             "size": {
-                "x": 613,
-                "y": 625
+                "x": 1231,
+                "y": 617
             },
             "near": 0.10000000149011612,
             "far": 900.0
+        }
+    },
+    {
+        "entityid": 24,
+        "general": {
+            "name": "DUMMY AUDIO",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "tuning-radio-7150.wav",
+            "fullpath": "../assets\\Audio/tuning-radio-7150.wav",
+            "playonawake": true,
+            "islooping": true,
+            "isunique": false,
+            "audiotype": 1,
+            "volume": 1.0
+        }
+    },
+    {
+        "entityid": 25,
+        "general": {
+            "name": "SFX #2",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Girl-Humming.wav",
+            "fullpath": "../assets\\Audio/Girl-Humming.wav",
+            "playonawake": true,
+            "islooping": true,
+            "isunique": false,
+            "audiotype": 1,
+            "volume": 1.0
+        }
+    },
+    {
+        "entityid": 26,
+        "general": {
+            "name": "BGM #1",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "cruising-down-8bit-lane-159615.mp3",
+            "fullpath": "../assets\\Audio/cruising-down-8bit-lane-159615.mp3",
+            "playonawake": true,
+            "islooping": true,
+            "isunique": false,
+            "audiotype": 0,
+            "volume": 1.0
         }
     }
 ]
