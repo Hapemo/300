@@ -9,6 +9,10 @@ mul = 20.0
 floorCount = 0
 totaltime = 0.0
 isDashing = false;
+speed = 10
+positions = Vec3.new(0,0,10)
+positions_offset = Vec3.new(0,0,0)
+positions_final = Vec3.new()
 
 function Alive()
     gameStateSys = systemManager:mGameStateSystem();
@@ -21,6 +25,7 @@ end
 
 function Update()
     totaltime = totaltime + 0.016;
+    --positions = cameraEntity:GetTransform().mTranslate
     Camera_Scripting.RotateCameraView(cameraEntity, Input.CursorPos())
     viewVec = Camera_Scripting.GetDirection(cameraEntity)
     viewVec.y = 0;
@@ -70,6 +75,21 @@ function Update()
     end
 
     physicsSys:SetVelocity(cameraEntity, movement)
+
+    -- positions_offset.x =  viewVec.x *10
+    -- positions_offset.y =  viewVec.y *10
+    -- positions_offset.z =  viewVec.z *10
+
+    -- positions_final.x = positions.x + positions_offset.x
+    -- positions_final.y = positions.y + positions_offset.y
+    -- positions_final.z = positions.z + positions_offset.z
+    
+    if(inputMapSys:GetKeyDown(349)) then
+        prefabEntity = systemManager.ecs:NewEntityFromPrefab("bullet", positions)
+    end
+
+
+
 
 end
 

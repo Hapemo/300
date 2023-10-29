@@ -21,6 +21,7 @@ and saving of prefabs, scenes and gamestates using serialization.
 #include "Graphics/GraphicsSystem.h"
 #include "Debug/Logger.h"
 #include "ECS/ECS_Components.h"
+#include "Physics/PhysicsSystem.h"
 
 #define SERIALIZE_SELF(T) if (e.HasComponent<T>()) e.GetComponent<T>().SerializeSelf(writer)
 #define DESERIALIZE_SELF(T, S) if(reader.HasMember(S)) e.AddComponent<T>().DeserializeSelf(reader[S])
@@ -138,6 +139,8 @@ Entity ObjectFactory::DeserializePrefab(const std::string& filename)
 
 	Entity e = systemManager->ecs->NewEntity();
 	LoadEntity(e, doc);
+
+
 	return e;
 }
 
