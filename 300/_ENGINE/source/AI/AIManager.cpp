@@ -178,39 +178,82 @@ glm::vec3 AIManager::CalcGroundAIDir(Entity _e) {
 	return glm::normalize(dir);
 }
 
+// Gain elevation first, then move towards player until designated area.
 glm::vec3 AIManager::CalcAirAIDir(Entity _e) {
 	AISetting const& _eSetting = _e.GetComponent<AISetting>();
 	Transform const& _eTrans = _e.GetComponent<Transform>();
 	Transform const& _tgtTrans = _eSetting.GetTarget().GetComponent<Transform>();
 
-	float _eEdgeDistance = glm::length(_eTrans.mScale/2.f);
-	float _tgtEdgeDistance = glm::length(_tgtTrans.mScale/2.f);
-	float DistanceInBetween = abs(glm::length(_eTrans.mTranslate - _tgtTrans.mTranslate)) - (_eEdgeDistance + _tgtEdgeDistance);
+	//float _eEdgeDistance = glm::length(_eTrans.mScale/2.f);
+	//float _tgtEdgeDistance = glm::length(_tgtTrans.mScale/2.f);
+	//float DistanceInBetween = abs(glm::length(_eTrans.mTranslate - _tgtTrans.mTranslate)) - (_eEdgeDistance + _tgtEdgeDistance);
 
-	// If reached the player, return nothing
-	if (DistanceInBetween <= _eSetting.mStayAway) {
-		return glm::vec3();
+	glm::vec3 accumDir{};
+	// Vertical distance between enemy and target not more than _eElevation
+	// Check vertical height
+	float elevationDir = (_tgtTrans.mTranslate.y + _tgtTrans.mScale.y/2.f + _eSetting.mElevation) - (_eTrans.mTranslate.y + _eTrans.mScale.y/2.f);
+
+	accumDir.y = elevationDir;
+
+	// Check horizontal Dist
+	glm::vec2 xzDir = glm::vec2(_tgtTrans.mTranslate.x - _eTrans.mTranslate.x, _tgtTrans.mTranslate.z - _eTrans.mTranslate.z);
+	float horizontalDistance = abs(glm::length(xzDir)) - glm::length(glm::vec2(abs(_eTrans.mScale.x) + abs(_tgtTrans.mScale.x), abs(_eTrans.mScale.y) + abs(_tgtTrans.mScale.y)) / 2.f);
+
+	float requiredDistance = horizontalDistance - _eSetting.mStayAway;
+
+	if (!(requiredDistance < FLT_EPSILON && requiredDistance > -FLT_EPSILON)) { // If required distance not equal to 0
+		if (horizontalDistance < FLT_EPSILON && horizontalDistance > -FLT_EPSILON) // If horizontal distance is 0
+			return glm::vec3(0.57735f, 0.57735f, 0.57735f); // Normalized vector for glm::vec3(1,1,1)
+
+		xzDir *= (requiredDistance/horizontalDistance);
+		accumDir.x = xzDir.x;
+		accumDir.z = xzDir.y;
 	}
-	// if AI is not above the target yet, gain height first, fly to mStayAway distance away.
-	if (_eTrans.mTranslate.y <= _eSetting.mStayAway + _tgtTrans.mTranslate.y + _tgtTrans.mScale.y/2.f) return glm::vec3(0, 1, 0);
-	
-#if 0
-	std::cout << "Mid point to mid point: " << glm::length(_eTrans.mTranslate - _tgtTrans.mTranslate) << '\n';
-	std::cout << "Total edge distance: " << _eEdgeDistance + _tgtEdgeDistance << '\n';
-	std::cout << "Distance between: " << DistanceInBetween << '\n';
-#endif
 
-	// When near the target's head, like 1.5x the stay away distance, move directly to the target until stay away distance
-	if (DistanceInBetween > (_eSetting.mStayAway * 2.f)) {
-		// Move directly to the target's top
-		glm::vec3 aboveTgtPos = _tgtTrans.mTranslate + glm::vec3(0, _eSetting.mStayAway, 0);
-
-		return glm::normalize(aboveTgtPos - _eTrans.mTranslate);
-	}
-
-	//std::cout << "Distance between 2: " << DistanceInBetween << '\n';
-
-	return glm::normalize(_tgtTrans.mTranslate - _eTrans.mTranslate);
+	if (glm::length(accumDir) != 0) accumDir = glm::normalize(accumDir);
+	return accumDir;
+//
+//	if (!enoughElevation)
+//		return glm::vec3(0, 1, 0);
+//
+//	// Horizontal distance from _e to _tgt, minus, Horizontal scale of both _e and _tgt divide by 2, less than 
+//	float horizontalDistance = abs(glm::length(horizontalDir));
+//	bool enoughDistance = horizontalDistance 
+//												<= _eSetting.mStayAway;
+//
+//	if (!enoughDistance) {
+//		if (horizontalDistance == 0) { // entity is in same pos as target (Shouldn't really happen)
+//			PWARNING("Entity %s is in same position as target %s, detected in CalcAirAIDir(), should not be happening", std::to_string(static_cast<int>(_e.id)).c_str(), std::to_string(static_cast<int>(_eSetting.GetTarget().id)).c_str());
+//			return glm::vec3(); 
+//		}
+//		return glm::normalize(glm::vec3(horizontalDir.x, 0, horizontalDir.y));
+//	}
+//
+//	return glm::vec3();
+//	// If reached the player, return nothing
+//	if (DistanceInBetween <= _eSetting.mStayAway) {
+//		return glm::vec3();
+//	}
+//	// if AI is not above the target yet, gain height first, fly to mStayAway distance away.
+//	if (_eTrans.mTranslate.y <= _eSetting.mStayAway + _tgtTrans.mTranslate.y + _tgtTrans.mScale.y/2.f) return glm::vec3(0, 1, 0);
+//	
+//#if 0
+//	std::cout << "Mid point to mid point: " << glm::length(_eTrans.mTranslate - _tgtTrans.mTranslate) << '\n';
+//	std::cout << "Total edge distance: " << _eEdgeDistance + _tgtEdgeDistance << '\n';
+//	std::cout << "Distance between: " << DistanceInBetween << '\n';
+//#endif
+//
+//	// When near the target's head, like 1.5x the stay away distance, move directly to the target until stay away distance
+//	if (DistanceInBetween > (_eSetting.mStayAway * 2.f)) {
+//		// Move directly to the target's top
+//		glm::vec3 aboveTgtPos = _tgtTrans.mTranslate + glm::vec3(0, _eSetting.mStayAway, 0);
+//
+//		return glm::normalize(aboveTgtPos - _eTrans.mTranslate);
+//	}
+//
+//	//std::cout << "Distance between 2: " << DistanceInBetween << '\n';
+//
+//	return glm::normalize(_tgtTrans.mTranslate - _eTrans.mTranslate);
 }
 
 void AIManager::SpreadOut(Entity _e, glm::vec3& dir) {

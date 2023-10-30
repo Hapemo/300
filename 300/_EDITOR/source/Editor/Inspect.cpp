@@ -1424,19 +1424,20 @@ void AISetting::Inspect() {
 			ImGui::EndCombo();
 		}
 
-		// bool mShotPrediction;						// AI's bullet predict target's movement
-		ImGui::Checkbox("Shooting Prediction", &mShotPrediction);
-		ImGui::Separator();
-		
-		// float mSpreadOut;								// Degree of spreading out from another entity
-		ImGui::Text("Degree of Spreading Out");
-		ImGui::DragFloat("##Degree of Spreading Out", &mSpreadOut);
+		// float mStayAway;								// Distance to stay away from player
+		if (mMovementType == E_MOVEMENT_TYPE::AIR_HOVER) {
+			ImGui::Text("Horizontal Distance From Target");
+			ImGui::DragFloat("##Distance From Target", &mStayAway);
+
+			ImGui::Text("Vertical Elevation From Target");
+			ImGui::DragFloat("##Vertical Elevation From Target", &mElevation);
+		}
 		ImGui::Separator();
 
-		// float mStayAway;								// Distance to stay away from player
-		ImGui::Text("Distance From Target");
-		ImGui::DragFloat("##Distance From Target", &mStayAway);
+		// float mSpreadOut;								// Degree of spreading out from another entity
 		ImGui::Separator();
+		ImGui::Text("Degree of Spreading Out");
+		ImGui::DragFloat("##Degree of Spreading Out", &mSpreadOut);
 
 		// Entity mTarget;								// AI's target
 		ImGui::InputText("Target Name", &mTargetName);

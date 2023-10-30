@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 1048577,
+        "entityid": 1,
         "general": {
             "name": "Enemy",
             "tagid": 0,
@@ -118,14 +118,13 @@
         },
         "aisetting": {
             "movementtype": 2,
-            "shotprediction": false,
             "spreadout": 40.0,
             "stayaway": 25.0,
             "targetname": "Player"
         }
     },
     {
-        "entityid": 1048578,
+        "entityid": 2,
         "general": {
             "name": "Enemy",
             "tagid": 0,
@@ -243,14 +242,13 @@
         },
         "aisetting": {
             "movementtype": 1,
-            "shotprediction": false,
             "spreadout": 40.0,
             "stayaway": 0.0,
             "targetname": "Player"
         }
     },
     {
-        "entityid": 1048579,
+        "entityid": 3,
         "general": {
             "name": "Enemy",
             "tagid": 0,
@@ -368,14 +366,13 @@
         },
         "aisetting": {
             "movementtype": 1,
-            "shotprediction": false,
             "spreadout": 40.0,
             "stayaway": 0.0,
             "targetname": "Player"
         }
     },
     {
-        "entityid": 1048580,
+        "entityid": 4,
         "general": {
             "name": "Enemy",
             "tagid": 0,
@@ -493,14 +490,13 @@
         },
         "aisetting": {
             "movementtype": 1,
-            "shotprediction": false,
             "spreadout": 40.0,
             "stayaway": 0.0,
             "targetname": "Player"
         }
     },
     {
-        "entityid": 1048581,
+        "entityid": 5,
         "general": {
             "name": "Enemy",
             "tagid": 0,
@@ -618,14 +614,13 @@
         },
         "aisetting": {
             "movementtype": 1,
-            "shotprediction": false,
             "spreadout": 40.0,
             "stayaway": 0.0,
             "targetname": "Player"
         }
     },
     {
-        "entityid": 1048582,
+        "entityid": 6,
         "general": {
             "name": "Player",
             "tagid": 0,
@@ -694,7 +689,7 @@
         }
     },
     {
-        "entityid": 1048583,
+        "entityid": 7,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -731,15 +726,15 @@
                 "z": 748.7139892578125
             },
             "size": {
-                "x": 1078,
-                "y": 625
+                "x": 1334,
+                "y": 538
             },
             "near": 0.10000000149011612,
             "far": 900.0
         }
     },
     {
-        "entityid": 1048584,
+        "entityid": 8,
         "general": {
             "name": "Ground",
             "tagid": 0,

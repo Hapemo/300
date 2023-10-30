@@ -325,9 +325,9 @@ void AISetting::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& 
 	writer.Key("aisetting");
 	writer.StartObject();
 	Serialize(writer, "movementtype", mMovementType);
-	Serialize(writer, "shotprediction", mShotPrediction);
 	Serialize(writer, "spreadout", mSpreadOut);
 	Serialize(writer, "stayaway", mStayAway);
+	Serialize(writer, "elevation", mElevation);
 	Serialize(writer, "targetname", mTargetName);
 	writer.EndObject();
 }
@@ -335,8 +335,8 @@ void AISetting::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& 
 void AISetting::DeserializeSelf(rapidjson::Value& reader)
 {
 	Deserialize(reader, "movementtype", mMovementType);
-	Deserialize(reader, "shotprediction", mShotPrediction);
 	Deserialize(reader, "spreadout", mSpreadOut);
 	Deserialize(reader, "stayaway", mStayAway);
+	Deserialize(reader, "elevation", mElevation);
 	Deserialize(reader, "targetname", mTargetName);
 }

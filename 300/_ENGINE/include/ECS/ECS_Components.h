@@ -518,9 +518,9 @@ struct VFX : public Serializable
 enum class E_MOVEMENT_TYPE : char;
 struct AISetting {
 	E_MOVEMENT_TYPE mMovementType;	// AI's movement type
-	bool mShotPrediction;						// AI's bullet predict target's movement
 	float mSpreadOut;								// Percentage determining how much it changes the direction. Max 100
-	float mStayAway;								// Distance to stay away from player
+	float mStayAway;								// For flying enemy, horizontal distance to stay away from player
+	float mElevation;								// For flying enemy, vertical distance to stay away from player
 	std::string mTargetName;				// Name of target (Will be searching via gamestate, not scene)
 
 	void Inspect();
