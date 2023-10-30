@@ -336,7 +336,7 @@ struct Audio : public Serializable
 	enum STATE : unsigned char
 	{
 		INACTIVE,			// Used for Stopped.
-		UNIQUE_PLAYING_ALREADY,
+		//UNIQUE_PLAYING_ALREADY,
 		SET_TO_PLAY,        // mPlayonAwake
 		PLAYING,
 		SET_TO_PAUSE,
@@ -344,6 +344,8 @@ struct Audio : public Serializable
 		RESUME,
 		SET_STOP,
 		STOPPED,
+		SET_FADE_IN, 
+		SET_FADE_OUT, 
 		FINISHED,		    // mIsLooping
 		FAILED				// When the audio fails to play...
 	};
@@ -357,7 +359,6 @@ struct Audio : public Serializable
 
 	bool           mPlayonAwake = false;		        // [Flag] - flag to play as the scene launches. 
 	bool           mIsLooping   = false;			    // [Flag] - flag to decide whether if audio is looping.
-	bool		   mIsUnique    = false;				// [Flag] - true if you only want 1 instance of this to exist at one time
 
 	// Audio Type [Channel Management]
 	AUDIOTYPE      mAudioType;			                // SFX or BGM (Mute Channels)
@@ -377,8 +378,6 @@ struct Audio : public Serializable
 	// ------------------------------------------
 	STATE          mState = STATE::INACTIVE;		    // Initial State - Inactive (do nothing first)
 	STATE		   mNextActionState = STATE::INACTIVE;  // Preface the next cause of action.
-
-	bool		   mUniqueChannel = false;				// Makes sure there's only 1 instance of this (works with 'mIsUnique')
 
 	// This is okay - because it's just editing data (use through component)
 
@@ -406,13 +405,30 @@ struct Audio : public Serializable
 	{
 		mVolume = volume;
 	}
-	
+
+	void FadeIn(float fade_to_vol = 1.0f, float fade_speed_modifier = 0.2f, float fade_duration = 5.0f)	// Use this to fade in audio from (0.0f)
+	{
+		mNextActionState = STATE::SET_FADE_IN;
+		mFadeInMaxVol = fade_to_vol;
+		mFadeSpeedModifier = fade_speed_modifier;
+		mFadeDuration = fade_duration;
+	}
+
+	void FadeOut(float fade_to_vol = 0.0f, float fade_speed_modifier = 0.2f, float fade_duration = 5.0f)
+	{
+		mNextActionState = STATE::SET_FADE_OUT; 
+		mFadeInMaxVol = fade_to_vol;
+		mFadeSpeedModifier = fade_speed_modifier;
+		mFadeDuration = fade_duration;
+	}
+
 	// Update Loop - Fade In / Fade out data
-	bool		   mFadeIn = false;						 // [Flag] - This audio will be faded out. 
-	bool		   mFadeOut = false;					 // [Flag] - This audio will be faded in.
+	//bool		   mFadeIn = false;						 // [Flag] - This audio will be faded out. 
+	//bool		   mFadeOut = false;					 // [Flag] - This audio will be faded in.
 	float		   mFadeInMaxVol = 1.0f;				 // Flexibility with audio volume fade in (control over volume)
 	float		   mFadeOutToVol = 0.0f;				 // Flexibility to adjust the audio volume as it fades out (don't have to be 0.0f)
 	float		   mFadeSpeedModifier = 0.2f;			 // How fast the fading goes (modifier * dt)
+	float		   mFadeDuration = 5.0f;				 // How long to fade for. 
 
 	// For Editor
 	bool		   mIsEmpty = true;						 // [For Editor] - if empty delete all data in this <Audio> component

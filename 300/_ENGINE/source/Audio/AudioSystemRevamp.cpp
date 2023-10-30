@@ -81,7 +81,7 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 		}
 
 		// Test Cases - to test functionality (will remove)
-		TestCases(audio_component);
+		TestCaseEntity(audio, dt);
 
 		// Update Volume (every loop) - based on global volume also 
 		float global_modifier = 1.0f;
@@ -99,64 +99,79 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 
 		switch (audio_component.mNextActionState)
 		{
-		case Audio::SET_TO_PLAY:
-			if (FindSound(audio_component.mFileName) != nullptr) // Sound Exists ...
-			{
-				if (audio_component.mIsUnique) // Only 1 instance of this sound can be played at a time.
+			case Audio::SET_TO_PLAY:
+				if (FindSound(audio_component.mFileName) != nullptr) // Sound Exists ...
 				{
-					if (IsUniqueAudioPlaying(audio_component.mFileName)) // if there is already a channel playing this sound.. break out. (don't play)
+					/*if (audio_component.mIsUnique)
 					{
-						audio_component.mState = Audio::UNIQUE_PLAYING_ALREADY;
+						mSoundsCurrentlyPlaying.find()
+					}*/
+
+					PINFO("AUDIO EXISTS");
+					PINFO("PLAYING AUDIO %s AT: %f", audio_component.mFileName.c_str(), audio_component.mVolume);
+
+					unsigned int play_bool = PlaySound(audio_component.mFileName, audio_component.mAudioType, audio_component.mVolume);
+					if (play_bool)  // Plays the sound based on parameters
+					{
+						audio_component.mState = Audio::PLAYING; // Update State 
+						audio_component.mChannelID = play_bool;
+						audio_component.mNextActionState = Audio::INACTIVE;
+					
+						// Update [Sounds Currently Playing] database.
+						//mSoundsCurrentlyPlaying.insert(audio_component.mFileName);
 					}
+
+					else
+						audio_component.mState = Audio::FAILED;
+			
 				}
 
-				PINFO("AUDIO EXISTS");
-				PINFO("PLAYING AUDIO %s AT: %f", audio_component.mFileName, audio_component.mVolume);
+				break;
 
-				unsigned int play_bool = PlaySound(audio_component.mFileName, audio_component.mAudioType, audio_component.mVolume);
-				if (play_bool)  // Plays the sound based on parameters
+			case Audio::SET_TO_PAUSE:
+				if (PauseSound(audio_component.mChannelID, audio_component.mAudioType))
 				{
-					audio_component.mState = Audio::PLAYING; // Update State 
-					audio_component.mChannelID = play_bool;
+					audio_component.mState = Audio::PAUSED;
 					audio_component.mNextActionState = Audio::INACTIVE;
 				}
+				break;
+
+			case Audio::RESUME:
+				if (ResumeSound(audio_component.mChannelID, audio_component.mAudioType))
+				{
+					audio_component.mState = Audio::PLAYING;
+					audio_component.mNextActionState = Audio::INACTIVE;
+				}
+
 				else
+				{
 					audio_component.mState = Audio::FAILED;
+				}
+
+				break;
+
+			case Audio::SET_STOP:
+				if (StopSound(audio_component.mChannelID, audio_component.mAudioType))
+				{
+					audio_component.mState = Audio::STOPPED;
+					audio_component.mNextActionState = Audio::INACTIVE;
+				}
+				break;
 			
+			case Audio::SET_FADE_IN:
+				if (FadeIn(audio, dt)) // will keep running this every loop till it's done fading in.
+				{
+					audio_component.mNextActionState = Audio::INACTIVE;
+				}
+
+				break;
+			case Audio::SET_FADE_OUT:
+				if (FadeOut(audio, dt)) // will keep running this every loop till it's done fading in.
+				{
+					audio_component.mNextActionState = Audio::INACTIVE;
+				}
+				break;
 			}
-
-			break;
-
-		case Audio::SET_TO_PAUSE:
-			if (PauseSound(audio_component.mChannelID, audio_component.mAudioType))
-			{
-				audio_component.mState = Audio::PAUSED;
-				audio_component.mNextActionState = Audio::INACTIVE;
-			}
-			break;
-
-		case Audio::RESUME:
-			if (ResumeSound(audio_component.mChannelID, audio_component.mAudioType))
-			{
-				audio_component.mState = Audio::PLAYING;
-				audio_component.mNextActionState = Audio::INACTIVE;
-			}
-
-			else
-			{
-				audio_component.mState = Audio::FAILED;
-			}
-
-			break;
-
-		case Audio::SET_STOP:
-			if (StopSound(audio_component.mChannelID, audio_component.mAudioType))
-			{
-				audio_component.mState = Audio::STOPPED;
-				audio_component.mNextActionState = Audio::INACTIVE;
-			}
-
-		}
 
 		switch (audio_component.mState)
 		{
@@ -216,8 +231,8 @@ void AudioSystem::Reset()
 	{
 		Audio& audio_component = audio.GetComponent<Audio>();
 
-		audio_component.mState = Audio::INACTIVE;
-		audio_component.mNextActionState = Audio::INACTIVE;
+		audio_component.mState = Audio::SET_STOP;
+		audio_component.mNextActionState = Audio::SET_STOP;
 	}
 }
 /******************************************************************************/
@@ -571,7 +586,138 @@ void AudioSystem::UnpauseAllSounds()
 	}
 }
 
+//void AudioSystem::FadeIn(uid channel_id, AUDIOTYPE type, float current_vol, float dt, float fade_to_vol, float fade_speed_modifier, float fade_duration)
+//{
+//	for (auto& channel_pair : mChannels[type])
+//	{
+//		if (channel_pair.first == channel_id)
+//		{
+//			FMOD::Sound* current_sound;
+//			channel_pair.second->getCurrentSound(&current_sound);
+//
+//			if (current_sound)  // not empty..
+//			{
+//				bool playing = false;
+//				channel_pair.second->isPlaying(&playing);
+//
+//				if (playing)
+//				{	
+//					if (fade_timer < fade_duration)
+//					{
+//						float fade_step = fade_speed_modifier * (fade_to_vol / fade_duration);  // [Modifier] * [Fade per step]
+//
+//					}
+//					channel_pair.second->setVolume()
+//				}
+//
+//
+//			}
+//		}
+//		
+//	}
+//}
+//
+//void AudioSystem::FadeOut(uid channel_id, AUDIOTYPE type, float dt,  float fade_to_vol = 1.0f, float fade_speed = 0.2f)
+//{
+//
+//}
 
+
+bool AudioSystem::FadeIn(Entity id, float dt)
+{
+	Audio& audio_component = id.GetComponent<Audio>();
+
+	for (auto& channel_pair : mChannels[audio_component.mAudioType])
+	{
+		if (channel_pair.first == audio_component.mChannelID) // find the correct channel. (that this is playing on)
+		{
+			if (fade_timer < audio_component.fade_duration)
+			{
+				float fade_step = audio_component.mFadeSpeedModifier * (audio_component.mFadeInMaxVol / audio_component.fade_duration); 
+
+				audio_component.mVolume += fade_step * dt;
+
+				FMOD::Sound* current_sound;
+				channel_pair.second->getCurrentSound(&current_sound);
+
+				if (current_sound)
+				{
+					bool playing = false;
+					channel_pair.second->isPlaying(&playing);
+
+					if (playing)
+					{
+						if (audio_component.mVolume < audio_component.mFadeInMaxVol) // if haven't reach the fade in max volume. 
+						{	
+							channel_pair.second->setVolume(audio_component.mVolume);
+							PINFO("Volume currently at: %f", audio_component.mVolume);
+						}
+
+						else // exceed the "mFadeInMaxVol" (ends here)
+						{
+							channel_pair.second->setVolume(audio_component.mFadeInMaxVol); 
+							audio_component.mVolume = audio_component.mFadeInMaxVol;
+							PINFO("DONE FADING IN.");
+							fade_timer = 0.0f; // reset timer.
+							return true;
+						}
+					}
+					
+				}
+			}
+		}
+	}
+
+	return false;
+
+}
+
+bool AudioSystem::FadeOut(Entity id, float dt)
+{
+	Audio& audio_component = id.GetComponent<Audio>();
+
+	for (auto& channel_pair : mChannels[audio_component.mAudioType])
+	{
+		if (channel_pair.first == audio_component.mChannelID) // find the correct channel. (that this is playing on)
+		{
+			if (fade_timer < audio_component.fade_duration)
+			{
+				float fade_step = audio_component.mFadeSpeedModifier * (audio_component.mVolume/ audio_component.fade_duration);
+
+				audio_component.mVolume -= fade_step * dt;
+
+				FMOD::Sound* current_sound;
+				channel_pair.second->getCurrentSound(&current_sound);
+
+				if (current_sound)
+				{
+					bool playing = false;
+					channel_pair.second->isPlaying(&playing);
+
+					if (playing)
+					{
+						if (audio_component.mVolume > audio_component.mFadeInMaxVol) // if haven't reach the fade in max volume. 
+						{
+							channel_pair.second->setVolume(audio_component.mVolume);
+							PINFO("Volume currently at: %f", audio_component.mVolume);
+						}
+
+						else // exceed the "mFadeInMaxVol" (ends here)
+						{
+							channel_pair.second->setVolume(audio_component.mFadeInMaxVol);
+							audio_component.mVolume = audio_component.mFadeInMaxVol;
+							PINFO("DONE FADING OUT.");
+							return true;
+						}
+					}
+
+				}
+			}
+		}
+	}
+
+	return false;
+}
 
 bool AudioSystem::IsChannelPlaying(uid id, AUDIOTYPE type)
 {
@@ -622,57 +768,20 @@ bool AudioSystem::IsChannelPaused(uid id, AUDIOTYPE type)
 	return false;
 }
 
+// Checks with internal database
 bool AudioSystem::IsUniqueAudioPlaying(std::string audio_name)
 {
-	for (auto& channel_pair : mChannels[AUDIO_SFX])
-	{
-		FMOD::Sound* current_sound;
-		channel_pair.second->getCurrentSound(&current_sound);
+	//auto unique_it = mUniqueSoundRecord.find(audio_name);
 
-		auto sound_it = mSounds.find(audio_name);
-		if (sound_it != mSounds.end()) // sound exist
-		{
-			FMOD::Sound* current_sound;
-			channel_pair.second->getCurrentSound(&current_sound);
+	//if (unique_it != mUniqueSoundRecord.end())
+	//{
+	//	return false; // unique audio already playing. 
+	//}
 
-			if (current_sound)
-			{
-				bool playing = false;
-				channel_pair.second->isPlaying(&playing);
-
-				if (playing)
-				{
-					return true;
-				}
-			}
-		}
-	}
-
-	for (auto& channel_pair : mChannels[AUDIO_BGM])
-	{
-		FMOD::Sound* current_sound;
-		channel_pair.second->getCurrentSound(&current_sound);
-
-		auto sound_it = mSounds.find(audio_name);
-		if (sound_it != mSounds.end()) // sound exist
-		{
-			FMOD::Sound* current_sound;
-			channel_pair.second->getCurrentSound(&current_sound);
-
-			if (current_sound)
-			{
-				bool playing = false;
-				channel_pair.second->isPlaying(&playing);
-
-				if (playing)
-				{
-					return true;
-				}
-			}
-		}
-	}
-	return false;
+	//return true;
+	return true;
 }
+
 
 /******************************************************************************/
 /*!
@@ -727,6 +836,44 @@ void AudioSystem::TestCases(Audio& audio_component)
 		SetAllBGMVolume(0.0f);
 	if (Input::CheckKey(PRESS, K))
 		SetAllBGMVolume(1.0f);
+	
 	/*if (Input::CheckKey(PRESS, J))*/
 		
+}
+
+void AudioSystem::TestCaseEntity(Entity& entity, float dt)
+{
+	Audio& audio_component = entity.GetComponent<Audio>();
+	General& general = entity.GetComponent<General>();
+
+	if (Input::CheckKey(PRESS, P))
+		audio_component.SetPause();
+	if (Input::CheckKey(PRESS, O))
+		audio_component.SetResume();
+	if (Input::CheckKey(PRESS, I))
+		audio_component.SetStop();
+	if (Input::CheckKey(PRESS, U))
+		SetAllSFXVolume(0.0f);
+	if (Input::CheckKey(PRESS, Y))
+		SetAllSFXVolume(1.0f);
+	if (Input::CheckKey(PRESS, L))
+		SetAllBGMVolume(0.0f);
+	if (Input::CheckKey(PRESS, K))
+		SetAllBGMVolume(1.0f);
+	if (Input::CheckKey(PRESS, H))
+	{
+		if (general.name == "BGM #1")  // we only want to try to fade this audio.
+		{
+			audio_component.FadeIn(0.9f, 0.2f);
+		}
+	}
+
+	if (Input::CheckKey(PRESS, G))
+	{
+		if (general.name == "BGM #1")  // we only want to try to fade this audio.
+		{
+			audio_component.FadeOut(0.2f, 0.2f);
+		}
+	}
+	
 }

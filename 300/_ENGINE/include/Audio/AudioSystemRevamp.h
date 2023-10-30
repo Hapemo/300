@@ -1,6 +1,7 @@
 #pragma once
 #include <fmod.hpp>		// Include [FMOD] Library
 #include <iostream>
+#include <unordered_set>
 #include <map>
 #include <filesystem>
 #include <stdexcept>   // Added (9/25)
@@ -34,7 +35,7 @@ public:
 	void Update(float dt);
 	void Pause();
 	void Reset();
-	int  ErrCodeCheck(FMOD_RESULT result);																					// Debugging tool				
+	int  ErrCodeCheck(FMOD_RESULT result);												// Debugging tool				
 
 	// Loading Sounds
 public:
@@ -52,6 +53,14 @@ public:
 	void		 SetAllBGMVolume(float volume);											// Built for Sound Settings
 	void		 PauseAllSounds();
 	void		 UnpauseAllSounds();
+
+	// Effects Playback
+	//void		 FadeIn(uid channel_id, AUDIOTYPE type, float dt, float current_vol , float fade_to_vol = 1.0f, float fade_speed = 0.2f, float fade_duratiomn = 5.0f); 
+	//void		 FadeOut(uid channel_id, AUDIOTYPE type, float dt, float fade_to_vol = 0.0f, float fade_speed = 0.2f);
+
+	bool		 FadeIn(Entity id, float dt);    // Pass in the data from the <Audio> component 
+	bool		 FadeOut(Entity id, float dt);   // Pass in the data from the <Audio> component 
+
 
 
 	// Audio Fade Functions 
@@ -71,17 +80,22 @@ public:
 	float sfx_global_vol = 1.0f;
 	float bgm_global_vol = 1.0f;
 	bool  pause_state = false;
+	float fade_timer = 0.0f;		// For Fading. 
 
 	// Databases (Sounds + Channels) + FMOD System
 public:
 	FMOD::System* system_obj = nullptr;
 	std::unordered_map<AUDIOTYPE, std::vector<std::pair<uid,FMOD::Channel*>>>     mChannels;
 	std::unordered_map<std::string, FMOD::Sound*>							      mSounds;
+	// std::unordered_set<std::string>						                          mSoundsCurrentlyPlaying;
+
+
 	//static std::unordered_map< 
 	/*std::unordered_map<AUDIOTYPE, std::vector*/
 
 	// Test Case (will remove)
 public:
 	void TestCases(Audio& comp);
+	void TestCaseEntity(Entity& entity, float dt); 
 
 };

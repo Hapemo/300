@@ -68,7 +68,7 @@ void SystemManager::Init(bool isEditor, GFX::Window *window)
 
 void SystemManager::Reset()
 {
-	//mAudioSystem.get()->Reset();				// Using <Audio> component, must happen before clearing of entities.
+	mAudioSystem.get()->Reset();				// Using <Audio> component, must happen before clearing of entities.
 	mGameStateSystem.get()->Unload();
 	mGameStateSystem.get()->Init();
 	mPhysicsSystem.get()->Init();
