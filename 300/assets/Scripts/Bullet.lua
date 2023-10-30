@@ -43,6 +43,12 @@ function OnTriggerEnter(Entity)
         -- gameStateSys:DeleteEntity(entityobj)
         gameStateSys:DeleteEntity(entityobj)
     end
+    if (tagid == 4) then
+        --floorCount = floorCount + 1;
+        -- gameStateSys = systemManager:mGameStateSystem();
+        -- gameStateSys:DeleteEntity(entityobj)
+        gameStateSys:DeleteEntity(entityobj)
+    end
 end
 
 function OnTriggerExit(Entity)

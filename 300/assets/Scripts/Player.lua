@@ -95,9 +95,9 @@ function Update()
         rotationCam.y = rotationCam.x *0
         rotationCam.z = rotationCam.z *0
         prefabEntity:GetTransform().mRotate = rotationCam    
-        viewVecCam.x = viewVecCam.x*1
-        viewVecCam.y=viewVecCam.y *1
-        viewVecCam.z=viewVecCam.z *1
+        viewVecCam.x = viewVecCam.x*100
+        viewVecCam.y=viewVecCam.y *100
+        viewVecCam.z=viewVecCam.z *100
 
         physicsSys:SetVelocity(prefabEntity, viewVecCam)
     end
