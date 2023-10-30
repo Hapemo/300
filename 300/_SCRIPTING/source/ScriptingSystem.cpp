@@ -43,6 +43,7 @@ has to be done (Attachment of scripts and running of scripts)
 #include "CustomCompCont.h"
 #include "Debug/EnginePerformance.h"
 #include "GameState/GameStateManager.h"
+#include "FPSManager.h"
 
 bool ScriptingSystem::printOnce = false;
 
@@ -114,7 +115,7 @@ void ScriptingSystem::Init()
     LuaEntity();
     LuaGeneral();
     LuaCamera();
-    //LuaGFXCamera();
+    LuaFPSManager();
     LuaTransform();
     LuaAnimator();
     LuaRigidBody();

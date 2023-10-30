@@ -61,3 +61,9 @@ void FPSManager::LimitFPS(unsigned int fpsCap) {
 
   CalcDeltaTime();
 }
+
+float FPSManager::GetDT()
+{
+    std::cout << (float)dt << std::endl;
+    return (float)dt;
+}
