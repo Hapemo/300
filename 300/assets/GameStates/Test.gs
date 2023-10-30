@@ -10,8 +10,8 @@
         },
         "bloom_exposure": 0.800000011920929,
         "bloom_offset": 1.0,
-        "bloom_sampleweight": 1.149999976158142,
-        "chroma_strength": 0.009999999776482582,
+        "bloom_sampleweight": 1.2000000476837158,
+        "chroma_strength": 0.00800000037997961,
         "bloom_enable": true,
         "chroma_enable": true
     }
