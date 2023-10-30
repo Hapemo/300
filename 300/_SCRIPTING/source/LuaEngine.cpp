@@ -303,7 +303,14 @@ void LuaGraphicsSystem()
         "EnableGlobalBloom", &GraphicsSystem::EnableGlobalBloom,
         "DisableGlobalBloom", &GraphicsSystem::DisableGlobalBloom,
         "SetGlobalBloomThreshold", &GraphicsSystem::SetGlobalBloomThreshold,
-        "SetGlobalBloomExposure", &GraphicsSystem::SetGlobalBloomExposure
+        "SetGlobalBloomExposure", &GraphicsSystem::SetGlobalBloomExposure,
+        "mAmbientBloomThreshold", &GraphicsSystem::mAmbientBloomThreshold,
+        "mAmbientBloomExposure", &GraphicsSystem::mAmbientBloomExposure,
+        "mTexelOffset", &GraphicsSystem::mTexelOffset,
+        "mSamplingWeight", &GraphicsSystem::mSamplingWeight,
+        "mChromaticStrength", &GraphicsSystem::mChromaticStrength,
+        "m_EnableBloom", &GraphicsSystem::m_EnableBloom,
+        "m_EnableChromaticAbberation", &GraphicsSystem::m_EnableChromaticAbberation
         );
 }
 

@@ -21,12 +21,15 @@ function Alive()
     gameStateSys = systemManager:mGameStateSystem();
     inputMapSys = systemManager:mInputActionSystem();
     physicsSys = systemManager:mPhysicsSystem();
+    --graphicsSys = systemManager:mGraphicsSystem();
     cameraEntity = Helper.GetScriptEntity(script_entity.id)
     totaltime = 3.0
-
 end
 
 function Update()
+
+    -- use '.' to reference variable
+    -- vectorrr = graphicsSys.mAmbientBloomThreshold
     totaltime = totaltime + 0.016;
     positions = cameraEntity:GetTransform().mTranslate
     Camera_Scripting.RotateCameraView(cameraEntity, Input.CursorPos())
