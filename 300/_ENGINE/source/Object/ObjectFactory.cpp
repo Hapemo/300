@@ -39,6 +39,7 @@ void ObjectFactory::LoadEntity(Entity e, rapidjson::Value& reader)
 			GFX::Mesh& meshinst = *reinterpret_cast<GFX::Mesh*>(e.GetComponent<MeshRenderer>().mMeshRef.data);
 			if (meshinst.mHasAnimation) {
 				e.AddComponent<Animator>();
+				e.GetComponent<Animator>().mAnimator.SetAnimation(&meshinst.mAnimation[0]);
 			}
 		}
 	}

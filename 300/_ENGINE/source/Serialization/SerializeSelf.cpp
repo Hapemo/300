@@ -75,6 +75,7 @@ void MeshRenderer::DeserializeSelf(rapidjson::Value& reader)
 		if (mMaterialInstancePath[i] == " ")
 			continue;
 
+		// store the texture descriptor data to meshrenderer struct
 		std::string texturedescFilepath = mMaterialInstancePath[i] + ".desc";
 		_GEOM::Texture_DescriptorData::DeserializeTEXTURE_DescriptorDataFromFile(mTextureDescriptorData[i], texturedescFilepath);
 	}
