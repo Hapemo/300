@@ -525,4 +525,9 @@ struct Button
 	bool mIsClick{ false };
 	bool mActivated{ false };
 	bool mRenderFlag{ true };
+
+	inline bool IsInteractable() { return mInteractable; }
+	inline bool IsHovered() { return mIsHover; }
+	inline bool IsClicked() { return mIsClick; }
+	inline bool IsActivated() { return mActivated; }
 };
