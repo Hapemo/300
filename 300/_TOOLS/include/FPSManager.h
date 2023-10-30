@@ -49,5 +49,5 @@ struct FPSManager
   static bool trigger;
 
 public:
-	static float GetDT();
+	static double GetDT();
 };
