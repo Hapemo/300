@@ -31,38 +31,45 @@ float second_entitytime{};
 
 void GraphicsSystem::Init()
 {
-	// -- Setup Storage Buffer Object
-	SetupShaderStorageBuffers();
-
-	// -- Setup UI stuffs
-	m_Image2DMesh.Setup2DImageMesh();
-	for (int i{}; i < 32; ++i)
+	if (!m_SystemInitialized)
 	{
-		m_Textures.emplace_back(i);
+		m_SystemInitialized = true;
+
+		// -- Setup Storage Buffer Object
+		SetupShaderStorageBuffers();
+
+		// -- Setup UI stuffs
+		m_Image2DMesh.Setup2DImageMesh();
+		for (int i{}; i < 32; ++i)
+		{
+			m_Textures.emplace_back(i);
+		}
+
+		// Initialize the UI Shader
+		std::string uiShader = "UIShader";
+		uid uiShaderstr(uiShader);
+		m_UiShaderInst = *systemManager->mResourceTySystem->get_Shader(uiShaderstr.id);
+
+		// Uniforms of UI Shader
+		m_UiShaderInst.Activate();
+		GLuint uniform_tex = glGetUniformLocation(m_UiShaderInst.GetHandle(), "uTex2d");
+		glUniform1iv(uniform_tex, (GLsizei)m_Textures.size(), m_Textures.data()); // Passing texture Binding units to frag shader [0 - 31]
+		m_UiShaderInst.Deactivate();
+
+		// Get Window Handle
+		m_Window = systemManager->GetWindow();
+		m_Width = m_Window->size().x;
+		m_Height = m_Window->size().y;
+
+		// Update the editor mode flag
+		m_EditorMode = systemManager->IsEditor();
+
+		// Create FBO, with the width and height of the window
+		m_Fbo.Create(m_Width, m_Height, m_EditorMode);
+		m_GameFbo.Create(m_Width, m_Height, m_EditorMode);
+		m_PingPongFbo.Create(m_Width, m_Height);
 	}
-
-	// Initialize the UI Shader
-	std::string uiShader = "UIShader";
-	uid uiShaderstr(uiShader);
-	m_UiShaderInst = *systemManager->mResourceTySystem->get_Shader(uiShaderstr.id);
-
-	// Uniforms of UI Shader
-	m_UiShaderInst.Activate();
-	GLuint uniform_tex = glGetUniformLocation(m_UiShaderInst.GetHandle(), "uTex2d");
-	glUniform1iv(uniform_tex, (GLsizei)m_Textures.size(), m_Textures.data()); // Passing texture Binding units to frag shader [0 - 31]
-	m_UiShaderInst.Deactivate();
-
-	// Get Window Handle
-	m_Window = systemManager->GetWindow();
-	m_Width = m_Window->size().x;
-	m_Height = m_Window->size().y;
-
-	m_EditorMode = systemManager->IsEditor();
-
-	// Create FBO, with the width and height of the window
-	m_Fbo.Create(m_Width, m_Height, m_EditorMode);
-	m_GameFbo.Create(m_Width, m_Height, m_EditorMode);
-	m_PingPongFbo.Create(m_Width, m_Height);
+	
 
 	// Set Cameras' starting position
 	SetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR, {0, 0, 20});									// Position of camera
@@ -83,6 +90,8 @@ void GraphicsSystem::Init()
 		// only update the game camera if editor mode is not enabled
 		UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_GAME, 0.f);
 	}
+
+	SetCursorPosition(0.5, 0.5);
 }
 
 /***************************************************************************/
@@ -650,6 +659,7 @@ void GraphicsSystem::ChromaticAbbrebationBlendFramebuffers(GFX::FBO& targetFrame
 void GraphicsSystem::Exit()
 {
 	m_Image2DMesh.Destroy();
+
 }
 
 /***************************************************************************/
@@ -1121,6 +1131,14 @@ void GraphicsSystem::ResizeWindow(ivec2 newSize)
 
 	m_Width = newSize.x;
 	m_Height = newSize.y;
+}
+
+void GraphicsSystem::SetCursorPosition(float xPos, float yPos)
+{
+	vec2 pos{ xPos, yPos };
+	pos *= m_Window->size();
+
+	glfwSetCursorPos(m_Window->GetHandle(), pos.x, pos.y);
 }
 
 void GraphicsSystem::Unload()

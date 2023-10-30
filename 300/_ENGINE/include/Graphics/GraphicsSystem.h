@@ -218,6 +218,9 @@ public:
 
 	void ResizeWindow(ivec2 newSize);
 
+	// Top-left position as 0, 0. normalized coordinates [0, 1]
+	void SetCursorPosition(float xPos, float yPos);
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // 
 //		MEMBER VARIABLES MEMBER VARIABLES MEMBER VARIABLES MEMBER VARIABLES MEMBER VARIABLES MEMBER VARIABLES
@@ -266,6 +269,8 @@ public:
 	bool    m_EnableScroll{ false };
 	bool	m_EditorSceneHovered{ false };
 	bool    m_RightClickHeld	{ false };
+	bool	m_SystemInitialized{ false };
+
 	// -- Stats --
 	int		m_LightCount{};
 

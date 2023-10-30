@@ -113,6 +113,7 @@ Destructor of the FBO class. Deletes the resources allocated on the GPU
 			glDeleteRenderbuffers(1, &mRboID);
 			glDeleteTextures(1, &mColorAttachment);
 			glDeleteTextures(1, &mEntityIDAttachment);
+			glDeleteTextures(1, &mBrightColorsAttachment);
 		}
 
 	private:
