@@ -89,7 +89,7 @@ function Update()
     -- positions_final.y = positions.y + positions_offset.y
     -- positions_final.z = positions.z + positions_offset.z
     
-    if(inputMapSys:GetKeyDown(349)) then
+    if(inputMapSys:GetButtonDown("Shoot")) then
         prefabEntity = systemManager.ecs:NewEntityFromPrefab("bullet", positions)
         rotationCam.x = rotationCam.z *360
         rotationCam.y = rotationCam.x *0

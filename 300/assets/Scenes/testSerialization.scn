@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 5242882,
+        "entityid": 1,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -88,7 +88,7 @@
         }
     },
     {
-        "entityid": 5242883,
+        "entityid": 2,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -176,7 +176,7 @@
         }
     },
     {
-        "entityid": 5242884,
+        "entityid": 3,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -264,7 +264,7 @@
         }
     },
     {
-        "entityid": 5242885,
+        "entityid": 4,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -352,7 +352,7 @@
         }
     },
     {
-        "entityid": 5242886,
+        "entityid": 5,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -440,134 +440,7 @@
         }
     },
     {
-        "entityid": 5242887,
-        "general": {
-            "name": "bullet2",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": -5.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 8.0,
-                "y": 14.0,
-                "z": 6.0
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 1,
-            "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": true,
-                "y": false,
-                "z": false
-            },
-            "gravity": true
-        },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 2285,
-            "instancecolor": {
-                "x": 0.95652174949646,
-                "y": 1.0,
-                "z": 0.0,
-                "w": 1.0
-            },
-            "materialinstance": [
-                "../assets/Compressed/Cube_Texture_White.ctexture",
-                " ",
-                " ",
-                " ",
-                " "
-            ],
-            "mesh": "../assets/compiled_geom/cube.geom",
-            "texturerefid": [
-                4706,
-                0,
-                0,
-                0,
-                0
-            ]
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "translateoffset": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "istrigger": true
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/Bullet.lua",
-                    "variables": [
-                        {
-                            "key": "movement",
-                            "val": {
-                                "type": -655306154,
-                                "value": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0
-                                }
-                            }
-                        },
-                        {
-                            "key": "multiplier",
-                            "val": {
-                                "type": -655306154,
-                                "value": {
-                                    "x": 0.4000000059604645,
-                                    "y": 0.4000000059604645,
-                                    "z": 0.4000000059604645
-                                }
-                            }
-                        },
-                        {
-                            "key": "viewVec",
-                            "val": {
-                                "type": -655306154,
-                                "value": {
-                                    "x": 0.0,
-                                    "y": 1.0,
-                                    "z": 0.0
-                                }
-                            }
-                        }
-                    ]
-                }
-            ]
-        },
-        "prefab": {
-            "prefab": "bullet"
-        }
-    },
-    {
-        "entityid": 5242888,
+        "entityid": 7,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -742,6 +615,17 @@
                             }
                         },
                         {
+                            "key": "rotationCam",
+                            "val": {
+                                "type": -655306154,
+                                "value": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0
+                                }
+                            }
+                        },
+                        {
                             "key": "speed",
                             "val": {
                                 "type": 694561268,
@@ -757,6 +641,17 @@
                         },
                         {
                             "key": "viewVec",
+                            "val": {
+                                "type": -655306154,
+                                "value": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0
+                                }
+                            }
+                        },
+                        {
+                            "key": "viewVecCam",
                             "val": {
                                 "type": -655306154,
                                 "value": {
@@ -801,7 +696,7 @@
         }
     },
     {
-        "entityid": 5242889,
+        "entityid": 8,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -889,7 +784,7 @@
         }
     },
     {
-        "entityid": 5242890,
+        "entityid": 9,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -977,7 +872,7 @@
         }
     },
     {
-        "entityid": 5242891,
+        "entityid": 10,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -1065,7 +960,7 @@
         }
     },
     {
-        "entityid": 5242892,
+        "entityid": 11,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -1153,7 +1048,7 @@
         }
     },
     {
-        "entityid": 5242893,
+        "entityid": 12,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -1241,7 +1136,7 @@
         }
     },
     {
-        "entityid": 5242894,
+        "entityid": 13,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -1329,7 +1224,7 @@
         }
     },
     {
-        "entityid": 5242895,
+        "entityid": 14,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -1417,7 +1312,7 @@
         }
     },
     {
-        "entityid": 5242896,
+        "entityid": 15,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -1514,17 +1409,6 @@
                             }
                         },
                         {
-                            "key": "multiplier",
-                            "val": {
-                                "type": -655306154,
-                                "value": {
-                                    "x": 0.4000000059604645,
-                                    "y": 0.4000000059604645,
-                                    "z": 0.4000000059604645
-                                }
-                            }
-                        },
-                        {
                             "key": "viewVec",
                             "val": {
                                 "type": -655306154,
@@ -1544,7 +1428,7 @@
         }
     },
     {
-        "entityid": 5242897,
+        "entityid": 16,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -1632,7 +1516,7 @@
         }
     },
     {
-        "entityid": 5242898,
+        "entityid": 17,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -1720,7 +1604,7 @@
         }
     },
     {
-        "entityid": 5242899,
+        "entityid": 18,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -1808,7 +1692,7 @@
         }
     },
     {
-        "entityid": 5242900,
+        "entityid": 19,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -1896,7 +1780,7 @@
         }
     },
     {
-        "entityid": 5242901,
+        "entityid": 20,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -1984,7 +1868,7 @@
         }
     },
     {
-        "entityid": 5242902,
+        "entityid": 21,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -2072,7 +1956,7 @@
         }
     },
     {
-        "entityid": 5242903,
+        "entityid": 22,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -2160,7 +2044,7 @@
         }
     },
     {
-        "entityid": 5242904,
+        "entityid": 23,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -2248,7 +2132,7 @@
         }
     },
     {
-        "entityid": 5242905,
+        "entityid": 24,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -2336,7 +2220,7 @@
         }
     },
     {
-        "entityid": 5242906,
+        "entityid": 25,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -2424,7 +2308,7 @@
         }
     },
     {
-        "entityid": 5242907,
+        "entityid": 26,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -2512,7 +2396,7 @@
         }
     },
     {
-        "entityid": 5242908,
+        "entityid": 27,
         "general": {
             "name": "Light",
             "tagid": 2,
@@ -2552,7 +2436,7 @@
         }
     },
     {
-        "entityid": 5242909,
+        "entityid": 28,
         "general": {
             "name": "Light",
             "tagid": 2,
@@ -2595,7 +2479,7 @@
         }
     },
     {
-        "entityid": 5242910,
+        "entityid": 29,
         "general": {
             "name": "gun",
             "tagid": 0,
@@ -2648,134 +2532,7 @@
         }
     },
     {
-        "entityid": 5242911,
-        "general": {
-            "name": "bullet",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": -5.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 20.011945724487305,
-                "y": 10.797821998596191,
-                "z": 15.376813888549805
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 1,
-            "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": true,
-                "y": false,
-                "z": false
-            },
-            "gravity": true
-        },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 2285,
-            "instancecolor": {
-                "x": 0.95652174949646,
-                "y": 1.0,
-                "z": 0.0,
-                "w": 1.0
-            },
-            "materialinstance": [
-                "../assets/Compressed/Cube_Texture_White.ctexture",
-                " ",
-                " ",
-                " ",
-                " "
-            ],
-            "mesh": "../assets/compiled_geom/cube.geom",
-            "texturerefid": [
-                4706,
-                0,
-                0,
-                0,
-                0
-            ]
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "translateoffset": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "istrigger": true
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/Bullet.lua",
-                    "variables": [
-                        {
-                            "key": "movement",
-                            "val": {
-                                "type": -655306154,
-                                "value": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0
-                                }
-                            }
-                        },
-                        {
-                            "key": "multiplier",
-                            "val": {
-                                "type": -655306154,
-                                "value": {
-                                    "x": 0.4000000059604645,
-                                    "y": 0.4000000059604645,
-                                    "z": 0.4000000059604645
-                                }
-                            }
-                        },
-                        {
-                            "key": "viewVec",
-                            "val": {
-                                "type": -655306154,
-                                "value": {
-                                    "x": 0.0,
-                                    "y": 1.0,
-                                    "z": 0.0
-                                }
-                            }
-                        }
-                    ]
-                }
-            ]
-        },
-        "prefab": {
-            "prefab": "bullet"
-        }
-    },
-    {
-        "entityid": 5242912,
+        "entityid": 31,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -2863,7 +2620,7 @@
         }
     },
     {
-        "entityid": 5242913,
+        "entityid": 32,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -2951,7 +2708,7 @@
         }
     },
     {
-        "entityid": 5242914,
+        "entityid": 33,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -3039,7 +2796,7 @@
         }
     },
     {
-        "entityid": 5242915,
+        "entityid": 34,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -3127,7 +2884,7 @@
         }
     },
     {
-        "entityid": 5242916,
+        "entityid": 35,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -3215,7 +2972,7 @@
         }
     },
     {
-        "entityid": 5242917,
+        "entityid": 36,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -3303,7 +3060,7 @@
         }
     },
     {
-        "entityid": 5242918,
+        "entityid": 37,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -3391,7 +3148,7 @@
         }
     },
     {
-        "entityid": 5242919,
+        "entityid": 38,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -3479,7 +3236,7 @@
         }
     },
     {
-        "entityid": 5242920,
+        "entityid": 39,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -3567,7 +3324,7 @@
         }
     },
     {
-        "entityid": 5242921,
+        "entityid": 40,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -3655,7 +3412,7 @@
         }
     },
     {
-        "entityid": 5242922,
+        "entityid": 41,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -3743,7 +3500,7 @@
         }
     },
     {
-        "entityid": 5242923,
+        "entityid": 42,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -3831,7 +3588,7 @@
         }
     },
     {
-        "entityid": 5242924,
+        "entityid": 43,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -3919,7 +3676,7 @@
         }
     },
     {
-        "entityid": 5242925,
+        "entityid": 44,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -4007,7 +3764,7 @@
         }
     },
     {
-        "entityid": 5242926,
+        "entityid": 45,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -4095,7 +3852,7 @@
         }
     },
     {
-        "entityid": 5242927,
+        "entityid": 46,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -4183,7 +3940,7 @@
         }
     },
     {
-        "entityid": 5242928,
+        "entityid": 47,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -4271,7 +4028,7 @@
         }
     },
     {
-        "entityid": 5242929,
+        "entityid": 48,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -4359,7 +4116,7 @@
         }
     },
     {
-        "entityid": 5242930,
+        "entityid": 49,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -4447,7 +4204,7 @@
         }
     },
     {
-        "entityid": 5242931,
+        "entityid": 50,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -4535,7 +4292,7 @@
         }
     },
     {
-        "entityid": 5242932,
+        "entityid": 51,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -4623,7 +4380,7 @@
         }
     },
     {
-        "entityid": 5242933,
+        "entityid": 52,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -4711,7 +4468,7 @@
         }
     },
     {
-        "entityid": 5242934,
+        "entityid": 53,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -4799,7 +4556,7 @@
         }
     },
     {
-        "entityid": 5242935,
+        "entityid": 54,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -4887,7 +4644,7 @@
         }
     },
     {
-        "entityid": 5242936,
+        "entityid": 55,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -4975,7 +4732,7 @@
         }
     },
     {
-        "entityid": 5242937,
+        "entityid": 56,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -5063,7 +4820,7 @@
         }
     },
     {
-        "entityid": 5242938,
+        "entityid": 57,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -5151,7 +4908,7 @@
         }
     },
     {
-        "entityid": 5242939,
+        "entityid": 58,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -5239,7 +4996,7 @@
         }
     },
     {
-        "entityid": 5242940,
+        "entityid": 59,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -5327,7 +5084,7 @@
         }
     },
     {
-        "entityid": 5242941,
+        "entityid": 60,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -5415,7 +5172,7 @@
         }
     },
     {
-        "entityid": 5242942,
+        "entityid": 61,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -5503,7 +5260,7 @@
         }
     },
     {
-        "entityid": 5242943,
+        "entityid": 62,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -5591,7 +5348,7 @@
         }
     },
     {
-        "entityid": 5242944,
+        "entityid": 63,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -5679,7 +5436,7 @@
         }
     },
     {
-        "entityid": 5242945,
+        "entityid": 64,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -5767,7 +5524,7 @@
         }
     },
     {
-        "entityid": 5242946,
+        "entityid": 65,
         "general": {
             "name": "Floor",
             "tagid": 4,
@@ -5855,7 +5612,7 @@
         }
     },
     {
-        "entityid": 5242947,
+        "entityid": 66,
         "general": {
             "name": "Floor",
             "tagid": 4,
@@ -5943,7 +5700,7 @@
         }
     },
     {
-        "entityid": 5242948,
+        "entityid": 67,
         "general": {
             "name": "Floor",
             "tagid": 4,
@@ -6031,7 +5788,7 @@
         }
     },
     {
-        "entityid": 5242949,
+        "entityid": 68,
         "general": {
             "name": "Floor",
             "tagid": 4,
@@ -6119,7 +5876,7 @@
         }
     },
     {
-        "entityid": 5242952,
+        "entityid": 69,
         "general": {
             "name": "Floor",
             "tagid": 4,
@@ -6207,7 +5964,7 @@
         }
     },
     {
-        "entityid": 5242953,
+        "entityid": 70,
         "general": {
             "name": "Floor",
             "tagid": 4,
@@ -6295,7 +6052,7 @@
         }
     },
     {
-        "entityid": 5242954,
+        "entityid": 71,
         "general": {
             "name": "Floor",
             "tagid": 4,
@@ -6383,7 +6140,7 @@
         }
     },
     {
-        "entityid": 5242955,
+        "entityid": 72,
         "general": {
             "name": "Floor",
             "tagid": 4,
@@ -6471,7 +6228,7 @@
         }
     },
     {
-        "entityid": 6291526,
+        "entityid": 73,
         "general": {
             "name": "Floor",
             "tagid": 4,
@@ -6559,7 +6316,7 @@
         }
     },
     {
-        "entityid": 6291527,
+        "entityid": 74,
         "general": {
             "name": "Floor",
             "tagid": 4,
