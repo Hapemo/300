@@ -42,6 +42,11 @@ function Update()
     --     print("can meh")
     -- end
 
+    -- CALLING DT
+    -- dt = FPSManager.GetDT()
+    -- print("DT is: "..dt)
+    --print("DT is: "..FPSManager.GetDT())
+
     -- Make character move x-axis
     if (Input.CheckKey(State.HOLD, Key.UP)) then
         transformComponent.mTranslate.y = transformComponent.mTranslate.y + speed

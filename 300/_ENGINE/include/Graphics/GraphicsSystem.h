@@ -221,6 +221,8 @@ public:
 	// Top-left position as 0, 0. normalized coordinates [0, 1]
 	void SetCursorPosition(float xPos, float yPos);
 
+	void HideCursor(bool hideCursor);
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // 
 //		MEMBER VARIABLES MEMBER VARIABLES MEMBER VARIABLES MEMBER VARIABLES MEMBER VARIABLES MEMBER VARIABLES

@@ -149,22 +149,13 @@ void LuaCamera()
         );
 }
 
-//void LuaGFXCamera()
-//{
-//    systemManager->mScriptingSystem->luaState.new_usertype<GFX::Camera>(
-//        "GFXCamera", sol::constructors<GFX::Camera()>(),
-//        "RotateCameraView", &GFX::Camera::RotateCameraView,
-//        "SetCameraSpeed", &GFX::Camera::SetCameraSpeed,
-//        "SetSensitivity", &GFX::Camera::SetSensitivity,
-//        "GetCameraSpeed", &GFX::Camera::GetCameraSpeed,
-//        "GetSensitivity", &GFX::Camera::GetSensitivity,
-//        "SetTarget", &GFX::Camera::SetTarget,
-//        "SetPosition", &GFX::Camera::SetPosition,
-//        "position", &GFX::Camera::position,
-//        "target", &GFX::Camera::target,
-//        "direction", &GFX::Camera::direction
-//        );
-//}
+void LuaFPSManager()
+{
+    systemManager->mScriptingSystem->luaState.new_usertype<FPSManager>(
+        "FPSManager", sol::constructors<>(),
+        "GetDT", &FPSManager::GetDT
+        );
+}
 
 void LuaTransform()
 {
