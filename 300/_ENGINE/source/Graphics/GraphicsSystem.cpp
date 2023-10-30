@@ -103,10 +103,9 @@ void GraphicsSystem::Init()
 /**************************************************************************/
 void GraphicsSystem::Update(float dt)
 {
-	// Check window size for any updates
-
 	m_RightClickHeld = systemManager->mInputActionSystem->GetKey(M_BUTTON_R);
 
+	// Check window size for any updates
 	CheckWindowSize();
 
 	// update the camera's transformations, and its input
@@ -1139,6 +1138,14 @@ void GraphicsSystem::SetCursorPosition(float xPos, float yPos)
 	pos *= m_Window->size();
 
 	glfwSetCursorPos(m_Window->GetHandle(), pos.x, pos.y);
+}
+
+void GraphicsSystem::HideCursor(bool hideCursor)
+{
+	if (hideCursor)
+		glfwSetInputMode(m_Window->GetHandle(), GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+	else
+		glfwSetInputMode(m_Window->GetHandle(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 }
 
 void GraphicsSystem::Unload()
