@@ -220,10 +220,6 @@ void Application::MainUpdate()
     {
         FirstUpdate();
         SystemUpdate();
-        // To remove (Script test with entities)
-        systemManager->mScriptingSystem->ScriptingUpdateTest();
-        // To remove after ScriptStart and ScriptUpdate are functions are working
-        systemManager->mScriptingSystem->TestSSSU();
         SecondUpdate(); // This should always be the last
 
         // Graphics update

@@ -128,6 +128,8 @@ void SystemManager::Update(float dt)
 	EnginePerformance::EndTrack("Audio");
 	EnginePerformance::UpdateSystemMs("Audio");
 	//	mResourceSystem.get()->Update();
+
+	ecs->DeleteEntityUpdate();
 }
 
 void SystemManager::Exit()

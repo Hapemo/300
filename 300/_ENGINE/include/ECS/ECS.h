@@ -19,6 +19,10 @@ struct Children;
 struct Parent;
 struct Transform;
 
+#define EXPAND(...) __VA_ARGS__ 
+
+#define ALL_COMPONENTS EXPAND(MeshRenderer, RigidBody, BoxCollider, SphereCollider, CapsuleCollider, Scripts, Audio) 
+
 struct Entity
 {
 	entt::entity id;
@@ -123,18 +127,6 @@ struct Entity
 	Removes a child from a parent entity.
 	*******************************************************************************/
 	void RemoveChild(Entity e);
-
-	/*!*****************************************************************************
-	Get component for lua.
-	*******************************************************************************/
-	template<typename Component>
-	Component& LuaGetComponent(Entity entity);
-
-	//template <typename Component, typename OtherComponent, typename ...Components>
-	/*auto LuaGetComponents(Entity entity);*/
-
-	//template <typename Component, typename OtherComponent, typename ...Components>
-	//auto LuaGetComponents(Entity entity, sol::as_args args);
 };
 
 class ECS
@@ -186,6 +178,21 @@ public:
 	void DeleteAllEntities();
 
 	/*!*****************************************************************************
+	Scripts will only call this delete entity function, which is to set
+	isDelete of entity in general component to true, indicating that it should
+	be delete later.
+	*******************************************************************************/
+	void SetDeleteEntity(Entity e);
+
+	/*!*****************************************************************************
+	This function is the follow up after SetDeleteEntity is called in scripts.
+	This function will be called after all systems had updated under systemManager
+	update to make sure that the intended deleted entity is deleted at the end 
+	of the update loop.
+	*******************************************************************************/
+	void DeleteEntityUpdate();
+
+	/*!*****************************************************************************
 	Creates a prefab from an entity.
 	*******************************************************************************/
 	void NewPrefab(Entity e);
@@ -213,7 +220,7 @@ public:
 	/*!*****************************************************************************
 	Pastes an entity from the clipboard.
 	*******************************************************************************/
-	Entity PasteEntity(int );
+	Entity PasteEntity(int);
 
 	/*!*****************************************************************************
 	Creates a dummy entity for editing prefabs.
@@ -224,7 +231,7 @@ public:
 	Destroys the dummy entity, and updates all entities that are linked to the prefab.
 	*******************************************************************************/
 	void EndEditPrefab(Entity e);
-	
+
 	/*!*****************************************************************************
 	Destroys the dummy entity, and DOES NOT updates all entities that are linked to the prefab.
 	*******************************************************************************/
@@ -235,11 +242,36 @@ public:
 	*******************************************************************************/
 	~ECS();
 
+	template <typename T, typename ...Ts>
+	void AddComponentHelper(Entity e, Entity temp);
+
+	template <typename T, typename ...Ts>
+	void RemoveComponentHelper(Entity e);
+
 	int SelectedScene;
 
 	static std::vector<std::string> mEntityTags;
 };
 
+template <typename T, typename ...Ts>
+void ECS::AddComponentHelper(Entity e, Entity temp) {
+	if (temp.HasComponent<T>())
+		e.AddComponent<T>() = temp.GetComponent<T>();
+
+	if constexpr (sizeof...(Ts) > 0) {
+		AddComponentHelper<Ts...>(e, temp);
+	}
+}
+
+template <typename T, typename ...Ts>
+void ECS::RemoveComponentHelper(Entity e) {
+	if (e.HasComponent<T>())
+		e.RemoveComponent<T>();
+
+	if constexpr (sizeof...(Ts) > 0) {
+		RemoveComponentHelper<Ts...>(e);
+	}
+}
 
 
 template <typename Component>
@@ -257,12 +289,12 @@ auto ECS::GetEntitiesWith()
 template <typename Component>
 Component& Entity::AddComponent()
 {
-//#ifdef _DEBUG
-//	assert(static_cast<std::uint32_t>(this->id) != 0);
-//#else
-//	if (static_cast<std::uint32_t>(this->id) == 0)
-//		return Component();
-//#endif
+	//#ifdef _DEBUG
+	//	assert(static_cast<std::uint32_t>(this->id) != 0);
+	//#else
+	//	if (static_cast<std::uint32_t>(this->id) == 0)
+	//		return Component();
+	//#endif
 	PASSERT((static_cast<std::uint32_t>(this->id) != 0, "Tried to add component from null entity! e.id = 0"));
 	return systemManager->ecs->registry.emplace_or_replace<Component>(id, Component());
 }
@@ -270,12 +302,12 @@ Component& Entity::AddComponent()
 template <typename Component>
 Component& Entity::AddComponent(const Component& component)
 {
-//#ifdef _DEBUG
-//	assert(static_cast<std::uint32_t>(this->id) != 0);
-//#else
-//	if (static_cast<std::uint32_t>(this->id) == 0)
-//		return Component();
-//#endif
+	//#ifdef _DEBUG
+	//	assert(static_cast<std::uint32_t>(this->id) != 0);
+	//#else
+	//	if (static_cast<std::uint32_t>(this->id) == 0)
+	//		return Component();
+	//#endif
 	PASSERT((static_cast<std::uint32_t>(this->id) != 0, "Tried to add component from null entity! e.id = 0"));
 	return systemManager->ecs->registry.emplace_or_replace<Component>(id, component);
 }
@@ -283,12 +315,12 @@ Component& Entity::AddComponent(const Component& component)
 template <typename Component>
 Component& Entity::GetComponent()
 {
-//#ifdef _DEBUG
-//	assert(static_cast<std::uint32_t>(this->id) != 0);
-//#else
-//	if (static_cast<std::uint32_t>(this->id) == 0)
-//		return Component();
-//#endif
+	//#ifdef _DEBUG
+	//	assert(static_cast<std::uint32_t>(this->id) != 0);
+	//#else
+	//	if (static_cast<std::uint32_t>(this->id) == 0)
+	//		return Component();
+	//#endif
 	PASSERT((static_cast<std::uint32_t>(this->id) != 0, "Tried to get component from null entity! e.id = 0"));
 	PASSERT((this->HasComponent<Component>(), "no such component in entity"));
 	return systemManager->ecs->registry.get_or_emplace<Component>(id, Component());
@@ -297,12 +329,12 @@ Component& Entity::GetComponent()
 template<typename Component>
 const Component& Entity::GetComponent() const
 {
-//#ifdef _DEBUG
-//	assert(static_cast<std::uint32_t>(this->id) != 0);
-//#else
-//	if (static_cast<std::uint32_t>(this->id) == 0)
-//		return Component();
-//#endif
+	//#ifdef _DEBUG
+	//	assert(static_cast<std::uint32_t>(this->id) != 0);
+	//#else
+	//	if (static_cast<std::uint32_t>(this->id) == 0)
+	//		return Component();
+	//#endif
 	PASSERT((static_cast<std::uint32_t>(this->id) != 0, "Tried to get component from null entity! e.id = 0"));
 	return systemManager->ecs->registry.get_or_emplace<Component>(id, Component());
 }
@@ -310,12 +342,12 @@ const Component& Entity::GetComponent() const
 template <typename Component, typename OtherComponent, typename ...Components>
 auto Entity::GetComponents()
 {
-//#ifdef _DEBUG
-//	assert(static_cast<std::uint32_t>(this->id) != 0);
-//#else
-//	if (static_cast<std::uint32_t>(this->id) == 0)
-//		return auto();
-//#endif
+	//#ifdef _DEBUG
+	//	assert(static_cast<std::uint32_t>(this->id) != 0);
+	//#else
+	//	if (static_cast<std::uint32_t>(this->id) == 0)
+	//		return auto();
+	//#endif
 	PASSERT((static_cast<std::uint32_t>(this->id) != 0, "Tried to get component from null entity! e.id = 0"));
 	return systemManager->ecs->registry.get<Component, OtherComponent, Components...>(id);
 }
@@ -333,7 +365,7 @@ bool Entity::HasAnyOfComponents() const
 }
 
 template <typename ... Components>
-bool Entity::HasAllOfComponents() const 
+bool Entity::HasAllOfComponents() const
 {
 	return systemManager->ecs->registry.all_of<Components...>(id);
 }

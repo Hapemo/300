@@ -41,13 +41,8 @@ void LuaECS()
         "ecs", sol::constructors<>(),
         "NewEntity", &ECS::NewEntity,
         "NewEntityByScene", &ECS::NewEntityByScene,
-        "DeleteEntity", &ECS::DeleteEntity,
-        "NewEntityFromPrefab", &ECS::NewEntityFromPrefab
-        //"GetEntitiesWithGeneral", &ECS::GetEntitiesWith<General>,
-        //"GetEntitiesWithTransform", &ECS::GetEntitiesWith<Transform>,
-        //"GetEntitiesWithRigidBody", &ECS::GetEntitiesWith<RigidBody>,
-        //"GetEntitiesWithBoxCollider", &ECS::GetEntitiesWith<BoxCollider>,
-        //"GetEntitiesWithScripts", &ECS::GetEntitiesWith<Scripts>
+        "NewEntityFromPrefab", &ECS::NewEntityFromPrefab,
+        "SetDeleteEntity", &ECS::SetDeleteEntity
     );
 }
 
@@ -363,7 +358,6 @@ void LuaGameState()
     systemManager->mScriptingSystem->luaState.new_usertype<GameStateManager>(
         "mGameStateSystem", sol::constructors<>(),
         "GetEntity", &GameStateManager::GetEntity,
-        "DeleteEntity", &GameStateManager::DeleteEntity,
         "ChangeGameState", sol::resolve<void(const std::string&)>(&GameStateManager::ChangeGameState)
         );
 }

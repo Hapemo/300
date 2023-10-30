@@ -61,10 +61,11 @@ struct General : public Serializable
 	//int tagid{ 0 };
 	SUBTAG subtag;
 	bool isActive{};
+	bool isDelete{};
 	bool isPaused{};
 
 	General() 
-	: name(""), subtag(SUBTAG::ACTIVE), isActive(true) 
+	: name(""), subtag(SUBTAG::ACTIVE), isActive(true), isDelete(false)
 	{};
 
 	std::string GetTag() { return ECS::GetTag(tagid); }

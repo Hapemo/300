@@ -2,8 +2,7 @@ viewVec = Vec3.new(0,0,0)
 movement = Vec3.new(0,0,0)
 
 function Alive()
-
-
+    
 end
 
 function Update()
@@ -14,7 +13,6 @@ function Update()
 
 
     viewVec = Camera_Scripting.GetDirection(cameraEntity)
-    entityobj = Helper.GetScriptEntity(script_entity.id)
     physicsSys = systemManager:mPhysicsSystem()
 
     -- movement.x= movement.x+movement.x
@@ -35,19 +33,20 @@ function Dead()
 end
 
 function OnTriggerEnter(Entity)
+    entityobj = Helper.GetScriptEntity(script_entity.id)
     generalComponent = Entity:GetGeneral()
     tagid = generalComponent.tagid
     if (tagid == 3) then
         --floorCount = floorCount + 1;
         -- gameStateSys = systemManager:mGameStateSystem();
         -- gameStateSys:DeleteEntity(entityobj)
-        gameStateSys:DeleteEntity(entityobj)
+        systemManager.ecs:SetDeleteEntity(entityobj)
     end
     if (tagid == 4) then
         --floorCount = floorCount + 1;
         -- gameStateSys = systemManager:mGameStateSystem();
         -- gameStateSys:DeleteEntity(entityobj)
-        gameStateSys:DeleteEntity(entityobj)
+        systemManager.ecs:SetDeleteEntity(entityobj)
     end
 end
 

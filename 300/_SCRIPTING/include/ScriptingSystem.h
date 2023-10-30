@@ -89,10 +89,6 @@ public:
     void ScriptExit(const Entity& script);
     void ScriptDead(const Entity& script);
 
-    // To test ScriptStart and ScriptUpdate in main
-    void TestSSSU();
-    bool runOnce;
-
     // Call in Reload function
     void ScriptReload();
 
@@ -101,11 +97,6 @@ public:
 
     // AddScripts function that checks for the existence of Script component then attach desired script to entity
     void AddScript(Entity& entity, std::string fileName);
-
-    // To delete after port in to imGui
-    void ScriptingInitTest();
-    void ScriptingUpdateTest();
-    static bool printOnce;
 
 private:
     // for performance

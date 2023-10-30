@@ -74,7 +74,7 @@ void Entity::Deactivate() {
 
 
 	// General
-	genComp.isActive = true;
+	genComp.isActive = false;
 
 	// Parent Child
 	/*if (HasComponent<)
@@ -166,6 +166,29 @@ void ECS::DeleteAllEntities()
 	registry.clear();
 }
 
+void ECS::SetDeleteEntity(Entity e)
+{
+	auto entities = systemManager->ecs->GetEntitiesWith<General>();
+	// set entity isDelete to true
+	entities.get<General>(e.id).isDelete = true;
+	PINFO("Entity to be deleted: %d", (int)e.id)
+	std::cout << "Enstity to be deleted" << (int)e.id << std::endl;
+}
+
+void ECS::DeleteEntityUpdate()
+{
+	auto generalEntities = systemManager->ecs->GetEntitiesWith<General>();
+	for (Entity entity : generalEntities)
+	{
+		if (entity.GetComponent<General>().isDelete)
+		{
+			std::cout << (int)entity.id << std::endl;
+			systemManager->GetGameStateSystem()->DeleteEntity(entity);
+			PINFO("Delete entity done");
+		}
+	}
+}
+
 void ECS::CopyEntity(Entity e)
 {
 	if (static_cast<std::uint32_t>(e.id) == 0)
@@ -228,20 +251,7 @@ void ECS::UpdatePrefabEntities(std::string prefabName)
 		e.GetComponent<Transform>().mScale = temp.GetComponent<Transform>().mScale;
 		e.GetComponent<Transform>().mRotate = temp.GetComponent<Transform>().mRotate;
 
-		if (temp.HasComponent<MeshRenderer>())
-			e.AddComponent<MeshRenderer>() = temp.GetComponent<MeshRenderer>();
-		if (temp.HasComponent<RigidBody>())
-			e.AddComponent<RigidBody>() = temp.GetComponent<RigidBody>();
-		if (temp.HasComponent<BoxCollider>())
-			e.AddComponent<BoxCollider>() = temp.GetComponent<BoxCollider>();
-		if (temp.HasComponent<SphereCollider>())
-			e.AddComponent<SphereCollider>() = temp.GetComponent<SphereCollider>();
-		if (temp.HasComponent<CapsuleCollider>())
-			e.AddComponent<CapsuleCollider>() = temp.GetComponent<CapsuleCollider>();
-		if (temp.HasComponent<Scripts>())
-			e.AddComponent<Scripts>() = temp.GetComponent<Scripts>();
-		if (temp.HasComponent<Audio>())
-			e.AddComponent<Audio>() = temp.GetComponent<Audio>();
+		AddComponentHelper<ALL_COMPONENTS>(e, temp);
 	}
 
 	systemManager->ecs->DeleteEntity(temp);
