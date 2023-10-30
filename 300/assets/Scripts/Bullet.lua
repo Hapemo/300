@@ -39,7 +39,8 @@ function OnTriggerEnter(Entity)
     tagid = generalComponent.tagid
     if (tagid == 3) then
         --floorCount = floorCount + 1;
-        
+        -- gameStateSys = systemManager:mGameStateSystem();
+        -- gameStateSys:DeleteEntity(entityobj)
         systemManager.ecs:DeleteEntity(entityobj)
     end
 end
