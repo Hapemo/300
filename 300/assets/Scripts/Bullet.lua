@@ -41,7 +41,7 @@ function OnTriggerEnter(Entity)
         --floorCount = floorCount + 1;
         -- gameStateSys = systemManager:mGameStateSystem();
         -- gameStateSys:DeleteEntity(entityobj)
-        systemManager.ecs:DeleteEntity(entityobj)
+        gameStateSys:DeleteEntity(entityobj)
     end
 end
 

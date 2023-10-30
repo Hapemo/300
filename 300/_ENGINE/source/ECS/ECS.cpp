@@ -157,6 +157,7 @@ void ECS::DeleteEntity(Entity e)
 			e.RemoveChild(child);
 	if (e.HasComponent<Prefab>())
 		UnlinkPrefab(e);
+	systemManager->mPhysicsSystem->RemoveActor(e);
 	registry.destroy(e.id);
 }
 

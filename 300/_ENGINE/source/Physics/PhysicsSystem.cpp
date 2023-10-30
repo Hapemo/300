@@ -97,6 +97,8 @@ void PhysicsSystem::SetVelocity(Entity e, const glm::vec3& velocity)
 
 void PhysicsSystem::RemoveActor(Entity e)
 {
+	if (!e.HasComponent<RigidBody>())
+		return;
 	auto itr = mTriggerCollisions.find(static_cast<uint32_t>(e.id));
 	if (itr != mTriggerCollisions.end())
 	{
@@ -115,6 +117,8 @@ void PhysicsSystem::RemoveActor(Entity e)
 			vec.erase(temp);
 		}
 	}
+	if (mActors.count(static_cast<uint32_t>(e.id)) == 0)
+		return;
 	mPX.mScene->removeActor(*mActors[static_cast<uint32_t>(e.id)].mActor);
 	mActors.erase(static_cast<uint32_t>(e.id));
 }

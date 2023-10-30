@@ -142,7 +142,6 @@ void SystemManager::Exit()
 
 void SystemManager::DeleteEntity(Entity e)
 {
-	mPhysicsSystem->RemoveActor(e);
 	ecs->DeleteEntity(e);
 }
 
