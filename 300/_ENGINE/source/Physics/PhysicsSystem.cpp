@@ -99,24 +99,24 @@ void PhysicsSystem::RemoveActor(Entity e)
 {
 	if (!e.HasComponent<RigidBody>())
 		return;
-	auto itr = mTriggerCollisions.find(static_cast<uint32_t>(e.id));
-	if (itr != mTriggerCollisions.end())
-	{
-		mTriggerCollisions.erase(itr);
-	}
-	else
-	{
-		for (itr = mTriggerCollisions.begin(); itr != mTriggerCollisions.end(); ++itr)
-		{
-			Entity trigger = itr->first;
-			std::vector<uint32_t>& vec = itr->second;
-			auto temp = std::find(vec.begin(), vec.end(), static_cast<uint32_t>(e.id));
-			if (temp == vec.end())
-				continue;
-			trigger.GetComponent<Scripts>().RunFunctionForAllScripts("OnTriggerExit", e);
-			vec.erase(temp);
-		}
-	}
+	//auto itr = mTriggerCollisions.find(static_cast<uint32_t>(e.id));
+	//if (itr != mTriggerCollisions.end())
+	//{
+	//	mTriggerCollisions.erase(itr);
+	//}
+	//else
+	//{
+	//	for (itr = mTriggerCollisions.begin(); itr != mTriggerCollisions.end(); ++itr)
+	//	{
+	//		Entity trigger = itr->first;
+	//		std::vector<uint32_t>& vec = itr->second;
+	//		auto temp = std::find(vec.begin(), vec.end(), static_cast<uint32_t>(e.id));
+	//		if (temp == vec.end())
+	//			continue;
+	//		trigger.GetComponent<Scripts>().RunFunctionForAllScripts("OnTriggerExit", e);
+	//		vec.erase(temp);
+	//	}
+	//}
 	if (mActors.count(static_cast<uint32_t>(e.id)) == 0)
 		return;
 	mPX.mScene->removeActor(*mActors[static_cast<uint32_t>(e.id)].mActor);

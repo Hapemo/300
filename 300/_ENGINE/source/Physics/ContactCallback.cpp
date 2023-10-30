@@ -57,23 +57,25 @@ void ContactCallback::onTrigger(PxTriggerPair* pairs, PxU32 count)
 		std::string tName = triggerEntity.GetComponent<General>().name;
 		std::string oName = otherEntity.GetComponent<General>().name;
 
+		if (tName == "bullet" && oName == "Camera")
+			continue;
 
-		std::vector<uint32_t>& triggeredEntities = PhysicsSystem::mTriggerCollisions[static_cast<uint32_t>(triggerEntity.id)];
-		uint32_t otherID = static_cast<uint32_t>(otherEntity.id);
+		/*std::vector<uint32_t>& triggeredEntities = PhysicsSystem::mTriggerCollisions[static_cast<uint32_t>(triggerEntity.id)];
+		uint32_t otherID = static_cast<uint32_t>(otherEntity.id);*/
 
 		if (current.status & PxPairFlag::eNOTIFY_TOUCH_FOUND)
 		{
 			triggerEntity.GetComponent<Scripts>().RunFunctionForAllScripts("OnTriggerEnter", otherEntity);
-			triggeredEntities.push_back(otherID);
+			//triggeredEntities.push_back(otherID);
 		}
 		else if (current.status & physx::PxPairFlag::eNOTIFY_TOUCH_LOST)
 		{
-			auto itr = std::find(triggeredEntities.begin(), triggeredEntities.end(), otherID);
-			if (itr != triggeredEntities.end())
-			{
+			//auto itr = std::find(triggeredEntities.begin(), triggeredEntities.end(), otherID);
+			//if (itr != triggeredEntities.end())
+			//{
 				triggerEntity.GetComponent<Scripts>().RunFunctionForAllScripts("OnTriggerExit", otherEntity);
-				triggeredEntities.erase(itr);
-			}
+			/*	triggeredEntities.erase(itr);
+			}*/
 		}
 	}
 }
