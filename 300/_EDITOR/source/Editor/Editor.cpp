@@ -292,7 +292,8 @@ void Editor::UIupdate([[maybe_unused]]GLFWwindow* window) {
             ImGui::Begin(windows.first.c_str(), 0, windows.second->mWinFlag);
 
             windows.second->update();
-            if (windows.first == "Editscene") {
+            if (windows.first == "Editscene") 
+            {
                 (static_cast<SceneWindow*>(windows.second))->RenderGuizmo();
             }
             ImGui::End();
