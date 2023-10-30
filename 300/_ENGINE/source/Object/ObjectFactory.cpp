@@ -42,6 +42,7 @@ void ObjectFactory::LoadEntity(Entity e, rapidjson::Value& reader)
 			}
 		}
 	}
+	DESERIALIZE_SELF(UIrenderer, "uirenderer");
 	DESERIALIZE_SELF(BoxCollider, "boxcollider");
 	DESERIALIZE_SELF(SphereCollider, "spherecollider");
 	DESERIALIZE_SELF(CapsuleCollider, "capsulecollider");
@@ -152,6 +153,7 @@ void ObjectFactory::SaveEntity(Entity e, rapidjson::PrettyWriter<rapidjson::Stri
 	SERIALIZE_SELF(Transform);
 	SERIALIZE_SELF(RigidBody);
 	SERIALIZE_SELF(MeshRenderer);
+	SERIALIZE_SELF(UIrenderer);
 	SERIALIZE_SELF(BoxCollider);
 	SERIALIZE_SELF(SphereCollider);
 	SERIALIZE_SELF(CapsuleCollider);
