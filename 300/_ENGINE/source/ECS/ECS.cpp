@@ -1,13 +1,16 @@
 #include "pch.h"
 #include "ECS/ECS.h"
 #include "ECS/ECS_Components.h"
+#include "ECS/ECS_Systems.h"
+#include "Physics/PhysicsSystem.h"
+
 #include "ScriptingSystem.h"
 #include "Object/ObjectFactory.h"
 #include "GameState/GameStateManager.h"
 #include "Debug/AssertException.h"
 #include "ResourceManagerTy.h"
 
-std::vector<std::string> ECS::mEntityTags({ "PLAYER", "ENEMY", "BULLET", "FLOOR", "WALL" });
+std::vector<std::string> ECS::mEntityTags({ "PLAYER", "ENEMY", "BULLET", "FLOOR", "WALL", "TELEPORTER"});
 
 bool Entity::ShouldRun() {
 	assert(HasComponent<General>() && std::string("There is no general component when attempting to change Entity's isActive").c_str());
@@ -193,7 +196,7 @@ void ECS::NewPrefab(Entity e)
 	mPrefabs[name].push_back(e);
 }
 
-Entity ECS::NewEntityFromPrefab(std::string prefabName)
+Entity ECS::NewEntityFromPrefab(std::string prefabName, const glm::vec3& pos)
 {
 	// void ObjectFactory::DeserializeScene(const std::string& filename)
 	// creation of new entity done inside deserializescene function
@@ -204,10 +207,14 @@ Entity ECS::NewEntityFromPrefab(std::string prefabName)
 	//MeshRenderer temp = e.GetComponent<MeshRenderer>();
 	PASSERT(static_cast<uint32_t>(e.id) != 0);
 	Scripts& scripts = e.GetComponent<Scripts>();
+	e.GetComponent<Transform>().mTranslate = pos;
 	for (auto& elem : scripts.scriptsContainer)
 	{
 		elem.Load(e.id);
 	}
+
+	if (e.HasComponent<RigidBody>())
+		systemManager->mPhysicsSystem->AddEntity(e);
 	return e;
 }
 

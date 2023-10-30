@@ -26,6 +26,9 @@ function Update()
     --vfxComponent = entity:GetVFX();
     -- Change entity name to enemy
     generalComponent.name = "Enemy"
+    subtag = generalComponent.subtag
+    generalComponent.subtag = SUBTAG.BACKGROUND
+    print(subtag)
     --[[ Get entity Tag
     tag = generalComponent:GetTag();
     print(tag) 
@@ -65,6 +68,8 @@ function Update()
                 testEntity = systemManager.ecs:NewEntityByScene();
                 gameStateSys = systemManager:mGameStateSystem();
                 gameStateSys:DeleteEntity(testEntity)
+                --gameStateSys:ChangeGameState("exit")
+                prefabEntity = systemManager.ecs:NewEntityFromPrefab("Floor", vec)
             end
             create = create + 1
         end

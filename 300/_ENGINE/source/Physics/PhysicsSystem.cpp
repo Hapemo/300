@@ -8,12 +8,12 @@ std::unordered_map<std::uint32_t, std::vector<uint32_t>> PhysicsSystem::mTrigger
 
 PhysicsSystem::PhysicsSystem()
 {
-	mMaterials[MATERIAL::RUBBER] = CreateMaterial(0.9f, 0.8f, 0.2f);
-	mMaterials[MATERIAL::WOOD] = CreateMaterial(0.5f, 0.4f, 0.3f);
-	mMaterials[MATERIAL::METAL] = CreateMaterial(0.7f, 0.6f, 0.05f);
-	mMaterials[MATERIAL::ICE] = CreateMaterial(0.1f, 0.05f, 0.1f);
-	mMaterials[MATERIAL::CONCRETE] = CreateMaterial(0.6f, 0.5f, 0.2f);
-	mMaterials[MATERIAL::GLASS] = CreateMaterial(0.4f, 0.3f, 0.7f);
+	mMaterials[MATERIAL::RUBBER] = CreateMaterial(0.9f, 0.8f, 0.f);
+	mMaterials[MATERIAL::WOOD] = CreateMaterial(0.5f, 0.4f, 0.f);
+	mMaterials[MATERIAL::METAL] = CreateMaterial(0.7f, 0.6f, 0.0f);
+	mMaterials[MATERIAL::ICE] = CreateMaterial(0.1f, 0.05f, 0.f);
+	mMaterials[MATERIAL::CONCRETE] = CreateMaterial(0.6f, 0.5f, 0.f);
+	mMaterials[MATERIAL::GLASS] = CreateMaterial(0.4f, 0.3f, 0.f);
 }
 
 void PhysicsSystem::Init()
@@ -170,7 +170,7 @@ void PhysicsSystem::CreateRigidBody(Entity e)
 		SphereCollider col = e.GetComponent<SphereCollider>();
 		CreateAndAttachShape(actor,
 			shape, 
-			PxSphereGeometry(std::max({ xform.mScale.x, xform.mScale.y, xform.mScale.z }) * col.mScaleOffset / 2.f), 
+			PxSphereGeometry(col.mScaleOffset), 
 			PxTransform(Convert(col.mTranslateOffset)),
 			rbod, 
 			col.mIsTrigger);

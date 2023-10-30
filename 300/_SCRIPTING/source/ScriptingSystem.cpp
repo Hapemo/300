@@ -190,6 +190,11 @@ void ScriptingSystem::Init()
         "CONCRETE", MATERIAL::CONCRETE,
         "GLASS", MATERIAL::GLASS,
         "UNDEFINED", MATERIAL::UNDEFINED);
+
+    luaState.new_enum("SUBTAG",
+        "ACTIVE", SUBTAG::ACTIVE,
+        "BACKGROUND", SUBTAG::BACKGROUND,
+        "UNDEFINED", SUBTAG::UNDEFINED);
 }
 
 void ScriptingSystem::Update(float dt)

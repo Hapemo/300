@@ -31,12 +31,13 @@ Camera_Input::Camera_Input()
 
 void Camera_Input::updateCameraInput(GFX::Camera& cam, const float& dt)
 {
-	glm::vec3 moveVector{};
-	auto  side = glm::normalize(glm::cross(cam.direction(), { 0, 1, 0 }));
-	auto  up = glm::normalize(glm::cross(side, cam.direction()));
-
-	//!< WASD Camera Movement
+	if (systemManager->isSystemPaused())
 	{
+		//!< WASD Camera Movement !<
+		glm::vec3 moveVector{};
+		auto  side = glm::normalize(glm::cross(cam.direction(), { 0, 1, 0 }));
+		auto  up = glm::normalize(glm::cross(side, cam.direction()));
+		
 		// camera move forward
 		if (Input::CheckKey(E_STATE::HOLD, E_KEY::W)) {
 			moveVector += glm::normalize(cam.direction()) * dt * cam.mCameraSpeed;
@@ -74,7 +75,8 @@ void Camera_Input::updateCameraInput(GFX::Camera& cam, const float& dt)
 	//!< Mouse Movement
 	{
 		// if the right mouse button is being pressed
-		if (Input::CheckKey(E_STATE::HOLD, E_KEY::M_BUTTON_R))
+		//if (Input::CheckKey(E_STATE::HOLD, E_KEY::M_BUTTON_R))
+		if (systemManager->mGraphicsSystem->m_RightClickHeld && systemManager->isSystemPaused())
 		{
 			// if the cursor is moving relative to its old position
 			vec2 delta = Input::CursorPos() - cam.cursorPosition();
@@ -92,7 +94,7 @@ void Camera_Input::updateCameraInput(GFX::Camera& cam, const float& dt)
 	}
 
 	//!< Camera Zoom
-	if (systemManager->mGraphicsSystem->m_EnableScroll)
+	if (systemManager->mGraphicsSystem->m_EnableScroll && systemManager->isSystemPaused())
 	{
 		cam.mFovDegree -= static_cast<float>(Input::GetScroll());
 		if (cam.mFovDegree < GFX::CameraConstants::minFOV) {
@@ -174,8 +176,9 @@ void Camera_Scripting::RotateCameraView(Entity cameraEntity, const vec2& cursorp
 	assert(cameraEntity.HasComponent<Camera>());
 	auto& caminst = cameraEntity.GetComponent<Camera>().mCamera;
 
-
-	vec2 delta = caminst.mCursorPos - cursorposition;
+	
+	//vec2 delta = caminst.mCursorPos - cursorposition;
+	vec2 delta = cursorposition - caminst.mCursorPos;
 	if (delta == vec2(0.f, 0.f))
 		return;
 

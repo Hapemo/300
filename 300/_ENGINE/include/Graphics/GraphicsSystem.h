@@ -218,6 +218,9 @@ public:
 
 	void ResizeWindow(ivec2 newSize);
 
+	// Top-left position as 0, 0. normalized coordinates [0, 1]
+	void SetCursorPosition(float xPos, float yPos);
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // 
 //		MEMBER VARIABLES MEMBER VARIABLES MEMBER VARIABLES MEMBER VARIABLES MEMBER VARIABLES MEMBER VARIABLES
@@ -238,6 +241,7 @@ public:
 	GFX::Camera m_EditorCamera;
 	CAMERA_TYPE m_CameraControl;
 
+
 	// -- Bloom -- 
 	vec3		mAmbientBloomThreshold { 0.05, 0.05, 0.005 };		// this yj
 	float		mAmbientBloomExposure{ 0.4f };						// this yj
@@ -246,6 +250,10 @@ public:
 
 	// -- Chromatic Abbreation --
 	float		mChromaticStrength{ 0.006f };						// this yj
+
+	bool    m_EnableBloom{ false };									// this yj
+	bool	m_EnableChromaticAbberation{ false };					// this yj
+
 
 	// -- Textures --
 	std::vector<int> m_Textures;	// 0, 1, ..., 31
@@ -259,14 +267,17 @@ public:
 	bool	m_EnableGlobalAnimations{ 1 };
 	bool	m_HasLight{ false };
 	bool    m_EnableScroll{ false };
-	bool    m_EnableBloom{ false };									// this yj
-	bool	m_EnableChromaticAbberation{ false };					// this yj
+	bool	m_EditorSceneHovered{ false };
+	bool    m_RightClickHeld	{ false };
+	bool	m_SystemInitialized{ false };
 
 	// -- Stats --
 	int		m_LightCount{};
 
 	// -- TEST --
 	float m_DegreeTest{};
+
+	void Unload();
 
 private:
 	// -- SSBO -- 

@@ -1,6 +1,7 @@
 Jump: SPACE
-Throw: G
-down: S
-left: A
-right: D
 up: W
+left: A
+down: S
+right: D
+Shoot: M_BUTTON_L
+Dash: M_BUTTON_R

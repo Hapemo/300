@@ -342,15 +342,15 @@ DESERIALIZE_BASIC(entt::entity)
 	}
 }
 
-DESERIALIZE_BASIC(enum_tag::enum_tag)
-{
-	if (reader.HasMember(name))
-	{
-		int num;
-		Deserialize(reader, name, num);
-		val = static_cast<enum_tag::enum_tag>(num);
-	}
-}
+//DESERIALIZE_BASIC(enum_tag::enum_tag)
+//{
+//	if (reader.HasMember(name))
+//	{
+//		int num;
+//		Deserialize(reader, name, num);
+//		val = static_cast<enum_tag::enum_tag>(num);
+//	}
+//}
 
 void WriteToFile(const std::string &filename, const rapidjson::StringBuffer &buffer)
 {

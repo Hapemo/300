@@ -18,8 +18,10 @@ and saving of prefabs, scenes and gamestates using serialization.
 #include "GameState/GameState.h"
 #include "ConfigManager.h"
 #include "ResourceManagerTy.h"
+#include "Graphics/GraphicsSystem.h"
 #include "Debug/Logger.h"
 #include "ECS/ECS_Components.h"
+#include "Physics/PhysicsSystem.h"
 
 #define SERIALIZE_SELF(T) if (e.HasComponent<T>()) e.GetComponent<T>().SerializeSelf(writer)
 #define DESERIALIZE_SELF(T, S) if(reader.HasMember(S)) e.AddComponent<T>().DeserializeSelf(reader[S])
@@ -40,6 +42,7 @@ void ObjectFactory::LoadEntity(Entity e, rapidjson::Value& reader)
 			}
 		}
 	}
+	DESERIALIZE_SELF(UIrenderer, "uirenderer");
 	DESERIALIZE_SELF(BoxCollider, "boxcollider");
 	DESERIALIZE_SELF(SphereCollider, "spherecollider");
 	DESERIALIZE_SELF(CapsuleCollider, "capsulecollider");
@@ -109,12 +112,21 @@ void ObjectFactory::LoadGameState(GameState* gs, const std::string& _name)
 	ReadFromFile(ConfigManager::GetValue("GameStatePath") + _name + ".gs", doc);
 
 	Scene scn;
+	auto& sys = systemManager->mGraphicsSystem;
+
 	// because an array of objects is contained inside of doc
 	for (rapidjson::Value::ValueIterator ci = doc.Begin(); ci != doc.End(); ++ci)
 	{
 		Deserialize(*ci, "scene_name", scn.mName);
 		Deserialize(*ci, "pause", scn.mIsPause);
 		Deserialize(*ci, "force_render", scn.mForceRender);
+		Deserialize(*ci, "bloom_threshold", sys->mAmbientBloomThreshold);
+		Deserialize(*ci, "bloom_exposure", sys->mAmbientBloomExposure);
+		Deserialize(*ci, "bloom_offset", sys->mTexelOffset);
+		Deserialize(*ci, "bloom_sampleweight", sys->mSamplingWeight);
+		Deserialize(*ci, "chroma_strength", sys->mChromaticStrength);
+		Deserialize(*ci, "bloom_enable", sys->m_EnableBloom);
+		Deserialize(*ci, "chroma_enable", sys->m_EnableChromaticAbberation);
 
 		gs->mScenes.push_back(scn);
 	}
@@ -128,6 +140,8 @@ Entity ObjectFactory::DeserializePrefab(const std::string& filename)
 
 	Entity e = systemManager->ecs->NewEntity();
 	LoadEntity(e, doc);
+
+
 	return e;
 }
 
@@ -139,6 +153,7 @@ void ObjectFactory::SaveEntity(Entity e, rapidjson::PrettyWriter<rapidjson::Stri
 	SERIALIZE_SELF(Transform);
 	SERIALIZE_SELF(RigidBody);
 	SERIALIZE_SELF(MeshRenderer);
+	SERIALIZE_SELF(UIrenderer);
 	SERIALIZE_SELF(BoxCollider);
 	SERIALIZE_SELF(SphereCollider);
 	SERIALIZE_SELF(CapsuleCollider);
@@ -172,12 +187,23 @@ void ObjectFactory::SaveGameState(GameState* gs)
 	rapidjson::StringBuffer buffer;
 	rapidjson::PrettyWriter<rapidjson::StringBuffer> writer{ buffer };
 	writer.StartArray();
+
+	auto& sys = systemManager->mGraphicsSystem;
 	for (Scene scn : gs->mScenes)
 	{
 		writer.StartObject();
 		Serialize(writer, "scene_name", scn.mName);
 		Serialize(writer, "pause", scn.mIsPause);
 		Serialize(writer, "force_render", scn.mForceRender);
+		Serialize(writer, "bloom_threshold", sys->mAmbientBloomThreshold);
+		Serialize(writer, "bloom_exposure", sys->mAmbientBloomExposure);
+		Serialize(writer, "bloom_offset", sys->mTexelOffset);
+		Serialize(writer, "bloom_sampleweight", sys->mSamplingWeight);
+		Serialize(writer, "chroma_strength", sys->mChromaticStrength);
+		Serialize(writer, "bloom_enable", sys->m_EnableBloom);
+		Serialize(writer, "chroma_enable", sys->m_EnableChromaticAbberation);
+
+
 		writer.EndObject();
 	}
 	writer.EndArray();

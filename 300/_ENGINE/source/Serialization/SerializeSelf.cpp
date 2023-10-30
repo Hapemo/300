@@ -93,12 +93,14 @@ void UIrenderer::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>&
 	writer.Key("uirenderer");
 	writer.StartObject();
 	Serialize(writer, "texpath", mTexPath);
+	Serialize(writer, "degree", mDegree);
 	writer.EndObject();
 }
 
 void UIrenderer::DeserializeSelf(rapidjson::Value& reader)
 {
 	Deserialize(reader, "texpath", mTexPath);
+	Deserialize(reader, "degree", mDegree);
 }
 
 void RigidBody::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const

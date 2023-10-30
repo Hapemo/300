@@ -57,6 +57,11 @@ void GameStateManager::UpdateNextGSMState() {
 		break;
 	case E_GSMSTATE::CHANGING:
 		mCurrentGameState.Unload();
+		std::ifstream file{ ConfigManager::GetValue("GameStatePath") + mNextGSName + ".gs" };
+		if (!file.is_open()) {
+			PERROR("Unable to open gamestate file %s, please restart the application", mNextGSName.c_str());
+			break;
+		}
 		mCurrentGameState.Load(mNextGSName);
 		mCurrentGameState.Init();
 		break;
@@ -78,7 +83,9 @@ void GameStateManager::ChangeGameState(std::string const& _name) {
 	//LOG_CUSTOM("GAMESTATEMANAGER", "Set gamestate to change to: " + _name);
 	//audioManager->StopAllSound(); TODO minglun
 	mNextGSName = _name;
-	mGSMState = E_GSMSTATE::CHANGING;
+	if (_name == "exit") mGSMState = E_GSMSTATE::EXIT;
+	else if (_name == "restart") mGSMState = E_GSMSTATE::RESTART;
+	else mGSMState = E_GSMSTATE::CHANGING;
 }
 
 void GameStateManager::ChangeGameState(E_GSMSTATE const& _state) {

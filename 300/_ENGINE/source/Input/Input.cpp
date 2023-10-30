@@ -79,16 +79,13 @@ void Input::UpdatePrevKeyStates() {
 glm::vec2 Input::CursorPos() {
   double xpos, ypos;
 
-#ifdef _GAMEPLAY
-  glfwGetCursorPos(systemManager->GetWindow()->GetHandle(), &xpos, &ypos);
-  return glm::vec2{ static_cast<float>(xpos), static_cast<float>(ypos) };
-#endif // DEBUG
-
-#ifdef _EDITOR
-
-  return mosposEditor;
-#endif // _EDITOR
-
+ // if (mIsEditor == false) {
+      glfwGetCursorPos(systemManager->GetWindow()->GetHandle(), &xpos, &ypos);
+      return glm::vec2{ static_cast<float>(xpos), static_cast<float>(ypos) };
+ // }
+ // else {
+  //    return mosposEditor;
+  //}
 }
 
 void Input::scroll_callback(GLFWwindow* _window, double _xoffset, double _yoffset)

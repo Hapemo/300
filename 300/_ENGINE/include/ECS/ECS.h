@@ -17,6 +17,7 @@ and prefabs.
 
 struct Children;
 struct Parent;
+struct Transform;
 
 struct Entity
 {
@@ -192,7 +193,7 @@ public:
 	/*!*****************************************************************************
 	Creates an entity from an existing prefab.
 	*******************************************************************************/
-	Entity NewEntityFromPrefab(std::string prefabName);
+	Entity NewEntityFromPrefab(std::string prefabName, const glm::vec3& pos);
 
 	/*!*****************************************************************************
 	Updates all entities tied to a specific prefab, to be called when the prefab is updated.

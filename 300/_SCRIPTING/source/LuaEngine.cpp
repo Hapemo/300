@@ -11,6 +11,7 @@
 #include "Audio/AudioSource.h"
 #include "AI/AIManager.h"
 #include "Graphics/Camera_Input.h"
+#include "FPSManager.h"
 
 void LuaComponentContainer()
 {
@@ -40,7 +41,8 @@ void LuaECS()
         "ecs", sol::constructors<>(),
         "NewEntity", &ECS::NewEntity,
         "NewEntityByScene", &ECS::NewEntityByScene,
-        "DeleteEntity", &ECS::DeleteEntity
+        "DeleteEntity", &ECS::DeleteEntity,
+        "NewEntityFromPrefab", &ECS::NewEntityFromPrefab
         //"GetEntitiesWithGeneral", &ECS::GetEntitiesWith<General>,
         //"GetEntitiesWithTransform", &ECS::GetEntitiesWith<Transform>,
         //"GetEntitiesWithRigidBody", &ECS::GetEntitiesWith<RigidBody>,
@@ -370,7 +372,8 @@ void LuaGameState()
     systemManager->mScriptingSystem->luaState.new_usertype<GameStateManager>(
         "mGameStateSystem", sol::constructors<>(),
         "GetEntity", &GameStateManager::GetEntity,
-        "DeleteEntity", &GameStateManager::DeleteEntity
+        "DeleteEntity", &GameStateManager::DeleteEntity,
+        "ChangeGameState", sol::resolve<void(const std::string&)>(&GameStateManager::ChangeGameState)
         );
 }
 

@@ -11,6 +11,8 @@ namespace GFX
 
 		void SubData(size_t dataSize, const void* data);
 
+		~SSBO();
+
 	private:
 		unsigned mID;
 	};
