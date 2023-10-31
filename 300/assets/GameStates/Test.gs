@@ -4,7 +4,7 @@
         "pause": false,
         "force_render": true,
         "bloom_threshold": {
-            "x": 0.0,
+            "x": 1.0,
             "y": 0.9399999976158142,
             "z": 1.0
         },
