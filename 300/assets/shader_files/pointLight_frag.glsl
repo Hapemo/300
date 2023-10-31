@@ -143,7 +143,7 @@ void main()
         BrightColor = vec4(0.0, 0.0, 0.0, 1.0);
 
     // Set the alpha for debug draw
-    uColor.a *= globalTint.a;
+    uColor.a *= (globalTint.a * VertexColor.a);
     //finalColor = globalTint.a;
 
     // Gamma correction
