@@ -17,9 +17,9 @@ positions = Vec3.new(0,0,10)
 positions_offset = Vec3.new(0,20,0)
 positions_final = Vec3.new()
 
--- mouse pos
+-- mouse attributes
 mouse_move = Vec2.new()
-
+mouse_on = true
 
 function Alive()
     gameStateSys = systemManager:mGameStateSystem();
@@ -32,16 +32,31 @@ end
 
 function Update()
 
+--region -- player camera
+    if(inputMapSys:GetButtonDown("Mouse")) then
+        if (mouse_on == true) then
+            mouse_on = false
+        else
+            mouse_on =true
+        end
+    end
+
+    if  (mouse_on)    then
+        mouse_move.x = Input.CursorPos().x - 935
+        mouse_move.y = Input.CursorPos().y - 378
+        Camera_Scripting.RotateCameraView(cameraEntity, mouse_move)
+        graphicsSys:SetCursorCenter()
+    end
+
+--endregion
+
+
+
+--region -- Player movements
     -- use '.' to reference variable
-    -- vectorrr = graphicsSys.mAmbientBloomThreshold
     totaltime = totaltime + 0.016;
     positions = cameraEntity:GetTransform().mTranslate
     
-    mouse_move.x = Input.CursorPos().x - 935
-    mouse_move.y = Input.CursorPos().y - 378
-    Camera_Scripting.RotateCameraView(cameraEntity, mouse_move)
-    graphicsSys:SetCursorCenter()
-
     viewVec = Camera_Scripting.GetDirection(cameraEntity)
     viewVecCam = Camera_Scripting.GetDirection(cameraEntity)
     rotationCam = Camera_Scripting.GetDirection(cameraEntity)
@@ -93,12 +108,13 @@ function Update()
 
     physicsSys:SetVelocity(cameraEntity, movement)
 
-    -- positions_offset.x =  viewVec.x *10
-    -- positions_offset.y =  viewVec.y *10
-    -- positions_offset.z =  viewVec.z *10
+
+--endregion
 
 
-    
+
+--region -- Player Shooting
+
     if(inputMapSys:GetButtonDown("Shoot")) then
         
         positions_final.x = positions.x + viewVecCam.x*5
@@ -117,8 +133,7 @@ function Update()
         physicsSys:SetVelocity(prefabEntity, viewVecCam)
     end
 
-
-
+--endregion
 
 end
 
