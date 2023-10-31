@@ -15,7 +15,7 @@
 #ifndef ANIMATOR_HPP
 #define ANIMATOR_HPP
 
-#define MAX_NUM_BONES 200
+#define MAX_NUM_BONES 70
 
 #include <Bone.h>
 #include <glm/glm.hpp>

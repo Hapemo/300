@@ -14,7 +14,7 @@ layout (location = 6) in vec3   inNormal;			// Per vertex Normal
 layout (location = 7) in vec4   inTex_Ent_ID;		// x: empty | y: Entity ID | z: Animation Instance ID | w: empty
 layout (location = 8) in mat4   inLTW;			    // local to world
 
-const int MAX_BONES = 200;
+const int MAX_BONES = 70;
 const int MAX_BONE_INFLUENCE = 4;
 
 uniform mat4 uMatrixVP;     // view projection

@@ -143,24 +143,31 @@ void GraphicsSystem::Update(float dt)
 
 
 		// pushback LTW matrices
-		vec3 trans = inst.GetComponent<Transform>().mTranslate;
+		auto& transforminst = inst.GetComponent<Transform>();
+		vec3 trans = transforminst.mTranslate;
+		vec3 parent_translate(0.f);
+
 		if (inst.HasParent())
 		{
-			trans += Entity(inst.GetParent()).GetComponent<Transform>().mTranslate;
+			parent_translate = Entity(inst.GetParent()).GetComponent<Transform>().mTranslate;
+			trans += parent_translate;
 		}
-		mat4 S = glm::scale(inst.GetComponent<Transform>().mScale / (meshinst.mBBOX.m_Max - meshinst.mBBOX.m_Min));
-		mat4 R = glm::toMat4(glm::quat(glm::radians(inst.GetComponent<Transform>().mRotate)));
+		mat4 S = glm::scale(transforminst.mScale / (meshinst.mBBOX.m_Max - meshinst.mBBOX.m_Min));
+		mat4 R = glm::toMat4(glm::quat(glm::radians(transforminst.mRotate)));
 		mat4 T = glm::translate(trans);
 		mat4 final = T * R * S;
 
 		// if the debug drawing is turned on
 		if (m_DebugDrawing && inst.HasComponent<BoxCollider>())
 		{
+			BoxCollider& boxcolliderinst = inst.GetComponent<BoxCollider>();
+
 			// draw the AABB of the mesh
-			glm::vec3 bbox_dimens = inst.GetComponent<Transform>().mScale * inst.GetComponent<BoxCollider>().mScaleOffset;
-			glm::vec3 bbox_xlate = inst.GetComponent<Transform>().mTranslate + inst.GetComponent<BoxCollider>().mTranslateOffset;
+			glm::vec3 bbox_dimens = transforminst.mScale * boxcolliderinst.mScaleOffset;
+			glm::vec3 bbox_xlate = transforminst.mTranslate + boxcolliderinst.mTranslateOffset;
 			if (inst.HasParent()) {
-				bbox_xlate += Entity(inst.GetParent()).GetComponent<Transform>().mTranslate;
+				//bbox_xlate += Entity(inst.GetParent()).GetComponent<Transform>().mTranslate;
+				bbox_xlate += parent_translate;
 			}
 
 			// calculate the transformations
@@ -171,17 +178,16 @@ void GraphicsSystem::Update(float dt)
 			m_Renderer.AddAabb(bboxFinal, {1.f, 0.f, 0.f, 1.f});
 
 			// draw the mesh's origin
-			m_Renderer.AddSphere(m_EditorCamera.position(), inst.GetComponent<Transform>().mTranslate, 0.5f, {1.f, 1.f, 0.f, 1.f});
+			m_Renderer.AddSphere(m_EditorCamera.position(), transforminst.mTranslate, 0.5f, {1.f, 1.f, 0.f, 1.f});
 		}
 
 		if (m_DebugDrawing && inst.HasComponent<CapsuleCollider>())
 		{
-			CapsuleCollider cap = inst.GetComponent<CapsuleCollider>();
-			Transform xform = inst.GetComponent<Transform>();
+			CapsuleCollider& cap = inst.GetComponent<CapsuleCollider>();
 			if (inst.HasParent())
-				xform.mTranslate += static_cast<Entity>(inst.GetParent()).GetComponent<Transform>().mTranslate;
+				transforminst.mTranslate += static_cast<Entity>(inst.GetParent()).GetComponent<Transform>().mTranslate;
 
-			glm::vec3 capPos = xform.mTranslate + cap.mTranslateOffset;
+			glm::vec3 capPos = transforminst.mTranslate + cap.mTranslateOffset;
 
 			glm::vec3 first = capPos;
 			glm::vec3 second = capPos;
@@ -201,7 +207,8 @@ void GraphicsSystem::Update(float dt)
 		}
 
 		// Update the animation
-		if (inst.HasComponent<Animator>() && _ENABLE_ANIMATIONS && systemManager->mGraphicsSystem->m_EnableGlobalAnimations)
+		bool hasanimation = inst.HasComponent<Animator>();
+		if (hasanimation && _ENABLE_ANIMATIONS && systemManager->mGraphicsSystem->m_EnableGlobalAnimations)
 		{
 			Animator& animatorInst = inst.GetComponent<Animator>();
 
@@ -219,7 +226,7 @@ void GraphicsSystem::Update(float dt)
 		}
 
 		// animations are present
-		if (inst.HasComponent<Animator>()) {
+		if (hasanimation) {
 			AddInstance(meshinst, final, meshRenderer.mInstanceColor, static_cast<int>(m_Materials.size()), static_cast<unsigned>(inst.id), animationID++);
 		}
 		else {
@@ -332,7 +339,7 @@ void GraphicsSystem::EditorDraw(float dt)
 		if (meshrefptr.mMeshRef.getdata(systemManager->mResourceTySystem->m_ResourceInstance) == nullptr)
 			continue;
 
-		std::string meshstr = inst.GetComponent<MeshRenderer>().mMeshPath;
+		std::string meshstr = meshrefptr.mMeshPath;
 		if (renderedMesh.find(meshstr) != renderedMesh.end())
 		{
 			// the mesh has been rendered before, skip it
@@ -343,7 +350,7 @@ void GraphicsSystem::EditorDraw(float dt)
 		renderedMesh[meshstr] = 1;
 
 		// render the mesh and its instances here
-		GFX::Mesh &meshinst = *reinterpret_cast<GFX::Mesh *>(inst.GetComponent<MeshRenderer>().mMeshRef.data);
+		GFX::Mesh &meshinst = *reinterpret_cast<GFX::Mesh *>(meshrefptr.mMeshRef.data);
 		
 		std::string shader{};
 
@@ -511,7 +518,7 @@ void GraphicsSystem::GameDraw(float dt)
 		if (meshrefptr.mMeshRef.getdata(systemManager->mResourceTySystem->m_ResourceInstance) == nullptr)
 			continue;
 
-		std::string meshstr = inst.GetComponent<MeshRenderer>().mMeshPath;
+		std::string meshstr = meshrefptr.mMeshPath;
 		if (renderedMesh.find(meshstr) != renderedMesh.end())
 		{
 			// the mesh has been rendered before, skip it
@@ -522,7 +529,7 @@ void GraphicsSystem::GameDraw(float dt)
 		renderedMesh[meshstr] = 1;
 
 		// render the mesh and its instances here
-		GFX::Mesh &meshinst = *reinterpret_cast<GFX::Mesh *>(inst.GetComponent<MeshRenderer>().mMeshRef.getdata(systemManager->mResourceTySystem->m_ResourceInstance));
+		GFX::Mesh &meshinst = *reinterpret_cast<GFX::Mesh *>(meshrefptr.mMeshRef.getdata(systemManager->mResourceTySystem->m_ResourceInstance));
 
 		// gets the shader filepath
 		std::string shader{};
@@ -594,7 +601,7 @@ void GraphicsSystem::GameDraw(float dt)
 		// unbind the textures
 		for (int i{0}; i < 4; i++)
 		{
-			if (inst.GetComponent<MeshRenderer>().mTextureRef[i].data != nullptr)
+			if (meshrefptr.mTextureRef[i].data != nullptr)
 			{
 				glBindTextureUnit(i, 0);
 			}
