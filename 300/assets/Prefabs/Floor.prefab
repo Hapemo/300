@@ -1,5 +1,5 @@
 {
-    "entityid": 68,
+    "entityid": 1048640,
     "general": {
         "name": "Floor",
         "tagid": 3,
@@ -19,7 +19,7 @@
             "z": 0.0
         },
         "translate": {
-            "x": 60.0,
+            "x": 0.0,
             "y": 0.0,
             "z": 50.0
         }
@@ -45,10 +45,10 @@
         "frag": "../assets/shader_files/pointLight_frag.glsl",
         "meshrefid": 3442,
         "instancecolor": {
-            "x": 0.24705882370471954,
-            "y": 0.8313725590705872,
-            "z": 0.9843137264251709,
-            "w": 0.772549033164978
+            "x": 0.239215686917305,
+            "y": 1.0,
+            "z": 0.9411764740943909,
+            "w": 1.0
         },
         "materialinstance": [
             "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
