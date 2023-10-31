@@ -1,5 +1,5 @@
 {
-    "entityid": 10,
+    "entityid": 60,
     "general": {
         "name": "Wall",
         "tagid": 4,
@@ -19,9 +19,9 @@
             "z": 90.0
         },
         "translate": {
-            "x": -32.5,
+            "x": 92.5,
             "y": 22.5,
-            "z": 0.0000014461613773164572
+            "z": 50.0
         }
     },
     "rigidbody": {
@@ -45,10 +45,10 @@
         "frag": "../assets/shader_files/pointLight_frag.glsl",
         "meshrefid": 3442,
         "instancecolor": {
-            "x": 0.0,
-            "y": 1.0,
-            "z": 1.0,
-            "w": 1.0
+            "x": 0.24576270580291748,
+            "y": 0.83309406042099,
+            "z": 0.9830508232116699,
+            "w": 0.772549033164978
         },
         "materialinstance": [
             "../assets/Compressed/Texture_Wall_12x10x1.ctexture",

@@ -1,5 +1,5 @@
 {
-    "entityid": 1,
+    "entityid": 68,
     "general": {
         "name": "Floor",
         "tagid": 3,
@@ -9,19 +9,19 @@
     },
     "transform": {
         "scale": {
-            "x": 59.99795150756836,
+            "x": 59.997955322265625,
             "y": 50.0,
-            "z": 4.999794006347656
+            "z": 4.9997944831848145
         },
         "rotate": {
             "x": 90.0,
-            "y": -90.0,
+            "y": 0.0,
             "z": 0.0
         },
         "translate": {
-            "x": -5.0,
-            "y": 25.0,
-            "z": 35.0
+            "x": 60.0,
+            "y": 0.0,
+            "z": 50.0
         }
     },
     "rigidbody": {
@@ -45,10 +45,10 @@
         "frag": "../assets/shader_files/pointLight_frag.glsl",
         "meshrefid": 3442,
         "instancecolor": {
-            "x": 0.0,
-            "y": 1.0,
-            "z": 1.0,
-            "w": 1.0
+            "x": 0.24705882370471954,
+            "y": 0.8313725590705872,
+            "z": 0.9843137264251709,
+            "w": 0.772549033164978
         },
         "materialinstance": [
             "../assets/Compressed/Texture_Wall_12x10x1.ctexture",

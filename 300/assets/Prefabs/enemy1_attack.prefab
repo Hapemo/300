@@ -1,5 +1,5 @@
 {
-    "entityid": 1048654,
+    "entityid": 3,
     "general": {
         "name": "enemy1_attack",
         "tagid": 1,
@@ -19,9 +19,9 @@
             "z": 0.0
         },
         "translate": {
-            "x": -7.274372076926383e-12,
-            "y": 2.4999990463256836,
-            "z": -1.015499506706874e-7
+            "x": 52.48073196411133,
+            "y": 2.49989652633667,
+            "z": -1.413171648979187
         }
     },
     "rigidbody": {
@@ -29,9 +29,9 @@
         "material": 1,
         "motion": 1,
         "velocity": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
+            "x": 0.1749381422996521,
+            "y": -0.0000010728836059570313,
+            "z": -0.7091813087463379
         },
         "rotationconstraints": {
             "x": true,
@@ -45,9 +45,9 @@
         "frag": "../assets/shader_files/pointLight_frag.glsl",
         "meshrefid": 3124,
         "instancecolor": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0,
+            "x": 0.8601694703102112,
+            "y": 0.3170963525772095,
+            "z": 0.3170963525772095,
             "w": 1.0
         },
         "materialinstance": [
@@ -76,9 +76,21 @@
         "istrigger": false
     },
     "scripts": {
-        "scriptscontainer": []
+        "scriptscontainer": [
+            {
+                "scriptFile": "../assets/Scripts/AITest.lua",
+                "variables": []
+            }
+        ]
     },
     "prefab": {
         "prefab": "enemy1_attack"
+    },
+    "aisetting": {
+        "movementtype": 1,
+        "spreadout": 41.0,
+        "stayaway": 0.0,
+        "elevation": 0.0,
+        "targetname": "Camera"
     }
 }
