@@ -221,7 +221,7 @@ public:
 	void ResizeWindow(ivec2 newSize);
 
 	// Top-left position as 0, 0. normalized coordinates [0, 1]
-	void SetCursorPosition(float xPos, float yPos);
+	void ClampCursor();
 
 	void HideCursor(bool hideCursor);
 

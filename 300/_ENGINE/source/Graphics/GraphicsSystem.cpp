@@ -92,8 +92,6 @@ void GraphicsSystem::Init()
 		// only update the game camera if editor mode is not enabled
 		UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_GAME, 0.f);
 	}
-
-	SetCursorPosition(0.5, 0.5);
 }
 
 /***************************************************************************/
@@ -325,7 +323,6 @@ void GraphicsSystem::Update(float dt)
 	}
 	// Send UI data to GPU
 	m_Image2DMesh.PrepForDraw();
-
 #pragma endregion
 }
 
@@ -1190,12 +1187,15 @@ void GraphicsSystem::ResizeWindow(ivec2 newSize)
 	m_Height = newSize.y;
 }
 
-void GraphicsSystem::SetCursorPosition(float xPos, float yPos)
+void GraphicsSystem::ClampCursor()
 {
-	vec2 pos{ xPos, yPos };
-	pos *= m_Window->size();
+	double posX, posY;
 
-	glfwSetCursorPos(m_Window->GetHandle(), pos.x, pos.y);
+	m_Window->GetCursorPos(&posX, &posY);
+	posX = glm::clamp(posX, -20.0, static_cast<double>(m_Window->GetScreenWidth()));
+	posY = glm::clamp(posY, -20.0, static_cast<double>(m_Window->GetScreenHeight()));
+
+	glfwSetCursorPos(m_Window->GetHandle(), posX, posY);
 }
 
 void GraphicsSystem::HideCursor(bool hideCursor)
