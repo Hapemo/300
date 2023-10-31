@@ -158,6 +158,8 @@ public:
 	vec3 GetCameraPosition(CAMERA_TYPE type);
 	vec3 GetCameraTarget(CAMERA_TYPE type);
 	vec3 GetCameraDirection(CAMERA_TYPE type);			// Direction vector of the camera (Target - position)
+	mat4 GetCameraViewMatrix(CAMERA_TYPE type);
+
 	GFX::DebugRenderer& getDebugRenderer() { 
 		return m_Renderer; 
 	}
