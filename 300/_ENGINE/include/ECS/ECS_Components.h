@@ -554,3 +554,12 @@ struct Button
 	inline bool IsClicked() { return mIsClick; }
 	inline bool IsActivated() { return mActivated; }
 };
+
+struct Crosshair
+{
+	float mThickness{ 1 };
+	float mInner	{ 10 };
+	float mOuter	{ 20 };
+
+	vec4 mColor		{ 1.f, 1.f, 1.f, 1.f };
+};

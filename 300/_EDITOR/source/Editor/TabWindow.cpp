@@ -79,25 +79,8 @@ void TabWindow::update()
 	ImGui::Checkbox("Enable Bloom", &systemManager->mGraphicsSystem->m_EnableBloom); 
 	ImGui::Checkbox("Enable Chromatic Abberation", &systemManager->mGraphicsSystem->m_EnableChromaticAbberation);
 
-	ImGui::Separator();
-	//ImGui::Text("Circle Degree Test");
-	//ImGui::SameLine();
-	//ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
-	//	- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
 	ImGui::DragFloat("Crosshair Thickness", (float*)&systemManager->mGraphicsSystem->m_CrosshairThickness);
-
-	ImGui::Separator();
-	//ImGui::Text("Crosshair Inner");
-	//ImGui::SameLine();
-	//ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
-	//	- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
 	ImGui::DragFloat("Crosshair Inner", (float*)&systemManager->mGraphicsSystem->m_CrosshairInner);
-
-	ImGui::Separator();
-	//ImGui::Text("Crosshair Outer");
-	//ImGui::SameLine();
-	//ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
-	//	- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
 	ImGui::DragFloat("Crosshair Outer", (float*)&systemManager->mGraphicsSystem->m_CrosshairOuter);
 
 	ImGui::ColorPicker4("Global Tint", (float*)&systemManager->mGraphicsSystem->m_GlobalTint);
