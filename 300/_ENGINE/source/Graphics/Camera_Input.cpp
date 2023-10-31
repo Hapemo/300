@@ -181,6 +181,8 @@ void Camera_Scripting::RotateCameraView(Entity cameraEntity, const vec2& cursorp
 
 	vec2 delta = cursorposition;
 
+	//std::cout << delta.x << ", " << delta.y << "\n";
+
 	if (delta == vec2(0.f, 0.f))
 		return;
 	

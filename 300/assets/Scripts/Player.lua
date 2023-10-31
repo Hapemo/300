@@ -8,6 +8,7 @@ forward = Vec3.new()
 back = Vec3.new()
 left = Vec3.new()
 right = Vec3.new()
+centerscreen = Vec2.new()
 mul = 20.0
 floorCount = 0
 totaltime = 0.0
@@ -42,10 +43,19 @@ function Update()
     end
 
     if  (mouse_on)    then
-        mouse_move.x = Input.CursorPos().x - 935
-        mouse_move.y = Input.CursorPos().y - 378
+
+        centerscreen = Input:GetCursorCenter()
+        mouse_move.x = Input.CursorPos().x - centerscreen.x
+        mouse_move.y = Input.CursorPos().y - centerscreen.y
+        print("cursorx "..Input.CursorPos().x)
+        print("cursory "..Input.CursorPos().y)
+
+        print("luax "..centerscreen.x)
+        print("luay "..centerscreen.y)
+
         Camera_Scripting.RotateCameraView(cameraEntity, mouse_move)
-        graphicsSys:SetCursorCenter()
+        Input.SetCursorCenter()
+
     end
 
 --endregion

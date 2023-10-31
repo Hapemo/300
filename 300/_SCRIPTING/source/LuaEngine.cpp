@@ -231,7 +231,9 @@ void LuaInput()
         "Input", sol::constructors<>(),
         "CheckKey", &Input::CheckKey,
         "GetScroll", &Input::GetScroll,
-        "CursorPos", &Input::CursorPos
+        "CursorPos", &Input::CursorPos,
+        "SetCursorCenter", &Input::SetCursorCenter,
+        "GetCursorCenter", &Input::GetCursorCenter
     );
 }
 
@@ -311,8 +313,7 @@ void LuaGraphicsSystem()
         "mChromaticStrength", &GraphicsSystem::mChromaticStrength,
         "m_EnableBloom", &GraphicsSystem::m_EnableBloom,
         "m_EnableChromaticAbberation", &GraphicsSystem::m_EnableChromaticAbberation,
-		"m_GlobalTint", &GraphicsSystem::m_GlobalTint,
-        "SetCursorCenter", &GraphicsSystem::SetCursorCenter
+		"m_GlobalTint", &GraphicsSystem::m_GlobalTint
         );
 }
 

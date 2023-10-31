@@ -10,6 +10,8 @@ Input detects keyboard and mouse input states and returns that to caller
 #include "Input/Input.h"
 #include "pch.h"
 #include "ECS/ECS_Systems.h"
+#include <Windows.h>
+#include <WinUser.h>
 
 std::array<bool, 324> Input::mPrevKeyStates;
 int Input::mStartingIndex{ 32 };
@@ -20,6 +22,11 @@ double Input::mScrollOffset{ 0 };
 GLFWcursor* Input::mCursor;
 bool Input::mIsEditor{ false };
 glm::vec2 Input::mosposEditor {};
+
+ glm::vec2 Input::m_EditorWindowPos;
+ glm::vec2 Input::m_EditorCursorPos;
+ glm::vec2 Input::m_GameWindowPos;
+
 
 void Input::Init(bool isEditor) {
     mIsEditor = isEditor;
@@ -79,14 +86,51 @@ void Input::UpdatePrevKeyStates() {
 glm::vec2 Input::CursorPos() {
   double xpos, ypos;
 
- // if (mIsEditor == false) {
-      glfwGetCursorPos(systemManager->GetWindow()->GetHandle(), &xpos, &ypos);
-      return glm::vec2{ static_cast<float>(xpos), static_cast<float>(ypos) };
- // }
- // else {
-  //    return mosposEditor;
+  //if (mIsEditor == false) {
+  //    glfwGetCursorPos(systemManager->GetWindow()->GetHandle(), &xpos, &ypos);
+  //    return glm::vec2{ static_cast<float>(xpos), static_cast<float>(ypos) };
+  //}
+  //else {
+      return mosposEditor;
   //}
 }
+
+void Input::SetCursorCenter()
+{
+    //if (m_EditorMode) {
+    SetCursorPos(m_EditorWindowPos.x, m_EditorWindowPos.y);
+    //	}
+
+    std::cout << m_EditorWindowPos.x << "x " << m_EditorWindowPos.y << "y\n ";
+    //else {
+    //	int x{}, y{};
+    //	int winlength{}, winheight{};
+
+    //	glfwGetWindowPos(systemManager->GetWindow()->GetHandle(), &x, &y);
+    //	glfwGetWindowSize(systemManager->GetWindow()->GetHandle(), &winlength, &winheight);
+
+    //	SetCursorPos(x + winlength / 2, y + winheight / 2);
+    //}
+}
+
+glm::vec2 Input::GetCursorCenter()
+{
+    //if (m_EditorMode) {
+    return m_EditorWindowPos;
+    //}
+
+    //else {
+    //	int x{}, y{};
+    //	int winlength{}, winheight{};
+
+    //	glfwGetWindowPos(systemManager->GetWindow()->GetHandle(), &x, &y);
+    //	glfwGetWindowSize(systemManager->GetWindow()->GetHandle(), &winlength, &winheight);
+
+    //	return vec2(x + winlength / 2, y + winheight / 2);
+    //}
+
+}
+
 
 void Input::scroll_callback(GLFWwindow* _window, double _xoffset, double _yoffset)
 {

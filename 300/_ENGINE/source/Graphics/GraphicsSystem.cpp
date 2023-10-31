@@ -19,8 +19,7 @@
 #include "Debug/EnginePerformance.h"
 #include "GameState/GameStateManager.h"
 #include "Input/InputMapSystem.h"
-#include <Windows.h>
-#include <WinUser.h>
+
 #include "cstdlib"
 
 
@@ -33,9 +32,7 @@
 float first_entitytime{};
 float second_entitytime{};
 
-void GraphicsSystem::SetCursorCenter() {
-	 SetCursorPos(m_EditorWindowPos.x, m_EditorWindowPos.y); 
-}
+
 
 void GraphicsSystem::Init()
 {

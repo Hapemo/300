@@ -125,6 +125,12 @@ public:
 	static glm::vec2 mosposEditor;
 	
 
+	static void SetCursorCenter();
+	static glm::vec2 GetCursorCenter();
+	static glm::vec2 m_EditorWindowPos;
+	static glm::vec2 m_GameWindowPos;
+	static glm::vec2 m_EditorCursorPos;
+
   /*!*****************************************************************************
   Initialises the Input system
   *******************************************************************************/

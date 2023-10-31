@@ -160,7 +160,7 @@ public:
 	vec3 GetCameraDirection(CAMERA_TYPE type);			// Direction vector of the camera (Target - position)
 	mat4 GetCameraViewMatrix(CAMERA_TYPE type);
 
-	void SetCursorCenter();
+
 
 	GFX::DebugRenderer& getDebugRenderer() { 
 		return m_Renderer; 
@@ -246,8 +246,8 @@ public:
 	// -- Camera --
 	GFX::Camera m_EditorCamera;
 	CAMERA_TYPE m_CameraControl;
-	glm::vec2 m_EditorWindowPos;
-	glm::vec2 m_GameWindowPos;
+
+
 
 	// -- Global tint --
 	vec4	m_GlobalTint = {1.f, 1.f, 1.f, 1.f};
