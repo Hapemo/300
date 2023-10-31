@@ -23,6 +23,21 @@ void ContactCallback::onContact(const PxContactPairHeader& pairHeader, const PxC
 		if (playerEntity.id == otherEntity.id)
 			continue;
 
+		if (!playerEntity.HasComponent<General>())
+			continue;
+
+		if (!otherEntity.HasComponent<General>())
+			continue;
+
+		if (!playerEntity.HasComponent<Scripts>())
+			continue;
+
+		if (playerEntity.GetComponent<General>().isDelete)
+			continue;
+
+		if (otherEntity.GetComponent<General>().isDelete)
+			continue;
+
 		if (playerEntity.GetComponent<General>().GetTag() != "PLAYER")
 		{
 			if (otherEntity.GetComponent<General>().GetTag() != "PLAYER")
@@ -54,10 +69,22 @@ void ContactCallback::onTrigger(PxTriggerPair* pairs, PxU32 count)
 		if (triggerEntity.id == otherEntity.id)
 			continue;
 
-		std::string tName = triggerEntity.GetComponent<General>().name;
-		std::string oName = otherEntity.GetComponent<General>().name;
+		if (!triggerEntity.HasComponent<General>())
+			continue;
 
-		if (tName == "bullet" && oName == "Camera")
+		if (!otherEntity.HasComponent<General>())
+			continue;
+
+		if (!triggerEntity.HasComponent<Scripts>())
+			continue;
+
+		if (triggerEntity.GetComponent<General>().isDelete)
+			continue;
+
+		if (otherEntity.GetComponent<General>().isDelete)
+			continue;
+
+		if (otherEntity.GetComponent<General>().name == "Camera")
 			continue;
 
 		/*std::vector<uint32_t>& triggeredEntities = PhysicsSystem::mTriggerCollisions[static_cast<uint32_t>(triggerEntity.id)];
@@ -65,6 +92,7 @@ void ContactCallback::onTrigger(PxTriggerPair* pairs, PxU32 count)
 
 		if (current.status & PxPairFlag::eNOTIFY_TOUCH_FOUND)
 		{
+
 			triggerEntity.GetComponent<Scripts>().RunFunctionForAllScripts("OnTriggerEnter", otherEntity);
 			//triggeredEntities.push_back(otherID);
 		}

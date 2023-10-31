@@ -46,7 +46,6 @@ public:
 	*******************************************************************************/
 	void SetVelocity(Entity e, const glm::vec3 &velocity);
 	void RemoveActor(Entity e);
-	static std::unordered_map<std::uint32_t, std::vector<uint32_t>> mTriggerCollisions; // key: trigger, val: entites colliding with trigger
 
 private:
 	PhysX mPX;

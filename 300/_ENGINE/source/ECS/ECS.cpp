@@ -168,11 +168,9 @@ void ECS::DeleteAllEntities()
 
 void ECS::SetDeleteEntity(Entity e)
 {
-	auto entities = systemManager->ecs->GetEntitiesWith<General>();
-	// set entity isDelete to true
-	entities.get<General>(e.id).isDelete = true;
+	e.GetComponent<General>().isDelete = true;
 	PINFO("Entity to be deleted: %d", (int)e.id)
-	std::cout << "Enstity to be deleted" << (int)e.id << std::endl;
+	//std::cout << "Enstity to be deleted" << (int)e.id << std::endl;
 }
 
 void ECS::DeleteEntityUpdate()
@@ -182,7 +180,7 @@ void ECS::DeleteEntityUpdate()
 	{
 		if (entity.GetComponent<General>().isDelete)
 		{
-			std::cout << (int)entity.id << std::endl;
+			//std::cout << "Deleting entity:" << (int)entity.id << std::endl;
 			systemManager->GetGameStateSystem()->DeleteEntity(entity);
 			PINFO("Delete entity done");
 		}

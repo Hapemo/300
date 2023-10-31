@@ -4,8 +4,6 @@
 #include "Physics/Accumulator.h"
 #include "Physics/PhysXUtils.h"
 
-std::unordered_map<std::uint32_t, std::vector<uint32_t>> PhysicsSystem::mTriggerCollisions;
-
 PhysicsSystem::PhysicsSystem()
 {
 	mMaterials[MATERIAL::RUBBER] = CreateMaterial(0.9f, 0.8f, 0.f);
@@ -22,7 +20,6 @@ void PhysicsSystem::Init()
 	for (auto itr = mActors.begin(); itr != mActors.end(); ++itr)
 		mPX.mScene->removeActor(*itr->second.mActor);
 	mActors.clear();
-	mTriggerCollisions.clear();
 
 	auto view = systemManager->ecs->GetEntitiesWith<Transform, RigidBody>();
 	for (Entity e : view)
@@ -38,7 +35,7 @@ void PhysicsSystem::Update(float dt)
 	for (unsigned step = 0; step < Accumulator::mSteps; ++step)
 	{
 		mPX.mScene->simulate(Accumulator::mFixedDT);
-		mPX.mScene->fetchResults(true);
+		bool isok = mPX.mScene->fetchResults(true);
 	}
 
 	// sync with ecs
@@ -48,11 +45,13 @@ void PhysicsSystem::Update(float dt)
 void PhysicsSystem::Exit()
 {
 	mActors.clear();
-	mTriggerCollisions.clear();
 }
 
 void PhysicsSystem::AddEntity(Entity e)
 {
+	//std::cout << "adding entity:" << (int)e.id << std::endl;
+	//std::cout << "adding entity:" << e.GetComponent<General>().name << std::endl;
+
 	if (mActors.find(static_cast<uint32_t>(e.id)) != mActors.end())
 	{
 		PWARNING("Tried to add actor that is already in simulation!");
@@ -150,8 +149,6 @@ void PhysicsSystem::CreateRigidBody(Entity e)
 			PxTransform(Convert(cap.mTranslateOffset), PxQuat(PxHalfPi, PxVec3T<float>(0, 0, 1))),
 			rbod, 
 			cap.mIsTrigger);
-		if (cap.mIsTrigger)
-			mTriggerCollisions[static_cast<uint32_t>(e.id)] = std::vector<uint32_t>();
 	}
 
 	if (e.HasComponent<BoxCollider>())
@@ -164,8 +161,6 @@ void PhysicsSystem::CreateRigidBody(Entity e)
 			PxTransform(Convert(col.mTranslateOffset)),
 			rbod, 
 			col.mIsTrigger); //PxRigidActorExt::createExclusiveShape();
-		if (col.mIsTrigger)
-			mTriggerCollisions[static_cast<uint32_t>(e.id)] = std::vector<uint32_t>();
 	}
 
 	if (e.HasComponent<SphereCollider>())
@@ -178,8 +173,6 @@ void PhysicsSystem::CreateRigidBody(Entity e)
 			PxTransform(Convert(col.mTranslateOffset)),
 			rbod, 
 			col.mIsTrigger);
-		if (col.mIsTrigger)
-			mTriggerCollisions[static_cast<uint32_t>(e.id)] = std::vector<uint32_t>();
 	}
 	
 	if (rbod.mMotion == MOTION::DYNAMIC)
