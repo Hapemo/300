@@ -507,6 +507,8 @@ void GraphicsSystem::EditorDraw(float dt)
 		ChromaticAbbrebationBlendFramebuffers(m_Fbo, m_Fbo.GetColorAttachment(), m_PingPongFbo.pingpongColorbuffers[0]);
 	}
 
+	m_Fbo.Bind();
+
 	// Render UI objects
 	m_UiShaderInst.Activate();		// Activate shader
 	DrawAll2DInstances(m_UiShaderInst.GetHandle());
@@ -699,6 +701,8 @@ void GraphicsSystem::GameDraw(float dt)
 	{
 		ChromaticAbbrebationBlendFramebuffers(m_GameFbo, m_GameFbo.GetColorAttachment(), m_PingPongFbo.pingpongColorbuffers[0]);
 	}
+
+	m_GameFbo.Bind();
 
 	// Render UI objects
 	m_UiShaderInst.Activate();		// Activate shader
