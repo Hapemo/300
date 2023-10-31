@@ -1,5 +1,5 @@
 {
-    "entityid": 76,
+    "entityid": 51,
     "general": {
         "name": "Wall",
         "tagid": 4,
@@ -10,18 +10,18 @@
     "transform": {
         "scale": {
             "x": 60.0,
-            "y": 50.0,
+            "y": 49.99950408935547,
             "z": 5.0
         },
         "rotate": {
             "x": 0.0,
-            "y": 0.0,
+            "y": -90.0,
             "z": 0.0
         },
         "translate": {
-            "x": 2.384185791015625e-7,
-            "y": 27.5,
-            "z": -27.5
+            "x": -92.5,
+            "y": 77.5,
+            "z": 0.0
         }
     },
     "rigidbody": {
@@ -78,6 +78,9 @@
             "z": 0.0
         },
         "istrigger": false
+    },
+    "scripts": {
+        "scriptscontainer": []
     },
     "prefab": {
         "prefab": "Wall"

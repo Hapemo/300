@@ -249,7 +249,6 @@ void ECS::UpdatePrefabEntities(std::string prefabName)
 	for (Entity e : mPrefabs[prefabName])
 	{
 		e.GetComponent<Transform>().mScale = temp.GetComponent<Transform>().mScale;
-		e.GetComponent<Transform>().mRotate = temp.GetComponent<Transform>().mRotate;
 
 		AddComponentHelper<ALL_COMPONENTS>(e, temp);
 	}
