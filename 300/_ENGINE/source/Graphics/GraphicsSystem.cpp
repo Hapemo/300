@@ -317,7 +317,11 @@ void GraphicsSystem::Update(float dt)
 		float uiHeight = uiTransform.mScale.y;
 		vec2 uiPosition = vec2(uiTransform.mTranslate.x, uiTransform.mTranslate.y);
 
-		Add2DImageInstance(uiWidth, uiHeight, uiPosition, uiRenderer.ID(), static_cast<int>(inst.id));
+		unsigned texID{};
+		if (uiRenderer.mTextureRef.getdata(systemManager->mResourceTySystem->m_ResourceInstance) != nullptr)
+			texID = reinterpret_cast<GFX::Texture*>(uiRenderer.mTextureRef.data)->ID();
+
+		Add2DImageInstance(uiWidth, uiHeight, uiPosition, texID, static_cast<int>(inst.id));
 	}
 	// Send UI data to GPU
 	m_Image2DMesh.PrepForDraw();
