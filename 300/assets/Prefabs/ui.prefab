@@ -1,0 +1,34 @@
+{
+    "entityid": 77,
+    "general": {
+        "name": "ui",
+        "tagid": 0,
+        "subtag": 0,
+        "isActive": true,
+        "isPaused": false
+    },
+    "transform": {
+        "scale": {
+            "x": 100.0,
+            "y": 100.0,
+            "z": 1.0
+        },
+        "rotate": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "translate": {
+            "x": -1800.0,
+            "y": -900.0,
+            "z": 0.0
+        }
+    },
+    "uirenderer": {
+        "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
+        "degree": 56.0
+    },
+    "prefab": {
+        "prefab": "ui"
+    }
+}

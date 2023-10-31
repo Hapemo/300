@@ -1,0 +1,7 @@
+[
+    {
+        "ShaderProgram": "CrosshairShader",
+        "Vertex": "../assets/shader_files/crosshair_vert.glsl",
+        "Fragment": "../assets/shader_files/crosshair_frag.glsl"
+    }
+]

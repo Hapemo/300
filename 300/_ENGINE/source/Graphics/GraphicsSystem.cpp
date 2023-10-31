@@ -11,6 +11,7 @@
 ***/
 #define  _ENABLE_ANIMATIONS 1
 #define  _TEST_PIE_SHADER 0
+#define  _TEST_CROSSHAIR_SHADER 1
 
 #include <ECS/ECS_Components.h>
 #include <Graphics/GraphicsSystem.h>
@@ -95,6 +96,8 @@ void GraphicsSystem::Init()
 		// only update the game camera if editor mode is not enabled
 		UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_GAME, 0.f);
 	}
+
+	PINFO("Window size: %d, %d", m_Window->size().x, m_Window->size().y);
 }
 
 /***************************************************************************/
@@ -329,11 +332,27 @@ void GraphicsSystem::Update(float dt)
 		if (uiRenderer.mTextureRef.getdata(systemManager->mResourceTySystem->m_ResourceInstance) != nullptr)
 			texID = reinterpret_cast<GFX::Texture*>(uiRenderer.mTextureRef.data)->ID();
 
-		Add2DImageInstance(uiWidth, uiHeight, uiPosition, texID, static_cast<int>(inst.id));
+		Add2DImageInstance(uiWidth, uiHeight, uiPosition, texID, static_cast<int>(inst.id), uiRenderer.mDegree);
 	}
 	// Send UI data to GPU
 	m_Image2DMesh.PrepForDraw();
 #pragma endregion
+
+	if (Input::CheckKey(E_STATE::RELEASE, E_KEY::F1))
+	{
+		PINFO("Window size: %d, %d", m_Window->size().x, m_Window->size().y);
+	}
+	if (Input::CheckKey(E_STATE::RELEASE, E_KEY::F2))
+	{
+		int vpInfo[4];
+		glGetIntegerv(GL_VIEWPORT, vpInfo);
+		PINFO("Viewport: %d, %d", vpInfo[2], vpInfo[3]);
+	}
+	if (Input::CheckKey(E_STATE::RELEASE, E_KEY::F3))
+	{
+		ivec2 camSize = GetCameraSize(CAMERA_TYPE::CAMERA_TYPE_GAME);
+		PINFO("Game Camera Size: %d, %d", camSize.x, camSize.y);
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -512,6 +531,29 @@ void GraphicsSystem::EditorDraw(float dt)
 	circularShaderInst.Deactivate();	// Deactivate shader
 #endif
 
+#if _TEST_CROSSHAIR_SHADER
+	std::string crosshairShaderStr{ "CrosshairShader" };
+	uid crosshairShaderUID(crosshairShaderStr);
+	GFX::Shader& crosshairShaderInst = *systemManager->mResourceTySystem->get_Shader(crosshairShaderUID.id);
+
+	crosshairShaderInst.Activate();		// activate shader
+	GLint thicknessLocation = crosshairShaderInst.GetUniformLocation("uThickness");
+	GLint innerLocation = crosshairShaderInst.GetUniformLocation("uInner");
+	GLint outerLocation = crosshairShaderInst.GetUniformLocation("uOuter");
+	glUniform1f(thicknessLocation, m_CrosshairThickness);
+	glUniform1f(innerLocation, m_CrosshairInner);
+	glUniform1f(outerLocation, m_CrosshairOuter);
+
+	// Bind 2D quad VAO
+	m_Image2DMesh.BindVao();
+	// Draw call
+	glDrawArraysInstanced(GL_TRIANGLE_FAN, 0, 4, 1);
+	// Unbind 2D quad VAO
+	m_Image2DMesh.UnbindVao();
+
+	crosshairShaderInst.Deactivate();	// Deactivate shader
+#endif
+
 #pragma endregion
 
 	m_Fbo.Unbind();
@@ -662,6 +704,29 @@ void GraphicsSystem::GameDraw(float dt)
 	m_UiShaderInst.Activate();		// Activate shader
 	DrawAll2DInstances(m_UiShaderInst.GetHandle());
 	m_UiShaderInst.Deactivate();	// Deactivate Shader
+
+#if _TEST_CROSSHAIR_SHADER
+	std::string crosshairShaderStr{ "CrosshairShader" };
+	uid crosshairShaderUID(crosshairShaderStr);
+	GFX::Shader& crosshairShaderInst = *systemManager->mResourceTySystem->get_Shader(crosshairShaderUID.id);
+
+	crosshairShaderInst.Activate();		// activate shader
+	GLint thicknessLocation = crosshairShaderInst.GetUniformLocation("uThickness");
+	GLint innerLocation = crosshairShaderInst.GetUniformLocation("uInner");
+	GLint outerLocation = crosshairShaderInst.GetUniformLocation("uOuter");
+	glUniform1f(thicknessLocation, m_CrosshairThickness);
+	glUniform1f(innerLocation, m_CrosshairInner);
+	glUniform1f(outerLocation, m_CrosshairOuter);
+
+	// Bind 2D quad VAO
+	m_Image2DMesh.BindVao();
+	// Draw call
+	glDrawArraysInstanced(GL_TRIANGLE_FAN, 0, 4, 1);
+	// Unbind 2D quad VAO
+	m_Image2DMesh.UnbindVao();
+
+	crosshairShaderInst.Deactivate();	// Deactivate shader
+#endif
 
 	m_GameFbo.Unbind();
 }
@@ -1107,6 +1172,29 @@ mat4 GraphicsSystem::GetCameraViewMatrix(CAMERA_TYPE type)
 	return {};
 }
 
+ivec2 GraphicsSystem::GetCameraSize(CAMERA_TYPE type)
+{
+	auto localcamera = systemManager->ecs->GetEntitiesWith<Camera>();
+	if (localcamera.empty())
+		return ivec2(); // Cannot find camera Richmond
+	Entity camera = localcamera.front();
+
+	switch (type)
+	{
+	case CAMERA_TYPE::CAMERA_TYPE_GAME:
+		return camera.GetComponent<Camera>().mCamera.mSize;
+
+	case CAMERA_TYPE::CAMERA_TYPE_EDITOR:
+		return m_EditorCamera.mSize;
+
+	case CAMERA_TYPE::CAMERA_TYPE_ALL:
+		return ivec2();
+		break;
+	}
+	PERROR("camera spoil - graphicssystem.cpp GetCameraSize()");
+	return {};
+}
+
 /***************************************************************************/
 /*!
 \brief
@@ -1209,6 +1297,8 @@ void GraphicsSystem::ResizeWindow(ivec2 newSize)
 
 	m_Width = newSize.x;
 	m_Height = newSize.y;
+
+	SetCameraSize(CAMERA_TYPE::CAMERA_TYPE_ALL, newSize);
 }
 
 void GraphicsSystem::ClampCursor()
@@ -1300,17 +1390,17 @@ void GraphicsSystem::DrawAll2DInstances(unsigned shaderID)
 	}
 }
 
-void GraphicsSystem::Add2DImageInstance(float width, float height, vec2 const& position, unsigned texHandle, unsigned entityID, vec4 const& color)
+void GraphicsSystem::Add2DImageInstance(float width, float height, vec2 const& position, unsigned texHandle, unsigned entityID, float degree, vec4 const& color)
 {
 	float half_w = m_Width * 0.5f;
 	float half_h = m_Height * 0.5f;
 
 	mat4 world =
 	{
-		vec4(width / m_Width, 0.f, 0.f, 0.f),
-		vec4(0.f, height / m_Height, 0.f, 0.f),
+		vec4(width / half_w, 0.f, 0.f, 0.f),
+		vec4(0.f, height / half_h, 0.f, 0.f),
 		vec4(0.f, 0.f, 1.f, 0.f),
-		vec4(position.x / half_w, position.y / half_h, 0.f, 1.f)
+		vec4(position.x / m_Width, position.y / m_Height, 0.f, 1.f)
 	};
 
 	int texIndex{};
@@ -1321,7 +1411,7 @@ void GraphicsSystem::Add2DImageInstance(float width, float height, vec2 const& p
 
 	m_Image2DMesh.mLTW.push_back(world);
 	m_Image2DMesh.mColors.push_back(color);
-	m_Image2DMesh.mTexEntID.push_back(vec4((float)texIndex + 0.5f, (float)entityID + 0.5f, 0, 0));
+	m_Image2DMesh.mTexEntID.push_back(vec4((float)texIndex + 0.5f, (float)entityID + 0.5f, degree, 0));
 }
 
 int GraphicsSystem::StoreTextureIndex(unsigned texHandle)

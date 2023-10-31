@@ -159,6 +159,7 @@ public:
 	vec3 GetCameraTarget(CAMERA_TYPE type);
 	vec3 GetCameraDirection(CAMERA_TYPE type);			// Direction vector of the camera (Target - position)
 	mat4 GetCameraViewMatrix(CAMERA_TYPE type);
+	ivec2 GetCameraSize(CAMERA_TYPE type);
 
 
 
@@ -285,7 +286,9 @@ public:
 	int		m_LightCount{};
 
 	// -- TEST --
-	float m_DegreeTest{};
+	float m_CrosshairThickness	{ 1.f };
+	float m_CrosshairInner		{ 20.f };
+	float m_CrosshairOuter		{ 50.f };
 
 	void Unload();
 
@@ -312,7 +315,7 @@ private:
 	GFX::Quad2D						mScreenQuad;
 
 	void DrawAll2DInstances(unsigned shaderID);
-	void Add2DImageInstance(float width, float height, vec2 const& position, unsigned texHandle, unsigned entityID = 0xFFFFFFFF, vec4 const& color = vec4{ 1.f, 1.f, 1.f, 1.f });
+	void Add2DImageInstance(float width, float height, vec2 const& position, unsigned texHandle, unsigned entityID = 0xFFFFFFFF, float degree = 0.f, vec4 const& color = vec4{ 1.f, 1.f, 1.f, 1.f });
 	int StoreTextureIndex(unsigned texHandle);
 };
 
