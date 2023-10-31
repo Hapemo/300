@@ -1,0 +1,84 @@
+{
+    "entityid": 1048654,
+    "general": {
+        "name": "enemy1_attack",
+        "tagid": 1,
+        "subtag": 0,
+        "isActive": true,
+        "isPaused": false
+    },
+    "transform": {
+        "scale": {
+            "x": 3.999943733215332,
+            "y": 7.999887466430664,
+            "z": 4.0
+        },
+        "rotate": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "translate": {
+            "x": -7.274372076926383e-12,
+            "y": 2.4999990463256836,
+            "z": -1.015499506706874e-7
+        }
+    },
+    "rigidbody": {
+        "density": 10.0,
+        "material": 1,
+        "motion": 1,
+        "velocity": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "rotationconstraints": {
+            "x": true,
+            "y": true,
+            "z": true
+        },
+        "gravity": true
+    },
+    "meshrenderer": {
+        "vert": "../assets/shader_files/pointLight_vert.glsl",
+        "frag": "../assets/shader_files/pointLight_frag.glsl",
+        "meshrefid": 3124,
+        "instancecolor": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+        },
+        "materialinstance": [
+            "../assets/Compressed/Enemy1_Base Color.ctexture",
+            "../assets/Compressed/Enemy1_Normal.ctexture",
+            "../assets/Compressed/Enemy1_Metallic.ctexture",
+            "../assets/Compressed/Enemy1_Roughness.ctexture",
+            "../assets/Compressed/Enemy1_Emissive.ctexture"
+        ],
+        "mesh": "../assets/compiled_geom/Enemy1_Attack.geom",
+        "texturerefid": [
+            4443,
+            4138,
+            4332,
+            4479,
+            4358
+        ]
+    },
+    "spherecollider": {
+        "scaleoffset": 4.0,
+        "translateoffset": {
+            "x": 0.0,
+            "y": 4.0,
+            "z": 0.0
+        },
+        "istrigger": false
+    },
+    "scripts": {
+        "scriptscontainer": []
+    },
+    "prefab": {
+        "prefab": "enemy1_attack"
+    }
+}

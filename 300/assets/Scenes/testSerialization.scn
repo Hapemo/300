@@ -460,9 +460,9 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 88.0,
+                "x": 87.99999237060547,
                 "y": 6.499999523162842,
-                "z": 40.93459701538086
+                "z": 40.934593200683594
             }
         },
         "rigidbody": {
@@ -472,7 +472,7 @@
             "velocity": {
                 "x": 0.0,
                 "y": 0.0,
-                "z": -4.312807888595671e-9
+                "z": -3.1134927969134196e-10
             },
             "rotationconstraints": {
                 "x": true,
@@ -676,16 +676,20 @@
                 }
             ]
         },
+        "children": {
+            "numchildren": 1,
+            "firstchild": 28
+        },
         "camera": {
             "positon": {
-                "x": 88.0,
+                "x": 87.99999237060547,
                 "y": 6.499999523162842,
-                "z": 40.93459701538086
+                "z": 40.934593200683594
             },
             "target": {
-                "x": 88.0,
+                "x": 87.99999237060547,
                 "y": 6.499999523162842,
-                "z": 39.93459701538086
+                "z": 39.934593200683594
             },
             "size": {
                 "x": 1175,
@@ -2489,46 +2493,51 @@
         },
         "transform": {
             "scale": {
-                "x": 0.9999998807907104,
-                "y": 1.2999999523162842,
-                "z": 5.0
+                "x": 1.0,
+                "y": 1.0,
+                "z": 0.25
             },
             "rotate": {
-                "x": 4.0,
-                "y": -10.0,
+                "x": 0.0,
+                "y": -75.0,
                 "z": 0.0
             },
             "translate": {
-                "x": 27.413999557495117,
-                "y": 5.073999881744385,
-                "z": 29.923999786376953
+                "x": 0.5,
+                "y": -0.6499999761581421,
+                "z": -0.7540000081062317
             }
         },
         "meshrenderer": {
             "vert": "../assets/shader_files/pointLight_vert.glsl",
             "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 2285,
+            "meshrefid": 2168,
             "instancecolor": {
-                "x": 0.18995390832424164,
-                "y": 0.7987805008888245,
-                "z": 0.3644346594810486,
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
                 "w": 1.0
             },
             "materialinstance": [
-                "../assets/Compressed/cube_diffuse.ctexture",
-                " ",
-                " ",
-                " ",
+                "../assets/Compressed/Gun_Base_Color.ctexture",
+                "../assets/Compressed/Gun_Normal.ctexture",
+                "../assets/Compressed/Gun_Metallic.ctexture",
+                "../assets/Compressed/Gun_Roughness.ctexture",
                 " "
             ],
-            "mesh": "../assets/compiled_geom/cube.geom",
+            "mesh": "../assets/compiled_geom/Gun.geom",
             "texturerefid": [
-                4119,
-                0,
-                0,
-                0,
+                4245,
+                3877,
+                4071,
+                4218,
                 0
             ]
+        },
+        "parent": {
+            "prevsibling": 28,
+            "nextsibling": 28,
+            "parent": 6
         }
     },
     {
@@ -6401,6 +6410,258 @@
         },
         "prefab": {
             "prefab": "Floor"
+        }
+    },
+    {
+        "entityid": 73,
+        "general": {
+            "name": "enemy1_attack",
+            "tagid": 1,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 3.999943733215332,
+                "y": 7.999887466430664,
+                "z": 4.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 10.000017166137695,
+                "y": 2.4999990463256836,
+                "z": -4.1229694147659757e-7
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 1,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": true,
+                "z": true
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3124,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Enemy1_Base Color.ctexture",
+                "../assets/Compressed/Enemy1_Normal.ctexture",
+                "../assets/Compressed/Enemy1_Metallic.ctexture",
+                "../assets/Compressed/Enemy1_Roughness.ctexture",
+                "../assets/Compressed/Enemy1_Emissive.ctexture"
+            ],
+            "mesh": "../assets/compiled_geom/Enemy1_Attack.geom",
+            "texturerefid": [
+                4443,
+                4138,
+                4332,
+                4479,
+                4358
+            ]
+        },
+        "spherecollider": {
+            "scaleoffset": 4.0,
+            "translateoffset": {
+                "x": 0.0,
+                "y": 4.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "enemy1_attack"
+        }
+    },
+    {
+        "entityid": 1048650,
+        "general": {
+            "name": "enemy1_walking",
+            "tagid": 1,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 3.999943733215332,
+                "y": 7.999887466430664,
+                "z": 4.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -2.112537922371871e-11,
+                "y": 2.4999990463256836,
+                "z": -3.9315247590820945e-7
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 1,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": true,
+                "z": true
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 2923,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Enemy1_Base Color.ctexture",
+                "../assets/Compressed/Enemy1_Normal.ctexture",
+                "../assets/Compressed/Enemy1_Metallic.ctexture",
+                "../assets/Compressed/Enemy1_Roughness.ctexture",
+                "../assets/Compressed/Enemy1_Emissive.ctexture"
+            ],
+            "mesh": "../assets/compiled_geom/Enemy1_Walk.geom",
+            "texturerefid": [
+                4443,
+                4138,
+                4332,
+                4479,
+                4358
+            ]
+        },
+        "spherecollider": {
+            "scaleoffset": 4.0,
+            "translateoffset": {
+                "x": 0.0,
+                "y": 4.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "enemy1_walking"
+        }
+    },
+    {
+        "entityid": 1048651,
+        "general": {
+            "name": "enemy1_walking",
+            "tagid": 1,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 3.999943733215332,
+                "y": 7.999887466430664,
+                "z": 4.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 20.000036239624023,
+                "y": 2.4999990463256836,
+                "z": -3.7400801033982134e-7
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 1,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": true,
+                "z": true
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 2923,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Enemy1_Base Color.ctexture",
+                "../assets/Compressed/Enemy1_Normal.ctexture",
+                "../assets/Compressed/Enemy1_Metallic.ctexture",
+                "../assets/Compressed/Enemy1_Roughness.ctexture",
+                "../assets/Compressed/Enemy1_Emissive.ctexture"
+            ],
+            "mesh": "../assets/compiled_geom/Enemy1_Walk.geom",
+            "texturerefid": [
+                4443,
+                4138,
+                4332,
+                4479,
+                4358
+            ]
+        },
+        "spherecollider": {
+            "scaleoffset": 4.0,
+            "translateoffset": {
+                "x": 0.0,
+                "y": 4.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "enemy1_walking"
         }
     }
 ]

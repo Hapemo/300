@@ -147,14 +147,27 @@ void GraphicsSystem::Update(float dt)
 		vec3 trans = transforminst.mTranslate;
 		vec3 parent_translate(0.f);
 
-		if (inst.HasParent())
-		{
-			parent_translate = Entity(inst.GetParent()).GetComponent<Transform>().mTranslate;
-			trans += parent_translate;
-		}
 		mat4 S = glm::scale(transforminst.mScale / (meshinst.mBBOX.m_Max - meshinst.mBBOX.m_Min));
 		mat4 R = glm::toMat4(glm::quat(glm::radians(transforminst.mRotate)));
 		mat4 T = glm::translate(trans);
+
+		if (inst.HasParent())	// Compute parent's offset
+		{
+			parent_translate = Entity(inst.GetParent()).GetComponent<Transform>().mTranslate;
+
+			// Compute view to world
+			if (inst.GetParent().GetComponent<TAG>() == TAG::PLAYER)	// if parent is the Player
+			{
+				// view space --> world space
+				mat4 viewToWorld = glm::inverse(GetCameraViewMatrix(CAMERA_TYPE::CAMERA_TYPE_GAME));
+				T = viewToWorld * T;
+			}
+			else
+			{
+				trans += parent_translate;
+				T = glm::translate(trans);
+			}
+		}
 		mat4 final = T * R * S;
 
 		// if the debug drawing is turned on
@@ -1043,6 +1056,29 @@ vec3 GraphicsSystem::GetCameraDirection(CAMERA_TYPE type)
 		break;
 	}
 	PERROR("camera spoil - graphicssystem.cpp GetCameraDirection()");
+	return {};
+}
+
+mat4 GraphicsSystem::GetCameraViewMatrix(CAMERA_TYPE type)
+{
+	auto localcamera = systemManager->ecs->GetEntitiesWith<Camera>();
+	if (localcamera.empty())
+		return mat4(1.0); // Cannot find camera Richmond
+	Entity camera = localcamera.front();
+
+	switch (type)
+	{
+	case CAMERA_TYPE::CAMERA_TYPE_GAME:
+		return camera.GetComponent<Camera>().mCamera.mView;
+
+	case CAMERA_TYPE::CAMERA_TYPE_EDITOR:
+		return m_EditorCamera.mView;
+
+	case CAMERA_TYPE::CAMERA_TYPE_ALL:
+		return mat4(1.0);
+		break;
+	}
+	PERROR("camera spoil - graphicssystem.cpp GetCameraViewMatrix()");
 	return {};
 }
 
