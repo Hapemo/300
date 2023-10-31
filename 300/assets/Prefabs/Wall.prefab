@@ -1,5 +1,5 @@
 {
-    "entityid": 2097157,
+    "entityid": 76,
     "general": {
         "name": "Wall",
         "tagid": 4,
@@ -52,7 +52,7 @@
         },
         "materialinstance": [
             "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
-            " ",
+            "../assets/Compressed/Normal_Wall_12x10x1.ctexture",
             " ",
             " ",
             " "
@@ -60,7 +60,7 @@
         "mesh": "../assets/compiled_geom/Model_Wall_12x10x1.geom",
         "texturerefid": [
             4695,
-            0,
+            4559,
             0,
             0,
             0

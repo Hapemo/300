@@ -174,27 +174,26 @@ float Camera_Scripting::GetSensitivity(Entity cameraEntity)
 void Camera_Scripting::RotateCameraView(Entity cameraEntity, const vec2& cursorposition)
 {
 	assert(cameraEntity.HasComponent<Camera>());
+	assert(cameraEntity.HasComponent<Transform>());
 	
 	auto& caminst = cameraEntity.GetComponent<Camera>().mCamera;
+	auto& caminstTransform = cameraEntity.GetComponent<Transform>();
+
 	vec2 delta = cursorposition;
-	
-	std::cout << delta.x << ", " << delta.y << "\n";
 
 	if (delta == vec2(0.f, 0.f))
 		return;
 	
 	delta *= caminst.mSensitivity;		// adjust the mouse movement sensitivity
-	caminst.mYaw += delta.x;
-	caminst.mPitch += delta.y;
+	caminstTransform.mRotate.x += delta.x;
+	caminstTransform.mRotate.y += delta.y;
 	
-	std::cout << "pitch: " << caminst.mPitch << ", yaw: " << caminst.mYaw << "\n";
-
-	if (caminst.mPitch > 89.0f) {
-		caminst.mPitch = 89.0f;
+	if (caminstTransform.mRotate.y > 89.0f) {
+		caminstTransform.mRotate.y = 89.0f;
 	}
 
-	if (caminst.mPitch < -89.0f) {
-		caminst.mPitch = -89.0f;
+	if (caminstTransform.mRotate.y < -89.0f) {
+		caminstTransform.mRotate.y = -89.0f;
 	}
 
 	glm::vec3 direction;

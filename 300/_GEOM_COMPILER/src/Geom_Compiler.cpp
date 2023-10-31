@@ -479,7 +479,7 @@ namespace _GEOM
 					{
 						_MyNodes[i].m_Indices[I] += iBaseVertex;
 					}
-
+					 
 					_MyNodes.erase(_MyNodes.begin() + j);
 					--j;
 				}

@@ -35,7 +35,6 @@ float second_entitytime{};
 
 void GraphicsSystem::SetCursorCenter() {
 	 SetCursorPos(m_EditorWindowPos.x, m_EditorWindowPos.y); 
-	 std::cout << "cursor center: " << m_EditorWindowPos.x << ", " << m_EditorWindowPos.y << "\n";
 }
 
 void GraphicsSystem::Init()
@@ -973,12 +972,18 @@ void GraphicsSystem::UpdateCamera(CAMERA_TYPE type, const float &dt)
 				return;
 			GameCamera = localcamera.front();		// there will only be one game camera
 
+			auto& GameCameraTransform = GameCamera.GetComponent<Transform>();
+			auto& GameCameraComponent = GameCamera.GetComponent<Camera>();
+
+			//Camera_Input::getInstance().updateCameraInput(camera.GetComponent<Camera>().mCamera, dt);
+
 			//camera.GetComponent<Transform>().mTranslate = camera.GetComponent<Camera>().mCamera.mPosition;
-			GameCamera.GetComponent<Camera>().mCamera.mTarget += (GameCamera.GetComponent<Transform>().mTranslate - GameCamera.GetComponent<Camera>().mCamera.mPosition);
-			GameCamera.GetComponent<Camera>().mCamera.mPosition = GameCamera.GetComponent<Transform>().mTranslate;
-			GameCamera.GetComponent<Camera>().mCamera.mPitch = GameCamera.GetComponent<Transform>().mRotate.y;
-			GameCamera.GetComponent<Camera>().mCamera.mYaw = GameCamera.GetComponent<Transform>().mRotate.x;
-			GameCamera.GetComponent<Camera>().mCamera.Update();
+			GameCameraComponent.mCamera.mTarget += (GameCameraTransform.mTranslate - GameCameraComponent.mCamera.mPosition);
+			GameCameraComponent.mCamera.mPosition = GameCameraTransform.mTranslate;
+			GameCameraComponent.mCamera.mPitch = GameCameraTransform.mRotate.y;
+			GameCameraComponent.mCamera.mYaw = GameCameraTransform.mRotate.x;
+
+			GameCameraComponent.mCamera.Update();
 
 			// debug drawing
 			if (systemManager->mGraphicsSystem->m_DebugDrawing) {
