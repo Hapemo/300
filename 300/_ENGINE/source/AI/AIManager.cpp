@@ -198,7 +198,7 @@ glm::vec3 AIManager::CalcAirAIDir(Entity _e) {
 
 	// Check horizontal Dist
 	glm::vec2 xzDir = glm::vec2(_tgtTrans.mTranslate.x - _eTrans.mTranslate.x, _tgtTrans.mTranslate.z - _eTrans.mTranslate.z);
-	float horizontalDistance = abs(glm::length(xzDir)) - glm::length(glm::vec2(abs(_eTrans.mScale.x) + abs(_tgtTrans.mScale.x), abs(_eTrans.mScale.y) + abs(_tgtTrans.mScale.y)) / 2.f);
+	float horizontalDistance = abs(abs(glm::length(xzDir)) - glm::length(glm::vec2(abs(_eTrans.mScale.x) + abs(_tgtTrans.mScale.x), abs(_eTrans.mScale.z) + abs(_tgtTrans.mScale.z)) / 2.f));
 
 	float requiredDistance = horizontalDistance - _eSetting.mStayAway;
 
