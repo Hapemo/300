@@ -340,3 +340,22 @@ void AISetting::DeserializeSelf(rapidjson::Value& reader)
 	Deserialize(reader, "elevation", mElevation);
 	Deserialize(reader, "targetname", mTargetName);
 }
+
+void Crosshair::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
+{
+	writer.Key("crosshair");
+	writer.StartObject();
+	Serialize(writer, "thickness", mThickness);
+	Serialize(writer, "inner", mInner);
+	Serialize(writer, "outer", mOuter);
+	Serialize(writer, "color", mColor);
+	writer.EndObject();
+}
+
+void Crosshair::DeserializeSelf(rapidjson::Value& reader)
+{
+	Deserialize(reader, "thickness", mThickness);
+	Deserialize(reader, "inner", mInner);
+	Deserialize(reader, "outer", mOuter);
+	Deserialize(reader, "color", mColor);
+}

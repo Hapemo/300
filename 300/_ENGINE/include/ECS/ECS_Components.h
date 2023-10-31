@@ -517,7 +517,7 @@ struct VFX : public Serializable
  */
 /******************************************************************************/
 enum class E_MOVEMENT_TYPE : char;
-struct AISetting {
+struct AISetting : public Serializable {
 	E_MOVEMENT_TYPE mMovementType;	// AI's movement type
 	float mSpreadOut;								// Percentage determining how much it changes the direction. Max 100
 	float mStayAway;								// For flying enemy, horizontal distance to stay away from player
@@ -555,11 +555,14 @@ struct Button
 	inline bool IsActivated() { return mActivated; }
 };
 
-struct Crosshair
+struct Crosshair : public Serializable
 {
 	float mThickness{ 1 };
 	float mInner	{ 10 };
 	float mOuter	{ 20 };
 
 	vec4 mColor		{ 1.f, 1.f, 1.f, 1.f };
+
+	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
+	void DeserializeSelf(rapidjson::Value& reader);
 };
