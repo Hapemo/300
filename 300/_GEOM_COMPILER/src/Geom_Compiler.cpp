@@ -902,10 +902,11 @@ namespace _GEOM
 					}
 
 					// Bones
-					for (int j{}; j < animation.m_Bones.size(); ++j)
+					//for (int j{}; j < animation.m_Bones.size(); ++j)
+					for(auto& bone : animation.m_Bones)
 					{
-						auto& boneinst = animation.m_Bones[j];
-
+						auto& boneinst = bone.second;
+						
 						uint8_t strlen = (uint8_t)boneinst.m_Name.size();
 						outfile.write((char*)&strlen, sizeof(uint8_t));						// name length
 						outfile.write((char*)boneinst.m_Name.c_str(), strlen);				// name	
@@ -1169,7 +1170,9 @@ namespace _GEOM
 			}
 
 			// emplace back the bone data, based off the boneinfomap and channel data
-			myanimation.m_Bones.emplace_back(Bone(boneName, boneInfoMap[channel->mNodeName.data].id, channel));
+			Bone bone(boneName, boneInfoMap[channel->mNodeName.data].id, channel);
+
+			myanimation.m_Bones[bone.m_Name] = bone;
 		}
 	};
 
