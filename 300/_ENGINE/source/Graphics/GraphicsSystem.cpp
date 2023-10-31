@@ -444,9 +444,15 @@ void GraphicsSystem::EditorDraw(float dt)
 		//	}
 		//}
 
-
-		GLuint debug_draw = glGetUniformLocation(shaderID, "uDebugDraw");
-		glUniform1i(debug_draw, m_DebugDrawing);
+		if (m_DebugDrawing) {
+			m_GlobalTint.a = 0.3f;
+		}
+		else {
+			m_GlobalTint.a = 1.f;
+		}
+		
+		GLuint debug_draw = glGetUniformLocation(shaderID, "globalTint");
+		glUniform4fv(debug_draw, 1, glm::value_ptr(m_GlobalTint));
 
 		// Bind mesh's VAO, copy render data into VBO, Draw
 		DrawAll(meshinst);

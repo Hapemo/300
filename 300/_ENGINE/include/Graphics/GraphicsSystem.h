@@ -249,6 +249,9 @@ public:
 	glm::vec2 m_EditorWindowPos;
 	glm::vec2 m_GameWindowPos;
 
+	// -- Global tint --
+	vec4	m_GlobalTint = {1.f, 1.f, 1.f, 1.f};
+
 	// -- Bloom -- 
 	vec3		mAmbientBloomThreshold { 0.05, 0.05, 0.005 };		// this yj
 	float		mAmbientBloomExposure{ 0.4f };						// this yj

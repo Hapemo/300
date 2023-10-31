@@ -85,4 +85,6 @@ void TabWindow::update()
 	ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
 		- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
 	ImGui::DragFloat("##CS", (float*)&systemManager->mGraphicsSystem->m_DegreeTest);
+
+	ImGui::ColorPicker4("Global Tint", (float*)&systemManager->mGraphicsSystem->m_GlobalTint);
 }
