@@ -19,8 +19,10 @@
 #include "Debug/EnginePerformance.h"
 #include "GameState/GameStateManager.h"
 #include "Input/InputMapSystem.h"
-
+#include <Windows.h>
+#include <WinUser.h>
 #include "cstdlib"
+
 
 /***************************************************************************/
 /*!
@@ -30,6 +32,11 @@
 /**************************************************************************/
 float first_entitytime{};
 float second_entitytime{};
+
+void GraphicsSystem::SetCursorCenter() {
+	 SetCursorPos(m_EditorWindowPos.x, m_EditorWindowPos.y); 
+	 std::cout << "cursor center: " << m_EditorWindowPos.x << ", " << m_EditorWindowPos.y << "\n";
+}
 
 void GraphicsSystem::Init()
 {
@@ -103,6 +110,13 @@ void GraphicsSystem::Init()
 /**************************************************************************/
 void GraphicsSystem::Update(float dt)
 {
+
+	if (m_EditorMode && m_EditorSceneHovered) {
+
+		
+	}
+
+
 	m_RightClickHeld = systemManager->mInputActionSystem->GetKey(M_BUTTON_R);
 
 	// Check window size for any updates
@@ -854,26 +868,26 @@ inline void drawViewFrustum(Entity gameCamera)
 	float halfHeight = tanf(glm::radians(camera.mFovDegree / 2.f));
 	float halfWidth = halfHeight * camera.mAspectRatio;
 
-	float near = camera.mNear;
-	float far = camera.mFar;
-	float xn = halfWidth * near;
-	float xf = halfWidth * far;
-	float yn = halfHeight * near;
-	float yf = halfHeight * far;
+	float near1 = camera.mNear;
+	float far1 = camera.mFar;
+	float xn = halfWidth * near1;
+	float xf = halfWidth * far1;
+	float yn = halfHeight * near1;
+	float yf = halfHeight * far1;
 
 	glm::vec4 f[8u] =
 	{
 		// near face
-		{xn, yn,	-near, 1.f},
-		{-xn, yn,	-near, 1.f},
-		{xn, -yn,	-near, 1.f},
-		{-xn, -yn,	-near , 1.f},
+		{xn, yn,	-near1, 1.f},
+		{-xn, yn,	-near1, 1.f},
+		{xn, -yn,	-near1, 1.f},
+		{-xn, -yn,	-near1 , 1.f},
 
 		// far face
-		{xf, yf,	-far, 1.f},
-		{-xf, yf,	-far , 1.f},
-		{xf, -yf,	-far , 1.f},
-		{-xf, -yf,	-far, 1.f},
+		{xf, yf,	-far1, 1.f},
+		{-xf, yf,	-far1 , 1.f},
+		{xf, -yf,	-far1 , 1.f},
+		{-xf, -yf,	-far1, 1.f},
 	};
 
 	glm::vec3 v[8];
@@ -922,15 +936,17 @@ void GraphicsSystem::UpdateCamera(CAMERA_TYPE type, const float &dt)
 			if (localcamera.empty())
 				return;
 			GameCamera = localcamera.front();		// there will only be one game camera
+			auto& GameCameraTransform = GameCamera.GetComponent<Transform>();
+			auto& GameCameraComponent = GameCamera.GetComponent<Camera>();
 
 			//Camera_Input::getInstance().updateCameraInput(camera.GetComponent<Camera>().mCamera, dt);
 			
 			//camera.GetComponent<Transform>().mTranslate = camera.GetComponent<Camera>().mCamera.mPosition;
-			GameCamera.GetComponent<Camera>().mCamera.mTarget += (GameCamera.GetComponent<Transform>().mTranslate - GameCamera.GetComponent<Camera>().mCamera.mPosition);
-			GameCamera.GetComponent<Camera>().mCamera.mPosition = GameCamera.GetComponent<Transform>().mTranslate;
-			GameCamera.GetComponent<Camera>().mCamera.mPitch = GameCamera.GetComponent<Transform>().mRotate.y;
-			GameCamera.GetComponent<Camera>().mCamera.mYaw = GameCamera.GetComponent<Transform>().mRotate.x;
-			GameCamera.GetComponent<Camera>().mCamera.Update();
+			GameCameraComponent.mCamera.mTarget += (GameCameraTransform.mTranslate - GameCameraComponent.mCamera.mPosition);
+			GameCameraComponent.mCamera.mPosition = GameCameraTransform.mTranslate;
+			GameCameraComponent.mCamera.mPitch = GameCameraTransform.mRotate.y;
+			GameCameraComponent.mCamera.mYaw = GameCameraTransform.mRotate.x;
+			GameCameraComponent.mCamera.Update();
 
 			// debug drawing
 			if (systemManager->mGraphicsSystem->m_DebugDrawing) {

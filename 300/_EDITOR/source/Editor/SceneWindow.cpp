@@ -58,13 +58,9 @@ void SceneWindow::init()
 /***************************************************************************/
 void SceneWindow::update()
 {
-	if (ImGui::IsWindowHovered()) {
-		//Input::mosposEditor = glm::vec2{ ImGui::GetMousePos().x ,ImGui::GetMousePos().y };
-		systemManager->mGraphicsSystem->m_EditorSceneHovered = true;
-	}
-	else {
-		systemManager->mGraphicsSystem->m_EditorSceneHovered = false;
-	}
+
+
+	
 
 	mWinFlag |= ImGuiWindowFlags_NoScrollbar;
 

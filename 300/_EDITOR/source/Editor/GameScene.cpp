@@ -33,6 +33,17 @@ void GameScene::init()
 /**************************************************************************/
 void GameScene::update() 
 {
+	if (ImGui::IsWindowHovered()) {
+		//Input::mosposEditor = glm::vec2{ ImGui::GetMousePos().x ,ImGui::GetMousePos().y };
+		systemManager->mGraphicsSystem->m_EditorSceneHovered = true;
+	}
+	else {
+		systemManager->mGraphicsSystem->m_EditorSceneHovered = false;
+	}
+
+	systemManager->mGraphicsSystem->m_EditorWindowPos = { ImGui::GetWindowPos().x+10 +(ImGui::GetWindowWidth() + 10)/2
+		, ImGui::GetWindowPos().y + 40+(ImGui::GetWindowHeight() + 40)/2};
+
 	mWinFlag |= ImGuiWindowFlags_NoScrollbar;
 
 	const ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();

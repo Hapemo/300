@@ -178,12 +178,16 @@ void Camera_Scripting::RotateCameraView(Entity cameraEntity, const vec2& cursorp
 	auto& caminst = cameraEntity.GetComponent<Camera>().mCamera;
 	vec2 delta = cursorposition;
 	
+	std::cout << delta.x << ", " << delta.y << "\n";
+
 	if (delta == vec2(0.f, 0.f))
 		return;
 	
 	delta *= caminst.mSensitivity;		// adjust the mouse movement sensitivity
 	caminst.mYaw += delta.x;
 	caminst.mPitch += delta.y;
+	
+	std::cout << "pitch: " << caminst.mPitch << ", yaw: " << caminst.mYaw << "\n";
 
 	if (caminst.mPitch > 89.0f) {
 		caminst.mPitch = 89.0f;

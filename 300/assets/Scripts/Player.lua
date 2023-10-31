@@ -14,14 +14,18 @@ totaltime = 0.0
 isDashing = false;
 speed = 10
 positions = Vec3.new(0,0,10)
-positions_offset = Vec3.new(0,0,0)
+positions_offset = Vec3.new(0,20,0)
 positions_final = Vec3.new()
+
+-- mouse pos
+mouse_move = Vec2.new()
+
 
 function Alive()
     gameStateSys = systemManager:mGameStateSystem();
     inputMapSys = systemManager:mInputActionSystem();
     physicsSys = systemManager:mPhysicsSystem();
-    --graphicsSys = systemManager:mGraphicsSystem();
+    graphicsSys = systemManager:mGraphicsSystem();
     cameraEntity = Helper.GetScriptEntity(script_entity.id)
     totaltime = 3.0
 end
@@ -32,7 +36,12 @@ function Update()
     -- vectorrr = graphicsSys.mAmbientBloomThreshold
     totaltime = totaltime + 0.016;
     positions = cameraEntity:GetTransform().mTranslate
-    Camera_Scripting.RotateCameraView(cameraEntity, Input.CursorPos())
+    
+    mouse_move.x = Input.CursorPos().x - 935
+    mouse_move.y = Input.CursorPos().y - 378
+    Camera_Scripting.RotateCameraView(cameraEntity, mouse_move)
+    graphicsSys:SetCursorCenter()
+
     viewVec = Camera_Scripting.GetDirection(cameraEntity)
     viewVecCam = Camera_Scripting.GetDirection(cameraEntity)
     rotationCam = Camera_Scripting.GetDirection(cameraEntity)
@@ -88,12 +97,15 @@ function Update()
     -- positions_offset.y =  viewVec.y *10
     -- positions_offset.z =  viewVec.z *10
 
-    -- positions_final.x = positions.x + positions_offset.x
-    -- positions_final.y = positions.y + positions_offset.y
-    -- positions_final.z = positions.z + positions_offset.z
+
     
     if(inputMapSys:GetButtonDown("Shoot")) then
-        prefabEntity = systemManager.ecs:NewEntityFromPrefab("bullet", positions)
+        
+        positions_final.x = positions.x + viewVecCam.x*5
+        positions_final.y = positions.y + viewVecCam.y*5
+        positions_final.z = positions.z + viewVecCam.z*5  
+
+        prefabEntity = systemManager.ecs:NewEntityFromPrefab("bullet", positions_final)
         rotationCam.x = rotationCam.z *360
         rotationCam.y = rotationCam.x *0
         rotationCam.z = rotationCam.z *0

@@ -310,7 +310,8 @@ void LuaGraphicsSystem()
         "mSamplingWeight", &GraphicsSystem::mSamplingWeight,
         "mChromaticStrength", &GraphicsSystem::mChromaticStrength,
         "m_EnableBloom", &GraphicsSystem::m_EnableBloom,
-        "m_EnableChromaticAbberation", &GraphicsSystem::m_EnableChromaticAbberation
+        "m_EnableChromaticAbberation", &GraphicsSystem::m_EnableChromaticAbberation,
+        "SetCursorCenter", &GraphicsSystem::SetCursorCenter
         );
 }
 
