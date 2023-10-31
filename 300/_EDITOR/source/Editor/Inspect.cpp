@@ -1452,6 +1452,9 @@ void AISetting::Inspect() {
 		if (ImGui::Button("Update Target"))
 			mTarget = systemManager->mGameStateSystem->GetEntity(mTargetName);
 	}
+
+	if (delete_component == false)
+		Entity(Hierarchy::selectedId).RemoveComponent<AISetting>();
 	
 	//if (ImGui::CollapsingHeader("UIrenderer", &delete_component, ImGuiTreeNodeFlags_DefaultOpen)) {
 	//	ImGui::TextColored({ 0.f,1.f, 1.f, 1.f }, "Bloom Variables");

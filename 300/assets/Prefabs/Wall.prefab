@@ -1,5 +1,5 @@
 {
-    "entityid": 60,
+    "entityid": 1048639,
     "general": {
         "name": "Wall",
         "tagid": 4,
@@ -9,8 +9,8 @@
     },
     "transform": {
         "scale": {
-            "x": 60.0,
-            "y": 49.99950408935547,
+            "x": 59.99998092651367,
+            "y": 49.99948501586914,
             "z": 5.0
         },
         "rotate": {
@@ -21,7 +21,7 @@
         "translate": {
             "x": 92.5,
             "y": 22.5,
-            "z": 50.0
+            "z": 0.0
         }
     },
     "rigidbody": {
@@ -45,10 +45,10 @@
         "frag": "../assets/shader_files/pointLight_frag.glsl",
         "meshrefid": 3442,
         "instancecolor": {
-            "x": 0.24576270580291748,
-            "y": 0.83309406042099,
-            "z": 0.9830508232116699,
-            "w": 0.772549033164978
+            "x": 0.23728811740875244,
+            "y": 1.0,
+            "z": 0.9418269991874695,
+            "w": 1.0
         },
         "materialinstance": [
             "../assets/Compressed/Texture_Wall_12x10x1.ctexture",

@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 1,
+        "entityid": 1048579,
         "general": {
             "name": "enemy1_walking",
             "tagid": 1,
@@ -20,9 +20,9 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 46.69139862060547,
-                "y": 2.4998960494995117,
-                "z": -6.933004379272461
+                "x": 20.000036239624023,
+                "y": 2.4999990463256836,
+                "z": -3.7400801033982134e-7
             }
         },
         "rigidbody": {
@@ -30,9 +30,9 @@
             "material": 1,
             "motion": 1,
             "velocity": {
-                "x": -3.3631441593170166,
-                "y": 0.0000021457672119140625,
-                "z": 2.6695237159729004
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
             },
             "rotationconstraints": {
                 "x": true,
@@ -46,9 +46,9 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 2923,
             "instancecolor": {
-                "x": 0.8588235378265381,
-                "y": 0.3176470696926117,
-                "z": 0.3176470696926117,
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
                 "w": 1.0
             },
             "materialinstance": [
@@ -77,26 +77,14 @@
             "istrigger": false
         },
         "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/AITest.lua",
-                    "variables": []
-                }
-            ]
+            "scriptscontainer": []
         },
         "prefab": {
             "prefab": "enemy1_walking"
-        },
-        "aisetting": {
-            "movementtype": 1,
-            "spreadout": 41.0,
-            "stayaway": 0.0,
-            "elevation": 0.0,
-            "targetname": "Camera"
         }
     },
     {
-        "entityid": 2,
+        "entityid": 1048580,
         "general": {
             "name": "enemy1_walking",
             "tagid": 1,
@@ -116,9 +104,9 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 39.29021453857422,
-                "y": 2.4998955726623535,
-                "z": -9.966794967651367
+                "x": -2.112537922371871e-11,
+                "y": 2.4999990463256836,
+                "z": -3.9315247590820945e-7
             }
         },
         "rigidbody": {
@@ -126,9 +114,9 @@
             "material": 1,
             "motion": 1,
             "velocity": {
-                "x": -3.3631441593170166,
-                "y": 0.0000021457672119140625,
-                "z": 2.6695237159729004
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
             },
             "rotationconstraints": {
                 "x": true,
@@ -142,9 +130,9 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 2923,
             "instancecolor": {
-                "x": 0.8588235378265381,
-                "y": 0.3176470696926117,
-                "z": 0.3176470696926117,
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
                 "w": 1.0
             },
             "materialinstance": [
@@ -173,26 +161,14 @@
             "istrigger": false
         },
         "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/AITest.lua",
-                    "variables": []
-                }
-            ]
+            "scriptscontainer": []
         },
         "prefab": {
             "prefab": "enemy1_walking"
-        },
-        "aisetting": {
-            "movementtype": 1,
-            "spreadout": 41.0,
-            "stayaway": 0.0,
-            "elevation": 0.0,
-            "targetname": "Camera"
         }
     },
     {
-        "entityid": 3,
+        "entityid": 1048581,
         "general": {
             "name": "enemy1_attack",
             "tagid": 1,
@@ -212,9 +188,9 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 52.48073196411133,
-                "y": 2.49989652633667,
-                "z": -1.413171648979187
+                "x": 10.000017166137695,
+                "y": 2.4999990463256836,
+                "z": -4.1229694147659757e-7
             }
         },
         "rigidbody": {
@@ -222,9 +198,9 @@
             "material": 1,
             "motion": 1,
             "velocity": {
-                "x": 0.1749381422996521,
-                "y": -0.0000010728836059570313,
-                "z": -0.7091813087463379
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
             },
             "rotationconstraints": {
                 "x": true,
@@ -238,9 +214,9 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3124,
             "instancecolor": {
-                "x": 0.8601694703102112,
-                "y": 0.3170963525772095,
-                "z": 0.3170963525772095,
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
                 "w": 1.0
             },
             "materialinstance": [
@@ -269,26 +245,14 @@
             "istrigger": false
         },
         "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/AITest.lua",
-                    "variables": []
-                }
-            ]
+            "scriptscontainer": []
         },
         "prefab": {
             "prefab": "enemy1_attack"
-        },
-        "aisetting": {
-            "movementtype": 1,
-            "spreadout": 41.0,
-            "stayaway": 0.0,
-            "elevation": 0.0,
-            "targetname": "Camera"
         }
     },
     {
-        "entityid": 4,
+        "entityid": 1048582,
         "general": {
             "name": "Floor",
             "tagid": 4,
@@ -334,10 +298,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24705882370471954,
-                "y": 0.8313725590705872,
-                "z": 0.9843137264251709,
-                "w": 0.772549033164978
+                "x": 0.239215686917305,
+                "y": 1.0,
+                "z": 0.9411764740943909,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -376,7 +340,7 @@
         }
     },
     {
-        "entityid": 5,
+        "entityid": 1048583,
         "general": {
             "name": "Floor",
             "tagid": 4,
@@ -422,10 +386,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24705882370471954,
-                "y": 0.8313725590705872,
-                "z": 0.9843137264251709,
-                "w": 0.772549033164978
+                "x": 0.239215686917305,
+                "y": 1.0,
+                "z": 0.9411764740943909,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -464,7 +428,7 @@
         }
     },
     {
-        "entityid": 6,
+        "entityid": 1048584,
         "general": {
             "name": "Floor",
             "tagid": 4,
@@ -510,10 +474,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24705882370471954,
-                "y": 0.8313725590705872,
-                "z": 0.9843137264251709,
-                "w": 0.772549033164978
+                "x": 0.239215686917305,
+                "y": 1.0,
+                "z": 0.9411764740943909,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -552,7 +516,7 @@
         }
     },
     {
-        "entityid": 7,
+        "entityid": 1048585,
         "general": {
             "name": "Floor",
             "tagid": 4,
@@ -598,10 +562,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24705882370471954,
-                "y": 0.8313725590705872,
-                "z": 0.9843137264251709,
-                "w": 0.772549033164978
+                "x": 0.239215686917305,
+                "y": 1.0,
+                "z": 0.9411764740943909,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -640,7 +604,7 @@
         }
     },
     {
-        "entityid": 8,
+        "entityid": 1048586,
         "general": {
             "name": "Floor",
             "tagid": 4,
@@ -686,10 +650,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24705882370471954,
-                "y": 0.8313725590705872,
-                "z": 0.9843137264251709,
-                "w": 0.772549033164978
+                "x": 0.239215686917305,
+                "y": 1.0,
+                "z": 0.9411764740943909,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -728,7 +692,7 @@
         }
     },
     {
-        "entityid": 9,
+        "entityid": 1048587,
         "general": {
             "name": "Floor",
             "tagid": 4,
@@ -774,10 +738,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24705882370471954,
-                "y": 0.8313725590705872,
-                "z": 0.9843137264251709,
-                "w": 0.772549033164978
+                "x": 0.239215686917305,
+                "y": 1.0,
+                "z": 0.9411764740943909,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -816,7 +780,7 @@
         }
     },
     {
-        "entityid": 10,
+        "entityid": 1048588,
         "general": {
             "name": "Floor",
             "tagid": 4,
@@ -862,10 +826,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24705882370471954,
-                "y": 0.8313725590705872,
-                "z": 0.9843137264251709,
-                "w": 0.772549033164978
+                "x": 0.239215686917305,
+                "y": 1.0,
+                "z": 0.9411764740943909,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -904,7 +868,7 @@
         }
     },
     {
-        "entityid": 11,
+        "entityid": 1048589,
         "general": {
             "name": "Floor",
             "tagid": 4,
@@ -950,10 +914,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24705882370471954,
-                "y": 0.8313725590705872,
-                "z": 0.9843137264251709,
-                "w": 0.772549033164978
+                "x": 0.239215686917305,
+                "y": 1.0,
+                "z": 0.9411764740943909,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -992,7 +956,7 @@
         }
     },
     {
-        "entityid": 12,
+        "entityid": 1048590,
         "general": {
             "name": "Floor",
             "tagid": 4,
@@ -1038,10 +1002,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24705882370471954,
-                "y": 0.8313725590705872,
-                "z": 0.9843137264251709,
-                "w": 0.772549033164978
+                "x": 0.239215686917305,
+                "y": 1.0,
+                "z": 0.9411764740943909,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -1080,7 +1044,7 @@
         }
     },
     {
-        "entityid": 13,
+        "entityid": 1048591,
         "general": {
             "name": "Floor",
             "tagid": 4,
@@ -1126,10 +1090,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24705882370471954,
-                "y": 0.8313725590705872,
-                "z": 0.9843137264251709,
-                "w": 0.772549033164978
+                "x": 0.239215686917305,
+                "y": 1.0,
+                "z": 0.9411764740943909,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -1168,7 +1132,7 @@
         }
     },
     {
-        "entityid": 14,
+        "entityid": 1048592,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -1178,8 +1142,8 @@
         },
         "transform": {
             "scale": {
-                "x": 60.0,
-                "y": 49.99950408935547,
+                "x": 59.99998092651367,
+                "y": 49.99948501586914,
                 "z": 5.0
             },
             "rotate": {
@@ -1214,10 +1178,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24576270580291748,
-                "y": 0.83309406042099,
-                "z": 0.9830508232116699,
-                "w": 0.772549033164978
+                "x": 0.23728811740875244,
+                "y": 1.0,
+                "z": 0.9418269991874695,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -1256,7 +1220,7 @@
         }
     },
     {
-        "entityid": 15,
+        "entityid": 1048593,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -1266,8 +1230,8 @@
         },
         "transform": {
             "scale": {
-                "x": 60.0,
-                "y": 49.99950408935547,
+                "x": 59.99998092651367,
+                "y": 49.99948501586914,
                 "z": 5.0
             },
             "rotate": {
@@ -1302,10 +1266,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24576270580291748,
-                "y": 0.83309406042099,
-                "z": 0.9830508232116699,
-                "w": 0.772549033164978
+                "x": 0.23728811740875244,
+                "y": 1.0,
+                "z": 0.9418269991874695,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -1344,7 +1308,7 @@
         }
     },
     {
-        "entityid": 16,
+        "entityid": 1048594,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -1354,8 +1318,8 @@
         },
         "transform": {
             "scale": {
-                "x": 60.0,
-                "y": 49.99950408935547,
+                "x": 59.99998092651367,
+                "y": 49.99948501586914,
                 "z": 5.0
             },
             "rotate": {
@@ -1390,10 +1354,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24576270580291748,
-                "y": 0.83309406042099,
-                "z": 0.9830508232116699,
-                "w": 0.772549033164978
+                "x": 0.23728811740875244,
+                "y": 1.0,
+                "z": 0.9418269991874695,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -1432,7 +1396,7 @@
         }
     },
     {
-        "entityid": 17,
+        "entityid": 1048595,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -1442,8 +1406,8 @@
         },
         "transform": {
             "scale": {
-                "x": 60.0,
-                "y": 49.99950408935547,
+                "x": 59.99998092651367,
+                "y": 49.99948501586914,
                 "z": 5.0
             },
             "rotate": {
@@ -1478,10 +1442,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24576270580291748,
-                "y": 0.83309406042099,
-                "z": 0.9830508232116699,
-                "w": 0.772549033164978
+                "x": 0.23728811740875244,
+                "y": 1.0,
+                "z": 0.9418269991874695,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -1520,7 +1484,7 @@
         }
     },
     {
-        "entityid": 18,
+        "entityid": 1048596,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -1530,8 +1494,8 @@
         },
         "transform": {
             "scale": {
-                "x": 60.0,
-                "y": 49.99950408935547,
+                "x": 59.99998092651367,
+                "y": 49.99948501586914,
                 "z": 5.0
             },
             "rotate": {
@@ -1566,10 +1530,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24576270580291748,
-                "y": 0.83309406042099,
-                "z": 0.9830508232116699,
-                "w": 0.772549033164978
+                "x": 0.23728811740875244,
+                "y": 1.0,
+                "z": 0.9418269991874695,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -1608,7 +1572,7 @@
         }
     },
     {
-        "entityid": 19,
+        "entityid": 1048597,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -1618,8 +1582,8 @@
         },
         "transform": {
             "scale": {
-                "x": 60.0,
-                "y": 49.99950408935547,
+                "x": 59.99998092651367,
+                "y": 49.99948501586914,
                 "z": 5.0
             },
             "rotate": {
@@ -1654,10 +1618,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24576270580291748,
-                "y": 0.83309406042099,
-                "z": 0.9830508232116699,
-                "w": 0.772549033164978
+                "x": 0.23728811740875244,
+                "y": 1.0,
+                "z": 0.9418269991874695,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -1696,7 +1660,7 @@
         }
     },
     {
-        "entityid": 20,
+        "entityid": 1048598,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -1706,8 +1670,8 @@
         },
         "transform": {
             "scale": {
-                "x": 60.0,
-                "y": 49.99950408935547,
+                "x": 59.99998092651367,
+                "y": 49.99948501586914,
                 "z": 5.0
             },
             "rotate": {
@@ -1742,10 +1706,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24576270580291748,
-                "y": 0.83309406042099,
-                "z": 0.9830508232116699,
-                "w": 0.772549033164978
+                "x": 0.23728811740875244,
+                "y": 1.0,
+                "z": 0.9418269991874695,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -1784,7 +1748,7 @@
         }
     },
     {
-        "entityid": 21,
+        "entityid": 1048599,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -1794,8 +1758,8 @@
         },
         "transform": {
             "scale": {
-                "x": 60.0,
-                "y": 49.99950408935547,
+                "x": 59.99998092651367,
+                "y": 49.99948501586914,
                 "z": 5.0
             },
             "rotate": {
@@ -1830,10 +1794,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24576270580291748,
-                "y": 0.83309406042099,
-                "z": 0.9830508232116699,
-                "w": 0.772549033164978
+                "x": 0.23728811740875244,
+                "y": 1.0,
+                "z": 0.9418269991874695,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -1872,7 +1836,7 @@
         }
     },
     {
-        "entityid": 22,
+        "entityid": 1048600,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -1882,8 +1846,8 @@
         },
         "transform": {
             "scale": {
-                "x": 60.0,
-                "y": 49.99950408935547,
+                "x": 59.99998092651367,
+                "y": 49.99948501586914,
                 "z": 5.0
             },
             "rotate": {
@@ -1918,10 +1882,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24576270580291748,
-                "y": 0.83309406042099,
-                "z": 0.9830508232116699,
-                "w": 0.772549033164978
+                "x": 0.23728811740875244,
+                "y": 1.0,
+                "z": 0.9418269991874695,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -1960,7 +1924,7 @@
         }
     },
     {
-        "entityid": 23,
+        "entityid": 1048601,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -1970,8 +1934,8 @@
         },
         "transform": {
             "scale": {
-                "x": 60.0,
-                "y": 49.99950408935547,
+                "x": 59.99998092651367,
+                "y": 49.99948501586914,
                 "z": 5.0
             },
             "rotate": {
@@ -2006,10 +1970,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24576270580291748,
-                "y": 0.83309406042099,
-                "z": 0.9830508232116699,
-                "w": 0.772549033164978
+                "x": 0.23728811740875244,
+                "y": 1.0,
+                "z": 0.9418269991874695,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -2048,7 +2012,7 @@
         }
     },
     {
-        "entityid": 24,
+        "entityid": 1048602,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -2058,8 +2022,8 @@
         },
         "transform": {
             "scale": {
-                "x": 60.0,
-                "y": 49.99950408935547,
+                "x": 59.99998092651367,
+                "y": 49.99948501586914,
                 "z": 5.0
             },
             "rotate": {
@@ -2094,10 +2058,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24576270580291748,
-                "y": 0.83309406042099,
-                "z": 0.9830508232116699,
-                "w": 0.772549033164978
+                "x": 0.23728811740875244,
+                "y": 1.0,
+                "z": 0.9418269991874695,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -2136,7 +2100,7 @@
         }
     },
     {
-        "entityid": 25,
+        "entityid": 1048603,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -2146,8 +2110,8 @@
         },
         "transform": {
             "scale": {
-                "x": 60.0,
-                "y": 49.99950408935547,
+                "x": 59.99998092651367,
+                "y": 49.99948501586914,
                 "z": 5.0
             },
             "rotate": {
@@ -2182,10 +2146,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24576270580291748,
-                "y": 0.83309406042099,
-                "z": 0.9830508232116699,
-                "w": 0.772549033164978
+                "x": 0.23728811740875244,
+                "y": 1.0,
+                "z": 0.9418269991874695,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -2224,7 +2188,7 @@
         }
     },
     {
-        "entityid": 26,
+        "entityid": 1048604,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -2234,8 +2198,8 @@
         },
         "transform": {
             "scale": {
-                "x": 60.0,
-                "y": 49.99950408935547,
+                "x": 59.99998092651367,
+                "y": 49.99948501586914,
                 "z": 5.0
             },
             "rotate": {
@@ -2270,10 +2234,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24576270580291748,
-                "y": 0.83309406042099,
-                "z": 0.9830508232116699,
-                "w": 0.772549033164978
+                "x": 0.23728811740875244,
+                "y": 1.0,
+                "z": 0.9418269991874695,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -2312,7 +2276,7 @@
         }
     },
     {
-        "entityid": 27,
+        "entityid": 1048605,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -2322,8 +2286,8 @@
         },
         "transform": {
             "scale": {
-                "x": 60.0,
-                "y": 49.99950408935547,
+                "x": 59.99998092651367,
+                "y": 49.99948501586914,
                 "z": 5.0
             },
             "rotate": {
@@ -2358,10 +2322,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24576270580291748,
-                "y": 0.83309406042099,
-                "z": 0.9830508232116699,
-                "w": 0.772549033164978
+                "x": 0.23728811740875244,
+                "y": 1.0,
+                "z": 0.9418269991874695,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -2400,7 +2364,7 @@
         }
     },
     {
-        "entityid": 28,
+        "entityid": 1048606,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -2410,8 +2374,8 @@
         },
         "transform": {
             "scale": {
-                "x": 60.0,
-                "y": 49.99950408935547,
+                "x": 59.99998092651367,
+                "y": 49.99948501586914,
                 "z": 5.0
             },
             "rotate": {
@@ -2446,10 +2410,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24576270580291748,
-                "y": 0.83309406042099,
-                "z": 0.9830508232116699,
-                "w": 0.772549033164978
+                "x": 0.23728811740875244,
+                "y": 1.0,
+                "z": 0.9418269991874695,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -2488,7 +2452,7 @@
         }
     },
     {
-        "entityid": 29,
+        "entityid": 1048607,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -2498,8 +2462,8 @@
         },
         "transform": {
             "scale": {
-                "x": 60.0,
-                "y": 49.99950408935547,
+                "x": 59.99998092651367,
+                "y": 49.99948501586914,
                 "z": 5.0
             },
             "rotate": {
@@ -2534,10 +2498,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24576270580291748,
-                "y": 0.83309406042099,
-                "z": 0.9830508232116699,
-                "w": 0.772549033164978
+                "x": 0.23728811740875244,
+                "y": 1.0,
+                "z": 0.9418269991874695,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -2576,7 +2540,7 @@
         }
     },
     {
-        "entityid": 30,
+        "entityid": 1048608,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -2586,8 +2550,8 @@
         },
         "transform": {
             "scale": {
-                "x": 60.0,
-                "y": 49.99950408935547,
+                "x": 59.99998092651367,
+                "y": 49.99948501586914,
                 "z": 5.0
             },
             "rotate": {
@@ -2622,10 +2586,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24576270580291748,
-                "y": 0.83309406042099,
-                "z": 0.9830508232116699,
-                "w": 0.772549033164978
+                "x": 0.23728811740875244,
+                "y": 1.0,
+                "z": 0.9418269991874695,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -2664,7 +2628,7 @@
         }
     },
     {
-        "entityid": 31,
+        "entityid": 1048609,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -2674,8 +2638,8 @@
         },
         "transform": {
             "scale": {
-                "x": 60.0,
-                "y": 49.99950408935547,
+                "x": 59.99998092651367,
+                "y": 49.99948501586914,
                 "z": 5.0
             },
             "rotate": {
@@ -2710,10 +2674,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24576270580291748,
-                "y": 0.83309406042099,
-                "z": 0.9830508232116699,
-                "w": 0.772549033164978
+                "x": 0.23728811740875244,
+                "y": 1.0,
+                "z": 0.9418269991874695,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -2752,7 +2716,7 @@
         }
     },
     {
-        "entityid": 32,
+        "entityid": 1048610,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -2762,8 +2726,8 @@
         },
         "transform": {
             "scale": {
-                "x": 60.0,
-                "y": 49.99950408935547,
+                "x": 59.99998092651367,
+                "y": 49.99948501586914,
                 "z": 5.0
             },
             "rotate": {
@@ -2798,10 +2762,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24576270580291748,
-                "y": 0.83309406042099,
-                "z": 0.9830508232116699,
-                "w": 0.772549033164978
+                "x": 0.23728811740875244,
+                "y": 1.0,
+                "z": 0.9418269991874695,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -2840,7 +2804,7 @@
         }
     },
     {
-        "entityid": 33,
+        "entityid": 1048611,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -2850,8 +2814,8 @@
         },
         "transform": {
             "scale": {
-                "x": 60.0,
-                "y": 49.99950408935547,
+                "x": 59.99998092651367,
+                "y": 49.99948501586914,
                 "z": 5.0
             },
             "rotate": {
@@ -2886,10 +2850,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24576270580291748,
-                "y": 0.83309406042099,
-                "z": 0.9830508232116699,
-                "w": 0.772549033164978
+                "x": 0.23728811740875244,
+                "y": 1.0,
+                "z": 0.9418269991874695,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -2928,7 +2892,7 @@
         }
     },
     {
-        "entityid": 34,
+        "entityid": 1048612,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -2938,8 +2902,8 @@
         },
         "transform": {
             "scale": {
-                "x": 60.0,
-                "y": 49.99950408935547,
+                "x": 59.99998092651367,
+                "y": 49.99948501586914,
                 "z": 5.0
             },
             "rotate": {
@@ -2974,10 +2938,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24576270580291748,
-                "y": 0.83309406042099,
-                "z": 0.9830508232116699,
-                "w": 0.772549033164978
+                "x": 0.23728811740875244,
+                "y": 1.0,
+                "z": 0.9418269991874695,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -3016,7 +2980,7 @@
         }
     },
     {
-        "entityid": 35,
+        "entityid": 1048613,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -3026,8 +2990,8 @@
         },
         "transform": {
             "scale": {
-                "x": 60.0,
-                "y": 49.99950408935547,
+                "x": 59.99998092651367,
+                "y": 49.99948501586914,
                 "z": 5.0
             },
             "rotate": {
@@ -3062,10 +3026,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24576270580291748,
-                "y": 0.83309406042099,
-                "z": 0.9830508232116699,
-                "w": 0.772549033164978
+                "x": 0.23728811740875244,
+                "y": 1.0,
+                "z": 0.9418269991874695,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -3104,7 +3068,7 @@
         }
     },
     {
-        "entityid": 36,
+        "entityid": 1048614,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -3114,8 +3078,8 @@
         },
         "transform": {
             "scale": {
-                "x": 60.0,
-                "y": 49.99950408935547,
+                "x": 59.99998092651367,
+                "y": 49.99948501586914,
                 "z": 5.0
             },
             "rotate": {
@@ -3150,10 +3114,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24576270580291748,
-                "y": 0.83309406042099,
-                "z": 0.9830508232116699,
-                "w": 0.772549033164978
+                "x": 0.23728811740875244,
+                "y": 1.0,
+                "z": 0.9418269991874695,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -3192,7 +3156,7 @@
         }
     },
     {
-        "entityid": 37,
+        "entityid": 1048615,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -3202,8 +3166,8 @@
         },
         "transform": {
             "scale": {
-                "x": 60.0,
-                "y": 49.99950408935547,
+                "x": 59.99998092651367,
+                "y": 49.99948501586914,
                 "z": 5.0
             },
             "rotate": {
@@ -3238,10 +3202,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24576270580291748,
-                "y": 0.83309406042099,
-                "z": 0.9830508232116699,
-                "w": 0.772549033164978
+                "x": 0.23728811740875244,
+                "y": 1.0,
+                "z": 0.9418269991874695,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -3280,7 +3244,7 @@
         }
     },
     {
-        "entityid": 38,
+        "entityid": 1048616,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -3326,10 +3290,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24705882370471954,
-                "y": 0.8313725590705872,
-                "z": 0.9843137264251709,
-                "w": 0.772549033164978
+                "x": 0.239215686917305,
+                "y": 1.0,
+                "z": 0.9411764740943909,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -3368,7 +3332,7 @@
         }
     },
     {
-        "entityid": 39,
+        "entityid": 1048617,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -3414,10 +3378,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24705882370471954,
-                "y": 0.8313725590705872,
-                "z": 0.9843137264251709,
-                "w": 0.772549033164978
+                "x": 0.239215686917305,
+                "y": 1.0,
+                "z": 0.9411764740943909,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -3456,7 +3420,7 @@
         }
     },
     {
-        "entityid": 40,
+        "entityid": 1048618,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -3502,10 +3466,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24705882370471954,
-                "y": 0.8313725590705872,
-                "z": 0.9843137264251709,
-                "w": 0.772549033164978
+                "x": 0.239215686917305,
+                "y": 1.0,
+                "z": 0.9411764740943909,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -3544,7 +3508,7 @@
         }
     },
     {
-        "entityid": 41,
+        "entityid": 1048619,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -3590,10 +3554,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24705882370471954,
-                "y": 0.8313725590705872,
-                "z": 0.9843137264251709,
-                "w": 0.772549033164978
+                "x": 0.239215686917305,
+                "y": 1.0,
+                "z": 0.9411764740943909,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -3632,7 +3596,7 @@
         }
     },
     {
-        "entityid": 42,
+        "entityid": 1048620,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -3678,10 +3642,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24705882370471954,
-                "y": 0.8313725590705872,
-                "z": 0.9843137264251709,
-                "w": 0.772549033164978
+                "x": 0.239215686917305,
+                "y": 1.0,
+                "z": 0.9411764740943909,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -3720,7 +3684,7 @@
         }
     },
     {
-        "entityid": 43,
+        "entityid": 1048621,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -3766,10 +3730,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24705882370471954,
-                "y": 0.8313725590705872,
-                "z": 0.9843137264251709,
-                "w": 0.772549033164978
+                "x": 0.239215686917305,
+                "y": 1.0,
+                "z": 0.9411764740943909,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -3808,7 +3772,7 @@
         }
     },
     {
-        "entityid": 44,
+        "entityid": 1048622,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -3854,10 +3818,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24705882370471954,
-                "y": 0.8313725590705872,
-                "z": 0.9843137264251709,
-                "w": 0.772549033164978
+                "x": 0.239215686917305,
+                "y": 1.0,
+                "z": 0.9411764740943909,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -3896,7 +3860,7 @@
         }
     },
     {
-        "entityid": 45,
+        "entityid": 1048623,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -3942,10 +3906,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24705882370471954,
-                "y": 0.8313725590705872,
-                "z": 0.9843137264251709,
-                "w": 0.772549033164978
+                "x": 0.239215686917305,
+                "y": 1.0,
+                "z": 0.9411764740943909,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -3984,7 +3948,7 @@
         }
     },
     {
-        "entityid": 46,
+        "entityid": 1048624,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -4030,10 +3994,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24705882370471954,
-                "y": 0.8313725590705872,
-                "z": 0.9843137264251709,
-                "w": 0.772549033164978
+                "x": 0.239215686917305,
+                "y": 1.0,
+                "z": 0.9411764740943909,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -4072,7 +4036,7 @@
         }
     },
     {
-        "entityid": 47,
+        "entityid": 1048625,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -4118,10 +4082,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24705882370471954,
-                "y": 0.8313725590705872,
-                "z": 0.9843137264251709,
-                "w": 0.772549033164978
+                "x": 0.239215686917305,
+                "y": 1.0,
+                "z": 0.9411764740943909,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -4160,7 +4124,7 @@
         }
     },
     {
-        "entityid": 48,
+        "entityid": 1048626,
         "general": {
             "name": "gun",
             "tagid": 0,
@@ -4190,9 +4154,9 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 2168,
             "instancecolor": {
-                "x": 0.09537490457296371,
-                "y": 0.40968769788742065,
-                "z": 0.7033898234367371,
+                "x": 0.08348894119262695,
+                "y": 0.1757984757423401,
+                "z": 0.6567796468734741,
                 "w": 1.0
             },
             "materialinstance": [
@@ -4212,13 +4176,13 @@
             ]
         },
         "parent": {
-            "prevsibling": 48,
-            "nextsibling": 48,
-            "parent": 0
+            "prevsibling": 1048626,
+            "nextsibling": 1048626,
+            "parent": 1048648
         }
     },
     {
-        "entityid": 49,
+        "entityid": 1048627,
         "general": {
             "name": "Light",
             "tagid": 2,
@@ -4257,11 +4221,11 @@
             },
             "linearfalloff": 0.0,
             "quadraticfalloff": 0.0,
-            "intensity": 1.0
+            "intensity": 1.5
         }
     },
     {
-        "entityid": 50,
+        "entityid": 1048628,
         "general": {
             "name": "Light",
             "tagid": 2,
@@ -4297,11 +4261,11 @@
             },
             "linearfalloff": 0.0,
             "quadraticfalloff": 0.0,
-            "intensity": 1.0
+            "intensity": 1.5
         }
     },
     {
-        "entityid": 51,
+        "entityid": 1048629,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -4311,8 +4275,8 @@
         },
         "transform": {
             "scale": {
-                "x": 60.0,
-                "y": 49.99950408935547,
+                "x": 59.99998092651367,
+                "y": 49.99948501586914,
                 "z": 5.0
             },
             "rotate": {
@@ -4347,10 +4311,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24576270580291748,
-                "y": 0.83309406042099,
-                "z": 0.9830508232116699,
-                "w": 0.772549033164978
+                "x": 0.23728811740875244,
+                "y": 1.0,
+                "z": 0.9418269991874695,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -4389,7 +4353,7 @@
         }
     },
     {
-        "entityid": 52,
+        "entityid": 1048630,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -4399,8 +4363,8 @@
         },
         "transform": {
             "scale": {
-                "x": 60.0,
-                "y": 49.99950408935547,
+                "x": 59.99998092651367,
+                "y": 49.99948501586914,
                 "z": 5.0
             },
             "rotate": {
@@ -4435,10 +4399,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24576270580291748,
-                "y": 0.83309406042099,
-                "z": 0.9830508232116699,
-                "w": 0.772549033164978
+                "x": 0.23728811740875244,
+                "y": 1.0,
+                "z": 0.9418269991874695,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -4477,7 +4441,7 @@
         }
     },
     {
-        "entityid": 53,
+        "entityid": 1048631,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -4487,8 +4451,8 @@
         },
         "transform": {
             "scale": {
-                "x": 60.0,
-                "y": 49.99950408935547,
+                "x": 59.99998092651367,
+                "y": 49.99948501586914,
                 "z": 5.0
             },
             "rotate": {
@@ -4523,10 +4487,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24576270580291748,
-                "y": 0.83309406042099,
-                "z": 0.9830508232116699,
-                "w": 0.772549033164978
+                "x": 0.23728811740875244,
+                "y": 1.0,
+                "z": 0.9418269991874695,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -4565,7 +4529,7 @@
         }
     },
     {
-        "entityid": 54,
+        "entityid": 1048632,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -4611,10 +4575,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24705882370471954,
-                "y": 0.8313725590705872,
-                "z": 0.9843137264251709,
-                "w": 0.772549033164978
+                "x": 0.239215686917305,
+                "y": 1.0,
+                "z": 0.9411764740943909,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -4653,7 +4617,7 @@
         }
     },
     {
-        "entityid": 55,
+        "entityid": 1048633,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -4663,8 +4627,8 @@
         },
         "transform": {
             "scale": {
-                "x": 60.0,
-                "y": 49.99950408935547,
+                "x": 59.99998092651367,
+                "y": 49.99948501586914,
                 "z": 5.0
             },
             "rotate": {
@@ -4699,10 +4663,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24576270580291748,
-                "y": 0.83309406042099,
-                "z": 0.9830508232116699,
-                "w": 0.772549033164978
+                "x": 0.23728811740875244,
+                "y": 1.0,
+                "z": 0.9418269991874695,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -4741,7 +4705,7 @@
         }
     },
     {
-        "entityid": 56,
+        "entityid": 1048634,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -4751,8 +4715,8 @@
         },
         "transform": {
             "scale": {
-                "x": 60.0,
-                "y": 49.99950408935547,
+                "x": 59.99998092651367,
+                "y": 49.99948501586914,
                 "z": 5.0
             },
             "rotate": {
@@ -4787,10 +4751,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24576270580291748,
-                "y": 0.83309406042099,
-                "z": 0.9830508232116699,
-                "w": 0.772549033164978
+                "x": 0.23728811740875244,
+                "y": 1.0,
+                "z": 0.9418269991874695,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -4829,7 +4793,7 @@
         }
     },
     {
-        "entityid": 57,
+        "entityid": 1048635,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -4875,10 +4839,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24705882370471954,
-                "y": 0.8313725590705872,
-                "z": 0.9843137264251709,
-                "w": 0.772549033164978
+                "x": 0.239215686917305,
+                "y": 1.0,
+                "z": 0.9411764740943909,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -4917,7 +4881,7 @@
         }
     },
     {
-        "entityid": 58,
+        "entityid": 1048636,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -4927,8 +4891,8 @@
         },
         "transform": {
             "scale": {
-                "x": 60.0,
-                "y": 49.99950408935547,
+                "x": 59.99998092651367,
+                "y": 49.99948501586914,
                 "z": 5.0
             },
             "rotate": {
@@ -4963,10 +4927,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24576270580291748,
-                "y": 0.83309406042099,
-                "z": 0.9830508232116699,
-                "w": 0.772549033164978
+                "x": 0.23728811740875244,
+                "y": 1.0,
+                "z": 0.9418269991874695,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -5005,7 +4969,7 @@
         }
     },
     {
-        "entityid": 59,
+        "entityid": 1048637,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -5015,8 +4979,8 @@
         },
         "transform": {
             "scale": {
-                "x": 60.0,
-                "y": 49.99950408935547,
+                "x": 59.99998092651367,
+                "y": 49.99948501586914,
                 "z": 5.0
             },
             "rotate": {
@@ -5051,10 +5015,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24576270580291748,
-                "y": 0.83309406042099,
-                "z": 0.9830508232116699,
-                "w": 0.772549033164978
+                "x": 0.23728811740875244,
+                "y": 1.0,
+                "z": 0.9418269991874695,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -5093,7 +5057,7 @@
         }
     },
     {
-        "entityid": 60,
+        "entityid": 1048638,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -5103,8 +5067,8 @@
         },
         "transform": {
             "scale": {
-                "x": 60.0,
-                "y": 49.99950408935547,
+                "x": 59.99998092651367,
+                "y": 49.99948501586914,
                 "z": 5.0
             },
             "rotate": {
@@ -5139,10 +5103,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24576270580291748,
-                "y": 0.83309406042099,
-                "z": 0.9830508232116699,
-                "w": 0.772549033164978
+                "x": 0.23728811740875244,
+                "y": 1.0,
+                "z": 0.9418269991874695,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -5181,7 +5145,7 @@
         }
     },
     {
-        "entityid": 61,
+        "entityid": 1048639,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -5191,8 +5155,8 @@
         },
         "transform": {
             "scale": {
-                "x": 60.0,
-                "y": 49.99950408935547,
+                "x": 59.99998092651367,
+                "y": 49.99948501586914,
                 "z": 5.0
             },
             "rotate": {
@@ -5227,10 +5191,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24576270580291748,
-                "y": 0.83309406042099,
-                "z": 0.9830508232116699,
-                "w": 0.772549033164978
+                "x": 0.23728811740875244,
+                "y": 1.0,
+                "z": 0.9418269991874695,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -5269,7 +5233,7 @@
         }
     },
     {
-        "entityid": 62,
+        "entityid": 1048640,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -5315,10 +5279,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24705882370471954,
-                "y": 0.8313725590705872,
-                "z": 0.9843137264251709,
-                "w": 0.772549033164978
+                "x": 0.239215686917305,
+                "y": 1.0,
+                "z": 0.9411764740943909,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -5357,7 +5321,7 @@
         }
     },
     {
-        "entityid": 63,
+        "entityid": 1048641,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -5403,10 +5367,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24705882370471954,
-                "y": 0.8313725590705872,
-                "z": 0.9843137264251709,
-                "w": 0.772549033164978
+                "x": 0.239215686917305,
+                "y": 1.0,
+                "z": 0.9411764740943909,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -5445,7 +5409,7 @@
         }
     },
     {
-        "entityid": 64,
+        "entityid": 1048642,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -5455,8 +5419,8 @@
         },
         "transform": {
             "scale": {
-                "x": 60.0,
-                "y": 49.99950408935547,
+                "x": 59.99998092651367,
+                "y": 49.99948501586914,
                 "z": 5.0
             },
             "rotate": {
@@ -5491,10 +5455,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24576270580291748,
-                "y": 0.83309406042099,
-                "z": 0.9830508232116699,
-                "w": 0.772549033164978
+                "x": 0.23728811740875244,
+                "y": 1.0,
+                "z": 0.9418269991874695,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -5533,7 +5497,7 @@
         }
     },
     {
-        "entityid": 65,
+        "entityid": 1048643,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -5543,8 +5507,8 @@
         },
         "transform": {
             "scale": {
-                "x": 60.0,
-                "y": 49.99950408935547,
+                "x": 59.99998092651367,
+                "y": 49.99948501586914,
                 "z": 5.0
             },
             "rotate": {
@@ -5579,10 +5543,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24576270580291748,
-                "y": 0.83309406042099,
-                "z": 0.9830508232116699,
-                "w": 0.772549033164978
+                "x": 0.23728811740875244,
+                "y": 1.0,
+                "z": 0.9418269991874695,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -5621,7 +5585,7 @@
         }
     },
     {
-        "entityid": 66,
+        "entityid": 1048644,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -5631,8 +5595,8 @@
         },
         "transform": {
             "scale": {
-                "x": 60.0,
-                "y": 49.99950408935547,
+                "x": 59.99998092651367,
+                "y": 49.99948501586914,
                 "z": 5.0
             },
             "rotate": {
@@ -5667,10 +5631,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24576270580291748,
-                "y": 0.83309406042099,
-                "z": 0.9830508232116699,
-                "w": 0.772549033164978
+                "x": 0.23728811740875244,
+                "y": 1.0,
+                "z": 0.9418269991874695,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -5709,7 +5673,7 @@
         }
     },
     {
-        "entityid": 67,
+        "entityid": 1048645,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -5719,8 +5683,8 @@
         },
         "transform": {
             "scale": {
-                "x": 60.0,
-                "y": 49.99950408935547,
+                "x": 59.99998092651367,
+                "y": 49.99948501586914,
                 "z": 5.0
             },
             "rotate": {
@@ -5755,10 +5719,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24576270580291748,
-                "y": 0.83309406042099,
-                "z": 0.9830508232116699,
-                "w": 0.772549033164978
+                "x": 0.23728811740875244,
+                "y": 1.0,
+                "z": 0.9418269991874695,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -5797,7 +5761,7 @@
         }
     },
     {
-        "entityid": 68,
+        "entityid": 1048646,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -5843,10 +5807,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24705882370471954,
-                "y": 0.8313725590705872,
-                "z": 0.9843137264251709,
-                "w": 0.772549033164978
+                "x": 0.239215686917305,
+                "y": 1.0,
+                "z": 0.9411764740943909,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -5885,7 +5849,7 @@
         }
     },
     {
-        "entityid": 69,
+        "entityid": 1048647,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -5931,10 +5895,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24705882370471954,
-                "y": 0.8313725590705872,
-                "z": 0.9843137264251709,
-                "w": 0.772549033164978
+                "x": 0.239215686917305,
+                "y": 1.0,
+                "z": 0.9411764740943909,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -5973,7 +5937,7 @@
         }
     },
     {
-        "entityid": 70,
+        "entityid": 1048648,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -5988,14 +5952,14 @@
                 "z": 20.0
             },
             "rotate": {
-                "x": 830.3001098632813,
-                "y": 6.200007915496826,
+                "x": -90.0,
+                "y": 0.0,
                 "z": 0.0
             },
             "translate": {
-                "x": 46.72349548339844,
-                "y": 14.501224517822266,
-                "z": -6.926018238067627
+                "x": 87.99999237060547,
+                "y": 6.499999523162842,
+                "z": 40.934593200683594
             }
         },
         "rigidbody": {
@@ -6003,9 +5967,9 @@
             "material": 1,
             "motion": 1,
             "velocity": {
-                "x": -1.0204565525054932,
-                "y": -0.25260818004608154,
-                "z": 0.8557486534118652
+                "x": 0.0,
+                "y": 0.0,
+                "z": -3.1134927969134196e-10
             },
             "rotationconstraints": {
                 "x": true,
@@ -6218,18 +6182,18 @@
         },
         "children": {
             "numchildren": 1,
-            "firstchild": 48
+            "firstchild": 1048626
         },
         "camera": {
             "positon": {
-                "x": 46.72349548339844,
-                "y": 14.501224517822266,
-                "z": -6.926018238067627
+                "x": 87.99999237060547,
+                "y": 6.499999523162842,
+                "z": 40.934593200683594
             },
             "target": {
-                "x": 46.37858581542969,
-                "y": 14.393224716186523,
-                "z": -5.993615627288818
+                "x": 87.99999237060547,
+                "y": 6.499999523162842,
+                "z": 39.934593200683594
             },
             "size": {
                 "x": 1175,
@@ -6240,7 +6204,7 @@
         }
     },
     {
-        "entityid": 71,
+        "entityid": 1048649,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -6286,10 +6250,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24705882370471954,
-                "y": 0.8313725590705872,
-                "z": 0.9843137264251709,
-                "w": 0.772549033164978
+                "x": 0.239215686917305,
+                "y": 1.0,
+                "z": 0.9411764740943909,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -6328,7 +6292,7 @@
         }
     },
     {
-        "entityid": 72,
+        "entityid": 1048650,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -6374,10 +6338,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24705882370471954,
-                "y": 0.8313725590705872,
-                "z": 0.9843137264251709,
-                "w": 0.772549033164978
+                "x": 0.239215686917305,
+                "y": 1.0,
+                "z": 0.9411764740943909,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -6416,7 +6380,7 @@
         }
     },
     {
-        "entityid": 73,
+        "entityid": 1048651,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -6462,10 +6426,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24705882370471954,
-                "y": 0.8313725590705872,
-                "z": 0.9843137264251709,
-                "w": 0.772549033164978
+                "x": 0.239215686917305,
+                "y": 1.0,
+                "z": 0.9411764740943909,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -6504,7 +6468,7 @@
         }
     },
     {
-        "entityid": 74,
+        "entityid": 1048655,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -6550,10 +6514,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24705882370471954,
-                "y": 0.8313725590705872,
-                "z": 0.9843137264251709,
-                "w": 0.772549033164978
+                "x": 0.239215686917305,
+                "y": 1.0,
+                "z": 0.9411764740943909,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -6592,7 +6556,7 @@
         }
     },
     {
-        "entityid": 75,
+        "entityid": 2097229,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -6638,10 +6602,10 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 3442,
             "instancecolor": {
-                "x": 0.24705882370471954,
-                "y": 0.8313725590705872,
-                "z": 0.9843137264251709,
-                "w": 0.772549033164978
+                "x": 0.239215686917305,
+                "y": 1.0,
+                "z": 0.9411764740943909,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
@@ -6677,122 +6641,6 @@
         },
         "prefab": {
             "prefab": "Floor"
-        }
-    },
-    {
-        "entityid": 76,
-        "general": {
-            "name": "bullet",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 335.6649475097656,
-                "y": -0.0,
-                "z": 3.1415927410125732
-            },
-            "translate": {
-                "x": 43.877197265625,
-                "y": 13.601176261901855,
-                "z": 0.8200647830963135
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 1,
-            "velocity": {
-                "x": -34.490966796875,
-                "y": -10.799980163574219,
-                "z": 93.24026489257813
-            },
-            "rotationconstraints": {
-                "x": true,
-                "y": false,
-                "z": false
-            },
-            "gravity": false
-        },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 2285,
-            "instancecolor": {
-                "x": 0.95652174949646,
-                "y": 1.0,
-                "z": 0.0,
-                "w": 1.0
-            },
-            "materialinstance": [
-                "../assets/Compressed/Cube_Texture_White.ctexture",
-                " ",
-                " ",
-                " ",
-                " "
-            ],
-            "mesh": "../assets/compiled_geom/cube.geom",
-            "texturerefid": [
-                4706,
-                0,
-                0,
-                0,
-                0
-            ]
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "translateoffset": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "istrigger": true
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/Bullet.lua",
-                    "variables": [
-                        {
-                            "key": "movement",
-                            "val": {
-                                "type": -655306154,
-                                "value": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0
-                                }
-                            }
-                        },
-                        {
-                            "key": "viewVec",
-                            "val": {
-                                "type": -655306154,
-                                "value": {
-                                    "x": 0.0,
-                                    "y": 1.0,
-                                    "z": 0.0
-                                }
-                            }
-                        }
-                    ]
-                }
-            ]
-        },
-        "prefab": {
-            "prefab": "bullet"
         }
     }
 ]
