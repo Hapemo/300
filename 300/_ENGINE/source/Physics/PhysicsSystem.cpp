@@ -12,6 +12,7 @@ PhysicsSystem::PhysicsSystem()
 	mMaterials[MATERIAL::ICE] = CreateMaterial(0.1f, 0.05f, 0.f);
 	mMaterials[MATERIAL::CONCRETE] = CreateMaterial(0.6f, 0.5f, 0.f);
 	mMaterials[MATERIAL::GLASS] = CreateMaterial(0.4f, 0.3f, 0.8f);
+	mIsSimulationRunning = false;
 }
 
 void PhysicsSystem::Init()
@@ -32,11 +33,13 @@ void PhysicsSystem::Update(float dt)
 		return;
 
 	// fixed time step
+	mIsSimulationRunning = true;
 	for (unsigned step = 0; step < Accumulator::mSteps; ++step)
 	{
 		mPX.mScene->simulate(Accumulator::mFixedDT);
 		bool isok = mPX.mScene->fetchResults(true);
 	}
+	mIsSimulationRunning = false;
 
 	MoveQueuedEntities();
 
@@ -53,8 +56,20 @@ void PhysicsSystem::AddEntity(Entity e)
 {
 	//std::cout << "adding entity:" << (int)e.id << std::endl;
 	//std::cout << "adding entity:" << e.GetComponent<General>().name << std::endl;
-	mPendingAdd.push_back(e);
-	
+	if (mIsSimulationRunning)
+	{
+		mPendingAdd.push_back(e);
+		return;
+	}
+	if (mActors.find(static_cast<uint32_t>(e.id)) != mActors.end())
+	{
+		PWARNING("Tried to add actor that is already in simulation!");
+		return;
+	}
+	if (e.HasComponent<RigidBody>())
+		CreateRigidBody(e);
+	else
+		PWARNING("Tried to add actor without rigid body to simulation!");
 }
 
 void PhysicsSystem::SetPosition(Entity e, const glm::vec3& globalpose)
