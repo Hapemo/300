@@ -97,8 +97,7 @@ void ContentBrowser::update()
 	for (auto const& directory : std::filesystem::directory_iterator{ current_Directory }) {
 		const auto& path = directory.path(); // directory path
 
-		auto relativepath = std::filesystem::relative(path, current_Directory);
-		std::string filename_string = relativepath.filename().string();
+		std::string filename_string = path.filename().string();
 
 		if (directory.is_directory()) {
 	

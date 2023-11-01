@@ -64,6 +64,5 @@ void FPSManager::LimitFPS(unsigned int fpsCap) {
 
 double FPSManager::GetDT()
 {
-    std::cout << dt << std::endl;
     return dt;
 }
