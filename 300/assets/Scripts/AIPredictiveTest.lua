@@ -7,12 +7,14 @@ function Update()
     aiSys = systemManager:mAISystem();
     phySys = systemManager:mPhysicsSystem();
     inputSys = systemManager:mInputActionSystem();
+    gameStateSys = systemManager:mGameStateSystem();
 
     -- Get entity attached to script
     entity = Helper.GetScriptEntity(script_entity.id)
     if entity == nil then
         print("Entity nil in script!")
     end
+
 
     -- Create new Entity in current scene example
     --testEntity = systemManager.ecs:NewEntityByScene();
@@ -21,27 +23,19 @@ function Update()
     --floorEntity = gameStateSys:GetEntity("Floor", "Test1")
 
     --AI TEST--
+    if inputSys:GetKeyDown(79) then -- press O
+        player = gameStateSys:GetEntity("Player", "JazzTestScene")
+        
+        aiSys:PredictiveShootPlayer(entity, 80.0, 10, 0)
+        -- aiSys:SetPredictiveVelocity(entity, player, 80.0)
+    end
+
+    if inputSys:GetKeyDown(80) then -- press P
+        vec = Vec3.new(0,0,0)
+        phySys:SetVelocity(entity, vec);
+    end
 
     -- vec = Vec3.new(50,0,50)
-    vec = Vec3.new(0,0,0)
-
-    if inputSys:GetButton("up") then 
-        vec.x = vec.x - 60
-    end
-    if inputSys:GetButton("down") then 
-        vec.x = vec.x + 60
-    end
-    if inputSys:GetButton("left") then 
-        vec.z = vec.z + 60
-    end
-    if inputSys:GetButton("right") then 
-        vec.z = vec.z - 60
-    end
-
-    if inputSys:GetButtonDown("Jump") then
-        vec.y = vec.y + 200
-    end
-    phySys:SetVelocity(entity, vec);
 
     -- AI functions
     -- aiSys:SetPredictiveVelocity(entity, entity, 0.5)

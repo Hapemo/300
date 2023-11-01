@@ -70,22 +70,29 @@ void Hierarchy::update() {
     if (ImGui::Button(ICON_FA_PLUS, ImVec2(50, 50)))
     {
 
-        if (allScene.size() <= 0) {
+        if (allScene.size() <= 0) 
+        {
             systemManager->mGameStateSystem->mCurrentGameState.AddScene();
             Entity newEntity = allScene[0].AddEntity();
+            newEntity.AddComponent<Camera>();
 
         }
         else {
             Entity newEntity = allScene[Hierarchy::selectedScene].AddEntity();
             newEntity.GetComponent<General>().name = "NewObject"/* + static_cast<int> (newEntity.id)*/;
-
         }
     }
 
     ImGui::SameLine();
     if (ImGui::Button(ICON_FA_FILE_CIRCLE_PLUS, ImVec2(50, 50))) {
-        systemManager->mGameStateSystem->mCurrentGameState.AddScene();
-
+        if (allScene.size() <= 0) 
+        {
+            systemManager->mGameStateSystem->mCurrentGameState.AddScene();
+            Entity newEntity = allScene[0].AddEntity();
+            newEntity.AddComponent<Camera>();
+        }
+        else
+            systemManager->mGameStateSystem->mCurrentGameState.AddScene();
     }
 
 
