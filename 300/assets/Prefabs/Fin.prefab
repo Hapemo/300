@@ -1,0 +1,56 @@
+{
+    "entityid": 80,
+    "general": {
+        "name": "Fin",
+        "tagid": 5,
+        "subtag": 0,
+        "isActive": true,
+        "isPaused": false
+    },
+    "transform": {
+        "scale": {
+            "x": 2.5,
+            "y": 2.5,
+            "z": 2.5
+        },
+        "rotate": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "translate": {
+            "x": 41.5,
+            "y": 22.498146057128906,
+            "z": -61.5
+        }
+    },
+    "meshrenderer": {
+        "vert": "../assets/shader_files/pointLight_vert.glsl",
+        "frag": "../assets/shader_files/pointLight_frag.glsl",
+        "meshrefid": 3348,
+        "instancecolor": {
+            "x": 0.6483050584793091,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 1.0
+        },
+        "materialinstance": [
+            "../assets/Compressed/Texture_Wall_2x4x1.ctexture",
+            " ",
+            " ",
+            " ",
+            " "
+        ],
+        "mesh": "../assets/compiled_geom/Model_Wall_2x4x1.geom",
+        "texturerefid": [
+            4601,
+            0,
+            0,
+            0,
+            0
+        ]
+    },
+    "prefab": {
+        "prefab": "Fin"
+    }
+}

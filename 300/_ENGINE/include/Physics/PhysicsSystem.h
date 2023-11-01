@@ -52,6 +52,8 @@ private:
 	float mFixedDT;
 	std::unordered_map<std::uint32_t, Actor> mActors;
 	std::unordered_map<MATERIAL, PxMaterial*> mMaterials;
+	std::vector<std::pair<Entity, glm::vec3>> mPendingTranslate;
+	std::vector<std::pair<Entity, glm::vec3>> mPendingRotate;
 
 	/*!*****************************************************************************
 	Create materials for entities.
@@ -68,6 +70,8 @@ private:
 	void CreateAndAttachShape(PxRigidActor*& actor, PxShape*& shape, 
 		const T& geometry, const PxTransform& pose, 
 		const RigidBody& rbod, bool isTrigger);
+
+	void MoveQueuedEntities();
 
 	void Synchronize();
 	//PxRigidDynamicLockFlags Convert(const glm::ivec3& vec);
