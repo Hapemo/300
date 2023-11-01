@@ -347,16 +347,8 @@ void Hierarchy::update() {
             systemManager->mGameStateSystem->mCurrentGameState.mScenes[RselectedScene].Save();
         }
         if (ImGui::Selectable("Delete")) {
-            
             selectionOn = false;
-             if (systemManager->mGameStateSystem->mCurrentGameState.mScenes[RselectedScene].mEntities.size() > 0) {
-
-                 for (int i{ 0 }; i < systemManager->mGameStateSystem->mCurrentGameState.mScenes[RselectedScene].mEntities.size(); i++) {
-                   systemManager->mGameStateSystem->mCurrentGameState.mScenes[RselectedScene].Unload();
-                 }
-             }
-             systemManager->mGameStateSystem->
-                 mCurrentGameState.RemoveScene(systemManager->mGameStateSystem->mCurrentGameState.mScenes[RselectedScene].mName);
+            systemManager->mGameStateSystem->mCurrentGameState.RemoveScene(systemManager->mGameStateSystem->mCurrentGameState.mScenes[RselectedScene].mName);
         }
        
         sCPopup = false;
