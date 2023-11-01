@@ -11,7 +11,8 @@
 ***/
 #define  _ENABLE_ANIMATIONS 1
 #define  _TEST_PIE_SHADER 0
-#define  _TEST_CROSSHAIR_SHADER 1
+#define  _TEST_CROSSHAIR_SHADER 0
+#define  _TEST_HEALTHBAR_SHADER 1
 
 #include <ECS/ECS_Components.h>
 #include <Graphics/GraphicsSystem.h>
@@ -723,6 +724,24 @@ void GraphicsSystem::GameDraw(float dt)
 	m_Image2DMesh.UnbindVao();
 
 	crosshairShaderInst.Deactivate();	// Deactivate shader
+#endif
+#if _TEST_HEALTHBAR_SHADER
+	std::string healthbarShaderStr{ "healthbarShader" };
+	uid healthbarShaderUID(healthbarShaderStr);
+	GFX::Shader& healthbarShaderInst = *systemManager->mResourceTySystem->get_Shader(healthbarShaderUID.id);
+
+	healthbarShaderInst.Activate();		// activate shader
+	GLint healthLocation = healthbarShaderInst.GetUniformLocation("uHealth");
+	glUniform1f(healthLocation, m_Health);
+
+	// Bind 2D quad VAO
+	m_Image2DMesh.BindVao();
+	// Draw call
+	glDrawArraysInstanced(GL_TRIANGLE_FAN, 0, 4, 1);
+	// Unbind 2D quad VAO
+	m_Image2DMesh.UnbindVao();
+
+	healthbarShaderInst.Deactivate();	// Deactivate shader
 #endif
 
 	m_GameFbo.Unbind();
