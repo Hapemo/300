@@ -103,7 +103,7 @@ function Update()
             if (graphicsSys.mSamplingWeight > 2.5) then
                 graphicsSys.mSamplingWeight = 2.5
             end
-            if (onTpTime > 1.0) then
+            if (onTpTime > 0.8) then
                 if (collideWithTP == 1) then
                     playertpoffset.x = cameraEntity:GetTransform().mTranslate.x - teleporter1:GetTransform().mTranslate.x;
                     playertpoffset.y = cameraEntity:GetTransform().mTranslate.y - teleporter1:GetTransform().mTranslate.y;
