@@ -2,8 +2,8 @@
     {
         "entityid": 1,
         "general": {
-            "name": "NewObject",
-            "tagid": 0,
+            "name": "UI1",
+            "tagid": 6,
             "subtag": 0,
             "isActive": true,
             "isPaused": false
@@ -34,8 +34,8 @@
     {
         "entityid": 2,
         "general": {
-            "name": "NewObject",
-            "tagid": 0,
+            "name": "UI2",
+            "tagid": 6,
             "subtag": 0,
             "isActive": true,
             "isPaused": false
