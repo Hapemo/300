@@ -60,6 +60,14 @@ void TabWindow::update()
 	static bool ischecked = systemManager->mGraphicsSystem->m_DebugDrawing;
 	if (ImGui::Checkbox("##Debug", &ischecked)) {
 		systemManager->mGraphicsSystem->m_DebugDrawing = ischecked ? 1 : 0;
+
+		if (ischecked) {
+			systemManager->mGraphicsSystem->m_GlobalTint.w = 0.3f;
+		}
+		else {
+			systemManager->mGraphicsSystem->m_GlobalTint.w = 1.f;
+		}
+
 	}
 
 	// the threshold for bloom

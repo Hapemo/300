@@ -87,8 +87,8 @@ glm::vec2 Input::CursorPos() {
   double xpos, ypos;
 
   //if (mIsEditor == false) {
-  //    glfwGetCursorPos(systemManager->GetWindow()->GetHandle(), &xpos, &ypos);
-  //    return glm::vec2{ static_cast<float>(xpos), static_cast<float>(ypos) };
+      //glfwGetCursorPos(systemManager->GetWindow()->GetHandle(), &xpos, &ypos);
+      //return glm::vec2{ static_cast<float>(xpos), static_cast<float>(ypos) };
   //}
   //else {
       return mosposEditor;
@@ -98,10 +98,10 @@ glm::vec2 Input::CursorPos() {
 void Input::SetCursorCenter()
 {
     //if (m_EditorMode) {
-    SetCursorPos(m_EditorWindowPos.x, m_EditorWindowPos.y);
+    SetCursorPos( int(m_EditorWindowPos.x +9), int(m_EditorWindowPos.y+38));
     //	}
 
-    std::cout << m_EditorWindowPos.x << "x " << m_EditorWindowPos.y << "y\n ";
+ //   std::cout << m_EditorWindowPos.x << "x " << m_EditorWindowPos.y << "y\n ";
     //else {
     //	int x{}, y{};
     //	int winlength{}, winheight{};

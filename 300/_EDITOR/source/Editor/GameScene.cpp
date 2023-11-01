@@ -11,8 +11,8 @@
  *  Copyright (C) 2023 DigiPen Institute of Technology.
  *-------------------------------------------------------------------------------------*/
 #include "GameScene.h"
-
-
+#include <Windows.h>
+#include <WinUser.h>
 
  /***************************************************************************/
  /*!
@@ -35,6 +35,7 @@ void GameScene::update()
 {
 	if (ImGui::IsWindowHovered()) {
 		Input::mosposEditor = glm::vec2{ ImGui::GetMousePos().x ,ImGui::GetMousePos().y };
+
 		systemManager->mGraphicsSystem->m_EditorSceneHovered = true;
 	}
 	else {
@@ -44,10 +45,21 @@ void GameScene::update()
 	//Input::m_EditorWindowPos = { ImGui::GetWindowPos().x+10 +(ImGui::GetWindowWidth() + 10)/2
 	//	, ImGui::GetWindowPos().y + 40+(ImGui::GetWindowHeight() + 40)/2};
 
+	static int xpos, ypos;
+	glfwGetWindowPos(systemManager->GetWindow()->GetHandle(), & xpos, & ypos);
 
-	Input::m_EditorWindowPos = { ImGui::GetWindowPos().x  + (ImGui::GetWindowWidth() ) / 2
-	, ImGui::GetWindowPos().y  + (ImGui::GetWindowHeight() ) / 2 }; 
+	Input::m_EditorWindowPos = { int(xpos + ImGui::GetWindowPos().x +(ImGui::GetWindowSize().x/2))
+	, int(ypos + ImGui::GetWindowPos().y + (ImGui::GetWindowSize().y / 2)) };
 	
+
+	if (ImGui::IsMouseClicked(1))
+	//	std::cout << Input::m_EditorWindowPos.x << " WimguiX\n" << Input::m_EditorWindowPos.y << " WimguiY\n";
+
+	if (ImGui::IsMouseClicked(0)) {
+		//SetCursorPos(Input::m_EditorWindowPos.x, Input::m_EditorWindowPos.y);
+	//	std::cout << ImGui::GetMousePos().x << " imguiX\n" << ImGui::GetMousePos().y << " imguiY\n";
+
+	}
 	
 	mWinFlag |= ImGuiWindowFlags_NoScrollbar;
 

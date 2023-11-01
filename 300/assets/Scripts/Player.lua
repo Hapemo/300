@@ -1,26 +1,26 @@
-movement = Vec3.new()
-zeroVector = Vec3.new(0,0,0)
-viewVec = Vec3.new()
-viewVecCam = Vec3.new()
-rotationCam = Vec3.new()
+local movement = Vec3.new()
+local zeroVector = Vec3.new(0,0,0)
+local viewVec = Vec3.new()
+local viewVecCam = Vec3.new()
+local rotationCam = Vec3.new()
 
-forward = Vec3.new()
-back = Vec3.new()
-left = Vec3.new()
-right = Vec3.new()
-centerscreen = Vec2.new()
-mul = 20.0
-floorCount = 0
-totaltime = 0.0
-isDashing = false;
-speed = 10
-positions = Vec3.new(0,0,10)
-positions_offset = Vec3.new(0,20,0)
-positions_final = Vec3.new()
+local forward = Vec3.new()
+local back = Vec3.new()
+local left = Vec3.new()
+local right = Vec3.new()
+local centerscreen = Vec2.new()
+local mul = 20.0
+local floorCount = 0
+local totaltime = 0.0
+local isDashing = false;
+local speed = 10
+local positions = Vec3.new(0,0,10)
+local positions_offset = Vec3.new(0,20,0)
+local positions_final = Vec3.new()
 
 -- mouse attributes
-mouse_move = Vec2.new()
-mouse_on = true
+local mouse_move = Vec2.new()
+local mouse_on = true
 
 function Alive()
     gameStateSys = systemManager:mGameStateSystem();
@@ -144,6 +144,14 @@ function Update()
     end
 
 --endregion
+
+
+--region -- dash effect
+
+
+
+--endregion --dash effect
+
 
 end
 
