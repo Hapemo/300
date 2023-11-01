@@ -17,6 +17,8 @@ local speed = 10
 local positions = Vec3.new(0,0,10)
 local positions_offset = Vec3.new(0,20,0)
 local positions_final = Vec3.new()
+local dashTime = 0.0
+
 
 local e_chroma = 0.06
 local d_chroma = 0.02
@@ -24,13 +26,19 @@ local e_exposure = 5
 local d_exposure = 0.5
 local e_texel = 5
 local d_texel = 1.9
-local e_sampleWeight = 0.6
-local d_sampleWeight = 0.8
+local e_sampleWeight = 0.8
+local d_sampleWeight = 0.6
 local e_tint = Vec4.new(1,0,0,0.3)
 local d_tint = Vec4.new(1,1,1,1)
+local d_tint_result = Vec4.new(0,0,0,0)
 local e_fov = 30
 local d_fov = 60
 
+local e_dashEffect = true
+
+local t = 0
+local t2 = 0
+local tinc = 0.1
 -- mouse attributes
 local mouse_move = Vec2.new()
 local mouse_on = true
@@ -78,6 +86,10 @@ function Update()
         centerscreen = Input:GetCursorCenter()
         mouse_move.x = Input.CursorPos().x - centerscreen.x
         mouse_move.y = Input.CursorPos().y - centerscreen.y
+        -- print("cursorx "..Input.CursorPos().x)
+        -- print("cursory "..Input.CursorPos().y)
+
+
         -- print("cursorx "..Input.CursorPos().x)
         -- print("cursory "..Input.CursorPos().y)
 
@@ -150,16 +162,42 @@ function Update()
     movement.z = 0;
 
     if (isDashing) then
-        dashEffect()
-        if (dashTime > 0.1) then
-            dashEffectEnd()
-            isDashing = false
-            dashTime = 0
-        else
-            movement.x = movement.x + (viewVec.x * 300.0)
-            movement.z = movement.z + (viewVec.z * 300.0);
+        if(e_dashEffect == true)then
+            dashEffect()
+            e_dashEffect = false
         end
+        movement.x = movement.x + (viewVec.x * 300.0)
+        movement.z = movement.z + (viewVec.z * 300.0);
+    
+        if (dashTime >= 0.1) then
+
+            dashTime = 0
+            isDashing = false
+           
+        end
+
+        --dashEffectEnd()
     else 
+        if(e_dashEffect == false)then
+            dashEffectEnd()
+        
+            if( tinc >=0)then
+                tinc = tinc +0.02
+             end
+
+
+            if( t>=1)then
+                tinc = 0.1
+                t = 0
+                e_dashEffect = true
+            else
+                t = t +tinc 
+                print("t"..t)
+            end
+        end
+
+        
+
         if (inputMapSys:GetButtonDown("Dash")) then
             if (dashTime > 3.0) then
                 dashTime = 0
@@ -273,16 +311,26 @@ function dashEffect()
     graphicsSys.mChromaticStrength = e_chroma
     graphicsSys.mAmbientBloomExposure = e_exposure
     graphicsSys.mTexelOffset = e_texel
-    graphicsSys.m_GlobalTint = e_tint
+   -- graphicsSys.m_GlobalTint = e_tint*t
     graphicsSys.mSamplingWeight = e_sampleWeight
+
+
+
     Camera_Scripting.SetFov(cameraEntity,e_fov)
 end
 
 function dashEffectEnd()
-    graphicsSys.mChromaticStrength = d_chroma;
-    graphicsSys.mAmbientBloomExposure = d_exposure;
-    graphicsSys.mTexelOffset = d_texel;
-    graphicsSys.m_GlobalTint = d_tint;
-    graphicsSys.mSamplingWeight = d_sampleWeight
-    Camera_Scripting.SetFov(cameraEntity,d_fov)
+    graphicsSys.mChromaticStrength = e_chroma + (d_chroma-e_chroma )*t
+    graphicsSys.mAmbientBloomExposure = e_exposure+ (d_exposure-e_exposure)*t
+    graphicsSys.mTexelOffset = e_texel+ (d_texel-e_texel)*t
+    graphicsSys.mSamplingWeight = e_sampleWeight+ (d_sampleWeight -e_sampleWeight)*t
+    Camera_Scripting.SetFov(cameraEntity,e_fov+ (d_fov-e_fov)*t)
+       -- graphicsSys.m_GlobalTint = d_tint
+
+
+    -- graphicsSys.mChromaticStrength = d_chroma + (e_chroma-d_chroma )*t
+    -- graphicsSys.mAmbientBloomExposure = d_exposure+ (e_exposure-d_exposure)*t
+    -- graphicsSys.mTexelOffset = d_texel+ (e_texel-d_texel)*t
+    -- graphicsSys.mSamplingWeight = d_sampleWeight+ (e_sampleWeight -d_sampleWeight)*t
+    -- Camera_Scripting.SetFov(cameraEntity,d_fov+ (d_fov-e_fov)*t)
 end
