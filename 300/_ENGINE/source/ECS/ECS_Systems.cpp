@@ -80,6 +80,7 @@ void SystemManager::Reset()
 
 void SystemManager::ResetForChangeGS() {
 	mAudioSystem.get()->Reset();				// Using <Audio> component, must happen before clearing of entities.
+	mAudioSystem.get()->PlayOnAwake();
 	mGraphicsSystem.get()->Unload();
 	mPhysicsSystem.get()->Init();
 	mGraphicsSystem.get()->Init();
