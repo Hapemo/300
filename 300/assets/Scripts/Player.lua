@@ -186,7 +186,7 @@ function Update()
                 walkingAudioSource:SetVolume(0.8)
                 fadeOutTimer = 0.0   
             else
-                FadeOutAudio(walkingAudioSource, 5.0, 25.0, 0.0)
+                FadeOutAudio(walkingAudioSource, 2.0, 25.0, 0.0)
             end
         
 

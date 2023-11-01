@@ -281,6 +281,18 @@ void AudioSystem::PlayOnAwake()
 			audio_component.mPaused = false;
 			audio_component.mWasPaused = true;  // to prevent replaying of clip (if update())
 		}
+
+
+		// Reload Sound
+		if (!audio_component.mFilePath.empty() && !audio_component.mFileName.empty()) // Accounting for empty <Audio> components.
+		{
+			std::string audio_path = audio_component.mFilePath + "/" + audio_component.mFileName;
+			std::string audio_name = audio_component.mFileName;
+
+			audio_component.mIsLoaded = true;
+			audio_component.mSound = FindSound(audio_name); // Register [Sound] reference into <Audio> component. (if successfully loaded)
+		}
+		
 	}
 }
 
@@ -332,7 +344,8 @@ void AudioSystem::Reset()
 			ErrCodeCheck(audio_component.mChannel->stop());
 		}
 
-		audio_component.ClearAudioComponent();
+
+		//audio_component.ClearAudioComponent();
 		//int i = 3;
 	}
 }

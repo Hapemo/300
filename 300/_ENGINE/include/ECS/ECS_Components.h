@@ -422,7 +422,6 @@ struct Audio : public Serializable
 		mPlayonAwake = false;
 		mIsEmpty = true;
 		mIsLoaded = false;
-		mSound = nullptr;
 		m3DAudio = false; // Added [10/26]
 	}
 
