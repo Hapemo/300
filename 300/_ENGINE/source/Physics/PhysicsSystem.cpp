@@ -53,16 +53,8 @@ void PhysicsSystem::AddEntity(Entity e)
 {
 	//std::cout << "adding entity:" << (int)e.id << std::endl;
 	//std::cout << "adding entity:" << e.GetComponent<General>().name << std::endl;
-
-	if (mActors.find(static_cast<uint32_t>(e.id)) != mActors.end())
-	{
-		PWARNING("Tried to add actor that is already in simulation!");
-		return;
-	}
-	if (e.HasComponent<RigidBody>())
-		CreateRigidBody(e);
-	else
-		PWARNING("Tried to add actor without rigid body to simulation!");
+	mPendingAdd.push_back(e);
+	
 }
 
 void PhysicsSystem::SetPosition(Entity e, const glm::vec3& globalpose)
@@ -231,8 +223,21 @@ void PhysicsSystem::MoveQueuedEntities()
 		PxRigidDynamic* actor = (physx::PxRigidDynamic*)(mActors[static_cast<uint32_t>(e.id)].mActor);
 		actor->setGlobalPose(PxTransform(Convert(e.GetComponent<Transform>().mTranslate), Convert(glm::quat(glm::radians(rotation)))));
 	}
+	for (auto e : mPendingAdd)
+	{
+		if (mActors.find(static_cast<uint32_t>(e.id)) != mActors.end())
+		{
+			PWARNING("Tried to add actor that is already in simulation!");
+			return;
+		}
+		if (e.HasComponent<RigidBody>())
+			CreateRigidBody(e);
+		else
+			PWARNING("Tried to add actor without rigid body to simulation!");
+	}
 	mPendingTranslate.clear();
 	mPendingRotate.clear();
+	mPendingAdd.clear();
 }
 
 void PhysicsSystem::Synchronize()

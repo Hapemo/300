@@ -23,6 +23,7 @@ and saving of prefabs, scenes and gamestates using serialization.
 #include "ECS/ECS_Components.h"
 #include "Physics/PhysicsSystem.h"
 #include "AI/AIManager.h"
+#include "ScriptingSystem.h"
 
 #define SERIALIZE_SELF(T) if (e.HasComponent<T>()) e.GetComponent<T>().SerializeSelf(writer)
 #define DESERIALIZE_SELF(T, S) if(reader.HasMember(S)) e.AddComponent<T>().DeserializeSelf(reader[S])
@@ -49,6 +50,8 @@ void ObjectFactory::LoadEntity(Entity e, rapidjson::Value& reader)
 	DESERIALIZE_SELF(SphereCollider, "spherecollider");
 	DESERIALIZE_SELF(CapsuleCollider, "capsulecollider");
 	DESERIALIZE_SELF(Scripts, "scripts");
+	if (e.HasComponent<Scripts>()) 
+		systemManager->GetScriptingPointer()->ScriptAlive(e);
 	DESERIALIZE_SELF(Parent, "parent");
 	DESERIALIZE_SELF(Children, "children");
 	DESERIALIZE_SELF(Audio, "audio");

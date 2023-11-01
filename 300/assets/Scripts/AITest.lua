@@ -1,18 +1,18 @@
 local vec = Vec3.new()
 local firstvec = Vec3.new()
 local secondvec = Vec3.new()
-local originalScaleX
 function Alive()
-    entity = Helper.GetScriptEntity(script_entity.id)
-    if entity == nil then
-        print("Entity nil in script!")
-    end
-    originalScaleX = entity:GetTransform().mScale.x
 end
 
 function Update()
     -- Get entity attached to script
-
+    
+    entity = Helper.GetScriptEntity(script_entity.id)
+    if entity == nil then
+        print("Entity nil in script!")
+    end
+    aiSys = systemManager:mAISystem();
+    phySys = systemManager:mPhysicsSystem();
 
     -- Create new Entity in current scene example
     --testEntity = systemManager.ecs:NewEntityByScene();
@@ -24,8 +24,7 @@ function Update()
     --AI TEST--
 
     -- Must call this before calling AISystem functions
-    aiSys = systemManager:mAISystem();
-    phySys = systemManager:mPhysicsSystem();
+    
     -- vec = Vec3.new(50,0,50)
     vec = aiSys:GetDirection(entity)
 
@@ -49,7 +48,7 @@ function Update()
     vec.z = vec.z * 20;
     phySys:SetVelocity(entity, vec);
     
-    if (entity:GetTransform().mScale.x < originalScaleX / 2.0) then
+    if (entity:GetTransform().mScale.x < 2.0) then
         systemManager.ecs:SetDeleteEntity(entity)
     end
         

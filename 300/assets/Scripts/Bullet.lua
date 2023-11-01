@@ -58,7 +58,7 @@ function OnTriggerEnter(Entity)
         Entity:GetTransform().mScale.x = Entity:GetTransform().mScale.x * 0.9
         Entity:GetTransform().mScale.y = Entity:GetTransform().mScale.y * 0.9
         Entity:GetTransform().mScale.z = Entity:GetTransform().mScale.z * 0.9
-
+        
         systemManager.ecs:SetDeleteEntity(entityobj)
     end
 
