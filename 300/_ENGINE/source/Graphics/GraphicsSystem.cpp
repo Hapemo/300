@@ -109,13 +109,6 @@ void GraphicsSystem::Init()
 /**************************************************************************/
 void GraphicsSystem::Update(float dt)
 {
-
-	if (m_EditorMode && m_EditorSceneHovered) {
-
-		
-	}
-
-
 	m_RightClickHeld = systemManager->mInputActionSystem->GetKey(M_BUTTON_R);
 
 	// Check window size for any updates
@@ -1330,9 +1323,15 @@ void GraphicsSystem::Unload()
 
 	for (Entity inst : meshRendererInstances)
 	{
-		GFX::Mesh& meshinst = *reinterpret_cast<GFX::Mesh*>(inst.GetComponent<MeshRenderer>().mMeshRef.getdata(systemManager->mResourceTySystem->m_ResourceInstance));
-		meshinst.ClearInstances();
+		GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(inst.GetComponent<MeshRenderer>().mMeshRef.getdata(systemManager->mResourceTySystem->m_ResourceInstance));
+		if (meshinst == nullptr)
+			continue;
+
+		// clears all instances of LTW, Colors for every mesh
+		meshinst->ClearInstances();
 	}
+
+	// clears all debug draw instances
 	m_Renderer.ClearInstances();
 }
 

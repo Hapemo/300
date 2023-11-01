@@ -11,6 +11,7 @@ instance
 *******************************************************************************/
 
 #include "Camera.hpp"
+#include <iostream>
 
 GFX::Camera::Camera()
 {
@@ -51,6 +52,9 @@ void GFX::Camera::SetTarget(vec3 newTarget)
 void GFX::Camera::SetSize(ivec2 size)
 {
 	mSize = size;
+	if(size.x == 0 && size.y == 0)
+		return;
+
 	mAspectRatio = static_cast<float>(size.x) / static_cast<float>(size.y);
 }
 
