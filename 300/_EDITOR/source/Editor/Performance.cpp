@@ -117,31 +117,31 @@ void Performance::update()
         //Print and display graphics ms / total ms
         if (gDisplayTemp > 0)
         {
-            sprintf_s(graphicsOverlay, "GRAPHICS/DT %.2f%%", gDisplayTemp);
-            ImGui::PlotLines("Graphics/dt", graphicsValues, IM_ARRAYSIZE(graphicsValues), values_offset, graphicsOverlay, -20.0f, 150.0f, ImVec2(0.f, 70.0f));
+            sprintf_s(graphicsOverlay, "GRAPHICS/DT %.2f ms", gDisplayTemp);
+            ImGui::PlotLines("Graphics dt", graphicsValues, IM_ARRAYSIZE(graphicsValues), values_offset, graphicsOverlay, -20.0f, 150.0f, ImVec2(0.f, 70.0f));
         }
         //Print and display physics ms / total ms
         if (pDisplayTemp > 0)
         {
-            sprintf_s(physicsOverlay, "PHYSICS/DT %.2f%%", pDisplayTemp);
-            ImGui::PlotLines("Physics/dt", physicsValues, IM_ARRAYSIZE(physicsValues), values_offset, physicsOverlay, -20.0f, 150.0f, ImVec2(0.f, 70.0f));
+            sprintf_s(physicsOverlay, "PHYSICS/DT %.2f ms", pDisplayTemp);
+            ImGui::PlotLines("Physics dt", physicsValues, IM_ARRAYSIZE(physicsValues), values_offset, physicsOverlay, -20.0f, 150.0f, ImVec2(0.f, 70.0f));
         }
         //Print and display scripting ms / total ms
         if (sDisplayTemp > 0)
         {
-            sprintf_s(scriptingOverlay, "SCRIPTING/DT %.2f%%", sDisplayTemp);
-            ImGui::PlotLines("Scripting/dt", scriptingValues, IM_ARRAYSIZE(scriptingValues), values_offset, scriptingOverlay, -20.0f, 150.0f, ImVec2(0.f, 70.0f));
+            sprintf_s(scriptingOverlay, "SCRIPTING/DT %.2f ms", sDisplayTemp);
+            ImGui::PlotLines("Scripting dt", scriptingValues, IM_ARRAYSIZE(scriptingValues), values_offset, scriptingOverlay, -20.0f, 150.0f, ImVec2(0.f, 70.0f));
         }
         //Print and display audio ms / total ms
         if (aDisplayTemp > 0)
         {
-            sprintf_s(audioOverlay, "AUDIO/DT %.2f%%", aDisplayTemp);
-            ImGui::PlotLines("Audio/dt", audioValues, IM_ARRAYSIZE(audioValues), values_offset, audioOverlay, -20.0f, 150.0f, ImVec2(0.f, 70.0f));
+            sprintf_s(audioOverlay, "AUDIO/DT %.2f ms", aDisplayTemp);
+            ImGui::PlotLines("Audio dt", audioValues, IM_ARRAYSIZE(audioValues), values_offset, audioOverlay, -20.0f, 150.0f, ImVec2(0.f, 70.0f));
         }
         if (eDisplayTemp > 0)
         {
-            sprintf_s(editorOverlay, "EDITOR/DT %.2f%%", eDisplayTemp);
-            ImGui::PlotLines("Editor/dt", editorValues, IM_ARRAYSIZE(editorValues), values_offset, editorOverlay, -20.0f, 150.0f, ImVec2(0.f, 70.0f));
+            sprintf_s(editorOverlay, "EDITOR/DT %.2f ms", eDisplayTemp);
+            ImGui::PlotLines("Editor dt", editorValues, IM_ARRAYSIZE(editorValues), values_offset, editorOverlay, -20.0f, 150.0f, ImVec2(0.f, 70.0f));
         }
     }
 

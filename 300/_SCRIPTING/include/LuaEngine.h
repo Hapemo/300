@@ -44,3 +44,4 @@ void LuaMeshRenderer();
 void LuaVFX();
 void LuaGameState();
 void LuaAIManager();
+void LuaButton();

@@ -19,10 +19,17 @@ local positions_offset = Vec3.new(0,20,0)
 local positions_final = Vec3.new()
 
 local e_chroma = 0.06
+local d_chroma = 0.02
 local e_exposure = 5
+local d_exposure = 0.5
 local e_texel = 5
-local e_tint = Vec4.new(211,42,42,255)
-local e_fov = 8
+local d_texel = 1.9
+local e_sampleWeight = 0.6
+local d_sampleWeight = 0.8
+local e_tint = Vec4.new(1,0,0,0.3)
+local d_tint = Vec4.new(1,1,1,1)
+local e_fov = 30
+local d_fov = 60
 
 -- mouse attributes
 local mouse_move = Vec2.new()
@@ -94,7 +101,9 @@ function Update()
     movement.z = 0;
 
     if (isDashing) then
-        if (dashTime > 0.1) then
+        dashEffect()
+        if (totaltime > 0.1) then
+            dashEffectEnd()
             isDashing = false
             dashTime = 0
         else
@@ -166,6 +175,7 @@ function Update()
 
 
 
+
 --endregion --dash effect
 
 
@@ -217,4 +227,22 @@ end
 
 function OnContactExit(Entity)
 
+end
+
+function dashEffect()
+    graphicsSys.mChromaticStrength = e_chroma
+    graphicsSys.mAmbientBloomExposure = e_exposure
+    graphicsSys.mTexelOffset = e_texel
+    graphicsSys.m_GlobalTint = e_tint
+    graphicsSys.mSamplingWeight = e_sampleWeight
+    Camera_Scripting.SetFov(cameraEntity,e_fov)
+end
+
+function dashEffectEnd()
+    graphicsSys.mChromaticStrength = d_chroma;
+    graphicsSys.mAmbientBloomExposure = d_exposure;
+    graphicsSys.mTexelOffset = d_texel;
+    graphicsSys.m_GlobalTint = d_tint;
+    graphicsSys.mSamplingWeight = d_sampleWeight
+    Camera_Scripting.SetFov(cameraEntity,d_fov)
 end

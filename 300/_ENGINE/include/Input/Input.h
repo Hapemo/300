@@ -124,13 +124,13 @@ public:
 	static bool mIsEditor;
 	static glm::vec2 mosposEditor;
 	
-
+	static bool m_EditorSceneHovered;
 	static void SetCursorCenter();
 	static glm::vec2 GetCursorCenter();
 	static glm::vec2 m_EditorWindowPos;
 	static glm::vec2 m_GameWindowPos;
 	static glm::vec2 m_EditorCursorPos;
-
+	static glm::vec2 m_EditorWindowPosUnadjusted;
   /*!*****************************************************************************
   Initialises the Input system
   *******************************************************************************/

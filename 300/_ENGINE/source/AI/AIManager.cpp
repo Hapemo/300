@@ -3,6 +3,7 @@
 #include "ECS/ECS_Components.h"
 #include "FPSManager.h"
 #include "GameState/GameStateManager.h"
+#include "Physics/PhysicsSystem.h"
 
 const std::array<std::string, static_cast<size_t>(E_MOVEMENT_TYPE::SIZE)> AIManager::mMovementTypeArray{ MovementTypeArrayInit() };
 
@@ -14,7 +15,7 @@ E_MOVEMENT_TYPE& operator++(E_MOVEMENT_TYPE& _enum) {
 //--------------------------------------------------
 // Public functions
 //--------------------------------------------------
-AIManager::AIManager() : mPlayerEntity(), mPlayerTransform(nullptr), mPlayerArrayIndex(0), mPlayerHistory(), mAILists() {
+AIManager::AIManager() : mPlayerEntity(), mPlayerTransform(nullptr), mPlayerHistorySize(), mPlayerArrayIndex(0), mPlayerHistory(), mAILists() {
 	E_MOVEMENT_TYPE i{ E_MOVEMENT_TYPE::BEGIN };
 	while (++i != E_MOVEMENT_TYPE::SIZE)
 		mAILists[mMovementTypeArray[static_cast<int>(i)]];
@@ -105,9 +106,11 @@ void AIManager::ClearAIs() {
 void AIManager::SetPredictiveVelocity(Entity projectile, Entity target, float speed) {
 	const glm::vec3 p1p0 = target.GetComponent<Transform>().mTranslate - projectile.GetComponent<Transform>().mTranslate;
 	const glm::vec3 v0 = target.GetComponent<RigidBody>().mVelocity;
-	const float s1 = glm::length(projectile.GetComponent<RigidBody>().mVelocity);
+	const float s1 = speed; //glm::length(projectile.GetComponent<RigidBody>().mVelocity);
 
-	projectile.GetComponent<RigidBody>().mVelocity = CalculatePredictiveVelocity(p1p0, v0, s1);
+	//projectile.GetComponent<RigidBody>().mVelocity = CalculatePredictiveVelocity(p1p0, v0, s1);
+
+	systemManager->GetPhysicsPointer()->SetVelocity(projectile, CalculatePredictiveVelocity(p1p0, v0, s1));
 
 #if _DEBUG
 	float actualSpeed = glm::length(projectile.GetComponent<RigidBody>().mVelocity);
@@ -116,7 +119,7 @@ void AIManager::SetPredictiveVelocity(Entity projectile, Entity target, float sp
 #endif
 }
 
-void AIManager::PredictiveShootPlayer(Entity projectile, float speed, short deciseconds, unsigned weightage = 50) {
+void AIManager::PredictiveShootPlayer(Entity projectile, float speed, int deciseconds, unsigned weightage = 50) {
 	int prevPosIndex{ mPlayerArrayIndex ? mPlayerArrayIndex - 1 : MAX_DECISECOND_PLAYER_HISTORY - 1 };
 	glm::vec3* currPos{ &mPlayerEntity.GetComponent<Transform>().mTranslate };
 	glm::vec3 accumulatedVector{};
@@ -139,11 +142,10 @@ void AIManager::PredictiveShootPlayer(Entity projectile, float speed, short deci
 
 	// Accounting for the accumulated vector, calculate the predicted velocity
 	const glm::vec3 p1p0 = mPlayerEntity.GetComponent<Transform>().mTranslate - projectile.GetComponent<Transform>().mTranslate;
-	const glm::vec3 v0 = mPlayerEntity.GetComponent<RigidBody>().mVelocity/static_cast<float>(100-weightage) + accumulatedVector/static_cast<float>(weightage);
-	const float s1 = glm::length(projectile.GetComponent<RigidBody>().mVelocity);
+	const glm::vec3 v0 = mPlayerEntity.GetComponent<RigidBody>().mVelocity*static_cast<float>(1.f-weightage/100.f) + accumulatedVector*static_cast<float>(weightage/100.f);
+	const float s1 = speed;
 
-	projectile.GetComponent<RigidBody>().mVelocity = CalculatePredictiveVelocity(p1p0, v0, s1);
-
+	systemManager->GetPhysicsPointer()->SetVelocity(projectile, CalculatePredictiveVelocity(p1p0, v0, s1));
 #if _DEBUG
 	float actualSpeed = glm::length(projectile.GetComponent<RigidBody>().mVelocity);
 	PASSERTMSG(!(actualSpeed > speed + cEpsilon) || (actualSpeed < speed + cEpsilon), 
@@ -156,10 +158,13 @@ glm::vec3 AIManager::CalculatePredictiveVelocity(glm::vec3 const& p1p0, glm::vec
 	const float a = glm::dot(v0, v0) - s1*s1;
 	const float b = 2 * glm::dot(p1p0, v0);
 	const float c = glm::dot(p1p0, p1p0);
+	//std::cout << "root val: " << b*b - 4*a*c;
 	float t0 = (-b + sqrt(b*b - 4*a*c))/(2*a);
-	const float t1 = (-b - sqrt(b*b - 4*a*c))/(2*a);
+	float t1 = (-b - sqrt(b*b - 4*a*c))/(2*a);
 
-	if (t1 > 0) t0 = std::min(t0, t1);
+	t0 = t0 < 0 ? FLT_MAX : t0;
+	t1 = t1 < 0 ? FLT_MAX : t1;
+	t0 = std::min(t0, t1);
 
 	// Calculate and set vector
 	return p1p0/t0 + v0;

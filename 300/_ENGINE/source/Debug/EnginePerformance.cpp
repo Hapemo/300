@@ -40,7 +40,7 @@ double EnginePerformance::storedTime = 0.0;
 void EnginePerformance::UpdateSystemMs(std::string str)
 {
 	std::map<std::string, double>::iterator it;
-	for (it = systemT.begin(); it != systemT.end(); ++it)
+	/*for (it = systemT.begin(); it != systemT.end(); ++it)
 	{
 		if (it->first == str)
 		{
@@ -51,7 +51,7 @@ void EnginePerformance::UpdateSystemMs(std::string str)
 			}
 			break;
 		}
-	}
+	}*/
 	EnginePerformance::trigger = true;
 }
 

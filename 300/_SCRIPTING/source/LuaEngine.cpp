@@ -109,7 +109,14 @@ void LuaEntity()
 
         ADD_COMPONENT("AddVFX", VFX),
         DECLARE_COMPONENT("GetVFX", VFX),
-        "HasVFX", & Entity::HasComponent<VFX>
+        "HasVFX", & Entity::HasComponent<VFX>,
+
+        ADD_COMPONENT("AddButton", Button),
+        DECLARE_COMPONENT("GetButton", Button),
+        "HasButton", & Entity::HasComponent<Button>,
+            ADD_COMPONENT("AddCamera", Camera),
+            DECLARE_COMPONENT("GetCamera", Camera),
+        "HasCamera", & Entity::HasComponent<Camera>
     );
 }
 
@@ -140,7 +147,8 @@ void LuaCamera()
         "GetDirection", &Camera_Scripting::GetDirection,
         "GetCameraSpeed", &Camera_Scripting::GetCameraSpeed,
         "GetSensitivity", &Camera_Scripting::GetSensitivity,
-        "RotateCameraView", &Camera_Scripting::RotateCameraView
+        "RotateCameraView", &Camera_Scripting::RotateCameraView,
+        "SetFov", &Camera_Scripting::SetFov
         );
 }
 
@@ -149,7 +157,7 @@ void LuaFPSManager()
     systemManager->mScriptingSystem->luaState.new_usertype<FPSManager>(
         "FPSManager", sol::constructors<>(),
         "GetDT", &FPSManager::GetDT
-        );
+    );
 }
 
 void LuaTransform()
@@ -168,7 +176,7 @@ void LuaAnimator()
         "Animator", sol::constructors<>(),
         "PauseAnimation", &Animator::PauseAnimation,
         "UnpauseAnimation", &Animator::UnpauseAnimation
-        );
+    );
 }
 
 void LuaRigidBody()
@@ -281,7 +289,8 @@ void LuaAudioSource()
 void LuaAudio()
 {
     systemManager->mScriptingSystem->luaState.new_usertype<Audio>(
-        "Audio", sol::constructors<>()
+        "Audio", sol::constructors<>(),
+        "mVolume", &Audio::mVolume
         );
 }
 
@@ -379,5 +388,16 @@ void LuaAIManager()
         "SetPredictiveVelocity", &AIManager::SetPredictiveVelocity,
         "PredictiveShootPlayer", &AIManager::PredictiveShootPlayer,
         "GetDirection", &AIManager::GetDirection
+        );
+}
+
+void LuaButton()
+{
+    systemManager->mScriptingSystem->luaState.new_usertype<Button>(
+        "Button", sol::constructors<>(),
+        "IsInteractable", &Button::IsInteractable,
+        "IsHovered", &Button::IsHovered,
+        "IsClicked", &Button::IsClicked,
+        "IsActivated", &Button::IsActivated
         );
 }
