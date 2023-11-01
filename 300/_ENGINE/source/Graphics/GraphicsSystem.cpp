@@ -505,6 +505,7 @@ void GraphicsSystem::EditorDraw(float dt)
 	}
 
 	m_Fbo.Bind();
+	m_Fbo.DrawBuffers(true, true);
 
 	// Render UI objects
 	m_UiShaderInst.Activate();		// Activate shader
@@ -701,6 +702,7 @@ void GraphicsSystem::GameDraw(float dt)
 	}
 
 	m_GameFbo.Bind();
+	m_GameFbo.DrawBuffers(true, true);
 
 	// Render UI objects
 	m_UiShaderInst.Activate();		// Activate shader

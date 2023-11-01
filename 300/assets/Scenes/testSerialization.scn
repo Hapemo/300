@@ -1,37 +1,5 @@
 [
     {
-        "entityid": 1,
-        "general": {
-            "name": "UI1",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 100.0,
-                "y": 100.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -1500.0,
-                "y": -900.0,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "../assets/Compressed/Wood Material 15_BaseColor.ctexture",
-            "textureref": 0,
-            "degree": 77.0
-        }
-    },
-    {
         "entityid": 2,
         "general": {
             "name": "UI2",
@@ -59,7 +27,7 @@
         },
         "uirenderer": {
             "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
-            "textureref": 0,
+            "textureref": 4923,
             "degree": 37.0
         }
     },
@@ -84,9 +52,9 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 20.000036239624023,
-                "y": 2.4999990463256836,
-                "z": -3.7400801033982134e-7
+                "x": 20.00004768371582,
+                "y": 2.49989652633667,
+                "z": -4.074708499501867e-7
             }
         },
         "rigidbody": {
@@ -168,9 +136,9 @@
                 "z": 0.0
             },
             "translate": {
-                "x": -2.112537922371871e-11,
-                "y": 2.4999990463256836,
-                "z": -3.9315247590820945e-7
+                "x": -2.7405296781912725e-11,
+                "y": 2.49989652633667,
+                "z": -4.266153155185748e-7
             }
         },
         "rigidbody": {
@@ -252,9 +220,9 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 10.000017166137695,
-                "y": 2.4999990463256836,
-                "z": -4.1229694147659757e-7
+                "x": 10.00002384185791,
+                "y": 2.49989652633667,
+                "z": -4.457597810869629e-7
             }
         },
         "rigidbody": {
@@ -6016,13 +5984,13 @@
                 "z": 20.0
             },
             "rotate": {
-                "x": -90.0,
-                "y": 0.0,
+                "x": -212.5000457763672,
+                "y": -3.1000092029571533,
                 "z": 0.0
             },
             "translate": {
                 "x": 87.99999237060547,
-                "y": 6.499999523162842,
+                "y": 6.499896049499512,
                 "z": 40.934593200683594
             }
         },
@@ -6031,9 +5999,9 @@
             "material": 1,
             "motion": 1,
             "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": -3.1134927969134196e-10
+                "x": 0.00015355332288891077,
+                "y": 0.00006937980651855469,
+                "z": -1.0672736472372435e-8
             },
             "rotationconstraints": {
                 "x": true,
@@ -6076,17 +6044,17 @@
         "camera": {
             "positon": {
                 "x": 87.99999237060547,
-                "y": 6.499999523162842,
+                "y": 6.499896049499512,
                 "z": 40.934593200683594
             },
             "target": {
-                "x": 87.99999237060547,
-                "y": 6.499999523162842,
-                "z": 39.934593200683594
+                "x": 87.1578369140625,
+                "y": 6.5539751052856445,
+                "z": 41.471107482910156
             },
             "size": {
-                "x": 948,
-                "y": 604
+                "x": 1173,
+                "y": 549
             },
             "near": 0.10000000149011612,
             "far": 900.0
@@ -6814,6 +6782,154 @@
         },
         "prefab": {
             "prefab": "Fin"
+        }
+    },
+    {
+        "entityid": 82,
+        "general": {
+            "name": "bullet",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 193.1451416015625,
+                "y": -0.0,
+                "z": 3.1415927410125732
+            },
+            "translate": {
+                "x": 78.17483520507813,
+                "y": 7.1308183670043945,
+                "z": 47.193931579589844
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 1,
+            "velocity": {
+                "x": -84.21554565429688,
+                "y": 5.407905578613281,
+                "z": 53.65142822265625
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": false,
+                "z": false
+            },
+            "gravity": false
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 2285,
+            "instancecolor": {
+                "x": 0.95652174949646,
+                "y": 1.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Cube_Texture_White.ctexture",
+                " ",
+                " ",
+                " ",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/cube.geom",
+            "texturerefid": [
+                4706,
+                0,
+                0,
+                0,
+                0
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": true
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/Bullet.lua",
+                    "variables": [
+                        {
+                            "key": "movement",
+                            "val": {
+                                "type": -655306154,
+                                "value": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0
+                                }
+                            }
+                        },
+                        {
+                            "key": "viewVec",
+                            "val": {
+                                "type": -655306154,
+                                "value": {
+                                    "x": 0.0,
+                                    "y": 1.0,
+                                    "z": 0.0
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        "prefab": {
+            "prefab": "bullet"
+        }
+    },
+    {
+        "entityid": 1048577,
+        "general": {
+            "name": "UI1",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 100.0,
+                "y": 100.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -1500.0,
+                "y": -900.0,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "../assets/Compressed/Wood Material 15_BaseColor.ctexture",
+            "textureref": 5242,
+            "degree": 77.0
         }
     }
 ]
