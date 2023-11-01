@@ -35,6 +35,7 @@ public:
 	static void SetTarget(Entity cameraEntity, const vec3& newtarget);
 	static void SetCameraSpeed(Entity cameraEntity, const float& speed);
 	static void SetSensitivity(Entity cameraEntity, const float& sensitivity);
+	static void SetFov(Entity cameraEntity, const float& fov);
 
 	// Getters
 	static glm::vec3 GetPosition(Entity cameraEntity);

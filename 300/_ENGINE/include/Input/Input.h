@@ -130,7 +130,7 @@ public:
 	static glm::vec2 m_EditorWindowPos;
 	static glm::vec2 m_GameWindowPos;
 	static glm::vec2 m_EditorCursorPos;
-
+	static glm::vec2 m_EditorWindowPosUnadjusted;
   /*!*****************************************************************************
   Initialises the Input system
   *******************************************************************************/

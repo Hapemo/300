@@ -113,7 +113,10 @@ void LuaEntity()
 
         ADD_COMPONENT("AddButton", Button),
         DECLARE_COMPONENT("GetButton", Button),
-        "HasButton", & Entity::HasComponent<Button>
+        "HasButton", & Entity::HasComponent<Button>,
+            ADD_COMPONENT("AddCamera", Camera),
+            DECLARE_COMPONENT("GetCamera", Camera),
+        "HasCamera", & Entity::HasComponent<Camera>
     );
 }
 
@@ -144,8 +147,9 @@ void LuaCamera()
         "GetDirection", &Camera_Scripting::GetDirection,
         "GetCameraSpeed", &Camera_Scripting::GetCameraSpeed,
         "GetSensitivity", &Camera_Scripting::GetSensitivity,
-        "RotateCameraView", &Camera_Scripting::RotateCameraView
-    );
+        "RotateCameraView", &Camera_Scripting::RotateCameraView,
+        "SetFov", &Camera_Scripting::SetFov
+        );
 }
 
 void LuaFPSManager()
