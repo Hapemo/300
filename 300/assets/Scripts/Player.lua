@@ -47,10 +47,6 @@ local mouse_on = true
 local walkingAudioSource
 local audioComp
 
-local shootingEntity
-local shootingComp
-local shootingAudioSource
-
 local bulletshootEntity
 local bulletshootComp
 local bulletshootAudioSource
@@ -80,10 +76,6 @@ function Alive()
 
     audioComp = cameraEntity:GetAudio()
     walkingAudioSource = Helper.CreateAudioSource(cameraEntity)
-    
-    shootingEntity = gameStateSys:GetEntity("Shooting", "testSerialization")
-    shootingComp = shootingEntity:GetAudio()
-    shootingAudioSource = Helper.CreateAudioSource(shootingEntity)
 
     bulletshootEntity = gameStateSys:GetEntity("Bullet Shoot", "testSerialization")
     bulletshootComp = bulletshootEntity:GetAudio()
