@@ -37,10 +37,14 @@ local mouse_on = true
 
 local teleporter1
 local teleporter2
-local once = true;
 local playertpoffset = Vec3.new()
 
 local cameraEntity
+
+local tpTime
+local onTpTime
+local collideWithTP
+local originalSamplingWeight
 
 function Alive()
     gameStateSys = systemManager:mGameStateSystem();
@@ -49,13 +53,17 @@ function Alive()
     graphicsSys = systemManager:mGraphicsSystem();
     cameraEntity = Helper.GetScriptEntity(script_entity.id)
     dashTime = 3.0
+    tpTime = 20.0
     teleporter1 = gameStateSys:GetEntity("Teleporter1", "testSerialization")
     teleporter2 = gameStateSys:GetEntity("Teleporter2", "testSerialization")
-
+    onTpTime = 0;
+    collideWithTP = 0
+    originalSamplingWeight = graphicsSys.mSamplingWeight
 end
 
 function Update()
 
+    
 --region -- player camera
     if(inputMapSys:GetButtonDown("Mouse")) then
         if (mouse_on == true) then
@@ -87,6 +95,47 @@ function Update()
 
 --region -- Player movements
     -- use '.' to reference variable
+    tpTime = tpTime + FPSManager.GetDT();
+    if (tpTime > 20.0) then
+        if (collideWithTP > 0) then
+            onTpTime = onTpTime + FPSManager.GetDT()
+            graphicsSys.mSamplingWeight = graphicsSys.mSamplingWeight + FPSManager.GetDT()
+            if (graphicsSys.mSamplingWeight > 2.5) then
+                graphicsSys.mSamplingWeight = 2.5
+            end
+            if (onTpTime > 1.0) then
+                if (collideWithTP == 1) then
+                    playertpoffset.x = cameraEntity:GetTransform().mTranslate.x - teleporter1:GetTransform().mTranslate.x;
+                    playertpoffset.y = cameraEntity:GetTransform().mTranslate.y - teleporter1:GetTransform().mTranslate.y;
+                    playertpoffset.z = cameraEntity:GetTransform().mTranslate.z - teleporter1:GetTransform().mTranslate.z;
+                    playertpoffset.x = playertpoffset.x + teleporter2:GetTransform().mTranslate.x;
+                    playertpoffset.y = playertpoffset.y + teleporter2:GetTransform().mTranslate.y;
+                    playertpoffset.z = playertpoffset.z + teleporter2:GetTransform().mTranslate.z;
+
+                    Helper.SetTranslate(cameraEntity, playertpoffset)
+                    tpTime = 0
+                    onTpTime = 0
+                elseif (collideWithTP == 2) then
+                    playertpoffset.x = cameraEntity:GetTransform().mTranslate.x - teleporter2:GetTransform().mTranslate.x;
+                    playertpoffset.y = cameraEntity:GetTransform().mTranslate.y - teleporter2:GetTransform().mTranslate.y;
+                    playertpoffset.z = cameraEntity:GetTransform().mTranslate.z - teleporter2:GetTransform().mTranslate.z;
+                    playertpoffset.x = playertpoffset.x + teleporter1:GetTransform().mTranslate.x;
+                    playertpoffset.y = playertpoffset.y + teleporter1:GetTransform().mTranslate.y;
+                    playertpoffset.z = playertpoffset.z + teleporter1:GetTransform().mTranslate.z;
+
+                    Helper.SetTranslate(cameraEntity, playertpoffset)
+                    tpTime = 0
+                    onTpTime = 0
+                end
+            end
+        end
+    else
+        graphicsSys.mSamplingWeight = graphicsSys.mSamplingWeight - FPSManager.GetDT()
+        if (graphicsSys.mSamplingWeight < originalSamplingWeight) then
+            graphicsSys.mSamplingWeight = originalSamplingWeight
+        end
+    end
+
     dashTime = dashTime + FPSManager.GetDT();
     positions = cameraEntity:GetTransform().mTranslate
     
@@ -102,7 +151,7 @@ function Update()
 
     if (isDashing) then
         dashEffect()
-        if (totaltime > 0.1) then
+        if (dashTime > 0.1) then
             dashEffectEnd()
             isDashing = false
             dashTime = 0
@@ -192,24 +241,11 @@ function OnTriggerEnter(Entity)
         floorCount = floorCount + 1;
     end
 
-    if (once == true) then
-        if (tagid == 5) then
-            if (generalComponent.name == teleporter1:GetGeneral().name) then
-                playertpoffset.x = cameraEntity:GetTransform().mTranslate.x - teleporter1:GetTransform().mTranslate.x;
-                playertpoffset.y = cameraEntity:GetTransform().mTranslate.y - teleporter1:GetTransform().mTranslate.y;
-                playertpoffset.z = cameraEntity:GetTransform().mTranslate.z - teleporter1:GetTransform().mTranslate.z;
-                playertpoffset.x = playertpoffset.x + teleporter2:GetTransform().mTranslate.x;
-                playertpoffset.y = playertpoffset.y + teleporter2:GetTransform().mTranslate.y;
-                playertpoffset.z = playertpoffset.z + teleporter2:GetTransform().mTranslate.z;
-
-                print(playertpoffset.x)
-                print(playertpoffset.y)
-                print(playertpoffset.z)
-                physicsSys:SetTranslate(script_entity, playertpoffset)
-                Helper.Translate(script_entity, playertpoffset)
-                once = false
-                print("moved")
-            end
+    if (tagid == 5) then
+        if (generalComponent.name == teleporter1:GetGeneral().name) then
+            collideWithTP = 1
+        elseif (generalComponent.name == teleporter2:GetGeneral().name) then
+            collideWithTP = 2
         end
     end
 end
@@ -219,6 +255,10 @@ function OnTriggerExit(Entity)
     tagid = generalComponent.tagid
     if (tagid == 3) then
         floorCount = floorCount - 1;
+    end
+    if (tagid == 5) then
+        collideWithTP = 0
+        onTpTime = 0
     end
 end
 
