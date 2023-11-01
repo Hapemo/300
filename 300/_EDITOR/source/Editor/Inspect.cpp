@@ -250,6 +250,11 @@ void Inspect::Add_component() {
 				Entity(Hierarchy::selectedId).AddComponent<AISetting>();
 		}
 
+		if (ImGui::Selectable("Camera")) {
+			if (!Entity(Hierarchy::selectedId).HasComponent<Camera>())
+				Entity(Hierarchy::selectedId).AddComponent<Camera>();
+		}
+
 		ImGui::EndCombo();
 
 
