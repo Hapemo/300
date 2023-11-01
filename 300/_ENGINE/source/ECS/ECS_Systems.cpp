@@ -124,7 +124,7 @@ void SystemManager::Update(float dt)
 	EnginePerformance::UpdateSystemMs("Scripting");
 
 	EnginePerformance::StartTrack("Audio");
-	mAudioSystem.get()->Update(dt);
+	mAudioSystem.get()->Update(dt);					// [10/26] Inclusion of 3D Audio -> must always be after (Positional Update) 
 	EnginePerformance::EndTrack("Audio");
 	EnginePerformance::UpdateSystemMs("Audio");
 	//	mResourceSystem.get()->Update();

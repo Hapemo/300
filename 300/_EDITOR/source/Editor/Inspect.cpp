@@ -101,8 +101,6 @@ void Inspect::update()
 		General& Inspector = ent.GetComponent<General>();
 		Inspector.Inspect();
 
-
-
 		if (ent.HasComponent<Transform>()) {
 			Transform& transform = ent.GetComponent<Transform>();
 			transform.Inspect();
@@ -229,6 +227,12 @@ void Inspect::Add_component() {
 			if (!Entity(Hierarchy::selectedId).HasComponent<Audio>())
 				Entity(Hierarchy::selectedId).AddComponent<Audio>();
 		}	
+
+		if (ImGui::Selectable("AudioListener")) {
+			if (!Entity(Hierarchy::selectedId).HasComponent<AudioListener>())
+				Entity(Hierarchy::selectedId).AddComponent<AudioListener>();				
+		}
+
 		if (ImGui::Selectable("VFX")) {
 			if (!Entity(Hierarchy::selectedId).HasComponent<VFX>())
 				Entity(Hierarchy::selectedId).AddComponent<VFX>();
@@ -1258,6 +1262,8 @@ void Audio::Inspect() {
 	std::string file_path;		 // Only Audio Directory	  e.g "../assets\\Audio"
 	std::string audio_name;      // Audio Name only.		  e.g "farm_ambience.wav"
 
+	float vol_changed = false; 
+
 	const char* audio_type[] = { "SFX" , "BGM" };
 
 	// Audio Component (Bar)
@@ -1282,6 +1288,12 @@ void Audio::Inspect() {
 
 				if (audio_name_start != std::string::npos) {
 					audio_name = full_file_path.substr(audio_name_start + 1);
+				}
+
+				// <Audio> Component - assign m3DAudio flag
+				if (audio_name.find("3D") != std::string::npos)
+				{
+					m3DAudio = true;
 				}
 
 				// Must be outside (what if i remove and add an already loaded audio)
@@ -1322,6 +1334,11 @@ void Audio::Inspect() {
 	ImGui::Text(Entity(Hierarchy::selectedId).GetComponent<Audio>().mFullPath.c_str());
 	Audio& audio = Entity(Hierarchy::selectedId).GetComponent<Audio>();
 
+	if (!mIsEmpty && m3DAudio)
+	{
+		ImGui::Text("This is a 3D Audio");
+	}
+
 	static bool remove_audio_bool = false;
 	if (!Entity(Hierarchy::selectedId).GetComponent<Audio>().mIsEmpty)
 	{
@@ -1342,7 +1359,24 @@ void Audio::Inspect() {
 		//ImGui::Checkbox("IsPlaying", &mIsPlaying);
 		ImGui::Checkbox("Play on Awake", &mPlayonAwake);
 		ImGui::Checkbox("Is Looping", &mIsLooping);
-		ImGui::SliderFloat("Volume", &f1, 0.0f, 1.0f, "ratio = %.3f");
+		ImGui::SliderFloat("Volume", &mVolume, 0.0f, 1.0f, "volume = %.3f");
+
+		if (ImGui::IsItemEdited())
+		{
+			mChannel->setVolume(mVolume);
+		}
+
+		ImGui::SliderFloat("Fade Speed", &mFadeSpeedModifier, 0.0f, 1.0f, "fade = %.3f");
+
+		if (m3DAudio)
+		{
+			ImGui::DragFloat("Min Distance", (float*)&mMinDistance);
+			ImGui::DragFloat("Max Distance", (float*)&mMaxDistance);
+			/*ImGui::SliderFloat("Min Distance", &mMinDistance, 0.0f, 3000.0f, "%.3f");
+			ImGui::SliderFloat("Max Distance", &mMaxDistance, 0.0f, 3000.0f, "%.3f");*/
+
+			//systemManager->mAudioSystem.get()->Update3DChannelSettings(Entity(Hierarchy::selectedId)); 
+		}
 
 	}
 
@@ -1373,6 +1407,27 @@ void Audio::Inspect() {
 
 	if (delete_component == false)
 		Entity(Hierarchy::selectedId).RemoveComponent<Audio>();
+}
+
+
+/***************************************************************************/
+/*!
+\brief
+	Inspector functionality for AudioListener
+*/
+/***************************************************************************/
+void AudioListener::Inspect() {
+	bool delete_component = true;
+
+	// Audio Component (Bar)
+	if (ImGui::CollapsingHeader("Audio Listener", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
+	{
+
+	}
+
+	
+	if (delete_component == false)
+		Entity(Hierarchy::selectedId).RemoveComponent<AudioListener>();
 }
 
 void UIrenderer::Inspect() {

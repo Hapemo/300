@@ -259,6 +259,13 @@ void LuaAudioSystem()
     );
 }
 
+void LuaAudio()
+{
+    systemManager->mScriptingSystem->luaState.new_usertype<Audio>(
+        "Audio", sol::constructors<>()
+        );
+}
+
 void LuaAudioSource()
 {
     systemManager->mScriptingSystem->luaState["CrossFadeAudio"] = &CrossFadeAudio;
@@ -275,13 +282,6 @@ void LuaAudioSource()
         "Mute", &AudioSource::Mute,
         "SetVolume", &AudioSource::SetVolume,
         "SetIsLoop", &AudioSource::SetIsLoop
-        );
-}
-
-void LuaAudio()
-{
-    systemManager->mScriptingSystem->luaState.new_usertype<Audio>(
-        "Audio", sol::constructors<>()
         );
 }
 
