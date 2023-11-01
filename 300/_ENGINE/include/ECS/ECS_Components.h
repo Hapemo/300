@@ -368,6 +368,7 @@ struct Audio : public Serializable
 	// Update Loop - Boolean Checks
 	bool		   mIsPlaying = false;					 // [Flag] - Check if audio is already playing (Channel Interaction)
 	bool           mIsPlay = false;						 // [Flag] - to decide whether to play audio (if true)
+	bool		   mSpamReplay = false;
 
 	// Update Loop - Fade In / Fade out data
 	bool		   mFadeIn = false;						 // [Flag] - This audio will be faded out. 

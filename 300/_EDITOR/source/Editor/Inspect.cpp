@@ -1369,7 +1369,18 @@ void Audio::Inspect() {
 
 		if (ImGui::IsItemEdited())
 		{
-			mChannel->setVolume(mVolume);
+			FMOD::Sound* current_sound;
+			mChannel->getCurrentSound(&current_sound);
+			if (current_sound)
+			{
+				bool playing = false;
+				mChannel->isPlaying(&playing);
+				if (playing)
+				{
+					mChannel->setVolume(mVolume);
+				}
+			}
+	
 		}
 
 		ImGui::SliderFloat("Fade Speed", &mFadeSpeedModifier, 0.0f, 1.0f, "fade = %.3f");

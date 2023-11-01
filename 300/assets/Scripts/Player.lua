@@ -38,6 +38,15 @@ local mouse_on = true
 -- audio attributes
 local walkingAudioSource
 local audioComp
+
+local shootingEntity
+local shootingComp
+local shootingAudioSource
+
+local bulletshootEntity
+local bulletshootComp
+local bulletshootAudioSource
+
 local fadeOutTimer = 0.0
 local fadeOutDuration = 5.0
 local dt
@@ -63,7 +72,14 @@ function Alive()
 
     audioComp = cameraEntity:GetAudio()
     walkingAudioSource = Helper.CreateAudioSource(cameraEntity)
-    --walkingAudioSource:SetVolume(0.0)
+    
+    shootingEntity = gameStateSys:GetEntity("Shooting", "testSerialization")
+    shootingComp = shootingEntity:GetAudio()
+    shootingAudioSource = Helper.CreateAudioSource(shootingEntity)
+
+    bulletshootEntity = gameStateSys:GetEntity("Bullet Shoot", "testSerialization")
+    bulletshootComp = bulletshootEntity:GetAudio()
+    bulletshootAudioSource = Helper.CreateAudioSource(bulletshootEntity)
 
     dashTime = 3.0
     tpTime = 20.0
@@ -255,6 +271,11 @@ function Update()
         viewVecCam.x = viewVecCam.x*100
         viewVecCam.y=viewVecCam.y *100
         viewVecCam.z=viewVecCam.z *100
+
+        bulletshootAudioSource:Play()
+        bulletshootAudioSource:SetVolume(0.4)
+   
+        print("SHOOT")
 
         physicsSys:SetVelocity(prefabEntity, viewVecCam)
     end

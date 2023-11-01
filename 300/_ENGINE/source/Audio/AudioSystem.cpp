@@ -267,6 +267,9 @@ void AudioSystem::PlayOnAwake()
 	for (Entity audio : audio_entities)
 	{
 		Audio& audio_component = audio.GetComponent<Audio>();
+		General& general = audio.GetComponent<General>();
+
+		std::string name = general.name;
 
 		if (audio_component.mPlayonAwake && audio_component.mPaused == false) // Truly the first time playing
 		{
@@ -279,7 +282,8 @@ void AudioSystem::PlayOnAwake()
 			PINFO("Resuming Audio: %s.", audio_component.mFileName.c_str());
 			ErrCodeCheck(audio_component.mChannel->setPaused(false));
 			audio_component.mPaused = false;
-			audio_component.mWasPaused = true;  // to prevent replaying of clip (if update())
+			audio_component.mWasPaused = false;  // to prevent replaying of clip (if update())
+			audio_component.mIsPlaying = true;
 		}
 
 
@@ -310,16 +314,19 @@ void AudioSystem::Pause()
 	{
 		Audio& audio_component = audio.GetComponent<Audio>();
 
-		bool playing = false; // by default.
-
-		audio_component.mChannel->isPlaying(&playing); // will still be true when it's setPaused() -> but this is to check whether if the channel has any sound playing the clip.
-		
-		if (playing) // only pause if it's playing.
+		FMOD::Sound* current_sound;
+		audio_component.mChannel->getCurrentSound(&current_sound);
+		if (current_sound)
 		{
-			PINFO("Pausing Audio : %s", audio_component.mFileName);  // I think loop too fast to display on debugger.
-			ErrCodeCheck(audio_component.mChannel->setPaused(true)); // [Cannot be done in Update() loop]
-			audio_component.mPaused = true;
-			audio_component.mIsPlaying = false;
+			bool playing = false;
+			audio_component.mChannel->isPlaying(&playing);
+			if (playing)
+			{
+				PINFO("Pausing Audio : %s", audio_component.mFileName);  // I think loop too fast to display on debugger.
+				ErrCodeCheck(audio_component.mChannel->setPaused(true)); // [Cannot be done in Update() loop]
+				audio_component.mPaused = true;
+				audio_component.mIsPlaying = false;
+			}
 		}
 	}
 }
@@ -332,18 +339,18 @@ void AudioSystem::Reset()
 	{
 		Audio& audio_component = audio.GetComponent<Audio>();
 
-		bool playing = false;
-
-		if (audio_component.mIsPlaying)
+		FMOD::Sound* current_sound;
+		audio_component.mChannel->getCurrentSound(&current_sound);
+		if (current_sound)
 		{
+			bool playing = false;
 			audio_component.mChannel->isPlaying(&playing);
-		}
+			if (playing)
+			{
+				ErrCodeCheck(audio_component.mChannel->stop());
+			}
 
-		if (playing)
-		{
-			ErrCodeCheck(audio_component.mChannel->stop());
 		}
-
 
 		//audio_component.ClearAudioComponent();
 		//int i = 3;
@@ -1042,8 +1049,9 @@ void AudioSystem::AudioPlayLoop(float dt)
 		{
 			audio_component.mChannel->isPlaying(&channelIsPlay);
 			audio_component.mChannel->setVolume(audio_component.mVolume);
-		
+
 		}
+
 
 		if (audio_component.mIsPlaying && !channelIsPlay) // Sound finished playing in channel.
 		{
