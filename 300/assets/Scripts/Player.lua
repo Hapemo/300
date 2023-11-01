@@ -31,7 +31,7 @@ local d_sampleWeight = 0.6
 local e_tint = Vec4.new(1,0,0,0.3)
 local d_tint = Vec4.new(1,1,1,1)
 local d_tint_result = Vec4.new(0,0,0,0)
-local e_fov = 30
+local e_fov = 50
 local d_fov = 60
 
 local e_dashEffect = true
