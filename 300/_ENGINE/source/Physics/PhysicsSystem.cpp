@@ -11,7 +11,7 @@ PhysicsSystem::PhysicsSystem()
 	mMaterials[MATERIAL::METAL] = CreateMaterial(0.7f, 0.6f, 0.0f);
 	mMaterials[MATERIAL::ICE] = CreateMaterial(0.1f, 0.05f, 0.f);
 	mMaterials[MATERIAL::CONCRETE] = CreateMaterial(0.6f, 0.5f, 0.f);
-	mMaterials[MATERIAL::GLASS] = CreateMaterial(0.4f, 0.3f, 0.f);
+	mMaterials[MATERIAL::GLASS] = CreateMaterial(0.4f, 0.3f, 0.8f);
 }
 
 void PhysicsSystem::Init()
