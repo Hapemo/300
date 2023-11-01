@@ -18,6 +18,12 @@ local positions = Vec3.new(0,0,10)
 local positions_offset = Vec3.new(0,20,0)
 local positions_final = Vec3.new()
 
+local e_chroma = 0.06
+local e_exposure = 5
+local e_texel = 5
+local e_tint = Vec4.new(211,42,42,255)
+local e_fov = 8
+
 -- mouse attributes
 local mouse_move = Vec2.new()
 local mouse_on = true

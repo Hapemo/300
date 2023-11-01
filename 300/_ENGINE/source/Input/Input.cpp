@@ -87,12 +87,12 @@ glm::vec2 Input::CursorPos() {
   double xpos, ypos;
 
   //if (mIsEditor == false) {
-      //glfwGetCursorPos(systemManager->GetWindow()->GetHandle(), &xpos, &ypos);
-      //return glm::vec2{ static_cast<float>(xpos), static_cast<float>(ypos) };
+  //    glfwGetCursorPos(systemManager->GetWindow()->GetHandle(), &xpos, &ypos);
+  //    return glm::vec2{ static_cast<float>(xpos), static_cast<float>(ypos) };
   //}
   //else {
       return mosposEditor;
-  //}
+ // }
 }
 
 void Input::SetCursorCenter()

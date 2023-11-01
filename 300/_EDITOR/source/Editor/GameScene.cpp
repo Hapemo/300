@@ -52,14 +52,14 @@ void GameScene::update()
 	, int(ypos + ImGui::GetWindowPos().y + (ImGui::GetWindowSize().y / 2)) };
 	
 
-	if (ImGui::IsMouseClicked(1))
+	//if (ImGui::IsMouseClicked(1))
 	//	std::cout << Input::m_EditorWindowPos.x << " WimguiX\n" << Input::m_EditorWindowPos.y << " WimguiY\n";
 
-	if (ImGui::IsMouseClicked(0)) {
+	//if (ImGui::IsMouseClicked(0)) {
 		//SetCursorPos(Input::m_EditorWindowPos.x, Input::m_EditorWindowPos.y);
 	//	std::cout << ImGui::GetMousePos().x << " imguiX\n" << ImGui::GetMousePos().y << " imguiY\n";
 
-	}
+	//}
 	
 	mWinFlag |= ImGuiWindowFlags_NoScrollbar;
 
