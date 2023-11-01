@@ -1,69 +1,5 @@
 [
     {
-        "entityid": 1,
-        "general": {
-            "name": "UI1",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 100.0,
-                "y": 100.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -1500.0,
-                "y": -900.0,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "../assets/Compressed/Wood Material 15_BaseColor.ctexture",
-            "textureref": 0,
-            "degree": 77.0
-        }
-    },
-    {
-        "entityid": 2,
-        "general": {
-            "name": "UI2",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 100.0,
-                "y": 100.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -1800.0,
-                "y": -900.0,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
-            "textureref": 0,
-            "degree": 37.0
-        }
-    },
-    {
         "entityid": 3,
         "general": {
             "name": "enemy1_walking",
@@ -80,13 +16,13 @@
             },
             "rotate": {
                 "x": 0.0,
-                "y": 0.0,
+                "y": 68.4521255493164,
                 "z": 0.0
             },
             "translate": {
-                "x": -15.664755821228027,
-                "y": 7.595328330993652,
-                "z": -3.7400801033982134e-7
+                "x": 17.689138412475586,
+                "y": 2.5998973846435547,
+                "z": 13.17063045501709
             }
         },
         "rigidbody": {
@@ -94,9 +30,9 @@
             "material": 1,
             "motion": 1,
             "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
+                "x": 17.993946075439453,
+                "y": -0.000018596649169921875,
+                "z": 7.105352878570557
             },
             "rotationconstraints": {
                 "x": true,
@@ -5860,13 +5796,13 @@
                 "z": 20.0
             },
             "rotate": {
-                "x": -90.0,
-                "y": 0.0,
+                "x": -164.39993286132813,
+                "y": -71.80001831054688,
                 "z": 0.0
             },
             "translate": {
                 "x": 87.99999237060547,
-                "y": 6.499999523162842,
+                "y": 6.499896049499512,
                 "z": 40.934593200683594
             }
         },
@@ -5875,9 +5811,9 @@
             "material": 1,
             "motion": 1,
             "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": -3.1134927969134196e-10
+                "x": 0.00015355332288891077,
+                "y": 0.00006937980651855469,
+                "z": -1.0672736472372435e-8
             },
             "rotationconstraints": {
                 "x": true,
@@ -5920,17 +5856,17 @@
         "camera": {
             "positon": {
                 "x": 87.99999237060547,
-                "y": 6.499999523162842,
+                "y": 6.499896049499512,
                 "z": 40.934593200683594
             },
             "target": {
-                "x": 87.99999237060547,
-                "y": 6.499999523162842,
-                "z": 39.934593200683594
+                "x": 87.69916534423828,
+                "y": 7.449868202209473,
+                "z": 40.85060119628906
             },
             "size": {
-                "x": 1106,
-                "y": 604
+                "x": 1173,
+                "y": 549
             },
             "near": 0.10000000149011612,
             "far": 900.0
@@ -6677,13 +6613,13 @@
             },
             "rotate": {
                 "x": 0.0,
-                "y": 0.0,
+                "y": 72.81524658203125,
                 "z": 0.0
             },
             "translate": {
-                "x": -28.03702735900879,
-                "y": 4.068583011627197,
-                "z": 18.054019927978516
+                "x": 6.561854362487793,
+                "y": 2.5998945236206055,
+                "z": 32.102821350097656
             }
         },
         "rigidbody": {
@@ -6691,9 +6627,9 @@
             "material": 1,
             "motion": 1,
             "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
+                "x": 18.46978187561035,
+                "y": 0.0000011920928955078125,
+                "z": 5.756253719329834
             },
             "rotationconstraints": {
                 "x": true,
@@ -6773,13 +6709,13 @@
             },
             "rotate": {
                 "x": 0.0,
-                "y": 0.0,
+                "y": 69.10987854003906,
                 "z": 0.0
             },
             "translate": {
-                "x": -15.619306564331055,
-                "y": 5.232604026794434,
-                "z": 30.973764419555664
+                "x": 17.002887725830078,
+                "y": 2.59989595413208,
+                "z": 45.67780685424805
             }
         },
         "rigidbody": {
@@ -6787,9 +6723,9 @@
             "material": 1,
             "motion": 1,
             "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
+                "x": 18.065710067749023,
+                "y": 0.0000034570693969726563,
+                "z": 6.920803070068359
             },
             "rotationconstraints": {
                 "x": true,
@@ -6850,6 +6786,186 @@
             "stayaway": 0.0,
             "elevation": 0.0,
             "targetname": "Camera"
+        }
+    },
+    {
+        "entityid": 82,
+        "general": {
+            "name": "bullet",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": -30.23712158203125,
+                "y": -0.0,
+                "z": 3.1415927410125732
+            },
+            "translate": {
+                "x": 83.98895263671875,
+                "y": 19.16619110107422,
+                "z": 39.814693450927734
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 1,
+            "velocity": {
+                "x": -30.08270263671875,
+                "y": 94.9972152709961,
+                "z": -8.399200439453125
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": false,
+                "z": false
+            },
+            "gravity": false
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 2285,
+            "instancecolor": {
+                "x": 0.95652174949646,
+                "y": 1.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Cube_Texture_White.ctexture",
+                " ",
+                " ",
+                " ",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/cube.geom",
+            "texturerefid": [
+                4706,
+                0,
+                0,
+                0,
+                0
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": true
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/Bullet.lua",
+                    "variables": [
+                        {
+                            "key": "movement",
+                            "val": {
+                                "type": -655306154,
+                                "value": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0
+                                }
+                            }
+                        },
+                        {
+                            "key": "viewVec",
+                            "val": {
+                                "type": -655306154,
+                                "value": {
+                                    "x": 0.0,
+                                    "y": 1.0,
+                                    "z": 0.0
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        "prefab": {
+            "prefab": "bullet"
+        }
+    },
+    {
+        "entityid": 1048577,
+        "general": {
+            "name": "UI2",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 100.0,
+                "y": 100.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -1800.0,
+                "y": -900.0,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "../assets/Compressed/Wood Material 15_BaseColor.ctexture",
+            "textureref": 5242,
+            "degree": -397.0
+        }
+    },
+    {
+        "entityid": 1048578,
+        "general": {
+            "name": "UI1",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 100.0,
+                "y": 100.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -1500.0,
+                "y": -900.0,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
+            "textureref": 4923,
+            "degree": 0.0
         }
     }
 ]

@@ -702,7 +702,7 @@ void GraphicsSystem::GameDraw(float dt)
 	}
 
 	m_GameFbo.Bind();
-	m_GameFbo.DrawBuffers(true, true);
+	m_GameFbo.DrawBuffers(true);
 
 	// Render UI objects
 	m_UiShaderInst.Activate();		// Activate shader
