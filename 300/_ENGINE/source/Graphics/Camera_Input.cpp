@@ -135,6 +135,12 @@ void Camera_Scripting::SetSensitivity(Entity cameraEntity, const float& sensitiv
 	cameraEntity.GetComponent<Camera>().mCamera.mSensitivity = sensitivity;
 }
 
+void Camera_Scripting::SetFov(Entity cameraEntity, const float& fov)
+{
+	assert(cameraEntity.HasComponent<Camera>());
+	cameraEntity.GetComponent<Camera>().mCamera.mFovDegree = fov;
+}
+
 
 glm::vec3 Camera_Scripting::GetPosition(Entity cameraEntity)
 {

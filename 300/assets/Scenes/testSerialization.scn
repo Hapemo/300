@@ -3496,7 +3496,7 @@
             "scale": {
                 "x": 59.997955322265625,
                 "y": 50.0,
-                "z": 4.9997944831848145
+                "z": 5.0
             },
             "rotate": {
                 "x": 90.0,
@@ -6094,8 +6094,8 @@
                 "z": 39.934593200683594
             },
             "size": {
-                "x": 1159,
-                "y": 703
+                "x": 948,
+                "y": 604
             },
             "near": 0.10000000149011612,
             "far": 900.0
@@ -6539,6 +6539,290 @@
         },
         "prefab": {
             "prefab": "Floor"
+        }
+    },
+    {
+        "entityid": 78,
+        "general": {
+            "name": "Teleporter1",
+            "tagid": 5,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 4.999836444854736,
+                "y": 5.0,
+                "z": 1.5
+            },
+            "rotate": {
+                "x": 90.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 42.29999923706055,
+                "y": 18.200000762939453,
+                "z": -62.5
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": true,
+                "z": true
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3442,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
+                " ",
+                " ",
+                " ",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/Model_Wall_12x10x1.geom",
+            "texturerefid": [
+                4695,
+                0,
+                0,
+                0,
+                0
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 0.5,
+                "y": 0.5,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        }
+    },
+    {
+        "entityid": 79,
+        "general": {
+            "name": "Teleporter2",
+            "tagid": 5,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 4.999882698059082,
+                "y": 5.0,
+                "z": 1.5
+            },
+            "rotate": {
+                "x": 90.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 12.300000190734863,
+                "y": 53.20000076293945,
+                "z": 62.5
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": true,
+                "z": true
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3442,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
+                " ",
+                " ",
+                " ",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/Model_Wall_12x10x1.geom",
+            "texturerefid": [
+                4695,
+                0,
+                0,
+                0,
+                0
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 0.5,
+                "y": 0.5,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        }
+    },
+    {
+        "entityid": 80,
+        "general": {
+            "name": "Fin",
+            "tagid": 5,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 2.5,
+                "y": 2.5,
+                "z": 2.5
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 41.5,
+                "y": 22.498146057128906,
+                "z": -61.5
+            }
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3442,
+            "instancecolor": {
+                "x": 0.6483050584793091,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Texture_Wall_2x4x1.ctexture",
+                " ",
+                " ",
+                " ",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/Model_Wall_12x10x1.geom",
+            "texturerefid": [
+                4601,
+                0,
+                0,
+                0,
+                0
+            ]
+        },
+        "prefab": {
+            "prefab": "Fin"
+        }
+    },
+    {
+        "entityid": 81,
+        "general": {
+            "name": "Fin",
+            "tagid": 5,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 2.5,
+                "y": 2.5,
+                "z": 2.5
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 11.300000190734863,
+                "y": 57.5,
+                "z": 63.21570587158203
+            }
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3348,
+            "instancecolor": {
+                "x": 0.6483050584793091,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Texture_Wall_2x4x1.ctexture",
+                " ",
+                " ",
+                " ",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/Model_Wall_2x4x1.geom",
+            "texturerefid": [
+                4601,
+                0,
+                0,
+                0,
+                0
+            ]
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/FinRotate.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "prefab": {
+            "prefab": "Fin"
         }
     }
 ]
