@@ -124,7 +124,7 @@ public:
 	static bool mIsEditor;
 	static glm::vec2 mosposEditor;
 	
-
+	static bool m_EditorSceneHovered;
 	static void SetCursorCenter();
 	static glm::vec2 GetCursorCenter();
 	static glm::vec2 m_EditorWindowPos;

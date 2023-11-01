@@ -59,7 +59,12 @@ void SceneWindow::init()
 void SceneWindow::update()
 {
 
-
+	if (ImGui::IsWindowHovered()) {
+		Input::m_EditorSceneHovered = true;
+	}
+	else {
+		Input::m_EditorSceneHovered = false;
+	}
 	
 
 	mWinFlag |= ImGuiWindowFlags_NoScrollbar;

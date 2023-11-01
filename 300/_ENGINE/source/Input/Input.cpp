@@ -21,6 +21,7 @@ double Input::mScrollTotal{ 0 };
 double Input::mScrollOffset{ 0 };
 GLFWcursor* Input::mCursor;
 bool Input::mIsEditor{ false };
+bool Input::m_EditorSceneHovered{ false };
 glm::vec2 Input::mosposEditor {};
 
  glm::vec2 Input::m_EditorWindowPos;
@@ -86,13 +87,13 @@ void Input::UpdatePrevKeyStates() {
 glm::vec2 Input::CursorPos() {
   double xpos, ypos;
 
-  //if (mIsEditor == false) {
+  if (m_EditorSceneHovered == true) {
       glfwGetCursorPos(systemManager->GetWindow()->GetHandle(), &xpos, &ypos);
       return glm::vec2{ static_cast<float>(xpos), static_cast<float>(ypos) };
-  //}
-  //else {
+  }
+  else {
       return mosposEditor;
- // }
+  }
 }
 
 void Input::SetCursorCenter()
