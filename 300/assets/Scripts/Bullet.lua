@@ -36,6 +36,14 @@ function OnTriggerEnter(Entity)
     entityobj = Helper.GetScriptEntity(script_entity.id)
     generalComponent = Entity:GetGeneral()
     tagid = generalComponent.tagid
+    if (tagid == 1) then
+        Entity:GetTransform().mScale.x = Entity:GetTransform().mScale.x * 0.9
+        Entity:GetTransform().mScale.y = Entity:GetTransform().mScale.y * 0.9
+        Entity:GetTransform().mScale.z = Entity:GetTransform().mScale.z * 0.9
+
+        systemManager.ecs:SetDeleteEntity(entityobj)
+    end
+
     if (tagid == 3) then
         --floorCount = floorCount + 1;
         -- gameStateSys = systemManager:mGameStateSystem();

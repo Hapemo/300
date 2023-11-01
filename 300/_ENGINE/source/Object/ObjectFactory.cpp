@@ -22,6 +22,7 @@ and saving of prefabs, scenes and gamestates using serialization.
 #include "Debug/Logger.h"
 #include "ECS/ECS_Components.h"
 #include "Physics/PhysicsSystem.h"
+#include "AI/AIManager.h"
 
 #define SERIALIZE_SELF(T) if (e.HasComponent<T>()) e.GetComponent<T>().SerializeSelf(writer)
 #define DESERIALIZE_SELF(T, S) if(reader.HasMember(S)) e.AddComponent<T>().DeserializeSelf(reader[S])
@@ -57,6 +58,8 @@ void ObjectFactory::LoadEntity(Entity e, rapidjson::Value& reader)
 		systemManager->ecs->mPrefabs[e.GetComponent<Prefab>().mPrefab].push_back(e);
 	DESERIALIZE_SELF(PointLight, "pointlight");
 	DESERIALIZE_SELF(AISetting, "aisetting");
+	if (e.HasComponent<AISetting>())
+		systemManager->mAISystem->InitialiseAI(e);
 	DESERIALIZE_SELF(Crosshair, "crosshair");
 }
 
