@@ -1,11 +1,6 @@
 viewVec = Vec3.new(0,0,0)
 movement = Vec3.new(0,0,0)
 
-local bullethitEntity
-local bullethitcomp
-local bullethitAudioSource
-
-
 function Alive()
     
 end
@@ -16,12 +11,9 @@ function Update()
     cameraEntity = gameStateSys:GetEntity("Camera", "testSerialization")
     positions = cameraEntity:GetTransform().mTranslate
 
+
     viewVec = Camera_Scripting.GetDirection(cameraEntity)
     physicsSys = systemManager:mPhysicsSystem()
-
-    bullethitEntity = gameStateSys:GetEntity("Bullet Hit" , "testSerialization")
-    bullethitcomp   = bullethitEntity:GetAudio()
-    bullethitAudioSource = Helper.CreateAudioSource(bullethitEntity)
 
     -- movement.x= movement.x+movement.x
     --   movement.x = movement.x+ viewVec.x *0     
@@ -50,9 +42,6 @@ function OnTriggerEnter(Entity)
         Entity:GetTransform().mScale.z = Entity:GetTransform().mScale.z * 0.9
 
         systemManager.ecs:SetDeleteEntity(entityobj)
-
-        bullethitAudioSource:Play()
-        bullethitAudioSource:SetVolume(0.2)
     end
 
     if (tagid == 3) then
