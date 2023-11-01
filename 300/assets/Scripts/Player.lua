@@ -11,7 +11,7 @@ local right = Vec3.new()
 local centerscreen = Vec2.new()
 local mul = 20.0
 local floorCount = 0
-local totaltime = 0.0
+local dashTime = 0.0
 local isDashing = false;
 local speed = 10
 local positions = Vec3.new(0,0,10)
@@ -28,13 +28,23 @@ local e_fov = 8
 local mouse_move = Vec2.new()
 local mouse_on = true
 
+local teleporter1
+local teleporter2
+local once = true;
+local playertpoffset = Vec3.new()
+
+local cameraEntity
+
 function Alive()
     gameStateSys = systemManager:mGameStateSystem();
     inputMapSys = systemManager:mInputActionSystem();
     physicsSys = systemManager:mPhysicsSystem();
     graphicsSys = systemManager:mGraphicsSystem();
     cameraEntity = Helper.GetScriptEntity(script_entity.id)
-    totaltime = 3.0
+    dashTime = 3.0
+    teleporter1 = gameStateSys:GetEntity("Teleporter1", "testSerialization")
+    teleporter2 = gameStateSys:GetEntity("Teleporter2", "testSerialization")
+
 end
 
 function Update()
@@ -53,11 +63,11 @@ function Update()
         centerscreen = Input:GetCursorCenter()
         mouse_move.x = Input.CursorPos().x - centerscreen.x
         mouse_move.y = Input.CursorPos().y - centerscreen.y
-        print("cursorx "..Input.CursorPos().x)
-        print("cursory "..Input.CursorPos().y)
+        -- print("cursorx "..Input.CursorPos().x)
+        -- print("cursory "..Input.CursorPos().y)
 
-        print("luax "..centerscreen.x)
-        print("luay "..centerscreen.y)
+        -- print("luax "..centerscreen.x)
+        -- print("luay "..centerscreen.y)
 
         Camera_Scripting.RotateCameraView(cameraEntity, mouse_move)
         Input.SetCursorCenter()
@@ -70,7 +80,7 @@ function Update()
 
 --region -- Player movements
     -- use '.' to reference variable
-    totaltime = totaltime + 0.016;
+    dashTime = dashTime + FPSManager.GetDT();
     positions = cameraEntity:GetTransform().mTranslate
     
     viewVec = Camera_Scripting.GetDirection(cameraEntity)
@@ -84,17 +94,17 @@ function Update()
     movement.z = 0;
 
     if (isDashing) then
-        if (totaltime > 0.1) then
+        if (dashTime > 0.1) then
             isDashing = false
-            totaltime = 0
+            dashTime = 0
         else
             movement.x = movement.x + (viewVec.x * 300.0)
             movement.z = movement.z + (viewVec.z * 300.0);
         end
     else 
         if (inputMapSys:GetButtonDown("Dash")) then
-            if (totaltime > 3.0) then
-                totaltime = 0
+            if (dashTime > 3.0) then
+                dashTime = 0
                 isDashing = true
             end
         else
@@ -170,6 +180,27 @@ function OnTriggerEnter(Entity)
     tagid = generalComponent.tagid
     if (tagid == 3) then
         floorCount = floorCount + 1;
+    end
+
+    if (once == true) then
+        if (tagid == 5) then
+            if (generalComponent.name == teleporter1:GetGeneral().name) then
+                playertpoffset.x = cameraEntity:GetTransform().mTranslate.x - teleporter1:GetTransform().mTranslate.x;
+                playertpoffset.y = cameraEntity:GetTransform().mTranslate.y - teleporter1:GetTransform().mTranslate.y;
+                playertpoffset.z = cameraEntity:GetTransform().mTranslate.z - teleporter1:GetTransform().mTranslate.z;
+                playertpoffset.x = playertpoffset.x + teleporter2:GetTransform().mTranslate.x;
+                playertpoffset.y = playertpoffset.y + teleporter2:GetTransform().mTranslate.y;
+                playertpoffset.z = playertpoffset.z + teleporter2:GetTransform().mTranslate.z;
+
+                print(playertpoffset.x)
+                print(playertpoffset.y)
+                print(playertpoffset.z)
+                physicsSys:SetTranslate(script_entity, playertpoffset)
+                Helper.Translate(script_entity, playertpoffset)
+                once = false
+                print("moved")
+            end
+        end
     end
 end
 
