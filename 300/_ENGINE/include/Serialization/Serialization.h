@@ -22,7 +22,7 @@ enum class E_MOVEMENT_TYPE : char;
 * SERIALIZATION
 *////////////////////////////////
 #pragma region serialization
-#define SERIALIZE_BASIC(T) void Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer, const char* name, const T& val)
+#define SERIALIZE_BASIC(T) void Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer, const char* name, T const& val)
 #pragma region basic_types
 SERIALIZE_BASIC(bool);
 SERIALIZE_BASIC(int);
@@ -35,7 +35,7 @@ SERIALIZE_BASIC(glm::ivec2);
 SERIALIZE_BASIC(glm::bvec3);
 SERIALIZE_BASIC(glm::vec3);
 SERIALIZE_BASIC(glm::vec4);
-SERIALIZE_BASIC(Script);
+SERIALIZE_BASIC(Script*);
 SERIALIZE_BASIC(SUBTAG);
 SERIALIZE_BASIC(MATERIAL);
 SERIALIZE_BASIC(MOTION);
@@ -66,7 +66,7 @@ void WriteToFile(const std::string& filename, const rapidjson::StringBuffer& buf
 #pragma region implementation
 // Derived types
 template <typename T>
-void Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer, const char* name, const T& val)
+void Serialize(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer, const char* name, T const& val)
 {
 	if (!std::derived_from<T, Serializable>) return;
 
@@ -160,7 +160,7 @@ DESERIALIZE_BASIC(glm::ivec2);
 DESERIALIZE_BASIC(glm::bvec3);
 DESERIALIZE_BASIC(glm::vec3);
 DESERIALIZE_BASIC(glm::vec4);
-DESERIALIZE_BASIC(Script);
+DESERIALIZE_BASIC(Script*);
 DESERIALIZE_BASIC(SUBTAG);
 DESERIALIZE_BASIC(MATERIAL);
 DESERIALIZE_BASIC(MOTION);

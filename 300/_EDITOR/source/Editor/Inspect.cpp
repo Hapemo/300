@@ -494,11 +494,8 @@ void Scripts::Inspect(entt::entity entityID) {
 				// if entity does not contain any script, just add 
 				if (scriptsContainer.size() == 0)
 				{
-					Script script;
-					script.scriptFile = dataScript;
-					script.env = { systemManager->mScriptingSystem->luaState, sol::create, systemManager->mScriptingSystem->luaState.globals() };
-					script.Load(entityID);
-					scriptsContainer.push_back(script);
+					Script* script = AddScript(dataScript);
+					script->Load(entityID);
 					//std::cout << "Script " << script.scriptFile << " added to entity " << std::to_string((int)Hierarchy::selectedId) << std::endl;
 				}
 				// if entity already has scripts attached, check if duplicate 
@@ -508,7 +505,7 @@ void Scripts::Inspect(entt::entity entityID) {
 
 					for (auto& elem : scriptsContainer)
 					{
-						if (elem.scriptFile == dataScript)
+						if (elem->scriptFile == dataScript)
 						{
 							hasScript = true;
 							//std::cout << "Script is already attached! " << std::endl;
@@ -519,16 +516,10 @@ void Scripts::Inspect(entt::entity entityID) {
 
 					if (!hasScript)
 					{
-						Script script;
-						script.scriptFile = dataScript;
-						std::cout << script.scriptFile << std::endl;
-						script.env = { systemManager->mScriptingSystem->luaState, sol::create, systemManager->mScriptingSystem->luaState.globals() };
-
-						script.Load(entityID);
-
-						scriptsContainer.push_back(script);
+						Script* script = AddScript(dataScript);
+						script->Load(entityID);
 						//std::cout << "Script " << script.scriptFile << ".lua added to entity " << std::to_string((int)Hierarchy::selectedId) << std::endl;
-						PINFO("Script %s added to entity %s", script.scriptFile.c_str(), std::to_string((int)Hierarchy::selectedId).c_str());
+						PINFO("Script %s added to entity %s", script->scriptFile.c_str(), std::to_string((int)Hierarchy::selectedId).c_str());
 					}
 				}
 			}
@@ -540,10 +531,10 @@ void Scripts::Inspect(entt::entity entityID) {
 		for (auto& elem : scriptsContainer)
 		{
 			ImGui::SetNextItemOpen(true);
-			if (ImGui::TreeNode(elem.scriptFile.c_str())) {
+			if (ImGui::TreeNode(elem->scriptFile.c_str())) {
 				if (ImGui::IsItemClicked(1)) {
 					open_popup = true;
-					deleteScript = elem.scriptFile;
+					deleteScript = elem->scriptFile;
 				}
 				InspectScript(elem);
 				ImGui::TreePop();
@@ -560,8 +551,9 @@ void Scripts::Inspect(entt::entity entityID) {
 			{
 				for (auto i = 0; i < scriptsContainer.size(); i++)
 				{
-					if (scriptsContainer[i].scriptFile == deleteScript)
+					if (scriptsContainer[i]->scriptFile == deleteScript)
 					{
+						delete scriptsContainer[i];
 						scriptsContainer.erase(scriptsContainer.begin() + i);
 					}
 				}
@@ -598,11 +590,8 @@ void Scripts::Inspect(entt::entity entityID) {
 					output << line << std::endl;
 				}
 				input.close();
-				Script script;
-				script.scriptFile = ss.str();
-				script.env = { systemManager->mScriptingSystem->luaState, sol::create, systemManager->mScriptingSystem->luaState.globals() };
-				script.Load(Hierarchy::selectedId);
-				scriptsContainer.push_back(script);
+				Script* script = AddScript(ss.str());
+				script->Load(Hierarchy::selectedId);
 				newScript = " ";
 			}
 			ImGui::InputText(".lua", &newScript);

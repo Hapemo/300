@@ -120,6 +120,7 @@ void ScriptingSystem::Init()
     LuaBoxCollider();
     LuaSphereCollider();
     LuaScript();
+    LuaScripts();
     LuaParent();
     LuaChildren();
     LuaInput();
@@ -218,9 +219,9 @@ void ScriptingSystem::Update(float dt)
     // Call the "Update" function 
     for (Entity entity : scriptEntities)
     {
-        for (Script script : entity.GetComponent<Scripts>().scriptsContainer)
+        for (Script* script : entity.GetComponent<Scripts>().scriptsContainer)
         {
-            script.Run("Update");
+            script->Run("Update");
         }
     }
 }
@@ -245,70 +246,6 @@ void ScriptingSystem::LoadHelper()
 
     luaState["Helper"] = env["Helper"];
     luaState.script("Helper = readonlytable(Helper)");
-}
-
-void ScriptingSystem::ScriptAlive(const Entity& entity)
-{
-    auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
-    for (Script& script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
-    {
-        script.Load(entity);
-        script.Run("Alive");
-    }
-}
-
-void ScriptingSystem::ScriptStart(const Entity& entity)
-{
-    auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
-    for (Script& script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
-    {
-        script.Run("Start");
-    }
-}
-
-void ScriptingSystem::ScriptExit(const Entity& entity)
-{
-    auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
-    for (Script& script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
-    {
-        script.Run("Exit");
-    }
-}
-
-void ScriptingSystem::ScriptDead(const Entity& entity)
-{
-    auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
-    for (Script& script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
-    {
-        script.Run("Dead");
-    }
-}
-
-void ScriptingSystem::LoadRunScript(Entity& entity)
-{
-    auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
-    for (Entity entity : scriptEntities)
-    {
-        for (Script script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
-        {
-            script.Load(entity);
-            script.Run("Alive");
-        }
-    }
-}
-
-void ScriptingSystem::AddScript(Entity& entity, std::string fileName)
-{
-    // Check if there is script component, else add it before the script is added
-    if (!entity.HasComponent<Scripts>())
-        entity.AddComponent<Scripts>();
-    Script temp;
-    std::replace(fileName.begin(), fileName.end(), '\\', '/');
-    temp.scriptFile = fileName;
-    temp.env = { systemManager->mScriptingSystem->luaState, sol::create, systemManager->mScriptingSystem->luaState.globals() };
-    temp.Load(entity);
-    ScriptAlive(entity);
-    entity.GetComponent<Scripts>().scriptsContainer.push_back(temp);
 }
 
 void ScriptingSystem::ScriptReload()

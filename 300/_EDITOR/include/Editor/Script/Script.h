@@ -1,4 +1,4 @@
 #pragma once
 #include "ScriptingSystem.h"
 
-void InspectScript(Script &script);
+void InspectScript(Script* script);

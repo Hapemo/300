@@ -271,19 +271,76 @@ struct CapsuleCollider : public Serializable //@han
 class Scripts : public Serializable {
 public:
 	Scripts() = default;
-	~Scripts() = default;
+	Scripts(const Scripts& script)
+	{
+		for (auto& elem : script.scriptsContainer)
+		{
+			Script* script = new Script;
+			*script = *elem;
+			scriptsContainer.push_back(script);
+		}
+	}
+	Scripts& operator=(const Scripts& script)
+	{
+		for (auto& elem : scriptsContainer)
+		{
+			delete elem;
+		}
+		scriptsContainer.clear();
+		for (auto& elem : script.scriptsContainer)
+		{
+			Script* script = new Script;
+			*script = *elem;
+			scriptsContainer.push_back(script);
+		}
+		return *this;
+	}
+	~Scripts()
+	{
+		for (auto& elem : scriptsContainer)
+		{
+			delete elem;
+		}
+		scriptsContainer.clear();
+	}
 
 	//static void LoadRunScript(Entity entity);
 
 	//std::string mScriptFile{};
-	std::vector <Script> scriptsContainer;
+	std::vector <Script*> scriptsContainer;
+
+	Script* AddScript(std::string scriptFile)
+	{
+		Script* script = new Script;
+		script->scriptFile = scriptFile;
+		scriptsContainer.push_back(script);
+		return script;
+	}
 
 	template<typename ...args>
 	void RunFunctionForAllScripts(const char* funcName, args... arguments)
 	{
 		for (auto& elem : scriptsContainer)
 		{
-			elem.Run(funcName, arguments...);
+			elem->Run(funcName, arguments...);
+		}
+	}
+
+	Script* GetScript(std::string scriptName)
+	{
+		for (auto& elem : scriptsContainer)
+		{
+			if (elem->scriptFile == scriptName)
+				return elem;
+		}
+		return nullptr;
+	}
+
+	void LoadForAllScripts(int entityID)
+	{
+		for (auto& elem : scriptsContainer)
+		{
+			elem->Load(entityID);
 		}
 	}
 
@@ -291,7 +348,6 @@ public:
 	void Inspect(entt::entity entityID);
 	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
 	void DeserializeSelf(rapidjson::Value& reader);
-
 };
 
 /******************************************************************************/

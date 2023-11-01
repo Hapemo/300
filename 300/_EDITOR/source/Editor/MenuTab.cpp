@@ -39,10 +39,10 @@ void MenuTab::update() {
 
         for (Entity entity : scriptEntities)
         {
-            for (Script& script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
+            for (Script* script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
             {
-                script.Load(entity);
-                script.Run("Alive");
+                script->Load(entity);
+                script->Run("Alive");
             }
         }
     }

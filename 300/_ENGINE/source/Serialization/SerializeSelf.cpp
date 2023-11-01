@@ -196,7 +196,7 @@ void Scripts::DeserializeSelf(rapidjson::Value& reader)
 {
 	Deserialize(reader, "scriptscontainer", scriptsContainer);
 	for (int i = 0; i < scriptsContainer.size(); ++i)
-		Deserialize(reader, scriptsContainer[i].scriptFile.c_str(), scriptsContainer[i].variables);
+		Deserialize(reader, scriptsContainer[i]->scriptFile.c_str(), scriptsContainer[i]->variables);
 }
 
 void Parent::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const

@@ -1,6 +1,12 @@
 local vec = Vec3.new()
 local firstvec = Vec3.new()
 local secondvec = Vec3.new()
+--local hp = 100
+
+-- function GetHP()
+--     return hp
+-- end
+
 function Alive()
     entity = Helper.GetScriptEntity(script_entity.id)
     if entity == nil then

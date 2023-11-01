@@ -209,8 +209,17 @@ void LuaSphereCollider()
 
 void LuaScript()
 {
+    systemManager->mScriptingSystem->luaState.new_usertype<Script>(
+        "Script", sol::constructors<>(),
+        "RunWithReturnValue_int", &Script::RunWithReturnValue<int>
+        );
+}
+
+void LuaScripts()
+{
     systemManager->mScriptingSystem->luaState.new_usertype<Scripts>(
-        "Scripts", sol::constructors<>()
+        "Scripts", sol::constructors<>(),
+        "GetScript", &Scripts::GetScript
     );
 }
 
@@ -339,8 +348,7 @@ void LuaPhysics()
 void LuaScripting()
 {
     systemManager->mScriptingSystem->luaState.new_usertype<ScriptingSystem>(
-        "mScriptingSystem", sol::constructors<>(),
-        "AddScript", &ScriptingSystem::AddScript
+        "mScriptingSystem", sol::constructors<>()
     );
 }
 

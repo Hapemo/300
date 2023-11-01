@@ -36,9 +36,6 @@ void Entity::Activate() {
 	if (editorManager->IsScenePaused()) return;
 #endif
 	//if (!editorManager->IsScenePaused())
-	if (HasComponent<Script>())
-		systemManager->GetScriptingPointer()->ScriptStart(*this);
-
 
 	// General
 	genComp.isActive = true;
@@ -70,9 +67,6 @@ void Entity::Deactivate() {
 	if (editorManager->IsScenePaused()) return;
 #endif
 	//if (!editorManager->IsScenePaused())
-	if (HasComponent<Script>())
-		systemManager->GetScriptingPointer()->ScriptExit(*this);
-
 
 	// General
 	genComp.isActive = false;
@@ -148,7 +142,7 @@ void ECS::DeleteEntity(Entity e)
 //#endif
 	if (static_cast<std::uint32_t>(e.id) == 0)
 	{
-		PWARNING("tried to delete entitiy with id 0");
+		PWARNING("tried to delete entity with id 0");
 		return;
 	}
 	if (e.HasParent())
@@ -231,15 +225,8 @@ Entity ECS::NewEntityFromPrefab(std::string prefabName, const glm::vec3& pos)
 	//MeshRenderer temp = e.GetComponent<MeshRenderer>();
 	e.GetComponent<Transform>().mTranslate = pos;
 	PASSERT(static_cast<uint32_t>(e.id) != 0);
-	if (e.HasComponent<Scripts>())
-	{
-		Scripts& scripts = e.GetComponent<Scripts>();
-		for (auto& elem : scripts.scriptsContainer)
-		{
-			elem.Load(e.id);
-			elem.Run("Alive");
-		}
-	}
+	e.GetComponent<Scripts>().LoadForAllScripts((int)e.id);
+	e.GetComponent<Scripts>().RunFunctionForAllScripts("Alive");
 
 	if (e.HasComponent<RigidBody>())
 		systemManager->mPhysicsSystem->AddEntity(e);

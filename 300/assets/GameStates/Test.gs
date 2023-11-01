@@ -12,7 +12,7 @@
         "bloom_offset": 1.899999976158142,
         "bloom_sampleweight": 0.6439999938011169,
         "chroma_strength": 0.039000000804662704,
-        "bloom_enable": true,
+        "bloom_enable": false,
         "chroma_enable": true
     }
 ]

@@ -55,6 +55,7 @@ local tpTime
 local onTpTime
 local collideWithTP
 local originalSamplingWeight
+local walkingenemy = 0
 
 local tpcolor = Vec4.new(0, 0, 0, 1)
 
@@ -68,6 +69,7 @@ function Alive()
     tpTime = 20.0
     teleporter1 = gameStateSys:GetEntity("Teleporter1", "testSerialization")
     teleporter2 = gameStateSys:GetEntity("Teleporter2", "testSerialization")
+    walkingenemy = gameStateSys:GetEntity("enemy1_walking", "testSerialization")
     onTpTime = 0;
     collideWithTP = 0
     originalSamplingWeight = graphicsSys.mSamplingWeight
@@ -78,7 +80,14 @@ end
 
 function Update()
 
-    
+    -- scriptingSys = systemManager:mScriptingSystem();
+    -- scriptingComp = walkingenemy:GetScripts()
+    -- script = scriptingComp:GetScript("../assets/Scripts/AITest.lua")
+    -- if script ~= nil then
+    --     result = script:RunWithReturnValue_int("GetHP")
+    --     print(result)
+    -- end
+
 --region -- player camera
     if(inputMapSys:GetButtonDown("Mouse")) then
         if (mouse_on == true) then

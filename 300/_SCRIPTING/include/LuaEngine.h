@@ -29,6 +29,7 @@ void LuaRigidBody();
 void LuaBoxCollider();
 void LuaSphereCollider();
 void LuaScript();
+void LuaScripts();
 void LuaParent();
 void LuaChildren();
 void LuaInput();
