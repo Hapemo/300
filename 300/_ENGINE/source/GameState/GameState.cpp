@@ -15,6 +15,7 @@ time.
 #include "ECS/ECS.h"
 #include "GameState/GameStateManager.h"
 #include "AI/AIManager.h"
+#include "Physics/PhysicsSystem.h"
 
 void GameState::Init() {
 	//LOG_INFO("Init() called for gamestate: " + mName + +" ==================");
@@ -100,6 +101,7 @@ void GameState::Load(std::string const& _name){
 	for (auto& scene : mScenes) {
 		scene.Load();
 	}
+	systemManager->GetPhysicsPointer()->Init();
 }
 
 void GameState::Save() {
