@@ -165,6 +165,11 @@ void Inspect::update()
 			aiSetting.Inspect();
 		}
 
+		if (ent.HasComponent<Crosshair>()) {
+			Crosshair& crosshair = ent.GetComponent<Crosshair>();
+			crosshair.Inspect();
+		}
+
 		//--------------------------------------------// must be at the LAST OF THIS LOOP
 		Add_component(); 
 	}
@@ -253,6 +258,11 @@ void Inspect::Add_component() {
 		if (ImGui::Selectable("Camera")) {
 			if (!Entity(Hierarchy::selectedId).HasComponent<Camera>())
 				Entity(Hierarchy::selectedId).AddComponent<Camera>();
+		}
+
+		if (ImGui::Selectable("Crosshair")) {
+			if (!Entity(Hierarchy::selectedId).HasComponent<Crosshair>())
+				Entity(Hierarchy::selectedId).AddComponent<Crosshair>();
 		}
 
 		ImGui::EndCombo();
@@ -1524,7 +1534,41 @@ void AISetting::Inspect() {
 	//}
 }
 
+void Crosshair::Inspect()
+{
+	bool delete_component = true;
 
+	if (ImGui::CollapsingHeader("Crosshair", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
+	{
+		ImGui::Selectable("Crosshair   ");
+
+		ImGui::Text("Thickness");
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		ImGui::DragFloat("##Thickness", (float*)&mThickness);
+		ImGui::Separator();
+
+		ImGui::Text("Inner Offset");
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		ImGui::DragFloat("##Inner Offset", (float*)&mInner);
+		ImGui::Separator();
+
+		ImGui::Text("Outer Limit");
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		ImGui::DragFloat("##Outer Limit", (float*)&mOuter);
+		ImGui::Separator();
+
+		ImGui::ColorPicker4("Crosshair Color", (float*)&mColor);
+	}
+
+	if (delete_component == false)
+		Entity(Hierarchy::selectedId).RemoveComponent<Crosshair>();
+}
 
 void popup(std::string name, ref& data, bool& trigger) {
 	std::string hash ="##to"+name;

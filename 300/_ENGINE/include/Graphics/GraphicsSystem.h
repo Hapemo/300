@@ -271,6 +271,7 @@ public:
 
 	// -- Shader Instance
 	GFX::Shader m_UiShaderInst;
+	GFX::Shader m_CrosshairShaderInst;
 
 	// -- Flags --
 	int		m_DebugDrawing{ 1 };			// debug drawing 
@@ -318,6 +319,14 @@ private:
 	void DrawAll2DInstances(unsigned shaderID);
 	void Add2DImageInstance(float width, float height, vec2 const& position, unsigned texHandle, unsigned entityID = 0xFFFFFFFF, float degree = 0.f, vec4 const& color = vec4{ 1.f, 1.f, 1.f, 1.f });
 	int StoreTextureIndex(unsigned texHandle);
+
+	// -- Crosshair --
+	GLint m_CrosshairThicknessLocation{};
+	GLint m_CrosshairInnerLocation{};
+	GLint m_CrosshairOuterLocation{};
+	GLint m_CrosshairColorLocation{};
+	void SetupCrosshairShaderLocations();
+	void DrawCrosshair();
 };
 
 #endif

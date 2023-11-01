@@ -563,6 +563,7 @@ struct Crosshair : public Serializable
 
 	vec4 mColor		{ 1.f, 1.f, 1.f, 1.f };
 
+	void Inspect();
 	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
 	void DeserializeSelf(rapidjson::Value& reader);
 };
