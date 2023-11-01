@@ -61,6 +61,7 @@ void ObjectFactory::LoadEntity(Entity e, rapidjson::Value& reader)
 	if (e.HasComponent<AISetting>())
 		systemManager->mAISystem->InitialiseAI(e);
 	DESERIALIZE_SELF(Crosshair, "crosshair");
+	DESERIALIZE_SELF(Healthbar, "healthbar");
 }
 
 // deserialize scenes from the Scenes folder
@@ -81,7 +82,7 @@ void ObjectFactory::LoadScene(Scene* scene, const std::string& filename)
 		idMap.insert({ tmp_id, e.id });
 		LoadEntity(e, *ci);
 
-		std::cout << "tmp_id: " << (int)tmp_id << ", entity_id: " << (int)e.id << ", entity_name: " << e.GetComponent<General>().name << std::endl;
+		//std::cout << "tmp_id: " << (int)tmp_id << ", entity_id: " << (int)e.id << ", entity_name: " << e.GetComponent<General>().name << std::endl;
 		scene->mEntities.insert(e);
 	}
 	auto parent_cont = systemManager->ecs->GetEntitiesWith<Parent>();
@@ -170,6 +171,7 @@ void ObjectFactory::SaveEntity(Entity e, rapidjson::PrettyWriter<rapidjson::Stri
 	SERIALIZE_SELF(PointLight);
 	SERIALIZE_SELF(AISetting);
 	SERIALIZE_SELF(Crosshair);
+	SERIALIZE_SELF(Healthbar);
 	writer.EndObject();
 }
 
