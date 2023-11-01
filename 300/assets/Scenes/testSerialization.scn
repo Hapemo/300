@@ -6074,13 +6074,13 @@
             "firstchild": 50
         },
         "audio": {
-            "filepath": "",
-            "filename": "",
-            "fullpath": "",
-            "playonawake": false,
-            "islooping": false,
+            "filepath": "../assets\\Audio",
+            "filename": "walk.wav",
+            "fullpath": "../assets\\Audio/walk.wav",
+            "playonawake": true,
+            "islooping": true,
             "audiotype": 1,
-            "volume": 1.0
+            "volume": 0.0
         },
         "camera": {
             "positon": {

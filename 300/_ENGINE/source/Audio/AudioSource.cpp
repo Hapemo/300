@@ -41,7 +41,7 @@ AudioSource::AudioSource() : mAudioComponent(nullptr) {}
 
 void AudioSource::GetAudioComponent(Entity id)
 {
-	mAudioComponent = &(id.GetComponent<Audio>()); // Change to "script_entity_id"
+ 	mAudioComponent = &(id.GetComponent<Audio>()); // Change to "script_entity_id"
 }
 
 bool AudioSource::IsSoundAttached()
@@ -51,7 +51,7 @@ bool AudioSource::IsSoundAttached()
 
 bool AudioSource::AttachSound(std::string audio_name)
 {
-	if (mAudioComponent->mIsEmpty)
+	if (!mAudioComponent->mIsEmpty) // if it's not empty
 	{
 		if (systemManager->mAudioSystem.get()->CheckAudioExist(audio_name)) // Check if the audio exists in the database...
 		{
@@ -156,6 +156,11 @@ void AudioSource::SetVolume(float volume)
 		if (playing)
 		{
 			mAudioComponent->mChannel->setVolume(volume);
+		}
+
+		else
+		{
+			mAudioComponent->mVolume = volume;
 		}
 	}
 }

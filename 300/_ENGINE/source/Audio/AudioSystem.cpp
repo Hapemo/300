@@ -81,7 +81,7 @@ void AudioSystem::Init()
 			std::string audio_path = audio_component.mFilePath + "/" + audio_component.mFileName;
 			std::string audio_name = audio_component.mFileName;
 
-			if (LoadAudio(audio_path, audio_name)) // (1) Load Audio + (2) Add [Sound] into Database.
+			if (LoadAudio(audio_path, audio_name, &audio_component)) // (1) Load Audio + (2) Add [Sound] into Database.
 			{
 				audio_component.mIsLoaded = true;
 				audio_component.mSound = FindSound(audio_name); // Register [Sound] reference into <Audio> component. (if successfully loaded)
@@ -562,9 +562,9 @@ bool AudioSystem::LoadAudio(std::string file_path, std::string audio_name, Audio
 			//std::cout << "File Detected: " << file_path << std::endl;
 			PINFO("Creating Sound: +");
 			/*std::cout << "Creating Sound: ";*/
-			std::string full_path = file_path + "/" + audio_name;
+		/*	std::string full_path = file_path + "/" + audio_name;*/
 			FMOD::Sound* new_sound;
-			int check = ErrCodeCheck(system_obj->createSound(full_path.c_str(), FMOD_LOOP_OFF, 0, &new_sound));
+			int check = ErrCodeCheck(system_obj->createSound(audio_component->mFullPath.c_str(), FMOD_LOOP_OFF, 0, &new_sound));
 
 			if (check != 1)
 			{
@@ -1021,12 +1021,14 @@ void AudioSystem::AudioPlayLoop(float dt)
 			}
 		}
 
+		
 
 		// Every Loop -> check if the <Audio> is still playing.
 		bool channelIsPlay = false;
 		if (audio_component.mIsPlaying) // need this to be true (to indicate that there's a sound playing in the channel)
 		{
 			audio_component.mChannel->isPlaying(&channelIsPlay);
+		
 		}
 
 		if (audio_component.mIsPlaying && !channelIsPlay) // Sound finished playing in channel.

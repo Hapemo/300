@@ -1266,6 +1266,13 @@ void Audio::Inspect() {
 
 	const char* audio_type[] = { "SFX" , "BGM" };
 
+	Audio& audio_check = Entity(Hierarchy::selectedId).GetComponent<Audio>();
+
+	if (!audio_check.mFileName.empty())
+	{
+		mIsEmpty = false;
+	}
+
 	// Audio Component (Bar)
 	if (ImGui::CollapsingHeader("Audio", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
 	{

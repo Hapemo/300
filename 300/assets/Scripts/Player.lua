@@ -28,6 +28,10 @@ local e_fov = 8
 local mouse_move = Vec2.new()
 local mouse_on = true
 
+-- audio attributes
+local walkingAudioSource
+local audioComp
+
 function Alive()
     gameStateSys = systemManager:mGameStateSystem();
     inputMapSys = systemManager:mInputActionSystem();
@@ -37,9 +41,9 @@ function Alive()
     cameraEntity = Helper.GetScriptEntity(script_entity.id)
     totaltime = 3.0
 
-    AudioSource footsteps;
-    footsteps.GetAudioComponent(script_entity.id);
-    
+    audioComp = cameraEntity:GetAudio()
+    walkingAudioSource = Helper.CreateAudioSource(cameraEntity)
+    --walkingAudioSource:SetVolume(0.0)
 
 end
 
@@ -102,11 +106,13 @@ function Update()
             if (totaltime > 3.0) then
                 totaltime = 0
                 isDashing = true
+             
             end
         else
             if (inputMapSys:GetButton("up")) then
                 movement.x = movement.x + (viewVec.x * mul);
                 movement.z = movement.z + (viewVec.z * mul);
+                walkingAudioSource:SetVolume(1.0);
             end
             if (inputMapSys:GetButton("down")) then
                 movement.x = movement.x - (viewVec.x * mul);
