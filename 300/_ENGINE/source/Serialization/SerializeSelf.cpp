@@ -361,3 +361,20 @@ void Crosshair::DeserializeSelf(rapidjson::Value& reader)
 	Deserialize(reader, "outer", mOuter);
 	Deserialize(reader, "color", mColor);
 }
+
+void Healthbar::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
+{
+	writer.Key("healthbar");
+	writer.StartObject();
+	Serialize(writer, "healthcolor", mHealthColor);
+	Serialize(writer, "backcolor", mBackColor);
+	Serialize(writer, "health", health);
+	writer.EndObject();
+}
+
+void Healthbar::DeserializeSelf(rapidjson::Value& reader)
+{
+	Deserialize(reader, "healthcolor", mHealthColor);
+	Deserialize(reader, "backcolor", mBackColor);
+	Deserialize(reader, "health", health);
+}
