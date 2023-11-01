@@ -109,7 +109,11 @@ void LuaEntity()
 
         ADD_COMPONENT("AddVFX", VFX),
         DECLARE_COMPONENT("GetVFX", VFX),
-        "HasVFX", & Entity::HasComponent<VFX>
+        "HasVFX", & Entity::HasComponent<VFX>,
+
+        ADD_COMPONENT("AddButton", Button),
+        DECLARE_COMPONENT("GetButton", Button),
+        "HasButton", & Entity::HasComponent<Button>
     );
 }
 
@@ -379,5 +383,16 @@ void LuaAIManager()
         "SetPredictiveVelocity", &AIManager::SetPredictiveVelocity,
         "PredictiveShootPlayer", &AIManager::PredictiveShootPlayer,
         "GetDirection", &AIManager::GetDirection
+        );
+}
+
+void LuaButton()
+{
+    systemManager->mScriptingSystem->luaState.new_usertype<Button>(
+        "Button", sol::constructors<>(),
+        "IsInteractable", &Button::IsInteractable,
+        "IsHovered", &Button::IsHovered,
+        "IsClicked", &Button::IsClicked,
+        "IsActivated", &Button::IsActivated
         );
 }
