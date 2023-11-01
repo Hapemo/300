@@ -23,9 +23,9 @@ GLFWcursor* Input::mCursor;
 bool Input::mIsEditor{ false };
 glm::vec2 Input::mosposEditor {};
 
- glm::vec2 Input::m_EditorWindowPos;
- glm::vec2 Input::m_EditorCursorPos;
- glm::vec2 Input::m_GameWindowPos;
+glm::vec2 Input::m_EditorWindowPos;
+glm::vec2 Input::m_EditorCursorPos;
+glm::vec2 Input::m_GameWindowPos;
 
 
 void Input::Init(bool isEditor) {
@@ -87,8 +87,8 @@ glm::vec2 Input::CursorPos() {
   double xpos, ypos;
 
   //if (mIsEditor == false) {
-  //    glfwGetCursorPos(systemManager->GetWindow()->GetHandle(), &xpos, &ypos);
-  //    return glm::vec2{ static_cast<float>(xpos), static_cast<float>(ypos) };
+      glfwGetCursorPos(systemManager->GetWindow()->GetHandle(), &xpos, &ypos);
+      return glm::vec2{ static_cast<float>(xpos), static_cast<float>(ypos) };
   //}
   //else {
       return mosposEditor;

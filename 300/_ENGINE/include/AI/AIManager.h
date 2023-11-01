@@ -113,7 +113,7 @@ public:
 	\param deciseconds
 	- Amount of time to take account of player's past position (in scale of 1/10)
 	*******************************************************************************/
-	void PredictiveShootPlayer(Entity projectile, float speed, short deciseconds, unsigned weightage);
+	void PredictiveShootPlayer(Entity projectile, float speed, int deciseconds, unsigned weightage);
 
 	/*!*****************************************************************************
 	Get the direction of entity which movement is dictated by AI.
@@ -202,8 +202,8 @@ private:
 private:
 	Entity mPlayerEntity;
 	Transform* mPlayerTransform;
-	short mPlayerHistorySize;																											// Counting the size of mPlayerHistory container
-	short mPlayerArrayIndex;																											// Indicating the latest index in the array to replace
+	int mPlayerHistorySize;																											// Counting the size of mPlayerHistory container
+	int mPlayerArrayIndex;																											// Indicating the latest index in the array to replace
 	std::array<glm::vec3, MAX_DECISECOND_PLAYER_HISTORY> mPlayerHistory;					// Contains the player's position for the past 3 seconds, storing every deciseconds
 	std::unordered_map<std::string, std::set<Entity>> mAILists;										// Contains the different list of AIs of different classification. string is the name of container
 

@@ -141,7 +141,7 @@ void LuaCamera()
         "GetCameraSpeed", &Camera_Scripting::GetCameraSpeed,
         "GetSensitivity", &Camera_Scripting::GetSensitivity,
         "RotateCameraView", &Camera_Scripting::RotateCameraView
-        );
+    );
 }
 
 void LuaFPSManager()
@@ -149,7 +149,7 @@ void LuaFPSManager()
     systemManager->mScriptingSystem->luaState.new_usertype<FPSManager>(
         "FPSManager", sol::constructors<>(),
         "GetDT", &FPSManager::GetDT
-        );
+    );
 }
 
 void LuaTransform()
@@ -168,7 +168,7 @@ void LuaAnimator()
         "Animator", sol::constructors<>(),
         "PauseAnimation", &Animator::PauseAnimation,
         "UnpauseAnimation", &Animator::UnpauseAnimation
-        );
+    );
 }
 
 void LuaRigidBody()
