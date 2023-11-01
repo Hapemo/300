@@ -12,7 +12,7 @@
 #define  _ENABLE_ANIMATIONS 1
 #define  _TEST_PIE_SHADER 0
 #define  _TEST_CROSSHAIR_SHADER 0
-#define  _TEST_HEALTHBAR_SHADER 1
+#define  _TEST_HEALTHBAR_SHADER 0
 
 #include <ECS/ECS_Components.h>
 #include <Graphics/GraphicsSystem.h>
