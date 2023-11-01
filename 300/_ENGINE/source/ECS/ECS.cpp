@@ -9,6 +9,7 @@
 #include "GameState/GameStateManager.h"
 #include "Debug/AssertException.h"
 #include "ResourceManagerTy.h"
+#include "AI/AIManager.h"
 
 std::vector<std::string> ECS::mEntityTags({ "PLAYER", "ENEMY", "BULLET", "FLOOR", "WALL", "TELEPORTER", "UI"});
 
@@ -157,6 +158,7 @@ void ECS::DeleteEntity(Entity e)
 			e.RemoveChild(child);
 	if (e.HasComponent<Prefab>())
 		UnlinkPrefab(e);
+	systemManager->mAISystem->RemoveAIFromEntity(e);
 	systemManager->mPhysicsSystem->RemoveActor(e);
 	registry.destroy(e.id);
 }

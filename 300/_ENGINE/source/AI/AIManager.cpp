@@ -103,6 +103,14 @@ void AIManager::ClearAIs() {
 		EntityList.second.clear();
 }
 
+void AIManager::RemoveAIFromEntity(Entity _e) {
+	for (auto& [listName, aiList] : mAILists) {
+		auto it = aiList.find(_e);
+		if (it != aiList.end()) aiList.erase(it);
+	}
+}
+
+
 void AIManager::SetPredictiveVelocity(Entity projectile, Entity target, float speed) {
 	const glm::vec3 p1p0 = target.GetComponent<Transform>().mTranslate - projectile.GetComponent<Transform>().mTranslate;
 	const glm::vec3 v0 = target.GetComponent<RigidBody>().mVelocity;
