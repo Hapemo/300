@@ -17,6 +17,7 @@ color7 = Vec3.new(1,1,1)
 
 allcolor = {color1,color2,color3,color4,color5,color6,color7}
 
+local entityobj
 
 
 function Alive()
@@ -24,7 +25,6 @@ function Alive()
 end
 
 function Update()
-    entityobj = Helper.GetScriptEntity(script_entity.id)
 
     gameStateSys = systemManager:mGameStateSystem()
     cameraEntity = gameStateSys:GetEntity("Camera", "testSerialization")
@@ -53,6 +53,8 @@ end
 
 function OnTriggerEnter(Entity)
     generalComponent = Entity:GetGeneral()
+    entityobj = Helper.GetScriptEntity(script_entity.id)
+
     tagid = generalComponent.tagid
     if (tagid == 1) then
         Entity:GetTransform().mScale.x = Entity:GetTransform().mScale.x * 0.9
@@ -76,13 +78,13 @@ function OnTriggerEnter(Entity)
     end
 
 
-    if (tagid == 1) then
-        for i = 7, 1, -1
-        do
-            spawned(i)
-        end
-        systemManager.ecs:SetDeleteEntity(entityobj)
-    end
+    -- if (tagid == 1) then
+    --     for i = 7, 1, -1
+    --     do
+    --         spawned(i)
+    --     end
+    --     systemManager.ecs:SetDeleteEntity(entityobj)
+    -- end
 
 end
 

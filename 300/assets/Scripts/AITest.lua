@@ -2,17 +2,18 @@ local vec = Vec3.new()
 local firstvec = Vec3.new()
 local secondvec = Vec3.new()
 function Alive()
-end
-
-function Update()
-    -- Get entity attached to script
-    
     entity = Helper.GetScriptEntity(script_entity.id)
     if entity == nil then
         print("Entity nil in script!")
     end
     aiSys = systemManager:mAISystem();
     phySys = systemManager:mPhysicsSystem();
+end
+
+function Update()
+    -- Get entity attached to script
+    
+    
 
     -- Create new Entity in current scene example
     --testEntity = systemManager.ecs:NewEntityByScene();
