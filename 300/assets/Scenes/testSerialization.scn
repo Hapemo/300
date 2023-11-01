@@ -553,6 +553,13 @@
                             }
                         },
                         {
+                            "key": "mouse_on",
+                            "val": {
+                                "type": -1129103353,
+                                "value": true
+                            }
+                        },
+                        {
                             "key": "movement",
                             "val": {
                                 "type": -655306154,
@@ -692,8 +699,8 @@
                 "z": 39.934593200683594
             },
             "size": {
-                "x": 1175,
-                "y": 538
+                "x": 1159,
+                "y": 703
             },
             "near": 0.10000000149011612,
             "far": 900.0
@@ -6634,6 +6641,70 @@
         },
         "prefab": {
             "prefab": "enemy1_walking"
+        }
+    },
+    {
+        "entityid": 76,
+        "general": {
+            "name": "NewObject",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 100.0,
+                "y": 100.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -1800.0,
+                "y": -900.0,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
+            "textureref": 0,
+            "degree": 37.0
+        }
+    },
+    {
+        "entityid": 77,
+        "general": {
+            "name": "NewObject",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 100.0,
+                "y": 100.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -1500.0,
+                "y": -900.0,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "../assets/Compressed/Wood Material 15_BaseColor.ctexture",
+            "textureref": 0,
+            "degree": 77.0
         }
     }
 ]
