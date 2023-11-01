@@ -31,6 +31,9 @@ local mouse_on = true
 -- audio attributes
 local walkingAudioSource
 local audioComp
+local fadeOutTimer = 0.0
+local fadeOutDuration = 5.0
+local dt
 
 function Alive()
     gameStateSys = systemManager:mGameStateSystem();
@@ -49,6 +52,7 @@ end
 
 function Update()
 
+    dt = FPSManager.GetDT()
 --region -- player camera
     if(inputMapSys:GetButtonDown("Mouse")) then
         if (mouse_on == true) then
@@ -109,10 +113,29 @@ function Update()
              
             end
         else
+            if(inputMapSys:GetButton("up") or inputMapSys:GetButton("down") or
+               inputMapSys:GetButton("left") or inputMapSys:GetButton("right")) then
+                walkingAudioSource:SetVolume(0.8)
+                fadeOutTimer = 0.0   
+            else
+                FadeOutAudio(walkingAudioSource, 5.0, 25.0, 0.0)
+            end
+        
+
+            -- else
+            --     if (fadeOutTimer < fadeOutDuration) then 
+            --         local volume = audioComp.mVolume - (fadeOutTimer / fadeOutDuration)
+            --         walkingAudioSource:SetVolume(volume)
+            --         fadeOutTimer = fadeOutTimer + dt
+            --         print("FADE OUT TIMER: ", fadeOutTimer)
+            --     end
+            -- end
+
             if (inputMapSys:GetButton("up")) then
                 movement.x = movement.x + (viewVec.x * mul);
-                movement.z = movement.z + (viewVec.z * mul);
-                walkingAudioSource:SetVolume(1.0);
+                movement.z = movement.z + (viewVec.z * mul);    
+                -- print("Volume: " , audioComp.mVolume)
+              
             end
             if (inputMapSys:GetButton("down")) then
                 movement.x = movement.x - (viewVec.x * mul);
@@ -132,6 +155,13 @@ function Update()
                 end
             end
         end
+
+        -- if (fadeOutTimer < fadeOutDuration) then 
+        --     local volume = audioComp.mVolume - (fadeOutTimer / fadeOutDuration)
+        --     walkingAudioSource:SetVolume(volume)
+        --     fadeOutTimer = fadeOutTimer + dt
+        --     print("FADE OUT TIMER: ", fadeOutTimer)
+        -- end
     end
 
     physicsSys:SetVelocity(cameraEntity, movement)
