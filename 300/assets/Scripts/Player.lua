@@ -183,7 +183,7 @@ function Update()
         else
             if(inputMapSys:GetButton("up") or inputMapSys:GetButton("down") or
                inputMapSys:GetButton("left") or inputMapSys:GetButton("right")) then
-                walkingAudioSource:SetVolume(0.8)
+                walkingAudioSource:SetVolume(0.2)
                 fadeOutTimer = 0.0   
             else
                 FadeOutAudio(walkingAudioSource, 2.0, 25.0, 0.0)

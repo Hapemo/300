@@ -1041,6 +1041,7 @@ void AudioSystem::AudioPlayLoop(float dt)
 		if (audio_component.mIsPlaying) // need this to be true (to indicate that there's a sound playing in the channel)
 		{
 			audio_component.mChannel->isPlaying(&channelIsPlay);
+			audio_component.mChannel->setVolume(audio_component.mVolume);
 		
 		}
 
