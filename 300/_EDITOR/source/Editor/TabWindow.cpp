@@ -90,6 +90,7 @@ void TabWindow::update()
 	ImGui::DragFloat("Crosshair Thickness", (float*)&systemManager->mGraphicsSystem->m_CrosshairThickness);
 	ImGui::DragFloat("Crosshair Inner", (float*)&systemManager->mGraphicsSystem->m_CrosshairInner);
 	ImGui::DragFloat("Crosshair Outer", (float*)&systemManager->mGraphicsSystem->m_CrosshairOuter);
+	ImGui::DragFloat("Health Bar", (float*)&systemManager->mGraphicsSystem->m_Health);
 
 	ImGui::ColorPicker4("Global Tint", (float*)&systemManager->mGraphicsSystem->m_GlobalTint);
 }
