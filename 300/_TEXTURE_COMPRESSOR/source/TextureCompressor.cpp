@@ -153,13 +153,13 @@ void CompressImageFile(const char* filepath, const char* outputFolder, bool gamm
 
 	// Validate compression
 	GLint result{};
-	glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_COMPRESSED_ARB, &result);
+	glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_COMPRESSED, &result);
 
 	GLint compressedSize{};
 	if (result == GL_TRUE)		// Compression successful
 	{
 		glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_INTERNAL_FORMAT, &internalFormat);				// Get compressed internal format
-		glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_COMPRESSED_IMAGE_SIZE_ARB, &compressedSize);		// Get compressed image size
+		glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_COMPRESSED_IMAGE_SIZE, &compressedSize);		// Get compressed image size
 
 		// Allocate buffer to store pixel data of compressed image
 		unsigned char* pixelData = new unsigned char[compressedSize];
