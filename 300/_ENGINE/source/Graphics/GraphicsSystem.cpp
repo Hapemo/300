@@ -506,6 +506,7 @@ void GraphicsSystem::EditorDraw(float dt)
 
 	m_Fbo.Bind();
 	m_Fbo.DrawBuffers(true, true);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	// Render UI objects
 	m_UiShaderInst.Activate();		// Activate shader
@@ -703,6 +704,7 @@ void GraphicsSystem::GameDraw(float dt)
 
 	m_GameFbo.Bind();
 	m_GameFbo.DrawBuffers(true);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	// Render UI objects
 	m_UiShaderInst.Activate();		// Activate shader
