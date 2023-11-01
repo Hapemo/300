@@ -88,29 +88,21 @@ void Scene::Unload() {
 	std::vector<Entity> parents;
 	std::vector<Entity> children;
 	for (auto e : tempEntities) {
-		if (e.HasChildren())
-		{
+		if (e.HasChildren()) {
 			parents.push_back(e);
 			continue;
 		}
-		if (e.HasParent())
-		{
+		if (e.HasParent()) {
 			children.push_back(e);
 			continue;
 		}
 		RemoveEntity(e);
 	}
-	Children child = parents[0].GetComponent<Children>();
-	Parent parent = children[0].GetComponent<Parent>();
 	for (auto e : children)
-	{
-		
 		RemoveEntity(e);
-	}
 	for (auto e : parents)
-	{
 		RemoveEntity(e);
-	}
+
 	assert(mEntities.empty() && std::string("Scene \"" + mName + "\"still contains " + std::to_string(mEntities.size()) + " after unloading").c_str());
 
 	// Clearing all scene data
@@ -139,7 +131,7 @@ void Scene::RemoveChildFromScene(Entity _e) {
 void Scene::RemoveEntity(Entity _e) {
 	// if (_e.GetComponent<General>().isActive) _e.Deactivate(); // Temporary remove - Han
 	//RemoveChildFromScene(_e);
-	//systemManager->mGraphicsSystem->Unload();
+	systemManager->mGraphicsSystem->Unload();
 
 	mEntities.erase(_e);
 	systemManager->ecs->DeleteEntity(_e);
