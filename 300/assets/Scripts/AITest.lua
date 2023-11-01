@@ -2,7 +2,18 @@ local vec = Vec3.new()
 local firstvec = Vec3.new()
 local secondvec = Vec3.new()
 local originalScaleX
+
+local deathEntity
+local deathComp
+local deathAudioSource
+
 function Alive()
+    gameStateSys = systemManager:mGameStateSystem()
+
+    deathEntity = gameStateSys:GetEntity("Death" , "testSerialization")
+    deathComp   = deathEntity:GetAudio()
+    deathAudioSource = Helper.CreateAudioSource(deathEntity)
+
     entity = Helper.GetScriptEntity(script_entity.id)
     if entity == nil then
         print("Entity nil in script!")
@@ -50,6 +61,8 @@ function Update()
     phySys:SetVelocity(entity, vec);
     
     if (entity:GetTransform().mScale.x < originalScaleX / 2.0) then
+        deathAudioSource.Play()
+        deathAudioSource.SetVolume(0.2)
         systemManager.ecs:SetDeleteEntity(entity)
     end
         
