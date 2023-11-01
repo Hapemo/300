@@ -279,6 +279,10 @@ function OnTriggerEnter(Entity)
         floorCount = floorCount + 1;
     end
 
+    if (tagid == 1) then
+        -- play attack anim
+    end 
+
     if (tagid == 5) then
         if (generalComponent.name == teleporter1:GetGeneral().name) then
             collideWithTP = 1

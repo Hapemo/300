@@ -1,5 +1,5 @@
 {
-    "entityid": 1,
+    "entityid": 3,
     "general": {
         "name": "enemy1_walking",
         "tagid": 1,
@@ -19,9 +19,9 @@
             "z": 0.0
         },
         "translate": {
-            "x": 46.69139862060547,
-            "y": 2.4998960494995117,
-            "z": -6.933004379272461
+            "x": 20.000036239624023,
+            "y": 2.4999990463256836,
+            "z": -3.7400801033982134e-7
         }
     },
     "rigidbody": {
@@ -29,9 +29,9 @@
         "material": 1,
         "motion": 1,
         "velocity": {
-            "x": -3.3631441593170166,
-            "y": 0.0000021457672119140625,
-            "z": 2.6695237159729004
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
         },
         "rotationconstraints": {
             "x": true,
@@ -45,9 +45,9 @@
         "frag": "../assets/shader_files/pointLight_frag.glsl",
         "meshrefid": 2923,
         "instancecolor": {
-            "x": 0.8588235378265381,
-            "y": 0.3176470696926117,
-            "z": 0.3176470696926117,
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
             "w": 1.0
         },
         "materialinstance": [
@@ -67,7 +67,7 @@
         ]
     },
     "spherecollider": {
-        "scaleoffset": 4.0,
+        "scaleoffset": 4.099999904632568,
         "translateoffset": {
             "x": 0.0,
             "y": 4.0,
@@ -88,7 +88,7 @@
     },
     "aisetting": {
         "movementtype": 1,
-        "spreadout": 41.0,
+        "spreadout": 35.0,
         "stayaway": 0.0,
         "elevation": 0.0,
         "targetname": "Camera"

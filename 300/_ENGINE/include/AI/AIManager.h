@@ -76,6 +76,8 @@ public:
 	*******************************************************************************/
 	void ClearAIs();
 
+	void RemoveAIFromEntity(Entity _e);
+
 	std::array<std::string, static_cast<size_t>(E_MOVEMENT_TYPE::SIZE)> const& GetMovementTypeArray() { return mMovementTypeArray; }
 
 public:
@@ -126,8 +128,6 @@ public:
 	*******************************************************************************/
 	glm::vec3 GetDirection(Entity _e);
 
-private:
-
 	/*!*****************************************************************************
 	Does the following procedures to initialise the AI
 	- Adds the AI to AI Manager to keep track
@@ -135,6 +135,8 @@ private:
 	* Must be called when AI Setting component is added to an entity *
 	*******************************************************************************/
 	void InitialiseAI(Entity _e);
+private:
+
 
 	/*!*****************************************************************************
 	Calculate the ground AI next direction
