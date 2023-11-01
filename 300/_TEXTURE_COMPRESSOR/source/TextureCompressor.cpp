@@ -114,7 +114,7 @@ void CompressImageFile(const char* filepath, const char* outputFolder, bool gamm
 	int width, height, channel;
 
 	// Settings
-	stbi_set_flip_vertically_on_load(false);
+	stbi_set_flip_vertically_on_load(true);
 
 	// Loading of image file with STB
 	unsigned char* texData = stbi_load(filepath, &width, &height, &channel, 0);
@@ -164,7 +164,7 @@ void CompressImageFile(const char* filepath, const char* outputFolder, bool gamm
 		// Allocate buffer to store pixel data of compressed image
 		unsigned char* pixelData = new unsigned char[compressedSize];
 
-		glGetCompressedTexImageARB(GL_TEXTURE_2D, 0, pixelData);
+		glGetCompressedTexImage(GL_TEXTURE_2D, 0, pixelData);
 
 		///////////////////////////////////////
 		// Serialize data into custom file
