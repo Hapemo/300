@@ -273,7 +273,7 @@ function Update()
         viewVecCam.z=viewVecCam.z *100
 
         bulletshootAudioSource:Play()
-        bulletshootAudioSource:SetVolume(0.4)
+        bulletshootAudioSource:SetVolume(0.2)
    
         print("SHOOT")
 

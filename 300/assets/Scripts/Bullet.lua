@@ -36,6 +36,10 @@ function OnTriggerEnter(Entity)
     entityobj = Helper.GetScriptEntity(script_entity.id)
     generalComponent = Entity:GetGeneral()
     tagid = generalComponent.tagid
+    if (tagid == 1) then 
+
+
+    end
     if (tagid == 3) then
         --floorCount = floorCount + 1;
         -- gameStateSys = systemManager:mGameStateSystem();
