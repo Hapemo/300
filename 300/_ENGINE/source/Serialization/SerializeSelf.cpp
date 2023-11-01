@@ -94,6 +94,7 @@ void UIrenderer::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>&
 	writer.Key("uirenderer");
 	writer.StartObject();
 	Serialize(writer, "texpath", mTexPath);
+	Serialize(writer, "textureref", mTextureRef.data_uid);
 	Serialize(writer, "degree", mDegree);
 	writer.EndObject();
 }
@@ -101,6 +102,7 @@ void UIrenderer::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>&
 void UIrenderer::DeserializeSelf(rapidjson::Value& reader)
 {
 	Deserialize(reader, "texpath", mTexPath);
+	Deserialize(reader, "textureref", mTextureRef.data_uid);
 	Deserialize(reader, "degree", mDegree);
 }
 
