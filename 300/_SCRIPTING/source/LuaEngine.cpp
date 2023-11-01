@@ -289,6 +289,14 @@ void LuaAudioSource()
         );
 }
 
+void LuaAudio()
+{
+    systemManager->mScriptingSystem->luaState.new_usertype<Audio>(
+        "Audio", sol::constructors<>(),
+        "mVolume", &Audio::mVolume
+        );
+}
+
 void LuaInputMapSystem()
 {
     systemManager->mScriptingSystem->luaState.new_usertype<InputMapSystem>(
