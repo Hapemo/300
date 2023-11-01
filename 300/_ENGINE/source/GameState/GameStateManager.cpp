@@ -54,6 +54,7 @@ void GameStateManager::UpdateNextGSMState() {
 		return;
 	case E_GSMSTATE::RESTART:
 		mCurrentGameState.Init();
+		systemManager->ResetForChangeGS();
 		break;
 	case E_GSMSTATE::CHANGING:
 		mCurrentGameState.Unload();
@@ -64,6 +65,7 @@ void GameStateManager::UpdateNextGSMState() {
 		}
 		mCurrentGameState.Load(mNextGSName);
 		mCurrentGameState.Init();
+		systemManager->ResetForChangeGS();
 		break;
 	}
 

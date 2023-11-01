@@ -1,8 +1,8 @@
 #version 450
 
 // -- INPUTS --
-layout (location = 0) out vec4 fHealthColor;
-layout (location = 1) out vec4 fBackColor;
+layout (location = 0) in vec4 fHealthColor;
+layout (location = 1) in vec4 fBackColor;
 layout (location = 2) in vec2 fTexCoords;
 
 // -- OUTPUTS --

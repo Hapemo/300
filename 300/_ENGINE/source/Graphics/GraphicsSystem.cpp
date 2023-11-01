@@ -12,7 +12,7 @@
 #define  _ENABLE_ANIMATIONS 1
 #define  _TEST_PIE_SHADER 0
 #define  _TEST_CROSSHAIR_SHADER 0
-#define  _TEST_HEALTHBAR_SHADER 1
+#define  _TEST_HEALTHBAR_SHADER 0
 
 #include <ECS/ECS_Components.h>
 #include <Graphics/GraphicsSystem.h>
@@ -75,6 +75,15 @@ void GraphicsSystem::Init()
 		m_Fbo.Create(m_Width, m_Height, m_EditorMode);
 		m_GameFbo.Create(m_Width, m_Height, m_EditorMode);
 		m_PingPongFbo.Create(m_Width, m_Height);
+
+
+		if (m_DebugDrawing) {
+			m_GlobalTint.a = 0.3f;
+		}
+		else {
+			m_GlobalTint.a = 1.f;
+		}
+
 	}
 	
 
@@ -454,13 +463,6 @@ void GraphicsSystem::EditorDraw(float dt)
 		//	}
 		//}
 
-		if (m_DebugDrawing) {
-			m_GlobalTint.a = 0.3f;
-		}
-		else {
-			m_GlobalTint.a = 1.f;
-		}
-		
 		GLuint debug_draw = glGetUniformLocation(shaderID, "globalTint");
 		glUniform4fv(debug_draw, 1, glm::value_ptr(m_GlobalTint));
 
@@ -498,7 +500,8 @@ void GraphicsSystem::EditorDraw(float dt)
 
 	if (systemManager->mGraphicsSystem->m_EnableChromaticAbberation)
 	{
-		ChromaticAbbrebationBlendFramebuffers(m_Fbo, m_Fbo.GetColorAttachment(), m_PingPongFbo.pingpongColorbuffers[0]);
+		//ChromaticAbbrebationBlendFramebuffers(m_Fbo, m_Fbo.GetBrightColorsAttachment());
+		ChromaticAbbrebationBlendFramebuffers(m_Fbo, m_PingPongFbo.pingpongColorbuffers[0]);
 	}
 
 	m_Fbo.Bind();
@@ -693,7 +696,8 @@ void GraphicsSystem::GameDraw(float dt)
 
 	if (systemManager->mGraphicsSystem->m_EnableChromaticAbberation)
 	{
-		ChromaticAbbrebationBlendFramebuffers(m_GameFbo, m_GameFbo.GetColorAttachment(), m_PingPongFbo.pingpongColorbuffers[0]);
+		//ChromaticAbbrebationBlendFramebuffers(m_GameFbo, m_GameFbo.GetBrightColorsAttachment());
+		ChromaticAbbrebationBlendFramebuffers(m_GameFbo, m_PingPongFbo.pingpongColorbuffers[0]);
 	}
 
 	m_GameFbo.Bind();
@@ -745,10 +749,11 @@ void GraphicsSystem::GameDraw(float dt)
 #endif
 
 	m_GameFbo.Unbind();
+	m_PingPongFbo.UnloadAndClear();
 }
 
 
-void GraphicsSystem::ChromaticAbbrebationBlendFramebuffers(GFX::FBO& targetFramebuffer, unsigned int Attachment0, unsigned int Attachment1)
+void GraphicsSystem::ChromaticAbbrebationBlendFramebuffers(GFX::FBO& targetFramebuffer, unsigned int Attachment1)
 {
 	glBlendFunc(GL_ONE, GL_ONE);
 
@@ -762,7 +767,6 @@ void GraphicsSystem::ChromaticAbbrebationBlendFramebuffers(GFX::FBO& targetFrame
 	glDrawBuffer(GL_COLOR_ATTACHMENT0);
 
 	glUniform1f(BlendShader.GetUniformLocation("ChromaticAbberationStrength"), systemManager->mGraphicsSystem->mChromaticStrength);
-	glBindTexture(GL_TEXTURE_2D, Attachment0);									// bind the first attachment
 	glBindTexture(GL_TEXTURE_2D, Attachment1);									// bind the second attachment
 
 	{

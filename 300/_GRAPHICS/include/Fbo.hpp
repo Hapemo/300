@@ -141,6 +141,7 @@ Destructor of the FBO class. Deletes the resources allocated on the GPU
 		void GaussianBlur(GFX::Shader& blurShader, GFX::FBO& hostFramebuffer, float texelOffset, float SamplingWeight);
 		void PrepForDraw();
 		void Resize(int width, int height);
+		void UnloadAndClear();
 
 		unsigned int pingpongFBO;
 		unsigned int pingpongColorbuffers[2];

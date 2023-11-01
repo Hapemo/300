@@ -280,6 +280,22 @@ void GFX::PingPongFBO::Resize(int width, int height)
 	}
 }
 
+void GFX::PingPongFBO::UnloadAndClear()
+{
+	// bind framebuffer as buffer to render to
+	glBindFramebuffer(GL_FRAMEBUFFER, pingpongFBO);
+
+	for (int i{}; i < 2; ++i)
+	{
+		// Clear Color attachments
+		glDrawBuffer(GL_COLOR_ATTACHMENT0 + i);
+		glClearColor(0.f, 0.f, 0.f, 1.f);
+		glClear(GL_COLOR_BUFFER_BIT);
+	}
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+}
+
 
 GFX::Quad2D::Quad2D()
 {

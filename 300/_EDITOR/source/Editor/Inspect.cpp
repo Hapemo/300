@@ -254,6 +254,11 @@ void Inspect::Add_component() {
 				Entity(Hierarchy::selectedId).AddComponent<AISetting>();
 		}
 
+		if (ImGui::Selectable("Camera")) {
+			if (!Entity(Hierarchy::selectedId).HasComponent<Camera>())
+				Entity(Hierarchy::selectedId).AddComponent<Camera>();
+		}
+
 		ImGui::EndCombo();
 
 
@@ -791,8 +796,11 @@ void MeshRenderer::Inspect()
 		}
 
 
-		ImGui::Dummy(ImVec2(0.0f, 10.0f));
+	//	ImGui::Dummy(ImVec2(0.0f, 10.0f));
 
+		
+
+		
 		ImGui::SameLine();
 
 		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcTextSize(tempPath.c_str()).x
@@ -1448,12 +1456,36 @@ void AudioListener::Inspect() {
 }
 
 void UIrenderer::Inspect() {
+
+	auto getFilename = [](std::string filepath) -> std::string
+	{
+		// returns AT-AT
+		std::string ret_str = filepath.substr(filepath.find_last_of("/") + 1);
+		ret_str = ret_str.substr(0, ret_str.find_first_of("."));
+		return ret_str;
+	};
+
 	bool delete_component = true;
 
 	if (ImGui::CollapsingHeader("UIrenderer", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
 	{
-		ImGui::Selectable(" ");
+		//ImGui::Selectable(" ");
 
+		ImGui::Selectable("UI   ");
+
+		//if (ImGui::BeginDragDropTarget())
+		//{
+		//	if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_TEXT")) {
+
+		//		const char* data = (const char*)payload->Data;
+		//		std::string data_str = std::string(data);
+		//		mTexPath = data_str;
+
+		//		uid temp(mTexPath);
+		//		mTextureRef.data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(temp.id));
+		//	}
+		//	ImGui::EndDragDropTarget();
+		//}
 		if (ImGui::BeginDragDropTarget())
 		{
 			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_TEXT")) {
@@ -1462,11 +1494,41 @@ void UIrenderer::Inspect() {
 				std::string data_str = std::string(data);
 				mTexPath = data_str;
 
-				uid temp(mTexPath);
-				mTextureRef.data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(temp.id));
+
+				std::string texturestr = systemManager->mResourceTySystem->compressed_texture_path + getFilename(data_str) + ".ctexture";
+				mTexPath = texturestr;
+				std::string TEXTURE_Descriptor_Filepath;
+				unsigned guid;
+				// check and ensures that the descriptor file for the materials are created
+				//bool descFilePresent = _GEOM::CheckAndCreateDescriptorFileTEXTURE(data_str, TEXTURE_Descriptor_Filepath, texturestr);
+				std::string descfilepath = data_str + ".desc";
+				guid = _GEOM::GetGUID(descfilepath);
+				mTextureRef.data_uid = guid;
+				mTextureRef.data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(guid));
+
+				//uid temp(mMaterialInstancePath[i]);
+				//mTextureRef[i].data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(temp.id));
+
 			}
 			ImGui::EndDragDropTarget();
 		}
+		
+		if (mTexPath.size() > 0) {
+			int st = static_cast<int>(mTexPath.find_last_of("/"));
+			int ed = static_cast<int>(mTexPath.find_last_of("."));
+			std::string tempPath = mTexPath.substr(st + 1, ed - (st + 1));
+
+			ImGui::SameLine();
+
+			ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcTextSize(tempPath.c_str()).x
+				- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+
+			ImGui::Text(tempPath.c_str());
+		}
+		else {
+			ImGui::Text(" ");
+		}
+
 
 		ImGui::Text("Degree");
 		ImGui::SameLine();

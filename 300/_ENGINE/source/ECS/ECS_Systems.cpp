@@ -78,6 +78,13 @@ void SystemManager::Reset()
 	mIsPlay = false;
 }
 
+void SystemManager::ResetForChangeGS() {
+	mAudioSystem.get()->Reset();				// Using <Audio> component, must happen before clearing of entities.
+	mGraphicsSystem.get()->Unload();
+	mPhysicsSystem.get()->Init();
+	mGraphicsSystem.get()->Init();
+}
+
 void SystemManager::Pause()
 {
 	mIsPlay = false; 

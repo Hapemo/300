@@ -126,7 +126,7 @@ public:
 		the additive blend function for the chromatic abbrebation
 	*/
 	/**************************************************************************/
-	void ChromaticAbbrebationBlendFramebuffers(GFX::FBO& targetFramebuffer, unsigned int Attachment0, unsigned int Attachment1);
+	void ChromaticAbbrebationBlendFramebuffers(GFX::FBO& targetFramebuffer, unsigned int Attachment1);
 
 	/***************************************************************************/
 	/*!
