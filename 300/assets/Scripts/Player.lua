@@ -51,6 +51,10 @@ local bulletshootEntity
 local bulletshootComp
 local bulletshootAudioSource
 
+local dashEntity
+local dashComp
+local dashAudioSource
+
 local fadeOutTimer = 0.0
 local fadeOutDuration = 5.0
 local dt
@@ -80,6 +84,10 @@ function Alive()
     bulletshootEntity = gameStateSys:GetEntity("Bullet Shoot", "testSerialization")
     bulletshootComp = bulletshootEntity:GetAudio()
     bulletshootAudioSource = Helper.CreateAudioSource(bulletshootEntity)
+
+    dashEntity = gameStateSys:GetEntity("Dash", "testSerialization")
+    dashComp = dashEntity:GetAudio()
+    dashAudioSource = Helper.CreateAudioSource(dashEntity)
 
     dashTime = 3.0
     tpTime = 20.0
@@ -184,8 +192,11 @@ function Update()
     movement.z = 0;
 
     if (isDashing) then
+        dashAudioSource:Play()
+        dashAudioSource:SetVolume(0.2)
         if(e_dashEffect == true)then
             dashEffect()
+          
             e_dashEffect = false
         end
         movement.x = movement.x + (viewVec.x * 300.0)
