@@ -1,0 +1,7 @@
+[
+    {
+        "ShaderProgram": "healthbarShader",
+        "Vertex": "../assets/shader_files/healthbar_vert.glsl",
+        "Fragment": "../assets/shader_files/healthbar_frag.glsl"
+    }
+]

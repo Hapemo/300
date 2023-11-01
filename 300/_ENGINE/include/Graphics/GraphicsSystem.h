@@ -289,6 +289,7 @@ public:
 	float m_CrosshairThickness	{ 1.f };
 	float m_CrosshairInner		{ 20.f };
 	float m_CrosshairOuter		{ 50.f };
+	float m_Health				{ 100.f };
 
 	void Unload();
 
