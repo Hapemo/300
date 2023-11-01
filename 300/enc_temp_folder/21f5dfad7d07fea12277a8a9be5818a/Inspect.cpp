@@ -1358,6 +1358,7 @@ void Audio::Inspect() {
 		//ImGui::Checkbox("IsPlaying", &mIsPlaying);
 		ImGui::Checkbox("Play on Awake", &mPlayonAwake);
 		ImGui::Checkbox("Is Looping", &mIsLooping);
+<<<<<<< Updated upstream
 		ImGui::SliderFloat("Volume", &mVolume, 0.0f, 1.0f, "volume = %.3f");
 
 		if (ImGui::IsItemEdited())
@@ -1376,6 +1377,9 @@ void Audio::Inspect() {
 
 			//systemManager->mAudioSystem.get()->Update3DChannelSettings(Entity(Hierarchy::selectedId)); 
 		}
+=======
+		ImGui::SliderFloat("Volume", &mVolume, 0.0f, 1.0f, "Volume = % .3f");
+>>>>>>> Stashed changes
 
 	}
 

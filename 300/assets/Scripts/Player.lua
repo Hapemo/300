@@ -33,8 +33,14 @@ function Alive()
     inputMapSys = systemManager:mInputActionSystem();
     physicsSys = systemManager:mPhysicsSystem();
     graphicsSys = systemManager:mGraphicsSystem();
+    audioSys    = systemManager:mAudioSystem();
     cameraEntity = Helper.GetScriptEntity(script_entity.id)
     totaltime = 3.0
+
+    AudioSource footsteps;
+    footsteps.GetAudioComponent(script_entity.id);
+    
+
 end
 
 function Update()

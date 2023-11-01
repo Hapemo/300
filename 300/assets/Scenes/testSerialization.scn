@@ -6073,6 +6073,15 @@
             "numchildren": 1,
             "firstchild": 50
         },
+        "audio": {
+            "filepath": "",
+            "filename": "",
+            "fullpath": "",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0
+        },
         "camera": {
             "positon": {
                 "x": 87.99999237060547,
