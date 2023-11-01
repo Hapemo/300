@@ -285,7 +285,8 @@ void LuaAudioSource()
 void LuaAudio()
 {
     systemManager->mScriptingSystem->luaState.new_usertype<Audio>(
-        "Audio", sol::constructors<>()
+        "Audio", sol::constructors<>(),
+        "mVolume", &Audio::mVolume
         );
 }
 
