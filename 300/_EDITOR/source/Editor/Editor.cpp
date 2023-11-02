@@ -251,6 +251,11 @@ void Editor::UIupdate([[maybe_unused]]GLFWwindow* window) {
 
     for (auto& windows : mWindowlist)
     {
+
+        if (Entity(Hierarchy::selectedId).HasComponent<Transform>() == false) {
+            Hierarchy::selectionOn = false;
+        }
+
         if (windows.first == "KeybindWindow") {
 
             if (KeybindWindow::openWindow ) {
