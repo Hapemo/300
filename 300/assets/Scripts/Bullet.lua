@@ -22,7 +22,7 @@ local entityobj
 
 local bullethitEntity
 local bullethitcomp
-local bullethitAudioSource
+local bullethitAudioSource 
 
 
 function Alive()
@@ -67,8 +67,9 @@ function OnTriggerEnter(Entity)
 
     tagid = generalComponent.tagid
     if (tagid == 1) then
-    gameStateSys = systemManager:mGameStateSystem()
-    bullethitEntity = gameStateSys:GetEntity("Bullet Hit" , "testSerialization")
+        gameStateSys = systemManager:mGameStateSystem()
+        bullethitEntity = gameStateSys:GetEntity("Bullet Hit" , "testSerialization")
+        bullethitAudioSource = Helper.CreateAudioSource(bullethitEntity)
 
         Entity:GetTransform().mScale.x = Entity:GetTransform().mScale.x * 0.9
         Entity:GetTransform().mScale.y = Entity:GetTransform().mScale.y * 0.9
