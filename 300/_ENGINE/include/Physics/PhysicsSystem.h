@@ -53,10 +53,10 @@ private:
 	float mFixedDT;
 	std::unordered_map<std::uint32_t, Actor> mActors;
 	std::unordered_map<MATERIAL, PxMaterial*> mMaterials;
+	std::vector<Entity> mPendingAdd;
 	std::vector<std::pair<Entity, glm::vec3>> mPendingTranslate;
 	std::vector<std::pair<Entity, glm::vec3>> mPendingRotate;
-	std::vector<Entity> mPendingAdd;
-
+	std::vector<std::pair<Entity, glm::vec3>> mPendingVelocity;
 	/*!*****************************************************************************
 	Create materials for entities.
 	*******************************************************************************/
