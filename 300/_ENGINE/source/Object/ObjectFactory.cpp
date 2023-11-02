@@ -23,6 +23,7 @@ and saving of prefabs, scenes and gamestates using serialization.
 #include "ECS/ECS_Components.h"
 #include "Physics/PhysicsSystem.h"
 #include "AI/AIManager.h"
+#include "ScriptingSystem.h"
 
 #define SERIALIZE_SELF(T) if (e.HasComponent<T>()) e.GetComponent<T>().SerializeSelf(writer)
 #define DESERIALIZE_SELF(T, S) if(reader.HasMember(S)) e.AddComponent<T>().DeserializeSelf(reader[S])
@@ -49,6 +50,7 @@ void ObjectFactory::LoadEntity(Entity e, rapidjson::Value& reader)
 	DESERIALIZE_SELF(SphereCollider, "spherecollider");
 	DESERIALIZE_SELF(CapsuleCollider, "capsulecollider");
 	DESERIALIZE_SELF(Scripts, "scripts");
+
 	DESERIALIZE_SELF(Parent, "parent");
 	DESERIALIZE_SELF(Children, "children");
 	DESERIALIZE_SELF(Audio, "audio");
@@ -61,6 +63,7 @@ void ObjectFactory::LoadEntity(Entity e, rapidjson::Value& reader)
 	if (e.HasComponent<AISetting>())
 		systemManager->mAISystem->InitialiseAI(e);
 	DESERIALIZE_SELF(Crosshair, "crosshair");
+	DESERIALIZE_SELF(Healthbar, "healthbar");
 }
 
 // deserialize scenes from the Scenes folder
@@ -81,7 +84,7 @@ void ObjectFactory::LoadScene(Scene* scene, const std::string& filename)
 		idMap.insert({ tmp_id, e.id });
 		LoadEntity(e, *ci);
 
-		std::cout << "tmp_id: " << (int)tmp_id << ", entity_id: " << (int)e.id << ", entity_name: " << e.GetComponent<General>().name << std::endl;
+		//std::cout << "tmp_id: " << (int)tmp_id << ", entity_id: " << (int)e.id << ", entity_name: " << e.GetComponent<General>().name << std::endl;
 		scene->mEntities.insert(e);
 	}
 	auto parent_cont = systemManager->ecs->GetEntitiesWith<Parent>();
@@ -170,6 +173,7 @@ void ObjectFactory::SaveEntity(Entity e, rapidjson::PrettyWriter<rapidjson::Stri
 	SERIALIZE_SELF(PointLight);
 	SERIALIZE_SELF(AISetting);
 	SERIALIZE_SELF(Crosshair);
+	SERIALIZE_SELF(Healthbar);
 	writer.EndObject();
 }
 

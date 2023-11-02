@@ -57,6 +57,8 @@ and rendered to
 *******************************************************************************/
 		void PrepForDraw();
 
+		void DrawBuffers(bool color = false, bool entityID = false, bool bright = false);
+
 /*!*****************************************************************************
 Reads the entity ID in the entityIDAttachment at the posX and posY. posX and 
 posY are normalized to be from [0.f, 1.f]

@@ -229,12 +229,16 @@ Entity ECS::NewEntityFromPrefab(std::string prefabName, const glm::vec3& pos)
 	//copy all prefab components (except transform) to new entity
 	//General temp1 = e.GetComponent<General>();
 	//MeshRenderer temp = e.GetComponent<MeshRenderer>();
-	PASSERT(static_cast<uint32_t>(e.id) != 0);
-	Scripts& scripts = e.GetComponent<Scripts>();
 	e.GetComponent<Transform>().mTranslate = pos;
-	for (auto& elem : scripts.scriptsContainer)
+	PASSERT(static_cast<uint32_t>(e.id) != 0);
+	if (e.HasComponent<Scripts>())
 	{
-		elem.Load(e.id);
+		Scripts& scripts = e.GetComponent<Scripts>();
+		for (auto& elem : scripts.scriptsContainer)
+		{
+			elem.Load(e.id);
+			elem.Run("Alive");
+		}
 	}
 
 	if (e.HasComponent<RigidBody>())

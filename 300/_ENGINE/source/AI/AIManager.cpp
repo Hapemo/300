@@ -104,9 +104,11 @@ void AIManager::ClearAIs() {
 }
 
 void AIManager::RemoveAIFromEntity(Entity _e) {
+	if (!_e.HasComponent<AISetting>()) return;
 	for (auto& [listName, aiList] : mAILists) {
 		auto it = aiList.find(_e);
-		if (it != aiList.end()) aiList.erase(it);
+		if (it != aiList.end()) 
+			aiList.erase(it);
 	}
 }
 

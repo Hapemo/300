@@ -10,8 +10,6 @@
 ****************************************************************************
 ***/
 #define  _ENABLE_ANIMATIONS 1
-#define  _TEST_PIE_SHADER 0
-#define  _TEST_CROSSHAIR_SHADER 0
 #define  _TEST_HEALTHBAR_SHADER 0
 
 #include <ECS/ECS_Components.h>
@@ -56,6 +54,14 @@ void GraphicsSystem::Init()
 		std::string uiShader = "UIShader";
 		uid uiShaderstr(uiShader);
 		m_UiShaderInst = *systemManager->mResourceTySystem->get_Shader(uiShaderstr.id);
+
+		// Initialize the Crosshair shader
+		std::string crosshairShader = "CrosshairShader";
+		uid crosshairShaderstr(crosshairShader);
+		m_CrosshairShaderInst = *systemManager->mResourceTySystem->get_Shader(crosshairShaderstr.id);
+		m_CrosshairShaderInst.Activate();
+		SetupCrosshairShaderLocations();
+		m_CrosshairShaderInst.Deactivate();
 
 		// Uniforms of UI Shader
 		m_UiShaderInst.Activate();
@@ -340,22 +346,6 @@ void GraphicsSystem::Update(float dt)
 	// Send UI data to GPU
 	m_Image2DMesh.PrepForDraw();
 #pragma endregion
-
-	if (Input::CheckKey(E_STATE::RELEASE, E_KEY::F1))
-	{
-		PINFO("Window size: %d, %d", m_Window->size().x, m_Window->size().y);
-	}
-	if (Input::CheckKey(E_STATE::RELEASE, E_KEY::F2))
-	{
-		int vpInfo[4];
-		glGetIntegerv(GL_VIEWPORT, vpInfo);
-		PINFO("Viewport: %d, %d", vpInfo[2], vpInfo[3]);
-	}
-	if (Input::CheckKey(E_STATE::RELEASE, E_KEY::F3))
-	{
-		ivec2 camSize = GetCameraSize(CAMERA_TYPE::CAMERA_TYPE_GAME);
-		PINFO("Game Camera Size: %d, %d", camSize.x, camSize.y);
-	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -505,53 +495,16 @@ void GraphicsSystem::EditorDraw(float dt)
 	}
 
 	m_Fbo.Bind();
+	m_Fbo.DrawBuffers(true, true);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	// Render UI objects
 	m_UiShaderInst.Activate();		// Activate shader
 	DrawAll2DInstances(m_UiShaderInst.GetHandle());
 	m_UiShaderInst.Deactivate();	// Deactivate shader
 
-#if _TEST_PIE_SHADER
-	std::string CircularShaderStr{"PieShaderTest"};
-	uid circularShaderUID(CircularShaderStr);
-	GFX::Shader& circularShaderInst = *systemManager->mResourceTySystem->get_Shader(circularShaderUID.id);
-
-	circularShaderInst.Activate();		// activate shader
-	GLuint degrees_uniform = glGetUniformLocation(circularShaderInst.GetHandle(), "uDegrees");
-	glUniform1f(degrees_uniform, glm::radians(m_DegreeTest));
-
-	// Bind 2D quad VAO
-	m_Image2DMesh.BindVao();
-	// Draw call
-	glDrawArraysInstanced(GL_TRIANGLE_FAN, 0, 4, 1);
-	// Unbind 2D quad VAO
-	m_Image2DMesh.UnbindVao();
-
-	circularShaderInst.Deactivate();	// Deactivate shader
-#endif
-
-#if _TEST_CROSSHAIR_SHADER
-	std::string crosshairShaderStr{ "CrosshairShader" };
-	uid crosshairShaderUID(crosshairShaderStr);
-	GFX::Shader& crosshairShaderInst = *systemManager->mResourceTySystem->get_Shader(crosshairShaderUID.id);
-
-	crosshairShaderInst.Activate();		// activate shader
-	GLint thicknessLocation = crosshairShaderInst.GetUniformLocation("uThickness");
-	GLint innerLocation = crosshairShaderInst.GetUniformLocation("uInner");
-	GLint outerLocation = crosshairShaderInst.GetUniformLocation("uOuter");
-	glUniform1f(thicknessLocation, m_CrosshairThickness);
-	glUniform1f(innerLocation, m_CrosshairInner);
-	glUniform1f(outerLocation, m_CrosshairOuter);
-
-	// Bind 2D quad VAO
-	m_Image2DMesh.BindVao();
-	// Draw call
-	glDrawArraysInstanced(GL_TRIANGLE_FAN, 0, 4, 1);
-	// Unbind 2D quad VAO
-	m_Image2DMesh.UnbindVao();
-
-	crosshairShaderInst.Deactivate();	// Deactivate shader
-#endif
+	// Render crosshair, if any
+	DrawCrosshair();
 
 #pragma endregion
 
@@ -701,34 +654,17 @@ void GraphicsSystem::GameDraw(float dt)
 	}
 
 	m_GameFbo.Bind();
+	m_GameFbo.DrawBuffers(true);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	// Render UI objects
 	m_UiShaderInst.Activate();		// Activate shader
 	DrawAll2DInstances(m_UiShaderInst.GetHandle());
 	m_UiShaderInst.Deactivate();	// Deactivate Shader
 
-#if _TEST_CROSSHAIR_SHADER
-	std::string crosshairShaderStr{ "CrosshairShader" };
-	uid crosshairShaderUID(crosshairShaderStr);
-	GFX::Shader& crosshairShaderInst = *systemManager->mResourceTySystem->get_Shader(crosshairShaderUID.id);
+	// Render crosshair, if any
+	DrawCrosshair();
 
-	crosshairShaderInst.Activate();		// activate shader
-	GLint thicknessLocation = crosshairShaderInst.GetUniformLocation("uThickness");
-	GLint innerLocation = crosshairShaderInst.GetUniformLocation("uInner");
-	GLint outerLocation = crosshairShaderInst.GetUniformLocation("uOuter");
-	glUniform1f(thicknessLocation, m_CrosshairThickness);
-	glUniform1f(innerLocation, m_CrosshairInner);
-	glUniform1f(outerLocation, m_CrosshairOuter);
-
-	// Bind 2D quad VAO
-	m_Image2DMesh.BindVao();
-	// Draw call
-	glDrawArraysInstanced(GL_TRIANGLE_FAN, 0, 4, 1);
-	// Unbind 2D quad VAO
-	m_Image2DMesh.UnbindVao();
-
-	crosshairShaderInst.Deactivate();	// Deactivate shader
-#endif
 #if _TEST_HEALTHBAR_SHADER
 	std::string healthbarShaderStr{ "healthbarShader" };
 	uid healthbarShaderUID(healthbarShaderStr);
@@ -1458,6 +1394,41 @@ int GraphicsSystem::StoreTextureIndex(unsigned texHandle)
 
 	// ID is already in container
 	int pos = (int)(it - m_Image2DStore.cbegin());
+}
+
+void GraphicsSystem::SetupCrosshairShaderLocations()
+{
+	m_CrosshairThicknessLocation = m_CrosshairShaderInst.GetUniformLocation("uThickness");
+	m_CrosshairInnerLocation = m_CrosshairShaderInst.GetUniformLocation("uInner");
+	m_CrosshairOuterLocation = m_CrosshairShaderInst.GetUniformLocation("uOuter");
+	m_CrosshairColorLocation = m_CrosshairShaderInst.GetUniformLocation("uColor");
+}
+
+void GraphicsSystem::DrawCrosshair()
+{
+	// Get entity with crosshair component
+	auto ent = systemManager->ecs->GetEntitiesWith<Crosshair>();
+
+	// Use crosshair shader program adn VAO
+	m_CrosshairShaderInst.Activate();
+	m_Image2DMesh.BindVao();
+
+	for (Entity inst : ent)	// only if entity exists
+	{
+		auto crosshairInst = inst.GetComponent<Crosshair>();
+
+		glUniform1f(m_CrosshairThicknessLocation, crosshairInst.mThickness);
+		glUniform1f(m_CrosshairInnerLocation, crosshairInst.mInner);
+		glUniform1f(m_CrosshairOuterLocation, crosshairInst.mOuter);
+		glUniform4fv(m_CrosshairColorLocation, 1, &crosshairInst.mColor[0]);
+	}
+
+	// Draw call
+	glDrawArraysInstanced(GL_TRIANGLE_FAN, 0, 4, 1);
+
+	// Stop using crosshair shader program and VAO
+	m_CrosshairShaderInst.Deactivate();
+	m_Image2DMesh.UnbindVao();
 }
 
 /***************************************************************************/

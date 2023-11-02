@@ -18,12 +18,14 @@ function Alive()
     if entity == nil then
         print("Entity nil in script!")
     end
-    originalScaleX = entity:GetTransform().mScale.x
+    aiSys = systemManager:mAISystem();
+    phySys = systemManager:mPhysicsSystem();
 end
 
 function Update()
     -- Get entity attached to script
-
+    
+    
 
     -- Create new Entity in current scene example
     --testEntity = systemManager.ecs:NewEntityByScene();
@@ -35,8 +37,7 @@ function Update()
     --AI TEST--
 
     -- Must call this before calling AISystem functions
-    aiSys = systemManager:mAISystem();
-    phySys = systemManager:mPhysicsSystem();
+    
     -- vec = Vec3.new(50,0,50)
     vec = aiSys:GetDirection(entity)
 
@@ -60,7 +61,7 @@ function Update()
     vec.z = vec.z * 20;
     phySys:SetVelocity(entity, vec);
     
-    if (entity:GetTransform().mScale.x < originalScaleX / 2.0) then
+    if (entity:GetTransform().mScale.x < 2.0) then
         deathAudioSource.Play()
         deathAudioSource.SetVolume(0.2)
         systemManager.ecs:SetDeleteEntity(entity)

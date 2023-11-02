@@ -60,6 +60,8 @@ local fadeOutDuration = 5.0
 local dt
 local teleporter1
 local teleporter2
+local tpfin1
+local tpfin2
 local playertpoffset = Vec3.new()
 
 local cameraEntity
@@ -68,6 +70,8 @@ local tpTime
 local onTpTime
 local collideWithTP
 local originalSamplingWeight
+
+local tpcolor = Vec4.new(0, 0, 0, 1)
 
 function Alive()
     gameStateSys = systemManager:mGameStateSystem();
@@ -96,6 +100,9 @@ function Alive()
     onTpTime = 0;
     collideWithTP = 0
     originalSamplingWeight = graphicsSys.mSamplingWeight
+    tpfin1 = gameStateSys:GetEntity("Fin1", "testSerialization")
+    tpfin2 = gameStateSys:GetEntity("Fin2", "testSerialization")
+
 end
 
 function Update()
@@ -138,6 +145,21 @@ function Update()
 --region -- Player movements
     -- use '.' to reference variable
     tpTime = tpTime + FPSManager.GetDT();
+
+    meshtp1 = teleporter1:GetMeshRenderer()
+    meshtp2 = teleporter2:GetMeshRenderer()
+    meshtp3 = tpfin1:GetMeshRenderer()
+    meshtp4 = tpfin2:GetMeshRenderer()
+
+    tpcolor.x = 1.0 - (tpTime / 20.1)
+    tpcolor.y = tpTime / 20.1
+    meshtp1:SetColor(tpcolor)
+    meshtp2:SetColor(tpcolor)
+    meshtp3:SetColor(tpcolor)
+    meshtp4:SetColor(tpcolor)
+
+
+
     if (tpTime > 20.0) then
         if (collideWithTP > 0) then
             onTpTime = onTpTime + FPSManager.GetDT()
@@ -170,7 +192,12 @@ function Update()
                     onTpTime = 0
                 end
             end
+        else
+            graphicsSys.mSamplingWeight = graphicsSys.mSamplingWeight - FPSManager.GetDT()
+            if (graphicsSys.mSamplingWeight < originalSamplingWeight) then
+                graphicsSys.mSamplingWeight = originalSamplingWeight
         end
+    end
     else
         graphicsSys.mSamplingWeight = graphicsSys.mSamplingWeight - FPSManager.GetDT()
         if (graphicsSys.mSamplingWeight < originalSamplingWeight) then

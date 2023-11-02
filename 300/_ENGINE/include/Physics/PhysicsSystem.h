@@ -49,11 +49,13 @@ public:
 
 private:
 	PhysX mPX;
+	bool mIsSimulationRunning;
 	float mFixedDT;
 	std::unordered_map<std::uint32_t, Actor> mActors;
 	std::unordered_map<MATERIAL, PxMaterial*> mMaterials;
 	std::vector<std::pair<Entity, glm::vec3>> mPendingTranslate;
 	std::vector<std::pair<Entity, glm::vec3>> mPendingRotate;
+	std::vector<Entity> mPendingAdd;
 
 	/*!*****************************************************************************
 	Create materials for entities.

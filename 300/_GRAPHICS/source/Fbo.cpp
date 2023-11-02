@@ -109,6 +109,21 @@ void GFX::FBO::PrepForDraw()
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
+void GFX::FBO::DrawBuffers(bool color, bool entityID, bool bright)
+{
+	GLuint attachments[3];
+
+	int count{};
+	if (color)
+		attachments[count++] = GL_COLOR_ATTACHMENT0;
+	if (entityID)
+		attachments[count++] = GL_COLOR_ATTACHMENT1;
+	if (bright)
+		attachments[count++] = GL_COLOR_ATTACHMENT2;
+
+	glDrawBuffers(count, attachments);
+}
+
 unsigned int GFX::FBO::ReadEntityID(float posX, float posY)
 {
 	// Map local to framebuffer space

@@ -9,6 +9,7 @@ layout (location = 0) out vec4 fragColor;
 uniform float uThickness;
 uniform float uInner;
 uniform float uOuter;
+uniform vec4 uColor;
 
 void main()
 {
@@ -27,5 +28,5 @@ void main()
 	if (distance(fTexCoords, vec2(0.5)) <= innerLimit)
 		return;
 
-	fragColor = vec4(1.0);
+	fragColor = uColor;
 }
