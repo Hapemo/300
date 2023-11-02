@@ -16,7 +16,7 @@ end
 
 function Update()
     spawntimer = spawntimer + FPSManager.GetDT()
-    if (spawntimer > 15.0) then
+    if (spawntimer > 30.0) then
         if (where == true) then
             systemManager.ecs:NewEntityFromPrefab("enemy1_walking", spawnPoint1:GetTransform().mTranslate)
             systemManager.ecs:NewEntityFromPrefab("enemy1_walking", spawnPoint2:GetTransform().mTranslate)
