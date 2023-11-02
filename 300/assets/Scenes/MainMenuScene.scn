@@ -1,42 +1,6 @@
 [
     {
-        "entityid": 1048580,
-        "general": {
-            "name": "TV_ON",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "tvOn.wav",
-            "fullpath": "../assets\\Audio/tvOn.wav",
-            "playonawake": true,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 1.0
-        }
-    },
-    {
-        "entityid": 3145729,
+        "entityid": 3145730,
         "general": {
             "name": "BGM",
             "tagid": 0,
@@ -72,7 +36,7 @@
         }
     },
     {
-        "entityid": 3145730,
+        "entityid": 3145731,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -109,15 +73,15 @@
                 "z": 0.0
             },
             "size": {
-                "x": 1813,
-                "y": 947
+                "x": 1318,
+                "y": 725
             },
             "near": 0.10000000149011612,
             "far": 900.0
         }
     },
     {
-        "entityid": 3145731,
+        "entityid": 3145732,
         "general": {
             "name": "MainMenuScreen",
             "tagid": 6,

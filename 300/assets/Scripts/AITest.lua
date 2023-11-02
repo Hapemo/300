@@ -63,7 +63,7 @@ function Update()
     
     if (entity:GetTransform().mScale.x < 2.0) then
         deathAudioSource:Play()
-        deathAudioSource:SetVolume(1.0)
+        deathAudioSource:SetVolume(0.2)
         systemManager.ecs:SetDeleteEntity(entity)
     end
         

@@ -228,7 +228,7 @@ function Update()
 
     if (isDashing) then
         dashAudioSource:Play()
-        dashAudioSource:SetVolume(1.0)
+        dashAudioSource:SetVolume(0.2)
         if(e_dashEffect == true)then
             dashEffect()
           
@@ -341,7 +341,7 @@ function Update()
         viewVecCam.z=viewVecCam.z *100
 
         bulletshootAudioSource:Play()
-        bulletshootAudioSource:SetVolume(1.0)
+        bulletshootAudioSource:SetVolume(0.2)
    
 
         physicsSys:SetVelocity(prefabEntity, viewVecCam)
