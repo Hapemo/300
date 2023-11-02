@@ -124,9 +124,9 @@ function spawned(value)
     -- colors.x = direction.x/5
     -- colors.y = direction.y/5
     -- colors.z = direction.z/5
-    direction.x =( direction.x/total)*15
-    direction.y = (direction.y/total)*15
-    direction.z = (direction.z/total)*15
+    direction.x =( direction.x/10)*15
+    direction.y = (direction.y/10)*15
+    direction.z = (direction.z/10)*15
     positions = entityobj:GetTransform().mTranslate
 
     prefabEntity = systemManager.ecs:NewEntityFromPrefab("parti",positions )   
