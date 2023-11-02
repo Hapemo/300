@@ -494,17 +494,17 @@ void GraphicsSystem::EditorDraw(float dt)
 		ChromaticAbbrebationBlendFramebuffers(m_Fbo, m_PingPongFbo.pingpongColorbuffers[0]);
 	}
 
-	m_Fbo.Bind();
-	m_Fbo.DrawBuffers(true, true);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	//m_Fbo.Bind();
+	//m_Fbo.DrawBuffers(true, true);
+	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	// Render UI objects
-	m_UiShaderInst.Activate();		// Activate shader
-	DrawAll2DInstances(m_UiShaderInst.GetHandle());
-	m_UiShaderInst.Deactivate();	// Deactivate shader
+	//// Render UI objects
+	//m_UiShaderInst.Activate();		// Activate shader
+	//DrawAll2DInstances(m_UiShaderInst.GetHandle());
+	//m_UiShaderInst.Deactivate();	// Deactivate shader
 
-	// Render crosshair, if any
-	DrawCrosshair();
+	//// Render crosshair, if any
+	//DrawCrosshair();
 
 #pragma endregion
 
