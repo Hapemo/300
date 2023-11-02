@@ -5912,6 +5912,15 @@
             "numchildren": 1,
             "firstchild": 48
         },
+        "audio": {
+            "filepath": "",
+            "filename": "",
+            "fullpath": "",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0
+        },
         "camera": {
             "positon": {
                 "x": 87.99999237060547,
@@ -5924,8 +5933,8 @@
                 "z": 40.934593200683594
             },
             "size": {
-                "x": 1189,
-                "y": 759
+                "x": 1202,
+                "y": 649
             },
             "near": 0.10000000149011612,
             "far": 900.0
@@ -6856,38 +6865,6 @@
         }
     },
     {
-        "entityid": 82,
-        "general": {
-            "name": "UI2",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 100.0,
-                "y": 100.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -1800.0,
-                "y": -900.0,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "../assets/Compressed/Wood Material 15_BaseColor.ctexture",
-            "textureref": 5242,
-            "degree": -397.0
-        }
-    },
-    {
         "entityid": 83,
         "general": {
             "name": "UI1",
@@ -6898,8 +6875,8 @@
         },
         "transform": {
             "scale": {
-                "x": 100.0,
-                "y": 100.0,
+                "x": 150.0,
+                "y": 150.0,
                 "z": 1.0
             },
             "rotate": {
@@ -6908,14 +6885,14 @@
                 "z": 0.0
             },
             "translate": {
-                "x": -1500.0,
-                "y": -900.0,
+                "x": -1600.0,
+                "y": -700.0,
                 "z": 0.0
             }
         },
         "uirenderer": {
-            "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
-            "textureref": 4923,
+            "texpath": "../assets/Compressed/dash.ctexture",
+            "textureref": 3283,
             "degree": 0.0
         }
     },

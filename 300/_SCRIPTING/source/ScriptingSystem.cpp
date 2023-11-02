@@ -136,6 +136,7 @@ void ScriptingSystem::Init()
     LuaGameState();
     LuaAIManager();
     LuaButton();
+    LuaUIrenderer();
 
     /******************************************************************************/
     /*!

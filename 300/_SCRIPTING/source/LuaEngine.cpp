@@ -114,9 +114,14 @@ void LuaEntity()
         ADD_COMPONENT("AddButton", Button),
         DECLARE_COMPONENT("GetButton", Button),
         "HasButton", & Entity::HasComponent<Button>,
-            ADD_COMPONENT("AddCamera", Camera),
-            DECLARE_COMPONENT("GetCamera", Camera),
-        "HasCamera", & Entity::HasComponent<Camera>
+
+        ADD_COMPONENT("AddCamera", Camera),
+        DECLARE_COMPONENT("GetCamera", Camera),
+        "HasCamera", & Entity::HasComponent<Camera>,
+
+        ADD_COMPONENT("AddUIrenderer", UIrenderer),
+        DECLARE_COMPONENT("GetUIrenderer", UIrenderer),
+        "HasUIrenderer", & Entity::HasComponent<UIrenderer>
     );
 }
 
@@ -408,4 +413,12 @@ void LuaButton()
         "IsClicked", &Button::IsClicked,
         "IsActivated", &Button::IsActivated
         );
+}
+
+void LuaUIrenderer()
+{
+    systemManager->mScriptingSystem->luaState.new_usertype<UIrenderer>(
+        "UIrenderer", sol::constructors<>(),
+        "SetDegree", &UIrenderer::SetDegree
+    );
 }

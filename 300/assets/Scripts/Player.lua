@@ -70,6 +70,8 @@ local tpTime
 local onTpTime
 local collideWithTP
 local originalSamplingWeight
+local dashui = {}
+local dashrender= {}
 
 local tpcolor = Vec4.new(0, 0, 0, 1)
 
@@ -83,6 +85,7 @@ function Alive()
     totaltime = 3.0
 
     audioComp = cameraEntity:GetAudio()
+    dashui = gameStateSys:GetEntity("UI1", "testSerialization")
     walkingAudioSource = Helper.CreateAudioSource(cameraEntity)
 
     bulletshootEntity = gameStateSys:GetEntity("Bullet Shoot", "testSerialization")
@@ -158,7 +161,12 @@ function Update()
     meshtp3:SetColor(tpcolor)
     meshtp4:SetColor(tpcolor)
 
-
+    dashrender = dashui:GetUIrenderer()
+    if (dashTime > 3.0) then
+        dashrender:SetDegree(0)
+    else
+        dashrender:SetDegree(360 - (dashTime / 3.0) * 360)
+    end
 
     if (tpTime > 20.0) then
         if (collideWithTP > 0) then

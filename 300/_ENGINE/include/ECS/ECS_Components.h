@@ -180,6 +180,10 @@ struct UIrenderer : public Serializable
 		return 0;
 	}
 	void Inspect();
+	void SetDegree(float degree)
+	{
+		mDegree = degree;
+	}
 	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
 	void DeserializeSelf(rapidjson::Value& reader);
 };
