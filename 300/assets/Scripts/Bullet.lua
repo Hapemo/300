@@ -72,7 +72,7 @@ function OnTriggerEnter(Entity)
         Entity:GetTransform().mScale.z = Entity:GetTransform().mScale.z * 0.9
 
         bullethitAudioSource:Play()
-        bullethitAudioSource:SetVolume(0.2)
+        bullethitAudioSource:SetVolume(1.0)
 
         
         systemManager.ecs:SetDeleteEntity(entityobj)

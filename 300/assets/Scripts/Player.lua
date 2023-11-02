@@ -220,7 +220,7 @@ function Update()
 
     if (isDashing) then
         dashAudioSource:Play()
-        dashAudioSource:SetVolume(0.2)
+        dashAudioSource:SetVolume(1.0)
         if(e_dashEffect == true)then
             dashEffect()
           
@@ -252,7 +252,6 @@ function Update()
                 e_dashEffect = true
             else
                 t = t +tinc 
-                print("t"..t)
             end
         end
 
@@ -265,13 +264,6 @@ function Update()
              
             end
         else
-            if(inputMapSys:GetButton("up") or inputMapSys:GetButton("down") or
-               inputMapSys:GetButton("left") or inputMapSys:GetButton("right")) then
-                walkingAudioSource:SetVolume(0.2)
-                fadeOutTimer = 0.0   
-            else
-                FadeOutAudio(walkingAudioSource, 2.0, 25.0, 0.0)
-            end
         
 
             -- else
@@ -341,9 +333,8 @@ function Update()
         viewVecCam.z=viewVecCam.z *100
 
         bulletshootAudioSource:Play()
-        bulletshootAudioSource:SetVolume(0.2)
+        bulletshootAudioSource:SetVolume(1.0)
    
-        print("SHOOT")
 
         physicsSys:SetVelocity(prefabEntity, viewVecCam)
     end

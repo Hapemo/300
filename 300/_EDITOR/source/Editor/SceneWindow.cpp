@@ -186,7 +186,6 @@ void SceneWindow::RenderGuizmo()
 	glm::vec3 scale(0, 0, 0);
 
 	if (Hierarchy::selectionOn == true) {
-
 		Transform& transform = Entity(Hierarchy::selectedId).GetComponent<Transform>();
 
 

@@ -62,8 +62,8 @@ function Update()
     phySys:SetVelocity(entity, vec);
     
     if (entity:GetTransform().mScale.x < 2.0) then
-        deathAudioSource.Play()
-        deathAudioSource.SetVolume(0.2)
+        deathAudioSource:Play()
+        deathAudioSource:SetVolume(1.0)
         systemManager.ecs:SetDeleteEntity(entity)
     end
         
