@@ -24,8 +24,9 @@ This file contains the base AudioSystem class that supports the following functi
 #include "Debug/EnginePerformance.h"
 #include "GameState/GameStateManager.h"
 #include "GameState/Scene.h"
+#include "Graphics/GraphicsSystem.h"
 
-
+static FMOD_VECTOR previous_position = { 0.0f, 0.0f, 0.0f };
 
 enum AUDIOTYPE : unsigned char;
 
@@ -75,15 +76,20 @@ public:
 	void UpdateLoadAudio(Entity id);				 // [For Engine] - Add Component mid-way
 	void UpdateChannelReference(Entity id);		     // [For Engine] - Add Channel to the global [SFX/BGM] channels. (for global control)
 	void InitAudioChannelReference(Entity id);		 // [For Engine]
+	void Update3DChannelSettings(Entity id);		 // [For Engine] - Updates 3D audio information. 
+	void SetupListenerAttributes(Entity id);		 // [For Engine] - Init <AudioListener> attributes.
 
 	// Helper Functions (Sound)
 	FMOD::Sound* FindSound(std::string audio_name);
 	bool	     CheckAudioExist(std::string audio_name); // [W7 - 10/14]
 
+	// Core Loops (For Organization)
+	void AudioPlayLoop(float dt);
+
 public:
 	// Retained Functions (Without Linking to <Audio> component)
-	bool LoadAudioFromDirectory(std::string directory_path);
 	//bool LoadAudioFromDirectory(std::filesystem::path file_path);					                                        // Load files from directory (Like just load all the audio files first) -> later then link
+	bool LoadAudioFromDirectory(std::string directory_path);															    // [10/22] [For Lua]
 	void SetAllSFXVolume(float audio_vol);																				    // Global Volume Setting (SFX)
 	void SetAllBGMVolume(float audio_vol);													                                // Global Volume Setting (BGM)
 	void MuteSFX();																											// Global Mute (SFX)
@@ -117,7 +123,15 @@ public:
 // Scripting Support
 public:
 	void PlayAudioSource(FMOD::Sound* comp_sound, FMOD::Channel* comp_channel, float vol = 1.0f);  // OK.
-	void PlayAudioSource(Audio& audio_component, float vol = 1.0f);
+	void PlayAudioSource(Audio& audio_component, float vol = 1.0f, bool audio_3d = false);
+
+
+// 3D Audio Stuff
+public:
+	float distance_factor = 1.0f;  // Units per meter. (per unit reference in game world)
+
+// Fading Stuff
+	float fadeLevelIn = 0.0f;
 
 public:
 	FMOD::System* system_obj = nullptr;

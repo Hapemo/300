@@ -1,17 +1,17 @@
 [
     {
-        "entityid": 1,
+        "entityid": 1048580,
         "general": {
-            "name": "MainMenuScreen",
-            "tagid": 6,
+            "name": "TV_ON",
+            "tagid": 0,
             "subtag": 0,
             "isActive": true,
             "isPaused": false
         },
         "transform": {
             "scale": {
-                "x": 1920.0,
-                "y": -1080.0,
+                "x": 1.0,
+                "y": 1.0,
                 "z": 1.0
             },
             "rotate": {
@@ -25,22 +25,54 @@
                 "z": 0.0
             }
         },
-        "uirenderer": {
-            "texpath": "../assets/Compressed/MainMenu.ctexture",
-            "textureref": 3661,
-            "degree": 0.0
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/MainMenuScript.lua",
-                    "variables": []
-                }
-            ]
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "tvOn.wav",
+            "fullpath": "../assets\\Audio/tvOn.wav",
+            "playonawake": true,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0
         }
     },
     {
-        "entityid": 2,
+        "entityid": 3145729,
+        "general": {
+            "name": "BGM",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "M2BGM.wav",
+            "fullpath": "../assets\\Audio/M2BGM.wav",
+            "playonawake": true,
+            "islooping": true,
+            "audiotype": 0,
+            "volume": 1.0
+        }
+    },
+    {
+        "entityid": 3145730,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -77,11 +109,51 @@
                 "z": 0.0
             },
             "size": {
-                "x": 1173,
-                "y": 604
+                "x": 1813,
+                "y": 947
             },
-            "near": 0.0,
-            "far": 0.0
+            "near": 0.10000000149011612,
+            "far": 900.0
+        }
+    },
+    {
+        "entityid": 3145731,
+        "general": {
+            "name": "MainMenuScreen",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1920.0,
+                "y": -1080.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "../assets/Compressed/MainMenu.ctexture",
+            "textureref": 3661,
+            "degree": 0.0
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/MainMenuScript.lua",
+                    "variables": []
+                }
+            ]
         }
     }
 ]

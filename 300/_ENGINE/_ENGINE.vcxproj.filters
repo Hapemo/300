@@ -63,6 +63,7 @@
     <ClInclude Include="include\Audio\AudioSource.h" />
     <ClInclude Include="include\Audio\AudioTest.h" />
     <ClInclude Include="include\Physics\FilterShader.h" />
+    <ClInclude Include="include\Audio\Audio3DTest.h" />
     <ClInclude Include="include\Serialization\Serializable.h" />
     <ClInclude Include="include\ECS\EnumTags.h" />
     <ClInclude Include="include\Physics\FilterShader.h" />

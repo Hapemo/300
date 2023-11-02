@@ -186,8 +186,6 @@ void SceneWindow::RenderGuizmo()
 	glm::vec3 scale(0, 0, 0);
 
 	if (Hierarchy::selectionOn == true) {
-
-		
 		Transform& transform = Entity(Hierarchy::selectedId).GetComponent<Transform>();
 
 		glm::vec3 tempRot = /*{ transform->orientation.z,0,transform->orientation.x }*/{ 0,0,0 };

@@ -43,6 +43,21 @@ local tinc = 0.1
 local mouse_move = Vec2.new()
 local mouse_on = true
 
+-- audio attributes
+local walkingAudioSource
+local audioComp
+
+local bulletshootEntity
+local bulletshootComp
+local bulletshootAudioSource
+
+local dashEntity
+local dashComp
+local dashAudioSource
+
+local fadeOutTimer = 0.0
+local fadeOutDuration = 5.0
+local dt
 local teleporter1
 local teleporter2
 local tpfin1
@@ -63,7 +78,21 @@ function Alive()
     inputMapSys = systemManager:mInputActionSystem();
     physicsSys = systemManager:mPhysicsSystem();
     graphicsSys = systemManager:mGraphicsSystem();
+    audioSys    = systemManager:mAudioSystem();
     cameraEntity = Helper.GetScriptEntity(script_entity.id)
+    totaltime = 3.0
+
+    audioComp = cameraEntity:GetAudio()
+    walkingAudioSource = Helper.CreateAudioSource(cameraEntity)
+
+    bulletshootEntity = gameStateSys:GetEntity("Bullet Shoot", "testSerialization")
+    bulletshootComp = bulletshootEntity:GetAudio()
+    bulletshootAudioSource = Helper.CreateAudioSource(bulletshootEntity)
+
+    dashEntity = gameStateSys:GetEntity("Dash", "testSerialization")
+    dashComp = dashEntity:GetAudio()
+    dashAudioSource = Helper.CreateAudioSource(dashEntity)
+
     dashTime = 3.0
     tpTime = 20.0
     teleporter1 = gameStateSys:GetEntity("Teleporter1", "testSerialization")
@@ -78,6 +107,7 @@ end
 
 function Update()
 
+    dt = FPSManager.GetDT()
     
 --region -- player camera
     if(inputMapSys:GetButtonDown("Mouse")) then
@@ -189,8 +219,11 @@ function Update()
     movement.z = 0;
 
     if (isDashing) then
+        dashAudioSource:Play()
+        dashAudioSource:SetVolume(1.0)
         if(e_dashEffect == true)then
             dashEffect()
+          
             e_dashEffect = false
         end
         movement.x = movement.x + (viewVec.x * 300.0)
@@ -219,7 +252,6 @@ function Update()
                 e_dashEffect = true
             else
                 t = t +tinc 
-                print("t"..t)
             end
         end
 
@@ -229,11 +261,25 @@ function Update()
             if (dashTime > 3.0) then
                 dashTime = 0
                 isDashing = true
+             
             end
         else
+        
+
+            -- else
+            --     if (fadeOutTimer < fadeOutDuration) then 
+            --         local volume = audioComp.mVolume - (fadeOutTimer / fadeOutDuration)
+            --         walkingAudioSource:SetVolume(volume)
+            --         fadeOutTimer = fadeOutTimer + dt
+            --         print("FADE OUT TIMER: ", fadeOutTimer)
+            --     end
+            -- end
+
             if (inputMapSys:GetButton("up")) then
                 movement.x = movement.x + (viewVec.x * mul);
-                movement.z = movement.z + (viewVec.z * mul);
+                movement.z = movement.z + (viewVec.z * mul);    
+                -- print("Volume: " , audioComp.mVolume)
+              
             end
             if (inputMapSys:GetButton("down")) then
                 movement.x = movement.x - (viewVec.x * mul);
@@ -253,6 +299,13 @@ function Update()
                 end
             end
         end
+
+        -- if (fadeOutTimer < fadeOutDuration) then 
+        --     local volume = audioComp.mVolume - (fadeOutTimer / fadeOutDuration)
+        --     walkingAudioSource:SetVolume(volume)
+        --     fadeOutTimer = fadeOutTimer + dt
+        --     print("FADE OUT TIMER: ", fadeOutTimer)
+        -- end
     end
 
     physicsSys:SetVelocity(cameraEntity, movement)
@@ -278,6 +331,10 @@ function Update()
         viewVecCam.x = viewVecCam.x*100
         viewVecCam.y=viewVecCam.y *100
         viewVecCam.z=viewVecCam.z *100
+
+        bulletshootAudioSource:Play()
+        bulletshootAudioSource:SetVolume(1.0)
+   
 
         physicsSys:SetVelocity(prefabEntity, viewVecCam)
     end

@@ -20,6 +20,11 @@ allcolor = {Vec4.new(1,0,0,1),Vec4.new(0,1,0,1),Vec4.new(0,0,1,1),Vec4.new(0,1,1
 local entityobj
 
 
+local bullethitEntity
+local bullethitcomp
+local bullethitAudioSource
+
+
 function Alive()
     
 end
@@ -33,6 +38,11 @@ function Update()
 
     viewVec = Camera_Scripting.GetDirection(cameraEntity)
     physicsSys = systemManager:mPhysicsSystem()
+
+    bullethitEntity = gameStateSys:GetEntity("Bullet Hit" , "testSerialization")
+    bullethitcomp   = bullethitEntity:GetAudio()
+    bullethitAudioSource = Helper.CreateAudioSource(bullethitEntity)
+
 
     -- movement.x= movement.x+movement.x
     --   movement.x = movement.x+ viewVec.x *0     
@@ -60,6 +70,10 @@ function OnTriggerEnter(Entity)
         Entity:GetTransform().mScale.x = Entity:GetTransform().mScale.x * 0.9
         Entity:GetTransform().mScale.y = Entity:GetTransform().mScale.y * 0.9
         Entity:GetTransform().mScale.z = Entity:GetTransform().mScale.z * 0.9
+
+        bullethitAudioSource:Play()
+        bullethitAudioSource:SetVolume(1.0)
+
         
         systemManager.ecs:SetDeleteEntity(entityobj)
     end

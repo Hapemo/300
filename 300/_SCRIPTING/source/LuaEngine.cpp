@@ -263,13 +263,16 @@ void LuaAudioSystem()
         "PauseBGMSounds", &AudioSystem::PauseBGMSounds,
         "UnpauseAllSounds", &AudioSystem::UnpauseAllSounds,
         "UnpauseSFXSounds", &AudioSystem::UnpauseSFXSounds,
-        "UnpauseBGMSounds", &AudioSystem::UnpauseBGMSounds
+        "UnpauseBGMSounds", &AudioSystem::UnpauseBGMSounds,
+        "FadeTimer", &AudioSystem::fade_timer
     );
 }
 
 void LuaAudioSource()
 {
     systemManager->mScriptingSystem->luaState["CrossFadeAudio"] = &CrossFadeAudio;
+    systemManager->mScriptingSystem->luaState["FadeInAudio"] = &FadeInAudio,
+    systemManager->mScriptingSystem->luaState["FadeOutAudio"] = &FadeOutAudio,
     systemManager->mScriptingSystem->luaState.new_usertype<AudioSource>(
         "AudioSource", sol::constructors<AudioSource()>(),
         "GetAudio", &AudioSource::GetAudioComponent,
@@ -290,7 +293,12 @@ void LuaAudio()
 {
     systemManager->mScriptingSystem->luaState.new_usertype<Audio>(
         "Audio", sol::constructors<>(),
-        "mVolume", &Audio::mVolume
+        "mVolume", &Audio::mVolume, 
+        "mFadeIn", &Audio::mFadeIn,
+        "mFadeOut", &Audio::mFadeOut,
+        "mFadeInMaxVol", &Audio::mFadeInMaxVol, 
+        "mFadeOutToVol", &Audio::mFadeOutToVol,
+        "mFadeSpeedModifier" , &Audio::mFadeSpeedModifier
         );
 }
 
