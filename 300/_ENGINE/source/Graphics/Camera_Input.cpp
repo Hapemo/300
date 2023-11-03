@@ -204,12 +204,12 @@ void Camera_Scripting::RotateCameraView(Entity cameraEntity, const vec2& cursorp
 		caminstTransform.mRotate.y = -89.0f;
 	}
 
-	glm::vec3 direction;
-	direction.x = cos(glm::radians(caminst.mYaw)) * cos(glm::radians(caminst.mPitch));
-	direction.y = sin(glm::radians(caminst.mPitch));
-	direction.z = sin(glm::radians(caminst.mYaw)) * cos(glm::radians(caminst.mPitch));
-	direction.y *= -1;
+	//glm::vec3 direction;
+	//direction.x = cos(glm::radians(caminst.mYaw)) * cos(glm::radians(caminst.mPitch));
+	//direction.y = sin(glm::radians(caminst.mPitch));
+	//direction.z = sin(glm::radians(caminst.mYaw)) * cos(glm::radians(caminst.mPitch));
+	//direction.y *= -1;
 
-	// update the camera's target based on the normalized direction
-	caminst.SetTarget(caminst.mPosition + glm::normalize(direction));
+	//// update the camera's target based on the normalized direction
+	//caminst.SetTarget(caminst.mPosition + glm::normalize(direction));
 }
