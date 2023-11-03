@@ -29,8 +29,10 @@ void GameState::Exit() {
 	for (auto& scene : mScenes) {
 		scene.Exit();
 		for (auto e : scene.mEntities)
-			if (e.HasComponent<Scripts>()) systemManager->GetScriptingPointer()->ScriptDead(e);
+			if (e.HasComponent<Scripts>())
+				e.GetComponent<Scripts>().RunFunctionForAllScripts("Dead");
 	}
+
 	systemManager->mAISystem->ClearAIs();
 }
 

@@ -7,6 +7,13 @@ local deathEntity
 local deathComp
 local deathAudioSource
 
+-- for example you want to reference out hp variable to another script
+--local hp = 100
+
+-- function GetHP()
+--     return hp
+-- end
+
 function Alive()
     gameStateSys = systemManager:mGameStateSystem()
 

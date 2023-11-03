@@ -98,14 +98,14 @@ SERIALIZE_BASIC(glm::vec4)
 	writer.EndObject();
 }
 
-SERIALIZE_BASIC(Script)
+SERIALIZE_BASIC(Script*)
 {
 	if (name != nullptr)
 		writer.Key(name);
 
 	writer.StartObject();
-	Serialize(writer, "scriptFile", val.scriptFile);
-	Serialize(writer, "variables", val.variables);
+	Serialize(writer, "scriptFile", val->scriptFile);
+	Serialize(writer, "variables", val->variables);
 	writer.EndObject();
 }
 
@@ -276,10 +276,11 @@ DESERIALIZE_BASIC(glm::vec4)
 	}
 }
 
-DESERIALIZE_BASIC(Script)
+DESERIALIZE_BASIC(Script*)
 {
-	Deserialize(reader, "scriptFile", val.scriptFile);
-	Deserialize(reader, "variables", val.variables);
+	val = new Script;
+	Deserialize(reader, "scriptFile", val->scriptFile);
+	Deserialize(reader, "variables", val->variables);
 }
 
 DESERIALIZE_BASIC(SUBTAG)

@@ -48,16 +48,32 @@ public:
 		//	PWARNING("FUNCTION IS NULL POINTER");
 		//if (func)
 		//{
-			sol::protected_function_result result = func(arguments...);
+		sol::protected_function_result result = func(arguments...);
 
-			if (!result.valid())
-			{
-				sol::error err = result;
-				std::cout << "Error running function! From " << scriptFile << " of function " << funcName << std::endl;
-				std::cout << err.what() << std::endl;
-				return;
-			}
+		if (!result.valid())
+		{
+			sol::error err = result;
+			std::cout << "Error running function! From " << scriptFile << " of function " << funcName << std::endl;
+			std::cout << err.what() << std::endl;
+			return;
+		}
 		//}
+	}
+	template<typename T>
+	T RunWithReturnValue(const char* funcName)
+	{
+		sol::protected_function func = env[funcName];
+		auto result = func();
+
+		if (!result.valid())
+		{
+			sol::error err = result;
+			std::cout << "error running function! from " << scriptFile << " of function " << funcName << std::endl;
+			std::cout << err.what() << std::endl;
+			return T();
+		}
+
+		return result;
 	}
 	// Check if the type of the variable had changed
 	bool CheckVariableTypeEqual(sol::object& value, const std::type_info& info);

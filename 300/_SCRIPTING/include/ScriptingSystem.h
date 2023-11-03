@@ -82,21 +82,8 @@ public:
 
     void LoadHelper();
 
-    // To call selected script init and update functions
-    void ScriptAlive(const Entity& script);
-    void ScriptStart(const Entity& script);
-    //void ScriptUpdate(const Entity& script);
-    void ScriptExit(const Entity& script);
-    void ScriptDead(const Entity& script);
-
     // Call in Reload function
     void ScriptReload();
-
-    //Load and run script, used when a script is added to a new entity in scripts
-    void LoadRunScript(Entity& entity);
-
-    // AddScripts function that checks for the existence of Script component then attach desired script to entity
-    void AddScript(Entity& entity, std::string fileName);
 
 private:
     // for performance

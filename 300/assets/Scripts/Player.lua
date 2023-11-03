@@ -100,6 +100,7 @@ function Alive()
     tpTime = 20.0
     teleporter1 = gameStateSys:GetEntity("Teleporter1", "testSerialization")
     teleporter2 = gameStateSys:GetEntity("Teleporter2", "testSerialization")
+    --walkingenemy = gameStateSys:GetEntity("enemy1_walking", "testSerialization")
     onTpTime = 0;
     collideWithTP = 0
     originalSamplingWeight = graphicsSys.mSamplingWeight
@@ -109,6 +110,15 @@ function Alive()
 end
 
 function Update()
+
+    -- Example: I want to get HP from AITest.lua script (getting walking enemy's hp)
+    -- scriptingSys = systemManager:mScriptingSystem();
+    -- scriptingComp = walkingenemy:GetScripts()
+    -- script = scriptingComp:GetScript("../assets/Scripts/AITest.lua")
+    -- if script ~= nil then
+    --     result = script:RunWithReturnValue_int("GetHP")
+    --     print(result)
+    -- end
 
     dt = FPSManager.GetDT()
     
