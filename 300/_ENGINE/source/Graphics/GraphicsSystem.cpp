@@ -795,12 +795,6 @@ void GraphicsSystem::SetCameraProjection(CAMERA_TYPE type, float fovDegree, ivec
 	}
 }
 
-
-
-void GraphicsSystem::DrawGameScene() {
-
-}
-
 /***************************************************************************/
 /*!
 \brief
