@@ -11,8 +11,8 @@
  *  Copyright (C) 2023 DigiPen Institute of Technology.
  *-------------------------------------------------------------------------------------*/
 #include "GameScene.h"
-#include <Windows.h>
-#include <WinUser.h>
+//#include <Windows.h>
+//#include <WinUser.h>
 
  /***************************************************************************/
  /*!

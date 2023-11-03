@@ -11,7 +11,7 @@ Input detects keyboard and mouse input states and returns that to caller
 #include "pch.h"
 #include "ECS/ECS_Systems.h"
 #include <Windows.h>
-#include <WinUser.h>
+//#include <WinUser.h>
 
 std::array<bool, 324> Input::mPrevKeyStates;
 int Input::mStartingIndex{ 32 };
@@ -99,7 +99,7 @@ glm::vec2 Input::CursorPos() {
 void Input::SetCursorCenter()
 {
     //if (m_EditorMode) {
-    SetCursorPos( int(m_EditorWindowPos.x ), int(m_EditorWindowPos.y));
+    //SetCursorPos( int(m_EditorWindowPos.x ), int(m_EditorWindowPos.y));
     //	}
 
  //   std::cout << m_EditorWindowPos.x << "x " << m_EditorWindowPos.y << "y\n ";

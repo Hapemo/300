@@ -365,7 +365,7 @@ void GraphicsSystem::EditorDraw(float dt)
 	auto meshRendererInstances = systemManager->ecs->GetEntitiesWith<MeshRenderer>();
 
 	// Prepare and bind the Framebuffer to be rendered on
-	m_Fbo.PrepForDraw();
+	//m_Fbo.PrepForDraw();
 
 #pragma region render all the mesh instances onto the editor camera framebuffer
 	// Render all instances of a given mesh
@@ -460,6 +460,8 @@ void GraphicsSystem::EditorDraw(float dt)
 		DrawAll(meshinst);
 
 		shaderinst.Deactivate();
+
+
 		meshinst.UnbindVao();
 
 		//// unbind the textures
@@ -849,6 +851,12 @@ void GraphicsSystem::SetCameraProjection(CAMERA_TYPE type, float fovDegree, ivec
 		m_EditorCamera.SetProjection(fovDegree, size, nearZ, farZ);
 		break;
 	}
+}
+
+
+
+void GraphicsSystem::DrawGameScene() {
+
 }
 
 /***************************************************************************/
