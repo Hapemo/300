@@ -758,17 +758,20 @@ void MeshRenderer::Inspect()
 				std::string descfilepath = data_str + ".desc";
 				guid = _GEOM::GetGUID(descfilepath);
 
-				// If the descriptor file is not present, then load it
-				if (!descFilePresent)
+				//if (!descFilePresent)
+				// recompiles everything as long as its fbx
 				{
 					//!>> Calling the GEOM Compiler to load 
 					std::string command = "..\\_GEOM_COMPILER\\_GEOM_COMPILER.exe ";
 					command += GEOM_Descriptor_Filepath;
 					int result = system(command.c_str());
 
-					std::string geompath = GEOM_Descriptor_Filepath.substr(0, GEOM_Descriptor_Filepath.find_last_of("."));
-
-					systemManager->mResourceTySystem->mesh_Load(geompath, guid);
+					if (systemManager->mResourceTySystem->get_mesh(guid) == nullptr)
+					{
+						// only load the mesh if its not yet been seen in the system
+						std::string geompath = GEOM_Descriptor_Filepath.substr(0, GEOM_Descriptor_Filepath.find_last_of("."));
+						systemManager->mResourceTySystem->mesh_Load(geompath, guid);
+					}
 				}
 
 				mMeshRef.data_uid = guid;

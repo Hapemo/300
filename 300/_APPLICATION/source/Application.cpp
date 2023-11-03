@@ -15,7 +15,7 @@ start up of window and game system, also runs their update functions.
 #include "FPSManager.h"
 #include "ECS/ECS.h"
 #include "ECS/ECS_Components.h"
-#include "Input/Input.h"
+//#include "Input/Input.h"
 #include "SingletonManager.h"
 #include "Object/ObjectFactory.h"
 #include "ScriptingSystem.h"
@@ -24,10 +24,11 @@ start up of window and game system, also runs their update functions.
 #include "GameState/GameStateManager.h"
 #include "Debug/Logger.h"
 #include "ConfigManager.h"
-
 #include "Example.h"
-#include "Input/Input.h"
 #include "Physics/Accumulator.h"
+
+#include <Windows.h>
+#include <WinUser.h>
 
 // Static variables
 GFX::DebugRenderer* Application::mRenderer;
@@ -37,6 +38,9 @@ std::string Application::title;
 
 void Application::Init() 
 {
+
+    //SetCursorPos(1, 1);
+
     StartUp();
     SystemInit();
     //MultithreadExample();

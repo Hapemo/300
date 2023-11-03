@@ -89,6 +89,7 @@ void ResourceTy::mesh_Load(std::string filepath, unsigned uid)
 	std::cout << "[NOTE]>> Loading uid: \t" << uid << "\n";
 
 	++mResouceCnt;
+
 	GFX::Mesh* meshPtr = SetupMesh(filepath, uid);
 	instance_infos& tempInstance = AllocRscInfo();
 
@@ -153,7 +154,10 @@ void ResourceTy::mesh_LoadFolder()
 	Return mesh pointer
 */
 /**************************************************************************/
-GFX::Mesh* ResourceTy::get_mesh(unsigned id) {
+GFX::Mesh* ResourceTy::get_mesh(unsigned id) 
+{
+	if (m_ResourceInstance.find(id) == m_ResourceInstance.end())
+		return nullptr;
 
 	return reinterpret_cast<GFX::Mesh*>(m_ResourceInstance[id]->m_pData);
 
