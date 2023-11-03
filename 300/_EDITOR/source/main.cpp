@@ -51,12 +51,7 @@ void RealMain();
 
  \int main int
 *******************************************************************************/
-
-#include "Graph.h"
-
 int main() {
-
-  TestGraph();
     try
     {
         Misc::MemLeakCheck();
