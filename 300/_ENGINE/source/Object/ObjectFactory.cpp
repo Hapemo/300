@@ -50,7 +50,6 @@ void ObjectFactory::LoadEntity(Entity e, rapidjson::Value& reader)
 	DESERIALIZE_SELF(SphereCollider, "spherecollider");
 	DESERIALIZE_SELF(CapsuleCollider, "capsulecollider");
 	DESERIALIZE_SELF(Scripts, "scripts");
-
 	DESERIALIZE_SELF(Parent, "parent");
 	DESERIALIZE_SELF(Children, "children");
 	DESERIALIZE_SELF(Audio, "audio");

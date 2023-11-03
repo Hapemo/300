@@ -18,16 +18,16 @@ namespace ImGuiHelper {
 	}
 }
 
-void InspectScript(Script& script)
+void InspectScript(Script* script)
 {
 	if (ImGui::TreeNode("Variables")) {
 
-		for (auto& e : script.variables) {
+		for (auto& e : script->variables) {
 			std::visit([&](auto&& v) {
 				//v = script.env[e.first].get<std::remove_reference<decltype(v)>::type>();
-				v = script.env[e.first].get<decltype(v)>();
+				v = script->env[e.first].get<decltype(v)>();
 				ImGuiHelper::Render(e.first.c_str(), &v);
-				script.env[e.first] = v;
+				script->env[e.first] = v;
 				}, e.second);
 		}
 

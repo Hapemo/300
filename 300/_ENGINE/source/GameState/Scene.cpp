@@ -67,11 +67,20 @@ void Scene::Load(std::string const& _name) {
 	if (mName.empty()) mName = _name;
 	
 	ObjectFactory::LoadScene(this, mName);
+
 	for (auto e : mEntities) {
-		if (e.HasComponent<Scripts>()) systemManager->GetScriptingPointer()->ScriptAlive(e);
-		if (e.HasComponent<MeshRenderer>()) {
+
+		if (e.HasComponent<Scripts>()) 
+		{
+			e.GetComponent<Scripts>().LoadForAllScripts((int)e.id);
+			e.GetComponent<Scripts>().RunFunctionForAllScripts("Alive");
+		}
+
+		if (e.HasComponent<MeshRenderer>()) 
+		{
 			auto& meshdata = e.GetComponent<MeshRenderer>();
 		}
+
 		e.GetComponent<General>().isPaused = mIsPause;
 	}
 }
