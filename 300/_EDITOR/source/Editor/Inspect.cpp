@@ -770,7 +770,7 @@ void MeshRenderer::Inspect()
 				guid = _GEOM::GetGUID(descfilepath);
 
 				// If the descriptor file is not present, then load it
-				//if (!descFilePresent)
+				if (!descFilePresent)
 				{
 					//!>> Calling the GEOM Compiler to load 
 					std::string command = "..\\_GEOM_COMPILER\\_GEOM_COMPILER.exe ";
