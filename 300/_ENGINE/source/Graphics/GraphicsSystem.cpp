@@ -432,8 +432,8 @@ void GraphicsSystem::EditorDraw(float dt)
 		GLuint debug_draw = glGetUniformLocation(shaderID, "globalTint");
 		glUniform4fv(debug_draw, 1, glm::value_ptr(m_GlobalTint));
 
-		// Bind mesh's VAO, copy render data into VBO, Draw
-		DrawAll(meshinst);
+		 //Bind mesh's VAO, copy render data into VBO, Draw
+		//DrawAll(meshinst);
 
 		shaderinst.Deactivate();
 
@@ -566,10 +566,17 @@ void GraphicsSystem::GameDraw(float dt)
 			GLuint mViewPosShaderLocation = shaderinst.GetUniformLocation("uViewPos");
 			vec3 viewPos = camera.GetComponent<Camera>().mCamera.position();
 			glUniform3fv(mViewPosShaderLocation, 1, &viewPos[0]);
+
+			// Light count uniform
+			GLuint mLightCountShaderLocation = shaderinst.GetUniformLocation("uLightCount");
+			glUniform1i(mLightCountShaderLocation, m_LightCount);
 		}
 
 		// Bind mesh's VAO, copy render data into VBO, Draw
 		DrawAll(meshinst);
+
+		GLuint debug_draw = glGetUniformLocation(shaderinst.GetHandle(), "globalTint");
+		glUniform4fv(debug_draw, 1, glm::value_ptr(m_GlobalTint));
 
 		meshinst.UnbindVao();
 		shaderinst.Deactivate();
