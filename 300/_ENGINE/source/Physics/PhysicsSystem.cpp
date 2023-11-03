@@ -202,7 +202,7 @@ void PhysicsSystem::CreateActor(PxRigidActor*& actor, const PxTransform& pxform,
 	if (rbod.mMotion == MOTION::DYNAMIC)
 	{
 		actor = mPX.mPhysics->createRigidDynamic(pxform);
-		float temp = rbod.mDensity;
+		//float temp = rbod.mDensity;
 		static_cast<PxRigidDynamic*>(actor)->setLinearVelocity(Convert(rbod.mVelocity));
 
 		PxRigidDynamicLockFlags axis;
