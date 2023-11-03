@@ -96,3 +96,37 @@ std::vector<DijkstraInfo> Graph::Dijkstra(unsigned start_node) const {
 
   return resultPath;
 }
+
+
+//---------------------------------------------
+// Graph Data
+//---------------------------------------------
+void GraphData::AddDEdge(glm::vec3 src, glm::vec3 dst) {
+  auto it = std::find_if(mData.begin(), mData.end(),
+                           [dst] (std::pair<glm::vec3, std::vector<glm::vec3>> const& pointNedges) { return dst == pointNedges.first; });
+
+  if (it == mData.end()) AddPoint(dst);
+  
+  GetPointEdges(src).push_back(dst);
+}
+
+// Add undirected edge
+void GraphData::AddUEdge(glm::vec3 p0, glm::vec3 p1) {
+  GetPointEdges(p0).push_back(p1); // make point if can't be found
+  GetPointEdges(p1).push_back(p0); // make point if can't be found
+}
+
+void GraphData::AddPoint(glm::vec3 point) {
+  mData.push_back({ point, std::vector<glm::vec3>() });
+}
+
+std::vector<glm::vec3>& GraphData::GetPointEdges(glm::vec3 point) {
+  auto it = std::find_if(mData.begin(), mData.end(),
+                         [point] (std::pair<glm::vec3, std::vector<glm::vec3>> const& pointNedges) { return point == pointNedges.first; });
+  if (it == mData.end()) {
+    AddPoint(point);
+    return mData.back().second;
+  } else {
+    return it->second;
+  }
+}
