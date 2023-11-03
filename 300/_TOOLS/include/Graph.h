@@ -10,6 +10,8 @@ method, and dijkstra algorithm to find a path.
 #include "pch.h"
 #include <glm/glm.hpp>
 
+void TestGraph();
+
 struct DijkstraInfo {
   unsigned cost;
   std::vector<unsigned> path;
@@ -129,6 +131,7 @@ public:
   void AddDEdge(glm::vec3 src, glm::vec3 dst);
   void AddUEdge(glm::vec3 p0, glm::vec3 p1);
   void AddPoint(glm::vec3 point);
+  bool CheckForEdge(glm::vec3 src, glm::vec3 dst);
   // Get the point's edges. If can't find point, make a new point
   std::vector<glm::vec3>& GetPointEdges(glm::vec3 point);
 
@@ -142,7 +145,10 @@ public:
 //template<int size>
 class ALGraph {
 public:
-  static const int size = 10;
+  ALGraph(int _size) { mData.resize(_size); }
+
+  void Print();
+
   struct AdjList;
 
   struct Edge {
@@ -155,36 +161,12 @@ public:
     std::vector<Edge> edges; // Vertices that this vertex is pointing to
   };
 
-  std::array<AdjList, size> mData;
+  std::vector<AdjList> mData;
 private:
+
+  void PrintVec(glm::vec3 v) {
+    std::cout << v.x << "|" << v.y << "|" << v.z;
+  }
 };
 
-//template<int size>
-ALGraph GraphData::MakeALGraph() {
-  ALGraph graph; // ALGraph<edges.size()>
-
-  // Adding all the points
-  int i{};
-  for (auto& [point, edges] : mData) {
-    graph.mData[i++].point = point;
-  }
-
-  // Add edges
-  // Find all the same vector and make a new edge, push back into the edges container
-  i = 0;
-  for (auto& [point, edges] : mData) { // In all the graphdata's points
-    ALGraph::AdjList& currPoint = graph.mData[i++]; // Get the corresponding points in ALGraph
-    for (glm::vec3 const& neighbor : edges) { // In the current point, get all connected points in graphdata
-      auto it = std::find_if(graph.mData.begin(), graph.mData.end(), // Find them in ALGraph so that you can point towards them and calculate the weight
-                             [neighbor] (ALGraph::AdjList& adjList) { return adjList.point == neighbor; });
-      assert((it != graph.mData.end()) && "Unable to add edge to AdjList since the other connection point does not exist in ALGraph's mData");
-      
-      // calculate the weight and get pointer, then add it into the edge list
-      float weight = abs(glm::length(currPoint.point - neighbor));
-      currPoint.edges.emplace_back(ALGraph::Edge(&*it, weight));
-    }
-  }
-
-  return graph;
-}
 

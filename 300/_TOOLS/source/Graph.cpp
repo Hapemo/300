@@ -107,17 +107,30 @@ void GraphData::AddDEdge(glm::vec3 src, glm::vec3 dst) {
 
   if (it == mData.end()) AddPoint(dst);
   
-  GetPointEdges(src).push_back(dst);
+  if (CheckForEdge(src, dst))
+    std::cout << "Warning: Attempting to add edge that was already added\n";
+  else GetPointEdges(src).push_back(dst);
 }
 
 // Add undirected edge
 void GraphData::AddUEdge(glm::vec3 p0, glm::vec3 p1) {
-  GetPointEdges(p0).push_back(p1); // make point if can't be found
-  GetPointEdges(p1).push_back(p0); // make point if can't be found
+  if (CheckForEdge(p0, p1))
+    std::cout << "Warning: Attempting to add edge that was already added\n";
+  else GetPointEdges(p0).push_back(p1); // make point if can't be found
+  
+  if (CheckForEdge(p1, p0))
+    std::cout << "Warning: Attempting to add edge that was already added\n";
+  else GetPointEdges(p1).push_back(p0); // make point if can't be found
 }
 
 void GraphData::AddPoint(glm::vec3 point) {
   mData.push_back({ point, std::vector<glm::vec3>() });
+}
+
+bool GraphData::CheckForEdge(glm::vec3 src, glm::vec3 dst) {
+  auto const& edges = GetPointEdges(src);
+  auto it = std::find_if(edges.begin(), edges.end(), [dst] (glm::vec3 const& vec) { return dst == vec; });
+  return it != edges.end();
 }
 
 std::vector<glm::vec3>& GraphData::GetPointEdges(glm::vec3 point) {
@@ -130,3 +143,83 @@ std::vector<glm::vec3>& GraphData::GetPointEdges(glm::vec3 point) {
     return it->second;
   }
 }
+
+ALGraph GraphData::MakeALGraph() {
+  ALGraph graph(mData.size());
+
+  // Adding all the points
+  int i{};
+  for (auto& [point, edges] : mData) {
+    graph.mData[i++].point = point;
+  }
+
+  // Add edges
+  // Find all the same vector and make a new edge, push back into the edges container
+  i = 0;
+  for (auto& [point, edges] : mData) { // In all the graphdata's points
+    ALGraph::AdjList& currPoint = graph.mData[i++]; // Get the corresponding points in ALGraph
+    for (glm::vec3 const& neighbor : edges) { // In the current point, get all connected points in graphdata
+      auto it = std::find_if(graph.mData.begin(), graph.mData.end(), // Find them in ALGraph so that you can point towards them and calculate the weight
+                             [neighbor] (ALGraph::AdjList& adjList) { return adjList.point == neighbor; });
+      assert((it != graph.mData.end()) && "Unable to add edge to AdjList since the other connection point does not exist in ALGraph's mData");
+
+      // calculate the weight and get pointer, then add it into the edge list
+      float weight = abs(glm::length(currPoint.point - neighbor));
+      currPoint.edges.emplace_back(ALGraph::Edge(&*it, weight));
+    }
+  }
+
+  return graph;
+}
+
+void TestGraph() {
+  std::cout << "---graph test start---\n";
+
+  glm::vec3 p1{ 1,2,3 };
+  glm::vec3 p2{ 2,3,4 };
+  glm::vec3 p3{ 3,4,5 };
+  glm::vec3 p4{ 4,5,6 };
+  glm::vec3 p5{ 5,6,7 };
+  glm::vec3 p6{ 6,7,8 };
+  glm::vec3 p7{ 7,8,9 };
+  glm::vec3 p8{ 8,9,10 };
+  glm::vec3 p9{ 9,10,11 };
+  glm::vec3 p10{ 10,11,12 };
+
+  GraphData graphData;
+  graphData.AddUEdge(p1, p2);
+  graphData.AddUEdge(p2, p3);
+  graphData.AddUEdge(p3, p4);
+  graphData.AddUEdge(p4, p5);
+  graphData.AddUEdge(p5, p6);
+  graphData.AddUEdge(p6, p7);
+  graphData.AddUEdge(p7, p8);
+  graphData.AddUEdge(p8, p9);
+  graphData.AddUEdge(p9, p10);
+  graphData.AddUEdge(p10, p1);
+
+  ALGraph alGraph = graphData.MakeALGraph();
+  alGraph.Print();
+
+  std::cout << "---graph test finish---\n";
+}
+
+void ALGraph::Print() {
+  std::cout << "---Printing ALGraph start---\n";
+  for (AdjList& adjList : mData) {
+    PrintVec(adjList.point);
+
+    for (auto& edge : adjList.edges) {
+      std::cout << " -> ";
+      PrintVec(edge.vertex->point);
+
+#if 1 // Print weight
+      std::cout << " (" << edge.weight << ")";
+#endif
+    }
+    std::cout << "\n";
+  }
+  std::cout << "---Printing ALGraph finish---\n";
+}
+
+
