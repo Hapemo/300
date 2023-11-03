@@ -30,23 +30,20 @@ void TabWindow::init() {
 	Update function for tan window
 */
 /***************************************************************************/
-void TabWindow::update() 
+void TabWindow::update()
 {
 
 	auto& editorcam = systemManager->mGraphicsSystem->m_EditorCamera;
 
 	ImGui::Text("Editor Camera");
-	//ImGui::SameLine();
-	//ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
-	//	- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
-	ImGui::DragFloat3("Position", (float*)&editorcam.mPosition);
+
+	vec3 editorcampos = editorcam.mPosition;
+	ImGui::TextColored({ 0.8f, 0.9f, 0.9f, 1.f }, "Editor Camera Position: %0.2f, %0.2f, %0.2f", editorcampos.x, editorcampos.y, editorcampos.z);
 
 	ImGui::Separator();
-	//ImGui::Text("Target");
-	//ImGui::SameLine();
-	//ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
-	//	- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
-	ImGui::DragFloat3("Target", (float*)&editorcam.mTarget);
+	
+	vec3 editorcamdir = editorcam.direction();
+	ImGui::TextColored({ 0.8f, 0.9f, 0.9f, 1.f }, "Editor Camera Direction: %0.2f, %0.2f, %0.2f", editorcamdir.x, editorcamdir.y, editorcamdir.z);
 
 	ImGui::Separator();
 	ImGui::Text("Camera Speed");
@@ -63,6 +60,14 @@ void TabWindow::update()
 	static bool ischecked = systemManager->mGraphicsSystem->m_DebugDrawing;
 	if (ImGui::Checkbox("##Debug", &ischecked)) {
 		systemManager->mGraphicsSystem->m_DebugDrawing = ischecked ? 1 : 0;
+
+		if (ischecked) {
+			systemManager->mGraphicsSystem->m_GlobalTint.w = 0.3f;
+		}
+		else {
+			systemManager->mGraphicsSystem->m_GlobalTint.w = 1.f;
+		}
+
 	}
 
 	// the threshold for bloom
@@ -81,4 +86,8 @@ void TabWindow::update()
 
 	ImGui::Checkbox("Enable Bloom", &systemManager->mGraphicsSystem->m_EnableBloom); 
 	ImGui::Checkbox("Enable Chromatic Abberation", &systemManager->mGraphicsSystem->m_EnableChromaticAbberation);
+
+	ImGui::DragFloat("Health Bar", (float*)&systemManager->mGraphicsSystem->m_Health);
+
+	ImGui::ColorPicker4("Global Tint", (float*)&systemManager->mGraphicsSystem->m_GlobalTint);
 }

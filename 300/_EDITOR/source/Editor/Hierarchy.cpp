@@ -70,22 +70,29 @@ void Hierarchy::update() {
     if (ImGui::Button(ICON_FA_PLUS, ImVec2(50, 50)))
     {
 
-        if (allScene.size() <= 0) {
-            systemManager->mGameStateSystem->mCurrentGameState.AddScene("NewScene");
+        if (allScene.size() <= 0) 
+        {
+            systemManager->mGameStateSystem->mCurrentGameState.AddScene();
             Entity newEntity = allScene[0].AddEntity();
+            newEntity.AddComponent<Camera>();
 
         }
         else {
             Entity newEntity = allScene[Hierarchy::selectedScene].AddEntity();
             newEntity.GetComponent<General>().name = "NewObject"/* + static_cast<int> (newEntity.id)*/;
-
         }
     }
 
     ImGui::SameLine();
     if (ImGui::Button(ICON_FA_FILE_CIRCLE_PLUS, ImVec2(50, 50))) {
-        systemManager->mGameStateSystem->mCurrentGameState.AddScene();
-
+        if (allScene.size() <= 0) 
+        {
+            systemManager->mGameStateSystem->mCurrentGameState.AddScene();
+            Entity newEntity = allScene[0].AddEntity();
+            newEntity.AddComponent<Camera>();
+        }
+        else
+            systemManager->mGameStateSystem->mCurrentGameState.AddScene();
     }
 
 
@@ -119,16 +126,17 @@ void Hierarchy::update() {
                 if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_PREFAB")) {
                     auto data = (const char*)payload->Data;
                     std::string newdata(data);
-                    Entity newent = systemManager->ecs->NewEntityFromPrefab(newdata);
-                  
+                    Entity newent = systemManager->ecs->NewEntityFromPrefab(newdata, glm::vec3());
                     
                 }
                 ImGui::EndDragDropTarget();
             }
 
             int imguid{0};
+           // auto temp = systemManager->ecs->GetEntitiesWith<General>();
             for (Entity ent : allScene[i].mEntities) {
-
+                //if (temp.find(ent.id) == temp.end())
+                //    Hierarchy::selectionOn = false;
 
                 if (ent.HasParent() == false && ent.HasChildren() == false) {
 
@@ -348,16 +356,8 @@ void Hierarchy::update() {
             systemManager->mGameStateSystem->mCurrentGameState.mScenes[RselectedScene].Save();
         }
         if (ImGui::Selectable("Delete")) {
-            
             selectionOn = false;
-             if (systemManager->mGameStateSystem->mCurrentGameState.mScenes[RselectedScene].mEntities.size() > 0) {
-
-                 for (int i{ 0 }; i < systemManager->mGameStateSystem->mCurrentGameState.mScenes[RselectedScene].mEntities.size(); i++) {
-                   systemManager->mGameStateSystem->mCurrentGameState.mScenes[RselectedScene].Unload();
-                 }
-             }
-             systemManager->mGameStateSystem->
-                 mCurrentGameState.RemoveScene(systemManager->mGameStateSystem->mCurrentGameState.mScenes[RselectedScene].mName);
+            systemManager->mGameStateSystem->mCurrentGameState.RemoveScene(systemManager->mGameStateSystem->mCurrentGameState.mScenes[RselectedScene].mName);
         }
        
         sCPopup = false;

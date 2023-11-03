@@ -2,7 +2,8 @@
 #include "ECS/ECS.h"
 #include "ECS/ECS_Components.h"
 #include "FPSManager.h"
-
+#include "GameState/GameStateManager.h"
+#include "Physics/PhysicsSystem.h"
 
 const std::array<std::string, static_cast<size_t>(E_MOVEMENT_TYPE::SIZE)> AIManager::mMovementTypeArray{ MovementTypeArrayInit() };
 
@@ -14,16 +15,22 @@ E_MOVEMENT_TYPE& operator++(E_MOVEMENT_TYPE& _enum) {
 //--------------------------------------------------
 // Public functions
 //--------------------------------------------------
-AIManager::AIManager() : mPlayerEntity(), mPlayerTransform(nullptr), mPlayerArrayIndex(0), mPlayerHistory(), mAILists() {
+AIManager::AIManager() : mPlayerEntity(), mPlayerTransform(nullptr), mPlayerHistorySize(), mPlayerArrayIndex(0), mPlayerHistory(), mAILists() {
 	E_MOVEMENT_TYPE i{ E_MOVEMENT_TYPE::BEGIN };
 	while (++i != E_MOVEMENT_TYPE::SIZE)
 		mAILists[mMovementTypeArray[static_cast<int>(i)]];
+
+}
+
+void AIManager::Update(float _dt) {
+	TrackPlayerPosition(_dt);
 }
 
 
 glm::vec3 AIManager::GetDirection(Entity _e) {
 	glm::vec3 dir{};
-	switch (_e.GetComponent<AISetting>().mMovementType) {
+	AISetting const& aiSetting = _e.GetComponent<AISetting>();
+	switch (aiSetting.mMovementType) {
 	case E_MOVEMENT_TYPE::GROUND_DIRECT: dir = CalcGroundAIDir(_e);
 		break;
 	case E_MOVEMENT_TYPE::AIR_HOVER: dir = CalcAirAIDir(_e);
@@ -31,16 +38,19 @@ glm::vec3 AIManager::GetDirection(Entity _e) {
 	}
 
 	// Advance movement settings
-	if (_e.GetComponent<AISetting>().mSpreadOut) SpreadOut(_e, dir);
+	if (aiSetting.mSpreadOut) SpreadOut(_e, dir);
+
+	//// Make sure ground enemy is always on ground
+	//if (aiSetting.mMovementType == E_MOVEMENT_TYPE::GROUND_DIRECT) dir.y = 0;
 
 	return dir;
 }
 
-void AIManager::TrackPlayerPosition() {
+void AIManager::TrackPlayerPosition(float _dt) {
 	if (mPlayerEntity.id == entt::null) return;
 	
 	static float timePassed{};
-	timePassed += FPSManager::dt;
+	timePassed += _dt;
 	if (timePassed >= 0.1) timePassed = 0;
 	else return;
 
@@ -58,15 +68,59 @@ void AIManager::SetPlayer(Entity _e) {
 void AIManager::ResetPlayerTracking() {
 	mPlayerEntity.id = entt::null;
 	mPlayerTransform = nullptr;
-	mPlayerHistorySize = 0;
+	mPlayerHistorySize = mPlayerArrayIndex = 0;
+	const glm::vec3 empty{ 0,0,0 };
+	mPlayerHistory.fill(empty);
 }
+
+void AIManager::InitialiseAI(Entity _e) {
+#if _DEBUG
+	if (!_e.HasComponent<AISetting>()) {
+		PWARNING("Attempted to initialise AI in entity with no AI Setting component. Entity name: %s", _e.GetComponent<General>().name);
+		return;
+	}
+#endif
+	AISetting& setting{ _e.GetComponent<AISetting>() };
+	if (setting.mMovementType != E_MOVEMENT_TYPE::BEGIN)
+		mAILists[mMovementTypeArray[static_cast<int>(setting.mMovementType)]].insert(_e);
+	setting.SetTarget(systemManager->mGameStateSystem->GetEntity(setting.mTargetName));
+}
+
+void AIManager::InitAIs() {
+	GameState* gs = systemManager->GetGameStateSystem()->GetCurrentGameState();
+	auto const& entities = systemManager->ecs->GetEntitiesWith<AISetting>();
+	for (auto entity : entities)
+		InitialiseAI(Entity(entity));
+	
+	Entity player = systemManager->GetGameStateSystem()->GetEntity(PLAYER_NAME);
+	if (player.id != entt::null) SetPlayer(player);
+	else PWARNING("Attempted to set player in AI Manager, but was unable to find player");
+}
+
+void AIManager::ClearAIs() {
+	ResetPlayerTracking();
+	for (auto& EntityList : mAILists)
+		EntityList.second.clear();
+}
+
+void AIManager::RemoveAIFromEntity(Entity _e) {
+	if (!_e.HasComponent<AISetting>()) return;
+	for (auto& [listName, aiList] : mAILists) {
+		auto it = aiList.find(_e);
+		if (it != aiList.end()) 
+			aiList.erase(it);
+	}
+}
+
 
 void AIManager::SetPredictiveVelocity(Entity projectile, Entity target, float speed) {
 	const glm::vec3 p1p0 = target.GetComponent<Transform>().mTranslate - projectile.GetComponent<Transform>().mTranslate;
 	const glm::vec3 v0 = target.GetComponent<RigidBody>().mVelocity;
-	const float s1 = glm::length(projectile.GetComponent<RigidBody>().mVelocity);
+	const float s1 = speed; //glm::length(projectile.GetComponent<RigidBody>().mVelocity);
 
-	projectile.GetComponent<RigidBody>().mVelocity = CalculatePredictiveVelocity(p1p0, v0, s1);
+	//projectile.GetComponent<RigidBody>().mVelocity = CalculatePredictiveVelocity(p1p0, v0, s1);
+
+	systemManager->GetPhysicsPointer()->SetVelocity(projectile, CalculatePredictiveVelocity(p1p0, v0, s1));
 
 #if _DEBUG
 	float actualSpeed = glm::length(projectile.GetComponent<RigidBody>().mVelocity);
@@ -75,7 +129,7 @@ void AIManager::SetPredictiveVelocity(Entity projectile, Entity target, float sp
 #endif
 }
 
-void AIManager::PredictiveShootPlayer(Entity projectile, float speed, short deciseconds, unsigned weightage = 50) {
+void AIManager::PredictiveShootPlayer(Entity projectile, float speed, int deciseconds, unsigned weightage = 50) {
 	int prevPosIndex{ mPlayerArrayIndex ? mPlayerArrayIndex - 1 : MAX_DECISECOND_PLAYER_HISTORY - 1 };
 	glm::vec3* currPos{ &mPlayerEntity.GetComponent<Transform>().mTranslate };
 	glm::vec3 accumulatedVector{};
@@ -98,11 +152,10 @@ void AIManager::PredictiveShootPlayer(Entity projectile, float speed, short deci
 
 	// Accounting for the accumulated vector, calculate the predicted velocity
 	const glm::vec3 p1p0 = mPlayerEntity.GetComponent<Transform>().mTranslate - projectile.GetComponent<Transform>().mTranslate;
-	const glm::vec3 v0 = mPlayerEntity.GetComponent<RigidBody>().mVelocity/static_cast<float>(100-weightage) + accumulatedVector/static_cast<float>(weightage);
-	const float s1 = glm::length(projectile.GetComponent<RigidBody>().mVelocity);
+	const glm::vec3 v0 = mPlayerEntity.GetComponent<RigidBody>().mVelocity*static_cast<float>(1.f-weightage/100.f) + accumulatedVector*static_cast<float>(weightage/100.f);
+	const float s1 = speed;
 
-	projectile.GetComponent<RigidBody>().mVelocity = CalculatePredictiveVelocity(p1p0, v0, s1);
-
+	systemManager->GetPhysicsPointer()->SetVelocity(projectile, CalculatePredictiveVelocity(p1p0, v0, s1));
 #if _DEBUG
 	float actualSpeed = glm::length(projectile.GetComponent<RigidBody>().mVelocity);
 	PASSERTMSG(!(actualSpeed > speed + cEpsilon) || (actualSpeed < speed + cEpsilon), 
@@ -115,10 +168,13 @@ glm::vec3 AIManager::CalculatePredictiveVelocity(glm::vec3 const& p1p0, glm::vec
 	const float a = glm::dot(v0, v0) - s1*s1;
 	const float b = 2 * glm::dot(p1p0, v0);
 	const float c = glm::dot(p1p0, p1p0);
+	//std::cout << "root val: " << b*b - 4*a*c;
 	float t0 = (-b + sqrt(b*b - 4*a*c))/(2*a);
-	const float t1 = (-b - sqrt(b*b - 4*a*c))/(2*a);
+	float t1 = (-b - sqrt(b*b - 4*a*c))/(2*a);
 
-	if (t1 > 0) t0 = std::min(t0, t1);
+	t0 = t0 < 0 ? FLT_MAX : t0;
+	t1 = t1 < 0 ? FLT_MAX : t1;
+	t0 = std::min(t0, t1);
 
 	// Calculate and set vector
 	return p1p0/t0 + v0;
@@ -133,39 +189,49 @@ glm::vec3 AIManager::CalcGroundAIDir(Entity _e) {
 	// Calculate basic direction
 	glm::vec3 tgtPos = Entity(_e.GetComponent<AISetting>().GetTarget()).GetComponent<Transform>().mTranslate;
 	glm::vec3 dir = tgtPos - _e.GetComponent<Transform>().mTranslate;
-	
-	return dir;
+#if 0
+	std::cout << "tgtPos: " << tgtPos;
+	std::cout << "currPos: " << _e.GetComponent<Transform>().mTranslate;
+	std::cout << "dir" << dir << '\n';
+#endif
+	dir.y = 0;
+	return glm::normalize(dir);
 }
 
+// Gain elevation first, then move towards player until designated area.
 glm::vec3 AIManager::CalcAirAIDir(Entity _e) {
 	AISetting const& _eSetting = _e.GetComponent<AISetting>();
 	Transform const& _eTrans = _e.GetComponent<Transform>();
 	Transform const& _tgtTrans = _eSetting.GetTarget().GetComponent<Transform>();
 
-	// if AI is not above the target yet, gain height first, fly to mStayAway distance away.
-	if (_eTrans.mTranslate.y <= _eSetting.mStayAway + _tgtTrans.mTranslate.y) return glm::vec3(0, 1, 0);
+	glm::vec3 accumDir{};
+	// Vertical distance between enemy and target not more than _eElevation
+	// Check vertical height
+	float elevationDir = (_tgtTrans.mTranslate.y + _tgtTrans.mScale.y/2.f + _eSetting.mElevation) - (_eTrans.mTranslate.y + _eTrans.mScale.y/2.f);
 
-	float _eEdgeDistance = glm::length(_eTrans.mScale/2.f);
-	float _tgtEdgeDistance = glm::length(_tgtTrans.mScale/2.f);
-	float DistanceInBetween = abs(glm::length(_eTrans.mTranslate - _tgtTrans.mTranslate)) - (_eEdgeDistance + _tgtEdgeDistance);
-	
-	// When near the target's head, like 1.5x the stay away distance, move directly to the target until stay away distance
-	if (DistanceInBetween > (_eSetting.mStayAway * 1.5f)) {
-		// Move directly to the target's top
-		glm::vec3 aboveTgtPos = _tgtTrans.mTranslate + glm::vec3(0, _eSetting.mStayAway, 0);
+	accumDir.y = elevationDir;
 
-		return glm::normalize(aboveTgtPos - _eTrans.mTranslate);
+	// Check horizontal Dist
+	glm::vec2 xzDir = glm::vec2(_tgtTrans.mTranslate.x - _eTrans.mTranslate.x, _tgtTrans.mTranslate.z - _eTrans.mTranslate.z);
+	float horizontalDistance = abs(abs(glm::length(xzDir)) - glm::length(glm::vec2(abs(_eTrans.mScale.x) + abs(_tgtTrans.mScale.x), abs(_eTrans.mScale.z) + abs(_tgtTrans.mScale.z)) / 2.f));
+
+	float requiredDistance = horizontalDistance - _eSetting.mStayAway;
+
+	if (!(requiredDistance < FLT_EPSILON && requiredDistance > -FLT_EPSILON)) { // If required horizontal distance not equal to 0
+		if (horizontalDistance < FLT_EPSILON && horizontalDistance > -FLT_EPSILON) // If horizontal distance is 0
+			return glm::vec3(0.57735f, 0.57735f, 0.57735f); // Normalized vector for glm::vec3(1,1,1)
+
+		xzDir *= (requiredDistance/horizontalDistance);
+		accumDir.x = xzDir.x;
+		accumDir.z = xzDir.y;
 	}
 
-	// Move directly to the target if too far from player
-	if (DistanceInBetween > _eSetting.mStayAway)
-		return glm::normalize(_tgtTrans.mTranslate - _eTrans.mTranslate);
-
-	return glm::vec3();
+	if (glm::length(accumDir) != 0) accumDir = glm::normalize(accumDir);
+	return accumDir;
 }
 
 void AIManager::SpreadOut(Entity _e, glm::vec3& dir) {
-	AISetting setting{ _e.GetComponent<AISetting>() };
+	AISetting& setting{ _e.GetComponent<AISetting>() };
 	// Get list of AIs from same catagory
 	std::set<Entity>& aiList = mAILists[mMovementTypeArray[static_cast<int>(setting.mMovementType)]];
 
@@ -173,14 +239,24 @@ void AIManager::SpreadOut(Entity _e, glm::vec3& dir) {
 	glm::vec3 allDeviatedDir{};
 	glm::vec3 ePos{ _e.GetComponent<Transform>().mTranslate };
 	for (Entity e : aiList) {
+		if (e == _e) continue;
 		// Add all vector of e to _e
 		glm::vec3 direction{ ePos - e.GetComponent<Transform>().mTranslate };
-		allDeviatedDir += (direction / (glm::length(direction) * 10));
+		allDeviatedDir += (direction / (glm::length(direction) * 10)); // 10 determines the degree of which distance between enemy and player will affect the direction change.
+																																	 // Higher number means closer entities will affect direction more than further enemies
 	}
-	allDeviatedDir = glm::normalize(allDeviatedDir);
+	if (setting.mMovementType == E_MOVEMENT_TYPE::GROUND_DIRECT)
+		allDeviatedDir.y = 0;
 
+	if (glm::length(allDeviatedDir) != 0)
+		allDeviatedDir = glm::normalize(allDeviatedDir);
+
+	if (setting.mSpreadOut > 100.f) setting.mSpreadOut = 100.f;
+	else if (setting.mSpreadOut < 0.f) setting.mSpreadOut = 0.f;
 	// Add deviation to direction with respect to spreadout ratio
-	dir = glm::normalize(dir + (allDeviatedDir * setting.mSpreadOut));
+	glm::vec3 tempVec = dir*(100 - setting.mSpreadOut) + allDeviatedDir * setting.mSpreadOut;
+	if (glm::length(tempVec) != 0) dir = glm::normalize(tempVec);
+	else dir = tempVec;
 }
 
 

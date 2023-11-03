@@ -67,6 +67,7 @@ public:
 	Reloads the gamestate and its scenes.
 	*******************************************************************************/
 	void Reset();
+	void ResetForChangeGS();
 	/*!*****************************************************************************
 	Pauses the game.
 	*******************************************************************************/
@@ -83,6 +84,8 @@ public:
 	Cleaning up before exiting.
 	*******************************************************************************/
 	void Exit();
+
+	bool isSystemPaused() {return !mIsPlay; }
 
 	void DeleteEntity(Entity e);
 	PhysicsSystem *GetPhysicsPointer();

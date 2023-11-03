@@ -149,12 +149,6 @@ void Inspect::update()
 			Audio& audio = ent.GetComponent<Audio>();
 			audio.Inspect();
 		}
-
-		if (ent.HasComponent<AudioListener>()) {
-			AudioListener& audio_listener = ent.GetComponent<AudioListener>();
-			audio_listener.Inspect();
-		}
-
 		if (ent.HasComponent<UIrenderer>()) {
 			UIrenderer& render = ent.GetComponent<UIrenderer>();
 			render.Inspect();
@@ -168,6 +162,11 @@ void Inspect::update()
 		if (ent.HasComponent<AISetting>()) {
 			AISetting& aiSetting = ent.GetComponent<AISetting>();
 			aiSetting.Inspect();
+		}
+
+		if (ent.HasComponent<Crosshair>()) {
+			Crosshair& crosshair = ent.GetComponent<Crosshair>();
+			crosshair.Inspect();
 		}
 
 		//--------------------------------------------// must be at the LAST OF THIS LOOP
@@ -261,6 +260,16 @@ void Inspect::Add_component() {
 				Entity(Hierarchy::selectedId).AddComponent<AISetting>();
 		}
 
+		if (ImGui::Selectable("Camera")) {
+			if (!Entity(Hierarchy::selectedId).HasComponent<Camera>())
+				Entity(Hierarchy::selectedId).AddComponent<Camera>();
+		}
+
+		if (ImGui::Selectable("Crosshair")) {
+			if (!Entity(Hierarchy::selectedId).HasComponent<Crosshair>())
+				Entity(Hierarchy::selectedId).AddComponent<Crosshair>();
+		}
+
 		ImGui::EndCombo();
 
 
@@ -347,6 +356,13 @@ void Transform::Inspect() {
 		ImGui::Separator();
 
 
+		ImGui::Text("Rotation");
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		ImGui::DragFloat3("##Rotation", (float*)&mRotate, 1);
+
+
 		ImGui::Text("Scale");
 		ImGui::SameLine();
 		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
@@ -355,15 +371,6 @@ void Transform::Inspect() {
 
 		ImGui::Separator();
 
-
-		ImGui::Text("Rotation");
-		ImGui::SameLine();
-		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
-			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
-		ImGui::DragFloat3("##Rotation", (float*)&mRotate, 1);
-
-
-		
 	}
 
 }
@@ -383,19 +390,18 @@ void Camera::Inspect()
 
 		ImGui::Separator();
 
-		vec3 temp = mCamera.mPosition;
-		ImGui::DragFloat3("Camera Position", (float*)&temp);
-
-		mCamera.mTarget += temp - mCamera.mPosition;
-		mCamera.mPosition = temp;
-
-		ImGui::DragFloat3("Camera Target", (float*)&mCamera.mTarget);
+		vec3 camdir = mCamera.direction();
+		ImGui::Text("Camera Direction");
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		ImGui::Text("%0.2f, %0.2f, %0.2f", camdir.x, camdir.y, camdir.z);
 
 		ImGui::Text("Aspect Ratio");
 		ImGui::SameLine();
 		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
 			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
-		ImGui::DragFloat("##Aspect", &mCamera.mAspectRatio);
+		ImGui::Text("%0.2f", &mCamera.mAspectRatio);
 
 		ImGui::Text("FOV");
 		ImGui::SameLine();
@@ -414,6 +420,13 @@ void Camera::Inspect()
 		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
 			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
 		ImGui::DragFloat("##NP", &mCamera.mNear);
+
+		ImGui::Text("Camera Speed");
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		ImGui::DragFloat("##CSG", &mCamera.mCameraSpeed);
+
 
 		//ImGui::Text("Orthographic");
 		//ImGui::SameLine();
@@ -468,6 +481,7 @@ void Scripts::Inspect(entt::entity entityID) {
 	static std::string newScript;
 	static bool open_popup{ false };
 	static std::string deleteScript;
+	bool emptyFile = false;
 
 	//auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
 	////Scripts& scripts = scriptEntities.get<Scripts>(Hierarchy::selectedId);
@@ -485,11 +499,8 @@ void Scripts::Inspect(entt::entity entityID) {
 				// if entity does not contain any script, just add 
 				if (scriptsContainer.size() == 0)
 				{
-					Script script;
-					script.scriptFile = dataScript;
-					script.env = { systemManager->mScriptingSystem->luaState, sol::create, systemManager->mScriptingSystem->luaState.globals() };
-					script.Load(entityID);
-					scriptsContainer.push_back(script);
+					Script* script = AddScript(dataScript);
+					script->Load(entityID);
 					//std::cout << "Script " << script.scriptFile << " added to entity " << std::to_string((int)Hierarchy::selectedId) << std::endl;
 				}
 				// if entity already has scripts attached, check if duplicate 
@@ -499,7 +510,7 @@ void Scripts::Inspect(entt::entity entityID) {
 
 					for (auto& elem : scriptsContainer)
 					{
-						if (elem.scriptFile == dataScript)
+						if (elem->scriptFile == dataScript)
 						{
 							hasScript = true;
 							//std::cout << "Script is already attached! " << std::endl;
@@ -510,15 +521,10 @@ void Scripts::Inspect(entt::entity entityID) {
 
 					if (!hasScript)
 					{
-						Script script;
-						script.scriptFile = dataScript;
-						script.env = { systemManager->mScriptingSystem->luaState, sol::create, systemManager->mScriptingSystem->luaState.globals() };
-
-						script.Load(entityID);
-
-						scriptsContainer.push_back(script);
+						Script* script = AddScript(dataScript);
+						script->Load(entityID);
 						//std::cout << "Script " << script.scriptFile << ".lua added to entity " << std::to_string((int)Hierarchy::selectedId) << std::endl;
-						PINFO("Script %s added to entity %s", script.scriptFile.c_str(), std::to_string((int)Hierarchy::selectedId).c_str());
+						PINFO("Script %s added to entity %s", script->scriptFile.c_str(), std::to_string((int)Hierarchy::selectedId).c_str());
 					}
 				}
 			}
@@ -530,10 +536,10 @@ void Scripts::Inspect(entt::entity entityID) {
 		for (auto& elem : scriptsContainer)
 		{
 			ImGui::SetNextItemOpen(true);
-			if (ImGui::TreeNode(elem.scriptFile.c_str())) {
+			if (ImGui::TreeNode(elem->scriptFile.c_str())) {
 				if (ImGui::IsItemClicked(1)) {
 					open_popup = true;
-					deleteScript = elem.scriptFile;
+					deleteScript = elem->scriptFile;
 				}
 				InspectScript(elem);
 				ImGui::TreePop();
@@ -550,8 +556,9 @@ void Scripts::Inspect(entt::entity entityID) {
 			{
 				for (auto i = 0; i < scriptsContainer.size(); i++)
 				{
-					if (scriptsContainer[i].scriptFile == deleteScript)
+					if (scriptsContainer[i]->scriptFile == deleteScript)
 					{
+						delete scriptsContainer[i];
 						scriptsContainer.erase(scriptsContainer.begin() + i);
 					}
 				}
@@ -565,24 +572,42 @@ void Scripts::Inspect(entt::entity entityID) {
 		ImGui::InputText(".lua", &newScript);
 		if (ImGui::Button("Add Lua Script"))
 		{
-			std::ofstream output;
-			std::ifstream input{ "../assets/Scripts/DefaultTemplate.lua" };
-			std::stringstream ss;
-			std::string lua = ".lua";
-			std::string line;
-			ss << "../assets/Scripts/" << newScript << ".lua";
-			std::cout << ss.str() << std::endl;
-			std::string pathInString = ss.str();
-			const char* path = pathInString.c_str();
-			output.open(path, std::ios_base::out);
-			while (getline(input, line))
+			// check if script name was empty
+			if (newScript == "" || newScript == " ")
 			{
-				output << line << std::endl;
+				ImGui::OpenPopup("EmptyScript");
+				emptyFile = true;
 			}
-			input.close();
-			newScript = " ";
+			if (!emptyFile)
+			{
+				std::ofstream output;
+				std::ifstream input{ "../assets/Scripts/DefaultTemplate.lua" };
+				std::stringstream ss;
+				std::string lua = ".lua";
+				std::string line;
+				ss << "../assets/Scripts/" << newScript << ".lua";
+				std::cout << ss.str() << std::endl;
+				std::string pathInString = ss.str();
+				const char* path = pathInString.c_str();
+				output.open(path, std::ios_base::out);
+				while (getline(input, line))
+				{
+					output << line << std::endl;
+				}
+				input.close();
+				Script* script = AddScript(ss.str());
+				script->Load(Hierarchy::selectedId);
+				newScript = " ";
+			}
 			ImGui::InputText(".lua", &newScript);
 		}
+	}
+	if (ImGui::BeginPopupModal("EmptyScript", NULL, ImGuiWindowFlags_AlwaysAutoResize))
+	{
+		ImGui::Text("Script file name is EMPTY !");
+		if (ImGui::Button("OK", ImVec2(120, 0))) { ImGui::CloseCurrentPopup(); }
+		ImGui::SetItemDefaultFocus();
+		ImGui::EndPopup();
 	}
 	if (delete_component == false)
 		Entity(Hierarchy::selectedId).RemoveComponent<Scripts>();
@@ -734,22 +759,28 @@ void MeshRenderer::Inspect()
 				std::string descfilepath = data_str + ".desc";
 				guid = _GEOM::GetGUID(descfilepath);
 
-				// If the descriptor file is not present, then load it
-				if (!descFilePresent)
+				//if (!descFilePresent)
+				// recompiles everything as long as its fbx
 				{
 					//!>> Calling the GEOM Compiler to load 
 					std::string command = "..\\_GEOM_COMPILER\\_GEOM_COMPILER.exe ";
 					command += GEOM_Descriptor_Filepath;
 					int result = system(command.c_str());
 
-					std::string geompath = GEOM_Descriptor_Filepath.substr(0, GEOM_Descriptor_Filepath.find_last_of("."));
-
-					systemManager->mResourceTySystem->mesh_Load(geompath, guid);
+					if (systemManager->mResourceTySystem->get_mesh(guid) == nullptr)
+					{
+						// only load the mesh if its not yet been seen in the system
+						std::string geompath = GEOM_Descriptor_Filepath.substr(0, GEOM_Descriptor_Filepath.find_last_of("."));
+						systemManager->mResourceTySystem->mesh_Load(geompath, guid);
+					}
 				}
 
 				mMeshRef.data_uid = guid;
 				mMeshRef.data = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(guid));
 				GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mMeshRef.data);
+				
+				// load the descriptor data into the GFX::mesh instance
+				_GEOM::DescriptorData::DeserializeGEOM_DescriptorDataFromFile(meshinst->mMeshDescriptorData, GEOM_Descriptor_Filepath);
 
 				if (entins.HasComponent<Animator>() && meshinst->mHasAnimation)
 				{
@@ -768,8 +799,11 @@ void MeshRenderer::Inspect()
 		}
 
 
-		ImGui::Dummy(ImVec2(0.0f, 10.0f));
+	//	ImGui::Dummy(ImVec2(0.0f, 10.0f));
 
+		
+
+		
 		ImGui::SameLine();
 
 		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcTextSize(tempPath.c_str()).x
@@ -816,11 +850,13 @@ void MeshRenderer::Inspect()
 						std::string TEXTURE_Descriptor_Filepath;
 						unsigned guid;
 						// check and ensures that the descriptor file for the materials are created
-						bool descFilePresent = _GEOM::CheckAndCreateDescriptorFileTEXTURE(data_str, TEXTURE_Descriptor_Filepath, texturestr);
+						//bool descFilePresent = _GEOM::CheckAndCreateDescriptorFileTEXTURE(data_str, TEXTURE_Descriptor_Filepath, texturestr);
 						std::string descfilepath = data_str + ".desc";
 						guid = _GEOM::GetGUID(descfilepath);
 						mTextureRef[i].data_uid = guid;
 						mTextureRef[i].data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(guid));
+
+						_GEOM::Texture_DescriptorData::DeserializeTEXTURE_DescriptorDataFromFile(mTextureDescriptorData[i], TEXTURE_Descriptor_Filepath);
 
 						//uid temp(mMaterialInstancePath[i]);
 						//mTextureRef[i].data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(temp.id));
@@ -843,10 +879,12 @@ void MeshRenderer::Inspect()
 						std::string descfilepath = data_str + ".desc";
 						guid = _GEOM::GetGUID(descfilepath);	// gets the guid from the png desc
 
+						_GEOM::Texture_DescriptorData::DeserializeTEXTURE_DescriptorDataFromFile(mTextureDescriptorData[i], TEXTURE_Descriptor_Filepath);
+
 						// If the descriptor file is not present, then load it
-						if (!descFilePresent)
+						//if (!descFilePresent)
 						{
-							CompressImageFile(data_str.c_str(), systemManager->mResourceTySystem->compressed_texture_path.c_str());
+							CompressImageFile(data_str.c_str(), systemManager->mResourceTySystem->compressed_texture_path.c_str(), _GEOM::Texture_DescriptorData::isGammaSpace(TEXTURE_Descriptor_Filepath));
 
 							// Load the textures into the list of usable textures within the engine
 							systemManager->mResourceTySystem->texture_Load(getFilename(data_str), guid);
@@ -856,8 +894,11 @@ void MeshRenderer::Inspect()
 						}
 
 						//uid temp(mMaterialInstancePath[i]);
-						mTextureRef[i].data_uid = guid;
-						mTextureRef[i].data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(guid));
+						//mTextureRef[i].data_uid = guid;
+						//mTextureRef[i].data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(guid));
+
+						//_GEOM::Texture_DescriptorData::DeserializeTEXTURE_DescriptorDataFromFile(mTextureDescriptorData[i], TEXTURE_Descriptor_Filepath);
+
 						//mTextureCont[i] = true;
 					}
 
@@ -884,6 +925,39 @@ void MeshRenderer::Inspect()
 					}
 				}
 				
+
+				ImGui::Dummy(ImVec2(0.0f, 3.0f));
+				std::string nodename = getFilename(mMaterialInstancePath[i]) + " DescriptorFile";
+				if (ImGui::TreeNode(nodename.c_str()))
+				{
+					_GEOM::Texture_DescriptorData& texturedesc = mTextureDescriptorData[i];
+					if (texturedesc.mGUID)
+					{
+						ImGui::Text("%d", texturedesc.mGUID);
+
+						bool isSRGB = (texturedesc.mCompressionType == _GEOM::CompressionType::SRGB);
+						ImGui::Checkbox("isSRGB", &isSRGB);
+
+						// RGB
+						if (isSRGB) {
+							texturedesc.mCompressionType = _GEOM::CompressionType::SRGB;
+						}
+						else {
+							texturedesc.mCompressionType = _GEOM::CompressionType::RGB;
+						}
+
+						if (texturedesc.mDescFilepath.size() > 0)
+							ImGui::Text("%s", texturedesc.mDescFilepath.c_str());
+
+						if (ImGui::Button("Save Descriptor Data"))
+						{
+							_GEOM::Texture_DescriptorData::SerializeTEXTURE_DescriptorDataToFile(mTextureDescriptorData[i].mDescFilepath, texturedesc);
+						}
+					}
+					ImGui::TreePop();
+				}
+
+
 				ImGui::Dummy(ImVec2(0.0f, 10.0f));
 			}
 			else {
@@ -903,7 +977,7 @@ void MeshRenderer::Inspect()
 						std::string TEXTURE_Descriptor_Filepath;
 						unsigned guid;
 						// check and ensures that the descriptor file for the materials are created
-						bool descFilePresent = _GEOM::CheckAndCreateDescriptorFileTEXTURE(data_str, TEXTURE_Descriptor_Filepath, texturestr);
+						//bool descFilePresent = _GEOM::CheckAndCreateDescriptorFileTEXTURE(data_str, TEXTURE_Descriptor_Filepath, texturestr);
 						std::string descfilepath = data_str + ".desc";
 						guid = _GEOM::GetGUID(descfilepath);
 						mTextureRef[i].data_uid = guid;
@@ -921,6 +995,8 @@ void MeshRenderer::Inspect()
 
 		ImGui::ColorPicker4("MeshColor", (float*)&mInstanceColor);
 	}
+
+	ImGui::Dummy(ImVec2(0.0f, 10.0f));
 
 	// == >> Mesh Renderer GEOM Descriptor File << == //
 	//ImGui::SetNextItemOpen(true, ImGuiCond_Once);
@@ -1206,6 +1282,13 @@ void Audio::Inspect() {
 	if (!mFullPath.empty())
 		mIsEmpty = false;
 
+	Audio& audio_check = Entity(Hierarchy::selectedId).GetComponent<Audio>();
+
+	if (!audio_check.mFileName.empty())
+	{
+		mIsEmpty = false;
+	}
+
 	// Audio Component (Bar)
 	if (ImGui::CollapsingHeader("Audio", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
 	{
@@ -1295,6 +1378,21 @@ void Audio::Inspect() {
 		ImGui::Checkbox("Is Looping", &mIsLooping);
 		ImGui::SliderFloat("Volume", &mVolume, 0.0f, 1.0f, "volume = %.3f");
 
+		if (ImGui::IsItemEdited())
+		{
+			FMOD::Sound* current_sound;
+			mChannel->getCurrentSound(&current_sound);
+			if (current_sound)
+			{
+				bool playing = false;
+				mChannel->isPlaying(&playing);
+				if (playing)
+				{
+					mChannel->setVolume(mVolume);
+				}
+			}
+	
+		}
 
 	//	ImGui::SliderFloat("Fade Speed", &mFadeSpeedModifier, 0.0f, 1.0f, "fade = %.3f");
 
@@ -1378,12 +1476,36 @@ void AudioListener::Inspect() {
 }
 
 void UIrenderer::Inspect() {
+
+	auto getFilename = [](std::string filepath) -> std::string
+	{
+		// returns AT-AT
+		std::string ret_str = filepath.substr(filepath.find_last_of("/") + 1);
+		ret_str = ret_str.substr(0, ret_str.find_first_of("."));
+		return ret_str;
+	};
+
 	bool delete_component = true;
 
 	if (ImGui::CollapsingHeader("UIrenderer", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
 	{
-		ImGui::Selectable(" ");
+		//ImGui::Selectable(" ");
 
+		ImGui::Selectable("UI   ");
+
+		//if (ImGui::BeginDragDropTarget())
+		//{
+		//	if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_TEXT")) {
+
+		//		const char* data = (const char*)payload->Data;
+		//		std::string data_str = std::string(data);
+		//		mTexPath = data_str;
+
+		//		uid temp(mTexPath);
+		//		mTextureRef.data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(temp.id));
+		//	}
+		//	ImGui::EndDragDropTarget();
+		//}
 		if (ImGui::BeginDragDropTarget())
 		{
 			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_TEXT")) {
@@ -1392,11 +1514,48 @@ void UIrenderer::Inspect() {
 				std::string data_str = std::string(data);
 				mTexPath = data_str;
 
-				uid temp(mTexPath);
-				mTextureRef = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(temp.id));
+
+				std::string texturestr = systemManager->mResourceTySystem->compressed_texture_path + getFilename(data_str) + ".ctexture";
+				mTexPath = texturestr;
+				std::string TEXTURE_Descriptor_Filepath;
+				unsigned guid;
+				// check and ensures that the descriptor file for the materials are created
+				//bool descFilePresent = _GEOM::CheckAndCreateDescriptorFileTEXTURE(data_str, TEXTURE_Descriptor_Filepath, texturestr);
+				std::string descfilepath = data_str + ".desc";
+				guid = _GEOM::GetGUID(descfilepath);
+				mTextureRef.data_uid = guid;
+				mTextureRef.data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(guid));
+
+				//uid temp(mMaterialInstancePath[i]);
+				//mTextureRef[i].data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(temp.id));
+
 			}
 			ImGui::EndDragDropTarget();
 		}
+		
+		if (mTexPath.size() > 0) {
+			int st = static_cast<int>(mTexPath.find_last_of("/"));
+			int ed = static_cast<int>(mTexPath.find_last_of("."));
+			std::string tempPath = mTexPath.substr(st + 1, ed - (st + 1));
+
+			ImGui::SameLine();
+
+			ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcTextSize(tempPath.c_str()).x
+				- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+
+			ImGui::Text(tempPath.c_str());
+		}
+		else {
+			ImGui::Text(" ");
+		}
+
+
+		ImGui::Text("Degree");
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		ImGui::DragFloat("##Degree", (float*)&mDegree);
+		ImGui::Separator();
 	}
 }
 
@@ -1426,19 +1585,20 @@ void AISetting::Inspect() {
 			ImGui::EndCombo();
 		}
 
-		// bool mShotPrediction;						// AI's bullet predict target's movement
-		ImGui::Checkbox("Shooting Prediction", &mShotPrediction);
-		ImGui::Separator();
-		
-		// float mSpreadOut;								// Degree of spreading out from another entity
-		ImGui::Text("Degree of Spreading Out");
-		ImGui::DragFloat("##Degree of Spreading Out", &mSpreadOut);
+		// float mStayAway;								// Distance to stay away from player
+		if (mMovementType == E_MOVEMENT_TYPE::AIR_HOVER) {
+			ImGui::Text("Horizontal Distance From Target");
+			ImGui::DragFloat("##Distance From Target", &mStayAway);
+
+			ImGui::Text("Vertical Elevation From Target");
+			ImGui::DragFloat("##Vertical Elevation From Target", &mElevation);
+		}
 		ImGui::Separator();
 
-		// float mStayAway;								// Distance to stay away from player
-		ImGui::Text("Distance From Target");
-		ImGui::DragFloat("##Distance From Target", &mStayAway);
+		// float mSpreadOut;								// Degree of spreading out from another entity
 		ImGui::Separator();
+		ImGui::Text("Degree of Spreading Out");
+		ImGui::DragFloat("##Degree of Spreading Out", &mSpreadOut);
 
 		// Entity mTarget;								// AI's target
 		ImGui::InputText("Target Name", &mTargetName);
@@ -1446,6 +1606,9 @@ void AISetting::Inspect() {
 		if (ImGui::Button("Update Target"))
 			mTarget = systemManager->mGameStateSystem->GetEntity(mTargetName);
 	}
+
+	if (delete_component == false)
+		Entity(Hierarchy::selectedId).RemoveComponent<AISetting>();
 	
 	//if (ImGui::CollapsingHeader("UIrenderer", &delete_component, ImGuiTreeNodeFlags_DefaultOpen)) {
 	//	ImGui::TextColored({ 0.f,1.f, 1.f, 1.f }, "Bloom Variables");
@@ -1453,7 +1616,41 @@ void AISetting::Inspect() {
 	//}
 }
 
+void Crosshair::Inspect()
+{
+	bool delete_component = true;
 
+	if (ImGui::CollapsingHeader("Crosshair", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
+	{
+		ImGui::Selectable("Crosshair   ");
+
+		ImGui::Text("Thickness");
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		ImGui::DragFloat("##Thickness", (float*)&mThickness);
+		ImGui::Separator();
+
+		ImGui::Text("Inner Offset");
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		ImGui::DragFloat("##Inner Offset", (float*)&mInner);
+		ImGui::Separator();
+
+		ImGui::Text("Outer Limit");
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		ImGui::DragFloat("##Outer Limit", (float*)&mOuter);
+		ImGui::Separator();
+
+		ImGui::ColorPicker4("Crosshair Color", (float*)&mColor);
+	}
+
+	if (delete_component == false)
+		Entity(Hierarchy::selectedId).RemoveComponent<Crosshair>();
+}
 
 void popup(std::string name, ref& data, bool& trigger) {
 	std::string hash ="##to"+name;

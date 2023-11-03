@@ -23,6 +23,21 @@ void ContactCallback::onContact(const PxContactPairHeader& pairHeader, const PxC
 		if (playerEntity.id == otherEntity.id)
 			continue;
 
+		if (!playerEntity.HasComponent<General>())
+			continue;
+
+		if (!otherEntity.HasComponent<General>())
+			continue;
+
+		if (!playerEntity.HasComponent<Scripts>())
+			continue;
+
+		if (playerEntity.GetComponent<General>().isDelete)
+			continue;
+
+		if (otherEntity.GetComponent<General>().isDelete)
+			continue;
+
 		if (playerEntity.GetComponent<General>().GetTag() != "PLAYER")
 		{
 			if (otherEntity.GetComponent<General>().GetTag() != "PLAYER")
@@ -54,22 +69,41 @@ void ContactCallback::onTrigger(PxTriggerPair* pairs, PxU32 count)
 		if (triggerEntity.id == otherEntity.id)
 			continue;
 
-		std::vector<uint32_t>& triggeredEntities = PhysicsSystem::mTriggerCollisions[static_cast<uint32_t>(triggerEntity.id)];
-		uint32_t otherID = static_cast<uint32_t>(otherEntity.id);
+		if (!triggerEntity.HasComponent<General>())
+			continue;
 
-		if (pairs->status == PxPairFlag::eNOTIFY_TOUCH_FOUND)
+		if (!otherEntity.HasComponent<General>())
+			continue;
+
+		if (!triggerEntity.HasComponent<Scripts>())
+			continue;
+
+		if (triggerEntity.GetComponent<General>().isDelete)
+			continue;
+
+		if (otherEntity.GetComponent<General>().isDelete)
+			continue;
+
+		if (otherEntity.GetComponent<General>().name == "Camera")
+			continue;
+
+		/*std::vector<uint32_t>& triggeredEntities = PhysicsSystem::mTriggerCollisions[static_cast<uint32_t>(triggerEntity.id)];
+		uint32_t otherID = static_cast<uint32_t>(otherEntity.id);*/
+
+		if (current.status & PxPairFlag::eNOTIFY_TOUCH_FOUND)
 		{
+
 			triggerEntity.GetComponent<Scripts>().RunFunctionForAllScripts("OnTriggerEnter", otherEntity);
-			triggeredEntities.push_back(otherID);
+			//triggeredEntities.push_back(otherID);
 		}
-		else if (pairs->status == physx::PxPairFlag::eNOTIFY_TOUCH_LOST)
+		else if (current.status & physx::PxPairFlag::eNOTIFY_TOUCH_LOST)
 		{
-			auto itr = std::find(triggeredEntities.begin(), triggeredEntities.end(), otherID);
-			if (itr != triggeredEntities.end())
-			{
+			//auto itr = std::find(triggeredEntities.begin(), triggeredEntities.end(), otherID);
+			//if (itr != triggeredEntities.end())
+			//{
 				triggerEntity.GetComponent<Scripts>().RunFunctionForAllScripts("OnTriggerExit", otherEntity);
-				triggeredEntities.erase(itr);
-			}
+			/*	triggeredEntities.erase(itr);
+			}*/
 		}
 	}
 }

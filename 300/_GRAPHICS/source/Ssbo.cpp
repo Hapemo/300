@@ -15,3 +15,8 @@ void GFX::SSBO::SubData(size_t dataSize, const void* data)
 {
 	glNamedBufferSubData(mID, 0, dataSize, data);
 }
+
+GFX::SSBO::~SSBO()
+{
+	glDeleteBuffers(1, &mID);
+}

@@ -11,6 +11,7 @@ instance
 *******************************************************************************/
 
 #include "Camera.hpp"
+#include <iostream>
 
 GFX::Camera::Camera()
 {
@@ -51,6 +52,9 @@ void GFX::Camera::SetTarget(vec3 newTarget)
 void GFX::Camera::SetSize(ivec2 size)
 {
 	mSize = size;
+	if(size.x == 0 && size.y == 0)
+		return;
+
 	mAspectRatio = static_cast<float>(size.x) / static_cast<float>(size.y);
 }
 
@@ -141,6 +145,23 @@ void GFX::Camera::Update()
 	mProjection = glm::perspective(glm::radians(mFovDegree), mAspectRatio, mNear, mFar);
 	mView = glm::lookAt(glm::vec3(mPosition), glm::vec3(mTarget), glm::vec3(0.0f, 1.0f, 0.0f));
 	mViewProjection = mProjection * mView;
+
+	if (mPitch > 89.0f) {
+		mPitch = 89.0f;
+	}
+
+	if (mPitch < -89.0f) {
+		mPitch = -89.0f;
+	}
+
+	glm::vec3 direction;
+	direction.x = cos(glm::radians(mYaw)) * cos(glm::radians(mPitch));
+	direction.y = sin(glm::radians(mPitch));
+	direction.z = sin(glm::radians(mYaw)) * cos(glm::radians(mPitch));
+	direction.y *= -1;
+
+	// update the camera's target based on the normalized direction
+	SetTarget(position() + glm::normalize(direction));
 }
 
 /**---------------------------------------------------------------------------/

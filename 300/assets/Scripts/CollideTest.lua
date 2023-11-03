@@ -13,16 +13,13 @@ function Dead()
 end
 
 function OnTriggerEnter(Entity)
-    print("From CollideTest.lua OnTriggerEnter")
+    print("OnTriggerEnter")
+end
+
+function OnTrigger(Entity)
+    print(Entity)
 end
 
 function OnTriggerExit(Entity)
     print("OnTriggerExit")
-end
-
-function OnContactEnter(Entity)
-end
-
-function OnContactExit(Entity)
-
 end

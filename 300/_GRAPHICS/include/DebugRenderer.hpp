@@ -80,6 +80,8 @@ Adds an instance of a quad to be drawn
 Adds an instance of a Aabb to be drawn
 *******************************************************************************/
 		void AddAabb(vec3 const& center, vec3 const& size, vec4 const& color = vec4{ 1.f, 1.f, 1.f, 1.f });
+
+		void AddAabb(const mat4& transform, vec4 const& color = vec4{ 1.f, 1.f, 1.f, 1.f });
 		
 /*!*****************************************************************************
 Adds an instance of a cube to be drawn

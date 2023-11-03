@@ -4,9 +4,20 @@
 \author(s) Lor Xaun Yun Michelle
 \par DP email:
 xaunyunmichelle.lor\@digipen.edu
-\date 1-11-2022
+\date 3-11-2023
 \brief
-This file contains the logic to Load and Run scripts.
+This file contains scripting component logic.
+The scripting system contains the functions:
+- Load
+Load all scripts
+
+- Run
+Run any function in the script
+(When Run("Dead) is passed in, this runs the function dead in script)
+
+(Updated M2 (3/11/2023))
+Functions that provides the logic to get and set variables from
+scripts for lua reflection
 ****************************************************************************
 ***/
 #define SOL_NO_EXCEPTIONS 1
@@ -14,9 +25,6 @@ This file contains the logic to Load and Run scripts.
 
 #include "Script.h"
 #include "ScriptingSystem.h"
-
-// Declare static variable (WIP as mentioned in h file)
-//bool Script::isOnce = false;
 
 void Script::Load(Entity entity)
 {
@@ -149,14 +157,6 @@ void Script::LoadEnvVar()
 
     for (auto& e : env)
     {
-        /*
-        case 1: you find the env variable in the variable map. you have a serialized value for that variable
-                update the env with your variable value
-                set the deleted for that name to false
-
-        case 2: you cannot find. so its a new variable, add it to your variable map
-        */
-
         std::string name = e.first.as<std::string>();
         auto& value = e.second;
 
@@ -203,16 +203,3 @@ void Script::LoadEnvVar()
         }
     }
 }
-
-//void Script::AddScript(Entity id, std::string fileName)
-//{
-//    std::cout << "came to add script" << std::endl;
-//    // Check if there is script component, else add it before the script is added
-//    if (!id.HasComponent<Scripts>())
-//        id.AddComponent<Scripts>();
-//    Script temp;
-//    temp.scriptFile = fileName;
-//    temp.env = { systemManager->mScriptingSystem->luaState, sol::create, systemManager->mScriptingSystem->luaState.globals() };
-//    id.GetComponent<Scripts>().scriptsContainer.push_back(temp);
-//}
-

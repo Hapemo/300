@@ -109,6 +109,21 @@ void GFX::FBO::PrepForDraw()
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
+void GFX::FBO::DrawBuffers(bool color, bool entityID, bool bright)
+{
+	GLuint attachments[3];
+
+	int count{};
+	if (color)
+		attachments[count++] = GL_COLOR_ATTACHMENT0;
+	if (entityID)
+		attachments[count++] = GL_COLOR_ATTACHMENT1;
+	if (bright)
+		attachments[count++] = GL_COLOR_ATTACHMENT2;
+
+	glDrawBuffers(count, attachments);
+}
+
 unsigned int GFX::FBO::ReadEntityID(float posX, float posY)
 {
 	// Map local to framebuffer space
@@ -278,6 +293,22 @@ void GFX::PingPongFBO::Resize(int width, int height)
 		// Unbind 
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
+}
+
+void GFX::PingPongFBO::UnloadAndClear()
+{
+	// bind framebuffer as buffer to render to
+	glBindFramebuffer(GL_FRAMEBUFFER, pingpongFBO);
+
+	for (int i{}; i < 2; ++i)
+	{
+		// Clear Color attachments
+		glDrawBuffer(GL_COLOR_ATTACHMENT0 + i);
+		glClearColor(0.f, 0.f, 0.f, 1.f);
+		glClear(GL_COLOR_BUFFER_BIT);
+	}
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
 

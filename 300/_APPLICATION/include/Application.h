@@ -14,6 +14,8 @@ start up of window and game system, also runs their update functions.
 #include "Camera.hpp"
 #include "DebugRenderer.hpp"
 
+
+
 class Application {
 public:
 	/*!*****************************************************************************

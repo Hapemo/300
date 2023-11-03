@@ -14,20 +14,26 @@ time.
 #include "Object/ObjectFactory.h"
 #include "ECS/ECS.h"
 #include "GameState/GameStateManager.h"
+#include "AI/AIManager.h"
+#include "Physics/PhysicsSystem.h"
 
 void GameState::Init() {
 	//LOG_INFO("Init() called for gamestate: " + mName + +" ==================");
 	for (auto& scene : mScenes) {
 		if (!scene.mIsPause) scene.Init();
 	}
+	systemManager->mAISystem->InitAIs();
 }
 
 void GameState::Exit() {
 	for (auto& scene : mScenes) {
 		scene.Exit();
 		for (auto e : scene.mEntities)
-			if (e.HasComponent<Scripts>()) systemManager->GetScriptingPointer()->ScriptDead(e);
+			if (e.HasComponent<Scripts>())
+				e.GetComponent<Scripts>().RunFunctionForAllScripts("Dead");
 	}
+
+	systemManager->mAISystem->ClearAIs();
 }
 
 
@@ -39,7 +45,8 @@ void GameState::AddScene(std::string const& _name) { // filesystem
 		static int newSceneCount = 1;
 		latestScene.mName = "New Scene " + std::to_string(newSceneCount++);  //cannot have same GS name
 		//LOG_CUSTOM("GAMESTATE", "Adding NEW scene to gamestate: " + mName);
-	} else {
+	} 
+	else {
 		std::string newName{};
 		int counter = 0;
 		if (std::find_if(mScenes.begin(), mScenes.end(), [_name](Scene& scene) -> bool { return scene.mName == _name; }) != mScenes.end()) {
@@ -96,6 +103,7 @@ void GameState::Load(std::string const& _name){
 	for (auto& scene : mScenes) {
 		scene.Load();
 	}
+	systemManager->GetPhysicsPointer()->Init();
 }
 
 void GameState::Save() {

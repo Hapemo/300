@@ -59,6 +59,13 @@ void SceneWindow::init()
 void SceneWindow::update()
 {
 
+	if (ImGui::IsWindowHovered()) {
+		Input::m_EditorSceneHovered = true;
+	}
+	else {
+		Input::m_EditorSceneHovered = false;
+	}
+	
 
 	mWinFlag |= ImGuiWindowFlags_NoScrollbar;
 
@@ -179,9 +186,7 @@ void SceneWindow::RenderGuizmo()
 	glm::vec3 scale(0, 0, 0);
 
 	if (Hierarchy::selectionOn == true) {
-
 		Transform& transform = Entity(Hierarchy::selectedId).GetComponent<Transform>();
-
 
 		glm::vec3 tempRot = /*{ transform->orientation.z,0,transform->orientation.x }*/{ 0,0,0 };
 

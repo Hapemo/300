@@ -57,6 +57,8 @@ and rendered to
 *******************************************************************************/
 		void PrepForDraw();
 
+		void DrawBuffers(bool color = false, bool entityID = false, bool bright = false);
+
 /*!*****************************************************************************
 Reads the entity ID in the entityIDAttachment at the posX and posY. posX and 
 posY are normalized to be from [0.f, 1.f]
@@ -113,6 +115,7 @@ Destructor of the FBO class. Deletes the resources allocated on the GPU
 			glDeleteRenderbuffers(1, &mRboID);
 			glDeleteTextures(1, &mColorAttachment);
 			glDeleteTextures(1, &mEntityIDAttachment);
+			glDeleteTextures(1, &mBrightColorsAttachment);
 		}
 
 	private:
@@ -140,6 +143,7 @@ Destructor of the FBO class. Deletes the resources allocated on the GPU
 		void GaussianBlur(GFX::Shader& blurShader, GFX::FBO& hostFramebuffer, float texelOffset, float SamplingWeight);
 		void PrepForDraw();
 		void Resize(int width, int height);
+		void UnloadAndClear();
 
 		unsigned int pingpongFBO;
 		unsigned int pingpongColorbuffers[2];

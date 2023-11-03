@@ -108,7 +108,7 @@ void LoadAndSerializeImageFile(const char* filepath, const char* outputFolder)
 	stbi_image_free(texData);
 }
 
-void CompressImageFile(const char* filepath, const char* outputFolder)
+void CompressImageFile(const char* filepath, const char* outputFolder, bool gammaSpace)
 {
 	// Image stats
 	int width, height, channel;
@@ -127,8 +127,12 @@ void CompressImageFile(const char* filepath, const char* outputFolder)
 	glBindTexture(GL_TEXTURE_2D, tex);
 
 	// Default format supports 4 channels
-	GLint internalFormat{ GL_COMPRESSED_RGBA_ARB };
+	//GLint internalFormat{ GL_COMPRESSED_RGBA_ARB };
+	GLint internalFormat{ GL_COMPRESSED_RGBA };
 	GLint format{ GL_RGBA };
+
+	if (gammaSpace)
+		internalFormat = GL_COMPRESSED_SRGB_ALPHA;
 
 	if (channel == 1)		// RED, 1 component
 	{
@@ -137,7 +141,10 @@ void CompressImageFile(const char* filepath, const char* outputFolder)
 	}
 	else if (channel == 3)		// RGB
 	{
-		internalFormat = GL_COMPRESSED_RGB_ARB;
+		if (gammaSpace)
+			internalFormat = GL_COMPRESSED_SRGB;
+		else
+			internalFormat = GL_COMPRESSED_RGB;
 		format = GL_RGB;
 	}
 
@@ -146,18 +153,18 @@ void CompressImageFile(const char* filepath, const char* outputFolder)
 
 	// Validate compression
 	GLint result{};
-	glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_COMPRESSED_ARB, &result);
+	glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_COMPRESSED, &result);
 
 	GLint compressedSize{};
 	if (result == GL_TRUE)		// Compression successful
 	{
 		glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_INTERNAL_FORMAT, &internalFormat);				// Get compressed internal format
-		glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_COMPRESSED_IMAGE_SIZE_ARB, &compressedSize);		// Get compressed image size
+		glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_COMPRESSED_IMAGE_SIZE, &compressedSize);		// Get compressed image size
 
 		// Allocate buffer to store pixel data of compressed image
 		unsigned char* pixelData = new unsigned char[compressedSize];
 
-		glGetCompressedTexImageARB(GL_TEXTURE_2D, 0, pixelData);
+		glGetCompressedTexImage(GL_TEXTURE_2D, 0, pixelData);
 
 		///////////////////////////////////////
 		// Serialize data into custom file

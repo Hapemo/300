@@ -1,0 +1,56 @@
+{
+    "entityid": 73,
+    "general": {
+        "name": "EnemyAttack",
+        "tagid": 0,
+        "subtag": 0,
+        "isActive": true,
+        "isPaused": false
+    },
+    "transform": {
+        "scale": {
+            "x": 50.0,
+            "y": 50.0,
+            "z": 50.0
+        },
+        "rotate": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "translate": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        }
+    },
+    "meshrenderer": {
+        "vert": "../assets/shader_files/pointLight_vert.glsl",
+        "frag": "../assets/shader_files/pointLight_frag.glsl",
+        "meshrefid": 3124,
+        "instancecolor": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+        },
+        "materialinstance": [
+            "../assets/Compressed/Enemy1_Base Color.ctexture",
+            " ",
+            " ",
+            " ",
+            " "
+        ],
+        "mesh": "../assets/compiled_geom/Enemy1_Attack.geom",
+        "texturerefid": [
+            4443,
+            0,
+            0,
+            0,
+            0
+        ]
+    },
+    "prefab": {
+        "prefab": "EnemyAttack"
+    }
+}

@@ -16,6 +16,7 @@
 #define _ANIMATION_H
 
 #include <unordered_map>
+#include <map>
 #include <vector>
 #include <Bone.h>
 
@@ -30,7 +31,7 @@ namespace _GEOM
 	struct Animation
 	{
 		std::unordered_map<std::string, BoneInfo>		m_BoneInfoMap;
-		std::vector<Bone>								m_Bones;
+		std::map<std::string, Bone>						m_Bones;
 		AssimpNodeData									m_RootNode;
 
 		int												m_BoneCounter = 0;

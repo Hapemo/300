@@ -11,6 +11,7 @@ creation of the required VBOs and VAO.
 #define  _ENABLE_ANIMATIONS 1
 
 #include "Mesh.hpp"
+#include "Bone.h"
 //#include "../../_RESOURCE/include/ResourceManagerTy.h"		// for _enable_animations define
 #include <filesystem>
 #include <array>
@@ -553,10 +554,11 @@ namespace Deserialization
 					}
 
 					// Bones
-					animation.m_Bones.resize(numberofbones);
+					//animation.m_Bones.resize(numberofbones);
 					for (int j{}; j < numberofbones; ++j)
 					{
-						auto& boneinst = animation.m_Bones[j];
+						//auto& boneinst = animation.m_Bones[j];
+						_GEOM::Bone boneinst;
 
 						char cname[64];
 						uint8_t strlen{};
@@ -592,6 +594,8 @@ namespace Deserialization
 						for (int k{}; k < boneinst.m_NumScalings; ++k) {
 							infile.read((char*)&boneinst.m_Scales[k], sizeof(_GEOM::KeyScale));
 						}
+
+						animation.m_Bones[boneinst.m_Name] = boneinst;
 					}
 
 					// AssimpNodeData

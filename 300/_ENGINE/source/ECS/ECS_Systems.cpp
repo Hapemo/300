@@ -69,11 +69,21 @@ void SystemManager::Init(bool isEditor, GFX::Window *window)
 void SystemManager::Reset()
 {
 	mAudioSystem.get()->Reset();				// Using <Audio> component, must happen before clearing of entities.
+	mGraphicsSystem.get()->Unload();
 	mGameStateSystem.get()->Unload();
 	mGameStateSystem.get()->Init();
 	mPhysicsSystem.get()->Init();
+	mGraphicsSystem.get()->Init();
 	//mScriptingSystem.get()->ScriptReload();
 	mIsPlay = false;
+}
+
+void SystemManager::ResetForChangeGS() {
+	mAudioSystem.get()->Reset();				// Using <Audio> component, must happen before clearing of entities.
+	mAudioSystem.get()->PlayOnAwake();
+	mGraphicsSystem.get()->Unload();
+	mPhysicsSystem.get()->Init();
+	mGraphicsSystem.get()->Init();
 }
 
 void SystemManager::Pause()
@@ -96,8 +106,11 @@ void SystemManager::Update(float dt)
 	EnginePerformance::StartTrack("Graphics");
 	mGraphicsSystem.get()->Update(dt);
 	mGameStateSystem.get()->UpdateNextGSMState();
-	mGraphicsSystem.get()->EditorDraw(dt);
+	if (mIsEditor)
+		mGraphicsSystem.get()->EditorDraw(dt);
 	mGraphicsSystem.get()->GameDraw(dt);
+	if (!mIsEditor)
+		mGraphicsSystem.get()->DrawGameScene();
 	EnginePerformance::EndTrack("Graphics");
 	EnginePerformance::UpdateSystemMs("Graphics");
 
@@ -107,6 +120,8 @@ void SystemManager::Update(float dt)
 	mPhysicsSystem.get()->Update(dt);
 	EnginePerformance::EndTrack("Physics");
 	EnginePerformance::UpdateSystemMs("Physics");
+
+	mAISystem.get()->Update(dt);
 
 	EnginePerformance::StartTrack("Scripting");
 	mScriptingSystem.get()->Update(dt);
@@ -118,6 +133,8 @@ void SystemManager::Update(float dt)
 	EnginePerformance::EndTrack("Audio");
 	EnginePerformance::UpdateSystemMs("Audio");
 	//	mResourceSystem.get()->Update();
+	
+	ecs->DeleteEntityUpdate();
 }
 
 void SystemManager::Exit()
@@ -132,7 +149,6 @@ void SystemManager::Exit()
 
 void SystemManager::DeleteEntity(Entity e)
 {
-	mPhysicsSystem->RemoveActor(e);
 	ecs->DeleteEntity(e);
 }
 

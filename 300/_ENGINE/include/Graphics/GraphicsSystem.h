@@ -126,7 +126,19 @@ public:
 		the additive blend function for the chromatic abbrebation
 	*/
 	/**************************************************************************/
-	void ChromaticAbbrebationBlendFramebuffers(GFX::FBO& targetFramebuffer, unsigned int Attachment0, unsigned int Attachment1);
+	void ChromaticAbbrebationBlendFramebuffers(GFX::FBO& targetFramebuffer, unsigned int Attachment1);
+
+
+
+
+	/***************************************************************************/
+	/*!
+	\brief
+		Draws the game scene to default framebuffer when not running in editor
+		mode
+	*/
+	/**************************************************************************/
+	void DrawGameScene();
 
 	/***************************************************************************/
 	/*!
@@ -158,6 +170,11 @@ public:
 	vec3 GetCameraPosition(CAMERA_TYPE type);
 	vec3 GetCameraTarget(CAMERA_TYPE type);
 	vec3 GetCameraDirection(CAMERA_TYPE type);			// Direction vector of the camera (Target - position)
+	mat4 GetCameraViewMatrix(CAMERA_TYPE type);
+	ivec2 GetCameraSize(CAMERA_TYPE type);
+
+
+
 	GFX::DebugRenderer& getDebugRenderer() { 
 		return m_Renderer; 
 	}
@@ -218,25 +235,35 @@ public:
 
 	void ResizeWindow(ivec2 newSize);
 
+	// Top-left position as 0, 0. normalized coordinates [0, 1]
+	void ClampCursor();
+
+	void HideCursor(bool hideCursor);
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // 
 //		MEMBER VARIABLES MEMBER VARIABLES MEMBER VARIABLES MEMBER VARIABLES MEMBER VARIABLES MEMBER VARIABLES
 // 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// -- Renderer --
-	GFX::DebugRenderer m_Renderer;		// isolated to debug draws
-	GFX::FBO m_Fbo;						// Editor Scene
-	GFX::FBO m_GameFbo;					// Game Scene
-	GFX::PingPongFBO m_PingPongFbo;		// Post Processing
+	GFX::DebugRenderer	m_Renderer;			// isolated to debug draws
+	GFX::FBO			m_Fbo;				// Editor Scene
+	GFX::FBO			m_GameFbo;			// Game Scene
+	GFX::PingPongFBO	m_PingPongFbo;		// Post Processing
 
 	// -- Window --
-	GFX::Window* m_Window;
-	int m_Width;
-	int m_Height;
+	GFX::Window*		m_Window;
+	int					m_Width;
+	int					m_Height;
 
 	// -- Camera --
 	GFX::Camera m_EditorCamera;
 	CAMERA_TYPE m_CameraControl;
+
+
+
+	// -- Global tint --
+	vec4	m_GlobalTint = {1.f, 1.f, 1.f, 1.f};
 
 	// -- Bloom -- 
 	vec3		mAmbientBloomThreshold { 0.05, 0.05, 0.005 };		// this yj
@@ -247,11 +274,17 @@ public:
 	// -- Chromatic Abbreation --
 	float		mChromaticStrength{ 0.006f };						// this yj
 
+	bool		m_EnableBloom{ false };									// this yj
+	bool		m_EnableChromaticAbberation{ false };					// this yj
+
+
 	// -- Textures --
 	std::vector<int> m_Textures;	// 0, 1, ..., 31
 
 	// -- Shader Instance
 	GFX::Shader m_UiShaderInst;
+	GFX::Shader m_CrosshairShaderInst;
+	GFX::Shader m_DrawSceneShaderInst;
 
 	// -- Flags --
 	int		m_DebugDrawing{ 1 };			// debug drawing 
@@ -259,11 +292,20 @@ public:
 	bool	m_EnableGlobalAnimations{ 1 };
 	bool	m_HasLight{ false };
 	bool    m_EnableScroll{ false };
-	bool    m_EnableBloom{ false };									// this yj
-	bool	m_EnableChromaticAbberation{ false };					// this yj
+	bool	m_EditorSceneHovered{ false };
+	bool    m_RightClickHeld	{ false };
+	bool	m_SystemInitialized{ false };
 
 	// -- Stats --
 	int		m_LightCount{};
+
+	// -- TEST --
+	float m_CrosshairThickness	{ 1.f };
+	float m_CrosshairInner		{ 20.f };
+	float m_CrosshairOuter		{ 50.f };
+	float m_Health				{ 100.f };
+
+	void Unload();
 
 private:
 	// -- SSBO -- 
@@ -283,13 +325,21 @@ private:
 	void SetupShaderStorageBuffers();		// Creates all SSBO required
 
 	// -- 2D Image Rendering --
-	GFX::Mesh				m_Image2DMesh;
-	std::vector<unsigned>	m_Image2DStore;
-	GFX::Quad2D				mScreenQuad;
+	GFX::Mesh						m_Image2DMesh;
+	std::vector<unsigned>			m_Image2DStore;
+	GFX::Quad2D						mScreenQuad;
 
 	void DrawAll2DInstances(unsigned shaderID);
-	void Add2DImageInstance(float width, float height, vec2 const& position, unsigned texHandle, unsigned entityID = 0xFFFFFFFF, vec4 const& color = vec4{ 1.f, 1.f, 1.f, 1.f });
+	void Add2DImageInstance(float width, float height, vec2 const& position, unsigned texHandle, unsigned entityID = 0xFFFFFFFF, float degree = 0.f, vec4 const& color = vec4{ 1.f, 1.f, 1.f, 1.f });
 	int StoreTextureIndex(unsigned texHandle);
+
+	// -- Crosshair --
+	GLint m_CrosshairThicknessLocation{};
+	GLint m_CrosshairInnerLocation{};
+	GLint m_CrosshairOuterLocation{};
+	GLint m_CrosshairColorLocation{};
+	void SetupCrosshairShaderLocations();
+	void DrawCrosshair();
 };
 
 #endif

@@ -40,7 +40,7 @@ layout (std430, binding = 2) buffer pointLightBuffer
 };
 
 uniform sampler2D uTex[5];
-uniform int uDebugDraw;
+uniform vec4 globalTint;;
 uniform bool uHasLight;
 uniform int uLightCount;
 uniform vec3 bloomThreshold;
@@ -88,7 +88,7 @@ vec3 ComputePointLight(PointLight light)
     specular *= attenuation;
 
     vec3 finalColor = vec3(ambient + diffuse + specular + emissionMap);
-    finalColor *= vec3(VertexColor);
+    finalColor *= vec3(VertexColor) * vec3(globalTint);
 
     return finalColor;
 }
@@ -98,6 +98,7 @@ void main()
     int ID = int(Tex_Ent_ID.x);
 
     vec4 uColor = texture(sampler2D(materials[ID].diffuseMap), TexCoords);              // Diffuse Color
+    uColor.a = 1.0;
     if (uColor.a <= 0.1) discard;
 
     vec3 finalColor = vec3(0.0);
@@ -142,9 +143,8 @@ void main()
         BrightColor = vec4(0.0, 0.0, 0.0, 1.0);
 
     // Set the alpha for debug draw
-    if(uDebugDraw == 1) {
-        uColor.a = 0.3f;
-    }
+    uColor.a *= (globalTint.a * VertexColor.a);
+    //finalColor = globalTint.a;
 
     // Gamma correction
     float gamma = 2.2;

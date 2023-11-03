@@ -20,36 +20,23 @@ of more data.
 Updates scripting system by ensuring that the scripts
 load when appropriate.
 
-- Script Alive()/Start()/Exit()/Dead()
-These functions run the respective script function (like Alive())
-of all scripts.
+- LoadHelper()
+Load Helper.lua script into sol. Helper.lua enables
+developers to add in Helper functions while scripting
+in lua.
 
-- Test SSSU
-For testing of the above functions created.
-
-- Script Reload
+- Script Reload()
 Implemented when the reload button on the editor is pressed,
 this reloads the script and any new changes to it will be
 processed. (Hot reloads)
-
-- Scripting Init Test and Scripting Update Test
-These functions are called when testing outside of the editor
-has to be done (Attachment of scripts and running of scripts)
 ****************************************************************************
 ***/
 #include "LuaEngine.h"
 #include "ScriptingSystem.h"
 #include "Debug/Logger.h"
-#include "CustomCompCont.h"
 #include "Debug/EnginePerformance.h"
 #include "GameState/GameStateManager.h"
-
-bool ScriptingSystem::printOnce = false;
-
-namespace sol {
-    template <>
-    struct is_container<CustomCompCont> : std::false_type { };
-}
+#include "FPSManager.h"
 
 void ScriptingSystem::Init()
 {
@@ -71,7 +58,7 @@ void ScriptingSystem::Init()
 
     /******************************************************************************/
     /*!
-        Vec2 and Vec3 library
+        Register Vec2, Vec3, Vec4
      */
      /******************************************************************************/
 
@@ -96,14 +83,6 @@ void ScriptingSystem::Init()
         "w", &glm::vec4::w
     );
 
-
-    luaState.new_usertype<CustomCompCont>("CustomCompCont",
-        sol::constructors<CustomCompCont>(),
-        "begin", &CustomCompCont::begin,
-        "end", &CustomCompCont::end,
-        "size", &CustomCompCont::size
-    );
-
     /******************************************************************************/
     /*!
         Insert engine functions to LUA
@@ -114,13 +93,14 @@ void ScriptingSystem::Init()
     LuaEntity();
     LuaGeneral();
     LuaCamera();
-    LuaGFXCamera();
+    LuaFPSManager();
     LuaTransform();
     LuaAnimator();
     LuaRigidBody();
     LuaBoxCollider();
     LuaSphereCollider();
     LuaScript();
+    LuaScripts();
     LuaParent();
     LuaChildren();
     LuaInput();
@@ -136,6 +116,8 @@ void ScriptingSystem::Init()
     LuaVFX();
     LuaGameState();
     LuaAIManager();
+    LuaButton();
+    LuaUIrenderer();
 
     /******************************************************************************/
     /*!
@@ -191,10 +173,10 @@ void ScriptingSystem::Init()
         "GLASS", MATERIAL::GLASS,
         "UNDEFINED", MATERIAL::UNDEFINED);
 
-    luaState.new_enum("MOTION",
-        "STATIC", MOTION::STATIC,
-        "DYNAMIC", MOTION::DYNAMIC,
-        "UNDEFINED", MOTION::UNDEFINED);
+    luaState.new_enum("SUBTAG",
+        "ACTIVE", SUBTAG::ACTIVE,
+        "BACKGROUND", SUBTAG::BACKGROUND,
+        "UNDEFINED", SUBTAG::UNDEFINED);
 }
 
 void ScriptingSystem::Update(float dt)
@@ -218,9 +200,9 @@ void ScriptingSystem::Update(float dt)
     // Call the "Update" function 
     for (Entity entity : scriptEntities)
     {
-        for (Script script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
+        for (Script* script : entity.GetComponent<Scripts>().scriptsContainer)
         {
-            script.Run("Update");
+            script->Run("Update");
         }
     }
 }
@@ -247,222 +229,7 @@ void ScriptingSystem::LoadHelper()
     luaState.script("Helper = readonlytable(Helper)");
 }
 
-void ScriptingSystem::ScriptAlive(const Entity& entity)
-{
-    auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
-    for (Script& script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
-    {
-        script.Load(entity);
-        script.Run("Alive");
-    }
-}
-
-void ScriptingSystem::ScriptStart(const Entity& entity)
-{
-    auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
-    for (Script& script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
-    {
-        script.Run("Start");
-    }
-}
-
-void ScriptingSystem::ScriptExit(const Entity& entity)
-{
-    auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
-    for (Script& script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
-    {
-        script.Run("Exit");
-    }
-}
-
-void ScriptingSystem::ScriptDead(const Entity& entity)
-{
-    auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
-    for (Script& script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
-    {
-        script.Run("Dead");
-    }
-}
-
-void ScriptingSystem::LoadRunScript(Entity& entity)
-{
-    auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
-    for (Entity entity : scriptEntities)
-    {
-        for (Script script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
-        {
-            script.Load(entity);
-            script.Run("Alive");
-        }
-    }
-}
-
-void ScriptingSystem::AddScript(Entity& entity, std::string fileName)
-{
-    // Check if there is script component, else add it before the script is added
-    if (!entity.HasComponent<Scripts>())
-        entity.AddComponent<Scripts>();
-    Script temp;
-    std::replace(fileName.begin(), fileName.end(), '\\', '/');
-    temp.scriptFile = fileName;
-    temp.env = { systemManager->mScriptingSystem->luaState, sol::create, systemManager->mScriptingSystem->luaState.globals() };
-    temp.Load(entity);
-    ScriptAlive(entity);
-    entity.GetComponent<Scripts>().scriptsContainer.push_back(temp);
-}
-
-void ScriptingSystem::TestSSSU()
-{
-    //std::string entityID;
-    //if (Input::CheckKey(E_STATE::PRESS, E_KEY::_4))
-    //{
-    //    std::cout << "Select entity that you want to run its functions in scripts: ";
-    //    std::cin >> entityID;
-
-    //    ScriptingSystem::ScriptAlive(Entity((entt::entity)std::stoul(entityID)));
-
-    //    ScriptingSystem::ScriptStart(Entity((entt::entity)std::stoul(entityID)));
-
-    //    ScriptingSystem::ScriptExit(Entity((entt::entity)std::stoul(entityID)));
-
-    //    ScriptingSystem::ScriptDead(Entity((entt::entity)std::stoul(entityID)));
-    //}
-}
-
 void ScriptingSystem::ScriptReload()
 {
     once = false;
-}
-
-/******************************************************************************/
-/*!
-    These functions to be used when scripting is to be tested without
-    editor present
- */
- /******************************************************************************/
-void ScriptingSystem::ScriptingInitTest()
-{
-    //Entity player = systemManager->ecs->NewEntity();
-    //std::cout << "Player (EntityID: " << std::to_string(unsigned int(player.id)) << ")added." << std::endl;
-    //Entity enemy1 = systemManager->ecs->NewEntity();
-    //std::cout << "Enemy1 (EntityID: " << std::to_string(unsigned int(enemy1.id)) << ")added." << std::endl;
-    //Entity enemy2 = systemManager->ecs->NewEntity();
-    //std::cout << "Enemy2 (EntityID: " << std::to_string(unsigned int(enemy2.id)) << ")added." << std::endl;
-
-    //player.AddComponent<Transform>();
-    //player.AddComponent<Scripts>();
-
-    //enemy1.AddComponent<Transform>();
-    //enemy1.AddComponent<Scripts>();
-
-    //enemy2.AddComponent<Scripts>();
-}
-
-void ScriptingSystem::ScriptingUpdateTest()
-{
-    // Get all exisiting entities
-    //if (!printOnce)
-    //{
-    //    for (auto& elem : systemManager->ecs->GetEntitiesWith<General>())
-    //    {
-
-    //        std::cout << "Player (EntityID: " << std::to_string(unsigned int(elem)) << ")added." << std::endl;
-    //    }
-    //    std::cout << std::endl;
-    //    printOnce = true;
-    //}
-    //if (Input::CheckKey(E_STATE::PRESS, E_KEY::Q))
-    //{
-    //    Entity entity = systemManager->ecs->NewEntity();
-    //    /*std::cout << entity.GetComponent<General>().name << std::endl;*/
-    //}
-
-    //if (Input::CheckKey(E_STATE::PRESS, E_KEY::T))
-    //    printOnce = false;
-    //// Button press number 1 to add new script 
-    //if (Input::CheckKey(E_STATE::PRESS, E_KEY::_1))
-    //{
-    //    std::string scriptName, line;
-    //    // get prefered name for script 
-    //    std::cout << "Enter new script name: ";
-    //    std::getline(std::cin, scriptName);
-    //    std::stringstream ss;
-    //    std::ifstream defScript{ "../assets/Scripts/DefaultTemplate.lua" };
-    //    std::ofstream output;
-    //    ss << "../assets/Scripts/" << scriptName << ".lua";
-    //    // create the script 
-    //    std::string path = ss.str();
-    //    output.open(path.c_str(), std::ios_base::out);
-    //    // copy the default template into the newly created script 
-    //    while (getline(defScript, line))
-    //    {
-    //        output << line << std::endl;
-    //    }
-    //    std::cout << scriptName << ".lua added to assets/Scripts." << std::endl;
-    //}
-
-    // Button press number 2 to add script to entity 
-    //if (Input::CheckKey(E_STATE::PRESS, E_KEY::_2))
-    //{
-    //    std::string entityID, scriptName;
-    //    std::cout << "Indicate entity (by their id) to add script to: ";
-    //    std::cin >> entityID;
-    //    std::cout << "Enter script name to add to entity(Reference from Resources/Scripts: ";
-    //    std::cin >> scriptName;
-    //    std::string temp = "../assets/Scripts/" + scriptName + ".lua";
-    //    auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
-    //    for (Entity entity : scriptEntities)
-    //    {
-    //        if (entity.id == static_cast<entt::entity>(std::stoul(entityID)))
-    //        {
-    //            // if entity does not contain any script, just add 
-    //            if (scriptEntities.get<Scripts>(entity.id).scriptsContainer.size() == 0)
-    //            {
-    //                Script script;
-    //                script.scriptFile = "../assets/Scripts/" + scriptName + ".lua";
-    //                script.env = { systemManager->mScriptingSystem->luaState, sol::create, systemManager->mScriptingSystem->luaState.globals() };
-    //                scriptEntities.get<Scripts>(entity.id).scriptsContainer.push_back(script);
-    //                std::cout << "Script " << scriptName << ".lua added to entity " << entityID << std::endl;
-    //            }
-    //            // if entity already has scripts attached, check if duplicate 
-    //            else
-    //            {
-    //                bool hasScript{ };
-
-    //                for (auto& elem : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
-    //                {
-    //                    if (elem.scriptFile == temp)
-    //                    {
-    //                        hasScript = true;
-    //                        std::cout << "Script is already attached! " << std::endl;
-    //                        break;
-    //                    }
-    //                }
-
-    //                if (!hasScript)
-    //                {
-    //                    Script script;
-    //                    script.scriptFile = "../assets/Scripts/" + scriptName + ".lua";
-    //                    script.env = { systemManager->mScriptingSystem->luaState, sol::create, systemManager->mScriptingSystem->luaState.globals() };
-    //                    scriptEntities.get<Scripts>(entity.id).scriptsContainer.push_back(script);
-    //                    std::cout << "Script " << scriptName << ".lua added to entity " << entityID << std::endl;
-    //                }
-    //            }
-    //        }
-    //    }
-    //}
-
-    ////Print all scripts that each entity has 
-    //if (Input::CheckKey(E_STATE::PRESS, E_KEY::_3))
-    //{
-    //    std::cout << "/******************************************************************************/" << std::endl;
-    //    auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
-    //    for (Entity entity : scriptEntities)
-    //    {
-    //        for (Script script : scriptEntities.get<Scripts>(entity.id).scriptsContainer)
-    //        {
-    //            std::cout << "Entity " << std::to_string(unsigned int(entity.id)) << " has script: " << script.scriptFile << std::endl;;
-    //        }
-    //    }
-    //}
 }

@@ -10,6 +10,7 @@
 ****************************************************************************
 ***/
 #define  _ENABLE_ANIMATIONS 1
+#define  _TEST_HEALTHBAR_SHADER 0
 
 #include <ECS/ECS_Components.h>
 #include <Graphics/GraphicsSystem.h>
@@ -17,8 +18,11 @@
 #include <Graphics/Camera_Input.h>
 #include "Debug/EnginePerformance.h"
 #include "GameState/GameStateManager.h"
+#include "Input/InputMapSystem.h"
 
 #include "cstdlib"
+
+
 /***************************************************************************/
 /*!
 \brief
@@ -28,49 +32,78 @@
 float first_entitytime{};
 float second_entitytime{};
 
+
+
 void GraphicsSystem::Init()
 {
-	// -- Setup Storage Buffer Object
-	SetupShaderStorageBuffers();
-
-	// -- Setup UI stuffs
-	m_Image2DMesh.Setup2DImageMesh();
-	for (int i{}; i < 32; ++i)
+	if (!m_SystemInitialized)
 	{
-		m_Textures.emplace_back(i);
+		m_SystemInitialized = true;
+
+		// -- Setup Storage Buffer Object
+		SetupShaderStorageBuffers();
+
+		// -- Setup UI stuffs
+		m_Image2DMesh.Setup2DImageMesh();
+		for (int i{}; i < 32; ++i)
+		{
+			m_Textures.emplace_back(i);
+		}
+
+		// Initialize the UI Shader
+		std::string uiShader = "UIShader";
+		uid uiShaderstr(uiShader);
+		m_UiShaderInst = *systemManager->mResourceTySystem->get_Shader(uiShaderstr.id);
+
+		// Initialize the Crosshair shader
+		std::string crosshairShader = "CrosshairShader";
+		uid crosshairShaderstr(crosshairShader);
+		m_CrosshairShaderInst = *systemManager->mResourceTySystem->get_Shader(crosshairShaderstr.id);
+		m_CrosshairShaderInst.Activate();
+		SetupCrosshairShaderLocations();
+		m_CrosshairShaderInst.Deactivate();
+
+		// Uniforms of UI Shader
+		m_UiShaderInst.Activate();
+		GLuint uniform_tex = glGetUniformLocation(m_UiShaderInst.GetHandle(), "uTex2d");
+		glUniform1iv(uniform_tex, (GLsizei)m_Textures.size(), m_Textures.data()); // Passing texture Binding units to frag shader [0 - 31]
+		m_UiShaderInst.Deactivate();
+
+		// Get Window Handle
+		m_Window = systemManager->GetWindow();
+		m_Width = m_Window->size().x;
+		m_Height = m_Window->size().y;
+
+		// Update the editor mode flag
+		m_EditorMode = systemManager->IsEditor();
+
+		// Create FBO, with the width and height of the window
+		m_Fbo.Create(m_Width, m_Height, m_EditorMode);
+		m_GameFbo.Create(m_Width, m_Height, m_EditorMode);
+		m_PingPongFbo.Create(m_Width, m_Height);
+
+
+		if (m_DebugDrawing) {
+			m_GlobalTint.a = 0.3f;
+		}
+		else {
+			m_GlobalTint.a = 1.f;
+		}
 	}
 
-	// Initialize the UI Shader
-	std::string uiShader = "UIShader";
-	uid uiShaderstr(uiShader);
-	m_UiShaderInst = *systemManager->mResourceTySystem->get_Shader(uiShaderstr.id);
-
-	// Uniforms of UI Shader
-	m_UiShaderInst.Activate();
-	GLuint uniform_tex = glGetUniformLocation(m_UiShaderInst.GetHandle(), "uTex2d");
-	glUniform1iv(uniform_tex, (GLsizei)m_Textures.size(), m_Textures.data()); // Passing texture Binding units to frag shader [0 - 31]
-	m_UiShaderInst.Deactivate();
-
-	// Get Window Handle
-	m_Window = systemManager->GetWindow();
-	m_Width = m_Window->size().x;
-	m_Height = m_Window->size().y;
-
-	m_EditorMode = systemManager->IsEditor();
-
-	// Create FBO, with the width and height of the window
-	m_Fbo.Create(m_Width, m_Height, m_EditorMode);
-	m_GameFbo.Create(m_Width, m_Height, m_EditorMode);
-	m_PingPongFbo.Create(m_Width, m_Height);
+	if (!m_EditorMode)	// If not running as editor
+	{
+		// Initialize the Draw Scene Shader
+		std::string drawSceneShader = "DrawSceneShader";
+		uid drawSceneShaderstr(drawSceneShader);
+		m_DrawSceneShaderInst = *systemManager->mResourceTySystem->get_Shader(drawSceneShaderstr.id);
+	}
+	
 
 	// Set Cameras' starting position
 	SetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR, {0, 0, 20});									// Position of camera
 	SetCameraTarget(CAMERA_TYPE::CAMERA_TYPE_EDITOR, {0, 0, 0});									// Target of camera
 	SetCameraProjection(CAMERA_TYPE::CAMERA_TYPE_ALL, 60.f, m_Window->size(), 0.1f, 900.f);			// Projection of camera
-
-	// init game camera
-	/*SetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_GAME, { 16.218f, 474.854f, 748.714f });
-	SetCameraTarget(CAMERA_TYPE::CAMERA_TYPE_GAME, { 16.21f, 473.694f, 739.714f });*/
 
 	if (m_EditorMode)
 	{
@@ -82,6 +115,8 @@ void GraphicsSystem::Init()
 		// only update the game camera if editor mode is not enabled
 		UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_GAME, 0.f);
 	}
+
+	PINFO("Window size: %d, %d", m_Window->size().x, m_Window->size().y);
 }
 
 /***************************************************************************/
@@ -93,6 +128,8 @@ void GraphicsSystem::Init()
 /**************************************************************************/
 void GraphicsSystem::Update(float dt)
 {
+	m_RightClickHeld = systemManager->mInputActionSystem->GetKey(M_BUTTON_R);
+
 	// Check window size for any updates
 	CheckWindowSize();
 
@@ -121,46 +158,72 @@ void GraphicsSystem::Update(float dt)
 		// if the mesh instance is not active, skip it
 		if (meshRenderer.mMeshRef.getdata(systemManager->mResourceTySystem->m_ResourceInstance) == nullptr)
 			continue;
-
+		
+		
 		// gives me the mesh
 		void *tt = meshRenderer.mMeshRef.getdata(systemManager->mResourceTySystem->m_ResourceInstance);
 		GFX::Mesh &meshinst = *reinterpret_cast<GFX::Mesh *>(tt);
 
+
 		// pushback LTW matrices
-		vec3 trans = inst.GetComponent<Transform>().mTranslate;
-		if (inst.HasParent())
-		{
-			trans += Entity(inst.GetParent()).GetComponent<Transform>().mTranslate;
-		}
-		mat4 S = glm::scale(inst.GetComponent<Transform>().mScale / (meshinst.mBBOX.m_Max - meshinst.mBBOX.m_Min));
-		mat4 R = glm::toMat4(glm::quat(glm::radians(inst.GetComponent<Transform>().mRotate)));
+		auto& transforminst = inst.GetComponent<Transform>();
+		vec3 trans = transforminst.mTranslate;
+		vec3 parent_translate(0.f);
+
+		mat4 S = glm::scale(transforminst.mScale / (meshinst.mBBOX.m_Max - meshinst.mBBOX.m_Min));
+		mat4 R = glm::toMat4(glm::quat(glm::radians(transforminst.mRotate)));
 		mat4 T = glm::translate(trans);
+
+		if (inst.HasParent())	// Compute parent's offset
+		{
+			parent_translate = Entity(inst.GetParent()).GetComponent<Transform>().mTranslate;
+
+			// Compute view to world
+			if (inst.GetParent().GetComponent<TAG>() == TAG::PLAYER)	// if parent is the Player
+			{
+				// view space --> world space
+				mat4 viewToWorld = glm::inverse(GetCameraViewMatrix(CAMERA_TYPE::CAMERA_TYPE_GAME));
+				T = viewToWorld * T;
+			}
+			else
+			{
+				trans += parent_translate;
+				T = glm::translate(trans);
+			}
+		}
 		mat4 final = T * R * S;
 
 		// if the debug drawing is turned on
 		if (m_DebugDrawing && inst.HasComponent<BoxCollider>())
 		{
+			BoxCollider& boxcolliderinst = inst.GetComponent<BoxCollider>();
+
 			// draw the AABB of the mesh
-			glm::vec3 bbox_dimens = inst.GetComponent<Transform>().mScale * inst.GetComponent<BoxCollider>().mScaleOffset;
-			glm::vec3 bbox_xlate = inst.GetComponent<Transform>().mTranslate + inst.GetComponent<BoxCollider>().mTranslateOffset;
-			if (inst.HasParent())
-			{
-				bbox_xlate += Entity(inst.GetParent()).GetComponent<Transform>().mTranslate;
+			glm::vec3 bbox_dimens = transforminst.mScale * boxcolliderinst.mScaleOffset;
+			glm::vec3 bbox_xlate = transforminst.mTranslate + boxcolliderinst.mTranslateOffset;
+			if (inst.HasParent()) {
+				//bbox_xlate += Entity(inst.GetParent()).GetComponent<Transform>().mTranslate;
+				bbox_xlate += parent_translate;
 			}
-			m_Renderer.AddAabb(bbox_xlate, bbox_dimens, {1.f, 0.f, 0.f, 1.f});
+
+			// calculate the transformations
+			glm::mat4 bboxScale = glm::scale(bbox_dimens);
+			glm::mat4 bboxTranslate = glm::translate(bbox_xlate);
+			glm::mat4 bboxFinal = bboxTranslate * R * bboxScale;
+
+			m_Renderer.AddAabb(bboxFinal, {1.f, 0.f, 0.f, 1.f});
 
 			// draw the mesh's origin
-			m_Renderer.AddSphere(m_EditorCamera.position(), inst.GetComponent<Transform>().mTranslate, 0.5f, {1.f, 1.f, 0.f, 1.f});
+			m_Renderer.AddSphere(m_EditorCamera.position(), transforminst.mTranslate, 0.5f, {1.f, 1.f, 0.f, 1.f});
 		}
 
 		if (m_DebugDrawing && inst.HasComponent<CapsuleCollider>())
 		{
-			CapsuleCollider cap = inst.GetComponent<CapsuleCollider>();
-			Transform xform = inst.GetComponent<Transform>();
+			CapsuleCollider& cap = inst.GetComponent<CapsuleCollider>();
 			if (inst.HasParent())
-				xform.mTranslate += static_cast<Entity>(inst.GetParent()).GetComponent<Transform>().mTranslate;
+				transforminst.mTranslate += static_cast<Entity>(inst.GetParent()).GetComponent<Transform>().mTranslate;
 
-			glm::vec3 capPos = xform.mTranslate + cap.mTranslateOffset;
+			glm::vec3 capPos = transforminst.mTranslate + cap.mTranslateOffset;
 
 			glm::vec3 first = capPos;
 			glm::vec3 second = capPos;
@@ -170,8 +233,18 @@ void GraphicsSystem::Update(float dt)
 			m_Renderer.AddCapsule(m_EditorCamera.position(), first, second, cap.mRadius, glm::vec4(0.f, 1.f, 0.f, 1.f));
 		}
 
+		if (m_DebugDrawing)
+		{
+			// Draw the axes
+			static const vec3 origin{-180.f, -100.f, 250.f};
+			m_Renderer.AddLine(origin, origin + vec3{ 100.f, 0.f, 0.f }, { 1.f, 0.f, 0.f, 1.f });
+			m_Renderer.AddLine(origin, origin + vec3{ 0.f, 100.f, 0.f }, { 0.f, 1.f, 0.f, 1.f });
+			m_Renderer.AddLine(origin, origin + vec3{ 0.f, 0.f, 100.f }, { 0.f, 0.f, 1.f, 1.f });
+		}
+
 		// Update the animation
-		if (inst.HasComponent<Animator>() && _ENABLE_ANIMATIONS && systemManager->mGraphicsSystem->m_EnableGlobalAnimations)
+		bool hasanimation = inst.HasComponent<Animator>();
+		if (hasanimation && _ENABLE_ANIMATIONS && systemManager->mGraphicsSystem->m_EnableGlobalAnimations)
 		{
 			Animator& animatorInst = inst.GetComponent<Animator>();
 
@@ -189,20 +262,12 @@ void GraphicsSystem::Update(float dt)
 		}
 
 		// animations are present
-		if (inst.HasComponent<Animator>()) {
+		if (hasanimation) {
 			AddInstance(meshinst, final, meshRenderer.mInstanceColor, static_cast<int>(m_Materials.size()), static_cast<unsigned>(inst.id), animationID++);
 		}
 		else {
 			AddInstance(meshinst, final, meshRenderer.mInstanceColor, static_cast<int>(m_Materials.size()), static_cast<unsigned>(inst.id));
 		}
-
-		MaterialSSBO material{};
-		// Save the materials if it exists
-		//material.mDiffuseMap	= GetAndStoreBindlessTextureHandle(meshRenderer.GetTexture(DIFFUSE));		
-		//material.mNormalMap		= GetAndStoreBindlessTextureHandle(meshRenderer.GetTexture(NORMAL));		
-		//material.mSpecularMap	= GetAndStoreBindlessTextureHandle(meshRenderer.GetTexture(SPECULAR));	
-		//material.mShininessMap	= GetAndStoreBindlessTextureHandle(meshRenderer.GetTexture(SHININESS));	
-		//material.mEmissionMap	= GetAndStoreBindlessTextureHandle(meshRenderer.GetTexture(EMISSION));	
 
 		auto getID = [&](MaterialType type, MeshRenderer& meshrenderer) ->int {
 
@@ -210,11 +275,9 @@ void GraphicsSystem::Update(float dt)
 				return -1;
 
 			return static_cast<GFX::Texture*>(meshrenderer.mTextureRef[static_cast<int>(type)].data)->ID();
-
-
 		};
 
-
+		MaterialSSBO material{};
 		material.mDiffuseMap = GetAndStoreBindlessTextureHandle(getID(DIFFUSE, meshRenderer));
 		material.mNormalMap = GetAndStoreBindlessTextureHandle(getID(NORMAL, meshRenderer));
 		material.mSpecularMap = GetAndStoreBindlessTextureHandle(getID(SPECULAR, meshRenderer));
@@ -269,11 +332,14 @@ void GraphicsSystem::Update(float dt)
 		float uiHeight = uiTransform.mScale.y;
 		vec2 uiPosition = vec2(uiTransform.mTranslate.x, uiTransform.mTranslate.y);
 
-		Add2DImageInstance(uiWidth, uiHeight, uiPosition, uiRenderer.ID(), static_cast<int>(inst.id));
+		unsigned texID{};
+		if (uiRenderer.mTextureRef.getdata(systemManager->mResourceTySystem->m_ResourceInstance) != nullptr)
+			texID = reinterpret_cast<GFX::Texture*>(uiRenderer.mTextureRef.data)->ID();
+
+		Add2DImageInstance(uiWidth, uiHeight, uiPosition, texID, static_cast<int>(inst.id), uiRenderer.mDegree);
 	}
 	// Send UI data to GPU
 	m_Image2DMesh.PrepForDraw();
-
 #pragma endregion
 }
 
@@ -304,7 +370,7 @@ void GraphicsSystem::EditorDraw(float dt)
 		if (meshrefptr.mMeshRef.getdata(systemManager->mResourceTySystem->m_ResourceInstance) == nullptr)
 			continue;
 
-		std::string meshstr = inst.GetComponent<MeshRenderer>().mMeshPath;
+		std::string meshstr = meshrefptr.mMeshPath;
 		if (renderedMesh.find(meshstr) != renderedMesh.end())
 		{
 			// the mesh has been rendered before, skip it
@@ -315,7 +381,7 @@ void GraphicsSystem::EditorDraw(float dt)
 		renderedMesh[meshstr] = 1;
 
 		// render the mesh and its instances here
-		GFX::Mesh &meshinst = *reinterpret_cast<GFX::Mesh *>(inst.GetComponent<MeshRenderer>().mMeshRef.data);
+		GFX::Mesh &meshinst = *reinterpret_cast<GFX::Mesh *>(meshrefptr.mMeshRef.data);
 		
 		std::string shader{};
 
@@ -327,16 +393,6 @@ void GraphicsSystem::EditorDraw(float dt)
 		uid shaderstr(shader);
 		GFX::Shader& shaderinst = *systemManager->mResourceTySystem->get_Shader(shaderstr.id);
 		unsigned shaderID = shaderinst.GetHandle();
-
-		//// bind all texture
-		//GFX::Texture* textureInst[4]{};
-		//for (int i{ 0 }; i < 4; i++)
-		//{
-		//	if (inst.GetComponent<MeshRenderer>().mTextureRef[i].getdata(systemManager->mResourceTySystem->m_ResourceInstance) != nullptr)
-		//	{
-		//		textureInst[i] = reinterpret_cast<GFX::Texture *>(inst.GetComponent<MeshRenderer>().mTextureRef[i].data);
-		//	}
-		//}
 
 		shaderinst.Activate();
 		glUniformMatrix4fv(shaderinst.GetUniformVP(), 1, GL_FALSE, &m_EditorCamera.viewProj()[0][0]);
@@ -373,33 +429,16 @@ void GraphicsSystem::EditorDraw(float dt)
 			glUniform1i(mLightCountShaderLocation, m_LightCount);
 		}
 
-		//// bind texture unit
-		//for (int i{0}; i < 4; i++)
-		//{
-		//	if (inst.GetComponent<MeshRenderer>().mTextureRef[i].getdata(systemManager->mResourceTySystem->m_ResourceInstance) != nullptr)
-		//	{
-		//		glBindTextureUnit(i, textureInst[i]->ID());
-		//	}
-		//}
-
-
-		GLuint debug_draw = glGetUniformLocation(shaderID, "uDebugDraw");
-		glUniform1i(debug_draw, m_DebugDrawing);
+		GLuint debug_draw = glGetUniformLocation(shaderID, "globalTint");
+		glUniform4fv(debug_draw, 1, glm::value_ptr(m_GlobalTint));
 
 		// Bind mesh's VAO, copy render data into VBO, Draw
 		DrawAll(meshinst);
 
 		shaderinst.Deactivate();
-		meshinst.UnbindVao();
 
-		//// unbind the textures
-		//for (int i{0}; i < 4; i++)
-		//{
-		//	if (inst.GetComponent<MeshRenderer>().mTextureRef[i].data != nullptr)
-		//	{
-		//		glBindTextureUnit(i, 0);
-		//	}
-		//}
+
+		meshinst.UnbindVao();
 	}
 
 	m_Renderer.RenderAll(m_EditorCamera.viewProj());
@@ -420,13 +459,21 @@ void GraphicsSystem::EditorDraw(float dt)
 
 	if (systemManager->mGraphicsSystem->m_EnableChromaticAbberation)
 	{
-		ChromaticAbbrebationBlendFramebuffers(m_Fbo, m_Fbo.GetColorAttachment(), m_PingPongFbo.pingpongColorbuffers[0]);
+		//ChromaticAbbrebationBlendFramebuffers(m_Fbo, m_Fbo.GetBrightColorsAttachment());
+		ChromaticAbbrebationBlendFramebuffers(m_Fbo, m_PingPongFbo.pingpongColorbuffers[0]);
 	}
 
-	// Render UI objects
-	m_UiShaderInst.Activate();		// Activate shader
-	DrawAll2DInstances(m_UiShaderInst.GetHandle());
-	m_UiShaderInst.Deactivate();	// Deactivate shader
+	//m_Fbo.Bind();
+	//m_Fbo.DrawBuffers(true, true);
+	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	//// Render UI objects
+	//m_UiShaderInst.Activate();		// Activate shader
+	//DrawAll2DInstances(m_UiShaderInst.GetHandle());
+	//m_UiShaderInst.Deactivate();	// Deactivate shader
+
+	//// Render crosshair, if any
+	//DrawCrosshair();
 
 #pragma endregion
 
@@ -464,7 +511,7 @@ void GraphicsSystem::GameDraw(float dt)
 		if (meshrefptr.mMeshRef.getdata(systemManager->mResourceTySystem->m_ResourceInstance) == nullptr)
 			continue;
 
-		std::string meshstr = inst.GetComponent<MeshRenderer>().mMeshPath;
+		std::string meshstr = meshrefptr.mMeshPath;
 		if (renderedMesh.find(meshstr) != renderedMesh.end())
 		{
 			// the mesh has been rendered before, skip it
@@ -475,7 +522,7 @@ void GraphicsSystem::GameDraw(float dt)
 		renderedMesh[meshstr] = 1;
 
 		// render the mesh and its instances here
-		GFX::Mesh &meshinst = *reinterpret_cast<GFX::Mesh *>(inst.GetComponent<MeshRenderer>().mMeshRef.getdata(systemManager->mResourceTySystem->m_ResourceInstance));
+		GFX::Mesh &meshinst = *reinterpret_cast<GFX::Mesh *>(meshrefptr.mMeshRef.getdata(systemManager->mResourceTySystem->m_ResourceInstance));
 
 		// gets the shader filepath
 		std::string shader{};
@@ -486,15 +533,6 @@ void GraphicsSystem::GameDraw(float dt)
 
 		uid shaderstr(shader);
 		GFX::Shader &shaderinst = *systemManager->mResourceTySystem->get_Shader(shaderstr.id);
-
-		//GFX::Texture *textureInst[4]{};
-		//for (int i{0}; i < 4; i++)
-		//{
-		//	if (inst.GetComponent<MeshRenderer>().mTextureRef[i].getdata(systemManager->mResourceTySystem->m_ResourceInstance) != nullptr)
-		//	{
-		//		textureInst[i] = reinterpret_cast<GFX::Texture *>(inst.GetComponent<MeshRenderer>().mTextureRef[i].data);
-		//	}
-		//}
 
 		shaderinst.Activate();
 
@@ -530,14 +568,6 @@ void GraphicsSystem::GameDraw(float dt)
 			glUniform3fv(mViewPosShaderLocation, 1, &viewPos[0]);
 		}
 
-		//for (int i{0}; i < 4; i++)
-		//{
-		//	if (inst.GetComponent<MeshRenderer>().mTextureRef[i].getdata(systemManager->mResourceTySystem->m_ResourceInstance) != nullptr)
-		//	{
-		//		glBindTextureUnit(i, textureInst[i]->ID());
-		//	}
-		//}
-
 		// Bind mesh's VAO, copy render data into VBO, Draw
 		DrawAll(meshinst);
 
@@ -547,7 +577,7 @@ void GraphicsSystem::GameDraw(float dt)
 		// unbind the textures
 		for (int i{0}; i < 4; i++)
 		{
-			if (inst.GetComponent<MeshRenderer>().mTextureRef[i].data != nullptr)
+			if (meshrefptr.mTextureRef[i].data != nullptr)
 			{
 				glBindTextureUnit(i, 0);
 			}
@@ -571,19 +601,47 @@ void GraphicsSystem::GameDraw(float dt)
 
 	if (systemManager->mGraphicsSystem->m_EnableChromaticAbberation)
 	{
-		ChromaticAbbrebationBlendFramebuffers(m_GameFbo, m_GameFbo.GetColorAttachment(), m_PingPongFbo.pingpongColorbuffers[0]);
+		//ChromaticAbbrebationBlendFramebuffers(m_GameFbo, m_GameFbo.GetBrightColorsAttachment());
+		ChromaticAbbrebationBlendFramebuffers(m_GameFbo, m_PingPongFbo.pingpongColorbuffers[0]);
 	}
+
+	m_GameFbo.Bind();
+	m_GameFbo.DrawBuffers(true);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	// Render UI objects
 	m_UiShaderInst.Activate();		// Activate shader
 	DrawAll2DInstances(m_UiShaderInst.GetHandle());
 	m_UiShaderInst.Deactivate();	// Deactivate Shader
 
+	// Render crosshair, if any
+	DrawCrosshair();
+
+#if _TEST_HEALTHBAR_SHADER
+	std::string healthbarShaderStr{ "healthbarShader" };
+	uid healthbarShaderUID(healthbarShaderStr);
+	GFX::Shader& healthbarShaderInst = *systemManager->mResourceTySystem->get_Shader(healthbarShaderUID.id);
+
+	healthbarShaderInst.Activate();		// activate shader
+	GLint healthLocation = healthbarShaderInst.GetUniformLocation("uHealth");
+	glUniform1f(healthLocation, m_Health);
+
+	// Bind 2D quad VAO
+	m_Image2DMesh.BindVao();
+	// Draw call
+	glDrawArraysInstanced(GL_TRIANGLE_FAN, 0, 4, 1);
+	// Unbind 2D quad VAO
+	m_Image2DMesh.UnbindVao();
+
+	healthbarShaderInst.Deactivate();	// Deactivate shader
+#endif
+
 	m_GameFbo.Unbind();
+	m_PingPongFbo.UnloadAndClear();
 }
 
 
-void GraphicsSystem::ChromaticAbbrebationBlendFramebuffers(GFX::FBO& targetFramebuffer, unsigned int Attachment0, unsigned int Attachment1)
+void GraphicsSystem::ChromaticAbbrebationBlendFramebuffers(GFX::FBO& targetFramebuffer, unsigned int Attachment1)
 {
 	glBlendFunc(GL_ONE, GL_ONE);
 
@@ -597,7 +655,6 @@ void GraphicsSystem::ChromaticAbbrebationBlendFramebuffers(GFX::FBO& targetFrame
 	glDrawBuffer(GL_COLOR_ATTACHMENT0);
 
 	glUniform1f(BlendShader.GetUniformLocation("ChromaticAbberationStrength"), systemManager->mGraphicsSystem->mChromaticStrength);
-	glBindTexture(GL_TEXTURE_2D, Attachment0);									// bind the first attachment
 	glBindTexture(GL_TEXTURE_2D, Attachment1);									// bind the second attachment
 
 	{
@@ -613,6 +670,30 @@ void GraphicsSystem::ChromaticAbbrebationBlendFramebuffers(GFX::FBO& targetFrame
 }
 
 
+void GraphicsSystem::DrawGameScene()
+{
+	// Clear Default framebuffer
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);	// back to default framebuffer
+	glClearColor(0.0f, 1.0f, 1.0f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT);
+	glDisable(GL_DEPTH_TEST);				// Depth testing must be disabled!!
+
+	// Activate shader program
+	m_DrawSceneShaderInst.Activate();
+	m_Image2DMesh.BindVao();										// Bind VAO
+	glBindTexture(GL_TEXTURE_2D, m_GameFbo.GetColorAttachment());	// Bind texture to be drawn
+
+	glDrawArraysInstanced(GL_TRIANGLE_FAN, 0, 4, 1);				// DRAW
+
+	m_Image2DMesh.BindVao();										// Unbind VAO
+	glBindTexture(GL_TEXTURE_2D, 0);								// Unbind texture after drawing
+
+	// Deactivate shader program
+	m_DrawSceneShaderInst.Deactivate();
+
+	glEnable(GL_DEPTH_TEST);
+}
+
 /***************************************************************************/
 /*!
 \brief
@@ -622,6 +703,7 @@ void GraphicsSystem::ChromaticAbbrebationBlendFramebuffers(GFX::FBO& targetFrame
 void GraphicsSystem::Exit()
 {
 	m_Image2DMesh.Destroy();
+
 }
 
 /***************************************************************************/
@@ -775,6 +857,66 @@ void GraphicsSystem::SetCameraSize(CAMERA_TYPE type, ivec2 size)
 	}
 }
 
+
+inline void drawViewFrustum(Entity gameCamera)
+{
+	auto& camera = gameCamera.GetComponent<Camera>().mCamera;
+
+	mat4 inv = glm::inverse(camera.mView);
+
+	float halfHeight = tanf(glm::radians(camera.mFovDegree / 2.f));
+	float halfWidth = halfHeight * camera.mAspectRatio;
+
+	float near1 = camera.mNear;
+	float far1 = camera.mFar;
+	float xn = halfWidth * near1;
+	float xf = halfWidth * far1;
+	float yn = halfHeight * near1;
+	float yf = halfHeight * far1;
+
+	glm::vec4 f[8u] =
+	{
+		// near face
+		{xn, yn,	-near1, 1.f},
+		{-xn, yn,	-near1, 1.f},
+		{xn, -yn,	-near1, 1.f},
+		{-xn, -yn,	-near1 , 1.f},
+
+		// far face
+		{xf, yf,	-far1, 1.f},
+		{-xf, yf,	-far1 , 1.f},
+		{xf, -yf,	-far1 , 1.f},
+		{-xf, -yf,	-far1, 1.f},
+	};
+
+	glm::vec3 v[8];
+	for (int i = 0; i < 8; i++)
+	{
+		vec4 ff = inv * f[i];
+		v[i].x = ff.x / ff.w;
+		v[i].y = ff.y / ff.w;
+		v[i].z = ff.z / ff.w;
+	}
+
+	//glm::vec4 color = {1.f, 0.38f, 0.01f, 1.f};
+	glm::vec4 color = {1.f, 1.f, 0.5f, 1.f};
+	systemManager->mGraphicsSystem->m_Renderer.AddLine(v[0], v[1], color);
+	systemManager->mGraphicsSystem->m_Renderer.AddLine(v[0], v[2], color);
+	systemManager->mGraphicsSystem->m_Renderer.AddLine(v[3], v[1], color);
+	systemManager->mGraphicsSystem->m_Renderer.AddLine(v[3], v[2], color);
+
+	systemManager->mGraphicsSystem->m_Renderer.AddLine(v[4], v[5], color);
+	systemManager->mGraphicsSystem->m_Renderer.AddLine(v[4], v[6], color);
+	systemManager->mGraphicsSystem->m_Renderer.AddLine(v[7], v[5], color);
+	systemManager->mGraphicsSystem->m_Renderer.AddLine(v[7], v[6], color);
+
+	systemManager->mGraphicsSystem->m_Renderer.AddLine(v[0], v[4], color);
+	systemManager->mGraphicsSystem->m_Renderer.AddLine(v[1], v[5], color);
+	systemManager->mGraphicsSystem->m_Renderer.AddLine(v[3], v[7], color);
+	systemManager->mGraphicsSystem->m_Renderer.AddLine(v[2], v[6], color);
+}
+
+
 /***************************************************************************/
 /*!
 \brief
@@ -784,7 +926,7 @@ void GraphicsSystem::SetCameraSize(CAMERA_TYPE type, ivec2 size)
 void GraphicsSystem::UpdateCamera(CAMERA_TYPE type, const float &dt)
 {
 	auto localcamera = systemManager->ecs->GetEntitiesWith<Camera>();
-	Entity camera;
+	Entity GameCamera;
 
 	switch (type)
 	{
@@ -792,11 +934,20 @@ void GraphicsSystem::UpdateCamera(CAMERA_TYPE type, const float &dt)
 		{
 			if (localcamera.empty())
 				return;
-			camera = localcamera.front();		// there will only be one game camera
+			GameCamera = localcamera.front();		// there will only be one game camera
+			auto& GameCameraTransform = GameCamera.GetComponent<Transform>();
+			auto& GameCameraComponent = GameCamera.GetComponent<Camera>();
 
-			Camera_Input::getInstance().updateCameraInput(camera.GetComponent<Camera>().mCamera, dt);
-			camera.GetComponent<Camera>().mCamera.Update();
-			camera.GetComponent<Transform>().mTranslate = camera.GetComponent<Camera>().mCamera.mPosition;
+			GameCameraComponent.mCamera.mTarget += (GameCameraTransform.mTranslate - GameCameraComponent.mCamera.mPosition);
+			GameCameraComponent.mCamera.mPosition = GameCameraTransform.mTranslate;
+			GameCameraComponent.mCamera.mPitch = GameCameraTransform.mRotate.y;
+			GameCameraComponent.mCamera.mYaw = GameCameraTransform.mRotate.x;
+			GameCameraComponent.mCamera.Update();
+
+			// debug drawing
+			if (systemManager->mGraphicsSystem->m_DebugDrawing) {
+				drawViewFrustum(GameCamera);
+			}
 			break;
 		}
 
@@ -809,21 +960,29 @@ void GraphicsSystem::UpdateCamera(CAMERA_TYPE type, const float &dt)
 
 	case CAMERA_TYPE::CAMERA_TYPE_ALL:
 		{
+			// == update editor camera ==
+			Camera_Input::getInstance().updateCameraInput(m_EditorCamera, dt);
 			m_EditorCamera.Update();
-			if (m_CameraControl == CAMERA_TYPE::CAMERA_TYPE_EDITOR) {
-				Camera_Input::getInstance().updateCameraInput(m_EditorCamera, dt);
-			}
 
+			// == update game camera ==
 			if (localcamera.empty())
 				return;
-			camera = localcamera.front();		// there will only be one game camera
+			GameCamera = localcamera.front();		// there will only be one game camera
 
-			camera.GetComponent<Camera>().mCamera.Update();
-			if (m_CameraControl == CAMERA_TYPE::CAMERA_TYPE_GAME) {
-				Camera_Input::getInstance().updateCameraInput(camera.GetComponent<Camera>().mCamera, dt);
-				camera.GetComponent<Transform>().mTranslate = camera.GetComponent<Camera>().mCamera.mPosition;
+			auto& GameCameraTransform = GameCamera.GetComponent<Transform>();
+			auto& GameCameraComponent = GameCamera.GetComponent<Camera>();
+
+			GameCameraComponent.mCamera.mTarget += (GameCameraTransform.mTranslate - GameCameraComponent.mCamera.mPosition);
+			GameCameraComponent.mCamera.mPosition = GameCameraTransform.mTranslate;
+			GameCameraComponent.mCamera.mPitch = GameCameraTransform.mRotate.y;
+			GameCameraComponent.mCamera.mYaw = GameCameraTransform.mRotate.x;
+
+			GameCameraComponent.mCamera.Update();
+
+			// debug drawing
+			if (systemManager->mGraphicsSystem->m_DebugDrawing) {
+				drawViewFrustum(GameCamera);
 			}
-
 			break;
 		}
 	}
@@ -913,6 +1072,52 @@ vec3 GraphicsSystem::GetCameraDirection(CAMERA_TYPE type)
 		break;
 	}
 	PERROR("camera spoil - graphicssystem.cpp GetCameraDirection()");
+	return {};
+}
+
+mat4 GraphicsSystem::GetCameraViewMatrix(CAMERA_TYPE type)
+{
+	auto localcamera = systemManager->ecs->GetEntitiesWith<Camera>();
+	if (localcamera.empty())
+		return mat4(1.0); // Cannot find camera Richmond
+	Entity camera = localcamera.front();
+
+	switch (type)
+	{
+	case CAMERA_TYPE::CAMERA_TYPE_GAME:
+		return camera.GetComponent<Camera>().mCamera.mView;
+
+	case CAMERA_TYPE::CAMERA_TYPE_EDITOR:
+		return m_EditorCamera.mView;
+
+	case CAMERA_TYPE::CAMERA_TYPE_ALL:
+		return mat4(1.0);
+		break;
+	}
+	PERROR("camera spoil - graphicssystem.cpp GetCameraViewMatrix()");
+	return {};
+}
+
+ivec2 GraphicsSystem::GetCameraSize(CAMERA_TYPE type)
+{
+	auto localcamera = systemManager->ecs->GetEntitiesWith<Camera>();
+	if (localcamera.empty())
+		return ivec2(); // Cannot find camera Richmond
+	Entity camera = localcamera.front();
+
+	switch (type)
+	{
+	case CAMERA_TYPE::CAMERA_TYPE_GAME:
+		return camera.GetComponent<Camera>().mCamera.mSize;
+
+	case CAMERA_TYPE::CAMERA_TYPE_EDITOR:
+		return m_EditorCamera.mSize;
+
+	case CAMERA_TYPE::CAMERA_TYPE_ALL:
+		return ivec2();
+		break;
+	}
+	PERROR("camera spoil - graphicssystem.cpp GetCameraSize()");
 	return {};
 }
 
@@ -1018,6 +1223,45 @@ void GraphicsSystem::ResizeWindow(ivec2 newSize)
 
 	m_Width = newSize.x;
 	m_Height = newSize.y;
+
+	SetCameraSize(CAMERA_TYPE::CAMERA_TYPE_ALL, newSize);
+}
+
+void GraphicsSystem::ClampCursor()
+{
+	double posX, posY;
+
+	m_Window->GetCursorPos(&posX, &posY);
+	posX = glm::clamp(posX, -20.0, static_cast<double>(m_Window->GetScreenWidth()));
+	posY = glm::clamp(posY, -20.0, static_cast<double>(m_Window->GetScreenHeight()));
+
+	glfwSetCursorPos(m_Window->GetHandle(), posX, posY);
+}
+
+void GraphicsSystem::HideCursor(bool hideCursor)
+{
+	if (hideCursor)
+		glfwSetInputMode(m_Window->GetHandle(), GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+	else
+		glfwSetInputMode(m_Window->GetHandle(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+}
+
+void GraphicsSystem::Unload()
+{
+	auto meshRendererInstances = systemManager->ecs->GetEntitiesWith<MeshRenderer>();
+
+	for (Entity inst : meshRendererInstances)
+	{
+		GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(inst.GetComponent<MeshRenderer>().mMeshRef.getdata(systemManager->mResourceTySystem->m_ResourceInstance));
+		if (meshinst == nullptr)
+			continue;
+
+		// clears all instances of LTW, Colors for every mesh
+		meshinst->ClearInstances();
+	}
+
+	// clears all debug draw instances
+	m_Renderer.ClearInstances();
 }
 
 GLuint64 GraphicsSystem::GetAndStoreBindlessTextureHandle(int texID)
@@ -1056,11 +1300,7 @@ void GraphicsSystem::DrawAll2DInstances(unsigned shaderID)
 	for (size_t i{}; i < m_Image2DStore.size(); ++i)
 	{
 		glBindTextureUnit(i, m_Image2DStore[i]);
-		//m_Textures.push_back(i);
 	}
-	//GLuint uniform_tex = glGetUniformLocation(shaderID, "uTex2d");
-	//glUniform1iv(uniform_tex, (GLsizei)m_Textures.size(), m_Textures.data()); // passing Texture ID to the fragment shader
-	//m_Textures.clear();
 
 	// Bind 2D quad VAO
 	m_Image2DMesh.BindVao();
@@ -1078,17 +1318,17 @@ void GraphicsSystem::DrawAll2DInstances(unsigned shaderID)
 	}
 }
 
-void GraphicsSystem::Add2DImageInstance(float width, float height, vec2 const& position, unsigned texHandle, unsigned entityID, vec4 const& color)
+void GraphicsSystem::Add2DImageInstance(float width, float height, vec2 const& position, unsigned texHandle, unsigned entityID, float degree, vec4 const& color)
 {
 	float half_w = m_Width * 0.5f;
 	float half_h = m_Height * 0.5f;
 
 	mat4 world =
 	{
-		vec4(width / m_Width, 0.f, 0.f, 0.f),
-		vec4(0.f, height / m_Height, 0.f, 0.f),
+		vec4(width / half_w, 0.f, 0.f, 0.f),
+		vec4(0.f, height / half_h, 0.f, 0.f),
 		vec4(0.f, 0.f, 1.f, 0.f),
-		vec4(position.x / half_w, position.y / half_h, 0.f, 1.f)
+		vec4(position.x / m_Width, position.y / m_Height, 0.f, 1.f)
 	};
 
 	int texIndex{};
@@ -1099,7 +1339,7 @@ void GraphicsSystem::Add2DImageInstance(float width, float height, vec2 const& p
 
 	m_Image2DMesh.mLTW.push_back(world);
 	m_Image2DMesh.mColors.push_back(color);
-	m_Image2DMesh.mTexEntID.push_back(vec4((float)texIndex + 0.5f, (float)entityID + 0.5f, 0, 0));
+	m_Image2DMesh.mTexEntID.push_back(vec4((float)texIndex + 0.5f, (float)entityID + 0.5f, degree, 0));
 }
 
 int GraphicsSystem::StoreTextureIndex(unsigned texHandle)
@@ -1122,6 +1362,41 @@ int GraphicsSystem::StoreTextureIndex(unsigned texHandle)
 	int pos = (int)(it - m_Image2DStore.cbegin());
 }
 
+void GraphicsSystem::SetupCrosshairShaderLocations()
+{
+	m_CrosshairThicknessLocation = m_CrosshairShaderInst.GetUniformLocation("uThickness");
+	m_CrosshairInnerLocation = m_CrosshairShaderInst.GetUniformLocation("uInner");
+	m_CrosshairOuterLocation = m_CrosshairShaderInst.GetUniformLocation("uOuter");
+	m_CrosshairColorLocation = m_CrosshairShaderInst.GetUniformLocation("uColor");
+}
+
+void GraphicsSystem::DrawCrosshair()
+{
+	// Get entity with crosshair component
+	auto ent = systemManager->ecs->GetEntitiesWith<Crosshair>();
+
+	// Use crosshair shader program adn VAO
+	m_CrosshairShaderInst.Activate();
+	m_Image2DMesh.BindVao();
+
+	for (Entity inst : ent)	// only if entity exists
+	{
+		auto crosshairInst = inst.GetComponent<Crosshair>();
+
+		glUniform1f(m_CrosshairThicknessLocation, crosshairInst.mThickness);
+		glUniform1f(m_CrosshairInnerLocation, crosshairInst.mInner);
+		glUniform1f(m_CrosshairOuterLocation, crosshairInst.mOuter);
+		glUniform4fv(m_CrosshairColorLocation, 1, &crosshairInst.mColor[0]);
+	}
+
+	// Draw call
+	glDrawArraysInstanced(GL_TRIANGLE_FAN, 0, 4, 1);
+
+	// Stop using crosshair shader program and VAO
+	m_CrosshairShaderInst.Deactivate();
+	m_Image2DMesh.UnbindVao();
+}
+
 /***************************************************************************/
 /*!
 \brief
@@ -1140,13 +1415,21 @@ void MeshRenderer::SetColor(const vec4& color)
 }
 
 
-void MeshRenderer::SetMesh(const std::string& meshName)
+void MeshRenderer::SetMesh(const std::string& meshName, Entity inst)
 {
+	// gets the guid from the fbx descriptor file
 	std::string descFilepath = systemManager->mResourceTySystem->fbx_path + meshName + ".fbx.desc";
 	unsigned guid = _GEOM::GetGUID(descFilepath);
 
 	mMeshRef.data = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(guid));
 	mMeshPath = systemManager->mResourceTySystem->compiled_geom_path + meshName + ".geom";
+
+	GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mMeshRef.data);
+	if (inst.HasComponent<Animator>() && meshinst->mHasAnimation)
+	{
+		// change the animation to the new mesh's
+		inst.GetComponent<Animator>().mAnimator.SetAnimation(&meshinst->mAnimation[0]);
+	}
 }
 
 

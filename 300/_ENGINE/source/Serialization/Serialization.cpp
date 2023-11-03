@@ -98,14 +98,14 @@ SERIALIZE_BASIC(glm::vec4)
 	writer.EndObject();
 }
 
-SERIALIZE_BASIC(Script)
+SERIALIZE_BASIC(Script*)
 {
 	if (name != nullptr)
 		writer.Key(name);
 
 	writer.StartObject();
-	Serialize(writer, "scriptFile", val.scriptFile);
-	Serialize(writer, "variables", val.variables);
+	Serialize(writer, "scriptFile", val->scriptFile);
+	Serialize(writer, "variables", val->variables);
 	writer.EndObject();
 }
 
@@ -276,10 +276,11 @@ DESERIALIZE_BASIC(glm::vec4)
 	}
 }
 
-DESERIALIZE_BASIC(Script)
+DESERIALIZE_BASIC(Script*)
 {
-	Deserialize(reader, "scriptFile", val.scriptFile);
-	Deserialize(reader, "variables", val.variables);
+	val = new Script;
+	Deserialize(reader, "scriptFile", val->scriptFile);
+	Deserialize(reader, "variables", val->variables);
 }
 
 DESERIALIZE_BASIC(SUBTAG)
@@ -342,15 +343,15 @@ DESERIALIZE_BASIC(entt::entity)
 	}
 }
 
-DESERIALIZE_BASIC(enum_tag::enum_tag)
-{
-	if (reader.HasMember(name))
-	{
-		int num;
-		Deserialize(reader, name, num);
-		val = static_cast<enum_tag::enum_tag>(num);
-	}
-}
+//DESERIALIZE_BASIC(enum_tag::enum_tag)
+//{
+//	if (reader.HasMember(name))
+//	{
+//		int num;
+//		Deserialize(reader, name, num);
+//		val = static_cast<enum_tag::enum_tag>(num);
+//	}
+//}
 
 void WriteToFile(const std::string &filename, const rapidjson::StringBuffer &buffer)
 {

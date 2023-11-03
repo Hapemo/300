@@ -34,6 +34,7 @@ Editor EditorApplication::mMaineditor;
 
 void EditorApplication::Init()
 {
+    Input::mIsEditor = true;
     StartUp();
     SystemInit();
    /* Entity trigger = systemManager->ecs->NewEntity();
@@ -64,7 +65,7 @@ void EditorApplication::SystemInit()
 {
     systemManager->Init(true, &mWindow);
     FPSManager::Init();
-    Input::Init();
+    Input::Init(true);
     // gfx init
 
     mMaineditor.UIinit(mWindow.GetHandle());

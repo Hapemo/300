@@ -18,8 +18,12 @@ and saving of prefabs, scenes and gamestates using serialization.
 #include "GameState/GameState.h"
 #include "ConfigManager.h"
 #include "ResourceManagerTy.h"
+#include "Graphics/GraphicsSystem.h"
 #include "Debug/Logger.h"
 #include "ECS/ECS_Components.h"
+#include "Physics/PhysicsSystem.h"
+#include "AI/AIManager.h"
+#include "ScriptingSystem.h"
 
 #define SERIALIZE_SELF(T) if (e.HasComponent<T>()) e.GetComponent<T>().SerializeSelf(writer)
 #define DESERIALIZE_SELF(T, S) if(reader.HasMember(S)) e.AddComponent<T>().DeserializeSelf(reader[S])
@@ -37,9 +41,11 @@ void ObjectFactory::LoadEntity(Entity e, rapidjson::Value& reader)
 			GFX::Mesh& meshinst = *reinterpret_cast<GFX::Mesh*>(e.GetComponent<MeshRenderer>().mMeshRef.data);
 			if (meshinst.mHasAnimation) {
 				e.AddComponent<Animator>();
+				e.GetComponent<Animator>().mAnimator.SetAnimation(&meshinst.mAnimation[0]);
 			}
 		}
 	}
+	DESERIALIZE_SELF(UIrenderer, "uirenderer");
 	DESERIALIZE_SELF(BoxCollider, "boxcollider");
 	DESERIALIZE_SELF(SphereCollider, "spherecollider");
 	DESERIALIZE_SELF(CapsuleCollider, "capsulecollider");
@@ -53,6 +59,10 @@ void ObjectFactory::LoadEntity(Entity e, rapidjson::Value& reader)
 		systemManager->ecs->mPrefabs[e.GetComponent<Prefab>().mPrefab].push_back(e);
 	DESERIALIZE_SELF(PointLight, "pointlight");
 	DESERIALIZE_SELF(AISetting, "aisetting");
+	if (e.HasComponent<AISetting>())
+		systemManager->mAISystem->InitialiseAI(e);
+	DESERIALIZE_SELF(Crosshair, "crosshair");
+	DESERIALIZE_SELF(Healthbar, "healthbar");
 }
 
 // deserialize scenes from the Scenes folder
@@ -73,74 +83,30 @@ void ObjectFactory::LoadScene(Scene* scene, const std::string& filename)
 		idMap.insert({ tmp_id, e.id });
 		LoadEntity(e, *ci);
 
-		auto parent_cont = systemManager->ecs->GetEntitiesWith<Parent>();
-		auto child_cont = systemManager->ecs->GetEntitiesWith<Children>();
-		for (Entity pe : parent_cont)
-		{
-			//need to check if entity came from this scene!!!!
-			Parent& parent = pe.GetComponent<Parent>();
-			if (idMap.count((entt::entity)parent.mNextSibling) == 0) //quick fix
-				continue;
-			parent.mNextSibling = entt::to_integral(idMap[(entt::entity)parent.mNextSibling]);
-			parent.mParent = entt::to_integral(idMap[(entt::entity)parent.mParent]);
-			parent.mPrevSibling = entt::to_integral(idMap[(entt::entity)parent.mPrevSibling]);
-		}
-
-		for (Entity ce : child_cont)
-		{
-			//need to check if entity came from this scene!!!!
-			Children& child = ce.GetComponent<Children>();
-			if (idMap.count((entt::entity)child.mFirstChild) == 0) //quick fix
-				continue;
-			child.mFirstChild = entt::to_integral(idMap[(entt::entity)child.mFirstChild]);
-		}
-
-		std::cout << "tmp_id: " << (int)tmp_id << ", entity_id: " << (int)e.id << ", entity_name: " << e.GetComponent<General>().name << std::endl;
+		//std::cout << "tmp_id: " << (int)tmp_id << ", entity_id: " << (int)e.id << ", entity_name: " << e.GetComponent<General>().name << std::endl;
 		scene->mEntities.insert(e);
 	}
+	auto parent_cont = systemManager->ecs->GetEntitiesWith<Parent>();
+	auto child_cont = systemManager->ecs->GetEntitiesWith<Children>();
+	for (Entity pe : parent_cont)
+	{
+		//need to check if entity came from this scene!!!!
+		Parent& parent = pe.GetComponent<Parent>();
+		if (idMap.count((entt::entity)parent.mNextSibling) == 0) //quick fix
+			continue;
+		parent.mNextSibling = entt::to_integral(idMap[(entt::entity)parent.mNextSibling]);
+		parent.mParent = entt::to_integral(idMap[(entt::entity)parent.mParent]);
+		parent.mPrevSibling = entt::to_integral(idMap[(entt::entity)parent.mPrevSibling]);
+	}
 
-
-	// Create a dummy <Audio> Component ...
-	/*Entity e = systemManager->ecs->NewEntity();
-	Audio& audio = e.GetComponent<Audio>();
-	General& general = e.GetComponent<General>();
-	general.name = "DUMMY AUDIO";
-	audio.mFilePath = "../assets\\Audio";
-	audio.mFileName = "tuning-radio-7150.wav";
-	audio.mFullPath = audio.mFilePath + "/" + audio.mFileName;
-	audio.mAudioType = AUDIO_SFX;
-	audio.mIsLooping = true;
-	audio.mState = Audio::INACTIVE;
-	audio.mPlayonAwake = true;
-
-	Entity e2 = systemManager->ecs->NewEntity();
-	Audio& audio2 = e2.GetComponent<Audio>();
-	General& general2 = e2.GetComponent<General>();
-	general2.name = "SFX #2";
-	audio2.mFilePath = "../assets\\Audio";
-	audio2.mFileName = "Girl-Humming.wav";
-	audio2.mFullPath = audio.mFilePath + "/" + audio.mFileName;
-	audio2.mAudioType = AUDIO_SFX;
-	audio2.mIsLooping = true;
-	audio2.mState = Audio::INACTIVE;
-	audio2.mPlayonAwake = true;
-
-	Entity e3 = systemManager->ecs->NewEntity();
-	Audio& audio3 = e3.GetComponent<Audio>();
-	General& general3 = e3.GetComponent<General>();
-	general3.name = "BGM #1";
-	audio3.mFilePath = "../assets\\Audio";
-	audio3.mFileName = "cruising-down-8bit-lane-159615.mp3";
-	audio3.mFullPath = audio.mFilePath + "/" + audio.mFileName;
-	audio3.mAudioType = AUDIO_BGM;
-	audio3.mIsLooping = true;
-	audio3.mState = Audio::INACTIVE;
-	audio3.mPlayonAwake = true;
-
-	scene->mEntities.insert(e);
-	scene->mEntities.insert(e2);
-	scene->mEntities.insert(e3);*/
-
+	for (Entity ce : child_cont)
+	{
+		//need to check if entity came from this scene!!!!
+		Children& child = ce.GetComponent<Children>();
+		if (idMap.count((entt::entity)child.mFirstChild) == 0) //quick fix
+			continue;
+		child.mFirstChild = entt::to_integral(idMap[(entt::entity)child.mFirstChild]);
+	}
 }
 
 void ObjectFactory::LoadGameState(GameState* gs, const std::string& _name)
@@ -152,13 +118,23 @@ void ObjectFactory::LoadGameState(GameState* gs, const std::string& _name)
 	ReadFromFile(ConfigManager::GetValue("GameStatePath") + _name + ".gs", doc);
 
 	Scene scn;
+	auto& sys = systemManager->mGraphicsSystem;
+
 	// because an array of objects is contained inside of doc
 	for (rapidjson::Value::ValueIterator ci = doc.Begin(); ci != doc.End(); ++ci)
 	{
 		Deserialize(*ci, "scene_name", scn.mName);
 		Deserialize(*ci, "pause", scn.mIsPause);
 		Deserialize(*ci, "force_render", scn.mForceRender);
-
+		Deserialize(*ci, "bloom_threshold", sys->mAmbientBloomThreshold);
+		Deserialize(*ci, "bloom_exposure", sys->mAmbientBloomExposure);
+		Deserialize(*ci, "bloom_offset", sys->mTexelOffset);
+		Deserialize(*ci, "bloom_sampleweight", sys->mSamplingWeight);
+		Deserialize(*ci, "chroma_strength", sys->mChromaticStrength);
+		Deserialize(*ci, "bloom_enable", sys->m_EnableBloom);
+		Deserialize(*ci, "chroma_enable", sys->m_EnableChromaticAbberation);
+		Deserialize(*ci, "global_tint", sys->m_GlobalTint);
+		Deserialize(*ci, "debug", sys->m_DebugDrawing);
 		gs->mScenes.push_back(scn);
 	}
 }
@@ -171,6 +147,8 @@ Entity ObjectFactory::DeserializePrefab(const std::string& filename)
 
 	Entity e = systemManager->ecs->NewEntity();
 	LoadEntity(e, doc);
+
+
 	return e;
 }
 
@@ -182,6 +160,7 @@ void ObjectFactory::SaveEntity(Entity e, rapidjson::PrettyWriter<rapidjson::Stri
 	SERIALIZE_SELF(Transform);
 	SERIALIZE_SELF(RigidBody);
 	SERIALIZE_SELF(MeshRenderer);
+	SERIALIZE_SELF(UIrenderer);
 	SERIALIZE_SELF(BoxCollider);
 	SERIALIZE_SELF(SphereCollider);
 	SERIALIZE_SELF(CapsuleCollider);
@@ -193,6 +172,8 @@ void ObjectFactory::SaveEntity(Entity e, rapidjson::PrettyWriter<rapidjson::Stri
 	SERIALIZE_SELF(Prefab);
 	SERIALIZE_SELF(PointLight);
 	SERIALIZE_SELF(AISetting);
+	SERIALIZE_SELF(Crosshair);
+	SERIALIZE_SELF(Healthbar);
 	writer.EndObject();
 }
 
@@ -215,12 +196,23 @@ void ObjectFactory::SaveGameState(GameState* gs)
 	rapidjson::StringBuffer buffer;
 	rapidjson::PrettyWriter<rapidjson::StringBuffer> writer{ buffer };
 	writer.StartArray();
+
+	auto& sys = systemManager->mGraphicsSystem;
 	for (Scene scn : gs->mScenes)
 	{
 		writer.StartObject();
 		Serialize(writer, "scene_name", scn.mName);
 		Serialize(writer, "pause", scn.mIsPause);
 		Serialize(writer, "force_render", scn.mForceRender);
+		Serialize(writer, "bloom_threshold", sys->mAmbientBloomThreshold);
+		Serialize(writer, "bloom_exposure", sys->mAmbientBloomExposure);
+		Serialize(writer, "bloom_offset", sys->mTexelOffset);
+		Serialize(writer, "bloom_sampleweight", sys->mSamplingWeight);
+		Serialize(writer, "chroma_strength", sys->mChromaticStrength);
+		Serialize(writer, "bloom_enable", sys->m_EnableBloom);
+		Serialize(writer, "chroma_enable", sys->m_EnableChromaticAbberation);
+		Serialize(writer, "global_tint", sys->m_GlobalTint);
+		Serialize(writer, "debug", sys->m_DebugDrawing);
 		writer.EndObject();
 	}
 	writer.EndArray();

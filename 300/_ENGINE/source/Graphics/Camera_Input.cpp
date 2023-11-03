@@ -31,12 +31,13 @@ Camera_Input::Camera_Input()
 
 void Camera_Input::updateCameraInput(GFX::Camera& cam, const float& dt)
 {
-	glm::vec3 moveVector{};
-	auto  side = glm::normalize(glm::cross(cam.direction(), { 0, 1, 0 }));
-	auto  up = glm::normalize(glm::cross(side, cam.direction()));
-
-	//!< WASD Camera Movement
+	if (systemManager->isSystemPaused())
 	{
+		//!< WASD Camera Movement !<
+		glm::vec3 moveVector{};
+		auto  side = glm::normalize(glm::cross(cam.direction(), { 0, 1, 0 }));
+		auto  up = glm::normalize(glm::cross(side, cam.direction()));
+		
 		// camera move forward
 		if (Input::CheckKey(E_STATE::HOLD, E_KEY::W)) {
 			moveVector += glm::normalize(cam.direction()) * dt * cam.mCameraSpeed;
@@ -74,7 +75,8 @@ void Camera_Input::updateCameraInput(GFX::Camera& cam, const float& dt)
 	//!< Mouse Movement
 	{
 		// if the right mouse button is being pressed
-		if (Input::CheckKey(E_STATE::HOLD, E_KEY::M_BUTTON_R))
+		//if (Input::CheckKey(E_STATE::HOLD, E_KEY::M_BUTTON_R))
+		if (systemManager->mGraphicsSystem->m_RightClickHeld && systemManager->isSystemPaused())
 		{
 			// if the cursor is moving relative to its old position
 			vec2 delta = Input::CursorPos() - cam.cursorPosition();
@@ -89,27 +91,10 @@ void Camera_Input::updateCameraInput(GFX::Camera& cam, const float& dt)
 		
 		// update previous cursor pos
 		cam.SetCursorPosition(Input::CursorPos());
-
-		if (cam.mPitch > 89.0f) {
-			cam.mPitch = 89.0f;
-		}
-
-		if (cam.mPitch < -89.0f) {
-			cam.mPitch = -89.0f;
-		}
-
-		glm::vec3 direction;
-		direction.x = cos(glm::radians(cam.mYaw)) * cos(glm::radians(cam.mPitch));
-		direction.y = sin(glm::radians(cam.mPitch));
-		direction.z = sin(glm::radians(cam.mYaw)) * cos(glm::radians(cam.mPitch));
-		direction.y *= -1;
-
-		// update the camera's target based on the normalized direction
-		cam.SetTarget(cam.position() + glm::normalize(direction));
 	}
 
 	//!< Camera Zoom
-	if (systemManager->mGraphicsSystem->m_EnableScroll)
+	if (systemManager->mGraphicsSystem->m_EnableScroll && systemManager->isSystemPaused())
 	{
 		cam.mFovDegree -= static_cast<float>(Input::GetScroll());
 		if (cam.mFovDegree < GFX::CameraConstants::minFOV) {
@@ -120,4 +105,111 @@ void Camera_Input::updateCameraInput(GFX::Camera& cam, const float& dt)
 			cam.mFovDegree = GFX::CameraConstants::maxFOV;
 		}
 	}
+}
+
+
+void Camera_Scripting::SetPosition(Entity cameraEntity, const vec3& newposition)
+{
+	assert(cameraEntity.HasComponent<Transform>());
+	cameraEntity.GetComponent<Transform>().mTranslate = newposition;
+}
+
+
+void Camera_Scripting::SetTarget(Entity cameraEntity, const vec3& newtarget)
+{
+	assert(cameraEntity.HasComponent<Camera>());
+	cameraEntity.GetComponent<Camera>().mCamera.mTarget = newtarget;
+}
+
+
+void Camera_Scripting::SetCameraSpeed(Entity cameraEntity, const float& speed)
+{
+	assert(cameraEntity.HasComponent<Camera>());
+	cameraEntity.GetComponent<Camera>().mCamera.mCameraSpeed = speed;
+}
+
+
+void Camera_Scripting::SetSensitivity(Entity cameraEntity, const float& sensitivity)
+{
+	assert(cameraEntity.HasComponent<Camera>());
+	cameraEntity.GetComponent<Camera>().mCamera.mSensitivity = sensitivity;
+}
+
+void Camera_Scripting::SetFov(Entity cameraEntity, const float& fov)
+{
+	assert(cameraEntity.HasComponent<Camera>());
+	cameraEntity.GetComponent<Camera>().mCamera.mFovDegree = fov;
+}
+
+
+glm::vec3 Camera_Scripting::GetPosition(Entity cameraEntity)
+{
+	assert(cameraEntity.HasComponent<Transform>());
+	return cameraEntity.GetComponent<Transform>().mTranslate;
+}
+
+
+glm::vec3 Camera_Scripting::GetTarget(Entity cameraEntity)
+{
+	assert(cameraEntity.HasComponent<Camera>());
+	return cameraEntity.GetComponent<Camera>().mCamera.mTarget;
+}
+
+
+glm::vec3 Camera_Scripting::GetDirection(Entity cameraEntity)
+{
+	assert(cameraEntity.HasComponent<Camera>());
+	return cameraEntity.GetComponent<Camera>().mCamera.direction();
+}
+
+
+float Camera_Scripting::GetCameraSpeed(Entity cameraEntity)
+{
+	assert(cameraEntity.HasComponent<Camera>());
+	return cameraEntity.GetComponent<Camera>().mCamera.mCameraSpeed;
+}
+
+
+float Camera_Scripting::GetSensitivity(Entity cameraEntity)
+{
+	assert(cameraEntity.HasComponent<Camera>());
+	return cameraEntity.GetComponent<Camera>().mCamera.mSensitivity;
+}
+
+
+void Camera_Scripting::RotateCameraView(Entity cameraEntity, const vec2& cursorposition)
+{
+	assert(cameraEntity.HasComponent<Camera>());
+	assert(cameraEntity.HasComponent<Transform>());
+	
+	auto& caminst = cameraEntity.GetComponent<Camera>().mCamera;
+	auto& caminstTransform = cameraEntity.GetComponent<Transform>();
+
+	vec2 delta = cursorposition;
+
+	//std::cout << delta.x << ", " << delta.y << "\n";
+
+	if (delta == vec2(0.f, 0.f))
+		return;
+	
+	delta *= caminst.mSensitivity;		// adjust the mouse movement sensitivity
+	caminstTransform.mRotate.x += delta.x;
+	caminstTransform.mRotate.y += delta.y;
+	
+	if (caminstTransform.mRotate.y > 89.0f) {
+		caminstTransform.mRotate.y = 89.0f;
+	}
+
+	if (caminstTransform.mRotate.y < -89.0f) {
+		caminstTransform.mRotate.y = -89.0f;
+	}
+
+	//glm::vec3 direction;
+	//direction.x = cos(glm::radians(caminst.mYaw)) * cos(glm::radians(caminst.mPitch));
+	//direction.y = sin(glm::radians(caminst.mPitch));
+	//direction.z = sin(glm::radians(caminst.mYaw)) * cos(glm::radians(caminst.mPitch));
+	//direction.y *= -1;
+
+	//// update the camera's target based on the normalized direction
+	//caminst.SetTarget(caminst.mPosition + glm::normalize(direction));
 }

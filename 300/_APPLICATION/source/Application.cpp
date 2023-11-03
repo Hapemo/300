@@ -8,11 +8,14 @@
 Main application that gets called in the main loop. It handles the creation and
 start up of window and game system, also runs their update functions.
 *******************************************************************************/
+
+
+
 #include "Application.h"
 #include "FPSManager.h"
 #include "ECS/ECS.h"
 #include "ECS/ECS_Components.h"
-#include "Input/Input.h"
+//#include "Input/Input.h"
 #include "SingletonManager.h"
 #include "Object/ObjectFactory.h"
 #include "ScriptingSystem.h"
@@ -21,10 +24,11 @@ start up of window and game system, also runs their update functions.
 #include "GameState/GameStateManager.h"
 #include "Debug/Logger.h"
 #include "ConfigManager.h"
-
 #include "Example.h"
-#include "Input/Input.h"
 #include "Physics/Accumulator.h"
+
+#include <Windows.h>
+#include <WinUser.h>
 
 // Static variables
 GFX::DebugRenderer* Application::mRenderer;
@@ -34,9 +38,14 @@ std::string Application::title;
 
 void Application::Init() 
 {
+
+    //SetCursorPos(1, 1);
+
     StartUp();
     SystemInit();
     //MultithreadExample();
+
+    systemManager->Play();
 }
 
 void Application::StartUp() 
@@ -51,6 +60,8 @@ void Application::StartUp()
 
 void Application::SystemInit()
 {
+    Input::mIsEditor = false;
+
 
 #pragma region AudioComponent Test
     Entity entAudio = systemManager->ecs->NewEntity();
@@ -105,7 +116,7 @@ void Application::SystemInit()
 
     systemManager->Init(false, &mWindow);
     FPSManager::Init();
-    Input::Init();
+    Input::Init(false);
 #pragma region testserialization
     //ObjectFactory::DeserializeScene("../assets/Scenes/test.json");
 
@@ -215,10 +226,6 @@ void Application::MainUpdate()
     {
         FirstUpdate();
         SystemUpdate();
-        // To remove (Script test with entities)
-        systemManager->mScriptingSystem->ScriptingUpdateTest();
-        // To remove after ScriptStart and ScriptUpdate are functions are working
-        systemManager->mScriptingSystem->TestSSSU();
         SecondUpdate(); // This should always be the last
 
         // Graphics update

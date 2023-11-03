@@ -1,13 +1,17 @@
 #include "pch.h"
 #include "ECS/ECS.h"
 #include "ECS/ECS_Components.h"
+#include "ECS/ECS_Systems.h"
+#include "Physics/PhysicsSystem.h"
+
 #include "ScriptingSystem.h"
 #include "Object/ObjectFactory.h"
 #include "GameState/GameStateManager.h"
 #include "Debug/AssertException.h"
 #include "ResourceManagerTy.h"
+#include "AI/AIManager.h"
 
-std::vector<std::string> ECS::mEntityTags({ "PLAYER", "ENEMY", "BULLET", "FLOOR", "WALL" });
+std::vector<std::string> ECS::mEntityTags({ "PLAYER", "ENEMY", "BULLET", "FLOOR", "WALL", "TELEPORTER", "UI"});
 
 bool Entity::ShouldRun() {
 	assert(HasComponent<General>() && std::string("There is no general component when attempting to change Entity's isActive").c_str());
@@ -32,9 +36,6 @@ void Entity::Activate() {
 	if (editorManager->IsScenePaused()) return;
 #endif
 	//if (!editorManager->IsScenePaused())
-	if (HasComponent<Script>())
-		systemManager->GetScriptingPointer()->ScriptStart(*this);
-
 
 	// General
 	genComp.isActive = true;
@@ -66,12 +67,9 @@ void Entity::Deactivate() {
 	if (editorManager->IsScenePaused()) return;
 #endif
 	//if (!editorManager->IsScenePaused())
-	if (HasComponent<Script>())
-		systemManager->GetScriptingPointer()->ScriptExit(*this);
-
 
 	// General
-	genComp.isActive = true;
+	genComp.isActive = false;
 
 	// Parent Child
 	/*if (HasComponent<)
@@ -144,7 +142,7 @@ void ECS::DeleteEntity(Entity e)
 //#endif
 	if (static_cast<std::uint32_t>(e.id) == 0)
 	{
-		PWARNING("tried to delete entitiy with id 0");
+		PWARNING("tried to delete entity with id 0");
 		return;
 	}
 	if (e.HasParent())
@@ -154,12 +152,35 @@ void ECS::DeleteEntity(Entity e)
 			e.RemoveChild(child);
 	if (e.HasComponent<Prefab>())
 		UnlinkPrefab(e);
+	systemManager->mAISystem->RemoveAIFromEntity(e);
+	systemManager->mPhysicsSystem->RemoveActor(e);
 	registry.destroy(e.id);
 }
 
 void ECS::DeleteAllEntities()
 {
 	registry.clear();
+}
+
+void ECS::SetDeleteEntity(Entity e)
+{
+	e.GetComponent<General>().isDelete = true;
+	PINFO("Entity to be deleted: %d", (int)e.id)
+	//std::cout << "Enstity to be deleted" << (int)e.id << std::endl;
+}
+
+void ECS::DeleteEntityUpdate()
+{
+	auto generalEntities = systemManager->ecs->GetEntitiesWith<General>();
+	for (Entity entity : generalEntities)
+	{
+		if (entity.GetComponent<General>().isDelete)
+		{
+			//std::cout << "Deleting entity:" << (int)entity.id << std::endl;
+			systemManager->GetGameStateSystem()->DeleteEntity(entity);
+			PINFO("Delete entity done");
+		}
+	}
 }
 
 void ECS::CopyEntity(Entity e)
@@ -193,7 +214,7 @@ void ECS::NewPrefab(Entity e)
 	mPrefabs[name].push_back(e);
 }
 
-Entity ECS::NewEntityFromPrefab(std::string prefabName)
+Entity ECS::NewEntityFromPrefab(std::string prefabName, const glm::vec3& pos)
 {
 	// void ObjectFactory::DeserializeScene(const std::string& filename)
 	// creation of new entity done inside deserializescene function
@@ -202,12 +223,13 @@ Entity ECS::NewEntityFromPrefab(std::string prefabName)
 	//copy all prefab components (except transform) to new entity
 	//General temp1 = e.GetComponent<General>();
 	//MeshRenderer temp = e.GetComponent<MeshRenderer>();
+	e.GetComponent<Transform>().mTranslate = pos;
 	PASSERT(static_cast<uint32_t>(e.id) != 0);
-	Scripts& scripts = e.GetComponent<Scripts>();
-	for (auto& elem : scripts.scriptsContainer)
-	{
-		elem.Load(e.id);
-	}
+	e.GetComponent<Scripts>().LoadForAllScripts((int)e.id);
+	e.GetComponent<Scripts>().RunFunctionForAllScripts("Alive");
+
+	if (e.HasComponent<RigidBody>())
+		systemManager->mPhysicsSystem->AddEntity(e);
 	return e;
 }
 
@@ -218,22 +240,8 @@ void ECS::UpdatePrefabEntities(std::string prefabName)
 	for (Entity e : mPrefabs[prefabName])
 	{
 		e.GetComponent<Transform>().mScale = temp.GetComponent<Transform>().mScale;
-		e.GetComponent<Transform>().mRotate = temp.GetComponent<Transform>().mRotate;
 
-		if (temp.HasComponent<MeshRenderer>())
-			e.AddComponent<MeshRenderer>() = temp.GetComponent<MeshRenderer>();
-		if (temp.HasComponent<RigidBody>())
-			e.AddComponent<RigidBody>() = temp.GetComponent<RigidBody>();
-		if (temp.HasComponent<BoxCollider>())
-			e.AddComponent<BoxCollider>() = temp.GetComponent<BoxCollider>();
-		if (temp.HasComponent<SphereCollider>())
-			e.AddComponent<SphereCollider>() = temp.GetComponent<SphereCollider>();
-		if (temp.HasComponent<CapsuleCollider>())
-			e.AddComponent<CapsuleCollider>() = temp.GetComponent<CapsuleCollider>();
-		if (temp.HasComponent<Scripts>())
-			e.AddComponent<Scripts>() = temp.GetComponent<Scripts>();
-		if (temp.HasComponent<Audio>())
-			e.AddComponent<Audio>() = temp.GetComponent<Audio>();
+		AddComponentHelper<ALL_COMPONENTS>(e, temp);
 	}
 
 	systemManager->ecs->DeleteEntity(temp);

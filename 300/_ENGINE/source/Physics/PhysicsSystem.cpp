@@ -4,16 +4,15 @@
 #include "Physics/Accumulator.h"
 #include "Physics/PhysXUtils.h"
 
-std::unordered_map<std::uint32_t, std::vector<uint32_t>> PhysicsSystem::mTriggerCollisions;
-
 PhysicsSystem::PhysicsSystem()
 {
-	mMaterials[MATERIAL::RUBBER] = CreateMaterial(0.9f, 0.8f, 0.2f);
-	mMaterials[MATERIAL::WOOD] = CreateMaterial(0.5f, 0.4f, 0.3f);
-	mMaterials[MATERIAL::METAL] = CreateMaterial(0.7f, 0.6f, 0.05f);
-	mMaterials[MATERIAL::ICE] = CreateMaterial(0.1f, 0.05f, 0.1f);
-	mMaterials[MATERIAL::CONCRETE] = CreateMaterial(0.6f, 0.5f, 0.2f);
-	mMaterials[MATERIAL::GLASS] = CreateMaterial(0.4f, 0.3f, 0.7f);
+	mMaterials[MATERIAL::RUBBER] = CreateMaterial(0.9f, 0.8f, 0.f);
+	mMaterials[MATERIAL::WOOD] = CreateMaterial(0.5f, 0.4f, 0.f);
+	mMaterials[MATERIAL::METAL] = CreateMaterial(0.7f, 0.6f, 0.0f);
+	mMaterials[MATERIAL::ICE] = CreateMaterial(0.1f, 0.05f, 0.f);
+	mMaterials[MATERIAL::CONCRETE] = CreateMaterial(0.6f, 0.5f, 0.f);
+	mMaterials[MATERIAL::GLASS] = CreateMaterial(0.4f, 0.3f, 0.8f);
+	mIsSimulationRunning = false;
 }
 
 void PhysicsSystem::Init()
@@ -22,7 +21,6 @@ void PhysicsSystem::Init()
 	for (auto itr = mActors.begin(); itr != mActors.end(); ++itr)
 		mPX.mScene->removeActor(*itr->second.mActor);
 	mActors.clear();
-	mTriggerCollisions.clear();
 
 	auto view = systemManager->ecs->GetEntitiesWith<Transform, RigidBody>();
 	for (Entity e : view)
@@ -35,11 +33,15 @@ void PhysicsSystem::Update(float dt)
 		return;
 
 	// fixed time step
+	mIsSimulationRunning = true;
 	for (unsigned step = 0; step < Accumulator::mSteps; ++step)
 	{
 		mPX.mScene->simulate(Accumulator::mFixedDT);
-		mPX.mScene->fetchResults(true);
+		bool isok = mPX.mScene->fetchResults(true);
 	}
+	mIsSimulationRunning = false;
+
+	MoveQueuedEntities();
 
 	// sync with ecs
 	Synchronize();
@@ -48,11 +50,17 @@ void PhysicsSystem::Update(float dt)
 void PhysicsSystem::Exit()
 {
 	mActors.clear();
-	mTriggerCollisions.clear();
 }
 
 void PhysicsSystem::AddEntity(Entity e)
 {
+	//std::cout << "adding entity:" << (int)e.id << std::endl;
+	//std::cout << "adding entity:" << e.GetComponent<General>().name << std::endl;
+	if (mIsSimulationRunning)
+	{
+		mPendingAdd.push_back(e);
+		return;
+	}
 	if (mActors.find(static_cast<uint32_t>(e.id)) != mActors.end())
 	{
 		PWARNING("Tried to add actor that is already in simulation!");
@@ -66,22 +74,12 @@ void PhysicsSystem::AddEntity(Entity e)
 
 void PhysicsSystem::SetPosition(Entity e, const glm::vec3& globalpose)
 {
-	if (!e.HasComponent<RigidBody>()) return;
-	RigidBody rbod = e.GetComponent<RigidBody>();
-	if (rbod.mMotion == MOTION::STATIC) return;
-
-	PxRigidDynamic* actor = (physx::PxRigidDynamic*)(mActors[static_cast<uint32_t>(e.id)].mActor);
-	actor->setGlobalPose(PxTransform(Convert(globalpose), Convert(glm::quat(glm::radians(e.GetComponent<Transform>().mRotate)))));
+	mPendingTranslate.push_back(std::pair<Entity, glm::vec3>(e, globalpose));
 }
 
 void PhysicsSystem::SetRotation(Entity e, const glm::vec3& rotation)
 {
-	if (!e.HasComponent<RigidBody>()) return;
-	RigidBody rbod = e.GetComponent<RigidBody>();
-	if (rbod.mMotion == MOTION::STATIC) return;
-
-	PxRigidDynamic* actor = (physx::PxRigidDynamic*)(mActors[static_cast<uint32_t>(e.id)].mActor);
-	actor->setGlobalPose(PxTransform(Convert(e.GetComponent<Transform>().mTranslate), Convert(glm::quat(glm::radians(rotation)))));
+	mPendingRotate.push_back(std::pair<Entity, glm::vec3>(e, rotation));
 }
 
 void PhysicsSystem::SetVelocity(Entity e, const glm::vec3& velocity)
@@ -89,6 +87,11 @@ void PhysicsSystem::SetVelocity(Entity e, const glm::vec3& velocity)
 	if (!e.HasComponent<RigidBody>()) return;
 	RigidBody rbod = e.GetComponent<RigidBody>();
 	if (rbod.mMotion == MOTION::STATIC) return;
+	if (mIsSimulationRunning)
+	{
+		mPendingVelocity.push_back(std::pair<Entity, glm::vec3>(e, velocity));
+		return;
+	}
 
 	physx::PxRigidDynamic* actor = (physx::PxRigidDynamic*)(mActors[static_cast<uint32_t>(e.id)].mActor);
 	actor->setAngularDamping(0.5f);
@@ -97,24 +100,28 @@ void PhysicsSystem::SetVelocity(Entity e, const glm::vec3& velocity)
 
 void PhysicsSystem::RemoveActor(Entity e)
 {
-	auto itr = mTriggerCollisions.find(static_cast<uint32_t>(e.id));
-	if (itr != mTriggerCollisions.end())
-	{
-		mTriggerCollisions.erase(itr);
-	}
-	else
-	{
-		for (itr = mTriggerCollisions.begin(); itr != mTriggerCollisions.end(); ++itr)
-		{
-			Entity trigger = itr->first;
-			std::vector<uint32_t>& vec = itr->second;
-			auto temp = std::find(vec.begin(), vec.end(), static_cast<uint32_t>(e.id));
-			if (temp == vec.end())
-				continue;
-			trigger.GetComponent<Scripts>().RunFunctionForAllScripts("OnTriggerExit", e);
-			vec.erase(temp);
-		}
-	}
+	if (!e.HasComponent<RigidBody>())
+		return;
+	//auto itr = mTriggerCollisions.find(static_cast<uint32_t>(e.id));
+	//if (itr != mTriggerCollisions.end())
+	//{
+	//	mTriggerCollisions.erase(itr);
+	//}
+	//else
+	//{
+	//	for (itr = mTriggerCollisions.begin(); itr != mTriggerCollisions.end(); ++itr)
+	//	{
+	//		Entity trigger = itr->first;
+	//		std::vector<uint32_t>& vec = itr->second;
+	//		auto temp = std::find(vec.begin(), vec.end(), static_cast<uint32_t>(e.id));
+	//		if (temp == vec.end())
+	//			continue;
+	//		trigger.GetComponent<Scripts>().RunFunctionForAllScripts("OnTriggerExit", e);
+	//		vec.erase(temp);
+	//	}
+	//}
+	if (mActors.count(static_cast<uint32_t>(e.id)) == 0)
+		return;
 	mPX.mScene->removeActor(*mActors[static_cast<uint32_t>(e.id)].mActor);
 	mActors.erase(static_cast<uint32_t>(e.id));
 }
@@ -137,6 +144,7 @@ void PhysicsSystem::CreateRigidBody(Entity e)
 
 	if (e.HasComponent<CapsuleCollider>())
 	{
+		actor->setGlobalPose(PxTransform(Convert(xform.mTranslate + childOffset)));
 		PxShape* shape{};
 		CapsuleCollider cap = e.GetComponent<CapsuleCollider>();
 		CreateAndAttachShape(actor,
@@ -145,8 +153,6 @@ void PhysicsSystem::CreateRigidBody(Entity e)
 			PxTransform(Convert(cap.mTranslateOffset), PxQuat(PxHalfPi, PxVec3T<float>(0, 0, 1))),
 			rbod, 
 			cap.mIsTrigger);
-		if (cap.mIsTrigger)
-			mTriggerCollisions[static_cast<uint32_t>(e.id)] = std::vector<uint32_t>();
 	}
 
 	if (e.HasComponent<BoxCollider>())
@@ -159,8 +165,6 @@ void PhysicsSystem::CreateRigidBody(Entity e)
 			PxTransform(Convert(col.mTranslateOffset)),
 			rbod, 
 			col.mIsTrigger); //PxRigidActorExt::createExclusiveShape();
-		if (col.mIsTrigger)
-			mTriggerCollisions[static_cast<uint32_t>(e.id)] = std::vector<uint32_t>();
 	}
 
 	if (e.HasComponent<SphereCollider>())
@@ -169,12 +173,10 @@ void PhysicsSystem::CreateRigidBody(Entity e)
 		SphereCollider col = e.GetComponent<SphereCollider>();
 		CreateAndAttachShape(actor,
 			shape, 
-			PxSphereGeometry(std::max({ xform.mScale.x, xform.mScale.y, xform.mScale.z }) * col.mScaleOffset / 2.f), 
+			PxSphereGeometry(col.mScaleOffset), 
 			PxTransform(Convert(col.mTranslateOffset)),
 			rbod, 
 			col.mIsTrigger);
-		if (col.mIsTrigger)
-			mTriggerCollisions[static_cast<uint32_t>(e.id)] = std::vector<uint32_t>();
 	}
 	
 	if (rbod.mMotion == MOTION::DYNAMIC)
@@ -215,6 +217,56 @@ void PhysicsSystem::CreateActor(PxRigidActor*& actor, const PxTransform& pxform,
 		return;
 	}
 	actor = mPX.mPhysics->createRigidStatic(pxform);
+}
+
+void PhysicsSystem::MoveQueuedEntities()
+{
+	for (auto e : mPendingAdd)
+	{
+		if (mActors.find(static_cast<uint32_t>(e.id)) != mActors.end())
+		{
+			PWARNING("Tried to add actor that is already in simulation!");
+			return;
+		}
+		if (e.HasComponent<RigidBody>())
+			CreateRigidBody(e);
+		else
+			PWARNING("Tried to add actor without rigid body to simulation!");
+	}
+	for (auto e_pos : mPendingTranslate)
+	{
+		Entity e = e_pos.first;
+		glm::vec3 globalpose = e_pos.second;
+		if (!e.HasComponent<RigidBody>()) return;
+		RigidBody rbod = e.GetComponent<RigidBody>();
+		if (rbod.mMotion == MOTION::STATIC) return;
+
+		PxRigidDynamic* actor = (physx::PxRigidDynamic*)(mActors[static_cast<uint32_t>(e.id)].mActor);
+		actor->setGlobalPose(PxTransform(Convert(globalpose), Convert(glm::quat(glm::radians(e.GetComponent<Transform>().mRotate)))));
+	}
+	for (auto e_pos : mPendingRotate)
+	{
+		Entity e = e_pos.first;
+		glm::vec3 rotation = e_pos.second;
+		if (!e.HasComponent<RigidBody>()) return;
+		RigidBody rbod = e.GetComponent<RigidBody>();
+		if (rbod.mMotion == MOTION::STATIC) return;
+
+		PxRigidDynamic* actor = (physx::PxRigidDynamic*)(mActors[static_cast<uint32_t>(e.id)].mActor);
+		actor->setGlobalPose(PxTransform(Convert(e.GetComponent<Transform>().mTranslate), Convert(glm::quat(glm::radians(rotation)))));
+	}
+	for (auto e_col : mPendingVelocity)
+	{
+		Entity e = e_col.first;
+		glm::vec3 velocity = e_col.second;
+		physx::PxRigidDynamic* actor = (physx::PxRigidDynamic*)(mActors[static_cast<uint32_t>(e.id)].mActor);
+		actor->setAngularDamping(0.5f);
+		actor->setLinearVelocity(Convert(velocity));
+	}
+	mPendingTranslate.clear();
+	mPendingRotate.clear();
+	mPendingAdd.clear();
+	mPendingVelocity.clear();
 }
 
 void PhysicsSystem::Synchronize()

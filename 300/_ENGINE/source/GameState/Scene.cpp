@@ -14,6 +14,7 @@ a group of entities and operates on them.
 #include "Object/ObjectFactory.h"
 //#include "LogicSystem.h"
 #include "GameState/GameStateManager.h"
+#include "Graphics/GraphicsSystem.h"
 
 
 Scene::Scene() : mEntities(), mIsPause(false), mName() {
@@ -66,11 +67,20 @@ void Scene::Load(std::string const& _name) {
 	if (mName.empty()) mName = _name;
 	
 	ObjectFactory::LoadScene(this, mName);
+
 	for (auto e : mEntities) {
-		if (e.HasComponent<Scripts>()) systemManager->GetScriptingPointer()->ScriptAlive(e);
-		if (e.HasComponent<MeshRenderer>()) {
+
+		if (e.HasComponent<Scripts>()) 
+		{
+			e.GetComponent<Scripts>().LoadForAllScripts((int)e.id);
+			e.GetComponent<Scripts>().RunFunctionForAllScripts("Alive");
+		}
+
+		if (e.HasComponent<MeshRenderer>()) 
+		{
 			auto& meshdata = e.GetComponent<MeshRenderer>();
 		}
+
 		e.GetComponent<General>().isPaused = mIsPause;
 	}
 
@@ -85,9 +95,24 @@ void Scene::Unload() {
 	//LOG_CUSTOM("SCENE", "Unloading Scene: " + mName);
 
 	decltype(mEntities) tempEntities = mEntities;
+	std::vector<Entity> parents;
+	std::vector<Entity> children;
 	for (auto e : tempEntities) {
+		if (e.HasChildren()) {
+			parents.push_back(e);
+			continue;
+		}
+		if (e.HasParent()) {
+			children.push_back(e);
+			continue;
+		}
 		RemoveEntity(e);
 	}
+	for (auto e : children)
+		RemoveEntity(e);
+	for (auto e : parents)
+		RemoveEntity(e);
+
 	assert(mEntities.empty() && std::string("Scene \"" + mName + "\"still contains " + std::to_string(mEntities.size()) + " after unloading").c_str());
 
 	// Clearing all scene data
@@ -97,9 +122,6 @@ void Scene::Unload() {
 }
 
 Entity Scene::AddEntity() {
-	
-
-
 	Entity e{ systemManager->ecs->NewEntity() };
 	mEntities.insert(e);
 
@@ -118,7 +140,8 @@ void Scene::RemoveChildFromScene(Entity _e) {
 
 void Scene::RemoveEntity(Entity _e) {
 	// if (_e.GetComponent<General>().isActive) _e.Deactivate(); // Temporary remove - Han
-	RemoveChildFromScene(_e);
+	//RemoveChildFromScene(_e);
+	systemManager->mGraphicsSystem->Unload();
 
 	mEntities.erase(_e);
 	systemManager->ecs->DeleteEntity(_e);

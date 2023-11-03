@@ -14,7 +14,13 @@ void ButtonSystem::Update()
 
 	// Get Mouse Position
 	double mouseX{}, mouseY{};
-	systemManager->GetWindow()->GetCursorPos(&mouseX, &mouseY);
+
+	if (systemManager->IsEditor())
+	{
+		// TODO: @Han: Use function that gets the position of the cursor within the game scene panel [0, 1] with top left as Origin
+	}
+	else
+		systemManager->GetWindow()->GetCursorPos(&mouseX, &mouseY);
 
 	// Map the Mouse Position (top left origin[0, 1] to center origin)
 	mouseX -= 0.5;

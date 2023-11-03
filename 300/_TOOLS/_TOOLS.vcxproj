@@ -151,6 +151,7 @@
   <ItemGroup>
     <ClInclude Include="include\ConfigManager.h" />
     <ClInclude Include="include\FPSManager.h" />
+    <ClInclude Include="include\Graph.h" />
     <ClInclude Include="include\ISingleton.h" />
     <ClInclude Include="include\Misc.h" />
     <ClInclude Include="include\pch.h" />
@@ -161,6 +162,7 @@
   <ItemGroup>
     <ClCompile Include="source\ConfigManager.cpp" />
     <ClCompile Include="source\FPSManager.cpp" />
+    <ClCompile Include="source\Graph.cpp" />
     <ClCompile Include="source\Misc.cpp" />
     <ClCompile Include="source\SingletonManager.cpp" />
   </ItemGroup>

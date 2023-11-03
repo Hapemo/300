@@ -54,11 +54,18 @@ void GameStateManager::UpdateNextGSMState() {
 		return;
 	case E_GSMSTATE::RESTART:
 		mCurrentGameState.Init();
+		systemManager->ResetForChangeGS();
 		break;
 	case E_GSMSTATE::CHANGING:
 		mCurrentGameState.Unload();
+		std::ifstream file{ ConfigManager::GetValue("GameStatePath") + mNextGSName + ".gs" };
+		if (!file.is_open()) {
+			PERROR("Unable to open gamestate file %s, please restart the application", mNextGSName.c_str());
+			break;
+		}
 		mCurrentGameState.Load(mNextGSName);
 		mCurrentGameState.Init();
+		systemManager->ResetForChangeGS();
 		break;
 	}
 
@@ -78,7 +85,9 @@ void GameStateManager::ChangeGameState(std::string const& _name) {
 	//LOG_CUSTOM("GAMESTATEMANAGER", "Set gamestate to change to: " + _name);
 	//audioManager->StopAllSound(); TODO minglun
 	mNextGSName = _name;
-	mGSMState = E_GSMSTATE::CHANGING;
+	if (_name == "exit") mGSMState = E_GSMSTATE::EXIT;
+	else if (_name == "restart") mGSMState = E_GSMSTATE::RESTART;
+	else mGSMState = E_GSMSTATE::CHANGING;
 }
 
 void GameStateManager::ChangeGameState(E_GSMSTATE const& _state) {
@@ -122,7 +131,7 @@ Entity GameStateManager::GetEntity(std::string const& _entityName, std::string c
 				return e;
 			}
 	}
-	assert(false && std::string("Unable to get entity: " + _entityName).c_str());
+	PWARNING("Unable to get entity: %s", _entityName.c_str());
 
 	return Entity();
 }
@@ -131,7 +140,7 @@ void GameStateManager::Unload() {
 	//LOG_CUSTOM("GAMESTATEMANAGER", "Unload GameStateManager");
 	mCurrentGameState.Exit();
 	mCurrentGameState.Unload();
-	mNextGSName = "";
+	//mNextGSName = "";
 }
 
 void GameStateManager::EditorRestartGameState() { mGSMState = E_GSMSTATE::CHANGING; }

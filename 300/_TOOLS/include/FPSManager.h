@@ -47,4 +47,7 @@ struct FPSManager
   static double elapsedTimeMs;
   //static int counter; // for performance visualizer in imGui
   static bool trigger;
+
+public:
+	static double GetDT();
 };

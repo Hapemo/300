@@ -68,6 +68,18 @@ void MeshRenderer::DeserializeSelf(rapidjson::Value& reader)
 	Deserialize(reader, "meshrefid", mMeshRef.data_uid);
 	Deserialize(reader, "instancecolor", mInstanceColor);
 	Deserialize(reader, "materialinstance", mMaterialInstancePath, 5);
+
+	for (int i{}; i < 5; ++i)
+	{
+		// deserialize the texture descriptor files
+		if (mMaterialInstancePath[i] == " ")
+			continue;
+
+		// store the texture descriptor data to meshrenderer struct
+		std::string texturedescFilepath = mMaterialInstancePath[i] + ".desc";
+		_GEOM::Texture_DescriptorData::DeserializeTEXTURE_DescriptorDataFromFile(mTextureDescriptorData[i], texturedescFilepath);
+	}
+
 	Deserialize(reader, "mesh", mMeshPath);
 	//Deserialize(reader, "texturecont", mTextureCont, 5);
 	for (int i = 0; i < 5; ++i)
@@ -82,12 +94,16 @@ void UIrenderer::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>&
 	writer.Key("uirenderer");
 	writer.StartObject();
 	Serialize(writer, "texpath", mTexPath);
+	Serialize(writer, "textureref", mTextureRef.data_uid);
+	Serialize(writer, "degree", mDegree);
 	writer.EndObject();
 }
 
 void UIrenderer::DeserializeSelf(rapidjson::Value& reader)
 {
 	Deserialize(reader, "texpath", mTexPath);
+	Deserialize(reader, "textureref", mTextureRef.data_uid);
+	Deserialize(reader, "degree", mDegree);
 }
 
 void RigidBody::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
@@ -180,7 +196,7 @@ void Scripts::DeserializeSelf(rapidjson::Value& reader)
 {
 	Deserialize(reader, "scriptscontainer", scriptsContainer);
 	for (int i = 0; i < scriptsContainer.size(); ++i)
-		Deserialize(reader, scriptsContainer[i].scriptFile.c_str(), scriptsContainer[i].variables);
+		Deserialize(reader, scriptsContainer[i]->scriptFile.c_str(), scriptsContainer[i]->variables);
 }
 
 void Parent::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
@@ -311,9 +327,9 @@ void AISetting::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& 
 	writer.Key("aisetting");
 	writer.StartObject();
 	Serialize(writer, "movementtype", mMovementType);
-	Serialize(writer, "shotprediction", mShotPrediction);
 	Serialize(writer, "spreadout", mSpreadOut);
 	Serialize(writer, "stayaway", mStayAway);
+	Serialize(writer, "elevation", mElevation);
 	Serialize(writer, "targetname", mTargetName);
 	writer.EndObject();
 }
@@ -321,8 +337,44 @@ void AISetting::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& 
 void AISetting::DeserializeSelf(rapidjson::Value& reader)
 {
 	Deserialize(reader, "movementtype", mMovementType);
-	Deserialize(reader, "shotprediction", mShotPrediction);
 	Deserialize(reader, "spreadout", mSpreadOut);
 	Deserialize(reader, "stayaway", mStayAway);
+	Deserialize(reader, "elevation", mElevation);
 	Deserialize(reader, "targetname", mTargetName);
+}
+
+void Crosshair::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
+{
+	writer.Key("crosshair");
+	writer.StartObject();
+	Serialize(writer, "thickness", mThickness);
+	Serialize(writer, "inner", mInner);
+	Serialize(writer, "outer", mOuter);
+	Serialize(writer, "color", mColor);
+	writer.EndObject();
+}
+
+void Crosshair::DeserializeSelf(rapidjson::Value& reader)
+{
+	Deserialize(reader, "thickness", mThickness);
+	Deserialize(reader, "inner", mInner);
+	Deserialize(reader, "outer", mOuter);
+	Deserialize(reader, "color", mColor);
+}
+
+void Healthbar::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
+{
+	writer.Key("healthbar");
+	writer.StartObject();
+	Serialize(writer, "healthcolor", mHealthColor);
+	Serialize(writer, "backcolor", mBackColor);
+	Serialize(writer, "health", health);
+	writer.EndObject();
+}
+
+void Healthbar::DeserializeSelf(rapidjson::Value& reader)
+{
+	Deserialize(reader, "healthcolor", mHealthColor);
+	Deserialize(reader, "backcolor", mBackColor);
+	Deserialize(reader, "health", health);
 }

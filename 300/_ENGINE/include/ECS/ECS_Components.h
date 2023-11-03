@@ -10,6 +10,9 @@ Components used by the ECS.
 ****************************************************************************/
 
 #pragma once
+
+//#define TAGCOUNT 32
+
 #include "glm/glm.hpp"
 #include <algorithm>
 #include "Script.h"
@@ -21,6 +24,7 @@ Components used by the ECS.
 #include "../../../lib/FMOD/core/inc/fmod.hpp"
 #include <Animator.hpp>
 #include <Camera.hpp>
+#include <string>
 //#include "EnumStrings.h"
 //#include "EnumTags.h"
 #include "Input/Input.h"
@@ -28,7 +32,6 @@ Components used by the ECS.
 #include <Constants.h>
 #include "ResourceManagerTy.h"
 #include "Serialization/Serialization.h"
-
 #include "Texture.hpp"
 //#include "Graphics/GraphicsSystem.h"
 //#include "Mesh.hpp"
@@ -38,7 +41,6 @@ Components used by the ECS.
 //DECLARE_ENUMSTRING(enum_tag, PLAYER, ENEMY, BULLET, STATIC, BUILDING)
 struct uid;
 
-//DECLARE_ENUMSTRING(enum_tag, PLAYER, ENEMY, BULLET, STATIC, BUILDING)
 namespace GFX {
 	struct Mesh;
 
@@ -59,10 +61,11 @@ struct General : public Serializable
 	//int tagid{ 0 };
 	SUBTAG subtag;
 	bool isActive{};
+	bool isDelete{};
 	bool isPaused{};
 
 	General() 
-	: name(""), subtag(SUBTAG::ACTIVE), isActive(true) 
+	: name(""), subtag(SUBTAG::ACTIVE), isActive(true), isDelete(false)
 	{};
 
 	std::string GetTag() { return ECS::GetTag(tagid); }
@@ -124,7 +127,6 @@ struct MeshRenderer : public Serializable
 	
 	std::pair<std::string, std::string> mShaderPath{ "../assets/shader_files/pointLight_vert.glsl", "../assets/shader_files/pointLight_frag.glsl" };
 	
-	//uid									mShaderid;
 	ref									mShaderRef;
 
 	std::string							mMaterialInstancePath[5] {" "," " ," " ," ", " "};
@@ -135,12 +137,16 @@ struct MeshRenderer : public Serializable
 	ref									mMeshRef{};
 	ref									mTextureRef[5]		{ {nullptr,0},{nullptr,0},{nullptr,0},{nullptr,0},{nullptr,0} };
 
+	// store the descriptor data for the material instance per mesh renderer instance
+	_GEOM::Texture_DescriptorData		mTextureDescriptorData[5];
+	
+
 	unsigned							mGUID;
 	//bool								mTextureCont[5];
 
 	void								Inspect();
 	void								SetColor(const vec4& color);
-	void								SetMesh(const std::string& meshName);
+	void								SetMesh(const std::string& meshName, Entity inst);
 	void								SetTexture(MaterialType type, const std::string& Texturename);
 
 	
@@ -161,18 +167,23 @@ struct MeshRenderer : public Serializable
 struct UIrenderer : public Serializable
 {
 	std::string							mTexPath; // temporary should be UID
-	void*								mTextureRef;
+	ref									mTextureRef;
+	float								mDegree;
 
 	inline unsigned ID() 
 	{
-		if (mTextureRef != nullptr) {
-			int temp = (reinterpret_cast<GFX::Texture*>(mTextureRef))->ID();
-			return temp;
-		}
+		//if (mTextureRef != nullptr) {
+		//	int temp = (reinterpret_cast<GFX::Texture*>(mTextureRef))->ID();
+		//	return temp;
+		//}
 
 		return 0;
 	}
 	void Inspect();
+	void SetDegree(float degree)
+	{
+		mDegree = degree;
+	}
 	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
 	void DeserializeSelf(rapidjson::Value& reader);
 };
@@ -214,7 +225,7 @@ struct BoxCollider : public Serializable //@han
 	glm::vec3 mTranslateOffset;		// final pos = Transform.mTranslate + mTranslateOffset;
 	bool mIsTrigger;
 
-	BoxCollider() : mScaleOffset(1.f), mTranslateOffset(0.f) {}
+	BoxCollider() : mScaleOffset(1.f), mTranslateOffset(0.f), mIsTrigger(false){}
 	
 	//RTTR_ENABLE()
 	void							Inspect();
@@ -233,7 +244,7 @@ struct SphereCollider : public Serializable //@han
 	glm::vec3 mTranslateOffset;		// final pos = Transform.mTranslate + mTranslateOffset;
 	bool mIsTrigger;
 
-	SphereCollider() : mScaleOffset(1.f), mTranslateOffset(0.f) {};
+	SphereCollider() : mScaleOffset(1.f), mTranslateOffset(0.f), mIsTrigger(false) {};
 
 	//RTTR_ENABLE()
 	void							Inspect();
@@ -264,19 +275,76 @@ struct CapsuleCollider : public Serializable //@han
 class Scripts : public Serializable {
 public:
 	Scripts() = default;
-	~Scripts() = default;
+	Scripts(const Scripts& script)
+	{
+		for (auto& elem : script.scriptsContainer)
+		{
+			Script* script = new Script;
+			*script = *elem;
+			scriptsContainer.push_back(script);
+		}
+	}
+	Scripts& operator=(const Scripts& script)
+	{
+		for (auto& elem : scriptsContainer)
+		{
+			delete elem;
+		}
+		scriptsContainer.clear();
+		for (auto& elem : script.scriptsContainer)
+		{
+			Script* script = new Script;
+			*script = *elem;
+			scriptsContainer.push_back(script);
+		}
+		return *this;
+	}
+	~Scripts()
+	{
+		for (auto& elem : scriptsContainer)
+		{
+			delete elem;
+		}
+		scriptsContainer.clear();
+	}
 
 	//static void LoadRunScript(Entity entity);
 
 	//std::string mScriptFile{};
-	std::vector <Script> scriptsContainer;
+	std::vector <Script*> scriptsContainer;
+
+	Script* AddScript(std::string scriptFile)
+	{
+		Script* script = new Script;
+		script->scriptFile = scriptFile;
+		scriptsContainer.push_back(script);
+		return script;
+	}
 
 	template<typename ...args>
 	void RunFunctionForAllScripts(const char* funcName, args... arguments)
 	{
 		for (auto& elem : scriptsContainer)
 		{
-			elem.Run(funcName, arguments...);
+			elem->Run(funcName, arguments...);
+		}
+	}
+
+	Script* GetScript(std::string scriptName)
+	{
+		for (auto& elem : scriptsContainer)
+		{
+			if (elem->scriptFile == scriptName)
+				return elem;
+		}
+		return nullptr;
+	}
+
+	void LoadForAllScripts(int entityID)
+	{
+		for (auto& elem : scriptsContainer)
+		{
+			elem->Load(entityID);
 		}
 	}
 
@@ -284,7 +352,6 @@ public:
 	void Inspect(entt::entity entityID);
 	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
 	void DeserializeSelf(rapidjson::Value& reader);
-
 };
 
 /******************************************************************************/
@@ -421,6 +488,10 @@ struct Audio : public Serializable
 		mFadeSpeedModifier = fade_speed_modifier;
 		mFadeDuration = fade_duration;
 	}
+	// Update Loop - Boolean Checks
+	bool		   mIsPlaying = false;					 // [Flag] - Check if audio is already playing (Channel Interaction)
+	bool           mIsPlay = false;						 // [Flag] - to decide whether to play audio (if true)
+	bool		   mSpamReplay = false;
 
 	// Update Loop - Fade In / Fade out data
 	//bool		   mFadeIn = false;						 // [Flag] - This audio will be faded out. 
@@ -475,7 +546,7 @@ struct Audio : public Serializable
 		mPlayonAwake = false;
 		mIsEmpty = true;
 		mIsLoaded = false;
-		//m3DAudio = false; // Added [10/26]
+		m3DAudio = false; // Added [10/26]
 	}
 
 	int mAudio{ 0 };
@@ -576,11 +647,11 @@ struct VFX : public Serializable
  */
 /******************************************************************************/
 enum class E_MOVEMENT_TYPE : char;
-struct AISetting {
+struct AISetting : public Serializable {
 	E_MOVEMENT_TYPE mMovementType;	// AI's movement type
-	bool mShotPrediction;						// AI's bullet predict target's movement
-	float mSpreadOut;								// Degree of spreading out from another entity
-	float mStayAway;								// Distance to stay away from player
+	float mSpreadOut;								// Percentage determining how much it changes the direction. Max 100
+	float mStayAway;								// For flying enemy, horizontal distance to stay away from player
+	float mElevation;								// For flying enemy, vertical distance to stay away from player
 	std::string mTargetName;				// Name of target (Will be searching via gamestate, not scene)
 
 	void Inspect();
@@ -607,4 +678,32 @@ struct Button
 	bool mIsClick{ false };
 	bool mActivated{ false };
 	bool mRenderFlag{ true };
+
+	inline bool IsInteractable() { return mInteractable; }
+	inline bool IsHovered() { return mIsHover; }
+	inline bool IsClicked() { return mIsClick; }
+	inline bool IsActivated() { return mActivated; }
+};
+
+struct Crosshair : public Serializable
+{
+	float mThickness{ 1 };
+	float mInner	{ 10 };
+	float mOuter	{ 20 };
+
+	vec4 mColor		{ 1.f, 1.f, 1.f, 1.f };
+
+	void Inspect();
+	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
+	void DeserializeSelf(rapidjson::Value& reader);
+};
+
+struct Healthbar : public Serializable
+{
+	vec4 mHealthColor	{ 0.f, 1.f, 0.f, 1.f };
+	vec4 mBackColor		{ 1.f, 0.f, 0.f, 1.f };
+	float health		{ 100.f };
+
+	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
+	void DeserializeSelf(rapidjson::Value& reader);
 };
