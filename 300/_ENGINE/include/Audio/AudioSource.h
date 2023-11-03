@@ -26,6 +26,8 @@ bool LoadAudio(std::string file_path, std::string audio_name);  // Way to LoadAu
 bool LoadAudioFromDirectory(std::string file_path);
 
 bool CrossFadeAudio(AudioSource& fade_out, AudioSource& fade_in, float fade_duration);
+bool FadeInAudio(AudioSource& fade_in, float fade_duration, float speed_modifier = 0.2f,  float fade_max_vol = 1.0f);									// Fade in 1 <AudioSource>
+bool FadeOutAudio(AudioSource& fade_out, float fade_duration, float speed_modifier = 0.2f, float fade_down_vol = 0.0f);
 
 
 class AudioSource								// [LUA] - Interface to interact with [AudioSystem] functionality.

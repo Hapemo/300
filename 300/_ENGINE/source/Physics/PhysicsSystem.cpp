@@ -87,6 +87,11 @@ void PhysicsSystem::SetVelocity(Entity e, const glm::vec3& velocity)
 	if (!e.HasComponent<RigidBody>()) return;
 	RigidBody rbod = e.GetComponent<RigidBody>();
 	if (rbod.mMotion == MOTION::STATIC) return;
+	if (mIsSimulationRunning)
+	{
+		mPendingVelocity.push_back(std::pair<Entity, glm::vec3>(e, velocity));
+		return;
+	}
 
 	physx::PxRigidDynamic* actor = (physx::PxRigidDynamic*)(mActors[static_cast<uint32_t>(e.id)].mActor);
 	actor->setAngularDamping(0.5f);
@@ -216,6 +221,18 @@ void PhysicsSystem::CreateActor(PxRigidActor*& actor, const PxTransform& pxform,
 
 void PhysicsSystem::MoveQueuedEntities()
 {
+	for (auto e : mPendingAdd)
+	{
+		if (mActors.find(static_cast<uint32_t>(e.id)) != mActors.end())
+		{
+			PWARNING("Tried to add actor that is already in simulation!");
+			return;
+		}
+		if (e.HasComponent<RigidBody>())
+			CreateRigidBody(e);
+		else
+			PWARNING("Tried to add actor without rigid body to simulation!");
+	}
 	for (auto e_pos : mPendingTranslate)
 	{
 		Entity e = e_pos.first;
@@ -238,21 +255,18 @@ void PhysicsSystem::MoveQueuedEntities()
 		PxRigidDynamic* actor = (physx::PxRigidDynamic*)(mActors[static_cast<uint32_t>(e.id)].mActor);
 		actor->setGlobalPose(PxTransform(Convert(e.GetComponent<Transform>().mTranslate), Convert(glm::quat(glm::radians(rotation)))));
 	}
-	for (auto e : mPendingAdd)
+	for (auto e_col : mPendingVelocity)
 	{
-		if (mActors.find(static_cast<uint32_t>(e.id)) != mActors.end())
-		{
-			PWARNING("Tried to add actor that is already in simulation!");
-			return;
-		}
-		if (e.HasComponent<RigidBody>())
-			CreateRigidBody(e);
-		else
-			PWARNING("Tried to add actor without rigid body to simulation!");
+		Entity e = e_col.first;
+		glm::vec3 velocity = e_col.second;
+		physx::PxRigidDynamic* actor = (physx::PxRigidDynamic*)(mActors[static_cast<uint32_t>(e.id)].mActor);
+		actor->setAngularDamping(0.5f);
+		actor->setLinearVelocity(Convert(velocity));
 	}
 	mPendingTranslate.clear();
 	mPendingRotate.clear();
 	mPendingAdd.clear();
+	mPendingVelocity.clear();
 }
 
 void PhysicsSystem::Synchronize()

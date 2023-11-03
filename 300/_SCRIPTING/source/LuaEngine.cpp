@@ -114,9 +114,14 @@ void LuaEntity()
         ADD_COMPONENT("AddButton", Button),
         DECLARE_COMPONENT("GetButton", Button),
         "HasButton", & Entity::HasComponent<Button>,
-            ADD_COMPONENT("AddCamera", Camera),
-            DECLARE_COMPONENT("GetCamera", Camera),
-        "HasCamera", & Entity::HasComponent<Camera>
+
+        ADD_COMPONENT("AddCamera", Camera),
+        DECLARE_COMPONENT("GetCamera", Camera),
+        "HasCamera", & Entity::HasComponent<Camera>,
+
+        ADD_COMPONENT("AddUIrenderer", UIrenderer),
+        DECLARE_COMPONENT("GetUIrenderer", UIrenderer),
+        "HasUIrenderer", & Entity::HasComponent<UIrenderer>
     );
 }
 
@@ -272,13 +277,16 @@ void LuaAudioSystem()
         "PauseBGMSounds", &AudioSystem::PauseBGMSounds,
         "UnpauseAllSounds", &AudioSystem::UnpauseAllSounds,
         "UnpauseSFXSounds", &AudioSystem::UnpauseSFXSounds,
-        "UnpauseBGMSounds", &AudioSystem::UnpauseBGMSounds
+        "UnpauseBGMSounds", &AudioSystem::UnpauseBGMSounds,
+        "FadeTimer", &AudioSystem::fade_timer
     );
 }
 
 void LuaAudioSource()
 {
     systemManager->mScriptingSystem->luaState["CrossFadeAudio"] = &CrossFadeAudio;
+    systemManager->mScriptingSystem->luaState["FadeInAudio"] = &FadeInAudio,
+    systemManager->mScriptingSystem->luaState["FadeOutAudio"] = &FadeOutAudio,
     systemManager->mScriptingSystem->luaState.new_usertype<AudioSource>(
         "AudioSource", sol::constructors<AudioSource()>(),
         "GetAudio", &AudioSource::GetAudioComponent,
@@ -299,7 +307,12 @@ void LuaAudio()
 {
     systemManager->mScriptingSystem->luaState.new_usertype<Audio>(
         "Audio", sol::constructors<>(),
-        "mVolume", &Audio::mVolume
+        "mVolume", &Audio::mVolume, 
+        "mFadeIn", &Audio::mFadeIn,
+        "mFadeOut", &Audio::mFadeOut,
+        "mFadeInMaxVol", &Audio::mFadeInMaxVol, 
+        "mFadeOutToVol", &Audio::mFadeOutToVol,
+        "mFadeSpeedModifier" , &Audio::mFadeSpeedModifier
         );
 }
 
@@ -408,4 +421,12 @@ void LuaButton()
         "IsClicked", &Button::IsClicked,
         "IsActivated", &Button::IsActivated
         );
+}
+
+void LuaUIrenderer()
+{
+    systemManager->mScriptingSystem->luaState.new_usertype<UIrenderer>(
+        "UIrenderer", sol::constructors<>(),
+        "SetDegree", &UIrenderer::SetDegree
+    );
 }

@@ -80,6 +80,7 @@ void SystemManager::Reset()
 
 void SystemManager::ResetForChangeGS() {
 	mAudioSystem.get()->Reset();				// Using <Audio> component, must happen before clearing of entities.
+	mAudioSystem.get()->PlayOnAwake();
 	mGraphicsSystem.get()->Unload();
 	mPhysicsSystem.get()->Init();
 	mGraphicsSystem.get()->Init();
@@ -131,7 +132,7 @@ void SystemManager::Update(float dt)
 	EnginePerformance::UpdateSystemMs("Scripting");
 
 	EnginePerformance::StartTrack("Audio");
-	mAudioSystem.get()->Update(dt);
+	mAudioSystem.get()->Update(dt);					// [10/26] Inclusion of 3D Audio -> must always be after (Positional Update) 
 	EnginePerformance::EndTrack("Audio");
 	EnginePerformance::UpdateSystemMs("Audio");
 	//	mResourceSystem.get()->Update();

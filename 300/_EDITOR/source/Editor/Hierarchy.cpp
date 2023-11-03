@@ -133,8 +133,10 @@ void Hierarchy::update() {
             }
 
             int imguid{0};
+           // auto temp = systemManager->ecs->GetEntitiesWith<General>();
             for (Entity ent : allScene[i].mEntities) {
-
+                //if (temp.find(ent.id) == temp.end())
+                //    Hierarchy::selectionOn = false;
 
                 if (ent.HasParent() == false && ent.HasChildren() == false) {
 

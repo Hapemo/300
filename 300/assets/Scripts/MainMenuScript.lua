@@ -1,5 +1,10 @@
-function Alive()
 
+
+
+function Alive()
+    gameStateSys = systemManager:mGameStateSystem()
+
+    
 end
 
 function Update()
