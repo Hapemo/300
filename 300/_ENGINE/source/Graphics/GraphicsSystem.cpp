@@ -9,8 +9,10 @@
 
 ****************************************************************************
 ***/
-#define  _ENABLE_ANIMATIONS 1
-#define  _TEST_HEALTHBAR_SHADER 0
+#define  _ENABLE_ANIMATIONS					1
+#define  _TEST_HEALTHBAR_SHADER				0
+#define  ENABLE_UI_IN_EDITOR_SCENE			true
+#define  ENABLE_CROSSHAIR_IN_EDITOR_SCENE	0
 
 #include <ECS/ECS_Components.h>
 #include <Graphics/GraphicsSystem.h>
@@ -433,7 +435,7 @@ void GraphicsSystem::EditorDraw(float dt)
 		glUniform4fv(debug_draw, 1, glm::value_ptr(m_GlobalTint));
 
 		 //Bind mesh's VAO, copy render data into VBO, Draw
-		//DrawAll(meshinst);
+		DrawAll(meshinst);
 
 		shaderinst.Deactivate();
 
@@ -463,17 +465,23 @@ void GraphicsSystem::EditorDraw(float dt)
 		ChromaticAbbrebationBlendFramebuffers(m_Fbo, m_PingPongFbo.pingpongColorbuffers[0]);
 	}
 
-	//m_Fbo.Bind();
-	//m_Fbo.DrawBuffers(true, true);
-	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+#if ENABLE_UI_IN_EDITOR_SCENE || ENABLE_CROSSHAIR_IN_EDITOR_SCENE
+	m_Fbo.Bind();
+	m_Fbo.DrawBuffers(true, true);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+#endif
 
-	//// Render UI objects
-	//m_UiShaderInst.Activate();		// Activate shader
-	//DrawAll2DInstances(m_UiShaderInst.GetHandle());
-	//m_UiShaderInst.Deactivate();	// Deactivate shader
+#if ENABLE_UI_IN_EDITOR_SCENE
+	// Render UI objects
+	m_UiShaderInst.Activate();		// Activate shader
+	DrawAll2DInstances(m_UiShaderInst.GetHandle());
+	m_UiShaderInst.Deactivate();	// Deactivate shader
+#endif
 
-	//// Render crosshair, if any
-	//DrawCrosshair();
+#if ENABLE_CROSSHAIR_IN_EDITOR_SCENE
+	 Render crosshair, if any
+	DrawCrosshair();
+#endif
 
 #pragma endregion
 
