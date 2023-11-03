@@ -43,8 +43,5 @@
     <ClInclude Include="include\ScriptingSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\CustomCompCont.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>

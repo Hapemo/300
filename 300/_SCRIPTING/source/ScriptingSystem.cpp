@@ -20,35 +20,23 @@ of more data.
 Updates scripting system by ensuring that the scripts
 load when appropriate.
 
-- Script Alive()/Start()/Exit()/Dead()
-These functions run the respective script function (like Alive())
-of all scripts.
+- LoadHelper()
+Load Helper.lua script into sol. Helper.lua enables
+developers to add in Helper functions while scripting
+in lua.
 
-- Test SSSU
-For testing of the above functions created.
-
-- Script Reload
+- Script Reload()
 Implemented when the reload button on the editor is pressed,
 this reloads the script and any new changes to it will be
 processed. (Hot reloads)
-
-- Scripting Init Test and Scripting Update Test
-These functions are called when testing outside of the editor
-has to be done (Attachment of scripts and running of scripts)
 ****************************************************************************
 ***/
 #include "LuaEngine.h"
 #include "ScriptingSystem.h"
 #include "Debug/Logger.h"
-#include "CustomCompCont.h"
 #include "Debug/EnginePerformance.h"
 #include "GameState/GameStateManager.h"
 #include "FPSManager.h"
-
-namespace sol {
-    template <>
-    struct is_container<CustomCompCont> : std::false_type { };
-}
 
 void ScriptingSystem::Init()
 {
@@ -70,7 +58,7 @@ void ScriptingSystem::Init()
 
     /******************************************************************************/
     /*!
-        Vec2 and Vec3 library
+        Register Vec2, Vec3, Vec4
      */
      /******************************************************************************/
 
@@ -93,14 +81,6 @@ void ScriptingSystem::Init()
         "y", &glm::vec4::y,
         "z", &glm::vec4::z,
         "w", &glm::vec4::w
-    );
-
-
-    luaState.new_usertype<CustomCompCont>("CustomCompCont",
-        sol::constructors<CustomCompCont>(),
-        "begin", &CustomCompCont::begin,
-        "end", &CustomCompCont::end,
-        "size", &CustomCompCont::size
     );
 
     /******************************************************************************/

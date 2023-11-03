@@ -1,3 +1,15 @@
+/*!*************************************************************************
+****
+\file LuaEngine.cpp
+\author(s) Lor Xaun Yun Michelle
+\par DP email:
+xaunyunmichelle.lor\@digipen.edu
+\date 28-9-2023
+\brief
+This file ports in engine functions to Lua, will be updated as scripts
+require more engine functionalities.
+****************************************************************************
+***/
 #include "LuaEngine.h"
 #include "ScriptingSystem.h"
 #include "Physics/PhysicsSystem.h"
@@ -12,11 +24,6 @@
 #include "AI/AIManager.h"
 #include "Graphics/Camera_Input.h"
 #include "FPSManager.h"
-
-void LuaComponentContainer()
-{
-
-}
 
 void LuaEngine()
 {
