@@ -87,13 +87,13 @@ void Input::UpdatePrevKeyStates() {
 glm::vec2 Input::CursorPos() {
   double xpos, ypos;
 
-  if (m_EditorSceneHovered == true) {
+//  if (m_right == true) {
       glfwGetCursorPos(systemManager->GetWindow()->GetHandle(), &xpos, &ypos);
       return glm::vec2{ static_cast<float>(xpos), static_cast<float>(ypos) };
-  }
-  else {
-      return mosposEditor;
-  }
+  //}
+  //else {
+  //    return mosposEditor;
+  //}
 }
 
 void Input::SetCursorCenter()
