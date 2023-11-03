@@ -90,6 +90,14 @@ void GraphicsSystem::Init()
 			m_GlobalTint.a = 1.f;
 		}
 	}
+
+	if (!m_EditorMode)	// If not running as editor
+	{
+		// Initialize the Draw Scene Shader
+		std::string drawSceneShader = "DrawSceneShader";
+		uid drawSceneShaderstr(drawSceneShader);
+		m_DrawSceneShaderInst = *systemManager->mResourceTySystem->get_Shader(drawSceneShaderstr.id);
+	}
 	
 
 	// Set Cameras' starting position
@@ -661,6 +669,30 @@ void GraphicsSystem::ChromaticAbbrebationBlendFramebuffers(GFX::FBO& targetFrame
 	BlendShader.Deactivate();
 }
 
+
+void GraphicsSystem::DrawGameScene()
+{
+	// Clear Default framebuffer
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);	// back to default framebuffer
+	glClearColor(0.0f, 1.0f, 1.0f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT);
+	glDisable(GL_DEPTH_TEST);				// Depth testing must be disabled!!
+
+	// Activate shader program
+	m_DrawSceneShaderInst.Activate();
+	m_Image2DMesh.BindVao();										// Bind VAO
+	glBindTexture(GL_TEXTURE_2D, m_GameFbo.GetColorAttachment());	// Bind texture to be drawn
+
+	glDrawArraysInstanced(GL_TRIANGLE_FAN, 0, 4, 1);				// DRAW
+
+	m_Image2DMesh.BindVao();										// Unbind VAO
+	glBindTexture(GL_TEXTURE_2D, 0);								// Unbind texture after drawing
+
+	// Deactivate shader program
+	m_DrawSceneShaderInst.Deactivate();
+
+	glEnable(GL_DEPTH_TEST);
+}
 
 /***************************************************************************/
 /*!

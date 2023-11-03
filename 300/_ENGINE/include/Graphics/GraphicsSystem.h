@@ -134,7 +134,8 @@ public:
 	/***************************************************************************/
 	/*!
 	\brief
-		the additive blend function for the chromatic abbrebation
+		Draws the game scene to default framebuffer when not running in editor
+		mode
 	*/
 	/**************************************************************************/
 	void DrawGameScene();
@@ -283,6 +284,7 @@ public:
 	// -- Shader Instance
 	GFX::Shader m_UiShaderInst;
 	GFX::Shader m_CrosshairShaderInst;
+	GFX::Shader m_DrawSceneShaderInst;
 
 	// -- Flags --
 	int		m_DebugDrawing{ 1 };			// debug drawing 
