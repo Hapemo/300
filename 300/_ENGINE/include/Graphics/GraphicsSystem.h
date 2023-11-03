@@ -128,6 +128,17 @@ public:
 	/**************************************************************************/
 	void ChromaticAbbrebationBlendFramebuffers(GFX::FBO& targetFramebuffer, unsigned int Attachment1);
 
+
+
+
+	/***************************************************************************/
+	/*!
+	\brief
+		the additive blend function for the chromatic abbrebation
+	*/
+	/**************************************************************************/
+	void DrawGameScene();
+
 	/***************************************************************************/
 	/*!
 	\brief

@@ -99,7 +99,7 @@ glm::vec2 Input::CursorPos() {
 void Input::SetCursorCenter()
 {
     //if (m_EditorMode) {
-    //SetCursorPos( int(m_EditorWindowPos.x ), int(m_EditorWindowPos.y));
+    SetCursorPos( int(m_EditorWindowPos.x ), int(m_EditorWindowPos.y));
     //	}
 
  //   std::cout << m_EditorWindowPos.x << "x " << m_EditorWindowPos.y << "y\n ";
