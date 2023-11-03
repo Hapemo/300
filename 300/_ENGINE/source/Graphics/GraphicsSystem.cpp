@@ -352,7 +352,7 @@ void GraphicsSystem::EditorDraw(float dt)
 	auto meshRendererInstances = systemManager->ecs->GetEntitiesWith<MeshRenderer>();
 
 	// Prepare and bind the Framebuffer to be rendered on
-	//m_Fbo.PrepForDraw();
+	m_Fbo.PrepForDraw();
 
 #pragma region render all the mesh instances onto the editor camera framebuffer
 	// Render all instances of a given mesh
