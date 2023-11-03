@@ -89,7 +89,6 @@ void GraphicsSystem::Init()
 		else {
 			m_GlobalTint.a = 1.f;
 		}
-
 	}
 	
 
@@ -97,10 +96,6 @@ void GraphicsSystem::Init()
 	SetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR, {0, 0, 20});									// Position of camera
 	SetCameraTarget(CAMERA_TYPE::CAMERA_TYPE_EDITOR, {0, 0, 0});									// Target of camera
 	SetCameraProjection(CAMERA_TYPE::CAMERA_TYPE_ALL, 60.f, m_Window->size(), 0.1f, 900.f);			// Projection of camera
-
-	// init game camera
-	/*SetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_GAME, { 16.218f, 474.854f, 748.714f });
-	SetCameraTarget(CAMERA_TYPE::CAMERA_TYPE_GAME, { 16.21f, 473.694f, 739.714f });*/
 
 	if (m_EditorMode)
 	{
@@ -266,14 +261,6 @@ void GraphicsSystem::Update(float dt)
 			AddInstance(meshinst, final, meshRenderer.mInstanceColor, static_cast<int>(m_Materials.size()), static_cast<unsigned>(inst.id));
 		}
 
-		MaterialSSBO material{};
-		// Save the materials if it exists
-		//material.mDiffuseMap	= GetAndStoreBindlessTextureHandle(meshRenderer.GetTexture(DIFFUSE));		
-		//material.mNormalMap		= GetAndStoreBindlessTextureHandle(meshRenderer.GetTexture(NORMAL));		
-		//material.mSpecularMap	= GetAndStoreBindlessTextureHandle(meshRenderer.GetTexture(SPECULAR));	
-		//material.mShininessMap	= GetAndStoreBindlessTextureHandle(meshRenderer.GetTexture(SHININESS));	
-		//material.mEmissionMap	= GetAndStoreBindlessTextureHandle(meshRenderer.GetTexture(EMISSION));	
-
 		auto getID = [&](MaterialType type, MeshRenderer& meshrenderer) ->int {
 
 			if (meshrenderer.mTextureRef[static_cast<int>(type)].getdata(systemManager->mResourceTySystem->m_ResourceInstance) == nullptr)
@@ -282,7 +269,7 @@ void GraphicsSystem::Update(float dt)
 			return static_cast<GFX::Texture*>(meshrenderer.mTextureRef[static_cast<int>(type)].data)->ID();
 		};
 
-
+		MaterialSSBO material{};
 		material.mDiffuseMap = GetAndStoreBindlessTextureHandle(getID(DIFFUSE, meshRenderer));
 		material.mNormalMap = GetAndStoreBindlessTextureHandle(getID(NORMAL, meshRenderer));
 		material.mSpecularMap = GetAndStoreBindlessTextureHandle(getID(SPECULAR, meshRenderer));
@@ -399,16 +386,6 @@ void GraphicsSystem::EditorDraw(float dt)
 		GFX::Shader& shaderinst = *systemManager->mResourceTySystem->get_Shader(shaderstr.id);
 		unsigned shaderID = shaderinst.GetHandle();
 
-		//// bind all texture
-		//GFX::Texture* textureInst[4]{};
-		//for (int i{ 0 }; i < 4; i++)
-		//{
-		//	if (inst.GetComponent<MeshRenderer>().mTextureRef[i].getdata(systemManager->mResourceTySystem->m_ResourceInstance) != nullptr)
-		//	{
-		//		textureInst[i] = reinterpret_cast<GFX::Texture *>(inst.GetComponent<MeshRenderer>().mTextureRef[i].data);
-		//	}
-		//}
-
 		shaderinst.Activate();
 		glUniformMatrix4fv(shaderinst.GetUniformVP(), 1, GL_FALSE, &m_EditorCamera.viewProj()[0][0]);
 
@@ -444,15 +421,6 @@ void GraphicsSystem::EditorDraw(float dt)
 			glUniform1i(mLightCountShaderLocation, m_LightCount);
 		}
 
-		//// bind texture unit
-		//for (int i{0}; i < 4; i++)
-		//{
-		//	if (inst.GetComponent<MeshRenderer>().mTextureRef[i].getdata(systemManager->mResourceTySystem->m_ResourceInstance) != nullptr)
-		//	{
-		//		glBindTextureUnit(i, textureInst[i]->ID());
-		//	}
-		//}
-
 		GLuint debug_draw = glGetUniformLocation(shaderID, "globalTint");
 		glUniform4fv(debug_draw, 1, glm::value_ptr(m_GlobalTint));
 
@@ -461,15 +429,6 @@ void GraphicsSystem::EditorDraw(float dt)
 
 		shaderinst.Deactivate();
 		meshinst.UnbindVao();
-
-		//// unbind the textures
-		//for (int i{0}; i < 4; i++)
-		//{
-		//	if (inst.GetComponent<MeshRenderer>().mTextureRef[i].data != nullptr)
-		//	{
-		//		glBindTextureUnit(i, 0);
-		//	}
-		//}
 	}
 
 	m_Renderer.RenderAll(m_EditorCamera.viewProj());
@@ -565,15 +524,6 @@ void GraphicsSystem::GameDraw(float dt)
 		uid shaderstr(shader);
 		GFX::Shader &shaderinst = *systemManager->mResourceTySystem->get_Shader(shaderstr.id);
 
-		//GFX::Texture *textureInst[4]{};
-		//for (int i{0}; i < 4; i++)
-		//{
-		//	if (inst.GetComponent<MeshRenderer>().mTextureRef[i].getdata(systemManager->mResourceTySystem->m_ResourceInstance) != nullptr)
-		//	{
-		//		textureInst[i] = reinterpret_cast<GFX::Texture *>(inst.GetComponent<MeshRenderer>().mTextureRef[i].data);
-		//	}
-		//}
-
 		shaderinst.Activate();
 
 		if (systemManager->mGraphicsSystem->m_EnableBloom)
@@ -607,14 +557,6 @@ void GraphicsSystem::GameDraw(float dt)
 			vec3 viewPos = camera.GetComponent<Camera>().mCamera.position();
 			glUniform3fv(mViewPosShaderLocation, 1, &viewPos[0]);
 		}
-
-		//for (int i{0}; i < 4; i++)
-		//{
-		//	if (inst.GetComponent<MeshRenderer>().mTextureRef[i].getdata(systemManager->mResourceTySystem->m_ResourceInstance) != nullptr)
-		//	{
-		//		glBindTextureUnit(i, textureInst[i]->ID());
-		//	}
-		//}
 
 		// Bind mesh's VAO, copy render data into VBO, Draw
 		DrawAll(meshinst);
@@ -962,9 +904,6 @@ void GraphicsSystem::UpdateCamera(CAMERA_TYPE type, const float &dt)
 			auto& GameCameraTransform = GameCamera.GetComponent<Transform>();
 			auto& GameCameraComponent = GameCamera.GetComponent<Camera>();
 
-			//Camera_Input::getInstance().updateCameraInput(camera.GetComponent<Camera>().mCamera, dt);
-			
-			//camera.GetComponent<Transform>().mTranslate = camera.GetComponent<Camera>().mCamera.mPosition;
 			GameCameraComponent.mCamera.mTarget += (GameCameraTransform.mTranslate - GameCameraComponent.mCamera.mPosition);
 			GameCameraComponent.mCamera.mPosition = GameCameraTransform.mTranslate;
 			GameCameraComponent.mCamera.mPitch = GameCameraTransform.mRotate.y;
@@ -999,9 +938,6 @@ void GraphicsSystem::UpdateCamera(CAMERA_TYPE type, const float &dt)
 			auto& GameCameraTransform = GameCamera.GetComponent<Transform>();
 			auto& GameCameraComponent = GameCamera.GetComponent<Camera>();
 
-			//Camera_Input::getInstance().updateCameraInput(camera.GetComponent<Camera>().mCamera, dt);
-
-			//camera.GetComponent<Transform>().mTranslate = camera.GetComponent<Camera>().mCamera.mPosition;
 			GameCameraComponent.mCamera.mTarget += (GameCameraTransform.mTranslate - GameCameraComponent.mCamera.mPosition);
 			GameCameraComponent.mCamera.mPosition = GameCameraTransform.mTranslate;
 			GameCameraComponent.mCamera.mPitch = GameCameraTransform.mRotate.y;
@@ -1330,11 +1266,7 @@ void GraphicsSystem::DrawAll2DInstances(unsigned shaderID)
 	for (size_t i{}; i < m_Image2DStore.size(); ++i)
 	{
 		glBindTextureUnit(i, m_Image2DStore[i]);
-		//m_Textures.push_back(i);
 	}
-	//GLuint uniform_tex = glGetUniformLocation(shaderID, "uTex2d");
-	//glUniform1iv(uniform_tex, (GLsizei)m_Textures.size(), m_Textures.data()); // passing Texture ID to the fragment shader
-	//m_Textures.clear();
 
 	// Bind 2D quad VAO
 	m_Image2DMesh.BindVao();
