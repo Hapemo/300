@@ -986,12 +986,6 @@ void AudioSystem::AudioPlayLoop(float dt)
 		Audio& audio_component = audio.GetComponent<Audio>();
 		General& name = audio.GetComponent<General>();
 
-		if (name.name == "Jump")
-		{
-			float volume = audio_component.mVolume;
-			int i = 3;
-		}
-
 		// Play Cycle
 		if (audio_component.mIsPlay &&							// (1) Check if this <Audio> is set to play.
 			CheckAudioExist(audio_component.mFileName) &&		// (2) Check if the [Sound] that we want to play exists.
