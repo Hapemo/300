@@ -214,9 +214,6 @@ void GraphicsSystem::Update(float dt)
 			glm::mat4 bboxFinal = bboxTranslate * R * bboxScale;
 
 			m_Renderer.AddAabb(bboxFinal, {1.f, 0.f, 0.f, 1.f});
-
-			// draw the mesh's origin
-			m_Renderer.AddSphere(m_EditorCamera.position(), transforminst.mTranslate, 0.5f, {1.f, 1.f, 0.f, 1.f});
 		}
 
 		if (m_DebugDrawing && inst.HasComponent<CapsuleCollider>())
