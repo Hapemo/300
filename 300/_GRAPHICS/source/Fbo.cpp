@@ -73,6 +73,8 @@ void GFX::FBO::PrepForDraw()
 	// bind framebuffer as buffer to render to
 	glBindFramebuffer(GL_FRAMEBUFFER, mID);
 
+	// Clear Default color attachment
+	glDrawBuffer(GL_COLOR_ATTACHMENT0);
 	glClearColor(.2f, .2f, .2f, 1.f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -81,27 +83,17 @@ void GFX::FBO::PrepForDraw()
 	glClearColor(0.f, 0.f, 0.f, 0.f);
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	// Renders to Game Attachment by default
-	GLuint attachments[2] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT2 };
-	glDrawBuffers(2, attachments);
-
 	if (mEditorMode)	// Need to render to both color attachments and Entity ID attachment
 	{
 		// Clear Entity ID buffer
 		glDrawBuffer(GL_COLOR_ATTACHMENT1);
 		glClearColor(0.f, 0.f, 0.f, 0.f);
 		glClear(GL_COLOR_BUFFER_BIT);
-
-		// Game attachment, Editor Attachment, Entity ID Attachment
-		// Clear Color attachments
-		glDrawBuffer(GL_COLOR_ATTACHMENT0);
-		glClearColor(0.2f, 0.2f, 0.2f, 1.f);
-		glClear(GL_COLOR_BUFFER_BIT);
-
-		// Set all attachments for output
-		GLuint allAttachments[3] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2 };
-		glDrawBuffers(3, allAttachments);
 	}
+
+	// Set all attachments for output
+	GLuint allAttachments[3] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2 };
+	glDrawBuffers(3, allAttachments);
 
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LEQUAL);

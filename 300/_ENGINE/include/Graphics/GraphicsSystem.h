@@ -274,8 +274,8 @@ public:
 	// -- Chromatic Abbreation --
 	float		mChromaticStrength{ 0.006f };						// this yj
 
-	bool		m_EnableBloom{ false };									// this yj
-	bool		m_EnableChromaticAbberation{ false };					// this yj
+	bool		m_EnableBloom{ true };									// this yj
+	bool		m_EnableChromaticAbberation{ true };					// this yj
 
 
 	// -- Textures --

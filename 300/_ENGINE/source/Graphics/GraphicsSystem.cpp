@@ -580,8 +580,8 @@ void GraphicsSystem::GameDraw(float dt)
 		// Bind mesh's VAO, copy render data into VBO, Draw
 		DrawAll(meshinst);
 
-		GLuint debug_draw = glGetUniformLocation(shaderinst.GetHandle(), "globalTint");
-		glUniform4fv(debug_draw, 1, glm::value_ptr(m_GlobalTint));
+		GLuint globalTintLocation = glGetUniformLocation(shaderinst.GetHandle(), "globalTint");
+		glUniform4fv(globalTintLocation, 1, glm::value_ptr(vec4(1.f, 1.f, 1.f, 1.f)));
 
 		meshinst.UnbindVao();
 		shaderinst.Deactivate();
