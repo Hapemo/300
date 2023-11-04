@@ -55,6 +55,10 @@ local dashEntity
 local dashComp
 local dashAudioSource
 
+local jumpEntity
+local jumpComp
+local jumpAudioSource
+
 local fadeOutTimer = 0.0
 local fadeOutDuration = 5.0
 local dt
@@ -95,6 +99,11 @@ function Alive()
     dashEntity = gameStateSys:GetEntity("Dash", "testSerialization")
     dashComp = dashEntity:GetAudio()
     dashAudioSource = Helper.CreateAudioSource(dashEntity)
+
+    jumpEntity = gameStateSys:GetEntity("Jump", "testSerialization")
+    jumpComp = jumpEntity:GetAudio()
+    jumpAudioSource = Helper.CreateAudioSource(jumpEntity)
+    jumpAudioSource:GetAudio(jumpEntity)
 
     dashTime = 3.0
     tpTime = 20.0
@@ -314,6 +323,8 @@ function Update()
             if (floorCount > 0) then
                 if (inputMapSys:GetButtonDown("Jump")) then
                     movement.y = movement.y + 50.0;
+                    jumpAudioSource:Play()
+                    jumpAudioSource:SetVolume(0.1)
                 end
             end
         end
@@ -351,7 +362,7 @@ function Update()
         viewVecCam.z=viewVecCam.z *100
 
         bulletshootAudioSource:Play()
-        bulletshootAudioSource:SetVolume(0.2)
+        bulletshootAudioSource:SetVolume(0.5)
    
 
         physicsSys:SetVelocity(prefabEntity, viewVecCam)
