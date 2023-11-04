@@ -214,7 +214,7 @@ void ALGraph::Print() {
       PrintVec(edge.vertex->point);
 
 #if 1 // Print weight
-      std::cout << " (" << edge.weight << ")";
+      std::cout << " (" << edge.distance << ")";
 #endif
     }
     std::cout << "\n";
@@ -222,4 +222,117 @@ void ALGraph::Print() {
   std::cout << "---Printing ALGraph finish---\n";
 }
 
+float ALGraph::CalcHCost(glm::vec3 const& p0, glm::vec3 const& p1) {
+  return abs(glm::length(p0 - p1));
+}
 
+void ALGraph::AStarInit(glm::vec3 const& start, glm::vec3 const& end) {
+  // Add start and end nodes
+  mData.push_back(decltype(mData)::value_type());
+  mData.back().point = start;
+  mData.push_back(decltype(mData)::value_type());
+  mData.back().point = end;
+
+  // Initialise HCost and reset all other values
+  for (AdjList& node : mData) {
+    node.hCost = CalcHCost(node.point, end);
+    node.gCost = 0;
+    node.state = NODE_STATE::NONE;
+    node.parent = nullptr;
+  }
+
+}
+
+std::vector<glm::vec3> ALGraph::AStarPath(glm::vec3 const& start, glm::vec3 const& end) {
+  // Initialise containers (open list, close list)
+  // Put starting node on the open list
+  OpenList openList;
+
+  AStarInit(start, end);
+  openList.Insert(&*mData.end()-2); // Add start node to openList
+  AdjList* endNode{ &*mData.end()-1 };
+
+  while (!openList.IsEmpty()) {
+    AdjList* currNode = openList.PopLowestCostNode();
+
+    if (currNode == endNode) {
+      return MasterPath(currNode);
+    }
+
+    currNode->state = NODE_STATE::CLOSE;
+
+    for (Edge& edge : currNode->edges) {
+      AdjList* neighbor = edge.vertex;
+      float newGCost = currNode->gCost + edge.distance;
+      float fCost = newGCost + neighbor->hCost;
+
+      if (neighbor->state == NODE_STATE::NONE) {
+        neighbor->parent = currNode;
+        neighbor->gCost = newGCost;
+        openList.Insert(neighbor);
+      } else if (neighbor->gCost + neighbor->hCost > fCost) {
+        neighbor->parent = currNode;
+        neighbor->gCost = newGCost;
+        if (neighbor->state == NODE_STATE::CLOSE)
+          openList.Insert(neighbor);
+      }
+    }
+  }
+
+  AStarExit();
+  return std::vector<glm::vec3>();
+}
+
+void ALGraph::AStarExit() {
+  // Pop the start and end nodes
+  mData.pop_back();
+  mData.pop_back();
+}
+
+std::vector<glm::vec3> ALGraph::MasterPath(AdjList* tailNode) {
+  std::vector<glm::vec3> path;
+  path.push_back(tailNode->point);
+  while (tailNode->parent != nullptr) {
+    tailNode = tailNode->parent;
+    path.push_back(tailNode->point);
+  }
+
+  AStarExit();
+  return path;
+}
+
+
+//------------------------------------
+// Open List Functionalities
+//------------------------------------
+void ALGraph::OpenList::Insert(AdjList* node) {
+  mData.push_back(node);
+}
+
+ALGraph::AdjList* ALGraph::OpenList::PopLowestCostNode() {
+  if (IsEmpty()) return nullptr;
+
+  AdjList** cheapest = &*mData.begin();
+  float cheapestFCost = (*cheapest)->gCost + (*cheapest)->hCost;
+  for (auto it = mData.begin(); it != mData.end(); ++it) {
+    float newFCost = (*it)->gCost + (*it)->hCost;
+    if (newFCost < cheapestFCost) {
+      cheapestFCost = newFCost;
+      cheapest = &*it;
+    }
+  }
+
+  // Swap back to return val's location
+  AdjList* returnVal = *cheapest;
+  *cheapest = std::move(mData.back());
+  mData.pop_back();
+  return returnVal;
+}
+
+bool ALGraph::OpenList::IsEmpty() {
+  return mData.empty();
+}
+
+void ALGraph::OpenList::Sort() {
+  std::sort(mData.begin(), mData.end(), [] (AdjList* a, AdjList* b) { return (a->gCost + a->hCost) > (b->gCost + b->hCost); });
+}

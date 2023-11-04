@@ -123,7 +123,6 @@ private:
   ALIST mAdjList;
 };
 
-//template<int size>
 class ALGraph;
 
 class GraphData {
@@ -136,37 +135,72 @@ public:
   std::vector<glm::vec3>& GetPointEdges(glm::vec3 point);
 
   // Convert this graph data into a ALGraph
-  //template<int size>
   ALGraph MakeALGraph(); // Make a non-dynamic container for efficiency
 
   std::vector<std::pair<glm::vec3, std::vector<glm::vec3>>> mData;
 };
 
-//template<int size>
 class ALGraph {
 public:
   ALGraph(int _size) { mData.resize(_size); }
 
-  void Print();
+  enum NODE_STATE {
+    NONE,
+    OPEN,
+    CLOSE
+  };
 
   struct AdjList;
 
   struct Edge {
     AdjList* vertex;    // Vertex id in the data 
-    float weight;       // Distance 
+    float distance;     // Distance from owner of edge to the vertex in the edge
   };
 
+  // This is like a node
   struct AdjList {
+    NODE_STATE state = NONE;
     glm::vec3 point;
     std::vector<Edge> edges; // Vertices that this vertex is pointing to
+    AdjList* parent;
+    float gCost;
+    float hCost;
   };
 
+  void Print();
   std::vector<AdjList> mData;
 private:
 
-  void PrintVec(glm::vec3 v) {
-    std::cout << v.x << "|" << v.y << "|" << v.z;
-  }
+  void PrintVec(glm::vec3 v) { std::cout << v.x << "|" << v.y << "|" << v.z; }
+
+public:
+//------------------------------
+// AStar pathfinding portion
+//------------------------------
+  
+  class OpenList {
+  public:
+    void Insert(AdjList* node);   // O(1)
+    AdjList* PopLowestCostNode(); // O(n)
+    bool IsEmpty();
+  private:
+    // Sort the container, put largest fCost infront and smallest fCost behind
+    void Sort();
+    std::vector<AdjList*> mData;
+    std::vector<float> fCostHistory;
+  };
+
+  // Put the G cost and H cost in the AdjList (G cost is accumulated from path, H cost is cost to end point)
+
+  // Add starting and ending adjList into mData at the back, so startnode = end-2, endnode = end-1
+  // Do line of sight check with all the nodes and generate the edges for start and end node
+  // Calculate G and H cost for every nodes
+  std::vector<glm::vec3> AStarPath(glm::vec3 const& start, glm::vec3 const& end); // Generates the AStar path for the graph
+private:
+  void AStarInit(glm::vec3 const& start, glm::vec3 const& end);
+  void AStarExit();
+  float CalcHCost(glm::vec3 const& p0, glm::vec3 const& p1);    // TODO find out the most suitable heuristic cost function
+  std::vector<glm::vec3> MasterPath(AdjList* tailNode);
 };
 
 
