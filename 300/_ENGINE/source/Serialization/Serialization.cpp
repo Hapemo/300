@@ -1,3 +1,16 @@
+/*!*************************************************************************
+****
+\file		   Serialization.cpp
+\author(s)	   Charissa Yip, Lor Xaun Yun Michelle, Kew Yu Jun
+\par DP email:
+charissa.yip\@digipen.edu, xaunyunmichelle.lor\@digipen.edu
+\date		   11-4-2023
+\brief
+This file contains various overloaded definitions of the macro function
+that serializes and deserializes different data types as well as common
+containers for JSON. It also includes functions to write to file and
+read from file.
+****************************************************************************/
 #include "Serialization/Serialization.h"
 #include "Debug/Logger.h"
 #include "GameState/Scene.h"
