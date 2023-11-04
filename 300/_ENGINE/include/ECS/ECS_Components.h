@@ -42,7 +42,7 @@ Components used by the ECS.
 struct uid;
 
 namespace GFX {
-	struct Mesh;
+	class Mesh;
 
 }
 

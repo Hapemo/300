@@ -296,7 +296,7 @@ void GraphicsSystem::Update(float dt)
 	// Sending Light source data to GPU
 	auto lightEntity = systemManager->ecs->GetEntitiesWith<PointLight>();
 	m_HasLight = !lightEntity.empty();
-	m_LightCount = lightEntity.size();
+	m_LightCount = static_cast<int>(lightEntity.size());
 
 	if (m_HasLight)
 	{
@@ -1314,14 +1314,14 @@ void GraphicsSystem::DrawAll2DInstances(unsigned shaderID)
 	// Bind Textures to OpenGL context
 	for (size_t i{}; i < m_Image2DStore.size(); ++i)
 	{
-		glBindTextureUnit(i, m_Image2DStore[i]);
+		glBindTextureUnit(i, m_Image2DStore[static_cast<GLuint>(i)]);
 	}
 
 	// Bind 2D quad VAO
 	m_Image2DMesh.BindVao();
 
 	// Draw call
-	glDrawArraysInstanced(GL_TRIANGLE_FAN, 0, 4, m_Image2DMesh.mLTW.size());
+	glDrawArraysInstanced(GL_TRIANGLE_FAN, 0, 4, static_cast<GLsizei>(m_Image2DMesh.mLTW.size()));
 
 	// Unbind 2D quad VAO
 	m_Image2DMesh.UnbindVao();
@@ -1329,7 +1329,7 @@ void GraphicsSystem::DrawAll2DInstances(unsigned shaderID)
 	// Unbind Textures from openGL context
 	for (size_t i{}; i < m_Image2DStore.size(); ++i)
 	{
-		glBindTextureUnit(i, 0);
+		glBindTextureUnit(static_cast<GLuint>(i), 0);
 	}
 }
 
@@ -1375,6 +1375,7 @@ int GraphicsSystem::StoreTextureIndex(unsigned texHandle)
 
 	// ID is already in container
 	int pos = (int)(it - m_Image2DStore.cbegin());
+	return pos;
 }
 
 void GraphicsSystem::SetupCrosshairShaderLocations()

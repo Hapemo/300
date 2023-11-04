@@ -13,7 +13,7 @@ void MenuTab::update() {
 
     ImVec2 buttonSize{ 50,50 };
 
-    ImGui::SetCursorPosX(ImGui::GetWindowSize().x / 2 - buttonSize.x * 1.5);
+    ImGui::SetCursorPosX( static_cast<float>((ImGui::GetWindowSize().x / 2) - (buttonSize.x * 1.5)) );
 
     if (ImGui::Button(ICON_FA_CIRCLE_PLAY, buttonSize)) {
         PINFO("PLAY")

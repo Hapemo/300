@@ -299,13 +299,13 @@ void General::Inspect() {
 
 	if (ImGui::BeginCombo("##Tag", ECS::mEntityTags[tagid].c_str())) {
 
-		for (int i = 0; i < ECS::mEntityTags.size(); i++) {
+		for (size_t i = 0; i < ECS::mEntityTags.size(); i++) {
 
-			if (tagid == i)
+			if (tagid == static_cast<unsigned char>(i))
 				continue;
 
 			if (ImGui::Selectable(ECS::mEntityTags[i].c_str())) {
-				tagid = i;
+				tagid = static_cast<unsigned char>(i);
 			}
 		}
 		ImGui::EndCombo();
@@ -699,7 +699,7 @@ void MeshRenderer::Inspect()
 			for (auto& data : systemManager->mResourceTySystem->m_Shaders) {
 
 				if (ImGui::Selectable(data.second.first.c_str())) {
-					mShaderRef.data_uid = data.first;
+					mShaderRef.data_uid = static_cast<unsigned int>(data.first);
 				}
 			}
 
@@ -725,8 +725,6 @@ void MeshRenderer::Inspect()
 				mMeshRef.data = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(guid));
 				GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mMeshRef.data);
 
-
-				Entity entins(Hierarchy::selectedId);
 				if (entins.HasComponent<Animator>() && meshinst->mHasAnimation)
 				{
 					// if the new entity has both animations and the animator component, update the animator to use the new animation
@@ -754,7 +752,7 @@ void MeshRenderer::Inspect()
 				std::string GEOM_Descriptor_Filepath;
 				unsigned guid;
 
-				bool descFilePresent = _GEOM::CheckAndCreateDescriptorFileMESH(data_str, GEOM_Descriptor_Filepath);
+				_GEOM::CheckAndCreateDescriptorFileMESH(data_str, GEOM_Descriptor_Filepath);
 				std::string descfilepath = data_str + ".desc";
 				guid = _GEOM::GetGUID(descfilepath);
 
@@ -762,9 +760,16 @@ void MeshRenderer::Inspect()
 				// recompiles everything as long as its fbx
 				{
 					//!>> Calling the GEOM Compiler to load 
+					std::cout << "\033[33mNOTE: >> Compiling mesh: " << data_str << "\033[0m" << std::endl;
+
 					std::string command = "..\\_GEOM_COMPILER\\_GEOM_COMPILER.exe ";
 					command += GEOM_Descriptor_Filepath;
 					int result = system(command.c_str());
+
+					if (result) {
+						std::cout << "GEOM Compiler: " << GEOM_Descriptor_Filepath << " failed to compile!" << std::endl;
+						assert(0);
+					}
 
 					if (systemManager->mResourceTySystem->get_mesh(guid) == nullptr)
 					{
@@ -874,7 +879,7 @@ void MeshRenderer::Inspect()
 						unsigned guid;
 
 						// check and ensures that the descriptor file for the materials are created
-						bool descFilePresent = _GEOM::CheckAndCreateDescriptorFileTEXTURE(data_str, TEXTURE_Descriptor_Filepath, texturestr);
+						_GEOM::CheckAndCreateDescriptorFileTEXTURE(data_str, TEXTURE_Descriptor_Filepath, texturestr);
 						std::string descfilepath = data_str + ".desc";
 						guid = _GEOM::GetGUID(descfilepath);	// gets the guid from the png desc
 
@@ -883,6 +888,7 @@ void MeshRenderer::Inspect()
 						// If the descriptor file is not present, then load it
 						//if (!descFilePresent)
 						{
+							std::cout << "\033[33mNOTE: >> Compressing texture: " << texturestr << "\033[0m" << std::endl;
 							CompressImageFile(data_str.c_str(), systemManager->mResourceTySystem->compressed_texture_path.c_str(), _GEOM::Texture_DescriptorData::isGammaSpace(TEXTURE_Descriptor_Filepath));
 
 							// Load the textures into the list of usable textures within the engine
