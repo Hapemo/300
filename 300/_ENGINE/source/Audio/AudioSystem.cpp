@@ -984,6 +984,7 @@ void AudioSystem::AudioPlayLoop(float dt)
 	for (Entity audio : audio_entities)
 	{
 		Audio& audio_component = audio.GetComponent<Audio>();
+		General& name = audio.GetComponent<General>();
 
 		// Play Cycle
 		if (audio_component.mIsPlay &&							// (1) Check if this <Audio> is set to play.
@@ -1020,7 +1021,6 @@ void AudioSystem::AudioPlayLoop(float dt)
 		{
 			audio_component.mChannel->isPlaying(&channelIsPlay);
 			audio_component.mChannel->setVolume(audio_component.mVolume);
-
 		}
 
 

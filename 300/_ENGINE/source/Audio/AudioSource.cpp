@@ -294,24 +294,26 @@ void AudioSource::SetVolume(float volume)
 {
 	if (mAudioComponent != nullptr) // Make sure there is the <Audio> component reference.
 	{
-		FMOD::Sound* current_sound;
-		mAudioComponent->mChannel->getCurrentSound(&current_sound);
-		if (current_sound)
-		{
-			bool playing;
-			mAudioComponent->mChannel->isPlaying(&playing);
-			if (playing)
-			{
-				mAudioComponent->mChannel->setVolume(volume);
-				mAudioComponent->mVolume = volume;
-				PINFO("SETTING VOLUME : %f", volume);
-			}
+		mAudioComponent->mVolume = volume; // Updates in "Update()" loop because of some complications.
 
-			else
-			{
-				mAudioComponent->mVolume = volume;
-			}
-		}
+		//FMOD::Sound* current_sound;
+		//mAudioComponent->mChannel->getCurrentSound(&current_sound);
+		//if (current_sound)
+		//{
+		//	bool playing;
+		//	mAudioComponent->mChannel->isPlaying(&playing);
+		//	if (playing)
+		//	{
+		//		//mAudioComponent->mChannel->setVolume(volume);
+		//		mAudioComponent->mVolume = volume;
+		//		PINFO("SETTING VOLUME : %f", volume);
+		//	}
+
+		//	else
+		//	{
+		//		mAudioComponent->mVolume = volume;
+		//	}
+		//}
 	
 	}
 }

@@ -64,24 +64,24 @@ void Application::SystemInit()
 
 
 #pragma region AudioComponent Test
-    Entity entAudio = systemManager->ecs->NewEntity();
-    entAudio.AddComponent<Audio>({ "../assets/Audio" , "farm_ambience.wav", AUDIO_BGM, false});
+    //Entity entAudio = systemManager->ecs->NewEntity();
+    //entAudio.AddComponent<Audio>({ "../assets/Audio" , "farm_ambience.wav", AUDIO_BGM, false});
 
-    // Test Edit <Audio> Component
-    //entAudio.GetComponent<Audio>().mFileName = "farm_ambience.wav";
-    /*entAudio.GetComponent<Audio>().mIsPlay = false;
-    entAudio.GetComponent<Audio>().mIsPlaying = false;
-    entAudio.GetComponent<Audio>().mIsPlay = false;
-    entAudio.GetComponent<Audio>().mIsPlaying = false;*/
+    //// Test Edit <Audio> Component
+    ////entAudio.GetComponent<Audio>().mFileName = "farm_ambience.wav";
+    ///*entAudio.GetComponent<Audio>().mIsPlay = false;
+    //entAudio.GetComponent<Audio>().mIsPlaying = false;
+    //entAudio.GetComponent<Audio>().mIsPlay = false;
+    //entAudio.GetComponent<Audio>().mIsPlaying = false;*/
 
-    Entity radioAudio = systemManager->ecs->NewEntity();
-    radioAudio.AddComponent<Audio>({ "../assets/Audio" , "tuning-radio-7150.wav" , AUDIO_SFX, false });
+    //Entity radioAudio = systemManager->ecs->NewEntity();
+    //radioAudio.AddComponent<Audio>({ "../assets/Audio" , "tuning-radio-7150.wav" , AUDIO_SFX, false });
 
-    Entity npcAudio = systemManager->ecs->NewEntity();
-    npcAudio.AddComponent<Audio>({ "../assets/Audio" , "NPC_Greeting.wav" , AUDIO_SFX, true });
+    //Entity npcAudio = systemManager->ecs->NewEntity();
+    //npcAudio.AddComponent<Audio>({ "../assets/Audio" , "NPC_Greeting.wav" , AUDIO_SFX, true });
 
-    Entity non_existent_audio = systemManager->ecs->NewEntity();
-    non_existent_audio.AddComponent<Audio>();
+    //Entity non_existent_audio = systemManager->ecs->NewEntity();
+    //non_existent_audio.AddComponent<Audio>();
 
 #pragma endregion
 

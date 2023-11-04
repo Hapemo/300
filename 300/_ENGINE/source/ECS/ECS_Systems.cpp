@@ -79,8 +79,7 @@ void SystemManager::Reset()
 }
 
 void SystemManager::ResetForChangeGS() {
-	mAudioSystem.get()->Reset();				// Using <Audio> component, must happen before clearing of entities.
-	mAudioSystem.get()->PlayOnAwake();
+	mAudioSystem.get()->PlayOnAwake();	// [11/4]
 	mGraphicsSystem.get()->Unload();
 	mPhysicsSystem.get()->Init();
 	mGraphicsSystem.get()->Init();
@@ -100,7 +99,7 @@ void SystemManager::Play()
 	mGraphicsSystem->UnpauseGlobalAnimation();
 	mGameStateSystem->mCurrentGameState.Save();
 	mAudioSystem.get()->PlayOnAwake();
-	mAudioSystem.get()->system_paused = false;
+	//mAudioSystem.get()->system_paused = false;
 }
 
 void SystemManager::Update(float dt)
