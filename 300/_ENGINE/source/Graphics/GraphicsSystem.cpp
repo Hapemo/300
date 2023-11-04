@@ -1308,10 +1308,12 @@ void GraphicsSystem::SetupShaderStorageBuffers()
 
 void GraphicsSystem::DrawAll2DInstances(unsigned shaderID)
 {
+	(void)shaderID;
+
 	// Bind Textures to OpenGL context
 	for (size_t i{}; i < m_Image2DStore.size(); ++i)
 	{
-		glBindTextureUnit(i, m_Image2DStore[static_cast<GLuint>(i)]);
+		glBindTextureUnit(static_cast<GLuint>(i), m_Image2DStore[static_cast<GLuint>(i)]);
 	}
 
 	// Bind 2D quad VAO
