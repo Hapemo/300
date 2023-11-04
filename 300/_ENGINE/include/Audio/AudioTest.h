@@ -276,10 +276,6 @@ void TestCrossFade()
 	// [Not in script] - Ignore this part. (the script entity id is different everytime i reset)
 	auto audio_ent = systemManager->ecs->GetEntitiesWith<Audio>();
 
-	for (Entity e : audio_ent)
-	{
-		int hi = 3;
-	}
 
 	if (audio_ent.size() >= 2)				// Need the guard (temporarily) -> this is just for me to retrieve the 2 audio components. through subscript
 	{ 
@@ -306,11 +302,6 @@ void TestCrossFadeBack()
 
 	// [Not in script] - Ignore this part. (the script entity id is different everytime i reset)
 	auto audio_ent = systemManager->ecs->GetEntitiesWith<Audio>();
-
-	for (Entity e : audio_ent)
-	{
-		int hi = 3;
-	}
 
 	if (audio_ent.size() >= 2)				// Need the guard (temporarily) -> this is just for me to retrieve the 2 audio components. through subscript
 	{

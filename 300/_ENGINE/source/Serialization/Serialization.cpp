@@ -1,3 +1,16 @@
+/*!*************************************************************************
+****
+\file		   Serialization.cpp
+\author(s)	   Charissa Yip, Lor Xaun Yun Michelle, Kew Yu Jun
+\par DP email:
+charissa.yip\@digipen.edu, xaunyunmichelle.lor\@digipen.edu
+\date		   4-11-2023
+\brief
+This file contains various overloaded definitions of the macro function
+that serializes and deserializes different data types as well as common
+containers for JSON. It also includes functions to write to file and
+read from file.
+****************************************************************************/
 #include "Serialization/Serialization.h"
 #include "Debug/Logger.h"
 #include "GameState/Scene.h"
@@ -163,9 +176,9 @@ DESERIALIZE_BASIC(int)
 DESERIALIZE_BASIC(unsigned char)
 {
 	if (name == nullptr)
-		val = reader.GetUint();
+		val = (unsigned char)reader.GetUint();
 	else if (reader.HasMember(name))
-		val = reader[name].GetUint();
+		val = (unsigned char)reader[name].GetUint();
 }
 
 DESERIALIZE_BASIC(std::uint32_t)
@@ -179,9 +192,9 @@ DESERIALIZE_BASIC(std::uint32_t)
 DESERIALIZE_BASIC(float)
 {
 	if (name == nullptr)
-		val = reader.GetDouble();
+		val = (float)reader.GetDouble();
 	else if (reader.HasMember(name))
-		val = reader[name].GetDouble();
+		val = (float)reader[name].GetDouble();
 }
 
 DESERIALIZE_BASIC(double)
@@ -278,6 +291,7 @@ DESERIALIZE_BASIC(glm::vec4)
 
 DESERIALIZE_BASIC(Script*)
 {
+	name = nullptr;
 	val = new Script;
 	Deserialize(reader, "scriptFile", val->scriptFile);
 	Deserialize(reader, "variables", val->variables);

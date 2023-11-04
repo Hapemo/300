@@ -125,6 +125,34 @@ The file to deserialize
 	/**************************************************************************/
 	static void SerializePrefab(Entity e, const std::string& filename);
 
+	/***************************************************************************/
+	/*
+
+	\brief
+	Function that serializes individual entities.
+
+	\param e
+	The entity to serialize.
+
+	\param writer
+	The writer to write into for JSON.
+
+	*/
+	/**************************************************************************/
 	static void SaveEntity(Entity e, rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer);
+	/***************************************************************************/
+	/*
+
+	\brief
+	Function that deserializes individual entities.
+
+	\param e
+	The entity to deserialize into.
+
+	\param reader
+	The reader to read the JSON data from so as to initialize the entity.
+
+	*/
+	/**************************************************************************/
 	static void LoadEntity(Entity e, rapidjson::Value& reader);
 };
