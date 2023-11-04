@@ -1,6 +1,6 @@
 /*!*************************************************************************
 ****
-\file		   SerializeSelf.cpp
+\file		   Serializable.h
 \author(s)	   Charissa Yip, Kew Yu Jun
 \par DP email:
 charissa.yip\@digipen.edu
