@@ -192,8 +192,8 @@ copy "$(SolutionDir)lib\rttr-0.9.6\rttr_core_d.dll" "$(TargetDir)rttr_core_d.dll
 copy "$(SolutionDir)lib\FMOD\core\lib\fmod.dll" "$(TargetDir)fmod.dll" /Y
 copy "$(ProjectDir)imgui.ini" "$(TargetDir)imgui.ini" /Y
 xcopy "$(SolutionDir)assets\*.*" "$(SolutionDir)x64\assets" /Y /I /E
-copy "$(ProjectDir)fa-regular-400.ttf" "$(SolutionDir)x64\fa-regular-400.ttf" /Y
-copy "$(ProjectDir)fa-solid-900.ttf" "$(SolutionDir)x64\fa-solid-900.ttf" /Y</Command>
+copy "$(ProjectDir)fa-regular-400.ttf" "$(TargetDir)fa-regular-400.ttf" /Y
+copy "$(ProjectDir)fa-solid-900.ttf" "$(TargetDir)fa-solid-900.ttf" /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
