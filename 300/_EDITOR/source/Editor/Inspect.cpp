@@ -73,6 +73,7 @@ Inspect display for Audio components
 
 #include <descriptor.h>
 #include <string>
+#include "Reflection/Reflection.h"
 
 
 void popup(std::string name, ref& data, bool& trigger);
@@ -1223,33 +1224,7 @@ void SphereCollider::Inspect() {
 void CapsuleCollider::Inspect() {
 	bool delete_component{ true };
 	if (ImGui::CollapsingHeader("CapsuleCollider", &delete_component, ImGuiTreeNodeFlags_DefaultOpen)) {
-
-		ImGui::Text("Translate Offset");
-		ImGui::SameLine();
-		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
-			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
-		ImGui::DragFloat3("##ScaleCC", (float*)&mTranslateOffset, 0.1f);
-
-		ImGui::Separator();
-		ImGui::Text("Radius");
-		ImGui::SameLine();
-		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
-			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
-		ImGui::DragFloat("##radiusCC", (float*)&mRadius);
-		ImGui::Separator();
-
-		ImGui::Text("Half-Height");
-		ImGui::SameLine();
-		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
-			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
-		ImGui::DragFloat("##HalfHeight", (float*)&mHalfHeight);
-		ImGui::Separator();
-
-		ImGui::Text("isTrigger");
-		ImGui::SameLine();
-		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
-			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
-		ImGui::Checkbox("##isTriggerCC", &mIsTrigger);
+		Resolve(*this);
 	}
 	if (delete_component == false)
 		Entity(Hierarchy::selectedId).RemoveComponent<CapsuleCollider>();
@@ -1523,9 +1498,10 @@ void VFX::Inspect() {
 	bool delete_component = true;
 	if (ImGui::CollapsingHeader("VFX", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
 	{
-		ImGui::TextColored({ 0.f,1.f, 1.f, 1.f }, "Bloom Variables");
-		ImGui::DragFloat3("Entity Bloom Threshold", (float*)&mBloomThreshold, 0.01f, 0.f, 1.f);
+		Resolve(*this);
 	}
+	if (delete_component == false)
+		Entity(Hierarchy::selectedId).RemoveComponent<VFX>();
 }
 
 void AISetting::Inspect() {

@@ -25,7 +25,7 @@ start up of window and game system, also runs their update functions.
 #include "GameState/GameStateManager.h"
 #include "Debug/EnginePerformance.h"
 #include "Audio/AudioSystem.h"
-
+#include "Reflection/Reflection.h"
 // Static variables
 GFX::DebugRenderer *EditorApplication::mRenderer;
 GFX::Window EditorApplication::mWindow;
@@ -63,6 +63,7 @@ void EditorApplication::StartUp()
 
 void EditorApplication::SystemInit()
 {
+    RegisterAllComponents();
     systemManager->Init(true, &mWindow);
     FPSManager::Init();
     Input::Init(true);
