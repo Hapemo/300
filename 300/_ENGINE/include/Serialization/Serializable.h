@@ -4,7 +4,7 @@
 \author(s)	   Charissa Yip, Kew Yu Jun
 \par DP email:
 charissa.yip\@digipen.edu
-\date		   11-4-2023
+\date		   4-11-2023
 \brief
 This file contains definitions of functions to be used in each component class.
 ****************************************************************************/
