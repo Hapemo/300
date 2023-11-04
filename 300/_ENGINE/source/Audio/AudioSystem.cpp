@@ -125,84 +125,16 @@ static bool testListener = false;
 static bool fadeintempfix = false;
 /******************************************************************************/
 /*!
-	Update()w
+	Update() -> M3 going to switch to new system.
 	- Iterate through <Audio> Component. 
 	- Decides whether if an audio is going to be played. 
  */
  /******************************************************************************/
 void AudioSystem::Update([[maybe_unused]] float dt)
 {
-	// [10/14] Scripting Test
-	//if (Input::CheckKey(PRESS, Q))
-	//	TestLoadPlaySuccess();		 // Test OK. (must have component to play)
-	//if (Input::CheckKey(PRESS, W))
-	//	TestLoadAudioDirectory();	 // Test OK.
-	//if (Input::CheckKey(PRESS, E))
-	//	TestOverrideAttachSound();   // Test OK. (must have component to play)
-	//if (Input::CheckKey(PRESS, R))   // Press 'E' first. (to play)
-	//	TestPauseSound();			 // Test OK.
-	//if (Input::CheckKey(PRESS, T))   // Press 'E' then 'R' then this
-	//	TestUnpauseSound();			 // Test OK.
-	//if (Input::CheckKey(PRESS, Y))   // Press 'E' first. (to play)
-	//	TestMuteSound();			 // Test OK
-	//if (Input::CheckKey(PRESS, U))   // Press 'E' first. (to play)
-	//	TestSetVolume();			 // Test OK
-
-	//if (Input::CheckKey(PRESS, A))
-	//	TestCrossFade();			 // Test OK
-
-	//if (Input::CheckKey(PRESS, S))
-	//	TestCrossFadeBack();		 // Test OK
-
-	//if (Input::CheckKey(PRESS, D))
-	//	TestFadeIn();				 // Test OK
-
-	//if (Input::CheckKey(PRESS, F))
-	//	TestFadeOut();				 // Test OK
-
-	////TestFootsteps();
-
-	//if (Input::CheckKey(PRESS, E_KEY::COMMA))
-	//	testfootstep = true;
-
-	//if (testfootstep)
-	//	TestFootstepsFade(dt);
-
-	//// [10/18] Global Channel Test
-	//if (Input::CheckKey(PRESS, _1))
-	//	SetAllSFXVolume(0.0f);
-	//if (Input::CheckKey(PRESS, _2))
-	//	SetAllBGMVolume(0.0f);
-	//if (Input::CheckKey(PRESS, _3))
-	//	StopAllSFX();
-	//if (Input::CheckKey(PRESS, _4))
-	//	StopAllBGM();
-
-	//// [10/18] Pause Functions
-	//if (Input::CheckKey(PRESS, _7))
-	//	PauseAllSounds();
-	//if (Input::CheckKey(PRESS, _8))
-	//	PauseSFXSounds();
-	//if (Input::CheckKey(PRESS, _9))
-	//	PauseBGMSounds();
-	//if (Input::CheckKey(PRESS, I))
-	//	UnpauseAllSounds();
-	//if (Input::CheckKey(PRESS, O))
-	//	UnpauseSFXSounds();
-	//if (Input::CheckKey(PRESS, P))
-	//	UnpauseBGMSounds();
-
-	//if (Input::CheckKey(PRESS, _5))
-	//	testListener = true;
-
-	//if (testListener)
-	//	TestListener();
-
-
 	/* Constantly updating the[AudioListener]'s attributes based on... -> using set3DListenerAttributes()
 	*  1. Player's Position in the game space.
-	*  2. Camera's Direction (where it is facing) 
-	* 
+	*  2. Camera's Direction (where it is facing)
 	*/
 
 	// Assuming that the <Listener> follows the <Camera>'s position. 
@@ -213,10 +145,10 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 
 	AudioListener* listener = nullptr;	 // There might not be an <AudioListener> 
 
-	FMOD_VECTOR listener_pos;
-	FMOD_VECTOR velocity;
-	FMOD_VECTOR camera_forward;
-	FMOD_VECTOR up_vector;
+	FMOD_VECTOR listener_pos{};
+	FMOD_VECTOR velocity{};
+	FMOD_VECTOR camera_forward{};
+	FMOD_VECTOR up_vector{};
 
 	if (listener_object.size() != 0)
 	{
@@ -254,7 +186,7 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 
 /******************************************************************************/
 /*!
-	Play()
+	PlayOnAwake()
 	- Checks for "mPlayonAwake" flag from <Audio> component. 
 	- Plays the respective audio.
 	- Linked to "Start" Button ("Resume" state)
@@ -331,6 +263,12 @@ void AudioSystem::Pause()
 	}
 }
 
+/******************************************************************************/
+/*!
+	Reset()
+	- Resets the audio system.
+ */
+ /******************************************************************************/
 void AudioSystem::Reset()
 {
 	auto audio_entities = systemManager->ecs->GetEntitiesWith<Audio>();
@@ -397,34 +335,15 @@ void AudioSystem::UpdateLoadAudio(Entity id)
 			PWARNING("Audio could not be loaded... Please Check (1) Directory Name , (2) File");
 		}
 	}
-
-
-
-	/*auto audio_entities = systemManager->ecs->GetEntitiesWith<Audio>();
-
-	for (Entity audio : audio_entities)
-	{
-		Audio& audio_component = audio.GetComponent<Audio>();
-
-		if (!audio_component.mIsLoaded)
-		{
-			std::string audio_path = audio_component.mFilePath + "/" + audio_component.mFileName;
-			std::string audio_name = audio_component.mFileName;
-			if (LoadAudio(audio_path, audio_name))
-			{
-				audio_component.mIsLoaded = true;
-				PINFO("Audio Successfully Loaded :)");
-
-			}
-			else
-			{
-				audio_component.mIsLoaded = false;
-				PWARNING("Audio could not be loaded... Please Check (1) Directory Name , (2) File");
-			}
-		}
-	}*/
 }
 
+/******************************************************************************/
+/*!
+	[Helper Function] UpdateChannelReference()
+	- Support for editor (when a <Audio> component switch between 'SFX' & 'BGM' channels)
+	[Note] : <Audio> Component must be attached to this for it to load properly.
+ */
+ /******************************************************************************/
 // Used to transfer the [Channels] between [SFX] & [BGM] database.
 void AudioSystem::UpdateChannelReference(Entity id)
 {
@@ -432,7 +351,6 @@ void AudioSystem::UpdateChannelReference(Entity id)
 	
 	AUDIOTYPE type = audio_component.mAudioType;
 	
-
 	if (type != AUDIO_NULL && audio_component.mTypeChanged) // Make sure it's a valid <Audio> audiotype
 	{
 		switch (type)
@@ -472,6 +390,13 @@ void AudioSystem::UpdateChannelReference(Entity id)
 	}
 }
 
+/******************************************************************************/
+/*!
+	[Helper Function] InitAudioChannelReference()
+	- Support for editor (when a <Audio> component for initializing [SFX] or [BGM] channels)
+	[Note] : <Audio> Component must be attached to this for it to load properly.
+ */
+ /******************************************************************************/
 void AudioSystem::InitAudioChannelReference(Entity id)
 {
 	Audio& audio_component = id.GetComponent<Audio>();
@@ -490,6 +415,13 @@ void AudioSystem::InitAudioChannelReference(Entity id)
 	}
 }
 
+/******************************************************************************/
+/*!
+	[Helper Function] Update3DChannelSettings()
+	- Support for editor (3D attributes for channels)
+	[Note] : <Audio> Component must be attached to this for it to load properly.
+ */
+ /******************************************************************************/
 // Updates the [3D Channel information]
 void AudioSystem::Update3DChannelSettings(Entity id)
 {
@@ -501,20 +433,6 @@ void AudioSystem::Update3DChannelSettings(Entity id)
 	PINFO("Setting 3D Attributes for channel that exists in this <Audio> component."); 
 	ErrCodeCheck(audio_component.mChannel->set3DAttributes(&pos, &vel));
 }
-
-void AudioSystem::SetupListenerAttributes(Entity id)
-{
-	AudioListener& listener_component = id.GetComponent<AudioListener>();
-
-	FMOD_VECTOR listener_position = { listener_component.mPosition.x, listener_component.mPosition.y , listener_component.mPosition.z };
-	FMOD_VECTOR listener_velocity = { listener_component.mVelocity.x, listener_component.mVelocity.y , listener_component.mVelocity.z };
-	FMOD_VECTOR listener_forward  = { listener_component.mForward.x, listener_component.mForward.y , listener_component.mForward.z };
-	FMOD_VECTOR listener_up       = { listener_component.mUp.x, listener_component.mUp.y , listener_component.mUp.z };
-
-	PINFO("Initializing 3D AudioListener Parameters."); 
-	ErrCodeCheck(system_obj->set3DListenerAttributes(0, &listener_position, &listener_velocity, &listener_forward, &listener_up)); // 1st param = 0 (means only 1 Listener can exist at one time)
-}
-
 
 /******************************************************************************/
 /*!
@@ -612,11 +530,19 @@ bool AudioSystem::LoadAudio(std::string file_path, std::string audio_name, Audio
 		}
 	}
 
-	
+	return false; 
 }
 
 
 
+/******************************************************************************/
+/*!
+	 LoadAudioFromDirectory()
+	 --------------------------------------------------------------------------
+	 - Loads all audio type (.wav,.mp3 etc.) files into the local audio system
+	 - This populates 'mSound' the audio database.
+ */
+ /******************************************************************************/
 bool AudioSystem::LoadAudioFromDirectory(std::string directory_path)
 {
 	for (const auto& file : std::filesystem::directory_iterator(directory_path))
@@ -665,7 +591,7 @@ bool AudioSystem::LoadAudioFromDirectory(std::string directory_path)
 	 - AudioSystem::Update() will play once it's toggled.
  */
  /******************************************************************************/
-void AudioSystem::PlayAudio(std::string audio_name, AUDIOTYPE audio_type, float audio_vol, Audio* audio_component)
+void AudioSystem::PlayAudio(std::string audio_name,  float audio_vol, Audio* audio_component)
 {
 	// Find the sound first ...
 	auto map_it = mSounds.find(audio_name); // tries to find the audio with this name...
@@ -680,19 +606,14 @@ void AudioSystem::PlayAudio(std::string audio_name, AUDIOTYPE audio_type, float 
 	{
 		PINFO("Flipping (mIsPlay)");
 		audio_component->mIsPlay = true;
+		audio_component->mVolume = audio_vol;
 	}
-
-	//else // giving an option to play sound let's say it's not tied to any <Audio> component.
-	//{
-	//	PINFO("Playing without Component");
-	//	ErrCodeCheck(system_obj->playSound(map_it->second, nullptr, false, &audio_component->mChannel));
-	//}
 }
 
 /******************************************************************************/
 /*!
 	 StopAudio()
-	 - Stops playing & reset the playback to the start.
+	 - Stops playing & reset the playback to the start. (Audio Component support)
  */
  /******************************************************************************/
 void AudioSystem::StopAudio(Audio* audio_component)
@@ -701,6 +622,12 @@ void AudioSystem::StopAudio(Audio* audio_component)
 	audio_component->mIsPlaying = false;
 }
 
+/******************************************************************************/
+/*!
+	 PauseAudio()
+	 - Pause audio. (Audio Component support)
+ */
+ /******************************************************************************/
 void AudioSystem::PauseAudio(Audio* audio_component)
 {
 	bool playing;
@@ -779,6 +706,12 @@ void AudioSystem::SetAllBGMVolume(float audio_vol)
 	UpdateBGMComponentVolume(bgmVolume);
 }
 
+/******************************************************************************/
+/*!
+	 UpdateSFXComponentVolume()
+	 - Updates internal component data.
+ */
+ /******************************************************************************/
 void AudioSystem::UpdateSFXComponentVolume(float volume)
 {
 	auto audio_entities = systemManager->ecs->GetEntitiesWith<Audio>();
@@ -792,6 +725,12 @@ void AudioSystem::UpdateSFXComponentVolume(float volume)
 	}
 }
 
+/******************************************************************************/
+/*!
+	 UpdateBGMComponentVolume()
+	 - Updates internal component data.
+ */
+ /******************************************************************************/
 void AudioSystem::UpdateBGMComponentVolume(float volume)
 {
 	auto audio_entities = systemManager->ecs->GetEntitiesWith<Audio>();
@@ -841,7 +780,7 @@ void AudioSystem::StopAllSFX()
 {
 	PINFO("Stopping All SFX.");
 
-	for (auto channel_pair : mChannelswID[AUDIO_SFX])
+	for (auto& channel_pair : mChannelswID[AUDIO_SFX])
 	{
 		channel_pair.second->stop();
 	}
@@ -858,7 +797,7 @@ void AudioSystem::StopAllBGM()
 	PINFO("Stopping All BGM.");
 	std::cout << "Stopping All BGM." << std::endl;
 
-	for (auto channel_pair : mChannelswID[AUDIO_BGM])
+	for (auto& channel_pair : mChannelswID[AUDIO_BGM])
 	{
 		channel_pair.second->stop();
 	}
@@ -866,9 +805,8 @@ void AudioSystem::StopAllBGM()
 
 /******************************************************************************/
 /*!
-	 TogglePauseAllSounds()
-	 - Pause if not Paused.
-	 - Unpause if paused.
+	 PauseAllSounds()
+	 - Pause every channel available.
  */
  /******************************************************************************/
 void AudioSystem::PauseAllSounds()
@@ -889,14 +827,13 @@ void AudioSystem::PauseAllSounds()
 
 /******************************************************************************/
 /*!
-	 TogglePauseSFXSounds()
-	 - Pause if not Paused.
-	 - Unpause if paused.
+	 PauseSFXSounds()
+	 - Pause All sfx sounds in [SFX] channels.
  */
  /******************************************************************************/
 void AudioSystem::PauseSFXSounds()
 {
-	for (auto channel_pair : mChannelswID[AUDIO_SFX])
+	for (auto& channel_pair : mChannelswID[AUDIO_SFX])
 	{
 		bool playing;
 		channel_pair.second->isPlaying(&playing);
@@ -909,14 +846,13 @@ void AudioSystem::PauseSFXSounds()
 
 /******************************************************************************/
 /*!
-	 TogglePauseBGMSounds()
-	 - Pause if not Paused.
-	 - Unpause if paused.
+	  PauseBGMSounds()
+	 - Pause All bgm sounds in [BGM] channels.
  */
  /******************************************************************************/
 void AudioSystem::PauseBGMSounds()
 {
-	for (auto channel_pair : mChannelswID[AUDIO_BGM])
+	for (auto& channel_pair : mChannelswID[AUDIO_BGM])
 	{
 		bool playing;
 		channel_pair.second->isPlaying(&playing);
@@ -927,6 +863,14 @@ void AudioSystem::PauseBGMSounds()
 	}
 }
 
+
+
+/******************************************************************************/
+/*!
+	 UnpauseAllSounds()
+	 - unpause every channel available.
+ */
+ /******************************************************************************/
 void AudioSystem::UnpauseAllSounds()
 {
 	auto audio_entities = systemManager->ecs->GetEntitiesWith<Audio>();
@@ -940,9 +884,15 @@ void AudioSystem::UnpauseAllSounds()
 	}
 }
 
+/******************************************************************************/
+/*!
+	 UnpuseSFXSounds()
+	 - unpause All sfx sounds in [SFX] channels.
+ */
+ /******************************************************************************/
 void AudioSystem::UnpauseSFXSounds()
 {
-	for (auto channel_pair : mChannelswID[AUDIO_SFX])
+	for (auto& channel_pair : mChannelswID[AUDIO_SFX])
 	{
 		bool playing;
 		channel_pair.second->isPlaying(&playing);
@@ -952,10 +902,17 @@ void AudioSystem::UnpauseSFXSounds()
 		}
 	}
 }
+
+/******************************************************************************/
+/*!
+	 UnpauseSFXSounds()
+	 - unpause All sfx sounds in [BGM] channels.
+ */
+ /******************************************************************************/
 void AudioSystem::UnpauseBGMSounds()
 {
 
-	for (auto channel_pair : mChannelswID[AUDIO_BGM])
+	for (auto& channel_pair : mChannelswID[AUDIO_BGM])
 	{
 		bool playing;
 		channel_pair.second->isPlaying(&playing);
@@ -966,7 +923,12 @@ void AudioSystem::UnpauseBGMSounds()
 	}
 }
 
-
+/******************************************************************************/
+/*!
+	[Helper Function] FindSound()
+	- Returns the sound object based on the audio name requested.
+ */
+ /******************************************************************************/
 FMOD::Sound* AudioSystem::FindSound(std::string audio_name)
 {
 	auto sound_it = mSounds.find(audio_name);
@@ -980,6 +942,13 @@ FMOD::Sound* AudioSystem::FindSound(std::string audio_name)
 	
 }
 
+
+/******************************************************************************/
+/*!
+	[Helper Function] CheckAudioExist()
+	- Checks if a particular sound exists.
+ */
+ /******************************************************************************/
 bool AudioSystem::CheckAudioExist(std::string audio_name)
 {
 	auto sound_it = mSounds.find(audio_name);
@@ -996,6 +965,8 @@ bool AudioSystem::CheckAudioExist(std::string audio_name)
 	{
 		return false;
 	}
+
+	return false;
 }
 
 
@@ -1195,61 +1166,3 @@ void AudioSystem::PlayAudioSource(Audio& audio_component, float volume, bool aud
 		}
 	}
 }
-
-
-
-#pragma region TestFunctions 
-/******************************************************************************/
-/*!
-	 Simulate <AudioSource> creation -> getting data from component. (scripting)
-	 ---------------------------------------------------------------
-	 Notes:
-	 a. In Script, access to "Entity's ID" (stored in a variable (?)) - Ask Michelle (for step 2.)
-	 ---------------------------------------------------------------
-	 
-	 [Use Case]
-	 1. Create <AudioSource> object (empty)
-	 2. Populate data from GetComponent<Audio> into the <AudioSource> object
-	 3. 
-	 
-	 1. Create empty <AudioSource> object
-	 2. Grab <Audio> Component, save pointer reference to it using "script_entity_id" (LUA)
-	 
-	 
-	 AudioSource m_audio;                    // Empty AudioSource (interface for designers to do audio functionality)
-	 Entity entity = new (script_entity_id); 
-	 m_audio = GetComponent<Audio>();        // Populate <AudioSource> with data from <Audio>
-
- */
- /******************************************************************************/
-//void AudioSystem::TestAudioSource()
-//{
-//	/*
-//		Testing with a "dummy" object that has <Audio> & <Scripting> Component attached to it.
-//		- Using "object_id" to access the entity that we will be working on (in the script)
-//	*/
-//	entt::entity object_id; 
-//	auto audioent = systemManager->ecs->GetEntitiesWith<Audio>();
-//
-//	for (Entity ent : audioent) // Only has 1 entity with <Audio>
-//	{
-//		object_id = ent.id; 
-//	}
-//	//---------------------------------------------------------------------------------
-//	
-//
-//	/*
-//		Script Start
-//	*/
-//	//AudioSource m_audio;													// Create Empty [AudioSource] object
-//	//m_audio.mAudioComponent = &(Entity(object_id).GetComponent<Audio>());	// Point to <Audio> Component (for it's data)
-//	
-//
-//	
-//	
-//
-//	//m_audio.mAudioComponent = 
-//
-//}
-
-#pragma endregion
