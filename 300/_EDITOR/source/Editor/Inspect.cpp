@@ -1467,23 +1467,8 @@ void UIrenderer::Inspect() {
 
 	if (ImGui::CollapsingHeader("UIrenderer", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
 	{
-		//ImGui::Selectable(" ");
-
 		ImGui::Selectable("UI   ");
 
-		//if (ImGui::BeginDragDropTarget())
-		//{
-		//	if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_TEXT")) {
-
-		//		const char* data = (const char*)payload->Data;
-		//		std::string data_str = std::string(data);
-		//		mTexPath = data_str;
-
-		//		uid temp(mTexPath);
-		//		mTextureRef.data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(temp.id));
-		//	}
-		//	ImGui::EndDragDropTarget();
-		//}
 		if (ImGui::BeginDragDropTarget())
 		{
 			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_TEXT")) {
@@ -1503,11 +1488,8 @@ void UIrenderer::Inspect() {
 				guid = _GEOM::GetGUID(descfilepath);
 				mTextureRef.data_uid = guid;
 				mTextureRef.data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(guid));
-
-				//uid temp(mMaterialInstancePath[i]);
-				//mTextureRef[i].data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(temp.id));
-
 			}
+
 			ImGui::EndDragDropTarget();
 		}
 		

@@ -287,7 +287,7 @@ public:
 	GFX::Shader m_DrawSceneShaderInst;
 
 	// -- Flags --
-	int		m_DebugDrawing{ 1 };			// debug drawing 
+	int		m_DebugDrawing{ 0 };			// debug drawing 
 	bool	m_EditorMode;
 	bool	m_EnableGlobalAnimations{ 1 };
 	bool	m_HasLight{ false };
