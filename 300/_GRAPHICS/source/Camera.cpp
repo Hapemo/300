@@ -142,10 +142,6 @@ void GFX::Camera::SetProjection(float fovDegree, ivec2 size, float nearZ, float 
  *---------------------------------------------------------------------------*/
 void GFX::Camera::Update()
 {
-	mProjection = glm::perspective(glm::radians(mFovDegree), mAspectRatio, mNear, mFar);
-	mView = glm::lookAt(glm::vec3(mPosition), glm::vec3(mTarget), glm::vec3(0.0f, 1.0f, 0.0f));
-	mViewProjection = mProjection * mView;
-
 	if (mPitch > 89.0f) {
 		mPitch = 89.0f;
 	}
@@ -162,6 +158,10 @@ void GFX::Camera::Update()
 
 	// update the camera's target based on the normalized direction
 	SetTarget(position() + glm::normalize(direction));
+
+	mProjection = glm::perspective(glm::radians(mFovDegree), mAspectRatio, mNear, mFar);
+	mView = glm::lookAt(glm::vec3(mPosition), glm::vec3(mTarget), glm::vec3(0.0f, 1.0f, 0.0f));
+	mViewProjection = mProjection * mView;
 }
 
 /**---------------------------------------------------------------------------/

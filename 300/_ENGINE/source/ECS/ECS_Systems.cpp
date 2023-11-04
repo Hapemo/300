@@ -108,8 +108,11 @@ void SystemManager::Update(float dt)
 	EnginePerformance::StartTrack("Graphics");
 	mGraphicsSystem.get()->Update(dt);
 	mGameStateSystem.get()->UpdateNextGSMState();
-	mGraphicsSystem.get()->EditorDraw(dt);
+	if (mIsEditor)
+		mGraphicsSystem.get()->EditorDraw(dt);
 	mGraphicsSystem.get()->GameDraw(dt);
+	if (!mIsEditor)
+		mGraphicsSystem.get()->DrawGameScene();
 	EnginePerformance::EndTrack("Graphics");
 	EnginePerformance::UpdateSystemMs("Graphics");
 

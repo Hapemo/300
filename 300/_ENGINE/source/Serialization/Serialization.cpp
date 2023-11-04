@@ -163,9 +163,9 @@ DESERIALIZE_BASIC(int)
 DESERIALIZE_BASIC(unsigned char)
 {
 	if (name == nullptr)
-		val = reader.GetUint();
+		val = (unsigned char)reader.GetUint();
 	else if (reader.HasMember(name))
-		val = reader[name].GetUint();
+		val = (unsigned char)reader[name].GetUint();
 }
 
 DESERIALIZE_BASIC(std::uint32_t)
@@ -179,9 +179,9 @@ DESERIALIZE_BASIC(std::uint32_t)
 DESERIALIZE_BASIC(float)
 {
 	if (name == nullptr)
-		val = reader.GetDouble();
+		val = (float)reader.GetDouble();
 	else if (reader.HasMember(name))
-		val = reader[name].GetDouble();
+		val = (float)reader[name].GetDouble();
 }
 
 DESERIALIZE_BASIC(double)
@@ -278,6 +278,7 @@ DESERIALIZE_BASIC(glm::vec4)
 
 DESERIALIZE_BASIC(Script*)
 {
+	name = nullptr;
 	val = new Script;
 	Deserialize(reader, "scriptFile", val->scriptFile);
 	Deserialize(reader, "variables", val->variables);

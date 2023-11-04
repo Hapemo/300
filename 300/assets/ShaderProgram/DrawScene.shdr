@@ -1,0 +1,7 @@
+[
+    {
+        "ShaderProgram": "DrawSceneShader",
+        "Vertex": "../assets/shader_files/drawScene_vert.glsl",
+        "Fragment": "../assets/shader_files/drawScene_frag.glsl"
+    }
+]

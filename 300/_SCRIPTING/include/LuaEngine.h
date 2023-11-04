@@ -6,13 +6,8 @@
 xaunyunmichelle.lor\@digipen.edu
 \date 28-9-2023
 \brief
-This file ports in engine functions to Lua.
-
-The scripting system contains the functions:
-LuaEngine(), LuaECS(), LuaEntity(), LuaGeneral()
-LuaTransform(), LuaRigidBody(), LuaBoxCollider()
-LuaSphereCollider(), LuaPlaneCollider()
-LuaScript(), LuaParent(), LuaChild(), LuaInput()
+This file ports in engine functions to Lua, will be updated as scripts
+require more engine functionalities.
 ****************************************************************************
 ***/
 #pragma once

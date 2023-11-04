@@ -44,6 +44,8 @@ void Application::Init()
     StartUp();
     SystemInit();
     //MultithreadExample();
+
+    systemManager->Play();
 }
 
 void Application::StartUp() 

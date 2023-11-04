@@ -9,8 +9,10 @@
 
 ****************************************************************************
 ***/
-#define  _ENABLE_ANIMATIONS 1
-#define  _TEST_HEALTHBAR_SHADER 0
+#define  _ENABLE_ANIMATIONS					1
+#define  _TEST_HEALTHBAR_SHADER				0
+#define  ENABLE_UI_IN_EDITOR_SCENE			true
+#define  ENABLE_CROSSHAIR_IN_EDITOR_SCENE	0
 
 #include <ECS/ECS_Components.h>
 #include <Graphics/GraphicsSystem.h>
@@ -89,6 +91,14 @@ void GraphicsSystem::Init()
 		else {
 			m_GlobalTint.a = 1.f;
 		}
+	}
+
+	if (!m_EditorMode)	// If not running as editor
+	{
+		// Initialize the Draw Scene Shader
+		std::string drawSceneShader = "DrawSceneShader";
+		uid drawSceneShaderstr(drawSceneShader);
+		m_DrawSceneShaderInst = *systemManager->mResourceTySystem->get_Shader(drawSceneShaderstr.id);
 	}
 	
 
@@ -204,9 +214,6 @@ void GraphicsSystem::Update(float dt)
 			glm::mat4 bboxFinal = bboxTranslate * R * bboxScale;
 
 			m_Renderer.AddAabb(bboxFinal, {1.f, 0.f, 0.f, 1.f});
-
-			// draw the mesh's origin
-			m_Renderer.AddSphere(m_EditorCamera.position(), transforminst.mTranslate, 0.5f, {1.f, 1.f, 0.f, 1.f});
 		}
 
 		if (m_DebugDrawing && inst.HasComponent<CapsuleCollider>())
@@ -286,7 +293,7 @@ void GraphicsSystem::Update(float dt)
 	// Sending Light source data to GPU
 	auto lightEntity = systemManager->ecs->GetEntitiesWith<PointLight>();
 	m_HasLight = !lightEntity.empty();
-	m_LightCount = lightEntity.size();
+	m_LightCount = static_cast<int>(lightEntity.size());
 
 	if (m_HasLight)
 	{
@@ -352,7 +359,7 @@ void GraphicsSystem::EditorDraw(float dt)
 	auto meshRendererInstances = systemManager->ecs->GetEntitiesWith<MeshRenderer>();
 
 	// Prepare and bind the Framebuffer to be rendered on
-	//m_Fbo.PrepForDraw();
+	m_Fbo.PrepForDraw();
 
 #pragma region render all the mesh instances onto the editor camera framebuffer
 	// Render all instances of a given mesh
@@ -424,7 +431,7 @@ void GraphicsSystem::EditorDraw(float dt)
 		GLuint debug_draw = glGetUniformLocation(shaderID, "globalTint");
 		glUniform4fv(debug_draw, 1, glm::value_ptr(m_GlobalTint));
 
-		// Bind mesh's VAO, copy render data into VBO, Draw
+		 //Bind mesh's VAO, copy render data into VBO, Draw
 		DrawAll(meshinst);
 
 		shaderinst.Deactivate();
@@ -455,17 +462,23 @@ void GraphicsSystem::EditorDraw(float dt)
 		ChromaticAbbrebationBlendFramebuffers(m_Fbo, m_PingPongFbo.pingpongColorbuffers[0]);
 	}
 
-	//m_Fbo.Bind();
-	//m_Fbo.DrawBuffers(true, true);
-	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+#if ENABLE_UI_IN_EDITOR_SCENE || ENABLE_CROSSHAIR_IN_EDITOR_SCENE
+	m_Fbo.Bind();
+	m_Fbo.DrawBuffers(true, true);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+#endif
 
-	//// Render UI objects
-	//m_UiShaderInst.Activate();		// Activate shader
-	//DrawAll2DInstances(m_UiShaderInst.GetHandle());
-	//m_UiShaderInst.Deactivate();	// Deactivate shader
+#if ENABLE_UI_IN_EDITOR_SCENE
+	// Render UI objects
+	m_UiShaderInst.Activate();		// Activate shader
+	DrawAll2DInstances(m_UiShaderInst.GetHandle());
+	m_UiShaderInst.Deactivate();	// Deactivate shader
+#endif
 
-	//// Render crosshair, if any
-	//DrawCrosshair();
+#if ENABLE_CROSSHAIR_IN_EDITOR_SCENE
+	 Render crosshair, if any
+	DrawCrosshair();
+#endif
 
 #pragma endregion
 
@@ -558,10 +571,17 @@ void GraphicsSystem::GameDraw(float dt)
 			GLuint mViewPosShaderLocation = shaderinst.GetUniformLocation("uViewPos");
 			vec3 viewPos = camera.GetComponent<Camera>().mCamera.position();
 			glUniform3fv(mViewPosShaderLocation, 1, &viewPos[0]);
+
+			// Light count uniform
+			GLuint mLightCountShaderLocation = shaderinst.GetUniformLocation("uLightCount");
+			glUniform1i(mLightCountShaderLocation, m_LightCount);
 		}
 
 		// Bind mesh's VAO, copy render data into VBO, Draw
 		DrawAll(meshinst);
+
+		GLuint debug_draw = glGetUniformLocation(shaderinst.GetHandle(), "globalTint");
+		glUniform4fv(debug_draw, 1, glm::value_ptr(m_GlobalTint));
 
 		meshinst.UnbindVao();
 		shaderinst.Deactivate();
@@ -661,6 +681,30 @@ void GraphicsSystem::ChromaticAbbrebationBlendFramebuffers(GFX::FBO& targetFrame
 	BlendShader.Deactivate();
 }
 
+
+void GraphicsSystem::DrawGameScene()
+{
+	// Clear Default framebuffer
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);	// back to default framebuffer
+	glClearColor(0.0f, 1.0f, 1.0f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT);
+	glDisable(GL_DEPTH_TEST);				// Depth testing must be disabled!!
+
+	// Activate shader program
+	m_DrawSceneShaderInst.Activate();
+	m_Image2DMesh.BindVao();										// Bind VAO
+	glBindTexture(GL_TEXTURE_2D, m_GameFbo.GetColorAttachment());	// Bind texture to be drawn
+
+	glDrawArraysInstanced(GL_TRIANGLE_FAN, 0, 4, 1);				// DRAW
+
+	m_Image2DMesh.BindVao();										// Unbind VAO
+	glBindTexture(GL_TEXTURE_2D, 0);								// Unbind texture after drawing
+
+	// Deactivate shader program
+	m_DrawSceneShaderInst.Deactivate();
+
+	glEnable(GL_DEPTH_TEST);
+}
 
 /***************************************************************************/
 /*!
@@ -1264,17 +1308,19 @@ void GraphicsSystem::SetupShaderStorageBuffers()
 
 void GraphicsSystem::DrawAll2DInstances(unsigned shaderID)
 {
+	(void)shaderID;
+
 	// Bind Textures to OpenGL context
 	for (size_t i{}; i < m_Image2DStore.size(); ++i)
 	{
-		glBindTextureUnit(i, m_Image2DStore[i]);
+		glBindTextureUnit(static_cast<GLuint>(i), m_Image2DStore[static_cast<GLuint>(i)]);
 	}
 
 	// Bind 2D quad VAO
 	m_Image2DMesh.BindVao();
 
 	// Draw call
-	glDrawArraysInstanced(GL_TRIANGLE_FAN, 0, 4, m_Image2DMesh.mLTW.size());
+	glDrawArraysInstanced(GL_TRIANGLE_FAN, 0, 4, static_cast<GLsizei>(m_Image2DMesh.mLTW.size()));
 
 	// Unbind 2D quad VAO
 	m_Image2DMesh.UnbindVao();
@@ -1282,7 +1328,7 @@ void GraphicsSystem::DrawAll2DInstances(unsigned shaderID)
 	// Unbind Textures from openGL context
 	for (size_t i{}; i < m_Image2DStore.size(); ++i)
 	{
-		glBindTextureUnit(i, 0);
+		glBindTextureUnit(static_cast<GLuint>(i), 0);
 	}
 }
 
@@ -1328,6 +1374,7 @@ int GraphicsSystem::StoreTextureIndex(unsigned texHandle)
 
 	// ID is already in container
 	int pos = (int)(it - m_Image2DStore.cbegin());
+	return pos;
 }
 
 void GraphicsSystem::SetupCrosshairShaderLocations()

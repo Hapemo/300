@@ -42,7 +42,7 @@ Components used by the ECS.
 struct uid;
 
 namespace GFX {
-	struct Mesh;
+	class Mesh;
 
 }
 
@@ -279,9 +279,9 @@ public:
 	{
 		for (auto& elem : script.scriptsContainer)
 		{
-			Script* script = new Script;
-			*script = *elem;
-			scriptsContainer.push_back(script);
+			Script* newScript = new Script;
+			*newScript = *elem;
+			scriptsContainer.push_back(newScript);
 		}
 	}
 	Scripts& operator=(const Scripts& script)
@@ -293,9 +293,9 @@ public:
 		scriptsContainer.clear();
 		for (auto& elem : script.scriptsContainer)
 		{
-			Script* script = new Script;
-			*script = *elem;
-			scriptsContainer.push_back(script);
+			Script* newScript = new Script;
+			*newScript = *elem;
+			scriptsContainer.push_back(newScript);
 		}
 		return *this;
 	}
