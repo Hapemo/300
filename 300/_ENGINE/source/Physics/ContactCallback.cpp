@@ -12,7 +12,7 @@ void ContactCallback::onWake(PxActor**, PxU32)
 {
 }
 
-void ContactCallback::onContact(const PxContactPairHeader& pairHeader, const PxContactPair* pairs, PxU32 count)
+void ContactCallback::onContact(const PxContactPairHeader&, const PxContactPair* pairs, PxU32 count)
 {
 	while (count--)
 	{

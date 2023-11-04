@@ -115,7 +115,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalIncludeDirectories>$(ProjectDir)include\Editor;$(ProjectDir)source\Imgui;$(SolutionDir)_ENGINE\include\ECS</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <DisableSpecificWarnings>4996;4703;4098;4201</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4996;4703;4098;4201;4099;</DisableSpecificWarnings>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
@@ -142,7 +142,9 @@ copy "$(SolutionDir)lib\rttr-0.9.6\rttr_core_d.dll" "$(TargetDir)rttr_core_d.dll
 copy "$(SolutionDir)lib\FMOD\core\lib\fmodL.dll" "$(TargetDir)fmodL.dll" /Y
 copy "$(ProjectDir)imgui.ini" "$(TargetDir)imgui.ini" /Y
 
-xcopy "$(SolutionDir)assets\*.*" "$(SolutionDir)x64\assets" /Y /I /E</Command>
+xcopy "$(SolutionDir)assets\*.*" "$(SolutionDir)x64\assets" /Y /I /E
+copy "$(ProjectDir)fa-regular-400.ttf" "$(TargetDir)fa-regular-400.ttf" /Y
+copy "$(ProjectDir)fa-solid-900.ttf" "$(TargetDir)fa-solid-900.ttf" /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -155,7 +157,7 @@ xcopy "$(SolutionDir)assets\*.*" "$(SolutionDir)x64\assets" /Y /I /E</Command>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <DisableSpecificWarnings>4996;4703;4098;4201</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4996;4703;4098;4201;4099;</DisableSpecificWarnings>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
@@ -189,7 +191,9 @@ copy "$(SolutionDir)lib\rttr-0.9.6\rttr_core_d.dll" "$(TargetDir)rttr_core_d.dll
 
 copy "$(SolutionDir)lib\FMOD\core\lib\fmod.dll" "$(TargetDir)fmod.dll" /Y
 copy "$(ProjectDir)imgui.ini" "$(TargetDir)imgui.ini" /Y
-xcopy "$(SolutionDir)assets\*.*" "$(SolutionDir)x64\assets" /Y /I /E</Command>
+xcopy "$(SolutionDir)assets\*.*" "$(SolutionDir)x64\assets" /Y /I /E
+copy "$(ProjectDir)fa-regular-400.ttf" "$(SolutionDir)x64\fa-regular-400.ttf" /Y
+copy "$(ProjectDir)fa-solid-900.ttf" "$(SolutionDir)x64\fa-solid-900.ttf" /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

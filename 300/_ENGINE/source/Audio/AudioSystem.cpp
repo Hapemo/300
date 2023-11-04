@@ -984,8 +984,6 @@ void AudioSystem::AudioPlayLoop(float dt)
 	for (Entity audio : audio_entities)
 	{
 		Audio& audio_component = audio.GetComponent<Audio>();
-		General& name = audio.GetComponent<General>();
-
 		// Play Cycle
 		if (audio_component.mIsPlay &&							// (1) Check if this <Audio> is set to play.
 			CheckAudioExist(audio_component.mFileName) &&		// (2) Check if the [Sound] that we want to play exists.

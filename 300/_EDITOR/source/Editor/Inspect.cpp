@@ -1243,8 +1243,6 @@ void Audio::Inspect() {
 	std::string file_path;		 // Only Audio Directory	  e.g "../assets\\Audio"
 	std::string audio_name;      // Audio Name only.		  e.g "farm_ambience.wav"
 
-	float vol_changed = false; 
-
 	const char* audio_type[] = { "SFX" , "BGM" };
 
 	Audio& audio_check = Entity(Hierarchy::selectedId).GetComponent<Audio>();
@@ -1272,7 +1270,6 @@ void Audio::Inspect() {
 				}
 
 				size_t audio_name_start = full_file_path.find_last_of("\\");
-				std::string audio_name;
 
 				if (audio_name_start != std::string::npos) {
 					audio_name = full_file_path.substr(audio_name_start + 1);
@@ -1297,7 +1294,6 @@ void Audio::Inspect() {
 					// Assign the [Sound*] to this component. 
 					mSound = systemManager->mAudioSystem.get()->FindSound(audio_name);
 					Entity(Hierarchy::selectedId).GetComponent<Audio>().mIsEmpty = false; // Component is populated with info
-					Audio& audioent = Entity(Hierarchy::selectedId).GetComponent<Audio>();
 					return;
 				}
 
@@ -1320,7 +1316,6 @@ void Audio::Inspect() {
 	ImGui::Text("Drag drop 'Audio' files to header above 'Audio'");
 	ImGui::Text("Audio File Selected: ");
 	ImGui::Text(Entity(Hierarchy::selectedId).GetComponent<Audio>().mFullPath.c_str());
-	Audio& audio = Entity(Hierarchy::selectedId).GetComponent<Audio>();
 
 	if (!mIsEmpty && m3DAudio)
 	{

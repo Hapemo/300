@@ -37,7 +37,7 @@ void PhysicsSystem::Update(float dt)
 	for (unsigned step = 0; step < Accumulator::mSteps; ++step)
 	{
 		mPX.mScene->simulate(Accumulator::mFixedDT);
-		bool isok = mPX.mScene->fetchResults(true);
+		mPX.mScene->fetchResults(true);
 	}
 	mIsSimulationRunning = false;
 
