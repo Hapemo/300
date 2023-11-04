@@ -14,7 +14,7 @@
 #include "ECS/EnumTags.h"
 
 // forward declaration
-struct Scene;
+class Scene;
 class Script;
 enum class E_MOVEMENT_TYPE : char;
 
@@ -210,7 +210,7 @@ void Deserialize(rapidjson::Value& reader, const char* name, T* arr, size_t size
 {
 	if (!reader.HasMember(name)) return;
 
-	for (size_t i = 0; i < size; ++i)
+	for (rapidjson::SizeType i = 0; i < (rapidjson::SizeType)size; ++i)
 		Deserialize(reader[name][i], nullptr, arr[i]);
 }
 
@@ -226,7 +226,7 @@ void Deserialize(rapidjson::Value& reader, const char* name, std::vector<T>& vec
 
 		// make sure the vector is empty
 		//vec.clear();
-		for (auto i = 0; i < reader[name].Size(); ++i)
+		for (size_t i = 0; i < (size_t)reader[name].Size(); ++i)
 		{
 			T item;
 			Deserialize(reader[name][i], nullptr, item);
@@ -235,7 +235,7 @@ void Deserialize(rapidjson::Value& reader, const char* name, std::vector<T>& vec
 	}
 	else if(name == nullptr)
 	{
-		for (auto i = 0; i < reader.Size(); ++i)
+		for (size_t i = 0; i < reader.Size(); ++i)
 		{
 			T item;
 			Deserialize(reader[i], nullptr, item);
@@ -249,7 +249,7 @@ void Deserialize(rapidjson::Value& reader, const char* name, std::map<T1, T2>& m
 {
 	if (!reader.HasMember(name)) return;
 
-	for (auto i = 0; i < reader[name].Size(); ++i)
+	for (rapidjson::SizeType i = 0; i < reader[name].Size(); ++i)
 	{
 		if (reader[name][i].HasMember("key") && reader[name][i].HasMember("val")) {
 			T1 key;
