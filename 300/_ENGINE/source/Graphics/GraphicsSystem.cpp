@@ -9,10 +9,11 @@
 
 ****************************************************************************
 ***/
-#define  _ENABLE_ANIMATIONS					1
-#define  _TEST_HEALTHBAR_SHADER				0
+#define  _ENABLE_ANIMATIONS					true
+#define  _TEST_HEALTHBAR_SHADER				false
 #define  ENABLE_UI_IN_EDITOR_SCENE			true
-#define  ENABLE_CROSSHAIR_IN_EDITOR_SCENE	0
+#define  ENABLE_CROSSHAIR_IN_EDITOR_SCENE	false
+#define  TEST_COMPUTE_SHADER				false	
 
 #include <ECS/ECS_Components.h>
 #include <Graphics/GraphicsSystem.h>
@@ -117,6 +118,11 @@ void GraphicsSystem::Init()
 		// only update the game camera if editor mode is not enabled
 		UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_GAME, 0.f);
 	}
+
+#if TEST_COMPUTE_SHADER
+	computeShader.CreateShaderFromFile("../assets/shader_files/computeTest.glsl");
+	glBindImageTexture(0, m_Fbo.GetColorAttachment(), 0, GL_FALSE, 0, GL_READ_WRITE, GL_RGBA32F);
+#endif
 
 	PINFO("Window size: %d, %d", m_Window->size().x, m_Window->size().y);
 }
@@ -476,7 +482,7 @@ void GraphicsSystem::EditorDraw(float dt)
 #endif
 
 #if ENABLE_CROSSHAIR_IN_EDITOR_SCENE
-	 Render crosshair, if any
+	// Render crosshair, if any
 	DrawCrosshair();
 #endif
 
@@ -646,6 +652,28 @@ void GraphicsSystem::GameDraw(float dt)
 	m_Image2DMesh.UnbindVao();
 
 	healthbarShaderInst.Deactivate();	// Deactivate shader
+#endif
+
+#if TEST_COMPUTE_SHADER
+	++counter;
+	if (counter > 500)
+		counter = 0;
+
+	computeShader.Activate();
+	GLint currentFrameLocation = computeShader.GetUniformLocation("t");
+	glUniform1f(currentFrameLocation, counter);
+	glDispatchCompute(m_Width, m_Height, 1);
+	// make sure writing to image is done before reading
+	glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT);
+	computeShader.Deactivate();
+
+	// Draw image to FBO
+	m_Image2DMesh.BindVao();
+	m_DrawSceneShaderInst.Activate();
+	glBindTexture(GL_TEXTURE_2D, m_Fbo.GetColorAttachment());
+	glDrawArraysInstanced(GL_TRIANGLE_FAN, 0, 4, 1);
+	m_Image2DMesh.UnbindVao();
+	m_DrawSceneShaderInst.Deactivate();
 #endif
 
 	m_GameFbo.Unbind();

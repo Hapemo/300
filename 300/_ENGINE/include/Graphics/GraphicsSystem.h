@@ -24,6 +24,7 @@
 #include <Fbo.hpp>
 #include <Animator.hpp>
 #include <Ssbo.hpp>
+#include <ComputeShader.hpp>
 
 /***************************************************************************/
 /*!
@@ -340,6 +341,10 @@ private:
 	GLint m_CrosshairColorLocation{};
 	void SetupCrosshairShaderLocations();
 	void DrawCrosshair();
+
+	// -- Compute Shader WIP --
+	GFX::ComputeShader computeShader;
+	float counter{};
 };
 
 #endif
