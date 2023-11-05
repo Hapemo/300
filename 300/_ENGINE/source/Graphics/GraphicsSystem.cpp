@@ -13,7 +13,7 @@
 #define  _TEST_HEALTHBAR_SHADER				false
 #define  ENABLE_UI_IN_EDITOR_SCENE			true
 #define  ENABLE_CROSSHAIR_IN_EDITOR_SCENE	false
-#define  TEST_COMPUTE_SHADER				false	
+#define  TEST_COMPUTE_SHADER				true	
 
 #include <ECS/ECS_Components.h>
 #include <Graphics/GraphicsSystem.h>
@@ -655,18 +655,16 @@ void GraphicsSystem::GameDraw(float dt)
 #endif
 
 #if TEST_COMPUTE_SHADER
-	++counter;
-	if (counter > 500)
-		counter = 0;
-
 	computeShader.Activate();
-	GLint currentFrameLocation = computeShader.GetUniformLocation("t");
-	glUniform1f(currentFrameLocation, counter);
-	glDispatchCompute(m_Width, m_Height, 1);
-	// make sure writing to image is done before reading
-	glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT);
+	int num_group_x = m_Width / 20;
+	int num_group_y = m_Height / 20;
+	for (int i{}; i < 50; ++i)	// Try blurring it N-times
+	{
+		glDispatchCompute(num_group_x, num_group_y, 1);
+		// make sure writing to image is done before reading
+		glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT);
+	}
 	computeShader.Deactivate();
-
 	// Draw image to FBO
 	m_Image2DMesh.BindVao();
 	m_DrawSceneShaderInst.Activate();

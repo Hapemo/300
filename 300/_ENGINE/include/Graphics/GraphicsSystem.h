@@ -344,7 +344,6 @@ private:
 
 	// -- Compute Shader WIP --
 	GFX::ComputeShader computeShader;
-	float counter{};
 };
 
 #endif
