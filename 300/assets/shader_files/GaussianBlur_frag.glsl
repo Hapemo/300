@@ -26,8 +26,8 @@ void main()
     {
         for(int i = 1; i < 5; ++i)
         {
-            result += texture(image, TexCoords + vec2(tex_offset.x * i, 0.0)).rgb * weight[i] * SamplingWeight;
-            result += texture(image, TexCoords - vec2(tex_offset.x * i, 0.0)).rgb * weight[i] * SamplingWeight;
+            result += texture(image, TexCoords + vec2(tex_offset.x * i * SamplingWeight, 0.0)).rgb * weight[i];
+            result += texture(image, TexCoords - vec2(tex_offset.x * i * SamplingWeight, 0.0)).rgb * weight[i];
         }
         
         FragColor0 = vec4(result, 1.0);
@@ -37,8 +37,8 @@ void main()
     {
         for(int i = 1; i < 5; ++i)
         {
-            result += texture(image, TexCoords + vec2(0.0, tex_offset.y * i)).rgb * weight[i] * SamplingWeight;
-            result += texture(image, TexCoords - vec2(0.0, tex_offset.y * i)).rgb * weight[i] * SamplingWeight;
+            result += texture(image, TexCoords + vec2(0.0, tex_offset.y * i * SamplingWeight)).rgb * weight[i];
+            result += texture(image, TexCoords - vec2(0.0, tex_offset.y * i * SamplingWeight)).rgb * weight[i];
         }
         
         FragColor1 = vec4(result, 1.0);
