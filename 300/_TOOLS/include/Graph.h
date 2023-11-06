@@ -21,6 +21,10 @@ class ALGraph;
 
 class GraphData {
 public:
+  GraphData() : mData() {}
+  GraphData(std::string const& _filePath); // Load in graph from file path
+  void SaveGraph(std::string const& _filePath); // Save graph into file path
+
   void AddDEdge(glm::vec3 src, glm::vec3 dst);
   void AddUEdge(glm::vec3 p0, glm::vec3 p1);
   void AddPoint(glm::vec3 point);
@@ -33,7 +37,12 @@ public:
   // Convert this graph data into a ALGraph
   ALGraph MakeALGraph(); // Make a non-dynamic container for efficiency
 
+
   std::vector<std::pair<glm::vec3, std::vector<glm::vec3>>> mData;
+
+  // The format to decode is "(x,y,z)"
+  static glm::vec3 StrToVec3(std::string const& str);
+  static std::string Vec3ToStr(glm::vec3 const& v);
 };
 
 class ALGraph {

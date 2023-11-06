@@ -14,6 +14,84 @@ and dijkstra algorithm to find a path.
 //---------------------------------------------
 // Graph Data
 //---------------------------------------------
+GraphData::GraphData(std::string const& _filePath) {
+  std::ifstream file(_filePath);
+
+  if (!file.is_open()) {
+    std::cout << "Unable to open graph data file to load: " << _filePath << '\n';
+    file.close();
+    return;
+  }
+
+  std::string line{};
+  while (std::getline(file, line)) {
+    if (!line.size()) continue;
+
+    size_t startPos{ 0 };
+    size_t endPos{ line.find(')')+1 };
+    glm::vec3 point = StrToVec3(line.substr(startPos, endPos));
+    AddPoint(point);
+
+    startPos = endPos;
+    while (startPos < line.length()) {
+      endPos = line.find(')', startPos) + 1;
+      AddDEdge(point, StrToVec3(line.substr(startPos, endPos)));
+      startPos = endPos;
+    }
+  }
+
+  file.close();
+}
+
+void GraphData::SaveGraph(std::string const& _filePath) {
+  // Format to save is 
+  // (point1)(edge1)(edge2)...
+  // (point2)...
+  // (point3)...
+  // ...
+
+  std::ofstream file(_filePath);
+
+  if (!file.is_open()) {
+    std::cout << "Unable to open graph data file to save: " << _filePath << '\n';
+    file.close();
+    return;
+  }
+
+  for (auto& [point, edges] : mData) {
+    file << Vec3ToStr(point);
+    for (glm::vec3 const& edge : edges)
+      file << Vec3ToStr(edge);
+    file << '\n';
+  }
+
+  file.close();
+}
+
+glm::vec3 GraphData::StrToVec3(std::string const& str) {
+  glm::vec3 v{};
+
+  size_t startPos{ 1 };
+  size_t endPos{ str.find(',') };
+  v.x = std::stof(str.substr(startPos, endPos));
+
+  startPos = endPos + 1;
+  endPos = str.find(',', endPos + 1);
+  v.y = std::stof(str.substr(startPos, endPos));
+
+  startPos = endPos + 1;
+  endPos = str.length()-1;
+  v.z = std::stof(str.substr(startPos, endPos));
+
+  return v;
+}
+
+std::string GraphData::Vec3ToStr(glm::vec3 const& v) {
+  return std::string("(" + std::to_string(v.x) + "," + 
+                           std::to_string(v.y) + "," + 
+                           std::to_string(v.z) + ")");
+}
+
 void GraphData::AddDEdge(glm::vec3 src, glm::vec3 dst) {
   auto it = std::find_if(mData.begin(), mData.end(),
                            [dst] (std::pair<glm::vec3, std::vector<glm::vec3>> const& pointNedges) { return dst == pointNedges.first; });
@@ -129,10 +207,13 @@ void TestGraph() {
   glm::vec3 p9{ 9,10,11 };
   glm::vec3 p10{ 10,11,12 };
 
+  std::string str = GraphData::Vec3ToStr(p1);
+  GraphData::StrToVec3(str);
+
   GraphData graphData;
-  graphData.AddDEdge(p1, p2);
-  graphData.AddDEdge(p2, p3);
-  graphData.AddDEdge(p3, p4);
+  graphData.AddUEdge(p1, p2);
+  graphData.AddUEdge(p2, p3);
+  graphData.AddUEdge(p3, p4);
   graphData.AddUEdge(p4, p5);
   graphData.AddUEdge(p5, p6);
   graphData.AddUEdge(p6, p7);
@@ -143,6 +224,11 @@ void TestGraph() {
 
   graphData.DeleteEdge(p1, p2);
   graphData.DeleteEdge(p1, p10);
+
+  std::string filePath{ "../assets/GraphData/graphData1.txt" };
+  //graphData.SaveGraph(filePath);
+  GraphData graphData1(filePath);
+
 
   ALGraph alGraph = graphData.MakeALGraph();
   alGraph.Print();
