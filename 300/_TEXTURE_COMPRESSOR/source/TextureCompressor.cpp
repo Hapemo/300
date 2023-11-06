@@ -111,13 +111,13 @@ void LoadAndSerializeImageFile(const char* filepath, const char* outputFolder)
 void CompressImageFile(const char* filepath, const char* outputFolder, bool gammaSpace)
 {
 	// Image stats
-	int width, height, channel;
+	int width, height, channel, desiredChannel{ 4 };
 
 	// Settings
 	stbi_set_flip_vertically_on_load(false);
 
 	// Loading of image file with STB
-	unsigned char* texData = stbi_load(filepath, &width, &height, &channel, 0);
+	unsigned char* texData = stbi_load(filepath, &width, &height, &channel, desiredChannel);
 
 	///////////////////////////////////////
 	// Compressing of the image data
@@ -134,19 +134,19 @@ void CompressImageFile(const char* filepath, const char* outputFolder, bool gamm
 	if (gammaSpace)
 		internalFormat = GL_COMPRESSED_SRGB_ALPHA;
 
-	if (channel == 1)		// RED, 1 component
-	{
-		internalFormat = GL_COMPRESSED_RED;
-		format = GL_RED;
-	}
-	else if (channel == 3)		// RGB
-	{
-		if (gammaSpace)
-			internalFormat = GL_COMPRESSED_SRGB;
-		else
-			internalFormat = GL_COMPRESSED_RGB;
-		format = GL_RGB;
-	}
+	//if (channel == 1)		// RED, 1 component
+	//{
+	//	internalFormat = GL_COMPRESSED_RED;
+	//	format = GL_RED;
+	//}
+	//else if (channel == 3)		// RGB
+	//{
+	//	if (gammaSpace)
+	//		internalFormat = GL_COMPRESSED_SRGB;
+	//	else
+	//		internalFormat = GL_COMPRESSED_RGB;
+	//	format = GL_RGB;
+	//}
 
 	// Compress with opengl
 	glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, format, GL_UNSIGNED_BYTE, texData);
@@ -175,7 +175,7 @@ void CompressImageFile(const char* filepath, const char* outputFolder, bool gamm
 		filename = filename.substr(filename.find_last_of("/"), filename.find_last_of(".") - filename.find_last_of("/"));
 		filename = outputFolder + filename + ".ctexture";
 
-		SerializeCompressedImage(width, height, channel, compressedSize, pixelData, internalFormat, filename);
+		SerializeCompressedImage(width, height, desiredChannel, compressedSize, pixelData, internalFormat, filename);
 
 		// Free buffer memory
 		delete[] pixelData;

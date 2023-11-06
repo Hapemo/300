@@ -1,3 +1,13 @@
+/*!*************************************************************************
+****
+\file		   SerializeSelf.cpp
+\author(s)	   Charissa Yip, Lor Xaun Yun Michelle, Kew Yu Jun
+\par DP email:
+charissa.yip\@digipen.edu, xaunyunmichelle.lor\@digipen.edu
+\date		   4-11-2023
+\brief
+This file contains declarations of functions for each component class.
+****************************************************************************/
 #include "ECS/ECS_Components.h"
 #include "ResourceManagerTy.h"
 #include "Guid.h"

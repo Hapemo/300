@@ -1,3 +1,14 @@
+/*!*************************************************************************
+****
+\file		   AudioSource.h
+\author(s)	   Cheong Ming Lun
+\par DP email: m.cheong@digipen.edu
+\date		   11-4-2023
+\brief
+
+This file contains the "AudioSource" class that wraps around features and functionality
+of the audio system.
+****************************************************************************/
 #pragma once
 #include "ECS/ECS_Components.h"
 #include "ECS/ECS.h"
@@ -57,10 +68,4 @@ public:
 	//void PlayDelayed();
 	//void TransitionBGM(AudioSource* transition_to, float audio_delay);
 	//void SetRandomnizedPitch();  // For Walking
-
-
-
-
-
-
 };

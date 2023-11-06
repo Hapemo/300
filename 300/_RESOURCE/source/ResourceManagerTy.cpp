@@ -304,10 +304,6 @@ void ResourceTy::MaterialEditor_Loader() {
 
 		auto texPtr = SetupEditorlInstance(materialinstancepath);
 		m_EditorTextures.emplace(saved, texPtr);
-
-
-
-
 	}
 }
 
@@ -367,7 +363,11 @@ GFX::Texture* ResourceTy::SetupMaterialInstance(std::string filepath) {
 	Return material instance pointer
 */
 /**************************************************************************/
-GFX::Texture* ResourceTy::getMaterialInstance(unsigned id) {
+GFX::Texture* ResourceTy::getMaterialInstance(unsigned id) 
+{
+	if (m_ResourceInstance.find(id) == m_ResourceInstance.end())
+		return nullptr;
+
 	return reinterpret_cast<GFX::Texture*>(m_ResourceInstance[id]->m_pData);
 }
 

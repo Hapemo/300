@@ -2,9 +2,9 @@
 #include "PhysX.h"
 #include "PhysicsTypes.h"
 
-static PxFilterFlags FilterShader(PxFilterObjectAttributes attributes0, PxFilterData filterData0,
-    PxFilterObjectAttributes attributes1, PxFilterData filterData1,
-    PxPairFlags& pairFlags, const void* constantBlock, PxU32 constantBlockSize)
+static PxFilterFlags FilterShader(PxFilterObjectAttributes attributes0, PxFilterData,
+    PxFilterObjectAttributes attributes1, PxFilterData,
+    PxPairFlags& pairFlags, const void*, PxU32)
 {
     // let triggers through
     if (PxFilterObjectIsTrigger(attributes0) || PxFilterObjectIsTrigger(attributes1))

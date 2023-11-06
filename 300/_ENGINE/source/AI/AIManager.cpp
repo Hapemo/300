@@ -87,7 +87,6 @@ void AIManager::InitialiseAI(Entity _e) {
 }
 
 void AIManager::InitAIs() {
-	GameState* gs = systemManager->GetGameStateSystem()->GetCurrentGameState();
 	auto const& entities = systemManager->ecs->GetEntitiesWith<AISetting>();
 	for (auto entity : entities)
 		InitialiseAI(Entity(entity));

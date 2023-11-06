@@ -77,7 +77,7 @@ public:
 	void UpdateChannelReference(Entity id);		     // [For Engine] - Add Channel to the global [SFX/BGM] channels. (for global control)
 	void InitAudioChannelReference(Entity id);		 // [For Engine]
 	void Update3DChannelSettings(Entity id);		 // [For Engine] - Updates 3D audio information. 
-	void SetupListenerAttributes(Entity id);		 // [For Engine] - Init <AudioListener> attributes.
+
 
 	// Helper Functions (Sound)
 	FMOD::Sound* FindSound(std::string audio_name);
@@ -107,7 +107,7 @@ public:
 	* ---------------------------------------------------------------------------------- */
 	// Functional 
 	bool LoadAudio(std::string file_path, std::string audio_name, Audio* audio_component = nullptr);			            // Load a single audio. (Will be in [mSounds] database)
-	void PlayAudio(std::string audio_name, AUDIOTYPE audio_type, float audio_vol = 1.0f, Audio* audio_component = nullptr);	// Toggle (mIsPlay) -> Plays in Update() loop.
+	void PlayAudio(std::string audio_name, float audio_vol = 1.0f, Audio* audio_component = nullptr);	// Toggle (mIsPlay) -> Plays in Update() loop.
 	void StopAudio(Audio* audio_component);
 	void PauseAudio(Audio* audio_component);
 

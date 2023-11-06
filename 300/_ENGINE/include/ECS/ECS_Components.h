@@ -42,7 +42,7 @@ Components used by the ECS.
 struct uid;
 
 namespace GFX {
-	struct Mesh;
+	class Mesh;
 
 }
 
@@ -243,7 +243,7 @@ struct SphereCollider : public Serializable //@han
 	float mScaleOffset;				// final scale = mScaleOffset * std::max(Transform.mScale.x, Transform.mScale.y, Transform.mScale.z);
 	glm::vec3 mTranslateOffset;		// final pos = Transform.mTranslate + mTranslateOffset;
 	bool mIsTrigger;
-
+	
 	SphereCollider() : mScaleOffset(1.f), mTranslateOffset(0.f), mIsTrigger(false) {};
 
 	//RTTR_ENABLE()
@@ -279,9 +279,9 @@ public:
 	{
 		for (auto& elem : script.scriptsContainer)
 		{
-			Script* script = new Script;
-			*script = *elem;
-			scriptsContainer.push_back(script);
+			Script* newScript = new Script;
+			*newScript = *elem;
+			scriptsContainer.push_back(newScript);
 		}
 	}
 	Scripts& operator=(const Scripts& script)
@@ -293,9 +293,9 @@ public:
 		scriptsContainer.clear();
 		for (auto& elem : script.scriptsContainer)
 		{
-			Script* script = new Script;
-			*script = *elem;
-			scriptsContainer.push_back(script);
+			Script* newScript = new Script;
+			*newScript = *elem;
+			scriptsContainer.push_back(newScript);
 		}
 		return *this;
 	}
@@ -608,7 +608,7 @@ struct Prefab : public Serializable
  /******************************************************************************/
 struct PointLight : public Serializable
 {
-	vec3	mLightColor{ 1.f, 1.f, 1.f };
+	glm::vec3	mLightColor{ 1.f, 1.f, 1.f };
 	float	mLinearFalloff{};
 	float	mQuadraticFalloff{};
 	float	mIntensity{ 1.5f };
@@ -618,7 +618,7 @@ struct PointLight : public Serializable
 	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
 	void DeserializeSelf(rapidjson::Value& reader);
 
-	void SetColor(const vec3& color);
+	void SetColor(const glm::vec3& color);
 };
 
 /******************************************************************************/
@@ -628,7 +628,7 @@ struct PointLight : public Serializable
  /******************************************************************************/
 struct VFX : public Serializable
 {
-	vec3		mBloomThreshold{ 0.2126, 0.7152, 0.0722 };
+	glm::vec3		mBloomThreshold{ 0.2126, 0.7152, 0.0722 };
 	bool		isObjectBloom{ 1 };
 
 	void Inspect();
@@ -691,7 +691,7 @@ struct Crosshair : public Serializable
 	float mInner	{ 10 };
 	float mOuter	{ 20 };
 
-	vec4 mColor		{ 1.f, 1.f, 1.f, 1.f };
+	glm::vec4 mColor		{ 1.f, 1.f, 1.f, 1.f };
 
 	void Inspect();
 	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
@@ -700,8 +700,8 @@ struct Crosshair : public Serializable
 
 struct Healthbar : public Serializable
 {
-	vec4 mHealthColor	{ 0.f, 1.f, 0.f, 1.f };
-	vec4 mBackColor		{ 1.f, 0.f, 0.f, 1.f };
+	glm::vec4 mHealthColor	{ 0.f, 1.f, 0.f, 1.f };
+	glm::vec4 mBackColor		{ 1.f, 0.f, 0.f, 1.f };
 	float health		{ 100.f };
 
 	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;

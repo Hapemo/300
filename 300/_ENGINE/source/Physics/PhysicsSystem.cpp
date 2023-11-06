@@ -37,7 +37,7 @@ void PhysicsSystem::Update(float dt)
 	for (unsigned step = 0; step < Accumulator::mSteps; ++step)
 	{
 		mPX.mScene->simulate(Accumulator::mFixedDT);
-		bool isok = mPX.mScene->fetchResults(true);
+		mPX.mScene->fetchResults(true);
 	}
 	mIsSimulationRunning = false;
 
@@ -202,7 +202,7 @@ void PhysicsSystem::CreateActor(PxRigidActor*& actor, const PxTransform& pxform,
 	if (rbod.mMotion == MOTION::DYNAMIC)
 	{
 		actor = mPX.mPhysics->createRigidDynamic(pxform);
-		float temp = rbod.mDensity;
+		//float temp = rbod.mDensity;
 		static_cast<PxRigidDynamic*>(actor)->setLinearVelocity(Convert(rbod.mVelocity));
 
 		PxRigidDynamicLockFlags axis;

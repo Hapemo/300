@@ -11,6 +11,8 @@ Input detects keyboard and mouse input states and returns that to caller
 #include "pch.h"
 #include "ECS/ECS_Systems.h"
 #include <Windows.h>
+//#include <Graphics/GraphicsSystem.h>
+
 //#include <WinUser.h>
 
 std::array<bool, 324> Input::mPrevKeyStates;
@@ -28,6 +30,7 @@ glm::vec2 Input::mosposEditor {};
  glm::vec2 Input::m_EditorCursorPos;
  glm::vec2 Input::m_GameWindowPos;
  glm::vec2 Input::m_EditorWindowPosUnadjusted;
+
 
 void Input::Init(bool isEditor) {
     mIsEditor = isEditor;
@@ -98,37 +101,40 @@ glm::vec2 Input::CursorPos() {
 
 void Input::SetCursorCenter()
 {
-    //if (m_EditorMode) {
-    SetCursorPos( int(m_EditorWindowPos.x ), int(m_EditorWindowPos.y));
-    //	}
+    //if (0) {
+    if (systemManager->IsEditor()) {
+        SetCursorPos( int(m_EditorWindowPos.x ), int(m_EditorWindowPos.y));
+        //glfwSetCursorPos(systemManager->GetWindow()->GetHandle(), m_EditorWindowPos.x, m_EditorWindowPos.y);
+    }
 
- //   std::cout << m_EditorWindowPos.x << "x " << m_EditorWindowPos.y << "y\n ";
-    //else {
-    //	int x{}, y{};
-    //	int winlength{}, winheight{};
+    else {
+    	int x{}, y{};
+    	int winlength{}, winheight{};
 
-    //	glfwGetWindowPos(systemManager->GetWindow()->GetHandle(), &x, &y);
-    //	glfwGetWindowSize(systemManager->GetWindow()->GetHandle(), &winlength, &winheight);
+    	glfwGetWindowPos(systemManager->GetWindow()->GetHandle(), &x, &y);
+    	glfwGetWindowSize(systemManager->GetWindow()->GetHandle(), &winlength, &winheight);
 
-    //	SetCursorPos(x + winlength / 2, y + winheight / 2);
-    //}
+    	//SetCursorPos(x + winlength / 2, y + winheight / 2);
+        glfwSetCursorPos(systemManager->GetWindow()->GetHandle(), x + winlength / 2, y + winheight / 2);
+    }
 }
 
 glm::vec2 Input::GetCursorCenter()
 {
-    //if (m_EditorMode) {
-    return m_EditorWindowPosUnadjusted;
-    //}
+    //if (0) {
+    if (systemManager->IsEditor()) {
+        return m_EditorWindowPosUnadjusted;
+    }
 
-    //else {
-    //	int x{}, y{};
-    //	int winlength{}, winheight{};
+    else {
+    	int x{}, y{};
+    	int winlength{}, winheight{};
 
-    //	glfwGetWindowPos(systemManager->GetWindow()->GetHandle(), &x, &y);
-    //	glfwGetWindowSize(systemManager->GetWindow()->GetHandle(), &winlength, &winheight);
+    	glfwGetWindowPos(systemManager->GetWindow()->GetHandle(), &x, &y);
+    	glfwGetWindowSize(systemManager->GetWindow()->GetHandle(), &winlength, &winheight);
 
-    //	return vec2(x + winlength / 2, y + winheight / 2);
-    //}
+    	return vec2(x + winlength / 2, y + winheight / 2);
+    }
 
 }
 

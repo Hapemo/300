@@ -74,6 +74,7 @@ Inspect display for Audio components
 
 #include <descriptor.h>
 #include <string>
+#include "Reflection/Reflection.h"
 
 
 void popup(std::string name, ref& data, bool& trigger);
@@ -300,13 +301,13 @@ void General::Inspect() {
 
 	if (ImGui::BeginCombo("##Tag", ECS::mEntityTags[tagid].c_str())) {
 
-		for (int i = 0; i < ECS::mEntityTags.size(); i++) {
+		for (size_t i = 0; i < ECS::mEntityTags.size(); i++) {
 
-			if (tagid == i)
+			if (tagid == static_cast<unsigned char>(i))
 				continue;
 
 			if (ImGui::Selectable(ECS::mEntityTags[i].c_str())) {
-				tagid = i;
+				tagid = static_cast<unsigned char>(i);
 			}
 		}
 		ImGui::EndCombo();
@@ -700,7 +701,7 @@ void MeshRenderer::Inspect()
 			for (auto& data : systemManager->mResourceTySystem->m_Shaders) {
 
 				if (ImGui::Selectable(data.second.first.c_str())) {
-					mShaderRef.data_uid = data.first;
+					mShaderRef.data_uid = static_cast<unsigned int>(data.first);
 				}
 			}
 
@@ -726,8 +727,6 @@ void MeshRenderer::Inspect()
 				mMeshRef.data = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(guid));
 				GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mMeshRef.data);
 
-
-				Entity entins(Hierarchy::selectedId);
 				if (entins.HasComponent<Animator>() && meshinst->mHasAnimation)
 				{
 					// if the new entity has both animations and the animator component, update the animator to use the new animation
@@ -755,7 +754,7 @@ void MeshRenderer::Inspect()
 				std::string GEOM_Descriptor_Filepath;
 				unsigned guid;
 
-				bool descFilePresent = _GEOM::CheckAndCreateDescriptorFileMESH(data_str, GEOM_Descriptor_Filepath);
+				_GEOM::CheckAndCreateDescriptorFileMESH(data_str, GEOM_Descriptor_Filepath);
 				std::string descfilepath = data_str + ".desc";
 				guid = _GEOM::GetGUID(descfilepath);
 
@@ -763,9 +762,16 @@ void MeshRenderer::Inspect()
 				// recompiles everything as long as its fbx
 				{
 					//!>> Calling the GEOM Compiler to load 
+					std::cout << "\033[33mNOTE: >> Compiling mesh: " << data_str << "\033[0m" << std::endl;
+
 					std::string command = "..\\_GEOM_COMPILER\\_GEOM_COMPILER.exe ";
 					command += GEOM_Descriptor_Filepath;
 					int result = system(command.c_str());
+
+					if (result) {
+						std::cout << "GEOM Compiler: " << GEOM_Descriptor_Filepath << " failed to compile!" << std::endl;
+						assert(0);
+					}
 
 					if (systemManager->mResourceTySystem->get_mesh(guid) == nullptr)
 					{
@@ -849,6 +855,7 @@ void MeshRenderer::Inspect()
 						mMaterialInstancePath[i] = texturestr;
 						std::string TEXTURE_Descriptor_Filepath;
 						unsigned guid;
+
 						// check and ensures that the descriptor file for the materials are created
 						//bool descFilePresent = _GEOM::CheckAndCreateDescriptorFileTEXTURE(data_str, TEXTURE_Descriptor_Filepath, texturestr);
 						std::string descfilepath = data_str + ".desc";
@@ -857,9 +864,6 @@ void MeshRenderer::Inspect()
 						mTextureRef[i].data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(guid));
 
 						_GEOM::Texture_DescriptorData::DeserializeTEXTURE_DescriptorDataFromFile(mTextureDescriptorData[i], TEXTURE_Descriptor_Filepath);
-
-						//uid temp(mMaterialInstancePath[i]);
-						//mTextureRef[i].data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(temp.id));
 					}
 
 					// file uncompressed texture for objects
@@ -875,31 +879,24 @@ void MeshRenderer::Inspect()
 						unsigned guid;
 
 						// check and ensures that the descriptor file for the materials are created
-						bool descFilePresent = _GEOM::CheckAndCreateDescriptorFileTEXTURE(data_str, TEXTURE_Descriptor_Filepath, texturestr);
+						_GEOM::CheckAndCreateDescriptorFileTEXTURE(data_str, TEXTURE_Descriptor_Filepath, texturestr);
 						std::string descfilepath = data_str + ".desc";
 						guid = _GEOM::GetGUID(descfilepath);	// gets the guid from the png desc
 
 						_GEOM::Texture_DescriptorData::DeserializeTEXTURE_DescriptorDataFromFile(mTextureDescriptorData[i], TEXTURE_Descriptor_Filepath);
 
-						// If the descriptor file is not present, then load it
-						//if (!descFilePresent)
 						{
+							std::cout << "\033[33mNOTE: >> Compressing texture: " << texturestr << "\033[0m" << std::endl;
 							CompressImageFile(data_str.c_str(), systemManager->mResourceTySystem->compressed_texture_path.c_str(), _GEOM::Texture_DescriptorData::isGammaSpace(TEXTURE_Descriptor_Filepath));
 
-							// Load the textures into the list of usable textures within the engine
-							systemManager->mResourceTySystem->texture_Load(getFilename(data_str), guid);
+							// Load the textures into the list of usable textures within the engine, if it doesnt already exist
+							if (systemManager->mResourceTySystem->getMaterialInstance(guid) == nullptr) {
+								systemManager->mResourceTySystem->texture_Load(getFilename(data_str), guid);
+							}
+
 							mTextureRef[i].data_uid = guid;
 							mTextureRef[i].data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(guid));
-							//mTextureCont[i] = true;
 						}
-
-						//uid temp(mMaterialInstancePath[i]);
-						//mTextureRef[i].data_uid = guid;
-						//mTextureRef[i].data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(guid));
-
-						//_GEOM::Texture_DescriptorData::DeserializeTEXTURE_DescriptorDataFromFile(mTextureDescriptorData[i], TEXTURE_Descriptor_Filepath);
-
-						//mTextureCont[i] = true;
 					}
 
 					ImGui::EndDragDropTarget();
@@ -1228,33 +1225,7 @@ void SphereCollider::Inspect() {
 void CapsuleCollider::Inspect() {
 	bool delete_component{ true };
 	if (ImGui::CollapsingHeader("CapsuleCollider", &delete_component, ImGuiTreeNodeFlags_DefaultOpen)) {
-
-		ImGui::Text("Translate Offset");
-		ImGui::SameLine();
-		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
-			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
-		ImGui::DragFloat3("##ScaleCC", (float*)&mTranslateOffset, 0.1f);
-
-		ImGui::Separator();
-		ImGui::Text("Radius");
-		ImGui::SameLine();
-		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
-			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
-		ImGui::DragFloat("##radiusCC", (float*)&mRadius);
-		ImGui::Separator();
-
-		ImGui::Text("Half-Height");
-		ImGui::SameLine();
-		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
-			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
-		ImGui::DragFloat("##HalfHeight", (float*)&mHalfHeight);
-		ImGui::Separator();
-
-		ImGui::Text("isTrigger");
-		ImGui::SameLine();
-		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
-			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
-		ImGui::Checkbox("##isTriggerCC", &mIsTrigger);
+		Resolve(*this);
 	}
 	if (delete_component == false)
 		Entity(Hierarchy::selectedId).RemoveComponent<CapsuleCollider>();
@@ -1273,14 +1244,7 @@ void Audio::Inspect() {
 	std::string file_path;		 // Only Audio Directory	  e.g "../assets\\Audio"
 	std::string audio_name;      // Audio Name only.		  e.g "farm_ambience.wav"
 
-	float vol_changed = false; 
-
-	const char* audio_type[] = {"BGM", "SFX" };
-
-	// Check if there's an attached information relating to the audio file.
-	Audio& audio1 = Entity(Hierarchy::selectedId).GetComponent<Audio>();
-	if (!mFullPath.empty())
-		mIsEmpty = false;
+	const char* audio_type[] = { "SFX" , "BGM" };
 
 	Audio& audio_check = Entity(Hierarchy::selectedId).GetComponent<Audio>();
 
@@ -1307,7 +1271,6 @@ void Audio::Inspect() {
 				}
 
 				size_t audio_name_start = full_file_path.find_last_of("\\");
-				std::string audio_name;
 
 				if (audio_name_start != std::string::npos) {
 					audio_name = full_file_path.substr(audio_name_start + 1);
@@ -1322,7 +1285,27 @@ void Audio::Inspect() {
 				// Must be outside (what if i remove and add an already loaded audio)
 				mFilePath = file_path;
 				mFileName = audio_name;
-				mFullPath = file_path + "/" + audio_name;	
+				mFullPath = file_path + "/" + audio_name;
+
+				// Check if the [Audio file] has been uploaded into the database...
+				if (systemManager->mAudioSystem.get()->CheckAudioExist(audio_name)) // Exists ... 
+				{
+					// For Debugging Purposes
+					PINFO("[Loaded] Audio is already in database.");
+					// Assign the [Sound*] to this component. 
+					mSound = systemManager->mAudioSystem.get()->FindSound(audio_name);
+					Entity(Hierarchy::selectedId).GetComponent<Audio>().mIsEmpty = false; // Component is populated with info
+					return;
+				}
+
+				else // Does not exist...
+				{
+					// Load the Audio File + Check (load status)
+					systemManager->mAudioSystem.get()->UpdateLoadAudio(Entity(Hierarchy::selectedId));
+					Entity(Hierarchy::selectedId).GetComponent<Audio>().mIsEmpty = false; // must be here (editor specific) -> to trigger the other options to appear.
+					/*Audio& audioent = Entity(Hierarchy::selectedId).GetComponent<Audio>();
+					int i = 0;*/
+				}
 
 			}
 
@@ -1333,8 +1316,6 @@ void Audio::Inspect() {
 	ImGui::Text("Drag drop 'Audio' files to header above 'Audio'");
 	ImGui::Text("Audio File Selected: ");
 	ImGui::Text(Entity(Hierarchy::selectedId).GetComponent<Audio>().mFullPath.c_str());
-	mFullPath = mFilePath + "/" + mFileName; // Update again after payload (in case)
-	Audio& audio = Entity(Hierarchy::selectedId).GetComponent<Audio>();
 
 	// Debugging (to show which audio are playing) - on editor
 	if (mState == Audio::PLAYING)
@@ -1489,23 +1470,8 @@ void UIrenderer::Inspect() {
 
 	if (ImGui::CollapsingHeader("UIrenderer", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
 	{
-		//ImGui::Selectable(" ");
-
 		ImGui::Selectable("UI   ");
 
-		//if (ImGui::BeginDragDropTarget())
-		//{
-		//	if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_TEXT")) {
-
-		//		const char* data = (const char*)payload->Data;
-		//		std::string data_str = std::string(data);
-		//		mTexPath = data_str;
-
-		//		uid temp(mTexPath);
-		//		mTextureRef.data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(temp.id));
-		//	}
-		//	ImGui::EndDragDropTarget();
-		//}
 		if (ImGui::BeginDragDropTarget())
 		{
 			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_TEXT")) {
@@ -1525,11 +1491,8 @@ void UIrenderer::Inspect() {
 				guid = _GEOM::GetGUID(descfilepath);
 				mTextureRef.data_uid = guid;
 				mTextureRef.data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(guid));
-
-				//uid temp(mMaterialInstancePath[i]);
-				//mTextureRef[i].data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(temp.id));
-
 			}
+
 			ImGui::EndDragDropTarget();
 		}
 		
@@ -1563,9 +1526,10 @@ void VFX::Inspect() {
 	bool delete_component = true;
 	if (ImGui::CollapsingHeader("VFX", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
 	{
-		ImGui::TextColored({ 0.f,1.f, 1.f, 1.f }, "Bloom Variables");
-		ImGui::DragFloat3("Entity Bloom Threshold", (float*)&mBloomThreshold, 0.01f, 0.f, 1.f);
+		Resolve(*this);
 	}
+	if (delete_component == false)
+		Entity(Hierarchy::selectedId).RemoveComponent<VFX>();
 }
 
 void AISetting::Inspect() {

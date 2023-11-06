@@ -57,18 +57,12 @@ void TabWindow::update()
 	ImGui::SameLine();
 	ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
 		- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
-	static bool ischecked = systemManager->mGraphicsSystem->m_DebugDrawing;
+	bool ischecked = systemManager->mGraphicsSystem->m_DebugDrawing;
 	if (ImGui::Checkbox("##Debug", &ischecked)) {
 		systemManager->mGraphicsSystem->m_DebugDrawing = ischecked ? 1 : 0;
-
-		if (ischecked) {
-			systemManager->mGraphicsSystem->m_GlobalTint.w = 0.3f;
-		}
-		else {
-			systemManager->mGraphicsSystem->m_GlobalTint.w = 1.f;
-		}
-
+		systemManager->mGraphicsSystem->m_GlobalTint.w = ischecked ? 0.3f : 1.f;
 	}
+
 
 	// the threshold for bloom
 	ImGui::Separator();

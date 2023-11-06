@@ -76,11 +76,6 @@ void Scene::Load(std::string const& _name) {
 			e.GetComponent<Scripts>().RunFunctionForAllScripts("Alive");
 		}
 
-		if (e.HasComponent<MeshRenderer>()) 
-		{
-			auto& meshdata = e.GetComponent<MeshRenderer>();
-		}
-
 		e.GetComponent<General>().isPaused = mIsPause;
 	}
 

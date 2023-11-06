@@ -89,9 +89,9 @@ void SceneWindow::update()
 		}
 	}
 	
-	ImVec4 ve4scale = (Scale == false) ? ImVec4(0, 0, 0, 0.2) : ImVec4(1, 1, 1, 0.6);
-	ImVec4 vec4rotate = (Rotate == false) ? ImVec4(0, 0, 0, 0.2) : ImVec4(1, 1, 1, 0.6);
-	ImVec4 vec4move = (Move == false) ? ImVec4(0, 0, 0, 0.2) : ImVec4(1, 1, 1, 0.6);
+	ImVec4 ve4scale = (Scale == false) ? ImVec4(0, 0, 0, 0.2f) : ImVec4(1, 1, 1, 0.6f);
+	ImVec4 vec4rotate = (Rotate == false) ? ImVec4(0, 0, 0, 0.2f) : ImVec4(1, 1, 1, 0.6f);
+	ImVec4 vec4move = (Move == false) ? ImVec4(0, 0, 0, 0.2f) : ImVec4(1, 1, 1, 0.6f);
 
 	buttonHovered = false;
 
