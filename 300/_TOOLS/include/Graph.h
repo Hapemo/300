@@ -5,6 +5,10 @@
 \date 25-10-2023
 This file contains the declaration of graph, made using the adjacent list
 method, and dijkstra algorithm to find a path.
+
+To use the AStar pathfinding, user must first create the graph using GraphData.
+Then generate ALGraph using the GraphData created, thereafter use the AStar 
+pathfinding algorithm in ALGraph.
 *******************************************************************************/
 #pragma once
 #include "pch.h"
@@ -20,6 +24,8 @@ public:
   void AddDEdge(glm::vec3 src, glm::vec3 dst);
   void AddUEdge(glm::vec3 p0, glm::vec3 p1);
   void AddPoint(glm::vec3 point);
+  void DeletePoint(glm::vec3 _point);
+  void DeleteEdge(glm::vec3 p0, glm::vec3 p1);
   bool CheckForEdge(glm::vec3 src, glm::vec3 dst);
   // Get the point's edges. If can't find point, make a new point
   std::vector<glm::vec3>& GetPointEdges(glm::vec3 point);
@@ -58,11 +64,8 @@ public:
   };
 
   void Print();
+  static void PrintVec(glm::vec3 v) { std::cout << v.x << "|" << v.y << "|" << v.z; }
   std::vector<AdjList> mData;
-private:
-
-  void PrintVec(glm::vec3 v) { std::cout << v.x << "|" << v.y << "|" << v.z; }
-
 public:
 //------------------------------
 // AStar pathfinding portion

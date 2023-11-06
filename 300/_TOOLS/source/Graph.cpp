@@ -40,6 +40,36 @@ void GraphData::AddPoint(glm::vec3 point) {
   mData.push_back({ point, std::vector<glm::vec3>() });
 }
 
+void GraphData::DeletePoint(glm::vec3 _point) {
+  auto it = std::find_if(mData.begin(), mData.end(), [_point] (std::pair<glm::vec3, std::vector<glm::vec3>> const& pointnedge) { return _point == pointnedge.first; });
+  if (it == mData.end()) {
+    std::cout << "Unable to delete non-existant point in graph data\n";
+    return;
+  }
+  mData.erase(it);
+
+  for (auto& [point, edges] : mData) {
+    auto it = std::find(edges.begin(), edges.end(), _point);
+    if (it == edges.end()) continue;
+    edges.erase(it);
+  }
+}
+
+void GraphData::DeleteEdge(glm::vec3 p0, glm::vec3 p1) {
+  auto p0it = std::find_if(mData.begin(), mData.end(), [p0] (std::pair<glm::vec3, std::vector<glm::vec3>> const& pointnedge) { return p0 == pointnedge.first; });
+  auto p1it = std::find_if(mData.begin(), mData.end(), [p1] (std::pair<glm::vec3, std::vector<glm::vec3>> const& pointnedge) { return p1 == pointnedge.first; });
+
+  if (p0it != mData.end()) {
+    auto it = std::find(p0it->second.begin(), p0it->second.end(), p1);
+    if (it != p0it->second.end()) p0it->second.erase(it);
+  }
+
+  if (p1it != mData.end()) {
+    auto it = std::find(p1it->second.begin(), p1it->second.end(), p0);
+    if (it != p1it->second.end()) p1it->second.erase(it);
+  }
+}
+
 bool GraphData::CheckForEdge(glm::vec3 src, glm::vec3 dst) {
   auto const& edges = GetPointEdges(src);
   auto it = std::find_if(edges.begin(), edges.end(), [dst] (glm::vec3 const& vec) { return dst == vec; });
@@ -100,9 +130,9 @@ void TestGraph() {
   glm::vec3 p10{ 10,11,12 };
 
   GraphData graphData;
-  graphData.AddUEdge(p1, p2);
-  graphData.AddUEdge(p2, p3);
-  graphData.AddUEdge(p3, p4);
+  graphData.AddDEdge(p1, p2);
+  graphData.AddDEdge(p2, p3);
+  graphData.AddDEdge(p3, p4);
   graphData.AddUEdge(p4, p5);
   graphData.AddUEdge(p5, p6);
   graphData.AddUEdge(p6, p7);
@@ -110,6 +140,9 @@ void TestGraph() {
   graphData.AddUEdge(p8, p9);
   graphData.AddUEdge(p9, p10);
   graphData.AddUEdge(p10, p1);
+
+  graphData.DeleteEdge(p1, p2);
+  graphData.DeleteEdge(p1, p10);
 
   ALGraph alGraph = graphData.MakeALGraph();
   alGraph.Print();
