@@ -35,7 +35,7 @@ GraphData::GraphData(std::string const& _filePath) {
     startPos = endPos;
     while (startPos < line.length()) {
       endPos = line.find(')', startPos) + 1;
-      AddDEdge(point, StrToVec3(line.substr(startPos, endPos)));
+      AddDEdgeSafe(point, StrToVec3(line.substr(startPos, endPos)));
       startPos = endPos;
     }
   }
@@ -103,15 +103,16 @@ void GraphData::AddDEdge(glm::vec3 src, glm::vec3 dst) {
   else GetPointEdges(src).push_back(dst);
 }
 
+void GraphData::AddDEdgeSafe(glm::vec3 src, glm::vec3 dst) {
+  if (CheckForEdge(src, dst))
+    std::cout << "Warning: Attempting to add edge that was already added\n";
+  else GetPointEdges(src).push_back(dst);
+}
+
 // Add undirected edge
 void GraphData::AddUEdge(glm::vec3 p0, glm::vec3 p1) {
-  if (CheckForEdge(p0, p1))
-    std::cout << "Warning: Attempting to add edge that was already added\n";
-  else GetPointEdges(p0).push_back(p1); // make point if can't be found
-  
-  if (CheckForEdge(p1, p0))
-    std::cout << "Warning: Attempting to add edge that was already added\n";
-  else GetPointEdges(p1).push_back(p0); // make point if can't be found
+  AddDEdgeSafe(p0, p1);
+  AddDEdgeSafe(p1, p0);
 }
 
 void GraphData::AddPoint(glm::vec3 point) {

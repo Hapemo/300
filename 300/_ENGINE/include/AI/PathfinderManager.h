@@ -1,6 +1,8 @@
 #pragma once
 #include "pch.h"
 #include "glm/glm.hpp"
+#include "Graph.h"
+#include "ECS/ECS.h"
 // Pathfind manager will be in charge of editing of pathfinding graph and saving of it.
 // It has to load in the pathfind graph every start of gamestate. 
 // 
@@ -12,12 +14,9 @@
 // Good to have - AISetting keep the string of the file name. After loading in the file, save pointer to ALGraph in PathfinderManager to AISetting component of AI
 // 
 
-class GraphData;
-class ALGraph;
-struct Entity;
-
 class PathfinderManager {
 public:
+	PathfinderManager();
 	//------------------
 	// Game Mode
 	//------------------ 
@@ -26,6 +25,7 @@ public:
 	// Looks through the asset folder and load all the graph data
 	void LoadAllGraphData();
 
+	void LoadGraphData(std::filesystem::path const& _path);
 	// Load Graph Data file in, convert it into ALGraph and return a shared pointer to it back to the entity.
 	ALGraph* LoadGraphData(std::string _filename);
 
@@ -83,7 +83,7 @@ private:
 	//------------------------------------------
 
 private:
-	std::vector<std::unique_ptr<ALGraph>> mALGraphList;
+	std::vector<ALGraph> mALGraphList;
 };
 
 

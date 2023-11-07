@@ -25,7 +25,8 @@ public:
   GraphData(std::string const& _filePath); // Load in graph from file path
   void SaveGraph(std::string const& _filePath); // Save graph into file path
 
-  void AddDEdge(glm::vec3 src, glm::vec3 dst);
+  void AddDEdge(glm::vec3 src, glm::vec3 dst); // This version will add dst to point if it can't find dst as a point
+  void AddDEdgeSafe(glm::vec3 src, glm::vec3 dst); // This version will not add dst to point if it can't find dst as a point
   void AddUEdge(glm::vec3 p0, glm::vec3 p1);
   void AddPoint(glm::vec3 point);
   void DeletePoint(glm::vec3 _point);

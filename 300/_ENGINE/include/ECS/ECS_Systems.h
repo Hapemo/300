@@ -22,6 +22,7 @@ class AudioSystem;
 class Logger;
 class InputMapSystem;
 class AIManager;
+class PathfinderManager;
 struct Entity;
 
 class SystemManager {
@@ -38,6 +39,7 @@ public:
 	std::unique_ptr<Logger> mLogger;
 	std::unique_ptr<InputMapSystem> mInputActionSystem;
 	std::unique_ptr<AIManager> mAISystem;
+	std::unique_ptr<PathfinderManager> mPathfinderSystem;
 
 	ECS *ecs;
 
@@ -95,6 +97,7 @@ public:
 	GameStateManager* GetGameStateSystem();
 	GraphicsSystem* GetGraphicsSystem();
 	AIManager* GetAIManager();
+	PathfinderManager* GetPathfinderManager();
 };
 
 extern SystemManager *systemManager;
