@@ -4,6 +4,7 @@
 #include "Physics/Accumulator.h"
 #include "Physics/PhysXUtils.h"
 
+
 PhysicsSystem::PhysicsSystem()
 {
 	mMaterials[MATERIAL::RUBBER] = CreateMaterial(0.9f, 0.8f, 0.f);
@@ -124,6 +125,19 @@ void PhysicsSystem::RemoveActor(Entity e)
 		return;
 	mPX.mScene->removeActor(*mActors[static_cast<uint32_t>(e.id)].mActor);
 	mActors.erase(static_cast<uint32_t>(e.id));
+}
+
+const std::vector<Entity>& PhysicsSystem::Visible(const glm::vec3& origin, const glm::vec3& finalpos, float maxdist)
+{
+	PxRaycastBuffer hits(hitBuffer, HIT_BUFFER_SIZE);
+	bool status = mPX.mScene->raycast(Convert(origin), Convert(glm::normalize(finalpos - origin)), maxdist, hits);
+
+	std::vector<Entity> entitiesHit;
+
+	for (PxU32 i = 0; i < hits.nbTouches; ++i)
+		entitiesHit.push_back(*static_cast<uint32_t*>(hits.touches[i].actor->userData));
+
+	return entitiesHit;
 }
 
 physx::PxMaterial* PhysicsSystem::CreateMaterial(float us, float ud, float res)
