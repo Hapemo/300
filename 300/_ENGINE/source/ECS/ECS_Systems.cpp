@@ -79,7 +79,6 @@ void SystemManager::Reset()
 }
 
 void SystemManager::ResetForChangeGS() {
-	mAudioSystem.get()->PlayOnAwake();	// [11/4]
 	mGraphicsSystem.get()->Unload();
 	mPhysicsSystem.get()->Init();
 	mGraphicsSystem.get()->Init();
@@ -98,7 +97,7 @@ void SystemManager::Play()
 	mPhysicsSystem.get()->Init();
 	mGraphicsSystem->UnpauseGlobalAnimation();
 	mGameStateSystem->mCurrentGameState.Save();
-	mAudioSystem.get()->PlayOnAwake();
+	//mAudioSystem.get()->PlayOnAwake();
 	//mAudioSystem.get()->system_paused = false;
 }
 

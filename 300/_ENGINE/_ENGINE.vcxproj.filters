@@ -23,7 +23,6 @@
     <ClCompile Include="source\AI\AIManager.cpp" />
     <ClCompile Include="source\Physics\PhysXUtils.cpp" />
     <ClCompile Include="source\Physics\ContactCallback.cpp" />
-    <ClCompile Include="source\Audio\AudioSource.cpp" />
     <ClCompile Include="source\Serialization\SerializeSelf.cpp" />
     <ClCompile Include="source\Button\ButtonSystem.cpp" />
     <ClCompile Include="source\Audio\AudioSystemRevamp.cpp" />
@@ -59,7 +58,6 @@
     <ClInclude Include="include\Physics\PhysXUtils.h" />
     <ClInclude Include="include\Physics\ContactCallback.h" />
     <ClInclude Include="include\Physics\Actor.h" />
-    <ClInclude Include="include\Audio\AudioSource.h" />
     <ClInclude Include="include\Audio\AudioTest.h" />
     <ClInclude Include="include\Physics\FilterShader.h" />
     <ClInclude Include="include\Audio\Audio3DTest.h" />

@@ -17,9 +17,6 @@ local deathAudioSource
 function Alive()
     gameStateSys = systemManager:mGameStateSystem()
 
-    deathEntity = gameStateSys:GetEntity("Death" , "testSerialization")
-    deathComp   = deathEntity:GetAudio()
-    deathAudioSource = Helper.CreateAudioSource(deathEntity)
 
     entity = Helper.GetScriptEntity(script_entity.id)
     if entity == nil then
@@ -69,8 +66,7 @@ function Update()
     phySys:SetVelocity(entity, vec);
     
     if (entity:GetTransform().mScale.x < 2.0) then
-        deathAudioSource:Play()
-        deathAudioSource:SetVolume(0.2)
+
         systemManager.ecs:SetDeleteEntity(entity)
     end
         

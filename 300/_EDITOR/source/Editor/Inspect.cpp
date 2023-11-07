@@ -1287,25 +1287,7 @@ void Audio::Inspect() {
 				mFileName = audio_name;
 				mFullPath = file_path + "/" + audio_name;
 
-				// Check if the [Audio file] has been uploaded into the database...
-				if (systemManager->mAudioSystem.get()->CheckAudioExist(audio_name)) // Exists ... 
-				{
-					// For Debugging Purposes
-					PINFO("[Loaded] Audio is already in database.");
-					// Assign the [Sound*] to this component. 
-					mSound = systemManager->mAudioSystem.get()->FindSound(audio_name);
-					Entity(Hierarchy::selectedId).GetComponent<Audio>().mIsEmpty = false; // Component is populated with info
-					return;
-				}
-
-				else // Does not exist...
-				{
-					// Load the Audio File + Check (load status)
-					systemManager->mAudioSystem.get()->UpdateLoadAudio(Entity(Hierarchy::selectedId));
-					Entity(Hierarchy::selectedId).GetComponent<Audio>().mIsEmpty = false; // must be here (editor specific) -> to trigger the other options to appear.
-					/*Audio& audioent = Entity(Hierarchy::selectedId).GetComponent<Audio>();
-					int i = 0;*/
-				}
+				
 
 			}
 
@@ -1320,7 +1302,7 @@ void Audio::Inspect() {
 	// Debugging (to show which audio are playing) - on editor
 	if (mState == Audio::PLAYING)
 	{
-		ImGui::Text("This Audio is currently playing on (ID = %u)", mChannelID);
+		ImGui::Text("Audio: %s is currently playing on (ID = %u)", mCurrentlyPlaying.c_str(), mChannelID);
 		std::string audio_type;
 		switch (mAudioType)
 		{
@@ -1339,6 +1321,8 @@ void Audio::Inspect() {
 	//{
 	//	ImGui::Text("This is a 3D Audio");
 	//}
+	if (mState == Audio::PAUSED)
+		ImGui::Text("Audio Paused :o");
 
 	static bool remove_audio_bool = false;
 	if (!mIsEmpty)
@@ -1357,25 +1341,9 @@ void Audio::Inspect() {
 	{
 		ImGui::Checkbox("Play on Awake", &mPlayonAwake);
 		ImGui::Checkbox("Is Looping", &mIsLooping);
-		ImGui::SliderFloat("Volume", &mVolume, 0.0f, 1.0f, "volume = %.3f");
-
-		if (ImGui::IsItemEdited())
-		{
-			FMOD::Sound* current_sound;
-			mChannel->getCurrentSound(&current_sound);
-			if (current_sound)
-			{
-				bool playing = false;
-				mChannel->isPlaying(&playing);
-				if (playing)
-				{
-					mChannel->setVolume(mVolume);
-				}
-			}
-	
-		}
-
-	//	ImGui::SliderFloat("Fade Speed", &mFadeSpeedModifier, 0.0f, 1.0f, "fade = %.3f");
+		//ImGui::SliderFloat("Volume", &mVolume, 0.0f, 1.0f, "volume = %.3f");
+		ImGui::DragFloat("Volume", (float*)&mVolume, 0.05, 0.0f, 1.0f);
+		ImGui::DragFloat("Fade Speed", (float*)&mFadeSpeedModifier, 0.05, 0.0f);
 
 	//	if (m3DAudio)
 	//	{

@@ -55,9 +55,6 @@ public:
 	void		 UnpauseAllSounds();
 
 	// Effects Playback
-	//void		 FadeIn(uid channel_id, AUDIOTYPE type, float dt, float current_vol , float fade_to_vol = 1.0f, float fade_speed = 0.2f, float fade_duratiomn = 5.0f); 
-	//void		 FadeOut(uid channel_id, AUDIOTYPE type, float dt, float fade_to_vol = 0.0f, float fade_speed = 0.2f);
-
 	bool		 FadeIn(Entity id, float dt);    // Pass in the data from the <Audio> component 
 	bool		 FadeOut(Entity id, float dt);   // Pass in the data from the <Audio> component 
 
@@ -79,7 +76,8 @@ public:
 public:
 	float sfx_global_vol = 1.0f;
 	float bgm_global_vol = 1.0f;
-	bool  pause_state = false;
+	bool  sys_paused = false;
+	bool  sys_was_paused = false;
 	float fade_timer = 0.0f;		// For Fading. 
 
 	// Databases (Sounds + Channels) + FMOD System

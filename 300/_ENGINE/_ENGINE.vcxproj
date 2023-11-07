@@ -150,7 +150,6 @@
   <ItemGroup>
     <ClInclude Include="include\AI\AIManager.h" />
     <ClInclude Include="include\Audio\Audio3DTest.h" />
-    <ClInclude Include="include\Audio\AudioSource.h" />
     <ClInclude Include="include\Audio\AudioSystemRevamp.h" />
     <ClInclude Include="include\Audio\AudioTest.h" />
     <ClInclude Include="include\Audio\AudioType.h" />
@@ -189,7 +188,6 @@
     <ClCompile Include="source\Physics\ContactCallback.cpp" />
     <ClCompile Include="source\Physics\PhysXUtils.cpp" />
     <ClCompile Include="source\AI\AIManager.cpp" />
-    <ClCompile Include="source\Audio\AudioSource.cpp" />
     <ClCompile Include="source\Debug\AssertException.cpp" />
     <ClCompile Include="source\Debug\EnginePerformance.cpp" />
     <ClCompile Include="source\Debug\LogException.cpp" />

@@ -403,12 +403,13 @@ struct Audio : public Serializable
 	enum STATE : unsigned char
 	{
 		INACTIVE,			// Used for Stopped.
+		STARTUP,			// Used for starting up the game.
 		//UNIQUE_PLAYING_ALREADY,
 		SET_TO_PLAY,        // mPlayonAwake
 		PLAYING,
 		SET_TO_PAUSE,
 		PAUSED,
-		RESUME,
+		SET_TO_RESUME,	    // Trigger "Resume" state (pause button) 
 		SET_STOP,
 		STOPPED,
 		SET_FADE_IN, 
@@ -436,21 +437,22 @@ struct Audio : public Serializable
 	
 
 	// 3D Audio
-	//bool		   m3DAudio = false;
+	bool		   m3DAudio = false;
 	//float		   mMinDistance = 0.5f;		         // Testing Values
 	//float		   mMaxDistance = 3000.0f;		         // Testing Values
 
 	
 	// Do not serialize 
 	// ------------------------------------------
-	STATE          mState = STATE::INACTIVE;		    // Initial State - Inactive (do nothing first)
+	STATE          mState = STATE::STARTUP;		        // Initial State - Startup 
 	STATE		   mNextActionState = STATE::INACTIVE;  // Preface the next cause of action.
 
 	// This is okay - because it's just editing data (use through component)
 
-	void SetPlay()
+	void SetPlay(float vol = 1.0f)
 	{
 		mNextActionState = STATE::SET_TO_PLAY;
+		mVolume = vol;
 	}
 
 	void SetPause() // Interface for Script
@@ -460,7 +462,7 @@ struct Audio : public Serializable
 
 	void SetResume()
 	{
-		mNextActionState = STATE::RESUME;
+		mNextActionState = STATE::SET_TO_RESUME;
 	}
 	
 	void SetStop()
@@ -470,24 +472,27 @@ struct Audio : public Serializable
 
 	void UpdateVolume(float volume)
 	{
-		mVolume = volume;
+		mVolume = volume; // auto adjust in update()
 	}
 
-	void FadeIn(float fade_to_vol = 1.0f, float fade_speed_modifier = 0.2f, float fade_duration = 5.0f)	// Use this to fade in audio from (0.0f)
+	void FadeIn(float fade_to_vol = 1.0f, float fade_speed_modifier = 1.0f, float fade_duration = 5.0f)	// Use this to fade in audio from (0.0f)
 	{
 		mNextActionState = STATE::SET_FADE_IN;
 		mFadeInMaxVol = fade_to_vol;
 		mFadeSpeedModifier = fade_speed_modifier;
 		mFadeDuration = fade_duration;
+		fade_timer = 0.0f;
 	}
 
-	void FadeOut(float fade_to_vol = 0.0f, float fade_speed_modifier = 0.2f, float fade_duration = 5.0f)
+	void FadeOut(float fade_to_vol = 0.0f, float fade_speed_modifier = 1.0f, float fade_duration = 5.0f)
 	{
 		mNextActionState = STATE::SET_FADE_OUT; 
 		mFadeInMaxVol = fade_to_vol;
 		mFadeSpeedModifier = fade_speed_modifier;
 		mFadeDuration = fade_duration;
+		fade_timer = 0.0f; // reset timer
 	}
+
 	// Update Loop - Boolean Checks
 	bool		   mIsPlaying = false;					 // [Flag] - Check if audio is already playing (Channel Interaction)
 	bool           mIsPlay = false;						 // [Flag] - to decide whether to play audio (if true)
@@ -504,6 +509,7 @@ struct Audio : public Serializable
 	// For Editor
 	bool		   mIsEmpty = true;						 // [For Editor] - if empty delete all data in this <Audio> component
 	bool		   mIsLoaded = false;					 // [For Loading]
+	std::string    mCurrentlyPlaying;					 // Shows the currently playing track.
 
 	// Pause State [Editor/Pause Menu]
 	bool		   mSetPause = false;					 // [Flag] - set pause for channel.
@@ -546,7 +552,7 @@ struct Audio : public Serializable
 		mPlayonAwake = false;
 		mIsEmpty = true;
 		mIsLoaded = false;
-		m3DAudio = false; // Added [10/26]
+		//m3DAudio = false; // Added [10/26]
 	}
 
 	int mAudio{ 0 };

@@ -20,7 +20,6 @@ require more engine functionalities.
 #include "Input/InputMapSystem.h"
 #include "GameState/GameStateManager.h"
 #include "Graphics/GraphicsSystem.h"
-#include "Audio/AudioSource.h"
 #include "AI/AIManager.h"
 #include "Graphics/Camera_Input.h"
 #include "FPSManager.h"
@@ -268,7 +267,7 @@ void LuaInput()
 
 void LuaAudioSystem()
 {
-    systemManager->mScriptingSystem->luaState.new_usertype<AudioSystem>(
+  /*  systemManager->mScriptingSystem->luaState.new_usertype<AudioSystem>(
         "mAudioSystem", sol::constructors<>(),
         "PlayAudio", &AudioSystem::PlayAudio,
         "SetAllSFXVolume", &AudioSystem::SetAllSFXVolume,
@@ -286,11 +285,11 @@ void LuaAudioSystem()
         "UnpauseSFXSounds", &AudioSystem::UnpauseSFXSounds,
         "UnpauseBGMSounds", &AudioSystem::UnpauseBGMSounds,
         "FadeTimer", &AudioSystem::fade_timer
-    );
+    );*/
 }
 
-// void LuaAudioSource()
-// {
+ void LuaAudioSource()
+ {
 //     systemManager->mScriptingSystem->luaState["CrossFadeAudio"] = &CrossFadeAudio;
 //     systemManager->mScriptingSystem->luaState["FadeInAudio"] = &FadeInAudio,
 //     systemManager->mScriptingSystem->luaState["FadeOutAudio"] = &FadeOutAudio,
@@ -308,15 +307,13 @@ void LuaAudioSystem()
 //         "SetVolume", &AudioSource::SetVolume,
 //         "SetIsLoop", &AudioSource::SetIsLoop
 //         );
-// }
+ }
 
 void LuaAudio()
 {
     systemManager->mScriptingSystem->luaState.new_usertype<Audio>(
         "Audio", sol::constructors<>(),
         "mVolume", &Audio::mVolume, 
-        "mFadeIn", &Audio::mFadeIn,
-        "mFadeOut", &Audio::mFadeOut,
         "mFadeInMaxVol", &Audio::mFadeInMaxVol, 
         "mFadeOutToVol", &Audio::mFadeOutToVol,
         "mFadeSpeedModifier" , &Audio::mFadeSpeedModifier

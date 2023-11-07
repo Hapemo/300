@@ -44,20 +44,23 @@ local mouse_move = Vec2.new()
 local mouse_on = true
 
 -- audio attributes
-local walkingAudioSource
-local audioComp
+-- local walkingAudioSource
+-- local audioComp
 
-local bulletshootEntity
-local bulletshootComp
-local bulletshootAudioSource
+-- local bulletshootEntity
+-- local bulletshootComp
+-- local bulletshootAudioSource
+
+-- local dashEntity
+-- local dashComp
+-- local dashAudioSource
+
+-- local jumpEntity
+-- local jumpComp
+-- local jumpAudioSource
 
 local dashEntity
-local dashComp
-local dashAudioSource
-
-local jumpEntity
-local jumpComp
-local jumpAudioSource
+local dashAudioComp
 
 local fadeOutTimer = 0.0
 local fadeOutDuration = 5.0
@@ -88,22 +91,30 @@ function Alive()
     cameraEntity = Helper.GetScriptEntity(script_entity.id)
     totaltime = 3.0
 
-    audioComp = cameraEntity:GetAudio()
+    -- audioComp = cameraEntity:GetAudio()
     dashui = gameStateSys:GetEntity("UI1", "testSerialization")
-    walkingAudioSource = Helper.CreateAudioSource(cameraEntity)
+    -- walkingAudioSource = Helper.CreateAudioSource(cameraEntity)
 
-    bulletshootEntity = gameStateSys:GetEntity("Bullet Shoot", "testSerialization")
-    bulletshootComp = bulletshootEntity:GetAudio()
-    bulletshootAudioSource = Helper.CreateAudioSource(bulletshootEntity)
+    dashEntity = gameStateSys.GetEntity("Dash" , "testSerialization")
+    dashAudio = dashEntity:GetAudio()
 
-    dashEntity = gameStateSys:GetEntity("Dash", "testSerialization")
-    dashComp = dashEntity:GetAudio()
-    dashAudioSource = Helper.CreateAudioSource(dashEntity)
+    dashAudio:Play(1.0f)
+    dashAudio:Pause()
+    dashAudio:Resume()
+    dashAudio:Stop()
+    dashAudio:UpdateVolume(0.5f)
+    -- bulletshootEntity = gameStateSys:GetEntity("Bullet Shoot", "testSerialization")
+    -- bulletshootComp = bulletshootEntity:GetAudio()
+    -- bulletshootAudioSource = Helper.CreateAudioSource(bulletshootEntity)
 
-    jumpEntity = gameStateSys:GetEntity("Jump", "testSerialization")
-    jumpComp = jumpEntity:GetAudio()
-    jumpAudioSource = Helper.CreateAudioSource(jumpEntity)
-    jumpAudioSource:GetAudio(jumpEntity)
+    -- dashEntity = gameStateSys:GetEntity("Dash", "testSerialization")
+    -- dashComp = dashEntity:GetAudio()
+    -- dashAudioSource = Helper.CreateAudioSource(dashEntity)
+
+    -- jumpEntity = gameStateSys:GetEntity("Jump", "testSerialization")
+    -- jumpComp = jumpEntity:GetAudio()
+    -- jumpAudioSource = Helper.CreateAudioSource(jumpEntity)
+    -- jumpAudioSource:GetAudio(jumpEntity)
 
     dashTime = 3.0
     tpTime = 20.0
@@ -246,8 +257,8 @@ function Update()
     movement.z = 0;
 
     if (isDashing) then
-        dashAudioSource:Play()
-        dashAudioSource:SetVolume(0.2)
+        -- dashAudioSource:Play()
+        -- dashAudioSource:SetVolume(0.2)
         if(e_dashEffect == true)then
             dashEffect()
           
@@ -323,8 +334,8 @@ function Update()
             if (floorCount > 0) then
                 if (inputMapSys:GetButtonDown("Jump")) then
                     movement.y = movement.y + 50.0;
-                    jumpAudioSource:Play()
-                    jumpAudioSource:SetVolume(0.1)
+                    -- jumpAudioSource:Play()
+                    -- jumpAudioSource:SetVolume(0.1)
                 end
             end
         end
@@ -361,8 +372,8 @@ function Update()
         viewVecCam.y=viewVecCam.y *100
         viewVecCam.z=viewVecCam.z *100
 
-        bulletshootAudioSource:Play()
-        bulletshootAudioSource:SetVolume(0.5)
+        -- bulletshootAudioSource:Play()
+        -- bulletshootAudioSource:SetVolume(0.5)
    
 
         physicsSys:SetVelocity(prefabEntity, viewVecCam)
