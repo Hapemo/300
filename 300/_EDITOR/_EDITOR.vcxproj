@@ -197,8 +197,8 @@ copy "$(ProjectDir)fa-solid-900.ttf" "$(TargetDir)fa-solid-900.ttf" /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="source\Reflection\Reflection.cpp" />
     <ClCompile Include="source\EditorApplication.cpp" />
+    <ClCompile Include="source\EditorReflection\EditorReflection.cpp" />
     <ClCompile Include="source\Editor\ContentBrower.cpp" />
     <ClCompile Include="source\Editor\Editor.cpp" />
     <ClCompile Include="source\Editor\EditorLogger.cpp" />
@@ -227,6 +227,7 @@ copy "$(ProjectDir)fa-solid-900.ttf" "$(TargetDir)fa-solid-900.ttf" /Y</Command>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\EditorApplication.h" />
+    <ClInclude Include="include\EditorReflection\EditorReflection.h" />
     <ClInclude Include="include\Editor\ContentBrower.h" />
     <ClInclude Include="include\Editor\Editor.h" />
     <ClInclude Include="include\Editor\EditorWindow.h" />
@@ -243,7 +244,6 @@ copy "$(ProjectDir)fa-solid-900.ttf" "$(TargetDir)fa-solid-900.ttf" /Y</Command>
     <ClInclude Include="include\Editor\Script\Script.h" />
     <ClInclude Include="include\Editor\ShaderCompiler.h" />
     <ClInclude Include="include\Editor\TabWindow.h" />
-    <ClInclude Include="include\Reflection\Reflection.h" />
     <ClInclude Include="source\Imgui\imconfig.h" />
     <ClInclude Include="source\Imgui\imgui.h" />
     <ClInclude Include="source\Imgui\ImGuizmo.h" />

@@ -29,6 +29,7 @@ start up of window and game system, also runs their update functions.
 
 #include <Windows.h>
 #include <WinUser.h>
+#include "Reflection/Reflection.h"
 
 // Static variables
 GFX::DebugRenderer* Application::mRenderer;
@@ -61,6 +62,7 @@ void Application::StartUp()
 void Application::SystemInit()
 {
     Input::mIsEditor = false;
+    //RegisterAllComponents();
 
   /*  systemManager->Init(false, &mWindow);*/ // Moved this after Audio Component Test
 
