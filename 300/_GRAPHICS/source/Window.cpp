@@ -22,6 +22,7 @@ GFX::Window::Window(ivec2 windowSize)
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE);
     glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
     glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);
+
     mWindow = glfwCreateWindow(mSize.x, mSize.y, "Graphics", nullptr, nullptr);
 
     if (mWindow == nullptr)

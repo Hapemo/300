@@ -22,6 +22,7 @@
 #include <DebugRenderer.hpp>
 #include <Camera.hpp>
 #include <Fbo.hpp>
+#include <MsFbo.hpp>
 #include <Animator.hpp>
 #include <Ssbo.hpp>
 #include <ComputeShader.hpp>
@@ -250,6 +251,7 @@ public:
 	GFX::DebugRenderer	m_Renderer;			// isolated to debug draws
 	GFX::FBO			m_Fbo;				// Editor Scene
 	GFX::FBO			m_GameFbo;			// Game Scene
+	GFX::MsFBO			m_MultisampleFBO;	// Multisample FBO
 	GFX::PingPongFBO	m_PingPongFbo;		// Post Processing
 
 	// -- Window --

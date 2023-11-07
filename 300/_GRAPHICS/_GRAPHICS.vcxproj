@@ -164,6 +164,7 @@
     <ClCompile Include="source\Font.cpp" />
     <ClCompile Include="source\Math.cpp" />
     <ClCompile Include="source\Mesh.cpp" />
+    <ClCompile Include="source\MsFbo.cpp" />
     <ClCompile Include="source\OpenGl.cpp" />
     <ClCompile Include="source\Random.cpp" />
     <ClCompile Include="source\Shader.cpp" />
@@ -188,6 +189,7 @@
     <ClInclude Include="include\Math.hpp" />
     <ClInclude Include="include\Mesh.hpp" />
     <ClInclude Include="include\Fbo.hpp" />
+    <ClInclude Include="include\MsFbo.hpp" />
     <ClInclude Include="include\OpenGl.hpp" />
     <ClInclude Include="include\Random.hpp" />
     <ClInclude Include="include\Shader.hpp" />

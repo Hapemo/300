@@ -13,7 +13,8 @@
 #define  _TEST_HEALTHBAR_SHADER				false
 #define  ENABLE_UI_IN_EDITOR_SCENE			true
 #define  ENABLE_CROSSHAIR_IN_EDITOR_SCENE	false
-#define  TEST_COMPUTE_SHADER				true	
+#define  TEST_COMPUTE_SHADER				false	
+#define  TEST_MULTISAMPLE					true	
 
 #include <ECS/ECS_Components.h>
 #include <Graphics/GraphicsSystem.h>
@@ -83,8 +84,8 @@ void GraphicsSystem::Init()
 		// Create FBO, with the width and height of the window
 		m_Fbo.Create(m_Width, m_Height, m_EditorMode);
 		m_GameFbo.Create(m_Width, m_Height, m_EditorMode);
+		m_MultisampleFBO.Create(m_Width, m_Height);
 		m_PingPongFbo.Create(m_Width, m_Height);
-
 
 		if (m_DebugDrawing) {
 			m_GlobalTint.a = 0.3f;
@@ -365,7 +366,12 @@ void GraphicsSystem::EditorDraw(float dt)
 	auto meshRendererInstances = systemManager->ecs->GetEntitiesWith<MeshRenderer>();
 
 	// Prepare and bind the Framebuffer to be rendered on
+#if TEST_MULTISAMPLE
+	m_MultisampleFBO.PrepForDraw();
+#else
 	m_Fbo.PrepForDraw();
+#endif
+
 
 #pragma region render all the mesh instances onto the editor camera framebuffer
 	// Render all instances of a given mesh
@@ -441,12 +447,16 @@ void GraphicsSystem::EditorDraw(float dt)
 		DrawAll(meshinst);
 
 		shaderinst.Deactivate();
-
-
 		meshinst.UnbindVao();
 	}
 
 	m_Renderer.RenderAll(m_EditorCamera.viewProj());
+#if TEST_MULTISAMPLE
+	m_Fbo.Clear();
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	// Copy pixel data from multisample FBO to editor FBO
+	m_MultisampleFBO.BlitFramebuffer(m_Fbo.GetID());
+#endif
 
 	if (systemManager->mGraphicsSystem->m_EnableBloom)
 	{
@@ -562,7 +572,11 @@ void GraphicsSystem::GameDraw(float dt)
 		}
 
 		mat4 gameCamVP = camera.GetComponent<Camera>().mCamera.viewProj();
+#if TEST_MULTISAMPLE
+		glUniformMatrix4fv(shaderinst.GetUniformVP(), 1, GL_FALSE, &m_EditorCamera.viewProj()[0][0]);
+#else
 		glUniformMatrix4fv(shaderinst.GetUniformVP(), 1, GL_FALSE, &gameCamVP[0][0]);
+#endif
 
 		// Retrieve Point Light object
 		auto lightEntity = systemManager->ecs->GetEntitiesWith<PointLight>();
