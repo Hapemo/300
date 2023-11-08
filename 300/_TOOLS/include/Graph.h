@@ -29,8 +29,10 @@ public:
   void AddDEdgeSafe(glm::vec3 src, glm::vec3 dst); // This version will not add dst to point if it can't find dst as a point
   void AddUEdge(glm::vec3 p0, glm::vec3 p1);
   void AddPoint(glm::vec3 point);
+  // Delete a point and all edges connecting to it
   void DeletePoint(glm::vec3 _point);
-  void DeleteEdge(glm::vec3 p0, glm::vec3 p1);
+  void DeleteUEdge(glm::vec3 p0, glm::vec3 p1);
+  void DeleteDEdge(glm::vec3 src, glm::vec3 dst);
   bool CheckForEdge(glm::vec3 src, glm::vec3 dst);
   // Get the point's edges. If can't find point, make a new point
   std::vector<glm::vec3>& GetPointEdges(glm::vec3 point);

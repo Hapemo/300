@@ -134,7 +134,7 @@ void GraphData::DeletePoint(glm::vec3 _point) {
   }
 }
 
-void GraphData::DeleteEdge(glm::vec3 p0, glm::vec3 p1) {
+void GraphData::DeleteUEdge(glm::vec3 p0, glm::vec3 p1) {
   auto p0it = std::find_if(mData.begin(), mData.end(), [p0] (std::pair<glm::vec3, std::vector<glm::vec3>> const& pointnedge) { return p0 == pointnedge.first; });
   auto p1it = std::find_if(mData.begin(), mData.end(), [p1] (std::pair<glm::vec3, std::vector<glm::vec3>> const& pointnedge) { return p1 == pointnedge.first; });
 
@@ -148,6 +148,15 @@ void GraphData::DeleteEdge(glm::vec3 p0, glm::vec3 p1) {
     if (it != p1it->second.end()) p1it->second.erase(it);
   }
 }
+
+void GraphData::DeleteDEdge(glm::vec3 src, glm::vec3 dst) {
+  auto it = std::find_if(mData.begin(), mData.end(), [src] (std::pair<glm::vec3, std::vector<glm::vec3>> const& pointnedge) { return src == pointnedge.first; });
+  if (it != mData.end()) {
+    auto itedges = std::find(it->second.begin(), it->second.end(), dst);
+    if (itedges != it->second.end()) it->second.erase(itedges);
+  }
+}
+
 
 bool GraphData::CheckForEdge(glm::vec3 src, glm::vec3 dst) {
   auto const& edges = GetPointEdges(src);
@@ -223,8 +232,8 @@ void TestGraph() {
   graphData.AddUEdge(p9, p10);
   graphData.AddUEdge(p10, p1);
 
-  graphData.DeleteEdge(p1, p2);
-  graphData.DeleteEdge(p1, p10);
+  graphData.DeleteUEdge(p1, p2);
+  graphData.DeleteUEdge(p1, p10);
 
   std::string filePath{ "../assets/GraphData/graphData1.txt" };
   //graphData.SaveGraph(filePath);
