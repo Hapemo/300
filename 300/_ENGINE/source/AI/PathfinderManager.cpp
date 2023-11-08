@@ -11,8 +11,17 @@
 void TestPathfinderManager() {
 	//systemManager->mPathfinderSystem.get()->ReloadALGraph("graphData2");
 
-	if (Input::CheckKey(PRESS, _1))
-		systemManager->mPathfinderSystem.get()->AddPoint(glm::vec3{ 10, 10, 10 });
+	if (Input::CheckKey(PRESS, _1)) {
+		std::vector<glm::vec3> points{ { 10, 0, 0 }, {50, 50, 50},{300, 50, 300} ,{10, 10, 0} ,{4000, 500, 0} ,{-300, -750, 30} };
+
+		for (int i{}; i < points.size(); ++i) {
+			systemManager->mPathfinderSystem.get()->AddPoint(points[i]);
+			for (int j{}; j < points.size(); ++j) {
+				if (i == j) continue;
+				systemManager->mPathfinderSystem.get()->AddDirectedEdge(points[i], points[j]);
+			}
+		}
+	}
 
 	if (Input::CheckKey(PRESS, _2))
 		systemManager->mPathfinderSystem.get()->DeleteGraphEntities();
@@ -169,10 +178,15 @@ void PathfinderManager::AddPoint(glm::vec3 pos) {
 }
 
 void PathfinderManager::AddDirectedEdge(glm::vec3 start, glm::vec3 end) {
-	Entity e = systemManager->ecs->NewEntityPrefabForGraph("TODO", start + (end - start)/2.f); // Make arrow entity at mid point
+	glm::vec3 direction = end - start;
+	Entity e = systemManager->ecs->NewEntityPrefabForGraph(EDGENAME, start + (direction)/2.f - direction*(0.15f)); // Make arrow entity at mid point
 	
-	// Add in calculations to make arrow entity point correctly TODO
-	
+	Transform& eTrans = e.GetComponent<Transform>();
+
+	eTrans.mScale.z = glm::length(end - start)-5.f;
+	eTrans.mRotate = RotationalVectorToEulerAngle(glm::normalize(end - start)) * 180.f / 3.1415925359f;
+	eTrans.mRotate.y += 180;
+
 	mGraphDataEntities.push_back({ e, {start, end} });
 }
 
@@ -204,4 +218,13 @@ std::pair<Entity, std::vector<glm::vec3>>* PathfinderManager::FindGraphEntity(En
 	return &*std::find_if(mGraphDataEntities.begin(), mGraphDataEntities.end(), [_e] (std::pair<Entity, std::vector<glm::vec3>> entityData) { return entityData.first == _e; });
 }
 
+glm::vec3 PathfinderManager::RotationalVectorToEulerAngle(glm::vec3 direction) {
+	glm::vec3 angles;
+
+	angles.x = asin(direction.y);
+	angles.y = glm::atan(direction.x, direction.z); 
+	angles.z = 0.0f; // Assuming no roll
+
+	return angles;
+}
 

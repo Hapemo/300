@@ -104,6 +104,7 @@ private:
 
 private: // Helper function
 	std::pair<Entity, std::vector<glm::vec3>>* FindGraphEntity(Entity _e);
+	glm::vec3 RotationalVectorToEulerAngle(glm::vec3 direction);
 
 };
 
