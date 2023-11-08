@@ -1,8 +1,8 @@
 [
     {
-        "entityid": 5,
+        "entityid": 1048577,
         "general": {
-            "name": "NewObject",
+            "name": "TV ON",
             "tagid": 0,
             "subtag": 0,
             "isActive": true,
@@ -27,97 +27,16 @@
         },
         "audio": {
             "filepath": "../assets\\Audio",
-            "filename": "(3D) Girl-Humming.wav",
-            "fullpath": "../assets\\Audio/(3D) Girl-Humming.wav",
+            "filename": "tvOn.wav",
+            "fullpath": "../assets\\Audio/tvOn.wav",
             "playonawake": true,
             "islooping": false,
             "audiotype": 1,
-            "volume": 1.0
-        }
-    },
-    {
-        "entityid": 1048577,
-        "general": {
-            "name": "BGM",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "M2BGM.wav",
-            "fullpath": "../assets\\Audio/M2BGM.wav",
-            "playonawake": true,
-            "islooping": true,
-            "audiotype": 0,
-            "volume": 1.0
+            "volume": 0.5
         }
     },
     {
         "entityid": 1048578,
-        "general": {
-            "name": "Camera",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "camera": {
-            "positon": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "target": {
-                "x": 1.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "size": {
-                "x": 2578,
-                "y": 859
-            },
-            "near": 0.10000000149011612,
-            "far": 900.0
-        }
-    },
-    {
-        "entityid": 1048579,
         "general": {
             "name": "MainMenuScreen",
             "tagid": 6,
@@ -157,9 +76,54 @@
         }
     },
     {
+        "entityid": 1048579,
+        "general": {
+            "name": "Camera",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "camera": {
+            "positon": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "target": {
+                "x": 1.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "size": {
+                "x": 1058,
+                "y": 671
+            },
+            "near": 0.10000000149011612,
+            "far": 900.0
+        }
+    },
+    {
         "entityid": 1048580,
         "general": {
-            "name": "TV ON",
+            "name": "BGM",
             "tagid": 0,
             "subtag": 0,
             "isActive": true,
@@ -184,12 +148,48 @@
         },
         "audio": {
             "filepath": "../assets\\Audio",
-            "filename": "tvOn.wav",
-            "fullpath": "../assets\\Audio/tvOn.wav",
+            "filename": "M2BGM.wav",
+            "fullpath": "../assets\\Audio/M2BGM.wav",
             "playonawake": true,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 0.5
+            "islooping": true,
+            "audiotype": 0,
+            "volume": 1.0
+        }
+    },
+    {
+        "entityid": 1048581,
+        "general": {
+            "name": "NewObject",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "M2BGM.wav",
+            "fullpath": "../assets\\Audio/M2BGM.wav",
+            "playonawake": true,
+            "islooping": true,
+            "audiotype": 0,
+            "volume": 1.0
         }
     }
 ]

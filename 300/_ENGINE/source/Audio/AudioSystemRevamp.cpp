@@ -22,7 +22,7 @@ void AudioSystem::Init()
 	// Initialize the System settings
 	// PINFO("FMOD System Initialize: %d" , ErrCodeCheck(system_obj->init(MAX_AUDIO_FILES_PLAYING, FMOD_INIT_NORMAL, nullptr))); // Settings can be combined by doing OR operation)
 	PINFO("FMOD System Initialize: +");
-	ErrCodeCheck(system_obj->init(MAX_AUDIO_FILES_PLAYING, FMOD_INIT_NORMAL, nullptr));
+	ErrCodeCheck(system_obj->init(MAX_AUDIO_FILES_PLAYING, FMOD_INIT_NORMAL | FMOD_INIT_3D_RIGHTHANDED, nullptr)); // RIGHT HANDED coz OPENGL
 
 	// Channel Initialization (SFX/BGM) - Global Volume Control
 	std::vector<std::pair<uid, FMOD::Channel*>> sfx_channels;
@@ -200,7 +200,7 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 					PINFO("AUDIO EXISTS");
 					PINFO("PLAYING AUDIO %s AT: %f", audio_component.mFileName.c_str(), audio_component.mVolume);
 
-					unsigned int play_bool = PlaySound(audio_component.mFileName, audio_component.mAudioType, audio_component.mVolume); // audio_component is used to access [3D] data
+					unsigned int play_bool = PlaySound(audio_component.mFileName, audio_component.mAudioType, audio_component.mVolume, &audio_component); // audio_component is used to access [3D] data
 					if (play_bool)  // Plays the sound based on parameters
 					{
 						audio_component.mState = Audio::PLAYING; // Update State 
@@ -506,7 +506,7 @@ FMOD::Sound* AudioSystem::FindSound(std::string audio_name)
 	- Finds an available channel and plays that audio.
  */
  /******************************************************************************/
-unsigned int AudioSystem::PlaySound(std::string audio_name, AUDIOTYPE type, float vol)
+unsigned int AudioSystem::PlaySound(std::string audio_name, AUDIOTYPE type, float vol, Audio* audio_component)
 {
 	// 3D Audio support
 	/*Transform& ent_transform = entity.GetComponent<Transform>();
@@ -519,31 +519,20 @@ unsigned int AudioSystem::PlaySound(std::string audio_name, AUDIOTYPE type, floa
 
 		FMOD::Sound* sound = FindSound(audio_name);
 
-		// Check if current sound is already playing (should be the same FMOD::Sound*) 
-		// [channel.second] -> represents the channel this audio is going to be played in.
-		if (current_sound == sound)
-		{
-			PINFO("ALREADY PLAYING");
-			channel.second->setVolume(vol);
-			system_obj->playSound(sound, 0, true, &channel.second);
-			channel.second->setVolume(vol);
-			channel.second->setPaused(false);
-
-			return (unsigned int)(channel.first);
-
-		}
-
+	
 		if (!current_sound)
 		{
-			// This channel is free to play
-			// Play the sound here using FMOD::System and FMOD::Sound
-
-			if (current_sound != sound) // Safeguard ... (make sure the same sound isn't being played twice)
+			system_obj->playSound(sound, 0, true, &channel.second);
+			channel.second->setVolume(vol);
+		
+			if (audio_component->m3DAudio)
 			{
-				system_obj->playSound(sound, 0, true, &channel.second);
-				channel.second->setVolume(vol);
-				channel.second->setPaused(false);
+				PINFO("SETTING 3D MIN MAX SETTINGS");
+				channel.second->set3DMinMaxDistance(audio_component->mMinDistance, audio_component->mMaxDistance);
 			}
+			
+			channel.second->setPaused(false);
+			
 
 			// [3D Sounds] - Intializing 3D audio information to FMOD.
 			//if (audio_component->m3DAudio)

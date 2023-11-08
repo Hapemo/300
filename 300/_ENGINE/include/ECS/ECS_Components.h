@@ -553,7 +553,13 @@ struct Audio : public Serializable
 		mPlayonAwake = false;
 		mIsEmpty = true;
 		mIsLoaded = false;
-		//m3DAudio = false; // Added [10/26]
+		m3DAudio = false;
+		mState = STATE::STARTUP;		        
+		mNextActionState = STATE::INACTIVE;  
+		mFadeInMaxVol = 1.0f;				 
+		mFadeOutToVol = 0.0f;			
+		mFadeSpeedModifier = 0.2f;			
+		mFadeDuration = 5.0f;
 	}
 
 	int mAudio{ 0 };

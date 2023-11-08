@@ -1334,12 +1334,14 @@ void Audio::Inspect() {
 	if (!mIsEmpty)
 	{
 		ImGui::Checkbox("Remove Audio File.", &remove_audio_bool);
+
 	}
 
 	if (!mIsEmpty && remove_audio_bool) // if not empty
 	{
 		Entity(Hierarchy::selectedId).GetComponent<Audio>().ClearAudioComponent();
 		remove_audio_bool = false;
+		ClearAudioComponent();
 		PINFO("Successfully Removed Audio.");
 	}
 
