@@ -9,9 +9,6 @@ in vec2 TexCoords;
 
 uniform sampler2D image;
 uniform float SamplingWeight;
-uniform int kernel;
-//const float kernel = 10.0;
-//const float weight = 1.0;
   
 vec2 iResolution = textureSize(image, 0);
 vec2 uv = gl_FragCoord.xy / iResolution.xy;

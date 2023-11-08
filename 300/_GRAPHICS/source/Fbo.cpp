@@ -256,7 +256,6 @@ void GFX::PingPongFBO::GaussianBlurShader(GFX::Shader& blurShader, GFX::FBO& sou
 	m_Quad.Bind();
 
 	glUniform1f(blurShader.GetUniformLocation("SamplingWeight"), SamplingWeight * 10.f);
-	glUniform1i(blurShader.GetUniformLocation("kernel"), mblurAmount);
 
 	glDrawBuffer(GL_COLOR_ATTACHMENT0);
 

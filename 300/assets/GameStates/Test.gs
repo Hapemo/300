@@ -8,7 +8,7 @@
             "y": 1.0,
             "z": 1.0
         },
-        "bloom_exposure": 0.28999999165534973,
+        "bloom_exposure": 0.4099999964237213,
         "bloom_offset": 1.8380000591278076,
         "bloom_sampleweight": 3.4179999828338623,
         "chroma_strength": 0.019200000911951065,
