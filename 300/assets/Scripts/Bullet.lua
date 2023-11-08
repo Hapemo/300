@@ -68,8 +68,8 @@ function OnTriggerEnter(Entity)
     tagid = generalComponent.tagid
     if (tagid == 1) then
         gameStateSys = systemManager:mGameStateSystem()
-        bullethitEntity = gameStateSys:GetEntity("Bullet Hit" , "testSerialization")
-        bullethitAudioSource = Helper.CreateAudioSource(bullethitEntity)
+        -- bullethitEntity = gameStateSys:GetEntity("Bullet Hit" , "testSerialization")
+        -- bullethitAudioSource = Helper.CreateAudioSource(bullethitEntity)
 
         Entity:GetTransform().mScale.x = Entity:GetTransform().mScale.x * 0.9
         Entity:GetTransform().mScale.y = Entity:GetTransform().mScale.y * 0.9

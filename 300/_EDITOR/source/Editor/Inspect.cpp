@@ -150,6 +150,11 @@ void Inspect::update()
 			Audio& audio = ent.GetComponent<Audio>();
 			audio.Inspect();
 		}
+
+		if (ent.HasComponent<AudioListener>()) {
+			AudioListener& listener = ent.GetComponent<AudioListener>();
+			listener.Inspect();
+		}
 		if (ent.HasComponent<UIrenderer>()) {
 			UIrenderer& render = ent.GetComponent<UIrenderer>();
 			render.Inspect();
@@ -1427,9 +1432,9 @@ void AudioListener::Inspect() {
 	bool delete_component = true;
 
 	// Audio Component (Bar)
-	if (ImGui::CollapsingHeader("Audio Listener", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
+	if (ImGui::CollapsingHeader("AudioListener", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
 	{
-
+		ImGui::Text("HELLO LISTENER");
 	}
 
 	

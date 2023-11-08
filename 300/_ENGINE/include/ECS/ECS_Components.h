@@ -91,6 +91,10 @@ struct Transform : public Serializable
 	glm::vec3 mRotate;
 	glm::vec3 mTranslate;
 
+	// 3D audio support 
+	glm::vec3 mPreviousPosition;
+
+
 	Transform() : mScale(1.f), mRotate(0.f), mTranslate(0.f) {}
 	glm::quat GetQuaternion() { return glm::quat(mRotate); }
 
@@ -562,16 +566,21 @@ struct Audio : public Serializable
 
 struct AudioListener
 {
-	// Position
+	// Properties
 	glm::vec3	   mPosition = { 0.0f, 0.0f, 0.0f }; // Q. <Transform> or glm::vec3
 	glm::vec3      mVelocity = { 0.0f, 0.0f, 0.0f }; // For [Doppler] effect. 
 	glm::vec3	   mForward  = { 0.0f, 0.0f, 0.0f };
 	glm::vec3	   mUp       = { 0.0f, 0.0f, 0.0f };
 
+	// Previous Position
+	glm::vec3	   mPreviousPosition;
+
 	int mAudioListener{ 0 };
 
 	//RTTR_ENABLE()
 	void							Inspect();
+	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
+	void DeserializeSelf(rapidjson::Value& reader);
 };
 
 

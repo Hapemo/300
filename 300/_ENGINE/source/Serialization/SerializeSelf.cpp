@@ -266,6 +266,19 @@ void Audio::DeserializeSelf(rapidjson::Value& reader)
 	Deserialize(reader, "volume", mVolume);
 }
 
+void AudioListener::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
+{
+	writer.Key("audiolistener");
+	writer.StartObject();
+	writer.EndObject();
+}
+
+void AudioListener::DeserializeSelf(rapidjson::Value& reader)
+{
+
+}
+
+
 void Camera::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
 {
 	writer.Key("camera");

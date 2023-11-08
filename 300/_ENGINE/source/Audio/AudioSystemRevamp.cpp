@@ -66,6 +66,44 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 
 	auto audio_entities = systemManager->ecs->GetEntitiesWith<Audio>();
 
+	auto listener_entity = systemManager->ecs->GetEntitiesWith<AudioListener>(); // There will only be '1' <AudioListenr> object
+	
+	if (listener_entity.size() == 1) // if there is no listeners. skip this portion
+	{
+		for (Entity e : listener_entity)
+		{
+			Transform& listener_trans = e.GetComponent<Transform>();	
+			AudioListener& listener = e.GetComponent<AudioListener>();
+
+			FMOD_VECTOR listener_pos{};
+			FMOD_VECTOR velocity{};
+			FMOD_VECTOR camera_forward{};
+			FMOD_VECTOR up_vector{};
+
+			// Update Listener Attributes
+			listener_pos = { listener_trans.mTranslate.x, listener_trans.mTranslate.y, listener_trans.mTranslate.z };
+
+			velocity.x = (listener_pos.x - listener_trans.mPreviousPosition.x) / dt;
+			velocity.y = (listener_pos.y - listener_trans.mPreviousPosition.y) / dt;
+			velocity.z = (listener_pos.z - listener_trans.mPreviousPosition.z) / dt;
+
+			listener_trans.mPreviousPosition = listener_trans.mTranslate; // update the previous position once velocity is calculated.
+
+			// Camera Forward Vector
+			glm::vec3 cam_dir = systemManager->mGraphicsSystem.get()->GetCameraDirection(CAMERA_TYPE::CAMERA_TYPE_GAME);
+
+			camera_forward = { cam_dir.x, cam_dir.y, cam_dir.z };
+
+			// Upwards Vector
+			up_vector = { 0.0f, 1.0f, 0.0f };
+
+			// Updates Listener every loop
+			system_obj->set3DListenerAttributes(0, &listener_pos, &velocity, &camera_forward, &up_vector);     
+		}
+	}
+	
+
+
 	for (Entity audio : audio_entities)
 	{
 		Audio& audio_component = audio.GetComponent<Audio>();
@@ -269,7 +307,14 @@ void AudioSystem::Reset()
 
 	for (auto& channel_pair : mChannels[AUDIO_SFX])
 	{
+		FMOD::Sound* sound = nullptr;
+		channel_pair.second->getCurrentSound(&sound);
 
+		if (sound != nullptr)
+		{
+			channel_pair.second->stop();
+			channel_pair.second = nullptr;
+		}
 	}
 }
 /******************************************************************************/
@@ -416,7 +461,6 @@ FMOD::Sound* AudioSystem::FindSound(std::string audio_name)
  /******************************************************************************/
 unsigned int AudioSystem::PlaySound(std::string audio_name, AUDIOTYPE type, float vol, Audio* audio_component)
 {
-
 	for (auto& channel : mChannels[type])
 	{
 		FMOD::Sound* current_sound;
