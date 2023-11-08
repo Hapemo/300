@@ -438,10 +438,11 @@ struct Audio : public Serializable
 
 	// 3D Audio
 	bool		   m3DAudio = false;
-	//float		   mMinDistance = 0.5f;		         // Testing Values
-	//float		   mMaxDistance = 3000.0f;		         // Testing Values
+	float		   mMinDistance = 0.5f;		         // Testing Values
+	float		   mMaxDistance = 3000.0f;		     // Testing Values
+	glm::vec3      mPosition = { 0.0,0.0,0.0 };
+	glm::vec3	   mVelocity = { 0.0,0.0,0.0 };
 
-	
 	// Do not serialize 
 	// ------------------------------------------
 	STATE          mState = STATE::STARTUP;		        // Initial State - Startup 
@@ -494,13 +495,11 @@ struct Audio : public Serializable
 	}
 
 	// Update Loop - Boolean Checks
-	bool		   mIsPlaying = false;					 // [Flag] - Check if audio is already playing (Channel Interaction)
-	bool           mIsPlay = false;						 // [Flag] - to decide whether to play audio (if true)
-	bool		   mSpamReplay = false;
+	//bool		   mIsPlaying = false;					 // [Flag] - Check if audio is already playing (Channel Interaction)
+	//bool           mIsPlay = false;						 // [Flag] - to decide whether to play audio (if true)
+	//bool		   mSpamReplay = false;
 
 	// Update Loop - Fade In / Fade out data
-	//bool		   mFadeIn = false;						 // [Flag] - This audio will be faded out. 
-	//bool		   mFadeOut = false;					 // [Flag] - This audio will be faded in.
 	float		   mFadeInMaxVol = 1.0f;				 // Flexibility with audio volume fade in (control over volume)
 	float		   mFadeOutToVol = 0.0f;				 // Flexibility to adjust the audio volume as it fades out (don't have to be 0.0f)
 	float		   mFadeSpeedModifier = 0.2f;			 // How fast the fading goes (modifier * dt)
@@ -520,8 +519,6 @@ struct Audio : public Serializable
 
 	// Q. Can a <Audio> entity have their very own channel.
 	uid            mChannelID;							 // Channel ID (this is being played in which channel...) 
-	//FMOD::Channel* mChannel;         					 // Use this to facilitate manipulation of audio.
-	//FMOD::Sound* mSound = nullptr;					 // Each <Audio> can only hold a reference to the "Audio File" it's attached to.
 
 	// Fade Volume Stuff
 	float fade_timer = 0.0f;							 // How long the fade has elapsed
@@ -576,6 +573,8 @@ struct AudioListener
 	//RTTR_ENABLE()
 	void							Inspect();
 };
+
+
 
 
 

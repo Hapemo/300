@@ -1276,23 +1276,22 @@ void Audio::Inspect() {
 					audio_name = full_file_path.substr(audio_name_start + 1);
 				}
 
-				// <Audio> Component - assign m3DAudio flag
-				/*if (audio_name.find("3D") != std::string::npos)
-				{
-					m3DAudio = true;
-				}*/
+				
 
 				// Must be outside (what if i remove and add an already loaded audio)
 				mFilePath = file_path;
 				mFileName = audio_name;
 				mFullPath = file_path + "/" + audio_name;
-
-				
-
 			}
 
 			ImGui::EndDragDropTarget();
 		}
+	}
+
+	// <Audio> Component - assign m3DAudio flag (has been loaded as a "FMOD_3D" in "LoadFromDirectory()"
+	if (mFileName.find("3D") != std::string::npos)
+	{
+		m3DAudio = true;
 	}
 
 	ImGui::Text("Drag drop 'Audio' files to header above 'Audio'");
@@ -1317,12 +1316,14 @@ void Audio::Inspect() {
 	}
 		
 
-	//if (!mIsEmpty && m3DAudio)
-	//{
-	//	ImGui::Text("This is a 3D Audio");
-	//}
+	if (!mIsEmpty && m3DAudio)
+	{
+		ImGui::Text("This is a 3D Audio");
+	}
+
 	if (mState == Audio::PAUSED)
 		ImGui::Text("Audio Paused :o");
+
 
 	static bool remove_audio_bool = false;
 	if (!mIsEmpty)
@@ -1337,6 +1338,18 @@ void Audio::Inspect() {
 		PINFO("Successfully Removed Audio.");
 	}
 
+	/*
+	*	Once an audio file is tagged to this <Audio> component.
+	*   - More interface will appear for customization.
+	*	[a] Play On Awake
+	*   [b] Is Looping 
+	*   [c] Volume Control
+	*   [d] Fade Speed Control
+	*	================================================================
+	*	(3D Parameters)
+	*   [a] Min Distance
+	*   [b] Max Distance
+	*/
 	if (!mIsEmpty)
 	{
 		ImGui::Checkbox("Play on Awake", &mPlayonAwake);
@@ -1345,15 +1358,15 @@ void Audio::Inspect() {
 		ImGui::DragFloat("Volume", (float*)&mVolume, 0.05, 0.0f, 1.0f);
 		ImGui::DragFloat("Fade Speed", (float*)&mFadeSpeedModifier, 0.05, 0.0f);
 
-	//	if (m3DAudio)
-	//	{
-	//		ImGui::DragFloat("Min Distance", (float*)&mMinDistance);
-	//		ImGui::DragFloat("Max Distance", (float*)&mMaxDistance);
-	//		/*ImGui::SliderFloat("Min Distance", &mMinDistance, 0.0f, 3000.0f, "%.3f");
-	//		ImGui::SliderFloat("Max Distance", &mMaxDistance, 0.0f, 3000.0f, "%.3f");*/
+		if (m3DAudio)
+		{
+			ImGui::DragFloat("Min Distance", (float*)&mMinDistance);
+			ImGui::DragFloat("Max Distance", (float*)&mMaxDistance);
+			/*ImGui::SliderFloat("Min Distance", &mMinDistance, 0.0f, 3000.0f, "%.3f");
+			ImGui::SliderFloat("Max Distance", &mMaxDistance, 0.0f, 3000.0f, "%.3f");*/
 
-	//		//systemManager->mAudioSystem.get()->Update3DChannelSettings(Entity(Hierarchy::selectedId)); 
-	//	}
+			//systemManager->mAudioSystem.get()->Update3DChannelSettings(Entity(Hierarchy::selectedId)); 
+		}
 
 	}
 
@@ -1361,12 +1374,12 @@ void Audio::Inspect() {
 	
 	switch (mAudioType) // depending on what is the audio type
 	{
-	case AUDIO_BGM:
+	case AUDIO_SFX:
 		mAudio = 0;
 		//mTypeChanged = true;
 		//systemManager->mAudioSystem.get()->UpdateChannelReference(Entity(Hierarchy::selectedId));
 		break;
-	case AUDIO_SFX:
+	case AUDIO_BGM:
 		mAudio = 1;
 		//mTypeChanged = true;
 		//systemManager->mAudioSystem.get()->UpdateChannelReference(Entity(Hierarchy::selectedId));
@@ -1383,12 +1396,12 @@ void Audio::Inspect() {
 				switch (mAudio) // depending on what is the audio type
 				{
 				case 0:
-					mAudioType = AUDIO_BGM;
+					mAudioType = AUDIO_SFX;
 					//mTypeChanged = true;
 					//systemManager->mAudioSystem.get()->UpdateChannelReference(Entity(Hierarchy::selectedId));
 					break;
 				case 1:
-					mAudioType = AUDIO_SFX;
+					mAudioType = AUDIO_BGM;
 					//mTypeChanged = true;
 					//systemManager->mAudioSystem.get()->UpdateChannelReference(Entity(Hierarchy::selectedId));
 					break;

@@ -5,6 +5,7 @@
 #include <map>
 #include <filesystem>
 #include <stdexcept>   // Added (9/25)
+#include <functional>
 #include "Input/Input.h"
 #include "ECS/ECS.h"
 #include "ECS/ECS_Components.h"
@@ -13,6 +14,7 @@
 #include "GameState/GameStateManager.h"
 #include "Graphics/GraphicsSystem.h"
 #include "Audio/AudioType.h"
+
 
 enum AUDIOTYPE :unsigned char;
 enum STATE : unsigned char;
@@ -44,7 +46,7 @@ public:
 
 	// Playback Functions (Used Internally) - Update() Loop
 public:
-	unsigned int PlaySound(std::string audio_name, AUDIOTYPE type, float vol = 1.0f);	// Finds the next available in (specified sfx/bgm) channel and plays it in there. 
+	unsigned int PlaySound(std::string audio_name, AUDIOTYPE type, float vol = 1.0f, Audio* audio = nullptr);	// Finds the next available in (specified sfx/bgm) channel and plays it in there. 
 	bool		 PauseSound(uid channel_id, AUDIOTYPE type);
 	bool		 ResumeSound(uid channel_id, AUDIOTYPE type);
 	bool		 StopSound(uid channel_id, AUDIOTYPE type);
@@ -57,8 +59,6 @@ public:
 	// Effects Playback
 	bool		 FadeIn(Entity id, float dt);    // Pass in the data from the <Audio> component 
 	bool		 FadeOut(Entity id, float dt);   // Pass in the data from the <Audio> component 
-
-
 
 	// Audio Fade Functions 
 public:

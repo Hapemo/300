@@ -121,17 +121,16 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 					PINFO("AUDIO EXISTS");
 					PINFO("PLAYING AUDIO %s AT: %f", audio_component.mFileName.c_str(), audio_component.mVolume);
 
-					unsigned int play_bool = PlaySound(audio_component.mFileName, audio_component.mAudioType, audio_component.mVolume);
+					unsigned int play_bool = PlaySound(audio_component.mFileName, audio_component.mAudioType, audio_component.mVolume, &audio_component); // audio_component is used to access [3D] data
 					if (play_bool)  // Plays the sound based on parameters
 					{
 						audio_component.mState = Audio::PLAYING; // Update State 
 						audio_component.mChannelID = play_bool;
 						audio_component.mNextActionState = Audio::INACTIVE;
 						audio_component.mCurrentlyPlaying = audio_component.mFileName; // for info display in editor.
-					
-						// Update [Sounds Currently Playing] database.
-						//mSoundsCurrentlyPlaying.insert(audio_component.mFileName);
+
 					}
+
 
 					
 
@@ -415,9 +414,9 @@ FMOD::Sound* AudioSystem::FindSound(std::string audio_name)
 	- Finds an available channel and plays that audio.
  */
  /******************************************************************************/
-unsigned int AudioSystem::PlaySound(std::string audio_name, AUDIOTYPE type, float vol)
+unsigned int AudioSystem::PlaySound(std::string audio_name, AUDIOTYPE type, float vol, Audio* audio_component)
 {
-	auto hi = &mChannels;
+
 	for (auto& channel : mChannels[type])
 	{
 		FMOD::Sound* current_sound;
@@ -426,6 +425,7 @@ unsigned int AudioSystem::PlaySound(std::string audio_name, AUDIOTYPE type, floa
 		FMOD::Sound* sound = FindSound(audio_name);
 
 		// Check if current sound is already playing (should be the same FMOD::Sound*) 
+		// [channel.second] -> represents the channel this audio is going to be played in.
 		if (current_sound == sound)
 		{
 			PINFO("ALREADY PLAYING");
@@ -433,7 +433,23 @@ unsigned int AudioSystem::PlaySound(std::string audio_name, AUDIOTYPE type, floa
 			system_obj->playSound(sound, 0, true, &channel.second);
 			channel.second->setVolume(vol);
 			channel.second->setPaused(false);
+
+
+			// [3D Sounds] - Intializing 3D audio information to FMOD.
+			if (audio_component->m3DAudio)
+			{
+				FMOD_VECTOR position = { audio_component->mPosition.x ,audio_component->mPosition.y , audio_component->mPosition.z };
+				FMOD_VECTOR velocity = { audio_component->mVelocity.x ,audio_component->mVelocity.y , audio_component->mVelocity.z };
+
+				// All this can only be set after audio has played.
+				PINFO("SETTING 3D ATTRIBUTES");
+				channel.second->set3DAttributes(&position, &velocity);
+				PINFO("SETTING 3D MIN MAX SETTINGS");
+				channel.second->set3DMinMaxDistance(audio_component->mMinDistance, audio_component->mMaxDistance);
+			}
+
 			return (unsigned int)(channel.first);
+
 		}
 
 		if (!current_sound)
@@ -446,9 +462,22 @@ unsigned int AudioSystem::PlaySound(std::string audio_name, AUDIOTYPE type, floa
 				system_obj->playSound(sound, 0, true, &channel.second);
 				channel.second->setVolume(vol);
 				channel.second->setPaused(false);
-				
 			}
 
+			// [3D Sounds] - Intializing 3D audio information to FMOD.
+			if (audio_component->m3DAudio)
+			{
+				FMOD_VECTOR position = { audio_component->mPosition.x ,audio_component->mPosition.y , audio_component->mPosition.z };
+				FMOD_VECTOR velocity = { audio_component->mVelocity.x ,audio_component->mVelocity.y , audio_component->mVelocity.z };
+
+				// All this can only be set after audio has played.
+				PINFO("SETTING 3D ATTRIBUTES");
+				channel.second->set3DAttributes(&position, &velocity);
+				PINFO("SETTING 3D MIN MAX SETTINGS");
+				channel.second->set3DMinMaxDistance(audio_component->mMinDistance, audio_component->mMaxDistance);
+			}
+
+		
 			return (unsigned int)(channel.first);
 		}
 		
@@ -639,43 +668,6 @@ void AudioSystem::UnpauseAllSounds()
 		}
 	}
 }
-
-//void AudioSystem::FadeIn(uid channel_id, AUDIOTYPE type, float current_vol, float dt, float fade_to_vol, float fade_speed_modifier, float fade_duration)
-//{
-//	for (auto& channel_pair : mChannels[type])
-//	{
-//		if (channel_pair.first == channel_id)
-//		{
-//			FMOD::Sound* current_sound;
-//			channel_pair.second->getCurrentSound(&current_sound);
-//
-//			if (current_sound)  // not empty..
-//			{
-//				bool playing = false;
-//				channel_pair.second->isPlaying(&playing);
-//
-//				if (playing)
-//				{	
-//					if (fade_timer < fade_duration)
-//					{
-//						float fade_step = fade_speed_modifier * (fade_to_vol / fade_duration);  // [Modifier] * [Fade per step]
-//
-//					}
-//					channel_pair.second->setVolume()
-//				}
-//
-//
-//			}
-//		}
-//		
-//	}
-//}
-//
-//void AudioSystem::FadeOut(uid channel_id, AUDIOTYPE type, float dt,  float fade_to_vol = 1.0f, float fade_speed = 0.2f)
-//{
-//
-//}
-
 
 bool AudioSystem::FadeIn(Entity id, float dt)
 {
