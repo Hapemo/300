@@ -1,0 +1,7 @@
+[
+    {
+        "ShaderProgram": "GaussianBlurShaderVer2",
+        "Vertex": "../assets/shader_files/Quad2D_vert.glsl",
+        "Fragment": "../assets/shader_files/GaussianBlurVer2_frag.glsl"
+    }
+]

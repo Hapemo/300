@@ -69,12 +69,12 @@ void TabWindow::update()
 	ImGui::TextColored({ 0.f,0.5f, 1.f, 1.f }, "Global Bloom Variables");
 	ImGui::DragFloat3("Global Bloom Threshold", (float*)&systemManager->mGraphicsSystem->mAmbientBloomThreshold, 0.01f, 0.f, 1.f);
 	ImGui::DragFloat("Global Exposure", &systemManager->mGraphicsSystem->mAmbientBloomExposure, 0.01f, 0.f, 5.f, "%0.2f");
-	ImGui::DragFloat("Texel Offset", &systemManager->mGraphicsSystem->mTexelOffset, 0.01f, 0.f, 5.f, "%0.2f");
+	//ImGui::DragFloat("Texel Offset", &systemManager->mGraphicsSystem->mTexelOffset, 0.01f, 0.f, 5.f, "%0.2f");
 	ImGui::DragFloat("Sampling Weight", &systemManager->mGraphicsSystem->mSamplingWeight, 0.001f, 0.f, 5.f, "%0.4f");
 
-	ImGui::InputInt("Gaussian Blur Amount", (int*)&systemManager->mGraphicsSystem->m_PingPongFbo.mblurAmount);
-	if(systemManager->mGraphicsSystem->m_PingPongFbo.mblurAmount < 1)
-		systemManager->mGraphicsSystem->m_PingPongFbo.mblurAmount = 1;
+	//ImGui::InputInt("Gaussian Blur Amount", (int*)&systemManager->mGraphicsSystem->m_PingPongFbo.mblurAmount);
+	//if(systemManager->mGraphicsSystem->m_PingPongFbo.mblurAmount < 1)
+	//	systemManager->mGraphicsSystem->m_PingPongFbo.mblurAmount = 1;
 
 	ImGui::DragFloat("Chromatic Abberation Strength", &systemManager->mGraphicsSystem->mChromaticStrength, 0.001f, 0.0f, 1.f);
 
