@@ -61,8 +61,8 @@ struct General : public Serializable
 	//int tagid{ 0 };
 	SUBTAG subtag;
 	bool isActive{};
-	bool isDelete{};
 	bool isPaused{};
+	bool isDelete{};
 
 	General() 
 	: name(""), subtag(SUBTAG::ACTIVE), isActive(true), isDelete(false)

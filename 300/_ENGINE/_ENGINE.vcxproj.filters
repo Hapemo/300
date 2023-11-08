@@ -28,6 +28,7 @@
     <ClCompile Include="source\Serialization\SerializeSelf.cpp" />
     <ClCompile Include="source\Button\ButtonSystem.cpp" />
     <ClCompile Include="source\AI\PathfinderManager.cpp" />
+    <ClCompile Include="source\Reflection\Reflection.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Audio\AudioSystem.h" />
@@ -70,5 +71,6 @@
     <ClInclude Include="include\Physics\FilterShader.h" />
     <ClInclude Include="include\Button\ButtonSystem.h" />
     <ClInclude Include="include\AI\PathfinderManager.h" />
+    <ClInclude Include="include\Reflection\Reflection.h" />
   </ItemGroup>
 </Project>
