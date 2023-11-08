@@ -129,8 +129,6 @@ public:
 	void ChromaticAbbrebationBlendFramebuffers(GFX::FBO& targetFramebuffer, unsigned int Attachment1);
 
 
-
-
 	/***************************************************************************/
 	/*!
 	\brief
