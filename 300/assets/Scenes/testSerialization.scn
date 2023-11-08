@@ -1,347 +1,5 @@
 [
     {
-        "entityid": 1048583,
-        "general": {
-            "name": "AISpawnPoint2",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -84.10657501220703,
-                "y": 60.07521057128906,
-                "z": 70.59991455078125
-            }
-        }
-    },
-    {
-        "entityid": 1048584,
-        "general": {
-            "name": "AISpawnPoint1",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -83.06127166748047,
-                "y": 14.054450988769531,
-                "z": -66.77978515625
-            }
-        }
-    },
-    {
-        "entityid": 1048585,
-        "general": {
-            "name": "UI1",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 150.0,
-                "y": 150.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -1600.0,
-                "y": -700.0,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "../assets/Compressed/dash.ctexture",
-            "textureref": 3283,
-            "degree": 0.0
-        }
-    },
-    {
-        "entityid": 1048586,
-        "general": {
-            "name": "enemy1_walking",
-            "tagid": 1,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 3.999943733215332,
-                "y": 7.999887466430664,
-                "z": 4.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 69.10987854003906,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 17.002887725830078,
-                "y": 2.59989595413208,
-                "z": 45.67780685424805
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 1,
-            "velocity": {
-                "x": 18.065710067749023,
-                "y": 0.0000034570693969726563,
-                "z": 6.920803070068359
-            },
-            "rotationconstraints": {
-                "x": true,
-                "y": true,
-                "z": true
-            },
-            "gravity": true
-        },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 2923,
-            "instancecolor": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "materialinstance": [
-                "../assets/Compressed/Enemy1_Base Color.ctexture",
-                "../assets/Compressed/Enemy1_Normal.ctexture",
-                "../assets/Compressed/Enemy1_Metallic.ctexture",
-                "../assets/Compressed/Enemy1_Roughness.ctexture",
-                "../assets/Compressed/Enemy1_Emissive.ctexture"
-            ],
-            "mesh": "../assets/compiled_geom/Enemy1_Walk.geom",
-            "texturerefid": [
-                4443,
-                4138,
-                4332,
-                4479,
-                4358
-            ]
-        },
-        "spherecollider": {
-            "scaleoffset": 4.099999904632568,
-            "translateoffset": {
-                "x": 0.0,
-                "y": 4.0,
-                "z": 0.0
-            },
-            "istrigger": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/AITest.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "prefab": {
-            "prefab": "enemy1_walking"
-        },
-        "aisetting": {
-            "movementtype": 1,
-            "spreadout": 35.0,
-            "stayaway": 0.0,
-            "elevation": 0.0,
-            "targetname": "Camera"
-        }
-    },
-    {
-        "entityid": 1048587,
-        "general": {
-            "name": "enemy1_walking",
-            "tagid": 1,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 3.999943733215332,
-                "y": 7.999887466430664,
-                "z": 4.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 72.81524658203125,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 6.561854362487793,
-                "y": 2.5998945236206055,
-                "z": 32.102821350097656
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 1,
-            "velocity": {
-                "x": 18.46978187561035,
-                "y": 0.0000011920928955078125,
-                "z": 5.756253719329834
-            },
-            "rotationconstraints": {
-                "x": true,
-                "y": true,
-                "z": true
-            },
-            "gravity": true
-        },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 2923,
-            "instancecolor": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "materialinstance": [
-                "../assets/Compressed/Enemy1_Base Color.ctexture",
-                "../assets/Compressed/Enemy1_Normal.ctexture",
-                "../assets/Compressed/Enemy1_Metallic.ctexture",
-                "../assets/Compressed/Enemy1_Roughness.ctexture",
-                "../assets/Compressed/Enemy1_Emissive.ctexture"
-            ],
-            "mesh": "../assets/compiled_geom/Enemy1_Walk.geom",
-            "texturerefid": [
-                4443,
-                4138,
-                4332,
-                4479,
-                4358
-            ]
-        },
-        "spherecollider": {
-            "scaleoffset": 4.099999904632568,
-            "translateoffset": {
-                "x": 0.0,
-                "y": 4.0,
-                "z": 0.0
-            },
-            "istrigger": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/AITest.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "prefab": {
-            "prefab": "enemy1_walking"
-        },
-        "aisetting": {
-            "movementtype": 1,
-            "spreadout": 35.0,
-            "stayaway": 0.0,
-            "elevation": 0.0,
-            "targetname": "Camera"
-        }
-    },
-    {
-        "entityid": 1048588,
-        "general": {
-            "name": "Fin2",
-            "tagid": 5,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 2.5,
-                "y": 2.5,
-                "z": 2.5
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 12.300000190734863,
-                "y": 65.0,
-                "z": 62.5
-            }
-        },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 2752,
-            "instancecolor": {
-                "x": 1.0,
-                "y": 0.0,
-                "z": 0.0,
-                "w": 1.0
-            },
-            "materialinstance": [
-                "../assets/Compressed/Texture_Wall_1x1x1.ctexture",
-                " ",
-                " ",
-                " ",
-                " "
-            ],
-            "mesh": "../assets/compiled_geom/Wall_1x1x1.geom",
-            "texturerefid": [
-                4597,
-                0,
-                0,
-                0,
-                0
-            ]
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/FinRotate.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "prefab": {
-            "prefab": "Fin"
-        }
-    },
-    {
         "entityid": 1048589,
         "general": {
             "name": "Fin1",
@@ -836,6 +494,94 @@
     {
         "entityid": 1048595,
         "general": {
+            "name": "Wall",
+            "tagid": 4,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 60.0,
+                "y": 49.99950408935547,
+                "z": 5.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 125.0,
+                "y": 77.5,
+                "z": -22.5
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": false,
+                "z": false
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3442,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
+                "../assets/Compressed/Normal_Wall_12x10x1.ctexture",
+                " ",
+                " ",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/Model_Wall_12x10x1.geom",
+            "texturerefid": [
+                4695,
+                4559,
+                0,
+                0,
+                0
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Wall"
+        }
+    },
+    {
+        "entityid": 1048596,
+        "general": {
             "name": "Floor",
             "tagid": 3,
             "subtag": 0,
@@ -922,7 +668,7 @@
         }
     },
     {
-        "entityid": 1048596,
+        "entityid": 1048597,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -1010,7 +756,7 @@
         }
     },
     {
-        "entityid": 1048597,
+        "entityid": 1048598,
         "general": {
             "name": "Jump",
             "tagid": 0,
@@ -1046,7 +792,95 @@
         }
     },
     {
-        "entityid": 1048598,
+        "entityid": 1048599,
+        "general": {
+            "name": "Wall",
+            "tagid": 4,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 60.0,
+                "y": 49.99950408935547,
+                "z": 5.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 90.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 147.5,
+                "y": 72.5,
+                "z": -45.0
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": false,
+                "z": false
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3442,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
+                "../assets/Compressed/Normal_Wall_12x10x1.ctexture",
+                " ",
+                " ",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/Model_Wall_12x10x1.geom",
+            "texturerefid": [
+                4695,
+                4559,
+                0,
+                0,
+                0
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Wall"
+        }
+    },
+    {
+        "entityid": 1048600,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -1116,7 +950,7 @@
         },
         "children": {
             "numchildren": 1,
-            "firstchild": 1048621
+            "firstchild": 1048624
         },
         "audiolistener": {},
         "camera": {
@@ -1132,14 +966,14 @@
             },
             "size": {
                 "x": 1058,
-                "y": 859
+                "y": 671
             },
             "near": 0.10000000149011612,
             "far": 900.0
         }
     },
     {
-        "entityid": 1048599,
+        "entityid": 1048601,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -1227,7 +1061,7 @@
         }
     },
     {
-        "entityid": 1048600,
+        "entityid": 1048602,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -1315,7 +1149,7 @@
         }
     },
     {
-        "entityid": 1048601,
+        "entityid": 1048603,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -1403,7 +1237,7 @@
         }
     },
     {
-        "entityid": 1048602,
+        "entityid": 1048604,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -1491,7 +1325,7 @@
         }
     },
     {
-        "entityid": 1048603,
+        "entityid": 1048605,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -1579,7 +1413,7 @@
         }
     },
     {
-        "entityid": 1048604,
+        "entityid": 1048606,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -1667,7 +1501,7 @@
         }
     },
     {
-        "entityid": 1048605,
+        "entityid": 1048607,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -1755,7 +1589,7 @@
         }
     },
     {
-        "entityid": 1048606,
+        "entityid": 1048608,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -1843,7 +1677,7 @@
         }
     },
     {
-        "entityid": 1048607,
+        "entityid": 1048609,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -1931,7 +1765,7 @@
         }
     },
     {
-        "entityid": 1048608,
+        "entityid": 1048610,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -2019,7 +1853,7 @@
         }
     },
     {
-        "entityid": 1048609,
+        "entityid": 1048611,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -2107,7 +1941,7 @@
         }
     },
     {
-        "entityid": 1048610,
+        "entityid": 1048612,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -2195,7 +2029,7 @@
         }
     },
     {
-        "entityid": 1048611,
+        "entityid": 1048613,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -2283,7 +2117,7 @@
         }
     },
     {
-        "entityid": 1048612,
+        "entityid": 1048614,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -2371,7 +2205,7 @@
         }
     },
     {
-        "entityid": 1048613,
+        "entityid": 1048615,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -2459,7 +2293,7 @@
         }
     },
     {
-        "entityid": 1048614,
+        "entityid": 1048616,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -2547,7 +2381,7 @@
         }
     },
     {
-        "entityid": 1048615,
+        "entityid": 1048617,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -2635,7 +2469,7 @@
         }
     },
     {
-        "entityid": 1048616,
+        "entityid": 1048618,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -2723,7 +2557,7 @@
         }
     },
     {
-        "entityid": 1048617,
+        "entityid": 1048619,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -2811,7 +2645,7 @@
         }
     },
     {
-        "entityid": 1048618,
+        "entityid": 1048620,
         "general": {
             "name": "Light",
             "tagid": 2,
@@ -2851,7 +2685,7 @@
         }
     },
     {
-        "entityid": 1048619,
+        "entityid": 1048621,
         "general": {
             "name": "BGM",
             "tagid": 0,
@@ -2880,14 +2714,102 @@
             "filepath": "../assets\\Audio",
             "filename": "M2BGM.wav",
             "fullpath": "../assets\\Audio/M2BGM.wav",
-            "playonawake": true,
-            "islooping": true,
+            "playonawake": false,
+            "islooping": false,
             "audiotype": 0,
             "volume": 1.0
         }
     },
     {
-        "entityid": 1048620,
+        "entityid": 1048622,
+        "general": {
+            "name": "Wall",
+            "tagid": 4,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 60.0,
+                "y": 49.99950408935547,
+                "z": 5.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 120.0,
+                "y": 72.5,
+                "z": -77.5
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": false,
+                "z": false
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3442,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
+                "../assets/Compressed/Normal_Wall_12x10x1.ctexture",
+                " ",
+                " ",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/Model_Wall_12x10x1.geom",
+            "texturerefid": [
+                4695,
+                4559,
+                0,
+                0,
+                0
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Wall"
+        }
+    },
+    {
+        "entityid": 1048623,
         "general": {
             "name": "Light",
             "tagid": 2,
@@ -2930,7 +2852,7 @@
         }
     },
     {
-        "entityid": 1048621,
+        "entityid": 1048624,
         "general": {
             "name": "gun",
             "tagid": 0,
@@ -2982,13 +2904,13 @@
             ]
         },
         "parent": {
-            "prevsibling": 1048621,
-            "nextsibling": 1048621,
-            "parent": 1048598
+            "prevsibling": 1048624,
+            "nextsibling": 1048624,
+            "parent": 1048600
         }
     },
     {
-        "entityid": 1048622,
+        "entityid": 1048625,
         "general": {
             "name": "Floor",
             "tagid": 4,
@@ -3076,7 +2998,7 @@
         }
     },
     {
-        "entityid": 1048623,
+        "entityid": 1048626,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -3164,7 +3086,7 @@
         }
     },
     {
-        "entityid": 1048624,
+        "entityid": 1048627,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -3252,7 +3174,7 @@
         }
     },
     {
-        "entityid": 1048625,
+        "entityid": 1048628,
         "general": {
             "name": "Floor",
             "tagid": 4,
@@ -3340,7 +3262,7 @@
         }
     },
     {
-        "entityid": 1048626,
+        "entityid": 1048629,
         "general": {
             "name": "Floor",
             "tagid": 4,
@@ -3428,7 +3350,7 @@
         }
     },
     {
-        "entityid": 1048627,
+        "entityid": 1048630,
         "general": {
             "name": "Floor",
             "tagid": 4,
@@ -3516,7 +3438,7 @@
         }
     },
     {
-        "entityid": 1048628,
+        "entityid": 1048631,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -3604,7 +3526,7 @@
         }
     },
     {
-        "entityid": 1048629,
+        "entityid": 1048632,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -3692,7 +3614,95 @@
         }
     },
     {
-        "entityid": 1048630,
+        "entityid": 1048633,
+        "general": {
+            "name": "Wall",
+            "tagid": 4,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 60.0,
+                "y": 49.99950408935547,
+                "z": 5.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 110.0,
+                "y": 77.5,
+                "z": 77.5
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": false,
+                "z": false
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3442,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
+                "../assets/Compressed/Normal_Wall_12x10x1.ctexture",
+                " ",
+                " ",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/Model_Wall_12x10x1.geom",
+            "texturerefid": [
+                4695,
+                4559,
+                0,
+                0,
+                0
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Wall"
+        }
+    },
+    {
+        "entityid": 1048634,
         "general": {
             "name": "Floor",
             "tagid": 4,
@@ -3780,7 +3790,7 @@
         }
     },
     {
-        "entityid": 1048631,
+        "entityid": 1048635,
         "general": {
             "name": "Bullet Shoot",
             "tagid": 0,
@@ -3816,7 +3826,7 @@
         }
     },
     {
-        "entityid": 1048632,
+        "entityid": 1048636,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -3904,7 +3914,7 @@
         }
     },
     {
-        "entityid": 1048633,
+        "entityid": 1048637,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -3992,7 +4002,95 @@
         }
     },
     {
-        "entityid": 1048634,
+        "entityid": 1048638,
+        "general": {
+            "name": "Wall",
+            "tagid": 4,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 60.0,
+                "y": 49.99950408935547,
+                "z": 5.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 90.0
+            },
+            "translate": {
+                "x": 120.0,
+                "y": 22.5,
+                "z": -22.5
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": false,
+                "z": false
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3442,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
+                "../assets/Compressed/Normal_Wall_12x10x1.ctexture",
+                " ",
+                " ",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/Model_Wall_12x10x1.geom",
+            "texturerefid": [
+                4695,
+                4559,
+                0,
+                0,
+                0
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Wall"
+        }
+    },
+    {
+        "entityid": 1048639,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -4080,7 +4178,7 @@
         }
     },
     {
-        "entityid": 1048635,
+        "entityid": 1048640,
         "general": {
             "name": "Floor",
             "tagid": 4,
@@ -4168,7 +4266,7 @@
         }
     },
     {
-        "entityid": 1048636,
+        "entityid": 1048641,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -4256,7 +4354,7 @@
         }
     },
     {
-        "entityid": 1048637,
+        "entityid": 1048642,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -4344,7 +4442,7 @@
         }
     },
     {
-        "entityid": 1048638,
+        "entityid": 1048643,
         "general": {
             "name": "AISpawnPoint3",
             "tagid": 6,
@@ -4371,7 +4469,7 @@
         }
     },
     {
-        "entityid": 1048639,
+        "entityid": 1048644,
         "general": {
             "name": "Death",
             "tagid": 0,
@@ -4407,7 +4505,7 @@
         }
     },
     {
-        "entityid": 1048640,
+        "entityid": 1048645,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -4495,7 +4593,71 @@
         }
     },
     {
-        "entityid": 1048641,
+        "entityid": 1048646,
+        "general": {
+            "name": "Fin2",
+            "tagid": 5,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 2.5,
+                "y": 2.5,
+                "z": 2.5
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 12.300000190734863,
+                "y": 65.0,
+                "z": 62.5
+            }
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 2752,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Texture_Wall_1x1x1.ctexture",
+                " ",
+                " ",
+                " ",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/Wall_1x1x1.geom",
+            "texturerefid": [
+                4597,
+                0,
+                0,
+                0,
+                0
+            ]
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/FinRotate.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "prefab": {
+            "prefab": "Fin"
+        }
+    },
+    {
+        "entityid": 1048647,
         "general": {
             "name": "crosshair",
             "tagid": 0,
@@ -4538,7 +4700,7 @@
         }
     },
     {
-        "entityid": 1048642,
+        "entityid": 1048648,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -4626,7 +4788,7 @@
         }
     },
     {
-        "entityid": 1048643,
+        "entityid": 1048649,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -4719,7 +4881,34 @@
         }
     },
     {
-        "entityid": 1048644,
+        "entityid": 1048650,
+        "general": {
+            "name": "AISpawnPoint1",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -83.06127166748047,
+                "y": 14.054450988769531,
+                "z": -66.77978515625
+            }
+        }
+    },
+    {
+        "entityid": 1048651,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -4807,7 +4996,7 @@
         }
     },
     {
-        "entityid": 1048645,
+        "entityid": 1048652,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -4895,7 +5084,112 @@
         }
     },
     {
-        "entityid": 1048646,
+        "entityid": 1048653,
+        "general": {
+            "name": "enemy1_walking_audio",
+            "tagid": 1,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 3.999943733215332,
+                "y": 7.999887466430664,
+                "z": 4.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 69.10987854003906,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 17.002887725830078,
+                "y": 2.59989595413208,
+                "z": 45.67780685424805
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 1,
+            "velocity": {
+                "x": 18.065710067749023,
+                "y": 0.0000034570693969726563,
+                "z": 6.920803070068359
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": true,
+                "z": true
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 2923,
+            "instancecolor": {
+                "x": 0.9573333263397217,
+                "y": 0.9201632142066956,
+                "z": 0.028081797063350677,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Enemy1_Base Color.ctexture",
+                "../assets/Compressed/Enemy1_Normal.ctexture",
+                "../assets/Compressed/Enemy1_Metallic.ctexture",
+                "../assets/Compressed/Enemy1_Roughness.ctexture",
+                "../assets/Compressed/Enemy1_Emissive.ctexture"
+            ],
+            "mesh": "../assets/compiled_geom/Enemy1_Walk.geom",
+            "texturerefid": [
+                4443,
+                4138,
+                4332,
+                4479,
+                4358
+            ]
+        },
+        "spherecollider": {
+            "scaleoffset": 4.099999904632568,
+            "translateoffset": {
+                "x": 0.0,
+                "y": 4.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/AITest.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "(3D) cruising-down-8bit-lane-159615.mp3",
+            "fullpath": "../assets\\Audio/(3D) cruising-down-8bit-lane-159615.mp3",
+            "playonawake": true,
+            "islooping": true,
+            "audiotype": 1,
+            "volume": 1.0
+        },
+        "prefab": {
+            "prefab": "enemy1_walking"
+        },
+        "aisetting": {
+            "movementtype": 1,
+            "spreadout": 35.0,
+            "stayaway": 0.0,
+            "elevation": 0.0,
+            "targetname": "Camera"
+        }
+    },
+    {
+        "entityid": 1048654,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -4983,7 +5277,7 @@
         }
     },
     {
-        "entityid": 1048647,
+        "entityid": 1048655,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -5071,7 +5365,7 @@
         }
     },
     {
-        "entityid": 1048648,
+        "entityid": 1048656,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -5159,7 +5453,34 @@
         }
     },
     {
-        "entityid": 1048649,
+        "entityid": 1048657,
+        "general": {
+            "name": "AISpawnPoint4",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 138.94932556152344,
+                "y": 49.536109924316406,
+                "z": -71.42704772949219
+            }
+        }
+    },
+    {
+        "entityid": 1048658,
         "general": {
             "name": "Test Fade BGM2",
             "tagid": 0,
@@ -5195,7 +5516,7 @@
         }
     },
     {
-        "entityid": 1048650,
+        "entityid": 1048659,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -5283,7 +5604,7 @@
         }
     },
     {
-        "entityid": 1048651,
+        "entityid": 1048660,
         "general": {
             "name": "Floor",
             "tagid": 4,
@@ -5371,7 +5692,7 @@
         }
     },
     {
-        "entityid": 1048652,
+        "entityid": 1048661,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -5459,7 +5780,7 @@
         }
     },
     {
-        "entityid": 1048653,
+        "entityid": 1048662,
         "general": {
             "name": "Floor",
             "tagid": 4,
@@ -5547,7 +5868,7 @@
         }
     },
     {
-        "entityid": 1048654,
+        "entityid": 1048663,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -5635,7 +5956,95 @@
         }
     },
     {
-        "entityid": 1048655,
+        "entityid": 1048664,
+        "general": {
+            "name": "Wall",
+            "tagid": 4,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 60.0,
+                "y": 49.99950408935547,
+                "z": 5.0
+            },
+            "rotate": {
+                "x": 90.0,
+                "y": -90.0,
+                "z": 90.0
+            },
+            "translate": {
+                "x": 147.5,
+                "y": 22.5,
+                "z": -50.0
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": false,
+                "z": false
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3442,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
+                "../assets/Compressed/Normal_Wall_12x10x1.ctexture",
+                " ",
+                " ",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/Model_Wall_12x10x1.geom",
+            "texturerefid": [
+                4695,
+                4559,
+                0,
+                0,
+                0
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Wall"
+        }
+    },
+    {
+        "entityid": 1048665,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -5723,7 +6132,7 @@
         }
     },
     {
-        "entityid": 1048656,
+        "entityid": 1048666,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -5811,7 +6220,7 @@
         }
     },
     {
-        "entityid": 1048657,
+        "entityid": 1048667,
         "general": {
             "name": "Floor",
             "tagid": 4,
@@ -5899,7 +6308,7 @@
         }
     },
     {
-        "entityid": 1048658,
+        "entityid": 1048668,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -5987,7 +6396,7 @@
         }
     },
     {
-        "entityid": 1048659,
+        "entityid": 2097153,
         "general": {
             "name": "enemy1_walking",
             "tagid": 1,
@@ -6083,7 +6492,7 @@
         }
     },
     {
-        "entityid": 1048660,
+        "entityid": 2097154,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -6171,7 +6580,103 @@
         }
     },
     {
-        "entityid": 1048661,
+        "entityid": 2097155,
+        "general": {
+            "name": "enemy1_walking",
+            "tagid": 1,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 3.999943733215332,
+                "y": 7.999887466430664,
+                "z": 4.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 72.81524658203125,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 6.561854362487793,
+                "y": 2.5998945236206055,
+                "z": 32.102821350097656
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 1,
+            "velocity": {
+                "x": 18.46978187561035,
+                "y": 0.0000011920928955078125,
+                "z": 5.756253719329834
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": true,
+                "z": true
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 2923,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Enemy1_Base Color.ctexture",
+                "../assets/Compressed/Enemy1_Normal.ctexture",
+                "../assets/Compressed/Enemy1_Metallic.ctexture",
+                "../assets/Compressed/Enemy1_Roughness.ctexture",
+                "../assets/Compressed/Enemy1_Emissive.ctexture"
+            ],
+            "mesh": "../assets/compiled_geom/Enemy1_Walk.geom",
+            "texturerefid": [
+                4443,
+                4138,
+                4332,
+                4479,
+                4358
+            ]
+        },
+        "spherecollider": {
+            "scaleoffset": 4.099999904632568,
+            "translateoffset": {
+                "x": 0.0,
+                "y": 4.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/AITest.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "prefab": {
+            "prefab": "enemy1_walking"
+        },
+        "aisetting": {
+            "movementtype": 1,
+            "spreadout": 35.0,
+            "stayaway": 0.0,
+            "elevation": 0.0,
+            "targetname": "Camera"
+        }
+    },
+    {
+        "entityid": 2097156,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -6259,7 +6764,7 @@
         }
     },
     {
-        "entityid": 1048662,
+        "entityid": 2097157,
         "general": {
             "name": "Floor",
             "tagid": 4,
@@ -6347,7 +6852,7 @@
         }
     },
     {
-        "entityid": 1048663,
+        "entityid": 2097261,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -6435,7 +6940,7 @@
         }
     },
     {
-        "entityid": 1048664,
+        "entityid": 3145827,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -6523,7 +7028,7 @@
         }
     },
     {
-        "entityid": 1048665,
+        "entityid": 3145829,
         "general": {
             "name": "Dash",
             "tagid": 0,
@@ -6559,7 +7064,66 @@
         }
     },
     {
-        "entityid": 1048666,
+        "entityid": 3145830,
+        "general": {
+            "name": "AISpawnPoint2",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -84.10657501220703,
+                "y": 60.07521057128906,
+                "z": 70.59991455078125
+            }
+        }
+    },
+    {
+        "entityid": 3145831,
+        "general": {
+            "name": "UI1",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 150.0,
+                "y": 150.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -1600.0,
+                "y": -700.0,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "../assets/Compressed/dash.ctexture",
+            "textureref": 3283,
+            "degree": 0.0
+        }
+    },
+    {
+        "entityid": 3145832,
         "general": {
             "name": "Bullet Hit",
             "tagid": 0,
@@ -6595,7 +7159,7 @@
         }
     },
     {
-        "entityid": 1048667,
+        "entityid": 3145833,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -6618,561 +7182,6 @@
                 "x": 92.5,
                 "y": 77.5,
                 "z": 5.0
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 0,
-            "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": true,
-                "y": false,
-                "z": false
-            },
-            "gravity": true
-        },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 3442,
-            "instancecolor": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "materialinstance": [
-                "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
-                "../assets/Compressed/Normal_Wall_12x10x1.ctexture",
-                " ",
-                " ",
-                " "
-            ],
-            "mesh": "../assets/compiled_geom/Model_Wall_12x10x1.geom",
-            "texturerefid": [
-                4695,
-                4559,
-                0,
-                0,
-                0
-            ]
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "translateoffset": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "istrigger": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Wall"
-        }
-    },
-    {
-        "entityid": 1048668,
-        "general": {
-            "name": "Wall",
-            "tagid": 4,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 60.0,
-                "y": 49.99950408935547,
-                "z": 5.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 110.0,
-                "y": 77.5,
-                "z": 77.5
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 0,
-            "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": true,
-                "y": false,
-                "z": false
-            },
-            "gravity": true
-        },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 3442,
-            "instancecolor": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "materialinstance": [
-                "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
-                "../assets/Compressed/Normal_Wall_12x10x1.ctexture",
-                " ",
-                " ",
-                " "
-            ],
-            "mesh": "../assets/compiled_geom/Model_Wall_12x10x1.geom",
-            "texturerefid": [
-                4695,
-                4559,
-                0,
-                0,
-                0
-            ]
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "translateoffset": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "istrigger": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Wall"
-        }
-    },
-    {
-        "entityid": 1048669,
-        "general": {
-            "name": "AISpawnPoint4",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 138.94932556152344,
-                "y": 49.536109924316406,
-                "z": -71.42704772949219
-            }
-        }
-    },
-    {
-        "entityid": 2097153,
-        "general": {
-            "name": "Wall",
-            "tagid": 4,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 60.0,
-                "y": 49.99950408935547,
-                "z": 5.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 125.0,
-                "y": 77.5,
-                "z": -22.5
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 0,
-            "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": true,
-                "y": false,
-                "z": false
-            },
-            "gravity": true
-        },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 3442,
-            "instancecolor": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "materialinstance": [
-                "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
-                "../assets/Compressed/Normal_Wall_12x10x1.ctexture",
-                " ",
-                " ",
-                " "
-            ],
-            "mesh": "../assets/compiled_geom/Model_Wall_12x10x1.geom",
-            "texturerefid": [
-                4695,
-                4559,
-                0,
-                0,
-                0
-            ]
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "translateoffset": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "istrigger": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Wall"
-        }
-    },
-    {
-        "entityid": 2097154,
-        "general": {
-            "name": "Wall",
-            "tagid": 4,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 60.0,
-                "y": 49.99950408935547,
-                "z": 5.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 120.0,
-                "y": 72.5,
-                "z": -77.5
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 0,
-            "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": true,
-                "y": false,
-                "z": false
-            },
-            "gravity": true
-        },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 3442,
-            "instancecolor": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "materialinstance": [
-                "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
-                "../assets/Compressed/Normal_Wall_12x10x1.ctexture",
-                " ",
-                " ",
-                " "
-            ],
-            "mesh": "../assets/compiled_geom/Model_Wall_12x10x1.geom",
-            "texturerefid": [
-                4695,
-                4559,
-                0,
-                0,
-                0
-            ]
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "translateoffset": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "istrigger": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Wall"
-        }
-    },
-    {
-        "entityid": 2097155,
-        "general": {
-            "name": "Wall",
-            "tagid": 4,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 60.0,
-                "y": 49.99950408935547,
-                "z": 5.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 90.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 147.5,
-                "y": 72.5,
-                "z": -45.0
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 0,
-            "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": true,
-                "y": false,
-                "z": false
-            },
-            "gravity": true
-        },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 3442,
-            "instancecolor": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "materialinstance": [
-                "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
-                "../assets/Compressed/Normal_Wall_12x10x1.ctexture",
-                " ",
-                " ",
-                " "
-            ],
-            "mesh": "../assets/compiled_geom/Model_Wall_12x10x1.geom",
-            "texturerefid": [
-                4695,
-                4559,
-                0,
-                0,
-                0
-            ]
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "translateoffset": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "istrigger": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Wall"
-        }
-    },
-    {
-        "entityid": 2097156,
-        "general": {
-            "name": "Wall",
-            "tagid": 4,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 60.0,
-                "y": 49.99950408935547,
-                "z": 5.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 90.0
-            },
-            "translate": {
-                "x": 120.0,
-                "y": 22.5,
-                "z": -22.5
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 0,
-            "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": true,
-                "y": false,
-                "z": false
-            },
-            "gravity": true
-        },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 3442,
-            "instancecolor": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "materialinstance": [
-                "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
-                "../assets/Compressed/Normal_Wall_12x10x1.ctexture",
-                " ",
-                " ",
-                " "
-            ],
-            "mesh": "../assets/compiled_geom/Model_Wall_12x10x1.geom",
-            "texturerefid": [
-                4695,
-                4559,
-                0,
-                0,
-                0
-            ]
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "translateoffset": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "istrigger": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Wall"
-        }
-    },
-    {
-        "entityid": 2097157,
-        "general": {
-            "name": "Wall",
-            "tagid": 4,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 60.0,
-                "y": 49.99950408935547,
-                "z": 5.0
-            },
-            "rotate": {
-                "x": 90.0,
-                "y": -90.0,
-                "z": 90.0
-            },
-            "translate": {
-                "x": 147.5,
-                "y": 22.5,
-                "z": -50.0
             }
         },
         "rigidbody": {

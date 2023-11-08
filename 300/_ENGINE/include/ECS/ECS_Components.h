@@ -566,14 +566,14 @@ struct Audio : public Serializable
 
 struct AudioListener
 {
-	// Properties
-	glm::vec3	   mPosition = { 0.0f, 0.0f, 0.0f }; // Q. <Transform> or glm::vec3
-	glm::vec3      mVelocity = { 0.0f, 0.0f, 0.0f }; // For [Doppler] effect. 
-	glm::vec3	   mForward  = { 0.0f, 0.0f, 0.0f };
-	glm::vec3	   mUp       = { 0.0f, 0.0f, 0.0f };
+	// Properties - use transform
+	//glm::vec3	   mPosition = { 0.0f, 0.0f, 0.0f }; // Q. <Transform> or glm::vec3
+	//glm::vec3      mVelocity = { 0.0f, 0.0f, 0.0f }; // For [Doppler] effect. 
+	//glm::vec3	   mForward  = { 0.0f, 0.0f, 0.0f };
+	//glm::vec3	   mUp       = { 0.0f, 0.0f, 0.0f };
 
 	// Previous Position
-	glm::vec3	   mPreviousPosition;
+	//glm::vec3	   mPreviousPosition;
 
 	int mAudioListener{ 0 };
 

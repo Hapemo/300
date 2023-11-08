@@ -46,7 +46,7 @@ public:
 
 	// Playback Functions (Used Internally) - Update() Loop
 public:
-	unsigned int PlaySound(std::string audio_name, AUDIOTYPE type, float vol = 1.0f, Audio* audio = nullptr);	// Finds the next available in (specified sfx/bgm) channel and plays it in there. 
+	unsigned int PlaySound(std::string audio_name, AUDIOTYPE type, float vol = 1.0f);	// Finds the next available in (specified sfx/bgm) channel and plays it in there. 
 	bool		 PauseSound(uid channel_id, AUDIOTYPE type);
 	bool		 ResumeSound(uid channel_id, AUDIOTYPE type);
 	bool		 StopSound(uid channel_id, AUDIOTYPE type);
@@ -70,6 +70,9 @@ public:
 	bool         IsChannelPlaying(uid id, AUDIOTYPE type);
 	bool		 IsChannelPaused(uid id, AUDIOTYPE type);
 	bool		 IsUniqueAudioPlaying(std::string audio_name);   // Unique Audio check
+	
+	FMOD::Channel* GetChannelPointer(AUDIOTYPE audio_type, uid channel_id);
+	
 
 
 	// Data Members (Global Volume Multiplier)

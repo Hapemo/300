@@ -48,6 +48,7 @@ void Transform::DeserializeSelf(rapidjson::Value& reader)
 	Deserialize(reader, "scale", mScale);
 	Deserialize(reader, "rotate", mRotate);
 	Deserialize(reader, "translate", mTranslate);
+	mPreviousPosition = mTranslate;
 }
 
 void MeshRenderer::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const

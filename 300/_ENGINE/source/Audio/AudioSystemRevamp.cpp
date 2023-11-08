@@ -50,7 +50,7 @@ void AudioSystem::Init()
 	// Load all Sounds from Directory... (at startup)
 	LoadAudioFromDirectory("../assets\\Audio");
 
-
+	system_obj->set3DSettings(0.1f, 1.0f, 0.1f);
 }
 
 /******************************************************************************/
@@ -67,13 +67,14 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 	auto audio_entities = systemManager->ecs->GetEntitiesWith<Audio>();
 
 	auto listener_entity = systemManager->ecs->GetEntitiesWith<AudioListener>(); // There will only be '1' <AudioListenr> object
-	
+
+	// Listener Stuff
 	if (listener_entity.size() == 1) // if there is no listeners. skip this portion
 	{
 		for (Entity e : listener_entity)
 		{
-			Transform& listener_trans = e.GetComponent<Transform>();	
-			AudioListener& listener = e.GetComponent<AudioListener>();
+			Transform& listener_trans = e.GetComponent<Transform>();
+			//AudioListener& listener = e.GetComponent<AudioListener>();
 
 			FMOD_VECTOR listener_pos{};
 			FMOD_VECTOR velocity{};
@@ -98,15 +99,55 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 			up_vector = { 0.0f, 1.0f, 0.0f };
 
 			// Updates Listener every loop
-			system_obj->set3DListenerAttributes(0, &listener_pos, &velocity, &camera_forward, &up_vector);     
+			system_obj->set3DListenerAttributes(0, &listener_pos, 0, &camera_forward, &up_vector);
 		}
 	}
-	
 
-
+	// Check <Audio> component "mState" + "mNextActionState" loop
 	for (Entity audio : audio_entities)
 	{
 		Audio& audio_component = audio.GetComponent<Audio>();
+		Transform& transform = audio.GetComponent<Transform>(); // need to update "mPreviousPosition" for 
+		General& general = audio.GetComponent<General>();
+
+		// Set 3D Flag
+		if (audio_component.mFileName.find("3D") != std::string::npos)
+		{
+			audio_component.m3DAudio = true;
+		}
+
+		// Update 3D Channel Attributes (moving objects)
+		//if (audio_component.m3DAudio)
+		{
+			FMOD::Channel* chn_ptr = GetChannelPointer(audio_component.mAudioType, audio_component.mChannelID);
+			
+			FMOD_VECTOR position = { transform.mTranslate.x , transform.mTranslate.y, transform.mTranslate.z };
+			glm::vec3 glm_vel = (transform.mTranslate - transform.mPreviousPosition) / dt;
+			FMOD_VECTOR velocity = { glm_vel.x, glm_vel.y, glm_vel.z };
+
+			if (chn_ptr != nullptr) // Safeguard
+			{
+				chn_ptr->set3DAttributes(&position, &velocity);
+			}
+
+			// Update new previous position. (after calculations are done)
+			transform.mPreviousPosition = transform.mTranslate;
+		}
+
+		// For Debugging
+		if (audio_component.mFileName == "(3D) cruising-down-8bit-lane-159615.mp3")
+		{
+			FMOD::Channel* chn_ptr = GetChannelPointer(audio_component.mAudioType, audio_component.mChannelID);
+
+			if (chn_ptr != nullptr)
+			{
+				chn_ptr->getVolume(&audio_component.mVolume); // the volume doesnt update siah
+			}
+		}
+	
+
+		//uid channel_id = audio_component.mChannelID;
+		//int hi = 3;
 
 		//if (pause_state) // was set to pause before resuming...
 		//{
@@ -159,7 +200,7 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 					PINFO("AUDIO EXISTS");
 					PINFO("PLAYING AUDIO %s AT: %f", audio_component.mFileName.c_str(), audio_component.mVolume);
 
-					unsigned int play_bool = PlaySound(audio_component.mFileName, audio_component.mAudioType, audio_component.mVolume, &audio_component); // audio_component is used to access [3D] data
+					unsigned int play_bool = PlaySound(audio_component.mFileName, audio_component.mAudioType, audio_component.mVolume); // audio_component is used to access [3D] data
 					if (play_bool)  // Plays the sound based on parameters
 					{
 						audio_component.mState = Audio::PLAYING; // Update State 
@@ -168,9 +209,6 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 						audio_component.mCurrentlyPlaying = audio_component.mFileName; // for info display in editor.
 
 					}
-
-
-					
 
 					else
 						audio_component.mState = Audio::FAILED;
@@ -255,7 +293,16 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 		case Audio::FAILED:
 			break;
 		}
+
+
+
+	
+
 	}
+
+	
+
+	system_obj->update();
 
 	//sys_was_paused = false; 
 }
@@ -459,8 +506,12 @@ FMOD::Sound* AudioSystem::FindSound(std::string audio_name)
 	- Finds an available channel and plays that audio.
  */
  /******************************************************************************/
-unsigned int AudioSystem::PlaySound(std::string audio_name, AUDIOTYPE type, float vol, Audio* audio_component)
+unsigned int AudioSystem::PlaySound(std::string audio_name, AUDIOTYPE type, float vol)
 {
+	// 3D Audio support
+	/*Transform& ent_transform = entity.GetComponent<Transform>();
+	Audio& ent_audio = entity.GetComponent<Audio>();*/
+
 	for (auto& channel : mChannels[type])
 	{
 		FMOD::Sound* current_sound;
@@ -477,20 +528,6 @@ unsigned int AudioSystem::PlaySound(std::string audio_name, AUDIOTYPE type, floa
 			system_obj->playSound(sound, 0, true, &channel.second);
 			channel.second->setVolume(vol);
 			channel.second->setPaused(false);
-
-
-			// [3D Sounds] - Intializing 3D audio information to FMOD.
-			if (audio_component->m3DAudio)
-			{
-				FMOD_VECTOR position = { audio_component->mPosition.x ,audio_component->mPosition.y , audio_component->mPosition.z };
-				FMOD_VECTOR velocity = { audio_component->mVelocity.x ,audio_component->mVelocity.y , audio_component->mVelocity.z };
-
-				// All this can only be set after audio has played.
-				PINFO("SETTING 3D ATTRIBUTES");
-				channel.second->set3DAttributes(&position, &velocity);
-				PINFO("SETTING 3D MIN MAX SETTINGS");
-				channel.second->set3DMinMaxDistance(audio_component->mMinDistance, audio_component->mMaxDistance);
-			}
 
 			return (unsigned int)(channel.first);
 
@@ -509,17 +546,17 @@ unsigned int AudioSystem::PlaySound(std::string audio_name, AUDIOTYPE type, floa
 			}
 
 			// [3D Sounds] - Intializing 3D audio information to FMOD.
-			if (audio_component->m3DAudio)
-			{
-				FMOD_VECTOR position = { audio_component->mPosition.x ,audio_component->mPosition.y , audio_component->mPosition.z };
-				FMOD_VECTOR velocity = { audio_component->mVelocity.x ,audio_component->mVelocity.y , audio_component->mVelocity.z };
+			//if (audio_component->m3DAudio)
+			//{
+			//	FMOD_VECTOR position = { audio_component->mPosition.x ,audio_component->mPosition.y , audio_component->mPosition.z };
+			//	FMOD_VECTOR velocity = { audio_component->mVelocity.x ,audio_component->mVelocity.y , audio_component->mVelocity.z };
 
-				// All this can only be set after audio has played.
-				PINFO("SETTING 3D ATTRIBUTES");
-				channel.second->set3DAttributes(&position, &velocity);
-				PINFO("SETTING 3D MIN MAX SETTINGS");
-				channel.second->set3DMinMaxDistance(audio_component->mMinDistance, audio_component->mMaxDistance);
-			}
+			//	// All this can only be set after audio has played.
+			//	PINFO("SETTING 3D ATTRIBUTES");
+			//	channel.second->set3DAttributes(&position, &velocity);
+			//	PINFO("SETTING 3D MIN MAX SETTINGS");
+			//	channel.second->set3DMinMaxDistance(audio_component->mMinDistance, audio_component->mMaxDistance);
+			//}
 
 		
 			return (unsigned int)(channel.first);
@@ -870,6 +907,24 @@ bool AudioSystem::IsUniqueAudioPlaying(std::string audio_name)
 
 	//return true;
 	return true;
+}
+
+FMOD::Channel* AudioSystem::GetChannelPointer(AUDIOTYPE audio_type, uid channel_id)
+{
+	auto it = mChannels.find(audio_type);
+
+	if (it != mChannels.end())
+	{
+		for (auto& channel_pair : it->second)
+		{
+			if (channel_pair.first == channel_id)
+			{
+				return channel_pair.second;
+			}
+		}
+	}
+
+	return nullptr;
 }
 
 
