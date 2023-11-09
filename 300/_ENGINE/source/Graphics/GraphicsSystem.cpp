@@ -262,10 +262,10 @@ void GraphicsSystem::Update(float dt)
 
 		// animations are present
 		if (hasanimation) {
-			AddInstance(meshinst, final, meshRenderer.mInstanceColor, static_cast<int>(m_Materials.size()), static_cast<unsigned>(inst.id), animationID++);
+			AddInstance(meshinst, final, meshRenderer.mInstanceColor, static_cast<int>(m_Materials.size()), meshRenderer.mBloomThreshold, static_cast<unsigned>(inst.id), animationID++);
 		}
 		else {
-			AddInstance(meshinst, final, meshRenderer.mInstanceColor, static_cast<int>(m_Materials.size()), static_cast<unsigned>(inst.id));
+			AddInstance(meshinst, final, meshRenderer.mInstanceColor, static_cast<int>(m_Materials.size()), meshRenderer.mBloomThreshold, static_cast<unsigned>(inst.id));
 		}
 
 		auto getID = [&](MaterialType type, MeshRenderer& meshrenderer) ->int {
@@ -735,7 +735,7 @@ void GraphicsSystem::Exit()
 	Adds an instance of a mesh to be drawn, For instancing
 */
 /**************************************************************************/
-void GraphicsSystem::AddInstance(GFX::Mesh &mesh, Transform transform, const vec4& color, int meshID, unsigned entityID)
+void GraphicsSystem::AddInstance(GFX::Mesh &mesh, Transform transform, const vec4& color, int meshID, const vec4& bloomthreshold, unsigned entityID)
 {
 	// Local to world transformation
 	mat4 scale = glm::scale(transform.mScale);
@@ -748,15 +748,17 @@ void GraphicsSystem::AddInstance(GFX::Mesh &mesh, Transform transform, const vec
 	mesh.mLTW.push_back(world);
 	mesh.mTexEntID.push_back(vec4((float)meshID + 0.5f, (float)entityID + 0.5f, 0, 0));
 	mesh.mColors.push_back(color);
+	mesh.mBloomThresholds.push_back(bloomthreshold);
 }
 
-void GraphicsSystem::AddInstance(GFX::Mesh &mesh, mat4 transform, const vec4& color, int meshID, unsigned entityID, int animInstanceID)
+void GraphicsSystem::AddInstance(GFX::Mesh &mesh, mat4 transform, const vec4& color, int meshID, const vec4& bloomthreshold, unsigned entityID, int animInstanceID)
 {
 	mesh.mLTW.push_back(transform);
 	mesh.mColors.push_back(color);
 	if (animInstanceID < 0)
 		animInstanceID = -2;
 	mesh.mTexEntID.push_back(vec4((float)meshID + 0.5f, (float)entityID + 0.5f, (float)animInstanceID + 0.5f, 0));
+	mesh.mBloomThresholds.push_back(bloomthreshold);
 }
 
 /***************************************************************************/

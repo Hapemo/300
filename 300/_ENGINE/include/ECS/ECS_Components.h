@@ -131,6 +131,7 @@ struct MeshRenderer : public Serializable
 
 	std::string							mMaterialInstancePath[5] {" "," " ," " ," ", " "};
 	vec4								mInstanceColor{ 1.f, 1.f, 1.f, 1.f };
+	vec4								mBloomThreshold{ 1.f, 1.f, 1.f, 1.f };
 
 	std::string							mMeshPath;
 

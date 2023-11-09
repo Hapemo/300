@@ -155,9 +155,11 @@ public:
 		This function is essential for instanced rendering
 	*/
 	/**************************************************************************/
-	void AddInstance(GFX::Mesh& mesh, Transform transform, const vec4& color, int meshID, unsigned entityID = 0xFFFFFFFF);		// Adds an instance of a mesh to be drawn
-	void AddInstance(GFX::Mesh& mesh, mat4 transform, const vec4& color, int meshID, unsigned entityID = 0xFFFFFFFF, int animInstanceID = -1);	// Adds an instance of a mesh to be drawn
+	// Adds an instance of a mesh to be drawn
+	void AddInstance(GFX::Mesh& mesh, Transform transform, const vec4& color, int meshID, const vec4& bloomthreshold, unsigned entityID = 0xFFFFFFFF);		
+	void AddInstance(GFX::Mesh& mesh, mat4 transform, const vec4& color, int meshID, const vec4& bloomthreshold, unsigned entityID = 0xFFFFFFFF, int animInstanceID = -1);
 
+	
 	// -- FBO --
 	/***************************************************************************/
 	/*!

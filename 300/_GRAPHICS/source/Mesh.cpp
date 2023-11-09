@@ -134,6 +134,15 @@ void GFX::Mesh::Setup(const _GEOM::Geom& GeomData)
 	mVao.AddAttributeDivisor(7, 1);											// divisor at vao index 7
 	mVao.AttachVertexBuffer(mTexEntIDVbo.GetID(), 7, 0, sizeof(vec4));		// Attach to index 7
 
+
+	/////////////////////////////////////////
+	// BLOOM THRESHOLD
+	// Create VBO for Bloom Threshold
+	mBloomThresholdVbo.Create(sizeof(vec4) * MAX_INSTANCES);
+	mVao.AddAttribute(8, 8, 4, GL_FLOAT);									// location 8, binding vao index 8
+	mVao.AddAttributeDivisor(8, 1);											// divisor at vao index 8
+	mVao.AttachVertexBuffer(mBloomThresholdVbo.GetID(), 8, 0, sizeof(vec4));// Attach to index 8
+
 	/////////////////////////////////////////
 	// Local To World
 	// Create local-to-world VBO
@@ -142,11 +151,11 @@ void GFX::Mesh::Setup(const _GEOM::Geom& GeomData)
 	// Add attributes and divisor as vec4
 	for (int i = 0; i < 4; ++i)
 	{
-		mVao.AddAttribute(8 + i, 8, 4, GL_FLOAT, sizeof(vec4) * i);					// location 8, binding vao index 8
-		mVao.AddAttributeDivisor(8, 1);												// divisor at vao index 8
+		mVao.AddAttribute(9 + i, 9, 4, GL_FLOAT, sizeof(vec4) * i);					// location 9, binding vao index 9
+		mVao.AddAttributeDivisor(9, 1);												// divisor at vao index 9
 	}
 	// Attach LTW VBO to VAO
-	mVao.AttachVertexBuffer(mLTWVbo.GetID(), 8, 0, sizeof(vec4) * 4);
+	mVao.AttachVertexBuffer(mLTWVbo.GetID(), 9, 0, sizeof(vec4) * 4);
 
 	/////////////////////////////////////////
 	// EBO
@@ -267,6 +276,7 @@ void GFX::Mesh::ClearInstances()
 	mLTW.clear();
 	mColors.clear();
 	mTexEntID.clear();
+	mBloomThresholds.clear();
 }
 
 void GFX::Mesh::Setup2DImageMesh()
@@ -336,6 +346,7 @@ void GFX::Mesh::PrepForDraw()
 	mColorVbo.AttachData(0, mColors.size() * sizeof(vec4), mColors.data());
 	mLTWVbo.AttachData(0, mLTW.size() * sizeof(mat4), mLTW.data());
 	mTexEntIDVbo.AttachData(0, mTexEntID.size() * sizeof(vec4), mTexEntID.data());
+	mBloomThresholdVbo.AttachData(0, mBloomThresholds.size() * sizeof(vec4), mBloomThresholds.data());
 }
 
 void GFX::Mesh::Destroy()
@@ -352,6 +363,7 @@ void GFX::Mesh::Destroy()
 	mNormalVbo.Destroy();
 	mBoneIDVbo.Destroy();
 	mBoneWeightVbo.Destroy();
+	mBloomThresholdVbo.Destroy();
 }
 
 
