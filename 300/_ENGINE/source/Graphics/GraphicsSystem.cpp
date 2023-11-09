@@ -290,6 +290,23 @@ void GraphicsSystem::Update(float dt)
 	m_MaterialSsbo.SubData(m_Materials.size() * sizeof(MaterialSSBO), m_Materials.data());
 	m_Materials.clear();
 
+	{
+		// Setting the bloom threshold once per loop
+		std::string shdr = "AnimationShader";
+		uid shaderstr(shdr);
+		GFX::Shader& shaderinst = *systemManager->mResourceTySystem->get_Shader(shaderstr.id);
+
+		vec4 lAmbientBloomThreshold{ 0.f, 0.f, 0.f, 0.f };
+		if (systemManager->mGraphicsSystem->m_EnableBloom) {
+			lAmbientBloomThreshold = vec4(mAmbientBloomThreshold, 1.f);
+		}
+
+		shaderinst.Activate();
+		GLuint threshold = shaderinst.GetUniformLocation("globalBloomThreshold");
+		glUniform4fv(threshold, 1, glm::value_ptr(lAmbientBloomThreshold));
+		shaderinst.Deactivate();
+	}
+
 	// Sending Light source data to GPU
 	auto lightEntity = systemManager->ecs->GetEntitiesWith<PointLight>();
 	m_HasLight = !lightEntity.empty();
@@ -402,20 +419,6 @@ void GraphicsSystem::EditorDraw(float dt)
 
 		GLuint mHasLightFlagLocation = shaderinst.GetUniformLocation("uHasLight");
 		glUniform1i(mHasLightFlagLocation, m_HasLight);
-
-		if (systemManager->mGraphicsSystem->m_EnableBloom)
-		{
-			GLuint threshold = shaderinst.GetUniformLocation("bloomThreshold");
-
-			if (inst.HasComponent<VFX>()) {
-				if (inst.GetComponent<VFX>().isObjectBloom) {
-					glUniform3fv(threshold, 1, glm::value_ptr(inst.GetComponent<VFX>().mBloomThreshold));	
-				}
-			}
-			else {
-				glUniform3fv(threshold, 1, glm::value_ptr(mAmbientBloomThreshold));
-			}
-		}
 
 		if (m_HasLight)
 		{
@@ -543,20 +546,6 @@ void GraphicsSystem::GameDraw(float dt)
 		GFX::Shader &shaderinst = *systemManager->mResourceTySystem->get_Shader(shaderstr.id);
 
 		shaderinst.Activate();
-
-		if (systemManager->mGraphicsSystem->m_EnableBloom)
-		{
-			GLuint threshold = shaderinst.GetUniformLocation("bloomThreshold");
-
-			if (inst.HasComponent<VFX>()) {
-				if (inst.GetComponent<VFX>().isObjectBloom) {
-					glUniform3fv(threshold, 1, glm::value_ptr(inst.GetComponent<VFX>().mBloomThreshold));
-				}
-			}
-			else {
-				glUniform3fv(threshold, 1, glm::value_ptr(mAmbientBloomThreshold));
-			}
-		}
 
 		mat4 gameCamVP = camera.GetComponent<Camera>().mCamera.viewProj();
 		glUniformMatrix4fv(shaderinst.GetUniformVP(), 1, GL_FALSE, &gameCamVP[0][0]);
