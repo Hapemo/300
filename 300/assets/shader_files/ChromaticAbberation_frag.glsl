@@ -12,14 +12,17 @@ void main()
 	const float gamma = 2.2;
 
 	// Chromatic abberation
-	float red		= texture(Scene, vec2(TexCoords.x - ChromaticAbberationStrength, TexCoords.y)).r;
-	float green		= texture(Scene, vec2(TexCoords.x, TexCoords.y)).g;
-	float blue		= texture(Scene, vec2(TexCoords.x + ChromaticAbberationStrength, TexCoords.y)).b; 
-	FragColor		= vec4( texture(Scene, TexCoords - ChromaticAbberationStrength).x,
-							texture(Scene, TexCoords).x,
-							texture(Scene, TexCoords + ChromaticAbberationStrength).x,
-							1.0
-							);
+	float red		= texture(Scene, TexCoords - ChromaticAbberationStrength).r;
+	float green		= texture(Scene, TexCoords).g;
+	float blue		= texture(Scene, TexCoords + ChromaticAbberationStrength).b; 
+	
+	
+	red		= pow(red, 1.0/gamma);
+	blue	= pow(blue, 1.0/gamma);
+	green	= pow(green, 1.0/gamma);
+
+
+	FragColor		= vec4( red, green, blue, 0.5 );
 							
 	//FragColor		= vec4(red, green, blue, 1.0);
 	//vec4 color		= vec4(red, green, blue, 1.0);
