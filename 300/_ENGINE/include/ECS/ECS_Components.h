@@ -644,6 +644,7 @@ struct Healthbar : public Serializable
 	float mHeight			{ 2.f };
 	float mHealth			{ 100.f };
 
+	void Inspect();
 	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
 	void DeserializeSelf(rapidjson::Value& reader);
 };

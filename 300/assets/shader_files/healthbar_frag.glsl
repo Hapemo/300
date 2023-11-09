@@ -7,6 +7,7 @@ layout (location = 2) in vec2 fTexCoords;
 
 // -- OUTPUTS --
 layout (location = 0) out vec4 fragColor;
+layout (location = 1) out vec4 entityID;
 
 void main()
 {

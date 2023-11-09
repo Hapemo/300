@@ -81,7 +81,5 @@ void TabWindow::update()
 	ImGui::Checkbox("Enable Bloom", &systemManager->mGraphicsSystem->m_EnableBloom); 
 	ImGui::Checkbox("Enable Chromatic Abberation", &systemManager->mGraphicsSystem->m_EnableChromaticAbberation);
 
-	ImGui::DragFloat("Health Bar", (float*)&systemManager->mGraphicsSystem->m_Health);
-
 	ImGui::ColorPicker4("Global Tint", (float*)&systemManager->mGraphicsSystem->m_GlobalTint);
 }
