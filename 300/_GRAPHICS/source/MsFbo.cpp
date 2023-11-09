@@ -17,6 +17,9 @@ void GFX::MsFBO::Create(int width, int height, bool resize)
 	glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, mColorAttachment);
 	// Specifying texture size
 	glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, mSamples, GL_RGBA32F, width, height, GL_TRUE);
+	float maxAnisotropy{};
+	glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &maxAnisotropy);
+	glTexParameterf(GL_TEXTURE_2D_MULTISAMPLE, GL_TEXTURE_MAX_ANISOTROPY_EXT, maxAnisotropy);	// Always set the maximum available Anisotropy
 	glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, 0);
 
 	// Creating Entity ID Attachment
@@ -31,8 +34,7 @@ void GFX::MsFBO::Create(int width, int height, bool resize)
 	glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, mBrightColorsAttachment);
 	// Specifying size
 	glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, mSamples, GL_RGBA32F, width, height, GL_TRUE);
-	glTexParameteri(GL_TEXTURE_2D_MULTISAMPLE, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D_MULTISAMPLE, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameterf(GL_TEXTURE_2D_MULTISAMPLE, GL_TEXTURE_MAX_ANISOTROPY_EXT, 2.f);	// Anisotropy
 	glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, 0);
 
 	// Attach all Attachments to currently bound framebuffer
