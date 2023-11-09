@@ -46,6 +46,7 @@ void GraphicsSystem::Init()
 		SetupShaderStorageBuffers();
 
 		// -- Setup UI stuffs
+		m_HealthbarMesh.Setup2DImageMesh();
 		m_Image2DMesh.Setup2DImageMesh();
 		for (int i{}; i < 32; ++i)
 		{
@@ -70,6 +71,14 @@ void GraphicsSystem::Init()
 		GLuint uniform_tex = glGetUniformLocation(m_UiShaderInst.GetHandle(), "uTex2d");
 		glUniform1iv(uniform_tex, (GLsizei)m_Textures.size(), m_Textures.data()); // Passing texture Binding units to frag shader [0 - 31]
 		m_UiShaderInst.Deactivate();
+
+		// Initialize the Healthbar shader and uniform location
+		std::string healthbarShader = "healthbarShader";
+		uid healthbarShaderstr(healthbarShader);
+		m_HealthbarShaderInst = *systemManager->mResourceTySystem->get_Shader(healthbarShaderstr.id);
+		m_HealthbarShaderInst.Activate();
+		m_HealthbarViewProjLocation = m_HealthbarShaderInst.GetUniformLocation("uViewProj");
+		m_HealthbarShaderInst.Deactivate();
 
 		// Get Window Handle
 		m_Window = systemManager->GetWindow();
@@ -339,6 +348,16 @@ void GraphicsSystem::Update(float dt)
 	}
 	// Send UI data to GPU
 	m_Image2DMesh.PrepForDraw();
+
+	// Healthbar objects
+	m_HealthbarMesh.ClearInstances();	// Clear data from previous frame
+	auto healthbarInstances = systemManager->ecs->GetEntitiesWith<Healthbar>();
+	for (Entity inst : healthbarInstances)
+	{
+		Healthbar& healthbar = inst.GetComponent<Healthbar>();
+
+		//AddHealthbarInstance(healthbar, GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_GAME), )
+	}
 #pragma endregion
 }
 
@@ -1386,6 +1405,56 @@ int GraphicsSystem::StoreTextureIndex(unsigned texHandle)
 	// ID is already in container
 	int pos = (int)(it - m_Image2DStore.cbegin());
 	return pos;
+}
+
+void GraphicsSystem::DrawAllHealthbarInstance(const mat4& viewProj)
+{
+	// Bind shader and VAO
+	m_HealthbarShaderInst.Activate();
+	m_HealthbarMesh.BindVao();
+
+	// Set view projection matrix uniform
+	glUniform4fv(m_HealthbarViewProjLocation, 1, &viewProj[0][0]);
+
+	// Draw call
+	glDrawArraysInstanced(GL_TRIANGLE_FAN, 0, 4, static_cast<GLsizei>(m_HealthbarMesh.mLTW.size()));
+
+	// Unbinding shader and VAO
+	m_HealthbarShaderInst.Deactivate();
+	m_HealthbarMesh.UnbindVao();
+}
+
+void GraphicsSystem::AddHealthbarInstance(const Healthbar& healthbar, const vec3& camPos, const vec2& size, const vec3& position, unsigned entityID)
+{
+	// Compute the rotation vectors
+	vec3 normal = camPos - position;
+	vec3 up = { 0, 0, 1 };
+	vec3 right = glm::cross(up, normal);
+	vec3 forward = glm::cross(right, normal);
+
+	mat4 scale = {
+		vec4(size.x, 0.f, 0.f, 0.f),
+		vec4(0.f, size.y, 0.f, 0.f),
+		vec4(0.f, 0.f, 1.f, 0.f),
+		vec4(0.f, 0.f, 0.f, 1.f)
+	};
+
+	// Rotation matrix to always face the camera
+	mat4 rotate = {
+		vec4(glm::normalize(right), 0.0f),
+		vec4(glm::normalize(forward), 0.0f),
+		vec4(glm::normalize(normal), 0.0f),
+		vec4(position, 1.0f)
+	};
+
+	mat4 world = rotate * scale;
+
+	// Update colors
+	vec4 healthColor = vec4(healthbar.mHealthColor.x, healthbar.mHealthColor.y, healthbar.mHealthColor.z, healthbar.health);
+	m_HealthbarMesh.mColors.push_back(healthColor);
+	m_HealthbarMesh.mTexEntID.push_back(healthbar.mBackColor);
+	// Update LTW matrix
+	m_HealthbarMesh.mLTW.push_back(world);
 }
 
 void GraphicsSystem::SetupCrosshairShaderLocations()

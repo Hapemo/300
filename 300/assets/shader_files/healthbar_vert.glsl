@@ -12,7 +12,6 @@ layout (location = 2) out vec2 fTexCoords;
 
 // -- UNIFORMS --
 uniform mat4 uViewProj;
-uniform mat4 uFaceCamera;
 
 vec2 CreateQuad(int vertexID)
 {
