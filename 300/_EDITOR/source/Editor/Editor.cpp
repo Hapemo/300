@@ -41,6 +41,7 @@ Returns main window for docking
 #include "GameScene.h"
 #include "TabWindow.h"
 #include "KeybindWindow.h"
+#include "PathfinderWindow.h"
 #include "MenuTab.h"
 #include "ShaderCompiler.h"
 /***************************************************************************/
@@ -174,6 +175,7 @@ void Editor::UIinit(GLFWwindow* window)
     mWindowlist["PrefabScene"] = new PrefabWindow;
     mWindowlist["GameScene"] = new GameScene;
     mWindowlist["KeybindWindow"] = new KeybindWindow;
+    mWindowlist["PathfinderWindow"] = new PathfinderWindow;
     mWindowlist["MenuTab"] = new MenuTab;
     mWindowlist["ShaderCompiler"] = new ShaderCompiler;
     for (auto& windows : mWindowlist)
@@ -263,6 +265,14 @@ void Editor::UIupdate([[maybe_unused]]GLFWwindow* window) {
                 windows.second->update();
                 ImGui::End();
             }
+        }
+        else if (windows.first == "PathfinderWindow") {
+
+          if (PathfinderWindow::openWindow) {
+            ImGui::Begin(windows.first.c_str(), &PathfinderWindow::openWindow, windows.second->mWinFlag);
+            windows.second->update();
+            ImGui::End();
+          }
         }
         else if (windows.first == "ShaderCompiler") {
 

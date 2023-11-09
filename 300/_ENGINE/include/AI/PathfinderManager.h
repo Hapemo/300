@@ -83,8 +83,6 @@ public:
 	void AddGraphEntities();
 	// Remove all entities from current active graph data
 	void DeleteGraphEntities();
-	// Add directed arrow entity
-	void AddDirectedArrowEntity(glm::vec3 start, glm::vec3 end);
 	// Delete Entity, point or edge, changing the graph data.
 	void DeleteEntity(Entity e);
 

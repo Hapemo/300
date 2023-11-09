@@ -24,6 +24,7 @@ Contains main loop for the logic of MenuPanel.
 #include "Hierarchy.h"
 #include "ScriptingSystem.h"
 #include "KeybindWindow.h"
+#include "PathfinderWindow.h"
 #include "ShaderCompiler.h"
 #include "imgui_stdlib.h"
 
@@ -97,6 +98,12 @@ void MenuPanel::update()
             {
 
                 KeybindWindow::openWindow = true;
+
+            }
+
+            if (ImGui::MenuItem(ICON_FA_KEY " Pathfinder Control")) {
+
+              PathfinderWindow::openWindow = true;
 
             }
 
