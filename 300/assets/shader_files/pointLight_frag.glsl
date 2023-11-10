@@ -135,21 +135,19 @@ void main()
 
     // HDR
     // check whether fragment output is higher than threshold, if so output as bright color
-
-    float brightness = dot(finalColor.rgb, Bloom_Threshold.rgb);
     
-//    float brightness = 0.f;
-//    if(globalBloomThreshold.a < 0.1) {
-//        // the bloom is turned off
-//        brightness = dot(finalColor.rgb, Bloom_Threshold.rgb);
-//    }
-//    else if (Bloom_Threshold != vec4(0.0, 0.0, 0.0, 0.0)) {
-//        // the bloom for the individual object is turned on
-//        brightness = dot(finalColor.rgb, Bloom_Threshold.rgb);
-//    else {
-//        // use the global bloom
-//        brightness = dot(finalColor.rgb, globalBloomThreshold.rgb);
-//    }
+    float brightness = 0.f;
+    if(globalBloomThreshold.a <= 0.1) {
+        // the bloom is turned off. brightness = 0
+    }
+    else if (Bloom_Threshold.a > 0.1) {
+        // the bloom for the individual object is turned on
+        brightness = dot(finalColor.rgb, Bloom_Threshold.rgb);
+    }
+    else {
+        // use the global bloom
+        brightness = dot(finalColor.rgb, globalBloomThreshold.rgb);
+    }
 
 
     if(brightness > 1.0)

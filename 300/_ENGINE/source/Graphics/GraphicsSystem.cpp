@@ -160,12 +160,32 @@ void GraphicsSystem::Update(float dt)
 		// if the mesh instance is not active, skip it
 		if (meshRenderer.mMeshRef.getdata(systemManager->mResourceTySystem->m_ResourceInstance) == nullptr)
 			continue;
-		
+	
 		
 		// gives me the mesh
 		void *tt = meshRenderer.mMeshRef.getdata(systemManager->mResourceTySystem->m_ResourceInstance);
 		GFX::Mesh &meshinst = *reinterpret_cast<GFX::Mesh *>(tt);
 
+		{
+			// Setting the bloom threshold once per loop
+			std::string shdr;
+			if (meshinst.mHasAnimation)
+				shdr = "AnimationShader";
+			else
+				shdr = "PointLightShader";
+			uid shaderstr(shdr);
+			GFX::Shader& shaderinst = *systemManager->mResourceTySystem->get_Shader(shaderstr.id);
+
+			vec4 lAmbientBloomThreshold{ 0.f, 0.f, 0.f, 0.f };
+			if (systemManager->mGraphicsSystem->m_EnableBloom) {
+				lAmbientBloomThreshold = vec4(mAmbientBloomThreshold, 1.f);
+			}
+
+			shaderinst.Activate();
+			GLuint threshold = shaderinst.GetUniformLocation("globalBloomThreshold");
+			glUniform4fv(threshold, 1, glm::value_ptr(lAmbientBloomThreshold));
+			shaderinst.Deactivate();
+		}
 
 		// pushback LTW matrices
 		auto& transforminst = inst.GetComponent<Transform>();
@@ -289,23 +309,6 @@ void GraphicsSystem::Update(float dt)
 	finalBoneMatrices.clear();
 	m_MaterialSsbo.SubData(m_Materials.size() * sizeof(MaterialSSBO), m_Materials.data());
 	m_Materials.clear();
-
-	{
-		// Setting the bloom threshold once per loop
-		std::string shdr = "AnimationShader";
-		uid shaderstr(shdr);
-		GFX::Shader& shaderinst = *systemManager->mResourceTySystem->get_Shader(shaderstr.id);
-
-		vec4 lAmbientBloomThreshold{ 0.f, 0.f, 0.f, 0.f };
-		if (systemManager->mGraphicsSystem->m_EnableBloom) {
-			lAmbientBloomThreshold = vec4(mAmbientBloomThreshold, 1.f);
-		}
-
-		shaderinst.Activate();
-		GLuint threshold = shaderinst.GetUniformLocation("globalBloomThreshold");
-		glUniform4fv(threshold, 1, glm::value_ptr(lAmbientBloomThreshold));
-		shaderinst.Deactivate();
-	}
 
 	// Sending Light source data to GPU
 	auto lightEntity = systemManager->ecs->GetEntitiesWith<PointLight>();
@@ -648,14 +651,14 @@ void GraphicsSystem::GameDraw(float dt)
 #endif
 
 	m_GameFbo.Unbind();
-	//m_PingPongFbo.UnloadAndClear();
+	m_PingPongFbo.UnloadAndClear();
 }
 
 
 
 void GraphicsSystem::ChromaticAbbrebationBlendFramebuffers(GFX::FBO& targetFramebuffer, unsigned int Attachment1)
 {
-	glBlendFunc(GL_ONE, GL_ONE);
+	glBlendFunc(GL_ONE_MINUS_DST_COLOR, GL_ONE);
 
 	uid shaderstr("ChromaticAbberation");
 	GFX::Shader& BlendShader = *systemManager->mResourceTySystem->get_Shader(shaderstr.id);
@@ -666,6 +669,7 @@ void GraphicsSystem::ChromaticAbbrebationBlendFramebuffers(GFX::FBO& targetFrame
 	// Draw to color attachment only. Otherwise might affect other attachments
 	glDrawBuffer(GL_COLOR_ATTACHMENT0);
 
+	glUniform1f(BlendShader.GetUniformLocation("ChromaticAbberationOffset"), systemManager->mGraphicsSystem->mChromaticOffset);
 	glUniform1f(BlendShader.GetUniformLocation("ChromaticAbberationStrength"), systemManager->mGraphicsSystem->mChromaticStrength);
 	glBindTexture(GL_TEXTURE_2D, Attachment1);									// bind the second attachment
 

@@ -348,7 +348,7 @@ void LuaGraphicsSystem()
         "mAmbientBloomExposure", &GraphicsSystem::mAmbientBloomExposure,
         "mTexelOffset", &GraphicsSystem::mTexelOffset,
         "mSamplingWeight", &GraphicsSystem::mSamplingWeight,
-        "mChromaticStrength", &GraphicsSystem::mChromaticStrength,
+        "mChromaticOffset", &GraphicsSystem::mChromaticOffset,
         "m_EnableBloom", &GraphicsSystem::m_EnableBloom,
         "m_EnableChromaticAbberation", &GraphicsSystem::m_EnableChromaticAbberation,
 		"m_GlobalTint", &GraphicsSystem::m_GlobalTint

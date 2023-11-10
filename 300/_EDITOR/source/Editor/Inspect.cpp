@@ -657,7 +657,10 @@ void MeshRenderer::Inspect()
 	bool delete_component{ true };
 	if (ImGui::CollapsingHeader("MeshRenderer", &delete_component,ImGuiTreeNodeFlags_DefaultOpen)) 
 	{
-		
+		// Bloom threshold values
+		ImGui::DragFloat4("Bloom Threshold", (float*)&mBloomThreshold, 0.01f, 0.0f, 1.f, "%0.2f");
+
+
 		int st = static_cast<int>(mMeshPath.find_last_of("/"));
 		int ed = static_cast<int>(mMeshPath.find_last_of("."));
 		std::string tempPath = mMeshPath.substr(st + 1, ed - (st + 1));
@@ -778,12 +781,6 @@ void MeshRenderer::Inspect()
 			ImGui::EndDragDropTarget();
 		}
 
-
-	//	ImGui::Dummy(ImVec2(0.0f, 10.0f));
-
-		
-
-		
 		ImGui::SameLine();
 
 		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcTextSize(tempPath.c_str()).x

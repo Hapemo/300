@@ -266,13 +266,14 @@ public:
 	vec4	m_GlobalTint = {1.f, 1.f, 1.f, 1.f};
 
 	// -- Bloom -- 
-	vec3		mAmbientBloomThreshold { 0.05, 0.05, 0.005 };		// this yj
-	float		mAmbientBloomExposure{ 0.4f };						// this yj
-	float		mTexelOffset{ 1.f };								// this yj
-	float		mSamplingWeight{ 1.f };								// this yj
+	vec3		mAmbientBloomThreshold { 0.05, 0.05, 0.005 };		
+	float		mAmbientBloomExposure{ 0.4f };						
+	float		mTexelOffset{ 1.f };								
+	float		mSamplingWeight{ 1.f };								
 
 	// -- Chromatic Abbreation --
-	float		mChromaticStrength{ 0.006f };						// this yj
+	float		mChromaticOffset{ 0.006f };
+	float		mChromaticStrength{ 1.f };
 
 	bool		m_EnableBloom{ true };									// this yj
 	bool		m_EnableChromaticAbberation{ true };					// this yj
