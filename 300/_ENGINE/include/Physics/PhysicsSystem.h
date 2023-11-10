@@ -13,6 +13,7 @@ Physics system.
 #include "PhysicsTypes.h"
 #include "ECS/ECS_Components.h"
 #include "Actor.h"
+#define HIT_BUFFER_SIZE 32
 
 using namespace physx;
 
@@ -47,6 +48,8 @@ public:
 	void SetVelocity(Entity e, const glm::vec3 &velocity);
 	void RemoveActor(Entity e);
 
+	const std::vector<Entity>& Visible(const glm::vec3& origin, const glm::vec3& finalpos, float maxdist);
+
 private:
 	PhysX mPX;
 	bool mIsSimulationRunning;
@@ -76,6 +79,8 @@ private:
 	void MoveQueuedEntities();
 
 	void Synchronize();
+
+	PxRaycastHit hitBuffer[HIT_BUFFER_SIZE];
 	//PxRigidDynamicLockFlags Convert(const glm::ivec3& vec);
 };
 

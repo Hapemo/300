@@ -131,8 +131,6 @@ public:
 	void ChromaticAbbrebationBlendFramebuffers(GFX::FBO& targetFramebuffer, unsigned int Attachment1);
 
 
-
-
 	/***************************************************************************/
 	/*!
 	\brief
@@ -263,8 +261,6 @@ public:
 	GFX::Camera m_EditorCamera;
 	CAMERA_TYPE m_CameraControl;
 
-
-
 	// -- Global tint --
 	vec4	m_GlobalTint = {1.f, 1.f, 1.f, 1.f};
 
@@ -280,7 +276,6 @@ public:
 	bool		m_EnableBloom{ true };									// this yj
 	bool		m_EnableChromaticAbberation{ true };					// this yj
 
-
 	// -- Textures --
 	std::vector<int> m_Textures;	// 0, 1, ..., 31
 
@@ -288,6 +283,7 @@ public:
 	GFX::Shader m_UiShaderInst;
 	GFX::Shader m_CrosshairShaderInst;
 	GFX::Shader m_DrawSceneShaderInst;
+	GFX::Shader m_HealthbarShaderInst;
 
 	// -- Flags --
 	int		m_DebugDrawing{ 0 };			// debug drawing 
@@ -301,12 +297,6 @@ public:
 
 	// -- Stats --
 	int		m_LightCount{};
-
-	// -- TEST --
-	float m_CrosshairThickness	{ 1.f };
-	float m_CrosshairInner		{ 20.f };
-	float m_CrosshairOuter		{ 50.f };
-	float m_Health				{ 100.f };
 
 	void Unload();
 
@@ -329,12 +319,18 @@ private:
 
 	// -- 2D Image Rendering --
 	GFX::Mesh						m_Image2DMesh;
+	GFX::Mesh						m_HealthbarMesh;
 	std::vector<unsigned>			m_Image2DStore;
 	GFX::Quad2D						mScreenQuad;
 
 	void DrawAll2DInstances(unsigned shaderID);
 	void Add2DImageInstance(float width, float height, vec2 const& position, unsigned texHandle, unsigned entityID = 0xFFFFFFFF, float degree = 0.f, vec4 const& color = vec4{ 1.f, 1.f, 1.f, 1.f });
 	int StoreTextureIndex(unsigned texHandle);
+
+	// -- Health Bar --
+	void AddHealthbarInstance(const Healthbar& healthbar, const vec3& camPos, unsigned entityID = 0xFFFFFFFF);
+	void DrawAllHealthbarInstance(const mat4& viewProj);
+	GLint m_HealthbarViewProjLocation{};
 
 	// -- Crosshair --
 	GLint m_CrosshairThicknessLocation{};

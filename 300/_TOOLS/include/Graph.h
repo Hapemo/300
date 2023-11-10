@@ -5,118 +5,107 @@
 \date 25-10-2023
 This file contains the declaration of graph, made using the adjacent list
 method, and dijkstra algorithm to find a path.
+
+To use the AStar pathfinding, user must first create the graph using GraphData.
+Then generate ALGraph using the GraphData created, thereafter use the AStar 
+pathfinding algorithm in ALGraph.
 *******************************************************************************/
 #pragma once
-#include <vector>
+#include "pch.h"
+#include <glm/glm.hpp>
 
-struct DijkstraInfo {
-  unsigned cost;
-  std::vector<unsigned> path;
-};
-
-struct AdjInfo {
-  unsigned id;
-  unsigned weight;
-
-  /*!*****************************************************************************
-  AdjacencyInfo operator< overload which is used for sorting/comparing
-
-  \param const AdjacencyInfo&
-  A reference to read-only data to compare with
-
-  \return bool
-  Result of the evaluation
-  *******************************************************************************/
-  bool operator<(const AdjInfo& rhs) const {
-    if (this->weight == rhs.weight)
-      return this->id < rhs.id;
-    return this->weight < rhs.weight;
-  }
-};
+void TestGraph();
 
 
-class Graph {
-  using ALIST = std::vector<std::vector<AdjInfo>>;
+class ALGraph;
+
+class GraphData {
 public:
-  /*!*****************************************************************************
-  Graph default constructor that initializes the stored list of adjacent nodes
+  GraphData() : mData() {}
+  GraphData(std::string const& _filePath); // Load in graph from file path
+  void SaveGraph(std::string const& _filePath); // Save graph into file path
 
-  \param unsigned
-  Number of nodes in the graph
-  *******************************************************************************/
-  Graph(unsigned size);
+  void AddDEdge(glm::vec3 src, glm::vec3 dst); // This version will add dst to point if it can't find dst as a point
+  void AddDEdgeSafe(glm::vec3 src, glm::vec3 dst); // This version will not add dst to point if it can't find dst as a point
+  void AddUEdge(glm::vec3 p0, glm::vec3 p1);
+  void AddPoint(glm::vec3 point);
+  // Delete a point and all edges connecting to it
+  void DeletePoint(glm::vec3 _point);
+  void DeleteUEdge(glm::vec3 p0, glm::vec3 p1);
+  void DeleteDEdge(glm::vec3 src, glm::vec3 dst);
+  bool CheckForEdge(glm::vec3 src, glm::vec3 dst);
+  // Get the point's edges. If can't find point, make a new point
+  std::vector<glm::vec3>& GetPointEdges(glm::vec3 point);
 
-  /*!*****************************************************************************
-  Graph AddDEdge function that adds a directed edge to two given nodes
+  // Convert this graph data into a ALGraph
+  ALGraph MakeALGraph(); // Make a non-dynamic container for efficiency
 
-  \param unsigned
-  ID of the source node
 
-  \param unsigned
-  ID of the destination node
+  std::vector<std::pair<glm::vec3, std::vector<glm::vec3>>> mData;
 
-  \param unsigned
-  Cost of travelling from source to dest
-  *******************************************************************************/
-  void AddDEdge(unsigned source, unsigned destination, unsigned weight);
+  // The format to decode is "(x,y,z)"
+  static glm::vec3 StrToVec3(std::string const& str);
+  static std::string Vec3ToStr(glm::vec3 const& v);
+};
 
-  /*!*****************************************************************************
-  Graph AddUEdge function that adds a bi-directional edge to two given nodes
+class ALGraph {
+public:
+  ALGraph(int _size) { mData.resize(_size); }
 
-  \param unsigned
-  ID of the source node
-
-  \param unsigned
-  ID of the destination node
-
-  \param unsigned
-  Cost of travelling inbetween the two nodes
-  *******************************************************************************/
-  void AddUEdge(unsigned node1, unsigned node2, unsigned weight);
-
-  /*!*****************************************************************************
-  Graph Dijkstra function that runs the Dijkstra algorithm to find the shortest
-  path to every node in the graph given the start node
-
-  \param unsigned
-  ID of the start node
-
-  \return std::vector<DijkstraInfo>
-  Container storing the shortest path to each node
-  *******************************************************************************/
-  std::vector<DijkstraInfo> Dijkstra(unsigned start_node) const;
-
-  /*!*****************************************************************************
-  Graph GetAList function that gets and returns the stored adjacency list of
-  the graph
-
-  \return ALIST
-  The stored adjacency list of the graph
-  *******************************************************************************/
-  ALIST GetAList() const { return this->mAdjList; }
-
-private:
-
-  struct GNode {
-    unsigned id;
-    bool visited;
-    DijkstraInfo info;
-
-    /*!*****************************************************************************
-    GNode operator< overload which is used for sorting/comparing
-
-    \param const GNode&
-    A reference to read-only data to compare with
-
-    \return bool
-    Result of the evaluation
-    *******************************************************************************/
-    bool operator<(const GNode& _rhs) const {
-      return this->info.cost < _rhs.info.cost;
-    }
+  enum NODE_STATE {
+    NONE,
+    OPEN,
+    CLOSE
   };
 
-  // Other private fields and methods
-  ALIST mAdjList;
+  struct AdjList;
+
+  struct Edge {
+    AdjList* vertex;    // Vertex id in the data 
+    float distance;     // Distance from owner of edge to the vertex in the edge
+  };
+
+  // This is like a node
+  struct AdjList {
+    NODE_STATE state = NONE;
+    glm::vec3 point;
+    std::vector<Edge> edges; // Vertices that this vertex is pointing to
+    AdjList* parent;
+    float gCost;
+    float hCost;
+  };
+
+  void Print();
+  static void PrintVec(glm::vec3 v) { std::cout << v.x << "|" << v.y << "|" << v.z; }
+  std::vector<AdjList> mData;
+public:
+//------------------------------
+// AStar pathfinding portion
+//------------------------------
+  
+  class OpenList {
+  public:
+    void Insert(AdjList* node);   // O(1)
+    AdjList* PopLowestCostNode(); // O(n)
+    bool IsEmpty();
+  private:
+    // Sort the container, put largest fCost infront and smallest fCost behind
+    void Sort();
+    std::vector<AdjList*> mData;
+    std::vector<float> fCostHistory;
+  };
+
+  // Put the G cost and H cost in the AdjList (G cost is accumulated from path, H cost is cost to end point)
+
+  // Add starting and ending adjList into mData at the back, so startnode = end-2, endnode = end-1
+  // Do line of sight check with all the nodes and generate the edges for start and end node
+  // Calculate G and H cost for every nodes
+  std::vector<glm::vec3> AStarPath(glm::vec3 const& start, glm::vec3 const& end); // Generates the AStar path for the graph
+private:
+  void AStarInit(glm::vec3 const& start, glm::vec3 const& end);
+  void AStarExit();
+  float CalcHCost(glm::vec3 const& p0, glm::vec3 const& p1);    // TODO find out the most suitable heuristic cost function
+  std::vector<glm::vec3> MasterPath(AdjList* tailNode);
 };
+
 

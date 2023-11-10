@@ -73,7 +73,7 @@ Inspect display for Audio components
 
 #include <descriptor.h>
 #include <string>
-#include "Reflection/Reflection.h"
+#include "EditorReflection/EditorReflection.h"
 
 
 void popup(std::string name, ref& data, bool& trigger);
@@ -167,6 +167,11 @@ void Inspect::update()
 		if (ent.HasComponent<Crosshair>()) {
 			Crosshair& crosshair = ent.GetComponent<Crosshair>();
 			crosshair.Inspect();
+		}
+
+		if (ent.HasComponent<Healthbar>()) {
+			Healthbar& healthbar = ent.GetComponent<Healthbar>();
+			healthbar.Inspect();
 		}
 
 		//--------------------------------------------// must be at the LAST OF THIS LOOP
@@ -270,6 +275,11 @@ void Inspect::Add_component() {
 				Entity(Hierarchy::selectedId).AddComponent<Crosshair>();
 		}
 
+		if (ImGui::Selectable("Healthbar")) {
+			if (!Entity(Hierarchy::selectedId).HasComponent<Healthbar>())
+				Entity(Hierarchy::selectedId).AddComponent<Healthbar>();
+		}
+
 		ImGui::EndCombo();
 
 
@@ -345,32 +355,7 @@ void General::Inspect() {
 /**************************************************************************/
 void Transform::Inspect() {
 	if (ImGui::CollapsingHeader("Transform", ImGuiTreeNodeFlags_DefaultOpen)) {
-
-
-		ImGui::Text("Position");
-		ImGui::SameLine();
-		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
-			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
-		ImGui::DragFloat3("##Position", (float*)&mTranslate);
-
-		ImGui::Separator();
-
-
-		ImGui::Text("Rotation");
-		ImGui::SameLine();
-		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
-			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
-		ImGui::DragFloat3("##Rotation", (float*)&mRotate, 1);
-
-
-		ImGui::Text("Scale");
-		ImGui::SameLine();
-		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
-			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
-		ImGui::DragFloat3("##Scale", (float*)&mScale, 1);
-
-		ImGui::Separator();
-
+		ReflectProperties(*this);
 	}
 
 }
@@ -1152,29 +1137,7 @@ void RigidBody::Inspect() {
 void BoxCollider::Inspect() {
 	bool delete_component{ true };
 	if (ImGui::CollapsingHeader("BoxCollider", &delete_component, ImGuiTreeNodeFlags_DefaultOpen)) {
-
-
-		ImGui::Text("Scale Offset");
-		ImGui::SameLine();
-		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
-			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
-		ImGui::DragFloat3("##ScaleBC", (float*)&mScaleOffset, 0.1f);
-
-		ImGui::Separator();
-		ImGui::Text("Translate Offset");
-		ImGui::SameLine();
-		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
-			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
-		ImGui::DragFloat3("##TranslateBC", (float*)&mTranslateOffset);
-		ImGui::Separator();
-
-
-		ImGui::Text("isTrigger");
-		ImGui::SameLine();
-		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
-			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
-		ImGui::Checkbox("##isTriggerBC", &mIsTrigger);
-
+		ReflectProperties(*this);
 	}
 	if (delete_component == false)
 		Entity(Hierarchy::selectedId).RemoveComponent<BoxCollider>();
@@ -1189,26 +1152,7 @@ void BoxCollider::Inspect() {
 void SphereCollider::Inspect() {
 	bool delete_component{ true };
 	if (ImGui::CollapsingHeader("SphereCollider", &delete_component, ImGuiTreeNodeFlags_DefaultOpen)) {
-		
-		ImGui::Text("Scale Offset");
-		ImGui::SameLine();
-		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
-			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
-		ImGui::DragFloat3("##ScaleSC", (float*)&mScaleOffset, 0.1f);
-
-		ImGui::Separator();
-		ImGui::Text("Translate Offset");
-		ImGui::SameLine();
-		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
-			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
-		ImGui::DragFloat3("##TranslateSC", (float*)&mTranslateOffset);
-		ImGui::Separator();
-
-		ImGui::Text("isTrigger");
-		ImGui::SameLine();
-		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
-			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
-		ImGui::Checkbox("##isTriggerSC", &mIsTrigger);
+		ReflectProperties(*this);
 	}
 	if (delete_component == false)
 		Entity(Hierarchy::selectedId).RemoveComponent<SphereCollider>();
@@ -1224,7 +1168,7 @@ void SphereCollider::Inspect() {
 void CapsuleCollider::Inspect() {
 	bool delete_component{ true };
 	if (ImGui::CollapsingHeader("CapsuleCollider", &delete_component, ImGuiTreeNodeFlags_DefaultOpen)) {
-		Resolve(*this);
+		ReflectProperties(*this);
 	}
 	if (delete_component == false)
 		Entity(Hierarchy::selectedId).RemoveComponent<CapsuleCollider>();
@@ -1493,7 +1437,7 @@ void VFX::Inspect() {
 	bool delete_component = true;
 	if (ImGui::CollapsingHeader("VFX", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
 	{
-		Resolve(*this);
+		ReflectProperties(*this);
 	}
 	if (delete_component == false)
 		Entity(Hierarchy::selectedId).RemoveComponent<VFX>();
@@ -1600,4 +1544,49 @@ void popup(std::string name, ref& data, bool& trigger) {
 	}
 	trigger = false;
 	
+}
+
+void Healthbar::Inspect()
+{
+	bool delete_component = true;
+
+	if (ImGui::CollapsingHeader("Healthbar", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
+	{
+		ImGui::Selectable("Healthbar   ");
+
+		ImGui::Text("Width");
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		ImGui::DragFloat("##Width", (float*)&mWidth);
+		ImGui::Separator();
+
+		ImGui::Text("Height");
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		ImGui::DragFloat("##Height", (float*)&mHeight);
+		ImGui::Separator();
+
+		ImGui::Text("Health");
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		ImGui::DragFloat("##Health", (float*)&mHealth);
+		ImGui::Separator();
+
+		ImGui::Text("Offset");
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		ImGui::DragFloat3("##Offset", (float*)&mPosition[0]);
+		ImGui::Separator();
+
+		ImGui::ColorPicker4("Health Color", (float*)&mHealthColor);
+
+		ImGui::ColorPicker4("Back Color", (float*)&mBackColor);
+	}
+
+	if (delete_component == false)
+		Entity(Hierarchy::selectedId).RemoveComponent<Crosshair>();
 }

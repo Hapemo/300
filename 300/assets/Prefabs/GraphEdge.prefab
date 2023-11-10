@@ -1,0 +1,56 @@
+{
+    "entityid": 1048585,
+    "general": {
+        "name": "GraphEdge",
+        "tagid": 7,
+        "subtag": 0,
+        "isActive": true,
+        "isPaused": false
+    },
+    "transform": {
+        "scale": {
+            "x": 2.0,
+            "y": 2.0,
+            "z": 40.0
+        },
+        "rotate": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "translate": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        }
+    },
+    "meshrenderer": {
+        "vert": "../assets/shader_files/pointLight_vert.glsl",
+        "frag": "../assets/shader_files/pointLight_frag.glsl",
+        "meshrefid": 3314,
+        "instancecolor": {
+            "x": 0.46305418014526367,
+            "y": 0.912713348865509,
+            "z": 1.0,
+            "w": 1.0
+        },
+        "materialinstance": [
+            "../assets/Compressed/Cube_Texture_White.ctexture",
+            " ",
+            " ",
+            " ",
+            " "
+        ],
+        "mesh": "../assets/compiled_geom/Cylinder_Arrow.geom",
+        "texturerefid": [
+            4706,
+            0,
+            0,
+            0,
+            0
+        ]
+    },
+    "prefab": {
+        "prefab": "GraphEdge"
+    }
+}

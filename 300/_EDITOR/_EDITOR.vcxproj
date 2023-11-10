@@ -197,8 +197,8 @@ copy "$(ProjectDir)fa-solid-900.ttf" "$(TargetDir)fa-solid-900.ttf" /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="source\Reflection\Reflection.cpp" />
     <ClCompile Include="source\EditorApplication.cpp" />
+    <ClCompile Include="source\EditorReflection\EditorReflection.cpp" />
     <ClCompile Include="source\Editor\ContentBrower.cpp" />
     <ClCompile Include="source\Editor\Editor.cpp" />
     <ClCompile Include="source\Editor\EditorLogger.cpp" />
@@ -208,6 +208,7 @@ copy "$(ProjectDir)fa-solid-900.ttf" "$(TargetDir)fa-solid-900.ttf" /Y</Command>
     <ClCompile Include="source\Editor\KeybindWindow.cpp" />
     <ClCompile Include="source\Editor\MenuPanel.cpp" />
     <ClCompile Include="source\Editor\MenuTab.cpp" />
+    <ClCompile Include="source\Editor\PathfinderWindow.cpp" />
     <ClCompile Include="source\Editor\Performance.cpp" />
     <ClCompile Include="source\Editor\PrefabWindow.cpp" />
     <ClCompile Include="source\Editor\SceneWindow.cpp" />
@@ -227,6 +228,7 @@ copy "$(ProjectDir)fa-solid-900.ttf" "$(TargetDir)fa-solid-900.ttf" /Y</Command>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\EditorApplication.h" />
+    <ClInclude Include="include\EditorReflection\EditorReflection.h" />
     <ClInclude Include="include\Editor\ContentBrower.h" />
     <ClInclude Include="include\Editor\Editor.h" />
     <ClInclude Include="include\Editor\EditorWindow.h" />
@@ -237,13 +239,13 @@ copy "$(ProjectDir)fa-solid-900.ttf" "$(TargetDir)fa-solid-900.ttf" /Y</Command>
     <ClInclude Include="include\Editor\KeybindWindow.h" />
     <ClInclude Include="include\Editor\MenuPanel.h" />
     <ClInclude Include="include\Editor\MenuTab.h" />
+    <ClInclude Include="include\Editor\PathfinderWindow.h" />
     <ClInclude Include="include\Editor\Performance.h" />
     <ClInclude Include="include\Editor\PrefabWindow.h" />
     <ClInclude Include="include\Editor\SceneWindow.h" />
     <ClInclude Include="include\Editor\Script\Script.h" />
     <ClInclude Include="include\Editor\ShaderCompiler.h" />
     <ClInclude Include="include\Editor\TabWindow.h" />
-    <ClInclude Include="include\Reflection\Reflection.h" />
     <ClInclude Include="source\Imgui\imconfig.h" />
     <ClInclude Include="source\Imgui\imgui.h" />
     <ClInclude Include="source\Imgui\ImGuizmo.h" />

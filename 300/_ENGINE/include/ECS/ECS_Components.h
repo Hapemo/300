@@ -61,8 +61,8 @@ struct General : public Serializable
 	//int tagid{ 0 };
 	SUBTAG subtag;
 	bool isActive{};
-	bool isDelete{};
 	bool isPaused{};
+	bool isDelete{};
 
 	General() 
 	: name(""), subtag(SUBTAG::ACTIVE), isActive(true), isDelete(false)
@@ -638,9 +638,13 @@ struct Crosshair : public Serializable
 struct Healthbar : public Serializable
 {
 	glm::vec4 mHealthColor	{ 0.f, 1.f, 0.f, 1.f };
-	glm::vec4 mBackColor		{ 1.f, 0.f, 0.f, 1.f };
-	float health		{ 100.f };
+	glm::vec4 mBackColor	{ 1.f, 0.f, 0.f, 1.f };
+	glm::vec3 mPosition		{ 0.f, 0.f, 0.f };
+	float mWidth			{ 5.f };
+	float mHeight			{ 2.f };
+	float mHealth			{ 100.f };
 
+	void Inspect();
 	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
 	void DeserializeSelf(rapidjson::Value& reader);
 };

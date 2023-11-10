@@ -258,6 +258,26 @@ void GFX::PingPongFBO::GaussianBlur(GFX::Shader& blurShader, GFX::FBO& hostFrame
 }
 
 
+void GFX::PingPongFBO::GaussianBlurShader(GFX::Shader& blurShader, GFX::FBO& sourceFramebuffer, float SamplingWeight)
+{
+	blurShader.Activate();
+	m_Quad.Bind();
+
+	glUniform1f(blurShader.GetUniformLocation("SamplingWeight"), SamplingWeight * 10.f);
+
+	glDrawBuffer(GL_COLOR_ATTACHMENT0);
+
+	glBindTexture(GL_TEXTURE_2D, sourceFramebuffer.GetBrightColorsAttachment());
+
+	glDrawArrays(GL_TRIANGLES, 0, 6);
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	m_Quad.Unbind();
+	blurShader.Deactivate();
+}
+
+
+
 void GFX::PingPongFBO::PrepForDraw()
 {
 	// bind framebuffer as buffer to render to

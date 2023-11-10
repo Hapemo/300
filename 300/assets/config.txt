@@ -1,4 +1,5 @@
 ScenePath: ../assets/Scenes/
 GameStatePath: ../assets/GameStates/
+GraphDataPath: ../assets/GraphData/
 StartingGameState: MainMenu
 KeybindPath: ../assets/

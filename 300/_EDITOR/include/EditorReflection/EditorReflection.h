@@ -1,23 +1,15 @@
 #pragma once
-#include "meta_all.hpp"
+#include "Reflection/Reflection.h"
 #include "imgui.h"
 #include "imgui_stdlib.h"
-#include "glm/glm.hpp"
-
-namespace meta = meta_hpp;
-
-void RegisterVec3();
-void RegisterAllComponents();
-void RegisterCapsuleCollider();
-void RegisterVFX();
 
 template <typename T>
-void Resolve(T& _type);
+void ReflectProperties(T& _type);
 void SetCursor();
 
 
 template <typename T>
-void Resolve(T& instance)
+void ReflectProperties(T& instance)
 {
 	meta::class_type class_type = meta::resolve_type(instance);
 	for (auto member : class_type.get_members())

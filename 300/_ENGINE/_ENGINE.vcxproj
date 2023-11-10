@@ -71,11 +71,11 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(SolutionDir)lib\ASSIMP\include;$(SolutionDir)lib\ASSIMP\include\assimp;$(SolutionDir)_GEOM_COMPILER/include;$(SolutionDir)lib\ASSIMP\BINARIES\Win32\include;$(SolutionDir)_RESOURCE/include;$(SolutionDir)_EDITOR/include;$(SolutionDir)_APPLICATION/include;$(SolutionDir)_ENGINE/include;$(SolutionDir)_GRAPHICS/include;$(SolutionDir)_SCRIPTING/include;$(SolutionDir)_TOOLS/include;$(IncludePath)$(SolutionDir)\lib\lua-5.3.6\include;$(SolutionDir)\lib\SOL;$(SolutionDir)lib/ENTT;$(SolutionDir)lib/GLM;$(SolutionDir)lib/RAPID-JSON;$(SolutionDir)lib\LUA\include;$(SolutionDir)lib/GLEW/include/GL;$(SolutionDir)lib/GLFW/include/GLFW;$(SolutionDir)lib\FMOD\core/inc;$(SolutionDir)lib\FMOD/studio\inc;$(SolutionDir)lib/PHYSX/include;$(SolutionDir)lib/STB</IncludePath>
+    <IncludePath>$(SolutionDir)lib\ASSIMP\include;$(SolutionDir)lib\ASSIMP\include\assimp;$(SolutionDir)_GEOM_COMPILER/include;$(SolutionDir)lib\ASSIMP\BINARIES\Win32\include;$(SolutionDir)lib/meta;$(SolutionDir)_RESOURCE/include;$(SolutionDir)_EDITOR/include;$(SolutionDir)_APPLICATION/include;$(SolutionDir)_ENGINE/include;$(SolutionDir)_GRAPHICS/include;$(SolutionDir)_SCRIPTING/include;$(SolutionDir)_TOOLS/include;$(IncludePath)$(SolutionDir)\lib\lua-5.3.6\include;$(SolutionDir)\lib\SOL;$(SolutionDir)lib/ENTT;$(SolutionDir)lib/GLM;$(SolutionDir)lib/RAPID-JSON;$(SolutionDir)lib\LUA\include;$(SolutionDir)lib/GLEW/include/GL;$(SolutionDir)lib/GLFW/include/GLFW;$(SolutionDir)lib\FMOD\core/inc;$(SolutionDir)lib\FMOD/studio\inc;$(SolutionDir)lib/PHYSX/include;$(SolutionDir)lib/STB</IncludePath>
     <LibraryPath>$(SolutionDir)\lib\lua-5.3.6\lib;$(SolutionDir)/lib/PHYSX/lib/debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(SolutionDir)lib\ASSIMP\include;$(SolutionDir)lib\ASSIMP\include\assimp;$(SolutionDir)_GEOM_COMPILER/include;$(SolutionDir)lib\ASSIMP\BINARIES\Win32\include;$(SolutionDir)_RESOURCE/include;$(SolutionDir)_APPLICATION/include;$(SolutionDir)_ENGINE/include;$(SolutionDir)_GRAPHICS/include;$(SolutionDir)_SCRIPTING/include;$(SolutionDir)_TOOLS/include;$(IncludePath)$(SolutionDir)\lib\lua-5.3.6\include;$(SolutionDir)\lib\SOL;$(SolutionDir)lib/ENTT;$(SolutionDir)lib/GLM;$(SolutionDir)lib/RAPID-JSON;$(SolutionDir)lib\LUA\include;$(SolutionDir)lib/GLEW/include/GL;$(SolutionDir)lib/GLFW/include/GLFW;$(SolutionDir)lib\FMOD\core/inc;$(SolutionDir)lib\FMOD/studio\inc;$(SolutionDir)lib/PHYSX/include;$(SolutionDir)lib/STB</IncludePath>
+    <IncludePath>$(SolutionDir)lib\ASSIMP\include;$(SolutionDir)lib\ASSIMP\include\assimp;$(SolutionDir)_GEOM_COMPILER/include;$(SolutionDir)lib\ASSIMP\BINARIES\Win32\include;$(SolutionDir)lib/meta;$(SolutionDir)_RESOURCE/include;$(SolutionDir)_APPLICATION/include;$(SolutionDir)_ENGINE/include;$(SolutionDir)_GRAPHICS/include;$(SolutionDir)_SCRIPTING/include;$(SolutionDir)_TOOLS/include;$(IncludePath)$(SolutionDir)\lib\lua-5.3.6\include;$(SolutionDir)\lib\SOL;$(SolutionDir)lib/ENTT;$(SolutionDir)lib/GLM;$(SolutionDir)lib/RAPID-JSON;$(SolutionDir)lib\LUA\include;$(SolutionDir)lib/GLEW/include/GL;$(SolutionDir)lib/GLFW/include/GLFW;$(SolutionDir)lib\FMOD\core/inc;$(SolutionDir)lib\FMOD/studio\inc;$(SolutionDir)lib/PHYSX/include;$(SolutionDir)lib/STB</IncludePath>
     <LibraryPath>$(SolutionDir)\lib\lua-5.3.6\lib;$(SolutionDir)lib/PHYSX/lib/release;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -149,6 +149,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="include\AI\AIManager.h" />
+    <ClInclude Include="include\AI\PathfinderManager.h" />
     <ClInclude Include="include\Audio\Audio3DTest.h" />
     <ClInclude Include="include\Audio\AudioSource.h" />
     <ClInclude Include="include\Audio\AudioSystem.h" />
@@ -184,6 +185,7 @@
     <ClInclude Include="include\Physics\PhysX.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="source\AI\PathfinderManager.cpp" />
     <ClCompile Include="source\Button\ButtonSystem.cpp" />
     <ClCompile Include="source\Physics\ContactCallback.cpp" />
     <ClCompile Include="source\Physics\PhysXUtils.cpp" />
@@ -199,7 +201,9 @@
     <ClCompile Include="source\Input\Input.cpp" />
     <ClCompile Include="source\Input\InputMapSystem.cpp" />
     <ClCompile Include="source\Physics\Accumulator.cpp" />
+    <ClCompile Include="source\Reflection\Reflection.cpp" />
     <ClCompile Include="source\Serialization\SerializeSelf.cpp" />
+    <ClInclude Include="include\Reflection\Reflection.h" />
     <ClInclude Include="include\Serialization\Serializable.h" />
     <ClInclude Include="include\Physics\PhysXUtils.h" />
     <ClInclude Include="include\Serialization\Serialization.h" />
