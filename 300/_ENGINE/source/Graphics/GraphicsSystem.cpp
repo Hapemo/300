@@ -10,11 +10,11 @@
 ****************************************************************************
 ***/
 #define  _ENABLE_ANIMATIONS					true
+#define  ENABLE_MULTISAMPLE					false	
 #define  _TEST_HEALTHBAR_SHADER				false
 #define  ENABLE_UI_IN_EDITOR_SCENE			true
 #define  ENABLE_CROSSHAIR_IN_EDITOR_SCENE	false
 #define  TEST_COMPUTE_SHADER				false	
-#define  TEST_MULTISAMPLE					true	
 
 #include <ECS/ECS_Components.h>
 #include <Graphics/GraphicsSystem.h>
@@ -375,7 +375,7 @@ void GraphicsSystem::EditorDraw(float dt)
 	auto meshRendererInstances = systemManager->ecs->GetEntitiesWith<MeshRenderer>();
 
 	// Prepare and bind the Framebuffer to be rendered on
-#if TEST_MULTISAMPLE
+#if ENABLE_MULTISAMPLE
 	m_MultisampleFBO.PrepForDraw();
 #else
 	m_Fbo.PrepForDraw();
@@ -460,7 +460,7 @@ void GraphicsSystem::EditorDraw(float dt)
 	}
 
 	m_Renderer.RenderAll(m_EditorCamera.viewProj());
-#if TEST_MULTISAMPLE
+#if ENABLE_MULTISAMPLE
 	m_Fbo.Clear();
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	// Copy pixel data from multisample FBO to editor FBO
@@ -545,8 +545,12 @@ void GraphicsSystem::GameDraw(float dt)
 	Entity camera = localcamera.front();
 	mat4 gameCamVP = camera.GetComponent<Camera>().mCamera.viewProj();
 
+#if ENABLE_MULTISAMPLE
+	m_MultisampleFBO.PrepForDraw();
+#else
 	// Prepare and bind the Framebuffer to be rendered on
 	m_GameFbo.PrepForDraw();
+#endif
 
 	// Render all instances of a given mesh
 	for (Entity inst : meshRendererInstances)
@@ -594,11 +598,7 @@ void GraphicsSystem::GameDraw(float dt)
 				glUniform3fv(threshold, 1, glm::value_ptr(mAmbientBloomThreshold));
 			}
 		}
-#if TEST_MULTISAMPLE
-		glUniformMatrix4fv(shaderinst.GetUniformVP(), 1, GL_FALSE, &m_EditorCamera.viewProj()[0][0]);
-#else
 		glUniformMatrix4fv(shaderinst.GetUniformVP(), 1, GL_FALSE, &gameCamVP[0][0]);
-#endif
 
 		// Retrieve Point Light object
 		auto lightEntity = systemManager->ecs->GetEntitiesWith<PointLight>();
@@ -640,6 +640,13 @@ void GraphicsSystem::GameDraw(float dt)
 		meshinst.ClearInstances();
 		m_Renderer.ClearInstances();
 	}
+
+#if ENABLE_MULTISAMPLE
+	m_GameFbo.Clear();
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	// Copy pixel data from multisample FBO to editor FBO
+	m_MultisampleFBO.BlitFramebuffer(m_GameFbo.GetID());
+#endif
 
 	if (systemManager->mGraphicsSystem->m_EnableBloom)
 	{
