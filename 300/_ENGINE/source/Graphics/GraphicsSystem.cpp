@@ -15,6 +15,7 @@
 #define  ENABLE_UI_IN_EDITOR_SCENE			true
 #define  ENABLE_CROSSHAIR_IN_EDITOR_SCENE	false
 #define  TEST_COMPUTE_SHADER				false	
+#define  TEST_DEFERRED_LIGHT				false	
 
 #include <ECS/ECS_Components.h>
 #include <Graphics/GraphicsSystem.h>
@@ -55,8 +56,6 @@ void GraphicsSystem::Init()
 			m_Textures.emplace_back(i);
 		}
 
-		SetupAllShaders();
-
 		// Get Window Handle
 		m_Window = systemManager->GetWindow();
 		m_Width = m_Window->size().x;
@@ -71,6 +70,8 @@ void GraphicsSystem::Init()
 		m_MultisampleFBO.Create(m_Width, m_Height);
 		m_IntermediateFBO.Create(m_Width, m_Height);
 		m_PingPongFbo.Create(m_Width, m_Height);
+
+		SetupAllShaders();
 
 		if (m_DebugDrawing) {
 			m_GlobalTint.a = 0.3f;
@@ -90,7 +91,7 @@ void GraphicsSystem::Init()
 	
 
 	// Set Cameras' starting position
-	SetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR, {0, 10, 20});									// Position of camera
+	SetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR, {38, 20, 30});									// Position of camera
 	SetCameraTarget(CAMERA_TYPE::CAMERA_TYPE_EDITOR, {0, 0, 0});									// Target of camera
 	SetCameraProjection(CAMERA_TYPE::CAMERA_TYPE_ALL, 60.f, m_Window->size(), 0.1f, 900.f);			// Projection of camera
 
@@ -353,10 +354,17 @@ void GraphicsSystem::EditorDraw(float dt)
 	// Prepare and bind the Framebuffer to be rendered on
 #if ENABLE_MULTISAMPLE
 	m_MultisampleFBO.PrepForDraw();
+#if TEST_DEFERRED_LIGHT
+	glDisable(GL_BLEND);
+#endif
 #else
 	m_Fbo.PrepForDraw();
 #endif
 
+#if TEST_DEFERRED_LIGHT
+	m_GBufferShaderInst.Activate();
+	glUniformMatrix4fv(m_GBufferShaderInst.GetUniformVP(), 1, GL_FALSE, &m_EditorCamera.viewProj()[0][0]);
+#endif
 
 #pragma region render all the mesh instances onto the editor camera framebuffer
 	// Render all instances of a given mesh
@@ -378,7 +386,7 @@ void GraphicsSystem::EditorDraw(float dt)
 
 		// render the mesh and its instances here
 		GFX::Mesh &meshinst = *reinterpret_cast<GFX::Mesh *>(meshrefptr.mMeshRef.data);
-		
+#if !TEST_DEFERRED_LIGHT
 		std::string shader{};
 
 		if (meshinst.mHasAnimation)
@@ -392,11 +400,11 @@ void GraphicsSystem::EditorDraw(float dt)
 
 		shaderinst.Activate();
 		glUniformMatrix4fv(shaderinst.GetUniformVP(), 1, GL_FALSE, &m_EditorCamera.viewProj()[0][0]);
-
+#endif
 		// Retrieve Point Light object
 		auto lightEntity = systemManager->ecs->GetEntitiesWith<PointLight>();
 		m_HasLight = !lightEntity.empty();
-
+#if !TEST_DEFERRED_LIGHT
 		GLuint mHasLightFlagLocation = shaderinst.GetUniformLocation("uHasLight");
 		glUniform1i(mHasLightFlagLocation, m_HasLight);
 
@@ -427,23 +435,33 @@ void GraphicsSystem::EditorDraw(float dt)
 
 		GLuint debug_draw = glGetUniformLocation(shaderID, "globalTint");
 		glUniform4fv(debug_draw, 1, glm::value_ptr(m_GlobalTint));
+#endif
 
 		 //Bind mesh's VAO, copy render data into VBO, Draw
 		DrawAll(meshinst);
 
-		shaderinst.Deactivate();
+		//shaderinst.Deactivate();
 		meshinst.UnbindVao();
 	}
-
 	m_Renderer.RenderAll(m_EditorCamera.viewProj());
+#if TEST_DEFERRED_LIGHT
+	m_GBufferShaderInst.Deactivate();
+#endif
+
 #if ENABLE_MULTISAMPLE
 	m_IntermediateFBO.Clear();
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	// Copy pixel data from multisample FBO to editor FBO
+	// Copy pixel data from multisample FBO to intermediate FBO
 	m_MultisampleFBO.BlitFramebuffer(m_IntermediateFBO.GetID());
 	m_Fbo.Clear();
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	// Copy pixel data from intermediate FBO to editor FBO
 	m_IntermediateFBO.BlitFramebuffer(m_Fbo.GetID());
+#if TEST_DEFERRED_LIGHT
+	DrawDeferredLight(m_EditorCamera.position(), m_Fbo);
+	glEnable(GL_BLEND);
+#endif
+
 #endif
 
 	if (systemManager->mGraphicsSystem->m_EnableBloom)
@@ -1484,35 +1502,6 @@ void GraphicsSystem::SetupCrosshairShaderLocations()
 	m_CrosshairColorLocation = m_CrosshairShaderInst.GetUniformLocation("uColor");
 }
 
-void GraphicsSystem::DrawDeferredLight(const GFX::Camera& camera)
-{
-	// Bind VAO and activate shader
-	m_Image2DMesh.BindVao();
-	m_DeferredLightShaderInst.Activate();
-	
-	// Set Shader uniforms
-	vec3 camPos = camera.mPosition;
-	glUniform3fv(m_DeferredCamPosLocation, 1, &camPos[0]);
-	glUniform1i(m_DeferredLightCountLocation, m_LightCount);
-
-	// Bind G-buffers as textures
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, m_MultisampleFBO.GetFragPosAttachment());
-	glActiveTexture(GL_TEXTURE1);
-	glBindTexture(GL_TEXTURE_2D, m_MultisampleFBO.GetNormalAttachment());
-	glActiveTexture(GL_TEXTURE2);
-	glBindTexture(GL_TEXTURE_2D, m_MultisampleFBO.GetAlbedoSpecAttachment());
-	glActiveTexture(GL_TEXTURE3);
-	glBindTexture(GL_TEXTURE_2D, m_MultisampleFBO.GetEmissionAttachment());
-	
-	// Draw
-	glDrawArraysInstanced(GL_TRIANGLE_FAN, 0, 4, 1);
-	
-	// Unbind VAO and Deactivate shader
-	m_DeferredLightShaderInst.Deactivate();
-	m_Image2DMesh.UnbindVao();
-}
-
 void GraphicsSystem::DrawCrosshair()
 {
 	// Get entity with crosshair component
@@ -1538,6 +1527,27 @@ void GraphicsSystem::DrawCrosshair()
 	// Stop using crosshair shader program and VAO
 	m_CrosshairShaderInst.Deactivate();
 	m_Image2DMesh.UnbindVao();
+}
+
+void GraphicsSystem::DrawDeferredLight(const vec3& camPos, GFX::FBO& destFbo)
+{
+	destFbo.Bind();
+	// Bind VAO and activate shader
+	m_Image2DMesh.BindVao();
+	m_DeferredLightShaderInst.Activate();
+	
+	// Set Shader uniforms
+	glUniform3fv(m_DeferredCamPosLocation, 1, &camPos[0]);
+	glUniform1i(m_DeferredLightCountLocation, m_LightCount);
+
+	// Draw
+	glDrawBuffer(GL_COLOR_ATTACHMENT0);
+	glDrawArraysInstanced(GL_TRIANGLE_FAN, 0, 4, 1);
+	
+	// Unbind VAO and Deactivate shader
+	m_DeferredLightShaderInst.Deactivate();
+	m_Image2DMesh.UnbindVao();
+	destFbo.Unbind();
 }
 
 void GraphicsSystem::SetupAllShaders()
@@ -1573,8 +1583,27 @@ void GraphicsSystem::SetupAllShaders()
 	std::string deferredLightShader = "deferredLightShader";
 	uid deferredLightShaderstr(deferredLightShader);
 	m_DeferredLightShaderInst = *systemManager->mResourceTySystem->get_Shader(deferredLightShaderstr.id);
+	m_DeferredLightShaderInst.Activate();
 	m_DeferredCamPosLocation = m_DeferredLightShaderInst.GetUniformLocation("uCamPos");
 	m_DeferredLightCountLocation = m_DeferredLightShaderInst.GetUniformLocation("uLightCount");
+
+	// Bind Textures
+	GLuint64 handle = glGetTextureHandleARB(m_IntermediateFBO.GetFragPosAttachment());
+	glMakeTextureHandleResidentARB(handle);
+	glUniform1ui64ARB(m_DeferredLightShaderInst.GetUniformLocation("gPosition"), handle);
+
+	handle = glGetTextureHandleARB(m_IntermediateFBO.GetNormalAttachment());
+	glMakeTextureHandleResidentARB(handle);
+	glUniform1ui64ARB(m_DeferredLightShaderInst.GetUniformLocation("gNormal"), handle);
+
+	handle = glGetTextureHandleARB(m_IntermediateFBO.GetAlbedoSpecAttachment());
+	glMakeTextureHandleResidentARB(handle);
+	glUniform1ui64ARB(m_DeferredLightShaderInst.GetUniformLocation("gAlbedoSpec"), handle);
+
+	handle = glGetTextureHandleARB(m_IntermediateFBO.GetEmissionAttachment());
+	glMakeTextureHandleResidentARB(handle);
+	glUniform1ui64ARB(m_DeferredLightShaderInst.GetUniformLocation("gEmission"), handle);
+	m_DeferredLightShaderInst.Deactivate();
 
 	// Initialize the G-buffer shader and uniform location
 	std::string gBufferShader = "gBufferShader";

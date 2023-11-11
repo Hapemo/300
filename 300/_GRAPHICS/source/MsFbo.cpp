@@ -70,14 +70,15 @@ void GFX::MsFBO::PrepForDraw()
 	glBindFramebuffer(GL_FRAMEBUFFER, mID);
 
 	// Set all attachments for output
-	GLuint allAttachments[6] = { 
+	GLuint allAttachments[7] = { 
 		GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2, 
-		GL_COLOR_ATTACHMENT3, GL_COLOR_ATTACHMENT4, GL_COLOR_ATTACHMENT5 
+		GL_COLOR_ATTACHMENT3, GL_COLOR_ATTACHMENT4, GL_COLOR_ATTACHMENT5,
+		GL_COLOR_ATTACHMENT6
 	};
-	glDrawBuffers(6, allAttachments);
+	glDrawBuffers(7, allAttachments);
 
 	// Clear Default color attachment
-	glClearColor(0.f, 0.f, 0.f, 0.f);
+	glClearColor(0.f, 0.f, 0.f, 1.f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glEnable(GL_DEPTH_TEST);
@@ -91,7 +92,7 @@ void GFX::MsFBO::BlitFramebuffer(unsigned int destFBO)
 	glBindFramebuffer(GL_READ_FRAMEBUFFER, mID);
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, destFBO);
 
-	for (int i{}; i < 3; ++i)
+	for (int i{}; i < 7; ++i)
 	{
 		glReadBuffer(GL_COLOR_ATTACHMENT0 + i);
 		glDrawBuffer(GL_COLOR_ATTACHMENT0 + i);
@@ -244,6 +245,9 @@ void GFX::IntermediateFBO::BlitFramebuffer(unsigned int destFBO)
 
 	glReadBuffer(GL_NONE);
 	glDrawBuffer(GL_NONE);
+
+	glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
+	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
 }
 
 void GFX::IntermediateFBO::Resize(int width, int height)

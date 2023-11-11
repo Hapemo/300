@@ -309,7 +309,7 @@ private:
 	GFX::SSBO						m_FinalBoneMatrixSsbo;
 	std::vector<mat4>				finalBoneMatrices;
 
-	const int						MAX_POINT_LIGHT = 5;
+	const int						MAX_POINT_LIGHT = 100;
 	GFX::SSBO						m_PointLightSsbo;
 	std::vector<PointLightSSBO>		pointLights;
 
@@ -344,7 +344,7 @@ private:
 	void DrawCrosshair();
 
 	// -- Deferred Lighting WIP --
-	void DrawDeferredLight(const GFX::Camera& camera);
+	void DrawDeferredLight(const vec3& camPos, GFX::FBO& destFbo);
 	GLint m_DeferredCamPosLocation{};
 	GLint m_DeferredLightCountLocation{};
 

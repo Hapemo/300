@@ -24,7 +24,7 @@ mat3 ComputeTBN()
 
 	vec3 T = normalize(vec3(inLTW * vec4(inTangent, 0.0)));
 	vec3 N = normalize(vec3(inLTW * vec4(inNormal, 0.0)));
-	vec3 B = normalize(cross(T, N));
+	vec3 B = normalize(cross(N, T));
 
 	return mat3(T, B, N);
 }

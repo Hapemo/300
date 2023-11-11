@@ -33,9 +33,9 @@ layout (std430, binding = 1) buffer materialBuffers
 
 vec3 n          = vec3(0.0);
 vec3 diffuse    = vec3(0.0);
-vec3 emission   = vec3(0.0);
-float roughness = 0.f;
-float specular  = 0.f;
+vec4 emission   = vec4(0.0);
+float roughness = 1.f;
+float specular  = 0.0f;
 
 void main()
 {
@@ -44,7 +44,10 @@ void main()
 
     // Get Normal and Roughness
     if(materials[ID].normalMap != 0)
+    {
         n = texture(sampler2D(materials[ID].normalMap), TexCoords).rgb;
+        n = normalize(n * 2.0 - 1.0);   // Maps normal
+    }
     if(materials[ID].shininessMap != 0)
         roughness = texture(sampler2D(materials[ID].shininessMap), TexCoords).r;
 
@@ -56,13 +59,13 @@ void main()
 
     // Get Emission
     if (materials[ID].emissionMap != 0)
-        emission = texture(sampler2D(materials[ID].emissionMap), TexCoords).rgb;
+        emission = texture(sampler2D(materials[ID].emissionMap), TexCoords);
 
     // Write G-Buffer output
 	gFragPos    = vec4(fragPos, 1.0);
     gNormal     = vec4(TBN * n, roughness);
     gAlbedoSpec = vec4(diffuse, specular);
-    gEmission   = vec4(emission, 1.0);
+    gEmission   = emission;
 
     // Write Entity ID
     outEntityID = uint(Tex_Ent_ID.y);
