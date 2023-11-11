@@ -658,6 +658,7 @@ void GraphicsSystem::GameDraw(float dt)
 
 void GraphicsSystem::ChromaticAbbrebationBlendFramebuffers(GFX::FBO& targetFramebuffer, unsigned int Attachment1)
 {
+	//glBlendFunc(GL_ONE, GL_ZERO);
 	glBlendFunc(GL_ONE_MINUS_DST_COLOR, GL_ONE);
 
 	uid shaderstr("ChromaticAbberation");

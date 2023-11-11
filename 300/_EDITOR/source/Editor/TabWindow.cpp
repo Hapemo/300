@@ -16,6 +16,7 @@
 #include "ECS/ECS_Systems.h"
 
 #include <Graphics/Camera_Input.h>
+#include <Hierarchy.h>
  /***************************************************************************/
  /*!
  \brief
@@ -24,6 +25,14 @@
  /***************************************************************************/
 void TabWindow::init() {
 }
+
+
+std::string getMeshName(const std::string& input)
+{
+	return input.substr(input.find_last_of("/") + 1);
+}
+
+
 /***************************************************************************/
 /*!
 \brief
@@ -69,18 +78,68 @@ void TabWindow::update()
 	ImGui::TextColored({ 0.f,0.5f, 1.f, 1.f }, "Global Bloom Variables");
 	ImGui::DragFloat3("Global Bloom Threshold", (float*)&systemManager->mGraphicsSystem->mAmbientBloomThreshold, 0.01f, 0.f, 1.f);
 	ImGui::DragFloat("Global Exposure", &systemManager->mGraphicsSystem->mAmbientBloomExposure, 0.01f, 0.f, 5.f, "%0.2f");
-	//ImGui::DragFloat("Texel Offset", &systemManager->mGraphicsSystem->mTexelOffset, 0.01f, 0.f, 5.f, "%0.2f");
-	ImGui::DragFloat("Sampling Weight", &systemManager->mGraphicsSystem->mSamplingWeight, 0.001f, 0.f, 5.f, "%0.4f");
-
-	//ImGui::InputInt("Gaussian Blur Amount", (int*)&systemManager->mGraphicsSystem->m_PingPongFbo.mblurAmount);
-	//if(systemManager->mGraphicsSystem->m_PingPongFbo.mblurAmount < 1)
-	//	systemManager->mGraphicsSystem->m_PingPongFbo.mblurAmount = 1;
+	ImGui::DragFloat("Sampling Weight", &systemManager->mGraphicsSystem->mSamplingWeight, 0.001f, 0.f, 7.f, "%0.4f");
 
 	ImGui::DragFloat("Chromatic Offset", &systemManager->mGraphicsSystem->mChromaticOffset, 0.001f, 0.0f, 1.f);
 	ImGui::DragFloat("Chromatic Strength", &systemManager->mGraphicsSystem->mChromaticStrength, 0.01f, 0.0f, 1.f);
 
 	ImGui::Checkbox("Enable Bloom", &systemManager->mGraphicsSystem->m_EnableBloom); 
 	ImGui::Checkbox("Enable Chromatic Abberation", &systemManager->mGraphicsSystem->m_EnableChromaticAbberation);
+
+	auto meshRendererInstances = systemManager->ecs->GetEntitiesWith<MeshRenderer>();
+	// this is to only show active meshrenderer entities
+	for (Entity inst : meshRendererInstances)
+	{
+		// populate the map with the mesh name
+		auto& meshinst = inst.GetComponent<MeshRenderer>();
+		mBloomEntityMap[meshinst.mMeshPath] = getMeshName(meshinst.mMeshPath);
+	}
+
+	if (ImGui::BeginCombo("##EntityBloomThresholds", mBloomEntityStr.c_str())) 
+	{
+		for (const auto& mapinst : mBloomEntityMap)
+		{
+			// Combo selector
+			if (ImGui::Selectable(mapinst.second.c_str())) {
+				mBloomEntityStr = mapinst.second;
+			}
+		}
+		ImGui::EndCombo();
+	}
+
+	if (mBloomEntityStr.length())
+	{
+		Entity selectedMeshEntity;
+
+		// select a mesh renderer entity
+		for (Entity inst : meshRendererInstances)
+		{
+			if (getMeshName(inst.GetComponent<MeshRenderer>().mMeshPath) == mBloomEntityStr)
+			{
+				selectedMeshEntity = inst;
+				break;
+			}
+		}
+
+		// get the bloom threshold for the selected mesh
+		ImGui::Text("Entity's Bloom Threshold");
+		ImGui::DragFloat4("##EntityBloomThres", (float*)&selectedMeshEntity.GetComponent<MeshRenderer>().mBloomThreshold, 0.01f, 0.f, 1.f, "%0.2f");
+		
+		if (ImGui::Button("Set Bloom Threshold"))
+		{
+			// set the bloom threshold for all the entities with the same mesh
+			for (Entity inst : meshRendererInstances)
+			{
+				if (getMeshName(inst.GetComponent<MeshRenderer>().mMeshPath) == mBloomEntityStr)
+				{
+					inst.GetComponent<MeshRenderer>().mBloomThreshold = selectedMeshEntity.GetComponent<MeshRenderer>().mBloomThreshold;
+				}
+			}
+		}
+	}
+
+
+	ImGui::Separator();
 
 	ImGui::DragFloat("Health Bar", (float*)&systemManager->mGraphicsSystem->m_Health);
 

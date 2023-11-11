@@ -266,10 +266,10 @@ public:
 	vec4	m_GlobalTint = {1.f, 1.f, 1.f, 1.f};
 
 	// -- Bloom -- 
-	vec3		mAmbientBloomThreshold { 0.05, 0.05, 0.005 };		
+	vec3		mAmbientBloomThreshold { 0.05, 0.05, 0.005 };	// Global bloom threshold	
 	float		mAmbientBloomExposure{ 0.4f };						
-	float		mTexelOffset{ 1.f };								
-	float		mSamplingWeight{ 1.f };								
+	float		mTexelOffset{ 1.f };							// Gaussian blur Ver1						
+	float		mSamplingWeight{ 1.f };							// Gaussian blur Ver1/2
 
 	// -- Chromatic Abbreation --
 	float		mChromaticOffset{ 0.006f };

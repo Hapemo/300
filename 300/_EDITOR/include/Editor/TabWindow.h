@@ -16,6 +16,8 @@
 #include "ECS/ECS.h"
 #include "ECS/ECS_Systems.h"
 
+#include <unordered_map>
+
 class TabWindow : public EditorWindow
 {
 public:
@@ -30,4 +32,6 @@ public:
 *******************************************************************************/
 	void update();
 
+	std::string										mBloomEntityStr{};
+	std::unordered_map<std::string, std::string>	mBloomEntityMap{};
 };
