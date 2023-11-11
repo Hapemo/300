@@ -10,7 +10,6 @@ layout (location = 7) in vec4 inTex_Ent_ID;		    // Texture ID, Entity ID of obj
 layout (location = 8) in mat4 inLTW;			    // local to world
 
 // -- UNIFORMS --
-uniform vec3 uViewPos;
 uniform mat4 uMatrixVP;
 
 // -- OUTPUTS --

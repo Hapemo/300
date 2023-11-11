@@ -25,6 +25,11 @@ namespace GFX
 		unsigned int GetEntityIDAttachment()		{ return mEntityIDAttachment; }
 		unsigned int GetBrightColorsAttachment()	{ return mBrightColorsAttachment; }
 
+		unsigned int GetFragPosAttachment()			{ return mGFragPosAttachment; }
+		unsigned int GetNormalAttachment()			{ return mGNormalAttachment; }
+		unsigned int GetAlbedoSpecAttachment()		{ return mGAlbedoSpecAttachment; }
+		unsigned int GetEmissionAttachment()		{ return mGEmissionAttachment; }
+
 		int GetWidth()	{ return mWidth; }
 		int GetHeight() { return mHeight; }
 
@@ -35,6 +40,10 @@ namespace GFX
 			glDeleteTextures(1, &mColorAttachment);
 			glDeleteTextures(1, &mEntityIDAttachment);
 			glDeleteTextures(1, &mBrightColorsAttachment);
+			glDeleteTextures(1, &mGFragPosAttachment);
+			glDeleteTextures(1, &mGNormalAttachment);
+			glDeleteTextures(1, &mGAlbedoSpecAttachment);
+			glDeleteTextures(1, &mGEmissionAttachment);
 		}
 
 	private:
@@ -44,9 +53,16 @@ namespace GFX
 		unsigned int mEntityIDAttachment{};			// Attachment that contains Entity ID of each corresponding pixel
 		unsigned int mBrightColorsAttachment;		// Bloom attachment
 
+		unsigned int mGFragPosAttachment{};			// G-buffer fragment position attachment for deferred lighting
+		unsigned int mGNormalAttachment{};			// G-buffer normal attachment for deferred lighting
+		unsigned int mGAlbedoSpecAttachment{};		// G-buffer Albedo-specular attachment for deferred lighting
+		unsigned int mGEmissionAttachment{};		// G-buffer emission attachment for deferred lighting
+
 		int mWidth{};
 		int mHeight{};
 		int mSamples{ 16 };
+
+		void CreateAttachment(unsigned& attachment, GLenum internalFormat);
 	};
 }
 

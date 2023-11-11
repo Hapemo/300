@@ -8,12 +8,14 @@ in mat3 TBN;			// Tangent-to-world matrix
 in vec3 fragPos;		// Fragment position
 
 // -- OUTPUTS --
-layout (location = 1) out vec4 gFragPos;		// XYZ:  Fragment Position
-layout (location = 2) out vec4 gNormal;			// XYZ:  Normal				| W: Roughness component
-layout (location = 3) out vec4 gAlbedoSpec;		// RGB:  Albedo Color		| A: Specular intensity
-layout (location = 4) out vec4 gEmission;		// RGBA: Emission
-layout (location = 5) out uint outEntityID;
-layout (location = 6) out vec4 BrightColor;
+layout (location = 0) out vec4 fragColor;
+layout (location = 1) out uint outEntityID;
+layout (location = 2) out vec4 BrightColor;
+
+layout (location = 3) out vec4 gFragPos;		// XYZ:  Fragment Position
+layout (location = 4) out vec4 gNormal;			// XYZ:  Normal				| W: Roughness component
+layout (location = 5) out vec4 gAlbedoSpec;		// RGB:  Albedo Color		| A: Specular intensity
+layout (location = 6) out vec4 gEmission;		// RGBA: Emission
 
 struct Material
 {

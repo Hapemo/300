@@ -284,6 +284,8 @@ public:
 	GFX::Shader m_CrosshairShaderInst;
 	GFX::Shader m_DrawSceneShaderInst;
 	GFX::Shader m_HealthbarShaderInst;
+	GFX::Shader m_GBufferShaderInst;
+	GFX::Shader m_DeferredLightShaderInst;
 
 	// -- Flags --
 	int		m_DebugDrawing{ 0 };			// debug drawing 
@@ -340,8 +342,16 @@ private:
 	void SetupCrosshairShaderLocations();
 	void DrawCrosshair();
 
+	// -- Deferred Lighting WIP --
+	void DrawDeferredLight(const GFX::Camera& camera);
+	GLint m_DeferredCamPosLocation{};
+	GLint m_DeferredLightCountLocation{};
+
 	// -- Compute Shader WIP --
 	GFX::ComputeShader computeShader;
+
+	// -- Shader Setup --
+	void SetupAllShaders();
 };
 
 #endif

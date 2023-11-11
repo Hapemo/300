@@ -10,7 +10,7 @@
 ****************************************************************************
 ***/
 #define  _ENABLE_ANIMATIONS					true
-#define  ENABLE_MULTISAMPLE					false	
+#define  ENABLE_MULTISAMPLE					true	
 #define  _TEST_HEALTHBAR_SHADER				false
 #define  ENABLE_UI_IN_EDITOR_SCENE			true
 #define  ENABLE_CROSSHAIR_IN_EDITOR_SCENE	false
@@ -55,32 +55,7 @@ void GraphicsSystem::Init()
 			m_Textures.emplace_back(i);
 		}
 
-		// Initialize the UI Shader
-		std::string uiShader = "UIShader";
-		uid uiShaderstr(uiShader);
-		m_UiShaderInst = *systemManager->mResourceTySystem->get_Shader(uiShaderstr.id);
-
-		// Initialize the Crosshair shader
-		std::string crosshairShader = "CrosshairShader";
-		uid crosshairShaderstr(crosshairShader);
-		m_CrosshairShaderInst = *systemManager->mResourceTySystem->get_Shader(crosshairShaderstr.id);
-		m_CrosshairShaderInst.Activate();
-		SetupCrosshairShaderLocations();
-		m_CrosshairShaderInst.Deactivate();
-
-		// Uniforms of UI Shader
-		m_UiShaderInst.Activate();
-		GLuint uniform_tex = glGetUniformLocation(m_UiShaderInst.GetHandle(), "uTex2d");
-		glUniform1iv(uniform_tex, (GLsizei)m_Textures.size(), m_Textures.data()); // Passing texture Binding units to frag shader [0 - 31]
-		m_UiShaderInst.Deactivate();
-
-		// Initialize the Healthbar shader and uniform location
-		std::string healthbarShader = "healthbarShader";
-		uid healthbarShaderstr(healthbarShader);
-		m_HealthbarShaderInst = *systemManager->mResourceTySystem->get_Shader(healthbarShaderstr.id);
-		m_HealthbarShaderInst.Activate();
-		m_HealthbarViewProjLocation = m_HealthbarShaderInst.GetUniformLocation("uViewProj");
-		m_HealthbarShaderInst.Deactivate();
+		SetupAllShaders();
 
 		// Get Window Handle
 		m_Window = systemManager->GetWindow();
@@ -1505,6 +1480,35 @@ void GraphicsSystem::SetupCrosshairShaderLocations()
 	m_CrosshairColorLocation = m_CrosshairShaderInst.GetUniformLocation("uColor");
 }
 
+void GraphicsSystem::DrawDeferredLight(const GFX::Camera& camera)
+{
+	// Bind VAO and activate shader
+	m_Image2DMesh.BindVao();
+	m_DeferredLightShaderInst.Activate();
+	
+	// Set Shader uniforms
+	vec3 camPos = camera.mPosition;
+	glUniform3fv(m_DeferredCamPosLocation, 1, &camPos[0]);
+	glUniform1i(m_DeferredLightCountLocation, m_LightCount);
+
+	// Bind G-buffers as textures
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, m_MultisampleFBO.GetFragPosAttachment());
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, m_MultisampleFBO.GetNormalAttachment());
+	glActiveTexture(GL_TEXTURE2);
+	glBindTexture(GL_TEXTURE_2D, m_MultisampleFBO.GetAlbedoSpecAttachment());
+	glActiveTexture(GL_TEXTURE3);
+	glBindTexture(GL_TEXTURE_2D, m_MultisampleFBO.GetEmissionAttachment());
+	
+	// Draw
+	glDrawArraysInstanced(GL_TRIANGLE_FAN, 0, 4, 1);
+	
+	// Unbind VAO and Deactivate shader
+	m_DeferredLightShaderInst.Deactivate();
+	m_Image2DMesh.UnbindVao();
+}
+
 void GraphicsSystem::DrawCrosshair()
 {
 	// Get entity with crosshair component
@@ -1530,6 +1534,48 @@ void GraphicsSystem::DrawCrosshair()
 	// Stop using crosshair shader program and VAO
 	m_CrosshairShaderInst.Deactivate();
 	m_Image2DMesh.UnbindVao();
+}
+
+void GraphicsSystem::SetupAllShaders()
+{
+	// Initialize the UI Shader
+	std::string uiShader = "UIShader";
+	uid uiShaderstr(uiShader);
+	m_UiShaderInst = *systemManager->mResourceTySystem->get_Shader(uiShaderstr.id);
+
+	// Initialize the Crosshair shader
+	std::string crosshairShader = "CrosshairShader";
+	uid crosshairShaderstr(crosshairShader);
+	m_CrosshairShaderInst = *systemManager->mResourceTySystem->get_Shader(crosshairShaderstr.id);
+	m_CrosshairShaderInst.Activate();
+	SetupCrosshairShaderLocations();
+	m_CrosshairShaderInst.Deactivate();
+
+	// Uniforms of UI Shader
+	m_UiShaderInst.Activate();
+	GLuint uniform_tex = glGetUniformLocation(m_UiShaderInst.GetHandle(), "uTex2d");
+	glUniform1iv(uniform_tex, (GLsizei)m_Textures.size(), m_Textures.data()); // Passing texture Binding units to frag shader [0 - 31]
+	m_UiShaderInst.Deactivate();
+
+	// Initialize the Healthbar shader and uniform location
+	std::string healthbarShader = "healthbarShader";
+	uid healthbarShaderstr(healthbarShader);
+	m_HealthbarShaderInst = *systemManager->mResourceTySystem->get_Shader(healthbarShaderstr.id);
+	m_HealthbarShaderInst.Activate();
+	m_HealthbarViewProjLocation = m_HealthbarShaderInst.GetUniformLocation("uViewProj");
+	m_HealthbarShaderInst.Deactivate();
+
+	// Initialize the deferred light shader and uniform location
+	std::string deferredLightShader = "deferredLightShader";
+	uid deferredLightShaderstr(deferredLightShader);
+	m_DeferredLightShaderInst = *systemManager->mResourceTySystem->get_Shader(deferredLightShaderstr.id);
+	m_DeferredCamPosLocation = m_DeferredLightShaderInst.GetUniformLocation("uCamPos");
+	m_DeferredLightCountLocation = m_DeferredLightShaderInst.GetUniformLocation("uLightCount");
+
+	// Initialize the G-buffer shader and uniform location
+	std::string gBufferShader = "gBufferShader";
+	uid gBufferShaderstr(gBufferShader);
+	m_GBufferShaderInst = *systemManager->mResourceTySystem->get_Shader(gBufferShaderstr.id);
 }
 
 /***************************************************************************/
