@@ -246,11 +246,12 @@ public:
 // 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// -- Renderer --
-	GFX::DebugRenderer	m_Renderer;			// isolated to debug draws
-	GFX::FBO			m_Fbo;				// Editor Scene
-	GFX::FBO			m_GameFbo;			// Game Scene
-	GFX::MsFBO			m_MultisampleFBO;	// Multisample FBO
-	GFX::PingPongFBO	m_PingPongFbo;		// Post Processing
+	GFX::DebugRenderer		m_Renderer;			// isolated to debug draws
+	GFX::FBO				m_Fbo;				// Editor Scene
+	GFX::FBO				m_GameFbo;			// Game Scene
+	GFX::MsFBO				m_MultisampleFBO;	// Multisample FBO
+	GFX::IntermediateFBO	m_IntermediateFBO;	// Intermediate FBO
+	GFX::PingPongFBO		m_PingPongFbo;		// Post Processing
 
 	// -- Window --
 	GFX::Window*		m_Window;

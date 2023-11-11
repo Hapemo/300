@@ -1,114 +1,6 @@
 [
     {
-        "entityid": 2097159,
-        "general": {
-            "name": "Jump",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "jump.wav",
-            "fullpath": "../assets\\Audio/jump.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 0.0989999994635582
-        }
-    },
-    {
-        "entityid": 2097160,
-        "general": {
-            "name": "BGM",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "M2BGM.wav",
-            "fullpath": "../assets\\Audio/M2BGM.wav",
-            "playonawake": true,
-            "islooping": true,
-            "audiotype": 0,
-            "volume": 1.0
-        }
-    },
-    {
-        "entityid": 2097161,
-        "general": {
-            "name": "Bullet Hit",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "hit.wav",
-            "fullpath": "../assets\\Audio/hit.wav",
-            "playonawake": true,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 0.0
-        }
-    },
-    {
-        "entityid": 2097162,
+        "entityid": 4,
         "general": {
             "name": "Death",
             "tagid": 0,
@@ -144,7 +36,7 @@
         }
     },
     {
-        "entityid": 2097163,
+        "entityid": 5,
         "general": {
             "name": "Dash",
             "tagid": 0,
@@ -180,7 +72,7 @@
         }
     },
     {
-        "entityid": 2097164,
+        "entityid": 6,
         "general": {
             "name": "crosshair",
             "tagid": 0,
@@ -223,7 +115,7 @@
         }
     },
     {
-        "entityid": 2097165,
+        "entityid": 7,
         "general": {
             "name": "AISpawnPoint2",
             "tagid": 6,
@@ -250,7 +142,7 @@
         }
     },
     {
-        "entityid": 2097166,
+        "entityid": 8,
         "general": {
             "name": "AISpawnPoint1",
             "tagid": 6,
@@ -277,7 +169,7 @@
         }
     },
     {
-        "entityid": 2097167,
+        "entityid": 9,
         "general": {
             "name": "UI1",
             "tagid": 6,
@@ -309,7 +201,7 @@
         }
     },
     {
-        "entityid": 2097168,
+        "entityid": 10,
         "general": {
             "name": "enemy1_walking",
             "tagid": 1,
@@ -325,13 +217,13 @@
             },
             "rotate": {
                 "x": 0.0,
-                "y": 69.10987854003906,
+                "y": 18.484771728515625,
                 "z": 0.0
             },
             "translate": {
-                "x": 17.002887725830078,
-                "y": 2.59989595413208,
-                "z": 45.67780685424805
+                "x": 24.200763702392578,
+                "y": 2.599855661392212,
+                "z": 54.58976745605469
             }
         },
         "rigidbody": {
@@ -339,9 +231,9 @@
             "material": 1,
             "motion": 1,
             "velocity": {
-                "x": 18.065710067749023,
-                "y": 0.0000034570693969726563,
-                "z": 6.920803070068359
+                "x": 6.150509834289551,
+                "y": 0.000003933906555175781,
+                "z": 18.34227180480957
             },
             "rotationconstraints": {
                 "x": true,
@@ -405,7 +297,7 @@
         }
     },
     {
-        "entityid": 2097169,
+        "entityid": 11,
         "general": {
             "name": "enemy1_walking",
             "tagid": 1,
@@ -421,13 +313,13 @@
             },
             "rotate": {
                 "x": 0.0,
-                "y": 72.81524658203125,
+                "y": 344.4306335449219,
                 "z": 0.0
             },
             "translate": {
-                "x": 6.561854362487793,
-                "y": 2.5998945236206055,
-                "z": 32.102821350097656
+                "x": 0.6885899305343628,
+                "y": 2.5998950004577637,
+                "z": 50.89992141723633
             }
         },
         "rigidbody": {
@@ -435,9 +327,9 @@
             "material": 1,
             "motion": 1,
             "velocity": {
-                "x": 18.46978187561035,
-                "y": 0.0000011920928955078125,
-                "z": 5.756253719329834
+                "x": -2.9963858127593994,
+                "y": 0.0,
+                "z": -0.04413604736328125
             },
             "rotationconstraints": {
                 "x": true,
@@ -501,7 +393,7 @@
         }
     },
     {
-        "entityid": 2097170,
+        "entityid": 12,
         "general": {
             "name": "Fin2",
             "tagid": 5,
@@ -516,9 +408,9 @@
                 "z": 2.5
             },
             "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
+                "x": 81.38987731933594,
+                "y": 101.73737335205078,
+                "z": 122.08473205566406
             },
             "translate": {
                 "x": 12.300000190734863,
@@ -531,8 +423,8 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 2752,
             "instancecolor": {
-                "x": 1.0,
-                "y": 0.0,
+                "x": -0.09625605493783951,
+                "y": 1.0962560176849365,
                 "z": 0.0,
                 "w": 1.0
             },
@@ -565,7 +457,7 @@
         }
     },
     {
-        "entityid": 2097171,
+        "entityid": 13,
         "general": {
             "name": "Fin1",
             "tagid": 5,
@@ -580,9 +472,9 @@
                 "z": 2.5
             },
             "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
+                "x": 81.38987731933594,
+                "y": 101.73737335205078,
+                "z": 122.08473205566406
             },
             "translate": {
                 "x": 42.29999923706055,
@@ -595,8 +487,8 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 2752,
             "instancecolor": {
-                "x": 1.0,
-                "y": 0.0,
+                "x": -0.09625605493783951,
+                "y": 1.0962560176849365,
                 "z": 0.0,
                 "w": 1.0
             },
@@ -629,7 +521,7 @@
         }
     },
     {
-        "entityid": 2097172,
+        "entityid": 14,
         "general": {
             "name": "Teleporter2",
             "tagid": 5,
@@ -675,8 +567,8 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 2752,
             "instancecolor": {
-                "x": 1.0,
-                "y": 0.0,
+                "x": -0.09625605493783951,
+                "y": 1.0962560176849365,
                 "z": 0.0,
                 "w": 1.0
             },
@@ -711,7 +603,7 @@
         }
     },
     {
-        "entityid": 2097173,
+        "entityid": 15,
         "general": {
             "name": "Teleporter1",
             "tagid": 5,
@@ -757,8 +649,8 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 2752,
             "instancecolor": {
-                "x": 1.0,
-                "y": 0.0,
+                "x": -0.09625605493783951,
+                "y": 1.0962560176849365,
                 "z": 0.0,
                 "w": 1.0
             },
@@ -793,7 +685,7 @@
         }
     },
     {
-        "entityid": 2097174,
+        "entityid": 16,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -881,7 +773,7 @@
         }
     },
     {
-        "entityid": 2097175,
+        "entityid": 17,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -969,7 +861,7 @@
         }
     },
     {
-        "entityid": 2097176,
+        "entityid": 18,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -1057,7 +949,7 @@
         }
     },
     {
-        "entityid": 2097177,
+        "entityid": 19,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -1145,7 +1037,7 @@
         }
     },
     {
-        "entityid": 2097178,
+        "entityid": 20,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -1233,7 +1125,7 @@
         }
     },
     {
-        "entityid": 2097179,
+        "entityid": 21,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -1248,13 +1140,13 @@
                 "z": 20.0
             },
             "rotate": {
-                "x": -450.0,
-                "y": 0.0,
+                "x": -517.5,
+                "y": -44.59999465942383,
                 "z": 0.0
             },
             "translate": {
-                "x": 30.053281784057617,
-                "y": 6.499906063079834,
+                "x": 30.05328369140625,
+                "y": 6.499892234802246,
                 "z": 156.96517944335938
             }
         },
@@ -1263,9 +1155,9 @@
             "material": 1,
             "motion": 1,
             "velocity": {
-                "x": 0.00015355332288891077,
-                "y": 0.00006937980651855469,
-                "z": -1.0672736472372435e-8
+                "x": -0.000005273150236462243,
+                "y": 0.0,
+                "z": -3.067939235990025e-10
             },
             "rotationconstraints": {
                 "x": true,
@@ -1303,7 +1195,7 @@
         },
         "children": {
             "numchildren": 1,
-            "firstchild": 2097201
+            "firstchild": 43
         },
         "audio": {
             "filepath": "",
@@ -1316,25 +1208,25 @@
         },
         "camera": {
             "positon": {
-                "x": 30.053281784057617,
-                "y": 6.499906063079834,
+                "x": 30.05328369140625,
+                "y": 6.499892234802246,
                 "z": 156.96517944335938
             },
             "target": {
-                "x": 30.053281784057617,
-                "y": 6.499906063079834,
-                "z": 155.96517944335938
+                "x": 29.395458221435547,
+                "y": 7.202045440673828,
+                "z": 156.6927032470703
             },
             "size": {
-                "x": 1958,
-                "y": 918
+                "x": 1318,
+                "y": 705
             },
             "near": 0.10000000149011612,
             "far": 900.0
         }
     },
     {
-        "entityid": 2097180,
+        "entityid": 22,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -1422,7 +1314,7 @@
         }
     },
     {
-        "entityid": 2097181,
+        "entityid": 23,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -1510,7 +1402,7 @@
         }
     },
     {
-        "entityid": 2097182,
+        "entityid": 24,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -1598,7 +1490,7 @@
         }
     },
     {
-        "entityid": 2097183,
+        "entityid": 25,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -1686,7 +1578,7 @@
         }
     },
     {
-        "entityid": 2097184,
+        "entityid": 26,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -1774,7 +1666,7 @@
         }
     },
     {
-        "entityid": 2097185,
+        "entityid": 27,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -1862,7 +1754,7 @@
         }
     },
     {
-        "entityid": 2097186,
+        "entityid": 28,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -1950,7 +1842,7 @@
         }
     },
     {
-        "entityid": 2097187,
+        "entityid": 29,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -2038,7 +1930,7 @@
         }
     },
     {
-        "entityid": 2097188,
+        "entityid": 30,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -2126,7 +2018,7 @@
         }
     },
     {
-        "entityid": 2097189,
+        "entityid": 31,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -2214,7 +2106,7 @@
         }
     },
     {
-        "entityid": 2097190,
+        "entityid": 32,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -2302,7 +2194,7 @@
         }
     },
     {
-        "entityid": 2097191,
+        "entityid": 33,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -2390,7 +2282,7 @@
         }
     },
     {
-        "entityid": 2097192,
+        "entityid": 34,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -2478,7 +2370,7 @@
         }
     },
     {
-        "entityid": 2097193,
+        "entityid": 35,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -2566,7 +2458,7 @@
         }
     },
     {
-        "entityid": 2097194,
+        "entityid": 36,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -2654,7 +2546,7 @@
         }
     },
     {
-        "entityid": 2097195,
+        "entityid": 37,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -2742,7 +2634,7 @@
         }
     },
     {
-        "entityid": 2097196,
+        "entityid": 38,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -2830,7 +2722,7 @@
         }
     },
     {
-        "entityid": 2097197,
+        "entityid": 39,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -2918,7 +2810,7 @@
         }
     },
     {
-        "entityid": 2097198,
+        "entityid": 40,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -3006,7 +2898,7 @@
         }
     },
     {
-        "entityid": 2097199,
+        "entityid": 41,
         "general": {
             "name": "Light",
             "tagid": 2,
@@ -3046,7 +2938,7 @@
         }
     },
     {
-        "entityid": 2097200,
+        "entityid": 42,
         "general": {
             "name": "Light",
             "tagid": 2,
@@ -3089,7 +2981,7 @@
         }
     },
     {
-        "entityid": 2097201,
+        "entityid": 43,
         "general": {
             "name": "gun",
             "tagid": 0,
@@ -3141,13 +3033,13 @@
             ]
         },
         "parent": {
-            "prevsibling": 2097201,
-            "nextsibling": 2097201,
-            "parent": 2097179
+            "prevsibling": 43,
+            "nextsibling": 43,
+            "parent": 21
         }
     },
     {
-        "entityid": 2097202,
+        "entityid": 44,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -3235,7 +3127,7 @@
         }
     },
     {
-        "entityid": 2097203,
+        "entityid": 45,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -3323,7 +3215,7 @@
         }
     },
     {
-        "entityid": 2097204,
+        "entityid": 46,
         "general": {
             "name": "Floor",
             "tagid": 4,
@@ -3411,7 +3303,7 @@
         }
     },
     {
-        "entityid": 2097205,
+        "entityid": 47,
         "general": {
             "name": "Floor",
             "tagid": 4,
@@ -3499,7 +3391,7 @@
         }
     },
     {
-        "entityid": 2097206,
+        "entityid": 48,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -3587,7 +3479,7 @@
         }
     },
     {
-        "entityid": 2097207,
+        "entityid": 49,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -3675,7 +3567,7 @@
         }
     },
     {
-        "entityid": 2097208,
+        "entityid": 50,
         "general": {
             "name": "Bullet Shoot",
             "tagid": 0,
@@ -3707,11 +3599,11 @@
             "playonawake": true,
             "islooping": false,
             "audiotype": 1,
-            "volume": 0.0
+            "volume": 0.5
         }
     },
     {
-        "entityid": 2097209,
+        "entityid": 51,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -3799,7 +3691,7 @@
         }
     },
     {
-        "entityid": 2097210,
+        "entityid": 52,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -3887,7 +3779,7 @@
         }
     },
     {
-        "entityid": 2097211,
+        "entityid": 53,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -3975,7 +3867,7 @@
         }
     },
     {
-        "entityid": 2097212,
+        "entityid": 54,
         "general": {
             "name": "Floor",
             "tagid": 4,
@@ -4063,7 +3955,7 @@
         }
     },
     {
-        "entityid": 2097213,
+        "entityid": 55,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -4151,7 +4043,7 @@
         }
     },
     {
-        "entityid": 2097214,
+        "entityid": 56,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -4239,7 +4131,7 @@
         }
     },
     {
-        "entityid": 2097215,
+        "entityid": 57,
         "general": {
             "name": "AISpawnPoint3",
             "tagid": 6,
@@ -4266,7 +4158,7 @@
         }
     },
     {
-        "entityid": 2097216,
+        "entityid": 58,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -4354,7 +4246,7 @@
         }
     },
     {
-        "entityid": 2097217,
+        "entityid": 59,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -4442,7 +4334,7 @@
         }
     },
     {
-        "entityid": 2097218,
+        "entityid": 60,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -4535,7 +4427,7 @@
         }
     },
     {
-        "entityid": 2097219,
+        "entityid": 61,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -4623,7 +4515,7 @@
         }
     },
     {
-        "entityid": 2097220,
+        "entityid": 62,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -4711,7 +4603,7 @@
         }
     },
     {
-        "entityid": 2097221,
+        "entityid": 63,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -4799,7 +4691,7 @@
         }
     },
     {
-        "entityid": 2097222,
+        "entityid": 64,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -4887,7 +4779,7 @@
         }
     },
     {
-        "entityid": 2097223,
+        "entityid": 65,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -4975,7 +4867,7 @@
         }
     },
     {
-        "entityid": 2097224,
+        "entityid": 66,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -5063,7 +4955,7 @@
         }
     },
     {
-        "entityid": 2097225,
+        "entityid": 67,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -5151,7 +5043,7 @@
         }
     },
     {
-        "entityid": 2097226,
+        "entityid": 68,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -5239,7 +5131,7 @@
         }
     },
     {
-        "entityid": 2097227,
+        "entityid": 69,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -5327,7 +5219,7 @@
         }
     },
     {
-        "entityid": 2097228,
+        "entityid": 70,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -5415,7 +5307,7 @@
         }
     },
     {
-        "entityid": 2097229,
+        "entityid": 71,
         "general": {
             "name": "Floor",
             "tagid": 4,
@@ -5503,7 +5395,7 @@
         }
     },
     {
-        "entityid": 2097230,
+        "entityid": 72,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -5591,7 +5483,7 @@
         }
     },
     {
-        "entityid": 2097231,
+        "entityid": 73,
         "general": {
             "name": "enemy1_walking",
             "tagid": 1,
@@ -5607,13 +5499,13 @@
             },
             "rotate": {
                 "x": 0.0,
-                "y": 68.4521255493164,
+                "y": 4.0789008140563965,
                 "z": 0.0
             },
             "translate": {
-                "x": 17.689138412475586,
-                "y": 2.5998973846435547,
-                "z": 13.17063045501709
+                "x": 22.18569564819336,
+                "y": 2.599895477294922,
+                "z": 46.637088775634766
             }
         },
         "rigidbody": {
@@ -5621,9 +5513,9 @@
             "material": 1,
             "motion": 1,
             "velocity": {
-                "x": 17.993946075439453,
-                "y": -0.000018596649169921875,
-                "z": 7.105352878570557
+                "x": 1.3761142492294312,
+                "y": 0.000002384185791015625,
+                "z": 19.29698371887207
             },
             "rotationconstraints": {
                 "x": true,
@@ -5687,7 +5579,7 @@
         }
     },
     {
-        "entityid": 2097232,
+        "entityid": 74,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -5775,7 +5667,7 @@
         }
     },
     {
-        "entityid": 2097233,
+        "entityid": 75,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -5863,7 +5755,7 @@
         }
     },
     {
-        "entityid": 2097234,
+        "entityid": 76,
         "general": {
             "name": "Floor",
             "tagid": 4,
@@ -5951,7 +5843,7 @@
         }
     },
     {
-        "entityid": 2097235,
+        "entityid": 77,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -6039,7 +5931,7 @@
         }
     },
     {
-        "entityid": 2097236,
+        "entityid": 78,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -6127,7 +6019,7 @@
         }
     },
     {
-        "entityid": 2097237,
+        "entityid": 79,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -6215,7 +6107,7 @@
         }
     },
     {
-        "entityid": 2097238,
+        "entityid": 80,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -6303,7 +6195,7 @@
         }
     },
     {
-        "entityid": 2097239,
+        "entityid": 81,
         "general": {
             "name": "AISpawnPoint4",
             "tagid": 6,
@@ -6330,7 +6222,7 @@
         }
     },
     {
-        "entityid": 2097240,
+        "entityid": 82,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -6418,7 +6310,7 @@
         }
     },
     {
-        "entityid": 2097241,
+        "entityid": 83,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -6506,7 +6398,7 @@
         }
     },
     {
-        "entityid": 2097242,
+        "entityid": 84,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -6594,7 +6486,7 @@
         }
     },
     {
-        "entityid": 2097243,
+        "entityid": 85,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -6682,7 +6574,7 @@
         }
     },
     {
-        "entityid": 3145729,
+        "entityid": 86,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -6770,7 +6662,7 @@
         }
     },
     {
-        "entityid": 3145730,
+        "entityid": 87,
         "general": {
             "name": "Floor",
             "tagid": 4,
@@ -6858,7 +6750,7 @@
         }
     },
     {
-        "entityid": 3145731,
+        "entityid": 88,
         "general": {
             "name": "Floor",
             "tagid": 4,
@@ -6946,7 +6838,7 @@
         }
     },
     {
-        "entityid": 6291549,
+        "entityid": 89,
         "general": {
             "name": "Floor",
             "tagid": 4,
@@ -7034,7 +6926,7 @@
         }
     },
     {
-        "entityid": 6291550,
+        "entityid": 90,
         "general": {
             "name": "Floor",
             "tagid": 4,
@@ -7122,7 +7014,7 @@
         }
     },
     {
-        "entityid": 6291552,
+        "entityid": 91,
         "general": {
             "name": "Floor",
             "tagid": 4,
@@ -7207,6 +7099,303 @@
         },
         "prefab": {
             "prefab": "Floor"
+        }
+    },
+    {
+        "entityid": 92,
+        "general": {
+            "name": "bullet",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": -98.0914306640625,
+                "y": -0.0,
+                "z": 3.1415927410125732
+            },
+            "translate": {
+                "x": 22.378650665283203,
+                "y": 14.691680908203125,
+                "z": 153.78627014160156
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 1,
+            "velocity": {
+                "x": -65.78254699707031,
+                "y": 70.21531677246094,
+                "z": -27.24761962890625
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": false,
+                "z": false
+            },
+            "gravity": false
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 2285,
+            "instancecolor": {
+                "x": 0.95652174949646,
+                "y": 1.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Cube_Texture_White.ctexture",
+                " ",
+                " ",
+                " ",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/cube.geom",
+            "texturerefid": [
+                4706,
+                0,
+                0,
+                0,
+                0
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": true
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/Bullet.lua",
+                    "variables": [
+                        {
+                            "key": "direction",
+                            "val": {
+                                "type": -655306154,
+                                "value": {
+                                    "x": 10.0,
+                                    "y": 0.0,
+                                    "z": 0.0
+                                }
+                            }
+                        },
+                        {
+                            "key": "movement",
+                            "val": {
+                                "type": -655306154,
+                                "value": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0
+                                }
+                            }
+                        },
+                        {
+                            "key": "positions",
+                            "val": {
+                                "type": -655306154,
+                                "value": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0
+                                }
+                            }
+                        },
+                        {
+                            "key": "spawn",
+                            "val": {
+                                "type": -1129103353,
+                                "value": true
+                            }
+                        },
+                        {
+                            "key": "timer",
+                            "val": {
+                                "type": 694561268,
+                                "value": 0.0
+                            }
+                        },
+                        {
+                            "key": "viewVec",
+                            "val": {
+                                "type": -655306154,
+                                "value": {
+                                    "x": 0.0,
+                                    "y": 1.0,
+                                    "z": 0.0
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        "prefab": {
+            "prefab": "bullet"
+        }
+    },
+    {
+        "entityid": 93,
+        "general": {
+            "name": "Light3",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 37.21240234375,
+                "y": 22.0863094329834,
+                "z": 0.0
+            }
+        },
+        "pointlight": {
+            "lightcolor": {
+                "x": 2.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "linearfalloff": 0.0,
+            "quadraticfalloff": 0.0,
+            "intensity": 2.0
+        }
+    },
+    {
+        "entityid": 1048577,
+        "general": {
+            "name": "Bullet Hit",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "hit.wav",
+            "fullpath": "../assets\\Audio/hit.wav",
+            "playonawake": true,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 0.0
+        }
+    },
+    {
+        "entityid": 1048578,
+        "general": {
+            "name": "BGM",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "M2BGM.wav",
+            "fullpath": "../assets\\Audio/M2BGM.wav",
+            "playonawake": true,
+            "islooping": true,
+            "audiotype": 0,
+            "volume": 1.0
+        }
+    },
+    {
+        "entityid": 1048579,
+        "general": {
+            "name": "Jump",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "jump.wav",
+            "fullpath": "../assets\\Audio/jump.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 0.0989999994635582
         }
     }
 ]

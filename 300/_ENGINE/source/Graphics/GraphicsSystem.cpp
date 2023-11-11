@@ -69,6 +69,7 @@ void GraphicsSystem::Init()
 		m_Fbo.Create(m_Width, m_Height, m_EditorMode);
 		m_GameFbo.Create(m_Width, m_Height, m_EditorMode);
 		m_MultisampleFBO.Create(m_Width, m_Height);
+		m_IntermediateFBO.Create(m_Width, m_Height);
 		m_PingPongFbo.Create(m_Width, m_Height);
 
 		if (m_DebugDrawing) {
@@ -89,7 +90,7 @@ void GraphicsSystem::Init()
 	
 
 	// Set Cameras' starting position
-	SetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR, {0, 0, 20});									// Position of camera
+	SetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR, {0, 10, 20});									// Position of camera
 	SetCameraTarget(CAMERA_TYPE::CAMERA_TYPE_EDITOR, {0, 0, 0});									// Target of camera
 	SetCameraProjection(CAMERA_TYPE::CAMERA_TYPE_ALL, 60.f, m_Window->size(), 0.1f, 900.f);			// Projection of camera
 
@@ -302,7 +303,7 @@ void GraphicsSystem::Update(float dt)
 
 			pointLights.push_back(light);
 
-			m_Renderer.AddCube(lightTransform.mTranslate, { 20, 20, 20 }, vec4(lightData.mLightColor, 1.f));
+			m_Renderer.AddCube(lightTransform.mTranslate, { 5, 5, 5 }, vec4(lightData.mLightColor, 1.f));
 		}
 		// Copy light source data into storage buffer
 		m_PointLightSsbo.SubData(pointLights.size() * sizeof(PointLightSSBO), pointLights.data());
@@ -436,10 +437,13 @@ void GraphicsSystem::EditorDraw(float dt)
 
 	m_Renderer.RenderAll(m_EditorCamera.viewProj());
 #if ENABLE_MULTISAMPLE
-	m_Fbo.Clear();
+	m_IntermediateFBO.Clear();
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	// Copy pixel data from multisample FBO to editor FBO
-	m_MultisampleFBO.BlitFramebuffer(m_Fbo.GetID());
+	m_MultisampleFBO.BlitFramebuffer(m_IntermediateFBO.GetID());
+	m_Fbo.Clear();
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	m_IntermediateFBO.BlitFramebuffer(m_Fbo.GetID());
 #endif
 
 	if (systemManager->mGraphicsSystem->m_EnableBloom)
