@@ -191,6 +191,7 @@ public:
 	void DisableGlobalBloom() { m_EnableBloom = false; }
 
 	void SetGlobalBloomThreshold(glm::vec3 threshold) { mAmbientBloomThreshold = threshold; }
+	void SetAllEntityBloomThreshold(glm::vec4 threshold, std::string meshName);
 	void SetGlobalBloomExposure(float exp) { mAmbientBloomExposure = exp; }
 
 	// -- Camera Functions --

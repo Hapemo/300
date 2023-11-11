@@ -755,6 +755,28 @@ void GraphicsSystem::AddInstance(GFX::Mesh &mesh, mat4 transform, const vec4& co
 	mesh.mBloomThresholds.push_back(bloomthreshold);
 }
 
+void GraphicsSystem::SetAllEntityBloomThreshold(glm::vec4 threshold, std::string meshName)
+{
+	//!< Helper
+	auto getMeshname = [](std::string filepath) -> std::string
+	{
+		// returns AT-AT
+		std::string ret_str = filepath.substr(filepath.find_last_of("/") + 1);
+		ret_str = ret_str.substr(0, ret_str.find_first_of("."));
+		return ret_str;
+	};
+
+	auto meshRendererInstances = systemManager->ecs->GetEntitiesWith<MeshRenderer>();
+	for (Entity inst : meshRendererInstances)
+	{
+		auto& meshinst = inst.GetComponent<MeshRenderer>();
+		if ( getMeshname(meshinst.mMeshPath) == meshName)
+		{
+			meshinst.mBloomThreshold = threshold;
+		}
+	}
+}
+
 /***************************************************************************/
 /*!
 \brief
