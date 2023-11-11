@@ -351,7 +351,8 @@ void LuaGraphicsSystem()
         "mChromaticOffset", &GraphicsSystem::mChromaticOffset,
         "m_EnableBloom", &GraphicsSystem::m_EnableBloom,
         "m_EnableChromaticAbberation", &GraphicsSystem::m_EnableChromaticAbberation,
-		"m_GlobalTint", &GraphicsSystem::m_GlobalTint
+		"m_GlobalTint", &GraphicsSystem::m_GlobalTint,
+        "SetAllEntityBloomThreshold", &GraphicsSystem::SetAllEntityBloomThreshold
         );
 }
 
