@@ -33,6 +33,7 @@ Components used by the ECS.
 #include "ResourceManagerTy.h"
 #include "Serialization/Serialization.h"
 #include "Texture.hpp"
+#include "Graph.h"
 //#include "Graphics/GraphicsSystem.h"
 //#include "Mesh.hpp"
 
@@ -590,6 +591,7 @@ struct AISetting : public Serializable {
 	float mStayAway;								// For flying enemy, horizontal distance to stay away from player
 	float mElevation;								// For flying enemy, vertical distance to stay away from player
 	std::string mTargetName;				// Name of target (Will be searching via gamestate, not scene)
+	std::string mGraphDataName;			// Graph data of AI
 
 	void Inspect();
 	Entity GetTarget() { return mTarget; }
@@ -598,9 +600,11 @@ struct AISetting : public Serializable {
 
 	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
 	void DeserializeSelf(rapidjson::Value& reader);
+	ALGraph*& GetALGraph() { return mALGraph; }
 
 private: 
 	Entity mTarget;									// AI's target
+	ALGraph* mALGraph;							// ALGraph that will help the entity's pathfinding
 };
 
 /******************************************************************************/

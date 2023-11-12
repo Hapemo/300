@@ -341,6 +341,7 @@ void AISetting::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& 
 	Serialize(writer, "stayaway", mStayAway);
 	Serialize(writer, "elevation", mElevation);
 	Serialize(writer, "targetname", mTargetName);
+	Serialize(writer, "graphdataname", mGraphDataName);
 	writer.EndObject();
 }
 
@@ -351,6 +352,7 @@ void AISetting::DeserializeSelf(rapidjson::Value& reader)
 	Deserialize(reader, "stayaway", mStayAway);
 	Deserialize(reader, "elevation", mElevation);
 	Deserialize(reader, "targetname", mTargetName);
+	Deserialize(reader, "graphdataname", mGraphDataName);
 }
 
 void Crosshair::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
