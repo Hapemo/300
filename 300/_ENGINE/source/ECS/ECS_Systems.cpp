@@ -118,6 +118,8 @@ void SystemManager::Update(float dt)
 	EnginePerformance::EndTrack("Graphics");
 	EnginePerformance::UpdateSystemMs("Graphics");
 
+	TestPathfinderManager();
+
 	// To Test (Uncomment)
 	//EnginePerformance::StartTrack("Audio");
 	//mAudioSystem.get()->Update(dt);
