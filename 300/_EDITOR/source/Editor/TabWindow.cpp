@@ -141,7 +141,5 @@ void TabWindow::update()
 
 	ImGui::Separator();
 
-	ImGui::DragFloat("Health Bar", (float*)&systemManager->mGraphicsSystem->m_Health);
-
 	ImGui::ColorPicker4("Global Tint", (float*)&systemManager->mGraphicsSystem->m_GlobalTint);
 }
