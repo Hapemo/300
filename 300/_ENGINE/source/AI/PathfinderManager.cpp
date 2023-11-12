@@ -100,19 +100,13 @@ void PathfinderManager::SaveActiveGraphData() {
 		return;
 	}
 	UpdateGraphData();
+	ReloadALGraph(mGraphDataNameList[mActiveGraph]);
 
 	std::string filePath = ConfigManager::GetValue("GraphDataPath") + mGraphDataNameList[mActiveGraph] + ".txt";
 	mGraphDataList[mActiveGraph].SaveGraph(filePath);
 }
 
 void PathfinderManager::DeleteActiveGraphData() {
-	// Loop through all entities make sure their ALGraph pointer is nullptr
-	for (auto e : systemManager->ecs->GetEntitiesWith<AISetting>()) {
-		AISetting& currSetting = Entity(e).GetComponent<AISetting>();
-		if (mGraphDataNameList[mActiveGraph] == currSetting.mGraphDataName)
-		Entity(e).GetComponent<AISetting>().GetALGraph() = nullptr;
-	}
-	
 	std::string filePath = ConfigManager::GetValue("GraphDataPath") + mGraphDataNameList[mActiveGraph] + ".txt";
 	remove(filePath.c_str());
 	

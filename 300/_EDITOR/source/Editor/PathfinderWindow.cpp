@@ -69,6 +69,7 @@ void PathfinderWindow::update() {
   if (ImGui::BeginCombo("Active Graph Data", activeGraphDataName.c_str())) {
     for (int i{}; i < pfSys->mGraphDataNameList.size(); ++i) {
       if (ImGui::Selectable(pfSys->mGraphDataNameList[i].c_str())) {
+        pfSys->SetActiveGraphData(pfSys->mGraphDataNameList[i]);
         pfSys->mActiveGraph = i;
       }
     }
@@ -79,7 +80,13 @@ void PathfinderWindow::update() {
   SetCursor();
 
   // Draw graph toggle
+  static bool drawHistory{ true };
   ImGui::Checkbox("Draw Graph", &(pfSys->mDrawGraph));
+  if (drawHistory != pfSys->mDrawGraph) {
+    pfSys->mDrawGraph = drawHistory;
+    pfSys->ToggleDrawGraph();
+    drawHistory = pfSys->mDrawGraph;
+  }
 
   // Point tool
   ImGui::Text("Point Editing Tool");

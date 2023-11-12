@@ -10,6 +10,8 @@ and dijkstra algorithm to find a path.
 #include "Graph.h"
 #include <algorithm>
 #include <queue>
+//#include "Physics/PhysicsSystem.h"
+#include <functional>
 
 //---------------------------------------------
 // Graph Data
@@ -324,6 +326,30 @@ std::vector<glm::vec3> ALGraph::AStarPath(glm::vec3 const& start, glm::vec3 cons
   AStarExit();
   return std::vector<glm::vec3>();
 }
+
+//void ALGraph::ConnectStartAndEnd() {
+//  // TODO WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING. I set the max height the start and end node can connect to to be 10
+//  // Make those points their neighbor
+//
+//  bool(*fptr)(glm::vec3, glm::vec3);
+//  
+//  std::function
+//
+//  // Identify the start end node
+//  AdjList* startNode{ &*mData.end()-2 };
+//  AdjList* endNode{ &*mData.end()-1 };
+//
+//  // For each of them, identify all the nodes that they can see
+//  for (auto& adjList : mData) {
+//    // If out of elevation range, don't connect
+//    if (abs(glm::length(adjList.point - startNode->point)) > mSetting.elevation) continue;
+//
+//    // Check line of sight
+//    //if ()
+//
+//
+//  }
+//}
 
 void ALGraph::AStarExit() {
   // Pop the start and end nodes

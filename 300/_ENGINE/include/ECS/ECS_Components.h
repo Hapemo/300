@@ -600,11 +600,9 @@ struct AISetting : public Serializable {
 
 	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
 	void DeserializeSelf(rapidjson::Value& reader);
-	ALGraph*& GetALGraph() { return mALGraph; }
 
 private: 
 	Entity mTarget;									// AI's target
-	ALGraph* mALGraph;							// ALGraph that will help the entity's pathfinding
 };
 
 /******************************************************************************/

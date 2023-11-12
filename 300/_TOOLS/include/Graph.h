@@ -95,6 +95,12 @@ public:
     std::vector<float> fCostHistory;
   };
 
+  //struct AStarSetting {
+  //  float elevation;    // What is the elevation range limit for start and end node to connect with other nodes. between -elevation and elevation.
+  //} mSetting;
+
+  //AStarSetting& GetSetting() { return mSetting; }
+
   // Put the G cost and H cost in the AdjList (G cost is accumulated from path, H cost is cost to end point)
 
   // Add starting and ending adjList into mData at the back, so startnode = end-2, endnode = end-1
@@ -103,6 +109,9 @@ public:
   std::vector<glm::vec3> AStarPath(glm::vec3 const& start, glm::vec3 const& end); // Generates the AStar path for the graph
 private:
   void AStarInit(glm::vec3 const& start, glm::vec3 const& end);
+
+  // Connects the start node and end node to graph
+  //void ConnectStartAndEnd();
   void AStarExit();
   float CalcHCost(glm::vec3 const& p0, glm::vec3 const& p1);    // TODO find out the most suitable heuristic cost function
   std::vector<glm::vec3> MasterPath(AdjList* tailNode);
