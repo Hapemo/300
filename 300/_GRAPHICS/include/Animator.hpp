@@ -46,7 +46,8 @@ namespace GFX
         void SetAnimation(_GEOM::Animation*);
         void UpdateAnimation(float dt, const glm::mat4&, const glm::mat4& LTW);
 
-        bool mIsPaused{ 0 };
+        bool                            mIsPaused{ 0 };
+        std::pair<bool, std::string>    mToChangeMeshDelayed;
 
     private:
         void CalculateBoneTransform(const _GEOM::AssimpNodeData* node, glm::mat4 parentTransform, const glm::mat4& LTW);

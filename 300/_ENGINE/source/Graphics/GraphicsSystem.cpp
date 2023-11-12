@@ -152,6 +152,7 @@ void GraphicsSystem::Update(float dt)
 	// Retrieve and update the mesh instances to be drawn
 	auto meshRendererInstances = systemManager->ecs->GetEntitiesWith<MeshRenderer>();
 	int animationID{ 0 };
+	bool hasanimator{false};
 
 	for (Entity inst : meshRendererInstances)
 	{
@@ -160,11 +161,25 @@ void GraphicsSystem::Update(float dt)
 		// if the mesh instance is not active, skip it
 		if (meshRenderer.mMeshRef.getdata(systemManager->mResourceTySystem->m_ResourceInstance) == nullptr)
 			continue;
-	
 		
 		// gives me the mesh
 		void *tt = meshRenderer.mMeshRef.getdata(systemManager->mResourceTySystem->m_ResourceInstance);
 		GFX::Mesh &meshinst = *reinterpret_cast<GFX::Mesh *>(tt);
+
+		hasanimator				= inst.HasComponent<Animator>();
+		if (hasanimator)
+		{
+			Animator& animatorInst	= inst.GetComponent<Animator>();
+
+			// handles the change of mesh when called in the scripts
+			float lAllowance = animatorInst.mAnimator.m_CurrentAnimation->m_TicksPerSecond * dt;
+			if (animatorInst.mAnimator.mToChangeMeshDelayed.first && (animatorInst.mAnimator.m_CurrentTime <= lAllowance))
+			{
+				// the mesh change delayed flag is set and the animation is completed, change the mesh
+				animatorInst.mAnimator.mToChangeMeshDelayed.first = false;
+				meshRenderer.SetMesh(animatorInst.mAnimator.mToChangeMeshDelayed.second, inst);
+			}
+		}
 
 		{
 			// Setting the bloom threshold once per loop
@@ -262,8 +277,7 @@ void GraphicsSystem::Update(float dt)
 		}
 
 		// Update the animation
-		bool hasanimation = inst.HasComponent<Animator>();
-		if (hasanimation && _ENABLE_ANIMATIONS && systemManager->mGraphicsSystem->m_EnableGlobalAnimations)
+		if (hasanimator && _ENABLE_ANIMATIONS && systemManager->mGraphicsSystem->m_EnableGlobalAnimations)
 		{
 			Animator& animatorInst = inst.GetComponent<Animator>();
 
@@ -281,7 +295,7 @@ void GraphicsSystem::Update(float dt)
 		}
 
 		// animations are present
-		if (hasanimation) {
+		if (hasanimator) {
 			AddInstance(meshinst, final, meshRenderer.mInstanceColor, static_cast<int>(m_Materials.size()), meshRenderer.mBloomThreshold, static_cast<unsigned>(inst.id), animationID++);
 		}
 		else {
@@ -1469,10 +1483,45 @@ void MeshRenderer::SetMesh(const std::string& meshName, Entity inst)
 	mMeshPath = systemManager->mResourceTySystem->compiled_geom_path + meshName + ".geom";
 
 	GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mMeshRef.data);
+	if (inst.HasComponent<Animator>())
+	{
+		if (meshinst->mHasAnimation) {
+			// change the animation to the new mesh's
+			inst.GetComponent<Animator>().mAnimator.SetAnimation(&meshinst->mAnimation[0]);
+		}
+
+		else {
+			// the new mesh has no animation, but the current entity has an animator component
+			inst.GetComponent<Animator>().mAnimator.SetAnimation(nullptr);
+		}
+	}
+}
+
+
+void MeshRenderer::SetMeshDelayed(const std::string& meshName, Entity inst)
+{
+	// gets the guid from the fbx descriptor file
+	std::string descFilepath = systemManager->mResourceTySystem->fbx_path + meshName + ".fbx.desc";
+	unsigned guid = _GEOM::GetGUID(descFilepath);
+
+	GFX::Mesh* meshinst = systemManager->mResourceTySystem->get_mesh(guid);
+
 	if (inst.HasComponent<Animator>() && meshinst->mHasAnimation)
 	{
-		// change the animation to the new mesh's
-		inst.GetComponent<Animator>().mAnimator.SetAnimation(&meshinst->mAnimation[0]);
+		// animation is available, then set the animation after current animation is done
+		auto& animatorinst = inst.GetComponent<Animator>();
+		animatorinst.mAnimator.mToChangeMeshDelayed.first = true;
+		animatorinst.mAnimator.mToChangeMeshDelayed.second = meshName;
+	}
+
+	else
+	{
+		// there is no animation, then set the mesh immediately
+		mMeshRef.data	= reinterpret_cast<void*>(meshinst);
+		mMeshPath		= systemManager->mResourceTySystem->compiled_geom_path + meshName + ".geom";
+
+		if (inst.HasComponent<Animator>())
+			inst.GetComponent<Animator>().mAnimator.SetAnimation(nullptr);	// reset the animation as needed
 	}
 }
 

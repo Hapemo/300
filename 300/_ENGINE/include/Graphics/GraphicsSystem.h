@@ -194,6 +194,7 @@ public:
 	void SetAllEntityBloomThreshold(glm::vec4 threshold, std::string meshName);
 	void SetGlobalBloomExposure(float exp) { mAmbientBloomExposure = exp; }
 
+
 	// -- Camera Functions --
 	/***************************************************************************/
 	/*!
