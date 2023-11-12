@@ -21,11 +21,18 @@ class ALGraph;
 
 class GraphData {
 public:
-  void AddDEdge(glm::vec3 src, glm::vec3 dst);
+  GraphData() : mData() {}
+  GraphData(std::string const& _filePath); // Load in graph from file path
+  void SaveGraph(std::string const& _filePath); // Save graph into file path
+
+  void AddDEdge(glm::vec3 src, glm::vec3 dst); // This version will add dst to point if it can't find dst as a point
+  void AddDEdgeSafe(glm::vec3 src, glm::vec3 dst); // This version will not add dst to point if it can't find dst as a point
   void AddUEdge(glm::vec3 p0, glm::vec3 p1);
   void AddPoint(glm::vec3 point);
+  // Delete a point and all edges connecting to it
   void DeletePoint(glm::vec3 _point);
-  void DeleteEdge(glm::vec3 p0, glm::vec3 p1);
+  void DeleteUEdge(glm::vec3 p0, glm::vec3 p1);
+  void DeleteDEdge(glm::vec3 src, glm::vec3 dst);
   bool CheckForEdge(glm::vec3 src, glm::vec3 dst);
   // Get the point's edges. If can't find point, make a new point
   std::vector<glm::vec3>& GetPointEdges(glm::vec3 point);
@@ -33,7 +40,12 @@ public:
   // Convert this graph data into a ALGraph
   ALGraph MakeALGraph(); // Make a non-dynamic container for efficiency
 
+
   std::vector<std::pair<glm::vec3, std::vector<glm::vec3>>> mData;
+
+  // The format to decode is "(x,y,z)"
+  static glm::vec3 StrToVec3(std::string const& str);
+  static std::string Vec3ToStr(glm::vec3 const& v);
 };
 
 class ALGraph {

@@ -380,7 +380,9 @@ void Healthbar::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& 
 	writer.StartObject();
 	Serialize(writer, "healthcolor", mHealthColor);
 	Serialize(writer, "backcolor", mBackColor);
-	Serialize(writer, "health", health);
+	Serialize(writer, "health", mHealth);
+	Serialize(writer, "width", mWidth);
+	Serialize(writer, "height", mHeight);
 	writer.EndObject();
 }
 
@@ -388,5 +390,7 @@ void Healthbar::DeserializeSelf(rapidjson::Value& reader)
 {
 	Deserialize(reader, "healthcolor", mHealthColor);
 	Deserialize(reader, "backcolor", mBackColor);
-	Deserialize(reader, "health", health);
+	Deserialize(reader, "health", mHealth);
+	Deserialize(reader, "width", mWidth);
+	Deserialize(reader, "height", mHeight);
 }

@@ -1,0 +1,56 @@
+{
+    "entityid": 93,
+    "general": {
+        "name": "GraphPoint",
+        "tagid": 7,
+        "subtag": 0,
+        "isActive": true,
+        "isPaused": false
+    },
+    "transform": {
+        "scale": {
+            "x": 5.0,
+            "y": 5.0,
+            "z": 5.0
+        },
+        "rotate": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "translate": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        }
+    },
+    "meshrenderer": {
+        "vert": "../assets/shader_files/pointLight_vert.glsl",
+        "frag": "../assets/shader_files/pointLight_frag.glsl",
+        "meshrefid": 2285,
+        "instancecolor": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 1.0,
+            "w": 1.0
+        },
+        "materialinstance": [
+            "../assets/Compressed/Cube_Texture_2.ctexture",
+            " ",
+            " ",
+            " ",
+            " "
+        ],
+        "mesh": "../assets/compiled_geom/cube.geom",
+        "texturerefid": [
+            4243,
+            0,
+            0,
+            0,
+            0
+        ]
+    },
+    "prefab": {
+        "prefab": "GraphPoint"
+    }
+}

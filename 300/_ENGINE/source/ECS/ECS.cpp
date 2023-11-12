@@ -11,7 +11,7 @@
 #include "ResourceManagerTy.h"
 #include "AI/AIManager.h"
 
-std::vector<std::string> ECS::mEntityTags({ "PLAYER", "ENEMY", "BULLET", "FLOOR", "WALL", "TELEPORTER", "UI"});
+std::vector<std::string> ECS::mEntityTags({ "PLAYER", "ENEMY", "BULLET", "FLOOR", "WALL", "TELEPORTER", "UI", "GRAPH"});
 
 bool Entity::ShouldRun() {
 	assert(HasComponent<General>() && std::string("There is no general component when attempting to change Entity's isActive").c_str());
@@ -230,6 +230,14 @@ Entity ECS::NewEntityFromPrefab(std::string prefabName, const glm::vec3& pos)
 
 	if (e.HasComponent<RigidBody>())
 		systemManager->mPhysicsSystem->AddEntity(e);
+	return e;
+}
+
+Entity ECS::NewEntityPrefabForGraph(std::string prefabName, const glm::vec3& pos) {
+	Entity e(ObjectFactory::DeserializePrefab("../assets/Prefabs/" + prefabName + ".prefab"));
+	e.GetComponent<Transform>().mTranslate = pos;
+	PASSERT(static_cast<uint32_t>(e.id) != 0);
+
 	return e;
 }
 

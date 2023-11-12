@@ -13,6 +13,7 @@
 #include "Input/InputMapSystem.h"
 #include "Debug/EnginePerformance.h"
 #include "AI/AIManager.h"
+#include "AI/PathfinderManager.h"
 
 SystemManager *systemManager;
 
@@ -29,6 +30,7 @@ SystemManager::SystemManager()
 	mLogger = std::make_unique<Logger>();
 	mInputActionSystem = std::make_unique<InputMapSystem>();
 	mAISystem = std::make_unique<AIManager>();
+	mPathfinderSystem = std::make_unique<PathfinderManager>();
 	ecs = new ECS();
 }
 
@@ -48,6 +50,7 @@ void SystemManager::Init(bool isEditor, GFX::Window *window)
 	mScriptingSystem.get()->Init();
 	PINFO("Init Scripting System");
 
+	mPathfinderSystem.get()->Init();
 
 	//mResourceSystem.get()->Init();
 	mResourceTySystem.get()->Init();
@@ -191,3 +194,5 @@ AIManager* SystemManager::GetAIManager()
 {
 	return mAISystem.get();
 }
+
+PathfinderManager* SystemManager::GetPathfinderManager() { return mPathfinderSystem.get(); }

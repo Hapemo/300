@@ -28,6 +28,7 @@
     <ClCompile Include="source\Editor\MenuTab.cpp" />
     <ClCompile Include="source\Editor\ShaderCompiler.cpp" />
     <ClCompile Include="source\EditorReflection\EditorReflection.cpp" />
+    <ClCompile Include="source\Editor\PathfinderWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\EditorApplication.h" />
@@ -59,5 +60,6 @@
     <ClInclude Include="include\Editor\MenuTab.h" />
     <ClInclude Include="include\Editor\ShaderCompiler.h" />
     <ClInclude Include="include\EditorReflection\EditorReflection.h" />
+    <ClInclude Include="include\Editor\PathfinderWindow.h" />
   </ItemGroup>
 </Project>

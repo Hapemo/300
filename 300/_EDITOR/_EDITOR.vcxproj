@@ -208,6 +208,7 @@ copy "$(ProjectDir)fa-solid-900.ttf" "$(TargetDir)fa-solid-900.ttf" /Y</Command>
     <ClCompile Include="source\Editor\KeybindWindow.cpp" />
     <ClCompile Include="source\Editor\MenuPanel.cpp" />
     <ClCompile Include="source\Editor\MenuTab.cpp" />
+    <ClCompile Include="source\Editor\PathfinderWindow.cpp" />
     <ClCompile Include="source\Editor\Performance.cpp" />
     <ClCompile Include="source\Editor\PrefabWindow.cpp" />
     <ClCompile Include="source\Editor\SceneWindow.cpp" />
@@ -238,6 +239,7 @@ copy "$(ProjectDir)fa-solid-900.ttf" "$(TargetDir)fa-solid-900.ttf" /Y</Command>
     <ClInclude Include="include\Editor\KeybindWindow.h" />
     <ClInclude Include="include\Editor\MenuPanel.h" />
     <ClInclude Include="include\Editor\MenuTab.h" />
+    <ClInclude Include="include\Editor\PathfinderWindow.h" />
     <ClInclude Include="include\Editor\Performance.h" />
     <ClInclude Include="include\Editor\PrefabWindow.h" />
     <ClInclude Include="include\Editor\SceneWindow.h" />
