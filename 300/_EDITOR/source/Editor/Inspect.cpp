@@ -1475,6 +1475,7 @@ void AISetting::Inspect() {
 		// Entity mTarget;								// AI's target
 		ImGui::InputText("Target Name", &mTargetName);
 
+
 		if (ImGui::Button("Update Target"))
 			mTarget = systemManager->mGameStateSystem->GetEntity(mTargetName);
 	}

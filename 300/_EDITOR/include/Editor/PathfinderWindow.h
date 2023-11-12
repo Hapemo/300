@@ -31,5 +31,9 @@ public:
 
 
 	static bool openWindow;
-
+	Entity mLatestPoint;
+	Entity mLatestEdge;
+	std::queue<Entity> mEdgePoints; // Should have maximum 2 at a time
+	//std::array<Entity, 2> mEdgeHistory;
+	//std::queue<Entity, std::list<Entity>> mSelectedEntityHistory;
 };
