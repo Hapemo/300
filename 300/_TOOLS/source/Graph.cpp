@@ -197,7 +197,7 @@ ALGraph GraphData::MakeALGraph() {
       assert((it != graph.mData.end()) && "Unable to add edge to AdjList since the other connection point does not exist in ALGraph's mData");
 
       // calculate the weight and get pointer, then add it into the edge list
-      float weight = abs(glm::length(currPoint.point - neighbor));
+      float weight = ALGraph::CalcHCost(currPoint.point, neighbor);
       currPoint.edges.emplace_back(ALGraph::Edge(&*it, weight));
     }
   }
@@ -287,12 +287,12 @@ void ALGraph::AStarInit(glm::vec3 const& start, glm::vec3 const& end) {
 
 }
 
-std::vector<glm::vec3> ALGraph::AStarPath(glm::vec3 const& start, glm::vec3 const& end) {
+std::vector<glm::vec3> ALGraph::AStarPath() {
   // Initialise containers (open list, close list)
   // Put starting node on the open list
   OpenList openList;
 
-  AStarInit(start, end);
+  //AStarInit(start, end);
   openList.Insert(&*mData.end()-2); // Add start node to openList
   AdjList* endNode{ &*mData.end()-1 };
 
@@ -323,7 +323,7 @@ std::vector<glm::vec3> ALGraph::AStarPath(glm::vec3 const& start, glm::vec3 cons
     }
   }
 
-  AStarExit();
+  //AStarExit();
   return std::vector<glm::vec3>();
 }
 
@@ -365,7 +365,7 @@ std::vector<glm::vec3> ALGraph::MasterPath(AdjList* tailNode) {
     path.push_back(tailNode->point);
   }
 
-  AStarExit();
+  //AStarExit();
   return path;
 }
 

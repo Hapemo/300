@@ -1481,6 +1481,11 @@ void AISetting::Inspect() {
 
 		if (ImGui::Button("Update Target"))
 			mTarget = systemManager->mGameStateSystem->GetEntity(mTargetName);
+
+		if (mTargetName.size())
+			ImGui::InputText("Pathfinder Name", &mGraphDataName);
+		else
+			ImGui::Text("Target name is required for pathfinder");
 	}
 
 	if (delete_component == false)

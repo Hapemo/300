@@ -4,6 +4,7 @@
 #include "FPSManager.h"
 #include "GameState/GameStateManager.h"
 #include "Physics/PhysicsSystem.h"
+#include "AI/PathfinderManager.h"
 
 const std::array<std::string, static_cast<size_t>(E_MOVEMENT_TYPE::SIZE)> AIManager::mMovementTypeArray{ MovementTypeArrayInit() };
 
@@ -28,10 +29,22 @@ void AIManager::Update(float _dt) {
 
 
 glm::vec3 AIManager::GetDirection(Entity _e) {
+	static bool runOnce{ false };
 	glm::vec3 dir{};
 	AISetting const& aiSetting = _e.GetComponent<AISetting>();
 	switch (aiSetting.mMovementType) {
-	case E_MOVEMENT_TYPE::GROUND_DIRECT: dir = CalcGroundAIDir(_e);
+	case E_MOVEMENT_TYPE::GROUND_DIRECT:
+		//if (aiSetting.mGraphDataName.size()) {
+		//	if (!runOnce) {
+		//		runOnce = !runOnce;
+		//		std::vector<glm::vec3> astarPath = systemManager->GetPathfinderManager()->AStarPath(_e, aiSetting.GetTarget(), { 20.f, {"ENEMY", "GRAPH"}});
+		//		if (astarPath.size())
+		//			dir = astarPath[1] - astarPath[0];
+		//		else dir = glm::vec3();
+		//	} else dir = glm::vec3();
+		//} else {
+			dir = CalcGroundAIDir(_e);
+		//}
 		break;
 	case E_MOVEMENT_TYPE::AIR_HOVER: dir = CalcAirAIDir(_e);
 		break;

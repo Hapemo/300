@@ -106,14 +106,14 @@ public:
   // Add starting and ending adjList into mData at the back, so startnode = end-2, endnode = end-1
   // Do line of sight check with all the nodes and generate the edges for start and end node
   // Calculate G and H cost for every nodes
-  std::vector<glm::vec3> AStarPath(glm::vec3 const& start, glm::vec3 const& end); // Generates the AStar path for the graph
+  std::vector<glm::vec3> AStarPath(); // Generates the AStar path for the graph
+  static float CalcHCost(glm::vec3 const& p0, glm::vec3 const& p1);    // TODO find out the most suitable heuristic cost function
 private:
   void AStarInit(glm::vec3 const& start, glm::vec3 const& end);
 
   // Connects the start node and end node to graph
   //void ConnectStartAndEnd();
   void AStarExit();
-  float CalcHCost(glm::vec3 const& p0, glm::vec3 const& p1);    // TODO find out the most suitable heuristic cost function
   std::vector<glm::vec3> MasterPath(AdjList* tailNode);
 };
 

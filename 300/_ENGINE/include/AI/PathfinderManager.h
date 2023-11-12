@@ -19,6 +19,12 @@
 
 void TestPathfinderManager();
 
+struct AStarSetting {
+	//AStarSetting() : elevation(), ignoreTags() {}
+	float elevation;								// acceptable range of elevation between start or end node with other node
+	std::vector<std::string> ignoreTags;	// Tags of entity to ignore the line of sight test
+};
+
 class PathfinderManager {
 public:
 	PathfinderManager();
@@ -33,6 +39,20 @@ public:
 	void LoadGraphData(std::filesystem::path const& _path);
 	// Load Graph Data file in, convert it into ALGraph and return a shared pointer to it back to the entity.
 	//ALGraph* LoadGraphData(std::string _filename);
+
+	//Pathfinder functionalities. Pathfinding from one entity to another
+	std::vector<glm::vec3> AStarPath(Entity _start, Entity _end, AStarSetting const& aStarSetting);
+private:
+	// Resetting all the nodes and connecting the start and end node to the alGraph
+	void InitAStar(Entity _start, Entity _end, ALGraph& alGraph, AStarSetting const& aStarSetting);
+	// Removing the last 2 nodes, the start and end points
+	void EndAStar(ALGraph& alGraph);
+
+	// Connect the src node with all other visible nodes in alGraph
+	void ConnectVisibleNodes(Entity src_e, ALGraph::AdjList& src, ALGraph& alGraph, AStarSetting const& aStarSetting);
+
+public:
+
 
 	// AIManager can handle the pathfinding part by calling AISetting.ALGraphsharedpointer.AStarpathfind(), smth like tat
 

@@ -3,6 +3,7 @@
 #include "ConfigManager.h"
 #include "Graph.h"
 #include "ECS/ECS_Components.h"
+#include "Physics/PhysicsSystem.h"
 
 void TestPathfinderManager() {
 	//systemManager->mPathfinderSystem.get()->ReloadALGraph("graphData2");
@@ -53,6 +54,108 @@ void PathfinderManager::LoadGraphData(std::filesystem::path const& _path) {
 	mALGraphList.emplace_back(mGraphDataList.back().MakeALGraph());
 }
 
+//------------------
+// AStar Functionalitiies
+//------------------ 
+
+std::vector<glm::vec3> PathfinderManager::AStarPath(Entity _start, Entity _end, AStarSetting const& aStarSetting) {
+	using NODE_STATE = ALGraph::NODE_STATE;
+	using AdjList = ALGraph::AdjList;
+	using Edge = ALGraph::Edge;
+	// Initialise containers (open list, close list)
+// Put starting node on the open list
+	
+	// Find ALGraph to do pathfinding
+	ALGraph* alGraph{ nullptr };
+	for (int i{}; i < mGraphDataNameList.size(); ++i) {
+		if (mGraphDataNameList[i] != _start.GetComponent<AISetting>().mGraphDataName) continue;
+		alGraph = &mALGraphList[i];
+		break;
+	}
+	if (!alGraph) {
+		PWARNING("Unable to find %s to perform pathfinding", _start.GetComponent<AISetting>().mGraphDataName);
+		return std::vector<glm::vec3>();
+	}
+
+	// AStar pathfinding portion
+	InitAStar(_start, _end, *alGraph, aStarSetting);
+	std::vector<glm::vec3> returnVal{}; //= alGraph->AStarPath();
+	EndAStar(*alGraph);
+
+	return returnVal;
+}
+
+void PathfinderManager::InitAStar(Entity _start, Entity _end, ALGraph& alGraph, AStarSetting const& aStarSetting) {
+	// Add start and end nodes
+	auto& mData = alGraph.mData;
+
+	glm::vec3 const& start = _start.GetComponent<Transform>().mTranslate;
+	glm::vec3 const& end = _end.GetComponent<Transform>().mTranslate;
+	
+	mData.push_back(decltype(alGraph.mData)::value_type());
+	mData.back().point = start;
+	mData.push_back(decltype(alGraph.mData)::value_type());
+	mData.back().point = end;
+
+	ConnectVisibleNodes(_start, *(mData.end()-2), alGraph, aStarSetting);
+	ConnectVisibleNodes(_end, *(mData.end()-1), alGraph, aStarSetting);
+
+	// Initialise HCost and reset all other values
+	for (ALGraph::AdjList& node : mData) {
+		node.hCost = ALGraph::CalcHCost(node.point, end);
+		node.gCost = 0;
+		node.state = ALGraph::NODE_STATE::NONE;
+		node.parent = nullptr;
+	}
+}
+
+void PathfinderManager::EndAStar(ALGraph& alGraph) {
+	alGraph.mData.pop_back();
+	alGraph.mData.pop_back();
+}
+
+// TODO DEBUG THIS
+// The start and end point is unable to connect with any points for some reason. Check what the ray collided with and print the entity's name.
+// 
+void PathfinderManager::ConnectVisibleNodes(Entity src_e, ALGraph::AdjList& src, ALGraph& alGraph, AStarSetting const& aStarSetting) {
+	for (ALGraph::AdjList& node : alGraph.mData) {
+		// In each node of the graph, if elevation difference is too much, ignore.
+		if ((abs(abs(src.point.y) - abs(node.point.y))) > aStarSetting.elevation) continue;
+		// If it's the same node, ignore
+		if (src.point == node.point) continue;
+
+		// Compare the node and src for line of sight test and get a list of entity hit
+		std::vector<Entity> entitiesHit = systemManager->GetPhysicsPointer()->Visible(src.point, node.point, FLT_MAX);
+
+		// Remove the start entity
+		entitiesHit.erase(std::find(entitiesHit.begin(), entitiesHit.end(), src_e));
+		std::cout << "When doing visibility test between " << src.point << " and " << node.point << ", these are the entities hit\n";
+		// Check the remaining tag of entities to see which ones you wanna ignore
+		for (int i{}; i < entitiesHit.size(); ++i) {
+			std::cout << "Entity " << static_cast<int>(entitiesHit[i].id) << ": " << entitiesHit[i].GetComponent<General>().name << '\n';
+			static int counter{};
+			entitiesHit[i].GetComponent<General>().name = entitiesHit[i].GetComponent<General>().name + std::to_string(++counter);
+			for (std::string const& tag : aStarSetting.ignoreTags) {
+				if (entitiesHit[i].GetComponent<General>().GetTag() == tag) {
+					entitiesHit.erase(entitiesHit.begin() + i);
+					printf("erased\n");
+					--i;
+				}
+			}
+		}
+		std::cout << '\n';
+		//for (auto it{ entitiesHit.begin() }; it != entitiesHit.end(); ++it) {
+		//}
+
+		// After removing those to ignore, if there's still some remains, ignore this point
+		if (entitiesHit.size()) continue;
+
+		// If it passes all the test, add both to each other neighbor, UEdge
+		float dist = ALGraph::CalcHCost(src.point, node.point);
+		src.edges.push_back(ALGraph::Edge(&node, dist));
+		node.edges.push_back(ALGraph::Edge(&src, dist));
+	}
+}
 
 
 //------------------
