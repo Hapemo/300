@@ -349,7 +349,8 @@ private:
 	GLint m_DeferredLightCountLocation{};
 
 	// -- Compute Shader WIP --
-	GFX::ComputeShader computeShader;
+	GFX::ComputeShader computeDeferred;
+	void ComputeDeferredLight();
 
 	// -- Shader Setup --
 	void SetupAllShaders();

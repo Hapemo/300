@@ -14,8 +14,7 @@
 #define  _TEST_HEALTHBAR_SHADER				false
 #define  ENABLE_UI_IN_EDITOR_SCENE			true
 #define  ENABLE_CROSSHAIR_IN_EDITOR_SCENE	false
-#define  TEST_COMPUTE_SHADER				false	
-#define  TEST_DEFERRED_LIGHT				false	
+#define  TEST_DEFERRED_LIGHT				true	
 
 #include <ECS/ECS_Components.h>
 #include <Graphics/GraphicsSystem.h>
@@ -106,10 +105,15 @@ void GraphicsSystem::Init()
 		UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_GAME, 0.f);
 	}
 
-#if TEST_COMPUTE_SHADER
-	computeShader.CreateShaderFromFile("../assets/shader_files/computeTest.glsl");
-	glBindImageTexture(0, m_Fbo.GetColorAttachment(), 0, GL_FALSE, 0, GL_READ_WRITE, GL_RGBA32F);
-#endif
+	computeDeferred.CreateShaderFromFile("../assets/shader_files/computeDeferred.glsl");
+	// Output
+	glBindImageTexture(0, m_Fbo.GetColorAttachment(), 0, GL_FALSE, 0, GL_WRITE_ONLY, GL_RGBA32F);
+
+	// Input
+	glBindImageTexture(1, m_IntermediateFBO.GetFragPosAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
+	glBindImageTexture(2, m_IntermediateFBO.GetNormalAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
+	glBindImageTexture(3, m_IntermediateFBO.GetAlbedoSpecAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
+	glBindImageTexture(4, m_IntermediateFBO.GetEmissionAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
 
 	PINFO("Window size: %d, %d", m_Window->size().x, m_Window->size().y);
 }
@@ -458,7 +462,8 @@ void GraphicsSystem::EditorDraw(float dt)
 	// Copy pixel data from intermediate FBO to editor FBO
 	m_IntermediateFBO.BlitFramebuffer(m_Fbo.GetID());
 #if TEST_DEFERRED_LIGHT
-	DrawDeferredLight(m_EditorCamera.position(), m_Fbo);
+	//DrawDeferredLight(m_EditorCamera.position(), m_Fbo);
+	ComputeDeferredLight();
 	glEnable(GL_BLEND);
 #endif
 
@@ -693,26 +698,6 @@ void GraphicsSystem::GameDraw(float dt)
 	m_HealthbarMesh.PrepForDraw();
 	DrawAllHealthbarInstance(gameCamVP);
 	m_HealthbarMesh.ClearInstances();	// Clear data
-
-#if TEST_COMPUTE_SHADER
-	computeShader.Activate();
-	int num_group_x = m_Width / 20;
-	int num_group_y = m_Height / 20;
-	for (int i{}; i < 50; ++i)	// Try blurring it N-times
-	{
-		glDispatchCompute(num_group_x, num_group_y, 1);
-		// make sure writing to image is done before reading
-		glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT);
-	}
-	computeShader.Deactivate();
-	// Draw image to FBO
-	m_Image2DMesh.BindVao();
-	m_DrawSceneShaderInst.Activate();
-	glBindTexture(GL_TEXTURE_2D, m_Fbo.GetColorAttachment());
-	glDrawArraysInstanced(GL_TRIANGLE_FAN, 0, 4, 1);
-	m_Image2DMesh.UnbindVao();
-	m_DrawSceneShaderInst.Deactivate();
-#endif
 
 	m_GameFbo.Unbind();
 	//m_PingPongFbo.UnloadAndClear();
@@ -1609,6 +1594,22 @@ void GraphicsSystem::SetupAllShaders()
 	std::string gBufferShader = "gBufferShader";
 	uid gBufferShaderstr(gBufferShader);
 	m_GBufferShaderInst = *systemManager->mResourceTySystem->get_Shader(gBufferShaderstr.id);
+}
+
+void GraphicsSystem::ComputeDeferredLight()
+{
+	computeDeferred.Activate();
+
+	glUniform1i(computeDeferred.GetUniformLocation("uLightCount"), m_LightCount);
+	glUniform3fv(computeDeferred.GetUniformLocation("uCamPos"), 1, &m_EditorCamera.mPosition[0]);
+
+	int num_group_x = glm::ceil(m_Width / 30);
+	int num_group_y = glm::ceil(m_Height / 30);
+	glDispatchCompute(num_group_x, num_group_y, 1);
+	// make sure writing to image is done before reading
+	glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT);
+
+	computeDeferred.Deactivate();
 }
 
 /***************************************************************************/

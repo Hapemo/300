@@ -1,7 +1,7 @@
 #version 430 core
 
 // -- Workgroup Size --
-layout(local_size_x = 20, local_size_y = 20, local_size_z = 1) in;
+layout(local_size_x = 30, local_size_y = 30, local_size_z = 1) in;
 
 // I-- INPUT --
 layout(rgba32f, binding = 1) uniform image2D gPosition;     // XYZ:  Fragment Position
@@ -75,7 +75,7 @@ void main()
 
     vec3 fragPos        = imageLoad(gPosition, texelCoord).xyz;
     vec4 normal         = imageLoad(gNormal, texelCoord);
-    vec4 gAlbedoSpec    = imageLoad(gAlbedoSpec, texelCoord);
+    vec4 albedoSpec    = imageLoad(gAlbedoSpec, texelCoord);
     vec4 emission       = imageLoad(gEmission, texelCoord);
     float roughness     = normal.w;
 
