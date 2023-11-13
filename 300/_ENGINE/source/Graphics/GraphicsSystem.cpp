@@ -87,7 +87,6 @@ void GraphicsSystem::Init()
 		uid drawSceneShaderstr(drawSceneShader);
 		m_DrawSceneShaderInst = *systemManager->mResourceTySystem->get_Shader(drawSceneShaderstr.id);
 	}
-	
 
 	// Set Cameras' starting position
 	SetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR, {38, 20, 30});									// Position of camera
@@ -463,7 +462,7 @@ void GraphicsSystem::EditorDraw(float dt)
 	m_IntermediateFBO.BlitFramebuffer(m_Fbo.GetID());
 #if TEST_DEFERRED_LIGHT
 	//DrawDeferredLight(m_EditorCamera.position(), m_Fbo);
-	ComputeDeferredLight();
+	ComputeDeferredLight(true);
 	glEnable(GL_BLEND);
 #endif
 
@@ -1596,8 +1595,13 @@ void GraphicsSystem::SetupAllShaders()
 	m_GBufferShaderInst = *systemManager->mResourceTySystem->get_Shader(gBufferShaderstr.id);
 }
 
-void GraphicsSystem::ComputeDeferredLight()
+void GraphicsSystem::ComputeDeferredLight(bool editorDraw)
 {
+	if (editorDraw)	// Draw to Editor FBO
+		glBindImageTexture(0, m_Fbo.GetColorAttachment(), 0, GL_FALSE, 0, GL_WRITE_ONLY, GL_RGBA32F);
+	else
+		glBindImageTexture(0, m_GameFbo.GetColorAttachment(), 0, GL_FALSE, 0, GL_WRITE_ONLY, GL_RGBA32F);
+
 	computeDeferred.Activate();
 
 	glUniform1i(computeDeferred.GetUniformLocation("uLightCount"), m_LightCount);

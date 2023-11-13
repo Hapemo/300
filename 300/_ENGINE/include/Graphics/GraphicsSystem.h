@@ -309,7 +309,7 @@ private:
 	GFX::SSBO						m_FinalBoneMatrixSsbo;
 	std::vector<mat4>				finalBoneMatrices;
 
-	const int						MAX_POINT_LIGHT = 100;
+	const int						MAX_POINT_LIGHT = 200;
 	GFX::SSBO						m_PointLightSsbo;
 	std::vector<PointLightSSBO>		pointLights;
 
@@ -350,7 +350,7 @@ private:
 
 	// -- Compute Shader WIP --
 	GFX::ComputeShader computeDeferred;
-	void ComputeDeferredLight();
+	void ComputeDeferredLight(bool editorDraw = false);
 
 	// -- Shader Setup --
 	void SetupAllShaders();
