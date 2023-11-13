@@ -59,6 +59,25 @@ glm::vec3 AIManager::GetDirection(Entity _e) {
 	return dir;
 }
 
+bool AIManager::ConeOfSight(Entity _eye, Entity _tgt, float _horizontalAngle, float _verticalLimit) {
+	Transform& eyeTrans{ _eye.GetComponent<Transform>() };
+	Transform& tgtTrans{ _tgt.GetComponent<Transform>() };
+	// Checks if target is too high to see
+	if (abs(abs(eyeTrans.mTranslate.y) - abs(tgtTrans.mTranslate.y)) > _verticalLimit) return false;
+
+	// Checks if target is within vision cone
+	glm::vec3 const& vector1 = GetDirection(_eye);
+	glm::vec3 const& vector2 = tgtTrans.mTranslate - eyeTrans.mTranslate;
+
+	float angle = glm::acos(glm::dot(vector1, vector2) / (glm::length(vector1) * glm::length(vector2)));
+	if (angle > _horizontalAngle) return false;
+
+	// Checks if source can raycast to target TODO
+
+
+	return true;
+}
+
 void AIManager::TrackPlayerPosition(float _dt) {
 	if (mPlayerEntity.id == entt::null) return;
 	

@@ -55,21 +55,7 @@ function Update()
     
     -- vec = Vec3.new(50,0,50)
     vec = aiSys:GetDirection(entity)
-
-    firstvec.x = 0.0
-    firstvec.y = 0.0
-    firstvec.z = 1.0
-    secondvec.x = vec.x
-    secondvec.y = 0
-    secondvec.z = vec.z
-
-    dotDivideMag = vec.z / math.sqrt(vec.x * vec.x + vec.z * vec.z)
-    radians = math.acos(dotDivideMag)
-    degree = radians * 180.0 / 3.141596
-    if (vec.x < 0) then
-        degree = 360.0 - degree
-    end
-    entity:GetTransform().mRotate.y = degree
+    entity:GetTransform().mRotate.y = Helper.DirectionToAngle(vec)
 
     vec.x = vec.x * 20;
     vec.y = entity:GetRigidBody().mVelocity.y;

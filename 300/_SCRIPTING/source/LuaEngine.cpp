@@ -419,7 +419,8 @@ void LuaAIManager()
         "mAISystem", sol::constructors<>(),
         "SetPredictiveVelocity", &AIManager::SetPredictiveVelocity,
         "PredictiveShootPlayer", &AIManager::PredictiveShootPlayer,
-        "GetDirection", &AIManager::GetDirection
+        "GetDirection", &AIManager::GetDirection,
+        "ConeOfSight", &AIManager::ConeOfSight
         );
 }
 
