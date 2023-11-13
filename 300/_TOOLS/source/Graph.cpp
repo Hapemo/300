@@ -13,6 +13,8 @@ and dijkstra algorithm to find a path.
 //#include "Physics/PhysicsSystem.h"
 #include <functional>
 
+#define AStarDebugPrint 1
+
 //---------------------------------------------
 // Graph Data
 //---------------------------------------------
@@ -248,6 +250,33 @@ void TestGraph() {
   std::cout << "---graph test finish---\n";
 }
 
+//-------------------------------------------------------
+// ALGraph
+//-------------------------------------------------------
+ALGraph& ALGraph::operator=(ALGraph const& _graph) {
+  // Copy over the points
+  mData = _graph.mData;
+
+  // Reset the pointer values
+  for (AdjList& adjList : mData) {
+    adjList.parent = nullptr;
+  }
+
+  // Link the edges (Expecting distance to be copied over properly
+  for (int adjCount{}; adjCount < mData.size(); ++adjCount) {
+    std::vector<Edge>& thisEdges = mData[adjCount].edges;
+    std::vector<Edge>const& thatEdges = _graph.mData[adjCount].edges;
+
+    for (int edgeCount{}; edgeCount < thatEdges.size(); ++edgeCount) {
+      glm::vec3 const& neighborPoint = thatEdges[edgeCount].vertex->point;
+      // Find adjList with same point
+      auto it = std::find(mData.begin(), mData.end(), [neighborPoint] (AdjList const& adjList) { return adjList.point == neighborPoint; });
+      thisEdges[edgeCount].vertex = &*it;
+    }
+  }
+}
+
+
 void ALGraph::Print() {
   std::cout << "---Printing ALGraph start---\n";
   for (AdjList& adjList : mData) {
@@ -293,11 +322,19 @@ std::vector<glm::vec3> ALGraph::AStarPath() {
   OpenList openList;
 
   //AStarInit(start, end);
-  openList.Insert(&*mData.end()-2); // Add start node to openList
-  AdjList* endNode{ &*mData.end()-1 };
+  openList.Insert(&*(mData.end()-2)); // Add start node to openList
+  AdjList* endNode{ &*(mData.end()-1) };
 
   while (!openList.IsEmpty()) {
+#if AStarDebugPrint
+    openList.Print();
+#endif
     AdjList* currNode = openList.PopLowestCostNode();
+#if AStarDebugPrint
+    std::cout << "currNode: ";
+    PrintVec(currNode->point);
+    std::cout << ", weight: "<< currNode->gCost << '\n';
+#endif
 
     if (currNode == endNode) {
       return MasterPath(currNode);
@@ -305,20 +342,39 @@ std::vector<glm::vec3> ALGraph::AStarPath() {
 
     currNode->state = NODE_STATE::CLOSE;
 
+#if AStarDebugPrint
+    std::cout << "Exploring Neighbor Nodes:\n";
+#endif
     for (Edge& edge : currNode->edges) {
       AdjList* neighbor = edge.vertex;
       float newGCost = currNode->gCost + edge.distance;
       float fCost = newGCost + neighbor->hCost;
 
+#if AStarDebugPrint
+      std::cout << "neighbor node: ";
+      PrintVec(edge.vertex->point);
+      std::cout << ", newGCost: "<< newGCost << '\n';
+#endif
+
       if (neighbor->state == NODE_STATE::NONE) {
         neighbor->parent = currNode;
         neighbor->gCost = newGCost;
         openList.Insert(neighbor);
+#if AStarDebugPrint
+        std::cout << "None State -> Open State\n";
+#endif
       } else if (neighbor->gCost + neighbor->hCost > fCost) {
         neighbor->parent = currNode;
         neighbor->gCost = newGCost;
-        if (neighbor->state == NODE_STATE::CLOSE)
+        if (neighbor->state == NODE_STATE::CLOSE) {
           openList.Insert(neighbor);
+#if AStarDebugPrint
+          std::cout << "Close State -> Open State\n";
+#endif
+        }
+#if AStarDebugPrint
+        std::cout << "Remain in Open State\n";
+#endif
       }
     }
   }

@@ -51,6 +51,7 @@ public:
 class ALGraph {
 public:
   ALGraph(int _size) { mData.resize(_size); }
+  ALGraph& operator=(ALGraph const& _graph);
 
   enum NODE_STATE {
     NONE,
@@ -88,11 +89,21 @@ public:
     void Insert(AdjList* node);   // O(1)
     AdjList* PopLowestCostNode(); // O(n)
     bool IsEmpty();
+
+    void Print() {
+      std::cout << "OpenList: ";
+      for (auto& adjList : mData) {
+        glm::vec3 point = adjList->point;
+        std::cout << "(";
+        PrintVec(point);
+        std::cout << ", weight: " << adjList->gCost + adjList->hCost << "), ";
+      }
+      std::cout << '\n';
+    }
   private:
     // Sort the container, put largest fCost infront and smallest fCost behind
-    void Sort();
     std::vector<AdjList*> mData;
-    std::vector<float> fCostHistory;
+    void Sort();
   };
 
   //struct AStarSetting {

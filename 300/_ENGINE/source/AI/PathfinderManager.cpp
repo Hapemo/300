@@ -79,7 +79,7 @@ std::vector<glm::vec3> PathfinderManager::AStarPath(Entity _start, Entity _end, 
 
 	// AStar pathfinding portion
 	InitAStar(_start, _end, *alGraph, aStarSetting);
-	std::vector<glm::vec3> returnVal{}; //= alGraph->AStarPath();
+	std::vector<glm::vec3> returnVal = alGraph->AStarPath();
 	EndAStar(*alGraph);
 
 	return returnVal;
@@ -124,28 +124,16 @@ void PathfinderManager::ConnectVisibleNodes(Entity src_e, ALGraph::AdjList& src,
 		// If it's the same node, ignore
 		if (src.point == node.point) continue;
 
-		// Compare the node and src for line of sight test and get a list of entity hit
-		std::vector<Entity> entitiesHit = systemManager->GetPhysicsPointer()->Visible(src.point, node.point, FLT_MAX);
-
-		// Remove the start entity
-		entitiesHit.erase(std::find(entitiesHit.begin(), entitiesHit.end(), src_e));
-		std::cout << "When doing visibility test between " << src.point << " and " << node.point << ", these are the entities hit\n";
-		// Check the remaining tag of entities to see which ones you wanna ignore
-		for (int i{}; i < entitiesHit.size(); ++i) {
-			std::cout << "Entity " << static_cast<int>(entitiesHit[i].id) << ": " << entitiesHit[i].GetComponent<General>().name << '\n';
-			static int counter{};
-			entitiesHit[i].GetComponent<General>().name = entitiesHit[i].GetComponent<General>().name + std::to_string(++counter);
-			for (std::string const& tag : aStarSetting.ignoreTags) {
+		// Get entities in between
+		std::vector<Entity> entitiesHit = CheckEntitiesInbetween(src.point, node.point, { src_e });
+		
+		// Remove entities with certain tags
+		for (int i{}; i < entitiesHit.size(); ++i)
+			for (std::string const& tag : aStarSetting.ignoreTags)
 				if (entitiesHit[i].GetComponent<General>().GetTag() == tag) {
-					entitiesHit.erase(entitiesHit.begin() + i);
-					printf("erased\n");
-					--i;
+					entitiesHit.erase(entitiesHit.begin() + i--);
+					break;
 				}
-			}
-		}
-		std::cout << '\n';
-		//for (auto it{ entitiesHit.begin() }; it != entitiesHit.end(); ++it) {
-		//}
 
 		// After removing those to ignore, if there's still some remains, ignore this point
 		if (entitiesHit.size()) continue;
@@ -157,6 +145,19 @@ void PathfinderManager::ConnectVisibleNodes(Entity src_e, ALGraph::AdjList& src,
 	}
 }
 
+std::vector<Entity> PathfinderManager::CheckEntitiesInbetween(glm::vec3 const& _p0, glm::vec3 const& _p1, std::vector<Entity> _toIgnore) {
+	// Compare the node and src for line of sight test and get a list of entity hit
+	std::vector<Entity> entitiesHit = systemManager->GetPhysicsPointer()->Visible(_p0, _p1, glm::length(_p0-_p1));
+
+	// Remove the entities to ignore
+	for (Entity e : _toIgnore) {
+		auto it = std::find(entitiesHit.begin(), entitiesHit.end(), e);
+		if (it != entitiesHit.end())
+			entitiesHit.erase(it);
+	}
+
+	return entitiesHit;
+}
 
 //------------------
 // Editor Mode

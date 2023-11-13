@@ -51,6 +51,9 @@ private:
 	// Connect the src node with all other visible nodes in alGraph
 	void ConnectVisibleNodes(Entity src_e, ALGraph::AdjList& src, ALGraph& alGraph, AStarSetting const& aStarSetting);
 
+	// Checks for entities inbetween 2 entities
+	std::vector<Entity> CheckEntitiesInbetween(glm::vec3 const& _p0, glm::vec3 const& _p1, std::vector<Entity> _toIgnore);
+
 public:
 
 
