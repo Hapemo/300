@@ -245,7 +245,7 @@ void ResourceTy::MaterialInstance_Loader() {
 		return ret_str;
 	};
 
-	std::filesystem::path folderpath = uncompressed_texture_path.c_str();
+	std::filesystem::path folderpath = compressed_texture_path.c_str();
 
 	// Reads through all the files in the folder, and loads them into the mesh
 	for (const auto& entry : std::filesystem::directory_iterator(folderpath))

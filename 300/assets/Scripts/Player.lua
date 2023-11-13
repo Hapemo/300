@@ -425,9 +425,9 @@ function OnContactExit(Entity)
 end
 
 function dashEffect()
-    graphicsSys.mChromaticStrength = e_chroma
+    graphicsSys.mChromaticOffset = e_chroma
     graphicsSys.mAmbientBloomExposure = e_exposure
-    graphicsSys.mTexelOffset = e_texel
+   -- graphicsSys.mTexelOffset = e_texel
    -- graphicsSys.m_GlobalTint = e_tint*t
     graphicsSys.mSamplingWeight = e_sampleWeight
 
@@ -437,7 +437,7 @@ function dashEffect()
 end
 
 function dashEffectEnd()
-    graphicsSys.mChromaticStrength = e_chroma + (d_chroma-e_chroma )*t
+    graphicsSys.mChromaticOffset = e_chroma + (d_chroma-e_chroma )*t
     graphicsSys.mAmbientBloomExposure = e_exposure+ (d_exposure-e_exposure)*t
     graphicsSys.mTexelOffset = e_texel+ (d_texel-e_texel)*t
     graphicsSys.mSamplingWeight = e_sampleWeight+ (d_sampleWeight -e_sampleWeight)*t

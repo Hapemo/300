@@ -14,6 +14,9 @@
 // Good to have - AISetting keep the string of the file name. After loading in the file, save pointer to ALGraph in PathfinderManager to AISetting component of AI
 // 
 
+#define POINTNAME "GraphPoint"
+#define EDGENAME "GraphEdge"
+
 void TestPathfinderManager();
 
 class PathfinderManager {
@@ -61,7 +64,7 @@ public:
 	//void DrawActiveGraphData();
 	// Save graph data into another file
 	void SaveActiveGraphData();
-	// Delete the active graph data. Will need to loop through all the loaded entities in gamestate and ensure their AISetting graph data are pointed at nullptr
+	// Delete the active graph data in system and in folder. Will need to loop through all the loaded entities in gamestate and ensure their AISetting graph data are pointed at nullptr
 	void DeleteActiveGraphData();
 	// Toggle graph drawing
 	void ToggleDrawGraph();
@@ -70,11 +73,13 @@ public:
 	// Editing active graph
 	// -------------
 	void AddPoint(glm::vec3);
-	void AddDirectedEdge(glm::vec3 start, glm::vec3 end);
 	void AddDirectedEdge(Entity _src, Entity _dst);
 	void AddUndirectedEdge(Entity _e0, Entity _e1);
 	//void DeletePoint(Entity _e);
 	//void DeleteEdge(Entity _e0, Entity _e1);
+	std::vector<glm::vec3> GetEdgeEnds(Entity _e);
+	// Updates the active graph data with the current waypoint entities
+	void UpdateGraphData();
 
 //private:
 	// Editing waypoint entities
@@ -85,23 +90,30 @@ public:
 	void DeleteGraphEntities();
 	// Delete Entity, point or edge, changing the graph data.
 	void DeleteEntity(Entity e);
+	// Get the most updated entity version of the active graph data
+	void RefreshGraphEntity();
 
-private:
+
 	// Variables that only needed in editor mode
 	int mActiveGraph;
 	bool mDrawGraph;															// Toggle to draw the debug lines for active graph
 	std::vector<std::string> mGraphDataNameList;
 	std::vector<GraphData> mGraphDataList;				// TODO, not needed during game mode, consider removing it during publication
-	std::vector<std::pair<Entity, std::vector<glm::vec3>>> mGraphDataEntities;	// Contains all the entities that represent the point and edges of the active graph data
+	std::vector<std::pair<Entity, std::vector<Entity>>> mGraphDataEntities;	// Contains all the entities that represent the point and edges of the active graph data. If it's point, vector will be empty
+private:
 
-
+	// Solution to graph data not updated when entities are added is, make a function that transforms mGraphDataEntities to graph data
+	// When to transform?
+	// 1. When saving graph data
+	// 2. When changing graph data
+	// 3. When updating ALGraph
 	//------------------------------------------
 
 private:
 	std::vector<ALGraph> mALGraphList;
 
 private: // Helper function
-	std::pair<Entity, std::vector<glm::vec3>>* FindGraphEntity(Entity _e);
+	std::pair<Entity, std::vector<Entity>>* FindGraphEntity(Entity _e);
 	glm::vec3 RotationalVectorToEulerAngle(glm::vec3 direction);
 
 };

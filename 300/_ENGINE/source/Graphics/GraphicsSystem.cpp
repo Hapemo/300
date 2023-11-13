@@ -148,6 +148,7 @@ void GraphicsSystem::Update(float dt)
 	// Retrieve and update the mesh instances to be drawn
 	auto meshRendererInstances = systemManager->ecs->GetEntitiesWith<MeshRenderer>();
 	int animationID{ 0 };
+	bool hasanimator{false};
 
 	for (Entity inst : meshRendererInstances)
 	{
@@ -157,11 +158,45 @@ void GraphicsSystem::Update(float dt)
 		if (meshRenderer.mMeshRef.getdata(systemManager->mResourceTySystem->m_ResourceInstance) == nullptr)
 			continue;
 		
-		
 		// gives me the mesh
 		void *tt = meshRenderer.mMeshRef.getdata(systemManager->mResourceTySystem->m_ResourceInstance);
 		GFX::Mesh &meshinst = *reinterpret_cast<GFX::Mesh *>(tt);
 
+		hasanimator				= inst.HasComponent<Animator>();
+		if (hasanimator)
+		{
+			Animator& animatorInst	= inst.GetComponent<Animator>();
+
+			// handles the change of mesh when called in the scripts
+			float lAllowance = animatorInst.mAnimator.m_CurrentAnimation->m_TicksPerSecond * dt;
+			if (animatorInst.mAnimator.mToChangeMeshDelayed.first && (animatorInst.mAnimator.m_CurrentTime <= lAllowance))
+			{
+				// the mesh change delayed flag is set and the animation is completed, change the mesh
+				animatorInst.mAnimator.mToChangeMeshDelayed.first = false;
+				meshRenderer.SetMesh(animatorInst.mAnimator.mToChangeMeshDelayed.second, inst);
+			}
+		}
+
+		{
+			// Setting the bloom threshold once per loop
+			std::string shdr;
+			if (meshinst.mHasAnimation)
+				shdr = "AnimationShader";
+			else
+				shdr = "PointLightShader";
+			uid shaderstr(shdr);
+			GFX::Shader& shaderinst = *systemManager->mResourceTySystem->get_Shader(shaderstr.id);
+
+			vec4 lAmbientBloomThreshold{ 0.f, 0.f, 0.f, 0.f };
+			if (systemManager->mGraphicsSystem->m_EnableBloom) {
+				lAmbientBloomThreshold = vec4(mAmbientBloomThreshold, 1.f);
+			}
+
+			shaderinst.Activate();
+			GLuint threshold = shaderinst.GetUniformLocation("globalBloomThreshold");
+			glUniform4fv(threshold, 1, glm::value_ptr(lAmbientBloomThreshold));
+			shaderinst.Deactivate();
+		}
 
 		// pushback LTW matrices
 		auto& transforminst = inst.GetComponent<Transform>();
@@ -238,8 +273,7 @@ void GraphicsSystem::Update(float dt)
 		}
 
 		// Update the animation
-		bool hasanimation = inst.HasComponent<Animator>();
-		if (hasanimation && _ENABLE_ANIMATIONS && systemManager->mGraphicsSystem->m_EnableGlobalAnimations)
+		if (hasanimator && _ENABLE_ANIMATIONS && systemManager->mGraphicsSystem->m_EnableGlobalAnimations)
 		{
 			Animator& animatorInst = inst.GetComponent<Animator>();
 
@@ -257,11 +291,11 @@ void GraphicsSystem::Update(float dt)
 		}
 
 		// animations are present
-		if (hasanimation) {
-			AddInstance(meshinst, final, meshRenderer.mInstanceColor, static_cast<int>(m_Materials.size()), static_cast<unsigned>(inst.id), animationID++);
+		if (hasanimator) {
+			AddInstance(meshinst, final, meshRenderer.mInstanceColor, static_cast<int>(m_Materials.size()), meshRenderer.mBloomThreshold, static_cast<unsigned>(inst.id), animationID++);
 		}
 		else {
-			AddInstance(meshinst, final, meshRenderer.mInstanceColor, static_cast<int>(m_Materials.size()), static_cast<unsigned>(inst.id));
+			AddInstance(meshinst, final, meshRenderer.mInstanceColor, static_cast<int>(m_Materials.size()), meshRenderer.mBloomThreshold, static_cast<unsigned>(inst.id));
 		}
 
 		auto getID = [&](MaterialType type, MeshRenderer& meshrenderer) ->int {
@@ -410,20 +444,6 @@ void GraphicsSystem::EditorDraw(float dt)
 #if !TEST_DEFERRED_LIGHT
 		GLuint mHasLightFlagLocation = shaderinst.GetUniformLocation("uHasLight");
 		glUniform1i(mHasLightFlagLocation, m_HasLight);
-
-		if (systemManager->mGraphicsSystem->m_EnableBloom)
-		{
-			GLuint threshold = shaderinst.GetUniformLocation("bloomThreshold");
-
-			if (inst.HasComponent<VFX>()) {
-				if (inst.GetComponent<VFX>().isObjectBloom) {
-					glUniform3fv(threshold, 1, glm::value_ptr(inst.GetComponent<VFX>().mBloomThreshold));	
-				}
-			}
-			else {
-				glUniform3fv(threshold, 1, glm::value_ptr(mAmbientBloomThreshold));
-			}
-		}
 
 		if (m_HasLight)
 		{
@@ -586,19 +606,7 @@ void GraphicsSystem::GameDraw(float dt)
 
 		shaderinst.Activate();
 
-		if (systemManager->mGraphicsSystem->m_EnableBloom)
-		{
-			GLuint threshold = shaderinst.GetUniformLocation("bloomThreshold");
-
-			if (inst.HasComponent<VFX>()) {
-				if (inst.GetComponent<VFX>().isObjectBloom) {
-					glUniform3fv(threshold, 1, glm::value_ptr(inst.GetComponent<VFX>().mBloomThreshold));
-				}
-			}
-			else {
-				glUniform3fv(threshold, 1, glm::value_ptr(mAmbientBloomThreshold));
-			}
-		}
+		mat4 gameCamVP = camera.GetComponent<Camera>().mCamera.viewProj();
 		glUniformMatrix4fv(shaderinst.GetUniformVP(), 1, GL_FALSE, &gameCamVP[0][0]);
 
 		// Retrieve Point Light object
@@ -699,14 +707,15 @@ void GraphicsSystem::GameDraw(float dt)
 	m_HealthbarMesh.ClearInstances();	// Clear data
 
 	m_GameFbo.Unbind();
-	//m_PingPongFbo.UnloadAndClear();
+	m_PingPongFbo.UnloadAndClear();
 }
 
 
 
 void GraphicsSystem::ChromaticAbbrebationBlendFramebuffers(GFX::FBO& targetFramebuffer, unsigned int Attachment1)
 {
-	glBlendFunc(GL_ONE, GL_ONE);
+	//glBlendFunc(GL_ONE, GL_ZERO);
+	glBlendFunc(GL_ONE_MINUS_DST_COLOR, GL_ONE);
 
 	uid shaderstr("ChromaticAbberation");
 	GFX::Shader& BlendShader = *systemManager->mResourceTySystem->get_Shader(shaderstr.id);
@@ -717,6 +726,7 @@ void GraphicsSystem::ChromaticAbbrebationBlendFramebuffers(GFX::FBO& targetFrame
 	// Draw to color attachment only. Otherwise might affect other attachments
 	glDrawBuffer(GL_COLOR_ATTACHMENT0);
 
+	glUniform1f(BlendShader.GetUniformLocation("ChromaticAbberationOffset"), systemManager->mGraphicsSystem->mChromaticOffset);
 	glUniform1f(BlendShader.GetUniformLocation("ChromaticAbberationStrength"), systemManager->mGraphicsSystem->mChromaticStrength);
 	glBindTexture(GL_TEXTURE_2D, Attachment1);									// bind the second attachment
 
@@ -775,7 +785,7 @@ void GraphicsSystem::Exit()
 	Adds an instance of a mesh to be drawn, For instancing
 */
 /**************************************************************************/
-void GraphicsSystem::AddInstance(GFX::Mesh &mesh, Transform transform, const vec4& color, int meshID, unsigned entityID)
+void GraphicsSystem::AddInstance(GFX::Mesh &mesh, Transform transform, const vec4& color, int meshID, const vec4& bloomthreshold, unsigned entityID)
 {
 	// Local to world transformation
 	mat4 scale = glm::scale(transform.mScale);
@@ -788,15 +798,39 @@ void GraphicsSystem::AddInstance(GFX::Mesh &mesh, Transform transform, const vec
 	mesh.mLTW.push_back(world);
 	mesh.mTexEntID.push_back(vec4((float)meshID + 0.5f, (float)entityID + 0.5f, 0, 0));
 	mesh.mColors.push_back(color);
+	mesh.mBloomThresholds.push_back(bloomthreshold);
 }
 
-void GraphicsSystem::AddInstance(GFX::Mesh &mesh, mat4 transform, const vec4& color, int meshID, unsigned entityID, int animInstanceID)
+void GraphicsSystem::AddInstance(GFX::Mesh &mesh, mat4 transform, const vec4& color, int meshID, const vec4& bloomthreshold, unsigned entityID, int animInstanceID)
 {
 	mesh.mLTW.push_back(transform);
 	mesh.mColors.push_back(color);
 	if (animInstanceID < 0)
 		animInstanceID = -2;
 	mesh.mTexEntID.push_back(vec4((float)meshID + 0.5f, (float)entityID + 0.5f, (float)animInstanceID + 0.5f, 0));
+	mesh.mBloomThresholds.push_back(bloomthreshold);
+}
+
+void GraphicsSystem::SetAllEntityBloomThreshold(glm::vec4 threshold, std::string meshName)
+{
+	//!< Helper
+	auto getMeshname = [](std::string filepath) -> std::string
+	{
+		// returns AT-AT
+		std::string ret_str = filepath.substr(filepath.find_last_of("/") + 1);
+		ret_str = ret_str.substr(0, ret_str.find_first_of("."));
+		return ret_str;
+	};
+
+	auto meshRendererInstances = systemManager->ecs->GetEntitiesWith<MeshRenderer>();
+	for (Entity inst : meshRendererInstances)
+	{
+		auto& meshinst = inst.GetComponent<MeshRenderer>();
+		if ( getMeshname(meshinst.mMeshPath) == meshName)
+		{
+			meshinst.mBloomThreshold = threshold;
+		}
+	}
 }
 
 /***************************************************************************/
@@ -1644,10 +1678,45 @@ void MeshRenderer::SetMesh(const std::string& meshName, Entity inst)
 	mMeshPath = systemManager->mResourceTySystem->compiled_geom_path + meshName + ".geom";
 
 	GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mMeshRef.data);
+	if (inst.HasComponent<Animator>())
+	{
+		if (meshinst->mHasAnimation) {
+			// change the animation to the new mesh's
+			inst.GetComponent<Animator>().mAnimator.SetAnimation(&meshinst->mAnimation[0]);
+		}
+
+		else {
+			// the new mesh has no animation, but the current entity has an animator component
+			inst.GetComponent<Animator>().mAnimator.SetAnimation(nullptr);
+		}
+	}
+}
+
+
+void MeshRenderer::SetMeshDelayed(const std::string& meshName, Entity inst)
+{
+	// gets the guid from the fbx descriptor file
+	std::string descFilepath = systemManager->mResourceTySystem->fbx_path + meshName + ".fbx.desc";
+	unsigned guid = _GEOM::GetGUID(descFilepath);
+
+	GFX::Mesh* meshinst = systemManager->mResourceTySystem->get_mesh(guid);
+
 	if (inst.HasComponent<Animator>() && meshinst->mHasAnimation)
 	{
-		// change the animation to the new mesh's
-		inst.GetComponent<Animator>().mAnimator.SetAnimation(&meshinst->mAnimation[0]);
+		// animation is available, then set the animation after current animation is done
+		auto& animatorinst = inst.GetComponent<Animator>();
+		animatorinst.mAnimator.mToChangeMeshDelayed.first = true;
+		animatorinst.mAnimator.mToChangeMeshDelayed.second = meshName;
+	}
+
+	else
+	{
+		// there is no animation, then set the mesh immediately
+		mMeshRef.data	= reinterpret_cast<void*>(meshinst);
+		mMeshPath		= systemManager->mResourceTySystem->compiled_geom_path + meshName + ".geom";
+
+		if (inst.HasComponent<Animator>())
+			inst.GetComponent<Animator>().mAnimator.SetAnimation(nullptr);	// reset the animation as needed
 	}
 }
 

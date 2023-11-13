@@ -58,6 +58,7 @@ void MeshRenderer::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer
 	Serialize(writer, "frag", mShaderPath.second);
 	Serialize(writer, "meshrefid", mMeshRef.data_uid);
 	Serialize(writer, "instancecolor", mInstanceColor);
+	Serialize(writer, "bloomthreshold", mBloomThreshold);
 	Serialize(writer, "materialinstance", mMaterialInstancePath, 5);
 	Serialize(writer, "mesh", mMeshPath);
 	//Serialize(writer, "texturecont", mTextureCont, 5);
@@ -77,6 +78,7 @@ void MeshRenderer::DeserializeSelf(rapidjson::Value& reader)
 	Deserialize(reader, "frag", mShaderPath.second);
 	Deserialize(reader, "meshrefid", mMeshRef.data_uid);
 	Deserialize(reader, "instancecolor", mInstanceColor);
+	Deserialize(reader, "bloomthreshold", mBloomThreshold);
 	Deserialize(reader, "materialinstance", mMaterialInstancePath, 5);
 
 	for (int i{}; i < 5; ++i)
@@ -341,6 +343,7 @@ void AISetting::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& 
 	Serialize(writer, "stayaway", mStayAway);
 	Serialize(writer, "elevation", mElevation);
 	Serialize(writer, "targetname", mTargetName);
+	Serialize(writer, "graphdataname", mGraphDataName);
 	writer.EndObject();
 }
 
@@ -351,6 +354,7 @@ void AISetting::DeserializeSelf(rapidjson::Value& reader)
 	Deserialize(reader, "stayaway", mStayAway);
 	Deserialize(reader, "elevation", mElevation);
 	Deserialize(reader, "targetname", mTargetName);
+	Deserialize(reader, "graphdataname", mGraphDataName);
 }
 
 void Crosshair::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const

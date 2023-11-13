@@ -157,9 +157,11 @@ public:
 		This function is essential for instanced rendering
 	*/
 	/**************************************************************************/
-	void AddInstance(GFX::Mesh& mesh, Transform transform, const vec4& color, int meshID, unsigned entityID = 0xFFFFFFFF);		// Adds an instance of a mesh to be drawn
-	void AddInstance(GFX::Mesh& mesh, mat4 transform, const vec4& color, int meshID, unsigned entityID = 0xFFFFFFFF, int animInstanceID = -1);	// Adds an instance of a mesh to be drawn
+	// Adds an instance of a mesh to be drawn
+	void AddInstance(GFX::Mesh& mesh, Transform transform, const vec4& color, int meshID, const vec4& bloomthreshold, unsigned entityID = 0xFFFFFFFF);		
+	void AddInstance(GFX::Mesh& mesh, mat4 transform, const vec4& color, int meshID, const vec4& bloomthreshold, unsigned entityID = 0xFFFFFFFF, int animInstanceID = -1);
 
+	
 	// -- FBO --
 	/***************************************************************************/
 	/*!
@@ -191,7 +193,9 @@ public:
 	void DisableGlobalBloom() { m_EnableBloom = false; }
 
 	void SetGlobalBloomThreshold(glm::vec3 threshold) { mAmbientBloomThreshold = threshold; }
+	void SetAllEntityBloomThreshold(glm::vec4 threshold, std::string meshName);
 	void SetGlobalBloomExposure(float exp) { mAmbientBloomExposure = exp; }
+
 
 	// -- Camera Functions --
 	/***************************************************************************/
@@ -266,13 +270,14 @@ public:
 	vec4	m_GlobalTint = {1.f, 1.f, 1.f, 1.f};
 
 	// -- Bloom -- 
-	vec3		mAmbientBloomThreshold { 0.05, 0.05, 0.005 };		// this yj
-	float		mAmbientBloomExposure{ 0.4f };						// this yj
-	float		mTexelOffset{ 1.f };								// this yj
-	float		mSamplingWeight{ 1.f };								// this yj
+	vec3		mAmbientBloomThreshold { 0.05, 0.05, 0.005 };	// Global bloom threshold	
+	float		mAmbientBloomExposure{ 0.4f };						
+	float		mTexelOffset{ 1.f };							// Gaussian blur Ver1						
+	float		mSamplingWeight{ 1.f };							// Gaussian blur Ver1/2
 
 	// -- Chromatic Abbreation --
-	float		mChromaticStrength{ 0.006f };						// this yj
+	float		mChromaticOffset{ 0.006f };
+	float		mChromaticStrength{ 1.f };
 
 	bool		m_EnableBloom{ true };									// this yj
 	bool		m_EnableChromaticAbberation{ true };					// this yj

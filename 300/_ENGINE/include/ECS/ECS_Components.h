@@ -33,6 +33,7 @@ Components used by the ECS.
 #include "ResourceManagerTy.h"
 #include "Serialization/Serialization.h"
 #include "Texture.hpp"
+#include "Graph.h"
 //#include "Graphics/GraphicsSystem.h"
 //#include "Mesh.hpp"
 
@@ -131,6 +132,7 @@ struct MeshRenderer : public Serializable
 
 	std::string							mMaterialInstancePath[5] {" "," " ," " ," ", " "};
 	vec4								mInstanceColor{ 1.f, 1.f, 1.f, 1.f };
+	vec4								mBloomThreshold{ 1.f, 1.f, 1.f, 1.f };
 
 	std::string							mMeshPath;
 
@@ -147,6 +149,7 @@ struct MeshRenderer : public Serializable
 	void								Inspect();
 	void								SetColor(const vec4& color);
 	void								SetMesh(const std::string& meshName, Entity inst);
+	void								SetMeshDelayed(const std::string& name, Entity inst);
 	void								SetTexture(MaterialType type, const std::string& Texturename);
 
 	
@@ -167,6 +170,7 @@ struct MeshRenderer : public Serializable
 struct UIrenderer : public Serializable
 {
 	std::string							mTexPath; // temporary should be UID
+	_GEOM::Texture_DescriptorData		mTextureDescriptorData;
 	ref									mTextureRef;
 	float								mDegree;
 
@@ -590,6 +594,7 @@ struct AISetting : public Serializable {
 	float mStayAway;								// For flying enemy, horizontal distance to stay away from player
 	float mElevation;								// For flying enemy, vertical distance to stay away from player
 	std::string mTargetName;				// Name of target (Will be searching via gamestate, not scene)
+	std::string mGraphDataName;			// Graph data of AI
 
 	void Inspect();
 	Entity GetTarget() { return mTarget; }
@@ -598,9 +603,11 @@ struct AISetting : public Serializable {
 
 	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
 	void DeserializeSelf(rapidjson::Value& reader);
+	ALGraph*& GetALGraph() { return mALGraph; }
 
 private: 
 	Entity mTarget;									// AI's target
+	ALGraph* mALGraph;							// ALGraph that will help the entity's pathfinding
 };
 
 /******************************************************************************/

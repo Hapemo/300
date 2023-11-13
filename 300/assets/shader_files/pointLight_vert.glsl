@@ -7,7 +7,8 @@ layout (location = 2) in vec2 inUV;			        // Texture Coordinates
 layout (location = 5) in vec3 inTangent;			// Per vertex Tangent
 layout (location = 6) in vec3 inNormal;			    // Per vertex Normal
 layout (location = 7) in vec4 inTex_Ent_ID;		    // Texture ID, Entity ID of object
-layout (location = 8) in mat4 inLTW;			    // local to world
+layout (location = 8) in vec4 inBloom;		        // Bloom threshold and flag
+layout (location = 9) in mat4 inLTW;			    // local to world
 
 //uniform vec3 uLightPos;
 uniform vec3 uViewPos;
@@ -20,6 +21,7 @@ out mat3 TBN;
 out vec3 TangentViewPos;
 out vec3 TangentFragPos;
 out vec4 Tex_Ent_ID;
+out vec4 Bloom_Threshold;
 
 void main() 
 {
@@ -42,5 +44,6 @@ void main()
     // Transform position to tangent space
     TangentViewPos  = TBN * uViewPos;
     TangentFragPos  = TBN * vec3(inLTW * vec4(inPos, 1.0));
-    VertexColor         = inVertexColor;
+    VertexColor     = inVertexColor;
+    Bloom_Threshold = inBloom;
 }
