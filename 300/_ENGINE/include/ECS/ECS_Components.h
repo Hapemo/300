@@ -170,6 +170,7 @@ struct MeshRenderer : public Serializable
 struct UIrenderer : public Serializable
 {
 	std::string							mTexPath; // temporary should be UID
+	_GEOM::Texture_DescriptorData		mTextureDescriptorData;
 	ref									mTextureRef;
 	float								mDegree;
 
