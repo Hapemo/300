@@ -46,13 +46,18 @@ private:
 	// Resetting all the nodes and connecting the start and end node to the alGraph
 	void InitAStar(Entity _start, Entity _end, ALGraph& alGraph, AStarSetting const& aStarSetting);
 	// Removing the last 2 nodes, the start and end points
-	void EndAStar(ALGraph& alGraph);
+	void EndAStar(Entity _start, Entity _end, ALGraph& alGraph);
 
 	// Connect the src node with all other visible nodes in alGraph
 	void ConnectVisibleNodes(Entity src_e, ALGraph::AdjList& src, ALGraph& alGraph, AStarSetting const& aStarSetting);
 
 	// Checks for entities inbetween 2 entities
-	std::vector<Entity> CheckEntitiesInbetween(glm::vec3 const& _p0, glm::vec3 const& _p1, std::vector<Entity> _toIgnore);
+	bool CheckEntitiesInbetween(glm::vec3 const& _p0, glm::vec3 const& _p1, std::vector<Entity> _toIgnoreEntities, std::vector<std::string> _toIgnoreTags);
+	// This version will take into account entity width, making sure most part of the entity can see the target
+	bool CheckEntitiesInbetween(glm::vec3 const& _p0, glm::vec3 const& _p1, std::vector<Entity> _toIgnoreEntities, std::vector<std::string> _toIgnoreTags, glm::vec3 size);
+
+	// Rubberband remove unnecessary nodes
+	std::vector<glm::vec3> RubberbandPath(std::vector<glm::vec3> const& path, std::vector<Entity> toIgnoreEntities, std::vector<std::string> const& toIgnoreTags);
 
 public:
 

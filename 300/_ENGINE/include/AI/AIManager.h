@@ -128,6 +128,8 @@ public:
 	*******************************************************************************/
 	glm::vec3 GetDirection(Entity _e);
 
+
+
 	/*!*****************************************************************************
 	Test if one entity is in the line of sight of another entity. Check if target 
 	is within view of horizontal angle from the center line of sight

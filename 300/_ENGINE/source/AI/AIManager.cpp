@@ -6,6 +6,8 @@
 #include "Physics/PhysicsSystem.h"
 #include "AI/PathfinderManager.h"
 
+#define Rubberbanding 1
+
 const std::array<std::string, static_cast<size_t>(E_MOVEMENT_TYPE::SIZE)> AIManager::mMovementTypeArray{ MovementTypeArrayInit() };
 
 E_MOVEMENT_TYPE& operator++(E_MOVEMENT_TYPE& _enum) {
@@ -29,19 +31,18 @@ void AIManager::Update(float _dt) {
 
 
 glm::vec3 AIManager::GetDirection(Entity _e) {
-	static bool runOnce{ false };
 	glm::vec3 dir{};
 	AISetting const& aiSetting = _e.GetComponent<AISetting>();
 	switch (aiSetting.mMovementType) {
 	case E_MOVEMENT_TYPE::GROUND_DIRECT:
 		if (aiSetting.mGraphDataName.size()) {
-			if (!runOnce) {
-				runOnce = !runOnce;
-				std::vector<glm::vec3> astarPath = systemManager->GetPathfinderManager()->AStarPath(_e, aiSetting.GetTarget(), { 20.f, {"ENEMY", "GRAPH"}});
-				if (astarPath.size())
-					dir = astarPath[1] - astarPath[0];
-				else dir = glm::vec3();
-			} else dir = glm::vec3();
+			std::vector<glm::vec3> astarPath = systemManager->GetPathfinderManager()->AStarPath(_e, aiSetting.GetTarget(), { 40.f, {"ENEMY", "GRAPH"}});
+
+			if (astarPath.size()) dir = astarPath[1] - astarPath[0];
+			else {
+				PINFO("%s unable to find path with pathfinding", _e.GetComponent<General>().name);
+				dir = glm::vec3();
+			}
 		} else {
 			dir = CalcGroundAIDir(_e);
 		}

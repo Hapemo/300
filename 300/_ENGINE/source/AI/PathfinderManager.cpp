@@ -58,12 +58,15 @@ void PathfinderManager::LoadGraphData(std::filesystem::path const& _path) {
 // AStar Functionalitiies
 //------------------ 
 
+//static std::vector<Entity> masterEntitiesHit{};
+static std::vector<std::string> stringEntitiesHit{};
+
 std::vector<glm::vec3> PathfinderManager::AStarPath(Entity _start, Entity _end, AStarSetting const& aStarSetting) {
 	using NODE_STATE = ALGraph::NODE_STATE;
 	using AdjList = ALGraph::AdjList;
 	using Edge = ALGraph::Edge;
 	// Initialise containers (open list, close list)
-// Put starting node on the open list
+	// Put starting node on the open list
 	
 	// Find ALGraph to do pathfinding
 	ALGraph* alGraph{ nullptr };
@@ -73,14 +76,15 @@ std::vector<glm::vec3> PathfinderManager::AStarPath(Entity _start, Entity _end, 
 		break;
 	}
 	if (!alGraph) {
-		PWARNING("Unable to find %s to perform pathfinding", _start.GetComponent<AISetting>().mGraphDataName);
+		PWARNING("Unable to find %s in graph data to perform pathfinding", _start.GetComponent<AISetting>().mGraphDataName);
 		return std::vector<glm::vec3>();
 	}
 
 	// AStar pathfinding portion
 	InitAStar(_start, _end, *alGraph, aStarSetting);
 	std::vector<glm::vec3> returnVal = alGraph->AStarPath();
-	EndAStar(*alGraph);
+	returnVal = RubberbandPath(returnVal, { _start, _end }, aStarSetting.ignoreTags);
+	EndAStar(_start, _end, *alGraph);
 
 	return returnVal;
 }
@@ -109,14 +113,31 @@ void PathfinderManager::InitAStar(Entity _start, Entity _end, ALGraph& alGraph, 
 	}
 }
 
-void PathfinderManager::EndAStar(ALGraph& alGraph) {
+// TODO possible improvement, if we make start point point outwards only and end point point inwards only, lot of these deletion won't be needed. These are only happening because in ConnectVisibleNodes, it's Undirected edge
+void PathfinderManager::EndAStar(Entity _start, Entity _end, ALGraph& alGraph) {
+	glm::vec3 const& startPos{ _start.GetComponent<Transform>().mTranslate };
+	glm::vec3 const& endPos{ _end.GetComponent<Transform>().mTranslate };
+	for (ALGraph::AdjList& node : alGraph.mData) {
+		auto& edges = node.edges;
+		for (auto it{ edges.begin() }; it != edges.end(); ++it) {
+			if (it->vertex->point == startPos) {
+				edges.erase(it);
+				break;
+			}
+		}
+		for (auto it{ edges.begin() }; it != edges.end(); ++it) {
+			if (it->vertex->point == endPos) {
+				edges.erase(it);
+				break;
+			}
+		}
+	}
+
 	alGraph.mData.pop_back();
 	alGraph.mData.pop_back();
 }
 
-// TODO DEBUG THIS
-// The start and end point is unable to connect with any points for some reason. Check what the ray collided with and print the entity's name.
-// 
+// TODO possbile improvement, if make start point point outwards and make end point point inwards, instead of using undirected edge here
 void PathfinderManager::ConnectVisibleNodes(Entity src_e, ALGraph::AdjList& src, ALGraph& alGraph, AStarSetting const& aStarSetting) {
 	for (ALGraph::AdjList& node : alGraph.mData) {
 		// In each node of the graph, if elevation difference is too much, ignore.
@@ -125,18 +146,10 @@ void PathfinderManager::ConnectVisibleNodes(Entity src_e, ALGraph::AdjList& src,
 		if (src.point == node.point) continue;
 
 		// Get entities in between
-		std::vector<Entity> entitiesHit = CheckEntitiesInbetween(src.point, node.point, { src_e });
-		
-		// Remove entities with certain tags
-		for (int i{}; i < entitiesHit.size(); ++i)
-			for (std::string const& tag : aStarSetting.ignoreTags)
-				if (entitiesHit[i].GetComponent<General>().GetTag() == tag) {
-					entitiesHit.erase(entitiesHit.begin() + i--);
-					break;
-				}
+		bool entitiesHit = CheckEntitiesInbetween(src.point, node.point, { src_e }, aStarSetting.ignoreTags);//, src_e.GetComponent<Transform>().mScale);
 
 		// After removing those to ignore, if there's still some remains, ignore this point
-		if (entitiesHit.size()) continue;
+		if (entitiesHit) continue;
 
 		// If it passes all the test, add both to each other neighbor, UEdge
 		float dist = ALGraph::CalcHCost(src.point, node.point);
@@ -145,18 +158,99 @@ void PathfinderManager::ConnectVisibleNodes(Entity src_e, ALGraph::AdjList& src,
 	}
 }
 
-std::vector<Entity> PathfinderManager::CheckEntitiesInbetween(glm::vec3 const& _p0, glm::vec3 const& _p1, std::vector<Entity> _toIgnore) {
+bool PathfinderManager::CheckEntitiesInbetween(glm::vec3 const& _p0, glm::vec3 const& _p1, std::vector<Entity> _toIgnoreEntities, std::vector<std::string> _toIgnoreTags) {
 	// Compare the node and src for line of sight test and get a list of entity hit
 	std::vector<Entity> entitiesHit = systemManager->GetPhysicsPointer()->Visible(_p0, _p1, glm::length(_p0-_p1));
 
 	// Remove the entities to ignore
-	for (Entity e : _toIgnore) {
+	for (Entity e : _toIgnoreEntities) {
 		auto it = std::find(entitiesHit.begin(), entitiesHit.end(), e);
 		if (it != entitiesHit.end())
 			entitiesHit.erase(it);
 	}
 
-	return entitiesHit;
+	// Remove entities with certain tags
+	for (int i{}; i < entitiesHit.size(); ++i)
+		for (std::string const& tag : _toIgnoreTags)
+			if (entitiesHit[i].GetComponent<General>().GetTag() == tag) {
+				entitiesHit.erase(entitiesHit.begin() + i--);
+				break;
+			}
+
+	return entitiesHit.size() != 0;
+}
+
+bool PathfinderManager::CheckEntitiesInbetween(glm::vec3 const& _p0, glm::vec3 const& _p1, std::vector<Entity> _toIgnoreEntities, std::vector<std::string> _toIgnoreTags, glm::vec3 size) {
+	// Compare the node and src for line of sight test and get a list of entity hit
+	glm::vec3 point1 = _p0;
+	point1.x += size.x/2.f;
+	point1.z += size.z/2.f;
+	glm::vec3 point2 = _p0;
+	point1.x -= size.x/2.f;
+	point1.z -= size.z/2.f;
+	std::vector<Entity> entitiesHit = systemManager->GetPhysicsPointer()->Visible(point1, _p1, glm::length(point1-_p1));
+	std::vector<Entity> entitiesHit2 = systemManager->GetPhysicsPointer()->Visible(point2, _p1, glm::length(point2-_p1));
+
+	for (Entity e : entitiesHit2) {
+		auto it = std::find(entitiesHit.begin(), entitiesHit.end(), e);
+		if (it == entitiesHit.end()) entitiesHit.push_back(e);
+	}
+
+#if 1 // More defined
+	glm::vec3 point3 = _p0;
+	point1.x += size.x/2.f;
+	point1.z -= size.z/2.f;
+	glm::vec3 point4 = _p0;
+	point1.x -= size.x/2.f;
+	point1.z += size.z/2.f;
+	std::vector<Entity> entitiesHit3 = systemManager->GetPhysicsPointer()->Visible(point3, _p1, glm::length(point3-_p1));
+	std::vector<Entity> entitiesHit4 = systemManager->GetPhysicsPointer()->Visible(point4, _p1, glm::length(point4-_p1));
+
+	for (Entity e : entitiesHit3) {
+		auto it = std::find(entitiesHit.begin(), entitiesHit.end(), e);
+		if (it == entitiesHit.end()) entitiesHit.push_back(e);
+	}
+
+	for (Entity e : entitiesHit4) {
+		auto it = std::find(entitiesHit.begin(), entitiesHit.end(), e);
+		if (it == entitiesHit.end()) entitiesHit.push_back(e);
+	}
+#endif
+
+	// Remove the entities to ignore
+	for (Entity e : _toIgnoreEntities) {
+		auto it = std::find(entitiesHit.begin(), entitiesHit.end(), e);
+		if (it != entitiesHit.end())
+			entitiesHit.erase(it);
+	}
+
+	// Remove entities with certain tags
+	for (int i{}; i < entitiesHit.size(); ++i)
+		for (std::string const& tag : _toIgnoreTags)
+			if (entitiesHit[i].GetComponent<General>().GetTag() == tag) {
+				entitiesHit.erase(entitiesHit.begin() + i--);
+				break;
+			}
+
+	return entitiesHit.size() != 0;
+}
+
+std::vector<glm::vec3> PathfinderManager::RubberbandPath(std::vector<glm::vec3> const& path, std::vector<Entity> toIgnoreEntities, std::vector<std::string> const& toIgnoreTags) {
+	if (path.size() < 2) return path;
+	std::vector<glm::vec3> finishedPath{};
+	finishedPath.reserve(path.size());
+	
+	glm::vec3 const* startVec{ &*path.begin() };
+	finishedPath.push_back(*startVec);
+	for (int i{1}; i < path.size(); ++i) {
+		bool entitiesHit = CheckEntitiesInbetween(*startVec, path[i], toIgnoreEntities, toIgnoreTags);
+		if (entitiesHit) {
+			startVec = &path[i-1];
+			finishedPath.push_back(*startVec);
+		}
+	}
+	finishedPath.push_back(path.back());
+	return finishedPath;
 }
 
 //------------------
