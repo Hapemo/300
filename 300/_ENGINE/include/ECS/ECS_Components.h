@@ -132,6 +132,7 @@ struct MeshRenderer : public Serializable
 
 	std::string							mMaterialInstancePath[5] {" "," " ," " ," ", " "};
 	vec4								mInstanceColor{ 1.f, 1.f, 1.f, 1.f };
+	vec4								mBloomThreshold{ 1.f, 1.f, 1.f, 1.f };
 
 	std::string							mMeshPath;
 
@@ -148,6 +149,7 @@ struct MeshRenderer : public Serializable
 	void								Inspect();
 	void								SetColor(const vec4& color);
 	void								SetMesh(const std::string& meshName, Entity inst);
+	void								SetMeshDelayed(const std::string& name, Entity inst);
 	void								SetTexture(MaterialType type, const std::string& Texturename);
 
 	
@@ -168,6 +170,7 @@ struct MeshRenderer : public Serializable
 struct UIrenderer : public Serializable
 {
 	std::string							mTexPath; // temporary should be UID
+	_GEOM::Texture_DescriptorData		mTextureDescriptorData;
 	ref									mTextureRef;
 	float								mDegree;
 

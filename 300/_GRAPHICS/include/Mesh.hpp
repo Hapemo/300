@@ -110,6 +110,7 @@ Destroys the mesh by deleting the VAO and VBOs allocated on th GPU's memory
 		std::vector<mat4>				mLTW;
 		std::vector<vec4>				mColors;
 		std::vector<vec4>				mTexEntID;
+		std::vector<vec4>				mBloomThresholds;
 
 		// This mesh may contain multiple different animations. These animations are unique to this mesh.
 		std::vector<_GEOM::Animation>	mAnimation{};
@@ -133,6 +134,7 @@ Destroys the mesh by deleting the VAO and VBOs allocated on th GPU's memory
 		VBO mNormalVbo;
 		VBO mBoneIDVbo;
 		VBO mBoneWeightVbo;
+		VBO mBloomThresholdVbo;
 
 		// Stats of the mesh model
 		std::string		mMeshName{};

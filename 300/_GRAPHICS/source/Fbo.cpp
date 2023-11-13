@@ -252,6 +252,8 @@ void GFX::PingPongFBO::GaussianBlur(GFX::Shader& blurShader, GFX::FBO& hostFrame
 
 void GFX::PingPongFBO::GaussianBlurShader(GFX::Shader& blurShader, GFX::FBO& sourceFramebuffer, float SamplingWeight)
 {
+	glBlendFunc(GL_ONE_MINUS_DST_COLOR, GL_ONE);
+
 	blurShader.Activate();
 	m_Quad.Bind();
 

@@ -69,5 +69,7 @@ Contains main loop for the logic of contentbrowsing + Drag and drop functionalit
 	static bool dragCheck;
 
 private:
+
+	bool content2{ true };
 	std::filesystem::path current_Directory;
 };

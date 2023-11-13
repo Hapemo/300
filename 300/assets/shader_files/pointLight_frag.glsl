@@ -8,7 +8,7 @@ in vec3 TangentViewPos;
 in vec3 TangentFragPos;
 in vec4 Tex_Ent_ID;     // x : Tex ID, y: Entity ID
 in vec4 VertexColor;
-in int hasLight;
+in vec4 Bloom_Threshold;
 
 struct PointLight           // 48 Bytes
 {
@@ -43,7 +43,7 @@ uniform sampler2D uTex[5];
 uniform vec4 globalTint;;
 uniform bool uHasLight;
 uniform int uLightCount;
-uniform vec3 bloomThreshold;
+uniform vec4 globalBloomThreshold;
 
 layout (location = 0) out vec4 fragColor0;
 layout (location = 1) out uint outEntityID;
@@ -135,8 +135,21 @@ void main()
 
     // HDR
     // check whether fragment output is higher than threshold, if so output as bright color
+    
+    float brightness = 0.f;
+    if(globalBloomThreshold.a <= 0.1) {
+        // the bloom is turned off. brightness = 0
+    }
+    else if (Bloom_Threshold.a > 0.1) {
+        // the bloom for the individual object is turned on
+        brightness = dot(finalColor.rgb, Bloom_Threshold.rgb);
+    }
+    else {
+        // use the global bloom
+        brightness = dot(finalColor.rgb, globalBloomThreshold.rgb);
+    }
 
-    float brightness = dot(finalColor.rgb, bloomThreshold);
+
     if(brightness > 1.0)
         BrightColor = vec4(finalColor.rgb, 1.0);
     else

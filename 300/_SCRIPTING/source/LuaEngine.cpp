@@ -352,10 +352,12 @@ void LuaGraphicsSystem()
         "mAmbientBloomExposure", &GraphicsSystem::mAmbientBloomExposure,
         "mTexelOffset", &GraphicsSystem::mTexelOffset,
         "mSamplingWeight", &GraphicsSystem::mSamplingWeight,
+        "mChromaticOffset", &GraphicsSystem::mChromaticOffset,
         "mChromaticStrength", &GraphicsSystem::mChromaticStrength,
         "m_EnableBloom", &GraphicsSystem::m_EnableBloom,
         "m_EnableChromaticAbberation", &GraphicsSystem::m_EnableChromaticAbberation,
-		"m_GlobalTint", &GraphicsSystem::m_GlobalTint
+		"m_GlobalTint", &GraphicsSystem::m_GlobalTint,
+        "SetAllEntityBloomThreshold", &GraphicsSystem::SetAllEntityBloomThreshold
         );
 }
 
@@ -390,6 +392,7 @@ void LuaMeshRenderer()
         "MeshRenderer", sol::constructors<>(),
         "SetColor", &MeshRenderer::SetColor,
         "SetMesh", &MeshRenderer::SetMesh,
+        "SetMeshDelayed", &MeshRenderer::SetMeshDelayed,
         "SetTexture", &MeshRenderer::SetTexture
     );
 }

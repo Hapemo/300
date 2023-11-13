@@ -130,7 +130,7 @@ void ObjectFactory::LoadGameState(GameState* gs, const std::string& _name)
 		Deserialize(*ci, "bloom_exposure", sys->mAmbientBloomExposure);
 		Deserialize(*ci, "bloom_offset", sys->mTexelOffset);
 		Deserialize(*ci, "bloom_sampleweight", sys->mSamplingWeight);
-		Deserialize(*ci, "chroma_strength", sys->mChromaticStrength);
+		Deserialize(*ci, "chroma_strength", sys->mChromaticOffset);
 		Deserialize(*ci, "bloom_enable", sys->m_EnableBloom);
 		Deserialize(*ci, "chroma_enable", sys->m_EnableChromaticAbberation);
 		Deserialize(*ci, "global_tint", sys->m_GlobalTint);
@@ -208,7 +208,7 @@ void ObjectFactory::SaveGameState(GameState* gs)
 		Serialize(writer, "bloom_exposure", sys->mAmbientBloomExposure);
 		Serialize(writer, "bloom_offset", sys->mTexelOffset);
 		Serialize(writer, "bloom_sampleweight", sys->mSamplingWeight);
-		Serialize(writer, "chroma_strength", sys->mChromaticStrength);
+		Serialize(writer, "chroma_strength", sys->mChromaticOffset);
 		Serialize(writer, "bloom_enable", sys->m_EnableBloom);
 		Serialize(writer, "chroma_enable", sys->m_EnableChromaticAbberation);
 		Serialize(writer, "global_tint", sys->m_GlobalTint);
