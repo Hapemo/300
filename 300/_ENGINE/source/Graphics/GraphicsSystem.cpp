@@ -105,6 +105,9 @@ void GraphicsSystem::Init()
 	}
 
 	computeDeferred.CreateShaderFromFile("../assets/shader_files/computeDeferred.glsl");
+	computeDeferred.Activate();
+	m_GlobalTintLocation = computeDeferred.GetUniformLocation("uGlobalTint");
+	GFX::Shader::Deactivate();
 	// Output
 	glBindImageTexture(0, m_Fbo.GetColorAttachment(), 0, GL_FALSE, 0, GL_WRITE_ONLY, GL_RGBA32F);
 
@@ -369,7 +372,161 @@ void GraphicsSystem::Update(float dt)
 	}
 	// Send UI data to GPU
 	m_Image2DMesh.PrepForDraw();
+
 #pragma endregion
+}
+
+void GraphicsSystem::Draw(bool forEditor)
+{
+	std::map<std::string, short> renderedMesh;
+	auto meshRendererInstances = systemManager->ecs->GetEntitiesWith<MeshRenderer>();
+
+	// Prepare and bind the Framebuffer to be rendered on
+	m_MultisampleFBO.PrepForDraw();
+	glDisable(GL_BLEND);				// Blending must be disabled for G-Buffer pass
+
+	// Get the Camera View Projection
+	mat4 camVP;
+	if (forEditor)
+		camVP = m_EditorCamera.viewProj();
+	else
+		camVP = GetCameraViewProjMatrix(CAMERA_TYPE::CAMERA_TYPE_GAME);
+
+	// Update View projection matrix uniform
+	m_GBufferShaderInst.Activate();
+	glUniformMatrix4fv(m_GBufferShaderInst.GetUniformVP(), 1, GL_FALSE, &camVP[0][0]);
+	GFX::Shader::Deactivate();
+	m_AnimationShaderInst.Activate();
+	glUniformMatrix4fv(m_AnimationShaderInst.GetUniformVP(), 1, GL_FALSE, &camVP[0][0]);
+	GFX::Shader::Deactivate();
+
+#pragma region render all the mesh instances onto the editor camera framebuffer
+	// Render all instances of a given mesh
+	for (Entity inst : meshRendererInstances)
+	{
+		auto& meshrefptr = inst.GetComponent<MeshRenderer>();
+		if (meshrefptr.mMeshRef.getdata(systemManager->mResourceTySystem->m_ResourceInstance) == nullptr)
+			continue;
+
+		std::string meshstr = meshrefptr.mMeshPath;
+		if (renderedMesh.find(meshstr) != renderedMesh.end())
+		{
+			// the mesh has been rendered before, skip it
+			continue;
+		}
+
+		// update the map of rendered meshes
+		renderedMesh[meshstr] = 1;
+
+		// render the mesh and its instances here
+		GFX::Mesh& meshinst = *reinterpret_cast<GFX::Mesh*>(meshrefptr.mMeshRef.data);
+
+		// Activate animation shader
+		if (meshinst.mHasAnimation)
+			m_AnimationShaderInst.Activate();
+		else
+			m_GBufferShaderInst.Activate();
+
+		//Bind mesh's VAO, copy render data into VBO, Draw
+		DrawAll(meshinst);
+
+		//shaderinst.Deactivate();
+		meshinst.UnbindVao();
+
+		if (!forEditor)	// Clear all mesh instances after done drawing for game scene
+			meshinst.ClearInstances();
+	}
+	if (forEditor)
+	{
+		m_Renderer.RenderAll(camVP);
+		m_Renderer.ClearInstances();
+	}
+	GFX::Shader::Deactivate();
+
+	// Perform blitting over pixel data from Multisample FBO -> intermediate FBO -> Destination FBO
+	if (forEditor)
+		BlitMultiSampleToDestinationFBO(m_Fbo);
+	else
+		BlitMultiSampleToDestinationFBO(m_GameFbo);
+
+	// Compute the light pass with completed G-Buffers
+	ComputeDeferredLight(forEditor);
+	glEnable(GL_BLEND);			// Enable back blending for later draws
+
+	if (systemManager->mGraphicsSystem->m_EnableBloom)
+	{
+		m_PingPongFbo.PrepForDraw();
+
+		// Render the bloom for the Editor Framebuffer
+		//uid gaussianshaderstr("GaussianBlurShader");
+		//GFX::Shader& gaussianShaderInst = *systemManager->mResourceTySystem->get_Shader(gaussianshaderstr.id);
+		//m_PingPongFbo.GaussianBlur(gaussianShaderInst, m_Fbo, systemManager->mGraphicsSystem->mTexelOffset, systemManager->mGraphicsSystem->mSamplingWeight);
+
+		uid gaussianshaderstr("GaussianBlurShaderVer2");
+		GFX::Shader& gaussianShaderInst = *systemManager->mResourceTySystem->get_Shader(gaussianshaderstr.id);
+		if (forEditor)
+		{
+			m_PingPongFbo.GaussianBlurShader(gaussianShaderInst, m_Fbo, systemManager->mGraphicsSystem->mSamplingWeight);
+			AdditiveBlendFramebuffers(m_Fbo, m_Fbo.GetColorAttachment(), m_PingPongFbo.pingpongColorbuffers[0]);
+		}
+		else
+		{
+			m_PingPongFbo.GaussianBlurShader(gaussianShaderInst, m_GameFbo, systemManager->mGraphicsSystem->mSamplingWeight);
+			AdditiveBlendFramebuffers(m_GameFbo, m_GameFbo.GetColorAttachment(), m_PingPongFbo.pingpongColorbuffers[0]);
+		}
+
+	}
+
+	if (systemManager->mGraphicsSystem->m_EnableChromaticAbberation)
+	{
+		//ChromaticAbbrebationBlendFramebuffers(m_Fbo, m_Fbo.GetBrightColorsAttachment());
+		if (forEditor)
+			ChromaticAbbrebationBlendFramebuffers(m_Fbo, m_PingPongFbo.pingpongColorbuffers[0]);
+		else
+			ChromaticAbbrebationBlendFramebuffers(m_GameFbo, m_PingPongFbo.pingpongColorbuffers[0]);
+	}
+
+	// Set blend function back to usual for UI rendering
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	// Bind the appropriate FBO
+	if (forEditor)		// Bind Editor FBO
+	{
+		m_Fbo.Bind();
+		m_Fbo.DrawBuffers(true, true);
+	}
+	else				// Bind Game FBO
+	{
+		m_GameFbo.Bind();
+		m_GameFbo.DrawBuffers(true);
+	}
+
+	// Render UI objects
+	m_UiShaderInst.Activate();		// Activate shader
+	DrawAll2DInstances(m_UiShaderInst.GetHandle());
+	GFX::Shader::Deactivate();	// Deactivate shader
+
+	if (ENABLE_CROSSHAIR_IN_EDITOR_SCENE || !forEditor)
+		DrawCrosshair();	// Render crosshair, if any
+
+	// Healthbar objects
+	auto healthbarInstances = systemManager->ecs->GetEntitiesWith<Healthbar>();
+	for (Entity inst : healthbarInstances)
+	{
+		Healthbar& healthbar = inst.GetComponent<Healthbar>();
+		
+		if (forEditor)
+			AddHealthbarInstance(healthbar, GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR), static_cast<int>(inst.id));
+		else
+			AddHealthbarInstance(healthbar, GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_GAME), static_cast<int>(inst.id));
+	}
+	m_HealthbarMesh.PrepForDraw();
+	DrawAllHealthbarInstance(camVP);
+	m_HealthbarMesh.ClearInstances();	// Clear data
+
+#pragma endregion
+	// Unbind FBO at end of draw frame
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -389,18 +546,19 @@ void GraphicsSystem::EditorDraw(float dt)
 	auto meshRendererInstances = systemManager->ecs->GetEntitiesWith<MeshRenderer>();
 
 	// Prepare and bind the Framebuffer to be rendered on
-#if ENABLE_MULTISAMPLE
 	m_MultisampleFBO.PrepForDraw();
 #if TEST_DEFERRED_LIGHT
 	glDisable(GL_BLEND);
 #endif
-#else
-	m_Fbo.PrepForDraw();
-#endif
 
 #if TEST_DEFERRED_LIGHT
+	// Update View projection matrix uniform
 	m_GBufferShaderInst.Activate();
 	glUniformMatrix4fv(m_GBufferShaderInst.GetUniformVP(), 1, GL_FALSE, &m_EditorCamera.viewProj()[0][0]);
+	GFX::Shader::Deactivate();
+	m_AnimationShaderInst.Activate();
+	glUniformMatrix4fv(m_AnimationShaderInst.GetUniformVP(), 1, GL_FALSE, &m_EditorCamera.viewProj()[0][0]);
+	GFX::Shader::Deactivate();
 #endif
 
 #pragma region render all the mesh instances onto the editor camera framebuffer
@@ -423,43 +581,20 @@ void GraphicsSystem::EditorDraw(float dt)
 
 		// render the mesh and its instances here
 		GFX::Mesh &meshinst = *reinterpret_cast<GFX::Mesh *>(meshrefptr.mMeshRef.data);
-#if !TEST_DEFERRED_LIGHT
-		std::string shader{};
+#if TEST_DEFERRED_LIGHT
 
+		// Activate animation shader
 		if (meshinst.mHasAnimation)
-			shader = "AnimationShader";
+			m_AnimationShaderInst.Activate();
 		else
-			shader = "PointLightShader";
+			m_GBufferShaderInst.Activate();
 
-		uid shaderstr(shader);
-		GFX::Shader& shaderinst = *systemManager->mResourceTySystem->get_Shader(shaderstr.id);
-		unsigned shaderID = shaderinst.GetHandle();
-
-		shaderinst.Activate();
-		glUniformMatrix4fv(shaderinst.GetUniformVP(), 1, GL_FALSE, &m_EditorCamera.viewProj()[0][0]);
 #endif
-		// Retrieve Point Light object
-		auto lightEntity = systemManager->ecs->GetEntitiesWith<PointLight>();
-		m_HasLight = !lightEntity.empty();
+
 #if !TEST_DEFERRED_LIGHT
-		GLuint mHasLightFlagLocation = shaderinst.GetUniformLocation("uHasLight");
-		glUniform1i(mHasLightFlagLocation, m_HasLight);
-
-		if (m_HasLight)
-		{
-			GLuint mViewPosShaderLocation = shaderinst.GetUniformLocation("uViewPos");
-			vec3 viewPos = GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR);
-			glUniform3fv(mViewPosShaderLocation, 1, &viewPos[0]);
-
-			// Light count uniform
-			GLuint mLightCountShaderLocation = shaderinst.GetUniformLocation("uLightCount");
-			glUniform1i(mLightCountShaderLocation, m_LightCount);
-		}
-
 		GLuint debug_draw = glGetUniformLocation(shaderID, "globalTint");
 		glUniform4fv(debug_draw, 1, glm::value_ptr(m_GlobalTint));
 #endif
-
 		 //Bind mesh's VAO, copy render data into VBO, Draw
 		DrawAll(meshinst);
 
@@ -468,18 +603,12 @@ void GraphicsSystem::EditorDraw(float dt)
 	}
 	m_Renderer.RenderAll(m_EditorCamera.viewProj());
 #if TEST_DEFERRED_LIGHT
-	m_GBufferShaderInst.Deactivate();
+	GFX::Shader::Deactivate();
 #endif
 
 #if ENABLE_MULTISAMPLE
-	m_IntermediateFBO.Clear();
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	// Copy pixel data from multisample FBO to intermediate FBO
-	m_MultisampleFBO.BlitFramebuffer(m_IntermediateFBO.GetID());
-	m_Fbo.Clear();
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	// Copy pixel data from intermediate FBO to editor FBO
-	m_IntermediateFBO.BlitFramebuffer(m_Fbo.GetID());
+	// Perform blitting over pixel data from Multisample FBO -> intermediate FBO -> Destination FBO
+	BlitMultiSampleToDestinationFBO(m_Fbo);
 #if TEST_DEFERRED_LIGHT
 	//DrawDeferredLight(m_EditorCamera.position(), m_Fbo);
 	ComputeDeferredLight(true);
@@ -521,7 +650,7 @@ void GraphicsSystem::EditorDraw(float dt)
 	// Render UI objects
 	m_UiShaderInst.Activate();		// Activate shader
 	DrawAll2DInstances(m_UiShaderInst.GetHandle());
-	m_UiShaderInst.Deactivate();	// Deactivate shader
+	GFX::Shader::Deactivate();	// Deactivate shader
 #endif
 
 #if ENABLE_CROSSHAIR_IN_EDITOR_SCENE
@@ -612,7 +741,6 @@ void GraphicsSystem::GameDraw(float dt)
 		// Retrieve Point Light object
 		auto lightEntity = systemManager->ecs->GetEntitiesWith<PointLight>();
 		m_HasLight = !lightEntity.empty();
-
 		GLuint mHasLightFlagLocation = shaderinst.GetUniformLocation("uHasLight");
 		glUniform1i(mHasLightFlagLocation, m_HasLight);
 
@@ -1195,6 +1323,29 @@ mat4 GraphicsSystem::GetCameraViewMatrix(CAMERA_TYPE type)
 	return {};
 }
 
+mat4 GraphicsSystem::GetCameraViewProjMatrix(CAMERA_TYPE type)
+{
+	auto localcamera = systemManager->ecs->GetEntitiesWith<Camera>();
+	if (localcamera.empty())
+		return mat4(1.0); // Cannot find camera Richmond
+	Entity camera = localcamera.front();
+
+	switch (type)
+	{
+	case CAMERA_TYPE::CAMERA_TYPE_GAME:
+		return camera.GetComponent<Camera>().mCamera.viewProj();
+
+	case CAMERA_TYPE::CAMERA_TYPE_EDITOR:
+		return m_EditorCamera.viewProj();
+
+	case CAMERA_TYPE::CAMERA_TYPE_ALL:
+		return mat4(1.0);
+		break;
+	}
+	PERROR("camera spoil - graphicssystem.cpp GetCameraViewMatrix()");
+	return {};
+}
+
 ivec2 GraphicsSystem::GetCameraSize(CAMERA_TYPE type)
 {
 	auto localcamera = systemManager->ecs->GetEntitiesWith<Camera>();
@@ -1262,7 +1413,7 @@ void GraphicsSystem::AdditiveBlendFramebuffers(	GFX::FBO& targetFramebuffer, uns
 	}
 
 	targetFramebuffer.Unbind();
-	BlendShader.Deactivate();
+	GFX::Shader::Deactivate();
 }
 
 
@@ -1475,7 +1626,7 @@ void GraphicsSystem::DrawAllHealthbarInstance(const mat4& viewProj)
 	glDrawArraysInstanced(GL_TRIANGLE_FAN, 0, 4, static_cast<GLsizei>(m_HealthbarMesh.mLTW.size()));
 
 	// Unbinding shader and VAO
-	m_HealthbarShaderInst.Deactivate();
+	GFX::Shader::Deactivate();
 	m_HealthbarMesh.UnbindVao();
 }
 
@@ -1568,38 +1719,53 @@ void GraphicsSystem::DrawDeferredLight(const vec3& camPos, GFX::FBO& destFbo)
 	destFbo.Unbind();
 }
 
+void GraphicsSystem::BlitMultiSampleToDestinationFBO(GFX::FBO& destFbo)
+{
+	// Clear out intermediate before blitting
+	m_IntermediateFBO.Clear();
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+	// Copy pixel data from multisample FBO to intermediate FBO
+	m_MultisampleFBO.BlitFramebuffer(m_IntermediateFBO.GetID());
+
+	// Clear out destination FBO before blitting
+	destFbo.Clear();
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	// Copy pixel data from intermediate FBO to editor FBO
+	m_IntermediateFBO.BlitFramebuffer(destFbo.GetID());
+}
+
 void GraphicsSystem::SetupAllShaders()
 {
 	// Initialize the UI Shader
-	std::string uiShader = "UIShader";
-	uid uiShaderstr(uiShader);
+	uid uiShaderstr("UIShader");
 	m_UiShaderInst = *systemManager->mResourceTySystem->get_Shader(uiShaderstr.id);
-
-	// Initialize the Crosshair shader
-	std::string crosshairShader = "CrosshairShader";
-	uid crosshairShaderstr(crosshairShader);
-	m_CrosshairShaderInst = *systemManager->mResourceTySystem->get_Shader(crosshairShaderstr.id);
-	m_CrosshairShaderInst.Activate();
-	SetupCrosshairShaderLocations();
-	m_CrosshairShaderInst.Deactivate();
-
 	// Uniforms of UI Shader
 	m_UiShaderInst.Activate();
 	GLuint uniform_tex = glGetUniformLocation(m_UiShaderInst.GetHandle(), "uTex2d");
 	glUniform1iv(uniform_tex, (GLsizei)m_Textures.size(), m_Textures.data()); // Passing texture Binding units to frag shader [0 - 31]
 	m_UiShaderInst.Deactivate();
 
+	// Initialize the Crosshair shader
+	uid crosshairShaderstr("CrosshairShader");
+	m_CrosshairShaderInst = *systemManager->mResourceTySystem->get_Shader(crosshairShaderstr.id);
+	m_CrosshairShaderInst.Activate();
+	SetupCrosshairShaderLocations();
+	m_CrosshairShaderInst.Deactivate();
+
 	// Initialize the Healthbar shader and uniform location
-	std::string healthbarShader = "healthbarShader";
-	uid healthbarShaderstr(healthbarShader);
+	uid healthbarShaderstr("healthbarShader");
 	m_HealthbarShaderInst = *systemManager->mResourceTySystem->get_Shader(healthbarShaderstr.id);
 	m_HealthbarShaderInst.Activate();
 	m_HealthbarViewProjLocation = m_HealthbarShaderInst.GetUniformLocation("uViewProj");
 	m_HealthbarShaderInst.Deactivate();
 
+	// Initialize the Healthbar shader and uniform location
+	uid animationShaderstr("AnimationShader");
+	m_AnimationShaderInst = *systemManager->mResourceTySystem->get_Shader(animationShaderstr.id);
+	
 	// Initialize the deferred light shader and uniform location
-	std::string deferredLightShader = "deferredLightShader";
-	uid deferredLightShaderstr(deferredLightShader);
+	uid deferredLightShaderstr("deferredLightShader");
 	m_DeferredLightShaderInst = *systemManager->mResourceTySystem->get_Shader(deferredLightShaderstr.id);
 	m_DeferredLightShaderInst.Activate();
 	m_DeferredCamPosLocation = m_DeferredLightShaderInst.GetUniformLocation("uCamPos");
@@ -1624,8 +1790,7 @@ void GraphicsSystem::SetupAllShaders()
 	m_DeferredLightShaderInst.Deactivate();
 
 	// Initialize the G-buffer shader and uniform location
-	std::string gBufferShader = "gBufferShader";
-	uid gBufferShaderstr(gBufferShader);
+	uid gBufferShaderstr("gBufferShader");
 	m_GBufferShaderInst = *systemManager->mResourceTySystem->get_Shader(gBufferShaderstr.id);
 }
 
@@ -1640,9 +1805,10 @@ void GraphicsSystem::ComputeDeferredLight(bool editorDraw)
 
 	glUniform1i(computeDeferred.GetUniformLocation("uLightCount"), m_LightCount);
 	glUniform3fv(computeDeferred.GetUniformLocation("uCamPos"), 1, &m_EditorCamera.mPosition[0]);
+	glUniform4fv(m_GlobalTintLocation, 1, &m_GlobalTint[0]);
 
-	int num_group_x = glm::ceil(m_Width / 30);
-	int num_group_y = glm::ceil(m_Height / 30);
+	int num_group_x = glm::ceil(m_Width / 29);
+	int num_group_y = glm::ceil(m_Height / 29);
 	glDispatchCompute(num_group_x, num_group_y, 1);
 	// make sure writing to image is done before reading
 	glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT);

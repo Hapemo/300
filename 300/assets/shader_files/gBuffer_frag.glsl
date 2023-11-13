@@ -2,10 +2,12 @@
 #extension GL_ARB_gpu_shader_int64 : enable
 
 // -- INPUTS --
-in vec2 TexCoords;		// Texture Coordinates
-in vec4 Tex_Ent_ID;		// Texture ID, Entity ID
-in mat3 TBN;			// Tangent-to-world matrix
-in vec3 fragPos;		// Fragment position
+in vec2 TexCoords;		    // Texture Coordinates
+in vec4 Tex_Ent_ID;		    // Texture ID, Entity ID
+in mat3 TBN;			    // Tangent-to-world matrix
+in vec3 fragPos;		    // Fragment position
+in vec4 Bloom_Threshold;    // Bloom Threshold
+
 
 // -- OUTPUTS --
 layout (location = 0) out vec4 fragColor;

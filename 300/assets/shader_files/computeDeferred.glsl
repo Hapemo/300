@@ -15,6 +15,7 @@ layout(rgba32f, binding = 0) uniform image2D imgOutput;
 // -- UNIFORM --
 uniform vec3 uCamPos;
 uniform int uLightCount;
+uniform vec4 uGlobalTint;
 
 struct PointLight           // 48 Bytes
 {
@@ -75,7 +76,7 @@ void main()
 
     vec3 fragPos        = imageLoad(gPosition, texelCoord).xyz;
     vec4 normal         = imageLoad(gNormal, texelCoord);
-    vec4 albedoSpec    = imageLoad(gAlbedoSpec, texelCoord);
+    vec4 albedoSpec     = imageLoad(gAlbedoSpec, texelCoord);
     vec4 emission       = imageLoad(gEmission, texelCoord);
     float roughness     = normal.w;
 
@@ -91,5 +92,5 @@ void main()
     float gamma = 2.2;
     finalColor = pow(finalColor.rgb, vec3(1.0/gamma));
 
-    imageStore(imgOutput, texelCoord, vec4(finalColor, 1.0));
+    imageStore(imgOutput, texelCoord, vec4(finalColor, 1.0) * uGlobalTint);
 }

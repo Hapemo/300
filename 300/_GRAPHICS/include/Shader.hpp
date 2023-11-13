@@ -43,7 +43,7 @@ Activates the shader program
 /*!*****************************************************************************
 Deactivates the shader program
 *******************************************************************************/
-        void Deactivate() const;
+        static void Deactivate();
 
 /*!*****************************************************************************
 Get the handle of the shader program

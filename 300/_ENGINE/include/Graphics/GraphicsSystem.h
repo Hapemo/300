@@ -97,6 +97,8 @@ public:
 	/**************************************************************************/
 	void Update(float dt);
 
+	void Draw(bool forEditor = false);
+
 	/***************************************************************************/
 	/*!
 	\brief
@@ -173,6 +175,7 @@ public:
 	vec3 GetCameraTarget(CAMERA_TYPE type);
 	vec3 GetCameraDirection(CAMERA_TYPE type);			// Direction vector of the camera (Target - position)
 	mat4 GetCameraViewMatrix(CAMERA_TYPE type);
+	mat4 GetCameraViewProjMatrix(CAMERA_TYPE type);
 	ivec2 GetCameraSize(CAMERA_TYPE type);
 
 
@@ -290,6 +293,7 @@ public:
 	GFX::Shader m_CrosshairShaderInst;
 	GFX::Shader m_DrawSceneShaderInst;
 	GFX::Shader m_HealthbarShaderInst;
+	GFX::Shader m_AnimationShaderInst;
 	GFX::Shader m_GBufferShaderInst;
 	GFX::Shader m_DeferredLightShaderInst;
 
@@ -350,12 +354,14 @@ private:
 
 	// -- Deferred Lighting WIP --
 	void DrawDeferredLight(const vec3& camPos, GFX::FBO& destFbo);
+	void BlitMultiSampleToDestinationFBO(GFX::FBO& destFbo);
 	GLint m_DeferredCamPosLocation{};
 	GLint m_DeferredLightCountLocation{};
 
 	// -- Compute Shader WIP --
 	GFX::ComputeShader computeDeferred;
 	void ComputeDeferredLight(bool editorDraw = false);
+	GLint m_GlobalTintLocation{};
 
 	// -- Shader Setup --
 	void SetupAllShaders();

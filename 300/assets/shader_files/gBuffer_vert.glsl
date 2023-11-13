@@ -7,6 +7,7 @@ layout (location = 2) in vec2 inUV;			        // Texture Coordinates
 layout (location = 5) in vec3 inTangent;			// Per vertex Tangent
 layout (location = 6) in vec3 inNormal;			    // Per vertex Normal
 layout (location = 7) in vec4 inTex_Ent_ID;		    // Texture ID, Entity ID of object
+layout (location = 8) in vec4 inBloom;				// Bloom threshold and flag
 layout (location = 9) in mat4 inLTW;			    // local to world
 
 // -- UNIFORMS --
@@ -17,6 +18,7 @@ out vec2 TexCoords;			// Texture Coordinates
 out vec4 Tex_Ent_ID;		// Texture ID, Entity ID
 out mat3 TBN;				// Tangent-to-world matrix
 out vec3 fragPos;			// Fragment position
+out vec4 Bloom_Threshold;
 
 
 mat3 ComputeTBN()

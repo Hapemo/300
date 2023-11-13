@@ -275,7 +275,7 @@ void GFX::PingPongFBO::GaussianBlurShader(GFX::Shader& blurShader, GFX::FBO& sou
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	m_Quad.Unbind();
-	blurShader.Deactivate();
+	GFX::Shader::Deactivate();
 }
 
 
