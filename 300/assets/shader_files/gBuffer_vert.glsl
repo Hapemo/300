@@ -7,7 +7,7 @@ layout (location = 2) in vec2 inUV;			        // Texture Coordinates
 layout (location = 5) in vec3 inTangent;			// Per vertex Tangent
 layout (location = 6) in vec3 inNormal;			    // Per vertex Normal
 layout (location = 7) in vec4 inTex_Ent_ID;		    // Texture ID, Entity ID of object
-layout (location = 8) in mat4 inLTW;			    // local to world
+layout (location = 9) in mat4 inLTW;			    // local to world
 
 // -- UNIFORMS --
 uniform mat4 uMatrixVP;
