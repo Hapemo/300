@@ -69,7 +69,7 @@ std::vector<glm::vec3> PathfinderManager::AStarPath(Entity _start, Entity _end, 
 	ALGraph* alGraph{ nullptr };
 	for (int i{}; i < mGraphDataNameList.size(); ++i) {
 		if (mGraphDataNameList[i] != _start.GetComponent<AISetting>().mGraphDataName) continue;
-		alGraph = &mALGraphList[i];
+		alGraph = mALGraphList[i].get();
 		break;
 	}
 	if (!alGraph) {

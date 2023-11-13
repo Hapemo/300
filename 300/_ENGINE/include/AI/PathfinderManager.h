@@ -133,7 +133,7 @@ private:
 	//------------------------------------------
 
 private:
-	std::vector<ALGraph> mALGraphList;
+	std::vector<std::shared_ptr<ALGraph>> mALGraphList;
 
 private: // Helper function
 	std::pair<Entity, std::vector<Entity>>* FindGraphEntity(Entity _e);

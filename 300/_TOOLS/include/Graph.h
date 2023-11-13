@@ -38,7 +38,7 @@ public:
   std::vector<glm::vec3>& GetPointEdges(glm::vec3 point);
 
   // Convert this graph data into a ALGraph
-  ALGraph MakeALGraph(); // Make a non-dynamic container for efficiency
+  std::shared_ptr<ALGraph> MakeALGraph(); // Make a non-dynamic container for efficiency
 
 
   std::vector<std::pair<glm::vec3, std::vector<glm::vec3>>> mData;
@@ -50,7 +50,7 @@ public:
 
 class ALGraph {
 public:
-  ALGraph(int _size) { mData.resize(_size); }
+  ALGraph(int _size) { mData.reserve(_size + 2); mData.resize(_size); }
   ALGraph& operator=(ALGraph const& _graph);
 
   enum NODE_STATE {
