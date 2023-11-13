@@ -128,7 +128,11 @@ void LuaEntity()
 
         ADD_COMPONENT("AddUIrenderer", UIrenderer),
         DECLARE_COMPONENT("GetUIrenderer", UIrenderer),
-        "HasUIrenderer", & Entity::HasComponent<UIrenderer>
+        "HasUIrenderer", & Entity::HasComponent<UIrenderer>,
+
+        ADD_COMPONENT("AddAISetting", AISetting),
+        DECLARE_COMPONENT("GetAISetting", AISetting),
+        "HasAISetting", & Entity::HasComponent<AISetting>
     );
 }
 
@@ -436,4 +440,14 @@ void LuaUIrenderer()
         "UIrenderer", sol::constructors<>(),
         "SetDegree", &UIrenderer::SetDegree
     );
+}
+
+void LuaAISetting()
+{
+    systemManager->mScriptingSystem->luaState.new_usertype<AISetting>(
+        "AISetting", sol::constructors<>(),
+        "SetTarget", &AISetting::SetTarget,
+        "GetTarget", sol::resolve<Entity()>(&AISetting::GetTarget),
+        "GetTargetConst", sol::resolve<Entity() const>(&AISetting::GetTarget)
+        );
 }

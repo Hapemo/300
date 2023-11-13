@@ -6,6 +6,11 @@ local originalScaleX
 local deathEntity
 local deathComp
 local deathAudioSource
+local aiSys
+local phySys
+local aiComp
+local entity
+local entity2
 
 -- for example you want to reference out hp variable to another script
 --local hp = 100
@@ -27,12 +32,15 @@ function Alive()
     end
     aiSys = systemManager:mAISystem();
     phySys = systemManager:mPhysicsSystem();
+    aiComp = entity:GetAISetting();
 end
 
 function Update()
-    -- Get entity attached to script
-    
-    
+
+    -- Get AISetting function
+    --entity2 = aiComp:GetTargetConst();
+    --aiComp:SetTarget(entity);
+    --print (entity2.id)
 
     -- Create new Entity in current scene example
     --testEntity = systemManager.ecs:NewEntityByScene();
