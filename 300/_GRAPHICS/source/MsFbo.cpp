@@ -215,11 +215,12 @@ void GFX::IntermediateFBO::PrepForDraw()
 	glBindFramebuffer(GL_FRAMEBUFFER, mID);
 
 	// Set all attachments for output
-	GLuint allAttachments[6] = {
+	GLuint allAttachments[7] = {
 		GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2,
-		GL_COLOR_ATTACHMENT3, GL_COLOR_ATTACHMENT4, GL_COLOR_ATTACHMENT5
+		GL_COLOR_ATTACHMENT3, GL_COLOR_ATTACHMENT4, GL_COLOR_ATTACHMENT5,
+		GL_COLOR_ATTACHMENT6
 	};
-	glDrawBuffers(6, allAttachments);
+	glDrawBuffers(7, allAttachments);
 
 	// Clear Default color attachment
 	glClearColor(0.f, 0.f, 0.f, 0.f);
@@ -271,11 +272,12 @@ void GFX::IntermediateFBO::Clear()
 	glBindFramebuffer(GL_FRAMEBUFFER, mID);
 
 	// Set all attachments for output
-	GLuint allAttachments[6] = {
+	GLuint allAttachments[7] = {
 		GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2,
-		GL_COLOR_ATTACHMENT3, GL_COLOR_ATTACHMENT4, GL_COLOR_ATTACHMENT5
+		GL_COLOR_ATTACHMENT3, GL_COLOR_ATTACHMENT4, GL_COLOR_ATTACHMENT5,
+		GL_COLOR_ATTACHMENT6
 	};
-	glDrawBuffers(6, allAttachments);
+	glDrawBuffers(7, allAttachments);
 
 	// Clear Default color attachment
 	glClearColor(0.f, 0.f, 0.f, 0.f);
