@@ -1,21 +1,21 @@
-#version 450
-#extension GL_ARB_gpu_shader_int64 : enable
+#version 430 core
 
-// -- INPUTS --
-layout (location = 0) in vec2 fTexCoords;
+// -- Workgroup Size --
+layout(local_size_x = 30, local_size_y = 30, local_size_z = 1) in;
 
-// -- UNIFORMS --
+// I-- INPUT --
+layout(rgba32f, binding = 1) uniform image2D gPosition;     // XYZ:  Fragment Position  | W: Ambient Occlusion
+layout(rgba32f, binding = 2) uniform image2D gNormal;       // XYZ:  Normal				| W: Roughness component
+layout(rgba32f, binding = 3) uniform image2D gAlbedoSpec;   // RGB:  Albedo Color		| A: Metallic component
+layout(rgba32f, binding = 4) uniform image2D gEmission;     // RGBA: Emission
+
+// -- OUTPUT --
+layout(rgba32f, binding = 0) uniform image2D imgOutput;
+
+// -- UNIFORM --
 uniform vec3 uCamPos;
 uniform int uLightCount;
-
-// -- OUTPUTS --
-layout (location = 0) out vec4 fragColor0;
-
-// -- G-Buffers --
-uniform uint64_t gPosition;        // XYZ:  Fragment Position   | W: Ambient Occlusion
-uniform uint64_t gNormal;          // XYZ:  Normal				| W: Roughness component
-uniform uint64_t gAlbedoSpec;      // RGB:  Albedo Color		| A: Metallic component
-uniform uint64_t gEmission;        // RGBA: Emission
+uniform vec4 uGlobalTint;
 
 struct PointLight           // 48 Bytes
 {
@@ -32,7 +32,6 @@ layout (std430, binding = 2) buffer pointLightBuffer
     PointLight pointLights[];
 };
 
-
 vec3 FresnelSchlick(float cosTheta, vec3 f0);
 float DistributionGGX(vec3 N, vec3 H, float roughness);
 float GeometrySchlickGGX(float NdotV, float roughness);
@@ -42,20 +41,23 @@ ComputeLight(PointLight light, vec3 F0, vec3 fragPos, vec3 albedo, vec3 normal, 
 
 const float PI = 3.14159265359;
 
-void main()
+void main() 
 {
-    vec4 fragPos    = texture(sampler2D(gPosition), fTexCoords);
-    vec4 normal     = texture(sampler2D(gNormal), fTexCoords);
-    vec4 albedoSpec = texture(sampler2D(gAlbedoSpec), fTexCoords);
-    vec4 emission   = texture(sampler2D(gEmission), fTexCoords);
-    float roughness = normal.a;
-    float metallic  = albedoSpec.a;
-    float ao        = fragPos.a;
+    ivec2 texelCoord = ivec2(gl_GlobalInvocationID.xy);
 
-    // Get the F0 Parameter
-    vec3 F0 = vec3(0.04);       // Non-metallic surface is always 0.04
+    vec4 fragPos        = imageLoad(gPosition, texelCoord);
+    vec4 normal         = imageLoad(gNormal, texelCoord);
+    vec4 albedoSpec     = imageLoad(gAlbedoSpec, texelCoord);
+    vec4 emission       = imageLoad(gEmission, texelCoord);
+    float roughness     = normal.a;
+    float metallic      = albedoSpec.a;
+    float ao            = fragPos.a;
+
+     // Get the F0 Parameter
+    // Non-metallic surface is always 0.04
+    vec3 F0 = vec3(0.04);       
     // Get F0 by linearly interpolating between F0 and albedo value with given metallic value
-    F0 = mix(F0, albedoSpec.rgb, metallic);     
+    F0 = mix(F0, albedoSpec.rgb, metallic);  
 
     vec3 lightRadiance = vec3(0.0);
 
@@ -70,6 +72,8 @@ void main()
     float gamma = 2.2;
     color = color / (color + vec3(1.0));
     color = pow(color, vec3(1.0/gamma));
+
+    imageStore(imgOutput, texelCoord, vec4(color, 1.0) * uGlobalTint);
 }
 
 ComputeLight(PointLight light, vec3 F0, vec3 fragPos, vec3 albedo, vec3 normal, float roughness, float metallic)
