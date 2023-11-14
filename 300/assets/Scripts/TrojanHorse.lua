@@ -1,14 +1,3 @@
-local firstvec = Vec3.new()
-local secondvec = Vec3.new()
-local xlate = Vec3.new()
-local thisxlate = Vec3.new()
-
-local originalScaleX
-
-local deathEntity
-local deathComp
-local deathAudioSource
-
 -- Variables for state
 local s1Timer           = 2
 local s1RoamVelocity    = Vec3.new()
@@ -24,10 +13,8 @@ local s4Timer           = 0
 -- Systems
 local aiSys
 local phySys
-local gameStateSys
 
 -- Other variables
-local vec = Vec3.new()
 local this
 
 
@@ -48,11 +35,6 @@ local state
 
 function Alive()
     math.randomseed(os.time())
-    gameStateSys = systemManager:mGameStateSystem()
-
-    deathEntity = gameStateSys:GetEntity("Death" , "testSerialization")
-    deathComp   = deathEntity:GetAudio()
-    deathAudioSource = Helper.CreateAudioSource(deathEntity)
 
     this = Helper.GetScriptEntity(script_entity.id)
     if this == nil then
@@ -129,26 +111,8 @@ function Update()
         end
 
     end
+    -- END STATE MACHINE
 
-    -- vec = aiSys:GetDirection(entity)
-    -- entity:GetTransform().mRotate.y = Helper.DirectionToAngle(vec)
-
-    -- vec.x = vec.x * 20;
-    -- vec.y = entity:GetRigidBody().mVelocity.y;
-    -- vec.z = vec.z * 20;
-    -- phySys:SetVelocity(entity, vec);
-    
-    -- if (entity:GetTransform().mScale.x < 2.0) then
-    --     deathAudioSource:Play()
-    --     deathAudioSource:SetVolume(0.2)
-    --     systemManager.ecs:SetDeleteEntity(entity)
-    -- end
-        
-    -- AI functions
-    -- aiSys:SetPredictiveVelocity(entity, entity, 0.5)
-    -- aiSys:PredictiveShootPlayer(entity, 0.5, 2, 4)
-
-    --print("Jiayou6 Jazzi")
 end
 
 function Dead()
@@ -186,25 +150,25 @@ end
 -- State initialise functions
 
 function ROAMInit()
-    print("Start Roam")
+    --print("Start Roam")
     state = "ROAM"
     s1Timer = 2
     s1RoamVelocity = RandDirectionXZ()
 end
 
 function CHARGEInit()
-    print("Start Charge")
+    --print("Start Charge")
     state = "CHARGE"
     s2Timer = 0
 end
 
 function SPRINTInit()
-    print("Start Sprint")
+    --print("Start Sprint")
     state = "SPRINT"
 end
 
 function RESTInit()
-    print("Start Rest")
+    --print("Start Rest")
     state = "REST"
     phySys:SetVelocity(this, Vec3.new())
 end
