@@ -130,17 +130,19 @@ struct MeshRenderer : public Serializable
 	
 	ref									mShaderRef;
 
-	std::string							mMaterialInstancePath[5] {" "," " ," " ," ", " "};
+
 	vec4								mInstanceColor{ 1.f, 1.f, 1.f, 1.f };
 	vec4								mBloomThreshold{ 1.f, 1.f, 1.f, 1.f };
 
 	std::string							mMeshPath;
 
 	ref									mMeshRef{};
-	ref									mTextureRef[5]		{ {nullptr,0},{nullptr,0},{nullptr,0},{nullptr,0},{nullptr,0} };
+
+	std::string							mMaterialInstancePath[6]{ " "," " ," " ," ", " " ," " };
+	ref									mTextureRef[6]		{ {nullptr,0},{nullptr,0},{nullptr,0},{nullptr,0},{nullptr,0},{nullptr,0} };
 
 	// store the descriptor data for the material instance per mesh renderer instance
-	_GEOM::Texture_DescriptorData		mTextureDescriptorData[5];
+	_GEOM::Texture_DescriptorData		mTextureDescriptorData[6];
 	
 
 	unsigned							mGUID;

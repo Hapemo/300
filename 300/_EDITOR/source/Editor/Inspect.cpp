@@ -76,7 +76,7 @@ Inspect display for Audio components
 #include "EditorReflection/EditorReflection.h"
 
 
-void popup(std::string name, ref& data, bool& trigger);
+void popup(std::string name, std::string& dataname, ref& data, bool& trigger);
 
 /***************************************************************************/
 /*!
@@ -806,7 +806,7 @@ void MeshRenderer::Inspect()
 		}
 
 		}
-		popup("Delete", mMeshRef, meshbool);
+		popup("Delete", mMeshPath, mMeshRef, meshbool);
 
 
 
@@ -815,9 +815,9 @@ void MeshRenderer::Inspect()
 
 
 
-		std::string textures[5] = { "DIFFUSE","NORMAL", "SPECULAR","SHININESS","EMISSION"};
+		std::string textures[6] = { "DIFFUSE","NORMAL", "SPECULAR","SHININESS","EMISSION", "AO"};
 
-		for (int i{ 0 }; i <5; i++) 
+		for (int i{ 0 }; i <6; i++) 
 		{
 			if (mMaterialInstancePath[i] != "") 
 			{
@@ -969,7 +969,7 @@ void MeshRenderer::Inspect()
 				}
 			}
 		}
-		popup("DeleteTexture", mTextureRef[texIndex], textbool);
+		popup("DeleteTexture", mMaterialInstancePath[texIndex], mTextureRef[texIndex], textbool);
 
 		ImGui::ColorPicker4("MeshColor", (float*)&mInstanceColor);
 	}
@@ -1563,7 +1563,7 @@ void Crosshair::Inspect()
 		Entity(Hierarchy::selectedId).RemoveComponent<Crosshair>();
 }
 
-void popup(std::string name, ref& data, bool& trigger) {
+void popup(std::string name, std::string& dataname, ref& data, bool& trigger) {
 	std::string hash ="##to"+name;
 	if (trigger == true) {
 		ImGui::OpenPopup(hash.c_str());
@@ -1571,8 +1571,11 @@ void popup(std::string name, ref& data, bool& trigger) {
 	if (ImGui::BeginPopup(hash.c_str())) {
 		
 		if (ImGui::Selectable("Delete")) {
+			data.data_uid = 0;
 			data.data = nullptr;
+			dataname = " ";
 			trigger = false;
+
 		}
 
 		ImGui::EndPopup();
