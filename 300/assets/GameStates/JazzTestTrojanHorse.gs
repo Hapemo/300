@@ -1,6 +1,6 @@
 [
     {
-        "scene_name": "JazzTestScene",
+        "scene_name": "JazzTestTrojanHorse",
         "pause": false,
         "force_render": true,
         "bloom_threshold": {

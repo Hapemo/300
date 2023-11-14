@@ -67,10 +67,11 @@ function Helper.Normalize(Vec3)
 end
 
 function Helper.Vec3Minus(v1, v2)
-    v1.x = v1.x - v2.x
-    v1.y = v1.y - v2.y
-    v1.z = v1.z - v2.z
-    return v1
+    local v = Vec3.new()
+    v.x = v1.x - v2.x
+    v.y = v1.y - v2.y
+    v.z = v1.z - v2.z
+    return v
 end
 
 function Helper.Scale(Vec3, scale)

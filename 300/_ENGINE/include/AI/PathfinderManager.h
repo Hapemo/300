@@ -42,6 +42,9 @@ public:
 
 	//Pathfinder functionalities. Pathfinding from one entity to another
 	std::vector<glm::vec3> AStarPath(Entity _start, Entity _end, AStarSetting const& aStarSetting);
+
+	// Checks for entities inbetween 2 entities
+	bool CheckEntitiesInbetween(glm::vec3 const& _p0, glm::vec3 const& _p1, std::vector<Entity> _toIgnoreEntities, std::vector<std::string> _toIgnoreTags);
 private:
 	// Resetting all the nodes and connecting the start and end node to the alGraph
 	void InitAStar(Entity _start, Entity _end, ALGraph& alGraph, AStarSetting const& aStarSetting);
@@ -50,9 +53,6 @@ private:
 
 	// Connect the src node with all other visible nodes in alGraph
 	void ConnectVisibleNodes(Entity src_e, ALGraph::AdjList& src, ALGraph& alGraph, AStarSetting const& aStarSetting);
-
-	// Checks for entities inbetween 2 entities
-	bool CheckEntitiesInbetween(glm::vec3 const& _p0, glm::vec3 const& _p1, std::vector<Entity> _toIgnoreEntities, std::vector<std::string> _toIgnoreTags);
 	// This version will take into account entity width, making sure most part of the entity can see the target
 	bool CheckEntitiesInbetween(glm::vec3 const& _p0, glm::vec3 const& _p1, std::vector<Entity> _toIgnoreEntities, std::vector<std::string> _toIgnoreTags, glm::vec3 size);
 

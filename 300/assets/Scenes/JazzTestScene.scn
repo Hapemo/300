@@ -1,28 +1,28 @@
 [
     {
-        "entityid": 1048577,
+        "entityid": 1,
         "general": {
-            "name": "Enemy",
+            "name": "player1",
             "tagid": 0,
             "subtag": 0,
-            "isActive": false,
+            "isActive": true,
             "isPaused": false
         },
         "transform": {
             "scale": {
-                "x": 20.044353485107422,
-                "y": 20.044353485107422,
-                "z": 20.044353485107422
+                "x": 5.0,
+                "y": 5.0,
+                "z": 5.0
             },
             "rotate": {
                 "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
+                "y": -0.0000066684442572295666,
+                "z": 3.1415927410125732
             },
             "translate": {
-                "x": -400.93499755859375,
-                "y": 11.281999588012695,
-                "z": 453.4651794433594
+                "x": 81.11026000976563,
+                "y": 2.9999940395355225,
+                "z": 81.5721435546875
             }
         },
         "rigidbody": {
@@ -35,33 +35,39 @@
                 "z": 0.0
             },
             "rotationconstraints": {
-                "x": false,
+                "x": true,
                 "y": false,
                 "z": false
             },
-            "gravity": false
+            "gravity": true
         },
         "meshrenderer": {
             "vert": "../assets/shader_files/pointLight_vert.glsl",
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 2285,
             "instancecolor": {
+                "x": 0.9359606504440308,
+                "y": 1.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
                 "x": 1.0,
                 "y": 1.0,
                 "z": 1.0,
                 "w": 1.0
             },
             "materialinstance": [
-                "../assets/Compressed/cube_diffuse.ctexture",
-                "../assets/Compressed/cube_emission.ctexture",
+                "../assets/Compressed/Cube_Texture_1.ctexture",
+                " ",
                 " ",
                 " ",
                 " "
             ],
-            "mesh": "",
+            "mesh": "../assets/compiled_geom/cube.geom",
             "texturerefid": [
-                4119,
-                4248,
+                4242,
+                0,
                 0,
                 0,
                 0
@@ -78,10 +84,89 @@
                 "y": 0.0,
                 "z": 0.0
             },
-            "istrigger": true
+            "istrigger": false
+        }
+    },
+    {
+        "entityid": 2,
+        "general": {
+            "name": "enemy1_walking",
+            "tagid": 1,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
         },
-        "spherecollider": {
-            "scaleoffset": 1.0,
+        "transform": {
+            "scale": {
+                "x": 3.9998526573181152,
+                "y": 7.999887466430664,
+                "z": 4.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 88.1258316040039,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -17.37317657470703,
+                "y": 6.2673139572143555,
+                "z": 99.38069152832031
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 1,
+            "velocity": {
+                "x": -0.03072357177734375,
+                "y": 0.017836451530456543,
+                "z": 0.0951080322265625
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": true,
+                "z": true
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 2923,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Enemy1_Base Color.ctexture",
+                "../assets/Compressed/Enemy1_Normal.ctexture",
+                "../assets/Compressed/Enemy1_Metallic.ctexture",
+                "../assets/Compressed/Enemy1_Roughness.ctexture",
+                "../assets/Compressed/Enemy1_Emissive.ctexture"
+            ],
+            "mesh": "../assets/compiled_geom/Enemy1_Walk.geom",
+            "texturerefid": [
+                4443,
+                4138,
+                4332,
+                4479,
+                4358
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
             "translateoffset": {
                 "x": 0.0,
                 "y": 0.0,
@@ -92,52 +177,601 @@
         "scripts": {
             "scriptscontainer": [
                 {
-                    "scriptFile": "../assets/Scripts/AITest.lua",
+                    "scriptFile": "../assets/Scripts/TrojanHorse.lua",
                     "variables": []
                 }
             ]
         },
-        "audio": {
-            "filepath": "",
-            "filename": "",
-            "fullpath": "",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 1.0
-        },
-        "pointlight": {
-            "lightcolor": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "linearfalloff": 0.0,
-            "quadraticfalloff": 0.0,
-            "intensity": 1.5
+        "prefab": {
+            "prefab": "enemy1_walking"
         },
         "aisetting": {
-            "movementtype": 2,
-            "spreadout": 40.0,
-            "stayaway": 25.0,
+            "movementtype": 1,
+            "spreadout": 0.0,
+            "stayaway": 0.0,
             "elevation": 0.0,
-            "targetname": "Player"
+            "targetname": "player1",
+            "graphdataname": ""
         }
     },
     {
-        "entityid": 1048578,
+        "entityid": 3,
         "general": {
-            "name": "Enemy",
-            "tagid": 0,
+            "name": "Wall",
+            "tagid": 4,
             "subtag": 0,
-            "isActive": false,
+            "isActive": true,
             "isPaused": false
         },
         "transform": {
             "scale": {
-                "x": 20.044353485107422,
-                "y": 20.044353485107422,
-                "z": 20.044353485107422
+                "x": 59.99998092651367,
+                "y": 200.0,
+                "z": 4.999946117401123
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 90.0
+            },
+            "translate": {
+                "x": 76.3017807006836,
+                "y": 0.7680473327636719,
+                "z": 39.57815933227539
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": false,
+                "z": false
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3442,
+            "instancecolor": {
+                "x": 0.23728811740875244,
+                "y": 1.0,
+                "z": 0.9418269991874695,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
+                "../assets/Compressed/Normal_Wall_12x10x1.ctexture",
+                " ",
+                " ",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/Model_Wall_12x10x1.geom",
+            "texturerefid": [
+                4695,
+                4559,
+                0,
+                0,
+                0
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Wall"
+        }
+    },
+    {
+        "entityid": 4,
+        "general": {
+            "name": "Wall",
+            "tagid": 4,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 59.999961853027344,
+                "y": 200.0,
+                "z": 4.999917984008789
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 90.0
+            },
+            "translate": {
+                "x": -73.17762756347656,
+                "y": -0.0002940528211183846,
+                "z": -42.44867706298828
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": false,
+                "z": false
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3442,
+            "instancecolor": {
+                "x": 0.23728811740875244,
+                "y": 1.0,
+                "z": 0.9418269991874695,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
+                "../assets/Compressed/Normal_Wall_12x10x1.ctexture",
+                " ",
+                " ",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/Model_Wall_12x10x1.geom",
+            "texturerefid": [
+                4695,
+                4559,
+                0,
+                0,
+                0
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Wall"
+        }
+    },
+    {
+        "entityid": 5,
+        "general": {
+            "name": "Wall",
+            "tagid": 4,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 59.99995422363281,
+                "y": 300.0,
+                "z": 4.999946594238281
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 90.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 135.93028259277344
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": false,
+                "z": false
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3442,
+            "instancecolor": {
+                "x": 0.23728811740875244,
+                "y": 1.0,
+                "z": 0.9418269991874695,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
+                "../assets/Compressed/Normal_Wall_12x10x1.ctexture",
+                " ",
+                " ",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/Model_Wall_12x10x1.geom",
+            "texturerefid": [
+                4695,
+                4559,
+                0,
+                0,
+                0
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Wall"
+        }
+    },
+    {
+        "entityid": 6,
+        "general": {
+            "name": "Wall",
+            "tagid": 4,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 59.99995803833008,
+                "y": 300.0,
+                "z": 4.99993371963501
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 90.0
+            },
+            "translate": {
+                "x": 2.277714568572885e-22,
+                "y": -5.21080354294037e-15,
+                "z": -141.34011840820313
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": false,
+                "z": false
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3442,
+            "instancecolor": {
+                "x": 0.23728811740875244,
+                "y": 1.0,
+                "z": 0.9418269991874695,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
+                "../assets/Compressed/Normal_Wall_12x10x1.ctexture",
+                " ",
+                " ",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/Model_Wall_12x10x1.geom",
+            "texturerefid": [
+                4695,
+                4559,
+                0,
+                0,
+                0
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Wall"
+        }
+    },
+    {
+        "entityid": 7,
+        "general": {
+            "name": "Wall",
+            "tagid": 4,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 59.99885559082031,
+                "y": 299.99127197265625,
+                "z": 5.0
+            },
+            "rotate": {
+                "x": 90.0,
+                "y": 0.0,
+                "z": 90.0
+            },
+            "translate": {
+                "x": -99.67884826660156,
+                "y": 28.917476654052734,
+                "z": 0.000004357101261120988
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": false,
+                "z": false
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3442,
+            "instancecolor": {
+                "x": 0.23728811740875244,
+                "y": 1.0,
+                "z": 0.9418269991874695,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
+                "../assets/Compressed/Normal_Wall_12x10x1.ctexture",
+                " ",
+                " ",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/Model_Wall_12x10x1.geom",
+            "texturerefid": [
+                4695,
+                4559,
+                0,
+                0,
+                0
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Wall"
+        }
+    },
+    {
+        "entityid": 8,
+        "general": {
+            "name": "Wall",
+            "tagid": 4,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 59.999267578125,
+                "y": 299.99444580078125,
+                "z": 5.0
+            },
+            "rotate": {
+                "x": 90.0,
+                "y": 0.0,
+                "z": 90.0
+            },
+            "translate": {
+                "x": 121.11454010009766,
+                "y": 28.872228622436523,
+                "z": -0.00000529408407601295
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": false,
+                "z": false
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3442,
+            "instancecolor": {
+                "x": 0.23728811740875244,
+                "y": 1.0,
+                "z": 0.9418269991874695,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Texture_Wall_12x10x1.ctexture",
+                "../assets/Compressed/Normal_Wall_12x10x1.ctexture",
+                " ",
+                " ",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/Model_Wall_12x10x1.geom",
+            "texturerefid": [
+                4695,
+                4559,
+                0,
+                0,
+                0
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Wall"
+        }
+    },
+    {
+        "entityid": 9,
+        "general": {
+            "name": "Ground",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1000.0,
+                "y": 1.0,
+                "z": 1000.0
             },
             "rotate": {
                 "x": 0.0,
@@ -145,15 +779,15 @@
                 "z": 0.0
             },
             "translate": {
-                "x": -400.93499755859375,
-                "y": 11.281999588012695,
-                "z": 400.0
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
             }
         },
         "rigidbody": {
             "density": 10.0,
             "material": 1,
-            "motion": 1,
+            "motion": 0,
             "velocity": {
                 "x": 0.0,
                 "y": 0.0,
@@ -171,6 +805,241 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 2285,
             "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Brick wall 4_baseColor.ctexture",
+                "../assets/Compressed/Brick wall 4_normal.ctexture",
+                " ",
+                " ",
+                " "
+            ],
+            "mesh": "",
+            "texturerefid": [
+                4923,
+                4650,
+                0,
+                0,
+                0
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        }
+    },
+    {
+        "entityid": 10,
+        "general": {
+            "name": "Camera",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.9999998211860657,
+                "y": 0.9999998211860657,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 16.218000411987305,
+                "y": 474.85400390625,
+                "z": 748.7139892578125
+            }
+        },
+        "camera": {
+            "positon": {
+                "x": 16.218000411987305,
+                "y": 474.85400390625,
+                "z": 748.7139892578125
+            },
+            "target": {
+                "x": 17.218000411987305,
+                "y": 474.85400390625,
+                "z": 748.7139892578125
+            },
+            "size": {
+                "x": 1210,
+                "y": 587
+            },
+            "near": 0.10000000149011612,
+            "far": 900.0
+        }
+    },
+    {
+        "entityid": 11,
+        "general": {
+            "name": "Player",
+            "tagid": 0,
+            "subtag": 1,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 20.7189998626709,
+                "y": 70.71900177001953,
+                "z": 19.7189998626709
+            },
+            "rotate": {
+                "x": 0.000017356172975269146,
+                "y": -0.000008477647497784346,
+                "z": 3.1415412425994873
+            },
+            "translate": {
+                "x": -379.2530822753906,
+                "y": 35.8597297668457,
+                "z": 302.2033386230469
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 1,
+            "velocity": {
+                "x": 0.00842290185391903,
+                "y": -0.018349766731262207,
+                "z": -0.00881135556846857
+            },
+            "rotationconstraints": {
+                "x": false,
+                "y": false,
+                "z": false
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 2285,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Girl_Diffuse.ctexture",
+                "../assets/Compressed/Girl_Normal.ctexture",
+                "../assets/Compressed/Girl_Specular.ctexture",
+                "../assets/Compressed/Girl_Glossiness.ctexture",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/cube.geom",
+            "texturerefid": [
+                4070,
+                3977,
+                4191,
+                4426,
+                0
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/AIPlayerTest.lua",
+                    "variables": []
+                }
+            ]
+        }
+    },
+    {
+        "entityid": 12,
+        "general": {
+            "name": "Enemy",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": false,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 20.044353485107422,
+                "y": 20.044353485107422,
+                "z": 20.044353485107422
+            },
+            "rotate": {
+                "x": -1.3949488401412964,
+                "y": 269.98419189453125,
+                "z": 1.6191152334213257
+            },
+            "translate": {
+                "x": -367.89312744140625,
+                "y": 1.5,
+                "z": 294.8192443847656
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 1,
+            "velocity": {
+                "x": -0.00032806396484375,
+                "y": -1.1920928955078125e-7,
+                "z": -0.00045668380334973335
+            },
+            "rotationconstraints": {
+                "x": false,
+                "y": false,
+                "z": false
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 2285,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
                 "x": 1.0,
                 "y": 1.0,
                 "z": 1.0,
@@ -246,11 +1115,12 @@
             "spreadout": 40.0,
             "stayaway": 0.0,
             "elevation": 0.0,
-            "targetname": "Player"
+            "targetname": "Player",
+            "graphdataname": ""
         }
     },
     {
-        "entityid": 1048579,
+        "entityid": 13,
         "general": {
             "name": "Enemy",
             "tagid": 0,
@@ -266,137 +1136,12 @@
             },
             "rotate": {
                 "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -445.1958923339844,
-                "y": 11.281999588012695,
-                "z": 400.0
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 1,
-            "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": false,
-                "y": false,
-                "z": false
-            },
-            "gravity": true
-        },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 2285,
-            "instancecolor": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "materialinstance": [
-                "../assets/Compressed/cube_diffuse.ctexture",
-                "../assets/Compressed/cube_emission.ctexture",
-                " ",
-                " ",
-                " "
-            ],
-            "mesh": "",
-            "texturerefid": [
-                4119,
-                4248,
-                0,
-                0,
-                0
-            ]
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "translateoffset": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "istrigger": true
-        },
-        "spherecollider": {
-            "scaleoffset": 1.0,
-            "translateoffset": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "istrigger": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/AITest.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "audio": {
-            "filepath": "",
-            "filename": "",
-            "fullpath": "",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 1.0
-        },
-        "pointlight": {
-            "lightcolor": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "linearfalloff": 0.0,
-            "quadraticfalloff": 0.0,
-            "intensity": 1.5
-        },
-        "aisetting": {
-            "movementtype": 1,
-            "spreadout": 40.0,
-            "stayaway": 0.0,
-            "elevation": 0.0,
-            "targetname": "Player"
-        }
-    },
-    {
-        "entityid": 1048580,
-        "general": {
-            "name": "Enemy",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": false,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 20.044353485107422,
-                "y": 20.044353485107422,
-                "z": 20.044353485107422
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
+                "y": -0.0,
+                "z": 3.1415927410125732
             },
             "translate": {
                 "x": -349.1562194824219,
-                "y": 11.281999588012695,
+                "y": 1.5,
                 "z": 450.500732421875
             }
         },
@@ -421,6 +1166,12 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 2285,
             "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
                 "x": 1.0,
                 "y": 1.0,
                 "z": 1.0,
@@ -496,11 +1247,12 @@
             "spreadout": 40.0,
             "stayaway": 0.0,
             "elevation": 0.0,
-            "targetname": "Player"
+            "targetname": "Player",
+            "graphdataname": ""
         }
     },
     {
-        "entityid": 1048581,
+        "entityid": 14,
         "general": {
             "name": "Enemy",
             "tagid": 0,
@@ -515,14 +1267,14 @@
                 "z": 20.044353485107422
             },
             "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
+                "x": -0.841716468334198,
+                "y": 90.02710723876953,
+                "z": -1.4625736474990845
             },
             "translate": {
-                "x": -349.48468017578125,
-                "y": 11.281999588012695,
-                "z": 400.2780456542969
+                "x": -390.6115417480469,
+                "y": 1.5,
+                "z": 304.8255310058594
             }
         },
         "rigidbody": {
@@ -530,9 +1282,9 @@
             "material": 1,
             "motion": 1,
             "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
+                "x": 0.0000362396240234375,
+                "y": 1.1920928955078125e-7,
+                "z": 0.00014615990221500397
             },
             "rotationconstraints": {
                 "x": false,
@@ -546,6 +1298,12 @@
             "frag": "../assets/shader_files/pointLight_frag.glsl",
             "meshrefid": 2285,
             "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
                 "x": 1.0,
                 "y": 1.0,
                 "z": 1.0,
@@ -621,33 +1379,34 @@
             "spreadout": 40.0,
             "stayaway": 0.0,
             "elevation": 0.0,
-            "targetname": "Player"
+            "targetname": "Player",
+            "graphdataname": ""
         }
     },
     {
-        "entityid": 1048582,
+        "entityid": 15,
         "general": {
-            "name": "Player",
+            "name": "Enemy",
             "tagid": 0,
-            "subtag": 1,
-            "isActive": true,
+            "subtag": 0,
+            "isActive": false,
             "isPaused": false
         },
         "transform": {
             "scale": {
-                "x": 20.7189998626709,
-                "y": 70.71900177001953,
-                "z": 19.7189998626709
+                "x": 20.044353485107422,
+                "y": 20.044353485107422,
+                "z": 20.044353485107422
             },
             "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
+                "x": -3.0191195011138916,
+                "y": 90.0194320678711,
+                "z": -0.5233142971992493
             },
             "translate": {
-                "x": -379.2522888183594,
-                "y": 36.54151916503906,
-                "z": 302.20166015625
+                "x": -390.6115417480469,
+                "y": 1.5,
+                "z": 297.52392578125
             }
         },
         "rigidbody": {
@@ -655,9 +1414,9 @@
             "material": 1,
             "motion": 1,
             "velocity": {
-                "x": 0.0,
+                "x": -0.0002536773681640625,
                 "y": 0.0,
-                "z": 0.0
+                "z": 0.0001836116425693035
             },
             "rotationconstraints": {
                 "x": false,
@@ -676,19 +1435,25 @@
                 "z": 1.0,
                 "w": 1.0
             },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
             "materialinstance": [
-                "../assets/Compressed/Girl_Diffuse.ctexture",
-                "../assets/Compressed/Girl_Normal.ctexture",
-                "../assets/Compressed/Girl_Specular.ctexture",
-                "../assets/Compressed/Girl_Glossiness.ctexture",
+                "../assets/Compressed/cube_diffuse.ctexture",
+                "../assets/Compressed/cube_emission.ctexture",
+                " ",
+                " ",
                 " "
             ],
-            "mesh": "../assets/compiled_geom/cube.geom",
+            "mesh": "",
             "texturerefid": [
-                4070,
-                3977,
-                4191,
-                4426,
+                4119,
+                4248,
+                0,
+                0,
                 0
             ]
         },
@@ -698,6 +1463,15 @@
                 "y": 1.0,
                 "z": 1.0
             },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": true
+        },
+        "spherecollider": {
+            "scaleoffset": 1.0,
             "translateoffset": {
                 "x": 0.0,
                 "y": 0.0,
@@ -708,98 +1482,80 @@
         "scripts": {
             "scriptscontainer": [
                 {
-                    "scriptFile": "../assets/Scripts/AIPlayerTest.lua",
+                    "scriptFile": "../assets/Scripts/AITest.lua",
                     "variables": []
                 }
             ]
-        }
-    },
-    {
-        "entityid": 1048583,
-        "general": {
-            "name": "Camera",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
         },
-        "transform": {
-            "scale": {
-                "x": 0.9999998211860657,
-                "y": 0.9999998211860657,
+        "audio": {
+            "filepath": "",
+            "filename": "",
+            "fullpath": "",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0
+        },
+        "pointlight": {
+            "lightcolor": {
+                "x": 1.0,
+                "y": 1.0,
                 "z": 1.0
             },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 16.218000411987305,
-                "y": 474.85400390625,
-                "z": 748.7139892578125
-            }
+            "linearfalloff": 0.0,
+            "quadraticfalloff": 0.0,
+            "intensity": 1.5
         },
-        "camera": {
-            "positon": {
-                "x": 16.218000411987305,
-                "y": 474.85400390625,
-                "z": 748.7139892578125
-            },
-            "target": {
-                "x": 17.218000411987305,
-                "y": 474.85400390625,
-                "z": 748.7139892578125
-            },
-            "size": {
-                "x": 1175,
-                "y": 538
-            },
-            "near": 0.10000000149011612,
-            "far": 900.0
+        "aisetting": {
+            "movementtype": 1,
+            "spreadout": 40.0,
+            "stayaway": 0.0,
+            "elevation": 0.0,
+            "targetname": "Player",
+            "graphdataname": ""
         }
     },
     {
-        "entityid": 1048584,
+        "entityid": 16,
         "general": {
-            "name": "Ground",
+            "name": "Enemy",
             "tagid": 0,
             "subtag": 0,
-            "isActive": true,
+            "isActive": false,
             "isPaused": false
         },
         "transform": {
             "scale": {
-                "x": 1000.0,
-                "y": 1.0,
-                "z": 1000.0
+                "x": 20.044353485107422,
+                "y": 20.044353485107422,
+                "z": 20.044353485107422
             },
             "rotate": {
                 "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
+                "y": 171.8418731689453,
+                "z": 3.1415927410125732
             },
             "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
+                "x": -386.84112548828125,
+                "y": 11.281999588012695,
+                "z": 355.1359558105469
             }
         },
         "rigidbody": {
             "density": 10.0,
             "material": 1,
-            "motion": 0,
+            "motion": 1,
             "velocity": {
-                "x": 0.0,
+                "x": 0.00012803806748706847,
                 "y": 0.0,
-                "z": 0.0
+                "z": -0.0008931669872254133
             },
             "rotationconstraints": {
                 "x": false,
                 "y": false,
                 "z": false
             },
-            "gravity": true
+            "gravity": false
         },
         "meshrenderer": {
             "vert": "../assets/shader_files/pointLight_vert.glsl",
@@ -811,17 +1567,23 @@
                 "z": 1.0,
                 "w": 1.0
             },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
             "materialinstance": [
-                "../assets/Compressed/Brick wall 4_baseColor.ctexture",
-                "../assets/Compressed/Brick wall 4_normal.ctexture",
+                "../assets/Compressed/cube_diffuse.ctexture",
+                "../assets/Compressed/cube_emission.ctexture",
                 " ",
                 " ",
                 " "
             ],
             "mesh": "",
             "texturerefid": [
-                4923,
-                4650,
+                4119,
+                4248,
                 0,
                 0,
                 0
@@ -838,7 +1600,51 @@
                 "y": 0.0,
                 "z": 0.0
             },
+            "istrigger": true
+        },
+        "spherecollider": {
+            "scaleoffset": 1.0,
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
             "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/AITest.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "audio": {
+            "filepath": "",
+            "filename": "",
+            "fullpath": "",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0
+        },
+        "pointlight": {
+            "lightcolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "linearfalloff": 0.0,
+            "quadraticfalloff": 0.0,
+            "intensity": 1.5
+        },
+        "aisetting": {
+            "movementtype": 2,
+            "spreadout": 40.0,
+            "stayaway": 25.0,
+            "elevation": 0.0,
+            "targetname": "Player",
+            "graphdataname": ""
         }
     }
 ]

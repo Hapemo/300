@@ -1,6 +1,8 @@
-local vec = Vec3.new()
 local firstvec = Vec3.new()
 local secondvec = Vec3.new()
+local xlate = Vec3.new()
+local thisxlate = Vec3.new()
+
 local originalScaleX
 
 local deathEntity
@@ -18,6 +20,16 @@ local s3SprintVelocity = Vec3.new()
 local sprintSpeed       = 50
 
 local s4Timer           = 0
+
+-- Systems
+local aiSys
+local phySys
+local gameStateSys
+
+-- Other variables
+local vec = Vec3.new()
+local this
+
 
 local state
 -- Trojan horse states
@@ -42,8 +54,8 @@ function Alive()
     deathComp   = deathEntity:GetAudio()
     deathAudioSource = Helper.CreateAudioSource(deathEntity)
 
-    entity = Helper.GetScriptEntity(script_entity.id)
-    if entity == nil then
+    this = Helper.GetScriptEntity(script_entity.id)
+    if this == nil then
         print("Entity nil in Trojan Horse script!")
     end
 
@@ -52,10 +64,20 @@ function Alive()
 
     -- Initialise the state's variables
     state = "ROAM"
+    s1Timer           = 2
+    s1RoamVelocity    = Vec3.new()
+    roamSpeed         = 20
+    s2Timer           = 0
+    s3SprintVelocity  = Vec3.new()
+    sprintSpeed       = 50
+    s4Timer           = 0
 end
 
 function Update()
 
+    -- OTHER UPDATE CODES
+
+    -- STATE MACHINE
     if state == "ROAM" then         -- roam around and passively look for player (change to 2. when sees player)
         -- Roam around randomly
         s1Timer = s1Timer + FPSManager.GetDT()
@@ -63,52 +85,50 @@ function Update()
             s1Timer = 0
             s1RoamVelocity = RandDirectionXZ()
             s1RoamVelocity = Helper.Normalize(s1RoamVelocity)
+            this:GetTransform().mRotate.y = Helper.DirectionToAngle(s1RoamVelocity)
             s1RoamVelocity = Helper.Scale(s1RoamVelocity, roamSpeed)
         end
-        phySys:SetVelocity(entity, s1RoamVelocity)
+        phySys:SetVelocity(this, s1RoamVelocity)
 
         -- Look for player here
-        if aiSys:ConeOfSight(entity, entity:GetAISetting().GetTarget(), 70, 40) then
-            state = "CHARGE"
+        if aiSys:ConeOfSight(this, this:GetAISetting():GetTarget(), 70, 40) then
             CHARGEInit()
         end
 
     elseif state == "CHARGE" then   -- saw player, eyes glow red, play some charge up noise, delay about 3 seconds before charging to player (change to 3. when delay ends)
         -- Play animation for eyes glowing red        
 
-        -- Constantly make him stare at player
+        -- Constantly make him stare at player and stand still
         local stareDirection = Vec3.new()
-        stareDirection = Helper.Vec3Minus(entity:GetAISetting().GetTarget():GetTransform().mTranslate, entity:GetTransform().mTranslate)
-        entity:GetTransform().mRotate.y = Helper.DirectionToAngle(stareDirection)
+        stareDirection = Helper.Vec3Minus(this:GetAISetting():GetTarget():GetTransform().mTranslate, this:GetTransform().mTranslate)
+        this:GetTransform().mRotate.y = Helper.DirectionToAngle(stareDirection)
+        phySys:SetVelocity(this, Vec3.new())
 
         -- Count down 3 seconds
         s2Timer = s2Timer + FPSManager.GetDT()
         if s2Timer > 3 then
             s2Timer = 0
-            state = "SPRINT"
             SPRINTInit()
             s3SprintVelocity = Helper.Scale(Helper.Normalize(stareDirection), sprintSpeed)
+            s3SprintVelocity.y = 0
             -- TODO End audio and animation
         end
 
     elseif state == "SPRINT" then   -- charge toward last seen player position at high speed (change to 4. when collided with something)
         -- Charge towards last seen player position at high speed
-        phySys:SetVelocity(entity, s3SprintVelocity);
+        phySys:SetVelocity(this, s3SprintVelocity);
 
         -- Stop and change state when collided with something
-        entity:GetRigidBody().mVelocity
+        -- This part is done in OnContactEnter
 
     elseif state == "REST" then     -- stops for around 0.5 seconds before moving back to 1. (change to 1. when rest timer ends)
         s4Timer = s4Timer + FPSManager.GetDT()
         if s4Timer > 0.5 then
             s4Timer = 0
-            state = "ROAM"
             ROAMInit()
         end
 
     end
-
-
 
     -- vec = aiSys:GetDirection(entity)
     -- entity:GetTransform().mRotate.y = Helper.DirectionToAngle(vec)
@@ -128,7 +148,7 @@ function Update()
     -- aiSys:SetPredictiveVelocity(entity, entity, 0.5)
     -- aiSys:PredictiveShootPlayer(entity, 0.5, 2, 4)
 
-    --print("Jiayou Jazzi")
+    --print("Jiayou6 Jazzi")
 end
 
 function Dead()
@@ -136,19 +156,26 @@ function Dead()
 end
 
 function OnTriggerEnter(Entity)
-    
-end
-
-function OnTrigger(Entity)
-    
 end
 
 function OnTriggerExit(Entity)
-    
 end
 
 function OnContactEnter(Entity)
+        print("contacting")
+    if (state == "SPRINT") then
+        print("IN SPRINTTTTT")
+        local generalComponent = Entity:GetGeneral()
+        local tagid = generalComponent.tagid
+        if (tagid ~= 2 and tagid ~= 3 and tagid ~= 7) then -- "BULLET", "FLOOR", "GRAPH"
+            -- When collide with anything other than those tag, stop and change state
+            state = "REST"
+            RESTInit()
+            return
+        end
+        
 
+    end
 end
 
 function OnContactExit(Entity)
@@ -159,20 +186,27 @@ end
 -- State initialise functions
 
 function ROAMInit()
+    print("Start Roam")
+    state = "ROAM"
     s1Timer = 2
     s1RoamVelocity = RandDirectionXZ()
 end
 
 function CHARGEInit()
+    print("Start Charge")
+    state = "CHARGE"
     s2Timer = 0
 end
 
 function SPRINTInit()
-
+    print("Start Sprint")
+    state = "SPRINT"
 end
 
 function RESTInit()
-
+    print("Start Rest")
+    state = "REST"
+    phySys:SetVelocity(this, Vec3.new())
 end
 
 
