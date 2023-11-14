@@ -1,96 +1,6 @@
 [
     {
-        "entityid": 2097155,
-        "general": {
-            "name": "player",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 8.0,
-                "y": 8.0,
-                "z": 8.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0003452972450759262,
-                "z": -3.141592264175415
-            },
-            "translate": {
-                "x": 70.29023742675781,
-                "y": 4.499994277954102,
-                "z": -135.70143127441406
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 1,
-            "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": true,
-                "y": false,
-                "z": false
-            },
-            "gravity": true
-        },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 2285,
-            "instancecolor": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "bloomthreshold": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "materialinstance": [
-                "../assets/Compressed/Cube_Texture_White.ctexture",
-                " ",
-                " ",
-                " ",
-                " ",
-                " "
-            ],
-            "mesh": "../assets/compiled_geom/cube.geom",
-            "texturerefid": [
-                4706,
-                0,
-                0,
-                0,
-                0,
-                0
-            ]
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "translateoffset": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "istrigger": false
-        }
-    },
-    {
-        "entityid": 2097156,
+        "entityid": 3145731,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -110,7 +20,7 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 68.79523468017578,
+                "x": 301.87872314453125,
                 "y": 49.292945861816406,
                 "z": 1.5995616912841797
             }
@@ -180,7 +90,7 @@
         }
     },
     {
-        "entityid": 2097157,
+        "entityid": 3145732,
         "general": {
             "name": "ZipBomb",
             "tagid": 1,
@@ -201,8 +111,8 @@
             },
             "translate": {
                 "x": 106.6638412475586,
-                "y": 2.9999942779541016,
-                "z": 178.6235809326172
+                "y": 2.999994993209839,
+                "z": 62.65265655517578
             }
         },
         "rigidbody": {
@@ -268,17 +178,25 @@
             },
             "istrigger": false
         },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/AIFlyingTest.lua",
+                    "variables": []
+                }
+            ]
+        },
         "aisetting": {
             "movementtype": 2,
             "spreadout": 0.0,
-            "stayaway": 0.0,
-            "elevation": 0.0,
+            "stayaway": 76.0,
+            "elevation": 29.0,
             "targetname": "player",
             "graphdataname": ""
         }
     },
     {
-        "entityid": 3145734,
+        "entityid": 3145733,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -368,7 +286,7 @@
         }
     },
     {
-        "entityid": 3145735,
+        "entityid": 3145734,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -420,6 +338,96 @@
             "linearfalloff": 0.0,
             "quadraticfalloff": 0.0,
             "intensity": 0.6000000238418579
+        }
+    },
+    {
+        "entityid": 3145735,
+        "general": {
+            "name": "player",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 8.0,
+                "y": 8.0,
+                "z": 8.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0003452972450759262,
+                "z": -3.141592264175415
+            },
+            "translate": {
+                "x": 70.29023742675781,
+                "y": 4.499994277954102,
+                "z": -135.70143127441406
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 1,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": false,
+                "z": false
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 2285,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Cube_Texture_White.ctexture",
+                " ",
+                " ",
+                " ",
+                " ",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/cube.geom",
+            "texturerefid": [
+                4706,
+                0,
+                0,
+                0,
+                0,
+                0
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
         }
     }
 ]

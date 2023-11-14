@@ -608,7 +608,6 @@ struct AISetting : public Serializable {
 
 private: 
 	Entity mTarget;									// AI's target
-	float mBobberAngle;							// Keeping track of entity's bobbering angle
 };
 
 /******************************************************************************/

@@ -6,6 +6,8 @@ local phySys
 local this
 
 local bobbleAngle
+local bobbleFrequency
+local bobbleIntensity
 
 -- for example you want to reference out hp variable to another script
 --local hp = 100
@@ -21,6 +23,10 @@ function Alive()
     end
     aiSys = systemManager:mAISystem();
     phySys = systemManager:mPhysicsSystem();
+
+    bobbleAngle = 0
+    bobbleFrequency = 2
+    bobbleIntensity = 20
 end
 
 function Update()
@@ -28,6 +34,23 @@ function Update()
     this:GetTransform().mRotate.y = Helper.DirectionToAngle(this, vec)
 
     Helper.Scale(vec, 20)
+
+    -- Add bobbbling here
+    bobbleAngle = bobbleAngle + bobbleFrequency
+    if bobbleAngle > 360 then bobbleAngle = 0 end
+    vec.y = vec.y + math.cos(bobbleAngle/180*math.pi) * bobbleIntensity
+    --
+
+    -- If horizontal length is reached, don't move horizontally
+    local x = this:GetAISetting():GetTarget():GetTransform().mTranslate.x - this:GetTransform().mTranslate.x
+    local z = this:GetAISetting():GetTarget():GetTransform().mTranslate.z - this:GetTransform().mTranslate.z
+    local distDiff = Helper.Vec2Len(x,z) - this:GetAISetting().mStayAway
+    if -10 < distDiff and distDiff < 10 then
+        vec.x = 0
+        vec.z = 0
+    end
+    --
+    
     phySys:SetVelocity(this, vec);
     
     if (this:GetTransform().mScale.x < 2.0) then
@@ -35,6 +58,8 @@ function Update()
         deathAudioSource:SetVolume(0.2)
         systemManager.ecs:SetDeleteEntity(this)
     end
+
+    
 end
 
 function Dead()

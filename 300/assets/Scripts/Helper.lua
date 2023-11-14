@@ -86,6 +86,11 @@ function Helper.Vec3Len(vec)
     return len
 end
 
+function Helper.Vec2Len(x, y)
+    local len = math.sqrt(x * x + y * y)
+    return len
+end
+
 function Helper.DirectionToAngle(entity, vec)
     if (Helper.Vec3Len(vec) == 0) then return entity:GetTransform().mRotate.y end
 
