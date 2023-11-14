@@ -506,16 +506,22 @@ void GraphicsSystem::EditorDraw(float dt)
 
 	if (systemManager->mGraphicsSystem->m_EnableBloom)
 	{
+		//Render the bloom for the Editor Framebuffer
 		m_PingPongFbo.PrepForDraw();
 	
-		// Render the bloom for the Editor Framebuffer
-		//uid gaussianshaderstr("GaussianBlurShader");
-		//GFX::Shader& gaussianShaderInst = *systemManager->mResourceTySystem->get_Shader(gaussianshaderstr.id);
-		//m_PingPongFbo.GaussianBlur(gaussianShaderInst, m_Fbo, systemManager->mGraphicsSystem->mTexelOffset, systemManager->mGraphicsSystem->mSamplingWeight);
+		if (mBloomType == BloomType::GAUSSIANBLUR)
+		{
+			uid gaussianshaderstr("GaussianBlurShader");
+			GFX::Shader& gaussianShaderInst = *systemManager->mResourceTySystem->get_Shader(gaussianshaderstr.id);
+			m_PingPongFbo.GaussianBlur(gaussianShaderInst, m_Fbo, systemManager->mGraphicsSystem->mTexelOffset, systemManager->mGraphicsSystem->mSamplingWeight);
+		}
 
-		uid gaussianshaderstr("GaussianBlurShaderVer2");
-		GFX::Shader& gaussianShaderInst = *systemManager->mResourceTySystem->get_Shader(gaussianshaderstr.id);
-		m_PingPongFbo.GaussianBlurShader(gaussianShaderInst, m_Fbo, systemManager->mGraphicsSystem->mSamplingWeight);
+		else if (mBloomType == BloomType::GAUSSIANBLUR_VER2)
+		{
+			uid gaussianshaderstr("GaussianBlurShaderVer2");
+			GFX::Shader& gaussianShaderInst = *systemManager->mResourceTySystem->get_Shader(gaussianshaderstr.id);
+			m_PingPongFbo.GaussianBlurShader(gaussianShaderInst, m_Fbo, systemManager->mGraphicsSystem->mSamplingWeight);
+		}
 
 		PostProcessing::AdditiveBlendFramebuffers(m_Fbo, m_Fbo.GetColorAttachment(), m_PingPongFbo.pingpongColorbuffers[0]);
 	}
@@ -663,19 +669,22 @@ void GraphicsSystem::GameDraw(float dt)
 
 	if (systemManager->mGraphicsSystem->m_EnableBloom)
 	{
+		// Render the bloom for the Game Framebuffer
 		m_PingPongFbo.PrepForDraw();
 
-		// Render the bloom for the Game Framebuffer
+		if (mBloomType == BloomType::GAUSSIANBLUR)
+		{
+			uid gaussianshaderstr("GaussianBlurShader");
+			GFX::Shader& gaussianShaderInst = *systemManager->mResourceTySystem->get_Shader(gaussianshaderstr.id);
+			m_PingPongFbo.GaussianBlur(gaussianShaderInst, m_GameFbo, systemManager->mGraphicsSystem->mTexelOffset, systemManager->mGraphicsSystem->mSamplingWeight);
+		}
 
-#if 0
-		uid gaussianshaderstr("GaussianBlurShader");
-		GFX::Shader& gaussianShaderInst = *systemManager->mResourceTySystem->get_Shader(gaussianshaderstr.id);
-		m_PingPongFbo.GaussianBlur(gaussianShaderInst, m_GameFbo, systemManager->mGraphicsSystem->mTexelOffset, systemManager->mGraphicsSystem->mSamplingWeight);
-#else
-		uid gaussianshaderstr("GaussianBlurShaderVer2");
-		GFX::Shader& gaussianShaderInst = *systemManager->mResourceTySystem->get_Shader(gaussianshaderstr.id);
-		m_PingPongFbo.GaussianBlurShader(gaussianShaderInst, m_GameFbo, systemManager->mGraphicsSystem->mSamplingWeight);
-#endif
+		else if (mBloomType == BloomType::GAUSSIANBLUR_VER2)
+		{
+			uid gaussianshaderstr("GaussianBlurShaderVer2");
+			GFX::Shader& gaussianShaderInst = *systemManager->mResourceTySystem->get_Shader(gaussianshaderstr.id);
+			m_PingPongFbo.GaussianBlurShader(gaussianShaderInst, m_GameFbo, systemManager->mGraphicsSystem->mSamplingWeight);
+		}
 
 		PostProcessing::AdditiveBlendFramebuffers(m_GameFbo, m_GameFbo.GetColorAttachment(), m_PingPongFbo.pingpongColorbuffers[0]);
 	}

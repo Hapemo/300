@@ -254,6 +254,8 @@ public:
 	float		mTexelOffset{ 1.f };							// Gaussian blur Ver1						
 	float		mSamplingWeight{ 1.f };							// Gaussian blur Ver1/2
 
+	BloomType	mBloomType{ BloomType::GAUSSIANBLUR_VER2 };		// defaults to Gaussian blur Ver2
+
 	// -- Chromatic Abbreation --
 	float		mChromaticOffset{ 0.006f };
 	float		mChromaticStrength{ 1.f };

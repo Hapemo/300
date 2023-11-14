@@ -17,6 +17,7 @@
 
 #include <Graphics/Camera_Input.h>
 #include <Hierarchy.h>
+#include <Constants.h>
  /***************************************************************************/
  /*!
  \brief
@@ -81,6 +82,35 @@ void TabWindow::update()
 	ImGui::DragFloat("Sampling Weight", &systemManager->mGraphicsSystem->mSamplingWeight, 0.001f, 0.f, 7.f, "%0.4f");
 
 	ImGui::Checkbox("Enable Bloom", &systemManager->mGraphicsSystem->m_EnableBloom); 
+
+	if (systemManager->mGraphicsSystem->mBloomType == BloomType::GAUSSIANBLUR) {
+		// Bloom type 1 specific variable
+		ImGui::DragFloat("Texel Offset", &systemManager->mGraphicsSystem->mTexelOffset, 0.1f, 0.f, 5.f, "%0.2f");
+	}
+
+	std::string bloomstr;
+
+	switch (systemManager->mGraphicsSystem->mBloomType)
+	{
+		case BloomType::GAUSSIANBLUR:
+			bloomstr = "Gaussian Blur";
+			break;
+		case BloomType::GAUSSIANBLUR_VER2:
+			bloomstr = "Gaussian Blur Ver2";
+			break;
+		case BloomType::PHYS_BASED_BLOOM:
+			bloomstr = "Physically Based Bloom";
+			break;
+		default:
+			break;
+	}
+
+	if (ImGui::Button(bloomstr.c_str()))
+	{
+		// switch between the different bloom types
+		systemManager->mGraphicsSystem->mBloomType = static_cast<BloomType>((static_cast<unsigned>(systemManager->mGraphicsSystem->mBloomType) + 1) % static_cast<unsigned>(BloomType::last_element));
+	}
+
 	if (ImGui::BeginCombo("EntityBloomThresholds", mBloomEntityStr.c_str()))
 	{
 		for (const auto& mapinst : mBloomEntityMap)
