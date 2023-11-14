@@ -44,6 +44,15 @@ local mouse_move = Vec2.new()
 local mouse_on = true
 
 -- audio attributes
+local bulletAudioEntity
+local bulletAudioComp
+
+local jumpAudioEntity
+local jumpAudioComp
+
+local dashAudioEntity
+local dashAudioComp
+
 -- local walkingAudioSource
 -- local audioComp
 
@@ -93,20 +102,15 @@ function Alive()
 
     -- audioComp = cameraEntity:GetAudio()
     dashui = gameStateSys:GetEntity("UI1", "testSerialization")
-    -- walkingAudioSource = Helper.CreateAudioSource(cameraEntity)
 
-    -- bulletshootEntity = gameStateSys:GetEntity("Bullet Shoot", "testSerialization")
-    -- bulletshootComp = bulletshootEntity:GetAudio()
-    -- bulletshootAudioSource = Helper.CreateAudioSource(bulletshootEntity)
+    bulletAudioEntity = gameStateSys:GetEntity("Bullet Shoot" , "testSerialization")
+    bulletAudioComp = bulletAudioEntity:GetAudio()
 
-    -- dashEntity = gameStateSys:GetEntity("Dash", "testSerialization")
-    -- dashComp = dashEntity:GetAudio()
-    -- dashAudioSource = Helper.CreateAudioSource(dashEntity)
+    jumpAudioEntity = gameStateSys:GetEntity("Jump" , "testSerialization")
+    jumpAudioComp = jumpAudioEntity:GetAudio()
 
-    -- jumpEntity = gameStateSys:GetEntity("Jump", "testSerialization")
-    -- jumpComp = jumpEntity:GetAudio()
-    -- jumpAudioSource = Helper.CreateAudioSource(jumpEntity)
-    -- jumpAudioSource:GetAudio(jumpEntity)
+    dashAudioEntity = gameStateSys:GetEntity("Dash" , "testSerialization")
+    dashAudioComp = dashAudioEntity:GetAudio()
 
     dashTime = 3.0
     tpTime = 20.0
@@ -253,6 +257,7 @@ function Update()
         -- dashAudioSource:SetVolume(0.2)
         if(e_dashEffect == true)then
             dashEffect()
+            dashAudioComp:SetPlay(0.4)
           
             e_dashEffect = false
         end
@@ -326,8 +331,7 @@ function Update()
             if (floorCount > 0) then
                 if (inputMapSys:GetButtonDown("Jump")) then
                     movement.y = movement.y + 50.0;
-                    -- jumpAudioSource:Play()
-                    -- jumpAudioSource:SetVolume(0.1)
+                    jumpAudioComp:SetPlay(0.4)
                 end
             end
         end
@@ -364,9 +368,7 @@ function Update()
         viewVecCam.y=viewVecCam.y *100
         viewVecCam.z=viewVecCam.z *100
 
-        -- bulletshootAudioSource:Play()
-        -- bulletshootAudioSource:SetVolume(0.5)
-   
+        bulletAudioComp:SetPlay(0.1)
 
         physicsSys:SetVelocity(prefabEntity, viewVecCam)
     end

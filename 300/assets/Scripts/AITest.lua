@@ -4,8 +4,8 @@ local secondvec = Vec3.new()
 local originalScaleX
 
 local deathEntity
-local deathComp
-local deathAudioSource
+local deathAudioComp
+
 
 -- for example you want to reference out hp variable to another script
 --local hp = 100
@@ -16,7 +16,8 @@ local deathAudioSource
 
 function Alive()
     gameStateSys = systemManager:mGameStateSystem()
-
+    deathEntity =  gameStateSys:GetEntity("Death" , "testSerialization")
+    deathAudioComp = deathEntity:GetAudio()
 
     entity = Helper.GetScriptEntity(script_entity.id)
     if entity == nil then
@@ -68,6 +69,7 @@ function Update()
     if (entity:GetTransform().mScale.x < 2.0) then
 
         systemManager.ecs:SetDeleteEntity(entity)
+        deathAudioComp:SetPlay(0.2)
     end
         
     -- AI functions

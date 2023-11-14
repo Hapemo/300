@@ -18,7 +18,6 @@ SystemManager *systemManager;
 
 SystemManager::SystemManager()
 {
-	mIsPlay = false;
 	mPhysicsSystem = std::make_unique<PhysicsSystem>();
 	mScriptingSystem = std::make_unique<ScriptingSystem>();
 	mGameStateSystem = std::make_unique<GameStateManager>();

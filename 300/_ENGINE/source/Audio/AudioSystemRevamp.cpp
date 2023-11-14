@@ -980,7 +980,7 @@ void AudioSystem::TestCaseEntity(Entity& entity, float dt)
 	Audio& audio_component = entity.GetComponent<Audio>();
 	General& general = entity.GetComponent<General>();
 
-	if (Input::CheckKey(PRESS, _0))
+	/*if (Input::CheckKey(PRESS, _0))
 	{
 		if (general.name == "Dash")
 			audio_component.SetPlay(0.2f);
@@ -990,7 +990,7 @@ void AudioSystem::TestCaseEntity(Entity& entity, float dt)
 	{
 		if (general.name == "Dash")
 			audio_component.SetPlay(0.8f);
-	}
+	}*/
 
 
 	if (Input::CheckKey(PRESS, P))
