@@ -10,6 +10,10 @@ and dijkstra algorithm to find a path.
 #include "Graph.h"
 #include <algorithm>
 #include <queue>
+//#include "Physics/PhysicsSystem.h"
+#include <functional>
+
+#define AStarDebugPrint 0
 
 //---------------------------------------------
 // Graph Data
@@ -175,32 +179,33 @@ std::vector<glm::vec3>& GraphData::GetPointEdges(glm::vec3 point) {
   }
 }
 
-ALGraph GraphData::MakeALGraph() {
-  ALGraph graph(mData.size());
+std::shared_ptr<ALGraph> GraphData::MakeALGraph() {
+  std::shared_ptr<ALGraph> graphPtr = std::make_shared<ALGraph>(mData.size());
+  ALGraph* graph = graphPtr.get();
 
   // Adding all the points
   int i{};
   for (auto& [point, edges] : mData) {
-    graph.mData[i++].point = point;
+    graph->mData[i++].point = point;
   }
 
   // Add edges
   // Find all the same vector and make a new edge, push back into the edges container
   i = 0;
   for (auto& [point, edges] : mData) { // In all the graphdata's points
-    ALGraph::AdjList& currPoint = graph.mData[i++]; // Get the corresponding points in ALGraph
+    ALGraph::AdjList& currPoint = graph->mData[i++]; // Get the corresponding points in ALGraph
     for (glm::vec3 const& neighbor : edges) { // In the current point, get all connected points in graphdata
-      auto it = std::find_if(graph.mData.begin(), graph.mData.end(), // Find them in ALGraph so that you can point towards them and calculate the weight
+      auto it = std::find_if(graph->mData.begin(), graph->mData.end(), // Find them in ALGraph so that you can point towards them and calculate the weight
                              [neighbor] (ALGraph::AdjList& adjList) { return adjList.point == neighbor; });
-      assert((it != graph.mData.end()) && "Unable to add edge to AdjList since the other connection point does not exist in ALGraph's mData");
+      assert((it != graph->mData.end()) && "Unable to add edge to AdjList since the other connection point does not exist in ALGraph's mData");
 
       // calculate the weight and get pointer, then add it into the edge list
-      float weight = abs(glm::length(currPoint.point - neighbor));
+      float weight = ALGraph::CalcHCost(currPoint.point, neighbor);
       currPoint.edges.emplace_back(ALGraph::Edge(&*it, weight));
     }
   }
 
-  return graph;
+  return graphPtr;
 }
 
 void TestGraph() {
@@ -240,11 +245,45 @@ void TestGraph() {
   GraphData graphData1(filePath);
 
 
-  ALGraph alGraph = graphData.MakeALGraph();
-  alGraph.Print();
+  std::shared_ptr<ALGraph> alGraph = graphData.MakeALGraph();
+  alGraph->Print();
 
   std::cout << "---graph test finish---\n";
 }
+
+//-------------------------------------------------------
+// ALGraph
+//-------------------------------------------------------
+ALGraph& ALGraph::operator=(ALGraph const& _graph) {
+  // Copy over the points
+  mData = _graph.mData;
+
+  // Reset the pointer values
+  for (AdjList& adjList : mData) {
+    adjList.parent = nullptr;
+  }
+
+  // Link the edges (Expecting distance to be copied over properly
+  for (int adjCount{}; adjCount < mData.size(); ++adjCount) {
+    std::vector<Edge>& thisEdges = mData[adjCount].edges;
+    std::vector<Edge>const& thatEdges = _graph.mData[adjCount].edges;
+
+    for (int edgeCount{}; edgeCount < thatEdges.size(); ++edgeCount) {
+      glm::vec3 const& neighborPoint = thatEdges[edgeCount].vertex->point;
+      thisEdges[edgeCount].vertex = nullptr;
+      // Find adjList with same point
+      for (AdjList& adjList : mData) {
+        if (adjList.point == neighborPoint) {
+          thisEdges[edgeCount].vertex = &adjList;
+          break;
+        }
+      }
+    }
+  }
+
+  return *this;
+}
+
 
 void ALGraph::Print() {
   std::cout << "---Printing ALGraph start---\n";
@@ -285,17 +324,25 @@ void ALGraph::AStarInit(glm::vec3 const& start, glm::vec3 const& end) {
 
 }
 
-std::vector<glm::vec3> ALGraph::AStarPath(glm::vec3 const& start, glm::vec3 const& end) {
+std::vector<glm::vec3> ALGraph::AStarPath() {
   // Initialise containers (open list, close list)
   // Put starting node on the open list
   OpenList openList;
 
-  AStarInit(start, end);
-  openList.Insert(&*mData.end()-2); // Add start node to openList
-  AdjList* endNode{ &*mData.end()-1 };
+  //AStarInit(start, end);
+  openList.Insert(&*(mData.end()-2)); // Add start node to openList
+  AdjList* endNode{ &*(mData.end()-1) };
 
   while (!openList.IsEmpty()) {
+#if AStarDebugPrint
+    openList.Print();
+#endif
     AdjList* currNode = openList.PopLowestCostNode();
+#if AStarDebugPrint
+    std::cout << "currNode: ";
+    PrintVec(currNode->point);
+    std::cout << ", gCost: " << currNode->gCost << ", hCost: " << currNode->hCost << ", fCost: " << currNode->hCost + currNode->gCost << '\n';
+#endif
 
     if (currNode == endNode) {
       return MasterPath(currNode);
@@ -303,27 +350,72 @@ std::vector<glm::vec3> ALGraph::AStarPath(glm::vec3 const& start, glm::vec3 cons
 
     currNode->state = NODE_STATE::CLOSE;
 
+#if AStarDebugPrint
+    std::cout << "Exploring Neighbor Nodes:\n";
+#endif
     for (Edge& edge : currNode->edges) {
       AdjList* neighbor = edge.vertex;
       float newGCost = currNode->gCost + edge.distance;
       float fCost = newGCost + neighbor->hCost;
 
+#if AStarDebugPrint
+      std::cout << "neighbor node: ";
+      PrintVec(edge.vertex->point);
+      std::cout << ", newGCost: "<< newGCost << ", hCost: " << neighbor->hCost << ", fCost: " << fCost << '\n';
+#endif
+
       if (neighbor->state == NODE_STATE::NONE) {
         neighbor->parent = currNode;
         neighbor->gCost = newGCost;
+        neighbor->state = NODE_STATE::OPEN;
         openList.Insert(neighbor);
+#if AStarDebugPrint
+        std::cout << "None State -> Open State\n";
+#endif
       } else if (neighbor->gCost + neighbor->hCost > fCost) {
         neighbor->parent = currNode;
         neighbor->gCost = newGCost;
-        if (neighbor->state == NODE_STATE::CLOSE)
+        if (neighbor->state == NODE_STATE::CLOSE) {
+          neighbor->state = NODE_STATE::OPEN;
           openList.Insert(neighbor);
+#if AStarDebugPrint
+          std::cout << "Close State -> Open State\n";
+#endif
+        }
+#if AStarDebugPrint
+        std::cout << "Remain in Open State\n";
+#endif
       }
     }
   }
 
-  AStarExit();
+  //AStarExit();
   return std::vector<glm::vec3>();
 }
+
+//void ALGraph::ConnectStartAndEnd() {
+//  // TODO WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING. I set the max height the start and end node can connect to to be 10
+//  // Make those points their neighbor
+//
+//  bool(*fptr)(glm::vec3, glm::vec3);
+//  
+//  std::function
+//
+//  // Identify the start end node
+//  AdjList* startNode{ &*mData.end()-2 };
+//  AdjList* endNode{ &*mData.end()-1 };
+//
+//  // For each of them, identify all the nodes that they can see
+//  for (auto& adjList : mData) {
+//    // If out of elevation range, don't connect
+//    if (abs(glm::length(adjList.point - startNode->point)) > mSetting.elevation) continue;
+//
+//    // Check line of sight
+//    //if ()
+//
+//
+//  }
+//}
 
 void ALGraph::AStarExit() {
   // Pop the start and end nodes
@@ -338,8 +430,9 @@ std::vector<glm::vec3> ALGraph::MasterPath(AdjList* tailNode) {
     tailNode = tailNode->parent;
     path.push_back(tailNode->point);
   }
+  std::reverse(path.begin(), path.end());
 
-  AStarExit();
+  //AStarExit();
   return path;
 }
 

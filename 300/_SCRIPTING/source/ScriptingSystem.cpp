@@ -118,6 +118,7 @@ void ScriptingSystem::Init()
     LuaAIManager();
     LuaButton();
     LuaUIrenderer();
+    LuaAISetting();
 
     /******************************************************************************/
     /*!

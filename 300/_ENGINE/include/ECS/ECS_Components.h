@@ -130,17 +130,19 @@ struct MeshRenderer : public Serializable
 	
 	ref									mShaderRef;
 
-	std::string							mMaterialInstancePath[5] {" "," " ," " ," ", " "};
+
 	vec4								mInstanceColor{ 1.f, 1.f, 1.f, 1.f };
 	vec4								mBloomThreshold{ 1.f, 1.f, 1.f, 1.f };
 
 	std::string							mMeshPath;
 
 	ref									mMeshRef{};
-	ref									mTextureRef[5]		{ {nullptr,0},{nullptr,0},{nullptr,0},{nullptr,0},{nullptr,0} };
+
+	std::string							mMaterialInstancePath[6]{ " "," " ," " ," ", " " ," " };
+	ref									mTextureRef[6]		{ {nullptr,0},{nullptr,0},{nullptr,0},{nullptr,0},{nullptr,0},{nullptr,0} };
 
 	// store the descriptor data for the material instance per mesh renderer instance
-	_GEOM::Texture_DescriptorData		mTextureDescriptorData[5];
+	_GEOM::Texture_DescriptorData		mTextureDescriptorData[6];
 	
 
 	unsigned							mGUID;
@@ -595,6 +597,7 @@ struct AISetting : public Serializable {
 	float mElevation;								// For flying enemy, vertical distance to stay away from player
 	std::string mTargetName;				// Name of target (Will be searching via gamestate, not scene)
 	std::string mGraphDataName;			// Graph data of AI
+	float mBobberingIntensity;			// For flying enemy, determine if they wanna bobber while flying
 
 	void Inspect();
 	Entity GetTarget() { return mTarget; }
@@ -603,11 +606,10 @@ struct AISetting : public Serializable {
 
 	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
 	void DeserializeSelf(rapidjson::Value& reader);
-	ALGraph*& GetALGraph() { return mALGraph; }
 
 private: 
 	Entity mTarget;									// AI's target
-	ALGraph* mALGraph;							// ALGraph that will help the entity's pathfinding
+	float mBobberAngle;							// Keeping track of entity's bobbering angle
 };
 
 /******************************************************************************/

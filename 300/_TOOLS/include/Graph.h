@@ -38,7 +38,7 @@ public:
   std::vector<glm::vec3>& GetPointEdges(glm::vec3 point);
 
   // Convert this graph data into a ALGraph
-  ALGraph MakeALGraph(); // Make a non-dynamic container for efficiency
+  std::shared_ptr<ALGraph> MakeALGraph(); // Make a non-dynamic container for efficiency
 
 
   std::vector<std::pair<glm::vec3, std::vector<glm::vec3>>> mData;
@@ -50,7 +50,8 @@ public:
 
 class ALGraph {
 public:
-  ALGraph(int _size) { mData.resize(_size); }
+  ALGraph(int _size) { mData.reserve(_size + 2); mData.resize(_size); }
+  ALGraph& operator=(ALGraph const& _graph);
 
   enum NODE_STATE {
     NONE,
@@ -88,23 +89,42 @@ public:
     void Insert(AdjList* node);   // O(1)
     AdjList* PopLowestCostNode(); // O(n)
     bool IsEmpty();
+
+    void Print() {
+      std::cout << "OpenList: ";
+      for (auto& adjList : mData) {
+        glm::vec3 point = adjList->point;
+        std::cout << "(";
+        PrintVec(point);
+        std::cout << ", weight: " << adjList->gCost + adjList->hCost << "), ";
+      }
+      std::cout << '\n';
+    }
   private:
     // Sort the container, put largest fCost infront and smallest fCost behind
-    void Sort();
     std::vector<AdjList*> mData;
-    std::vector<float> fCostHistory;
+    void Sort();
   };
+
+  //struct AStarSetting {
+  //  float elevation;    // What is the elevation range limit for start and end node to connect with other nodes. between -elevation and elevation.
+  //} mSetting;
+
+  //AStarSetting& GetSetting() { return mSetting; }
 
   // Put the G cost and H cost in the AdjList (G cost is accumulated from path, H cost is cost to end point)
 
   // Add starting and ending adjList into mData at the back, so startnode = end-2, endnode = end-1
   // Do line of sight check with all the nodes and generate the edges for start and end node
   // Calculate G and H cost for every nodes
-  std::vector<glm::vec3> AStarPath(glm::vec3 const& start, glm::vec3 const& end); // Generates the AStar path for the graph
+  std::vector<glm::vec3> AStarPath(); // Generates the AStar path for the graph
+  static float CalcHCost(glm::vec3 const& p0, glm::vec3 const& p1);    // TODO find out the most suitable heuristic cost function
 private:
   void AStarInit(glm::vec3 const& start, glm::vec3 const& end);
+
+  // Connects the start node and end node to graph
+  //void ConnectStartAndEnd();
   void AStarExit();
-  float CalcHCost(glm::vec3 const& p0, glm::vec3 const& p1);    // TODO find out the most suitable heuristic cost function
   std::vector<glm::vec3> MasterPath(AdjList* tailNode);
 };
 

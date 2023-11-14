@@ -318,6 +318,35 @@ void GraphicsSystem::Update(float dt)
 
 		m_Materials.emplace_back(material);	// push back
 	}
+
+	if (m_DebugDrawing)
+	{
+		auto debugDrawsWithoutMesh = systemManager->ecs->GetEntitiesWith<BoxCollider>();
+		for (Entity e : debugDrawsWithoutMesh)
+		{
+			if (e.HasComponent<MeshRenderer>())
+				continue;
+			BoxCollider& boxcolliderinst = e.GetComponent<BoxCollider>();
+
+			Transform xform = e.GetComponent<Transform>();
+			// draw the AABB of the mesh
+			glm::vec3 bbox_dimens = xform.mScale * boxcolliderinst.mScaleOffset;
+			glm::vec3 bbox_xlate = xform.mTranslate + boxcolliderinst.mTranslateOffset;
+			if (e.HasParent()) {
+				//bbox_xlate += Entity(inst.GetParent()).GetComponent<Transform>().mTranslate;
+				bbox_xlate += Entity(e.GetParent()).GetComponent<Transform>().mTranslate;
+			}
+			mat4 R = glm::toMat4(glm::quat(glm::radians(xform.mRotate)));
+
+			// calculate the transformations
+			glm::mat4 bboxScale = glm::scale(bbox_dimens);
+			glm::mat4 bboxTranslate = glm::translate(bbox_xlate);
+			glm::mat4 bboxFinal = bboxTranslate * R * bboxScale;
+
+			m_Renderer.AddAabb(bboxFinal, { 1.f, 0.f, 0.f, 1.f });
+		}
+	}
+	
 	m_FinalBoneMatrixSsbo.SubData(finalBoneMatrices.size() * sizeof(mat4), finalBoneMatrices.data());
 	finalBoneMatrices.clear();
 	m_MaterialSsbo.SubData(m_Materials.size() * sizeof(MaterialSSBO), m_Materials.data());
@@ -344,7 +373,7 @@ void GraphicsSystem::Update(float dt)
 
 			pointLights.push_back(light);
 
-			m_Renderer.AddCube(lightTransform.mTranslate, { 5, 5, 5 }, vec4(lightData.mLightColor, 1.f));
+			m_Renderer.AddCube(lightTransform.mTranslate, { 2, 2, 2 }, vec4(lightData.mLightColor, 1.f));
 		}
 		// Copy light source data into storage buffer
 		m_PointLightSsbo.SubData(pointLights.size() * sizeof(PointLightSSBO), pointLights.data());

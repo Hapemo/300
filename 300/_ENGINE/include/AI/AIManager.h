@@ -128,6 +128,29 @@ public:
 	*******************************************************************************/
 	glm::vec3 GetDirection(Entity _e);
 
+
+
+	/*!*****************************************************************************
+	Test if one entity is in the line of sight of another entity. Check if target 
+	is within view of horizontal angle from the center line of sight
+
+	\param _eye
+	- Entity looking from
+
+	\param _tgt
+	- Entity looking at
+
+	\param _horizontalAngle
+	- horizontal angle from the direct line of sight
+
+	\param _verticalLimit
+	- vertical height limit where the entity can see
+
+	\return bool
+	- True if able to see target, otherwise false
+	*******************************************************************************/
+	bool ConeOfSight(Entity _eye, Entity _tgt, float _horizontalAngle, float _verticalLimit);
+
 	/*!*****************************************************************************
 	Does the following procedures to initialise the AI
 	- Adds the AI to AI Manager to keep track

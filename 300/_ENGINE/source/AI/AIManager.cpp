@@ -4,6 +4,9 @@
 #include "FPSManager.h"
 #include "GameState/GameStateManager.h"
 #include "Physics/PhysicsSystem.h"
+#include "AI/PathfinderManager.h"
+
+#define Rubberbanding 1
 
 const std::array<std::string, static_cast<size_t>(E_MOVEMENT_TYPE::SIZE)> AIManager::mMovementTypeArray{ MovementTypeArrayInit() };
 
@@ -31,7 +34,18 @@ glm::vec3 AIManager::GetDirection(Entity _e) {
 	glm::vec3 dir{};
 	AISetting const& aiSetting = _e.GetComponent<AISetting>();
 	switch (aiSetting.mMovementType) {
-	case E_MOVEMENT_TYPE::GROUND_DIRECT: dir = CalcGroundAIDir(_e);
+	case E_MOVEMENT_TYPE::GROUND_DIRECT:
+		if (aiSetting.mGraphDataName.size()) {
+			std::vector<glm::vec3> astarPath = systemManager->GetPathfinderManager()->AStarPath(_e, aiSetting.GetTarget(), { 40.f, {"ENEMY", "GRAPH"}});
+
+			if (astarPath.size()) dir = astarPath[1] - astarPath[0];
+			else {
+				PINFO("%s unable to find path with pathfinding", _e.GetComponent<General>().name);
+				dir = glm::vec3();
+			}
+		} else {
+			dir = CalcGroundAIDir(_e);
+		}
 		break;
 	case E_MOVEMENT_TYPE::AIR_HOVER: dir = CalcAirAIDir(_e);
 		break;
@@ -44,6 +58,25 @@ glm::vec3 AIManager::GetDirection(Entity _e) {
 	//if (aiSetting.mMovementType == E_MOVEMENT_TYPE::GROUND_DIRECT) dir.y = 0;
 
 	return dir;
+}
+
+bool AIManager::ConeOfSight(Entity _eye, Entity _tgt, float _horizontalAngle, float _verticalLimit) {
+	Transform& eyeTrans{ _eye.GetComponent<Transform>() };
+	Transform& tgtTrans{ _tgt.GetComponent<Transform>() };
+	// Checks if target is too high to see
+	if (abs(abs(eyeTrans.mTranslate.y) - abs(tgtTrans.mTranslate.y)) > _verticalLimit) return false;
+
+	// Checks if target is within vision cone
+	glm::vec3 const& vector1 = GetDirection(_eye);
+	glm::vec3 const& vector2 = tgtTrans.mTranslate - eyeTrans.mTranslate;
+
+	float angle = glm::acos(glm::dot(vector1, vector2) / (glm::length(vector1) * glm::length(vector2)));
+	if (angle > _horizontalAngle) return false;
+
+	// Checks if source can raycast to target TODO
+	if (systemManager->GetPathfinderManager()->CheckEntitiesInbetween(eyeTrans.mTranslate, tgtTrans.mTranslate, { _eye, _tgt }, {})) return false;
+
+	return true;
 }
 
 void AIManager::TrackPlayerPosition(float _dt) {

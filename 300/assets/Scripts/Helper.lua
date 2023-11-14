@@ -65,3 +65,37 @@ function Helper.Normalize(Vec3)
     Vec3.z = Vec3.z / magnitude
     return Vec3
 end
+
+function Helper.Vec3Minus(v1, v2)
+    local v = Vec3.new()
+    v.x = v1.x - v2.x
+    v.y = v1.y - v2.y
+    v.z = v1.z - v2.z
+    return v
+end
+
+function Helper.Scale(Vec3, scale)
+    Vec3.x = Vec3.x * scale
+    Vec3.y = Vec3.y * scale
+    Vec3.z = Vec3.z * scale
+    return Vec3
+end
+
+function Helper.DirectionToAngle(vec)
+    firstvec = Vec3.new()
+    secondvec = Vec3.new()
+    firstvec.x = 0.0
+    firstvec.y = 0.0
+    firstvec.z = 1.0
+    secondvec.x = vec.x
+    secondvec.y = 0
+    secondvec.z = vec.z
+
+    dotDivideMag = vec.z / math.sqrt(vec.x * vec.x + vec.z * vec.z)
+    radians = math.acos(dotDivideMag)
+    degree = radians * 180.0 / 3.141596
+    if (vec.x < 0) then
+        degree = 360.0 - degree
+    end
+    return degree
+end

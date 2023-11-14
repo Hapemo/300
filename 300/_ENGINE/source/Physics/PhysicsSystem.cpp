@@ -127,7 +127,7 @@ void PhysicsSystem::RemoveActor(Entity e)
 	mActors.erase(static_cast<uint32_t>(e.id));
 }
 
-const std::vector<Entity>& PhysicsSystem::Visible(const glm::vec3& origin, const glm::vec3& finalpos, float maxdist)
+std::vector<Entity> PhysicsSystem::Visible(const glm::vec3& origin, const glm::vec3& finalpos, float maxdist)
 {
 	PxRaycastBuffer hits(hitBuffer, HIT_BUFFER_SIZE);
 	bool status = mPX.mScene->raycast(Convert(origin), Convert(glm::normalize(finalpos - origin)), maxdist, hits);

@@ -48,7 +48,7 @@ public:
 	void SetVelocity(Entity e, const glm::vec3 &velocity);
 	void RemoveActor(Entity e);
 
-	const std::vector<Entity>& Visible(const glm::vec3& origin, const glm::vec3& finalpos, float maxdist);
+	std::vector<Entity> Visible(const glm::vec3& origin, const glm::vec3& finalpos, float maxdist = FLT_MAX);
 
 private:
 	PhysX mPX;
