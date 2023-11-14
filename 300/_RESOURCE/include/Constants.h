@@ -9,6 +9,7 @@ enum MaterialType : unsigned {
     SPECULAR,
     SHININESS,
     EMISSION,
+    AO
 };
 
 #endif

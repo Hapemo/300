@@ -76,8 +76,8 @@ Inspect display for Audio components
 #include "EditorReflection/EditorReflection.h"
 
 
-void popup(std::string name, ref& data, bool& trigger);
-
+void popup(std::string name, _GEOM::Texture_DescriptorData& desc, std::string& dataname, ref& data, bool& trigger);
+void popup(std::string name, _GEOM::DescriptorData& desc, std::string& dataname, ref& data, bool& trigger);
 /***************************************************************************/
 /*!
 \brief
@@ -800,13 +800,15 @@ void MeshRenderer::Inspect()
 		ImGui::Selectable(tempPath.c_str());
 
 		//--------------------------------------------------------------------------------------------------------------// delete the mesh 
-		if (ImGui::IsItemClicked(ImGuiMouseButton_Right)) {
+			if (ImGui::IsItemClicked(ImGuiMouseButton_Right)) {
 
-			meshbool = true;
-		}
+				meshbool = true;
+			}
 
 		}
-		popup("Delete", mMeshRef, meshbool);
+		GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mMeshRef.data);
+
+		popup("Delete", meshinst->mMeshDescriptorData,mMeshPath, mMeshRef, meshbool);
 
 
 
@@ -815,9 +817,9 @@ void MeshRenderer::Inspect()
 
 
 
-		std::string textures[5] = { "DIFFUSE","NORMAL", "SPECULAR","SHININESS","EMISSION"};
+		std::string textures[6] = { "DIFFUSE","NORMAL", "SPECULAR","SHININESS","EMISSION", "AO"};
 
-		for (int i{ 0 }; i <5; i++) 
+		for (int i{ 0 }; i <6; i++) 
 		{
 			if (mMaterialInstancePath[i] != "") 
 			{
@@ -932,6 +934,10 @@ void MeshRenderer::Inspect()
 							_GEOM::Texture_DescriptorData::SerializeTEXTURE_DescriptorDataToFile(mTextureDescriptorData[i].mDescFilepath, texturedesc);
 						}
 					}
+					else
+					{
+						ImGui::Text("Empty\n");
+					}
 					ImGui::TreePop();
 				}
 
@@ -969,7 +975,7 @@ void MeshRenderer::Inspect()
 				}
 			}
 		}
-		popup("DeleteTexture", mTextureRef[texIndex], textbool);
+		popup("DeleteTexture", mTextureDescriptorData[texIndex], mMaterialInstancePath[texIndex], mTextureRef[texIndex], textbool);
 
 		ImGui::ColorPicker4("MeshColor", (float*)&mInstanceColor);
 	}
@@ -1563,7 +1569,7 @@ void Crosshair::Inspect()
 		Entity(Hierarchy::selectedId).RemoveComponent<Crosshair>();
 }
 
-void popup(std::string name, ref& data, bool& trigger) {
+void popup(std::string name, _GEOM::Texture_DescriptorData& desc, std::string& dataname, ref& data, bool& trigger) {
 	std::string hash ="##to"+name;
 	if (trigger == true) {
 		ImGui::OpenPopup(hash.c_str());
@@ -1571,8 +1577,11 @@ void popup(std::string name, ref& data, bool& trigger) {
 	if (ImGui::BeginPopup(hash.c_str())) {
 		
 		if (ImGui::Selectable("Delete")) {
+			data.data_uid = 0;
 			data.data = nullptr;
+			dataname = " ";
 			trigger = false;
+			desc.mGUID = 0;
 		}
 
 		ImGui::EndPopup();
@@ -1581,6 +1590,30 @@ void popup(std::string name, ref& data, bool& trigger) {
 	trigger = false;
 	
 }
+
+void popup(std::string name, _GEOM::DescriptorData& desc,  std::string& dataname, ref& data, bool& trigger) {
+	std::string hash = "##to" + name;
+	if (trigger == true) {
+		ImGui::OpenPopup(hash.c_str());
+	}
+	if (ImGui::BeginPopup(hash.c_str())) {
+
+		if (ImGui::Selectable("Delete")) {
+			data.data_uid = 0;
+			data.data = nullptr;
+			dataname = " ";
+			trigger = false;
+			desc.m_GUID = 0;
+		}
+
+		ImGui::EndPopup();
+
+	}
+	trigger = false;
+
+}
+
+
 
 void Healthbar::Inspect()
 {
