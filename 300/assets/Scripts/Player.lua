@@ -253,8 +253,7 @@ function Update()
     movement.z = 0;
 
     if (isDashing) then
-        -- dashAudioSource:Play()
-        -- dashAudioSource:SetVolume(0.2)
+   
         if(e_dashEffect == true)then
             dashEffect()
             dashAudioComp:SetPlay(0.4)
