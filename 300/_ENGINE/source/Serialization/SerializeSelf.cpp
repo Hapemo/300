@@ -27,6 +27,7 @@ void General::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& wr
 void General::DeserializeSelf(rapidjson::Value& reader)
 {
 	Deserialize(reader, "name", name);
+	//std::cout << name << std::endl;
 	Deserialize(reader, "tagid", tagid);
 	Deserialize(reader, "subtag", subtag);
 	Deserialize(reader, "isActive", isActive);
@@ -64,7 +65,7 @@ void MeshRenderer::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer
 	//Serialize(writer, "texturecont", mTextureCont, 5);
 	writer.Key("texturerefid");
 	writer.StartArray();
-	for (int i = 0; i < 5; ++i)
+	for (int i = 0; i < 6; ++i)
 	{
 		Serialize(writer, nullptr, mTextureRef[i].data_uid);
 	}
@@ -81,7 +82,7 @@ void MeshRenderer::DeserializeSelf(rapidjson::Value& reader)
 	Deserialize(reader, "bloomthreshold", mBloomThreshold);
 	Deserialize(reader, "materialinstance", mMaterialInstancePath, 6);
 
-	for (int i{}; i < 5; ++i)
+	for (int i{}; i < 6; ++i)
 	{
 		// deserialize the texture descriptor files
 		if (mMaterialInstancePath[i] == " ")
@@ -94,7 +95,7 @@ void MeshRenderer::DeserializeSelf(rapidjson::Value& reader)
 
 	Deserialize(reader, "mesh", mMeshPath);
 	//Deserialize(reader, "texturecont", mTextureCont, 5);
-	for (int i = 0; i < 5; ++i)
+	for (int i = 0; i < 6; ++i)
 	{
 		Deserialize(reader["texturerefid"][i], nullptr, mTextureRef[i].data_uid);
 	}

@@ -47,7 +47,7 @@
                 "../assets/Compressed/Environment_Walls1_Emissive.ctexture",
                 "../assets/Compressed/Environment_Walls1_Roughness.ctexture",
                 "../assets/Compressed/Environment_Walls1_Emissive.ctexture",
-		" "
+                " "
             ],
             "mesh": "../assets/compiled_geom/Wall.geom",
             "texturerefid": [
@@ -56,7 +56,7 @@
                 5631,
                 5752,
                 5631,
-		0
+                0
             ]
         }
     },
@@ -168,7 +168,7 @@
         },
         "children": {
             "numchildren": 1,
-            "firstchild": 9
+            "firstchild": 7
         },
         "audio": {
             "filepath": "",
@@ -191,15 +191,15 @@
                 "z": 52.141937255859375
             },
             "size": {
-                "x": 1220,
-                "y": 587
+                "x": 1318,
+                "y": 607
             },
             "near": 0.10000000149011612,
             "far": 900.0
         }
     },
     {
-        "entityid": 5,
+        "entityid": 4,
         "general": {
             "name": "FloorTexture",
             "tagid": 0,
@@ -246,7 +246,7 @@
                 "../assets/Compressed/Environment_Floor_Emissive.ctexture",
                 "../assets/Compressed/Environment_Floor_Roughness.ctexture",
                 "../assets/Compressed/Environment_Floor_Emissive.ctexture",
-		" "
+                " "
             ],
             "mesh": "../assets/compiled_geom/Floor.geom",
             "texturerefid": [
@@ -255,12 +255,12 @@
                 5581,
                 5702,
                 5581,
-		0
+                0
             ]
         }
     },
     {
-        "entityid": 6,
+        "entityid": 5,
         "general": {
             "name": "Buildings",
             "tagid": 0,
@@ -307,7 +307,7 @@
                 "../assets/Compressed/Environment_Building_Emissive.ctexture",
                 "../assets/Compressed/Environment_Building_Roughness.ctexture",
                 "../assets/Compressed/Environment_Building_Emissive.ctexture",
-		" "
+                " "
             ],
             "mesh": "../assets/compiled_geom/Buildings.geom",
             "texturerefid": [
@@ -316,12 +316,12 @@
                 5881,
                 6002,
                 5881,
-		0
+                0
             ]
         }
     },
     {
-        "entityid": 8,
+        "entityid": 6,
         "general": {
             "name": "Skybox",
             "tagid": 0,
@@ -368,7 +368,7 @@
                 " ",
                 " ",
                 "../assets/Compressed/Environment_Skybox_BaseColor.ctexture",
-		" "
+                " "
             ],
             "mesh": "../assets/compiled_geom/Skybox.geom",
             "texturerefid": [
@@ -377,12 +377,12 @@
                 0,
                 0,
                 5760,
-		0
+                0
             ]
         }
     },
     {
-        "entityid": 9,
+        "entityid": 7,
         "general": {
             "name": "gun",
             "tagid": 0,
@@ -429,7 +429,7 @@
                 "../assets/Compressed/Gun_Metallic.ctexture",
                 "../assets/Compressed/Gun_Roughness.ctexture",
                 " ",
-		" "
+                " "
             ],
             "mesh": "../assets/compiled_geom/Gun.geom",
             "texturerefid": [
@@ -438,12 +438,12 @@
                 4071,
                 4218,
                 0,
-		0
+                0
             ]
         },
         "parent": {
-            "prevsibling": 9,
-            "nextsibling": 9,
+            "prevsibling": 7,
+            "nextsibling": 7,
             "parent": 3
         }
     }
