@@ -4,22 +4,22 @@
         "pause": false,
         "force_render": true,
         "bloom_threshold": {
-            "x": 0.05000000074505806,
-            "y": 0.05000000074505806,
-            "z": 0.004999999888241291
+            "x": 1.0,
+            "y": 1.0,
+            "z": 0.0
         },
-        "bloom_exposure": 0.4000000059604645,
-        "bloom_offset": 1.0,
-        "bloom_sampleweight": 1.0,
-        "chroma_strength": 0.006000000052154064,
-        "bloom_enable": false,
+        "bloom_exposure": 0.07999999821186066,
+        "bloom_offset": 1.8380000591278076,
+        "bloom_sampleweight": 2.871000051498413,
+        "chroma_strength": 0.035999998450279236,
+        "bloom_enable": true,
         "chroma_enable": false,
         "global_tint": {
             "x": 1.0,
             "y": 1.0,
             "z": 1.0,
-            "w": 0.30000001192092896
+            "w": 1.0
         },
-        "debug": 1
+        "debug": 0
     }
 ]

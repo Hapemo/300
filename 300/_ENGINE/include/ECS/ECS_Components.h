@@ -597,6 +597,7 @@ struct AISetting : public Serializable {
 	float mElevation;								// For flying enemy, vertical distance to stay away from player
 	std::string mTargetName;				// Name of target (Will be searching via gamestate, not scene)
 	std::string mGraphDataName;			// Graph data of AI
+	float mBobberingIntensity;			// For flying enemy, determine if they wanna bobber while flying
 
 	void Inspect();
 	Entity GetTarget() { return mTarget; }
@@ -608,6 +609,7 @@ struct AISetting : public Serializable {
 
 private: 
 	Entity mTarget;									// AI's target
+	float mBobberAngle;							// Keeping track of entity's bobbering angle
 };
 
 /******************************************************************************/
