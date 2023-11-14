@@ -22,6 +22,8 @@
 #include "GameState/GameStateManager.h"
 #include "Input/InputMapSystem.h"
 
+#include <Graphics/PostProcessing.h>
+
 #include "cstdlib"
 
 
@@ -486,14 +488,13 @@ void GraphicsSystem::EditorDraw(float dt)
 		GFX::Shader& gaussianShaderInst = *systemManager->mResourceTySystem->get_Shader(gaussianshaderstr.id);
 		m_PingPongFbo.GaussianBlurShader(gaussianShaderInst, m_Fbo, systemManager->mGraphicsSystem->mSamplingWeight);
 
-		AdditiveBlendFramebuffers(m_Fbo, m_Fbo.GetColorAttachment(), m_PingPongFbo.pingpongColorbuffers[0]);
+		PostProcessing::AdditiveBlendFramebuffers(m_Fbo, m_Fbo.GetColorAttachment(), m_PingPongFbo.pingpongColorbuffers[0]);
 	}
 
 
 	if (systemManager->mGraphicsSystem->m_EnableChromaticAbberation)
 	{
-		//ChromaticAbbrebationBlendFramebuffers(m_Fbo, m_Fbo.GetBrightColorsAttachment());
-		ChromaticAbbrebationBlendFramebuffers(m_Fbo, m_PingPongFbo.pingpongColorbuffers[0]);
+		PostProcessing::ChromaticAbbrebationBlendFramebuffers(m_Fbo, m_PingPongFbo.pingpongColorbuffers[0]);
 	}
 
 #if ENABLE_UI_IN_EDITOR_SCENE || ENABLE_CROSSHAIR_IN_EDITOR_SCENE
@@ -647,13 +648,13 @@ void GraphicsSystem::GameDraw(float dt)
 		m_PingPongFbo.GaussianBlurShader(gaussianShaderInst, m_GameFbo, systemManager->mGraphicsSystem->mSamplingWeight);
 #endif
 
-		AdditiveBlendFramebuffers(m_GameFbo, m_GameFbo.GetColorAttachment(), m_PingPongFbo.pingpongColorbuffers[0]);
+		PostProcessing::AdditiveBlendFramebuffers(m_GameFbo, m_GameFbo.GetColorAttachment(), m_PingPongFbo.pingpongColorbuffers[0]);
 	}
 
 	if (systemManager->mGraphicsSystem->m_EnableChromaticAbberation)
 	{
 		//ChromaticAbbrebationBlendFramebuffers(m_GameFbo, m_GameFbo.GetBrightColorsAttachment());
-		ChromaticAbbrebationBlendFramebuffers(m_GameFbo, m_PingPongFbo.pingpongColorbuffers[0]);
+		PostProcessing::ChromaticAbbrebationBlendFramebuffers(m_GameFbo, m_PingPongFbo.pingpongColorbuffers[0]);
 	}
 
 	m_GameFbo.Bind();
@@ -680,41 +681,19 @@ void GraphicsSystem::GameDraw(float dt)
 	DrawAllHealthbarInstance(gameCamVP);
 	m_HealthbarMesh.ClearInstances();	// Clear data
 
+	if (systemManager->mGraphicsSystem->m_EnableCRT && !systemManager->mGraphicsSystem->m_EnableChromaticAbberation)
+	{
+		// CRT post processing effect. Called here so it can be rendered over the UI
+		PostProcessing::CRTBlendFramebuffers(m_GameFbo, m_PingPongFbo.pingpongFBO, dt);
+	}
+
 	m_GameFbo.Unbind();
 	m_PingPongFbo.UnloadAndClear();
 }
 
 
 
-void GraphicsSystem::ChromaticAbbrebationBlendFramebuffers(GFX::FBO& targetFramebuffer, unsigned int Attachment1)
-{
-	//glBlendFunc(GL_ONE, GL_ZERO);
-	glBlendFunc(GL_ONE_MINUS_DST_COLOR, GL_ONE);
 
-	uid shaderstr("ChromaticAbberation");
-	GFX::Shader& BlendShader = *systemManager->mResourceTySystem->get_Shader(shaderstr.id);
-
-	BlendShader.Activate();
-	targetFramebuffer.Bind();
-
-	// Draw to color attachment only. Otherwise might affect other attachments
-	glDrawBuffer(GL_COLOR_ATTACHMENT0);
-
-	glUniform1f(BlendShader.GetUniformLocation("ChromaticAbberationOffset"), systemManager->mGraphicsSystem->mChromaticOffset);
-	glUniform1f(BlendShader.GetUniformLocation("ChromaticAbberationStrength"), systemManager->mGraphicsSystem->mChromaticStrength);
-	glBindTexture(GL_TEXTURE_2D, Attachment1);									// bind the second attachment
-
-	{
-		mScreenQuad.Bind();
-
-		glDrawArrays(GL_TRIANGLES, 0, 6);
-
-		mScreenQuad.Unbind();
-	}
-
-	targetFramebuffer.Unbind();
-	BlendShader.Deactivate();
-}
 
 
 void GraphicsSystem::DrawGameScene()
@@ -1203,41 +1182,6 @@ void GraphicsSystem::DrawAll(GFX::Mesh &mesh)
 	mesh.DrawAllInstances();
 }
 
-
-/***************************************************************************/
-/*!
-\brief
-	Perform additive blending on 2 color attachments
-*/
-/**************************************************************************/
-void GraphicsSystem::AdditiveBlendFramebuffers(	GFX::FBO& targetFramebuffer, unsigned int Attachment0, unsigned int Attachment1)
-{
-	glBlendFunc(GL_ONE, GL_ONE);
-
-	uid shaderstr("AdditiveBlendShader");
-	GFX::Shader& BlendShader = *systemManager->mResourceTySystem->get_Shader(shaderstr.id);
-
-	BlendShader.Activate();
-	targetFramebuffer.Bind();
-
-	// Draw to color attachment only. Otherwise might affect other attachments
-	glDrawBuffer(GL_COLOR_ATTACHMENT0);
-
-	glUniform1f(BlendShader.GetUniformLocation("Exposure"), systemManager->mGraphicsSystem->mAmbientBloomExposure);
-	glBindTexture(GL_TEXTURE_2D, Attachment0);									// bind the first attachment
-	glBindTexture(GL_TEXTURE_2D, Attachment1);									// bind the second attachment
-
-	{
-		mScreenQuad.Bind();
-
-		glDrawArrays(GL_TRIANGLES, 0, 6);
-
-		mScreenQuad.Unbind();
-	}
-
-	targetFramebuffer.Unbind();
-	BlendShader.Deactivate();
-}
 
 
 /***************************************************************************/

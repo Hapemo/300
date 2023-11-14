@@ -13,7 +13,7 @@
         "bloom_sampleweight": 3.1449999809265137,
         "chroma_strength": 0.019200000911951065,
         "bloom_enable": true,
-        "chroma_enable": true,
+        "chroma_enable": false,
         "global_tint": {
             "x": 1.0,
             "y": 1.0,

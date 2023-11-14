@@ -111,23 +111,6 @@ public:
 	/**************************************************************************/
 	void EditorDraw(float dt);
 
-	/***************************************************************************/
-	/*!
-	\brief
-		the additive draw function isolated to the editor's framebuffer
-	*/
-	/**************************************************************************/
-	void AdditiveBlendFramebuffers( GFX::FBO& targetFramebuffer, unsigned int Attachment0, unsigned int Attachment1);
-
-
-	/***************************************************************************/
-	/*!
-	\brief
-		the additive blend function for the chromatic abbrebation
-	*/
-	/**************************************************************************/
-	void ChromaticAbbrebationBlendFramebuffers(GFX::FBO& targetFramebuffer, unsigned int Attachment1);
-
 
 	/***************************************************************************/
 	/*!
@@ -275,8 +258,9 @@ public:
 	float		mChromaticOffset{ 0.006f };
 	float		mChromaticStrength{ 1.f };
 
-	bool		m_EnableBloom{ true };									// this yj
-	bool		m_EnableChromaticAbberation{ true };					// this yj
+	bool		m_EnableBloom{ true };									
+	bool		m_EnableChromaticAbberation{ true };					
+	bool		m_EnableCRT{ true };						// this yj
 
 	// -- Textures --
 	std::vector<int> m_Textures;	// 0, 1, ..., 31
@@ -300,6 +284,12 @@ public:
 	// -- Stats --
 	int		m_LightCount{};
 
+	// -- 2D Image Rendering --
+	GFX::Mesh						m_Image2DMesh;
+	GFX::Mesh						m_HealthbarMesh;
+	std::vector<unsigned>			m_Image2DStore;
+	GFX::Quad2D						mScreenQuad;
+
 	void Unload();
 
 private:
@@ -318,12 +308,6 @@ private:
 	GLuint64 GetAndStoreBindlessTextureHandle(int texID);	// Stores adn Return the 64bit texture handle and makes it resident
 
 	void SetupShaderStorageBuffers();		// Creates all SSBO required
-
-	// -- 2D Image Rendering --
-	GFX::Mesh						m_Image2DMesh;
-	GFX::Mesh						m_HealthbarMesh;
-	std::vector<unsigned>			m_Image2DStore;
-	GFX::Quad2D						mScreenQuad;
 
 	void DrawAll2DInstances(unsigned shaderID);
 	void Add2DImageInstance(float width, float height, vec2 const& position, unsigned texHandle, unsigned entityID = 0xFFFFFFFF, float degree = 0.f, vec4 const& color = vec4{ 1.f, 1.f, 1.f, 1.f });
