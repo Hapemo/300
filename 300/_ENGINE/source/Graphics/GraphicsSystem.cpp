@@ -104,7 +104,7 @@ void GraphicsSystem::Init()
 		UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_GAME, 0.f);
 	}
 
-	computeDeferred.CreateShaderFromFile("../assets/shader_files/computeDeferred.glsl");
+	computeDeferred.CreateShaderFromFile("../assets/shader_files/computePBR.glsl");
 	computeDeferred.Activate();
 	m_GlobalTintLocation = computeDeferred.GetUniformLocation("uGlobalTint");
 	GFX::Shader::Deactivate();
@@ -436,12 +436,12 @@ void GraphicsSystem::Draw(bool forEditor)
 		if (!forEditor)	// Clear all mesh instances after done drawing for game scene
 			meshinst.ClearInstances();
 	}
+	GFX::Shader::Deactivate();
 	if (forEditor)
 	{
 		m_Renderer.RenderAll(camVP);
 		m_Renderer.ClearInstances();
 	}
-	GFX::Shader::Deactivate();
 
 	// Perform blitting over pixel data from Multisample FBO -> intermediate FBO -> Destination FBO
 	if (forEditor)
@@ -1464,6 +1464,8 @@ void GraphicsSystem::ResizeWindow(ivec2 newSize)
 	// Update FBOs
 	m_Fbo.Resize(newSize.x, newSize.y);
 	m_GameFbo.Resize(newSize.x, newSize.y);
+	m_MultisampleFBO.Resize(newSize.x, newSize.y);
+	m_IntermediateFBO.Resize(newSize.x, newSize.y);
 	m_PingPongFbo.Resize(newSize.x, newSize.y);
 
 	// Update Window

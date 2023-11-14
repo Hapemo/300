@@ -36,8 +36,8 @@ vec3 FresnelSchlick(float cosTheta, vec3 f0);
 float DistributionGGX(vec3 N, vec3 H, float roughness);
 float GeometrySchlickGGX(float NdotV, float roughness);
 float GeometrySmith(vec3 N, vec3 V, vec3 L, float roughness);
-float CalculateAttenuation(float linear, float quadratic, float distance)
-ComputeLight(PointLight light, vec3 F0, vec3 fragPos, vec3 albedo, vec3 normal, float roughness, float metallic);
+float CalculateAttenuation(float linear, float quadratic, float distance);
+vec3 ComputeLight(PointLight light, vec3 F0, vec3 fragPos, vec3 albedo, vec3 normal, float roughness, float metallic);
 
 const float PI = 3.14159265359;
 
@@ -52,8 +52,9 @@ void main()
     float roughness     = normal.a;
     float metallic      = albedoSpec.a;
     float ao            = fragPos.a;
+    //albedoSpec.rgb = pow(albedoSpec.rgb, vec3(2.2));
 
-     // Get the F0 Parameter
+    // Get the F0 Parameter
     // Non-metallic surface is always 0.04
     vec3 F0 = vec3(0.04);       
     // Get F0 by linearly interpolating between F0 and albedo value with given metallic value
@@ -61,22 +62,23 @@ void main()
 
     vec3 lightRadiance = vec3(0.0);
 
-    for (int i{}; i < uLightCount; ++i)
+    for (int i = 0; i < uLightCount; ++i)
     {
-        lightRadiance = ComputeLight(pointLights[i], F0, fragPos.rgb, albedoSpec.rgb, normal.rgb, roughness, metallic);
+        lightRadiance += ComputeLight(pointLights[i], F0, fragPos.rgb, albedoSpec.rgb, normal.rgb, roughness, metallic);
     }
 
     vec3 ambient = vec3(0.03) * albedoSpec.rgb * ao;
     vec3 color = ambient + lightRadiance;
+    vec3 finalColor = color + emission.rgb;
 
     float gamma = 2.2;
-    color = color / (color + vec3(1.0));
-    color = pow(color, vec3(1.0/gamma));
+    finalColor = finalColor / (finalColor + vec3(1.0));
+    finalColor = pow(finalColor, vec3(1.0/gamma));
 
-    imageStore(imgOutput, texelCoord, vec4(color, 1.0) * uGlobalTint);
+    imageStore(imgOutput, texelCoord, vec4(finalColor, 1.0) * uGlobalTint);
 }
 
-ComputeLight(PointLight light, vec3 F0, vec3 fragPos, vec3 albedo, vec3 normal, float roughness, float metallic)
+vec3 ComputeLight(PointLight light, vec3 F0, vec3 fragPos, vec3 albedo, vec3 normal, float roughness, float metallic)
 {
     vec3 lightPos = light.position.xyz;
 
@@ -86,11 +88,11 @@ ComputeLight(PointLight light, vec3 F0, vec3 fragPos, vec3 albedo, vec3 normal, 
     vec3 H = normalize(V + L);
     float dist          = length(lightPos - fragPos);
     float attenuation   = CalculateAttenuation(light.linear, light.quadratic, dist);
-    vec3 radiance       = light.color * attenuation;
+    vec3 radiance       = light.color.rgb * attenuation;
 
     // Cook-Torrance BRDF
     float NDF   = DistributionGGX(normal, H, roughness);
-    float G     = GeometrySmith(N, V, L, roughness);
+    float G     = GeometrySmith(normal, V, L, roughness);
     vec3 F      = FresnelSchlick(max(dot(H, V), 0.0), F0);
 
     vec3 kS = F;
@@ -98,20 +100,22 @@ ComputeLight(PointLight light, vec3 F0, vec3 fragPos, vec3 albedo, vec3 normal, 
     kD *= 1.0 - metallic;
 
     vec3 num        = NDF * G * F;
-    float denom     = 4.0 * max(dot(V, V), 0.0) * max(dot(N, L), 0.0) + 0.0001; // 0.0001 to prevent division by 0
+    float denom     = 4.0 * max(dot(normal, V), 0.0) * max(dot(normal, L), 0.0) + 0.0001; // 0.0001 to prevent division by 0
     vec3 specular   = num / denom;
 
     // Return to add to outgoing radiance
-    float NdotL = max(dot(N, L), 0.0);
+    float NdotL = max(dot(normal, L), 0.0);
     return (kD * albedo / PI + specular) * radiance * NdotL;
 }
 
 float CalculateAttenuation(float linear, float quadratic, float distance)
 {
     // Attenuation
-    float linear = max(light.linear * 0.001, 0.0);
-    float quadratic = max(light.quadratic * 0.00001, 0.0);
+    linear = max(linear * 0.001, 0.0);
+    quadratic = max(quadratic * 0.00001, 0.0);
     float attenuation = 1.0 / (1.0 + linear * distance + quadratic * (distance * distance));
+
+    return attenuation;
 }
 
 vec3 FresnelSchlick(float cosTheta, vec3 f0)
@@ -127,6 +131,7 @@ float DistributionGGX(vec3 N, vec3 H, float roughness)
     float NdotH2    = NdotH * NdotH;
     
     float denom     = (NdotH2 * (a2 - 1.0) + 1.0);
+    denom = PI * denom * denom;
 
     return a2 / denom;
 }
@@ -138,7 +143,7 @@ float GeometrySchlickGGX(float NdotV, float roughness)
 
     float denom = NdotV * (1.0 - k) + k;
 
-    return NdotV / denom
+    return NdotV / denom;
 }
 
 float GeometrySmith(vec3 N, vec3 V, vec3 L, float roughness)
