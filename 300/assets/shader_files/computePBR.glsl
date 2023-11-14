@@ -88,7 +88,7 @@ vec3 ComputeLight(PointLight light, vec3 F0, vec3 fragPos, vec3 albedo, vec3 nor
     vec3 H = normalize(V + L);
     float dist          = length(lightPos - fragPos);
     float attenuation   = CalculateAttenuation(light.linear, light.quadratic, dist);
-    vec3 radiance       = light.color.rgb * attenuation;
+    vec3 radiance       = light.color.rgb * attenuation * light.intensity;
 
     // Cook-Torrance BRDF
     float NDF   = DistributionGGX(normal, H, roughness);
