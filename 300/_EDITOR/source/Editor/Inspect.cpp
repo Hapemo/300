@@ -1503,9 +1503,6 @@ void AISetting::Inspect() {
 
 			ImGui::Text("Vertical Elevation From Target");
 			ImGui::DragFloat("##Vertical Elevation From Target", &mElevation);
-
-			ImGui::Text("Bobbering Intensity");
-			ImGui::DragFloat("##Bobbering Intensity", &mBobberingIntensity);
 		}
 		ImGui::Separator();
 
