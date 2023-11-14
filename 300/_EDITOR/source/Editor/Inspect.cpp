@@ -65,7 +65,8 @@ Inspect display for Audio components
 
 #include "ResourceManagerTy.h"
 #include "Debug/Logger.h"
-#include "Audio/AudioSystem.h"
+//#include "Audio/AudioSystem.h"
+#include "Audio/AudioSystemRevamp.h"
 #include "Input/InputMapSystem.h"
 #include <TextureCompressor.h>
 #include "Script/Script.h"
@@ -76,8 +77,8 @@ Inspect display for Audio components
 #include "EditorReflection/EditorReflection.h"
 
 
-void popup(std::string name, std::string& dataname, ref& data, bool& trigger);
-
+void popup(std::string name, _GEOM::Texture_DescriptorData& desc, std::string& dataname, ref& data, bool& trigger);
+void popup(std::string name, _GEOM::DescriptorData& desc, std::string& dataname, ref& data, bool& trigger);
 /***************************************************************************/
 /*!
 \brief
@@ -148,6 +149,11 @@ void Inspect::update()
 		if (ent.HasComponent<Audio>()) {
 			Audio& audio = ent.GetComponent<Audio>();
 			audio.Inspect();
+		}
+
+		if (ent.HasComponent<AudioListener>()) {
+			AudioListener& listener = ent.GetComponent<AudioListener>();
+			listener.Inspect();
 		}
 		if (ent.HasComponent<UIrenderer>()) {
 			UIrenderer& render = ent.GetComponent<UIrenderer>();
@@ -800,13 +806,15 @@ void MeshRenderer::Inspect()
 		ImGui::Selectable(tempPath.c_str());
 
 		//--------------------------------------------------------------------------------------------------------------// delete the mesh 
-		if (ImGui::IsItemClicked(ImGuiMouseButton_Right)) {
+			if (ImGui::IsItemClicked(ImGuiMouseButton_Right)) {
 
-			meshbool = true;
-		}
+				meshbool = true;
+			}
 
 		}
-		popup("Delete", mMeshPath, mMeshRef, meshbool);
+		GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mMeshRef.data);
+
+		popup("Delete", meshinst->mMeshDescriptorData,mMeshPath, mMeshRef, meshbool);
 
 
 
@@ -932,6 +940,10 @@ void MeshRenderer::Inspect()
 							_GEOM::Texture_DescriptorData::SerializeTEXTURE_DescriptorDataToFile(mTextureDescriptorData[i].mDescFilepath, texturedesc);
 						}
 					}
+					else
+					{
+						ImGui::Text("Empty\n");
+					}
 					ImGui::TreePop();
 				}
 
@@ -969,7 +981,7 @@ void MeshRenderer::Inspect()
 				}
 			}
 		}
-		popup("DeleteTexture", mMaterialInstancePath[texIndex], mTextureRef[texIndex], textbool);
+		popup("DeleteTexture", mTextureDescriptorData[texIndex], mMaterialInstancePath[texIndex], mTextureRef[texIndex], textbool);
 
 		ImGui::ColorPicker4("MeshColor", (float*)&mInstanceColor);
 	}
@@ -1216,91 +1228,89 @@ void Audio::Inspect() {
 					audio_name = full_file_path.substr(audio_name_start + 1);
 				}
 
-				// <Audio> Component - assign m3DAudio flag
-				if (audio_name.find("3D") != std::string::npos)
-				{
-					m3DAudio = true;
-				}
+				
 
 				// Must be outside (what if i remove and add an already loaded audio)
 				mFilePath = file_path;
 				mFileName = audio_name;
 				mFullPath = file_path + "/" + audio_name;
-
-				// Check if the [Audio file] has been uploaded into the database...
-				if (systemManager->mAudioSystem.get()->CheckAudioExist(audio_name)) // Exists ... 
-				{
-					// For Debugging Purposes
-					PINFO("[Loaded] Audio is already in database.");
-					// Assign the [Sound*] to this component. 
-					mSound = systemManager->mAudioSystem.get()->FindSound(audio_name);
-					Entity(Hierarchy::selectedId).GetComponent<Audio>().mIsEmpty = false; // Component is populated with info
-					return;
-				}
-
-				else // Does not exist...
-				{
-					// Load the Audio File + Check (load status)
-					systemManager->mAudioSystem.get()->UpdateLoadAudio(Entity(Hierarchy::selectedId));
-					Entity(Hierarchy::selectedId).GetComponent<Audio>().mIsEmpty = false; // must be here (editor specific) -> to trigger the other options to appear.
-					/*Audio& audioent = Entity(Hierarchy::selectedId).GetComponent<Audio>();
-					int i = 0;*/
-				}
-
 			}
 
 			ImGui::EndDragDropTarget();
 		}
+	}
 
+	// <Audio> Component - assign m3DAudio flag (has been loaded as a "FMOD_3D" in "LoadFromDirectory()"
+	if (mFileName.find("3D") != std::string::npos)
+	{
+		m3DAudio = true;
 	}
 
 	ImGui::Text("Drag drop 'Audio' files to header above 'Audio'");
 	ImGui::Text("Audio File Selected: ");
 	ImGui::Text(Entity(Hierarchy::selectedId).GetComponent<Audio>().mFullPath.c_str());
 
+	// Debugging (to show which audio are playing) - on editor
+	if (mState == Audio::PLAYING)
+	{
+		ImGui::Text("Audio: %s is currently playing on (ID = %u)", mCurrentlyPlaying.c_str(), mChannelID);
+		std::string audio_type;
+		switch (mAudioType)
+		{
+			case AUDIO_SFX:
+				audio_type = "SFX";
+				break;
+			case AUDIO_BGM:
+				audio_type = "BGM";
+				break;
+		}
+		ImGui::Text("On the %s group", audio_type.c_str());
+	}
+		
+
 	if (!mIsEmpty && m3DAudio)
 	{
 		ImGui::Text("This is a 3D Audio");
 	}
 
+	if (mState == Audio::PAUSED)
+		ImGui::Text("Audio Paused :o");
+
+
 	static bool remove_audio_bool = false;
-	if (!Entity(Hierarchy::selectedId).GetComponent<Audio>().mIsEmpty)
+	if (!mIsEmpty)
 	{
 		ImGui::Checkbox("Remove Audio File.", &remove_audio_bool);
+
 	}
 
 	if (!mIsEmpty && remove_audio_bool) // if not empty
 	{
 		Entity(Hierarchy::selectedId).GetComponent<Audio>().ClearAudioComponent();
 		remove_audio_bool = false;
+		ClearAudioComponent();
 		PINFO("Successfully Removed Audio.");
 	}
 
+	/*
+	*	Once an audio file is tagged to this <Audio> component.
+	*   - More interface will appear for customization.
+	*	[a] Play On Awake
+	*   [b] Is Looping 
+	*   [c] Volume Control
+	*   [d] Fade Speed Control
+	*	================================================================
+	*	(3D Parameters)
+	*   [a] Min Distance
+	*   [b] Max Distance
+	*/
 	if (!mIsEmpty)
 	{
-		//ImGui::Checkbox("Play This (start the scene first)", &mIsPlay);
-		//ImGui::Checkbox("IsPlaying", &mIsPlaying);
 		ImGui::Checkbox("Play on Awake", &mPlayonAwake);
 		ImGui::Checkbox("Is Looping", &mIsLooping);
-		ImGui::SliderFloat("Volume", &mVolume, 0.0f, 1.0f, "volume = %.3f");
-
-		if (ImGui::IsItemEdited())
-		{
-			FMOD::Sound* current_sound;
-			mChannel->getCurrentSound(&current_sound);
-			if (current_sound)
-			{
-				bool playing = false;
-				mChannel->isPlaying(&playing);
-				if (playing)
-				{
-					mChannel->setVolume(mVolume);
-				}
-			}
-	
-		}
-
-		ImGui::SliderFloat("Fade Speed", &mFadeSpeedModifier, 0.0f, 1.0f, "fade = %.3f");
+		//ImGui::SliderFloat("Volume", &mVolume, 0.0f, 1.0f, "volume = %.3f");
+		ImGui::DragFloat("Volume", (float*)&mVolume, 0.05, 0.0f, 1.0f);
+		ImGui::DragFloat("Fade Speed", (float*)&mFadeSpeedModifier, 0.05, 0.0f);
 
 		if (m3DAudio)
 		{
@@ -1314,23 +1324,40 @@ void Audio::Inspect() {
 
 	}
 
-	// AudioType Selector 
+	// AudioType (Initial) - based on component
+	
+	switch (mAudioType) // depending on what is the audio type
+	{
+	case AUDIO_SFX:
+		mAudio = 0;
+		//mTypeChanged = true;
+		//systemManager->mAudioSystem.get()->UpdateChannelReference(Entity(Hierarchy::selectedId));
+		break;
+	case AUDIO_BGM:
+		mAudio = 1;
+		//mTypeChanged = true;
+		//systemManager->mAudioSystem.get()->UpdateChannelReference(Entity(Hierarchy::selectedId));
+		break;
+	}
+	
+
+	//mAudio = mAudioType;
 	if (ImGui::BeginCombo("Audio Type", audio_type[mAudio]))
 	{
 		for (unsigned char i{ 0 }; i < 2; i++) {
 			if (ImGui::Selectable(audio_type[i])) {
 				mAudio = i;
-				switch (mAudio)
+				switch (mAudio) // depending on what is the audio type
 				{
 				case 0:
 					mAudioType = AUDIO_SFX;
-					mTypeChanged = true;
-					systemManager->mAudioSystem.get()->UpdateChannelReference(Entity(Hierarchy::selectedId));
+					//mTypeChanged = true;
+					//systemManager->mAudioSystem.get()->UpdateChannelReference(Entity(Hierarchy::selectedId));
 					break;
 				case 1:
 					mAudioType = AUDIO_BGM;
-					mTypeChanged = true;
-					systemManager->mAudioSystem.get()->UpdateChannelReference(Entity(Hierarchy::selectedId));
+					//mTypeChanged = true;
+					//systemManager->mAudioSystem.get()->UpdateChannelReference(Entity(Hierarchy::selectedId));
 					break;
 				}
 			}
@@ -1354,9 +1381,9 @@ void AudioListener::Inspect() {
 	bool delete_component = true;
 
 	// Audio Component (Bar)
-	if (ImGui::CollapsingHeader("Audio Listener", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
+	if (ImGui::CollapsingHeader("AudioListener", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
 	{
-
+		ImGui::Text("HELLO LISTENER");
 	}
 
 	
@@ -1497,6 +1524,9 @@ void AISetting::Inspect() {
 
 			ImGui::Text("Vertical Elevation From Target");
 			ImGui::DragFloat("##Vertical Elevation From Target", &mElevation);
+
+			ImGui::Text("Bobbering Intensity");
+			ImGui::DragFloat("##Bobbering Intensity", &mBobberingIntensity);
 		}
 		ImGui::Separator();
 
@@ -1563,7 +1593,7 @@ void Crosshair::Inspect()
 		Entity(Hierarchy::selectedId).RemoveComponent<Crosshair>();
 }
 
-void popup(std::string name, std::string& dataname, ref& data, bool& trigger) {
+void popup(std::string name, _GEOM::Texture_DescriptorData& desc, std::string& dataname, ref& data, bool& trigger) {
 	std::string hash ="##to"+name;
 	if (trigger == true) {
 		ImGui::OpenPopup(hash.c_str());
@@ -1575,7 +1605,7 @@ void popup(std::string name, std::string& dataname, ref& data, bool& trigger) {
 			data.data = nullptr;
 			dataname = " ";
 			trigger = false;
-
+			desc.mGUID = 0;
 		}
 
 		ImGui::EndPopup();
@@ -1584,6 +1614,30 @@ void popup(std::string name, std::string& dataname, ref& data, bool& trigger) {
 	trigger = false;
 	
 }
+
+void popup(std::string name, _GEOM::DescriptorData& desc,  std::string& dataname, ref& data, bool& trigger) {
+	std::string hash = "##to" + name;
+	if (trigger == true) {
+		ImGui::OpenPopup(hash.c_str());
+	}
+	if (ImGui::BeginPopup(hash.c_str())) {
+
+		if (ImGui::Selectable("Delete")) {
+			data.data_uid = 0;
+			data.data = nullptr;
+			dataname = " ";
+			trigger = false;
+			desc.m_GUID = 0;
+		}
+
+		ImGui::EndPopup();
+
+	}
+	trigger = false;
+
+}
+
+
 
 void Healthbar::Inspect()
 {

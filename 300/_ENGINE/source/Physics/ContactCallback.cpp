@@ -29,31 +29,26 @@ void ContactCallback::onContact(const PxContactPairHeader&, const PxContactPair*
 		if (!otherEntity.HasComponent<General>())
 			continue;
 
-		if (!playerEntity.HasComponent<Scripts>())
-			continue;
-
 		if (playerEntity.GetComponent<General>().isDelete)
 			continue;
 
 		if (otherEntity.GetComponent<General>().isDelete)
 			continue;
 
-		if (playerEntity.GetComponent<General>().GetTag() != "PLAYER")
-		{
-			if (otherEntity.GetComponent<General>().GetTag() != "PLAYER")
-				continue;
-			Entity temp = playerEntity;
-			playerEntity = otherEntity;
-			otherEntity = temp;
-		}
-
 		if (current.events & (PxPairFlag::eNOTIFY_TOUCH_FOUND))
 		{
-			playerEntity.GetComponent<Scripts>().RunFunctionForAllScripts("OnContactEnter", otherEntity);
+			if (playerEntity.HasComponent<Scripts>())
+				playerEntity.GetComponent<Scripts>().RunFunctionForAllScripts("OnContactEnter", otherEntity);
+			if (otherEntity.HasComponent<Scripts>())
+				otherEntity.GetComponent<Scripts>().RunFunctionForAllScripts("OnContactEnter", playerEntity);
+
 		}
 		else if (current.events & PxPairFlag::eNOTIFY_TOUCH_LOST)
 		{
-			playerEntity.GetComponent<Scripts>().RunFunctionForAllScripts("OnContactExit", otherEntity);
+			if (playerEntity.HasComponent<Scripts>())
+				playerEntity.GetComponent<Scripts>().RunFunctionForAllScripts("OnContactExit", otherEntity);
+			if (otherEntity.HasComponent<Scripts>())
+				otherEntity.GetComponent<Scripts>().RunFunctionForAllScripts("OnContactExit", playerEntity);
 		}
 	}
 }

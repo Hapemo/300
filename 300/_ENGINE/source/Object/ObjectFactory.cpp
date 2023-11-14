@@ -53,6 +53,7 @@ void ObjectFactory::LoadEntity(Entity e, rapidjson::Value& reader)
 	DESERIALIZE_SELF(Parent, "parent");
 	DESERIALIZE_SELF(Children, "children");
 	DESERIALIZE_SELF(Audio, "audio");
+	DESERIALIZE_SELF(AudioListener, "audiolistener");
 	DESERIALIZE_SELF(Camera, "camera");
 	DESERIALIZE_SELF(Prefab, "prefab");
 	if (e.HasComponent<Prefab>())
@@ -168,6 +169,7 @@ void ObjectFactory::SaveEntity(Entity e, rapidjson::PrettyWriter<rapidjson::Stri
 	SERIALIZE_SELF(Parent);
 	SERIALIZE_SELF(Children);
 	SERIALIZE_SELF(Audio);
+	SERIALIZE_SELF(AudioListener);
 	SERIALIZE_SELF(Camera);
 	SERIALIZE_SELF(Prefab);
 	SERIALIZE_SELF(PointLight);

@@ -74,7 +74,7 @@ bool AIManager::ConeOfSight(Entity _eye, Entity _tgt, float _horizontalAngle, fl
 	if (angle > _horizontalAngle) return false;
 
 	// Checks if source can raycast to target TODO
-
+	if (systemManager->GetPathfinderManager()->CheckEntitiesInbetween(eyeTrans.mTranslate, tgtTrans.mTranslate, { _eye, _tgt }, {})) return false;
 
 	return true;
 }

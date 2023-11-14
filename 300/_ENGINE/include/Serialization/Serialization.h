@@ -349,6 +349,8 @@ void Deserialize(rapidjson::Value& reader, const char* name, T* arr, size_t size
 {
 	if (!reader.HasMember(name)) return;
 
+	//std::cout << "array size: " << reader[name].Size() << std::endl;
+
 	for (rapidjson::SizeType i = 0; i < (rapidjson::SizeType)size; ++i)
 		Deserialize(reader[name][i], nullptr, arr[i]);
 }
