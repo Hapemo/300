@@ -65,15 +65,17 @@ void PostProcessing::ChromaticAbbrebationBlendFramebuffers(GFX::FBO& targetFrame
 }
 
 
-void PostProcessing::CRTBlendFramebuffers(GFX::FBO& targetFramebuffer, unsigned int tempFramebuffer, float dt)
+void PostProcessing::CRTBlendFramebuffers(GFX::FBO& targetFramebuffer, unsigned int tempFramebuffer, unsigned int tempColorAttachment, float dt)
 {
 	glBlendFunc(GL_ONE_MINUS_DST_COLOR, GL_ONE);
 
 	{
+		// blit the framebuffer to the temp framebuffer, as a reference framebuffer before drawing onto the target framebuffer
 		glBindFramebuffer(GL_READ_FRAMEBUFFER, targetFramebuffer.mID);
 		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, tempFramebuffer);
 
-		glDrawBuffer(GL_COLOR_ATTACHMENT0);
+		// im using the second pingpongcolor attachment as the buffer to blit to
+		glDrawBuffer(GL_COLOR_ATTACHMENT1);
 		glBlitFramebuffer(0, 0, targetFramebuffer.mWidth, targetFramebuffer.mHeight, 0, 0, targetFramebuffer.mWidth, targetFramebuffer.mHeight, GL_COLOR_BUFFER_BIT, GL_NEAREST);
 
 		glBindFramebuffer(GL_FRAMEBUFFER, 0); // Restore the default framebuffer
@@ -89,7 +91,7 @@ void PostProcessing::CRTBlendFramebuffers(GFX::FBO& targetFramebuffer, unsigned 
 	glDrawBuffer(GL_COLOR_ATTACHMENT0);
 
 	glUniform1f(BlendShader.GetUniformLocation("accumulationTime"), (PostProcessing::getInstance().accumulationTime += dt));
-	glBindTexture(GL_TEXTURE_2D, tempFramebuffer);
+	glBindTexture(GL_TEXTURE_2D, tempColorAttachment);
 
 	{
 		systemManager->mGraphicsSystem->mScreenQuad.Bind();

@@ -19,23 +19,24 @@ vec3 chromaticAbberation(float dist, vec2 uv, vec3 frag)
 
 vec3 crt(vec3 frag)
 {
+	// average out the brightness
     float brightness = (frag.r + frag.g + frag.b) / 3.0;
     float mul = 0.1 * brightness * brightness + 0.85;
     return frag * mul;
 }
 
-vec2 distort(vec2 uv, int t)
+vec2 distort(vec2 uv, int t, float tex_offset)
 {
     if (t == 0)
-        uv.x -= 0.001;
+        uv.x -= tex_offset;
     else if (t == 1)
-        uv.x -= 0.002;
+        uv.x -= tex_offset * 2;
     else if (t == 2)
-        uv.x -= 0.003;
+        uv.x -= tex_offset * 3;
     else if (t == 3)
-        uv.x -= 0.002;
+        uv.x -= tex_offset * 2;
     else
-        uv.x -= 0.001;
+        uv.x -= tex_offset * 1;
     return uv;
 }
 
@@ -43,16 +44,19 @@ void main()
 {
     vec2 iResolution = textureSize(Scene, 0);
     vec2 uv = gl_FragCoord.xy / iResolution.xy;
+	float tex_offset = 0.001;
+	int height = int(iResolution.y / 50);
     
-    int y_coord = int(gl_FragCoord.y + accumulationTime * 40.0) % 12;
-    if(y_coord < 6)
+    int y_coord = int(gl_FragCoord.y + accumulationTime * 40.0) % (height * 2);
+    if(y_coord < height)
 	{
-        uv = distort(uv, y_coord);
+        uv = distort(uv, y_coord, tex_offset);
     }
 
-	FragColor.rgb = chromaticAbberation(0.006, uv, FragColor.rgb);
+	FragColor.rgb = chromaticAbberation(0.004, uv, FragColor.rgb);
 
-    if(y_coord < 6) {
+    if(y_coord < height) {
+		FragColor.rgb *= 0.7;
         return;
     }
 

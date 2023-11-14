@@ -684,7 +684,7 @@ void GraphicsSystem::GameDraw(float dt)
 	if (systemManager->mGraphicsSystem->m_EnableCRT && !systemManager->mGraphicsSystem->m_EnableChromaticAbberation)
 	{
 		// CRT post processing effect. Called here so it can be rendered over the UI
-		PostProcessing::CRTBlendFramebuffers(m_GameFbo, m_PingPongFbo.pingpongFBO, dt);
+		PostProcessing::CRTBlendFramebuffers(m_GameFbo, m_PingPongFbo.pingpongFBO, m_PingPongFbo.pingpongColorbuffers[1], dt);
 	}
 
 	m_GameFbo.Unbind();
@@ -1313,6 +1313,9 @@ void GraphicsSystem::DrawAll2DInstances(unsigned shaderID)
 {
 	(void)shaderID;
 
+	if (m_Image2DStore.size() == 0)
+		return;
+
 	// Bind Textures to OpenGL context
 	for (size_t i{}; i < m_Image2DStore.size(); ++i)
 	{
@@ -1382,6 +1385,9 @@ int GraphicsSystem::StoreTextureIndex(unsigned texHandle)
 
 void GraphicsSystem::DrawAllHealthbarInstance(const mat4& viewProj)
 {
+	if (m_HealthbarMesh.mLTW.size() == 0)
+		return;
+
 	// Bind shader and VAO
 	m_HealthbarShaderInst.Activate();
 	m_HealthbarMesh.BindVao();
@@ -1442,6 +1448,9 @@ void GraphicsSystem::DrawCrosshair()
 {
 	// Get entity with crosshair component
 	auto ent = systemManager->ecs->GetEntitiesWith<Crosshair>();
+
+	if(ent.size() == 0)
+		return;
 
 	// Use crosshair shader program adn VAO
 	m_CrosshairShaderInst.Activate();

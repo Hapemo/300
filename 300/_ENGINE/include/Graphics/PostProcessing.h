@@ -43,7 +43,7 @@ struct PostProcessing
 		post processing CRT effect
 	*/
 	/**************************************************************************/
-	static void CRTBlendFramebuffers(GFX::FBO& targetFramebuffer, unsigned int tempFramebuffer, float dt);
+	static void CRTBlendFramebuffers(GFX::FBO& targetFramebuffer, unsigned int tempFramebuffer, unsigned int tempcolorattachment, float dt);
 
 	double accumulationTime;
 };
