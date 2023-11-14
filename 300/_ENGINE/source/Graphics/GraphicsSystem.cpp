@@ -110,6 +110,8 @@ void GraphicsSystem::Init()
 		m_DrawSceneShaderInst = *systemManager->mResourceTySystem->get_Shader(drawSceneShaderstr.id);
 	}
 	
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK);
 
 	// Set Cameras' starting position
 	SetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR, {0, 0, 20});									// Position of camera
