@@ -78,6 +78,7 @@ void Scene::Load(std::string const& _name) {
 
 		e.GetComponent<General>().isPaused = mIsPause;
 	}
+
 }
 
 void Scene::Save() {

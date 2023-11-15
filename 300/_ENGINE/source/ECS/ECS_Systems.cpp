@@ -8,7 +8,7 @@
 #include "ECS/ECS_Components.h"
 #include "GameState/GameStateManager.h"
 #include "GameState/GameState.h"
-#include "Audio/AudioSystem.h"
+#include "Audio/AudioSystemRevamp.h"
 #include "Debug/Logger.h"
 #include "Input/InputMapSystem.h"
 #include "Debug/EnginePerformance.h"
@@ -19,7 +19,6 @@ SystemManager *systemManager;
 
 SystemManager::SystemManager()
 {
-	mIsPlay = false;
 	mPhysicsSystem = std::make_unique<PhysicsSystem>();
 	mScriptingSystem = std::make_unique<ScriptingSystem>();
 	mGameStateSystem = std::make_unique<GameStateManager>();
@@ -82,7 +81,6 @@ void SystemManager::Reset()
 }
 
 void SystemManager::ResetForChangeGS() {
-	mAudioSystem.get()->PlayOnAwake();	// [11/4]
 	mGraphicsSystem.get()->Unload();
 	mPhysicsSystem.get()->Init();
 	mGraphicsSystem.get()->Init();
@@ -92,7 +90,7 @@ void SystemManager::Pause()
 {
 	mIsPlay = false; 
 	mGraphicsSystem->PauseGlobalAnimation();
-	mAudioSystem->Pause();
+	mAudioSystem->Pause(); 
 }
 
 void SystemManager::Play()
@@ -101,7 +99,7 @@ void SystemManager::Play()
 	mPhysicsSystem.get()->Init();
 	mGraphicsSystem->UnpauseGlobalAnimation();
 	mGameStateSystem->mCurrentGameState.Save();
-	mAudioSystem.get()->PlayOnAwake();
+	//mAudioSystem.get()->PlayOnAwake();
 	//mAudioSystem.get()->system_paused = false;
 }
 
@@ -154,7 +152,7 @@ void SystemManager::Exit()
 	mGraphicsSystem.get()->Exit();
 	mResourceTySystem.get()->Exit();
 	mGameStateSystem.get()->Unload();
-	mAudioSystem.get()->Exit();
+	//mAudioSystem.get()->Exit();
 }
 
 void SystemManager::DeleteEntity(Entity e)
