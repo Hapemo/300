@@ -1,0 +1,226 @@
+[
+    {
+        "entityid": 1048577,
+        "general": {
+            "name": "Leftshift",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 93.0,
+                "y": -45.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -354.70001220703125,
+                "y": -590.2999877929688,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 4007,
+            "degree": 0.0
+        }
+    },
+    {
+        "entityid": 1048578,
+        "general": {
+            "name": "Base",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1051.0,
+                "y": -191.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -755.7999877929688,
+                "y": -740.2999877929688,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 3696,
+            "degree": 0.0
+        }
+    },
+    {
+        "entityid": 1048579,
+        "general": {
+            "name": "crosshair-1",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 34.0,
+                "y": -34.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -102.0,
+                "y": 102.0,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 4435,
+            "degree": 0.0
+        }
+    },
+    {
+        "entityid": 1048580,
+        "general": {
+            "name": "middle",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 30.0,
+                "y": 30.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "../assets/Compressed/Cube_Texture_White.ctexture",
+            "textureref": 4706,
+            "degree": 0.0
+        }
+    },
+    {
+        "entityid": 1048581,
+        "general": {
+            "name": "crosshair-2",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 34.0,
+                "y": -34.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 102.0,
+                "y": 102.0,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 4550,
+            "degree": 0.0
+        }
+    },
+    {
+        "entityid": 1048582,
+        "general": {
+            "name": "crosshair-4",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 34.0,
+                "y": -34.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -102.0,
+                "y": -102.0,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 4550,
+            "degree": 0.0
+        }
+    },
+    {
+        "entityid": 1048583,
+        "general": {
+            "name": "crosshair-3",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 34.0,
+                "y": -34.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 102.0,
+                "y": -102.0,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 4435,
+            "degree": 0.0
+        }
+    }
+]
