@@ -3,19 +3,22 @@
 // -- Workgroup Size --
 layout(local_size_x = 30, local_size_y = 30, local_size_z = 1) in;
 
-// I-- INPUT --
-layout(rgba32f, binding = 1) uniform image2D gPosition;     // XYZ:  Fragment Position  | W: Ambient Occlusion
-layout(rgba32f, binding = 2) uniform image2D gNormal;       // XYZ:  Normal				| W: Roughness component
-layout(rgba32f, binding = 3) uniform image2D gAlbedoSpec;   // RGB:  Albedo Color		| A: Metallic component
-layout(rgba32f, binding = 4) uniform image2D gEmission;     // RGBA: Emission
+// -- INPUT --
+layout(rgba32f, binding = 2) uniform image2D bloomThresholds;       // Contains the bloom thresholds for Bloom
+layout(rgba32f, binding = 3) uniform image2D gPosition;             // XYZ:  Fragment Position  | W: Ambient Occlusion
+layout(rgba32f, binding = 4) uniform image2D gNormal;               // XYZ:  Normal				| W: Roughness component
+layout(rgba32f, binding = 5) uniform image2D gAlbedoSpec;           // RGB:  Albedo Color		| A: Metallic component
+layout(rgba32f, binding = 6) uniform image2D gEmission;             // RGBA: Emission
 
 // -- OUTPUT --
 layout(rgba32f, binding = 0) uniform image2D imgOutput;
+layout(rgba32f, binding = 1) uniform image2D brightOutput;
 
 // -- UNIFORM --
 uniform vec3 uCamPos;
 uniform int uLightCount;
 uniform vec4 uGlobalTint;
+uniform vec4 uGlobalBloomThreshold;
 
 struct PointLight           // 48 Bytes
 {
@@ -70,6 +73,28 @@ void main()
     vec3 ambient = vec3(0.03) * albedoSpec.rgb * ao;
     vec3 color = ambient + lightRadiance;
     vec3 finalColor = color + emission.rgb;
+
+    // HDR
+    // check whether fragment output is higher than threshold, if so output as bright color
+    vec4 bloomThreshold = imageLoad(bloomThresholds, texelCoord);
+
+    float brightness = 0.f;
+    if(uGlobalBloomThreshold.a <= 0.1) {
+        // the bloom is turned off. brightness = 0
+    }
+    else if (bloomThreshold.a > 0.1) {
+        // the bloom for the individual object is turned on
+        brightness = dot(finalColor.rgb, bloomThreshold.rgb);
+    }
+    else {
+        // use the global bloom
+        brightness = dot(finalColor.rgb, uGlobalBloomThreshold.rgb);
+    }
+
+    if(brightness > 1.0)
+        imageStore(brightOutput, texelCoord, vec4(finalColor.rgb, 1.0));
+    else
+        imageStore(brightOutput, texelCoord, vec4(0.0, 0.0, 0.0, 1.0));
 
     float gamma = 2.2;
     finalColor = finalColor / (finalColor + vec3(1.0));

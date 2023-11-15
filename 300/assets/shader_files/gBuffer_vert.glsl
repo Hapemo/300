@@ -39,6 +39,7 @@ void main()
     TexCoords	= inUV;
     Tex_Ent_ID  = inTex_Ent_ID;
 
-	TBN = ComputeTBN();
-	fragPos = worldPos.xyz;
+	TBN				= ComputeTBN();
+	fragPos			= worldPos.xyz;
+	Bloom_Threshold = inBloom;
 }

@@ -106,16 +106,18 @@ void GraphicsSystem::Init()
 
 	computeDeferred.CreateShaderFromFile("../assets/shader_files/computePBR.glsl");
 	computeDeferred.Activate();
-	m_GlobalTintLocation = computeDeferred.GetUniformLocation("uGlobalTint");
+	m_ComputeDeferredLightCountLocation		= computeDeferred.GetUniformLocation("uLightCount");
+	m_ComputeDeferredCamPosLocation			= computeDeferred.GetUniformLocation("uCamPos");
+	m_ComputeDeferredGlobalTintLocation		= computeDeferred.GetUniformLocation("uGlobalTint");
+	m_ComputeDeferredGlobalBloomLocation	= computeDeferred.GetUniformLocation("uGlobalBloomThreshold");
 	GFX::Shader::Deactivate();
-	// Output
-	glBindImageTexture(0, m_Fbo.GetColorAttachment(), 0, GL_FALSE, 0, GL_WRITE_ONLY, GL_RGBA32F);
 
 	// Input
-	glBindImageTexture(1, m_IntermediateFBO.GetFragPosAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
-	glBindImageTexture(2, m_IntermediateFBO.GetNormalAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
-	glBindImageTexture(3, m_IntermediateFBO.GetAlbedoSpecAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
-	glBindImageTexture(4, m_IntermediateFBO.GetEmissionAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
+	glBindImageTexture(2, m_IntermediateFBO.GetBrightColorsAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
+	glBindImageTexture(3, m_IntermediateFBO.GetFragPosAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
+	glBindImageTexture(4, m_IntermediateFBO.GetNormalAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
+	glBindImageTexture(5, m_IntermediateFBO.GetAlbedoSpecAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
+	glBindImageTexture(6, m_IntermediateFBO.GetEmissionAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
 
 	PINFO("Window size: %d, %d", m_Window->size().x, m_Window->size().y);
 }
@@ -474,7 +476,7 @@ void GraphicsSystem::Draw(bool forEditor)
 
 	// Perform blitting over pixel data from Multisample FBO -> intermediate FBO -> Destination FBO
 	if (forEditor)
-		BlitMultiSampleToDestinationFBO(m_Fbo);
+		BlitMultiSampleToDestinationFBO(m_Fbo, true);
 	else
 		BlitMultiSampleToDestinationFBO(m_GameFbo);
 
@@ -1750,7 +1752,7 @@ void GraphicsSystem::DrawDeferredLight(const vec3& camPos, GFX::FBO& destFbo)
 	destFbo.Unbind();
 }
 
-void GraphicsSystem::BlitMultiSampleToDestinationFBO(GFX::FBO& destFbo)
+void GraphicsSystem::BlitMultiSampleToDestinationFBO(GFX::FBO& destFbo, bool editorFlag)
 {
 	// Clear out intermediate before blitting
 	m_IntermediateFBO.Clear();
@@ -1762,8 +1764,9 @@ void GraphicsSystem::BlitMultiSampleToDestinationFBO(GFX::FBO& destFbo)
 	// Clear out destination FBO before blitting
 	destFbo.Clear();
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	// Copy pixel data from intermediate FBO to editor FBO
-	m_IntermediateFBO.BlitFramebuffer(destFbo.GetID());
+	// Copies only the entity ID data to editor FBO
+	if (editorFlag)
+		m_IntermediateFBO.BlitFramebuffer(destFbo.GetID());
 }
 
 void GraphicsSystem::SetupAllShaders()
@@ -1828,15 +1831,23 @@ void GraphicsSystem::SetupAllShaders()
 void GraphicsSystem::ComputeDeferredLight(bool editorDraw)
 {
 	if (editorDraw)	// Draw to Editor FBO
+	{
 		glBindImageTexture(0, m_Fbo.GetColorAttachment(), 0, GL_FALSE, 0, GL_WRITE_ONLY, GL_RGBA32F);
+		glBindImageTexture(1, m_Fbo.GetBrightColorsAttachment(), 0, GL_FALSE, 0, GL_WRITE_ONLY, GL_RGBA32F);
+	}
 	else
+	{
 		glBindImageTexture(0, m_GameFbo.GetColorAttachment(), 0, GL_FALSE, 0, GL_WRITE_ONLY, GL_RGBA32F);
+		glBindImageTexture(1, m_GameFbo.GetBrightColorsAttachment(), 0, GL_FALSE, 0, GL_WRITE_ONLY, GL_RGBA32F);
+	}
 
 	computeDeferred.Activate();
 
-	glUniform1i(computeDeferred.GetUniformLocation("uLightCount"), m_LightCount);
-	glUniform3fv(computeDeferred.GetUniformLocation("uCamPos"), 1, &m_EditorCamera.mPosition[0]);
-	glUniform4fv(m_GlobalTintLocation, 1, &m_GlobalTint[0]);
+	glUniform1i(m_ComputeDeferredLightCountLocation, m_LightCount);
+	glUniform3fv(m_ComputeDeferredCamPosLocation, 1, &m_EditorCamera.mPosition[0]);
+	glUniform4fv(m_ComputeDeferredGlobalTintLocation, 1, &m_GlobalTint[0]);
+	vec4 globalBloom = vec4(mAmbientBloomThreshold, m_EnableBloom);
+	glUniform4fv(m_ComputeDeferredGlobalBloomLocation, 1, &globalBloom[0]);
 
 	int num_group_x = glm::ceil(m_Width / 29);
 	int num_group_y = glm::ceil(m_Height / 29);

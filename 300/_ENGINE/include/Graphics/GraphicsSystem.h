@@ -354,14 +354,17 @@ private:
 
 	// -- Deferred Lighting WIP --
 	void DrawDeferredLight(const vec3& camPos, GFX::FBO& destFbo);
-	void BlitMultiSampleToDestinationFBO(GFX::FBO& destFbo);
+	void BlitMultiSampleToDestinationFBO(GFX::FBO& destFbo, bool editorFlag = false);
 	GLint m_DeferredCamPosLocation{};
 	GLint m_DeferredLightCountLocation{};
 
 	// -- Compute Shader WIP --
 	GFX::ComputeShader computeDeferred;
 	void ComputeDeferredLight(bool editorDraw = false);
-	GLint m_GlobalTintLocation{};
+	GLint m_ComputeDeferredGlobalTintLocation{};
+	GLint m_ComputeDeferredCamPosLocation{};
+	GLint m_ComputeDeferredLightCountLocation{};
+	GLint m_ComputeDeferredGlobalBloomLocation{};
 
 	// -- Shader Setup --
 	void SetupAllShaders();

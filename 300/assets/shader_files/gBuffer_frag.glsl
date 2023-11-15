@@ -10,7 +10,6 @@ in vec4 Bloom_Threshold;    // Bloom Threshold
 
 
 // -- OUTPUTS --
-layout (location = 0) out vec4 fragColor;
 layout (location = 1) out uint outEntityID;
 layout (location = 2) out vec4 BrightColor;
 
@@ -71,4 +70,5 @@ void main()
 
     // Write Entity ID
     outEntityID = uint(Tex_Ent_ID.y);
+    BrightColor = Bloom_Threshold;
 }
