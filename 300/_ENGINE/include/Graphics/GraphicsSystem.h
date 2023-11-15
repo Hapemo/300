@@ -25,6 +25,8 @@
 #include <Animator.hpp>
 #include <Ssbo.hpp>
 
+#include <Graphics/PostProcessing.h>
+
 /***************************************************************************/
 /*!
 \brief
@@ -231,10 +233,11 @@ public:
 // 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// -- Renderer --
-	GFX::DebugRenderer	m_Renderer;			// isolated to debug draws
-	GFX::FBO			m_Fbo;				// Editor Scene
-	GFX::FBO			m_GameFbo;			// Game Scene
-	GFX::PingPongFBO	m_PingPongFbo;		// Post Processing
+	GFX::DebugRenderer			m_Renderer;				// isolated to debug draws
+	GFX::FBO					m_Fbo;					// Editor Scene
+	GFX::FBO					m_GameFbo;				// Game Scene
+	GFX::PingPongFBO			m_PingPongFbo;			// Post Processing
+	PhysBasedBloomRenderer		m_PhysBloomRenderer;	// Bloom
 
 	// -- Window --
 	GFX::Window*		m_Window;
@@ -253,6 +256,7 @@ public:
 	float		mAmbientBloomExposure{ 0.4f };						
 	float		mTexelOffset{ 1.f };							// Gaussian blur Ver1						
 	float		mSamplingWeight{ 1.f };							// Gaussian blur Ver1/2
+	float		mFilterRadius{ 20.f };							// Phys Based Bloom
 
 	BloomType	mBloomType{ BloomType::GAUSSIANBLUR_VER2 };		// defaults to Gaussian blur Ver2
 

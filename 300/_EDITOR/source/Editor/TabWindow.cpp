@@ -88,6 +88,10 @@ void TabWindow::update()
 		ImGui::DragFloat("Texel Offset", &systemManager->mGraphicsSystem->mTexelOffset, 0.1f, 0.f, 5.f, "%0.2f");
 	}
 
+	else if (systemManager->mGraphicsSystem->mBloomType == BloomType::PHYS_BASED_BLOOM) {
+		ImGui::DragFloat("Filter Radius", &systemManager->mGraphicsSystem->mFilterRadius, 0.1f, 0.f, 50.f, "%0.2f");
+	}
+
 	std::string bloomstr;
 
 	switch (systemManager->mGraphicsSystem->mBloomType)
