@@ -60,7 +60,7 @@ namespace GFX
 
 		int mWidth{};
 		int mHeight{};
-		int mSamples{ 16 };
+		int mSamples{ 4 };
 
 		void CreateAttachment(unsigned& attachment, GLenum internalFormat);
 	};

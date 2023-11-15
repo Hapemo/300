@@ -94,8 +94,8 @@ void GFX::MsFBO::BlitFramebuffer(unsigned int destFBO)
 
 	for (int i{}; i < 7; ++i)
 	{
-		glReadBuffer(GL_COLOR_ATTACHMENT0 + i);
-		glDrawBuffer(GL_COLOR_ATTACHMENT0 + i);
+		glReadBuffer(GL_COLOR_ATTACHMENT1 + i);
+		glDrawBuffer(GL_COLOR_ATTACHMENT1 + i);
 		glBlitFramebuffer(0, 0, mWidth, mHeight, 0, 0, mWidth, mHeight, GL_COLOR_BUFFER_BIT, GL_NEAREST);
 	}
 
