@@ -152,7 +152,9 @@ void ECS::DeleteEntity(Entity e)
 			e.RemoveChild(child);
 	if (e.HasComponent<Prefab>())
 		UnlinkPrefab(e);
-	systemManager->mAISystem->RemoveAIFromEntity(e);
+	if (e.HasComponent<Scripts>())
+		e.GetComponent<Scripts>().RunFunctionForAllScripts("Dead");
+	
 	systemManager->mPhysicsSystem->RemoveActor(e);
 	registry.destroy(e.id);
 }

@@ -30,6 +30,8 @@ function Alive()
 end
 
 function Update()
+
+    --#region Movement
     vec = aiSys:GetDirection(this)
     this:GetTransform().mRotate.y = Helper.DirectionToAngle(this, vec)
 
@@ -50,16 +52,9 @@ function Update()
         vec.z = 0
     end
     --
-    
     phySys:SetVelocity(this, vec);
-    
-    if (this:GetTransform().mScale.x < 2.0) then
-        deathAudioSource:Play()
-        deathAudioSource:SetVolume(0.2)
-        systemManager.ecs:SetDeleteEntity(this)
-    end
+    --#endregion
 
-    
 end
 
 function Dead()
