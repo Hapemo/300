@@ -401,7 +401,7 @@ void GraphicsSystem::Update(float dt)
 		if (uiRenderer.mTextureRef.getdata(systemManager->mResourceTySystem->m_ResourceInstance) != nullptr)
 			texID = reinterpret_cast<GFX::Texture*>(uiRenderer.mTextureRef.data)->ID();
 
-		Add2DImageInstance(uiWidth, uiHeight, uiPosition, texID, static_cast<int>(inst.id), uiRenderer.mDegree);
+		Add2DImageInstance(uiWidth, uiHeight, uiPosition, texID, static_cast<int>(inst.id), uiRenderer.mDegree, uiRenderer.mColor);
 	}
 	// Send UI data to GPU
 	m_Image2DMesh.PrepForDraw();
@@ -1837,6 +1837,12 @@ void GraphicsSystem::SetupAllShaders()
 	// Initialize the G-buffer shader and uniform location
 	uid gBufferShaderstr("gBufferShader");
 	m_GBufferShaderInst = *systemManager->mResourceTySystem->get_Shader(gBufferShaderstr.id);
+}
+
+mat4 GraphicsSystem::GetPortalViewMatrix(mat4 const& sourceView, mat4 const& source, mat4 const& dest)
+{
+	// Compute the virtual camera at the destination portal's position
+	return sourceView * source * glm::rotate(glm::radians(180.f), vec3(0.f, 1.f, 0.f)) * glm::inverse(dest);
 }
 
 void GraphicsSystem::ComputeDeferredLight(bool editorDraw)

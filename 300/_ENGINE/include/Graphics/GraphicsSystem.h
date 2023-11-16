@@ -368,6 +368,7 @@ private:
 
 	// -- Shader Setup --
 	void SetupAllShaders();
+	mat4 GetPortalViewMatrix(mat4 const& sourceView, mat4 const& source, mat4 const& dest);
 };
 
 #endif
