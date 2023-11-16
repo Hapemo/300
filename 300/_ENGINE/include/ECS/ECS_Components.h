@@ -178,8 +178,9 @@ struct UIrenderer : public Serializable
 	std::string							mTexPath; // temporary should be UID
 	_GEOM::Texture_DescriptorData		mTextureDescriptorData;
 	ref									mTextureRef;
-	float								mDegree;
 	vec4								mColor{ 1.f, 1.f, 1.f, 1.f };
+	float								mDegree;
+	int									mLayer;
 
 
 	inline unsigned ID() 
@@ -702,7 +703,7 @@ private:
 	[Component] - Button
  */
  /******************************************************************************/
-struct Button
+struct Button : public Serializable
 {
 	bool mInteractable{ true };
 	bool mIsHover{ false };
@@ -714,6 +715,10 @@ struct Button
 	inline bool IsHovered() { return mIsHover; }
 	inline bool IsClicked() { return mIsClick; }
 	inline bool IsActivated() { return mActivated; }
+
+	void Inspect();
+	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
+	void DeserializeSelf(rapidjson::Value& reader);
 };
 
 struct Crosshair : public Serializable

@@ -393,6 +393,12 @@ void GraphicsSystem::Update(float dt)
 		UIrenderer& uiRenderer = inst.GetComponent<UIrenderer>();
 		Transform& uiTransform = inst.GetComponent<Transform>();
 
+		/*if (inst.HasParent())
+		{
+			Transform parentTransform = inst.GetParent().GetComponent<Transform>();
+			uiTransform = parentTransform;
+		}*/
+
 		float uiWidth = uiTransform.mScale.x;
 		float uiHeight = uiTransform.mScale.y;
 		vec2 uiPosition = vec2(uiTransform.mTranslate.x, uiTransform.mTranslate.y);
