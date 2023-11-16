@@ -53,10 +53,10 @@ void GFX::MsFBO::Create(int width, int height, bool resize)
 
 	// Creating renderbuffer object for depth testing
 	glCreateRenderbuffers(1, &mRboID);
-	glNamedRenderbufferStorageMultisample(mRboID, mSamples, GL_DEPTH_COMPONENT, width, height);
+	glNamedRenderbufferStorageMultisample(mRboID, mSamples, GL_DEPTH24_STENCIL8, width, height);
 
 	// Attaching renderbuffer object to framebuffer
-	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, mRboID);
+	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, mRboID);
 
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 	{

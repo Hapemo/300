@@ -78,6 +78,22 @@ void GraphicsSystem::Init()
 		else {
 			m_GlobalTint.a = 1.f;
 		}
+
+		// Compile Compute shader
+		computeDeferred.CreateShaderFromFile("../assets/shader_files/computePBR.glsl");
+		computeDeferred.Activate();
+		m_ComputeDeferredLightCountLocation		= computeDeferred.GetUniformLocation("uLightCount");
+		m_ComputeDeferredCamPosLocation			= computeDeferred.GetUniformLocation("uCamPos");
+		m_ComputeDeferredGlobalTintLocation		= computeDeferred.GetUniformLocation("uGlobalTint");
+		m_ComputeDeferredGlobalBloomLocation	= computeDeferred.GetUniformLocation("uGlobalBloomThreshold");
+		GFX::Shader::Deactivate();
+
+		// Input
+		glBindImageTexture(2, m_IntermediateFBO.GetBrightColorsAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
+		glBindImageTexture(3, m_IntermediateFBO.GetFragPosAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
+		glBindImageTexture(4, m_IntermediateFBO.GetNormalAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
+		glBindImageTexture(5, m_IntermediateFBO.GetAlbedoSpecAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
+		glBindImageTexture(6, m_IntermediateFBO.GetEmissionAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
 	}
 
 	if (!m_EditorMode)	// If not running as editor
@@ -104,20 +120,6 @@ void GraphicsSystem::Init()
 		UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_GAME, 0.f);
 	}
 
-	computeDeferred.CreateShaderFromFile("../assets/shader_files/computePBR.glsl");
-	computeDeferred.Activate();
-	m_ComputeDeferredLightCountLocation		= computeDeferred.GetUniformLocation("uLightCount");
-	m_ComputeDeferredCamPosLocation			= computeDeferred.GetUniformLocation("uCamPos");
-	m_ComputeDeferredGlobalTintLocation		= computeDeferred.GetUniformLocation("uGlobalTint");
-	m_ComputeDeferredGlobalBloomLocation	= computeDeferred.GetUniformLocation("uGlobalBloomThreshold");
-	GFX::Shader::Deactivate();
-
-	// Input
-	glBindImageTexture(2, m_IntermediateFBO.GetBrightColorsAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
-	glBindImageTexture(3, m_IntermediateFBO.GetFragPosAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
-	glBindImageTexture(4, m_IntermediateFBO.GetNormalAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
-	glBindImageTexture(5, m_IntermediateFBO.GetAlbedoSpecAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
-	glBindImageTexture(6, m_IntermediateFBO.GetEmissionAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
 
 	PINFO("Window size: %d, %d", m_Window->size().x, m_Window->size().y);
 }
@@ -1498,6 +1500,13 @@ void GraphicsSystem::ResizeWindow(ivec2 newSize)
 	m_MultisampleFBO.Resize(newSize.x, newSize.y);
 	m_IntermediateFBO.Resize(newSize.x, newSize.y);
 	m_PingPongFbo.Resize(newSize.x, newSize.y);
+
+	// Input
+	glBindImageTexture(2, m_IntermediateFBO.GetBrightColorsAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
+	glBindImageTexture(3, m_IntermediateFBO.GetFragPosAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
+	glBindImageTexture(4, m_IntermediateFBO.GetNormalAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
+	glBindImageTexture(5, m_IntermediateFBO.GetAlbedoSpecAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
+	glBindImageTexture(6, m_IntermediateFBO.GetEmissionAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
 
 	// Update Window
 	m_Window->SetWindowSize(newSize);

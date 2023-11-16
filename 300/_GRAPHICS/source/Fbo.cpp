@@ -11,15 +11,18 @@ to handle resizing of framebuffers and object picking
 
 #include "Fbo.hpp"
 
-void GFX::FBO::Create(int width, int height, bool editorMode)
+void GFX::FBO::Create(int width, int height, bool editorMode, bool resize)
 {
 	mWidth = width;
 	mHeight = height;
 	mEditorMode = editorMode;
 
-	// Create and bind framebuffer
-	glGenFramebuffers(1, &mID);
-	glBindFramebuffer(GL_FRAMEBUFFER, mID);
+	if (!resize)
+	{
+		// Create and bind framebuffer
+		glGenFramebuffers(1, &mID);
+		glBindFramebuffer(GL_FRAMEBUFFER, mID);
+	}
 
 	// Creating Game Attachment
 	glGenTextures(1, &mColorAttachment);
@@ -57,10 +60,10 @@ void GFX::FBO::Create(int width, int height, bool editorMode)
 
 	// Creating renderbuffer object for depth testing
 	glCreateRenderbuffers(1, &mRboID);
-	glNamedRenderbufferStorage(mRboID, GL_DEPTH_COMPONENT, width, height);
+	glNamedRenderbufferStorage(mRboID, GL_DEPTH24_STENCIL8, width, height);
 
 	// Attaching renderbuffer object to framebuffer
-	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, mRboID);
+	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, mRboID);
 
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 	{
@@ -148,28 +151,13 @@ void GFX::FBO::Resize(int width, int height)
 	mWidth = width;
 	mHeight = height;
 
-	// Bind Color Attachment to be resized
-	glBindTexture(GL_TEXTURE_2D, mColorAttachment);
-	// Specifying new attachment size
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, width, height, 0, GL_RGBA, GL_FLOAT, NULL);
-	// Unbind 
-	glBindTexture(GL_TEXTURE_2D, 0);
+	// Delete current buffer and attachment
+	glDeleteRenderbuffers(1, &mRboID);
+	glDeleteTextures(1, &mColorAttachment);
+	glDeleteTextures(1, &mEntityIDAttachment);
+	glDeleteTextures(1, &mBrightColorsAttachment);
 
-	// Bind Entity ID Attachment to be resized
-	glBindTexture(GL_TEXTURE_2D, mEntityIDAttachment);
-	// Specifying new attachment size
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_R32UI, width, height, 0, GL_RED_INTEGER, GL_UNSIGNED_INT, NULL);
-	// Unbind 
-	glBindTexture(GL_TEXTURE_2D, 0);
-
-	// Bind Bright Color Attachment to be resized
-	glBindTexture(GL_TEXTURE_2D, mBrightColorsAttachment);
-	// Specifying new attachment size
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, width, height, 0, GL_RGBA, GL_FLOAT, NULL);
-	// Unbind 
-	glBindTexture(GL_TEXTURE_2D, 0);
-
-	glNamedRenderbufferStorage(mRboID, GL_DEPTH_COMPONENT, width, height);
+	Create(width, height, mEditorMode, true);
 }
 
 void GFX::PingPongFBO::Create(int width, int height)
