@@ -507,7 +507,7 @@ void GraphicsSystem::EditorDraw(float dt)
 	{
 		if (mBloomType == BloomType::PHYS_BASED_BLOOM)
 		{
-			m_PhysBloomRenderer.PrepForDraw();
+			//m_PhysBloomRenderer.PrepForDraw();
 			m_PhysBloomRenderer.RenderBloom(m_Fbo.GetColorAttachment(), mFilterRadius);
 		}
 
@@ -675,36 +675,6 @@ void GraphicsSystem::GameDraw(float dt)
 		m_Renderer.ClearInstances();
 	}
 
-	if (systemManager->mGraphicsSystem->m_EnableBloom)
-	{
-		if (mBloomType == BloomType::PHYS_BASED_BLOOM)
-		{
-			m_PhysBloomRenderer.RenderBloom(m_GameFbo.GetColorAttachment(), mFilterRadius);
-		}
-
-		else
-		{
-			// Render the bloom for the Game Framebuffer
-			m_PingPongFbo.PrepForDraw();
-
-			if (mBloomType == BloomType::GAUSSIANBLUR)
-			{
-				uid gaussianshaderstr("GaussianBlurShader");
-				GFX::Shader& gaussianShaderInst = *systemManager->mResourceTySystem->get_Shader(gaussianshaderstr.id);
-				m_PingPongFbo.GaussianBlur(gaussianShaderInst, m_GameFbo, systemManager->mGraphicsSystem->mTexelOffset, systemManager->mGraphicsSystem->mSamplingWeight);
-			}
-
-			else if (mBloomType == BloomType::GAUSSIANBLUR_VER2)
-			{
-				uid gaussianshaderstr("GaussianBlurShaderVer2");
-				GFX::Shader& gaussianShaderInst = *systemManager->mResourceTySystem->get_Shader(gaussianshaderstr.id);
-				m_PingPongFbo.GaussianBlurShader(gaussianShaderInst, m_GameFbo, systemManager->mGraphicsSystem->mSamplingWeight);
-			}
-
-			PostProcessing::AdditiveBlendFramebuffers(m_GameFbo, m_GameFbo.GetColorAttachment(), m_PingPongFbo.pingpongColorbuffers[0]);
-		}
-	}
-
 	if (systemManager->mGraphicsSystem->m_EnableChromaticAbberation)
 	{
 		//ChromaticAbbrebationBlendFramebuffers(m_GameFbo, m_GameFbo.GetBrightColorsAttachment());
@@ -739,6 +709,36 @@ void GraphicsSystem::GameDraw(float dt)
 	{
 		// CRT post processing effect. Called here so it can be rendered over the UI
 		PostProcessing::CRTBlendFramebuffers(m_GameFbo, m_PingPongFbo, dt);
+	}
+
+	if (systemManager->mGraphicsSystem->m_EnableBloom)
+	{
+		if (mBloomType == BloomType::PHYS_BASED_BLOOM)
+		{
+			m_PhysBloomRenderer.RenderBloom(m_GameFbo.GetColorAttachment(), mFilterRadius);
+		}
+
+		else
+		{
+			// Render the bloom for the Game Framebuffer
+			m_PingPongFbo.PrepForDraw();
+
+			if (mBloomType == BloomType::GAUSSIANBLUR)
+			{
+				uid gaussianshaderstr("GaussianBlurShader");
+				GFX::Shader& gaussianShaderInst = *systemManager->mResourceTySystem->get_Shader(gaussianshaderstr.id);
+				m_PingPongFbo.GaussianBlur(gaussianShaderInst, m_GameFbo, systemManager->mGraphicsSystem->mTexelOffset, systemManager->mGraphicsSystem->mSamplingWeight);
+			}
+
+			else if (mBloomType == BloomType::GAUSSIANBLUR_VER2)
+			{
+				uid gaussianshaderstr("GaussianBlurShaderVer2");
+				GFX::Shader& gaussianShaderInst = *systemManager->mResourceTySystem->get_Shader(gaussianshaderstr.id);
+				m_PingPongFbo.GaussianBlurShader(gaussianShaderInst, m_GameFbo, systemManager->mGraphicsSystem->mSamplingWeight);
+			}
+
+			PostProcessing::AdditiveBlendFramebuffers(m_GameFbo, m_GameFbo.GetColorAttachment(), m_PingPongFbo.pingpongColorbuffers[0]);
+		}
 	}
 
 	m_GameFbo.Unbind();

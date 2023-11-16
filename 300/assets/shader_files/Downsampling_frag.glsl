@@ -13,7 +13,7 @@
 in vec2 TexCoords;
 
 // == out
-out vec4 downsample;
+layout (location = 0) out vec4 downsample;
 
 uniform sampler2D srcTexture;
 uniform vec2 srcResolution;

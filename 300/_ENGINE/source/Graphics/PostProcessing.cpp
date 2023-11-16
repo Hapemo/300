@@ -144,23 +144,22 @@ bool PhysBasedBloomFBO::Init(unsigned int windowWidth, unsigned int windowHeight
 		glBindTexture(GL_TEXTURE_2D, mip.mTexture);
 
 		// we are downscaling the texture. since we dont need alpha, the GL_R11F_G11F_B10F flag gives us more hdr precision
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, intMipSize.x, intMipSize.y, 0, GL_RGBA, GL_FLOAT, NULL);
+		//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, intMipSize.x, intMipSize.y, 0, GL_RGBA, GL_FLOAT, NULL);
 		//glTexImage2D(GL_TEXTURE_2D, 0, GL_R11F_G11F_B10F, intMipSize.x, intMipSize.y, 0, GL_RGB, GL_FLOAT, NULL);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, intMipSize.x, intMipSize.y, 0, GL_RGBA, GL_FLOAT, NULL);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
-		glNamedFramebufferTexture(mFBO, GL_COLOR_ATTACHMENT0 + i, mip.mTexture, 0);
+		//glNamedFramebufferTexture(mFBO, GL_COLOR_ATTACHMENT0 + i, mip.mTexture, 0);
 
 		mMipChain.emplace_back(mip);
-
-		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 
-	//glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, mMipChain[0].mTexture, 0);
-	//unsigned int attachments[1] = { GL_COLOR_ATTACHMENT0 };
-	//glDrawBuffers(1, attachments);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, mMipChain[0].mTexture, 0);
+	unsigned int attachments[1] = { GL_COLOR_ATTACHMENT0 };
+	glDrawBuffers(1, attachments);
 
 	int status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
 	assert(status == GL_FRAMEBUFFER_COMPLETE);
@@ -239,7 +238,8 @@ void PhysBasedBloomRenderer::RenderBloom(unsigned int sourceTexture, float filte
 	RenderDownsamples(sourceTexture);
 	RenderUpsamples(filterRadius);
 
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	//glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	//PostProcessing::BlitFrameBuffers(0, targetFBO.mID, )
 
 	// restore viewport
 	glViewport(0, 0, mIntSrcViewportSize.x, mIntSrcViewportSize.y);
@@ -257,17 +257,17 @@ void PhysBasedBloomRenderer::RenderDownsamples(unsigned int sourceTexture)
 	GLuint resolution = shaderinst.GetUniformLocation("srcResolution");
 	glUniform2fv(resolution, 1, glm::value_ptr(mSrcViewportSize));
 
-	//glActiveTexture(GL_TEXTURE0);
+	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, sourceTexture);	// bind the source texture
 
 	// progressively downsample through the mip chain
 	for (int i{}; i < mipchain.size(); ++i)
 	{
 		const BloomMip& mip = mipchain[i];
-		glViewport(0, 0, (GLsizei)mip.mIntSize.x, (GLsizei)mip.mIntSize.y);
+		glViewport(0, 0, (GLsizei)mip.mSize.x, (GLsizei)mip.mSize.y);
 		
-		glDrawBuffer(GL_COLOR_ATTACHMENT0 + i);
-		//glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, mip.mTexture, 0);
+		//glDrawBuffer(GL_COLOR_ATTACHMENT0 + i);
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, mip.mTexture, 0);
 
 		// render the screen quad
 		systemManager->mGraphicsSystem->mScreenQuad.Bind();
@@ -307,20 +307,39 @@ void PhysBasedBloomRenderer::RenderUpsamples(float filterRadius)
 		const BloomMip& nextMip = mipchain[i - 1];
 
 		// bind viewport and texture for the source
-		//glActiveTexture(GL_TEXTURE0);
+		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, mip.mTexture);
 
 		// set the framebuffer render target as the destination
 		glViewport(0, 0, nextMip.mIntSize.x, nextMip.mIntSize.y);
 
-		glDrawBuffer(GL_COLOR_ATTACHMENT0 + i-1);
-		//glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, nextMip.mTexture, 0);
+		//glDrawBuffer(GL_COLOR_ATTACHMENT0 + i-1);
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, nextMip.mTexture, 0);	// draws to this locaion
 
 		// render the screen quad
 		systemManager->mGraphicsSystem->mScreenQuad.Bind();
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 		systemManager->mGraphicsSystem->mScreenQuad.Unbind();
 	}
-
+	
 	shaderinst.Deactivate();
+}
+
+
+void PostProcessing::BlitFrameBuffers(unsigned int readFramebuffer, unsigned int drawFramebuffer, ivec2 readFramebufferSize, ivec2 drawFramebufferSize, int drawColorAttachmentOffset )
+{
+	glBlendFunc(GL_ONE_MINUS_DST_COLOR, GL_ONE);
+
+	{
+		// blit the framebuffer to the temp framebuffer, as a reference framebuffer before drawing onto the target framebuffer
+		glBindFramebuffer(GL_READ_FRAMEBUFFER, readFramebuffer);
+		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, drawFramebuffer);
+
+		// im using the second pingpongcolor attachment as the buffer to blit to
+		glDrawBuffer(GL_COLOR_ATTACHMENT0 + drawColorAttachmentOffset);
+		glBlitFramebuffer(0, 0, readFramebufferSize.x, readFramebufferSize.y, 0, 0, drawFramebufferSize.x, drawFramebufferSize.y, GL_COLOR_BUFFER_BIT, GL_NEAREST);
+
+		glBindFramebuffer(GL_FRAMEBUFFER, 0); // Restore the default framebuffer
+	}
+
 }

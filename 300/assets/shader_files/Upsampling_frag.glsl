@@ -11,7 +11,7 @@
 in vec2 TexCoords;
 
 // == out
-out vec4 upsample;
+layout (location = 0) out vec4 upsample;
 
 uniform sampler2D srcTexture;
 uniform float filterRadius;
