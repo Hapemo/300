@@ -1848,10 +1848,18 @@ void GraphicsSystem::SetupAllShaders()
 	m_GBufferShaderInst = *systemManager->mResourceTySystem->get_Shader(gBufferShaderstr.id);
 }
 
-mat4 GraphicsSystem::GetPortalViewMatrix(mat4 const& sourceView, mat4 const& source, mat4 const& dest)
+mat4 GraphicsSystem::GetPortalViewMatrix(Transform const& destTransform)
 {
 	// Compute the virtual camera at the destination portal's position
-	return sourceView * source * glm::rotate(glm::radians(180.f), vec3(0.f, 1.f, 0.f)) * glm::inverse(dest);
+	vec3 portalPosition = destTransform.mTranslate;
+	mat3 R = glm::toMat3(glm::quat(glm::radians(destTransform.mRotate)));
+
+	vec3 portalForward = R * vec3(0.f, 0.f, 1.f);
+	vec3 portalUp = vec3(0.f, 1.f, 0.f);
+
+	mat4 viewMatrix = glm::lookAt(portalPosition, portalForward, portalUp);
+
+	return viewMatrix;
 }
 
 void GraphicsSystem::ComputeDeferredLight(bool editorDraw)

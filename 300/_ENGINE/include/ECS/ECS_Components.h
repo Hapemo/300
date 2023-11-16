@@ -754,7 +754,5 @@ struct Portal : public Serializable
 	Transform transform1{};
 	Transform transform2{};
 
-	// Do not Serialize these
-	vec4 plane1{};		// Plane of portal 1
-	vec4 plane2{};		// Plane of portal 2
+	mat4 GetClippedProjMatrix(Transform const& sourceTransform, float distance, mat4 const& destViewMatrix, mat4 const& projMatrix);
 };
