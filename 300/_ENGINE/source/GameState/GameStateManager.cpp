@@ -32,7 +32,7 @@ GameStateManager::GameStateManager() : mErrorScene("Error"), mGSMState(E_GSMSTAT
 // Load the first game state.
 void GameStateManager::Init() {
 	if (mNextGSName == "")
-		mNextGSName = "Test"; //temp
+		mNextGSName = "MainMenu"; //temp
 	mCurrentGameState.Load(mNextGSName);
 	mCurrentGameState.Init();
 

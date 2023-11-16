@@ -714,6 +714,10 @@ struct Button
 	inline bool IsHovered() { return mIsHover; }
 	inline bool IsClicked() { return mIsClick; }
 	inline bool IsActivated() { return mActivated; }
+
+	void Inspect();
+	/*void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
+	void DeserializeSelf(rapidjson::Value& reader);*/
 };
 
 struct Crosshair : public Serializable
