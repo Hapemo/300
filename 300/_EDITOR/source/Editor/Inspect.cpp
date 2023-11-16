@@ -180,6 +180,11 @@ void Inspect::update()
 			healthbar.Inspect();
 		}
 
+		if (ent.HasComponent<Button>()) {
+			Button& button = ent.GetComponent<Button>();
+			button.Inspect();
+		}
+
 		//--------------------------------------------// must be at the LAST OF THIS LOOP
 		Add_component(); 
 	}
@@ -284,6 +289,11 @@ void Inspect::Add_component() {
 		if (ImGui::Selectable("Healthbar")) {
 			if (!Entity(Hierarchy::selectedId).HasComponent<Healthbar>())
 				Entity(Hierarchy::selectedId).AddComponent<Healthbar>();
+		}
+
+		if (ImGui::Selectable("Button")) {
+			if (!Entity(Hierarchy::selectedId).HasComponent<Button>())
+				Entity(Hierarchy::selectedId).AddComponent<Button>();
 		}
 
 		ImGui::EndCombo();
@@ -1488,8 +1498,18 @@ void UIrenderer::Inspect() {
 		ImGui::DragFloat("##Degree", (float*)&mDegree);
 		ImGui::Separator();
 
+		ImGui::Text("Layer");
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		ImGui::DragInt("##Layer", (int*)&mLayer);
+		ImGui::Separator();
+
 		ImGui::ColorPicker4("Color", (float*)&mColor);
 	}
+
+	if (delete_component == false)
+		Entity(Hierarchy::selectedId).RemoveComponent<UIrenderer>();
 }
 
 void VFX::Inspect() {
@@ -1684,4 +1704,18 @@ void Healthbar::Inspect()
 
 	if (delete_component == false)
 		Entity(Hierarchy::selectedId).RemoveComponent<Crosshair>();
+}
+
+void Button::Inspect()
+{
+	bool delete_component{ true };
+	if (ImGui::CollapsingHeader("Button", &delete_component, ImGuiTreeNodeFlags_DefaultOpen)) {
+		ImGui::Checkbox("Interactable", &mInteractable);
+		ImGui::Checkbox("Hover", &mIsHover);
+		ImGui::Checkbox("Click", &mIsClick);
+		ImGui::Checkbox("Activated", &mActivated);
+		ImGui::Checkbox("RenderFlag", &mRenderFlag);
+	}
+	if (delete_component == false)
+		Entity(Hierarchy::selectedId).RemoveComponent<Button>();
 }

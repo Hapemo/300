@@ -22,8 +22,10 @@
 #include <DebugRenderer.hpp>
 #include <Camera.hpp>
 #include <Fbo.hpp>
+#include <MsFbo.hpp>
 #include <Animator.hpp>
 #include <Ssbo.hpp>
+#include <ComputeShader.hpp>
 
 /***************************************************************************/
 /*!
@@ -94,6 +96,8 @@ public:
 	*/
 	/**************************************************************************/
 	void Update(float dt);
+
+	void Draw(bool forEditor = false);
 
 	/***************************************************************************/
 	/*!
@@ -171,6 +175,7 @@ public:
 	vec3 GetCameraTarget(CAMERA_TYPE type);
 	vec3 GetCameraDirection(CAMERA_TYPE type);			// Direction vector of the camera (Target - position)
 	mat4 GetCameraViewMatrix(CAMERA_TYPE type);
+	mat4 GetCameraViewProjMatrix(CAMERA_TYPE type);
 	ivec2 GetCameraSize(CAMERA_TYPE type);
 
 
@@ -248,10 +253,12 @@ public:
 // 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// -- Renderer --
-	GFX::DebugRenderer	m_Renderer;			// isolated to debug draws
-	GFX::FBO			m_Fbo;				// Editor Scene
-	GFX::FBO			m_GameFbo;			// Game Scene
-	GFX::PingPongFBO	m_PingPongFbo;		// Post Processing
+	GFX::DebugRenderer		m_Renderer;			// isolated to debug draws
+	GFX::FBO				m_Fbo;				// Editor Scene
+	GFX::FBO				m_GameFbo;			// Game Scene
+	GFX::MsFBO				m_MultisampleFBO;	// Multisample FBO
+	GFX::IntermediateFBO	m_IntermediateFBO;	// Intermediate FBO
+	GFX::PingPongFBO		m_PingPongFbo;		// Post Processing
 
 	// -- Window --
 	GFX::Window*		m_Window;
@@ -286,6 +293,9 @@ public:
 	GFX::Shader m_CrosshairShaderInst;
 	GFX::Shader m_DrawSceneShaderInst;
 	GFX::Shader m_HealthbarShaderInst;
+	GFX::Shader m_AnimationShaderInst;
+	GFX::Shader m_GBufferShaderInst;
+	GFX::Shader m_DeferredLightShaderInst;
 
 	// -- Flags --
 	int		m_DebugDrawing{ 0 };			// debug drawing 
@@ -308,7 +318,7 @@ private:
 	GFX::SSBO						m_FinalBoneMatrixSsbo;
 	std::vector<mat4>				finalBoneMatrices;
 
-	const int						MAX_POINT_LIGHT = 5;
+	const int						MAX_POINT_LIGHT = 200;
 	GFX::SSBO						m_PointLightSsbo;
 	std::vector<PointLightSSBO>		pointLights;
 
@@ -326,7 +336,7 @@ private:
 	GFX::Quad2D						mScreenQuad;
 
 	void DrawAll2DInstances(unsigned shaderID);
-	void Add2DImageInstance(float width, float height, vec2 const& position, unsigned texHandle, unsigned entityID = 0xFFFFFFFF, float degree = 0.f, vec4 const& color = vec4{ 1.f, 1.f, 1.f, 1.f });
+	void Add2DImageInstance(float width, float height, vec3 const& position, unsigned texHandle, unsigned entityID = 0xFFFFFFFF, float degree = 0.f, vec4 const& color = vec4{ 1.f, 1.f, 1.f, 1.f });
 	int StoreTextureIndex(unsigned texHandle);
 
 	// -- Health Bar --
@@ -341,6 +351,24 @@ private:
 	GLint m_CrosshairColorLocation{};
 	void SetupCrosshairShaderLocations();
 	void DrawCrosshair();
+
+	// -- Deferred Lighting WIP --
+	void DrawDeferredLight(const vec3& camPos, GFX::FBO& destFbo);
+	void BlitMultiSampleToDestinationFBO(GFX::FBO& destFbo, bool editorFlag = false);
+	GLint m_DeferredCamPosLocation{};
+	GLint m_DeferredLightCountLocation{};
+
+	// -- Compute Shader WIP --
+	GFX::ComputeShader computeDeferred;
+	void ComputeDeferredLight(bool editorDraw = false);
+	GLint m_ComputeDeferredGlobalTintLocation{};
+	GLint m_ComputeDeferredCamPosLocation{};
+	GLint m_ComputeDeferredLightCountLocation{};
+	GLint m_ComputeDeferredGlobalBloomLocation{};
+
+	// -- Shader Setup --
+	void SetupAllShaders();
+	mat4 GetPortalViewMatrix(mat4 const& sourceView, mat4 const& source, mat4 const& dest);
 };
 
 #endif
