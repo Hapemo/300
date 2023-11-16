@@ -105,9 +105,9 @@ end
 
 function Shoot()
     local bullet = systemManager.ecs:NewEntityFromPrefab("EnemyBullet", thisPos)
-    local direction = Helper.Vec3Minus(targetPos, thisPos)
-    print(direction.x, " | " , direction.y, " | ", direction.z)
-    phySys:SetVelocity(bullet, Helper.Scale(Helper.Normalize(direction), ShotSpeed))
+    local bulletVec = Helper.Scale(Helper.Normalize(Helper.Vec3Minus(targetPos, thisPos)), ShotSpeed)
+    print(bulletVec.x, " | " , bulletVec.y, " | ", bulletVec.z)
+    phySys:SetVelocity(bullet, bulletVec)
     print(bullet:GetRigidBody().mVelocity)
 end
 
