@@ -91,6 +91,14 @@ local dashrender= {}
 
 local tpcolor = Vec4.new(0, 0, 0, 1)
 
+_G.tester = 0
+testing = 0
+
+testingSet = Vec3.new();
+testingSet.x = 5;
+testingSet.y = 6;
+testingSet.z = 6;
+
 function Alive()
     gameStateSys = systemManager:mGameStateSystem();
     inputMapSys = systemManager:mInputActionSystem();

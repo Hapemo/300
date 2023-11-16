@@ -226,7 +226,8 @@ void LuaScript()
 {
     systemManager->mScriptingSystem->luaState.new_usertype<Script>(
         "Script", sol::constructors<>(),
-        "RunWithReturnValue_int", &Script::RunWithReturnValue<int>
+        "RunWithReturnValue_int", &Script::RunWithReturnValue<int>,
+        "SetValue", &Script::SetValue<glm::vec3>
         );
 }
 
