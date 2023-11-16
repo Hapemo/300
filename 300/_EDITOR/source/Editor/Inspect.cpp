@@ -1498,6 +1498,13 @@ void UIrenderer::Inspect() {
 		ImGui::DragFloat("##Degree", (float*)&mDegree);
 		ImGui::Separator();
 
+		ImGui::Text("Layer");
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		ImGui::DragInt("##Layer", (int*)&mLayer);
+		ImGui::Separator();
+
 		ImGui::ColorPicker4("Color", (float*)&mColor);
 	}
 

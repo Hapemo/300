@@ -401,7 +401,10 @@ void GraphicsSystem::Update(float dt)
 
 		float uiWidth = uiTransform.mScale.x;
 		float uiHeight = uiTransform.mScale.y;
-		vec2 uiPosition = vec2(uiTransform.mTranslate.x, uiTransform.mTranslate.y);
+		float depth = (int)uiRenderer.mLayer;
+		// Maps depth from 0-255 to 0-1
+		depth /= 255.f;
+		vec3 uiPosition = vec3(uiTransform.mTranslate.x, uiTransform.mTranslate.y, depth);
 
 		unsigned texID{};
 		if (uiRenderer.mTextureRef.getdata(systemManager->mResourceTySystem->m_ResourceInstance) != nullptr)
@@ -1616,7 +1619,7 @@ void GraphicsSystem::DrawAll2DInstances(unsigned shaderID)
 	}
 }
 
-void GraphicsSystem::Add2DImageInstance(float width, float height, vec2 const& position, unsigned texHandle, unsigned entityID, float degree, vec4 const& color)
+void GraphicsSystem::Add2DImageInstance(float width, float height, vec3 const& position, unsigned texHandle, unsigned entityID, float degree, vec4 const& color)
 {
 	float half_w = m_Width * 0.5f;
 	float half_h = m_Height * 0.5f;
@@ -1626,7 +1629,7 @@ void GraphicsSystem::Add2DImageInstance(float width, float height, vec2 const& p
 		vec4(width / half_w, 0.f, 0.f, 0.f),
 		vec4(0.f, height / half_h, 0.f, 0.f),
 		vec4(0.f, 0.f, 1.f, 0.f),
-		vec4(position.x / m_Width, position.y / m_Height, 0.f, 1.f)
+		vec4(position.x / m_Width, position.y / m_Height, -position.z, 1.f)
 	};
 
 	int texIndex{};
