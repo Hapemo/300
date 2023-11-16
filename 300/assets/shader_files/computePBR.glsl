@@ -92,7 +92,7 @@ void main()
     }
 
     if(brightness > 1.0)
-        imageStore(brightOutput, texelCoord, vec4(finalColor.rgb, 1.0));
+        imageStore(brightOutput, texelCoord, vec4(finalColor.rgb, brightness));
     else
         imageStore(brightOutput, texelCoord, vec4(0.0, 0.0, 0.0, 1.0));
 
