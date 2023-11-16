@@ -1,44 +1,44 @@
 {
-    "entityid": 12582916,
+    "entityid": 4,
     "general": {
-        "name": "Explosion",
-        "tagid": 8,
+        "name": "ZipBomb",
+        "tagid": 1,
         "subtag": 0,
         "isActive": true,
         "isPaused": false
     },
     "transform": {
         "scale": {
-            "x": 20.0,
-            "y": 20.0,
-            "z": 20.0
+            "x": 5.0,
+            "y": 5.0,
+            "z": 5.0
         },
         "rotate": {
             "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
+            "y": 190.4442901611328,
+            "z": 3.132326602935791
         },
         "translate": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
+            "x": 164.8161163330078,
+            "y": 14.687995910644531,
+            "z": -74.4119873046875
         }
     },
     "rigidbody": {
         "density": 10.0,
         "material": 1,
-        "motion": 0,
+        "motion": 1,
         "velocity": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
+            "x": -3.3814563751220703,
+            "y": -15.7520751953125,
+            "z": -18.34455680847168
         },
         "rotationconstraints": {
             "x": true,
             "y": false,
             "z": false
         },
-        "gravity": false
+        "gravity": true
     },
     "meshrenderer": {
         "vert": "../assets/shader_files/pointLight_vert.glsl",
@@ -46,8 +46,8 @@
         "meshrefid": 2285,
         "instancecolor": {
             "x": 1.0,
-            "y": 0.0,
-            "z": 0.0,
+            "y": 1.0,
+            "z": 1.0,
             "w": 1.0
         },
         "bloomthreshold": {
@@ -57,8 +57,8 @@
             "w": 1.0
         },
         "materialinstance": [
-            "../assets/Compressed/Cube_Texture_White.ctexture",
-            " ",
+            "../assets/Compressed/Cube_Texture_1.ctexture",
+            "../assets/Compressed/Normal.ctexture",
             " ",
             " ",
             " ",
@@ -66,32 +66,44 @@
         ],
         "mesh": "../assets/compiled_geom/cube.geom",
         "texturerefid": [
-            4706,
-            0,
+            4242,
+            3484,
             0,
             0,
             0,
             0
         ]
     },
-    "spherecollider": {
-        "scaleoffset": 1.0,
+    "boxcollider": {
+        "scaleoffset": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+        },
         "translateoffset": {
             "x": 0.0,
             "y": 0.0,
             "z": 0.0
         },
-        "istrigger": true
+        "istrigger": false
     },
     "scripts": {
         "scriptscontainer": [
             {
-                "scriptFile": "../assets/Scripts/Explosion.lua",
+                "scriptFile": "../assets/Scripts/ZipBomb.lua",
                 "variables": []
             }
         ]
     },
     "prefab": {
-        "prefab": "Explosion"
+        "prefab": "ZipBomb"
+    },
+    "aisetting": {
+        "movementtype": 2,
+        "spreadout": 0.0,
+        "stayaway": 0.0,
+        "elevation": 0.0,
+        "targetname": "player",
+        "graphdataname": ""
     }
 }

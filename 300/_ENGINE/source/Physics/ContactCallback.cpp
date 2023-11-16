@@ -35,10 +35,6 @@ void ContactCallback::onContact(const PxContactPairHeader&, const PxContactPair*
 		if (otherEntity.GetComponent<General>().isDelete)
 			continue;
 
-		if (playerEntity.GetComponent<General>().name == "Explosion" || otherEntity.GetComponent<General>().name == "Explosion") {
-			std::cout << "break here\n";
-		}
-
 		if (current.events & (PxPairFlag::eNOTIFY_TOUCH_FOUND))
 		{
 			if (playerEntity.HasComponent<Scripts>())

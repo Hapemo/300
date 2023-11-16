@@ -12,7 +12,7 @@ local triggerExplosionDistance
 
 function Alive()
     this = Helper.GetScriptEntity(script_entity.id)
-    if entity == nil then
+    if this == nil then
         print("Entity nil in script!")
     end
     aiSys = systemManager:mAISystem();
@@ -70,7 +70,10 @@ function Dead()
 end
 
 function OnTriggerEnter(Entity)
-    
+    local tagid = Entity:GetGeneral().tagid
+    if (tagid == 0) then --player id
+        Kamekazi()
+    end
 end
 
 function OnTrigger(Entity)
@@ -82,13 +85,7 @@ function OnTriggerExit(Entity)
 end
 
 function OnContactEnter(Entity)
-    local tagid = Entity:GetGeneral().tagid
-    print("contact enter")
-    print(tagid)
-    if (tagid == 0) then --player id
-        print("Kamekazi")
-        Kamekazi()
-    end
+
 end
 
 function OnContactExit(Entity)

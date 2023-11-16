@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 12582914,
+        "entityid": 7340033,
         "general": {
             "name": "player",
             "tagid": 0,
@@ -90,7 +90,7 @@
         }
     },
     {
-        "entityid": 12582915,
+        "entityid": 7340034,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -145,7 +145,7 @@
         }
     },
     {
-        "entityid": 13631492,
+        "entityid": 7340035,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -235,7 +235,116 @@
         }
     },
     {
-        "entityid": 14680065,
+        "entityid": 7340036,
+        "general": {
+            "name": "ILOVEYOU",
+            "tagid": 1,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 5.0,
+                "y": 5.0,
+                "z": 5.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 330.0,
+                "z": 3.132326602935791
+            },
+            "translate": {
+                "x": -0.9442757964134216,
+                "y": 17.25525665283203,
+                "z": 0.0
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 1,
+            "velocity": {
+                "x": -3.3814563751220703,
+                "y": -15.7520751953125,
+                "z": -18.34455680847168
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": false,
+                "z": false
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3314,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 0.29556649923324585,
+                "z": 0.29556649923324585,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Cube_Texture_1.ctexture",
+                "../assets/Compressed/cube_emission.ctexture",
+                " ",
+                " ",
+                " ",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/Cylinder_Arrow.geom",
+            "texturerefid": [
+                4242,
+                4248,
+                0,
+                0,
+                0,
+                0
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/ILOVEYOU.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "prefab": {
+            "prefab": "ZipBomb"
+        },
+        "aisetting": {
+            "movementtype": 2,
+            "spreadout": 0.0,
+            "stayaway": 100.0,
+            "elevation": 20.0,
+            "targetname": "player",
+            "graphdataname": ""
+        }
+    },
+    {
+        "entityid": 7340038,
         "general": {
             "name": "ZipBomb",
             "tagid": 1,
@@ -255,9 +364,9 @@
                 "z": 3.132326602935791
             },
             "translate": {
-                "x": 96.59321594238281,
-                "y": 9.210750579833984,
-                "z": 7.759837627410889
+                "x": 164.8161163330078,
+                "y": 14.687995910644531,
+                "z": -74.4119873046875
             }
         },
         "rigidbody": {
@@ -331,6 +440,9 @@
                 }
             ]
         },
+        "prefab": {
+            "prefab": "ZipBomb"
+        },
         "aisetting": {
             "movementtype": 2,
             "spreadout": 0.0,
@@ -341,7 +453,101 @@
         }
     },
     {
-        "entityid": 14680069,
+        "entityid": 7340039,
+        "general": {
+            "name": "EnemyBullet",
+            "tagid": 2,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 18.54596519470215,
+                "z": -22.233449935913086
+            }
+        },
+        "rigidbody": {
+            "density": 3.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": false,
+                "z": false
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 2285,
+            "instancecolor": {
+                "x": 0.9952195286750793,
+                "y": 1.0,
+                "z": 0.029556632041931152,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Cube_Texture_White.ctexture",
+                " ",
+                " ",
+                " ",
+                " ",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/cube.geom",
+            "texturerefid": [
+                4706,
+                0,
+                0,
+                0,
+                0,
+                0
+            ]
+        },
+        "spherecollider": {
+            "scaleoffset": 1.0,
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": true
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/EnemyBullet.lua",
+                    "variables": []
+                }
+            ]
+        }
+    },
+    {
+        "entityid": 8388613,
         "general": {
             "name": "Wall",
             "tagid": 4,
