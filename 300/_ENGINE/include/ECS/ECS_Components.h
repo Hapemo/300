@@ -179,6 +179,8 @@ struct UIrenderer : public Serializable
 	_GEOM::Texture_DescriptorData		mTextureDescriptorData;
 	ref									mTextureRef;
 	float								mDegree;
+	vec4								mColor;
+
 
 	inline unsigned ID() 
 	{
