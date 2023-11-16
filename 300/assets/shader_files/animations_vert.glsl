@@ -19,8 +19,6 @@ const int MAX_BONES = 70;
 const int MAX_BONE_INFLUENCE = 4;
 
 uniform mat4 uMatrixVP;     // view projection
-uniform vec3 uViewPos;
-uniform bool uHasLight;
 
 layout (std430, binding = 3) buffer boneFinal
 {
@@ -28,12 +26,21 @@ layout (std430, binding = 3) buffer boneFinal
 };
 
 out vec2 TexCoords;
-out mat3 TBN;
-out vec3 TangentViewPos;
-out vec3 TangentFragPos;
 out vec4 Tex_Ent_ID;
-out vec4 VertexColor;
+out mat3 TBN;
+out vec3 fragPos;
 out vec4 Bloom_Threshold;
+out vec4 VertexColor;
+
+mat3 ComputeTBN()
+{
+
+	vec3 T = normalize(vec3(inLTW * vec4(inTangent, 0.0)));
+	vec3 N = normalize(vec3(inLTW * vec4(inNormal, 0.0)));
+	vec3 B = normalize(cross(N, T));
+
+	return mat3(T, B, N);
+}
 
 void main() 
 {
@@ -69,22 +76,9 @@ void main()
     Tex_Ent_ID          = inTex_Ent_ID;
     VertexColor         = inVertexColor;
 
-    if (!uHasLight) return;
-
-    
-    // Compute world-to-tangent space matrix
-    mat3 normalMatrix = transpose(inverse(mat3(inLTW)));
-    vec3 T = normalize(normalMatrix * inTangent);
-    vec3 N = normalize(normalMatrix * normal);
-    //vec3 N = normalize(normalMatrix * inNormal);
-    T = normalize(T - dot(T, N) * N);
-    vec3 B = cross(N, T);
-    TBN = transpose(mat3(T, B, N));
-
+    TBN = ComputeTBN();
 
     // Set all the output vars
-    //gl_Position   = uMatrixVP * inLTW * vec4(inQPos,1.0);
-    TangentViewPos  = TBN * uViewPos;
-    TangentFragPos  = TBN * vec3(inLTW * totalPosition);
+    fragPos  = vec3(inLTW * totalPosition);
     Bloom_Threshold = inBloom;
 }

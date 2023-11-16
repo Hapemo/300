@@ -132,7 +132,7 @@ void GFX::Shader::Activate() const
  * @return
  *  none
 *---------------------------------------------------------------------------*/
-void GFX::Shader::Deactivate() const
+void GFX::Shader::Deactivate()
 {
 	glUseProgram(0);
 }

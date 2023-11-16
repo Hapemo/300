@@ -178,7 +178,7 @@ struct UIrenderer : public Serializable
 	std::string							mTexPath; // temporary should be UID
 	_GEOM::Texture_DescriptorData		mTextureDescriptorData;
 	ref									mTextureRef;
-	vec4								mColor;
+	vec4								mColor{ 1.f, 1.f, 1.f, 1.f };
 	float								mDegree;
 	int									mLayer;
 
@@ -746,4 +746,15 @@ struct Healthbar : public Serializable
 	void Inspect();
 	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
 	void DeserializeSelf(rapidjson::Value& reader);
+};
+
+struct Portal : public Serializable
+{
+	// Serialize these
+	Transform transform1{};
+	Transform transform2{};
+
+	// Do not Serialize these
+	vec4 plane1{};		// Plane of portal 1
+	vec4 plane2{};		// Plane of portal 2
 };
