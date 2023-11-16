@@ -2,6 +2,318 @@
     {
         "entityid": 1048577,
         "general": {
+            "name": "Bullet Shoot",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Mac 10 Shoot.mp3",
+            "fullpath": "../assets\\Audio/Mac 10 Shoot.mp3",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 0.0
+        }
+    },
+    {
+        "entityid": 1048579,
+        "general": {
+            "name": "Tutorial Cube",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 24.700000762939453,
+                "y": 18.599998474121094,
+                "z": 23.199996948242188
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -139.6999969482422,
+                "y": -15.5,
+                "z": 0.0
+            }
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3232,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Wood Material 15_BaseColor.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Normal.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Metallic.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Roughness.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Emissive.ctexture",
+                "../assets/Compressed/Tutorial_Cube_AO.ctexture"
+            ],
+            "mesh": "../assets/compiled_geom/Tutorial_cube.geom",
+            "texturerefid": [
+                5242,
+                4909,
+                5103,
+                5250,
+                5129,
+                4436
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Tutorial Cube"
+        }
+    },
+    {
+        "entityid": 1048580,
+        "general": {
+            "name": "Tutorial Cube",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 24.700002670288086,
+                "y": 18.599998474121094,
+                "z": 23.199993133544922
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -115.0,
+                "y": -15.5,
+                "z": 0.0
+            }
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3232,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Wood Material 15_BaseColor.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Normal.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Metallic.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Roughness.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Emissive.ctexture",
+                "../assets/Compressed/Tutorial_Cube_AO.ctexture"
+            ],
+            "mesh": "../assets/compiled_geom/Tutorial_cube.geom",
+            "texturerefid": [
+                5242,
+                4909,
+                5103,
+                5250,
+                5129,
+                4436
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Tutorial Cube"
+        }
+    },
+    {
+        "entityid": 1048582,
+        "general": {
+            "name": "Jump",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "jump.wav",
+            "fullpath": "../assets\\Audio/jump.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 0.0
+        }
+    },
+    {
+        "entityid": 1048583,
+        "general": {
+            "name": "Tutorial Cube",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 24.700000762939453,
+                "y": 18.600000381469727,
+                "z": 23.200000762939453
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -65.69999694824219,
+                "y": -15.5,
+                "z": 0.0
+            }
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3232,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Wood Material 15_BaseColor.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Normal.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Metallic.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Roughness.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Emissive.ctexture",
+                "../assets/Compressed/Tutorial_Cube_AO.ctexture"
+            ],
+            "mesh": "../assets/compiled_geom/Tutorial_cube.geom",
+            "texturerefid": [
+                5242,
+                4909,
+                5103,
+                5250,
+                5129,
+                4436
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Tutorial Cube"
+        }
+    },
+    {
+        "entityid": 1048584,
+        "general": {
             "name": "Light",
             "tagid": 0,
             "subtag": 0,
@@ -37,7 +349,7 @@
         }
     },
     {
-        "entityid": 1048582,
+        "entityid": 1048585,
         "general": {
             "name": "WallTexture",
             "tagid": 0,
@@ -98,7 +410,7 @@
         }
     },
     {
-        "entityid": 1048584,
+        "entityid": 1048586,
         "general": {
             "name": "gun",
             "tagid": 0,
@@ -158,13 +470,13 @@
             ]
         },
         "parent": {
-            "prevsibling": 1048584,
-            "nextsibling": 1048584,
-            "parent": 1048589
+            "prevsibling": 1048586,
+            "nextsibling": 1048586,
+            "parent": 1048631
         }
     },
     {
-        "entityid": 1048585,
+        "entityid": 1048587,
         "general": {
             "name": "Dash",
             "tagid": 0,
@@ -200,7 +512,7 @@
         }
     },
     {
-        "entityid": 1048586,
+        "entityid": 1048588,
         "general": {
             "name": "Buildings",
             "tagid": 0,
@@ -261,7 +573,7 @@
         }
     },
     {
-        "entityid": 1048587,
+        "entityid": 1048589,
         "general": {
             "name": "NewObject",
             "tagid": 0,
@@ -285,168 +597,6 @@
                 "y": 0.0,
                 "z": 0.0
             }
-        }
-    },
-    {
-        "entityid": 1048588,
-        "general": {
-            "name": "FloorTexture",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 62.400001525878906,
-                "y": 17.799999237060547,
-                "z": 101.69999694824219
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -0.4000000059604645,
-                "y": 1.149999976158142,
-                "z": -1.100000023841858
-            }
-        },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 2384,
-            "instancecolor": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "bloomthreshold": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "materialinstance": [
-                "../assets/Compressed/Environment_Floor_BaseColor.ctexture",
-                "../assets/Compressed/Environment_Floor_Normal.ctexture",
-                "../assets/Compressed/Environment_Floor_Emissive.ctexture",
-                "../assets/Compressed/Environment_Floor_Roughness.ctexture",
-                "../assets/Compressed/Environment_Floor_Emissive.ctexture",
-                "../assets/Compressed/Environment_Floor_AO.ctexture"
-            ],
-            "mesh": "../assets/compiled_geom/Floor.geom",
-            "texturerefid": [
-                5634,
-                5361,
-                5581,
-                5702,
-                5581,
-                4888
-            ]
-        }
-    },
-    {
-        "entityid": 1048589,
-        "general": {
-            "name": "Camera",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 19.999286651611328,
-                "y": 20.0000057220459,
-                "z": 20.000228881835938
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 5.436209678649902,
-                "y": 8.155665397644043,
-                "z": 52.141937255859375
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 1,
-            "velocity": {
-                "x": -0.000005273150236462243,
-                "y": 0.0,
-                "z": -3.067939235990025e-10
-            },
-            "rotationconstraints": {
-                "x": true,
-                "y": true,
-                "z": true
-            },
-            "gravity": true
-        },
-        "spherecollider": {
-            "scaleoffset": 4.099999904632568,
-            "translateoffset": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "istrigger": true
-        },
-        "capsulecollider": {
-            "translateoffset": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "radius": 0.5,
-            "halfheight": 0.5,
-            "istrigger": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/Player.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "children": {
-            "numchildren": 1,
-            "firstchild": 1048584
-        },
-        "audio": {
-            "filepath": "",
-            "filename": "",
-            "fullpath": "",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 1.0
-        },
-        "camera": {
-            "positon": {
-                "x": 5.436209678649902,
-                "y": 8.155665397644043,
-                "z": 52.141937255859375
-            },
-            "target": {
-                "x": 6.436209678649902,
-                "y": 8.155665397644043,
-                "z": 52.141937255859375
-            },
-            "size": {
-                "x": 1100,
-                "y": 559
-            },
-            "near": 0.10000000149011612,
-            "far": 900.0
         }
     },
     {
@@ -2655,78 +2805,6 @@
     {
         "entityid": 1048626,
         "general": {
-            "name": "Bullet Shoot",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "Mac 10 Shoot.mp3",
-            "fullpath": "../assets\\Audio/Mac 10 Shoot.mp3",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 0.0
-        }
-    },
-    {
-        "entityid": 1048627,
-        "general": {
-            "name": "Jump",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "jump.wav",
-            "fullpath": "../assets\\Audio/jump.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 0.0
-        }
-    },
-    {
-        "entityid": 1048628,
-        "general": {
             "name": "FloorCollider",
             "tagid": 3,
             "subtag": 0,
@@ -2787,7 +2865,7 @@
         }
     },
     {
-        "entityid": 1048629,
+        "entityid": 1048627,
         "general": {
             "name": "Tutorial Cube",
             "tagid": 0,
@@ -2797,9 +2875,9 @@
         },
         "transform": {
             "scale": {
-                "x": 15.0,
-                "y": 14.600000381469727,
-                "z": 10.0
+                "x": 24.700000762939453,
+                "y": 18.600000381469727,
+                "z": 23.200000762939453
             },
             "rotate": {
                 "x": 0.0,
@@ -2807,8 +2885,8 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 51.400001525878906,
-                "y": 0.0,
+                "x": -90.30000305175781,
+                "y": -15.5,
                 "z": 0.0
             }
         },
@@ -2829,26 +2907,42 @@
                 "w": 1.0
             },
             "materialinstance": [
-                "../assets/Compressed/Tutorial_Cube_BaseColor.ctexture",
+                "../assets/Compressed/Wood Material 15_BaseColor.ctexture",
                 "../assets/Compressed/Tutorial_Cube_Normal.ctexture",
-                "../assets/Compressed/Tutorial_Cube_BaseColor.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Metallic.ctexture",
                 "../assets/Compressed/Tutorial_Cube_Roughness.ctexture",
                 "../assets/Compressed/Tutorial_Cube_Emissive.ctexture",
                 "../assets/Compressed/Tutorial_Cube_AO.ctexture"
             ],
             "mesh": "../assets/compiled_geom/Tutorial_cube.geom",
             "texturerefid": [
-                5182,
+                5242,
                 4909,
-                5182,
+                5103,
                 5250,
                 5129,
                 4436
             ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "prefab": {
+            "prefab": "Tutorial Cube"
         }
     },
     {
-        "entityid": 1048630,
+        "entityid": 1048628,
         "general": {
             "name": "Skybox",
             "tagid": 0,
@@ -2909,7 +3003,7 @@
         }
     },
     {
-        "entityid": 1048631,
+        "entityid": 1048629,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -2968,6 +3062,248 @@
         },
         "prefab": {
             "prefab": "FloorCollider"
+        }
+    },
+    {
+        "entityid": 1048630,
+        "general": {
+            "name": "FloorTexture",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 62.400001525878906,
+                "y": 17.799999237060547,
+                "z": 101.69999694824219
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -0.4000000059604645,
+                "y": 1.149999976158142,
+                "z": -1.100000023841858
+            }
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 2384,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Environment_Floor_BaseColor.ctexture",
+                "../assets/Compressed/Environment_Floor_Normal.ctexture",
+                "../assets/Compressed/Environment_Floor_Emissive.ctexture",
+                "../assets/Compressed/Environment_Floor_Roughness.ctexture",
+                "../assets/Compressed/Environment_Floor_Emissive.ctexture",
+                "../assets/Compressed/Environment_Floor_AO.ctexture"
+            ],
+            "mesh": "../assets/compiled_geom/Floor.geom",
+            "texturerefid": [
+                5634,
+                5361,
+                5581,
+                5702,
+                5581,
+                4888
+            ]
+        }
+    },
+    {
+        "entityid": 1048631,
+        "general": {
+            "name": "Camera",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 19.999286651611328,
+                "y": 20.0000057220459,
+                "z": 20.000228881835938
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 5.436209678649902,
+                "y": 8.155665397644043,
+                "z": 52.141937255859375
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 1,
+            "velocity": {
+                "x": -0.000005273150236462243,
+                "y": 0.0,
+                "z": -3.067939235990025e-10
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": true,
+                "z": true
+            },
+            "gravity": true
+        },
+        "spherecollider": {
+            "scaleoffset": 4.099999904632568,
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": true
+        },
+        "capsulecollider": {
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "radius": 0.5,
+            "halfheight": 0.5,
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/Player.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "children": {
+            "numchildren": 1,
+            "firstchild": 1048586
+        },
+        "audio": {
+            "filepath": "",
+            "filename": "",
+            "fullpath": "",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0
+        },
+        "camera": {
+            "positon": {
+                "x": 5.436209678649902,
+                "y": 8.155665397644043,
+                "z": 52.141937255859375
+            },
+            "target": {
+                "x": 6.436209678649902,
+                "y": 8.155665397644043,
+                "z": 52.141937255859375
+            },
+            "size": {
+                "x": 1943,
+                "y": 642
+            },
+            "near": 0.10000000149011612,
+            "far": 900.0
+        }
+    },
+    {
+        "entityid": 2097157,
+        "general": {
+            "name": "Tutorial Cube",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 24.700000762939453,
+                "y": 18.600000381469727,
+                "z": 23.200000762939453
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -41.0,
+                "y": -15.5,
+                "z": 0.0
+            }
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3232,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Wood Material 15_BaseColor.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Normal.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Metallic.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Roughness.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Emissive.ctexture",
+                "../assets/Compressed/Tutorial_Cube_AO.ctexture"
+            ],
+            "mesh": "../assets/compiled_geom/Tutorial_cube.geom",
+            "texturerefid": [
+                5242,
+                4909,
+                5103,
+                5250,
+                5129,
+                4436
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Tutorial Cube"
         }
     }
 ]
