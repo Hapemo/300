@@ -49,13 +49,18 @@ namespace GFX
 /*!*****************************************************************************
 Creates the framebuffer object and the colorAttachment, Entity ID attachment
 *******************************************************************************/
-		void Create(int width, int height, bool editorMode = true);
+		void Create(int width, int height, bool editorMode = true, bool resize = false);
 
 /*!*****************************************************************************
 Prepares the Framebuffer to be drawn by selecting the attachments to be bound
 and rendered to
 *******************************************************************************/
 		void PrepForDraw();
+
+/*!*****************************************************************************
+Clears the framebuffer's attachments
+*******************************************************************************/
+		void Clear();
 
 		void DrawBuffers(bool color = false, bool entityID = false, bool bright = false);
 
@@ -100,6 +105,11 @@ Returns the width of the framebuffer
 Returns the height of the framebuffer
 *******************************************************************************/
 		int GetHeight()							{ return mHeight; }
+
+/*!*****************************************************************************
+Returns the ID of the framebuffer
+*******************************************************************************/
+		unsigned GetID()						{ return mID; }
 
 /*!*****************************************************************************
 Resizes the size of the framebuffer

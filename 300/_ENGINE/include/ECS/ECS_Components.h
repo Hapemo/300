@@ -742,3 +742,14 @@ struct Healthbar : public Serializable
 	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
 	void DeserializeSelf(rapidjson::Value& reader);
 };
+
+struct Portal : public Serializable
+{
+	// Serialize these
+	Transform transform1{};
+	Transform transform2{};
+
+	// Do not Serialize these
+	vec4 plane1{};		// Plane of portal 1
+	vec4 plane2{};		// Plane of portal 2
+};
