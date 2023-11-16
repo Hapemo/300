@@ -66,17 +66,11 @@ local original_translate_y
 local original_translate_z
 local original_translation = Vec3.new()
 
-local interpolationFactor = 0.5
-local interpolatedValue = Vec3.new()
-local interpolatedValue_x 
-local interpolatedValue_y
-local interpolatedValue_z 
-local offset_original_pos = Vec3.new()
-
 local gunState 
-local gunIdleTimer = 0
-local gunDisplaceBackSpeed = 0.05
-local gunDisplaceSpeed = 0.03
+local gunDisplaceBackSpeed = 0.015
+local gunDisplaceSpeed = 0.015
+local gunDisplaceSpeedModifier = 0.0
+local gunDisplaceSpeedFactorLimit = 3
 
 local gunThreshHold_max_y = -0.15
 local gunThreshHold_min_y = -0.9
@@ -332,50 +326,34 @@ function Update()
              
             end
         else
-        
-
-            -- else
-            --     if (fadeOutTimer < fadeOutDuration) then 
-            --         local volume = audioComp.mVolume - (fadeOutTimer / fadeOutDuration)
-            --         walkingAudioSource:SetVolume(volume)
-            --         fadeOutTimer = fadeOutTimer + dt
-            --         print("FADE OUT TIMER: ", fadeOutTimer)
-            --     end
-            -- end
-
-            -- complementInterpolationFactor = 1.0 - interpolationFactor
-
-            -- print("Complement Interpolation Factor: " , complementInterpolationFactor)
-            -- print("Original Translation x: " , original_translation.x)
-            -- print("Interpolation Factor: " , interpolationFactor)
-
-            -- interpolatedValue_y = complementInterpolationFactor * gunTranslate.y + interpolationFactor * original_translate_x
-
-            -- print("INTERPOLATED VALUE OF y", interpolatedValue_y)
 
             -- 'y' : vertical-axis
             if (gunState == "IDLE") then
+                
+                -- if(gunTranslate.y == gunTranslate.y) then 
+                --     if(gunTranslate.x == gunTranslate.x) then 
+                --     end 
                 -- Account for "vertical" axis
                 if(gunTranslate.y ~= original_translate_y) then
                     if((gunTranslate.y > original_translate_y)) then -- it should go up 
-                        print("Gun is displaced higher than its original translation")
+                       -- print("Gun is displaced higher than its original translation")
                         gunTranslate.y = gunTranslate.y - gunDisplaceBackSpeed
                     end
                     
                     if(gunTranslate.y < original_translate_y) then
-                        print("Gun is displaced lower than its original translation")
-                        gunTranslate.y = gunTranslate.y + gunDisplaceBackSpeed
+                       -- print("Gun is displaced lower than its original translation")
+                        gunTranslate.y = gunTranslate.y + gunDisplaceBackSpeed 
                     end
                 end
 
                 -- Account for "horizontal" axis
                 if(gunTranslate.x ~= original_translate_x) then 
                     if(gunTranslate.x < original_translate_x) then  -- left to original
-                        gunTranslate.x = gunTranslate.x + gunDisplaceBackSpeed
+                        gunTranslate.x = gunTranslate.x + gunDisplaceBackSpeed 
                     end
 
                     if(gunTranslate.x > original_translate_x) then  -- right to original
-                        gunTranslate.x = gunTranslate.x - gunDisplaceBackSpeed
+                        gunTranslate.x = gunTranslate.x - gunDisplaceBackSpeed 
                     end
 
                     --print("HORIZONTAL AXIS CHANGED")
@@ -383,6 +361,7 @@ function Update()
             end 
 
             gunState = "IDLE" -- will become "IDLE" unless there's a movement button pressed
+            
            
             if (inputMapSys:GetButton("up")) then
                 movement.x = movement.x + (viewVec.x * mul);
@@ -391,6 +370,11 @@ function Update()
                 -- gun "jumps down" when player moves forward\
                 if(gunTranslate.y > gunThreshHold_min_y) then 
                     gunTranslate.y = gunTranslate.y - gunDisplaceSpeed
+                    
+                    if(gunDisplaceSpeedModifier <= gunDisplaceSpeedFactorLimit) then 
+                        gunDisplaceSpeedModifier = gunDisplaceSpeedModifier + 1
+                        print("SPEED MODIFIER" , gunDisplaceSpeedModifier)
+                    end
                 end
 
                 gunState = "MOVING"
@@ -406,6 +390,10 @@ function Update()
                 -- gun "jumps up" when player moves forward
                 if(gunTranslate.y < gunThreshHold_max_y) then -- limit to how much 
                     gunTranslate.y = gunTranslate.y + gunDisplaceSpeed
+
+                    if(gunDisplaceSpeedModifier < gunDisplaceSpeedFactorLimit) then 
+                        gunDisplaceSpeedModifier = gunDisplaceSpeedModifier + 1
+                    end
                 end
 
                 gunState = "MOVING"
@@ -417,6 +405,11 @@ function Update()
                 -- gun "move rightwards" when player moves left
                 if(gunTranslate.x > gunThreshHold_min_x) then 
                     gunTranslate.x = gunTranslate.x - gunDisplaceSpeed
+                    
+                    if(gunDisplaceSpeedModifier < gunDisplaceSpeedFactorLimit) then 
+                        gunDisplaceSpeedModifier = gunDisplaceSpeedModifier + 0.01
+                    end
+
                 end
 
                 gunState = "MOVING"
@@ -429,6 +422,10 @@ function Update()
                 -- gun "moves leftwards" when player moves right
                 if(gunTranslate.x < gunThreshHold_max_x) then 
                     gunTranslate.x = gunTranslate.x + gunDisplaceSpeed
+
+                    if(gunDisplaceSpeedModifier < gunDisplaceSpeedFactorLimit) then 
+                        gunDisplaceSpeedModifier = gunDisplaceSpeedModifier + 0.01
+                    end
                 end
 
                 gunState = "MOVING"
