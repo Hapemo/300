@@ -75,6 +75,15 @@ local offset_original_pos = Vec3.new()
 
 local gunState 
 local gunIdleTimer = 0
+local gunDisplaceBackSpeed = 0.05
+local gunDisplaceSpeed = 0.03
+
+local gunThreshHold_max_y = -0.15
+local gunThreshHold_min_y = -0.9
+
+local gunThreshHold_min_x = 0.15 
+local gunThreshHold_max_x = 0.9
+
 
 -- end gun
 
@@ -346,55 +355,84 @@ function Update()
 
             -- 'y' : vertical-axis
             if (gunState == "IDLE") then
+                -- Account for "vertical" axis
                 if(gunTranslate.y ~= original_translate_y) then
                     if((gunTranslate.y > original_translate_y)) then -- it should go up 
                         print("Gun is displaced higher than its original translation")
-                        gunTranslate.y = gunTranslate.y - 0.05
+                        gunTranslate.y = gunTranslate.y - gunDisplaceBackSpeed
                     end
-    
-                    -- if((gunTranslate.y > original_translate_y)) then -- it should go down
-                    --     print("Gun is displaced lower than its original translation")
-                    --     gunTranslate.y = gunTranslate.y + 0.05
-                    -- end
-                    -- gunTranslate.y = gunTranslate.y - interpolatedValue_y
-                    print("DIFFERENT TRANSLATION")
+                    
+                    if(gunTranslate.y < original_translate_y) then
+                        print("Gun is displaced lower than its original translation")
+                        gunTranslate.y = gunTranslate.y + gunDisplaceBackSpeed
+                    end
                 end
-            end
 
-            gunIdleTimer = gunIdleTimer + 1
-            if(gunIdleTimer > 100) then
-                gunState = "IDLE"
-                gunIdleTimer = 0
-            end
+                -- Account for "horizontal" axis
+                if(gunTranslate.x ~= original_translate_x) then 
+                    if(gunTranslate.x < original_translate_x) then  -- left to original
+                        gunTranslate.x = gunTranslate.x + gunDisplaceBackSpeed
+                    end
+
+                    if(gunTranslate.x > original_translate_x) then  -- right to original
+                        gunTranslate.x = gunTranslate.x - gunDisplaceBackSpeed
+                    end
+
+                    --print("HORIZONTAL AXIS CHANGED")
+                end
+            end 
+
+            gunState = "IDLE" -- will become "IDLE" unless there's a movement button pressed
            
             if (inputMapSys:GetButton("up")) then
                 movement.x = movement.x + (viewVec.x * mul);
                 movement.z = movement.z + (viewVec.z * mul);    
 
-                -- gun "jumps up" when player moves forward
-                if(movement.z < 0) then
-                    print("MOVEMENT IS NEGATIVE")
-                    gunTranslate.y = gunTranslate.y + (-movement.z * 0.001)
-                else 
-                    print("MOVEMENT IS POSITIVE")
-                    gunTranslate.y = gunTranslate.y + (movement.z * 0.001)
+                -- gun "jumps down" when player moves forward\
+                if(gunTranslate.y > gunThreshHold_min_y) then 
+                    gunTranslate.y = gunTranslate.y - gunDisplaceSpeed
                 end
-            
+
                 gunState = "MOVING"
 
-                print("GUN MOVES", movement.z * 0.001) 
+                -- print("GUN MOVES", movement.z * 0.001) 
+                -- print("GUN TRANSLATE (Y): " , gunTranslate.y)
+                -- print("ORIGINAL TRANLSATE (Y): ", original_translate_y)
             end
             if (inputMapSys:GetButton("down")) then
                 movement.x = movement.x - (viewVec.x * mul);
                 movement.z = movement.z - (viewVec.z * mul);
+                
+                -- gun "jumps up" when player moves forward
+                if(gunTranslate.y < gunThreshHold_max_y) then -- limit to how much 
+                    gunTranslate.y = gunTranslate.y + gunDisplaceSpeed
+                end
+
+                gunState = "MOVING"
             end
             if (inputMapSys:GetButton("left")) then
                 movement.x = movement.x + (viewVec.z * mul);
                 movement.z = movement.z - (viewVec.x * mul);
+
+                -- gun "move rightwards" when player moves left
+                if(gunTranslate.x > gunThreshHold_min_x) then 
+                    gunTranslate.x = gunTranslate.x - gunDisplaceSpeed
+                end
+
+                gunState = "MOVING"
+    
             end
             if (inputMapSys:GetButton("right")) then
                 movement.x = movement.x - viewVec.z * mul;
                 movement.z = movement.z + viewVec.x * mul;
+
+                -- gun "moves leftwards" when player moves right
+                if(gunTranslate.x < gunThreshHold_max_x) then 
+                    gunTranslate.x = gunTranslate.x + gunDisplaceSpeed
+                end
+
+                gunState = "MOVING"
+
             end
             if (floorCount > 0) then
                 if (inputMapSys:GetButtonDown("Jump")) then
