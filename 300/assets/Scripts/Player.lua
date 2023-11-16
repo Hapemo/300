@@ -53,23 +53,30 @@ local jumpAudioComp
 local dashAudioEntity
 local dashAudioComp
 
--- local walkingAudioSource
--- local audioComp
+--physics
+local cameraPhysicsComp
 
--- local bulletshootEntity
--- local bulletshootComp
--- local bulletshootAudioSource
+--gun
+local gunEntity
+local gunTranslate
+local gunRotation
 
--- local dashEntity
--- local dashComp
--- local dashAudioSource
+local original_translate_x
+local original_translate_y
+local original_translate_z
+local original_translation = Vec3.new()
 
--- local jumpEntity
--- local jumpComp
--- local jumpAudioSource
+local interpolationFactor = 0.5
+local interpolatedValue = Vec3.new()
+local interpolatedValue_x 
+local interpolatedValue_y
+local interpolatedValue_z 
+local offset_original_pos = Vec3.new()
 
-local dashEntity
-local dashAudioComp
+local gunState 
+local gunIdleTimer = 0
+
+-- end gun
 
 local fadeOutTimer = 0.0
 local fadeOutDuration = 5.0
@@ -100,7 +107,8 @@ function Alive()
     cameraEntity = Helper.GetScriptEntity(script_entity.id)
     totaltime = 3.0
 
-    -- audioComp = cameraEntity:GetAudio()
+    cameraPhysicsComp = cameraEntity:GetRigidBody()
+    
     dashui = gameStateSys:GetEntity("UI1", "testSerialization")
 
     bulletAudioEntity = gameStateSys:GetEntity("Bullet Shoot" , "testSerialization")
@@ -122,6 +130,23 @@ function Alive()
     originalSamplingWeight = graphicsSys.mSamplingWeight
     tpfin1 = gameStateSys:GetEntity("Fin1", "testSerialization")
     tpfin2 = gameStateSys:GetEntity("Fin2", "testSerialization")
+
+    -- Gun Stuff --
+    gunEntity = gameStateSys:GetEntity("gun", "testSerialization")
+    gunTranslate = gunEntity:GetTransform().mTranslate
+    gunRotation = gunEntity:GetTransform().mRotation
+
+    -- Original Gun Position --
+    original_translate_x = gunTranslate.x
+    original_translate_y = gunTranslate.y
+    original_translate_z = gunTranslate.z 
+    original_translation.x = gunTranslate.x
+    original_translation.y = gunTranslate.y
+    original_translation.z = gunTranslate.z
+
+    gunState = "IDLE"
+    
+    
 
 end
 
@@ -309,11 +334,55 @@ function Update()
             --     end
             -- end
 
+            -- complementInterpolationFactor = 1.0 - interpolationFactor
+
+            -- print("Complement Interpolation Factor: " , complementInterpolationFactor)
+            -- print("Original Translation x: " , original_translation.x)
+            -- print("Interpolation Factor: " , interpolationFactor)
+
+            -- interpolatedValue_y = complementInterpolationFactor * gunTranslate.y + interpolationFactor * original_translate_x
+
+            -- print("INTERPOLATED VALUE OF y", interpolatedValue_y)
+
+            -- 'y' : vertical-axis
+            if (gunState == "IDLE") then
+                if(gunTranslate.y ~= original_translate_y) then
+                    if((gunTranslate.y > original_translate_y)) then -- it should go up 
+                        print("Gun is displaced higher than its original translation")
+                        gunTranslate.y = gunTranslate.y - 0.05
+                    end
+    
+                    -- if((gunTranslate.y > original_translate_y)) then -- it should go down
+                    --     print("Gun is displaced lower than its original translation")
+                    --     gunTranslate.y = gunTranslate.y + 0.05
+                    -- end
+                    -- gunTranslate.y = gunTranslate.y - interpolatedValue_y
+                    print("DIFFERENT TRANSLATION")
+                end
+            end
+
+            gunIdleTimer = gunIdleTimer + 1
+            if(gunIdleTimer > 100) then
+                gunState = "IDLE"
+                gunIdleTimer = 0
+            end
+           
             if (inputMapSys:GetButton("up")) then
                 movement.x = movement.x + (viewVec.x * mul);
                 movement.z = movement.z + (viewVec.z * mul);    
-                -- print("Volume: " , audioComp.mVolume)
-              
+
+                -- gun "jumps up" when player moves forward
+                if(movement.z < 0) then
+                    print("MOVEMENT IS NEGATIVE")
+                    gunTranslate.y = gunTranslate.y + (-movement.z * 0.001)
+                else 
+                    print("MOVEMENT IS POSITIVE")
+                    gunTranslate.y = gunTranslate.y + (movement.z * 0.001)
+                end
+            
+                gunState = "MOVING"
+
+                print("GUN MOVES", movement.z * 0.001) 
             end
             if (inputMapSys:GetButton("down")) then
                 movement.x = movement.x - (viewVec.x * mul);
@@ -344,6 +413,10 @@ function Update()
     end
 
     physicsSys:SetVelocity(cameraEntity, movement)
+   -- print("VELOCITY" , movement.x , movement.y, movement.z)
+    
+    --cameraPhysicsComp.mVelocity = movement
+    --print("VELOCITY FROM PHYSICS" , cameraPhysicsComp.mVelocity.x , cameraPhysicsComp.mVelocity.y , cameraPhysicsComp.mVelocity.z)
 
 
 --endregion
