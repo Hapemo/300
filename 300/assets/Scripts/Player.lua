@@ -81,6 +81,8 @@ local gunThreshHold_min_y = -0.9
 local gunThreshHold_min_x = 0.15 
 local gunThreshHold_max_x = 0.9
 
+local recoil_factor = 0.5
+
 
 -- end gun
 
@@ -375,6 +377,14 @@ function Update()
 
                     --print("HORIZONTAL AXIS CHANGED")
                 end
+
+                -- Account for "recoil"
+                if(gunTranslate.z ~= original_translate_z) then 
+                    gunTranslate.z = gunTranslate.z - gunDisplaceBackSpeed
+                    if(gunTranslate.z < original_translate_z) then
+                        gunTranslate.z = original_translate_z
+                    end
+                end
             end 
 
             if(gunState == "JUMP") then 
@@ -490,6 +500,19 @@ function Update()
         viewVecCam.x = viewVecCam.x*100
         viewVecCam.y=viewVecCam.y *100
         viewVecCam.z=viewVecCam.z *100
+
+        -- if(gunTranslate.z == original_translate_z) then
+        --     gunTranslate.z = gunTranslate.z + recoil_factor -- recoil
+        -- else if (gunTranslate.z < gunTranslate.z + recoil_factor) then
+        --     gunTranslate.z = gunTranslate.z + recoil_factor -- recoil
+        -- end
+
+        if(gunTranslate.z + recoil_factor <= original_translate_z + recoil_factor) then
+            gunTranslate.z = gunTranslate.z + recoil_factor -- recoil
+        else 
+            gunTranslate.z = original_translate_z 
+            gunTranslate.z = gunTranslate.z + recoil_factor -- recoil
+        end
 
         bulletAudioComp:SetPlay(0.1)
 
