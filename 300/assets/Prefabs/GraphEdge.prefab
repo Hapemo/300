@@ -1,5 +1,5 @@
 {
-    "entityid": 1048585,
+    "entityid": 1048584,
     "general": {
         "name": "GraphEdge",
         "tagid": 7,
@@ -20,7 +20,7 @@
         },
         "translate": {
             "x": 0.0,
-            "y": 0.0,
+            "y": 7.936253547668457,
             "z": 0.0
         }
     },
@@ -29,8 +29,14 @@
         "frag": "../assets/shader_files/pointLight_frag.glsl",
         "meshrefid": 3314,
         "instancecolor": {
-            "x": 0.46305418014526367,
-            "y": 0.912713348865509,
+            "x": 0.2266010046005249,
+            "y": 0.8971341252326965,
+            "z": 1.0,
+            "w": 1.0
+        },
+        "bloomthreshold": {
+            "x": 1.0,
+            "y": 1.0,
             "z": 1.0,
             "w": 1.0
         },
@@ -39,11 +45,13 @@
             " ",
             " ",
             " ",
+            " ",
             " "
         ],
         "mesh": "../assets/compiled_geom/Cylinder_Arrow.geom",
         "texturerefid": [
             4706,
+            0,
             0,
             0,
             0,

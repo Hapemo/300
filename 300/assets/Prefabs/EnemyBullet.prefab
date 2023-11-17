@@ -1,5 +1,5 @@
 {
-    "entityid": 2097154,
+    "entityid": 2097162,
     "general": {
         "name": "EnemyBullet",
         "tagid": 2,
@@ -27,7 +27,7 @@
     "rigidbody": {
         "density": 3.0,
         "material": 1,
-        "motion": 0,
+        "motion": 1,
         "velocity": {
             "x": 0.0,
             "y": 0.0,
@@ -38,7 +38,7 @@
             "y": false,
             "z": false
         },
-        "gravity": true
+        "gravity": false
     },
     "meshrenderer": {
         "vert": "../assets/shader_files/pointLight_vert.glsl",

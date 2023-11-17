@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 7340033,
+        "entityid": 2097157,
         "general": {
             "name": "player",
             "tagid": 0,
@@ -90,7 +90,7 @@
         }
     },
     {
-        "entityid": 7340034,
+        "entityid": 2097158,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -127,7 +127,7 @@
                 "z": -500.0
             },
             "size": {
-                "x": 1318,
+                "x": 1151,
                 "y": 607
             },
             "near": 0.10000000149011612,
@@ -145,7 +145,7 @@
         }
     },
     {
-        "entityid": 7340035,
+        "entityid": 2097159,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -235,7 +235,7 @@
         }
     },
     {
-        "entityid": 7340036,
+        "entityid": 2097160,
         "general": {
             "name": "ILOVEYOU",
             "tagid": 1,
@@ -255,9 +255,9 @@
                 "z": 3.132326602935791
             },
             "translate": {
-                "x": -0.9442757964134216,
-                "y": 17.25525665283203,
-                "z": 0.0
+                "x": -1.741842269897461,
+                "y": 17.21161651611328,
+                "z": 45.195430755615234
             }
         },
         "rigidbody": {
@@ -340,11 +340,11 @@
             "stayaway": 100.0,
             "elevation": 20.0,
             "targetname": "player",
-            "graphdataname": ""
+            "graphdataname": "FlyingGraphJazzTest"
         }
     },
     {
-        "entityid": 7340038,
+        "entityid": 2097161,
         "general": {
             "name": "ZipBomb",
             "tagid": 1,
@@ -364,9 +364,9 @@
                 "z": 3.132326602935791
             },
             "translate": {
-                "x": 164.8161163330078,
-                "y": 14.687995910644531,
-                "z": -74.4119873046875
+                "x": 112.35260772705078,
+                "y": 11.816985130310059,
+                "z": 37.521785736083984
             }
         },
         "rigidbody": {
@@ -449,11 +449,11 @@
             "stayaway": 0.0,
             "elevation": 0.0,
             "targetname": "player",
-            "graphdataname": ""
+            "graphdataname": "FlyingGraphJazzTest"
         }
     },
     {
-        "entityid": 7340039,
+        "entityid": 2097162,
         "general": {
             "name": "EnemyBullet",
             "tagid": 2,
@@ -481,7 +481,7 @@
         "rigidbody": {
             "density": 3.0,
             "material": 1,
-            "motion": 0,
+            "motion": 1,
             "velocity": {
                 "x": 0.0,
                 "y": 0.0,
@@ -492,7 +492,7 @@
                 "y": false,
                 "z": false
             },
-            "gravity": true
+            "gravity": false
         },
         "meshrenderer": {
             "vert": "../assets/shader_files/pointLight_vert.glsl",
@@ -544,10 +544,13 @@
                     "variables": []
                 }
             ]
+        },
+        "prefab": {
+            "prefab": "EnemyBullet"
         }
     },
     {
-        "entityid": 8388613,
+        "entityid": 3145731,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -567,9 +570,9 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 301.87872314453125,
+                "x": 54.74578094482422,
                 "y": 49.292945861816406,
-                "z": 1.5995616912841797
+                "z": -30.596050262451172
             }
         },
         "rigidbody": {

@@ -1,5 +1,5 @@
 {
-    "entityid": 93,
+    "entityid": 8,
     "general": {
         "name": "GraphPoint",
         "tagid": 7,
@@ -20,7 +20,7 @@
         },
         "translate": {
             "x": 0.0,
-            "y": 0.0,
+            "y": 13.152587890625,
             "z": 0.0
         }
     },
@@ -30,7 +30,13 @@
         "meshrefid": 2285,
         "instancecolor": {
             "x": 0.0,
-            "y": 0.0,
+            "y": 0.06896567344665527,
+            "z": 1.0,
+            "w": 1.0
+        },
+        "bloomthreshold": {
+            "x": 1.0,
+            "y": 1.0,
             "z": 1.0,
             "w": 1.0
         },
@@ -39,11 +45,13 @@
             " ",
             " ",
             " ",
+            " ",
             " "
         ],
         "mesh": "../assets/compiled_geom/cube.geom",
         "texturerefid": [
             4243,
+            0,
             0,
             0,
             0,
