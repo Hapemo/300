@@ -58,8 +58,8 @@ local cameraPhysicsComp
 
 --gun
 local gunEntity
-local gunTranslate
-local gunRotation
+local gunTranslate = Vec3.new()
+local gunRotation = Vec3.new()
 
 local original_translate_x
 local original_translate_y
@@ -67,10 +67,13 @@ local original_translate_z
 local original_translation = Vec3.new()
 
 local gunState 
+local gunJumpTimer = 0
+local gunDisplacement = Vec3.new()
 local gunDisplaceBackSpeed = 0.015
 local gunDisplaceSpeed = 0.015
 local gunDisplaceSpeedModifier = 0.0
 local gunDisplaceSpeedFactorLimit = 3
+local gunMaxAcceleration = 100
 
 local gunThreshHold_max_y = -0.15
 local gunThreshHold_min_y = -0.9
@@ -137,7 +140,7 @@ function Alive()
     -- Gun Stuff --
     gunEntity = gameStateSys:GetEntity("gun", "testSerialization")
     gunTranslate = gunEntity:GetTransform().mTranslate
-    gunRotation = gunEntity:GetTransform().mRotation
+    gunRotation = gunEntity:GetTransform().mRotate
 
     -- Original Gun Position --
     original_translate_x = gunTranslate.x
@@ -329,16 +332,30 @@ function Update()
 
             -- 'y' : vertical-axis
             if (gunState == "IDLE") then
+                local displacement_x = gunTranslate.x - original_translation.x 
+                local displacement_y = gunTranslate.y - original_translation.y
+                --print("GUN DISPLACED: " , displacement_x , displacement_y)
+                local displacement_z = 0
                 
-                -- if(gunTranslate.y == gunTranslate.y) then 
-                --     if(gunTranslate.x == gunTranslate.x) then 
-                --     end 
+                local acceleration_x = gunMaxAcceleration * displacement_x * displacement_x
+                local acceleration_y = gunMaxAcceleration * (1.0 - displacement_y * displacement_y)
+                local acceleration_z = gunMaxAcceleration * displacement_z * displacement_z
+
+                -- print("ACCELERATION Y:" , acceleration_y)
+
+                local velocity_x = acceleration_x * dt
+                local velocity_y = acceleration_y * dt
+                local velocity_z = acceleration_z * dt
+                
+                -- print("VELOCITY Y:" , velocity_y)
+                
                 -- Account for "vertical" axis
                 if(gunTranslate.y ~= original_translate_y) then
                     if((gunTranslate.y > original_translate_y)) then -- it should go up 
                        -- print("Gun is displaced higher than its original translation")
-                        gunTranslate.y = gunTranslate.y - gunDisplaceBackSpeed
+                       gunTranslate.y = gunTranslate.y - gunDisplaceBackSpeed 
                     end
+                
                     
                     if(gunTranslate.y < original_translate_y) then
                        -- print("Gun is displaced lower than its original translation")
@@ -360,8 +377,17 @@ function Update()
                 end
             end 
 
-            gunState = "IDLE" -- will become "IDLE" unless there's a movement button pressed
-            
+            if(gunState == "JUMP") then 
+                gunTranslate.y = gunTranslate.y - gunDisplaceBackSpeed 
+                gunJumpTimer = gunJumpTimer + 1
+
+                if (gunJumpTimer > 20) then
+                    gunState = "IDLE" -- will become "IDLE" unless there's a movement button pressed
+                    gunJumpTimer = 0
+                end
+            else 
+                gunState = "IDLE"
+            end 
            
             if (inputMapSys:GetButton("up")) then
                 movement.x = movement.x + (viewVec.x * mul);
@@ -370,11 +396,6 @@ function Update()
                 -- gun "jumps down" when player moves forward\
                 if(gunTranslate.y > gunThreshHold_min_y) then 
                     gunTranslate.y = gunTranslate.y - gunDisplaceSpeed
-                    
-                    if(gunDisplaceSpeedModifier <= gunDisplaceSpeedFactorLimit) then 
-                        gunDisplaceSpeedModifier = gunDisplaceSpeedModifier + 1
-                        print("SPEED MODIFIER" , gunDisplaceSpeedModifier)
-                    end
                 end
 
                 gunState = "MOVING"
@@ -391,9 +412,6 @@ function Update()
                 if(gunTranslate.y < gunThreshHold_max_y) then -- limit to how much 
                     gunTranslate.y = gunTranslate.y + gunDisplaceSpeed
 
-                    if(gunDisplaceSpeedModifier < gunDisplaceSpeedFactorLimit) then 
-                        gunDisplaceSpeedModifier = gunDisplaceSpeedModifier + 1
-                    end
                 end
 
                 gunState = "MOVING"
@@ -403,12 +421,9 @@ function Update()
                 movement.z = movement.z - (viewVec.x * mul);
 
                 -- gun "move rightwards" when player moves left
-                if(gunTranslate.x > gunThreshHold_min_x) then 
-                    gunTranslate.x = gunTranslate.x - gunDisplaceSpeed
+                if(gunTranslate.x < gunThreshHold_max_x) then 
+                    gunTranslate.x = gunTranslate.x + gunDisplaceSpeed
                     
-                    if(gunDisplaceSpeedModifier < gunDisplaceSpeedFactorLimit) then 
-                        gunDisplaceSpeedModifier = gunDisplaceSpeedModifier + 0.01
-                    end
 
                 end
 
@@ -420,12 +435,12 @@ function Update()
                 movement.z = movement.z + viewVec.x * mul;
 
                 -- gun "moves leftwards" when player moves right
-                if(gunTranslate.x < gunThreshHold_max_x) then 
-                    gunTranslate.x = gunTranslate.x + gunDisplaceSpeed
+                if(gunTranslate.x > gunThreshHold_min_x) then 
+                    gunTranslate.x = gunTranslate.x - gunDisplaceSpeed
 
-                    if(gunDisplaceSpeedModifier < gunDisplaceSpeedFactorLimit) then 
-                        gunDisplaceSpeedModifier = gunDisplaceSpeedModifier + 0.01
-                    end
+                    -- if(gunDisplaceSpeedModifier < gunDisplaceSpeedFactorLimit) then 
+                    --     gunDisplaceSpeedModifier = gunDisplaceSpeedModifier + 0.01
+                    -- end
                 end
 
                 gunState = "MOVING"
@@ -434,6 +449,7 @@ function Update()
             if (floorCount > 0) then
                 if (inputMapSys:GetButtonDown("Jump")) then
                     movement.y = movement.y + 50.0;
+                    gunState = "JUMP"
                     jumpAudioComp:SetPlay(0.4)
                 end
             end
@@ -563,3 +579,4 @@ function dashEffectEnd()
     -- graphicsSys.mSamplingWeight = d_sampleWeight+ (e_sampleWeight -d_sampleWeight)*t
     -- Camera_Scripting.SetFov(cameraEntity,d_fov+ (d_fov-e_fov)*t)
 end
+
