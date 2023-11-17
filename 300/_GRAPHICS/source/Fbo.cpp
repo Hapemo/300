@@ -70,7 +70,23 @@ void GFX::FBO::Create(int width, int height, bool editorMode)
 
 void GFX::FBO::PrepForDraw()
 {
-	// bind framebuffer as buffer to render to
+	Clear();
+
+	glBindFramebuffer(GL_FRAMEBUFFER, mID);
+
+	// Set all attachments for output
+	GLuint allAttachments[3] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2 };
+	glDrawBuffers(3, allAttachments);
+
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LEQUAL);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+}
+
+void GFX::FBO::Clear()
+{
+	// bind framebuffer as buffer to clear
 	glBindFramebuffer(GL_FRAMEBUFFER, mID);
 
 	// Clear Default color attachment
@@ -83,22 +99,14 @@ void GFX::FBO::PrepForDraw()
 	glClearColor(0.f, 0.f, 0.f, 0.f);
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	if (mEditorMode)	// Need to render to both color attachments and Entity ID attachment
+	if (mEditorMode)
 	{
 		// Clear Entity ID buffer
 		glDrawBuffer(GL_COLOR_ATTACHMENT1);
 		glClearColor(0.f, 0.f, 0.f, 0.f);
 		glClear(GL_COLOR_BUFFER_BIT);
 	}
-
-	// Set all attachments for output
-	GLuint allAttachments[3] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2 };
-	glDrawBuffers(3, allAttachments);
-
-	glEnable(GL_DEPTH_TEST);
-	glDepthFunc(GL_LEQUAL);
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
 void GFX::FBO::DrawBuffers(bool color, bool entityID, bool bright)
@@ -130,8 +138,8 @@ unsigned int GFX::FBO::ReadEntityID(float posX, float posY)
 	unsigned eid{};
 	glReadPixels(mapped_x, mapped_y, 1, 1, GL_RED_INTEGER, GL_UNSIGNED_INT, &eid);	// Retrieve pixel data
 
+	glReadBuffer(GL_NONE);
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);		// Unbind FBO
-
 	return eid;
 }
 
@@ -267,7 +275,7 @@ void GFX::PingPongFBO::GaussianBlurShader(GFX::Shader& blurShader, GFX::FBO& sou
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	m_Quad.Unbind();
-	blurShader.Deactivate();
+	GFX::Shader::Deactivate();
 }
 
 

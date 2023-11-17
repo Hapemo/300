@@ -1,0 +1,7 @@
+[
+    {
+        "ShaderProgram": "gBufferShader",
+        "Vertex": "../assets/shader_files/gBuffer_vert.glsl",
+        "Fragment": "../assets/shader_files/gBuffer_frag.glsl"
+    }
+]

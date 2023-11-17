@@ -9,7 +9,7 @@ local back = Vec3.new()
 local left = Vec3.new()
 local right = Vec3.new()
 local centerscreen = Vec2.new()
-local mul = 20.0
+local mul = 10.0
 local floorCount = 0
 local dashTime = 0.0
 local isDashing = false;
@@ -292,8 +292,8 @@ function Update()
           
             e_dashEffect = false
         end
-        movement.x = movement.x + (viewVec.x * 300.0)
-        movement.z = movement.z + (viewVec.z * 300.0);
+        movement.x = movement.x + (viewVec.x * 50.0)
+        movement.z = movement.z + (viewVec.z * 50.0);
     
         if (dashTime >= 0.1) then
 

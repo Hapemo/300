@@ -1,0 +1,100 @@
+{
+    "entityid": 12,
+    "general": {
+        "name": "Camera",
+        "tagid": 0,
+        "subtag": 0,
+        "isActive": true,
+        "isPaused": false
+    },
+    "transform": {
+        "scale": {
+            "x": 19.999286651611328,
+            "y": 20.0,
+            "z": 20.0
+        },
+        "rotate": {
+            "x": -530.9000244140625,
+            "y": -89.0,
+            "z": 0.0
+        },
+        "translate": {
+            "x": 22.00884437561035,
+            "y": 6.49271821975708,
+            "z": 163.95440673828125
+        }
+    },
+    "rigidbody": {
+        "density": 10.0,
+        "material": 1,
+        "motion": 1,
+        "velocity": {
+            "x": -0.28633570671081543,
+            "y": -0.07841050624847412,
+            "z": 2.3007140159606934
+        },
+        "rotationconstraints": {
+            "x": true,
+            "y": true,
+            "z": true
+        },
+        "gravity": true
+    },
+    "spherecollider": {
+        "scaleoffset": 4.099999904632568,
+        "translateoffset": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "istrigger": true
+    },
+    "capsulecollider": {
+        "translateoffset": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "radius": 2.0,
+        "halfheight": 2.0,
+        "istrigger": false
+    },
+    "scripts": {
+        "scriptscontainer": [
+            {
+                "scriptFile": "../assets/Scripts/Player.lua",
+                "variables": []
+            }
+        ]
+    },
+    "audio": {
+        "filepath": "",
+        "filename": "",
+        "fullpath": "",
+        "playonawake": false,
+        "islooping": false,
+        "audiotype": 1,
+        "volume": 1.0
+    },
+    "camera": {
+        "positon": {
+            "x": 22.00884437561035,
+            "y": 6.49271821975708,
+            "z": 163.95440673828125
+        },
+        "target": {
+            "x": 21.99161148071289,
+            "y": 7.492566108703613,
+            "z": 163.95164489746094
+        },
+        "size": {
+            "x": 1318,
+            "y": 524
+        },
+        "near": 0.10000000149011612,
+        "far": 900.0
+    },
+    "prefab": {
+        "prefab": "Camera"
+    }
+}

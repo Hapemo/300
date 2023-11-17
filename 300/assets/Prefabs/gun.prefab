@@ -1,0 +1,56 @@
+{
+    "entityid": 32,
+    "general": {
+        "name": "gun",
+        "tagid": 0,
+        "subtag": 0,
+        "isActive": true,
+        "isPaused": false
+    },
+    "transform": {
+        "scale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 0.25
+        },
+        "rotate": {
+            "x": 0.0,
+            "y": -75.0,
+            "z": 0.0
+        },
+        "translate": {
+            "x": 0.5,
+            "y": -0.6499999761581421,
+            "z": -0.7540000081062317
+        }
+    },
+    "meshrenderer": {
+        "vert": "../assets/shader_files/pointLight_vert.glsl",
+        "frag": "../assets/shader_files/pointLight_frag.glsl",
+        "meshrefid": 2168,
+        "instancecolor": {
+            "x": 0.0569700188934803,
+            "y": 0.22790546715259552,
+            "z": 0.7076271176338196,
+            "w": 1.0
+        },
+        "materialinstance": [
+            "../assets/Compressed/Gun_Base_Color.ctexture",
+            "../assets/Compressed/Gun_Normal.ctexture",
+            "../assets/Compressed/Gun_Metallic.ctexture",
+            "../assets/Compressed/Gun_Roughness.ctexture",
+            " "
+        ],
+        "mesh": "../assets/compiled_geom/Gun.geom",
+        "texturerefid": [
+            4245,
+            3877,
+            4071,
+            4218,
+            0
+        ]
+    },
+    "prefab": {
+        "prefab": "gun"
+    }
+}

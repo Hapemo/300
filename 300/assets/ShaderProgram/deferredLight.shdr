@@ -1,0 +1,7 @@
+[
+    {
+        "ShaderProgram": "deferredLightShader",
+        "Vertex": "../assets/shader_files/drawScene_vert.glsl",
+        "Fragment": "../assets/shader_files/deferredLight_frag.glsl"
+    }
+]

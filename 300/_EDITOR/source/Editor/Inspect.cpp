@@ -1487,6 +1487,8 @@ void UIrenderer::Inspect() {
 			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
 		ImGui::DragFloat("##Degree", (float*)&mDegree);
 		ImGui::Separator();
+
+		ImGui::ColorPicker4("Color", (float*)&mColor);
 	}
 }
 
