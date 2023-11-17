@@ -66,13 +66,9 @@ local original_translate_y
 local original_translate_z
 local original_translation = Vec3.new()
 
-local gunState 
 local gunJumpTimer = 0
-local gunDisplacement = Vec3.new()
 local gunDisplaceBackSpeed = 0.015
 local gunDisplaceSpeed = 0.015
-local gunDisplaceSpeedModifier = 0.0
-local gunDisplaceSpeedFactorLimit = 3
 local gunMaxAcceleration = 100
 
 local gunThreshHold_max_y = -0.15
@@ -83,6 +79,9 @@ local gunThreshHold_max_x = 0.9
 
 local recoil_factor = 0.5
 
+-- gun states
+local gunState 
+local gunEquipped = "BASIC" -- rename this to whatever
 
 -- end gun
 
@@ -321,7 +320,12 @@ function Update()
                 t = t +tinc 
             end
         end
-
+-- Toggle Weapons
+       if(inputMapSys:GetButtonDown("Weapon2")) then 
+            print("Swapping to shotgun")
+            gunEquipped = "SHOTGUN"
+       end
+-- end of Toggle Weapons
         
 
         if (inputMapSys:GetButtonDown("Dash")) then
@@ -331,7 +335,7 @@ function Update()
              
             end
         else
-
+-- Gun Script
             -- 'y' : vertical-axis
             if (gunState == "IDLE") then
                 local displacement_x = gunTranslate.x - original_translation.x 
@@ -464,13 +468,7 @@ function Update()
                 end
             end
         end
-
-        -- if (fadeOutTimer < fadeOutDuration) then 
-        --     local volume = audioComp.mVolume - (fadeOutTimer / fadeOutDuration)
-        --     walkingAudioSource:SetVolume(volume)
-        --     fadeOutTimer = fadeOutTimer + dt
-        --     print("FADE OUT TIMER: ", fadeOutTimer)
-        -- end
+-- end of gun script 
     end
 
     physicsSys:SetVelocity(cameraEntity, movement)
@@ -488,18 +486,26 @@ function Update()
 
     if(inputMapSys:GetButtonDown("Shoot")) then
         
-        positions_final.x = positions.x + viewVecCam.x*5
-        positions_final.y = positions.y + viewVecCam.y*5
-        positions_final.z = positions.z + viewVecCam.z*5  
+        if(gunEquipped == "BASIC") then 
+            positions_final.x = positions.x + viewVecCam.x*5
+            positions_final.y = positions.y + viewVecCam.y*5
+            positions_final.z = positions.z + viewVecCam.z*5  
 
-        prefabEntity = systemManager.ecs:NewEntityFromPrefab("bullet", positions_final)
-        rotationCam.x = rotationCam.z *360
-        rotationCam.y = rotationCam.x *0
-        rotationCam.z = rotationCam.z *0
-        prefabEntity:GetTransform().mRotate = rotationCam    
-        viewVecCam.x = viewVecCam.x*100
-        viewVecCam.y=viewVecCam.y *100
-        viewVecCam.z=viewVecCam.z *100
+            prefabEntity = systemManager.ecs:NewEntityFromPrefab("bullet", positions_final)
+            rotationCam.x = rotationCam.z *360
+            rotationCam.y = rotationCam.x *0
+            rotationCam.z = rotationCam.z *0
+            prefabEntity:GetTransform().mRotate = rotationCam    
+            viewVecCam.x = viewVecCam.x*100
+            viewVecCam.y=viewVecCam.y *100
+            viewVecCam.z=viewVecCam.z *100
+
+            physicsSys:SetVelocity(prefabEntity, viewVecCam)
+        end
+
+        if(gunEquipped == "SHOTGUN") then 
+            shotgun()
+        end
 
         -- if(gunTranslate.z == original_translate_z) then
         --     gunTranslate.z = gunTranslate.z + recoil_factor -- recoil
@@ -516,7 +522,7 @@ function Update()
 
         bulletAudioComp:SetPlay(0.1)
 
-        physicsSys:SetVelocity(prefabEntity, viewVecCam)
+ 
     end
 
 --endregion
@@ -602,4 +608,24 @@ function dashEffectEnd()
     -- graphicsSys.mSamplingWeight = d_sampleWeight+ (e_sampleWeight -d_sampleWeight)*t
     -- Camera_Scripting.SetFov(cameraEntity,d_fov+ (d_fov-e_fov)*t)
 end
+
+function shotgun()
+    print("SHOOTING SHOTGUN : 3 pellets")
+    positions_final.x = positions.x + viewVecCam.x*5
+    positions_final.y = positions.y + viewVecCam.y*5
+    positions_final.z = positions.z + viewVecCam.z*5  
+
+    prefabEntity1 = systemManager.ecs:NewEntityFromPrefab("bullet", positions_final)
+    prefabEntity2 = systemManager.ecs:NewEntityFromPrefab("bullet", positions_final)
+
+    rotationCam.x = rotationCam.z *360
+    rotationCam.y = rotationCam.x *0
+    rotationCam.z = rotationCam.z *0
+    prefabEntity:GetTransform().mRotate = rotationCam    
+    viewVecCam.x = viewVecCam.x*100
+    viewVecCam.y=viewVecCam.y *100
+    viewVecCam.z=viewVecCam.z *100
+
+    physicsSys:SetVelocity(prefabEntity, viewVecCam)
+end 
 

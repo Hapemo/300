@@ -1,104 +1,6 @@
 [
     {
-        "entityid": 3145731,
-        "general": {
-            "name": "Light",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": -26.750856399536133,
-                "z": 17.29239845275879
-            }
-        },
-        "pointlight": {
-            "lightcolor": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "linearfalloff": 0.0,
-            "quadraticfalloff": 0.0,
-            "intensity": 0.5
-        }
-    },
-    {
-        "entityid": 3145732,
-        "general": {
-            "name": "River",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 10.0,
-                "y": 13.599743843078613,
-                "z": 10.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": -117.5999984741211,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -4.062328815460205,
-                "y": -5.014279842376709,
-                "z": -20.844581604003906
-            }
-        },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 2863,
-            "instancecolor": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "bloomthreshold": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0,
-                "w": 1.0
-            },
-            "materialinstance": [
-                "../assets/Compressed/Environment_Data_River_BaseColor.ctexture",
-                "../assets/Compressed/Environment_Data_River_Normal.ctexture",
-                "../assets/Compressed/Environment_Data_River_Roughness.ctexture",
-                "../assets/Compressed/Environment_Data_River_Roughness.ctexture",
-                "../assets/Compressed/Environment_Data_River_BaseColor.ctexture",
-                "../assets/Compressed/Environment_Data_River_AO.ctexture"
-            ],
-            "mesh": "../assets/compiled_geom/Data_River.geom",
-            "texturerefid": [
-                6113,
-                5840,
-                6181,
-                6181,
-                6113,
-                5367
-            ]
-        }
-    },
-    {
-        "entityid": 3145733,
+        "entityid": 22020119,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -160,7 +62,7 @@
         }
     },
     {
-        "entityid": 3145734,
+        "entityid": 22020120,
         "general": {
             "name": "Dash",
             "tagid": 0,
@@ -196,7 +98,68 @@
         }
     },
     {
-        "entityid": 3145735,
+        "entityid": 22020121,
+        "general": {
+            "name": "Skybox",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 500.0,
+                "y": 500.0,
+                "z": 500.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 6.885263442993164,
+                "z": 13.399999618530273
+            }
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 2510,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Environment_Skybox_BaseColor.ctexture",
+                "../assets/Compressed/Environment_Skybox_Normal.ctexture",
+                "../assets/Compressed/Environment_Skybox_BaseColor.ctexture",
+                "../assets/Compressed/Environment_Skybox_Roughness.ctexture",
+                "../assets/Compressed/Environment_Skybox_BaseColor.ctexture",
+                "../assets/Compressed/Environment_Skybox_AO.ctexture"
+            ],
+            "mesh": "../assets/compiled_geom/Skybox.geom",
+            "texturerefid": [
+                5760,
+                5487,
+                5760,
+                5828,
+                5760,
+                5014
+            ]
+        }
+    },
+    {
+        "entityid": 22020122,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -266,7 +229,7 @@
         },
         "children": {
             "numchildren": 1,
-            "firstchild": 3145776
+            "firstchild": 41943042
         },
         "audio": {
             "filepath": "",
@@ -297,7 +260,44 @@
         }
     },
     {
-        "entityid": 3145736,
+        "entityid": 22020123,
+        "general": {
+            "name": "Light",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": -26.750856399536133,
+                "z": 17.29239845275879
+            }
+        },
+        "pointlight": {
+            "lightcolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "linearfalloff": 0.0,
+            "quadraticfalloff": 0.0,
+            "intensity": 0.5
+        }
+    },
+    {
+        "entityid": 22020124,
         "general": {
             "name": "Jump",
             "tagid": 0,
@@ -333,7 +333,7 @@
         }
     },
     {
-        "entityid": 3145737,
+        "entityid": 22020125,
         "general": {
             "name": "Light",
             "tagid": 0,
@@ -370,7 +370,7 @@
         }
     },
     {
-        "entityid": 3145738,
+        "entityid": 22020126,
         "general": {
             "name": "Bullet Shoot",
             "tagid": 0,
@@ -406,7 +406,7 @@
         }
     },
     {
-        "entityid": 3145739,
+        "entityid": 22020127,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -468,7 +468,7 @@
         }
     },
     {
-        "entityid": 3145740,
+        "entityid": 22020128,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -530,7 +530,7 @@
         }
     },
     {
-        "entityid": 3145741,
+        "entityid": 22020129,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -592,7 +592,7 @@
         }
     },
     {
-        "entityid": 3145742,
+        "entityid": 22020130,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -654,7 +654,7 @@
         }
     },
     {
-        "entityid": 3145743,
+        "entityid": 22020131,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -716,7 +716,7 @@
         }
     },
     {
-        "entityid": 3145744,
+        "entityid": 22020132,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -778,7 +778,7 @@
         }
     },
     {
-        "entityid": 3145745,
+        "entityid": 22020133,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -840,7 +840,7 @@
         }
     },
     {
-        "entityid": 3145746,
+        "entityid": 22020134,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -902,7 +902,7 @@
         }
     },
     {
-        "entityid": 3145747,
+        "entityid": 22020135,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -964,7 +964,7 @@
         }
     },
     {
-        "entityid": 3145748,
+        "entityid": 22020136,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -1026,7 +1026,7 @@
         }
     },
     {
-        "entityid": 3145749,
+        "entityid": 22020137,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -1088,7 +1088,7 @@
         }
     },
     {
-        "entityid": 3145750,
+        "entityid": 22020138,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -1150,7 +1150,7 @@
         }
     },
     {
-        "entityid": 3145751,
+        "entityid": 22020139,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -1212,7 +1212,7 @@
         }
     },
     {
-        "entityid": 3145752,
+        "entityid": 22020140,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -1274,7 +1274,7 @@
         }
     },
     {
-        "entityid": 3145753,
+        "entityid": 22020141,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -1336,7 +1336,7 @@
         }
     },
     {
-        "entityid": 3145754,
+        "entityid": 22020142,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -1398,7 +1398,7 @@
         }
     },
     {
-        "entityid": 3145755,
+        "entityid": 22020143,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -1460,7 +1460,7 @@
         }
     },
     {
-        "entityid": 3145756,
+        "entityid": 22020144,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -1522,7 +1522,7 @@
         }
     },
     {
-        "entityid": 3145757,
+        "entityid": 22020147,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -1584,7 +1584,7 @@
         }
     },
     {
-        "entityid": 3145758,
+        "entityid": 22020158,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -1646,7 +1646,7 @@
         }
     },
     {
-        "entityid": 3145759,
+        "entityid": 23068678,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -1708,7 +1708,7 @@
         }
     },
     {
-        "entityid": 3145760,
+        "entityid": 23068686,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -1770,7 +1770,7 @@
         }
     },
     {
-        "entityid": 3145761,
+        "entityid": 23068724,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -1832,7 +1832,7 @@
         }
     },
     {
-        "entityid": 3145762,
+        "entityid": 24117266,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -1894,7 +1894,7 @@
         }
     },
     {
-        "entityid": 3145763,
+        "entityid": 25165840,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -1956,7 +1956,7 @@
         }
     },
     {
-        "entityid": 3145764,
+        "entityid": 25165843,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -2018,7 +2018,7 @@
         }
     },
     {
-        "entityid": 3145765,
+        "entityid": 26214409,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -2077,7 +2077,7 @@
         }
     },
     {
-        "entityid": 3145766,
+        "entityid": 27262988,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -2139,7 +2139,7 @@
         }
     },
     {
-        "entityid": 3145767,
+        "entityid": 27263026,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -2201,7 +2201,7 @@
         }
     },
     {
-        "entityid": 3145768,
+        "entityid": 29360145,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -2263,7 +2263,7 @@
         }
     },
     {
-        "entityid": 3145769,
+        "entityid": 30408711,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -2325,7 +2325,7 @@
         }
     },
     {
-        "entityid": 3145770,
+        "entityid": 30408715,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -2387,7 +2387,7 @@
         }
     },
     {
-        "entityid": 3145771,
+        "entityid": 31457285,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -2449,7 +2449,7 @@
         }
     },
     {
-        "entityid": 3145772,
+        "entityid": 32505859,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -2511,7 +2511,7 @@
         }
     },
     {
-        "entityid": 3145773,
+        "entityid": 32505860,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -2573,7 +2573,7 @@
         }
     },
     {
-        "entityid": 3145774,
+        "entityid": 32505871,
         "general": {
             "name": "WallTexture",
             "tagid": 0,
@@ -2634,7 +2634,7 @@
         }
     },
     {
-        "entityid": 3145775,
+        "entityid": 33554440,
         "general": {
             "name": "FloorTexture",
             "tagid": 0,
@@ -2695,134 +2695,7 @@
         }
     },
     {
-        "entityid": 3145776,
-        "general": {
-            "name": "gun",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 0.25
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": -75.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.5,
-                "y": -0.6499999761581421,
-                "z": -0.7540000081062317
-            }
-        },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 2168,
-            "instancecolor": {
-                "x": 0.0569700188934803,
-                "y": 0.22790546715259552,
-                "z": 0.7076271176338196,
-                "w": 1.0
-            },
-            "bloomthreshold": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "materialinstance": [
-                "../assets/Compressed/Gun_Base_Color.ctexture",
-                "../assets/Compressed/Gun_Normal.ctexture",
-                "../assets/Compressed/Gun_Metallic.ctexture",
-                "../assets/Compressed/Gun_Roughness.ctexture",
-                " ",
-                " "
-            ],
-            "mesh": "../assets/compiled_geom/Gun.geom",
-            "texturerefid": [
-                4245,
-                3877,
-                4071,
-                4218,
-                0,
-                0
-            ]
-        },
-        "parent": {
-            "prevsibling": 3145776,
-            "nextsibling": 3145776,
-            "parent": 3145735
-        }
-    },
-    {
-        "entityid": 4194353,
-        "general": {
-            "name": "Skybox",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 500.0,
-                "y": 500.0,
-                "z": 500.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 6.885263442993164,
-                "z": 13.399999618530273
-            }
-        },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 2510,
-            "instancecolor": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "bloomthreshold": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "materialinstance": [
-                "../assets/Compressed/Environment_Skybox_BaseColor.ctexture",
-                "../assets/Compressed/Environment_Skybox_Normal.ctexture",
-                "../assets/Compressed/Environment_Skybox_BaseColor.ctexture",
-                "../assets/Compressed/Environment_Skybox_Roughness.ctexture",
-                "../assets/Compressed/Environment_Skybox_BaseColor.ctexture",
-                "../assets/Compressed/Environment_Skybox_AO.ctexture"
-            ],
-            "mesh": "../assets/compiled_geom/Skybox.geom",
-            "texturerefid": [
-                5760,
-                5487,
-                5760,
-                5828,
-                5760,
-                5014
-            ]
-        }
-    },
-    {
-        "entityid": 4194354,
+        "entityid": 36700209,
         "general": {
             "name": "Buildings",
             "tagid": 0,
@@ -2880,6 +2753,133 @@
                 5881,
                 5188
             ]
+        }
+    },
+    {
+        "entityid": 37748737,
+        "general": {
+            "name": "River",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 10.0,
+                "y": 13.599743843078613,
+                "z": 10.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": -117.5999984741211,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -4.062328815460205,
+                "y": -5.014279842376709,
+                "z": -20.844581604003906
+            }
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 2863,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Environment_Data_River_BaseColor.ctexture",
+                "../assets/Compressed/Environment_Data_River_Normal.ctexture",
+                "../assets/Compressed/Environment_Data_River_Roughness.ctexture",
+                "../assets/Compressed/Environment_Data_River_Roughness.ctexture",
+                "../assets/Compressed/Environment_Data_River_BaseColor.ctexture",
+                "../assets/Compressed/Environment_Data_River_AO.ctexture"
+            ],
+            "mesh": "../assets/compiled_geom/Data_River.geom",
+            "texturerefid": [
+                6113,
+                5840,
+                6181,
+                6181,
+                6113,
+                5367
+            ]
+        }
+    },
+    {
+        "entityid": 41943042,
+        "general": {
+            "name": "gun",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 0.25
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": -75.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.5,
+                "y": -0.6499999761581421,
+                "z": -0.9539999961853027
+            }
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 2168,
+            "instancecolor": {
+                "x": 0.0569700188934803,
+                "y": 0.22790546715259552,
+                "z": 0.7076271176338196,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Gun_Base_Color.ctexture",
+                "../assets/Compressed/Gun_Normal.ctexture",
+                "../assets/Compressed/Gun_Metallic.ctexture",
+                "../assets/Compressed/Gun_Roughness.ctexture",
+                " ",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/Gun.geom",
+            "texturerefid": [
+                4245,
+                3877,
+                4071,
+                4218,
+                0,
+                0
+            ]
+        },
+        "parent": {
+            "prevsibling": 41943042,
+            "nextsibling": 41943042,
+            "parent": 22020122
         }
     }
 ]
