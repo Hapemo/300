@@ -21,7 +21,7 @@ local entity2
 
 function Alive()
     gameStateSys = systemManager:mGameStateSystem()
-    deathEntity =  gameStateSys:GetEntity("Death" , "testSerialization")
+    deathEntity =  gameStateSys:GetEntity("Death")
     deathAudioComp = deathEntity:GetAudio()
 
     entity = Helper.GetScriptEntity(script_entity.id)
@@ -45,7 +45,7 @@ function Update()
 
     -- Get Entity exisiting in scene by name example
     --gameStateSys = systemManager:mGameStateSystem();
-    --floorEntity = gameStateSys:GetEntity("Floor", "Test1")
+    --floorEntity = gameStateSys:GetEntity("Floor")
 
     --AI TEST--
 

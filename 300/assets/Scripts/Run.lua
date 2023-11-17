@@ -18,7 +18,7 @@ function Update()
     --For M1 demo
     --entity = Entity.new(script_entity.id)
     entity = Helper.GetScriptEntity(script_entity.id)
-    cameraEntity = gameStateSys:GetEntity("Camera" , "testSerialization")
+    cameraEntity = gameStateSys:GetEntity("Camera")
     if entity == nil then
         print("Entity nil in script!")
     end
