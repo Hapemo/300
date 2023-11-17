@@ -1,5 +1,5 @@
 {
-    "entityid": 8,
+    "entityid": 1048577,
     "general": {
         "name": "GraphPoint",
         "tagid": 7,
@@ -20,7 +20,7 @@
         },
         "translate": {
             "x": 0.0,
-            "y": 13.152587890625,
+            "y": 0.0,
             "z": 0.0
         }
     },
@@ -42,7 +42,7 @@
         },
         "materialinstance": [
             "../assets/Compressed/Cube_Texture_2.ctexture",
-            " ",
+            "../assets/Compressed/cube_emission.ctexture",
             " ",
             " ",
             " ",
@@ -51,12 +51,15 @@
         "mesh": "../assets/compiled_geom/cube.geom",
         "texturerefid": [
             4243,
-            0,
+            4248,
             0,
             0,
             0,
             0
         ]
+    },
+    "scripts": {
+        "scriptscontainer": []
     },
     "prefab": {
         "prefab": "GraphPoint"

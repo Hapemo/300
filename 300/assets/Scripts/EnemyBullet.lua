@@ -3,6 +3,7 @@ local phySys
 local this
 
 local startingVec
+local lifeTime -- in seconds
 
 function Alive()
     this = Helper.GetScriptEntity(script_entity.id)
@@ -10,17 +11,22 @@ function Alive()
     phySys = systemManager:mPhysicsSystem();
 
     startingVec = Vec3.new()
+    lifeTime = 5
 end
 
 function Update()
+    -- Set bullet's velocity to consistently be some speed
     if (Helper.Vec3Len(startingVec) == 0) then
-        -- print("len is 0")
         startingVec = this:GetRigidBody().mVelocity
     else
-        -- print("len is NOT 0")
         phySys:SetVelocity(this, startingVec)
     end
-    -- print(Helper.Vec3Len(startingVec))
+
+    -- Bullet despawn countdown
+    lifeTime = lifeTime - FPSManager.GetDT()
+    if lifeTime < 0 then 
+        systemManager.ecs:SetDeleteEntity(this)
+    end
 end
 
 function Dead()
@@ -29,9 +35,12 @@ end
 
 function OnTriggerEnter(Entity)
     local tagid = Entity:GetGeneral().tagid
-    if (tagid == 0) then --player id
-        -- TODO, Decrease player health here, when player got hit by bomb
-        print("player hit by enemy bullet!")
+    if (tagid == 0 and tagid == 3 and tagid == 4 and tagid == 5) then --Things the bullet can hit - "PLAYER", "FLOOR", "WALL", "TELEPORTER"
+        BulletHit()
+        if (tagid == 0) then 
+            -- TODO, Decrease player health here, when player got hit by bomb
+            print("player hit by enemy bullet!")
+        end
     end
 end
 
@@ -51,7 +60,7 @@ function OnContactExit(Entity)
 
 end
 
-function BulletDespawn()
+function BulletHit()
 
     -- Might want bullet to explode some particles out
     -- and bullet hit sound

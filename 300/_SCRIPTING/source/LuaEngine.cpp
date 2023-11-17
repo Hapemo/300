@@ -379,7 +379,8 @@ void LuaAIManager()
         "SetPredictiveVelocity", &AIManager::SetPredictiveVelocity,
         "PredictiveShootPlayer", &AIManager::PredictiveShootPlayer,
         "GetDirection", &AIManager::GetDirection,
-        "ConeOfSight", &AIManager::ConeOfSight
+        "ConeOfSight", &AIManager::ConeOfSight,
+        "LineOfSight", &AIManager::LineOfSight
         );
 }
 

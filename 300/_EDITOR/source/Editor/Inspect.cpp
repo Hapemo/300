@@ -1541,6 +1541,9 @@ void AISetting::Inspect() {
 		if (ImGui::Button("Update Target"))
 			mTarget = systemManager->mGameStateSystem->GetEntity(mTargetName);
 
+		if (ImGui::Button("Make Target The Global Player"))
+			systemManager->GetAIManager()->SetPlayer(mTarget);
+
 		if (mTargetName.size())
 			ImGui::InputText("Pathfinder Name", &mGraphDataName);
 		else

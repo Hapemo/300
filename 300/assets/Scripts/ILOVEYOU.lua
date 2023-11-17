@@ -15,6 +15,8 @@ local AttackSpeed
 local AttackTimer
 local ShotSpeed
 
+local inLineOfSight
+
 function Alive()
     this = Helper.GetScriptEntity(script_entity.id)
     if this == nil then
@@ -36,6 +38,7 @@ function Update()
 
     targetPos = this:GetAISetting():GetTarget():GetTransform().mTranslate
     thisPos = this:GetTransform().mTranslate
+    inLineOfSight = aiSys:LineOfSight(this, this:GetAISetting():GetTarget())
 
     ILOVEYOUMovement()
 
@@ -81,13 +84,15 @@ function ILOVEYOUMovement()
     vec.y = vec.y + math.cos(bobbleAngle/180*math.pi) * bobbleIntensity
     --
 
-    -- If horizontal length is reached, don't move horizontally
-    local x = targetPos.x - thisPos.x
-    local z = targetPos.z - thisPos.z
-    local distDiff = Helper.Vec2Len(x,z) - this:GetAISetting().mStayAway
-    if -10 < distDiff and distDiff < 10 then
-        vec.x = 0
-        vec.z = 0
+    if inLineOfSight then
+        -- If horizontal length is reached, don't move horizontally
+        local x = targetPos.x - thisPos.x
+        local z = targetPos.z - thisPos.z
+        local distDiff = Helper.Vec2Len(x,z) - this:GetAISetting().mStayAway
+        if -10 < distDiff and distDiff < 10 then
+            vec.x = 0
+            vec.z = 0
+        end
     end
     --
     phySys:SetVelocity(this, vec);
@@ -96,6 +101,7 @@ end
 
 
 function ILOVEYOUAttack()
+    if not inLineOfSight then return end -- No line of sight, don't attack
     AttackTimer = AttackTimer + FPSManager.GetDT()
     if AttackTimer > AttackSpeed then
         Shoot()
@@ -105,10 +111,10 @@ end
 
 function Shoot()
     local bullet = systemManager.ecs:NewEntityFromPrefab("EnemyBullet", thisPos)
-    local bulletVec = Helper.Scale(Helper.Normalize(Helper.Vec3Minus(targetPos, thisPos)), ShotSpeed)
-    print(bulletVec.x, " | " , bulletVec.y, " | ", bulletVec.z)
-    phySys:SetVelocity(bullet, bulletVec)
-    print(bullet:GetRigidBody().mVelocity)
+    -- local bulletVec = Helper.Scale(Helper.Normalize(Helper.Vec3Minus(targetPos, thisPos)), ShotSpeed)
+    -- phySys:SetVelocity(bullet, bulletVec)
+    -- aiSys:SetPredictiveVelocity(bullet, this:GetAISetting():GetTarget(), ShotSpeed)
+    aiSys:PredictiveShootPlayer(bullet, ShotSpeed, 30, 50)
 end
 
 

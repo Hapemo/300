@@ -8,6 +8,8 @@
 
 #define Rubberbanding 1
 
+#define IGNORETAGS { "ENEMY", "GRAPH", "BULLET", "UI", "OTHERS" }
+
 const std::array<std::string, static_cast<size_t>(E_MOVEMENT_TYPE::SIZE)> AIManager::mMovementTypeArray{ MovementTypeArrayInit() };
 
 E_MOVEMENT_TYPE& operator++(E_MOVEMENT_TYPE& _enum) {
@@ -33,22 +35,16 @@ void AIManager::Update(float _dt) {
 glm::vec3 AIManager::GetDirection(Entity _e) {
 	glm::vec3 dir{};
 	AISetting const& aiSetting = _e.GetComponent<AISetting>();
-	switch (aiSetting.mMovementType) {
-	case E_MOVEMENT_TYPE::GROUND_DIRECT:
-		if (aiSetting.mGraphDataName.size()) {
-			std::vector<glm::vec3> astarPath = systemManager->GetPathfinderManager()->AStarPath(_e, aiSetting.GetTarget(), { 40.f, {"ENEMY", "GRAPH"}});
 
-			if (astarPath.size()) dir = astarPath[1] - astarPath[0];
-			else {
-				PINFO("%s unable to find path with pathfinding", _e.GetComponent<General>().name);
-				dir = glm::vec3();
-			}
-		} else {
-			dir = CalcGroundAIDir(_e);
+	if (CheckUseAStar(_e, aiSetting)) {
+		dir = GetAStarDir(_e, aiSetting);
+	} else {
+		switch (aiSetting.mMovementType) {
+		case E_MOVEMENT_TYPE::GROUND_DIRECT: dir = CalcGroundAIDir(_e);
+			break;
+		case E_MOVEMENT_TYPE::AIR_HOVER: dir = CalcAirAIDir(_e);
+			break;
 		}
-		break;
-	case E_MOVEMENT_TYPE::AIR_HOVER: dir = CalcAirAIDir(_e);
-		break;
 	}
 
 	// Advance movement settings
@@ -74,9 +70,13 @@ bool AIManager::ConeOfSight(Entity _eye, Entity _tgt, float _horizontalAngle, fl
 	if (angle > _horizontalAngle) return false;
 
 	// Checks if source can raycast to target TODO
-	if (systemManager->GetPathfinderManager()->CheckEntitiesInbetween(eyeTrans.mTranslate, tgtTrans.mTranslate, { _eye, _tgt }, {})) return false;
+	if (systemManager->GetPathfinderManager()->CheckEntitiesInbetween(eyeTrans.mTranslate, tgtTrans.mTranslate, { _eye, _tgt }, IGNORETAGS)) return false;
 
 	return true;
+}
+
+bool AIManager::LineOfSight(Entity _eye, Entity _tgt) {
+	return !systemManager->GetPathfinderManager()->CheckEntitiesInbetween(_eye.GetComponent<Transform>().mTranslate, _tgt.GetComponent<Transform>().mTranslate, { _eye, _tgt }, IGNORETAGS);
 }
 
 void AIManager::TrackPlayerPosition(float _dt) {
@@ -176,7 +176,7 @@ void AIManager::PredictiveShootPlayer(Entity projectile, float speed, int decise
 		accumulatedVector += difference;
 
 		currPos = prevPos;
-		if (--prevPosIndex == 0) prevPosIndex = MAX_DECISECOND_PLAYER_HISTORY - 1;
+		if (--prevPosIndex <= 0) prevPosIndex = MAX_DECISECOND_PLAYER_HISTORY - 1;
 	}
 	accumulatedVector /= i;
 
@@ -260,6 +260,25 @@ glm::vec3 AIManager::CalcAirAIDir(Entity _e) {
 
 	if (glm::length(accumDir) != 0) accumDir = glm::normalize(accumDir);
 	return accumDir;
+}
+
+glm::vec3 AIManager::GetAStarDir(Entity _e, AISetting const& _setting) {
+	std::vector<glm::vec3> astarPath = systemManager->GetPathfinderManager()->AStarPath(_e, _setting.GetTarget(), { 40.f, IGNORETAGS });
+
+	if (astarPath.size()) 
+		return glm::normalize(astarPath[1] - astarPath[0]);
+	else {
+		PINFO("%s unable to find path with pathfinding", _e.GetComponent<General>().name);
+		return glm::vec3();
+	}
+}
+
+bool AIManager::CheckUseAStar(Entity _e, AISetting const& _setting) {
+	if (!_setting.mGraphDataName.size()) return false;
+
+	// Check initial line of sight
+	return systemManager->GetPathfinderManager()->CheckEntitiesInbetween(_e.GetComponent<Transform>().mTranslate, _setting.GetTarget().GetComponent<Transform>().mTranslate, 
+																																			{_e, _setting.GetTarget()}, IGNORETAGS);
 }
 
 void AIManager::SpreadOut(Entity _e, glm::vec3& dir) {
