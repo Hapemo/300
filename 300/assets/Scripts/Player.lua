@@ -361,7 +361,6 @@ function Update()
 --region -- Player Shooting
 
     if(inputMapSys:GetButtonDown("Shoot")) then
-        print ("hereweeeeeeee")
         positions_final.x = positions.x + viewVecCam.x*5
         positions_final.y = positions.y + viewVecCam.y*5
         positions_final.z = positions.z + viewVecCam.z*5  

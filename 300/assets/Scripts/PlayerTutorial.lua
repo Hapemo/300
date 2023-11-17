@@ -9,7 +9,7 @@ local back = Vec3.new()
 local left = Vec3.new()
 local right = Vec3.new()
 local centerscreen = Vec2.new()
-local mul = 20.0
+local mul = 100.0
 local floorCount = 0
 local dashTime = 0.0
 local isDashing = false;
@@ -90,6 +90,8 @@ local dashui = {}
 local dashrender= {}
 
 local tpcolor = Vec4.new(0, 0, 0, 1)
+
+local inputMapSys = {}
 
 _G.tester = 0
 testing = 0
