@@ -70,7 +70,8 @@ void SceneWindow::update()
 	mWinFlag |= ImGuiWindowFlags_NoScrollbar;
 
 	scene_m_Hovered = ImGui::IsWindowHovered();	
-	const ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();	
+	//const ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();	
+	const ImVec2 viewportPanelSize = ImGui::GetWindowSize();
 	ImGui::Image((ImTextureID)(intptr_t)systemManager->mGraphicsSystem->GetEditorAttachment(), viewportPanelSize, ImVec2(0,1), ImVec2(1,0));
 	//ImGui::Image((ImTextureID)(intptr_t)systemManager->mGraphicsSystem->m_Fbo.GetBrightColorsAttachment(), viewportPanelSize, ImVec2(0, 1), ImVec2(1, 0));
 	

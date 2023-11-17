@@ -49,6 +49,7 @@ void Transform::DeserializeSelf(rapidjson::Value& reader)
 	Deserialize(reader, "scale", mScale);
 	Deserialize(reader, "rotate", mRotate);
 	Deserialize(reader, "translate", mTranslate);
+	mPreviousPosition = mTranslate;
 }
 
 void MeshRenderer::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
@@ -268,6 +269,19 @@ void Audio::DeserializeSelf(rapidjson::Value& reader)
 	Deserialize(reader, "audiotype", mAudioType);
 	Deserialize(reader, "volume", mVolume);
 }
+
+void AudioListener::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
+{
+	writer.Key("audiolistener");
+	writer.StartObject();
+	writer.EndObject();
+}
+
+void AudioListener::DeserializeSelf(rapidjson::Value& reader)
+{
+
+}
+
 
 void Camera::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
 {

@@ -16,11 +16,10 @@ require more engine functionalities.
 #include "Input/Input.h"
 #include "ECS/ECS_Systems.h"
 #include "ECS/ECS_Components.h"
-#include "Audio/AudioSystem.h"
+#include "Audio/AudioSystemRevamp.h"
 #include "Input/InputMapSystem.h"
 #include "GameState/GameStateManager.h"
 #include "Graphics/GraphicsSystem.h"
-#include "Audio/AudioSource.h"
 #include "AI/AIManager.h"
 #include "Graphics/Camera_Input.h"
 #include "FPSManager.h"
@@ -270,60 +269,17 @@ void LuaInput()
     );
 }
 
-void LuaAudioSystem()
-{
-    systemManager->mScriptingSystem->luaState.new_usertype<AudioSystem>(
-        "mAudioSystem", sol::constructors<>(),
-        "PlayAudio", &AudioSystem::PlayAudio,
-        "SetAllSFXVolume", &AudioSystem::SetAllSFXVolume,
-        "SetAllBGMVolume", &AudioSystem::SetAllBGMVolume,
-        "MuteSFX", &AudioSystem::MuteSFX,
-        "MuteBGM", &AudioSystem::MuteBGM,
-        "LoadAudio", &AudioSystem::LoadAudio,
-        "LoadAudioFromDirectory", &AudioSystem::LoadAudioFromDirectory,
-        "StopAllSFX", &AudioSystem::StopAllSFX,
-        "StopAllBGM", &AudioSystem::StopAllBGM,
-        "PauseAllSounds", &AudioSystem::PauseAllSounds,
-        "PauseSFXSounds", &AudioSystem::PauseSFXSounds,
-        "PauseBGMSounds", &AudioSystem::PauseBGMSounds,
-        "UnpauseAllSounds", &AudioSystem::UnpauseAllSounds,
-        "UnpauseSFXSounds", &AudioSystem::UnpauseSFXSounds,
-        "UnpauseBGMSounds", &AudioSystem::UnpauseBGMSounds,
-        "FadeTimer", &AudioSystem::fade_timer
-    );
-}
-
-void LuaAudioSource()
-{
-    systemManager->mScriptingSystem->luaState["CrossFadeAudio"] = &CrossFadeAudio;
-    systemManager->mScriptingSystem->luaState["FadeInAudio"] = &FadeInAudio,
-    systemManager->mScriptingSystem->luaState["FadeOutAudio"] = &FadeOutAudio,
-    systemManager->mScriptingSystem->luaState.new_usertype<AudioSource>(
-        "AudioSource", sol::constructors<AudioSource()>(),
-        "GetAudio", &AudioSource::GetAudioComponent,
-        "IsSoundAttached", &AudioSource::IsSoundAttached,
-        "AttachSound", &AudioSource::AttachSound,
-        //"IsPlaying", &AudioSource::IsPlaying,
-        "Play", &AudioSource::Play,
-        "Pause", &AudioSource::Pause,
-        "Unpause", &AudioSource::Unpause,
-        "Stop", &AudioSource::Stop,
-        "Mute", &AudioSource::Mute,
-        "SetVolume", &AudioSource::SetVolume,
-        "SetIsLoop", &AudioSource::SetIsLoop
-        );
-}
-
 void LuaAudio()
 {
     systemManager->mScriptingSystem->luaState.new_usertype<Audio>(
         "Audio", sol::constructors<>(),
-        "mVolume", &Audio::mVolume, 
-        "mFadeIn", &Audio::mFadeIn,
-        "mFadeOut", &Audio::mFadeOut,
-        "mFadeInMaxVol", &Audio::mFadeInMaxVol, 
-        "mFadeOutToVol", &Audio::mFadeOutToVol,
-        "mFadeSpeedModifier" , &Audio::mFadeSpeedModifier
+        "SetPlay", &Audio::SetPlay,
+        "SetPause", &Audio::SetPause,
+        "SetResume", &Audio::SetResume,
+        "SetStop", &Audio::SetStop,
+        "UpdateVolume", &Audio::UpdateVolume,
+        "FadeIn", &Audio::FadeIn,
+        "FadeOut", &Audio::FadeOut
         );
 }
 

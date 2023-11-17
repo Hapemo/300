@@ -1,5 +1,5 @@
 {
-    "entityid": 10,
+    "entityid": 61866041,
     "general": {
         "name": "FloorCollider",
         "tagid": 3,
@@ -9,9 +9,9 @@
     },
     "transform": {
         "scale": {
-            "x": 50.0,
-            "y": 50.0,
-            "z": 50.0
+            "x": 25.700000762939453,
+            "y": 1.0,
+            "z": 12.0
         },
         "rotate": {
             "x": 0.0,
@@ -20,9 +20,25 @@
         },
         "translate": {
             "x": 0.0,
-            "y": 0.0,
-            "z": 2.664799690246582
+            "y": -15.831740379333496,
+            "z": -3.7665703296661377
         }
+    },
+    "rigidbody": {
+        "density": 10.0,
+        "material": 1,
+        "motion": 0,
+        "velocity": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "rotationconstraints": {
+            "x": true,
+            "y": true,
+            "z": false
+        },
+        "gravity": true
     },
     "boxcollider": {
         "scaleoffset": {
@@ -36,6 +52,9 @@
             "z": 0.0
         },
         "istrigger": false
+    },
+    "scripts": {
+        "scriptscontainer": []
     },
     "prefab": {
         "prefab": "FloorCollider"

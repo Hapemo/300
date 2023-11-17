@@ -92,6 +92,10 @@ struct Transform : public Serializable
 	glm::vec3 mRotate;
 	glm::vec3 mTranslate;
 
+	// 3D audio support 
+	glm::vec3 mPreviousPosition;
+
+
 	Transform() : mScale(1.f), mRotate(0.f), mTranslate(0.f) {}
 	glm::quat GetQuaternion() { return glm::quat(mRotate); }
 
@@ -175,6 +179,8 @@ struct UIrenderer : public Serializable
 	_GEOM::Texture_DescriptorData		mTextureDescriptorData;
 	ref									mTextureRef;
 	float								mDegree;
+	vec4								mColor;
+
 
 	inline unsigned ID() 
 	{
@@ -404,7 +410,27 @@ struct Children : public Serializable
  /******************************************************************************/
 
 struct Audio : public Serializable
-{
+{	
+	// Don't need to serialize
+	enum STATE : unsigned char
+	{
+		INACTIVE,			// Used for Stopped.
+		STARTUP,			// Used for starting up the game.
+		//UNIQUE_PLAYING_ALREADY,
+		SET_TO_PLAY,        // mPlayonAwake
+		PLAYING,
+		SET_TO_PAUSE,
+		PAUSED,
+		SET_TO_RESUME,	    // Trigger "Resume" state (pause button) 
+		SET_STOP,
+		STOPPED,
+		SET_FADE_IN, 
+		SET_FADE_OUT, 
+		FINISHED,		    // mIsLooping
+		FAILED				// When the audio fails to play...
+	};
+	//----------------------------------------------------
+
 	// Serialize
 	// -----------------------------------------
 	std::string    mFilePath;				            // File Path to the Audio File (required for loading)
@@ -412,40 +438,89 @@ struct Audio : public Serializable
 	std::string    mFullPath;				            // Full Path (File Path + Audio File)
 
 	bool           mPlayonAwake = false;		        // [Flag] - flag to play as the scene launches. 
-	bool           mIsLooping = false;			        // [Flag] - flag to decide whether if audio is looping.
+	bool           mIsLooping   = false;			    // [Flag] - flag to decide whether if audio is looping.
 
 	// Audio Type [Channel Management]
 	AUDIOTYPE      mAudioType;			                // SFX or BGM (Mute Channels)
 
 	// Volume 
 	float		   mVolume = 1.0f;
+	// ----------------------------------------
+	
 
 	// 3D Audio
 	bool		   m3DAudio = false;
 	float		   mMinDistance = 0.5f;		         // Testing Values
-	float		   mMaxDistance = 3000.0f;		         // Testing Values
-
-	// Position
-	glm::vec3	   mPosition = { 0.0f, 0.0f, 0.0f }; // Q. <Transform> or glm::vec3
-	glm::vec3      mVelocity = { 0.0f, 0.0f, 0.0f }; // For [Doppler] effect. 
+	float		   mMaxDistance = 3000.0f;		     // Testing Values
+	glm::vec3      mPosition = { 0.0,0.0,0.0 };
+	glm::vec3	   mVelocity = { 0.0,0.0,0.0 };
 
 	// Do not serialize 
 	// ------------------------------------------
+	STATE          mState = STATE::STARTUP;		        // Initial State - Startup 
+	STATE		   mNextActionState = STATE::INACTIVE;  // Preface the next cause of action.
+
+	// This is okay - because it's just editing data (use through component)
+
+	void SetPlay(float vol = 1.0f)
+	{
+		mNextActionState = STATE::SET_TO_PLAY;
+		mVolume = vol;
+	}
+
+	void SetPause() // Interface for Script
+	{
+		mNextActionState = STATE::SET_TO_PAUSE;
+	}
+
+	void SetResume()
+	{
+		mNextActionState = STATE::SET_TO_RESUME;
+	}
+	
+	void SetStop()
+	{
+		mNextActionState = STATE::SET_STOP;
+	}
+
+	void UpdateVolume(float volume)
+	{
+		mVolume = volume; // auto adjust in update()
+	}
+
+	void FadeIn(float fade_to_vol = 1.0f, float fade_speed_modifier = 1.0f, float fade_duration = 5.0f)	// Use this to fade in audio from (0.0f)
+	{
+		mNextActionState = STATE::SET_FADE_IN;
+		mFadeInMaxVol = fade_to_vol;
+		mFadeSpeedModifier = fade_speed_modifier;
+		mFadeDuration = fade_duration;
+		fade_timer = 0.0f;
+	}
+
+	void FadeOut(float fade_to_vol = 0.0f, float fade_speed_modifier = 1.0f, float fade_duration = 5.0f)
+	{
+		mNextActionState = STATE::SET_FADE_OUT; 
+		mFadeInMaxVol = fade_to_vol;
+		mFadeSpeedModifier = fade_speed_modifier;
+		mFadeDuration = fade_duration;
+		fade_timer = 0.0f; // reset timer
+	}
+
 	// Update Loop - Boolean Checks
-	bool		   mIsPlaying = false;					 // [Flag] - Check if audio is already playing (Channel Interaction)
-	bool           mIsPlay = false;						 // [Flag] - to decide whether to play audio (if true)
-	bool		   mSpamReplay = false;
+	//bool		   mIsPlaying = false;					 // [Flag] - Check if audio is already playing (Channel Interaction)
+	//bool           mIsPlay = false;						 // [Flag] - to decide whether to play audio (if true)
+	//bool		   mSpamReplay = false;
 
 	// Update Loop - Fade In / Fade out data
-	bool		   mFadeIn = false;						 // [Flag] - This audio will be faded out. 
-	bool		   mFadeOut = false;					 // [Flag] - This audio will be faded in.
 	float		   mFadeInMaxVol = 1.0f;				 // Flexibility with audio volume fade in (control over volume)
 	float		   mFadeOutToVol = 0.0f;				 // Flexibility to adjust the audio volume as it fades out (don't have to be 0.0f)
 	float		   mFadeSpeedModifier = 0.2f;			 // How fast the fading goes (modifier * dt)
+	float		   mFadeDuration = 5.0f;				 // How long to fade for. 
 
 	// For Editor
 	bool		   mIsEmpty = true;						 // [For Editor] - if empty delete all data in this <Audio> component
 	bool		   mIsLoaded = false;					 // [For Loading]
+	std::string    mCurrentlyPlaying;					 // Shows the currently playing track.
 
 	// Pause State [Editor/Pause Menu]
 	bool		   mSetPause = false;					 // [Flag] - set pause for channel.
@@ -455,9 +530,7 @@ struct Audio : public Serializable
 	float		   mTypeChanged = false;				 // [For Editor] - trigger type change
 
 	// Q. Can a <Audio> entity have their very own channel.
-	uid            mChannelID;							 // Channel ID (Channel Management)
-	FMOD::Channel* mChannel;         					 // Use this to facilitate manipulation of audio.
-	FMOD::Sound* mSound = nullptr;					 // Each <Audio> can only hold a reference to the "Audio File" it's attached to.
+	uid            mChannelID;							 // Channel ID (this is being played in which channel...) 
 
 	// Fade Volume Stuff
 	float fade_timer = 0.0f;							 // How long the fade has elapsed
@@ -465,17 +538,17 @@ struct Audio : public Serializable
 
 	Audio() : mFilePath(""), mFileName(""), mAudioType(AUDIO_SFX), mIsEmpty(true)
 	{
-		mChannelID = uid();
+		//mChannelID = uid();
 	}
 
-	Audio(std::string file_path_to_audio, std::string file_audio_name, AUDIOTYPE audio_type, bool playOnAwake) : mAudioType(audio_type), mIsPlaying(false), mPlayonAwake(playOnAwake),
+	Audio(std::string file_path_to_audio, std::string file_audio_name, AUDIOTYPE audio_type, bool playOnAwake) : mAudioType(audio_type), mPlayonAwake(playOnAwake),
 		mIsEmpty(false)
 	{
 		mFilePath = file_path_to_audio;
 		mFileName = file_audio_name;
 		mFullPath = file_path_to_audio + "/" + mFileName;
 
-		mChannelID = uid();
+		//mChannelID = uid();
 	}
 
 	// For [Editor]
@@ -485,11 +558,16 @@ struct Audio : public Serializable
 		mFileName = "";
 		mFullPath = "";
 		mAudioType = AUDIO_SFX;
-		mIsPlay = false;
 		mPlayonAwake = false;
 		mIsEmpty = true;
 		mIsLoaded = false;
-		m3DAudio = false; // Added [10/26]
+		m3DAudio = false;
+		mState = STATE::STARTUP;		        
+		mNextActionState = STATE::INACTIVE;  
+		mFadeInMaxVol = 1.0f;				 
+		mFadeOutToVol = 0.0f;			
+		mFadeSpeedModifier = 0.2f;			
+		mFadeDuration = 5.0f;
 	}
 
 	int mAudio{ 0 };
@@ -502,17 +580,24 @@ struct Audio : public Serializable
 
 struct AudioListener
 {
-	// Position
-	glm::vec3	   mPosition = { 0.0f, 0.0f, 0.0f }; // Q. <Transform> or glm::vec3
-	glm::vec3      mVelocity = { 0.0f, 0.0f, 0.0f }; // For [Doppler] effect. 
-	glm::vec3	   mForward  = { 0.0f, 0.0f, 0.0f };
-	glm::vec3	   mUp       = { 0.0f, 0.0f, 0.0f };
+	// Properties - use transform
+	//glm::vec3	   mPosition = { 0.0f, 0.0f, 0.0f }; // Q. <Transform> or glm::vec3
+	//glm::vec3      mVelocity = { 0.0f, 0.0f, 0.0f }; // For [Doppler] effect. 
+	//glm::vec3	   mForward  = { 0.0f, 0.0f, 0.0f };
+	//glm::vec3	   mUp       = { 0.0f, 0.0f, 0.0f };
+
+	// Previous Position
+	//glm::vec3	   mPreviousPosition;
 
 	int mAudioListener{ 0 };
 
 	//RTTR_ENABLE()
 	void							Inspect();
+	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
+	void DeserializeSelf(rapidjson::Value& reader);
 };
+
+
 
 
 
