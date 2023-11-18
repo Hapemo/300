@@ -105,6 +105,9 @@ local dashrender= {}
 
 local tpcolor = Vec4.new(0, 0, 0, 1)
 
+--This variable is to be set in another script
+--testingSet = 5.0
+
 function Alive()
     gameStateSys = systemManager:mGameStateSystem();
     inputMapSys = systemManager:mInputActionSystem();
@@ -160,7 +163,6 @@ end
 function Update()
 
     -- Example: I want to get HP from AITest.lua script (getting walking enemy's hp)
-    -- scriptingSys = systemManager:mScriptingSystem();
     -- scriptingComp = walkingenemy:GetScripts()
     -- script = scriptingComp:GetScript("../assets/Scripts/AITest.lua")
     -- if script ~= nil then
