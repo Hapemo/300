@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 117440540,
+        "entityid": 153,
         "general": {
             "name": "Leftshift",
             "tagid": 0,
@@ -32,7 +32,7 @@
         }
     },
     {
-        "entityid": 117440541,
+        "entityid": 154,
         "general": {
             "name": "Base",
             "tagid": 0,
@@ -72,7 +72,7 @@
         }
     },
     {
-        "entityid": 117440549,
+        "entityid": 155,
         "general": {
             "name": "crosshair-1",
             "tagid": 0,
@@ -112,7 +112,7 @@
         }
     },
     {
-        "entityid": 117440550,
+        "entityid": 156,
         "general": {
             "name": "crosshair-2",
             "tagid": 0,
@@ -152,7 +152,7 @@
         }
     },
     {
-        "entityid": 117440551,
+        "entityid": 157,
         "general": {
             "name": "crosshair-4",
             "tagid": 0,
@@ -192,7 +192,7 @@
         }
     },
     {
-        "entityid": 117440552,
+        "entityid": 158,
         "general": {
             "name": "crosshair-3",
             "tagid": 0,
@@ -232,7 +232,7 @@
         }
     },
     {
-        "entityid": 117440553,
+        "entityid": 159,
         "general": {
             "name": "P1",
             "tagid": 0,
@@ -267,7 +267,7 @@
         }
     },
     {
-        "entityid": 117440554,
+        "entityid": 160,
         "general": {
             "name": "P3",
             "tagid": 0,
@@ -299,7 +299,7 @@
         }
     },
     {
-        "entityid": 117440555,
+        "entityid": 161,
         "general": {
             "name": "P4",
             "tagid": 0,
@@ -331,7 +331,7 @@
         }
     },
     {
-        "entityid": 117440556,
+        "entityid": 162,
         "general": {
             "name": "P5",
             "tagid": 0,
@@ -363,7 +363,7 @@
         }
     },
     {
-        "entityid": 117440557,
+        "entityid": 163,
         "general": {
             "name": "P6",
             "tagid": 0,
@@ -395,7 +395,7 @@
         }
     },
     {
-        "entityid": 117440558,
+        "entityid": 164,
         "general": {
             "name": "P7",
             "tagid": 0,
@@ -427,7 +427,7 @@
         }
     },
     {
-        "entityid": 117440559,
+        "entityid": 165,
         "general": {
             "name": "P8",
             "tagid": 0,
@@ -459,7 +459,7 @@
         }
     },
     {
-        "entityid": 117440561,
+        "entityid": 166,
         "general": {
             "name": "P2",
             "tagid": 0,
@@ -488,6 +488,38 @@
             "texpath": "",
             "textureref": 4923,
             "degree": 360.0
+        }
+    },
+    {
+        "entityid": 167,
+        "general": {
+            "name": "cccc",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": -100.0,
+                "y": 100.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
+            "textureref": 4923,
+            "degree": 0.0
         }
     }
 ]
