@@ -274,7 +274,7 @@ public:
 
 	bool		m_EnableBloom{ true };									
 	bool		m_EnableChromaticAbberation{ true };					
-	bool		m_EnableCRT{ true };						// this yj
+	bool		m_EnableCRT{ false };						// this yj
 
 	// -- Textures --
 	std::vector<int> m_Textures;	// 0, 1, ..., 31

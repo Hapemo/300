@@ -235,9 +235,6 @@ void PhysBasedBloomRenderer::RenderBloom(unsigned int sourceTexture, float filte
 	RenderDownsamples(sourceTexture);
 	RenderUpsamples(filterRadius);
 
-	//glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	//PostProcessing::BlitFrameBuffers(0, targetFBO.mID, )
-
 	// restore viewport
 	glViewport(0, 0, mIntSrcViewportSize.x, mIntSrcViewportSize.y);
 }
