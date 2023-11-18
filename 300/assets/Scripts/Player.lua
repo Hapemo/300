@@ -9,7 +9,7 @@ local back = Vec3.new()
 local left = Vec3.new()
 local right = Vec3.new()
 local centerscreen = Vec2.new()
-local mul = 20.0
+local mul = 10.0
 local floorCount = 0
 local dashTime = 0.0
 local isDashing = false;
@@ -53,23 +53,37 @@ local jumpAudioComp
 local dashAudioEntity
 local dashAudioComp
 
--- local walkingAudioSource
--- local audioComp
+--physics
+local cameraPhysicsComp
 
--- local bulletshootEntity
--- local bulletshootComp
--- local bulletshootAudioSource
+--gun
+local gunEntity
+local gunTranslate = Vec3.new()
+local gunRotation = Vec3.new()
 
--- local dashEntity
--- local dashComp
--- local dashAudioSource
+local original_translate_x
+local original_translate_y
+local original_translate_z
+local original_translation = Vec3.new()
 
--- local jumpEntity
--- local jumpComp
--- local jumpAudioSource
+local gunJumpTimer = 0
+local gunDisplaceBackSpeed = 0.015
+local gunDisplaceSpeed = 0.015
+local gunMaxAcceleration = 100
 
-local dashEntity
-local dashAudioComp
+local gunThreshHold_max_y = -0.15
+local gunThreshHold_min_y = -0.9
+
+local gunThreshHold_min_x = 0.15 
+local gunThreshHold_max_x = 0.9
+
+local recoil_factor = 0.5
+
+-- gun states
+local gunState 
+local gunEquipped = "BASIC" -- rename this to whatever
+
+-- end gun
 
 local fadeOutTimer = 0.0
 local fadeOutDuration = 5.0
@@ -100,7 +114,8 @@ function Alive()
     cameraEntity = Helper.GetScriptEntity(script_entity.id)
     totaltime = 3.0
 
-    -- audioComp = cameraEntity:GetAudio()
+    cameraPhysicsComp = cameraEntity:GetRigidBody()
+    
     dashui = gameStateSys:GetEntity("UI1", "testSerialization")
 
     bulletAudioEntity = gameStateSys:GetEntity("Bullet Shoot" , "testSerialization")
@@ -122,6 +137,23 @@ function Alive()
     originalSamplingWeight = graphicsSys.mSamplingWeight
     tpfin1 = gameStateSys:GetEntity("Fin1", "testSerialization")
     tpfin2 = gameStateSys:GetEntity("Fin2", "testSerialization")
+
+    -- Gun Stuff --
+    gunEntity = gameStateSys:GetEntity("gun", "testSerialization")
+    gunTranslate = gunEntity:GetTransform().mTranslate
+    gunRotation = gunEntity:GetTransform().mRotate
+
+    -- Original Gun Position --
+    original_translate_x = gunTranslate.x
+    original_translate_y = gunTranslate.y
+    original_translate_z = gunTranslate.z 
+    original_translation.x = gunTranslate.x
+    original_translation.y = gunTranslate.y
+    original_translation.z = gunTranslate.z
+
+    gunState = "IDLE"
+    
+    
 
 end
 
@@ -260,8 +292,8 @@ function Update()
           
             e_dashEffect = false
         end
-        movement.x = movement.x + (viewVec.x * 300.0)
-        movement.z = movement.z + (viewVec.z * 300.0);
+        movement.x = movement.x + (viewVec.x * 50.0)
+        movement.z = movement.z + (viewVec.z * 50.0);
     
         if (dashTime >= 0.1) then
 
@@ -288,7 +320,12 @@ function Update()
                 t = t +tinc 
             end
         end
-
+-- Toggle Weapons
+       if(inputMapSys:GetButtonDown("Weapon2")) then 
+            print("Swapping to shotgun")
+            gunEquipped = "SHOTGUN"
+       end
+-- end of Toggle Weapons
         
 
         if (inputMapSys:GetButtonDown("Dash")) then
@@ -298,52 +335,147 @@ function Update()
              
             end
         else
-        
+-- Gun Script
+            -- 'y' : vertical-axis
+            if (gunState == "IDLE") then
+                local displacement_x = gunTranslate.x - original_translation.x 
+                local displacement_y = gunTranslate.y - original_translation.y
+                --print("GUN DISPLACED: " , displacement_x , displacement_y)
+                local displacement_z = 0
+                
+                local acceleration_x = gunMaxAcceleration * displacement_x * displacement_x
+                local acceleration_y = gunMaxAcceleration * (1.0 - displacement_y * displacement_y)
+                local acceleration_z = gunMaxAcceleration * displacement_z * displacement_z
 
-            -- else
-            --     if (fadeOutTimer < fadeOutDuration) then 
-            --         local volume = audioComp.mVolume - (fadeOutTimer / fadeOutDuration)
-            --         walkingAudioSource:SetVolume(volume)
-            --         fadeOutTimer = fadeOutTimer + dt
-            --         print("FADE OUT TIMER: ", fadeOutTimer)
-            --     end
-            -- end
+                -- print("ACCELERATION Y:" , acceleration_y)
 
+                local velocity_x = acceleration_x * dt
+                local velocity_y = acceleration_y * dt
+                local velocity_z = acceleration_z * dt
+                
+                -- print("VELOCITY Y:" , velocity_y)
+                
+                -- Account for "vertical" axis
+                if(gunTranslate.y ~= original_translate_y) then
+                    if((gunTranslate.y > original_translate_y)) then -- it should go up 
+                       -- print("Gun is displaced higher than its original translation")
+                       gunTranslate.y = gunTranslate.y - gunDisplaceBackSpeed 
+                    end
+                
+                    
+                    if(gunTranslate.y < original_translate_y) then
+                       -- print("Gun is displaced lower than its original translation")
+                        gunTranslate.y = gunTranslate.y + gunDisplaceBackSpeed 
+                    end
+                end
+
+                -- Account for "horizontal" axis
+                if(gunTranslate.x ~= original_translate_x) then 
+                    if(gunTranslate.x < original_translate_x) then  -- left to original
+                        gunTranslate.x = gunTranslate.x + gunDisplaceBackSpeed 
+                    end
+
+                    if(gunTranslate.x > original_translate_x) then  -- right to original
+                        gunTranslate.x = gunTranslate.x - gunDisplaceBackSpeed 
+                    end
+
+                    --print("HORIZONTAL AXIS CHANGED")
+                end
+
+                -- Account for "recoil"
+                if(gunTranslate.z ~= original_translate_z) then 
+                    gunTranslate.z = gunTranslate.z - gunDisplaceBackSpeed
+                    if(gunTranslate.z < original_translate_z) then
+                        gunTranslate.z = original_translate_z
+                    end
+                end
+            end 
+
+            if(gunState == "JUMP") then 
+                gunTranslate.y = gunTranslate.y - gunDisplaceBackSpeed 
+                gunJumpTimer = gunJumpTimer + 1
+
+                if (gunJumpTimer > 20) then
+                    gunState = "IDLE" -- will become "IDLE" unless there's a movement button pressed
+                    gunJumpTimer = 0
+                end
+            else 
+                gunState = "IDLE"
+            end 
+           
             if (inputMapSys:GetButton("up")) then
                 movement.x = movement.x + (viewVec.x * mul);
                 movement.z = movement.z + (viewVec.z * mul);    
-                -- print("Volume: " , audioComp.mVolume)
-              
+
+                -- gun "jumps down" when player moves forward\
+                if(gunTranslate.y > gunThreshHold_min_y) then 
+                    gunTranslate.y = gunTranslate.y - gunDisplaceSpeed
+                end
+
+                gunState = "MOVING"
+
+                -- print("GUN MOVES", movement.z * 0.001) 
+                -- print("GUN TRANSLATE (Y): " , gunTranslate.y)
+                -- print("ORIGINAL TRANLSATE (Y): ", original_translate_y)
             end
             if (inputMapSys:GetButton("down")) then
                 movement.x = movement.x - (viewVec.x * mul);
                 movement.z = movement.z - (viewVec.z * mul);
+                
+                -- gun "jumps up" when player moves forward
+                if(gunTranslate.y < gunThreshHold_max_y) then -- limit to how much 
+                    gunTranslate.y = gunTranslate.y + gunDisplaceSpeed
+
+                end
+
+                gunState = "MOVING"
             end
             if (inputMapSys:GetButton("left")) then
                 movement.x = movement.x + (viewVec.z * mul);
                 movement.z = movement.z - (viewVec.x * mul);
+
+                -- gun "move rightwards" when player moves left
+                if(gunTranslate.x < gunThreshHold_max_x) then 
+                    gunTranslate.x = gunTranslate.x + gunDisplaceSpeed
+                    
+
+                end
+
+                gunState = "MOVING"
+    
             end
             if (inputMapSys:GetButton("right")) then
                 movement.x = movement.x - viewVec.z * mul;
                 movement.z = movement.z + viewVec.x * mul;
+
+                -- gun "moves leftwards" when player moves right
+                if(gunTranslate.x > gunThreshHold_min_x) then 
+                    gunTranslate.x = gunTranslate.x - gunDisplaceSpeed
+
+                    -- if(gunDisplaceSpeedModifier < gunDisplaceSpeedFactorLimit) then 
+                    --     gunDisplaceSpeedModifier = gunDisplaceSpeedModifier + 0.01
+                    -- end
+                end
+
+                gunState = "MOVING"
+
             end
             if (floorCount > 0) then
                 if (inputMapSys:GetButtonDown("Jump")) then
                     movement.y = movement.y + 50.0;
+                    gunState = "JUMP"
                     jumpAudioComp:SetPlay(0.4)
                 end
             end
         end
-
-        -- if (fadeOutTimer < fadeOutDuration) then 
-        --     local volume = audioComp.mVolume - (fadeOutTimer / fadeOutDuration)
-        --     walkingAudioSource:SetVolume(volume)
-        --     fadeOutTimer = fadeOutTimer + dt
-        --     print("FADE OUT TIMER: ", fadeOutTimer)
-        -- end
+-- end of gun script 
     end
 
     physicsSys:SetVelocity(cameraEntity, movement)
+   -- print("VELOCITY" , movement.x , movement.y, movement.z)
+    
+    --cameraPhysicsComp.mVelocity = movement
+    --print("VELOCITY FROM PHYSICS" , cameraPhysicsComp.mVelocity.x , cameraPhysicsComp.mVelocity.y , cameraPhysicsComp.mVelocity.z)
 
 
 --endregion
@@ -354,22 +486,43 @@ function Update()
 
     if(inputMapSys:GetButtonDown("Shoot")) then
         
-        positions_final.x = positions.x + viewVecCam.x*5
-        positions_final.y = positions.y + viewVecCam.y*5
-        positions_final.z = positions.z + viewVecCam.z*5  
+        if(gunEquipped == "BASIC") then 
+            positions_final.x = positions.x + viewVecCam.x*5
+            positions_final.y = positions.y + viewVecCam.y*5
+            positions_final.z = positions.z + viewVecCam.z*5  
 
-        prefabEntity = systemManager.ecs:NewEntityFromPrefab("bullet", positions_final)
-        rotationCam.x = rotationCam.z *360
-        rotationCam.y = rotationCam.x *0
-        rotationCam.z = rotationCam.z *0
-        prefabEntity:GetTransform().mRotate = rotationCam    
-        viewVecCam.x = viewVecCam.x*100
-        viewVecCam.y=viewVecCam.y *100
-        viewVecCam.z=viewVecCam.z *100
+            prefabEntity = systemManager.ecs:NewEntityFromPrefab("bullet", positions_final)
+            rotationCam.x = rotationCam.z *360
+            rotationCam.y = rotationCam.x *0
+            rotationCam.z = rotationCam.z *0
+            prefabEntity:GetTransform().mRotate = rotationCam    
+            viewVecCam.x = viewVecCam.x*100
+            viewVecCam.y=viewVecCam.y *100
+            viewVecCam.z=viewVecCam.z *100
+
+            physicsSys:SetVelocity(prefabEntity, viewVecCam)
+        end
+
+        if(gunEquipped == "SHOTGUN") then 
+            shotgun()
+        end
+
+        -- if(gunTranslate.z == original_translate_z) then
+        --     gunTranslate.z = gunTranslate.z + recoil_factor -- recoil
+        -- else if (gunTranslate.z < gunTranslate.z + recoil_factor) then
+        --     gunTranslate.z = gunTranslate.z + recoil_factor -- recoil
+        -- end
+
+        if(gunTranslate.z + recoil_factor <= original_translate_z + recoil_factor) then
+            gunTranslate.z = gunTranslate.z + recoil_factor -- recoil
+        else 
+            gunTranslate.z = original_translate_z 
+            gunTranslate.z = gunTranslate.z + recoil_factor -- recoil
+        end
 
         bulletAudioComp:SetPlay(0.1)
 
-        physicsSys:SetVelocity(prefabEntity, viewVecCam)
+ 
     end
 
 --endregion
@@ -455,3 +608,24 @@ function dashEffectEnd()
     -- graphicsSys.mSamplingWeight = d_sampleWeight+ (e_sampleWeight -d_sampleWeight)*t
     -- Camera_Scripting.SetFov(cameraEntity,d_fov+ (d_fov-e_fov)*t)
 end
+
+function shotgun()
+    print("SHOOTING SHOTGUN : 3 pellets")
+    positions_final.x = positions.x + viewVecCam.x*5
+    positions_final.y = positions.y + viewVecCam.y*5
+    positions_final.z = positions.z + viewVecCam.z*5  
+
+    prefabEntity1 = systemManager.ecs:NewEntityFromPrefab("bullet", positions_final)
+    prefabEntity2 = systemManager.ecs:NewEntityFromPrefab("bullet", positions_final)
+
+    rotationCam.x = rotationCam.z *360
+    rotationCam.y = rotationCam.x *0
+    rotationCam.z = rotationCam.z *0
+    prefabEntity:GetTransform().mRotate = rotationCam    
+    viewVecCam.x = viewVecCam.x*100
+    viewVecCam.y=viewVecCam.y *100
+    viewVecCam.z=viewVecCam.z *100
+
+    physicsSys:SetVelocity(prefabEntity, viewVecCam)
+end 
+

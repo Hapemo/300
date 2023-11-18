@@ -22,8 +22,10 @@
 #include <DebugRenderer.hpp>
 #include <Camera.hpp>
 #include <Fbo.hpp>
+#include <MsFbo.hpp>
 #include <Animator.hpp>
 #include <Ssbo.hpp>
+#include <ComputeShader.hpp>
 
 #include <Graphics/PostProcessing.h>
 
@@ -97,6 +99,8 @@ public:
 	/**************************************************************************/
 	void Update(float dt);
 
+	void Draw(bool forEditor = false);
+
 	/***************************************************************************/
 	/*!
 	\brief
@@ -156,6 +160,7 @@ public:
 	vec3 GetCameraTarget(CAMERA_TYPE type);
 	vec3 GetCameraDirection(CAMERA_TYPE type);			// Direction vector of the camera (Target - position)
 	mat4 GetCameraViewMatrix(CAMERA_TYPE type);
+	mat4 GetCameraViewProjMatrix(CAMERA_TYPE type);
 	ivec2 GetCameraSize(CAMERA_TYPE type);
 
 
@@ -236,8 +241,11 @@ public:
 	GFX::DebugRenderer			m_Renderer;				// isolated to debug draws
 	GFX::FBO					m_Fbo;					// Editor Scene
 	GFX::FBO					m_GameFbo;				// Game Scene
+	GFX::MsFBO					m_MultisampleFBO;		// Multisample FBO
+	GFX::IntermediateFBO		m_IntermediateFBO;		// Intermediate FBO
 	GFX::PingPongFBO			m_PingPongFbo;			// Post Processing
 	PhysBasedBloomRenderer		m_PhysBloomRenderer;	// Bloom
+
 
 	// -- Window --
 	GFX::Window*		m_Window;
@@ -276,6 +284,9 @@ public:
 	GFX::Shader m_CrosshairShaderInst;
 	GFX::Shader m_DrawSceneShaderInst;
 	GFX::Shader m_HealthbarShaderInst;
+	GFX::Shader m_AnimationShaderInst;
+	GFX::Shader m_GBufferShaderInst;
+	GFX::Shader m_DeferredLightShaderInst;
 
 	// -- Flags --
 	int		m_DebugDrawing{ 0 };			// debug drawing 
@@ -304,7 +315,7 @@ private:
 	GFX::SSBO						m_FinalBoneMatrixSsbo;
 	std::vector<mat4>				finalBoneMatrices;
 
-	const int						MAX_POINT_LIGHT = 5;
+	const int						MAX_POINT_LIGHT = 200;
 	GFX::SSBO						m_PointLightSsbo;
 	std::vector<PointLightSSBO>		pointLights;
 
@@ -331,6 +342,23 @@ private:
 	GLint m_CrosshairColorLocation{};
 	void SetupCrosshairShaderLocations();
 	void DrawCrosshair();
+
+	// -- Deferred Lighting WIP --
+	void DrawDeferredLight(const vec3& camPos, GFX::FBO& destFbo);
+	void BlitMultiSampleToDestinationFBO(GFX::FBO& destFbo, bool editorFlag = false);
+	GLint m_DeferredCamPosLocation{};
+	GLint m_DeferredLightCountLocation{};
+
+	// -- Compute Shader WIP --
+	GFX::ComputeShader computeDeferred;
+	void ComputeDeferredLight(bool editorDraw = false);
+	GLint m_ComputeDeferredGlobalTintLocation{};
+	GLint m_ComputeDeferredCamPosLocation{};
+	GLint m_ComputeDeferredLightCountLocation{};
+	GLint m_ComputeDeferredGlobalBloomLocation{};
+
+	// -- Shader Setup --
+	void SetupAllShaders();
 };
 
 #endif
