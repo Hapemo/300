@@ -507,8 +507,9 @@ void GraphicsSystem::EditorDraw(float dt)
 	{
 		if (mBloomType == BloomType::PHYS_BASED_BLOOM)
 		{
-			//m_PhysBloomRenderer.PrepForDraw();
-			m_PhysBloomRenderer.RenderBloom(m_Fbo.GetColorAttachment(), mFilterRadius);
+			m_PhysBloomRenderer.PrepForDraw();
+			m_PhysBloomRenderer.RenderBloom(m_Fbo.GetBrightColorsAttachment(), mFilterRadius);
+			PostProcessing::AdditiveBlendFramebuffers(m_Fbo, m_Fbo.GetColorAttachment(), m_PhysBloomRenderer.getBloomTexture());
 		}
 
 		else
@@ -534,11 +535,16 @@ void GraphicsSystem::EditorDraw(float dt)
 		}
 	}
 
-
 	if (systemManager->mGraphicsSystem->m_EnableChromaticAbberation)
 	{
-		PostProcessing::ChromaticAbbrebationBlendFramebuffers(m_Fbo, m_PingPongFbo.pingpongColorbuffers[0]);
+		if (mBloomType == BloomType::PHYS_BASED_BLOOM) {
+			PostProcessing::ChromaticAbbrebationBlendFramebuffers(m_Fbo, m_PhysBloomRenderer.getBloomTexture());
+		}
+		else {
+			PostProcessing::ChromaticAbbrebationBlendFramebuffers(m_Fbo, m_PingPongFbo.pingpongColorbuffers[0]);
+		}
 	}
+
 
 #if ENABLE_UI_IN_EDITOR_SCENE || ENABLE_CROSSHAIR_IN_EDITOR_SCENE
 	m_Fbo.Bind();
@@ -715,7 +721,10 @@ void GraphicsSystem::GameDraw(float dt)
 	{
 		if (mBloomType == BloomType::PHYS_BASED_BLOOM)
 		{
-			m_PhysBloomRenderer.RenderBloom(m_GameFbo.GetColorAttachment(), mFilterRadius);
+			m_PhysBloomRenderer.PrepForDraw();
+			//m_PhysBloomRenderer.RenderBloom(m_GameFbo.GetColorAttachment(), mFilterRadius);
+			m_PhysBloomRenderer.RenderBloom(m_GameFbo.GetBrightColorsAttachment(), mFilterRadius);
+			PostProcessing::AdditiveBlendFramebuffers(m_GameFbo, m_GameFbo.GetColorAttachment(), m_PhysBloomRenderer.getBloomTexture());
 		}
 
 		else

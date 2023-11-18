@@ -222,12 +222,9 @@ void PhysBasedBloomRenderer::PrepForDraw()
 {
 	mBloomFBO.Bind();
 
-	for (int i{}; i < mBloomFBO.mMipChain.size(); ++i)
-	{
-		glDrawBuffer(GL_COLOR_ATTACHMENT0 + i);
-		glClearColor(0.f, 0.f, 0.f, 0.f);
-		glClear(GL_COLOR_BUFFER_BIT);
-	}
+	glDrawBuffer(GL_COLOR_ATTACHMENT0);
+	glClearColor(0.f, 0.f, 0.f, 0.f);
+	glClear(GL_COLOR_BUFFER_BIT);
 }
 
 
@@ -248,6 +245,7 @@ void PhysBasedBloomRenderer::RenderBloom(unsigned int sourceTexture, float filte
 
 void PhysBasedBloomRenderer::RenderDownsamples(unsigned int sourceTexture)
 {
+	glDisable(GL_BLEND);
 	const std::vector<BloomMip>& mipchain = mBloomFBO.mMipChain;
 
 	uid shaderstr(mDownSamplingShaderStr);

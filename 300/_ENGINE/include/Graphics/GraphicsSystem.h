@@ -256,9 +256,9 @@ public:
 	float		mAmbientBloomExposure{ 0.4f };						
 	float		mTexelOffset{ 1.f };							// Gaussian blur Ver1						
 	float		mSamplingWeight{ 1.f };							// Gaussian blur Ver1/2
-	float		mFilterRadius{ 20.f };							// Phys Based Bloom
+	float		mFilterRadius{ 0.001f };						// Phys Based Bloom
 
-	BloomType	mBloomType{ BloomType::GAUSSIANBLUR_VER2 };		// defaults to Gaussian blur Ver2
+	BloomType	mBloomType{ BloomType::PHYS_BASED_BLOOM };		// defaults to Phys based bloom
 
 	// -- Chromatic Abbreation --
 	float		mChromaticOffset{ 0.006f };

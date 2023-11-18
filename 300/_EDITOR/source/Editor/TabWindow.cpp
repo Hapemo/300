@@ -89,7 +89,7 @@ void TabWindow::update()
 	}
 
 	else if (systemManager->mGraphicsSystem->mBloomType == BloomType::PHYS_BASED_BLOOM) {
-		ImGui::DragFloat("Filter Radius", &systemManager->mGraphicsSystem->mFilterRadius, 0.1f, 0.f, 50.f, "%0.2f");
+		ImGui::DragFloat("Filter Radius", &systemManager->mGraphicsSystem->mFilterRadius, 0.0001f, 0.f, 1.f, "%0.4f");
 	}
 
 	std::string bloomstr;
