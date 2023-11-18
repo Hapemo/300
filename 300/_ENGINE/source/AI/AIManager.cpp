@@ -184,8 +184,10 @@ void AIManager::PredictiveShootPlayer(Entity projectile, float speed, int decise
 
 	// Accounting for the accumulated vector, calculate the predicted velocity
 	const glm::vec3 p1p0 = mPlayerEntity.GetComponent<Transform>().mTranslate - projectile.GetComponent<Transform>().mTranslate;
-	const glm::vec3 v0 = mPlayerEntity.GetComponent<RigidBody>().mVelocity*static_cast<float>(1.f-weightage/100.f) + accumulatedVector*static_cast<float>(weightage/100.f);
+	glm::vec3 v0 = mPlayerEntity.GetComponent<RigidBody>().mVelocity*static_cast<float>(1.f-weightage/100.f) + accumulatedVector*static_cast<float>(weightage/100.f);
 	const float s1 = speed;
+
+	if (v0.x != v0.x) v0 = glm::vec3(); // Check for nan
 
 	systemManager->GetPhysicsPointer()->SetVelocity(projectile, CalculatePredictiveVelocity(p1p0, v0, s1));
 #if _DEBUG

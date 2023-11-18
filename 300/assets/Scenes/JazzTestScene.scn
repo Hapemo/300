@@ -1,28 +1,28 @@
 [
     {
-        "entityid": 1,
+        "entityid": 8,
         "general": {
-            "name": "player",
-            "tagid": 0,
+            "name": "TrojanHorse",
+            "tagid": 1,
             "subtag": 0,
             "isActive": true,
             "isPaused": false
         },
         "transform": {
             "scale": {
-                "x": 8.0,
-                "y": 8.0,
-                "z": 8.0
+                "x": 10.0,
+                "y": 10.0,
+                "z": 10.0
             },
             "rotate": {
                 "x": 0.0,
-                "y": -0.0005388862919062376,
-                "z": -3.1415743827819824
+                "y": 0.0,
+                "z": 0.0
             },
             "translate": {
-                "x": 70.15164947509766,
-                "y": 4.499995231628418,
-                "z": -135.6868896484375
+                "x": 0.0,
+                "y": 18.170289993286133,
+                "z": 93.25807189941406
             }
         },
         "rigidbody": {
@@ -58,7 +58,7 @@
                 "w": 1.0
             },
             "materialinstance": [
-                "../assets/Compressed/Cube_Texture_White.ctexture",
+                "../assets/Compressed/cube_diffuse.ctexture",
                 "../assets/Compressed/cube_emission.ctexture",
                 " ",
                 " ",
@@ -67,7 +67,7 @@
             ],
             "mesh": "../assets/compiled_geom/cube.geom",
             "texturerefid": [
-                4706,
+                4119,
                 4248,
                 0,
                 0,
@@ -88,19 +88,19 @@
             },
             "istrigger": false
         },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/AIPlayerTest.lua",
-                    "variables": []
-                }
-            ]
+        "aisetting": {
+            "movementtype": 1,
+            "spreadout": 0.0,
+            "stayaway": 0.0,
+            "elevation": 0.0,
+            "targetname": "player",
+            "graphdataname": ""
         }
     },
     {
-        "entityid": 2,
+        "entityid": 1048577,
         "general": {
-            "name": "Camera",
+            "name": "Melissa",
             "tagid": 0,
             "subtag": 0,
             "isActive": true,
@@ -108,9 +108,9 @@
         },
         "transform": {
             "scale": {
-                "x": 0.0,
-                "y": 1.0,
-                "z": 0.0
+                "x": 20.0,
+                "y": 13.199999809265137,
+                "z": 4.900000095367432
             },
             "rotate": {
                 "x": 0.0,
@@ -118,54 +118,97 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 5000.0,
-                "y": 571.2293701171875,
-                "z": -500.0
+                "x": 36.190643310546875,
+                "y": 9.727237701416016,
+                "z": 41.02629470825195
             }
         },
-        "camera": {
-            "positon": {
-                "x": 5000.0,
-                "y": 571.2293701171875,
-                "z": -500.0
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 1,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
             },
-            "target": {
-                "x": 5001.0,
-                "y": 571.2293701171875,
-                "z": -500.0
+            "rotationconstraints": {
+                "x": true,
+                "y": false,
+                "z": false
             },
-            "size": {
-                "x": 1151,
-                "y": 607
-            },
-            "near": 0.10000000149011612,
-            "far": 900.0
+            "gravity": true
         },
-        "pointlight": {
-            "lightcolor": {
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 2168,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/cube_diffuse.ctexture",
+                "../assets/Compressed/cube_emission.ctexture",
+                " ",
+                " ",
+                " ",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/Gun.geom",
+            "texturerefid": [
+                4119,
+                4248,
+                0,
+                0,
+                0,
+                0
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
                 "x": 1.0,
                 "y": 1.0,
                 "z": 1.0
             },
-            "linearfalloff": 0.0,
-            "quadraticfalloff": 0.0,
-            "intensity": 6.599999904632568
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "aisetting": {
+            "movementtype": 1,
+            "spreadout": 0.0,
+            "stayaway": 0.0,
+            "elevation": 0.0,
+            "targetname": "player",
+            "graphdataname": "FlyingGraphJazzTest"
         }
     },
     {
-        "entityid": 3,
+        "entityid": 1048578,
         "general": {
-            "name": "Floor",
-            "tagid": 3,
+            "name": "Wall",
+            "tagid": 4,
             "subtag": 0,
             "isActive": true,
             "isPaused": false
         },
         "transform": {
             "scale": {
-                "x": 1000.0,
-                "y": 1.0,
-                "z": 1000.0
+                "x": 200.0,
+                "y": 100.0,
+                "z": 10.0
             },
             "rotate": {
                 "x": 0.0,
@@ -173,9 +216,9 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
+                "x": 54.74578094482422,
+                "y": 49.292945861816406,
+                "z": -30.596050262451172
             }
         },
         "rigidbody": {
@@ -197,7 +240,7 @@
         "meshrenderer": {
             "vert": "../assets/shader_files/pointLight_vert.glsl",
             "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 2285,
+            "meshrefid": 3442,
             "instancecolor": {
                 "x": 1.0,
                 "y": 1.0,
@@ -211,16 +254,16 @@
                 "w": 1.0
             },
             "materialinstance": [
-                "../assets/Compressed/Wood Material 15_BaseColor.ctexture",
+                "../assets/Compressed/Brick wall 4_baseColor.ctexture",
                 "../assets/Compressed/cube_emission.ctexture",
                 " ",
                 " ",
                 " ",
                 " "
             ],
-            "mesh": "../assets/compiled_geom/cube.geom",
+            "mesh": "../assets/compiled_geom/Model_Wall_12x10x1.geom",
             "texturerefid": [
-                5242,
+                4923,
                 4248,
                 0,
                 0,
@@ -243,116 +286,7 @@
         }
     },
     {
-        "entityid": 4,
-        "general": {
-            "name": "ILOVEYOU",
-            "tagid": 1,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 5.0,
-                "y": 5.0,
-                "z": 5.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 330.0,
-                "z": 3.132326602935791
-            },
-            "translate": {
-                "x": -1.741842269897461,
-                "y": 17.21161651611328,
-                "z": 45.195430755615234
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 1,
-            "velocity": {
-                "x": -3.3814563751220703,
-                "y": -15.7520751953125,
-                "z": -18.34455680847168
-            },
-            "rotationconstraints": {
-                "x": true,
-                "y": false,
-                "z": false
-            },
-            "gravity": true
-        },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 3314,
-            "instancecolor": {
-                "x": 1.0,
-                "y": 0.29556649923324585,
-                "z": 0.29556649923324585,
-                "w": 1.0
-            },
-            "bloomthreshold": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "materialinstance": [
-                "../assets/Compressed/Cube_Texture_1.ctexture",
-                "../assets/Compressed/cube_emission.ctexture",
-                " ",
-                " ",
-                " ",
-                " "
-            ],
-            "mesh": "../assets/compiled_geom/Cylinder_Arrow.geom",
-            "texturerefid": [
-                4242,
-                4248,
-                0,
-                0,
-                0,
-                0
-            ]
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "translateoffset": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "istrigger": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/ILOVEYOU.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "prefab": {
-            "prefab": "ZipBomb"
-        },
-        "aisetting": {
-            "movementtype": 2,
-            "spreadout": 0.0,
-            "stayaway": 100.0,
-            "elevation": 20.0,
-            "targetname": "player",
-            "graphdataname": "FlyingGraphJazzTest"
-        }
-    },
-    {
-        "entityid": 5,
+        "entityid": 1048579,
         "general": {
             "name": "ZipBomb",
             "tagid": 1,
@@ -461,19 +395,128 @@
         }
     },
     {
-        "entityid": 7,
+        "entityid": 1048580,
         "general": {
-            "name": "Wall",
-            "tagid": 4,
+            "name": "ILOVEYOU",
+            "tagid": 1,
             "subtag": 0,
             "isActive": true,
             "isPaused": false
         },
         "transform": {
             "scale": {
-                "x": 200.0,
-                "y": 100.0,
-                "z": 10.0
+                "x": 5.0,
+                "y": 5.0,
+                "z": 5.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 330.0,
+                "z": 3.132326602935791
+            },
+            "translate": {
+                "x": -1.741842269897461,
+                "y": 17.21161651611328,
+                "z": 45.195430755615234
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 1,
+            "velocity": {
+                "x": -3.3814563751220703,
+                "y": -15.7520751953125,
+                "z": -18.34455680847168
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": false,
+                "z": false
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3314,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 0.29556649923324585,
+                "z": 0.29556649923324585,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Cube_Texture_1.ctexture",
+                "../assets/Compressed/cube_emission.ctexture",
+                " ",
+                " ",
+                " ",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/Cylinder_Arrow.geom",
+            "texturerefid": [
+                4242,
+                4248,
+                0,
+                0,
+                0,
+                0
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/ILOVEYOU.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "prefab": {
+            "prefab": "ZipBomb"
+        },
+        "aisetting": {
+            "movementtype": 2,
+            "spreadout": 0.0,
+            "stayaway": 100.0,
+            "elevation": 20.0,
+            "targetname": "player",
+            "graphdataname": "FlyingGraphJazzTest"
+        }
+    },
+    {
+        "entityid": 1048581,
+        "general": {
+            "name": "Floor",
+            "tagid": 3,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1000.0,
+                "y": 1.0,
+                "z": 1000.0
             },
             "rotate": {
                 "x": 0.0,
@@ -481,9 +524,9 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 54.74578094482422,
-                "y": 49.292945861816406,
-                "z": -30.596050262451172
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
             }
         },
         "rigidbody": {
@@ -505,7 +548,7 @@
         "meshrenderer": {
             "vert": "../assets/shader_files/pointLight_vert.glsl",
             "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 3442,
+            "meshrefid": 2285,
             "instancecolor": {
                 "x": 1.0,
                 "y": 1.0,
@@ -519,16 +562,16 @@
                 "w": 1.0
             },
             "materialinstance": [
-                "../assets/Compressed/Brick wall 4_baseColor.ctexture",
+                "../assets/Compressed/Wood Material 15_BaseColor.ctexture",
                 "../assets/Compressed/cube_emission.ctexture",
                 " ",
                 " ",
                 " ",
                 " "
             ],
-            "mesh": "../assets/compiled_geom/Model_Wall_12x10x1.geom",
+            "mesh": "../assets/compiled_geom/cube.geom",
             "texturerefid": [
-                4923,
+                5242,
                 4248,
                 0,
                 0,
@@ -548,6 +591,159 @@
                 "z": 0.0
             },
             "istrigger": false
+        }
+    },
+    {
+        "entityid": 1048582,
+        "general": {
+            "name": "Camera",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.0,
+                "y": 1.0,
+                "z": 0.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 5000.0,
+                "y": 571.2293701171875,
+                "z": -500.0
+            }
+        },
+        "camera": {
+            "positon": {
+                "x": 5000.0,
+                "y": 571.2293701171875,
+                "z": -500.0
+            },
+            "target": {
+                "x": 5001.0,
+                "y": 571.2293701171875,
+                "z": -500.0
+            },
+            "size": {
+                "x": 1151,
+                "y": 607
+            },
+            "near": 0.10000000149011612,
+            "far": 900.0
+        },
+        "pointlight": {
+            "lightcolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "linearfalloff": 0.0,
+            "quadraticfalloff": 0.0,
+            "intensity": 6.599999904632568
+        }
+    },
+    {
+        "entityid": 1048583,
+        "general": {
+            "name": "player",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 8.0,
+                "y": 8.0,
+                "z": 8.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": -0.0005388862919062376,
+                "z": -3.1415743827819824
+            },
+            "translate": {
+                "x": 70.15164947509766,
+                "y": 4.499995231628418,
+                "z": -135.6868896484375
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 1,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": false,
+                "z": false
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 2285,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Cube_Texture_White.ctexture",
+                "../assets/Compressed/cube_emission.ctexture",
+                " ",
+                " ",
+                " ",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/cube.geom",
+            "texturerefid": [
+                4706,
+                4248,
+                0,
+                0,
+                0,
+                0
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/AIPlayerTest.lua",
+                    "variables": []
+                }
+            ]
         }
     }
 ]
