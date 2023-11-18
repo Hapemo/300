@@ -2,6 +2,7 @@
 #extension GL_ARB_gpu_shader_int64 : enable
 
 // -- INPUTS --
+in vec4 vertexColor;        // Custom Color of the vertex
 in vec2 TexCoords;		    // Texture Coordinates
 in vec4 Tex_Ent_ID;		    // Texture ID, Entity ID
 in mat3 TBN;			    // Tangent-to-world matrix
@@ -10,6 +11,7 @@ in vec4 Bloom_Threshold;    // Bloom Threshold
 
 
 // -- OUTPUTS --
+layout (location = 0) out vec4 outVertexColor;
 layout (location = 1) out uint outEntityID;
 layout (location = 2) out vec4 BrightColor;
 
@@ -68,7 +70,8 @@ void main()
     gAlbedoSpec = vec4(diffuse, specular);
     gEmission   = emission;
 
-    // Write Entity ID
+    // Write Entity ID, bloom threshold and custom vertex color
     outEntityID = uint(Tex_Ent_ID.y);
     BrightColor = Bloom_Threshold;
+    outVertexColor = vertexColor;
 }

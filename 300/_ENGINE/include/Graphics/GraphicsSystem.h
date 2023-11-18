@@ -306,6 +306,7 @@ public:
 	// -- 2D Image Rendering --
 	GFX::Mesh						m_Image2DMesh;
 	GFX::Mesh						m_HealthbarMesh;
+	GFX::Mesh						m_PortalMesh;
 	std::vector<unsigned>			m_Image2DStore;
 	GFX::Quad2D						mScreenQuad;
 
@@ -327,13 +328,6 @@ private:
 	GLuint64 GetAndStoreBindlessTextureHandle(int texID);	// Stores adn Return the 64bit texture handle and makes it resident
 
 	void SetupShaderStorageBuffers();		// Creates all SSBO required
-
-	// -- 2D Image Rendering --
-	GFX::Mesh						m_Image2DMesh;
-	GFX::Mesh						m_HealthbarMesh;
-	GFX::Mesh						m_PortalMesh;
-	std::vector<unsigned>			m_Image2DStore;
-	GFX::Quad2D						mScreenQuad;
 
 	void DrawAll2DInstances(unsigned shaderID);
 	void Add2DImageInstance(float width, float height, vec3 const& position, unsigned texHandle, unsigned entityID = 0xFFFFFFFF, float degree = 0.f, vec4 const& color = vec4{ 1.f, 1.f, 1.f, 1.f });

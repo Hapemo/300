@@ -94,8 +94,8 @@ void GFX::MsFBO::BlitFramebuffer(unsigned int destFBO)
 
 	for (int i{}; i < 7; ++i)
 	{
-		glReadBuffer(GL_COLOR_ATTACHMENT1 + i);
-		glDrawBuffer(GL_COLOR_ATTACHMENT1 + i);
+		glReadBuffer(GL_COLOR_ATTACHMENT0 + i);
+		glDrawBuffer(GL_COLOR_ATTACHMENT0 + i);
 		glBlitFramebuffer(0, 0, mWidth, mHeight, 0, 0, mWidth, mHeight, GL_COLOR_BUFFER_BIT, GL_NEAREST);
 	}
 	glBlitFramebuffer(0, 0, mWidth, mHeight, 0, 0, mWidth, mHeight, GL_DEPTH_BUFFER_BIT, GL_NEAREST);
@@ -238,10 +238,12 @@ void GFX::IntermediateFBO::BlitFramebuffer(unsigned int destFBO)
 	glBindFramebuffer(GL_READ_FRAMEBUFFER, mID);
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, destFBO);
 
-	// Copies only the Entity ID data
-	glReadBuffer(GL_COLOR_ATTACHMENT1);
-	glDrawBuffer(GL_COLOR_ATTACHMENT1);
-	glBlitFramebuffer(0, 0, mWidth, mHeight, 0, 0, mWidth, mHeight, GL_COLOR_BUFFER_BIT, GL_NEAREST);
+	for (int i{}; i < 2; ++i)
+	{
+		glReadBuffer(GL_COLOR_ATTACHMENT0 + i);
+		glDrawBuffer(GL_COLOR_ATTACHMENT0 + i);
+		glBlitFramebuffer(0, 0, mWidth, mHeight, 0, 0, mWidth, mHeight, GL_COLOR_BUFFER_BIT, GL_NEAREST);
+	}
 	glBlitFramebuffer(0, 0, mWidth, mHeight, 0, 0, mWidth, mHeight, GL_DEPTH_BUFFER_BIT, GL_NEAREST);
 
 	glReadBuffer(GL_NONE);
