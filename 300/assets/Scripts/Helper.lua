@@ -99,3 +99,7 @@ function Helper.DirectionToAngle(vec)
     end
     return degree
 end
+
+function Helper.CreateSphereParticle(vec)
+    systemManager.ecs:NewEntityFromPrefab("SphereParticle", vec)   
+end
