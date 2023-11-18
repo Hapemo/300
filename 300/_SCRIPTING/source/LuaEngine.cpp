@@ -331,7 +331,9 @@ void LuaPhysics()
 void LuaScripting()
 {
     systemManager->mScriptingSystem->luaState.new_usertype<ScriptingSystem>(
-        "mScriptingSystem", sol::constructors<>()
+        "mScriptingSystem", sol::constructors<>(),
+        "TestingFromScriptSys", &ScriptingSystem::TestingFromScriptSys,
+        "CreateVectorString", &ScriptingSystem::CreateVectorString
     );
 }
 

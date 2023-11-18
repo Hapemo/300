@@ -57,7 +57,13 @@ function Update()
     elseif Input.CheckKey(State.HOLD, Key.DOWN) then
         transformComponent.mTranslate.y = transformComponent.mTranslate.y - speed
     elseif Input.CheckKey(State.HOLD, Key.RIGHT) then
+        --scriptingSys = systemManager:mScriptingSystem();
         transformComponent.mTranslate.x = transformComponent.mTranslate.x + speed
+        -- vector = scriptingSys:CreateVectorString();
+        -- vector:add("Hello");
+        -- vector:add("Testing !!")
+        -- vector:add("This actually works.")
+        -- scriptingSys:TestingFromScriptSys(vector)
     elseif Input.CheckKey(State.HOLD, Key.KEY_A) then
         -- print("Value: ", test)
         -- print("VEC X: ", vec.x)
