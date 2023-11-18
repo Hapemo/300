@@ -1,0 +1,104 @@
+{
+    "entityid": 3145731,
+    "general": {
+        "name": "TrojanSoldier",
+        "tagid": 1,
+        "subtag": 0,
+        "isActive": true,
+        "isPaused": false
+    },
+    "transform": {
+        "scale": {
+            "x": 0.10000020265579224,
+            "y": 0.16989222168922424,
+            "z": 0.10000020265579224
+        },
+        "rotate": {
+            "x": 0.0,
+            "y": 89.80000305175781,
+            "z": 0.041999999433755875
+        },
+        "translate": {
+            "x": 6.178221702575684,
+            "y": -10.910388946533203,
+            "z": -16.90349769592285
+        }
+    },
+    "rigidbody": {
+        "density": 10.0,
+        "material": 1,
+        "motion": 1,
+        "velocity": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "rotationconstraints": {
+            "x": true,
+            "y": false,
+            "z": false
+        },
+        "gravity": true
+    },
+    "meshrenderer": {
+        "vert": "../assets/shader_files/pointLight_vert.glsl",
+        "frag": "../assets/shader_files/pointLight_frag.glsl",
+        "meshrefid": 3309,
+        "instancecolor": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+        },
+        "bloomthreshold": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+        },
+        "materialinstance": [
+            "../assets/Compressed/Trojan_Soldier_BaseColor.ctexture",
+            "../assets/Compressed/Trojan_Soldier_Normal.ctexture",
+            "../assets/Compressed/Trojan_Soldier_Metallic.ctexture",
+            "../assets/Compressed/Trojan_Soldier_Roughness.ctexture",
+            "../assets/Compressed/Trojan_Soldier_Emissive.ctexture",
+            "../assets/Compressed/Trojan_Soldier_AO.ctexture"
+        ],
+        "mesh": "../assets/compiled_geom/Trojan_Soldier.geom",
+        "texturerefid": [
+            5291,
+            5018,
+            5212,
+            5359,
+            5238,
+            4545
+        ]
+    },
+    "boxcollider": {
+        "scaleoffset": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+        },
+        "translateoffset": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "istrigger": false
+    },
+    "scripts": {
+        "scriptscontainer": []
+    },
+    "prefab": {
+        "prefab": "TrojanSoldier"
+    },
+    "aisetting": {
+        "movementtype": 1,
+        "spreadout": 0.0,
+        "stayaway": 0.0,
+        "elevation": 0.0,
+        "targetname": "player",
+        "graphdataname": ""
+    }
+}
