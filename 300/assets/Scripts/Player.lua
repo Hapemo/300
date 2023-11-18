@@ -79,6 +79,8 @@ local gunThreshHold_max_x = 0.9
 
 local recoil_factor = 0.5
 
+local bullet_scale = Vec3.new()
+
 -- gun states
 local gunState 
 local gunEquipped = "BASIC" -- rename this to whatever
@@ -321,6 +323,10 @@ function Update()
             end
         end
 -- Toggle Weapons
+        if(inputMapSys:GetButtonDown("Weapon1")) then 
+            print("Swapping to revolver")
+            gunEquipped = "BASIC"
+        end
        if(inputMapSys:GetButtonDown("Weapon2")) then 
             print("Swapping to shotgun")
             gunEquipped = "SHOTGUN"
@@ -336,6 +342,7 @@ function Update()
             end
         else
 -- Gun Script
+            -- print("CURRENT GUN STATE:", gunState) -- uncomment to debug
             -- 'y' : vertical-axis
             if (gunState == "IDLE") then
                 local displacement_x = gunTranslate.x - original_translation.x 
@@ -412,7 +419,7 @@ function Update()
                     gunTranslate.y = gunTranslate.y - gunDisplaceSpeed
                 end
 
-                gunState = "MOVING"
+                gunState = "MOVING" 
 
                 -- print("GUN MOVES", movement.z * 0.001) 
                 -- print("GUN TRANSLATE (Y): " , gunTranslate.y)
@@ -507,17 +514,13 @@ function Update()
             shotgun()
         end
 
-        -- if(gunTranslate.z == original_translate_z) then
-        --     gunTranslate.z = gunTranslate.z + recoil_factor -- recoil
-        -- else if (gunTranslate.z < gunTranslate.z + recoil_factor) then
-        --     gunTranslate.z = gunTranslate.z + recoil_factor -- recoil
-        -- end
-
         if(gunTranslate.z + recoil_factor <= original_translate_z + recoil_factor) then
             gunTranslate.z = gunTranslate.z + recoil_factor -- recoil
+            --print("1")
         else 
             gunTranslate.z = original_translate_z 
             gunTranslate.z = gunTranslate.z + recoil_factor -- recoil
+            --print("2")
         end
 
         bulletAudioComp:SetPlay(0.1)
@@ -611,21 +614,44 @@ end
 
 function shotgun()
     print("SHOOTING SHOTGUN : 3 pellets")
-    positions_final.x = positions.x + viewVecCam.x*5
-    positions_final.y = positions.y + viewVecCam.y*5
-    positions_final.z = positions.z + viewVecCam.z*5  
+    local r = math.random(20,50)
+    --initial_spread_range = 40
 
-    prefabEntity1 = systemManager.ecs:NewEntityFromPrefab("bullet", positions_final)
-    prefabEntity2 = systemManager.ecs:NewEntityFromPrefab("bullet", positions_final)
+    -- for i = 0, 3 , 1 
+    -- do 
+    --     positions_final.x = positions
+    -- end
 
-    rotationCam.x = rotationCam.z *360
-    rotationCam.y = rotationCam.x *0
-    rotationCam.z = rotationCam.z *0
-    prefabEntity:GetTransform().mRotate = rotationCam    
-    viewVecCam.x = viewVecCam.x*100
-    viewVecCam.y=viewVecCam.y *100
-    viewVecCam.z=viewVecCam.z *100
 
-    physicsSys:SetVelocity(prefabEntity, viewVecCam)
+    -- Position of bullet spawn
+    print("VIEW VEC CAM (X): " , viewVecCam.x)
+    print("VIEW VEC CAM (Y): ", viewVecCam.y)
+    
+    positions_final.x = positions.x 
+    positions_final.y = positions.y 
+    positions_final.z = positions.z 
+
+    -- Scale down the bullets (shotgun) - realised prefabs need to be scaled down in the file
+
+    -- TODO: Generate 3 random directions for the shotgun particles (not too apart)
+    
+    bulletPrefab1 = systemManager.ecs:NewEntityFromPrefab("bullet", positions_final)
+    -- bulletPrefab2 = systemManager.ecs:NewEntityFromPrefab("bullet", positions_final)
+    -- bulletPrefab3 = systemManager.ecs:NewEntityFromPrefab("bullet", positions_final)
+    original_scale = bulletPrefab1:GetTransform().mScale 
+   -- print("BEFORE: " , bulletPrefab1:GetTransform().mScale.x , bulletPrefab1:GetTransform().mScale.y, bulletPrefab1:GetTransform().mScale.z)
+    bulletPrefab1:GetTransform().mScale.x = original_scale.x / 2
+    bulletPrefab1:GetTransform().mScale.y = original_scale.y / 2
+    bulletPrefab1:GetTransform().mScale.z = original_scale.z / 2
+
+   -- print("AFTER: " , bulletPrefab1:GetTransform().mScale.x , bulletPrefab1:GetTransform().mScale.y, bulletPrefab1:GetTransform().mScale.z)
+
+    viewVecCam.x = viewVecCam.x * 100
+    viewVecCam.y = viewVecCam.y * 100
+    viewVecCam.z = viewVecCam.z * 100
+    
+    physicsSys:SetVelocity(bulletPrefab1, viewVecCam)
+
+
 end 
 
