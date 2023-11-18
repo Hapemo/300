@@ -99,7 +99,7 @@ public:
 	/**************************************************************************/
 	void Update(float dt);
 
-	void Draw(bool forEditor = false);
+	void Draw(float dt, bool forEditor = false);
 
 	/***************************************************************************/
 	/*!
