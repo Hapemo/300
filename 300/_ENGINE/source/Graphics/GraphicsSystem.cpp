@@ -539,6 +539,7 @@ void GraphicsSystem::Draw(float dt, bool forEditor)
 			}
 		}
 
+		m_PingPongFbo.UnloadAndClear();
 		glDepthMask(GL_TRUE);
 	}
 
