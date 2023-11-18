@@ -143,6 +143,11 @@ void Scene::RemoveEntity(Entity _e) {
 	PINFO("Removed Entity (%s) from Scene (%s)", std::to_string(static_cast<int>(_e.id)).c_str(), mName.c_str());
 }
 
+bool Scene::HasEntity(Entity e)
+{
+	return mEntities.contains(e);
+}
+
 bool Scene::IsError() {
 	return operator==(*systemManager->mGameStateSystem->GetErrorScene());
 }
