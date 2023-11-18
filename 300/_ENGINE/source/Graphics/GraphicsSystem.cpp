@@ -488,52 +488,58 @@ void GraphicsSystem::Draw(float dt, bool forEditor)
 	ComputeDeferredLight(forEditor);
 	glEnable(GL_BLEND);			// Enable back blending for later draws
 
-	GFX::FBO* fbo = forEditor ? &m_Fbo : &m_GameFbo;
-
-	if (systemManager->mGraphicsSystem->m_EnableCRT && !systemManager->mGraphicsSystem->m_EnableChromaticAbberation)
 	{
-		// CRT post processing effect. Called here so it can be rendered over the UI
-		PostProcessing::CRTBlendFramebuffers(*fbo, m_PingPongFbo, dt);
-	}
+		// Post Processing Area
+		glDepthMask(GL_FALSE);
+		GFX::FBO* fbo = forEditor ? &m_Fbo : &m_GameFbo;
 
-	if (systemManager->mGraphicsSystem->m_EnableChromaticAbberation)
-	{
-		if (mBloomType == PHYS_BASED_BLOOM)
-			PostProcessing::ChromaticAbbrebationBlendFramebuffers(*fbo, m_PhysBloomRenderer.getBloomTexture());
-		else
-			PostProcessing::ChromaticAbbrebationBlendFramebuffers(*fbo, m_PingPongFbo.pingpongColorbuffers[0]);
-	}
-
-	if (systemManager->mGraphicsSystem->m_EnableBloom)
-	{
-		if (mBloomType == BloomType::PHYS_BASED_BLOOM)
+		if (systemManager->mGraphicsSystem->m_EnableCRT && !systemManager->mGraphicsSystem->m_EnableChromaticAbberation)
 		{
-			m_PhysBloomRenderer.PrepForDraw();
-			m_PhysBloomRenderer.RenderBloom(fbo->GetBrightColorsAttachment(), mFilterRadius);
-			PostProcessing::AdditiveBlendFramebuffers(*fbo, fbo->GetColorAttachment(), m_PhysBloomRenderer.getBloomTexture());
+			// CRT post processing effect. Called here so it can be rendered over the UI
+			PostProcessing::CRTBlendFramebuffers(*fbo, m_PingPongFbo, dt);
 		}
 
-		else
+		if (systemManager->mGraphicsSystem->m_EnableChromaticAbberation)
 		{
-			//Render the bloom for the Editor Framebuffer
-			m_PingPongFbo.PrepForDraw();
-
-			if (mBloomType == BloomType::GAUSSIANBLUR)
-			{
-				uid gaussianshaderstr("GaussianBlurShader");
-				GFX::Shader& gaussianShaderInst = *systemManager->mResourceTySystem->get_Shader(gaussianshaderstr.id);
-				m_PingPongFbo.GaussianBlur(gaussianShaderInst, *fbo, systemManager->mGraphicsSystem->mTexelOffset, systemManager->mGraphicsSystem->mSamplingWeight);
-			}
-
-			else if (mBloomType == BloomType::GAUSSIANBLUR_VER2)
-			{
-				uid gaussianshaderstr("GaussianBlurShaderVer2");
-				GFX::Shader& gaussianShaderInst = *systemManager->mResourceTySystem->get_Shader(gaussianshaderstr.id);
-				m_PingPongFbo.GaussianBlurShader(gaussianShaderInst, *fbo, systemManager->mGraphicsSystem->mSamplingWeight);
-			}
-
-			PostProcessing::AdditiveBlendFramebuffers(*fbo, fbo->GetColorAttachment(), m_PingPongFbo.pingpongColorbuffers[0]);
+			if (mBloomType == PHYS_BASED_BLOOM)
+				PostProcessing::ChromaticAbbrebationBlendFramebuffers(*fbo, m_PhysBloomRenderer.getBloomTexture());
+			else
+				PostProcessing::ChromaticAbbrebationBlendFramebuffers(*fbo, m_PingPongFbo.pingpongColorbuffers[0]);
 		}
+
+		if (systemManager->mGraphicsSystem->m_EnableBloom)
+		{
+			if (mBloomType == BloomType::PHYS_BASED_BLOOM)
+			{
+				m_PhysBloomRenderer.PrepForDraw();
+				m_PhysBloomRenderer.RenderBloom(fbo->GetBrightColorsAttachment(), mFilterRadius);
+				PostProcessing::AdditiveBlendFramebuffers(*fbo, fbo->GetColorAttachment(), m_PhysBloomRenderer.getBloomTexture());
+			}
+
+			else
+			{
+				//Render the bloom for the Editor Framebuffer
+				m_PingPongFbo.PrepForDraw();
+
+				if (mBloomType == BloomType::GAUSSIANBLUR)
+				{
+					uid gaussianshaderstr("GaussianBlurShader");
+					GFX::Shader& gaussianShaderInst = *systemManager->mResourceTySystem->get_Shader(gaussianshaderstr.id);
+					m_PingPongFbo.GaussianBlur(gaussianShaderInst, *fbo, systemManager->mGraphicsSystem->mTexelOffset, systemManager->mGraphicsSystem->mSamplingWeight);
+				}
+
+				else if (mBloomType == BloomType::GAUSSIANBLUR_VER2)
+				{
+					uid gaussianshaderstr("GaussianBlurShaderVer2");
+					GFX::Shader& gaussianShaderInst = *systemManager->mResourceTySystem->get_Shader(gaussianshaderstr.id);
+					m_PingPongFbo.GaussianBlurShader(gaussianShaderInst, *fbo, systemManager->mGraphicsSystem->mSamplingWeight);
+				}
+
+				PostProcessing::AdditiveBlendFramebuffers(*fbo, fbo->GetColorAttachment(), m_PingPongFbo.pingpongColorbuffers[0]);
+			}
+		}
+
+		glDepthMask(GL_TRUE);
 	}
 
 	// Set blend function back to usual for UI rendering
@@ -1968,4 +1974,15 @@ void MeshRenderer::SetTexture(MaterialType MaterialType, const std::string& Text
 void PointLight::SetColor(const vec3& color)
 {
 	mLightColor = color;
+}
+
+
+void UIrenderer::SetTexture(const std::string& Texturename)
+{
+	std::string MaterialInstancePath = systemManager->mResourceTySystem->compressed_texture_path + Texturename + ".ctexture";
+
+	std::string descFilepath = MaterialInstancePath + ".desc";
+	unsigned guid = _GEOM::GetGUID(descFilepath);
+
+	mTextureRef.data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(guid));
 }

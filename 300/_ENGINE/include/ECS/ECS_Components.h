@@ -196,6 +196,7 @@ struct UIrenderer : public Serializable
 	{
 		mDegree = degree;
 	}
+	void SetTexture(const std::string& Texturename);
 	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
 	void DeserializeSelf(rapidjson::Value& reader);
 };
