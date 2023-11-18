@@ -3759,16 +3759,6 @@
             },
             "near": 0.10000000149011612,
             "far": 900.0
-        },
-        "pointlight": {
-            "lightcolor": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "linearfalloff": 0.0,
-            "quadraticfalloff": 0.0,
-            "intensity": 1.5
         }
     },
     {
@@ -9244,7 +9234,7 @@
         }
     },
     {
-        "entityid": 53477534,
+        "entityid": 152,
         "general": {
             "name": "bullet",
             "tagid": 0,
