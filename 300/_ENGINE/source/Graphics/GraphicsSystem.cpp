@@ -968,7 +968,8 @@ void GraphicsSystem::DrawGameScene()
 void GraphicsSystem::Exit()
 {
 	m_Image2DMesh.Destroy();
-
+	m_HealthbarMesh.Destroy();
+	m_PortalMesh.Destroy();
 }
 
 /***************************************************************************/
@@ -1717,10 +1718,8 @@ void GraphicsSystem::DrawAllHealthbarInstance(const mat4& viewProj)
 	// Set view projection matrix uniform
 	glUniformMatrix4fv(m_HealthbarViewProjLocation, 1, GL_FALSE, &viewProj[0][0]);
 
-	glDisable(GL_DEPTH_TEST);
 	// Draw call
 	glDrawArraysInstanced(GL_TRIANGLE_FAN, 0, 4, static_cast<GLsizei>(m_HealthbarMesh.mLTW.size()));
-	glEnable(GL_DEPTH_TEST);
 
 	// Unbinding shader and VAO
 	GFX::Shader::Deactivate();
@@ -1958,10 +1957,8 @@ void GraphicsSystem::DrawAllPortals(bool editorDraw)
 	m_Quad3DShaderInst.Activate();
 	glUniformMatrix4fv(m_Quad3DShaderInst.GetUniformVP(), 1, GL_FALSE, &camVP[0][0]);
 
-	//glDisable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LEQUAL);
 	glDrawArraysInstanced(GL_TRIANGLE_FAN, 0, 4, GLsizei(m_PortalMesh.mLTW.size()));
-	//glEnable(GL_DEPTH_TEST);
 
 	m_PortalMesh.UnbindVao();
 	GFX::Shader::Deactivate();
