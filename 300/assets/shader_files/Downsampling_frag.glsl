@@ -87,7 +87,11 @@ void main()
     groups[3] *= KarisAverage(groups[3]);
     groups[4] *= KarisAverage(groups[4]);
     downsample.rgb = groups[0]+groups[1]+groups[2]+groups[3]+groups[4];
-    downsample.a *= 0.1;
+    
+    if(downsample.r > 1.0 || downsample.g > 1.0 || downsample.b > 1.0)
+        downsample.rgb = vec3(1.0, 1.0, 1.0);
+
+    downsample.a = 1.0;
 
 
     // Apply weighted distribution:
@@ -109,8 +113,6 @@ void main()
 //    downsample.rgb += (j+k+l+m)*0.125;
 //    downsample.a *= 0.1;
 
-    
-    
-    downsample = max(downsample, 0.0001f);
+    //downsample = max(downsample, 0.0001f);
 
 }
