@@ -1,0 +1,7 @@
+[
+    {
+        "ShaderProgram": "DownSampleShader",
+        "Vertex": "../assets/shader_files/Quad2D_vert.glsl",
+        "Fragment": "../assets/shader_files/Downsampling_frag.glsl"
+    }
+]

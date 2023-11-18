@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 50,
+        "entityid": 153,
         "general": {
             "name": "Leftshift",
             "tagid": 0,
@@ -32,7 +32,7 @@
         }
     },
     {
-        "entityid": 51,
+        "entityid": 154,
         "general": {
             "name": "Base",
             "tagid": 0,
@@ -64,7 +64,7 @@
         }
     },
     {
-        "entityid": 52,
+        "entityid": 155,
         "general": {
             "name": "crosshair-1",
             "tagid": 0,
@@ -84,8 +84,8 @@
                 "z": 0.0
             },
             "translate": {
-                "x": -102.0,
-                "y": 102.0,
+                "x": -132.0,
+                "y": 132.0,
                 "z": 0.0
             }
         },
@@ -104,7 +104,7 @@
         }
     },
     {
-        "entityid": 53,
+        "entityid": 156,
         "general": {
             "name": "crosshair-2",
             "tagid": 0,
@@ -124,8 +124,8 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 102.0,
-                "y": 102.0,
+                "x": 132.0,
+                "y": 132.0,
                 "z": 0.0
             }
         },
@@ -144,7 +144,7 @@
         }
     },
     {
-        "entityid": 54,
+        "entityid": 157,
         "general": {
             "name": "crosshair-4",
             "tagid": 0,
@@ -164,8 +164,8 @@
                 "z": 0.0
             },
             "translate": {
-                "x": -102.0,
-                "y": -102.0,
+                "x": -132.0,
+                "y": -132.0,
                 "z": 0.0
             }
         },
@@ -184,7 +184,7 @@
         }
     },
     {
-        "entityid": 55,
+        "entityid": 158,
         "general": {
             "name": "crosshair-3",
             "tagid": 0,
@@ -204,8 +204,8 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 102.0,
-                "y": -102.0,
+                "x": 132.0,
+                "y": -132.0,
                 "z": 0.0
             }
         },
