@@ -50,6 +50,7 @@ void GraphicsSystem::Init()
 		// -- Setup UI stuffs
 		m_HealthbarMesh.Setup2DImageMesh();
 		m_Image2DMesh.Setup2DImageMesh();
+		m_PortalMesh.Setup2DImageMesh();
 		for (int i{}; i < 32; ++i)
 		{
 			m_Textures.emplace_back(i);
@@ -412,8 +413,16 @@ void GraphicsSystem::Update(float dt)
 
 		Add2DImageInstance(uiWidth, uiHeight, uiPosition, texID, static_cast<int>(inst.id), uiRenderer.mDegree, uiRenderer.mColor);
 	}
-	// Send UI data to GPU
+	// Send UI data to GPU. Portal uses the same mesh
 	m_Image2DMesh.PrepForDraw();
+
+	m_PortalMesh.ClearInstances();
+	auto portals = systemManager->ecs->GetEntitiesWith<Portal>();
+	for (Entity p : portals)
+	{
+		AddPortalInstance(p);
+	}
+	m_PortalMesh.PrepForDraw();
 
 #pragma endregion
 }
@@ -504,6 +513,9 @@ void GraphicsSystem::Draw(bool forEditor)
 		//GFX::Shader& gaussianShaderInst = *systemManager->mResourceTySystem->get_Shader(gaussianshaderstr.id);
 		//m_PingPongFbo.GaussianBlur(gaussianShaderInst, m_Fbo, systemManager->mGraphicsSystem->mTexelOffset, systemManager->mGraphicsSystem->mSamplingWeight);
 
+		// Disable writing to depth buffer
+		glDepthMask(GL_FALSE);
+
 		uid gaussianshaderstr("GaussianBlurShaderVer2");
 		GFX::Shader& gaussianShaderInst = *systemManager->mResourceTySystem->get_Shader(gaussianshaderstr.id);
 		if (forEditor)
@@ -517,15 +529,23 @@ void GraphicsSystem::Draw(bool forEditor)
 			AdditiveBlendFramebuffers(m_GameFbo, m_GameFbo.GetColorAttachment(), m_PingPongFbo.pingpongColorbuffers[0]);
 		}
 
+		// Enable writing to depth buffer
+		glDepthMask(GL_TRUE);
 	}
 
 	if (systemManager->mGraphicsSystem->m_EnableChromaticAbberation)
 	{
+		// Disable writing to depth buffer
+		glDepthMask(GL_FALSE);
+
 		//ChromaticAbbrebationBlendFramebuffers(m_Fbo, m_Fbo.GetBrightColorsAttachment());
 		if (forEditor)
 			ChromaticAbbrebationBlendFramebuffers(m_Fbo, m_PingPongFbo.pingpongColorbuffers[0]);
 		else
 			ChromaticAbbrebationBlendFramebuffers(m_GameFbo, m_PingPongFbo.pingpongColorbuffers[0]);
+
+		// Enable writing to depth buffer
+		glDepthMask(GL_TRUE);
 	}
 
 	// Set blend function back to usual for UI rendering
@@ -542,6 +562,8 @@ void GraphicsSystem::Draw(bool forEditor)
 		m_GameFbo.Bind();
 		m_GameFbo.DrawBuffers(true);
 	}
+
+	DrawAllPortals(forEditor);	// Draw Portal object
 
 	// Render UI objects
 	m_UiShaderInst.Activate();		// Activate shader
@@ -1255,6 +1277,28 @@ void GraphicsSystem::UpdateCamera(CAMERA_TYPE type, const float &dt)
 	}
 }
 
+GFX::Camera GraphicsSystem::GetCamera(CAMERA_TYPE type)
+{
+	auto localcamera = systemManager->ecs->GetEntitiesWith<Camera>();
+	if (localcamera.empty())
+		return GFX::Camera(); // Cannot find camera Richmond
+	Entity camera = localcamera.front();
+
+	switch (type)
+	{
+	case CAMERA_TYPE::CAMERA_TYPE_GAME:
+		return camera.GetComponent<Camera>().mCamera;
+
+	case CAMERA_TYPE::CAMERA_TYPE_EDITOR:
+		return m_EditorCamera;
+
+	case CAMERA_TYPE::CAMERA_TYPE_ALL:
+		break;
+	}
+	PERROR("camera spoil - graphicssystem.cpp line 751");
+	return {};
+}
+
 /***************************************************************************/
 /*!
 \brief
@@ -1846,6 +1890,10 @@ void GraphicsSystem::SetupAllShaders()
 	// Initialize the G-buffer shader and uniform location
 	uid gBufferShaderstr("gBufferShader");
 	m_GBufferShaderInst = *systemManager->mResourceTySystem->get_Shader(gBufferShaderstr.id);
+
+	// Initialize the quad 3D Shader
+	uid quad3DShaderstr("Quad3D");
+	m_Quad3DShaderInst = *systemManager->mResourceTySystem->get_Shader(quad3DShaderstr.id);
 }
 
 mat4 GraphicsSystem::GetPortalViewMatrix(Transform const& destTransform)
@@ -1862,6 +1910,63 @@ mat4 GraphicsSystem::GetPortalViewMatrix(Transform const& destTransform)
 	return viewMatrix;
 }
 
+void GraphicsSystem::AddPortalInstance(Entity portal)
+{
+	float entID = static_cast<float>(portal.id);
+
+	Portal p = portal.GetComponent<Portal>();
+	mat4 S1 = glm::scale(p.mScale1);
+	mat4 R1 = glm::toMat4(glm::quat(glm::radians(p.mRotate1)));
+	mat4 T1 = glm::translate(p.mTranslate1);
+	mat4 ltw1 = T1 * R1 * S1;
+
+	m_PortalMesh.mLTW.push_back(ltw1);
+	m_PortalMesh.mColors.push_back(vec4(1.f, 1.f, 1.f, 1.f));
+	m_PortalMesh.mTexEntID.push_back(vec4(- 2.f, entID + 0.5f, 0.f, 0.f));
+
+	mat4 S2 = glm::scale(p.mScale2);
+	mat4 R2 = glm::toMat4(glm::quat(glm::radians(p.mRotate2)));
+	mat4 T2 = glm::translate(p.mTranslate2);
+	mat4 ltw2 = T2 * R2 * S2;
+
+	m_PortalMesh.mLTW.push_back(ltw2);
+	m_PortalMesh.mColors.push_back(vec4(1.f, 1.f, 1.f, 1.f));
+	m_PortalMesh.mTexEntID.push_back(vec4(-2.f, entID + 0.5f, 0.f, 0.f));
+
+	if (m_DebugDrawing)
+	{
+		vec4 normal1 = vec4(0.f, 0.f, 1.f, 0.f);
+		normal1 = R1 * normal1;
+		m_Renderer.AddLine(p.mTranslate1, p.mTranslate1 + vec3(normal1) * 5.f, vec4(0.f, 1.f, 0.f, 1.f));
+
+		vec4 normal2 = vec4(0.f, 0.f, 1.f, 0.f);
+		normal2 = R2 * normal2;
+		m_Renderer.AddLine(p.mTranslate2, p.mTranslate2 + vec3(normal2) * 5.f, vec4(0.f, 1.f, 0.f, 1.f));
+	}
+}
+
+void GraphicsSystem::DrawAllPortals(bool editorDraw)
+{
+	// Get appropriate camera
+	GFX::Camera camera = GetCamera(CAMERA_TYPE::CAMERA_TYPE_GAME);
+	if (editorDraw)
+		camera = GetCamera(CAMERA_TYPE::CAMERA_TYPE_EDITOR);
+
+	mat4 camVP = camera.viewProj();
+
+	m_PortalMesh.BindVao();
+	m_Quad3DShaderInst.Activate();
+	glUniformMatrix4fv(m_Quad3DShaderInst.GetUniformVP(), 1, GL_FALSE, &camVP[0][0]);
+
+	//glDisable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LEQUAL);
+	glDrawArraysInstanced(GL_TRIANGLE_FAN, 0, 4, GLsizei(m_PortalMesh.mLTW.size()));
+	//glEnable(GL_DEPTH_TEST);
+
+	m_PortalMesh.UnbindVao();
+	GFX::Shader::Deactivate();
+}
+
 void GraphicsSystem::ComputeDeferredLight(bool editorDraw)
 {
 	if (editorDraw)	// Draw to Editor FBO
@@ -1875,10 +1980,15 @@ void GraphicsSystem::ComputeDeferredLight(bool editorDraw)
 		glBindImageTexture(1, m_GameFbo.GetBrightColorsAttachment(), 0, GL_FALSE, 0, GL_WRITE_ONLY, GL_RGBA32F);
 	}
 
+	// Set appropriate camera position
+	vec3 camPos = GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_GAME);
+	if (editorDraw)
+		camPos = m_EditorCamera.position();
+
 	computeDeferred.Activate();
 
 	glUniform1i(m_ComputeDeferredLightCountLocation, m_LightCount);
-	glUniform3fv(m_ComputeDeferredCamPosLocation, 1, &m_EditorCamera.mPosition[0]);
+	glUniform3fv(m_ComputeDeferredCamPosLocation, 1, &camPos[0]);
 	glUniform4fv(m_ComputeDeferredGlobalTintLocation, 1, &m_GlobalTint[0]);
 	vec4 globalBloom = vec4(mAmbientBloomThreshold, m_EnableBloom);
 	glUniform4fv(m_ComputeDeferredGlobalBloomLocation, 1, &globalBloom[0]);

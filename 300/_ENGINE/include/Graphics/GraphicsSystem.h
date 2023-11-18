@@ -171,6 +171,7 @@ public:
 		Getters
 	*/
 	/**************************************************************************/
+	GFX::Camera GetCamera(CAMERA_TYPE type);
 	vec3 GetCameraPosition(CAMERA_TYPE type);
 	vec3 GetCameraTarget(CAMERA_TYPE type);
 	vec3 GetCameraDirection(CAMERA_TYPE type);			// Direction vector of the camera (Target - position)
@@ -296,6 +297,7 @@ public:
 	GFX::Shader m_AnimationShaderInst;
 	GFX::Shader m_GBufferShaderInst;
 	GFX::Shader m_DeferredLightShaderInst;
+	GFX::Shader m_Quad3DShaderInst;
 
 	// -- Flags --
 	int		m_DebugDrawing{ 0 };			// debug drawing 
@@ -332,6 +334,7 @@ private:
 	// -- 2D Image Rendering --
 	GFX::Mesh						m_Image2DMesh;
 	GFX::Mesh						m_HealthbarMesh;
+	GFX::Mesh						m_PortalMesh;
 	std::vector<unsigned>			m_Image2DStore;
 	GFX::Quad2D						mScreenQuad;
 
@@ -369,6 +372,10 @@ private:
 	// -- Shader Setup --
 	void SetupAllShaders();
 	mat4 GetPortalViewMatrix(Transform const& destTransform);
+
+	// -- Portal WIP --
+	void AddPortalInstance(Entity portal);
+	void DrawAllPortals(bool editorDraw);
 };
 
 #endif

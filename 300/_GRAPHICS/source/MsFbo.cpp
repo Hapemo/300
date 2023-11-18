@@ -98,6 +98,7 @@ void GFX::MsFBO::BlitFramebuffer(unsigned int destFBO)
 		glDrawBuffer(GL_COLOR_ATTACHMENT1 + i);
 		glBlitFramebuffer(0, 0, mWidth, mHeight, 0, 0, mWidth, mHeight, GL_COLOR_BUFFER_BIT, GL_NEAREST);
 	}
+	glBlitFramebuffer(0, 0, mWidth, mHeight, 0, 0, mWidth, mHeight, GL_DEPTH_BUFFER_BIT, GL_NEAREST);
 
 	glReadBuffer(GL_NONE);
 	glDrawBuffer(GL_NONE);
@@ -241,6 +242,7 @@ void GFX::IntermediateFBO::BlitFramebuffer(unsigned int destFBO)
 	glReadBuffer(GL_COLOR_ATTACHMENT1);
 	glDrawBuffer(GL_COLOR_ATTACHMENT1);
 	glBlitFramebuffer(0, 0, mWidth, mHeight, 0, 0, mWidth, mHeight, GL_COLOR_BUFFER_BIT, GL_NEAREST);
+	glBlitFramebuffer(0, 0, mWidth, mHeight, 0, 0, mWidth, mHeight, GL_DEPTH_BUFFER_BIT, GL_NEAREST);
 
 	glReadBuffer(GL_NONE);
 	glDrawBuffer(GL_NONE);
