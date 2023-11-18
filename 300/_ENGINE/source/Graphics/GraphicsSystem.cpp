@@ -1873,8 +1873,12 @@ void GraphicsSystem::ComputeDeferredLight(bool editorDraw)
 
 	computeDeferred.Activate();
 
+	vec3 camPos = GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_GAME);
+	if (editorDraw)
+		camPos = m_EditorCamera.position();
+
 	glUniform1i(m_ComputeDeferredLightCountLocation, m_LightCount);
-	glUniform3fv(m_ComputeDeferredCamPosLocation, 1, &m_EditorCamera.mPosition[0]);
+	glUniform3fv(m_ComputeDeferredCamPosLocation, 1, &camPos[0]);
 	glUniform4fv(m_ComputeDeferredGlobalTintLocation, 1, &m_GlobalTint[0]);
 	vec4 globalBloom = vec4(mAmbientBloomThreshold, m_EnableBloom);
 	glUniform4fv(m_ComputeDeferredGlobalBloomLocation, 1, &globalBloom[0]);
