@@ -68,6 +68,18 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 
 	auto listener_entity = systemManager->ecs->GetEntitiesWith<AudioListener>(); // There will only be '1' <AudioListenr> object
 
+	/*auto transform_entities = systemManager->ecs->GetEntitiesWith<Transform>();
+
+	for (Entity e : transform_entities)
+	{
+		Transform& trans = e.GetComponent<Transform>();
+		General& gen = e.GetComponent<General>();
+
+		if (gen.name == "gun")
+			int hi = 4;
+
+		int hi = 3;
+	}*/
 	// Listener Stuff
 	if (listener_entity.size() == 1) // if there is no listeners. skip this portion
 	{
