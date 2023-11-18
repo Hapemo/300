@@ -577,12 +577,10 @@ void GraphicsSystem::Draw(bool forEditor)
 	auto healthbarInstances = systemManager->ecs->GetEntitiesWith<Healthbar>();
 	for (Entity inst : healthbarInstances)
 	{
-		Healthbar& healthbar = inst.GetComponent<Healthbar>();
-		
 		if (forEditor)
-			AddHealthbarInstance(healthbar, GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR), static_cast<int>(inst.id));
+			AddHealthbarInstance(inst, GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR), static_cast<int>(inst.id));
 		else
-			AddHealthbarInstance(healthbar, GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_GAME), static_cast<int>(inst.id));
+			AddHealthbarInstance(inst, GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_GAME), static_cast<int>(inst.id));
 	}
 	m_HealthbarMesh.PrepForDraw();
 	DrawAllHealthbarInstance(camVP);
@@ -725,9 +723,7 @@ void GraphicsSystem::EditorDraw(float dt)
 	 auto healthbarInstances = systemManager->ecs->GetEntitiesWith<Healthbar>();
 	 for (Entity inst : healthbarInstances)
 	 {
-		 Healthbar& healthbar = inst.GetComponent<Healthbar>();
-
-		 AddHealthbarInstance(healthbar, GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR), static_cast<int>(inst.id));
+		 AddHealthbarInstance(inst, GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR), static_cast<int>(inst.id));
 	 }
 	 m_HealthbarMesh.PrepForDraw();
 	 DrawAllHealthbarInstance(m_EditorCamera.viewProj());
@@ -890,9 +886,7 @@ void GraphicsSystem::GameDraw(float dt)
 	auto healthbarInstances = systemManager->ecs->GetEntitiesWith<Healthbar>();
 	for (Entity inst : healthbarInstances)
 	{
-		Healthbar& healthbar = inst.GetComponent<Healthbar>();
-
-		AddHealthbarInstance(healthbar, GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_GAME), static_cast<int>(inst.id));
+		AddHealthbarInstance(inst, GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_GAME), static_cast<int>(inst.id));
 	}
 	m_HealthbarMesh.PrepForDraw();
 	DrawAllHealthbarInstance(gameCamVP);
@@ -1726,8 +1720,11 @@ void GraphicsSystem::DrawAllHealthbarInstance(const mat4& viewProj)
 	m_HealthbarMesh.UnbindVao();
 }
 
-void GraphicsSystem::AddHealthbarInstance(const Healthbar& healthbar, const vec3& camPos, unsigned entityID)
+void GraphicsSystem::AddHealthbarInstance(Entity e, const vec3& camPos, unsigned entityID)
 {
+	Healthbar& healthbar = e.GetComponent<Healthbar>();
+	vec3 originPos = e.GetComponent<Transform>().mTranslate;
+
 	// Compute the rotation vectors
 	vec3 normal = camPos - healthbar.mPosition;
 	vec3 up = { 0, 1, 0 };
@@ -1746,7 +1743,7 @@ void GraphicsSystem::AddHealthbarInstance(const Healthbar& healthbar, const vec3
 		vec4(glm::normalize(right), 0.0f),
 		vec4(glm::normalize(forward), 0.0f),
 		vec4(glm::normalize(normal), 0.0f),
-		vec4(healthbar.mPosition, 1.0f)
+		vec4(healthbar.mPosition + originPos, 1.0f)
 	};
 
 	mat4 world = rotate * scale;

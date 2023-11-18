@@ -343,7 +343,7 @@ private:
 	int StoreTextureIndex(unsigned texHandle);
 
 	// -- Health Bar --
-	void AddHealthbarInstance(const Healthbar& healthbar, const vec3& camPos, unsigned entityID = 0xFFFFFFFF);
+	void AddHealthbarInstance(Entity e, const vec3& camPos, unsigned entityID = 0xFFFFFFFF);
 	void DrawAllHealthbarInstance(const mat4& viewProj);
 	GLint m_HealthbarViewProjLocation{};
 
