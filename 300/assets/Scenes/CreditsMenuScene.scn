@@ -1,100 +1,8 @@
 [
     {
-        "entityid": 3145734,
+        "entityid": 2097158,
         "general": {
-            "name": "StartButton",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 600.0,
-                "y": -133.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -1320.0,
-                "y": -400.0,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 4270,
-            "degree": 0.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 1
-        },
-        "button": {
-            "interactable": true,
-            "hover": true,
-            "click": true,
-            "activated": false,
-            "renderflag": true
-        }
-    },
-    {
-        "entityid": 3145778,
-        "general": {
-            "name": "QuitButton",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 600.0,
-                "y": -133.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -1320.0,
-                "y": -800.0,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 4163,
-            "degree": 0.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 1
-        },
-        "button": {
-            "interactable": true,
-            "hover": true,
-            "click": true,
-            "activated": false,
-            "renderflag": true
-        }
-    },
-    {
-        "entityid": 3145779,
-        "general": {
-            "name": "CreditsButton",
+            "name": "BackButton",
             "tagid": 6,
             "subtag": 0,
             "isActive": true,
@@ -119,7 +27,7 @@
         },
         "uirenderer": {
             "texpath": "",
-            "textureref": 4462,
+            "textureref": 3872,
             "degree": 0.0,
             "color": {
                 "x": 1.0,
@@ -138,7 +46,7 @@
         }
     },
     {
-        "entityid": 4194356,
+        "entityid": 3145780,
         "general": {
             "name": "MenuBackground",
             "tagid": 6,
@@ -165,7 +73,7 @@
         },
         "uirenderer": {
             "texpath": "../assets/Compressed/MainMenuEmpty.ctexture",
-            "textureref": 4188,
+            "textureref": 4079,
             "degree": 0.0,
             "color": {
                 "x": 1.0,
@@ -177,7 +85,7 @@
         }
     },
     {
-        "entityid": 4194357,
+        "entityid": 3145781,
         "general": {
             "name": "BGM",
             "tagid": 0,
@@ -213,7 +121,7 @@
         }
     },
     {
-        "entityid": 4194358,
+        "entityid": 3145782,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -258,7 +166,7 @@
         }
     },
     {
-        "entityid": 4194359,
+        "entityid": 3145783,
         "general": {
             "name": "TV ON",
             "tagid": 0,
