@@ -130,7 +130,7 @@ void AudioSystem::Update([[maybe_unused]] float dt, bool calling_from_pause)
 		}
 
 		// Update 3D Channel Attributes (moving objects)
-		//if (audio_component.m3DAudio)
+		if (audio_component.m3DAudio)
 		{
 			FMOD::Channel* chn_ptr = GetChannelPointer(audio_component.mAudioType, audio_component.mChannelID);
 			
@@ -265,12 +265,12 @@ void AudioSystem::Update([[maybe_unused]] float dt, bool calling_from_pause)
 			// Check if the current sound has finished playing...
 
 			// [11/20] Supporting multiple audio instances
-			for (auto it = audio_component.mListOfChannelIDs.begin(); it != audio_component.mListOfChannelIDs.end(); ++it)
+			for (auto it = audio_component.mListOfChannelIDs.begin(); it != audio_component.mListOfChannelIDs.end();)
 			{
 				uid channel_id = *it;
 
 				if (!IsChannelPlaying(channel_id, audio_component.mAudioType))
-				{
+				{ 
 					audio_component.mState = Audio::FINISHED;
 					NullChannelPointer(audio_component.mAudioType, channel_id);
 					PINFO("DONE PLAYING");
@@ -282,6 +282,11 @@ void AudioSystem::Update([[maybe_unused]] float dt, bool calling_from_pause)
 					{
 						--it; // Adjust the iterator to stay at the current position after erasing
 					}
+				}
+
+				else
+				{
+					++it;
 				}
 			}
 			break;
