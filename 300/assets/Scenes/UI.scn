@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 153,
+        "entityid": 4194322,
         "general": {
             "name": "Leftshift",
             "tagid": 0,
@@ -32,7 +32,7 @@
         }
     },
     {
-        "entityid": 154,
+        "entityid": 4194323,
         "general": {
             "name": "Base",
             "tagid": 0,
@@ -72,7 +72,7 @@
         }
     },
     {
-        "entityid": 155,
+        "entityid": 4194324,
         "general": {
             "name": "crosshair-1",
             "tagid": 0,
@@ -112,7 +112,7 @@
         }
     },
     {
-        "entityid": 156,
+        "entityid": 4194325,
         "general": {
             "name": "crosshair-2",
             "tagid": 0,
@@ -152,7 +152,7 @@
         }
     },
     {
-        "entityid": 157,
+        "entityid": 4194326,
         "general": {
             "name": "crosshair-4",
             "tagid": 0,
@@ -192,7 +192,7 @@
         }
     },
     {
-        "entityid": 158,
+        "entityid": 4194327,
         "general": {
             "name": "crosshair-3",
             "tagid": 0,
@@ -232,7 +232,7 @@
         }
     },
     {
-        "entityid": 159,
+        "entityid": 4194328,
         "general": {
             "name": "P1",
             "tagid": 0,
@@ -242,7 +242,7 @@
         },
         "transform": {
             "scale": {
-                "x": 100.0,
+                "x": -100.0,
                 "y": 100.0,
                 "z": 1.0
             },
@@ -267,7 +267,7 @@
         }
     },
     {
-        "entityid": 160,
+        "entityid": 4194329,
         "general": {
             "name": "P3",
             "tagid": 0,
@@ -277,7 +277,7 @@
         },
         "transform": {
             "scale": {
-                "x": 100.0,
+                "x": -100.0,
                 "y": 100.0,
                 "z": 1.0
             },
@@ -299,7 +299,7 @@
         }
     },
     {
-        "entityid": 161,
+        "entityid": 4194330,
         "general": {
             "name": "P4",
             "tagid": 0,
@@ -309,7 +309,7 @@
         },
         "transform": {
             "scale": {
-                "x": 100.0,
+                "x": -100.0,
                 "y": 100.0,
                 "z": 1.0
             },
@@ -331,7 +331,7 @@
         }
     },
     {
-        "entityid": 162,
+        "entityid": 4194331,
         "general": {
             "name": "P5",
             "tagid": 0,
@@ -341,7 +341,7 @@
         },
         "transform": {
             "scale": {
-                "x": 100.0,
+                "x": -100.0,
                 "y": 100.0,
                 "z": 1.0
             },
@@ -363,7 +363,7 @@
         }
     },
     {
-        "entityid": 163,
+        "entityid": 4194332,
         "general": {
             "name": "P6",
             "tagid": 0,
@@ -373,7 +373,7 @@
         },
         "transform": {
             "scale": {
-                "x": 100.0,
+                "x": -100.0,
                 "y": 100.0,
                 "z": 1.0
             },
@@ -395,7 +395,7 @@
         }
     },
     {
-        "entityid": 164,
+        "entityid": 4194333,
         "general": {
             "name": "P7",
             "tagid": 0,
@@ -405,7 +405,7 @@
         },
         "transform": {
             "scale": {
-                "x": 100.0,
+                "x": -100.0,
                 "y": 100.0,
                 "z": 1.0
             },
@@ -427,7 +427,7 @@
         }
     },
     {
-        "entityid": 165,
+        "entityid": 4194334,
         "general": {
             "name": "P8",
             "tagid": 0,
@@ -437,7 +437,7 @@
         },
         "transform": {
             "scale": {
-                "x": 100.0,
+                "x": -100.0,
                 "y": 100.0,
                 "z": 1.0
             },
@@ -459,7 +459,7 @@
         }
     },
     {
-        "entityid": 166,
+        "entityid": 4194335,
         "general": {
             "name": "P2",
             "tagid": 0,
@@ -469,7 +469,7 @@
         },
         "transform": {
             "scale": {
-                "x": 100.0,
+                "x": -100.0,
                 "y": 100.0,
                 "z": 1.0
             },
@@ -488,38 +488,6 @@
             "texpath": "",
             "textureref": 4923,
             "degree": 360.0
-        }
-    },
-    {
-        "entityid": 167,
-        "general": {
-            "name": "cccc",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": -100.0,
-                "y": 100.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
-            "textureref": 4923,
-            "degree": 0.0
         }
     }
 ]

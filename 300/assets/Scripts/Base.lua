@@ -1,10 +1,12 @@
 _G.obj =1
 local position_1 = Vec3.new(180,-820,0)
-_G.weaponArray = {{0,false},{0,false},{0,false},{0,false},{0,false},{0,false},{0,false},{1,true}}
+_G.weaponArray = {{1,false,0},{1,false,0},{1,false,0},{1,false,0},{1,false,0},{1,false,0},{1,false,0},{1,true,1}}
 local weaponPosition = {-1700,-1430,-1170,-900,-620,-360,-90,180 }
-local dispensor = {}
+local dispensor = {1,1,1}
 local disCount = 3
 local dashui = { }
+_G.textureArray  = {"Environment_Floor_BaseColor", "Gun_Base_Color", "Trojan_Soldier_BaseColor"}
+
 
 local spawnTime = 0
 local dispenseTime = 0
@@ -28,8 +30,10 @@ function Update()
     spawnTime = spawnTime +  FPSManager.GetDT()
     if(spawnTime > 1)then
 
-        if (disCount <2)then
-        table.insert(dispensor,1)
+        if (disCount <3)then
+        --table.insert(dispensor,1)
+        dispensor[disCount] = math.random(1,3)
+        --print(dispensor[disCount])
         disCount = disCount+1
         spawnTime =0
         end
@@ -45,7 +49,16 @@ function Update()
         else
             if(dispenseTime > 1)then
                -- print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
+
+               --local newpos = position_1
+                math.randomseed(os.time())
+                local randn = math.random(1,3)
                 dEntity = systemManager.ecs:NewEntityFromPrefab("UI-Spawned", position_1)
+                uirend  = dEntity:GetUIrenderer()
+                dtransform = dEntity:GetTransform()
+                dtransform.mTranslate.z = randn
+                -- uirend:SetTexture(_G.textureArray[dispensor[disCount]])
+                uirend:SetTexture(_G.textureArray[randn])
                 -- _G.obj = _G.obj+1
 
                 disCount = disCount-1
@@ -62,27 +75,35 @@ function Update()
     --49 = keycode for number '0'
     if(Input.CheckKey(State.PRESS,Key.KEY_1))then
         _G.weaponArray[8][2] = false
+        _G.weaponArray[8][3] = 0
         ArraySystem(8)
     elseif(Input.CheckKey(State.PRESS,Key.KEY_2))then
         _G.weaponArray[7][2] = false
+        _G.weaponArray[7][3] = 0
         ArraySystem(7)
     elseif(Input.CheckKey(State.PRESS,Key.KEY_3))then
         _G.weaponArray[6][2] = false
+        _G.weaponArray[6][3] = 0
         ArraySystem(6)
     elseif(Input.CheckKey(State.PRESS,Key.KEY_4))then
         _G.weaponArray[5][2] = false
+        _G.weaponArray[5][3] = 0
         ArraySystem(5)
     elseif(Input.CheckKey(State.PRESS,Key.KEY_5))then
         _G.weaponArray[4][2] = false
+        _G.weaponArray[4][3] = 0
         ArraySystem(4)
     elseif(Input.CheckKey(State.PRESS,Key.KEY_6))then
         _G.weaponArray[3][2] = false
+        _G.weaponArray[3][3] = 0
         ArraySystem(3)
     elseif(Input.CheckKey(State.PRESS,Key.KEY_7))then
         _G.weaponArray[2][2] = false
+        _G.weaponArray[2][3] = 0
         ArraySystem(2)
     elseif(Input.CheckKey(State.PRESS,Key.KEY_8))then
         _G.weaponArray[1][2] = false
+        _G.weaponArray[1][3] = 0
         ArraySystem(1)
     end
 
@@ -124,6 +145,7 @@ function ArraySystem(index)
 
              _G.weaponArray[i][1]= _G.weaponArray[i-1][1]
              _G.weaponArray[i][2]= _G.weaponArray[i-1][2]
+             _G.weaponArray[i][3]= _G.weaponArray[i-1][3]
             _G.weaponArray[i-1][2] = false
 
 
@@ -136,6 +158,7 @@ function DisplayArray()
     do
         if(_G.weaponArray[i][2] == true)then
             uirender = dashui[i]:GetUIrenderer()
+            uirender:SetTexture(_G.textureArray[_G.weaponArray[i][1]])      
             uirender:SetDegree(0)
 
         else
