@@ -74,32 +74,49 @@ local dashAudioComp
 local fadeOutTimer = 0.0
 local fadeOutDuration = 5.0
 local dt
-local teleporter1
-local teleporter2
-local tpfin1
-local tpfin2
+--local teleporter1
+--local teleporter2
+-- local tpfin1
+-- local tpfin2
+local tutTeleporter
+local skiptutTeleporter
+local box2Spawn
 local playertpoffset = Vec3.new()
 
 local cameraEntity
 
 local tpTime
-local onTpTime
+--local onTpTime
 local collideWithTP
 local originalSamplingWeight
-local dashui = {}
-local dashrender= {}
+-- local dashui = {}
+--local dashrender= {}
 
-local tpcolor = Vec4.new(0, 0, 0, 1)
+-- local tpcolor = Vec4.new(0, 0, 0, 1)
 
 local inputMapSys = {}
 
-_G.tester = 0
-testing = 0
+-- _G.tester = 0
+-- testing = 0
 
-testingSet = Vec3.new();
-testingSet.x = 5;
-testingSet.y = 6;
-testingSet.z = 6;
+-- testingSet = Vec3.new();
+-- testingSet.x = 5;
+-- testingSet.y = 6;
+-- testingSet.z = 6;
+
+--Set when collide with teleporter to go next box
+local travelBox = false
+
+TutBox = {
+   FIRST = 1,
+   SECOND = 2,
+   THIRD = 3,
+   FOURTH = 4,
+   FIFTH = 5,
+   NONE = 6
+}
+
+local tutState = TutBox.FIRST
 
 function Alive()
     gameStateSys = systemManager:mGameStateSystem();
@@ -110,8 +127,8 @@ function Alive()
     cameraEntity = Helper.GetScriptEntity(script_entity.id)
     totaltime = 3.0
 
-    -- audioComp = cameraEntity:GetAudio()
-    dashui = gameStateSys:GetEntity("UI1")
+    -- -- audioComp = cameraEntity:GetAudio()
+    -- dashui = gameStateSys:GetEntity("UI1")
 
     bulletAudioEntity = gameStateSys:GetEntity("Bullet Shoot")
     bulletAudioComp = bulletAudioEntity:GetAudio()
@@ -124,15 +141,18 @@ function Alive()
 
     dashTime = 3.0
     tpTime = 20.0
-    teleporter1 = gameStateSys:GetEntity("Teleporter1")
-    teleporter2 = gameStateSys:GetEntity("Teleporter2")
+    -- teleporter1 = gameStateSys:GetEntity("Teleporter1")
+    -- teleporter2 = gameStateSys:GetEntity("Teleporter2")
     --walkingenemy = gameStateSys:GetEntity("enemy1_walking", "testSerialization")
-    onTpTime = 0;
+    --onTpTime = 0;
     collideWithTP = 0
     originalSamplingWeight = graphicsSys.mSamplingWeight
-    tpfin1 = gameStateSys:GetEntity("Fin1")
-    tpfin2 = gameStateSys:GetEntity("Fin2")
+    -- tpfin1 = gameStateSys:GetEntity("Fin1")
+    -- tpfin2 = gameStateSys:GetEntity("Fin2")
 
+    tutTeleporter = gameStateSys:GetEntity("Tutorial")
+    skiptutTeleporter = gameStateSys:GetEntity("Skip Tutorial")
+    box2Spawn = gameStateSys:GetEntity("Box2Spawn")
 end
 
 function Update()
@@ -177,6 +197,13 @@ function Update()
 
     end
 
+    if tutState == TutBox.SECOND then
+        if travelBox == true then
+            Helper.SetTranslate(cameraEntity, box2Spawn:GetTransform().mTranslate)
+            travelBox = false
+        end
+    end
+
 --endregion
 
 
@@ -185,69 +212,37 @@ function Update()
     -- use '.' to reference variable
     tpTime = tpTime + FPSManager.GetDT();
 
-    meshtp1 = teleporter1:GetMeshRenderer()
-    meshtp2 = teleporter2:GetMeshRenderer()
-    meshtp3 = tpfin1:GetMeshRenderer()
-    meshtp4 = tpfin2:GetMeshRenderer()
+    --meshtp1 = teleporter1:GetMeshRenderer()
+    --meshtp2 = teleporter2:GetMeshRenderer()
+    --meshtp3 = tpfin1:GetMeshRenderer()
+    --meshtp4 = tpfin2:GetMeshRenderer()
 
-    tpcolor.x = 1.0 - (tpTime / 20.1)
-    tpcolor.y = tpTime / 20.1
-    meshtp1:SetColor(tpcolor)
-    meshtp2:SetColor(tpcolor)
-    meshtp3:SetColor(tpcolor)
-    meshtp4:SetColor(tpcolor)
+    -- tpcolor.x = 1.0 - (tpTime / 20.1)
+    -- tpcolor.y = tpTime / 20.1
+    -- meshtp1:SetColor(tpcolor)
+    -- meshtp2:SetColor(tpcolor)
+    -- meshtp3:SetColor(tpcolor)
+    -- meshtp4:SetColor(tpcolor)
 
-    dashrender = dashui:GetUIrenderer()
-    if (dashTime > 3.0) then
-        dashrender:SetDegree(0)
-    else
-        dashrender:SetDegree(360 - (dashTime / 3.0) * 360)
-    end
+   --dashrender = dashui:GetUIrenderer()
+    -- if (dashTime > 3.0) then
+    --     dashrender:SetDegree(0)
+    -- else
+    --     dashrender:SetDegree(360 - (dashTime / 3.0) * 360)
+    -- end
 
-    if (tpTime > 20.0) then
-        if (collideWithTP > 0) then
-            onTpTime = onTpTime + FPSManager.GetDT()
-            graphicsSys.mSamplingWeight = graphicsSys.mSamplingWeight + FPSManager.GetDT()
-            if (graphicsSys.mSamplingWeight > 2.5) then
-                graphicsSys.mSamplingWeight = 2.5
-            end
-            if (onTpTime > 0.8) then
-                if (collideWithTP == 1) then
-                    playertpoffset.x = cameraEntity:GetTransform().mTranslate.x - teleporter1:GetTransform().mTranslate.x;
-                    playertpoffset.y = cameraEntity:GetTransform().mTranslate.y - teleporter1:GetTransform().mTranslate.y;
-                    playertpoffset.z = cameraEntity:GetTransform().mTranslate.z - teleporter1:GetTransform().mTranslate.z;
-                    playertpoffset.x = playertpoffset.x + teleporter2:GetTransform().mTranslate.x;
-                    playertpoffset.y = playertpoffset.y + teleporter2:GetTransform().mTranslate.y;
-                    playertpoffset.z = playertpoffset.z + teleporter2:GetTransform().mTranslate.z;
-
-                    Helper.SetTranslate(cameraEntity, playertpoffset)
-                    tpTime = 0
-                    onTpTime = 0
-                elseif (collideWithTP == 2) then
-                    playertpoffset.x = cameraEntity:GetTransform().mTranslate.x - teleporter2:GetTransform().mTranslate.x;
-                    playertpoffset.y = cameraEntity:GetTransform().mTranslate.y - teleporter2:GetTransform().mTranslate.y;
-                    playertpoffset.z = cameraEntity:GetTransform().mTranslate.z - teleporter2:GetTransform().mTranslate.z;
-                    playertpoffset.x = playertpoffset.x + teleporter1:GetTransform().mTranslate.x;
-                    playertpoffset.y = playertpoffset.y + teleporter1:GetTransform().mTranslate.y;
-                    playertpoffset.z = playertpoffset.z + teleporter1:GetTransform().mTranslate.z;
-
-                    Helper.SetTranslate(cameraEntity, playertpoffset)
-                    tpTime = 0
-                    onTpTime = 0
-                end
-            end
-        else
-            graphicsSys.mSamplingWeight = graphicsSys.mSamplingWeight - FPSManager.GetDT()
-            if (graphicsSys.mSamplingWeight < originalSamplingWeight) then
-                graphicsSys.mSamplingWeight = originalSamplingWeight
-        end
-    end
-    else
-        graphicsSys.mSamplingWeight = graphicsSys.mSamplingWeight - FPSManager.GetDT()
-        if (graphicsSys.mSamplingWeight < originalSamplingWeight) then
-            graphicsSys.mSamplingWeight = originalSamplingWeight
-        end
-    end
+    -- if (tpTime <= 20.0) then  
+    --     graphicsSys.mSamplingWeight = graphicsSys.mSamplingWeight - FPSManager.GetDT()
+    --     if (graphicsSys.mSamplingWeight < originalSamplingWeight) then
+    --         graphicsSys.mSamplingWeight = originalSamplingWeight
+    --     end
+    -- end
+    -- else
+    --     graphicsSys.mSamplingWeight = graphicsSys.mSamplingWeight - FPSManager.GetDT()
+    --     if (graphicsSys.mSamplingWeight < originalSamplingWeight) then
+    --         graphicsSys.mSamplingWeight = originalSamplingWeight
+    --     end
+    -- end
 
     dashTime = dashTime + FPSManager.GetDT();
     positions = cameraEntity:GetTransform().mTranslate
@@ -339,7 +334,7 @@ function Update()
             end
             if (floorCount > 0) then
                 if (inputMapSys:GetButtonDown("Jump")) then
-                    movement.y = movement.y + 50.0;
+                    movement.y = movement.y + 100.0;
                     jumpAudioComp:SetPlay(0.4)
                 end
             end
@@ -402,18 +397,23 @@ function OnTriggerEnter(Entity)
     generalComponent = Entity:GetGeneral()
     tagid = generalComponent.tagid
     if (tagid == 3) then
+        print(generalComponent.name)
         floorCount = floorCount + 1;
     end
 
-    if (tagid == 1) then
-        -- play attack anim
-    end 
-
     if (tagid == 5) then
-        if (generalComponent.name == teleporter1:GetGeneral().name) then
-            collideWithTP = 1
-        elseif (generalComponent.name == teleporter2:GetGeneral().name) then
-            collideWithTP = 2
+        print(generalComponent.name)
+        -- if (generalComponent.name == teleporter1:GetGeneral().name) then
+        --     collideWithTP = 1
+        -- elseif (generalComponent.name == teleporter2:GetGeneral().name) then
+        --     collideWithTP = 2
+        -- end
+
+        if (generalComponent.name == skiptutTeleporter:GetGeneral().name) then
+            gameStateSys:ChangeGameState("Test")
+        elseif (generalComponent.name == tutTeleporter:GetGeneral().name) then
+            tutState = TutBox.SECOND
+            travelBox = true
         end
     end
 end
@@ -425,8 +425,8 @@ function OnTriggerExit(Entity)
         floorCount = floorCount - 1;
     end
     if (tagid == 5) then
-        collideWithTP = 0
-        onTpTime = 0
+        -- collideWithTP = 0
+        -- onTpTime = 0
     end
 end
 
