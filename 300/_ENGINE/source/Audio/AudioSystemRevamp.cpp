@@ -201,6 +201,7 @@ void AudioSystem::Update([[maybe_unused]] float dt, bool calling_from_pause)
 						audio_component.mNextActionState = Audio::INACTIVE;
 						audio_component.mCurrentlyPlaying = audio_component.mFileName; // for info display in editor.
 
+						audio_component.mListOfChannelIDs.push_back(audio_component.mChannelID); // push an instance of the audio where the channel is being played
 					}
 
 					else
@@ -262,9 +263,26 @@ void AudioSystem::Update([[maybe_unused]] float dt, bool calling_from_pause)
 
 		case Audio::PLAYING:
 			// Check if the current sound has finished playing...
-			if (!IsChannelPlaying(audio_component.mChannelID, audio_component.mAudioType))	// If finished playing...
+
+			// [11/20] Supporting multiple audio instances
+			for (auto it = audio_component.mListOfChannelIDs.begin(); it != audio_component.mListOfChannelIDs.end(); ++it)
 			{
-				audio_component.mState = Audio::FINISHED;
+				uid channel_id = *it;
+
+				if (!IsChannelPlaying(channel_id, audio_component.mAudioType))
+				{
+					audio_component.mState = Audio::FINISHED;
+					NullChannelPointer(audio_component.mAudioType, channel_id);
+					PINFO("DONE PLAYING");
+					std::cout << "DONE PLAYING" << std::endl;
+
+					// Remove the finished channel ID from the vector
+					it = audio_component.mListOfChannelIDs.erase(it);
+					if (it != audio_component.mListOfChannelIDs.end() && it != audio_component.mListOfChannelIDs.begin())
+					{
+						--it; // Adjust the iterator to stay at the current position after erasing
+					}
+				}
 			}
 			break;
 
@@ -994,6 +1012,22 @@ FMOD::Channel* AudioSystem::GetChannelPointer(AUDIOTYPE audio_type, uid channel_
 	}
 
 	return nullptr;
+}
+
+void AudioSystem::NullChannelPointer(AUDIOTYPE audio_type, uid channel_id)
+{
+	auto it = mChannels.find(audio_type);
+
+	if (it != mChannels.end())
+	{
+		for (auto& channel_pair : it->second)
+		{
+			if (channel_pair.first == channel_id)
+			{
+				channel_pair.second = nullptr;
+			}
+		}
+	}
 }
 
 

@@ -530,7 +530,8 @@ struct Audio : public Serializable
 	float		   mTypeChanged = false;				 // [For Editor] - trigger type change
 
 	// Q. Can a <Audio> entity have their very own channel.
-	uid            mChannelID;							 // Channel ID (this is being played in which channel...) 
+	uid              mChannelID;						 // Channel ID (this is being played in which channel...) 
+	std::vector<uid> mListOfChannelIDs;				     // What if there's multiple instances of such an audio
 
 	// Fade Volume Stuff
 	float fade_timer = 0.0f;							 // How long the fade has elapsed

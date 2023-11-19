@@ -74,7 +74,7 @@ public:
 	bool		 IsUniqueAudioPlaying(std::string audio_name);   // Unique Audio check
 	
 	FMOD::Channel* GetChannelPointer(AUDIOTYPE audio_type, uid channel_id);
-	
+	void           NullChannelPointer(AUDIOTYPE audio_type, uid channel_id);
 
 
 	// Data Members (Global Volume Multiplier)
