@@ -614,44 +614,160 @@ end
 
 function shotgun()
     print("SHOOTING SHOTGUN : 3 pellets")
-    local r = math.random(20,50)
-    --initial_spread_range = 40
 
-    -- for i = 0, 3 , 1 
+    local bullet_speed_modifier = 20
+    local number_of_bullets = 5
+
+    
+    for i = 1, number_of_bullets , 1 
+    do 
+        -- Apply Randomization 
+        randomAngleDegreesX = math.random(-5,5)
+        randomAngleDegreesY = math.random(-1,1)
+        randomAngleDegreesZ = math.random(-5,5)
+
+        -- Rotating the "Camera Direction" vector about the Z-axis (NORMALIZED)
+        rotatedVelocity_X = rotateVectorX(viewVec,randomAngleDegreesX)
+        rotatedVelocity_XY = rotateVectorY(rotatedVelocity_X, randomAngleDegreesY)
+        rotatedVelocity_XYZ = rotateVectorY(rotatedVelocity_XY, randomAngleDegreesZ)
+        
+        print("XYZ: " , rotatedVelocity_XYZ.x , rotatedVelocity_XYZ.y,  rotatedVelocity_XYZ.z)
+
+        -- Starting Position of bullet 
+        positions_final.x = positions.x +  rotatedVelocity_XYZ.x * 2 -- 'positions' - camera's translate
+        positions_final.y = positions.y +  rotatedVelocity_XYZ.y * 2 
+        positions_final.z = positions.z +  rotatedVelocity_XYZ.z * 2 
+
+        -- positions_final.x = positions.x +  rotatedVelocity_XY.x * 2 -- 'positions' - camera's translate
+        -- positions_final.y = positions.y +  rotatedVelocity_XY.y * 2 
+        -- positions_final.z = positions.z +  rotatedVelocity_XY.z * 2  
+
+        -- Scaling Randomnized "Rotated Vector"
+        rotatedVelocity_X.x =  rotatedVelocity_XYZ.x * bullet_speed_modifier
+        rotatedVelocity_X.y =  rotatedVelocity_XYZ.y * bullet_speed_modifier
+        rotatedVelocity_X.z =  rotatedVelocity_XYZ.z * bullet_speed_modifier
+
+        -- rotatedVelocity_XY.x =  rotatedVelocity_XY.x * bullet_speed_modifier
+        -- rotatedVelocity_XY.y =  rotatedVelocity_XY.y * bullet_speed_modifier
+        -- rotatedVelocity_XY.z =  rotatedVelocity_XY.z * bullet_speed_modifier
+
+        bulletPrefab = systemManager.ecs:NewEntityFromPrefab("bullet", positions_final)
+
+        -- Scaling Down (Shotgun pellets)
+        original_scale = bulletPrefab:GetTransform().mScale 
+        bulletPrefab:GetTransform().mScale.x = original_scale.x / 3
+        bulletPrefab:GetTransform().mScale.y = original_scale.y / 3
+        bulletPrefab:GetTransform().mScale.z = original_scale.z / 3
+
+        -- Rotation of bullets
+        rotationCam.x = rotationCam.z *360
+        rotationCam.y = rotationCam.x *0
+        rotationCam.z = rotationCam.z *0
+        bulletPrefab:GetTransform().mRotate = rotationCam    
+
+        -- print("ROTATED VECTOR:" , rotatedVelocity_XY.x, rotatedVelocity_XY.y, rotatedVelocity_XY.z)
+        
+        print("ROTATED VECTOR:" , rotatedVelocity_X.x, rotatedVelocity_X.y, rotatedVelocity_X.z)
+
+        --print("CREATING SHOTGUN BULLET")
+        physicsSys:SetVelocity(bulletPrefab, rotatedVelocity_X)
+
+    end
+    -- for i = 0, 2 , 1 
     -- do 
-    --     positions_final.x = positions
+    --     -- spread_angle = 1
+    --     randomX = math.random(-1,1)
+    --     randomY = math.random(-1,1)
+    --     randomZ = math.random(-1,1)
+    
+    --     print("RANDOM X: " , randomX)
+    --     print("RANDOM Y: " , randomY)
+
+
+        
+    --     -- Apply Randomization to the camera direction
+    --     shotgunSpread = Vec3.new()
+    --     shotgunSpread.x = viewVecCam.x + randomX / 5
+    --     shotgunSpread.y = viewVecCam.y + randomY / 5
+    --     shotgunSpread.z = (viewVecCam.z + randomZ) * 10
+
+    --     -- stop_moving = Vec3.new()
+    --     -- stop_moving.x = stop_moving.x + viewVecCam.x * 5
+    --     -- stop_moving.y = stop_moving.y + viewVecCam.y * 5
+    --     -- stop_moving.z = stop_moving.z + viewVecCam.z * 5
+
+
+    --     --print("SHOTGUN SPREAD:" ,shotgunSpread.x, shotgunSpread.y, shotgunSpread.z )
+
+    --     print("VIEW VEC:" , viewVecCam.x,viewVecCam.y,viewVecCam.z)
+
+    --     -- positions_final.x = positions.x + shotgunSpread.x * 5 
+    --     -- positions_final.y = positions.y + shotgunSpread.y * 5
+    --     -- positions_final.z = positions.z + shotgunSpread.z * 5  
+
+    --     positions_final.x = positions.x + viewVecCam.x * 3
+    --     positions_final.y = positions.y + viewVecCam.y * 3 
+    --     positions_final.z = positions.z + viewVecCam.z * 3  
+
+    --    -- print("STATIC POSITION" ,positions_final.x ,positions_final.y, positions_final.z )
+
+    --     bulletPrefab1 = systemManager.ecs:NewEntityFromPrefab("bullet", positions_final)
+    --     original_scale = bulletPrefab1:GetTransform().mScale 
+    --     bulletPrefab1:GetTransform().mScale.x = original_scale.x / 3
+    --     bulletPrefab1:GetTransform().mScale.y = original_scale.y / 3
+    --     bulletPrefab1:GetTransform().mScale.z = original_scale.z / 3
+
+    --     --print("CREATING SHOTGUN BULLET")
+    --     physicsSys:SetVelocity(bulletPrefab1, shotgunSpread)
     -- end
 
 
-    -- Position of bullet spawn
-    print("VIEW VEC CAM (X): " , viewVecCam.x)
-    print("VIEW VEC CAM (Y): ", viewVecCam.y)
-    
-    positions_final.x = positions.x 
-    positions_final.y = positions.y 
-    positions_final.z = positions.z 
-
-    -- Scale down the bullets (shotgun) - realised prefabs need to be scaled down in the file
-
-    -- TODO: Generate 3 random directions for the shotgun particles (not too apart)
-    
-    bulletPrefab1 = systemManager.ecs:NewEntityFromPrefab("bullet", positions_final)
-    -- bulletPrefab2 = systemManager.ecs:NewEntityFromPrefab("bullet", positions_final)
-    -- bulletPrefab3 = systemManager.ecs:NewEntityFromPrefab("bullet", positions_final)
-    original_scale = bulletPrefab1:GetTransform().mScale 
-   -- print("BEFORE: " , bulletPrefab1:GetTransform().mScale.x , bulletPrefab1:GetTransform().mScale.y, bulletPrefab1:GetTransform().mScale.z)
-    bulletPrefab1:GetTransform().mScale.x = original_scale.x / 2
-    bulletPrefab1:GetTransform().mScale.y = original_scale.y / 2
-    bulletPrefab1:GetTransform().mScale.z = original_scale.z / 2
-
-   -- print("AFTER: " , bulletPrefab1:GetTransform().mScale.x , bulletPrefab1:GetTransform().mScale.y, bulletPrefab1:GetTransform().mScale.z)
-
-    viewVecCam.x = viewVecCam.x * 100
-    viewVecCam.y = viewVecCam.y * 100
-    viewVecCam.z = viewVecCam.z * 100
-    
-    physicsSys:SetVelocity(bulletPrefab1, viewVecCam)
+   
 
 
 end 
+
+function rotateVectorX(vector, angleInDegrees)
+    angleInRadians = math.rad(angleInDegrees)
+
+    cosTheta = math.cos(angleInRadians)
+    sinTheta = math.sin(angleInRadians)
+
+    local rotatedVector = Vec3:new()
+    rotatedVector.x = vector.x
+    rotatedVector.y = cosTheta * vector.y - sinTheta * vector.z
+    rotatedVector.z = sinTheta * vector.y + cosTheta * vector.z
+
+    return rotatedVector
+end
+
+function rotateVectorY(vector, angleInDegrees)
+    angleInRadians = math.rad(angleInDegrees)
+
+    cosTheta = math.cos(angleInRadians)
+    sinTheta = math.sin(angleInRadians)
+
+    local rotatedVector = Vec3:new()
+    rotatedVector.x = cosTheta * vector.x + sinTheta * vector.z
+    rotatedVector.y = vector.y
+    rotatedVector.z = -sinTheta * vector.x + cosTheta * vector.z
+
+    return rotatedVector
+end
+
+
+function rotateVectorZ(vector, angleInDegrees)
+    angleInRadians = math.rad(angleInDegrees)
+
+    cosTheta = math.cos(angleInRadians)
+    sinTheta = math.sin(angleInRadians)
+
+    local rotatedVector = Vec3:new()
+    rotatedVector.x = cosTheta * vector.x - sinTheta * vector.y
+    rotatedVector.y = sinTheta * vector.x + cosTheta * vector.y
+    rotatedVector.z = vector.z
+
+    return rotatedVector
+end
+
 
