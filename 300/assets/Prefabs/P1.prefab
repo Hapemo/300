@@ -1,0 +1,35 @@
+{
+    "entityid": 77,
+    "general": {
+        "name": "P1",
+        "tagid": 0,
+        "subtag": 0,
+        "isActive": true,
+        "isPaused": false
+    },
+    "transform": {
+        "scale": {
+            "x": 100.0,
+            "y": 100.0,
+            "z": 1.0
+        },
+        "rotate": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "translate": {
+            "x": -1700.0,
+            "y": -820.5999755859375,
+            "z": 0.0
+        }
+    },
+    "uirenderer": {
+        "texpath": "",
+        "textureref": 4923,
+        "degree": 0.0
+    },
+    "prefab": {
+        "prefab": "P1"
+    }
+}

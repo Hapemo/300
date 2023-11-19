@@ -27,6 +27,8 @@
 #include <Ssbo.hpp>
 #include <ComputeShader.hpp>
 
+#include <Graphics/PostProcessing.h>
+
 /***************************************************************************/
 /*!
 \brief
@@ -97,7 +99,7 @@ public:
 	/**************************************************************************/
 	void Update(float dt);
 
-	void Draw(bool forEditor = false);
+	void Draw(float dt, bool forEditor = false);
 
 	/***************************************************************************/
 	/*!
@@ -114,23 +116,6 @@ public:
 	*/
 	/**************************************************************************/
 	void EditorDraw(float dt);
-
-	/***************************************************************************/
-	/*!
-	\brief
-		the additive draw function isolated to the editor's framebuffer
-	*/
-	/**************************************************************************/
-	void AdditiveBlendFramebuffers( GFX::FBO& targetFramebuffer, unsigned int Attachment0, unsigned int Attachment1);
-
-
-	/***************************************************************************/
-	/*!
-	\brief
-		the additive blend function for the chromatic abbrebation
-	*/
-	/**************************************************************************/
-	void ChromaticAbbrebationBlendFramebuffers(GFX::FBO& targetFramebuffer, unsigned int Attachment1);
 
 
 	/***************************************************************************/
@@ -253,12 +238,14 @@ public:
 // 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// -- Renderer --
-	GFX::DebugRenderer		m_Renderer;			// isolated to debug draws
-	GFX::FBO				m_Fbo;				// Editor Scene
-	GFX::FBO				m_GameFbo;			// Game Scene
-	GFX::MsFBO				m_MultisampleFBO;	// Multisample FBO
-	GFX::IntermediateFBO	m_IntermediateFBO;	// Intermediate FBO
-	GFX::PingPongFBO		m_PingPongFbo;		// Post Processing
+	GFX::DebugRenderer			m_Renderer;				// isolated to debug draws
+	GFX::FBO					m_Fbo;					// Editor Scene
+	GFX::FBO					m_GameFbo;				// Game Scene
+	GFX::MsFBO					m_MultisampleFBO;		// Multisample FBO
+	GFX::IntermediateFBO		m_IntermediateFBO;		// Intermediate FBO
+	GFX::PingPongFBO			m_PingPongFbo;			// Post Processing
+	PhysBasedBloomRenderer		m_PhysBloomRenderer;	// Bloom
+
 
 	// -- Window --
 	GFX::Window*		m_Window;
@@ -277,13 +264,17 @@ public:
 	float		mAmbientBloomExposure{ 0.4f };						
 	float		mTexelOffset{ 1.f };							// Gaussian blur Ver1						
 	float		mSamplingWeight{ 1.f };							// Gaussian blur Ver1/2
+	float		mFilterRadius{ 0.001f };						// Phys Based Bloom
+
+	BloomType	mBloomType{ BloomType::PHYS_BASED_BLOOM };		// defaults to Phys based bloom
 
 	// -- Chromatic Abbreation --
 	float		mChromaticOffset{ 0.006f };
 	float		mChromaticStrength{ 1.f };
 
-	bool		m_EnableBloom{ true };									// this yj
-	bool		m_EnableChromaticAbberation{ true };					// this yj
+	bool		m_EnableBloom{ true };									
+	bool		m_EnableChromaticAbberation{ true };					
+	bool		m_EnableCRT{ false };						// this yj
 
 	// -- Textures --
 	std::vector<int> m_Textures;	// 0, 1, ..., 31
@@ -310,6 +301,12 @@ public:
 	// -- Stats --
 	int		m_LightCount{};
 
+	// -- 2D Image Rendering --
+	GFX::Mesh						m_Image2DMesh;
+	GFX::Mesh						m_HealthbarMesh;
+	std::vector<unsigned>			m_Image2DStore;
+	GFX::Quad2D						mScreenQuad;
+
 	void Unload();
 
 private:
@@ -328,12 +325,6 @@ private:
 	GLuint64 GetAndStoreBindlessTextureHandle(int texID);	// Stores adn Return the 64bit texture handle and makes it resident
 
 	void SetupShaderStorageBuffers();		// Creates all SSBO required
-
-	// -- 2D Image Rendering --
-	GFX::Mesh						m_Image2DMesh;
-	GFX::Mesh						m_HealthbarMesh;
-	std::vector<unsigned>			m_Image2DStore;
-	GFX::Quad2D						mScreenQuad;
 
 	void DrawAll2DInstances(unsigned shaderID);
 	void Add2DImageInstance(float width, float height, vec2 const& position, unsigned texHandle, unsigned entityID = 0xFFFFFFFF, float degree = 0.f, vec4 const& color = vec4{ 1.f, 1.f, 1.f, 1.f });

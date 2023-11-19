@@ -111,3 +111,11 @@ function Helper.DirectionToAngle(entity, vec)
     end
     return degree
 end
+
+function Helper.SetFloatVarFromOtherScript_Scene(entityName, sceneName, scriptName, varName, varValue)
+    gameStateSys = systemManager:mGameStateSystem()
+    e = gameStateSys:GetEntity(entityName , sceneName)
+    scriptingComp = e:GetScripts()
+    script = scriptingComp:GetScript(scriptName)
+    script:SetValueFloat(varName, varValue)
+end
