@@ -1191,59 +1191,59 @@ void GraphicsSystem::SetCameraSize(CAMERA_TYPE type, ivec2 size)
 inline void drawViewFrustum(Entity gameCamera)
 {
 	auto& camera = gameCamera.GetComponent<Camera>().mCamera;
+	systemManager->mGraphicsSystem->m_Renderer.AddFrustum(camera.viewProj(), vec4(1.f, 1.f, 0.5f, 1.f));
+	//mat4 inv = glm::inverse(camera.mView);
 
-	mat4 inv = glm::inverse(camera.mView);
+	//float halfHeight = tanf(glm::radians(camera.mFovDegree / 2.f));
+	//float halfWidth = halfHeight * camera.mAspectRatio;
 
-	float halfHeight = tanf(glm::radians(camera.mFovDegree / 2.f));
-	float halfWidth = halfHeight * camera.mAspectRatio;
+	//float near1 = camera.mNear;
+	//float far1 = camera.mFar;
+	//float xn = halfWidth * near1;
+	//float xf = halfWidth * far1;
+	//float yn = halfHeight * near1;
+	//float yf = halfHeight * far1;
 
-	float near1 = camera.mNear;
-	float far1 = camera.mFar;
-	float xn = halfWidth * near1;
-	float xf = halfWidth * far1;
-	float yn = halfHeight * near1;
-	float yf = halfHeight * far1;
+	//glm::vec4 f[8u] =
+	//{
+	//	// near face
+	//	{xn, yn,	-near1, 1.f},
+	//	{-xn, yn,	-near1, 1.f},
+	//	{xn, -yn,	-near1, 1.f},
+	//	{-xn, -yn,	-near1 , 1.f},
 
-	glm::vec4 f[8u] =
-	{
-		// near face
-		{xn, yn,	-near1, 1.f},
-		{-xn, yn,	-near1, 1.f},
-		{xn, -yn,	-near1, 1.f},
-		{-xn, -yn,	-near1 , 1.f},
+	//	// far face
+	//	{xf, yf,	-far1, 1.f},
+	//	{-xf, yf,	-far1 , 1.f},
+	//	{xf, -yf,	-far1 , 1.f},
+	//	{-xf, -yf,	-far1, 1.f},
+	//};
 
-		// far face
-		{xf, yf,	-far1, 1.f},
-		{-xf, yf,	-far1 , 1.f},
-		{xf, -yf,	-far1 , 1.f},
-		{-xf, -yf,	-far1, 1.f},
-	};
+	//glm::vec3 v[8];
+	//for (int i = 0; i < 8; i++)
+	//{
+	//	vec4 ff = inv * f[i];
+	//	v[i].x = ff.x / ff.w;
+	//	v[i].y = ff.y / ff.w;
+	//	v[i].z = ff.z / ff.w;
+	//}
 
-	glm::vec3 v[8];
-	for (int i = 0; i < 8; i++)
-	{
-		vec4 ff = inv * f[i];
-		v[i].x = ff.x / ff.w;
-		v[i].y = ff.y / ff.w;
-		v[i].z = ff.z / ff.w;
-	}
+	////glm::vec4 color = {1.f, 0.38f, 0.01f, 1.f};
+	//glm::vec4 color = {1.f, 1.f, 0.5f, 1.f};
+	//systemManager->mGraphicsSystem->m_Renderer.AddLine(v[0], v[1], color);
+	//systemManager->mGraphicsSystem->m_Renderer.AddLine(v[0], v[2], color);
+	//systemManager->mGraphicsSystem->m_Renderer.AddLine(v[3], v[1], color);
+	//systemManager->mGraphicsSystem->m_Renderer.AddLine(v[3], v[2], color);
 
-	//glm::vec4 color = {1.f, 0.38f, 0.01f, 1.f};
-	glm::vec4 color = {1.f, 1.f, 0.5f, 1.f};
-	systemManager->mGraphicsSystem->m_Renderer.AddLine(v[0], v[1], color);
-	systemManager->mGraphicsSystem->m_Renderer.AddLine(v[0], v[2], color);
-	systemManager->mGraphicsSystem->m_Renderer.AddLine(v[3], v[1], color);
-	systemManager->mGraphicsSystem->m_Renderer.AddLine(v[3], v[2], color);
+	//systemManager->mGraphicsSystem->m_Renderer.AddLine(v[4], v[5], color);
+	//systemManager->mGraphicsSystem->m_Renderer.AddLine(v[4], v[6], color);
+	//systemManager->mGraphicsSystem->m_Renderer.AddLine(v[7], v[5], color);
+	//systemManager->mGraphicsSystem->m_Renderer.AddLine(v[7], v[6], color);
 
-	systemManager->mGraphicsSystem->m_Renderer.AddLine(v[4], v[5], color);
-	systemManager->mGraphicsSystem->m_Renderer.AddLine(v[4], v[6], color);
-	systemManager->mGraphicsSystem->m_Renderer.AddLine(v[7], v[5], color);
-	systemManager->mGraphicsSystem->m_Renderer.AddLine(v[7], v[6], color);
-
-	systemManager->mGraphicsSystem->m_Renderer.AddLine(v[0], v[4], color);
-	systemManager->mGraphicsSystem->m_Renderer.AddLine(v[1], v[5], color);
-	systemManager->mGraphicsSystem->m_Renderer.AddLine(v[3], v[7], color);
-	systemManager->mGraphicsSystem->m_Renderer.AddLine(v[2], v[6], color);
+	//systemManager->mGraphicsSystem->m_Renderer.AddLine(v[0], v[4], color);
+	//systemManager->mGraphicsSystem->m_Renderer.AddLine(v[1], v[5], color);
+	//systemManager->mGraphicsSystem->m_Renderer.AddLine(v[3], v[7], color);
+	//systemManager->mGraphicsSystem->m_Renderer.AddLine(v[2], v[6], color);
 }
 
 
