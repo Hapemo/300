@@ -362,9 +362,10 @@ private:
 
 	// -- Shader Setup --
 	void SetupAllShaders();
-	mat4 GetPortalViewMatrix(Transform const& destTransform);
 
 	// -- Portal WIP --
+	mat4 GetPortalViewMatrix(GFX::Camera const& camera, Transform const& sourcePortal, Transform const& destPortal);
+	mat4 ObliqueNearPlaneClipping(mat4 proj, mat4 view, Transform const& srcPortal, Transform const& destPortal);
 	void AddPortalInstance(Entity portal);
 	void DrawAllPortals(bool editorDraw);
 };

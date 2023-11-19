@@ -425,6 +425,19 @@ void GraphicsSystem::Update(float dt)
 	for (Entity p : portals)
 	{
 		AddPortalInstance(p);
+
+		Portal& portal = p.GetComponent<Portal>();
+
+		Transform srcTransform;
+		srcTransform.mTranslate = portal.mTranslate1;
+		srcTransform.mRotate = portal.mRotate1;
+		Transform destTransform;
+		destTransform.mTranslate = portal.mTranslate2;
+		destTransform.mRotate = portal.mRotate2;
+
+		mat4 destViewProj = GetPortalViewMatrix(m_EditorCamera, srcTransform, destTransform);
+
+		m_Renderer.AddFrustum(destViewProj, vec4(0.f, 0.f, 1.f, 1.f));
 	}
 	m_PortalMesh.PrepForDraw();
 
@@ -1191,7 +1204,7 @@ void GraphicsSystem::SetCameraSize(CAMERA_TYPE type, ivec2 size)
 inline void drawViewFrustum(Entity gameCamera)
 {
 	auto& camera = gameCamera.GetComponent<Camera>().mCamera;
-	systemManager->mGraphicsSystem->m_Renderer.AddFrustum(camera.viewProj(), vec4(1.f, 1.f, 0.5f, 1.f));
+	//systemManager->mGraphicsSystem->m_Renderer.AddFrustum(camera.viewProj(), vec4(1.f, 1.f, 0.5f, 1.f));
 	//mat4 inv = glm::inverse(camera.mView);
 
 	//float halfHeight = tanf(glm::radians(camera.mFovDegree / 2.f));
@@ -1912,18 +1925,52 @@ void GraphicsSystem::SetupAllShaders()
 	m_Quad3DShaderInst = *systemManager->mResourceTySystem->get_Shader(quad3DShaderstr.id);
 }
 
-mat4 GraphicsSystem::GetPortalViewMatrix(Transform const& destTransform)
+mat4 GraphicsSystem::GetPortalViewMatrix(GFX::Camera const& camera, Transform const& sourcePortal, Transform const& destPortal)
 {
-	// Compute the virtual camera at the destination portal's position
-	vec3 portalPosition = destTransform.mTranslate;
-	mat3 R = glm::toMat3(glm::quat(glm::radians(destTransform.mRotate)));
+	mat4 camView = camera.mView;
 
-	vec3 portalForward = R * vec3(0.f, 0.f, 1.f);
-	vec3 portalUp = vec3(0.f, 1.f, 0.f);
+	mat4 destT = glm::translate(destPortal.mTranslate);
+	mat4 destR = glm::toMat4(glm::quat(glm::radians(destPortal.mRotate)));
+	mat4 destFinal = destT * destR;
 
-	mat4 viewMatrix = glm::lookAt(portalPosition, portalForward, portalUp);
+	mat4 srcT = glm::translate(sourcePortal.mTranslate);
+	mat4 srcR = glm::toMat4(glm::quat(glm::radians(sourcePortal.mRotate)));
+	mat4 srcFinal = srcT * srcR;
 
-	return viewMatrix;
+	mat4 destinationView = camView * srcFinal * glm::rotate(glm::radians(180.f), glm::vec3(0.0f, 1.0f, 0.0f)) * glm::inverse(destFinal);
+
+	mat4 obliqueProj = ObliqueNearPlaneClipping(camera.mProjection, destinationView, sourcePortal, destPortal);
+
+	return obliqueProj * destinationView;
+}
+
+mat4 GraphicsSystem::ObliqueNearPlaneClipping(mat4 proj, mat4 view, Transform const& srcPortal, Transform const& destPortal)
+{
+	// Calculate the near plane
+	mat3 destR = glm::toMat3(glm::quat(glm::radians(destPortal.mRotate)));
+	vec3 planeNormal = destR * vec3(0.f, 0.f, 1.f);
+	//float d = glm::dot(planeNormal, srcPortal.mTranslate);
+	float d = glm::length(destPortal.mTranslate);
+	vec4 nearPlane = vec4(planeNormal, d);
+	nearPlane = glm::inverse(view) * nearPlane;
+
+	if (nearPlane.w > 0.f)
+		return proj;
+
+	vec4 q = glm::inverse(proj) * vec4(
+										glm::sign(nearPlane.x),
+										glm::sign(nearPlane.y),
+										1.f,
+										1.f);
+
+
+	// Calculate the Scale plane vector
+	vec4 c = nearPlane * (2.f / glm::dot(nearPlane, q));
+
+	mat4 newProj = proj;
+	newProj = glm::row(newProj, 2, c - glm::row(newProj, 3));
+
+	return newProj;
 }
 
 void GraphicsSystem::AddPortalInstance(Entity portal)
@@ -1975,7 +2022,9 @@ void GraphicsSystem::DrawAllPortals(bool editorDraw)
 	glUniformMatrix4fv(m_Quad3DShaderInst.GetUniformVP(), 1, GL_FALSE, &camVP[0][0]);
 
 	glDepthFunc(GL_LEQUAL);
+	glDisable(GL_CULL_FACE);
 	glDrawArraysInstanced(GL_TRIANGLE_FAN, 0, 4, GLsizei(m_PortalMesh.mLTW.size()));
+	glEnable(GL_CULL_FACE);
 
 	m_PortalMesh.UnbindVao();
 	GFX::Shader::Deactivate();

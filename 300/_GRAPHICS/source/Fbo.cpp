@@ -95,7 +95,7 @@ void GFX::FBO::Clear()
 	// Clear Default color attachment
 	glDrawBuffer(GL_COLOR_ATTACHMENT0);
 	glClearColor(.2f, .2f, .2f, 1.f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
 	// Clear Bright Colors Attachment
 	glDrawBuffer(GL_COLOR_ATTACHMENT2);

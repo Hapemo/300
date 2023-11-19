@@ -761,7 +761,5 @@ struct Portal
 	glm::vec3 mRotate1{};
 	glm::vec3 mRotate2{};
 
-	//mat4 GetClippedProjMatrix(Transform const& sourceTransform, float distance, mat4 const& destViewMatrix, mat4 const& projMatrix);
-	
 	void Inspect();
 };
