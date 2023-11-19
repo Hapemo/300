@@ -568,7 +568,7 @@ function Update()
 
     if(gunEquipped == "MACHINE GUN") then  
         -- Machine Gun (need to be held down)
-        if(gunHoldState == "HOLDING") then 
+        -- if(gunHoldState == "HOLDING") then 
             -- print("GENERATE 1 bullet")
             machineGunRecoil()
 
@@ -588,7 +588,7 @@ function Update()
             -- physicsSys:SetVelocity(prefabEntity, viewVecCam)
 
             bulletAudioComp:SetPlay(0.1)
-        end
+        -- end
     end
 
 
