@@ -53,6 +53,9 @@ local jumpAudioComp
 local dashAudioEntity
 local dashAudioComp
 
+local machineGunAudioEntity
+local machineGunAudioComp
+
 --physics
 local cameraPhysicsComp
 
@@ -86,8 +89,8 @@ local bullet_scale = Vec3.new()
 
 local shotGunTimer = 0 
 local shotGunCooldown = 50
-local machinegunTimer = 0
-local machineGunCooldown = 5
+local machineGunTimer = 0
+local machineGunCooldown = 0.2
 
 -- gun states
 local gunRecoilState = "IDLE"             -- ["IDLE" , "MOVING"]
@@ -140,6 +143,11 @@ function Alive()
 
     dashAudioEntity = gameStateSys:GetEntity("Dash" , "testSerialization")
     dashAudioComp = dashAudioEntity:GetAudio()
+
+    machineGunAudioEntity = gameStateSys:GetEntity("Machine Gun Shoot (LOOP)" , "testSerialization")
+    machineGunAudioComp = machineGunAudioEntity:GetAudio()
+    machineGunAudioComp:UpdateVolume(0.0)
+    machineGunAudioComp:SetPlay()
 
     dashTime = 3.0
     tpTime = 20.0
@@ -566,10 +574,11 @@ function Update()
         gunHoldState = "NOT HELD"
     end
 
+    local alternate_audio = false
     if(gunEquipped == "MACHINE GUN") then  
         -- Machine Gun (need to be held down)
         if(gunHoldState == "HOLDING") then 
-            -- print("GENERATE 1 bullet")
+          
             machineGunRecoil()
 
             -- positions_final.x = positions.x + viewVecCam.x * 5
@@ -586,11 +595,18 @@ function Update()
             -- viewVecCam.z =viewVecCam.z   * 2
 
             -- physicsSys:SetVelocity(prefabEntity, viewVecCam)
-
-            bulletAudioComp:SetPlay(0.1)
+            -- if(machineGunTimer == 0) then
+            -- machineGunAudioComp:UpdateVolume(0.1)
+            if(machineGunTimer <= 0) then
+                bulletAudioComp:SetPlay(0.1)
+                machineGunTimer = machineGunCooldown  -- Set the cooldown timer
+           end
+           machineGunTimer = math.max(0, machineGunTimer - dt)  -- deltaTime is the time since the last fra
         end
     end
 
+    -- Update the cooldown timer
+    machineGunTimer = math.max(0, machineGunTimer - dt)  -- deltaTime is the time since the last fra
 
 
     -- print("GUN HOLD STATE: " , gunHoldState)
@@ -626,6 +642,16 @@ function Update()
                 print("SHOT GUN READY")
             end
         end
+        -- Machine Gun
+        -- if(gunEquipped == "MACHINE GUN") then 
+        --     machineGunTimer = machineGunTimer - 1
+        --     --print("SHOTGUN TIMER TILL READY: " ,shotGunTimer)
+        --     if(machineGunTimer == 0) then 
+        --         gunShootState = "SHOOTABLE"
+        --         print("SHOT GUN READY")
+        --     end
+        -- end
+
     end
 
 --endregion

@@ -462,10 +462,10 @@ struct Audio : public Serializable
 
 	// This is okay - because it's just editing data (use through component)
 
-	void SetPlay(float vol = 1.0f)
+	void SetPlay(/*float vol = 1.0f*/)
 	{
 		mNextActionState = STATE::SET_TO_PLAY;
-		mVolume = vol;
+		//mVolume = vol;
 	}
 
 	void SetPause() // Interface for Script
