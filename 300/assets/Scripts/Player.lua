@@ -581,22 +581,8 @@ function Update()
           
             machineGunRecoil()
 
-            -- positions_final.x = positions.x + viewVecCam.x * 5
-            -- positions_final.y = positions.y + viewVecCam.y * 5
-            -- positions_final.z = positions.z + viewVecCam.z * 5  
+            machineGun()
 
-            -- prefabEntity = systemManager.ecs:NewEntityFromPrefab("bullet", positions_final)
-            -- rotationCam.x = rotationCam.z *360
-            -- rotationCam.y = rotationCam.x *0
-            -- rotationCam.z = rotationCam.z *0
-            -- prefabEntity:GetTransform().mRotate = rotationCam    
-            -- viewVecCam.x = viewVecCam.x  * 2
-            -- viewVecCam.y =viewVecCam.y   * 2
-            -- viewVecCam.z =viewVecCam.z   * 2
-
-            -- physicsSys:SetVelocity(prefabEntity, viewVecCam)
-            -- if(machineGunTimer == 0) then
-            -- machineGunAudioComp:UpdateVolume(0.1)
             if(machineGunTimer <= 0) then
                 bulletAudioComp:SetPlay(0.1)
                 machineGunTimer = machineGunCooldown  -- Set the cooldown timer
@@ -802,31 +788,30 @@ function shotgun()
 end 
 
 function machineGun()
-    print("HI SHOOTING MACHINE GUN")
-    local bullet_speed_modifier = 20
-    local number_of_bullets = 3
-    -- local counter = 0
+    -- print("HI SHOOTING MACHINE GUN")
 
-    for i = 1, number_of_bullets , 1 
-    do 
-        positions_final.x = positions.x + viewVecCam.x * 5
-        positions_final.y = positions.y + viewVecCam.y * 5
-        positions_final.z = positions.z + viewVecCam.z * 5
+    positions_final.x = positions.x + viewVecCam.x*6
+    positions_final.y = positions.y + viewVecCam.y*6
+    positions_final.z = positions.z + viewVecCam.z*6  
 
-        --print("POSITION:" , positions_final.x , positions_final.y ,positions_final.z )
+    prefabEntity = systemManager.ecs:NewEntityFromPrefab("bullet", positions_final)
+    rotationCam.x = rotationCam.z *360
+    rotationCam.y = rotationCam.x *0
+    rotationCam.z = rotationCam.z *0
+    prefabEntity:GetTransform().mRotate = rotationCam    
+    viewVecCam.x = viewVecCam.x*50
+    viewVecCam.y=viewVecCam.y *50
+    viewVecCam.z=viewVecCam.z *50
 
-        bulletEntity = systemManager.ecs:NewEntityFromPrefab("bullet", positions_final)
+    -- Scaling Down (Machine Gun Pellets)
+    original_scale = prefabEntity:GetTransform().mScale 
+    prefabEntity:GetTransform().mScale.x = original_scale.x / 5
+    prefabEntity:GetTransform().mScale.y = original_scale.y / 5
+    prefabEntity:GetTransform().mScale.z = original_scale.z / 5
 
-        rotationCam.x = rotationCam.z *360
-        rotationCam.y = rotationCam.x *0
-        rotationCam.z = rotationCam.z *0
-        bulletEntity:GetTransform().mRotate = rotationCam    
-        viewVecCam.x = viewVecCam.x* 50
-        viewVecCam.y=viewVecCam.y * 50
-        viewVecCam.z=viewVecCam.z * 50
+    print("HI")
 
-        physicsSys:SetVelocity(bulletEntity, viewVecCam)
-    end
+    physicsSys:SetVelocity(prefabEntity, viewVecCam)
 
 end
 
@@ -894,13 +879,5 @@ function machineGunRecoil()
     else 
         gunTranslate.z = math.min(gunTranslate.z, original_translate_z + max_recoil_distance_z) -- this makes sure it does not surpass the limit.
     end
-    -- if(gunTranslate.z + recoil_distance <= original_translate_z + recoil_distance) then
-    --     gunTranslate.z = gunTranslate.z + recoil_distance -- recoil
-    --     --print("1")
-    -- else 
-    --     gunTranslate.z = original_translate_z 
-    --     gunTranslate.z = gunTranslate.z + recoil_distance -- recoil
-    --     --print("2")
-    -- end
 end
 
