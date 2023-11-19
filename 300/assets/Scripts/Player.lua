@@ -81,9 +81,12 @@ local recoil_factor = 0.5
 
 local bullet_scale = Vec3.new()
 
+local shotGunCooldown = 50
+local shotGunTimer = 0
+
 -- gun states
 local gunState 
-local gunEquipped = "BASIC" -- rename this to whatever
+local gunEquipped = "REVOLVER" -- rename this to whatever
 
 -- end gun
 
@@ -323,14 +326,19 @@ function Update()
             end
         end
 -- Toggle Weapons
-        if(inputMapSys:GetButtonDown("Weapon1")) then 
-            print("Swapping to revolver")
-            gunEquipped = "BASIC"
-        end
-       if(inputMapSys:GetButtonDown("Weapon2")) then 
+        if(inputMapSys:GetButtonDown("Shotgun")) then 
             print("Swapping to shotgun")
             gunEquipped = "SHOTGUN"
-       end
+        end
+        if(inputMapSys:GetButtonDown("Revolver")) then 
+            print("Swapping to revolver")
+            gunEquipped = "REVOLVER"
+        end
+        if(inputMapSys:GetButtonDown("Machine Gun")) then 
+            print("Swapping to machine gun")
+            gunEquipped = "MACHINE GUN"
+        end
+   
 -- end of Toggle Weapons
         
 
@@ -490,10 +498,11 @@ function Update()
 
 
 --region -- Player Shooting
-
+    shotGunTimer = shotGunTimer + 1
+    print("SHOTGUN TIMER:", shotGunTimer)
     if(inputMapSys:GetButtonDown("Shoot")) then
         
-        if(gunEquipped == "BASIC") then 
+        if(gunEquipped == "REVOLVER") then 
             positions_final.x = positions.x + viewVecCam.x*5
             positions_final.y = positions.y + viewVecCam.y*5
             positions_final.z = positions.z + viewVecCam.z*5  
@@ -511,7 +520,14 @@ function Update()
         end
 
         if(gunEquipped == "SHOTGUN") then 
-            shotgun()
+            if(shotGunTimer > shotGunCooldown) then
+                shotgun()
+                shotGunTimer = 0
+            end
+        end
+
+        if(gunEquipped == "MACHINE GUN") then 
+            machineGun()
         end
 
         if(gunTranslate.z + recoil_factor <= original_translate_z + recoil_factor) then
@@ -613,12 +629,11 @@ function dashEffectEnd()
 end
 
 function shotgun()
-    print("SHOOTING SHOTGUN : 3 pellets")
-
     local bullet_speed_modifier = 20
     local number_of_bullets = 5
 
-    
+    print("SHOOTING SHOTGUN (no of pellets)" , number_of_bullets)
+
     for i = 1, number_of_bullets , 1 
     do 
         -- Apply Randomization 
@@ -631,25 +646,17 @@ function shotgun()
         rotatedVelocity_XY = rotateVectorY(rotatedVelocity_X, randomAngleDegreesY)
         rotatedVelocity_XYZ = rotateVectorY(rotatedVelocity_XY, randomAngleDegreesZ)
         
-        print("XYZ: " , rotatedVelocity_XYZ.x , rotatedVelocity_XYZ.y,  rotatedVelocity_XYZ.z)
+        --print("XYZ: " , rotatedVelocity_XYZ.x , rotatedVelocity_XYZ.y,  rotatedVelocity_XYZ.z)
 
         -- Starting Position of bullet 
         positions_final.x = positions.x +  rotatedVelocity_XYZ.x * 2 -- 'positions' - camera's translate
         positions_final.y = positions.y +  rotatedVelocity_XYZ.y * 2 
         positions_final.z = positions.z +  rotatedVelocity_XYZ.z * 2 
 
-        -- positions_final.x = positions.x +  rotatedVelocity_XY.x * 2 -- 'positions' - camera's translate
-        -- positions_final.y = positions.y +  rotatedVelocity_XY.y * 2 
-        -- positions_final.z = positions.z +  rotatedVelocity_XY.z * 2  
-
         -- Scaling Randomnized "Rotated Vector"
         rotatedVelocity_X.x =  rotatedVelocity_XYZ.x * bullet_speed_modifier
         rotatedVelocity_X.y =  rotatedVelocity_XYZ.y * bullet_speed_modifier
         rotatedVelocity_X.z =  rotatedVelocity_XYZ.z * bullet_speed_modifier
-
-        -- rotatedVelocity_XY.x =  rotatedVelocity_XY.x * bullet_speed_modifier
-        -- rotatedVelocity_XY.y =  rotatedVelocity_XY.y * bullet_speed_modifier
-        -- rotatedVelocity_XY.z =  rotatedVelocity_XY.z * bullet_speed_modifier
 
         bulletPrefab = systemManager.ecs:NewEntityFromPrefab("bullet", positions_final)
 
@@ -667,65 +674,42 @@ function shotgun()
 
         -- print("ROTATED VECTOR:" , rotatedVelocity_XY.x, rotatedVelocity_XY.y, rotatedVelocity_XY.z)
         
-        print("ROTATED VECTOR:" , rotatedVelocity_X.x, rotatedVelocity_X.y, rotatedVelocity_X.z)
+        --print("ROTATED VECTOR:" , rotatedVelocity_X.x, rotatedVelocity_X.y, rotatedVelocity_X.z)
 
         --print("CREATING SHOTGUN BULLET")
         physicsSys:SetVelocity(bulletPrefab, rotatedVelocity_X)
 
     end
-    -- for i = 0, 2 , 1 
-    -- do 
-    --     -- spread_angle = 1
-    --     randomX = math.random(-1,1)
-    --     randomY = math.random(-1,1)
-    --     randomZ = math.random(-1,1)
-    
-    --     print("RANDOM X: " , randomX)
-    --     print("RANDOM Y: " , randomY)
-
-
-        
-    --     -- Apply Randomization to the camera direction
-    --     shotgunSpread = Vec3.new()
-    --     shotgunSpread.x = viewVecCam.x + randomX / 5
-    --     shotgunSpread.y = viewVecCam.y + randomY / 5
-    --     shotgunSpread.z = (viewVecCam.z + randomZ) * 10
-
-    --     -- stop_moving = Vec3.new()
-    --     -- stop_moving.x = stop_moving.x + viewVecCam.x * 5
-    --     -- stop_moving.y = stop_moving.y + viewVecCam.y * 5
-    --     -- stop_moving.z = stop_moving.z + viewVecCam.z * 5
-
-
-    --     --print("SHOTGUN SPREAD:" ,shotgunSpread.x, shotgunSpread.y, shotgunSpread.z )
-
-    --     print("VIEW VEC:" , viewVecCam.x,viewVecCam.y,viewVecCam.z)
-
-    --     -- positions_final.x = positions.x + shotgunSpread.x * 5 
-    --     -- positions_final.y = positions.y + shotgunSpread.y * 5
-    --     -- positions_final.z = positions.z + shotgunSpread.z * 5  
-
-    --     positions_final.x = positions.x + viewVecCam.x * 3
-    --     positions_final.y = positions.y + viewVecCam.y * 3 
-    --     positions_final.z = positions.z + viewVecCam.z * 3  
-
-    --    -- print("STATIC POSITION" ,positions_final.x ,positions_final.y, positions_final.z )
-
-    --     bulletPrefab1 = systemManager.ecs:NewEntityFromPrefab("bullet", positions_final)
-    --     original_scale = bulletPrefab1:GetTransform().mScale 
-    --     bulletPrefab1:GetTransform().mScale.x = original_scale.x / 3
-    --     bulletPrefab1:GetTransform().mScale.y = original_scale.y / 3
-    --     bulletPrefab1:GetTransform().mScale.z = original_scale.z / 3
-
-    --     --print("CREATING SHOTGUN BULLET")
-    --     physicsSys:SetVelocity(bulletPrefab1, shotgunSpread)
-    -- end
-
-
-   
-
-
 end 
+
+function machineGun()
+    print("HI SHOOTING MACHINE GUN")
+    local bullet_speed_modifier = 20
+    local number_of_bullets = 3
+    -- local counter = 0
+
+    for i = 1, number_of_bullets , 1 
+    do 
+        positions_final.x = positions.x + viewVecCam.x * 5
+        positions_final.y = positions.y + viewVecCam.y * 5
+        positions_final.z = positions.z + viewVecCam.z * 5
+
+        print("POSITION:" , positions_final.x , positions_final.y ,positions_final.z )
+
+        bulletEntity = systemManager.ecs:NewEntityFromPrefab("bullet", positions_final)
+
+        rotationCam.x = rotationCam.z *360
+        rotationCam.y = rotationCam.x *0
+        rotationCam.z = rotationCam.z *0
+        bulletEntity:GetTransform().mRotate = rotationCam    
+        viewVecCam.x = viewVecCam.x* 50
+        viewVecCam.y=viewVecCam.y * 50
+        viewVecCam.z=viewVecCam.z * 50
+
+        physicsSys:SetVelocity(bulletEntity, viewVecCam)
+    end
+
+end
 
 function rotateVectorX(vector, angleInDegrees)
     angleInRadians = math.rad(angleInDegrees)
@@ -769,5 +753,4 @@ function rotateVectorZ(vector, angleInDegrees)
 
     return rotatedVector
 end
-
 
