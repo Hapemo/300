@@ -83,7 +83,7 @@ function Update()
         -- Constantly make him stare at player and stand still
         local stareDirection = Vec3.new()
         stareDirection = Helper.Vec3Minus(this:GetAISetting():GetTarget():GetTransform().mTranslate, this:GetTransform().mTranslate)
-        this:GetTransform().mRotate.y = Helper.DirectionToAngle(stareDirection)
+        this:GetTransform().mRotate.y = Helper.DirectionToAngle(this, stareDirection)
         phySys:SetVelocity(this, Vec3.new())
 
         -- Count down 3 seconds

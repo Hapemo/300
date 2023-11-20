@@ -1,0 +1,109 @@
+{
+    "entityid": 1048736,
+    "general": {
+        "name": "ZipBomb",
+        "tagid": 1,
+        "subtag": 0,
+        "isActive": true,
+        "isPaused": false
+    },
+    "transform": {
+        "scale": {
+            "x": 0.7550002336502075,
+            "y": 0.7549988627433777,
+            "z": 0.24360503256320953
+        },
+        "rotate": {
+            "x": 0.0,
+            "y": 0.3610000014305115,
+            "z": 0.34200000762939453
+        },
+        "translate": {
+            "x": 3.6465346813201904,
+            "y": -10.216910362243652,
+            "z": -15.40556526184082
+        }
+    },
+    "rigidbody": {
+        "density": 10.0,
+        "material": 1,
+        "motion": 1,
+        "velocity": {
+            "x": 17.040250778198242,
+            "y": -17.984424591064453,
+            "z": -10.304134368896484
+        },
+        "rotationconstraints": {
+            "x": true,
+            "y": false,
+            "z": false
+        },
+        "gravity": true
+    },
+    "meshrenderer": {
+        "vert": "../assets/shader_files/pointLight_vert.glsl",
+        "frag": "../assets/shader_files/pointLight_frag.glsl",
+        "meshrefid": 2561,
+        "instancecolor": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+        },
+        "bloomthreshold": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+        },
+        "materialinstance": [
+            "../assets/Compressed/ZipBomb_BaseColor.ctexture",
+            "../assets/Compressed/ZipBomb_Normal.ctexture",
+            "../assets/Compressed/ZipBomb_Metallic.ctexture",
+            "../assets/Compressed/ZipBomb_Roughness.ctexture",
+            "../assets/Compressed/ZipBomb_Emissive.ctexture",
+            "../assets/Compressed/ZipBomb_AO.ctexture"
+        ],
+        "mesh": "../assets/compiled_geom/ZipBomb.geom",
+        "texturerefid": [
+            4543,
+            4270,
+            4464,
+            4611,
+            4490,
+            3797
+        ]
+    },
+    "boxcollider": {
+        "scaleoffset": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+        },
+        "translateoffset": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "istrigger": false
+    },
+    "scripts": {
+        "scriptscontainer": [
+            {
+                "scriptFile": "../assets/Scripts/ZipBomb.lua",
+                "variables": []
+            }
+        ]
+    },
+    "prefab": {
+        "prefab": "ZipBomb"
+    },
+    "aisetting": {
+        "movementtype": 2,
+        "spreadout": 0.0,
+        "stayaway": 0.0,
+        "elevation": 0.0,
+        "targetname": "player",
+        "graphdataname": "FlyingGraphJazzTest"
+    }
+}

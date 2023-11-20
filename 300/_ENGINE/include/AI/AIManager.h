@@ -151,6 +151,8 @@ public:
 	*******************************************************************************/
 	bool ConeOfSight(Entity _eye, Entity _tgt, float _horizontalAngle, float _verticalLimit);
 
+	bool LineOfSight(Entity _eye, Entity _tgt);
+
 	/*!*****************************************************************************
 	Does the following procedures to initialise the AI
 	- Adds the AI to AI Manager to keep track
@@ -182,6 +184,10 @@ private:
 	- Direction
 	*******************************************************************************/
 	glm::vec3 CalcAirAIDir(Entity _e);
+
+	glm::vec3 GetAStarDir(Entity _e, AISetting const& _setting);
+
+	bool CheckUseAStar(Entity _e, AISetting const& _setting);
 
 	/*!*****************************************************************************
 	Change the input direction of an AI with respect to other AIs from it's 

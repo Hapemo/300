@@ -81,9 +81,21 @@ function Helper.Scale(Vec3, scale)
     return Vec3
 end
 
-function Helper.DirectionToAngle(vec)
-    firstvec = Vec3.new()
-    secondvec = Vec3.new()
+function Helper.Vec3Len(vec)
+    local len = math.sqrt(vec.x * vec.x + vec.y * vec.y + vec.z * vec.z)
+    return len
+end
+
+function Helper.Vec2Len(x, y)
+    local len = math.sqrt(x * x + y * y)
+    return len
+end
+
+function Helper.DirectionToAngle(entity, vec)
+    if (Helper.Vec3Len(vec) == 0) then return entity:GetTransform().mRotate.y end
+
+    local firstvec = Vec3.new()
+    local secondvec = Vec3.new()
     firstvec.x = 0.0
     firstvec.y = 0.0
     firstvec.z = 1.0
@@ -91,11 +103,19 @@ function Helper.DirectionToAngle(vec)
     secondvec.y = 0
     secondvec.z = vec.z
 
-    dotDivideMag = vec.z / math.sqrt(vec.x * vec.x + vec.z * vec.z)
-    radians = math.acos(dotDivideMag)
-    degree = radians * 180.0 / 3.141596
+    local dotDivideMag = vec.z / math.sqrt(vec.x * vec.x + vec.z * vec.z)
+    local radians = math.acos(dotDivideMag)
+    local degree = radians * 180.0 / 3.141596
     if (vec.x < 0) then
         degree = 360.0 - degree
     end
     return degree
+end
+
+function Helper.SetFloatVarFromOtherScript_Scene(entityName, sceneName, scriptName, varName, varValue)
+    gameStateSys = systemManager:mGameStateSystem()
+    e = gameStateSys:GetEntity(entityName , sceneName)
+    scriptingComp = e:GetScripts()
+    script = scriptingComp:GetScript(scriptName)
+    script:SetValueFloat(varName, varValue)
 end

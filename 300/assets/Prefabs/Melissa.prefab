@@ -1,0 +1,104 @@
+{
+    "entityid": 3145730,
+    "general": {
+        "name": "Melissa",
+        "tagid": 0,
+        "subtag": 0,
+        "isActive": true,
+        "isPaused": false
+    },
+    "transform": {
+        "scale": {
+            "x": 1.5500003099441528,
+            "y": 1.9333767890930176,
+            "z": 0.8008583784103394
+        },
+        "rotate": {
+            "x": 0.0,
+            "y": -0.02354247309267521,
+            "z": 0.0
+        },
+        "translate": {
+            "x": 0.00667573744431138,
+            "y": -11.029329299926758,
+            "z": -16.246864318847656
+        }
+    },
+    "rigidbody": {
+        "density": 10.0,
+        "material": 1,
+        "motion": 1,
+        "velocity": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "rotationconstraints": {
+            "x": true,
+            "y": false,
+            "z": false
+        },
+        "gravity": true
+    },
+    "meshrenderer": {
+        "vert": "../assets/shader_files/pointLight_vert.glsl",
+        "frag": "../assets/shader_files/pointLight_frag.glsl",
+        "meshrefid": 2588,
+        "instancecolor": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+        },
+        "bloomthreshold": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+        },
+        "materialinstance": [
+            "../assets/Compressed/Melissa_BaseColor.ctexture",
+            "../assets/Compressed/Melissa_Normal.ctexture",
+            "../assets/Compressed/Melissa_Metallic.ctexture",
+            "../assets/Compressed/Melissa_Roughness.ctexture",
+            "../assets/Compressed/Melissa_Emissive.ctexture",
+            "../assets/Compressed/Melissa_AO.ctexture"
+        ],
+        "mesh": "../assets/compiled_geom/Melissa.geom",
+        "texturerefid": [
+            4570,
+            4297,
+            4491,
+            4638,
+            4517,
+            3824
+        ]
+    },
+    "boxcollider": {
+        "scaleoffset": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+        },
+        "translateoffset": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "istrigger": false
+    },
+    "scripts": {
+        "scriptscontainer": []
+    },
+    "prefab": {
+        "prefab": "Melissa"
+    },
+    "aisetting": {
+        "movementtype": 1,
+        "spreadout": 0.0,
+        "stayaway": 0.0,
+        "elevation": 0.0,
+        "targetname": "player",
+        "graphdataname": "FlyingGraphJazzTest"
+    }
+}

@@ -1,0 +1,109 @@
+{
+    "entityid": 1048737,
+    "general": {
+        "name": "TrojanHorse",
+        "tagid": 1,
+        "subtag": 0,
+        "isActive": true,
+        "isPaused": false
+    },
+    "transform": {
+        "scale": {
+            "x": 0.7087522149085999,
+            "y": 1.2886407375335693,
+            "z": 1.4175045490264893
+        },
+        "rotate": {
+            "x": 0.0,
+            "y": -0.0000022740748590877047,
+            "z": 3.1415927410125732
+        },
+        "translate": {
+            "x": 5.356176853179932,
+            "y": -10.75171947479248,
+            "z": -16.37542152404785
+        }
+    },
+    "rigidbody": {
+        "density": 10.0,
+        "material": 1,
+        "motion": 1,
+        "velocity": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "rotationconstraints": {
+            "x": true,
+            "y": false,
+            "z": false
+        },
+        "gravity": true
+    },
+    "meshrenderer": {
+        "vert": "../assets/shader_files/pointLight_vert.glsl",
+        "frag": "../assets/shader_files/pointLight_frag.glsl",
+        "meshrefid": 2492,
+        "instancecolor": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+        },
+        "bloomthreshold": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+        },
+        "materialinstance": [
+            "../assets/Compressed/Trojan_Default_BaseColor.ctexture",
+            "../assets/Compressed/Trojan_Normal.ctexture",
+            "../assets/Compressed/Trojan_Metallic.ctexture",
+            "../assets/Compressed/Trojan_Roughness.ctexture",
+            "../assets/Compressed/Trojan_Default_Emissive.ctexture",
+            "../assets/Compressed/Trojan_AO.ctexture"
+        ],
+        "mesh": "../assets/compiled_geom/Trojan.geom",
+        "texturerefid": [
+            5278,
+            4201,
+            4395,
+            4542,
+            5225,
+            3728
+        ]
+    },
+    "boxcollider": {
+        "scaleoffset": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+        },
+        "translateoffset": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "istrigger": false
+    },
+    "scripts": {
+        "scriptscontainer": [
+            {
+                "scriptFile": "../assets/Scripts/TrojanHorse.lua",
+                "variables": []
+            }
+        ]
+    },
+    "prefab": {
+        "prefab": "TrojanHorse"
+    },
+    "aisetting": {
+        "movementtype": 1,
+        "spreadout": 0.0,
+        "stayaway": 0.0,
+        "elevation": 0.0,
+        "targetname": "player",
+        "graphdataname": ""
+    }
+}

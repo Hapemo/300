@@ -7,7 +7,7 @@ out vec2 TexCoords;
 in vec2 inPosition;
 in vec2 inTexCoords;
 
-uniform sampler2D image;
+//uniform sampler2D image;
   
 void main()
 {             
