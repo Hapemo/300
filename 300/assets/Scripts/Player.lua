@@ -81,9 +81,9 @@ local gunThreshHold_min_x = 0.15
 local gunThreshHold_max_x = 0.9
 
 -- Recoil Stuff
-local recoil_distance = 1.0
+local recoil_distance = 0.5
 local recoil_speed = 1.0
-local max_recoil_distance_z = 0.2
+local max_recoil_distance_z = 0.5
 
 local bullet_scale = Vec3.new()
 
@@ -93,7 +93,7 @@ local machineGunTimer = 0
 local machineGunCooldown = 0.2
 
 -- gun states
-local gunRecoilState = "IDLE"             -- ["IDLE" , "MOVING"]
+local gunRecoilState = "IDLE"    -- ["STARTUP", "IDLE" , "MOVING"]
 local gunEquipped = "REVOLVER"      -- rename this to whatever ["REVOLVER" , "SHOTGUN" , "MACHINE GUN"]
 local gunHoldState = "NOT HELD"     -- ["NOT HELD" , "HOLDING"]
 local gunShootState = "SHOOTABLE"   -- ["SHOOTABLE" , "COOLDOWN"]
@@ -122,6 +122,7 @@ local dashrender= {}
 
 local tpcolor = Vec4.new(0, 0, 0, 1)
 
+local once = false
 --This variable is to be set in another script
 --testingSet = 5.0
 
@@ -371,6 +372,11 @@ function Update()
 -- Gun Script
             -- print("CURRENT GUN STATE:", gunState) -- uncomment to debug
             -- 'y' : vertical-axis
+
+            
+    -- print("GUN TRANSLATE:" , gunTranslate.z)
+    -- print("ORIGINAL:" , original_translation.z)
+
             if (gunRecoilState == "IDLE") then
                 local displacement_x = gunTranslate.x - original_translation.x 
                 local displacement_y = gunTranslate.y - original_translation.y
@@ -404,6 +410,8 @@ function Update()
                 end
 
                 -- Account for "horizontal" axis
+                -- print("GUN TRANSLATE: " , gunTranslate.z)
+                -- print("ORIGINAL TRANSLATE: " , original_translate_z)
                 if(gunTranslate.x ~= original_translate_x) then 
                     if(gunTranslate.x < original_translate_x) then  -- left to original
                         gunTranslate.x = gunTranslate.x + gunDisplaceBackSpeed 
@@ -417,12 +425,18 @@ function Update()
                 end
 
                 -- Account for "recoil"
+                if(once == false) then  
+                    print("ORIGINAL Z:" , original_translate_z)
+                    once = true
+                end
+
                 if(gunTranslate.z ~= original_translate_z) then 
                     gunTranslate.z = gunTranslate.z - gunDisplaceBackSpeed
-                    --print("GUN TRANSLATE: " , gunTranslate.z)
+                    print("GUN TRANSLATE: " , gunTranslate.z)
+                
                     if(gunTranslate.z < original_translate_z) then
                         gunTranslate.z = original_translate_z
-                        --print("SNAPBACK")
+                        print("SNAPBACK TO" , gunTranslate.z)
                     end
                 end
             end 
@@ -448,7 +462,7 @@ function Update()
             --         print("2")
             --     end
             else
-                 gunRecoilState = "IDLE"
+                gunRecoilState = "IDLE"
             end 
            
             if (inputMapSys:GetButton("up")) then
@@ -537,10 +551,11 @@ function Update()
         gunHoldState = "HOLDING"   -- for machine gun
 
        -- print("GUN RECOIL STATE:" , gunRecoilState)
-        
+        -- print("GUN EQUIPPED:" , gunEquipped)
         if(gunEquipped == "REVOLVER") then 
+            print("REVOLVER SHOOTING")
             applyGunRecoil()
-
+            print(gunEntity:GetTransform().mTranslate.z)
             positions_final.x = positions.x + viewVecCam.x*5
             positions_final.y = positions.y + viewVecCam.y*5
             positions_final.z = positions.z + viewVecCam.z*5  
@@ -571,6 +586,19 @@ function Update()
         end
     end
 
+    -- "Cooldown" state
+    if(gunShootState == "COOLDOWN") then
+        -- Shotgun
+        if(gunEquipped == "SHOTGUN") then 
+            shotGunTimer = shotGunTimer - 1
+            --print("SHOTGUN TIMER TILL READY: " ,shotGunTimer)
+            if(shotGunTimer == 0) then 
+                gunShootState = "SHOOTABLE"
+                print("SHOT GUN READY")
+            end
+        end
+    end
+
     if(inputMapSys:GetButtonUp("Shoot")) then 
         -- print("STOPPED PRESSING")
         gunHoldState = "NOT HELD"
@@ -583,7 +611,7 @@ function Update()
           
             machineGunRecoil()
 
-            machineGun()
+            machineGunBullets()
 
             if(machineGunTimer <= 0) then
                 bulletAudioComp:SetPlay(0.1)
@@ -597,50 +625,6 @@ function Update()
     machineGunTimer = math.max(0, machineGunTimer - dt)  -- deltaTime is the time since the last fra
 
 
-    -- print("GUN HOLD STATE: " , gunHoldState)
-
-    -- if(gunEquipped == "MACHINE GUN") then 
-    --     positions_final.x = positions.x + viewVecCam.x * 5
-    --     positions_final.y = positions.y + viewVecCam.y * 5
-    --     positions_final.z = positions.z + viewVecCam.z * 5
-
-    --     --print("POSITION:" , positions_final.x , positions_final.y ,positions_final.z )
-
-    --     bulletEntity = systemManager.ecs:NewEntityFromPrefab("bullet", positions_final)
-
-    --     rotationCam.x = rotationCam.z *360
-    --     rotationCam.y = rotationCam.x *0
-    --     rotationCam.z = rotationCam.z *0
-    --     bulletEntity:GetTransform().mRotate = rotationCam    
-    --     viewVecCam.x = viewVecCam.x* 50
-    --     viewVecCam.y=viewVecCam.y * 50
-    --     viewVecCam.z=viewVecCam.z * 50
-
-    --     physicsSys:SetVelocity(bulletEntity, viewVecCam)
-    -- end
-
-    -- "Cooldown" state
-    if(gunShootState == "COOLDOWN") then
-        -- Shotgun
-        if(gunEquipped == "SHOTGUN") then 
-            shotGunTimer = shotGunTimer - 1
-            --print("SHOTGUN TIMER TILL READY: " ,shotGunTimer)
-            if(shotGunTimer == 0) then 
-                gunShootState = "SHOOTABLE"
-                print("SHOT GUN READY")
-            end
-        end
-        -- Machine Gun
-        -- if(gunEquipped == "MACHINE GUN") then 
-        --     machineGunTimer = machineGunTimer - 1
-        --     --print("SHOTGUN TIMER TILL READY: " ,shotGunTimer)
-        --     if(machineGunTimer == 0) then 
-        --         gunShootState = "SHOOTABLE"
-        --         print("SHOT GUN READY")
-        --     end
-        -- end
-
-    end
 
 --endregion
 
@@ -789,7 +773,7 @@ function shotgun()
     end
 end 
 
-function machineGun()
+function machineGunBullets()
     -- print("HI SHOOTING MACHINE GUN")
 
     positions_final.x = positions.x + viewVecCam.x*6
@@ -810,8 +794,6 @@ function machineGun()
     prefabEntity:GetTransform().mScale.x = original_scale.x / 5
     prefabEntity:GetTransform().mScale.y = original_scale.y / 5
     prefabEntity:GetTransform().mScale.z = original_scale.z / 5
-
-    print("HI")
 
     physicsSys:SetVelocity(prefabEntity, viewVecCam)
 
@@ -861,14 +843,19 @@ function rotateVectorZ(vector, angleInDegrees)
 end
 
 function applyGunRecoil() 
-    -- print("GUN TRANSLATE: " , gunTranslate.z)
+    print("GUN TRANSLATE: " , gunTranslate.z)
+    print("GunTranslate.z + recoil_distance", gunTranslate.z + recoil_distance)
+    print("original_translate_z + recoil_distance" , original_translate_z + recoil_distance)
     if(gunTranslate.z + recoil_distance <= original_translate_z + recoil_distance) then
         gunTranslate.z = gunTranslate.z + recoil_distance -- recoil
+        print("GUN TRANSLATE AFTER RECOIL: " , gunTranslate.z)
         --print("1")
     else 
+        
         gunTranslate.z = original_translate_z 
         gunTranslate.z = gunTranslate.z + recoil_distance -- recoil
-        --print("2")
+
+        print("2 GUN TRANSLATE AFTER RECOIL:",gunTranslate.z)
     end
 end
 

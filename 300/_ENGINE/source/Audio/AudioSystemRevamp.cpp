@@ -274,7 +274,7 @@ void AudioSystem::Update([[maybe_unused]] float dt, bool calling_from_pause)
 					audio_component.mState = Audio::FINISHED;
 					NullChannelPointer(audio_component.mAudioType, channel_id);
 					PINFO("DONE PLAYING");
-					std::cout << "DONE PLAYING" << std::endl;
+					//std::cout << "DONE PLAYING" << std::endl;
 
 					// Remove the finished channel ID from the vector
 					it = audio_component.mListOfChannelIDs.erase(it);
