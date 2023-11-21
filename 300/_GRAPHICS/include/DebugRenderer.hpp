@@ -99,6 +99,11 @@ Adds an instance of a sphere to be drawn
 		void AddCapsule(vec3 const& camPos, vec3 const& center1, vec3 const& center2, float radius, vec4 const& color = vec4{ 1.f, 1.f, 1.f, 1.f });
 
 /*!*****************************************************************************
+Adds an instance of a sphere to be drawn
+*******************************************************************************/
+		void AddFrustum(mat4 const& frustumVp, vec4 color = vec4(1.f, 1.f, 1.f, 1.f));
+
+/*!*****************************************************************************
 Renders all instances of all debug shapes
 *******************************************************************************/
 		void RenderAll(mat4 viewProj);
@@ -119,6 +124,7 @@ Clears all instances of all debug shapes
 		Mesh mAabbMesh;
 		Mesh mCubeMesh;
 		Mesh mSphereMesh;
+		Mesh mFrustumMesh;
 
 		// Shader Set up
 		void SetupShader();
@@ -130,6 +136,7 @@ Clears all instances of all debug shapes
 		void SetupAabbMesh();
 		void SetupCubeMesh();
 		void SetupSphereMesh();
+		void SetupFrustumMesh();
 
 		// -- Render Shapes --
 		void RenderAllPoints(mat4 const& viewProj);
@@ -139,6 +146,7 @@ Clears all instances of all debug shapes
 		void RenderAllAabb(mat4 const& viewProj);
 		void RenderAllCube(mat4 const& viewProj);
 		void RenderAllSphere(mat4 const& viewProj);
+		void RenderAllFrustum(mat4 const& viewProj);
 
 		// -- Shader Code --
 		const char* vertexShaderCode = R"(

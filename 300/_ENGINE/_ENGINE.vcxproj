@@ -185,6 +185,7 @@
     <ClInclude Include="include\Physics\PhysX.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="include\ECS\ECS_Components.cpp" />
     <ClCompile Include="source\AI\PathfinderManager.cpp" />
     <ClCompile Include="source\Audio\AudioSystemRevamp.cpp" />
     <ClCompile Include="source\Button\ButtonSystem.cpp" />

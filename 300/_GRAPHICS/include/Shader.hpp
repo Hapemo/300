@@ -22,7 +22,7 @@ namespace GFX
 Creates the shader program by compiling the vertex and fragment shader code. 
 Compiled shader will be attached and link the shader program
 *******************************************************************************/
-        void CreateShader(const char* shaderCode, const char* fragmentShaderCode);
+        void CreateShader(const char* shaderCode, const char* fragmentShaderCode, const char* vertFile = nullptr, const char* fragFile = nullptr);
 
 /*!*****************************************************************************
 Creates the shader program by compiling the vertex and fragment shader code.
@@ -70,7 +70,7 @@ Gets the uniform location of uniformName from the activated shader program
 /*!*****************************************************************************
 Compiles the shader program and checks for compilation or linking errors
 *******************************************************************************/
-        bool CompileErrors(unsigned int shader, const char* shaderType) const;
+        bool CompileErrors(unsigned int shader, const char* shaderType, const char* vertFile = nullptr, const char* fragFile = nullptr) const;
     };
 }
 #endif // SHADER_HPP

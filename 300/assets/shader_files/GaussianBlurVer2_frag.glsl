@@ -31,7 +31,9 @@ vec4 BlurH (sampler2D source, vec2 size, vec2 uv, float radius) {
 
 		float divisor = 0.0; 
         float weight = 0.0;
-        
+
+		float intensity = texture(source, uv).a;
+
         float radiusMultiplier = 1.0 / radius;
         
  		for (float firstpass = -radius; firstpass <= radius; firstpass++)
@@ -52,7 +54,8 @@ vec4 BlurH (sampler2D source, vec2 size, vec2 uv, float radius) {
 			divisor += weight; 
 		}
 
-		return vec4(C.r / divisor, C.g / divisor, C.b / divisor, 1.0);
+		//C *= intensity;
+		return vec4(C.r / divisor, C.g / divisor, C.b / divisor, intensity - 1.0);
 	}
 
 	return texture(source, uv);

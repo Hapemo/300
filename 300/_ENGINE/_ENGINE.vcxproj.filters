@@ -28,6 +28,7 @@
     <ClCompile Include="source\AI\PathfinderManager.cpp" />
     <ClCompile Include="source\Reflection\Reflection.cpp" />
     <ClCompile Include="source\Audio\AudioSystemRevamp.cpp" />
+    <ClCompile Include="include\ECS\ECS_Components.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Audio\AudioType.h" />
