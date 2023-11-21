@@ -107,14 +107,6 @@ void GraphicsSystem::Init()
 		glBindImageTexture(5, m_IntermediateFBO.GetAlbedoSpecAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
 		glBindImageTexture(6, m_IntermediateFBO.GetEmissionAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
 	}
-
-	if (!m_EditorMode)	// If not running as editor
-	{
-		// Initialize the Draw Scene Shader
-		std::string drawSceneShader = "DrawSceneShader";
-		uid drawSceneShaderstr(drawSceneShader);
-		m_DrawSceneShaderInst = *systemManager->mResourceTySystem->get_Shader(drawSceneShaderstr.id);
-	}
 	
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
@@ -995,33 +987,19 @@ void GraphicsSystem::GameDraw(float dt)
 	m_PingPongFbo.UnloadAndClear();
 }
 
-
-
-
-
-
 void GraphicsSystem::DrawGameScene()
 {
-	// Clear Default framebuffer
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);	// back to default framebuffer
-	glClearColor(0.0f, 1.0f, 1.0f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT);
-	glDisable(GL_DEPTH_TEST);				// Depth testing must be disabled!!
+	// Blit data from Game FBO to default FBO
+	glBindFramebuffer(GL_READ_FRAMEBUFFER, m_GameFbo.GetID());
+	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
 
-	// Activate shader program
-	m_DrawSceneShaderInst.Activate();
-	m_Image2DMesh.BindVao();										// Bind VAO
-	glBindTexture(GL_TEXTURE_2D, m_GameFbo.GetColorAttachment());	// Bind texture to be drawn
+	glReadBuffer(GL_COLOR_ATTACHMENT0);	// Read from color attachment
+	glDrawBuffer(GL_BACK);				// Draw to Front attachment for default FBO
 
-	glDrawArraysInstanced(GL_TRIANGLE_FAN, 0, 4, 1);				// DRAW
+	glBlitFramebuffer(0, 0, m_Width, m_Height, 0, 0, m_Width, m_Height, GL_COLOR_BUFFER_BIT, GL_NEAREST);
 
-	m_Image2DMesh.BindVao();										// Unbind VAO
-	glBindTexture(GL_TEXTURE_2D, 0);								// Unbind texture after drawing
-
-	// Deactivate shader program
-	m_DrawSceneShaderInst.Deactivate();
-
-	glEnable(GL_DEPTH_TEST);
+	glReadBuffer(GL_NONE);
+	glDrawBuffer(GL_NONE);
 }
 
 /***************************************************************************/
@@ -1218,57 +1196,6 @@ inline void drawViewFrustum(Entity gameCamera)
 	auto& camera = gameCamera.GetComponent<Camera>().mCamera;
 	systemManager->mGraphicsSystem->m_Renderer.AddFrustum(camera.viewProj(), vec4(1.f, 1.f, 0.5f, 1.f));
 	mat4 inv = glm::inverse(camera.mView);
-
-	//float halfHeight = tanf(glm::radians(camera.mFovDegree / 2.f));
-	//float halfWidth = halfHeight * camera.mAspectRatio;
-
-	//float near1 = camera.mNear;
-	//float far1 = camera.mFar;
-	//float xn = halfWidth * near1;
-	//float xf = halfWidth * far1;
-	//float yn = halfHeight * near1;
-	//float yf = halfHeight * far1;
-
-	//glm::vec4 f[8u] =
-	//{
-	//	// near face
-	//	{xn, yn,	-near1, 1.f},
-	//	{-xn, yn,	-near1, 1.f},
-	//	{xn, -yn,	-near1, 1.f},
-	//	{-xn, -yn,	-near1 , 1.f},
-
-	//	// far face
-	//	{xf, yf,	-far1, 1.f},
-	//	{-xf, yf,	-far1 , 1.f},
-	//	{xf, -yf,	-far1 , 1.f},
-	//	{-xf, -yf,	-far1, 1.f},
-	//};
-
-	//glm::vec3 v[8];
-	//for (int i = 0; i < 8; i++)
-	//{
-	//	vec4 ff = inv * f[i];
-	//	v[i].x = ff.x / ff.w;
-	//	v[i].y = ff.y / ff.w;
-	//	v[i].z = ff.z / ff.w;
-	//}
-
-	////glm::vec4 color = {1.f, 0.38f, 0.01f, 1.f};
-	//glm::vec4 color = {1.f, 1.f, 0.5f, 1.f};
-	//systemManager->mGraphicsSystem->m_Renderer.AddLine(v[0], v[1], color);
-	//systemManager->mGraphicsSystem->m_Renderer.AddLine(v[0], v[2], color);
-	//systemManager->mGraphicsSystem->m_Renderer.AddLine(v[3], v[1], color);
-	//systemManager->mGraphicsSystem->m_Renderer.AddLine(v[3], v[2], color);
-
-	//systemManager->mGraphicsSystem->m_Renderer.AddLine(v[4], v[5], color);
-	//systemManager->mGraphicsSystem->m_Renderer.AddLine(v[4], v[6], color);
-	//systemManager->mGraphicsSystem->m_Renderer.AddLine(v[7], v[5], color);
-	//systemManager->mGraphicsSystem->m_Renderer.AddLine(v[7], v[6], color);
-
-	//systemManager->mGraphicsSystem->m_Renderer.AddLine(v[0], v[4], color);
-	//systemManager->mGraphicsSystem->m_Renderer.AddLine(v[1], v[5], color);
-	//systemManager->mGraphicsSystem->m_Renderer.AddLine(v[3], v[7], color);
-	//systemManager->mGraphicsSystem->m_Renderer.AddLine(v[2], v[6], color);
 }
 
 
