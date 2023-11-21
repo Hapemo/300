@@ -499,14 +499,6 @@ void GraphicsSystem::Draw(float dt, bool forEditor)
 			PostProcessing::CRTBlendFramebuffers(*fbo, m_PingPongFbo, dt);
 		}
 
-		if (systemManager->mGraphicsSystem->m_EnableChromaticAbberation)
-		{
-			if (mBloomType == PHYS_BASED_BLOOM)
-				PostProcessing::ChromaticAbbrebationBlendFramebuffers(*fbo, m_PhysBloomRenderer.getBloomTexture());
-			else
-				PostProcessing::ChromaticAbbrebationBlendFramebuffers(*fbo, m_PingPongFbo.pingpongColorbuffers[0]);
-		}
-
 		if (systemManager->mGraphicsSystem->m_EnableBloom)
 		{
 			if (mBloomType == BloomType::PHYS_BASED_BLOOM)
@@ -537,6 +529,14 @@ void GraphicsSystem::Draw(float dt, bool forEditor)
 
 				PostProcessing::AdditiveBlendFramebuffers(*fbo, fbo->GetColorAttachment(), m_PingPongFbo.pingpongColorbuffers[0]);
 			}
+		}
+
+		if (systemManager->mGraphicsSystem->m_EnableChromaticAbberation)
+		{
+			if (mBloomType == PHYS_BASED_BLOOM)
+				PostProcessing::ChromaticAbbrebationBlendFramebuffers(*fbo, m_PhysBloomRenderer.getBloomTexture());
+			else
+				PostProcessing::ChromaticAbbrebationBlendFramebuffers(*fbo, m_PingPongFbo.pingpongColorbuffers[0]);
 		}
 
 		m_PingPongFbo.UnloadAndClear();
