@@ -84,18 +84,23 @@ local gunJumped = false -- for gun animation
 
 -- Recoil Stuff
 local recoil_distance = 0.5
-local recoil_speed_MG = 1.0
-local recoil_speed_R = 15.0
+local recoil_speed = 15
+-- local recoil_speed_SG = 30.0
+-- local recoil_speed_MG = 1.0
+-- local recoil_speed_R = 15.0
 local max_recoil_distance_z = 0.1
 
 local bullet_scale = Vec3.new()
 
-local revolverGunTimer = 0
+-- Cooldown in seconds (between bullets)
 local revolverGunCooldown = 1.5
-local shotGunTimer = 0 
-local shotGunCooldown = 50
-local machineGunTimer = 0
+local shotGunCooldown = 3
 local machineGunCooldown = 0.2
+
+local revolverGunTimer = 0
+local shotGunTimer = 0 
+local machineGunTimer = 0
+
 
 -- gun states
 local gunRecoilState = "IDLE"       -- ["STARTUP", "IDLE" , "MOVING"]
@@ -529,7 +534,9 @@ function Update()
                 if(revolverGunTimer == 0) then 
                     print("REVOLVER SHOOTING")
                     
-                    applyGunRecoil()
+                    applyGunRecoil(recoil_speed, 0.5)
+
+                    -- gunRecoilState = "MOVING"
 
                     -- Shoots Bullet
                     positions_final.x = positions.x + viewVecCam.x*5
@@ -562,16 +569,41 @@ function Update()
             --     gunRecoilState = "MOVING"
             -- end
             end 
+
+            print("TRANSLATE: " , gunTranslate.z)
+
+            if(gunEquipped == "SHOTGUN") then 
+                print("SHOTGUN TIMER: " , shotGunTimer)
+                print("TRANSLATE: " , gunTranslate.z)
+                if(shotGunTimer == 0) then 
+                    print("SHOTGUN SHOOTING")
+                    print("TRANSLATE: " , gunTranslate.z)
+                    
+                    -- gunRecoilState = "MOVING"
+
+                    shotgunbullets(5) -- bullets + recoil (param) - number of bullets in spray
+                    applyGunRecoil(recoil_speed * 3, 1.0)
+
+                    shotGunTimer = shotGunTimer + shotGunCooldown
+                    print("SHOTGUN COOLDOWN STARTS: " , shotGunTimer)
+
+                    shotgunShootState = "COOLDOWN"
+
+                    bulletAudioComp:SetPlay(0.1)
+                end
+            end
+
         end
 
         -- "COOLDOWN" state
         if(shotgunShootState == "COOLDOWN") then 
             if(shotGunTimer > 0) then 
-                shotGunTimer = shotGunTimer - 1
-                --print("SHOTGUN TIMER: ", shotGunTimer) 
+                shotGunTimer = shotGunTimer - dt
+                print("SHOTGUN COOLDOWN: " , shotGunTimer)
             else 
+                shotGunTimer = 0
                 shotgunShootState = "SHOOTABLE"
-                --print("SHOTGUN IS READY!")
+                print("SHOTGUN IS READY!")
             end
         end
 
@@ -723,12 +755,12 @@ function dashEffectEnd()
     -- Camera_Scripting.SetFov(cameraEntity,d_fov+ (d_fov-e_fov)*t)
 end
 
-function shotgun()
+function shotgunbullets(number_of_bullets)
     local bullet_speed_modifier = 20
-    local number_of_bullets = 5
+    -- local number_of_bullets = 5
 
     print("IN SHOTGUN")
-    applyGunRecoil()
+    print("TRANSLATE: " , gunTranslate.z)
 
     --print("SHOOTING SHOTGUN (no of pellets)" , number_of_bullets)
 
@@ -777,7 +809,8 @@ function shotgun()
         --print("CREATING SHOTGUN BULLET")
         physicsSys:SetVelocity(bulletPrefab, rotatedVelocity_XYZ)
 
-        gunShot = false -- gun already shot
+        gunTranslate.z = original_translate_z -- some weird behaviour (changes this z value to a very big value)
+        print("WTF" , gunTranslate.z)
     end
 end 
 
@@ -850,27 +883,40 @@ function rotateVectorZ(vector, angleInDegrees)
     return rotatedVector
 end
 
-function applyGunRecoil() 
-    -- print("GUN TRANSLATE: " , gunTranslate.z)
-    -- print("GunTranslate.z + recoil_distance", gunTranslate.z + recoil_distance)
-    -- print("original_translate_z + recoil_distance" , original_translate_z + recoil_distance)
+function applyGunRecoil(recoil_speed, max_recoil_distance_z) 
+    gunTranslate = gunEntity:GetTransform().mTranslate -- some weird bug again
 
-    -- print("IN APPLYSHOTGUNRECOIL")
-
-    distance_travelled_this_frame = recoil_speed_R * dt
-
-    -- print("DISTANCE TRAVELLED THIS FRAME: " , distance_travelled_this_frame)
+    local distance_travelled_this_frame = recoil_speed * dt
     
     if(gunTranslate.z < original_translate_z + distance_travelled_this_frame) and
         (gunTranslate.z < original_translate_z + max_recoil_distance_z) then
         gunTranslate.z = gunTranslate.z + distance_travelled_this_frame -- recoil
-        -- print("GUN TRANSLATE AFTER RECOIL: " , gunTranslate.z)
-        --print("1")
     else -- if it extends over the limit 
-        gunTranslate.z = gunTranslate.z +  max_recoil_distance_z -- recoil
-        -- print("MAX RECOIL REACHED", gunTranslate.z)
+        gunTranslate.z = gunTranslate.z + max_recoil_distance_z -- recoil
     end
 end
+
+-- function applyShotGunRecoil(max_shotgun_recoil_distance_z)
+--     print("SHOTGUN RECOIL")
+
+--     local distance_travelled_this_frame = recoil_speed_SG * dt
+--     print("DISTANCE TRAVELED SHOTGUN: ", distance_travelled_this_frame)
+
+--     -- if(gunTranslate.z < original_translate_z + distance_travelled_this_frame) and
+--     --    (gunTranslate.z < original_translate_z + max_recoil_distance_z) then
+--         -- gunTranslate.z = gunTranslate.z + distance_travelled_this_frame -- recoil
+--         -- print("GUN TRANSLATE AFTER RECOIL: " , gunTranslate.z)
+--         -- print("1")
+--     -- else -- if it extends over the limit 
+--         print("GUN TRANSLATE BEFORE: " , gunTranslate.z)
+--         gunTranslate.z = gunTranslate.z +  max_recoil_distance_z -- recoil
+        
+--         print("MAX RECOIL REACHED", gunTranslate.z)
+--         -- print("2")
+--     -- end
+
+-- end 
+
 
 function machineGunRecoil()
     if((gunTranslate.z < original_translate_z + recoil_distance) and 
