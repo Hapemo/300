@@ -151,14 +151,36 @@ struct uid {
         unsigned hashedValue{ 0 };
 
         for (const char& c : name) {
+          //  hashedValue += (c * 12 + 2) * 4 /** table.ms_Table[counter++]*/;
+            hashedValue += c /** table.ms_Table[counter++]*/;
+        }
+
+        //std::hash<std::string> hasher ;
+       // hashedValue = (unsigned)hasher(name);
+      //  std::cout << hashedValue << "\n";
+        //std::cout << hashedValue;
+        return hashedValue;
+    }
+
+
+    unsigned getstringUid(std::string name) {
+
+        unsigned hashedValue{ 0 };
+
+        for (const char& c : name) {
 
             hashedValue += c /** table.ms_Table[counter++]*/;
         }
 
+        //std::hash<std::string> hasher ;
+       // hashedValue = (unsigned)hasher(name);
+       // std::cout << hashedValue << "\n";
         //std::cout << hashedValue;
 
+        id = hashedValue;
         return hashedValue;
     }
+
 
 
     uid() :id{ generateUniqueID() } {  }

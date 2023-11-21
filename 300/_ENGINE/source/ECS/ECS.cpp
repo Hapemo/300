@@ -235,6 +235,25 @@ Entity ECS::NewEntityFromPrefab(std::string prefabName, const glm::vec3& pos)
 	return e;
 }
 
+Entity ECS::NewEntityFromPrefabScene(std::string prefabName,int prefabscene, const glm::vec3& pos)
+{
+	// void ObjectFactory::DeserializeScene(const std::string& filename)
+	// creation of new entity done inside deserializescene function
+	Entity e(ObjectFactory::DeserializePrefab("../assets/Prefabs/" + prefabName + ".prefab"));
+	systemManager->mGameStateSystem->mCurrentGameState.mScenes[prefabscene].mEntities.insert(e);
+	//copy all prefab components (except transform) to new entity
+	//General temp1 = e.GetComponent<General>();
+	//MeshRenderer temp = e.GetComponent<MeshRenderer>();
+	e.GetComponent<Transform>().mTranslate = pos;
+	PASSERT(static_cast<uint32_t>(e.id) != 0);
+	e.GetComponent<Scripts>().LoadForAllScripts((int)e.id);
+	e.GetComponent<Scripts>().RunFunctionForAllScripts("Alive");
+
+	if (e.HasComponent<RigidBody>())
+		systemManager->mPhysicsSystem->AddEntity(e);
+	return e;
+}
+
 Entity ECS::NewEntityPrefabForGraph(std::string prefabName, const glm::vec3& pos) {
 	Entity e(ObjectFactory::DeserializePrefab("../assets/Prefabs/" + prefabName + ".prefab"));
 	e.GetComponent<Transform>().mTranslate = pos;

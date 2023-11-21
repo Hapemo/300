@@ -455,6 +455,7 @@ void GraphicsSystem::Update(float dt)
 
 void GraphicsSystem::Draw(float dt, bool forEditor)
 {
+	std::cout << systemManager->mResourceTySystem->m_ResourceInstance.size()<<"\n";
 	std::map<std::string, short> renderedMesh;
 	auto meshRendererInstances = systemManager->ecs->GetEntitiesWith<MeshRenderer>();
 
@@ -1878,6 +1879,7 @@ void GraphicsSystem::SetupAllShaders()
 	// Initialize the UI Shader
 	uid uiShaderstr("UIShader");
 	m_UiShaderInst = *systemManager->mResourceTySystem->get_Shader(uiShaderstr.id);
+	
 	// Uniforms of UI Shader
 	m_UiShaderInst.Activate();
 	GLuint uniform_tex = glGetUniformLocation(m_UiShaderInst.GetHandle(), "uTex2d");
