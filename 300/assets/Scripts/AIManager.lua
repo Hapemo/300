@@ -7,10 +7,10 @@ local where
 function Alive()
     gameStateSys = systemManager:mGameStateSystem()
     spawntimer = 0
-    spawnPoint1 = gameStateSys:GetEntity("AISpawnPoint1", "testSerialization")
-    spawnPoint2 = gameStateSys:GetEntity("AISpawnPoint2", "testSerialization")
-    spawnPoint3 = gameStateSys:GetEntity("AISpawnPoint3", "testSerialization")
-    spawnPoint4 = gameStateSys:GetEntity("AISpawnPoint4", "testSerialization")
+    spawnPoint1 = gameStateSys:GetEntity("AISpawnPoint1")
+    spawnPoint2 = gameStateSys:GetEntity("AISpawnPoint2")
+    spawnPoint3 = gameStateSys:GetEntity("AISpawnPoint3")
+    spawnPoint4 = gameStateSys:GetEntity("AISpawnPoint4")
     where = false
 end
 

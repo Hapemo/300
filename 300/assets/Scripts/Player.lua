@@ -151,15 +151,15 @@ function Alive()
 
     cameraPhysicsComp = cameraEntity:GetRigidBody()
     
-    dashui = gameStateSys:GetEntity("UI1", "testSerialization")
+    dashui = gameStateSys:GetEntity("UI1")
 
-    bulletAudioEntity = gameStateSys:GetEntity("Bullet Shoot" , "testSerialization")
+    bulletAudioEntity = gameStateSys:GetEntity("Bullet Shoot")
     bulletAudioComp = bulletAudioEntity:GetAudio()
 
-    jumpAudioEntity = gameStateSys:GetEntity("Jump" , "testSerialization")
+    jumpAudioEntity = gameStateSys:GetEntity("Jump")
     jumpAudioComp = jumpAudioEntity:GetAudio()
 
-    dashAudioEntity = gameStateSys:GetEntity("Dash" , "testSerialization")
+    dashAudioEntity = gameStateSys:GetEntity("Dash")
     dashAudioComp = dashAudioEntity:GetAudio()
 
     machineGunAudioEntity = gameStateSys:GetEntity("Machine Gun Shoot (LOOP)" , "testSerialization")
@@ -169,14 +169,14 @@ function Alive()
 
     dashTime = 3.0
     tpTime = 20.0
-    teleporter1 = gameStateSys:GetEntity("Teleporter1", "testSerialization")
-    teleporter2 = gameStateSys:GetEntity("Teleporter2", "testSerialization")
+    teleporter1 = gameStateSys:GetEntity("Teleporter1")
+    teleporter2 = gameStateSys:GetEntity("Teleporter2")
     --walkingenemy = gameStateSys:GetEntity("enemy1_walking", "testSerialization")
     onTpTime = 0;
     collideWithTP = 0
     originalSamplingWeight = graphicsSys.mSamplingWeight
-    tpfin1 = gameStateSys:GetEntity("Fin1", "testSerialization")
-    tpfin2 = gameStateSys:GetEntity("Fin2", "testSerialization")
+    tpfin1 = gameStateSys:GetEntity("Fin1")
+    tpfin2 = gameStateSys:GetEntity("Fin2")
 
     -- Gun Stuff --
     gunEntity = gameStateSys:GetEntity("gun", "testSerialization")
