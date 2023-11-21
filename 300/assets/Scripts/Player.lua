@@ -374,6 +374,11 @@ function Update()
             end
         else
 -- Gun Script
+       
+
+         
+
+-- region (snapback)
             print("GUN RECOIL STATE: ", gunRecoilState)
             if (gunRecoilState == "IDLE") then
                 local displacement_x = gunTranslate.x - original_translation.x 
@@ -423,7 +428,7 @@ function Update()
                 end
             end 
 
-            gunRecoilState = "IDLE" -- If no iput will result in "IDLE"
+            -- gunRecoilState = "IDLE" -- If no iput will result in "IDLE"
 
             -- Recoil Snapback
             if(gunTranslate.z ~= original_translate_z) then 
@@ -435,6 +440,9 @@ function Update()
                     --print("SNAPBACK TO (NOT IDLE)" , gunTranslate.z)
                 end
             end
+
+            -- Must be before any state change
+            gunRecoilState = "IDLE"
 
             gunJumpTimer = gunJumpTimer + 1
 
@@ -519,7 +527,39 @@ function Update()
                     print("DONE :D")
                     gunJumped = false
                 end
+            end
 
+--  endregion
+          
+        end
+
+        if(inputMapSys:GetButtonDown("Shoot")) then
+            gunHoldState = "HOLDING"   -- for machine gun
+
+        -- print("GUN RECOIL STATE:" , gunRecoilState)
+            -- print("GUN EQUIPPED:" , gunEquipped)
+            if(gunEquipped == "REVOLVER") then 
+                print("REVOLVER SHOOTING")
+                applyGunRecoil()
+
+                gunRecoilState = "SHOOTING"
+                
+                -- print(gunEntity:GetTransform().mTranslate.z)
+                positions_final.x = positions.x + viewVecCam.x*5
+                positions_final.y = positions.y + viewVecCam.y*5
+                positions_final.z = positions.z + viewVecCam.z*5  
+
+                prefabEntity = systemManager.ecs:NewEntityFromPrefab("bullet", positions_final)
+                rotationCam.x = rotationCam.z *360
+                rotationCam.y = rotationCam.x *0
+                rotationCam.z = rotationCam.z *0
+                prefabEntity:GetTransform().mRotate = rotationCam    
+                viewVecCam.x = viewVecCam.x*100
+                viewVecCam.y=viewVecCam.y *100
+                viewVecCam.z=viewVecCam.z *100
+
+                physicsSys:SetVelocity(prefabEntity, viewVecCam)
+                bulletAudioComp:SetPlay(0.1)
             end
         end
 -- end of gun script 
@@ -539,33 +579,7 @@ function Update()
 --region -- Player Shooting
     --print("GUN SHOOT STATE:" , gunShootState)
     --print("SHOTGUN TIMER:", shotGunTimer)
-    if(inputMapSys:GetButtonDown("Shoot")) then
-        gunHoldState = "HOLDING"   -- for machine gun
 
-       -- print("GUN RECOIL STATE:" , gunRecoilState)
-        -- print("GUN EQUIPPED:" , gunEquipped)
-        if(gunEquipped == "REVOLVER") then 
-            print("REVOLVER SHOOTING")
-            applyGunRecoil()
-            -- print(gunEntity:GetTransform().mTranslate.z)
-            positions_final.x = positions.x + viewVecCam.x*5
-            positions_final.y = positions.y + viewVecCam.y*5
-            positions_final.z = positions.z + viewVecCam.z*5  
-
-            prefabEntity = systemManager.ecs:NewEntityFromPrefab("bullet", positions_final)
-            rotationCam.x = rotationCam.z *360
-            rotationCam.y = rotationCam.x *0
-            rotationCam.z = rotationCam.z *0
-            prefabEntity:GetTransform().mRotate = rotationCam    
-            viewVecCam.x = viewVecCam.x*100
-            viewVecCam.y=viewVecCam.y *100
-            viewVecCam.z=viewVecCam.z *100
-
-            physicsSys:SetVelocity(prefabEntity, viewVecCam)
-            bulletAudioComp:SetPlay(0.1)
-
-        end
-    end
 
     if(inputMapSys:GetButtonDown("Shoot")) then 
         if(gunEquipped == "SHOTGUN" and shotgunShootState == "SHOOTABLE") then 
