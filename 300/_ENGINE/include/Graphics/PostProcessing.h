@@ -104,8 +104,6 @@ struct PostProcessing
 	/**************************************************************************/
 	static void CRTBlendFramebuffers(GFX::FBO& targetFramebuffer, GFX::PingPongFBO& bufferfbo, float dt);
 
-	static void PhysBasedBloom();
-
 	static void BlitFrameBuffers(unsigned int readFramebuffer, unsigned int drawFramebuffer, ivec2 readFramebufferSize, ivec2 drawFramebufferSize, int drawColorAttachmentOffset);
 
 public:
