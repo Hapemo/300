@@ -1,8 +1,8 @@
 [
     {
-        "entityid": 2097158,
+        "entityid": 15728670,
         "general": {
-            "name": "BackButton",
+            "name": "CreditsBackButton",
             "tagid": 6,
             "subtag": 0,
             "isActive": true,
@@ -37,6 +37,23 @@
             },
             "layer": 1
         },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/MainMenuButtons.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "click.wav",
+            "fullpath": "../assets\\Audio/click.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 0.20000000298023224
+        },
         "button": {
             "interactable": true,
             "hover": true,
@@ -46,7 +63,7 @@
         }
     },
     {
-        "entityid": 3145780,
+        "entityid": 18874377,
         "general": {
             "name": "MenuBackground",
             "tagid": 6,
@@ -85,7 +102,7 @@
         }
     },
     {
-        "entityid": 3145781,
+        "entityid": 18874378,
         "general": {
             "name": "BGM",
             "tagid": 0,
@@ -121,7 +138,7 @@
         }
     },
     {
-        "entityid": 3145782,
+        "entityid": 22020108,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -159,14 +176,14 @@
             },
             "size": {
                 "x": 1303,
-                "y": 636
+                "y": 689
             },
             "near": 0.10000000149011612,
             "far": 900.0
         }
     },
     {
-        "entityid": 3145783,
+        "entityid": 22020115,
         "general": {
             "name": "TV ON",
             "tagid": 0,
