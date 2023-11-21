@@ -1725,7 +1725,15 @@ void GraphicsSystem::AddHealthbarInstance(const Healthbar& healthbar, const vec3
 	mat4 world = rotate * scale;
 
 	// Update colors
-	vec4 healthColor = vec4(healthbar.mHealthColor.x, healthbar.mHealthColor.y, healthbar.mHealthColor.z, healthbar.mHealth);
+	float healthbarRatio{};
+	if (healthbar.mMaxHealth == 0) {
+		healthbarRatio = 0;
+		PWARNING("Max health of an enemy is 0, should not be!")
+	} else {
+		healthbarRatio = (healthbar.mHealth/healthbar.mMaxHealth) * 100.f;
+		healthbarRatio = healthbarRatio < 0 ? 0 : healthbarRatio; // Cap healthbar ratio min to 0
+	}
+	vec4 healthColor = vec4(healthbar.mHealthColor.x, healthbar.mHealthColor.y, healthbar.mHealthColor.z, healthbarRatio);
 	m_HealthbarMesh.mColors.push_back(healthColor);
 	m_HealthbarMesh.mTexEntID.push_back(healthbar.mBackColor);
 	// Update LTW matrix

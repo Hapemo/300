@@ -67,7 +67,7 @@ function Update()
             s1Timer = 0
             s1RoamVelocity = RandDirectionXZ()
             s1RoamVelocity = Helper.Normalize(s1RoamVelocity)
-            this:GetTransform().mRotate.y = Helper.DirectionToAngle(s1RoamVelocity)
+            this:GetTransform().mRotate.y = Helper.DirectionToAngle(this, s1RoamVelocity)
             s1RoamVelocity = Helper.Scale(s1RoamVelocity, roamSpeed)
         end
         phySys:SetVelocity(this, s1RoamVelocity)
@@ -126,9 +126,7 @@ function OnTriggerExit(Entity)
 end
 
 function OnContactEnter(Entity)
-        print("contacting")
     if (state == "SPRINT") then
-        print("IN SPRINTTTTT")
         local generalComponent = Entity:GetGeneral()
         local tagid = generalComponent.tagid
         if (tagid ~= 2 and tagid ~= 3 and tagid ~= 7) then -- "BULLET", "FLOOR", "GRAPH"

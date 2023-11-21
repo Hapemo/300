@@ -732,10 +732,11 @@ struct Healthbar : public Serializable
 {
 	glm::vec4 mHealthColor	{ 0.f, 1.f, 0.f, 1.f };
 	glm::vec4 mBackColor	{ 1.f, 0.f, 0.f, 1.f };
-	glm::vec3 mPosition		{ 0.f, 0.f, 0.f };
+	glm::vec3 mPosition;
 	float mWidth			{ 5.f };
 	float mHeight			{ 2.f };
-	float mHealth			{ 100.f };
+	float mMaxHealth;
+	float mHealth;
 
 	void Inspect();
 	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;

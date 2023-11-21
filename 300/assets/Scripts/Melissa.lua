@@ -45,10 +45,8 @@ function Alive()
 end
 
 function Update()
-
     -- OTHER UPDATE CODES
     -- Movement
-
 
     -- STATE MACHINE
     if state == "TRAVEL" then         -- walk directly to player using pathfinding (change to 2. when duplicate timer runs out)
@@ -60,6 +58,9 @@ function Update()
         phySys:SetVelocity(this, direction);
 
         if notBelow50Yet then
+            if (this:GetHealthbar().health/this:GetHealthbar().maxHealth > 0.5) then 
+                -- do something
+            end
             -- Check for health below 50
             -- Need michelle's other function to check for health in other script. 
             -- If health below 50, set notBelow50Yet to false 
