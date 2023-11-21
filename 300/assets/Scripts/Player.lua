@@ -442,7 +442,9 @@ function Update()
             end
 
             -- Must be before any state change
-            gunRecoilState = "IDLE"
+            if(gunRecoilState ~= "SHOOTING") then
+                gunRecoilState = "IDLE"
+            end
 
             gunJumpTimer = gunJumpTimer + 1
 
@@ -519,12 +521,12 @@ function Update()
 
             if(gunJumped == true) then  -- this loop will drop the gun (dip)
                 gunRecoilState = "MOVING"
-                print("CURRENT GUN Y TRANSLATE: " , gunTranslate.y)
+                -- print("CURRENT GUN Y TRANSLATE: " , gunTranslate.y)
                 if(gunTranslate.y > gunThreshHold_min_y) then  -- if gun is still higher than desired height
                     gunTranslate.y = gunTranslate.y - gunDisplaceBackSpeed
-                    print("DECREASING")
+                    -- print("DECREASING")
                 else
-                    print("DONE :D")
+                    -- print("DONE :D")
                     gunJumped = false
                 end
             end
@@ -540,11 +542,12 @@ function Update()
             -- print("GUN EQUIPPED:" , gunEquipped)
             if(gunEquipped == "REVOLVER") then 
                 print("REVOLVER SHOOTING")
+                
                 applyGunRecoil()
 
-                gunRecoilState = "SHOOTING"
+                gunRecoilState = "MOVING"
                 
-                -- print(gunEntity:GetTransform().mTranslate.z)
+                -- Shoots Bullet
                 positions_final.x = positions.x + viewVecCam.x*5
                 positions_final.y = positions.y + viewVecCam.y*5
                 positions_final.z = positions.z + viewVecCam.z*5  
@@ -863,9 +866,13 @@ function applyGunRecoil()
 
     print("IN APPLYSHOTGUNRECOIL")
 
-    if(gunTranslate.z < original_translate_z + recoil_distance and
-        (gunTranslate.z < original_translate_z + max_recoil_distance_z)) then
-        gunTranslate.z = gunTranslate.z + recoil_speed_R * dt -- recoil
+    distance_travelled_this_frame = recoil_speed_R * dt
+
+    print("DISTANCE TRAVELLED THIS FRAME: " , distance_travelled_this_frame)
+    
+    if(gunTranslate.z < original_translate_z + distance_travelled_this_frame) and
+        (gunTranslate.z < original_translate_z + max_recoil_distance_z) then
+        gunTranslate.z = gunTranslate.z + distance_travelled_this_frame -- recoil
         gunRecoilState = "MOVING"
         print("GUN TRANSLATE AFTER RECOIL: " , gunTranslate.z)
         --print("1")
