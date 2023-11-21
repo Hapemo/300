@@ -11,9 +11,11 @@ local phySys
 -- Other variables
 local this
 local direction
-local spawnMelissa      -- This should be rng, might or might not spawn another melissa (50% chance)
-local healthBelow50
+local spawnMelissa = false      -- This should be rng, might or might not spawn another melissa (50% chance)
 local notBelow50Yet
+
+local deathTimer = 2
+local deathTimerCount
 
 local state
 -- Melissa states
@@ -39,15 +41,16 @@ function Alive()
     -- Initialise the state's variables
     state = "TRAVEL"
 
-    spawnMelissa = math.random() > 0.5
+    local num = math.random()
+    spawnMelissa = num > 0.5
+    print(num)
+    print(spawnMelissa)
 
-    healthBelow50 = false
+    notBelow50Yet = true
+    deathTimerCount = 0
 end
 
 function Update()
-    -- OTHER UPDATE CODES
-    -- Movement
-
     -- STATE MACHINE
     if state == "TRAVEL" then         -- walk directly to player using pathfinding (change to 2. when duplicate timer runs out)
         direction = aiSys:GetDirection(this)
@@ -58,13 +61,11 @@ function Update()
         phySys:SetVelocity(this, direction);
 
         if notBelow50Yet then
-            if (this:GetHealthbar().health/this:GetHealthbar().maxHealth > 0.5) then 
-                -- do something
+            -- Check for health below 50%
+            if (this:GetHealthbar().health/this:GetHealthbar().maxHealth < 0.5) then 
+                notBelow50Yet = false
+                SpawnMelissa()
             end
-            -- Check for health below 50
-            -- Need michelle's other function to check for health in other script. 
-            -- If health below 50, set notBelow50Yet to false 
-            -- Run the SpawnMelissa() function
         end
     elseif state == "DUPLICATING" then   -- stops moving and vibrate hard. when vibrate timer is up, spawn in another melissa (change to 1. after duplicating)
         phySys:SetVelocity(this, Vec3.new());
@@ -75,7 +76,16 @@ function Update()
         if (s2Timer > s2TimerLimit) then
             s2Timer = 0
             -- Spawn in another melissa
+            local spawnPos = this:GetTransform().mTranslate
+            local scale = this:GetTransform().mScale
+            spawnPos.x = spawnPos.x + scale.x
+            spawnPos.z = spawnPos.z + scale.z
+            local melissa2 = systemManager.ecs:NewEntityFromPrefab("Melissa", spawnPos)
+            TRAVELInit()
         end
+    elseif state == "DEATH" then
+        deathTimerCount = deathTimerCount + FPSManager.GetDT()
+        if deathTimerCount > deathTimer then systemManager.ecs:SetDeleteEntity(this) end
     end
     -- END STATE MACHINE
 
@@ -119,10 +129,16 @@ end
 
 function SpawnMelissa() -- This function should be called in 
     if not spawnMelissa then return end
-    state = "DUPLICATE"
+    state = "DUPLICATING"
     s2Timer = 0
 end
 
-
+-- this function is ran when health just reached 0
+function StartDeath()
+    -- Start death animation
+    -- Start death sound
+    deathTimerCount = 0
+    state = "DEATH"
+end
 
 -- Helper functions
