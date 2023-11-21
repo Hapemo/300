@@ -5,8 +5,9 @@ local roamSpeed         = 20
 
 local s2Timer           = 0
 
-local s3SprintVelocity = Vec3.new()
+local s3SprintVelocity  = Vec3.new()
 local sprintSpeed       = 50
+local stareDirection    = Vec3.new()
 
 local s4Timer           = 0
 
@@ -63,11 +64,12 @@ function Update()
     if state == "ROAM" then         -- roam around and passively look for player (change to 2. when sees player)
         -- Roam around randomly
         s1Timer = s1Timer + FPSManager.GetDT()
+        this:GetTransform().mRotate.y = Helper.DirectionToAngle(this, s1RoamVelocity)
         if s1Timer > 2 then
             s1Timer = 0
             s1RoamVelocity = RandDirectionXZ()
             s1RoamVelocity = Helper.Normalize(s1RoamVelocity)
-            this:GetTransform().mRotate.y = Helper.DirectionToAngle(s1RoamVelocity)
+            this:GetTransform().mRotate.y = Helper.DirectionToAngle(this, s1RoamVelocity)
             s1RoamVelocity = Helper.Scale(s1RoamVelocity, roamSpeed)
         end
         phySys:SetVelocity(this, s1RoamVelocity)
@@ -81,7 +83,6 @@ function Update()
         -- Play animation for eyes glowing red        
 
         -- Constantly make him stare at player and stand still
-        local stareDirection = Vec3.new()
         stareDirection = Helper.Vec3Minus(this:GetAISetting():GetTarget():GetTransform().mTranslate, this:GetTransform().mTranslate)
         this:GetTransform().mRotate.y = Helper.DirectionToAngle(this, stareDirection)
         phySys:SetVelocity(this, Vec3.new())
@@ -99,6 +100,7 @@ function Update()
     elseif state == "SPRINT" then   -- charge toward last seen player position at high speed (change to 4. when collided with something)
         -- Charge towards last seen player position at high speed
         phySys:SetVelocity(this, s3SprintVelocity);
+        this:GetTransform().mRotate.y = Helper.DirectionToAngle(this, stareDirection)
 
         -- Stop and change state when collided with something
         -- This part is done in OnContactEnter
@@ -126,9 +128,7 @@ function OnTriggerExit(Entity)
 end
 
 function OnContactEnter(Entity)
-        print("contacting")
     if (state == "SPRINT") then
-        print("IN SPRINTTTTT")
         local generalComponent = Entity:GetGeneral()
         local tagid = generalComponent.tagid
         if (tagid ~= 2 and tagid ~= 3 and tagid ~= 7) then -- "BULLET", "FLOOR", "GRAPH"

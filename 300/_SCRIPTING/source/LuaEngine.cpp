@@ -131,7 +131,11 @@ void LuaEntity()
 
         ADD_COMPONENT("AddAISetting", AISetting),
         DECLARE_COMPONENT("GetAISetting", AISetting),
-        "HasAISetting", & Entity::HasComponent<AISetting>
+        "HasAISetting", & Entity::HasComponent<AISetting>,
+
+      ADD_COMPONENT("AddHealthbar", Healthbar),
+      DECLARE_COMPONENT("GetHealthbar", Healthbar),
+      "HasHealthbar", & Entity::HasComponent<Healthbar>
     );
 }
 
@@ -420,4 +424,12 @@ void LuaAISetting()
         "mTargetName", &AISetting::mTargetName,
         "mStayAway", &AISetting::mStayAway
         );
+}
+
+void LuaHealth() {
+  systemManager->mScriptingSystem->luaState.new_usertype<Healthbar>(
+    "Healthbar", sol::constructors<>(),
+    "maxHealth", &Healthbar::mMaxHealth,
+    "health", &Healthbar::mHealth
+  );
 }

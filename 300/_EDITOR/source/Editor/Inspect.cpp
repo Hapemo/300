@@ -1522,6 +1522,8 @@ void UIrenderer::Inspect() {
 		ImGui::DragInt("##Layer", (int*)&mLayer);
 		ImGui::Separator();
 
+		ImGui::Checkbox("World Transform", &mWorldTransform);
+
 		ImGui::ColorPicker4("Color", (float*)&mColor);
 	}
 
@@ -1700,11 +1702,11 @@ void Healthbar::Inspect()
 		ImGui::DragFloat("##Height", (float*)&mHeight);
 		ImGui::Separator();
 
-		ImGui::Text("Health");
+		ImGui::Text("Max Health");
 		ImGui::SameLine();
 		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
 			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
-		ImGui::DragFloat("##Health", (float*)&mHealth);
+		ImGui::DragFloat("##Max Health", (float*)&mMaxHealth);
 		ImGui::Separator();
 
 		ImGui::Text("Offset");

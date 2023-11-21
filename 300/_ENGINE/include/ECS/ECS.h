@@ -201,8 +201,8 @@ public:
 	Creates an entity from an existing prefab.
 	*******************************************************************************/
 	Entity NewEntityFromPrefab(std::string prefabName, const glm::vec3& pos);
+	Entity NewEntityFromPrefabScene(std::string prefabName, int prefabscene, const glm::vec3& pos);
 	Entity NewEntityPrefabForGraph(std::string prefabName, const glm::vec3& pos);
-
 	/*!*****************************************************************************
 	Updates all entities tied to a specific prefab, to be called when the prefab is updated.
 	*******************************************************************************/
