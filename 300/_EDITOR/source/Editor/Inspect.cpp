@@ -1517,6 +1517,8 @@ void UIrenderer::Inspect() {
 		ImGui::DragInt("##Layer", (int*)&mLayer);
 		ImGui::Separator();
 
+		ImGui::Checkbox("World Transform", &mWorldTransform);
+
 		ImGui::ColorPicker4("Color", (float*)&mColor);
 	}
 

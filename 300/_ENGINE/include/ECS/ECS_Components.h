@@ -181,6 +181,7 @@ struct UIrenderer : public Serializable
 	vec4								mColor{ 1.f, 1.f, 1.f, 1.f };
 	float								mDegree;
 	int									mLayer;
+	bool								mWorldTransform;
 
 
 	inline unsigned ID() 

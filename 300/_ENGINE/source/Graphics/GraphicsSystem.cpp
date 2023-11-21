@@ -392,6 +392,7 @@ void GraphicsSystem::Update(float dt)
 
 	// UI Objects
 	m_Image2DMesh.ClearInstances();		// Clear data from previous frame
+	m_PortalMesh.ClearInstances();
 	m_Image2DStore.clear();
 	auto UiInstances = systemManager->ecs->GetEntitiesWith<UIrenderer>();
 	for (Entity inst : UiInstances)
@@ -416,12 +417,33 @@ void GraphicsSystem::Update(float dt)
 		if (uiRenderer.mTextureRef.getdata(systemManager->mResourceTySystem->m_ResourceInstance) != nullptr)
 			texID = reinterpret_cast<GFX::Texture*>(uiRenderer.mTextureRef.data)->ID();
 
-		Add2DImageInstance(uiWidth, uiHeight, uiPosition, texID, static_cast<int>(inst.id), uiRenderer.mDegree, uiRenderer.mColor);
+		if (uiRenderer.mWorldTransform)
+		{
+			Transform xform = uiTransform;
+			if (inst.HasParent())	// Compute parent's offset
+			{
+				vec3 parent_translate = Entity(inst.GetParent()).GetComponent<Transform>().mTranslate;
+
+				// Compute view to world
+				if (inst.GetParent().GetComponent<TAG>() == TAG::PLAYER)	// if parent is the Player
+				{
+					// view space --> world space
+					mat4 viewToWorld = glm::inverse(GetCameraViewMatrix(CAMERA_TYPE::CAMERA_TYPE_GAME));
+					xform.mTranslate = viewToWorld * vec4(uiTransform.mTranslate, 1.0);
+				}
+				else
+				{
+					xform.mTranslate += parent_translate;
+				}
+			}
+			Add2DImageWorldInstance(xform, texID, static_cast<int>(inst.id), uiRenderer.mDegree, uiRenderer.mColor);
+		}
+		else
+			Add2DImageInstance(uiWidth, uiHeight, uiPosition, texID, static_cast<int>(inst.id), uiRenderer.mDegree, uiRenderer.mColor);
 	}
 	// Send UI data to GPU. Portal uses the same mesh
 	m_Image2DMesh.PrepForDraw();
 
-	m_PortalMesh.ClearInstances();
 	auto portals = systemManager->ecs->GetEntitiesWith<Portal>();
 	for (Entity p : portals)
 	{
@@ -1648,6 +1670,24 @@ void GraphicsSystem::Add2DImageInstance(float width, float height, vec3 const& p
 	m_Image2DMesh.mTexEntID.push_back(vec4((float)texIndex + 0.5f, (float)entityID + 0.5f, degree, 0));
 }
 
+void GraphicsSystem::Add2DImageWorldInstance(Transform transform, unsigned texHandle, unsigned entityID, float degree, vec4 const& color)
+{
+	mat4 S = glm::scale(transform.mScale);
+	mat4 R = glm::toMat4(glm::quat(glm::radians(transform.mRotate)));
+	mat4 T = glm::translate(transform.mTranslate);
+
+	mat4 world = T * R * S;
+
+	int texIndex{};
+	if (texHandle > 0)
+		texIndex = StoreTextureIndex(texHandle);
+	else
+		texIndex = -2;
+
+	m_PortalMesh.mLTW.push_back(world);
+	m_PortalMesh.mColors.push_back(color);
+	m_PortalMesh.mTexEntID.push_back(vec4((float)texIndex + 0.5f, (float)entityID + 0.5f, degree, 0));
+}
 int GraphicsSystem::StoreTextureIndex(unsigned texHandle)
 {
 	if (m_Image2DStore.size() >= 32)
