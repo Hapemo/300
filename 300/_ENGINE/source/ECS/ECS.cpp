@@ -11,7 +11,7 @@
 #include "ResourceManagerTy.h"
 #include "AI/AIManager.h"
 
-std::vector<std::string> ECS::mEntityTags({ "PLAYER", "ENEMY", "BULLET", "FLOOR", "WALL", "TELEPORTER", "UI", "GRAPH"});
+std::vector<std::string> ECS::mEntityTags({ "PLAYER", "ENEMY", "BULLET", "FLOOR", "WALL", "TELEPORTER", "UI", "GRAPH", "OTHERS"});
 
 bool Entity::ShouldRun() {
 	assert(HasComponent<General>() && std::string("There is no general component when attempting to change Entity's isActive").c_str());
@@ -152,7 +152,9 @@ void ECS::DeleteEntity(Entity e)
 			e.RemoveChild(child);
 	if (e.HasComponent<Prefab>())
 		UnlinkPrefab(e);
-	systemManager->mAISystem->RemoveAIFromEntity(e);
+	if (e.HasComponent<Scripts>())
+		e.GetComponent<Scripts>().RunFunctionForAllScripts("Dead");
+	
 	systemManager->mPhysicsSystem->RemoveActor(e);
 	registry.destroy(e.id);
 }

@@ -1,0 +1,72 @@
+{
+    "entityid": 158,
+    "general": {
+        "name": "SphereParticle",
+        "tagid": 2,
+        "subtag": 0,
+        "isActive": true,
+        "isPaused": false
+    },
+    "transform": {
+        "scale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+        },
+        "rotate": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "translate": {
+            "x": 0.0,
+            "y": 9.560379981994629,
+            "z": 16.13715934753418
+        }
+    },
+    "meshrenderer": {
+        "vert": "../assets/shader_files/pointLight_vert.glsl",
+        "frag": "../assets/shader_files/pointLight_frag.glsl",
+        "meshrefid": 3400,
+        "instancecolor": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+        },
+        "bloomthreshold": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+        },
+        "materialinstance": [
+            "../assets/Compressed/Cube_Texture_White.ctexture",
+            " ",
+            " ",
+            " ",
+            " ",
+            " "
+        ],
+        "mesh": "../assets/compiled_geom/Particle_Sphere.geom",
+        "texturerefid": [
+            4706,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
+    },
+    "scripts": {
+        "scriptscontainer": [
+            {
+                "scriptFile": "../assets/Scripts/SphereParticle.lua",
+                "variables": []
+            }
+        ]
+    },
+    "prefab": {
+        "prefab": "SphereParticle"
+    }
+}

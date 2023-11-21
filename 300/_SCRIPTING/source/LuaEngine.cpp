@@ -226,7 +226,9 @@ void LuaScript()
 {
     systemManager->mScriptingSystem->luaState.new_usertype<Script>(
         "Script", sol::constructors<>(),
-        "RunWithReturnValue_int", &Script::RunWithReturnValue<int>
+        "ReturnValueInt", &Script::RunWithReturnValue<int>,
+        "SetValueVec3", &Script::SetValue<glm::vec3>,
+        "SetValueFloat", &Script::SetValue<float>
         );
 }
 
@@ -331,6 +333,8 @@ void LuaScripting()
 {
     systemManager->mScriptingSystem->luaState.new_usertype<ScriptingSystem>(
         "mScriptingSystem", sol::constructors<>()
+        //"TestingFromScriptSys", &ScriptingSystem::TestingFromScriptSys,
+        //"CreateVectorString", &ScriptingSystem::CreateVectorString
     );
 }
 
@@ -367,6 +371,8 @@ void LuaGameState()
 {
     systemManager->mScriptingSystem->luaState.new_usertype<GameStateManager>(
         "mGameStateSystem", sol::constructors<>(),
+        //"GetEntity", sol::resolve<Entity(std::string const&)>(&GameStateManager::GetEntity),
+       // "GetEntityByScene", sol::resolve<Entity(std::string const&, std::string const&)>(&GameStateManager::GetEntity),
         "GetEntity", &GameStateManager::GetEntity,
         "ChangeGameState", sol::resolve<void(const std::string&)>(&GameStateManager::ChangeGameState)
         );
@@ -379,7 +385,8 @@ void LuaAIManager()
         "SetPredictiveVelocity", &AIManager::SetPredictiveVelocity,
         "PredictiveShootPlayer", &AIManager::PredictiveShootPlayer,
         "GetDirection", &AIManager::GetDirection,
-        "ConeOfSight", &AIManager::ConeOfSight
+        "ConeOfSight", &AIManager::ConeOfSight,
+        "LineOfSight", &AIManager::LineOfSight
         );
 }
 
@@ -409,6 +416,8 @@ void LuaAISetting()
         "AISetting", sol::constructors<>(),
         "SetTarget", &AISetting::SetTarget,
         "GetTarget", sol::resolve<Entity()>(&AISetting::GetTarget),
-        "GetTargetConst", sol::resolve<Entity() const>(&AISetting::GetTarget)
+        "GetTargetConst", sol::resolve<Entity() const>(&AISetting::GetTarget),
+        "mTargetName", &AISetting::mTargetName,
+        "mStayAway", &AISetting::mStayAway
         );
 }

@@ -84,6 +84,19 @@ public:
 
 		return result;
 	}
+	template<typename T>
+	void SetValue(std::string variableName, T value)
+	{
+		for (auto& e : env)
+		{
+			std::string name = e.first.as<std::string>();
+			if (name == variableName)
+			{
+				env[name] = value;
+				break;
+			}
+		}
+	}
 	// Check if the type of the variable had changed
 	bool CheckVariableTypeEqual(sol::object& value, const std::type_info& info);
 	// Set the value of the variable stored in the map

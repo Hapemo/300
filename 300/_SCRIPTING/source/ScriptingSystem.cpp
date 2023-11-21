@@ -198,7 +198,7 @@ void ScriptingSystem::Update(float dt)
 
     // Call the "Update" function 
     for (Entity entity : scriptEntities)
-    {
+    {   
         for (Script* script : entity.GetComponent<Scripts>().scriptsContainer)
         {
             script->Run("Update");
