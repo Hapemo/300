@@ -360,6 +360,9 @@ private:
 	GLint m_ComputeDeferredLightCountLocation{};
 	GLint m_ComputeDeferredGlobalBloomLocation{};
 
+	GFX::ComputeShader m_ComputeCRTShader;
+	GLint m_ComputeCRTTimeLocation{};
+
 	// -- Shader Setup --
 	void SetupAllShaders();
 

@@ -81,31 +81,15 @@ void PostProcessing::CRTBlendFramebuffers(GFX::FBO& targetFramebuffer, GFX::Ping
 		glBindFramebuffer(GL_FRAMEBUFFER, 0); // Restore the default framebuffer
 	}
 
-	uid shaderstr("CRT_Shader");
-	GFX::Shader& BlendShader = *systemManager->mResourceTySystem->get_Shader(shaderstr.id);
+	// input/output texture
+	glBindImageTexture(1, bufferfbo.pingpongColorbuffers[1], 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
+	glBindImageTexture(0, targetFramebuffer.GetColorAttachment(), 0, GL_FALSE, 0, GL_READ_WRITE, GL_RGBA32F);
 
-	BlendShader.Activate();
-	targetFramebuffer.Bind();
-
-	// Draw to color attachment only. Otherwise might affect other attachments
-	// output texture
-	glDrawBuffer(GL_COLOR_ATTACHMENT0);
-
-	glUniform1f(BlendShader.GetUniformLocation("accumulationTime"), (PostProcessing::getInstance().accumulationTime += dt));
-
-	// input texture
-	glBindTexture(GL_TEXTURE_2D, bufferfbo.pingpongColorbuffers[1]);									
-
-	{
-		systemManager->mGraphicsSystem->mScreenQuad.Bind();
-
-		glDrawArrays(GL_TRIANGLES, 0, 6);
-
-		systemManager->mGraphicsSystem->mScreenQuad.Unbind();
-	}
-
-	targetFramebuffer.Unbind();
-	BlendShader.Deactivate();
+	int num_group_x = glm::ceil(systemManager->GetGraphicsSystem()->m_Width / 29);
+	int num_group_y = glm::ceil(systemManager->GetGraphicsSystem()->m_Height/ 29);
+	glDispatchCompute(num_group_x, num_group_y, 1);
+	// make sure writing to image is done before reading
+	glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT);
 }
 
 

@@ -1,12 +1,12 @@
 /**-------------------------------------------------------------------------------------/
  * @file
- *  PrefabWindow.h
+ *  PathfinderWindow.h
  * @author
- *  Han Cheng Wen, c,han@digipen.edu
+ *  Jazz Teoh Yu Jue, j.teoh@digipen.edu
  * @date
- *  2023/05/21
+ *  14/11/2023
  * @brief
- *	Prefab Scene declaration for editing prefabs
+ *	Pathfinder graph editing
  * @copyright
  *  Copyright (C) 2023 DigiPen Institute of Technology.
  *-------------------------------------------------------------------------------------*/

@@ -90,6 +90,11 @@ void GraphicsSystem::Init()
 		m_ComputeDeferredGlobalBloomLocation	= computeDeferred.GetUniformLocation("uGlobalBloomThreshold");
 		GFX::Shader::Deactivate();
 
+		m_ComputeCRTShader.CreateShaderFromFile("../assets/shader_files/computeCRT.glsl");
+		m_ComputeCRTShader.Activate();
+		m_ComputeCRTTimeLocation = m_ComputeCRTShader.GetUniformLocation("accumulationTime");
+		GFX::Shader::Deactivate();
+
 		// Input
 		glBindImageTexture(2, m_IntermediateFBO.GetBrightColorsAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
 		glBindImageTexture(3, m_IntermediateFBO.GetFragPosAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
@@ -124,7 +129,6 @@ void GraphicsSystem::Init()
 		// only update the game camera if editor mode is not enabled
 		UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_GAME, 0.f);
 	}
-
 
 	PINFO("Window size: %d, %d", m_Window->size().x, m_Window->size().y);
 }
@@ -528,8 +532,11 @@ void GraphicsSystem::Draw(float dt, bool forEditor)
 
 		if (systemManager->mGraphicsSystem->m_EnableCRT && !systemManager->mGraphicsSystem->m_EnableChromaticAbberation)
 		{
+			m_ComputeCRTShader.Activate();
+			glUniform1f(m_ComputeCRTTimeLocation, PostProcessing::getInstance().accumulationTime += dt);
 			// CRT post processing effect. Called here so it can be rendered over the UI
 			PostProcessing::CRTBlendFramebuffers(*fbo, m_PingPongFbo, dt);
+			m_ComputeCRTShader.Deactivate();
 		}
 
 		if (systemManager->mGraphicsSystem->m_EnableChromaticAbberation)

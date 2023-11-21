@@ -21,7 +21,7 @@ creation of the required VBOs and VAO.
 #include "stb_image.h"
 
 
-constexpr int MAX_INSTANCES = 100;
+constexpr int MAX_INSTANCES = 10000;
 
 // Follows the format in the shader code
 /******************************************

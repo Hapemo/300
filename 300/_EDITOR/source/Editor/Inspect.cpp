@@ -1558,9 +1558,6 @@ void AISetting::Inspect() {
 
 			ImGui::Text("Vertical Elevation From Target");
 			ImGui::DragFloat("##Vertical Elevation From Target", &mElevation);
-
-			ImGui::Text("Bobbering Intensity");
-			ImGui::DragFloat("##Bobbering Intensity", &mBobberingIntensity);
 		}
 		ImGui::Separator();
 
@@ -1575,6 +1572,9 @@ void AISetting::Inspect() {
 
 		if (ImGui::Button("Update Target"))
 			mTarget = systemManager->mGameStateSystem->GetEntity(mTargetName);
+
+		if (ImGui::Button("Make Target The Global Player"))
+			systemManager->GetAIManager()->SetPlayer(mTarget);
 
 		if (mTargetName.size())
 			ImGui::InputText("Pathfinder Name", &mGraphDataName);
