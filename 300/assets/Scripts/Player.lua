@@ -464,7 +464,7 @@ function Update()
             end
             if (floorCount > 0) then
                 if (inputMapSys:GetButtonDown("Jump")) then
-                    movement.y = movement.y + 50.0;
+                    movement.y = movement.y + 25.0;
                     gunState = "JUMP"
                     jumpAudioComp:SetPlay(0.4)
                 end
