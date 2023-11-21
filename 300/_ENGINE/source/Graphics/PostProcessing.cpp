@@ -113,13 +113,12 @@ bool PhysBasedBloomFBO::Init(unsigned int windowWidth, unsigned int windowHeight
 	glm::vec2 mipSize((float)windowWidth, (float)windowHeight);
 	glm::ivec2 intMipSize((int)windowWidth, (int)windowHeight);
 
-	for (unsigned int i{}; i < mipChainLength; ++i)
+	// one extra mip for the original image size
+	for (unsigned int i{}; i < mipChainLength + 1; ++i)
 	{
 		// creating the mips
 		BloomMip mip;
 
-		mipSize *= 0.5f;
-		intMipSize /= 2;
 		mip.mSize = mipSize;
 		mip.mIntSize = intMipSize;
 
@@ -128,15 +127,16 @@ bool PhysBasedBloomFBO::Init(unsigned int windowWidth, unsigned int windowHeight
 		glBindTexture(GL_TEXTURE_2D, mip.mTexture);
 
 		// we are downscaling the texture. since we dont need alpha, the GL_R11F_G11F_B10F flag gives us more hdr precision
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_R11F_G11F_B10F, mip.mIntSize.x, mip.mIntSize.y, 0, GL_RGBA, GL_FLOAT, NULL);
 		//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, intMipSize.x, intMipSize.y, 0, GL_RGBA, GL_FLOAT, NULL);
-		//glTexImage2D(GL_TEXTURE_2D, 0, GL_R11F_G11F_B10F, intMipSize.x, intMipSize.y, 0, GL_RGB, GL_FLOAT, NULL);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, intMipSize.x, intMipSize.y, 0, GL_RGBA, GL_FLOAT, NULL);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
-		//glNamedFramebufferTexture(mFBO, GL_COLOR_ATTACHMENT0 + i, mip.mTexture, 0);
+		// downsample for the next mip iteration
+		mipSize *= 0.5f;
+		intMipSize /= 2;
 
 		mMipChain.emplace_back(mip);
 	}
