@@ -363,6 +363,9 @@ private:
 	GFX::ComputeShader m_ComputeCRTShader;
 	GLint m_ComputeCRTTimeLocation{};
 
+	GFX::ComputeShader m_ComputeAddBlendShader;
+	GLint m_ComputeAddBlendExposureLocation{};
+
 	// -- Shader Setup --
 	void SetupAllShaders();
 
