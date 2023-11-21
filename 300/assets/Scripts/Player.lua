@@ -86,7 +86,7 @@ local gunJumped = false -- for gun animation
 local recoil_distance = 0.5
 local recoil_speed_MG = 1.0
 local recoil_speed_R = 15.0
-local max_recoil_distance_z = 0.5
+local max_recoil_distance_z = 0.1
 
 local bullet_scale = Vec3.new()
 
@@ -564,16 +564,20 @@ function Update()
                 physicsSys:SetVelocity(prefabEntity, viewVecCam)
                 bulletAudioComp:SetPlay(0.1)
             end
+
+            -- if(gunEquipped == "SHOTGUN" and shotgunShootState == "SHOOTABLE") then 
+            --     shotgunShootState = "COOLDOWN" -- goes in this loop once until cooldown is done.
+            --     shotGunTimer = shotGunTimer + shotGunCooldown
+            --     print("SHOTGUN COOLDOWN")
+            --     shotgun()
+            --     gunRecoilState = "MOVING"
+            -- end
+
         end
 -- end of gun script 
     end
 
     physicsSys:SetVelocity(cameraEntity, movement)
-   -- print("VELOCITY" , movement.x , movement.y, movement.z)
-    
-    --cameraPhysicsComp.mVelocity = movement
-    --print("VELOCITY FROM PHYSICS" , cameraPhysicsComp.mVelocity.x , cameraPhysicsComp.mVelocity.y , cameraPhysicsComp.mVelocity.z)
-
 
 --endregion
 
@@ -583,14 +587,8 @@ function Update()
     --print("GUN SHOOT STATE:" , gunShootState)
     --print("SHOTGUN TIMER:", shotGunTimer)
 
-
     if(inputMapSys:GetButtonDown("Shoot")) then 
-        if(gunEquipped == "SHOTGUN" and shotgunShootState == "SHOOTABLE") then 
-            shotgunShootState = "COOLDOWN" -- goes in this loop once until cooldown is done.
-            shotGunTimer = shotGunTimer + shotGunCooldown
-            --print("SHOTGUN COOLDOWN")
-            shotgun()
-        end
+   
     end
 
     -- "COOLDOWN" state
@@ -873,15 +871,11 @@ function applyGunRecoil()
     if(gunTranslate.z < original_translate_z + distance_travelled_this_frame) and
         (gunTranslate.z < original_translate_z + max_recoil_distance_z) then
         gunTranslate.z = gunTranslate.z + distance_travelled_this_frame -- recoil
-        gunRecoilState = "MOVING"
         print("GUN TRANSLATE AFTER RECOIL: " , gunTranslate.z)
         --print("1")
-    else 
-        
-        gunTranslate.z = original_translate_z 
-        gunTranslate.z = gunTranslate.z + recoil_distance -- recoil
-
-        print("2 GUN TRANSLATE AFTER RECOIL:", gunTranslate.z)
+    else -- if it extends over the limit 
+        gunTranslate.z = gunTranslate.z +  max_recoil_distance_z -- recoil
+        print("MAX RECOIL REACHED", gunTranslate.z)
     end
 end
 
