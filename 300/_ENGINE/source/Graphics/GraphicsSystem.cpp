@@ -513,7 +513,7 @@ void GraphicsSystem::Draw(float dt, bool forEditor)
 
 	// Perform blitting over pixel data from Multisample FBO -> intermediate FBO -> Destination FBO
 	if (forEditor)
-		BlitMultiSampleToDestinationFBO(m_Fbo, true);
+		BlitMultiSampleToDestinationFBO(m_Fbo);
 	else
 		BlitMultiSampleToDestinationFBO(m_GameFbo);
 
@@ -1204,8 +1204,8 @@ void GraphicsSystem::SetCameraSize(CAMERA_TYPE type, ivec2 size)
 inline void drawViewFrustum(Entity gameCamera)
 {
 	auto& camera = gameCamera.GetComponent<Camera>().mCamera;
-	//systemManager->mGraphicsSystem->m_Renderer.AddFrustum(camera.viewProj(), vec4(1.f, 1.f, 0.5f, 1.f));
-	//mat4 inv = glm::inverse(camera.mView);
+	systemManager->mGraphicsSystem->m_Renderer.AddFrustum(camera.viewProj(), vec4(1.f, 1.f, 0.5f, 1.f));
+	mat4 inv = glm::inverse(camera.mView);
 
 	//float halfHeight = tanf(glm::radians(camera.mFovDegree / 2.f));
 	//float halfWidth = halfHeight * camera.mAspectRatio;
@@ -1845,7 +1845,7 @@ void GraphicsSystem::DrawDeferredLight(const vec3& camPos, GFX::FBO& destFbo)
 	destFbo.Unbind();
 }
 
-void GraphicsSystem::BlitMultiSampleToDestinationFBO(GFX::FBO& destFbo, bool editorFlag)
+void GraphicsSystem::BlitMultiSampleToDestinationFBO(GFX::FBO& destFbo)
 {
 	// Clear out intermediate before blitting
 	m_IntermediateFBO.Clear();
@@ -1858,8 +1858,7 @@ void GraphicsSystem::BlitMultiSampleToDestinationFBO(GFX::FBO& destFbo, bool edi
 	destFbo.Clear();
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	// Copies only the entity ID data to editor FBO
-	if (editorFlag)
-		m_IntermediateFBO.BlitFramebuffer(destFbo.GetID());
+	m_IntermediateFBO.BlitFramebuffer(destFbo.GetID());
 }
 
 void GraphicsSystem::SetupAllShaders()

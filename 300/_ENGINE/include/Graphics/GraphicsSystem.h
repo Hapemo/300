@@ -348,7 +348,7 @@ private:
 
 	// -- Deferred Lighting WIP --
 	void DrawDeferredLight(const vec3& camPos, GFX::FBO& destFbo);
-	void BlitMultiSampleToDestinationFBO(GFX::FBO& destFbo, bool editorFlag = false);
+	void BlitMultiSampleToDestinationFBO(GFX::FBO& destFbo);
 	GLint m_DeferredCamPosLocation{};
 	GLint m_DeferredLightCountLocation{};
 
