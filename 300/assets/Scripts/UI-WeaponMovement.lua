@@ -54,9 +54,9 @@ function Update()
                         _G.weaponArray[pCount][1] = transform.mTranslate.z
                         _G.weaponArray[pCount][2] = true
                         _G.weaponArray[pCount][3] = 1
-                        print(pCount.."count")
-                        print(_G.weaponArray[pCount+1][3].."xxxxxxx")
-                        print(3)
+                        -- print(pCount.."count")
+                        -- print(_G.weaponArray[pCount+1][3].."xxxxxxx")
+                        -- print(3)
                         systemManager.ecs:SetDeleteEntity(ent)
                     end
                 end

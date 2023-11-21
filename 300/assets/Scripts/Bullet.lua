@@ -22,6 +22,11 @@ local entityobj
 local bullethitAudioEntity
 local bullethitAudioComp
 
+local bulletObject
+local bulletLifeTime = 0
+local bulletDeathTime = 150
+
+
 -- local bullethitEntity
 -- local bullethitcomp
 -- local bullethitAudioSource 
@@ -45,6 +50,21 @@ function Update()
     bullethitAudioComp = bullethitAudioEntity:GetAudio()
     -- bullethitAudioSource = Helper.CreateAudioSource(bullethitEntity)
 
+    
+    bulletObject = gameStateSys:GetEntity("bullet" , "testSerialization")
+    while bulletObject ~= nil do 
+       --print("THERE IS A BULLET OBJECT")
+        bulletLifeTime = bulletLifeTime + 1
+        -- print("BULLET LIFETIME: " , bulletLifeTime)
+        if(bulletLifeTime > bulletDeathTime) then
+            systemManager.ecs:SetDeleteEntity(bulletObject)
+            print("DELETING BULLET")
+        end
+        break
+    end
+    
+    
+        
 
     -- movement.x= movement.x+movement.x
     --   movement.x = movement.x+ viewVec.x *0     
@@ -81,7 +101,7 @@ function OnTriggerEnter(Entity)
         Entity:GetTransform().mScale.z = Entity:GetTransform().mScale.z * 0.9
 
 
-        
+                
         systemManager.ecs:SetDeleteEntity(entityobj)
     end
 

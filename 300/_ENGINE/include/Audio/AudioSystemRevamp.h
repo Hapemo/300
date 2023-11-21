@@ -6,6 +6,7 @@
 #include <filesystem>
 #include <stdexcept>   // Added (9/25)
 #include <functional>
+#include <algorithm>
 #include "Input/Input.h"
 #include "ECS/ECS.h"
 #include "ECS/ECS_Components.h"
@@ -14,6 +15,7 @@
 #include "GameState/GameStateManager.h"
 #include "Graphics/GraphicsSystem.h"
 #include "Audio/AudioType.h"
+#include "FPSManager.h"
 
 
 enum AUDIOTYPE :unsigned char;
@@ -34,8 +36,8 @@ public:
 	// Core Loops
 public:
 	void Init();
-	void Update(float dt);
-	void Pause();
+	void Update(float dt, bool calling_from_pause);
+	void TogglePause();
 	void Reset();
 	int  ErrCodeCheck(FMOD_RESULT result);												// Debugging tool				
 
@@ -57,14 +59,14 @@ public:
 	void		 UnpauseAllSounds();
 
 	// Effects Playback
+	// Audio Fade Functions 
 	bool		 FadeIn(Entity id, float dt);    // Pass in the data from the <Audio> component 
 	bool		 FadeOut(Entity id, float dt);   // Pass in the data from the <Audio> component 
 
-	// Audio Fade Functions 
+	// Channel Management (used in every loop)
+	void		 ClearFinishedSounds();
+	
 public:
-
-
-
 	// Channel Check (still playing or not)
 public:
 	bool         IsChannelPlaying(uid id, AUDIOTYPE type);
@@ -72,14 +74,14 @@ public:
 	bool		 IsUniqueAudioPlaying(std::string audio_name);   // Unique Audio check
 	
 	FMOD::Channel* GetChannelPointer(AUDIOTYPE audio_type, uid channel_id);
-	
+	void           NullChannelPointer(AUDIOTYPE audio_type, uid channel_id);
 
 
 	// Data Members (Global Volume Multiplier)
 public:
 	float sfx_global_vol = 1.0f;
 	float bgm_global_vol = 1.0f;
-	bool  sys_paused = false;
+	bool  sys_paused = true;
 	bool  sys_was_paused = false;
 	float fade_timer = 0.0f;		// For Fading. 
 

@@ -463,10 +463,10 @@ struct Audio : public Serializable
 
 	// This is okay - because it's just editing data (use through component)
 
-	void SetPlay(float vol = 1.0f)
+	void SetPlay(/*float vol = 1.0f*/)
 	{
 		mNextActionState = STATE::SET_TO_PLAY;
-		mVolume = vol;
+		//mVolume = vol;
 	}
 
 	void SetPause() // Interface for Script
@@ -531,7 +531,8 @@ struct Audio : public Serializable
 	float		   mTypeChanged = false;				 // [For Editor] - trigger type change
 
 	// Q. Can a <Audio> entity have their very own channel.
-	uid            mChannelID;							 // Channel ID (this is being played in which channel...) 
+	uid              mChannelID;						 // Channel ID (this is being played in which channel...) 
+	std::vector<uid> mListOfChannelIDs;				     // What if there's multiple instances of such an audio
 
 	// Fade Volume Stuff
 	float fade_timer = 0.0f;							 // How long the fade has elapsed
