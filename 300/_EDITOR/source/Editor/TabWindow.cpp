@@ -17,6 +17,7 @@
 
 #include <Graphics/Camera_Input.h>
 #include <Hierarchy.h>
+#include <Constants.h>
  /***************************************************************************/
  /*!
  \brief
@@ -80,22 +81,41 @@ void TabWindow::update()
 	ImGui::DragFloat("Global Exposure", &systemManager->mGraphicsSystem->mAmbientBloomExposure, 0.01f, 0.f, 5.f, "%0.2f");
 	ImGui::DragFloat("Sampling Weight", &systemManager->mGraphicsSystem->mSamplingWeight, 0.001f, 0.f, 7.f, "%0.4f");
 
-	ImGui::DragFloat("Chromatic Offset", &systemManager->mGraphicsSystem->mChromaticOffset, 0.001f, 0.0f, 1.f);
-	ImGui::DragFloat("Chromatic Strength", &systemManager->mGraphicsSystem->mChromaticStrength, 0.01f, 0.0f, 1.f);
-
 	ImGui::Checkbox("Enable Bloom", &systemManager->mGraphicsSystem->m_EnableBloom); 
-	ImGui::Checkbox("Enable Chromatic Abberation", &systemManager->mGraphicsSystem->m_EnableChromaticAbberation);
 
-	auto meshRendererInstances = systemManager->ecs->GetEntitiesWith<MeshRenderer>();
-	// this is to only show active meshrenderer entities
-	for (Entity inst : meshRendererInstances)
-	{
-		// populate the map with the mesh name
-		auto& meshinst = inst.GetComponent<MeshRenderer>();
-		mBloomEntityMap[meshinst.mMeshPath] = getMeshName(meshinst.mMeshPath);
+	if (systemManager->mGraphicsSystem->mBloomType == BloomType::GAUSSIANBLUR) {
+		// Bloom type 1 specific variable
+		ImGui::DragFloat("Texel Offset", &systemManager->mGraphicsSystem->mTexelOffset, 0.1f, 0.f, 5.f, "%0.2f");
 	}
 
-	if (ImGui::BeginCombo("##EntityBloomThresholds", mBloomEntityStr.c_str())) 
+	else if (systemManager->mGraphicsSystem->mBloomType == BloomType::PHYS_BASED_BLOOM) {
+		ImGui::DragFloat("Filter Radius", &systemManager->mGraphicsSystem->mFilterRadius, 0.0001f, 0.f, 1.f, "%0.4f");
+	}
+
+	std::string bloomstr;
+
+	switch (systemManager->mGraphicsSystem->mBloomType)
+	{
+		case BloomType::GAUSSIANBLUR:
+			bloomstr = "Gaussian Blur";
+			break;
+		case BloomType::GAUSSIANBLUR_VER2:
+			bloomstr = "Gaussian Blur Ver2";
+			break;
+		case BloomType::PHYS_BASED_BLOOM:
+			bloomstr = "Physically Based Bloom";
+			break;
+		default:
+			break;
+	}
+
+	if (ImGui::Button(bloomstr.c_str()))
+	{
+		// switch between the different bloom types
+		systemManager->mGraphicsSystem->mBloomType = static_cast<BloomType>((static_cast<unsigned>(systemManager->mGraphicsSystem->mBloomType) + 1) % static_cast<unsigned>(BloomType::last_element));
+	}
+
+	if (ImGui::BeginCombo("EntityBloomThresholds", mBloomEntityStr.c_str()))
 	{
 		for (const auto& mapinst : mBloomEntityMap)
 		{
@@ -105,6 +125,30 @@ void TabWindow::update()
 			}
 		}
 		ImGui::EndCombo();
+	}
+
+
+	ImGui::Separator();
+	ImGui::Checkbox("Enable Chromatic Abberation", &systemManager->mGraphicsSystem->m_EnableChromaticAbberation);
+	ImGui::Checkbox("Enable CRT", &systemManager->mGraphicsSystem->m_EnableCRT);
+
+	if (systemManager->mGraphicsSystem->m_EnableCRT && systemManager->mGraphicsSystem->m_EnableChromaticAbberation) 
+	{
+		ImGui::TextColored(ImVec4(1.f, 0.f, 0.f, 1.f), "Warning: CRT and Chromatic Abberation cannot be enabled at the same time");
+	}
+	else if (systemManager->mGraphicsSystem->m_EnableChromaticAbberation) 
+	{
+		ImGui::DragFloat("Chromatic Offset", &systemManager->mGraphicsSystem->mChromaticOffset, 0.001f, 0.0f, 1.f);
+		ImGui::DragFloat("Chromatic Strength", &systemManager->mGraphicsSystem->mChromaticStrength, 0.01f, 0.0f, 1.f);
+	}
+
+	auto meshRendererInstances = systemManager->ecs->GetEntitiesWith<MeshRenderer>();
+	// this is to only show active meshrenderer entities
+	for (Entity inst : meshRendererInstances)
+	{
+		// populate the map with the mesh name
+		auto& meshinst = inst.GetComponent<MeshRenderer>();
+		mBloomEntityMap[meshinst.mMeshPath] = getMeshName(meshinst.mMeshPath);
 	}
 
 	if (mBloomEntityStr.length())

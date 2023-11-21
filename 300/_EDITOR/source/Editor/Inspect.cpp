@@ -430,7 +430,9 @@ void Camera::Inspect()
 
 void PointLight::Inspect()
 {
-	if (ImGui::CollapsingHeader("PointLight", ImGuiTreeNodeFlags_DefaultOpen))
+	bool delete_component = true;
+
+	if (ImGui::CollapsingHeader("PointLight", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
 	{
 		ImGui::Text("Color");
 		ImGui::SameLine();
@@ -456,9 +458,10 @@ void PointLight::Inspect()
 		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
 			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
 		ImGui::DragFloat("##Intensity", (float*)&mIntensity, 0.1f);
-
-
 	}
+
+	if (delete_component == false)
+		Entity(Hierarchy::selectedId).RemoveComponent<PointLight>();
 }
 /***************************************************************************/
 /*!
@@ -1526,9 +1529,6 @@ void AISetting::Inspect() {
 
 			ImGui::Text("Vertical Elevation From Target");
 			ImGui::DragFloat("##Vertical Elevation From Target", &mElevation);
-
-			ImGui::Text("Bobbering Intensity");
-			ImGui::DragFloat("##Bobbering Intensity", &mBobberingIntensity);
 		}
 		ImGui::Separator();
 
@@ -1543,6 +1543,9 @@ void AISetting::Inspect() {
 
 		if (ImGui::Button("Update Target"))
 			mTarget = systemManager->mGameStateSystem->GetEntity(mTargetName);
+
+		if (ImGui::Button("Make Target The Global Player"))
+			systemManager->GetAIManager()->SetPlayer(mTarget);
 
 		if (mTargetName.size())
 			ImGui::InputText("Pathfinder Name", &mGraphDataName);

@@ -69,6 +69,7 @@ void GraphicsSystem::Init()
 		m_MultisampleFBO.Create(m_Width, m_Height);
 		m_IntermediateFBO.Create(m_Width, m_Height);
 		m_PingPongFbo.Create(m_Width, m_Height);
+		m_PhysBloomRenderer.Init(m_Width, m_Height);
 
 		SetupAllShaders();
 
@@ -87,6 +88,9 @@ void GraphicsSystem::Init()
 		uid drawSceneShaderstr(drawSceneShader);
 		m_DrawSceneShaderInst = *systemManager->mResourceTySystem->get_Shader(drawSceneShaderstr.id);
 	}
+	
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK);
 
 	// Set Cameras' starting position
 	SetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR, {38, 20, 30});									// Position of camera
@@ -110,6 +114,11 @@ void GraphicsSystem::Init()
 	m_ComputeDeferredCamPosLocation			= computeDeferred.GetUniformLocation("uCamPos");
 	m_ComputeDeferredGlobalTintLocation		= computeDeferred.GetUniformLocation("uGlobalTint");
 	m_ComputeDeferredGlobalBloomLocation	= computeDeferred.GetUniformLocation("uGlobalBloomThreshold");
+	GFX::Shader::Deactivate();
+
+	m_ComputeCRTShader.CreateShaderFromFile("../assets/shader_files/computeCRT.glsl");
+	m_ComputeCRTShader.Activate();
+	m_ComputeCRTTimeLocation = m_ComputeCRTShader.GetUniformLocation("accumulationTime");
 	GFX::Shader::Deactivate();
 
 	// Input
@@ -407,7 +416,7 @@ void GraphicsSystem::Update(float dt)
 #pragma endregion
 }
 
-void GraphicsSystem::Draw(bool forEditor)
+void GraphicsSystem::Draw(float dt, bool forEditor)
 {
 	std::map<std::string, short> renderedMesh;
 	auto meshRendererInstances = systemManager->ecs->GetEntitiesWith<MeshRenderer>();
@@ -484,37 +493,62 @@ void GraphicsSystem::Draw(bool forEditor)
 	ComputeDeferredLight(forEditor);
 	glEnable(GL_BLEND);			// Enable back blending for later draws
 
-	if (systemManager->mGraphicsSystem->m_EnableBloom)
 	{
-		m_PingPongFbo.PrepForDraw();
+		// Post Processing Area
+		glDepthMask(GL_FALSE);
+		GFX::FBO* fbo = forEditor ? &m_Fbo : &m_GameFbo;
 
-		// Render the bloom for the Editor Framebuffer
-		//uid gaussianshaderstr("GaussianBlurShader");
-		//GFX::Shader& gaussianShaderInst = *systemManager->mResourceTySystem->get_Shader(gaussianshaderstr.id);
-		//m_PingPongFbo.GaussianBlur(gaussianShaderInst, m_Fbo, systemManager->mGraphicsSystem->mTexelOffset, systemManager->mGraphicsSystem->mSamplingWeight);
-
-		uid gaussianshaderstr("GaussianBlurShaderVer2");
-		GFX::Shader& gaussianShaderInst = *systemManager->mResourceTySystem->get_Shader(gaussianshaderstr.id);
-		if (forEditor)
+		if (systemManager->mGraphicsSystem->m_EnableCRT && !systemManager->mGraphicsSystem->m_EnableChromaticAbberation)
 		{
-			m_PingPongFbo.GaussianBlurShader(gaussianShaderInst, m_Fbo, systemManager->mGraphicsSystem->mSamplingWeight);
-			AdditiveBlendFramebuffers(m_Fbo, m_Fbo.GetColorAttachment(), m_PingPongFbo.pingpongColorbuffers[0]);
-		}
-		else
-		{
-			m_PingPongFbo.GaussianBlurShader(gaussianShaderInst, m_GameFbo, systemManager->mGraphicsSystem->mSamplingWeight);
-			AdditiveBlendFramebuffers(m_GameFbo, m_GameFbo.GetColorAttachment(), m_PingPongFbo.pingpongColorbuffers[0]);
+			m_ComputeCRTShader.Activate();
+			glUniform1f(m_ComputeCRTTimeLocation, PostProcessing::getInstance().accumulationTime += dt);
+			// CRT post processing effect. Called here so it can be rendered over the UI
+			PostProcessing::CRTBlendFramebuffers(*fbo, m_PingPongFbo, dt);
+			m_ComputeCRTShader.Deactivate();
 		}
 
-	}
+		if (systemManager->mGraphicsSystem->m_EnableChromaticAbberation)
+		{
+			if (mBloomType == PHYS_BASED_BLOOM)
+				PostProcessing::ChromaticAbbrebationBlendFramebuffers(*fbo, m_PhysBloomRenderer.getBloomTexture());
+			else
+				PostProcessing::ChromaticAbbrebationBlendFramebuffers(*fbo, m_PingPongFbo.pingpongColorbuffers[0]);
+		}
 
-	if (systemManager->mGraphicsSystem->m_EnableChromaticAbberation)
-	{
-		//ChromaticAbbrebationBlendFramebuffers(m_Fbo, m_Fbo.GetBrightColorsAttachment());
-		if (forEditor)
-			ChromaticAbbrebationBlendFramebuffers(m_Fbo, m_PingPongFbo.pingpongColorbuffers[0]);
-		else
-			ChromaticAbbrebationBlendFramebuffers(m_GameFbo, m_PingPongFbo.pingpongColorbuffers[0]);
+		if (systemManager->mGraphicsSystem->m_EnableBloom)
+		{
+			if (mBloomType == BloomType::PHYS_BASED_BLOOM)
+			{
+				m_PhysBloomRenderer.PrepForDraw();
+				m_PhysBloomRenderer.RenderBloom(fbo->GetBrightColorsAttachment(), mFilterRadius);
+				PostProcessing::AdditiveBlendFramebuffers(*fbo, fbo->GetColorAttachment(), m_PhysBloomRenderer.getBloomTexture());
+			}
+
+			else
+			{
+				//Render the bloom for the Editor Framebuffer
+				m_PingPongFbo.PrepForDraw();
+
+				if (mBloomType == BloomType::GAUSSIANBLUR)
+				{
+					uid gaussianshaderstr("GaussianBlurShader");
+					GFX::Shader& gaussianShaderInst = *systemManager->mResourceTySystem->get_Shader(gaussianshaderstr.id);
+					m_PingPongFbo.GaussianBlur(gaussianShaderInst, *fbo, systemManager->mGraphicsSystem->mTexelOffset, systemManager->mGraphicsSystem->mSamplingWeight);
+				}
+
+				else if (mBloomType == BloomType::GAUSSIANBLUR_VER2)
+				{
+					uid gaussianshaderstr("GaussianBlurShaderVer2");
+					GFX::Shader& gaussianShaderInst = *systemManager->mResourceTySystem->get_Shader(gaussianshaderstr.id);
+					m_PingPongFbo.GaussianBlurShader(gaussianShaderInst, *fbo, systemManager->mGraphicsSystem->mSamplingWeight);
+				}
+
+				PostProcessing::AdditiveBlendFramebuffers(*fbo, fbo->GetColorAttachment(), m_PingPongFbo.pingpongColorbuffers[0]);
+			}
+		}
+
+		m_PingPongFbo.UnloadAndClear();
+		glDepthMask(GL_TRUE);
 	}
 
 	// Set blend function back to usual for UI rendering
@@ -650,26 +684,46 @@ void GraphicsSystem::EditorDraw(float dt)
 
 	if (systemManager->mGraphicsSystem->m_EnableBloom)
 	{
-		m_PingPongFbo.PrepForDraw();
+		if (mBloomType == BloomType::PHYS_BASED_BLOOM)
+		{
+			m_PhysBloomRenderer.PrepForDraw();
+			m_PhysBloomRenderer.RenderBloom(m_Fbo.GetBrightColorsAttachment(), mFilterRadius);
+			PostProcessing::AdditiveBlendFramebuffers(m_Fbo, m_Fbo.GetColorAttachment(), m_PhysBloomRenderer.getBloomTexture());
+		}
+
+		else
+		{
+			//Render the bloom for the Editor Framebuffer
+			m_PingPongFbo.PrepForDraw();
 	
-		// Render the bloom for the Editor Framebuffer
-		//uid gaussianshaderstr("GaussianBlurShader");
-		//GFX::Shader& gaussianShaderInst = *systemManager->mResourceTySystem->get_Shader(gaussianshaderstr.id);
-		//m_PingPongFbo.GaussianBlur(gaussianShaderInst, m_Fbo, systemManager->mGraphicsSystem->mTexelOffset, systemManager->mGraphicsSystem->mSamplingWeight);
+			if (mBloomType == BloomType::GAUSSIANBLUR)
+			{
+				uid gaussianshaderstr("GaussianBlurShader");
+				GFX::Shader& gaussianShaderInst = *systemManager->mResourceTySystem->get_Shader(gaussianshaderstr.id);
+				m_PingPongFbo.GaussianBlur(gaussianShaderInst, m_Fbo, systemManager->mGraphicsSystem->mTexelOffset, systemManager->mGraphicsSystem->mSamplingWeight);
+			}
 
-		uid gaussianshaderstr("GaussianBlurShaderVer2");
-		GFX::Shader& gaussianShaderInst = *systemManager->mResourceTySystem->get_Shader(gaussianshaderstr.id);
-		m_PingPongFbo.GaussianBlurShader(gaussianShaderInst, m_Fbo, systemManager->mGraphicsSystem->mSamplingWeight);
+			else if (mBloomType == BloomType::GAUSSIANBLUR_VER2)
+			{
+				uid gaussianshaderstr("GaussianBlurShaderVer2");
+				GFX::Shader& gaussianShaderInst = *systemManager->mResourceTySystem->get_Shader(gaussianshaderstr.id);
+				m_PingPongFbo.GaussianBlurShader(gaussianShaderInst, m_Fbo, systemManager->mGraphicsSystem->mSamplingWeight);
+			}
 
-		AdditiveBlendFramebuffers(m_Fbo, m_Fbo.GetColorAttachment(), m_PingPongFbo.pingpongColorbuffers[0]);
+			PostProcessing::AdditiveBlendFramebuffers(m_Fbo, m_Fbo.GetColorAttachment(), m_PingPongFbo.pingpongColorbuffers[0]);
+		}
 	}
-
 
 	if (systemManager->mGraphicsSystem->m_EnableChromaticAbberation)
 	{
-		//ChromaticAbbrebationBlendFramebuffers(m_Fbo, m_Fbo.GetBrightColorsAttachment());
-		ChromaticAbbrebationBlendFramebuffers(m_Fbo, m_PingPongFbo.pingpongColorbuffers[0]);
+		if (mBloomType == BloomType::PHYS_BASED_BLOOM) {
+			PostProcessing::ChromaticAbbrebationBlendFramebuffers(m_Fbo, m_PhysBloomRenderer.getBloomTexture());
+		}
+		else {
+			PostProcessing::ChromaticAbbrebationBlendFramebuffers(m_Fbo, m_PingPongFbo.pingpongColorbuffers[0]);
+		}
 	}
+
 
 #if ENABLE_UI_IN_EDITOR_SCENE || ENABLE_CROSSHAIR_IN_EDITOR_SCENE
 	m_Fbo.Bind();
@@ -816,30 +870,30 @@ void GraphicsSystem::GameDraw(float dt)
 	m_MultisampleFBO.BlitFramebuffer(m_GameFbo.GetID());
 #endif
 
-	if (systemManager->mGraphicsSystem->m_EnableBloom)
-	{
-		m_PingPongFbo.PrepForDraw();
-
-		// Render the bloom for the Game Framebuffer
-
-#if 0
-		uid gaussianshaderstr("GaussianBlurShader");
-		GFX::Shader& gaussianShaderInst = *systemManager->mResourceTySystem->get_Shader(gaussianshaderstr.id);
-		m_PingPongFbo.GaussianBlur(gaussianShaderInst, m_GameFbo, systemManager->mGraphicsSystem->mTexelOffset, systemManager->mGraphicsSystem->mSamplingWeight);
-#else
-		uid gaussianshaderstr("GaussianBlurShaderVer2");
-		GFX::Shader& gaussianShaderInst = *systemManager->mResourceTySystem->get_Shader(gaussianshaderstr.id);
-		m_PingPongFbo.GaussianBlurShader(gaussianShaderInst, m_GameFbo, systemManager->mGraphicsSystem->mSamplingWeight);
-#endif
-
-		AdditiveBlendFramebuffers(m_GameFbo, m_GameFbo.GetColorAttachment(), m_PingPongFbo.pingpongColorbuffers[0]);
-	}
-
-	if (systemManager->mGraphicsSystem->m_EnableChromaticAbberation)
-	{
-		//ChromaticAbbrebationBlendFramebuffers(m_GameFbo, m_GameFbo.GetBrightColorsAttachment());
-		ChromaticAbbrebationBlendFramebuffers(m_GameFbo, m_PingPongFbo.pingpongColorbuffers[0]);
-	}
+//	if (systemManager->mGraphicsSystem->m_EnableBloom)
+//	{
+//		m_PingPongFbo.PrepForDraw();
+//
+//		// Render the bloom for the Game Framebuffer
+//
+//#if 0
+//		uid gaussianshaderstr("GaussianBlurShader");
+//		GFX::Shader& gaussianShaderInst = *systemManager->mResourceTySystem->get_Shader(gaussianshaderstr.id);
+//		m_PingPongFbo.GaussianBlur(gaussianShaderInst, m_GameFbo, systemManager->mGraphicsSystem->mTexelOffset, systemManager->mGraphicsSystem->mSamplingWeight);
+//#else
+//		uid gaussianshaderstr("GaussianBlurShaderVer2");
+//		GFX::Shader& gaussianShaderInst = *systemManager->mResourceTySystem->get_Shader(gaussianshaderstr.id);
+//		m_PingPongFbo.GaussianBlurShader(gaussianShaderInst, m_GameFbo, systemManager->mGraphicsSystem->mSamplingWeight);
+//#endif
+//
+//		PostProcessing::AdditiveBlendFramebuffers(m_GameFbo, m_GameFbo.GetColorAttachment(), m_PingPongFbo.pingpongColorbuffers[0]);
+//	}
+//
+//	if (systemManager->mGraphicsSystem->m_EnableChromaticAbberation)
+//	{
+//		//ChromaticAbbrebationBlendFramebuffers(m_GameFbo, m_GameFbo.GetBrightColorsAttachment());
+//		PostProcessing::ChromaticAbbrebationBlendFramebuffers(m_GameFbo, m_PingPongFbo.pingpongColorbuffers[0]);
+//	}
 
 	m_GameFbo.Bind();
 	m_GameFbo.DrawBuffers(true);
@@ -865,41 +919,52 @@ void GraphicsSystem::GameDraw(float dt)
 	DrawAllHealthbarInstance(gameCamVP);
 	m_HealthbarMesh.ClearInstances();	// Clear data
 
+	if (systemManager->mGraphicsSystem->m_EnableCRT && !systemManager->mGraphicsSystem->m_EnableChromaticAbberation)
+	{
+		// CRT post processing effect. Called here so it can be rendered over the UI
+		PostProcessing::CRTBlendFramebuffers(m_GameFbo, m_PingPongFbo, dt);
+	}
+
+	if (systemManager->mGraphicsSystem->m_EnableBloom)
+	{
+		if (mBloomType == BloomType::PHYS_BASED_BLOOM)
+		{
+			m_PhysBloomRenderer.PrepForDraw();
+			//m_PhysBloomRenderer.RenderBloom(m_GameFbo.GetColorAttachment(), mFilterRadius);
+			m_PhysBloomRenderer.RenderBloom(m_GameFbo.GetBrightColorsAttachment(), mFilterRadius);
+			PostProcessing::AdditiveBlendFramebuffers(m_GameFbo, m_GameFbo.GetColorAttachment(), m_PhysBloomRenderer.getBloomTexture());
+		}
+
+		else
+		{
+			// Render the bloom for the Game Framebuffer
+			m_PingPongFbo.PrepForDraw();
+
+			if (mBloomType == BloomType::GAUSSIANBLUR)
+			{
+				uid gaussianshaderstr("GaussianBlurShader");
+				GFX::Shader& gaussianShaderInst = *systemManager->mResourceTySystem->get_Shader(gaussianshaderstr.id);
+				m_PingPongFbo.GaussianBlur(gaussianShaderInst, m_GameFbo, systemManager->mGraphicsSystem->mTexelOffset, systemManager->mGraphicsSystem->mSamplingWeight);
+			}
+
+			else if (mBloomType == BloomType::GAUSSIANBLUR_VER2)
+			{
+				uid gaussianshaderstr("GaussianBlurShaderVer2");
+				GFX::Shader& gaussianShaderInst = *systemManager->mResourceTySystem->get_Shader(gaussianshaderstr.id);
+				m_PingPongFbo.GaussianBlurShader(gaussianShaderInst, m_GameFbo, systemManager->mGraphicsSystem->mSamplingWeight);
+			}
+
+			PostProcessing::AdditiveBlendFramebuffers(m_GameFbo, m_GameFbo.GetColorAttachment(), m_PingPongFbo.pingpongColorbuffers[0]);
+		}
+	}
+
 	m_GameFbo.Unbind();
 	m_PingPongFbo.UnloadAndClear();
 }
 
 
 
-void GraphicsSystem::ChromaticAbbrebationBlendFramebuffers(GFX::FBO& targetFramebuffer, unsigned int Attachment1)
-{
-	//glBlendFunc(GL_ONE, GL_ZERO);
-	glBlendFunc(GL_ONE_MINUS_DST_COLOR, GL_ONE);
 
-	uid shaderstr("ChromaticAbberation");
-	GFX::Shader& BlendShader = *systemManager->mResourceTySystem->get_Shader(shaderstr.id);
-
-	BlendShader.Activate();
-	targetFramebuffer.Bind();
-
-	// Draw to color attachment only. Otherwise might affect other attachments
-	glDrawBuffer(GL_COLOR_ATTACHMENT0);
-
-	glUniform1f(BlendShader.GetUniformLocation("ChromaticAbberationOffset"), systemManager->mGraphicsSystem->mChromaticOffset);
-	glUniform1f(BlendShader.GetUniformLocation("ChromaticAbberationStrength"), systemManager->mGraphicsSystem->mChromaticStrength);
-	glBindTexture(GL_TEXTURE_2D, Attachment1);									// bind the second attachment
-
-	{
-		mScreenQuad.Bind();
-
-		glDrawArrays(GL_TRIANGLES, 0, 6);
-
-		mScreenQuad.Unbind();
-	}
-
-	targetFramebuffer.Unbind();
-	BlendShader.Deactivate();
-}
 
 
 void GraphicsSystem::DrawGameScene()
@@ -1412,41 +1477,6 @@ void GraphicsSystem::DrawAll(GFX::Mesh &mesh)
 }
 
 
-/***************************************************************************/
-/*!
-\brief
-	Perform additive blending on 2 color attachments
-*/
-/**************************************************************************/
-void GraphicsSystem::AdditiveBlendFramebuffers(	GFX::FBO& targetFramebuffer, unsigned int Attachment0, unsigned int Attachment1)
-{
-	glBlendFunc(GL_ONE, GL_ONE);
-
-	uid shaderstr("AdditiveBlendShader");
-	GFX::Shader& BlendShader = *systemManager->mResourceTySystem->get_Shader(shaderstr.id);
-
-	BlendShader.Activate();
-	targetFramebuffer.Bind();
-
-	// Draw to color attachment only. Otherwise might affect other attachments
-	glDrawBuffer(GL_COLOR_ATTACHMENT0);
-
-	glUniform1f(BlendShader.GetUniformLocation("Exposure"), systemManager->mGraphicsSystem->mAmbientBloomExposure);
-	glBindTexture(GL_TEXTURE_2D, Attachment0);									// bind the first attachment
-	glBindTexture(GL_TEXTURE_2D, Attachment1);									// bind the second attachment
-
-	{
-		mScreenQuad.Bind();
-
-		glDrawArrays(GL_TRIANGLES, 0, 6);
-
-		mScreenQuad.Unbind();
-	}
-
-	targetFramebuffer.Unbind();
-	GFX::Shader::Deactivate();
-}
-
 
 /***************************************************************************/
 /*!
@@ -1579,6 +1609,9 @@ void GraphicsSystem::DrawAll2DInstances(unsigned shaderID)
 {
 	(void)shaderID;
 
+	if (m_Image2DStore.size() == 0)
+		return;
+
 	// Bind Textures to OpenGL context
 	for (size_t i{}; i < m_Image2DStore.size(); ++i)
 	{
@@ -1648,6 +1681,9 @@ int GraphicsSystem::StoreTextureIndex(unsigned texHandle)
 
 void GraphicsSystem::DrawAllHealthbarInstance(const mat4& viewProj)
 {
+	if (m_HealthbarMesh.mLTW.size() == 0)
+		return;
+
 	// Bind shader and VAO
 	m_HealthbarShaderInst.Activate();
 	m_HealthbarMesh.BindVao();
@@ -1708,6 +1744,9 @@ void GraphicsSystem::DrawCrosshair()
 {
 	// Get entity with crosshair component
 	auto ent = systemManager->ecs->GetEntitiesWith<Crosshair>();
+
+	if(ent.size() == 0)
+		return;
 
 	// Use crosshair shader program adn VAO
 	m_CrosshairShaderInst.Activate();
@@ -1843,8 +1882,12 @@ void GraphicsSystem::ComputeDeferredLight(bool editorDraw)
 
 	computeDeferred.Activate();
 
+	vec3 camPos = GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_GAME);
+	if (editorDraw)
+		camPos = m_EditorCamera.position();
+
 	glUniform1i(m_ComputeDeferredLightCountLocation, m_LightCount);
-	glUniform3fv(m_ComputeDeferredCamPosLocation, 1, &m_EditorCamera.mPosition[0]);
+	glUniform3fv(m_ComputeDeferredCamPosLocation, 1, &camPos[0]);
 	glUniform4fv(m_ComputeDeferredGlobalTintLocation, 1, &m_GlobalTint[0]);
 	vec4 globalBloom = vec4(mAmbientBloomThreshold, m_EnableBloom);
 	glUniform4fv(m_ComputeDeferredGlobalBloomLocation, 1, &globalBloom[0]);
@@ -1944,4 +1987,15 @@ void MeshRenderer::SetTexture(MaterialType MaterialType, const std::string& Text
 void PointLight::SetColor(const vec3& color)
 {
 	mLightColor = color;
+}
+
+
+void UIrenderer::SetTexture(const std::string& Texturename)
+{
+	std::string MaterialInstancePath = systemManager->mResourceTySystem->compressed_texture_path + Texturename + ".ctexture";
+
+	std::string descFilepath = MaterialInstancePath + ".desc";
+	unsigned guid = _GEOM::GetGUID(descFilepath);
+
+	mTextureRef.data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(guid));
 }

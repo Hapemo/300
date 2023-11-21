@@ -1,0 +1,43 @@
+{
+    "entityid": 168,
+    "general": {
+        "name": "UI-Spawned",
+        "tagid": 0,
+        "subtag": 0,
+        "isActive": true,
+        "isPaused": false
+    },
+    "transform": {
+        "scale": {
+            "x": -100.0,
+            "y": 100.0,
+            "z": 1.0
+        },
+        "rotate": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "translate": {
+            "x": 170.0,
+            "y": -820.0,
+            "z": 0.0
+        }
+    },
+    "uirenderer": {
+        "texpath": "",
+        "textureref": 4650,
+        "degree": 0.0
+    },
+    "scripts": {
+        "scriptscontainer": [
+            {
+                "scriptFile": "../assets/Scripts/UI-WeaponMovement.lua",
+                "variables": []
+            }
+        ]
+    },
+    "prefab": {
+        "prefab": "UI-Spawned"
+    }
+}
