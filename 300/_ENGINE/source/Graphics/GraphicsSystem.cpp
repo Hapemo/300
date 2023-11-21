@@ -1539,6 +1539,7 @@ void GraphicsSystem::ResizeWindow(ivec2 newSize)
 	m_MultisampleFBO.Resize(newSize.x, newSize.y);
 	m_IntermediateFBO.Resize(newSize.x, newSize.y);
 	m_PingPongFbo.Resize(newSize.x, newSize.y);
+	m_PhysBloomRenderer.Resize(newSize.x, newSize.y);
 
 	// Input
 	glBindImageTexture(2, m_IntermediateFBO.GetBrightColorsAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
