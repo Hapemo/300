@@ -469,7 +469,6 @@ void GraphicsSystem::Update(float dt)
 
 void GraphicsSystem::Draw(float dt, bool forEditor)
 {
-	std::cout << systemManager->mResourceTySystem->m_ResourceInstance.size()<<"\n";
 	std::map<std::string, short> renderedMesh;
 	auto meshRendererInstances = systemManager->ecs->GetEntitiesWith<MeshRenderer>();
 

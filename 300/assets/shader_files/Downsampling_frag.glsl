@@ -76,7 +76,7 @@ void main()
     // of 4 samples to prevent fireflies (very bright subpixels, leads to pulsating
     // artifacts)
 
-    if(false)
+    if(true)
     {
         vec3 groups[5];
         groups[0] = (a+b+d+e) * (0.125f/4.0f);
@@ -106,7 +106,7 @@ void main()
     // to effectively yield this sum. We get:
     // 0.125*5 + 0.03125*4 + 0.0625*4 = 1
 
-    if(true)
+    else
     {
         downsample.rgb = e*0.125;
         downsample.rgb += (a+c+g+i)*0.03125;
