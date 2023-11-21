@@ -51,7 +51,7 @@ function Update()
     -- bullethitAudioSource = Helper.CreateAudioSource(bullethitEntity)
 
     
-    bulletObject = gameStateSys:GetEntity("bullet" , "testSerialization")
+    bulletObject = gameStateSys:GetEntity("bullet")
     while bulletObject ~= nil do 
        --print("THERE IS A BULLET OBJECT")
         bulletLifeTime = bulletLifeTime + 1

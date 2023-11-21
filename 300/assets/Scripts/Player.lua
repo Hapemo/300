@@ -162,7 +162,7 @@ function Alive()
     dashAudioEntity = gameStateSys:GetEntity("Dash")
     dashAudioComp = dashAudioEntity:GetAudio()
 
-    machineGunAudioEntity = gameStateSys:GetEntity("Machine Gun Shoot (LOOP)" , "testSerialization")
+    machineGunAudioEntity = gameStateSys:GetEntity("Machine Gun Shoot (LOOP)")
     machineGunAudioComp = machineGunAudioEntity:GetAudio()
     machineGunAudioComp:UpdateVolume(0.0)
     machineGunAudioComp:SetPlay()
@@ -171,7 +171,7 @@ function Alive()
     tpTime = 20.0
     teleporter1 = gameStateSys:GetEntity("Teleporter1")
     teleporter2 = gameStateSys:GetEntity("Teleporter2")
-    --walkingenemy = gameStateSys:GetEntity("enemy1_walking", "testSerialization")
+    --walkingenemy = gameStateSys:GetEntity("enemy1_walking")
     onTpTime = 0;
     collideWithTP = 0
     originalSamplingWeight = graphicsSys.mSamplingWeight
@@ -179,7 +179,7 @@ function Alive()
     tpfin2 = gameStateSys:GetEntity("Fin2")
 
     -- Gun Stuff --
-    gunEntity = gameStateSys:GetEntity("gun", "testSerialization")
+    gunEntity = gameStateSys:GetEntity("gun")
     gunInitialTranslate = gunEntity:GetTransform().mTranslate
     gunRotation = gunEntity:GetTransform().mRotate
 

@@ -143,7 +143,7 @@ function Alive()
     tpTime = 20.0
     -- teleporter1 = gameStateSys:GetEntity("Teleporter1")
     -- teleporter2 = gameStateSys:GetEntity("Teleporter2")
-    --walkingenemy = gameStateSys:GetEntity("enemy1_walking", "testSerialization")
+    --walkingenemy = gameStateSys:GetEntity("enemy1_walking")
     --onTpTime = 0;
     collideWithTP = 0
     originalSamplingWeight = graphicsSys.mSamplingWeight
