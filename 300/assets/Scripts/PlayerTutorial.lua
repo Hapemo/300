@@ -9,7 +9,7 @@ local back = Vec3.new()
 local left = Vec3.new()
 local right = Vec3.new()
 local centerscreen = Vec2.new()
-local mul = 100.0
+local mul = 10.0
 local floorCount = 0
 local dashTime = 0.0
 local isDashing = false;
@@ -334,7 +334,7 @@ function Update()
             end
             if (floorCount > 0) then
                 if (inputMapSys:GetButtonDown("Jump")) then
-                    movement.y = movement.y + 100.0;
+                    movement.y = movement.y + 25.0;
                     jumpAudioComp:SetPlay(0.4)
                 end
             end
