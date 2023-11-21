@@ -26,10 +26,12 @@ function Update()
     moveTime = moveTime + FPSManager.GetDT()
     ent = Helper.GetScriptEntity(script_entity.id)
     transform = ent:GetTransform()
-        if(moveTime >0.5)then
-        --print("haaaaaaaaaaaahahahaah")
+        
 
-
+    
+    if(moveTime >0.5)then
+    --print("haaaaaaaaaaaahahahaah")
+        if(pCount < 8)then
             if( _G.weaponArray[pCount+1][2] == true)then
 
                 if ( _G.weaponArray[pCount+1][3] >2)then
@@ -52,35 +54,45 @@ function Update()
                         _G.weaponArray[pCount][1] = transform.mTranslate.z
                         _G.weaponArray[pCount][2] = true
                         _G.weaponArray[pCount][3] = 1
-                        print(pCount.."count")
-                        print(_G.weaponArray[pCount+1][3].."xxxxxxx")
-                        print(3)
+                        -- print(pCount.."count")
+                        -- print(_G.weaponArray[pCount+1][3].."xxxxxxx")
+                        -- print(3)
                         systemManager.ecs:SetDeleteEntity(ent)
                     end
                 end
 
-               -- if(_G.weaponArray[pCount+1][1] ==transform.mTranslate.z )
 
-
-
+           
+            -- if(_G.weaponArray[pCount+1][1] ==transform.mTranslate.z )            
             end
-            if (pCount ==8)then
-                _G.weaponArray[pCount][1] = transform.mTranslate.z
-                _G.weaponArray[pCount][2] = true
-                _G.weaponArray[pCount][3] = 1
+        else
+
+            if( _G.weaponArray[8][2] == false )then
+                _G.weaponArray[8][1] = transform.mTranslate.z
+                _G.weaponArray[8][2] = true
+                _G.weaponArray[8][3] = 1
                 systemManager.ecs:SetDeleteEntity(ent)
-            end
-            pCount = pCount+1
-            transform.mTranslate.x = weaponPosition[pCount]
-            --print(pCount.." object "..objecto.. " pos "..weaponPosition[pCount])
-            moveTime = 0
-
-
+            end   
         end
+
+ 
+            
+        pCount = pCount+1
+        transform.mTranslate.x = weaponPosition[pCount]
+        --print(pCount.." object "..objecto.. " pos "..weaponPosition[pCount])
+        moveTime = 0
+        -- else
+        --     if( _G.weaponArray[8][2] == true)then
+        --         _G.weaponArray[8][1] = transform.mTranslate.z
+        --         _G.weaponArray[8][2] = true
+        --         _G.weaponArray[8][3] = 1
+        --         systemManager.ecs:SetDeleteEntity(ent)
+        --     end
+        --     systemManager.ecs:SetDeleteEntity(ent)
+        -- end
+    end
+
     
-        if (pCount >=8)then
-            systemManager.ecs:SetDeleteEntity(ent)
-        end
 
 
 

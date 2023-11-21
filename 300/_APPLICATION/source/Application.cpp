@@ -29,7 +29,6 @@ start up of window and game system, also runs their update functions.
 
 #include <Windows.h>
 #include <WinUser.h>
-#include "Reflection/Reflection.h"
 
 // Static variables
 GFX::DebugRenderer* Application::mRenderer;

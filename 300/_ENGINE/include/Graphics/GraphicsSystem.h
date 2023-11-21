@@ -156,6 +156,7 @@ public:
 		Getters
 	*/
 	/**************************************************************************/
+	GFX::Camera GetCamera(CAMERA_TYPE type);
 	vec3 GetCameraPosition(CAMERA_TYPE type);
 	vec3 GetCameraTarget(CAMERA_TYPE type);
 	vec3 GetCameraDirection(CAMERA_TYPE type);			// Direction vector of the camera (Target - position)
@@ -287,6 +288,7 @@ public:
 	GFX::Shader m_AnimationShaderInst;
 	GFX::Shader m_GBufferShaderInst;
 	GFX::Shader m_DeferredLightShaderInst;
+	GFX::Shader m_Quad3DShaderInst;
 
 	// -- Flags --
 	int		m_DebugDrawing{ 0 };			// debug drawing 
@@ -304,6 +306,7 @@ public:
 	// -- 2D Image Rendering --
 	GFX::Mesh						m_Image2DMesh;
 	GFX::Mesh						m_HealthbarMesh;
+	GFX::Mesh						m_PortalMesh;
 	std::vector<unsigned>			m_Image2DStore;
 	GFX::Quad2D						mScreenQuad;
 
@@ -327,11 +330,11 @@ private:
 	void SetupShaderStorageBuffers();		// Creates all SSBO required
 
 	void DrawAll2DInstances(unsigned shaderID);
-	void Add2DImageInstance(float width, float height, vec2 const& position, unsigned texHandle, unsigned entityID = 0xFFFFFFFF, float degree = 0.f, vec4 const& color = vec4{ 1.f, 1.f, 1.f, 1.f });
+	void Add2DImageInstance(float width, float height, vec3 const& position, unsigned texHandle, unsigned entityID = 0xFFFFFFFF, float degree = 0.f, vec4 const& color = vec4{ 1.f, 1.f, 1.f, 1.f });
 	int StoreTextureIndex(unsigned texHandle);
 
 	// -- Health Bar --
-	void AddHealthbarInstance(const Healthbar& healthbar, const vec3& camPos, unsigned entityID = 0xFFFFFFFF);
+	void AddHealthbarInstance(Entity e, const vec3& camPos, unsigned entityID = 0xFFFFFFFF);
 	void DrawAllHealthbarInstance(const mat4& viewProj);
 	GLint m_HealthbarViewProjLocation{};
 
@@ -345,7 +348,7 @@ private:
 
 	// -- Deferred Lighting WIP --
 	void DrawDeferredLight(const vec3& camPos, GFX::FBO& destFbo);
-	void BlitMultiSampleToDestinationFBO(GFX::FBO& destFbo, bool editorFlag = false);
+	void BlitMultiSampleToDestinationFBO(GFX::FBO& destFbo);
 	GLint m_DeferredCamPosLocation{};
 	GLint m_DeferredLightCountLocation{};
 
@@ -360,8 +363,17 @@ private:
 	GFX::ComputeShader m_ComputeCRTShader;
 	GLint m_ComputeCRTTimeLocation{};
 
+	GFX::ComputeShader m_ComputeAddBlendShader;
+	GLint m_ComputeAddBlendExposureLocation{};
+
 	// -- Shader Setup --
 	void SetupAllShaders();
+
+	// -- Portal WIP --
+	mat4 GetPortalViewMatrix(GFX::Camera const& camera, Transform const& sourcePortal, Transform const& destPortal);
+	mat4 ObliqueNearPlaneClipping(mat4 proj, mat4 view, Transform const& srcPortal, Transform const& destPortal);
+	void AddPortalInstance(Entity portal);
+	void DrawAllPortals(bool editorDraw);
 };
 
 #endif

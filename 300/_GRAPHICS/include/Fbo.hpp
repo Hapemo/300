@@ -49,7 +49,7 @@ namespace GFX
 /*!*****************************************************************************
 Creates the framebuffer object and the colorAttachment, Entity ID attachment
 *******************************************************************************/
-		void Create(int width, int height, bool editorMode = true);
+		void Create(int width, int height, bool editorMode = true, bool resize = false);
 
 /*!*****************************************************************************
 Prepares the Framebuffer to be drawn by selecting the attachments to be bound

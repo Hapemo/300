@@ -25,12 +25,12 @@ layout (std430, binding = 3) buffer boneFinal
   mat4 matrices[];
 };
 
+out vec4 vertexColor;
 out vec2 TexCoords;
 out vec4 Tex_Ent_ID;
 out mat3 TBN;
 out vec3 fragPos;
 out vec4 Bloom_Threshold;
-out vec4 VertexColor;
 
 mat3 ComputeTBN()
 {
@@ -74,7 +74,7 @@ void main()
     gl_Position         = uMatrixVP * inLTW * totalPosition;
     TexCoords           = inQUV;
     Tex_Ent_ID          = inTex_Ent_ID;
-    VertexColor         = inVertexColor;
+    vertexColor         = inVertexColor;
 
     TBN = ComputeTBN();
 

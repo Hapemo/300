@@ -178,8 +178,9 @@ struct UIrenderer : public Serializable
 	std::string							mTexPath; // temporary should be UID
 	_GEOM::Texture_DescriptorData		mTextureDescriptorData;
 	ref									mTextureRef;
+	vec4								mColor{ 1.f, 1.f, 1.f, 1.f };
 	float								mDegree;
-	vec4								mColor;
+	int									mLayer;
 
 
 	inline unsigned ID() 
@@ -463,10 +464,10 @@ struct Audio : public Serializable
 
 	// This is okay - because it's just editing data (use through component)
 
-	void SetPlay(float vol = 1.0f)
+	void SetPlay(/*float vol = 1.0f*/)
 	{
 		mNextActionState = STATE::SET_TO_PLAY;
-		mVolume = vol;
+		//mVolume = vol;
 	}
 
 	void SetPause() // Interface for Script
@@ -531,7 +532,8 @@ struct Audio : public Serializable
 	float		   mTypeChanged = false;				 // [For Editor] - trigger type change
 
 	// Q. Can a <Audio> entity have their very own channel.
-	uid            mChannelID;							 // Channel ID (this is being played in which channel...) 
+	uid              mChannelID;						 // Channel ID (this is being played in which channel...) 
+	std::vector<uid> mListOfChannelIDs;				     // What if there's multiple instances of such an audio
 
 	// Fade Volume Stuff
 	float fade_timer = 0.0f;							 // How long the fade has elapsed
@@ -701,7 +703,7 @@ private:
 	[Component] - Button
  */
  /******************************************************************************/
-struct Button
+struct Button : public Serializable
 {
 	bool mInteractable{ true };
 	bool mIsHover{ false };
@@ -713,6 +715,10 @@ struct Button
 	inline bool IsHovered() { return mIsHover; }
 	inline bool IsClicked() { return mIsClick; }
 	inline bool IsActivated() { return mActivated; }
+
+	void Inspect();
+	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
+	void DeserializeSelf(rapidjson::Value& reader);
 };
 
 struct Crosshair : public Serializable
@@ -741,4 +747,19 @@ struct Healthbar : public Serializable
 	void Inspect();
 	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
 	void DeserializeSelf(rapidjson::Value& reader);
+};
+
+struct Portal
+{
+	// Serialize these
+	glm::vec3 mTranslate1{};
+	glm::vec3 mTranslate2{};
+
+	glm::vec3 mScale1{};
+	glm::vec3 mScale2{};
+
+	glm::vec3 mRotate1{};
+	glm::vec3 mRotate2{};
+
+	void Inspect();
 };

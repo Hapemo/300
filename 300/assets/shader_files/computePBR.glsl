@@ -11,7 +11,7 @@ layout(rgba32f, binding = 5) uniform image2D gAlbedoSpec;           // RGB:  Alb
 layout(rgba32f, binding = 6) uniform image2D gEmission;             // RGBA: Emission
 
 // -- OUTPUT --
-layout(rgba32f, binding = 0) uniform image2D imgOutput;
+layout(rgba32f, binding = 0) uniform image2D imgOutput;             // Custom Color of the mesh, and also the output
 layout(rgba32f, binding = 1) uniform image2D brightOutput;
 
 // -- UNIFORM --
@@ -55,6 +55,7 @@ void main()
     float roughness     = normal.a;
     float metallic      = albedoSpec.a;
     float ao            = fragPos.a;
+    vec4 customColor    = imageLoad(imgOutput, texelCoord);
     //albedoSpec.rgb = pow(albedoSpec.rgb, vec3(2.2));
 
     // Get the F0 Parameter
@@ -72,7 +73,8 @@ void main()
 
     vec3 ambient = vec3(0.03) * albedoSpec.rgb * ao;
     vec3 color = ambient + lightRadiance;
-    vec3 finalColor = color + emission.rgb;
+    vec4 finalColor = vec4(color + emission.rgb, 1.0);
+    finalColor = finalColor * customColor;   // Set Custom Color
 
     // HDR
     // check whether fragment output is higher than threshold, if so output as bright color
@@ -92,15 +94,15 @@ void main()
     }
 
     if(brightness > 1.0)
-        imageStore(brightOutput, texelCoord, vec4(finalColor.rgb, 1.0));
+        imageStore(brightOutput, texelCoord, vec4(finalColor.rgb, brightness));
     else
         imageStore(brightOutput, texelCoord, vec4(0.0, 0.0, 0.0, 1.0));
 
     float gamma = 2.2;
-    finalColor = finalColor / (finalColor + vec3(1.0));
-    finalColor = pow(finalColor, vec3(1.0/gamma));
+    finalColor.rgb = finalColor.rgb / (finalColor.rgb + vec3(1.0));
+    finalColor.rgb = pow(finalColor.rgb, vec3(1.0/gamma));
 
-    imageStore(imgOutput, texelCoord, vec4(finalColor, 1.0) * uGlobalTint);
+    imageStore(imgOutput, texelCoord, finalColor * uGlobalTint);
 }
 
 vec3 ComputeLight(PointLight light, vec3 F0, vec3 fragPos, vec3 albedo, vec3 normal, float roughness, float metallic)

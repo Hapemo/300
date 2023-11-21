@@ -70,6 +70,8 @@ public:
 	*******************************************************************************/
 	void RemoveEntity(Entity);
 
+	bool HasEntity(Entity e);
+
 	bool IsError();
 
 	std::set<Entity> mEntities{};			// Entities in the scene 

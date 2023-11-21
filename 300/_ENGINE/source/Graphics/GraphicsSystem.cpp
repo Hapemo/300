@@ -50,6 +50,7 @@ void GraphicsSystem::Init()
 		// -- Setup UI stuffs
 		m_HealthbarMesh.Setup2DImageMesh();
 		m_Image2DMesh.Setup2DImageMesh();
+		m_PortalMesh.Setup2DImageMesh();
 		for (int i{}; i < 32; ++i)
 		{
 			m_Textures.emplace_back(i);
@@ -79,6 +80,32 @@ void GraphicsSystem::Init()
 		else {
 			m_GlobalTint.a = 1.f;
 		}
+
+		// Compile Compute shader
+		computeDeferred.CreateShaderFromFile("../assets/shader_files/computePBR.glsl");
+		computeDeferred.Activate();
+		m_ComputeDeferredLightCountLocation		= computeDeferred.GetUniformLocation("uLightCount");
+		m_ComputeDeferredCamPosLocation			= computeDeferred.GetUniformLocation("uCamPos");
+		m_ComputeDeferredGlobalTintLocation		= computeDeferred.GetUniformLocation("uGlobalTint");
+		m_ComputeDeferredGlobalBloomLocation	= computeDeferred.GetUniformLocation("uGlobalBloomThreshold");
+		GFX::Shader::Deactivate();
+
+		m_ComputeCRTShader.CreateShaderFromFile("../assets/shader_files/computeCRT.glsl");
+		m_ComputeCRTShader.Activate();
+		m_ComputeCRTTimeLocation = m_ComputeCRTShader.GetUniformLocation("accumulationTime");
+		GFX::Shader::Deactivate();
+
+		m_ComputeAddBlendShader.CreateShaderFromFile("../assets/shader_files/computeCRT.glsl");
+		m_ComputeAddBlendShader.Activate();
+		m_ComputeAddBlendExposureLocation = m_ComputeAddBlendShader.GetUniformLocation("Exposure");
+		GFX::Shader::Deactivate();
+
+		// Input
+		glBindImageTexture(2, m_IntermediateFBO.GetBrightColorsAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
+		glBindImageTexture(3, m_IntermediateFBO.GetFragPosAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
+		glBindImageTexture(4, m_IntermediateFBO.GetNormalAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
+		glBindImageTexture(5, m_IntermediateFBO.GetAlbedoSpecAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
+		glBindImageTexture(6, m_IntermediateFBO.GetEmissionAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
 	}
 
 	if (!m_EditorMode)	// If not running as editor
@@ -107,26 +134,6 @@ void GraphicsSystem::Init()
 		// only update the game camera if editor mode is not enabled
 		UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_GAME, 0.f);
 	}
-
-	computeDeferred.CreateShaderFromFile("../assets/shader_files/computePBR.glsl");
-	computeDeferred.Activate();
-	m_ComputeDeferredLightCountLocation		= computeDeferred.GetUniformLocation("uLightCount");
-	m_ComputeDeferredCamPosLocation			= computeDeferred.GetUniformLocation("uCamPos");
-	m_ComputeDeferredGlobalTintLocation		= computeDeferred.GetUniformLocation("uGlobalTint");
-	m_ComputeDeferredGlobalBloomLocation	= computeDeferred.GetUniformLocation("uGlobalBloomThreshold");
-	GFX::Shader::Deactivate();
-
-	m_ComputeCRTShader.CreateShaderFromFile("../assets/shader_files/computeCRT.glsl");
-	m_ComputeCRTShader.Activate();
-	m_ComputeCRTTimeLocation = m_ComputeCRTShader.GetUniformLocation("accumulationTime");
-	GFX::Shader::Deactivate();
-
-	// Input
-	glBindImageTexture(2, m_IntermediateFBO.GetBrightColorsAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
-	glBindImageTexture(3, m_IntermediateFBO.GetFragPosAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
-	glBindImageTexture(4, m_IntermediateFBO.GetNormalAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
-	glBindImageTexture(5, m_IntermediateFBO.GetAlbedoSpecAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
-	glBindImageTexture(6, m_IntermediateFBO.GetEmissionAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
 
 	PINFO("Window size: %d, %d", m_Window->size().x, m_Window->size().y);
 }
@@ -400,18 +407,48 @@ void GraphicsSystem::Update(float dt)
 		UIrenderer& uiRenderer = inst.GetComponent<UIrenderer>();
 		Transform& uiTransform = inst.GetComponent<Transform>();
 
+		/*if (inst.HasParent())
+		{
+			Transform parentTransform = inst.GetParent().GetComponent<Transform>();
+			uiTransform = parentTransform;
+		}*/
+
 		float uiWidth = uiTransform.mScale.x;
 		float uiHeight = uiTransform.mScale.y;
-		vec2 uiPosition = vec2(uiTransform.mTranslate.x, uiTransform.mTranslate.y);
+		float depth = (int)uiRenderer.mLayer;
+		// Maps depth from 0-255 to 0-1
+		depth /= 255.f;
+		vec3 uiPosition = vec3(uiTransform.mTranslate.x, uiTransform.mTranslate.y, depth);
 
 		unsigned texID{};
 		if (uiRenderer.mTextureRef.getdata(systemManager->mResourceTySystem->m_ResourceInstance) != nullptr)
 			texID = reinterpret_cast<GFX::Texture*>(uiRenderer.mTextureRef.data)->ID();
 
-		Add2DImageInstance(uiWidth, uiHeight, uiPosition, texID, static_cast<int>(inst.id), uiRenderer.mDegree);
+		Add2DImageInstance(uiWidth, uiHeight, uiPosition, texID, static_cast<int>(inst.id), uiRenderer.mDegree, uiRenderer.mColor);
 	}
-	// Send UI data to GPU
+	// Send UI data to GPU. Portal uses the same mesh
 	m_Image2DMesh.PrepForDraw();
+
+	m_PortalMesh.ClearInstances();
+	auto portals = systemManager->ecs->GetEntitiesWith<Portal>();
+	for (Entity p : portals)
+	{
+		AddPortalInstance(p);
+
+		Portal& portal = p.GetComponent<Portal>();
+
+		Transform srcTransform;
+		srcTransform.mTranslate = portal.mTranslate1;
+		srcTransform.mRotate = portal.mRotate1;
+		Transform destTransform;
+		destTransform.mTranslate = portal.mTranslate2;
+		destTransform.mRotate = portal.mRotate2;
+
+		mat4 destViewProj = GetPortalViewMatrix(m_EditorCamera, srcTransform, destTransform);
+
+		m_Renderer.AddFrustum(destViewProj, vec4(0.f, 0.f, 1.f, 1.f));
+	}
+	m_PortalMesh.PrepForDraw();
 
 #pragma endregion
 }
@@ -485,7 +522,7 @@ void GraphicsSystem::Draw(float dt, bool forEditor)
 
 	// Perform blitting over pixel data from Multisample FBO -> intermediate FBO -> Destination FBO
 	if (forEditor)
-		BlitMultiSampleToDestinationFBO(m_Fbo, true);
+		BlitMultiSampleToDestinationFBO(m_Fbo);
 	else
 		BlitMultiSampleToDestinationFBO(m_GameFbo);
 
@@ -566,6 +603,8 @@ void GraphicsSystem::Draw(float dt, bool forEditor)
 		m_GameFbo.DrawBuffers(true);
 	}
 
+	DrawAllPortals(forEditor);	// Draw Portal object
+
 	// Render UI objects
 	m_UiShaderInst.Activate();		// Activate shader
 	DrawAll2DInstances(m_UiShaderInst.GetHandle());
@@ -578,12 +617,10 @@ void GraphicsSystem::Draw(float dt, bool forEditor)
 	auto healthbarInstances = systemManager->ecs->GetEntitiesWith<Healthbar>();
 	for (Entity inst : healthbarInstances)
 	{
-		Healthbar& healthbar = inst.GetComponent<Healthbar>();
-		
 		if (forEditor)
-			AddHealthbarInstance(healthbar, GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR), static_cast<int>(inst.id));
+			AddHealthbarInstance(inst, GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR), static_cast<int>(inst.id));
 		else
-			AddHealthbarInstance(healthbar, GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_GAME), static_cast<int>(inst.id));
+			AddHealthbarInstance(inst, GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_GAME), static_cast<int>(inst.id));
 	}
 	m_HealthbarMesh.PrepForDraw();
 	DrawAllHealthbarInstance(camVP);
@@ -746,9 +783,7 @@ void GraphicsSystem::EditorDraw(float dt)
 	 auto healthbarInstances = systemManager->ecs->GetEntitiesWith<Healthbar>();
 	 for (Entity inst : healthbarInstances)
 	 {
-		 Healthbar& healthbar = inst.GetComponent<Healthbar>();
-
-		 AddHealthbarInstance(healthbar, GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR), static_cast<int>(inst.id));
+		 AddHealthbarInstance(inst, GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR), static_cast<int>(inst.id));
 	 }
 	 m_HealthbarMesh.PrepForDraw();
 	 DrawAllHealthbarInstance(m_EditorCamera.viewProj());
@@ -911,9 +946,7 @@ void GraphicsSystem::GameDraw(float dt)
 	auto healthbarInstances = systemManager->ecs->GetEntitiesWith<Healthbar>();
 	for (Entity inst : healthbarInstances)
 	{
-		Healthbar& healthbar = inst.GetComponent<Healthbar>();
-
-		AddHealthbarInstance(healthbar, GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_GAME), static_cast<int>(inst.id));
+		AddHealthbarInstance(inst, GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_GAME), static_cast<int>(inst.id));
 	}
 	m_HealthbarMesh.PrepForDraw();
 	DrawAllHealthbarInstance(gameCamVP);
@@ -1000,7 +1033,8 @@ void GraphicsSystem::DrawGameScene()
 void GraphicsSystem::Exit()
 {
 	m_Image2DMesh.Destroy();
-
+	m_HealthbarMesh.Destroy();
+	m_PortalMesh.Destroy();
 }
 
 /***************************************************************************/
@@ -1182,59 +1216,59 @@ void GraphicsSystem::SetCameraSize(CAMERA_TYPE type, ivec2 size)
 inline void drawViewFrustum(Entity gameCamera)
 {
 	auto& camera = gameCamera.GetComponent<Camera>().mCamera;
-
+	systemManager->mGraphicsSystem->m_Renderer.AddFrustum(camera.viewProj(), vec4(1.f, 1.f, 0.5f, 1.f));
 	mat4 inv = glm::inverse(camera.mView);
 
-	float halfHeight = tanf(glm::radians(camera.mFovDegree / 2.f));
-	float halfWidth = halfHeight * camera.mAspectRatio;
+	//float halfHeight = tanf(glm::radians(camera.mFovDegree / 2.f));
+	//float halfWidth = halfHeight * camera.mAspectRatio;
 
-	float near1 = camera.mNear;
-	float far1 = camera.mFar;
-	float xn = halfWidth * near1;
-	float xf = halfWidth * far1;
-	float yn = halfHeight * near1;
-	float yf = halfHeight * far1;
+	//float near1 = camera.mNear;
+	//float far1 = camera.mFar;
+	//float xn = halfWidth * near1;
+	//float xf = halfWidth * far1;
+	//float yn = halfHeight * near1;
+	//float yf = halfHeight * far1;
 
-	glm::vec4 f[8u] =
-	{
-		// near face
-		{xn, yn,	-near1, 1.f},
-		{-xn, yn,	-near1, 1.f},
-		{xn, -yn,	-near1, 1.f},
-		{-xn, -yn,	-near1 , 1.f},
+	//glm::vec4 f[8u] =
+	//{
+	//	// near face
+	//	{xn, yn,	-near1, 1.f},
+	//	{-xn, yn,	-near1, 1.f},
+	//	{xn, -yn,	-near1, 1.f},
+	//	{-xn, -yn,	-near1 , 1.f},
 
-		// far face
-		{xf, yf,	-far1, 1.f},
-		{-xf, yf,	-far1 , 1.f},
-		{xf, -yf,	-far1 , 1.f},
-		{-xf, -yf,	-far1, 1.f},
-	};
+	//	// far face
+	//	{xf, yf,	-far1, 1.f},
+	//	{-xf, yf,	-far1 , 1.f},
+	//	{xf, -yf,	-far1 , 1.f},
+	//	{-xf, -yf,	-far1, 1.f},
+	//};
 
-	glm::vec3 v[8];
-	for (int i = 0; i < 8; i++)
-	{
-		vec4 ff = inv * f[i];
-		v[i].x = ff.x / ff.w;
-		v[i].y = ff.y / ff.w;
-		v[i].z = ff.z / ff.w;
-	}
+	//glm::vec3 v[8];
+	//for (int i = 0; i < 8; i++)
+	//{
+	//	vec4 ff = inv * f[i];
+	//	v[i].x = ff.x / ff.w;
+	//	v[i].y = ff.y / ff.w;
+	//	v[i].z = ff.z / ff.w;
+	//}
 
-	//glm::vec4 color = {1.f, 0.38f, 0.01f, 1.f};
-	glm::vec4 color = {1.f, 1.f, 0.5f, 1.f};
-	systemManager->mGraphicsSystem->m_Renderer.AddLine(v[0], v[1], color);
-	systemManager->mGraphicsSystem->m_Renderer.AddLine(v[0], v[2], color);
-	systemManager->mGraphicsSystem->m_Renderer.AddLine(v[3], v[1], color);
-	systemManager->mGraphicsSystem->m_Renderer.AddLine(v[3], v[2], color);
+	////glm::vec4 color = {1.f, 0.38f, 0.01f, 1.f};
+	//glm::vec4 color = {1.f, 1.f, 0.5f, 1.f};
+	//systemManager->mGraphicsSystem->m_Renderer.AddLine(v[0], v[1], color);
+	//systemManager->mGraphicsSystem->m_Renderer.AddLine(v[0], v[2], color);
+	//systemManager->mGraphicsSystem->m_Renderer.AddLine(v[3], v[1], color);
+	//systemManager->mGraphicsSystem->m_Renderer.AddLine(v[3], v[2], color);
 
-	systemManager->mGraphicsSystem->m_Renderer.AddLine(v[4], v[5], color);
-	systemManager->mGraphicsSystem->m_Renderer.AddLine(v[4], v[6], color);
-	systemManager->mGraphicsSystem->m_Renderer.AddLine(v[7], v[5], color);
-	systemManager->mGraphicsSystem->m_Renderer.AddLine(v[7], v[6], color);
+	//systemManager->mGraphicsSystem->m_Renderer.AddLine(v[4], v[5], color);
+	//systemManager->mGraphicsSystem->m_Renderer.AddLine(v[4], v[6], color);
+	//systemManager->mGraphicsSystem->m_Renderer.AddLine(v[7], v[5], color);
+	//systemManager->mGraphicsSystem->m_Renderer.AddLine(v[7], v[6], color);
 
-	systemManager->mGraphicsSystem->m_Renderer.AddLine(v[0], v[4], color);
-	systemManager->mGraphicsSystem->m_Renderer.AddLine(v[1], v[5], color);
-	systemManager->mGraphicsSystem->m_Renderer.AddLine(v[3], v[7], color);
-	systemManager->mGraphicsSystem->m_Renderer.AddLine(v[2], v[6], color);
+	//systemManager->mGraphicsSystem->m_Renderer.AddLine(v[0], v[4], color);
+	//systemManager->mGraphicsSystem->m_Renderer.AddLine(v[1], v[5], color);
+	//systemManager->mGraphicsSystem->m_Renderer.AddLine(v[3], v[7], color);
+	//systemManager->mGraphicsSystem->m_Renderer.AddLine(v[2], v[6], color);
 }
 
 
@@ -1307,6 +1341,28 @@ void GraphicsSystem::UpdateCamera(CAMERA_TYPE type, const float &dt)
 			break;
 		}
 	}
+}
+
+GFX::Camera GraphicsSystem::GetCamera(CAMERA_TYPE type)
+{
+	auto localcamera = systemManager->ecs->GetEntitiesWith<Camera>();
+	if (localcamera.empty())
+		return GFX::Camera(); // Cannot find camera Richmond
+	Entity camera = localcamera.front();
+
+	switch (type)
+	{
+	case CAMERA_TYPE::CAMERA_TYPE_GAME:
+		return camera.GetComponent<Camera>().mCamera;
+
+	case CAMERA_TYPE::CAMERA_TYPE_EDITOR:
+		return m_EditorCamera;
+
+	case CAMERA_TYPE::CAMERA_TYPE_ALL:
+		break;
+	}
+	PERROR("camera spoil - graphicssystem.cpp line 751");
+	return {};
 }
 
 /***************************************************************************/
@@ -1529,6 +1585,13 @@ void GraphicsSystem::ResizeWindow(ivec2 newSize)
 	m_IntermediateFBO.Resize(newSize.x, newSize.y);
 	m_PingPongFbo.Resize(newSize.x, newSize.y);
 
+	// Input
+	glBindImageTexture(2, m_IntermediateFBO.GetBrightColorsAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
+	glBindImageTexture(3, m_IntermediateFBO.GetFragPosAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
+	glBindImageTexture(4, m_IntermediateFBO.GetNormalAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
+	glBindImageTexture(5, m_IntermediateFBO.GetAlbedoSpecAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
+	glBindImageTexture(6, m_IntermediateFBO.GetEmissionAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
+
 	// Update Window
 	m_Window->SetWindowSize(newSize);
 
@@ -1634,7 +1697,7 @@ void GraphicsSystem::DrawAll2DInstances(unsigned shaderID)
 	}
 }
 
-void GraphicsSystem::Add2DImageInstance(float width, float height, vec2 const& position, unsigned texHandle, unsigned entityID, float degree, vec4 const& color)
+void GraphicsSystem::Add2DImageInstance(float width, float height, vec3 const& position, unsigned texHandle, unsigned entityID, float degree, vec4 const& color)
 {
 	float half_w = m_Width * 0.5f;
 	float half_h = m_Height * 0.5f;
@@ -1644,7 +1707,7 @@ void GraphicsSystem::Add2DImageInstance(float width, float height, vec2 const& p
 		vec4(width / half_w, 0.f, 0.f, 0.f),
 		vec4(0.f, height / half_h, 0.f, 0.f),
 		vec4(0.f, 0.f, 1.f, 0.f),
-		vec4(position.x / m_Width, position.y / m_Height, 0.f, 1.f)
+		vec4(position.x / m_Width, position.y / m_Height, -position.z, 1.f)
 	};
 
 	int texIndex{};
@@ -1699,8 +1762,11 @@ void GraphicsSystem::DrawAllHealthbarInstance(const mat4& viewProj)
 	m_HealthbarMesh.UnbindVao();
 }
 
-void GraphicsSystem::AddHealthbarInstance(const Healthbar& healthbar, const vec3& camPos, unsigned entityID)
+void GraphicsSystem::AddHealthbarInstance(Entity e, const vec3& camPos, unsigned entityID)
 {
+	Healthbar& healthbar = e.GetComponent<Healthbar>();
+	vec3 originPos = e.GetComponent<Transform>().mTranslate;
+
 	// Compute the rotation vectors
 	vec3 normal = camPos - healthbar.mPosition;
 	vec3 up = { 0, 1, 0 };
@@ -1719,7 +1785,7 @@ void GraphicsSystem::AddHealthbarInstance(const Healthbar& healthbar, const vec3
 		vec4(glm::normalize(right), 0.0f),
 		vec4(glm::normalize(forward), 0.0f),
 		vec4(glm::normalize(normal), 0.0f),
-		vec4(healthbar.mPosition, 1.0f)
+		vec4(healthbar.mPosition + originPos, 1.0f)
 	};
 
 	mat4 world = rotate * scale;
@@ -1799,7 +1865,7 @@ void GraphicsSystem::DrawDeferredLight(const vec3& camPos, GFX::FBO& destFbo)
 	destFbo.Unbind();
 }
 
-void GraphicsSystem::BlitMultiSampleToDestinationFBO(GFX::FBO& destFbo, bool editorFlag)
+void GraphicsSystem::BlitMultiSampleToDestinationFBO(GFX::FBO& destFbo)
 {
 	// Clear out intermediate before blitting
 	m_IntermediateFBO.Clear();
@@ -1812,8 +1878,7 @@ void GraphicsSystem::BlitMultiSampleToDestinationFBO(GFX::FBO& destFbo, bool edi
 	destFbo.Clear();
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	// Copies only the entity ID data to editor FBO
-	if (editorFlag)
-		m_IntermediateFBO.BlitFramebuffer(destFbo.GetID());
+	m_IntermediateFBO.BlitFramebuffer(destFbo.GetID());
 }
 
 void GraphicsSystem::SetupAllShaders()
@@ -1873,26 +1938,136 @@ void GraphicsSystem::SetupAllShaders()
 	// Initialize the G-buffer shader and uniform location
 	uid gBufferShaderstr("gBufferShader");
 	m_GBufferShaderInst = *systemManager->mResourceTySystem->get_Shader(gBufferShaderstr.id);
+
+	// Initialize the quad 3D Shader
+	uid quad3DShaderstr("Quad3D");
+	m_Quad3DShaderInst = *systemManager->mResourceTySystem->get_Shader(quad3DShaderstr.id);
+}
+
+mat4 GraphicsSystem::GetPortalViewMatrix(GFX::Camera const& camera, Transform const& sourcePortal, Transform const& destPortal)
+{
+	mat4 camView = camera.mView;
+
+	mat4 destT = glm::translate(destPortal.mTranslate);
+	mat4 destR = glm::toMat4(glm::quat(glm::radians(destPortal.mRotate)));
+	mat4 destFinal = destT * destR;
+
+	mat4 srcT = glm::translate(sourcePortal.mTranslate);
+	mat4 srcR = glm::toMat4(glm::quat(glm::radians(sourcePortal.mRotate)));
+	mat4 srcFinal = srcT * srcR;
+
+	mat4 destinationView = camView * srcFinal * glm::rotate(glm::radians(180.f), glm::vec3(0.0f, 1.0f, 0.0f)) * glm::inverse(destFinal);
+
+	mat4 obliqueProj = ObliqueNearPlaneClipping(camera.mProjection, destinationView, sourcePortal, destPortal);
+
+	return obliqueProj * destinationView;
+}
+
+mat4 GraphicsSystem::ObliqueNearPlaneClipping(mat4 proj, mat4 view, Transform const& srcPortal, Transform const& destPortal)
+{
+	// Calculate the near plane
+	mat3 destR = glm::toMat3(glm::quat(glm::radians(destPortal.mRotate)));
+	vec3 planeNormal = destR * vec3(0.f, 0.f, 1.f);
+	//float d = glm::dot(planeNormal, srcPortal.mTranslate);
+	float d = glm::length(destPortal.mTranslate);
+	vec4 nearPlane = vec4(planeNormal, d);
+	nearPlane = glm::inverse(view) * nearPlane;
+
+	if (nearPlane.w > 0.f)
+		return proj;
+
+	vec4 q = glm::inverse(proj) * vec4(
+										glm::sign(nearPlane.x),
+										glm::sign(nearPlane.y),
+										1.f,
+										1.f);
+
+
+	// Calculate the Scale plane vector
+	vec4 c = nearPlane * (2.f / glm::dot(nearPlane, q));
+
+	mat4 newProj = proj;
+	newProj = glm::row(newProj, 2, c - glm::row(newProj, 3));
+
+	return newProj;
+}
+
+void GraphicsSystem::AddPortalInstance(Entity portal)
+{
+	float entID = static_cast<float>(portal.id);
+
+	Portal p = portal.GetComponent<Portal>();
+	mat4 S1 = glm::scale(p.mScale1);
+	mat4 R1 = glm::toMat4(glm::quat(glm::radians(p.mRotate1)));
+	mat4 T1 = glm::translate(p.mTranslate1);
+	mat4 ltw1 = T1 * R1 * S1;
+
+	m_PortalMesh.mLTW.push_back(ltw1);
+	m_PortalMesh.mColors.push_back(vec4(1.f, 1.f, 1.f, 1.f));
+	m_PortalMesh.mTexEntID.push_back(vec4(- 2.f, entID + 0.5f, 0.f, 0.f));
+
+	mat4 S2 = glm::scale(p.mScale2);
+	mat4 R2 = glm::toMat4(glm::quat(glm::radians(p.mRotate2)));
+	mat4 T2 = glm::translate(p.mTranslate2);
+	mat4 ltw2 = T2 * R2 * S2;
+
+	m_PortalMesh.mLTW.push_back(ltw2);
+	m_PortalMesh.mColors.push_back(vec4(1.f, 1.f, 1.f, 1.f));
+	m_PortalMesh.mTexEntID.push_back(vec4(-2.f, entID + 0.5f, 0.f, 0.f));
+
+	if (m_DebugDrawing)
+	{
+		vec4 normal1 = vec4(0.f, 0.f, 1.f, 0.f);
+		normal1 = R1 * normal1;
+		m_Renderer.AddLine(p.mTranslate1, p.mTranslate1 + vec3(normal1) * 5.f, vec4(0.f, 1.f, 0.f, 1.f));
+
+		vec4 normal2 = vec4(0.f, 0.f, 1.f, 0.f);
+		normal2 = R2 * normal2;
+		m_Renderer.AddLine(p.mTranslate2, p.mTranslate2 + vec3(normal2) * 5.f, vec4(0.f, 1.f, 0.f, 1.f));
+	}
+}
+
+void GraphicsSystem::DrawAllPortals(bool editorDraw)
+{
+	// Get appropriate camera
+	GFX::Camera camera = GetCamera(CAMERA_TYPE::CAMERA_TYPE_GAME);
+	if (editorDraw)
+		camera = GetCamera(CAMERA_TYPE::CAMERA_TYPE_EDITOR);
+
+	mat4 camVP = camera.viewProj();
+
+	m_PortalMesh.BindVao();
+	m_Quad3DShaderInst.Activate();
+	glUniformMatrix4fv(m_Quad3DShaderInst.GetUniformVP(), 1, GL_FALSE, &camVP[0][0]);
+
+	glDepthFunc(GL_LEQUAL);
+	glDisable(GL_CULL_FACE);
+	glDrawArraysInstanced(GL_TRIANGLE_FAN, 0, 4, GLsizei(m_PortalMesh.mLTW.size()));
+	glEnable(GL_CULL_FACE);
+
+	m_PortalMesh.UnbindVao();
+	GFX::Shader::Deactivate();
 }
 
 void GraphicsSystem::ComputeDeferredLight(bool editorDraw)
 {
 	if (editorDraw)	// Draw to Editor FBO
 	{
-		glBindImageTexture(0, m_Fbo.GetColorAttachment(), 0, GL_FALSE, 0, GL_WRITE_ONLY, GL_RGBA32F);
+		glBindImageTexture(0, m_Fbo.GetColorAttachment(), 0, GL_FALSE, 0, GL_READ_WRITE, GL_RGBA32F);
 		glBindImageTexture(1, m_Fbo.GetBrightColorsAttachment(), 0, GL_FALSE, 0, GL_WRITE_ONLY, GL_RGBA32F);
 	}
 	else
 	{
-		glBindImageTexture(0, m_GameFbo.GetColorAttachment(), 0, GL_FALSE, 0, GL_WRITE_ONLY, GL_RGBA32F);
+		glBindImageTexture(0, m_GameFbo.GetColorAttachment(), 0, GL_FALSE, 0, GL_READ_WRITE, GL_RGBA32F);
 		glBindImageTexture(1, m_GameFbo.GetBrightColorsAttachment(), 0, GL_FALSE, 0, GL_WRITE_ONLY, GL_RGBA32F);
 	}
 
-	computeDeferred.Activate();
-
+	// Set appropriate camera position
 	vec3 camPos = GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_GAME);
 	if (editorDraw)
 		camPos = m_EditorCamera.position();
+
+	computeDeferred.Activate();
 
 	glUniform1i(m_ComputeDeferredLightCountLocation, m_LightCount);
 	glUniform3fv(m_ComputeDeferredCamPosLocation, 1, &camPos[0]);

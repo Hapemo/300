@@ -90,7 +90,12 @@ void SystemManager::Pause()
 {
 	mIsPlay = false; 
 	mGraphicsSystem->PauseGlobalAnimation();
-	mAudioSystem->Pause(); 
+	if (!mAudioSystem->sys_paused)
+	{
+		mAudioSystem->TogglePause();
+		mAudioSystem->sys_paused = true;
+	}
+	
 }
 
 void SystemManager::Play()
@@ -99,8 +104,11 @@ void SystemManager::Play()
 	mPhysicsSystem.get()->Init();
 	mGraphicsSystem->UnpauseGlobalAnimation();
 	mGameStateSystem->mCurrentGameState.Save();
-	//mAudioSystem.get()->PlayOnAwake();
-	//mAudioSystem.get()->system_paused = false;
+	if (mAudioSystem->sys_paused)
+	{
+		mAudioSystem->TogglePause();
+		mAudioSystem->sys_paused = false;
+	}
 }
 
 void SystemManager::Update(float dt)
@@ -138,7 +146,7 @@ void SystemManager::Update(float dt)
 	EnginePerformance::UpdateSystemMs("Scripting");
 
 	EnginePerformance::StartTrack("Audio");
-	mAudioSystem.get()->Update(dt);					// [10/26] Inclusion of 3D Audio -> must always be after (Positional Update) 
+	mAudioSystem.get()->Update(dt, false);					// [10/26] Inclusion of 3D Audio -> must always be after (Positional Update) 
 	EnginePerformance::EndTrack("Audio");
 	EnginePerformance::UpdateSystemMs("Audio");
 	//	mResourceSystem.get()->Update();

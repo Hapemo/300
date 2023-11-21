@@ -423,6 +423,7 @@ std::vector<Entity> Entity::GetAllChildren()
 {
 	if (!this->HasComponent<Children>())
 		return {};
+	std::string name = this->GetComponent<General>().name;
 	Children child = this->GetComponent<Children>();
 	std::vector<Entity> children;
 	children.push_back(child.mFirstChild);

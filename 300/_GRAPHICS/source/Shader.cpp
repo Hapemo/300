@@ -10,7 +10,7 @@ Shader class implementation for loading, creating, compiling and linking shader
 
 #include "Shader.hpp"
 
-void GFX::Shader::CreateShader(const char* vertexShaderCode, const char* fragmentShaderCode)
+void GFX::Shader::CreateShader(const char* vertexShaderCode, const char* fragmentShaderCode, const char* vertFile, const char* fragFile)
 {
 	// Create Shader Program
 	mShaderProgram = glCreateProgram();
@@ -20,7 +20,7 @@ void GFX::Shader::CreateShader(const char* vertexShaderCode, const char* fragmen
 	int32_t shaderCodeLength = (int32_t)strlen(vertexShaderCode);
 	glShaderSource(shader, 1, &vertexShaderCode, &shaderCodeLength);
 	glCompileShader(shader);
-	if (!CompileErrors(shader, "VERTEX"))		// Check for compiling errors
+	if (!CompileErrors(shader, "VERTEX", vertFile, fragFile))		// Check for compiling errors
 	{
 		return;
 	}
@@ -33,7 +33,7 @@ void GFX::Shader::CreateShader(const char* vertexShaderCode, const char* fragmen
 	shaderCodeLength = (int32_t)strlen(fragmentShaderCode);
 	glShaderSource(shader, 1, &fragmentShaderCode, &shaderCodeLength);
 	glCompileShader(shader);
-	if (!CompileErrors(shader, "FRAGMENT"))		// Check for compiling errors
+	if (!CompileErrors(shader, "FRAGMENT", vertFile, fragFile))		// Check for compiling errors
 	{
 		return;
 	}
@@ -43,7 +43,7 @@ void GFX::Shader::CreateShader(const char* vertexShaderCode, const char* fragmen
 
 	// Link Program
 	glLinkProgram(mShaderProgram);
-	if (!CompileErrors(mShaderProgram, "PROGRAM"))
+	if (!CompileErrors(mShaderProgram, "PROGRAM", vertFile, fragFile))
 	{
 		return;
 	}
@@ -101,7 +101,7 @@ void GFX::Shader::CreateShaderFromFiles(const char* vertexFile, const char* frag
 		throw std::runtime_error("Unable to open Fragment File!");
 	}
 
-	CreateShader(vertexCode.c_str(), fragmentCode.c_str());
+	CreateShader(vertexCode.c_str(), fragmentCode.c_str(), vertexFile, fragmentFile);
 }
 
 /**---------------------------------------------------------------------------/
@@ -147,7 +147,7 @@ void GFX::Shader::Deactivate()
  * @return
  *  none
 *---------------------------------------------------------------------------*/
-bool GFX::Shader::CompileErrors(unsigned int shader, const char* shaderType) const
+bool GFX::Shader::CompileErrors(unsigned int shader, const char* shaderType, const char* vertFile, const char* fragFile) const
 {
 	GLint hasCompiled{};
 	if (strcmp(shaderType, "PROGRAM") != 0)
@@ -155,7 +155,13 @@ bool GFX::Shader::CompileErrors(unsigned int shader, const char* shaderType) con
 		glGetShaderiv(shader, GL_COMPILE_STATUS, &hasCompiled);
 		if (hasCompiled == GL_FALSE)
 		{
-			std::cout << "SHADER COMPILATION_ERROR for: " << shaderType << '\n' << std::endl;
+			std::cout << "SHADER COMPILATION_ERROR for: ";
+			if (!strcmp(shaderType, "VERTEX"))
+				std::cout << vertFile << " | ";
+			if (!strcmp(shaderType, "FRAGMENT"))
+				std::cout << fragFile << " | ";
+
+			std::cout << shaderType << '\n' << std::endl;
 			char infoLog[1024];
 			glGetShaderInfoLog(shader, 1024, NULL, infoLog);
 			std::cout << infoLog << "\n";
@@ -167,7 +173,10 @@ bool GFX::Shader::CompileErrors(unsigned int shader, const char* shaderType) con
 		glGetProgramiv(shader, GL_LINK_STATUS, &hasCompiled);
 		if (hasCompiled == GL_FALSE)
 		{
-			std::cout << "SHADER_LINKING_ERROR for: " << shaderType << '\n' << std::endl;
+			std::cout << "SHADER_LINKING_ERROR for: ";
+			std::cout << vertFile << " | ";
+			std::cout << fragFile << " | ";
+			std::cout << shaderType << '\n' << std::endl;
 			char infoLog[1024];
 			glGetProgramInfoLog(shader, 1024, NULL, infoLog);
 			std::cout << infoLog << "\n";

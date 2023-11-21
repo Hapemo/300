@@ -112,6 +112,9 @@ function Helper.DirectionToAngle(entity, vec)
     return degree
 end
 
+function Helper.CreateSphereParticle(vec)
+    systemManager.ecs:NewEntityFromPrefab("SphereParticle", vec)   
+end
 function Helper.SetFloatVarFromOtherScript_Scene(entityName, sceneName, scriptName, varName, varValue)
     gameStateSys = systemManager:mGameStateSystem()
     e = gameStateSys:GetEntity(entityName , sceneName)

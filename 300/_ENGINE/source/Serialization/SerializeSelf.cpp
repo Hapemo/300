@@ -110,6 +110,8 @@ void UIrenderer::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>&
 	Serialize(writer, "texpath", mTexPath);
 	Serialize(writer, "textureref", mTextureRef.data_uid);
 	Serialize(writer, "degree", mDegree);
+	Serialize(writer, "color", mColor);
+	Serialize(writer, "layer", mLayer);
 	writer.EndObject();
 }
 
@@ -118,6 +120,8 @@ void UIrenderer::DeserializeSelf(rapidjson::Value& reader)
 	Deserialize(reader, "texpath", mTexPath);
 	Deserialize(reader, "textureref", mTextureRef.data_uid);
 	Deserialize(reader, "degree", mDegree);
+	Deserialize(reader, "color", mColor);
+	Deserialize(reader, "layer", mLayer);
 }
 
 void RigidBody::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
@@ -413,4 +417,25 @@ void Healthbar::DeserializeSelf(rapidjson::Value& reader)
 	Deserialize(reader, "maxhealth", mHealth);
 	Deserialize(reader, "width", mWidth);
 	Deserialize(reader, "height", mHeight);
+}
+
+void Button::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
+{
+	writer.Key("button");
+	writer.StartObject();
+	Serialize(writer, "interactable", mInteractable);
+	Serialize(writer, "hover", mIsHover);
+	Serialize(writer, "click", mIsClick);
+	Serialize(writer, "activated", mActivated);
+	Serialize(writer, "renderflag", mRenderFlag);
+	writer.EndObject();
+}
+
+void Button::DeserializeSelf(rapidjson::Value& reader)
+{
+	Deserialize(reader, "interactable", mInteractable);
+	Deserialize(reader, "hover", mIsHover);
+	Deserialize(reader, "click", mIsClick);
+	Deserialize(reader, "activated", mActivated);
+	Deserialize(reader, "renderflag", mRenderFlag);
 }

@@ -14,6 +14,7 @@ layout (location = 9) in mat4 inLTW;			    // local to world
 uniform mat4 uMatrixVP;
 
 // -- OUTPUTS --
+out vec4 vertexColor;
 out vec2 TexCoords;			// Texture Coordinates
 out vec4 Tex_Ent_ID;		// Texture ID, Entity ID
 out mat3 TBN;				// Tangent-to-world matrix
@@ -42,4 +43,5 @@ void main()
 	TBN				= ComputeTBN();
 	fragPos			= worldPos.xyz;
 	Bloom_Threshold = inBloom;
+	vertexColor = inVertexColor;
 }
