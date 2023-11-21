@@ -79,18 +79,23 @@ void TabWindow::update()
 	ImGui::TextColored({ 0.f,0.5f, 1.f, 1.f }, "Global Bloom Variables");
 	ImGui::DragFloat3("Global Bloom Threshold", (float*)&systemManager->mGraphicsSystem->mAmbientBloomThreshold, 0.01f, 0.f, 1.f);
 	ImGui::DragFloat("Global Exposure", &systemManager->mGraphicsSystem->mAmbientBloomExposure, 0.01f, 0.f, 5.f, "%0.2f");
-	ImGui::DragFloat("Sampling Weight", &systemManager->mGraphicsSystem->mSamplingWeight, 0.001f, 0.f, 7.f, "%0.4f");
 
 	ImGui::Checkbox("Enable Bloom", &systemManager->mGraphicsSystem->m_EnableBloom); 
 
 	if (systemManager->mGraphicsSystem->mBloomType == BloomType::GAUSSIANBLUR) {
 		// Bloom type 1 specific variable
 		ImGui::DragFloat("Texel Offset", &systemManager->mGraphicsSystem->mTexelOffset, 0.1f, 0.f, 5.f, "%0.2f");
+		ImGui::DragFloat("Sampling Weight", &systemManager->mGraphicsSystem->mSamplingWeight, 0.001f, 0.f, 7.f, "%0.4f");
+	}
+
+	else if (systemManager->mGraphicsSystem->mBloomType == BloomType::GAUSSIANBLUR) {
+		ImGui::DragFloat("Sampling Weight", &systemManager->mGraphicsSystem->mSamplingWeight, 0.001f, 0.f, 7.f, "%0.4f");
 	}
 
 	else if (systemManager->mGraphicsSystem->mBloomType == BloomType::PHYS_BASED_BLOOM) {
 		ImGui::DragFloat("Filter Radius", &systemManager->mGraphicsSystem->mFilterRadius, 0.0001f, 0.f, 1.f, "%0.4f");
 	}
+	
 
 	std::string bloomstr;
 
