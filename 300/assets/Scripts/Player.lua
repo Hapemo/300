@@ -93,10 +93,10 @@ local machineGunTimer = 0
 local machineGunCooldown = 0.2
 
 -- gun states
-local gunRecoilState = "IDLE"    -- ["STARTUP", "IDLE" , "MOVING"]
+local gunRecoilState = "IDLE"       -- ["STARTUP", "IDLE" , "MOVING"]
 local gunEquipped = "REVOLVER"      -- rename this to whatever ["REVOLVER" , "SHOTGUN" , "MACHINE GUN"]
 local gunHoldState = "NOT HELD"     -- ["NOT HELD" , "HOLDING"]
-local gunShootState = "SHOOTABLE"   -- ["SHOOTABLE" , "COOLDOWN"]
+local shotgunShootState = "SHOOTABLE"   -- ["SHOOTABLE" , "COOLDOWN"]
 local gunShot = false
 
 
@@ -185,6 +185,7 @@ end
 
 function Update()
 
+    -- print("GUNTRANSLATE at the start z: " , gunTranslate.z)
     -- Example: I want to get HP from AITest.lua script (getting walking enemy's hp)
     -- scriptingComp = walkingenemy:GetScripts()
     -- script = scriptingComp:GetScript("../assets/Scripts/AITest.lua")
@@ -370,13 +371,7 @@ function Update()
             end
         else
 -- Gun Script
-            -- print("CURRENT GUN STATE:", gunState) -- uncomment to debug
-            -- 'y' : vertical-axis
-
-            
-    -- print("GUN TRANSLATE:" , gunTranslate.z)
-    -- print("ORIGINAL:" , original_translation.z)
-
+            print("GUN RECOIL STATE: ", gunRecoilState)
             if (gunRecoilState == "IDLE") then
                 local displacement_x = gunTranslate.x - original_translation.x 
                 local displacement_y = gunTranslate.y - original_translation.y
@@ -423,23 +418,20 @@ function Update()
 
                     --print("HORIZONTAL AXIS CHANGED")
                 end
-
-                -- Account for "recoil"
-                if(once == false) then  
-                    print("ORIGINAL Z:" , original_translate_z)
-                    once = true
-                end
-
-                if(gunTranslate.z ~= original_translate_z) then 
-                    gunTranslate.z = gunTranslate.z - gunDisplaceBackSpeed
-                    print("GUN TRANSLATE: " , gunTranslate.z)
-                
-                    if(gunTranslate.z < original_translate_z) then
-                        gunTranslate.z = original_translate_z
-                        print("SNAPBACK TO" , gunTranslate.z)
-                    end
-                end
             end 
+
+            -- Recoil Snapback
+            if(gunTranslate.z ~= original_translate_z) then 
+                gunTranslate.z = gunTranslate.z - gunDisplaceBackSpeed
+                print("GUN TRANSLATE (NOT IDLE): " , gunTranslate.z)
+            
+                if(gunTranslate.z < original_translate_z) then
+                    gunTranslate.z = original_translate_z
+                    print("SNAPBACK TO (NOT IDLE)" , gunTranslate.z)
+                end
+            end
+
+        
 
             if(gunRecoilState == "JUMP") then 
                 print("GUN STATE: JUMP")
@@ -447,7 +439,7 @@ function Update()
                 gunJumpTimer = gunJumpTimer + 1
 
                 if (gunJumpTimer > 20) then
-                    gunRecoilState = "IDLE" -- will become "IDLE" unless there's a movement button pressed
+                    --gunRecoilState = "IDLE" -- will become "IDLE" unless there's a movement button pressed
                     gunJumpTimer = 0
                 end
             -- elseif (gunRecoilState == "MOVING") then
@@ -554,7 +546,7 @@ function Update()
         -- print("GUN EQUIPPED:" , gunEquipped)
         if(gunEquipped == "REVOLVER") then 
             print("REVOLVER SHOOTING")
-            applyGunRecoil()
+            applyShotgunRecoil()
             print(gunEntity:GetTransform().mTranslate.z)
             positions_final.x = positions.x + viewVecCam.x*5
             positions_final.y = positions.y + viewVecCam.y*5
@@ -573,31 +565,46 @@ function Update()
             bulletAudioComp:SetPlay(0.1)
 
         end
+    end
 
-        if(gunEquipped == "SHOTGUN") then 
-            -- This one controls bullet 
-            if(gunShootState == "SHOOTABLE") then
-                shotgun()
-                gunShootState = "COOLDOWN"  -- will trigger (won't go into this loop until cooldown loop ends)
-                shotGunTimer = shotGunTimer + shotGunCooldown -- add cooldown once
-
-                bulletAudioComp:SetPlay(0.1)
-            end
+    if(inputMapSys:GetButtonDown("Shoot")) then 
+        if(gunEquipped == "SHOTGUN" and shotgunShootState == "SHOOTABLE") then 
+            shotgunShootState = "COOLDOWN" -- goes in this loop once until cooldown is done.
+            shotGunTimer = shotGunTimer + shotGunCooldown
+            print("SHOTGUN COOLDOWN")
+            shotgun()
         end
     end
+
+    -- "COOLDOWN" state
+    if(shotgunShootState == "COOLDOWN") then 
+        if(shotGunTimer > 0) then 
+            shotGunTimer = shotGunTimer - 1
+            print("SHOTGUN TIMER: ", shotGunTimer) 
+        else 
+            shotgunShootState = "SHOOTABLE"
+            print("SHOTGUN IS READY!")
+        end
+    end
+
+    -- if(gunShot == true) then
+    --     if(gunEquipped == "SHOTGUN") then
+    --         shotgun()
+    --     end
+    -- end
 
     -- "Cooldown" state
-    if(gunShootState == "COOLDOWN") then
-        -- Shotgun
-        if(gunEquipped == "SHOTGUN") then 
-            shotGunTimer = shotGunTimer - 1
-            --print("SHOTGUN TIMER TILL READY: " ,shotGunTimer)
-            if(shotGunTimer == 0) then 
-                gunShootState = "SHOOTABLE"
-                print("SHOT GUN READY")
-            end
-        end
-    end
+    -- if(gunShootState == "COOLDOWN") then
+    --     -- Shotgun
+    --     if(gunEquipped == "SHOTGUN") then 
+    --         shotGunTimer = shotGunTimer - 1
+    --         -- print("SHOTGUN TIMER TILL READY: " ,shotGunTimer)
+    --         if(shotGunTimer == 0) then 
+    --             gunShootState = "SHOOTABLE"
+    --             print("SHOT GUN READY")
+    --         end
+    --     end
+    -- end
 
     if(inputMapSys:GetButtonUp("Shoot")) then 
         -- print("STOPPED PRESSING")
@@ -714,15 +721,8 @@ function shotgun()
     local bullet_speed_modifier = 20
     local number_of_bullets = 5
 
-    applyGunRecoil()
-
-    -- Account for "recoil"
-    if(gunTranslate.z ~= original_translate_z) then 
-        gunTranslate.z = gunTranslate.z - gunDisplaceBackSpeed
-        if(gunTranslate.z < original_translate_z) then
-            gunTranslate.z = original_translate_z
-        end
-    end
+    print("IN SHOTGUN")
+    applyShotgunRecoil()
 
     --print("SHOOTING SHOTGUN (no of pellets)" , number_of_bullets)
 
@@ -770,6 +770,8 @@ function shotgun()
 
         --print("CREATING SHOTGUN BULLET")
         physicsSys:SetVelocity(bulletPrefab, rotatedVelocity_XYZ)
+
+        gunShot = false -- gun already shot
     end
 end 
 
@@ -842,12 +844,17 @@ function rotateVectorZ(vector, angleInDegrees)
     return rotatedVector
 end
 
-function applyGunRecoil() 
-    print("GUN TRANSLATE: " , gunTranslate.z)
-    print("GunTranslate.z + recoil_distance", gunTranslate.z + recoil_distance)
-    print("original_translate_z + recoil_distance" , original_translate_z + recoil_distance)
-    if(gunTranslate.z + recoil_distance <= original_translate_z + recoil_distance) then
+function applyShotgunRecoil() 
+    -- print("GUN TRANSLATE: " , gunTranslate.z)
+    -- print("GunTranslate.z + recoil_distance", gunTranslate.z + recoil_distance)
+    -- print("original_translate_z + recoil_distance" , original_translate_z + recoil_distance)
+
+    print("IN APPLYSHOTGUNRECOIL")
+
+    if(gunTranslate.z < original_translate_z + recoil_distance and
+        (gunTranslate.z < original_translate_z + max_recoil_distance_z)) then
         gunTranslate.z = gunTranslate.z + recoil_distance -- recoil
+        gunRecoilState = "MOVING"
         print("GUN TRANSLATE AFTER RECOIL: " , gunTranslate.z)
         --print("1")
     else 
@@ -855,7 +862,7 @@ function applyGunRecoil()
         gunTranslate.z = original_translate_z 
         gunTranslate.z = gunTranslate.z + recoil_distance -- recoil
 
-        print("2 GUN TRANSLATE AFTER RECOIL:",gunTranslate.z)
+        print("2 GUN TRANSLATE AFTER RECOIL:", gunTranslate.z)
     end
 end
 
