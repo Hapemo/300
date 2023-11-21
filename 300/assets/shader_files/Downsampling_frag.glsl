@@ -91,8 +91,11 @@ void main()
     if(downsample.r > 1.0 || downsample.g > 1.0 || downsample.b > 1.0)
         downsample.rgb = vec3(1.0, 1.0, 1.0);
 
-    downsample.a = 1.0;
+    downsample.a = 0.1;
 
+    downsample.r = max(downsample.r, 0.0001);
+    downsample.g = max(downsample.g, 0.0001);
+    downsample.b = max(downsample.b, 0.0001);
 
     // Apply weighted distribution:
     // 0.5 + 0.125 + 0.125 + 0.125 + 0.125 = 1
@@ -113,6 +116,5 @@ void main()
 //    downsample.rgb += (j+k+l+m)*0.125;
 //    downsample.a *= 0.1;
 
-    //downsample = max(downsample, 0.0001f);
 
 }

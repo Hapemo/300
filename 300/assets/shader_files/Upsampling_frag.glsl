@@ -48,8 +48,8 @@ void main()
     upsample.rgb += (b+d+f+h)*2.0;
     upsample.rgb += (a+c+g+i);
     upsample.rgb *= 1.0 / 16.0;
-    upsample.a *= 0.1;
+    upsample.a = 0.1;
 
-    upsample = max(upsample, 0.0001f);
+    //upsample = max(upsample, 0.0001f);
 
 }
