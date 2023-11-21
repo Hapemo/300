@@ -85,6 +85,7 @@ local gunJumped = false -- for gun animation
 -- Recoil Stuff
 local recoil_distance = 0.5
 local recoil_speed = 15
+local mg_recoil_speed = 2
 -- local recoil_speed_SG = 30.0
 -- local recoil_speed_MG = 1.0
 -- local recoil_speed_R = 15.0
@@ -93,8 +94,8 @@ local max_recoil_distance_z = 0.1
 local bullet_scale = Vec3.new()
 
 -- Cooldown in seconds (between bullets)
-local revolverGunCooldown = 1.5
-local shotGunCooldown = 3
+local revolverGunCooldown = 1
+local shotGunCooldown = 1.5
 local machineGunCooldown = 0.2
 
 local revolverGunTimer = 0
@@ -195,6 +196,7 @@ end
 
 function Update()
     gunTranslate = gunEntity:GetTransform().mTranslate
+
     -- print("GUNTRANSLATE at the start z: " , gunTranslate.z)
     -- Example: I want to get HP from AITest.lua script (getting walking enemy's hp)
     -- scriptingComp = walkingenemy:GetScripts()
@@ -582,7 +584,7 @@ function Update()
                     -- gunRecoilState = "MOVING"
 
                     shotgunbullets(5) -- bullets + recoil (param) - number of bullets in spray
-                    applyGunRecoil(recoil_speed * 3, 1.0)
+                    applyGunRecoil(recoil_speed * 0.5, 0.1)
 
                     shotGunTimer = shotGunTimer + shotGunCooldown
                     print("SHOTGUN COOLDOWN STARTS: " , shotGunTimer)
@@ -592,7 +594,6 @@ function Update()
                     bulletAudioComp:SetPlay(0.1)
                 end
             end
-
         end
 
         -- "COOLDOWN" state
@@ -618,6 +619,30 @@ function Update()
             end 
         end
 
+        if(inputMapSys:GetButtonDown("Shoot")) then 
+
+        end
+
+        if(gunEquipped == "MACHINE GUN") then  
+            -- Machine Gun (need to be held down)
+            if(gunHoldState == "HOLDING") then 
+              
+                -- applyGunRecoil(recoil_speed * 0.05 , 0.
+                machineGunRecoil()
+                machineGunBullets()
+    
+                if(machineGunTimer <= 0) then
+                    bulletAudioComp:SetPlay(0.1)
+                    machineGunTimer = machineGunCooldown  -- Set the cooldown timer
+               end
+               machineGunTimer = math.max(0, machineGunTimer - dt)  -- deltaTime is the time since the last fra
+            end
+        end
+
+        
+        if(inputMapSys:GetButtonUp("Shoot")) then
+            gunHoldState = "NOT HELD"   -- for machine gun
+        end
     end
     
 -- end of gun script 
@@ -652,21 +677,7 @@ function Update()
     --     end
     -- end
     
-    if(gunEquipped == "MACHINE GUN") then  
-        -- Machine Gun (need to be held down)
-        if(gunHoldState == "HOLDING") then 
-          
-            machineGunRecoil()
-
-            machineGunBullets()
-
-            if(machineGunTimer <= 0) then
-                bulletAudioComp:SetPlay(0.1)
-                machineGunTimer = machineGunCooldown  -- Set the cooldown timer
-           end
-           machineGunTimer = math.max(0, machineGunTimer - dt)  -- deltaTime is the time since the last fra
-        end
-    end
+   
 
     -- Update the cooldown timer
     machineGunTimer = math.max(0, machineGunTimer - dt)  -- deltaTime is the time since the last fra
@@ -886,13 +897,17 @@ end
 function applyGunRecoil(recoil_speed, max_recoil_distance_z) 
     gunTranslate = gunEntity:GetTransform().mTranslate -- some weird bug again
 
+    -- print("MAX RECOIL: " , max_recoil_distance_z)
     local distance_travelled_this_frame = recoil_speed * dt
+    -- print("DISTANCE TRAELLED:" ,  distance_travelled_this_frame)
     
     if(gunTranslate.z < original_translate_z + distance_travelled_this_frame) and
         (gunTranslate.z < original_translate_z + max_recoil_distance_z) then
         gunTranslate.z = gunTranslate.z + distance_travelled_this_frame -- recoil
+        -- print("DISTANCE TRAVELLED (1): " , gunTranslate.z)
     else -- if it extends over the limit 
-        gunTranslate.z = gunTranslate.z + max_recoil_distance_z -- recoil
+        gunTranslate.z = max_recoil_distance_z -- recoil
+        -- print("DISTANCE TRAVELLED (2): " , gunTranslate.z)
     end
 end
 
@@ -919,9 +934,10 @@ end
 
 
 function machineGunRecoil()
+    
     if((gunTranslate.z < original_translate_z + recoil_distance) and 
         (gunTranslate.z < original_translate_z + max_recoil_distance_z)) then 
-        gunTranslate.z = gunTranslate.z + recoil_speed_MG * dt  -- incorporate dt
+        gunTranslate.z = gunTranslate.z + mg_recoil_speed * dt  -- incorporate dt
         -- print("RECOIL SPEED: " , recoil_speed_MG)
         -- print("dt", dt)
     else 
