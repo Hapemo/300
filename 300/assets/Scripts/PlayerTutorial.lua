@@ -85,6 +85,7 @@ local dt
 local tutTeleporter
 local skiptutTeleporter
 local box2Spawn
+local box3Spawn
 local playertpoffset = Vec3.new()
 
 local cameraEntity
@@ -159,6 +160,7 @@ function Alive()
     tutTeleporter2 = gameStateSys:GetEntity("Tutorial 2")
     skiptutTeleporter = gameStateSys:GetEntity("Skip Tutorial")
     box2Spawn = gameStateSys:GetEntity("Box2Spawn")
+    box3Spawn = gameStateSys:GetEntity("Box3Spawn")
 end
 
 function Update()
@@ -210,7 +212,7 @@ function Update()
         end
     elseif tutState == TutBox.THIRD then
 	if travelBox == true then
-	    Helper.SetTranslate(cameraEntity, box2Spawn:GetTransform().mTranslate)
+	    Helper.SetTranslate(cameraEntity, box3Spawn:GetTransform().mTranslate)
             travelBox = false
     	end
     end
@@ -410,6 +412,16 @@ function OnTriggerEnter(Entity)
     if (tagid == 3) then
         print(generalComponent.name)
         floorCount = floorCount + 1;
+    end
+
+    if (tagid == 4) then
+	if (isDashing) then
+                print("cameeeeeeeeeeeeeeee")
+		isDashing = false
+    		movement.x = 0;
+    		movement.y = 0;
+    		movement.z = 0;
+	end
     end
 
     if (tagid == 5) then
