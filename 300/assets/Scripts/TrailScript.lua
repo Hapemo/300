@@ -11,6 +11,7 @@ local originalScale = Vec3.new()
 local scalePerSec
 local finalTranslate = Vec3.new()
 local amplitude
+local period
 local max
 function Alive()
     --lifespan
@@ -20,6 +21,7 @@ function Alive()
     --randomness
     max = 2.0
     amplitude = math.random() + math.random(0, max)
+    period = math.random() + math.random(0, max + 1.0)
     
     --transform
     this = Helper.GetScriptEntity(script_entity.id)
@@ -38,9 +40,9 @@ function Update()
     
     --random movement
     eTranslate = this:GetTransform().mTranslate
-    finalTranslate.x = originalTranslateX + amplitude * math.sin(timer)
-    finalTranslate.y = originalTranslateY + amplitude * math.sin(timer) 
-    finalTranslate.z = originalTranslateZ + amplitude * math.sin(timer) 
+    finalTranslate.x = originalTranslateX + amplitude * math.sin(period * timer)
+    finalTranslate.y = originalTranslateY + amplitude * math.sin(period * timer) 
+    finalTranslate.z = originalTranslateZ + amplitude * math.sin(period * timer) 
     eTranslate.x = finalTranslate.x
     eTranslate.y = finalTranslate.y
     eTranslate.z = finalTranslate.z
