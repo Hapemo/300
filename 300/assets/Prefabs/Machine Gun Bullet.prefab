@@ -1,5 +1,5 @@
 {
-    "entityid": 175,
+    "entityid": 222,
     "general": {
         "name": "Machine Gun Bullet",
         "tagid": 11,
@@ -9,9 +9,9 @@
     },
     "transform": {
         "scale": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0
+            "x": 0.5,
+            "y": 0.5,
+            "z": 0.5
         },
         "rotate": {
             "x": 0.0,
@@ -45,9 +45,9 @@
         "frag": "../assets/shader_files/pointLight_frag.glsl",
         "meshrefid": 2285,
         "instancecolor": {
-            "x": 1.0,
-            "y": 0.0,
-            "z": 0.0,
+            "x": 0.17733991146087646,
+            "y": 1.0,
+            "z": 0.30702030658721924,
             "w": 1.0
         },
         "bloomthreshold": {
@@ -58,7 +58,7 @@
         },
         "materialinstance": [
             "../assets/Compressed/Cube_Texture_White.ctexture",
-            " ",
+            "../assets/Compressed/Cube_Texture_White_Normal.ctexture",
             " ",
             " ",
             " ",
@@ -67,7 +67,7 @@
         "mesh": "../assets/compiled_geom/cube.geom",
         "texturerefid": [
             4706,
-            0,
+            5418,
             0,
             0,
             0,

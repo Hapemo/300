@@ -13,6 +13,7 @@
         "bloom_sampleweight": 2.941999912261963,
         "chroma_strength": 0.019200000911951065,
         "bloom_enable": true,
+        "crt_enable": true,
         "chroma_enable": false,
         "global_tint": {
             "x": 1.0,
@@ -36,6 +37,7 @@
         "bloom_sampleweight": 2.941999912261963,
         "chroma_strength": 0.019200000911951065,
         "bloom_enable": true,
+        "crt_enable": true,
         "chroma_enable": false,
         "global_tint": {
             "x": 1.0,
@@ -59,6 +61,7 @@
         "bloom_sampleweight": 2.941999912261963,
         "chroma_strength": 0.019200000911951065,
         "bloom_enable": true,
+        "crt_enable": true,
         "chroma_enable": false,
         "global_tint": {
             "x": 1.0,

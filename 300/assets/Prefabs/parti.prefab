@@ -1,5 +1,5 @@
 {
-    "entityid": 14680187,
+    "entityid": 9437405,
     "general": {
         "name": "parti",
         "tagid": 0,
@@ -9,9 +9,9 @@
     },
     "transform": {
         "scale": {
-            "x": 0.5,
-            "y": 0.5,
-            "z": 0.5
+            "x": 0.20000000298023224,
+            "y": 0.20000000298023224,
+            "z": 0.20000000298023224
         },
         "rotate": {
             "x": 0.0,
@@ -50,21 +50,27 @@
             "z": 1.0,
             "w": 1.0
         },
+        "bloomthreshold": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+        },
         "materialinstance": [
             "../assets/Compressed/Cube_Texture_White.ctexture",
+            "../assets/Compressed/Cube_Texture_White_Normal.ctexture",
             " ",
             " ",
-            " ",
-            " ",
+            "../assets/Compressed/cube_emission.ctexture",
             " "
         ],
         "mesh": "../assets/compiled_geom/cube.geom",
         "texturerefid": [
             4706,
+            5418,
             0,
             0,
-            0,
-            0,
+            4248,
             0
         ]
     },
@@ -74,6 +80,13 @@
                 "scriptFile": "../assets/Scripts/Particle.lua",
                 "variables": [
                     {
+                        "key": "deathtime",
+                        "val": {
+                            "type": 694561268,
+                            "value": 0.0
+                        }
+                    },
+                    {
                         "key": "movement",
                         "val": {
                             "type": -655306154,
@@ -82,6 +95,27 @@
                                 "y": 0.0,
                                 "z": 0.0
                             }
+                        }
+                    },
+                    {
+                        "key": "randomdeath",
+                        "val": {
+                            "type": 694561268,
+                            "value": 1.0
+                        }
+                    },
+                    {
+                        "key": "spawned",
+                        "val": {
+                            "type": -1129103353,
+                            "value": true
+                        }
+                    },
+                    {
+                        "key": "speed",
+                        "val": {
+                            "type": 694561268,
+                            "value": 5.0
                         }
                     }
                 ]

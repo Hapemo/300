@@ -105,7 +105,7 @@ local machineGunTimer = 0
 
 -- gun states
 local gunRecoilState = "IDLE"       -- ["STARTUP", "IDLE" , "MOVING"]
-local gunEquipped = "REVOLVER"      -- rename this to whatever ["REVOLVER" , "SHOTGUN" , "MACHINE GUN"]
+_G.gunEquipped = 1 --"REVOLVER"      -- rename this to whatever ["REVOLVER" , "SHOTGUN" , "MACHINE GUN"]
 local gunHoldState = "NOT HELD"     -- ["NOT HELD" , "HOLDING"]
 
 local revolverShootState = "SHOOTABLE"
@@ -374,15 +374,15 @@ function Update()
 -- Toggle Weapons
         if(inputMapSys:GetButtonDown("Shotgun")) then 
             print("Swapping to shotgun")
-            gunEquipped = "SHOTGUN"
+            _G.gunEquipped = 2 --"SHOTGUN"
         end
         if(inputMapSys:GetButtonDown("Revolver")) then 
             print("Swapping to revolver")
-            gunEquipped = "REVOLVER"
+            _G.gunEquipped = 1 --"REVOLVER"
         end
         if(inputMapSys:GetButtonDown("Machine Gun")) then 
             print("Swapping to machine gun")
-            gunEquipped = "MACHINE GUN"
+            _G.gunEquipped = 3 --"MACHINE GUN"
         end
    
 -- end of Toggle Weapons
@@ -544,7 +544,7 @@ function Update()
 
         -- print("GUN RECOIL STATE:" , gunRecoilState)
             -- print("GUN EQUIPPED:" , gunEquipped)
-            if(gunEquipped == "REVOLVER") then
+            if(_G.gunEquipped == 1 ) then -- REVOLVER
              
                 if(revolverGunTimer == 0) then 
                     print("REVOLVER SHOOTING")
@@ -559,9 +559,11 @@ function Update()
                     positions_final.z = positions.z + viewVecCam.z*5  
 
                     prefabEntity = systemManager.ecs:NewEntityFromPrefab("Revolver Bullet", positions_final)
-                    rotationCam.x = rotationCam.z *360
-                    rotationCam.y = rotationCam.x *0
-                    rotationCam.z = rotationCam.z *0
+                    -- rotationCam.x = rotationCam.x *0
+                    -- rotationCam.y = rotationCam.y *0
+                    -- rotationCam.z = rotationCam.z *0
+
+
                     prefabEntity:GetTransform().mRotate = rotationCam    
                     viewVecCam.x = viewVecCam.x*100
                     viewVecCam.y=viewVecCam.y *100
@@ -579,7 +581,7 @@ function Update()
 
             -- print("TRANSLATE: " , gunTranslate.z)
 
-            if(gunEquipped == "SHOTGUN") then
+            if(_G.gunEquipped == 2) then -- SHOTGUN
                 if(shotGunTimer == 0) then 
 
                     moreAccurateShotgun(10)
@@ -620,7 +622,7 @@ function Update()
 
         end
 
-        if(gunEquipped == "MACHINE GUN") then  
+        if(_G.gunEquipped == 3) then  --MACHINE GUN
             -- Machine Gun (need to be held down)
             if(gunHoldState == "HOLDING") then 
               
