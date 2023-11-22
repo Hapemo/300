@@ -137,8 +137,11 @@ local dashrender= {}
 local tpcolor = Vec4.new(0, 0, 0, 1)
 
 local once = false
+local up_vector = Vec3.new()
 --This variable is to be set in another script
 --testingSet = 5.0
+
+local world_local_right_vector
 
 function Alive()
     gameStateSys = systemManager:mGameStateSystem();
@@ -151,35 +154,35 @@ function Alive()
 
     cameraPhysicsComp = cameraEntity:GetRigidBody()
     
-    dashui = gameStateSys:GetEntity("UI1")
+    dashui = gameStateSys:GetEntity("UI1", "testSerialization")
 
-    bulletAudioEntity = gameStateSys:GetEntity("Bullet Shoot")
+    bulletAudioEntity = gameStateSys:GetEntity("Bullet Shoot" , "testSerialization")
     bulletAudioComp = bulletAudioEntity:GetAudio()
 
-    jumpAudioEntity = gameStateSys:GetEntity("Jump")
+    jumpAudioEntity = gameStateSys:GetEntity("Jump" , "testSerialization")
     jumpAudioComp = jumpAudioEntity:GetAudio()
 
-    dashAudioEntity = gameStateSys:GetEntity("Dash")
+    dashAudioEntity = gameStateSys:GetEntity("Dash" , "testSerialization")
     dashAudioComp = dashAudioEntity:GetAudio()
 
-    machineGunAudioEntity = gameStateSys:GetEntity("Machine Gun Shoot (LOOP)")
+    machineGunAudioEntity = gameStateSys:GetEntity("Machine Gun Shoot (LOOP)" , "testSerialization")
     machineGunAudioComp = machineGunAudioEntity:GetAudio()
     machineGunAudioComp:UpdateVolume(0.0)
     machineGunAudioComp:SetPlay()
 
     dashTime = 3.0
     tpTime = 20.0
-    teleporter1 = gameStateSys:GetEntity("Teleporter1")
-    teleporter2 = gameStateSys:GetEntity("Teleporter2")
-    --walkingenemy = gameStateSys:GetEntity("enemy1_walking")
+    teleporter1 = gameStateSys:GetEntity("Teleporter1", "testSerialization")
+    teleporter2 = gameStateSys:GetEntity("Teleporter2", "testSerialization")
+    --walkingenemy = gameStateSys:GetEntity("enemy1_walking", "testSerialization")
     onTpTime = 0;
     collideWithTP = 0
     originalSamplingWeight = graphicsSys.mSamplingWeight
-    tpfin1 = gameStateSys:GetEntity("Fin1")
-    tpfin2 = gameStateSys:GetEntity("Fin2")
+    tpfin1 = gameStateSys:GetEntity("Fin1", "testSerialization")
+    tpfin2 = gameStateSys:GetEntity("Fin2", "testSerialization")
 
     -- Gun Stuff --
-    gunEntity = gameStateSys:GetEntity("gun")
+    gunEntity = gameStateSys:GetEntity("gun", "testSerialization")
     gunInitialTranslate = gunEntity:GetTransform().mTranslate
     gunRotation = gunEntity:GetTransform().mRotate
 
@@ -190,6 +193,9 @@ function Alive()
     original_translation.x = gunInitialTranslate.x
     original_translation.y = gunInitialTranslate.y
     original_translation.z = gunInitialTranslate.z
+
+    -- Shotgun Stuff -- 
+
 
     print("HI IM ALIVEEEE")
 end
@@ -312,11 +318,18 @@ function Update()
     dashTime = dashTime + FPSManager.GetDT();
     positions = cameraEntity:GetTransform().mTranslate
     
-    viewVec = Camera_Scripting.GetDirection(cameraEntity)
     viewVecCam = Camera_Scripting.GetDirection(cameraEntity)
     rotationCam = Camera_Scripting.GetDirection(cameraEntity)
-    viewVec.y = 0;
+    targetCam = Camera_Scripting.GetTarget(cameraEntity)
+    positionCam = Camera_Scripting.GetPosition(cameraEntity) -- works   
+
+    -- Normalize First
+    viewVec.x = targetCam.x - positionCam.x 
+    viewVec.y = targetCam.y - positionCam.y
+    viewVec.z = targetCam.z - positionCam.z
+
     viewVec = Helper.Normalize(viewVec)
+       
 
     movement.x = 0;
     movement.y = cameraEntity:GetRigidBody().mVelocity.y
@@ -545,7 +558,7 @@ function Update()
                     positions_final.y = positions.y + viewVecCam.y*5
                     positions_final.z = positions.z + viewVecCam.z*5  
 
-                    prefabEntity = systemManager.ecs:NewEntityFromPrefab("bullet", positions_final)
+                    prefabEntity = systemManager.ecs:NewEntityFromPrefab("Revolver Bullet", positions_final)
                     rotationCam.x = rotationCam.z *360
                     rotationCam.y = rotationCam.x *0
                     rotationCam.z = rotationCam.z *0
@@ -558,36 +571,22 @@ function Update()
                     bulletAudioComp:SetPlay(0.1)
 
                     revolverGunTimer = revolverGunTimer + revolverGunCooldown
-                    print("GUN TIMER:" ,revolverGunTimer)
+                    -- print("GUN TIMER:" ,revolverGunTimer)
                     
                     revolverShootState = "COOLDOWN"
                 end
-
-            -- if(gunEquipped == "SHOTGUN" and shotgunShootState == "SHOOTABLE") then 
-            --     shotgunShootState = "COOLDOWN" -- goes in this loop once until cooldown is done.
-            --     shotGunTimer = shotGunTimer + shotGunCooldown
-            --     print("SHOTGUN COOLDOWN")
-            --     shotgun()
-            --     gunRecoilState = "MOVING"
-            -- end
             end 
 
-            print("TRANSLATE: " , gunTranslate.z)
+            -- print("TRANSLATE: " , gunTranslate.z)
 
-            if(gunEquipped == "SHOTGUN") then 
-                print("SHOTGUN TIMER: " , shotGunTimer)
-                print("TRANSLATE: " , gunTranslate.z)
+            if(gunEquipped == "SHOTGUN") then
                 if(shotGunTimer == 0) then 
-                    print("SHOTGUN SHOOTING")
-                    print("TRANSLATE: " , gunTranslate.z)
-                    
-                    -- gunRecoilState = "MOVING"
 
-                    shotgunbullets(5) -- bullets + recoil (param) - number of bullets in spray
+                    moreAccurateShotgun(10)
                     applyGunRecoil(recoil_speed * 0.5, 0.1)
 
                     shotGunTimer = shotGunTimer + shotGunCooldown
-                    print("SHOTGUN COOLDOWN STARTS: " , shotGunTimer)
+
 
                     shotgunShootState = "COOLDOWN"
 
@@ -600,7 +599,7 @@ function Update()
         if(shotgunShootState == "COOLDOWN") then 
             if(shotGunTimer > 0) then 
                 shotGunTimer = shotGunTimer - dt
-                print("SHOTGUN COOLDOWN: " , shotGunTimer)
+                -- print("SHOTGUN COOLDOWN: " , shotGunTimer)
             else 
                 shotGunTimer = 0
                 shotgunShootState = "SHOOTABLE"
@@ -611,11 +610,9 @@ function Update()
         if(revolverShootState == "COOLDOWN") then 
             if(revolverGunTimer > 0) then 
                 revolverGunTimer = revolverGunTimer - dt
-                print("REVOLVER COOLDOWN: " , revolverGunTimer)
             else 
                 revolverGunTimer = 0
                 revolverShootState = "SHOOTABLE"
-                print("REVOLVER SHOOTABLE")
             end 
         end
 
@@ -825,6 +822,97 @@ function shotgunbullets(number_of_bullets)
     end
 end 
 
+function moreAccurateShotgun(num_of_bullets) 
+
+    local bullet_speed = 50
+
+    -- 1. Get my local right vector
+    up_vector.x = 0 
+    up_vector.y = 1
+    up_vector.z = 0
+
+    local local_right_vector = Vec3.new()
+    local world_true_up_vector = Vec3.new()
+    local final_vector = Vec3.new()
+    
+    local_right_vector = Camera_Scripting.Cross(viewVec, up_vector) -- get vector pointing to rightwards of player
+    print("LOCAL RIGHT VECTOR: " , local_right_vector.x, local_right_vector.y, local_right_vector.z)
+    world_true_up_vector = Camera_Scripting.Cross(local_right_vector, viewVec)
+   
+    for i = 0 , num_of_bullets , 1 do
+        spreadRange = math.random(-1,1)
+        spreadRange = spreadRange / 10
+
+        randomAngleinDegree = math.random(0,360)
+
+       -- print("SPREAD RANGE:" , spreadRange)
+        world_true_up_vector.x = spreadRange * local_right_vector.x
+        world_true_up_vector.y = spreadRange * local_right_vector.y
+        world_true_up_vector.z = spreadRange * local_right_vector.z
+
+        final_vector.x = viewVec.x + world_true_up_vector.x
+        final_vector.y = viewVec.y + world_true_up_vector.y
+        final_vector.z = viewVec.z + world_true_up_vector.z
+
+        -- Starting Position of bullet 
+        positions_final.x = positions.x +  final_vector.x * 5-- 'positions' - camera's translate
+        positions_final.y = positions.y +  final_vector.y * 5
+        positions_final.z = positions.z +  final_vector.z * 5
+
+        final_vector.x = (viewVec.x + world_true_up_vector.x) * bullet_speed
+        final_vector.y = (viewVec.y + world_true_up_vector.y) * bullet_speed
+        final_vector.z = (viewVec.z + world_true_up_vector.z) * bullet_speed
+
+        -- Randomnized Rotation
+        final_vector = Camera_Scripting.Rotate(final_vector, viewVec, randomAngleinDegree)
+
+        bulletPrefab = systemManager.ecs:NewEntityFromPrefab("Shotgun Bullet", positions_final)
+
+        -- Scaling Down (Shotgun pellets)
+        original_scale = bulletPrefab:GetTransform().mScale 
+        bulletPrefab:GetTransform().mScale.x = original_scale.x / 3
+        bulletPrefab:GetTransform().mScale.y = original_scale.y / 3
+        bulletPrefab:GetTransform().mScale.z = original_scale.z / 3
+        
+
+
+        physicsSys:SetVelocity(bulletPrefab, final_vector)
+    end
+
+
+    -- for i = 0 , num_of_bullets, 1 do
+    --     -- Generate random angles within a cone
+    --     local theta = math.rad(math.random() * cone_angle)
+    --     local phi = math.rad(math.random() * 360)
+
+    --     -- Convert angles to direcitonal vectors
+    --     local x = math.sin(theta) * math.cos(phi)
+    --     local y = math.sin(theta) * math.sin(phi)
+    --     local z = math.cos(theta)
+        
+    --     -- Applying spread to the camera's base forward vector
+    --     camera_forward.x = camera_forward.x * x + camera_forward.y * y + camera_forward.z * z
+    --     camera_forward.y = camera_forward.y * x + camera_forward.z * y + camera_forward.x * z
+    --     camera_forward.z = camera_forward.z * x + camera_forward.x * y + camera_forward.y * z
+
+    --     -- Starting Position of bullet 
+    --     positions_final.x = positions.x +  camera_forward.x * 2 -- 'positions' - camera's translate
+    --     positions_final.y = positions.y +  camera_forward.y * 2 
+    --     positions_final.z = positions.z +  camera_forward.z * 2 
+
+        
+    --     bulletPrefab = systemManager.ecs:NewEntityFromPrefab("bullet", positions_final)
+
+    --     print("POSITION SPAWN:" , positions_final.x , positions_final.y, positions_final.z)
+
+
+
+
+    -- end
+end 
+
+
+
 function machineGunBullets()
     -- print("HI SHOOTING MACHINE GUN")
 
@@ -832,7 +920,7 @@ function machineGunBullets()
     positions_final.y = positions.y + viewVecCam.y*6
     positions_final.z = positions.z + viewVecCam.z*6  
 
-    prefabEntity = systemManager.ecs:NewEntityFromPrefab("bullet", positions_final)
+    prefabEntity = systemManager.ecs:NewEntityFromPrefab("Machine Gun Bullet", positions_final)
     rotationCam.x = rotationCam.z *360
     rotationCam.y = rotationCam.x *0
     rotationCam.z = rotationCam.z *0
@@ -849,6 +937,14 @@ function machineGunBullets()
 
     physicsSys:SetVelocity(prefabEntity, viewVecCam)
 
+end
+
+function crossProduct(v1 ,v2)
+    local x = v1[2]*v2[3] - v1[3]*v2[2]
+    local y = v1[3]*v2[1] - v1[1]*v2[3]
+    local z = v1[1]*v2[2] - v1[2]*v2[1]
+    
+    return {x, y, z}
 end
 
 function rotateVectorX(vector, angleInDegrees)
