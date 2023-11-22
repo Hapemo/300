@@ -558,7 +558,7 @@ function Update()
                     positions_final.y = positions.y + viewVecCam.y*5
                     positions_final.z = positions.z + viewVecCam.z*5  
 
-                    prefabEntity = systemManager.ecs:NewEntityFromPrefab("bullet", positions_final)
+                    prefabEntity = systemManager.ecs:NewEntityFromPrefab("Revolver Bullet", positions_final)
                     rotationCam.x = rotationCam.z *360
                     rotationCam.y = rotationCam.x *0
                     rotationCam.z = rotationCam.z *0
@@ -571,37 +571,22 @@ function Update()
                     bulletAudioComp:SetPlay(0.1)
 
                     revolverGunTimer = revolverGunTimer + revolverGunCooldown
-                    print("GUN TIMER:" ,revolverGunTimer)
+                    -- print("GUN TIMER:" ,revolverGunTimer)
                     
                     revolverShootState = "COOLDOWN"
                 end
-
-            -- if(gunEquipped == "SHOTGUN" and shotgunShootState == "SHOOTABLE") then 
-            --     shotgunShootState = "COOLDOWN" -- goes in this loop once until cooldown is done.
-            --     shotGunTimer = shotGunTimer + shotGunCooldown
-            --     print("SHOTGUN COOLDOWN")
-            --     shotgun()
-            --     gunRecoilState = "MOVING"
-            -- end
             end 
 
-            print("TRANSLATE: " , gunTranslate.z)
+            -- print("TRANSLATE: " , gunTranslate.z)
 
-            if(gunEquipped == "SHOTGUN") then 
-                print("SHOTGUN TIMER: " , shotGunTimer)
-                print("TRANSLATE: " , gunTranslate.z)
+            if(gunEquipped == "SHOTGUN") then
                 if(shotGunTimer == 0) then 
-                    print("SHOTGUN SHOOTING")
-                    print("TRANSLATE: " , gunTranslate.z)
-                    
-                    -- gunRecoilState = "MOVING"
 
-                    --shotgunbullets(5) -- bullets + recoil (param) - number of bullets in spray
                     moreAccurateShotgun(10)
                     applyGunRecoil(recoil_speed * 0.5, 0.1)
 
                     shotGunTimer = shotGunTimer + shotGunCooldown
-                    print("SHOTGUN COOLDOWN STARTS: " , shotGunTimer)
+
 
                     shotgunShootState = "COOLDOWN"
 
@@ -625,11 +610,9 @@ function Update()
         if(revolverShootState == "COOLDOWN") then 
             if(revolverGunTimer > 0) then 
                 revolverGunTimer = revolverGunTimer - dt
-                print("REVOLVER COOLDOWN: " , revolverGunTimer)
             else 
                 revolverGunTimer = 0
                 revolverShootState = "SHOOTABLE"
-                print("REVOLVER SHOOTABLE")
             end 
         end
 
@@ -882,15 +865,15 @@ function moreAccurateShotgun(num_of_bullets)
 
         -- Randomnized Rotation
         final_vector = Camera_Scripting.Rotate(final_vector, viewVec, randomAngleinDegree)
-   
-    
-        bulletPrefab = systemManager.ecs:NewEntityFromPrefab("bullet", positions_final)
+
+        bulletPrefab = systemManager.ecs:NewEntityFromPrefab("Shotgun Bullet", positions_final)
 
         -- Scaling Down (Shotgun pellets)
         original_scale = bulletPrefab:GetTransform().mScale 
         bulletPrefab:GetTransform().mScale.x = original_scale.x / 3
         bulletPrefab:GetTransform().mScale.y = original_scale.y / 3
         bulletPrefab:GetTransform().mScale.z = original_scale.z / 3
+        
 
 
         physicsSys:SetVelocity(bulletPrefab, final_vector)
@@ -937,7 +920,7 @@ function machineGunBullets()
     positions_final.y = positions.y + viewVecCam.y*6
     positions_final.z = positions.z + viewVecCam.z*6  
 
-    prefabEntity = systemManager.ecs:NewEntityFromPrefab("bullet", positions_final)
+    prefabEntity = systemManager.ecs:NewEntityFromPrefab("Machine Gun Bullet", positions_final)
     rotationCam.x = rotationCam.z *360
     rotationCam.y = rotationCam.x *0
     rotationCam.z = rotationCam.z *0
