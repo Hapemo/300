@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 2097153,
+        "entityid": 1,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -90,7 +90,7 @@
         }
     },
     {
-        "entityid": 2097154,
+        "entityid": 2,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -180,7 +180,7 @@
         }
     },
     {
-        "entityid": 2097155,
+        "entityid": 3,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -235,7 +235,7 @@
         }
     },
     {
-        "entityid": 2097156,
+        "entityid": 4,
         "general": {
             "name": "player",
             "tagid": 0,
@@ -333,7 +333,7 @@
         }
     },
     {
-        "entityid": 2097157,
+        "entityid": 5,
         "general": {
             "name": "ILOVEYOU",
             "tagid": 1,
@@ -464,7 +464,7 @@
         }
     },
     {
-        "entityid": 2097158,
+        "entityid": 6,
         "general": {
             "name": "TrojanHorse",
             "tagid": 1,
@@ -595,7 +595,7 @@
         }
     },
     {
-        "entityid": 2097159,
+        "entityid": 7,
         "general": {
             "name": "TrojanSoldier",
             "tagid": 1,
@@ -616,7 +616,7 @@
             },
             "translate": {
                 "x": 6.103666305541992,
-                "y": 0.0,
+                "y": 7.450580596923828e-9,
                 "z": 0.0
             }
         },
@@ -670,15 +670,11 @@
                 4545
             ]
         },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
+        "spherecollider": {
+            "scaleoffset": 1.0,
             "translateoffset": {
                 "x": 0.0,
-                "y": 0.09000000357627869,
+                "y": 0.22499999403953552,
                 "z": 0.0
             },
             "istrigger": false
@@ -726,7 +722,7 @@
         }
     },
     {
-        "entityid": 2097160,
+        "entityid": 8,
         "general": {
             "name": "Melissa",
             "tagid": 0,
@@ -857,7 +853,7 @@
         }
     },
     {
-        "entityid": 2097161,
+        "entityid": 9,
         "general": {
             "name": "ZipBomb",
             "tagid": 1,

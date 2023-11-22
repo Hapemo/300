@@ -50,8 +50,7 @@ function Update()
 
     -- Attack portion is in oncontact
     -- Movement
-    -- rotate.y = Helper.DirectionToAngle(this, this:GetRigidBody().mVelocity)
-    -- Helper.SetRotate(this, rotate)
+    this:GetTransform().mRotate.y = Helper.DirectionToAngle(this, this:GetRigidBody().mVelocity)
     
     if Helper.Vec3Len(this:GetRigidBody().mVelocity) < 0.1 then
         print(this:GetRigidBody().mVelocity)
