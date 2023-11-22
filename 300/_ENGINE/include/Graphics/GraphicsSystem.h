@@ -307,6 +307,7 @@ public:
 	GFX::Mesh						m_Image2DMesh;
 	GFX::Mesh						m_HealthbarMesh;
 	GFX::Mesh						m_PortalMesh;
+	GFX::Mesh						m_ParticleMesh;
 	std::vector<unsigned>			m_Image2DStore;
 	GFX::Quad2D						mScreenQuad;
 
