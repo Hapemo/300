@@ -364,7 +364,7 @@ void AudioSystem::TogglePause()
 
 
 void AudioSystem::Reset()
-{
+{   
 	auto audio_entities = systemManager->ecs->GetEntitiesWith<Audio>();
 
 	for (Entity audio : audio_entities)
@@ -382,12 +382,11 @@ void AudioSystem::Reset()
 		channel_pair.second->getCurrentSound(&sound);
 		
 		if(sound != nullptr)
-		{
+		{	
 			channel_pair.second->stop();
-			channel_pair.second = nullptr; 
+			channel_pair.second = nullptr;
 		}
 	}
-
 
 
 	for (auto& channel_pair : mChannels[AUDIO_SFX])
@@ -558,9 +557,8 @@ unsigned int AudioSystem::PlaySound(std::string audio_name, AUDIOTYPE type, floa
 
 		FMOD::Sound* sound = FindSound(audio_name);
 
-
 		if (!current_sound)
-		{
+		{	
 			system_obj->playSound(sound, 0, true, &channel.second);
 			channel.second->setVolume(vol);
 
