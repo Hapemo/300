@@ -1741,7 +1741,7 @@ void GraphicsSystem::AddHealthbarInstance(Entity e, const vec3& camPos, unsigned
 	vec3 originPos = e.GetComponent<Transform>().mTranslate;
 
 	// Compute the rotation vectors
-	vec3 normal = camPos - healthbar.mPosition;
+	vec3 normal = camPos - originPos;
 	vec3 up = { 0, 1, 0 };
 	vec3 right = glm::cross(up, normal);
 	vec3 forward = glm::cross(right, normal);
