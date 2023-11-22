@@ -24,10 +24,10 @@ function Update()
     mouse_move.x = Input.CursorPos().x - centerscreen.x
     mouse_move.y = Input.CursorPos().y - centerscreen.y
 
-    -- print("mouse pos x: ")
-    -- print(mouse_move.x)
-    -- print("mouse pos y: ")
-    -- print(mouse_move.y)
+    print("mouse pos x: ")
+    print(mouse_move.x)
+    print("mouse pos y: ")
+    print(mouse_move.y)
 
     -- check if cursor is within the button width & height
     -- lol hardcoded (for char's laptop)
