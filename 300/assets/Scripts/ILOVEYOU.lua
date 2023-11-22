@@ -2,6 +2,7 @@ local vec = Vec3.new()
 
 local aiSys
 local phySys
+local gameStateSys
 local this
 
 local bobbleAngle
@@ -29,6 +30,7 @@ function Alive()
     end
     aiSys = systemManager:mAISystem();
     phySys = systemManager:mPhysicsSystem();
+    gameStateSys = systemManager:mGameStateSystem();
 
     bobbleAngle = 0
     bobbleFrequency = 2
@@ -145,4 +147,5 @@ function StartDeath()
     -- Start death sound
     state = "DEATH"
     phySys:SetVelocity(this, Vec3.new())
+    gameStateSys:GetEntity("EnemyDeath"):GetAudio():SetPlay()
 end

@@ -1,8 +1,8 @@
 -- Variables for state
 
 -- Systems
-local aiSys
 local phySys
+local gameStateSys
 
 -- Other variables
 local this
@@ -30,6 +30,8 @@ function Alive()
 
     phySys = systemManager:mPhysicsSystem();
     aiSetting = this:GetAISetting()
+    gameStateSys = systemManager:mGameStateSystem();
+
     -- Initialise the state's variables
     state = ""
 
@@ -104,4 +106,5 @@ function StartDeath()
     -- Start death animation
     -- Start death sound
     state = "DEATH"
+    gameStateSys:GetEntity("EnemyDeath"):GetAudio():SetPlay()
 end

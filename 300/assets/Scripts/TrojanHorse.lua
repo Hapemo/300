@@ -14,6 +14,7 @@ local s4Timer           = 0
 -- Systems
 local aiSys
 local phySys
+local gameStateSys
 
 -- Other variables
 local this
@@ -38,6 +39,7 @@ function Alive()
 
     aiSys = systemManager:mAISystem();
     phySys = systemManager:mPhysicsSystem();
+    gameStateSys = systemManager:mGameStateSystem();
 
     -- Initialise the state's variables
     state = "ROAM"
@@ -56,9 +58,6 @@ function Update()
     if systemManager:mInputActionSystem():GetButtonDown("Test2") then
         this:GetHealthbar().health = this:GetHealthbar().health - 10
     end
-
-    -- Health logic
-    if this:GetHealthbar().health <= 0 then StartDeath() end
 
     -- STATE MACHINE
     if state == "ROAM" then         -- roam around and passively look for player (change to 2. when sees player)
@@ -114,9 +113,12 @@ function Update()
     elseif state == "DEATH" then
         deathTimerCount = deathTimerCount + FPSManager.GetDT()
         if deathTimerCount > deathTimer then systemManager.ecs:SetDeleteEntity(this) end
+        return
     end
     -- END STATE MACHINE
 
+    -- Health logic
+    if this:GetHealthbar().health <= 0 then StartDeath() end
 end
 
 function Dead()
@@ -191,4 +193,6 @@ function StartDeath()
     -- Start death animation
     -- Start death sound
     state = "DEATH"
+    gameStateSys:GetEntity("EnemyDeath"):GetAudio():SetPlay()
+    
 end

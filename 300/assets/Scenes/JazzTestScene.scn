@@ -1,96 +1,6 @@
 [
     {
-        "entityid": 1,
-        "general": {
-            "name": "Wall",
-            "tagid": 4,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 200.0,
-                "y": 100.0,
-                "z": 10.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 54.74578094482422,
-                "y": 49.292945861816406,
-                "z": -30.596050262451172
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 0,
-            "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": true,
-                "y": false,
-                "z": false
-            },
-            "gravity": true
-        },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 3442,
-            "instancecolor": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "bloomthreshold": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "materialinstance": [
-                "../assets/Compressed/Brick wall 4_baseColor.ctexture",
-                "../assets/Compressed/cube_emission.ctexture",
-                " ",
-                " ",
-                " ",
-                " "
-            ],
-            "mesh": "../assets/compiled_geom/Model_Wall_12x10x1.geom",
-            "texturerefid": [
-                4923,
-                4248,
-                0,
-                0,
-                0,
-                0
-            ]
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "translateoffset": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "istrigger": false
-        }
-    },
-    {
-        "entityid": 2,
+        "entityid": 4194305,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -180,7 +90,7 @@
         }
     },
     {
-        "entityid": 3,
+        "entityid": 5242882,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -217,8 +127,8 @@
                 "z": -500.0
             },
             "size": {
-                "x": 1303,
-                "y": 638
+                "x": 1304,
+                "y": 586
             },
             "near": 0.10000000149011612,
             "far": 900.0
@@ -235,7 +145,7 @@
         }
     },
     {
-        "entityid": 4,
+        "entityid": 5242883,
         "general": {
             "name": "player",
             "tagid": 0,
@@ -333,7 +243,7 @@
         }
     },
     {
-        "entityid": 5,
+        "entityid": 5242884,
         "general": {
             "name": "ILOVEYOU",
             "tagid": 1,
@@ -464,7 +374,7 @@
         }
     },
     {
-        "entityid": 6,
+        "entityid": 5242886,
         "general": {
             "name": "TrojanHorse",
             "tagid": 1,
@@ -595,7 +505,97 @@
         }
     },
     {
-        "entityid": 7,
+        "entityid": 5242887,
+        "general": {
+            "name": "Wall",
+            "tagid": 4,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 200.0,
+                "y": 100.0,
+                "z": 10.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 54.74578094482422,
+                "y": 49.292945861816406,
+                "z": -30.596050262451172
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": false,
+                "z": false
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3442,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Brick wall 4_baseColor.ctexture",
+                "../assets/Compressed/cube_emission.ctexture",
+                " ",
+                " ",
+                " ",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/Model_Wall_12x10x1.geom",
+            "texturerefid": [
+                4923,
+                4248,
+                0,
+                0,
+                0,
+                0
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        }
+    },
+    {
+        "entityid": 5242888,
         "general": {
             "name": "TrojanSoldier",
             "tagid": 1,
@@ -722,7 +722,7 @@
         }
     },
     {
-        "entityid": 8,
+        "entityid": 5242889,
         "general": {
             "name": "Melissa",
             "tagid": 0,
@@ -853,7 +853,7 @@
         }
     },
     {
-        "entityid": 9,
+        "entityid": 5242890,
         "general": {
             "name": "ZipBomb",
             "tagid": 1,
@@ -981,6 +981,42 @@
             "maxhealth": 100.0,
             "width": 1.0,
             "height": 0.07000000029802322
+        }
+    },
+    {
+        "entityid": 6291461,
+        "general": {
+            "name": "EnemyDeath",
+            "tagid": 8,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Enemy_Death.wav",
+            "fullpath": "../assets\\Audio/Enemy_Death.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 0.25
         }
     }
 ]

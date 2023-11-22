@@ -2,6 +2,7 @@ local vec = Vec3.new()
 
 local aiSys
 local phySys
+local gameStateSys
 local this
 
 local bobbleAngle
@@ -21,6 +22,7 @@ function Alive()
     end
     aiSys = systemManager:mAISystem();
     phySys = systemManager:mPhysicsSystem();
+    gameStateSys = systemManager:mGameStateSystem();
 
     bobbleAngle = 0
     bobbleFrequency = 2
