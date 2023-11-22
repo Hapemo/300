@@ -92,6 +92,9 @@ void Application::MainUpdate()
 
         if (glfwWindowShouldClose(mWindow.GetHandle())) 
           systemManager->mGameStateSystem->Exit();
+
+        if (systemManager->IsQuit())
+            break;
     }
 }
 

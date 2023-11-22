@@ -50,6 +50,7 @@ public:
 	bool Init(unsigned int windowWidth, unsigned int windowHeight);
 	void Destroy();
 	void PrepForDraw();
+	void Resize(int width, int height);
 	void RenderBloom(unsigned int sourceTexture, float filterRadius);
 	GLuint getBloomTexture() { return mBloomFBO.mMipChain[0].mTexture; }
 	
@@ -103,8 +104,6 @@ struct PostProcessing
 	*/
 	/**************************************************************************/
 	static void CRTBlendFramebuffers(GFX::FBO& targetFramebuffer, GFX::PingPongFBO& bufferfbo, float dt);
-
-	static void PhysBasedBloom();
 
 	static void BlitFrameBuffers(unsigned int readFramebuffer, unsigned int drawFramebuffer, ivec2 readFramebufferSize, ivec2 drawFramebufferSize, int drawColorAttachmentOffset);
 

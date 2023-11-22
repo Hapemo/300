@@ -122,3 +122,7 @@ function Helper.SetFloatVarFromOtherScript_Scene(entityName, sceneName, scriptNa
     script = scriptingComp:GetScript(scriptName)
     script:SetValueFloat(varName, varValue)
 end
+
+function Helper.CreateTrailParticle(vec)
+    systemManager.ecs:NewEntityFromPrefab("TrailParticle", vec)
+end

@@ -104,6 +104,8 @@ void EditorApplication::MainUpdate()
 
         EnginePerformance::EndTrack("Editor");
         EnginePerformance::StoreTime("Editor");
+        if (systemManager->IsQuit())
+            break;
     }
 }
 
@@ -122,7 +124,7 @@ void EditorApplication::SystemUpdate()
 void EditorApplication::SecondUpdate()
 {
     Input::UpdatePrevKeyStates();
-    FPSManager::LimitFPS(60);
+    FPSManager::LimitFPS(0);
 }
 
 void EditorApplication::Exit()

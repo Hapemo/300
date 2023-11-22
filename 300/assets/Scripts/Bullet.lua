@@ -27,6 +27,14 @@ local bulletLifeTime = 0
 local bulletDeathTime = 150
 
 
+-- Testing Damage System
+local bulletTag = "REVOLVER" -- "REVOLVER" , "SHOTGUN" , "MACHINE GUN"
+local enemytag1HP = 100
+local shotGunDamage = 12 -- per bullet
+local revolverDamage = 35 -- per bullet
+local machineGunDamage = 3 -- per bullet
+
+
 -- local bullethitEntity
 -- local bullethitcomp
 -- local bullethitAudioSource 
@@ -39,19 +47,22 @@ end
 function Update()
 
     gameStateSys = systemManager:mGameStateSystem()
-    cameraEntity = gameStateSys:GetEntity("Camera", "testSerialization")
+    cameraEntity = gameStateSys:GetEntity("Camera")
     positions = cameraEntity:GetTransform().mTranslate
 
 
     viewVec = Camera_Scripting.GetDirection(cameraEntity)
     physicsSys = systemManager:mPhysicsSystem()
 
-    bullethitAudioEntity = gameStateSys:GetEntity("Bullet Hit" , "testSerialization")
+    bullethitAudioEntity = gameStateSys:GetEntity("Bullet Hit")
     bullethitAudioComp = bullethitAudioEntity:GetAudio()
     -- bullethitAudioSource = Helper.CreateAudioSource(bullethitEntity)
 
-    
-    bulletObject = gameStateSys:GetEntity("bullet" , "testSerialization")
+    bulletObject = Helper.GetScriptEntity(script_entity.id)
+    bulletGeneral = bulletObject:GetGeneral()
+
+    bulletTag = bulletGeneral:GetTag()
+
     while bulletObject ~= nil do 
        --print("THERE IS A BULLET OBJECT")
         bulletLifeTime = bulletLifeTime + 1
@@ -62,21 +73,6 @@ function Update()
         end
         break
     end
-    
-    
-        
-
-    -- movement.x= movement.x+movement.x
-    --   movement.x = movement.x+ viewVec.x *0     
-    --   movement.y = movement.y+ viewVec.y *0   
-    --   movement.z = movement.z+ viewVec.z *0
-
-    --   print(viewVec.x)
-    --   print(viewVec.y)
-    --   print(viewVec.z)
-      
-   
-    
 end
 
 function Dead()
@@ -132,7 +128,29 @@ function OnTriggerEnter(Entity)
         do
             spawned(i)
         end
-        systemManager.ecs:SetDeleteEntity(entityobj)
+
+        if(bulletTag == "REVOLVER") then 
+            enemytag1HP = enemytag1HP - revolverDamage
+            print("ENEMY TAKING DAMAGE: ", revolverDamage)
+            print("HP LEFT: " , enemytag1HP)
+        end
+
+        if(bulletTag == "SHOTGUN") then 
+            enemytag1HP = enemytag1HP - shotGunDamage
+            print("ENEMY TAKING DAMAGE: ", shotGunDamage)
+            print("HP LEFT: " , enemytag1HP)
+        end
+
+        if(bulletTag == "MACHINE_GUN") then 
+            enemytag1HP = enemytag1HP - machineGunDamage
+            print("ENEMY TAKING DAMAGE: ", machineGunDamage)
+            print("HP LEFT: " , enemytag1HP)
+        end
+
+        if(enemytag1HP <= 0) then 
+            print("ENEMY DIES")
+            systemManager.ecs:SetDeleteEntity(entityobj)
+        end
     end
 
 end

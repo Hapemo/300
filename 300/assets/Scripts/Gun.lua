@@ -28,7 +28,7 @@ function Alive()
     original_translate_z = gunTranslate.z 
 
     -- Player Velocity --
-    playerEntity = gameStateSys:GetEntity("Camera", "testSerialization")
+    playerEntity = gameStateSys:GetEntity("Camera")
     playerRigidBody = playerEntity:GetRigidBody().mVelocity
 
 end

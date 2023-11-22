@@ -37,8 +37,8 @@ void LuaEngine()
         "mInputActionSystem", &SystemManager::GetInputMapSystemPointer,
         "mGameStateSystem", &SystemManager::GetGameStateSystem,
         "mGraphicsSystem", &SystemManager::GetGraphicsSystem,
-        "mAISystem", &SystemManager::GetAIManager
-    );
+        "mAISystem", &SystemManager::GetAIManager,
+        "Quit", &SystemManager::Quit);
 }
 
 void LuaECS()
@@ -48,12 +48,11 @@ void LuaECS()
         "NewEntity", &ECS::NewEntity,
         "NewEntityByScene", &ECS::NewEntityByScene,
         "NewEntityFromPrefab", &ECS::NewEntityFromPrefab,
-        "SetDeleteEntity", &ECS::SetDeleteEntity
-    );
+        "SetDeleteEntity", &ECS::SetDeleteEntity);
 }
 
-#define DECLARE_COMPONENT(str, type) str, sol::resolve<type&()>(&Entity::GetComponent<type>)
-#define ADD_COMPONENT(str, type) str, sol::resolve<type&()>(&Entity::AddComponent<type>)
+#define DECLARE_COMPONENT(str, type) str, sol::resolve<type &()>(&Entity::GetComponent<type>)
+#define ADD_COMPONENT(str, type) str, sol::resolve<type &()>(&Entity::AddComponent<type>)
 
 void LuaEntity()
 {
@@ -67,11 +66,11 @@ void LuaEntity()
         "HasTransform", &Entity::HasComponent<Transform>,
 
         DECLARE_COMPONENT("GetCamera", Camera),
-        "HasCamera", & Entity::HasComponent<Camera>,
+        "HasCamera", &Entity::HasComponent<Camera>,
 
         ADD_COMPONENT("AddAnimator", Animator),
         DECLARE_COMPONENT("GetAnimator", Animator),
-        "HasAnimator", & Entity::HasComponent<Animator>,
+        "HasAnimator", &Entity::HasComponent<Animator>,
 
         ADD_COMPONENT("AddRigidBody", RigidBody),
         DECLARE_COMPONENT("GetRigidBody", RigidBody),
@@ -115,30 +114,28 @@ void LuaEntity()
 
         ADD_COMPONENT("AddVFX", VFX),
         DECLARE_COMPONENT("GetVFX", VFX),
-        "HasVFX", & Entity::HasComponent<VFX>,
+        "HasVFX", &Entity::HasComponent<VFX>,
 
         ADD_COMPONENT("AddButton", Button),
         DECLARE_COMPONENT("GetButton", Button),
-        "HasButton", & Entity::HasComponent<Button>,
+        "HasButton", &Entity::HasComponent<Button>,
 
         ADD_COMPONENT("AddCamera", Camera),
         DECLARE_COMPONENT("GetCamera", Camera),
-        "HasCamera", & Entity::HasComponent<Camera>,
+        "HasCamera", &Entity::HasComponent<Camera>,
 
         ADD_COMPONENT("AddUIrenderer", UIrenderer),
         DECLARE_COMPONENT("GetUIrenderer", UIrenderer),
-        "HasUIrenderer", & Entity::HasComponent<UIrenderer>,
+        "HasUIrenderer", &Entity::HasComponent<UIrenderer>,
 
         ADD_COMPONENT("AddAISetting", AISetting),
         DECLARE_COMPONENT("GetAISetting", AISetting),
-        "HasAISetting", & Entity::HasComponent<AISetting>,
+        "HasAISetting", &Entity::HasComponent<AISetting>,
 
-      ADD_COMPONENT("AddHealthbar", Healthbar),
-      DECLARE_COMPONENT("GetHealthbar", Healthbar),
-      "HasHealthbar", & Entity::HasComponent<Healthbar>
-    );
+        ADD_COMPONENT("AddHealthbar", Healthbar),
+        DECLARE_COMPONENT("GetHealthbar", Healthbar),
+        "HasHealthbar", &Entity::HasComponent<Healthbar>);
 }
-
 
 void LuaGeneral()
 {
@@ -149,8 +146,7 @@ void LuaGeneral()
         "subtag", &General::subtag,
         "isActive", &General::isActive,
         "GetTag", &General::GetTag,
-        "SetTag", &General::SetTag
-    );
+        "SetTag", &General::SetTag);
 }
 
 void LuaCamera()
@@ -167,16 +163,16 @@ void LuaCamera()
         "GetCameraSpeed", &Camera_Scripting::GetCameraSpeed,
         "GetSensitivity", &Camera_Scripting::GetSensitivity,
         "RotateCameraView", &Camera_Scripting::RotateCameraView,
-        "SetFov", &Camera_Scripting::SetFov
-        );
+        "SetFov", &Camera_Scripting::SetFov,
+        "Cross", &Camera_Scripting::Cross, 
+        "Rotate" , &Camera_Scripting::Rotate);
 }
 
 void LuaFPSManager()
 {
     systemManager->mScriptingSystem->luaState.new_usertype<FPSManager>(
         "FPSManager", sol::constructors<>(),
-        "GetDT", &FPSManager::GetDT
-    );
+        "GetDT", &FPSManager::GetDT);
 }
 
 void LuaTransform()
@@ -185,8 +181,7 @@ void LuaTransform()
         "Transform", sol::constructors<>(),
         "mScale", &Transform::mScale,
         "mRotate", &Transform::mRotate,
-        "mTranslate", &Transform::mTranslate
-    );
+        "mTranslate", &Transform::mTranslate);
 }
 
 void LuaAnimator()
@@ -194,8 +189,7 @@ void LuaAnimator()
     systemManager->mScriptingSystem->luaState.new_usertype<Animator>(
         "Animator", sol::constructors<>(),
         "PauseAnimation", &Animator::PauseAnimation,
-        "UnpauseAnimation", &Animator::UnpauseAnimation
-    );
+        "UnpauseAnimation", &Animator::UnpauseAnimation);
 }
 
 void LuaRigidBody()
@@ -204,8 +198,7 @@ void LuaRigidBody()
         "RigidBody", sol::constructors<>(),
         "mDensity", &RigidBody::mDensity,
         "mMaterial", &RigidBody::mMaterial,
-        "mVelocity", &RigidBody::mVelocity
-    );
+        "mVelocity", &RigidBody::mVelocity);
 }
 
 void LuaBoxCollider()
@@ -213,8 +206,7 @@ void LuaBoxCollider()
     systemManager->mScriptingSystem->luaState.new_usertype<BoxCollider>(
         "BoxCollider", sol::constructors<>(),
         "mScaleOffset", &BoxCollider::mScaleOffset,
-        "mTranslateOffset", &BoxCollider::mTranslateOffset
-    );
+        "mTranslateOffset", &BoxCollider::mTranslateOffset);
 }
 
 void LuaSphereCollider()
@@ -222,8 +214,7 @@ void LuaSphereCollider()
     systemManager->mScriptingSystem->luaState.new_usertype<SphereCollider>(
         "SphereCollider", sol::constructors<>(),
         "mScaleOffset", &SphereCollider::mScaleOffset,
-        "mTranslateOffset", &SphereCollider::mTranslateOffset
-    );
+        "mTranslateOffset", &SphereCollider::mTranslateOffset);
 }
 
 void LuaScript()
@@ -232,16 +223,14 @@ void LuaScript()
         "Script", sol::constructors<>(),
         "ReturnValueInt", &Script::RunWithReturnValue<int>,
         "SetValueVec3", &Script::SetValue<glm::vec3>,
-        "SetValueFloat", &Script::SetValue<float>
-        );
+        "SetValueFloat", &Script::SetValue<float>);
 }
 
 void LuaScripts()
 {
     systemManager->mScriptingSystem->luaState.new_usertype<Scripts>(
         "Scripts", sol::constructors<>(),
-        "GetScript", &Scripts::GetScript
-    );
+        "GetScript", &Scripts::GetScript);
 }
 
 void LuaParent()
@@ -250,8 +239,7 @@ void LuaParent()
         "Parent", sol::constructors<>(),
         "mPrevSibling", &Parent::mPrevSibling,
         "mNextSibling", &Parent::mNextSibling,
-        "mParent", &Parent::mParent
-    );
+        "mParent", &Parent::mParent);
 }
 
 void LuaChildren()
@@ -259,8 +247,7 @@ void LuaChildren()
     systemManager->mScriptingSystem->luaState.new_usertype<Children>(
         "Children", sol::constructors<>(),
         "mNumChildren", &Children::mNumChildren,
-        "mFirstChild", &Children::mFirstChild
-    );
+        "mFirstChild", &Children::mFirstChild);
 }
 
 void LuaInput()
@@ -271,8 +258,7 @@ void LuaInput()
         "GetScroll", &Input::GetScroll,
         "CursorPos", &Input::CursorPos,
         "SetCursorCenter", &Input::SetCursorCenter,
-        "GetCursorCenter", &Input::GetCursorCenter
-    );
+        "GetCursorCenter", &Input::GetCursorCenter);
 }
 
 void LuaAudio()
@@ -285,8 +271,7 @@ void LuaAudio()
         "SetStop", &Audio::SetStop,
         "UpdateVolume", &Audio::UpdateVolume,
         "FadeIn", &Audio::FadeIn,
-        "FadeOut", &Audio::FadeOut
-        );
+        "FadeOut", &Audio::FadeOut);
 }
 
 void LuaInputMapSystem()
@@ -298,8 +283,7 @@ void LuaInputMapSystem()
         "GetButtonDown", &InputMapSystem::GetButtonDown,
         "GetKey", &InputMapSystem::GetKey,
         "GetKeyUp", &InputMapSystem::GetKeyUp,
-        "GetKeyDown", &InputMapSystem::GetKeyDown
-    );
+        "GetKeyDown", &InputMapSystem::GetKeyDown);
 }
 
 void LuaGraphicsSystem()
@@ -318,9 +302,8 @@ void LuaGraphicsSystem()
         "mChromaticStrength", &GraphicsSystem::mChromaticStrength,
         "m_EnableBloom", &GraphicsSystem::m_EnableBloom,
         "m_EnableChromaticAbberation", &GraphicsSystem::m_EnableChromaticAbberation,
-		"m_GlobalTint", &GraphicsSystem::m_GlobalTint,
-        "SetAllEntityBloomThreshold", &GraphicsSystem::SetAllEntityBloomThreshold
-        );
+        "m_GlobalTint", &GraphicsSystem::m_GlobalTint,
+        "SetAllEntityBloomThreshold", &GraphicsSystem::SetAllEntityBloomThreshold);
 }
 
 void LuaPhysics()
@@ -329,25 +312,22 @@ void LuaPhysics()
         "mPhysicsSystem", sol::constructors<>(),
         "SetVelocity", &PhysicsSystem::SetVelocity,
         "SetPosition", &PhysicsSystem::SetPosition,
-        "SetRotation", &PhysicsSystem::SetRotation
-    );
+        "SetRotation", &PhysicsSystem::SetRotation);
 }
 
 void LuaScripting()
 {
     systemManager->mScriptingSystem->luaState.new_usertype<ScriptingSystem>(
-        "mScriptingSystem", sol::constructors<>()
-        //"TestingFromScriptSys", &ScriptingSystem::TestingFromScriptSys,
-        //"CreateVectorString", &ScriptingSystem::CreateVectorString
-    );
+        "mScriptingSystem", sol::constructors<>(),
+        "TestingFromScriptSys", &ScriptingSystem::TestingFromScriptSys,
+        "CreateVectorString", &ScriptingSystem::CreateVectorString);
 }
 
 void LuaPointLight()
 {
     systemManager->mScriptingSystem->luaState.new_usertype<PointLight>(
         "PointLight", sol::constructors<>(),
-        "SetColor", &PointLight::SetColor
-    );
+        "SetColor", &PointLight::SetColor);
 }
 
 void LuaMeshRenderer()
@@ -357,8 +337,7 @@ void LuaMeshRenderer()
         "SetColor", &MeshRenderer::SetColor,
         "SetMesh", &MeshRenderer::SetMesh,
         "SetMeshDelayed", &MeshRenderer::SetMeshDelayed,
-        "SetTexture", &MeshRenderer::SetTexture
-    );
+        "SetTexture", &MeshRenderer::SetTexture);
 }
 
 void LuaVFX()
@@ -367,19 +346,16 @@ void LuaVFX()
         "VFX", sol::constructors<>(),
         "EnableObjectBloom", &VFX::EnableObjectBloom,
         "DisableObjectBloom", &VFX::DisableObjectBloom,
-        "SetEntityBloomThreshold", &VFX::SetEntityBloomThreshold
-        );
+        "SetEntityBloomThreshold", &VFX::SetEntityBloomThreshold);
 }
 
 void LuaGameState()
 {
     systemManager->mScriptingSystem->luaState.new_usertype<GameStateManager>(
         "mGameStateSystem", sol::constructors<>(),
-        //"GetEntity", sol::resolve<Entity(std::string const&)>(&GameStateManager::GetEntity),
-       // "GetEntityByScene", sol::resolve<Entity(std::string const&, std::string const&)>(&GameStateManager::GetEntity),
-        "GetEntity", &GameStateManager::GetEntity,
-        "ChangeGameState", sol::resolve<void(const std::string&)>(&GameStateManager::ChangeGameState)
-        );
+        "GetEntity", sol::resolve<Entity(std::string const &)>(&GameStateManager::GetEntity),
+        "GetEntityByScene", sol::resolve<Entity(std::string const &, std::string const &)>(&GameStateManager::GetEntity),
+        "ChangeGameState", sol::resolve<void(const std::string &)>(&GameStateManager::ChangeGameState));
 }
 
 void LuaAIManager()
@@ -390,8 +366,7 @@ void LuaAIManager()
         "PredictiveShootPlayer", &AIManager::PredictiveShootPlayer,
         "GetDirection", &AIManager::GetDirection,
         "ConeOfSight", &AIManager::ConeOfSight,
-        "LineOfSight", &AIManager::LineOfSight
-        );
+        "LineOfSight", &AIManager::LineOfSight);
 }
 
 void LuaButton()
@@ -401,8 +376,7 @@ void LuaButton()
         "IsInteractable", &Button::IsInteractable,
         "IsHovered", &Button::IsHovered,
         "IsClicked", &Button::IsClicked,
-        "IsActivated", &Button::IsActivated
-        );
+        "IsActivated", &Button::IsActivated);
 }
 
 void LuaUIrenderer()
@@ -424,14 +398,13 @@ void LuaAISetting()
         "GetTarget", sol::resolve<Entity()>(&AISetting::GetTarget),
         "GetTargetConst", sol::resolve<Entity() const>(&AISetting::GetTarget),
         "mTargetName", &AISetting::mTargetName,
-        "mStayAway", &AISetting::mStayAway
-        );
+        "mStayAway", &AISetting::mStayAway);
 }
 
-void LuaHealth() {
-  systemManager->mScriptingSystem->luaState.new_usertype<Healthbar>(
-    "Healthbar", sol::constructors<>(),
-    "maxHealth", &Healthbar::mMaxHealth,
-    "health", &Healthbar::mHealth
-  );
+void LuaHealth()
+{
+    systemManager->mScriptingSystem->luaState.new_usertype<Healthbar>(
+        "Healthbar", sol::constructors<>(),
+        "maxHealth", &Healthbar::mMaxHealth,
+        "health", &Healthbar::mHealth);
 }

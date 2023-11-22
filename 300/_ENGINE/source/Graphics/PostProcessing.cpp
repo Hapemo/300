@@ -93,12 +93,6 @@ void PostProcessing::CRTBlendFramebuffers(GFX::FBO& targetFramebuffer, GFX::Ping
 }
 
 
-void PostProcessing::PhysBasedBloom()
-{
-	
-}
-
-
 bool PhysBasedBloomFBO::Init(unsigned int windowWidth, unsigned int windowHeight, unsigned int mipChainLength)
 {
 	if (mIsInit)
@@ -127,8 +121,8 @@ bool PhysBasedBloomFBO::Init(unsigned int windowWidth, unsigned int windowHeight
 		glBindTexture(GL_TEXTURE_2D, mip.mTexture);
 
 		// we are downscaling the texture. since we dont need alpha, the GL_R11F_G11F_B10F flag gives us more hdr precision
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_R11F_G11F_B10F, mip.mIntSize.x, mip.mIntSize.y, 0, GL_RGBA, GL_FLOAT, NULL);
-		//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, intMipSize.x, intMipSize.y, 0, GL_RGBA, GL_FLOAT, NULL);
+		//glTexImage2D(GL_TEXTURE_2D, 0, GL_R11F_G11F_B10F, mip.mIntSize.x, mip.mIntSize.y, 0, GL_RGBA, GL_FLOAT, NULL);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, intMipSize.x, intMipSize.y, 0, GL_RGBA, GL_FLOAT, NULL);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -192,6 +186,29 @@ bool PhysBasedBloomRenderer::Init(unsigned int windowWidth, unsigned int windowH
 
 	mInit = true;
 	return true;
+}
+
+
+void PhysBasedBloomRenderer::Resize(int width, int height)
+{
+	mIntSrcViewportSize = glm::ivec2(width, height);
+	mSrcViewportSize = glm::vec2((float)width, (float)height);
+	
+	float localwidth = (float)width;
+	float localheight = (float)height;
+
+	for (int i{}; i < mBloomFBO.mMipChain.size(); ++i)
+	{
+		mBloomFBO.mMipChain[i].mSize = glm::ivec2((int)localwidth, (int)localheight);
+		mBloomFBO.mMipChain[i].mIntSize = glm::vec2(localwidth, localheight);
+
+		glBindTexture(GL_TEXTURE_2D, mBloomFBO.mMipChain[i].mTexture);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, mBloomFBO.mMipChain[i].mIntSize.x, mBloomFBO.mMipChain[i].mIntSize.y, 0, GL_RGBA, GL_FLOAT, NULL);
+		glBindTexture(GL_TEXTURE_2D, 0);
+
+		localwidth /= 2.f;
+		localheight /= 2.f;
+	}
 }
 
 

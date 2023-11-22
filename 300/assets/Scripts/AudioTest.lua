@@ -14,7 +14,7 @@ function Update()
 
     -- Get other entity by name
     gameStateSys = systemManager:mGameStateSystem();
-    floorEntity = gameStateSys:GetEntity("Floor", "Test1")
+    floorEntity = gameStateSys:GetEntity("Floor")
     if entity:HasAudio() == false then
         floorAudio = floorEntity:AddAudio();
     end

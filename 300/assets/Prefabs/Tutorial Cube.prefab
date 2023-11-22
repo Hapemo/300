@@ -1,5 +1,5 @@
 {
-    "entityid": 1048627,
+    "entityid": 10485804,
     "general": {
         "name": "Tutorial Cube",
         "tagid": 0,
@@ -9,9 +9,9 @@
     },
     "transform": {
         "scale": {
-            "x": 24.700000762939453,
-            "y": 18.600000381469727,
-            "z": 23.200000762939453
+            "x": 296.29998779296875,
+            "y": 173.8000030517578,
+            "z": 260.8999938964844
         },
         "rotate": {
             "x": 0.0,
@@ -19,9 +19,9 @@
             "z": 0.0
         },
         "translate": {
-            "x": -90.30000305175781,
-            "y": -15.5,
-            "z": 0.0
+            "x": 9.699999809265137,
+            "y": 4.999000072479248,
+            "z": 48.70000076293945
         }
     },
     "meshrenderer": {
@@ -41,35 +41,25 @@
             "w": 1.0
         },
         "materialinstance": [
-            "../assets/Compressed/Wood Material 15_BaseColor.ctexture",
+            "../assets/Compressed/Tutorial_Cube_BaseColor.ctexture",
             "../assets/Compressed/Tutorial_Cube_Normal.ctexture",
             "../assets/Compressed/Tutorial_Cube_Metallic.ctexture",
             "../assets/Compressed/Tutorial_Cube_Roughness.ctexture",
             "../assets/Compressed/Tutorial_Cube_Emissive.ctexture",
-            "../assets/Compressed/Tutorial_Cube_AO.ctexture"
+            "../assets/Compressed/Temp_Tutorial_Cube_AO.ctexture"
         ],
         "mesh": "../assets/compiled_geom/Tutorial_cube.geom",
         "texturerefid": [
-            5242,
+            5182,
             4909,
             5103,
             5250,
             5129,
-            4436
+            4937
         ]
     },
-    "boxcollider": {
-        "scaleoffset": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0
-        },
-        "translateoffset": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
-        },
-        "istrigger": false
+    "scripts": {
+        "scriptscontainer": []
     },
     "prefab": {
         "prefab": "Tutorial Cube"

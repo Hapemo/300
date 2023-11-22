@@ -12,11 +12,13 @@ function Alive()
 end
 
 function Update()
+    gameStateSys = systemManager:mGameStateSystem();
     testing = testing + 1;
     --testie = systemManager.ecs:NewEntity();
     --For M1 demo
     --entity = Entity.new(script_entity.id)
     entity = Helper.GetScriptEntity(script_entity.id)
+    cameraEntity = gameStateSys:GetEntity("Camera")
     if entity == nil then
         print("Entity nil in script!")
     end
@@ -55,7 +57,13 @@ function Update()
     elseif Input.CheckKey(State.HOLD, Key.DOWN) then
         transformComponent.mTranslate.y = transformComponent.mTranslate.y - speed
     elseif Input.CheckKey(State.HOLD, Key.RIGHT) then
+        --scriptingSys = systemManager:mScriptingSystem();
         transformComponent.mTranslate.x = transformComponent.mTranslate.x + speed
+        -- vector = scriptingSys:CreateVectorString();
+        -- vector:add("Hello");
+        -- vector:add("Testing !!")
+        -- vector:add("This actually works.")
+        -- scriptingSys:TestingFromScriptSys(vector)
     elseif Input.CheckKey(State.HOLD, Key.KEY_A) then
         -- print("Value: ", test)
         -- print("VEC X: ", vec.x)
@@ -68,16 +76,16 @@ function Update()
         generalComponent:SetTag("eneMY");
         tag = generalComponent:GetTag();
         print("Tag is: "..tag)
-        if (create == 2) then
-            for i = 1, 4 do
-                testEntity = systemManager.ecs:NewEntityByScene();
-                gameStateSys = systemManager:mGameStateSystem();
-                gameStateSys:DeleteEntity(testEntity)
-                --gameStateSys:ChangeGameState("exit")
-                prefabEntity = systemManager.ecs:NewEntityFromPrefab("Floor", vec)
-            end
-            create = create + 1
-        end
+        --if (create == 2) then
+        --    for i = 1, 4 do
+        --        testEntity = systemManager.ecs:NewEntityByScene();
+        --        gameStateSys = systemManager:mGameStateSystem();
+        --        gameStateSys:DeleteEntity(testEntity)
+        --        --gameStateSys:ChangeGameState("exit")
+        --        prefabEntity = systemManager.ecs:NewEntityFromPrefab("Floor", vec)
+        --    end
+        --    create = create + 1
+        --end
 
         --Test VFX Component
         --vfxComponent:EnableObjectBloom();
@@ -86,6 +94,12 @@ function Update()
         -- Physics Set Velocity function
         -- physicsSys = systemManager:mPhysicsSystem();
         -- physicsSys:SetVelocity(entity, vec);
+	
+	scriptingSys = systemManager:mScriptingSystem();
+    	scriptingComp = cameraEntity :GetScripts()
+    	script = scriptingComp:GetScript("../assets/Scripts/Player.lua")
+	script:SetValue("testingSet", vec);
+	
     elseif Input.CheckKey(State.HOLD, Key.KEY_B) then
         testEntity = systemManager.ecs:NewEntityByScene();
         --scriptingSys = systemManager:mScriptingSystem();

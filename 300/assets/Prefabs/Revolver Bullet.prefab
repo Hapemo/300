@@ -1,0 +1,160 @@
+{
+    "entityid": 8388759,
+    "general": {
+        "name": "Revolver Bullet",
+        "tagid": 10,
+        "subtag": 0,
+        "isActive": true,
+        "isPaused": false
+    },
+    "transform": {
+        "scale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+        },
+        "rotate": {
+            "x": -335.18463134765625,
+            "y": -0.0,
+            "z": 3.1415927410125732
+        },
+        "translate": {
+            "x": 13.857372283935547,
+            "y": -10.240767478942871,
+            "z": 21.210899353027344
+        }
+    },
+    "rigidbody": {
+        "density": 10.0,
+        "material": 1,
+        "motion": 1,
+        "velocity": {
+            "x": -36.483001708984375,
+            "y": -0.34942626953125,
+            "z": -93.10684204101563
+        },
+        "rotationconstraints": {
+            "x": true,
+            "y": false,
+            "z": false
+        },
+        "gravity": false
+    },
+    "meshrenderer": {
+        "vert": "../assets/shader_files/pointLight_vert.glsl",
+        "frag": "../assets/shader_files/pointLight_frag.glsl",
+        "meshrefid": 2285,
+        "instancecolor": {
+            "x": 0.95652174949646,
+            "y": 1.0,
+            "z": 0.0,
+            "w": 1.0
+        },
+        "bloomthreshold": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+        },
+        "materialinstance": [
+            "../assets/Compressed/Cube_Texture_White.ctexture",
+            " ",
+            " ",
+            " ",
+            " ",
+            " "
+        ],
+        "mesh": "../assets/compiled_geom/cube.geom",
+        "texturerefid": [
+            4706,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
+    },
+    "boxcollider": {
+        "scaleoffset": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+        },
+        "translateoffset": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "istrigger": true
+    },
+    "scripts": {
+        "scriptscontainer": [
+            {
+                "scriptFile": "../assets/Scripts/Bullet.lua",
+                "variables": [
+                    {
+                        "key": "direction",
+                        "val": {
+                            "type": -655306154,
+                            "value": {
+                                "x": 10.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            }
+                        }
+                    },
+                    {
+                        "key": "movement",
+                        "val": {
+                            "type": -655306154,
+                            "value": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            }
+                        }
+                    },
+                    {
+                        "key": "positions",
+                        "val": {
+                            "type": -655306154,
+                            "value": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            }
+                        }
+                    },
+                    {
+                        "key": "spawn",
+                        "val": {
+                            "type": -1129103353,
+                            "value": true
+                        }
+                    },
+                    {
+                        "key": "timer",
+                        "val": {
+                            "type": 694561268,
+                            "value": 0.0
+                        }
+                    },
+                    {
+                        "key": "viewVec",
+                        "val": {
+                            "type": -655306154,
+                            "value": {
+                                "x": 0.0,
+                                "y": 1.0,
+                                "z": 0.0
+                            }
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    "prefab": {
+        "prefab": "Revolver Bullet"
+    }
+}
