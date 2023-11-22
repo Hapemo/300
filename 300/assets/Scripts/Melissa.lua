@@ -22,13 +22,6 @@ local state
 -- 1. TRAVEL. walk directly to player using pathfinding (change to 2. when health falls below 50% health and is intended to spawn another melissa)
 -- 2. DUPLICATE. stops moving and vibrate hard. when vibrate timer is up, spawn in another melissa (change to 1. after duplicating)
 
--- for example you want to reference out hp variable to another script
---local hp = 100
-
--- function GetHP()
---     return hp
--- end
-
 function Alive()
     math.randomseed(os.time())
 
@@ -51,6 +44,14 @@ function Alive()
 end
 
 function Update()
+
+    if systemManager:mInputActionSystem():GetButtonDown("Test1") then
+        this:GetHealthbar().health = this:GetHealthbar().health - 10
+    end
+
+    -- Health logic
+    if this:GetHealthbar().health <= 0 then StartDeath() end
+
     -- STATE MACHINE
     if state == "TRAVEL" then         -- walk directly to player using pathfinding (change to 2. when duplicate timer runs out)
         direction = aiSys:GetDirection(this)
@@ -84,11 +85,12 @@ function Update()
             TRAVELInit()
         end
     elseif state == "DEATH" then
+        print("Death counter")
+        print(deathTimerCount)
         deathTimerCount = deathTimerCount + FPSManager.GetDT()
         if deathTimerCount > deathTimer then systemManager.ecs:SetDeleteEntity(this) end
     end
     -- END STATE MACHINE
-
 end
 
 function Dead()
@@ -111,8 +113,6 @@ function OnContactEnter(Entity)
             RESTInit()
             return
         end
-        
-
     end
 end
 
@@ -137,8 +137,8 @@ end
 function StartDeath()
     -- Start death animation
     -- Start death sound
-    deathTimerCount = 0
     state = "DEATH"
+    print("start death")
 end
 
 -- Helper functions
