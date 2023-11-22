@@ -19,6 +19,16 @@ function Helper.CreateAudioSource(Entity)
     return audioEntity
 end
 
+function Helper.protect(tbl)
+    return setmetatable({}, {
+        __index = tbl,
+        __newindex = function(t, key, value)
+            error("attempting to change constant " ..
+                   tostring(key) .. " to " .. tostring(value), 2)
+        end
+    })
+end
+
 function Helper.Translate(Entity, Vec3)
     transformComponent = Entity:GetTransform()
     transformComponent.mTranslate.x = transformComponent.mTranslate.x + Vec3.x

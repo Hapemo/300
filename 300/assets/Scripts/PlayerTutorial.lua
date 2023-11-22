@@ -18,8 +18,6 @@ local positions = Vec3.new(0,0,10)
 local positions_offset = Vec3.new(0,20,0)
 local positions_final = Vec3.new()
 local dashTime = 0.0
-
-
 local e_chroma = 0.06
 local d_chroma = 0.02
 local e_exposure = 5
@@ -33,6 +31,12 @@ local d_tint = Vec4.new(1,1,1,1)
 local d_tint_result = Vec4.new(0,0,0,0)
 local e_fov = 50
 local d_fov = 60
+
+--local constants = {
+--    test = 1,
+--    working = 2.4,
+--}
+--constants = Helper.protect(constants)
 
 local e_dashEffect = true
 
@@ -119,6 +123,7 @@ TutBox = {
 local tutState = TutBox.FIRST
 
 function Alive()
+
     gameStateSys = systemManager:mGameStateSystem();
     inputMapSys = systemManager:mInputActionSystem();
     physicsSys = systemManager:mPhysicsSystem();
@@ -143,7 +148,7 @@ function Alive()
     tpTime = 20.0
     -- teleporter1 = gameStateSys:GetEntity("Teleporter1")
     -- teleporter2 = gameStateSys:GetEntity("Teleporter2")
-    --walkingenemy = gameStateSys:GetEntity("enemy1_walking", "testSerialization")
+    --walkingenemy = gameStateSys:GetEntity("enemy1_walking")
     --onTpTime = 0;
     collideWithTP = 0
     originalSamplingWeight = graphicsSys.mSamplingWeight
@@ -151,6 +156,7 @@ function Alive()
     -- tpfin2 = gameStateSys:GetEntity("Fin2")
 
     tutTeleporter = gameStateSys:GetEntity("Tutorial")
+    tutTeleporter2 = gameStateSys:GetEntity("Tutorial 2")
     skiptutTeleporter = gameStateSys:GetEntity("Skip Tutorial")
     box2Spawn = gameStateSys:GetEntity("Box2Spawn")
 end
@@ -202,6 +208,11 @@ function Update()
             Helper.SetTranslate(cameraEntity, box2Spawn:GetTransform().mTranslate)
             travelBox = false
         end
+    elseif tutState == TutBox.THIRD then
+	if travelBox == true then
+	    Helper.SetTranslate(cameraEntity, box2Spawn:GetTransform().mTranslate)
+            travelBox = false
+    	end
     end
 
 --endregion
@@ -413,6 +424,9 @@ function OnTriggerEnter(Entity)
             gameStateSys:ChangeGameState("Test")
         elseif (generalComponent.name == tutTeleporter:GetGeneral().name) then
             tutState = TutBox.SECOND
+            travelBox = true
+        elseif (generalComponent.name == tutTeleporter2:GetGeneral().name) then
+            tutState = TutBox.THIRD
             travelBox = true
         end
     end
