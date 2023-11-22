@@ -1,7 +1,7 @@
 {
-    "entityid": 10485804,
+    "entityid": 1048614,
     "general": {
-        "name": "Tutorial Cube",
+        "name": "Obstacle",
         "tagid": 0,
         "subtag": 0,
         "isActive": true,
@@ -9,9 +9,9 @@
     },
     "transform": {
         "scale": {
-            "x": 296.29998779296875,
-            "y": 173.8000030517578,
-            "z": 260.8999938964844
+            "x": 146.6999969482422,
+            "y": 246.0,
+            "z": 130.0
         },
         "rotate": {
             "x": 0.0,
@@ -19,9 +19,9 @@
             "z": 0.0
         },
         "translate": {
-            "x": 9.699999809265137,
-            "y": 4.999000072479248,
-            "z": 48.70000076293945
+            "x": 115.69999694824219,
+            "y": 97.30000305175781,
+            "z": -365.0
         }
     },
     "meshrenderer": {
@@ -58,10 +58,7 @@
             4937
         ]
     },
-    "scripts": {
-        "scriptscontainer": []
-    },
     "prefab": {
-        "prefab": "Tutorial Cube"
+        "prefab": "Obstacle"
     }
 }

@@ -1,0 +1,43 @@
+{
+    "entityid": 1048617,
+    "general": {
+        "name": "Tutorial",
+        "tagid": 5,
+        "subtag": 0,
+        "isActive": true,
+        "isPaused": false
+    },
+    "transform": {
+        "scale": {
+            "x": 66.0,
+            "y": 62.0,
+            "z": 1.0
+        },
+        "rotate": {
+            "x": 0.0,
+            "y": -87.80000305175781,
+            "z": 0.0
+        },
+        "translate": {
+            "x": -335.4259948730469,
+            "y": 175.70399475097656,
+            "z": -405.1409912109375
+        }
+    },
+    "boxcollider": {
+        "scaleoffset": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+        },
+        "translateoffset": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "istrigger": false
+    },
+    "prefab": {
+        "prefab": "Tutorial"
+    }
+}

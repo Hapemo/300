@@ -122,6 +122,20 @@ bool GameStateManager::SceneExists(std::string const& _name) {
 	return false;
 }
 
+Entity GameStateManager::GetEntity(std::string const& _entityName) {
+	for (Scene& scene : mCurrentGameState.mScenes) {
+		// Find entity of same name and return
+		for (Entity e : scene.mEntities)
+			if (e.GetComponent<General>().name == _entityName) {
+				//LOG_CUSTOM("GAMESTATEMANAGER", "Get entity: \"" + std::to_string(e.id) + "\" from scene: " + scene.mName);
+				return e;
+			}
+	}
+	PWARNING("Unable to get entity: %s", _entityName.c_str());
+
+	return Entity();
+}
+
 Entity GameStateManager::GetEntity(std::string const& _entityName, std::string const& _sceneName) {
 	for (Scene& scene : mCurrentGameState.mScenes) {
 		// If scene is specified, skip those scenes that are not same name.

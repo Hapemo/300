@@ -6,7 +6,7 @@ end
 
 function Update()
     gameStateSys = systemManager:mGameStateSystem()
-    cameraEntity = gameStateSys:GetEntity("Camera", "testSerialization")
+    cameraEntity = gameStateSys:GetEntity("Camera")
     Camera_Scripting.SetPosition(cameraEntity, vec)
     Camera_Scripting.RotateCameraView(cameraEntity, vec2)
 end
