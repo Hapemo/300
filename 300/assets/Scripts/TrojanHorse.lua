@@ -1,12 +1,12 @@
 -- Variables for state
 local s1Timer           = 2
 local s1RoamVelocity    = Vec3.new()
-local roamSpeed         = 20
+local roamSpeed         = 2
 
 local s2Timer           = 0
 
 local s3SprintVelocity  = Vec3.new()
-local sprintSpeed       = 50
+local sprintSpeed       = 6
 local stareDirection    = Vec3.new()
 
 local s4Timer           = 0
@@ -43,12 +43,10 @@ function Alive()
     state = "ROAM"
     s1Timer           = 2
     s1RoamVelocity    = Vec3.new()
-    roamSpeed         = 20
     s2Timer           = 0
     s3SprintVelocity  = Vec3.new()
-    sprintSpeed       = 50
     s4Timer           = 0
-    
+
     deathTimerCount   = 0
 end
 

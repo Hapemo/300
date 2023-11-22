@@ -1,5 +1,5 @@
 -- Variables for state
-local speed             = 20
+local speed             = 1
 
 local s2Timer           = 0
 local s2TimerLimit      = 2 -- This should depend on the animation time period
