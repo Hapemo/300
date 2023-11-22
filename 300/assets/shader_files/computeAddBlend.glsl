@@ -24,7 +24,7 @@ void main()
 	vec3 result = vec3(1.0) - exp(-hdrColor * Exposure);
 
 	// gamma correction to SRGB
-	result = pow(result, vec3(1.0 / gamma));
+	//result = pow(result, vec3(1.0 / gamma));
 
 	// Blend the destination color and source color
 	// source and destination blend factor of GL_ONE

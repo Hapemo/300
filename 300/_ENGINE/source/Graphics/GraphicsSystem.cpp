@@ -95,7 +95,7 @@ void GraphicsSystem::Init()
 		m_ComputeCRTTimeLocation = m_ComputeCRTShader.GetUniformLocation("accumulationTime");
 		GFX::Shader::Deactivate();
 
-		m_ComputeAddBlendShader.CreateShaderFromFile("../assets/shader_files/computeCRT.glsl");
+		m_ComputeAddBlendShader.CreateShaderFromFile("../assets/shader_files/computeAddBlend.glsl");
 		m_ComputeAddBlendShader.Activate();
 		m_ComputeAddBlendExposureLocation = m_ComputeAddBlendShader.GetUniformLocation("Exposure");
 		GFX::Shader::Deactivate();
@@ -564,7 +564,11 @@ void GraphicsSystem::Draw(float dt, bool forEditor)
 			{
 				m_PhysBloomRenderer.PrepForDraw();
 				m_PhysBloomRenderer.RenderBloom(fbo->GetBrightColorsAttachment(), mFilterRadius);
+				m_ComputeAddBlendShader.Activate();
+				glUniform1f(m_ComputeAddBlendExposureLocation, mAmbientBloomExposure);
 				PostProcessing::AdditiveBlendFramebuffers(*fbo, fbo->GetColorAttachment(), m_PhysBloomRenderer.getBloomTexture());
+
+				m_ComputeAddBlendShader.Deactivate();
 			}
 
 			else

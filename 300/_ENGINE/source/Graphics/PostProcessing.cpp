@@ -5,32 +5,43 @@
 
 void PostProcessing::AdditiveBlendFramebuffers(GFX::FBO& targetFramebuffer, unsigned int Attachment0, unsigned int Attachment1)
 {
-	// additive blending blend function
-	glBlendFunc(GL_ONE, GL_ONE);
+	glBindImageTexture(0, targetFramebuffer.GetColorAttachment(), 0, GL_FALSE, 0, GL_READ_WRITE, GL_RGBA32F);
+	glBindImageTexture(1, Attachment0, 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
+	glBindImageTexture(2, Attachment1, 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
 
-	uid shaderstr("AdditiveBlendShader");
-	GFX::Shader& BlendShader = *systemManager->mResourceTySystem->get_Shader(shaderstr.id);
+	int num_group_x = glm::ceil(systemManager->GetGraphicsSystem()->m_Width / 29);
+	int num_group_y = glm::ceil(systemManager->GetGraphicsSystem()->m_Height / 29);
+	glDispatchCompute(num_group_x, num_group_y, 1);
+	// make sure writing to image is done before reading
+	glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT);
 
-	BlendShader.Activate();
-	targetFramebuffer.Bind();
 
-	// Draw to color attachment only. Otherwise might affect other attachments
-	glDrawBuffer(GL_COLOR_ATTACHMENT0);
+	//// additive blending blend function
+	//glBlendFunc(GL_ONE, GL_ONE);
 
-	glUniform1f(BlendShader.GetUniformLocation("Exposure"), systemManager->mGraphicsSystem->mAmbientBloomExposure);
-	glBindTexture(GL_TEXTURE_2D, Attachment0);									// bind the first attachment
-	glBindTexture(GL_TEXTURE_2D, Attachment1);									// bind the second attachment
+	//uid shaderstr("AdditiveBlendShader");
+	//GFX::Shader& BlendShader = *systemManager->mResourceTySystem->get_Shader(shaderstr.id);
 
-	{
-		systemManager->mGraphicsSystem->mScreenQuad.Bind();
+	//BlendShader.Activate();
+	//targetFramebuffer.Bind();
 
-		glDrawArrays(GL_TRIANGLES, 0, 6);
+	//// Draw to color attachment only. Otherwise might affect other attachments
+	//glDrawBuffer(GL_COLOR_ATTACHMENT0);
 
-		systemManager->mGraphicsSystem->mScreenQuad.Unbind();
-	}
+	//glUniform1f(BlendShader.GetUniformLocation("Exposure"), systemManager->mGraphicsSystem->mAmbientBloomExposure);
+	//glBindTexture(GL_TEXTURE_2D, Attachment0);									// bind the first attachment
+	//glBindTexture(GL_TEXTURE_2D, Attachment1);									// bind the second attachment
 
-	targetFramebuffer.Unbind();
-	BlendShader.Deactivate();
+	//{
+	//	systemManager->mGraphicsSystem->mScreenQuad.Bind();
+
+	//	glDrawArrays(GL_TRIANGLES, 0, 6);
+
+	//	systemManager->mGraphicsSystem->mScreenQuad.Unbind();
+	//}
+
+	//targetFramebuffer.Unbind();
+	//BlendShader.Deactivate();
 }
 
 
