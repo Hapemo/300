@@ -41,3 +41,4 @@ void LuaAIManager();
 void LuaButton();
 void LuaUIrenderer();
 void LuaAISetting();
+void LuaHealth();

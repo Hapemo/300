@@ -107,14 +107,6 @@ void GraphicsSystem::Init()
 		glBindImageTexture(5, m_IntermediateFBO.GetAlbedoSpecAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
 		glBindImageTexture(6, m_IntermediateFBO.GetEmissionAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
 	}
-
-	if (!m_EditorMode)	// If not running as editor
-	{
-		// Initialize the Draw Scene Shader
-		std::string drawSceneShader = "DrawSceneShader";
-		uid drawSceneShaderstr(drawSceneShader);
-		m_DrawSceneShaderInst = *systemManager->mResourceTySystem->get_Shader(drawSceneShaderstr.id);
-	}
 	
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
@@ -400,6 +392,7 @@ void GraphicsSystem::Update(float dt)
 
 	// UI Objects
 	m_Image2DMesh.ClearInstances();		// Clear data from previous frame
+	m_PortalMesh.ClearInstances();
 	m_Image2DStore.clear();
 	auto UiInstances = systemManager->ecs->GetEntitiesWith<UIrenderer>();
 	for (Entity inst : UiInstances)
@@ -424,12 +417,33 @@ void GraphicsSystem::Update(float dt)
 		if (uiRenderer.mTextureRef.getdata(systemManager->mResourceTySystem->m_ResourceInstance) != nullptr)
 			texID = reinterpret_cast<GFX::Texture*>(uiRenderer.mTextureRef.data)->ID();
 
-		Add2DImageInstance(uiWidth, uiHeight, uiPosition, texID, static_cast<int>(inst.id), uiRenderer.mDegree, uiRenderer.mColor);
+		if (uiRenderer.mWorldTransform)
+		{
+			Transform xform = uiTransform;
+			if (inst.HasParent())	// Compute parent's offset
+			{
+				vec3 parent_translate = Entity(inst.GetParent()).GetComponent<Transform>().mTranslate;
+
+				// Compute view to world
+				if (inst.GetParent().GetComponent<TAG>() == TAG::PLAYER)	// if parent is the Player
+				{
+					// view space --> world space
+					mat4 viewToWorld = glm::inverse(GetCameraViewMatrix(CAMERA_TYPE::CAMERA_TYPE_GAME));
+					xform.mTranslate = viewToWorld * vec4(uiTransform.mTranslate, 1.0);
+				}
+				else
+				{
+					xform.mTranslate += parent_translate;
+				}
+			}
+			Add2DImageWorldInstance(xform, texID, static_cast<int>(inst.id), uiRenderer.mDegree, uiRenderer.mColor);
+		}
+		else
+			Add2DImageInstance(uiWidth, uiHeight, uiPosition, texID, static_cast<int>(inst.id), uiRenderer.mDegree, uiRenderer.mColor);
 	}
 	// Send UI data to GPU. Portal uses the same mesh
 	m_Image2DMesh.PrepForDraw();
 
-	m_PortalMesh.ClearInstances();
 	auto portals = systemManager->ecs->GetEntitiesWith<Portal>();
 	for (Entity p : portals)
 	{
@@ -996,33 +1010,19 @@ void GraphicsSystem::GameDraw(float dt)
 	m_PingPongFbo.UnloadAndClear();
 }
 
-
-
-
-
-
 void GraphicsSystem::DrawGameScene()
 {
-	// Clear Default framebuffer
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);	// back to default framebuffer
-	glClearColor(0.0f, 1.0f, 1.0f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT);
-	glDisable(GL_DEPTH_TEST);				// Depth testing must be disabled!!
+	// Blit data from Game FBO to default FBO
+	glBindFramebuffer(GL_READ_FRAMEBUFFER, m_GameFbo.GetID());
+	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
 
-	// Activate shader program
-	m_DrawSceneShaderInst.Activate();
-	m_Image2DMesh.BindVao();										// Bind VAO
-	glBindTexture(GL_TEXTURE_2D, m_GameFbo.GetColorAttachment());	// Bind texture to be drawn
+	glReadBuffer(GL_COLOR_ATTACHMENT0);	// Read from color attachment
+	glDrawBuffer(GL_BACK);				// Draw to Front attachment for default FBO
 
-	glDrawArraysInstanced(GL_TRIANGLE_FAN, 0, 4, 1);				// DRAW
+	glBlitFramebuffer(0, 0, m_Width, m_Height, 0, 0, m_Width, m_Height, GL_COLOR_BUFFER_BIT, GL_NEAREST);
 
-	m_Image2DMesh.BindVao();										// Unbind VAO
-	glBindTexture(GL_TEXTURE_2D, 0);								// Unbind texture after drawing
-
-	// Deactivate shader program
-	m_DrawSceneShaderInst.Deactivate();
-
-	glEnable(GL_DEPTH_TEST);
+	glReadBuffer(GL_NONE);
+	glDrawBuffer(GL_NONE);
 }
 
 /***************************************************************************/
@@ -1219,57 +1219,6 @@ inline void drawViewFrustum(Entity gameCamera)
 	auto& camera = gameCamera.GetComponent<Camera>().mCamera;
 	systemManager->mGraphicsSystem->m_Renderer.AddFrustum(camera.viewProj(), vec4(1.f, 1.f, 0.5f, 1.f));
 	mat4 inv = glm::inverse(camera.mView);
-
-	//float halfHeight = tanf(glm::radians(camera.mFovDegree / 2.f));
-	//float halfWidth = halfHeight * camera.mAspectRatio;
-
-	//float near1 = camera.mNear;
-	//float far1 = camera.mFar;
-	//float xn = halfWidth * near1;
-	//float xf = halfWidth * far1;
-	//float yn = halfHeight * near1;
-	//float yf = halfHeight * far1;
-
-	//glm::vec4 f[8u] =
-	//{
-	//	// near face
-	//	{xn, yn,	-near1, 1.f},
-	//	{-xn, yn,	-near1, 1.f},
-	//	{xn, -yn,	-near1, 1.f},
-	//	{-xn, -yn,	-near1 , 1.f},
-
-	//	// far face
-	//	{xf, yf,	-far1, 1.f},
-	//	{-xf, yf,	-far1 , 1.f},
-	//	{xf, -yf,	-far1 , 1.f},
-	//	{-xf, -yf,	-far1, 1.f},
-	//};
-
-	//glm::vec3 v[8];
-	//for (int i = 0; i < 8; i++)
-	//{
-	//	vec4 ff = inv * f[i];
-	//	v[i].x = ff.x / ff.w;
-	//	v[i].y = ff.y / ff.w;
-	//	v[i].z = ff.z / ff.w;
-	//}
-
-	////glm::vec4 color = {1.f, 0.38f, 0.01f, 1.f};
-	//glm::vec4 color = {1.f, 1.f, 0.5f, 1.f};
-	//systemManager->mGraphicsSystem->m_Renderer.AddLine(v[0], v[1], color);
-	//systemManager->mGraphicsSystem->m_Renderer.AddLine(v[0], v[2], color);
-	//systemManager->mGraphicsSystem->m_Renderer.AddLine(v[3], v[1], color);
-	//systemManager->mGraphicsSystem->m_Renderer.AddLine(v[3], v[2], color);
-
-	//systemManager->mGraphicsSystem->m_Renderer.AddLine(v[4], v[5], color);
-	//systemManager->mGraphicsSystem->m_Renderer.AddLine(v[4], v[6], color);
-	//systemManager->mGraphicsSystem->m_Renderer.AddLine(v[7], v[5], color);
-	//systemManager->mGraphicsSystem->m_Renderer.AddLine(v[7], v[6], color);
-
-	//systemManager->mGraphicsSystem->m_Renderer.AddLine(v[0], v[4], color);
-	//systemManager->mGraphicsSystem->m_Renderer.AddLine(v[1], v[5], color);
-	//systemManager->mGraphicsSystem->m_Renderer.AddLine(v[3], v[7], color);
-	//systemManager->mGraphicsSystem->m_Renderer.AddLine(v[2], v[6], color);
 }
 
 
@@ -1722,6 +1671,24 @@ void GraphicsSystem::Add2DImageInstance(float width, float height, vec3 const& p
 	m_Image2DMesh.mTexEntID.push_back(vec4((float)texIndex + 0.5f, (float)entityID + 0.5f, degree, 0));
 }
 
+void GraphicsSystem::Add2DImageWorldInstance(Transform transform, unsigned texHandle, unsigned entityID, float degree, vec4 const& color)
+{
+	mat4 S = glm::scale(transform.mScale);
+	mat4 R = glm::toMat4(glm::quat(glm::radians(transform.mRotate)));
+	mat4 T = glm::translate(transform.mTranslate);
+
+	mat4 world = T * R * S;
+
+	int texIndex{};
+	if (texHandle > 0)
+		texIndex = StoreTextureIndex(texHandle);
+	else
+		texIndex = -2;
+
+	m_PortalMesh.mLTW.push_back(world);
+	m_PortalMesh.mColors.push_back(color);
+	m_PortalMesh.mTexEntID.push_back(vec4((float)texIndex + 0.5f, (float)entityID + 0.5f, degree, 0));
+}
 int GraphicsSystem::StoreTextureIndex(unsigned texHandle)
 {
 	if (m_Image2DStore.size() >= 32)
@@ -1792,7 +1759,15 @@ void GraphicsSystem::AddHealthbarInstance(Entity e, const vec3& camPos, unsigned
 	mat4 world = rotate * scale;
 
 	// Update colors
-	vec4 healthColor = vec4(healthbar.mHealthColor.x, healthbar.mHealthColor.y, healthbar.mHealthColor.z, healthbar.mHealth);
+	float healthbarRatio{};
+	if (healthbar.mMaxHealth == 0) {
+		healthbarRatio = 0;
+		PWARNING("Max health of an enemy is 0, should not be!")
+	} else {
+		healthbarRatio = (healthbar.mHealth/healthbar.mMaxHealth) * 100.f;
+		healthbarRatio = healthbarRatio < 0 ? 0 : healthbarRatio; // Cap healthbar ratio min to 0
+	}
+	vec4 healthColor = vec4(healthbar.mHealthColor.x, healthbar.mHealthColor.y, healthbar.mHealthColor.z, healthbarRatio);
 	m_HealthbarMesh.mColors.push_back(healthColor);
 	m_HealthbarMesh.mTexEntID.push_back(healthbar.mBackColor);
 	// Update LTW matrix
