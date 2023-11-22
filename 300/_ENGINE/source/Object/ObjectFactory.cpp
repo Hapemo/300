@@ -93,21 +93,25 @@ void ObjectFactory::LoadScene(Scene* scene, const std::string& filename)
 	for (Entity pe : parent_cont)
 	{
 		//need to check if entity came from this scene!!!!
+		if (!scene->HasEntity(pe)) continue;
 		Parent& parent = pe.GetComponent<Parent>();
-		if (idMap.count((entt::entity)parent.mNextSibling) == 0) //quick fix
-			continue;
+		
 		parent.mNextSibling = entt::to_integral(idMap[(entt::entity)parent.mNextSibling]);
 		parent.mParent = entt::to_integral(idMap[(entt::entity)parent.mParent]);
 		parent.mPrevSibling = entt::to_integral(idMap[(entt::entity)parent.mPrevSibling]);
+		parent.mPrevSibling = parent.mPrevSibling;
 	}
 
 	for (Entity ce : child_cont)
 	{
 		//need to check if entity came from this scene!!!!
+		if (!scene->HasEntity(ce)) continue;
+
 		Children& child = ce.GetComponent<Children>();
 		if (idMap.count((entt::entity)child.mFirstChild) == 0) //quick fix
 			continue;
 		child.mFirstChild = entt::to_integral(idMap[(entt::entity)child.mFirstChild]);
+		child.mFirstChild = child.mFirstChild;
 	}
 }
 

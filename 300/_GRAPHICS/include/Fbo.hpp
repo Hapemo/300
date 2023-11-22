@@ -128,7 +128,7 @@ Destructor of the FBO class. Deletes the resources allocated on the GPU
 			glDeleteTextures(1, &mBrightColorsAttachment);
 		}
 
-	private:
+	public:
 		unsigned int mID{};							// Framebuffer Object ID
 		unsigned int mRboID{};						// Renderbuffer Object ID
 		unsigned int mColorAttachment{};			// Color Attachment of scene

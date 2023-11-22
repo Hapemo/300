@@ -27,6 +27,8 @@
 #include <Ssbo.hpp>
 #include <ComputeShader.hpp>
 
+#include <Graphics/PostProcessing.h>
+
 /***************************************************************************/
 /*!
 \brief
@@ -97,7 +99,7 @@ public:
 	/**************************************************************************/
 	void Update(float dt);
 
-	void Draw(bool forEditor = false);
+	void Draw(float dt, bool forEditor = false);
 
 	/***************************************************************************/
 	/*!
@@ -114,23 +116,6 @@ public:
 	*/
 	/**************************************************************************/
 	void EditorDraw(float dt);
-
-	/***************************************************************************/
-	/*!
-	\brief
-		the additive draw function isolated to the editor's framebuffer
-	*/
-	/**************************************************************************/
-	void AdditiveBlendFramebuffers( GFX::FBO& targetFramebuffer, unsigned int Attachment0, unsigned int Attachment1);
-
-
-	/***************************************************************************/
-	/*!
-	\brief
-		the additive blend function for the chromatic abbrebation
-	*/
-	/**************************************************************************/
-	void ChromaticAbbrebationBlendFramebuffers(GFX::FBO& targetFramebuffer, unsigned int Attachment1);
 
 
 	/***************************************************************************/
@@ -171,6 +156,7 @@ public:
 		Getters
 	*/
 	/**************************************************************************/
+	GFX::Camera GetCamera(CAMERA_TYPE type);
 	vec3 GetCameraPosition(CAMERA_TYPE type);
 	vec3 GetCameraTarget(CAMERA_TYPE type);
 	vec3 GetCameraDirection(CAMERA_TYPE type);			// Direction vector of the camera (Target - position)
@@ -253,12 +239,14 @@ public:
 // 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// -- Renderer --
-	GFX::DebugRenderer		m_Renderer;			// isolated to debug draws
-	GFX::FBO				m_Fbo;				// Editor Scene
-	GFX::FBO				m_GameFbo;			// Game Scene
-	GFX::MsFBO				m_MultisampleFBO;	// Multisample FBO
-	GFX::IntermediateFBO	m_IntermediateFBO;	// Intermediate FBO
-	GFX::PingPongFBO		m_PingPongFbo;		// Post Processing
+	GFX::DebugRenderer			m_Renderer;				// isolated to debug draws
+	GFX::FBO					m_Fbo;					// Editor Scene
+	GFX::FBO					m_GameFbo;				// Game Scene
+	GFX::MsFBO					m_MultisampleFBO;		// Multisample FBO
+	GFX::IntermediateFBO		m_IntermediateFBO;		// Intermediate FBO
+	GFX::PingPongFBO			m_PingPongFbo;			// Post Processing
+	PhysBasedBloomRenderer		m_PhysBloomRenderer;	// Bloom
+
 
 	// -- Window --
 	GFX::Window*		m_Window;
@@ -277,13 +265,17 @@ public:
 	float		mAmbientBloomExposure{ 0.4f };						
 	float		mTexelOffset{ 1.f };							// Gaussian blur Ver1						
 	float		mSamplingWeight{ 1.f };							// Gaussian blur Ver1/2
+	float		mFilterRadius{ 0.001f };						// Phys Based Bloom
+
+	BloomType	mBloomType{ BloomType::PHYS_BASED_BLOOM };		// defaults to Phys based bloom
 
 	// -- Chromatic Abbreation --
 	float		mChromaticOffset{ 0.006f };
 	float		mChromaticStrength{ 1.f };
 
-	bool		m_EnableBloom{ true };									// this yj
-	bool		m_EnableChromaticAbberation{ true };					// this yj
+	bool		m_EnableBloom{ true };									
+	bool		m_EnableChromaticAbberation{ true };					
+	bool		m_EnableCRT{ false };						// this yj
 
 	// -- Textures --
 	std::vector<int> m_Textures;	// 0, 1, ..., 31
@@ -296,6 +288,7 @@ public:
 	GFX::Shader m_AnimationShaderInst;
 	GFX::Shader m_GBufferShaderInst;
 	GFX::Shader m_DeferredLightShaderInst;
+	GFX::Shader m_Quad3DShaderInst;
 
 	// -- Flags --
 	int		m_DebugDrawing{ 0 };			// debug drawing 
@@ -309,6 +302,13 @@ public:
 
 	// -- Stats --
 	int		m_LightCount{};
+
+	// -- 2D Image Rendering --
+	GFX::Mesh						m_Image2DMesh;
+	GFX::Mesh						m_HealthbarMesh;
+	GFX::Mesh						m_PortalMesh;
+	std::vector<unsigned>			m_Image2DStore;
+	GFX::Quad2D						mScreenQuad;
 
 	void Unload();
 
@@ -329,18 +329,13 @@ private:
 
 	void SetupShaderStorageBuffers();		// Creates all SSBO required
 
-	// -- 2D Image Rendering --
-	GFX::Mesh						m_Image2DMesh;
-	GFX::Mesh						m_HealthbarMesh;
-	std::vector<unsigned>			m_Image2DStore;
-	GFX::Quad2D						mScreenQuad;
-
 	void DrawAll2DInstances(unsigned shaderID);
 	void Add2DImageInstance(float width, float height, vec3 const& position, unsigned texHandle, unsigned entityID = 0xFFFFFFFF, float degree = 0.f, vec4 const& color = vec4{ 1.f, 1.f, 1.f, 1.f });
+	void Add2DImageWorldInstance(Transform transform, unsigned texHandle, unsigned entityID = 0xFFFFFFFF, float degree = 0.f, vec4 const& color = vec4{ 1.f, 1.f, 1.f, 1.f });
 	int StoreTextureIndex(unsigned texHandle);
 
 	// -- Health Bar --
-	void AddHealthbarInstance(const Healthbar& healthbar, const vec3& camPos, unsigned entityID = 0xFFFFFFFF);
+	void AddHealthbarInstance(Entity e, const vec3& camPos, unsigned entityID = 0xFFFFFFFF);
 	void DrawAllHealthbarInstance(const mat4& viewProj);
 	GLint m_HealthbarViewProjLocation{};
 
@@ -354,7 +349,7 @@ private:
 
 	// -- Deferred Lighting WIP --
 	void DrawDeferredLight(const vec3& camPos, GFX::FBO& destFbo);
-	void BlitMultiSampleToDestinationFBO(GFX::FBO& destFbo, bool editorFlag = false);
+	void BlitMultiSampleToDestinationFBO(GFX::FBO& destFbo);
 	GLint m_DeferredCamPosLocation{};
 	GLint m_DeferredLightCountLocation{};
 
@@ -366,9 +361,20 @@ private:
 	GLint m_ComputeDeferredLightCountLocation{};
 	GLint m_ComputeDeferredGlobalBloomLocation{};
 
+	GFX::ComputeShader m_ComputeCRTShader;
+	GLint m_ComputeCRTTimeLocation{};
+
+	GFX::ComputeShader m_ComputeAddBlendShader;
+	GLint m_ComputeAddBlendExposureLocation{};
+
 	// -- Shader Setup --
 	void SetupAllShaders();
-	mat4 GetPortalViewMatrix(mat4 const& sourceView, mat4 const& source, mat4 const& dest);
+
+	// -- Portal WIP --
+	mat4 GetPortalViewMatrix(GFX::Camera const& camera, Transform const& sourcePortal, Transform const& destPortal);
+	mat4 ObliqueNearPlaneClipping(mat4 proj, mat4 view, Transform const& srcPortal, Transform const& destPortal);
+	void AddPortalInstance(Entity portal);
+	void DrawAllPortals(bool editorDraw);
 };
 
 #endif

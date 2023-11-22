@@ -88,6 +88,7 @@ void Scene::Save() {
 
 void Scene::Unload() {
 	//LOG_CUSTOM("SCENE", "Unloading Scene: " + mName);
+	systemManager->mGraphicsSystem->Unload();
 
 	decltype(mEntities) tempEntities = mEntities;
 	std::vector<Entity> parents;
@@ -136,11 +137,15 @@ void Scene::RemoveChildFromScene(Entity _e) {
 void Scene::RemoveEntity(Entity _e) {
 	// if (_e.GetComponent<General>().isActive) _e.Deactivate(); // Temporary remove - Han
 	//RemoveChildFromScene(_e);
-	systemManager->mGraphicsSystem->Unload();
 
 	mEntities.erase(_e);
 	systemManager->ecs->DeleteEntity(_e);
 	PINFO("Removed Entity (%s) from Scene (%s)", std::to_string(static_cast<int>(_e.id)).c_str(), mName.c_str());
+}
+
+bool Scene::HasEntity(Entity e)
+{
+	return mEntities.contains(e);
 }
 
 bool Scene::IsError() {

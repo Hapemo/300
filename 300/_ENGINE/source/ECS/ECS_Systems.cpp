@@ -17,7 +17,7 @@
 
 SystemManager *systemManager;
 
-SystemManager::SystemManager()
+SystemManager::SystemManager() : mIsQuit(false)
 {
 	mPhysicsSystem = std::make_unique<PhysicsSystem>();
 	mScriptingSystem = std::make_unique<ScriptingSystem>();
@@ -90,7 +90,12 @@ void SystemManager::Pause()
 {
 	mIsPlay = false; 
 	mGraphicsSystem->PauseGlobalAnimation();
-	mAudioSystem->Pause(); 
+	if (!mAudioSystem->sys_paused)
+	{
+		mAudioSystem->TogglePause();
+		mAudioSystem->sys_paused = true;
+	}
+	
 }
 
 void SystemManager::Play()
@@ -99,8 +104,11 @@ void SystemManager::Play()
 	mPhysicsSystem.get()->Init();
 	mGraphicsSystem->UnpauseGlobalAnimation();
 	mGameStateSystem->mCurrentGameState.Save();
-	//mAudioSystem.get()->PlayOnAwake();
-	//mAudioSystem.get()->system_paused = false;
+	if (mAudioSystem->sys_paused)
+	{
+		mAudioSystem->TogglePause();
+		mAudioSystem->sys_paused = false;
+	}
 }
 
 void SystemManager::Update(float dt)
@@ -109,14 +117,15 @@ void SystemManager::Update(float dt)
 	mGraphicsSystem.get()->Update(dt);
 	mGameStateSystem.get()->UpdateNextGSMState();
 	if (mIsEditor)
-		mGraphicsSystem.get()->Draw(true);
-	mGraphicsSystem.get()->Draw();
+		mGraphicsSystem.get()->Draw(dt, true);
+	mGraphicsSystem.get()->Draw(dt);
 	if (!mIsEditor)
 		mGraphicsSystem.get()->DrawGameScene();
 	EnginePerformance::EndTrack("Graphics");
 	EnginePerformance::UpdateSystemMs("Graphics");
 
 	TestPathfinderManager();
+
 
 	// To Test (Uncomment)
 	//EnginePerformance::StartTrack("Audio");
@@ -137,12 +146,18 @@ void SystemManager::Update(float dt)
 	EnginePerformance::UpdateSystemMs("Scripting");
 
 	EnginePerformance::StartTrack("Audio");
-	mAudioSystem.get()->Update(dt);					// [10/26] Inclusion of 3D Audio -> must always be after (Positional Update) 
+	mAudioSystem.get()->Update(dt, false);					// [10/26] Inclusion of 3D Audio -> must always be after (Positional Update) 
 	EnginePerformance::EndTrack("Audio");
 	EnginePerformance::UpdateSystemMs("Audio");
 	//	mResourceSystem.get()->Update();
 	
 	ecs->DeleteEntityUpdate();
+}
+
+void SystemManager::Quit()
+{
+	Exit();
+	mIsQuit = true;
 }
 
 void SystemManager::Exit()

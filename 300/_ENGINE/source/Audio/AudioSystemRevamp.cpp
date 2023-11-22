@@ -60,14 +60,27 @@ void AudioSystem::Init()
 	- Decides whether if an audio is going to be played.
  */
  /******************************************************************************/
-void AudioSystem::Update([[maybe_unused]] float dt)
+void AudioSystem::Update([[maybe_unused]] float dt, bool calling_from_pause)
 {
-	sys_paused = false; // the fact that it goes in here means its unpaused
+	if(!sys_paused && !calling_from_pause)
+		ClearFinishedSounds(); // only do this when the system is running
 
 	auto audio_entities = systemManager->ecs->GetEntitiesWith<Audio>();
 
 	auto listener_entity = systemManager->ecs->GetEntitiesWith<AudioListener>(); // There will only be '1' <AudioListenr> object
 
+	/*auto transform_entities = systemManager->ecs->GetEntitiesWith<Transform>();
+
+	for (Entity e : transform_entities)
+	{
+		Transform& trans = e.GetComponent<Transform>();
+		General& gen = e.GetComponent<General>();
+
+		if (gen.name == "gun")
+			int hi = 4;
+
+		int hi = 3;
+	}*/
 	// Listener Stuff
 	if (listener_entity.size() == 1) // if there is no listeners. skip this portion
 	{
@@ -117,7 +130,7 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 		}
 
 		// Update 3D Channel Attributes (moving objects)
-		//if (audio_component.m3DAudio)
+		if (audio_component.m3DAudio)
 		{
 			FMOD::Channel* chn_ptr = GetChannelPointer(audio_component.mAudioType, audio_component.mChannelID);
 			
@@ -134,26 +147,6 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 			transform.mPreviousPosition = transform.mTranslate;
 		}
 
-		// For Debugging
-		if (audio_component.mFileName == "(3D) cruising-down-8bit-lane-159615.mp3")
-		{
-			FMOD::Channel* chn_ptr = GetChannelPointer(audio_component.mAudioType, audio_component.mChannelID);
-
-			if (chn_ptr != nullptr)
-			{
-				chn_ptr->getVolume(&audio_component.mVolume); // the volume doesnt update siah
-			}
-		}
-	
-
-		//uid channel_id = audio_component.mChannelID;
-		//int hi = 3;
-
-		//if (pause_state) // was set to pause before resuming...
-		//{
-		//	if (audio_component.mState == Audio::PAUSED)
-		//		audio_component.mNextActionState = Audio::RESUME;
-		//}
 
 		// On Awake Play (Check once only)
 		if (audio_component.mState == Audio::STARTUP)
@@ -208,6 +201,7 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 						audio_component.mNextActionState = Audio::INACTIVE;
 						audio_component.mCurrentlyPlaying = audio_component.mFileName; // for info display in editor.
 
+						audio_component.mListOfChannelIDs.push_back(audio_component.mChannelID); // push an instance of the audio where the channel is being played
 					}
 
 					else
@@ -269,17 +263,39 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 
 		case Audio::PLAYING:
 			// Check if the current sound has finished playing...
-			if (!IsChannelPlaying(audio_component.mChannelID, audio_component.mAudioType))	// If finished playing...
+
+			// [11/20] Supporting multiple audio instances
+			for (auto it = audio_component.mListOfChannelIDs.begin(); it != audio_component.mListOfChannelIDs.end();)
 			{
-				audio_component.mState = Audio::FINISHED;
+				uid channel_id = *it;
+
+				if (!IsChannelPlaying(channel_id, audio_component.mAudioType))
+				{ 
+					audio_component.mState = Audio::FINISHED;
+					NullChannelPointer(audio_component.mAudioType, channel_id);
+					PINFO("DONE PLAYING");
+					//std::cout << "DONE PLAYING" << std::endl;
+
+					// Remove the finished channel ID from the vector
+					it = audio_component.mListOfChannelIDs.erase(it);
+					if (it != audio_component.mListOfChannelIDs.end() && it != audio_component.mListOfChannelIDs.begin())
+					{
+						--it; // Adjust the iterator to stay at the current position after erasing
+					}
+				}
+
+				else
+				{
+					++it;
+				}
 			}
 			break;
 
 		case Audio::PAUSED:
-			if (sys_was_paused && !sys_paused) // Systme Unpaused + System was paused (pause button use case)
-			{
-				audio_component.mNextActionState = Audio::SET_TO_RESUME;
-			}
+			//if (sys_was_paused && !sys_paused) // Systme Unpaused + System was paused (pause button use case)
+			//{
+			//	audio_component.mNextActionState = Audio::SET_TO_RESUME;
+			//}
 			break;
 		case Audio::STOPPED:
 			break;
@@ -307,21 +323,43 @@ void AudioSystem::Update([[maybe_unused]] float dt)
 	//sys_was_paused = false; 
 }
 
-void AudioSystem::Pause()
+void AudioSystem::TogglePause()
 {
-	sys_paused = true;
-	sys_was_paused = true;
 	auto audio_entities = systemManager->ecs->GetEntitiesWith<Audio>();
+	bool once = false;
 
 	for (Entity audio : audio_entities)
 	{
 		Audio& audio_component = audio.GetComponent<Audio>();
 
-		audio_component.mState = Audio::PAUSED;
+		// Pause Loop
+		if (audio_component.mState != Audio::INACTIVE)
+		{
+			if (audio_component.mState == Audio::PLAYING)
+			{
+				audio_component.mNextActionState = Audio::SET_TO_PAUSE; // will set the state to PAUSED ltr in update loop
+			}
+		}
 
+		if (sys_paused)
+		{
+			if(audio_component.mState == Audio::PAUSED)
+				audio_component.mNextActionState = Audio::SET_TO_RESUME;
+		}
 	}
 
-	PauseAllSounds();
+	Update(static_cast<float>(FPSManager::dt), true); // Update (once to pause)
+
+	/*switch (pause_state)
+	{
+		case Audio::PAUSED:
+			PauseAllSounds();
+			break;
+		case Audio::PLAYING:
+			UnpauseAllSounds();
+			break;
+	}*/
+
 }
 
 
@@ -512,6 +550,7 @@ unsigned int AudioSystem::PlaySound(std::string audio_name, AUDIOTYPE type, floa
 	/*Transform& ent_transform = entity.GetComponent<Transform>();
 	Audio& ent_audio = entity.GetComponent<Audio>();*/
 
+
 	for (auto& channel : mChannels[type])
 	{
 		FMOD::Sound* current_sound;
@@ -519,20 +558,20 @@ unsigned int AudioSystem::PlaySound(std::string audio_name, AUDIOTYPE type, floa
 
 		FMOD::Sound* sound = FindSound(audio_name);
 
-	
+
 		if (!current_sound)
 		{
 			system_obj->playSound(sound, 0, true, &channel.second);
 			channel.second->setVolume(vol);
-		
+
 			if (audio_component->m3DAudio)
 			{
 				PINFO("SETTING 3D MIN MAX SETTINGS");
 				channel.second->set3DMinMaxDistance(audio_component->mMinDistance, audio_component->mMaxDistance);
 			}
-			
+
 			channel.second->setPaused(false);
-			
+
 
 			// [3D Sounds] - Intializing 3D audio information to FMOD.
 			//if (audio_component->m3DAudio)
@@ -547,10 +586,10 @@ unsigned int AudioSystem::PlaySound(std::string audio_name, AUDIOTYPE type, floa
 			//	channel.second->set3DMinMaxDistance(audio_component->mMinDistance, audio_component->mMaxDistance);
 			//}
 
-		
+
 			return (unsigned int)(channel.first);
 		}
-		
+
 	}
 
 	return 0; // failed.
@@ -835,6 +874,70 @@ bool AudioSystem::FadeOut(Entity id, float dt)
 	return false;
 }
 
+void AudioSystem::ClearFinishedSounds()
+{
+	system_obj->update(); 
+
+	for (auto& channel_pair : mChannels[AUDIO_SFX])
+	{
+		FMOD::Sound* current_sound;
+		channel_pair.second->getCurrentSound(&current_sound);
+
+		if (current_sound)  // not empty..
+		{
+			bool playing = false;
+			channel_pair.second->isPlaying(&playing);
+
+			bool paused = false;
+			channel_pair.second->getPaused(&paused);
+
+			// Check if paused ... then we don't clear this channel
+			if (paused)
+			{
+				continue;
+			}
+
+			// Passed "pause" check, now we check if it's playing , if it isn't we clear the channel for other audio to use.
+			if (!playing)
+			{
+				channel_pair.second = nullptr;
+			}
+		}
+
+	/*	else
+		{
+
+		}*/
+	}
+
+	for (auto& channel_pair : mChannels[AUDIO_BGM])
+	{
+		FMOD::Sound* current_sound;
+		channel_pair.second->getCurrentSound(&current_sound);
+
+		if (current_sound)  // not empty..
+		{
+			bool playing = false;
+			channel_pair.second->isPlaying(&playing);
+
+			bool paused = false;
+			channel_pair.second->getPaused(&paused);
+
+			// Check if paused ... then we don't clear this channel
+			if (paused)
+			{
+				continue;
+			}
+
+			// Passed "pause" check, now we check if it's playing , if it isn't we clear the channel for other audio to use.
+			if (!playing)
+			{
+				channel_pair.second = nullptr;
+			}
+		}
+	}
+}
+
 bool AudioSystem::IsChannelPlaying(uid id, AUDIOTYPE type)
 {
 	std::vector<std::pair<uid, FMOD::Channel*>> sfx_or_bgm = mChannels[type];
@@ -914,6 +1017,22 @@ FMOD::Channel* AudioSystem::GetChannelPointer(AUDIOTYPE audio_type, uid channel_
 	}
 
 	return nullptr;
+}
+
+void AudioSystem::NullChannelPointer(AUDIOTYPE audio_type, uid channel_id)
+{
+	auto it = mChannels.find(audio_type);
+
+	if (it != mChannels.end())
+	{
+		for (auto& channel_pair : it->second)
+		{
+			if (channel_pair.first == channel_id)
+			{
+				channel_pair.second = nullptr;
+			}
+		}
+	}
 }
 
 

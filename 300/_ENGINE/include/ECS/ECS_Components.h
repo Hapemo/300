@@ -181,6 +181,7 @@ struct UIrenderer : public Serializable
 	vec4								mColor{ 1.f, 1.f, 1.f, 1.f };
 	float								mDegree;
 	int									mLayer;
+	bool								mWorldTransform;
 
 
 	inline unsigned ID() 
@@ -197,6 +198,7 @@ struct UIrenderer : public Serializable
 	{
 		mDegree = degree;
 	}
+	void SetTexture(const std::string& Texturename);
 	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
 	void DeserializeSelf(rapidjson::Value& reader);
 };
@@ -463,10 +465,10 @@ struct Audio : public Serializable
 
 	// This is okay - because it's just editing data (use through component)
 
-	void SetPlay(float vol = 1.0f)
+	void SetPlay(/*float vol = 1.0f*/)
 	{
 		mNextActionState = STATE::SET_TO_PLAY;
-		mVolume = vol;
+		//mVolume = vol;
 	}
 
 	void SetPause() // Interface for Script
@@ -531,7 +533,8 @@ struct Audio : public Serializable
 	float		   mTypeChanged = false;				 // [For Editor] - trigger type change
 
 	// Q. Can a <Audio> entity have their very own channel.
-	uid            mChannelID;							 // Channel ID (this is being played in which channel...) 
+	uid              mChannelID;						 // Channel ID (this is being played in which channel...) 
+	std::vector<uid> mListOfChannelIDs;				     // What if there's multiple instances of such an audio
 
 	// Fade Volume Stuff
 	float fade_timer = 0.0f;							 // How long the fade has elapsed
@@ -683,7 +686,6 @@ struct AISetting : public Serializable {
 	float mElevation;								// For flying enemy, vertical distance to stay away from player
 	std::string mTargetName;				// Name of target (Will be searching via gamestate, not scene)
 	std::string mGraphDataName;			// Graph data of AI
-	float mBobberingIntensity;			// For flying enemy, determine if they wanna bobber while flying
 
 	void Inspect();
 	Entity GetTarget() { return mTarget; }
@@ -695,7 +697,6 @@ struct AISetting : public Serializable {
 
 private: 
 	Entity mTarget;									// AI's target
-	float mBobberAngle;							// Keeping track of entity's bobbering angle
 };
 
 /******************************************************************************/
@@ -738,23 +739,28 @@ struct Healthbar : public Serializable
 {
 	glm::vec4 mHealthColor	{ 0.f, 1.f, 0.f, 1.f };
 	glm::vec4 mBackColor	{ 1.f, 0.f, 0.f, 1.f };
-	glm::vec3 mPosition		{ 0.f, 0.f, 0.f };
+	glm::vec3 mPosition;
 	float mWidth			{ 5.f };
 	float mHeight			{ 2.f };
-	float mHealth			{ 100.f };
+	float mMaxHealth;
+	float mHealth;
 
 	void Inspect();
 	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
 	void DeserializeSelf(rapidjson::Value& reader);
 };
 
-struct Portal : public Serializable
+struct Portal
 {
 	// Serialize these
-	Transform transform1{};
-	Transform transform2{};
+	glm::vec3 mTranslate1{};
+	glm::vec3 mTranslate2{};
 
-	// Do not Serialize these
-	vec4 plane1{};		// Plane of portal 1
-	vec4 plane2{};		// Plane of portal 2
+	glm::vec3 mScale1{};
+	glm::vec3 mScale2{};
+
+	glm::vec3 mRotate1{};
+	glm::vec3 mRotate2{};
+
+	void Inspect();
 };

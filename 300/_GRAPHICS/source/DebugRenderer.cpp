@@ -23,6 +23,7 @@ GFX::DebugRenderer::DebugRenderer()
 	SetupAabbMesh();
 	SetupCubeMesh();
 	SetupSphereMesh();
+	SetupFrustumMesh();
 }
 
 GFX::DebugRenderer::~DebugRenderer()
@@ -35,6 +36,7 @@ GFX::DebugRenderer::~DebugRenderer()
 	mAabbMesh.Destroy();
 	mCubeMesh.Destroy();
 	mSphereMesh.Destroy();
+	mFrustumMesh.Destroy();
 
 	mShader.DestroyShader();
 }
@@ -234,6 +236,12 @@ void GFX::DebugRenderer::AddCapsule(vec3 const& camPos, vec3 const& center1, vec
 	AddSphere(camPos, center2, radius, color);
 }
 
+void GFX::DebugRenderer::AddFrustum(mat4 const& frustumVp, vec4 color)
+{
+	mFrustumMesh.mLTW.push_back(glm::inverse(frustumVp));
+	mFrustumMesh.mColors.push_back(color);
+}
+
 void GFX::DebugRenderer::RenderAll(mat4 viewProj)
 {
 	if (mPointMesh.mLTW.size())
@@ -250,6 +258,8 @@ void GFX::DebugRenderer::RenderAll(mat4 viewProj)
 		RenderAllCube(viewProj);
 	if (mSphereMesh.mLTW.size())
 		RenderAllSphere(viewProj);
+	if (mFrustumMesh.mLTW.size())
+		RenderAllFrustum(viewProj);
 }
 
 void GFX::DebugRenderer::ClearInstances()
@@ -261,6 +271,7 @@ void GFX::DebugRenderer::ClearInstances()
 	mAabbMesh.ClearInstances();
 	mCubeMesh.ClearInstances();
 	mSphereMesh.ClearInstances();
+	mFrustumMesh.ClearInstances();
 }
 
 void GFX::DebugRenderer::SetupShader()
@@ -423,6 +434,31 @@ void GFX::DebugRenderer::SetupSphereMesh()
 	mSphereMesh.Setup(positions, indices, std::vector<vec2>{}, 4);
 }
 
+void GFX::DebugRenderer::SetupFrustumMesh()
+{
+	std::vector<vec3> positions
+	{
+		vec3(-1.f,  1.f,  1.f),		// Top left near
+		vec3(-1.f, -1.f,  1.f),		// Bottom left near
+		vec3(1.f, -1.f,  1.f),		// Bottom right near
+		vec3(1.f,  1.f,  1.f),		// Top right near
+		vec3(-1.f,  1.f, -1.f),		// Top left far
+		vec3(-1.f, -1.f, -1.f),		// Bottom left far
+		vec3(1.f, -1.f, -1.f),		// Bottom right far
+		vec3(1.f,  1.f, -1.f)		// Top right far
+	};
+
+	std::vector<GLuint> indices
+	{
+		0, 1, 2, 3,
+		0, 4, 5, 1,
+		2, 6, 7, 4,
+		5, 6, 7, 3
+	};
+
+	mFrustumMesh.Setup(positions, indices);
+}
+
 void GFX::DebugRenderer::RenderAllPoints(mat4 const& viewProj)
 {
 	// Attach shader to state
@@ -568,4 +604,25 @@ void GFX::DebugRenderer::RenderAllSphere(mat4 const& viewProj)
 
 	mShader.Deactivate();
 	mSphereMesh.UnbindVao();
+}
+
+void GFX::DebugRenderer::RenderAllFrustum(mat4 const& viewProj)
+{
+	// Attach shader to state
+	mShader.Activate();
+
+	// Bind VAO to pipeline
+	mFrustumMesh.BindVao();
+
+	// Attach data to vbo
+	mFrustumMesh.PrepForDraw();
+
+	// Set uniform
+	glUniformMatrix4fv(mShader.GetUniformVP(), 1, GL_FALSE, &viewProj[0][0]);
+
+	// Draw
+	glDrawElementsInstanced(GL_LINE_LOOP, mFrustumMesh.GetIndexCount(), GL_UNSIGNED_INT, nullptr, static_cast<GLsizei>(mFrustumMesh.mLTW.size()));
+
+	mShader.Deactivate();
+	mFrustumMesh.UnbindVao();
 }

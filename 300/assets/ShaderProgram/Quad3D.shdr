@@ -1,0 +1,7 @@
+[
+    {
+        "ShaderProgram": "Quad3D",
+        "Vertex": "../assets/shader_files/Quad3D_vert.glsl",
+        "Fragment": "../assets/shader_files/UI_frag.glsl"
+    }
+]

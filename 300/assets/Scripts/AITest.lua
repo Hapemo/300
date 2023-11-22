@@ -35,6 +35,9 @@ end
 
 function Update()
 
+    -- Set variable from another script
+    --Helper.SetFloatVarFromOtherScript_Scene("Camera", "testSerialization", "../assets/Scripts/Player.lua", "testingSet", 3.25)
+
     -- Get AISetting function
     --entity2 = aiComp:GetTargetConst();
     --aiComp:SetTarget(entity);
@@ -48,9 +51,7 @@ function Update()
     --floorEntity = gameStateSys:GetEntity("Floor")
 
     --AI TEST--
-
     -- Must call this before calling AISystem functions
-    
     -- vec = Vec3.new(50,0,50)
     vec = aiSys:GetDirection(entity)
     entity:GetTransform().mRotate.y = Helper.DirectionToAngle(vec)

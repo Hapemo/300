@@ -172,6 +172,8 @@
     <ClInclude Include="include\GameState\Scene.h" />
     <ClInclude Include="include\Graphics\Camera_Input.h" />
     <ClInclude Include="include\Graphics\GraphicsSystem.h" />
+    <ClInclude Include="include\Graphics\ParticleSystem.h" />
+    <ClInclude Include="include\Graphics\PostProcessing.h" />
     <ClInclude Include="include\Input\Input.h" />
     <ClInclude Include="include\Input\InputMapSystem.h" />
     <ClInclude Include="include\Multithread.h" />
@@ -184,9 +186,12 @@
     <ClInclude Include="include\Physics\PhysX.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="include\ECS\ECS_Components.cpp" />
     <ClCompile Include="source\AI\PathfinderManager.cpp" />
     <ClCompile Include="source\Audio\AudioSystemRevamp.cpp" />
     <ClCompile Include="source\Button\ButtonSystem.cpp" />
+    <ClCompile Include="source\Graphics\ParticleSystem.cpp" />
+    <ClCompile Include="source\Graphics\PostProcessing.cpp" />
     <ClCompile Include="source\Physics\ContactCallback.cpp" />
     <ClCompile Include="source\Physics\PhysXUtils.cpp" />
     <ClCompile Include="source\AI\AIManager.cpp" />

@@ -95,7 +95,7 @@ void GFX::FBO::Clear()
 	// Clear Default color attachment
 	glDrawBuffer(GL_COLOR_ATTACHMENT0);
 	glClearColor(.2f, .2f, .2f, 1.f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
 	// Clear Bright Colors Attachment
 	glDrawBuffer(GL_COLOR_ATTACHMENT2);
@@ -164,21 +164,6 @@ void GFX::PingPongFBO::Create(int width, int height)
 {
 	mWidth = width;
 	mHeight = height;
-
-	//glGenFramebuffers(2, pingpongFBO);
-	//glGenTextures(2, pingpongColorbuffers);
-	//for (unsigned int i{}; i < 2; ++i)
-	//{
-	//	glBindFramebuffer(GL_FRAMEBUFFER, pingpongFBO[0]);
-	//	glBindTexture(GL_TEXTURE_2D, pingpongColorbuffers[i]);
-	//	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, width, height, 0, GL_RGBA, GL_FLOAT, NULL);
-	//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	//	glFramebufferTexture2D( GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, pingpongColorbuffers[i], 0 );
-	//}
-
 
 	// Create and bind framebuffer
 	glGenFramebuffers(1, &pingpongFBO);

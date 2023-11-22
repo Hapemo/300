@@ -28,6 +28,9 @@
     <ClCompile Include="source\AI\PathfinderManager.cpp" />
     <ClCompile Include="source\Reflection\Reflection.cpp" />
     <ClCompile Include="source\Audio\AudioSystemRevamp.cpp" />
+    <ClCompile Include="include\ECS\ECS_Components.cpp" />
+    <ClCompile Include="source\Graphics\PostProcessing.cpp" />
+    <ClCompile Include="source\Graphics\ParticleSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Audio\AudioType.h" />
@@ -70,5 +73,7 @@
     <ClInclude Include="include\AI\PathfinderManager.h" />
     <ClInclude Include="include\Reflection\Reflection.h" />
     <ClInclude Include="include\Audio\AudioSystemRevamp.h" />
+    <ClInclude Include="include\Graphics\PostProcessing.h" />
+    <ClInclude Include="include\Graphics\ParticleSystem.h" />
   </ItemGroup>
 </Project>

@@ -1,0 +1,537 @@
+[
+    {
+        "entityid": 2097178,
+        "general": {
+            "name": "ZipBomb",
+            "tagid": 1,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.7550002336502075,
+                "y": 0.7549988627433777,
+                "z": 0.24360503256320953
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.3610000014305115,
+                "z": 0.34200000762939453
+            },
+            "translate": {
+                "x": 3.6465346813201904,
+                "y": -10.216910362243652,
+                "z": -15.40556526184082
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 1,
+            "velocity": {
+                "x": 17.040250778198242,
+                "y": -17.984424591064453,
+                "z": -10.304134368896484
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": false,
+                "z": false
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 2561,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/ZipBomb_BaseColor.ctexture",
+                "../assets/Compressed/ZipBomb_Normal.ctexture",
+                "../assets/Compressed/ZipBomb_Metallic.ctexture",
+                "../assets/Compressed/ZipBomb_Roughness.ctexture",
+                "../assets/Compressed/ZipBomb_Emissive.ctexture",
+                "../assets/Compressed/ZipBomb_AO.ctexture"
+            ],
+            "mesh": "../assets/compiled_geom/ZipBomb.geom",
+            "texturerefid": [
+                4543,
+                4270,
+                4464,
+                4611,
+                4490,
+                3797
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/ZipBomb.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "prefab": {
+            "prefab": "ZipBomb"
+        },
+        "aisetting": {
+            "movementtype": 2,
+            "spreadout": 0.0,
+            "stayaway": 0.0,
+            "elevation": 0.0,
+            "targetname": "player",
+            "graphdataname": "FlyingGraphJazzTest"
+        }
+    },
+    {
+        "entityid": 2097179,
+        "general": {
+            "name": "TrojanHorse",
+            "tagid": 1,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.7087522149085999,
+                "y": 1.2886407375335693,
+                "z": 1.4175045490264893
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": -0.0000022740748590877047,
+                "z": 3.1415927410125732
+            },
+            "translate": {
+                "x": 5.356176853179932,
+                "y": -10.75171947479248,
+                "z": -16.37542152404785
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 1,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": false,
+                "z": false
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 2492,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Trojan_Default_BaseColor.ctexture",
+                "../assets/Compressed/Trojan_Normal.ctexture",
+                "../assets/Compressed/Trojan_Metallic.ctexture",
+                "../assets/Compressed/Trojan_Roughness.ctexture",
+                "../assets/Compressed/Trojan_Default_Emissive.ctexture",
+                "../assets/Compressed/Trojan_AO.ctexture"
+            ],
+            "mesh": "../assets/compiled_geom/Trojan.geom",
+            "texturerefid": [
+                5278,
+                4201,
+                4395,
+                4542,
+                5225,
+                3728
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/TrojanHorse.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "prefab": {
+            "prefab": "TrojanHorse"
+        },
+        "aisetting": {
+            "movementtype": 1,
+            "spreadout": 0.0,
+            "stayaway": 0.0,
+            "elevation": 0.0,
+            "targetname": "player",
+            "graphdataname": ""
+        }
+    },
+    {
+        "entityid": 2097180,
+        "general": {
+            "name": "ILOVEYOU",
+            "tagid": 1,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.097214937210083,
+                "y": 1.097224235534668,
+                "z": 0.4577629864215851
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 1.9589999914169312,
+                "z": 0.1420000046491623
+            },
+            "translate": {
+                "x": 2.33837628364563,
+                "y": -10.471951484680176,
+                "z": -16.293365478515625
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 1,
+            "velocity": {
+                "x": -12.324732780456543,
+                "y": -11.139036178588867,
+                "z": -15.685152053833008
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": false,
+                "z": false
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 2108,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 0.29556649923324585,
+                "z": 0.29556649923324585,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/ILY_BaseColor.ctexture",
+                "../assets/Compressed/ILY_Normal.ctexture",
+                "../assets/Compressed/ILY_Metallic.ctexture",
+                "../assets/Compressed/ILY_Roughness.ctexture",
+                "../assets/Compressed/ILY_Emissive.ctexture",
+                "../assets/Compressed/ILY_AO.ctexture"
+            ],
+            "mesh": "../assets/compiled_geom/ILY.geom",
+            "texturerefid": [
+                4090,
+                3817,
+                4011,
+                4158,
+                4037,
+                3344
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/ILOVEYOU.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "prefab": {
+            "prefab": "ILOVEYOU"
+        },
+        "aisetting": {
+            "movementtype": 2,
+            "spreadout": 0.0,
+            "stayaway": 100.0,
+            "elevation": 20.0,
+            "targetname": "player",
+            "graphdataname": "FlyingGraphJazzTest"
+        }
+    },
+    {
+        "entityid": 2097181,
+        "general": {
+            "name": "Melissa",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.5500003099441528,
+                "y": 1.9333767890930176,
+                "z": 0.8008583784103394
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": -0.02354247309267521,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.00667573744431138,
+                "y": -11.029329299926758,
+                "z": -16.246864318847656
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 1,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": false,
+                "z": false
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 2588,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Melissa_BaseColor.ctexture",
+                "../assets/Compressed/Melissa_Normal.ctexture",
+                "../assets/Compressed/Melissa_Metallic.ctexture",
+                "../assets/Compressed/Melissa_Roughness.ctexture",
+                "../assets/Compressed/Melissa_Emissive.ctexture",
+                "../assets/Compressed/Melissa_AO.ctexture"
+            ],
+            "mesh": "../assets/compiled_geom/Melissa.geom",
+            "texturerefid": [
+                4570,
+                4297,
+                4491,
+                4638,
+                4517,
+                3824
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Melissa"
+        },
+        "aisetting": {
+            "movementtype": 1,
+            "spreadout": 0.0,
+            "stayaway": 0.0,
+            "elevation": 0.0,
+            "targetname": "player",
+            "graphdataname": "FlyingGraphJazzTest"
+        }
+    },
+    {
+        "entityid": 2097182,
+        "general": {
+            "name": "TrojanSoldier",
+            "tagid": 1,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.10000020265579224,
+                "y": 0.16989222168922424,
+                "z": 0.10000020265579224
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 89.80000305175781,
+                "z": 0.041999999433755875
+            },
+            "translate": {
+                "x": 6.178221702575684,
+                "y": -10.910388946533203,
+                "z": -16.90349769592285
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 1,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": false,
+                "z": false
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3309,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Trojan_Soldier_BaseColor.ctexture",
+                "../assets/Compressed/Trojan_Soldier_Normal.ctexture",
+                "../assets/Compressed/Trojan_Soldier_Metallic.ctexture",
+                "../assets/Compressed/Trojan_Soldier_Roughness.ctexture",
+                "../assets/Compressed/Trojan_Soldier_Emissive.ctexture",
+                "../assets/Compressed/Trojan_Soldier_AO.ctexture"
+            ],
+            "mesh": "../assets/compiled_geom/Trojan_Soldier.geom",
+            "texturerefid": [
+                5291,
+                5018,
+                5212,
+                5359,
+                5238,
+                4545
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "TrojanSoldier"
+        },
+        "aisetting": {
+            "movementtype": 1,
+            "spreadout": 0.0,
+            "stayaway": 0.0,
+            "elevation": 0.0,
+            "targetname": "player",
+            "graphdataname": ""
+        }
+    }
+]

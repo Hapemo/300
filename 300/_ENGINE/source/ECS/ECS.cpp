@@ -11,7 +11,7 @@
 #include "ResourceManagerTy.h"
 #include "AI/AIManager.h"
 
-std::vector<std::string> ECS::mEntityTags({ "PLAYER", "ENEMY", "BULLET", "FLOOR", "WALL", "TELEPORTER", "UI", "GRAPH"});
+std::vector<std::string> ECS::mEntityTags({ "PLAYER", "ENEMY", "BULLET", "FLOOR", "WALL", "TELEPORTER", "UI", "GRAPH", "OTHERS"});
 
 bool Entity::ShouldRun() {
 	assert(HasComponent<General>() && std::string("There is no general component when attempting to change Entity's isActive").c_str());
@@ -152,7 +152,9 @@ void ECS::DeleteEntity(Entity e)
 			e.RemoveChild(child);
 	if (e.HasComponent<Prefab>())
 		UnlinkPrefab(e);
-	systemManager->mAISystem->RemoveAIFromEntity(e);
+	if (e.HasComponent<Scripts>())
+		e.GetComponent<Scripts>().RunFunctionForAllScripts("Dead");
+	
 	systemManager->mPhysicsSystem->RemoveActor(e);
 	registry.destroy(e.id);
 }
@@ -220,6 +222,25 @@ Entity ECS::NewEntityFromPrefab(std::string prefabName, const glm::vec3& pos)
 	// creation of new entity done inside deserializescene function
 	Entity e(ObjectFactory::DeserializePrefab("../assets/Prefabs/" + prefabName + ".prefab"));
 	systemManager->mGameStateSystem->mCurrentGameState.mScenes[0].mEntities.insert(e);
+	//copy all prefab components (except transform) to new entity
+	//General temp1 = e.GetComponent<General>();
+	//MeshRenderer temp = e.GetComponent<MeshRenderer>();
+	e.GetComponent<Transform>().mTranslate = pos;
+	PASSERT(static_cast<uint32_t>(e.id) != 0);
+	e.GetComponent<Scripts>().LoadForAllScripts((int)e.id);
+	e.GetComponent<Scripts>().RunFunctionForAllScripts("Alive");
+
+	if (e.HasComponent<RigidBody>())
+		systemManager->mPhysicsSystem->AddEntity(e);
+	return e;
+}
+
+Entity ECS::NewEntityFromPrefabScene(std::string prefabName,int prefabscene, const glm::vec3& pos)
+{
+	// void ObjectFactory::DeserializeScene(const std::string& filename)
+	// creation of new entity done inside deserializescene function
+	Entity e(ObjectFactory::DeserializePrefab("../assets/Prefabs/" + prefabName + ".prefab"));
+	systemManager->mGameStateSystem->mCurrentGameState.mScenes[prefabscene].mEntities.insert(e);
 	//copy all prefab components (except transform) to new entity
 	//General temp1 = e.GetComponent<General>();
 	//MeshRenderer temp = e.GetComponent<MeshRenderer>();
@@ -421,6 +442,7 @@ std::vector<Entity> Entity::GetAllChildren()
 {
 	if (!this->HasComponent<Children>())
 		return {};
+	std::string name = this->GetComponent<General>().name;
 	Children child = this->GetComponent<Children>();
 	std::vector<Entity> children;
 	children.push_back(child.mFirstChild);

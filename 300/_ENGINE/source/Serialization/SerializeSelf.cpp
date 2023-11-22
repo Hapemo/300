@@ -363,7 +363,6 @@ void AISetting::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& 
 	Serialize(writer, "elevation", mElevation);
 	Serialize(writer, "targetname", mTargetName);
 	Serialize(writer, "graphdataname", mGraphDataName);
-	Serialize(writer, "bobberingintensity", mBobberingIntensity);
 	writer.EndObject();
 }
 
@@ -375,7 +374,6 @@ void AISetting::DeserializeSelf(rapidjson::Value& reader)
 	Deserialize(reader, "elevation", mElevation);
 	Deserialize(reader, "targetname", mTargetName);
 	Deserialize(reader, "graphdataname", mGraphDataName);
-	Deserialize(reader, "bobberingintensity", mBobberingIntensity);
 }
 
 void Crosshair::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
@@ -403,7 +401,8 @@ void Healthbar::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& 
 	writer.StartObject();
 	Serialize(writer, "healthcolor", mHealthColor);
 	Serialize(writer, "backcolor", mBackColor);
-	Serialize(writer, "health", mHealth);
+	Serialize(writer, "position", mPosition);
+	Serialize(writer, "maxhealth", mMaxHealth);
 	Serialize(writer, "width", mWidth);
 	Serialize(writer, "height", mHeight);
 	writer.EndObject();
@@ -413,7 +412,9 @@ void Healthbar::DeserializeSelf(rapidjson::Value& reader)
 {
 	Deserialize(reader, "healthcolor", mHealthColor);
 	Deserialize(reader, "backcolor", mBackColor);
-	Deserialize(reader, "health", mHealth);
+	Deserialize(reader, "position", mPosition);
+	Deserialize(reader, "maxhealth", mMaxHealth);
+	Deserialize(reader, "maxhealth", mHealth);
 	Deserialize(reader, "width", mWidth);
 	Deserialize(reader, "height", mHeight);
 }

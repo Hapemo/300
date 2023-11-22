@@ -29,6 +29,7 @@ class SystemManager {
 	GFX::Window *mWindow;
 	bool mIsEditor;
 	bool mIsPlay;
+	bool mIsQuit;
 public:
 	std::unique_ptr<PhysicsSystem> mPhysicsSystem;
 	std::unique_ptr<ScriptingSystem> mScriptingSystem;
@@ -82,12 +83,15 @@ public:
 	Update all systems.
 	*******************************************************************************/
 	void Update(float dt);
+	void Quit();
 	/*!*****************************************************************************
 	Cleaning up before exiting.
 	*******************************************************************************/
 	void Exit();
 
 	bool isSystemPaused() {return !mIsPlay; }
+
+	bool IsQuit() { return mIsQuit; }
 	
 	void DeleteEntity(Entity e);
 	PhysicsSystem *GetPhysicsPointer();

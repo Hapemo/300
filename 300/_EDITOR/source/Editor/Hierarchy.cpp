@@ -126,7 +126,7 @@ void Hierarchy::update() {
                 if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_PREFAB")) {
                     auto data = (const char*)payload->Data;
                     std::string newdata(data);
-                    Entity newent = systemManager->ecs->NewEntityFromPrefab(newdata, glm::vec3());
+                    Entity newent = systemManager->ecs->NewEntityFromPrefabScene(newdata,i, glm::vec3());
                     
                 }
                 ImGui::EndDragDropTarget();

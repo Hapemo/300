@@ -185,6 +185,10 @@ void Inspect::update()
 			button.Inspect();
 		}
 
+		if (ent.HasComponent<Portal>()) {
+			Portal& portal = ent.GetComponent<Portal>();
+			portal.Inspect();
+		}
 		//--------------------------------------------// must be at the LAST OF THIS LOOP
 		Add_component(); 
 	}
@@ -294,6 +298,11 @@ void Inspect::Add_component() {
 		if (ImGui::Selectable("Button")) {
 			if (!Entity(Hierarchy::selectedId).HasComponent<Button>())
 				Entity(Hierarchy::selectedId).AddComponent<Button>();
+		}
+
+		if (ImGui::Selectable("Portal")) {
+			if (!Entity(Hierarchy::selectedId).HasComponent<Portal>())
+				Entity(Hierarchy::selectedId).AddComponent<Portal>();
 		}
 
 		ImGui::EndCombo();
@@ -440,7 +449,9 @@ void Camera::Inspect()
 
 void PointLight::Inspect()
 {
-	if (ImGui::CollapsingHeader("PointLight", ImGuiTreeNodeFlags_DefaultOpen))
+	bool delete_component = true;
+
+	if (ImGui::CollapsingHeader("PointLight", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
 	{
 		ImGui::Text("Color");
 		ImGui::SameLine();
@@ -466,9 +477,10 @@ void PointLight::Inspect()
 		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
 			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
 		ImGui::DragFloat("##Intensity", (float*)&mIntensity, 0.1f);
-
-
 	}
+
+	if (delete_component == false)
+		Entity(Hierarchy::selectedId).RemoveComponent<PointLight>();
 }
 /***************************************************************************/
 /*!
@@ -1505,6 +1517,8 @@ void UIrenderer::Inspect() {
 		ImGui::DragInt("##Layer", (int*)&mLayer);
 		ImGui::Separator();
 
+		ImGui::Checkbox("World Transform", &mWorldTransform);
+
 		ImGui::ColorPicker4("Color", (float*)&mColor);
 	}
 
@@ -1546,9 +1560,6 @@ void AISetting::Inspect() {
 
 			ImGui::Text("Vertical Elevation From Target");
 			ImGui::DragFloat("##Vertical Elevation From Target", &mElevation);
-
-			ImGui::Text("Bobbering Intensity");
-			ImGui::DragFloat("##Bobbering Intensity", &mBobberingIntensity);
 		}
 		ImGui::Separator();
 
@@ -1563,6 +1574,9 @@ void AISetting::Inspect() {
 
 		if (ImGui::Button("Update Target"))
 			mTarget = systemManager->mGameStateSystem->GetEntity(mTargetName);
+
+		if (ImGui::Button("Make Target The Global Player"))
+			systemManager->GetAIManager()->SetPlayer(mTarget);
 
 		if (mTargetName.size())
 			ImGui::InputText("Pathfinder Name", &mGraphDataName);
@@ -1683,11 +1697,11 @@ void Healthbar::Inspect()
 		ImGui::DragFloat("##Height", (float*)&mHeight);
 		ImGui::Separator();
 
-		ImGui::Text("Health");
+		ImGui::Text("Max Health");
 		ImGui::SameLine();
 		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
 			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
-		ImGui::DragFloat("##Health", (float*)&mHealth);
+		ImGui::DragFloat("##Max Health", (float*)&mMaxHealth);
 		ImGui::Separator();
 
 		ImGui::Text("Offset");
@@ -1718,4 +1732,59 @@ void Button::Inspect()
 	}
 	if (delete_component == false)
 		Entity(Hierarchy::selectedId).RemoveComponent<Button>();
+}
+
+void Portal::Inspect()
+{
+	bool delete_component = true;
+
+	if (ImGui::CollapsingHeader("Portal", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
+	{
+		ImGui::Selectable("Portal   ");
+
+		ImGui::Text("Position 1");
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		ImGui::DragFloat3("##Position 1", (float*)&mTranslate1[0]);
+		ImGui::Separator();
+
+		ImGui::Text("Scale 1");
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		ImGui::DragFloat3("##Scale 1", (float*)&mScale1[0]);
+		ImGui::Separator();
+
+		ImGui::Text("Rotate 1");
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		ImGui::DragFloat3("##Rotate 1", (float*)&mRotate1[0]);
+		ImGui::Separator();
+
+		ImGui::Text("Position 2");
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		ImGui::DragFloat3("##Position 2", (float*)&mTranslate2[0]);
+		ImGui::Separator();
+
+		ImGui::Text("Scale 2");
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		ImGui::DragFloat3("##Scale 2", (float*)&mScale2[0]);
+		ImGui::Separator();
+
+		ImGui::Text("Rotate 2");
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		ImGui::DragFloat3("##Rotate 2", (float*)&mRotate2[0]);
+		ImGui::Separator();
+	}
+
+	if (delete_component == false)
+		Entity(Hierarchy::selectedId).RemoveComponent<Portal>();
 }
