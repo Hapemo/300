@@ -340,6 +340,7 @@ function Update()
         if(e_dashEffect == true)then
             dashEffect()
             dashAudioComp:SetPlay(0.4)
+            print("DASH")
           
             e_dashEffect = false
         end
@@ -568,7 +569,7 @@ function Update()
                     viewVecCam.z=viewVecCam.z *100
 
                     physicsSys:SetVelocity(prefabEntity, viewVecCam)
-                    bulletAudioComp:SetPlay(0.1)
+                    bulletAudioComp:SetPlay(0.3)
 
                     revolverGunTimer = revolverGunTimer + revolverGunCooldown
                     -- print("GUN TIMER:" ,revolverGunTimer)
@@ -590,7 +591,7 @@ function Update()
 
                     shotgunShootState = "COOLDOWN"
 
-                    bulletAudioComp:SetPlay(0.1)
+                    bulletAudioComp:SetPlay(0.3)
                 end
             end
         end
@@ -629,7 +630,7 @@ function Update()
                 machineGunBullets()
     
                 if(machineGunTimer <= 0) then
-                    bulletAudioComp:SetPlay(0.1)
+                    bulletAudioComp:SetPlay(0.3)
                     machineGunTimer = machineGunCooldown  -- Set the cooldown timer
                end
                machineGunTimer = math.max(0, machineGunTimer - dt)  -- deltaTime is the time since the last fra
