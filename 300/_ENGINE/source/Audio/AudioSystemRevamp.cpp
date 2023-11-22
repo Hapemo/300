@@ -367,24 +367,47 @@ void AudioSystem::Reset()
 {   
 	auto audio_entities = systemManager->ecs->GetEntitiesWith<Audio>();
 
+	std::list<Audio*> persisting_audio;
+
 	for (Entity audio : audio_entities)
 	{
-		Audio& audio_component = audio.GetComponent<Audio>();
+		Audio* audio_component = &audio.GetComponent<Audio>();
 
-		audio_component.mState = Audio::STARTUP;		    // Set to intiail startup state.
-		audio_component.mNextActionState = Audio::INACTIVE; // Set to do nothing (reset)
+		if (!audio_component->mGameStateRetain) // only for those that won't survive till next state
+		{
+			audio_component->mState = Audio::STARTUP;		    // Set to intiail startup state.
+			audio_component->mNextActionState = Audio::INACTIVE; // Set to do nothing (reset)
+		}
+
+		else
+		{
+			persisting_audio.push_back(audio_component);
+		}
 	}
 
 	// Stop all channels (must do it here)
 	for (auto& channel_pair : mChannels[AUDIO_BGM])
 	{
-		FMOD::Sound* sound = nullptr;
-		channel_pair.second->getCurrentSound(&sound);
-		
-		if(sound != nullptr)
-		{	
-			channel_pair.second->stop();
-			channel_pair.second = nullptr;
+		for (Audio* persist : persisting_audio)
+		{
+			if (channel_pair.first == persist->mChannelID) // skip stopping this audio
+			{
+				continue;
+			}
+
+			else
+			{
+				FMOD::Sound* sound = nullptr;
+				channel_pair.second->getCurrentSound(&sound);
+
+				if (sound != nullptr)
+				{
+					channel_pair.second->stop();
+					channel_pair.second = nullptr;
+				}
+			}
+			
+			
 		}
 	}
 
