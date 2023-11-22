@@ -1,7 +1,7 @@
 {
-    "entityid": 10485804,
+    "entityid": 28311603,
     "general": {
-        "name": "Tutorial Cube",
+        "name": "Platform",
         "tagid": 0,
         "subtag": 0,
         "isActive": true,
@@ -9,9 +9,9 @@
     },
     "transform": {
         "scale": {
-            "x": 296.29998779296875,
-            "y": 173.8000030517578,
-            "z": 260.8999938964844
+            "x": 5.5,
+            "y": 6.0,
+            "z": 21.0
         },
         "rotate": {
             "x": 0.0,
@@ -19,9 +19,9 @@
             "z": 0.0
         },
         "translate": {
-            "x": 9.699999809265137,
-            "y": 4.999000072479248,
-            "z": 48.70000076293945
+            "x": 10.294550895690918,
+            "y": 0.6894070506095886,
+            "z": 0.0
         }
     },
     "meshrenderer": {
@@ -58,10 +58,7 @@
             4937
         ]
     },
-    "scripts": {
-        "scriptscontainer": []
-    },
     "prefab": {
-        "prefab": "Tutorial Cube"
+        "prefab": "Platform"
     }
 }

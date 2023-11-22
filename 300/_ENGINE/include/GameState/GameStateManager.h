@@ -109,7 +109,8 @@ public:
 	\return Entity
 	- Entity found. Returns error entity with id 0 if not found.
 	*******************************************************************************/
-	Entity GetEntity(std::string const& _entityName, std::string const& _sceneName = "");
+	Entity GetEntity(std::string const& _entityName);
+	Entity GetEntity(std::string const& _entityName, std::string const& _sceneName);
 
 	//----------------------------------
 	// Editor only functionalities

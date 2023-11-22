@@ -20,11 +20,11 @@ function Update()
     --testEntity = systemManager.ecs:NewEntityByScene();
 
     -- Get Entity exisiting in scene by name example
-    --floorEntity = gameStateSys:GetEntity("Floor", "Test1")
+    --floorEntity = gameStateSys:GetEntity("Floor")
 
     --AI TEST--
     if inputSys:GetKeyDown(79) then -- press O
-        player = gameStateSys:GetEntity("Player", "JazzTestScene")
+        player = gameStateSys:GetEntity("Player")
         
         aiSys:PredictiveShootPlayer(entity, 80.0, 10, 0)
         -- aiSys:SetPredictiveVelocity(entity, player, 80.0)
