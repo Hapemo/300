@@ -27,7 +27,7 @@ function Alive()
 
     bobbleAngle = 0
     bobbleFrequency = 2
-    bobbleIntensity = 10
+    bobbleIntensity = 0.5
 
     AttackSpeed = 1
     AttackTimer = 0
@@ -76,7 +76,7 @@ function ILOVEYOUMovement()
     vec = aiSys:GetDirection(this)
     this:GetTransform().mRotate.y = Helper.DirectionToAngle(this, vec)
 
-    Helper.Scale(vec, 20)
+    Helper.Scale(vec, 1)
 
     -- Add bobbling here
     bobbleAngle = bobbleAngle + bobbleFrequency
@@ -89,7 +89,7 @@ function ILOVEYOUMovement()
         local x = targetPos.x - thisPos.x
         local z = targetPos.z - thisPos.z
         local distDiff = Helper.Vec2Len(x,z) - this:GetAISetting().mStayAway
-        if -10 < distDiff and distDiff < 10 then
+        if -0.5 < distDiff and distDiff < 0.5 then
             vec.x = 0
             vec.z = 0
         end

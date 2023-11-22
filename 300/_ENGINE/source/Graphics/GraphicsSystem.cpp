@@ -109,8 +109,8 @@ void GraphicsSystem::Init()
 		glBindImageTexture(6, m_IntermediateFBO.GetEmissionAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
 	}
 	
-	glEnable(GL_CULL_FACE);
-	glCullFace(GL_BACK);
+	//glEnable(GL_CULL_FACE);
+	//glCullFace(GL_BACK);
 
 	// Set Cameras' starting position
 	SetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR, {38, 20, 30});									// Position of camera
@@ -1027,8 +1027,7 @@ void GraphicsSystem::DrawGameScene()
 
 	glBlitFramebuffer(0, 0, m_Width, m_Height, 0, 0, m_Width, m_Height, GL_COLOR_BUFFER_BIT, GL_NEAREST);
 
-	glReadBuffer(GL_NONE);
-	glDrawBuffer(GL_NONE);
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
 /***************************************************************************/
@@ -1743,7 +1742,7 @@ void GraphicsSystem::AddHealthbarInstance(Entity e, const vec3& camPos, unsigned
 	vec3 originPos = e.GetComponent<Transform>().mTranslate;
 
 	// Compute the rotation vectors
-	vec3 normal = camPos - healthbar.mPosition;
+	vec3 normal = camPos - originPos;
 	vec3 up = { 0, 1, 0 };
 	vec3 right = glm::cross(up, normal);
 	vec3 forward = glm::cross(right, normal);
@@ -2078,6 +2077,9 @@ void GraphicsSystem::ComputeDeferredLight(bool editorDraw)
 	glDispatchCompute(num_group_x, num_group_y, 1);
 	// make sure writing to image is done before reading
 	glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT);
+
+	glBindImageTexture(0, 0, 0, GL_FALSE, 0, GL_READ_WRITE, GL_RGBA32F);
+	glBindImageTexture(1, 0, 0, GL_FALSE, 0, GL_WRITE_ONLY, GL_RGBA32F);
 
 	computeDeferred.Deactivate();
 }

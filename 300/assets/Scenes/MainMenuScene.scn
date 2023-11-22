@@ -71,7 +71,8 @@
                 "z": 1.0,
                 "w": 1.0
             },
-            "layer": 1
+            "layer": 1,
+            "worldtransform": false
         },
         "scripts": {
             "scriptscontainer": [
@@ -134,7 +135,8 @@
                 "z": 1.0,
                 "w": 1.0
             },
-            "layer": 1
+            "layer": 1,
+            "worldtransform": false
         },
         "scripts": {
             "scriptscontainer": [
@@ -197,7 +199,8 @@
                 "z": 1.0,
                 "w": 1.0
             },
-            "layer": 1
+            "layer": 1,
+            "worldtransform": false
         },
         "scripts": {
             "scriptscontainer": [
@@ -260,7 +263,8 @@
                 "z": 1.0,
                 "w": 1.0
             },
-            "layer": 0
+            "layer": 0,
+            "worldtransform": false
         }
     },
     {
@@ -338,7 +342,7 @@
             },
             "size": {
                 "x": 1303,
-                "y": 634
+                "y": 638
             },
             "near": 0.10000000149011612,
             "far": 900.0
