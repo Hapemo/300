@@ -48,7 +48,7 @@ public:
 	static void RotateCameraView(Entity cameraEntity, const vec2& cursorposition);
 
 	// Math
-	vec3 Cross(vec3 const& u, vec3 const& v) { return glm::cross(u, v); }
+	static vec3 Cross(vec3 const& u, vec3 const& v) { return glm::cross(u, v); }
 
 };
 

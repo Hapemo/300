@@ -141,6 +141,8 @@ local up_vector = Vec3.new()
 --This variable is to be set in another script
 --testingSet = 5.0
 
+local world_local_right_vector
+
 function Alive()
     gameStateSys = systemManager:mGameStateSystem();
     inputMapSys = systemManager:mInputActionSystem();
@@ -847,7 +849,7 @@ function moreAccurateShotgun()
     up_vector.y = 1
     up_vector.z = 0
 
-    local world_local_right_vector = Camera_Scripting:Cross(viewVec, up_vector) -- get vector pointing to rightwards of player
+    world_local_right_vector = Camera_Scripting.Cross(viewVec, up_vector) -- get vector pointing to rightwards of player
     print("HI")
 
 
