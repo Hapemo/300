@@ -419,6 +419,11 @@ void Camera::Inspect()
 			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
 		ImGui::DragFloat("##FOV", &mCamera.mFovDegree, 0.2f, GFX::CameraConstants::minFOV, GFX::CameraConstants::maxFOV);
 
+		if (ImGui::Button("Reset FOV"))
+		{
+			mCamera.mFovDegree = GFX::CameraConstants::defaultFOV;
+		}
+
 		ImGui::Text("Far Plane");
 		ImGui::SameLine();
 		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()

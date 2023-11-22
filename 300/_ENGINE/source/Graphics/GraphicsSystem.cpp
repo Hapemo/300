@@ -115,7 +115,7 @@ void GraphicsSystem::Init()
 	// Set Cameras' starting position
 	SetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR, {38, 20, 30});									// Position of camera
 	SetCameraTarget(CAMERA_TYPE::CAMERA_TYPE_EDITOR, {0, 0, 0});									// Target of camera
-	SetCameraProjection(CAMERA_TYPE::CAMERA_TYPE_ALL, 60.f, m_Window->size(), 0.1f, 900.f);			// Projection of camera
+	SetCameraProjection(CAMERA_TYPE::CAMERA_TYPE_ALL, GFX::CameraConstants::defaultFOV, m_Window->size(), 0.1f, 900.f);			// Projection of camera
 
 	if (m_EditorMode)
 	{
@@ -543,10 +543,52 @@ void GraphicsSystem::Draw(float dt, bool forEditor)
 
 	// Compute the light pass with completed G-Buffers
 	ComputeDeferredLight(forEditor);
-	glEnable(GL_BLEND);			// Enable back blending for later draws
-
+	
+	// UI Area
 	{
-		// Post Processing Area
+		glEnable(GL_BLEND);			// Enable back blending for later draws
+
+		// Set blend function back to usual for UI rendering
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+		// Bind the appropriate FBO
+		if (forEditor)		// Bind Editor FBO
+		{
+			m_Fbo.Bind();
+			m_Fbo.DrawBuffers(true, true);
+		}
+		else				// Bind Game FBO
+		{
+			m_GameFbo.Bind();
+			m_GameFbo.DrawBuffers(true);
+		}
+
+		DrawAllPortals(forEditor);	// Draw Portal object
+
+		// Render UI objects
+		m_UiShaderInst.Activate();		// Activate shader
+		DrawAll2DInstances(m_UiShaderInst.GetHandle());
+		GFX::Shader::Deactivate();	// Deactivate shader
+
+		if (ENABLE_CROSSHAIR_IN_EDITOR_SCENE || !forEditor)
+			DrawCrosshair();	// Render crosshair, if any
+
+		// Healthbar objects
+		auto healthbarInstances = systemManager->ecs->GetEntitiesWith<Healthbar>();
+		for (Entity inst : healthbarInstances)
+		{
+			if (forEditor)
+				AddHealthbarInstance(inst, GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR), static_cast<int>(inst.id));
+			else
+				AddHealthbarInstance(inst, GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_GAME), static_cast<int>(inst.id));
+		}
+		m_HealthbarMesh.PrepForDraw();
+		DrawAllHealthbarInstance(camVP);
+		m_HealthbarMesh.ClearInstances();	// Clear data
+	}
+
+	// Post Processing Area
+	{
 		glDepthMask(GL_FALSE);
 		GFX::FBO* fbo = forEditor ? &m_Fbo : &m_GameFbo;
 
@@ -603,45 +645,9 @@ void GraphicsSystem::Draw(float dt, bool forEditor)
 		glDepthMask(GL_TRUE);
 	}
 
-	// Set blend function back to usual for UI rendering
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-	// Bind the appropriate FBO
-	if (forEditor)		// Bind Editor FBO
-	{
-		m_Fbo.Bind();
-		m_Fbo.DrawBuffers(true, true);
-	}
-	else				// Bind Game FBO
-	{
-		m_GameFbo.Bind();
-		m_GameFbo.DrawBuffers(true);
-	}
-
-	DrawAllPortals(forEditor);	// Draw Portal object
-
-	// Render UI objects
-	m_UiShaderInst.Activate();		// Activate shader
-	DrawAll2DInstances(m_UiShaderInst.GetHandle());
-	GFX::Shader::Deactivate();	// Deactivate shader
-
-	if (ENABLE_CROSSHAIR_IN_EDITOR_SCENE || !forEditor)
-		DrawCrosshair();	// Render crosshair, if any
-
-	// Healthbar objects
-	auto healthbarInstances = systemManager->ecs->GetEntitiesWith<Healthbar>();
-	for (Entity inst : healthbarInstances)
-	{
-		if (forEditor)
-			AddHealthbarInstance(inst, GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR), static_cast<int>(inst.id));
-		else
-			AddHealthbarInstance(inst, GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_GAME), static_cast<int>(inst.id));
-	}
-	m_HealthbarMesh.PrepForDraw();
-	DrawAllHealthbarInstance(camVP);
-	m_HealthbarMesh.ClearInstances();	// Clear data
-
 #pragma endregion
+
+	
 	// Unbind FBO at end of draw frame
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
