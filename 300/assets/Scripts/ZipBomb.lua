@@ -10,6 +10,10 @@ local bobbleIntensity
 
 local triggerExplosionDistance
 
+local state
+local explodingTimer = 2
+local explodingTimerCount
+
 function Alive()
     this = Helper.GetScriptEntity(script_entity.id)
     if this == nil then
@@ -22,7 +26,9 @@ function Alive()
     bobbleFrequency = 2
     bobbleIntensity = 0.5
     
-    triggerExplosionDistance = 10
+    triggerExplosionDistance = 0.5
+    
+    state = ""
 end
 
 function Update()
@@ -54,12 +60,18 @@ function Update()
     phySys:SetVelocity(this, vec);
     --#endregion
     
+    if state == "EXPLODING" then
+        explodingTimerCount = explodingTimerCount + FPSManager.GetDT()
+        if explodingTimerCount > explodingTimer then amekazi() end
+        return
+    end
 
     -- #region Check should explode
-    
-    if Helper.Vec3Len(Helper.Vec3Minus(targetPos, thisPos)) < triggerExplosionDistance then
-        Kamekazi()
-    end
+    local exploding = false
+    if Helper.Vec3Len(Helper.Vec3Minus(targetPos, thisPos)) < triggerExplosionDistance then kamekazi = true end
+    if this:GetHealthbar().health <= 0 then exploding = true end
+
+    if exploding then state = "EXPLODING" end
 
     -- #endregion
 
@@ -97,6 +109,4 @@ function Kamekazi()
     systemManager.ecs:NewEntityFromPrefab("Explosion", this:GetTransform().mTranslate)
     systemManager.ecs:SetDeleteEntity(this)
 end
-
-
 

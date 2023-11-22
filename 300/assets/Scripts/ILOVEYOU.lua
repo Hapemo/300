@@ -17,6 +17,11 @@ local ShotSpeed
 
 local inLineOfSight
 
+local deathTimer = 2
+local deathTimerCount
+
+local state
+
 function Alive()
     this = Helper.GetScriptEntity(script_entity.id)
     if this == nil then
@@ -32,6 +37,9 @@ function Alive()
     AttackSpeed = 1
     AttackTimer = 0
     ShotSpeed = 100
+
+    state = ""
+    deathTimerCount = 0
 end
 
 function Update()
@@ -39,6 +47,9 @@ function Update()
     targetPos = this:GetAISetting():GetTarget():GetTransform().mTranslate
     thisPos = this:GetTransform().mTranslate
     inLineOfSight = aiSys:LineOfSight(this, this:GetAISetting():GetTarget())
+
+    -- Health logic
+    if this:GetHealthbar().health <= 0 then StartDeath() end
 
     ILOVEYOUMovement()
 
@@ -95,6 +106,12 @@ function ILOVEYOUMovement()
         end
     end
     --
+
+    if state == "DEATH" then
+        if deathTimerCount > deathTimer then systemManager.ecs:SetDeleteEntity(this) end
+        deathTimerCount = deathTimerCount + FPSManager.GetDT()
+    end
+    
     phySys:SetVelocity(this, vec);
     --#endregion
 end
@@ -117,4 +134,9 @@ function Shoot()
     aiSys:PredictiveShootPlayer(bullet, ShotSpeed, 30, 50)
 end
 
-
+-- this function is ran when health just reached 0
+function StartDeath()
+    -- Start death animation
+    -- Start death sound
+    state = "DEATH"
+end

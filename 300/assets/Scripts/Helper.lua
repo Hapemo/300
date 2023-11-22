@@ -45,7 +45,7 @@ function Helper.SetTranslate(Entity, Vec3)
     physicsSys:SetPosition(Entity, vec);
 end
 
-function Helper.Rotate(Entity, Vec3)
+function Helper.SetRotate(Entity, Vec3)
     transformComponent = Entity:GetTransform()
     transformComponent.mRotate.x = transformComponent.mRotate.x + Vec3.x
     transformComponent.mRotate.y = transformComponent.mRotate.y + Vec3.y

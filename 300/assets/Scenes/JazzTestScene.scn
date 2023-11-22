@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 1048770,
+        "entityid": 2097153,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -90,7 +90,7 @@
         }
     },
     {
-        "entityid": 1048773,
+        "entityid": 2097154,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -142,10 +142,10 @@
                 "w": 1.0
             },
             "bloomthreshold": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 0.2199999988079071
             },
             "materialinstance": [
                 "../assets/Compressed/Wood Material 15_BaseColor.ctexture",
@@ -180,7 +180,7 @@
         }
     },
     {
-        "entityid": 1048774,
+        "entityid": 2097155,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -235,7 +235,7 @@
         }
     },
     {
-        "entityid": 1048775,
+        "entityid": 2097156,
         "general": {
             "name": "player",
             "tagid": 0,
@@ -333,7 +333,7 @@
         }
     },
     {
-        "entityid": 2097343,
+        "entityid": 2097157,
         "general": {
             "name": "ILOVEYOU",
             "tagid": 1,
@@ -464,7 +464,7 @@
         }
     },
     {
-        "entityid": 2097345,
+        "entityid": 2097158,
         "general": {
             "name": "TrojanHorse",
             "tagid": 1,
@@ -595,7 +595,7 @@
         }
     },
     {
-        "entityid": 2097347,
+        "entityid": 2097159,
         "general": {
             "name": "TrojanSoldier",
             "tagid": 1,
@@ -684,7 +684,12 @@
             "istrigger": false
         },
         "scripts": {
-            "scriptscontainer": []
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/TrojanSoldier.lua",
+                    "variables": []
+                }
+            ]
         },
         "prefab": {
             "prefab": "TrojanSoldier"
@@ -721,7 +726,7 @@
         }
     },
     {
-        "entityid": 2097348,
+        "entityid": 2097160,
         "general": {
             "name": "Melissa",
             "tagid": 0,
@@ -852,7 +857,7 @@
         }
     },
     {
-        "entityid": 4194496,
+        "entityid": 2097161,
         "general": {
             "name": "ZipBomb",
             "tagid": 1,
