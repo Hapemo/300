@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 195,
+        "entityid": 15728643,
         "general": {
             "name": "TrojanSoldier",
             "tagid": 1,
@@ -10,13 +10,13 @@
         },
         "transform": {
             "scale": {
-                "x": 0.26562052965164185,
-                "y": 0.45126762986183167,
-                "z": 0.26562047004699707
+                "x": 0.10000020265579224,
+                "y": 0.16989222168922424,
+                "z": 0.10000020265579224
             },
             "rotate": {
                 "x": 0.0,
-                "y": 0.0,
+                "y": 89.80000305175781,
                 "z": 0.041999999433755875
             },
             "translate": {
@@ -52,9 +52,9 @@
                 "w": 1.0
             },
             "bloomthreshold": {
-                "x": 0.3499999940395355,
-                "y": 0.36000001430511475,
-                "z": 0.10999999940395355,
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
                 "w": 1.0
             },
             "materialinstance": [
@@ -83,7 +83,7 @@
             },
             "translateoffset": {
                 "x": 0.0,
-                "y": 0.09000000357627869,
+                "y": 0.0,
                 "z": 0.0
             },
             "istrigger": false
@@ -101,32 +101,10 @@
             "elevation": 0.0,
             "targetname": "player",
             "graphdataname": ""
-        },
-        "healthbar": {
-            "healthcolor": {
-                "x": 0.0,
-                "y": 1.0,
-                "z": 0.0,
-                "w": 1.0
-            },
-            "backcolor": {
-                "x": 1.0,
-                "y": 0.0,
-                "z": 0.0,
-                "w": 1.0
-            },
-            "position": {
-                "x": 0.0,
-                "y": 0.6000000238418579,
-                "z": 0.0
-            },
-            "maxhealth": 30.0,
-            "width": 0.30000001192092896,
-            "height": 0.07000000029802322
         }
     },
     {
-        "entityid": 196,
+        "entityid": 15728644,
         "general": {
             "name": "Melissa",
             "tagid": 0,
@@ -142,7 +120,7 @@
             },
             "rotate": {
                 "x": 0.0,
-                "y": 0.0,
+                "y": -0.02354247309267521,
                 "z": 0.0
             },
             "translate": {
@@ -165,7 +143,7 @@
                 "y": false,
                 "z": false
             },
-            "gravity": false
+            "gravity": true
         },
         "meshrenderer": {
             "vert": "../assets/shader_files/pointLight_vert.glsl",
@@ -178,9 +156,9 @@
                 "w": 1.0
             },
             "bloomthreshold": {
-                "x": 0.05999999865889549,
-                "y": 0.2199999988079071,
-                "z": 0.25999999046325684,
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
                 "w": 1.0
             },
             "materialinstance": [
@@ -203,24 +181,19 @@
         },
         "boxcollider": {
             "scaleoffset": {
-                "x": 0.8999999761581421,
-                "y": 0.699999988079071,
-                "z": 0.800000011920929
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
             },
             "translateoffset": {
                 "x": 0.0,
-                "y": 1.100000023841858,
-                "z": -0.30000001192092896
+                "y": 0.0,
+                "z": 0.0
             },
             "istrigger": false
         },
         "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/Melissa.lua",
-                    "variables": []
-                }
-            ]
+            "scriptscontainer": []
         },
         "prefab": {
             "prefab": "Melissa"
@@ -232,32 +205,10 @@
             "elevation": 0.0,
             "targetname": "player",
             "graphdataname": "FlyingGraphJazzTest"
-        },
-        "healthbar": {
-            "healthcolor": {
-                "x": 0.0,
-                "y": 1.0,
-                "z": 0.0,
-                "w": 1.0
-            },
-            "backcolor": {
-                "x": 1.0,
-                "y": 0.0,
-                "z": 0.0,
-                "w": 1.0
-            },
-            "position": {
-                "x": 0.0,
-                "y": 2.0999999046325684,
-                "z": -0.10000000149011612
-            },
-            "maxhealth": 200.0,
-            "width": 1.0,
-            "height": 0.07000000029802322
         }
     },
     {
-        "entityid": 197,
+        "entityid": 15728645,
         "general": {
             "name": "ILOVEYOU",
             "tagid": 1,
@@ -267,19 +218,19 @@
         },
         "transform": {
             "scale": {
-                "x": 1.0972113609313965,
-                "y": 1.0972108840942383,
+                "x": 1.097214937210083,
+                "y": 1.097224235534668,
                 "z": 0.4577629864215851
             },
             "rotate": {
                 "x": 0.0,
-                "y": 0.0,
+                "y": 1.9589999914169312,
                 "z": 0.1420000046491623
             },
             "translate": {
-                "x": 2.190782308578491,
-                "y": -10.472314834594727,
-                "z": -16.245370864868164
+                "x": 2.33837628364563,
+                "y": -10.471951484680176,
+                "z": -16.293365478515625
             }
         },
         "rigidbody": {
@@ -296,7 +247,7 @@
                 "y": false,
                 "z": false
             },
-            "gravity": false
+            "gravity": true
         },
         "meshrenderer": {
             "vert": "../assets/shader_files/pointLight_vert.glsl",
@@ -309,10 +260,10 @@
                 "w": 1.0
             },
             "bloomthreshold": {
-                "x": 0.6200000047683716,
-                "y": 0.009999999776482582,
-                "z": 0.10999999940395355,
-                "w": 0.8600000143051147
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/ILY_BaseColor.ctexture",
@@ -334,14 +285,14 @@
         },
         "boxcollider": {
             "scaleoffset": {
-                "x": 0.800000011920929,
-                "y": 0.800000011920929,
-                "z": 0.699999988079071
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
             },
             "translateoffset": {
                 "x": 0.0,
-                "y": 0.699999988079071,
-                "z": 0.10000000149011612
+                "y": 0.0,
+                "z": 0.0
             },
             "istrigger": false
         },
@@ -363,32 +314,10 @@
             "elevation": 20.0,
             "targetname": "player",
             "graphdataname": "FlyingGraphJazzTest"
-        },
-        "healthbar": {
-            "healthcolor": {
-                "x": 0.0,
-                "y": 1.0,
-                "z": 0.0,
-                "w": 1.0
-            },
-            "backcolor": {
-                "x": 1.0,
-                "y": 0.0,
-                "z": 0.0,
-                "w": 1.0
-            },
-            "position": {
-                "x": 0.0,
-                "y": 1.2999999523162842,
-                "z": 0.0
-            },
-            "maxhealth": 100.0,
-            "width": 1.0,
-            "height": 0.07000000029802322
         }
     },
     {
-        "entityid": 198,
+        "entityid": 15728646,
         "general": {
             "name": "TrojanHorse",
             "tagid": 1,
@@ -440,9 +369,9 @@
                 "w": 1.0
             },
             "bloomthreshold": {
-                "x": 0.3400000035762787,
-                "y": 0.3100000023841858,
-                "z": 0.23000000417232513,
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
                 "w": 1.0
             },
             "materialinstance": [
@@ -466,12 +395,12 @@
         "boxcollider": {
             "scaleoffset": {
                 "x": 1.0,
-                "y": 0.8999999761581421,
-                "z": 0.8500000238418579
+                "y": 1.0,
+                "z": 1.0
             },
             "translateoffset": {
                 "x": 0.0,
-                "y": 0.6000000238418579,
+                "y": 0.0,
                 "z": 0.0
             },
             "istrigger": false
@@ -494,32 +423,10 @@
             "elevation": 0.0,
             "targetname": "player",
             "graphdataname": ""
-        },
-        "healthbar": {
-            "healthcolor": {
-                "x": 0.0,
-                "y": 1.0,
-                "z": 0.0,
-                "w": 1.0
-            },
-            "backcolor": {
-                "x": 1.0,
-                "y": 0.0,
-                "z": 0.0,
-                "w": 1.0
-            },
-            "position": {
-                "x": 0.0,
-                "y": 1.5,
-                "z": 0.0
-            },
-            "maxhealth": 200.0,
-            "width": 1.0,
-            "height": 0.07000000029802322
         }
     },
     {
-        "entityid": 199,
+        "entityid": 15728647,
         "general": {
             "name": "ZipBomb",
             "tagid": 1,
@@ -535,7 +442,7 @@
             },
             "rotate": {
                 "x": 0.0,
-                "y": -362.53900146484375,
+                "y": 0.3610000014305115,
                 "z": 0.34200000762939453
             },
             "translate": {
@@ -558,7 +465,7 @@
                 "y": false,
                 "z": false
             },
-            "gravity": false
+            "gravity": true
         },
         "meshrenderer": {
             "vert": "../assets/shader_files/pointLight_vert.glsl",
@@ -571,14 +478,14 @@
                 "w": 1.0
             },
             "bloomthreshold": {
-                "x": 0.4399999976158142,
-                "y": 0.0,
+                "x": 1.0,
+                "y": 1.0,
                 "z": 1.0,
                 "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/ZipBomb_BaseColor.ctexture",
-                "../assets/Compressed/Cube_Texture_White.ctexture",
+                "../assets/Compressed/ZipBomb_Normal.ctexture",
                 "../assets/Compressed/ZipBomb_Metallic.ctexture",
                 "../assets/Compressed/ZipBomb_Roughness.ctexture",
                 "../assets/Compressed/ZipBomb_Emissive.ctexture",
@@ -587,7 +494,7 @@
             "mesh": "../assets/compiled_geom/ZipBomb.geom",
             "texturerefid": [
                 4543,
-                4706,
+                4270,
                 4464,
                 4611,
                 4490,
@@ -596,14 +503,14 @@
         },
         "boxcollider": {
             "scaleoffset": {
-                "x": 0.8999999761581421,
-                "y": 0.75,
-                "z": 0.699999988079071
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
             },
             "translateoffset": {
                 "x": 0.0,
-                "y": 0.44999998807907104,
-                "z": 0.019999999552965164
+                "y": 0.0,
+                "z": 0.0
             },
             "istrigger": false
         },
@@ -625,28 +532,6 @@
             "elevation": 0.0,
             "targetname": "player",
             "graphdataname": "FlyingGraphJazzTest"
-        },
-        "healthbar": {
-            "healthcolor": {
-                "x": 0.0,
-                "y": 1.0,
-                "z": 0.0,
-                "w": 1.0
-            },
-            "backcolor": {
-                "x": 1.0,
-                "y": 0.0,
-                "z": 0.0,
-                "w": 1.0
-            },
-            "position": {
-                "x": -0.029999999329447746,
-                "y": 0.8999999761581421,
-                "z": 0.0
-            },
-            "maxhealth": 100.0,
-            "width": 1.0,
-            "height": 0.07000000029802322
         }
     }
 ]

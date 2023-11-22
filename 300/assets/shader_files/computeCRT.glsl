@@ -45,7 +45,7 @@ void main()
     ivec2 iResolution = imageSize(Scene);
     ivec2 uv = ivec2(gl_GlobalInvocationID.xy);
 	int tex_offset = int(0.001 * iResolution.x);
-	int height = int(iResolution.y / 50);
+	int height = int(iResolution.y / 100);
     
     ivec2 newUV = uv;
     int y_coord = int(gl_GlobalInvocationID.y + accumulationTime * 40.0) % (height * 2);
@@ -55,7 +55,7 @@ void main()
     }
 
     vec4 color = vec4(1.0); 
-    int dist = int(0.004 * iResolution.x);
+    int dist = int(0.0025 * iResolution.x);
 	color.rgb = chromaticAbberation(dist, newUV, color.rgb);
 
     // Performing Blending with sFactor = GL_ONE_MINUS_DST_COLOR
@@ -65,13 +65,13 @@ void main()
     color.rgb = color.rgb * srcFactor + destColor.rgb;
 
     if(y_coord < height) {
-		color.rgb *= 0.7;
+		color.rgb *= 0.65;
         // Write to image output
         imageStore(OutputColor, uv, color);
         return;
     }
 
     // Write to image output
-	color.rgb = crt(color.rgb);
+	color.rgb = crt(color.rgb * 0.9);
     imageStore(OutputColor, uv, color);
 }
