@@ -390,13 +390,13 @@ void AudioSystem::Reset()
 	{
 		for (Audio* persist : persisting_audio)
 		{
-			if (channel_pair.first == persist->mChannelID) // skip stopping this audio
-			{
-				continue;
-			}
+			//if (channel_pair.first == persist->mChannelID) // skip stopping this audio
+			//{
+			//	continue;
+			//}
 
-			else
-			{
+			/*else
+			{*/
 				FMOD::Sound* sound = nullptr;
 				channel_pair.second->getCurrentSound(&sound);
 
@@ -405,7 +405,7 @@ void AudioSystem::Reset()
 					channel_pair.second->stop();
 					channel_pair.second = nullptr;
 				}
-			}
+			//}
 			
 			
 		}

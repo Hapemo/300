@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 1048577,
+        "entityid": 1,
         "general": {
             "name": "StartButton",
             "tagid": 6,
@@ -65,9 +65,9 @@
         }
     },
     {
-        "entityid": 1048578,
+        "entityid": 2,
         "general": {
-            "name": "TV ON",
+            "name": "Awake",
             "tagid": 0,
             "subtag": 0,
             "isActive": true,
@@ -92,17 +92,17 @@
         },
         "audio": {
             "filepath": "../assets\\Audio",
-            "filename": "tvOn.wav",
-            "fullpath": "../assets\\Audio/tvOn.wav",
+            "filename": "UI_Screen_Awake.wav",
+            "fullpath": "../assets\\Audio/UI_Screen_Awake.wav",
             "playonawake": true,
             "islooping": false,
             "audiotype": 1,
-            "volume": 0.800000011920929,
+            "volume": 0.6000000238418579,
             "retainaudio": false
         }
     },
     {
-        "entityid": 1048579,
+        "entityid": 3,
         "general": {
             "name": "QuitButton",
             "tagid": 6,
@@ -167,7 +167,7 @@
         }
     },
     {
-        "entityid": 1048580,
+        "entityid": 4,
         "general": {
             "name": "Click",
             "tagid": 0,
@@ -204,7 +204,7 @@
         }
     },
     {
-        "entityid": 1048581,
+        "entityid": 5,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -249,7 +249,7 @@
         }
     },
     {
-        "entityid": 1048582,
+        "entityid": 6,
         "general": {
             "name": "BGM",
             "tagid": 0,
@@ -286,7 +286,7 @@
         }
     },
     {
-        "entityid": 1048583,
+        "entityid": 7,
         "general": {
             "name": "MenuBackground",
             "tagid": 6,
@@ -321,11 +321,12 @@
                 "z": 1.0,
                 "w": 1.0
             },
-            "layer": 0
+            "layer": 0,
+            "worldtransform": false
         }
     },
     {
-        "entityid": 1048584,
+        "entityid": 8,
         "general": {
             "name": "CreditsButton",
             "tagid": 6,
@@ -390,7 +391,7 @@
         }
     },
     {
-        "entityid": 5,
+        "entityid": 9,
         "general": {
             "name": "MenuBackground",
             "tagid": 6,
@@ -430,43 +431,7 @@
         }
     },
     {
-        "entityid": 6,
-        "general": {
-            "name": "BGM",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "M2BGM.wav",
-            "fullpath": "../assets\\Audio/M2BGM.wav",
-            "playonawake": true,
-            "islooping": true,
-            "audiotype": 0,
-            "volume": 1.0
-        }
-    },
-    {
-        "entityid": 7,
+        "entityid": 11,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -503,11 +468,48 @@
                 "z": 0.0
             },
             "size": {
-                "x": 1303,
-                "y": 638
+                "x": 1304,
+                "y": 586
             },
             "near": 0.10000000149011612,
             "far": 900.0
+        }
+    },
+    {
+        "entityid": 2097162,
+        "general": {
+            "name": "Exit",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "UI_Screen_Sleep.wav",
+            "fullpath": "../assets\\Audio/UI_Screen_Sleep.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 0.6000000238418579,
+            "retainaudio": false
         }
     }
 ]
