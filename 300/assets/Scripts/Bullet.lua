@@ -39,19 +39,19 @@ end
 function Update()
 
     gameStateSys = systemManager:mGameStateSystem()
-    cameraEntity = gameStateSys:GetEntity("Camera", "testSerialization")
+    cameraEntity = gameStateSys:GetEntity("Camera")
     positions = cameraEntity:GetTransform().mTranslate
 
 
     viewVec = Camera_Scripting.GetDirection(cameraEntity)
     physicsSys = systemManager:mPhysicsSystem()
 
-    bullethitAudioEntity = gameStateSys:GetEntity("Bullet Hit" , "testSerialization")
+    bullethitAudioEntity = gameStateSys:GetEntity("Bullet Hit")
     bullethitAudioComp = bullethitAudioEntity:GetAudio()
     -- bullethitAudioSource = Helper.CreateAudioSource(bullethitEntity)
 
     
-    bulletObject = gameStateSys:GetEntity("bullet" , "testSerialization")
+    bulletObject = gameStateSys:GetEntity("bullet")
     while bulletObject ~= nil do 
        --print("THERE IS A BULLET OBJECT")
         bulletLifeTime = bulletLifeTime + 1

@@ -2,16 +2,16 @@
     {
         "entityid": 1,
         "general": {
-            "name": "MainMenuBackground",
-            "tagid": 6,
+            "name": "TV ON",
+            "tagid": 0,
             "subtag": 0,
             "isActive": true,
             "isPaused": false
         },
         "transform": {
             "scale": {
-                "x": 1920.0,
-                "y": -1080.0,
+                "x": 1.0,
+                "y": 1.0,
                 "z": 1.0
             },
             "rotate": {
@@ -25,23 +25,20 @@
                 "z": 0.0
             }
         },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 4188,
-            "degree": 0.0,
-            "color": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0,
-                "w": 0.0
-            },
-            "layer": 0
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "tvOn.wav",
+            "fullpath": "../assets\\Audio/tvOn.wav",
+            "playonawake": true,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 0.5
         }
     },
     {
         "entityid": 2,
         "general": {
-            "name": "CreditsButton",
+            "name": "StartButton",
             "tagid": 6,
             "subtag": 0,
             "isActive": true,
@@ -59,22 +56,46 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 1320.0,
-                "y": -800.0,
+                "x": -1320.0,
+                "y": -400.0,
                 "z": 0.0
             }
         },
         "uirenderer": {
             "texpath": "",
-            "textureref": 4462,
+            "textureref": 4270,
             "degree": 0.0,
             "color": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0,
-                "w": 0.0
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
             },
-            "layer": 0
+            "layer": 1
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/MainMenuButtons.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "click.wav",
+            "fullpath": "../assets\\Audio/click.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 0.20000000298023224
+        },
+        "button": {
+            "interactable": true,
+            "hover": false,
+            "click": false,
+            "activated": false,
+            "renderflag": true
         }
     },
     {
@@ -108,18 +129,42 @@
             "textureref": 4163,
             "degree": 0.0,
             "color": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0,
-                "w": 0.0
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
             },
-            "layer": 0
+            "layer": 1
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/MainMenuButtons.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "click.wav",
+            "fullpath": "../assets\\Audio/click.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 0.20000000298023224
+        },
+        "button": {
+            "interactable": true,
+            "hover": true,
+            "click": true,
+            "activated": false,
+            "renderflag": true
         }
     },
     {
         "entityid": 4,
         "general": {
-            "name": "StartButton",
+            "name": "CreditsButton",
             "tagid": 6,
             "subtag": 0,
             "isActive": true,
@@ -137,26 +182,89 @@
                 "z": 0.0
             },
             "translate": {
-                "x": -1320.0,
-                "y": -400.0,
+                "x": 1320.0,
+                "y": -800.0,
                 "z": 0.0
             }
         },
         "uirenderer": {
             "texpath": "",
-            "textureref": 4270,
+            "textureref": 4462,
             "degree": 0.0,
             "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 1
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/MainMenuButtons.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "click.wav",
+            "fullpath": "../assets\\Audio/click.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 0.20000000298023224
+        },
+        "button": {
+            "interactable": true,
+            "hover": true,
+            "click": true,
+            "activated": false,
+            "renderflag": true
+        }
+    },
+    {
+        "entityid": 5,
+        "general": {
+            "name": "MenuBackground",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1920.0,
+                "y": -1080.0,
+                "z": 1.0
+            },
+            "rotate": {
                 "x": 0.0,
                 "y": 0.0,
-                "z": 0.0,
-                "w": 0.0
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "../assets/Compressed/MainMenuEmpty.ctexture",
+            "textureref": 4188,
+            "degree": 0.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
             },
             "layer": 0
         }
     },
     {
-        "entityid": 5,
+        "entityid": 6,
         "general": {
             "name": "BGM",
             "tagid": 0,
@@ -192,7 +300,7 @@
         }
     },
     {
-        "entityid": 6,
+        "entityid": 7,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -230,46 +338,10 @@
             },
             "size": {
                 "x": 1303,
-                "y": 636
+                "y": 634
             },
             "near": 0.10000000149011612,
             "far": 900.0
-        }
-    },
-    {
-        "entityid": 7,
-        "general": {
-            "name": "TV ON",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "tvOn.wav",
-            "fullpath": "../assets\\Audio/tvOn.wav",
-            "playonawake": true,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 0.5
         }
     }
 ]

@@ -1,0 +1,64 @@
+{
+    "entityid": 15728641,
+    "general": {
+        "name": "Tutorial Stairs",
+        "tagid": 0,
+        "subtag": 0,
+        "isActive": true,
+        "isPaused": false
+    },
+    "transform": {
+        "scale": {
+            "x": 300.0,
+            "y": 60.0,
+            "z": 200.0
+        },
+        "rotate": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "translate": {
+            "x": 75.39099884033203,
+            "y": 123.33300018310547,
+            "z": -748.916015625
+        }
+    },
+    "meshrenderer": {
+        "vert": "../assets/shader_files/pointLight_vert.glsl",
+        "frag": "../assets/shader_files/pointLight_frag.glsl",
+        "meshrefid": 3232,
+        "instancecolor": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+        },
+        "bloomthreshold": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+        },
+        "materialinstance": [
+            "../assets/Compressed/Tutorial_Cube_BaseColor.ctexture",
+            "../assets/Compressed/Tutorial_Cube_Normal.ctexture",
+            "../assets/Compressed/Tutorial_Cube_Metallic.ctexture",
+            "../assets/Compressed/Tutorial_Cube_Roughness.ctexture",
+            "../assets/Compressed/Tutorial_Cube_Emissive.ctexture",
+            "../assets/Compressed/Temp_Tutorial_Cube_AO.ctexture"
+        ],
+        "mesh": "../assets/compiled_geom/Tutorial_cube.geom",
+        "texturerefid": [
+            5182,
+            4909,
+            5103,
+            5250,
+            5129,
+            4937
+        ]
+    },
+    "prefab": {
+        "prefab": "Tutorial Stairs"
+    }
+}

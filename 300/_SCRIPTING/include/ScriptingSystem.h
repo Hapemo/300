@@ -22,6 +22,7 @@ The functions
 #include "ECS/ECS_Components.h"
 #include "Input/Input.h"
 #include "Script.h"
+#include <vector>
 
 /******************************************************************************/
 /*!
@@ -42,4 +43,8 @@ public:
 
     // Call in Reload function
     void ScriptReload();
+
+    void TestingFromScriptSys(std::vector<std::string> const& vect);
+
+    std::vector<std::string> CreateVectorString();
 };

@@ -229,7 +229,21 @@ void ScriptingSystem::LoadHelper()
     luaState.script("Helper = readonlytable(Helper)");
 }
 
+void ScriptingSystem::TestingFromScriptSys(std::vector<std::string> const& vect)
+{
+    if (vect.size() <= 0) return;
+    for (auto& elem : vect)
+    {
+        std::cout << elem << std::endl;
+    }
+}
+
 void ScriptingSystem::ScriptReload()
 {
     once = false;
+}
+
+std::vector<std::string> ScriptingSystem::CreateVectorString()
+{
+    return std::vector<std::string>{};
 }

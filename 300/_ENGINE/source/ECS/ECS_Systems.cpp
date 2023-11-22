@@ -17,7 +17,7 @@
 
 SystemManager *systemManager;
 
-SystemManager::SystemManager()
+SystemManager::SystemManager() : mIsQuit(false)
 {
 	mPhysicsSystem = std::make_unique<PhysicsSystem>();
 	mScriptingSystem = std::make_unique<ScriptingSystem>();
@@ -152,6 +152,11 @@ void SystemManager::Update(float dt)
 	//	mResourceSystem.get()->Update();
 	
 	ecs->DeleteEntityUpdate();
+}
+
+void SystemManager::Quit()
+{
+	mIsQuit = true;
 }
 
 void SystemManager::Exit()
