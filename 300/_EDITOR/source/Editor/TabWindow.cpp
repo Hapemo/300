@@ -62,6 +62,11 @@ void TabWindow::update()
 		- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
 	ImGui::DragFloat("##CS", (float*)&systemManager->mGraphicsSystem->m_EditorCamera.mCameraSpeed);
 
+	if (ImGui::Button("Reset Camera Zoom"))
+	{
+		systemManager->mGraphicsSystem->m_EditorCamera.mFovDegree = GFX::CameraConstants::defaultFOV;
+	}
+
 	ImGui::Separator();
 	ImGui::Text("Debug");
 	ImGui::SameLine();

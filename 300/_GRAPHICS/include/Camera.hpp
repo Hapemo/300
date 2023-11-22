@@ -18,8 +18,9 @@ instance
 namespace GFX 
 {
     namespace CameraConstants {
-        const float maxFOV = 45.f;
-        const float minFOV = 1.f;
+        const float maxFOV = 300.f;
+        const float minFOV = 0.1f;
+        const float defaultFOV = 45.f;
     }
 
     class Camera
@@ -111,7 +112,7 @@ Updates projection and view projection matrix of the camera
         vec2    mCursorPos;
         ivec2   mSize;    //save
         float   mSensitivity{ 0.1f };
-        float   mCameraSpeed{ 100.f };
+        float   mCameraSpeed{ 50.f };
         float   mAspectRatio;
         float   mNear;    //save
         float   mFar;     //save

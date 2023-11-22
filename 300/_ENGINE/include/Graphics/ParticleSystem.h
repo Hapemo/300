@@ -6,11 +6,7 @@
 #include <ECS/ECS_Components.h>
 #include <ECS/ECS.h>
 
-struct Particle
-{
-
-};
-
+// Properties of particles
 struct ParticleProperties
 {
 	vec4 mStartColor, mEndColor;
@@ -20,6 +16,18 @@ struct ParticleProperties
 	float mLifetime{ 1.f };
 };
 
+// Stats of each particle instance
+struct Particle
+{
+	ParticleProperties mProperties;
+	vec4 mCurrColor;
+	vec3 mCurrPosition;
+	float mCurrRotation;
+	float mCurrSize;
+	float currLife;
+};
+
+// Emits the particles with specified properties
 class ParticleEmitter
 {
 public:
@@ -27,7 +35,6 @@ public:
 private:
 	ParticleProperties mProperties;
 	int mCount{};
-
 };
 
 #endif

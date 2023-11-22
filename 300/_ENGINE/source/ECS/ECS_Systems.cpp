@@ -156,7 +156,6 @@ void SystemManager::Update(float dt)
 
 void SystemManager::Quit()
 {
-	Exit();
 	mIsQuit = true;
 }
 

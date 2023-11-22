@@ -213,3 +213,8 @@ void Camera_Scripting::RotateCameraView(Entity cameraEntity, const vec2& cursorp
 	//// update the camera's target based on the normalized direction
 	//caminst.SetTarget(caminst.mPosition + glm::normalize(direction));
 }
+
+vec3 Camera_Scripting::Rotate(vec3 const& v, vec3 const& axis, float degree)
+{
+	return glm::rotate(v, glm::radians(degree), axis);
+}
