@@ -15,7 +15,7 @@ layout (location = 0) out vec4 outVertexColor;
 layout (location = 1) out uint outEntityID;
 layout (location = 2) out vec4 BrightColor;
 
-layout (location = 3) out vec4 gFragPos;		// XYZ:  Fragment Position
+layout (location = 3) out vec4 gFragPos;		// XYZ:  Fragment Position  | W: Ambient Occlusion
 layout (location = 4) out vec4 gNormal;			// XYZ:  Normal				| W: Roughness component
 layout (location = 5) out vec4 gAlbedoSpec;		// RGB:  Albedo Color		| A: Specular intensity
 layout (location = 6) out vec4 gEmission;		// RGBA: Emission
@@ -23,6 +23,7 @@ layout (location = 6) out vec4 gEmission;		// RGBA: Emission
 struct Material
 {
     uint64_t diffuseMap;
+    uint64_t AOMap;
     uint64_t normalMap;
     uint64_t specularMap;
     uint64_t shininessMap;
@@ -39,6 +40,7 @@ vec3 diffuse    = vec3(0.0);
 vec4 emission   = vec4(0.0);
 float roughness = 1.f;
 float specular  = 0.0f;
+float AO        = 0.0f;
 
 void main()
 {
@@ -54,6 +56,9 @@ void main()
     if(materials[ID].shininessMap != 0)
         roughness = texture(sampler2D(materials[ID].shininessMap), TexCoords).r;
 
+    if (materials[ID].AOMap != 0)
+        AO = texture(sampler2D(materials[ID].AOMap), TexCoords).r;
+
     // Get Albedo and Specular
     if(materials[ID].diffuseMap != 0)
         diffuse = texture(sampler2D(materials[ID].diffuseMap), TexCoords).rgb;
@@ -65,7 +70,7 @@ void main()
         emission = texture(sampler2D(materials[ID].emissionMap), TexCoords);
 
     // Write G-Buffer output
-	gFragPos    = vec4(fragPos, 1.0);
+	gFragPos    = vec4(fragPos, AO);
     gNormal     = vec4(TBN * n, roughness);
     gAlbedoSpec = vec4(diffuse, specular);
     gEmission   = emission;

@@ -326,6 +326,7 @@ void GraphicsSystem::Update(float dt)
 		material.mSpecularMap = GetAndStoreBindlessTextureHandle(getID(SPECULAR, meshRenderer));
 		material.mShininessMap = GetAndStoreBindlessTextureHandle(getID(SHININESS, meshRenderer));
 		material.mEmissionMap = GetAndStoreBindlessTextureHandle(getID(EMISSION, meshRenderer));
+		material.mAOMap = GetAndStoreBindlessTextureHandle(getID(AO, meshRenderer));
 
 		m_Materials.emplace_back(material);	// push back
 	}
