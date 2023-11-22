@@ -137,6 +137,7 @@ local dashrender= {}
 local tpcolor = Vec4.new(0, 0, 0, 1)
 
 local once = false
+local up_vector = Vec3.new()
 --This variable is to be set in another script
 --testingSet = 5.0
 
@@ -151,35 +152,35 @@ function Alive()
 
     cameraPhysicsComp = cameraEntity:GetRigidBody()
     
-    dashui = gameStateSys:GetEntity("UI1")
+    dashui = gameStateSys:GetEntity("UI1", "testSerialization")
 
-    bulletAudioEntity = gameStateSys:GetEntity("Bullet Shoot")
+    bulletAudioEntity = gameStateSys:GetEntity("Bullet Shoot" , "testSerialization")
     bulletAudioComp = bulletAudioEntity:GetAudio()
 
-    jumpAudioEntity = gameStateSys:GetEntity("Jump")
+    jumpAudioEntity = gameStateSys:GetEntity("Jump" , "testSerialization")
     jumpAudioComp = jumpAudioEntity:GetAudio()
 
-    dashAudioEntity = gameStateSys:GetEntity("Dash")
+    dashAudioEntity = gameStateSys:GetEntity("Dash" , "testSerialization")
     dashAudioComp = dashAudioEntity:GetAudio()
 
-    machineGunAudioEntity = gameStateSys:GetEntity("Machine Gun Shoot (LOOP)")
+    machineGunAudioEntity = gameStateSys:GetEntity("Machine Gun Shoot (LOOP)" , "testSerialization")
     machineGunAudioComp = machineGunAudioEntity:GetAudio()
     machineGunAudioComp:UpdateVolume(0.0)
     machineGunAudioComp:SetPlay()
 
     dashTime = 3.0
     tpTime = 20.0
-    teleporter1 = gameStateSys:GetEntity("Teleporter1")
-    teleporter2 = gameStateSys:GetEntity("Teleporter2")
-    --walkingenemy = gameStateSys:GetEntity("enemy1_walking")
+    teleporter1 = gameStateSys:GetEntity("Teleporter1", "testSerialization")
+    teleporter2 = gameStateSys:GetEntity("Teleporter2", "testSerialization")
+    --walkingenemy = gameStateSys:GetEntity("enemy1_walking", "testSerialization")
     onTpTime = 0;
     collideWithTP = 0
     originalSamplingWeight = graphicsSys.mSamplingWeight
-    tpfin1 = gameStateSys:GetEntity("Fin1")
-    tpfin2 = gameStateSys:GetEntity("Fin2")
+    tpfin1 = gameStateSys:GetEntity("Fin1", "testSerialization")
+    tpfin2 = gameStateSys:GetEntity("Fin2", "testSerialization")
 
     -- Gun Stuff --
-    gunEntity = gameStateSys:GetEntity("gun")
+    gunEntity = gameStateSys:GetEntity("gun", "testSerialization")
     gunInitialTranslate = gunEntity:GetTransform().mTranslate
     gunRotation = gunEntity:GetTransform().mRotate
 
@@ -190,6 +191,9 @@ function Alive()
     original_translation.x = gunInitialTranslate.x
     original_translation.y = gunInitialTranslate.y
     original_translation.z = gunInitialTranslate.z
+
+    -- Shotgun Stuff -- 
+
 
     print("HI IM ALIVEEEE")
 end
@@ -315,6 +319,16 @@ function Update()
     viewVec = Camera_Scripting.GetDirection(cameraEntity)
     viewVecCam = Camera_Scripting.GetDirection(cameraEntity)
     rotationCam = Camera_Scripting.GetDirection(cameraEntity)
+    targetCam = Camera_Scripting.GetTarget(cameraEntity)
+    positionCam = Camera_Scripting.GetPosition(cameraEntity) -- works   
+
+    -- print("TARGET CAM: " , targetCam.x)
+    -- print("CAMERA POSITION: " , positionCam.x)
+
+
+    
+ 
+
     viewVec.y = 0;
     viewVec = Helper.Normalize(viewVec)
 
@@ -583,7 +597,8 @@ function Update()
                     
                     -- gunRecoilState = "MOVING"
 
-                    shotgunbullets(5) -- bullets + recoil (param) - number of bullets in spray
+                    --shotgunbullets(5) -- bullets + recoil (param) - number of bullets in spray
+                    moreAccurateShotgun()
                     applyGunRecoil(recoil_speed * 0.5, 0.1)
 
                     shotGunTimer = shotGunTimer + shotGunCooldown
@@ -600,7 +615,7 @@ function Update()
         if(shotgunShootState == "COOLDOWN") then 
             if(shotGunTimer > 0) then 
                 shotGunTimer = shotGunTimer - dt
-                print("SHOTGUN COOLDOWN: " , shotGunTimer)
+                -- print("SHOTGUN COOLDOWN: " , shotGunTimer)
             else 
                 shotGunTimer = 0
                 shotgunShootState = "SHOOTABLE"
@@ -825,6 +840,52 @@ function shotgunbullets(number_of_bullets)
     end
 end 
 
+function moreAccurateShotgun() 
+
+    -- 1. Get my local right vector
+    up_vector.x = 0 
+    up_vector.y = 1
+    up_vector.z = 0
+
+    local world_local_right_vector = Camera_Scripting:Cross(viewVec, up_vector) -- get vector pointing to rightwards of player
+    print("HI")
+
+
+
+
+    -- for i = 0 , num_of_bullets, 1 do
+    --     -- Generate random angles within a cone
+    --     local theta = math.rad(math.random() * cone_angle)
+    --     local phi = math.rad(math.random() * 360)
+
+    --     -- Convert angles to direcitonal vectors
+    --     local x = math.sin(theta) * math.cos(phi)
+    --     local y = math.sin(theta) * math.sin(phi)
+    --     local z = math.cos(theta)
+        
+    --     -- Applying spread to the camera's base forward vector
+    --     camera_forward.x = camera_forward.x * x + camera_forward.y * y + camera_forward.z * z
+    --     camera_forward.y = camera_forward.y * x + camera_forward.z * y + camera_forward.x * z
+    --     camera_forward.z = camera_forward.z * x + camera_forward.x * y + camera_forward.y * z
+
+    --     -- Starting Position of bullet 
+    --     positions_final.x = positions.x +  camera_forward.x * 2 -- 'positions' - camera's translate
+    --     positions_final.y = positions.y +  camera_forward.y * 2 
+    --     positions_final.z = positions.z +  camera_forward.z * 2 
+
+        
+    --     bulletPrefab = systemManager.ecs:NewEntityFromPrefab("bullet", positions_final)
+
+    --     print("POSITION SPAWN:" , positions_final.x , positions_final.y, positions_final.z)
+
+
+
+
+    -- end
+end 
+
+
+
 function machineGunBullets()
     -- print("HI SHOOTING MACHINE GUN")
 
@@ -849,6 +910,14 @@ function machineGunBullets()
 
     physicsSys:SetVelocity(prefabEntity, viewVecCam)
 
+end
+
+function crossProduct(v1 ,v2)
+    local x = v1[2]*v2[3] - v1[3]*v2[2]
+    local y = v1[3]*v2[1] - v1[1]*v2[3]
+    local z = v1[1]*v2[2] - v1[2]*v2[1]
+    
+    return {x, y, z}
 end
 
 function rotateVectorX(vector, angleInDegrees)
