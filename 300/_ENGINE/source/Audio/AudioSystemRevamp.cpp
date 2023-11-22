@@ -367,7 +367,7 @@ void AudioSystem::Reset()
 {   
 	auto audio_entities = systemManager->ecs->GetEntitiesWith<Audio>();
 
-	std::list<Audio*> persisting_audio;
+	//std::list<Audio*> persisting_audio;
 
 	for (Entity audio : audio_entities)
 	{
@@ -379,17 +379,17 @@ void AudioSystem::Reset()
 			audio_component->mNextActionState = Audio::INACTIVE; // Set to do nothing (reset)
 		}
 
-		else
+		/*else
 		{
 			persisting_audio.push_back(audio_component);
-		}
+		}*/
 	}
 
 	// Stop all channels (must do it here)
 	for (auto& channel_pair : mChannels[AUDIO_BGM])
 	{
-		for (Audio* persist : persisting_audio)
-		{
+		/*for (Audio* persist : persisting_audio)
+		{*/
 			//if (channel_pair.first == persist->mChannelID) // skip stopping this audio
 			//{
 			//	continue;
@@ -401,14 +401,20 @@ void AudioSystem::Reset()
 				channel_pair.second->getCurrentSound(&sound);
 
 				if (sound != nullptr)
-				{
+				{   
+					if (scene_switched == true)
+					{
+						channel_pair.second->getPosition(&playback_position, FMOD_TIMEUNIT_MS);
+						std::cout << "PLAYBACK: " << playback_position << std::endl;
+					}
+
 					channel_pair.second->stop();
 					channel_pair.second = nullptr;
 				}
 			//}
 			
 			
-		}
+		//}
 	}
 
 
@@ -582,8 +588,16 @@ unsigned int AudioSystem::PlaySound(std::string audio_name, AUDIOTYPE type, floa
 
 		if (!current_sound)
 		{	
+
 			system_obj->playSound(sound, 0, true, &channel.second);
 			channel.second->setVolume(vol);
+
+			if (audio_name == "M3BGM.wav" && scene_switched == true)
+			{
+				channel.second->setPosition(playback_position, FMOD_TIMEUNIT_MS);
+				std::cout << "HEY" << std::endl;
+				scene_switched = false;
+			}
 
 			if (audio_component->m3DAudio)
 			{

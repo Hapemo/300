@@ -1280,7 +1280,7 @@ void Audio::Inspect() {
 	// Debugging (to show which audio are playing) - on editor
 	if (mState == Audio::PLAYING)
 	{
-		//ImGui::Text("Audio: %s is currently playing on (ID = %u)", mCurrentlyPlaying.c_str(), mChannelID);
+		ImGui::Text("Audio: %s is currently playing on (ID = %u)", mCurrentlyPlaying.c_str(), mChannelID);
 		std::string audio_type;
 		switch (mAudioType)
 		{
@@ -1291,7 +1291,7 @@ void Audio::Inspect() {
 				audio_type = "BGM";
 				break;
 		}
-		//ImGui::Text("On the %s group", audio_type.c_str());
+		ImGui::Text("On the %s group", audio_type.c_str());
 	}
 		
 

@@ -23,7 +23,7 @@ M_GSMSTATE::EXIT is only used for closing the game in GAMEMODE only.
 #include "ECS/ECS_Components.h"
 #include "ConfigManager.h"
 #include "Input/Input.h"
-#include "Audio/AudioSystem.h"
+#include "Audio/AudioSystemRevamp.h"
 
 GameStateManager::GameStateManager() : mErrorScene("Error"), mGSMState(E_GSMSTATE::NONE), mCurrentGameState(), mNextGSName(ConfigManager::GetValue("StartingGameState")) {};
 
@@ -59,6 +59,7 @@ void GameStateManager::UpdateNextGSMState() {
 		systemManager->ResetForChangeGS();
 		break;
 	case E_GSMSTATE::CHANGING:
+		systemManager->mAudioSystem.get()->scene_switched = true;
 		systemManager->mAudioSystem.get()->Reset();			// [11/4] Using <Audio> component, must happen before clearing of entities.
 		mCurrentGameState.Unload();
 		std::ifstream file{ ConfigManager::GetValue("GameStatePath") + mNextGSName + ".gs" };
