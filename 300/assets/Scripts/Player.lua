@@ -154,35 +154,35 @@ function Alive()
 
     cameraPhysicsComp = cameraEntity:GetRigidBody()
     
-    dashui = gameStateSys:GetEntity("UI1", "testSerialization")
+    dashui = gameStateSys:GetEntity("UI1")
 
-    bulletAudioEntity = gameStateSys:GetEntity("Bullet Shoot" , "testSerialization")
+    bulletAudioEntity = gameStateSys:GetEntity("Bullet Shoot" )
     bulletAudioComp = bulletAudioEntity:GetAudio()
 
-    jumpAudioEntity = gameStateSys:GetEntity("Jump" , "testSerialization")
+    jumpAudioEntity = gameStateSys:GetEntity("Jump" )
     jumpAudioComp = jumpAudioEntity:GetAudio()
 
-    dashAudioEntity = gameStateSys:GetEntity("Dash" , "testSerialization")
+    dashAudioEntity = gameStateSys:GetEntity("Dash" )
     dashAudioComp = dashAudioEntity:GetAudio()
 
-    machineGunAudioEntity = gameStateSys:GetEntity("Machine Gun Shoot (LOOP)" , "testSerialization")
+    machineGunAudioEntity = gameStateSys:GetEntity("Machine Gun Shoot (LOOP)" )
     machineGunAudioComp = machineGunAudioEntity:GetAudio()
     machineGunAudioComp:UpdateVolume(0.0)
     machineGunAudioComp:SetPlay()
 
     dashTime = 3.0
     tpTime = 20.0
-    teleporter1 = gameStateSys:GetEntity("Teleporter1", "testSerialization")
-    teleporter2 = gameStateSys:GetEntity("Teleporter2", "testSerialization")
-    --walkingenemy = gameStateSys:GetEntity("enemy1_walking", "testSerialization")
+    teleporter1 = gameStateSys:GetEntity("Teleporter1")
+    teleporter2 = gameStateSys:GetEntity("Teleporter2")
+    --walkingenemy = gameStateSys:GetEntity("enemy1_walking")
     onTpTime = 0;
     collideWithTP = 0
     originalSamplingWeight = graphicsSys.mSamplingWeight
-    tpfin1 = gameStateSys:GetEntity("Fin1", "testSerialization")
-    tpfin2 = gameStateSys:GetEntity("Fin2", "testSerialization")
+    tpfin1 = gameStateSys:GetEntity("Fin1")
+    tpfin2 = gameStateSys:GetEntity("Fin2")
 
     -- Gun Stuff --
-    gunEntity = gameStateSys:GetEntity("gun", "testSerialization")
+    gunEntity = gameStateSys:GetEntity("gun")
     gunInitialTranslate = gunEntity:GetTransform().mTranslate
     gunRotation = gunEntity:GetTransform().mRotate
 
@@ -555,9 +555,9 @@ function Update()
                     -- gunRecoilState = "MOVING"
 
                     -- Shoots Bullet
-                    positions_final.x = positions.x + viewVecCam.x*5
-                    positions_final.y = positions.y + viewVecCam.y*5
-                    positions_final.z = positions.z + viewVecCam.z*5  
+                    positions_final.x = positions.x + viewVecCam.x*3
+                    positions_final.y = positions.y + viewVecCam.y*3
+                    positions_final.z = positions.z + viewVecCam.z*3  
 
                     prefabEntity = systemManager.ecs:NewEntityFromPrefab("Revolver Bullet", positions_final)
                     rotationCam.x = rotationCam.z *360
@@ -856,9 +856,9 @@ function moreAccurateShotgun(num_of_bullets)
         final_vector.z = viewVec.z + world_true_up_vector.z
 
         -- Starting Position of bullet 
-        positions_final.x = positions.x +  final_vector.x * 5-- 'positions' - camera's translate
-        positions_final.y = positions.y +  final_vector.y * 5
-        positions_final.z = positions.z +  final_vector.z * 5
+        positions_final.x = positions.x +  final_vector.x * 2-- 'positions' - camera's translate
+        positions_final.y = positions.y +  final_vector.y * 2
+        positions_final.z = positions.z +  final_vector.z * 2
 
         final_vector.x = (viewVec.x + world_true_up_vector.x) * bullet_speed
         final_vector.y = (viewVec.y + world_true_up_vector.y) * bullet_speed

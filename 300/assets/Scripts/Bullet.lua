@@ -54,8 +54,8 @@ function Update()
     viewVec = Camera_Scripting.GetDirection(cameraEntity)
     physicsSys = systemManager:mPhysicsSystem()
 
-    bullethitAudioEntity = gameStateSys:GetEntity("Bullet Hit")
-    bullethitAudioComp = bullethitAudioEntity:GetAudio()
+    -- bullethitAudioEntity = gameStateSys:GetEntity("Bullet Hit")
+    -- bullethitAudioComp = bullethitAudioEntity:GetAudio()
     -- bullethitAudioSource = Helper.CreateAudioSource(bullethitEntity)
 
     bulletObject = Helper.GetScriptEntity(script_entity.id)
@@ -81,7 +81,21 @@ end
 
 function OnTriggerEnter(Entity)
     generalComponent = Entity:GetGeneral()
+    healthComponent = Entity:GetHealthbar()
+    
+
+    if(Entity:HasHealthbar()) then 
+        print("HAS HEALTH BAR")
+    end
+
+    if(healthComponent ~= nil) then 
+        print("HEALTH COMPONENT ASSIGNED")
+        print("HEALTH:" , healthComponent.health)
+    end
+
     entityobj = Helper.GetScriptEntity(script_entity.id)
+
+    print("THIS ENTITY is: " , generalComponent.name)
 
     tagid = generalComponent.tagid
     if (tagid == 1) then
@@ -90,11 +104,11 @@ function OnTriggerEnter(Entity)
             spawned(i)
         end
         gameStateSys = systemManager:mGameStateSystem()
-        bullethitAudioComp:SetPlay(0.2)
+        -- bullethitAudioComp:SetPlay(0.2)
 
-        Entity:GetTransform().mScale.x = Entity:GetTransform().mScale.x * 0.9
-        Entity:GetTransform().mScale.y = Entity:GetTransform().mScale.y * 0.9
-        Entity:GetTransform().mScale.z = Entity:GetTransform().mScale.z * 0.9
+        -- Entity:GetTransform().mScale.x = Entity:GetTransform().mScale.x * 0.9
+        -- Entity:GetTransform().mScale.y = Entity:GetTransform().mScale.y * 0.9
+        -- Entity:GetTransform().mScale.z = Entity:GetTransform().mScale.z * 0.9
 
 
                 
@@ -130,21 +144,31 @@ function OnTriggerEnter(Entity)
         end
 
         if(bulletTag == "REVOLVER") then 
-            enemytag1HP = enemytag1HP - revolverDamage
-            print("ENEMY TAKING DAMAGE: ", revolverDamage)
-            print("HP LEFT: " , enemytag1HP)
+            if(healthComponent ~= nil) then 
+                print("HEALTH COMPONENT ASSIGNED (REVOLVER)")
+                print("HEALTH:" , healthComponent.health)
+            end
+
+            healthComponent.health = healthComponent.health - revolverDamage
+            print("HEALTH: " , healthComponent.health)
         end
 
         if(bulletTag == "SHOTGUN") then 
-            enemytag1HP = enemytag1HP - shotGunDamage
-            print("ENEMY TAKING DAMAGE: ", shotGunDamage)
-            print("HP LEFT: " , enemytag1HP)
+            if(healthComponent ~= nil) then 
+                print("HEALTH COMPONENT ASSIGNED (SHOTGUN)")
+                print("HEALTH:" , healthComponent.health)
+            end
+            healthComponent.health = healthComponent.health - shotGunDamage
+            print("HEALTH: " , healthComponent.health)
         end
 
         if(bulletTag == "MACHINE_GUN") then 
-            enemytag1HP = enemytag1HP - machineGunDamage
-            print("ENEMY TAKING DAMAGE: ", machineGunDamage)
-            print("HP LEFT: " , enemytag1HP)
+            if(healthComponent ~= nil) then 
+                print("HEALTH COMPONENT ASSIGNED (SHOTGUN)")
+                print("HEALTH:" , healthComponent.health)
+            end
+            healthComponent.health = healthComponent.health - machineGunDamage
+            print("HEALTH: " , healthComponent.health)
         end
 
         if(enemytag1HP <= 0) then 
