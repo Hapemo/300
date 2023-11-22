@@ -12,7 +12,7 @@
         "bloom_offset": 1.8380000591278076,
         "bloom_sampleweight": 0.5960000157356262,
         "chroma_strength": 0.019200000911951065,
-        "bloom_enable": false,
+        "bloom_enable": true,
         "chroma_enable": false,
         "global_tint": {
             "x": 1.0,
@@ -35,7 +35,7 @@
         "bloom_offset": 1.8380000591278076,
         "bloom_sampleweight": 0.5960000157356262,
         "chroma_strength": 0.019200000911951065,
-        "bloom_enable": false,
+        "bloom_enable": true,
         "chroma_enable": false,
         "global_tint": {
             "x": 1.0,
