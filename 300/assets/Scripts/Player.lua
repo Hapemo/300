@@ -318,21 +318,18 @@ function Update()
     dashTime = dashTime + FPSManager.GetDT();
     positions = cameraEntity:GetTransform().mTranslate
     
-    viewVec = Camera_Scripting.GetDirection(cameraEntity)
     viewVecCam = Camera_Scripting.GetDirection(cameraEntity)
     rotationCam = Camera_Scripting.GetDirection(cameraEntity)
     targetCam = Camera_Scripting.GetTarget(cameraEntity)
     positionCam = Camera_Scripting.GetPosition(cameraEntity) -- works   
 
-    -- print("TARGET CAM: " , targetCam.x)
-    -- print("CAMERA POSITION: " , positionCam.x)
+    -- Normalize First
+    viewVec.x = targetCam.x - positionCam.x 
+    viewVec.y = targetCam.y - positionCam.y
+    viewVec.z = targetCam.z - positionCam.z
 
-
-    
- 
-
-    viewVec.y = 0;
     viewVec = Helper.Normalize(viewVec)
+       
 
     movement.x = 0;
     movement.y = cameraEntity:GetRigidBody().mVelocity.y
@@ -600,7 +597,7 @@ function Update()
                     -- gunRecoilState = "MOVING"
 
                     --shotgunbullets(5) -- bullets + recoil (param) - number of bullets in spray
-                    moreAccurateShotgun()
+                    moreAccurateShotgun(10)
                     applyGunRecoil(recoil_speed * 0.5, 0.1)
 
                     shotGunTimer = shotGunTimer + shotGunCooldown
@@ -842,17 +839,62 @@ function shotgunbullets(number_of_bullets)
     end
 end 
 
-function moreAccurateShotgun() 
+function moreAccurateShotgun(num_of_bullets) 
+
+    local bullet_speed = 50
 
     -- 1. Get my local right vector
     up_vector.x = 0 
     up_vector.y = 1
     up_vector.z = 0
 
-    world_local_right_vector = Camera_Scripting.Cross(viewVec, up_vector) -- get vector pointing to rightwards of player
-    print("HI")
+    local local_right_vector = Vec3.new()
+    local world_true_up_vector = Vec3.new()
+    local final_vector = Vec3.new()
+    
+    local_right_vector = Camera_Scripting.Cross(viewVec, up_vector) -- get vector pointing to rightwards of player
+    print("LOCAL RIGHT VECTOR: " , local_right_vector.x, local_right_vector.y, local_right_vector.z)
+    world_true_up_vector = Camera_Scripting.Cross(local_right_vector, viewVec)
+   
+    for i = 0 , num_of_bullets , 1 do
+        spreadRange = math.random(-1,1)
+        spreadRange = spreadRange / 10
+
+        randomAngleinDegree = math.random(0,360)
+
+       -- print("SPREAD RANGE:" , spreadRange)
+        world_true_up_vector.x = spreadRange * local_right_vector.x
+        world_true_up_vector.y = spreadRange * local_right_vector.y
+        world_true_up_vector.z = spreadRange * local_right_vector.z
+
+        final_vector.x = viewVec.x + world_true_up_vector.x
+        final_vector.y = viewVec.y + world_true_up_vector.y
+        final_vector.z = viewVec.z + world_true_up_vector.z
+
+        -- Starting Position of bullet 
+        positions_final.x = positions.x +  final_vector.x * 5-- 'positions' - camera's translate
+        positions_final.y = positions.y +  final_vector.y * 5
+        positions_final.z = positions.z +  final_vector.z * 5
+
+        final_vector.x = (viewVec.x + world_true_up_vector.x) * bullet_speed
+        final_vector.y = (viewVec.y + world_true_up_vector.y) * bullet_speed
+        final_vector.z = (viewVec.z + world_true_up_vector.z) * bullet_speed
+
+        -- Randomnized Rotation
+        final_vector = Camera_Scripting.Rotate(final_vector, viewVec, randomAngleinDegree)
+   
+    
+        bulletPrefab = systemManager.ecs:NewEntityFromPrefab("bullet", positions_final)
+
+        -- Scaling Down (Shotgun pellets)
+        original_scale = bulletPrefab:GetTransform().mScale 
+        bulletPrefab:GetTransform().mScale.x = original_scale.x / 3
+        bulletPrefab:GetTransform().mScale.y = original_scale.y / 3
+        bulletPrefab:GetTransform().mScale.z = original_scale.z / 3
 
 
+        physicsSys:SetVelocity(bulletPrefab, final_vector)
+    end
 
 
     -- for i = 0 , num_of_bullets, 1 do

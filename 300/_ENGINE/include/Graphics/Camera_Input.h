@@ -49,6 +49,7 @@ public:
 
 	// Math
 	static vec3 Cross(vec3 const& u, vec3 const& v) { return glm::cross(u, v); }
+	static vec3 Rotate(vec3 const& v, vec3 const& axis, float degree);
 
 };
 

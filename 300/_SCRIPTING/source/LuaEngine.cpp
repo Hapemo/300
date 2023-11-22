@@ -163,7 +163,8 @@ void LuaCamera()
         "GetSensitivity", &Camera_Scripting::GetSensitivity,
         "RotateCameraView", &Camera_Scripting::RotateCameraView,
         "SetFov", &Camera_Scripting::SetFov,
-        "Cross", &Camera_Scripting::Cross);
+        "Cross", &Camera_Scripting::Cross, 
+        "Rotate" , &Camera_Scripting::Rotate);
 }
 
 void LuaFPSManager()
