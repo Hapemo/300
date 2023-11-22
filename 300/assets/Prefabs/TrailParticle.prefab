@@ -1,5 +1,5 @@
 {
-    "entityid": 172,
+    "entityid": 5242896,
     "general": {
         "name": "TrailParticle",
         "tagid": 8,
@@ -9,9 +9,9 @@
     },
     "transform": {
         "scale": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0
+            "x": 0.20000000298023224,
+            "y": 0.20000000298023224,
+            "z": 0.20000000298023224
         },
         "rotate": {
             "x": 0.0,
@@ -19,9 +19,9 @@
             "z": 0.0
         },
         "translate": {
-            "x": 0.0,
-            "y": 3.968390464782715,
-            "z": 10.199102401733398
+            "x": 12.813629150390625,
+            "y": -10.475838661193848,
+            "z": 23.168916702270508
         }
     },
     "meshrenderer": {
@@ -42,19 +42,19 @@
         },
         "materialinstance": [
             "../assets/Compressed/Cube_Texture_White.ctexture",
-            " ",
-            " ",
-            " ",
-            " ",
+            "../assets/Compressed/Cube_Texture_White_Normal.ctexture",
+            "../assets/Compressed/Cube_Texture_White.ctexture",
+            "../assets/Compressed/Cube_Texture_White.ctexture",
+            "../assets/Compressed/Cube_Texture_White.ctexture",
             " "
         ],
         "mesh": "../assets/compiled_geom/Particle_Sphere.geom",
         "texturerefid": [
             4706,
-            0,
-            0,
-            0,
-            0,
+            5418,
+            4706,
+            4706,
+            4706,
             0
         ]
     },

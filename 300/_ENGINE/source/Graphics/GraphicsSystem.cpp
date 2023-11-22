@@ -1633,7 +1633,7 @@ void GraphicsSystem::DrawAll2DInstances(unsigned shaderID)
 	// Bind 2D quad VAO
 	m_Image2DMesh.BindVao();
 
-	// Draw call
+	// Draw call for UI
 	glDrawArraysInstanced(GL_TRIANGLE_FAN, 0, 4, static_cast<GLsizei>(m_Image2DMesh.mLTW.size()));
 
 	// Unbind 2D quad VAO
@@ -1997,6 +1997,15 @@ void GraphicsSystem::AddPortalInstance(Entity portal)
 
 void GraphicsSystem::DrawAllPortals(bool editorDraw)
 {
+	if (m_PortalMesh.mLTW.empty())
+		return;
+
+	// Bind Textures to OpenGL context
+	for (size_t i{}; i < m_Image2DStore.size(); ++i)
+	{
+		glBindTextureUnit(static_cast<GLuint>(i), m_Image2DStore[static_cast<GLuint>(i)]);
+	}
+
 	// Get appropriate camera
 	GFX::Camera camera = GetCamera(CAMERA_TYPE::CAMERA_TYPE_GAME);
 	if (editorDraw)
@@ -2015,6 +2024,15 @@ void GraphicsSystem::DrawAllPortals(bool editorDraw)
 
 	m_PortalMesh.UnbindVao();
 	GFX::Shader::Deactivate();
+
+	if (m_Image2DStore.size() == 0)
+		return;
+
+	// Bind Textures to OpenGL context
+	for (size_t i{}; i < m_Image2DStore.size(); ++i)
+	{
+		glBindTextureUnit(static_cast<GLuint>(i), 0);
+	}
 }
 
 void GraphicsSystem::ComputeDeferredLight(bool editorDraw)
