@@ -17,7 +17,7 @@ local ShotSpeed
 
 local inLineOfSight
 
-local deathTimer = 2
+local deathTimer = 0.1
 local deathTimerCount
 
 local state
@@ -43,6 +43,16 @@ function Alive()
 end
 
 function Update()
+
+    if state == "DEATH" then
+        if deathTimerCount > deathTimer then systemManager.ecs:SetDeleteEntity(this) end
+        deathTimerCount = deathTimerCount + FPSManager.GetDT()
+        return
+    end
+
+    if systemManager:mInputActionSystem():GetButtonDown("Test3") then
+        this:GetHealthbar().health = this:GetHealthbar().health - 10
+    end
 
     targetPos = this:GetAISetting():GetTarget():GetTransform().mTranslate
     thisPos = this:GetTransform().mTranslate
@@ -106,11 +116,6 @@ function ILOVEYOUMovement()
         end
     end
     --
-
-    if state == "DEATH" then
-        if deathTimerCount > deathTimer then systemManager.ecs:SetDeleteEntity(this) end
-        deathTimerCount = deathTimerCount + FPSManager.GetDT()
-    end
     
     phySys:SetVelocity(this, vec);
     --#endregion
@@ -139,4 +144,5 @@ function StartDeath()
     -- Start death animation
     -- Start death sound
     state = "DEATH"
+    phySys:SetVelocity(this, Vec3.new())
 end

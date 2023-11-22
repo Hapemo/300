@@ -12,7 +12,7 @@ local triggerExplosionDistance
 
 local state
 local explodingTimer = 2
-local explodingTimerCount
+local explodingTimerCount = 0
 
 function Alive()
     this = Helper.GetScriptEntity(script_entity.id)
@@ -32,6 +32,10 @@ function Alive()
 end
 
 function Update()
+
+    if systemManager:mInputActionSystem():GetButtonDown("Test4") then
+        this:GetHealthbar().health = this:GetHealthbar().health - 10
+    end
 
     --#region Movement
     vec = aiSys:GetDirection(this)
@@ -62,7 +66,7 @@ function Update()
     
     if state == "EXPLODING" then
         explodingTimerCount = explodingTimerCount + FPSManager.GetDT()
-        if explodingTimerCount > explodingTimer then amekazi() end
+        if explodingTimerCount > explodingTimer then Kamekazi() end
         return
     end
 

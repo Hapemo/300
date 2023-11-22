@@ -7,14 +7,15 @@ local phySys
 -- Other variables
 local this
 
-local deathTimer = 2
+local deathTimer = 0.1
 local deathTimerCount
 
 local state
 
 local aiSetting
 
-local prevPos = Vec3.new()
+local rotate = Vec3.new()
+
 -- Trojan horse states
 -- 1. ROAM. roam around and passively look for player (change to 2. when sees player)
 -- 2. CHARGE. saw player, eyes glow red, play some charge up noise, delay about 3 seconds before charging to player (change to 3. when delay ends)
@@ -37,8 +38,7 @@ end
 
 function Update()
 
-    -- OTHER UPDATE CODES
-    if systemManager:mInputActionSystem():GetButtonDown("Test2") then
+    if systemManager:mInputActionSystem():GetButtonDown("Test5") then
         this:GetHealthbar().health = this:GetHealthbar().health - 10
     end
 
@@ -50,8 +50,11 @@ function Update()
 
     -- Attack portion is in oncontact
     -- Movement
-
+    -- rotate.y = Helper.DirectionToAngle(this, this:GetRigidBody().mVelocity)
+    -- Helper.SetRotate(this, rotate)
+    
     if Helper.Vec3Len(this:GetRigidBody().mVelocity) < 0.1 then
+        print(this:GetRigidBody().mVelocity)
         local upVec = Vec3.new()
         upVec.y = 8
         phySys:SetVelocity(this, upVec);
@@ -77,9 +80,6 @@ function OnContactEnter(Entity)
     
     local tagID = Entity:GetGeneral().tagid
     local velocity = Helper.Normalize(Helper.Vec3Minus(aiSetting:GetTarget():GetTransform().mTranslate, this:GetTransform().mTranslate))
-    local rotate = velocity
-    rotate.x = 0
-    Helper.SetRotate(this, rotate)
     velocity = Helper.Scale(velocity, 3)
     velocity.y = 8
     if tagID == 3 then -- "FLOOR"
@@ -92,7 +92,6 @@ function OnContactEnter(Entity)
         -- Make player take damage here
         print("player damaged by trojan soldier")
     end
-
     phySys:SetVelocity(this, velocity);
 end
 
