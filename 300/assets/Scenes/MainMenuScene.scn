@@ -35,7 +35,8 @@
                 "z": 1.0,
                 "w": 1.0
             },
-            "layer": 1
+            "layer": 1,
+            "worldtransform": false
         },
         "scripts": {
             "scriptscontainer": [
@@ -136,7 +137,8 @@
                 "z": 1.0,
                 "w": 1.0
             },
-            "layer": 1
+            "layer": 1,
+            "worldtransform": false
         },
         "scripts": {
             "scriptscontainer": [
@@ -358,7 +360,8 @@
                 "z": 1.0,
                 "w": 1.0
             },
-            "layer": 1
+            "layer": 1,
+            "worldtransform": false
         },
         "scripts": {
             "scriptscontainer": [
@@ -384,6 +387,127 @@
             "click": true,
             "activated": false,
             "renderflag": true
+        }
+    },
+    {
+        "entityid": 5,
+        "general": {
+            "name": "MenuBackground",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1920.0,
+                "y": -1080.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "../assets/Compressed/MainMenuEmpty.ctexture",
+            "textureref": 4188,
+            "degree": 0.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 0,
+            "worldtransform": false
+        }
+    },
+    {
+        "entityid": 6,
+        "general": {
+            "name": "BGM",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "M2BGM.wav",
+            "fullpath": "../assets\\Audio/M2BGM.wav",
+            "playonawake": true,
+            "islooping": true,
+            "audiotype": 0,
+            "volume": 1.0
+        }
+    },
+    {
+        "entityid": 7,
+        "general": {
+            "name": "Camera",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "camera": {
+            "positon": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "target": {
+                "x": 1.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "size": {
+                "x": 1303,
+                "y": 638
+            },
+            "near": 0.10000000149011612,
+            "far": 900.0
         }
     }
 ]

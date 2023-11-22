@@ -112,6 +112,7 @@ void UIrenderer::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>&
 	Serialize(writer, "degree", mDegree);
 	Serialize(writer, "color", mColor);
 	Serialize(writer, "layer", mLayer);
+	Serialize(writer, "worldtransform", mWorldTransform);
 	writer.EndObject();
 }
 
@@ -122,6 +123,7 @@ void UIrenderer::DeserializeSelf(rapidjson::Value& reader)
 	Deserialize(reader, "degree", mDegree);
 	Deserialize(reader, "color", mColor);
 	Deserialize(reader, "layer", mLayer);
+	Deserialize(reader, "worldtransform", mWorldTransform);
 }
 
 void RigidBody::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const

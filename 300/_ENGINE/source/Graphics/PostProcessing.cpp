@@ -67,7 +67,8 @@ void PostProcessing::ChromaticAbbrebationBlendFramebuffers(GFX::FBO& targetFrame
 
 void PostProcessing::CRTBlendFramebuffers(GFX::FBO& targetFramebuffer, GFX::PingPongFBO& bufferfbo, float dt)
 {
-	glBlendFunc(GL_ONE_MINUS_DST_COLOR, GL_ONE);
+	//glBlendFunc(GL_ONE_MINUS_DST_COLOR, GL_ONE);
+	glBlendFunc(GL_SRC_COLOR, GL_ONE_MINUS_SRC_COLOR);
 
 	{
 		// blit the framebuffer to the temp framebuffer, as a reference framebuffer before drawing onto the target framebuffer
@@ -186,6 +187,29 @@ bool PhysBasedBloomRenderer::Init(unsigned int windowWidth, unsigned int windowH
 
 	mInit = true;
 	return true;
+}
+
+
+void PhysBasedBloomRenderer::Resize(int width, int height)
+{
+	mIntSrcViewportSize = glm::ivec2(width, height);
+	mSrcViewportSize = glm::vec2((float)width, (float)height);
+	
+	float localwidth = (float)width;
+	float localheight = (float)height;
+
+	for (int i{}; i < mBloomFBO.mMipChain.size(); ++i)
+	{
+		mBloomFBO.mMipChain[i].mSize = glm::ivec2((int)localwidth, (int)localheight);
+		mBloomFBO.mMipChain[i].mIntSize = glm::vec2(localwidth, localheight);
+
+		glBindTexture(GL_TEXTURE_2D, mBloomFBO.mMipChain[i].mTexture);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, mBloomFBO.mMipChain[i].mIntSize.x, mBloomFBO.mMipChain[i].mIntSize.y, 0, GL_RGBA, GL_FLOAT, NULL);
+		glBindTexture(GL_TEXTURE_2D, 0);
+
+		localwidth /= 2.f;
+		localheight /= 2.f;
+	}
 }
 
 

@@ -14,7 +14,7 @@
         "chroma_strength": 0.01899999938905239,
         "bloom_enable": true,
         "crt_enable": true,
-        "chroma_enable": true,
+        "chroma_enable": false,
         "global_tint": {
             "x": 1.0,
             "y": 1.0,

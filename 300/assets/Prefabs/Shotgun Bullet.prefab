@@ -1,5 +1,5 @@
 {
-    "entityid": 4194379,
+    "entityid": 2097207,
     "general": {
         "name": "Shotgun Bullet",
         "tagid": 9,
@@ -9,9 +9,9 @@
     },
     "transform": {
         "scale": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0
+            "x": 0.5,
+            "y": 0.5,
+            "z": 0.5
         },
         "rotate": {
             "x": -335.18499755859375,
@@ -45,9 +45,9 @@
         "frag": "../assets/shader_files/pointLight_frag.glsl",
         "meshrefid": 2285,
         "instancecolor": {
-            "x": 0.6847290992736816,
-            "y": 0.1686524748802185,
-            "z": 0.1686524748802185,
+            "x": 0.8916256427764893,
+            "y": 0.18447425961494446,
+            "z": 0.18447425961494446,
             "w": 1.0
         },
         "bloomthreshold": {
@@ -58,7 +58,7 @@
         },
         "materialinstance": [
             "../assets/Compressed/Cube_Texture_White.ctexture",
-            " ",
+            "../assets/Compressed/Cube_Texture_White_Normal.ctexture",
             " ",
             " ",
             " ",
@@ -67,7 +67,7 @@
         "mesh": "../assets/compiled_geom/cube.geom",
         "texturerefid": [
             4706,
-            0,
+            5418,
             0,
             0,
             0,

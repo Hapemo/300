@@ -50,6 +50,7 @@ public:
 	bool Init(unsigned int windowWidth, unsigned int windowHeight);
 	void Destroy();
 	void PrepForDraw();
+	void Resize(int width, int height);
 	void RenderBloom(unsigned int sourceTexture, float filterRadius);
 	GLuint getBloomTexture() { return mBloomFBO.mMipChain[0].mTexture; }
 	

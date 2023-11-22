@@ -1,5 +1,5 @@
 {
-    "entityid": 8388759,
+    "entityid": 6291680,
     "general": {
         "name": "Revolver Bullet",
         "tagid": 10,
@@ -9,19 +9,19 @@
     },
     "transform": {
         "scale": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0
+            "x": 0.20000000298023224,
+            "y": 0.20000000298023224,
+            "z": 3.0
         },
         "rotate": {
-            "x": -335.18463134765625,
-            "y": -0.0,
-            "z": 3.1415927410125732
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
         },
         "translate": {
-            "x": 13.857372283935547,
-            "y": -10.240767478942871,
-            "z": 21.210899353027344
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
         }
     },
     "rigidbody": {
@@ -45,9 +45,9 @@
         "frag": "../assets/shader_files/pointLight_frag.glsl",
         "meshrefid": 2285,
         "instancecolor": {
-            "x": 0.95652174949646,
+            "x": 0.0,
             "y": 1.0,
-            "z": 0.0,
+            "z": 0.5714285373687744,
             "w": 1.0
         },
         "bloomthreshold": {
@@ -58,19 +58,19 @@
         },
         "materialinstance": [
             "../assets/Compressed/Cube_Texture_White.ctexture",
+            "../assets/Compressed/Cube_Texture_White_Normal.ctexture",
             " ",
             " ",
-            " ",
-            " ",
+            "../assets/Compressed/cube_emission.ctexture",
             " "
         ],
         "mesh": "../assets/compiled_geom/cube.geom",
         "texturerefid": [
             4706,
+            5418,
             0,
             0,
-            0,
-            0,
+            4248,
             0
         ]
     },

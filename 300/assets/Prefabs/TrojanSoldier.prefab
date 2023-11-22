@@ -1,5 +1,5 @@
 {
-    "entityid": 2097347,
+    "entityid": 7,
     "general": {
         "name": "TrojanSoldier",
         "tagid": 1,
@@ -19,8 +19,8 @@
             "z": 0.0
         },
         "translate": {
-            "x": 0.0,
-            "y": 0.0,
+            "x": 6.103666305541992,
+            "y": 7.450580596923828e-9,
             "z": 0.0
         }
     },
@@ -74,21 +74,22 @@
             4545
         ]
     },
-    "boxcollider": {
-        "scaleoffset": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0
-        },
+    "spherecollider": {
+        "scaleoffset": 1.0,
         "translateoffset": {
             "x": 0.0,
-            "y": 0.09000000357627869,
+            "y": 0.22499999403953552,
             "z": 0.0
         },
         "istrigger": false
     },
     "scripts": {
-        "scriptscontainer": []
+        "scriptscontainer": [
+            {
+                "scriptFile": "../assets/Scripts/TrojanSoldier.lua",
+                "variables": []
+            }
+        ]
     },
     "prefab": {
         "prefab": "TrojanSoldier"

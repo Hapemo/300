@@ -1,0 +1,45 @@
+{
+    "entityid": 200,
+    "general": {
+        "name": "UI-red",
+        "tagid": 0,
+        "subtag": 0,
+        "isActive": true,
+        "isPaused": false
+    },
+    "transform": {
+        "scale": {
+            "x": -20.0,
+            "y": 20.0,
+            "z": 1.0
+        },
+        "rotate": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "translate": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        }
+    },
+    "uirenderer": {
+        "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
+        "textureref": 3353,
+        "degree": 0.0,
+        "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+        },
+        "layer": 0
+    },
+    "scripts": {
+        "scriptscontainer": []
+    },
+    "prefab": {
+        "prefab": "UI-red"
+    }
+}
