@@ -109,8 +109,8 @@ void GraphicsSystem::Init()
 		glBindImageTexture(6, m_IntermediateFBO.GetEmissionAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
 	}
 	
-	glEnable(GL_CULL_FACE);
-	glCullFace(GL_BACK);
+	//glEnable(GL_CULL_FACE);
+	//glCullFace(GL_BACK);
 
 	// Set Cameras' starting position
 	SetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR, {38, 20, 30});									// Position of camera
