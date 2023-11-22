@@ -51,6 +51,7 @@ void GraphicsSystem::Init()
 		m_HealthbarMesh.Setup2DImageMesh();
 		m_Image2DMesh.Setup2DImageMesh();
 		m_PortalMesh.Setup2DImageMesh();
+		m_ParticleMesh.Setup2DImageMesh();
 		for (int i{}; i < 32; ++i)
 		{
 			m_Textures.emplace_back(i);
@@ -1539,6 +1540,7 @@ void GraphicsSystem::ResizeWindow(ivec2 newSize)
 	m_MultisampleFBO.Resize(newSize.x, newSize.y);
 	m_IntermediateFBO.Resize(newSize.x, newSize.y);
 	m_PingPongFbo.Resize(newSize.x, newSize.y);
+	m_PhysBloomRenderer.Resize(newSize.x, newSize.y);
 
 	// Input
 	glBindImageTexture(2, m_IntermediateFBO.GetBrightColorsAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
@@ -1916,6 +1918,10 @@ void GraphicsSystem::SetupAllShaders()
 	// Initialize the quad 3D Shader
 	uid quad3DShaderstr("Quad3D");
 	m_Quad3DShaderInst = *systemManager->mResourceTySystem->get_Shader(quad3DShaderstr.id);
+	m_Quad3DShaderInst.Activate();
+	uniform_tex = glGetUniformLocation(m_Quad3DShaderInst.GetHandle(), "uTex2d");
+	glUniform1iv(uniform_tex, (GLsizei)m_Textures.size(), m_Textures.data()); // Passing texture Binding units to frag shader [0 - 31]
+	m_Quad3DShaderInst.Deactivate();
 }
 
 mat4 GraphicsSystem::GetPortalViewMatrix(GFX::Camera const& camera, Transform const& sourcePortal, Transform const& destPortal)
