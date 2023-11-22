@@ -1,8 +1,8 @@
 [
     {
-        "entityid": 1,
+        "entityid": 4194357,
         "general": {
-            "name": "TV ON",
+            "name": "Exit",
             "tagid": 0,
             "subtag": 0,
             "isActive": true,
@@ -27,27 +27,28 @@
         },
         "audio": {
             "filepath": "../assets\\Audio",
-            "filename": "tvOn.wav",
-            "fullpath": "../assets\\Audio/tvOn.wav",
-            "playonawake": true,
+            "filename": "UI_Screen_Sleep.wav",
+            "fullpath": "../assets\\Audio/UI_Screen_Sleep.wav",
+            "playonawake": false,
             "islooping": false,
             "audiotype": 1,
-            "volume": 0.5
+            "volume": 0.6000000238418579,
+            "retainaudio": false
         }
     },
     {
-        "entityid": 2,
+        "entityid": 4194358,
         "general": {
-            "name": "StartButton",
-            "tagid": 6,
+            "name": "Camera",
+            "tagid": 0,
             "subtag": 0,
             "isActive": true,
             "isPaused": false
         },
         "transform": {
             "scale": {
-                "x": 600.0,
-                "y": -133.0,
+                "x": 1.0,
+                "y": 1.0,
                 "z": 1.0
             },
             "rotate": {
@@ -56,53 +57,34 @@
                 "z": 0.0
             },
             "translate": {
-                "x": -1320.0,
-                "y": -400.0,
+                "x": 0.0,
+                "y": 0.0,
                 "z": 0.0
             }
         },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 4270,
-            "degree": 0.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
+        "camera": {
+            "positon": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
             },
-            "layer": 1,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/MainMenuButtons.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "click.wav",
-            "fullpath": "../assets\\Audio/click.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 0.20000000298023224
-        },
-        "button": {
-            "interactable": true,
-            "hover": false,
-            "click": false,
-            "activated": false,
-            "renderflag": true
+            "target": {
+                "x": 1.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "size": {
+                "x": 1304,
+                "y": 586
+            },
+            "near": 0.10000000149011612,
+            "far": 900.0
         }
     },
     {
-        "entityid": 3,
+        "entityid": 4194359,
         "general": {
-            "name": "QuitButton",
+            "name": "MenuBackground",
             "tagid": 6,
             "subtag": 0,
             "isActive": true,
@@ -110,8 +92,8 @@
         },
         "transform": {
             "scale": {
-                "x": 600.0,
-                "y": -133.0,
+                "x": 1920.0,
+                "y": -1080.0,
                 "z": 1.0
             },
             "rotate": {
@@ -120,14 +102,14 @@
                 "z": 0.0
             },
             "translate": {
-                "x": -1320.0,
-                "y": -800.0,
+                "x": 0.0,
+                "y": 0.0,
                 "z": 0.0
             }
         },
         "uirenderer": {
-            "texpath": "",
-            "textureref": 4163,
+            "texpath": "../assets/Compressed/MainMenuEmpty.ctexture",
+            "textureref": 4188,
             "degree": 0.0,
             "color": {
                 "x": 1.0,
@@ -135,36 +117,12 @@
                 "z": 1.0,
                 "w": 1.0
             },
-            "layer": 1,
+            "layer": 0,
             "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/MainMenuButtons.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "click.wav",
-            "fullpath": "../assets\\Audio/click.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 0.20000000298023224
-        },
-        "button": {
-            "interactable": true,
-            "hover": true,
-            "click": true,
-            "activated": false,
-            "renderflag": true
         }
     },
     {
-        "entityid": 4,
+        "entityid": 4194360,
         "general": {
             "name": "CreditsButton",
             "tagid": 6,
@@ -212,12 +170,13 @@
         },
         "audio": {
             "filepath": "../assets\\Audio",
-            "filename": "click.wav",
-            "fullpath": "../assets\\Audio/click.wav",
+            "filename": "UI_Button_Hover.wav",
+            "fullpath": "../assets\\Audio/UI_Button_Hover.wav",
             "playonawake": false,
             "islooping": false,
             "audiotype": 1,
-            "volume": 0.20000000298023224
+            "volume": 0.20000000298023224,
+            "retainaudio": false
         },
         "button": {
             "interactable": true,
@@ -228,7 +187,7 @@
         }
     },
     {
-        "entityid": 5,
+        "entityid": 4194362,
         "general": {
             "name": "MenuBackground",
             "tagid": 6,
@@ -268,7 +227,7 @@
         }
     },
     {
-        "entityid": 6,
+        "entityid": 4194363,
         "general": {
             "name": "BGM",
             "tagid": 0,
@@ -295,16 +254,17 @@
         },
         "audio": {
             "filepath": "../assets\\Audio",
-            "filename": "M2BGM.wav",
-            "fullpath": "../assets\\Audio/M2BGM.wav",
+            "filename": "M3BGM.wav",
+            "fullpath": "../assets\\Audio/M3BGM.wav",
             "playonawake": true,
             "islooping": true,
             "audiotype": 0,
-            "volume": 1.0
+            "volume": 0.4000000059604645,
+            "retainaudio": true
         }
     },
     {
-        "entityid": 7,
+        "entityid": 5242961,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -342,10 +302,214 @@
             },
             "size": {
                 "x": 1303,
-                "y": 638
+                "y": 634
             },
             "near": 0.10000000149011612,
             "far": 900.0
+        }
+    },
+    {
+        "entityid": 7340257,
+        "general": {
+            "name": "Click",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "UI_Button_Click.wav",
+            "fullpath": "../assets\\Audio/UI_Button_Click.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false
+        }
+    },
+    {
+        "entityid": 11534346,
+        "general": {
+            "name": "QuitButton",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 600.0,
+                "y": -133.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -1320.0,
+                "y": -800.0,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 4163,
+            "degree": 0.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 1,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/MainMenuButtons.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "UI_Button_Hover.wav",
+            "fullpath": "../assets\\Audio/UI_Button_Hover.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 0.20000000298023224,
+            "retainaudio": false
+        },
+        "button": {
+            "interactable": true,
+            "hover": true,
+            "click": true,
+            "activated": false,
+            "renderflag": true
+        }
+    },
+    {
+        "entityid": 12582913,
+        "general": {
+            "name": "Awake",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "UI_Screen_Awake.wav",
+            "fullpath": "../assets\\Audio/UI_Screen_Awake.wav",
+            "playonawake": true,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 0.6000000238418579,
+            "retainaudio": false
+        }
+    },
+    {
+        "entityid": 12583138,
+        "general": {
+            "name": "StartButton",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 600.0,
+                "y": -133.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -1320.0,
+                "y": -400.0,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 4270,
+            "degree": 0.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 1,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/MainMenuButtons.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "UI_Button_Hover.wav",
+            "fullpath": "../assets\\Audio/UI_Button_Hover.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 0.20000000298023224,
+            "retainaudio": false
+        },
+        "button": {
+            "interactable": true,
+            "hover": false,
+            "click": false,
+            "activated": false,
+            "renderflag": true
         }
     }
 ]

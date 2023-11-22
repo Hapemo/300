@@ -2,6 +2,12 @@ local hoverSFX
 local hoverOver
 local centerscreen = Vec2.new()
 
+local clickSFX
+local clickAudioEntity
+
+local exitSFX
+local exitAudioEntity
+
 -- mouse attributes
 local mouse_move = Vec2.new()
 
@@ -11,6 +17,12 @@ function Alive()
     inputMapSys = systemManager:mInputActionSystem()
 
     hoverOver = false
+
+    clickAudioEntity = gameStateSys:GetEntity("Click")
+    clickSFX = clickAudioEntity:GetAudio()
+
+    exitAudioEntity = gameStateSys:GetEntity("Exit")
+    exitSFX = exitAudioEntity:GetAudio()
 end
 
 function Update()
@@ -44,8 +56,10 @@ function Update()
             end
 
             if(inputMapSys:GetButtonDown("Shoot")) then
+                clickSFX:SetPlay(0.3)
                 gameStateSys:ChangeGameState("Tutorial")
             end
+          
         else
             hoverOver = false
         end
@@ -63,6 +77,7 @@ function Update()
             end
 
             if(inputMapSys:GetButtonDown("Shoot")) then
+                exitSFX:SetPlay(0.3)
                 systemManager:Quit()
             end
         else
@@ -82,6 +97,7 @@ function Update()
             end
 
             if(inputMapSys:GetButtonDown("Shoot")) then
+                clickSFX:SetPlay(0.3)
                 gameStateSys:ChangeGameState("CreditsMenu")
             end
         else
@@ -101,6 +117,7 @@ function Update()
             end
 
             if(inputMapSys:GetButtonDown("Shoot")) then
+                clickSFX:SetPlay(0.3)
                 gameStateSys:ChangeGameState("MainMenu")
             end
         else

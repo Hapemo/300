@@ -442,6 +442,7 @@ struct Audio : public Serializable
 
 	bool           mPlayonAwake = false;		        // [Flag] - flag to play as the scene launches. 
 	bool           mIsLooping   = false;			    // [Flag] - flag to decide whether if audio is looping.
+	bool		   mGameStateRetain = false;			// [Flag] - specially made for audio to persist between states (BGM)
 
 	// Audio Type [Channel Management]
 	AUDIOTYPE      mAudioType;			                // SFX or BGM (Mute Channels)

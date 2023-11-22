@@ -1332,9 +1332,10 @@ void Audio::Inspect() {
 	*   [b] Max Distance
 	*/
 	if (!mIsEmpty)
-	{
+	{	
 		ImGui::Checkbox("Play on Awake", &mPlayonAwake);
 		ImGui::Checkbox("Is Looping", &mIsLooping);
+		ImGui::Checkbox("Persist upon game state switch", &mGameStateRetain);
 		//ImGui::SliderFloat("Volume", &mVolume, 0.0f, 1.0f, "volume = %.3f");
 		ImGui::DragFloat("Volume", (float*)&mVolume, 0.05, 0.0f, 1.0f);
 		ImGui::DragFloat("Fade Speed", (float*)&mFadeSpeedModifier, 0.05, 0.0f);
