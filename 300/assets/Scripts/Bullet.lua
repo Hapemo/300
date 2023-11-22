@@ -85,12 +85,12 @@ function OnTriggerEnter(Entity)
     
 
     if(Entity:HasHealthbar()) then 
-        print("HAS HEALTH BAR")
+        -- print("HAS HEALTH BAR")
     end
 
     if(healthComponent ~= nil) then 
-        print("HEALTH COMPONENT ASSIGNED")
-        print("HEALTH:" , healthComponent.health)
+        -- print("HEALTH COMPONENT ASSIGNED")
+        -- print("HEALTH:" , healthComponent.health)
     end
 
     entityobj = Helper.GetScriptEntity(script_entity.id)
@@ -145,30 +145,30 @@ function OnTriggerEnter(Entity)
 
         if(bulletTag == "REVOLVER") then 
             if(healthComponent ~= nil) then 
-                print("HEALTH COMPONENT ASSIGNED (REVOLVER)")
-                print("HEALTH:" , healthComponent.health)
+                -- print("HEALTH COMPONENT ASSIGNED (REVOLVER)")
+                -- print("HEALTH:" , healthComponent.health)
             end
 
             healthComponent.health = healthComponent.health - revolverDamage
-            print("HEALTH: " , healthComponent.health)
+            -- print("HEALTH: " , healthComponent.health)
         end
 
         if(bulletTag == "SHOTGUN") then 
             if(healthComponent ~= nil) then 
-                print("HEALTH COMPONENT ASSIGNED (SHOTGUN)")
-                print("HEALTH:" , healthComponent.health)
+                -- print("HEALTH COMPONENT ASSIGNED (SHOTGUN)")
+                -- print("HEALTH:" , healthComponent.health)
             end
             healthComponent.health = healthComponent.health - shotGunDamage
-            print("HEALTH: " , healthComponent.health)
+            -- print("HEALTH: " , healthComponent.health)
         end
 
         if(bulletTag == "MACHINE_GUN") then 
             if(healthComponent ~= nil) then 
-                print("HEALTH COMPONENT ASSIGNED (SHOTGUN)")
-                print("HEALTH:" , healthComponent.health)
+                -- print("HEALTH COMPONENT ASSIGNED (SHOTGUN)")
+                -- print("HEALTH:" , healthComponent.health)
             end
             healthComponent.health = healthComponent.health - machineGunDamage
-            print("HEALTH: " , healthComponent.health)
+            -- print("HEALTH: " , healthComponent.health)
         end
 
         if(enemytag1HP <= 0) then 

@@ -56,6 +56,9 @@ local dashAudioComp
 local machineGunAudioEntity
 local machineGunAudioComp
 
+local walkingAudioEntity
+local walkingAudioComp
+
 --physics
 local cameraPhysicsComp
 
@@ -169,6 +172,14 @@ function Alive()
     machineGunAudioComp = machineGunAudioEntity:GetAudio()
     machineGunAudioComp:UpdateVolume(0.0)
     machineGunAudioComp:SetPlay()
+
+    walkingAudioComp = cameraEntity:GetAudio()
+    -- walkingAudioComp:UpdateVolume(0.0)
+    walkingAudioComp:SetPlay(0.2)
+    
+    if(cameraEntity:HasAudio()) then 
+        print("HAS AUDIO")
+    end
 
     dashTime = 3.0
     tpTime = 20.0
@@ -457,11 +468,13 @@ function Update()
                 --gunRecoilState = "IDLE" -- will become "IDLE" unless there's a movement button pressed
                 gunJumpTimer = 0
             end
-      
+
+            -- walkingAudioComp:UpdateVolume(0.0)
+
             if (inputMapSys:GetButton("up")) then
                 movement.x = movement.x + (viewVec.x * mul);
                 movement.z = movement.z + (viewVec.z * mul);    
-
+           
                 -- gun "jumps down" when player moves forward\
                 if(gunTranslate.y > gunThreshHold_min_y) then 
                     gunTranslate.y = gunTranslate.y - gunDisplaceSpeed
