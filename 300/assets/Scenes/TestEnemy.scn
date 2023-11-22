@@ -142,7 +142,7 @@
             },
             "rotate": {
                 "x": 0.0,
-                "y": -0.02354247309267521,
+                "y": -619.2239990234375,
                 "z": 0.0
             },
             "translate": {
@@ -179,7 +179,7 @@
             },
             "bloomthreshold": {
                 "x": 0.05999999865889549,
-                "y": 0.03999999910593033,
+                "y": 0.2199999988079071,
                 "z": 0.25999999046325684,
                 "w": 1.0
             },
@@ -535,7 +535,7 @@
             },
             "rotate": {
                 "x": 0.0,
-                "y": 0.3610000014305115,
+                "y": -362.53900146484375,
                 "z": 0.34200000762939453
             },
             "translate": {
@@ -571,14 +571,14 @@
                 "w": 1.0
             },
             "bloomthreshold": {
-                "x": 1.0,
-                "y": 0.07000000029802322,
-                "z": 0.0,
+                "x": 0.4399999976158142,
+                "y": 0.0,
+                "z": 1.0,
                 "w": 1.0
             },
             "materialinstance": [
                 "../assets/Compressed/ZipBomb_BaseColor.ctexture",
-                "../assets/Compressed/ZipBomb_Normal.ctexture",
+                "../assets/Compressed/Cube_Texture_White.ctexture",
                 "../assets/Compressed/ZipBomb_Metallic.ctexture",
                 "../assets/Compressed/ZipBomb_Roughness.ctexture",
                 "../assets/Compressed/ZipBomb_Emissive.ctexture",
@@ -587,7 +587,7 @@
             "mesh": "../assets/compiled_geom/ZipBomb.geom",
             "texturerefid": [
                 4543,
-                4270,
+                4706,
                 4464,
                 4611,
                 4490,
