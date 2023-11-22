@@ -1,12 +1,12 @@
 -- Variables for state
 local s1Timer           = 2
 local s1RoamVelocity    = Vec3.new()
-local roamSpeed         = 20
+local roamSpeed         = 2
 
 local s2Timer           = 0
 
 local s3SprintVelocity  = Vec3.new()
-local sprintSpeed       = 50
+local sprintSpeed       = 6
 local stareDirection    = Vec3.new()
 
 local s4Timer           = 0
@@ -18,6 +18,8 @@ local phySys
 -- Other variables
 local this
 
+local deathTimer = 2
+local deathTimerCount
 
 local state
 -- Trojan horse states
@@ -25,14 +27,6 @@ local state
 -- 2. CHARGE. saw player, eyes glow red, play some charge up noise, delay about 3 seconds before charging to player (change to 3. when delay ends)
 -- 3. SPRINT. charge toward last seen player position at high speed (change to 4. when collided with something)
 -- 4. REST. stops for around 0.5 seconds before moving back to 1. (change to 1. when rest timer ends)
-
-
--- for example you want to reference out hp variable to another script
---local hp = 100
-
--- function GetHP()
---     return hp
--- end
 
 function Alive()
     math.randomseed(os.time())
@@ -49,16 +43,22 @@ function Alive()
     state = "ROAM"
     s1Timer           = 2
     s1RoamVelocity    = Vec3.new()
-    roamSpeed         = 20
     s2Timer           = 0
     s3SprintVelocity  = Vec3.new()
-    sprintSpeed       = 50
     s4Timer           = 0
+
+    deathTimerCount   = 0
 end
 
 function Update()
 
     -- OTHER UPDATE CODES
+    if systemManager:mInputActionSystem():GetButtonDown("Test2") then
+        this:GetHealthbar().health = this:GetHealthbar().health - 10
+    end
+
+    -- Health logic
+    if this:GetHealthbar().health <= 0 then StartDeath() end
 
     -- STATE MACHINE
     if state == "ROAM" then         -- roam around and passively look for player (change to 2. when sees player)
@@ -111,7 +111,9 @@ function Update()
             s4Timer = 0
             ROAMInit()
         end
-
+    elseif state == "DEATH" then
+        deathTimerCount = deathTimerCount + FPSManager.GetDT()
+        if deathTimerCount > deathTimer then systemManager.ecs:SetDeleteEntity(this) end
     end
     -- END STATE MACHINE
 
@@ -184,3 +186,9 @@ function RandDirectionXZ()
     return v
 end
 
+-- this function is ran when health just reached 0
+function StartDeath()
+    -- Start death animation
+    -- Start death sound
+    state = "DEATH"
+end
