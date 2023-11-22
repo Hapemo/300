@@ -85,8 +85,6 @@ function Update()
             TRAVELInit()
         end
     elseif state == "DEATH" then
-        print("Death counter")
-        print(deathTimerCount)
         deathTimerCount = deathTimerCount + FPSManager.GetDT()
         if deathTimerCount > deathTimer then systemManager.ecs:SetDeleteEntity(this) end
     end
@@ -138,7 +136,6 @@ function StartDeath()
     -- Start death animation
     -- Start death sound
     state = "DEATH"
-    print("start death")
 end
 
 -- Helper functions

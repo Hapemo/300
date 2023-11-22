@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 1,
+        "entityid": 2097157,
         "general": {
             "name": "player",
             "tagid": 0,
@@ -98,7 +98,7 @@
         }
     },
     {
-        "entityid": 2,
+        "entityid": 2097158,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -153,7 +153,7 @@
         }
     },
     {
-        "entityid": 3,
+        "entityid": 2097159,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -243,7 +243,7 @@
         }
     },
     {
-        "entityid": 4,
+        "entityid": 2097160,
         "general": {
             "name": "ILOVEYOU",
             "tagid": 1,
@@ -349,10 +349,32 @@
             "elevation": 20.0,
             "targetname": "player",
             "graphdataname": "FlyingGraphJazzTest"
+        },
+        "healthbar": {
+            "healthcolor": {
+                "x": 0.0,
+                "y": 1.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "backcolor": {
+                "x": 1.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "position": {
+                "x": 0.0,
+                "y": 1.0,
+                "z": 0.0
+            },
+            "maxhealth": 0.0,
+            "width": 5.0,
+            "height": 2.0
         }
     },
     {
-        "entityid": 5,
+        "entityid": 2097161,
         "general": {
             "name": "ZipBomb",
             "tagid": 1,
@@ -458,10 +480,32 @@
             "elevation": 0.0,
             "targetname": "player",
             "graphdataname": "FlyingGraphJazzTest"
+        },
+        "healthbar": {
+            "healthcolor": {
+                "x": 0.0,
+                "y": 1.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "backcolor": {
+                "x": 1.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "position": {
+                "x": 0.0,
+                "y": 18.0,
+                "z": 0.0
+            },
+            "maxhealth": 100.0,
+            "width": 10.0,
+            "height": 2.0
         }
     },
     {
-        "entityid": 6,
+        "entityid": 2097162,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -551,7 +595,7 @@
         }
     },
     {
-        "entityid": 7,
+        "entityid": 2097163,
         "general": {
             "name": "TrojanHorse",
             "tagid": 1,
@@ -657,10 +701,32 @@
             "elevation": 0.0,
             "targetname": "player",
             "graphdataname": ""
+        },
+        "healthbar": {
+            "healthcolor": {
+                "x": 0.0,
+                "y": 1.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "backcolor": {
+                "x": 1.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "position": {
+                "x": 0.0,
+                "y": 32.0,
+                "z": 0.0
+            },
+            "maxhealth": 200.0,
+            "width": 16.0,
+            "height": 2.0
         }
     },
     {
-        "entityid": 8,
+        "entityid": 2097164,
         "general": {
             "name": "Melissa",
             "tagid": 0,
@@ -788,7 +854,7 @@
         }
     },
     {
-        "entityid": 9,
+        "entityid": 2097165,
         "general": {
             "name": "TrojanSoldier",
             "tagid": 1,
@@ -799,7 +865,7 @@
         "transform": {
             "scale": {
                 "x": 5.0,
-                "y": 8.494592666625977,
+                "y": 8.494587898254395,
                 "z": 5.0
             },
             "rotate": {
@@ -809,7 +875,7 @@
             },
             "translate": {
                 "x": 137.84486389160156,
-                "y": 7.565775394439697,
+                "y": 7.565774917602539,
                 "z": 44.89263916015625
             }
         },
@@ -889,6 +955,28 @@
             "elevation": 0.0,
             "targetname": "player",
             "graphdataname": ""
+        },
+        "healthbar": {
+            "healthcolor": {
+                "x": 0.0,
+                "y": 1.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "backcolor": {
+                "x": 1.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "position": {
+                "x": 0.0,
+                "y": 12.0,
+                "z": 0.0
+            },
+            "maxhealth": 30.0,
+            "width": 5.0,
+            "height": 2.0
         }
     }
 ]
