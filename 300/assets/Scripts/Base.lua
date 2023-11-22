@@ -5,8 +5,8 @@ local weaponPosition = {-1700,-1430,-1170,-900,-620,-360,-90,180 }
 local dispensor = {1,1,1}
 local disCount = 3
 local dashui = { }
-_G.textureArray  = {"Environment_Floor_BaseColor", "Gun_Base_Color", "Trojan_Soldier_BaseColor"}
-
+_G.textureArray  = {"UI-Assult-133123", "UI-Shotgun-1223341", "UI-Revolver"}
+_G.textureArray2 = {"UI-Red","UI-Yellow-s3&321", "UI-Blue" }
 
 local spawnTime = 0
 local dispenseTime = 0
@@ -77,6 +77,7 @@ function Update()
         _G.weaponArray[8][2] = false
         _G.weaponArray[8][3] = 0
         ArraySystem(8)
+
     elseif(Input.CheckKey(State.PRESS,Key.KEY_2))then
         _G.weaponArray[7][2] = false
         _G.weaponArray[7][3] = 0
@@ -106,7 +107,12 @@ function Update()
         _G.weaponArray[1][3] = 0
         ArraySystem(1)
     end
+    -- for i = 8, 2 , -1
+    -- do
 
+    -- print("ui-".. _G.weaponArray[i][3].."index-"..i)
+
+    -- end
     -- if(Input.CheckKey(State.HOLD,Key.KEY_1))then
     --     if(_G.weaponArray[1][2] == false)then
     --         --print("richmondisgay")
@@ -136,22 +142,47 @@ function OnTriggerExit(Entity)
 end
 
 function ArraySystem(index)
-
+    local rearrange = 0
+    
      for i = index, 2 , -1
      do
-
         if( _G.weaponArray[i-1][2] == true)then
-        --print("richmondisgay"..i)
 
-             _G.weaponArray[i][1]= _G.weaponArray[i-1][1]
-             _G.weaponArray[i][2]= _G.weaponArray[i-1][2]
-             _G.weaponArray[i][3]= _G.weaponArray[i-1][3]
-            _G.weaponArray[i-1][2] = false
-
-
+                _G.weaponArray[i][1]= _G.weaponArray[i-1][1]
+                _G.weaponArray[i][2]= _G.weaponArray[i-1][2]
+                _G.weaponArray[i][3]= _G.weaponArray[i-1][3]
+                _G.weaponArray[i-1][2] = false
         end
-     end
+    end
+
+    -- if( rearrange > 0)then
+
+    --     for i = rearrange, 1 , -1
+    --     do
+
+    --      --   arrayArrange()
+
+    --     end
+
+    -- end
+
 end
+
+--  function arrayArrange(index)
+
+--     for i = index, 2 , -1
+--     do
+--         if( _G.weaponArray[i-1][2] == true)then
+
+--                 _G.weaponArray[i][1]= _G.weaponArray[i-1][1]
+--                 _G.weaponArray[i][2]= _G.weaponArray[i-1][2]
+--                 _G.weaponArray[i][3]= _G.weaponArray[i-1][3]
+--                 _G.weaponArray[i-1][2] = false
+--         end
+--     end
+
+--  end
+
 
 function DisplayArray()
     for i = 1, 8 , 1

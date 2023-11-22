@@ -410,7 +410,9 @@ void LuaUIrenderer()
     systemManager->mScriptingSystem->luaState.new_usertype<UIrenderer>(
         "UIrenderer", sol::constructors<>(),
         "SetDegree", &UIrenderer::SetDegree,
-        "SetTexture", &UIrenderer::SetTexture
+        "SetTexture", &UIrenderer::SetTexture,
+        "mColor", &UIrenderer::mColor
+
     );
 }
 
