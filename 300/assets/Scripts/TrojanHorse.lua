@@ -43,6 +43,7 @@ function Alive()
 
     -- Initialise the state's variables
     state = "ROAM"
+    this:GetAudio():SetPlay()
     s1Timer           = 2
     s1RoamVelocity    = Vec3.new()
     s2Timer           = 0
@@ -80,7 +81,7 @@ function Update()
 
     elseif state == "CHARGE" then   -- saw player, eyes glow red, play some charge up noise, delay about 3 seconds before charging to player (change to 3. when delay ends)
         -- Play animation for eyes glowing red        
-
+        
         -- Constantly make him stare at player and stand still
         stareDirection = Helper.Vec3Minus(this:GetAISetting():GetTarget():GetTransform().mTranslate, this:GetTransform().mTranslate)
         this:GetTransform().mRotate.y = Helper.DirectionToAngle(this, stareDirection)
@@ -158,10 +159,13 @@ function ROAMInit()
     state = "ROAM"
     s1Timer = 2
     s1RoamVelocity = RandDirectionXZ()
+    this:GetAudio():SetResume()
 end
 
 function CHARGEInit()
     --print("Start Charge")
+    this:GetAudio():SetPause()
+    gameStateSys:GetEntity("TrojanHorseChargeAudio"):GetAudio():SetPlay()
     state = "CHARGE"
     s2Timer = 0
 end
@@ -169,11 +173,13 @@ end
 function SPRINTInit()
     --print("Start Sprint")
     state = "SPRINT"
+    this:GetAudio():SetResume()
 end
 
 function RESTInit()
     --print("Start Rest")
     state = "REST"
+    this:GetAudio():SetPause()
     phySys:SetVelocity(this, Vec3.new())
 end
 

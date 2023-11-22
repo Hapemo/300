@@ -38,7 +38,7 @@ function Alive()
 
     AttackSpeed = 1
     AttackTimer = 0
-    ShotSpeed = 100
+    ShotSpeed = 10
 
     state = ""
     deathTimerCount = 0
@@ -134,6 +134,8 @@ function ILOVEYOUAttack()
 end
 
 function Shoot()
+    this:GetAudio():SetPlay()
+    print("shooting bullet")
     local bullet = systemManager.ecs:NewEntityFromPrefab("EnemyBullet", thisPos)
     -- local bulletVec = Helper.Scale(Helper.Normalize(Helper.Vec3Minus(targetPos, thisPos)), ShotSpeed)
     -- phySys:SetVelocity(bullet, bulletVec)

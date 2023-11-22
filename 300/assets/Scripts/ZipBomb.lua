@@ -31,6 +31,8 @@ function Alive()
     triggerExplosionDistance = 0.5
     
     state = ""
+
+    this:GetAudio():SetPlay()
 end
 
 function Update()
@@ -68,7 +70,10 @@ function Update()
     
     if state == "EXPLODING" then
         explodingTimerCount = explodingTimerCount + FPSManager.GetDT()
-        if explodingTimerCount > explodingTimer then Kamekazi() end
+        if explodingTimerCount > explodingTimer then 
+            gameStateSys:GetEntity("ZipBombFuseAudio"):GetAudio():SetStop()
+            Kamekazi() 
+        end
         return
     end
 
@@ -77,14 +82,17 @@ function Update()
     if Helper.Vec3Len(Helper.Vec3Minus(targetPos, thisPos)) < triggerExplosionDistance then kamekazi = true end
     if this:GetHealthbar().health <= 0 then exploding = true end
 
-    if exploding then state = "EXPLODING" end
+    if exploding then 
+        state = "EXPLODING"
+        gameStateSys:GetEntity("ZipBombFuseAudio"):GetAudio():SetPlay()
+    end
 
     -- #endregion
 
 end
 
 function Dead()
-
+    this:GetAudio():SetStop()
 end
 
 function OnTriggerEnter(Entity)

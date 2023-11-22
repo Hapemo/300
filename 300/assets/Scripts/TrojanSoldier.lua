@@ -94,6 +94,7 @@ function OnContactEnter(Entity)
         print("player damaged by trojan soldier")
     end
     phySys:SetVelocity(this, velocity);
+    this:GetAudio():SetPlay()
 end
 
 function OnContactExit(Entity)

@@ -132,6 +132,7 @@ function SpawnMelissa() -- This function should be called in
     if not spawnMelissa then return end
     state = "DUPLICATING"
     s2Timer = 0
+    this:GetAudio():SetPlay()
 end
 
 -- this function is ran when health just reached 0
