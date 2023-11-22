@@ -37,7 +37,8 @@ void LuaEngine()
         "mInputActionSystem", &SystemManager::GetInputMapSystemPointer,
         "mGameStateSystem", &SystemManager::GetGameStateSystem,
         "mGraphicsSystem", &SystemManager::GetGraphicsSystem,
-        "mAISystem", &SystemManager::GetAIManager
+        "mAISystem", &SystemManager::GetAIManager,
+        "Quit", &SystemManager::Quit
     );
 }
 

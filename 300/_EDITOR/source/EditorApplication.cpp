@@ -104,6 +104,8 @@ void EditorApplication::MainUpdate()
 
         EnginePerformance::EndTrack("Editor");
         EnginePerformance::StoreTime("Editor");
+        if (systemManager->IsQuit())
+            break;
     }
 }
 
