@@ -1027,8 +1027,7 @@ void GraphicsSystem::DrawGameScene()
 
 	glBlitFramebuffer(0, 0, m_Width, m_Height, 0, 0, m_Width, m_Height, GL_COLOR_BUFFER_BIT, GL_NEAREST);
 
-	glReadBuffer(GL_NONE);
-	glDrawBuffer(GL_NONE);
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
 /***************************************************************************/
@@ -2078,6 +2077,9 @@ void GraphicsSystem::ComputeDeferredLight(bool editorDraw)
 	glDispatchCompute(num_group_x, num_group_y, 1);
 	// make sure writing to image is done before reading
 	glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT);
+
+	glBindImageTexture(0, 0, 0, GL_FALSE, 0, GL_READ_WRITE, GL_RGBA32F);
+	glBindImageTexture(1, 0, 0, GL_FALSE, 0, GL_WRITE_ONLY, GL_RGBA32F);
 
 	computeDeferred.Deactivate();
 }
