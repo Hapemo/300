@@ -24,21 +24,20 @@ function Update()
     mouse_move.x = Input.CursorPos().x - centerscreen.x
     mouse_move.y = Input.CursorPos().y - centerscreen.y
 
-    print("mouse pos x: ")
-    print(mouse_move.x)
-    print("mouse pos y: ")
-    print(mouse_move.y)
+    -- print("mouse pos x: ")
+    -- print(mouse_move.x)
+    -- print("mouse pos y: ")
+    -- print(mouse_move.y)
 
     -- check if cursor is within the button width & height
     -- lol hardcoded (for char's laptop)
 
     -- start button
     if(gen.name == "StartButton") then
-        if((mouse_move.x < -242) and (mouse_move.x > -644) and
-            (mouse_move.y < 174) and (mouse_move.y > 92)) then
+        if((mouse_move.x < -360) and (mouse_move.x > -960) and
+            (mouse_move.y < 215) and (mouse_move.y > 70)) then
             if not hoverOver then
                 hoverOver = true
-                -- print("I'm within range of the start button.")
                 -- Play the sound effect
                 hoverSFX = ent:GetAudio()
                 hoverSFX:SetPlay(0.3)
@@ -54,18 +53,17 @@ function Update()
 
     -- quit button
     if(gen.name == "QuitButton") then
-        if((mouse_move.x < -242) and (mouse_move.x > -644) and
-            (mouse_move.y < 295) and (mouse_move.y > 213)) then
+        if((mouse_move.x < -360) and (mouse_move.x > -960) and
+            (mouse_move.y < 435) and (mouse_move.y > 290)) then
             if not hoverOver then
                 hoverOver = true
-                -- print("I'm within range of the start button.")
                 -- Play the sound effect
                 hoverSFX = ent:GetAudio()
                 hoverSFX:SetPlay(0.3)
             end
 
             if(inputMapSys:GetButtonDown("Shoot")) then
-                print("I'm closing application.")
+                systemManager:Quit()
             end
         else
             hoverOver = false
@@ -74,11 +72,10 @@ function Update()
 
     -- credits button
     if(gen.name == "CreditsButton") then
-        if((mouse_move.x < 642) and (mouse_move.x > 240) and
-            (mouse_move.y < 295) and (mouse_move.y > 213)) then
+        if((mouse_move.x < 960) and (mouse_move.x > 360) and
+            (mouse_move.y < 435) and (mouse_move.y > 290)) then
             if not hoverOver then
                 hoverOver = true
-                -- print("I'm within range of the start button.")
                 -- Play the sound effect
                 hoverSFX = ent:GetAudio()
                 hoverSFX:SetPlay(0.3)
@@ -94,11 +91,10 @@ function Update()
 
     -- credits (back) button
     if(gen.name == "CreditsBackButton") then
-        if((mouse_move.x < 642) and (mouse_move.x > 240) and
-            (mouse_move.y < 295) and (mouse_move.y > 213)) then
+        if((mouse_move.x < 960) and (mouse_move.x > 360) and
+            (mouse_move.y < 435) and (mouse_move.y > 290)) then
             if not hoverOver then
                 hoverOver = true
-                -- print("I'm within range of the start button.")
                 -- Play the sound effect
                 hoverSFX = ent:GetAudio()
                 hoverSFX:SetPlay(0.3)
