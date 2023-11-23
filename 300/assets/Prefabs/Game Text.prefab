@@ -1,0 +1,43 @@
+{
+    "entityid": 3145785,
+    "general": {
+        "name": "Game Text",
+        "tagid": 0,
+        "subtag": 0,
+        "isActive": true,
+        "isPaused": false
+    },
+    "transform": {
+        "scale": {
+            "x": 4.0,
+            "y": 3.999959707260132,
+            "z": 4.0
+        },
+        "rotate": {
+            "x": 0.0,
+            "y": 90.0,
+            "z": 0.0
+        },
+        "translate": {
+            "x": 52.66154479980469,
+            "y": 4.439318656921387,
+            "z": -0.02530190348625183
+        }
+    },
+    "uirenderer": {
+        "texpath": "",
+        "textureref": 4327,
+        "degree": 0.0,
+        "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+        },
+        "layer": 0,
+        "worldtransform": true
+    },
+    "prefab": {
+        "prefab": "Game Text"
+    }
+}

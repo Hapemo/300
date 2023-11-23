@@ -1,16 +1,16 @@
 Dash: M_BUTTON_R
 Jump: SPACE
-Machine Gun: M
+Machine Gun: C
 Mouse: ESCAPE
-Revolver: N
+Revolver: X
 Shoot: M_BUTTON_L
-Shotgun: B
-down: S
-left: A
-right: D
-up: W
+Shotgun: Z
 Test1: _1
 Test2: _2
 Test3: _3
 Test4: _4
 Test5: _5
+down: S
+left: A
+right: D
+up: W

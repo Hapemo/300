@@ -69,10 +69,11 @@ function Update()
         -- print("BULLET LIFETIME: " , bulletLifeTime)
         if(bulletLifeTime > bulletDeathTime) then
             systemManager.ecs:SetDeleteEntity(bulletObject)
-            print("DELETING BULLET")
+            -- print("DELETING BULLET")
         end
         break
     end
+
 end
 
 function Dead()
@@ -81,12 +82,12 @@ end
 
 function OnTriggerEnter(Entity)
     generalComponent = Entity:GetGeneral()
-    healthComponent = Entity:GetHealthbar()
+    local healthComponent 
     
-
     if(Entity:HasHealthbar()) then 
-        -- print("HAS HEALTH BAR")
+        healthComponent = Entity:GetHealthbar()
     end
+
 
     if(healthComponent ~= nil) then 
         -- print("HEALTH COMPONENT ASSIGNED")
@@ -95,7 +96,7 @@ function OnTriggerEnter(Entity)
 
     entityobj = Helper.GetScriptEntity(script_entity.id)
 
-    print("THIS ENTITY is: " , generalComponent.name)
+    -- print("THIS ENTITY is: " , generalComponent.name)
 
     tagid = generalComponent.tagid
     if (tagid == 1) then
@@ -104,6 +105,31 @@ function OnTriggerEnter(Entity)
             spawned(i)
         end
         gameStateSys = systemManager:mGameStateSystem()
+
+        if(bulletTag == "REVOLVER") then 
+            if(healthComponent ~= nil) then 
+                healthComponent.health = healthComponent.health - revolverDamage
+            else
+            end
+        end
+
+        if(bulletTag == "SHOTGUN") then 
+            if(healthComponent ~= nil) then 
+                healthComponent.health = healthComponent.health - shotGunDamage
+            else
+            end
+        end
+
+        if(bulletTag == "MACHINE_GUN") then 
+            if(healthComponent ~= nil) then 
+                healthComponent.health = healthComponent.health - machineGunDamage
+            end
+
+        end
+        -- print("BLLET TAG:" , bulletTag)
+        -- if(bulletTag == "REVOLVER") then 
+        --     print("REVOLVER BULLET")
+        -- end
         -- bullethitAudioComp:SetPlay(0.2)
 
         -- Entity:GetTransform().mScale.x = Entity:GetTransform().mScale.x * 0.9
@@ -143,33 +169,9 @@ function OnTriggerEnter(Entity)
             spawned(i)
         end
 
-        if(bulletTag == "REVOLVER") then 
-            if(healthComponent ~= nil) then 
-                -- print("HEALTH COMPONENT ASSIGNED (REVOLVER)")
-                -- print("HEALTH:" , healthComponent.health)
-            end
+    
 
-            healthComponent.health = healthComponent.health - revolverDamage
-            -- print("HEALTH: " , healthComponent.health)
-        end
-
-        if(bulletTag == "SHOTGUN") then 
-            if(healthComponent ~= nil) then 
-                -- print("HEALTH COMPONENT ASSIGNED (SHOTGUN)")
-                -- print("HEALTH:" , healthComponent.health)
-            end
-            healthComponent.health = healthComponent.health - shotGunDamage
-            -- print("HEALTH: " , healthComponent.health)
-        end
-
-        if(bulletTag == "MACHINE_GUN") then 
-            if(healthComponent ~= nil) then 
-                -- print("HEALTH COMPONENT ASSIGNED (SHOTGUN)")
-                -- print("HEALTH:" , healthComponent.health)
-            end
-            healthComponent.health = healthComponent.health - machineGunDamage
-            -- print("HEALTH: " , healthComponent.health)
-        end
+        
 
         if(enemytag1HP <= 0) then 
             print("ENEMY DIES")
@@ -192,24 +194,10 @@ end
 
 
 function spawned(value)
-
-    direction.x = math.random(-5,5)
-    direction.y = math.random(-5,5)
-    direction.z = math.random(-5,5)
-    
-    total = (direction.x +direction.y +direction.z)
-    -- colors.x = direction.x/5
-    -- colors.y = direction.y/5
-    -- colors.z = direction.z/5
-    direction.x =( direction.x/10)*15
-    direction.y = (direction.y/10)*15
-    direction.z = (direction.z/10)*15
     positions = entityobj:GetTransform().mTranslate
 
     prefabEntity = systemManager.ecs:NewEntityFromPrefab("parti",positions )   
 
     meshSys = prefabEntity:GetMeshRenderer()
     meshSys:SetColor(allcolor[value])
-    physicsSys = systemManager:mPhysicsSystem()
-    physicsSys:SetVelocity(prefabEntity, direction)
 end
