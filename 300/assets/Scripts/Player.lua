@@ -854,7 +854,6 @@ function moreAccurateShotgun(num_of_bullets)
     local final_vector = Vec3.new()
     
     local_right_vector = Camera_Scripting.Cross(viewVec, up_vector) -- get vector pointing to rightwards of player
-    print("LOCAL RIGHT VECTOR: " , local_right_vector.x, local_right_vector.y, local_right_vector.z)
     world_true_up_vector = Camera_Scripting.Cross(local_right_vector, viewVec)
    
     for i = 0 , num_of_bullets , 1 do
