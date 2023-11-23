@@ -24,22 +24,6 @@
             "z": 0.0
         }
     },
-    "rigidbody": {
-        "density": 0.0,
-        "material": 1,
-        "motion": 1,
-        "velocity": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
-        },
-        "rotationconstraints": {
-            "x": true,
-            "y": false,
-            "z": false
-        },
-        "gravity": false
-    },
     "meshrenderer": {
         "vert": "../assets/shader_files/pointLight_vert.glsl",
         "frag": "../assets/shader_files/pointLight_frag.glsl",
