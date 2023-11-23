@@ -494,6 +494,8 @@ void GraphicsSystem::Draw(float dt, bool forEditor)
 	glUniformMatrix4fv(m_AnimationShaderInst.GetUniformVP(), 1, GL_FALSE, &camVP[0][0]);
 	GFX::Shader::Deactivate();
 
+	GFX::FBO* fbo = forEditor ? &m_Fbo : &m_GameFbo;
+
 #pragma region render all the mesh instances onto the editor camera framebuffer
 	// Render all instances of a given mesh
 	for (Entity inst : meshRendererInstances)
@@ -546,6 +548,45 @@ void GraphicsSystem::Draw(float dt, bool forEditor)
 	// Compute the light pass with completed G-Buffers
 	ComputeDeferredLight(forEditor);
 	
+	// Post Processing Bloom
+	{
+		glDepthMask(GL_FALSE);
+
+		if (systemManager->mGraphicsSystem->m_EnableBloom)
+		{
+			if (mBloomType == BloomType::PHYS_BASED_BLOOM)
+			{
+				m_PhysBloomRenderer.PrepForDraw();
+				m_PhysBloomRenderer.RenderBloom(fbo->GetBrightColorsAttachment(), mFilterRadius);
+				PostProcessing::AdditiveBlendFramebuffers(*fbo, fbo->GetColorAttachment(), m_PhysBloomRenderer.getBloomTexture());
+			}
+
+			else
+			{
+				//Render the bloom for the Editor Framebuffer
+				m_PingPongFbo.PrepForDraw();
+
+				if (mBloomType == BloomType::GAUSSIANBLUR)
+				{
+					uid gaussianshaderstr("GaussianBlurShader");
+					GFX::Shader& gaussianShaderInst = *systemManager->mResourceTySystem->get_Shader(gaussianshaderstr.id);
+					m_PingPongFbo.GaussianBlur(gaussianShaderInst, *fbo, systemManager->mGraphicsSystem->mTexelOffset, systemManager->mGraphicsSystem->mSamplingWeight);
+				}
+
+				else if (mBloomType == BloomType::GAUSSIANBLUR_VER2)
+				{
+					uid gaussianshaderstr("GaussianBlurShaderVer2");
+					GFX::Shader& gaussianShaderInst = *systemManager->mResourceTySystem->get_Shader(gaussianshaderstr.id);
+					m_PingPongFbo.GaussianBlurShader(gaussianShaderInst, *fbo, systemManager->mGraphicsSystem->mSamplingWeight);
+				}
+
+				PostProcessing::AdditiveBlendFramebuffers(*fbo, fbo->GetColorAttachment(), m_PingPongFbo.pingpongColorbuffers[0]);
+			}
+		}
+
+		glDepthMask(GL_TRUE);
+	}
+
 	// UI Area
 	{
 		glEnable(GL_BLEND);			// Enable back blending for later draws
@@ -589,11 +630,10 @@ void GraphicsSystem::Draw(float dt, bool forEditor)
 		m_HealthbarMesh.ClearInstances();	// Clear data
 	}
 
-	// Post Processing Area
+	// Post Processing Chromatic Abberation and CRT
 	{
 		glDepthMask(GL_FALSE);
-		GFX::FBO* fbo = forEditor ? &m_Fbo : &m_GameFbo;
-
+		
 		if (systemManager->mGraphicsSystem->m_EnableCRT && !systemManager->mGraphicsSystem->m_EnableChromaticAbberation)
 		{
 			m_ComputeCRTShader.Activate();
@@ -601,38 +641,6 @@ void GraphicsSystem::Draw(float dt, bool forEditor)
 			// CRT post processing effect. Called here so it can be rendered over the UI
 			PostProcessing::CRTBlendFramebuffers(*fbo, m_PingPongFbo, dt);
 			m_ComputeCRTShader.Deactivate();
-		}
-
-		if (systemManager->mGraphicsSystem->m_EnableBloom)
-		{
-			if (mBloomType == BloomType::PHYS_BASED_BLOOM)
-			{
-				m_PhysBloomRenderer.PrepForDraw();
-				m_PhysBloomRenderer.RenderBloom(fbo->GetBrightColorsAttachment(), mFilterRadius);
-				PostProcessing::AdditiveBlendFramebuffers(*fbo, fbo->GetColorAttachment(), m_PhysBloomRenderer.getBloomTexture());
-			}
-
-			else
-			{
-				//Render the bloom for the Editor Framebuffer
-				m_PingPongFbo.PrepForDraw();
-
-				if (mBloomType == BloomType::GAUSSIANBLUR)
-				{
-					uid gaussianshaderstr("GaussianBlurShader");
-					GFX::Shader& gaussianShaderInst = *systemManager->mResourceTySystem->get_Shader(gaussianshaderstr.id);
-					m_PingPongFbo.GaussianBlur(gaussianShaderInst, *fbo, systemManager->mGraphicsSystem->mTexelOffset, systemManager->mGraphicsSystem->mSamplingWeight);
-				}
-
-				else if (mBloomType == BloomType::GAUSSIANBLUR_VER2)
-				{
-					uid gaussianshaderstr("GaussianBlurShaderVer2");
-					GFX::Shader& gaussianShaderInst = *systemManager->mResourceTySystem->get_Shader(gaussianshaderstr.id);
-					m_PingPongFbo.GaussianBlurShader(gaussianShaderInst, *fbo, systemManager->mGraphicsSystem->mSamplingWeight);
-				}
-
-				PostProcessing::AdditiveBlendFramebuffers(*fbo, fbo->GetColorAttachment(), m_PingPongFbo.pingpongColorbuffers[0]);
-			}
 		}
 
 		if (systemManager->mGraphicsSystem->m_EnableChromaticAbberation)
@@ -2031,9 +2039,9 @@ void GraphicsSystem::DrawAllPortals(bool editorDraw)
 	glUniformMatrix4fv(m_Quad3DShaderInst.GetUniformVP(), 1, GL_FALSE, &camVP[0][0]);
 
 	glDepthFunc(GL_LEQUAL);
-	glDisable(GL_CULL_FACE);
+	//glDisable(GL_CULL_FACE);
 	glDrawArraysInstanced(GL_TRIANGLE_FAN, 0, 4, GLsizei(m_PortalMesh.mLTW.size()));
-	glEnable(GL_CULL_FACE);
+	//glEnable(GL_CULL_FACE);
 
 	m_PortalMesh.UnbindVao();
 	GFX::Shader::Deactivate();

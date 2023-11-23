@@ -442,7 +442,7 @@ void PathfinderManager::AddDirectedEdge(Entity _src, Entity _dst) {
 
 	Transform& eTrans = e.GetComponent<Transform>();
 
-	eTrans.mScale.z = glm::length(direction)-5.f;
+	eTrans.mScale.z = glm::length(direction);
 	eTrans.mRotate = RotationalVectorToEulerAngle(glm::normalize(direction)) * 180.f / 3.1415925359f;
 	eTrans.mRotate.y += 180;
 

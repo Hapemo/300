@@ -2,96 +2,6 @@
     {
         "entityid": 1,
         "general": {
-            "name": "Wall",
-            "tagid": 4,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 200.0,
-                "y": 100.0,
-                "z": 10.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 54.74578094482422,
-                "y": 49.292945861816406,
-                "z": -30.596050262451172
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 0,
-            "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": true,
-                "y": false,
-                "z": false
-            },
-            "gravity": true
-        },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 3442,
-            "instancecolor": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "bloomthreshold": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "materialinstance": [
-                "../assets/Compressed/Brick wall 4_baseColor.ctexture",
-                "../assets/Compressed/cube_emission.ctexture",
-                " ",
-                " ",
-                " ",
-                " "
-            ],
-            "mesh": "../assets/compiled_geom/Model_Wall_12x10x1.geom",
-            "texturerefid": [
-                4923,
-                4248,
-                0,
-                0,
-                0,
-                0
-            ]
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "translateoffset": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "istrigger": false
-        }
-    },
-    {
-        "entityid": 2,
-        "general": {
             "name": "Floor",
             "tagid": 3,
             "subtag": 0,
@@ -180,7 +90,7 @@
         }
     },
     {
-        "entityid": 3,
+        "entityid": 2,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -217,8 +127,8 @@
                 "z": -500.0
             },
             "size": {
-                "x": 1303,
-                "y": 638
+                "x": 1304,
+                "y": 586
             },
             "near": 0.10000000149011612,
             "far": 900.0
@@ -235,7 +145,7 @@
         }
     },
     {
-        "entityid": 4,
+        "entityid": 3,
         "general": {
             "name": "player",
             "tagid": 0,
@@ -251,13 +161,13 @@
             },
             "rotate": {
                 "x": 0.0,
-                "y": 0.0006382989231497049,
-                "z": -3.141575336456299
+                "y": 0.00037370744394138455,
+                "z": -3.141576051712036
             },
             "translate": {
-                "x": 70.08810424804688,
-                "y": 4.49999475479126,
-                "z": -135.6897735595703
+                "x": 69.78424835205078,
+                "y": 3.885998010635376,
+                "z": -135.72132873535156
             }
         },
         "rigidbody": {
@@ -265,9 +175,9 @@
             "material": 1,
             "motion": 1,
             "velocity": {
-                "x": 0.0006711457972414792,
-                "y": -0.0013941526412963867,
-                "z": 0.0002385184052400291
+                "x": 0.0006374695803970098,
+                "y": -0.0013523101806640625,
+                "z": 0.0005068646278232336
             },
             "rotationconstraints": {
                 "x": true,
@@ -333,7 +243,7 @@
         }
     },
     {
-        "entityid": 5,
+        "entityid": 4,
         "general": {
             "name": "ILOVEYOU",
             "tagid": 1,
@@ -344,8 +254,8 @@
         "transform": {
             "scale": {
                 "x": 1.097214937210083,
-                "y": 1.0972144603729248,
-                "z": 0.4577629864215851
+                "y": 1.0972084999084473,
+                "z": 0.45776301622390747
             },
             "rotate": {
                 "x": 0.0,
@@ -353,7 +263,7 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 2.9843151569366455,
+                "x": 0.0,
                 "y": 0.0,
                 "z": 0.0
             }
@@ -363,9 +273,9 @@
             "material": 1,
             "motion": 1,
             "velocity": {
-                "x": -12.324732780456543,
-                "y": -11.139036178588867,
-                "z": -15.685152053833008
+                "x": -0.3578566014766693,
+                "y": 0.5734360814094543,
+                "z": 0.34594738483428955
             },
             "rotationconstraints": {
                 "x": true,
@@ -429,6 +339,15 @@
                 }
             ]
         },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Enemy_ILY_ShootArrow.wav",
+            "fullpath": "../assets\\Audio/Enemy_ILY_ShootArrow.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 0.10000000149011612
+        },
         "prefab": {
             "prefab": "ILOVEYOU"
         },
@@ -464,7 +383,7 @@
         }
     },
     {
-        "entityid": 6,
+        "entityid": 5,
         "general": {
             "name": "TrojanHorse",
             "tagid": 1,
@@ -484,7 +403,7 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 4.746692657470703,
+                "x": 2.1140098571777344,
                 "y": 0.0,
                 "z": 0.0
             }
@@ -494,9 +413,9 @@
             "material": 1,
             "motion": 1,
             "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
+                "x": 0.8561363816261292,
+                "y": -0.15813720226287842,
+                "z": -1.14519464969635
             },
             "rotationconstraints": {
                 "x": true,
@@ -560,6 +479,15 @@
                 }
             ]
         },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Enemy_Horse_Move.wav",
+            "fullpath": "../assets\\Audio/Enemy_Horse_Move.wav",
+            "playonawake": false,
+            "islooping": true,
+            "audiotype": 1,
+            "volume": 0.15000000596046448
+        },
         "prefab": {
             "prefab": "TrojanHorse"
         },
@@ -595,6 +523,96 @@
         }
     },
     {
+        "entityid": 6,
+        "general": {
+            "name": "Wall",
+            "tagid": 4,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 200.0,
+                "y": 100.0,
+                "z": 10.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 54.74578094482422,
+                "y": 49.292945861816406,
+                "z": -30.596050262451172
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": false,
+                "z": false
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3442,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Brick wall 4_baseColor.ctexture",
+                "../assets/Compressed/cube_emission.ctexture",
+                " ",
+                " ",
+                " ",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/Model_Wall_12x10x1.geom",
+            "texturerefid": [
+                4923,
+                4248,
+                0,
+                0,
+                0,
+                0
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        }
+    },
+    {
         "entityid": 7,
         "general": {
             "name": "TrojanSoldier",
@@ -615,8 +633,8 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 6.103666305541992,
-                "y": 7.450580596923828e-9,
+                "x": 6.6009440422058105,
+                "y": 0.0,
                 "z": 0.0
             }
         },
@@ -625,9 +643,9 @@
             "material": 1,
             "motion": 1,
             "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
+                "x": 0.6926406025886536,
+                "y": -2.981811761856079,
+                "z": 2.3264454728053903e-25
             },
             "rotationconstraints": {
                 "x": true,
@@ -687,6 +705,15 @@
                 }
             ]
         },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Enemy_Horse_Soldier_Hop.wav",
+            "fullpath": "../assets\\Audio/Enemy_Horse_Soldier_Hop.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 0.10000000149011612
+        },
         "prefab": {
             "prefab": "TrojanSoldier"
         },
@@ -733,7 +760,7 @@
         "transform": {
             "scale": {
                 "x": 1.5500003099441528,
-                "y": 1.9333767890930176,
+                "y": 1.933376669883728,
                 "z": 0.8008583784103394
             },
             "rotate": {
@@ -742,7 +769,7 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 0.0,
+                "x": -2.4326701164245605,
                 "y": 0.0,
                 "z": 0.0
             }
@@ -752,9 +779,9 @@
             "material": 1,
             "motion": 1,
             "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
+                "x": -0.9196317791938782,
+                "y": 0.2033793181180954,
+                "z": -0.3360271453857422
             },
             "rotationconstraints": {
                 "x": true,
@@ -818,6 +845,15 @@
                 }
             ]
         },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Enemy_Melissa_Split.wav",
+            "fullpath": "../assets\\Audio/Enemy_Melissa_Split.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0
+        },
         "prefab": {
             "prefab": "Melissa"
         },
@@ -855,6 +891,78 @@
     {
         "entityid": 9,
         "general": {
+            "name": "EnemyDeathAudio",
+            "tagid": 8,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Enemy_Death.wav",
+            "fullpath": "../assets\\Audio/Enemy_Death.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 0.25
+        }
+    },
+    {
+        "entityid": 10,
+        "general": {
+            "name": "ZipBombFuseAudio",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Enemy_Zipbomb_Fuse.wav",
+            "fullpath": "../assets\\Audio/Enemy_Zipbomb_Fuse.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0
+        }
+    },
+    {
+        "entityid": 11,
+        "general": {
             "name": "ZipBomb",
             "tagid": 1,
             "subtag": 0,
@@ -873,8 +981,8 @@
                 "z": 0.0
             },
             "translate": {
-                "x": -2.236858367919922,
-                "y": 0.0,
+                "x": 4.5709547996521,
+                "y": 0.5200406908988953,
                 "z": 0.0
             }
         },
@@ -949,6 +1057,15 @@
                 }
             ]
         },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Enemy_Zipbomb_Move.wav",
+            "fullpath": "../assets\\Audio/Enemy_Zipbomb_Move.wav",
+            "playonawake": false,
+            "islooping": true,
+            "audiotype": 1,
+            "volume": 1.0
+        },
         "prefab": {
             "prefab": "ZipBomb"
         },
@@ -981,6 +1098,42 @@
             "maxhealth": 100.0,
             "width": 1.0,
             "height": 0.07000000029802322
+        }
+    },
+    {
+        "entityid": 12,
+        "general": {
+            "name": "TrojanHorseChargeAudio",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Enemy_Horse_Charge.wav",
+            "fullpath": "../assets\\Audio/Enemy_Horse_Charge.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0
         }
     }
 ]

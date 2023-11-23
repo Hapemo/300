@@ -15,6 +15,7 @@ function Alive()
     gameStateSys = systemManager:mGameStateSystem()
     audioSys    = systemManager:mAudioSystem()
     inputMapSys = systemManager:mInputActionSystem()
+    graphicsSys = systemManager:mGraphicsSystem()
 
     hoverOver = false
 
@@ -40,6 +41,14 @@ function Update()
     -- print(mouse_move.x)
     -- print("mouse pos y: ")
     -- print(mouse_move.y)
+
+    print("width: ")
+    print(graphicsSys.m_WindowWidth)
+
+    print("height: ")
+    print(graphicsSys.m_WindowHeight)
+
+    print("")
 
     -- check if cursor is within the button width & height
     -- lol hardcoded (for char's laptop)

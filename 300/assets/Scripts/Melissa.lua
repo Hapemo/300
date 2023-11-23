@@ -7,6 +7,7 @@ local s2TimerLimit      = 2 -- This should depend on the animation time period
 -- Systems
 local aiSys
 local phySys
+local gameStateSys
 
 -- Other variables
 local this
@@ -30,6 +31,7 @@ function Alive()
 
     aiSys = systemManager:mAISystem();
     phySys = systemManager:mPhysicsSystem();
+    gameStateSys = systemManager:mGameStateSystem();
 
     -- Initialise the state's variables
     state = "TRAVEL"
@@ -48,9 +50,6 @@ function Update()
     if systemManager:mInputActionSystem():GetButtonDown("Test1") then
         this:GetHealthbar().health = this:GetHealthbar().health - 10
     end
-
-    -- Health logic
-    if this:GetHealthbar().health <= 0 then StartDeath() end
 
     -- STATE MACHINE
     if state == "TRAVEL" then         -- walk directly to player using pathfinding (change to 2. when duplicate timer runs out)
@@ -87,8 +86,12 @@ function Update()
     elseif state == "DEATH" then
         deathTimerCount = deathTimerCount + FPSManager.GetDT()
         if deathTimerCount > deathTimer then systemManager.ecs:SetDeleteEntity(this) end
+        return
     end
     -- END STATE MACHINE
+
+    -- Health logic
+    if this:GetHealthbar().health <= 0 then StartDeath() end
 end
 
 function Dead()
@@ -129,6 +132,7 @@ function SpawnMelissa() -- This function should be called in
     if not spawnMelissa then return end
     state = "DUPLICATING"
     s2Timer = 0
+    this:GetAudio():SetPlay()
 end
 
 -- this function is ran when health just reached 0
@@ -136,6 +140,7 @@ function StartDeath()
     -- Start death animation
     -- Start death sound
     state = "DEATH"
+    gameStateSys:GetEntity("EnemyDeath"):GetAudio():SetPlay()
 end
 
 -- Helper functions
