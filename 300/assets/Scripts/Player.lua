@@ -146,6 +146,11 @@ local up_vector = Vec3.new()
 
 local world_local_right_vector
 
+local dashX
+local dashY
+local dashZ
+local inittedDash = false
+
 function Alive()
     gameStateSys = systemManager:mGameStateSystem();
     inputMapSys = systemManager:mInputActionSystem();
@@ -348,7 +353,12 @@ function Update()
     movement.z = 0;
 
     if (isDashing) then
-   
+        if inittedDash == false then
+            dashX = viewVec.x
+            dashY = viewVec.y
+            dashZ = viewVec.z
+            inittedDash = true
+        end
         if(e_dashEffect == true)then
             dashEffect()
             dashAudioComp:SetPlay(0.4)
@@ -356,14 +366,14 @@ function Update()
           
             e_dashEffect = false
         end
-        movement.x = movement.x + (viewVec.x * 50.0)
-        movement.z = movement.z + (viewVec.z * 50.0);
+        movement.x = movement.x + (dashX * 50.0)
+        movement.z = movement.z + (dashZ * 50.0);
     
         if (dashTime >= 0.1) then
 
             dashTime = 0
             isDashing = false
-           
+           inittedDash = false
         end
 
         --dashEffectEnd()
