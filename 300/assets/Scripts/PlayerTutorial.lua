@@ -107,20 +107,8 @@ local shotgunShootState = "SHOOTABLE"   -- ["SHOOTABLE" , "COOLDOWN"]
 local machinegunShootState = "SHOOTABLE"
 local gunShot = false
 
--- local walkingAudioSource
--- local audioComp
+local up_vector = Vec3.new()
 
--- local bulletshootEntity
--- local bulletshootComp
--- local bulletshootAudioSource
-
--- local dashEntity
--- local dashComp
--- local dashAudioSource
-
--- local jumpEntity
--- local jumpComp
--- local jumpAudioSource
 
 local dashEntity
 local dashAudioComp
@@ -508,24 +496,105 @@ function Update()
 
 
 --region -- Player Shooting
-
     if(inputMapSys:GetButtonDown("Shoot")) then
-        positions_final.x = positions.x + viewVecCam.x*5
-        positions_final.y = positions.y + viewVecCam.y*5
-        positions_final.z = positions.z + viewVecCam.z*5  
+        gunHoldState = "HOLDING"   -- for machine gun
 
-        prefabEntity = systemManager.ecs:NewEntityFromPrefab("bullet", positions_final)
-        rotationCam.x = rotationCam.z *360
-        rotationCam.y = rotationCam.x *0
-        rotationCam.z = rotationCam.z *0
-        prefabEntity:GetTransform().mRotate = rotationCam    
-        viewVecCam.x = viewVecCam.x*100
-        viewVecCam.y=viewVecCam.y *100
-        viewVecCam.z=viewVecCam.z *100
+    -- print("GUN RECOIL STATE:" , gunRecoilState)
+        -- print("GUN EQUIPPED:" , gunEquipped)
+        if(_G.gunEquipped == 1 ) then -- REVOLVER
+        
+            if(revolverGunTimer == 0) then 
+                -- print("REVOLVER SHOOTING")
+                
+                applyGunRecoil(recoil_speed, 0.5)
 
-        bulletAudioComp:SetPlay(0.1)
+                -- gunRecoilState = "MOVING"
 
-        physicsSys:SetVelocity(prefabEntity, viewVecCam)
+                -- Shoots Bullet
+                positions_final.x = positions.x + viewVecCam.x*3
+                positions_final.y = positions.y + viewVecCam.y*3
+                positions_final.z = positions.z + viewVecCam.z*3  
+
+                prefabEntity = systemManager.ecs:NewEntityFromPrefab("Revolver Bullet", positions_final)
+                -- rotationCam.x = rotationCam.x *0
+                -- rotationCam.y = rotationCam.y *0
+                -- rotationCam.z = rotationCam.z *0
+
+
+                prefabEntity:GetTransform().mRotate = rotationCam    
+                viewVecCam.x = viewVecCam.x*100
+                viewVecCam.y=viewVecCam.y *100
+                viewVecCam.z=viewVecCam.z *100
+
+                physicsSys:SetVelocity(prefabEntity, viewVecCam)
+                bulletAudioComp:SetPlay(0.3)
+
+                revolverGunTimer = revolverGunTimer + revolverGunCooldown
+                -- print("GUN TIMER:" ,revolverGunTimer)
+                
+                revolverShootState = "COOLDOWN"
+            end
+        end 
+
+        -- print("TRANSLATE: " , gunTranslate.z)
+
+        if(_G.gunEquipped == 2) then -- SHOTGUN
+            if(shotGunTimer == 0) then 
+
+                moreAccurateShotgun(10)
+                applyGunRecoil(recoil_speed * 0.5, 0.1)
+
+                shotGunTimer = shotGunTimer + shotGunCooldown
+
+
+                shotgunShootState = "COOLDOWN"
+
+                bulletAudioComp:SetPlay(0.3)
+            end
+        end
+    end
+
+    -- "COOLDOWN" state
+    if(shotgunShootState == "COOLDOWN") then 
+        if(shotGunTimer > 0) then 
+            shotGunTimer = shotGunTimer - dt
+            -- print("SHOTGUN COOLDOWN: " , shotGunTimer)
+        else 
+            shotGunTimer = 0
+            shotgunShootState = "SHOOTABLE"
+            -- print("SHOTGUN IS READY!")
+        end
+    end
+
+    if(revolverShootState == "COOLDOWN") then 
+        if(revolverGunTimer > 0) then 
+            revolverGunTimer = revolverGunTimer - dt
+        else 
+            revolverGunTimer = 0
+            revolverShootState = "SHOOTABLE"
+        end 
+    end
+    -- end of "COOLDOWN" state
+
+    -- Machine Gun
+    if(_G.gunEquipped == 3) then  --MACHINE GUN
+        -- Machine Gun (need to be held down)
+        if(gunHoldState == "HOLDING") then 
+          
+            -- applyGunRecoil(recoil_speed * 0.05 , 0.
+            machineGunRecoil()
+            machineGunBullets()
+
+            if(machineGunTimer <= 0) then
+                bulletAudioComp:SetPlay(0.3)
+                machineGunTimer = machineGunCooldown  -- Set the cooldown timer
+           end
+           machineGunTimer = math.max(0, machineGunTimer - dt)  -- deltaTime is the time since the last fra
+        end
+    end
+
+    if(inputMapSys:GetButtonUp("Shoot")) then
+        gunHoldState = "NOT HELD"   -- for machine gun
     end
 
 --endregion
@@ -615,4 +684,230 @@ function dashEffectEnd()
     -- graphicsSys.mTexelOffset = d_texel+ (e_texel-d_texel)*t
     -- graphicsSys.mSamplingWeight = d_sampleWeight+ (e_sampleWeight -d_sampleWeight)*t
     -- Camera_Scripting.SetFov(cameraEntity,d_fov+ (d_fov-e_fov)*t)
+end
+
+function shotgunbullets(number_of_bullets)
+    local bullet_speed_modifier = 20
+    -- local number_of_bullets = 5
+
+    -- print("IN SHOTGUN")
+    -- print("TRANSLATE: " , gunTranslate.z)
+
+    --print("SHOOTING SHOTGUN (no of pellets)" , number_of_bullets)
+
+    for i = 1, number_of_bullets , 1 
+    do 
+        -- Apply Randomization 
+        randomAngleDegreesX = math.random(-5,5)
+        randomAngleDegreesY = math.random(-1,1)
+        randomAngleDegreesZ = math.random(-5,5)
+
+        -- Rotating the "Camera Direction" vector about the Z-axis (NORMALIZED)
+        rotatedVelocity_X = rotateVectorX(viewVec,randomAngleDegreesX)
+        rotatedVelocity_XY = rotateVectorY(rotatedVelocity_X, randomAngleDegreesY)
+        rotatedVelocity_XYZ = rotateVectorY(rotatedVelocity_XY, randomAngleDegreesZ)
+        
+        --print("XYZ: " , rotatedVelocity_XYZ.x , rotatedVelocity_XYZ.y,  rotatedVelocity_XYZ.z)
+
+        -- Starting Position of bullet 
+        positions_final.x = positions.x +  rotatedVelocity_XYZ.x * 2 -- 'positions' - camera's translate
+        positions_final.y = positions.y +  rotatedVelocity_XYZ.y * 2 
+        positions_final.z = positions.z +  rotatedVelocity_XYZ.z * 2 
+
+        -- Scaling Randomnized "Rotated Vector"
+        rotatedVelocity_XYZ.x =  rotatedVelocity_XYZ.x * bullet_speed_modifier
+        rotatedVelocity_XYZ.y =  rotatedVelocity_XYZ.y * bullet_speed_modifier
+        rotatedVelocity_XYZ.z =  rotatedVelocity_XYZ.z * bullet_speed_modifier
+
+        bulletPrefab = systemManager.ecs:NewEntityFromPrefab("bullet", positions_final)
+
+        -- Scaling Down (Shotgun pellets)
+        original_scale = bulletPrefab:GetTransform().mScale 
+        bulletPrefab:GetTransform().mScale.x = original_scale.x / 3
+        bulletPrefab:GetTransform().mScale.y = original_scale.y / 3
+        bulletPrefab:GetTransform().mScale.z = original_scale.z / 3
+
+        -- Rotation of bullets
+        rotationCam.x = rotationCam.z *360
+        rotationCam.y = rotationCam.x *0
+        rotationCam.z = rotationCam.z *0
+        bulletPrefab:GetTransform().mRotate = rotationCam    
+
+        -- print("ROTATED VECTOR:" , rotatedVelocity_XY.x, rotatedVelocity_XY.y, rotatedVelocity_XY.z)
+        
+        --print("ROTATED VECTOR:" , rotatedVelocity_X.x, rotatedVelocity_X.y, rotatedVelocity_X.z)
+
+        --print("CREATING SHOTGUN BULLET")
+        physicsSys:SetVelocity(bulletPrefab, rotatedVelocity_XYZ)
+
+        gunTranslate.z = original_translate_z -- some weird behaviour (changes this z value to a very big value)
+        -- print("WTF" , gunTranslate.z)
+        
+    end
+end 
+
+function moreAccurateShotgun(num_of_bullets) 
+
+    local bullet_speed = 50
+
+    -- 1. Get my local right vector
+    up_vector.x = 0 
+    up_vector.y = 1
+    up_vector.z = 0
+
+    local local_right_vector = Vec3.new()
+    local world_true_up_vector = Vec3.new()
+    local final_vector = Vec3.new()
+    
+    local_right_vector = Camera_Scripting.Cross(viewVec, up_vector) -- get vector pointing to rightwards of player
+    world_true_up_vector = Camera_Scripting.Cross(local_right_vector, viewVec)
+   
+    for i = 0 , num_of_bullets , 1 do
+        spreadRange = math.random(-1,1)
+        spreadRange = spreadRange / 10
+
+        randomAngleinDegree = math.random(0,360)
+
+       -- print("SPREAD RANGE:" , spreadRange)
+        world_true_up_vector.x = spreadRange * local_right_vector.x
+        world_true_up_vector.y = spreadRange * local_right_vector.y
+        world_true_up_vector.z = spreadRange * local_right_vector.z
+
+        final_vector.x = viewVec.x + world_true_up_vector.x
+        final_vector.y = viewVec.y + world_true_up_vector.y
+        final_vector.z = viewVec.z + world_true_up_vector.z
+
+        -- Starting Position of bullet 
+        positions_final.x = positions.x +  final_vector.x * 2-- 'positions' - camera's translate
+        positions_final.y = positions.y +  final_vector.y * 2
+        positions_final.z = positions.z +  final_vector.z * 2
+
+        final_vector.x = (viewVec.x + world_true_up_vector.x) * bullet_speed
+        final_vector.y = (viewVec.y + world_true_up_vector.y) * bullet_speed
+        final_vector.z = (viewVec.z + world_true_up_vector.z) * bullet_speed
+
+        -- Randomnized Rotation
+        final_vector = Camera_Scripting.Rotate(final_vector, viewVec, randomAngleinDegree)
+
+        bulletPrefab = systemManager.ecs:NewEntityFromPrefab("Shotgun Bullet", positions_final)
+
+        -- Scaling Down (Shotgun pellets)
+        original_scale = bulletPrefab:GetTransform().mScale 
+        bulletPrefab:GetTransform().mScale.x = original_scale.x / 3
+        bulletPrefab:GetTransform().mScale.y = original_scale.y / 3
+        bulletPrefab:GetTransform().mScale.z = original_scale.z / 3
+        
+
+
+        physicsSys:SetVelocity(bulletPrefab, final_vector)
+    end
+end 
+
+
+
+function machineGunBullets()
+    -- print("HI SHOOTING MACHINE GUN")
+
+    positions_final.x = positions.x + viewVecCam.x*6
+    positions_final.y = positions.y + viewVecCam.y*6
+    positions_final.z = positions.z + viewVecCam.z*6  
+
+    prefabEntity = systemManager.ecs:NewEntityFromPrefab("Machine Gun Bullet", positions_final)
+    rotationCam.x = rotationCam.z *360
+    rotationCam.y = rotationCam.x *0
+    rotationCam.z = rotationCam.z *0
+    prefabEntity:GetTransform().mRotate = rotationCam    
+    viewVecCam.x = viewVecCam.x*50
+    viewVecCam.y=viewVecCam.y *50
+    viewVecCam.z=viewVecCam.z *50
+
+    -- Scaling Down (Machine Gun Pellets)
+    original_scale = prefabEntity:GetTransform().mScale 
+    prefabEntity:GetTransform().mScale.x = original_scale.x / 5
+    prefabEntity:GetTransform().mScale.y = original_scale.y / 5
+    prefabEntity:GetTransform().mScale.z = original_scale.z / 5
+
+    physicsSys:SetVelocity(prefabEntity, viewVecCam)
+
+end
+
+function crossProduct(v1 ,v2)
+    local x = v1[2]*v2[3] - v1[3]*v2[2]
+    local y = v1[3]*v2[1] - v1[1]*v2[3]
+    local z = v1[1]*v2[2] - v1[2]*v2[1]
+    
+    return {x, y, z}
+end
+
+function rotateVectorX(vector, angleInDegrees)
+    angleInRadians = math.rad(angleInDegrees)
+
+    cosTheta = math.cos(angleInRadians)
+    sinTheta = math.sin(angleInRadians)
+
+    local rotatedVector = Vec3:new()
+    rotatedVector.x = vector.x
+    rotatedVector.y = cosTheta * vector.y - sinTheta * vector.z
+    rotatedVector.z = sinTheta * vector.y + cosTheta * vector.z
+
+    return rotatedVector
+end
+
+function rotateVectorY(vector, angleInDegrees)
+    angleInRadians = math.rad(angleInDegrees)
+
+    cosTheta = math.cos(angleInRadians)
+    sinTheta = math.sin(angleInRadians)
+
+    local rotatedVector = Vec3:new()
+    rotatedVector.x = cosTheta * vector.x + sinTheta * vector.z
+    rotatedVector.y = vector.y
+    rotatedVector.z = -sinTheta * vector.x + cosTheta * vector.z
+
+    return rotatedVector
+end
+
+
+function rotateVectorZ(vector, angleInDegrees)
+    angleInRadians = math.rad(angleInDegrees)
+
+    cosTheta = math.cos(angleInRadians)
+    sinTheta = math.sin(angleInRadians)
+
+    local rotatedVector = Vec3:new()
+    rotatedVector.x = cosTheta * vector.x - sinTheta * vector.y
+    rotatedVector.y = sinTheta * vector.x + cosTheta * vector.y
+    rotatedVector.z = vector.z
+
+    return rotatedVector
+end
+
+function applyGunRecoil(recoil_speed, max_recoil_distance_z) 
+    gunTranslate = gunEntity:GetTransform().mTranslate -- some weird bug again
+
+    -- print("MAX RECOIL: " , max_recoil_distance_z)
+    local distance_travelled_this_frame = recoil_speed * dt
+    -- print("DISTANCE TRAELLED:" ,  distance_travelled_this_frame)
+    
+    if(gunTranslate.z < original_translate_z + distance_travelled_this_frame) and
+        (gunTranslate.z < original_translate_z + max_recoil_distance_z) then
+        gunTranslate.z = gunTranslate.z + distance_travelled_this_frame -- recoil
+        -- print("DISTANCE TRAVELLED (1): " , gunTranslate.z)
+    else -- if it extends over the limit 
+        gunTranslate.z = max_recoil_distance_z -- recoil
+        -- print("DISTANCE TRAVELLED (2): " , gunTranslate.z)
+    end
+end
+
+
+function machineGunRecoil()
+    
+    if((gunTranslate.z < original_translate_z + recoil_distance) and 
+        (gunTranslate.z < original_translate_z + max_recoil_distance_z)) then 
+        gunTranslate.z = gunTranslate.z + mg_recoil_speed * dt  -- incorporate dt
+        -- print("RECOIL SPEED: " , recoil_speed_MG)
+        -- print("dt", dt)
+    else 
+        gunTranslate.z = math.min(gunTranslate.z, original_translate_z + max_recoil_distance_z) -- this makes sure it does not surpass the limit.
+    end
 end
