@@ -303,6 +303,8 @@ void LuaGraphicsSystem()
         "m_EnableBloom", &GraphicsSystem::m_EnableBloom,
         "m_EnableChromaticAbberation", &GraphicsSystem::m_EnableChromaticAbberation,
         "m_GlobalTint", &GraphicsSystem::m_GlobalTint,
+        "m_WindowWidth", &GraphicsSystem::m_Width,
+        "m_WindowHeight", &GraphicsSystem::m_Height,
         "SetAllEntityBloomThreshold", &GraphicsSystem::SetAllEntityBloomThreshold);
 }
 
