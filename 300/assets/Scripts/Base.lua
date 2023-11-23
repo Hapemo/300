@@ -5,8 +5,8 @@ local weaponPosition = {-1700,-1430,-1170,-900,-620,-360,-90,180 }
 local dispensor = {1,1,1}
 local disCount = 3
 local dashui = { }
-_G.textureArray  = {"UI-Assult-133123", "UI-Shotgun-1223341", "UI-Revolver"}
-_G.textureArray2 = {"UI-Red","UI-Yellow-s3&321", "UI-Blue" }
+_G.textureArray  = {"UI-Revolver" , "UI-Shotgun-1223341","UI-Assult-133123" }
+_G.textureArray2 = {"UI-Blue","UI-Yellow-s3&321",  "UI-Red"}
 
 local spawnTime = 0
 local dispenseTime = 0
@@ -76,35 +76,43 @@ function Update()
     if(Input.CheckKey(State.PRESS,Key.KEY_1))then
         _G.weaponArray[8][2] = false
         _G.weaponArray[8][3] = 0
+        _G.gunEquipped = _G.weaponArray[8][1]
         ArraySystem(8)
 
     elseif(Input.CheckKey(State.PRESS,Key.KEY_2))then
         _G.weaponArray[7][2] = false
         _G.weaponArray[7][3] = 0
+        _G.gunEquipped = _G.weaponArray[7][1]
         ArraySystem(7)
     elseif(Input.CheckKey(State.PRESS,Key.KEY_3))then
         _G.weaponArray[6][2] = false
         _G.weaponArray[6][3] = 0
+        _G.gunEquipped = _G.weaponArray[6][1]
         ArraySystem(6)
     elseif(Input.CheckKey(State.PRESS,Key.KEY_4))then
         _G.weaponArray[5][2] = false
         _G.weaponArray[5][3] = 0
+        _G.gunEquipped = _G.weaponArray[5][1]
         ArraySystem(5)
     elseif(Input.CheckKey(State.PRESS,Key.KEY_5))then
         _G.weaponArray[4][2] = false
         _G.weaponArray[4][3] = 0
+        _G.gunEquipped = _G.weaponArray[4][1]
         ArraySystem(4)
     elseif(Input.CheckKey(State.PRESS,Key.KEY_6))then
         _G.weaponArray[3][2] = false
         _G.weaponArray[3][3] = 0
+        _G.gunEquipped = _G.weaponArray[3][1]
         ArraySystem(3)
     elseif(Input.CheckKey(State.PRESS,Key.KEY_7))then
         _G.weaponArray[2][2] = false
         _G.weaponArray[2][3] = 0
+        _G.gunEquipped = _G.weaponArray[2][1]
         ArraySystem(2)
     elseif(Input.CheckKey(State.PRESS,Key.KEY_8))then
         _G.weaponArray[1][2] = false
         _G.weaponArray[1][3] = 0
+        _G.gunEquipped = _G.weaponArray[1][1]
         ArraySystem(1)
     end
     -- for i = 8, 2 , -1
