@@ -96,7 +96,7 @@ void PathfinderWindow::update() {
   if (mLatestPoint.id == entt::null) ImGui::Text("No active point selected");
   else {
     ImGui::DragFloat3("##CurrentSelectedPoint", (float*)&mLatestPoint.GetComponent<Transform>().mTranslate, 0.1f);
-    if (ImGui::Button("Duplicate Point")) {
+    if (ImGui::Button("Duplicate Point") || (Input::CheckKey(HOLD, LEFT_CONTROL) && Input::CheckKey(PRESS, Q))) {
       pfSys->AddPoint(mLatestPoint.GetComponent<Transform>().mTranslate + glm::vec3{0,0,0.01});
     }
   }
