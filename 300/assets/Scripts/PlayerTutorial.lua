@@ -53,6 +53,60 @@ local jumpAudioComp
 local dashAudioEntity
 local dashAudioComp
 
+--gun
+local gunEntity
+local gunTranslate = Vec3.new()
+local gunRotation = Vec3.new()
+
+local original_translate_x
+local original_translate_y
+local original_translate_z
+local original_translation = Vec3.new()
+
+local gunJumpTimer = 0
+local gunDisplaceBackSpeed = 0.015
+local gunDisplaceSpeed = 0.015
+local gunMaxAcceleration = 100
+
+local gunThreshHold_max_y = -0.15
+local gunThreshHold_min_y = -0.9
+
+local gunThreshHold_min_x = 0.15 
+local gunThreshHold_max_x = 0.9
+
+local gunJumped = false -- for gun animation
+
+-- Recoil Stuff
+local recoil_distance = 0.5
+local recoil_speed = 15
+local mg_recoil_speed = 2
+-- local recoil_speed_SG = 30.0
+-- local recoil_speed_MG = 1.0
+-- local recoil_speed_R = 15.0
+local max_recoil_distance_z = 0.1
+
+local bullet_scale = Vec3.new()
+
+-- Cooldown in seconds (between bullets)
+local revolverGunCooldown = 1
+local shotGunCooldown = 1.5
+local machineGunCooldown = 0.2
+
+local revolverGunTimer = 0
+local shotGunTimer = 0 
+local machineGunTimer = 0
+
+
+-- gun states
+local gunRecoilState = "IDLE"       -- ["STARTUP", "IDLE" , "MOVING"]
+_G.gunEquipped = 1 --"REVOLVER"      -- rename this to whatever ["REVOLVER" , "SHOTGUN" , "MACHINE GUN"]
+local gunHoldState = "NOT HELD"     -- ["NOT HELD" , "HOLDING"]
+
+local revolverShootState = "SHOOTABLE"
+local shotgunShootState = "SHOOTABLE"   -- ["SHOOTABLE" , "COOLDOWN"]
+local machinegunShootState = "SHOOTABLE"
+local gunShot = false
+
 -- local walkingAudioSource
 -- local audioComp
 
@@ -153,10 +207,23 @@ function Alive()
     tutTeleporter = gameStateSys:GetEntity("Tutorial")
     skiptutTeleporter = gameStateSys:GetEntity("Skip Tutorial")
     box2Spawn = gameStateSys:GetEntity("Box2Spawn")
+
+    -- Gun Stuff --
+    gunEntity = gameStateSys:GetEntity("gun")
+    gunInitialTranslate = gunEntity:GetTransform().mTranslate
+    gunRotation = gunEntity:GetTransform().mRotate
+
+    -- Original Gun Position --
+    original_translate_x =  gunInitialTranslate.x
+    original_translate_y =  gunInitialTranslate.y
+    original_translate_z =  gunInitialTranslate.z 
+    original_translation.x = gunInitialTranslate.x
+    original_translation.y = gunInitialTranslate.y
+    original_translation.z = gunInitialTranslate.z
 end
 
 function Update()
-
+    gunTranslate = gunEntity:GetTransform().mTranslate
     -- Example: I want to get HP from AITest.lua script (getting walking enemy's hp)
     -- scriptingSys = systemManager:mScriptingSystem();
     -- scriptingComp = walkingenemy:GetScripts()
@@ -293,7 +360,21 @@ function Update()
                 t = t +tinc 
             end
         end
-
+        
+-- Toggle Weapons
+        if(inputMapSys:GetButtonDown("Shotgun")) then 
+            print("Swapping to shotgun")
+            _G.gunEquipped = 2 --"SHOTGUN"
+        end
+        if(inputMapSys:GetButtonDown("Revolver")) then 
+            print("Swapping to revolver")
+            _G.gunEquipped = 1 --"REVOLVER"
+        end
+        if(inputMapSys:GetButtonDown("Machine Gun")) then 
+            print("Swapping to machine gun")
+            _G.gunEquipped = 3 --"MACHINE GUN"
+        end
+-- end of Toggle Weapons
         
 
         if (inputMapSys:GetButtonDown("Dash")) then
@@ -304,33 +385,104 @@ function Update()
             end
         else
         
+-- region (snapback)
+            -- print("GUN RECOIL STATE: ", gunRecoilState)
+            if (gunRecoilState == "IDLE") then
+                
+                -- Account for "vertical" axis
+                if(gunTranslate.y ~= original_translate_y) then
+                    if((gunTranslate.y > original_translate_y)) then -- it should go up 
+                       -- print("Gun is displaced higher than its original translation")
+                       gunTranslate.y = gunTranslate.y - gunDisplaceBackSpeed 
+                    end
+                
+                    
+                    if(gunTranslate.y < original_translate_y) then
+                       -- print("Gun is displaced lower than its original translation")
+                        gunTranslate.y = gunTranslate.y + gunDisplaceBackSpeed 
+                    end
+                end
 
-            -- else
-            --     if (fadeOutTimer < fadeOutDuration) then 
-            --         local volume = audioComp.mVolume - (fadeOutTimer / fadeOutDuration)
-            --         walkingAudioSource:SetVolume(volume)
-            --         fadeOutTimer = fadeOutTimer + dt
-            --         print("FADE OUT TIMER: ", fadeOutTimer)
-            --     end
-            -- end
+                -- Account for "horizontal" axis
+                if(gunTranslate.x ~= original_translate_x) then 
+                    if(gunTranslate.x < original_translate_x) then  -- left to original
+                        gunTranslate.x = gunTranslate.x + gunDisplaceBackSpeed 
+                    end
+
+                    if(gunTranslate.x > original_translate_x) then  -- right to original
+                        gunTranslate.x = gunTranslate.x - gunDisplaceBackSpeed 
+                    end
+
+                    --print("HORIZONTAL AXIS CHANGED")
+                end
+            end 
+
+            -- Recoil Snapback
+            if(gunTranslate.z ~= original_translate_z) then 
+                gunTranslate.z = gunTranslate.z - gunDisplaceBackSpeed
+                --print("GUN TRANSLATE (NOT IDLE): " , gunTranslate.z)
+            
+                if(gunTranslate.z < original_translate_z) then
+                    gunTranslate.z = original_translate_z
+                    --print("SNAPBACK TO (NOT IDLE)" , gunTranslate.z)
+                end
+            end
+-- endregion (snapback)
+
+ -- Must be before any state change
+            if(gunRecoilState ~= "SHOOTING") then
+                gunRecoilState = "IDLE"
+            end
+-- endregion 
 
             if (inputMapSys:GetButton("up")) then
                 movement.x = movement.x + (viewVec.x * mul);
                 movement.z = movement.z + (viewVec.z * mul);    
-                -- print("Volume: " , audioComp.mVolume)
-              
+             
+                -- gun "jumps down" when player moves forward\
+                if(gunTranslate.y > gunThreshHold_min_y) then 
+                    gunTranslate.y = gunTranslate.y - gunDisplaceSpeed
+                end
+
+                gunRecoilState = "MOVING"
             end
+
             if (inputMapSys:GetButton("down")) then
                 movement.x = movement.x - (viewVec.x * mul);
                 movement.z = movement.z - (viewVec.z * mul);
+
+                  -- gun "jumps up" when player moves forward
+                if(gunTranslate.y < gunThreshHold_max_y) then -- limit to how much 
+                    gunTranslate.y = gunTranslate.y + gunDisplaceSpeed
+                end
+
+                gunRecoilState = "MOVING"
             end
+
             if (inputMapSys:GetButton("left")) then
                 movement.x = movement.x + (viewVec.z * mul);
                 movement.z = movement.z - (viewVec.x * mul);
+
+                -- gun "move rightwards" when player moves left
+                if(gunTranslate.x < gunThreshHold_max_x) then 
+                    gunTranslate.x = gunTranslate.x + gunDisplaceSpeed
+                end
+
+                gunRecoilState = "MOVING"
             end
+
+
             if (inputMapSys:GetButton("right")) then
                 movement.x = movement.x - viewVec.z * mul;
                 movement.z = movement.z + viewVec.x * mul;
+
+                  -- gun "moves leftwards" when player moves right
+                if(gunTranslate.x > gunThreshHold_min_x) then 
+                    gunTranslate.x = gunTranslate.x - gunDisplaceSpeed
+                end
+
+                gunRecoilState = "MOVING"
+
             end
             if (floorCount > 0) then
                 if (inputMapSys:GetButtonDown("Jump")) then

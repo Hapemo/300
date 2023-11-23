@@ -445,8 +445,6 @@ function Update()
                 end
             end 
 
-            -- gunRecoilState = "IDLE" -- If no iput will result in "IDLE"
-
             -- Recoil Snapback
             if(gunTranslate.z ~= original_translate_z) then 
                 gunTranslate.z = gunTranslate.z - gunDisplaceBackSpeed
@@ -457,6 +455,8 @@ function Update()
                     --print("SNAPBACK TO (NOT IDLE)" , gunTranslate.z)
                 end
             end
+-- endregion (snapback)
+
 
             -- Must be before any state change
             if(gunRecoilState ~= "SHOOTING") then
@@ -550,7 +550,7 @@ function Update()
                 end
             end
 
---  endregion
+
           
         end
 
