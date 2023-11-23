@@ -1,5 +1,42 @@
 [
     {
+        "entityid": 4194310,
+        "general": {
+            "name": "Click",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "UI_Button_Click.wav",
+            "fullpath": "../assets\\Audio/UI_Button_Click.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false
+        }
+    },
+    {
         "entityid": 4194311,
         "general": {
             "name": "CreditsBackButton",
@@ -48,8 +85,8 @@
         },
         "audio": {
             "filepath": "../assets\\Audio",
-            "filename": "click.wav",
-            "fullpath": "../assets\\Audio/click.wav",
+            "filename": "UI_Button_Hover.wav",
+            "fullpath": "../assets\\Audio/UI_Button_Hover.wav",
             "playonawake": false,
             "islooping": false,
             "audiotype": 1,
@@ -65,7 +102,7 @@
         }
     },
     {
-        "entityid": 5242888,
+        "entityid": 4194312,
         "general": {
             "name": "MenuBackground",
             "tagid": 6,
@@ -105,7 +142,7 @@
         }
     },
     {
-        "entityid": 5242889,
+        "entityid": 4194313,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -143,14 +180,14 @@
             },
             "size": {
                 "x": 1304,
-                "y": 586
+                "y": 680
             },
             "near": 0.10000000149011612,
             "far": 900.0
         }
     },
     {
-        "entityid": 5242890,
+        "entityid": 4194314,
         "general": {
             "name": "TV ON",
             "tagid": 0,
@@ -187,7 +224,7 @@
         }
     },
     {
-        "entityid": 5242891,
+        "entityid": 4194315,
         "general": {
             "name": "BGM",
             "tagid": 0,
