@@ -99,7 +99,7 @@ function ILOVEYOUMovement()
     vec = aiSys:GetDirection(this)
     this:GetTransform().mRotate.y = Helper.DirectionToAngle(this, vec)
 
-    Helper.Scale(vec, 1)
+    Helper.Scale(vec, 3)
 
     -- Add bobbling here
     bobbleAngle = bobbleAngle + bobbleFrequency

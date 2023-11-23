@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 224,
+        "entityid": 223,
         "general": {
             "name": "TrojanSoldier",
             "tagid": 1,
@@ -127,7 +127,7 @@
         }
     },
     {
-        "entityid": 225,
+        "entityid": 224,
         "general": {
             "name": "TrojanSoldier",
             "tagid": 1,
@@ -254,7 +254,7 @@
         }
     },
     {
-        "entityid": 226,
+        "entityid": 225,
         "general": {
             "name": "TrojanHorse",
             "tagid": 1,
@@ -395,7 +395,7 @@
         }
     },
     {
-        "entityid": 227,
+        "entityid": 226,
         "general": {
             "name": "Melissa",
             "tagid": 0,
@@ -526,7 +526,7 @@
         }
     },
     {
-        "entityid": 228,
+        "entityid": 227,
         "general": {
             "name": "ILOVEYOU",
             "tagid": 1,
@@ -631,7 +631,7 @@
             "stayaway": 100.0,
             "elevation": 20.0,
             "targetname": "Camera",
-            "graphdataname": ""
+            "graphdataname": "GroundPath"
         },
         "healthbar": {
             "healthcolor": {
@@ -657,7 +657,7 @@
         }
     },
     {
-        "entityid": 229,
+        "entityid": 228,
         "general": {
             "name": "ZipBomb",
             "tagid": 1,
@@ -772,7 +772,7 @@
             "stayaway": 0.0,
             "elevation": 0.0,
             "targetname": "Camera",
-            "graphdataname": "dw"
+            "graphdataname": "GroundPath"
         },
         "healthbar": {
             "healthcolor": {
@@ -798,7 +798,7 @@
         }
     },
     {
-        "entityid": 230,
+        "entityid": 229,
         "general": {
             "name": "TrojanSoldier",
             "tagid": 1,
@@ -925,7 +925,7 @@
         }
     },
     {
-        "entityid": 231,
+        "entityid": 230,
         "general": {
             "name": "EnemyDeathAudio",
             "tagid": 8,
@@ -968,7 +968,7 @@
         }
     },
     {
-        "entityid": 232,
+        "entityid": 231,
         "general": {
             "name": "ZipBombFuseAudio",
             "tagid": 0,
@@ -1011,7 +1011,7 @@
         }
     },
     {
-        "entityid": 233,
+        "entityid": 232,
         "general": {
             "name": "TrojanHorseChargeAudio",
             "tagid": 0,

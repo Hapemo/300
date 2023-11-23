@@ -45,7 +45,7 @@ function Update()
     vec = aiSys:GetDirection(this)
     this:GetTransform().mRotate.y = Helper.DirectionToAngle(this, vec)
 
-    Helper.Scale(vec, 1)
+    Helper.Scale(vec, 5)
 
     -- Add bobbbling here
     bobbleAngle = bobbleAngle + bobbleFrequency
