@@ -1,5 +1,5 @@
 {
-    "entityid": 7,
+    "entityid": 184,
     "general": {
         "name": "TrojanSoldier",
         "tagid": 1,
@@ -19,9 +19,9 @@
             "z": 0.0
         },
         "translate": {
-            "x": 6.103666305541992,
-            "y": 7.450580596923828e-9,
-            "z": 0.0
+            "x": -9.313225746154785e-10,
+            "y": -11.052732467651367,
+            "z": -14.986703872680664
         }
     },
     "rigidbody": {
@@ -75,10 +75,10 @@
         ]
     },
     "spherecollider": {
-        "scaleoffset": 1.0,
+        "scaleoffset": 0.22499999403953552,
         "translateoffset": {
             "x": 0.0,
-            "y": 0.22499999403953552,
+            "y": 0.0,
             "z": 0.0
         },
         "istrigger": false
@@ -99,7 +99,7 @@
         "spreadout": 0.0,
         "stayaway": 0.0,
         "elevation": 0.0,
-        "targetname": "player",
+        "targetname": "Camera",
         "graphdataname": ""
     },
     "healthbar": {

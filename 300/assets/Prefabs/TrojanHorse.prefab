@@ -1,5 +1,5 @@
 {
-    "entityid": 2097345,
+    "entityid": 188,
     "general": {
         "name": "TrojanHorse",
         "tagid": 1,
@@ -9,9 +9,9 @@
     },
     "transform": {
         "scale": {
-            "x": 0.7087522149085999,
-            "y": 1.2886407375335693,
-            "z": 1.4175045490264893
+            "x": 1.1890875101089478,
+            "y": 2.161978244781494,
+            "z": 2.378175735473633
         },
         "rotate": {
             "x": 0.0,
@@ -19,9 +19,9 @@
             "z": 0.0
         },
         "translate": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
+            "x": 5.6142802238464355,
+            "y": -11.030112266540527,
+            "z": -15.278809547424316
         }
     },
     "rigidbody": {
@@ -82,7 +82,7 @@
         },
         "translateoffset": {
             "x": 0.0,
-            "y": 0.6000000238418579,
+            "y": 1.100000023841858,
             "z": 0.0
         },
         "istrigger": false
@@ -95,6 +95,16 @@
             }
         ]
     },
+    "audio": {
+        "filepath": "",
+        "filename": "",
+        "fullpath": "",
+        "playonawake": false,
+        "islooping": false,
+        "audiotype": 1,
+        "volume": 1.0,
+        "retainaudio": false
+    },
     "prefab": {
         "prefab": "TrojanHorse"
     },
@@ -103,7 +113,7 @@
         "spreadout": 0.0,
         "stayaway": 0.0,
         "elevation": 0.0,
-        "targetname": "player",
+        "targetname": "Camera",
         "graphdataname": ""
     },
     "healthbar": {
@@ -121,7 +131,7 @@
         },
         "position": {
             "x": 0.0,
-            "y": 1.5,
+            "y": 2.4000000953674316,
             "z": 0.0
         },
         "maxhealth": 200.0,

@@ -1,5 +1,5 @@
 {
-    "entityid": 2097343,
+    "entityid": 186,
     "general": {
         "name": "ILOVEYOU",
         "tagid": 1,
@@ -9,9 +9,9 @@
     },
     "transform": {
         "scale": {
-            "x": 1.097214937210083,
-            "y": 1.0972144603729248,
-            "z": 0.4577629864215851
+            "x": 2.0889999866485596,
+            "y": 1.470267415046692,
+            "z": 0.6134024262428284
         },
         "rotate": {
             "x": 0.0,
@@ -19,9 +19,9 @@
             "z": 0.0
         },
         "translate": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
+            "x": 9.408001899719238,
+            "y": -9.422754287719727,
+            "z": -20.92490577697754
         }
     },
     "rigidbody": {
@@ -82,7 +82,7 @@
         },
         "translateoffset": {
             "x": 0.0,
-            "y": 0.699999988079071,
+            "y": 0.8999999761581421,
             "z": 0.10000000149011612
         },
         "istrigger": false
@@ -101,10 +101,10 @@
     "aisetting": {
         "movementtype": 2,
         "spreadout": 0.0,
-        "stayaway": 100.0,
-        "elevation": 20.0,
-        "targetname": "player",
-        "graphdataname": "FlyingGraphJazzTest"
+        "stayaway": 6.0,
+        "elevation": 2.0,
+        "targetname": "Camera",
+        "graphdataname": "FlyingPath"
     },
     "healthbar": {
         "healthcolor": {
@@ -121,11 +121,11 @@
         },
         "position": {
             "x": 0.0,
-            "y": 1.2999999523162842,
+            "y": 1.7000000476837158,
             "z": 0.0
         },
         "maxhealth": 100.0,
-        "width": 1.0,
+        "width": 1.399999976158142,
         "height": 0.07000000029802322
     }
 }

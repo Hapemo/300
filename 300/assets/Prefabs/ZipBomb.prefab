@@ -1,5 +1,5 @@
 {
-    "entityid": 2097348,
+    "entityid": 185,
     "general": {
         "name": "ZipBomb",
         "tagid": 1,
@@ -9,9 +9,9 @@
     },
     "transform": {
         "scale": {
-            "x": 0.7550002336502075,
-            "y": 0.7549988627433777,
-            "z": 0.24360503256320953
+            "x": 2.0,
+            "y": 1.7999999523162842,
+            "z": 0.6000000238418579
         },
         "rotate": {
             "x": 0.0,
@@ -19,9 +19,9 @@
             "z": 0.0
         },
         "translate": {
-            "x": -0.0592414028942585,
-            "y": 9.92467212677002,
-            "z": 0.0
+            "x": 11.749424934387207,
+            "y": -9.826375961303711,
+            "z": -20.6711368560791
         }
     },
     "rigidbody": {
@@ -82,7 +82,7 @@
         },
         "translateoffset": {
             "x": 0.0,
-            "y": 0.44999998807907104,
+            "y": 1.0499999523162842,
             "z": 0.019999999552965164
         },
         "istrigger": false
@@ -95,6 +95,16 @@
             }
         ]
     },
+    "audio": {
+        "filepath": "",
+        "filename": "",
+        "fullpath": "",
+        "playonawake": false,
+        "islooping": false,
+        "audiotype": 1,
+        "volume": 1.0,
+        "retainaudio": false
+    },
     "prefab": {
         "prefab": "ZipBomb"
     },
@@ -103,8 +113,8 @@
         "spreadout": 0.0,
         "stayaway": 0.0,
         "elevation": 0.0,
-        "targetname": "player",
-        "graphdataname": "FlyingGraphJazzTest"
+        "targetname": "Camera",
+        "graphdataname": "FlyingPath"
     },
     "healthbar": {
         "healthcolor": {
@@ -121,11 +131,11 @@
         },
         "position": {
             "x": -0.029999999329447746,
-            "y": 0.8999999761581421,
+            "y": 2.0,
             "z": 0.0
         },
         "maxhealth": 100.0,
-        "width": 1.0,
+        "width": 1.399999976158142,
         "height": 0.07000000029802322
     }
 }
