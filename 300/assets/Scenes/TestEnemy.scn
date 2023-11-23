@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 8388678,
+        "entityid": 181,
         "general": {
             "name": "TrojanHorseChargeAudio",
             "tagid": 0,
@@ -43,7 +43,7 @@
         }
     },
     {
-        "entityid": 8388679,
+        "entityid": 182,
         "general": {
             "name": "ZipBombFuseAudio",
             "tagid": 0,
@@ -86,7 +86,7 @@
         }
     },
     {
-        "entityid": 8388680,
+        "entityid": 183,
         "general": {
             "name": "EnemyDeathAudio",
             "tagid": 8,
@@ -129,7 +129,7 @@
         }
     },
     {
-        "entityid": 8388681,
+        "entityid": 184,
         "general": {
             "name": "TrojanSoldier",
             "tagid": 1,
@@ -205,10 +205,10 @@
             ]
         },
         "spherecollider": {
-            "scaleoffset": 1.0,
+            "scaleoffset": 0.22499999403953552,
             "translateoffset": {
                 "x": 0.0,
-                "y": 0.22499999403953552,
+                "y": 0.0,
                 "z": 0.0
             },
             "istrigger": false
@@ -256,7 +256,7 @@
         }
     },
     {
-        "entityid": 8388682,
+        "entityid": 185,
         "general": {
             "name": "ZipBomb",
             "tagid": 1,
@@ -339,7 +339,7 @@
             },
             "translateoffset": {
                 "x": 0.0,
-                "y": 0.44999998807907104,
+                "y": 1.0499999523162842,
                 "z": 0.019999999552965164
             },
             "istrigger": false
@@ -371,7 +371,7 @@
             "stayaway": 0.0,
             "elevation": 0.0,
             "targetname": "Camera",
-            "graphdataname": "GroundPath"
+            "graphdataname": "FlyingPath"
         },
         "healthbar": {
             "healthcolor": {
@@ -388,16 +388,16 @@
             },
             "position": {
                 "x": -0.029999999329447746,
-                "y": 0.8999999761581421,
+                "y": 2.0,
                 "z": 0.0
             },
             "maxhealth": 100.0,
-            "width": 1.0,
+            "width": 1.399999976158142,
             "height": 0.07000000029802322
         }
     },
     {
-        "entityid": 8388683,
+        "entityid": 186,
         "general": {
             "name": "ILOVEYOU",
             "tagid": 1,
@@ -480,7 +480,7 @@
             },
             "translateoffset": {
                 "x": 0.0,
-                "y": 0.699999988079071,
+                "y": 0.8999999761581421,
                 "z": 0.10000000149011612
             },
             "istrigger": false
@@ -499,10 +499,10 @@
         "aisetting": {
             "movementtype": 2,
             "spreadout": 0.0,
-            "stayaway": 100.0,
-            "elevation": 20.0,
+            "stayaway": 6.0,
+            "elevation": 2.0,
             "targetname": "Camera",
-            "graphdataname": "GroundPath"
+            "graphdataname": "FlyingPath"
         },
         "healthbar": {
             "healthcolor": {
@@ -519,16 +519,16 @@
             },
             "position": {
                 "x": 0.0,
-                "y": 1.2999999523162842,
+                "y": 1.7000000476837158,
                 "z": 0.0
             },
             "maxhealth": 100.0,
-            "width": 1.0,
+            "width": 1.399999976158142,
             "height": 0.07000000029802322
         }
     },
     {
-        "entityid": 8388684,
+        "entityid": 187,
         "general": {
             "name": "Melissa",
             "tagid": 0,
@@ -650,16 +650,16 @@
             },
             "position": {
                 "x": 0.0,
-                "y": 2.0999999046325684,
+                "y": 1.7000000476837158,
                 "z": -0.10000000149011612
             },
             "maxhealth": 200.0,
-            "width": 1.0,
+            "width": 0.800000011920929,
             "height": 0.07000000029802322
         }
     },
     {
-        "entityid": 8388685,
+        "entityid": 188,
         "general": {
             "name": "TrojanHorse",
             "tagid": 1,
@@ -742,7 +742,7 @@
             },
             "translateoffset": {
                 "x": 0.0,
-                "y": 0.6000000238418579,
+                "y": 1.100000023841858,
                 "z": 0.0
             },
             "istrigger": false
@@ -791,7 +791,7 @@
             },
             "position": {
                 "x": 0.0,
-                "y": 1.5,
+                "y": 2.4000000953674316,
                 "z": 0.0
             },
             "maxhealth": 200.0,
@@ -800,7 +800,7 @@
         }
     },
     {
-        "entityid": 8388686,
+        "entityid": 189,
         "general": {
             "name": "TrojanSoldier",
             "tagid": 1,
@@ -876,10 +876,10 @@
             ]
         },
         "spherecollider": {
-            "scaleoffset": 1.0,
+            "scaleoffset": 0.22499999403953552,
             "translateoffset": {
                 "x": 0.0,
-                "y": 0.22499999403953552,
+                "y": 0.0,
                 "z": 0.0
             },
             "istrigger": false
@@ -927,7 +927,7 @@
         }
     },
     {
-        "entityid": 8388687,
+        "entityid": 190,
         "general": {
             "name": "TrojanSoldier",
             "tagid": 1,
@@ -1003,10 +1003,10 @@
             ]
         },
         "spherecollider": {
-            "scaleoffset": 1.0,
+            "scaleoffset": 0.22499999403953552,
             "translateoffset": {
                 "x": 0.0,
-                "y": 0.22499999403953552,
+                "y": 0.0,
                 "z": 0.0
             },
             "istrigger": false

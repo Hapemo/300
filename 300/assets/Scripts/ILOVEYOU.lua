@@ -33,7 +33,7 @@ function Alive()
     gameStateSys = systemManager:mGameStateSystem();
 
     bobbleAngle = 0
-    bobbleFrequency = 2
+    bobbleFrequency = 1
     bobbleIntensity = 0.5
 
     AttackSpeed = 1
@@ -100,21 +100,26 @@ function ILOVEYOUMovement()
     this:GetTransform().mRotate.y = Helper.DirectionToAngle(this, vec)
 
     Helper.Scale(vec, 3)
-
-    -- Add bobbling here
-    bobbleAngle = bobbleAngle + bobbleFrequency
-    if bobbleAngle > 360 then bobbleAngle = 0 end
-    vec.y = vec.y + math.cos(bobbleAngle/180*math.pi) * bobbleIntensity
-    --
-
+-- when horizontal distance reached, don't move by getdirection
     if inLineOfSight then
+        -- Add bobbling here
+        
+        --
+        
         -- If horizontal length is reached, don't move horizontally
         local x = targetPos.x - thisPos.x
         local z = targetPos.z - thisPos.z
         local distDiff = Helper.Vec2Len(x,z) - this:GetAISetting().mStayAway
-        if -0.5 < distDiff and distDiff < 0.5 then
+        if -2 < distDiff and distDiff < 2 then
             vec.x = 0
             vec.z = 0
+            bobbleAngle = bobbleAngle + bobbleFrequency
+            if bobbleAngle > 360 then bobbleAngle = 0 end
+            vec.y = math.cos(bobbleAngle/180*math.pi) * bobbleIntensity
+        else 
+            bobbleAngle = bobbleAngle + bobbleFrequency
+            if bobbleAngle > 360 then bobbleAngle = 0 end
+            vec.y = vec.y + math.cos(bobbleAngle/180*math.pi) * bobbleIntensity
         end
     end
     --

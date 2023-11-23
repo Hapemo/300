@@ -5,6 +5,14 @@
 #include "EditorReflection/EditorReflection.h"
 bool PathfinderWindow::openWindow;
 
+// Controls
+// Hold left alt
+// 
+// duplicate point - Q
+// delete point - W
+// undirected edge - S
+// directed edge - D
+// delete edge - A
 
 void PathfinderWindow::init() {
 	openWindow = false;
@@ -96,7 +104,7 @@ void PathfinderWindow::update() {
   if (mLatestPoint.id == entt::null) ImGui::Text("No active point selected");
   else {
     ImGui::DragFloat3("##CurrentSelectedPoint", (float*)&mLatestPoint.GetComponent<Transform>().mTranslate, 0.1f);
-    if (ImGui::Button("Duplicate Point") || (Input::CheckKey(HOLD, LEFT_CONTROL) && Input::CheckKey(PRESS, Q))) {
+    if (ImGui::Button("Duplicate Point") || (Input::CheckKey(HOLD, LEFT_ALT) && Input::CheckKey(PRESS, Q))) {
       pfSys->AddPoint(mLatestPoint.GetComponent<Transform>().mTranslate + glm::vec3{0,0,0.01});
     }
   }
@@ -113,7 +121,8 @@ void PathfinderWindow::update() {
   }
 
   // Delete Point (button) (deletes latest selected point)
-  if (ImGui::Button("Delete Point")) {
+  if (mLatestPoint.id != entt::null)
+  if (ImGui::Button("Delete Point") || (Input::CheckKey(HOLD, LEFT_ALT) && Input::CheckKey(PRESS, W))) {
     pfSys->DeleteEntity(mLatestPoint);
     mLatestPoint.id = entt::null;
   }
@@ -145,12 +154,12 @@ void PathfinderWindow::update() {
   // Add Direccted edge (button) (should reset the display point)
   // Add Undirected edge (button) (should reset the display point)
   if (mEdgePoints.size() == 2) {
-    if (ImGui::Button("Add Directed Edge") || (Input::CheckKey(HOLD, LEFT_CONTROL) && Input::CheckKey(PRESS, D))) { // L_Ctrl + D to add directed edge
+    if (ImGui::Button("Add Directed Edge") || (Input::CheckKey(HOLD, LEFT_ALT) && Input::CheckKey(PRESS, D))) { // L_Ctrl + D to add directed edge
       pfSys->AddDirectedEdge(mEdgePoints.front(), mEdgePoints.back());
       mEdgePoints.pop();
       mEdgePoints.pop();
     }
-    if (ImGui::Button("Add Undirected Edge") || (Input::CheckKey(HOLD, LEFT_CONTROL) && Input::CheckKey(PRESS, U))) { // L_Ctrl + U to add undirected edge
+    if (ImGui::Button("Add Undirected Edge") || (Input::CheckKey(HOLD, LEFT_ALT) && Input::CheckKey(PRESS, S))) { // L_Ctrl + U to add undirected edge
       pfSys->AddUndirectedEdge(mEdgePoints.front(), mEdgePoints.back());
       mEdgePoints.pop();
       mEdgePoints.pop();
@@ -176,7 +185,7 @@ void PathfinderWindow::update() {
     ImGui::SameLine();
     ImGui::DragFloat3("##EndPoint", (float*)&startnend.back(), 0.1f);
 
-    if (ImGui::Button("Delete Directed Edges") || (Input::CheckKey(HOLD, LEFT_CONTROL) && Input::CheckKey(PRESS, X))) { // L_Ctrl + X to delete edge
+    if (ImGui::Button("Delete Directed Edges") || (Input::CheckKey(HOLD, LEFT_ALT) && Input::CheckKey(PRESS, A))) { // L_Ctrl + X to delete edge
       pfSys->DeleteEntity(mLatestEdge);
       mLatestEdge.id = entt::null;
     }

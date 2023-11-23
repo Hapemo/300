@@ -112,7 +112,7 @@ Updates projection and view projection matrix of the camera
         vec2    mCursorPos;
         ivec2   mSize;    //save
         float   mSensitivity{ 0.1f };
-        float   mCameraSpeed{ 50.f };
+        float   mCameraSpeed{ 10.f };
         float   mAspectRatio;
         float   mNear;    //save
         float   mFar;     //save

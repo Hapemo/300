@@ -257,15 +257,16 @@ glm::vec3 AIManager::CalcAirAIDir(Entity _e) {
 	// Check vertical height
 	float elevationDir = (_tgtTrans.mTranslate.y + _tgtTrans.mScale.y/2.f + _eSetting.mElevation) - (_eTrans.mTranslate.y + _eTrans.mScale.y/2.f);
 
-	accumDir.y = elevationDir;
+	if (abs(elevationDir) > _eSetting.mElevation/100.f) accumDir.y = elevationDir;
 
 	// Check horizontal Dist
 	glm::vec2 xzDir = glm::vec2(_tgtTrans.mTranslate.x - _eTrans.mTranslate.x, _tgtTrans.mTranslate.z - _eTrans.mTranslate.z);
 	float horizontalDistance = abs(abs(glm::length(xzDir)) - glm::length(glm::vec2(abs(_eTrans.mScale.x) + abs(_tgtTrans.mScale.x), abs(_eTrans.mScale.z) + abs(_tgtTrans.mScale.z)) / 2.f));
 
 	float requiredDistance = horizontalDistance - _eSetting.mStayAway;
+	float onePercent = _eSetting.mStayAway/100;
 
-	if (!(requiredDistance < FLT_EPSILON && requiredDistance > -FLT_EPSILON)) { // If required horizontal distance not equal to 0
+	if (!(requiredDistance < onePercent && requiredDistance > -onePercent)) { // If required horizontal distance not equal to 0
 		if (horizontalDistance < FLT_EPSILON && horizontalDistance > -FLT_EPSILON) // If horizontal distance is 0
 			return glm::vec3(0.57735f, 0.57735f, 0.57735f); // Normalized vector for glm::vec3(1,1,1)
 
@@ -292,9 +293,18 @@ glm::vec3 AIManager::GetAStarDir(Entity _e, AISetting const& _setting) {
 bool AIManager::CheckUseAStar(Entity _e, AISetting const& _setting) {
 	if (!_setting.mGraphDataName.size()) return false;
 
+	Entity tgtE = _setting.GetTarget();
+
+	glm::vec3 pos = _e.GetComponent<Transform>().mTranslate;
+	if (_e.HasComponent<BoxCollider>()) pos += _e.GetComponent<BoxCollider>().mTranslateOffset;
+	else if (_e.HasComponent<BoxCollider>()) pos += _e.GetComponent<SphereCollider>().mTranslateOffset;
+
+	glm::vec3 tgt = tgtE.GetComponent<Transform>().mTranslate;
+	if (tgtE.HasComponent<BoxCollider>()) pos += tgtE.GetComponent<BoxCollider>().mTranslateOffset;
+	else if (tgtE.HasComponent<BoxCollider>()) pos += tgtE.GetComponent<SphereCollider>().mTranslateOffset;
+
 	// Check initial line of sight
-	return systemManager->GetPathfinderManager()->CheckEntitiesInbetween(_e.GetComponent<Transform>().mTranslate, _setting.GetTarget().GetComponent<Transform>().mTranslate, 
-																																			{_e, _setting.GetTarget()}, IGNORETAGS);
+	return systemManager->GetPathfinderManager()->CheckEntitiesInbetween(pos, tgt, {_e, _setting.GetTarget()}, IGNORETAGS);
 }
 
 void AIManager::SpreadOut(Entity _e, glm::vec3& dir) {
