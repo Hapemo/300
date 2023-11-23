@@ -37,10 +37,10 @@ function Update()
     mouse_move.x = Input.CursorPos().x - centerscreen.x
     mouse_move.y = Input.CursorPos().y - centerscreen.y
 
-    -- print("mouse pos x: ")
-    -- print(mouse_move.x)
-    -- print("mouse pos y: ")
-    -- print(mouse_move.y)
+    print("mouse pos x: ")
+    print(mouse_move.x)
+    print("mouse pos y: ")
+    print(mouse_move.y)
 
     print("width: ")
     print(graphicsSys.m_WindowWidth)
@@ -55,8 +55,8 @@ function Update()
 
     -- start button
     if(gen.name == "StartButton") then
-        if((mouse_move.x < -360) and (mouse_move.x > -960) and
-            (mouse_move.y < 215) and (mouse_move.y > 70)) then
+        if((mouse_move.x < -(graphicsSys.m_WindowWidth * 0.1875)) and (mouse_move.x > -(graphicsSys.m_WindowWidth * 0.5)) and
+            (mouse_move.y < (graphicsSys.m_WindowHeight * 0.2170)) and (mouse_move.y > (graphicsSys.m_WindowHeight * 0.0706))) then
             if not hoverOver then
                 hoverOver = true
                 -- Play the sound effect
