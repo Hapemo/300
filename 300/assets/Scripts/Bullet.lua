@@ -69,10 +69,11 @@ function Update()
         -- print("BULLET LIFETIME: " , bulletLifeTime)
         if(bulletLifeTime > bulletDeathTime) then
             systemManager.ecs:SetDeleteEntity(bulletObject)
-            print("DELETING BULLET")
+            -- print("DELETING BULLET")
         end
         break
     end
+
 end
 
 function Dead()
@@ -81,12 +82,14 @@ end
 
 function OnTriggerEnter(Entity)
     generalComponent = Entity:GetGeneral()
-    healthComponent = Entity:GetHealthbar()
+    local healthComponent 
     
-
     if(Entity:HasHealthbar()) then 
-        -- print("HAS HEALTH BAR")
+        healthComponent = Entity:GetHealthbar()
+        print("THERE IS A HEALTHBAR")
+        -- print("BULLET TAG: ", bulletTag)
     end
+
 
     if(healthComponent ~= nil) then 
         -- print("HEALTH COMPONENT ASSIGNED")
@@ -95,15 +98,50 @@ function OnTriggerEnter(Entity)
 
     entityobj = Helper.GetScriptEntity(script_entity.id)
 
-    print("THIS ENTITY is: " , generalComponent.name)
+    -- print("THIS ENTITY is: " , generalComponent.name)
 
     tagid = generalComponent.tagid
+    print("COLLISION TAGID:" , tagid)
     if (tagid == 1) then
         for i = 7, 1, -1
         do
             spawned(i)
         end
         gameStateSys = systemManager:mGameStateSystem()
+
+        if(bulletTag == "REVOLVER") then 
+            print("OK REVOLVER")
+            if(healthComponent ~= nil) then 
+                print("HEALTH COMPONENT EXISTS")
+                healthComponent.health = healthComponent.health - revolverDamage
+                print("HEALTH LEFT (REVOLVER): " , healthComponent.health)
+            else
+            end
+        end
+
+        if(bulletTag == "SHOTGUN") then 
+            print("OK SHOTGUN")
+            if(healthComponent ~= nil) then 
+                print("HEALTH COMPONENT EXISTS")
+                healthComponent.health = healthComponent.health - shotGunDamage
+                print("HEALTH LEFT (SHOTGUN): " , healthComponent.health)
+            else
+            end
+        end
+
+        if(bulletTag == "MACHINE_GUN") then 
+            print("OK MACHINE GUN")
+            if(healthComponent ~= nil) then 
+                print("HEALTH COMPONENT EXISTS")
+                healthComponent.health = healthComponent.health - machineGunDamage
+                print("HEALTH LEFT (REVOLVER): " , healthComponent.health)
+            end
+
+        end
+        -- print("BLLET TAG:" , bulletTag)
+        -- if(bulletTag == "REVOLVER") then 
+        --     print("REVOLVER BULLET")
+        -- end
         -- bullethitAudioComp:SetPlay(0.2)
 
         -- Entity:GetTransform().mScale.x = Entity:GetTransform().mScale.x * 0.9
@@ -143,33 +181,9 @@ function OnTriggerEnter(Entity)
             spawned(i)
         end
 
-        if(bulletTag == "REVOLVER") then 
-            if(healthComponent ~= nil) then 
-                -- print("HEALTH COMPONENT ASSIGNED (REVOLVER)")
-                -- print("HEALTH:" , healthComponent.health)
-            end
+    
 
-            healthComponent.health = healthComponent.health - revolverDamage
-            -- print("HEALTH: " , healthComponent.health)
-        end
-
-        if(bulletTag == "SHOTGUN") then 
-            if(healthComponent ~= nil) then 
-                -- print("HEALTH COMPONENT ASSIGNED (SHOTGUN)")
-                -- print("HEALTH:" , healthComponent.health)
-            end
-            healthComponent.health = healthComponent.health - shotGunDamage
-            -- print("HEALTH: " , healthComponent.health)
-        end
-
-        if(bulletTag == "MACHINE_GUN") then 
-            if(healthComponent ~= nil) then 
-                -- print("HEALTH COMPONENT ASSIGNED (SHOTGUN)")
-                -- print("HEALTH:" , healthComponent.health)
-            end
-            healthComponent.health = healthComponent.health - machineGunDamage
-            -- print("HEALTH: " , healthComponent.health)
-        end
+        
 
         if(enemytag1HP <= 0) then 
             print("ENEMY DIES")

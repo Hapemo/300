@@ -178,7 +178,7 @@ function Alive()
     walkingAudioComp:SetPlay(0.2)
     
     if(cameraEntity:HasAudio()) then 
-        print("HAS AUDIO")
+        -- print("HAS AUDIO")
     end
 
     dashTime = 3.0
@@ -207,8 +207,6 @@ function Alive()
 
     -- Shotgun Stuff -- 
 
-
-    print("HI IM ALIVEEEE")
 end
 
 function Update()
@@ -561,7 +559,7 @@ function Update()
             if(_G.gunEquipped == 1 ) then -- REVOLVER
              
                 if(revolverGunTimer == 0) then 
-                    print("REVOLVER SHOOTING")
+                    -- print("REVOLVER SHOOTING")
                     
                     applyGunRecoil(recoil_speed, 0.5)
 
@@ -619,7 +617,7 @@ function Update()
             else 
                 shotGunTimer = 0
                 shotgunShootState = "SHOOTABLE"
-                print("SHOTGUN IS READY!")
+                -- print("SHOTGUN IS READY!")
             end
         end
 
@@ -783,8 +781,8 @@ function shotgunbullets(number_of_bullets)
     local bullet_speed_modifier = 20
     -- local number_of_bullets = 5
 
-    print("IN SHOTGUN")
-    print("TRANSLATE: " , gunTranslate.z)
+    -- print("IN SHOTGUN")
+    -- print("TRANSLATE: " , gunTranslate.z)
 
     --print("SHOOTING SHOTGUN (no of pellets)" , number_of_bullets)
 
@@ -834,7 +832,8 @@ function shotgunbullets(number_of_bullets)
         physicsSys:SetVelocity(bulletPrefab, rotatedVelocity_XYZ)
 
         gunTranslate.z = original_translate_z -- some weird behaviour (changes this z value to a very big value)
-        print("WTF" , gunTranslate.z)
+        -- print("WTF" , gunTranslate.z)
+        
     end
 end 
 

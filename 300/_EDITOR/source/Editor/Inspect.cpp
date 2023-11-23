@@ -1723,7 +1723,7 @@ void Healthbar::Inspect()
 	}
 
 	if (delete_component == false)
-		Entity(Hierarchy::selectedId).RemoveComponent<Crosshair>();
+		Entity(Hierarchy::selectedId).RemoveComponent<Healthbar>();
 }
 
 void Button::Inspect()
