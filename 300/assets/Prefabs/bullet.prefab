@@ -1,5 +1,5 @@
 {
-    "entityid": 1048577,
+    "entityid": 12583140,
     "general": {
         "name": "bullet",
         "tagid": 0,
@@ -9,9 +9,9 @@
     },
     "transform": {
         "scale": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0
+            "x": 0.5,
+            "y": 0.5,
+            "z": 0.5
         },
         "rotate": {
             "x": 0.0,
@@ -19,9 +19,9 @@
             "z": 0.0
         },
         "translate": {
-            "x": 45.0,
-            "y": 10.0,
-            "z": 5.0
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
         }
     },
     "rigidbody": {
@@ -45,26 +45,32 @@
         "frag": "../assets/shader_files/pointLight_frag.glsl",
         "meshrefid": 2285,
         "instancecolor": {
-            "x": 0.95652174949646,
+            "x": 1.0,
             "y": 1.0,
-            "z": 0.0,
+            "z": 1.0,
+            "w": 1.0
+        },
+        "bloomthreshold": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
             "w": 1.0
         },
         "materialinstance": [
             "../assets/Compressed/Cube_Texture_White.ctexture",
+            "../assets/Compressed/Cube_Texture_White_Normal.ctexture",
             " ",
             " ",
-            " ",
-            " ",
+            "../assets/Compressed/cube_emission.ctexture",
             " "
         ],
         "mesh": "../assets/compiled_geom/cube.geom",
         "texturerefid": [
             4706,
+            5418,
             0,
             0,
-            0,
-            0,
+            4248,
             0
         ]
     },
@@ -87,6 +93,17 @@
                 "scriptFile": "../assets/Scripts/Bullet.lua",
                 "variables": [
                     {
+                        "key": "direction",
+                        "val": {
+                            "type": -655306154,
+                            "value": {
+                                "x": 10.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            }
+                        }
+                    },
+                    {
                         "key": "movement",
                         "val": {
                             "type": -655306154,
@@ -98,14 +115,28 @@
                         }
                     },
                     {
-                        "key": "multiplier",
+                        "key": "positions",
                         "val": {
                             "type": -655306154,
                             "value": {
-                                "x": 0.4000000059604645,
-                                "y": 0.4000000059604645,
-                                "z": 0.4000000059604645
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
                             }
+                        }
+                    },
+                    {
+                        "key": "spawn",
+                        "val": {
+                            "type": -1129103353,
+                            "value": true
+                        }
+                    },
+                    {
+                        "key": "timer",
+                        "val": {
+                            "type": 694561268,
+                            "value": 0.0
                         }
                     },
                     {

@@ -2,6 +2,12 @@ local hoverSFX
 local hoverOver
 local centerscreen = Vec2.new()
 
+local clickSFX
+local clickAudioEntity
+
+local exitSFX
+local exitAudioEntity
+
 -- mouse attributes
 local mouse_move = Vec2.new()
 
@@ -9,8 +15,15 @@ function Alive()
     gameStateSys = systemManager:mGameStateSystem()
     audioSys    = systemManager:mAudioSystem()
     inputMapSys = systemManager:mInputActionSystem()
+    graphicsSys = systemManager:mGraphicsSystem()
 
     hoverOver = false
+
+    clickAudioEntity = gameStateSys:GetEntity("Click")
+    clickSFX = clickAudioEntity:GetAudio()
+
+    exitAudioEntity = gameStateSys:GetEntity("Exit")
+    exitSFX = exitAudioEntity:GetAudio()
 end
 
 function Update()
@@ -29,6 +42,14 @@ function Update()
     -- print("mouse pos y: ")
     -- print(mouse_move.y)
 
+    print("width: ")
+    print(graphicsSys.m_WindowWidth)
+
+    print("height: ")
+    print(graphicsSys.m_WindowHeight)
+
+    print("")
+
     -- check if cursor is within the button width & height
     -- lol hardcoded (for char's laptop)
 
@@ -44,8 +65,10 @@ function Update()
             end
 
             if(inputMapSys:GetButtonDown("Shoot")) then
+                clickSFX:SetPlay(0.3)
                 gameStateSys:ChangeGameState("Tutorial")
             end
+          
         else
             hoverOver = false
         end
@@ -63,6 +86,7 @@ function Update()
             end
 
             if(inputMapSys:GetButtonDown("Shoot")) then
+                exitSFX:SetPlay(0.3)
                 systemManager:Quit()
             end
         else
@@ -82,6 +106,7 @@ function Update()
             end
 
             if(inputMapSys:GetButtonDown("Shoot")) then
+                clickSFX:SetPlay(0.3)
                 gameStateSys:ChangeGameState("CreditsMenu")
             end
         else
@@ -101,6 +126,7 @@ function Update()
             end
 
             if(inputMapSys:GetButtonDown("Shoot")) then
+                clickSFX:SetPlay(0.3)
                 gameStateSys:ChangeGameState("MainMenu")
             end
         else

@@ -71,6 +71,7 @@ void SystemManager::Init(bool isEditor, GFX::Window *window)
 void SystemManager::Reset()
 {
 	mAudioSystem.get()->Reset();				// Using <Audio> component, must happen before clearing of entities.
+	mAudioSystem.get()->scene_switched = false;
 	mGraphicsSystem.get()->Unload();
 	mGameStateSystem.get()->Unload();
 	mGameStateSystem.get()->Init();

@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 1048770,
+        "entityid": 1,
         "general": {
             "name": "Wall",
             "tagid": 4,
@@ -90,7 +90,7 @@
         }
     },
     {
-        "entityid": 1048773,
+        "entityid": 2,
         "general": {
             "name": "Floor",
             "tagid": 3,
@@ -142,10 +142,10 @@
                 "w": 1.0
             },
             "bloomthreshold": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 0.2199999988079071
             },
             "materialinstance": [
                 "../assets/Compressed/Wood Material 15_BaseColor.ctexture",
@@ -180,7 +180,7 @@
         }
     },
     {
-        "entityid": 1048774,
+        "entityid": 3,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -235,7 +235,7 @@
         }
     },
     {
-        "entityid": 1048775,
+        "entityid": 4,
         "general": {
             "name": "player",
             "tagid": 0,
@@ -333,7 +333,7 @@
         }
     },
     {
-        "entityid": 2097343,
+        "entityid": 5,
         "general": {
             "name": "ILOVEYOU",
             "tagid": 1,
@@ -464,7 +464,7 @@
         }
     },
     {
-        "entityid": 2097345,
+        "entityid": 6,
         "general": {
             "name": "TrojanHorse",
             "tagid": 1,
@@ -595,7 +595,7 @@
         }
     },
     {
-        "entityid": 2097347,
+        "entityid": 7,
         "general": {
             "name": "TrojanSoldier",
             "tagid": 1,
@@ -616,7 +616,7 @@
             },
             "translate": {
                 "x": 6.103666305541992,
-                "y": 0.0,
+                "y": 7.450580596923828e-9,
                 "z": 0.0
             }
         },
@@ -670,21 +670,22 @@
                 4545
             ]
         },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
+        "spherecollider": {
+            "scaleoffset": 1.0,
             "translateoffset": {
                 "x": 0.0,
-                "y": 0.09000000357627869,
+                "y": 0.22499999403953552,
                 "z": 0.0
             },
             "istrigger": false
         },
         "scripts": {
-            "scriptscontainer": []
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/TrojanSoldier.lua",
+                    "variables": []
+                }
+            ]
         },
         "prefab": {
             "prefab": "TrojanSoldier"
@@ -721,7 +722,7 @@
         }
     },
     {
-        "entityid": 2097348,
+        "entityid": 8,
         "general": {
             "name": "Melissa",
             "tagid": 0,
@@ -852,7 +853,7 @@
         }
     },
     {
-        "entityid": 4194496,
+        "entityid": 9,
         "general": {
             "name": "ZipBomb",
             "tagid": 1,

@@ -262,6 +262,7 @@ void Audio::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writ
 	Serialize(writer, "islooping", mIsLooping);
 	Serialize(writer, "audiotype", mAudioType);
 	Serialize(writer, "volume", mVolume);
+	Serialize(writer, "retainaudio", mGameStateRetain);
 	writer.EndObject();
 }
 
@@ -274,6 +275,7 @@ void Audio::DeserializeSelf(rapidjson::Value& reader)
 	Deserialize(reader, "islooping", mIsLooping);
 	Deserialize(reader, "audiotype", mAudioType);
 	Deserialize(reader, "volume", mVolume);
+	Deserialize(reader, "retainaudio", mGameStateRetain);
 }
 
 void AudioListener::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const

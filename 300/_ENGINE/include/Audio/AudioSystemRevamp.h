@@ -92,7 +92,8 @@ public:
 	std::unordered_map<std::string, FMOD::Sound*>							      mSounds;
 	// std::unordered_set<std::string>						                          mSoundsCurrentlyPlaying;
 
-
+	bool scene_switched = false;
+	unsigned int playback_position;
 	//static std::unordered_map< 
 	/*std::unordered_map<AUDIOTYPE, std::vector*/
 

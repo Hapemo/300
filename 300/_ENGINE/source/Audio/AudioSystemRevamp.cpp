@@ -364,30 +364,58 @@ void AudioSystem::TogglePause()
 
 
 void AudioSystem::Reset()
-{
+{   
 	auto audio_entities = systemManager->ecs->GetEntitiesWith<Audio>();
+
+	//std::list<Audio*> persisting_audio;
 
 	for (Entity audio : audio_entities)
 	{
-		Audio& audio_component = audio.GetComponent<Audio>();
+		Audio* audio_component = &audio.GetComponent<Audio>();
 
-		audio_component.mState = Audio::STARTUP;		    // Set to intiail startup state.
-		audio_component.mNextActionState = Audio::INACTIVE; // Set to do nothing (reset)
+		if (!audio_component->mGameStateRetain) // only for those that won't survive till next state
+		{
+			audio_component->mState = Audio::STARTUP;		    // Set to intiail startup state.
+			audio_component->mNextActionState = Audio::INACTIVE; // Set to do nothing (reset)
+		}
+
+		/*else
+		{
+			persisting_audio.push_back(audio_component);
+		}*/
 	}
 
 	// Stop all channels (must do it here)
 	for (auto& channel_pair : mChannels[AUDIO_BGM])
 	{
-		FMOD::Sound* sound = nullptr;
-		channel_pair.second->getCurrentSound(&sound);
-		
-		if(sound != nullptr)
-		{
-			channel_pair.second->stop();
-			channel_pair.second = nullptr; 
-		}
-	}
+		/*for (Audio* persist : persisting_audio)
+		{*/
+			//if (channel_pair.first == persist->mChannelID) // skip stopping this audio
+			//{
+			//	continue;
+			//}
 
+			/*else
+			{*/
+				FMOD::Sound* sound = nullptr;
+				channel_pair.second->getCurrentSound(&sound);
+
+				if (sound != nullptr)
+				{   
+					if (scene_switched == true)
+					{
+						channel_pair.second->getPosition(&playback_position, FMOD_TIMEUNIT_MS);
+						std::cout << "PLAYBACK: " << playback_position << std::endl;
+					}
+
+					channel_pair.second->stop();
+					channel_pair.second = nullptr;
+				}
+			//}
+			
+			
+		//}
+	}
 
 
 	for (auto& channel_pair : mChannels[AUDIO_SFX])
@@ -558,11 +586,18 @@ unsigned int AudioSystem::PlaySound(std::string audio_name, AUDIOTYPE type, floa
 
 		FMOD::Sound* sound = FindSound(audio_name);
 
-
 		if (!current_sound)
-		{
+		{	
+
 			system_obj->playSound(sound, 0, true, &channel.second);
 			channel.second->setVolume(vol);
+
+			if (audio_name == "M3BGM.wav" && scene_switched == true)
+			{
+				channel.second->setPosition(playback_position, FMOD_TIMEUNIT_MS);
+				std::cout << "HEY" << std::endl;
+				scene_switched = false;
+			}
 
 			if (audio_component->m3DAudio)
 			{
