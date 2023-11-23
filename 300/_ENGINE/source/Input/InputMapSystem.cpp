@@ -83,7 +83,7 @@ bool InputMapSystem::CheckButton(std::string const& actionName, E_STATE state) {
 		int hi = 3;
 	} catch (const std::out_of_range& oor) {
 		(void)oor;
-		PWARNING("Attempted to check for non-existant action \"%s\". Insert the action in setting > Edit Keybind before using it!", actionName);
+		PWARNING("Attempted to check for non-existant action \"%s\". Insert the action in setting > Edit Keybind before using it!", actionName.c_str());
 	}
 	return Input::CheckKey(state, ekey);
 }
