@@ -180,7 +180,7 @@ function Alive()
     -- -- audioComp = cameraEntity:GetAudio()
     -- dashui = gameStateSys:GetEntity("UI1")
 
-    bulletAudioEntity = gameStateSys:GetEntity("Bullet Shoot")
+    bulletAudioEntity = gameStateSys:GetEntity("BulletShoot")
     bulletAudioComp = bulletAudioEntity:GetAudio()
 
     jumpAudioEntity = gameStateSys:GetEntity("Jump")
@@ -201,14 +201,14 @@ function Alive()
     -- tpfin2 = gameStateSys:GetEntity("Fin2")
 
     tutTeleporter = gameStateSys:GetEntity("Tutorial")
-    tutTeleporter2 = gameStateSys:GetEntity("Tutorial 2")
+    tutTeleporter2 = gameStateSys:GetEntity("Tutorial2")
     tutTeleporter3 = gameStateSys:GetEntity("Game")
-    skiptutTeleporter = gameStateSys:GetEntity("Skip Tutorial")
+    skiptutTeleporter = gameStateSys:GetEntity("SkipTutorial")
     box2Spawn = gameStateSys:GetEntity("Box2Spawn")
     box3Spawn = gameStateSys:GetEntity("Box3Spawn")
     wasd = gameStateSys:GetEntity("WASD")
-    jumpText = gameStateSys:GetEntity("JUMP text")
-    zxcText = gameStateSys:GetEntity("ZXC text")
+    jumpText = gameStateSys:GetEntity("JUMPtext")
+    zxcText = gameStateSys:GetEntity("ZXCtext")
 
     -- Gun Stuff --
     gunEntity = gameStateSys:GetEntity("gun")
