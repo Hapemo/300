@@ -118,7 +118,8 @@ TutBox = {
    THIRD = 3,
    FOURTH = 4,
    FIFTH = 5,
-   NONE = 6
+   NONE = 6,
+   GAME = 7
 }
 
 local tutState = TutBox.FIRST
@@ -158,6 +159,7 @@ function Alive()
 
     tutTeleporter = gameStateSys:GetEntity("Tutorial")
     tutTeleporter2 = gameStateSys:GetEntity("Tutorial 2")
+    tutTeleporter3 = gameStateSys:GetEntity("Game")
     skiptutTeleporter = gameStateSys:GetEntity("Skip Tutorial")
     box2Spawn = gameStateSys:GetEntity("Box2Spawn")
     box3Spawn = gameStateSys:GetEntity("Box3Spawn")
@@ -211,9 +213,13 @@ function Update()
             travelBox = false
         end
     elseif tutState == TutBox.THIRD then
-	if travelBox == true then
-	    Helper.SetTranslate(cameraEntity, box3Spawn:GetTransform().mTranslate)
+	    if travelBox == true then
+	        Helper.SetTranslate(cameraEntity, box3Spawn:GetTransform().mTranslate)
             travelBox = false
+    	end
+    elseif tutState == TutBox.GAME then
+	    if travelBox == true then
+            gameStateSys:ChangeGameState("Test")
     	end
     end
 
@@ -416,11 +422,10 @@ function OnTriggerEnter(Entity)
 
     if (tagid == 4) then
 	if (isDashing) then
-                print("cameeeeeeeeeeeeeeee")
 		isDashing = false
-    		movement.x = 0;
-    		movement.y = 0;
-    		movement.z = 0;
+        movement.x = 0;
+        movement.y = 0;
+        movement.z = 0;
 	end
     end
 
@@ -439,6 +444,9 @@ function OnTriggerEnter(Entity)
             travelBox = true
         elseif (generalComponent.name == tutTeleporter2:GetGeneral().name) then
             tutState = TutBox.THIRD
+            travelBox = true
+        elseif (generalComponent.name == tutTeleporter3:GetGeneral().name) then
+            tutState = TutBox.GAME
             travelBox = true
         end
     end
