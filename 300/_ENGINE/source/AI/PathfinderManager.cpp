@@ -162,6 +162,10 @@ bool PathfinderManager::CheckEntitiesInbetween(glm::vec3 const& _p0, glm::vec3 c
 	// Compare the node and src for line of sight test and get a list of entity hit
 	std::vector<Entity> entitiesHit = systemManager->GetPhysicsPointer()->Visible(_p0, _p1, glm::length(_p0-_p1));
 
+	// remove dup
+	std::sort(entitiesHit.begin(), entitiesHit.end());
+	entitiesHit.erase(std::unique(entitiesHit.begin(), entitiesHit.end()), entitiesHit.end());
+
 	// Remove the entities to ignore
 	for (Entity e : _toIgnoreEntities) {
 		auto it = std::find(entitiesHit.begin(), entitiesHit.end(), e);

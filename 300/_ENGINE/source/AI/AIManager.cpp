@@ -270,7 +270,7 @@ glm::vec3 AIManager::GetAStarDir(Entity _e, AISetting const& _setting) {
 	if (astarPath.size()) 
 		return glm::normalize(astarPath[1] - astarPath[0]);
 	else {
-		PINFO("%s unable to find path with pathfinding", _e.GetComponent<General>().name);
+		//PINFO("%s unable to find path with pathfinding", _e.GetComponent<General>().name);
 		return glm::vec3();
 	}
 }
