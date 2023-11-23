@@ -21,9 +21,9 @@ local dashTime = 0.0
 
 
 local e_chroma = 0.06
-local d_chroma = 0.02
+local d_chroma = 0.005
 local e_exposure = 5
-local d_exposure = 0.5
+local d_exposure = 0.2
 local e_texel = 5
 local d_texel = 1.9
 local e_sampleWeight = 0.8
