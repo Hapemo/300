@@ -77,42 +77,50 @@ function Update()
         _G.weaponArray[8][2] = false
         _G.weaponArray[8][3] = 0
         _G.gunEquipped = _G.weaponArray[8][1]
+        _G.activated = true
         ArraySystem(8)
 
     elseif(Input.CheckKey(State.PRESS,Key.KEY_2))then
         _G.weaponArray[7][2] = false
         _G.weaponArray[7][3] = 0
         _G.gunEquipped = _G.weaponArray[7][1]
+        _G.activated = true
         ArraySystem(7)
     elseif(Input.CheckKey(State.PRESS,Key.KEY_3))then
         _G.weaponArray[6][2] = false
         _G.weaponArray[6][3] = 0
         _G.gunEquipped = _G.weaponArray[6][1]
+        _G.activated = true
         ArraySystem(6)
     elseif(Input.CheckKey(State.PRESS,Key.KEY_4))then
         _G.weaponArray[5][2] = false
         _G.weaponArray[5][3] = 0
         _G.gunEquipped = _G.weaponArray[5][1]
+        _G.activated = true
         ArraySystem(5)
     elseif(Input.CheckKey(State.PRESS,Key.KEY_5))then
         _G.weaponArray[4][2] = false
         _G.weaponArray[4][3] = 0
         _G.gunEquipped = _G.weaponArray[4][1]
+        _G.activated = true
         ArraySystem(4)
     elseif(Input.CheckKey(State.PRESS,Key.KEY_6))then
         _G.weaponArray[3][2] = false
         _G.weaponArray[3][3] = 0
         _G.gunEquipped = _G.weaponArray[3][1]
+        _G.activated = true
         ArraySystem(3)
     elseif(Input.CheckKey(State.PRESS,Key.KEY_7))then
         _G.weaponArray[2][2] = false
         _G.weaponArray[2][3] = 0
         _G.gunEquipped = _G.weaponArray[2][1]
+        _G.activated = true
         ArraySystem(2)
     elseif(Input.CheckKey(State.PRESS,Key.KEY_8))then
         _G.weaponArray[1][2] = false
         _G.weaponArray[1][3] = 0
         _G.gunEquipped = _G.weaponArray[1][1]
+        _G.activated = true
         ArraySystem(1)
     end
     -- for i = 8, 2 , -1
