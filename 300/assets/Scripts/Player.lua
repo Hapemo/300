@@ -226,6 +226,9 @@ function Update()
     dt = FPSManager.GetDT()
     
 --region -- player camera
+    if (inputMapSys:GetButtonDown("exit")) then
+        gameStateSys:ChangeGameState("MainMenu")
+    end
     if(inputMapSys:GetButtonDown("Mouse")) then
         if (mouse_on == true) then
             mouse_on = false

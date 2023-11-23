@@ -12,7 +12,7 @@ function Alive()
     if this == nil then print("Explosion Entity nil in script!") end
     -- If there's particle effect, here should spawn some particles
     
-
+    this:GetAudio():SetPlay()
 end
 
 function Update()

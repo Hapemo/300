@@ -192,24 +192,10 @@ end
 
 
 function spawned(value)
-
-    direction.x = math.random(-5,5)
-    direction.y = math.random(-5,5)
-    direction.z = math.random(-5,5)
-    
-    total = (direction.x +direction.y +direction.z)
-    -- colors.x = direction.x/5
-    -- colors.y = direction.y/5
-    -- colors.z = direction.z/5
-    direction.x =( direction.x/10)*15
-    direction.y = (direction.y/10)*15
-    direction.z = (direction.z/10)*15
     positions = entityobj:GetTransform().mTranslate
 
     prefabEntity = systemManager.ecs:NewEntityFromPrefab("parti",positions )   
 
     meshSys = prefabEntity:GetMeshRenderer()
     meshSys:SetColor(allcolor[value])
-    physicsSys = systemManager:mPhysicsSystem()
-    physicsSys:SetVelocity(prefabEntity, direction)
 end

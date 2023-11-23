@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 11534353,
+        "entityid": 2097230,
         "general": {
             "name": "ZipBomb",
             "tagid": 1,
@@ -96,6 +96,16 @@
                 }
             ]
         },
+        "audio": {
+            "filepath": "",
+            "filename": "",
+            "fullpath": "",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false
+        },
         "prefab": {
             "prefab": "ZipBomb"
         },
@@ -109,7 +119,7 @@
         }
     },
     {
-        "entityid": 11534354,
+        "entityid": 2097231,
         "general": {
             "name": "TrojanHorse",
             "tagid": 1,
@@ -205,6 +215,16 @@
                 }
             ]
         },
+        "audio": {
+            "filepath": "",
+            "filename": "",
+            "fullpath": "",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false
+        },
         "prefab": {
             "prefab": "TrojanHorse"
         },
@@ -218,7 +238,7 @@
         }
     },
     {
-        "entityid": 11534355,
+        "entityid": 2097232,
         "general": {
             "name": "ILOVEYOU",
             "tagid": 1,
@@ -327,7 +347,7 @@
         }
     },
     {
-        "entityid": 11534356,
+        "entityid": 2097233,
         "general": {
             "name": "Melissa",
             "tagid": 0,
@@ -431,7 +451,7 @@
         }
     },
     {
-        "entityid": 11534357,
+        "entityid": 2097234,
         "general": {
             "name": "TrojanSoldier",
             "tagid": 1,

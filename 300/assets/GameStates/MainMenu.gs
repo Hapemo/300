@@ -5,7 +5,7 @@
         "force_render": true,
         "bloom_threshold": {
             "x": 1.0,
-            "y": 0.0,
+            "y": 1.0,
             "z": 1.0
         },
         "bloom_exposure": 1.7400000095367432,
