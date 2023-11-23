@@ -86,8 +86,6 @@ function OnTriggerEnter(Entity)
     
     if(Entity:HasHealthbar()) then 
         healthComponent = Entity:GetHealthbar()
-        print("THERE IS A HEALTHBAR")
-        -- print("BULLET TAG: ", bulletTag)
     end
 
 
@@ -101,7 +99,6 @@ function OnTriggerEnter(Entity)
     -- print("THIS ENTITY is: " , generalComponent.name)
 
     tagid = generalComponent.tagid
-    print("COLLISION TAGID:" , tagid)
     if (tagid == 1) then
         for i = 7, 1, -1
         do
@@ -110,31 +107,22 @@ function OnTriggerEnter(Entity)
         gameStateSys = systemManager:mGameStateSystem()
 
         if(bulletTag == "REVOLVER") then 
-            print("OK REVOLVER")
             if(healthComponent ~= nil) then 
-                print("HEALTH COMPONENT EXISTS")
                 healthComponent.health = healthComponent.health - revolverDamage
-                print("HEALTH LEFT (REVOLVER): " , healthComponent.health)
             else
             end
         end
 
         if(bulletTag == "SHOTGUN") then 
-            print("OK SHOTGUN")
             if(healthComponent ~= nil) then 
-                print("HEALTH COMPONENT EXISTS")
                 healthComponent.health = healthComponent.health - shotGunDamage
-                print("HEALTH LEFT (SHOTGUN): " , healthComponent.health)
             else
             end
         end
 
         if(bulletTag == "MACHINE_GUN") then 
-            print("OK MACHINE GUN")
             if(healthComponent ~= nil) then 
-                print("HEALTH COMPONENT EXISTS")
                 healthComponent.health = healthComponent.health - machineGunDamage
-                print("HEALTH LEFT (REVOLVER): " , healthComponent.health)
             end
 
         end

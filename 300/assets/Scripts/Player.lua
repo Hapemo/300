@@ -445,8 +445,6 @@ function Update()
                 end
             end 
 
-            -- gunRecoilState = "IDLE" -- If no iput will result in "IDLE"
-
             -- Recoil Snapback
             if(gunTranslate.z ~= original_translate_z) then 
                 gunTranslate.z = gunTranslate.z - gunDisplaceBackSpeed
@@ -457,6 +455,8 @@ function Update()
                     --print("SNAPBACK TO (NOT IDLE)" , gunTranslate.z)
                 end
             end
+-- endregion (snapback)
+
 
             -- Must be before any state change
             if(gunRecoilState ~= "SHOOTING") then
@@ -481,11 +481,7 @@ function Update()
                     gunTranslate.y = gunTranslate.y - gunDisplaceSpeed
                 end
 
-                gunRecoilState = "MOVING" 
-
-                -- print("GUN MOVES", movement.z * 0.001) 
-                -- print("GUN TRANSLATE (Y): " , gunTranslate.y)
-                -- print("ORIGINAL TRANLSATE (Y): ", original_translate_y)
+                gunRecoilState = "MOVING"
             end
             if (inputMapSys:GetButton("down")) then
                 movement.x = movement.x - (viewVec.x * mul);
@@ -506,8 +502,6 @@ function Update()
                 -- gun "move rightwards" when player moves left
                 if(gunTranslate.x < gunThreshHold_max_x) then 
                     gunTranslate.x = gunTranslate.x + gunDisplaceSpeed
-                    
-
                 end
 
                 gunRecoilState = "MOVING"
@@ -550,7 +544,7 @@ function Update()
                 end
             end
 
---  endregion
+
           
         end
 
@@ -632,6 +626,7 @@ function Update()
                 revolverShootState = "SHOOTABLE"
             end 
         end
+        -- end of "COOLDOWN" state
 
         if(inputMapSys:GetButtonDown("Shoot")) then 
 
@@ -854,7 +849,6 @@ function moreAccurateShotgun(num_of_bullets)
     local final_vector = Vec3.new()
     
     local_right_vector = Camera_Scripting.Cross(viewVec, up_vector) -- get vector pointing to rightwards of player
-    print("LOCAL RIGHT VECTOR: " , local_right_vector.x, local_right_vector.y, local_right_vector.z)
     world_true_up_vector = Camera_Scripting.Cross(local_right_vector, viewVec)
    
     for i = 0 , num_of_bullets , 1 do
@@ -896,37 +890,6 @@ function moreAccurateShotgun(num_of_bullets)
 
         physicsSys:SetVelocity(bulletPrefab, final_vector)
     end
-
-
-    -- for i = 0 , num_of_bullets, 1 do
-    --     -- Generate random angles within a cone
-    --     local theta = math.rad(math.random() * cone_angle)
-    --     local phi = math.rad(math.random() * 360)
-
-    --     -- Convert angles to direcitonal vectors
-    --     local x = math.sin(theta) * math.cos(phi)
-    --     local y = math.sin(theta) * math.sin(phi)
-    --     local z = math.cos(theta)
-        
-    --     -- Applying spread to the camera's base forward vector
-    --     camera_forward.x = camera_forward.x * x + camera_forward.y * y + camera_forward.z * z
-    --     camera_forward.y = camera_forward.y * x + camera_forward.z * y + camera_forward.x * z
-    --     camera_forward.z = camera_forward.z * x + camera_forward.x * y + camera_forward.y * z
-
-    --     -- Starting Position of bullet 
-    --     positions_final.x = positions.x +  camera_forward.x * 2 -- 'positions' - camera's translate
-    --     positions_final.y = positions.y +  camera_forward.y * 2 
-    --     positions_final.z = positions.z +  camera_forward.z * 2 
-
-        
-    --     bulletPrefab = systemManager.ecs:NewEntityFromPrefab("bullet", positions_final)
-
-    --     print("POSITION SPAWN:" , positions_final.x , positions_final.y, positions_final.z)
-
-
-
-
-    -- end
 end 
 
 
@@ -1024,27 +987,6 @@ function applyGunRecoil(recoil_speed, max_recoil_distance_z)
         -- print("DISTANCE TRAVELLED (2): " , gunTranslate.z)
     end
 end
-
--- function applyShotGunRecoil(max_shotgun_recoil_distance_z)
---     print("SHOTGUN RECOIL")
-
---     local distance_travelled_this_frame = recoil_speed_SG * dt
---     print("DISTANCE TRAVELED SHOTGUN: ", distance_travelled_this_frame)
-
---     -- if(gunTranslate.z < original_translate_z + distance_travelled_this_frame) and
---     --    (gunTranslate.z < original_translate_z + max_recoil_distance_z) then
---         -- gunTranslate.z = gunTranslate.z + distance_travelled_this_frame -- recoil
---         -- print("GUN TRANSLATE AFTER RECOIL: " , gunTranslate.z)
---         -- print("1")
---     -- else -- if it extends over the limit 
---         print("GUN TRANSLATE BEFORE: " , gunTranslate.z)
---         gunTranslate.z = gunTranslate.z +  max_recoil_distance_z -- recoil
-        
---         print("MAX RECOIL REACHED", gunTranslate.z)
---         -- print("2")
---     -- end
-
--- end 
 
 
 function machineGunRecoil()
