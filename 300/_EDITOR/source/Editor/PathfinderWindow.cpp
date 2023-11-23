@@ -94,8 +94,12 @@ void PathfinderWindow::update() {
   ImGui::Text("Selected Point: ");
   ImGui::SameLine();
   if (mLatestPoint.id == entt::null) ImGui::Text("No active point selected");
-  else ImGui::DragFloat3("##CurrentSelectedPoint", (float*)&mLatestPoint.GetComponent<Transform>().mTranslate, 0.1f);
-    
+  else {
+    ImGui::DragFloat3("##CurrentSelectedPoint", (float*)&mLatestPoint.GetComponent<Transform>().mTranslate, 0.1f);
+    if (ImGui::Button("Duplicate Point")) {
+      pfSys->AddPoint(mLatestPoint.GetComponent<Transform>().mTranslate + glm::vec3{0,0,0.01});
+    }
+  }
   ImGui::Separator();
 
   // Add point (button and coordinate input)
@@ -105,7 +109,7 @@ void PathfinderWindow::update() {
   ImGui::DragFloat3("##NewPoint", (float*)&tempTransform, 0.1f);
   if (ImGui::Button("Create Point")) {
     pfSys->AddPoint(tempTransform);
-    tempTransform = glm::vec3();
+    //tempTransform = glm::vec3();
   }
 
   // Delete Point (button) (deletes latest selected point)
