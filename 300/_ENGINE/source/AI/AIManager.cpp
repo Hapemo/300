@@ -7,6 +7,7 @@
 #include "AI/PathfinderManager.h"
 
 #define Rubberbanding 1
+#define QUICKFIX 1
 
 #define IGNORETAGS { "ENEMY", "GRAPH", "BULLET", "UI", "OTHERS" }
 
@@ -31,13 +32,26 @@ void AIManager::Update(float _dt) {
 	TrackPlayerPosition(_dt);
 }
 
+#if QUICKFIX
+std::map<Entity, std::pair<int, glm::vec3>> delayContainer;
+#endif
 
 glm::vec3 AIManager::GetDirection(Entity _e) {
 	glm::vec3 dir{};
 	AISetting const& aiSetting = _e.GetComponent<AISetting>();
 
 	if (CheckUseAStar(_e, aiSetting)) {
-		dir = GetAStarDir(_e, aiSetting);
+#if QUICKFIX
+		if (delayContainer.find(_e) == delayContainer.end()) {
+			delayContainer[_e] = {30, glm::vec3()};
+		}
+
+		if (++(delayContainer[_e].first) > 30) {
+			dir = delayContainer[_e].second = GetAStarDir(_e, aiSetting);
+			delayContainer[_e].first = 0;
+		} else dir = delayContainer[_e].second;
+#endif
+		//dir = GetAStarDir(_e, aiSetting);
 	} else {
 		switch (aiSetting.mMovementType) {
 		case E_MOVEMENT_TYPE::GROUND_DIRECT: dir = CalcGroundAIDir(_e);

@@ -38,6 +38,7 @@ void Input::Init(bool isEditor) {
  }
 
 bool Input::CheckKey(E_STATE state, E_KEY key) {
+  if (key == E_KEY::ERROR_EKEY) return false;
   int curr_state{};
   if ((int)key > mMaxKeyboardIndex)
     curr_state = systemManager->GetWindow()->IsMousePressed((int)key - mMaxKeyboardIndex - 1);
