@@ -2,6 +2,7 @@ local vec = Vec3.new()
 
 local aiSys
 local phySys
+local gameStateSys
 local this
 
 local bobbleAngle
@@ -29,6 +30,7 @@ function Alive()
     end
     aiSys = systemManager:mAISystem();
     phySys = systemManager:mPhysicsSystem();
+    gameStateSys = systemManager:mGameStateSystem();
 
     bobbleAngle = 0
     bobbleFrequency = 2
@@ -36,7 +38,7 @@ function Alive()
 
     AttackSpeed = 1
     AttackTimer = 0
-    ShotSpeed = 100
+    ShotSpeed = 10
 
     state = ""
     deathTimerCount = 0
@@ -132,6 +134,8 @@ function ILOVEYOUAttack()
 end
 
 function Shoot()
+    this:GetAudio():SetPlay()
+    print("shooting bullet")
     local bullet = systemManager.ecs:NewEntityFromPrefab("EnemyBullet", thisPos)
     -- local bulletVec = Helper.Scale(Helper.Normalize(Helper.Vec3Minus(targetPos, thisPos)), ShotSpeed)
     -- phySys:SetVelocity(bullet, bulletVec)
@@ -145,4 +149,5 @@ function StartDeath()
     -- Start death sound
     state = "DEATH"
     phySys:SetVelocity(this, Vec3.new())
+    gameStateSys:GetEntity("EnemyDeath"):GetAudio():SetPlay()
 end

@@ -1,5 +1,5 @@
 {
-    "entityid": 12582916,
+    "entityid": 2097164,
     "general": {
         "name": "Explosion",
         "tagid": 8,
@@ -9,9 +9,9 @@
     },
     "transform": {
         "scale": {
-            "x": 20.0,
-            "y": 20.0,
-            "z": 20.0
+            "x": 3.1449601650238037,
+            "y": 3.1449601650238037,
+            "z": 3.1449601650238037
         },
         "rotate": {
             "x": 0.0,
@@ -90,6 +90,15 @@
                 "variables": []
             }
         ]
+    },
+    "audio": {
+        "filepath": "../assets\\Audio",
+        "filename": "Enemy_Zipbomb_Explode.wav",
+        "fullpath": "../assets\\Audio/Enemy_Zipbomb_Explode.wav",
+        "playonawake": false,
+        "islooping": false,
+        "audiotype": 1,
+        "volume": 1.0
     },
     "prefab": {
         "prefab": "Explosion"
