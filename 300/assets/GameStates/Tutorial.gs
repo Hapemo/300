@@ -12,16 +12,16 @@
         "bloom_offset": 1.8380000591278076,
         "bloom_sampleweight": 0.5960000157356262,
         "chroma_strength": 0.019200000911951065,
-        "bloom_enable": false,
+        "bloom_enable": true,
         "crt_enable": false,
         "chroma_enable": false,
         "global_tint": {
             "x": 1.0,
             "y": 1.0,
             "z": 1.0,
-            "w": 0.30000001192092896
+            "w": 1.0
         },
-        "debug": 1
+        "debug": 0
     },
     {
         "scene_name": "tutorialUI",
@@ -36,15 +36,15 @@
         "bloom_offset": 1.8380000591278076,
         "bloom_sampleweight": 0.5960000157356262,
         "chroma_strength": 0.019200000911951065,
-        "bloom_enable": false,
+        "bloom_enable": true,
         "crt_enable": false,
         "chroma_enable": false,
         "global_tint": {
             "x": 1.0,
             "y": 1.0,
             "z": 1.0,
-            "w": 0.30000001192092896
+            "w": 1.0
         },
-        "debug": 1
+        "debug": 0
     }
 ]

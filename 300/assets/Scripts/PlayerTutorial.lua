@@ -111,6 +111,7 @@ local inputMapSys = {}
 
 --Set when collide with teleporter to go next box
 local travelBox = false
+local wasdTranslate
 
 TutBox = {
    FIRST = 1,
@@ -163,6 +164,9 @@ function Alive()
     skiptutTeleporter = gameStateSys:GetEntity("Skip Tutorial")
     box2Spawn = gameStateSys:GetEntity("Box2Spawn")
     box3Spawn = gameStateSys:GetEntity("Box3Spawn")
+    wasd = gameStateSys:GetEntity("WASD")
+    jumpText = gameStateSys:GetEntity("JUMP text")
+    zxcText = gameStateSys:GetEntity("ZXC text")
 end
 
 function Update()
@@ -211,11 +215,17 @@ function Update()
         if travelBox == true then
             Helper.SetTranslate(cameraEntity, box2Spawn:GetTransform().mTranslate)
             travelBox = false
+            wasdTranslate = wasd:GetTransform().mTranslate
+            wasdTranslate.y = 750
         end
     elseif tutState == TutBox.THIRD then
 	    if travelBox == true then
 	        Helper.SetTranslate(cameraEntity, box3Spawn:GetTransform().mTranslate)
             travelBox = false
+            jumpTextTranslate = jumpText:GetTransform().mTranslate
+            jumpTextTranslate.y = 2000
+            zxcTextTranslate = zxcText:GetTransform().mTranslate
+            zxcTextTranslate.y = 750
     	end
     elseif tutState == TutBox.GAME then
 	    if travelBox == true then
@@ -284,8 +294,8 @@ function Update()
           
             e_dashEffect = false
         end
-        movement.x = movement.x + (viewVec.x * 300.0)
-        movement.z = movement.z + (viewVec.z * 300.0);
+        movement.x = movement.x + (viewVec.x * 50.0)
+        movement.z = movement.z + (viewVec.z * 50.0);
     
         if (dashTime >= 0.1) then
 
@@ -319,7 +329,12 @@ function Update()
             if (dashTime > 3.0) then
                 dashTime = 0
                 isDashing = true
-             
+                if tutState == TutBox.SECOND then
+                    wasdTranslate = wasd:GetTransform().mTranslate
+                    wasdTranslate.y = 2000
+                    jumpTextTranslate = jumpText:GetTransform().mTranslate
+                    jumpTextTranslate.y = 750
+                end
             end
         else
         
