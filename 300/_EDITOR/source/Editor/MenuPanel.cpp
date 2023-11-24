@@ -28,6 +28,8 @@ Contains main loop for the logic of MenuPanel.
 #include "ShaderCompiler.h"
 #include "imgui_stdlib.h"
 
+#include <TextureCompressor.h>
+
 /***************************************************************************/
 /*!
 \brief
@@ -105,6 +107,50 @@ void MenuPanel::update()
 
               PathfinderWindow::openWindow = true;
 
+            }
+
+            if (ImGui::MenuItem("Recompile All Textures"))
+            {
+                //!< Helper
+                auto getFilename = [](std::string filepath) -> std::string
+                {
+                    // returns AT-AT
+                    std::string ret_str = filepath.substr(filepath.find_last_of("/") + 1);
+                    ret_str = ret_str.substr(0, ret_str.find_first_of("."));
+                    return ret_str;
+                };
+
+                auto getFileExtension = [](std::string filepath) -> std::string
+                {
+                    // returns .png
+                    std::string ret_str = filepath.substr(filepath.find_last_of("."));
+                    return ret_str;
+                };
+
+                std::filesystem::path directoryTex = systemManager->mResourceTySystem->uncompressed_texture_path;
+
+                for (const auto& entry : std::filesystem::directory_iterator(directoryTex))
+                {
+                    std::string data_str = entry.path().string();
+
+                    if (getFileExtension(data_str) == ".desc")
+                        continue;
+
+                    std::string texturestr = systemManager->mResourceTySystem->compressed_texture_path + getFilename(data_str) + ".ctexture";
+
+                    std::string TEXTURE_Descriptor_Filepath;
+                    unsigned guid;
+
+                    // check and ensures that the descriptor file for the materials are created
+                    _GEOM::CheckAndCreateDescriptorFileTEXTURE(data_str, TEXTURE_Descriptor_Filepath, texturestr);
+                    //std::string descfilepath = data_str + ".desc";
+                    //guid = _GEOM::GetGUID(descfilepath);	// gets the guid from the png desc
+
+                    //_GEOM::Texture_DescriptorData::DeserializeTEXTURE_DescriptorDataFromFile(mTextureDescriptorData[i], TEXTURE_Descriptor_Filepath);
+
+                    std::cout << "\033[33mNOTE: >> Compressing texture: " << texturestr << "\033[0m" << std::endl;
+                    CompressImageFile(data_str.c_str(), systemManager->mResourceTySystem->compressed_texture_path.c_str(), _GEOM::Texture_DescriptorData::isGammaSpace(TEXTURE_Descriptor_Filepath));
+                }
             }
 
             ImGui::EndMenu();
