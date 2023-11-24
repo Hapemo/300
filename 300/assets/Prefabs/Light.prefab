@@ -1,8 +1,8 @@
 {
-    "entityid": 21,
+    "entityid": 80,
     "general": {
         "name": "Light",
-        "tagid": 2,
+        "tagid": 0,
         "subtag": 0,
         "isActive": true,
         "isPaused": false
@@ -19,9 +19,9 @@
             "z": 0.0
         },
         "translate": {
-            "x": 69.65132904052734,
-            "y": 26.33354377746582,
-            "z": 134.02987670898438
+            "x": 0.0,
+            "y": -26.750856399536133,
+            "z": 17.29239845275879
         }
     },
     "prefab": {
@@ -29,12 +29,12 @@
     },
     "pointlight": {
         "lightcolor": {
-            "x": 0.0,
+            "x": 1.0,
             "y": 1.0,
             "z": 1.0
         },
         "linearfalloff": 0.0,
         "quadraticfalloff": 0.0,
-        "intensity": 1.5
+        "intensity": 5.0
     }
 }
