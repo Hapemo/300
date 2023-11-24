@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 181,
+        "entityid": 180,
         "general": {
             "name": "TrojanHorseChargeAudio",
             "tagid": 0,
@@ -43,7 +43,7 @@
         }
     },
     {
-        "entityid": 182,
+        "entityid": 181,
         "general": {
             "name": "ZipBombFuseAudio",
             "tagid": 0,
@@ -86,7 +86,7 @@
         }
     },
     {
-        "entityid": 183,
+        "entityid": 182,
         "general": {
             "name": "EnemyDeathAudio",
             "tagid": 8,
@@ -129,7 +129,7 @@
         }
     },
     {
-        "entityid": 184,
+        "entityid": 183,
         "general": {
             "name": "TrojanSoldier",
             "tagid": 1,
@@ -256,7 +256,7 @@
         }
     },
     {
-        "entityid": 185,
+        "entityid": 184,
         "general": {
             "name": "ZipBomb",
             "tagid": 1,
@@ -397,7 +397,7 @@
         }
     },
     {
-        "entityid": 186,
+        "entityid": 185,
         "general": {
             "name": "ILOVEYOU",
             "tagid": 1,
@@ -528,7 +528,7 @@
         }
     },
     {
-        "entityid": 187,
+        "entityid": 186,
         "general": {
             "name": "Melissa",
             "tagid": 1,
@@ -567,7 +567,7 @@
                 "y": false,
                 "z": false
             },
-            "gravity": false
+            "gravity": true
         },
         "meshrenderer": {
             "vert": "../assets/shader_files/pointLight_vert.glsl",
@@ -659,7 +659,7 @@
         }
     },
     {
-        "entityid": 188,
+        "entityid": 187,
         "general": {
             "name": "TrojanHorse",
             "tagid": 1,
@@ -800,7 +800,7 @@
         }
     },
     {
-        "entityid": 189,
+        "entityid": 188,
         "general": {
             "name": "TrojanSoldier",
             "tagid": 1,
@@ -927,7 +927,7 @@
         }
     },
     {
-        "entityid": 190,
+        "entityid": 189,
         "general": {
             "name": "TrojanSoldier",
             "tagid": 1,

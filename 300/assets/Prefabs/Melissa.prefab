@@ -1,5 +1,5 @@
 {
-    "entityid": 187,
+    "entityid": 186,
     "general": {
         "name": "Melissa",
         "tagid": 1,
@@ -38,7 +38,7 @@
             "y": false,
             "z": false
         },
-        "gravity": false
+        "gravity": true
     },
     "meshrenderer": {
         "vert": "../assets/shader_files/pointLight_vert.glsl",
