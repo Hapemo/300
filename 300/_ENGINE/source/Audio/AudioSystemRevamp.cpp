@@ -595,7 +595,7 @@ unsigned int AudioSystem::PlaySound(std::string audio_name, AUDIOTYPE type, floa
 			if (audio_name == "M3BGM.wav" && scene_switched == true)
 			{
 				channel.second->setPosition(playback_position, FMOD_TIMEUNIT_MS);
-				std::cout << "HEY" << std::endl;
+				//std::cout << "HEY" << std::endl;
 				scene_switched = false;
 			}
 
