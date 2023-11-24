@@ -1,6 +1,46 @@
 [
     {
-        "entityid": 2097235,
+        "entityid": 1048707,
+        "general": {
+            "name": "dashui",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 160.0,
+                "y": -160.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 1500.0,
+                "y": -750.0,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "../assets/Compressed/UI-Dash.ctexture",
+            "textureref": 4125721315,
+            "degree": 0.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 0,
+            "worldtransform": false
+        }
+    },
+    {
+        "entityid": 1048708,
         "general": {
             "name": "P2",
             "tagid": 0,
@@ -40,7 +80,7 @@
         }
     },
     {
-        "entityid": 2097236,
+        "entityid": 1048709,
         "general": {
             "name": "P8",
             "tagid": 0,
@@ -80,7 +120,7 @@
         }
     },
     {
-        "entityid": 2097237,
+        "entityid": 1048710,
         "general": {
             "name": "P7",
             "tagid": 0,
@@ -120,7 +160,7 @@
         }
     },
     {
-        "entityid": 2097238,
+        "entityid": 1048711,
         "general": {
             "name": "P6",
             "tagid": 0,
@@ -160,7 +200,7 @@
         }
     },
     {
-        "entityid": 2097239,
+        "entityid": 1048712,
         "general": {
             "name": "P5",
             "tagid": 0,
@@ -200,7 +240,7 @@
         }
     },
     {
-        "entityid": 2097240,
+        "entityid": 1048713,
         "general": {
             "name": "P4",
             "tagid": 0,
@@ -240,7 +280,7 @@
         }
     },
     {
-        "entityid": 2097241,
+        "entityid": 1048714,
         "general": {
             "name": "P3",
             "tagid": 0,
@@ -280,7 +320,7 @@
         }
     },
     {
-        "entityid": 2097242,
+        "entityid": 1048715,
         "general": {
             "name": "P1",
             "tagid": 0,
@@ -323,7 +363,7 @@
         }
     },
     {
-        "entityid": 2097243,
+        "entityid": 1048716,
         "general": {
             "name": "crosshair-3",
             "tagid": 0,
@@ -349,8 +389,8 @@
             }
         },
         "uirenderer": {
-            "texpath": "",
-            "textureref": 4435,
+            "texpath": "../assets/Compressed/UI-cross-topleft.ctexture",
+            "textureref": 1964819264,
             "degree": 0.0,
             "color": {
                 "x": 1.0,
@@ -371,7 +411,7 @@
         }
     },
     {
-        "entityid": 2097245,
+        "entityid": 1048717,
         "general": {
             "name": "crosshair-4",
             "tagid": 0,
@@ -397,8 +437,8 @@
             }
         },
         "uirenderer": {
-            "texpath": "",
-            "textureref": 4550,
+            "texpath": "../assets/Compressed/UI-cross-topright.ctexture",
+            "textureref": 127443535,
             "degree": 0.0,
             "color": {
                 "x": 1.0,
@@ -419,7 +459,7 @@
         }
     },
     {
-        "entityid": 2097246,
+        "entityid": 1048718,
         "general": {
             "name": "crosshair-2",
             "tagid": 0,
@@ -445,8 +485,8 @@
             }
         },
         "uirenderer": {
-            "texpath": "",
-            "textureref": 4550,
+            "texpath": "../assets/Compressed/UI-cross-topright.ctexture",
+            "textureref": 127443535,
             "degree": 0.0,
             "color": {
                 "x": 1.0,
@@ -467,7 +507,7 @@
         }
     },
     {
-        "entityid": 2097247,
+        "entityid": 1048719,
         "general": {
             "name": "crosshair-1",
             "tagid": 0,
@@ -493,8 +533,8 @@
             }
         },
         "uirenderer": {
-            "texpath": "",
-            "textureref": 4435,
+            "texpath": "../assets/Compressed/UI-cross-topleft.ctexture",
+            "textureref": 1964819264,
             "degree": 0.0,
             "color": {
                 "x": 1.0,
@@ -515,7 +555,7 @@
         }
     },
     {
-        "entityid": 2097248,
+        "entityid": 1048720,
         "general": {
             "name": "Base",
             "tagid": 0,
@@ -541,8 +581,8 @@
             }
         },
         "uirenderer": {
-            "texpath": "",
-            "textureref": 3696,
+            "texpath": "../assets/Compressed/UI-Skills.ctexture",
+            "textureref": 533721741,
             "degree": 0.0,
             "color": {
                 "x": 1.0,
@@ -563,7 +603,7 @@
         }
     },
     {
-        "entityid": 2097249,
+        "entityid": 1048721,
         "general": {
             "name": "Leftshift",
             "tagid": 0,
@@ -573,7 +613,7 @@
         },
         "transform": {
             "scale": {
-                "x": 93.0,
+                "x": 95.0,
                 "y": -45.0,
                 "z": 1.0
             },
@@ -583,14 +623,14 @@
                 "z": 0.0
             },
             "translate": {
-                "x": -354.70001220703125,
-                "y": -590.2999877929688,
+                "x": -360.0,
+                "y": -590.0,
                 "z": 0.0
             }
         },
         "uirenderer": {
-            "texpath": "",
-            "textureref": 4007,
+            "texpath": "../assets/Compressed/UI-Leftshift.ctexture",
+            "textureref": 3891596652,
             "degree": 0.0,
             "color": {
                 "x": 1.0,
@@ -600,10 +640,18 @@
             },
             "layer": 0,
             "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/UI-Leftshift.lua",
+                    "variables": []
+                }
+            ]
         }
     },
     {
-        "entityid": 2097250,
+        "entityid": 1048722,
         "general": {
             "name": "UI-indicator3",
             "tagid": 0,
@@ -654,7 +702,7 @@
         }
     },
     {
-        "entityid": 2097251,
+        "entityid": 1048723,
         "general": {
             "name": "UI-indicator1",
             "tagid": 0,
@@ -705,7 +753,7 @@
         }
     },
     {
-        "entityid": 2097252,
+        "entityid": 1048724,
         "general": {
             "name": "UI-indicator24",
             "tagid": 0,
@@ -756,7 +804,7 @@
         }
     },
     {
-        "entityid": 2097253,
+        "entityid": 1048725,
         "general": {
             "name": "UI-indicator23",
             "tagid": 0,
@@ -807,7 +855,7 @@
         }
     },
     {
-        "entityid": 2097254,
+        "entityid": 1048727,
         "general": {
             "name": "UI-indicator22",
             "tagid": 0,
@@ -858,7 +906,7 @@
         }
     },
     {
-        "entityid": 2097255,
+        "entityid": 1048728,
         "general": {
             "name": "UI-indicator21",
             "tagid": 0,
@@ -909,7 +957,7 @@
         }
     },
     {
-        "entityid": 2097256,
+        "entityid": 1048729,
         "general": {
             "name": "UI-indicator20",
             "tagid": 0,
@@ -960,7 +1008,7 @@
         }
     },
     {
-        "entityid": 2097257,
+        "entityid": 1048730,
         "general": {
             "name": "UI-indicator19",
             "tagid": 0,
@@ -1011,7 +1059,7 @@
         }
     },
     {
-        "entityid": 2097258,
+        "entityid": 1048731,
         "general": {
             "name": "UI-indicator18",
             "tagid": 0,
@@ -1062,7 +1110,7 @@
         }
     },
     {
-        "entityid": 2097259,
+        "entityid": 1048732,
         "general": {
             "name": "UI-indicator17",
             "tagid": 0,
@@ -1113,7 +1161,7 @@
         }
     },
     {
-        "entityid": 2097260,
+        "entityid": 1048733,
         "general": {
             "name": "UI-indicator16",
             "tagid": 0,
@@ -1164,7 +1212,7 @@
         }
     },
     {
-        "entityid": 2097261,
+        "entityid": 1048734,
         "general": {
             "name": "UI-indicator15",
             "tagid": 0,
@@ -1215,7 +1263,7 @@
         }
     },
     {
-        "entityid": 2097262,
+        "entityid": 1048735,
         "general": {
             "name": "UI-indicator14",
             "tagid": 0,
@@ -1266,7 +1314,7 @@
         }
     },
     {
-        "entityid": 2097264,
+        "entityid": 1048736,
         "general": {
             "name": "UI-indicator13",
             "tagid": 0,
@@ -1317,7 +1365,7 @@
         }
     },
     {
-        "entityid": 2097265,
+        "entityid": 1048737,
         "general": {
             "name": "UI-indicator12",
             "tagid": 0,
@@ -1368,7 +1416,7 @@
         }
     },
     {
-        "entityid": 2097266,
+        "entityid": 1048738,
         "general": {
             "name": "UI-indicator11",
             "tagid": 0,
@@ -1419,7 +1467,7 @@
         }
     },
     {
-        "entityid": 2097267,
+        "entityid": 1048739,
         "general": {
             "name": "UI-indicator10",
             "tagid": 0,
@@ -1470,7 +1518,7 @@
         }
     },
     {
-        "entityid": 2097268,
+        "entityid": 1048740,
         "general": {
             "name": "UI-indicator9",
             "tagid": 0,
@@ -1521,7 +1569,7 @@
         }
     },
     {
-        "entityid": 2097269,
+        "entityid": 1048741,
         "general": {
             "name": "UI-indicator8",
             "tagid": 0,
@@ -1572,7 +1620,7 @@
         }
     },
     {
-        "entityid": 2097270,
+        "entityid": 1048742,
         "general": {
             "name": "UI-indicator7",
             "tagid": 0,
@@ -1623,7 +1671,7 @@
         }
     },
     {
-        "entityid": 2097271,
+        "entityid": 1048743,
         "general": {
             "name": "UI-indicator6",
             "tagid": 0,
@@ -1674,7 +1722,7 @@
         }
     },
     {
-        "entityid": 2097272,
+        "entityid": 1048744,
         "general": {
             "name": "UI-indicator5",
             "tagid": 0,
@@ -1725,9 +1773,9 @@
         }
     },
     {
-        "entityid": 2097273,
+        "entityid": 1048745,
         "general": {
-            "name": "UI-indicator4",
+            "name": "UI-indicator6",
             "tagid": 0,
             "subtag": 0,
             "isActive": true,
@@ -1737,7 +1785,7 @@
             "scale": {
                 "x": -20.0,
                 "y": 20.0,
-                "z": 4.0
+                "z": 1.0
             },
             "rotate": {
                 "x": 0.0,
@@ -1776,7 +1824,7 @@
         }
     },
     {
-        "entityid": 2097274,
+        "entityid": 1048746,
         "general": {
             "name": "UI-indicator2",
             "tagid": 0,
@@ -1824,6 +1872,54 @@
         },
         "prefab": {
             "prefab": "UI-indicator"
+        }
+    },
+    {
+        "entityid": 1048747,
+        "general": {
+            "name": "UI-Circle-Pattern",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": -500.0,
+                "y": 500.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "../assets/Compressed/UI-Circle-Shooting-Pattern.ctexture",
+            "textureref": 401058174,
+            "degree": 0.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 0,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/UI-ShootingPattern.lua",
+                    "variables": []
+                }
+            ]
         }
     }
 ]
