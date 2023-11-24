@@ -119,6 +119,9 @@ function Helper.DirectionToAngle(entity, vec)
     if (vec.x < 0) then
         degree = 360.0 - degree
     end
+
+    if degree ~= degree then return entity:GetTransform().mRotate.y end
+
     return degree
 end
 

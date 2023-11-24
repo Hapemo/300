@@ -162,7 +162,8 @@ function Alive()
 
     cameraPhysicsComp = cameraEntity:GetRigidBody()
     
-    dashui = gameStateSys:GetEntity("UI1")
+    dashui = gameStateSys:GetEntityByScene("dashui" , "UI")
+
 
     bulletAudioEntity = gameStateSys:GetEntity("Bullet Shoot" )
     bulletAudioComp = bulletAudioEntity:GetAudio()
@@ -280,13 +281,14 @@ function Update()
     meshtp3:SetColor(tpcolor)
     meshtp4:SetColor(tpcolor)
 
+    dashui = gameStateSys:GetEntityByScene("dashui" , "UI")
+
     dashrender = dashui:GetUIrenderer()
     if (dashTime > 3.0) then
         dashrender:SetDegree(0)
     else
         dashrender:SetDegree(360 - (dashTime / 3.0) * 360)
     end
-
     if (tpTime > 20.0) then
         if (collideWithTP > 0) then
             onTpTime = onTpTime + FPSManager.GetDT()

@@ -45,13 +45,15 @@ function Update()
     vec = aiSys:GetDirection(this)
     this:GetTransform().mRotate.y = Helper.DirectionToAngle(this, vec)
 
-    Helper.Scale(vec, 1)
+    Helper.Scale(vec, 5)
 
-    -- Add bobbbling here
-    bobbleAngle = bobbleAngle + bobbleFrequency
-    if bobbleAngle > 360 then bobbleAngle = 0 end
-    vec.y = vec.y + math.cos(bobbleAngle/180*math.pi) * bobbleIntensity
-    --
+    if aiSys:LineOfSight(this, this:GetAISetting():GetTarget()) then 
+        -- Add bobbbling here
+        bobbleAngle = bobbleAngle + bobbleFrequency
+        if bobbleAngle > 360 then bobbleAngle = 0 end
+        vec.y = vec.y + math.cos(bobbleAngle/180*math.pi) * bobbleIntensity
+        --
+    end
 
     -- If horizontal length is reached, don't move horizontally
     local targetPos = this:GetAISetting():GetTarget():GetTransform().mTranslate
