@@ -6,6 +6,8 @@ local gameStateSys
 
 -- Other variables
 local this
+local target
+local damage = 5
 
 local deathTimer = 0.1
 local deathTimerCount
@@ -13,8 +15,6 @@ local deathTimerCount
 local state
 
 local aiSetting
-
-local rotate = Vec3.new()
 
 -- Trojan horse states
 -- 1. ROAM. roam around and passively look for player (change to 2. when sees player)
@@ -36,6 +36,7 @@ function Alive()
     state = ""
 
     deathTimerCount   = 0
+    target = this:GetAISetting():GetTarget()
 end
 
 function Update()
@@ -90,8 +91,9 @@ function OnContactEnter(Entity)
         velocity.x = -velocity.x * 5
         velocity.y = velocity.y * 3
         velocity.z = -velocity.z * 5
-        -- Make player take damage here
-        print("player damaged by trojan soldier")
+
+        -- decrease player health
+        target:GetHealthbar().health = target:GetHealthbar().health - damage
     end
     phySys:SetVelocity(this, velocity);
     this:GetAudio():SetPlay()

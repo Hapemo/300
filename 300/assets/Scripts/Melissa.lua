@@ -1,8 +1,12 @@
 -- Variables for state
 local speed             = 3
+local damage            = 15
 
-local s2Timer           = 0
-local s2TimerLimit      = 2 -- This should depend on the animation time period
+local s2AttackingTimer          = 1
+local s2AttackingTimerCount     = 0
+
+local s3ScreamingTimer           = 0
+local s3ScreamingTimerLimit      = 2 -- This should depend on the animation time period
 
 -- Systems
 local aiSys
@@ -11,9 +15,13 @@ local gameStateSys
 
 -- Other variables
 local this
-local direction
+local target
+local thisPos
+local targetPos
+local direction    = Vec3.new()
 local spawnMelissa = false      -- This should be rng, might or might not spawn another melissa (50% chance)
 local notBelow50Yet
+local AttackOnce = false
 
 local deathTimer = 2
 local deathTimerCount
@@ -38,8 +46,10 @@ function Alive()
 
     local num = math.random()
     spawnMelissa = num > 0.5
-    print(num)
-    print(spawnMelissa)
+    target = this:GetAISetting():GetTarget()
+
+    thisPos = this:GetTransform().mTranslate
+    targetPos = target:GetTransform().mTranslate
 
     notBelow50Yet = true
     deathTimerCount = 0
@@ -51,14 +61,18 @@ function Update()
         this:GetHealthbar().health = this:GetHealthbar().health - 10
     end
 
+    this:GetTransform().mRotate.y = Helper.DirectionToAngle(this, direction)
     -- STATE MACHINE
     if state == "TRAVEL" then         -- walk directly to player using pathfinding (change to 2. when duplicate timer runs out)
         direction = aiSys:GetDirection(this)
-        this:GetTransform().mRotate.y = Helper.DirectionToAngle(this, direction)
     
         Helper.Scale(direction, speed)
     
         phySys:SetVelocity(this, direction);
+
+        if (InMeleeRange(1.5)) then
+            AttackInit()
+        end
 
         if notBelow50Yet then
             -- Check for health below 50%
@@ -67,20 +81,37 @@ function Update()
                 SpawnMelissa()
             end
         end
+    elseif state == "ATTACKING" then -- damaging when at half the duration
+        phySys:SetVelocity(this, Vec3.new());
+        s2AttackingTimerCount = s2AttackingTimerCount + FPSManager.GetDT()
+        if (s2AttackingTimerCount > s2AttackingTimer) then
+            s2AttackingTimerCount = 0
+            AttackOnce = false
+            TRAVELInit()
+        elseif (s2AttackingTimerCount > s2AttackingTimer/2) and not AttackOnce then -- (this run once only per attack state entrance)
+            AttackOnce = true
+            -- Play attack SOUND
+            -- decrease player health
+            print("attacked")
+            if InMeleeRange(2) then
+                print("attack in range")
+                target:GetHealthbar().health = target:GetHealthbar().health - damage
+            end
+        end
     elseif state == "DUPLICATING" then   -- stops moving and vibrate hard. when vibrate timer is up, spawn in another melissa (change to 1. after duplicating)
         phySys:SetVelocity(this, Vec3.new());
         
         -- Set vibrating animation
         -- Start melissa's screaming
-        s2Timer = s2Timer + FPSManager.GetDT()
-        if (s2Timer > s2TimerLimit) then
-            s2Timer = 0
+        s3ScreamingTimer = s3ScreamingTimer + FPSManager.GetDT()
+        if (s3ScreamingTimer > s3ScreamingTimerLimit) then
+            s3ScreamingTimer = 0
             -- Spawn in another melissa
             local spawnPos = this:GetTransform().mTranslate
             local scale = this:GetTransform().mScale
             spawnPos.x = spawnPos.x + scale.x
             spawnPos.z = spawnPos.z + scale.z
-            local melissa2 = systemManager.ecs:NewEntityFromPrefab("Melissa", spawnPos)
+            systemManager.ecs:NewEntityFromPrefab("Melissa", spawnPos)
             TRAVELInit()
         end
     elseif state == "DEATH" then
@@ -123,6 +154,13 @@ end
 
 
 -- State initialise functions
+function AttackInit()
+    -- Start attack animation
+    AttackOnce = false
+    s2AttackingTimerCount = 0
+    state = "ATTACKING"
+    print("start attacking")
+end
 
 function TRAVELInit()
     state = "TRAVEL"
@@ -131,7 +169,7 @@ end
 function SpawnMelissa() -- This function should be called in 
     if not spawnMelissa then return end
     state = "DUPLICATING"
-    s2Timer = 0
+    s3ScreamingTimer = 0
     this:GetAudio():SetPlay()
 end
 
@@ -144,3 +182,15 @@ function StartDeath()
 end
 
 -- Helper functions
+
+function InMeleeRange(range)
+    local distance = Helper.Vec3Len(Helper.Vec3Minus(targetPos, thisPos))
+    print(distance)
+    if distance < range then return true end
+    return false
+end
+
+
+
+
+
