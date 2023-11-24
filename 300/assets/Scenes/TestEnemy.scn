@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 3145772,
+        "entityid": 181,
         "general": {
             "name": "TrojanHorseChargeAudio",
             "tagid": 0,
@@ -43,7 +43,7 @@
         }
     },
     {
-        "entityid": 3145773,
+        "entityid": 182,
         "general": {
             "name": "ZipBombFuseAudio",
             "tagid": 0,
@@ -86,7 +86,7 @@
         }
     },
     {
-        "entityid": 3145774,
+        "entityid": 183,
         "general": {
             "name": "EnemyDeathAudio",
             "tagid": 8,
@@ -129,7 +129,7 @@
         }
     },
     {
-        "entityid": 3145775,
+        "entityid": 184,
         "general": {
             "name": "TrojanSoldier",
             "tagid": 1,
@@ -196,12 +196,12 @@
             ],
             "mesh": "../assets/compiled_geom/Trojan_Soldier.geom",
             "texturerefid": [
-                5291,
-                5018,
-                5212,
-                5359,
-                5238,
-                4545
+                602447454,
+                2438310811,
+                2305639413,
+                1216284744,
+                928397263,
+                736177602
             ]
         },
         "spherecollider": {
@@ -256,7 +256,7 @@
         }
     },
     {
-        "entityid": 3145776,
+        "entityid": 185,
         "general": {
             "name": "ZipBomb",
             "tagid": 1,
@@ -315,7 +315,7 @@
             },
             "materialinstance": [
                 "../assets/Compressed/ZipBomb_BaseColor.ctexture",
-                "../assets/Compressed/Cube_Texture_White.ctexture",
+                "../assets/Compressed/ZipBomb_Normal.ctexture",
                 "../assets/Compressed/ZipBomb_Metallic.ctexture",
                 "../assets/Compressed/ZipBomb_Roughness.ctexture",
                 "../assets/Compressed/ZipBomb_Emissive.ctexture",
@@ -323,12 +323,12 @@
             ],
             "mesh": "../assets/compiled_geom/ZipBomb.geom",
             "texturerefid": [
-                4543,
-                4706,
-                4464,
-                4611,
-                4490,
-                3797
+                2348069524,
+                1319533521,
+                2095937491,
+                2888612446,
+                3155337405,
+                2357914544
             ]
         },
         "boxcollider": {
@@ -397,7 +397,7 @@
         }
     },
     {
-        "entityid": 3145777,
+        "entityid": 186,
         "general": {
             "name": "ILOVEYOU",
             "tagid": 1,
@@ -464,12 +464,12 @@
             ],
             "mesh": "../assets/compiled_geom/ILY.geom",
             "texturerefid": [
-                4090,
-                3817,
-                4011,
-                4158,
-                4037,
-                3344
+                3245335065,
+                571906946,
+                2361540176,
+                3651022823,
+                660779078,
+                3279126427
             ]
         },
         "boxcollider": {
@@ -528,10 +528,10 @@
         }
     },
     {
-        "entityid": 3145778,
+        "entityid": 187,
         "general": {
             "name": "Melissa",
-            "tagid": 0,
+            "tagid": 1,
             "subtag": 0,
             "isActive": true,
             "isPaused": false
@@ -595,12 +595,12 @@
             ],
             "mesh": "../assets/compiled_geom/Melissa.geom",
             "texturerefid": [
-                4570,
-                4297,
-                4491,
-                4638,
-                4517,
-                3824
+                1322168031,
+                1820887936,
+                2908106086,
+                2866962469,
+                2759371044,
+                2018461449
             ]
         },
         "boxcollider": {
@@ -659,7 +659,7 @@
         }
     },
     {
-        "entityid": 3145779,
+        "entityid": 188,
         "general": {
             "name": "TrojanHorse",
             "tagid": 1,
@@ -726,12 +726,12 @@
             ],
             "mesh": "../assets/compiled_geom/Trojan.geom",
             "texturerefid": [
-                5278,
-                4201,
-                4395,
-                4542,
-                5225,
-                3728
+                1940192559,
+                4213568630,
+                1301958460,
+                3973318747,
+                326184372,
+                748184727
             ]
         },
         "boxcollider": {
@@ -800,7 +800,7 @@
         }
     },
     {
-        "entityid": 3145830,
+        "entityid": 189,
         "general": {
             "name": "TrojanSoldier",
             "tagid": 1,
@@ -867,12 +867,12 @@
             ],
             "mesh": "../assets/compiled_geom/Trojan_Soldier.geom",
             "texturerefid": [
-                5291,
-                5018,
-                5212,
-                5359,
-                5238,
-                4545
+                602447454,
+                2438310811,
+                2305639413,
+                1216284744,
+                928397263,
+                736177602
             ]
         },
         "spherecollider": {
@@ -927,7 +927,7 @@
         }
     },
     {
-        "entityid": 3145831,
+        "entityid": 190,
         "general": {
             "name": "TrojanSoldier",
             "tagid": 1,
@@ -994,12 +994,12 @@
             ],
             "mesh": "../assets/compiled_geom/Trojan_Soldier.geom",
             "texturerefid": [
-                5291,
-                5018,
-                5212,
-                5359,
-                5238,
-                4545
+                602447454,
+                2438310811,
+                2305639413,
+                1216284744,
+                928397263,
+                736177602
             ]
         },
         "spherecollider": {

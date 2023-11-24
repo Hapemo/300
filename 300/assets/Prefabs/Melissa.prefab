@@ -2,7 +2,7 @@
     "entityid": 187,
     "general": {
         "name": "Melissa",
-        "tagid": 0,
+        "tagid": 1,
         "subtag": 0,
         "isActive": true,
         "isPaused": false
@@ -66,12 +66,12 @@
         ],
         "mesh": "../assets/compiled_geom/Melissa.geom",
         "texturerefid": [
-            4570,
-            4297,
-            4491,
-            4638,
-            4517,
-            3824
+            1322168031,
+            1820887936,
+            2908106086,
+            2866962469,
+            2759371044,
+            2018461449
         ]
     },
     "boxcollider": {
