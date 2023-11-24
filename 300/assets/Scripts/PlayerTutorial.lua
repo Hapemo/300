@@ -308,12 +308,14 @@ function Update()
     -- meshtp3:SetColor(tpcolor)
     -- meshtp4:SetColor(tpcolor)
 
-   --dashrender = dashui:GetUIrenderer()
-    -- if (dashTime > 3.0) then
-    --     dashrender:SetDegree(0)
-    -- else
-    --     dashrender:SetDegree(360 - (dashTime / 3.0) * 360)
-    -- end
+    dashui = gameStateSys:GetEntityByScene("dashui" , "UI")
+
+   dashrender = dashui:GetUIrenderer()
+    if (dashTime > 3.0) then
+        dashrender:SetDegree(0)
+    else
+        dashrender:SetDegree(360 - (dashTime / 3.0) * 360)
+    end
 
     -- if (tpTime <= 20.0) then  
     --     graphicsSys.mSamplingWeight = graphicsSys.mSamplingWeight - FPSManager.GetDT()
@@ -334,7 +336,6 @@ function Update()
     viewVec = Camera_Scripting.GetDirection(cameraEntity)
     viewVecCam = Camera_Scripting.GetDirection(cameraEntity)
     rotationCam = Camera_Scripting.GetDirection(cameraEntity)
-    viewVec.y = 0;
     viewVec = Helper.Normalize(viewVec)
 
     movement.x = 0;

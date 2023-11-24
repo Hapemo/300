@@ -1415,12 +1415,12 @@
             ],
             "mesh": "../assets/compiled_geom/Stairs.geom",
             "texturerefid": [
-                5750,
-                5477,
-                5671,
-                5818,
-                5697,
-                5004
+                4287510093,
+                173547918,
+                3400405812,
+                3752397651,
+                1883431474,
+                1271446879
             ]
         }
     },
@@ -4606,19 +4606,19 @@
             "materialinstance": [
                 "../assets/Compressed/Environment_Skybox_BaseColor.ctexture",
                 "../assets/Compressed/Environment_Skybox_Normal.ctexture",
-                "../assets/Compressed/Environment_Skybox_BaseColor.ctexture",
+                "../assets/Compressed/Environment_Skybox_Metallic.ctexture",
                 "../assets/Compressed/Environment_Skybox_Roughness.ctexture",
                 "../assets/Compressed/Environment_Skybox_BaseColor.ctexture",
                 "../assets/Compressed/Environment_Skybox_AO.ctexture"
             ],
             "mesh": "../assets/compiled_geom/Skybox.geom",
             "texturerefid": [
+                437536649,
+                3522280818,
+                1686346496,
+                1590588887,
                 5760,
-                5487,
-                5760,
-                5828,
-                5760,
-                5014
+                1467793003
             ]
         }
     },
@@ -4835,12 +4835,12 @@
             ],
             "mesh": "../assets/compiled_geom/Wall.geom",
             "texturerefid": [
-                5684,
-                5411,
-                5605,
-                5752,
-                5631,
-                4938
+                3520767871,
+                1971810656,
+                3162252486,
+                706921733,
+                4007260036,
+                3914208681
             ]
         }
     },
@@ -5189,67 +5189,6 @@
         },
         "prefab": {
             "prefab": "FloorCollider"
-        }
-    },
-    {
-        "entityid": 86,
-        "general": {
-            "name": "River",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 10.0,
-                "y": 13.599743843078613,
-                "z": 10.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": -117.5999984741211,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -4.062328815460205,
-                "y": -5.014279842376709,
-                "z": -20.844581604003906
-            }
-        },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 2863,
-            "instancecolor": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "bloomthreshold": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0,
-                "w": 1.0
-            },
-            "materialinstance": [
-                "../assets/Compressed/Environment_Data_River_BaseColor.ctexture",
-                "../assets/Compressed/Environment_Data_River_Normal.ctexture",
-                "../assets/Compressed/Environment_Data_River_Roughness.ctexture",
-                "../assets/Compressed/Environment_Data_River_Roughness.ctexture",
-                "../assets/Compressed/Environment_Data_River_BaseColor.ctexture",
-                "../assets/Compressed/Environment_Data_River_AO.ctexture"
-            ],
-            "mesh": "../assets/compiled_geom/Data_River.geom",
-            "texturerefid": [
-                6113,
-                5840,
-                6181,
-                6181,
-                6113,
-                5367
-            ]
         }
     },
     {
@@ -9135,10 +9074,10 @@
             ],
             "mesh": "../assets/compiled_geom/Gun.geom",
             "texturerefid": [
-                4245,
-                3877,
-                4071,
-                4218,
+                561120090,
+                236381020,
+                3720350570,
+                2134634497,
                 0,
                 0
             ]
@@ -10438,12 +10377,12 @@
             ],
             "mesh": "../assets/compiled_geom/Buildings.geom",
             "texturerefid": [
-                5934,
-                5661,
-                5855,
-                6002,
-                5881,
-                5188
+                1395914091,
+                3964270660,
+                2601670354,
+                3573518473,
+                4080969704,
+                170474421
             ]
         }
     },
@@ -10604,33 +10543,11 @@
                 "z": 25.0881290435791
             },
             "size": {
-                "x": 1133,
-                "y": 692
+                "x": 1212,
+                "y": 639
             },
             "near": 0.10000000149011612,
             "far": 900.0
-        },
-        "healthbar": {
-            "healthcolor": {
-                "x": 0.0,
-                "y": 1.0,
-                "z": 0.0,
-                "w": 1.0
-            },
-            "backcolor": {
-                "x": 1.0,
-                "y": 0.0,
-                "z": 0.0,
-                "w": 1.0
-            },
-            "position": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "maxhealth": 200.0,
-            "width": 0.0,
-            "height": 0.0
         }
     },
     {
@@ -10740,19 +10657,19 @@
             "materialinstance": [
                 "../assets/Compressed/Environment_Floor_BaseColor.ctexture",
                 "../assets/Compressed/Environment_Floor_Normal.ctexture",
-                "../assets/Compressed/Environment_Floor_Emissive.ctexture",
+                "../assets/Compressed/Environment_Floor_Metallic.ctexture",
                 "../assets/Compressed/Environment_Floor_Roughness.ctexture",
                 "../assets/Compressed/Environment_Floor_Emissive.ctexture",
                 "../assets/Compressed/Environment_Floor_AO.ctexture"
             ],
             "mesh": "../assets/compiled_geom/Floor.geom",
             "texturerefid": [
-                5634,
-                5361,
-                5581,
-                5702,
-                5581,
-                4888
+                3328846373,
+                226459590,
+                1496144460,
+                2618591275,
+                2137330394,
+                18602567
             ]
         }
     },
