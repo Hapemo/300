@@ -611,14 +611,6 @@ void GraphicsSystem::Draw(float dt, bool forEditor)
 
 		DrawAllPortals(forEditor);	// Draw Portal object
 
-		// Render UI objects
-		m_UiShaderInst.Activate();		// Activate shader
-		DrawAll2DInstances(m_UiShaderInst.GetHandle());
-		GFX::Shader::Deactivate();	// Deactivate shader
-
-		if (ENABLE_CROSSHAIR_IN_EDITOR_SCENE || !forEditor)
-			DrawCrosshair();	// Render crosshair, if any
-
 		// Healthbar objects
 		auto healthbarInstances = systemManager->ecs->GetEntitiesWith<Healthbar>();
 		for (Entity inst : healthbarInstances)
@@ -631,6 +623,14 @@ void GraphicsSystem::Draw(float dt, bool forEditor)
 		m_HealthbarMesh.PrepForDraw();
 		DrawAllHealthbarInstance(camVP);
 		m_HealthbarMesh.ClearInstances();	// Clear data
+
+		// Render UI objects
+		m_UiShaderInst.Activate();		// Activate shader
+		DrawAll2DInstances(m_UiShaderInst.GetHandle());
+		GFX::Shader::Deactivate();	// Deactivate shader
+
+		if (ENABLE_CROSSHAIR_IN_EDITOR_SCENE || !forEditor)
+			DrawCrosshair();	// Render crosshair, if any
 	}
 
 	// Post Processing Chromatic Abberation and CRT
@@ -1653,8 +1653,10 @@ void GraphicsSystem::DrawAll2DInstances(unsigned shaderID)
 	// Bind 2D quad VAO
 	m_Image2DMesh.BindVao();
 
+	glDepthMask(GL_FALSE);
 	// Draw call for UI
 	glDrawArraysInstanced(GL_TRIANGLE_FAN, 0, 4, static_cast<GLsizei>(m_Image2DMesh.mLTW.size()));
+	glDepthMask(GL_TRUE);
 
 	// Unbind 2D quad VAO
 	m_Image2DMesh.UnbindVao();
