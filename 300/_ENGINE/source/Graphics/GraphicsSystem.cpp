@@ -181,13 +181,16 @@ void GraphicsSystem::Update(float dt)
 		{
 			Animator& animatorInst	= inst.GetComponent<Animator>();
 
-			// handles the change of mesh when called in the scripts
-			float lAllowance = animatorInst.mAnimator.m_CurrentAnimation->m_TicksPerSecond * dt;
-			if (animatorInst.mAnimator.mToChangeMeshDelayed.first && (animatorInst.mAnimator.m_CurrentTime <= lAllowance))
+			if (animatorInst.mAnimator.m_CurrentAnimation != nullptr)
 			{
-				// the mesh change delayed flag is set and the animation is completed, change the mesh
-				animatorInst.mAnimator.mToChangeMeshDelayed.first = false;
-				meshRenderer.SetMesh(animatorInst.mAnimator.mToChangeMeshDelayed.second, inst);
+				// handles the change of mesh when called in the scripts
+				float lAllowance = animatorInst.mAnimator.m_CurrentAnimation->m_TicksPerSecond * dt;
+				if (animatorInst.mAnimator.mToChangeMeshDelayed.first && (animatorInst.mAnimator.m_CurrentTime <= lAllowance))
+				{
+					// the mesh change delayed flag is set and the animation is completed, change the mesh
+					animatorInst.mAnimator.mToChangeMeshDelayed.first = false;
+					meshRenderer.SetMesh(animatorInst.mAnimator.mToChangeMeshDelayed.second, inst);
+				}
 			}
 		}
 
