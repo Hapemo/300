@@ -45,6 +45,9 @@ void main()
 	if (texIndex >= 0)
 		outColor = texture(uTex2d[texIndex], fTexCoords);
 	outColor = outColor * fColor;
+	
+	if (outColor.a < 0.1)
+		discard;
 
 	// Gamma correction
     float gamma = 2.2;
