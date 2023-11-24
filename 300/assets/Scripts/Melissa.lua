@@ -23,7 +23,7 @@ local spawnMelissa = false      -- This should be rng, might or might not spawn 
 local notBelow50Yet
 local AttackOnce = false
 
-local deathTimer = 2
+local deathTimer = 0.1
 local deathTimerCount
 
 local state
