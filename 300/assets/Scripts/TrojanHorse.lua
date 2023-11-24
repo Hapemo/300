@@ -22,6 +22,9 @@ local this
 local deathTimer = 2
 local deathTimerCount
 
+local spawnSoldierFrequency = 0.6
+local spawnSoldierCounter = 0
+
 local state
 -- Trojan horse states
 -- 1. ROAM. roam around and passively look for player (change to 2. when sees player)
@@ -57,7 +60,7 @@ function Update()
 
     -- OTHER UPDATE CODES
     if systemManager:mInputActionSystem():GetButtonDown("Test2") then
-        this:GetHealthbar().health = this:GetHealthbar().health - 10
+        this:GetHealthbar().health = this:GetHealthbar().health - 100
     end
 
     -- STATE MACHINE
@@ -112,8 +115,16 @@ function Update()
             ROAMInit()
         end
     elseif state == "DEATH" then
-        deathTimerCount = deathTimerCount + FPSManager.GetDT()
-        if deathTimerCount > deathTimer then systemManager.ecs:SetDeleteEntity(this) end
+        -- spawning soldier
+        local dt = FPSManager.GetDT()
+        spawnSoldierCounter = spawnSoldierCounter + dt
+        deathTimerCount = deathTimerCount + dt
+
+        if spawnSoldierCounter > spawnSoldierFrequency then
+            spawnSoldierCounter = 0
+            SpawnSoldier()
+        end
+        if deathTimerCount > deathTimer then Die() end
         return
     end
     -- END STATE MACHINE
@@ -199,6 +210,19 @@ function StartDeath()
     -- Start death animation
     -- Start death sound
     state = "DEATH"
-    gameStateSys:GetEntity("EnemyDeath"):GetAudio():SetPlay()
     
+end
+
+function Die()
+    systemManager.ecs:SetDeleteEntity(this)
+    gameStateSys:GetEntity("EnemyDeath"):GetAudio():SetPlay()
+end
+
+function SpawnSoldier()
+    local position = Helper.Vec3Add(this:GetTransform().mTranslate, this:GetBoxCollider().mTranslateOffset)
+    local velocity = Helper.Scale(RandDirectionXZ(), 15)
+    velocity.y = 24
+    
+    local soldier = systemManager.ecs:NewEntityFromPrefab("TrojanSoldier", position)
+    phySys:SetVelocity(soldier, velocity)
 end
