@@ -58,7 +58,7 @@
         },
         "materialinstance": [
             "../assets/Compressed/ZipBomb_BaseColor.ctexture",
-            "../assets/Compressed/Cube_Texture_White.ctexture",
+            "../assets/Compressed/ZipBomb_Normal.ctexture",
             "../assets/Compressed/ZipBomb_Metallic.ctexture",
             "../assets/Compressed/ZipBomb_Roughness.ctexture",
             "../assets/Compressed/ZipBomb_Emissive.ctexture",
@@ -66,12 +66,12 @@
         ],
         "mesh": "../assets/compiled_geom/ZipBomb.geom",
         "texturerefid": [
-            4543,
-            4706,
-            4464,
-            4611,
-            4490,
-            3797
+            2348069524,
+            1319533521,
+            2095937491,
+            2888612446,
+            3155337405,
+            2357914544
         ]
     },
     "boxcollider": {
