@@ -334,7 +334,6 @@ function Update()
     viewVec = Camera_Scripting.GetDirection(cameraEntity)
     viewVecCam = Camera_Scripting.GetDirection(cameraEntity)
     rotationCam = Camera_Scripting.GetDirection(cameraEntity)
-    viewVec.y = 0;
     viewVec = Helper.Normalize(viewVec)
 
     movement.x = 0;
