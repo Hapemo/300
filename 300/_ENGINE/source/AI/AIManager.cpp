@@ -9,7 +9,7 @@
 #define Rubberbanding 1
 #define QUICKFIX 1
 
-#define IGNORETAGS { "ENEMY", "GRAPH", "BULLET", "UI", "OTHERS" }
+#define IGNORETAGS { "GRAPH", "BULLET", "UI", "OTHERS" }
 
 const std::array<std::string, static_cast<size_t>(E_MOVEMENT_TYPE::SIZE)> AIManager::mMovementTypeArray{ MovementTypeArrayInit() };
 
