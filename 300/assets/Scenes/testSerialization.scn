@@ -1,611 +1,5 @@
 [
     {
-        "entityid": 1,
-        "general": {
-            "name": "WallCollider",
-            "tagid": 4,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 16.100000381469727,
-                "y": 7.999867916107178,
-                "z": 1.100000023841858
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 90.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -11.436036109924316,
-                "y": -7.166136741638184,
-                "z": 16.82908821105957
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 0,
-            "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": true,
-                "y": true,
-                "z": false
-            },
-            "gravity": true
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "translateoffset": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "istrigger": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "WallCollider"
-        }
-    },
-    {
-        "entityid": 2,
-        "general": {
-            "name": "WallCollider",
-            "tagid": 4,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.999967098236084,
-                "z": 2.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 90.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -19.020572662353516,
-                "y": -8.259827613830566,
-                "z": 22.5748233795166
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 0,
-            "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": true,
-                "y": true,
-                "z": false
-            },
-            "gravity": true
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "translateoffset": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "istrigger": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "WallCollider"
-        }
-    },
-    {
-        "entityid": 3,
-        "general": {
-            "name": "Light",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -110.29932403564453,
-                "y": -26.0,
-                "z": 28.603710174560547
-            }
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Light"
-        },
-        "pointlight": {
-            "lightcolor": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "linearfalloff": 0.0,
-            "quadraticfalloff": 0.0,
-            "intensity": 5.0
-        }
-    },
-    {
-        "entityid": 4,
-        "general": {
-            "name": "Light",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": -26.0,
-                "z": -89.33705139160156
-            }
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Light"
-        },
-        "pointlight": {
-            "lightcolor": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "linearfalloff": 0.0,
-            "quadraticfalloff": 0.0,
-            "intensity": 5.0
-        }
-    },
-    {
-        "entityid": 5,
-        "general": {
-            "name": "Light",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 61.0,
-                "z": -87.8730239868164
-            }
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Light"
-        },
-        "pointlight": {
-            "lightcolor": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "linearfalloff": 0.0,
-            "quadraticfalloff": 0.0,
-            "intensity": 1.0
-        }
-    },
-    {
-        "entityid": 6,
-        "general": {
-            "name": "Light",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 26.48050308227539,
-                "y": 61.6864013671875,
-                "z": 180.6772918701172
-            }
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Light"
-        },
-        "pointlight": {
-            "lightcolor": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "linearfalloff": 0.0,
-            "quadraticfalloff": 0.0,
-            "intensity": 1.0
-        }
-    },
-    {
-        "entityid": 7,
-        "general": {
-            "name": "FloorCollider",
-            "tagid": 3,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.100000023841858,
-                "y": 1.0,
-                "z": 8.399999618530273
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -0.33703911304473877,
-                "y": -2.6500000953674316,
-                "z": 12.861167907714844
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 0,
-            "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": true,
-                "y": true,
-                "z": false
-            },
-            "gravity": true
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "translateoffset": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "istrigger": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "FloorCollider"
-        }
-    },
-    {
-        "entityid": 8,
-        "general": {
-            "name": "WallCollider",
-            "tagid": 4,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 3.999946117401123,
-                "z": 7.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 90.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 3.8666343688964844,
-                "y": -4.507038116455078,
-                "z": 53.80929183959961
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 0,
-            "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": true,
-                "y": true,
-                "z": false
-            },
-            "gravity": true
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "translateoffset": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "istrigger": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "WallCollider"
-        }
-    },
-    {
-        "entityid": 9,
-        "general": {
-            "name": "FloorCollider",
-            "tagid": 3,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 6.699999809265137,
-                "y": 1.0,
-                "z": 3.9000000953674316
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -12.120686531066895,
-                "y": -10.096835136413574,
-                "z": 39.93299865722656
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 0,
-            "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": true,
-                "y": true,
-                "z": false
-            },
-            "gravity": true
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "translateoffset": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "istrigger": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "FloorCollider"
-        }
-    },
-    {
-        "entityid": 10,
-        "general": {
-            "name": "WallCollider",
-            "tagid": 4,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 9.5,
-                "y": 4.099544525146484,
-                "z": 1.100000023841858
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 90.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 13.80747127532959,
-                "y": -9.538000106811523,
-                "z": -1.6936240196228027
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 0,
-            "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": true,
-                "y": true,
-                "z": false
-            },
-            "gravity": true
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "translateoffset": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "istrigger": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "WallCollider"
-        }
-    },
-    {
-        "entityid": 11,
-        "general": {
-            "name": "WallCollider",
-            "tagid": 4,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 14.0,
-                "z": 31.09999656677246
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 57.099998474121094,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -17.094242095947266,
-                "y": -4.458000183105469,
-                "z": 65.59600830078125
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 0,
-            "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": true,
-                "y": true,
-                "z": false
-            },
-            "gravity": true
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "translateoffset": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "istrigger": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "WallCollider"
-        }
-    },
-    {
         "entityid": 12,
         "general": {
             "name": "FloorTexture",
@@ -5216,43 +4610,6 @@
     {
         "entityid": 86,
         "general": {
-            "name": "BGM",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "M3BGM.wav",
-            "fullpath": "../assets\\Audio/M3BGM.wav",
-            "playonawake": true,
-            "islooping": true,
-            "audiotype": 1,
-            "volume": 0.4000000059604645,
-            "retainaudio": false
-        }
-    },
-    {
-        "entityid": 87,
-        "general": {
             "name": "WallCollider",
             "tagid": 4,
             "subtag": 0,
@@ -5313,7 +4670,7 @@
         }
     },
     {
-        "entityid": 88,
+        "entityid": 87,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -5412,7 +4769,7 @@
         }
     },
     {
-        "entityid": 90,
+        "entityid": 88,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -5474,7 +4831,7 @@
         }
     },
     {
-        "entityid": 91,
+        "entityid": 89,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -5536,7 +4893,7 @@
         }
     },
     {
-        "entityid": 92,
+        "entityid": 90,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -5598,7 +4955,7 @@
         }
     },
     {
-        "entityid": 93,
+        "entityid": 91,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -5660,7 +5017,7 @@
         }
     },
     {
-        "entityid": 94,
+        "entityid": 92,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -5722,7 +5079,7 @@
         }
     },
     {
-        "entityid": 95,
+        "entityid": 93,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -5784,7 +5141,7 @@
         }
     },
     {
-        "entityid": 96,
+        "entityid": 94,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -5846,7 +5203,7 @@
         }
     },
     {
-        "entityid": 97,
+        "entityid": 95,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -5908,7 +5265,7 @@
         }
     },
     {
-        "entityid": 98,
+        "entityid": 96,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -5970,7 +5327,7 @@
         }
     },
     {
-        "entityid": 99,
+        "entityid": 97,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -6032,7 +5389,7 @@
         }
     },
     {
-        "entityid": 100,
+        "entityid": 98,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -6094,7 +5451,7 @@
         }
     },
     {
-        "entityid": 101,
+        "entityid": 99,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -6156,7 +5513,7 @@
         }
     },
     {
-        "entityid": 102,
+        "entityid": 100,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -6218,7 +5575,7 @@
         }
     },
     {
-        "entityid": 103,
+        "entityid": 101,
         "general": {
             "name": "Light",
             "tagid": 0,
@@ -6255,7 +5612,7 @@
         }
     },
     {
-        "entityid": 104,
+        "entityid": 102,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -6317,7 +5674,7 @@
         }
     },
     {
-        "entityid": 105,
+        "entityid": 103,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -6379,7 +5736,7 @@
         }
     },
     {
-        "entityid": 106,
+        "entityid": 104,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -6441,7 +5798,7 @@
         }
     },
     {
-        "entityid": 107,
+        "entityid": 105,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -6503,7 +5860,7 @@
         }
     },
     {
-        "entityid": 108,
+        "entityid": 106,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -6565,7 +5922,7 @@
         }
     },
     {
-        "entityid": 109,
+        "entityid": 107,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -6627,7 +5984,7 @@
         }
     },
     {
-        "entityid": 110,
+        "entityid": 108,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -6689,7 +6046,7 @@
         }
     },
     {
-        "entityid": 111,
+        "entityid": 109,
         "general": {
             "name": "Light",
             "tagid": 0,
@@ -6889,7 +6246,7 @@
         }
     },
     {
-        "entityid": 115,
+        "entityid": 110,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -6951,7 +6308,7 @@
         }
     },
     {
-        "entityid": 116,
+        "entityid": 111,
         "general": {
             "name": "Skybox",
             "tagid": 0,
@@ -7074,7 +6431,7 @@
         }
     },
     {
-        "entityid": 118,
+        "entityid": 112,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -7136,7 +6493,7 @@
         }
     },
     {
-        "entityid": 122,
+        "entityid": 113,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -7198,7 +6555,7 @@
         }
     },
     {
-        "entityid": 127,
+        "entityid": 114,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -7260,7 +6617,7 @@
         }
     },
     {
-        "entityid": 128,
+        "entityid": 115,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -7322,7 +6679,7 @@
         }
     },
     {
-        "entityid": 129,
+        "entityid": 116,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -7384,7 +6741,7 @@
         }
     },
     {
-        "entityid": 130,
+        "entityid": 117,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -7446,7 +6803,7 @@
         }
     },
     {
-        "entityid": 131,
+        "entityid": 118,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -7508,7 +6865,7 @@
         }
     },
     {
-        "entityid": 132,
+        "entityid": 119,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -7570,7 +6927,7 @@
         }
     },
     {
-        "entityid": 133,
+        "entityid": 120,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -7632,7 +6989,7 @@
         }
     },
     {
-        "entityid": 134,
+        "entityid": 121,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -7694,7 +7051,7 @@
         }
     },
     {
-        "entityid": 135,
+        "entityid": 122,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -7756,7 +7113,7 @@
         }
     },
     {
-        "entityid": 136,
+        "entityid": 123,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -7818,7 +7175,7 @@
         }
     },
     {
-        "entityid": 137,
+        "entityid": 124,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -7880,7 +7237,7 @@
         }
     },
     {
-        "entityid": 138,
+        "entityid": 125,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -7942,7 +7299,7 @@
         }
     },
     {
-        "entityid": 139,
+        "entityid": 126,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -8004,7 +7361,7 @@
         }
     },
     {
-        "entityid": 140,
+        "entityid": 127,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -8066,7 +7423,7 @@
         }
     },
     {
-        "entityid": 141,
+        "entityid": 128,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -8128,7 +7485,7 @@
         }
     },
     {
-        "entityid": 142,
+        "entityid": 129,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -8190,7 +7547,7 @@
         }
     },
     {
-        "entityid": 143,
+        "entityid": 130,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -8252,7 +7609,7 @@
         }
     },
     {
-        "entityid": 144,
+        "entityid": 131,
         "general": {
             "name": "",
             "tagid": 0,
@@ -8314,7 +7671,7 @@
         }
     },
     {
-        "entityid": 145,
+        "entityid": 132,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -8376,7 +7733,7 @@
         }
     },
     {
-        "entityid": 146,
+        "entityid": 133,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -8438,7 +7795,7 @@
         }
     },
     {
-        "entityid": 147,
+        "entityid": 134,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -8500,7 +7857,7 @@
         }
     },
     {
-        "entityid": 148,
+        "entityid": 135,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -8562,7 +7919,7 @@
         }
     },
     {
-        "entityid": 149,
+        "entityid": 136,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -8624,7 +7981,7 @@
         }
     },
     {
-        "entityid": 150,
+        "entityid": 137,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -8686,7 +8043,7 @@
         }
     },
     {
-        "entityid": 151,
+        "entityid": 138,
         "general": {
             "name": "Dash",
             "tagid": 0,
@@ -8785,7 +8142,7 @@
         }
     },
     {
-        "entityid": 153,
+        "entityid": 139,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -8847,7 +8204,7 @@
         }
     },
     {
-        "entityid": 154,
+        "entityid": 140,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -8909,7 +8266,7 @@
         }
     },
     {
-        "entityid": 155,
+        "entityid": 141,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -8971,7 +8328,7 @@
         }
     },
     {
-        "entityid": 156,
+        "entityid": 142,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -9033,7 +8390,7 @@
         }
     },
     {
-        "entityid": 157,
+        "entityid": 143,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -9095,7 +8452,7 @@
         }
     },
     {
-        "entityid": 158,
+        "entityid": 144,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -9157,7 +8514,7 @@
         }
     },
     {
-        "entityid": 159,
+        "entityid": 145,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -9219,7 +8576,7 @@
         }
     },
     {
-        "entityid": 160,
+        "entityid": 146,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -9281,7 +8638,7 @@
         }
     },
     {
-        "entityid": 161,
+        "entityid": 147,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -9343,7 +8700,7 @@
         }
     },
     {
-        "entityid": 162,
+        "entityid": 148,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -9405,7 +8762,7 @@
         }
     },
     {
-        "entityid": 163,
+        "entityid": 149,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -9417,7 +8774,73 @@
             "scale": {
                 "x": 4.800000190734863,
                 "y": 1.0,
-                "z": 3.9000000953674316
+                "z": 0.25
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": -75.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.5,
+                "y": -0.6499999761581421,
+                "z": -0.5471169948577881
+            }
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 2168,
+            "instancecolor": {
+                "x": 0.0569700188934803,
+                "y": 0.22790546715259552,
+                "z": 0.7076271176338196,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 0.25,
+                "y": 0.25,
+                "z": 0.25,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Gun_Base_Color.ctexture",
+                "../assets/Compressed/Gun_Normal.ctexture",
+                "../assets/Compressed/Gun_Metallic.ctexture",
+                "../assets/Compressed/Gun_Roughness.ctexture",
+                " ",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/Gun.geom",
+            "texturerefid": [
+                561120090,
+                236381020,
+                3720350570,
+                2134634497,
+                0,
+                0
+            ]
+        },
+        "parent": {
+            "prevsibling": 149,
+            "nextsibling": 149,
+            "parent": 172
+        }
+    },
+    {
+        "entityid": 150,
+        "general": {
+            "name": "WallCollider",
+            "tagid": 4,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 3.9999024868011475,
+                "z": 15.0
             },
             "rotate": {
                 "x": 0.0,
@@ -9467,7 +8890,7 @@
         }
     },
     {
-        "entityid": 164,
+        "entityid": 151,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -9529,7 +8952,7 @@
         }
     },
     {
-        "entityid": 165,
+        "entityid": 152,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -9591,7 +9014,7 @@
         }
     },
     {
-        "entityid": 166,
+        "entityid": 153,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -9653,7 +9076,7 @@
         }
     },
     {
-        "entityid": 167,
+        "entityid": 154,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -9715,7 +9138,7 @@
         }
     },
     {
-        "entityid": 168,
+        "entityid": 155,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -9777,7 +9200,7 @@
         }
     },
     {
-        "entityid": 169,
+        "entityid": 156,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -9900,7 +9323,7 @@
         }
     },
     {
-        "entityid": 171,
+        "entityid": 157,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -9962,7 +9385,7 @@
         }
     },
     {
-        "entityid": 172,
+        "entityid": 158,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -10024,7 +9447,7 @@
         }
     },
     {
-        "entityid": 173,
+        "entityid": 159,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -10086,7 +9509,7 @@
         }
     },
     {
-        "entityid": 174,
+        "entityid": 160,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -10148,7 +9571,7 @@
         }
     },
     {
-        "entityid": 175,
+        "entityid": 161,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -10210,7 +9633,7 @@
         }
     },
     {
-        "entityid": 176,
+        "entityid": 162,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -10272,7 +9695,7 @@
         }
     },
     {
-        "entityid": 177,
+        "entityid": 163,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -10334,7 +9757,7 @@
         }
     },
     {
-        "entityid": 178,
+        "entityid": 164,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -10396,7 +9819,7 @@
         }
     },
     {
-        "entityid": 179,
+        "entityid": 165,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -10458,7 +9881,7 @@
         }
     },
     {
-        "entityid": 180,
+        "entityid": 166,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -10520,7 +9943,7 @@
         }
     },
     {
-        "entityid": 181,
+        "entityid": 167,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -10582,7 +10005,7 @@
         }
     },
     {
-        "entityid": 182,
+        "entityid": 168,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -10644,7 +10067,7 @@
         }
     },
     {
-        "entityid": 183,
+        "entityid": 169,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -10706,7 +10129,7 @@
         }
     },
     {
-        "entityid": 184,
+        "entityid": 170,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -10726,9 +10149,70 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 2.298870325088501,
-                "y": -8.633484840393066,
-                "z": 16.215999603271484
+                "x": -0.8410000205039978,
+                "y": -4.129000186920166,
+                "z": -0.11599999666213989
+            }
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 2799,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Environment_Building_BaseColor.ctexture",
+                "../assets/Compressed/Environment_Building_Normal.ctexture",
+                "../assets/Compressed/Environment_Building_Metallic.ctexture",
+                "../assets/Compressed/Environment_Building_Roughness.ctexture",
+                "../assets/Compressed/Environment_Building_Emissive.ctexture",
+                "../assets/Compressed/Environment_Building_AO.ctexture"
+            ],
+            "mesh": "../assets/compiled_geom/Buildings.geom",
+            "texturerefid": [
+                1395914091,
+                3964270660,
+                2601670354,
+                3573518473,
+                4080969704,
+                170474421
+            ]
+        }
+    },
+    {
+        "entityid": 171,
+        "general": {
+            "name": "WallCollider",
+            "tagid": 4,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 4.099741458892822,
+                "z": 2.200000047683716
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 90.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 7.248220443725586,
+                "y": -9.529999732971191,
+                "z": -5.8944091796875
             }
         },
         "rigidbody": {
@@ -10768,7 +10252,7 @@
         }
     },
     {
-        "entityid": 185,
+        "entityid": 172,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -10823,14 +10307,70 @@
             "istrigger": false
         },
         "scripts": {
-            "scriptscontainer": []
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/Player.lua",
+                    "variables": []
+                }
+            ]
         },
-        "prefab": {
-            "prefab": "FloorCollider"
+        "children": {
+            "numchildren": 1,
+            "firstchild": 149
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Player_Movement_Walk.wav",
+            "fullpath": "../assets\\Audio/Player_Movement_Walk.wav",
+            "playonawake": true,
+            "islooping": true,
+            "audiotype": 1,
+            "volume": 0.0,
+            "retainaudio": false
+        },
+        "camera": {
+            "positon": {
+                "x": 16.721782684326172,
+                "y": -10.399999618530273,
+                "z": 26.061573028564453
+            },
+            "target": {
+                "x": 16.500673294067383,
+                "y": -10.340696334838867,
+                "z": 25.0881290435791
+            },
+            "size": {
+                "x": 1212,
+                "y": 639
+            },
+            "near": 0.10000000149011612,
+            "far": 900.0
+        },
+        "healthbar": {
+            "healthcolor": {
+                "x": 0.0,
+                "y": 1.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "backcolor": {
+                "x": 1.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "maxhealth": 200.0,
+            "width": 0.0,
+            "height": 0.0
         }
     },
     {
-        "entityid": 186,
+        "entityid": 173,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -10892,7 +10432,7 @@
         }
     },
     {
-        "entityid": 187,
+        "entityid": 174,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -10954,7 +10494,7 @@
         }
     },
     {
-        "entityid": 188,
+        "entityid": 175,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -11016,7 +10556,7 @@
         }
     },
     {
-        "entityid": 189,
+        "entityid": 176,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -11078,7 +10618,7 @@
         }
     },
     {
-        "entityid": 190,
+        "entityid": 177,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -11140,7 +10680,7 @@
         }
     },
     {
-        "entityid": 191,
+        "entityid": 178,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -11202,7 +10742,7 @@
         }
     },
     {
-        "entityid": 4194423,
+        "entityid": 179,
         "general": {
             "name": "Revolver Bullet",
             "tagid": 10,
@@ -11358,7 +10898,689 @@
             ]
         },
         "prefab": {
-            "prefab": "Revolver Bullet"
+            "prefab": "FloorCollider"
+        }
+    },
+    {
+        "entityid": 1048577,
+        "general": {
+            "name": "WallCollider",
+            "tagid": 4,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 5.599999904632568,
+                "y": 5.999866962432861,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 90.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 11.820798873901367,
+                "y": -5.489930629730225,
+                "z": 30.458864212036133
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": true,
+                "z": false
+            },
+            "gravity": true
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "WallCollider"
+        }
+    },
+    {
+        "entityid": 1048578,
+        "general": {
+            "name": "WallCollider",
+            "tagid": 4,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 8.999963760375977,
+                "z": 11.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 90.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 1.634887456893921,
+                "y": -7.614455223083496,
+                "z": 14.873629570007324
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": true,
+                "z": false
+            },
+            "gravity": true
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "WallCollider"
+        }
+    },
+    {
+        "entityid": 1048579,
+        "general": {
+            "name": "FloorCollider",
+            "tagid": 3,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 2.9000000953674316,
+                "y": 1.0,
+                "z": 2.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 2.298870325088501,
+                "y": -8.633484840393066,
+                "z": 16.215999603271484
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": true,
+                "z": false
+            },
+            "gravity": true
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "FloorCollider"
+        }
+    },
+    {
+        "entityid": 1048580,
+        "general": {
+            "name": "FloorCollider",
+            "tagid": 3,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.7999999523162842,
+                "y": 1.0,
+                "z": 2.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 1.899854063987732,
+                "y": -8.128841400146484,
+                "z": 16.215999603271484
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": true,
+                "z": false
+            },
+            "gravity": true
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "FloorCollider"
+        }
+    },
+    {
+        "entityid": 1048581,
+        "general": {
+            "name": "FloorCollider",
+            "tagid": 3,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 2.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 1.3258320093154907,
+                "y": -7.618856430053711,
+                "z": 16.215999603271484
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": true,
+                "z": false
+            },
+            "gravity": true
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "FloorCollider"
+        }
+    },
+    {
+        "entityid": 1048582,
+        "general": {
+            "name": "FloorCollider",
+            "tagid": 3,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 7.800000190734863,
+                "y": 1.0,
+                "z": 2.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 4.682832717895508,
+                "y": -11.193281173706055,
+                "z": 31.454547882080078
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": true,
+                "z": false
+            },
+            "gravity": true
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "FloorCollider"
+        }
+    },
+    {
+        "entityid": 1048583,
+        "general": {
+            "name": "FloorCollider",
+            "tagid": 3,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 6.800000190734863,
+                "y": 1.0,
+                "z": 2.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 4.214742660522461,
+                "y": -10.678777694702148,
+                "z": 31.454999923706055
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": true,
+                "z": false
+            },
+            "gravity": true
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "FloorCollider"
+        }
+    },
+    {
+        "entityid": 1048584,
+        "general": {
+            "name": "FloorCollider",
+            "tagid": 3,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 5.800000190734863,
+                "y": 1.0,
+                "z": 2.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 3.7632393836975098,
+                "y": -10.153380393981934,
+                "z": 31.454999923706055
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": true,
+                "z": false
+            },
+            "gravity": true
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "FloorCollider"
+        }
+    },
+    {
+        "entityid": 1048585,
+        "general": {
+            "name": "FloorCollider",
+            "tagid": 3,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 4.699999809265137,
+                "y": 1.0,
+                "z": 2.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 3.330770254135132,
+                "y": -9.653153419494629,
+                "z": 31.454999923706055
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": true,
+                "z": false
+            },
+            "gravity": true
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "FloorCollider"
+        }
+    },
+    {
+        "entityid": 1048586,
+        "general": {
+            "name": "FloorCollider",
+            "tagid": 3,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 3.799999952316284,
+                "y": 1.0,
+                "z": 2.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 2.8164544105529785,
+                "y": -9.13916301727295,
+                "z": 31.454999923706055
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": true,
+                "z": false
+            },
+            "gravity": true
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "FloorCollider"
+        }
+    },
+    {
+        "entityid": 1048587,
+        "general": {
+            "name": "WallCollider",
+            "tagid": 4,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.999967098236084,
+                "z": 2.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 90.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -19.020572662353516,
+                "y": -8.259827613830566,
+                "z": 22.5748233795166
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": true,
+                "z": false
+            },
+            "gravity": true
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "WallCollider"
         }
     }
 ]

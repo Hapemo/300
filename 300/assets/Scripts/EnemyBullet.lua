@@ -1,6 +1,7 @@
 
 local phySys
 local this
+local damage = 10
 
 local startingVec
 local lifeTime -- in seconds
@@ -38,8 +39,8 @@ function OnTriggerEnter(Entity)
     if (tagid == 0 and tagid == 3 and tagid == 4 and tagid == 5) then --Things the bullet can hit - "PLAYER", "FLOOR", "WALL", "TELEPORTER"
         BulletHit()
         if (tagid == 0) then 
-            -- TODO, Decrease player health here, when player got hit by bomb
-            print("player hit by enemy bullet!")
+            -- Decrease player health here, when player got hit bullet
+            Entity:GetHealthbar().health = Entity:GetHealthbar().health - damage
         end
     end
 end

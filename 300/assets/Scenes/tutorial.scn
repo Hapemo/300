@@ -1,815 +1,6 @@
 [
     {
-        "entityid": 4194407,
-        "general": {
-            "name": "BGM",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "M3BGM.wav",
-            "fullpath": "../assets\\Audio/M3BGM.wav",
-            "playonawake": true,
-            "islooping": true,
-            "audiotype": 0,
-            "volume": 0.4000000059604645,
-            "retainaudio": false
-        }
-    },
-    {
-        "entityid": 4194441,
-        "general": {
-            "name": "TutorialStairs",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 5.0,
-                "y": 1.2000000476837158,
-                "z": 3.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 16.221302032470703,
-                "y": 2.4173386096954346,
-                "z": -8.555999755859375
-            }
-        },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 3232,
-            "instancecolor": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "bloomthreshold": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "materialinstance": [
-                "../assets/Compressed/Tutorial_Cube_BaseColor.ctexture",
-                "../assets/Compressed/Tutorial_Cube_Normal.ctexture",
-                "../assets/Compressed/Tutorial_Cube_Metallic.ctexture",
-                "../assets/Compressed/Tutorial_Cube_Roughness.ctexture",
-                "../assets/Compressed/Tutorial_Cube_Emissive.ctexture",
-                "../assets/Compressed/Temp_Tutorial_Cube_AO.ctexture"
-            ],
-            "mesh": "../assets/compiled_geom/Tutorial_cube.geom",
-            "texturerefid": [
-                5182,
-                4909,
-                5103,
-                5250,
-                5129,
-                4937
-            ]
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Tutorial Stairs"
-        }
-    },
-    {
-        "entityid": 4194442,
-        "general": {
-            "name": "TutorialStairs",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.2000000476837158,
-                "z": 3.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 14.272543907165527,
-                "y": 5.356723308563232,
-                "z": -8.565999984741211
-            }
-        },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 3232,
-            "instancecolor": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "bloomthreshold": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "materialinstance": [
-                "../assets/Compressed/Tutorial_Cube_BaseColor.ctexture",
-                "../assets/Compressed/Tutorial_Cube_Normal.ctexture",
-                "../assets/Compressed/Tutorial_Cube_Metallic.ctexture",
-                "../assets/Compressed/Tutorial_Cube_Roughness.ctexture",
-                "../assets/Compressed/Tutorial_Cube_Emissive.ctexture",
-                "../assets/Compressed/Temp_Tutorial_Cube_AO.ctexture"
-            ],
-            "mesh": "../assets/compiled_geom/Tutorial_cube.geom",
-            "texturerefid": [
-                5182,
-                4909,
-                5103,
-                5250,
-                5129,
-                4937
-            ]
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Tutorial Stairs"
-        }
-    },
-    {
-        "entityid": 4194443,
-        "general": {
-            "name": "WallCollider",
-            "tagid": 4,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 5.0,
-                "z": 9.395000457763672
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 37.159358978271484,
-                "y": 3.383317708969116,
-                "z": -0.0519106388092041
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 0,
-            "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": true,
-                "y": true,
-                "z": false
-            },
-            "gravity": true
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "translateoffset": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "istrigger": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "WallCollider"
-        }
-    },
-    {
-        "entityid": 4194444,
-        "general": {
-            "name": "Obstacle",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 3.0,
-                "y": 6.0,
-                "z": 3.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 22.676084518432617,
-                "y": 0.6460000276565552,
-                "z": 0.0
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 0,
-            "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": false,
-                "y": false,
-                "z": false
-            },
-            "gravity": true
-        },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 3232,
-            "instancecolor": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "bloomthreshold": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "materialinstance": [
-                "../assets/Compressed/Tutorial_Cube_BaseColor.ctexture",
-                "../assets/Compressed/Tutorial_Cube_Normal.ctexture",
-                "../assets/Compressed/Tutorial_Cube_Metallic.ctexture",
-                "../assets/Compressed/Tutorial_Cube_Roughness.ctexture",
-                "../assets/Compressed/Tutorial_Cube_Emissive.ctexture",
-                "../assets/Compressed/Temp_Tutorial_Cube_AO.ctexture"
-            ],
-            "mesh": "../assets/compiled_geom/Tutorial_cube.geom",
-            "texturerefid": [
-                5182,
-                4909,
-                5103,
-                5250,
-                5129,
-                4937
-            ]
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "translateoffset": {
-                "x": 0.0,
-                "y": 2.799999952316284,
-                "z": 0.0
-            },
-            "istrigger": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Obstacle"
-        }
-    },
-    {
-        "entityid": 4194445,
-        "general": {
-            "name": "Obstacle",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 3.0,
-                "y": 6.0,
-                "z": 3.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 17.32114028930664,
-                "y": 0.6460000276565552,
-                "z": 0.0
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 0,
-            "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": true,
-                "y": false,
-                "z": false
-            },
-            "gravity": true
-        },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 3232,
-            "instancecolor": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "bloomthreshold": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "materialinstance": [
-                "../assets/Compressed/Tutorial_Cube_BaseColor.ctexture",
-                "../assets/Compressed/Tutorial_Cube_Normal.ctexture",
-                "../assets/Compressed/Tutorial_Cube_Metallic.ctexture",
-                "../assets/Compressed/Tutorial_Cube_Roughness.ctexture",
-                "../assets/Compressed/Tutorial_Cube_Emissive.ctexture",
-                "../assets/Compressed/Temp_Tutorial_Cube_AO.ctexture"
-            ],
-            "mesh": "../assets/compiled_geom/Tutorial_cube.geom",
-            "texturerefid": [
-                5182,
-                4909,
-                5103,
-                5250,
-                5129,
-                4937
-            ]
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "translateoffset": {
-                "x": 0.0,
-                "y": 2.9000000953674316,
-                "z": 0.0
-            },
-            "istrigger": false
-        },
-        "prefab": {
-            "prefab": "Obstacle"
-        }
-    },
-    {
-        "entityid": 4194446,
-        "general": {
-            "name": "TutorialCube",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 15.0,
-                "y": 8.0,
-                "z": 15.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 3232,
-            "instancecolor": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "bloomthreshold": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "materialinstance": [
-                "../assets/Compressed/Tutorial_Cube_BaseColor.ctexture",
-                "../assets/Compressed/Tutorial_Cube_Normal.ctexture",
-                "../assets/Compressed/Tutorial_Cube_Metallic.ctexture",
-                "../assets/Compressed/Tutorial_Cube_Roughness.ctexture",
-                "../assets/Compressed/Tutorial_Cube_Emissive.ctexture",
-                "../assets/Compressed/Temp_Tutorial_Cube_AO.ctexture"
-            ],
-            "mesh": "../assets/compiled_geom/Tutorial_cube.geom",
-            "texturerefid": [
-                5182,
-                4909,
-                5103,
-                5250,
-                5129,
-                4937
-            ]
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Tutorial Cube"
-        }
-    },
-    {
-        "entityid": 4194447,
-        "general": {
-            "name": "TutorialCube",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 296.29998779296875,
-                "y": 173.8000030517578,
-                "z": 221.8000030517578
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 895.5999755859375,
-                "y": 4.900000095367432,
-                "z": -8.565999984741211
-            }
-        },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 3232,
-            "instancecolor": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "bloomthreshold": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "materialinstance": [
-                "../assets/Compressed/Tutorial_Cube_BaseColor.ctexture",
-                "../assets/Compressed/Tutorial_Cube_Normal.ctexture",
-                "../assets/Compressed/Tutorial_Cube_Metallic.ctexture",
-                "../assets/Compressed/Tutorial_Cube_Roughness.ctexture",
-                "../assets/Compressed/Tutorial_Cube_Emissive.ctexture",
-                "../assets/Compressed/Temp_Tutorial_Cube_AO.ctexture"
-            ],
-            "mesh": "../assets/compiled_geom/Tutorial_cube.geom",
-            "texturerefid": [
-                5182,
-                4909,
-                5103,
-                5250,
-                5129,
-                4937
-            ]
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Tutorial Cube"
-        }
-    },
-    {
-        "entityid": 4194448,
-        "general": {
-            "name": "FloorCollider",
-            "tagid": 3,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 64.5999984741211,
-                "y": 2.0,
-                "z": 23.100000381469727
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 22.607999801635742,
-                "y": 1.2000000476837158,
-                "z": 0.0
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 0,
-            "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": true,
-                "y": true,
-                "z": false
-            },
-            "gravity": true
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "translateoffset": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "istrigger": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "FloorCollider"
-        }
-    },
-    {
-        "entityid": 4194449,
-        "general": {
-            "name": "WallCollider",
-            "tagid": 4,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 5.0,
-                "z": 9.390999794006348
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 46.92625427246094,
-                "y": 3.9895660877227783,
-                "z": -0.045664578676223755
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 0,
-            "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": true,
-                "y": true,
-                "z": false
-            },
-            "gravity": true
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "translateoffset": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "istrigger": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "WallCollider"
-        }
-    },
-    {
-        "entityid": 4194450,
-        "general": {
-            "name": "WallCollider",
-            "tagid": 4,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 5.0,
-                "z": 21.899999618530273
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 13.315999984741211,
-                "y": 4.150853157043457,
-                "z": 0.7859470844268799
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 0,
-            "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": true,
-                "y": true,
-                "z": false
-            },
-            "gravity": true
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "translateoffset": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "istrigger": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "WallCollider"
-        }
-    },
-    {
-        "entityid": 4194451,
-        "general": {
-            "name": "TutorialStairs",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 6.5,
-                "y": 1.2000000476837158,
-                "z": 3.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 16.974510192871094,
-                "y": 1.4572784900665283,
-                "z": -8.556200981140137
-            }
-        },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 3232,
-            "instancecolor": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "bloomthreshold": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "materialinstance": [
-                "../assets/Compressed/Tutorial_Cube_BaseColor.ctexture",
-                "../assets/Compressed/Tutorial_Cube_Normal.ctexture",
-                "../assets/Compressed/Tutorial_Cube_Metallic.ctexture",
-                "../assets/Compressed/Tutorial_Cube_Roughness.ctexture",
-                "../assets/Compressed/Tutorial_Cube_Emissive.ctexture",
-                "../assets/Compressed/Temp_Tutorial_Cube_AO.ctexture"
-            ],
-            "mesh": "../assets/compiled_geom/Tutorial_cube.geom",
-            "texturerefid": [
-                5182,
-                4909,
-                5103,
-                5250,
-                5129,
-                4937
-            ]
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Tutorial Stairs"
-        }
-    },
-    {
-        "entityid": 4194452,
+        "entityid": 4194435,
         "general": {
             "name": "Jump",
             "tagid": 0,
@@ -846,7 +37,7 @@
         }
     },
     {
-        "entityid": 4194453,
+        "entityid": 4194436,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -908,7 +99,7 @@
         }
     },
     {
-        "entityid": 4194454,
+        "entityid": 4194437,
         "general": {
             "name": "Box2Spawn",
             "tagid": 0,
@@ -935,7 +126,7 @@
         }
     },
     {
-        "entityid": 4194455,
+        "entityid": 4194438,
         "general": {
             "name": "Gametext",
             "tagid": 0,
@@ -981,7 +172,7 @@
         }
     },
     {
-        "entityid": 4194456,
+        "entityid": 4194439,
         "general": {
             "name": "Platform",
             "tagid": 0,
@@ -1032,17 +223,17 @@
             ],
             "mesh": "../assets/compiled_geom/Tutorial_cube.geom",
             "texturerefid": [
-                5182,
-                4909,
-                5103,
-                5250,
-                5129,
-                4937
+                1065073471,
+                1690869280,
+                1749384838,
+                2264384965,
+                1718410820,
+                52255920
             ]
         }
     },
     {
-        "entityid": 4194457,
+        "entityid": 4194440,
         "general": {
             "name": "SkipTutorial",
             "tagid": 5,
@@ -1104,7 +295,7 @@
         }
     },
     {
-        "entityid": 4194458,
+        "entityid": 4194441,
         "general": {
             "name": "WASD",
             "tagid": 0,
@@ -1131,7 +322,7 @@
         },
         "uirenderer": {
             "texpath": "",
-            "textureref": 3170,
+            "textureref": 2726819873,
             "degree": 0.0,
             "color": {
                 "x": 1.0,
@@ -1144,7 +335,7 @@
         }
     },
     {
-        "entityid": 4194459,
+        "entityid": 4194442,
         "general": {
             "name": "ZXCtext",
             "tagid": 0,
@@ -1171,7 +362,7 @@
         },
         "uirenderer": {
             "texpath": "",
-            "textureref": 3278,
+            "textureref": 2530480537,
             "degree": 0.0,
             "color": {
                 "x": 1.0,
@@ -1184,7 +375,7 @@
         }
     },
     {
-        "entityid": 4194460,
+        "entityid": 4194443,
         "general": {
             "name": "Dash",
             "tagid": 0,
@@ -1221,7 +412,7 @@
         }
     },
     {
-        "entityid": 4194461,
+        "entityid": 4194444,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -1283,7 +474,7 @@
         }
     },
     {
-        "entityid": 4194462,
+        "entityid": 4194445,
         "general": {
             "name": "Light",
             "tagid": 0,
@@ -1320,7 +511,7 @@
         }
     },
     {
-        "entityid": 4194463,
+        "entityid": 4194446,
         "general": {
             "name": "TutorialStairs",
             "tagid": 0,
@@ -1371,12 +562,12 @@
             ],
             "mesh": "../assets/compiled_geom/Tutorial_cube.geom",
             "texturerefid": [
-                5182,
-                4909,
-                5103,
-                5250,
-                5129,
-                4937
+                1065073471,
+                1690869280,
+                1749384838,
+                2264384965,
+                1718410820,
+                52255920
             ]
         },
         "scripts": {
@@ -1387,7 +578,7 @@
         }
     },
     {
-        "entityid": 4194464,
+        "entityid": 4194447,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -1449,7 +640,7 @@
         }
     },
     {
-        "entityid": 4194465,
+        "entityid": 4194448,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -1511,7 +702,7 @@
         }
     },
     {
-        "entityid": 4194466,
+        "entityid": 4194449,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -1573,7 +764,69 @@
         }
     },
     {
-        "entityid": 4194496,
+        "entityid": 4194450,
+        "general": {
+            "name": "WallCollider",
+            "tagid": 4,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 15.0,
+                "z": 21.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 37.50716781616211,
+                "y": 8.23006534576416,
+                "z": -0.0000012993839391128859
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": true,
+                "z": false
+            },
+            "gravity": true
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "WallCollider"
+        }
+    },
+    {
+        "entityid": 4194451,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -1643,7 +896,7 @@
         },
         "children": {
             "numchildren": 1,
-            "firstchild": 5243044
+            "firstchild": 4194526
         },
         "audio": {
             "filepath": "",
@@ -1675,7 +928,7 @@
         }
     },
     {
-        "entityid": 4194517,
+        "entityid": 4194452,
         "general": {
             "name": "TutorialCube3",
             "tagid": 0,
@@ -1720,18 +973,18 @@
                 "../assets/Compressed/Tutorial_Cube_BaseColor.ctexture",
                 "../assets/Compressed/Tutorial_Cube_Normal.ctexture",
                 "../assets/Compressed/Tutorial_Cube_Metallic.ctexture",
-                "../assets/Compressed/Tutorial_Cube_Roughness.ctexture",
+                "../assets/Compressed/Trojan_Soldier_Roughness.ctexture",
                 "../assets/Compressed/Tutorial_Cube_Emissive.ctexture",
                 "../assets/Compressed/Temp_Tutorial_Cube_AO.ctexture"
             ],
             "mesh": "../assets/compiled_geom/Tutorial_cube.geom",
             "texturerefid": [
-                5182,
-                4909,
-                5103,
-                5250,
-                5129,
-                4937
+                1065073471,
+                1690869280,
+                1749384838,
+                1216284744,
+                1718410820,
+                52255920
             ]
         },
         "scripts": {
@@ -1742,7 +995,7 @@
         }
     },
     {
-        "entityid": 4194518,
+        "entityid": 4194453,
         "general": {
             "name": "JUMPtext",
             "tagid": 0,
@@ -1769,7 +1022,7 @@
         },
         "uirenderer": {
             "texpath": "",
-            "textureref": 3279,
+            "textureref": 2387421516,
             "degree": 0.0,
             "color": {
                 "x": 1.0,
@@ -1782,7 +1035,7 @@
         }
     },
     {
-        "entityid": 4194519,
+        "entityid": 4194455,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -1844,7 +1097,7 @@
         }
     },
     {
-        "entityid": 4194520,
+        "entityid": 4194456,
         "general": {
             "name": "TutorialCube2",
             "tagid": 0,
@@ -1895,12 +1148,12 @@
             ],
             "mesh": "../assets/compiled_geom/Tutorial_cube.geom",
             "texturerefid": [
-                5182,
-                4909,
-                5103,
-                5250,
-                5129,
-                4937
+                1065073471,
+                1690869280,
+                1749384838,
+                2264384965,
+                1718410820,
+                52255920
             ]
         },
         "scripts": {
@@ -1911,7 +1164,7 @@
         }
     },
     {
-        "entityid": 4194521,
+        "entityid": 4194457,
         "general": {
             "name": "TutorialStairs",
             "tagid": 0,
@@ -1962,12 +1215,12 @@
             ],
             "mesh": "../assets/compiled_geom/Tutorial_cube.geom",
             "texturerefid": [
-                5182,
-                4909,
-                5103,
-                5250,
-                5129,
-                4937
+                1065073471,
+                1690869280,
+                1749384838,
+                2264384965,
+                1718410820,
+                52255920
             ]
         },
         "prefab": {
@@ -1975,7 +1228,7 @@
         }
     },
     {
-        "entityid": 4194522,
+        "entityid": 4194458,
         "general": {
             "name": "Box3Spawn",
             "tagid": 0,
@@ -2002,7 +1255,7 @@
         }
     },
     {
-        "entityid": 4194523,
+        "entityid": 4194459,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -2064,7 +1317,7 @@
         }
     },
     {
-        "entityid": 4194524,
+        "entityid": 4194460,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -2126,7 +1379,7 @@
         }
     },
     {
-        "entityid": 4194525,
+        "entityid": 4194461,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -2188,7 +1441,7 @@
         }
     },
     {
-        "entityid": 4194526,
+        "entityid": 4194462,
         "general": {
             "name": "Tutorial2",
             "tagid": 5,
@@ -2250,7 +1503,7 @@
         }
     },
     {
-        "entityid": 4194527,
+        "entityid": 4194463,
         "general": {
             "name": "SkipTutorialText",
             "tagid": 0,
@@ -2277,7 +1530,7 @@
         },
         "uirenderer": {
             "texpath": "",
-            "textureref": 4126,
+            "textureref": 3583181903,
             "degree": 0.0,
             "color": {
                 "x": 1.0,
@@ -2290,7 +1543,7 @@
         }
     },
     {
-        "entityid": 4194528,
+        "entityid": 4194464,
         "general": {
             "name": "Platform",
             "tagid": 0,
@@ -2341,12 +1594,12 @@
             ],
             "mesh": "../assets/compiled_geom/Tutorial_cube.geom",
             "texturerefid": [
-                5182,
-                4909,
-                5103,
-                5250,
-                5129,
-                4937
+                1065073471,
+                1690869280,
+                1749384838,
+                2264384965,
+                1718410820,
+                52255920
             ]
         },
         "scripts": {
@@ -2357,591 +1610,7 @@
         }
     },
     {
-        "entityid": 4194529,
-        "general": {
-            "name": "Obstacle",
-            "tagid": 4,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 3.0,
-                "y": 6.0,
-                "z": 3.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 28.0310001373291,
-                "y": 0.6460000276565552,
-                "z": 0.0
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 0,
-            "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": false,
-                "y": false,
-                "z": false
-            },
-            "gravity": true
-        },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 3232,
-            "instancecolor": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "bloomthreshold": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "materialinstance": [
-                "../assets/Compressed/Tutorial_Cube_BaseColor.ctexture",
-                "../assets/Compressed/Tutorial_Cube_Normal.ctexture",
-                "../assets/Compressed/Tutorial_Cube_Metallic.ctexture",
-                "../assets/Compressed/Tutorial_Cube_Roughness.ctexture",
-                "../assets/Compressed/Tutorial_Cube_Emissive.ctexture",
-                "../assets/Compressed/Temp_Tutorial_Cube_AO.ctexture"
-            ],
-            "mesh": "../assets/compiled_geom/Tutorial_cube.geom",
-            "texturerefid": [
-                5182,
-                4909,
-                5103,
-                5250,
-                5129,
-                4937
-            ]
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "translateoffset": {
-                "x": 0.0,
-                "y": 3.0999999046325684,
-                "z": 0.0
-            },
-            "istrigger": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Obstacle"
-        }
-    },
-    {
-        "entityid": 4194530,
-        "general": {
-            "name": "WallCollider",
-            "tagid": 4,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 12.987422943115234,
-                "z": 30.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 90.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 22.315784454345703,
-                "y": 7.978496551513672,
-                "z": -10.322969436645508
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 0,
-            "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": true,
-                "y": true,
-                "z": false
-            },
-            "gravity": true
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "translateoffset": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "istrigger": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "WallCollider"
-        }
-    },
-    {
-        "entityid": 4194531,
-        "general": {
-            "name": "Tutorial",
-            "tagid": 5,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 4.099999904632568,
-                "y": 3.5999999046325684,
-                "z": 0.5
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": -87.80000305175781,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 7.166163444519043,
-                "y": 3.5999999046325684,
-                "z": -3.524075984954834
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 0,
-            "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": false,
-                "y": false,
-                "z": false
-            },
-            "gravity": true
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 0,
-            "degree": 0.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 0,
-            "worldtransform": false
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "translateoffset": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "istrigger": false
-        },
-        "prefab": {
-            "prefab": "Tutorial"
-        }
-    },
-    {
-        "entityid": 4194532,
-        "general": {
-            "name": "FloorCollider",
-            "tagid": 3,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 3.5,
-                "y": 0.30000001192092896,
-                "z": 3.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 15.477336883544922,
-                "y": 4.712577819824219,
-                "z": -8.555999755859375
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 0,
-            "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": true,
-                "y": true,
-                "z": false
-            },
-            "gravity": true
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "translateoffset": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "istrigger": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "FloorCollider"
-        }
-    },
-    {
-        "entityid": 4194533,
-        "general": {
-            "name": "Tutorialtext",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": -4.0,
-                "y": -4.0,
-                "z": 5.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 90.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 7.4154510498046875,
-                "y": 4.436999797821045,
-                "z": -3.566305637359619
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 3719,
-            "degree": 0.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 0,
-            "worldtransform": true
-        }
-    },
-    {
-        "entityid": 4194534,
-        "general": {
-            "name": "FloorCollider",
-            "tagid": 3,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 3.0,
-                "y": 0.30000001192092896,
-                "z": 3.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 22.676000595092773,
-                "y": 6.730968475341797,
-                "z": 0.0
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 0,
-            "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": true,
-                "y": true,
-                "z": false
-            },
-            "gravity": true
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "translateoffset": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "istrigger": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "FloorCollider"
-        }
-    },
-    {
-        "entityid": 5243014,
-        "general": {
-            "name": "FloorCollider",
-            "tagid": 3,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 3.0,
-                "y": 0.30000001192092896,
-                "z": 3.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 17.320999145507813,
-                "y": 6.6843109130859375,
-                "z": 0.0
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 0,
-            "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": true,
-                "y": true,
-                "z": false
-            },
-            "gravity": true
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "translateoffset": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "istrigger": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "FloorCollider"
-        }
-    },
-    {
-        "entityid": 5243043,
-        "general": {
-            "name": "FloorCollider",
-            "tagid": 3,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 3.0,
-                "y": 0.30000001192092896,
-                "z": 3.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 28.0310001373291,
-                "y": 6.726276397705078,
-                "z": 0.0
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 0,
-            "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": true,
-                "y": true,
-                "z": false
-            },
-            "gravity": true
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "translateoffset": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "istrigger": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "FloorCollider"
-        }
-    },
-    {
-        "entityid": 5243044,
-        "general": {
-            "name": "gun",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 0.25
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": -75.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.5,
-                "y": -0.6499999761581421,
-                "z": -0.7540000081062317
-            }
-        },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 2168,
-            "instancecolor": {
-                "x": 0.0569700188934803,
-                "y": 0.22790546715259552,
-                "z": 0.7076271176338196,
-                "w": 1.0
-            },
-            "bloomthreshold": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "materialinstance": [
-                "../assets/Compressed/Gun_Base_Color.ctexture",
-                "../assets/Compressed/Gun_Normal.ctexture",
-                "../assets/Compressed/Gun_Metallic.ctexture",
-                "../assets/Compressed/Gun_Roughness.ctexture",
-                " ",
-                " "
-            ],
-            "mesh": "../assets/compiled_geom/Gun.geom",
-            "texturerefid": [
-                4245,
-                3877,
-                4071,
-                4218,
-                0,
-                0
-            ]
-        },
-        "parent": {
-            "prevsibling": 5243044,
-            "nextsibling": 5243044,
-            "parent": 4194496
-        }
-    },
-    {
-        "entityid": 5243045,
+        "entityid": 4194465,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -3003,131 +1672,7 @@
         }
     },
     {
-        "entityid": 5243046,
-        "general": {
-            "name": "WallCollider",
-            "tagid": 4,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 4.999692440032959,
-                "z": 9.395000457763672
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 90.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 42.26054763793945,
-                "y": 4.043212890625,
-                "z": 4.339495658874512
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 0,
-            "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": true,
-                "y": true,
-                "z": false
-            },
-            "gravity": true
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "translateoffset": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "istrigger": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "WallCollider"
-        }
-    },
-    {
-        "entityid": 5243047,
-        "general": {
-            "name": "WallCollider",
-            "tagid": 4,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 4.999793529510498,
-                "z": 9.395000457763672
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 90.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 42.25162887573242,
-                "y": 4.0926032066345215,
-                "z": -5.241100311279297
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 0,
-            "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": true,
-                "y": true,
-                "z": false
-            },
-            "gravity": true
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "translateoffset": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "istrigger": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "WallCollider"
-        }
-    },
-    {
-        "entityid": 5243048,
+        "entityid": 4194466,
         "general": {
             "name": "Gametext",
             "tagid": 0,
@@ -3170,7 +1715,7 @@
         }
     },
     {
-        "entityid": 5243049,
+        "entityid": 4194467,
         "general": {
             "name": "Game",
             "tagid": 5,
@@ -3232,7 +1777,7 @@
         }
     },
     {
-        "entityid": 5243050,
+        "entityid": 4194468,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -3294,7 +1839,7 @@
         }
     },
     {
-        "entityid": 5243051,
+        "entityid": 4194469,
         "general": {
             "name": "BulletShoot",
             "tagid": 0,
@@ -3331,7 +1876,7 @@
         }
     },
     {
-        "entityid": 5243052,
+        "entityid": 4194470,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -3393,7 +1938,7 @@
         }
     },
     {
-        "entityid": 5243053,
+        "entityid": 4194471,
         "general": {
             "name": "TutorialCube",
             "tagid": 0,
@@ -3444,12 +1989,12 @@
             ],
             "mesh": "../assets/compiled_geom/Tutorial_cube.geom",
             "texturerefid": [
-                5182,
-                4909,
-                5103,
-                5250,
-                5129,
-                4937
+                1065073471,
+                1690869280,
+                1749384838,
+                2264384965,
+                1718410820,
+                52255920
             ]
         },
         "scripts": {
@@ -3460,7 +2005,7 @@
         }
     },
     {
-        "entityid": 7340167,
+        "entityid": 4194472,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -3522,7 +2067,69 @@
         }
     },
     {
-        "entityid": 10485888,
+        "entityid": 4194474,
+        "general": {
+            "name": "WallCollider",
+            "tagid": 4,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 4.999692440032959,
+                "z": 9.395000457763672
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 90.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 42.26054763793945,
+                "y": 4.043212890625,
+                "z": 4.339495658874512
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": true,
+                "z": false
+            },
+            "gravity": true
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "WallCollider"
+        }
+    },
+    {
+        "entityid": 4194475,
         "general": {
             "name": "bullet",
             "tagid": 0,
@@ -3679,6 +2286,1461 @@
         },
         "prefab": {
             "prefab": "bullet"
+        }
+    },
+    {
+        "entityid": 4194484,
+        "general": {
+            "name": "Tutorial",
+            "tagid": 5,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 4.099999904632568,
+                "y": 3.5999999046325684,
+                "z": 0.5
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": -87.80000305175781,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 7.166163444519043,
+                "y": 3.5999999046325684,
+                "z": -3.524075984954834
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": false,
+                "y": false,
+                "z": false
+            },
+            "gravity": true
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 0,
+            "degree": 0.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 0,
+            "worldtransform": false
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "prefab": {
+            "prefab": "Tutorial"
+        }
+    },
+    {
+        "entityid": 4194491,
+        "general": {
+            "name": "TutorialStairs",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 6.5,
+                "y": 1.2000000476837158,
+                "z": 3.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 16.974510192871094,
+                "y": 1.4572784900665283,
+                "z": -8.556200981140137
+            }
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3232,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Tutorial_Cube_BaseColor.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Normal.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Metallic.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Roughness.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Emissive.ctexture",
+                "../assets/Compressed/Temp_Tutorial_Cube_AO.ctexture"
+            ],
+            "mesh": "../assets/compiled_geom/Tutorial_cube.geom",
+            "texturerefid": [
+                1065073471,
+                1690869280,
+                1749384838,
+                2264384965,
+                1718410820,
+                52255920
+            ]
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Tutorial Stairs"
+        }
+    },
+    {
+        "entityid": 4194510,
+        "general": {
+            "name": "Obstacle",
+            "tagid": 4,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 3.0,
+                "y": 6.0,
+                "z": 3.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 28.0310001373291,
+                "y": 0.6460000276565552,
+                "z": 0.0
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": false,
+                "y": false,
+                "z": false
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3232,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Tutorial_Cube_BaseColor.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Normal.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Metallic.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Roughness.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Emissive.ctexture",
+                "../assets/Compressed/Temp_Tutorial_Cube_AO.ctexture"
+            ],
+            "mesh": "../assets/compiled_geom/Tutorial_cube.geom",
+            "texturerefid": [
+                1065073471,
+                1690869280,
+                1749384838,
+                2264384965,
+                1718410820,
+                52255920
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 3.0999999046325684,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Obstacle"
+        }
+    },
+    {
+        "entityid": 4194518,
+        "general": {
+            "name": "FloorCollider",
+            "tagid": 3,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 3.5,
+                "y": 0.30000001192092896,
+                "z": 3.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 15.477336883544922,
+                "y": 4.712577819824219,
+                "z": -8.555999755859375
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": true,
+                "z": false
+            },
+            "gravity": true
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "FloorCollider"
+        }
+    },
+    {
+        "entityid": 4194519,
+        "general": {
+            "name": "Tutorialtext",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": -4.0,
+                "y": -4.0,
+                "z": 5.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 90.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 7.4154510498046875,
+                "y": 4.436999797821045,
+                "z": -3.566305637359619
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 4259092790,
+            "degree": 0.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 0,
+            "worldtransform": true
+        }
+    },
+    {
+        "entityid": 4194520,
+        "general": {
+            "name": "FloorCollider",
+            "tagid": 3,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 3.0,
+                "y": 0.30000001192092896,
+                "z": 3.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 22.676000595092773,
+                "y": 6.730968475341797,
+                "z": 0.0
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": true,
+                "z": false
+            },
+            "gravity": true
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "FloorCollider"
+        }
+    },
+    {
+        "entityid": 4194521,
+        "general": {
+            "name": "FloorCollider",
+            "tagid": 3,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 3.0,
+                "y": 0.30000001192092896,
+                "z": 3.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 17.320999145507813,
+                "y": 6.6843109130859375,
+                "z": 0.0
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": true,
+                "z": false
+            },
+            "gravity": true
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "FloorCollider"
+        }
+    },
+    {
+        "entityid": 4194522,
+        "general": {
+            "name": "FloorCollider",
+            "tagid": 3,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 3.0,
+                "y": 0.30000001192092896,
+                "z": 3.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 28.0310001373291,
+                "y": 6.726276397705078,
+                "z": 0.0
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": true,
+                "z": false
+            },
+            "gravity": true
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "FloorCollider"
+        }
+    },
+    {
+        "entityid": 4194523,
+        "general": {
+            "name": "WallCollider",
+            "tagid": 4,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 12.987422943115234,
+                "z": 30.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 90.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 22.315784454345703,
+                "y": 7.978496551513672,
+                "z": -10.322969436645508
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": true,
+                "z": false
+            },
+            "gravity": true
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "WallCollider"
+        }
+    },
+    {
+        "entityid": 4194524,
+        "general": {
+            "name": "WallCollider",
+            "tagid": 4,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 4.999793529510498,
+                "z": 9.395000457763672
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 90.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 42.25162887573242,
+                "y": 4.0926032066345215,
+                "z": -5.241100311279297
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": true,
+                "z": false
+            },
+            "gravity": true
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "WallCollider"
+        }
+    },
+    {
+        "entityid": 4194525,
+        "general": {
+            "name": "WallCollider",
+            "tagid": 4,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 5.0,
+                "z": 21.899999618530273
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 13.315999984741211,
+                "y": 4.150853157043457,
+                "z": 0.7859470844268799
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": true,
+                "z": false
+            },
+            "gravity": true
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "WallCollider"
+        }
+    },
+    {
+        "entityid": 4194526,
+        "general": {
+            "name": "gun",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 0.25
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": -75.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.5,
+                "y": -0.6499999761581421,
+                "z": -0.7540000081062317
+            }
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 2168,
+            "instancecolor": {
+                "x": 0.0569700188934803,
+                "y": 0.22790546715259552,
+                "z": 0.7076271176338196,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Gun_Base_Color.ctexture",
+                "../assets/Compressed/Gun_Normal.ctexture",
+                "../assets/Compressed/Gun_Metallic.ctexture",
+                "../assets/Compressed/Gun_Roughness.ctexture",
+                " ",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/Gun.geom",
+            "texturerefid": [
+                561120090,
+                236381020,
+                3720350570,
+                2134634497,
+                0,
+                0
+            ]
+        },
+        "parent": {
+            "prevsibling": 4194526,
+            "nextsibling": 4194526,
+            "parent": 4194451
+        }
+    },
+    {
+        "entityid": 4194527,
+        "general": {
+            "name": "BGM",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "M3BGM.wav",
+            "fullpath": "../assets\\Audio/M3BGM.wav",
+            "playonawake": true,
+            "islooping": true,
+            "audiotype": 0,
+            "volume": 0.4000000059604645,
+            "retainaudio": false
+        }
+    },
+    {
+        "entityid": 4194528,
+        "general": {
+            "name": "WallCollider",
+            "tagid": 4,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 5.0,
+                "z": 9.390999794006348
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 46.92625427246094,
+                "y": 3.9895660877227783,
+                "z": -0.045664578676223755
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": true,
+                "z": false
+            },
+            "gravity": true
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "WallCollider"
+        }
+    },
+    {
+        "entityid": 4194529,
+        "general": {
+            "name": "FloorCollider",
+            "tagid": 3,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 64.5999984741211,
+                "y": 2.0,
+                "z": 23.100000381469727
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 22.607999801635742,
+                "y": 1.2000000476837158,
+                "z": 0.0
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": true,
+                "z": false
+            },
+            "gravity": true
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "FloorCollider"
+        }
+    },
+    {
+        "entityid": 4194530,
+        "general": {
+            "name": "TutorialStairs",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 5.0,
+                "y": 1.2000000476837158,
+                "z": 3.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 16.221302032470703,
+                "y": 2.4173386096954346,
+                "z": -8.555999755859375
+            }
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3232,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Tutorial_Cube_BaseColor.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Normal.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Metallic.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Roughness.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Emissive.ctexture",
+                "../assets/Compressed/Temp_Tutorial_Cube_AO.ctexture"
+            ],
+            "mesh": "../assets/compiled_geom/Tutorial_cube.geom",
+            "texturerefid": [
+                1065073471,
+                1690869280,
+                1749384838,
+                2264384965,
+                1718410820,
+                52255920
+            ]
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Tutorial Stairs"
+        }
+    },
+    {
+        "entityid": 4194531,
+        "general": {
+            "name": "TutorialStairs",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.2000000476837158,
+                "z": 3.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 14.272543907165527,
+                "y": 5.356723308563232,
+                "z": -8.565999984741211
+            }
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3232,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Tutorial_Cube_BaseColor.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Normal.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Metallic.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Roughness.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Emissive.ctexture",
+                "../assets/Compressed/Temp_Tutorial_Cube_AO.ctexture"
+            ],
+            "mesh": "../assets/compiled_geom/Tutorial_cube.geom",
+            "texturerefid": [
+                1065073471,
+                1690869280,
+                1749384838,
+                2264384965,
+                1718410820,
+                52255920
+            ]
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Tutorial Stairs"
+        }
+    },
+    {
+        "entityid": 4194533,
+        "general": {
+            "name": "WallCollider",
+            "tagid": 4,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 5.0,
+                "z": 9.395000457763672
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 37.159358978271484,
+                "y": 3.383317708969116,
+                "z": -0.0519106388092041
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": true,
+                "z": false
+            },
+            "gravity": true
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "WallCollider"
+        }
+    },
+    {
+        "entityid": 4194534,
+        "general": {
+            "name": "Obstacle",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 3.0,
+                "y": 6.0,
+                "z": 3.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 22.676084518432617,
+                "y": 0.6460000276565552,
+                "z": 0.0
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": false,
+                "y": false,
+                "z": false
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3232,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Tutorial_Cube_BaseColor.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Normal.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Metallic.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Roughness.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Emissive.ctexture",
+                "../assets/Compressed/Temp_Tutorial_Cube_AO.ctexture"
+            ],
+            "mesh": "../assets/compiled_geom/Tutorial_cube.geom",
+            "texturerefid": [
+                1065073471,
+                1690869280,
+                1749384838,
+                2264384965,
+                1718410820,
+                52255920
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 2.799999952316284,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Obstacle"
+        }
+    },
+    {
+        "entityid": 7340162,
+        "general": {
+            "name": "Obstacle",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 3.0,
+                "y": 6.0,
+                "z": 3.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 17.32114028930664,
+                "y": 0.6460000276565552,
+                "z": 0.0
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": false,
+                "z": false
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3232,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Tutorial_Cube_BaseColor.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Normal.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Metallic.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Roughness.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Emissive.ctexture",
+                "../assets/Compressed/Temp_Tutorial_Cube_AO.ctexture"
+            ],
+            "mesh": "../assets/compiled_geom/Tutorial_cube.geom",
+            "texturerefid": [
+                1065073471,
+                1690869280,
+                1749384838,
+                2264384965,
+                1718410820,
+                52255920
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 2.9000000953674316,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "prefab": {
+            "prefab": "Obstacle"
+        }
+    },
+    {
+        "entityid": 8388777,
+        "general": {
+            "name": "TutorialCube",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 15.0,
+                "y": 8.0,
+                "z": 15.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3232,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Tutorial_Cube_BaseColor.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Normal.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Metallic.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Roughness.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Emissive.ctexture",
+                "../assets/Compressed/Temp_Tutorial_Cube_AO.ctexture"
+            ],
+            "mesh": "../assets/compiled_geom/Tutorial_cube.geom",
+            "texturerefid": [
+                1065073471,
+                1690869280,
+                1749384838,
+                2264384965,
+                1718410820,
+                52255920
+            ]
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Tutorial Cube"
+        }
+    },
+    {
+        "entityid": 8388836,
+        "general": {
+            "name": "TutorialCube",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 296.29998779296875,
+                "y": 173.8000030517578,
+                "z": 221.8000030517578
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 895.5999755859375,
+                "y": 4.900000095367432,
+                "z": -8.565999984741211
+            }
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3232,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Tutorial_Cube_BaseColor.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Normal.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Metallic.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Roughness.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Emissive.ctexture",
+                "../assets/Compressed/Temp_Tutorial_Cube_AO.ctexture"
+            ],
+            "mesh": "../assets/compiled_geom/Tutorial_cube.geom",
+            "texturerefid": [
+                5182,
+                4909,
+                5103,
+                5250,
+                5129,
+                4937
+            ]
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Tutorial Cube"
         }
     }
 ]

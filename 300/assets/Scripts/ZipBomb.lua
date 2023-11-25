@@ -4,6 +4,7 @@ local aiSys
 local phySys
 local gameStateSys
 local this
+local target
 
 local bobbleAngle
 local bobbleFrequency
@@ -33,6 +34,7 @@ function Alive()
     state = ""
 
     this:GetAudio():SetPlay()
+    target = this:GetAISetting():GetTarget()
 end
 
 function Update()
@@ -98,10 +100,7 @@ function Dead()
 end
 
 function OnTriggerEnter(Entity)
-    local tagid = Entity:GetGeneral().tagid
-    if (tagid == 0) then --player id
-        Kamekazi()
-    end
+    
 end
 
 function OnTrigger(Entity)
@@ -113,7 +112,9 @@ function OnTriggerExit(Entity)
 end
 
 function OnContactEnter(Entity)
-
+    if Entity == target then --player id
+        Kamekazi()
+    end
 end
 
 function OnContactExit(Entity)
