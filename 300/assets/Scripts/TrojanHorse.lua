@@ -4,10 +4,11 @@ local s1RoamVelocity    = Vec3.new()
 local roamSpeed         = 2
 local damage            = 20
 
-local s2Timer           = 0
+local s2ChargeCount     = 0
+local s2Charge          = 2
 
 local s3SprintVelocity  = Vec3.new()
-local sprintSpeed       = 6
+local sprintSpeed       = 15
 local stareDirection    = Vec3.new()
 
 local s4RestTimer       = 2
@@ -91,9 +92,9 @@ function Update()
         phySys:SetVelocity(this, Vec3.new())
 
         -- Count down 3 seconds
-        s2Timer = s2Timer + FPSManager.GetDT()
-        if s2Timer > 3 then
-            s2Timer = 0
+        s2ChargeCount = s2ChargeCount + FPSManager.GetDT()
+        if s2ChargeCount > s2Charge then
+            s2ChargeCount = 0
             SPRINTInit()
             s3SprintVelocity = Helper.Scale(Helper.Normalize(stareDirection), sprintSpeed)
             s3SprintVelocity.y = 0
@@ -180,7 +181,7 @@ function CHARGEInit()
     this:GetAudio():SetPause()
     gameStateSys:GetEntity("TrojanHorseChargeAudio"):GetAudio():SetPlay()
     state = "CHARGE"
-    s2Timer = 0
+    s2ChargeCount = 0
 end
 
 function SPRINTInit()
