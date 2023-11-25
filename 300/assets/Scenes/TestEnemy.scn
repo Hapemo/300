@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 1048616,
+        "entityid": 3145843,
         "general": {
             "name": "TrojanSoldier",
             "tagid": 1,
@@ -127,7 +127,7 @@
         }
     },
     {
-        "entityid": 1048617,
+        "entityid": 3145844,
         "general": {
             "name": "TrojanSoldier",
             "tagid": 1,
@@ -254,7 +254,7 @@
         }
     },
     {
-        "entityid": 1048618,
+        "entityid": 3145845,
         "general": {
             "name": "TrojanHorse",
             "tagid": 1,
@@ -298,7 +298,7 @@
         "meshrenderer": {
             "vert": "../assets/shader_files/pointLight_vert.glsl",
             "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 2492,
+            "meshrefid": 1817507058,
             "instancecolor": {
                 "x": 1.0,
                 "y": 1.0,
@@ -316,16 +316,16 @@
                 "../assets/Compressed/Trojan_Normal.ctexture",
                 "../assets/Compressed/Trojan_Metallic.ctexture",
                 "../assets/Compressed/Trojan_Roughness.ctexture",
-                "../assets/Compressed/Trojan_Default_Emissive.ctexture",
+                "../assets/Compressed/Trojan_Rage_Emissive.ctexture",
                 "../assets/Compressed/Trojan_AO.ctexture"
             ],
-            "mesh": "../assets/compiled_geom/Trojan.geom",
+            "mesh": "../assets/compiled_geom/Trojan05.geom",
             "texturerefid": [
                 1940192559,
                 4213568630,
                 1301958460,
                 3973318747,
-                326184372,
+                1469951046,
                 748184727
             ]
         },
@@ -395,7 +395,7 @@
         }
     },
     {
-        "entityid": 1048619,
+        "entityid": 3145846,
         "general": {
             "name": "Melissa",
             "tagid": 1,
@@ -526,7 +526,7 @@
         }
     },
     {
-        "entityid": 1048620,
+        "entityid": 3145847,
         "general": {
             "name": "ILOVEYOU",
             "tagid": 1,
@@ -657,7 +657,7 @@
         }
     },
     {
-        "entityid": 1048621,
+        "entityid": 3145848,
         "general": {
             "name": "ZipBomb",
             "tagid": 1,
@@ -798,7 +798,7 @@
         }
     },
     {
-        "entityid": 1048622,
+        "entityid": 3145849,
         "general": {
             "name": "TrojanSoldier",
             "tagid": 1,
@@ -925,7 +925,7 @@
         }
     },
     {
-        "entityid": 1048623,
+        "entityid": 3145850,
         "general": {
             "name": "EnemyDeathAudio",
             "tagid": 8,
@@ -968,7 +968,7 @@
         }
     },
     {
-        "entityid": 1048624,
+        "entityid": 3145851,
         "general": {
             "name": "ZipBombFuseAudio",
             "tagid": 0,
@@ -1011,7 +1011,7 @@
         }
     },
     {
-        "entityid": 1048625,
+        "entityid": 3145852,
         "general": {
             "name": "TrojanHorseChargeAudio",
             "tagid": 0,
