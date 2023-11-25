@@ -233,8 +233,6 @@ Entity ECS::NewEntityFromPrefab(std::string prefabName, const glm::vec3& pos)
 
 	if (e.HasComponent<RigidBody>())
 		systemManager->mPhysicsSystem->AddEntity(e);
-	if (e.HasComponent<AISetting>())
-		systemManager->mAISystem->InitialiseAI(e);
 	return e;
 }
 

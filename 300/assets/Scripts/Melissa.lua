@@ -59,6 +59,7 @@ function Update()
 
     if systemManager:mInputActionSystem():GetButtonDown("Test1") then
         this:GetHealthbar().health = this:GetHealthbar().health - 10
+        print(aiSys:GetAICount())
     end
 
     this:GetTransform().mRotate.y = Helper.DirectionToAngle(this, direction)
