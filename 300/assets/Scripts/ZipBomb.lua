@@ -39,9 +39,9 @@ end
 
 function Update()
 
-    if systemManager:mInputActionSystem():GetButtonDown("Test4") then
-        this:GetHealthbar().health = this:GetHealthbar().health - 10
-    end
+    -- if systemManager:mInputActionSystem():GetButtonDown("Test4") then
+    --     this:GetHealthbar().health = this:GetHealthbar().health - 10
+    -- end
 
     --#region Movement
     vec = aiSys:GetDirection(this)

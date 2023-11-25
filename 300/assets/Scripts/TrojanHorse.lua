@@ -63,9 +63,9 @@ end
 function Update()
 
     -- OTHER UPDATE CODES
-    if systemManager:mInputActionSystem():GetButtonDown("Test2") then
-        this:GetHealthbar().health = this:GetHealthbar().health - 100
-    end
+    -- if systemManager:mInputActionSystem():GetButtonDown("Test2") then
+    --     this:GetHealthbar().health = this:GetHealthbar().health - 100
+    -- end
 
     -- STATE MACHINE
     if state == "ROAM" then         -- roam around and passively look for player (change to 2. when sees player)
