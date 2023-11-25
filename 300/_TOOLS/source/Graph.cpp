@@ -264,11 +264,11 @@ ALGraph& ALGraph::operator=(ALGraph const& _graph) {
   }
 
   // Link the edges (Expecting distance to be copied over properly
-  for (int adjCount{}; adjCount < mData.size(); ++adjCount) {
+  for (size_t adjCount{}; adjCount < mData.size(); ++adjCount) {
     std::vector<Edge>& thisEdges = mData[adjCount].edges;
     std::vector<Edge>const& thatEdges = _graph.mData[adjCount].edges;
 
-    for (int edgeCount{}; edgeCount < thatEdges.size(); ++edgeCount) {
+    for (size_t edgeCount{}; edgeCount < thatEdges.size(); ++edgeCount) {
       glm::vec3 const& neighborPoint = thatEdges[edgeCount].vertex->point;
       thisEdges[edgeCount].vertex = nullptr;
       // Find adjList with same point
