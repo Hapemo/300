@@ -15,7 +15,7 @@
 #define ADDITEMARR_E_MOVEMENT_TYPE(x) arr[static_cast<int>(E_MOVEMENT_TYPE::x)] = #x;
 
 #define MAX_DECISECOND_PLAYER_HISTORY 30
-#define PLAYER_NAME "Player"
+#define PLAYER_NAME "Camera"
 
 enum class E_MOVEMENT_TYPE : char {
 	BEGIN,

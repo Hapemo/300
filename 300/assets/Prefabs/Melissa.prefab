@@ -1,8 +1,8 @@
 {
-    "entityid": 187,
+    "entityid": 1048619,
     "general": {
         "name": "Melissa",
-        "tagid": 0,
+        "tagid": 1,
         "subtag": 0,
         "isActive": true,
         "isPaused": false
@@ -38,7 +38,7 @@
             "y": false,
             "z": false
         },
-        "gravity": false
+        "gravity": true
     },
     "meshrenderer": {
         "vert": "../assets/shader_files/pointLight_vert.glsl",
@@ -66,23 +66,23 @@
         ],
         "mesh": "../assets/compiled_geom/Melissa.geom",
         "texturerefid": [
-            4570,
-            4297,
-            4491,
-            4638,
-            4517,
-            3824
+            1322168031,
+            1820887936,
+            2908106086,
+            2866962469,
+            2759371044,
+            2018461449
         ]
     },
     "boxcollider": {
         "scaleoffset": {
             "x": 0.800000011920929,
-            "y": 0.699999988079071,
+            "y": 1.0,
             "z": 0.699999988079071
         },
         "translateoffset": {
             "x": 0.0,
-            "y": 0.800000011920929,
+            "y": 0.699999988079071,
             "z": -0.20000000298023224
         },
         "istrigger": false

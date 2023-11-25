@@ -164,7 +164,6 @@ function Alive()
     
     dashui = gameStateSys:GetEntityByScene("dashui" , "UI")
 
-
     bulletAudioEntity = gameStateSys:GetEntity("Bullet Shoot" )
     bulletAudioComp = bulletAudioEntity:GetAudio()
 

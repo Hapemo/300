@@ -45,6 +45,9 @@ public:
 
 	// Checks for entities inbetween 2 entities
 	bool CheckEntitiesInbetween(glm::vec3 const& _p0, glm::vec3 const& _p1, std::vector<Entity> _toIgnoreEntities, std::vector<std::string> _toIgnoreTags);
+
+	// Get collider Position
+	glm::vec3 GetColliderPos(Entity _e);
 private:
 	// Resetting all the nodes and connecting the start and end node to the alGraph
 	void InitAStar(Entity _start, Entity _end, ALGraph& alGraph, AStarSetting const& aStarSetting);

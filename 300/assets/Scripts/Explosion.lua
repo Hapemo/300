@@ -3,6 +3,7 @@
 local timer
 local timerCap
 local this
+local damage = 30
 
 function Alive()
 
@@ -29,8 +30,8 @@ end
 function OnTriggerEnter(Entity)
     local tagid = Entity:GetGeneral().tagid
     if (tagid == 0) then --player id
-        -- TODO, Decrease player health here, when player got hit by bomb
-        print("player hit by explosion!")
+        -- Decrease player health here, when player got hit by bomb
+        Entity:GetHealthbar().health = Entity:GetHealthbar().health - damage
     end
 end
 

@@ -1,5 +1,5 @@
 {
-    "entityid": 5242896,
+    "entityid": 3145958,
     "general": {
         "name": "TrailParticle",
         "tagid": 8,
@@ -50,11 +50,11 @@
         ],
         "mesh": "../assets/compiled_geom/Particle_Sphere.geom",
         "texturerefid": [
-            4706,
-            5418,
-            4706,
-            4706,
-            4706,
+            2075419717,
+            1949753341,
+            2075419717,
+            2075419717,
+            2075419717,
             0
         ]
     },

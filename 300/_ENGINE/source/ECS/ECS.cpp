@@ -294,7 +294,21 @@ void ECS::EndEditPrefab(Entity e)
 {
 	ObjectFactory::SerializePrefab(e, "../assets/Prefabs/" + e.GetComponent<General>().name + ".prefab");
 	UpdatePrefabEntities(e.GetComponent<General>().name);
-	DeleteEntity(e);
+	if (static_cast<std::uint32_t>(e.id) == 0)
+	{
+		PWARNING("tried to delete entity with id 0");
+		return;
+	}
+	if (e.HasParent())
+		Entity(e.GetParent()).RemoveChild(e);
+	if (e.HasChildren())
+		for (Entity child : e.GetAllChildren())
+			e.RemoveChild(child);
+	if (e.HasComponent<Prefab>())
+		UnlinkPrefab(e);
+
+	systemManager->mPhysicsSystem->RemoveActor(e);
+	registry.destroy(e.id);
 }
 
 void ECS::EndEditPrefabNoSave(Entity e)

@@ -180,6 +180,8 @@ function Alive()
     -- -- audioComp = cameraEntity:GetAudio()
     -- dashui = gameStateSys:GetEntity("UI1")
 
+    dashui = gameStateSys:GetEntityByScene("dashui" , "tutorialUI")
+
     bulletAudioEntity = gameStateSys:GetEntity("BulletShoot")
     bulletAudioComp = bulletAudioEntity:GetAudio()
 
@@ -308,12 +310,16 @@ function Update()
     -- meshtp3:SetColor(tpcolor)
     -- meshtp4:SetColor(tpcolor)
 
-   --dashrender = dashui:GetUIrenderer()
-    -- if (dashTime > 3.0) then
-    --     dashrender:SetDegree(0)
-    -- else
-    --     dashrender:SetDegree(360 - (dashTime / 3.0) * 360)
-    -- end
+    dashui = gameStateSys:GetEntityByScene("dashui" , "tutorialUI")
+
+   dashrender = dashui:GetUIrenderer()
+    if (dashTime > 3.0) then
+        dashrender:SetDegree(0)
+        print("came here!")
+    else
+        dashrender:SetDegree(360 - (dashTime / 3.0) * 360)
+        print("came here2")
+    end
 
     -- if (tpTime <= 20.0) then  
     --     graphicsSys.mSamplingWeight = graphicsSys.mSamplingWeight - FPSManager.GetDT()
@@ -334,7 +340,6 @@ function Update()
     viewVec = Camera_Scripting.GetDirection(cameraEntity)
     viewVecCam = Camera_Scripting.GetDirection(cameraEntity)
     rotationCam = Camera_Scripting.GetDirection(cameraEntity)
-    viewVec.y = 0;
     viewVec = Helper.Normalize(viewVec)
 
     movement.x = 0;
@@ -342,7 +347,13 @@ function Update()
     movement.z = 0;
 
     if (isDashing) then
-   
+        if inittedDash == false then
+            dashX = viewVec.x
+            dashY = viewVec.y
+            dashZ = viewVec.z
+            inittedDash = true
+        end
+
         if(e_dashEffect == true)then
             dashEffect()
             dashAudioComp:SetPlay(0.4)
@@ -356,7 +367,7 @@ function Update()
 
             dashTime = 0
             isDashing = false
-           
+            inittedDash = false
         end
 
         --dashEffectEnd()
