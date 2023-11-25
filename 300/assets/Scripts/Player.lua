@@ -157,6 +157,7 @@ function Alive()
     physicsSys = systemManager:mPhysicsSystem();
     graphicsSys = systemManager:mGraphicsSystem();
     audioSys    = systemManager:mAudioSystem();
+    aiSys    = systemManager:mAISystem();
     cameraEntity = Helper.GetScriptEntity(script_entity.id)
     totaltime = 3.0
 
@@ -671,7 +672,12 @@ function Update()
 
 --endregion
 
+    print("AI Count: ")
+    print(aiSys:GetAICount())
 
+    if(aiSys:GetAICount() <= 0) then
+        gameStateSys:ChangeGameState("WinMenu")
+    end
 
 
 

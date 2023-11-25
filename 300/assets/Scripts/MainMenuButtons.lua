@@ -37,16 +37,16 @@ function Update()
     mouse_move.x = Input.CursorPos().x - centerscreen.x
     mouse_move.y = Input.CursorPos().y - centerscreen.y
 
-    print("mouse pos x: ")
-    print(mouse_move.x)
-    print("mouse pos y: ")
-    print(mouse_move.y)
+    -- print("mouse pos x: ")
+    -- print(mouse_move.x)
+    -- print("mouse pos y: ")
+    -- print(mouse_move.y)
 
-    print("width: ")
-    print(graphicsSys.m_WindowWidth)
+    -- print("width: ")
+    -- print(graphicsSys.m_WindowWidth)
 
-    print("height: ")
-    print(graphicsSys.m_WindowHeight)
+    -- print("height: ")
+    -- print(graphicsSys.m_WindowHeight)
 
     -- print("")
 
