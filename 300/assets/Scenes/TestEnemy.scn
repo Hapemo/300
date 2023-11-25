@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 3145843,
+        "entityid": 188,
         "general": {
             "name": "TrojanSoldier",
             "tagid": 1,
@@ -127,7 +127,7 @@
         }
     },
     {
-        "entityid": 3145844,
+        "entityid": 189,
         "general": {
             "name": "TrojanSoldier",
             "tagid": 1,
@@ -254,7 +254,7 @@
         }
     },
     {
-        "entityid": 3145845,
+        "entityid": 190,
         "general": {
             "name": "TrojanHorse",
             "tagid": 1,
@@ -395,7 +395,7 @@
         }
     },
     {
-        "entityid": 3145846,
+        "entityid": 191,
         "general": {
             "name": "Melissa",
             "tagid": 1,
@@ -526,7 +526,7 @@
         }
     },
     {
-        "entityid": 3145847,
+        "entityid": 192,
         "general": {
             "name": "ILOVEYOU",
             "tagid": 1,
@@ -570,7 +570,7 @@
         "meshrenderer": {
             "vert": "../assets/shader_files/pointLight_vert.glsl",
             "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 2108,
+            "meshrefid": 1383853127,
             "instancecolor": {
                 "x": 1.0,
                 "y": 0.29556649923324585,
@@ -657,7 +657,7 @@
         }
     },
     {
-        "entityid": 3145848,
+        "entityid": 193,
         "general": {
             "name": "ZipBomb",
             "tagid": 1,
@@ -798,7 +798,7 @@
         }
     },
     {
-        "entityid": 3145849,
+        "entityid": 194,
         "general": {
             "name": "TrojanSoldier",
             "tagid": 1,
@@ -925,7 +925,7 @@
         }
     },
     {
-        "entityid": 3145850,
+        "entityid": 195,
         "general": {
             "name": "EnemyDeathAudio",
             "tagid": 8,
@@ -968,7 +968,7 @@
         }
     },
     {
-        "entityid": 3145851,
+        "entityid": 196,
         "general": {
             "name": "ZipBombFuseAudio",
             "tagid": 0,
@@ -1011,7 +1011,7 @@
         }
     },
     {
-        "entityid": 3145852,
+        "entityid": 197,
         "general": {
             "name": "TrojanHorseChargeAudio",
             "tagid": 0,

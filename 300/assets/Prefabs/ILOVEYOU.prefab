@@ -1,5 +1,5 @@
 {
-    "entityid": 186,
+    "entityid": 192,
     "general": {
         "name": "ILOVEYOU",
         "tagid": 1,
@@ -43,7 +43,7 @@
     "meshrenderer": {
         "vert": "../assets/shader_files/pointLight_vert.glsl",
         "frag": "../assets/shader_files/pointLight_frag.glsl",
-        "meshrefid": 2108,
+        "meshrefid": 1383853127,
         "instancecolor": {
             "x": 1.0,
             "y": 0.29556649923324585,
