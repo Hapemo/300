@@ -185,7 +185,6 @@ end
 
 function InMeleeRange(range)
     local distance = Helper.Vec3Len(Helper.Vec3Minus(targetPos, thisPos))
-    print(distance)
     if distance < range then return true end
     return false
 end
