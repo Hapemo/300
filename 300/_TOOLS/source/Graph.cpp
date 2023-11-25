@@ -180,7 +180,7 @@ std::vector<glm::vec3>& GraphData::GetPointEdges(glm::vec3 point) {
 }
 
 std::shared_ptr<ALGraph> GraphData::MakeALGraph() {
-  std::shared_ptr<ALGraph> graphPtr = std::make_shared<ALGraph>(mData.size());
+  std::shared_ptr<ALGraph> graphPtr = std::make_shared<ALGraph>(static_cast<int>(mData.size()));
   ALGraph* graph = graphPtr.get();
 
   // Adding all the points
