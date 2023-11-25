@@ -368,7 +368,9 @@ void LuaAIManager()
         "PredictiveShootPlayer", &AIManager::PredictiveShootPlayer,
         "GetDirection", &AIManager::GetDirection,
         "ConeOfSight", &AIManager::ConeOfSight,
-        "LineOfSight", &AIManager::LineOfSight);
+        "LineOfSight", &AIManager::LineOfSight,
+        "GetAICount", &AIManager::GetAICount
+    );
 }
 
 void LuaButton()

@@ -116,6 +116,7 @@ void GameState::Unload() {
 	for (auto& scene : mScenes)
 		scene.Unload();
 	mScenes.clear();
+	systemManager->GetAIManager()->ClearAIs();
 #ifndef _EDITOR
 	// ResourceManager::GetInstance()->SelectiveUnloadAllResources();
 #endif
