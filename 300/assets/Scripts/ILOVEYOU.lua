@@ -52,9 +52,9 @@ function Update()
         return
     end
 
-    if systemManager:mInputActionSystem():GetButtonDown("Test3") then
-        this:GetHealthbar().health = this:GetHealthbar().health - 10
-    end
+    -- if systemManager:mInputActionSystem():GetButtonDown("Test3") then
+    --     this:GetHealthbar().health = this:GetHealthbar().health - 10
+    -- end
 
     targetPos = this:GetAISetting():GetTarget():GetTransform().mTranslate
     thisPos = this:GetTransform().mTranslate
@@ -140,7 +140,6 @@ end
 
 function Shoot()
     this:GetAudio():SetPlay()
-    print("shooting bullet")
     local bullet = systemManager.ecs:NewEntityFromPrefab("EnemyBullet", thisPos)
     -- local bulletVec = Helper.Scale(Helper.Normalize(Helper.Vec3Minus(targetPos, thisPos)), ShotSpeed)
     -- phySys:SetVelocity(bullet, bulletVec)

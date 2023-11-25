@@ -41,9 +41,9 @@ end
 
 function Update()
 
-    if systemManager:mInputActionSystem():GetButtonDown("Test5") then
-        this:GetHealthbar().health = this:GetHealthbar().health - 10
-    end
+    -- if systemManager:mInputActionSystem():GetButtonDown("Test5") then
+    --     this:GetHealthbar().health = this:GetHealthbar().health - 10
+    -- end
 
     if state == "DEATH" then
         deathTimerCount = deathTimerCount + FPSManager.GetDT()
@@ -56,7 +56,6 @@ function Update()
     this:GetTransform().mRotate.y = Helper.DirectionToAngle(this, this:GetRigidBody().mVelocity)
     
     if Helper.Vec3Len(this:GetRigidBody().mVelocity) < 0.1 then
-        print(this:GetRigidBody().mVelocity)
         local upVec = Vec3.new()
         upVec.y = 8
         phySys:SetVelocity(this, upVec);
