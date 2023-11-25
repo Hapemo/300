@@ -672,8 +672,8 @@ function Update()
 
 --endregion
 
-    print("AI Count: ")
-    print(aiSys:GetAICount())
+    -- print("AI Count: ")
+    -- print(aiSys:GetAICount())
 
     if(aiSys:GetAICount() <= 0) then
         gameStateSys:ChangeGameState("WinMenu")
