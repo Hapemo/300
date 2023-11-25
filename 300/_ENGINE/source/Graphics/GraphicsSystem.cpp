@@ -1653,10 +1653,8 @@ void GraphicsSystem::DrawAll2DInstances(unsigned shaderID)
 	// Bind 2D quad VAO
 	m_Image2DMesh.BindVao();
 
-	glDepthMask(GL_FALSE);
 	// Draw call for UI
 	glDrawArraysInstanced(GL_TRIANGLE_FAN, 0, 4, static_cast<GLsizei>(m_Image2DMesh.mLTW.size()));
-	glDepthMask(GL_TRUE);
 
 	// Unbind 2D quad VAO
 	m_Image2DMesh.UnbindVao();
