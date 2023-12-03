@@ -28,6 +28,7 @@
 #include <ComputeShader.hpp>
 
 #include <Graphics/PostProcessing.h>
+#include <Graphics/ParticleSystem.h>
 
 /***************************************************************************/
 /*!
@@ -377,6 +378,11 @@ private:
 	mat4 ObliqueNearPlaneClipping(mat4 proj, mat4 view, Transform const& srcPortal, Transform const& destPortal);
 	void AddPortalInstance(Entity portal);
 	void DrawAllPortals(bool editorDraw);
+
+	// -- Particles WIP --
+	ParticleEmitter m_Emitter;
+	void AddParticleInstance(Particle const& p);
+	void DrawAllParticles();
 };
 
 #endif

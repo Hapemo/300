@@ -128,6 +128,8 @@ void GraphicsSystem::Init()
 		UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_GAME, 0.f);
 	}
 
+	m_Emitter.Init(ParticleProperties());
+
 	PINFO("Window size: %d, %d", m_Window->size().x, m_Window->size().y);
 }
 
@@ -469,6 +471,20 @@ void GraphicsSystem::Update(float dt)
 	}
 	m_PortalMesh.PrepForDraw();
 
+	// ---------------- PARTICLES WIP ----------------
+	if (Input::CheckKey(E_STATE::RELEASE, E_KEY::F1))
+	{
+		m_Emitter.Emit(100);
+	}
+	// Update all particles
+	m_Emitter.Update(dt);
+	m_ParticleMesh.ClearInstances();
+	for (auto p : m_Emitter.mParticles)
+	{
+		AddParticleInstance(p);
+	}
+	m_ParticleMesh.PrepForDraw();
+
 #pragma endregion
 }
 
@@ -609,6 +625,7 @@ void GraphicsSystem::Draw(float dt, bool forEditor)
 			m_GameFbo.DrawBuffers(true);
 		}
 
+
 		DrawAllPortals(forEditor);	// Draw Portal object
 
 		// Healthbar objects
@@ -628,6 +645,8 @@ void GraphicsSystem::Draw(float dt, bool forEditor)
 		m_UiShaderInst.Activate();		// Activate shader
 		DrawAll2DInstances(m_UiShaderInst.GetHandle());
 		GFX::Shader::Deactivate();	// Deactivate shader
+
+		DrawAllParticles();
 
 		if (ENABLE_CROSSHAIR_IN_EDITOR_SCENE || !forEditor)
 			DrawCrosshair();	// Render crosshair, if any
@@ -657,6 +676,7 @@ void GraphicsSystem::Draw(float dt, bool forEditor)
 		m_PingPongFbo.UnloadAndClear();
 		glDepthMask(GL_TRUE);
 	}
+
 
 #pragma endregion
 
@@ -2057,6 +2077,40 @@ void GraphicsSystem::DrawAllPortals(bool editorDraw)
 	{
 		glBindTextureUnit(static_cast<GLuint>(i), 0);
 	}
+}
+
+void GraphicsSystem::AddParticleInstance(Particle const& p)
+{
+	mat4 world =
+	{
+		vec4(p.mCurrSize, 0.f, 0.f, 0.f),
+		vec4(0.f, p.mCurrSize, 0.f, 0.f),
+		vec4(0.f, 0.f, 1.f, 0.f),
+		vec4(p.mCurrPosition, 1.f)
+	};
+
+	m_ParticleMesh.mTexEntID.push_back(vec4(-2.f, 0.f, 0.f, 0.f));
+	m_ParticleMesh.mColors.emplace_back(p.mCurrColor);
+	m_ParticleMesh.mLTW.emplace_back(world);
+}
+
+void GraphicsSystem::DrawAllParticles()
+{
+	GFX::Camera camera = GetCamera(CAMERA_TYPE::CAMERA_TYPE_GAME);
+	if (true)
+		camera = GetCamera(CAMERA_TYPE::CAMERA_TYPE_EDITOR);
+
+	mat4 camVP = camera.viewProj();
+
+	m_ParticleMesh.BindVao();
+	m_Quad3DShaderInst.Activate();
+	glUniformMatrix4fv(m_Quad3DShaderInst.GetUniformVP(), 1, GL_FALSE, &camVP[0][0]);
+
+	glDepthFunc(GL_LEQUAL);
+	glDrawArraysInstanced(GL_TRIANGLE_FAN, 0, 4, GLsizei(m_ParticleMesh.mLTW.size()));
+
+	m_ParticleMesh.UnbindVao();
+	GFX::Shader::Deactivate();
 }
 
 void GraphicsSystem::ComputeDeferredLight(bool editorDraw)
