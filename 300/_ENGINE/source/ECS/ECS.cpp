@@ -166,6 +166,7 @@ void ECS::DeleteAllEntities()
 
 void ECS::SetDeleteEntity(Entity e)
 {
+	if (e.HasComponent<AISetting>()) systemManager->GetAIManager()->RemoveAIFromEntity(e);
 	e.GetComponent<General>().isDelete = true;
 	PINFO("Entity to be deleted: %d", (int)e.id)
 	//std::cout << "Enstity to be deleted" << (int)e.id << std::endl;
@@ -251,6 +252,8 @@ Entity ECS::NewEntityFromPrefabScene(std::string prefabName,int prefabscene, con
 
 	if (e.HasComponent<RigidBody>())
 		systemManager->mPhysicsSystem->AddEntity(e);
+	if (e.HasComponent<AISetting>())
+		systemManager->mAISystem->InitialiseAI(e);
 	return e;
 }
 
@@ -294,7 +297,21 @@ void ECS::EndEditPrefab(Entity e)
 {
 	ObjectFactory::SerializePrefab(e, "../assets/Prefabs/" + e.GetComponent<General>().name + ".prefab");
 	UpdatePrefabEntities(e.GetComponent<General>().name);
-	DeleteEntity(e);
+	if (static_cast<std::uint32_t>(e.id) == 0)
+	{
+		PWARNING("tried to delete entity with id 0");
+		return;
+	}
+	if (e.HasParent())
+		Entity(e.GetParent()).RemoveChild(e);
+	if (e.HasChildren())
+		for (Entity child : e.GetAllChildren())
+			e.RemoveChild(child);
+	if (e.HasComponent<Prefab>())
+		UnlinkPrefab(e);
+
+	systemManager->mPhysicsSystem->RemoveActor(e);
+	registry.destroy(e.id);
 }
 
 void ECS::EndEditPrefabNoSave(Entity e)

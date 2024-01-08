@@ -1,5 +1,5 @@
 {
-    "entityid": 187,
+    "entityid": 191,
     "general": {
         "name": "Melissa",
         "tagid": 1,
@@ -38,7 +38,7 @@
             "y": false,
             "z": false
         },
-        "gravity": false
+        "gravity": true
     },
     "meshrenderer": {
         "vert": "../assets/shader_files/pointLight_vert.glsl",
@@ -77,12 +77,12 @@
     "boxcollider": {
         "scaleoffset": {
             "x": 0.800000011920929,
-            "y": 0.699999988079071,
+            "y": 1.0,
             "z": 0.699999988079071
         },
         "translateoffset": {
             "x": 0.0,
-            "y": 0.800000011920929,
+            "y": 0.699999988079071,
             "z": -0.20000000298023224
         },
         "istrigger": false

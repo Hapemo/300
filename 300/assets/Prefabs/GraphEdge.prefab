@@ -1,5 +1,5 @@
 {
-    "entityid": 1048578,
+    "entityid": 224,
     "general": {
         "name": "GraphEdge",
         "tagid": 7,
@@ -9,8 +9,8 @@
     },
     "transform": {
         "scale": {
-            "x": 0.3,
-            "y": 0.3,
+            "x": 0.30000001192092896,
+            "y": 0.30000001192092896,
             "z": 10.0
         },
         "rotate": {
@@ -41,20 +41,20 @@
             "w": 1.0
         },
         "materialinstance": [
-            "../assets/Compressed/Cube_Texture_White.ctexture",
+            "../assets/Compressed/Base Color.ctexture",
             "../assets/Compressed/cube_emission.ctexture",
             " ",
             " ",
-            " ",
+            "../assets/Compressed/cube_emission.ctexture",
             " "
         ],
         "mesh": "../assets/compiled_geom/Cylinder_Arrow.geom",
         "texturerefid": [
-            4706,
-            4248,
+            1100817002,
+            3806423867,
             0,
             0,
-            0,
+            3806423867,
             0
         ]
     },

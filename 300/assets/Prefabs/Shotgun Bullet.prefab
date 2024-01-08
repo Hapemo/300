@@ -1,5 +1,5 @@
 {
-    "entityid": 1048580,
+    "entityid": 1048806,
     "general": {
         "name": "Shotgun Bullet",
         "tagid": 9,
@@ -61,7 +61,7 @@
             "../assets/Compressed/Cube_Texture_White_Normal.ctexture",
             " ",
             " ",
-            " ",
+            "../assets/Compressed/cube_emission.ctexture",
             " "
         ],
         "mesh": "../assets/compiled_geom/cube.geom",
@@ -70,7 +70,7 @@
             1949753341,
             0,
             0,
-            0,
+            3806423867,
             0
         ]
     },

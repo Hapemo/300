@@ -298,7 +298,7 @@ void PhysBasedBloomRenderer::RenderUpsamples(float filterRadius)
 	glBlendFunc(GL_ONE, GL_ONE);
 	glBlendEquation(GL_FUNC_ADD);
 
-	for (int i = mipchain.size() - 1; i > 0; --i)
+	for (size_t i = mipchain.size() - 1; i > 0; --i)
 	{
 		const BloomMip& mip = mipchain[i];
 		const BloomMip& nextMip = mipchain[i - 1];

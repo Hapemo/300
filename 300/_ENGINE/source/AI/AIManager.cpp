@@ -9,7 +9,7 @@
 #define Rubberbanding 1
 #define QUICKFIX 1
 
-#define IGNORETAGS { "ENEMY", "GRAPH", "BULLET", "UI", "OTHERS" }
+#define IGNORETAGS { "GRAPH", "BULLET", "UI", "OTHERS" }
 
 const std::array<std::string, static_cast<size_t>(E_MOVEMENT_TYPE::SIZE)> AIManager::mMovementTypeArray{ MovementTypeArrayInit() };
 
@@ -21,7 +21,7 @@ E_MOVEMENT_TYPE& operator++(E_MOVEMENT_TYPE& _enum) {
 //--------------------------------------------------
 // Public functions
 //--------------------------------------------------
-AIManager::AIManager() : mPlayerEntity(), mPlayerTransform(nullptr), mPlayerHistorySize(), mPlayerArrayIndex(0), mPlayerHistory(), mAILists() {
+AIManager::AIManager() : mPlayerEntity(), mPlayerTransform(nullptr), mPlayerHistorySize(), mPlayerArrayIndex(0), mPlayerHistory(), mAILists(), mAICount() {
 	E_MOVEMENT_TYPE i{ E_MOVEMENT_TYPE::BEGIN };
 	while (++i != E_MOVEMENT_TYPE::SIZE)
 		mAILists[mMovementTypeArray[static_cast<int>(i)]];
@@ -84,13 +84,13 @@ bool AIManager::ConeOfSight(Entity _eye, Entity _tgt, float _horizontalAngle, fl
 	if (angle > _horizontalAngle) return false;
 
 	// Checks if source can raycast to target TODO
-	if (systemManager->GetPathfinderManager()->CheckEntitiesInbetween(eyeTrans.mTranslate, tgtTrans.mTranslate, { _eye, _tgt }, IGNORETAGS)) return false;
-
-	return true;
+	return LineOfSight(_eye, _tgt);
 }
 
 bool AIManager::LineOfSight(Entity _eye, Entity _tgt) {
-	return !systemManager->GetPathfinderManager()->CheckEntitiesInbetween(_eye.GetComponent<Transform>().mTranslate, _tgt.GetComponent<Transform>().mTranslate, { _eye, _tgt }, IGNORETAGS);
+	return !systemManager->GetPathfinderManager()->CheckEntitiesInbetween(systemManager->GetPathfinderManager()->GetColliderPos(_eye), 
+																																				systemManager->GetPathfinderManager()->GetColliderPos(_tgt), 
+																																				{ _eye, _tgt }, IGNORETAGS);
 }
 
 void AIManager::TrackPlayerPosition(float _dt) {
@@ -128,6 +128,8 @@ void AIManager::InitialiseAI(Entity _e) {
 	}
 #endif
 	AISetting& setting{ _e.GetComponent<AISetting>() };
+	++mAICount;
+	std::cout << "Enemy initialised: " << _e.GetComponent<General>().name << '\n';
 	if (setting.mMovementType != E_MOVEMENT_TYPE::BEGIN)
 		mAILists[mMovementTypeArray[static_cast<int>(setting.mMovementType)]].insert(_e);
 	setting.SetTarget(systemManager->mGameStateSystem->GetEntity(setting.mTargetName));
@@ -135,8 +137,8 @@ void AIManager::InitialiseAI(Entity _e) {
 
 void AIManager::InitAIs() {
 	auto const& entities = systemManager->ecs->GetEntitiesWith<AISetting>();
-	for (auto entity : entities)
-		InitialiseAI(Entity(entity));
+	//for (auto entity : entities)
+	//	InitialiseAI(Entity(entity));
 	
 	Entity player = systemManager->GetGameStateSystem()->GetEntity(PLAYER_NAME);
 	if (player.id != entt::null) SetPlayer(player);
@@ -151,6 +153,7 @@ void AIManager::ClearAIs() {
 
 void AIManager::RemoveAIFromEntity(Entity _e) {
 	if (!_e.HasComponent<AISetting>()) return;
+	--mAICount;
 	for (auto& [listName, aiList] : mAILists) {
 		auto it = aiList.find(_e);
 		if (it != aiList.end()) 
@@ -295,13 +298,8 @@ bool AIManager::CheckUseAStar(Entity _e, AISetting const& _setting) {
 
 	Entity tgtE = _setting.GetTarget();
 
-	glm::vec3 pos = _e.GetComponent<Transform>().mTranslate;
-	if (_e.HasComponent<BoxCollider>()) pos += _e.GetComponent<BoxCollider>().mTranslateOffset;
-	else if (_e.HasComponent<BoxCollider>()) pos += _e.GetComponent<SphereCollider>().mTranslateOffset;
-
-	glm::vec3 tgt = tgtE.GetComponent<Transform>().mTranslate;
-	if (tgtE.HasComponent<BoxCollider>()) pos += tgtE.GetComponent<BoxCollider>().mTranslateOffset;
-	else if (tgtE.HasComponent<BoxCollider>()) pos += tgtE.GetComponent<SphereCollider>().mTranslateOffset;
+	glm::vec3 pos = systemManager->GetPathfinderManager()->GetColliderPos(_e);
+	glm::vec3 tgt = systemManager->GetPathfinderManager()->GetColliderPos(tgtE);
 
 	// Check initial line of sight
 	return systemManager->GetPathfinderManager()->CheckEntitiesInbetween(pos, tgt, {_e, _setting.GetTarget()}, IGNORETAGS);

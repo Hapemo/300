@@ -1,5 +1,5 @@
 {
-    "entityid": 188,
+    "entityid": 190,
     "general": {
         "name": "TrojanHorse",
         "tagid": 1,
@@ -43,7 +43,7 @@
     "meshrenderer": {
         "vert": "../assets/shader_files/pointLight_vert.glsl",
         "frag": "../assets/shader_files/pointLight_frag.glsl",
-        "meshrefid": 2492,
+        "meshrefid": 1817507058,
         "instancecolor": {
             "x": 1.0,
             "y": 1.0,
@@ -61,16 +61,16 @@
             "../assets/Compressed/Trojan_Normal.ctexture",
             "../assets/Compressed/Trojan_Metallic.ctexture",
             "../assets/Compressed/Trojan_Roughness.ctexture",
-            "../assets/Compressed/Trojan_Default_Emissive.ctexture",
+            "../assets/Compressed/Trojan_Rage_Emissive.ctexture",
             "../assets/Compressed/Trojan_AO.ctexture"
         ],
-        "mesh": "../assets/compiled_geom/Trojan.geom",
+        "mesh": "../assets/compiled_geom/Trojan05.geom",
         "texturerefid": [
             1940192559,
             4213568630,
             1301958460,
             3973318747,
-            326184372,
+            1469951046,
             748184727
         ]
     },

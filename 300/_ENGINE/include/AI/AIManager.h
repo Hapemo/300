@@ -128,7 +128,8 @@ public:
 	*******************************************************************************/
 	glm::vec3 GetDirection(Entity _e);
 
-
+	// Get the number of AI existing
+	int GetAICount() { return mAICount; }
 
 	/*!*****************************************************************************
 	Test if one entity is in the line of sight of another entity. Check if target 
@@ -239,7 +240,7 @@ private:
 	std::unordered_map<std::string, std::set<Entity>> mAILists;										// Contains the different list of AIs of different classification. string is the name of container
 
 	static const std::array<std::string, static_cast<size_t>(E_MOVEMENT_TYPE::SIZE)> mMovementTypeArray; // Contains all the name of E_MOVEMENT_TYPE
-
+	int mAICount;
 };
 
 

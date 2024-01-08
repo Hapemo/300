@@ -184,6 +184,13 @@ bool PathfinderManager::CheckEntitiesInbetween(glm::vec3 const& _p0, glm::vec3 c
 	return entitiesHit.size() != 0;
 }
 
+glm::vec3 PathfinderManager::GetColliderPos(Entity _e) {
+	glm::vec3 pos = _e.GetComponent<Transform>().mTranslate;
+	if (_e.HasComponent<BoxCollider>()) pos += _e.GetComponent<BoxCollider>().mTranslateOffset;
+	else if (_e.HasComponent<BoxCollider>()) pos += _e.GetComponent<SphereCollider>().mTranslateOffset;
+	return pos;
+}
+
 bool PathfinderManager::CheckEntitiesInbetween(glm::vec3 const& _p0, glm::vec3 const& _p1, std::vector<Entity> _toIgnoreEntities, std::vector<std::string> _toIgnoreTags, glm::vec3 size) {
 	// Compare the node and src for line of sight test and get a list of entity hit
 	glm::vec3 point1 = _p0;

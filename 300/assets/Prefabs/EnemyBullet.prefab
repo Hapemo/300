@@ -1,5 +1,5 @@
 {
-    "entityid": 2097342,
+    "entityid": 238,
     "general": {
         "name": "EnemyBullet",
         "tagid": 2,
@@ -9,9 +9,9 @@
     },
     "transform": {
         "scale": {
-            "x": 0.12000000476837158,
-            "y": 0.12000000476837158,
-            "z": 0.12000000476837158
+            "x": 0.3655588924884796,
+            "y": 0.3002619743347168,
+            "z": 0.12510916590690613
         },
         "rotate": {
             "x": 0.0,
@@ -19,9 +19,9 @@
             "z": 0.0
         },
         "translate": {
-            "x": -4.118221282958984,
-            "y": 2.4697039127349854,
-            "z": -0.2735595703125
+            "x": 9.356184005737305,
+            "y": -8.402533531188965,
+            "z": -20.574974060058594
         }
     },
     "rigidbody": {
@@ -43,11 +43,11 @@
     "meshrenderer": {
         "vert": "../assets/shader_files/pointLight_vert.glsl",
         "frag": "../assets/shader_files/pointLight_frag.glsl",
-        "meshrefid": 2285,
+        "meshrefid": 3317633099,
         "instancecolor": {
-            "x": 0.9952195286750793,
+            "x": 1.0,
             "y": 1.0,
-            "z": 0.029556632041931152,
+            "z": 1.0,
             "w": 1.0
         },
         "bloomthreshold": {
@@ -57,20 +57,20 @@
             "w": 1.0
         },
         "materialinstance": [
-            "../assets/Compressed/Cube_Texture_White.ctexture",
-            " ",
-            " ",
-            " ",
-            " ",
+            "../assets/Compressed/Heart_Projectile_BaseColor.ctexture",
+            "../assets/Compressed/Cube_Texture_White_Normal.ctexture",
+            "../assets/Compressed/Heart_Projectile_Metallic.ctexture",
+            "../assets/Compressed/Heart_Projectile_Roughness.ctexture",
+            "../assets/Compressed/Heart_Projectile_Emissive.ctexture",
             " "
         ],
-        "mesh": "../assets/compiled_geom/cube.geom",
+        "mesh": "../assets/compiled_geom/Heart_Projectile.geom",
         "texturerefid": [
-            4706,
-            0,
-            0,
-            0,
-            0,
+            3602130523,
+            1949753341,
+            370256770,
+            4094858937,
+            3477025560,
             0
         ]
     },
