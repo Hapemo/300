@@ -60,9 +60,9 @@ void main()
 
     // Performing Blending with sFactor = GL_ONE_MINUS_DST_COLOR
     // Performing Blending with dFactor = GL_ONE
-    vec3 destColor = imageLoad(Scene, uv).rgb;
-    vec3 srcFactor = vec3(1.0) - destColor;
-    color.rgb = color.rgb * srcFactor + destColor.rgb;
+        // vec3 destColor = imageLoad(Scene, uv).rgb;
+        // vec3 srcFactor = vec3(1.0) - destColor;
+        // color.rgb = color.rgb * srcFactor + destColor.rgb;
 
     if(y_coord < height) {
 		color.rgb *= 0.65;
