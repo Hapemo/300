@@ -84,6 +84,7 @@ void PostProcessing::CRTBlendFramebuffers(GFX::FBO& targetFramebuffer, GFX::Ping
 	}
 
 	// input/output texture
+	glDrawBuffer(GL_COLOR_ATTACHMENT0);
 	glBindImageTexture(1, bufferfbo.pingpongColorbuffers[1], 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
 	glBindImageTexture(0, targetFramebuffer.GetColorAttachment(), 0, GL_FALSE, 0, GL_READ_WRITE, GL_RGBA32F);
 

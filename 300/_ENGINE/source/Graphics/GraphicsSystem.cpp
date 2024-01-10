@@ -553,8 +553,10 @@ void GraphicsSystem::Draw(float dt, bool forEditor)
 	// Compute the light pass with completed G-Buffers
 	ComputeDeferredLight(forEditor);
 	
-	// Post Processing Bloom
+	//!< === POST PROCESSING AND UI AREA ===
+	if (!forEditor)
 	{
+		// Post Processing Bloom
 		glDepthMask(GL_FALSE);
 
 		if (systemManager->mGraphicsSystem->m_EnableBloom)
@@ -592,80 +594,80 @@ void GraphicsSystem::Draw(float dt, bool forEditor)
 		}
 
 		glDepthMask(GL_TRUE);
-	}
 
-	//!< UI Area
-	{
-		glEnable(GL_BLEND);			// Enable back blending for later draws
-
-		// Set blend function back to usual for UI rendering
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-		// Bind the appropriate FBO
-		if (forEditor)		// Bind Editor FBO
+		//!< UI Area
 		{
-			m_Fbo.Bind();
-			m_Fbo.DrawBuffers(true, true);
-		}
-		else				// Bind Game FBO
-		{
-			m_GameFbo.Bind();
-			m_GameFbo.DrawBuffers(true);
-		}
+			glEnable(GL_BLEND);			// Enable back blending for later draws
 
-		DrawAllPortals(forEditor);	// Draw Portal object
+			// Set blend function back to usual for UI rendering
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-		// Healthbar objects
-		auto healthbarInstances = systemManager->ecs->GetEntitiesWith<Healthbar>();
-		for (Entity inst : healthbarInstances)
-		{
-			if (forEditor)
-				AddHealthbarInstance(inst, GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR), static_cast<int>(inst.id));
-			else
-				AddHealthbarInstance(inst, GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_GAME), static_cast<int>(inst.id));
-		}
-		m_HealthbarMesh.PrepForDraw();
-		DrawAllHealthbarInstance(camVP);
-		m_HealthbarMesh.ClearInstances();	// Clear data
+			// Bind the appropriate FBO
+			if (forEditor)		// Bind Editor FBO
+			{
+				m_Fbo.Bind();
+				m_Fbo.DrawBuffers(true, true);
+			}
+			else				// Bind Game FBO
+			{
+				m_GameFbo.Bind();
+				m_GameFbo.DrawBuffers(true);
+			}
 
-		// Render UI objects
-		m_UiShaderInst.Activate();		// Activate shader
-		DrawAll2DInstances(m_UiShaderInst.GetHandle());
-		GFX::Shader::Deactivate();	// Deactivate shader
+			DrawAllPortals(forEditor);	// Draw Portal object
 
-		if (ENABLE_CROSSHAIR_IN_EDITOR_SCENE || !forEditor)
-			DrawCrosshair();	// Render crosshair, if any
-	}
+			// Healthbar objects
+			auto healthbarInstances = systemManager->ecs->GetEntitiesWith<Healthbar>();
+			for (Entity inst : healthbarInstances)
+			{
+				if (forEditor)
+					AddHealthbarInstance(inst, GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR), static_cast<int>(inst.id));
+				else
+					AddHealthbarInstance(inst, GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_GAME), static_cast<int>(inst.id));
+			}
+			m_HealthbarMesh.PrepForDraw();
+			DrawAllHealthbarInstance(camVP);
+			m_HealthbarMesh.ClearInstances();	// Clear data
 
-	//!< Post Processing Chromatic Abberation and CRT
-	{
-		glDepthMask(GL_FALSE);
-		
-		//if (systemManager->mGraphicsSystem->m_EnableCRT && !systemManager->mGraphicsSystem->m_EnableChromaticAbberation)
-		if (systemManager->mGraphicsSystem->m_EnableCRT)
-		{
-			m_ComputeCRTShader.Activate();
-			
-			glUniform1f(m_ComputeCRTTimeLocation, PostProcessing::getInstance().mCRT_AccumulationTime += dt);
-			glUniform1f(m_ComputeCRTDistortionLocation, PostProcessing::getInstance().mCRT_DistortionValue);
-			glUniform1i(m_ComputeCRTHeightOffsetLocation, PostProcessing::getInstance().mCRT_HeightOffset);
+			// Render UI objects
+			m_UiShaderInst.Activate();		// Activate shader
+			DrawAll2DInstances(m_UiShaderInst.GetHandle());
+			GFX::Shader::Deactivate();	// Deactivate shader
 
-			// CRT post processing effect. Called here so it can be rendered over the UI
-			PostProcessing::CRTBlendFramebuffers(*fbo, m_PingPongFbo, dt);
-			
-			m_ComputeCRTShader.Deactivate();
+			if (ENABLE_CROSSHAIR_IN_EDITOR_SCENE || !forEditor)
+				DrawCrosshair();	// Render crosshair, if any
 		}
 
-		if (systemManager->mGraphicsSystem->m_EnableChromaticAbberation)
+		//!< Post Processing Chromatic Abberation and CRT
 		{
-			if (mBloomType == PHYS_BASED_BLOOM)
-				PostProcessing::ChromaticAbbrebationBlendFramebuffers(*fbo, m_PhysBloomRenderer.getBloomTexture());
-			else
-				PostProcessing::ChromaticAbbrebationBlendFramebuffers(*fbo, m_PingPongFbo.pingpongColorbuffers[0]);
-		}
+			glDepthMask(GL_FALSE);
 
-		m_PingPongFbo.UnloadAndClear();
-		glDepthMask(GL_TRUE);
+			//if (systemManager->mGraphicsSystem->m_EnableCRT && !systemManager->mGraphicsSystem->m_EnableChromaticAbberation)
+			if (systemManager->mGraphicsSystem->m_EnableCRT)
+			{
+				m_ComputeCRTShader.Activate();
+
+				glUniform1f(m_ComputeCRTTimeLocation, PostProcessing::getInstance().mCRT_AccumulationTime += dt);
+				glUniform1f(m_ComputeCRTDistortionLocation, PostProcessing::getInstance().mCRT_DistortionValue);
+				glUniform1i(m_ComputeCRTHeightOffsetLocation, PostProcessing::getInstance().mCRT_HeightOffset);
+
+				// CRT post processing effect. Called here so it can be rendered over the UI
+				PostProcessing::CRTBlendFramebuffers(*fbo, m_PingPongFbo, dt);
+
+				m_ComputeCRTShader.Deactivate();
+			}
+
+			if (systemManager->mGraphicsSystem->m_EnableChromaticAbberation)
+			{
+				if (mBloomType == PHYS_BASED_BLOOM)
+					PostProcessing::ChromaticAbbrebationBlendFramebuffers(*fbo, m_PhysBloomRenderer.getBloomTexture());
+				else
+					PostProcessing::ChromaticAbbrebationBlendFramebuffers(*fbo, m_PingPongFbo.pingpongColorbuffers[0]);
+			}
+
+			m_PingPongFbo.UnloadAndClear();
+			glDepthMask(GL_TRUE);
+		}
 	}
 
 #pragma endregion
