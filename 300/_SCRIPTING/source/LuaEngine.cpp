@@ -181,7 +181,8 @@ void LuaTransform()
         "Transform", sol::constructors<>(),
         "mScale", &Transform::mScale,
         "mRotate", &Transform::mRotate,
-        "mTranslate", &Transform::mTranslate);
+        "mTranslate", &Transform::mTranslate,
+        "ParentChildRotate", &Transform::parentChildRotateInit);
 }
 
 void LuaAnimator()

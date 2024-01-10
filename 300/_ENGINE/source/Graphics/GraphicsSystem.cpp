@@ -18,6 +18,7 @@
 
 #include <ECS/ECS_Components.h>
 #include <Graphics/GraphicsSystem.h>
+#include <Graphics/GraphicsSystemDefinitions.h>
 #include "ResourceManagerTy.h"
 #include <Graphics/Camera_Input.h>
 #include "Debug/EnginePerformance.h"
@@ -48,14 +49,7 @@ void GraphicsSystem::Init()
 		SetupShaderStorageBuffers();
 
 		// -- Setup UI stuffs
-		m_HealthbarMesh.Setup2DImageMesh();
-		m_Image2DMesh.Setup2DImageMesh();
-		m_PortalMesh.Setup2DImageMesh();
-		m_ParticleMesh.Setup2DImageMesh();
-		for (int i{}; i < 32; ++i)
-		{
-			m_Textures.emplace_back(i);
-		}
+		InitUIMeshes();
 
 		// Get Window Handle
 		m_Window = systemManager->GetWindow();
@@ -66,13 +60,9 @@ void GraphicsSystem::Init()
 		m_EditorMode = systemManager->IsEditor();
 
 		// Create FBO, with the width and height of the window
-		m_Fbo.Create(m_Width, m_Height, m_EditorMode);
-		m_GameFbo.Create(m_Width, m_Height, m_EditorMode);
-		m_MultisampleFBO.Create(m_Width, m_Height);
-		m_IntermediateFBO.Create(m_Width, m_Height);
-		m_PingPongFbo.Create(m_Width, m_Height);
-		m_PhysBloomRenderer.Init(m_Width, m_Height);
+		InitFramebuffers();
 
+		// setup all the shaders
 		SetupAllShaders();
 
 		if (m_DebugDrawing) {
@@ -81,34 +71,6 @@ void GraphicsSystem::Init()
 		else {
 			m_GlobalTint.a = 1.f;
 		}
-
-		// Compile Compute shader
-		computeDeferred.CreateShaderFromFile("../assets/shader_files/computePBR.glsl");
-		computeDeferred.Activate();
-		m_ComputeDeferredLightCountLocation		= computeDeferred.GetUniformLocation("uLightCount");
-		m_ComputeDeferredCamPosLocation			= computeDeferred.GetUniformLocation("uCamPos");
-		m_ComputeDeferredGlobalTintLocation		= computeDeferred.GetUniformLocation("uGlobalTint");
-		m_ComputeDeferredGlobalBloomLocation	= computeDeferred.GetUniformLocation("uGlobalBloomThreshold");
-		GFX::Shader::Deactivate();
-
-		m_ComputeCRTShader.CreateShaderFromFile("../assets/shader_files/computeCRT.glsl");
-		m_ComputeCRTShader.Activate();
-		m_ComputeCRTTimeLocation = m_ComputeCRTShader.GetUniformLocation("mCRT_AccumulationTime");
-		m_ComputeCRTHeightOffsetLocation = m_ComputeCRTShader.GetUniformLocation("heightoffset");
-		m_ComputeCRTDistortionLocation = m_ComputeCRTShader.GetUniformLocation("distortion_value");
-		GFX::Shader::Deactivate();
-
-		m_ComputeAddBlendShader.CreateShaderFromFile("../assets/shader_files/computeCRT.glsl");
-		m_ComputeAddBlendShader.Activate();
-		m_ComputeAddBlendExposureLocation = m_ComputeAddBlendShader.GetUniformLocation("Exposure");
-		GFX::Shader::Deactivate();
-
-		// Input
-		glBindImageTexture(2, m_IntermediateFBO.GetBrightColorsAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
-		glBindImageTexture(3, m_IntermediateFBO.GetFragPosAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
-		glBindImageTexture(4, m_IntermediateFBO.GetNormalAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
-		glBindImageTexture(5, m_IntermediateFBO.GetAlbedoSpecAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
-		glBindImageTexture(6, m_IntermediateFBO.GetEmissionAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
 	}
 	
 	//glEnable(GL_CULL_FACE);
@@ -148,13 +110,11 @@ void GraphicsSystem::Update(float dt)
 	CheckWindowSize();
 
 	// update the camera's transformations, and its input
-	if (m_EditorMode)
-	{
+	if (m_EditorMode) {
 		// update both the editor and game camera
 		UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_ALL, dt);
 	}
-	else
-	{
+	else {
 		// only update the game camera if editor mode is not enabled
 		UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_GAME, dt);
 	}
@@ -1948,6 +1908,28 @@ void GraphicsSystem::SetupAllShaders()
 	uniform_tex = glGetUniformLocation(m_Quad3DShaderInst.GetHandle(), "uTex2d");
 	glUniform1iv(uniform_tex, (GLsizei)m_Textures.size(), m_Textures.data()); // Passing texture Binding units to frag shader [0 - 31]
 	m_Quad3DShaderInst.Deactivate();
+
+	
+	//!<< Compile Compute shader >>
+	computeDeferred.CreateShaderFromFile("../assets/shader_files/computePBR.glsl");
+	computeDeferred.Activate();
+	m_ComputeDeferredLightCountLocation = computeDeferred.GetUniformLocation("uLightCount");
+	m_ComputeDeferredCamPosLocation = computeDeferred.GetUniformLocation("uCamPos");
+	m_ComputeDeferredGlobalTintLocation = computeDeferred.GetUniformLocation("uGlobalTint");
+	m_ComputeDeferredGlobalBloomLocation = computeDeferred.GetUniformLocation("uGlobalBloomThreshold");
+	GFX::Shader::Deactivate();
+
+	m_ComputeCRTShader.CreateShaderFromFile("../assets/shader_files/computeCRT.glsl");
+	m_ComputeCRTShader.Activate();
+	m_ComputeCRTTimeLocation = m_ComputeCRTShader.GetUniformLocation("mCRT_AccumulationTime");
+	m_ComputeCRTHeightOffsetLocation = m_ComputeCRTShader.GetUniformLocation("heightoffset");
+	m_ComputeCRTDistortionLocation = m_ComputeCRTShader.GetUniformLocation("distortion_value");
+	GFX::Shader::Deactivate();
+
+	m_ComputeAddBlendShader.CreateShaderFromFile("../assets/shader_files/computeCRT.glsl");
+	m_ComputeAddBlendShader.Activate();
+	m_ComputeAddBlendExposureLocation = m_ComputeAddBlendShader.GetUniformLocation("Exposure");
+	GFX::Shader::Deactivate();
 }
 
 mat4 GraphicsSystem::GetPortalViewMatrix(GFX::Camera const& camera, Transform const& sourcePortal, Transform const& destPortal)
