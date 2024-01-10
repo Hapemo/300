@@ -189,7 +189,8 @@ void LuaAnimator()
     systemManager->mScriptingSystem->luaState.new_usertype<Animator>(
         "Animator", sol::constructors<>(),
         "PauseAnimation", &Animator::PauseAnimation,
-        "UnpauseAnimation", &Animator::UnpauseAnimation);
+        "UnpauseAnimation", &Animator::UnpauseAnimation,
+        "IsEndOfAnimation", &Animator::IsEndOfAnimation);
 }
 
 void LuaRigidBody()

@@ -31,6 +31,7 @@
     <ClCompile Include="include\ECS\ECS_Components.cpp" />
     <ClCompile Include="source\Graphics\PostProcessing.cpp" />
     <ClCompile Include="source\Graphics\ParticleSystem.cpp" />
+    <ClCompile Include="source\Graphics\Animator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Audio\AudioType.h" />

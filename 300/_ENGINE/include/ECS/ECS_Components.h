@@ -117,6 +117,7 @@ struct Animator
 	void Inspect();
 	void PauseAnimation() { mAnimator.mIsPaused = true; }
 	void UnpauseAnimation() { mAnimator.mIsPaused = false; }
+	bool IsEndOfAnimation();
 };
 
 /******************************************************************************/

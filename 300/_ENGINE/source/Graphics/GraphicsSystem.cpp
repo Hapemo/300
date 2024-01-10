@@ -187,6 +187,8 @@ void GraphicsSystem::Update(float dt)
 			{
 				// handles the change of mesh when called in the scripts
 				float lAllowance = animatorInst.mAnimator.m_CurrentAnimation->m_TicksPerSecond * dt;
+
+				// handles the mesh change delayed flag, if its set
 				if (animatorInst.mAnimator.mToChangeMeshDelayed.first && (animatorInst.mAnimator.m_CurrentTime <= lAllowance))
 				{
 					// the mesh change delayed flag is set and the animation is completed, change the mesh
@@ -2150,7 +2152,7 @@ void MeshRenderer::SetMesh(const std::string& meshName, Entity inst)
 		}
 	}
 }
-
+// 
 
 void MeshRenderer::SetMeshDelayed(const std::string& meshName, Entity inst)
 {

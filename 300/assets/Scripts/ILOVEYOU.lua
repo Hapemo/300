@@ -59,6 +59,7 @@ function Update()
     targetPos = this:GetAISetting():GetTarget():GetTransform().mTranslate
     thisPos = this:GetTransform().mTranslate
     inLineOfSight = aiSys:LineOfSight(this, this:GetAISetting():GetTarget())
+    --meshrenderer = this:GetMeshRenderer():SetMesh("Arrow", this) -- C:\300\300\assets\compiled_geom\arrow.geom
 
     -- Health logic
     if this:GetHealthbar().health <= 0 then StartDeath() end
