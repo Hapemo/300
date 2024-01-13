@@ -203,6 +203,19 @@ void CapsuleCollider::DeserializeSelf(rapidjson::Value& reader)
 	Deserialize(reader, "istrigger", mIsTrigger);
 }
 
+void MeshCollider::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
+{
+	writer.Key("meshcollider");
+	writer.StartObject();
+	Serialize(writer, "ismeshcollider", mIsMeshCollider);
+	writer.EndObject();
+}
+
+void MeshCollider::DeserializeSelf(rapidjson::Value& reader)
+{
+	Deserialize(reader, "ismeshcollider", mIsMeshCollider);
+}
+
 void Scripts::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
 {
 	writer.Key("scripts");

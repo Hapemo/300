@@ -136,6 +136,10 @@ void Inspect::update()
 			CapsuleCollider& capsuleCollider = ent.GetComponent<CapsuleCollider>();
 			capsuleCollider.Inspect();
 		}
+		if (ent.HasComponent<MeshCollider>()) {
+			MeshCollider& meshCollider = ent.GetComponent<MeshCollider>();
+			meshCollider.Inspect();
+		}
 		if (ent.HasComponent<PointLight>()) {
 			PointLight& pointLight = ent.GetComponent<PointLight>();
 			pointLight.Inspect();
@@ -225,6 +229,10 @@ void Inspect::Add_component() {
 				Entity(Hierarchy::selectedId).AddComponent<BoxCollider>();
 		}
 
+		if (ImGui::Selectable("MeshCollider")) {
+			if (!Entity(Hierarchy::selectedId).HasComponent<MeshCollider>())
+				Entity(Hierarchy::selectedId).AddComponent<MeshCollider>();
+		}
 
 		if (ImGui::Selectable("Scripts")) {
 			if (!Entity(Hierarchy::selectedId).HasComponent<Scripts>())
@@ -1208,6 +1216,15 @@ void CapsuleCollider::Inspect() {
 	}
 	if (delete_component == false)
 		Entity(Hierarchy::selectedId).RemoveComponent<CapsuleCollider>();
+}
+
+void MeshCollider::Inspect() {
+	bool delete_component{ true };
+	if (ImGui::CollapsingHeader("MeshCollider", &delete_component, ImGuiTreeNodeFlags_DefaultOpen)) {
+		ReflectProperties(*this);
+	}
+	if (delete_component == false)
+		Entity(Hierarchy::selectedId).RemoveComponent<MeshCollider>();
 }
 
 /***************************************************************************/
