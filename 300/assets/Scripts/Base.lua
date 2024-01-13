@@ -8,6 +8,17 @@ local dashui = { }
 _G.textureArray  = {"UI-Revolver" , "UI-Shotgun-1223341","UI-Assult-133123" }
 _G.textureArray2 = {"UI-Blue","UI-Yellow-s3&321",  "UI-Red"}
 
+-- Skill Audio
+local skillActivateEntity
+local skillActivateAudio
+
+local skillEndingEntity
+local skillEndingAudio
+
+-- local skillElapsed = 0
+
+
+
 local spawnTime = 0
 local dispenseTime = 0
 function Alive()
@@ -22,14 +33,21 @@ function Alive()
     dashui[6] = gameStateSys:GetEntity("P3", "UI")
     dashui[7] = gameStateSys:GetEntity("P2", "UI")
     dashui[8] = gameStateSys:GetEntity("P1", "UI")
+
+    skillActivateEntity = gameStateSys:GetEntity("Skill_Activate")
+    skillActivateAudio = skillActivateEntity:GetAudio()
+
+    skillEndingEntity = gameStateSys:GetEntity("Skill_Ending")
+    skillEndingAudio = skillEndingEntity:GetAudio()
 end
 
 function Update()
 
     -- for simulating random orb picked up
     spawnTime = spawnTime +  FPSManager.GetDT()
-    if(spawnTime > 1)then
+    -- skillElapsed = skillElapsed + FPSManager.GetDT()
 
+    if(spawnTime > 1)then
         if (disCount <3)then
         --table.insert(dispensor,1)
         dispensor[disCount] = math.random(1,3)
@@ -39,6 +57,12 @@ function Update()
         end
     end    
 
+    -- if(skillElapsed > 2) then
+    --     print("SLILL ELAPSED") 
+    --     skillEndingAudio:SetPlay(0.4)
+    --     skillElapsed = 0
+    -- end
+
     if (disCount >0) then
         dispenseTime = dispenseTime +  FPSManager.GetDT()
         --print(dispenseTime)
@@ -46,10 +70,12 @@ function Update()
         if(_G.weaponArray[1][2] == true)then
             disCount =0
             dispenseTime = 0
+
         else
             if(dispenseTime > 1)then
+        
                -- print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
-
+                -- print("I ACTIVATED MY SKILL")
                --local newpos = position_1
                 math.randomseed(os.time())
                 local randn = math.random(1,3)
@@ -74,54 +100,77 @@ function Update()
     -- 3 = HOLD
     --49 = keycode for number '0'
     if(Input.CheckKey(State.PRESS,Key.KEY_1))then
-        _G.weaponArray[8][2] = false
-        _G.weaponArray[8][3] = 0
-        _G.gunEquipped = _G.weaponArray[8][1]
-        _G.activated = true
-        ArraySystem(8)
-
+        if(_G.weaponArray[8][2] == true)  then
+            _G.weaponArray[8][2] = false
+            _G.weaponArray[8][3] = 0
+            _G.gunEquipped = _G.weaponArray[8][1]
+            _G.activated = true
+            skillActivateAudio:SetPlay(0.4)
+            ArraySystem(8)
+        end
     elseif(Input.CheckKey(State.PRESS,Key.KEY_2))then
-        _G.weaponArray[7][2] = false
-        _G.weaponArray[7][3] = 0
-        _G.gunEquipped = _G.weaponArray[7][1]
-        _G.activated = true
-        ArraySystem(7)
+        if(_G.weaponArray[7][2] == true)  then
+            _G.weaponArray[7][2] = false
+            _G.weaponArray[7][3] = 0
+            _G.gunEquipped = _G.weaponArray[7][1]
+            _G.activated = true
+            skillActivateAudio:SetPlay(0.4)
+            ArraySystem(7)
+        end
     elseif(Input.CheckKey(State.PRESS,Key.KEY_3))then
-        _G.weaponArray[6][2] = false
-        _G.weaponArray[6][3] = 0
-        _G.gunEquipped = _G.weaponArray[6][1]
-        _G.activated = true
-        ArraySystem(6)
+        if(_G.weaponArray[7][2] == true)  then
+            _G.weaponArray[6][2] = false
+            _G.weaponArray[6][3] = 0
+            _G.gunEquipped = _G.weaponArray[6][1]
+            _G.activated = true
+            skillActivateAudio:SetPlay(0.4)
+            ArraySystem(6)
+        end
     elseif(Input.CheckKey(State.PRESS,Key.KEY_4))then
-        _G.weaponArray[5][2] = false
-        _G.weaponArray[5][3] = 0
-        _G.gunEquipped = _G.weaponArray[5][1]
-        _G.activated = true
-        ArraySystem(5)
+        if(_G.weaponArray[7][2] == true)  then
+            _G.weaponArray[5][2] = false
+            _G.weaponArray[5][3] = 0
+            _G.gunEquipped = _G.weaponArray[5][1]
+            _G.activated = true
+            skillActivateAudio:SetPlay(0.4)
+            ArraySystem(5)
+        end
     elseif(Input.CheckKey(State.PRESS,Key.KEY_5))then
-        _G.weaponArray[4][2] = false
-        _G.weaponArray[4][3] = 0
-        _G.gunEquipped = _G.weaponArray[4][1]
-        _G.activated = true
-        ArraySystem(4)
+        if(_G.weaponArray[7][2] == true)  then
+            _G.weaponArray[4][2] = false
+            _G.weaponArray[4][3] = 0
+            _G.gunEquipped = _G.weaponArray[4][1]
+            _G.activated = true
+            skillActivateAudio:SetPlay(0.4)
+            ArraySystem(4)
+        end
     elseif(Input.CheckKey(State.PRESS,Key.KEY_6))then
-        _G.weaponArray[3][2] = false
-        _G.weaponArray[3][3] = 0
-        _G.gunEquipped = _G.weaponArray[3][1]
-        _G.activated = true
-        ArraySystem(3)
+        if(_G.weaponArray[7][2] == true)  then
+            _G.weaponArray[3][2] = false
+            _G.weaponArray[3][3] = 0
+            _G.gunEquipped = _G.weaponArray[3][1]
+            _G.activated = true
+            skillActivateAudio:SetPlay(0.4)
+            ArraySystem(3)
+        end
     elseif(Input.CheckKey(State.PRESS,Key.KEY_7))then
-        _G.weaponArray[2][2] = false
-        _G.weaponArray[2][3] = 0
-        _G.gunEquipped = _G.weaponArray[2][1]
-        _G.activated = true
-        ArraySystem(2)
+        if(_G.weaponArray[7][2] == true)  then
+            _G.weaponArray[2][2] = false
+            _G.weaponArray[2][3] = 0
+            _G.gunEquipped = _G.weaponArray[2][1]
+            _G.activated = true
+            skillActivateAudio:SetPlay(0.4)
+            ArraySystem(2)
+        end
     elseif(Input.CheckKey(State.PRESS,Key.KEY_8))then
-        _G.weaponArray[1][2] = false
-        _G.weaponArray[1][3] = 0
-        _G.gunEquipped = _G.weaponArray[1][1]
-        _G.activated = true
-        ArraySystem(1)
+        if(_G.weaponArray[7][2] == true)  then
+            _G.weaponArray[1][2] = false
+            _G.weaponArray[1][3] = 0
+            _G.gunEquipped = _G.weaponArray[1][1]
+            _G.activated = true
+            skillActivateAudio:SetPlay(0.4)
+            ArraySystem(1)
+        end
     end
     -- for i = 8, 2 , -1
     -- do

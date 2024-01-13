@@ -80,7 +80,7 @@ void Application::MainUpdate()
 {
     while (!systemManager->mGameStateSystem->Exited())
     {
-        std::string title{ "Application | FPS: " };
+        std::string title{ "TroubleShooter | FPS: " };
         title += std::to_string((int)FPSManager::fps);
         systemManager->GetWindow()->SetWindowTitle(title.c_str());
         FirstUpdate();

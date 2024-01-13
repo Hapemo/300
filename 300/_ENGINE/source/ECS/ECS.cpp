@@ -166,6 +166,7 @@ void ECS::DeleteAllEntities()
 
 void ECS::SetDeleteEntity(Entity e)
 {
+	if (e.HasComponent<AISetting>()) systemManager->GetAIManager()->RemoveAIFromEntity(e);
 	e.GetComponent<General>().isDelete = true;
 	PINFO("Entity to be deleted: %d", (int)e.id)
 	//std::cout << "Enstity to be deleted" << (int)e.id << std::endl;
@@ -251,6 +252,8 @@ Entity ECS::NewEntityFromPrefabScene(std::string prefabName,int prefabscene, con
 
 	if (e.HasComponent<RigidBody>())
 		systemManager->mPhysicsSystem->AddEntity(e);
+	if (e.HasComponent<AISetting>())
+		systemManager->mAISystem->InitialiseAI(e);
 	return e;
 }
 

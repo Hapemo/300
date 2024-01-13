@@ -315,10 +315,10 @@ function Update()
    dashrender = dashui:GetUIrenderer()
     if (dashTime > 3.0) then
         dashrender:SetDegree(0)
-        print("came here!")
+        -- print("came here!")
     else
         dashrender:SetDegree(360 - (dashTime / 3.0) * 360)
-        print("came here2")
+        -- print("came here2")
     end
 
     -- if (tpTime <= 20.0) then  

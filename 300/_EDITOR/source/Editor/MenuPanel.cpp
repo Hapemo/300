@@ -139,7 +139,6 @@ void MenuPanel::update()
                     std::string texturestr = systemManager->mResourceTySystem->compressed_texture_path + getFilename(data_str) + ".ctexture";
 
                     std::string TEXTURE_Descriptor_Filepath;
-                    unsigned guid;
 
                     // check and ensures that the descriptor file for the materials are created
                     _GEOM::CheckAndCreateDescriptorFileTEXTURE(data_str, TEXTURE_Descriptor_Filepath, texturestr);

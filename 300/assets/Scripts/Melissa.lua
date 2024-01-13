@@ -57,9 +57,9 @@ end
 
 function Update()
 
-    if systemManager:mInputActionSystem():GetButtonDown("Test1") then
-        this:GetHealthbar().health = this:GetHealthbar().health - 10
-    end
+    -- if systemManager:mInputActionSystem():GetButtonDown("Test1") then
+    --     this:GetHealthbar().health = this:GetHealthbar().health - 10
+    -- end
 
     this:GetTransform().mRotate.y = Helper.DirectionToAngle(this, direction)
     -- STATE MACHINE
@@ -92,9 +92,7 @@ function Update()
             AttackOnce = true
             -- Play attack SOUND
             -- decrease player health
-            print("attacked")
             if InMeleeRange(2) then
-                print("attack in range")
                 target:GetHealthbar().health = target:GetHealthbar().health - damage
             end
         end
@@ -159,7 +157,6 @@ function AttackInit()
     AttackOnce = false
     s2AttackingTimerCount = 0
     state = "ATTACKING"
-    print("start attacking")
 end
 
 function TRAVELInit()
@@ -185,7 +182,6 @@ end
 
 function InMeleeRange(range)
     local distance = Helper.Vec3Len(Helper.Vec3Minus(targetPos, thisPos))
-    print(distance)
     if distance < range then return true end
     return false
 end

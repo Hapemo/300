@@ -21,7 +21,7 @@ E_MOVEMENT_TYPE& operator++(E_MOVEMENT_TYPE& _enum) {
 //--------------------------------------------------
 // Public functions
 //--------------------------------------------------
-AIManager::AIManager() : mPlayerEntity(), mPlayerTransform(nullptr), mPlayerHistorySize(), mPlayerArrayIndex(0), mPlayerHistory(), mAILists() {
+AIManager::AIManager() : mPlayerEntity(), mPlayerTransform(nullptr), mPlayerHistorySize(), mPlayerArrayIndex(0), mPlayerHistory(), mAILists(), mAICount() {
 	E_MOVEMENT_TYPE i{ E_MOVEMENT_TYPE::BEGIN };
 	while (++i != E_MOVEMENT_TYPE::SIZE)
 		mAILists[mMovementTypeArray[static_cast<int>(i)]];
@@ -128,6 +128,8 @@ void AIManager::InitialiseAI(Entity _e) {
 	}
 #endif
 	AISetting& setting{ _e.GetComponent<AISetting>() };
+	++mAICount;
+	std::cout << "Enemy initialised: " << _e.GetComponent<General>().name << '\n';
 	if (setting.mMovementType != E_MOVEMENT_TYPE::BEGIN)
 		mAILists[mMovementTypeArray[static_cast<int>(setting.mMovementType)]].insert(_e);
 	setting.SetTarget(systemManager->mGameStateSystem->GetEntity(setting.mTargetName));
@@ -135,8 +137,8 @@ void AIManager::InitialiseAI(Entity _e) {
 
 void AIManager::InitAIs() {
 	auto const& entities = systemManager->ecs->GetEntitiesWith<AISetting>();
-	for (auto entity : entities)
-		InitialiseAI(Entity(entity));
+	//for (auto entity : entities)
+	//	InitialiseAI(Entity(entity));
 	
 	Entity player = systemManager->GetGameStateSystem()->GetEntity(PLAYER_NAME);
 	if (player.id != entt::null) SetPlayer(player);
@@ -151,6 +153,7 @@ void AIManager::ClearAIs() {
 
 void AIManager::RemoveAIFromEntity(Entity _e) {
 	if (!_e.HasComponent<AISetting>()) return;
+	--mAICount;
 	for (auto& [listName, aiList] : mAILists) {
 		auto it = aiList.find(_e);
 		if (it != aiList.end()) 

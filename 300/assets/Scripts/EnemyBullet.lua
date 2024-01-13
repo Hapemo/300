@@ -21,6 +21,7 @@ function Update()
         startingVec = this:GetRigidBody().mVelocity
     else
         phySys:SetVelocity(this, startingVec)
+        this:GetTransform().mRotate.y = Helper.DirectionToAngle(this, startingVec)
     end
 
     -- Bullet despawn countdown

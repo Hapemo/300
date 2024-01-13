@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 4194310,
+        "entityid": 1048582,
         "general": {
             "name": "Click",
             "tagid": 6,
@@ -37,7 +37,7 @@
         }
     },
     {
-        "entityid": 4194311,
+        "entityid": 1048583,
         "general": {
             "name": "CreditsBackButton",
             "tagid": 6,
@@ -64,7 +64,7 @@
         },
         "uirenderer": {
             "texpath": "",
-            "textureref": 3872,
+            "textureref": 2396002073,
             "degree": 0.0,
             "color": {
                 "x": 1.0,
@@ -102,7 +102,7 @@
         }
     },
     {
-        "entityid": 4194312,
+        "entityid": 1048584,
         "general": {
             "name": "MenuBackground",
             "tagid": 6,
@@ -128,8 +128,8 @@
             }
         },
         "uirenderer": {
-            "texpath": "../assets/Compressed/MainMenuEmpty.ctexture",
-            "textureref": 4079,
+            "texpath": "../assets/Compressed/CreditsScene.ctexture",
+            "textureref": 3860481966,
             "degree": 0.0,
             "color": {
                 "x": 1.0,
@@ -142,7 +142,7 @@
         }
     },
     {
-        "entityid": 4194313,
+        "entityid": 1048585,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -179,15 +179,15 @@
                 "z": 0.0
             },
             "size": {
-                "x": 1304,
-                "y": 680
+                "x": 1212,
+                "y": 639
             },
             "near": 0.10000000149011612,
             "far": 900.0
         }
     },
     {
-        "entityid": 4194314,
+        "entityid": 1048586,
         "general": {
             "name": "TV ON",
             "tagid": 0,
@@ -224,7 +224,7 @@
         }
     },
     {
-        "entityid": 4194315,
+        "entityid": 1048587,
         "general": {
             "name": "BGM",
             "tagid": 0,

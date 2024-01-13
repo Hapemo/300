@@ -6,7 +6,7 @@
 void PostProcessing::AdditiveBlendFramebuffers(GFX::FBO& targetFramebuffer, unsigned int Attachment0, unsigned int Attachment1)
 {
 	// additive blending blend function
-	glBlendFunc(GL_ONE, GL_ONE);
+	//glBlendFunc(GL_ONE, GL_ONE);
 
 	uid shaderstr("AdditiveBlendShader");
 	GFX::Shader& BlendShader = *systemManager->mResourceTySystem->get_Shader(shaderstr.id);
@@ -68,7 +68,8 @@ void PostProcessing::ChromaticAbbrebationBlendFramebuffers(GFX::FBO& targetFrame
 void PostProcessing::CRTBlendFramebuffers(GFX::FBO& targetFramebuffer, GFX::PingPongFBO& bufferfbo, float dt)
 {
 	//glBlendFunc(GL_ONE_MINUS_DST_COLOR, GL_ONE);
-	glBlendFunc(GL_SRC_COLOR, GL_ONE_MINUS_SRC_COLOR);
+	//glBlendFunc(GL_SRC_COLOR, GL_ONE_MINUS_SRC_COLOR);
+	glBlendFunc(GL_ONE, GL_ONE);
 
 	{
 		// blit the framebuffer to the temp framebuffer, as a reference framebuffer before drawing onto the target framebuffer
@@ -298,7 +299,7 @@ void PhysBasedBloomRenderer::RenderUpsamples(float filterRadius)
 	glBlendFunc(GL_ONE, GL_ONE);
 	glBlendEquation(GL_FUNC_ADD);
 
-	for (int i = mipchain.size() - 1; i > 0; --i)
+	for (size_t i = mipchain.size() - 1; i > 0; --i)
 	{
 		const BloomMip& mip = mipchain[i];
 		const BloomMip& nextMip = mipchain[i - 1];
