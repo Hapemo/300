@@ -67,9 +67,9 @@ void PostProcessing::ChromaticAbbrebationBlendFramebuffers(GFX::FBO& targetFrame
 
 void PostProcessing::CRTBlendFramebuffers(GFX::FBO& targetFramebuffer, GFX::PingPongFBO& bufferfbo, float dt)
 {
-	//glBlendFunc(GL_ONE_MINUS_DST_COLOR, GL_ONE);
+	glBlendFunc(GL_ONE_MINUS_DST_COLOR, GL_ONE);
 	//glBlendFunc(GL_SRC_COLOR, GL_ONE_MINUS_SRC_COLOR);
-	glBlendFunc(GL_ONE, GL_ONE);
+	//glBlendFunc(GL_ONE, GL_ONE);
 
 	{
 		// blit the framebuffer to the temp framebuffer, as a reference framebuffer before drawing onto the target framebuffer

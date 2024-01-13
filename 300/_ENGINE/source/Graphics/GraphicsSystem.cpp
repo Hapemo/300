@@ -93,7 +93,9 @@ void GraphicsSystem::Init()
 
 		m_ComputeCRTShader.CreateShaderFromFile("../assets/shader_files/computeCRT.glsl");
 		m_ComputeCRTShader.Activate();
-		m_ComputeCRTTimeLocation = m_ComputeCRTShader.GetUniformLocation("accumulationTime");
+		m_ComputeCRTTimeLocation = m_ComputeCRTShader.GetUniformLocation("mCRT_AccumulationTime");
+		m_ComputeCRTHeightOffsetLocation = m_ComputeCRTShader.GetUniformLocation("heightoffset");
+		m_ComputeCRTDistortionLocation = m_ComputeCRTShader.GetUniformLocation("distortion_value");
 		GFX::Shader::Deactivate();
 
 		m_ComputeAddBlendShader.CreateShaderFromFile("../assets/shader_files/computeCRT.glsl");
@@ -557,6 +559,7 @@ void GraphicsSystem::Draw(float dt, bool forEditor)
 
 		if (systemManager->mGraphicsSystem->m_EnableBloom)
 		{
+			//!< Using Phys Based Bloom
 			if (mBloomType == BloomType::PHYS_BASED_BLOOM)
 			{
 				m_PhysBloomRenderer.PrepForDraw();
@@ -564,6 +567,7 @@ void GraphicsSystem::Draw(float dt, bool forEditor)
 				PostProcessing::AdditiveBlendFramebuffers(*fbo, fbo->GetColorAttachment(), m_PhysBloomRenderer.getBloomTexture());
 			}
 
+			//!< Using Gaussian Blur
 			else
 			{
 				//Render the bloom for the Editor Framebuffer
@@ -590,7 +594,7 @@ void GraphicsSystem::Draw(float dt, bool forEditor)
 		glDepthMask(GL_TRUE);
 	}
 
-	// UI Area
+	//!< UI Area
 	{
 		glEnable(GL_BLEND);			// Enable back blending for later draws
 
@@ -633,16 +637,22 @@ void GraphicsSystem::Draw(float dt, bool forEditor)
 			DrawCrosshair();	// Render crosshair, if any
 	}
 
-	// Post Processing Chromatic Abberation and CRT
+	//!< Post Processing Chromatic Abberation and CRT
 	{
 		glDepthMask(GL_FALSE);
 		
-		if (systemManager->mGraphicsSystem->m_EnableCRT && !systemManager->mGraphicsSystem->m_EnableChromaticAbberation)
+		//if (systemManager->mGraphicsSystem->m_EnableCRT && !systemManager->mGraphicsSystem->m_EnableChromaticAbberation)
+		if (systemManager->mGraphicsSystem->m_EnableCRT)
 		{
 			m_ComputeCRTShader.Activate();
-			glUniform1f(m_ComputeCRTTimeLocation, PostProcessing::getInstance().accumulationTime += dt);
+			
+			glUniform1f(m_ComputeCRTTimeLocation, PostProcessing::getInstance().mCRT_AccumulationTime += dt);
+			glUniform1f(m_ComputeCRTDistortionLocation, PostProcessing::getInstance().mCRT_DistortionValue);
+			glUniform1i(m_ComputeCRTHeightOffsetLocation, PostProcessing::getInstance().mCRT_HeightOffset);
+
 			// CRT post processing effect. Called here so it can be rendered over the UI
 			PostProcessing::CRTBlendFramebuffers(*fbo, m_PingPongFbo, dt);
+			
 			m_ComputeCRTShader.Deactivate();
 		}
 
