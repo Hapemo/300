@@ -85,7 +85,14 @@ void TabWindow::update()
 	ImGui::DragFloat3("Global Bloom Threshold", (float*)&systemManager->mGraphicsSystem->mAmbientBloomThreshold, 0.01f, 0.f, 1.f);
 	ImGui::DragFloat("Global Exposure", &systemManager->mGraphicsSystem->mAmbientBloomExposure, 0.01f, 0.f, 5.f, "%0.2f");
 
-	ImGui::Checkbox("Enable Bloom", &systemManager->mGraphicsSystem->m_EnableBloom); 
+	if (ImGui::Checkbox("Enable Bloom", &systemManager->mGraphicsSystem->m_EnableBloom))
+	{
+		if (systemManager->mGraphicsSystem->m_EnableChromaticAbberation && !systemManager->mGraphicsSystem->m_EnableBloom)
+		{
+			ImGui::TextColored(ImVec4(1.f, 0.f, 0.f, 1.f), "Warning: CRT must be used with bloom!");
+			systemManager->mGraphicsSystem->m_EnableBloom = true;
+		}
+	}
 
 	if (systemManager->mGraphicsSystem->mBloomType == BloomType::GAUSSIANBLUR) {
 		// Bloom type 1 specific variable
@@ -142,14 +149,18 @@ void TabWindow::update()
 	ImGui::Checkbox("Enable Chromatic Abberation", &systemManager->mGraphicsSystem->m_EnableChromaticAbberation);
 	ImGui::Checkbox("Enable CRT", &systemManager->mGraphicsSystem->m_EnableCRT);
 
-	if (systemManager->mGraphicsSystem->m_EnableCRT && systemManager->mGraphicsSystem->m_EnableChromaticAbberation) 
-	{
-		ImGui::TextColored(ImVec4(1.f, 0.f, 0.f, 1.f), "Warning: CRT and Chromatic Abberation cannot be enabled at the same time");
-	}
-	else if (systemManager->mGraphicsSystem->m_EnableChromaticAbberation) 
+	// Chromatic Abberation specific variables
+	if (systemManager->mGraphicsSystem->m_EnableChromaticAbberation) 
 	{
 		ImGui::DragFloat("Chromatic Offset", &systemManager->mGraphicsSystem->mChromaticOffset, 0.001f, 0.0f, 1.f);
 		ImGui::DragFloat("Chromatic Strength", &systemManager->mGraphicsSystem->mChromaticStrength, 0.01f, 0.0f, 1.f);
+	}
+
+	// CRT specific variables
+	if (systemManager->mGraphicsSystem->m_EnableCRT)
+	{
+		ImGui::DragFloat("CRT Distortion", &PostProcessing::getInstance().mCRT_DistortionValue, 0.0001f, 0.0f, 0.1f, "%0.4f");
+		ImGui::DragInt("CRT LineHeight", &PostProcessing::getInstance().mCRT_HeightOffset);
 	}
 
 	auto meshRendererInstances = systemManager->ecs->GetEntitiesWith<MeshRenderer>();

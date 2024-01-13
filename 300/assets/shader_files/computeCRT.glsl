@@ -3,7 +3,9 @@
 // -- Workgroup Size --
 layout(local_size_x = 30, local_size_y = 30, local_size_z = 1) in;
 
-uniform float accumulationTime;
+uniform float mCRT_AccumulationTime;
+uniform float distortion_value;
+uniform int heightoffset;
 
 // -- INPUT & OUTPUT --
 layout(rgba32f, binding = 0) uniform image2D OutputColor;   // FBO Color Output
@@ -44,11 +46,11 @@ void main()
 {
     ivec2 iResolution = imageSize(Scene);
     ivec2 uv = ivec2(gl_GlobalInvocationID.xy);
-	int tex_offset = int(0.001 * iResolution.x);
-	int height = int(iResolution.y / 100);
+	int tex_offset = int(distortion_value * iResolution.x);
+	int height = int(iResolution.y / heightoffset);
     
     ivec2 newUV = uv;
-    int y_coord = int(gl_GlobalInvocationID.y + accumulationTime * 40.0) % (height * 2);
+    int y_coord = int(gl_GlobalInvocationID.y + mCRT_AccumulationTime * 40.0) % (height * 2);
     if(y_coord < height)
 	{
         newUV = distort(uv, y_coord, tex_offset);
@@ -60,9 +62,9 @@ void main()
 
     // Performing Blending with sFactor = GL_ONE_MINUS_DST_COLOR
     // Performing Blending with dFactor = GL_ONE
-    vec3 destColor = imageLoad(Scene, uv).rgb;
-    vec3 srcFactor = vec3(1.0) - destColor;
-    color.rgb = color.rgb * srcFactor + destColor.rgb;
+        // vec3 destColor = imageLoad(Scene, uv).rgb;
+        // vec3 srcFactor = vec3(1.0) - destColor;
+        // color.rgb = color.rgb * srcFactor + destColor.rgb;
 
     if(y_coord < height) {
 		color.rgb *= 0.65;

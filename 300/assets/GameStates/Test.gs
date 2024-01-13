@@ -13,15 +13,15 @@
         "bloom_sampleweight": 2.941999912261963,
         "chroma_strength": 0.0038999998942017555,
         "bloom_enable": true,
-        "crt_enable": false,
+        "crt_enable": true,
         "chroma_enable": false,
         "global_tint": {
             "x": 1.0,
             "y": 1.0,
             "z": 1.0,
-            "w": 0.30000001192092896
+            "w": 1.0
         },
-        "debug": 1
+        "debug": 0
     },
     {
         "scene_name": "TestEnemy",
@@ -37,15 +37,15 @@
         "bloom_sampleweight": 2.941999912261963,
         "chroma_strength": 0.0038999998942017555,
         "bloom_enable": true,
-        "crt_enable": false,
+        "crt_enable": true,
         "chroma_enable": false,
         "global_tint": {
             "x": 1.0,
             "y": 1.0,
             "z": 1.0,
-            "w": 0.30000001192092896
+            "w": 1.0
         },
-        "debug": 1
+        "debug": 0
     },
     {
         "scene_name": "UI",
@@ -61,14 +61,14 @@
         "bloom_sampleweight": 2.941999912261963,
         "chroma_strength": 0.0038999998942017555,
         "bloom_enable": true,
-        "crt_enable": false,
+        "crt_enable": true,
         "chroma_enable": false,
         "global_tint": {
             "x": 1.0,
             "y": 1.0,
             "z": 1.0,
-            "w": 0.30000001192092896
+            "w": 1.0
         },
-        "debug": 1
+        "debug": 0
     }
 ]
