@@ -70,7 +70,7 @@ private:
 
 struct PostProcessing
 {
-	PostProcessing() : accumulationTime(0.0)
+	PostProcessing() : mCRT_AccumulationTime(0.0), mCRT_DistortionValue(0.001f), mCRT_HeightOffset(100)
 	{}
 
 	static PostProcessing& getInstance()
@@ -108,7 +108,9 @@ struct PostProcessing
 	static void BlitFrameBuffers(unsigned int readFramebuffer, unsigned int drawFramebuffer, ivec2 readFramebufferSize, ivec2 drawFramebufferSize, int drawColorAttachmentOffset);
 
 public:
-	double accumulationTime;
+	double mCRT_AccumulationTime;
+	int  mCRT_HeightOffset;
+	float  mCRT_DistortionValue;
 };
 
 
@@ -137,7 +139,7 @@ public:
 //// Draw to color attachment only. Otherwise might affect other attachments
 //glDrawBuffer(GL_COLOR_ATTACHMENT0);
 //
-//glUniform1f(BlendShader.GetUniformLocation("accumulationTime"), (PostProcessing::getInstance().accumulationTime += dt));
+//glUniform1f(BlendShader.GetUniformLocation("mCRT_AccumulationTime"), (PostProcessing::getInstance().mCRT_AccumulationTime += dt));
 //glBindTexture(GL_TEXTURE_2D, bufferfbo.pingpongColorbuffers[1]);
 //
 //{
