@@ -116,6 +116,7 @@ public:
     void mesh_Load(std::string filepath, unsigned uid);
     GFX::Mesh* SetupMesh(std::string filepath, unsigned);
     GFX::Mesh* get_mesh(unsigned );
+    void mesh_GetVerticesAndIndices(std::string filepath, std::vector<glm::vec3>& vertices, std::vector<unsigned int>& indices);
 
     /***************************************************************************/
     /*!
