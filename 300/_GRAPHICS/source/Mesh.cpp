@@ -59,6 +59,28 @@ void GFX::Mesh::LoadFromGeom(const _GEOM::Geom& GeomData, std::vector<vec3>& pos
 }
 
 
+void GFX::Mesh::LoadFromGeom(const _GEOM::Geom& GeomData, std::vector<vec3>& positions, std::vector<unsigned int>& indices)
+{
+	positions.reserve(GeomData.m_nVertices);
+	indices.reserve(GeomData.m_nIndices);
+
+	for (size_t iSM{}; iSM < GeomData.m_nSubMeshes; ++iSM)
+	{
+		// Load indices
+		for (size_t iIndex{}; iIndex < GeomData.m_pSubMesh[iSM].m_nIndices; ++iIndex)
+		{
+			indices.emplace_back(GeomData.m_pIndices[iIndex]);
+		}
+
+		// Load positions
+		for (size_t iIndex{}; iIndex < GeomData.m_pSubMesh[iSM].m_nVertices; ++iIndex)
+		{
+			positions.emplace_back(vec3(GeomData.m_pPos[iIndex].m_Pos.x, GeomData.m_pPos[iIndex].m_Pos.y, GeomData.m_pPos[iIndex].m_Pos.z));
+		}
+	}
+}
+
+
 void GFX::Mesh::LoadAnimationDataFromGeom(const _GEOM::Geom& GeomData, std::vector<glm::vec4>& boneIDs, std::vector<glm::vec4>& boneWeights)
 {
 	const int reservenumber = GeomData.m_nVertices;
