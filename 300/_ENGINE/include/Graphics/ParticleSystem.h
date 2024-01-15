@@ -13,9 +13,9 @@ struct ParticleProperties
 	vec4 mStartColor{ 1.f, 1.f, 1.f, 1.f }, mEndColor{ 1.f, 0.f, 0.f, 0.3f };
 	vec3 mPosition{ 0.f, -40.f, 0.f };
 	vec3 mVelocity, mVelocityVariation;
-	float mStartSize{ 5 }, mEndSize{ 0.1 }, mSizeVariation;
+	float mStartSize{ 0.1f }, mEndSize{ 0.01f }, mSizeVariation;
 	float mLifetime{ 2.f };
-	float mSpeed{ 10 };
+	float mSpeed{ 2 };
 };
 
 // Stats of each particle instance
@@ -34,7 +34,7 @@ class ParticleEmitter
 {
 public:
 	void Init(ParticleProperties const& props) { mProperties = props; }
-	void Emit(int count);
+	void Emit(int count, vec3 const& camRightVector, vec3 const& camUpVector);
 	void Update(float dt);
 
 	std::list<Particle> mParticles;

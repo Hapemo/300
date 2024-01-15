@@ -474,14 +474,14 @@ void GraphicsSystem::Update(float dt)
 	// ---------------- PARTICLES WIP ----------------
 	if (Input::CheckKey(E_STATE::RELEASE, E_KEY::F1))
 	{
-		m_Emitter.Emit(100);
+		m_Emitter.Emit(1000, glm::normalize(m_EditorCamera.GetRightVector()), glm::normalize(m_EditorCamera.GetUpVector()));
 	}
 	// Update all particles
 	m_Emitter.Update(dt);
 	m_ParticleMesh.ClearInstances();
 	for (auto p : m_Emitter.mParticles)
 	{
-		AddParticleInstance(p);
+		AddParticleInstance(p, m_EditorCamera.position());
 	}
 	m_ParticleMesh.PrepForDraw();
 
@@ -607,25 +607,26 @@ void GraphicsSystem::Draw(float dt, bool forEditor)
 	}
 
 	// UI Area
+	glEnable(GL_BLEND);			// Enable back blending for later draws
+
+	// Set blend function back to usual for UI rendering
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	// Bind the appropriate FBO
+	if (forEditor)		// Bind Editor FBO
 	{
-		glEnable(GL_BLEND);			// Enable back blending for later draws
+		m_Fbo.Bind();
+		m_Fbo.DrawBuffers(true, true);
+	}
+	else				// Bind Game FBO
+	{
+		m_GameFbo.Bind();
+		m_GameFbo.DrawBuffers(true);
+	}
 
-		// Set blend function back to usual for UI rendering
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-		// Bind the appropriate FBO
-		if (forEditor)		// Bind Editor FBO
-		{
-			m_Fbo.Bind();
-			m_Fbo.DrawBuffers(true, true);
-		}
-		else				// Bind Game FBO
-		{
-			m_GameFbo.Bind();
-			m_GameFbo.DrawBuffers(true);
-		}
-
-
+	// UI Area
+	if (!forEditor)
+	{
 		DrawAllPortals(forEditor);	// Draw Portal object
 
 		// Healthbar objects
@@ -646,11 +647,11 @@ void GraphicsSystem::Draw(float dt, bool forEditor)
 		DrawAll2DInstances(m_UiShaderInst.GetHandle());
 		GFX::Shader::Deactivate();	// Deactivate shader
 
-		DrawAllParticles();
 
 		if (ENABLE_CROSSHAIR_IN_EDITOR_SCENE || !forEditor)
 			DrawCrosshair();	// Render crosshair, if any
 	}
+	DrawAllParticles();
 
 	// Post Processing Chromatic Abberation and CRT
 	{
@@ -2079,15 +2080,34 @@ void GraphicsSystem::DrawAllPortals(bool editorDraw)
 	}
 }
 
-void GraphicsSystem::AddParticleInstance(Particle const& p)
+void GraphicsSystem::AddParticleInstance(Particle const& p, vec3 const& camPos)
 {
-	mat4 world =
-	{
+	// Compute the rotation vectors
+	vec3 normal = camPos - p.mCurrPosition;
+	vec3 up = { 0, 1, 0 };
+	vec3 right = glm::cross(up, normal);
+	vec3 forward = glm::cross(right, normal);
+
+	mat4 scale = {
 		vec4(p.mCurrSize, 0.f, 0.f, 0.f),
 		vec4(0.f, p.mCurrSize, 0.f, 0.f),
 		vec4(0.f, 0.f, 1.f, 0.f),
-		vec4(p.mCurrPosition, 1.f)
+		vec4(0.f, 0.f, 0.f, 1.f)
 	};
+
+	mat4 tilt = glm::rotate(glm::radians(p.mCurrRotation), vec3(0, 0, 1));
+
+	scale = tilt * scale;
+
+	// Rotation matrix to always face the camera
+	mat4 rotate = {
+		vec4(glm::normalize(right), 0.0f),
+		vec4(glm::normalize(forward), 0.0f),
+		vec4(glm::normalize(normal), 0.0f),
+		vec4(p.mCurrPosition, 1.0f)
+	};
+
+	mat4 world = rotate * scale;
 
 	m_ParticleMesh.mTexEntID.push_back(vec4(-2.f, 0.f, 0.f, 0.f));
 	m_ParticleMesh.mColors.emplace_back(p.mCurrColor);

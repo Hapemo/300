@@ -1,13 +1,15 @@
 #include <Graphics/ParticleSystem.h>
 
-void ParticleEmitter::Emit(int count)
+void ParticleEmitter::Emit(int count, vec3 const& camRightVector, vec3 const& camUpVector)
 {
 	for (int i{}; i < count; ++i)
 	{
 		Particle p;
 		ParticleProperties props;
 
-		props.mVelocity = glm::ballRand(1.f);
+		props.mVelocity = vec3(glm::circularRand(1.f), 0.f);
+		props.mVelocity = props.mVelocity.x * camRightVector + props.mVelocity.y * camUpVector;
+		props.mVelocityVariation = GFX::Utils::Random(0.3f, 0.8f) * camUpVector + GFX::Utils::Random(-0.3f, 0.3f) * camRightVector;
 
 		p.mProperties	= props;
 		p.mCurrColor	= mProperties.mStartColor;
@@ -15,6 +17,7 @@ void ParticleEmitter::Emit(int count)
 		p.mCurrRotation = GFX::Utils::Random(0.f, 360.f);
 		p.mCurrSize		= mProperties.mStartSize;
 		p.mCurrLife		= 0.f;
+		p.mProperties.mSpeed *= GFX::Utils::Random(0.5f, 1.f);
 
 		mParticles.emplace_back(std::move(p));
 	}
@@ -38,6 +41,9 @@ void ParticleEmitter::Update(float dt)
 		it->mCurrPosition	= it->mCurrPosition + (it->mProperties.mVelocity * it->mProperties.mSpeed * dt);
 		it->mCurrSize		= glm::mix(it->mProperties.mStartSize, it->mProperties.mEndSize, factor);
 		it->mCurrLife		+= dt;
+		it->mCurrRotation	+= 90.f * dt;
+		it->mProperties.mSpeed -= dt;
+		it->mProperties.mVelocity = glm::normalize(it->mProperties.mVelocity + it->mProperties.mVelocityVariation);
 	}
 
 	for (int i{}; i < toBeDeleted.size(); ++i)

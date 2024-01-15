@@ -381,7 +381,7 @@ private:
 
 	// -- Particles WIP --
 	ParticleEmitter m_Emitter;
-	void AddParticleInstance(Particle const& p);
+	void AddParticleInstance(Particle const& p, vec3 const& camPos);
 	void DrawAllParticles();
 };
 

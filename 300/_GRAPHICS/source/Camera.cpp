@@ -73,6 +73,33 @@ void GFX::Camera::SetCursorPosition(vec2 newPosition)
 
 /**---------------------------------------------------------------------------/
  * @brief
+ *  Gets the right vector of the camera. Unnormalized
+ * @return
+ *  Right vector of the camera
+ *---------------------------------------------------------------------------*/
+vec3 GFX::Camera::GetRightVector()
+{
+	vec3 forward = mTarget - mPosition;
+
+	return glm::cross(forward, vec3(0, 1, 0));
+}
+
+/**---------------------------------------------------------------------------/
+ * @brief
+ *  Gets the up vector of the camera. Unnormalized
+ * @return
+ *  Up vector of the camera
+ *---------------------------------------------------------------------------*/
+vec3 GFX::Camera::GetUpVector()
+{
+	vec3 forward = mTarget - mPosition;
+	vec3 right = GetRightVector();
+
+	return glm::cross(right, forward);
+}
+
+/**---------------------------------------------------------------------------/
+ * @brief
  *  Gets the position of the camera
  * @return
  *  Position of the camera
