@@ -634,9 +634,9 @@ void GraphicsSystem::Draw(float dt, bool forEditor)
 		for (Entity inst : healthbarInstances)
 		{
 			if (forEditor)
-				AddHealthbarInstance(inst, GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR), static_cast<int>(inst.id));
+				AddHealthbarInstance(inst, GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR));
 			else
-				AddHealthbarInstance(inst, GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_GAME), static_cast<int>(inst.id));
+				AddHealthbarInstance(inst, GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_GAME));
 		}
 		m_HealthbarMesh.PrepForDraw();
 		DrawAllHealthbarInstance(camVP);
@@ -1770,7 +1770,7 @@ void GraphicsSystem::DrawAllHealthbarInstance(const mat4& viewProj)
 	m_HealthbarMesh.UnbindVao();
 }
 
-void GraphicsSystem::AddHealthbarInstance(Entity e, const vec3& camPos, unsigned entityID)
+void GraphicsSystem::AddHealthbarInstance(Entity e, const vec3& camPos, unsigned texHandle)
 {
 	Healthbar& healthbar = e.GetComponent<Healthbar>();
 	vec3 originPos = e.GetComponent<Transform>().mTranslate;
@@ -1807,9 +1807,20 @@ void GraphicsSystem::AddHealthbarInstance(Entity e, const vec3& camPos, unsigned
 		healthbarRatio = (healthbar.mHealth/healthbar.mMaxHealth) * 100.f;
 		healthbarRatio = healthbarRatio < 0 ? 0 : healthbarRatio; // Cap healthbar ratio min to 0
 	}
+
+	// Texture UI for Health
+	int texIndex{};
+	if (texHandle > 0)
+		texIndex = StoreTextureIndex(texHandle);
+	else
+		texIndex = -2;
+
 	vec4 healthColor = vec4(healthbar.mHealthColor.x, healthbar.mHealthColor.y, healthbar.mHealthColor.z, healthbarRatio);
 	m_HealthbarMesh.mColors.push_back(healthColor);
-	m_HealthbarMesh.mTexEntID.push_back(healthbar.mBackColor);
+	if (texHandle > 0)
+		m_HealthbarMesh.mTexEntID.push_back(vec4(texIndex + 0.5f, -2.f, 0.f, 0.f));	// set y component for checking at shader side
+	else
+		m_HealthbarMesh.mTexEntID.push_back(healthbar.mBackColor);
 	// Update LTW matrix
 	m_HealthbarMesh.mLTW.push_back(world);
 }

@@ -9,6 +9,8 @@ layout (location = 2) in vec2 fTexCoords;
 layout (location = 0) out vec4 fragColor;
 layout (location = 1) out vec4 entityID;
 
+uniform sampler2D uTex2d[32];
+
 void main()
 {
 	float health = fHealthColor.a * 0.01;
@@ -16,5 +18,10 @@ void main()
 	if (fTexCoords.x < health)
 		fragColor = vec4(fHealthColor.rgb, fBackColor.a);
 	else
-		fragColor = fBackColor;
+	{
+		if (fBackColor.y < 0)	// Have UI texture
+			fragColor = texture(uTex2d[int(fBackColor.x)], fTexCoords);
+		else
+			fragColor = fBackColor;
+	}
 }
