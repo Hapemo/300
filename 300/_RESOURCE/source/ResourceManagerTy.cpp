@@ -177,6 +177,31 @@ void ResourceTy::mesh_GetVerticesAndIndices(std::string filepath, std::vector<gl
 	Deserialization::DeserializeGeom(filepath.c_str(), GeomData);	// load the geom from the compiled geom file
 	
 	GFX::Mesh::LoadFromGeom(GeomData, vertices, indices);
+
+	float minx, maxx, miny, maxy, minz, maxz;
+	minx = miny = minz = INFINITY;
+	maxx = maxy = maxz = -INFINITY;
+	for (const glm::vec3& vtx : vertices)
+	{
+		if (vtx.x < minx)
+			minx = vtx.x;
+		if (vtx.x > maxx)
+			maxx = vtx.x;
+		if (vtx.y < miny)
+			miny = vtx.y;
+		if (vtx.y > maxy)
+			maxy = vtx.y;
+		if (vtx.z < minz)
+			minz = vtx.z;
+		if (vtx.z > maxz)
+			maxz = vtx.z;
+	}
+	for (glm::vec3& vtx : vertices)
+	{
+		vtx.x /= (maxx - minx);
+		vtx.y /= (maxy - miny);
+		vtx.z /= (maxz - minz);
+	}
 }
 
 
