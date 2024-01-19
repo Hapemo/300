@@ -19,7 +19,7 @@ void ContactCallback::onContact(const PxContactPairHeader&, const PxContactPair*
 		const PxContactPair& current = *pairs++;
 		Entity playerEntity = *static_cast<uint32_t*>(current.shapes[0]->getActor()->userData);
 		Entity otherEntity = *static_cast<uint32_t*>(current.shapes[1]->getActor()->userData);
-		
+
 		if (playerEntity.id == otherEntity.id)
 			continue;
 
@@ -79,8 +79,8 @@ void ContactCallback::onTrigger(PxTriggerPair* pairs, PxU32 count)
 		if (otherEntity.GetComponent<General>().isDelete)
 			continue;
 
-		if (otherEntity.GetComponent<General>().name == "Camera")
-			continue;
+		//if (otherEntity.GetComponent<General>().name == "Camera")
+		//	continue;
 
 		/*std::vector<uint32_t>& triggeredEntities = PhysicsSystem::mTriggerCollisions[static_cast<uint32_t>(triggerEntity.id)];
 		uint32_t otherID = static_cast<uint32_t>(otherEntity.id);*/

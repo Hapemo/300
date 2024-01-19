@@ -71,6 +71,11 @@ private:
 
 	void CreateActor(PxRigidActor*& actor, const PxTransform& pxform, const RigidBody& rbod);
 
+	void CreateMeshCollider(const std::vector<glm::vec3>& vtx, const std::vector<unsigned int>& idx, PxTriangleMesh*& triMesh,
+		bool skipCleanup = false, bool skipEdge = false, const PxU32 triPerLeaf = 4);
+
+	void SetUpCooking(PxCookingParams& params, bool skipMeshCleanup, bool skipEdgeData);
+
 	template <typename T>
 	void CreateAndAttachShape(PxRigidActor*& actor, PxShape*& shape, 
 		const T& geometry, const PxTransform& pose, 

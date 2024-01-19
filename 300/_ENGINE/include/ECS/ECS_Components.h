@@ -282,6 +282,18 @@ struct CapsuleCollider : public Serializable //@han
 	void Inspect();
 };
 
+struct MeshCollider : public Serializable
+{
+	bool mIsMeshCollider;
+
+	MeshCollider() : mIsMeshCollider(true) {}
+
+	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
+	void DeserializeSelf(rapidjson::Value& reader);
+
+	void Inspect();
+};
+
 /******************************************************************************/
 /*!
 	[Component] - Scripts

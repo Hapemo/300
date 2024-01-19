@@ -49,6 +49,7 @@ void ObjectFactory::LoadEntity(Entity e, rapidjson::Value& reader)
 	DESERIALIZE_SELF(BoxCollider, "boxcollider");
 	DESERIALIZE_SELF(SphereCollider, "spherecollider");
 	DESERIALIZE_SELF(CapsuleCollider, "capsulecollider");
+	DESERIALIZE_SELF(MeshCollider, "meshcollider");
 	DESERIALIZE_SELF(Scripts, "scripts");
 	DESERIALIZE_SELF(Parent, "parent");
 	DESERIALIZE_SELF(Children, "children");
@@ -171,6 +172,7 @@ void ObjectFactory::SaveEntity(Entity e, rapidjson::PrettyWriter<rapidjson::Stri
 	SERIALIZE_SELF(BoxCollider);
 	SERIALIZE_SELF(SphereCollider);
 	SERIALIZE_SELF(CapsuleCollider);
+	SERIALIZE_SELF(MeshCollider);
 	SERIALIZE_SELF(Scripts);
 	SERIALIZE_SELF(Parent);
 	SERIALIZE_SELF(Children);
