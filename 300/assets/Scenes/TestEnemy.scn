@@ -83,7 +83,7 @@
             },
             "radius": 0.5,
             "halfheight": 0.25,
-            "istrigger": true
+            "istrigger": false
         },
         "scripts": {
             "scriptscontainer": [
@@ -1352,7 +1352,7 @@
                 "../assets/Compressed/Trojan_Rage_Emissive.ctexture",
                 "../assets/Compressed/Trojan_AO.ctexture"
             ],
-            "mesh": "../assets/compiled_geom/Trojan05.geom",
+            "mesh": "../assets/compiled_geom/Trojan.geom",
             "texturerefid": [
                 1940192559,
                 4213568630,
@@ -1493,7 +1493,7 @@
                 "../assets/Compressed/Trojan_Rage_Emissive.ctexture",
                 "../assets/Compressed/Trojan_AO.ctexture"
             ],
-            "mesh": "../assets/compiled_geom/Trojan05.geom",
+            "mesh": "../assets/compiled_geom/Trojan.geom",
             "texturerefid": [
                 1940192559,
                 4213568630,
@@ -1634,7 +1634,7 @@
                 "../assets/Compressed/Trojan_Rage_Emissive.ctexture",
                 "../assets/Compressed/Trojan_AO.ctexture"
             ],
-            "mesh": "../assets/compiled_geom/Trojan05.geom",
+            "mesh": "../assets/compiled_geom/Trojan.geom",
             "texturerefid": [
                 1940192559,
                 4213568630,
@@ -1775,7 +1775,7 @@
                 "../assets/Compressed/Trojan_Rage_Emissive.ctexture",
                 "../assets/Compressed/Trojan_AO.ctexture"
             ],
-            "mesh": "../assets/compiled_geom/Trojan05.geom",
+            "mesh": "../assets/compiled_geom/Trojan.geom",
             "texturerefid": [
                 1940192559,
                 4213568630,
@@ -3018,7 +3018,7 @@
                 "../assets/Compressed/Trojan_Rage_Emissive.ctexture",
                 "../assets/Compressed/Trojan_AO.ctexture"
             ],
-            "mesh": "../assets/compiled_geom/Trojan05.geom",
+            "mesh": "../assets/compiled_geom/Trojan.geom",
             "texturerefid": [
                 1940192559,
                 4213568630,
@@ -3451,7 +3451,7 @@
             },
             "radius": 0.5,
             "halfheight": 0.25,
-            "istrigger": true
+            "istrigger": false
         },
         "scripts": {
             "scriptscontainer": [
@@ -3579,7 +3579,7 @@
             },
             "radius": 0.5,
             "halfheight": 0.25,
-            "istrigger": true
+            "istrigger": false
         },
         "scripts": {
             "scriptscontainer": [
@@ -3707,7 +3707,7 @@
             },
             "radius": 0.5,
             "halfheight": 0.25,
-            "istrigger": true
+            "istrigger": false
         },
         "scripts": {
             "scriptscontainer": [
@@ -3835,7 +3835,7 @@
             },
             "radius": 0.5,
             "halfheight": 0.25,
-            "istrigger": true
+            "istrigger": false
         },
         "scripts": {
             "scriptscontainer": [
@@ -3963,7 +3963,7 @@
             },
             "radius": 0.5,
             "halfheight": 0.25,
-            "istrigger": true
+            "istrigger": false
         },
         "scripts": {
             "scriptscontainer": [

@@ -2,7 +2,7 @@
 local speed             = 3
 local damage            = 15
 
-local s2AttackingTimer          = 1
+local s2AttackingTimer          = 1.875 -- This is the attack animation length
 local s2AttackingTimerCount     = 0
 
 local s3ScreamingTimer           = 0
@@ -154,6 +154,7 @@ end
 -- State initialise functions
 function AttackInit()
     -- Start attack animation
+    this:GetMeshRenderer():SetMesh("Melissa_attack", this)
     AttackOnce = false
     s2AttackingTimerCount = 0
     state = "ATTACKING"
@@ -161,6 +162,9 @@ end
 
 function TRAVELInit()
     state = "TRAVEL"
+
+    this:GetMeshRenderer():SetMesh("Melissa_attack", this) -- Change back to idle animation 
+
 end
 
 function SpawnMelissa() -- This function should be called in 
