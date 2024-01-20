@@ -154,7 +154,6 @@ end
 -- State initialise functions
 function AttackInit()
     -- Start attack animation
-    print("Start melissa attack")
     this:GetMeshRenderer():SetMesh("Melissa_attack", this)
     AttackOnce = false
     s2AttackingTimerCount = 0
@@ -164,8 +163,7 @@ end
 function TRAVELInit()
     state = "TRAVEL"
 
-    print("Start melissa travel")
-    this:GetMeshRenderer():SetMesh("Melissa", this) -- Change back to idle animation 
+    this:GetMeshRenderer():SetMesh("Melissa_attack", this) -- Change back to idle animation 
 
 end
 
