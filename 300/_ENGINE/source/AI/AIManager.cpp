@@ -311,6 +311,7 @@ glm::vec3 AIManager::GetAStarDir(Entity _e, AISetting const& _setting) {
 std::vector<glm::vec3> AIManager::GetAStarPath(Entity _e, AISetting const& _setting) {
 	std::vector<glm::vec3> astarPath = systemManager->GetPathfinderManager()->AStarPath(_e, _setting.GetTarget(), { 40.f, IGNORETAGS });
 	std::reverse(astarPath.begin(), astarPath.end());
+	return astarPath;
 }
 
 bool AIManager::CheckUseAStar(Entity _e, AISetting const& _setting) {
