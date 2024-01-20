@@ -85,6 +85,7 @@ function OnTriggerEnter(Entity)
     local healthComponent 
     
     if(Entity:HasHealthbar()) then 
+        print("HIT AN ENTITY WITH HEALTHBAR")
         healthComponent = Entity:GetHealthbar()
     end
 
