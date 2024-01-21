@@ -6,7 +6,7 @@ local s2AttackingTimer          = 1.875 -- This is the attack animation length
 local s2AttackingTimerCount     = 0
 
 local s3ScreamingTimer           = 0
-local s3ScreamingTimerLimit      = 2 -- This should depend on the animation time period
+local s3ScreamingTimerLimit      = 2.36 -- This should depend on the animation time period
 
 -- Systems
 local aiSys
