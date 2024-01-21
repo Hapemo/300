@@ -45,6 +45,21 @@ function Alive()
 end
 
 function Update()
+    targetPos = this:GetAISetting():GetTarget():GetTransform().mTranslate
+    thisPos = this:GetTransform().mTranslate
+    inLineOfSight = aiSys:LineOfSight(this, this:GetAISetting():GetTarget())
+
+    if inLineOfSight and not (state == "ATTACK") then
+        -- if (state == "ATTACK")
+        --print(state)
+        --print("Attack init")
+        ATTACKinit()
+    elseif not inLineOfSight and state ~= "IDLE" then
+        if AttackTimer > AttackAnimation then -- If attack animation ended already
+            --print()
+            IDLEinit()
+        end
+    end
 
     if state == "DEATH" then
         if deathTimerCount > deathTimer then systemManager.ecs:SetDeleteEntity(this) end
@@ -53,11 +68,11 @@ function Update()
     elseif state == "ATTACK" then
         AttackTimer = AttackTimer + FPSManager.GetDT()
         if (not Attacked) and AttackTimer > AttackSpeed then
-            print(Attacked)
+            --print(Attacked)
             Shoot()
             Attacked = true
         elseif AttackTimer > AttackAnimation then -- Attack animation ended, reset attack
-            print("Reset attack")
+            --print("Reset attack")
             AttackTimer = 0
             Attacked = false
         end
@@ -67,19 +82,8 @@ function Update()
     --     this:GetHealthbar().health = this:GetHealthbar().health - 10
     -- end
 
-    targetPos = this:GetAISetting():GetTarget():GetTransform().mTranslate
-    thisPos = this:GetTransform().mTranslate
-    inLineOfSight = aiSys:LineOfSight(this, this:GetAISetting():GetTarget())
-
-    if inLineOfSight and not (state == "ATTACK") then
-        -- if (state == "ATTACK")
-        print(state)
-        print("Attack init")
-        ATTACKinit()
-    elseif not inLineOfSight and state ~= "IDLE" then
-        print()
-        IDLEinit()
-    end
+    
+    
     -- Health logic
     if this:GetHealthbar().health <= 0 then StartDeath() end
 
@@ -161,7 +165,8 @@ end
 
 function ATTACKinit()
     state = "ATTACK"
-    this:GetMeshRenderer():SetMesh("ILY_attack", this) -- Change back to attack animation 
+    this:GetMeshRenderer():SetMesh("ILY_attack", this) -- Change back to attack animation
+    AttackTimer = 0
     Attacked = false
 end
 
