@@ -413,12 +413,12 @@ void GraphicsSystem::Update(float dt)
 			uiTransform = parentTransform;
 		}*/
 
-		float uiWidth = uiTransform.mScale.x;
-		float uiHeight = uiTransform.mScale.y;
+		float uiWidth = uiTransform.mScale.x * m_Width / 2.f;
+		float uiHeight = uiTransform.mScale.y * m_Height / 2.f;
 		float depth = (int)uiRenderer.mLayer;
 		// Maps depth from 0-255 to 0-1
 		depth /= 255.f;
-		vec3 uiPosition = vec3(uiTransform.mTranslate.x, uiTransform.mTranslate.y, depth);
+		vec3 uiPosition = vec3(uiTransform.mTranslate.x * m_Width, uiTransform.mTranslate.y * m_Height, depth);
 
 		unsigned texID{};
 		if (uiRenderer.mTextureRef.getdata(systemManager->mResourceTySystem->m_ResourceInstance) != nullptr)

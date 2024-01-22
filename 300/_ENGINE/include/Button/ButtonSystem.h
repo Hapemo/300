@@ -14,16 +14,11 @@ public:
 	void Update();
 	void Reset();
 
-	int imguiButtonX{};
-	int imguiButtonY{};
+	float imguiButtonX{};
+	float imguiButtonY{};
 
 private:
-	int mWindowWidth{};
-	int mWindowHeight{};
-	
-
-
-
+	GFX::Window* window;
 
 	bool CheckHover(Entity e, vec2 mousePos);
 	bool CheckClick(Entity e, vec2 mousePos);
