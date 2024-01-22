@@ -85,6 +85,38 @@ function Update()
         end
     end
 
+    if(gen.name == "HTPButton") then
+        if (button.mIsHover) then
+            if (hoverOver == false) then
+                hoverSFX = ent:GetAudio()
+                hoverSFX:SetPlay(0.2)
+                hoverOver = true;
+            end
+        end
+        if (button.mIsHover == false) then
+            hoverOver = false;
+        end
+        if (button.mActivated) then
+            clickSFX:SetPlay(1.0)
+        end
+    end
+
+    if(gen.name == "SettingsButton") then
+        if (button.mIsHover) then
+            if (hoverOver == false) then
+                hoverSFX = ent:GetAudio()
+                hoverSFX:SetPlay(0.2)
+                hoverOver = true;
+            end
+        end
+        if (button.mIsHover == false) then
+            hoverOver = false;
+        end
+        if (button.mActivated) then
+            clickSFX:SetPlay(1.0)
+        end
+    end
+
     -- 960, 360
     -- 435, 290
     -- credits button
