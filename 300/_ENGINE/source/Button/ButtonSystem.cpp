@@ -17,11 +17,12 @@ void ButtonSystem::Update()
 
 	if (systemManager->IsEditor())
 	{
-		// TODO: @Han: Use function that gets the position of the cursor within the game scene panel [0, 1] with top left as Origin
+		mouseX = imguiButtonX;
+		mouseY = imguiButtonY;
 	}
 	else
 		systemManager->GetWindow()->GetCursorPos(&mouseX, &mouseY);
-
+	std::cout << "x:" << mouseX << ", y:" << mouseY << std::endl;
 	// Map the Mouse Position (top left origin[0, 1] to center origin)
 	mouseX -= 0.5;
 	mouseY -= 0.5;

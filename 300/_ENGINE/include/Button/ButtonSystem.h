@@ -14,9 +14,16 @@ public:
 	void Update();
 	void Reset();
 
+	int imguiButtonX{};
+	int imguiButtonY{};
+
 private:
 	int mWindowWidth{};
 	int mWindowHeight{};
+	
+
+
+
 
 	bool CheckHover(Entity e, vec2 mousePos);
 	bool CheckClick(Entity e, vec2 mousePos);
