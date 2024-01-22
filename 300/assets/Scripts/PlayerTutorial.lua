@@ -75,7 +75,7 @@ local gunMaxAcceleration = 100
 local gunThreshHold_max_y = -0.15
 local gunThreshHold_min_y = -0.9
 
-local gunThreshHold_min_x = 0.15 
+local gunThreshHold_min_x = 0.3
 local gunThreshHold_max_x = 0.9
 
 local gunJumped = false -- for gun animation
@@ -166,6 +166,23 @@ TutBox = {
 }
 
 local tutState = TutBox.FIRST
+
+-- Matrix3D class
+Matrix3D = {}
+Matrix3D.__index = Matrix3D
+
+-- Function to create a new Matrix3D instance
+function Matrix3D.new()
+    local self = setmetatable({}, Matrix3D)
+    self.data = {}
+    for i = 1, 3 do
+        self.data[i] = {}
+        for j = 1, 3 do
+            self.data[i][j] = 0
+        end
+    end
+    return self
+end
 
 function Alive()
 
@@ -337,7 +354,7 @@ function Update()
     dashTime = dashTime + FPSManager.GetDT();
     positions = cameraEntity:GetTransform().mTranslate
     
-    viewVec = Camera_Scripting.GetDirection(cameraEntity)
+    viewVec = Camera_Scripting.GetDirection(cameraEntity)          -- Not Normalized
     viewVecCam = Camera_Scripting.GetDirection(cameraEntity)
     rotationCam = Camera_Scripting.GetDirection(cameraEntity)
     viewVec = Helper.Normalize(viewVec)
@@ -539,7 +556,6 @@ function Update()
 --endregion
 
 
-
 --region -- Player Shooting
     if(inputMapSys:GetButtonDown("Shoot")) then
         gunHoldState = "HOLDING"   -- for machine gun
@@ -555,21 +571,86 @@ function Update()
 
                 -- gunRecoilState = "MOVING"
 
-                -- Shoots Bullet
+                -- Set Bullet starting point
                 positions_final.x = positions.x + viewVecCam.x*3
                 positions_final.y = positions.y + viewVecCam.y*3
                 positions_final.z = positions.z + viewVecCam.z*3  
 
+
+                -- Create Bullet
                 prefabEntity = systemManager.ecs:NewEntityFromPrefab("Revolver Bullet", positions_final)
-                -- rotationCam.x = rotationCam.x *0
-                -- rotationCam.y = rotationCam.y *0
-                -- rotationCam.z = rotationCam.z *0
+
+                prefabEntity:GetTransform().mRotate =  cameraEntity:GetTransform().mRotate -- Assign the rotation axis directly
 
 
-                prefabEntity:GetTransform().mRotate = rotationCam    
-                viewVecCam.x = viewVecCam.x*100
-                viewVecCam.y=viewVecCam.y *100
-                viewVecCam.z=viewVecCam.z *100
+                -- quaterion Q1 (prefabEntity:GetTransform().mRotate)'
+                -- quaterion Q2 (0,0,GunRotation)
+                -- quaterion Final = Q1 * Q2;
+                -- prefabEntity:GetTransform().mRotate.x = Final.rx 
+                -- prefabEntity:GetTransform().mRotate.y = Final.ry 
+                -- prefabEntity:GetTransform().mRotate.z = Final.rz 
+
+                -- Position of where the crosshair is at.
+                -- local aimPosition = Camera_Scripting.GetTarget(cameraEntity)
+               
+                -- print("AIM POSITION: " , aimPosition.x , aimPosition.y , aimPosition.z)
+
+                -- local bullet_to_target = Vec3.new()
+                -- -- distance between bullet and crosshair
+                -- bullet_to_target.x = aimPosition.x - positions_final.x 
+                -- bullet_to_target.y = aimPosition.y - positions_final.y
+                -- bullet_to_target.z = aimPosition.z - positions_final.z
+
+                -- print("BULLE TO TARGET: " , bullet_to_target.x , bullet_to_target.y , bullet_to_target.z)
+                -- bullet_to_target = Helper.Normalize(bullet_to_target)
+                -- print("BULLE TO TARGET (NORM): " , bullet_to_target.x , bullet_to_target.y , bullet_to_target.z)
+
+                -- local rotationAxis = Vec3.new()
+
+                -- -- Calculate Rotational Axis (Cross Product between bullet direction & target direction)
+                -- -- Viewvec : the camera direction , 
+                -- -- bullet_to_target : the unit vector from bullet's position to target (crosshair position)
+                -- -- (I NEED) : bullet object's direction
+
+                -- local bullet_forward_vector = Vec3.new()
+                -- bullet_forward_vector.x = 0 
+                -- bullet_forward_vector.y = 0
+                -- bullet_forward_vector.z = 1 
+
+                -- rotationAxis = Camera_Scripting.Cross(bullet_forward_vector, bullet_to_target) -- this is a vector
+                -- print("ROTATION AXIS: " , rotationAxis.x , rotationAxis.y , rotationAxis.z) -- this is a vector 
+                -- rotationAxis = Helper.Normalize(rotationAxis)
+
+                -- -- Calculate the angle between target direction (crosshair) & bullet's direction 
+                -- local angle = angleBetween(viewVec, bullet_to_target) 
+
+                -- -- Rotate the bullet towards the target
+                -- local rotationMatrix = Matrix3D.new()
+                -- print(magnitude(rotationAxis))
+
+                -- if magnitude(rotationAxis) ~= 0 then 
+                --     rotationMatrix.rotate(rotationMatrix, rotationAxis, angle)  -- Assuming angle is the correct rotation angle
+                --     -- Apply Rotation Matix to the bullet. 
+                  
+                -- end
+
+                -- prefabEntity:GetTransform().mRotate =  cameraEntity:GetTransform().mRotate -- Assign the rotation axis directly
+
+                -- print("CAMERA mRotate: " , cameraEntity:GetTransform().mRotate.x , cameraEntity:GetTransform().mRotate.y , cameraEntity:GetTransform().mRotate.z)
+
+                    -- rotationMatrix.rotate(rotationAxis, angle)  -- Assuming angle is the correct rotation angle
+                    -- prefabEntity:GetTransform().mRotate = rotationAxis -- Assign the rotation axis directly
+                
+                -- if magnitude(rotationAxis) ~= 0 then 
+                --     rotationMatrix.rotate(rotationAxis , bullet_to_target)
+                -- end
+                -- viewVec = rotationMatrix * viewVec -- note that viewVec is normalized
+
+                -- -- Rotate the Bullet (Revolver : Long Rectangle)
+                -- prefabEntity:GetTransform().mRotate = rotationAxis  
+                -- viewVecCam.x = viewVecCam.x * 0
+                -- viewVecCam.y = viewVecCam.y * 0
+                -- viewVecCam.z = viewVecCam.z * 0
 
                 physicsSys:SetVelocity(prefabEntity, viewVecCam)
                 bulletAudioComp:SetPlay(0.3)
@@ -896,6 +977,7 @@ function crossProduct(v1 ,v2)
     local y = v1[3]*v2[1] - v1[1]*v2[3]
     local z = v1[1]*v2[2] - v1[2]*v2[1]
     
+    print(x, y , z)
     return {x, y, z}
 end
 
@@ -971,3 +1053,75 @@ function machineGunRecoil()
         gunTranslate.z = math.min(gunTranslate.z, original_translate_z + max_recoil_distance_z) -- this makes sure it does not surpass the limit.
     end
 end
+
+-- Calculate the dot product of two vectors
+function dotProduct(v1, v2)
+    return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z
+end
+
+-- Calculate the magnitude of a vector
+function magnitude(v)
+    return math.sqrt(v.x^2 + v.y^2 + v.z^2)
+end
+
+-- Calculate the angle between 2 vectors in radians
+function angleBetween(v1, v2)
+    local dp = dotProduct(v1, v2)
+    local magnitudeProduct = magnitude(v1) * magnitude(v2)
+
+    if magnitudeProduct == 0 then 
+        return 0 
+    end
+
+    local cosTheta = dp / magnitudeProduct
+
+    -- Clamp the value to avoid floating-point errors
+    cosTheta = math.max(-1, math.min(1, cosTheta))
+
+    return math.acos(cosTheta)
+end
+
+-- Assuming Vec3 is a 3D vector class
+function rotateVector(vector, rotationMatrix)
+    local x = vector.x
+    local y = vector.y
+    local z = vector.z
+
+    local xRot = rotationMatrix[1] * x + rotationMatrix[2] * y + rotationMatrix[3] * z
+    local yRot = rotationMatrix[4] * x + rotationMatrix[5] * y + rotationMatrix[6] * z
+    local zRot = rotationMatrix[7] * x + rotationMatrix[8] * y + rotationMatrix[9] * z
+
+    return Vec3.new(xRot, yRot, zRot)
+end
+
+function Matrix3D.rotate(self, axis, angle)
+    local cosTheta = math.cos(angle)
+    local sinTheta = math.sin(angle)
+    local oneMinusCosTheta = 1 - cosTheta
+
+    local u = axis.x
+    local v = axis.y
+    local w = axis.z
+
+    local m = self.m
+
+    local m11 = cosTheta + u*u*oneMinusCosTheta
+    local m12 = u*v*oneMinusCosTheta - w*sinTheta
+    local m13 = u*w*oneMinusCosTheta + v*sinTheta
+
+    local m21 = v*u*oneMinusCosTheta + w*sinTheta
+    local m22 = cosTheta + v*v*oneMinusCosTheta
+    local m23 = v*w*oneMinusCosTheta - u*sinTheta
+
+    local m31 = w*u*oneMinusCosTheta - v*sinTheta
+    local m32 = w*v*oneMinusCosTheta + u*sinTheta
+    local m33 = cosTheta + w*w*oneMinusCosTheta
+
+    self.m = {m11, m12, m13, m21, m22, m23, m31, m32, m33}
+end
+
+
+-- Gun Animation Stuff 
+
+-- Revolver : Spinning 
+

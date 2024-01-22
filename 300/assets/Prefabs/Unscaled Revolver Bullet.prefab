@@ -1,7 +1,7 @@
 {
-    "entityid": 3145839,
+    "entityid": 7340046,
     "general": {
-        "name": "Revolver Bullet",
+        "name": "Unscaled Revolver Bullet",
         "tagid": 10,
         "subtag": 0,
         "isActive": true,
@@ -9,19 +9,19 @@
     },
     "transform": {
         "scale": {
-            "x": 3.0,
-            "y": 0.20000000298023224,
-            "z": 0.20000000298023224
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
         },
         "rotate": {
             "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
+            "y": -0.0,
+            "z": 3.1415927410125732
         },
         "translate": {
-            "x": -3.3854620456695557,
-            "y": 3.4019582271575928,
-            "z": 1.597017765045166
+            "x": -0.4449167251586914,
+            "y": 3.7663381099700928,
+            "z": -0.12621977925300598
         }
     },
     "rigidbody": {
@@ -155,6 +155,6 @@
         ]
     },
     "prefab": {
-        "prefab": "Revolver Bullet"
+        "prefab": "Unscaled Revolver Bullet"
     }
 }
