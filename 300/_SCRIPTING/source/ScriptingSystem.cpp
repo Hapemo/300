@@ -118,6 +118,7 @@ void ScriptingSystem::Init()
     LuaUIrenderer();
     LuaAISetting();
     LuaHealth();
+    LuaButton();
 
     /******************************************************************************/
     /*!
