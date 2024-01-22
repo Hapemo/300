@@ -40,9 +40,12 @@ namespace GFX
 Loads the positions, texture coordinates, indices, normals and tangents from
 the geom data
 *******************************************************************************/
-		void LoadFromGeom(const _GEOM::Geom& GeomData, std::vector<vec3>& positions, std::vector<glm::vec2>& uvs, 
-						std::vector<unsigned int>& indices, std::vector<vec3>& normals, std::vector<vec3>& tangents);
+		static void LoadFromGeom(const _GEOM::Geom& GeomData, std::vector<vec3>& positions, std::vector<glm::vec2>& uvs, 
+									std::vector<unsigned int>& indices, std::vector<vec3>& normals, std::vector<vec3>& tangents);
 		
+		
+		static void LoadFromGeom(const _GEOM::Geom& GeomData, std::vector<vec3>& positions, std::vector<unsigned int>& indices);
+
 /*!*****************************************************************************
 Loads the animation data such as bone IDs and bone weight from the geom data
 *******************************************************************************/

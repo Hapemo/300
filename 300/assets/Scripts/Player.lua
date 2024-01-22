@@ -73,15 +73,15 @@ local original_translate_z
 local original_translation = Vec3.new()
 
 local gunJumpTimer = 0
-local gunDisplaceBackSpeed = 0.015
-local gunDisplaceSpeed = 0.015
+local gunDisplaceBackSpeed = 0.01
+local gunDisplaceSpeed = 0.01
 local gunMaxAcceleration = 100
 
-local gunThreshHold_max_y = -0.15
-local gunThreshHold_min_y = -0.9
+local gunThreshHold_max_y = -0.2
+local gunThreshHold_min_y = -0.5
 
-local gunThreshHold_min_x = 0.15 
-local gunThreshHold_max_x = 0.9
+local gunThreshHold_min_x = 0.4
+local gunThreshHold_max_x = 0.6
 
 local gunJumped = false -- for gun animation
 

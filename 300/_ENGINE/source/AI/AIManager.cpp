@@ -8,6 +8,7 @@
 
 #define Rubberbanding 1
 #define QUICKFIX 1
+#define PATHFINDERFREQUENCY 1 // Time interval between each run of pathfind
 
 #define IGNORETAGS { "GRAPH", "BULLET", "UI", "OTHERS" }
 
@@ -42,16 +43,27 @@ glm::vec3 AIManager::GetDirection(Entity _e) {
 
 	if (CheckUseAStar(_e, aiSetting)) {
 #if QUICKFIX
-		if (delayContainer.find(_e) == delayContainer.end()) {
-			delayContainer[_e] = {30, glm::vec3()};
-		}
+		//// If can't find entity in pathfinder
+		//if (delayContainer.find(_e) == delayContainer.end()) {
+		//	delayContainer[_e] = {30, glm::vec3()};
+		//}
 
-		if (++(delayContainer[_e].first) > 30) {
-			dir = delayContainer[_e].second = GetAStarDir(_e, aiSetting);
-			delayContainer[_e].first = 0;
-		} else dir = delayContainer[_e].second;
+		float* time = &mPathfindHistoryList[_e].first;
+		*time += FPSManager::dt;
+		if (*time > PATHFINDERFREQUENCY) {
+			std::string name = _e.GetComponent<General>().name;
+			dir = mPathfindHistoryList[_e].second = GetAStarDir(_e, aiSetting);
+			*time = 0;
+		} else dir = mPathfindHistoryList[_e].second;
+
+
+		//if (++(mPathfindHistoryList[_e].first) > 30) {
+		//	dir = delayContainer[_e].second = GetAStarDir(_e, aiSetting);
+		//	delayContainer[_e].first = 0;
+		//} else dir = delayContainer[_e].second;
+#else
+		dir = GetAStarDir(_e, aiSetting);
 #endif
-		//dir = GetAStarDir(_e, aiSetting);
 	} else {
 		switch (aiSetting.mMovementType) {
 		case E_MOVEMENT_TYPE::GROUND_DIRECT: dir = CalcGroundAIDir(_e);
@@ -133,6 +145,9 @@ void AIManager::InitialiseAI(Entity _e) {
 	if (setting.mMovementType != E_MOVEMENT_TYPE::BEGIN)
 		mAILists[mMovementTypeArray[static_cast<int>(setting.mMovementType)]].insert(_e);
 	setting.SetTarget(systemManager->mGameStateSystem->GetEntity(setting.mTargetName));
+	
+	// Add to mPathfindHistoryList
+	if (setting.mGraphDataName.size()) mPathfindHistoryList[_e] = { PATHFINDERFREQUENCY, glm::vec3() };
 }
 
 void AIManager::InitAIs() {
@@ -291,6 +306,12 @@ glm::vec3 AIManager::GetAStarDir(Entity _e, AISetting const& _setting) {
 		//PINFO("%s unable to find path with pathfinding", _e.GetComponent<General>().name);
 		return glm::vec3();
 	}
+}
+
+std::vector<glm::vec3> AIManager::GetAStarPath(Entity _e, AISetting const& _setting) {
+	std::vector<glm::vec3> astarPath = systemManager->GetPathfinderManager()->AStarPath(_e, _setting.GetTarget(), { 40.f, IGNORETAGS });
+	std::reverse(astarPath.begin(), astarPath.end());
+	return astarPath;
 }
 
 bool AIManager::CheckUseAStar(Entity _e, AISetting const& _setting) {
