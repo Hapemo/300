@@ -24,6 +24,7 @@ void ButtonSystem::Update()
 	mouseX -= 1.f;
 	mouseY *= -2.f;
 	mouseY += 1.f;
+
 	// Map the Mouse Position (top left origin[0, 1] to center origin)
 	// Update all Button
 	auto entities = systemManager->ecs->GetEntitiesWith<Button>();
@@ -54,11 +55,16 @@ bool ButtonSystem::CheckHover(Entity e, vec2 mousePos)
 {
 	// Get Transform of button
 	Transform buttonTransform = e.GetComponent<Transform>();
-	if (mousePos.x < buttonTransform.mTranslate.x - 0.5f * buttonTransform.mScale.x) return false;
-	if (mousePos.x > buttonTransform.mTranslate.x + 0.5f * buttonTransform.mScale.x) return false;	
-	if (mousePos.y < buttonTransform.mTranslate.y - 0.5f * buttonTransform.mScale.y) return false;
-	if (mousePos.y > buttonTransform.mTranslate.y + 0.5f * buttonTransform.mScale.y) return false;
+	if (mousePos.x < -0.7f) {
+		mousePos.x = mousePos.x;
+	}
+	float scaleX = 0.5f * std::fabsf(buttonTransform.mScale.x);
+	float scaleY = 0.5f * std::fabsf(buttonTransform.mScale.y);
 
+	if (mousePos.x < buttonTransform.mTranslate.x - scaleX) return false;
+	if (mousePos.x > buttonTransform.mTranslate.x + scaleX) return false;	
+	if (mousePos.y < buttonTransform.mTranslate.y - scaleY) return false;
+	if (mousePos.y > buttonTransform.mTranslate.y + scaleY) return false;
 	return true;
 }
 
