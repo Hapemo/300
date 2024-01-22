@@ -13,7 +13,7 @@ local bobbleIntensity
 local triggerExplosionDistance
 
 local state
-local explodingTimer = 2
+local explodingTimer = 1.0416 -- based on animation time
 local explodingTimerCount = 0
 
 function Alive()
@@ -75,6 +75,7 @@ function Update()
     if state == "EXPLODING" then
         explodingTimerCount = explodingTimerCount + FPSManager.GetDT()
         if explodingTimerCount > explodingTimer then 
+            --print("kamekazi")
             gameStateSys:GetEntity("ZipBombFuseAudio"):GetAudio():SetStop()
             Kamekazi() 
         end
@@ -82,14 +83,9 @@ function Update()
     end
 
     -- #region Check should explode
-    local exploding = false
     if Helper.Vec3Len(Helper.Vec3Minus(targetPos, thisPos)) < triggerExplosionDistance then kamekazi = true end
-    if this:GetHealthbar().health <= 0 then exploding = true end
+    if this:GetHealthbar().health <= 0 then StartExploding() end
 
-    if exploding then 
-        state = "EXPLODING"
-        gameStateSys:GetEntity("ZipBombFuseAudio"):GetAudio():SetPlay()
-    end
 
     -- #endregion
 
@@ -113,7 +109,7 @@ end
 
 function OnContactEnter(Entity)
     if Entity == target then --player id
-        Kamekazi()
+        StartExploding()
     end
 end
 
@@ -127,3 +123,9 @@ function Kamekazi()
     systemManager.ecs:SetDeleteEntity(this)
 end
 
+function StartExploding()
+    state = "EXPLODING"
+    --print("exploding")
+    gameStateSys:GetEntity("ZipBombFuseAudio"):GetAudio():SetPlay()
+    this:GetMeshRenderer():SetMesh("Zip_exploding", this) -- Start exploding animation 
+end

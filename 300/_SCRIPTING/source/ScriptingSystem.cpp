@@ -114,10 +114,10 @@ void ScriptingSystem::Init()
     LuaVFX();
     LuaGameState();
     LuaAIManager();
-    LuaButton();
     LuaUIrenderer();
     LuaAISetting();
     LuaHealth();
+    LuaButton();
 
     /******************************************************************************/
     /*!

@@ -2,32 +2,30 @@
 
 void ButtonSystem::Init()
 {
-	mWindowWidth = systemManager->GetWindow()->GetScreenWidth();
-	mWindowHeight = systemManager->GetWindow()->GetScreenHeight();
+	window = systemManager->GetWindow();
 }
 
 void ButtonSystem::Update()
 {
-	// Update the screen size
-	mWindowWidth = systemManager->GetWindow()->GetScreenWidth();
-	mWindowHeight = systemManager->GetWindow()->GetScreenHeight();
-
 	// Get Mouse Position
 	double mouseX{}, mouseY{};
 
 	if (systemManager->IsEditor())
 	{
-		// TODO: @Han: Use function that gets the position of the cursor within the game scene panel [0, 1] with top left as Origin
+		mouseX = imguiButtonX;
+		mouseY = imguiButtonY;
 	}
-	else
-		systemManager->GetWindow()->GetCursorPos(&mouseX, &mouseY);
+	else {
+		window->GetCursorPos(&mouseX, &mouseY);
+		mouseX /= window->GetScreenWidth();
+		mouseY /= window->GetScreenHeight();
+	}
+	mouseX *= 2.f;
+	mouseX -= 1.f;
+	mouseY *= -2.f;
+	mouseY += 1.f;
 
 	// Map the Mouse Position (top left origin[0, 1] to center origin)
-	mouseX -= 0.5;
-	mouseY -= 0.5;
-	mouseX *= mWindowWidth;
-	mouseY *= -mWindowHeight;
-
 	// Update all Button
 	auto entities = systemManager->ecs->GetEntitiesWith<Button>();
 	for (Entity ent : entities)
@@ -57,11 +55,16 @@ bool ButtonSystem::CheckHover(Entity e, vec2 mousePos)
 {
 	// Get Transform of button
 	Transform buttonTransform = e.GetComponent<Transform>();
-	if (mousePos.x < buttonTransform.mTranslate.x - 0.5f * buttonTransform.mScale.x) return false;
-	if (mousePos.x > buttonTransform.mTranslate.x + 0.5f * buttonTransform.mScale.x) return false;	
-	if (mousePos.y < buttonTransform.mTranslate.y - 0.5f * buttonTransform.mScale.y) return false;
-	if (mousePos.y > buttonTransform.mTranslate.y + 0.5f * buttonTransform.mScale.y) return false;
+	if (mousePos.x < -0.7f) {
+		mousePos.x = mousePos.x;
+	}
+	float scaleX = 0.5f * std::fabsf(buttonTransform.mScale.x);
+	float scaleY = 0.5f * std::fabsf(buttonTransform.mScale.y);
 
+	if (mousePos.x < buttonTransform.mTranslate.x - scaleX) return false;
+	if (mousePos.x > buttonTransform.mTranslate.x + scaleX) return false;	
+	if (mousePos.y < buttonTransform.mTranslate.y - scaleY) return false;
+	if (mousePos.y > buttonTransform.mTranslate.y + scaleY) return false;
 	return true;
 }
 
