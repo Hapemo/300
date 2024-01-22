@@ -30,6 +30,17 @@ struct PointLight           // 48 Bytes
     float   padding;        // 44
 };
 
+struct SpotLight            // 64 Bytes
+{
+	vec4    position;       // 0
+	vec4    target;         // 16
+	vec4    color;          // 32
+	float   cutoff;         // 48
+	float   outerCutoff;    // 52
+	float   intensity;      // 56
+	float   pad;            // 60
+};
+
 layout (std430, binding = 2) buffer pointLightBuffer
 {
     PointLight pointLights[];
@@ -133,6 +144,27 @@ vec3 ComputeLight(PointLight light, vec3 F0, vec3 fragPos, vec3 albedo, vec3 nor
     // Return to add to outgoing radiance
     float NdotL = max(dot(normal, L), 0.0);
     return (kD * albedo / PI + specular) * radiance * NdotL;
+}
+
+vec3 ComputeSpotLight(SpotLight light, vec3 fragPos, vec3 albedo, vec3 normal, float roughness, float metallic)
+{
+    vec3 lightToFragDir = light.position.xyz - fragPos;
+    vec3 lightDir = light.target.xyz - light.position.xyz;
+
+    // Diffuse
+    vec3 norm = normalize(normal);
+    float diff = max(dot(norm, lightToFragDir), 0.0);
+    vec3 diffuse = light.color.rgb * diff * albedo;
+
+    float theta = dot(lightToFragDir, normalize(-lightDir));
+    float epsilon = light.cutoff - light.outerCutoff;
+    float intensity = clamp((theta - light.outerCutoff) / epsilon, 0.0, 1.0);
+
+    // placeholder, To be Changed
+    diffuse *= intensity;
+    metallic *= intensity;
+
+    return diffuse + metallic;
 }
 
 float CalculateAttenuation(float linear, float quadratic, float distance)

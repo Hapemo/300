@@ -758,6 +758,10 @@ struct Healthbar : public Serializable
 	float mMaxHealth;
 	float mHealth;
 
+	// TODO: Han to add textures for frame and healthbar
+	// Ref mFrameTexture;
+	// Ref mHealthTexture;
+
 	void Inspect();
 	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
 	void DeserializeSelf(rapidjson::Value& reader);
