@@ -12,11 +12,9 @@ local bobbleIntensity
 local targetPos
 local thisPos
 
-local AttackSpeed = 1.75
-local AttackTimer = 0
-local AttackAnimation = 2.375
+local AttackSpeed
+local AttackTimer
 local ShotSpeed
-local Attacked = false -- This run once every attack 
 
 local inLineOfSight
 
@@ -38,6 +36,8 @@ function Alive()
     bobbleFrequency = 1
     bobbleIntensity = 0.5
 
+    AttackSpeed = 1
+    AttackTimer = 0
     ShotSpeed = 10
 
     state = ""
@@ -45,50 +45,28 @@ function Alive()
 end
 
 function Update()
-    targetPos = this:GetAISetting():GetTarget():GetTransform().mTranslate
-    thisPos = this:GetTransform().mTranslate
-    inLineOfSight = aiSys:LineOfSight(this, this:GetAISetting():GetTarget())
-
-    if inLineOfSight and not (state == "ATTACK") then
-        -- if (state == "ATTACK")
-        --print(state)
-        --print("Attack init")
-        ATTACKinit()
-    elseif not inLineOfSight and state ~= "IDLE" then
-        if AttackTimer > AttackAnimation then -- If attack animation ended already
-            --print()
-            IDLEinit()
-        end
-    end
 
     if state == "DEATH" then
         if deathTimerCount > deathTimer then systemManager.ecs:SetDeleteEntity(this) end
         deathTimerCount = deathTimerCount + FPSManager.GetDT()
         return
-    elseif state == "ATTACK" then
-        AttackTimer = AttackTimer + FPSManager.GetDT()
-        if (not Attacked) and AttackTimer > AttackSpeed then
-            --print(Attacked)
-            Shoot()
-            Attacked = true
-        elseif AttackTimer > AttackAnimation then -- Attack animation ended, reset attack
-            --print("Reset attack")
-            AttackTimer = 0
-            Attacked = false
-        end
     end
 
     -- if systemManager:mInputActionSystem():GetButtonDown("Test3") then
     --     this:GetHealthbar().health = this:GetHealthbar().health - 10
     -- end
 
-    
-    
+    targetPos = this:GetAISetting():GetTarget():GetTransform().mTranslate
+    thisPos = this:GetTransform().mTranslate
+    inLineOfSight = aiSys:LineOfSight(this, this:GetAISetting():GetTarget())
+    --meshrenderer = this:GetMeshRenderer():SetMesh("Arrow", this) -- C:\300\300\assets\compiled_geom\arrow.geom
+
     -- Health logic
     if this:GetHealthbar().health <= 0 then StartDeath() end
 
     ILOVEYOUMovement()
 
+    ILOVEYOUAttack()
 
 end
 
@@ -154,32 +132,16 @@ end
 
 function ILOVEYOUAttack()
     if not inLineOfSight then return end -- No line of sight, don't attack
-    this:GetMeshRenderer():SetMesh("ILY_attack", this) -- Change back to idle animation 
     AttackTimer = AttackTimer + FPSManager.GetDT()
-    if (not Attacked) and AttackTimer > AttackSpeed then
-
+    if AttackTimer > AttackSpeed then
         Shoot()
         AttackTimer = 0
     end
 end
 
-function ATTACKinit()
-    state = "ATTACK"
-    this:GetMeshRenderer():SetMesh("ILY_attack", this) -- Change back to attack animation
-    AttackTimer = 0
-    Attacked = false
-end
-
-function IDLEinit()
-    state = "IDLE"
-    this:GetMeshRenderer():SetMesh("ILY", this) -- Change back to idle animation 
-end
-
 function Shoot()
     this:GetAudio():SetPlay()
-    local pos = thisPos
-    pos.y = pos.y + 1
-    local bullet = systemManager.ecs:NewEntityFromPrefab("EnemyBullet", pos)
+    local bullet = systemManager.ecs:NewEntityFromPrefab("EnemyBullet", thisPos)
     -- local bulletVec = Helper.Scale(Helper.Normalize(Helper.Vec3Minus(targetPos, thisPos)), ShotSpeed)
     -- phySys:SetVelocity(bullet, bulletVec)
     -- aiSys:SetPredictiveVelocity(bullet, this:GetAISetting():GetTarget(), ShotSpeed)

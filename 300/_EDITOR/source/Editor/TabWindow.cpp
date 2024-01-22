@@ -75,7 +75,8 @@ void TabWindow::update()
 	bool ischecked = systemManager->mGraphicsSystem->m_DebugDrawing;
 	if (ImGui::Checkbox("##Debug", &ischecked)) {
 		systemManager->mGraphicsSystem->m_DebugDrawing = ischecked ? 1 : 0;
-		systemManager->mGraphicsSystem->m_GlobalTint.w = ischecked ? 0.3f : 1.f;
+		systemManager->mGraphicsSystem->m_GlobalTint.w = ischecked ? 0.95f : 1.f;
+		//systemManager->mGraphicsSystem->m_GlobalTint.w = ischecked ? 0.3f : 1.f;
 	}
 
 
