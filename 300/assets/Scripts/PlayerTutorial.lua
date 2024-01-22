@@ -61,6 +61,7 @@ local dashAudioComp
 local gunEntity
 local gunTranslate = Vec3.new()
 local gunRotation = Vec3.new()
+local gunTransform = Vec3.new()
 
 local original_translate_x
 local original_translate_y
@@ -214,8 +215,16 @@ function Alive()
 
     -- Gun Stuff --
     gunEntity = gameStateSys:GetEntity("gun")
+
+    -- -- Testing [ParentChildRotateInit]
+    gunTransform = cameraEntity:GetTransform()
+    gunTransform:ParentChildRotateInit('x', 40)
+        
     gunInitialTranslate = gunEntity:GetTransform().mTranslate
     gunRotation = gunEntity:GetTransform().mRotate
+
+    -- gunTransform = gunEntity:GetTransform()
+    -- gunTransform:ParentChildRotateInit()
 
     -- Original Gun Position --
     original_translate_x =  gunInitialTranslate.x
@@ -228,6 +237,7 @@ end
 
 function Update()
     gunTranslate = gunEntity:GetTransform().mTranslate
+
     -- Example: I want to get HP from AITest.lua script (getting walking enemy's hp)
     -- scriptingSys = systemManager:mScriptingSystem();
     -- scriptingComp = walkingenemy:GetScripts()
@@ -238,6 +248,9 @@ function Update()
     -- end
 
     dt = FPSManager.GetDT()
+
+    -- For Gun Rotation
+    gunTransform:ParentChildRotateUpdate(dt)
     
 --region -- player camera
     if(inputMapSys:GetButtonDown("Mouse")) then

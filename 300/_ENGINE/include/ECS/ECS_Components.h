@@ -99,6 +99,7 @@ struct Transform : public Serializable
 	// parent child rotate member variables
 	float mCumulativeTime{};
 	char  mRotationAxis;
+	float mRotationDegrees;
 
 
 	Transform() : mScale(1.f), mRotate(0.f), mTranslate(0.f) {}

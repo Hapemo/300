@@ -152,6 +152,7 @@ local dashZ
 local inittedDash = false
 
 function Alive()
+
     gameStateSys = systemManager:mGameStateSystem();
     inputMapSys = systemManager:mInputActionSystem();
     physicsSys = systemManager:mPhysicsSystem();
@@ -162,7 +163,7 @@ function Alive()
     totaltime = 3.0
 
     cameraPhysicsComp = cameraEntity:GetRigidBody()
-    
+
     dashui = gameStateSys:GetEntityByScene("dashui" , "UI")
 
     bulletAudioEntity = gameStateSys:GetEntity("Bullet Shoot" )
