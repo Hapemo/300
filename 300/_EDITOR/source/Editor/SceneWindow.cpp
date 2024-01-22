@@ -91,8 +91,8 @@ void SceneWindow::update()
 		}
 	}
 
-	systemManager->mButtonSystem->imguiButtonX = ImGui::GetMousePos().x - ImGui::GetWindowPos().x / winSize.x;
-	systemManager->mButtonSystem->imguiButtonY = ImGui::GetMousePos().y - ImGui::GetWindowPos().y / winSize.y;
+	systemManager->mButtonSystem->imguiButtonX = (ImGui::GetMousePos().x - ImGui::GetWindowPos().x) / winSize.x;
+	systemManager->mButtonSystem->imguiButtonY = (ImGui::GetMousePos().y - ImGui::GetWindowPos().y) / winSize.y;
 	
 	ImVec4 ve4scale = (Scale == false) ? ImVec4(0, 0, 0, 0.2f) : ImVec4(1, 1, 1, 0.6f);
 	ImVec4 vec4rotate = (Rotate == false) ? ImVec4(0, 0, 0, 0.2f) : ImVec4(1, 1, 1, 0.6f);

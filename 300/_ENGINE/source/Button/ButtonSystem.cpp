@@ -2,16 +2,11 @@
 
 void ButtonSystem::Init()
 {
-	mWindowWidth = systemManager->GetWindow()->GetScreenWidth();
-	mWindowHeight = systemManager->GetWindow()->GetScreenHeight();
+	window = systemManager->GetWindow();
 }
 
 void ButtonSystem::Update()
 {
-	// Update the screen size
-	mWindowWidth = systemManager->GetWindow()->GetScreenWidth();
-	mWindowHeight = systemManager->GetWindow()->GetScreenHeight();
-
 	// Get Mouse Position
 	double mouseX{}, mouseY{};
 
@@ -20,15 +15,16 @@ void ButtonSystem::Update()
 		mouseX = imguiButtonX;
 		mouseY = imguiButtonY;
 	}
-	else
-		systemManager->GetWindow()->GetCursorPos(&mouseX, &mouseY);
-	std::cout << "x:" << mouseX << ", y:" << mouseY << std::endl;
+	else {
+		window->GetCursorPos(&mouseX, &mouseY);
+		mouseX /= window->GetScreenWidth();
+		mouseY /= window->GetScreenHeight();
+	}
+	mouseX *= 2.f;
+	mouseX -= 1.f;
+	mouseY *= -2.f;
+	mouseY += 1.f;
 	// Map the Mouse Position (top left origin[0, 1] to center origin)
-	mouseX -= 0.5;
-	mouseY -= 0.5;
-	mouseX *= mWindowWidth;
-	mouseY *= -mWindowHeight;
-
 	// Update all Button
 	auto entities = systemManager->ecs->GetEntitiesWith<Button>();
 	for (Entity ent : entities)
