@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 1048826,
+        "entityid": 1,
         "general": {
             "name": "StartButton",
             "tagid": 6,
@@ -20,7 +20,7 @@
                 "z": 0.0
             },
             "translate": {
-                "x": -0.4569999873638153,
+                "x": -0.44699999690055847,
                 "y": 0.33000001311302185,
                 "z": 0.0
             }
@@ -56,6 +56,9 @@
             "volume": 0.20000000298023224,
             "retainaudio": false
         },
+        "prefab": {
+            "prefab": "StartButton"
+        },
         "button": {
             "interactable": true,
             "hover": false,
@@ -65,7 +68,7 @@
         }
     },
     {
-        "entityid": 1048827,
+        "entityid": 2,
         "general": {
             "name": "Awake",
             "tagid": 0,
@@ -102,7 +105,7 @@
         }
     },
     {
-        "entityid": 1048828,
+        "entityid": 3,
         "general": {
             "name": "QuitButton",
             "tagid": 6,
@@ -112,7 +115,7 @@
         },
         "transform": {
             "scale": {
-                "x": 0.4050000011920929,
+                "x": 0.38499999046325684,
                 "y": -0.3009999990463257,
                 "z": 1.0
             },
@@ -122,7 +125,7 @@
                 "z": 0.0
             },
             "translate": {
-                "x": -0.44699999690055847,
+                "x": -0.43700000643730164,
                 "y": -0.7699999809265137,
                 "z": 0.0
             }
@@ -160,14 +163,14 @@
         },
         "button": {
             "interactable": true,
-            "hover": true,
-            "click": true,
+            "hover": false,
+            "click": false,
             "activated": false,
             "renderflag": true
         }
     },
     {
-        "entityid": 1048829,
+        "entityid": 4,
         "general": {
             "name": "Click",
             "tagid": 6,
@@ -204,7 +207,7 @@
         }
     },
     {
-        "entityid": 1048830,
+        "entityid": 5,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -249,7 +252,7 @@
         }
     },
     {
-        "entityid": 1048831,
+        "entityid": 6,
         "general": {
             "name": "BGM",
             "tagid": 0,
@@ -286,47 +289,7 @@
         }
     },
     {
-        "entityid": 1048832,
-        "general": {
-            "name": "MenuBackground",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 2.0,
-                "y": -2.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "../assets/Compressed/MainMenuEmpty.ctexture",
-            "textureref": 131267284,
-            "degree": 0.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 0,
-            "worldtransform": false
-        }
-    },
-    {
-        "entityid": 1048833,
+        "entityid": 8,
         "general": {
             "name": "CreditsButton",
             "tagid": 6,
@@ -384,14 +347,14 @@
         },
         "button": {
             "interactable": true,
-            "hover": true,
-            "click": true,
+            "hover": false,
+            "click": false,
             "activated": false,
             "renderflag": true
         }
     },
     {
-        "entityid": 1048834,
+        "entityid": 9,
         "general": {
             "name": "MenuBackground",
             "tagid": 6,
@@ -431,7 +394,7 @@
         }
     },
     {
-        "entityid": 1048835,
+        "entityid": 10,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -468,7 +431,7 @@
                 "z": 0.0
             },
             "size": {
-                "x": 1212,
+                "x": 1152,
                 "y": 639
             },
             "near": 0.10000000149011612,
@@ -476,7 +439,7 @@
         }
     },
     {
-        "entityid": 1048836,
+        "entityid": 11,
         "general": {
             "name": "Exit",
             "tagid": 0,
@@ -510,6 +473,142 @@
             "audiotype": 1,
             "volume": 0.6000000238418579,
             "retainaudio": false
+        }
+    },
+    {
+        "entityid": 12,
+        "general": {
+            "name": "SettingsButton",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.39500001072883606,
+                "y": -0.26100000739097595,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -0.4300000071525574,
+                "y": -0.20999999344348907,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 3113566441,
+            "degree": 0.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 1,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/MainMenuButtons.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "UI_Button_Hover.wav",
+            "fullpath": "../assets\\Audio/UI_Button_Hover.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 0.20000000298023224,
+            "retainaudio": false
+        },
+        "prefab": {
+            "prefab": "StartButton"
+        },
+        "button": {
+            "interactable": true,
+            "hover": false,
+            "click": false,
+            "activated": false,
+            "renderflag": true
+        }
+    },
+    {
+        "entityid": 1048583,
+        "general": {
+            "name": "HTPButton",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.5353000164031982,
+                "y": -0.29100000858306885,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -0.4350000023841858,
+                "y": 0.04500000178813934,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 2586813445,
+            "degree": 0.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 1,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/MainMenuButtons.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "UI_Button_Hover.wav",
+            "fullpath": "../assets\\Audio/UI_Button_Hover.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 0.20000000298023224,
+            "retainaudio": false
+        },
+        "prefab": {
+            "prefab": "StartButton"
+        },
+        "button": {
+            "interactable": true,
+            "hover": false,
+            "click": false,
+            "activated": false,
+            "renderflag": true
         }
     }
 ]
