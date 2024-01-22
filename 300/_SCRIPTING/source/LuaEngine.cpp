@@ -377,16 +377,6 @@ void LuaAIManager()
     );
 }
 
-void LuaButton()
-{
-    systemManager->mScriptingSystem->luaState.new_usertype<Button>(
-        "Button", sol::constructors<>(),
-        "IsInteractable", &Button::IsInteractable,
-        "IsHovered", &Button::IsHovered,
-        "IsClicked", &Button::IsClicked,
-        "IsActivated", &Button::IsActivated);
-}
-
 void LuaUIrenderer()
 {
     systemManager->mScriptingSystem->luaState.new_usertype<UIrenderer>(
