@@ -51,8 +51,14 @@ function Update()
     -- start button
     if(gen.name == "StartButton") then
         if (button.mIsHover) then
-            hoverSFX = ent:GetAudio()
-            hoverSFX:SetPlay(0.2)
+            if (hoverOver == false) then
+                hoverSFX = ent:GetAudio()
+                hoverSFX:SetPlay(0.2)
+                hoverOver = true;
+            end
+        end
+        if (button.mIsHover == false) then
+            hoverOver = false;
         end
         if (button.mActivated) then
             clickSFX:SetPlay(1.0)
@@ -64,8 +70,14 @@ function Update()
     -- quit button
     if(gen.name == "QuitButton") then
         if (button.mIsHover) then
-            hoverSFX = ent:GetAudio()
-            hoverSFX:SetPlay(0.2)
+            if (hoverOver == false) then
+                hoverSFX = ent:GetAudio()
+                hoverSFX:SetPlay(0.2)
+                hoverOver = true;
+            end
+        end
+        if (button.mIsHover == false) then
+            hoverOver = false;
         end
         if (button.mActivated) then
                 exitSFX:SetPlay(0.2)
@@ -78,8 +90,14 @@ function Update()
     -- credits button
     if(gen.name == "CreditsButton") then
         if (button.mIsHover) then
-            hoverSFX = ent:GetAudio()
-            hoverSFX:SetPlay(0.2)
+            if (hoverOver == false) then
+                hoverSFX = ent:GetAudio()
+                hoverSFX:SetPlay(0.2)
+                hoverOver = true;
+            end
+        end
+        if (button.mIsHover == false) then
+            hoverOver = false;
         end
         if (button.mActivated) then
             clickSFX:SetPlay(1.0)
@@ -90,8 +108,14 @@ function Update()
     -- credits (back) button
     if(gen.name == "CreditsBackButton") then
         if (button.mIsHover) then
-            hoverSFX = ent:GetAudio()
-            hoverSFX:SetPlay(0.2)
+            if (hoverOver == false) then
+                hoverSFX = ent:GetAudio()
+                hoverSFX:SetPlay(0.2)
+                hoverOver = true;
+            end
+        end
+        if (button.mIsHover == false) then
+            hoverOver = false;
         end
         if (button.mActivated) then
             clickSFX:SetPlay(0.2)
@@ -102,8 +126,14 @@ function Update()
     -- restart level button
     if(gen.name == "RetryLevelButton") then
         if (button.mIsHover) then
-            hoverSFX = ent:GetAudio()
-            hoverSFX:SetPlay(0.2)
+            if (hoverOver == false) then
+                hoverSFX = ent:GetAudio()
+                hoverSFX:SetPlay(0.2)
+                hoverOver = true;
+            end
+        end
+        if (button.mIsHover == false) then
+            hoverOver = false;
         end
         if (button.mActivated) then
             clickSFX:SetPlay(1.0)
@@ -114,8 +144,14 @@ function Update()
     -- back to main menu button
     if(gen.name == "BackToMainMenuButton") then
         if (button.mIsHover) then
-            hoverSFX = ent:GetAudio()
-            hoverSFX:SetPlay(0.2)
+            if (hoverOver == false) then
+                hoverSFX = ent:GetAudio()
+                hoverSFX:SetPlay(0.2)
+                hoverOver = true;
+            end
+        end
+        if (button.mIsHover == false) then
+            hoverOver = false;
         end
         if (button.mActivated) then
             clickSFX:SetPlay(1.0)
