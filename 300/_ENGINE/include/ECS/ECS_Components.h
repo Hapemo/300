@@ -81,6 +81,7 @@ struct General : public Serializable
 	//RTTR_ENABLE()
 };
 
+
 /******************************************************************************/
 /*!
 	[Component] - Transform
@@ -94,6 +95,10 @@ struct Transform : public Serializable
 
 	// 3D audio support 
 	glm::vec3 mPreviousPosition;
+	
+	// parent child rotate member variables
+	float mCumulativeTime{};
+	char  mRotationAxis;
 
 
 	Transform() : mScale(1.f), mRotate(0.f), mTranslate(0.f) {}
@@ -102,6 +107,9 @@ struct Transform : public Serializable
 	void Inspect();
 	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
 	void DeserializeSelf(rapidjson::Value& reader);
+	
+	void parentChildRotateInit(char axis, float angle);
+	void parentChildRotateUpdate(float dt);
 	//RTTR_ENABLE()
 };
 
@@ -117,6 +125,7 @@ struct Animator
 	void Inspect();
 	void PauseAnimation() { mAnimator.mIsPaused = true; }
 	void UnpauseAnimation() { mAnimator.mIsPaused = false; }
+	bool IsEndOfAnimation();
 };
 
 /******************************************************************************/

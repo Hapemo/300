@@ -17,6 +17,7 @@
 #include <Animator.hpp>
 
 #include "Graphics/GraphicsSystem.h"
+#include <ECS/ECS_Components.h>
 
 
 namespace GFX
@@ -125,3 +126,18 @@ namespace GFX
         }
     }
 }
+
+
+//!< ENGINE NAMESPACE >
+bool Animator::IsEndOfAnimation()
+{
+    // the next frame will loop the animation back to the beginning
+    if ((mAnimator.m_CurrentTime + (mAnimator.m_CurrentAnimation->m_TicksPerSecond * mAnimator.m_DeltaTime)) >= mAnimator.m_CurrentAnimation->m_Duration)
+    {
+        return true;
+    }
+    return false;
+}
+
+// thisentity.IsEndOfAnimation()
+// 
