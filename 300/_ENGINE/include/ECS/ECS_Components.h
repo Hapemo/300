@@ -89,6 +89,12 @@ struct General : public Serializable
  /******************************************************************************/
 struct Transform : public Serializable
 {
+	// Added [M4 - 23/1/2024]
+	enum GunAnimations
+	{
+		REVOLVER
+	};
+
 	glm::vec3 mScale;
 	glm::vec3 mRotate;
 	glm::vec3 mTranslate;
@@ -101,6 +107,7 @@ struct Transform : public Serializable
 	char      mRotationAxis;		  // x, y, z
 	float     mRotationDegrees;		  // rotation amount
 	glm::vec3 mRotateAxisVector;      // rotation vector based on 'mRotationAxis' & 'mRotationDegrees'
+	GunAnimations mGunAnim;
 
 
 	Transform() : mScale(1.f), mRotate(0.f), mTranslate(0.f) {}
@@ -112,6 +119,8 @@ struct Transform : public Serializable
 	
 	void parentChildRotateInit(char axis, float angle);
 	void parentChildRotateUpdate(float dt);
+	
+
 	//RTTR_ENABLE()
 };
 

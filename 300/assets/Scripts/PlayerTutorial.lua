@@ -218,7 +218,7 @@ function Alive()
 
     -- -- Testing [ParentChildRotateInit]
     gunTransform = gunEntity:GetTransform()
-    gunTransform:ParentChildRotateInit('x', 360)
+    gunTransform:ParentChildRotateInit('x', 30)
         
     gunInitialTranslate = gunEntity:GetTransform().mTranslate
     gunRotation = gunEntity:GetTransform().mRotate

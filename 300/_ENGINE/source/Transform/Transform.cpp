@@ -44,6 +44,12 @@ void Transform::parentChildRotateInit(char axis, float angle)
 void Transform::parentChildRotateUpdate(float dt)
 {
 	std::cout << "Parent Child Update" << std::endl;
+
+	switch (mGunAnim)
+	{
+	case REVOLVER:
+			
+	}
 	
 
 	// if this has ended, 
@@ -78,24 +84,7 @@ void Transform::parentChildRotateUpdate(float dt)
 
 		// Decreament delta time.
 		mCumulativeTime -= dt;
-	
-		
 	}
 	
-	//else // cumulative is more than 0 (continue rotating)
-	//{
-	//	// Calculate the quaternion for the rotation
-	//	glm::quat rotationQuaternion = glm::angleAxis(glm::radians(mRotate.y), glm::vec3(0.0f, 1.0f, 0.0f));
-
-	//	// Update the cumulative time
-	//	mCumulativeTime -= dt;
-
-	//	// Apply the rotation to the current rotation
-	//	glm::quat currentRotation = glm::angleAxis(glm::radians(mRotate.y), glm::vec3(0.0f, 1.0f, 0.0f));
-
-	//	// Update the rotation
-	//	mRotate = glm::eulerAngles(currentRotation);
-	//}
-
-	
 }
+
