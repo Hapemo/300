@@ -2,7 +2,7 @@
 
 // -- INPUTS --
 layout (location = 0) in vec4 fHealthColor;		// r, g, b: Health color | a: Health value
-layout (location = 1) in vec4 fBackColor;		// r, g, b, a: Back health color
+layout (location = 1) in vec4 fBackColor;		// R: texture ID | G: Contains texture if < 0 | B: Frame UI if > 0)
 layout (location = 2) in vec2 fTexCoords;
 
 // -- OUTPUTS --
@@ -13,15 +13,22 @@ uniform sampler2D uTex2d[32];
 
 void main()
 {
-	float health = fHealthColor.a * 0.01;
-
-	if (fTexCoords.x < health)
-		fragColor = vec4(fHealthColor.rgb, fBackColor.a);
+	if (fBackColor.b > 0)	// Render frame UI
+	{
+		fragColor = texture(uTex2d[int(fBackColor.x)], fTexCoords);
+	}
 	else
 	{
-		if (fBackColor.y < 0)	// Have UI texture
-			fragColor = texture(uTex2d[int(fBackColor.x)], fTexCoords);
+		float health = fHealthColor.a * 0.01;
+
+		if (fTexCoords.x > health)
+			fragColor = vec4(fHealthColor.rgb, fBackColor.a);
 		else
-			fragColor = fBackColor;
+		{
+			if (fBackColor.g < 0)	// Have UI texture
+				fragColor = texture(uTex2d[int(fBackColor.x)], fTexCoords);
+			else
+				fragColor = fBackColor;
+		}
 	}
 }
