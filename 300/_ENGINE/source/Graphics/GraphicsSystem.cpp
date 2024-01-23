@@ -283,7 +283,7 @@ void GraphicsSystem::Draw(float dt, bool forEditor)
 	ComputeDeferredLight(forEditor);
 	
 	//!< === POST PROCESSING AND UI AREA ===
-	if (forEditor)
+	if (!forEditor)
 	{
 		// Post Processing Bloom
 		glDepthMask(GL_FALSE);
