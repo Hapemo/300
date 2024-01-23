@@ -144,6 +144,10 @@ void Inspect::update()
 			PointLight& pointLight = ent.GetComponent<PointLight>();
 			pointLight.Inspect();
 		}
+		if (ent.HasComponent<Spotlight>()) {
+			Spotlight& spotlight = ent.GetComponent<Spotlight>();
+			spotlight.Inspect();
+		}
 
 		if (ent.HasComponent<Camera>()) {
 			Camera& cam = ent.GetComponent<Camera>();
@@ -257,6 +261,12 @@ void Inspect::Add_component() {
 			if (!Entity(Hierarchy::selectedId).HasComponent<PointLight>())
 				Entity(Hierarchy::selectedId).AddComponent<PointLight>();
 		}
+		if (ImGui::Selectable("Spotlight"))
+		{
+			if (!Entity(Hierarchy::selectedId).HasComponent<Spotlight>())
+				Entity(Hierarchy::selectedId).AddComponent<Spotlight>();
+		}
+
 		if (ImGui::Selectable("Audio")) {
 			if (!Entity(Hierarchy::selectedId).HasComponent<Audio>())
 				Entity(Hierarchy::selectedId).AddComponent<Audio>();
@@ -472,7 +482,6 @@ void PointLight::Inspect()
 			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
 		ImGui::DragFloat3("##Light Color", (float*)&mLightColor, 0.01f);
 
-
 		ImGui::Text("Linear Falloff");
 		ImGui::SameLine();
 		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
@@ -495,6 +504,48 @@ void PointLight::Inspect()
 	if (delete_component == false)
 		Entity(Hierarchy::selectedId).RemoveComponent<PointLight>();
 }
+
+void Spotlight::Inspect()
+{
+	bool delete_component = true;
+
+	if (ImGui::CollapsingHeader("Spotlight", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
+	{
+		ImGui::Text("Color");
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		ImGui::DragFloat3("##Light Color", (float*)&mColor, 0.01f);
+
+		ImGui::Text("Spotlight Target");
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		ImGui::DragFloat3("##Target ", (float*)&mTarget, 0.01f);
+
+		ImGui::Text("Cutoff");
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		ImGui::DragFloat("##Linear Falloff", (float*)&mCutoff, 0.1f);
+
+		ImGui::Text("Outer Cutoff");
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		ImGui::DragFloat("##Outer Cutoff", (float*)&mOuterCutoff, 0.1f);
+
+		ImGui::Text("Intensity");
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		ImGui::DragFloat("##Intensity", (float*)&mIntensity, 0.1f);
+	}
+
+	if (delete_component == false)
+		Entity(Hierarchy::selectedId).RemoveComponent<Spotlight>();
+}
+
 /***************************************************************************/
 /*!
 \brief

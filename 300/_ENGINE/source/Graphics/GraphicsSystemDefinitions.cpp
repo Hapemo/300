@@ -244,30 +244,58 @@ void updateSSBO_Data()
 void update_Light()
 {
 	// Sending Light source data to GPU
-	auto lightEntity = systemManager->ecs->GetEntitiesWith<PointLight>();
-	systemManager->mGraphicsSystem->m_HasLight = !lightEntity.empty();
-	systemManager->mGraphicsSystem->m_LightCount = static_cast<int>(lightEntity.size());
+	{	
+		auto lightEntity = systemManager->ecs->GetEntitiesWith<General, PointLight>();
+		systemManager->mGraphicsSystem->m_HasLight = !lightEntity.empty();
+		systemManager->mGraphicsSystem->m_LightCount = static_cast<int>(lightEntity.size());
 
-	if (systemManager->mGraphicsSystem->m_HasLight)
-	{
-		for (int i = 0; i < lightEntity.size(); ++i)
+		if (systemManager->mGraphicsSystem->m_HasLight)
 		{
-			PointLight& lightData = lightEntity.get<PointLight>(lightEntity[i]);
-			Transform& lightTransform = Entity(lightEntity[i]).GetComponent<Transform>();
+			for (int i = 0; i < lightEntity.size(); ++i)
+			{
+				PointLight& lightData = lightEntity.get<PointLight>(lightEntity[i]);
+				Transform& lightTransform = Entity(lightEntity[i]).GetComponent<Transform>();
 
-			PointLightSSBO light;
-			light.mPosition = vec4(lightTransform.mTranslate, 0.f);
-			light.mColor = vec4(lightData.mLightColor, 0.f);
-			light.mIntensity = lightData.mIntensity;
-			light.mLinear = lightData.mLinearFalloff;
-			light.mQuadratic = lightData.mQuadraticFalloff;
+				PointLightSSBO light;
+				light.mPosition = vec4(lightTransform.mTranslate, 0.f);
+				light.mColor = vec4(lightData.mLightColor, 0.f);
+				light.mIntensity = lightData.mIntensity;
+				light.mLinear = lightData.mLinearFalloff;
+				light.mQuadratic = lightData.mQuadraticFalloff;
 
-			systemManager->mGraphicsSystem->pointLights.push_back(light);
+				systemManager->mGraphicsSystem->pointLights.push_back(light);
 
-			systemManager->mGraphicsSystem->m_Renderer.AddCube(lightTransform.mTranslate, { 2, 2, 2 }, vec4(lightData.mLightColor, 1.f));
+				systemManager->mGraphicsSystem->m_Renderer.AddCube(lightTransform.mTranslate, { 2, 2, 2 }, vec4(lightData.mLightColor, 1.f));
+			}
+			// Copy light source data into storage buffer
+			systemManager->mGraphicsSystem->m_PointLightSsbo.SubData(systemManager->mGraphicsSystem->pointLights.size() * sizeof(PointLightSSBO), systemManager->mGraphicsSystem->pointLights.data());
 		}
-		// Copy light source data into storage buffer
-		systemManager->mGraphicsSystem->m_PointLightSsbo.SubData(systemManager->mGraphicsSystem->pointLights.size() * sizeof(PointLightSSBO), systemManager->mGraphicsSystem->pointLights.data());
+	}
+
+	// Spotlight
+	{
+		auto spotlightEntity = systemManager->ecs->GetEntitiesWith<Spotlight>();
+		systemManager->mGraphicsSystem->m_SpotlightCount = static_cast<int>(spotlightEntity.size());
+
+		for (int i{}; i < spotlightEntity.size(); ++i)
+		{
+			Spotlight& lightData = spotlightEntity.get<Spotlight>(spotlightEntity[i]);
+			Transform& lightTransform = Entity(spotlightEntity[i]).GetComponent<Transform>();
+
+			SpotLightSSBO light;
+			light.mPosition = vec4(lightTransform.mTranslate, 0.f);
+			light.mTarget = vec4(lightData.mTarget, 0.0f);
+			light.mColor = vec4(lightData.mColor, 0.f);
+			light.mIntensity = lightData.mIntensity;
+			light.mCutoff = lightData.mCutoff;
+			light.mOuterCutoff = lightData.mOuterCutoff;
+
+			systemManager->mGraphicsSystem->spotlights.push_back(light);
+
+			systemManager->mGraphicsSystem->m_Renderer.AddCube(lightTransform.mTranslate, { 2, 2, 2 }, vec4(lightData.mColor, 1.f));
+			systemManager->mGraphicsSystem->m_Renderer.AddLine(light.mPosition, light.mTarget, vec4(lightData.mColor, 1.f));
+		}
+		systemManager->mGraphicsSystem->m_SpotlightSsbo.SubData(systemManager->mGraphicsSystem->spotlights.size() * sizeof(SpotLightSSBO), systemManager->mGraphicsSystem->spotlights.data());
 	}
 }
 
@@ -281,6 +309,7 @@ void Reset_Data()
 	systemManager->mGraphicsSystem->finalBoneMatrices.clear();
 	systemManager->mGraphicsSystem->m_Materials.clear();
 	systemManager->mGraphicsSystem->pointLights.clear();
+	systemManager->mGraphicsSystem->spotlights.clear();
 }
 
 

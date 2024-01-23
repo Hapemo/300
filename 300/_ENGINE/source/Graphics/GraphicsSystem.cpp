@@ -1408,6 +1408,8 @@ void GraphicsSystem::SetupShaderStorageBuffers()
 	// Final Bone Matrix for Animation -- Location 3
 	m_FinalBoneMatrixSsbo.Create(sizeof(mat4) * MAX_NUM_BONES * MAX_INSTANCES, 3);
 
+	// All spotlight in the scene -- Location 4
+	m_SpotlightSsbo.Create(sizeof(SpotLightSSBO) * MAX_SPOTLIGHT, 4);
 }
 
 void GraphicsSystem::DrawAll2DInstances(unsigned shaderID)
@@ -1742,6 +1744,7 @@ void GraphicsSystem::SetupAllShaders()
 	computeDeferred.CreateShaderFromFile("../assets/shader_files/computePBR.glsl");
 	computeDeferred.Activate();
 	m_ComputeDeferredLightCountLocation = computeDeferred.GetUniformLocation("uLightCount");
+	m_ComputeDeferredSpotlightCountLocation = computeDeferred.GetUniformLocation("uSpotlightCount");
 	m_ComputeDeferredCamPosLocation = computeDeferred.GetUniformLocation("uCamPos");
 	m_ComputeDeferredGlobalTintLocation = computeDeferred.GetUniformLocation("uGlobalTint");
 	m_ComputeDeferredGlobalBloomLocation = computeDeferred.GetUniformLocation("uGlobalBloomThreshold");
@@ -1957,6 +1960,7 @@ void GraphicsSystem::ComputeDeferredLight(bool editorDraw)
 	computeDeferred.Activate();
 
 	glUniform1i(m_ComputeDeferredLightCountLocation, m_LightCount);
+	glUniform1i(m_ComputeDeferredSpotlightCountLocation, m_SpotlightCount);
 	glUniform3fv(m_ComputeDeferredCamPosLocation, 1, &camPos[0]);
 	glUniform4fv(m_ComputeDeferredGlobalTintLocation, 1, &m_GlobalTint[0]);
 	vec4 globalBloom = vec4(mAmbientBloomThreshold, m_EnableBloom);

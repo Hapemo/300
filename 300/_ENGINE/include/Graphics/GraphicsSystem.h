@@ -315,6 +315,7 @@ public:
 
 	// -- Stats --
 	int		m_LightCount{};
+	int		m_SpotlightCount{};
 
 	// -- 2D Image Rendering --
 	GFX::Mesh						m_Image2DMesh;
@@ -338,6 +339,10 @@ public:
 	GFX::SSBO						m_MaterialSsbo;
 	std::vector<MaterialSSBO>		m_Materials;
 	std::map<unsigned, GLuint64>	m_MaterialHandles;
+
+	const int						MAX_SPOTLIGHT = 50;
+	GFX::SSBO						m_SpotlightSsbo;
+	std::vector<SpotLightSSBO>		spotlights;
 
 	GLuint64 GetAndStoreBindlessTextureHandle(int texID);	// Stores adn Return the 64bit texture handle and makes it resident
 	void SetupShaderStorageBuffers();		// Creates all SSBO required
@@ -372,6 +377,7 @@ public:
 	GLint m_ComputeDeferredGlobalTintLocation{};
 	GLint m_ComputeDeferredCamPosLocation{};
 	GLint m_ComputeDeferredLightCountLocation{};
+	GLint m_ComputeDeferredSpotlightCountLocation{};
 	GLint m_ComputeDeferredGlobalBloomLocation{};
 
 	GFX::ComputeShader m_ComputeCRTShader;

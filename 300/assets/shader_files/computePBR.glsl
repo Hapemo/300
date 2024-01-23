@@ -17,6 +17,7 @@ layout(rgba32f, binding = 1) uniform image2D brightOutput;
 // -- UNIFORM --
 uniform vec3 uCamPos;
 uniform int uLightCount;
+uniform int uSpotlightCount;
 uniform vec4 uGlobalTint;
 uniform vec4 uGlobalBloomThreshold;
 
@@ -45,6 +46,10 @@ layout (std430, binding = 2) buffer pointLightBuffer
 {
     PointLight pointLights[];
 };
+layout(std430, binding = 4) buffer spotLightBuffer
+{
+    SpotLight spotlights[];
+};
 
 vec3 FresnelSchlick(float cosTheta, vec3 f0);
 float DistributionGGX(vec3 N, vec3 H, float roughness);
@@ -52,6 +57,7 @@ float GeometrySchlickGGX(float NdotV, float roughness);
 float GeometrySmith(vec3 N, vec3 V, vec3 L, float roughness);
 float CalculateAttenuation(float linear, float quadratic, float distance);
 vec3 ComputeLight(PointLight light, vec3 F0, vec3 fragPos, vec3 albedo, vec3 normal, float roughness, float metallic);
+vec3 ComputeSpotLight(SpotLight light, vec3 fragPos, vec3 albedo, vec3 normal, float roughness, float metallic);
 
 const float PI = 3.14159265359;
 
@@ -80,6 +86,10 @@ void main()
     for (int i = 0; i < uLightCount; ++i)
     {
         lightRadiance += ComputeLight(pointLights[i], F0, fragPos.rgb, albedoSpec.rgb, normal.rgb, roughness, metallic);
+    }
+    for (int i = 0; i < uSpotlightCount; ++i)
+    {
+        lightRadiance += ComputeSpotLight(spotlights[i], fragPos.rgb, albedoSpec.rgb, normal.rgb, roughness, metallic);
     }
 
     vec3 ambient = vec3(0.03) * albedoSpec.rgb * ao;

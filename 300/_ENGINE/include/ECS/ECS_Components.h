@@ -675,6 +675,17 @@ struct PointLight : public Serializable
 	void SetColor(const glm::vec3& color);
 };
 
+struct Spotlight
+{
+	vec3 mTarget;
+	vec3 mColor{ 1.f, 1.f, 1.f };
+	float mCutoff;
+	float mOuterCutoff;
+	float mIntensity{ 1.5f };
+
+	void Inspect();
+};
+
 /******************************************************************************/
 /*!
 	[Component] - Visual Effects (VFX)
