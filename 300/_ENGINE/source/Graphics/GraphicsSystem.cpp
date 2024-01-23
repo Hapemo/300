@@ -350,10 +350,23 @@ void GraphicsSystem::Draw(float dt, bool forEditor)
 			auto healthbarInstances = systemManager->ecs->GetEntitiesWith<Healthbar>();
 			for (Entity inst : healthbarInstances)
 			{
+				Healthbar healthbar = inst.GetComponent<Healthbar>();
+				unsigned healthTexID{}, frameTexID{};
+				if (healthbar.mHealthTexture.getdata(systemManager->mResourceTySystem->m_ResourceInstance) != nullptr)
+					healthTexID = reinterpret_cast<GFX::Texture*>(healthbar.mHealthTexture.data)->ID();
+				if (healthbar.mFrameTexture.getdata(systemManager->mResourceTySystem->m_ResourceInstance) != nullptr)
+					frameTexID = reinterpret_cast<GFX::Texture*>(healthbar.mFrameTexture.data)->ID();
+
 				if (forEditor)
-					AddHealthbarInstance(inst, GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR));
+				{
+					AddHealthbarInstance(inst, GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR), frameTexID, true);
+					AddHealthbarInstance(inst, GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR), healthTexID);
+				}
 				else
-					AddHealthbarInstance(inst, GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_GAME));
+				{
+					AddHealthbarInstance(inst, GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_GAME), frameTexID, true);
+					AddHealthbarInstance(inst, GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_GAME), healthTexID);
+				}
 			}
 			m_HealthbarMesh.PrepForDraw();
 			DrawAllHealthbarInstance(camVP);
@@ -1494,6 +1507,12 @@ void GraphicsSystem::DrawAllHealthbarInstance(const mat4& viewProj)
 	if (m_HealthbarMesh.mLTW.size() == 0)
 		return;
 
+	// Bind Textures to OpenGL context
+	for (size_t i{}; i < m_Image2DStore.size(); ++i)
+	{
+		glBindTextureUnit(static_cast<GLuint>(i), m_Image2DStore[static_cast<GLuint>(i)]);
+	}
+
 	// Bind shader and VAO
 	m_HealthbarShaderInst.Activate();
 	m_HealthbarMesh.BindVao();
@@ -1507,9 +1526,15 @@ void GraphicsSystem::DrawAllHealthbarInstance(const mat4& viewProj)
 	// Unbinding shader and VAO
 	GFX::Shader::Deactivate();
 	m_HealthbarMesh.UnbindVao();
+
+	// Unbind Textures from openGL context
+	for (size_t i{}; i < m_Image2DStore.size(); ++i)
+	{
+		glBindTextureUnit(static_cast<GLuint>(i), 0);
+	}
 }
 
-void GraphicsSystem::AddHealthbarInstance(Entity e, const vec3& camPos, unsigned texHandle)
+void GraphicsSystem::AddHealthbarInstance(Entity e, const vec3& camPos, unsigned texHandle, bool forFrame)
 {
 	Healthbar& healthbar = e.GetComponent<Healthbar>();
 	vec3 originPos = e.GetComponent<Transform>().mTranslate;
@@ -1556,8 +1581,12 @@ void GraphicsSystem::AddHealthbarInstance(Entity e, const vec3& camPos, unsigned
 
 	vec4 healthColor = vec4(healthbar.mHealthColor.x, healthbar.mHealthColor.y, healthbar.mHealthColor.z, healthbarRatio);
 	m_HealthbarMesh.mColors.push_back(healthColor);
+
+	float frameFlag{ -5.f };
+	if (forFrame) frameFlag = 5.f;
+
 	if (texHandle > 0)
-		m_HealthbarMesh.mTexEntID.push_back(vec4(texIndex + 0.5f, -2.f, 0.f, 0.f));	// set y component for checking at shader side
+		m_HealthbarMesh.mTexEntID.push_back(vec4(texIndex + 0.5f, -2.f, frameFlag, 0.f));	// set y component for checking at shader side, z for frame
 	else
 		m_HealthbarMesh.mTexEntID.push_back(healthbar.mBackColor);
 	// Update LTW matrix
@@ -1663,6 +1692,8 @@ void GraphicsSystem::SetupAllShaders()
 	m_HealthbarShaderInst = *systemManager->mResourceTySystem->get_Shader(healthbarShaderstr.id);
 	m_HealthbarShaderInst.Activate();
 	m_HealthbarViewProjLocation = m_HealthbarShaderInst.GetUniformLocation("uViewProj");
+	GLuint health_uniform_tex = glGetUniformLocation(m_HealthbarShaderInst.GetHandle(), "uTex2d");
+	glUniform1iv(health_uniform_tex, (GLsizei)m_Textures.size(), m_Textures.data()); // Passing texture Binding units to frag shader [0 - 31]
 	m_HealthbarShaderInst.Deactivate();
 
 	// Initialize the Healthbar shader and uniform location
