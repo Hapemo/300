@@ -14,7 +14,6 @@
 #include "Debug/EnginePerformance.h"
 #include "AI/AIManager.h"
 #include "AI/PathfinderManager.h"
-#include "Button/ButtonSystem.h"
 
 SystemManager *systemManager;
 
@@ -31,7 +30,6 @@ SystemManager::SystemManager() : mIsQuit(false)
 	mInputActionSystem = std::make_unique<InputMapSystem>();
 	mAISystem = std::make_unique<AIManager>();
 	mPathfinderSystem = std::make_unique<PathfinderManager>();
-	mButtonSystem = std::make_unique<ButtonSystem>();
 	ecs = new ECS();
 }
 
@@ -44,7 +42,6 @@ void SystemManager::Init(bool isEditor, GFX::Window *window)
 {
 	mIsEditor = isEditor;
 	mWindow = window;
-	mButtonSystem.get()->Init();
 	mInputActionSystem.get()->Init();
 	PINFO("Init Input Action System");
 	mLogger.get()->InitLogging();
@@ -136,7 +133,7 @@ void SystemManager::Update(float dt)
 	//mAudioSystem.get()->Update(dt);
 	//EnginePerformance::EndTrack("Audio");
 	if (!mIsPlay) return;
-	mButtonSystem.get()->Update();
+
 	EnginePerformance::StartTrack("Physics");
 	mPhysicsSystem.get()->Update(dt);
 	EnginePerformance::EndTrack("Physics");

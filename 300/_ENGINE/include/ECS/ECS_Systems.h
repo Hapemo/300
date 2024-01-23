@@ -23,7 +23,6 @@ class Logger;
 class InputMapSystem;
 class AIManager;
 class PathfinderManager;
-class ButtonSystem;
 struct Entity;
 
 class SystemManager {
@@ -42,7 +41,6 @@ public:
 	std::unique_ptr<InputMapSystem> mInputActionSystem;
 	std::unique_ptr<AIManager> mAISystem;
 	std::unique_ptr<PathfinderManager> mPathfinderSystem;
-	std::unique_ptr<ButtonSystem> mButtonSystem;
 
 	ECS *ecs;
 

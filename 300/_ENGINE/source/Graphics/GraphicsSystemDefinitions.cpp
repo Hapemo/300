@@ -298,14 +298,12 @@ void update_UI()
 			uiTransform = parentTransform;
 		}*/
 
-		float width = systemManager->mGraphicsSystem->m_Width;
-		float height = systemManager->mGraphicsSystem->m_Height;
-		float uiWidth = uiTransform.mScale.x * width / 2.f;
-		float uiHeight = uiTransform.mScale.y * height / 2.f;
+		float uiWidth = uiTransform.mScale.x;
+		float uiHeight = uiTransform.mScale.y;
 		float depth = (int)uiRenderer.mLayer;
 		// Maps depth from 0-255 to 0-1
 		depth /= 255.f;
-		vec3 uiPosition = vec3(uiTransform.mTranslate.x * width, uiTransform.mTranslate.y * height, depth);
+		vec3 uiPosition = vec3(uiTransform.mTranslate.x, uiTransform.mTranslate.y, depth);
 
 		unsigned texID{};
 		if (uiRenderer.mTextureRef.getdata(systemManager->mResourceTySystem->m_ResourceInstance) != nullptr)

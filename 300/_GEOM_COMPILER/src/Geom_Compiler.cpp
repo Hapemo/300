@@ -359,9 +359,6 @@ namespace _GEOM
 			{
 				auto& animation = m_Scene->mAnimations[numanims];
 
-				if (m_SkinGeom->m_Animation.size() < numanims + 1)
-					m_SkinGeom->m_Animation.emplace_back(Animation());
-
 				m_SkinGeom->m_Animation[numanims].m_Duration = static_cast<float>(animation->mDuration);					// set the duration of the animation
 				m_SkinGeom->m_Animation[numanims].m_TicksPerSecond = static_cast<float>(animation->mTicksPerSecond);		// set the ticks per second of the animation
 				ReadHierarchyData(m_SkinGeom->m_Animation[numanims].m_RootNode, m_Scene->mRootNode);

@@ -134,11 +134,7 @@ void LuaEntity()
 
         ADD_COMPONENT("AddHealthbar", Healthbar),
         DECLARE_COMPONENT("GetHealthbar", Healthbar),
-        "HasHealthbar", &Entity::HasComponent<Healthbar>,
-
-        ADD_COMPONENT("AddButton", Button),
-        DECLARE_COMPONENT("GetButton", Button),
-        "HasButton", & Entity::HasComponent<Button>);
+        "HasHealthbar", &Entity::HasComponent<Healthbar>);
 }
 
 void LuaGeneral()
@@ -380,6 +376,16 @@ void LuaAIManager()
     );
 }
 
+void LuaButton()
+{
+    systemManager->mScriptingSystem->luaState.new_usertype<Button>(
+        "Button", sol::constructors<>(),
+        "IsInteractable", &Button::IsInteractable,
+        "IsHovered", &Button::IsHovered,
+        "IsClicked", &Button::IsClicked,
+        "IsActivated", &Button::IsActivated);
+}
+
 void LuaUIrenderer()
 {
     systemManager->mScriptingSystem->luaState.new_usertype<UIrenderer>(
@@ -408,15 +414,4 @@ void LuaHealth()
         "Healthbar", sol::constructors<>(),
         "maxHealth", &Healthbar::mMaxHealth,
         "health", &Healthbar::mHealth);
-}
-
-void LuaButton()
-{
-    systemManager->mScriptingSystem->luaState.new_usertype<Button>(
-        "Button", sol::constructors<>(),
-        "mInteractable", &Button::mInteractable,
-        "mIsHover", &Button::mIsHover,
-        "mIsClick", &Button::mIsClick,
-        "mActivated", &Button::mActivated,
-        "mRenderFlag", &Button::mRenderFlag);
 }

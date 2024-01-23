@@ -6,7 +6,7 @@ local s2AttackingTimer          = 1.875 -- This is the attack animation length
 local s2AttackingTimerCount     = 0
 
 local s3ScreamingTimer           = 0
-local s3ScreamingTimerLimit      = 2.36 -- This should depend on the animation time period
+local s3ScreamingTimerLimit      = 2 -- This should depend on the animation time period
 
 -- Systems
 local aiSys
@@ -65,7 +65,7 @@ function Update()
     -- STATE MACHINE
     if state == "TRAVEL" then         -- walk directly to player using pathfinding (change to 2. when duplicate timer runs out)
         direction = aiSys:GetDirection(this)
-        direction.y = direction.y + 0.5
+    
         Helper.Scale(direction, speed)
     
         phySys:SetVelocity(this, direction);

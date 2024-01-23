@@ -240,7 +240,7 @@ private:
 	int mPlayerArrayIndex;																											// Indicating the latest index in the array to replace
 	std::array<glm::vec3, MAX_DECISECOND_PLAYER_HISTORY> mPlayerHistory;				// Contains the player's position for the past 3 seconds, storing every deciseconds
 	std::unordered_map<std::string, std::set<Entity>> mAILists;									// Contains the different list of AIs of different classification. string is the name of container
-	std::map<Entity, std::pair<float, std::vector<glm::vec3>>> mPathfindHistoryList;						// List of pathfinder's path history for each entity
+	std::map<Entity, std::pair<float, glm::vec3>> mPathfindHistoryList;						// List of pathfinder's path history for each entity
 	static const std::array<std::string, static_cast<size_t>(E_MOVEMENT_TYPE::SIZE)> mMovementTypeArray; // Contains all the name of E_MOVEMENT_TYPE
 	int mAICount;
 };

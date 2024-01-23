@@ -56,15 +56,11 @@ private:
 
 	// Connect the src node with all other visible nodes in alGraph
 	void ConnectVisibleNodes(Entity src_e, ALGraph::AdjList& src, ALGraph& alGraph, AStarSetting const& aStarSetting);
-
-	// Connect a point to closest point it can find. node must come from nodePool
-	void ConnectToClosest(ALGraph::AdjList* node, std::vector<ALGraph::AdjList>& nodePool);
-
 	// This version will take into account entity width, making sure most part of the entity can see the target
 	bool CheckEntitiesInbetween(glm::vec3 const& _p0, glm::vec3 const& _p1, std::vector<Entity> _toIgnoreEntities, std::vector<std::string> _toIgnoreTags, glm::vec3 size);
 
-	// Rubberband remove unnecessary nodes. Height ignore is the y-value difference threshold for node to rubberband to each other
-	std::vector<glm::vec3> RubberbandPath(std::vector<glm::vec3> const& path, std::vector<Entity> toIgnoreEntities, std::vector<std::string> const& toIgnoreTags, float heightIgnore = FLT_MAX);
+	// Rubberband remove unnecessary nodes
+	std::vector<glm::vec3> RubberbandPath(std::vector<glm::vec3> const& path, std::vector<Entity> toIgnoreEntities, std::vector<std::string> const& toIgnoreTags);
 
 public:
 

@@ -83,7 +83,7 @@ std::vector<glm::vec3> PathfinderManager::AStarPath(Entity _start, Entity _end, 
 	// AStar pathfinding portion
 	InitAStar(_start, _end, *alGraph, aStarSetting);
 	std::vector<glm::vec3> returnVal = alGraph->AStarPath();
-	returnVal = RubberbandPath(returnVal, { _start, _end }, aStarSetting.ignoreTags, aStarSetting.elevation);
+	returnVal = RubberbandPath(returnVal, { _start, _end }, aStarSetting.ignoreTags);
 	EndAStar(_start, _end, *alGraph);
 
 	return returnVal;
@@ -103,10 +103,6 @@ void PathfinderManager::InitAStar(Entity _start, Entity _end, ALGraph& alGraph, 
 
 	ConnectVisibleNodes(_start, *(mData.end()-2), alGraph, aStarSetting);
 	ConnectVisibleNodes(_end, *(mData.end()-1), alGraph, aStarSetting);
-
-	if (!(mData.end()-2)->edges.size()) ConnectToClosest(&*(mData.end()-2), mData); // If can't find any point to connect to, connect to closest
-	if (!(mData.end()-1)->edges.size()) ConnectToClosest(&*(mData.end()-1), mData);
-
 
 	// Initialise HCost and reset all other values
 	for (ALGraph::AdjList& node : mData) {
@@ -162,25 +158,9 @@ void PathfinderManager::ConnectVisibleNodes(Entity src_e, ALGraph::AdjList& src,
 	}
 }
 
-void PathfinderManager::ConnectToClosest(ALGraph::AdjList* node, std::vector<ALGraph::AdjList>& nodePool) {
-	float closestDist{ FLT_MAX };
-	ALGraph::AdjList* curr{ nullptr };
-
-	for (auto it{ nodePool.begin() }; it != nodePool.end()-2; ++it) {
-		if (it->point == node->point) continue;
-		const float currDist = ALGraph::CalcHCost(it->point, node->point);
-		if (currDist < closestDist) {
-			closestDist = currDist;
-			curr = &*it;
-		}
-	}
-	curr->edges.push_back(ALGraph::Edge(node, closestDist));
-	node->edges.push_back(ALGraph::Edge(curr, closestDist));
-}
-
 bool PathfinderManager::CheckEntitiesInbetween(glm::vec3 const& _p0, glm::vec3 const& _p1, std::vector<Entity> _toIgnoreEntities, std::vector<std::string> _toIgnoreTags) {
 	// Compare the node and src for line of sight test and get a list of entity hit
-	std::vector<Entity> entitiesHit = systemManager->GetPhysicsPointer()->Visible(_p0 + vec3(0, 0.1f, 0), _p1 + vec3(0, 0.1f, 0), glm::length(_p0-_p1));
+	std::vector<Entity> entitiesHit = systemManager->GetPhysicsPointer()->Visible(_p0, _p1, glm::length(_p0-_p1));
 
 	// remove dup
 	std::sort(entitiesHit.begin(), entitiesHit.end());
@@ -266,7 +246,7 @@ bool PathfinderManager::CheckEntitiesInbetween(glm::vec3 const& _p0, glm::vec3 c
 	return entitiesHit.size() != 0;
 }
 
-std::vector<glm::vec3> PathfinderManager::RubberbandPath(std::vector<glm::vec3> const& path, std::vector<Entity> toIgnoreEntities, std::vector<std::string> const& toIgnoreTags, float heightThreshold) {
+std::vector<glm::vec3> PathfinderManager::RubberbandPath(std::vector<glm::vec3> const& path, std::vector<Entity> toIgnoreEntities, std::vector<std::string> const& toIgnoreTags) {
 	if (path.size() < 2) return path;
 	std::vector<glm::vec3> finishedPath{};
 	finishedPath.reserve(path.size());
@@ -275,7 +255,7 @@ std::vector<glm::vec3> PathfinderManager::RubberbandPath(std::vector<glm::vec3> 
 	finishedPath.push_back(*startVec);
 	for (int i{1}; i < path.size(); ++i) {
 		bool entitiesHit = CheckEntitiesInbetween(*startVec, path[i], toIgnoreEntities, toIgnoreTags);
-		if (entitiesHit || (abs(path[i].y - startVec->y) > heightThreshold)) { // If node's height difference is more than
+		if (entitiesHit) {
 			startVec = &path[i-1];
 			finishedPath.push_back(*startVec);
 		}

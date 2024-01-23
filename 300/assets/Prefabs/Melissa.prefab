@@ -1,5 +1,5 @@
 {
-    "entityid": 3145782,
+    "entityid": 216,
     "general": {
         "name": "Melissa",
         "tagid": 1,
@@ -19,9 +19,9 @@
             "z": 0.0
         },
         "translate": {
-            "x": -15.385740280151367,
-            "y": -10.86380386352539,
-            "z": 0.0
+            "x": -4.0111403465271,
+            "y": -5.968728065490723,
+            "z": 11.074114799499512
         }
     },
     "rigidbody": {
@@ -35,8 +35,8 @@
         },
         "rotationconstraints": {
             "x": true,
-            "y": true,
-            "z": true
+            "y": false,
+            "z": false
         },
         "gravity": true
     },
@@ -76,13 +76,13 @@
     },
     "capsulecollider": {
         "translateoffset": {
-            "x": -0.30000001192092896,
+            "x": 0.0,
             "y": 0.75,
-            "z": 0.0
+            "z": -0.30000001192092896
         },
         "radius": 0.5,
         "halfheight": 0.25,
-        "istrigger": false
+        "istrigger": true
     },
     "scripts": {
         "scriptscontainer": [
