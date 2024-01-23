@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 1,
+        "entityid": 4194305,
         "general": {
             "name": "StartButton",
             "tagid": 6,
@@ -26,7 +26,7 @@
             }
         },
         "uirenderer": {
-            "texpath": "",
+            "texpath": "../assets/Compressed/Start_Default.ctexture",
             "textureref": 1952423938,
             "degree": 0.0,
             "color": {
@@ -68,7 +68,7 @@
         }
     },
     {
-        "entityid": 2,
+        "entityid": 4194306,
         "general": {
             "name": "Awake",
             "tagid": 0,
@@ -105,7 +105,7 @@
         }
     },
     {
-        "entityid": 3,
+        "entityid": 4194307,
         "general": {
             "name": "QuitButton",
             "tagid": 6,
@@ -131,7 +131,7 @@
             }
         },
         "uirenderer": {
-            "texpath": "",
+            "texpath": "../assets/Compressed/Quit_Default.ctexture",
             "textureref": 3328537307,
             "degree": 0.0,
             "color": {
@@ -170,7 +170,7 @@
         }
     },
     {
-        "entityid": 4,
+        "entityid": 4194308,
         "general": {
             "name": "Click",
             "tagid": 6,
@@ -207,7 +207,7 @@
         }
     },
     {
-        "entityid": 5,
+        "entityid": 4194309,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -252,7 +252,7 @@
         }
     },
     {
-        "entityid": 6,
+        "entityid": 4194310,
         "general": {
             "name": "BGM",
             "tagid": 0,
@@ -289,7 +289,7 @@
         }
     },
     {
-        "entityid": 8,
+        "entityid": 4194311,
         "general": {
             "name": "CreditsButton",
             "tagid": 6,
@@ -315,7 +315,7 @@
             }
         },
         "uirenderer": {
-            "texpath": "",
+            "texpath": "../assets/Compressed/Credits_Default.ctexture",
             "textureref": 533001668,
             "degree": 0.0,
             "color": {
@@ -354,7 +354,7 @@
         }
     },
     {
-        "entityid": 9,
+        "entityid": 4194312,
         "general": {
             "name": "MenuBackground",
             "tagid": 6,
@@ -394,7 +394,7 @@
         }
     },
     {
-        "entityid": 10,
+        "entityid": 4194313,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -439,7 +439,7 @@
         }
     },
     {
-        "entityid": 11,
+        "entityid": 4194314,
         "general": {
             "name": "Exit",
             "tagid": 0,
@@ -476,7 +476,7 @@
         }
     },
     {
-        "entityid": 12,
+        "entityid": 4194315,
         "general": {
             "name": "SettingsButton",
             "tagid": 6,
@@ -497,12 +497,12 @@
             },
             "translate": {
                 "x": -0.4300000071525574,
-                "y": -0.20999999344348907,
+                "y": -0.23000000417232513,
                 "z": 0.0
             }
         },
         "uirenderer": {
-            "texpath": "",
+            "texpath": "../assets/Compressed/Settings_Default.ctexture",
             "textureref": 3113566441,
             "degree": 0.0,
             "color": {
@@ -544,7 +544,7 @@
         }
     },
     {
-        "entityid": 1048583,
+        "entityid": 4194316,
         "general": {
             "name": "HTPButton",
             "tagid": 6,
@@ -565,12 +565,12 @@
             },
             "translate": {
                 "x": -0.4350000023841858,
-                "y": 0.04500000178813934,
+                "y": 0.054999999701976776,
                 "z": 0.0
             }
         },
         "uirenderer": {
-            "texpath": "",
+            "texpath": "../assets/Compressed/HowToPlay_Default.ctexture",
             "textureref": 2586813445,
             "degree": 0.0,
             "color": {

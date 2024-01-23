@@ -29,35 +29,25 @@ end
 function Update()
     ent = Helper.GetScriptEntity(script_entity.id)
 
+    uirend  = ent:GetUIrenderer()
     button = ent:GetButton()
     gen = ent:GetGeneral()
     trans = ent:GetTransform()
 
-    -- print("mouse pos x: ")
-    -- print(mouse_move.x)
-    -- print("mouse pos y: ")
-    -- print(mouse_move.y)
-
-    -- print("width: ")
-    -- print(graphicsSys.m_WindowWidth)
-
-    -- print("height: ")
-    -- print(graphicsSys.m_WindowHeight)
-
-    -- print("")
-
-    -- check if cursor is within the button width & height
-
     -- start button
     if(gen.name == "StartButton") then
+        -- when the mouse is hovered over the button,
+        -- do whatever here (click sound + image change, set the boolean)
         if (button.mIsHover) then
             if (hoverOver == false) then
                 hoverSFX = ent:GetAudio()
                 hoverSFX:SetPlay(0.2)
+                uirend:SetTexture("Start_Hover")
                 hoverOver = true;
             end
         end
         if (button.mIsHover == false) then
+            uirend:SetTexture("Start_Default")
             hoverOver = false;
         end
         if (button.mActivated) then
@@ -66,17 +56,18 @@ function Update()
         end
     end
 
-    -- 435, 290
     -- quit button
     if(gen.name == "QuitButton") then
         if (button.mIsHover) then
             if (hoverOver == false) then
                 hoverSFX = ent:GetAudio()
                 hoverSFX:SetPlay(0.2)
+                uirend:SetTexture("Quit_Hover")
                 hoverOver = true;
             end
         end
         if (button.mIsHover == false) then
+            uirend:SetTexture("Quit_Default")
             hoverOver = false;
         end
         if (button.mActivated) then
@@ -85,15 +76,18 @@ function Update()
         end
     end
 
+    -- how to play button
     if(gen.name == "HTPButton") then
         if (button.mIsHover) then
             if (hoverOver == false) then
                 hoverSFX = ent:GetAudio()
                 hoverSFX:SetPlay(0.2)
+                uirend:SetTexture("HowToPlay_Hover")
                 hoverOver = true;
             end
         end
         if (button.mIsHover == false) then
+            uirend:SetTexture("HowToPlay_Default")
             hoverOver = false;
         end
         if (button.mActivated) then
@@ -101,15 +95,18 @@ function Update()
         end
     end
 
+    -- settings button
     if(gen.name == "SettingsButton") then
         if (button.mIsHover) then
             if (hoverOver == false) then
                 hoverSFX = ent:GetAudio()
                 hoverSFX:SetPlay(0.2)
+                uirend:SetTexture("Settings_Hover")
                 hoverOver = true;
             end
         end
         if (button.mIsHover == false) then
+            uirend:SetTexture("Settings_Default")
             hoverOver = false;
         end
         if (button.mActivated) then
@@ -117,18 +114,18 @@ function Update()
         end
     end
 
-    -- 960, 360
-    -- 435, 290
     -- credits button
     if(gen.name == "CreditsButton") then
         if (button.mIsHover) then
             if (hoverOver == false) then
                 hoverSFX = ent:GetAudio()
                 hoverSFX:SetPlay(0.2)
+                uirend:SetTexture("Credits_Hover")
                 hoverOver = true;
             end
         end
         if (button.mIsHover == false) then
+            uirend:SetTexture("Credits_Default")
             hoverOver = false;
         end
         if (button.mActivated) then
@@ -137,7 +134,7 @@ function Update()
         end
     end
 
-    -- credits (back) button
+    -- credits (back) button, still wip for assets
     if(gen.name == "CreditsBackButton") then
         if (button.mIsHover) then
             if (hoverOver == false) then
