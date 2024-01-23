@@ -93,7 +93,9 @@ void GraphicsSystem::Init()
 
 		m_ComputeCRTShader.CreateShaderFromFile("../assets/shader_files/computeCRT.glsl");
 		m_ComputeCRTShader.Activate();
-		m_ComputeCRTTimeLocation = m_ComputeCRTShader.GetUniformLocation("accumulationTime");
+		m_ComputeCRTTimeLocation = m_ComputeCRTShader.GetUniformLocation("mCRT_AccumulationTime");
+		m_ComputeCRTHeightOffsetLocation = m_ComputeCRTShader.GetUniformLocation("heightoffset");
+		m_ComputeCRTDistortionLocation = m_ComputeCRTShader.GetUniformLocation("distortion_value");
 		GFX::Shader::Deactivate();
 
 		m_ComputeAddBlendShader.CreateShaderFromFile("../assets/shader_files/computeCRT.glsl");
@@ -413,12 +415,12 @@ void GraphicsSystem::Update(float dt)
 			uiTransform = parentTransform;
 		}*/
 
-		float uiWidth = uiTransform.mScale.x;
-		float uiHeight = uiTransform.mScale.y;
+		float uiWidth = uiTransform.mScale.x * m_Width / 2.f;
+		float uiHeight = uiTransform.mScale.y * m_Height / 2.f;
 		float depth = (int)uiRenderer.mLayer;
 		// Maps depth from 0-255 to 0-1
 		depth /= 255.f;
-		vec3 uiPosition = vec3(uiTransform.mTranslate.x, uiTransform.mTranslate.y, depth);
+		vec3 uiPosition = vec3(uiTransform.mTranslate.x * m_Width, uiTransform.mTranslate.y * m_Height, depth);
 
 		unsigned texID{};
 		if (uiRenderer.mTextureRef.getdata(systemManager->mResourceTySystem->m_ResourceInstance) != nullptr)
@@ -573,6 +575,7 @@ void GraphicsSystem::Draw(float dt, bool forEditor)
 
 		if (systemManager->mGraphicsSystem->m_EnableBloom)
 		{
+			//!< Using Phys Based Bloom
 			if (mBloomType == BloomType::PHYS_BASED_BLOOM)
 			{
 				m_PhysBloomRenderer.PrepForDraw();
@@ -580,6 +583,7 @@ void GraphicsSystem::Draw(float dt, bool forEditor)
 				PostProcessing::AdditiveBlendFramebuffers(*fbo, fbo->GetColorAttachment(), m_PhysBloomRenderer.getBloomTexture());
 			}
 
+			//!< Using Gaussian Blur
 			else
 			{
 				//Render the bloom for the Editor Framebuffer
@@ -653,16 +657,22 @@ void GraphicsSystem::Draw(float dt, bool forEditor)
 	}
 	DrawAllParticles();
 
-	// Post Processing Chromatic Abberation and CRT
+	//!< Post Processing Chromatic Abberation and CRT
 	{
 		glDepthMask(GL_FALSE);
 		
-		if (systemManager->mGraphicsSystem->m_EnableCRT && !systemManager->mGraphicsSystem->m_EnableChromaticAbberation)
+		//if (systemManager->mGraphicsSystem->m_EnableCRT && !systemManager->mGraphicsSystem->m_EnableChromaticAbberation)
+		if (systemManager->mGraphicsSystem->m_EnableCRT)
 		{
 			m_ComputeCRTShader.Activate();
-			glUniform1f(m_ComputeCRTTimeLocation, PostProcessing::getInstance().accumulationTime += dt);
+			
+			glUniform1f(m_ComputeCRTTimeLocation, PostProcessing::getInstance().mCRT_AccumulationTime += dt);
+			glUniform1f(m_ComputeCRTDistortionLocation, PostProcessing::getInstance().mCRT_DistortionValue);
+			glUniform1i(m_ComputeCRTHeightOffsetLocation, PostProcessing::getInstance().mCRT_HeightOffset);
+
 			// CRT post processing effect. Called here so it can be rendered over the UI
 			PostProcessing::CRTBlendFramebuffers(*fbo, m_PingPongFbo, dt);
+			
 			m_ComputeCRTShader.Deactivate();
 		}
 

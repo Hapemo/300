@@ -7,7 +7,7 @@
 #include "AI/PathfinderManager.h"
 
 #define Rubberbanding 1
-#define QUICKFIX 1
+#define PATHFINDERFREQUENCY 1 // Time interval between each run of pathfind
 
 #define IGNORETAGS { "GRAPH", "BULLET", "UI", "OTHERS" }
 
@@ -32,26 +32,37 @@ void AIManager::Update(float _dt) {
 	TrackPlayerPosition(_dt);
 }
 
-#if QUICKFIX
-std::map<Entity, std::pair<int, glm::vec3>> delayContainer;
-#endif
-
 glm::vec3 AIManager::GetDirection(Entity _e) {
 	glm::vec3 dir{};
 	AISetting const& aiSetting = _e.GetComponent<AISetting>();
 
 	if (CheckUseAStar(_e, aiSetting)) {
-#if QUICKFIX
-		if (delayContainer.find(_e) == delayContainer.end()) {
-			delayContainer[_e] = {30, glm::vec3()};
+		auto& curr = mPathfindHistoryList[_e];
+
+		float* time = &(curr.first);
+		*time += FPSManager::dt;
+		if (*time > PATHFINDERFREQUENCY) { 
+			*time = 0;
+			// Update the content if more than time
+			curr.second = GetAStarPath(_e, aiSetting);
+			std::cout << "---Start Getting Path ---\n";
+			for (auto v : curr.second) std::cout << v << '\n';
+			std::cout << "--- End	 Getting Path ---\n";
 		}
 
-		if (++(delayContainer[_e].first) > 30) {
-			dir = delayContainer[_e].second = GetAStarDir(_e, aiSetting);
-			delayContainer[_e].first = 0;
-		} else dir = delayContainer[_e].second;
-#endif
-		//dir = GetAStarDir(_e, aiSetting);
+		if (curr.second.size() == 0) dir = glm::vec3(); // Destination reached
+		else {
+			// Get direction from path history
+			const glm::vec3 pos = _e.GetComponent<Transform>().mTranslate;
+			// If current position is really near next movement point, remove it and move on 
+			if (glm::length(curr.second.back() - pos) < 1.f) curr.second.pop_back();
+			if (curr.second.size() == 0) dir = glm::vec3(); // Destination reached
+			else {
+				if (glm::length(curr.second.back() - pos) == 0) dir = glm::vec3();
+				else dir = glm::normalize(curr.second.back() - pos);
+			}
+		}
+
 	} else {
 		switch (aiSetting.mMovementType) {
 		case E_MOVEMENT_TYPE::GROUND_DIRECT: dir = CalcGroundAIDir(_e);
@@ -133,6 +144,10 @@ void AIManager::InitialiseAI(Entity _e) {
 	if (setting.mMovementType != E_MOVEMENT_TYPE::BEGIN)
 		mAILists[mMovementTypeArray[static_cast<int>(setting.mMovementType)]].insert(_e);
 	setting.SetTarget(systemManager->mGameStateSystem->GetEntity(setting.mTargetName));
+	
+	// Add to mPathfindHistoryList
+	if (setting.mGraphDataName.size()) 
+		mPathfindHistoryList[_e] = { PATHFINDERFREQUENCY, std::vector<glm::vec3>() };
 }
 
 void AIManager::InitAIs() {
@@ -283,7 +298,17 @@ glm::vec3 AIManager::CalcAirAIDir(Entity _e) {
 }
 
 glm::vec3 AIManager::GetAStarDir(Entity _e, AISetting const& _setting) {
-	std::vector<glm::vec3> astarPath = systemManager->GetPathfinderManager()->AStarPath(_e, _setting.GetTarget(), { 40.f, IGNORETAGS });
+	float elevation = _setting.mGraphDataName == "GroundPath" ? 3.f : 40.f;
+	std::vector<glm::vec3> astarPath = systemManager->GetPathfinderManager()->AStarPath(_e, _setting.GetTarget(), { elevation, IGNORETAGS });
+
+#if 1 // Printing path
+	std::cout << "---Astar Path Begin---\n";
+
+	for (glm::vec3 const& point : astarPath)
+		std::cout << point << '\n';
+
+	std::cout << "---Astar Path End  ---\n";
+#endif
 
 	if (astarPath.size()) 
 		return glm::normalize(astarPath[1] - astarPath[0]);
@@ -293,6 +318,13 @@ glm::vec3 AIManager::GetAStarDir(Entity _e, AISetting const& _setting) {
 	}
 }
 
+std::vector<glm::vec3> AIManager::GetAStarPath(Entity _e, AISetting const& _setting) {
+	float elevation = _setting.mGraphDataName == "GroundPath" ? 3.f : 40.f;
+	std::vector<glm::vec3> astarPath = systemManager->GetPathfinderManager()->AStarPath(_e, _setting.GetTarget(), { elevation, IGNORETAGS });
+	std::reverse(astarPath.begin(), astarPath.end());
+	return astarPath;
+}
+
 bool AIManager::CheckUseAStar(Entity _e, AISetting const& _setting) {
 	if (!_setting.mGraphDataName.size()) return false;
 
@@ -300,6 +332,8 @@ bool AIManager::CheckUseAStar(Entity _e, AISetting const& _setting) {
 
 	glm::vec3 pos = systemManager->GetPathfinderManager()->GetColliderPos(_e);
 	glm::vec3 tgt = systemManager->GetPathfinderManager()->GetColliderPos(tgtE);
+
+	if (abs(pos.y - tgt.y) >= 0.55) return true;
 
 	// Check initial line of sight
 	return systemManager->GetPathfinderManager()->CheckEntitiesInbetween(pos, tgt, {_e, _setting.GetTarget()}, IGNORETAGS);

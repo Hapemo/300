@@ -107,6 +107,7 @@ function Update()
             _G.activated = true
             skillActivateAudio:SetPlay(0.4)
             ArraySystem(8)
+            recurrArray()
         end
     elseif(Input.CheckKey(State.PRESS,Key.KEY_2))then
         if(_G.weaponArray[7][2] == true)  then
@@ -116,6 +117,7 @@ function Update()
             _G.activated = true
             skillActivateAudio:SetPlay(0.4)
             ArraySystem(7)
+            recurrArray()
         end
     elseif(Input.CheckKey(State.PRESS,Key.KEY_3))then
         if(_G.weaponArray[7][2] == true)  then
@@ -125,6 +127,7 @@ function Update()
             _G.activated = true
             skillActivateAudio:SetPlay(0.4)
             ArraySystem(6)
+            recurrArray()
         end
     elseif(Input.CheckKey(State.PRESS,Key.KEY_4))then
         if(_G.weaponArray[7][2] == true)  then
@@ -134,6 +137,7 @@ function Update()
             _G.activated = true
             skillActivateAudio:SetPlay(0.4)
             ArraySystem(5)
+            recurrArray()
         end
     elseif(Input.CheckKey(State.PRESS,Key.KEY_5))then
         if(_G.weaponArray[7][2] == true)  then
@@ -143,6 +147,7 @@ function Update()
             _G.activated = true
             skillActivateAudio:SetPlay(0.4)
             ArraySystem(4)
+            recurrArray()
         end
     elseif(Input.CheckKey(State.PRESS,Key.KEY_6))then
         if(_G.weaponArray[7][2] == true)  then
@@ -152,6 +157,7 @@ function Update()
             _G.activated = true
             skillActivateAudio:SetPlay(0.4)
             ArraySystem(3)
+            recurrArray()
         end
     elseif(Input.CheckKey(State.PRESS,Key.KEY_7))then
         if(_G.weaponArray[7][2] == true)  then
@@ -161,6 +167,7 @@ function Update()
             _G.activated = true
             skillActivateAudio:SetPlay(0.4)
             ArraySystem(2)
+            recurrArray()
         end
     elseif(Input.CheckKey(State.PRESS,Key.KEY_8))then
         if(_G.weaponArray[7][2] == true)  then
@@ -170,6 +177,7 @@ function Update()
             _G.activated = true
             skillActivateAudio:SetPlay(0.4)
             ArraySystem(1)
+            recurrArray()
         end
     end
     -- for i = 8, 2 , -1
@@ -230,6 +238,46 @@ function ArraySystem(index)
     --     end
 
     -- end
+
+end
+
+
+function recurrArray()
+
+    for i = 8, 2 , -1
+    do
+        if( _G.weaponArray[i-1][2] == false)then
+            break
+        end
+        
+        
+        if( _G.weaponArray[i][1] == _G.weaponArray[i-1][1] )then
+
+            if(_G.weaponArray[i][3] <3 )then
+
+                for d = i, 2 , -1
+                do
+           
+                    _G.weaponArray[d][1]= _G.weaponArray[d-1][1]
+                    _G.weaponArray[d][2]= _G.weaponArray[d-1][2]
+                    _G.weaponArray[d][3]=  _G.weaponArray[d][3]+1
+                    _G.weaponArray[d-1][2] = false
+
+
+                    -- if( _G.weaponArray[d-1][2] == false)then
+                    --     break
+                    -- end
+                
+               end
+
+               i = i+1
+            end 
+        
+
+
+        end
+
+   end
 
 end
 

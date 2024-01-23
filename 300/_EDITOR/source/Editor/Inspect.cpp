@@ -136,6 +136,10 @@ void Inspect::update()
 			CapsuleCollider& capsuleCollider = ent.GetComponent<CapsuleCollider>();
 			capsuleCollider.Inspect();
 		}
+		if (ent.HasComponent<MeshCollider>()) {
+			MeshCollider& meshCollider = ent.GetComponent<MeshCollider>();
+			meshCollider.Inspect();
+		}
 		if (ent.HasComponent<PointLight>()) {
 			PointLight& pointLight = ent.GetComponent<PointLight>();
 			pointLight.Inspect();
@@ -225,6 +229,10 @@ void Inspect::Add_component() {
 				Entity(Hierarchy::selectedId).AddComponent<BoxCollider>();
 		}
 
+		if (ImGui::Selectable("MeshCollider")) {
+			if (!Entity(Hierarchy::selectedId).HasComponent<MeshCollider>())
+				Entity(Hierarchy::selectedId).AddComponent<MeshCollider>();
+		}
 
 		if (ImGui::Selectable("Scripts")) {
 			if (!Entity(Hierarchy::selectedId).HasComponent<Scripts>())
@@ -1210,6 +1218,15 @@ void CapsuleCollider::Inspect() {
 		Entity(Hierarchy::selectedId).RemoveComponent<CapsuleCollider>();
 }
 
+void MeshCollider::Inspect() {
+	bool delete_component{ true };
+	if (ImGui::CollapsingHeader("MeshCollider", &delete_component, ImGuiTreeNodeFlags_DefaultOpen)) {
+		ReflectProperties(*this);
+	}
+	if (delete_component == false)
+		Entity(Hierarchy::selectedId).RemoveComponent<MeshCollider>();
+}
+
 /***************************************************************************/
 /*!
 \brief
@@ -1682,12 +1699,148 @@ void popup(std::string name, _GEOM::DescriptorData& desc,  std::string& dataname
 
 
 void Healthbar::Inspect()
+
+
 {
+
+	auto getFilename = [](std::string filepath) -> std::string
+	{
+		// returns AT-AT
+		std::string ret_str = filepath.substr(filepath.find_last_of("/") + 1);
+		ret_str = ret_str.substr(0, ret_str.find_first_of("."));
+		return ret_str;
+	};
+
 	bool delete_component = true;
 
 	if (ImGui::CollapsingHeader("Healthbar", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
 	{
-		ImGui::Selectable("Healthbar   ");
+
+
+
+
+		ImGui::Selectable("Frame Texture ");
+
+		if (ImGui::BeginDragDropTarget())
+		{
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_TEXT")) {
+
+				const char* data = (const char*)payload->Data;
+				std::string data_str = std::string(data);
+				//mTexPath = data_str;
+
+
+				std::string texturestr = systemManager->mResourceTySystem->compressed_texture_path + getFilename(data_str) + ".ctexture";
+				//mTexPath = texturestr;
+				std::string TEXTURE_Descriptor_Filepath;
+				unsigned guid;
+				// check and ensures that the descriptor file for the materials are created
+				//bool descFilePresent = _GEOM::CheckAndCreateDescriptorFileTEXTURE(data_str, TEXTURE_Descriptor_Filepath, texturestr);
+				std::string descfilepath = data_str + ".desc";
+				guid = _GEOM::GetGUID(descfilepath);
+				mFrameTexture.data_uid = guid;
+				mFrameTexture.data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(guid));
+			}
+
+
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_TEXT_UNCOMPRESS"))
+			{
+				const char* data = (const char*)payload->Data;
+				std::string data_str = std::string(data);
+
+				std::string texturestr = systemManager->mResourceTySystem->compressed_texture_path + getFilename(data_str) + ".ctexture";
+				//mMaterialInstancePath[i] = texturestr;
+
+				std::string TEXTURE_Descriptor_Filepath;
+				unsigned guid;
+
+				// check and ensures that the descriptor file for the materials are created
+				_GEOM::CheckAndCreateDescriptorFileTEXTURE(data_str, TEXTURE_Descriptor_Filepath, texturestr);
+				std::string descfilepath = data_str + ".desc";
+				guid = _GEOM::GetGUID(descfilepath);	// gets the guid from the png desc
+
+				_GEOM::Texture_DescriptorData::DeserializeTEXTURE_DescriptorDataFromFile(mFrameTextureDescriptorData, TEXTURE_Descriptor_Filepath);
+
+				{
+					std::cout << "\033[33mNOTE: >> Compressing texture: " << texturestr << "\033[0m" << std::endl;
+					CompressImageFile(data_str.c_str(), systemManager->mResourceTySystem->compressed_texture_path.c_str(), _GEOM::Texture_DescriptorData::isGammaSpace(TEXTURE_Descriptor_Filepath));
+
+					// Load the textures into the list of usable textures within the engine, if it doesnt already exist
+					if (systemManager->mResourceTySystem->getMaterialInstance(guid) == nullptr) {
+						systemManager->mResourceTySystem->texture_Load(getFilename(data_str), guid);
+					}
+
+					mFrameTexture.data_uid = guid;
+					mFrameTexture.data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(guid));
+				}
+			}
+
+			ImGui::EndDragDropTarget();
+		}
+
+
+		ImGui::Selectable("Health Texture ");
+
+		if (ImGui::BeginDragDropTarget())
+		{
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_TEXT")) {
+
+				const char* data = (const char*)payload->Data;
+				std::string data_str = std::string(data);
+				//mTexPath = data_str;
+
+
+				std::string texturestr = systemManager->mResourceTySystem->compressed_texture_path + getFilename(data_str) + ".ctexture";
+				//mTexPath = texturestr;
+				std::string TEXTURE_Descriptor_Filepath;
+				unsigned guid;
+				// check and ensures that the descriptor file for the materials are created
+				//bool descFilePresent = _GEOM::CheckAndCreateDescriptorFileTEXTURE(data_str, TEXTURE_Descriptor_Filepath, texturestr);
+				std::string descfilepath = data_str + ".desc";
+				guid = _GEOM::GetGUID(descfilepath);
+				mHealthTexture.data_uid = guid;
+				mHealthTexture.data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(guid));
+			}
+
+
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_TEXT_UNCOMPRESS"))
+			{
+				const char* data = (const char*)payload->Data;
+				std::string data_str = std::string(data);
+
+				std::string texturestr = systemManager->mResourceTySystem->compressed_texture_path + getFilename(data_str) + ".ctexture";
+				//mMaterialInstancePath[i] = texturestr;
+
+				std::string TEXTURE_Descriptor_Filepath;
+				unsigned guid;
+
+				// check and ensures that the descriptor file for the materials are created
+				_GEOM::CheckAndCreateDescriptorFileTEXTURE(data_str, TEXTURE_Descriptor_Filepath, texturestr);
+				std::string descfilepath = data_str + ".desc";
+				guid = _GEOM::GetGUID(descfilepath);	// gets the guid from the png desc
+
+				_GEOM::Texture_DescriptorData::DeserializeTEXTURE_DescriptorDataFromFile(mHealthTextureDescriptorData, TEXTURE_Descriptor_Filepath);
+
+				{
+					std::cout << "\033[33mNOTE: >> Compressing texture: " << texturestr << "\033[0m" << std::endl;
+					CompressImageFile(data_str.c_str(), systemManager->mResourceTySystem->compressed_texture_path.c_str(), _GEOM::Texture_DescriptorData::isGammaSpace(TEXTURE_Descriptor_Filepath));
+
+					// Load the textures into the list of usable textures within the engine, if it doesnt already exist
+					if (systemManager->mResourceTySystem->getMaterialInstance(guid) == nullptr) {
+						systemManager->mResourceTySystem->texture_Load(getFilename(data_str), guid);
+					}
+
+					mHealthTexture.data_uid = guid;
+					mHealthTexture.data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(guid));
+				}
+			}
+			
+			ImGui::EndDragDropTarget();
+
+		}
+
+		
+		//ImGui::Selectable("Healthbar   ");
 
 		ImGui::Text("Width");
 		ImGui::SameLine();
@@ -1721,6 +1874,8 @@ void Healthbar::Inspect()
 
 		ImGui::ColorPicker4("Back Color", (float*)&mBackColor);
 	}
+
+
 
 	if (delete_component == false)
 		Entity(Hierarchy::selectedId).RemoveComponent<Healthbar>();

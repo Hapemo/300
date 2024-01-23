@@ -4,7 +4,6 @@
 #include "Physics/Accumulator.h"
 #include "Physics/PhysXUtils.h"
 
-
 PhysicsSystem::PhysicsSystem()
 {
 	mMaterials[MATERIAL::RUBBER] = CreateMaterial(0.9f, 0.8f, 0.f);
@@ -156,6 +155,22 @@ void PhysicsSystem::CreateRigidBody(Entity e)
 	CreateActor(actor, PxTransform(Convert(xform.mTranslate + childOffset), 
 		Convert(glm::quat(glm::radians(xform.mRotate)))), rbod);
 
+	if (e.HasComponent<MeshCollider>() && e.HasComponent<MeshRenderer>() && rbod.mMotion == MOTION::STATIC) 
+	{
+		std::vector<glm::vec3> vtx;
+		std::vector<unsigned int> idx;
+		PxTriangleMesh* mesh = nullptr;
+
+		systemManager->mResourceTySystem->mesh_GetVerticesAndIndices(e.GetComponent<MeshRenderer>().mMeshPath, vtx, idx);
+		CreateMeshCollider(vtx, idx, mesh);
+		PxMeshScale scale(Convert(xform.mScale), Convert(xform.GetQuaternion()));
+		PxTriangleMeshGeometry geom(mesh, scale);
+		PxShapeFlags flags = PxShapeFlag::eVISUALIZATION | PxShapeFlag::eSCENE_QUERY_SHAPE | PxShapeFlag::eSIMULATION_SHAPE;
+		PxShape* MeshShape = PxRigidActorExt::createExclusiveShape(*actor, geom, *mMaterials[rbod.mMaterial], flags);
+		PxFilterData motionFilter(static_cast<uint32_t>(rbod.mMotion), 0, 0, 0);
+		MeshShape->setSimulationFilterData(motionFilter);
+	}
+
 	if (e.HasComponent<CapsuleCollider>())
 	{
 		actor->setGlobalPose(PxTransform(Convert(xform.mTranslate + childOffset)));
@@ -231,6 +246,54 @@ void PhysicsSystem::CreateActor(PxRigidActor*& actor, const PxTransform& pxform,
 		return;
 	}
 	actor = mPX.mPhysics->createRigidStatic(pxform);
+}
+
+void PhysicsSystem::CreateMeshCollider(const std::vector<glm::vec3>& vtx, const std::vector<unsigned int>& idx, PxTriangleMesh*& triMesh,
+	bool skipCleanup, bool skipEdge, const PxU32 triPerLeaf)
+{
+	PxTriangleMeshDesc desc;
+	desc.points.count = vtx.size();
+	desc.points.data = vtx.data();
+	desc.points.stride = sizeof(glm::vec3);
+	desc.triangles.count = idx.size() / 3;
+	desc.triangles.data = idx.data();
+	desc.triangles.stride = 3 * sizeof(unsigned int);
+
+	PxTolerancesScale scale;
+	PxCookingParams params(scale);
+
+	params.midphaseDesc = PxMeshMidPhase::eBVH34;
+	SetUpCooking(params, skipCleanup, skipEdge);
+	params.midphaseDesc.mBVH34Desc.numPrimsPerLeaf = triPerLeaf;
+	PX_ASSERT(PxValidateTriangleMesh(params, desc));
+	PxU32 meshSize = 0;
+	triMesh = PxCreateTriangleMesh(params, desc, mPX.mPhysics->getPhysicsInsertionCallback());
+}
+
+void PhysicsSystem::SetUpCooking(PxCookingParams& params, bool skipMeshCleanup, bool skipEdgeData)
+{
+	// we suppress the triangle mesh remap table computation to gain some speed, as we will not need it 
+	// in this snippet
+	params.suppressTriangleMeshRemapTable = true;
+
+	// If DISABLE_CLEAN_MESH is set, the mesh is not cleaned during the cooking. The input mesh must be valid. 
+	// The following conditions are true for a valid triangle mesh :
+	//  1. There are no duplicate vertices(within specified vertexWeldTolerance.See PxCookingParams::meshWeldTolerance)
+	//  2. There are no large triangles(within specified PxTolerancesScale.)
+	// It is recommended to run a separate validation check in debug/checked builds, see below.
+
+	if (!skipMeshCleanup)
+		params.meshPreprocessParams &= ~static_cast<PxMeshPreprocessingFlags>(PxMeshPreprocessingFlag::eDISABLE_CLEAN_MESH);
+	else
+		params.meshPreprocessParams |= PxMeshPreprocessingFlag::eDISABLE_CLEAN_MESH;
+
+	// If eDISABLE_ACTIVE_EDGES_PRECOMPUTE is set, the cooking does not compute the active (convex) edges, and instead 
+	// marks all edges as active. This makes cooking faster but can slow down contact generation. This flag may change 
+	// the collision behavior, as all edges of the triangle mesh will now be considered active.
+	if (!skipEdgeData)
+		params.meshPreprocessParams &= ~static_cast<PxMeshPreprocessingFlags>(PxMeshPreprocessingFlag::eDISABLE_ACTIVE_EDGES_PRECOMPUTE);
+	else
+		params.meshPreprocessParams |= PxMeshPreprocessingFlag::eDISABLE_ACTIVE_EDGES_PRECOMPUTE;
 }
 
 void PhysicsSystem::MoveQueuedEntities()

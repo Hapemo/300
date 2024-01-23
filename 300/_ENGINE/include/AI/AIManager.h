@@ -158,6 +158,7 @@ public:
 	Does the following procedures to initialise the AI
 	- Adds the AI to AI Manager to keep track
 	- Initialises the Target entity ID with the target name
+	- Adds the AI to pathfinder history list to keep track
 	* Must be called when AI Setting component is added to an entity *
 	*******************************************************************************/
 	void InitialiseAI(Entity _e);
@@ -187,6 +188,7 @@ private:
 	glm::vec3 CalcAirAIDir(Entity _e);
 
 	glm::vec3 GetAStarDir(Entity _e, AISetting const& _setting);
+	std::vector<glm::vec3> GetAStarPath(Entity _e, AISetting const& _setting); // [0] being destination and [n] being first position to move to
 
 	bool CheckUseAStar(Entity _e, AISetting const& _setting);
 
@@ -236,9 +238,9 @@ private:
 	Transform* mPlayerTransform;
 	int mPlayerHistorySize;																											// Counting the size of mPlayerHistory container
 	int mPlayerArrayIndex;																											// Indicating the latest index in the array to replace
-	std::array<glm::vec3, MAX_DECISECOND_PLAYER_HISTORY> mPlayerHistory;					// Contains the player's position for the past 3 seconds, storing every deciseconds
-	std::unordered_map<std::string, std::set<Entity>> mAILists;										// Contains the different list of AIs of different classification. string is the name of container
-
+	std::array<glm::vec3, MAX_DECISECOND_PLAYER_HISTORY> mPlayerHistory;				// Contains the player's position for the past 3 seconds, storing every deciseconds
+	std::unordered_map<std::string, std::set<Entity>> mAILists;									// Contains the different list of AIs of different classification. string is the name of container
+	std::map<Entity, std::pair<float, std::vector<glm::vec3>>> mPathfindHistoryList;						// List of pathfinder's path history for each entity
 	static const std::array<std::string, static_cast<size_t>(E_MOVEMENT_TYPE::SIZE)> mMovementTypeArray; // Contains all the name of E_MOVEMENT_TYPE
 	int mAICount;
 };

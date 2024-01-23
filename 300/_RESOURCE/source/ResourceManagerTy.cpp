@@ -163,6 +163,48 @@ GFX::Mesh* ResourceTy::get_mesh(unsigned id)
 
 }
 
+
+/***************************************************************************/
+/*!
+\brief
+	Mesh collider. returns by reference the vertices and indices of the mesh
+*/
+/**************************************************************************/
+void ResourceTy::mesh_GetVerticesAndIndices(std::string filepath, std::vector<glm::vec3>& vertices, std::vector<unsigned int>& indices)
+{
+	_GEOM::Geom GeomData;
+
+	Deserialization::DeserializeGeom(filepath.c_str(), GeomData);	// load the geom from the compiled geom file
+	
+	GFX::Mesh::LoadFromGeom(GeomData, vertices, indices);
+
+	float minx, maxx, miny, maxy, minz, maxz;
+	minx = miny = minz = INFINITY;
+	maxx = maxy = maxz = -INFINITY;
+	for (const glm::vec3& vtx : vertices)
+	{
+		if (vtx.x < minx)
+			minx = vtx.x;
+		if (vtx.x > maxx)
+			maxx = vtx.x;
+		if (vtx.y < miny)
+			miny = vtx.y;
+		if (vtx.y > maxy)
+			maxy = vtx.y;
+		if (vtx.z < minz)
+			minz = vtx.z;
+		if (vtx.z > maxz)
+			maxz = vtx.z;
+	}
+	for (glm::vec3& vtx : vertices)
+	{
+		vtx.x /= (maxx - minx);
+		vtx.y /= (maxy - miny);
+		vtx.z /= (maxz - minz);
+	}
+}
+
+
 /***************************************************************************/
 /*!
 \brief
@@ -173,9 +215,6 @@ GFX::Mesh* ResourceTy::SetupMesh(std::string filepath, unsigned id)
 {
 	_GEOM::Geom GeomData;
 	GFX::Mesh localmesh;
-	std::vector<glm::vec3> positions;
-	std::vector<glm::vec2> uvs;
-	std::vector<unsigned int> indices;
 
 	Deserialization::DeserializeGeom(filepath.c_str(), GeomData);	// load the geom from the compiled geom file
 	localmesh.Setup(GeomData);
@@ -194,8 +233,6 @@ GFX::Mesh* ResourceTy::SetupMesh(std::string filepath, unsigned id)
 
 	auto Meshret = std::make_unique<GFX::Mesh>(localmesh);
 	return Meshret.release();
-
-
 }
 
 /***************************************************************************/

@@ -24,16 +24,14 @@ function Update()
         renderer.mColor.w =0
 
         if( indexing >=6)then
-            indexing = 0
+            indexing = 1
         end
-        
-    end
 
-    if(timercheck >0.4)then
-        indexing = indexing+1
+    elseif(timercheck >0.4)then
         transform.mTranslate.x = poschecker[indexing]
 
         renderer.mColor.w =1
+        indexing = indexing+1
 
         timercheck = 0
     end

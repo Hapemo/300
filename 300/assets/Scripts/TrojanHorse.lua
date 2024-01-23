@@ -177,6 +177,9 @@ function ROAMInit()
 end
 
 function CHARGEInit()
+    -- play animation
+    this:GetMeshRenderer():SetMesh("Trojan_charging", this)
+
     --print("Start Charge")
     this:GetAudio():SetPause()
     gameStateSys:GetEntity("TrojanHorseChargeAudio"):GetAudio():SetPlay()
@@ -193,6 +196,8 @@ end
 function RESTInit()
     --print("Start Rest")
     state = "REST"
+    this:GetMeshRenderer():SetMesh("Trojan", this) -- change animation back
+
     this:GetAudio():SetPause()
     phySys:SetVelocity(this, Vec3.new())
 end

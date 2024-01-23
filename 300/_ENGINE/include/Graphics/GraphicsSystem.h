@@ -54,6 +54,17 @@ struct PointLightSSBO
 	float mPad{};
 };
 
+struct SpotLightSSBO
+{
+	alignas(16) vec4 mPosition;
+	alignas(16) vec4 mTarget{ 0.f, 1.f, 0.f, 0.f };
+	alignas(16) vec4 mColor { 1.f, 1.f, 1.f, 0.f };
+	float mCutoff;
+	float mOuterCutoff;
+	float mIntensity;
+	float mPad{};
+};
+
 struct MaterialSSBO
 {
 	alignas(8) GLuint64 mDiffuseMap		{};
@@ -366,6 +377,8 @@ private:
 
 	GFX::ComputeShader m_ComputeCRTShader;
 	GLint m_ComputeCRTTimeLocation{};
+	GLint m_ComputeCRTHeightOffsetLocation{};
+	GLint m_ComputeCRTDistortionLocation{};
 
 	GFX::ComputeShader m_ComputeAddBlendShader;
 	GLint m_ComputeAddBlendExposureLocation{};
