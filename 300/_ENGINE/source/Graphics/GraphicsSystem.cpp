@@ -340,6 +340,8 @@ void GraphicsSystem::Draw(float dt, bool forEditor)
 			m_GameFbo.Bind();
 			m_GameFbo.DrawBuffers(true);
 		}
+
+		DrawAllParticles();
 		//!< UI Area
 		{
 			DrawAllPortals(forEditor);	// Draw Portal object
@@ -349,9 +351,9 @@ void GraphicsSystem::Draw(float dt, bool forEditor)
 			for (Entity inst : healthbarInstances)
 			{
 				if (forEditor)
-					AddHealthbarInstance(inst, GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR), static_cast<int>(inst.id));
+					AddHealthbarInstance(inst, GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR));
 				else
-					AddHealthbarInstance(inst, GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_GAME), static_cast<int>(inst.id));
+					AddHealthbarInstance(inst, GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_GAME));
 			}
 			m_HealthbarMesh.PrepForDraw();
 			DrawAllHealthbarInstance(camVP);
@@ -398,6 +400,19 @@ void GraphicsSystem::Draw(float dt, bool forEditor)
 		}
 	}
 
+	// Bind the appropriate FBO
+	if (forEditor)		// Bind Editor FBO
+	{
+		m_Fbo.Bind();
+		m_Fbo.DrawBuffers(true, true);
+	}
+	else				// Bind Game FBO
+	{
+		m_GameFbo.Bind();
+		m_GameFbo.DrawBuffers(true);
+	}
+	// Particles
+	DrawAllParticles();
 
 #pragma endregion
 
