@@ -464,6 +464,7 @@ void Spotlight::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& 
 	Serialize(writer, "direction", mDirection);
 	Serialize(writer, "color", mColor);
 	Serialize(writer, "cutoff", mCutoff);
+	Serialize(writer, "outercutoff", mOuterCutoff);
 	Serialize(writer, "intensity", mIntensity);
 	writer.EndObject();
 }
@@ -473,6 +474,7 @@ void Spotlight::DeserializeSelf(rapidjson::Value& reader)
 	Deserialize(reader, "direction", mDirection);
 	Deserialize(reader, "color", mColor);
 	Deserialize(reader, "cutoff", mCutoff);
+	Deserialize(reader, "outercutoff", mOuterCutoff);
 	Deserialize(reader, "intensity", mIntensity);
 
 }
