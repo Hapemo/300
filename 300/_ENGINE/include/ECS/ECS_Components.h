@@ -675,7 +675,7 @@ struct PointLight : public Serializable
 	void SetColor(const glm::vec3& color);
 };
 
-struct Spotlight
+struct Spotlight : public Serializable
 {
 	vec3 mTarget;
 	vec3 mColor{ 1.f, 1.f, 1.f };
@@ -684,6 +684,9 @@ struct Spotlight
 	float mIntensity{ 1.5f };
 
 	void Inspect();
+
+	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
+	void DeserializeSelf(rapidjson::Value& reader);
 };
 
 /******************************************************************************/
