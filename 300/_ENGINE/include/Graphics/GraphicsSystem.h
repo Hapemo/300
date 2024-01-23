@@ -326,7 +326,6 @@ public:
 
 	void Unload();
 
-private:
 	// -- SSBO -- 
 	const int						MAX_INSTANCES = 1000;
 	GFX::SSBO						m_FinalBoneMatrixSsbo;
@@ -339,8 +338,8 @@ private:
 	GFX::SSBO						m_MaterialSsbo;
 	std::vector<MaterialSSBO>		m_Materials;
 	std::map<unsigned, GLuint64>	m_MaterialHandles;
-	GLuint64 GetAndStoreBindlessTextureHandle(int texID);	// Stores adn Return the 64bit texture handle and makes it resident
 
+	GLuint64 GetAndStoreBindlessTextureHandle(int texID);	// Stores adn Return the 64bit texture handle and makes it resident
 	void SetupShaderStorageBuffers();		// Creates all SSBO required
 
 	void DrawAll2DInstances(unsigned shaderID);

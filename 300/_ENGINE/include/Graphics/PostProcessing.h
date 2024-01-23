@@ -17,7 +17,6 @@ struct BloomMip
 };
 
 
-
 class PhysBasedBloomFBO
 {
 public:
