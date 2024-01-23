@@ -158,7 +158,7 @@ vec3 ComputeLight(PointLight light, vec3 F0, vec3 fragPos, vec3 albedo, vec3 nor
 
 vec3 ComputeSpotLight(SpotLight light, vec3 fragPos, vec3 albedo, vec3 normal, float roughness, float metallic)
 {
-    vec3 lightToFragDir = light.position.xyz - fragPos;
+    vec3 lightToFragDir = normalize(light.position.xyz - fragPos);
     vec3 lightDir = light.target.xyz - light.position.xyz;
 
     // Diffuse

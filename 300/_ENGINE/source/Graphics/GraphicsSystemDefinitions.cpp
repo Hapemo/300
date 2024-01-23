@@ -287,8 +287,8 @@ void update_Light()
 			light.mTarget = vec4(lightData.mTarget, 0.0f);
 			light.mColor = vec4(lightData.mColor, 0.f);
 			light.mIntensity = lightData.mIntensity;
-			light.mCutoff = lightData.mCutoff;
-			light.mOuterCutoff = lightData.mOuterCutoff;
+			light.mCutoff = glm::cos(glm::radians(lightData.mCutoff));
+			light.mOuterCutoff = glm::cos(glm::radians(lightData.mOuterCutoff));
 
 			systemManager->mGraphicsSystem->spotlights.push_back(light);
 
