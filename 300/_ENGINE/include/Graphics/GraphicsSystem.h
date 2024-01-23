@@ -57,7 +57,7 @@ struct PointLightSSBO
 struct SpotLightSSBO
 {
 	alignas(16) vec4 mPosition;
-	alignas(16) vec4 mTarget{ 0.f, 1.f, 0.f, 0.f };
+	alignas(16) vec4 mDirection { 0.f, -1.f, 0.f, 0.f };
 	alignas(16) vec4 mColor { 1.f, 1.f, 1.f, 0.f };
 	float mCutoff;
 	float mOuterCutoff;

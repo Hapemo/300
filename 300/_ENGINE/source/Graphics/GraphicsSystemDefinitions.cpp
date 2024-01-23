@@ -284,7 +284,7 @@ void update_Light()
 
 			SpotLightSSBO light;
 			light.mPosition = vec4(lightTransform.mTranslate, 0.f);
-			light.mTarget = vec4(lightData.mTarget, 0.0f);
+			light.mDirection = vec4(lightData.mDirection, 0.0f);
 			light.mColor = vec4(lightData.mColor, 0.f);
 			light.mIntensity = lightData.mIntensity;
 			light.mCutoff = glm::cos(glm::radians(lightData.mCutoff));
@@ -293,7 +293,7 @@ void update_Light()
 			systemManager->mGraphicsSystem->spotlights.push_back(light);
 
 			systemManager->mGraphicsSystem->m_Renderer.AddCube(lightTransform.mTranslate, { 2, 2, 2 }, vec4(lightData.mColor, 1.f));
-			systemManager->mGraphicsSystem->m_Renderer.AddLine(light.mPosition, light.mTarget, vec4(lightData.mColor, 1.f));
+			systemManager->mGraphicsSystem->m_Renderer.AddLine(light.mPosition, light.mPosition + light.mDirection * 10.f, vec4(lightData.mColor, 1.f));
 		}
 		systemManager->mGraphicsSystem->m_SpotlightSsbo.SubData(systemManager->mGraphicsSystem->spotlights.size() * sizeof(SpotLightSSBO), systemManager->mGraphicsSystem->spotlights.data());
 	}

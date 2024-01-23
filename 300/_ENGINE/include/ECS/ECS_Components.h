@@ -677,7 +677,7 @@ struct PointLight : public Serializable
 
 struct Spotlight : public Serializable
 {
-	vec3 mTarget;
+	vec3 mDirection;
 	vec3 mColor{ 1.f, 1.f, 1.f };
 	float mCutoff;
 	float mOuterCutoff;

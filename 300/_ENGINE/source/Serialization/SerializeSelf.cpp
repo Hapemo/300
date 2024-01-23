@@ -461,7 +461,7 @@ void Spotlight::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& 
 {
 	writer.Key("spotlight");
 	writer.StartObject();
-	Serialize(writer, "target", mTarget);
+	Serialize(writer, "direction", mDirection);
 	Serialize(writer, "color", mColor);
 	Serialize(writer, "cutoff", mCutoff);
 	Serialize(writer, "intensity", mIntensity);
@@ -470,7 +470,7 @@ void Spotlight::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& 
 
 void Spotlight::DeserializeSelf(rapidjson::Value& reader)
 {
-	Deserialize(reader, "target", mTarget);
+	Deserialize(reader, "direction", mDirection);
 	Deserialize(reader, "color", mColor);
 	Deserialize(reader, "cutoff", mCutoff);
 	Deserialize(reader, "intensity", mIntensity);
