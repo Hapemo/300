@@ -92,6 +92,8 @@ void GraphicsSystem::Init()
 		UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_GAME, 0.f);
 	}
 
+	m_Emitter.Init(ParticleProperties());
+
 	PINFO("Window size: %d, %d", m_Window->size().x, m_Window->size().y);
 }
 
@@ -177,6 +179,20 @@ void GraphicsSystem::Update(float dt)
 	update_UI();
 
 	update_Portals();
+
+	// ---------------- PARTICLES WIP ----------------
+	if (Input::CheckKey(E_STATE::RELEASE, E_KEY::F1))
+	{
+		m_Emitter.Emit(1000, glm::normalize(m_EditorCamera.GetRightVector()), glm::normalize(m_EditorCamera.GetUpVector()));
+	}
+	// Update all particles
+	m_Emitter.Update(dt);
+	m_ParticleMesh.ClearInstances();
+	for (auto p : m_Emitter.mParticles)
+	{
+		AddParticleInstance(p, m_EditorCamera.position());
+	}
+	m_ParticleMesh.PrepForDraw();
 
 #pragma endregion
 }
@@ -267,7 +283,7 @@ void GraphicsSystem::Draw(float dt, bool forEditor)
 	ComputeDeferredLight(forEditor);
 	
 	//!< === POST PROCESSING AND UI AREA ===
-	if (!forEditor)
+	if (forEditor)
 	{
 		// Post Processing Bloom
 		glDepthMask(GL_FALSE);
@@ -308,35 +324,49 @@ void GraphicsSystem::Draw(float dt, bool forEditor)
 
 		glDepthMask(GL_TRUE);
 
+		glEnable(GL_BLEND);			// Enable back blending for later draws
+
+		// Set blend function back to usual for UI rendering
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+		// Bind the appropriate FBO
+		if (forEditor)		// Bind Editor FBO
+		{
+			m_Fbo.Bind();
+			m_Fbo.DrawBuffers(true, true);
+		}
+		else				// Bind Game FBO
+		{
+			m_GameFbo.Bind();
+			m_GameFbo.DrawBuffers(true);
+		}
+
+		DrawAllParticles();
 		//!< UI Area
 		{
-			glEnable(GL_BLEND);			// Enable back blending for later draws
-
-			// Set blend function back to usual for UI rendering
-			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-			// Bind the appropriate FBO
-			if (forEditor)		// Bind Editor FBO
-			{
-				m_Fbo.Bind();
-				m_Fbo.DrawBuffers(true, true);
-			}
-			else				// Bind Game FBO
-			{
-				m_GameFbo.Bind();
-				m_GameFbo.DrawBuffers(true);
-			}
-
 			DrawAllPortals(forEditor);	// Draw Portal object
 
 			// Healthbar objects
 			auto healthbarInstances = systemManager->ecs->GetEntitiesWith<Healthbar>();
 			for (Entity inst : healthbarInstances)
 			{
+				Healthbar healthbar = inst.GetComponent<Healthbar>();
+				unsigned healthTexID{}, frameTexID{};
+				if (healthbar.mHealthTexture.getdata(systemManager->mResourceTySystem->m_ResourceInstance) != nullptr)
+					healthTexID = reinterpret_cast<GFX::Texture*>(healthbar.mHealthTexture.data)->ID();
+				if (healthbar.mFrameTexture.getdata(systemManager->mResourceTySystem->m_ResourceInstance) != nullptr)
+					frameTexID = reinterpret_cast<GFX::Texture*>(healthbar.mFrameTexture.data)->ID();
+
 				if (forEditor)
-					AddHealthbarInstance(inst, GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR), static_cast<int>(inst.id));
+				{
+					AddHealthbarInstance(inst, GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR), frameTexID, true);
+					AddHealthbarInstance(inst, GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR), healthTexID);
+				}
 				else
-					AddHealthbarInstance(inst, GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_GAME), static_cast<int>(inst.id));
+				{
+					AddHealthbarInstance(inst, GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_GAME), frameTexID, true);
+					AddHealthbarInstance(inst, GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_GAME), healthTexID);
+				}
 			}
 			m_HealthbarMesh.PrepForDraw();
 			DrawAllHealthbarInstance(camVP);
@@ -382,6 +412,20 @@ void GraphicsSystem::Draw(float dt, bool forEditor)
 			glDepthMask(GL_TRUE);
 		}
 	}
+
+	// Bind the appropriate FBO
+	if (forEditor)		// Bind Editor FBO
+	{
+		m_Fbo.Bind();
+		m_Fbo.DrawBuffers(true, true);
+	}
+	else				// Bind Game FBO
+	{
+		m_GameFbo.Bind();
+		m_GameFbo.DrawBuffers(true);
+	}
+	// Particles
+	DrawAllParticles();
 
 #pragma endregion
 
@@ -1463,6 +1507,12 @@ void GraphicsSystem::DrawAllHealthbarInstance(const mat4& viewProj)
 	if (m_HealthbarMesh.mLTW.size() == 0)
 		return;
 
+	// Bind Textures to OpenGL context
+	for (size_t i{}; i < m_Image2DStore.size(); ++i)
+	{
+		glBindTextureUnit(static_cast<GLuint>(i), m_Image2DStore[static_cast<GLuint>(i)]);
+	}
+
 	// Bind shader and VAO
 	m_HealthbarShaderInst.Activate();
 	m_HealthbarMesh.BindVao();
@@ -1476,9 +1526,15 @@ void GraphicsSystem::DrawAllHealthbarInstance(const mat4& viewProj)
 	// Unbinding shader and VAO
 	GFX::Shader::Deactivate();
 	m_HealthbarMesh.UnbindVao();
+
+	// Unbind Textures from openGL context
+	for (size_t i{}; i < m_Image2DStore.size(); ++i)
+	{
+		glBindTextureUnit(static_cast<GLuint>(i), 0);
+	}
 }
 
-void GraphicsSystem::AddHealthbarInstance(Entity e, const vec3& camPos, unsigned entityID)
+void GraphicsSystem::AddHealthbarInstance(Entity e, const vec3& camPos, unsigned texHandle, bool forFrame)
 {
 	Healthbar& healthbar = e.GetComponent<Healthbar>();
 	vec3 originPos = e.GetComponent<Transform>().mTranslate;
@@ -1515,9 +1571,24 @@ void GraphicsSystem::AddHealthbarInstance(Entity e, const vec3& camPos, unsigned
 		healthbarRatio = (healthbar.mHealth/healthbar.mMaxHealth) * 100.f;
 		healthbarRatio = healthbarRatio < 0 ? 0 : healthbarRatio; // Cap healthbar ratio min to 0
 	}
+
+	// Texture UI for Health
+	int texIndex{};
+	if (texHandle > 0)
+		texIndex = StoreTextureIndex(texHandle);
+	else
+		texIndex = -2;
+
 	vec4 healthColor = vec4(healthbar.mHealthColor.x, healthbar.mHealthColor.y, healthbar.mHealthColor.z, healthbarRatio);
 	m_HealthbarMesh.mColors.push_back(healthColor);
-	m_HealthbarMesh.mTexEntID.push_back(healthbar.mBackColor);
+
+	float frameFlag{ -5.f };
+	if (forFrame) frameFlag = 5.f;
+
+	if (texHandle > 0)
+		m_HealthbarMesh.mTexEntID.push_back(vec4(texIndex + 0.5f, -2.f, frameFlag, 0.f));	// set y component for checking at shader side, z for frame
+	else
+		m_HealthbarMesh.mTexEntID.push_back(healthbar.mBackColor);
 	// Update LTW matrix
 	m_HealthbarMesh.mLTW.push_back(world);
 }
@@ -1621,6 +1692,8 @@ void GraphicsSystem::SetupAllShaders()
 	m_HealthbarShaderInst = *systemManager->mResourceTySystem->get_Shader(healthbarShaderstr.id);
 	m_HealthbarShaderInst.Activate();
 	m_HealthbarViewProjLocation = m_HealthbarShaderInst.GetUniformLocation("uViewProj");
+	GLuint health_uniform_tex = glGetUniformLocation(m_HealthbarShaderInst.GetHandle(), "uTex2d");
+	glUniform1iv(health_uniform_tex, (GLsizei)m_Textures.size(), m_Textures.data()); // Passing texture Binding units to frag shader [0 - 31]
 	m_HealthbarShaderInst.Deactivate();
 
 	// Initialize the Healthbar shader and uniform location
@@ -1808,6 +1881,59 @@ void GraphicsSystem::DrawAllPortals(bool editorDraw)
 	{
 		glBindTextureUnit(static_cast<GLuint>(i), 0);
 	}
+}
+
+void GraphicsSystem::AddParticleInstance(Particle const& p, vec3 const& camPos)
+{
+	// Compute the rotation vectors
+	vec3 normal = camPos - p.mCurrPosition;
+	vec3 up = { 0, 1, 0 };
+	vec3 right = glm::cross(up, normal);
+	vec3 forward = glm::cross(right, normal);
+
+	mat4 scale = {
+		vec4(p.mCurrSize, 0.f, 0.f, 0.f),
+		vec4(0.f, p.mCurrSize, 0.f, 0.f),
+		vec4(0.f, 0.f, 1.f, 0.f),
+		vec4(0.f, 0.f, 0.f, 1.f)
+	};
+
+	mat4 tilt = glm::rotate(glm::radians(p.mCurrRotation), vec3(0, 0, 1));
+
+	scale = tilt * scale;
+
+	// Rotation matrix to always face the camera
+	mat4 rotate = {
+		vec4(glm::normalize(right), 0.0f),
+		vec4(glm::normalize(forward), 0.0f),
+		vec4(glm::normalize(normal), 0.0f),
+		vec4(p.mCurrPosition, 1.0f)
+	};
+
+	mat4 world = rotate * scale;
+
+	m_ParticleMesh.mTexEntID.push_back(vec4(-2.f, 0.f, 0.f, 0.f));
+	m_ParticleMesh.mColors.emplace_back(p.mCurrColor);
+	m_ParticleMesh.mLTW.emplace_back(world);
+}
+
+void GraphicsSystem::DrawAllParticles()
+{
+	GFX::Camera camera = GetCamera(CAMERA_TYPE::CAMERA_TYPE_GAME);
+	if (true)
+		camera = GetCamera(CAMERA_TYPE::CAMERA_TYPE_EDITOR);
+
+	mat4 camVP = camera.viewProj();
+
+	m_ParticleMesh.BindVao();
+	m_Quad3DShaderInst.Activate();
+	glUniformMatrix4fv(m_Quad3DShaderInst.GetUniformVP(), 1, GL_FALSE, &camVP[0][0]);
+
+	glDepthFunc(GL_LEQUAL);
+	glDrawArraysInstanced(GL_TRIANGLE_FAN, 0, 4, GLsizei(m_ParticleMesh.mLTW.size()));
+
+	m_ParticleMesh.UnbindVao();
+	GFX::Shader::Deactivate();
 }
 
 void GraphicsSystem::ComputeDeferredLight(bool editorDraw)

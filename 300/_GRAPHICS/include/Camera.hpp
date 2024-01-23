@@ -82,6 +82,12 @@ Sets the size of the camera
 Sets the cursor position of the camera
 *******************************************************************************/
         void SetCursorPosition(vec2 newPosition);
+
+/*!*****************************************************************************
+Get the cardinal vectors of the camera, but unnormalized
+*******************************************************************************/
+        vec3 GetRightVector();
+        vec3 GetUpVector();
         
 /*!*****************************************************************************
 Sets the projection matrix of the camera
