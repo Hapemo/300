@@ -217,8 +217,8 @@ function Alive()
     gunEntity = gameStateSys:GetEntity("gun")
 
     -- -- Testing [ParentChildRotateInit]
-    gunTransform = cameraEntity:GetTransform()
-    gunTransform:ParentChildRotateInit('x', 40)
+    gunTransform = gunEntity:GetTransform()
+    gunTransform:ParentChildRotateInit('x', 360)
         
     gunInitialTranslate = gunEntity:GetTransform().mTranslate
     gunRotation = gunEntity:GetTransform().mRotate

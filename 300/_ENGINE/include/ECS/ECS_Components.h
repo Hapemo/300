@@ -97,9 +97,10 @@ struct Transform : public Serializable
 	glm::vec3 mPreviousPosition;
 	
 	// parent child rotate member variables
-	float mCumulativeTime{};
-	char  mRotationAxis;
-	float mRotationDegrees;
+	float     mCumulativeTime{};
+	char      mRotationAxis;		  // x, y, z
+	float     mRotationDegrees;		  // rotation amount
+	glm::vec3 mRotateAxisVector;      // rotation vector based on 'mRotationAxis' & 'mRotationDegrees'
 
 
 	Transform() : mScale(1.f), mRotate(0.f), mTranslate(0.f) {}
