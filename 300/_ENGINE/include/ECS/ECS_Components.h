@@ -89,16 +89,25 @@ struct General : public Serializable
  /******************************************************************************/
 struct Transform : public Serializable
 {
+	// Added [M4 - 23/1/2024]
+	enum GunAnimations
+	{
+		REVOLVER
+	};
+
 	glm::vec3 mScale;
 	glm::vec3 mRotate;
 	glm::vec3 mTranslate;
 
 	// 3D audio support 
 	glm::vec3 mPreviousPosition;
-	
+
 	// parent child rotate member variables
-	float mCumulativeTime{};
-	char  mRotationAxis;
+	float     mCumulativeTime{};
+	char      mRotationAxis;		  // x, y, z
+	float     mRotationDegrees;		  // rotation amount
+	glm::vec3 mRotateAxisVector;      // rotation vector based on 'mRotationAxis' & 'mRotationDegrees'
+	GunAnimations mGunAnim;
 
 
 	Transform() : mScale(1.f), mRotate(0.f), mTranslate(0.f) {}
@@ -107,9 +116,11 @@ struct Transform : public Serializable
 	void Inspect();
 	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
 	void DeserializeSelf(rapidjson::Value& reader);
-	
+
 	void parentChildRotateInit(char axis, float angle);
 	void parentChildRotateUpdate(float dt);
+
+
 	//RTTR_ENABLE()
 };
 
