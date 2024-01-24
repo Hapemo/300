@@ -186,7 +186,8 @@ void LuaTransform()
         "mScale", &Transform::mScale,
         "mRotate", &Transform::mRotate,
         "mTranslate", &Transform::mTranslate,
-        "ParentChildRotate", &Transform::parentChildRotateInit);
+        "ParentChildRotateInit", &Transform::parentChildRotateInit,
+        "ParentChildRotateUpdate", &Transform::parentChildRotateUpdate);
 }
 
 void LuaAnimator()
