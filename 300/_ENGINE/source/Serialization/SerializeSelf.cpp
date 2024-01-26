@@ -422,6 +422,8 @@ void Healthbar::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& 
 	Serialize(writer, "maxhealth", mMaxHealth);
 	Serialize(writer, "width", mWidth);
 	Serialize(writer, "height", mHeight);
+	Serialize(writer, "frametexture", mFrameTexture.data_uid);
+	Serialize(writer, "healthtexture", mHealthTexture.data_uid);
 	writer.EndObject();
 }
 
@@ -434,6 +436,8 @@ void Healthbar::DeserializeSelf(rapidjson::Value& reader)
 	Deserialize(reader, "maxhealth", mHealth);
 	Deserialize(reader, "width", mWidth);
 	Deserialize(reader, "height", mHeight);
+	Deserialize(reader, "frametexture", mFrameTexture.data_uid);
+	Deserialize(reader, "healthtexture", mHealthTexture.data_uid);
 }
 
 void Button::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
