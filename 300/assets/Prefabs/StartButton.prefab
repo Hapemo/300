@@ -1,0 +1,68 @@
+{
+    "entityid": 1,
+    "general": {
+        "name": "StartButton",
+        "tagid": 6,
+        "subtag": 0,
+        "isActive": true,
+        "isPaused": false
+    },
+    "transform": {
+        "scale": {
+            "x": 0.39500001072883606,
+            "y": -0.29100000858306885,
+            "z": 1.0
+        },
+        "rotate": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "translate": {
+            "x": -0.4569999873638153,
+            "y": 0.33000001311302185,
+            "z": 0.0
+        }
+    },
+    "uirenderer": {
+        "texpath": "",
+        "textureref": 1952423938,
+        "degree": 0.0,
+        "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+        },
+        "layer": 1,
+        "worldtransform": false
+    },
+    "scripts": {
+        "scriptscontainer": [
+            {
+                "scriptFile": "../assets/Scripts/MainMenuButtons.lua",
+                "variables": []
+            }
+        ]
+    },
+    "audio": {
+        "filepath": "../assets\\Audio",
+        "filename": "UI_Button_Hover.wav",
+        "fullpath": "../assets\\Audio/UI_Button_Hover.wav",
+        "playonawake": false,
+        "islooping": false,
+        "audiotype": 1,
+        "volume": 0.20000000298023224,
+        "retainaudio": false
+    },
+    "prefab": {
+        "prefab": "StartButton"
+    },
+    "button": {
+        "interactable": true,
+        "hover": false,
+        "click": false,
+        "activated": false,
+        "renderflag": true
+    }
+}

@@ -17,6 +17,7 @@ layout(rgba32f, binding = 1) uniform image2D brightOutput;
 // -- UNIFORM --
 uniform vec3 uCamPos;
 uniform int uLightCount;
+uniform int uSpotlightCount;
 uniform vec4 uGlobalTint;
 uniform vec4 uGlobalBloomThreshold;
 
@@ -30,9 +31,24 @@ struct PointLight           // 48 Bytes
     float   padding;        // 44
 };
 
+struct SpotLight            // 64 Bytes
+{
+	vec4    position;       // 0
+	vec4    direction;      // 16
+	vec4    color;          // 32
+	float   cutoff;         // 48
+	float   outerCutoff;    // 52
+	float   intensity;      // 56
+	float   pad;            // 60
+};
+
 layout (std430, binding = 2) buffer pointLightBuffer
 {
     PointLight pointLights[];
+};
+layout(std430, binding = 4) buffer spotLightBuffer
+{
+    SpotLight spotlights[];
 };
 
 vec3 FresnelSchlick(float cosTheta, vec3 f0);
@@ -41,6 +57,7 @@ float GeometrySchlickGGX(float NdotV, float roughness);
 float GeometrySmith(vec3 N, vec3 V, vec3 L, float roughness);
 float CalculateAttenuation(float linear, float quadratic, float distance);
 vec3 ComputeLight(PointLight light, vec3 F0, vec3 fragPos, vec3 albedo, vec3 normal, float roughness, float metallic);
+vec3 ComputeSpotLight(SpotLight light, vec3 fragPos, vec3 albedo, vec3 normal, float roughness, float metallic);
 
 const float PI = 3.14159265359;
 
@@ -69,6 +86,10 @@ void main()
     for (int i = 0; i < uLightCount; ++i)
     {
         lightRadiance += ComputeLight(pointLights[i], F0, fragPos.rgb, albedoSpec.rgb, normal.rgb, roughness, metallic);
+    }
+    for (int i = 0; i < uSpotlightCount; ++i)
+    {
+        lightRadiance += ComputeSpotLight(spotlights[i], fragPos.rgb, albedoSpec.rgb, normal.rgb, roughness, metallic);
     }
 
     vec3 ambient = vec3(0.03) * albedoSpec.rgb * ao;
@@ -133,6 +154,27 @@ vec3 ComputeLight(PointLight light, vec3 F0, vec3 fragPos, vec3 albedo, vec3 nor
     // Return to add to outgoing radiance
     float NdotL = max(dot(normal, L), 0.0);
     return (kD * albedo / PI + specular) * radiance * NdotL;
+}
+
+vec3 ComputeSpotLight(SpotLight light, vec3 fragPos, vec3 albedo, vec3 normal, float roughness, float metallic)
+{
+    vec3 lightToFragDir = normalize(light.position.xyz - fragPos);
+    vec3 lightDir = light.direction.xyz;
+
+    // Diffuse
+    vec3 norm = normalize(normal);
+    float diff = max(dot(norm, lightToFragDir), 0.0);
+    vec3 diffuse = diff * albedo;
+
+    float theta = dot(lightToFragDir, normalize(-lightDir));
+    float epsilon = light.cutoff - light.outerCutoff;
+    float intensity = light.intensity * clamp((theta - light.outerCutoff) / epsilon, 0.0, 1.0);
+
+    // placeholder, To be Changed
+    diffuse *= intensity;
+    metallic *= intensity;
+
+    return light.color.rgb * (diffuse + metallic);
 }
 
 float CalculateAttenuation(float linear, float quadratic, float distance)

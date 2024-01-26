@@ -29,152 +29,162 @@ end
 function Update()
     ent = Helper.GetScriptEntity(script_entity.id)
 
+    uirend  = ent:GetUIrenderer()
     button = ent:GetButton()
     gen = ent:GetGeneral()
     trans = ent:GetTransform()
 
-    centerscreen = Input:GetCursorCenter()
-    mouse_move.x = Input.CursorPos().x - centerscreen.x
-    mouse_move.y = Input.CursorPos().y - centerscreen.y
-
-    -- print("mouse pos x: ")
-    -- print(mouse_move.x)
-    -- print("mouse pos y: ")
-    -- print(mouse_move.y)
-
-    -- print("width: ")
-    -- print(graphicsSys.m_WindowWidth)
-
-    -- print("height: ")
-    -- print(graphicsSys.m_WindowHeight)
-
-    -- print("")
-
-    -- check if cursor is within the button width & height
-
     -- start button
     if(gen.name == "StartButton") then
-        if((mouse_move.x < -(graphicsSys.m_WindowWidth * 0.1875)) and (mouse_move.x > -(graphicsSys.m_WindowWidth * 0.5)) and
-            (mouse_move.y < (graphicsSys.m_WindowHeight * 0.2170)) and (mouse_move.y > (graphicsSys.m_WindowHeight * 0.0707))) then
-            if not hoverOver then
-                hoverOver = true
-                -- Play the sound effect
+        -- when the mouse is hovered over the button,
+        -- do whatever here (click sound + image change, set the boolean)
+        if (button.mIsHover) then
+            if (hoverOver == false) then
                 hoverSFX = ent:GetAudio()
                 hoverSFX:SetPlay(0.2)
+                uirend:SetTexture("Start_Hover")
+                hoverOver = true;
             end
-
-            if(inputMapSys:GetButtonDown("Shoot")) then
-                clickSFX:SetPlay(1.0)
-                gameStateSys:ChangeGameState("Tutorial")
-            end
-          
-        else
-            hoverOver = false
+        end
+        if (button.mIsHover == false) then
+            uirend:SetTexture("Start_Default")
+            hoverOver = false;
+        end
+        if (button.mActivated) then
+            clickSFX:SetPlay(1.0)
+            gameStateSys:ChangeGameState("Tutorial")
         end
     end
 
-    -- 435, 290
     -- quit button
     if(gen.name == "QuitButton") then
-        if((mouse_move.x < -(graphicsSys.m_WindowWidth * 0.1875)) and (mouse_move.x > -(graphicsSys.m_WindowWidth * 0.5)) and
-            (mouse_move.y < (graphicsSys.m_WindowHeight * 0.4390)) and (mouse_move.y > (graphicsSys.m_WindowHeight * 0.2926))) then
-            if not hoverOver then
-                hoverOver = true
-                -- Play the sound effect
+        if (button.mIsHover) then
+            if (hoverOver == false) then
                 hoverSFX = ent:GetAudio()
                 hoverSFX:SetPlay(0.2)
+                uirend:SetTexture("Quit_Hover")
+                hoverOver = true;
             end
-
-            if(inputMapSys:GetButtonDown("Shoot")) then
+        end
+        if (button.mIsHover == false) then
+            uirend:SetTexture("Quit_Default")
+            hoverOver = false;
+        end
+        if (button.mActivated) then
                 exitSFX:SetPlay(0.2)
                 systemManager:Quit()
-            end
-        else
-            hoverOver = false
         end
     end
 
-    -- 960, 360
-    -- 435, 290
+    -- how to play button
+    if(gen.name == "HTPButton") then
+        if (button.mIsHover) then
+            if (hoverOver == false) then
+                hoverSFX = ent:GetAudio()
+                hoverSFX:SetPlay(0.2)
+                uirend:SetTexture("HowToPlay_Hover")
+                hoverOver = true;
+            end
+        end
+        if (button.mIsHover == false) then
+            uirend:SetTexture("HowToPlay_Default")
+            hoverOver = false;
+        end
+        if (button.mActivated) then
+            clickSFX:SetPlay(1.0)
+        end
+    end
+
+    -- settings button
+    if(gen.name == "SettingsButton") then
+        if (button.mIsHover) then
+            if (hoverOver == false) then
+                hoverSFX = ent:GetAudio()
+                hoverSFX:SetPlay(0.2)
+                uirend:SetTexture("Settings_Hover")
+                hoverOver = true;
+            end
+        end
+        if (button.mIsHover == false) then
+            uirend:SetTexture("Settings_Default")
+            hoverOver = false;
+        end
+        if (button.mActivated) then
+            clickSFX:SetPlay(1.0)
+        end
+    end
+
     -- credits button
     if(gen.name == "CreditsButton") then
-        if((mouse_move.x < (graphicsSys.m_WindowWidth * 0.5)) and (mouse_move.x > (graphicsSys.m_WindowWidth * 0.1875)) and
-            (mouse_move.y < (graphicsSys.m_WindowHeight * 0.4390)) and (mouse_move.y > (graphicsSys.m_WindowHeight * 0.2926))) then
-            if not hoverOver then
-                hoverOver = true
-                -- Play the sound effect
+        if (button.mIsHover) then
+            if (hoverOver == false) then
                 hoverSFX = ent:GetAudio()
                 hoverSFX:SetPlay(0.2)
+                uirend:SetTexture("Credits_Hover")
+                hoverOver = true;
             end
-
-            if(inputMapSys:GetButtonDown("Shoot")) then
-                clickSFX:SetPlay(1.0)
-                gameStateSys:ChangeGameState("CreditsMenu")
-            end
-        else
-            hoverOver = false
+        end
+        if (button.mIsHover == false) then
+            uirend:SetTexture("Credits_Default")
+            hoverOver = false;
+        end
+        if (button.mActivated) then
+            clickSFX:SetPlay(1.0)
+            gameStateSys:ChangeGameState("CreditsMenu")
         end
     end
 
-    -- credits (back) button
+    -- credits (back) button, still wip for assets
     if(gen.name == "CreditsBackButton") then
-        if((mouse_move.x < (graphicsSys.m_WindowWidth * 0.5)) and (mouse_move.x > (graphicsSys.m_WindowWidth * 0.1875)) and
-            (mouse_move.y < (graphicsSys.m_WindowHeight * 0.4390)) and (mouse_move.y > (graphicsSys.m_WindowHeight * 0.2926))) then
-            if not hoverOver then
-                hoverOver = true
-                -- Play the sound effect
+        if (button.mIsHover) then
+            if (hoverOver == false) then
                 hoverSFX = ent:GetAudio()
                 hoverSFX:SetPlay(0.2)
+                hoverOver = true;
             end
-
-            if(inputMapSys:GetButtonDown("Shoot")) then
-                clickSFX:SetPlay(0.2)
-                gameStateSys:ChangeGameState("MainMenu")
-            end
-        else
-            hoverOver = false
+        end
+        if (button.mIsHover == false) then
+            hoverOver = false;
+        end
+        if (button.mActivated) then
+            clickSFX:SetPlay(0.2)
+            gameStateSys:ChangeGameState("MainMenu")
         end
     end
 
     -- restart level button
     if(gen.name == "RetryLevelButton") then
-        if((mouse_move.x < (graphicsSys.m_WindowWidth * 0.15625)) and (mouse_move.x > -(graphicsSys.m_WindowWidth * 0.15625)) and
-            (mouse_move.y < (graphicsSys.m_WindowHeight * 0.0353)) and (mouse_move.y > -(graphicsSys.m_WindowHeight * 0.0959))) then
-            if not hoverOver then
-                hoverOver = true
-                -- Play the sound effect
+        if (button.mIsHover) then
+            if (hoverOver == false) then
                 hoverSFX = ent:GetAudio()
                 hoverSFX:SetPlay(0.2)
+                hoverOver = true;
             end
-
-            if(inputMapSys:GetButtonDown("Shoot")) then
-                clickSFX:SetPlay(1.0)
-                gameStateSys:ChangeGameState("Test")
-            end
-          
-        else
-            hoverOver = false
+        end
+        if (button.mIsHover == false) then
+            hoverOver = false;
+        end
+        if (button.mActivated) then
+            clickSFX:SetPlay(1.0)
+            gameStateSys:ChangeGameState("Test")
         end
     end
 
     -- back to main menu button
     if(gen.name == "BackToMainMenuButton") then
-        if((mouse_move.x < (graphicsSys.m_WindowWidth * 0.15625)) and (mouse_move.x > -(graphicsSys.m_WindowWidth * 0.15625)) and
-            (mouse_move.y < (graphicsSys.m_WindowHeight * 0.2371)) and (mouse_move.y > -(graphicsSys.m_WindowHeight * 0.1060))) then
-            if not hoverOver then
-                hoverOver = true
-                -- Play the sound effect
+        if (button.mIsHover) then
+            if (hoverOver == false) then
                 hoverSFX = ent:GetAudio()
                 hoverSFX:SetPlay(0.2)
+                hoverOver = true;
             end
-
-            if(inputMapSys:GetButtonDown("Shoot")) then
-                clickSFX:SetPlay(1.0)
-                gameStateSys:ChangeGameState("MainMenu")
-            end
-          
-        else
-            hoverOver = false
+        end
+        if (button.mIsHover == false) then
+            hoverOver = false;
+        end
+        if (button.mActivated) then
+            clickSFX:SetPlay(1.0)
+            gameStateSys:ChangeGameState("MainMenu")
         end
     end
 end

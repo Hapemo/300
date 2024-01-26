@@ -456,3 +456,25 @@ void Button::DeserializeSelf(rapidjson::Value& reader)
 	Deserialize(reader, "activated", mActivated);
 	Deserialize(reader, "renderflag", mRenderFlag);
 }
+
+void Spotlight::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
+{
+	writer.Key("spotlight");
+	writer.StartObject();
+	Serialize(writer, "direction", mDirection);
+	Serialize(writer, "color", mColor);
+	Serialize(writer, "cutoff", mCutoff);
+	Serialize(writer, "outercutoff", mOuterCutoff);
+	Serialize(writer, "intensity", mIntensity);
+	writer.EndObject();
+}
+
+void Spotlight::DeserializeSelf(rapidjson::Value& reader)
+{
+	Deserialize(reader, "direction", mDirection);
+	Deserialize(reader, "color", mColor);
+	Deserialize(reader, "cutoff", mCutoff);
+	Deserialize(reader, "outercutoff", mOuterCutoff);
+	Deserialize(reader, "intensity", mIntensity);
+
+}

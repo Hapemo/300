@@ -18,6 +18,7 @@
 
 #include <ECS/ECS_Components.h>
 #include <Graphics/GraphicsSystem.h>
+#include <Graphics/GraphicsSystemDefinitions.h>
 #include "ResourceManagerTy.h"
 #include <Graphics/Camera_Input.h>
 #include "Debug/EnginePerformance.h"
@@ -48,14 +49,7 @@ void GraphicsSystem::Init()
 		SetupShaderStorageBuffers();
 
 		// -- Setup UI stuffs
-		m_HealthbarMesh.Setup2DImageMesh();
-		m_Image2DMesh.Setup2DImageMesh();
-		m_PortalMesh.Setup2DImageMesh();
-		m_ParticleMesh.Setup2DImageMesh();
-		for (int i{}; i < 32; ++i)
-		{
-			m_Textures.emplace_back(i);
-		}
+		InitUIMeshes();
 
 		// Get Window Handle
 		m_Window = systemManager->GetWindow();
@@ -66,13 +60,9 @@ void GraphicsSystem::Init()
 		m_EditorMode = systemManager->IsEditor();
 
 		// Create FBO, with the width and height of the window
-		m_Fbo.Create(m_Width, m_Height, m_EditorMode);
-		m_GameFbo.Create(m_Width, m_Height, m_EditorMode);
-		m_MultisampleFBO.Create(m_Width, m_Height);
-		m_IntermediateFBO.Create(m_Width, m_Height);
-		m_PingPongFbo.Create(m_Width, m_Height);
-		m_PhysBloomRenderer.Init(m_Width, m_Height);
+		InitFramebuffers();
 
+		// setup all the shaders
 		SetupAllShaders();
 
 		if (m_DebugDrawing) {
@@ -81,34 +71,6 @@ void GraphicsSystem::Init()
 		else {
 			m_GlobalTint.a = 1.f;
 		}
-
-		// Compile Compute shader
-		computeDeferred.CreateShaderFromFile("../assets/shader_files/computePBR.glsl");
-		computeDeferred.Activate();
-		m_ComputeDeferredLightCountLocation		= computeDeferred.GetUniformLocation("uLightCount");
-		m_ComputeDeferredCamPosLocation			= computeDeferred.GetUniformLocation("uCamPos");
-		m_ComputeDeferredGlobalTintLocation		= computeDeferred.GetUniformLocation("uGlobalTint");
-		m_ComputeDeferredGlobalBloomLocation	= computeDeferred.GetUniformLocation("uGlobalBloomThreshold");
-		GFX::Shader::Deactivate();
-
-		m_ComputeCRTShader.CreateShaderFromFile("../assets/shader_files/computeCRT.glsl");
-		m_ComputeCRTShader.Activate();
-		m_ComputeCRTTimeLocation = m_ComputeCRTShader.GetUniformLocation("mCRT_AccumulationTime");
-		m_ComputeCRTHeightOffsetLocation = m_ComputeCRTShader.GetUniformLocation("heightoffset");
-		m_ComputeCRTDistortionLocation = m_ComputeCRTShader.GetUniformLocation("distortion_value");
-		GFX::Shader::Deactivate();
-
-		m_ComputeAddBlendShader.CreateShaderFromFile("../assets/shader_files/computeCRT.glsl");
-		m_ComputeAddBlendShader.Activate();
-		m_ComputeAddBlendExposureLocation = m_ComputeAddBlendShader.GetUniformLocation("Exposure");
-		GFX::Shader::Deactivate();
-
-		// Input
-		glBindImageTexture(2, m_IntermediateFBO.GetBrightColorsAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
-		glBindImageTexture(3, m_IntermediateFBO.GetFragPosAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
-		glBindImageTexture(4, m_IntermediateFBO.GetNormalAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
-		glBindImageTexture(5, m_IntermediateFBO.GetAlbedoSpecAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
-		glBindImageTexture(6, m_IntermediateFBO.GetEmissionAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
 	}
 	
 	//glEnable(GL_CULL_FACE);
@@ -130,8 +92,11 @@ void GraphicsSystem::Init()
 		UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_GAME, 0.f);
 	}
 
+	m_Emitter.Init(ParticleProperties());
+
 	PINFO("Window size: %d, %d", m_Window->size().x, m_Window->size().y);
 }
+
 
 /***************************************************************************/
 /*!
@@ -148,13 +113,11 @@ void GraphicsSystem::Update(float dt)
 	CheckWindowSize();
 
 	// update the camera's transformations, and its input
-	if (m_EditorMode)
-	{
+	if (m_EditorMode) {
 		// update both the editor and game camera
 		UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_ALL, dt);
 	}
-	else
-	{
+	else {
 		// only update the game camera if editor mode is not enabled
 		UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_GAME, dt);
 	}
@@ -168,315 +131,82 @@ void GraphicsSystem::Update(float dt)
 
 	for (Entity inst : meshRendererInstances)
 	{
-		MeshRenderer& meshRenderer = inst.GetComponent<MeshRenderer>();
+		mat4 final = mat4(1.f);
 
 		// if the mesh instance is not active, skip it
+		MeshRenderer& meshRenderer = inst.GetComponent<MeshRenderer>();
+		Transform& transforminst = inst.GetComponent<Transform>();
 		if (meshRenderer.mMeshRef.getdata(systemManager->mResourceTySystem->m_ResourceInstance) == nullptr)
 			continue;
 		
-		// gives me the mesh
+		hasanimator	= inst.HasComponent<Animator>();
+		if (hasanimator) {
+			// check if the mesh needs to be updated before taking the mesh data
+			animationsToChangeMeshDelayedCheck(inst, dt);
+		}
+
 		void *tt = meshRenderer.mMeshRef.getdata(systemManager->mResourceTySystem->m_ResourceInstance);
 		GFX::Mesh &meshinst = *reinterpret_cast<GFX::Mesh *>(tt);
 
-		hasanimator				= inst.HasComponent<Animator>();
-		if (hasanimator)
-		{
-			Animator& animatorInst	= inst.GetComponent<Animator>();
+		updateBloomValues(meshinst);
 
-			if (animatorInst.mAnimator.m_CurrentAnimation != nullptr)
-			{
-				// handles the change of mesh when called in the scripts
-				float lAllowance = animatorInst.mAnimator.m_CurrentAnimation->m_TicksPerSecond * dt;
-				if (animatorInst.mAnimator.mToChangeMeshDelayed.first && (animatorInst.mAnimator.m_CurrentTime <= lAllowance))
-				{
-					// the mesh change delayed flag is set and the animation is completed, change the mesh
-					animatorInst.mAnimator.mToChangeMeshDelayed.first = false;
-					meshRenderer.SetMesh(animatorInst.mAnimator.mToChangeMeshDelayed.second, inst);
-				}
-			}
-		}
-
-		{
-			// Setting the bloom threshold once per loop
-			std::string shdr;
-			if (meshinst.mHasAnimation)
-				shdr = "AnimationShader";
-			else
-				shdr = "PointLightShader";
-			uid shaderstr(shdr);
-			GFX::Shader& shaderinst = *systemManager->mResourceTySystem->get_Shader(shaderstr.id);
-
-			vec4 lAmbientBloomThreshold{ 0.f, 0.f, 0.f, 0.f };
-			if (systemManager->mGraphicsSystem->m_EnableBloom) {
-				lAmbientBloomThreshold = vec4(mAmbientBloomThreshold, 1.f);
-			}
-
-			shaderinst.Activate();
-			GLuint threshold = shaderinst.GetUniformLocation("globalBloomThreshold");
-			glUniform4fv(threshold, 1, glm::value_ptr(lAmbientBloomThreshold));
-			shaderinst.Deactivate();
-		}
-
-		// pushback LTW matrices
-		auto& transforminst = inst.GetComponent<Transform>();
-		vec3 trans = transforminst.mTranslate;
-		vec3 parent_translate(0.f);
-
-		mat4 S = glm::scale(transforminst.mScale / (meshinst.mBBOX.m_Max - meshinst.mBBOX.m_Min));
-		mat4 R = glm::toMat4(glm::quat(glm::radians(transforminst.mRotate)));
-		mat4 T = glm::translate(trans);
-
-		if (inst.HasParent())	// Compute parent's offset
-		{
-			parent_translate = Entity(inst.GetParent()).GetComponent<Transform>().mTranslate;
-
-			// Compute view to world
-			if (inst.GetParent().GetComponent<TAG>() == TAG::PLAYER)	// if parent is the Player
-			{
-				// view space --> world space
-				mat4 viewToWorld = glm::inverse(GetCameraViewMatrix(CAMERA_TYPE::CAMERA_TYPE_GAME));
-				T = viewToWorld * T;
-			}
-			else
-			{
-				trans += parent_translate;
-				T = glm::translate(trans);
-			}
-		}
-		mat4 final = T * R * S;
-
-		// if the debug drawing is turned on
-		if (m_DebugDrawing && inst.HasComponent<BoxCollider>())
-		{
-			BoxCollider& boxcolliderinst = inst.GetComponent<BoxCollider>();
-
-			// draw the AABB of the mesh
-			glm::vec3 bbox_dimens = transforminst.mScale * boxcolliderinst.mScaleOffset;
-			glm::vec3 bbox_xlate = transforminst.mTranslate + boxcolliderinst.mTranslateOffset;
-			if (inst.HasParent()) {
-				//bbox_xlate += Entity(inst.GetParent()).GetComponent<Transform>().mTranslate;
-				bbox_xlate += parent_translate;
-			}
-
-			// calculate the transformations
-			glm::mat4 bboxScale = glm::scale(bbox_dimens);
-			glm::mat4 bboxTranslate = glm::translate(bbox_xlate);
-			glm::mat4 bboxFinal = bboxTranslate * R * bboxScale;
-
-			m_Renderer.AddAabb(bboxFinal, {1.f, 0.f, 0.f, 1.f});
-		}
-
-		if (m_DebugDrawing && inst.HasComponent<CapsuleCollider>())
-		{
-			CapsuleCollider& cap = inst.GetComponent<CapsuleCollider>();
-			if (inst.HasParent())
-				transforminst.mTranslate += static_cast<Entity>(inst.GetParent()).GetComponent<Transform>().mTranslate;
-
-			glm::vec3 capPos = transforminst.mTranslate + cap.mTranslateOffset;
-
-			glm::vec3 first = capPos;
-			glm::vec3 second = capPos;
-			first.y -= cap.mHalfHeight;
-			second.y += cap.mHalfHeight;
-
-			m_Renderer.AddCapsule(m_EditorCamera.position(), first, second, cap.mRadius, glm::vec4(0.f, 1.f, 0.f, 1.f));
-		}
-
-		if (m_DebugDrawing)
-		{
-			// Draw the axes
-			static const vec3 origin{-180.f, -100.f, 250.f};
-			m_Renderer.AddLine(origin, origin + vec3{ 100.f, 0.f, 0.f }, { 1.f, 0.f, 0.f, 1.f });
-			m_Renderer.AddLine(origin, origin + vec3{ 0.f, 100.f, 0.f }, { 0.f, 1.f, 0.f, 1.f });
-			m_Renderer.AddLine(origin, origin + vec3{ 0.f, 0.f, 100.f }, { 0.f, 0.f, 1.f, 1.f });
-		}
+		update_CalculateLTW(inst, meshinst, transforminst, final);
 
 		// Update the animation
 		if (hasanimator && _ENABLE_ANIMATIONS && systemManager->mGraphicsSystem->m_EnableGlobalAnimations)
-		{
-			Animator& animatorInst = inst.GetComponent<Animator>();
+			updateAnimations(inst, final, dt);
 
-			// skip the mesh that does not have an animation set
-			if (animatorInst.mAnimator.m_CurrentAnimation != nullptr)
-			{
-				animatorInst.mAnimator.UpdateAnimation(dt, mat4(1.f), final); // update the current animation
-
-				// push back matrices into the SSBO
-				for (const auto& x : animatorInst.mAnimator.m_FinalBoneMatrices)
-				{
-					finalBoneMatrices.push_back(x);
-				}
-			}
-		}
-
-		// animations are present
-		if (hasanimator) {
+		// pushback the relevant data to the instance buffer
+		if (hasanimator) 
 			AddInstance(meshinst, final, meshRenderer.mInstanceColor, static_cast<int>(m_Materials.size()), meshRenderer.mBloomThreshold, static_cast<unsigned>(inst.id), animationID++);
-		}
-		else {
+
+		else 
 			AddInstance(meshinst, final, meshRenderer.mInstanceColor, static_cast<int>(m_Materials.size()), meshRenderer.mBloomThreshold, static_cast<unsigned>(inst.id));
-		}
 
-		auto getID = [&](MaterialType type, MeshRenderer& meshrenderer) ->int {
-
-			if (meshrenderer.mTextureRef[static_cast<int>(type)].getdata(systemManager->mResourceTySystem->m_ResourceInstance) == nullptr)
-				return -1;
-
-			return static_cast<GFX::Texture*>(meshrenderer.mTextureRef[static_cast<int>(type)].data)->ID();
-		};
-
-		MaterialSSBO material{};
-		material.mDiffuseMap = GetAndStoreBindlessTextureHandle(getID(DIFFUSE, meshRenderer));
-		material.mNormalMap = GetAndStoreBindlessTextureHandle(getID(NORMAL, meshRenderer));
-		material.mSpecularMap = GetAndStoreBindlessTextureHandle(getID(SPECULAR, meshRenderer));
-		material.mShininessMap = GetAndStoreBindlessTextureHandle(getID(SHININESS, meshRenderer));
-		material.mEmissionMap = GetAndStoreBindlessTextureHandle(getID(EMISSION, meshRenderer));
-		material.mAOMap = GetAndStoreBindlessTextureHandle(getID(AO, meshRenderer));
-
-		m_Materials.emplace_back(material);	// push back
+		updateMaterials(meshRenderer);
 	}
 
-	if (m_DebugDrawing)
-	{
-		auto debugDrawsWithoutMesh = systemManager->ecs->GetEntitiesWith<BoxCollider>();
-		for (Entity e : debugDrawsWithoutMesh)
-		{
-			if (e.HasComponent<MeshRenderer>())
-				continue;
-			BoxCollider& boxcolliderinst = e.GetComponent<BoxCollider>();
+	update_NonMeshrendererColliders();
 
-			Transform xform = e.GetComponent<Transform>();
-			// draw the AABB of the mesh
-			glm::vec3 bbox_dimens = xform.mScale * boxcolliderinst.mScaleOffset;
-			glm::vec3 bbox_xlate = xform.mTranslate + boxcolliderinst.mTranslateOffset;
-			if (e.HasParent()) {
-				//bbox_xlate += Entity(inst.GetParent()).GetComponent<Transform>().mTranslate;
-				bbox_xlate += Entity(e.GetParent()).GetComponent<Transform>().mTranslate;
-			}
-			mat4 R = glm::toMat4(glm::quat(glm::radians(xform.mRotate)));
-
-			// calculate the transformations
-			glm::mat4 bboxScale = glm::scale(bbox_dimens);
-			glm::mat4 bboxTranslate = glm::translate(bbox_xlate);
-			glm::mat4 bboxFinal = bboxTranslate * R * bboxScale;
-
-			m_Renderer.AddAabb(bboxFinal, { 1.f, 0.f, 0.f, 1.f });
-		}
-	}
+#pragma endregion
 	
-	m_FinalBoneMatrixSsbo.SubData(finalBoneMatrices.size() * sizeof(mat4), finalBoneMatrices.data());
-	finalBoneMatrices.clear();
-	m_MaterialSsbo.SubData(m_Materials.size() * sizeof(MaterialSSBO), m_Materials.data());
-	m_Materials.clear();
+	updateSSBO_Data();
 
-	// Sending Light source data to GPU
-	auto lightEntity = systemManager->ecs->GetEntitiesWith<PointLight>();
-	m_HasLight = !lightEntity.empty();
-	m_LightCount = static_cast<int>(lightEntity.size());
+	update_Light();
 
-	if (m_HasLight)
+	Reset_Data();
+
+	update_UI();
+
+	update_Portals();
+
+	// ---------------- PARTICLES WIP ----------------
+	if (Input::CheckKey(E_STATE::RELEASE, E_KEY::F1))
 	{
-		for (int i = 0; i < lightEntity.size(); ++i)
-		{
-			PointLight& lightData = lightEntity.get<PointLight>(lightEntity[i]);
-			Transform& lightTransform = Entity(lightEntity[i]).GetComponent<Transform>();
-
-			PointLightSSBO light;
-			light.mPosition = vec4(lightTransform.mTranslate, 0.f);
-			light.mColor = vec4(lightData.mLightColor, 0.f);
-			light.mIntensity = lightData.mIntensity;
-			light.mLinear = lightData.mLinearFalloff;
-			light.mQuadratic = lightData.mQuadraticFalloff;
-
-			pointLights.push_back(light);
-
-			m_Renderer.AddCube(lightTransform.mTranslate, { 2, 2, 2 }, vec4(lightData.mLightColor, 1.f));
-		}
-		// Copy light source data into storage buffer
-		m_PointLightSsbo.SubData(pointLights.size() * sizeof(PointLightSSBO), pointLights.data());
-		pointLights.clear();
+		m_Emitter.Emit(1000, glm::normalize(m_EditorCamera.GetRightVector()), glm::normalize(m_EditorCamera.GetUpVector()));
 	}
-
-	// UI Objects
-	m_Image2DMesh.ClearInstances();		// Clear data from previous frame
-	m_PortalMesh.ClearInstances();
-	m_Image2DStore.clear();
-	auto UiInstances = systemManager->ecs->GetEntitiesWith<UIrenderer>();
-	for (Entity inst : UiInstances)
+	// Update all particles
+	m_Emitter.Update(dt);
+	m_ParticleMesh.ClearInstances();
+	for (auto p : m_Emitter.mParticles)
 	{
-		UIrenderer& uiRenderer = inst.GetComponent<UIrenderer>();
-		Transform& uiTransform = inst.GetComponent<Transform>();
-
-		/*if (inst.HasParent())
-		{
-			Transform parentTransform = inst.GetParent().GetComponent<Transform>();
-			uiTransform = parentTransform;
-		}*/
-
-		float uiWidth = uiTransform.mScale.x;
-		float uiHeight = uiTransform.mScale.y;
-		float depth = (int)uiRenderer.mLayer;
-		// Maps depth from 0-255 to 0-1
-		depth /= 255.f;
-		vec3 uiPosition = vec3(uiTransform.mTranslate.x, uiTransform.mTranslate.y, depth);
-
-		unsigned texID{};
-		if (uiRenderer.mTextureRef.getdata(systemManager->mResourceTySystem->m_ResourceInstance) != nullptr)
-			texID = reinterpret_cast<GFX::Texture*>(uiRenderer.mTextureRef.data)->ID();
-
-		if (uiRenderer.mWorldTransform)
-		{
-			Transform xform = uiTransform;
-			if (inst.HasParent())	// Compute parent's offset
-			{
-				vec3 parent_translate = Entity(inst.GetParent()).GetComponent<Transform>().mTranslate;
-
-				// Compute view to world
-				if (inst.GetParent().GetComponent<TAG>() == TAG::PLAYER)	// if parent is the Player
-				{
-					// view space --> world space
-					mat4 viewToWorld = glm::inverse(GetCameraViewMatrix(CAMERA_TYPE::CAMERA_TYPE_GAME));
-					xform.mTranslate = viewToWorld * vec4(uiTransform.mTranslate, 1.0);
-				}
-				else
-				{
-					xform.mTranslate += parent_translate;
-				}
-			}
-			Add2DImageWorldInstance(xform, texID, static_cast<int>(inst.id), uiRenderer.mDegree, uiRenderer.mColor);
-		}
-		else
-			Add2DImageInstance(uiWidth, uiHeight, uiPosition, texID, static_cast<int>(inst.id), uiRenderer.mDegree, uiRenderer.mColor);
+		AddParticleInstance(p, m_EditorCamera.position());
 	}
-	// Send UI data to GPU. Portal uses the same mesh
-	m_Image2DMesh.PrepForDraw();
-
-	auto portals = systemManager->ecs->GetEntitiesWith<Portal>();
-	for (Entity p : portals)
-	{
-		AddPortalInstance(p);
-
-		Portal& portal = p.GetComponent<Portal>();
-
-		Transform srcTransform;
-		srcTransform.mTranslate = portal.mTranslate1;
-		srcTransform.mRotate = portal.mRotate1;
-		Transform destTransform;
-		destTransform.mTranslate = portal.mTranslate2;
-		destTransform.mRotate = portal.mRotate2;
-
-		mat4 destViewProj = GetPortalViewMatrix(m_EditorCamera, srcTransform, destTransform);
-
-		m_Renderer.AddFrustum(destViewProj, vec4(0.f, 0.f, 1.f, 1.f));
-	}
-	m_PortalMesh.PrepForDraw();
+	m_ParticleMesh.PrepForDraw();
 
 #pragma endregion
 }
 
+
+
+/***************************************************************************/
+/*!
+\brief
+	Drawcall for the Graphics system. Called every frame
+*/
+/**************************************************************************/
 void GraphicsSystem::Draw(float dt, bool forEditor)
 {
-	//std::cout << systemManager->mResourceTySystem->m_ResourceInstance.size()<<"\n";
 	std::map<std::string, short> renderedMesh;
 	auto meshRendererInstances = systemManager->ecs->GetEntitiesWith<MeshRenderer>();
 
@@ -538,23 +268,24 @@ void GraphicsSystem::Draw(float dt, bool forEditor)
 			meshinst.ClearInstances();
 	}
 	GFX::Shader::Deactivate();
+
 	if (forEditor)
-	{
-		m_Renderer.RenderAll(camVP);
-		m_Renderer.ClearInstances();
-	}
+		render_Debugdraw(camVP);
 
 	// Perform blitting over pixel data from Multisample FBO -> intermediate FBO -> Destination FBO
-	if (forEditor)
+	BlitMultiSampleToDestinationFBO(*fbo);
+	/*if (forEditor)
 		BlitMultiSampleToDestinationFBO(m_Fbo);
 	else
-		BlitMultiSampleToDestinationFBO(m_GameFbo);
+		BlitMultiSampleToDestinationFBO(m_GameFbo);*/
 
 	// Compute the light pass with completed G-Buffers
 	ComputeDeferredLight(forEditor);
 	
-	// Post Processing Bloom
+	//!< === POST PROCESSING AND UI AREA ===
+	if (!forEditor)
 	{
+		// Post Processing Bloom
 		glDepthMask(GL_FALSE);
 
 		if (systemManager->mGraphicsSystem->m_EnableBloom)
@@ -592,10 +323,7 @@ void GraphicsSystem::Draw(float dt, bool forEditor)
 		}
 
 		glDepthMask(GL_TRUE);
-	}
 
-	//!< UI Area
-	{
 		glEnable(GL_BLEND);			// Enable back blending for later draws
 
 		// Set blend function back to usual for UI rendering
@@ -613,60 +341,91 @@ void GraphicsSystem::Draw(float dt, bool forEditor)
 			m_GameFbo.DrawBuffers(true);
 		}
 
-		DrawAllPortals(forEditor);	// Draw Portal object
-
-		// Healthbar objects
-		auto healthbarInstances = systemManager->ecs->GetEntitiesWith<Healthbar>();
-		for (Entity inst : healthbarInstances)
+		DrawAllParticles();
+		//!< UI Area
 		{
-			if (forEditor)
-				AddHealthbarInstance(inst, GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR), static_cast<int>(inst.id));
-			else
-				AddHealthbarInstance(inst, GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_GAME), static_cast<int>(inst.id));
+			DrawAllPortals(forEditor);	// Draw Portal object
+
+			// Healthbar objects
+			auto healthbarInstances = systemManager->ecs->GetEntitiesWith<Healthbar>();
+			for (Entity inst : healthbarInstances)
+			{
+				Healthbar healthbar = inst.GetComponent<Healthbar>();
+				unsigned healthTexID{}, frameTexID{};
+				if (healthbar.mHealthTexture.getdata(systemManager->mResourceTySystem->m_ResourceInstance) != nullptr)
+					healthTexID = reinterpret_cast<GFX::Texture*>(healthbar.mHealthTexture.data)->ID();
+				if (healthbar.mFrameTexture.getdata(systemManager->mResourceTySystem->m_ResourceInstance) != nullptr)
+					frameTexID = reinterpret_cast<GFX::Texture*>(healthbar.mFrameTexture.data)->ID();
+
+				if (forEditor)
+				{
+					AddHealthbarInstance(inst, GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR), frameTexID, true);
+					AddHealthbarInstance(inst, GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR), healthTexID);
+				}
+				else
+				{
+					AddHealthbarInstance(inst, GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_GAME), frameTexID, true);
+					AddHealthbarInstance(inst, GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_GAME), healthTexID);
+				}
+			}
+			m_HealthbarMesh.PrepForDraw();
+			DrawAllHealthbarInstance(camVP);
+			m_HealthbarMesh.ClearInstances();	// Clear data
+
+			// Render UI objects
+			m_UiShaderInst.Activate();		// Activate shader
+			DrawAll2DInstances(m_UiShaderInst.GetHandle());
+			GFX::Shader::Deactivate();	// Deactivate shader
+
+			if (ENABLE_CROSSHAIR_IN_EDITOR_SCENE || !forEditor)
+				DrawCrosshair();	// Render crosshair, if any
 		}
-		m_HealthbarMesh.PrepForDraw();
-		DrawAllHealthbarInstance(camVP);
-		m_HealthbarMesh.ClearInstances();	// Clear data
 
-		// Render UI objects
-		m_UiShaderInst.Activate();		// Activate shader
-		DrawAll2DInstances(m_UiShaderInst.GetHandle());
-		GFX::Shader::Deactivate();	// Deactivate shader
+		//!< Post Processing Chromatic Abberation and CRT
+		{
+			glDepthMask(GL_FALSE);
 
-		if (ENABLE_CROSSHAIR_IN_EDITOR_SCENE || !forEditor)
-			DrawCrosshair();	// Render crosshair, if any
+			//if (systemManager->mGraphicsSystem->m_EnableCRT && !systemManager->mGraphicsSystem->m_EnableChromaticAbberation)
+			if (systemManager->mGraphicsSystem->m_EnableCRT)
+			{
+				m_ComputeCRTShader.Activate();
+
+				glUniform1f(m_ComputeCRTTimeLocation, PostProcessing::getInstance().mCRT_AccumulationTime += dt);
+				glUniform1f(m_ComputeCRTDistortionLocation, PostProcessing::getInstance().mCRT_DistortionValue);
+				glUniform1i(m_ComputeCRTHeightOffsetLocation, PostProcessing::getInstance().mCRT_HeightOffset);
+
+				// CRT post processing effect. Called here so it can be rendered over the UI
+				PostProcessing::CRTBlendFramebuffers(*fbo, m_PingPongFbo, dt);
+
+				m_ComputeCRTShader.Deactivate();
+			}
+
+			if (systemManager->mGraphicsSystem->m_EnableChromaticAbberation)
+			{
+				if (mBloomType == PHYS_BASED_BLOOM)
+					PostProcessing::ChromaticAbbrebationBlendFramebuffers(*fbo, m_PhysBloomRenderer.getBloomTexture());
+				else
+					PostProcessing::ChromaticAbbrebationBlendFramebuffers(*fbo, m_PingPongFbo.pingpongColorbuffers[0]);
+			}
+
+			m_PingPongFbo.UnloadAndClear();
+			glDepthMask(GL_TRUE);
+		}
 	}
 
-	//!< Post Processing Chromatic Abberation and CRT
+	// Bind the appropriate FBO
+	if (forEditor)		// Bind Editor FBO
 	{
-		glDepthMask(GL_FALSE);
-		
-		//if (systemManager->mGraphicsSystem->m_EnableCRT && !systemManager->mGraphicsSystem->m_EnableChromaticAbberation)
-		if (systemManager->mGraphicsSystem->m_EnableCRT)
-		{
-			m_ComputeCRTShader.Activate();
-			
-			glUniform1f(m_ComputeCRTTimeLocation, PostProcessing::getInstance().mCRT_AccumulationTime += dt);
-			glUniform1f(m_ComputeCRTDistortionLocation, PostProcessing::getInstance().mCRT_DistortionValue);
-			glUniform1i(m_ComputeCRTHeightOffsetLocation, PostProcessing::getInstance().mCRT_HeightOffset);
-
-			// CRT post processing effect. Called here so it can be rendered over the UI
-			PostProcessing::CRTBlendFramebuffers(*fbo, m_PingPongFbo, dt);
-			
-			m_ComputeCRTShader.Deactivate();
-		}
-
-		if (systemManager->mGraphicsSystem->m_EnableChromaticAbberation)
-		{
-			if (mBloomType == PHYS_BASED_BLOOM)
-				PostProcessing::ChromaticAbbrebationBlendFramebuffers(*fbo, m_PhysBloomRenderer.getBloomTexture());
-			else
-				PostProcessing::ChromaticAbbrebationBlendFramebuffers(*fbo, m_PingPongFbo.pingpongColorbuffers[0]);
-		}
-
-		m_PingPongFbo.UnloadAndClear();
-		glDepthMask(GL_TRUE);
+		m_Fbo.Bind();
+		m_Fbo.DrawBuffers(true, true);
 	}
+	else				// Bind Game FBO
+	{
+		m_GameFbo.Bind();
+		m_GameFbo.DrawBuffers(true);
+	}
+	// Particles
+	DrawAllParticles();
 
 #pragma endregion
 
@@ -674,6 +433,8 @@ void GraphicsSystem::Draw(float dt, bool forEditor)
 	// Unbind FBO at end of draw frame
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
+
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -837,8 +598,6 @@ void GraphicsSystem::EditorDraw(float dt)
 
 	m_Fbo.Unbind();
 }
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /***************************************************************************/
 /*!
@@ -1038,6 +797,10 @@ void GraphicsSystem::GameDraw(float dt)
 	m_GameFbo.Unbind();
 	m_PingPongFbo.UnloadAndClear();
 }
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 void GraphicsSystem::DrawGameScene()
 {
@@ -1645,6 +1408,8 @@ void GraphicsSystem::SetupShaderStorageBuffers()
 	// Final Bone Matrix for Animation -- Location 3
 	m_FinalBoneMatrixSsbo.Create(sizeof(mat4) * MAX_NUM_BONES * MAX_INSTANCES, 3);
 
+	// All spotlight in the scene -- Location 4
+	m_SpotlightSsbo.Create(sizeof(SpotLightSSBO) * MAX_SPOTLIGHT, 4);
 }
 
 void GraphicsSystem::DrawAll2DInstances(unsigned shaderID)
@@ -1744,6 +1509,12 @@ void GraphicsSystem::DrawAllHealthbarInstance(const mat4& viewProj)
 	if (m_HealthbarMesh.mLTW.size() == 0)
 		return;
 
+	// Bind Textures to OpenGL context
+	for (size_t i{}; i < m_Image2DStore.size(); ++i)
+	{
+		glBindTextureUnit(static_cast<GLuint>(i), m_Image2DStore[static_cast<GLuint>(i)]);
+	}
+
 	// Bind shader and VAO
 	m_HealthbarShaderInst.Activate();
 	m_HealthbarMesh.BindVao();
@@ -1757,9 +1528,15 @@ void GraphicsSystem::DrawAllHealthbarInstance(const mat4& viewProj)
 	// Unbinding shader and VAO
 	GFX::Shader::Deactivate();
 	m_HealthbarMesh.UnbindVao();
+
+	// Unbind Textures from openGL context
+	for (size_t i{}; i < m_Image2DStore.size(); ++i)
+	{
+		glBindTextureUnit(static_cast<GLuint>(i), 0);
+	}
 }
 
-void GraphicsSystem::AddHealthbarInstance(Entity e, const vec3& camPos, unsigned entityID)
+void GraphicsSystem::AddHealthbarInstance(Entity e, const vec3& camPos, unsigned texHandle, bool forFrame)
 {
 	Healthbar& healthbar = e.GetComponent<Healthbar>();
 	vec3 originPos = e.GetComponent<Transform>().mTranslate;
@@ -1796,9 +1573,24 @@ void GraphicsSystem::AddHealthbarInstance(Entity e, const vec3& camPos, unsigned
 		healthbarRatio = (healthbar.mHealth/healthbar.mMaxHealth) * 100.f;
 		healthbarRatio = healthbarRatio < 0 ? 0 : healthbarRatio; // Cap healthbar ratio min to 0
 	}
+
+	// Texture UI for Health
+	int texIndex{};
+	if (texHandle > 0)
+		texIndex = StoreTextureIndex(texHandle);
+	else
+		texIndex = -2;
+
 	vec4 healthColor = vec4(healthbar.mHealthColor.x, healthbar.mHealthColor.y, healthbar.mHealthColor.z, healthbarRatio);
 	m_HealthbarMesh.mColors.push_back(healthColor);
-	m_HealthbarMesh.mTexEntID.push_back(healthbar.mBackColor);
+
+	float frameFlag{ -5.f };
+	if (forFrame) frameFlag = 5.f;
+
+	if (texHandle > 0)
+		m_HealthbarMesh.mTexEntID.push_back(vec4(texIndex + 0.5f, -2.f, frameFlag, 0.f));	// set y component for checking at shader side, z for frame
+	else
+		m_HealthbarMesh.mTexEntID.push_back(healthbar.mBackColor);
 	// Update LTW matrix
 	m_HealthbarMesh.mLTW.push_back(world);
 }
@@ -1902,6 +1694,8 @@ void GraphicsSystem::SetupAllShaders()
 	m_HealthbarShaderInst = *systemManager->mResourceTySystem->get_Shader(healthbarShaderstr.id);
 	m_HealthbarShaderInst.Activate();
 	m_HealthbarViewProjLocation = m_HealthbarShaderInst.GetUniformLocation("uViewProj");
+	GLuint health_uniform_tex = glGetUniformLocation(m_HealthbarShaderInst.GetHandle(), "uTex2d");
+	glUniform1iv(health_uniform_tex, (GLsizei)m_Textures.size(), m_Textures.data()); // Passing texture Binding units to frag shader [0 - 31]
 	m_HealthbarShaderInst.Deactivate();
 
 	// Initialize the Healthbar shader and uniform location
@@ -1944,6 +1738,29 @@ void GraphicsSystem::SetupAllShaders()
 	uniform_tex = glGetUniformLocation(m_Quad3DShaderInst.GetHandle(), "uTex2d");
 	glUniform1iv(uniform_tex, (GLsizei)m_Textures.size(), m_Textures.data()); // Passing texture Binding units to frag shader [0 - 31]
 	m_Quad3DShaderInst.Deactivate();
+
+	
+	//!<< Compile Compute shader >>
+	computeDeferred.CreateShaderFromFile("../assets/shader_files/computePBR.glsl");
+	computeDeferred.Activate();
+	m_ComputeDeferredLightCountLocation = computeDeferred.GetUniformLocation("uLightCount");
+	m_ComputeDeferredSpotlightCountLocation = computeDeferred.GetUniformLocation("uSpotlightCount");
+	m_ComputeDeferredCamPosLocation = computeDeferred.GetUniformLocation("uCamPos");
+	m_ComputeDeferredGlobalTintLocation = computeDeferred.GetUniformLocation("uGlobalTint");
+	m_ComputeDeferredGlobalBloomLocation = computeDeferred.GetUniformLocation("uGlobalBloomThreshold");
+	GFX::Shader::Deactivate();
+
+	m_ComputeCRTShader.CreateShaderFromFile("../assets/shader_files/computeCRT.glsl");
+	m_ComputeCRTShader.Activate();
+	m_ComputeCRTTimeLocation = m_ComputeCRTShader.GetUniformLocation("mCRT_AccumulationTime");
+	m_ComputeCRTHeightOffsetLocation = m_ComputeCRTShader.GetUniformLocation("heightoffset");
+	m_ComputeCRTDistortionLocation = m_ComputeCRTShader.GetUniformLocation("distortion_value");
+	GFX::Shader::Deactivate();
+
+	m_ComputeAddBlendShader.CreateShaderFromFile("../assets/shader_files/computeCRT.glsl");
+	m_ComputeAddBlendShader.Activate();
+	m_ComputeAddBlendExposureLocation = m_ComputeAddBlendShader.GetUniformLocation("Exposure");
+	GFX::Shader::Deactivate();
 }
 
 mat4 GraphicsSystem::GetPortalViewMatrix(GFX::Camera const& camera, Transform const& sourcePortal, Transform const& destPortal)
@@ -2069,6 +1886,59 @@ void GraphicsSystem::DrawAllPortals(bool editorDraw)
 	}
 }
 
+void GraphicsSystem::AddParticleInstance(Particle const& p, vec3 const& camPos)
+{
+	// Compute the rotation vectors
+	vec3 normal = camPos - p.mCurrPosition;
+	vec3 up = { 0, 1, 0 };
+	vec3 right = glm::cross(up, normal);
+	vec3 forward = glm::cross(right, normal);
+
+	mat4 scale = {
+		vec4(p.mCurrSize, 0.f, 0.f, 0.f),
+		vec4(0.f, p.mCurrSize, 0.f, 0.f),
+		vec4(0.f, 0.f, 1.f, 0.f),
+		vec4(0.f, 0.f, 0.f, 1.f)
+	};
+
+	mat4 tilt = glm::rotate(glm::radians(p.mCurrRotation), vec3(0, 0, 1));
+
+	scale = tilt * scale;
+
+	// Rotation matrix to always face the camera
+	mat4 rotate = {
+		vec4(glm::normalize(right), 0.0f),
+		vec4(glm::normalize(forward), 0.0f),
+		vec4(glm::normalize(normal), 0.0f),
+		vec4(p.mCurrPosition, 1.0f)
+	};
+
+	mat4 world = rotate * scale;
+
+	m_ParticleMesh.mTexEntID.push_back(vec4(-2.f, 0.f, 0.f, 0.f));
+	m_ParticleMesh.mColors.emplace_back(p.mCurrColor);
+	m_ParticleMesh.mLTW.emplace_back(world);
+}
+
+void GraphicsSystem::DrawAllParticles()
+{
+	GFX::Camera camera = GetCamera(CAMERA_TYPE::CAMERA_TYPE_GAME);
+	if (true)
+		camera = GetCamera(CAMERA_TYPE::CAMERA_TYPE_EDITOR);
+
+	mat4 camVP = camera.viewProj();
+
+	m_ParticleMesh.BindVao();
+	m_Quad3DShaderInst.Activate();
+	glUniformMatrix4fv(m_Quad3DShaderInst.GetUniformVP(), 1, GL_FALSE, &camVP[0][0]);
+
+	glDepthFunc(GL_LEQUAL);
+	glDrawArraysInstanced(GL_TRIANGLE_FAN, 0, 4, GLsizei(m_ParticleMesh.mLTW.size()));
+
+	m_ParticleMesh.UnbindVao();
+	GFX::Shader::Deactivate();
+}
+
 void GraphicsSystem::ComputeDeferredLight(bool editorDraw)
 {
 	if (editorDraw)	// Draw to Editor FBO
@@ -2090,6 +1960,7 @@ void GraphicsSystem::ComputeDeferredLight(bool editorDraw)
 	computeDeferred.Activate();
 
 	glUniform1i(m_ComputeDeferredLightCountLocation, m_LightCount);
+	glUniform1i(m_ComputeDeferredSpotlightCountLocation, m_SpotlightCount);
 	glUniform3fv(m_ComputeDeferredCamPosLocation, 1, &camPos[0]);
 	glUniform4fv(m_ComputeDeferredGlobalTintLocation, 1, &m_GlobalTint[0]);
 	vec4 globalBloom = vec4(mAmbientBloomThreshold, m_EnableBloom);
@@ -2148,7 +2019,7 @@ void MeshRenderer::SetMesh(const std::string& meshName, Entity inst)
 		}
 	}
 }
-
+// 
 
 void MeshRenderer::SetMeshDelayed(const std::string& meshName, Entity inst)
 {
