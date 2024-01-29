@@ -45,9 +45,9 @@ glm::vec3 AIManager::GetDirection(Entity _e) {
 			*time = 0;
 			// Update the content if more than time
 			curr.second = GetAStarPath(_e, aiSetting);
-			std::cout << "---Start Getting Path ---\n";
-			for (auto v : curr.second) std::cout << v << '\n';
-			std::cout << "--- End	 Getting Path ---\n";
+			//std::cout << "---Start Getting Path ---\n";
+			//for (auto v : curr.second) std::cout << v << '\n';
+			//std::cout << "--- End	 Getting Path ---\n";
 		}
 
 		if (curr.second.size() == 0) dir = glm::vec3(); // Destination reached
