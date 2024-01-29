@@ -2019,6 +2019,31 @@ void MeshRenderer::SetMesh(const std::string& meshName, Entity inst)
 		}
 	}
 }
+
+
+void MeshRenderer::SetMesh(const std::string& meshName, Entity inst, unsigned int index)
+{
+	// gets the guid from the fbx descriptor file
+	std::string descFilepath = systemManager->mResourceTySystem->fbx_path + meshName + ".fbx.desc";
+	unsigned guid = _GEOM::GetGUID(descFilepath);
+
+	mMeshRef.data = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(guid));
+	mMeshPath = systemManager->mResourceTySystem->compiled_geom_path + meshName + ".geom";
+
+	GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mMeshRef.data);
+	if (inst.HasComponent<Animator>())
+	{
+		if (meshinst->mHasAnimation) {
+			// change the animation to the new mesh's
+			inst.GetComponent<Animator>().mAnimator.SetAnimation(&meshinst->mAnimation[index]);
+		}
+
+		else {
+			// the new mesh has no animation, but the current entity has an animator component
+			inst.GetComponent<Animator>().mAnimator.SetAnimation(nullptr);
+		}
+	}
+}
 // 
 
 void MeshRenderer::SetMeshDelayed(const std::string& meshName, Entity inst)
