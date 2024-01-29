@@ -94,7 +94,6 @@ function Update()
             end
 
             -- TODO: since objective progress decreases outside zone, need to set alpha back to 0 if progress falls below each threshold
-
         end
 
         -- SPAWNING ENEMIES
