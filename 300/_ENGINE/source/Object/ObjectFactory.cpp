@@ -34,13 +34,14 @@ void ObjectFactory::LoadEntity(Entity e, rapidjson::Value& reader)
 	DESERIALIZE_SELF(Transform, "transform");
 	DESERIALIZE_SELF(RigidBody, "rigidbody");
 	DESERIALIZE_SELF(MeshRenderer, "meshrenderer");
+	DESERIALIZE_SELF(Animator, "animator");
+
 	if (e.HasComponent<MeshRenderer>())
 	{
-		if (e.GetComponent<MeshRenderer>().mMeshRef.getdata(systemManager->mResourceTySystem->m_ResourceInstance) != nullptr)
+		if(e.GetComponent<MeshRenderer>().mMeshRef.getdata(systemManager->mResourceTySystem->m_ResourceInstance) != nullptr)
 		{
 			GFX::Mesh& meshinst = *reinterpret_cast<GFX::Mesh*>(e.GetComponent<MeshRenderer>().mMeshRef.data);
 			if (meshinst.mHasAnimation) {
-				e.AddComponent<Animator>();
 				e.GetComponent<Animator>().mAnimator.SetAnimation(&meshinst.mAnimation[0]);
 			}
 		}
@@ -171,6 +172,7 @@ void ObjectFactory::SaveEntity(Entity e, rapidjson::PrettyWriter<rapidjson::Stri
 	SERIALIZE_SELF(Transform);
 	SERIALIZE_SELF(RigidBody);
 	SERIALIZE_SELF(MeshRenderer);
+	SERIALIZE_SELF(Animator);
 	SERIALIZE_SELF(UIrenderer);
 	SERIALIZE_SELF(BoxCollider);
 	SERIALIZE_SELF(SphereCollider);

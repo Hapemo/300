@@ -59,6 +59,11 @@ namespace GFX
 		m_CurrentAnimation = animation;
         m_CurrentTime = 0.f;
         m_DeltaTime = 0.f;
+
+        // reset the bone matrices
+        for (auto& mtx : m_FinalBoneMatrices) {
+            mtx = glm::mat4(1.f);
+        }
 	}
 
 

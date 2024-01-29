@@ -103,6 +103,19 @@ void MeshRenderer::DeserializeSelf(rapidjson::Value& reader)
 	//mTextureRef->data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(mTextureRef->data_uid));
 }
 
+
+void Animator::DeserializeSelf(rapidjson::Value& reader)
+{}
+
+void Animator::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
+{
+	writer.Key("animator");
+	writer.StartObject();
+	writer.EndObject();
+}
+
+
+
 void UIrenderer::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
 {
 	writer.Key("uirenderer");

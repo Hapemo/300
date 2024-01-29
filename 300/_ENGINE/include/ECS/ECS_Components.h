@@ -126,6 +126,9 @@ struct Animator
 	void PauseAnimation() { mAnimator.mIsPaused = true; }
 	void UnpauseAnimation() { mAnimator.mIsPaused = false; }
 	bool IsEndOfAnimation();
+
+	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
+	void DeserializeSelf(rapidjson::Value& reader);
 };
 
 /******************************************************************************/
@@ -143,12 +146,10 @@ struct MeshRenderer : public Serializable
 	
 	ref									mShaderRef;
 
-
 	vec4								mInstanceColor{ 1.f, 1.f, 1.f, 1.f };
 	vec4								mBloomThreshold{ 1.f, 1.f, 1.f, 1.f };
 
 	std::string							mMeshPath;
-
 	ref									mMeshRef{};
 
 	std::string							mMaterialInstancePath[6]{ " "," " ," " ," ", " " ," " };
@@ -159,7 +160,7 @@ struct MeshRenderer : public Serializable
 	
 
 	unsigned							mGUID;
-	//bool								mTextureCont[5];
+	//bool 								mNeedsAnimator;
 
 	void								Inspect();
 	void								SetColor(const vec4& color);
