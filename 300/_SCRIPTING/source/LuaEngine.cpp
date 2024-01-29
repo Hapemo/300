@@ -385,6 +385,7 @@ void LuaUIrenderer()
         "UIrenderer", sol::constructors<>(),
         "SetDegree", &UIrenderer::SetDegree,
         "SetTexture", &UIrenderer::SetTexture,
+        "SetSlider", &UIrenderer::SetSlider,
         "mColor", &UIrenderer::mColor
 
     );

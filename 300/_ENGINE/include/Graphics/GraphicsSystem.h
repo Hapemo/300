@@ -28,6 +28,7 @@
 #include <ComputeShader.hpp>
 
 #include <Graphics/PostProcessing.h>
+#include <Graphics/ParticleSystem.h>
 
 /***************************************************************************/
 /*!
@@ -56,7 +57,7 @@ struct PointLightSSBO
 struct SpotLightSSBO
 {
 	alignas(16) vec4 mPosition;
-	alignas(16) vec4 mTarget{ 0.f, 1.f, 0.f, 0.f };
+	alignas(16) vec4 mDirection { 0.f, -1.f, 0.f, 0.f };
 	alignas(16) vec4 mColor { 1.f, 1.f, 1.f, 0.f };
 	float mCutoff;
 	float mOuterCutoff;
@@ -314,6 +315,7 @@ public:
 
 	// -- Stats --
 	int		m_LightCount{};
+	int		m_SpotlightCount{};
 
 	// -- 2D Image Rendering --
 	GFX::Mesh						m_Image2DMesh;
@@ -338,16 +340,20 @@ public:
 	std::vector<MaterialSSBO>		m_Materials;
 	std::map<unsigned, GLuint64>	m_MaterialHandles;
 
+	const int						MAX_SPOTLIGHT = 50;
+	GFX::SSBO						m_SpotlightSsbo;
+	std::vector<SpotLightSSBO>		spotlights;
+
 	GLuint64 GetAndStoreBindlessTextureHandle(int texID);	// Stores adn Return the 64bit texture handle and makes it resident
 	void SetupShaderStorageBuffers();		// Creates all SSBO required
 
 	void DrawAll2DInstances(unsigned shaderID);
-	void Add2DImageInstance(float width, float height, vec3 const& position, unsigned texHandle, unsigned entityID = 0xFFFFFFFF, float degree = 0.f, vec4 const& color = vec4{ 1.f, 1.f, 1.f, 1.f });
-	void Add2DImageWorldInstance(Transform transform, unsigned texHandle, unsigned entityID = 0xFFFFFFFF, float degree = 0.f, vec4 const& color = vec4{ 1.f, 1.f, 1.f, 1.f });
+	void Add2DImageInstance(float width, float height, vec3 const& position, unsigned texHandle, unsigned entityID = 0xFFFFFFFF, float degree = 0.f, vec4 const& color = vec4{ 1.f, 1.f, 1.f, 1.f }, float slider = 1.f);
+	void Add2DImageWorldInstance(Transform transform, unsigned texHandle, unsigned entityID = 0xFFFFFFFF, float degree = 0.f, vec4 const& color = vec4{ 1.f, 1.f, 1.f, 1.f }, float slider = 1.f);
 	int StoreTextureIndex(unsigned texHandle);
 
 	// -- Health Bar --
-	void AddHealthbarInstance(Entity e, const vec3& camPos, unsigned entityID = 0xFFFFFFFF);
+	void AddHealthbarInstance(Entity e, const vec3& camPos, unsigned texHandle = 0, bool forFrame = false);
 	void DrawAllHealthbarInstance(const mat4& viewProj);
 	GLint m_HealthbarViewProjLocation{};
 
@@ -371,6 +377,7 @@ public:
 	GLint m_ComputeDeferredGlobalTintLocation{};
 	GLint m_ComputeDeferredCamPosLocation{};
 	GLint m_ComputeDeferredLightCountLocation{};
+	GLint m_ComputeDeferredSpotlightCountLocation{};
 	GLint m_ComputeDeferredGlobalBloomLocation{};
 
 	GFX::ComputeShader m_ComputeCRTShader;
@@ -389,6 +396,11 @@ public:
 	mat4 ObliqueNearPlaneClipping(mat4 proj, mat4 view, Transform const& srcPortal, Transform const& destPortal);
 	void AddPortalInstance(Entity portal);
 	void DrawAllPortals(bool editorDraw);
+
+	// -- Particles WIP --
+	ParticleEmitter m_Emitter;
+	void AddParticleInstance(Particle const& p, vec3 const& camPos);
+	void DrawAllParticles();
 };
 
 #endif

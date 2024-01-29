@@ -66,6 +66,7 @@ void ObjectFactory::LoadEntity(Entity e, rapidjson::Value& reader)
 	DESERIALIZE_SELF(Crosshair, "crosshair");
 	DESERIALIZE_SELF(Healthbar, "healthbar");
 	DESERIALIZE_SELF(Button, "button");
+	DESERIALIZE_SELF(Spotlight, "spotlight");
 }
 
 // deserialize scenes from the Scenes folder
@@ -185,6 +186,7 @@ void ObjectFactory::SaveEntity(Entity e, rapidjson::PrettyWriter<rapidjson::Stri
 	SERIALIZE_SELF(Crosshair);
 	SERIALIZE_SELF(Healthbar);
 	SERIALIZE_SELF(Button);
+	SERIALIZE_SELF(Spotlight);
 	writer.EndObject();
 }
 

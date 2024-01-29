@@ -65,7 +65,7 @@ function Update()
     -- STATE MACHINE
     if state == "TRAVEL" then         -- walk directly to player using pathfinding (change to 2. when duplicate timer runs out)
         direction = aiSys:GetDirection(this)
-    
+        direction.y = direction.y + 0.5
         Helper.Scale(direction, speed)
     
         phySys:SetVelocity(this, direction);

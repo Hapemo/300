@@ -189,6 +189,7 @@ struct UIrenderer : public Serializable
 	ref									mTextureRef;
 	vec4								mColor{ 1.f, 1.f, 1.f, 1.f };
 	float								mDegree;
+	float								mSlider{ 1.f };
 	int									mLayer;
 	bool								mWorldTransform;
 
@@ -206,6 +207,10 @@ struct UIrenderer : public Serializable
 	void SetDegree(float degree)
 	{
 		mDegree = degree;
+	}
+	void SetSlider(float value)
+	{
+		mSlider = glm::clamp(value, 0.f, 1.f);
 	}
 	void SetTexture(const std::string& Texturename);
 	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
@@ -673,6 +678,20 @@ struct PointLight : public Serializable
 	void DeserializeSelf(rapidjson::Value& reader);
 
 	void SetColor(const glm::vec3& color);
+};
+
+struct Spotlight : public Serializable
+{
+	vec3 mDirection;
+	vec3 mColor{ 1.f, 1.f, 1.f };
+	float mCutoff;
+	float mOuterCutoff;
+	float mIntensity{ 1.5f };
+
+	void Inspect();
+
+	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
+	void DeserializeSelf(rapidjson::Value& reader);
 };
 
 /******************************************************************************/
