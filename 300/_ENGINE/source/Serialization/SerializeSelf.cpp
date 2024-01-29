@@ -110,6 +110,7 @@ void UIrenderer::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>&
 	Serialize(writer, "texpath", mTexPath);
 	Serialize(writer, "textureref", mTextureRef.data_uid);
 	Serialize(writer, "degree", mDegree);
+	Serialize(writer, "slider", mSlider);
 	Serialize(writer, "color", mColor);
 	Serialize(writer, "layer", mLayer);
 	Serialize(writer, "worldtransform", mWorldTransform);
@@ -121,6 +122,7 @@ void UIrenderer::DeserializeSelf(rapidjson::Value& reader)
 	Deserialize(reader, "texpath", mTexPath);
 	Deserialize(reader, "textureref", mTextureRef.data_uid);
 	Deserialize(reader, "degree", mDegree);
+	Deserialize(reader, "slider", mSlider);
 	Deserialize(reader, "color", mColor);
 	Deserialize(reader, "layer", mLayer);
 	Deserialize(reader, "worldtransform", mWorldTransform);
