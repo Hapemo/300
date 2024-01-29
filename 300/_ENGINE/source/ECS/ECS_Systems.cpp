@@ -135,7 +135,28 @@ void SystemManager::Update(float dt)
 	//EnginePerformance::StartTrack("Audio");
 	//mAudioSystem.get()->Update(dt);
 	//EnginePerformance::EndTrack("Audio");
-	if (!mIsPlay) return;
+
+	//check if esc is triggered in gamescene
+	if (!systemManager->IsEditor() && mInputActionSystem->GetKeyDown(ESCAPE))
+		mIsGamePause = !mIsGamePause;
+
+	if (mIsGamePause)
+	{
+		//check if pause menu ui entity exists in gs
+		Entity pauseMenu = mGameStateSystem->GetEntity("pauseMenu");
+		if (pauseMenu.GetComponent<General>().name == "pauseMenu")
+		{
+			//run pause menu script only
+			Script* pauseScript = pauseMenu.GetComponent<Scripts>().GetScript("../assets/Scripts/testPauseState.lua");
+			pauseScript->Run("TriggerPause");
+		}
+		else
+			PWARNING("Cannot get pause menu ui entity in gamestate!");
+		return;
+	}
+
+	if (!mIsPlay)
+		return;
 	mButtonSystem.get()->Update();
 	EnginePerformance::StartTrack("Physics");
 	mPhysicsSystem.get()->Update(dt);

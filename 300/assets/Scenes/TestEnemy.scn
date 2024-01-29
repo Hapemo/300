@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 1048699,
+        "entityid": 190,
         "general": {
             "name": "Melissa",
             "tagid": 1,
@@ -124,11 +124,13 @@
             },
             "maxhealth": 200.0,
             "width": 0.800000011920929,
-            "height": 0.07000000029802322
+            "height": 0.07000000029802322,
+            "frametexture": 0,
+            "healthtexture": 0
         }
     },
     {
-        "entityid": 1048745,
+        "entityid": 191,
         "general": {
             "name": "ILOVEYOU",
             "tagid": 1,
@@ -255,11 +257,13 @@
             },
             "maxhealth": 100.0,
             "width": 1.399999976158142,
-            "height": 0.07000000029802322
+            "height": 0.07000000029802322,
+            "frametexture": 0,
+            "healthtexture": 0
         }
     },
     {
-        "entityid": 1048746,
+        "entityid": 192,
         "general": {
             "name": "ILOVEYOU",
             "tagid": 1,
@@ -386,11 +390,13 @@
             },
             "maxhealth": 100.0,
             "width": 1.399999976158142,
-            "height": 0.07000000029802322
+            "height": 0.07000000029802322,
+            "frametexture": 0,
+            "healthtexture": 0
         }
     },
     {
-        "entityid": 1048747,
+        "entityid": 193,
         "general": {
             "name": "ILOVEYOU",
             "tagid": 1,
@@ -517,11 +523,13 @@
             },
             "maxhealth": 100.0,
             "width": 1.399999976158142,
-            "height": 0.07000000029802322
+            "height": 0.07000000029802322,
+            "frametexture": 0,
+            "healthtexture": 0
         }
     },
     {
-        "entityid": 1048748,
+        "entityid": 194,
         "general": {
             "name": "ILOVEYOU",
             "tagid": 1,
@@ -648,11 +656,13 @@
             },
             "maxhealth": 100.0,
             "width": 1.399999976158142,
-            "height": 0.07000000029802322
+            "height": 0.07000000029802322,
+            "frametexture": 0,
+            "healthtexture": 0
         }
     },
     {
-        "entityid": 1048749,
+        "entityid": 195,
         "general": {
             "name": "TrojanSoldier",
             "tagid": 1,
@@ -775,11 +785,13 @@
             },
             "maxhealth": 30.0,
             "width": 0.30000001192092896,
-            "height": 0.07000000029802322
+            "height": 0.07000000029802322,
+            "frametexture": 0,
+            "healthtexture": 0
         }
     },
     {
-        "entityid": 1048750,
+        "entityid": 196,
         "general": {
             "name": "TrojanSoldier",
             "tagid": 1,
@@ -902,11 +914,13 @@
             },
             "maxhealth": 30.0,
             "width": 0.30000001192092896,
-            "height": 0.07000000029802322
+            "height": 0.07000000029802322,
+            "frametexture": 0,
+            "healthtexture": 0
         }
     },
     {
-        "entityid": 1048751,
+        "entityid": 197,
         "general": {
             "name": "TrojanSoldier",
             "tagid": 1,
@@ -1029,11 +1043,13 @@
             },
             "maxhealth": 30.0,
             "width": 0.30000001192092896,
-            "height": 0.07000000029802322
+            "height": 0.07000000029802322,
+            "frametexture": 0,
+            "healthtexture": 0
         }
     },
     {
-        "entityid": 1048752,
+        "entityid": 198,
         "general": {
             "name": "TrojanSoldier",
             "tagid": 1,
@@ -1156,11 +1172,13 @@
             },
             "maxhealth": 30.0,
             "width": 0.30000001192092896,
-            "height": 0.07000000029802322
+            "height": 0.07000000029802322,
+            "frametexture": 0,
+            "healthtexture": 0
         }
     },
     {
-        "entityid": 1048753,
+        "entityid": 199,
         "general": {
             "name": "TrojanSoldier",
             "tagid": 1,
@@ -1283,11 +1301,13 @@
             },
             "maxhealth": 30.0,
             "width": 0.30000001192092896,
-            "height": 0.07000000029802322
+            "height": 0.07000000029802322,
+            "frametexture": 0,
+            "healthtexture": 0
         }
     },
     {
-        "entityid": 1048754,
+        "entityid": 200,
         "general": {
             "name": "TrojanHorse",
             "tagid": 1,
@@ -1424,11 +1444,13 @@
             },
             "maxhealth": 200.0,
             "width": 1.0,
-            "height": 0.07000000029802322
+            "height": 0.07000000029802322,
+            "frametexture": 0,
+            "healthtexture": 0
         }
     },
     {
-        "entityid": 1048755,
+        "entityid": 201,
         "general": {
             "name": "TrojanHorse",
             "tagid": 1,
@@ -1565,11 +1587,13 @@
             },
             "maxhealth": 200.0,
             "width": 1.0,
-            "height": 0.07000000029802322
+            "height": 0.07000000029802322,
+            "frametexture": 0,
+            "healthtexture": 0
         }
     },
     {
-        "entityid": 1048756,
+        "entityid": 202,
         "general": {
             "name": "TrojanHorse",
             "tagid": 1,
@@ -1706,11 +1730,13 @@
             },
             "maxhealth": 200.0,
             "width": 1.0,
-            "height": 0.07000000029802322
+            "height": 0.07000000029802322,
+            "frametexture": 0,
+            "healthtexture": 0
         }
     },
     {
-        "entityid": 1048757,
+        "entityid": 203,
         "general": {
             "name": "TrojanHorse",
             "tagid": 1,
@@ -1847,11 +1873,13 @@
             },
             "maxhealth": 200.0,
             "width": 1.0,
-            "height": 0.07000000029802322
+            "height": 0.07000000029802322,
+            "frametexture": 0,
+            "healthtexture": 0
         }
     },
     {
-        "entityid": 1048758,
+        "entityid": 204,
         "general": {
             "name": "ZipBomb",
             "tagid": 1,
@@ -1988,11 +2016,13 @@
             },
             "maxhealth": 100.0,
             "width": 1.399999976158142,
-            "height": 0.07000000029802322
+            "height": 0.07000000029802322,
+            "frametexture": 0,
+            "healthtexture": 0
         }
     },
     {
-        "entityid": 1048759,
+        "entityid": 205,
         "general": {
             "name": "ZipBomb",
             "tagid": 1,
@@ -2129,11 +2159,13 @@
             },
             "maxhealth": 100.0,
             "width": 1.399999976158142,
-            "height": 0.07000000029802322
+            "height": 0.07000000029802322,
+            "frametexture": 0,
+            "healthtexture": 0
         }
     },
     {
-        "entityid": 1048760,
+        "entityid": 206,
         "general": {
             "name": "ZipBomb",
             "tagid": 1,
@@ -2270,11 +2302,13 @@
             },
             "maxhealth": 100.0,
             "width": 1.399999976158142,
-            "height": 0.07000000029802322
+            "height": 0.07000000029802322,
+            "frametexture": 0,
+            "healthtexture": 0
         }
     },
     {
-        "entityid": 1048761,
+        "entityid": 207,
         "general": {
             "name": "ZipBomb",
             "tagid": 1,
@@ -2411,11 +2445,13 @@
             },
             "maxhealth": 100.0,
             "width": 1.399999976158142,
-            "height": 0.07000000029802322
+            "height": 0.07000000029802322,
+            "frametexture": 0,
+            "healthtexture": 0
         }
     },
     {
-        "entityid": 1048762,
+        "entityid": 208,
         "general": {
             "name": "TrojanHorseChargeAudio",
             "tagid": 0,
@@ -2458,7 +2494,7 @@
         }
     },
     {
-        "entityid": 1048763,
+        "entityid": 209,
         "general": {
             "name": "ZipBombFuseAudio",
             "tagid": 0,
@@ -2501,7 +2537,7 @@
         }
     },
     {
-        "entityid": 1048764,
+        "entityid": 210,
         "general": {
             "name": "EnemyDeathAudio",
             "tagid": 8,
@@ -2544,7 +2580,7 @@
         }
     },
     {
-        "entityid": 1048837,
+        "entityid": 211,
         "general": {
             "name": "TrojanSoldier",
             "tagid": 1,
@@ -2677,11 +2713,13 @@
             },
             "maxhealth": 30.0,
             "width": 0.30000001192092896,
-            "height": 0.07000000029802322
+            "height": 0.07000000029802322,
+            "frametexture": 0,
+            "healthtexture": 0
         }
     },
     {
-        "entityid": 1048838,
+        "entityid": 212,
         "general": {
             "name": "ZipBomb",
             "tagid": 1,
@@ -2818,11 +2856,13 @@
             },
             "maxhealth": 100.0,
             "width": 1.399999976158142,
-            "height": 0.07000000029802322
+            "height": 0.07000000029802322,
+            "frametexture": 0,
+            "healthtexture": 0
         }
     },
     {
-        "entityid": 1048840,
+        "entityid": 213,
         "general": {
             "name": "ILOVEYOU",
             "tagid": 1,
@@ -2949,11 +2989,13 @@
             },
             "maxhealth": 100.0,
             "width": 1.399999976158142,
-            "height": 0.07000000029802322
+            "height": 0.07000000029802322,
+            "frametexture": 0,
+            "healthtexture": 0
         }
     },
     {
-        "entityid": 1048842,
+        "entityid": 214,
         "general": {
             "name": "TrojanHorse",
             "tagid": 1,
@@ -3090,11 +3132,13 @@
             },
             "maxhealth": 200.0,
             "width": 1.0,
-            "height": 0.07000000029802322
+            "height": 0.07000000029802322,
+            "frametexture": 0,
+            "healthtexture": 0
         }
     },
     {
-        "entityid": 1048843,
+        "entityid": 215,
         "general": {
             "name": "TrojanSoldier",
             "tagid": 1,
@@ -3227,11 +3271,13 @@
             },
             "maxhealth": 30.0,
             "width": 0.30000001192092896,
-            "height": 0.07000000029802322
+            "height": 0.07000000029802322,
+            "frametexture": 0,
+            "healthtexture": 0
         }
     },
     {
-        "entityid": 1048844,
+        "entityid": 216,
         "general": {
             "name": "TrojanSoldier",
             "tagid": 1,
@@ -3364,11 +3410,13 @@
             },
             "maxhealth": 30.0,
             "width": 0.30000001192092896,
-            "height": 0.07000000029802322
+            "height": 0.07000000029802322,
+            "frametexture": 0,
+            "healthtexture": 0
         }
     },
     {
-        "entityid": 2097316,
+        "entityid": 217,
         "general": {
             "name": "Melissa",
             "tagid": 1,
@@ -3492,11 +3540,13 @@
             },
             "maxhealth": 200.0,
             "width": 0.800000011920929,
-            "height": 0.07000000029802322
+            "height": 0.07000000029802322,
+            "frametexture": 0,
+            "healthtexture": 0
         }
     },
     {
-        "entityid": 2097317,
+        "entityid": 218,
         "general": {
             "name": "Melissa",
             "tagid": 1,
@@ -3620,11 +3670,13 @@
             },
             "maxhealth": 200.0,
             "width": 0.800000011920929,
-            "height": 0.07000000029802322
+            "height": 0.07000000029802322,
+            "frametexture": 0,
+            "healthtexture": 0
         }
     },
     {
-        "entityid": 2097318,
+        "entityid": 219,
         "general": {
             "name": "Melissa",
             "tagid": 1,
@@ -3748,11 +3800,13 @@
             },
             "maxhealth": 200.0,
             "width": 0.800000011920929,
-            "height": 0.07000000029802322
+            "height": 0.07000000029802322,
+            "frametexture": 0,
+            "healthtexture": 0
         }
     },
     {
-        "entityid": 2097319,
+        "entityid": 220,
         "general": {
             "name": "Melissa",
             "tagid": 1,
@@ -3876,11 +3930,13 @@
             },
             "maxhealth": 200.0,
             "width": 0.800000011920929,
-            "height": 0.07000000029802322
+            "height": 0.07000000029802322,
+            "frametexture": 0,
+            "healthtexture": 0
         }
     },
     {
-        "entityid": 2097320,
+        "entityid": 221,
         "general": {
             "name": "Melissa",
             "tagid": 1,
@@ -4004,7 +4060,9 @@
             },
             "maxhealth": 200.0,
             "width": 0.800000011920929,
-            "height": 0.07000000029802322
+            "height": 0.07000000029802322,
+            "frametexture": 0,
+            "healthtexture": 0
         }
     }
 ]
