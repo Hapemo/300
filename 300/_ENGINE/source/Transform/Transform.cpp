@@ -51,15 +51,16 @@ void Transform::parentChildRotateUpdate(float dt)
 	// if this has ended, 
 	if (mCumulativeTime <= 0) {
 		mCumulativeTime = 0;
+		mRotate = mInitialRotation;
 		return;
 	}
 
 	else
 	{
 		// Calculate the rotation amount for the current frame
-
-		float rotation_amount = (mRotationDegrees / mCumulativeTime) * dt;
-		
+		std::cout << "Rotation Amount: " << (mRotationDegrees / mDuration) * dt << std::endl;
+		float rotation_amount = (mRotationDegrees / mDuration) * dt * mRotateSpeed;
+		std::cout << "Rotation Amount (W speed): " << rotation_amount << std::endl;
 		//std::cout << "Rotate Amount: " << rotation_amount << std::endl;
 
 		// Create a quaternion from the additional rotation
@@ -80,6 +81,7 @@ void Transform::parentChildRotateUpdate(float dt)
 
 		// Decreament delta time.
 		mCumulativeTime -= dt;
+		std::cout << "Cumultive Timer: " << mCumulativeTime << std::endl;
 	}
 
 }
@@ -88,7 +90,7 @@ void Transform::parentChildRotateUpdate(float dt)
 void Transform::gunAnimationUpdate(std::string gun_type, float recoil_angle, float recoil_speed, float recoil_duration)
 {
 	std::cout << "HANDLING GUN ANIMATION" << std::endl;
-
+	
 	mCumulativeTime = 10.0f;
 
 	if (gun_type == "REVOLVER")
@@ -97,7 +99,7 @@ void Transform::gunAnimationUpdate(std::string gun_type, float recoil_angle, flo
 		// - set it back to original rotation then do recoil (in <parentChildRotateUpdate>
 		if (mRotate != mInitialRotation) // check if the gun is currently rotating 
 		{
-			//std::cout << "(" << mInitialRotation.x << " , " << mInitialRotation.y << " , " << mInitialRotation.z << std::endl;
+			std::cout << "(" << mInitialRotation.x << " , " << mInitialRotation.y << " , " << mInitialRotation.z << std::endl;
 			mRotate = mInitialRotation;
 			std::cout << "Reseting to Rest. (GUN ROTATION)" << std::endl;
 		}
@@ -108,12 +110,16 @@ void Transform::gunAnimationUpdate(std::string gun_type, float recoil_angle, flo
 		//std::cout << "Recoil Angle: " << recoil_angle << std::endl;
 
 		// Set up the parent-child rotation for the recoil
-		parentChildRotateInit('x', recoil_angle);
-		mCumulativeTime = recoil_duration;				// Set the total elapsed time for the recoil animation to run.
+		mRotationDegrees = recoil_angle;
+		mDuration = recoil_duration;				    // Set the total elapsed time for the recoil animation to run.
+		mCumulativeTime = recoil_duration;
 		mRotateSpeed = recoil_speed;					// Set the speed of the recoil animation to go off. 
 
 		//std::cout << "Cumulative Time udpated to: " << mCumulativeTime << std::endl;
 		//std::cout << "Rotate Speed: " << mRotateSpeed << std::endl;
+
+		//std::cout << "ROTATION Degrees: " << mRotationDegrees << std::endl;
+
 	}
 }
 

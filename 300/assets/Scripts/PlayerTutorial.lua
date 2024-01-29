@@ -570,7 +570,7 @@ function Update()
                 -- print("REVOLVER SHOOTING")
                 
                 applyGunRecoil(recoil_speed, 0.5)   
-                gunTransform:GunAnimation("REVOLVER" , 30.0, 10.0, 2.0) -- Trigger everytime player shoots
+                gunTransform:GunAnimation("REVOLVER" , 30.0, 1.0, 0.2) -- Trigger everytime player shoots
 
                 -- gunRecoilState = "MOVING"
 
