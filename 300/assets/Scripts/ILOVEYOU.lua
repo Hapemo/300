@@ -120,7 +120,13 @@ end
 function ILOVEYOUMovement() 
     --#region Movement
     vec = aiSys:GetDirection(this)
-    this:GetTransform().mRotate.y = Helper.DirectionToAngle(this, vec)
+    if inLineOfSight then
+        this:GetTransform().mRotate.y = Helper.DirectionToAngle(this, vec)
+    else
+        local dir = Vec3.new()
+        dir = Helper.Normalize(Helper.Vec3Minus(targetPos, thisPos))
+        this:GetTransform().mRotate.y = Helper.DirectionToAngle(this, dir)
+    end
 
     Helper.Scale(vec, 3)
 -- when horizontal distance reached, don't move by getdirection
@@ -177,7 +183,10 @@ end
 
 function Shoot()
     this:GetAudio():SetPlay()
-    local pos = thisPos
+    local pos = Vec3.new()
+    pos.x = thisPos.x
+    pos.y = thisPos.y
+    pos.z = thisPos.z
     pos.y = pos.y + 1
     local bullet = systemManager.ecs:NewEntityFromPrefab("EnemyBullet", pos)
     -- local bulletVec = Helper.Scale(Helper.Normalize(Helper.Vec3Minus(targetPos, thisPos)), ShotSpeed)
