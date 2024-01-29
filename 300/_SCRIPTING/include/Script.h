@@ -55,7 +55,7 @@ public:
 	void LoadEnvVar();
 	void Run(const char* funcName);
 	template<typename ...args>
-	void Run(const char* funcName, args... arguments)
+	void RunWithParams(const char* funcName, args... arguments)
 	{
 		sol::protected_function func = env[funcName];
 		sol::protected_function_result result = func(arguments...);

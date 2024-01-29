@@ -229,7 +229,9 @@ void LuaScript()
         "Script", sol::constructors<>(),
         "ReturnValueInt", &Script::RunWithReturnValue<int>,
         "SetValueVec3", &Script::SetValue<glm::vec3>,
-        "SetValueFloat", &Script::SetValue<float>);
+        "SetValueFloat", &Script::SetValue<float>,
+        "SetNextGameStateHelper", &Script::RunWithParams<std::string>,
+        "RunFunction", &Script::Run);
 }
 
 void LuaScripts()
@@ -311,7 +313,8 @@ void LuaGraphicsSystem()
         "m_GlobalTint", &GraphicsSystem::m_GlobalTint,
         "m_WindowWidth", &GraphicsSystem::m_Width,
         "m_WindowHeight", &GraphicsSystem::m_Height,
-        "SetAllEntityBloomThreshold", &GraphicsSystem::SetAllEntityBloomThreshold);
+        "SetAllEntityBloomThreshold", &GraphicsSystem::SetAllEntityBloomThreshold,
+        "FilterRadius", &GraphicsSystem::mFilterRadius);
 }
 
 void LuaPhysics()
