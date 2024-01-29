@@ -211,6 +211,8 @@ void PhysBasedBloomRenderer::Resize(int width, int height)
 		localwidth /= 2.f;
 		localheight /= 2.f;
 	}
+
+	// Init(width, height);
 }
 
 

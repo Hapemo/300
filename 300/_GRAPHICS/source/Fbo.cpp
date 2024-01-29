@@ -157,7 +157,7 @@ void GFX::FBO::Resize(int width, int height)
 	glDeleteTextures(1, &mEntityIDAttachment);
 	glDeleteTextures(1, &mBrightColorsAttachment);
 
-	Create(width, height, mEditorMode, true);
+	Create(width, height, mEditorMode, false);
 }
 
 void GFX::PingPongFBO::Create(int width, int height)
@@ -288,6 +288,8 @@ void GFX::PingPongFBO::Resize(int width, int height)
 		// Unbind 
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
+
+	// Create(width, height);
 }
 
 void GFX::PingPongFBO::UnloadAndClear()

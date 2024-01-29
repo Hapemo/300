@@ -126,7 +126,7 @@ void GFX::MsFBO::Resize(int width, int height)
 	glDeleteTextures(1, &mGAlbedoSpecAttachment);
 	glDeleteTextures(1, &mGEmissionAttachment);
 
-	Create(width, height, true);
+	Create(width, height, false);
 }
 
 void GFX::MsFBO::CreateAttachment(unsigned& attachment, GLenum internalFormat)
@@ -265,7 +265,7 @@ void GFX::IntermediateFBO::Resize(int width, int height)
 	glDeleteTextures(1, &mGAlbedoSpecAttachment);
 	glDeleteTextures(1, &mGEmissionAttachment);
 
-	Create(width, height, true);
+	Create(width, height, false);
 }
 
 void GFX::IntermediateFBO::Clear()
