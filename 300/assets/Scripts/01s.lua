@@ -1,4 +1,4 @@
-local destroyHeight = 80 -- height to destroy the object
+local destroyHeight = 60 -- height to destroy the object
 local tpcolor = Vec4.new(1, 1, 1, 0)
 
 local target = Vec3.new()
@@ -22,7 +22,7 @@ function Update()
     playerTrans = player:GetTransform()
 
 
-    transform.mTranslate.y = transform.mTranslate.y+0.4
+    transform.mTranslate.y = transform.mTranslate.y+0.5
 
     direction.x = transform.mTranslate.x - playerTrans.mTranslate.x
     direction.y = transform.mTranslate.y - playerTrans.mTranslate.y
