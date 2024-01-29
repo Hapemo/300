@@ -288,8 +288,6 @@ void GFX::PingPongFBO::Resize(int width, int height)
 		// Unbind 
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
-
-	// Create(width, height);
 }
 
 void GFX::PingPongFBO::UnloadAndClear()
