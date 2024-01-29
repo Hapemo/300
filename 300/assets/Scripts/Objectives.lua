@@ -2,7 +2,7 @@
 local this
 
 -- for objectives bar
-local objectivesComplete = 1000 -- Changed from 1000 from 100 cause 100 filled up too fast
+local objectivesComplete = 100
 local progress
 local isInZone = false
 
@@ -11,107 +11,85 @@ local spawnTimer = 3 -- sets how long the enemy spawning interval is
 local currentEnemyCount = 0 -- keeps track of how many enemies there are in the map
 local maxEnemyCount = 3 -- sets how many enemies are allowed in the map
 
-local spawnPos1 = Vec3.new()
-local spawnPos2 = Vec3.new()
-local spawnPos3 = Vec3.new()
-local spawnPos4 = Vec3.new()
+local mobSpawnPos1 = Vec3.new()
+local mobSpawnPos2 = Vec3.new()
+local mobSpawnPos3 = Vec3.new()
+local mobSpawnPos4 = Vec3.new()
+
+local objectiveBarSpawnPos = Vec3.new()
 
 local mobtype = 0;
+local isInit
 
 function Alive()
-
+    isInit = false
     this = Helper.GetScriptEntity(script_entity.id)
     progress = 0
     print("Progress is", progress)
 
-    spawnPos1.x = 27; -- find 4 good spawn points on the map and designate the 4 spawn spots below
-    spawnPos1.y = -10;
-    spawnPos1.z = 27;
+    mobSpawnPos1.x = 18;
+    mobSpawnPos1.y = -9;
+    mobSpawnPos1.z = 60;
 
-    spawnPos2.x = 27;
-    spawnPos2.y = -10;
-    spawnPos2.z = 27;
+    mobSpawnPos2.x = -22;
+    mobSpawnPos2.y = -9;
+    mobSpawnPos2.z = 40;
 
-    spawnPos3.x = 27;
-    spawnPos3.y = -10;
-    spawnPos3.z = 27;
+    mobSpawnPos3.x = -22;
+    mobSpawnPos3.y = -9;
+    mobSpawnPos3.z = -8;
 
-    spawnPos4.x = 27;
-    spawnPos4.y = -10;
-    spawnPos4.z = 27;
+    mobSpawnPos4.x = 8;
+    mobSpawnPos4.y = -9;
+    mobSpawnPos4.z = 13;
 
+    objectiveBarSpawnPos.x = 0.7;
+    objectiveBarSpawnPos.y = 0.7;
+    objectiveBarSpawnPos.z = 0;
+
+    objectivebar = systemManager.ecs:NewEntityFromPrefab("StartButton", objectiveBarSpawnPos)
 end
 
 function Update()
+    if isInit == false then
+        gameStateSys = systemManager:mGameStateSystem();
+        testScriptEntity = gameStateSys:GetEntity("Controller")
+        TestScripts = testScriptEntity:GetScripts()
+        testScript = TestScripts:GetScript("../assets/Scripts/ObjectivesController.lua")
+
+        if testScript ~= nil then
+            testScript:RunFunction("AddObjective")
+        end
+        isInit = true
+    end
+    -- SPAWNING ENEMIES
+    currentSpawnTimer = currentSpawnTimer + FPSManager.GetDT()
+
+    if currentEnemyCount < maxEnemyCount and currentSpawnTimer > spawnTimer then
+
+        mobtype = math.random(2, 3) -- generate a random number to spawn a random enemy between Trojan and Melissa only (for level 1)
+
+            if (mobtype == 1) then systemManager.ecs:NewEntityFromPrefab("ILOVEYOU", mobSpawnPos1) 
+                elseif (mobtype == 2) then systemManager.ecs:NewEntityFromPrefab("Melissa", mobSpawnPos2) 
+                elseif (mobtype == 3) then systemManager.ecs:NewEntityFromPrefab("TrojanHorse", mobSpawnPos3) 
+                elseif (mobtype == 4) then systemManager.ecs:NewEntityFromPrefab("ZipBomb", mobSpawnPos4)
+            end
+        currentEnemyCount = currentEnemyCount + 1
+        currentSpawnTimer = 0 -- reset currentSpawnTimer so that next enemy can spawn
+    end
+
+    objectivebar:GetUIrenderer():SetSlider(progress/objectivesComplete);
 
     if (isInZone == true) then
-        -- OBJECTIVE PROGRESS
+
         if (progress < objectivesComplete) then
 
-            -- TODO: set objective UI alpha to 255
-
-            progress = progress + 1
-            print("Current progress =", progress)
-
-            if (progress == 100) then
-            -- TODO: set objective UI first bar alpha to 255
+            objectivebar:GetTransform().mTranslate.y = 0.7; -- Show the objective progress
+            -- OBJECTIVE PROGRESS
+            if (progress < objectivesComplete) then
+                progress = progress + 1
+                print("Current progress =", progress)
             end
-
-            if (progress == 200) then
-            -- TODO: set objective UI second bar alpha to 255
-            end
-
-            if (progress == 300) then
-            -- TODO: set objective UI third bar alpha to 255
-            end
-
-            if (progress == 400) then
-            -- TODO: set objective UI fourth bar alpha to 255
-            end
-
-            if (progress == 500) then
-            -- TODO: set objective UI fifth bar alpha to 255
-            end
-
-            if (progress == 600) then
-            -- TODO: set objective UI sixth bar alpha to 255
-            end
-
-            if (progress == 700) then
-            -- TODO: set objective UI seventh bar alpha to 255
-            end
-
-            if (progress == 800) then
-            -- TODO: set objective UI eigth bar alpha to 255
-            end
-
-             if (progress == 900) then
-            -- TODO: set objective UI ninth bar alpha to 255
-            end
-
-            if (progress == 1000) then
-            -- TODO: set objective UI tenth bar alpha to 255
-            end
-
-            -- TODO: since objective progress decreases outside zone, need to set alpha back to 0 if progress falls below each threshold
-        end
-
-        -- SPAWNING ENEMIES
-        currentSpawnTimer = currentSpawnTimer + FPSManager.GetDT()
-
-        if currentEnemyCount < maxEnemyCount and currentSpawnTimer > spawnTimer then
-            -- TODO: Select a XYZ point in the map to spawn at, current it spawns inside the objective
-
-                mobtype = math.random(1, 4) -- generate a random number to spawn a random enemy
-
-                if (mobtype == 1) then systemManager.ecs:NewEntityFromPrefab("ILOVEYOU", spawnPos1) 
-                elseif (mobtype == 2) then systemManager.ecs:NewEntityFromPrefab("Melissa", spawnPos1) 
-                elseif (mobtype == 3) then systemManager.ecs:NewEntityFromPrefab("TrojanHorse", spawnPos1) 
-                elseif (mobtype == 4) then systemManager.ecs:NewEntityFromPrefab("ZipBomb", spawnPos1)
-                end
-
-                currentEnemyCount = currentEnemyCount + 1
-                currentSpawnTimer = 0 -- reset currentSpawnTimer so that next enemy can spawn
         end
 
     end
@@ -119,16 +97,32 @@ function Update()
     if (isInZone == false) then
     -- OBJECTIVE Progress (decreases if player is outside objective)
 
-        -- TODO: set objective UI alpha to 0
+        objectivebar:GetTransform().mTranslate.y = 20; -- Hide the objective progress
 
-        if (progress > 0) then
-        progress = progress - 1
-        print("Current progress =", progress)
+        if (progress < objectivesComplete) then
+
+            if (progress > 0) then
+                progress = progress - 1
+                print("Current progress =", progress)
+            end
+
         end
     end
 
     if (progress == objectivesComplete) then
         print("Objective complete!")
+        objectivebar:GetTransform().mTranslate.y = 20; -- Hide the objective progress
+        entityobj = Helper.GetScriptEntity(script_entity.id)
+        systemManager.ecs:SetDeleteEntity(entityobj)
+        gameStateSys = systemManager:mGameStateSystem();
+  
+        testScriptEntity = gameStateSys:GetEntity("Controller")
+        TestScripts = testScriptEntity:GetScripts()
+        testScript = TestScripts:GetScript("../assets/Scripts/ObjectivesController.lua")
+
+        if testScript ~= nil then
+            testScript:RunFunction("RemoveObjective")
+        end
 
         --gameStateSys:GetEntity("ZipBombFuseAudio"):GetAudio():SetPlay() -- TODO: Play audio
         -- TODO: Spawn another objective entity prefab at XYZ location in the map
@@ -140,7 +134,7 @@ function Update()
 end
 
 function Dead()
-
+    
 end
 
 function OnTriggerEnter(Entity)
