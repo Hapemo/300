@@ -367,7 +367,7 @@ public:
 	{
 		for (auto& elem : scriptsContainer)
 		{
-			elem->Run(funcName, arguments...);
+			elem->RunWithParams(funcName, arguments...);
 		}
 	}
 

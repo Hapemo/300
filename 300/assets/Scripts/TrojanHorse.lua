@@ -23,7 +23,7 @@ local gameStateSys
 local this
 local target
 
-local deathTimer = 2
+local deathTimer = 1.25
 local deathTimerCount
 
 local spawnSoldierFrequency = 0.6
@@ -174,6 +174,7 @@ function ROAMInit()
     s1Timer = 2
     s1RoamVelocity = RandDirectionXZ()
     this:GetAudio():SetResume()
+    this:GetMeshRenderer():SetMesh("Trojan_Movement", this)
 end
 
 function CHARGEInit()
@@ -196,7 +197,7 @@ end
 function RESTInit()
     --print("Start Rest")
     state = "REST"
-    this:GetMeshRenderer():SetMesh("Trojan", this) -- change animation back
+    this:GetMeshRenderer():SetMesh("Trojan_Idle", this) -- change animation back
 
     this:GetAudio():SetPause()
     phySys:SetVelocity(this, Vec3.new())
@@ -225,12 +226,12 @@ function StartDeath()
     -- Start death animation
     -- Start death sound
     state = "DEATH"
-    
+    this:GetMeshRenderer():SetMesh("Trojan_Death", this)
+    gameStateSys:GetEntity("EnemyDeath"):GetAudio():SetPlay()
 end
 
 function Die()
     systemManager.ecs:SetDeleteEntity(this)
-    gameStateSys:GetEntity("EnemyDeath"):GetAudio():SetPlay()
 end
 
 function SpawnSoldier()
