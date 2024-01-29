@@ -88,13 +88,7 @@ struct General : public Serializable
  */
  /******************************************************************************/
 struct Transform : public Serializable
-{
-	// Added [M4 - 23/1/2024]
-	enum GunAnimations
-	{
-		REVOLVER
-	};
-
+{	
 	glm::vec3 mScale;
 	glm::vec3 mRotate;
 	glm::vec3 mTranslate;
@@ -107,9 +101,7 @@ struct Transform : public Serializable
 	char      mRotationAxis;		  // x, y, z
 	float     mRotationDegrees;		  // rotation amount
 	glm::vec3 mRotateAxisVector;      // rotation vector based on 'mRotationAxis' & 'mRotationDegrees'
-	GunAnimations mGunAnim;
-
-
+	
 	Transform() : mScale(1.f), mRotate(0.f), mTranslate(0.f) {}
 	glm::quat GetQuaternion() { return glm::quat(mRotate); }
 
@@ -118,12 +110,38 @@ struct Transform : public Serializable
 	void DeserializeSelf(rapidjson::Value& reader);
 
 	void parentChildRotateInit(char axis, float angle);
-	void parentChildRotateUpdate(float dt);
+	void parentChildRotateUpdate(float dt);	// General use
+
+	// Gun Specific
+	void gunAnimationUpdate(std::string gun_type, float recoil_angle = 0.0f, float recoil_speed = 10.0f, float max_recoil_angle = glm::radians(30.0f));
+	float     mRotateSpeed;
+	glm::vec3 mInitialRotation;
+
 
 
 	//RTTR_ENABLE()
 };
 
+//struct Gun : public Transform 
+//{
+//	enum GunType
+//	{
+//		REVOLER, 
+//		NONE
+//	};
+//
+//	float recoilAngle;			// Current Recoil Angle
+//	float recoilSpeed;			// Speed at which the gun tilts upwards during recoil
+//	float maxRecoilAngle;	    // Maximum angle the gun can tilt.
+//	GunType gunType;			// Gun Holding
+//
+//	Gun() : recoilAngle(0.0f), recoilSpeed(10.0f), maxRecoilAngle(glm::radians(30.0f)) {}
+//
+//	void UpdateRecoil(float dt);
+//
+//};
+
+ 
 /******************************************************************************/
 /*!
 	[Component] - Animator

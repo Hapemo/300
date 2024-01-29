@@ -14,7 +14,10 @@ void Transform::parentChildRotateInit(char axis, float angle)
 
 	mRotationAxis = axis;
 	mRotationDegrees = angle;
-	mCumulativeTime = 10.0f;
+	mCumulativeTime = 0.0f;
+	mInitialRotation = mRotate;
+
+	std::cout << "(" << mInitialRotation.x << " , " << mInitialRotation.y << " , " << mInitialRotation.z << std::endl;
 
 	// Selecting the axis that we want to rotate on
 	switch (axis)
@@ -43,14 +46,7 @@ void Transform::parentChildRotateInit(char axis, float angle)
 
 void Transform::parentChildRotateUpdate(float dt)
 {
-	std::cout << "Parent Child Update" << std::endl;
-
-	switch (mGunAnim)
-	{
-	//case REVOLVER:
-
-	}
-
+	//std::cout << "Parent Child Update" << std::endl;
 
 	// if this has ended, 
 	if (mCumulativeTime <= 0) {
@@ -63,8 +59,8 @@ void Transform::parentChildRotateUpdate(float dt)
 		// Calculate the rotation amount for the current frame
 
 		float rotation_amount = (mRotationDegrees / mCumulativeTime) * dt;
-		;
-		std::cout << "Rotate Amount: " << rotation_amount << std::endl;
+		
+		//std::cout << "Rotate Amount: " << rotation_amount << std::endl;
 
 		// Create a quaternion from the additional rotation
 		glm::quat additional_rotation = glm::angleAxis(glm::radians(rotation_amount), glm::normalize(mRotateAxisVector));
@@ -88,3 +84,76 @@ void Transform::parentChildRotateUpdate(float dt)
 
 }
 
+// This function is called everytime the [FIRE] button is pressed. 
+void Transform::gunAnimationUpdate(std::string gun_type, float recoil_angle, float recoil_speed, float recoil_duration)
+{
+	std::cout << "HANDLING GUN ANIMATION" << std::endl;
+
+	mCumulativeTime = 10.0f;
+
+	if (gun_type == "REVOLVER")
+	{	
+		// if [current rotation] is not the same as the [initial rotation]
+		// - set it back to original rotation then do recoil (in <parentChildRotateUpdate>
+		if (mRotate != mInitialRotation) // check if the gun is currently rotating 
+		{
+			//std::cout << "(" << mInitialRotation.x << " , " << mInitialRotation.y << " , " << mInitialRotation.z << std::endl;
+			mRotate = mInitialRotation;
+			std::cout << "Reseting to Rest. (GUN ROTATION)" << std::endl;
+		}
+
+
+		// Ensure the recoil angle is within the specified bounds
+		//recoil_angle = glm::clamp(recoil_angle, -max_recoil_angle, max_recoil_angle);
+		//std::cout << "Recoil Angle: " << recoil_angle << std::endl;
+
+		// Set up the parent-child rotation for the recoil
+		parentChildRotateInit('x', recoil_angle);
+		mCumulativeTime = recoil_duration;				// Set the total elapsed time for the recoil animation to run.
+		mRotateSpeed = recoil_speed;					// Set the speed of the recoil animation to go off. 
+
+		//std::cout << "Cumulative Time udpated to: " << mCumulativeTime << std::endl;
+		//std::cout << "Rotate Speed: " << mRotateSpeed << std::endl;
+	}
+}
+
+
+//void Transform::parentChildRotateUpdate(float dt)
+//{
+//	std::cout << "Parent Child Update" << std::endl;
+//
+//	// if this has ended, 
+//	if (mCumulativeTime <= 0) {
+//		mCumulativeTime = 0;
+//		return;
+//	}
+//
+//	else
+//	{
+//		// Calculate the rotation amount for the current frame
+//
+//		float rotation_amount = (mRotationDegrees / mCumulativeTime) * dt;
+//		;
+//		std::cout << "Rotate Amount: " << rotation_amount << std::endl;
+//
+//		// Create a quaternion from the additional rotation
+//		glm::quat additional_rotation = glm::angleAxis(glm::radians(rotation_amount), glm::normalize(mRotateAxisVector));
+//
+//		//std::cout << "Previous Rottion (GLM::VEC3): " << mRotate.x << "," << mRotate.y << "," << mRotate.z << std::endl;
+//
+//		// Convert the existing [mRotate - glm::vec3] to a quarternion
+//		glm::quat current_rotation = glm::quat(glm::radians(mRotate));
+//
+//		//std::cout << "Quat Rotation: " << current_rotation.x << "," << current_rotation.y << "," << current_rotation.z << "," << current_rotation.w << std::endl;
+//
+//		// Combine the existing rotation with the additional rotation (matrix * matrix)
+//		glm::quat combined_rotation = additional_rotation * current_rotation;
+//
+//		// Convert the combined rotation back to <Euler Angles> and Update the mRotate.
+//		mRotate = glm::degrees(glm::eulerAngles(combined_rotation));
+//
+//		// Decreament delta time.
+//		mCumulativeTime -= dt;
+//	}
+//
+//}

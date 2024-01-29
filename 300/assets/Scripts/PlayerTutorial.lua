@@ -219,9 +219,12 @@ function Alive()
     -- -- Testing [ParentChildRotateInit]
     gunTransform = gunEntity:GetTransform()
     gunTransform:ParentChildRotateInit('x', 30)
+
+    -- Save reference to gun's original rotation
+    -- gunRotation = gunTransform.mRotate
         
     gunInitialTranslate = gunEntity:GetTransform().mTranslate
-    gunRotation = gunEntity:GetTransform().mRotate
+    gunRotation = gunTransform.mRotate
 
     -- gunTransform = gunEntity:GetTransform()
     -- gunTransform:ParentChildRotateInit()
@@ -250,7 +253,9 @@ function Update()
     dt = FPSManager.GetDT()
 
     -- For Gun Rotation
-    gunTransform:ParentChildRotateUpdate(dt)
+    -- if(_G.gunEquipped == 1) then -- Revolver
+        gunTransform:ParentChildRotateUpdate(dt, "REVOLVER")
+    -- end
     
 --region -- player camera
     if(inputMapSys:GetButtonDown("Mouse")) then
@@ -564,7 +569,8 @@ function Update()
             if(revolverGunTimer == 0) then 
                 -- print("REVOLVER SHOOTING")
                 
-                applyGunRecoil(recoil_speed, 0.5)
+                applyGunRecoil(recoil_speed, 0.5)   
+                gunTransform:GunAnimation("REVOLVER" , 30.0, 10.0, 2.0) -- Trigger everytime player shoots
 
                 -- gunRecoilState = "MOVING"
 
@@ -984,3 +990,4 @@ function machineGunRecoil()
         gunTranslate.z = math.min(gunTranslate.z, original_translate_z + max_recoil_distance_z) -- this makes sure it does not surpass the limit.
     end
 end
+
