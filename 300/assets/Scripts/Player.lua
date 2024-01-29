@@ -151,6 +151,14 @@ local dashY
 local dashZ
 local inittedDash = false
 
+local isTakingDamage = false; -- whether player is in contact with other enemies, thus taking damage
+local playerHealthCurrent = 400;
+local playerHealthMax = 400;
+local playerHealthStartRegenCurrent = 0;
+local playerHealthStartRegenMax = 30; -- this is the time it takes for the player to not be damaged to start regenerating health
+
+local healthbarSpawnPos = Vec3.new()
+
 function Alive()
     gameStateSys = systemManager:mGameStateSystem();
     inputMapSys = systemManager:mInputActionSystem();
@@ -213,9 +221,44 @@ function Alive()
 
     -- Shotgun Stuff -- 
 
+    -- Player Health System Start -- 
+
+    healthbarSpawnPos.x = -0.7;
+    healthbarSpawnPos.y = 0.7;
+    healthbarSpawnPos.z = 0;
+
+    healthbar = systemManager.ecs:NewEntityFromPrefab("StartButton", healthbarSpawnPos)
+
+    -- Player Health System End -- 
+
 end
 
 function Update()
+
+    -- Player Health System Start -- 
+
+    if (isTakingDamage == true) then
+    playerHealthStartRegenCurrent = 0;
+    playerHealthCurrent = playerHealthCurrent - 6; -- take damage
+    end
+
+    if (isTakingDamage == false) then -- if not taking damage
+
+        if (playerHealthStartRegenCurrent < playerHealthStartRegenMax) then
+            playerHealthStartRegenCurrent = playerHealthStartRegenCurrent + 1;
+        end
+
+        if (playerHealthStartRegenCurrent == playerHealthStartRegenMax) then
+            if (playerHealthCurrent < 400) then
+                playerHealthCurrent = playerHealthCurrent + 3; -- regen hp
+            end
+        end
+    end
+
+    healthbar:GetUIrenderer():SetSlider(playerHealthCurrent/playerHealthMax);
+
+    -- Player Health System End
+
     gunTranslate = gunEntity:GetTransform().mTranslate
 
     -- print("GUNTRANSLATE at the start z: " , gunTranslate.z)
@@ -745,6 +788,15 @@ function OnTriggerEnter(Entity)
             collideWithTP = 2
         end
     end
+
+    -- Player Health System Start --
+    if (generalComponent.name == "ILOVEYOU") then isTakingDamage = true; end
+    if (generalComponent.name == "Melissa") then isTakingDamage = true; end
+    if (generalComponent.name == "TrojanHorse") then isTakingDamage = true; end
+    if (generalComponent.name == "ZipBomb") then isTakingDamage = true; end
+    if (generalComponent.name == "TrojanSoldier") then isTakingDamage = true; end
+    -- Player Health System End --
+
 end
 
 function OnTriggerExit(Entity)
@@ -757,9 +809,18 @@ function OnTriggerExit(Entity)
         collideWithTP = 0
         onTpTime = 0
     end
+
+    -- Player Health System Start --
+    if (generalComponent.name == "ILOVEYOU") then isTakingDamage = false; end
+    if (generalComponent.name == "Melissa") then isTakingDamage = false; end
+    if (generalComponent.name == "TrojanHorse") then isTakingDamage = false; end
+    if (generalComponent.name == "ZipBomb") then isTakingDamage = false; end
+    if (generalComponent.name == "TrojanSoldier") then isTakingDamage = false; end
+    -- Player Health System End --
 end
 
 function OnContactEnter(Entity)
+
 end
 
 function OnContactExit(Entity)
