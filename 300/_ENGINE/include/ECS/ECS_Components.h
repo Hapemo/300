@@ -208,6 +208,10 @@ struct UIrenderer : public Serializable
 	{
 		mDegree = degree;
 	}
+	void SetSlider(float value)
+	{
+		mSlider = glm::clamp(value, 0.f, 1.f);
+	}
 	void SetTexture(const std::string& Texturename);
 	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
 	void DeserializeSelf(rapidjson::Value& reader);
