@@ -1,7 +1,7 @@
 {
-    "entityid": 16777574,
+    "entityid": 6291508,
     "general": {
-        "name": "0s",
+        "name": "1s",
         "tagid": 0,
         "subtag": 0,
         "isActive": true,
@@ -21,13 +21,13 @@
         "translate": {
             "x": 0.0,
             "y": 0.0,
-            "z": 0.0
+            "z": 1.2124619483947754
         }
     },
     "meshrenderer": {
         "vert": "../assets/shader_files/pointLight_vert.glsl",
         "frag": "../assets/shader_files/pointLight_frag.glsl",
-        "meshrefid": 3761590307,
+        "meshrefid": 2822347464,
         "instancecolor": {
             "x": 1.0,
             "y": 1.0,
@@ -48,7 +48,7 @@
             " ",
             " "
         ],
-        "mesh": "../assets/compiled_geom/0.geom",
+        "mesh": "../assets/compiled_geom/1.geom",
         "texturerefid": [
             164106086,
             164106086,
@@ -67,6 +67,6 @@
         ]
     },
     "prefab": {
-        "prefab": "0s"
+        "prefab": "1s"
     }
 }

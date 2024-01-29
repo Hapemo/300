@@ -18,6 +18,13 @@ local mobSpawnPos4 = Vec3.new()
 
 local objectiveBarSpawnPos = Vec3.new()
 
+
+-- for spawning 0s
+local spawndataPos = Vec3.new()
+local moveTime = 0
+local reseed = 0
+-- end
+
 local mobtype = 0;
 local isInit
 
@@ -79,6 +86,53 @@ function Update()
     end
 
     objectivebar:GetUIrenderer():SetSlider(progress/objectivesComplete);
+
+    ent = Helper.GetScriptEntity(script_entity.id)
+    transform = ent:GetTransform()
+
+    -- print(math.random() +math.random(-20,20) )
+
+
+    
+
+    moveTime = moveTime + FPSManager.GetDT()
+
+    reseed = reseed + FPSManager.GetDT()
+
+    if(reseed >2)then
+
+        math.randomseed(os.time())     
+        reseed = 0
+    end
+
+    if(moveTime >0.2)then
+
+        for i = 1, 2 , 1 
+        do 
+
+        -- print(math.random(-200,200))
+
+            spawndataPos.x = transform.mTranslate.x  +math.random(-300,300)/100
+            spawndataPos.y = transform.mTranslate.y 
+            spawndataPos.z = transform.mTranslate.z +math.random(-300,300)/100
+
+            transform.mRotate.y = math.random(0,300)
+            
+
+            bulletPrefab = systemManager.ecs:NewEntityFromPrefab("1s", spawndataPos)
+
+            transform.mRotate.y = math.random(0,300)
+            spawndataPos.x = transform.mTranslate.x  +math.random(-300,300)/100
+            spawndataPos.y = transform.mTranslate.y 
+            spawndataPos.z = transform.mTranslate.z +math.random(-300,300)/100
+
+            bulletPrefab = systemManager.ecs:NewEntityFromPrefab("0s", spawndataPos)
+
+
+        end
+        moveTime = 0
+    end
+
 
     if (isInZone == true) then
 
