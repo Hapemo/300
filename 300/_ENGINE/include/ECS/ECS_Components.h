@@ -164,6 +164,7 @@ struct MeshRenderer : public Serializable
 	void								Inspect();
 	void								SetColor(const vec4& color);
 	void								SetMesh(const std::string& meshName, Entity inst);
+	//void								SetMesh(const std::string& meshName, Entity inst, unsigned int index);
 	void								SetMeshDelayed(const std::string& name, Entity inst);
 	void								SetTexture(MaterialType type, const std::string& Texturename);
 

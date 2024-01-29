@@ -91,7 +91,9 @@
         "bloom_sampleweight": 2.941999912261963,
         "chroma_strength": 0.0038999998942017555,
         "bloom_enable": true,
-        "crt_enable": false,
+        "crt_enable": true,
+        "crt_distortion_value": 0.0005000000237487257,
+        "crt_height_offset": 100,
         "chroma_enable": false,
         "global_tint": {
             "x": 1.0,
