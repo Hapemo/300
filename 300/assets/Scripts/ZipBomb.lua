@@ -16,6 +16,8 @@ local state
 local explodingTimer = 1.0416 -- based on animation time
 local explodingTimerCount = 0
 
+local lineOfSight
+
 function Alive()
     this = Helper.GetScriptEntity(script_entity.id)
     if this == nil then
@@ -44,12 +46,20 @@ function Update()
     -- end
 
     --#region Movement
+    lineOfSight = aiSys:LineOfSight(this, this:GetAISetting():GetTarget())
     vec = aiSys:GetDirection(this)
-    this:GetTransform().mRotate.y = Helper.DirectionToAngle(this, vec)
 
     Helper.Scale(vec, 5)
 
-    if aiSys:LineOfSight(this, this:GetAISetting():GetTarget()) then 
+    if lineOfSight then
+        local dir = Vec3.new()
+        dir = Helper.Normalize(Helper.Vec3Minus(this:GetAISetting():GetTarget():GetTransform().mTranslate, this:GetTransform().mTranslate))
+        this:GetTransform().mRotate.y = Helper.DirectionToAngle(this, dir)
+    else
+        this:GetTransform().mRotate.y = Helper.DirectionToAngle(this, vec)
+    end
+
+    if lineOfSight then 
         -- Add bobbbling here
         bobbleAngle = bobbleAngle + bobbleFrequency
         if bobbleAngle > 360 then bobbleAngle = 0 end

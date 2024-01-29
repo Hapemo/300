@@ -155,7 +155,7 @@ end
 function AttackInit()
     -- Start attack animation
     --print("Start melissa attack")
-    this:GetMeshRenderer():SetMesh("Melissa_attack", this)
+    this:GetMeshRenderer():SetMesh("Melissa_attack", this, 1)
     AttackOnce = false
     s2AttackingTimerCount = 0
     state = "ATTACKING"
