@@ -2,7 +2,7 @@
 local this
 
 -- for objectives bar
-local objectivesComplete = 1000 -- CHanged from 1000 from 100 cause 100 filled up too fast
+local objectivesComplete = 1000 -- Changed from 1000 from 100 cause 100 filled up too fast
 local progress
 local isInZone = false
 
@@ -94,7 +94,6 @@ function Update()
             end
 
             -- TODO: since objective progress decreases outside zone, need to set alpha back to 0 if progress falls below each threshold
-
         end
 
         -- SPAWNING ENEMIES
