@@ -105,10 +105,10 @@ function Update()
         reseed = 0
     end
 
-    if(moveTime >0.2)then
+    if(moveTime >0.4)then
 
-        for i = 1, 2 , 1 
-        do 
+        -- for i = 1, 2 , 1 
+        -- do 
 
         -- print(math.random(-200,200))
 
@@ -116,20 +116,24 @@ function Update()
             spawndataPos.y = transform.mTranslate.y 
             spawndataPos.z = transform.mTranslate.z +math.random(-300,300)/100
 
-            transform.mRotate.y = math.random(0,300)
             
 
             bulletPrefab = systemManager.ecs:NewEntityFromPrefab("1s", spawndataPos)
 
-            transform.mRotate.y = math.random(0,300)
-            spawndataPos.x = transform.mTranslate.x  +math.random(-300,300)/100
-            spawndataPos.y = transform.mTranslate.y 
-            spawndataPos.z = transform.mTranslate.z +math.random(-300,300)/100
+            -- spawndataPos.x = transform.mTranslate.x  +math.random(-300,300)/100
+            -- spawndataPos.y = transform.mTranslate.y 
+            -- spawndataPos.z = transform.mTranslate.z +math.random(-300,300)/100
 
-            bulletPrefab = systemManager.ecs:NewEntityFromPrefab("0s", spawndataPos)
+            -- bulletPrefab = systemManager.ecs:NewEntityFromPrefab("0s", spawndataPos)
+
+            -- spawndataPos.x = transform.mTranslate.x  +math.random(-300,300)/100
+            -- spawndataPos.y = transform.mTranslate.y 
+            -- spawndataPos.z = transform.mTranslate.z +math.random(-300,300)/100
+
+            -- bulletPrefab = systemManager.ecs:NewEntityFromPrefab("0s", spawndataPos)
 
 
-        end
+        -- end
         moveTime = 0
     end
 
