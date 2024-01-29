@@ -1316,6 +1316,12 @@ void GraphicsSystem::CheckWindowSize()
 
 void GraphicsSystem::ResizeWindow(ivec2 newSize)
 {
+	// Update Window
+	m_Window->SetWindowSize(newSize);
+
+	m_Width = newSize.x;
+	m_Height = newSize.y;
+
 	// Update viewport
 	glViewport(0, 0, newSize.x, newSize.y);
 
@@ -1333,12 +1339,6 @@ void GraphicsSystem::ResizeWindow(ivec2 newSize)
 	glBindImageTexture(4, m_IntermediateFBO.GetNormalAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
 	glBindImageTexture(5, m_IntermediateFBO.GetAlbedoSpecAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
 	glBindImageTexture(6, m_IntermediateFBO.GetEmissionAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
-
-	// Update Window
-	m_Window->SetWindowSize(newSize);
-
-	m_Width = newSize.x;
-	m_Height = newSize.y;
 
 	SetCameraSize(CAMERA_TYPE::CAMERA_TYPE_ALL, newSize);
 }
