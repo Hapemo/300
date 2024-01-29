@@ -359,10 +359,10 @@ void update_UI()
 					xform.mTranslate += parent_translate;
 				}
 			}
-			systemManager->mGraphicsSystem->Add2DImageWorldInstance(xform, texID, static_cast<int>(inst.id), uiRenderer.mDegree, uiRenderer.mColor);
+			systemManager->mGraphicsSystem->Add2DImageWorldInstance(xform, texID, static_cast<int>(inst.id), uiRenderer.mDegree, uiRenderer.mColor, uiRenderer.mSlider);
 		}
 		else
-			systemManager->mGraphicsSystem->Add2DImageInstance(uiWidth, uiHeight, uiPosition, texID, static_cast<int>(inst.id), uiRenderer.mDegree, uiRenderer.mColor);
+			systemManager->mGraphicsSystem->Add2DImageInstance(uiWidth, uiHeight, uiPosition, texID, static_cast<int>(inst.id), uiRenderer.mDegree, uiRenderer.mColor, uiRenderer.mSlider);
 	}
 
 	systemManager->mGraphicsSystem->m_Image2DMesh.PrepForDraw();

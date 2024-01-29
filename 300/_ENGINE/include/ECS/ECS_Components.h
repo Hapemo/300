@@ -189,6 +189,7 @@ struct UIrenderer : public Serializable
 	ref									mTextureRef;
 	vec4								mColor{ 1.f, 1.f, 1.f, 1.f };
 	float								mDegree;
+	float								mSlider{ 1.f };
 	int									mLayer;
 	bool								mWorldTransform;
 

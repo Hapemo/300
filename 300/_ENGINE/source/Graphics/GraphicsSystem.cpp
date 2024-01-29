@@ -1441,7 +1441,7 @@ void GraphicsSystem::DrawAll2DInstances(unsigned shaderID)
 	}
 }
 
-void GraphicsSystem::Add2DImageInstance(float width, float height, vec3 const& position, unsigned texHandle, unsigned entityID, float degree, vec4 const& color)
+void GraphicsSystem::Add2DImageInstance(float width, float height, vec3 const& position, unsigned texHandle, unsigned entityID, float degree, vec4 const& color, float slider)
 {
 	float half_w = m_Width * 0.5f;
 	float half_h = m_Height * 0.5f;
@@ -1462,10 +1462,10 @@ void GraphicsSystem::Add2DImageInstance(float width, float height, vec3 const& p
 
 	m_Image2DMesh.mLTW.push_back(world);
 	m_Image2DMesh.mColors.push_back(color);
-	m_Image2DMesh.mTexEntID.push_back(vec4((float)texIndex + 0.5f, (float)entityID + 0.5f, degree, 0));
+	m_Image2DMesh.mTexEntID.push_back(vec4((float)texIndex + 0.5f, (float)entityID + 0.5f, degree, slider));
 }
 
-void GraphicsSystem::Add2DImageWorldInstance(Transform transform, unsigned texHandle, unsigned entityID, float degree, vec4 const& color)
+void GraphicsSystem::Add2DImageWorldInstance(Transform transform, unsigned texHandle, unsigned entityID, float degree, vec4 const& color, float slider)
 {
 	mat4 S = glm::scale(transform.mScale);
 	mat4 R = glm::toMat4(glm::quat(glm::radians(transform.mRotate)));
@@ -1481,7 +1481,7 @@ void GraphicsSystem::Add2DImageWorldInstance(Transform transform, unsigned texHa
 
 	m_PortalMesh.mLTW.push_back(world);
 	m_PortalMesh.mColors.push_back(color);
-	m_PortalMesh.mTexEntID.push_back(vec4((float)texIndex + 0.5f, (float)entityID + 0.5f, degree, 0));
+	m_PortalMesh.mTexEntID.push_back(vec4((float)texIndex + 0.5f, (float)entityID + 0.5f, degree, slider));
 }
 int GraphicsSystem::StoreTextureIndex(unsigned texHandle)
 {

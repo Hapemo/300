@@ -2,7 +2,7 @@
 
 // -- INPUTS -- 
 layout (location = 0) in vec4 fColor;
-layout (location = 1) in vec4 fTexId_EntId;		// x: texture Index | y: entity ID | z: degree | w: empty
+layout (location = 1) in vec4 fTexId_EntId;		// x: texture Index | y: entity ID | z: degree | w: slider value
 layout (location = 2) in vec2 fTexCoords;
 
 uniform sampler2D uTex2d[32];
@@ -27,6 +27,10 @@ float GetAngle(vec2 v)
 void main()
 {
 	float deg = radians(fTexId_EntId.z);
+
+	// Discard fragment that is outside of the slider limit
+	if (fTexCoords.x > fTexId_EntId.w)
+		return;
 
 	// Discard any fragment not part of the pie
 	if (GetAngle(fTexCoords - vec2(0.5)) < deg)
