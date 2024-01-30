@@ -1,779 +1,6 @@
 [
     {
-        "entityid": 4194647,
-        "general": {
-            "name": "StartButton",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.39500001072883606,
-                "y": -0.29100000858306885,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.699999988079071,
-                "y": 0.699999988079071,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 1952423938,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 1,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/MainMenuButtons.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "UI_Button_Hover.wav",
-            "fullpath": "../assets\\Audio/UI_Button_Hover.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 0.20000000298023224,
-            "retainaudio": false
-        },
-        "prefab": {
-            "prefab": "StartButton"
-        },
-        "button": {
-            "interactable": true,
-            "hover": false,
-            "click": false,
-            "activated": false,
-            "renderflag": true
-        }
-    },
-    {
-        "entityid": 4194648,
-        "general": {
-            "name": "StartButton",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.39500001072883606,
-                "y": -0.29100000858306885,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.699999988079071,
-                "y": 0.699999988079071,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 1952423938,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 1,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/MainMenuButtons.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "UI_Button_Hover.wav",
-            "fullpath": "../assets\\Audio/UI_Button_Hover.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 0.20000000298023224,
-            "retainaudio": false
-        },
-        "prefab": {
-            "prefab": "StartButton"
-        },
-        "button": {
-            "interactable": true,
-            "hover": false,
-            "click": false,
-            "activated": false,
-            "renderflag": true
-        }
-    },
-    {
-        "entityid": 4194661,
-        "general": {
-            "name": "StartButton",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.39500001072883606,
-                "y": -0.29100000858306885,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.699999988079071,
-                "y": 0.699999988079071,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 1952423938,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 1,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/MainMenuButtons.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "UI_Button_Hover.wav",
-            "fullpath": "../assets\\Audio/UI_Button_Hover.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 0.20000000298023224,
-            "retainaudio": false
-        },
-        "prefab": {
-            "prefab": "StartButton"
-        },
-        "button": {
-            "interactable": true,
-            "hover": false,
-            "click": false,
-            "activated": false,
-            "renderflag": true
-        }
-    },
-    {
-        "entityid": 5242893,
-        "general": {
-            "name": "StartButton",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.39500001072883606,
-                "y": -0.29100000858306885,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.699999988079071,
-                "y": 0.699999988079071,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 1952423938,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 1,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/MainMenuButtons.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "UI_Button_Hover.wav",
-            "fullpath": "../assets\\Audio/UI_Button_Hover.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 0.20000000298023224,
-            "retainaudio": false
-        },
-        "prefab": {
-            "prefab": "StartButton"
-        },
-        "button": {
-            "interactable": true,
-            "hover": false,
-            "click": false,
-            "activated": false,
-            "renderflag": true
-        }
-    },
-    {
-        "entityid": 5242897,
-        "general": {
-            "name": "StartButton",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.39500001072883606,
-                "y": -0.29100000858306885,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.699999988079071,
-                "y": 0.699999988079071,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 1952423938,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 1,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/MainMenuButtons.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "UI_Button_Hover.wav",
-            "fullpath": "../assets\\Audio/UI_Button_Hover.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 0.20000000298023224,
-            "retainaudio": false
-        },
-        "prefab": {
-            "prefab": "StartButton"
-        },
-        "button": {
-            "interactable": true,
-            "hover": false,
-            "click": false,
-            "activated": false,
-            "renderflag": true
-        }
-    },
-    {
-        "entityid": 5242898,
-        "general": {
-            "name": "pauseMenu",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": -1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 1000.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "../assets/Compressed/MainMenu.ctexture",
-            "textureref": 3691930878,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 0,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/testPauseState.lua",
-                    "variables": []
-                }
-            ]
-        }
-    },
-    {
-        "entityid": 5242899,
-        "general": {
-            "name": "WallCollider",
-            "tagid": 4,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 7.199999809265137,
-                "y": 14.0,
-                "z": 13.399999618530273
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 28.878965377807617,
-                "y": -4.458000183105469,
-                "z": 14.862814903259277
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 0,
-            "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": true,
-                "y": true,
-                "z": false
-            },
-            "gravity": true
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "translateoffset": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "istrigger": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "WallCollider"
-        }
-    },
-    {
-        "entityid": 5242900,
-        "general": {
-            "name": "StartButton",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.39500001072883606,
-                "y": -0.29100000858306885,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.699999988079071,
-                "y": 0.699999988079071,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 1952423938,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 1,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/MainMenuButtons.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "UI_Button_Hover.wav",
-            "fullpath": "../assets\\Audio/UI_Button_Hover.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 0.20000000298023224,
-            "retainaudio": false
-        },
-        "prefab": {
-            "prefab": "StartButton"
-        },
-        "button": {
-            "interactable": true,
-            "hover": false,
-            "click": false,
-            "activated": false,
-            "renderflag": true
-        }
-    },
-    {
-        "entityid": 5242974,
-        "general": {
-            "name": "WallCollider",
-            "tagid": 4,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 7.599999904632568,
-                "y": 14.0,
-                "z": 13.399999618530273
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 29.09505844116211,
-                "y": -4.458000183105469,
-                "z": 35.75255584716797
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 0,
-            "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": true,
-                "y": true,
-                "z": false
-            },
-            "gravity": true
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "translateoffset": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "istrigger": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "WallCollider"
-        }
-    },
-    {
-        "entityid": 5242987,
-        "general": {
-            "name": "WallCollider",
-            "tagid": 4,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 7.599999904632568,
-                "y": 13.998332977294922,
-                "z": 1.100000023841858
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 90.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 7.72614860534668,
-                "y": -9.764017105102539,
-                "z": 50.238651275634766
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 0,
-            "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": true,
-                "y": true,
-                "z": false
-            },
-            "gravity": true
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "translateoffset": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "istrigger": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "WallCollider"
-        }
-    },
-    {
-        "entityid": 5242988,
-        "general": {
-            "name": "WallCollider",
-            "tagid": 4,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 14.0,
-                "z": 13.399999618530273
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 29.917699813842773,
-                "y": -4.458000183105469,
-                "z": 24.95552635192871
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 0,
-            "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": true,
-                "y": true,
-                "z": false
-            },
-            "gravity": true
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "translateoffset": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "istrigger": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "WallCollider"
-        }
-    },
-    {
-        "entityid": 5242989,
-        "general": {
-            "name": "FloorCollider",
-            "tagid": 3,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 8.0,
-                "y": 1.0,
-                "z": 1.899999976158142
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -11.98576545715332,
-                "y": -2.5999999046325684,
-                "z": 54.97954559326172
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 0,
-            "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": true,
-                "y": true,
-                "z": false
-            },
-            "gravity": true
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "translateoffset": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "istrigger": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "FloorCollider"
-        }
-    },
-    {
-        "entityid": 5242990,
+        "entityid": 13,
         "general": {
             "name": "BGM",
             "tagid": 0,
@@ -810,7 +37,7 @@
         }
     },
     {
-        "entityid": 5242991,
+        "entityid": 14,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -872,7 +99,7 @@
         }
     },
     {
-        "entityid": 5242992,
+        "entityid": 15,
         "general": {
             "name": "Dash",
             "tagid": 0,
@@ -909,7 +136,7 @@
         }
     },
     {
-        "entityid": 5242993,
+        "entityid": 16,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -971,7 +198,7 @@
         }
     },
     {
-        "entityid": 5242994,
+        "entityid": 17,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -1033,7 +260,7 @@
         }
     },
     {
-        "entityid": 5242995,
+        "entityid": 18,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -1095,7 +322,7 @@
         }
     },
     {
-        "entityid": 5242996,
+        "entityid": 19,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -1157,7 +384,7 @@
         }
     },
     {
-        "entityid": 5242997,
+        "entityid": 20,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -1219,7 +446,7 @@
         }
     },
     {
-        "entityid": 5242998,
+        "entityid": 21,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -1281,7 +508,7 @@
         }
     },
     {
-        "entityid": 5242999,
+        "entityid": 22,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -1343,7 +570,7 @@
         }
     },
     {
-        "entityid": 5243000,
+        "entityid": 23,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -1405,7 +632,7 @@
         }
     },
     {
-        "entityid": 5243001,
+        "entityid": 24,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -1467,7 +694,7 @@
         }
     },
     {
-        "entityid": 5243002,
+        "entityid": 25,
         "general": {
             "name": "StartButton",
             "tagid": 6,
@@ -1536,7 +763,7 @@
         }
     },
     {
-        "entityid": 5243003,
+        "entityid": 26,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -1598,7 +825,7 @@
         }
     },
     {
-        "entityid": 5243004,
+        "entityid": 27,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -1660,7 +887,7 @@
         }
     },
     {
-        "entityid": 5243005,
+        "entityid": 28,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -1722,7 +949,7 @@
         }
     },
     {
-        "entityid": 5243006,
+        "entityid": 29,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -1784,7 +1011,7 @@
         }
     },
     {
-        "entityid": 5243007,
+        "entityid": 30,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -1846,7 +1073,7 @@
         }
     },
     {
-        "entityid": 5243008,
+        "entityid": 31,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -1908,7 +1135,7 @@
         }
     },
     {
-        "entityid": 5243009,
+        "entityid": 32,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -1970,7 +1197,7 @@
         }
     },
     {
-        "entityid": 5243010,
+        "entityid": 33,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -2032,7 +1259,7 @@
         }
     },
     {
-        "entityid": 5243011,
+        "entityid": 34,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -2094,7 +1321,7 @@
         }
     },
     {
-        "entityid": 5243012,
+        "entityid": 35,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -2156,7 +1383,7 @@
         }
     },
     {
-        "entityid": 5243013,
+        "entityid": 36,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -2218,7 +1445,7 @@
         }
     },
     {
-        "entityid": 5243014,
+        "entityid": 37,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -2280,7 +1507,7 @@
         }
     },
     {
-        "entityid": 5243015,
+        "entityid": 38,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -2342,7 +1569,7 @@
         }
     },
     {
-        "entityid": 5243016,
+        "entityid": 39,
         "general": {
             "name": "Spotlighttttttttttttttttttt",
             "tagid": 0,
@@ -2384,7 +1611,7 @@
         }
     },
     {
-        "entityid": 5243017,
+        "entityid": 40,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -2446,7 +1673,7 @@
         }
     },
     {
-        "entityid": 5243018,
+        "entityid": 41,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -2508,7 +1735,7 @@
         }
     },
     {
-        "entityid": 5243019,
+        "entityid": 42,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -2570,7 +1797,7 @@
         }
     },
     {
-        "entityid": 5243020,
+        "entityid": 43,
         "general": {
             "name": "Bullet Shoot",
             "tagid": 0,
@@ -2607,7 +1834,7 @@
         }
     },
     {
-        "entityid": 5243021,
+        "entityid": 44,
         "general": {
             "name": "0s",
             "tagid": 0,
@@ -2679,7 +1906,7 @@
         }
     },
     {
-        "entityid": 5243022,
+        "entityid": 45,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -2741,7 +1968,7 @@
         }
     },
     {
-        "entityid": 5243023,
+        "entityid": 46,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -2803,7 +2030,7 @@
         }
     },
     {
-        "entityid": 5243024,
+        "entityid": 47,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -2865,7 +2092,7 @@
         }
     },
     {
-        "entityid": 5243025,
+        "entityid": 48,
         "general": {
             "name": "WallTexture",
             "tagid": 0,
@@ -2926,7 +2153,7 @@
         }
     },
     {
-        "entityid": 5243026,
+        "entityid": 49,
         "general": {
             "name": "Jump",
             "tagid": 0,
@@ -2963,7 +2190,7 @@
         }
     },
     {
-        "entityid": 5243027,
+        "entityid": 50,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -3025,7 +2252,7 @@
         }
     },
     {
-        "entityid": 5243028,
+        "entityid": 51,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -3087,7 +2314,7 @@
         }
     },
     {
-        "entityid": 5243029,
+        "entityid": 52,
         "general": {
             "name": "Skybox",
             "tagid": 0,
@@ -3148,7 +2375,7 @@
         }
     },
     {
-        "entityid": 5243030,
+        "entityid": 53,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -3210,7 +2437,7 @@
         }
     },
     {
-        "entityid": 5243031,
+        "entityid": 54,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -3272,7 +2499,7 @@
         }
     },
     {
-        "entityid": 5243032,
+        "entityid": 55,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -3334,7 +2561,7 @@
         }
     },
     {
-        "entityid": 5243033,
+        "entityid": 56,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -3396,7 +2623,7 @@
         }
     },
     {
-        "entityid": 5243034,
+        "entityid": 57,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -3458,7 +2685,7 @@
         }
     },
     {
-        "entityid": 5243035,
+        "entityid": 58,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -3520,7 +2747,7 @@
         }
     },
     {
-        "entityid": 5243036,
+        "entityid": 59,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -3582,7 +2809,7 @@
         }
     },
     {
-        "entityid": 5243037,
+        "entityid": 60,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -3644,7 +2871,7 @@
         }
     },
     {
-        "entityid": 5243038,
+        "entityid": 61,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -3706,7 +2933,7 @@
         }
     },
     {
-        "entityid": 5243039,
+        "entityid": 62,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -3768,7 +2995,7 @@
         }
     },
     {
-        "entityid": 5243040,
+        "entityid": 63,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -3830,7 +3057,7 @@
         }
     },
     {
-        "entityid": 5243041,
+        "entityid": 64,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -3892,7 +3119,7 @@
         }
     },
     {
-        "entityid": 5243042,
+        "entityid": 65,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -3954,7 +3181,7 @@
         }
     },
     {
-        "entityid": 5243043,
+        "entityid": 66,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -4016,7 +3243,7 @@
         }
     },
     {
-        "entityid": 5243044,
+        "entityid": 67,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -4078,7 +3305,7 @@
         }
     },
     {
-        "entityid": 5243045,
+        "entityid": 68,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -4140,7 +3367,7 @@
         }
     },
     {
-        "entityid": 5243046,
+        "entityid": 69,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -4202,7 +3429,7 @@
         }
     },
     {
-        "entityid": 5243047,
+        "entityid": 70,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -4264,7 +3491,7 @@
         }
     },
     {
-        "entityid": 5243048,
+        "entityid": 71,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -4326,7 +3553,7 @@
         }
     },
     {
-        "entityid": 5243049,
+        "entityid": 72,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -4388,7 +3615,7 @@
         }
     },
     {
-        "entityid": 5243050,
+        "entityid": 73,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -4450,7 +3677,7 @@
         }
     },
     {
-        "entityid": 5243051,
+        "entityid": 74,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -4512,7 +3739,7 @@
         }
     },
     {
-        "entityid": 5243052,
+        "entityid": 75,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -4574,7 +3801,7 @@
         }
     },
     {
-        "entityid": 5243053,
+        "entityid": 76,
         "general": {
             "name": "Objectives",
             "tagid": 0,
@@ -4672,7 +3899,7 @@
         }
     },
     {
-        "entityid": 5243054,
+        "entityid": 77,
         "general": {
             "name": "StartButton",
             "tagid": 6,
@@ -4741,7 +3968,7 @@
         }
     },
     {
-        "entityid": 5243055,
+        "entityid": 78,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -4803,7 +4030,7 @@
         }
     },
     {
-        "entityid": 5243056,
+        "entityid": 79,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -4865,7 +4092,7 @@
         }
     },
     {
-        "entityid": 5243057,
+        "entityid": 80,
         "general": {
             "name": "StartButton",
             "tagid": 6,
@@ -4934,7 +4161,7 @@
         }
     },
     {
-        "entityid": 5243058,
+        "entityid": 81,
         "general": {
             "name": "StartButton",
             "tagid": 6,
@@ -5003,7 +4230,7 @@
         }
     },
     {
-        "entityid": 5243059,
+        "entityid": 82,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -5065,7 +4292,7 @@
         }
     },
     {
-        "entityid": 5243060,
+        "entityid": 83,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -5127,7 +4354,7 @@
         }
     },
     {
-        "entityid": 5243061,
+        "entityid": 84,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -5189,7 +4416,7 @@
         }
     },
     {
-        "entityid": 5243062,
+        "entityid": 85,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -5251,7 +4478,7 @@
         }
     },
     {
-        "entityid": 5243063,
+        "entityid": 86,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -5313,7 +4540,7 @@
         }
     },
     {
-        "entityid": 5243064,
+        "entityid": 87,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -5375,7 +4602,7 @@
         }
     },
     {
-        "entityid": 5243065,
+        "entityid": 88,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -5434,7 +4661,7 @@
         }
     },
     {
-        "entityid": 5243066,
+        "entityid": 89,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -5496,7 +4723,7 @@
         }
     },
     {
-        "entityid": 5243067,
+        "entityid": 90,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -5558,7 +4785,7 @@
         }
     },
     {
-        "entityid": 5243068,
+        "entityid": 91,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -5620,7 +4847,7 @@
         }
     },
     {
-        "entityid": 5243069,
+        "entityid": 92,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -5682,7 +4909,7 @@
         }
     },
     {
-        "entityid": 5243070,
+        "entityid": 93,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -5744,7 +4971,7 @@
         }
     },
     {
-        "entityid": 5243071,
+        "entityid": 94,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -5806,7 +5033,7 @@
         }
     },
     {
-        "entityid": 5243072,
+        "entityid": 95,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -5868,7 +5095,7 @@
         }
     },
     {
-        "entityid": 5243073,
+        "entityid": 96,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -5930,7 +5157,7 @@
         }
     },
     {
-        "entityid": 5243074,
+        "entityid": 97,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -5992,7 +5219,7 @@
         }
     },
     {
-        "entityid": 5243075,
+        "entityid": 98,
         "general": {
             "name": "Light",
             "tagid": 0,
@@ -6035,7 +5262,7 @@
         }
     },
     {
-        "entityid": 5243076,
+        "entityid": 99,
         "general": {
             "name": "Light",
             "tagid": 0,
@@ -6078,7 +5305,7 @@
         }
     },
     {
-        "entityid": 5243077,
+        "entityid": 100,
         "general": {
             "name": "Light",
             "tagid": 0,
@@ -6121,7 +5348,7 @@
         }
     },
     {
-        "entityid": 5243078,
+        "entityid": 101,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -6183,7 +5410,7 @@
         }
     },
     {
-        "entityid": 5243079,
+        "entityid": 102,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -6245,7 +5472,7 @@
         }
     },
     {
-        "entityid": 5243080,
+        "entityid": 103,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -6307,7 +5534,7 @@
         }
     },
     {
-        "entityid": 5243081,
+        "entityid": 104,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -6369,7 +5596,7 @@
         }
     },
     {
-        "entityid": 5243082,
+        "entityid": 105,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -6431,7 +5658,7 @@
         }
     },
     {
-        "entityid": 5243083,
+        "entityid": 106,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -6493,7 +5720,7 @@
         }
     },
     {
-        "entityid": 5243084,
+        "entityid": 107,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -6555,7 +5782,7 @@
         }
     },
     {
-        "entityid": 5243085,
+        "entityid": 108,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -6617,7 +5844,7 @@
         }
     },
     {
-        "entityid": 5243086,
+        "entityid": 109,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -6679,7 +5906,7 @@
         }
     },
     {
-        "entityid": 5243087,
+        "entityid": 110,
         "general": {
             "name": "Stairs",
             "tagid": 3,
@@ -6740,7 +5967,7 @@
         }
     },
     {
-        "entityid": 5243088,
+        "entityid": 111,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -6802,7 +6029,7 @@
         }
     },
     {
-        "entityid": 5243089,
+        "entityid": 112,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -6864,7 +6091,7 @@
         }
     },
     {
-        "entityid": 5243090,
+        "entityid": 113,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -6926,7 +6153,7 @@
         }
     },
     {
-        "entityid": 5243091,
+        "entityid": 114,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -6988,7 +6215,7 @@
         }
     },
     {
-        "entityid": 5243092,
+        "entityid": 115,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -7050,7 +6277,7 @@
         }
     },
     {
-        "entityid": 5243093,
+        "entityid": 116,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -7112,7 +6339,7 @@
         }
     },
     {
-        "entityid": 5243094,
+        "entityid": 117,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -7174,7 +6401,7 @@
         }
     },
     {
-        "entityid": 5243095,
+        "entityid": 118,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -7236,7 +6463,7 @@
         }
     },
     {
-        "entityid": 5243096,
+        "entityid": 119,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -7298,7 +6525,7 @@
         }
     },
     {
-        "entityid": 5243097,
+        "entityid": 120,
         "general": {
             "name": "Skill_Ending",
             "tagid": 0,
@@ -7335,7 +6562,7 @@
         }
     },
     {
-        "entityid": 5243098,
+        "entityid": 121,
         "general": {
             "name": "Player_Movement",
             "tagid": 0,
@@ -7372,7 +6599,7 @@
         }
     },
     {
-        "entityid": 5243099,
+        "entityid": 122,
         "general": {
             "name": "Skill_Activate",
             "tagid": 0,
@@ -7409,7 +6636,7 @@
         }
     },
     {
-        "entityid": 5243100,
+        "entityid": 123,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -7471,7 +6698,7 @@
         }
     },
     {
-        "entityid": 5243101,
+        "entityid": 124,
         "general": {
             "name": "Light",
             "tagid": 0,
@@ -7514,7 +6741,7 @@
         }
     },
     {
-        "entityid": 5243102,
+        "entityid": 125,
         "general": {
             "name": "Light",
             "tagid": 0,
@@ -7557,7 +6784,7 @@
         }
     },
     {
-        "entityid": 5243103,
+        "entityid": 126,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -7619,7 +6846,7 @@
         }
     },
     {
-        "entityid": 5243104,
+        "entityid": 127,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -7681,7 +6908,7 @@
         }
     },
     {
-        "entityid": 5243105,
+        "entityid": 128,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -7743,7 +6970,7 @@
         }
     },
     {
-        "entityid": 5243106,
+        "entityid": 129,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -7805,7 +7032,7 @@
         }
     },
     {
-        "entityid": 5243107,
+        "entityid": 130,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -7867,7 +7094,7 @@
         }
     },
     {
-        "entityid": 5243108,
+        "entityid": 131,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -7929,7 +7156,7 @@
         }
     },
     {
-        "entityid": 5243109,
+        "entityid": 132,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -7991,7 +7218,7 @@
         }
     },
     {
-        "entityid": 5243110,
+        "entityid": 133,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -8053,7 +7280,7 @@
         }
     },
     {
-        "entityid": 5243111,
+        "entityid": 134,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -8115,7 +7342,7 @@
         }
     },
     {
-        "entityid": 5243112,
+        "entityid": 135,
         "general": {
             "name": "Buildings",
             "tagid": 0,
@@ -8176,7 +7403,7 @@
         }
     },
     {
-        "entityid": 5243113,
+        "entityid": 136,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -8238,7 +7465,7 @@
         }
     },
     {
-        "entityid": 5243114,
+        "entityid": 137,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -8300,7 +7527,7 @@
         }
     },
     {
-        "entityid": 5243115,
+        "entityid": 138,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -8362,7 +7589,7 @@
         }
     },
     {
-        "entityid": 5243116,
+        "entityid": 139,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -8424,7 +7651,7 @@
         }
     },
     {
-        "entityid": 5243117,
+        "entityid": 140,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -8486,7 +7713,7 @@
         }
     },
     {
-        "entityid": 5243118,
+        "entityid": 141,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -8556,7 +7783,7 @@
         },
         "children": {
             "numchildren": 1,
-            "firstchild": 5243139
+            "firstchild": 162
         },
         "audio": {
             "filepath": "../assets\\Audio",
@@ -8612,7 +7839,7 @@
         }
     },
     {
-        "entityid": 5243119,
+        "entityid": 142,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -8674,7 +7901,7 @@
         }
     },
     {
-        "entityid": 5243120,
+        "entityid": 143,
         "general": {
             "name": "Light",
             "tagid": 0,
@@ -8711,7 +7938,7 @@
         }
     },
     {
-        "entityid": 5243121,
+        "entityid": 144,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -8773,7 +8000,7 @@
         }
     },
     {
-        "entityid": 5243122,
+        "entityid": 145,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -8835,7 +8062,7 @@
         }
     },
     {
-        "entityid": 5243123,
+        "entityid": 146,
         "general": {
             "name": "FloorTexture",
             "tagid": 0,
@@ -8896,7 +8123,7 @@
         }
     },
     {
-        "entityid": 5243124,
+        "entityid": 147,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -8958,7 +8185,7 @@
         }
     },
     {
-        "entityid": 5243125,
+        "entityid": 148,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -9020,7 +8247,7 @@
         }
     },
     {
-        "entityid": 5243126,
+        "entityid": 149,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -9082,7 +8309,7 @@
         }
     },
     {
-        "entityid": 5243127,
+        "entityid": 150,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -9144,7 +8371,7 @@
         }
     },
     {
-        "entityid": 5243128,
+        "entityid": 151,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -9206,7 +8433,7 @@
         }
     },
     {
-        "entityid": 5243129,
+        "entityid": 152,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -9268,7 +8495,7 @@
         }
     },
     {
-        "entityid": 5243130,
+        "entityid": 153,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -9330,7 +8557,7 @@
         }
     },
     {
-        "entityid": 5243131,
+        "entityid": 154,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -9392,7 +8619,7 @@
         }
     },
     {
-        "entityid": 5243132,
+        "entityid": 155,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -9454,7 +8681,7 @@
         }
     },
     {
-        "entityid": 5243133,
+        "entityid": 156,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -9516,7 +8743,7 @@
         }
     },
     {
-        "entityid": 5243134,
+        "entityid": 157,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -9578,7 +8805,7 @@
         }
     },
     {
-        "entityid": 5243135,
+        "entityid": 158,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -9640,7 +8867,7 @@
         }
     },
     {
-        "entityid": 5243136,
+        "entityid": 159,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -9702,7 +8929,7 @@
         }
     },
     {
-        "entityid": 5243137,
+        "entityid": 160,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -9764,7 +8991,7 @@
         }
     },
     {
-        "entityid": 5243138,
+        "entityid": 161,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -9826,7 +9053,7 @@
         }
     },
     {
-        "entityid": 5243139,
+        "entityid": 162,
         "general": {
             "name": "gun",
             "tagid": 0,
@@ -9886,13 +9113,13 @@
             ]
         },
         "parent": {
-            "prevsibling": 5243139,
-            "nextsibling": 5243139,
-            "parent": 5243118
+            "prevsibling": 162,
+            "nextsibling": 162,
+            "parent": 141
         }
     },
     {
-        "entityid": 5243140,
+        "entityid": 163,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -9954,7 +9181,7 @@
         }
     },
     {
-        "entityid": 5243141,
+        "entityid": 164,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -10016,7 +9243,7 @@
         }
     },
     {
-        "entityid": 5243142,
+        "entityid": 165,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -10078,7 +9305,7 @@
         }
     },
     {
-        "entityid": 5243143,
+        "entityid": 166,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -10140,7 +9367,7 @@
         }
     },
     {
-        "entityid": 5243144,
+        "entityid": 167,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -10202,7 +9429,7 @@
         }
     },
     {
-        "entityid": 5243145,
+        "entityid": 168,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -10264,7 +9491,7 @@
         }
     },
     {
-        "entityid": 5243146,
+        "entityid": 169,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -10326,7 +9553,7 @@
         }
     },
     {
-        "entityid": 5243147,
+        "entityid": 170,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -10388,7 +9615,7 @@
         }
     },
     {
-        "entityid": 5243148,
+        "entityid": 171,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -10450,7 +9677,7 @@
         }
     },
     {
-        "entityid": 5243149,
+        "entityid": 172,
         "general": {
             "name": "Light",
             "tagid": 0,
@@ -10487,7 +9714,7 @@
         }
     },
     {
-        "entityid": 5243150,
+        "entityid": 173,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -10549,7 +9776,7 @@
         }
     },
     {
-        "entityid": 5243151,
+        "entityid": 174,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -10611,7 +9838,7 @@
         }
     },
     {
-        "entityid": 5243152,
+        "entityid": 175,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -10673,7 +9900,7 @@
         }
     },
     {
-        "entityid": 5243170,
+        "entityid": 176,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -10735,7 +9962,7 @@
         }
     },
     {
-        "entityid": 5243172,
+        "entityid": 177,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -10797,7 +10024,7 @@
         }
     },
     {
-        "entityid": 5243173,
+        "entityid": 178,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -10859,7 +10086,7 @@
         }
     },
     {
-        "entityid": 5243174,
+        "entityid": 179,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -10921,7 +10148,7 @@
         }
     },
     {
-        "entityid": 5243175,
+        "entityid": 180,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -10983,7 +10210,7 @@
         }
     },
     {
-        "entityid": 5243176,
+        "entityid": 181,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -11045,7 +10272,7 @@
         }
     },
     {
-        "entityid": 5243177,
+        "entityid": 182,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -11107,7 +10334,7 @@
         }
     },
     {
-        "entityid": 5243178,
+        "entityid": 183,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -11169,7 +10396,7 @@
         }
     },
     {
-        "entityid": 5243194,
+        "entityid": 184,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -11231,7 +10458,7 @@
         }
     },
     {
-        "entityid": 5243213,
+        "entityid": 185,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -11293,7 +10520,7 @@
         }
     },
     {
-        "entityid": 5243214,
+        "entityid": 186,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -11355,7 +10582,7 @@
         }
     },
     {
-        "entityid": 6291457,
+        "entityid": 187,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -11417,7 +10644,7 @@
         }
     },
     {
-        "entityid": 6291458,
+        "entityid": 188,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -11479,7 +10706,7 @@
         }
     },
     {
-        "entityid": 6291459,
+        "entityid": 189,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -11541,7 +10768,7 @@
         }
     },
     {
-        "entityid": 6291460,
+        "entityid": 190,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -11603,7 +10830,7 @@
         }
     },
     {
-        "entityid": 6291461,
+        "entityid": 191,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -11665,7 +10892,7 @@
         }
     },
     {
-        "entityid": 6291462,
+        "entityid": 192,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -11727,7 +10954,7 @@
         }
     },
     {
-        "entityid": 6291463,
+        "entityid": 193,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -11789,7 +11016,7 @@
         }
     },
     {
-        "entityid": 6291464,
+        "entityid": 194,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -11851,7 +11078,7 @@
         }
     },
     {
-        "entityid": 6291465,
+        "entityid": 195,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -11913,7 +11140,7 @@
         }
     },
     {
-        "entityid": 6291466,
+        "entityid": 196,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -11975,7 +11202,7 @@
         }
     },
     {
-        "entityid": 6291467,
+        "entityid": 197,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -12037,7 +11264,7 @@
         }
     },
     {
-        "entityid": 6291468,
+        "entityid": 198,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -12099,7 +11326,7 @@
         }
     },
     {
-        "entityid": 6291737,
+        "entityid": 199,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -12161,7 +11388,7 @@
         }
     },
     {
-        "entityid": 6291747,
+        "entityid": 200,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -12223,7 +11450,7 @@
         }
     },
     {
-        "entityid": 6291760,
+        "entityid": 201,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -12282,6 +11509,1124 @@
         },
         "prefab": {
             "prefab": "FloorCollider"
+        }
+    },
+    {
+        "entityid": 202,
+        "general": {
+            "name": "StartButton",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.39500001072883606,
+                "y": -0.29100000858306885,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.699999988079071,
+                "y": 0.699999988079071,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 1952423938,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 1,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/MainMenuButtons.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "UI_Button_Hover.wav",
+            "fullpath": "../assets\\Audio/UI_Button_Hover.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 0.20000000298023224,
+            "retainaudio": false
+        },
+        "prefab": {
+            "prefab": "StartButton"
+        },
+        "button": {
+            "interactable": true,
+            "hover": false,
+            "click": false,
+            "activated": false,
+            "renderflag": true
+        }
+    },
+    {
+        "entityid": 203,
+        "general": {
+            "name": "StartButton",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.39500001072883606,
+                "y": -0.29100000858306885,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -0.699999988079071,
+                "y": 0.699999988079071,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 1952423938,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 1,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/MainMenuButtons.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "UI_Button_Hover.wav",
+            "fullpath": "../assets\\Audio/UI_Button_Hover.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 0.20000000298023224,
+            "retainaudio": false
+        },
+        "prefab": {
+            "prefab": "StartButton"
+        },
+        "button": {
+            "interactable": true,
+            "hover": false,
+            "click": false,
+            "activated": false,
+            "renderflag": true
+        }
+    },
+    {
+        "entityid": 284,
+        "general": {
+            "name": "StartButton",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.39500001072883606,
+                "y": -0.29100000858306885,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.699999988079071,
+                "y": 0.699999988079071,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 1952423938,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 1,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/MainMenuButtons.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "UI_Button_Hover.wav",
+            "fullpath": "../assets\\Audio/UI_Button_Hover.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 0.20000000298023224,
+            "retainaudio": false
+        },
+        "prefab": {
+            "prefab": "StartButton"
+        },
+        "button": {
+            "interactable": true,
+            "hover": false,
+            "click": false,
+            "activated": false,
+            "renderflag": true
+        }
+    },
+    {
+        "entityid": 285,
+        "general": {
+            "name": "StartButton",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.39500001072883606,
+                "y": -0.29100000858306885,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.699999988079071,
+                "y": 0.699999988079071,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 1952423938,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 1,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/MainMenuButtons.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "UI_Button_Hover.wav",
+            "fullpath": "../assets\\Audio/UI_Button_Hover.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 0.20000000298023224,
+            "retainaudio": false
+        },
+        "prefab": {
+            "prefab": "StartButton"
+        },
+        "button": {
+            "interactable": true,
+            "hover": false,
+            "click": false,
+            "activated": false,
+            "renderflag": true
+        }
+    },
+    {
+        "entityid": 286,
+        "general": {
+            "name": "StartButton",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.39500001072883606,
+                "y": -0.29100000858306885,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.699999988079071,
+                "y": 0.699999988079071,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 1952423938,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 1,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/MainMenuButtons.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "UI_Button_Hover.wav",
+            "fullpath": "../assets\\Audio/UI_Button_Hover.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 0.20000000298023224,
+            "retainaudio": false
+        },
+        "prefab": {
+            "prefab": "StartButton"
+        },
+        "button": {
+            "interactable": true,
+            "hover": false,
+            "click": false,
+            "activated": false,
+            "renderflag": true
+        }
+    },
+    {
+        "entityid": 1048577,
+        "general": {
+            "name": "FloorCollider",
+            "tagid": 3,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 8.0,
+                "y": 1.0,
+                "z": 1.899999976158142
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -11.98576545715332,
+                "y": -2.5999999046325684,
+                "z": 54.97954559326172
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": true,
+                "z": false
+            },
+            "gravity": true
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "FloorCollider"
+        }
+    },
+    {
+        "entityid": 1048578,
+        "general": {
+            "name": "WallCollider",
+            "tagid": 4,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 14.0,
+                "z": 13.399999618530273
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 29.917699813842773,
+                "y": -4.458000183105469,
+                "z": 24.95552635192871
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": true,
+                "z": false
+            },
+            "gravity": true
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "WallCollider"
+        }
+    },
+    {
+        "entityid": 1048579,
+        "general": {
+            "name": "WallCollider",
+            "tagid": 4,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 7.599999904632568,
+                "y": 13.998332977294922,
+                "z": 1.100000023841858
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 90.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 7.72614860534668,
+                "y": -9.764017105102539,
+                "z": 50.238651275634766
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": true,
+                "z": false
+            },
+            "gravity": true
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "WallCollider"
+        }
+    },
+    {
+        "entityid": 1048580,
+        "general": {
+            "name": "WallCollider",
+            "tagid": 4,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 7.599999904632568,
+                "y": 14.0,
+                "z": 13.399999618530273
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 29.09505844116211,
+                "y": -4.458000183105469,
+                "z": 35.75255584716797
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": true,
+                "z": false
+            },
+            "gravity": true
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "WallCollider"
+        }
+    },
+    {
+        "entityid": 1048581,
+        "general": {
+            "name": "StartButton",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.39500001072883606,
+                "y": -0.29100000858306885,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.699999988079071,
+                "y": 0.699999988079071,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 1952423938,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 1,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/MainMenuButtons.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "UI_Button_Hover.wav",
+            "fullpath": "../assets\\Audio/UI_Button_Hover.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 0.20000000298023224,
+            "retainaudio": false
+        },
+        "prefab": {
+            "prefab": "StartButton"
+        },
+        "button": {
+            "interactable": true,
+            "hover": false,
+            "click": false,
+            "activated": false,
+            "renderflag": true
+        }
+    },
+    {
+        "entityid": 1048582,
+        "general": {
+            "name": "WallCollider",
+            "tagid": 4,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 7.199999809265137,
+                "y": 14.0,
+                "z": 13.399999618530273
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 28.878965377807617,
+                "y": -4.458000183105469,
+                "z": 14.862814903259277
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": true,
+                "z": false
+            },
+            "gravity": true
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "WallCollider"
+        }
+    },
+    {
+        "entityid": 1048583,
+        "general": {
+            "name": "pauseMenu",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": -1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 1000.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "../assets/Compressed/MainMenu.ctexture",
+            "textureref": 3691930878,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 0,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/testPauseState.lua",
+                    "variables": []
+                }
+            ]
+        }
+    },
+    {
+        "entityid": 1048584,
+        "general": {
+            "name": "StartButton",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.39500001072883606,
+                "y": -0.29100000858306885,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.699999988079071,
+                "y": 0.699999988079071,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 1952423938,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 1,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/MainMenuButtons.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "UI_Button_Hover.wav",
+            "fullpath": "../assets\\Audio/UI_Button_Hover.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 0.20000000298023224,
+            "retainaudio": false
+        },
+        "prefab": {
+            "prefab": "StartButton"
+        },
+        "button": {
+            "interactable": true,
+            "hover": false,
+            "click": false,
+            "activated": false,
+            "renderflag": true
+        }
+    },
+    {
+        "entityid": 1048585,
+        "general": {
+            "name": "StartButton",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.39500001072883606,
+                "y": -0.29100000858306885,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.699999988079071,
+                "y": 0.699999988079071,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 1952423938,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 1,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/MainMenuButtons.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "UI_Button_Hover.wav",
+            "fullpath": "../assets\\Audio/UI_Button_Hover.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 0.20000000298023224,
+            "retainaudio": false
+        },
+        "prefab": {
+            "prefab": "StartButton"
+        },
+        "button": {
+            "interactable": true,
+            "hover": false,
+            "click": false,
+            "activated": false,
+            "renderflag": true
+        }
+    },
+    {
+        "entityid": 1048586,
+        "general": {
+            "name": "StartButton",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.39500001072883606,
+                "y": -0.29100000858306885,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.699999988079071,
+                "y": 0.699999988079071,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 1952423938,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 1,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/MainMenuButtons.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "UI_Button_Hover.wav",
+            "fullpath": "../assets\\Audio/UI_Button_Hover.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 0.20000000298023224,
+            "retainaudio": false
+        },
+        "prefab": {
+            "prefab": "StartButton"
+        },
+        "button": {
+            "interactable": true,
+            "hover": false,
+            "click": false,
+            "activated": false,
+            "renderflag": true
+        }
+    },
+    {
+        "entityid": 1048587,
+        "general": {
+            "name": "StartButton",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.39500001072883606,
+                "y": -0.29100000858306885,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.699999988079071,
+                "y": 0.699999988079071,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 1952423938,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 1,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/MainMenuButtons.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "UI_Button_Hover.wav",
+            "fullpath": "../assets\\Audio/UI_Button_Hover.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 0.20000000298023224,
+            "retainaudio": false
+        },
+        "prefab": {
+            "prefab": "StartButton"
+        },
+        "button": {
+            "interactable": true,
+            "hover": false,
+            "click": false,
+            "activated": false,
+            "renderflag": true
+        }
+    },
+    {
+        "entityid": 1048588,
+        "general": {
+            "name": "StartButton",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.39500001072883606,
+                "y": -0.29100000858306885,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.699999988079071,
+                "y": 0.699999988079071,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 1952423938,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 1,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/MainMenuButtons.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "UI_Button_Hover.wav",
+            "fullpath": "../assets\\Audio/UI_Button_Hover.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 0.20000000298023224,
+            "retainaudio": false
+        },
+        "prefab": {
+            "prefab": "StartButton"
+        },
+        "button": {
+            "interactable": true,
+            "hover": false,
+            "click": false,
+            "activated": false,
+            "renderflag": true
         }
     }
 ]

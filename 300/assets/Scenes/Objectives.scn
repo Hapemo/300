@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 276,
+        "entityid": 280,
         "general": {
             "name": "Controller",
             "tagid": 0,
@@ -35,7 +35,7 @@
         }
     },
     {
-        "entityid": 277,
+        "entityid": 281,
         "general": {
             "name": "Objectives",
             "tagid": 0,
@@ -98,7 +98,7 @@
                 "../assets/Compressed/Objective_Base_Roughness.ctexture",
                 "../assets/Compressed/Objective_Base_Metallic.ctexture",
                 "../assets/Compressed/Objective_Base_Emissive.ctexture",
-                " "
+                "../assets/Compressed/Objective_Base_AO.ctexture"
             ],
             "mesh": "../assets/compiled_geom/Objective_Base.geom",
             "texturerefid": [
@@ -107,7 +107,7 @@
                 2037504544,
                 565530477,
                 3188370359,
-                0
+                916185482
             ]
         },
         "boxcollider": {
@@ -136,7 +136,7 @@
         }
     },
     {
-        "entityid": 278,
+        "entityid": 282,
         "general": {
             "name": "Objectives",
             "tagid": 0,
@@ -199,7 +199,7 @@
                 "../assets/Compressed/Objective_Base_Roughness.ctexture",
                 "../assets/Compressed/Objective_Base_Metallic.ctexture",
                 "../assets/Compressed/Objective_Base_Emissive.ctexture",
-                " "
+                "../assets/Compressed/Objective_Base_AO.ctexture"
             ],
             "mesh": "../assets/compiled_geom/Objective_Base.geom",
             "texturerefid": [
@@ -208,7 +208,7 @@
                 2037504544,
                 565530477,
                 3188370359,
-                0
+                916185482
             ]
         },
         "boxcollider": {
@@ -237,7 +237,7 @@
         }
     },
     {
-        "entityid": 279,
+        "entityid": 283,
         "general": {
             "name": "Objectives",
             "tagid": 0,
@@ -300,7 +300,7 @@
                 "../assets/Compressed/Objective_Base_Roughness.ctexture",
                 "../assets/Compressed/Objective_Base_Metallic.ctexture",
                 "../assets/Compressed/Objective_Base_Emissive.ctexture",
-                "../assets/Compressed/Objective_Base_BaseColour.ctexture"
+                "../assets/Compressed/Objective_Base_AO.ctexture"
             ],
             "mesh": "../assets/compiled_geom/Objective_Base.geom",
             "texturerefid": [
@@ -309,7 +309,7 @@
                 2037504544,
                 565530477,
                 3188370359,
-                200309925
+                916185482
             ]
         },
         "boxcollider": {
