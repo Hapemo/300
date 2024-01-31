@@ -28,10 +28,11 @@ local bulletDeathTime = 150
 
 
 -- Testing Damage System
-local bulletTag = "REVOLVER" -- "REVOLVER" , "SHOTGUN" , "MACHINE GUN"
+local bulletTag = "PISTOL" -- "REVOLVER" , "SHOTGUN" , "MACHINE GUN"
 local enemytag1HP = 100
+local pistolDamage = 15   -- per bullet (added on 1/31)
 local shotGunDamage = 12 -- per bullet
-local revolverDamage = 35 -- per bullet
+local revolverDamage = 45 -- per bullet
 local machineGunDamage = 3 -- per bullet
 
 
@@ -106,6 +107,14 @@ function OnTriggerEnter(Entity)
             spawned(i)
         end
         gameStateSys = systemManager:mGameStateSystem()
+
+        if(bulletTag == "PISTOL") then 
+            if(healthComponent ~= nil) then 
+                healthComponent.health = healthComponent.health - pistolDamage
+                print("PISTOL HIT")
+            else
+            end
+        end
 
         if(bulletTag == "REVOLVER") then 
             if(healthComponent ~= nil) then 

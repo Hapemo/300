@@ -27,7 +27,7 @@ function Update()
             if(timercheck <360)then
                 renderer:SetDegree(timercheck)
             else
-                _G.gunEquipped =1 
+                _G.gunEquipped = 0 
                 timercheck = 0
                 running = false
             end

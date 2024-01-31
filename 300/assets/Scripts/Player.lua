@@ -100,17 +100,19 @@ local bullet_scale = Vec3.new()
 local revolverGunCooldown = 1
 local shotGunCooldown = 1.5
 local machineGunCooldown = 0.2
+local pistolCooldown = 0.5
 
 local revolverGunTimer = 0
 local shotGunTimer = 0 
 local machineGunTimer = 0
-
+local pistolTimer = 0
 
 -- gun states
 local gunRecoilState = "IDLE"       -- ["STARTUP", "IDLE" , "MOVING"]
-_G.gunEquipped = 1 --"REVOLVER"      -- rename this to whatever ["REVOLVER" , "SHOTGUN" , "MACHINE GUN"]
+_G.gunEquipped = 0 --"REVOLVER"      -- rename this to whatever ["PISTOL (DEFAULT)" , "REVOLVER" , "SHOTGUN" , "MACHINE GUN"]  - 1/31 (pistol new default gun)
 local gunHoldState = "NOT HELD"     -- ["NOT HELD" , "HOLDING"]
 
+local pistolShootState = "SHOOTABLE" 
 local revolverShootState = "SHOOTABLE"
 local shotgunShootState = "SHOOTABLE"   -- ["SHOOTABLE" , "COOLDOWN"]
 local machinegunShootState = "SHOOTABLE"
@@ -480,7 +482,7 @@ function Update()
             if (gunRecoilState == "IDLE") then
                 
                 this:GetAudio():UpdateVolume(0.0)
-                
+
                 -- Account for "vertical" axis
                 if(gunTranslate.y ~= original_translate_y) then
                     if((gunTranslate.y > original_translate_y)) then -- it should go up 
@@ -623,6 +625,35 @@ function Update()
         if(inputMapSys:GetButtonDown("Shoot")) then
             gunHoldState = "HOLDING"   -- for machine gun
 
+            if(_G.gunEquipped == 0) then 
+
+                if(pistolTimer == 0) then
+                    print("SHOOTING PISTOLS")
+                    applyGunRecoil(recoil_speed, 0.5)
+
+                    positions_final.x = positions.x + viewVecCam.x*3
+                    positions_final.y = positions.y + viewVecCam.y*3
+                    positions_final.z = positions.z + viewVecCam.z*3  
+
+                    prefabEntity = systemManager.ecs:NewEntityFromPrefab("Pistol Bullet", positions_final)
+
+                    prefabEntity:GetTransform().mRotate = rotationCam    
+                    viewVecCam.x = viewVecCam.x*100
+                    viewVecCam.y=viewVecCam.y *100
+                    viewVecCam.z=viewVecCam.z *100
+
+                    physicsSys:SetVelocity(prefabEntity, viewVecCam)
+                    bulletAudioComp:SetPlay(0.3)
+                    
+                    pistolTimer = pistolTimer + pistolCooldown
+
+                    pistolShootState = "COOLDOWN"
+                end
+            end
+                
+
+
+  
         -- print("GUN RECOIL STATE:" , gunRecoilState)
             -- print("GUN EQUIPPED:" , gunEquipped)
             if(_G.gunEquipped == 1 ) then -- REVOLVER
@@ -640,7 +671,7 @@ function Update()
                     positions_final.y = positions.y + viewVecCam.y*3
                     positions_final.z = positions.z + viewVecCam.z*3  
 
-                    prefabEntity = systemManager.ecs:NewEntityFromPrefab("Revolver Bullet", positions_final)
+                    prefabEntity = systemManager.ecs:NewEntityFromPrefab("bullet", positions_final)
                     -- rotationCam.x = rotationCam.x *0
                     -- rotationCam.y = rotationCam.y *0
                     -- rotationCam.z = rotationCam.z *0
@@ -698,6 +729,15 @@ function Update()
                 revolverGunTimer = 0
                 revolverShootState = "SHOOTABLE"
             end 
+        end
+
+        if(pistolShootState == "COOLDOWN") then 
+            if(pistolTimer > 0) then 
+                pistolTimer = pistolTimer - dt
+            else 
+                pistolTimer = 0
+                pistolShootState = "SHOOTABLE"
+            end
         end
         -- end of "COOLDOWN" state
 
@@ -783,6 +823,7 @@ function Update()
 
 
 end
+
 
 function Dead()
 

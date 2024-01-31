@@ -15,7 +15,7 @@ local skillActivateAudio
 local skillEndingEntity
 local skillEndingAudio
 
--- local skillElapsed = 0
+local skillElapsed = 0
 
 
 
@@ -91,9 +91,15 @@ function Update()
 
                 disCount = disCount-1
                 dispenseTime = 0
+            -- else if (dispenseTime < 0.25) then 
+            --     skillEndingAudio:SetPlay(0.4)
+            -- end
             end
         end
-    else
+
+        
+    else 
+
         dispenseTime =0
     end
 
