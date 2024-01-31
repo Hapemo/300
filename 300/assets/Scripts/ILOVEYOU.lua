@@ -25,6 +25,8 @@ local deathTimerCount
 
 local state
 
+local this
+
 function Alive()
     this = Helper.GetScriptEntity(script_entity.id)
     if this == nil then
@@ -165,6 +167,7 @@ function ILOVEYOUAttack()
     if (not Attacked) and AttackTimer > AttackSpeed then
 
         Shoot()
+        this:GetAudio():SetPlay()
         AttackTimer = 0
     end
 end
