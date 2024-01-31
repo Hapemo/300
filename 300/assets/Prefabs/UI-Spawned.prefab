@@ -1,5 +1,5 @@
 {
-    "entityid": 17825796,
+    "entityid": 11534525,
     "general": {
         "name": "UI-Spawned",
         "tagid": 0,
@@ -9,8 +9,8 @@
     },
     "transform": {
         "scale": {
-            "x": 100.0,
-            "y": -100.0,
+            "x": 0.10400000214576721,
+            "y": -0.1850000023841858,
             "z": 1.0
         },
         "rotate": {
@@ -34,7 +34,8 @@
             "z": 1.0,
             "w": 1.0
         },
-        "layer": 0
+        "layer": 0,
+        "worldtransform": false
     },
     "scripts": {
         "scriptscontainer": [

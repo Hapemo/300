@@ -148,13 +148,15 @@ void GraphicsSystem::Update(float dt)
 		void *tt = meshRenderer.mMeshRef.getdata(systemManager->mResourceTySystem->m_ResourceInstance);
 		GFX::Mesh &meshinst = *reinterpret_cast<GFX::Mesh *>(tt);
 
+
 		updateBloomValues(meshinst);
 
 		update_CalculateLTW(inst, meshinst, transforminst, final);
 
 		// Update the animation
-		if (hasanimator && _ENABLE_ANIMATIONS && systemManager->mGraphicsSystem->m_EnableGlobalAnimations)
+		if (hasanimator && _ENABLE_ANIMATIONS && systemManager->mGraphicsSystem->m_EnableGlobalAnimations) {
 			updateAnimations(inst, final, dt);
+		}
 
 		// pushback the relevant data to the instance buffer
 		if (hasanimator) 
@@ -1316,6 +1318,12 @@ void GraphicsSystem::CheckWindowSize()
 
 void GraphicsSystem::ResizeWindow(ivec2 newSize)
 {
+	// Update Window
+	m_Window->SetWindowSize(newSize);
+
+	m_Width = newSize.x;
+	m_Height = newSize.y;
+
 	// Update viewport
 	glViewport(0, 0, newSize.x, newSize.y);
 
@@ -1333,12 +1341,6 @@ void GraphicsSystem::ResizeWindow(ivec2 newSize)
 	glBindImageTexture(4, m_IntermediateFBO.GetNormalAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
 	glBindImageTexture(5, m_IntermediateFBO.GetAlbedoSpecAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
 	glBindImageTexture(6, m_IntermediateFBO.GetEmissionAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
-
-	// Update Window
-	m_Window->SetWindowSize(newSize);
-
-	m_Width = newSize.x;
-	m_Height = newSize.y;
 
 	SetCameraSize(CAMERA_TYPE::CAMERA_TYPE_ALL, newSize);
 }
@@ -1441,7 +1443,7 @@ void GraphicsSystem::DrawAll2DInstances(unsigned shaderID)
 	}
 }
 
-void GraphicsSystem::Add2DImageInstance(float width, float height, vec3 const& position, unsigned texHandle, unsigned entityID, float degree, vec4 const& color)
+void GraphicsSystem::Add2DImageInstance(float width, float height, vec3 const& position, unsigned texHandle, unsigned entityID, float degree, vec4 const& color, float slider)
 {
 	float half_w = m_Width * 0.5f;
 	float half_h = m_Height * 0.5f;
@@ -1462,10 +1464,10 @@ void GraphicsSystem::Add2DImageInstance(float width, float height, vec3 const& p
 
 	m_Image2DMesh.mLTW.push_back(world);
 	m_Image2DMesh.mColors.push_back(color);
-	m_Image2DMesh.mTexEntID.push_back(vec4((float)texIndex + 0.5f, (float)entityID + 0.5f, degree, 0));
+	m_Image2DMesh.mTexEntID.push_back(vec4((float)texIndex + 0.5f, (float)entityID + 0.5f, degree, slider));
 }
 
-void GraphicsSystem::Add2DImageWorldInstance(Transform transform, unsigned texHandle, unsigned entityID, float degree, vec4 const& color)
+void GraphicsSystem::Add2DImageWorldInstance(Transform transform, unsigned texHandle, unsigned entityID, float degree, vec4 const& color, float slider)
 {
 	mat4 S = glm::scale(transform.mScale);
 	mat4 R = glm::toMat4(glm::quat(glm::radians(transform.mRotate)));
@@ -1481,7 +1483,7 @@ void GraphicsSystem::Add2DImageWorldInstance(Transform transform, unsigned texHa
 
 	m_PortalMesh.mLTW.push_back(world);
 	m_PortalMesh.mColors.push_back(color);
-	m_PortalMesh.mTexEntID.push_back(vec4((float)texIndex + 0.5f, (float)entityID + 0.5f, degree, 0));
+	m_PortalMesh.mTexEntID.push_back(vec4((float)texIndex + 0.5f, (float)entityID + 0.5f, degree, slider));
 }
 int GraphicsSystem::StoreTextureIndex(unsigned texHandle)
 {
@@ -2019,6 +2021,31 @@ void MeshRenderer::SetMesh(const std::string& meshName, Entity inst)
 		}
 	}
 }
+
+
+//void MeshRenderer::SetMesh(const std::string& meshName, Entity inst, unsigned int index)
+//{
+//	// gets the guid from the fbx descriptor file
+//	std::string descFilepath = systemManager->mResourceTySystem->fbx_path + meshName + ".fbx.desc";
+//	unsigned guid = _GEOM::GetGUID(descFilepath);
+//
+//	mMeshRef.data = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(guid));
+//	mMeshPath = systemManager->mResourceTySystem->compiled_geom_path + meshName + ".geom";
+//
+//	GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mMeshRef.data);
+//	if (inst.HasComponent<Animator>())
+//	{
+//		if (meshinst->mHasAnimation) {
+//			// change the animation to the new mesh's
+//			inst.GetComponent<Animator>().mAnimator.SetAnimation(&meshinst->mAnimation[index]);
+//		}
+//
+//		else {
+//			// the new mesh has no animation, but the current entity has an animator component
+//			inst.GetComponent<Animator>().mAnimator.SetAnimation(nullptr);
+//		}
+//	}
+//}
 // 
 
 void MeshRenderer::SetMeshDelayed(const std::string& meshName, Entity inst)

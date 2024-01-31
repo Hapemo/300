@@ -156,6 +156,9 @@ struct Animator
 	void PauseAnimation() { mAnimator.mIsPaused = true; }
 	void UnpauseAnimation() { mAnimator.mIsPaused = false; }
 	bool IsEndOfAnimation();
+
+	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
+	void DeserializeSelf(rapidjson::Value& reader);
 };
 
 /******************************************************************************/
@@ -173,12 +176,10 @@ struct MeshRenderer : public Serializable
 	
 	ref									mShaderRef;
 
-
 	vec4								mInstanceColor{ 1.f, 1.f, 1.f, 1.f };
 	vec4								mBloomThreshold{ 1.f, 1.f, 1.f, 1.f };
 
 	std::string							mMeshPath;
-
 	ref									mMeshRef{};
 
 	std::string							mMaterialInstancePath[6]{ " "," " ," " ," ", " " ," " };
@@ -189,11 +190,12 @@ struct MeshRenderer : public Serializable
 	
 
 	unsigned							mGUID;
-	//bool								mTextureCont[5];
+	//bool 								mNeedsAnimator;
 
 	void								Inspect();
 	void								SetColor(const vec4& color);
 	void								SetMesh(const std::string& meshName, Entity inst);
+	//void								SetMesh(const std::string& meshName, Entity inst, unsigned int index);
 	void								SetMeshDelayed(const std::string& name, Entity inst);
 	void								SetTexture(MaterialType type, const std::string& Texturename);
 
@@ -219,6 +221,7 @@ struct UIrenderer : public Serializable
 	ref									mTextureRef;
 	vec4								mColor{ 1.f, 1.f, 1.f, 1.f };
 	float								mDegree;
+	float								mSlider{ 1.f };
 	int									mLayer;
 	bool								mWorldTransform;
 
@@ -236,6 +239,10 @@ struct UIrenderer : public Serializable
 	void SetDegree(float degree)
 	{
 		mDegree = degree;
+	}
+	void SetSlider(float value)
+	{
+		mSlider = glm::clamp(value, 0.f, 1.f);
 	}
 	void SetTexture(const std::string& Texturename);
 	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
@@ -392,7 +399,7 @@ public:
 	{
 		for (auto& elem : scriptsContainer)
 		{
-			elem->Run(funcName, arguments...);
+			elem->RunWithParams(funcName, arguments...);
 		}
 	}
 

@@ -1,7 +1,7 @@
 _G.obj =1
 local position_1 = Vec3.new(180,-820,0)
 _G.weaponArray = {{1,false,0},{1,false,0},{1,false,0},{1,false,0},{1,false,0},{1,false,0},{1,false,0},{1,true,1}}
-local weaponPosition = {-1700,-1430,-1170,-900,-620,-360,-90,180 }
+-- local weaponPosition = {-1700,-1430,-1170,-900,-620,-360,-90,180 }
 local dispensor = {1,1,1}
 local disCount = 3
 local dashui = { }
@@ -43,6 +43,8 @@ end
 
 function Update()
 
+    -- _G.gunEquipped =1 
+
     -- for simulating random orb picked up
     spawnTime = spawnTime +  FPSManager.GetDT()
     -- skillElapsed = skillElapsed + FPSManager.GetDT()
@@ -74,7 +76,7 @@ function Update()
         else
             if(dispenseTime > 1)then
         
-               -- print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
+            --    print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
                 -- print("I ACTIVATED MY SKILL")
                --local newpos = position_1
                 math.randomseed(os.time())
@@ -255,12 +257,17 @@ function recurrArray()
 
             if(_G.weaponArray[i][3] <3 )then
 
-                for d = i, 2 , -1
+
+
+                _G.weaponArray[i][3]=  _G.weaponArray[i][3]+1
+                _G.weaponArray[i-1][2] = false
+
+                for d = i-1, 2 , -1
                 do
            
                     _G.weaponArray[d][1]= _G.weaponArray[d-1][1]
                     _G.weaponArray[d][2]= _G.weaponArray[d-1][2]
-                    _G.weaponArray[d][3]=  _G.weaponArray[d][3]+1
+                    _G.weaponArray[d][3]=  _G.weaponArray[d][3]
                     _G.weaponArray[d-1][2] = false
 
 

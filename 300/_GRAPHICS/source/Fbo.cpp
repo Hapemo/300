@@ -157,7 +157,7 @@ void GFX::FBO::Resize(int width, int height)
 	glDeleteTextures(1, &mEntityIDAttachment);
 	glDeleteTextures(1, &mBrightColorsAttachment);
 
-	Create(width, height, mEditorMode, true);
+	Create(width, height, mEditorMode, false);
 }
 
 void GFX::PingPongFBO::Create(int width, int height)

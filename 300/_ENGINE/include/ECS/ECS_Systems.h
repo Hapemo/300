@@ -31,6 +31,8 @@ class SystemManager {
 	bool mIsEditor;
 	bool mIsPlay;
 	bool mIsQuit;
+	// pause menu
+	bool mIsGamePause = false;
 public:
 	std::unique_ptr<PhysicsSystem> mPhysicsSystem;
 	std::unique_ptr<ScriptingSystem> mScriptingSystem;

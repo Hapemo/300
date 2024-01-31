@@ -10,6 +10,46 @@ local general
 local objecto
 function Alive()
 
+
+
+    gameStateSys = systemManager:mGameStateSystem()
+
+    dd = gameStateSys:GetEntity("P8", "UI")
+    transform = dd:GetTransform()
+    position_1.x = transform.mTranslate.x
+    position_1.y = transform.mTranslate.y
+
+    
+
+    dashui1 = gameStateSys:GetEntity("P8", "UI")
+    weaponPosition[1] = dashui1:GetTransform().mTranslate.x
+    dashui2 = gameStateSys:GetEntity("P7", "UI")
+    weaponPosition[2] = dashui2:GetTransform().mTranslate.x
+    dashui3 = gameStateSys:GetEntity("P6", "UI")
+    weaponPosition[3] = dashui3:GetTransform().mTranslate.x
+    dashui4 = gameStateSys:GetEntity("P5", "UI")
+    weaponPosition[4] = dashui4:GetTransform().mTranslate.x
+    dashui5 = gameStateSys:GetEntity("P4", "UI")
+    weaponPosition[5] = dashui5:GetTransform().mTranslate.x
+    dashui6 = gameStateSys:GetEntity("P3", "UI")
+    weaponPosition[6] = dashui6:GetTransform().mTranslate.x
+    dashui7 = gameStateSys:GetEntity("P2", "UI")
+    weaponPosition[7] = dashui7:GetTransform().mTranslate.x
+
+    dashui8 = gameStateSys:GetEntity("P1", "UI")
+    weaponPosition[8] = dashui8:GetTransform().mTranslate.x
+    -- print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+    -- print(dashui:GetTransform().mTranslate.x)
+
+    -- dashui[2] = gameStateSys:GetEntity("P7", "UI")
+    -- dashui[3] = gameStateSys:GetEntity("P6", "UI")
+    -- dashui[4] = gameStateSys:GetEntity("P5", "UI")
+    -- dashui[5] = gameStateSys:GetEntity("P4", "UI")
+    -- dashui[6] = gameStateSys:GetEntity("P3", "UI")
+    -- dashui[7] = gameStateSys:GetEntity("P2", "UI")
+    -- dashui[8] = gameStateSys:GetEntity("P1", "UI")
+
+
     ent = Helper.GetScriptEntity(script_entity.id)
     transform = ent:GetTransform()
     general = ent:GetGeneral()

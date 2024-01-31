@@ -34,13 +34,14 @@ void ObjectFactory::LoadEntity(Entity e, rapidjson::Value& reader)
 	DESERIALIZE_SELF(Transform, "transform");
 	DESERIALIZE_SELF(RigidBody, "rigidbody");
 	DESERIALIZE_SELF(MeshRenderer, "meshrenderer");
+	DESERIALIZE_SELF(Animator, "animator");
+
 	if (e.HasComponent<MeshRenderer>())
 	{
-		if (e.GetComponent<MeshRenderer>().mMeshRef.getdata(systemManager->mResourceTySystem->m_ResourceInstance) != nullptr)
+		if(e.GetComponent<MeshRenderer>().mMeshRef.getdata(systemManager->mResourceTySystem->m_ResourceInstance) != nullptr)
 		{
 			GFX::Mesh& meshinst = *reinterpret_cast<GFX::Mesh*>(e.GetComponent<MeshRenderer>().mMeshRef.data);
 			if (meshinst.mHasAnimation) {
-				e.AddComponent<Animator>();
 				e.GetComponent<Animator>().mAnimator.SetAnimation(&meshinst.mAnimation[0]);
 			}
 		}
@@ -141,6 +142,8 @@ void ObjectFactory::LoadGameState(GameState* gs, const std::string& _name)
 		Deserialize(*ci, "chroma_strength", sys->mChromaticOffset);
 		Deserialize(*ci, "bloom_enable", sys->m_EnableBloom);
 		Deserialize(*ci, "crt_enable", sys->m_EnableCRT);
+		Deserialize(*ci, "crt_distortion_value", PostProcessing::getInstance().mCRT_DistortionValue);
+		Deserialize(*ci, "crt_height_offset", PostProcessing::getInstance().mCRT_HeightOffset);
 		Deserialize(*ci, "chroma_enable", sys->m_EnableChromaticAbberation);
 		Deserialize(*ci, "global_tint", sys->m_GlobalTint);
 		Deserialize(*ci, "debug", sys->m_DebugDrawing);
@@ -169,6 +172,7 @@ void ObjectFactory::SaveEntity(Entity e, rapidjson::PrettyWriter<rapidjson::Stri
 	SERIALIZE_SELF(Transform);
 	SERIALIZE_SELF(RigidBody);
 	SERIALIZE_SELF(MeshRenderer);
+	SERIALIZE_SELF(Animator);
 	SERIALIZE_SELF(UIrenderer);
 	SERIALIZE_SELF(BoxCollider);
 	SERIALIZE_SELF(SphereCollider);
@@ -224,6 +228,8 @@ void ObjectFactory::SaveGameState(GameState* gs)
 		Serialize(writer, "chroma_strength", sys->mChromaticOffset);
 		Serialize(writer, "bloom_enable", sys->m_EnableBloom);
 		Serialize(writer, "crt_enable", sys->m_EnableCRT);
+		Serialize(writer, "crt_distortion_value", PostProcessing::getInstance().mCRT_DistortionValue);
+		Serialize(writer, "crt_height_offset", PostProcessing::getInstance().mCRT_HeightOffset);
 		Serialize(writer, "chroma_enable", sys->m_EnableChromaticAbberation);
 		Serialize(writer, "global_tint", sys->m_GlobalTint);
 		Serialize(writer, "debug", sys->m_DebugDrawing);

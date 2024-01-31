@@ -103,6 +103,19 @@ void MeshRenderer::DeserializeSelf(rapidjson::Value& reader)
 	//mTextureRef->data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(mTextureRef->data_uid));
 }
 
+
+void Animator::DeserializeSelf(rapidjson::Value& reader)
+{}
+
+void Animator::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
+{
+	writer.Key("animator");
+	writer.StartObject();
+	writer.EndObject();
+}
+
+
+
 void UIrenderer::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
 {
 	writer.Key("uirenderer");
@@ -110,6 +123,7 @@ void UIrenderer::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>&
 	Serialize(writer, "texpath", mTexPath);
 	Serialize(writer, "textureref", mTextureRef.data_uid);
 	Serialize(writer, "degree", mDegree);
+	Serialize(writer, "slider", mSlider);
 	Serialize(writer, "color", mColor);
 	Serialize(writer, "layer", mLayer);
 	Serialize(writer, "worldtransform", mWorldTransform);
@@ -121,6 +135,7 @@ void UIrenderer::DeserializeSelf(rapidjson::Value& reader)
 	Deserialize(reader, "texpath", mTexPath);
 	Deserialize(reader, "textureref", mTextureRef.data_uid);
 	Deserialize(reader, "degree", mDegree);
+	Deserialize(reader, "slider", mSlider);
 	Deserialize(reader, "color", mColor);
 	Deserialize(reader, "layer", mLayer);
 	Deserialize(reader, "worldtransform", mWorldTransform);
@@ -422,6 +437,8 @@ void Healthbar::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& 
 	Serialize(writer, "maxhealth", mMaxHealth);
 	Serialize(writer, "width", mWidth);
 	Serialize(writer, "height", mHeight);
+	Serialize(writer, "frametexture", mFrameTexture.data_uid);
+	Serialize(writer, "healthtexture", mHealthTexture.data_uid);
 	writer.EndObject();
 }
 
@@ -434,6 +451,8 @@ void Healthbar::DeserializeSelf(rapidjson::Value& reader)
 	Deserialize(reader, "maxhealth", mHealth);
 	Deserialize(reader, "width", mWidth);
 	Deserialize(reader, "height", mHeight);
+	Deserialize(reader, "frametexture", mFrameTexture.data_uid);
+	Deserialize(reader, "healthtexture", mHealthTexture.data_uid);
 }
 
 void Button::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
