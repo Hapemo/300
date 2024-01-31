@@ -30,6 +30,8 @@ local spawnSoldierFrequency = 0.6
 local spawnSoldierCounter = 0
 
 local state
+
+local audio_played = false
 -- Trojan horse states
 -- 1. ROAM. roam around and passively look for player (change to 2. when sees player)
 -- 2. CHARGE. saw player, eyes glow red, play some charge up noise, delay about 3 seconds before charging to player (change to 3. when delay ends)
@@ -50,7 +52,7 @@ function Alive()
 
     -- Initialise the state's variables
     state = "ROAM"
-    this:GetAudio():SetPlay()
+    -- this:GetAudio():SetPlay()
     s1Timer           = 2
     s1RoamVelocity    = Vec3.new()
     s2Timer           = 0
@@ -60,7 +62,18 @@ function Alive()
     target = this:GetAISetting():GetTarget()
 end
 
+local timer = 0
 function Update()
+
+    -- dt = FPSManager.GetDT()
+
+    -- timer = timer - dt 
+
+    -- if (timer < 0) then
+    --     this:GetAudio():SetPlay()
+    --     timer = 3
+    -- end
+
 
     -- OTHER UPDATE CODES
     -- if systemManager:mInputActionSystem():GetButtonDown("Test2") then
@@ -80,6 +93,7 @@ function Update()
 
         -- Look for player here
         if aiSys:ConeOfSight(this, target, 70, 40) then
+            -- this:GetAudio():SetPlay()
             CHARGEInit()
         end
 
@@ -90,12 +104,17 @@ function Update()
         stareDirection = Helper.Vec3Minus(target:GetTransform().mTranslate, this:GetTransform().mTranslate)
         this:GetTransform().mRotate.y = Helper.DirectionToAngle(this, stareDirection)
         phySys:SetVelocity(this, Vec3.new())
+        
+        -- if audio_played == false then 
+        --     this:GetAudio():SetPlay()
+        -- end
 
         -- Count down 3 seconds
         s2ChargeCount = s2ChargeCount + FPSManager.GetDT()
         if s2ChargeCount > s2Charge then
             s2ChargeCount = 0
             SPRINTInit()
+
             s3SprintVelocity = Helper.Scale(Helper.Normalize(stareDirection), sprintSpeed)
             s3SprintVelocity.y = 0
             -- TODO End audio and animation
@@ -182,8 +201,11 @@ function CHARGEInit()
     this:GetMeshRenderer():SetMesh("Trojan_charging", this)
 
     --print("Start Charge")
-    this:GetAudio():SetPause()
-    gameStateSys:GetEntity("TrojanHorseChargeAudio"):GetAudio():SetPlay()
+    -- this:GetAudio():SetPause()
+
+    -- [1/31] ML - changed to 3D system (for spatial cues) -> audio file is now attached w the enemy.
+    this:GetAudio():SetPlay()
+    -- gameStateSys:GetEntity("TrojanHorseChargeAudio"):GetAudio():SetPlay()
     state = "CHARGE"
     s2ChargeCount = 0
 end
@@ -199,7 +221,7 @@ function RESTInit()
     state = "REST"
     this:GetMeshRenderer():SetMesh("Trojan_Idle", this) -- change animation back
 
-    this:GetAudio():SetPause()
+    -- this:GetAudio():SetPause()
     phySys:SetVelocity(this, Vec3.new())
 end
 

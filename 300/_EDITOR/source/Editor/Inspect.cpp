@@ -1323,8 +1323,6 @@ void Audio::Inspect() {
 					audio_name = full_file_path.substr(audio_name_start + 1);
 				}
 
-				
-
 				// Must be outside (what if i remove and add an already loaded audio)
 				mFilePath = file_path;
 				mFileName = audio_name;
@@ -1339,6 +1337,11 @@ void Audio::Inspect() {
 	if (mFileName.find("3D") != std::string::npos)
 	{
 		m3DAudio = true;
+	}
+
+	else
+	{
+		m3DAudio = false;
 	}
 
 	ImGui::Text("Drag drop 'Audio' files to header above 'Audio'");

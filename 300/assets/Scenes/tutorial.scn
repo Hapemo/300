@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 7340048,
+        "entityid": 10485796,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -62,7 +62,7 @@
         }
     },
     {
-        "entityid": 7340059,
+        "entityid": 10485798,
         "general": {
             "name": "Skill_Ending",
             "tagid": 0,
@@ -99,7 +99,7 @@
         }
     },
     {
-        "entityid": 7340074,
+        "entityid": 10485799,
         "general": {
             "name": "Tutorial",
             "tagid": 5,
@@ -144,6 +144,7 @@
             "texpath": "",
             "textureref": 0,
             "degree": 0.0,
+            "slider": 1.0,
             "color": {
                 "x": 1.0,
                 "y": 1.0,
@@ -171,7 +172,7 @@
         }
     },
     {
-        "entityid": 7340077,
+        "entityid": 10485800,
         "general": {
             "name": "bullet",
             "tagid": 0,
@@ -331,7 +332,7 @@
         }
     },
     {
-        "entityid": 7340079,
+        "entityid": 10485801,
         "general": {
             "name": "Obstacle",
             "tagid": 4,
@@ -427,7 +428,7 @@
         }
     },
     {
-        "entityid": 7340083,
+        "entityid": 10485802,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -489,7 +490,7 @@
         }
     },
     {
-        "entityid": 7340092,
+        "entityid": 10485803,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -551,7 +552,7 @@
         }
     },
     {
-        "entityid": 7340093,
+        "entityid": 10485804,
         "general": {
             "name": "TutorialCube",
             "tagid": 0,
@@ -618,7 +619,7 @@
         }
     },
     {
-        "entityid": 7340094,
+        "entityid": 10485805,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -680,7 +681,7 @@
         }
     },
     {
-        "entityid": 7340095,
+        "entityid": 10485806,
         "general": {
             "name": "BulletShoot",
             "tagid": 0,
@@ -717,7 +718,7 @@
         }
     },
     {
-        "entityid": 7340096,
+        "entityid": 10485807,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -779,7 +780,7 @@
         }
     },
     {
-        "entityid": 7340097,
+        "entityid": 10485808,
         "general": {
             "name": "Game",
             "tagid": 5,
@@ -841,7 +842,7 @@
         }
     },
     {
-        "entityid": 7340099,
+        "entityid": 10485809,
         "general": {
             "name": "Gametext",
             "tagid": 0,
@@ -870,6 +871,7 @@
             "texpath": "",
             "textureref": 4327,
             "degree": 0.0,
+            "slider": 1.0,
             "color": {
                 "x": 1.0,
                 "y": 1.0,
@@ -884,7 +886,7 @@
         }
     },
     {
-        "entityid": 7340100,
+        "entityid": 10485812,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -946,7 +948,7 @@
         }
     },
     {
-        "entityid": 7340101,
+        "entityid": 10485813,
         "general": {
             "name": "Platform",
             "tagid": 0,
@@ -1013,7 +1015,7 @@
         }
     },
     {
-        "entityid": 7340102,
+        "entityid": 10485814,
         "general": {
             "name": "SkipTutorialText",
             "tagid": 0,
@@ -1042,6 +1044,7 @@
             "texpath": "",
             "textureref": 3583181903,
             "degree": 0.0,
+            "slider": 1.0,
             "color": {
                 "x": 1.0,
                 "y": 1.0,
@@ -1053,7 +1056,7 @@
         }
     },
     {
-        "entityid": 7340103,
+        "entityid": 10485816,
         "general": {
             "name": "Tutorial2",
             "tagid": 5,
@@ -1115,7 +1118,7 @@
         }
     },
     {
-        "entityid": 7340104,
+        "entityid": 10485817,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -1177,7 +1180,7 @@
         }
     },
     {
-        "entityid": 7340105,
+        "entityid": 10485818,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -1239,7 +1242,7 @@
         }
     },
     {
-        "entityid": 7340106,
+        "entityid": 10485823,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -1301,7 +1304,7 @@
         }
     },
     {
-        "entityid": 7340107,
+        "entityid": 10485825,
         "general": {
             "name": "Box3Spawn",
             "tagid": 0,
@@ -1328,7 +1331,7 @@
         }
     },
     {
-        "entityid": 7340108,
+        "entityid": 10485827,
         "general": {
             "name": "TutorialStairs",
             "tagid": 0,
@@ -1392,7 +1395,7 @@
         }
     },
     {
-        "entityid": 7340109,
+        "entityid": 10485828,
         "general": {
             "name": "TutorialCube2",
             "tagid": 0,
@@ -1459,7 +1462,7 @@
         }
     },
     {
-        "entityid": 7340110,
+        "entityid": 10485851,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -1521,7 +1524,7 @@
         }
     },
     {
-        "entityid": 7340111,
+        "entityid": 10485858,
         "general": {
             "name": "JUMPtext",
             "tagid": 0,
@@ -1550,6 +1553,7 @@
             "texpath": "",
             "textureref": 2387421516,
             "degree": 0.0,
+            "slider": 1.0,
             "color": {
                 "x": 1.0,
                 "y": 1.0,
@@ -1561,7 +1565,7 @@
         }
     },
     {
-        "entityid": 7340112,
+        "entityid": 10485863,
         "general": {
             "name": "TutorialCube3",
             "tagid": 0,
@@ -1628,7 +1632,7 @@
         }
     },
     {
-        "entityid": 7340113,
+        "entityid": 10485864,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -1698,7 +1702,7 @@
         },
         "children": {
             "numchildren": 1,
-            "firstchild": 10485873
+            "firstchild": 15728747
         },
         "audio": {
             "filepath": "",
@@ -1722,15 +1726,15 @@
                 "z": 0.821121871471405
             },
             "size": {
-                "x": 1212,
-                "y": 639
+                "x": 1224,
+                "y": 621
             },
             "near": 0.10000000149011612,
             "far": 900.0
         }
     },
     {
-        "entityid": 7340116,
+        "entityid": 10485865,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -1792,7 +1796,7 @@
         }
     },
     {
-        "entityid": 7340117,
+        "entityid": 10485875,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -1854,7 +1858,7 @@
         }
     },
     {
-        "entityid": 7340118,
+        "entityid": 11534337,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -1916,7 +1920,7 @@
         }
     },
     {
-        "entityid": 7340119,
+        "entityid": 11534338,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -1978,7 +1982,7 @@
         }
     },
     {
-        "entityid": 7340121,
+        "entityid": 11534339,
         "general": {
             "name": "TutorialStairs",
             "tagid": 0,
@@ -2045,7 +2049,7 @@
         }
     },
     {
-        "entityid": 7340122,
+        "entityid": 11534340,
         "general": {
             "name": "Light",
             "tagid": 0,
@@ -2082,7 +2086,7 @@
         }
     },
     {
-        "entityid": 7340123,
+        "entityid": 11534341,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -2144,7 +2148,7 @@
         }
     },
     {
-        "entityid": 7340124,
+        "entityid": 11534342,
         "general": {
             "name": "Dash",
             "tagid": 0,
@@ -2181,7 +2185,7 @@
         }
     },
     {
-        "entityid": 7340125,
+        "entityid": 11534343,
         "general": {
             "name": "ZXCtext",
             "tagid": 0,
@@ -2210,6 +2214,7 @@
             "texpath": "",
             "textureref": 2530480537,
             "degree": 0.0,
+            "slider": 1.0,
             "color": {
                 "x": 1.0,
                 "y": 1.0,
@@ -2221,7 +2226,7 @@
         }
     },
     {
-        "entityid": 7340126,
+        "entityid": 11534369,
         "general": {
             "name": "WASD",
             "tagid": 0,
@@ -2250,6 +2255,7 @@
             "texpath": "",
             "textureref": 2726819873,
             "degree": 0.0,
+            "slider": 1.0,
             "color": {
                 "x": 1.0,
                 "y": 1.0,
@@ -2261,7 +2267,7 @@
         }
     },
     {
-        "entityid": 7340127,
+        "entityid": 11534386,
         "general": {
             "name": "SkipTutorial",
             "tagid": 5,
@@ -2323,7 +2329,7 @@
         }
     },
     {
-        "entityid": 7340128,
+        "entityid": 11534444,
         "general": {
             "name": "Box2Spawn",
             "tagid": 0,
@@ -2350,7 +2356,7 @@
         }
     },
     {
-        "entityid": 7340129,
+        "entityid": 11534445,
         "general": {
             "name": "Platform",
             "tagid": 0,
@@ -2411,90 +2417,7 @@
         }
     },
     {
-        "entityid": 7340130,
-        "general": {
-            "name": "Gametext",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 4.0,
-                "y": 3.9998955726623535,
-                "z": 4.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 90.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 37.150001525878906,
-                "y": 8.836276054382324,
-                "z": -0.659438967704773
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 4327,
-            "degree": 0.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 0,
-            "worldtransform": true
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Game Text"
-        }
-    },
-    {
-        "entityid": 7340133,
-        "general": {
-            "name": "Skill_Activate",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "Player_Skill_Start.wav",
-            "fullpath": "../assets\\Audio/Player_Skill_Start.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 0.4000000059604645,
-            "retainaudio": false
-        }
-    },
-    {
-        "entityid": 8388717,
+        "entityid": 11534446,
         "general": {
             "name": "Jump",
             "tagid": 0,
@@ -2531,7 +2454,7 @@
         }
     },
     {
-        "entityid": 9437291,
+        "entityid": 11534447,
         "general": {
             "name": "TutorialCube",
             "tagid": 0,
@@ -2598,7 +2521,7 @@
         }
     },
     {
-        "entityid": 9437296,
+        "entityid": 11534504,
         "general": {
             "name": "TutorialCube",
             "tagid": 0,
@@ -2665,7 +2588,7 @@
         }
     },
     {
-        "entityid": 10485761,
+        "entityid": 12582941,
         "general": {
             "name": "Obstacle",
             "tagid": 0,
@@ -2758,7 +2681,7 @@
         }
     },
     {
-        "entityid": 10485762,
+        "entityid": 12582949,
         "general": {
             "name": "Obstacle",
             "tagid": 0,
@@ -2854,7 +2777,7 @@
         }
     },
     {
-        "entityid": 10485763,
+        "entityid": 12582971,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -2916,7 +2839,7 @@
         }
     },
     {
-        "entityid": 10485764,
+        "entityid": 12582976,
         "general": {
             "name": "Activate_Skill",
             "tagid": 0,
@@ -2953,7 +2876,7 @@
         }
     },
     {
-        "entityid": 10485765,
+        "entityid": 12582978,
         "general": {
             "name": "TutorialStairs",
             "tagid": 0,
@@ -3020,7 +2943,7 @@
         }
     },
     {
-        "entityid": 10485772,
+        "entityid": 12582984,
         "general": {
             "name": "TutorialStairs",
             "tagid": 0,
@@ -3087,7 +3010,7 @@
         }
     },
     {
-        "entityid": 10485781,
+        "entityid": 12583018,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -3149,7 +3072,7 @@
         }
     },
     {
-        "entityid": 10485819,
+        "entityid": 13631589,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -3211,7 +3134,7 @@
         }
     },
     {
-        "entityid": 10485866,
+        "entityid": 13631600,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -3273,7 +3196,7 @@
         }
     },
     {
-        "entityid": 10485868,
+        "entityid": 14680455,
         "general": {
             "name": "BGM",
             "tagid": 0,
@@ -3310,7 +3233,44 @@
         }
     },
     {
-        "entityid": 10485873,
+        "entityid": 15728649,
+        "general": {
+            "name": "Skill_Activate",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Player_Skill_Start.wav",
+            "fullpath": "../assets\\Audio/Player_Skill_Start.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 0.4000000059604645,
+            "retainaudio": false
+        }
+    },
+    {
+        "entityid": 15728747,
         "general": {
             "name": "gun",
             "tagid": 0,
@@ -3370,13 +3330,13 @@
             ]
         },
         "parent": {
-            "prevsibling": 10485873,
-            "nextsibling": 10485873,
-            "parent": 7340113
+            "prevsibling": 15728747,
+            "nextsibling": 15728747,
+            "parent": 10485864
         }
     },
     {
-        "entityid": 11534342,
+        "entityid": 15728871,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -3438,7 +3398,7 @@
         }
     },
     {
-        "entityid": 11534343,
+        "entityid": 15728988,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -3500,7 +3460,7 @@
         }
     },
     {
-        "entityid": 11534344,
+        "entityid": 16777360,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -3562,7 +3522,7 @@
         }
     },
     {
-        "entityid": 11534345,
+        "entityid": 16777412,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -3624,7 +3584,7 @@
         }
     },
     {
-        "entityid": 11534346,
+        "entityid": 16777507,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -3686,7 +3646,7 @@
         }
     },
     {
-        "entityid": 11534347,
+        "entityid": 16777515,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -3748,7 +3708,7 @@
         }
     },
     {
-        "entityid": 13631502,
+        "entityid": 16777524,
         "general": {
             "name": "Tutorialtext",
             "tagid": 0,
@@ -3777,6 +3737,7 @@
             "texpath": "",
             "textureref": 4259092790,
             "degree": 0.0,
+            "slider": 1.0,
             "color": {
                 "x": 1.0,
                 "y": 1.0,
@@ -3788,7 +3749,7 @@
         }
     },
     {
-        "entityid": 14680083,
+        "entityid": 17826018,
         "general": {
             "name": "TutorialStairs",
             "tagid": 0,
@@ -3852,6 +3813,53 @@
         },
         "prefab": {
             "prefab": "Tutorial Stairs"
+        }
+    },
+    {
+        "entityid": 18874553,
+        "general": {
+            "name": "Gametext",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 4.0,
+                "y": 3.9998955726623535,
+                "z": 4.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 90.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 37.150001525878906,
+                "y": 8.836276054382324,
+                "z": -0.659438967704773
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 4327,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 0,
+            "worldtransform": true
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Game Text"
         }
     }
 ]
