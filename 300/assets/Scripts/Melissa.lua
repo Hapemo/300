@@ -182,6 +182,7 @@ function StartDeath()
     -- Start death sound
     state = "DEATH"
     gameStateSys:GetEntity("EnemyDeath"):GetAudio():SetPlay()
+    -- this:GetAudio():SetStop()
 end
 
 -- Helper functions

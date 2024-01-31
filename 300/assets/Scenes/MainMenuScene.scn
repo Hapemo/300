@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 4194305,
+        "entityid": 1,
         "general": {
             "name": "StartButton",
             "tagid": 6,
@@ -29,6 +29,7 @@
             "texpath": "../assets/Compressed/Start_Default.ctexture",
             "textureref": 1952423938,
             "degree": 0.0,
+            "slider": 1.0,
             "color": {
                 "x": 1.0,
                 "y": 1.0,
@@ -68,7 +69,7 @@
         }
     },
     {
-        "entityid": 4194306,
+        "entityid": 2,
         "general": {
             "name": "Awake",
             "tagid": 0,
@@ -105,7 +106,7 @@
         }
     },
     {
-        "entityid": 4194307,
+        "entityid": 3,
         "general": {
             "name": "QuitButton",
             "tagid": 6,
@@ -134,6 +135,7 @@
             "texpath": "../assets/Compressed/Quit_Default.ctexture",
             "textureref": 3328537307,
             "degree": 0.0,
+            "slider": 1.0,
             "color": {
                 "x": 1.0,
                 "y": 1.0,
@@ -170,7 +172,7 @@
         }
     },
     {
-        "entityid": 4194308,
+        "entityid": 4,
         "general": {
             "name": "Click",
             "tagid": 6,
@@ -207,7 +209,7 @@
         }
     },
     {
-        "entityid": 4194309,
+        "entityid": 5,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -252,7 +254,7 @@
         }
     },
     {
-        "entityid": 4194310,
+        "entityid": 6,
         "general": {
             "name": "BGM",
             "tagid": 0,
@@ -279,17 +281,17 @@
         },
         "audio": {
             "filepath": "../assets\\Audio",
-            "filename": "M3BGM.wav",
-            "fullpath": "../assets\\Audio/M3BGM.wav",
+            "filename": "Troubleshooter_M4.wav",
+            "fullpath": "../assets\\Audio/Troubleshooter_M4.wav",
             "playonawake": true,
             "islooping": true,
             "audiotype": 0,
-            "volume": 0.4000000059604645,
+            "volume": 0.20000000298023224,
             "retainaudio": true
         }
     },
     {
-        "entityid": 4194311,
+        "entityid": 7,
         "general": {
             "name": "CreditsButton",
             "tagid": 6,
@@ -318,6 +320,7 @@
             "texpath": "../assets/Compressed/Credits_Default.ctexture",
             "textureref": 533001668,
             "degree": 0.0,
+            "slider": 1.0,
             "color": {
                 "x": 1.0,
                 "y": 1.0,
@@ -354,7 +357,7 @@
         }
     },
     {
-        "entityid": 4194312,
+        "entityid": 8,
         "general": {
             "name": "MenuBackground",
             "tagid": 6,
@@ -383,6 +386,7 @@
             "texpath": "../assets/Compressed/MainMenuEmpty.ctexture",
             "textureref": 131267284,
             "degree": 0.0,
+            "slider": 1.0,
             "color": {
                 "x": 1.0,
                 "y": 1.0,
@@ -394,7 +398,7 @@
         }
     },
     {
-        "entityid": 4194313,
+        "entityid": 9,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -431,15 +435,15 @@
                 "z": 0.0
             },
             "size": {
-                "x": 1152,
-                "y": 639
+                "x": 1224,
+                "y": 621
             },
             "near": 0.10000000149011612,
             "far": 900.0
         }
     },
     {
-        "entityid": 4194314,
+        "entityid": 10,
         "general": {
             "name": "Exit",
             "tagid": 0,
@@ -476,7 +480,7 @@
         }
     },
     {
-        "entityid": 4194315,
+        "entityid": 11,
         "general": {
             "name": "SettingsButton",
             "tagid": 6,
@@ -505,6 +509,7 @@
             "texpath": "../assets/Compressed/Settings_Default.ctexture",
             "textureref": 3113566441,
             "degree": 0.0,
+            "slider": 1.0,
             "color": {
                 "x": 1.0,
                 "y": 1.0,
@@ -544,7 +549,7 @@
         }
     },
     {
-        "entityid": 4194316,
+        "entityid": 12,
         "general": {
             "name": "HTPButton",
             "tagid": 6,
@@ -573,6 +578,7 @@
             "texpath": "../assets/Compressed/HowToPlay_Default.ctexture",
             "textureref": 2586813445,
             "degree": 0.0,
+            "slider": 1.0,
             "color": {
                 "x": 1.0,
                 "y": 1.0,

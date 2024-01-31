@@ -1,0 +1,141 @@
+{
+    "entityid": 3145770,
+    "general": {
+        "name": "Melissa (AUDIO TEST)",
+        "tagid": 1,
+        "subtag": 0,
+        "isActive": true,
+        "isPaused": false
+    },
+    "transform": {
+        "scale": {
+            "x": 1.162500262260437,
+            "y": 1.4500325918197632,
+            "z": 0.6006437540054321
+        },
+        "rotate": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "translate": {
+            "x": 16.0,
+            "y": -11.0,
+            "z": 26.0
+        }
+    },
+    "rigidbody": {
+        "density": 10.0,
+        "material": 1,
+        "motion": 1,
+        "velocity": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "rotationconstraints": {
+            "x": true,
+            "y": false,
+            "z": false
+        },
+        "gravity": true
+    },
+    "meshrenderer": {
+        "vert": "../assets/shader_files/pointLight_vert.glsl",
+        "frag": "../assets/shader_files/pointLight_frag.glsl",
+        "meshrefid": 2588,
+        "instancecolor": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+        },
+        "bloomthreshold": {
+            "x": 0.17000000178813934,
+            "y": 0.20999999344348907,
+            "z": 0.3100000023841858,
+            "w": 1.0
+        },
+        "materialinstance": [
+            "../assets/Compressed/Melissa_BaseColor.ctexture",
+            "../assets/Compressed/Melissa_Normal.ctexture",
+            "../assets/Compressed/Melissa_Metallic.ctexture",
+            "../assets/Compressed/Melissa_Roughness.ctexture",
+            "../assets/Compressed/Melissa_Emissive.ctexture",
+            "../assets/Compressed/Melissa_AO.ctexture"
+        ],
+        "mesh": "../assets/compiled_geom/Melissa.geom",
+        "texturerefid": [
+            1322168031,
+            1820887936,
+            2908106086,
+            2866962469,
+            2759371044,
+            2018461449
+        ]
+    },
+    "animator": {},
+    "capsulecollider": {
+        "translateoffset": {
+            "x": 0.0,
+            "y": 0.75,
+            "z": -0.30000001192092896
+        },
+        "radius": 0.5,
+        "halfheight": 0.25,
+        "istrigger": false
+    },
+    "scripts": {
+        "scriptscontainer": [
+            {
+                "scriptFile": "../assets/Scripts/Melissa.lua",
+                "variables": []
+            }
+        ]
+    },
+    "audio": {
+        "filepath": "../assets\\Audio",
+        "filename": "(3D) Enemy_Melissa_Split.wav",
+        "fullpath": "../assets\\Audio/(3D) Enemy_Melissa_Split.wav",
+        "playonawake": false,
+        "islooping": false,
+        "audiotype": 1,
+        "volume": 1.0,
+        "retainaudio": false
+    },
+    "prefab": {
+        "prefab": "Melissa (AUDIO TEST)"
+    },
+    "aisetting": {
+        "movementtype": 1,
+        "spreadout": 0.0,
+        "stayaway": 0.0,
+        "elevation": 0.0,
+        "targetname": "Camera",
+        "graphdataname": "GroundPath"
+    },
+    "healthbar": {
+        "healthcolor": {
+            "x": 0.0,
+            "y": 1.0,
+            "z": 0.0,
+            "w": 1.0
+        },
+        "backcolor": {
+            "x": 1.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 1.0
+        },
+        "position": {
+            "x": 0.0,
+            "y": 1.7000000476837158,
+            "z": -0.10000000149011612
+        },
+        "maxhealth": 200.0,
+        "width": 0.800000011920929,
+        "height": 0.07000000029802322,
+        "frametexture": 0,
+        "healthtexture": 0
+    }
+}

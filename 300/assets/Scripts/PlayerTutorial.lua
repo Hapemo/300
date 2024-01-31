@@ -37,7 +37,7 @@ local d_fov = 60
 --    working = 2.4,
 --}
 --constants = Helper.protect(constants)
-
+local this
 local e_dashEffect = true
 
 local t = 0
@@ -169,7 +169,7 @@ TutBox = {
 local tutState = TutBox.FIRST
 
 function Alive()
-
+    this = Helper.GetScriptEntity(script_entity.id)
     gameStateSys = systemManager:mGameStateSystem();
     inputMapSys = systemManager:mInputActionSystem();
     physicsSys = systemManager:mPhysicsSystem();
@@ -440,6 +440,8 @@ function Update()
             -- print("GUN RECOIL STATE: ", gunRecoilState)
             if (gunRecoilState == "IDLE") then
                 
+                this:GetAudio():UpdateVolume(0.0)
+                
                 -- Account for "vertical" axis
                 if(gunTranslate.y ~= original_translate_y) then
                     if((gunTranslate.y > original_translate_y)) then -- it should go up 
@@ -495,6 +497,8 @@ function Update()
                     gunTranslate.y = gunTranslate.y - gunDisplaceSpeed
                 end
 
+                this:GetAudio():UpdateVolume(0.2)
+
                 gunRecoilState = "MOVING"
             end
 
@@ -506,6 +510,8 @@ function Update()
                 if(gunTranslate.y < gunThreshHold_max_y) then -- limit to how much 
                     gunTranslate.y = gunTranslate.y + gunDisplaceSpeed
                 end
+                
+                this:GetAudio():UpdateVolume(0.2)
 
                 gunRecoilState = "MOVING"
             end
@@ -518,6 +524,8 @@ function Update()
                 if(gunTranslate.x < gunThreshHold_max_x) then 
                     gunTranslate.x = gunTranslate.x + gunDisplaceSpeed
                 end
+                
+                this:GetAudio():UpdateVolume(0.2)
 
                 gunRecoilState = "MOVING"
             end
@@ -531,6 +539,8 @@ function Update()
                 if(gunTranslate.x > gunThreshHold_min_x) then 
                     gunTranslate.x = gunTranslate.x - gunDisplaceSpeed
                 end
+                
+                this:GetAudio():UpdateVolume(0.2)
 
                 gunRecoilState = "MOVING"
 

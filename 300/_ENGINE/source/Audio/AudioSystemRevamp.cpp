@@ -592,7 +592,7 @@ unsigned int AudioSystem::PlaySound(std::string audio_name, AUDIOTYPE type, floa
 			system_obj->playSound(sound, 0, true, &channel.second);
 			channel.second->setVolume(vol);
 
-			if (audio_name == "M3BGM.wav" && scene_switched == true)
+			if (audio_name == "Troubleshooter_M4.wav" && scene_switched == true)
 			{
 				channel.second->setPosition(playback_position, FMOD_TIMEUNIT_MS);
 				std::cout << "HEY" << std::endl;

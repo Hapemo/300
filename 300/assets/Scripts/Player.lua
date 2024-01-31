@@ -159,7 +159,9 @@ local playerHealthStartRegenMax = 30; -- this is the time it takes for the playe
 
 local healthbarSpawnPos = Vec3.new()
 
+local this
 function Alive()
+    this = Helper.GetScriptEntity(script_entity.id)
     gameStateSys = systemManager:mGameStateSystem();
     inputMapSys = systemManager:mInputActionSystem();
     physicsSys = systemManager:mPhysicsSystem();
@@ -210,6 +212,10 @@ function Alive()
     gunEntity = gameStateSys:GetEntity("gun")
     gunInitialTranslate = gunEntity:GetTransform().mTranslate
     gunRotation = gunEntity:GetTransform().mRotate
+
+    -- -- Testing [ParentChildRotateInit]
+    gunTransform = gunEntity:GetTransform()
+    gunTransform:ParentChildRotateInit('x', 30)
 
     -- Original Gun Position --
     original_translate_x =  gunInitialTranslate.x
@@ -271,6 +277,7 @@ function Update()
     -- end
 
     dt = FPSManager.GetDT()
+    gunTransform:ParentChildRotateUpdate(dt, "REVOLVER")
     
 --region -- player camera
     if (inputMapSys:GetButtonDown("exit")) then
@@ -472,6 +479,8 @@ function Update()
             -- print("GUN RECOIL STATE: ", gunRecoilState)
             if (gunRecoilState == "IDLE") then
                 
+                this:GetAudio():UpdateVolume(0.0)
+                
                 -- Account for "vertical" axis
                 if(gunTranslate.y ~= original_translate_y) then
                     if((gunTranslate.y > original_translate_y)) then -- it should go up 
@@ -536,6 +545,8 @@ function Update()
                     gunTranslate.y = gunTranslate.y - gunDisplaceSpeed
                 end
 
+                this:GetAudio():UpdateVolume(0.2)
+
                 gunRecoilState = "MOVING"
             end
             if (inputMapSys:GetButton("down")) then
@@ -548,6 +559,8 @@ function Update()
 
                 end
 
+                this:GetAudio():UpdateVolume(0.2)
+
                 gunRecoilState = "MOVING"
             end
             if (inputMapSys:GetButton("left")) then
@@ -558,6 +571,8 @@ function Update()
                 if(gunTranslate.x < gunThreshHold_max_x) then 
                     gunTranslate.x = gunTranslate.x + gunDisplaceSpeed
                 end
+
+                this:GetAudio():UpdateVolume(0.2)
 
                 gunRecoilState = "MOVING"
     
@@ -574,6 +589,8 @@ function Update()
                     --     gunDisplaceSpeedModifier = gunDisplaceSpeedModifier + 0.01
                     -- end
                 end
+
+                this:GetAudio():UpdateVolume(0.2)
 
                 gunRecoilState = "MOVING"
 
@@ -614,6 +631,7 @@ function Update()
                     -- print("REVOLVER SHOOTING")
                     
                     applyGunRecoil(recoil_speed, 0.5)
+                    gunTransform:GunAnimation("REVOLVER" , 30.0, 1.0, 0.2) -- Trigger everytime player shoots
 
                     -- gunRecoilState = "MOVING"
 

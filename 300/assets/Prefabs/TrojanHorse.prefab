@@ -1,5 +1,5 @@
 {
-    "entityid": 3146022,
+    "entityid": 11534532,
     "general": {
         "name": "TrojanHorse",
         "tagid": 1,
@@ -19,9 +19,9 @@
             "z": 0.0
         },
         "translate": {
-            "x": 0.4000000059604645,
+            "x": 16.0,
             "y": -11.0,
-            "z": 23.0
+            "z": 24.0
         }
     },
     "rigidbody": {
@@ -98,8 +98,8 @@
     },
     "audio": {
         "filepath": "../assets\\Audio",
-        "filename": "(3D) horse_2.wav",
-        "fullpath": "../assets\\Audio/(3D) horse_2.wav",
+        "filename": "(3D) horse_3.wav",
+        "fullpath": "../assets\\Audio/(3D) horse_3.wav",
         "playonawake": false,
         "islooping": false,
         "audiotype": 1,
