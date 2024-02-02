@@ -30,11 +30,11 @@ void main()
 
 	// Discard fragment that is outside of the slider limit
 	if (fTexCoords.x > fTexId_EntId.w)
-		return;
+		discard;
 
 	// Discard any fragment not part of the pie
 	if (GetAngle(fTexCoords - vec2(0.5)) < deg)
-		return;
+		discard;
 
 	// Discard any fragment outside of circle
 //	if (distance(fTexCoords, vec2(0.5)) >= 0.5)
