@@ -154,13 +154,14 @@ local dashZ
 local inittedDash = false
 
 local isTakingDamage = false; -- whether player is in contact with other enemies, thus taking damage
-local playerHealthCurrent = 400;
-local playerHealthMax = 400;
+local playerHealthCurrent = 1000;
+local playerHealthMax = 1000;
 local playerHealthStartRegenCurrent = 0;
 local playerHealthStartRegenMax = 30; -- this is the time it takes for the player to not be damaged to start regenerating health
 
 local healthbarSpawnPos = Vec3.new()
 local objectiveBarEmptySpawnPos = Vec3.new()
+local healthBarEmptySpawnPos = Vec3.new()
 
 local this
 function Alive()
@@ -233,16 +234,22 @@ function Alive()
     -- Player Health System Start -- 
 
     healthbarSpawnPos.x = -0.7;
-    healthbarSpawnPos.y = 0.7;
+    healthbarSpawnPos.y = 0.65;
     healthbarSpawnPos.z = 0;
 
-    healthbar = systemManager.ecs:NewEntityFromPrefab("Objective Bar Empty", healthbarSpawnPos)
+    healthbar = systemManager.ecs:NewEntityFromPrefab("Health Bar", healthbarSpawnPos)
 
     objectiveBarEmptySpawnPos.x = 0.7;
     objectiveBarEmptySpawnPos.y = 0.7;
     objectiveBarEmptySpawnPos.z = 0;
 
     objectivebarEmpty = systemManager.ecs:NewEntityFromPrefab("Objective Bar Empty", objectiveBarEmptySpawnPos)
+
+    healthBarEmptySpawnPos.x = -0.7;
+    healthBarEmptySpawnPos.y = 0.7;
+    healthBarEmptySpawnPos.z = 0;
+
+    healthbarEmpty = systemManager.ecs:NewEntityFromPrefab("Objective Bar Empty", healthBarEmptySpawnPos)
 
     -- Player Health System End -- 
 
@@ -271,6 +278,10 @@ function Update()
     end
 
     healthbar:GetUIrenderer():SetSlider(playerHealthCurrent/playerHealthMax);
+
+    if playerHealthCurrent <= 0 then
+        gameStateSys:ChangeGameState("LoseMenu")
+    end
 
     -- Player Health System End
 

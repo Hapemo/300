@@ -63,14 +63,12 @@ function Update()
         end
 
         objectiveBarSpawnPos.x = 0.8;
-        objectiveBarSpawnPos.y = 0.6;
+        objectiveBarSpawnPos.y = 0.65;
         objectiveBarSpawnPos.z = 0;
         objectivebar = systemManager.ecs:NewEntityFromPrefab("Objective Bar 1", objectiveBarSpawnPos)
 
         isInit = true
     end
-
-        -- HELP    
 
         gameStateSys = systemManager:mGameStateSystem();
         testScriptEntity = gameStateSys:GetEntity("Controller")
@@ -81,7 +79,7 @@ function Update()
             objCount = testScript:ReturnValueInt("GetCountObj")
 
             if objCount == 3 then
-                objectivebar:GetTransform().mTranslate.x = 0.8;
+                objectivebar:GetTransform().mTranslate.x = 0.815;
             end
 
             if objCount == 2 then
@@ -89,11 +87,9 @@ function Update()
             end
 
             if objCount == 1 then
-                objectivebar:GetTransform().mTranslate.x = 0.6;
+                objectivebar:GetTransform().mTranslate.x = 0.58;
             end
         end
-
-        -- HELP END
 
     -- SPAWNING ENEMIES
     currentSpawnTimer = currentSpawnTimer + FPSManager.GetDT()
@@ -204,6 +200,18 @@ function Update()
 
         if testScript ~= nil then
             testScript:RunFunction("RemoveObjective")
+        end
+
+        gameStateSys = systemManager:mGameStateSystem();
+        testScriptEntity = gameStateSys:GetEntity("Controller")
+        TestScripts = testScriptEntity:GetScripts()
+        testScript = TestScripts:GetScript("../assets/Scripts/ObjectivesController.lua")
+
+        if testScript ~= nil then
+            objCount = testScript:ReturnValueInt("GetCountObj")
+            if objCount == 0 then
+                gameStateSys:ChangeGameState("WinMenu")
+            end
         end
 
         --gameStateSys:GetEntity("ZipBombFuseAudio"):GetAudio():SetPlay() -- TODO: Play audio
