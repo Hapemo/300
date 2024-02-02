@@ -144,6 +144,7 @@ void ObjectFactory::LoadGameState(GameState* gs, const std::string& _name)
 		Deserialize(*ci, "crt_enable", sys->m_EnableCRT);
 		Deserialize(*ci, "crt_distortion_value", PostProcessing::getInstance().mCRT_DistortionValue);
 		Deserialize(*ci, "crt_height_offset", PostProcessing::getInstance().mCRT_HeightOffset);
+		Deserialize(*ci, "crt_chromatic_strength", PostProcessing::getInstance().mCRT_ChromaticAbberationStrength);
 		Deserialize(*ci, "chroma_enable", sys->m_EnableChromaticAbberation);
 		Deserialize(*ci, "global_tint", sys->m_GlobalTint);
 		Deserialize(*ci, "debug", sys->m_DebugDrawing);
@@ -230,6 +231,7 @@ void ObjectFactory::SaveGameState(GameState* gs)
 		Serialize(writer, "crt_enable", sys->m_EnableCRT);
 		Serialize(writer, "crt_distortion_value", PostProcessing::getInstance().mCRT_DistortionValue);
 		Serialize(writer, "crt_height_offset", PostProcessing::getInstance().mCRT_HeightOffset);
+		Serialize(writer, "crt_chromatic_strength", PostProcessing::getInstance().mCRT_ChromaticAbberationStrength);
 		Serialize(writer, "chroma_enable", sys->m_EnableChromaticAbberation);
 		Serialize(writer, "global_tint", sys->m_GlobalTint);
 		Serialize(writer, "debug", sys->m_DebugDrawing);

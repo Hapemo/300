@@ -384,6 +384,7 @@ public:
 	GLint m_ComputeCRTTimeLocation{};
 	GLint m_ComputeCRTHeightOffsetLocation{};
 	GLint m_ComputeCRTDistortionLocation{};
+	GLint m_ComputeCRTChromaticAbberationLocation{};
 
 	GFX::ComputeShader m_ComputeAddBlendShader;
 	GLint m_ComputeAddBlendExposureLocation{};

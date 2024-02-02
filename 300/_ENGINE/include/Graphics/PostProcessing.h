@@ -69,7 +69,7 @@ private:
 
 struct PostProcessing
 {
-	PostProcessing() : mCRT_AccumulationTime(0.0), mCRT_DistortionValue(0.0005f), mCRT_HeightOffset(100)
+	PostProcessing() : mCRT_AccumulationTime(0.0), mCRT_DistortionValue(0.0005f), mCRT_HeightOffset(100), mCRT_ChromaticAbberationStrength(0.002f)
 	{}
 
 	static PostProcessing& getInstance()
@@ -107,9 +107,10 @@ struct PostProcessing
 	static void BlitFrameBuffers(unsigned int readFramebuffer, unsigned int drawFramebuffer, ivec2 readFramebufferSize, ivec2 drawFramebufferSize, int drawColorAttachmentOffset);
 
 public:
-	double mCRT_AccumulationTime;
-	int  mCRT_HeightOffset;
-	float  mCRT_DistortionValue;
+	double	mCRT_AccumulationTime;
+	int		mCRT_HeightOffset;
+	float	mCRT_DistortionValue;
+	float	mCRT_ChromaticAbberationStrength;
 };
 
 

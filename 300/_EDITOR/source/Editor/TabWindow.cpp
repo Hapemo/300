@@ -161,6 +161,7 @@ void TabWindow::update()
 	if (systemManager->mGraphicsSystem->m_EnableCRT)
 	{
 		ImGui::DragFloat("CRT Distortion", &PostProcessing::getInstance().mCRT_DistortionValue, 0.0001f, 0.0f, 0.1f, "%0.4f");
+		ImGui::DragFloat("CRT Chromatic Strength", &PostProcessing::getInstance().mCRT_ChromaticAbberationStrength, 0.0001f, 0.0f, 0.1f, "%0.4f");
 		ImGui::DragInt("CRT LineHeight", &PostProcessing::getInstance().mCRT_HeightOffset);
 	}
 

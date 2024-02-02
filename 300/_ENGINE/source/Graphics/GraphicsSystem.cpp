@@ -394,6 +394,7 @@ void GraphicsSystem::Draw(float dt, bool forEditor)
 
 				glUniform1f(m_ComputeCRTTimeLocation, PostProcessing::getInstance().mCRT_AccumulationTime += dt);
 				glUniform1f(m_ComputeCRTDistortionLocation, PostProcessing::getInstance().mCRT_DistortionValue);
+				glUniform1f(m_ComputeCRTChromaticAbberationLocation, PostProcessing::getInstance().mCRT_ChromaticAbberationStrength);
 				glUniform1i(m_ComputeCRTHeightOffsetLocation, PostProcessing::getInstance().mCRT_HeightOffset);
 
 				// CRT post processing effect. Called here so it can be rendered over the UI
@@ -1757,6 +1758,7 @@ void GraphicsSystem::SetupAllShaders()
 	m_ComputeCRTTimeLocation = m_ComputeCRTShader.GetUniformLocation("mCRT_AccumulationTime");
 	m_ComputeCRTHeightOffsetLocation = m_ComputeCRTShader.GetUniformLocation("heightoffset");
 	m_ComputeCRTDistortionLocation = m_ComputeCRTShader.GetUniformLocation("distortion_value");
+	m_ComputeCRTChromaticAbberationLocation = m_ComputeCRTShader.GetUniformLocation("chromatic_abberation");
 	GFX::Shader::Deactivate();
 
 	m_ComputeAddBlendShader.CreateShaderFromFile("../assets/shader_files/computeCRT.glsl");

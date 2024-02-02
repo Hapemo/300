@@ -5,6 +5,7 @@ layout(local_size_x = 30, local_size_y = 30, local_size_z = 1) in;
 
 uniform float mCRT_AccumulationTime;
 uniform float distortion_value;
+uniform float chromatic_abberation;
 uniform int heightoffset;
 
 // -- INPUT & OUTPUT --
@@ -57,7 +58,7 @@ void main()
     }
 
     vec4 color = vec4(1.0); 
-    int dist = int(0.0025 * iResolution.x);
+    int dist = int(chromatic_abberation * iResolution.x);
 	color.rgb = chromaticAbberation(dist, newUV, color.rgb);
 
     // Performing Blending with sFactor = GL_ONE_MINUS_DST_COLOR
