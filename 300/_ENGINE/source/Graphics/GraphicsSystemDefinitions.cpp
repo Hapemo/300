@@ -1,5 +1,6 @@
 #include <Graphics/GraphicsSystemDefinitions.h>
 #include <Graphics/GraphicsSystem.h>
+#include <omp.h>
 
 
 void InitUIMeshes()
@@ -165,10 +166,10 @@ void updateAnimations(Entity inst, const mat4& final, const float& dt)
 		animatorInst.mAnimator.UpdateAnimation(dt, mat4(1.f), final); // update the current animation
 	}
 
-	// push back matrices into the SSBO
-	for (const auto& x : animatorInst.mAnimator.m_FinalBoneMatrices)
-	{
-		systemManager->mGraphicsSystem->finalBoneMatrices.push_back(x);
+#pragma omp parallel for
+	for (size_t i = 0; i < animatorInst.mAnimator.m_FinalBoneMatrices.size(); ++i) {
+		// Access each element using the index i and push it back into the SSBO
+		systemManager->mGraphicsSystem->finalBoneMatrices.push_back(animatorInst.mAnimator.m_FinalBoneMatrices[i]);
 	}
 }
 

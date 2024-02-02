@@ -237,12 +237,13 @@ void GraphicsSystem::Draw(float dt, bool forEditor)
 	for (Entity inst : meshRendererInstances)
 	{
 		auto& meshrefptr = inst.GetComponent<MeshRenderer>();
+
+		// the mesh instance has no meshrenderer
 		if (meshrefptr.mMeshRef.getdata(systemManager->mResourceTySystem->m_ResourceInstance) == nullptr)
 			continue;
 
 		std::string meshstr = meshrefptr.mMeshPath;
-		if (renderedMesh.find(meshstr) != renderedMesh.end())
-		{
+		if (renderedMesh.find(meshstr) != renderedMesh.end()) {
 			// the mesh has been rendered before, skip it
 			continue;
 		}
