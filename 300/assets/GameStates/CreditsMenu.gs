@@ -1,6 +1,6 @@
 [
     {
-        "scene_name": "CreditsMenu2Scene",
+        "scene_name": "CreditsMenuScene",
         "pause": false,
         "force_render": true,
         "bloom_threshold": {
@@ -16,6 +16,7 @@
         "crt_enable": true,
         "crt_distortion_value": 0.0005000000237487257,
         "crt_height_offset": 100,
+        "crt_chromatic_strength": 0.0020000000949949026,
         "chroma_enable": false,
         "global_tint": {
             "x": 1.0,

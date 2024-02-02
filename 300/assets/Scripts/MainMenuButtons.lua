@@ -177,10 +177,12 @@ function Update()
             if (hoverOver == false) then
                 hoverSFX = ent:GetAudio()
                 hoverSFX:SetPlay(0.2)
+                --uirend:SetTexture("Back_Hover")
                 hoverOver = true;
             end
         end
         if (button.mIsHover == false) then
+           --uirend:SetTexture("Back_Default")
             hoverOver = false;
         end
         if (button.mActivated) then
