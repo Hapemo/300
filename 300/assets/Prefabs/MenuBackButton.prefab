@@ -1,0 +1,69 @@
+{
+    "entityid": 1048583,
+    "general": {
+        "name": "MenuBackButton",
+        "tagid": 6,
+        "subtag": 0,
+        "isActive": true,
+        "isPaused": false
+    },
+    "transform": {
+        "scale": {
+            "x": 0.625,
+            "y": -0.24629630148410797,
+            "z": 1.0
+        },
+        "rotate": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "translate": {
+            "x": 0.6875,
+            "y": -0.7407407164573669,
+            "z": 0.0
+        }
+    },
+    "uirenderer": {
+        "texpath": "",
+        "textureref": 2396002073,
+        "degree": 0.0,
+        "slider": 1.0,
+        "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+        },
+        "layer": 1,
+        "worldtransform": false
+    },
+    "scripts": {
+        "scriptscontainer": [
+            {
+                "scriptFile": "../assets/Scripts/MainMenuButtons.lua",
+                "variables": []
+            }
+        ]
+    },
+    "audio": {
+        "filepath": "../assets\\Audio",
+        "filename": "UI_Button_Hover.wav",
+        "fullpath": "../assets\\Audio/UI_Button_Hover.wav",
+        "playonawake": false,
+        "islooping": false,
+        "audiotype": 1,
+        "volume": 0.20000000298023224,
+        "retainaudio": false
+    },
+    "prefab": {
+        "prefab": "MenuBackButton"
+    },
+    "button": {
+        "interactable": true,
+        "hover": true,
+        "click": true,
+        "activated": false,
+        "renderflag": true
+    }
+}

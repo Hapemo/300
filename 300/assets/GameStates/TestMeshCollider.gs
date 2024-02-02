@@ -14,6 +14,8 @@
         "chroma_strength": 0.01899999938905239,
         "bloom_enable": true,
         "crt_enable": false,
+        "crt_distortion_value": 0.0005000000237487257,
+        "crt_height_offset": 100,
         "chroma_enable": false,
         "global_tint": {
             "x": 1.0,

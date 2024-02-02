@@ -92,6 +92,7 @@ function Update()
         end
         if (button.mActivated) then
             clickSFX:SetPlay(1.0)
+            gameStateSys:ChangeGameState("HTPMenu")
         end
     end
 
@@ -134,8 +135,44 @@ function Update()
         end
     end
 
-    -- credits (back) button, still wip for assets
+    -- credits next button
+    if(gen.name == "CreditsNextButton") then
+        if (button.mIsHover) then
+            if (hoverOver == false) then
+                hoverSFX = ent:GetAudio()
+                hoverSFX:SetPlay(0.2)
+                hoverOver = true;
+            end
+        end
+        if (button.mIsHover == false) then
+            hoverOver = false;
+        end
+        if (button.mActivated) then
+            clickSFX:SetPlay(0.2)
+            gameStateSys:ChangeGameState("CreditsMenu2")
+        end
+    end
+
+    -- credits back button
     if(gen.name == "CreditsBackButton") then
+        if (button.mIsHover) then
+            if (hoverOver == false) then
+                hoverSFX = ent:GetAudio()
+                hoverSFX:SetPlay(0.2)
+                hoverOver = true;
+            end
+        end
+        if (button.mIsHover == false) then
+            hoverOver = false;
+        end
+        if (button.mActivated) then
+            clickSFX:SetPlay(0.2)
+            gameStateSys:ChangeGameState("CreditsMenu")
+        end
+    end
+
+    -- menu back button, used in HTP(back) and Credits(Back), can be used for settings next time
+    if(gen.name == "MenuBackButton") then
         if (button.mIsHover) then
             if (hoverOver == false) then
                 hoverSFX = ent:GetAudio()
