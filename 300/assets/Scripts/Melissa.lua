@@ -6,7 +6,7 @@ local s2AttackingTimer          = 1.875 -- This is the attack animation length
 local s2AttackingTimerCount     = 0
 
 local s3ScreamingTimer           = 0
-local s3ScreamingTimerLimit      = 2.36 -- This should depend on the animation time period
+local s3ScreamingTimerLimit      = 2.7 -- This should depend on the animation time period
 
 -- Systems
 local aiSys
@@ -23,8 +23,8 @@ local spawnMelissa = false      -- This should be rng, might or might not spawn 
 local notBelow50Yet
 local AttackOnce = false
 
-local deathTimer = 0.1
-local deathTimerCount
+local deathTimer = 1.45
+local deathTimerCount = 0
 
 local state
 -- Melissa states
@@ -165,13 +165,14 @@ function TRAVELInit()
     state = "TRAVEL"
 
     --print("Start melissa travel")
-    this:GetMeshRenderer():SetMesh("Melissa", this) -- Change back to idle animation 
+    this:GetMeshRenderer():SetMesh("Melissa_Idle", this) -- Change back to idle animation 
 
 end
 
 function SpawnMelissa() -- This function should be called in 
     if not spawnMelissa then return end
     state = "DUPLICATING"
+    this:GetMeshRenderer():SetMesh("Melissa_Split", this) -- Change to death animation 
     s3ScreamingTimer = 0
     this:GetAudio():SetPlay()
 end
@@ -182,6 +183,7 @@ function StartDeath()
     -- Start death sound
     state = "DEATH"
     gameStateSys:GetEntity("EnemyDeath"):GetAudio():SetPlay()
+    this:GetMeshRenderer():SetMesh("Melissa_Death", this) -- Change to death animation 
     -- this:GetAudio():SetStop()
 end
 
