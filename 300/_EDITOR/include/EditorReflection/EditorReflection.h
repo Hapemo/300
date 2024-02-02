@@ -35,7 +35,7 @@ void ReflectProperties(T& instance)
 		else if (member.get_type().get_value_type() == meta::resolve_type<glm::vec3>())
 		{
 			glm::vec3 type = val.as<glm::vec3>();
-			ImGui::DragFloat3(("##" + name).c_str(), (float*)&type, 0.1f);
+			ImGui::DragFloat3(("##" + name).c_str(), (float*)&type, 0.01f);
 			member.set(instance, type);
 		}
 		ImGui::Separator();
