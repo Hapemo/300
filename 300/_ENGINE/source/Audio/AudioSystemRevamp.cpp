@@ -409,7 +409,7 @@ void AudioSystem::Reset()
 					}
 
 					channel_pair.second->stop();
-					channel_pair.second = nullptr;
+					//channel_pair.second = nullptr;
 				}
 			//}
 			
@@ -594,6 +594,7 @@ unsigned int AudioSystem::PlaySound(std::string audio_name, AUDIOTYPE type, floa
 
 			if (audio_name == "Troubleshooter_M4.wav" && scene_switched == true)
 			{
+				std::cout << "PLAYING BACK AT: " << playback_position << std::endl;
 				channel.second->setPosition(playback_position, FMOD_TIMEUNIT_MS);
 				std::cout << "HEY" << std::endl;
 				scene_switched = false;
