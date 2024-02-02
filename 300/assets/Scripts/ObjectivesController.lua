@@ -37,3 +37,7 @@ end
 function RemoveObjective()
 	countObj = countObj - 1
 end
+
+function GetCountObj()
+    return countObj
+end

@@ -160,6 +160,7 @@ local playerHealthStartRegenCurrent = 0;
 local playerHealthStartRegenMax = 30; -- this is the time it takes for the player to not be damaged to start regenerating health
 
 local healthbarSpawnPos = Vec3.new()
+local objectiveBarEmptySpawnPos = Vec3.new()
 
 local this
 function Alive()
@@ -235,7 +236,13 @@ function Alive()
     healthbarSpawnPos.y = 0.7;
     healthbarSpawnPos.z = 0;
 
-    healthbar = systemManager.ecs:NewEntityFromPrefab("StartButton", healthbarSpawnPos)
+    healthbar = systemManager.ecs:NewEntityFromPrefab("Objective Bar Empty", healthbarSpawnPos)
+
+    objectiveBarEmptySpawnPos.x = 0.7;
+    objectiveBarEmptySpawnPos.y = 0.7;
+    objectiveBarEmptySpawnPos.z = 0;
+
+    objectivebarEmpty = systemManager.ecs:NewEntityFromPrefab("Objective Bar Empty", objectiveBarEmptySpawnPos)
 
     -- Player Health System End -- 
 
