@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 2097160,
+        "entityid": 1048583,
         "general": {
             "name": "BGM",
             "tagid": 0,
@@ -37,7 +37,7 @@
         }
     },
     {
-        "entityid": 2097161,
+        "entityid": 1048584,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -75,14 +75,14 @@
             },
             "size": {
                 "x": 1224,
-                "y": 621
+                "y": 657
             },
             "near": 0.10000000149011612,
             "far": 900.0
         }
     },
     {
-        "entityid": 2097162,
+        "entityid": 1048585,
         "general": {
             "name": "MenuBackground",
             "tagid": 6,
@@ -109,7 +109,7 @@
         },
         "uirenderer": {
             "texpath": "../assets/Compressed/CreditsScene.ctexture",
-            "textureref": 43276095,
+            "textureref": 1092111750,
             "degree": 0.0,
             "slider": 1.0,
             "color": {
@@ -123,7 +123,7 @@
         }
     },
     {
-        "entityid": 2097163,
+        "entityid": 1048586,
         "general": {
             "name": "BackToMainMenuButton",
             "tagid": 6,
@@ -143,14 +143,14 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 0.0,
-                "y": -0.37037035822868347,
+                "x": 0.02500000037252903,
+                "y": -0.05000000074505806,
                 "z": 0.0
             }
         },
         "uirenderer": {
             "texpath": "",
-            "textureref": 2555179805,
+            "textureref": 3379754746,
             "degree": 0.0,
             "slider": 1.0,
             "color": {
@@ -189,7 +189,7 @@
         }
     },
     {
-        "entityid": 2097164,
+        "entityid": 1048587,
         "general": {
             "name": "Click",
             "tagid": 6,
