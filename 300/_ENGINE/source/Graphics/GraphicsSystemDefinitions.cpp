@@ -42,15 +42,10 @@ void animationsToChangeMeshDelayedCheck(Entity inst, const float& dt)
 
 	if (animatorInst.mAnimator.mToChangeMeshDelayed.first && animatorInst.mAnimator.m_CurrentAnimation != nullptr)
 	{
-		MeshRenderer& meshRenderer = inst.GetComponent<MeshRenderer>();
-
-		// handles the change of mesh when called in the scripts
-		float lAllowance = animatorInst.mAnimator.m_CurrentAnimation->m_TicksPerSecond * dt;
-
-		// handles the mesh change delayed flag, if its set
-		if (animatorInst.mAnimator.m_CurrentTime <= lAllowance)
+		if(animatorInst.IsEndOfAnimation())
 		{
 			// the mesh change delayed flag is set and the animation is completed, change the mesh
+			MeshRenderer& meshRenderer = inst.GetComponent<MeshRenderer>();
 			animatorInst.mAnimator.mToChangeMeshDelayed.first = false;
 			meshRenderer.SetMesh(animatorInst.mAnimator.mToChangeMeshDelayed.second, inst);
 		}

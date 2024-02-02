@@ -57,8 +57,11 @@ namespace GFX
     void Animator::SetAnimation(_GEOM::Animation* animation)
     {
 		m_CurrentAnimation = animation;
-        m_CurrentTime = 0.f;
-        m_DeltaTime = 0.f;
+
+        if(!animation)
+			return;
+
+        m_CurrentTime = animation->m_Duration;
 
         // reset the bone matrices
         for (auto& mtx : m_FinalBoneMatrices) {
@@ -101,7 +104,7 @@ namespace GFX
             nodeTransform = bone->GetLocalTransform();
         }
 
-        glm::mat4 globalTransform = parentTransform; // *nodeTransform;
+        glm::mat4 globalTransform = parentTransform; // * nodeTransform;
 
         auto& boneInfoMap = m_CurrentAnimation->m_BoneInfoMap;
         if (boneInfoMap.find(nodename) != boneInfoMap.end())
@@ -120,7 +123,7 @@ namespace GFX
                 vec4 final  = LTW * globalTransform * identityvec;
                 vec4 parent = LTW * parentTransform * identityvec;
 
-                systemManager->mGraphicsSystem->m_Renderer.AddCube(parent, { 0.5f, 0.5, 0.5f }, { 1.f, 0.f, 0.f, 1.f });
+                systemManager->mGraphicsSystem->m_Renderer.AddCube(parent, { 0.1f, 0.1f, 0.1f }, { 1.f, 0.f, 0.f, 1.f });
                 systemManager->mGraphicsSystem->m_Renderer.AddLine( parent, final, {0.f, 1.f, 1.f, 1.f});
             }
         }
