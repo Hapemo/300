@@ -148,7 +148,6 @@ void GraphicsSystem::Update(float dt)
 		void *tt = meshRenderer.mMeshRef.getdata(systemManager->mResourceTySystem->m_ResourceInstance);
 		GFX::Mesh &meshinst = *reinterpret_cast<GFX::Mesh *>(tt);
 
-
 		updateBloomValues(meshinst);
 
 		update_CalculateLTW(inst, meshinst, transforminst, final);

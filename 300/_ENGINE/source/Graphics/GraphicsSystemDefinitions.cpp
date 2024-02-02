@@ -163,12 +163,12 @@ void updateAnimations(Entity inst, const mat4& final, const float& dt)
 	if (animatorInst.mAnimator.m_CurrentAnimation != nullptr)
 	{
 		animatorInst.mAnimator.UpdateAnimation(dt, mat4(1.f), final); // update the current animation
+	}
 
-		// push back matrices into the SSBO
-		for (const auto& x : animatorInst.mAnimator.m_FinalBoneMatrices)
-		{
-			systemManager->mGraphicsSystem->finalBoneMatrices.push_back(x);
-		}
+	// push back matrices into the SSBO
+	for (const auto& x : animatorInst.mAnimator.m_FinalBoneMatrices)
+	{
+		systemManager->mGraphicsSystem->finalBoneMatrices.push_back(x);
 	}
 }
 

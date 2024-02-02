@@ -57,11 +57,7 @@ namespace GFX
     void Animator::SetAnimation(_GEOM::Animation* animation)
     {
 		m_CurrentAnimation = animation;
-
-        if(!animation)
-			return;
-
-        m_CurrentTime = animation->m_Duration;
+        m_CurrentTime = 0.f;
 
         // reset the bone matrices
         for (auto& mtx : m_FinalBoneMatrices) {
