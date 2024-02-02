@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 1048765,
+        "entityid": 2097302,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -62,7 +62,7 @@
         }
     },
     {
-        "entityid": 1048769,
+        "entityid": 2097303,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -124,7 +124,7 @@
         }
     },
     {
-        "entityid": 1048770,
+        "entityid": 2097304,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -186,7 +186,7 @@
         }
     },
     {
-        "entityid": 1048771,
+        "entityid": 2097305,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -248,69 +248,7 @@
         }
     },
     {
-        "entityid": 1048772,
-        "general": {
-            "name": "WallCollider",
-            "tagid": 4,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 3.9999029636383057,
-                "z": 4.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 90.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -5.964897632598877,
-                "y": -4.389590740203857,
-                "z": 53.642425537109375
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 0,
-            "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": true,
-                "y": true,
-                "z": false
-            },
-            "gravity": true
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "translateoffset": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "istrigger": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "WallCollider"
-        }
-    },
-    {
-        "entityid": 1048773,
+        "entityid": 2097306,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -372,7 +310,7 @@
         }
     },
     {
-        "entityid": 1048774,
+        "entityid": 2097307,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -434,7 +372,7 @@
         }
     },
     {
-        "entityid": 1048775,
+        "entityid": 2097308,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -496,7 +434,7 @@
         }
     },
     {
-        "entityid": 1048776,
+        "entityid": 2097309,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -558,7 +496,7 @@
         }
     },
     {
-        "entityid": 1048777,
+        "entityid": 2097310,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -620,7 +558,7 @@
         }
     },
     {
-        "entityid": 1048778,
+        "entityid": 2097311,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -682,7 +620,7 @@
         }
     },
     {
-        "entityid": 1048779,
+        "entityid": 2097312,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -744,7 +682,7 @@
         }
     },
     {
-        "entityid": 1048787,
+        "entityid": 2097313,
         "general": {
             "name": "BGM",
             "tagid": 0,
@@ -781,7 +719,7 @@
         }
     },
     {
-        "entityid": 1048788,
+        "entityid": 2097314,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -843,7 +781,7 @@
         }
     },
     {
-        "entityid": 1048789,
+        "entityid": 2097315,
         "general": {
             "name": "Dash",
             "tagid": 0,
@@ -880,7 +818,7 @@
         }
     },
     {
-        "entityid": 1048790,
+        "entityid": 2097316,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -942,7 +880,7 @@
         }
     },
     {
-        "entityid": 1048794,
+        "entityid": 2097317,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -1004,7 +942,7 @@
         }
     },
     {
-        "entityid": 1048795,
+        "entityid": 2097318,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -1066,7 +1004,7 @@
         }
     },
     {
-        "entityid": 1048796,
+        "entityid": 2097319,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -1128,7 +1066,7 @@
         }
     },
     {
-        "entityid": 1048797,
+        "entityid": 2097320,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -1190,7 +1128,7 @@
         }
     },
     {
-        "entityid": 1048798,
+        "entityid": 2097321,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -1252,7 +1190,7 @@
         }
     },
     {
-        "entityid": 1048800,
+        "entityid": 2097322,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -1314,7 +1252,7 @@
         }
     },
     {
-        "entityid": 1048801,
+        "entityid": 2097323,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -1376,7 +1314,7 @@
         }
     },
     {
-        "entityid": 1048804,
+        "entityid": 2097324,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -1438,7 +1376,7 @@
         }
     },
     {
-        "entityid": 1048805,
+        "entityid": 2097325,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -1500,7 +1438,7 @@
         }
     },
     {
-        "entityid": 1048806,
+        "entityid": 2097326,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -1562,7 +1500,7 @@
         }
     },
     {
-        "entityid": 1048807,
+        "entityid": 2097327,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -1624,7 +1562,7 @@
         }
     },
     {
-        "entityid": 1048808,
+        "entityid": 2097328,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -1686,7 +1624,7 @@
         }
     },
     {
-        "entityid": 1048809,
+        "entityid": 2097329,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -1748,7 +1686,7 @@
         }
     },
     {
-        "entityid": 1048810,
+        "entityid": 2097330,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -1810,7 +1748,7 @@
         }
     },
     {
-        "entityid": 1048811,
+        "entityid": 2097331,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -1872,7 +1810,7 @@
         }
     },
     {
-        "entityid": 1048812,
+        "entityid": 2097332,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -1934,7 +1872,7 @@
         }
     },
     {
-        "entityid": 1048813,
+        "entityid": 2097333,
         "general": {
             "name": "Light",
             "tagid": 0,
@@ -1977,7 +1915,7 @@
         }
     },
     {
-        "entityid": 1048814,
+        "entityid": 2097334,
         "general": {
             "name": "Light",
             "tagid": 0,
@@ -2020,7 +1958,7 @@
         }
     },
     {
-        "entityid": 1048815,
+        "entityid": 2097335,
         "general": {
             "name": "Light",
             "tagid": 0,
@@ -2063,7 +2001,7 @@
         }
     },
     {
-        "entityid": 1048816,
+        "entityid": 2097336,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -2125,7 +2063,7 @@
         }
     },
     {
-        "entityid": 1048817,
+        "entityid": 2097337,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -2187,7 +2125,7 @@
         }
     },
     {
-        "entityid": 1048818,
+        "entityid": 2097338,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -2249,7 +2187,7 @@
         }
     },
     {
-        "entityid": 1048819,
+        "entityid": 2097339,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -2311,7 +2249,7 @@
         }
     },
     {
-        "entityid": 1048820,
+        "entityid": 2097340,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -2373,7 +2311,7 @@
         }
     },
     {
-        "entityid": 1048821,
+        "entityid": 2097341,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -2435,7 +2373,7 @@
         }
     },
     {
-        "entityid": 1048822,
+        "entityid": 2097342,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -2497,7 +2435,7 @@
         }
     },
     {
-        "entityid": 1048823,
+        "entityid": 2097343,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -2559,7 +2497,7 @@
         }
     },
     {
-        "entityid": 1048824,
+        "entityid": 2097397,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -2621,7 +2559,7 @@
         }
     },
     {
-        "entityid": 1048825,
+        "entityid": 2097398,
         "general": {
             "name": "Stairs",
             "tagid": 3,
@@ -2682,7 +2620,7 @@
         }
     },
     {
-        "entityid": 1048826,
+        "entityid": 2097399,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -2744,7 +2682,7 @@
         }
     },
     {
-        "entityid": 1048827,
+        "entityid": 2097423,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -2806,7 +2744,7 @@
         }
     },
     {
-        "entityid": 1048828,
+        "entityid": 2097424,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -2868,69 +2806,7 @@
         }
     },
     {
-        "entityid": 1048829,
-        "general": {
-            "name": "FloorCollider",
-            "tagid": 3,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 2.799999952316284,
-                "y": 1.0,
-                "z": 3.9000000953674316
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -10.260101318359375,
-                "y": -8.054106712341309,
-                "z": 39.93299865722656
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 0,
-            "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": true,
-                "y": true,
-                "z": false
-            },
-            "gravity": true
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "translateoffset": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "istrigger": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "FloorCollider"
-        }
-    },
-    {
-        "entityid": 1048830,
+        "entityid": 2097425,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -2992,7 +2868,7 @@
         }
     },
     {
-        "entityid": 1048831,
+        "entityid": 2097426,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -3054,7 +2930,7 @@
         }
     },
     {
-        "entityid": 1048832,
+        "entityid": 3145740,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -3116,7 +2992,7 @@
         }
     },
     {
-        "entityid": 1048833,
+        "entityid": 3145741,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -3178,7 +3054,7 @@
         }
     },
     {
-        "entityid": 1048839,
+        "entityid": 3145742,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -3240,7 +3116,7 @@
         }
     },
     {
-        "entityid": 1048840,
+        "entityid": 3145743,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -3251,70 +3127,8 @@
         "transform": {
             "scale": {
                 "x": 1.0,
-                "y": 14.0,
-                "z": 13.399999618530273
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 29.917699813842773,
-                "y": -4.458000183105469,
-                "z": 24.95552635192871
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 0,
-            "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": true,
-                "y": true,
-                "z": false
-            },
-            "gravity": true
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "translateoffset": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "istrigger": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "WallCollider"
-        }
-    },
-    {
-        "entityid": 1048841,
-        "general": {
-            "name": "WallCollider",
-            "tagid": 4,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 7.599999904632568,
-                "y": 13.998332977294922,
-                "z": 1.100000023841858
+                "y": 3.9999029636383057,
+                "z": 4.0
             },
             "rotate": {
                 "x": 0.0,
@@ -3322,9 +3136,9 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 7.72614860534668,
-                "y": -9.764017105102539,
-                "z": 50.238651275634766
+                "x": -5.964897632598877,
+                "y": -4.389590740203857,
+                "z": 53.642425537109375
             }
         },
         "rigidbody": {
@@ -3364,7 +3178,7 @@
         }
     },
     {
-        "entityid": 1048842,
+        "entityid": 3145744,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -3426,7 +3240,7 @@
         }
     },
     {
-        "entityid": 1048844,
+        "entityid": 3145745,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -3488,7 +3302,7 @@
         }
     },
     {
-        "entityid": 1048845,
+        "entityid": 3145746,
         "general": {
             "name": "pauseMenu",
             "tagid": 6,
@@ -3537,7 +3351,7 @@
         }
     },
     {
-        "entityid": 1048853,
+        "entityid": 3145747,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -3599,7 +3413,7 @@
         }
     },
     {
-        "entityid": 1048862,
+        "entityid": 3145748,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -3661,7 +3475,7 @@
         }
     },
     {
-        "entityid": 1048863,
+        "entityid": 3145749,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -3723,7 +3537,7 @@
         }
     },
     {
-        "entityid": 1048864,
+        "entityid": 3145750,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -3782,7 +3596,7 @@
         }
     },
     {
-        "entityid": 1048865,
+        "entityid": 3145751,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -3844,7 +3658,7 @@
         }
     },
     {
-        "entityid": 1048866,
+        "entityid": 3145752,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -3906,7 +3720,7 @@
         }
     },
     {
-        "entityid": 1048867,
+        "entityid": 3145753,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -3968,7 +3782,7 @@
         }
     },
     {
-        "entityid": 1048868,
+        "entityid": 3145754,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -4030,7 +3844,7 @@
         }
     },
     {
-        "entityid": 1048869,
+        "entityid": 3145755,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -4092,7 +3906,7 @@
         }
     },
     {
-        "entityid": 1048870,
+        "entityid": 3145756,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -4154,7 +3968,7 @@
         }
     },
     {
-        "entityid": 1048871,
+        "entityid": 3145757,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -4216,7 +4030,7 @@
         }
     },
     {
-        "entityid": 1048872,
+        "entityid": 3145758,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -4278,7 +4092,7 @@
         }
     },
     {
-        "entityid": 1048873,
+        "entityid": 3145759,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -4340,7 +4154,7 @@
         }
     },
     {
-        "entityid": 1048874,
+        "entityid": 3145760,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -4402,7 +4216,7 @@
         }
     },
     {
-        "entityid": 2097164,
+        "entityid": 3145761,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -4464,7 +4278,7 @@
         }
     },
     {
-        "entityid": 2097165,
+        "entityid": 3145762,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -4526,7 +4340,7 @@
         }
     },
     {
-        "entityid": 2097166,
+        "entityid": 3145763,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -4588,7 +4402,7 @@
         }
     },
     {
-        "entityid": 2097167,
+        "entityid": 3145764,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -4650,7 +4464,7 @@
         }
     },
     {
-        "entityid": 2097168,
+        "entityid": 3145765,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -4712,7 +4526,7 @@
         }
     },
     {
-        "entityid": 2097169,
+        "entityid": 3145766,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -4774,7 +4588,7 @@
         }
     },
     {
-        "entityid": 2097170,
+        "entityid": 3145767,
         "general": {
             "name": "Skill_Ending",
             "tagid": 0,
@@ -4811,7 +4625,7 @@
         }
     },
     {
-        "entityid": 2097171,
+        "entityid": 3145768,
         "general": {
             "name": "Player_Movement",
             "tagid": 0,
@@ -4848,7 +4662,7 @@
         }
     },
     {
-        "entityid": 2097172,
+        "entityid": 3145769,
         "general": {
             "name": "Skill_Activate",
             "tagid": 0,
@@ -4885,7 +4699,7 @@
         }
     },
     {
-        "entityid": 2097173,
+        "entityid": 3145770,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -4947,7 +4761,7 @@
         }
     },
     {
-        "entityid": 2097174,
+        "entityid": 3145771,
         "general": {
             "name": "Light",
             "tagid": 0,
@@ -4990,7 +4804,7 @@
         }
     },
     {
-        "entityid": 2097175,
+        "entityid": 3145772,
         "general": {
             "name": "Light",
             "tagid": 0,
@@ -5033,7 +4847,7 @@
         }
     },
     {
-        "entityid": 2097176,
+        "entityid": 3145773,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -5095,7 +4909,7 @@
         }
     },
     {
-        "entityid": 2097177,
+        "entityid": 3145774,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -5157,7 +4971,7 @@
         }
     },
     {
-        "entityid": 2097178,
+        "entityid": 3145775,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -5219,7 +5033,7 @@
         }
     },
     {
-        "entityid": 2097179,
+        "entityid": 3145776,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -5281,7 +5095,7 @@
         }
     },
     {
-        "entityid": 2097180,
+        "entityid": 3145777,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -5343,7 +5157,7 @@
         }
     },
     {
-        "entityid": 2097181,
+        "entityid": 3145778,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -5405,7 +5219,7 @@
         }
     },
     {
-        "entityid": 2097182,
+        "entityid": 3145779,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -5467,7 +5281,7 @@
         }
     },
     {
-        "entityid": 2097183,
+        "entityid": 3145780,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -5529,7 +5343,7 @@
         }
     },
     {
-        "entityid": 2097184,
+        "entityid": 3145781,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -5591,7 +5405,7 @@
         }
     },
     {
-        "entityid": 2097185,
+        "entityid": 3145783,
         "general": {
             "name": "Buildings",
             "tagid": 0,
@@ -5652,7 +5466,7 @@
         }
     },
     {
-        "entityid": 2097186,
+        "entityid": 3145784,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -5714,7 +5528,7 @@
         }
     },
     {
-        "entityid": 2097187,
+        "entityid": 3145785,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -5776,7 +5590,7 @@
         }
     },
     {
-        "entityid": 2097188,
+        "entityid": 3145786,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -5838,7 +5652,7 @@
         }
     },
     {
-        "entityid": 2097189,
+        "entityid": 3145787,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -5900,7 +5714,7 @@
         }
     },
     {
-        "entityid": 2097190,
+        "entityid": 3145788,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -5962,7 +5776,7 @@
         }
     },
     {
-        "entityid": 2097191,
+        "entityid": 3145789,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -6032,7 +5846,7 @@
         },
         "children": {
             "numchildren": 1,
-            "firstchild": 2097215
+            "firstchild": 3145815
         },
         "audio": {
             "filepath": "../assets\\Audio",
@@ -6088,7 +5902,131 @@
         }
     },
     {
-        "entityid": 2097192,
+        "entityid": 3145790,
+        "general": {
+            "name": "FloorCollider",
+            "tagid": 3,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 2.799999952316284,
+                "y": 1.0,
+                "z": 3.9000000953674316
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -10.260101318359375,
+                "y": -8.054106712341309,
+                "z": 39.93299865722656
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": true,
+                "z": false
+            },
+            "gravity": true
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "FloorCollider"
+        }
+    },
+    {
+        "entityid": 3145791,
+        "general": {
+            "name": "WallCollider",
+            "tagid": 4,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 14.0,
+                "z": 13.399999618530273
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 29.917699813842773,
+                "y": -4.458000183105469,
+                "z": 24.95552635192871
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": true,
+                "z": false
+            },
+            "gravity": true
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "WallCollider"
+        }
+    },
+    {
+        "entityid": 3145792,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -6150,7 +6088,7 @@
         }
     },
     {
-        "entityid": 2097193,
+        "entityid": 3145793,
         "general": {
             "name": "Light",
             "tagid": 0,
@@ -6187,7 +6125,7 @@
         }
     },
     {
-        "entityid": 2097194,
+        "entityid": 3145794,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -6249,7 +6187,7 @@
         }
     },
     {
-        "entityid": 2097195,
+        "entityid": 3145795,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -6311,7 +6249,7 @@
         }
     },
     {
-        "entityid": 2097196,
+        "entityid": 3145796,
         "general": {
             "name": "FloorTexture",
             "tagid": 0,
@@ -6372,7 +6310,7 @@
         }
     },
     {
-        "entityid": 2097197,
+        "entityid": 3145797,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -6434,7 +6372,7 @@
         }
     },
     {
-        "entityid": 2097198,
+        "entityid": 3145798,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -6496,7 +6434,7 @@
         }
     },
     {
-        "entityid": 2097199,
+        "entityid": 3145799,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -6558,7 +6496,7 @@
         }
     },
     {
-        "entityid": 2097200,
+        "entityid": 3145800,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -6620,7 +6558,7 @@
         }
     },
     {
-        "entityid": 2097201,
+        "entityid": 3145801,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -6682,7 +6620,7 @@
         }
     },
     {
-        "entityid": 2097202,
+        "entityid": 3145802,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -6744,7 +6682,7 @@
         }
     },
     {
-        "entityid": 2097203,
+        "entityid": 3145803,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -6806,7 +6744,7 @@
         }
     },
     {
-        "entityid": 2097205,
+        "entityid": 3145804,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -6868,7 +6806,7 @@
         }
     },
     {
-        "entityid": 2097206,
+        "entityid": 3145805,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -6930,7 +6868,7 @@
         }
     },
     {
-        "entityid": 2097207,
+        "entityid": 3145806,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -6992,7 +6930,7 @@
         }
     },
     {
-        "entityid": 2097208,
+        "entityid": 3145807,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -7054,7 +6992,7 @@
         }
     },
     {
-        "entityid": 2097209,
+        "entityid": 3145808,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -7116,7 +7054,7 @@
         }
     },
     {
-        "entityid": 2097210,
+        "entityid": 3145809,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -7178,7 +7116,7 @@
         }
     },
     {
-        "entityid": 2097211,
+        "entityid": 3145810,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -7240,7 +7178,7 @@
         }
     },
     {
-        "entityid": 2097212,
+        "entityid": 3145811,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -7302,7 +7240,7 @@
         }
     },
     {
-        "entityid": 2097213,
+        "entityid": 3145812,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -7364,7 +7302,7 @@
         }
     },
     {
-        "entityid": 2097214,
+        "entityid": 3145813,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -7426,7 +7364,69 @@
         }
     },
     {
-        "entityid": 2097215,
+        "entityid": 3145814,
+        "general": {
+            "name": "FloorCollider",
+            "tagid": 3,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 16.100000381469727,
+                "y": 1.0,
+                "z": 7.699999809265137
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -0.8467470407485962,
+                "y": -7.0,
+                "z": 50.24283981323242
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": true,
+                "z": false
+            },
+            "gravity": true
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "FloorCollider"
+        }
+    },
+    {
+        "entityid": 3145815,
         "general": {
             "name": "gun",
             "tagid": 0,
@@ -7486,13 +7486,75 @@
             ]
         },
         "parent": {
-            "prevsibling": 2097215,
-            "nextsibling": 2097215,
-            "parent": 2097191
+            "prevsibling": 3145815,
+            "nextsibling": 3145815,
+            "parent": 3145789
         }
     },
     {
-        "entityid": 2097216,
+        "entityid": 3145816,
+        "general": {
+            "name": "WallCollider",
+            "tagid": 4,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 7.599999904632568,
+                "y": 13.998332977294922,
+                "z": 1.100000023841858
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 90.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 7.72614860534668,
+                "y": -9.764017105102539,
+                "z": 50.238651275634766
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": true,
+                "z": false
+            },
+            "gravity": true
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "WallCollider"
+        }
+    },
+    {
+        "entityid": 3145817,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -7554,7 +7616,7 @@
         }
     },
     {
-        "entityid": 2097217,
+        "entityid": 3145818,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -7616,7 +7678,7 @@
         }
     },
     {
-        "entityid": 2097218,
+        "entityid": 3145819,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -7678,7 +7740,7 @@
         }
     },
     {
-        "entityid": 2097219,
+        "entityid": 3145820,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -7740,7 +7802,7 @@
         }
     },
     {
-        "entityid": 2097220,
+        "entityid": 3145821,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -7802,7 +7864,7 @@
         }
     },
     {
-        "entityid": 2097221,
+        "entityid": 3145822,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -7864,7 +7926,7 @@
         }
     },
     {
-        "entityid": 2097222,
+        "entityid": 3145823,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -7926,7 +7988,7 @@
         }
     },
     {
-        "entityid": 2097223,
+        "entityid": 3145824,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -7988,7 +8050,7 @@
         }
     },
     {
-        "entityid": 2097224,
+        "entityid": 3145825,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -8050,7 +8112,7 @@
         }
     },
     {
-        "entityid": 2097225,
+        "entityid": 3145826,
         "general": {
             "name": "Light",
             "tagid": 0,
@@ -8087,7 +8149,7 @@
         }
     },
     {
-        "entityid": 2097226,
+        "entityid": 3145827,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -8149,7 +8211,7 @@
         }
     },
     {
-        "entityid": 2097227,
+        "entityid": 3145828,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -8211,7 +8273,7 @@
         }
     },
     {
-        "entityid": 2097228,
+        "entityid": 3145829,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -8273,7 +8335,7 @@
         }
     },
     {
-        "entityid": 2097229,
+        "entityid": 3145830,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -8335,7 +8397,7 @@
         }
     },
     {
-        "entityid": 2097230,
+        "entityid": 3145831,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -8397,7 +8459,7 @@
         }
     },
     {
-        "entityid": 2097231,
+        "entityid": 3145832,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -8459,7 +8521,7 @@
         }
     },
     {
-        "entityid": 2097233,
+        "entityid": 3145833,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -8521,7 +8583,7 @@
         }
     },
     {
-        "entityid": 2097234,
+        "entityid": 3145834,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -8583,7 +8645,7 @@
         }
     },
     {
-        "entityid": 2097235,
+        "entityid": 3145835,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -8645,7 +8707,7 @@
         }
     },
     {
-        "entityid": 2097236,
+        "entityid": 3145836,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -8707,7 +8769,7 @@
         }
     },
     {
-        "entityid": 2097237,
+        "entityid": 3145837,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -8769,7 +8831,7 @@
         }
     },
     {
-        "entityid": 2097238,
+        "entityid": 3145838,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -8831,7 +8893,7 @@
         }
     },
     {
-        "entityid": 2097239,
+        "entityid": 3145839,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -8893,7 +8955,7 @@
         }
     },
     {
-        "entityid": 2097240,
+        "entityid": 3145840,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -8955,7 +9017,7 @@
         }
     },
     {
-        "entityid": 2097241,
+        "entityid": 3145842,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -9017,7 +9079,7 @@
         }
     },
     {
-        "entityid": 2097242,
+        "entityid": 3145843,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -9079,7 +9141,7 @@
         }
     },
     {
-        "entityid": 2097243,
+        "entityid": 3145844,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -9141,7 +9203,7 @@
         }
     },
     {
-        "entityid": 2097244,
+        "entityid": 3145845,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -9203,7 +9265,7 @@
         }
     },
     {
-        "entityid": 2097245,
+        "entityid": 3145846,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -9265,7 +9327,7 @@
         }
     },
     {
-        "entityid": 2097246,
+        "entityid": 3145969,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -9327,7 +9389,7 @@
         }
     },
     {
-        "entityid": 2097247,
+        "entityid": 3145985,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -9389,7 +9451,7 @@
         }
     },
     {
-        "entityid": 2097248,
+        "entityid": 3145986,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -9451,7 +9513,7 @@
         }
     },
     {
-        "entityid": 2097249,
+        "entityid": 3145987,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -9513,7 +9575,7 @@
         }
     },
     {
-        "entityid": 2097250,
+        "entityid": 4194305,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -9575,7 +9637,7 @@
         }
     },
     {
-        "entityid": 2097251,
+        "entityid": 4194306,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -9637,7 +9699,7 @@
         }
     },
     {
-        "entityid": 2097252,
+        "entityid": 4194307,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -9699,7 +9761,7 @@
         }
     },
     {
-        "entityid": 2097253,
+        "entityid": 4194308,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -9761,7 +9823,7 @@
         }
     },
     {
-        "entityid": 2097254,
+        "entityid": 4194309,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -9823,7 +9885,7 @@
         }
     },
     {
-        "entityid": 2097255,
+        "entityid": 4194310,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -9885,7 +9947,7 @@
         }
     },
     {
-        "entityid": 2097256,
+        "entityid": 4194311,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -9947,7 +10009,7 @@
         }
     },
     {
-        "entityid": 2097257,
+        "entityid": 4194312,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -10009,7 +10071,7 @@
         }
     },
     {
-        "entityid": 2097258,
+        "entityid": 4194313,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -10071,7 +10133,7 @@
         }
     },
     {
-        "entityid": 2097259,
+        "entityid": 4194314,
         "general": {
             "name": "Spotlighttttttttttttttttttt",
             "tagid": 0,
@@ -10113,7 +10175,7 @@
         }
     },
     {
-        "entityid": 2097260,
+        "entityid": 4194315,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -10175,7 +10237,7 @@
         }
     },
     {
-        "entityid": 2097261,
+        "entityid": 4194417,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -10237,7 +10299,7 @@
         }
     },
     {
-        "entityid": 2097262,
+        "entityid": 5243134,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -10299,7 +10361,7 @@
         }
     },
     {
-        "entityid": 2097263,
+        "entityid": 5243135,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -10361,7 +10423,7 @@
         }
     },
     {
-        "entityid": 2097264,
+        "entityid": 5243136,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -10423,7 +10485,7 @@
         }
     },
     {
-        "entityid": 2097265,
+        "entityid": 6291718,
         "general": {
             "name": "Bullet Shoot",
             "tagid": 0,
@@ -10460,7 +10522,7 @@
         }
     },
     {
-        "entityid": 2097266,
+        "entityid": 7340086,
         "general": {
             "name": "0s",
             "tagid": 0,
@@ -10532,7 +10594,7 @@
         }
     },
     {
-        "entityid": 2097267,
+        "entityid": 7340283,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -10594,7 +10656,7 @@
         }
     },
     {
-        "entityid": 2097268,
+        "entityid": 7340300,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -10656,7 +10718,7 @@
         }
     },
     {
-        "entityid": 2097269,
+        "entityid": 7340302,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -10718,7 +10780,7 @@
         }
     },
     {
-        "entityid": 3145729,
+        "entityid": 8388871,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -10780,7 +10842,7 @@
         }
     },
     {
-        "entityid": 3145730,
+        "entityid": 8388877,
         "general": {
             "name": "WallTexture",
             "tagid": 0,
@@ -10841,7 +10903,7 @@
         }
     },
     {
-        "entityid": 3145731,
+        "entityid": 9437451,
         "general": {
             "name": "Jump",
             "tagid": 0,
@@ -10878,7 +10940,7 @@
         }
     },
     {
-        "entityid": 3145732,
+        "entityid": 10486024,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -10940,7 +11002,7 @@
         }
     },
     {
-        "entityid": 3145733,
+        "entityid": 11534586,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -11002,7 +11064,7 @@
         }
     },
     {
-        "entityid": 3145734,
+        "entityid": 11534589,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -11064,7 +11126,7 @@
         }
     },
     {
-        "entityid": 3145735,
+        "entityid": 11534596,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -11126,7 +11188,7 @@
         }
     },
     {
-        "entityid": 3145736,
+        "entityid": 11534597,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -11188,7 +11250,7 @@
         }
     },
     {
-        "entityid": 3145737,
+        "entityid": 11534602,
         "general": {
             "name": "Skybox",
             "tagid": 0,
@@ -11249,7 +11311,7 @@
         }
     },
     {
-        "entityid": 3145738,
+        "entityid": 12583160,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -11311,7 +11373,7 @@
         }
     },
     {
-        "entityid": 3145739,
+        "entityid": 12583177,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -11373,7 +11435,7 @@
         }
     },
     {
-        "entityid": 3145780,
+        "entityid": 13631740,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -11432,68 +11494,6 @@
         },
         "prefab": {
             "prefab": "WallCollider"
-        }
-    },
-    {
-        "entityid": 3145846,
-        "general": {
-            "name": "FloorCollider",
-            "tagid": 3,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 16.100000381469727,
-                "y": 1.0,
-                "z": 7.699999809265137
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -0.8467470407485962,
-                "y": -7.0,
-                "z": 50.24283981323242
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 0,
-            "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": true,
-                "y": true,
-                "z": false
-            },
-            "gravity": true
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "translateoffset": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "istrigger": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "FloorCollider"
         }
     }
 ]

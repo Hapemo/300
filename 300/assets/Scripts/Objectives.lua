@@ -2,7 +2,7 @@
 local this
 
 -- for objectives bar
-local objectivesComplete = 100
+local objectivesComplete = 500
 local progress
 local isInZone = false
 
@@ -17,7 +17,7 @@ local mobSpawnPos3 = Vec3.new()
 local mobSpawnPos4 = Vec3.new()
 
 local objectiveBarSpawnPos = Vec3.new()
-
+local objCount = 0
 
 -- for spawning 0s
 local spawndataPos = Vec3.new()
@@ -49,12 +49,6 @@ function Alive()
     mobSpawnPos4.x = 8;
     mobSpawnPos4.y = -9;
     mobSpawnPos4.z = 13;
-
-    objectiveBarSpawnPos.x = 0.7;
-    objectiveBarSpawnPos.y = 0.7;
-    objectiveBarSpawnPos.z = 0;
-
-    objectivebar = systemManager.ecs:NewEntityFromPrefab("StartButton", objectiveBarSpawnPos)
 end
 
 function Update()
@@ -67,8 +61,40 @@ function Update()
         if testScript ~= nil then
             testScript:RunFunction("AddObjective")
         end
+
+        objectiveBarSpawnPos.x = 0.8;
+        objectiveBarSpawnPos.y = 0.8;
+        objectiveBarSpawnPos.z = 0;
+        objectivebar = systemManager.ecs:NewEntityFromPrefab("Objective Bar 1", objectiveBarSpawnPos)
+
         isInit = true
     end
+
+        -- HELP    
+
+        gameStateSys = systemManager:mGameStateSystem();
+        testScriptEntity = gameStateSys:GetEntity("Controller")
+        TestScripts = testScriptEntity:GetScripts()
+        testScript = TestScripts:GetScript("../assets/Scripts/ObjectivesController.lua")
+
+        if testScript ~= nil then
+            objCount = testScript:RunFunction("GetCountObj")
+
+            if objCount == 1 then
+                objectivebar:GetTransform().mTranslate.x = 0.8;
+            end
+
+            if objCount == 2 then
+                 objectivebar:GetTransform().mTranslate.x = 0.7;
+            end
+
+            if objCount == 3 then
+                objectivebar:GetTransform().mTranslate.x = 0.6;
+            end
+        end
+
+        -- HELP END
+
     -- SPAWNING ENEMIES
     currentSpawnTimer = currentSpawnTimer + FPSManager.GetDT()
 
@@ -116,8 +142,6 @@ function Update()
             spawndataPos.y = transform.mTranslate.y 
             spawndataPos.z = transform.mTranslate.z +math.random(-300,300)/100
 
-            
-
             bulletPrefab = systemManager.ecs:NewEntityFromPrefab("1s", spawndataPos)
 
             -- spawndataPos.x = transform.mTranslate.x  +math.random(-300,300)/100
@@ -142,7 +166,7 @@ function Update()
 
         if (progress < objectivesComplete) then
 
-            objectivebar:GetTransform().mTranslate.y = 0.7; -- Show the objective progress
+            --objectivebar:GetTransform().mTranslate.y = 0.7; -- Show the objective progress
             -- OBJECTIVE PROGRESS
             if (progress < objectivesComplete) then
                 progress = progress + 1
@@ -155,7 +179,7 @@ function Update()
     if (isInZone == false) then
     -- OBJECTIVE Progress (decreases if player is outside objective)
 
-        objectivebar:GetTransform().mTranslate.y = 20; -- Hide the objective progress
+        --objectivebar:GetTransform().mTranslate.y = 20; -- Hide the objective progress
 
         if (progress < objectivesComplete) then
 
@@ -169,7 +193,7 @@ function Update()
 
     if (progress == objectivesComplete) then
         print("Objective complete!")
-        objectivebar:GetTransform().mTranslate.y = 20; -- Hide the objective progress
+        --objectivebar:GetTransform().mTranslate.y = 20; -- Hide the objective progress
         entityobj = Helper.GetScriptEntity(script_entity.id)
         systemManager.ecs:SetDeleteEntity(entityobj)
         gameStateSys = systemManager:mGameStateSystem();

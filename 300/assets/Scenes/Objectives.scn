@@ -1,41 +1,6 @@
 [
     {
-        "entityid": 280,
-        "general": {
-            "name": "Controller",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/ObjectivesController.lua",
-                    "variables": []
-                }
-            ]
-        }
-    },
-    {
-        "entityid": 281,
+        "entityid": 17825935,
         "general": {
             "name": "Objectives",
             "tagid": 0,
@@ -55,9 +20,9 @@
                 "z": 0.0
             },
             "translate": {
-                "x": -20.57029914855957,
+                "x": 19.657516479492188,
                 "y": -11.0,
-                "z": 14.840156555175781
+                "z": 15.100000381469727
             }
         },
         "rigidbody": {
@@ -94,7 +59,7 @@
             },
             "materialinstance": [
                 "../assets/Compressed/Objective_Base_BaseColour.ctexture",
-                "../assets/Compressed/Objective_Base_Metallic.ctexture",
+                "../assets/Compressed/Objective_Base_Normal.ctexture",
                 "../assets/Compressed/Objective_Base_Roughness.ctexture",
                 "../assets/Compressed/Objective_Base_Metallic.ctexture",
                 "../assets/Compressed/Objective_Base_Emissive.ctexture",
@@ -103,7 +68,7 @@
             "mesh": "../assets/compiled_geom/Objective_Base.geom",
             "texturerefid": [
                 200309925,
-                565530477,
+                683426931,
                 2037504544,
                 565530477,
                 3188370359,
@@ -136,7 +101,7 @@
         }
     },
     {
-        "entityid": 282,
+        "entityid": 17825936,
         "general": {
             "name": "Objectives",
             "tagid": 0,
@@ -237,7 +202,7 @@
         }
     },
     {
-        "entityid": 283,
+        "entityid": 17825937,
         "general": {
             "name": "Objectives",
             "tagid": 0,
@@ -257,9 +222,9 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 19.657516479492188,
+                "x": -20.57029914855957,
                 "y": -11.0,
-                "z": 15.100000381469727
+                "z": 14.840156555175781
             }
         },
         "rigidbody": {
@@ -296,7 +261,7 @@
             },
             "materialinstance": [
                 "../assets/Compressed/Objective_Base_BaseColour.ctexture",
-                "../assets/Compressed/Objective_Base_Normal.ctexture",
+                "../assets/Compressed/Objective_Base_Metallic.ctexture",
                 "../assets/Compressed/Objective_Base_Roughness.ctexture",
                 "../assets/Compressed/Objective_Base_Metallic.ctexture",
                 "../assets/Compressed/Objective_Base_Emissive.ctexture",
@@ -305,7 +270,7 @@
             "mesh": "../assets/compiled_geom/Objective_Base.geom",
             "texturerefid": [
                 200309925,
-                683426931,
+                565530477,
                 2037504544,
                 565530477,
                 3188370359,
@@ -335,6 +300,41 @@
         },
         "prefab": {
             "prefab": "Objectives"
+        }
+    },
+    {
+        "entityid": 17825938,
+        "general": {
+            "name": "Controller",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/ObjectivesController.lua",
+                    "variables": []
+                }
+            ]
         }
     }
 ]
