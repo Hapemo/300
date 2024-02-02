@@ -1,6 +1,6 @@
 [
     {
-        "scene_name": "CreditsMenuScene",
+        "scene_name": "CreditsMenu2Scene",
         "pause": false,
         "force_render": true,
         "bloom_threshold": {

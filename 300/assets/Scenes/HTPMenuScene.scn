@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 2097158,
+        "entityid": 15728647,
         "general": {
             "name": "Click",
             "tagid": 6,
@@ -37,7 +37,7 @@
         }
     },
     {
-        "entityid": 2097159,
+        "entityid": 15728648,
         "general": {
             "name": "MenuBackButton",
             "tagid": 6,
@@ -47,8 +47,8 @@
         },
         "transform": {
             "scale": {
-                "x": 0.625,
-                "y": -0.24629630148410797,
+                "x": 0.32499998807907104,
+                "y": -0.24500000476837158,
                 "z": 1.0
             },
             "rotate": {
@@ -57,14 +57,14 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 0.6875,
-                "y": -0.7407407164573669,
+                "x": 0.800000011920929,
+                "y": -0.8299999833106995,
                 "z": 0.0
             }
         },
         "uirenderer": {
             "texpath": "",
-            "textureref": 2396002073,
+            "textureref": 3685421110,
             "degree": 0.0,
             "slider": 1.0,
             "color": {
@@ -103,7 +103,7 @@
         }
     },
     {
-        "entityid": 2097160,
+        "entityid": 15728649,
         "general": {
             "name": "MenuBackground",
             "tagid": 6,
@@ -130,7 +130,7 @@
         },
         "uirenderer": {
             "texpath": "../assets/Compressed/CreditsScene.ctexture",
-            "textureref": 3860481966,
+            "textureref": 3040466872,
             "degree": 0.0,
             "slider": 1.0,
             "color": {
@@ -144,7 +144,7 @@
         }
     },
     {
-        "entityid": 2097161,
+        "entityid": 15728650,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -181,15 +181,15 @@
                 "z": 0.0
             },
             "size": {
-                "x": 1075,
-                "y": 621
+                "x": 1864,
+                "y": 993
             },
             "near": 0.10000000149011612,
             "far": 900.0
         }
     },
     {
-        "entityid": 2097162,
+        "entityid": 15728651,
         "general": {
             "name": "TV ON",
             "tagid": 0,
@@ -226,7 +226,7 @@
         }
     },
     {
-        "entityid": 2097163,
+        "entityid": 15728652,
         "general": {
             "name": "BGM",
             "tagid": 0,

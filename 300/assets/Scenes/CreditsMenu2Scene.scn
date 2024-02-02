@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 5243052,
+        "entityid": 35651823,
         "general": {
             "name": "CreditsBackButton",
             "tagid": 6,
@@ -10,9 +10,9 @@
         },
         "transform": {
             "scale": {
-                "x": 0.625,
-                "y": -0.24629630148410797,
-                "z": 1.0
+                "x": 0.07500000298023224,
+                "y": -0.20000000298023224,
+                "z": 0.0
             },
             "rotate": {
                 "x": 0.0,
@@ -20,14 +20,14 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 0.6880000233650208,
-                "y": -0.4000000059604645,
+                "x": 0.17499999701976776,
+                "y": -0.10000000149011612,
                 "z": 0.0
             }
         },
         "uirenderer": {
             "texpath": "",
-            "textureref": 2396002073,
+            "textureref": 193966369,
             "degree": 0.0,
             "slider": 1.0,
             "color": {
@@ -69,7 +69,7 @@
         }
     },
     {
-        "entityid": 5243053,
+        "entityid": 38797552,
         "general": {
             "name": "BGM",
             "tagid": 0,
@@ -106,7 +106,7 @@
         }
     },
     {
-        "entityid": 5243054,
+        "entityid": 38797553,
         "general": {
             "name": "TV ON",
             "tagid": 0,
@@ -143,7 +143,7 @@
         }
     },
     {
-        "entityid": 5243055,
+        "entityid": 38797554,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -180,15 +180,15 @@
                 "z": 0.0
             },
             "size": {
-                "x": 1224,
-                "y": 621
+                "x": 1864,
+                "y": 993
             },
             "near": 0.10000000149011612,
             "far": 900.0
         }
     },
     {
-        "entityid": 5243056,
+        "entityid": 38797555,
         "general": {
             "name": "MenuBackground",
             "tagid": 6,
@@ -215,7 +215,7 @@
         },
         "uirenderer": {
             "texpath": "../assets/Compressed/CreditsScene.ctexture",
-            "textureref": 164106086,
+            "textureref": 3477513084,
             "degree": 0.0,
             "slider": 1.0,
             "color": {
@@ -229,7 +229,7 @@
         }
     },
     {
-        "entityid": 5243057,
+        "entityid": 38797556,
         "general": {
             "name": "MenuBackButton",
             "tagid": 6,
@@ -239,8 +239,8 @@
         },
         "transform": {
             "scale": {
-                "x": 0.625,
-                "y": -0.24629630148410797,
+                "x": 0.32499998807907104,
+                "y": -0.24500000476837158,
                 "z": 1.0
             },
             "rotate": {
@@ -249,14 +249,14 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 0.6875,
-                "y": -0.7407407164573669,
+                "x": 0.800000011920929,
+                "y": -0.8299999833106995,
                 "z": 0.0
             }
         },
         "uirenderer": {
             "texpath": "",
-            "textureref": 2396002073,
+            "textureref": 3685421110,
             "degree": 0.0,
             "slider": 1.0,
             "color": {
@@ -295,7 +295,7 @@
         }
     },
     {
-        "entityid": 5243058,
+        "entityid": 38797557,
         "general": {
             "name": "Click",
             "tagid": 6,
