@@ -4,10 +4,11 @@ function Alive()
 end
 
 function Update()
-	if countObj == 0 then
-		
+
+	if countObj == 3 then
+
 	end
-	print("==============================count", countObj)
+
 end
 
 function Dead()
