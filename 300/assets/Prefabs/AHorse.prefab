@@ -1,0 +1,144 @@
+{
+    "entityid": 103,
+    "general": {
+        "name": "AHorse",
+        "tagid": 1,
+        "subtag": 0,
+        "isActive": true,
+        "isPaused": false
+    },
+    "transform": {
+        "scale": {
+            "x": 1.1890875101089478,
+            "y": 2.161978244781494,
+            "z": 2.378175735473633
+        },
+        "rotate": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "translate": {
+            "x": -20.89872169494629,
+            "y": -4.5074872970581055,
+            "z": 25.422449111938477
+        }
+    },
+    "rigidbody": {
+        "density": 10.0,
+        "material": 1,
+        "motion": 1,
+        "velocity": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "rotationconstraints": {
+            "x": true,
+            "y": false,
+            "z": false
+        },
+        "gravity": true
+    },
+    "meshrenderer": {
+        "vert": "../assets/shader_files/pointLight_vert.glsl",
+        "frag": "../assets/shader_files/pointLight_frag.glsl",
+        "meshrefid": 1817507058,
+        "instancecolor": {
+            "x": 1.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 1.0
+        },
+        "bloomthreshold": {
+            "x": 0.3400000035762787,
+            "y": 0.3100000023841858,
+            "z": 0.23000000417232513,
+            "w": 1.0
+        },
+        "materialinstance": [
+            "../assets/Compressed/Trojan_Default_BaseColor.ctexture",
+            "../assets/Compressed/Trojan_Normal.ctexture",
+            "../assets/Compressed/Trojan_Metallic.ctexture",
+            "../assets/Compressed/Trojan_Roughness.ctexture",
+            "../assets/Compressed/Trojan_Rage_Emissive.ctexture",
+            "../assets/Compressed/Trojan_AO.ctexture"
+        ],
+        "mesh": "../assets/compiled_geom/Trojan05.geom",
+        "texturerefid": [
+            1940192559,
+            4213568630,
+            1301958460,
+            3973318747,
+            1469951046,
+            748184727
+        ]
+    },
+    "animator": {},
+    "boxcollider": {
+        "scaleoffset": {
+            "x": 1.0,
+            "y": 0.8999999761581421,
+            "z": 0.8500000238418579
+        },
+        "translateoffset": {
+            "x": 0.0,
+            "y": 1.100000023841858,
+            "z": 0.0
+        },
+        "istrigger": false
+    },
+    "scripts": {
+        "scriptscontainer": [
+            {
+                "scriptFile": "../assets/Scripts/TrojanHorse.lua",
+                "variables": []
+            }
+        ]
+    },
+    "audio": {
+        "filepath": "../assets\\Audio",
+        "filename": "(3D) horse_3.wav",
+        "fullpath": "../assets\\Audio/(3D) horse_3.wav",
+        "playonawake": false,
+        "islooping": false,
+        "audiotype": 1,
+        "volume": 1.0,
+        "retainaudio": false
+    },
+    "prefab": {
+        "prefab": "AHorse"
+    },
+    "aisetting": {
+        "movementtype": 1,
+        "spreadout": 0.0,
+        "stayaway": 0.0,
+        "elevation": 0.0,
+        "targetname": "Camera",
+        "graphdataname": ""
+    },
+    "healthbar": {
+        "healthcolor": {
+            "x": 0.0,
+            "y": 1.0,
+            "z": 0.0,
+            "w": 1.0
+        },
+        "backcolor": {
+            "x": 1.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 1.0
+        },
+        "position": {
+            "x": 0.0,
+            "y": 2.4000000953674316,
+            "z": 0.0
+        },
+        "maxhealth": 200.0,
+        "width": 1.0,
+        "height": 0.07000000029802322,
+        "frametexture": 0,
+        "healthtexture": 0
+    }
+}
