@@ -1,3 +1,4 @@
+
 function Alive()
     this = Helper.GetScriptEntity(script_entity.id)
     if this == nil then
@@ -6,12 +7,12 @@ function Alive()
 end
 
 function Update()
-    if this:GetHealthbar().health <= 0 then
-        --increase count of dead enemy
-        _G.PreObjectivesCounter = _G.PreObjectivesCounter + 1;
-        --transformed away fr now lol
-        this:GetTransform().mTranslate.x = 1000;
-    end
+        if this:GetHealthbar().health <= 0 then
+            --increase count of dead enemy
+            _G.PreObjectivesCounter = _G.PreObjectivesCounter + 1;
+            --transformed away fr now lol
+            systemManager.ecs:SetDeleteEntity(this)
+        end
 end
 
 function Dead()
