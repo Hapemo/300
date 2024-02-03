@@ -26,6 +26,7 @@
 #include "Input/InputMapSystem.h"
 
 #include "cstdlib"
+#include <omp.h>
 
 
 /***************************************************************************/
@@ -122,15 +123,17 @@ void GraphicsSystem::Update(float dt)
 		UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_GAME, dt);
 	}
 
-#pragma region update all the mesh instances
 
 	// Retrieve and update the mesh instances to be drawn
 	auto meshRendererInstances = systemManager->ecs->GetEntitiesWith<MeshRenderer>();
 	int animationID{ 0 };
 	bool hasanimator{false};
-
-	for (Entity inst : meshRendererInstances)
+	
+	//for (Entity inst : meshRendererInstances)
+#pragma omp parallel for
+	for (int iter{}; iter < meshRendererInstances.size(); ++iter)
 	{
+		Entity inst = meshRendererInstances[iter];
 		mat4 final = mat4(1.f);
 
 		// if the mesh instance is not active, skip it
@@ -194,8 +197,6 @@ void GraphicsSystem::Update(float dt)
 		AddParticleInstance(p, m_EditorCamera.position());
 	}
 	m_ParticleMesh.PrepForDraw();
-
-#pragma endregion
 }
 
 

@@ -16,6 +16,7 @@
 #include <stringbuffer.h>
 
 #include <filesystem>
+#include <omp.h>
 
 #define  _ENABLE_ANIMATIONS 1
 /***************************************************************************/
@@ -115,6 +116,7 @@ void ResourceTy::mesh_LoadFolder()
 	std::filesystem::path folderpath = compiled_geom_path.c_str();
 
 	// Reads through all the files in the folder, and loads them into the mesh
+#pragma omp parallel for
 	for (const auto& entry : std::filesystem::directory_iterator(folderpath))
 	{
 		if (std::filesystem::is_regular_file(entry))
@@ -127,7 +129,11 @@ void ResourceTy::mesh_LoadFolder()
 
 			std::string filepath = compiled_geom_path + entry.path().filename().string();
 
-			++mResouceCnt;
+//#pragma omp critical
+			{
+				++mResouceCnt;
+			}
+
 			//uid uids(filepath);
 
 			std::string descfilepath = filepath + ".desc";
@@ -143,7 +149,10 @@ void ResourceTy::mesh_LoadFolder()
 			meshInstance.m_GUID = guid;
 			meshInstance.m_Type = _MESH;
 
-			m_ResourceInstance.emplace(guid, &meshInstance);
+//#pragma omp critical 
+			{
+				m_ResourceInstance.emplace(guid, &meshInstance);
+			}
 		}
 	}
 }
@@ -285,6 +294,7 @@ void ResourceTy::MaterialInstance_Loader() {
 	std::filesystem::path folderpath = compressed_texture_path.c_str();
 
 	// Reads through all the files in the folder, and loads them into the mesh
+#pragma omp parallel for
 	for (const auto& entry : std::filesystem::directory_iterator(folderpath))
 	{
 
@@ -304,13 +314,18 @@ void ResourceTy::MaterialInstance_Loader() {
 
 		auto texPtr = SetupMaterialInstance(compressedfilepath);
 
-		++mResouceCnt;
+//#pragma omp critical 
+		{
+			++mResouceCnt;
+		}
+
 		instance_infos& tempInstance = AllocRscInfo();
 		tempInstance.m_Name = compressedfilepath;
 		tempInstance.m_GUID = guid;
 		tempInstance.m_pData = reinterpret_cast<void*>(texPtr);
 
 		tempInstance.m_Type = _TEXTURE;
+
 		m_ResourceInstance.emplace(guid, &tempInstance);
 	}
 }
