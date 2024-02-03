@@ -1958,6 +1958,8 @@ void GraphicsSystem::DrawAllParticles()
 
 void GraphicsSystem::RenderShadowMap()
 {
+	glCullFace(GL_FRONT);
+
 	// Bind shadow FBO to be rendered to
 	m_ShadowFbo.PrepForDraw();
 	//glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);	// turn off writing to FBO's color buffer
@@ -2020,6 +2022,8 @@ void GraphicsSystem::RenderShadowMap()
 	// Enable back writing to color bits in framebuffer
 	//glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
 	m_ShadowFbo.Unbind();
+
+	glCullFace(GL_NONE);
 }
 
 void GraphicsSystem::ComputeDeferredLight(bool editorDraw)
