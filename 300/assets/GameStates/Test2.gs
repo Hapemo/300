@@ -1,17 +1,17 @@
 [
     {
-        "scene_name": "TestMeshCollider",
+        "scene_name": "test2",
         "pause": false,
         "force_render": true,
         "bloom_threshold": {
             "x": 1.0,
-            "y": 0.0,
-            "z": 1.0
+            "y": 1.0,
+            "z": 0.0
         },
-        "bloom_exposure": 1.7400000095367432,
-        "bloom_offset": 1.6100000143051147,
-        "bloom_sampleweight": 0.6439999938011169,
-        "chroma_strength": 0.01899999938905239,
+        "bloom_exposure": 0.10400000214576721,
+        "bloom_offset": 1.8380000591278076,
+        "bloom_sampleweight": 2.941999912261963,
+        "chroma_strength": 0.0038999998942017555,
         "bloom_enable": true,
         "crt_enable": false,
         "crt_distortion_value": 0.0005000000237487257,
@@ -22,7 +22,7 @@
             "x": 1.0,
             "y": 1.0,
             "z": 1.0,
-            "w": 0.30000001192092896
+            "w": 0.949999988079071
         },
         "debug": 1
     }
