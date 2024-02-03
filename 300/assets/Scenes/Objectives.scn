@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 3145949,
+        "entityid": 242,
         "general": {
             "name": "Objectives",
             "tagid": 0,
@@ -101,7 +101,7 @@
         }
     },
     {
-        "entityid": 3145950,
+        "entityid": 243,
         "general": {
             "name": "Objectives",
             "tagid": 0,
@@ -202,7 +202,7 @@
         }
     },
     {
-        "entityid": 3145951,
+        "entityid": 244,
         "general": {
             "name": "Objectives",
             "tagid": 0,
@@ -303,7 +303,7 @@
         }
     },
     {
-        "entityid": 3145952,
+        "entityid": 245,
         "general": {
             "name": "Controller",
             "tagid": 0,
@@ -332,6 +332,41 @@
             "scriptscontainer": [
                 {
                     "scriptFile": "../assets/Scripts/ObjectivesController.lua",
+                    "variables": []
+                }
+            ]
+        }
+    },
+    {
+        "entityid": 246,
+        "general": {
+            "name": "PreObjectivesController",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/PreObjectivesController.lua",
                     "variables": []
                 }
             ]

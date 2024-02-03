@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 4194381,
+        "entityid": 192,
         "general": {
             "name": "AMelissa",
             "tagid": 1,
@@ -89,7 +89,7 @@
         "scripts": {
             "scriptscontainer": [
                 {
-                    "scriptFile": "../assets/Scripts/Melissa.lua",
+                    "scriptFile": "../assets/Scripts/NewEnemy.lua",
                     "variables": []
                 }
             ]
@@ -131,7 +131,7 @@
         }
     },
     {
-        "entityid": 4194382,
+        "entityid": 193,
         "general": {
             "name": "AHorse",
             "tagid": 1,
@@ -223,7 +223,7 @@
         "scripts": {
             "scriptscontainer": [
                 {
-                    "scriptFile": "../assets/Scripts/TrojanHorse.lua",
+                    "scriptFile": "../assets/Scripts/NewEnemy.lua",
                     "variables": []
                 }
             ]
@@ -275,7 +275,7 @@
         }
     },
     {
-        "entityid": 4194383,
+        "entityid": 194,
         "general": {
             "name": "AtrojanS",
             "tagid": 1,
@@ -362,7 +362,7 @@
         "scripts": {
             "scriptscontainer": [
                 {
-                    "scriptFile": "../assets/Scripts/TrojanSoldier.lua",
+                    "scriptFile": "../assets/Scripts/NewEnemy.lua",
                     "variables": []
                 }
             ]
@@ -404,7 +404,7 @@
         }
     },
     {
-        "entityid": 4194384,
+        "entityid": 195,
         "general": {
             "name": "Angry",
             "tagid": 1,
@@ -479,6 +479,14 @@
                 2357914544
             ]
         },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/NewEnemy.lua",
+                    "variables": []
+                }
+            ]
+        },
         "healthbar": {
             "healthcolor": {
                 "x": 0.0,
@@ -505,7 +513,7 @@
         }
     },
     {
-        "entityid": 4194385,
+        "entityid": 196,
         "general": {
             "name": "ILOVEYOU",
             "tagid": 1,
@@ -649,7 +657,7 @@
         }
     },
     {
-        "entityid": 4194386,
+        "entityid": 197,
         "general": {
             "name": "ZipBomb",
             "tagid": 1,
@@ -793,7 +801,7 @@
         }
     },
     {
-        "entityid": 4194387,
+        "entityid": 198,
         "general": {
             "name": "EnemyDeathAudio",
             "tagid": 8,
@@ -836,7 +844,7 @@
         }
     },
     {
-        "entityid": 4194388,
+        "entityid": 199,
         "general": {
             "name": "ZipBombFuseAudio",
             "tagid": 0,
@@ -879,7 +887,7 @@
         }
     },
     {
-        "entityid": 4194389,
+        "entityid": 200,
         "general": {
             "name": "TrojanHorseChargeAudio",
             "tagid": 0,
@@ -922,7 +930,7 @@
         }
     },
     {
-        "entityid": 4194390,
+        "entityid": 201,
         "general": {
             "name": "Melissa (AUDIO TEST)",
             "tagid": 1,
