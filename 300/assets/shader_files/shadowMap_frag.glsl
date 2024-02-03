@@ -6,5 +6,4 @@
 void main() 
 {
 	// Intentionally empty
-	//gl_FragDepth = gl_FragCoord.z;
 }

@@ -77,7 +77,7 @@ void GraphicsSystem::Init()
 	//glCullFace(GL_BACK);
 
 	// Set Cameras' starting position
-	SetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR, {38, 20, 30});									// Position of camera
+	SetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR, {38, 20, 30});								// Position of camera
 	SetCameraTarget(CAMERA_TYPE::CAMERA_TYPE_EDITOR, {0, 0, 0});									// Target of camera
 	SetCameraProjection(CAMERA_TYPE::CAMERA_TYPE_ALL, GFX::CameraConstants::defaultFOV, m_Window->size(), 0.1f, 900.f);			// Projection of camera
 
@@ -210,7 +210,7 @@ void GraphicsSystem::Draw(float dt, bool forEditor)
 {
 	// Render the depth scene first as shadow pass
 	RenderShadowMap();
-	m_Renderer.AddCube(dirLightPos, vec3(2.f, 2.f, 2.f));
+	//m_Renderer.AddCube(dirLightPos, vec3(2.f, 2.f, 2.f));
 	m_Renderer.AddLine(dirLightPos, dirLightTgt);
 
 	std::map<std::string, short> renderedMesh;
@@ -1966,7 +1966,7 @@ void GraphicsSystem::RenderShadowMap()
 	lightCam.SetPosition(dirLightPos);
 	lightCam.SetTarget(dirLightTgt);
 	lightCam.SetProjection(GFX::CameraConstants::defaultFOV, m_Window->size(), 0.1f, 900.f);
-	lightCam.Update();
+	lightCam.Update(false);
 	mat4 camVP = lightCam.viewProj();
 
 	// Bind Shaders and update uniforms

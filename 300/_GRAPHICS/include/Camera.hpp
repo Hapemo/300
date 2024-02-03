@@ -106,7 +106,7 @@ Sets the projection matrix of the camera
 /*!*****************************************************************************
 Updates projection and view projection matrix of the camera
 *******************************************************************************/
-        void Update();
+        void Update(bool freeMoving = true);
 
         mat4 mProjection;
         mat4 mView;
