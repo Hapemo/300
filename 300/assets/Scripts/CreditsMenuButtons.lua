@@ -81,12 +81,12 @@ function Update()
             if (hoverOver == false) then
                 hoverSFX = ent:GetAudio()
                 hoverSFX:SetPlay(0.2)
-                --uirend:SetTexture("NextButton_Hover")
+                uirend:SetTexture("NextButton_Hover")
                 hoverOver = true;
             end
         end
         if (button.mIsHover == false) then
-            --uirend:SetTexture("NextButton_Default")
+            uirend:SetTexture("NextButton_Default")
             hoverOver = false;
         end
         if (button.mActivated) then
@@ -109,12 +109,12 @@ function Update()
             if (hoverOver == false) then
                 hoverSFX = ent:GetAudio()
                 hoverSFX:SetPlay(0.2)
-               -- uirend:SetTexture("NextButton_Hover")
+                uirend:SetTexture("NextButton_Hover")
                 hoverOver = true;
             end
         end
         if (button.mIsHover == false) then
-            --uirend:SetTexture("NextButton_Default")
+            uirend:SetTexture("NextButton_Default")
             hoverOver = false;
         end
         if (button.mActivated) then
@@ -135,12 +135,12 @@ function Update()
             if (hoverOver == false) then
                 hoverSFX = ent:GetAudio()
                 hoverSFX:SetPlay(0.2)
-                --uirend:SetTexture("NextButton_Hover")
+                uirend:SetTexture("NextButton_Hover")
                 hoverOver = true;
             end
         end
         if (button.mIsHover == false) then
-            --uirend:SetTexture("NextButton_Default")
+            uirend:SetTexture("NextButton_Default")
             hoverOver = false;
         end
         if (button.mActivated) then
@@ -161,12 +161,12 @@ function Update()
             if (hoverOver == false) then
                 hoverSFX = ent:GetAudio()
                 hoverSFX:SetPlay(0.2)
-                --uirend:SetTexture("NextButton_Hover")
+                uirend:SetTexture("NextButton_Hover")
                 hoverOver = true;
             end
         end
         if (button.mIsHover == false) then
-            --uirend:SetTexture("NextButton_Default")
+            uirend:SetTexture("NextButton_Default")
             hoverOver = false;
         end
         if (button.mActivated) then
@@ -187,12 +187,12 @@ function Update()
             if (hoverOver == false) then
                 hoverSFX = ent:GetAudio()
                 hoverSFX:SetPlay(0.2)
-                --uirend:SetTexture("NextButton_Hover")
+                uirend:SetTexture("NextButton_Hover")
                 hoverOver = true;
             end
         end
         if (button.mIsHover == false) then
-           -- uirend:SetTexture("NextButton_Default")
+            uirend:SetTexture("NextButton_Default")
             hoverOver = false;
         end
         if (button.mActivated) then
@@ -212,12 +212,12 @@ function Update()
             if (hoverOver == false) then
                 hoverSFX = ent:GetAudio()
                 hoverSFX:SetPlay(0.2)
-                --uirend:SetTexture("BackButton_Hover")
+                uirend:SetTexture("BackButton_Hover")
                 hoverOver = true;
             end
         end
         if (button.mIsHover == false) then
-            --uirend:SetTexture("BackButton_Default")
+            uirend:SetTexture("BackButton_Default")
             hoverOver = false;
         end
         if (button.mActivated) then
@@ -237,12 +237,12 @@ function Update()
             if (hoverOver == false) then
                 hoverSFX = ent:GetAudio()
                 hoverSFX:SetPlay(0.2)
-                --uirend:SetTexture("BackButton_Hover")
+                uirend:SetTexture("BackButton_Hover")
                 hoverOver = true;
             end
         end
         if (button.mIsHover == false) then
-            --uirend:SetTexture("BackButton_Default")
+            uirend:SetTexture("BackButton_Default")
             hoverOver = false;
         end
         if (button.mActivated) then
@@ -263,12 +263,12 @@ function Update()
             if (hoverOver == false) then
                 hoverSFX = ent:GetAudio()
                 hoverSFX:SetPlay(0.2)
-                --uirend:SetTexture("BackButton_Hover")
+                uirend:SetTexture("BackButton_Hover")
                 hoverOver = true;
             end
         end
         if (button.mIsHover == false) then
-            --uirend:SetTexture("BackButton_Default")
+            uirend:SetTexture("BackButton_Default")
             hoverOver = false;
         end
         if (button.mActivated) then
@@ -289,12 +289,12 @@ function Update()
             if (hoverOver == false) then
                 hoverSFX = ent:GetAudio()
                 hoverSFX:SetPlay(0.2)
-                --uirend:SetTexture("BackButton_Hover")
+                uirend:SetTexture("BackButton_Hover")
                 hoverOver = true;
             end
         end
         if (button.mIsHover == false) then
-            --uirend:SetTexture("BackButton_Default")
+            uirend:SetTexture("BackButton_Default")
             hoverOver = false;
         end
         if (button.mActivated) then
@@ -315,12 +315,12 @@ function Update()
             if (hoverOver == false) then
                 hoverSFX = ent:GetAudio()
                 hoverSFX:SetPlay(0.2)
-                --uirend:SetTexture("BackButton_Hover")
+                uirend:SetTexture("BackButton_Hover")
                 hoverOver = true;
             end
         end
         if (button.mIsHover == false) then
-            --uirend:SetTexture("BackButton_Default")
+            uirend:SetTexture("BackButton_Default")
             hoverOver = false;
         end
         if (button.mActivated) then
@@ -338,12 +338,12 @@ function Update()
             if (hoverOver == false) then
                 hoverSFX = ent:GetAudio()
                 hoverSFX:SetPlay(0.2)
-                --uirend:SetTexture("Back_Hover")
+                uirend:SetTexture("Back_Hover")
                 hoverOver = true;
             end
         end
         if (button.mIsHover == false) then
-            --uirend:SetTexture("Back_Default")
+            uirend:SetTexture("Back_Default")
             hoverOver = false;
         end
         if (button.mActivated) then
