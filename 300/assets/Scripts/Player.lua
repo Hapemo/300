@@ -109,7 +109,7 @@ local pistolTimer = 0
 
 -- gun states
 local gunRecoilState = "IDLE"       -- ["STARTUP", "IDLE" , "MOVING"]
-_G.gunEquipped = 0 --"REVOLVER"      -- rename this to whatever ["PISTOL (DEFAULT)" , "REVOLVER" , "SHOTGUN" , "MACHINE GUN"]  - 1/31 (pistol new default gun)
+_G.gunEquipped = 0 --"PISTOL"      -- rename this to whatever ["PISTOL (DEFAULT)" , "REVOLVER" , "SHOTGUN" , "MACHINE GUN"]  - 1/31 (pistol new default gun)
 local gunHoldState = "NOT HELD"     -- ["NOT HELD" , "HOLDING"]
 
 local pistolShootState = "SHOOTABLE" 
@@ -678,12 +678,18 @@ function Update()
         -- print("GUN RECOIL STATE:" , gunRecoilState)
             -- print("GUN EQUIPPED:" , gunEquipped)
             if(_G.gunEquipped == 1 ) then -- REVOLVER
-             
+                print("SHOOTING REVOLVER")
                 if(revolverGunTimer == 0) then 
                     -- print("REVOLVER SHOOTING")
                     
                     applyGunRecoil(recoil_speed, 0.5)
-                    gunTransform:GunAnimation("REVOLVER" , 30.0, 1.0, 0.2) -- Trigger everytime player shoots
+                    -- <GunAnimation>
+                    -- 1. Gun Type 
+                    -- 2. Skill Timer (sync it up w the internal skill timer)
+                    -- 3. Recoil Angle (how much) - depends on axis set on "parentChildRotateInit()"
+                    -- 4. Recoil Speed (how fast)
+                    -- 5. Recoil Duration (how long the recoil should last)
+                    gunTransform:GunAnimation("REVOLVER",_G.skill_duration, 30.0, 1.0, 0.2)  -- Trigger everytime player shoots 
 
                     -- gunRecoilState = "MOVING"
 

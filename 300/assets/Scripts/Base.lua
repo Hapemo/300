@@ -112,6 +112,7 @@ function Update()
             _G.weaponArray[8][2] = false
             _G.weaponArray[8][3] = 0
             _G.gunEquipped = _G.weaponArray[8][1]
+            print("GUN EQUIPPED: ", _G.gunEquipped)
             _G.activated = true
             skillActivateAudio:SetPlay(0.4)
             ArraySystem(8)
@@ -122,6 +123,7 @@ function Update()
             _G.weaponArray[7][2] = false
             _G.weaponArray[7][3] = 0
             _G.gunEquipped = _G.weaponArray[7][1]
+            print("GUN EQUIPPED: ", _G.gunEquipped)
             _G.activated = true
             skillActivateAudio:SetPlay(0.4)
             ArraySystem(7)
@@ -132,6 +134,7 @@ function Update()
             _G.weaponArray[6][2] = false
             _G.weaponArray[6][3] = 0
             _G.gunEquipped = _G.weaponArray[6][1]
+            print("GUN EQUIPPED: ", _G.gunEquipped)
             _G.activated = true
             skillActivateAudio:SetPlay(0.4)
             ArraySystem(6)
@@ -142,6 +145,7 @@ function Update()
             _G.weaponArray[5][2] = false
             _G.weaponArray[5][3] = 0
             _G.gunEquipped = _G.weaponArray[5][1]
+            print("GUN EQUIPPED: ", _G.gunEquipped)
             _G.activated = true
             skillActivateAudio:SetPlay(0.4)
             ArraySystem(5)
@@ -152,6 +156,7 @@ function Update()
             _G.weaponArray[4][2] = false
             _G.weaponArray[4][3] = 0
             _G.gunEquipped = _G.weaponArray[4][1]
+            print("GUN EQUIPPED: ", _G.gunEquipped)
             _G.activated = true
             skillActivateAudio:SetPlay(0.4)
             ArraySystem(4)
@@ -162,6 +167,7 @@ function Update()
             _G.weaponArray[3][2] = false
             _G.weaponArray[3][3] = 0
             _G.gunEquipped = _G.weaponArray[3][1]
+            print("GUN EQUIPPED: ", _G.gunEquipped)
             _G.activated = true
             skillActivateAudio:SetPlay(0.4)
             ArraySystem(3)
@@ -172,6 +178,7 @@ function Update()
             _G.weaponArray[2][2] = false
             _G.weaponArray[2][3] = 0
             _G.gunEquipped = _G.weaponArray[2][1]
+            print("GUN EQUIPPED: ", _G.gunEquipped)
             _G.activated = true
             skillActivateAudio:SetPlay(0.4)
             ArraySystem(2)
@@ -182,6 +189,7 @@ function Update()
             _G.weaponArray[1][2] = false
             _G.weaponArray[1][3] = 0
             _G.gunEquipped = _G.weaponArray[1][1]
+            print("GUN EQUIPPED: ", _G.gunEquipped)
             _G.activated = true
             skillActivateAudio:SetPlay(0.4)
             ArraySystem(1)
