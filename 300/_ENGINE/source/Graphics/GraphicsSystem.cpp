@@ -1763,6 +1763,7 @@ void GraphicsSystem::SetupAllShaders()
 	m_ComputeDeferredCamPosLocation = computeDeferred.GetUniformLocation("uCamPos");
 	m_ComputeDeferredGlobalTintLocation = computeDeferred.GetUniformLocation("uGlobalTint");
 	m_ComputeDeferredGlobalBloomLocation = computeDeferred.GetUniformLocation("uGlobalBloomThreshold");
+	computePBRLightSpaceMatrixLocation = computeDeferred.GetUniformLocation("uLightSpaceMatrix");
 	GFX::Shader::Deactivate();
 
 	m_ComputeCRTShader.CreateShaderFromFile("../assets/shader_files/computeCRT.glsl");
@@ -2048,6 +2049,19 @@ void GraphicsSystem::ComputeDeferredLight(bool editorDraw)
 	vec4 globalBloom = vec4(mAmbientBloomThreshold, m_EnableBloom);
 	glUniform4fv(m_ComputeDeferredGlobalBloomLocation, 1, &globalBloom[0]);
 
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, m_ShadowFbo.GetDepthMap());
+
+	// Light space matrix
+	GFX::Camera lightCam;
+	lightCam.SetPosition(dirLightPos);
+	lightCam.SetTarget(dirLightTgt);
+	lightCam.SetProjection(GFX::CameraConstants::defaultFOV, m_Window->size(), 0.1f, 900.f);
+	lightCam.Update(false);
+	mat4 camVP = lightCam.viewProj();
+
+	glUniformMatrix4fv(computePBRLightSpaceMatrixLocation, 1, GL_FALSE, &camVP[0][0]);
+
 	int num_group_x = glm::ceil(m_Width / 29);
 	int num_group_y = glm::ceil(m_Height / 29);
 	glDispatchCompute(num_group_x, num_group_y, 1);
@@ -2057,6 +2071,7 @@ void GraphicsSystem::ComputeDeferredLight(bool editorDraw)
 	glBindImageTexture(0, 0, 0, GL_FALSE, 0, GL_READ_WRITE, GL_RGBA32F);
 	glBindImageTexture(1, 0, 0, GL_FALSE, 0, GL_WRITE_ONLY, GL_RGBA32F);
 
+	glBindTexture(GL_TEXTURE_2D, 0);
 	computeDeferred.Deactivate();
 }
 

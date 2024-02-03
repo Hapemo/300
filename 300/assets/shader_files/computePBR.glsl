@@ -10,6 +10,8 @@ layout(rgba32f, binding = 4) uniform image2D gNormal;               // XYZ:  Nor
 layout(rgba32f, binding = 5) uniform image2D gAlbedoSpec;           // RGB:  Albedo Color		| A: Metallic component
 layout(rgba32f, binding = 6) uniform image2D gEmission;             // RGBA: Emission
 
+layout(binding = 0) uniform sampler2D depthBuffer;
+
 // -- OUTPUT --
 layout(rgba32f, binding = 0) uniform image2D imgOutput;             // Custom Color of the mesh, and also the output
 layout(rgba32f, binding = 1) uniform image2D brightOutput;
@@ -20,6 +22,7 @@ uniform int uLightCount;
 uniform int uSpotlightCount;
 uniform vec4 uGlobalTint;
 uniform vec4 uGlobalBloomThreshold;
+uniform mat4 uLightSpaceMatrix;
 
 struct PointLight           // 48 Bytes
 {
@@ -58,6 +61,7 @@ float GeometrySmith(vec3 N, vec3 V, vec3 L, float roughness);
 float CalculateAttenuation(float linear, float quadratic, float distance);
 vec3 ComputeLight(PointLight light, vec3 F0, vec3 fragPos, vec3 albedo, vec3 normal, float roughness, float metallic);
 vec3 ComputeSpotLight(SpotLight light, vec3 fragPos, vec3 albedo, vec3 normal, float roughness, float metallic);
+float ShadowCalculation(vec3 fragPos);
 
 const float PI = 3.14159265359;
 
@@ -92,10 +96,13 @@ void main()
         lightRadiance += ComputeSpotLight(spotlights[i], fragPos.rgb, albedoSpec.rgb, normal.rgb, roughness, metallic);
     }
 
-    vec3 ambient = vec3(0.03) * albedoSpec.rgb * ao;
+    vec3 ambient = vec3(0.15) * albedoSpec.rgb * ao;
     vec3 color = ambient + lightRadiance;
     vec4 finalColor = vec4(color + emission.rgb, 1.0);
+    float shadow = ShadowCalculation(fragPos.xyz);
     finalColor = finalColor * customColor;   // Set Custom Color
+    if (shadow > 0.5f)
+        finalColor.rgb = vec3(1.0, 0.0, 0.0);
 
     // HDR
     // check whether fragment output is higher than threshold, if so output as bright color
@@ -223,4 +230,26 @@ float GeometrySmith(vec3 N, vec3 V, vec3 L, float roughness)
     float ggx2  = GeometrySchlickGGX(NdotV, roughness);
 
     return ggx1 * ggx2;
+}
+
+float ShadowCalculation(vec3 fragPos)
+{
+    vec4 fragPosLightSpace = uLightSpaceMatrix * vec4(fragPos, 1.0);
+    // Perform perspective divide to transform clip space to NDC
+    vec3 projCoords = fragPosLightSpace.xyz / fragPosLightSpace.w;  // Gets light-space position in range [-1, 1]
+
+    // Depth map range is [0, 1], convert to depth map range
+    projCoords = projCoords * 0.5 + 0.5;
+
+    if (projCoords.z > 1.0)
+        return 0.0;
+
+    float closestDepth = texture(depthBuffer, projCoords.xy).r;
+    float currentDepth = projCoords.z;
+
+    // In shadow if current depth is larger than closest depth
+    float bias = 0.005;
+    float shadow = currentDepth - bias > closestDepth ? 1.0 : 0.0;
+
+    return shadow;
 }

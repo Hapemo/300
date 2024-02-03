@@ -406,6 +406,7 @@ public:
 	// -- Shadows WIP --
 	GFX::Shader shadowMapShaderInst;
 	GLuint shadowMapLightSpaceMatrixLocation{};
+	GLuint computePBRLightSpaceMatrixLocation{};
 	GFX::ShadowFBO m_ShadowFbo;
 	const vec3 dirLightPos{ -20.f, 50.f, 0.f };
 	const vec3 dirLightTgt{ -4, 32, 1 };
