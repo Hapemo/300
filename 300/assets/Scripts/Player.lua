@@ -300,9 +300,9 @@ function Update()
     -- end
 
     dt = FPSManager.GetDT()
-    if(_G.gunEquipped == 1) then -- Revolver
+    -- if(_G.gunEquipped == 1) then -- Revolver
         gunTransform:ParentChildRotateUpdate(dt)
-    end
+    -- end
     
 --region -- player camera
     if (inputMapSys:GetButtonDown("exit")) then
@@ -684,12 +684,11 @@ function Update()
                 if(revolverGunTimer == 0) then 
                     -- print("REVOLVER SHOOTING")
                     
-                    -- applyGunRecoil(recoil_speed, 0.5)
                     -- <GunAnimation>
                     -- 1. Gun Type 
                     -- 2. Skill Timer (sync it up w the internal skill timer)
                     -- 3. Recoil Angle (how much) - depends on axis set on "parentChildRotateInit()"
-                    -- 4. Recoil Speed (how fast)2
+                    -- 4. Recoil Speed (how fast)
                     -- 5. Recoil Duration (how long the recoil should last)
                     gunTransform:GunAnimation("REVOLVER",_G.skill_duration, 30.0, 1.0, 0.2)  -- Trigger everytime player shoots 
                     -- print("SKILL DURATION" , _G.skill_duration)

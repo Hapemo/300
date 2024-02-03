@@ -7,6 +7,7 @@ local disCount = 3
 local dashui = { }
 _G.textureArray  = {"UI-Revolver" , "UI-Shotgun-1223341","UI-Assult-133123" }
 _G.textureArray2 = {"UI-Blue","UI-Yellow-s3&321",  "UI-Red"}
+_G.powerLevel = 1
 
 -- Skill Audio
 local skillActivateEntity
@@ -110,7 +111,9 @@ function Update()
     if(Input.CheckKey(State.PRESS,Key.KEY_1))then
         if(_G.weaponArray[8][2] == true)  then
             _G.weaponArray[8][2] = false
-            _G.weaponArray[8][3] = 0
+            _G.powerLevel = _G.weaponArray[8][3]
+            -- _G.weaponArray[8][3] = 0
+            print("POWER LEVEL: " , _G.weaponArray[8][3])
             _G.gunEquipped = _G.weaponArray[8][1]
             print("GUN EQUIPPED: ", _G.gunEquipped)
             _G.activated = true
@@ -121,7 +124,8 @@ function Update()
     elseif(Input.CheckKey(State.PRESS,Key.KEY_2))then
         if(_G.weaponArray[7][2] == true)  then
             _G.weaponArray[7][2] = false
-            _G.weaponArray[7][3] = 0
+            _G.powerLevel = _G.weaponArray[7][3]
+            -- _G.weaponArray[7][3] = 0
             _G.gunEquipped = _G.weaponArray[7][1]
             print("GUN EQUIPPED: ", _G.gunEquipped)
             _G.activated = true
@@ -132,7 +136,8 @@ function Update()
     elseif(Input.CheckKey(State.PRESS,Key.KEY_3))then
         if(_G.weaponArray[7][2] == true)  then
             _G.weaponArray[6][2] = false
-            _G.weaponArray[6][3] = 0
+            _G.powerLevel = _G.weaponArray[6][3]
+            -- _G.weaponArray[6][3] = 0
             _G.gunEquipped = _G.weaponArray[6][1]
             print("GUN EQUIPPED: ", _G.gunEquipped)
             _G.activated = true
@@ -143,7 +148,8 @@ function Update()
     elseif(Input.CheckKey(State.PRESS,Key.KEY_4))then
         if(_G.weaponArray[7][2] == true)  then
             _G.weaponArray[5][2] = false
-            _G.weaponArray[5][3] = 0
+            _G.powerLevel = _G.weaponArray[5][3]
+            -- _G.weaponArray[5][3] = 0
             _G.gunEquipped = _G.weaponArray[5][1]
             print("GUN EQUIPPED: ", _G.gunEquipped)
             _G.activated = true
@@ -154,7 +160,8 @@ function Update()
     elseif(Input.CheckKey(State.PRESS,Key.KEY_5))then
         if(_G.weaponArray[7][2] == true)  then
             _G.weaponArray[4][2] = false
-            _G.weaponArray[4][3] = 0
+            _G.powerLevel = _G.weaponArray[4][3]
+            -- _G.weaponArray[4][3] = 0
             _G.gunEquipped = _G.weaponArray[4][1]
             print("GUN EQUIPPED: ", _G.gunEquipped)
             _G.activated = true
@@ -165,7 +172,8 @@ function Update()
     elseif(Input.CheckKey(State.PRESS,Key.KEY_6))then
         if(_G.weaponArray[7][2] == true)  then
             _G.weaponArray[3][2] = false
-            _G.weaponArray[3][3] = 0
+            _G.powerLevel = _G.weaponArray[3][3]
+            -- _G.weaponArray[3][3] = 0
             _G.gunEquipped = _G.weaponArray[3][1]
             print("GUN EQUIPPED: ", _G.gunEquipped)
             _G.activated = true
@@ -176,7 +184,8 @@ function Update()
     elseif(Input.CheckKey(State.PRESS,Key.KEY_7))then
         if(_G.weaponArray[7][2] == true)  then
             _G.weaponArray[2][2] = false
-            _G.weaponArray[2][3] = 0
+            _G.powerLevel = _G.weaponArray[2][3]
+            -- _G.weaponArray[2][3] = 0
             _G.gunEquipped = _G.weaponArray[2][1]
             print("GUN EQUIPPED: ", _G.gunEquipped)
             _G.activated = true
@@ -187,7 +196,8 @@ function Update()
     elseif(Input.CheckKey(State.PRESS,Key.KEY_8))then
         if(_G.weaponArray[7][2] == true)  then
             _G.weaponArray[1][2] = false
-            _G.weaponArray[1][3] = 0
+            _G.powerLevel = _G.weaponArray[1][3]
+            -- _G.weaponArray[1][3] = 0
             _G.gunEquipped = _G.weaponArray[1][1]
             print("GUN EQUIPPED: ", _G.gunEquipped)
             _G.activated = true

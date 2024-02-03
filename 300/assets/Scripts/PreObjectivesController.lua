@@ -16,7 +16,7 @@ end
 
 function Update()
     --set >= 4 for now as there are 4 'A' enemies in the scene rn
-    print("OBJECTIVE COUNTER: " , _G.PreObjectivesCounter)
+    -- print("OBJECTIVE COUNTER: " , _G.PreObjectivesCounter)
     if _G.PreObjectivesCounter >= 4 then
         --spawn the objectives portals
         print("SPAWN PORTALS")

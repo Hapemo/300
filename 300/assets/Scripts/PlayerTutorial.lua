@@ -645,8 +645,8 @@ function Update()
                 
                 revolverShootState = "COOLDOWN"
             end
-        else 
-            gunTransform:SetInitialRotation()
+        -- else 
+        --     gunTransform:SetInitialRotation()
         end 
 
         -- print("TRANSLATE: " , gunTranslate.z)

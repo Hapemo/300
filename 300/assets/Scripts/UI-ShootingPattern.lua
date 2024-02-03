@@ -29,6 +29,7 @@ function Update()
                 renderer:SetDegree(timercheck)
             else
                 _G.gunEquipped = 0 
+                _G.powerLevel = 1
                 print("SKILL ENDED, EQUIPPED PISTOL BACK.") 
                 print("GUN EQUIPPED CODE: " , _G.gunEquipped)
                 timercheck = 0
