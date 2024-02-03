@@ -1,8 +1,8 @@
 [
     {
-        "entityid": 2097172,
+        "entityid": 2097259,
         "general": {
-            "name": "Melissa (AUDIO TEST)",
+            "name": "Angry",
             "tagid": 1,
             "subtag": 0,
             "isActive": true,
@@ -10,9 +10,9 @@
         },
         "transform": {
             "scale": {
-                "x": 1.162500262260437,
-                "y": 1.4500325918197632,
-                "z": 0.6006437540054321
+                "x": 2.0889999866485596,
+                "y": 1.470267415046692,
+                "z": 1.0
             },
             "rotate": {
                 "x": 0.0,
@@ -20,9 +20,9 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 16.0,
-                "y": -11.0,
-                "z": 26.0
+                "x": 10.97467041015625,
+                "y": -6.351762294769287,
+                "z": -1.1337890625
             }
         },
         "rigidbody": {
@@ -36,68 +36,148 @@
             },
             "rotationconstraints": {
                 "x": true,
-                "y": true,
-                "z": true
+                "y": false,
+                "z": false
             },
-            "gravity": true
+            "gravity": false
         },
         "meshrenderer": {
             "vert": "../assets/shader_files/pointLight_vert.glsl",
             "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 2588,
+            "meshrefid": 2561,
             "instancecolor": {
+                "x": 0.9857819676399231,
+                "y": 0.009343920275568962,
+                "z": 0.009343920275568962,
+                "w": 1.0
+            },
+            "bloomthreshold": {
                 "x": 1.0,
                 "y": 1.0,
                 "z": 1.0,
                 "w": 1.0
             },
-            "bloomthreshold": {
-                "x": 0.17000000178813934,
-                "y": 0.20999999344348907,
-                "z": 0.3100000023841858,
+            "materialinstance": [
+                "../assets/Compressed/ZipBomb_BaseColor.ctexture",
+                "../assets/Compressed/ZipBomb_Normal.ctexture",
+                "../assets/Compressed/ZipBomb_Metallic.ctexture",
+                "../assets/Compressed/ZipBomb_Roughness.ctexture",
+                "../assets/Compressed/ZipBomb_Emissive.ctexture",
+                "../assets/Compressed/ZipBomb_AO.ctexture"
+            ],
+            "mesh": "../assets/compiled_geom/ZipBomb.geom",
+            "texturerefid": [
+                2348069524,
+                1319533521,
+                2095937491,
+                2888612446,
+                3155337405,
+                2357914544
+            ]
+        }
+    },
+    {
+        "entityid": 2097260,
+        "general": {
+            "name": "ILOVEYOU",
+            "tagid": 1,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 2.0889999866485596,
+                "y": 1.470267415046692,
+                "z": 0.6134020686149597
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 11.767226219177246,
+                "z": 3.141385793685913
+            },
+            "translate": {
+                "x": 8.958003997802734,
+                "y": -10.821680068969727,
+                "z": -11.214813232421875
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 1,
+            "velocity": {
+                "x": -0.3319500982761383,
+                "y": -0.016860254108905792,
+                "z": 0.8449276685714722
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": false,
+                "z": false
+            },
+            "gravity": false
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 1383853127,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 0.29556649923324585,
+                "z": 0.29556649923324585,
                 "w": 1.0
             },
+            "bloomthreshold": {
+                "x": 0.6200000047683716,
+                "y": 0.009999999776482582,
+                "z": 0.10999999940395355,
+                "w": 0.8600000143051147
+            },
             "materialinstance": [
-                "../assets/Compressed/Melissa_BaseColor.ctexture",
-                "../assets/Compressed/Melissa_Normal.ctexture",
-                "../assets/Compressed/Melissa_Metallic.ctexture",
-                "../assets/Compressed/Melissa_Roughness.ctexture",
-                "../assets/Compressed/Melissa_Emissive.ctexture",
-                "../assets/Compressed/Melissa_AO.ctexture"
+                "../assets/Compressed/ILY_BaseColor.ctexture",
+                "../assets/Compressed/ILY_Normal.ctexture",
+                "../assets/Compressed/ILY_Metallic.ctexture",
+                "../assets/Compressed/ILY_Roughness.ctexture",
+                "../assets/Compressed/ILY_Emissive.ctexture",
+                "../assets/Compressed/ILY_AO.ctexture"
             ],
-            "mesh": "../assets/compiled_geom/Melissa.geom",
+            "mesh": "../assets/compiled_geom/ILY.geom",
             "texturerefid": [
-                1322168031,
-                1820887936,
-                2908106086,
-                2866962469,
-                2759371044,
-                2018461449
+                3245335065,
+                571906946,
+                2361540176,
+                3651022823,
+                660779078,
+                3279126427
             ]
         },
         "animator": {},
-        "capsulecollider": {
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 0.800000011920929,
+                "y": 0.800000011920929,
+                "z": 0.699999988079071
+            },
             "translateoffset": {
                 "x": 0.0,
-                "y": 0.75,
-                "z": -0.30000001192092896
+                "y": 0.8999999761581421,
+                "z": 0.10000000149011612
             },
-            "radius": 0.5,
-            "halfheight": 0.25,
             "istrigger": false
         },
         "scripts": {
             "scriptscontainer": [
                 {
-                    "scriptFile": "../assets/Scripts/Melissa.lua",
+                    "scriptFile": "../assets/Scripts/ILOVEYOU.lua",
                     "variables": []
                 }
             ]
         },
         "audio": {
             "filepath": "../assets\\Audio",
-            "filename": "(3D) Enemy_Melissa_Split.wav",
-            "fullpath": "../assets\\Audio/(3D) Enemy_Melissa_Split.wav",
+            "filename": "Enemy_ILY_ShootArrow.wav",
+            "fullpath": "../assets\\Audio/Enemy_ILY_ShootArrow.wav",
             "playonawake": false,
             "islooping": false,
             "audiotype": 1,
@@ -105,15 +185,15 @@
             "retainaudio": false
         },
         "prefab": {
-            "prefab": "Melissa"
+            "prefab": "ILOVEYOU"
         },
         "aisetting": {
-            "movementtype": 1,
+            "movementtype": 2,
             "spreadout": 0.0,
-            "stayaway": 0.0,
-            "elevation": 0.0,
+            "stayaway": 6.0,
+            "elevation": 2.0,
             "targetname": "Camera",
-            "graphdataname": "GroundPath"
+            "graphdataname": "FlyingPath"
         },
         "healthbar": {
             "healthcolor": {
@@ -131,146 +211,17 @@
             "position": {
                 "x": 0.0,
                 "y": 1.7000000476837158,
-                "z": -0.10000000149011612
+                "z": 0.0
             },
-            "maxhealth": 200.0,
-            "width": 0.800000011920929,
+            "maxhealth": 100.0,
+            "width": 1.399999976158142,
             "height": 0.07000000029802322,
             "frametexture": 0,
             "healthtexture": 0
         }
     },
     {
-        "entityid": 2097173,
-        "general": {
-            "name": "TrojanHorseChargeAudio",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "Enemy_Horse_Charge.wav",
-            "fullpath": "../assets\\Audio/Enemy_Horse_Charge.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 1.0,
-            "retainaudio": false
-        },
-        "prefab": {
-            "prefab": "TrojanHorseChargeAudio"
-        }
-    },
-    {
-        "entityid": 2097174,
-        "general": {
-            "name": "ZipBombFuseAudio",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "Enemy_Zipbomb_Fuse.wav",
-            "fullpath": "../assets\\Audio/Enemy_Zipbomb_Fuse.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 1.0,
-            "retainaudio": false
-        },
-        "prefab": {
-            "prefab": "ZipBombFuseAudio"
-        }
-    },
-    {
-        "entityid": 2097175,
-        "general": {
-            "name": "EnemyDeathAudio",
-            "tagid": 8,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "Enemy_Death.wav",
-            "fullpath": "../assets\\Audio/Enemy_Death.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 0.25,
-            "retainaudio": false
-        },
-        "prefab": {
-            "prefab": "EnemyDeathAudio"
-        }
-    },
-    {
-        "entityid": 2097176,
+        "entityid": 2097261,
         "general": {
             "name": "ZipBomb",
             "tagid": 1,
@@ -414,107 +365,81 @@
         }
     },
     {
-        "entityid": 2097178,
+        "entityid": 2097262,
         "general": {
-            "name": "ILOVEYOU",
-            "tagid": 1,
+            "name": "EnemyDeathAudio",
+            "tagid": 8,
             "subtag": 0,
             "isActive": true,
             "isPaused": false
         },
         "transform": {
             "scale": {
-                "x": 2.0889999866485596,
-                "y": 1.470267415046692,
-                "z": 0.6134020686149597
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
             },
             "rotate": {
                 "x": 0.0,
-                "y": 11.767226219177246,
-                "z": 3.141385793685913
+                "y": 0.0,
+                "z": 0.0
             },
             "translate": {
-                "x": 8.958003997802734,
-                "y": -10.821680068969727,
-                "z": -11.214813232421875
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
             }
         },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 1,
-            "velocity": {
-                "x": -0.3319500982761383,
-                "y": -0.016860254108905792,
-                "z": 0.8449276685714722
-            },
-            "rotationconstraints": {
-                "x": true,
-                "y": false,
-                "z": false
-            },
-            "gravity": false
-        },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 1383853127,
-            "instancecolor": {
-                "x": 1.0,
-                "y": 0.29556649923324585,
-                "z": 0.29556649923324585,
-                "w": 1.0
-            },
-            "bloomthreshold": {
-                "x": 0.6200000047683716,
-                "y": 0.009999999776482582,
-                "z": 0.10999999940395355,
-                "w": 0.8600000143051147
-            },
-            "materialinstance": [
-                "../assets/Compressed/ILY_BaseColor.ctexture",
-                "../assets/Compressed/ILY_Normal.ctexture",
-                "../assets/Compressed/ILY_Metallic.ctexture",
-                "../assets/Compressed/ILY_Roughness.ctexture",
-                "../assets/Compressed/ILY_Emissive.ctexture",
-                "../assets/Compressed/ILY_AO.ctexture"
-            ],
-            "mesh": "../assets/compiled_geom/ILY.geom",
-            "texturerefid": [
-                3245335065,
-                571906946,
-                2361540176,
-                3651022823,
-                660779078,
-                3279126427
-            ]
-        },
-        "animator": {},
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 0.800000011920929,
-                "y": 0.800000011920929,
-                "z": 0.699999988079071
-            },
-            "translateoffset": {
-                "x": 0.0,
-                "y": 0.8999999761581421,
-                "z": 0.10000000149011612
-            },
-            "istrigger": false
-        },
         "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/ILOVEYOU.lua",
-                    "variables": []
-                }
-            ]
+            "scriptscontainer": []
         },
         "audio": {
             "filepath": "../assets\\Audio",
-            "filename": "Enemy_ILY_ShootArrow.wav",
-            "fullpath": "../assets\\Audio/Enemy_ILY_ShootArrow.wav",
+            "filename": "Enemy_Death.wav",
+            "fullpath": "../assets\\Audio/Enemy_Death.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 0.25,
+            "retainaudio": false
+        },
+        "prefab": {
+            "prefab": "EnemyDeathAudio"
+        }
+    },
+    {
+        "entityid": 2097263,
+        "general": {
+            "name": "ZipBombFuseAudio",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Enemy_Zipbomb_Fuse.wav",
+            "fullpath": "../assets\\Audio/Enemy_Zipbomb_Fuse.wav",
             "playonawake": false,
             "islooping": false,
             "audiotype": 1,
@@ -522,15 +447,167 @@
             "retainaudio": false
         },
         "prefab": {
-            "prefab": "ILOVEYOU"
+            "prefab": "ZipBombFuseAudio"
+        }
+    },
+    {
+        "entityid": 2097264,
+        "general": {
+            "name": "TrojanHorseChargeAudio",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Enemy_Horse_Charge.wav",
+            "fullpath": "../assets\\Audio/Enemy_Horse_Charge.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false
+        },
+        "prefab": {
+            "prefab": "TrojanHorseChargeAudio"
+        }
+    },
+    {
+        "entityid": 2097265,
+        "general": {
+            "name": "Melissa (AUDIO TEST)",
+            "tagid": 1,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.162500262260437,
+                "y": 1.4500325918197632,
+                "z": 0.6006437540054321
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 16.0,
+                "y": -11.0,
+                "z": 26.0
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 1,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": true,
+                "z": true
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 2588,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 0.17000000178813934,
+                "y": 0.20999999344348907,
+                "z": 0.3100000023841858,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Melissa_BaseColor.ctexture",
+                "../assets/Compressed/Melissa_Normal.ctexture",
+                "../assets/Compressed/Melissa_Metallic.ctexture",
+                "../assets/Compressed/Melissa_Roughness.ctexture",
+                "../assets/Compressed/Melissa_Emissive.ctexture",
+                "../assets/Compressed/Melissa_AO.ctexture"
+            ],
+            "mesh": "../assets/compiled_geom/Melissa.geom",
+            "texturerefid": [
+                1322168031,
+                1820887936,
+                2908106086,
+                2866962469,
+                2759371044,
+                2018461449
+            ]
+        },
+        "animator": {},
+        "capsulecollider": {
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.75,
+                "z": -0.30000001192092896
+            },
+            "radius": 0.5,
+            "halfheight": 0.25,
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/Melissa.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "(3D) Enemy_Melissa_Split.wav",
+            "fullpath": "../assets\\Audio/(3D) Enemy_Melissa_Split.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false
+        },
+        "prefab": {
+            "prefab": "Melissa"
         },
         "aisetting": {
-            "movementtype": 2,
+            "movementtype": 1,
             "spreadout": 0.0,
-            "stayaway": 6.0,
-            "elevation": 2.0,
+            "stayaway": 0.0,
+            "elevation": 0.0,
             "targetname": "Camera",
-            "graphdataname": "FlyingPath"
+            "graphdataname": "GroundPath"
         },
         "healthbar": {
             "healthcolor": {
@@ -548,10 +625,10 @@
             "position": {
                 "x": 0.0,
                 "y": 1.7000000476837158,
-                "z": 0.0
+                "z": -0.10000000149011612
             },
-            "maxhealth": 100.0,
-            "width": 1.399999976158142,
+            "maxhealth": 200.0,
+            "width": 0.800000011920929,
             "height": 0.07000000029802322,
             "frametexture": 0,
             "healthtexture": 0
