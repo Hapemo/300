@@ -1,5 +1,5 @@
 {
-    "entityid": 1048737,
+    "entityid": 5243143,
     "general": {
         "name": "Melissa",
         "tagid": 1,
@@ -43,7 +43,7 @@
     "meshrenderer": {
         "vert": "../assets/shader_files/pointLight_vert.glsl",
         "frag": "../assets/shader_files/pointLight_frag.glsl",
-        "meshrefid": 2588,
+        "meshrefid": 2584865052,
         "instancecolor": {
             "x": 1.0,
             "y": 1.0,
@@ -64,7 +64,7 @@
             "../assets/Compressed/Melissa_Emissive.ctexture",
             "../assets/Compressed/Melissa_AO.ctexture"
         ],
-        "mesh": "../assets/compiled_geom/Melissa.geom",
+        "mesh": "../assets/compiled_geom/Melissa_Idle.geom",
         "texturerefid": [
             1322168031,
             1820887936,
