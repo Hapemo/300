@@ -622,11 +622,11 @@ function Update()
                 -- gunRecoilState = "MOVING"
 
                 -- Shoots Bullet
-                positions_final.x = positions.x + viewVecCam.x*3
-                positions_final.y = positions.y + viewVecCam.y*3
-                positions_final.z = positions.z + viewVecCam.z*3  
+                positions_final.x = positions.x + viewVecCam.x
+                positions_final.y = positions.y + viewVecCam.y
+                positions_final.z = positions.z + viewVecCam.z
 
-                       prefabEntity = systemManager.ecs:NewEntityFromPrefab("bullet", positions_final)
+                prefabEntity = systemManager.ecs:NewEntityFromPrefab("Revolver Bullet", positions_final)
                 -- rotationCam.x = rotationCam.x *0
                 -- rotationCam.y = rotationCam.y *0
                 -- rotationCam.z = rotationCam.z *0
@@ -945,9 +945,9 @@ end
 function machineGunBullets()
     -- print("HI SHOOTING MACHINE GUN")
 
-    positions_final.x = positions.x + viewVecCam.x*6
-    positions_final.y = positions.y + viewVecCam.y*6
-    positions_final.z = positions.z + viewVecCam.z*6  
+    positions_final.x = positions.x + viewVecCam.x
+    positions_final.y = positions.y + viewVecCam.y
+    positions_final.z = positions.z + viewVecCam.z 
 
     prefabEntity = systemManager.ecs:NewEntityFromPrefab("Machine Gun Bullet", positions_final)
     rotationCam.x = rotationCam.z *360

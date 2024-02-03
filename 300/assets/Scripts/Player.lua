@@ -97,7 +97,7 @@ local max_recoil_distance_z = 0.1
 local bullet_scale = Vec3.new()
 
 -- Cooldown in seconds (between bullets)
-local revolverGunCooldown = 1
+local revolverGunCooldown = 0.7
 local shotGunCooldown = 1.5
 local machineGunCooldown = 0.2
 local pistolCooldown = 0.5
@@ -682,7 +682,7 @@ function Update()
                 if(revolverGunTimer == 0) then 
                     -- print("REVOLVER SHOOTING")
                     
-                    applyGunRecoil(recoil_speed, 0.5)
+                    -- applyGunRecoil(recoil_speed, 0.5)
                     -- <GunAnimation>
                     -- 1. Gun Type 
                     -- 2. Skill Timer (sync it up w the internal skill timer)
@@ -694,11 +694,11 @@ function Update()
                     -- gunRecoilState = "MOVING"
 
                     -- Shoots Bullet
-                    positions_final.x = positions.x + viewVecCam.x*3
-                    positions_final.y = positions.y + viewVecCam.y*3
-                    positions_final.z = positions.z + viewVecCam.z*3  
+                    positions_final.x = positions.x + viewVecCam.x
+                    positions_final.y = positions.y + viewVecCam.y
+                    positions_final.z = positions.z + viewVecCam.z 
 
-                    prefabEntity = systemManager.ecs:NewEntityFromPrefab("bullet", positions_final)
+                    prefabEntity = systemManager.ecs:NewEntityFromPrefab("Revolver Bullet", positions_final)
                     -- rotationCam.x = rotationCam.x *0
                     -- rotationCam.y = rotationCam.y *0
                     -- rotationCam.z = rotationCam.z *0
