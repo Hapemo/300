@@ -295,9 +295,9 @@ void GFX::Mesh::Setup(std::vector<vec3> const& positions, std::vector<unsigned i
 
 void GFX::Mesh::ClearInstances()
 {
+	if (!mColors.empty()) return;
 	mLTW.clear();
-	if (!mColors.empty())
-		mColors.clear();
+	mColors.clear();
 	mTexEntID.clear();
 	mBloomThresholds.clear();
 }
