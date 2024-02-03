@@ -1,5 +1,5 @@
 {
-    "entityid": 1049112,
+    "entityid": 1048737,
     "general": {
         "name": "Melissa",
         "tagid": 1,
@@ -19,8 +19,8 @@
             "z": 0.0
         },
         "translate": {
-            "x": -15.385740280151367,
-            "y": -10.86380386352539,
+            "x": 0.0,
+            "y": 0.0,
             "z": 0.0
         }
     },
@@ -35,8 +35,8 @@
         },
         "rotationconstraints": {
             "x": true,
-            "y": false,
-            "z": false
+            "y": true,
+            "z": true
         },
         "gravity": true
     },
