@@ -97,7 +97,7 @@ local max_recoil_distance_z = 0.1
 local bullet_scale = Vec3.new()
 
 -- Cooldown in seconds (between bullets)
-local revolverGunCooldown = 1
+local revolverGunCooldown = 0.7
 local shotGunCooldown = 1.5
 local machineGunCooldown = 0.2
 local pistolCooldown = 0.5
@@ -109,7 +109,7 @@ local pistolTimer = 0
 
 -- gun states
 local gunRecoilState = "IDLE"       -- ["STARTUP", "IDLE" , "MOVING"]
-_G.gunEquipped = 0 --"REVOLVER"      -- rename this to whatever ["PISTOL (DEFAULT)" , "REVOLVER" , "SHOTGUN" , "MACHINE GUN"]  - 1/31 (pistol new default gun)
+_G.gunEquipped = 0 --"PISTOL"      -- rename this to whatever ["PISTOL (DEFAULT)" , "REVOLVER" , "SHOTGUN" , "MACHINE GUN"]  - 1/31 (pistol new default gun)
 local gunHoldState = "NOT HELD"     -- ["NOT HELD" , "HOLDING"]
 
 local pistolShootState = "SHOOTABLE" 
@@ -300,7 +300,9 @@ function Update()
     -- end
 
     dt = FPSManager.GetDT()
-    gunTransform:ParentChildRotateUpdate(dt, "REVOLVER")
+    if(_G.gunEquipped == 1) then -- Revolver
+        gunTransform:ParentChildRotateUpdate(dt)
+    end
     
 --region -- player camera
     if (inputMapSys:GetButtonDown("exit")) then
@@ -678,21 +680,28 @@ function Update()
         -- print("GUN RECOIL STATE:" , gunRecoilState)
             -- print("GUN EQUIPPED:" , gunEquipped)
             if(_G.gunEquipped == 1 ) then -- REVOLVER
-             
+                print("SHOOTING REVOLVER")
                 if(revolverGunTimer == 0) then 
                     -- print("REVOLVER SHOOTING")
                     
-                    applyGunRecoil(recoil_speed, 0.5)
-                    gunTransform:GunAnimation("REVOLVER" , 30.0, 1.0, 0.2) -- Trigger everytime player shoots
+                    -- applyGunRecoil(recoil_speed, 0.5)
+                    -- <GunAnimation>
+                    -- 1. Gun Type 
+                    -- 2. Skill Timer (sync it up w the internal skill timer)
+                    -- 3. Recoil Angle (how much) - depends on axis set on "parentChildRotateInit()"
+                    -- 4. Recoil Speed (how fast)2
+                    -- 5. Recoil Duration (how long the recoil should last)
+                    gunTransform:GunAnimation("REVOLVER",_G.skill_duration, 30.0, 1.0, 0.2)  -- Trigger everytime player shoots 
+                    -- print("SKILL DURATION" , _G.skill_duration)
 
                     -- gunRecoilState = "MOVING"
 
                     -- Shoots Bullet
-                    positions_final.x = positions.x + viewVecCam.x*3
-                    positions_final.y = positions.y + viewVecCam.y*3
-                    positions_final.z = positions.z + viewVecCam.z*3  
+                    positions_final.x = positions.x + viewVecCam.x
+                    positions_final.y = positions.y + viewVecCam.y
+                    positions_final.z = positions.z + viewVecCam.z 
 
-                    prefabEntity = systemManager.ecs:NewEntityFromPrefab("bullet", positions_final)
+                    prefabEntity = systemManager.ecs:NewEntityFromPrefab("Revolver Bullet", positions_final)
                     -- rotationCam.x = rotationCam.x *0
                     -- rotationCam.y = rotationCam.y *0
                     -- rotationCam.z = rotationCam.z *0
@@ -711,6 +720,7 @@ function Update()
                     
                     revolverShootState = "COOLDOWN"
                 end
+                
             end 
 
             -- print("TRANSLATE: " , gunTranslate.z)
@@ -720,7 +730,7 @@ function Update()
 
                     moreAccurateShotgun(10)
                     applyGunRecoil(recoil_speed * 0.5, 0.1)
-
+             
                     shotGunTimer = shotGunTimer + shotGunCooldown
 
 
@@ -729,6 +739,7 @@ function Update()
                     bulletAudioComp:SetPlay(0.3)
                 end
             end
+
         end
 
         -- "COOLDOWN" state
@@ -773,6 +784,7 @@ function Update()
                 -- applyGunRecoil(recoil_speed * 0.05 , 0.
                 machineGunRecoil()
                 machineGunBullets()
+                -- gunTransform:GunAnimation("NA", 0 ,  30.0, 1.0, 0.2)
     
                 if(machineGunTimer <= 0) then
                     bulletAudioComp:SetPlay(0.3)

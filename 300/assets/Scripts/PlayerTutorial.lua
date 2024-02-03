@@ -256,7 +256,7 @@ function Update()
 
     -- For Gun Rotation
     -- if(_G.gunEquipped == 1) then -- Revolver
-        gunTransform:ParentChildRotateUpdate(dt, "REVOLVER")
+        gunTransform:ParentChildRotateUpdate(dt)
     -- end
     
 --region -- player camera
@@ -606,21 +606,27 @@ function Update()
     -- print("GUN RECOIL STATE:" , gunRecoilState)
         -- print("GUN EQUIPPED:" , gunEquipped)
         if(_G.gunEquipped == 1 ) then -- REVOLVER
-        
+            print("SHOOTING REVOLVER")
             if(revolverGunTimer == 0) then 
                 -- print("REVOLVER SHOOTING")
                 
                 applyGunRecoil(recoil_speed, 0.5)   
-                gunTransform:GunAnimation("REVOLVER" , 30.0, 1.0, 0.2) -- Trigger everytime player shoots
+                -- <GunAnimation>
+                -- 1. Gun Type 
+                -- 2. Skill Timer (sync it up w the internal skill timer)
+                -- 3. Recoil Angle (how much) - depends on axis set on "parentChildRotateInit()"
+                -- 4. Recoil Speed (how fast)
+                -- 5. Recoil Duration (how long the recoil should last)
+                gunTransform:GunAnimation("REVOLVER",_G.skill_duration, 30.0, 1.0, 0.2)  -- Trigger everytime player shoots 
 
                 -- gunRecoilState = "MOVING"
 
                 -- Shoots Bullet
-                positions_final.x = positions.x + viewVecCam.x*3
-                positions_final.y = positions.y + viewVecCam.y*3
-                positions_final.z = positions.z + viewVecCam.z*3  
+                positions_final.x = positions.x + viewVecCam.x
+                positions_final.y = positions.y + viewVecCam.y
+                positions_final.z = positions.z + viewVecCam.z
 
-                       prefabEntity = systemManager.ecs:NewEntityFromPrefab("bullet", positions_final)
+                prefabEntity = systemManager.ecs:NewEntityFromPrefab("Revolver Bullet", positions_final)
                 -- rotationCam.x = rotationCam.x *0
                 -- rotationCam.y = rotationCam.y *0
                 -- rotationCam.z = rotationCam.z *0
@@ -639,6 +645,8 @@ function Update()
                 
                 revolverShootState = "COOLDOWN"
             end
+        else 
+            gunTransform:SetInitialRotation()
         end 
 
         -- print("TRANSLATE: " , gunTranslate.z)
@@ -700,6 +708,7 @@ function Update()
             -- applyGunRecoil(recoil_speed * 0.05 , 0.
             machineGunRecoil()
             machineGunBullets()
+
 
             if(machineGunTimer <= 0) then
                 bulletAudioComp:SetPlay(0.3)
@@ -939,9 +948,9 @@ end
 function machineGunBullets()
     -- print("HI SHOOTING MACHINE GUN")
 
-    positions_final.x = positions.x + viewVecCam.x*6
-    positions_final.y = positions.y + viewVecCam.y*6
-    positions_final.z = positions.z + viewVecCam.z*6  
+    positions_final.x = positions.x + viewVecCam.x * 2
+    positions_final.y = positions.y + viewVecCam.y * 2
+    positions_final.z = positions.z + viewVecCam.z * 2
 
     prefabEntity = systemManager.ecs:NewEntityFromPrefab("Machine Gun Bullet", positions_final)
     rotationCam.x = rotationCam.z *360

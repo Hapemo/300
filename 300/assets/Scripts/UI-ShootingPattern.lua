@@ -1,5 +1,6 @@
 local timercheck = 0
 _G.activated = false
+_G.skill_duration = 360
 local running = false
 local colors = {Vec4.new(0,0.7,1,1),Vec4.new(1,1,0,1),Vec4.new(1,0.4,0,1) }
 function Alive()
@@ -24,10 +25,12 @@ function Update()
 
         timercheck = timercheck +FPSManager.GetDT()*100
 
-            if(timercheck <360)then
+            if(timercheck < _G.skill_duration)then
                 renderer:SetDegree(timercheck)
             else
                 _G.gunEquipped = 0 
+                print("SKILL ENDED, EQUIPPED PISTOL BACK.") 
+                print("GUN EQUIPPED CODE: " , _G.gunEquipped)
                 timercheck = 0
                 running = false
             end

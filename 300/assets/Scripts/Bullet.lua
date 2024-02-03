@@ -32,7 +32,7 @@ local bulletTag = "PISTOL" -- "REVOLVER" , "SHOTGUN" , "MACHINE GUN"
 local enemytag1HP = 100
 local pistolDamage = 15   -- per bullet (added on 1/31)
 local shotGunDamage = 12 -- per bullet
-local revolverDamage = 45 -- per bullet
+local revolverDamage = 75 -- per bullet (adjusted damage on 2/4)
 local machineGunDamage = 3 -- per bullet
 
 

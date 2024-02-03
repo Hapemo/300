@@ -1,5 +1,5 @@
 {
-    "entityid": 3145770,
+    "entityid": 12583172,
     "general": {
         "name": "Melissa (AUDIO TEST)",
         "tagid": 1,
@@ -35,8 +35,8 @@
         },
         "rotationconstraints": {
             "x": true,
-            "y": false,
-            "z": false
+            "y": true,
+            "z": true
         },
         "gravity": true
     },
@@ -95,8 +95,8 @@
     },
     "audio": {
         "filepath": "../assets\\Audio",
-        "filename": "(3D) Enemy_Melissa_Split.wav",
-        "fullpath": "../assets\\Audio/(3D) Enemy_Melissa_Split.wav",
+        "filename": "Enemy_Melissa_Split.wav",
+        "fullpath": "../assets\\Audio/Enemy_Melissa_Split.wav",
         "playonawake": false,
         "islooping": false,
         "audiotype": 1,
