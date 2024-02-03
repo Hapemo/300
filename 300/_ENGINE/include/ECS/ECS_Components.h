@@ -111,9 +111,10 @@ struct Transform : public Serializable
 
 	void parentChildRotateInit(char axis, float angle);
 	void parentChildRotateUpdate(float dt);	// General use
+	void setInitialRotation();
 
 	// Gun Specific
-	void gunAnimationUpdate(std::string gun_type, float skill_timer, float recoil_angle = 0.0f, float recoil_speed = 10.0f, float recoil_duration = 0.2f);
+	void gunAnimationUpdate(std::string gun_type = "NA", float skill_timer = 360, float recoil_angle = 0.0f, float recoil_speed = 10.0f, float recoil_duration = 0.2f);
 	float     mRotateSpeed;
 	glm::vec3 mInitialRotation;
 	float	  mDuration;		// Copies mCumulativeTime (doesn't decrease)
