@@ -162,7 +162,7 @@ local playerHealthStartRegenMax = 30; -- this is the time it takes for the playe
 local healthbarSpawnPos = Vec3.new()
 local objectiveBarEmptySpawnPos = Vec3.new()
 local healthBarEmptySpawnPos = Vec3.new()
-
+local isuiinit = false
 local this
 function Alive()
     this = Helper.GetScriptEntity(script_entity.id)
@@ -231,34 +231,37 @@ function Alive()
 
     -- Shotgun Stuff -- 
 
-    -- Player Health System Start -- 
 
-    healthbarSpawnPos.x = -0.7;
-    healthbarSpawnPos.y = 0.65;
-    healthbarSpawnPos.z = 0;
-
-    healthbar = systemManager.ecs:NewEntityFromPrefab("Health Bar", healthbarSpawnPos)
-
-    objectiveBarEmptySpawnPos.x = 0.7;
-    objectiveBarEmptySpawnPos.y = 0.7;
-    objectiveBarEmptySpawnPos.z = 0;
-
-    objectivebarEmpty = systemManager.ecs:NewEntityFromPrefab("Objective Bar Empty", objectiveBarEmptySpawnPos)
-
-    healthBarEmptySpawnPos.x = -0.7;
-    healthBarEmptySpawnPos.y = 0.7;
-    healthBarEmptySpawnPos.z = 0;
-
-    healthbarEmpty = systemManager.ecs:NewEntityFromPrefab("Objective Bar Empty", healthBarEmptySpawnPos)
-
-    -- Player Health System End -- 
 
 end
 
 function Update()
 
     -- Player Health System Start -- 
+    if isuiinit == false then
+        -- Player Health System Start -- 
 
+        healthbarSpawnPos.x = -0.7;
+        healthbarSpawnPos.y = 0.65;
+        healthbarSpawnPos.z = 0;
+
+        healthbar = systemManager.ecs:NewEntityFromPrefab("Health Bar", healthbarSpawnPos)
+
+        objectiveBarEmptySpawnPos.x = 0.7;
+        objectiveBarEmptySpawnPos.y = 0.7;
+        objectiveBarEmptySpawnPos.z = 0;
+
+        objectivebarEmpty = systemManager.ecs:NewEntityFromPrefab("Objective Bar Empty", objectiveBarEmptySpawnPos)
+
+        healthBarEmptySpawnPos.x = -0.7;
+        healthBarEmptySpawnPos.y = 0.7;
+        healthBarEmptySpawnPos.z = 0;
+
+        healthbarEmpty = systemManager.ecs:NewEntityFromPrefab("Objective Bar Empty", healthBarEmptySpawnPos)
+        isuiinit = true
+    end
+
+    -- Player Health System End -- 
     if (isTakingDamage == true) then
     playerHealthStartRegenCurrent = 0;
     playerHealthCurrent = playerHealthCurrent - 6; -- take damage
