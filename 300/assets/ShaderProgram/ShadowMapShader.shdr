@@ -1,0 +1,7 @@
+[
+    {
+        "ShaderProgram": "ShadowMapShader",
+        "Vertex": "../assets/shader_files/shadowMap_vert.glsl",
+        "Fragment": "../assets/shader_files/shadowMap_frag.glsl"
+    }
+]

@@ -208,6 +208,11 @@ void GraphicsSystem::Update(float dt)
 /**************************************************************************/
 void GraphicsSystem::Draw(float dt, bool forEditor)
 {
+	// Render the depth scene first as shadow pass
+	RenderShadowMap();
+	m_Renderer.AddCube(dirLightPos, vec3(2.f, 2.f, 2.f));
+	m_Renderer.AddLine(dirLightPos, dirLightTgt);
+
 	std::map<std::string, short> renderedMesh;
 	auto meshRendererInstances = systemManager->ecs->GetEntitiesWith<MeshRenderer>();
 
@@ -1742,7 +1747,14 @@ void GraphicsSystem::SetupAllShaders()
 	glUniform1iv(uniform_tex, (GLsizei)m_Textures.size(), m_Textures.data()); // Passing texture Binding units to frag shader [0 - 31]
 	m_Quad3DShaderInst.Deactivate();
 
-	
+	// Initialize the Shadow Map shader
+	uid shadowMapShaderstr("ShadowMapShader");
+	shadowMapShaderInst = *systemManager->mResourceTySystem->get_Shader(shadowMapShaderstr.id);
+	shadowMapShaderInst.Activate();
+	shadowMapLightSpaceMatrixLocation = shadowMapShaderInst.GetUniformLocation("uLightSpaceMatrix");
+	shadowMapShaderInst.Deactivate();
+
+
 	//!<< Compile Compute shader >>
 	computeDeferred.CreateShaderFromFile("../assets/shader_files/computePBR.glsl");
 	computeDeferred.Activate();
@@ -1941,6 +1953,72 @@ void GraphicsSystem::DrawAllParticles()
 
 	m_ParticleMesh.UnbindVao();
 	GFX::Shader::Deactivate();
+}
+
+void GraphicsSystem::RenderShadowMap()
+{
+	// Bind shadow FBO to be rendered to
+	m_ShadowFbo.PrepForDraw();
+	//glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);	// turn off writing to FBO's color buffer
+
+	// Setting up directional light as camera
+	GFX::Camera lightCam;
+	lightCam.SetPosition(dirLightPos);
+	lightCam.SetTarget(dirLightTgt);
+	lightCam.SetProjection(GFX::CameraConstants::defaultFOV, m_Window->size(), 0.1f, 900.f);
+	lightCam.Update();
+	mat4 camVP = lightCam.viewProj();
+
+	// Bind Shaders and update uniforms
+	m_AnimationShaderInst.Activate();	// Animation Shader
+	glUniformMatrix4fv(m_AnimationShaderInst.GetUniformVP(), 1, GL_FALSE, &camVP[0][0]);
+	GFX::Shader::Deactivate();
+
+	shadowMapShaderInst.Activate();		// Shadow mapping shader for non-animated meshes
+	glUniformMatrix4fv(shadowMapLightSpaceMatrixLocation, 1, GL_FALSE, &camVP[0][0]);
+	GFX::Shader::Deactivate();
+
+	// Rendering of meshes
+	std::map<std::string, short> renderedMesh;
+	auto meshRendererInstances = systemManager->ecs->GetEntitiesWith<MeshRenderer>();
+
+	for (Entity inst : meshRendererInstances)
+	{
+		auto& meshrefptr = inst.GetComponent<MeshRenderer>();
+
+		// the mesh instance has no meshrenderer
+		if (meshrefptr.mMeshRef.getdata(systemManager->mResourceTySystem->m_ResourceInstance) == nullptr)
+			continue;
+
+		std::string meshstr = meshrefptr.mMeshPath;
+		if (renderedMesh.find(meshstr) != renderedMesh.end()) {
+			// the mesh has been rendered before, skip it
+			continue;
+		}
+
+		// update the map of rendered meshes
+		renderedMesh[meshstr] = 1;
+
+		// render the mesh and its instances here
+		GFX::Mesh& meshinst = *reinterpret_cast<GFX::Mesh*>(meshrefptr.mMeshRef.data);
+
+		// Activate animation shader
+		if (meshinst.mHasAnimation)
+			m_AnimationShaderInst.Activate();
+		else
+			shadowMapShaderInst.Activate();
+
+		//Bind mesh's VAO, copy render data into VBO, Draw
+		DrawAll(meshinst);
+
+		//shaderinst.Deactivate();
+		meshinst.UnbindVao();
+	}
+	GFX::Shader::Deactivate();
+
+	// Enable back writing to color bits in framebuffer
+	//glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
+	m_ShadowFbo.Unbind();
 }
 
 void GraphicsSystem::ComputeDeferredLight(bool editorDraw)
