@@ -164,6 +164,9 @@ local objectiveBarEmptySpawnPos = Vec3.new()
 local healthBarEmptySpawnPos = Vec3.new()
 local isuiinit = false
 local this
+
+local isGamePaused
+
 function Alive()
     this = Helper.GetScriptEntity(script_entity.id)
     gameStateSys = systemManager:mGameStateSystem();
@@ -200,6 +203,7 @@ function Alive()
     if(cameraEntity:HasAudio()) then 
         -- print("HAS AUDIO")
     end
+    isGamePaused = false
 
     dashTime = 3.0
     tpTime = 20.0
@@ -304,10 +308,6 @@ function Update()
         gunTransform:ParentChildRotateUpdate(dt)
     -- end
     
---region -- player camera
-    if (inputMapSys:GetButtonDown("exit")) then
-        gameStateSys:ChangeGameState("MainMenu")
-    end
     if(inputMapSys:GetButtonDown("Mouse")) then
         if (mouse_on == true) then
             mouse_on = false
