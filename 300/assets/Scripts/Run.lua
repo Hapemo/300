@@ -13,24 +13,28 @@ end
 
 function Update()
     gameStateSys = systemManager:mGameStateSystem();
+    scriptingSys = systemManager:mScriptingSystem();
     testing = testing + 1;
     --testie = systemManager.ecs:NewEntity();
     --For M1 demo
     --entity = Entity.new(script_entity.id)
-    entity = Helper.GetScriptEntity(script_entity.id)
-    cameraEntity = gameStateSys:GetEntity("Camera")
-    if entity == nil then
+    --entity = Helper.GetScriptEntity(script_entity.id)
+    cameraEntity = gameStateSys:GetEntity("CreditsButton")
+    if cameraEntity == nil then
         print("Entity nil in script!")
     end
-    generalComponent = entity:GetGeneral()
-    transformComponent = entity:GetTransform()
 
-    --vfxComponent = entity:GetVFX();
-    -- Change entity name to enemy
-    generalComponent.name = "Enemy"
-    subtag = generalComponent.subtag
-    generalComponent.subtag = SUBTAG.BACKGROUND
-    print(subtag)
+    cameraEntity:GetScripts():AddScript("../assets\\Scripts\\TestAddScript.lua")
+
+    -- generalComponent = entity:GetGeneral()
+    -- transformComponent = entity:GetTransform()
+
+    -- --vfxComponent = entity:GetVFX();
+    -- -- Change entity name to enemy
+    -- generalComponent.name = "Enemy"
+    -- subtag = generalComponent.subtag
+    -- generalComponent.subtag = SUBTAG.BACKGROUND
+    -- print(subtag)
     --[[ Get entity Tag
     tag = generalComponent:GetTag();
     print(tag) 
@@ -50,85 +54,84 @@ function Update()
     --print("DT is: "..FPSManager.GetDT())
 
     -- Make character move x-axis
-    if (Input.CheckKey(State.HOLD, Key.UP)) then
-        transformComponent.mTranslate.y = transformComponent.mTranslate.y + speed
-    elseif (Input.CheckKey(State.HOLD, Key.LEFT)) then
-        transformComponent.mTranslate.x = transformComponent.mTranslate.x - speed
-    elseif Input.CheckKey(State.HOLD, Key.DOWN) then
-        transformComponent.mTranslate.y = transformComponent.mTranslate.y - speed
-    elseif Input.CheckKey(State.HOLD, Key.RIGHT) then
-        --scriptingSys = systemManager:mScriptingSystem();
-        transformComponent.mTranslate.x = transformComponent.mTranslate.x + speed
-        -- vector = scriptingSys:CreateVectorString();
-        -- vector:add("Hello");
-        -- vector:add("Testing !!")
-        -- vector:add("This actually works.")
-        -- scriptingSys:TestingFromScriptSys(vector)
-    elseif Input.CheckKey(State.HOLD, Key.KEY_A) then
-        -- print("Value: ", test)
-        -- print("VEC X: ", vec.x)
-        -- print("VEC Y: ", vec.y)
-        -- print("VEC Z: ", vec.z)
-        -- print("Name: ", name)
-        --print("Value2: ", test2)
+    -- if (Input.CheckKey(State.HOLD, Key.UP)) then
+    --     transformComponent.mTranslate.y = transformComponent.mTranslate.y + speed
+    -- elseif (Input.CheckKey(State.HOLD, Key.LEFT)) then
+    --     transformComponent.mTranslate.x = transformComponent.mTranslate.x - speed
+    -- elseif Input.CheckKey(State.HOLD, Key.DOWN) then
+    --     transformComponent.mTranslate.y = transformComponent.mTranslate.y - speed
+    -- elseif Input.CheckKey(State.HOLD, Key.RIGHT) then
+    --     --scriptingSys = systemManager:mScriptingSystem();
+    --     transformComponent.mTranslate.x = transformComponent.mTranslate.x + speed
+    --     -- vector = scriptingSys:CreateVectorString();
+    --     -- vector:add("Hello");
+    --     -- vector:add("Testing !!")
+    --     -- vector:add("This actually works.")
+    --     -- scriptingSys:TestingFromScriptSys(vector)
+    -- elseif Input.CheckKey(State.HOLD, Key.KEY_A) then
+    --     -- print("Value: ", test)
+    --     -- print("VEC X: ", vec.x)
+    --     -- print("VEC Y: ", vec.y)
+    --     -- print("VEC Z: ", vec.z)
+    --     -- print("Name: ", name)
+    --     --print("Value2: ", test2)
         
-        -- Set entity Tag
-        generalComponent:SetTag("eneMY");
-        tag = generalComponent:GetTag();
-        print("Tag is: "..tag)
-        --if (create == 2) then
-        --    for i = 1, 4 do
-        --        testEntity = systemManager.ecs:NewEntityByScene();
-        --        gameStateSys = systemManager:mGameStateSystem();
-        --        gameStateSys:DeleteEntity(testEntity)
-        --        --gameStateSys:ChangeGameState("exit")
-        --        prefabEntity = systemManager.ecs:NewEntityFromPrefab("Floor", vec)
-        --    end
-        --    create = create + 1
-        --end
+    --     -- Set entity Tag
+    --     generalComponent:SetTag("eneMY");
+    --     tag = generalComponent:GetTag();
+    --     print("Tag is: "..tag)
+    --     --if (create == 2) then
+    --     --    for i = 1, 4 do
+    --     --        testEntity = systemManager.ecs:NewEntityByScene();
+    --     --        gameStateSys = systemManager:mGameStateSystem();
+    --     --        gameStateSys:DeleteEntity(testEntity)
+    --     --        --gameStateSys:ChangeGameState("exit")
+    --     --        prefabEntity = systemManager.ecs:NewEntityFromPrefab("Floor", vec)
+    --     --    end
+    --     --    create = create + 1
+    --     --end
 
-        --Test VFX Component
-        --vfxComponent:EnableObjectBloom();
-        --vfxComponent:SetEntityBloomThreshold(vec);
+    --     --Test VFX Component
+    --     --vfxComponent:EnableObjectBloom();
+    --     --vfxComponent:SetEntityBloomThreshold(vec);
 
-        -- Physics Set Velocity function
-        -- physicsSys = systemManager:mPhysicsSystem();
-        -- physicsSys:SetVelocity(entity, vec);
+    --     -- Physics Set Velocity function
+    --     -- physicsSys = systemManager:mPhysicsSystem();
+    --     -- physicsSys:SetVelocity(entity, vec);
 	
-	scriptingSys = systemManager:mScriptingSystem();
-    	scriptingComp = cameraEntity :GetScripts()
-    	script = scriptingComp:GetScript("../assets/Scripts/Player.lua")
-	script:SetValue("testingSet", vec);
+	-- scriptingSys = systemManager:mScriptingSystem();
+    -- 	scriptingComp = cameraEntity :GetScripts()
+    -- 	script = scriptingComp:GetScript("../assets/Scripts/Player.lua")
+	-- script:SetValue("testingSet", vec);
 	
-    elseif Input.CheckKey(State.HOLD, Key.KEY_B) then
-        testEntity = systemManager.ecs:NewEntityByScene();
-        --scriptingSys = systemManager:mScriptingSystem();
-        --scriptingSys:AddScript(testEntity, "../assets\\Scripts\\Print.lua");
-        scriptsComponent = testEntity:AddScripts();
-        rigidBodyComponent = testEntity:AddRigidBody();
-        pointLightComponent = testEntity:AddPointLight();
-        meshComponent = testEntity:AddMeshRenderer();
-        pointLightComponent:SetColor(vec);
-        meshComponent:SetColor(vec4);
-        meshComponent:SetMesh("cube");
-        meshComponent:SetTexture(MaterialType.NORMAL, "Wood Material 15_Normal");
-        --Helper.printTest()
-        --Helper.test = 300
-        --script_entity.id = 60
-        generalComponent:SetTag("enEmy");
-        tag = generalComponent:GetTag();
+    -- elseif Input.CheckKey(State.HOLD, Key.KEY_B) then
+    --     testEntity = systemManager.ecs:NewEntityByScene();
+    --     --scriptingSys = systemManager:mScriptingSystem();
+    --     --scriptingSys:AddScript(testEntity, "../assets\\Scripts\\Print.lua");
+    --     scriptsComponent = testEntity:AddScripts();
+    --     rigidBodyComponent = testEntity:AddRigidBody();
+    --     pointLightComponent = testEntity:AddPointLight();
+    --     meshComponent = testEntity:AddMeshRenderer();
+    --     pointLightComponent:SetColor(vec);
+    --     meshComponent:SetColor(vec4);
+    --     meshComponent:SetMesh("cube");
+    --     meshComponent:SetTexture(MaterialType.NORMAL, "Wood Material 15_Normal");
+    --     --Helper.printTest()
+    --     --Helper.test = 300
+    --     --script_entity.id = 60
+    --     generalComponent:SetTag("enEmy");
+    --     tag = generalComponent:GetTag();
 
-        if testEntity:HasRigidBody() then
-            print("has rigidbody")
-        end
+    --     if testEntity:HasRigidBody() then
+    --         print("has rigidbody")
+    --     end
 
-        testVec = Vec3.new()
-        testVec.x = 4
-        testVec.y = 4.2
-        testVec.z = 0
-        -- Test Helper Translate
-        Helper.Translate(entity, testVec)
-    end
+    --     testVec = Vec3.new()
+    --     testVec.x = 4
+    --     testVec.y = 4.2
+    --     testVec.z = 0
+    --     -- Test Helper Translate
+    --     Helper.Translate(entity, testVec)
 
     --Test Default Param
     --Testing()

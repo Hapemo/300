@@ -396,6 +396,19 @@ public:
 		return script;
 	}
 
+	void AddScriptScripts(Entity entity, std::string scriptFile)
+	{
+		for (auto& elem : scriptsContainer)
+		{
+			if (elem->scriptFile == scriptFile)
+				return;
+		}
+		Script* script = new Script;
+		script->scriptFile = scriptFile;
+		scriptsContainer.push_back(script);
+		script->Load(entity);
+	}
+
 	template<typename ...args>
 	void RunFunctionForAllScripts(const char* funcName, args... arguments)
 	{
