@@ -27,6 +27,7 @@ to select current Entity and activates inspector
 #include "GameState/GameStateManager.h"
 #include "Misc.h"
 #include "imgui_stdlib.h"
+#include <string>
 
 //#define DEBUG
 
@@ -49,6 +50,10 @@ void Hierarchy::init() {
 }
 
 
+char to_upper(const char& ch) {
+    return std::toupper(ch);
+}
+
 
 #ifndef DEBUG
 /***************************************************************************/
@@ -57,8 +62,11 @@ void Hierarchy::init() {
     Update function for Imgui Window
 */
 /**************************************************************************/
-void Hierarchy::update() {
-    
+void Hierarchy::update() 
+{
+    static std::string lSearchBar{};
+    ImGui::InputText("Searchbar", &lSearchBar);
+
     copyPaste();
     ImGui::Text("GameState");
     ImGui::SameLine();
@@ -96,9 +104,8 @@ void Hierarchy::update() {
     }
 
 
-    for (int i{ 0 }; i < allScene.size(); ++i) {
-    
-
+    for (int i{ 0 }; i < allScene.size(); ++i) 
+    {
         ImGuiWindowFlags selectflagscene{ 0 };
         if (i == selectedScene)
             selectflagscene |= ImGuiTreeNodeFlags_Selected;
@@ -107,10 +114,6 @@ void Hierarchy::update() {
 
         if (ImGui::TreeNodeEx(sceneName.c_str(), selectflagscene | ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_OpenOnDoubleClick))
         {
-
-
-
-
             if (ImGui::IsItemClicked(ImGuiMouseButton_Left)) {  
                 selectedScene = i;
                 systemManager->ecs->SelectedScene = selectedScene;
@@ -134,14 +137,22 @@ void Hierarchy::update() {
 
             int imguid{0};
            // auto temp = systemManager->ecs->GetEntitiesWith<General>();
-            for (Entity ent : allScene[i].mEntities) {
+            for (Entity ent : allScene[i].mEntities) 
+            {
                 //if (temp.find(ent.id) == temp.end())
                 //    Hierarchy::selectionOn = false;
 
-                if (ent.HasParent() == false && ent.HasChildren() == false) {
-
+                if (ent.HasParent() == false && ent.HasChildren() == false) 
+                {
                     General& info = ent.GetComponent<General>();
                     ImGui::PushID(imguid);
+
+                    std::string caps_itemname = info.name;
+                    std::transform(caps_itemname.begin(), caps_itemname.end(), caps_itemname.begin(), to_upper);
+                    std::transform(lSearchBar.begin(), lSearchBar.end(), lSearchBar.begin(), to_upper);
+
+                    if (lSearchBar.length() && caps_itemname.find(lSearchBar) == std::string::npos)
+                        continue;
 
                     ImGuiWindowFlags selectflag{ 0 };
                     if (ent.id == selectedId)
