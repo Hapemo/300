@@ -24,7 +24,7 @@
             "z": 1.0,
             "w": 0.949999988079071
         },
-        "debug": 1
+        "debug": 0
     },
     {
         "scene_name": "TestEnemy",
@@ -51,7 +51,7 @@
             "z": 1.0,
             "w": 0.949999988079071
         },
-        "debug": 1
+        "debug": 0
     },
     {
         "scene_name": "UI",
@@ -78,7 +78,7 @@
             "z": 1.0,
             "w": 0.949999988079071
         },
-        "debug": 1
+        "debug": 0
     },
     {
         "scene_name": "Objectives",
@@ -108,7 +108,7 @@
         "debug": 1
     },
     {
-        "scene_name": "PauseMenu",
+        "scene_name": "PauseMenuScene",
         "pause": false,
         "force_render": true,
         "bloom_threshold": {

@@ -140,21 +140,12 @@ void SystemManager::Update(float dt)
 	//check if esc is triggered in gamescene
 	if (!systemManager->IsEditor() && mInputActionSystem->GetKeyDown(ESCAPE))
 		mIsGamePause = !mIsGamePause;
-
-	if (Input::CheckKey(E_STATE::PRESS, E_KEY::Q))
-	{
-		if (mIsPlay)
+	if (!mIsPlay) {
+		auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
+		for (Entity entity : scriptEntities)
 		{
-			Pause(); // add scripting on pause
-			auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
-			for (Entity entity : scriptEntities)
-			{
-				entity.GetComponent<Scripts>().RunFunctionForAllScripts("PauseUpdate");
-			}
+			entity.GetComponent<Scripts>().RunFunctionForAllScripts("PauseUpdate");
 		}
-
-		else
-			Play(); // add scripting on play
 	}
 
 	if (!mIsPlay)

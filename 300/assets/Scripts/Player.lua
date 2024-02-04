@@ -866,10 +866,6 @@ function Dead()
 
 end
 
-function PauseUpdate()
-    print("Running Pause Update from Player.lua")
-end
-
 function OnTriggerEnter(Entity)
     generalComponent = Entity:GetGeneral()
     tagid = generalComponent.tagid

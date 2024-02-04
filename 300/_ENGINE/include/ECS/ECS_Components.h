@@ -407,6 +407,7 @@ public:
 		script->scriptFile = scriptFile;
 		scriptsContainer.push_back(script);
 		script->Load(entity);
+		script->Run("Alive");
 	}
 
 	template<typename ...args>
