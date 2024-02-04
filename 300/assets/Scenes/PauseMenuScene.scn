@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 8388693,
+        "entityid": 248,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -37,15 +37,15 @@
                 "z": 0.0
             },
             "size": {
-                "x": 1178,
-                "y": 549
+                "x": 1224,
+                "y": 554
             },
             "near": 0.10000000149011612,
             "far": 900.0
         }
     },
     {
-        "entityid": 8388752,
+        "entityid": 249,
         "general": {
             "name": "RestartButton",
             "tagid": 6,
@@ -111,7 +111,7 @@
         }
     },
     {
-        "entityid": 8388766,
+        "entityid": 250,
         "general": {
             "name": "MenuBackground",
             "tagid": 6,
@@ -160,7 +160,7 @@
         }
     },
     {
-        "entityid": 8388767,
+        "entityid": 251,
         "general": {
             "name": "Exit",
             "tagid": 0,
@@ -197,7 +197,7 @@
         }
     },
     {
-        "entityid": 8388768,
+        "entityid": 252,
         "general": {
             "name": "HTPButton",
             "tagid": 6,
@@ -266,7 +266,7 @@
         }
     },
     {
-        "entityid": 8388797,
+        "entityid": 253,
         "general": {
             "name": "ResumeButton",
             "tagid": 6,
@@ -328,14 +328,14 @@
         },
         "button": {
             "interactable": true,
-            "hover": true,
+            "hover": false,
             "click": false,
             "activated": false,
             "renderflag": true
         }
     },
     {
-        "entityid": 8388798,
+        "entityid": 254,
         "general": {
             "name": "Awake",
             "tagid": 0,
@@ -372,7 +372,7 @@
         }
     },
     {
-        "entityid": 8388799,
+        "entityid": 255,
         "general": {
             "name": "QuitButton",
             "tagid": 6,
@@ -438,7 +438,7 @@
         }
     },
     {
-        "entityid": 8388800,
+        "entityid": 256,
         "general": {
             "name": "Click",
             "tagid": 6,
@@ -475,7 +475,7 @@
         }
     },
     {
-        "entityid": 8388801,
+        "entityid": 257,
         "general": {
             "name": "MainMenuButton",
             "tagid": 6,
