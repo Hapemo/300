@@ -315,23 +315,34 @@ void PhysicsSystem::MoveQueuedEntities()
 	{
 		Entity e = e_pos.first;
 		glm::vec3 globalpose = e_pos.second;
-		if (!e.HasComponent<RigidBody>()) return;
+		if (!e.HasComponent<RigidBody>()) continue;
 		RigidBody rbod = e.GetComponent<RigidBody>();
-		if (rbod.mMotion == MOTION::STATIC) return;
-
-		PxRigidDynamic* actor = (physx::PxRigidDynamic*)(mActors[static_cast<uint32_t>(e.id)].mActor);
-		actor->setGlobalPose(PxTransform(Convert(globalpose), Convert(glm::quat(glm::radians(e.GetComponent<Transform>().mRotate)))));
+		if (rbod.mMotion == MOTION::DYNAMIC) {
+			PxRigidDynamic* actor = (physx::PxRigidDynamic*)(mActors[static_cast<uint32_t>(e.id)].mActor);
+			actor->setGlobalPose(PxTransform(Convert(globalpose), Convert(glm::quat(glm::radians(e.GetComponent<Transform>().mRotate)))));
+		}
+		else if (rbod.mMotion == MOTION::STATIC) {
+			PxRigidStatic* actor = (physx::PxRigidStatic*)(mActors[static_cast<uint32_t>(e.id)].mActor);
+			actor->setGlobalPose(PxTransform(Convert(globalpose), Convert(glm::quat(glm::radians(e.GetComponent<Transform>().mRotate)))));
+		}
+		
 	}
 	for (auto e_pos : mPendingRotate)
 	{
 		Entity e = e_pos.first;
 		glm::vec3 rotation = e_pos.second;
-		if (!e.HasComponent<RigidBody>()) return;
+		if (!e.HasComponent<RigidBody>()) continue;
 		RigidBody rbod = e.GetComponent<RigidBody>();
-		if (rbod.mMotion == MOTION::STATIC) return;
+		if (rbod.mMotion == MOTION::DYNAMIC) {
+			PxRigidDynamic* actor = (physx::PxRigidDynamic*)(mActors[static_cast<uint32_t>(e.id)].mActor);
+			actor->setGlobalPose(PxTransform(Convert(e.GetComponent<Transform>().mTranslate), Convert(glm::quat(glm::radians(rotation)))));
+		}
+		else if (rbod.mMotion == MOTION::STATIC) {
+			PxRigidStatic* actor = (physx::PxRigidStatic*)(mActors[static_cast<uint32_t>(e.id)].mActor);
+			actor->setGlobalPose(PxTransform(Convert(e.GetComponent<Transform>().mTranslate), Convert(glm::quat(glm::radians(rotation)))));
+		}
 
-		PxRigidDynamic* actor = (physx::PxRigidDynamic*)(mActors[static_cast<uint32_t>(e.id)].mActor);
-		actor->setGlobalPose(PxTransform(Convert(e.GetComponent<Transform>().mTranslate), Convert(glm::quat(glm::radians(rotation)))));
+		
 	}
 	for (auto e_col : mPendingVelocity)
 	{
