@@ -214,7 +214,7 @@ function Update()
         if testScript ~= nil then
             objCount = testScript:ReturnValueInt("GetCountObj")
             if objCount == 0 then
-                gameStateSys:ChangeGameState("WinMenu")
+                gameStateSys:ChangeGameState("Test2")
             end
         end
 
