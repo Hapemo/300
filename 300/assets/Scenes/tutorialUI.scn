@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 72,
+        "entityid": 22020149,
         "general": {
             "name": "UI-Circle-Pattern",
             "tagid": 0,
@@ -49,7 +49,7 @@
         }
     },
     {
-        "entityid": 73,
+        "entityid": 22020167,
         "general": {
             "name": "UI-indicator2",
             "tagid": 0,
@@ -83,7 +83,7 @@
                 "x": 1.0,
                 "y": 1.0,
                 "z": 1.0,
-                "w": 1.0
+                "w": 0.0
             },
             "layer": 0,
             "worldtransform": false
@@ -101,7 +101,7 @@
         }
     },
     {
-        "entityid": 74,
+        "entityid": 22020168,
         "general": {
             "name": "UI-indicator6",
             "tagid": 0,
@@ -135,7 +135,7 @@
                 "x": 1.0,
                 "y": 1.0,
                 "z": 1.0,
-                "w": 1.0
+                "w": 0.0
             },
             "layer": 0,
             "worldtransform": false
@@ -153,7 +153,7 @@
         }
     },
     {
-        "entityid": 75,
+        "entityid": 22020169,
         "general": {
             "name": "UI-indicator5",
             "tagid": 0,
@@ -205,7 +205,7 @@
         }
     },
     {
-        "entityid": 76,
+        "entityid": 22020170,
         "general": {
             "name": "UI-indicator6",
             "tagid": 0,
@@ -257,7 +257,7 @@
         }
     },
     {
-        "entityid": 77,
+        "entityid": 22020171,
         "general": {
             "name": "UI-indicator7",
             "tagid": 0,
@@ -291,7 +291,7 @@
                 "x": 1.0,
                 "y": 1.0,
                 "z": 1.0,
-                "w": 1.0
+                "w": 0.0
             },
             "layer": 0,
             "worldtransform": false
@@ -309,7 +309,7 @@
         }
     },
     {
-        "entityid": 78,
+        "entityid": 22020172,
         "general": {
             "name": "UI-indicator8",
             "tagid": 0,
@@ -361,7 +361,7 @@
         }
     },
     {
-        "entityid": 79,
+        "entityid": 22020174,
         "general": {
             "name": "UI-indicator9",
             "tagid": 0,
@@ -413,7 +413,7 @@
         }
     },
     {
-        "entityid": 80,
+        "entityid": 22020175,
         "general": {
             "name": "UI-indicator10",
             "tagid": 0,
@@ -447,7 +447,7 @@
                 "x": 1.0,
                 "y": 1.0,
                 "z": 1.0,
-                "w": 1.0
+                "w": 0.0
             },
             "layer": 0,
             "worldtransform": false
@@ -465,7 +465,7 @@
         }
     },
     {
-        "entityid": 81,
+        "entityid": 22020180,
         "general": {
             "name": "UI-indicator11",
             "tagid": 0,
@@ -517,7 +517,7 @@
         }
     },
     {
-        "entityid": 82,
+        "entityid": 22020183,
         "general": {
             "name": "UI-indicator12",
             "tagid": 0,
@@ -569,7 +569,7 @@
         }
     },
     {
-        "entityid": 83,
+        "entityid": 22020184,
         "general": {
             "name": "UI-indicator13",
             "tagid": 0,
@@ -603,7 +603,7 @@
                 "x": 1.0,
                 "y": 1.0,
                 "z": 1.0,
-                "w": 1.0
+                "w": 0.0
             },
             "layer": 0,
             "worldtransform": false
@@ -621,7 +621,7 @@
         }
     },
     {
-        "entityid": 84,
+        "entityid": 22020185,
         "general": {
             "name": "UI-indicator14",
             "tagid": 0,
@@ -673,7 +673,7 @@
         }
     },
     {
-        "entityid": 85,
+        "entityid": 22020186,
         "general": {
             "name": "UI-indicator15",
             "tagid": 0,
@@ -725,7 +725,7 @@
         }
     },
     {
-        "entityid": 86,
+        "entityid": 22020188,
         "general": {
             "name": "UI-indicator16",
             "tagid": 0,
@@ -759,7 +759,7 @@
                 "x": 1.0,
                 "y": 1.0,
                 "z": 1.0,
-                "w": 1.0
+                "w": 0.0
             },
             "layer": 0,
             "worldtransform": false
@@ -777,7 +777,7 @@
         }
     },
     {
-        "entityid": 87,
+        "entityid": 22020189,
         "general": {
             "name": "UI-indicator17",
             "tagid": 0,
@@ -829,7 +829,7 @@
         }
     },
     {
-        "entityid": 88,
+        "entityid": 22020199,
         "general": {
             "name": "UI-indicator18",
             "tagid": 0,
@@ -881,7 +881,7 @@
         }
     },
     {
-        "entityid": 89,
+        "entityid": 23068673,
         "general": {
             "name": "UI-indicator19",
             "tagid": 0,
@@ -933,7 +933,7 @@
         }
     },
     {
-        "entityid": 90,
+        "entityid": 23068676,
         "general": {
             "name": "UI-indicator20",
             "tagid": 0,
@@ -985,7 +985,7 @@
         }
     },
     {
-        "entityid": 91,
+        "entityid": 23068677,
         "general": {
             "name": "UI-indicator21",
             "tagid": 0,
@@ -1037,7 +1037,7 @@
         }
     },
     {
-        "entityid": 92,
+        "entityid": 23068681,
         "general": {
             "name": "UI-indicator22",
             "tagid": 0,
@@ -1089,7 +1089,7 @@
         }
     },
     {
-        "entityid": 93,
+        "entityid": 23068682,
         "general": {
             "name": "UI-indicator23",
             "tagid": 0,
@@ -1141,7 +1141,7 @@
         }
     },
     {
-        "entityid": 94,
+        "entityid": 23068683,
         "general": {
             "name": "UI-indicator24",
             "tagid": 0,
@@ -1193,7 +1193,7 @@
         }
     },
     {
-        "entityid": 95,
+        "entityid": 23068690,
         "general": {
             "name": "UI-indicator1",
             "tagid": 0,
@@ -1245,7 +1245,7 @@
         }
     },
     {
-        "entityid": 96,
+        "entityid": 23068700,
         "general": {
             "name": "UI-indicator3",
             "tagid": 0,
@@ -1279,7 +1279,7 @@
                 "x": 1.0,
                 "y": 1.0,
                 "z": 1.0,
-                "w": 1.0
+                "w": 0.0
             },
             "layer": 0,
             "worldtransform": false
@@ -1297,7 +1297,7 @@
         }
     },
     {
-        "entityid": 97,
+        "entityid": 23068701,
         "general": {
             "name": "Leftshift",
             "tagid": 0,
@@ -1317,7 +1317,7 @@
                 "z": 0.0
             },
             "translate": {
-                "x": -895.0,
+                "x": -625.0,
                 "y": -0.5462962985038757,
                 "z": 0.0
             }
@@ -1346,7 +1346,7 @@
         }
     },
     {
-        "entityid": 98,
+        "entityid": 23068704,
         "general": {
             "name": "Base",
             "tagid": 0,
@@ -1395,7 +1395,7 @@
         }
     },
     {
-        "entityid": 99,
+        "entityid": 23068706,
         "general": {
             "name": "crosshair-1",
             "tagid": 0,
@@ -1415,8 +1415,8 @@
                 "z": 0.0
             },
             "translate": {
-                "x": -190.06875610351563,
-                "y": 190.12222290039063,
+                "x": -0.05000000074505806,
+                "y": 0.15000000596046448,
                 "z": 0.0
             }
         },
@@ -1444,7 +1444,7 @@
         }
     },
     {
-        "entityid": 100,
+        "entityid": 24117262,
         "general": {
             "name": "crosshair-2",
             "tagid": 0,
@@ -1464,8 +1464,8 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 190.06875610351563,
-                "y": 190.12222290039063,
+                "x": 0.05000000074505806,
+                "y": 0.15000000596046448,
                 "z": 0.0
             }
         },
@@ -1493,7 +1493,7 @@
         }
     },
     {
-        "entityid": 101,
+        "entityid": 24117263,
         "general": {
             "name": "crosshair-4",
             "tagid": 0,
@@ -1513,8 +1513,8 @@
                 "z": 0.0
             },
             "translate": {
-                "x": -190.06875610351563,
-                "y": -190.12222290039063,
+                "x": -0.05000000074505806,
+                "y": -0.05000000074505806,
                 "z": 0.0
             }
         },
@@ -1542,7 +1542,7 @@
         }
     },
     {
-        "entityid": 102,
+        "entityid": 24117275,
         "general": {
             "name": "crosshair-3",
             "tagid": 0,
@@ -1562,8 +1562,8 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 190.06875610351563,
-                "y": -190.12222290039063,
+                "x": 0.05000000074505806,
+                "y": -0.05000000074505806,
                 "z": 0.0
             }
         },
@@ -1591,7 +1591,7 @@
         }
     },
     {
-        "entityid": 103,
+        "entityid": 24117305,
         "general": {
             "name": "P1",
             "tagid": 0,
@@ -1635,7 +1635,7 @@
         }
     },
     {
-        "entityid": 104,
+        "entityid": 24117312,
         "general": {
             "name": "P3",
             "tagid": 0,
@@ -1663,7 +1663,7 @@
         "uirenderer": {
             "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
             "textureref": 4923,
-            "degree": 0.0,
+            "degree": 360.0,
             "slider": 1.0,
             "color": {
                 "x": 1.0,
@@ -1676,7 +1676,7 @@
         }
     },
     {
-        "entityid": 105,
+        "entityid": 24117354,
         "general": {
             "name": "P4",
             "tagid": 0,
@@ -1704,7 +1704,7 @@
         "uirenderer": {
             "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
             "textureref": 4923,
-            "degree": 0.0,
+            "degree": 360.0,
             "slider": 1.0,
             "color": {
                 "x": 1.0,
@@ -1717,7 +1717,7 @@
         }
     },
     {
-        "entityid": 106,
+        "entityid": 24117355,
         "general": {
             "name": "P5",
             "tagid": 0,
@@ -1745,7 +1745,7 @@
         "uirenderer": {
             "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
             "textureref": 4923,
-            "degree": 0.0,
+            "degree": 360.0,
             "slider": 1.0,
             "color": {
                 "x": 1.0,
@@ -1758,7 +1758,7 @@
         }
     },
     {
-        "entityid": 107,
+        "entityid": 24117357,
         "general": {
             "name": "P6",
             "tagid": 0,
@@ -1786,7 +1786,7 @@
         "uirenderer": {
             "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
             "textureref": 4923,
-            "degree": 0.0,
+            "degree": 360.0,
             "slider": 1.0,
             "color": {
                 "x": 1.0,
@@ -1799,7 +1799,7 @@
         }
     },
     {
-        "entityid": 108,
+        "entityid": 24117358,
         "general": {
             "name": "P7",
             "tagid": 0,
@@ -1840,7 +1840,7 @@
         }
     },
     {
-        "entityid": 109,
+        "entityid": 24117360,
         "general": {
             "name": "P8",
             "tagid": 0,
@@ -1881,7 +1881,7 @@
         }
     },
     {
-        "entityid": 110,
+        "entityid": 25165837,
         "general": {
             "name": "P2",
             "tagid": 0,
@@ -1909,7 +1909,7 @@
         "uirenderer": {
             "texpath": "",
             "textureref": 4923,
-            "degree": 0.0,
+            "degree": 360.0,
             "slider": 1.0,
             "color": {
                 "x": 1.0,
@@ -1922,7 +1922,7 @@
         }
     },
     {
-        "entityid": 111,
+        "entityid": 25165854,
         "general": {
             "name": "dashui",
             "tagid": 0,

@@ -1,0 +1,131 @@
+{
+    "entityid": 43,
+    "general": {
+        "name": "AMelissa",
+        "tagid": 1,
+        "subtag": 0,
+        "isActive": true,
+        "isPaused": false
+    },
+    "transform": {
+        "scale": {
+            "x": 1.162500262260437,
+            "y": 1.4500325918197632,
+            "z": 0.6006437540054321
+        },
+        "rotate": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "translate": {
+            "x": -4.690115928649902,
+            "y": -0.3114674687385559,
+            "z": 51.33574295043945
+        }
+    },
+    "rigidbody": {
+        "density": 10.0,
+        "material": 1,
+        "motion": 1,
+        "velocity": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "rotationconstraints": {
+            "x": true,
+            "y": true,
+            "z": true
+        },
+        "gravity": true
+    },
+    "meshrenderer": {
+        "vert": "../assets/shader_files/pointLight_vert.glsl",
+        "frag": "../assets/shader_files/pointLight_frag.glsl",
+        "meshrefid": 2584865052,
+        "instancecolor": {
+            "x": 1.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 1.0
+        },
+        "bloomthreshold": {
+            "x": 0.17000000178813934,
+            "y": 0.20999999344348907,
+            "z": 0.3100000023841858,
+            "w": 1.0
+        },
+        "materialinstance": [
+            "../assets/Compressed/Melissa_BaseColor.ctexture",
+            "../assets/Compressed/Melissa_Normal.ctexture",
+            "../assets/Compressed/Melissa_Metallic.ctexture",
+            "../assets/Compressed/Melissa_Roughness.ctexture",
+            "../assets/Compressed/Melissa_Emissive.ctexture",
+            "../assets/Compressed/Melissa_AO.ctexture"
+        ],
+        "mesh": "../assets/compiled_geom/Melissa_Idle.geom",
+        "texturerefid": [
+            1322168031,
+            1820887936,
+            2908106086,
+            2866962469,
+            2759371044,
+            2018461449
+        ]
+    },
+    "animator": {},
+    "capsulecollider": {
+        "translateoffset": {
+            "x": 0.0,
+            "y": 0.75,
+            "z": -0.30000001192092896
+        },
+        "radius": 0.5,
+        "halfheight": 0.25,
+        "istrigger": false
+    },
+    "scripts": {
+        "scriptscontainer": [
+            {
+                "scriptFile": "../assets/Scripts/Melissa.lua",
+                "variables": []
+            }
+        ]
+    },
+    "prefab": {
+        "prefab": "AMelissa"
+    },
+    "aisetting": {
+        "movementtype": 1,
+        "spreadout": 0.0,
+        "stayaway": 0.0,
+        "elevation": 0.0,
+        "targetname": "Camera",
+        "graphdataname": "GroundPath"
+    },
+    "healthbar": {
+        "healthcolor": {
+            "x": 0.0,
+            "y": 1.0,
+            "z": 0.0,
+            "w": 1.0
+        },
+        "backcolor": {
+            "x": 1.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 1.0
+        },
+        "position": {
+            "x": 0.0,
+            "y": 1.7000000476837158,
+            "z": -0.10000000149011612
+        },
+        "maxhealth": 200.0,
+        "width": 0.800000011920929,
+        "height": 0.07000000029802322,
+        "frametexture": 0,
+        "healthtexture": 0
+    }
+}

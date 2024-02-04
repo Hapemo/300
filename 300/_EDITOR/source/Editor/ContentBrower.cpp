@@ -27,7 +27,8 @@ Contains main loop for the logic of contentbrowsing + Drag and drop functionalit
 #include <stdlib.h>
 #include <iostream>
 #include <string>
-#include <algorithm>
+#include "imgui_stdlib.h"
+
 
 static const std::filesystem::path s_asset_directory = "../assets";
 bool ContentBrowser::dragCheck = false;
@@ -67,6 +68,16 @@ void format_string(std::string& path) {
 void ContentBrowser::update() 
 {
 	ImGui::Checkbox("Non-Icon", &content2);
+	
+	ImGui::Text("Filter: ");
+	ImGui::SameLine();
+	ImGui::InputText("##Filter", &mFilter);
+
+	std::transform(mFilter.begin(), mFilter.end(), mFilter.begin(), toupper);
+
+
+
+
 	if (content2 == true) {
 		ImVec2 maxpos;
 
@@ -98,18 +109,34 @@ void ContentBrowser::update()
 		for (auto const& directory : std::filesystem::directory_iterator{ current_Directory }) {
 			const auto& path = directory.path(); // directory path
 
+
 			std::string filename_string = path.filename().string();
 
-			if (directory.is_directory()) {
 
-				ImGui::PushID(idd);
-				ImGui::ImageButton((ImTextureID)(intptr_t)resourceDatas->m_EditorTextures["Folder"]->ID(), { buttonsize, buttonsize });
-				ImGui::PopID();
-				if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) {
-					current_Directory /= path.filename();
-				}
-				ImGui::Text(filename_string.c_str());
-				ImGui::NextColumn();
+			std::string fsupper = filename_string;
+			std::transform(fsupper.begin(), fsupper.end(), fsupper.begin(),toupper);
+
+			
+			if (fsupper.length()&& fsupper.find(mFilter) == std::string::npos)
+				continue;
+
+
+			//char to_upper(const char& ch) {
+			//	return std::toupper(ch);
+			//}
+
+			if (directory.is_directory()) {
+				
+
+					ImGui::PushID(idd);
+					ImGui::ImageButton((ImTextureID)(intptr_t)resourceDatas->m_EditorTextures["Folder"]->ID(), { buttonsize, buttonsize });
+					ImGui::PopID();
+					if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left)) {
+						current_Directory /= path.filename();
+					}
+					ImGui::Text(filename_string.c_str());
+					ImGui::NextColumn();
+
 
 			}
 			else if (!directory.is_directory()) {

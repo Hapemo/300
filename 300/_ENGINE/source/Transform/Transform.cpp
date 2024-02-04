@@ -48,8 +48,8 @@ void Transform::parentChildRotateUpdate(float dt)
 {
 	//std::cout << "Parent Child Update" << std::endl;
 
-	// if this has ended, 
-	if (mCumulativeTime <= 0) {
+	// if this has ended, if skill has ceased.
+	if (mCumulativeTime <= 0 || mSkillTimer <= 0) { 
 		mCumulativeTime = 0;
 		mRotate = mInitialRotation;
 		return;
@@ -58,9 +58,9 @@ void Transform::parentChildRotateUpdate(float dt)
 	else
 	{
 		// Calculate the rotation amount for the current frame
-		std::cout << "Rotation Amount: " << (mRotationDegrees / mDuration) * dt << std::endl;
+		//std::cout << "Rotation Amount: " << (mRotationDegrees / mDuration) * dt << std::endl;
 		float rotation_amount = (mRotationDegrees / mDuration) * dt * mRotateSpeed;
-		std::cout << "Rotation Amount (W speed): " << rotation_amount << std::endl;
+		//std::cout << "Rotation Amount (W speed): " << rotation_amount << std::endl;
 		//std::cout << "Rotate Amount: " << rotation_amount << std::endl;
 
 		// Create a quaternion from the additional rotation
@@ -81,38 +81,31 @@ void Transform::parentChildRotateUpdate(float dt)
 
 		// Decreament delta time.
 		mCumulativeTime -= dt;
-		std::cout << "Cumultive Timer: " << mCumulativeTime << std::endl;
+		mSkillTimer -= dt;
+		//std::cout << "Cumultive Timer: " << mCumulativeTime << std::endl;
 	}
 
 }
 
 // This function is called everytime the [FIRE] button is pressed. 
-void Transform::gunAnimationUpdate(std::string gun_type, float recoil_angle, float recoil_speed, float recoil_duration)
+void Transform::gunAnimationUpdate(std::string gun_type, float skill_timer, float recoil_angle, float recoil_speed, float recoil_duration)
 {
 	std::cout << "HANDLING GUN ANIMATION" << std::endl;
 	
-	mCumulativeTime = 10.0f;
+	//mCumulativeTime = 10.0f;
 
 	if (gun_type == "REVOLVER")
 	{	
-		// if [current rotation] is not the same as the [initial rotation]
-		// - set it back to original rotation then do recoil (in <parentChildRotateUpdate>
-		if (mRotate != mInitialRotation) // check if the gun is currently rotating 
-		{
-			std::cout << "(" << mInitialRotation.x << " , " << mInitialRotation.y << " , " << mInitialRotation.z << std::endl;
-			mRotate = mInitialRotation;
-			std::cout << "Reseting to Rest. (GUN ROTATION)" << std::endl;
-		}
-
-
+	
 		// Ensure the recoil angle is within the specified bounds
 		//recoil_angle = glm::clamp(recoil_angle, -max_recoil_angle, max_recoil_angle);
 		//std::cout << "Recoil Angle: " << recoil_angle << std::endl;
 
 		// Set up the parent-child rotation for the recoil
 		mRotationDegrees = recoil_angle;
-		mDuration = recoil_duration;				    // Set the total elapsed time for the recoil animation to run.
-		mCumulativeTime = recoil_duration;
+		mDuration = recoil_duration;				    // Set the total elapsed time for the recoil animation to run. (doesnt change)
+		mCumulativeTime = recoil_duration;			    // This will decrease as time elapses
+		mSkillTimer = skill_timer;					    // [2/4] To sync up with skill system (weapon swap)
 		mRotateSpeed = recoil_speed;					// Set the speed of the recoil animation to go off. 
 
 		//std::cout << "Cumulative Time udpated to: " << mCumulativeTime << std::endl;
@@ -121,6 +114,13 @@ void Transform::gunAnimationUpdate(std::string gun_type, float recoil_angle, flo
 		//std::cout << "ROTATION Degrees: " << mRotationDegrees << std::endl;
 
 	}
+
+
+}
+
+void Transform::setInitialRotation()
+{
+	mRotate = mInitialRotation;
 }
 
 

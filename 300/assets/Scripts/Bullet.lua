@@ -32,7 +32,7 @@ local bulletTag = "PISTOL" -- "REVOLVER" , "SHOTGUN" , "MACHINE GUN"
 local enemytag1HP = 100
 local pistolDamage = 15   -- per bullet (added on 1/31)
 local shotGunDamage = 12 -- per bullet
-local revolverDamage = 45 -- per bullet
+local revolverDamage = 75 -- per bullet (adjusted damage on 2/4)
 local machineGunDamage = 3 -- per bullet
 
 
@@ -110,7 +110,7 @@ function OnTriggerEnter(Entity)
 
         if(bulletTag == "PISTOL") then 
             if(healthComponent ~= nil) then 
-                healthComponent.health = healthComponent.health - pistolDamage
+                healthComponent.health = healthComponent.health - pistolDamage * _G.powerLevel
                 print("PISTOL HIT")
             else
             end
@@ -118,21 +118,22 @@ function OnTriggerEnter(Entity)
 
         if(bulletTag == "REVOLVER") then 
             if(healthComponent ~= nil) then 
-                healthComponent.health = healthComponent.health - revolverDamage
+                healthComponent.health = healthComponent.health - revolverDamage * _G.powerLevel
+                print("DAMAGE (PISTOL): " , revolverDamage * _G.powerLevel)
             else
             end
         end
 
         if(bulletTag == "SHOTGUN") then 
             if(healthComponent ~= nil) then 
-                healthComponent.health = healthComponent.health - shotGunDamage
+                healthComponent.health = healthComponent.health - shotGunDamage * _G.powerLevel
             else
             end
         end
 
         if(bulletTag == "MACHINE_GUN") then 
             if(healthComponent ~= nil) then 
-                healthComponent.health = healthComponent.health - machineGunDamage
+                healthComponent.health = healthComponent.health - machineGunDamage * _G.powerLevel
             end
 
         end

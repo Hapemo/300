@@ -1,27 +1,27 @@
 {
-    "entityid": 230,
+    "entityid": 6291499,
     "general": {
         "name": "Revolver Bullet",
-        "tagid": 10,
+        "tagid": 11,
         "subtag": 0,
         "isActive": true,
         "isPaused": false
     },
     "transform": {
         "scale": {
-            "x": 0.20000000298023224,
-            "y": 0.20000000298023224,
-            "z": 3.0
+            "x": 0.5,
+            "y": 0.5,
+            "z": 0.5
         },
         "rotate": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
+            "x": -0.5837287902832031,
+            "y": -0.0,
+            "z": -3.1382036209106445
         },
         "translate": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
+            "x": -28.46468162536621,
+            "y": 63.70797348022461,
+            "z": 30.42494773864746
         }
     },
     "rigidbody": {
@@ -29,9 +29,9 @@
         "material": 1,
         "motion": 1,
         "velocity": {
-            "x": -36.483001708984375,
-            "y": -0.34942626953125,
-            "z": -93.10684204101563
+            "x": -58.37287902832031,
+            "y": 80.59263610839844,
+            "z": 9.870719909667969
         },
         "rotationconstraints": {
             "x": true,
@@ -45,9 +45,9 @@
         "frag": "../assets/shader_files/pointLight_frag.glsl",
         "meshrefid": 2285,
         "instancecolor": {
-            "x": 0.0,
+            "x": 1.0,
             "y": 1.0,
-            "z": 0.5714285373687744,
+            "z": 1.0,
             "w": 1.0
         },
         "bloomthreshold": {
