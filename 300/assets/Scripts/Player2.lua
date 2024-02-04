@@ -618,13 +618,12 @@ function Update()
                 gunRecoilState = "MOVING"
 
             end
-            if (floorCount > 0) then
-                if (inputMapSys:GetButtonDown("Jump")) then
-                    movement.y = movement.y + 25.0;
-                    gunRecoilState = "MOVING"
-                    gunJumped = true
-                    jumpAudioComp:SetPlay(0.4)
-                end
+
+            if (inputMapSys:GetButtonDown("Jump") and math.abs(movement.y) < 0.1) then
+                movement.y = movement.y + 25.0;
+                gunRecoilState = "MOVING"
+                gunJumped = true
+                jumpAudioComp:SetPlay(0.4)
             end
 
             if(gunJumped == true) then  -- this loop will drop the gun (dip)

@@ -16,6 +16,7 @@
 #include <stringbuffer.h>
 
 #include <filesystem>
+#include <omp.h>
 
 #define  _ENABLE_ANIMATIONS 1
 /***************************************************************************/
@@ -115,6 +116,7 @@ void ResourceTy::mesh_LoadFolder()
 	std::filesystem::path folderpath = compiled_geom_path.c_str();
 
 	// Reads through all the files in the folder, and loads them into the mesh
+#pragma omp parallel for
 	for (const auto& entry : std::filesystem::directory_iterator(folderpath))
 	{
 		if (std::filesystem::is_regular_file(entry))
@@ -127,7 +129,11 @@ void ResourceTy::mesh_LoadFolder()
 
 			std::string filepath = compiled_geom_path + entry.path().filename().string();
 
-			++mResouceCnt;
+//#pragma omp critical
+			{
+				++mResouceCnt;
+			}
+
 			//uid uids(filepath);
 
 			std::string descfilepath = filepath + ".desc";
@@ -143,7 +149,10 @@ void ResourceTy::mesh_LoadFolder()
 			meshInstance.m_GUID = guid;
 			meshInstance.m_Type = _MESH;
 
-			m_ResourceInstance.emplace(guid, &meshInstance);
+//#pragma omp critical 
+			{
+				m_ResourceInstance.emplace(guid, &meshInstance);
+			}
 		}
 	}
 }
@@ -170,38 +179,14 @@ GFX::Mesh* ResourceTy::get_mesh(unsigned id)
 	Mesh collider. returns by reference the vertices and indices of the mesh
 */
 /**************************************************************************/
-void ResourceTy::mesh_GetVerticesAndIndices(std::string filepath, std::vector<glm::vec3>& vertices, std::vector<unsigned int>& indices)
+std::pair<glm::vec3, glm::vec3> ResourceTy::mesh_GetVerticesAndIndices(std::string filepath, std::vector<glm::vec3>& vertices, std::vector<unsigned int>& indices)
 {
 	_GEOM::Geom GeomData;
 
 	Deserialization::DeserializeGeom(filepath.c_str(), GeomData);	// load the geom from the compiled geom file
 	
 	GFX::Mesh::LoadFromGeom(GeomData, vertices, indices);
-
-	float minx, maxx, miny, maxy, minz, maxz;
-	minx = miny = minz = INFINITY;
-	maxx = maxy = maxz = -INFINITY;
-	for (const glm::vec3& vtx : vertices)
-	{
-		if (vtx.x < minx)
-			minx = vtx.x;
-		if (vtx.x > maxx)
-			maxx = vtx.x;
-		if (vtx.y < miny)
-			miny = vtx.y;
-		if (vtx.y > maxy)
-			maxy = vtx.y;
-		if (vtx.z < minz)
-			minz = vtx.z;
-		if (vtx.z > maxz)
-			maxz = vtx.z;
-	}
-	for (glm::vec3& vtx : vertices)
-	{
-		vtx.x /= (maxx - minx);
-		vtx.y /= (maxy - miny);
-		vtx.z /= (maxz - minz);
-	}
+	return std::pair<glm::vec3, glm::vec3>(GeomData.m_pMesh[0].m_MeshBBOX.m_Min, GeomData.m_pMesh[0].m_MeshBBOX.m_Max);
 }
 
 
@@ -285,6 +270,7 @@ void ResourceTy::MaterialInstance_Loader() {
 	std::filesystem::path folderpath = compressed_texture_path.c_str();
 
 	// Reads through all the files in the folder, and loads them into the mesh
+#pragma omp parallel for
 	for (const auto& entry : std::filesystem::directory_iterator(folderpath))
 	{
 
@@ -304,13 +290,18 @@ void ResourceTy::MaterialInstance_Loader() {
 
 		auto texPtr = SetupMaterialInstance(compressedfilepath);
 
-		++mResouceCnt;
+//#pragma omp critical 
+		{
+			++mResouceCnt;
+		}
+
 		instance_infos& tempInstance = AllocRscInfo();
 		tempInstance.m_Name = compressedfilepath;
 		tempInstance.m_GUID = guid;
 		tempInstance.m_pData = reinterpret_cast<void*>(texPtr);
 
 		tempInstance.m_Type = _TEXTURE;
+
 		m_ResourceInstance.emplace(guid, &tempInstance);
 	}
 }
