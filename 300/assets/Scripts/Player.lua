@@ -98,7 +98,7 @@ local bullet_scale = Vec3.new()
 
 -- Cooldown in seconds (between bullets)
 local revolverGunCooldown = 0.7
-local shotGunCooldown = 1.5
+local shotGunCooldown = 0.9
 local machineGunCooldown = 0.2
 local pistolCooldown = 0.5
 

@@ -126,7 +126,8 @@ struct Transform : public Serializable
 };
 
 //struct Gun : public Transform 
-//{
+
+// 
 //	enum GunType
 //	{
 //		REVOLER, 
