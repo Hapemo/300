@@ -83,6 +83,19 @@ end
 
 function OnTriggerEnter(Entity)
     generalComponent = Entity:GetGeneral()
+
+    --yujun's hardcode :D
+    if (generalComponent.name == "tutorialTrojan") then
+        entityobj = Helper.GetScriptEntity(script_entity.id)
+        systemManager.ecs:SetDeleteEntity(entityobj)
+        testScriptEntity = gameStateSys:GetEntity("tutorialTrojan")
+        TestScripts = testScriptEntity:GetScripts()
+        testScript = TestScripts:GetScript("../assets/Scripts/TutorialTrojanSoldier.lua")
+        if testScript ~= nil then
+            testScript:RunFunction("KillMe")
+        end
+    end
+
     local healthComponent 
     
     if(Entity:HasHealthbar()) then 
