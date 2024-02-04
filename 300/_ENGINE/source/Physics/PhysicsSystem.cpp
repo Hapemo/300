@@ -161,9 +161,10 @@ void PhysicsSystem::CreateRigidBody(Entity e)
 		std::vector<unsigned int> idx;
 		PxTriangleMesh* mesh = nullptr;
 
-		systemManager->mResourceTySystem->mesh_GetVerticesAndIndices(e.GetComponent<MeshRenderer>().mMeshPath, vtx, idx);
+		std::pair<glm::vec3, glm::vec3> bbox = systemManager->mResourceTySystem->mesh_GetVerticesAndIndices(e.GetComponent<MeshRenderer>().mMeshPath, vtx, idx);
+		glm::vec3 diff = bbox.second - bbox.first;
 		CreateMeshCollider(vtx, idx, mesh);
-		PxMeshScale scale(Convert(xform.mScale), Convert(xform.GetQuaternion()));
+		PxMeshScale scale(Convert(xform.mScale / diff), Convert(xform.GetQuaternion()));
 		PxTriangleMeshGeometry geom(mesh, scale);
 		PxShapeFlags flags = PxShapeFlag::eVISUALIZATION | PxShapeFlag::eSCENE_QUERY_SHAPE | PxShapeFlag::eSIMULATION_SHAPE;
 		PxShape* MeshShape = PxRigidActorExt::createExclusiveShape(*actor, geom, *mMaterials[rbod.mMaterial], flags);
