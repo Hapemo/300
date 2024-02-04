@@ -127,36 +127,40 @@ function Update()
         reseed = 0
     end
 
-    if(moveTime >0.4)then
-
-        -- for i = 1, 2 , 1 
-        -- do 
-
-        -- print(math.random(-200,200))
-
-            spawndataPos.x = transform.mTranslate.x  +math.random(-300,300)/100
-            spawndataPos.y = transform.mTranslate.y 
-            spawndataPos.z = transform.mTranslate.z +math.random(-300,300)/100
-
-            bulletPrefab = systemManager.ecs:NewEntityFromPrefab("1s", spawndataPos)
-
-            -- spawndataPos.x = transform.mTranslate.x  +math.random(-300,300)/100
-            -- spawndataPos.y = transform.mTranslate.y 
-            -- spawndataPos.z = transform.mTranslate.z +math.random(-300,300)/100
-
-            -- bulletPrefab = systemManager.ecs:NewEntityFromPrefab("0s", spawndataPos)
-
-            -- spawndataPos.x = transform.mTranslate.x  +math.random(-300,300)/100
-            -- spawndataPos.y = transform.mTranslate.y 
-            -- spawndataPos.z = transform.mTranslate.z +math.random(-300,300)/100
-
-            -- bulletPrefab = systemManager.ecs:NewEntityFromPrefab("0s", spawndataPos)
 
 
-        -- end
-        moveTime = 0
+    if(_G.PreObjectivesCounter >=4)then
+
+        if(moveTime >0.4)then
+
+            -- for i = 1, 2 , 1 
+            -- do 
+
+            -- print(math.random(-200,200))
+
+                spawndataPos.x = transform.mTranslate.x  +math.random(-300,300)/100
+                spawndataPos.y = transform.mTranslate.y 
+                spawndataPos.z = transform.mTranslate.z +math.random(-300,300)/100
+
+                bulletPrefab = systemManager.ecs:NewEntityFromPrefab("1s", spawndataPos)
+
+                spawndataPos.x = transform.mTranslate.x  +math.random(-300,300)/100
+                spawndataPos.y = transform.mTranslate.y 
+                spawndataPos.z = transform.mTranslate.z +math.random(-300,300)/100
+
+                bulletPrefab = systemManager.ecs:NewEntityFromPrefab("0s", spawndataPos)
+
+                -- spawndataPos.x = transform.mTranslate.x  +math.random(-300,300)/100
+                -- spawndataPos.y = transform.mTranslate.y 
+                -- spawndataPos.z = transform.mTranslate.z +math.random(-300,300)/100
+
+                -- bulletPrefab = systemManager.ecs:NewEntityFromPrefab("0s", spawndataPos)
+
+
+            -- end
+            moveTime = 0
+        end
     end
-
 
     if (isInZone == true) then
 

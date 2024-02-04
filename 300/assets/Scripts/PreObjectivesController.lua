@@ -20,9 +20,9 @@ function Update()
     if _G.PreObjectivesCounter >= 4 then
         --spawn the objectives portals
         print("SPAWN PORTALS")
-        objective1:GetTransform().mTranslate.y = -11
-        objective2:GetTransform().mTranslate.y = -11
-        objective3:GetTransform().mTranslate.y = -11
+        objective1:GetTransform().mTranslate.y = -9
+        objective2:GetTransform().mTranslate.y = -9
+        objective3:GetTransform().mTranslate.y = -9
     end
 end
 
