@@ -31,6 +31,9 @@ function Update()
         end
     end
     bar:GetUIrenderer():SetSlider(progress/maxProgress)
+    if complete == true then
+        systemManager.ecs:SetDeleteEntity(this)
+    end
 end
 
 function Dead()
