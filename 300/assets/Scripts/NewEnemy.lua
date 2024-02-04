@@ -8,7 +8,7 @@ local scriptingSys
 
 local color = Vec4.new(0,0,0,1)
 local flipColor = true
-local colorRate = 300
+local colorRate = 1
 
 local runOnce = false
 
@@ -41,17 +41,17 @@ function Update()
     end
 
     if (flipColor) then
-        if (color.x < 255) then
+        if (color.x < 1) then
             print("before", color.x)
             color.x = color.x + FPSManager.GetDT()*colorRate
-            if color.x > 255 then color.x = 255 end
-        elseif (color.y < 255) then
+            if color.x > 1 then color.x = 1 end
+        elseif (color.y < 1) then
             color.y = color.y + FPSManager.GetDT()*colorRate
-            if color.y > 255 then color.x = 255 end
-        elseif (color.z < 255) then
+            if color.y > 1 then color.x = 1 end
+        elseif (color.z < 1) then
             color.z = color.z + FPSManager.GetDT()*colorRate
-            if color.z > 255 then 
-                color.z = 255 
+            if color.z > 1 then 
+                color.z = 1 
                 flipColor = false
             end
         end
