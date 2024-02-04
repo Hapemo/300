@@ -7,7 +7,7 @@ local progress
 local isInZone = false
 
 local currentSpawnTimer = 0 -- keeps track of how often enemy spawning interval
-local spawnTimer = 3 -- sets how long the enemy spawning interval is
+local spawnTimer = 10 -- sets how long the enemy spawning interval is
 local currentEnemyCount = 0 -- keeps track of how many enemies there are in the map
 local maxEnemyCount = 3 -- sets how many enemies are allowed in the map
 
