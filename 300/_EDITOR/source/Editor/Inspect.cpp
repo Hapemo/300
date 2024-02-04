@@ -788,6 +788,9 @@ void MeshRenderer::Inspect()
 
 		}
 		ImGui::Separator();
+		ImGui::Checkbox("Cast Shadow", &mCastShadow);
+
+		ImGui::Separator();
 
 		// == >> Mesh << == //
 		ImGui::Text("MESH");

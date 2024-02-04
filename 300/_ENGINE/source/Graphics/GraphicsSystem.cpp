@@ -210,8 +210,8 @@ void GraphicsSystem::Draw(float dt, bool forEditor)
 {
 	// Render the depth scene first as shadow pass
 	RenderShadowMap();
-	//m_Renderer.AddCube(dirLightPos, vec3(2.f, 2.f, 2.f));
-	m_Renderer.AddLine(dirLightPos, dirLightTgt);
+	m_Renderer.AddCube(dirLightPos, vec3(1.f, 1.f, 1.f), { 1.f, 0.f, 1.f, 1.f });
+	m_Renderer.AddLine(dirLightPos, dirLightPos + dirLightDir * 3.f);
 
 	std::map<std::string, short> renderedMesh;
 	auto meshRendererInstances = systemManager->ecs->GetEntitiesWith<MeshRenderer>();
@@ -1962,15 +1962,17 @@ void GraphicsSystem::RenderShadowMap()
 
 	// Bind shadow FBO to be rendered to
 	m_ShadowFbo.PrepForDraw();
-	//glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);	// turn off writing to FBO's color buffer
 
 	// Setting up directional light as camera
-	GFX::Camera lightCam;
-	lightCam.SetPosition(dirLightPos);
-	lightCam.SetTarget(dirLightTgt);
-	lightCam.SetProjection(GFX::CameraConstants::defaultFOV, m_Window->size(), 0.1f, 900.f);
-	lightCam.Update(false);
-	mat4 camVP = lightCam.viewProj();
+	//GFX::Camera lightCam;
+	//lightCam.SetPosition(dirLightPos);
+	//lightCam.SetTarget(dirLightPos + dirLightDir);
+	//lightCam.SetProjection(GFX::CameraConstants::defaultFOV, m_Window->size(), 0.1f, 900.f);
+	//lightCam.Update(false);
+	//mat4 camVP = lightCam.viewProj();
+	mat4 view = glm::lookAt(dirLightPos, dirLightDir + dirLightPos, { 0.f, 1.f, 0.f });
+	mat4 proj = glm::ortho(-dirLightSize.x / 2, dirLightSize.x / 2, -dirLightSize.y / 2, dirLightSize.y / 2, dirLightNearFar.x, dirLightNearFar.y);
+	mat4 camVP = proj * view;
 
 	// Bind Shaders and update uniforms
 	m_AnimationShaderInst.Activate();	// Animation Shader
@@ -1988,6 +1990,9 @@ void GraphicsSystem::RenderShadowMap()
 	for (Entity inst : meshRendererInstances)
 	{
 		auto& meshrefptr = inst.GetComponent<MeshRenderer>();
+
+		if (meshrefptr.mCastShadow == false)	// Don't render objects that do not cast shadows
+			continue;
 
 		// the mesh instance has no meshrenderer
 		if (meshrefptr.mMeshRef.getdata(systemManager->mResourceTySystem->m_ResourceInstance) == nullptr)
@@ -2019,8 +2024,6 @@ void GraphicsSystem::RenderShadowMap()
 	}
 	GFX::Shader::Deactivate();
 
-	// Enable back writing to color bits in framebuffer
-	//glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
 	m_ShadowFbo.Unbind();
 
 	glCullFace(GL_NONE);
@@ -2057,12 +2060,15 @@ void GraphicsSystem::ComputeDeferredLight(bool editorDraw)
 	glBindTexture(GL_TEXTURE_2D, m_ShadowFbo.GetDepthMap());
 
 	// Light space matrix
-	GFX::Camera lightCam;
-	lightCam.SetPosition(dirLightPos);
-	lightCam.SetTarget(dirLightTgt);
-	lightCam.SetProjection(GFX::CameraConstants::defaultFOV, m_Window->size(), 0.1f, 900.f);
-	lightCam.Update(false);
-	mat4 camVP = lightCam.viewProj();
+	//GFX::Camera lightCam;
+	//lightCam.SetPosition(dirLightPos);
+	//lightCam.SetTarget(dirLightPos + dirLightDir);
+	//lightCam.SetProjection(GFX::CameraConstants::defaultFOV, m_Window->size(), 0.1f, 900.f);
+	//lightCam.Update(false);
+	//mat4 camVP = lightCam.viewProj();
+	mat4 view = glm::lookAt(dirLightPos, dirLightDir + dirLightPos, { 0.f, 1.f, 0.f });
+	mat4 proj = glm::ortho(-dirLightSize.x / 2, dirLightSize.x / 2, -dirLightSize.y / 2, dirLightSize.y / 2, dirLightNearFar.x, dirLightNearFar.y);
+	mat4 camVP = proj * view;
 
 	glUniformMatrix4fv(computePBRLightSpaceMatrixLocation, 1, GL_FALSE, &camVP[0][0]);
 

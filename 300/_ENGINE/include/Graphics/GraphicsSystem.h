@@ -408,8 +408,10 @@ public:
 	GLuint shadowMapLightSpaceMatrixLocation{};
 	GLuint computePBRLightSpaceMatrixLocation{};
 	GFX::ShadowFBO m_ShadowFbo;
-	const vec3 dirLightPos{ -20.f, 50.f, 0.f };
-	const vec3 dirLightTgt{ -4, 32, 1 };
+	vec3 dirLightPos{ -0.4f, 21.7f, 55.6f };
+	vec3 dirLightDir{ 0.3f, -1.f, -1.f };
+	vec2 dirLightSize{ 20.f, 20.f };
+	vec2 dirLightNearFar{ 0.1f, 900.f };
 	void RenderShadowMap();
 };
 

@@ -191,6 +191,7 @@ struct MeshRenderer : public Serializable
 
 	unsigned							mGUID;
 	//bool 								mNeedsAnimator;
+	bool								mCastShadow{ true };
 
 	void								Inspect();
 	void								SetColor(const vec4& color);
