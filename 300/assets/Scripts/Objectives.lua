@@ -106,7 +106,7 @@ function Update()
         currentEnemyCount = currentEnemyCount + 1
         currentSpawnTimer = 0 -- reset currentSpawnTimer so that next enemy can spawn
     end
-    print("Current progress =", progress/objectivesComplete)
+    -- print("Current progress =", progress/objectivesComplete)
     objectivebar:GetUIrenderer():SetSlider(progress/objectivesComplete);
 
     ent = Helper.GetScriptEntity(script_entity.id)

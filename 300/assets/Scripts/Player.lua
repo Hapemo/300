@@ -154,8 +154,8 @@ local dashZ
 local inittedDash = false
 
 local isTakingDamage = false; -- whether player is in contact with other enemies, thus taking damage
-local playerHealthCurrent = 1000;
-local playerHealthMax = 1000;
+local playerHealthCurrent = 100;
+local playerHealthMax = 100;
 local playerHealthStartRegenCurrent = 0;
 local playerHealthStartRegenMax = 30; -- this is the time it takes for the player to not be damaged to start regenerating health
 
@@ -166,6 +166,10 @@ local isuiinit = false
 local this
 
 local isGamePaused
+
+
+local DamageCD =1.1;
+local DamageTime = 1.0;
 
 function Alive()
     this = Helper.GetScriptEntity(script_entity.id)
@@ -240,16 +244,13 @@ function Alive()
 end
 
 function Update()
+    healthbar = gameStateSys:GetEntityByScene("Health Bar","Objectives")
 
     -- Player Health System Start -- 
     if isuiinit == false then
         -- Player Health System Start -- 
 
-        healthbarSpawnPos.x = -0.7;
-        healthbarSpawnPos.y = 0.65;
-        healthbarSpawnPos.z = 0;
 
-        healthbar = gameStateSys:GetEntityByScene("Health Bar","Objectives")
         -- healthbar = systemManager.ecs:NewEntityFromPrefab("Health Bar", healthbarSpawnPos)
 
         -- objectiveBarEmptySpawnPos.x = 0.7;
@@ -267,25 +268,28 @@ function Update()
     end
 
     -- Player Health System End -- 
-    if (isTakingDamage == true) then
-    playerHealthStartRegenCurrent = 0;
-    playerHealthCurrent = playerHealthCurrent - 6; -- take damage
+    
+
+
+    -- if (isTakingDamage == false) then -- if not taking damage
+    if(DamageCD<=DamageTime)then
+            DamageCD = DamageCD+FPSManager.GetDT()
+        -- end
+
+        -- if (playerHealthStartRegenCurrent < playerHealthStartRegenMax) then
+        --     playerHealthStartRegenCurrent = playerHealthStartRegenCurrent + 1;
+        -- end
+
+        -- if (playerHealthStartRegenCurrent == playerHealthStartRegenMax) then
+        --     if (playerHealthCurrent < 400) then
+        --         playerHealthCurrent = playerHealthCurrent + 3; -- regen hp
+        --     end
+        -- end
     end
 
-    if (isTakingDamage == false) then -- if not taking damage
-
-        if (playerHealthStartRegenCurrent < playerHealthStartRegenMax) then
-            playerHealthStartRegenCurrent = playerHealthStartRegenCurrent + 1;
-        end
-
-        if (playerHealthStartRegenCurrent == playerHealthStartRegenMax) then
-            if (playerHealthCurrent < 400) then
-                playerHealthCurrent = playerHealthCurrent + 3; -- regen hp
-            end
-        end
-    end
-
+    print(playerHealthCurrent/playerHealthMax)
     healthbar:GetUIrenderer():SetSlider(playerHealthCurrent/playerHealthMax);
+
 
     if playerHealthCurrent <= 0 then
         gameStateSys:ChangeGameState("LoseMenu")
@@ -885,13 +889,29 @@ function OnTriggerEnter(Entity)
         end
     end
 
+    if (generalComponent.name == "ILOVEYOU" or generalComponent.name == "Melissa" or generalComponent.name == "TrojanHorse"
+    or generalComponent.name == "ZipBomb" or generalComponent.name == "TrojanSoldier" )then
+
+        if(DamageCD >=DamageTime-0.1)then
+            -- if (isTakingDamage == true) then
+                playerHealthStartRegenCurrent = 0;
+                playerHealthCurrent = playerHealthCurrent - 10; -- take damage
+                -- print("Running Pause Update fromxxxxxxxxxxxxxxxxxxxxxxxx Player.lua")
+                DamageCD = 0
+                -- isTakingDamage = false
+            --end
+        end
+    end
     -- Player Health System Start --
-    if (generalComponent.name == "ILOVEYOU") then isTakingDamage = true; end
-    if (generalComponent.name == "Melissa") then isTakingDamage = true; end
-    if (generalComponent.name == "TrojanHorse") then isTakingDamage = true; end
-    if (generalComponent.name == "ZipBomb") then isTakingDamage = true; end
-    if (generalComponent.name == "TrojanSoldier") then isTakingDamage = true; end
+    -- if (generalComponent.name == "ILOVEYOU") then isTakingDamage = true; end
+    -- if (generalComponent.name == "Melissa") then isTakingDamage = true; end
+    -- if (generalComponent.name == "TrojanHorse") then isTakingDamage = true; end
+    -- if (generalComponent.name == "ZipBomb") then isTakingDamage = true; end
+    -- if (generalComponent.name == "TrojanSoldier") then isTakingDamage = true; end
     -- Player Health System End --
+
+
+    
 
 end
 
@@ -907,11 +927,11 @@ function OnTriggerExit(Entity)
     end
 
     -- Player Health System Start --
-    if (generalComponent.name == "ILOVEYOU") then isTakingDamage = false; end
-    if (generalComponent.name == "Melissa") then isTakingDamage = false; end
-    if (generalComponent.name == "TrojanHorse") then isTakingDamage = false; end
-    if (generalComponent.name == "ZipBomb") then isTakingDamage = false; end
-    if (generalComponent.name == "TrojanSoldier") then isTakingDamage = false; end
+    -- if (generalComponent.name == "ILOVEYOU") then isTakingDamage = false; end
+    -- if (generalComponent.name == "Melissa") then isTakingDamage = false; end
+    -- if (generalComponent.name == "TrojanHorse") then isTakingDamage = false; end
+    -- if (generalComponent.name == "ZipBomb") then isTakingDamage = false; end
+    -- if (generalComponent.name == "TrojanSoldier") then isTakingDamage = false; end
     -- Player Health System End --
 end
 
