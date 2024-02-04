@@ -142,10 +142,20 @@ void SystemManager::Update(float dt)
 		mIsGamePause = !mIsGamePause;
 
 	if (Input::CheckKey(E_STATE::PRESS, E_KEY::Q))
+	{
 		if (mIsPlay)
+		{
 			Pause(); // add scripting on pause
+			auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
+			for (Entity entity : scriptEntities)
+			{
+				entity.GetComponent<Scripts>().RunFunctionForAllScripts("PauseUpdate");
+			}
+		}
+
 		else
 			Play(); // add scripting on play
+	}
 
 	if (!mIsPlay)
 		return;
