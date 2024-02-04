@@ -35,14 +35,13 @@ function Update()
     -- If can see player, activate the scripts accordingly
     if not runOnce and (aiSys:ConeOfSight(this, target, 70, 40)) then
         runOnce = true
-        print(name)
-        print("sees player")
+        -- print(name)
+        -- print("sees player")
         ActivateScript(this)
     end
 
     if (flipColor) then
         if (color.x < 1) then
-            print("before", color.x)
             color.x = color.x + FPSManager.GetDT()*colorRate
             if color.x > 1 then color.x = 1 end
         elseif (color.y < 1) then
@@ -55,7 +54,6 @@ function Update()
                 flipColor = false
             end
         end
-        print(color)
     else 
         if (color.x > 0) then
             color.x = color.x - FPSManager.GetDT()*colorRate
@@ -110,6 +108,6 @@ function ActivateScript(Entity)
     elseif (string.find(name, "zipbomb")) then 
         scriptName = "..\\assets\\Scripts\\ZipBomb.lua"
     end
-    print(scriptName)
-    -- scriptingSys:AddScript(Entity, scriptName);
+    -- print(scriptName)
+    Entity:GetScripts():AddScript(Entity, scriptName)
 end
