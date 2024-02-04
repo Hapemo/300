@@ -1,7 +1,7 @@
 {
-    "entityid": 12583172,
+    "entityid": 43,
     "general": {
-        "name": "Melissa (AUDIO TEST)",
+        "name": "AMelissa",
         "tagid": 1,
         "subtag": 0,
         "isActive": true,
@@ -19,9 +19,9 @@
             "z": 0.0
         },
         "translate": {
-            "x": 16.0,
-            "y": -11.0,
-            "z": 26.0
+            "x": -4.690115928649902,
+            "y": -0.3114674687385559,
+            "z": 51.33574295043945
         }
     },
     "rigidbody": {
@@ -43,11 +43,11 @@
     "meshrenderer": {
         "vert": "../assets/shader_files/pointLight_vert.glsl",
         "frag": "../assets/shader_files/pointLight_frag.glsl",
-        "meshrefid": 2588,
+        "meshrefid": 2584865052,
         "instancecolor": {
             "x": 1.0,
-            "y": 1.0,
-            "z": 1.0,
+            "y": 0.0,
+            "z": 0.0,
             "w": 1.0
         },
         "bloomthreshold": {
@@ -64,7 +64,7 @@
             "../assets/Compressed/Melissa_Emissive.ctexture",
             "../assets/Compressed/Melissa_AO.ctexture"
         ],
-        "mesh": "../assets/compiled_geom/Melissa.geom",
+        "mesh": "../assets/compiled_geom/Melissa_Idle.geom",
         "texturerefid": [
             1322168031,
             1820887936,
@@ -93,18 +93,8 @@
             }
         ]
     },
-    "audio": {
-        "filepath": "../assets\\Audio",
-        "filename": "Enemy_Melissa_Split.wav",
-        "fullpath": "../assets\\Audio/Enemy_Melissa_Split.wav",
-        "playonawake": false,
-        "islooping": false,
-        "audiotype": 1,
-        "volume": 1.0,
-        "retainaudio": false
-    },
     "prefab": {
-        "prefab": "Melissa (AUDIO TEST)"
+        "prefab": "AMelissa"
     },
     "aisetting": {
         "movementtype": 1,

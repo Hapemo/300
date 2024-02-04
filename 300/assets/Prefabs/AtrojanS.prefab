@@ -1,7 +1,7 @@
 {
-    "entityid": 12583172,
+    "entityid": 12,
     "general": {
-        "name": "Melissa (AUDIO TEST)",
+        "name": "AtrojanS",
         "tagid": 1,
         "subtag": 0,
         "isActive": true,
@@ -9,9 +9,9 @@
     },
     "transform": {
         "scale": {
-            "x": 1.162500262260437,
-            "y": 1.4500325918197632,
-            "z": 0.6006437540054321
+            "x": 0.800000011920929,
+            "y": 1.2000000476837158,
+            "z": 0.800000011920929
         },
         "rotate": {
             "x": 0.0,
@@ -19,9 +19,9 @@
             "z": 0.0
         },
         "translate": {
-            "x": 16.0,
-            "y": -11.0,
-            "z": 26.0
+            "x": -6.079092979431152,
+            "y": -5.000641822814941,
+            "z": 18.81005859375
         }
     },
     "rigidbody": {
@@ -35,76 +35,64 @@
         },
         "rotationconstraints": {
             "x": true,
-            "y": true,
-            "z": true
+            "y": false,
+            "z": false
         },
         "gravity": true
     },
     "meshrenderer": {
         "vert": "../assets/shader_files/pointLight_vert.glsl",
         "frag": "../assets/shader_files/pointLight_frag.glsl",
-        "meshrefid": 2588,
+        "meshrefid": 3309,
         "instancecolor": {
             "x": 1.0,
-            "y": 1.0,
-            "z": 1.0,
+            "y": 0.0,
+            "z": 0.0,
             "w": 1.0
         },
         "bloomthreshold": {
-            "x": 0.17000000178813934,
-            "y": 0.20999999344348907,
-            "z": 0.3100000023841858,
+            "x": 0.3499999940395355,
+            "y": 0.36000001430511475,
+            "z": 0.10999999940395355,
             "w": 1.0
         },
         "materialinstance": [
-            "../assets/Compressed/Melissa_BaseColor.ctexture",
-            "../assets/Compressed/Melissa_Normal.ctexture",
-            "../assets/Compressed/Melissa_Metallic.ctexture",
-            "../assets/Compressed/Melissa_Roughness.ctexture",
-            "../assets/Compressed/Melissa_Emissive.ctexture",
-            "../assets/Compressed/Melissa_AO.ctexture"
+            "../assets/Compressed/Trojan_Soldier_BaseColor.ctexture",
+            "../assets/Compressed/Trojan_Soldier_Normal.ctexture",
+            "../assets/Compressed/Trojan_Soldier_Metallic.ctexture",
+            "../assets/Compressed/Trojan_Soldier_Roughness.ctexture",
+            "../assets/Compressed/Trojan_Soldier_Emissive.ctexture",
+            "../assets/Compressed/Trojan_Soldier_AO.ctexture"
         ],
-        "mesh": "../assets/compiled_geom/Melissa.geom",
+        "mesh": "../assets/compiled_geom/Trojan_Soldier.geom",
         "texturerefid": [
-            1322168031,
-            1820887936,
-            2908106086,
-            2866962469,
-            2759371044,
-            2018461449
+            602447454,
+            2438310811,
+            2305639413,
+            1216284744,
+            928397263,
+            736177602
         ]
     },
-    "animator": {},
-    "capsulecollider": {
+    "spherecollider": {
+        "scaleoffset": 0.22499999403953552,
         "translateoffset": {
             "x": 0.0,
-            "y": 0.75,
-            "z": -0.30000001192092896
+            "y": 0.0,
+            "z": 0.0
         },
-        "radius": 0.5,
-        "halfheight": 0.25,
         "istrigger": false
     },
     "scripts": {
         "scriptscontainer": [
             {
-                "scriptFile": "../assets/Scripts/Melissa.lua",
+                "scriptFile": "../assets/Scripts/TrojanSoldier.lua",
                 "variables": []
             }
         ]
     },
-    "audio": {
-        "filepath": "../assets\\Audio",
-        "filename": "Enemy_Melissa_Split.wav",
-        "fullpath": "../assets\\Audio/Enemy_Melissa_Split.wav",
-        "playonawake": false,
-        "islooping": false,
-        "audiotype": 1,
-        "volume": 1.0,
-        "retainaudio": false
-    },
     "prefab": {
-        "prefab": "Melissa (AUDIO TEST)"
+        "prefab": "AtrojanS"
     },
     "aisetting": {
         "movementtype": 1,
@@ -112,7 +100,7 @@
         "stayaway": 0.0,
         "elevation": 0.0,
         "targetname": "Camera",
-        "graphdataname": "GroundPath"
+        "graphdataname": ""
     },
     "healthbar": {
         "healthcolor": {
@@ -129,11 +117,11 @@
         },
         "position": {
             "x": 0.0,
-            "y": 1.7000000476837158,
-            "z": -0.10000000149011612
+            "y": 0.6000000238418579,
+            "z": 0.0
         },
-        "maxhealth": 200.0,
-        "width": 0.800000011920929,
+        "maxhealth": 30.0,
+        "width": 0.30000001192092896,
         "height": 0.07000000029802322,
         "frametexture": 0,
         "healthtexture": 0

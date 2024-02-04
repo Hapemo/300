@@ -141,20 +141,11 @@ void SystemManager::Update(float dt)
 	if (!systemManager->IsEditor() && mInputActionSystem->GetKeyDown(ESCAPE))
 		mIsGamePause = !mIsGamePause;
 
-	if (mIsGamePause)
-	{
-		//check if pause menu ui entity exists in gs
-		Entity pauseMenu = mGameStateSystem->GetEntity("pauseMenu");
-		if (pauseMenu.GetComponent<General>().name == "pauseMenu")
-		{
-			//run pause menu script only
-			Script* pauseScript = pauseMenu.GetComponent<Scripts>().GetScript("../assets/Scripts/testPauseState.lua");
-			pauseScript->Run("TriggerPause");
-		}
+	if (Input::CheckKey(E_STATE::PRESS, E_KEY::Q))
+		if (mIsPlay)
+			Pause(); // add scripting on pause
 		else
-			PWARNING("Cannot get pause menu ui entity in gamestate!");
-		return;
-	}
+			Play(); // add scripting on play
 
 	if (!mIsPlay)
 		return;

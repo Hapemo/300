@@ -188,7 +188,8 @@ void LuaTransform()
         "mTranslate", &Transform::mTranslate,
         "ParentChildRotateInit", &Transform::parentChildRotateInit,
         "ParentChildRotateUpdate", &Transform::parentChildRotateUpdate,
-        "GunAnimation" , &Transform::gunAnimationUpdate);
+        "GunAnimation" , &Transform::gunAnimationUpdate,
+        "SetInitialRotation" , &Transform::setInitialRotation);
 }
 
 void LuaAnimator()
