@@ -102,7 +102,7 @@ function OnTriggerEnter(Entity)
 
     tagid = generalComponent.tagid
     if (tagid == 1) then
-        for i = 7, 1, -1
+        for i = 3, 1, -1
         do
             spawned(i)
         end
@@ -152,43 +152,38 @@ function OnTriggerEnter(Entity)
         systemManager.ecs:SetDeleteEntity(entityobj)
     end
 
-    if (tagid == 3) then
-        for i = 7, 1, -1
-        do
-            spawned(i)
-        end
-        --floorCount = floorCount + 1;
-        -- gameStateSys = systemManager:mGameStateSystem();
-        -- gameStateSys:DeleteEntity(entityobj)
-        systemManager.ecs:SetDeleteEntity(entityobj)
-    end
-    if (tagid == 4) then
-        for i = 7, 1, -1
-        do
-            spawned(i)
-        end
-        --floorCount = floorCount + 1;
-        -- gameStateSys = systemManager:mGameStateSystem();
-        -- gameStateSys:DeleteEntity(entityobj)
-        systemManager.ecs:SetDeleteEntity(entityobj)
-    end
+    -- if (tagid == 3) then
+    --     for i = 3, 1, -1
+    --     do
+    --         spawned(i)
+    --     end
+    --     --floorCount = floorCount + 1;
+    --     -- gameStateSys = systemManager:mGameStateSystem();
+    --     -- gameStateSys:DeleteEntity(entityobj)
+    --     systemManager.ecs:SetDeleteEntity(entityobj)
+    -- end
+    -- if (tagid == 4) then
+    --     for i = 7, 1, -1
+    --     do
+    --         spawned(i)
+    --     end
+    --     --floorCount = floorCount + 1;
+    --     -- gameStateSys = systemManager:mGameStateSystem();
+    --     -- gameStateSys:DeleteEntity(entityobj)
+    --     systemManager.ecs:SetDeleteEntity(entityobj)
+    -- end
 
 
-    if (tagid == 1) then
-        for i = 7, 1, -1
-        do
-            spawned(i)
-        end
-
-    
-
-        
-
-        if(enemytag1HP <= 0) then 
-            print("ENEMY DIES")
-            systemManager.ecs:SetDeleteEntity(entityobj)
-        end
-    end
+    -- if (tagid == 1) then
+    --     for i = 3, 1, -1
+    --     do
+    --         spawned(i)
+    --     end
+    --     if(enemytag1HP <= 0) then 
+    --         print("ENEMY DIES")
+    --         systemManager.ecs:SetDeleteEntity(entityobj)
+    --     end
+    -- end
 
 end
 

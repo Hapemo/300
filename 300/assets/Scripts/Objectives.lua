@@ -63,10 +63,10 @@ function Update()
         end
 
         objectiveBarSpawnPos.x = 0.8;
-        objectiveBarSpawnPos.y = 0.65;
+        objectiveBarSpawnPos.y = 0.7;
         objectiveBarSpawnPos.z = 0;
-        -- objectivebar = systemManager.ecs:NewEntityFromPrefab("Objective Bar 1", objectiveBarSpawnPos)
-        objectivebar = gameStateSys:GetEntityByScene("Objective Bar 1","Objectives")
+        objectivebar = systemManager.ecs:NewEntityFromPrefab("Objective Bar 1", objectiveBarSpawnPos)
+        -- objectivebar = gameStateSys:GetEntityByScene("Objective Bar 1","Objectives")
         isInit = true
     end
 
@@ -79,7 +79,7 @@ function Update()
             objCount = testScript:ReturnValueInt("GetCountObj")
 
             if objCount == 3 then
-                objectivebar:GetTransform().mTranslate.x = 0.815;
+                objectivebar:GetTransform().mTranslate.x =  0.58;
             end
 
             if objCount == 2 then
@@ -87,7 +87,7 @@ function Update()
             end
 
             if objCount == 1 then
-                objectivebar:GetTransform().mTranslate.x = 0.58;
+                objectivebar:GetTransform().mTranslate.x = 0.815;
             end
         end
 
@@ -106,7 +106,7 @@ function Update()
         currentEnemyCount = currentEnemyCount + 1
         currentSpawnTimer = 0 -- reset currentSpawnTimer so that next enemy can spawn
     end
-
+    print("Current progress =", progress/objectivesComplete)
     objectivebar:GetUIrenderer():SetSlider(progress/objectivesComplete);
 
     ent = Helper.GetScriptEntity(script_entity.id)
@@ -166,7 +166,7 @@ function Update()
             -- OBJECTIVE PROGRESS
             if (progress < objectivesComplete) then
                 progress = progress + 1
-                print("Current progress =", progress)
+               -- print("Current progress =", progress/objectivesComplete)
             end
         end
 
@@ -181,7 +181,7 @@ function Update()
 
             if (progress > 0) then
                 progress = progress - 1
-                print("Current progress =", progress)
+               -- print("Current progress =", progress)
             end
 
         end
