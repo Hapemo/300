@@ -6,6 +6,10 @@ local target
 local aiSys
 local scriptingSys
 
+local color = Vec4.new(0,0,0,1)
+local flipColor = true
+local colorRate = 300
+
 local runOnce = false
 
 function Alive()
@@ -35,6 +39,40 @@ function Update()
         print("sees player")
         ActivateScript(this)
     end
+
+    if (flipColor) then
+        if (color.x < 255) then
+            print("before", color.x)
+            color.x = color.x + FPSManager.GetDT()*colorRate
+            if color.x > 255 then color.x = 255 end
+        elseif (color.y < 255) then
+            color.y = color.y + FPSManager.GetDT()*colorRate
+            if color.y > 255 then color.x = 255 end
+        elseif (color.z < 255) then
+            color.z = color.z + FPSManager.GetDT()*colorRate
+            if color.z > 255 then 
+                color.z = 255 
+                flipColor = false
+            end
+        end
+        print(color)
+    else 
+        if (color.x > 0) then
+            color.x = color.x - FPSManager.GetDT()*colorRate
+            if color.x < 0 then color.x = 0 end
+        elseif (color.y > 0) then
+            color.y = color.y - FPSManager.GetDT()*colorRate
+            if color.y < 0 then color.y = 0 end
+        elseif (color.z > 0) then
+            color.z = color.z - FPSManager.GetDT()*colorRate
+            if color.z < 0 then 
+                color.z = 0 
+                flipColor = true
+            end
+        end
+    end
+    this:GetMeshRenderer():SetColor(color)
+    
 
 end
 
