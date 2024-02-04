@@ -146,10 +146,12 @@ void SystemManager::Update(float dt)
 		{
 			entity.GetComponent<Scripts>().RunFunctionForAllScripts("PauseUpdate");
 		}
+		mButtonSystem.get()->Update();
 	}
 
 	if (!mIsPlay)
 		return;
+
 	mButtonSystem.get()->Update();
 	EnginePerformance::StartTrack("Physics");
 	mPhysicsSystem.get()->Update(dt);

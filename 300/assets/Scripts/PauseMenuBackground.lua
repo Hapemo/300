@@ -11,39 +11,31 @@ function Alive()
 end
 
 function Update()
-    --print("Update")
     menuBackground = Helper.GetScriptEntity(script_entity.id)
-    if (inputMapSys:GetButtonDown("pause")) then
-        print("PAUSEEEEEEEEEEE")
-        if (not _G.isPausePauseMenu) then
+    if (inputMapSys:GetButton("pause")) then
+        --if (not _G.isPausePauseMenu) then
             systemManager:Pause()
-            _G.isPausePauseMenu = true
-        else
-            systemManager:Play()
-            _G.isPausePauseMenu = false
-        end
+            _--G.isPausePauseMenu = true
+        --end
     end
-    if (not _G.isPausePauseMenu) then
+    --if (not _G.isPausePauseMenu) then
         mainMenuButton:GetTransform().mTranslate.x = 1000
         quitButton:GetTransform().mTranslate.x = 1000
         resumeButton:GetTransform().mTranslate.x = 1000
         htpButton:GetTransform().mTranslate.x = 1000
         menuBackground:GetTransform().mTranslate.x = 1000
         restartButton:GetTransform().mTranslate.x = 1000
-    end
+    --end
 end
 
 function PauseUpdate()
-    if (inputMapSys:GetKeyDown("pause")) then
-        print("PAUSEEEEEEEEEEE")
-        if (not _G.isPausePauseMenu) then
-            systemManager:Pause()
-            _G.isPausePauseMenu = true
-        else
-            systemManager:Play()
-            _G.isPausePauseMenu = false
-        end
-    end
+    -- inputMapSys = systemManager:mInputActionSystem()
+    -- if (inputMapSys:GetButton("pause")) then
+    --     if (_G.isPausePauseMenu) then
+    --         systemManager:Play()
+    --         _G.isPausePauseMenu = false
+    --     end
+    -- end
     menuBackground = Helper.GetScriptEntity(script_entity.id)
     mainMenuButton:GetTransform().mTranslate.x = 0.02
     quitButton:GetTransform().mTranslate.x = 0.02

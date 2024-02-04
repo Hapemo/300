@@ -24,6 +24,11 @@ function Alive()
 
     -- exitAudioEntity = gameStateSys:GetEntity("Exit")
     -- exitSFX = exitAudioEntity:GetAudio()
+    mainMenuButton = gameStateSys:GetEntityByScene("MainMenuButton", "PauseMenuScene")
+    quitButton = gameStateSys:GetEntityByScene("QuitButton", "PauseMenuScene")
+    resumeButton = gameStateSys:GetEntityByScene("ResumeButton", "PauseMenuScene")
+    htpButton = gameStateSys:GetEntityByScene("HTPButton", "PauseMenuScene")
+    restartButton = gameStateSys:GetEntityByScene("RestartButton", "PauseMenuScene")
 
 end
 
@@ -137,9 +142,10 @@ function Update()
 end
 
 function PauseUpdate()
-    
+    --print("INUPDATEEEEEEEEEEEEEEE")
     button = Helper.GetScriptEntity(script_entity.id)
     if (button:GetButton().mIsHover) then
+        --print("HOVERRRRRRRRRRRRRRRRRRRRRRR")
         hoverSFX = button:GetAudio()
         hoverSFX:SetPlay(0.2)
         if (button:GetGeneral().name == "ResumeButton") then
@@ -163,15 +169,19 @@ function PauseUpdate()
         end
     end
     if (button:GetButton().mActivated) then
+        print("ISACTIVATEDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD")
         clickSFX:SetPlay(1.0)
         if (button:GetGeneral().name == "ResumeButton") then
             systemManager:Play()
+            TranslateMenu()
         elseif (button:GetGeneral().name == "HTPButton") then
             --gameStateSys:ChangeGameState("HTPMenu")
         elseif (button:GetGeneral().name == "RestartButton") then
             gameStateSys:ChangeGameState("Test")
+            TranslateMenu()
         elseif (button:GetGeneral().name == "QuitButton") then
             gameStateSys:ChangeGameState("MainMenu")
+            TranslateMenu()
         end
     end
 end
@@ -190,4 +200,13 @@ end
 
 function OnTriggerExit(Entity)
     
+end
+
+function TranslateMenu()
+    mainMenuButton:GetTransform().mTranslate.x = 1000
+    quitButton:GetTransform().mTranslate.x = 1000
+    resumeButton:GetTransform().mTranslate.x = 1000
+    htpButton:GetTransform().mTranslate.x = 1000
+    menuBackground:GetTransform().mTranslate.x = 1000
+    restartButton:GetTransform().mTranslate.x = 1000
 end
