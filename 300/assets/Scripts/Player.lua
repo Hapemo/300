@@ -249,19 +249,20 @@ function Update()
         healthbarSpawnPos.y = 0.65;
         healthbarSpawnPos.z = 0;
 
-        healthbar = systemManager.ecs:NewEntityFromPrefab("Health Bar", healthbarSpawnPos)
+        healthbar = gameStateSys:GetEntityByScene("Health Bar","Objectives")
+        -- healthbar = systemManager.ecs:NewEntityFromPrefab("Health Bar", healthbarSpawnPos)
 
-        objectiveBarEmptySpawnPos.x = 0.7;
-        objectiveBarEmptySpawnPos.y = 0.7;
-        objectiveBarEmptySpawnPos.z = 0;
+        -- objectiveBarEmptySpawnPos.x = 0.7;
+        -- objectiveBarEmptySpawnPos.y = 0.7;
+        -- objectiveBarEmptySpawnPos.z = 0;
 
-        objectivebarEmpty = systemManager.ecs:NewEntityFromPrefab("Objective Bar Empty", objectiveBarEmptySpawnPos)
+        -- objectivebarEmpty = systemManager.ecs:NewEntityFromPrefab("Objective Bar Empty", objectiveBarEmptySpawnPos)
 
-        healthBarEmptySpawnPos.x = -0.7;
-        healthBarEmptySpawnPos.y = 0.7;
-        healthBarEmptySpawnPos.z = 0;
+        -- healthBarEmptySpawnPos.x = -0.7;
+        -- healthBarEmptySpawnPos.y = 0.7;
+        -- healthBarEmptySpawnPos.z = 0;
 
-        healthbarEmpty = systemManager.ecs:NewEntityFromPrefab("Objective Bar Empty", healthBarEmptySpawnPos)
+        -- healthbarEmpty = systemManager.ecs:NewEntityFromPrefab("Objective Bar Empty", healthBarEmptySpawnPos)
         isuiinit = true
     end
 

@@ -65,8 +65,8 @@ function Update()
         objectiveBarSpawnPos.x = 0.8;
         objectiveBarSpawnPos.y = 0.65;
         objectiveBarSpawnPos.z = 0;
-        objectivebar = systemManager.ecs:NewEntityFromPrefab("Objective Bar 1", objectiveBarSpawnPos)
-
+        -- objectivebar = systemManager.ecs:NewEntityFromPrefab("Objective Bar 1", objectiveBarSpawnPos)
+        objectivebar = gameStateSys:GetEntityByScene("Objective Bar 1","Objectives")
         isInit = true
     end
 
