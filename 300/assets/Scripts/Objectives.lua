@@ -7,9 +7,9 @@ local progress
 local isInZone = false
 
 local currentSpawnTimer = 0 -- keeps track of how often enemy spawning interval
-local spawnTimer = 3 -- sets how long the enemy spawning interval is
+local spawnTimer = 10 -- sets how long the enemy spawning interval is
 local currentEnemyCount = 0 -- keeps track of how many enemies there are in the map
-local maxEnemyCount = 3 -- sets how many enemies are allowed in the map
+local maxEnemyCount = 2 -- sets how many enemies are allowed in the map
 
 local mobSpawnPos1 = Vec3.new()
 local mobSpawnPos2 = Vec3.new()
@@ -95,7 +95,7 @@ function Update()
     currentSpawnTimer = currentSpawnTimer + FPSManager.GetDT()
 
     if currentEnemyCount < maxEnemyCount and currentSpawnTimer > spawnTimer then
-
+        print("SPAWN NEW")
         mobtype = math.random(2, 3) -- generate a random number to spawn a random enemy between Trojan and Melissa only (for level 1)
 
             if (mobtype == 1) then systemManager.ecs:NewEntityFromPrefab("ILOVEYOU", mobSpawnPos1) 

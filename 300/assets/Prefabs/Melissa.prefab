@@ -1,5 +1,5 @@
 {
-    "entityid": 5243143,
+    "entityid": 242,
     "general": {
         "name": "Melissa",
         "tagid": 1,
@@ -92,6 +92,16 @@
                 "variables": []
             }
         ]
+    },
+    "audio": {
+        "filepath": "../assets\\Audio",
+        "filename": "Enemy_Melissa_Split.wav",
+        "fullpath": "../assets\\Audio/Enemy_Melissa_Split.wav",
+        "playonawake": false,
+        "islooping": false,
+        "audiotype": 1,
+        "volume": 1.0,
+        "retainaudio": false
     },
     "prefab": {
         "prefab": "Melissa"
