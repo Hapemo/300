@@ -226,8 +226,7 @@ function Update()
             objCount = testScript:ReturnValueInt("GetCountObj")
             if objCount == 0 then
                 gameStateSys = systemManager:mGameStateSystem()
-                inputMapSys = systemManager:mInputActionSystem()
-                if(inputMapSys:GetButtonDown("NextLevel")) then
+            
                     x = gameStateSys:GetEntity("TransitionHelper", "Transition") 
                     y = x:GetScripts()
                     z = y:GetScript("../assets/Scripts/Transition.lua")
@@ -237,7 +236,6 @@ function Update()
                         --z:RunFunctionWithParam("SetNextGameState", "Test2")
                         z:RunFunction("StartTransition")
                     end
-                end
             end
         end
 
