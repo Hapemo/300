@@ -1311,7 +1311,7 @@ void GraphicsSystem::PrintMat4(const glm::mat4 &input)
 	Global enum to unpause all animations
 */
 /**************************************************************************/
-void GraphicsSystem::UnpauseGlobalAnimation()
+void GraphicsSystem::UnpauseGlobalAnimation() 
 {
 	m_EnableGlobalAnimations = true;
 }
