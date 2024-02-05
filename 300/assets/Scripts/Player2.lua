@@ -214,6 +214,7 @@ function Alive()
 
     -- Gun Stuff --
     gunEntity = gameStateSys:GetEntity("gun")
+    gunMeshRenderer = gunEntity:GetMeshRenderer()
     gunInitialTranslate = gunEntity:GetTransform().mTranslate
     gunRotation = gunEntity:GetTransform().mRotate
 
@@ -642,6 +643,28 @@ function Update()
           
         end
 
+-- region (Gun Colors)
+    if(_G.gunEquipped == 0) then 
+        local color_vec4 = Vec4.new(0.5,0.5,0.5,1)
+        setBaseGunTexture(color_vec4)
+    end
+
+    if(_G.gunEquipped == 1) then 
+        local color_vec4 = Vec4.new(0.05, 0.23, 0.7, 1)
+        setBaseGunTexture(color_vec4)
+    end
+
+    if(_G.gunEquipped == 2) then 
+        local color_vec4 = Vec4.new(0.67, 0.65, 0.18, 1)
+        setYellowGunTexture(color_vec4)
+    end
+
+
+    if(_G.gunEquipped == 3) then 
+        local color_vec4 = Vec4.new(0.65, 0.05, 0.05, 1)
+        setRedGunTexture(color_vec4)
+    end
+-- endregion
         if(inputMapSys:GetButtonDown("Shoot")) then
             gunHoldState = "HOLDING"   -- for machine gun
 
@@ -1158,3 +1181,17 @@ function machineGunRecoil()
     end
 end
 
+function setBaseGunTexture(color_vec4)
+    gunMeshRenderer:SetTexture(MaterialType.DIFFUSE, "Gun_Base_Color")
+    gunMeshRenderer:SetColor(color_vec4)
+end
+
+function setRedGunTexture(color_vec4)
+    gunMeshRenderer:SetTexture(MaterialType.DIFFUSE, "Gun_Base_Color_Red")
+    gunMeshRenderer:SetColor(color_vec4)
+end
+
+function setYellowGunTexture(color_vec4)
+    gunMeshRenderer:SetTexture(MaterialType.DIFFUSE, "Gun_Base_Color_Brown")
+    gunMeshRenderer:SetColor(color_vec4)
+end
