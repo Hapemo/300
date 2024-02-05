@@ -38,7 +38,10 @@ void LuaEngine()
         "mGameStateSystem", &SystemManager::GetGameStateSystem,
         "mGraphicsSystem", &SystemManager::GetGraphicsSystem,
         "mAISystem", &SystemManager::GetAIManager,
-        "Quit", &SystemManager::Quit);
+        "Quit", &SystemManager::Quit,
+        "Play", &SystemManager::Play,
+        "Pause", &SystemManager::Pause,
+        "SetIsPause", &SystemManager::SetIsPause);
 }
 
 void LuaECS()
@@ -234,14 +237,16 @@ void LuaScript()
         "SetValueVec3", &Script::SetValue<glm::vec3>,
         "SetValueFloat", &Script::SetValue<float>,
         "SetNextGameStateHelper", &Script::RunWithParams<std::string>,
-        "RunFunction", &Script::Run);
+        "RunFunction", &Script::Run,
+        "Load", &Script::Load);
 }
 
 void LuaScripts()
 {
     systemManager->mScriptingSystem->luaState.new_usertype<Scripts>(
         "Scripts", sol::constructors<>(),
-        "GetScript", &Scripts::GetScript);
+        "GetScript", &Scripts::GetScript,
+        "AddScript", &Scripts::AddScriptScripts);
 }
 
 void LuaParent()

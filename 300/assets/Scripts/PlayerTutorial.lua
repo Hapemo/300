@@ -68,6 +68,8 @@ local original_translate_y
 local original_translate_z
 local original_translation = Vec3.new()
 
+local box2SpawnPos = Vec3.new()
+
 local gunJumpTimer = 0
 local gunDisplaceBackSpeed = 0.01
 local gunDisplaceSpeed = 0.01
@@ -180,12 +182,15 @@ function Alive()
     cameraEntity = Helper.GetScriptEntity(script_entity.id)
     totaltime = 3.0
 
+    box2SpawnPos.x = 18.0
+    box2SpawnPos.y = 8.78
+    box2SpawnPos.z = -0.56
     -- -- audioComp = cameraEntity:GetAudio()
     -- dashui = gameStateSys:GetEntity("UI1")
 
     dashui = gameStateSys:GetEntityByScene("dashui" , "tutorialUI")
 
-    bulletAudioEntity = gameStateSys:GetEntity("BulletShoot")
+    bulletAudioEntity = gameStateSys:GetEntity("Bullet Shoot")
     bulletAudioComp = bulletAudioEntity:GetAudio()
 
     jumpAudioEntity = gameStateSys:GetEntity("Jump")
@@ -205,11 +210,11 @@ function Alive()
     -- tpfin1 = gameStateSys:GetEntity("Fin1")
     -- tpfin2 = gameStateSys:GetEntity("Fin2")
 
-    tutTeleporter = gameStateSys:GetEntity("Tutorial")
+    tutTeleporter = gameStateSys:GetEntity("GoToTutorial")
     tutTeleporter2 = gameStateSys:GetEntity("Tutorial2")
     tutTeleporter3 = gameStateSys:GetEntity("Game")
     skiptutTeleporter = gameStateSys:GetEntity("SkipTutorial")
-    box2Spawn = gameStateSys:GetEntity("Box2Spawn")
+    box2Spawn = gameStateSys:GetEntity("Box2Spawn", "JumpAndDash")
     box3Spawn = gameStateSys:GetEntity("Box3Spawn")
     wasd = gameStateSys:GetEntity("WASD")
     jumpText = gameStateSys:GetEntity("JUMPtext")
@@ -290,7 +295,7 @@ function Update()
 
     if tutState == TutBox.SECOND then
         if travelBox == true then
-            Helper.SetTranslate(cameraEntity, box2Spawn:GetTransform().mTranslate)
+            Helper.SetTranslate(cameraEntity, box2SpawnPos)
             travelBox = false
             wasdTranslate = wasd:GetTransform().mTranslate
             wasdTranslate.y = 750
@@ -577,7 +582,7 @@ function Update()
         if(_G.gunEquipped == 0) then 
 
             if(pistolTimer == 0) then
-                print("SHOOTING PISTOLS")
+                -- print("SHOOTING PISTOLS")
                 applyGunRecoil(recoil_speed, 0.5)
 
                 positions_final.x = positions.x + viewVecCam.x*3
@@ -757,7 +762,6 @@ function OnTriggerEnter(Entity)
     end
 
     if (tagid == 5) then
-        print(generalComponent.name)
         -- if (generalComponent.name == teleporter1:GetGeneral().name) then
         --     collideWithTP = 1
         -- elseif (generalComponent.name == teleporter2:GetGeneral().name) then

@@ -63,10 +63,10 @@ function Update()
         end
 
         objectiveBarSpawnPos.x = 0.8;
-        objectiveBarSpawnPos.y = 0.65;
+        objectiveBarSpawnPos.y = 0.7;
         objectiveBarSpawnPos.z = 0;
         objectivebar = systemManager.ecs:NewEntityFromPrefab("Objective Bar 1", objectiveBarSpawnPos)
-
+        -- objectivebar = gameStateSys:GetEntityByScene("Objective Bar 1","Objectives")
         isInit = true
     end
 
@@ -79,7 +79,7 @@ function Update()
             objCount = testScript:ReturnValueInt("GetCountObj")
 
             if objCount == 3 then
-                objectivebar:GetTransform().mTranslate.x = 0.815;
+                objectivebar:GetTransform().mTranslate.x =  0.58;
             end
 
             if objCount == 2 then
@@ -87,7 +87,7 @@ function Update()
             end
 
             if objCount == 1 then
-                objectivebar:GetTransform().mTranslate.x = 0.58;
+                objectivebar:GetTransform().mTranslate.x = 0.815;
             end
         end
 
@@ -106,7 +106,7 @@ function Update()
         currentEnemyCount = currentEnemyCount + 1
         currentSpawnTimer = 0 -- reset currentSpawnTimer so that next enemy can spawn
     end
-
+    -- print("Current progress =", progress/objectivesComplete)
     objectivebar:GetUIrenderer():SetSlider(progress/objectivesComplete);
 
     ent = Helper.GetScriptEntity(script_entity.id)
@@ -127,36 +127,40 @@ function Update()
         reseed = 0
     end
 
-    if(moveTime >0.4)then
-
-        -- for i = 1, 2 , 1 
-        -- do 
-
-        -- print(math.random(-200,200))
-
-            spawndataPos.x = transform.mTranslate.x  +math.random(-300,300)/100
-            spawndataPos.y = transform.mTranslate.y 
-            spawndataPos.z = transform.mTranslate.z +math.random(-300,300)/100
-
-            bulletPrefab = systemManager.ecs:NewEntityFromPrefab("1s", spawndataPos)
-
-            -- spawndataPos.x = transform.mTranslate.x  +math.random(-300,300)/100
-            -- spawndataPos.y = transform.mTranslate.y 
-            -- spawndataPos.z = transform.mTranslate.z +math.random(-300,300)/100
-
-            -- bulletPrefab = systemManager.ecs:NewEntityFromPrefab("0s", spawndataPos)
-
-            -- spawndataPos.x = transform.mTranslate.x  +math.random(-300,300)/100
-            -- spawndataPos.y = transform.mTranslate.y 
-            -- spawndataPos.z = transform.mTranslate.z +math.random(-300,300)/100
-
-            -- bulletPrefab = systemManager.ecs:NewEntityFromPrefab("0s", spawndataPos)
 
 
-        -- end
-        moveTime = 0
+    if(_G.PreObjectivesCounter >=4)then
+
+        if(moveTime >0.4)then
+
+            -- for i = 1, 2 , 1 
+            -- do 
+
+            -- print(math.random(-200,200))
+
+                spawndataPos.x = transform.mTranslate.x  +math.random(-300,300)/100
+                spawndataPos.y = transform.mTranslate.y 
+                spawndataPos.z = transform.mTranslate.z +math.random(-300,300)/100
+
+                bulletPrefab = systemManager.ecs:NewEntityFromPrefab("1s", spawndataPos)
+
+                spawndataPos.x = transform.mTranslate.x  +math.random(-300,300)/100
+                spawndataPos.y = transform.mTranslate.y 
+                spawndataPos.z = transform.mTranslate.z +math.random(-300,300)/100
+
+                bulletPrefab = systemManager.ecs:NewEntityFromPrefab("0s", spawndataPos)
+
+                -- spawndataPos.x = transform.mTranslate.x  +math.random(-300,300)/100
+                -- spawndataPos.y = transform.mTranslate.y 
+                -- spawndataPos.z = transform.mTranslate.z +math.random(-300,300)/100
+
+                -- bulletPrefab = systemManager.ecs:NewEntityFromPrefab("0s", spawndataPos)
+
+
+            -- end
+            moveTime = 0
+        end
     end
-
 
     if (isInZone == true) then
 
@@ -166,7 +170,7 @@ function Update()
             -- OBJECTIVE PROGRESS
             if (progress < objectivesComplete) then
                 progress = progress + 1
-                print("Current progress =", progress)
+               -- print("Current progress =", progress/objectivesComplete)
             end
         end
 
@@ -181,7 +185,7 @@ function Update()
 
             if (progress > 0) then
                 progress = progress - 1
-                print("Current progress =", progress)
+               -- print("Current progress =", progress)
             end
 
         end
@@ -210,7 +214,7 @@ function Update()
         if testScript ~= nil then
             objCount = testScript:ReturnValueInt("GetCountObj")
             if objCount == 0 then
-                gameStateSys:ChangeGameState("WinMenu")
+                gameStateSys:ChangeGameState("Test2")
             end
         end
 

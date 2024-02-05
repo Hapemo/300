@@ -58,6 +58,14 @@ public:
 	void RunWithParams(const char* funcName, args... arguments)
 	{
 		sol::protected_function func = env[funcName];
+
+		if (!func.valid())
+		{
+			// uncomment below if want to test if function exist
+			//std::cout << std::string(funcName) << " function does not exist in " << scriptFile << std::endl;
+			return;
+		}
+
 		sol::protected_function_result result = func(arguments...);
 
 		if (!result.valid())
