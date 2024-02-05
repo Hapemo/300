@@ -1,4 +1,15 @@
 _G.isPausePauseMenu = false
+runOnce = false
+runOnce2 = false
+
+local gameStateSys
+local inputMapSys
+local mainMenuButton
+local quitButton
+local resumeButton
+local htpButton
+local restartButton
+local menuBackground
 
 function Alive()
     gameStateSys = systemManager:mGameStateSystem()
@@ -8,36 +19,52 @@ function Alive()
     resumeButton = gameStateSys:GetEntityByScene("ResumeButton", "PauseMenuScene")
     htpButton = gameStateSys:GetEntityByScene("HTPButton", "PauseMenuScene")
     restartButton = gameStateSys:GetEntityByScene("RestartButton", "PauseMenuScene")
+    menuBackground = gameStateSys:GetEntityByScene("MenuBackground", "PauseMenuScene")
+    _G.isPausePauseMenu = false
 end
 
 function Update()
-    menuBackground = Helper.GetScriptEntity(script_entity.id)
-    mainMenuButton:GetTransform().mTranslate.x = 1000
-    quitButton:GetTransform().mTranslate.x = 1000
-    resumeButton:GetTransform().mTranslate.x = 1000
-    htpButton:GetTransform().mTranslate.x = 1000
-    menuBackground:GetTransform().mTranslate.x = 1000
-    restartButton:GetTransform().mTranslate.x = 1000
-    if (inputMapSys:GetButton("pause")) then
---         --if (not _G.isPausePauseMenu) then
-            systemManager:Pause()
---             _--G.isPausePauseMenu = true
---         --end
+    if (runOnce2) then
+        runOnce2 = false
+        return
     end
---     --if (not _G.isPausePauseMenu) then
--- print("SUPPPPP")
---     --end
+
+    if (inputMapSys:GetButtonDown("pause")) then
+        runOnce = true
+        if (not _G.isPausePauseMenu) then
+            systemManager:Pause()
+            _G.isPausePauseMenu = true
+        end
+    end
+    if (not _G.isPausePauseMenu) then
+        --print("bring AWAYYY menu")
+        mainMenuButton:GetTransform().mTranslate.x = 1000
+        quitButton:GetTransform().mTranslate.x = 1000
+        resumeButton:GetTransform().mTranslate.x = 1000
+        htpButton:GetTransform().mTranslate.x = 1000
+        menuBackground:GetTransform().mTranslate.x = 1000
+        restartButton:GetTransform().mTranslate.x = 1000
+    end
 end
 
 function PauseUpdate()
-    -- inputMapSys = systemManager:mInputActionSystem()
-    -- if (inputMapSys:GetButton("pause")) then
-    --     if (_G.isPausePauseMenu) then
-    --         systemManager:Play()
-    --         _G.isPausePauseMenu = false
-    --     end
-    -- end
-    menuBackground = Helper.GetScriptEntity(script_entity.id)
+    if (runOnce) then
+        runOnce = false
+        return
+    end
+
+    inputMapSys = systemManager:mInputActionSystem()
+    if (inputMapSys:GetButtonDown("pause")) then
+        if (_G.isPausePauseMenu) then
+            systemManager:Play()
+            _G.isPausePauseMenu = false
+            runOnce2 = true
+        end
+    end
+
+    if not _G.isPausePauseMenu then return end
+
+    --print("bring back menu7")
     mainMenuButton:GetTransform().mTranslate.x = 0.02
     quitButton:GetTransform().mTranslate.x = 0.02
     resumeButton:GetTransform().mTranslate.x = 0.023
@@ -47,7 +74,6 @@ function PauseUpdate()
 end
 
 function Dead()
-
 end
 
 function OnTriggerEnter(Entity)

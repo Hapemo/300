@@ -82,7 +82,7 @@ void SystemManager::Reset()
 	mGraphicsSystem.get()->Init();
 	//mScriptingSystem.get()->ScriptReload();
 	mIsPlay = false;
-	mIsPause = false;
+	mIsInGamePause = false;
 }
 
 void SystemManager::ResetForChangeGS() {
@@ -94,19 +94,21 @@ void SystemManager::ResetForChangeGS() {
 
 void SystemManager::Pause()
 {
-	mIsPlay = false; 
+	mIsInGamePause = true;
 	mGraphicsSystem->PauseGlobalAnimation();
 	if (!mAudioSystem->sys_paused)
 	{
 		mAudioSystem->TogglePause();
 		mAudioSystem->sys_paused = true;
 	}
+	auto temp = systemManager->mGameStateSystem->GetEntity("MenuBackground").GetComponent<Transform>();
 	
 }
 
 void SystemManager::Play()
 {
 	mIsPlay = true; 
+	mIsInGamePause = false;
 	mPhysicsSystem.get()->Init();
 	mGraphicsSystem->UnpauseGlobalAnimation();
 	mGameStateSystem->mCurrentGameState.Save();
@@ -139,10 +141,10 @@ void SystemManager::Update(float dt)
 	//mAudioSystem.get()->Update(dt);
 	//EnginePerformance::EndTrack("Audio");
 
-	if (mInputActionSystem->GetButtonDown("pause") && mIsPlay)
-		mIsPause = true;
+	//if (mInputActionSystem->GetButtonDown("pause") && mIsPlay)
+	//	mIsPause = true;
 
-	if (mIsPause) {
+	if (mIsInGamePause) {
 		auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
 		for (Entity entity : scriptEntities)
 		{
