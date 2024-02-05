@@ -100,12 +100,12 @@ void main()
     }
 
     vec3 ambient = vec3(0.3) * albedoSpec.rgb * ao;
-    vec3 color = ambient + lightRadiance;
-    vec4 finalColor = vec4(color + emission.rgb, 1.0);
-    float shadow = ShadowCalculation(fragPos.xyz, normal.rgb);
+    vec3 color = vec3(0.3) * albedoSpec.rgb;
+    //vec3 color = ambient + lightRadiance;
+    vec4 finalColor = vec4(lightRadiance + emission.rgb, 1.0);
     finalColor = finalColor * customColor;   // Set Custom Color
-    if (shadow > 0.5f)
-        finalColor.rgb = vec3(0.3) * albedoSpec.rgb;
+    float shadow = ShadowCalculation(fragPos.xyz, normal.rgb);
+    finalColor = vec4(color, 1.0) + (1.0 - shadow) * finalColor;
 
     // HDR
     // check whether fragment output is higher than threshold, if so output as bright color
@@ -254,9 +254,21 @@ float ShadowCalculation(vec3 fragPos, vec3 normal)
     float currentDepth = projCoords.z;
 
     // In shadow if current depth is larger than closest depth
-    //float bias = max(0.05 * (1.0 - dot(normal, fragToLightDir)), 0.005);
+    //float bias = max(0.05 * (1.0 - dot(normal, fragToLightDir)), 0.0005);
     float bias = 0.0005;
-    float shadow = currentDepth - bias > closestDepth ? 1.0 : 0.0;
 
+    // PCF
+    float shadow = 0.0;
+    vec2 texelSize = 1.0 / textureSize(depthBuffer, 0);
+    for(int x = -1; x <= 1; ++x)
+    {
+        for(int y = -1; y <= 1; ++y)
+        {
+            float pcfDepth = texture(depthBuffer, projCoords.xy + vec2(x, y) * texelSize).r; 
+            shadow += currentDepth - bias > pcfDepth  ? 1.0 : 0.0;        
+        }    
+    }
+    shadow /= 9.0;
+    
     return shadow;
 }
