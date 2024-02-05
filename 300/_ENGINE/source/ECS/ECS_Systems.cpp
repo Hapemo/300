@@ -82,6 +82,7 @@ void SystemManager::Reset()
 	mGraphicsSystem.get()->Init();
 	//mScriptingSystem.get()->ScriptReload();
 	mIsPlay = false;
+	mIsPause = false;
 }
 
 void SystemManager::ResetForChangeGS() {
@@ -137,27 +138,22 @@ void SystemManager::Update(float dt)
 	//mAudioSystem.get()->Update(dt);
 	//EnginePerformance::EndTrack("Audio");
 
-	//check if esc is triggered in gamescene
-	if (!systemManager->IsEditor() && mInputActionSystem->GetKeyDown(ESCAPE))
-		mIsGamePause = !mIsGamePause;
+	if (mInputActionSystem->GetButtonDown("pause") && mIsPlay)
+		mIsPause = true;
 
-	if (mIsGamePause)
-	{
-		//check if pause menu ui entity exists in gs
-		Entity pauseMenu = mGameStateSystem->GetEntity("pauseMenu");
-		if (pauseMenu.GetComponent<General>().name == "pauseMenu")
+	if (mIsPause) {
+		auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
+		for (Entity entity : scriptEntities)
 		{
-			//run pause menu script only
-			Script* pauseScript = pauseMenu.GetComponent<Scripts>().GetScript("../assets/Scripts/testPauseState.lua");
-			pauseScript->Run("TriggerPause");
+			entity.GetComponent<Scripts>().RunFunctionForAllScripts("PauseUpdate");
 		}
-		else
-			PWARNING("Cannot get pause menu ui entity in gamestate!");
+		mButtonSystem.get()->Update();
 		return;
 	}
 
 	if (!mIsPlay)
 		return;
+
 	mButtonSystem.get()->Update();
 	EnginePerformance::StartTrack("Physics");
 	mPhysicsSystem.get()->Update(dt);
@@ -190,8 +186,8 @@ void SystemManager::Exit()
 	mPhysicsSystem.get()->Exit();
 	mScriptingSystem.get()->Exit();
 	mGraphicsSystem.get()->Exit();
-	mResourceTySystem.get()->Exit();
 	mGameStateSystem.get()->Unload();
+	mResourceTySystem.get()->Exit();
 	//mAudioSystem.get()->Exit();
 }
 

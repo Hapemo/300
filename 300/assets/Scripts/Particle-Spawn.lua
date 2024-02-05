@@ -29,7 +29,7 @@ function Update()
    
     
     if ( timer >1)then   
-        for i = 7, 1, -1
+        for i = 3, 1, -1
         do
             spawned(i)
         end

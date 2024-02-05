@@ -83,6 +83,19 @@ end
 
 function OnTriggerEnter(Entity)
     generalComponent = Entity:GetGeneral()
+
+    --yujun's hardcode :D
+    if (generalComponent.name == "tutorialTrojan") then
+        entityobj = Helper.GetScriptEntity(script_entity.id)
+        systemManager.ecs:SetDeleteEntity(entityobj)
+        testScriptEntity = gameStateSys:GetEntity("tutorialTrojan")
+        TestScripts = testScriptEntity:GetScripts()
+        testScript = TestScripts:GetScript("../assets/Scripts/TutorialTrojanSoldier.lua")
+        if testScript ~= nil then
+            testScript:RunFunction("KillMe")
+        end
+    end
+
     local healthComponent 
     
     if(Entity:HasHealthbar()) then 
@@ -102,7 +115,7 @@ function OnTriggerEnter(Entity)
 
     tagid = generalComponent.tagid
     if (tagid == 1) then
-        for i = 7, 1, -1
+        for i = 3, 1, -1
         do
             spawned(i)
         end
@@ -110,7 +123,7 @@ function OnTriggerEnter(Entity)
 
         if(bulletTag == "PISTOL") then 
             if(healthComponent ~= nil) then 
-                healthComponent.health = healthComponent.health - pistolDamage
+                healthComponent.health = healthComponent.health - pistolDamage * _G.powerLevel
                 print("PISTOL HIT")
             else
             end
@@ -118,21 +131,22 @@ function OnTriggerEnter(Entity)
 
         if(bulletTag == "REVOLVER") then 
             if(healthComponent ~= nil) then 
-                healthComponent.health = healthComponent.health - revolverDamage
+                healthComponent.health = healthComponent.health - revolverDamage * _G.powerLevel
+                print("DAMAGE (PISTOL): " , revolverDamage * _G.powerLevel)
             else
             end
         end
 
         if(bulletTag == "SHOTGUN") then 
             if(healthComponent ~= nil) then 
-                healthComponent.health = healthComponent.health - shotGunDamage
+                healthComponent.health = healthComponent.health - shotGunDamage * _G.powerLevel
             else
             end
         end
 
         if(bulletTag == "MACHINE_GUN") then 
             if(healthComponent ~= nil) then 
-                healthComponent.health = healthComponent.health - machineGunDamage
+                healthComponent.health = healthComponent.health - machineGunDamage * _G.powerLevel
             end
 
         end
@@ -151,43 +165,38 @@ function OnTriggerEnter(Entity)
         systemManager.ecs:SetDeleteEntity(entityobj)
     end
 
-    if (tagid == 3) then
-        for i = 7, 1, -1
-        do
-            spawned(i)
-        end
-        --floorCount = floorCount + 1;
-        -- gameStateSys = systemManager:mGameStateSystem();
-        -- gameStateSys:DeleteEntity(entityobj)
-        systemManager.ecs:SetDeleteEntity(entityobj)
-    end
-    if (tagid == 4) then
-        for i = 7, 1, -1
-        do
-            spawned(i)
-        end
-        --floorCount = floorCount + 1;
-        -- gameStateSys = systemManager:mGameStateSystem();
-        -- gameStateSys:DeleteEntity(entityobj)
-        systemManager.ecs:SetDeleteEntity(entityobj)
-    end
+    -- if (tagid == 3) then
+    --     for i = 3, 1, -1
+    --     do
+    --         spawned(i)
+    --     end
+    --     --floorCount = floorCount + 1;
+    --     -- gameStateSys = systemManager:mGameStateSystem();
+    --     -- gameStateSys:DeleteEntity(entityobj)
+    --     systemManager.ecs:SetDeleteEntity(entityobj)
+    -- end
+    -- if (tagid == 4) then
+    --     for i = 7, 1, -1
+    --     do
+    --         spawned(i)
+    --     end
+    --     --floorCount = floorCount + 1;
+    --     -- gameStateSys = systemManager:mGameStateSystem();
+    --     -- gameStateSys:DeleteEntity(entityobj)
+    --     systemManager.ecs:SetDeleteEntity(entityobj)
+    -- end
 
 
-    if (tagid == 1) then
-        for i = 7, 1, -1
-        do
-            spawned(i)
-        end
-
-    
-
-        
-
-        if(enemytag1HP <= 0) then 
-            print("ENEMY DIES")
-            systemManager.ecs:SetDeleteEntity(entityobj)
-        end
-    end
+    -- if (tagid == 1) then
+    --     for i = 3, 1, -1
+    --     do
+    --         spawned(i)
+    --     end
+    --     if(enemytag1HP <= 0) then 
+    --         print("ENEMY DIES")
+    --         systemManager.ecs:SetDeleteEntity(entityobj)
+    --     end
+    -- end
 
 end
 

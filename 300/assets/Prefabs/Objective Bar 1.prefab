@@ -1,5 +1,5 @@
 {
-    "entityid": 283,
+    "entityid": 26214434,
     "general": {
         "name": "Objective Bar 1",
         "tagid": 6,
@@ -9,8 +9,8 @@
     },
     "transform": {
         "scale": {
-            "x": -0.14000000059604645,
-            "y": 0.09000000357627869,
+            "x": 0.14000000059604645,
+            "y": -0.07999999821186066,
             "z": 1.0
         },
         "rotate": {
@@ -19,7 +19,7 @@
             "z": 0.0
         },
         "translate": {
-            "x": 0.8899999856948853,
+            "x": 0.5699999928474426,
             "y": 0.699999988079071,
             "z": 0.0
         }
@@ -35,8 +35,11 @@
             "z": 1.0,
             "w": 1.0
         },
-        "layer": 0,
+        "layer": 1,
         "worldtransform": false
+    },
+    "scripts": {
+        "scriptscontainer": []
     },
     "prefab": {
         "prefab": "Objective Bar 1"

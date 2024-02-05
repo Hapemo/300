@@ -38,7 +38,10 @@ void LuaEngine()
         "mGameStateSystem", &SystemManager::GetGameStateSystem,
         "mGraphicsSystem", &SystemManager::GetGraphicsSystem,
         "mAISystem", &SystemManager::GetAIManager,
-        "Quit", &SystemManager::Quit);
+        "Quit", &SystemManager::Quit,
+        "Play", &SystemManager::Play,
+        "Pause", &SystemManager::Pause,
+        "SetIsPause", &SystemManager::SetIsPause);
 }
 
 void LuaECS()

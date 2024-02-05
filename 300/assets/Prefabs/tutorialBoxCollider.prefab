@@ -1,0 +1,93 @@
+{
+    "entityid": 11534433,
+    "general": {
+        "name": "tutorialBoxCollider",
+        "tagid": 0,
+        "subtag": 0,
+        "isActive": true,
+        "isPaused": false
+    },
+    "transform": {
+        "scale": {
+            "x": 15.0,
+            "y": 8.0,
+            "z": 15.0
+        },
+        "rotate": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "translate": {
+            "x": 19.45561981201172,
+            "y": 5.445690155029297,
+            "z": 0.0
+        }
+    },
+    "rigidbody": {
+        "density": 10.0,
+        "material": 1,
+        "motion": 0,
+        "velocity": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "rotationconstraints": {
+            "x": false,
+            "y": false,
+            "z": false
+        },
+        "gravity": true
+    },
+    "meshrenderer": {
+        "vert": "../assets/shader_files/pointLight_vert.glsl",
+        "frag": "../assets/shader_files/pointLight_frag.glsl",
+        "meshrefid": 3232,
+        "instancecolor": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+        },
+        "bloomthreshold": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+        },
+        "materialinstance": [
+            "../assets/Compressed/Tutorial_Cube_BaseColor.ctexture",
+            "../assets/Compressed/Tutorial_Cube_Normal.ctexture",
+            "../assets/Compressed/Tutorial_Cube_Roughness.ctexture",
+            "../assets/Compressed/Tutorial_Cube_Metallic.ctexture",
+            "../assets/Compressed/Tutorial_Cube_Emissive.ctexture",
+            " "
+        ],
+        "mesh": "../assets/compiled_geom/Tutorial_cube.geom",
+        "texturerefid": [
+            1065073471,
+            1690869280,
+            2264384965,
+            1749384838,
+            1718410820,
+            0
+        ]
+    },
+    "boxcollider": {
+        "scaleoffset": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+        },
+        "translateoffset": {
+            "x": 0.0,
+            "y": -2.440000057220459,
+            "z": 0.0
+        },
+        "istrigger": false
+    },
+    "prefab": {
+        "prefab": "tutorialBoxCollider"
+    }
+}

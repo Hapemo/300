@@ -1,0 +1,1390 @@
+[
+    {
+        "entityid": 5242894,
+        "general": {
+            "name": "FinishTutorialText",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": -4.0,
+                "y": -4.0,
+                "z": 5.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 90.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 141.2959442138672,
+                "y": 9.233353614807129,
+                "z": -7.907802341833303e-7
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 4136852752,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 0,
+            "worldtransform": true
+        }
+    },
+    {
+        "entityid": 5242895,
+        "general": {
+            "name": "tutorialNormalCollider",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 10.0,
+                "y": 40.0,
+                "z": 15.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 146.76390075683594,
+                "y": -1.1876096725463867,
+                "z": 0.0
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": false,
+                "y": false,
+                "z": false
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3232,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Tutorial_Cube_BaseColor.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Normal.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Roughness.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Metallic.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Emissive.ctexture",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/Tutorial_cube.geom",
+            "texturerefid": [
+                1065073471,
+                1690869280,
+                2264384965,
+                1749384838,
+                1718410820,
+                0
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 0.8199999928474426,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 5.889999866485596,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "tutorialNormalCollider"
+        }
+    },
+    {
+        "entityid": 5242896,
+        "general": {
+            "name": "tutorialNormalCollider",
+            "tagid": 3,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 150.0,
+                "y": 10.0,
+                "z": 15.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 135.05099487304688,
+                "y": -2.9165024757385254,
+                "z": 0.0
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": false,
+                "y": false,
+                "z": false
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3232,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Tutorial_Cube_BaseColor.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Normal.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Roughness.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Metallic.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Emissive.ctexture",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/Tutorial_cube.geom",
+            "texturerefid": [
+                1065073471,
+                1690869280,
+                2264384965,
+                1749384838,
+                1718410820,
+                0
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 0.8199999928474426,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 6.210000038146973,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "tutorialNormalCollider"
+        }
+    },
+    {
+        "entityid": 5242900,
+        "general": {
+            "name": "DashInstructions",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 8.0,
+                "y": -4.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 30.0,
+                "y": -90.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 54.24399948120117,
+                "y": 15.215999603271484,
+                "z": 2.338748856800521e-7
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 3943067591,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 0,
+            "worldtransform": true
+        }
+    },
+    {
+        "entityid": 5242901,
+        "general": {
+            "name": "middlePlatform",
+            "tagid": 3,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 4.0,
+                "y": 10.0,
+                "z": 4.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 35.0,
+                "y": -3.631999969482422,
+                "z": 0.0
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": false,
+                "y": false,
+                "z": false
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3232,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Tutorial_Cube_BaseColor.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Normal.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Roughness.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Metallic.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Emissive.ctexture",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/Tutorial_cube.geom",
+            "texturerefid": [
+                1065073471,
+                1690869280,
+                2264384965,
+                1749384838,
+                1718410820,
+                0
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 0.8199999928474426,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 6.510000228881836,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "tutorialNormalCollider"
+        }
+    },
+    {
+        "entityid": 5242902,
+        "general": {
+            "name": "KillInstruction",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 8.0,
+                "y": -4.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 30.0,
+                "y": -90.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 110.0,
+                "y": 15.215999603271484,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 3122220211,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 0,
+            "worldtransform": true
+        }
+    },
+    {
+        "entityid": 5242903,
+        "general": {
+            "name": "dashPlatform",
+            "tagid": 3,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 10.0,
+                "y": 10.0,
+                "z": 15.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 49.617156982421875,
+                "y": -6.050000190734863,
+                "z": 0.0
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": false,
+                "y": false,
+                "z": false
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3232,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Tutorial_Cube_BaseColor.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Normal.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Roughness.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Metallic.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Emissive.ctexture",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/Tutorial_cube.geom",
+            "texturerefid": [
+                1065073471,
+                1690869280,
+                2264384965,
+                1749384838,
+                1718410820,
+                0
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 0.8199999928474426,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 6.539999961853027,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "tutorialNormalCollider"
+        }
+    },
+    {
+        "entityid": 5242904,
+        "general": {
+            "name": "helperPlatform",
+            "tagid": 3,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 10.0,
+                "y": 10.0,
+                "z": 15.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 32.069000244140625,
+                "y": -6.050000190734863,
+                "z": 0.0
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": false,
+                "y": false,
+                "z": false
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3232,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Tutorial_Cube_BaseColor.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Normal.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Roughness.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Metallic.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Emissive.ctexture",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/Tutorial_cube.geom",
+            "texturerefid": [
+                1065073471,
+                1690869280,
+                2264384965,
+                1749384838,
+                1718410820,
+                0
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 0.8199999928474426,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 6.5,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "tutorialNormalCollider"
+        }
+    },
+    {
+        "entityid": 5242905,
+        "general": {
+            "name": "RedEnemyInstructions",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 8.0,
+                "y": -4.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 30.0,
+                "y": -90.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 95.0,
+                "y": 15.215999603271484,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 4185308627,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 0,
+            "worldtransform": true
+        }
+    },
+    {
+        "entityid": 5242906,
+        "general": {
+            "name": "tutorialBoxCollider",
+            "tagid": 3,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 200.0,
+                "y": 20.0,
+                "z": 15.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 114.66252136230469,
+                "y": -3.0369791984558105,
+                "z": 0.0
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": true,
+                "z": true
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3232,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Tutorial_Cube_BaseColor.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Normal.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Roughness.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Metallic.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Emissive.ctexture",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/Tutorial_cube.geom",
+            "texturerefid": [
+                1065073471,
+                1690869280,
+                2264384965,
+                1749384838,
+                1718410820,
+                0
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": -4.489999771118164,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "prefab": {
+            "prefab": "tutorialBoxCollider"
+        }
+    },
+    {
+        "entityid": 6291457,
+        "general": {
+            "name": "tutorialTrojan",
+            "tagid": 1,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 2.0,
+                "y": 2.499915838241577,
+                "z": 1.600000023841858
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": -90.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 117.37611389160156,
+                "y": 7.5320000648498535,
+                "z": 7.539301805081777e-7
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 1,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": false,
+                "z": false
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3309,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 0.3499999940395355,
+                "y": 0.36000001430511475,
+                "z": 0.10999999940395355,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Trojan_Soldier_BaseColor.ctexture",
+                "../assets/Compressed/Trojan_Soldier_Normal.ctexture",
+                "../assets/Compressed/Trojan_Soldier_Metallic.ctexture",
+                "../assets/Compressed/Trojan_Soldier_Roughness.ctexture",
+                "../assets/Compressed/Trojan_Soldier_Emissive.ctexture",
+                "../assets/Compressed/Trojan_Soldier_AO.ctexture"
+            ],
+            "mesh": "../assets/compiled_geom/Trojan_Soldier.geom",
+            "texturerefid": [
+                602447454,
+                2438310811,
+                2305639413,
+                1216284744,
+                928397263,
+                736177602
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 1.2000000476837158,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/TutorialTrojanSoldier.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "prefab": {
+            "prefab": "AtrojanS"
+        }
+    },
+    {
+        "entityid": 6291459,
+        "general": {
+            "name": "JumpInstructions",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 8.0,
+                "y": -4.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 30.0,
+                "y": -90.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 33.349998474121094,
+                "y": 15.215999603271484,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 1065868991,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 1,
+            "worldtransform": true
+        }
+    },
+    {
+        "entityid": 6291461,
+        "general": {
+            "name": "HealthInstructions",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 7.0,
+                "y": -4.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 30.0,
+                "y": -90.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 80.0,
+                "y": 15.215999603271484,
+                "z": -3.700000047683716
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 4199566785,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 0,
+            "worldtransform": true
+        }
+    },
+    {
+        "entityid": 6291462,
+        "general": {
+            "name": "helperPlatform",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 12.0,
+                "y": 10.0,
+                "z": 0.10000000149011612
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 54.244384765625,
+                "y": -2.922186851501465,
+                "z": 0.0
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": false,
+                "y": false,
+                "z": false
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3232,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Tutorial_Cube_BaseColor.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Normal.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Roughness.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Metallic.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Emissive.ctexture",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/Tutorial_cube.geom",
+            "texturerefid": [
+                1065073471,
+                1690869280,
+                2264384965,
+                1749384838,
+                1718410820,
+                0
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 0.8199999928474426,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 6.21999979019165,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "tutorialNormalCollider"
+        }
+    },
+    {
+        "entityid": 6291463,
+        "general": {
+            "name": "CTOInstructions",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": -8.0,
+                "y": -4.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": -30.0,
+                "y": 90.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 130.0,
+                "y": 15.215999603271484,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 1402684208,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 0,
+            "worldtransform": true
+        }
+    },
+    {
+        "entityid": 6291464,
+        "general": {
+            "name": "startingPlatform",
+            "tagid": 3,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 15.0,
+                "y": 5.0,
+                "z": 15.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 22.66899871826172,
+                "y": 1.2000000476837158,
+                "z": 0.00226593017578125
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": false,
+                "y": false,
+                "z": false
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3232,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Tutorial_Cube_BaseColor.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Normal.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Roughness.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Metallic.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Emissive.ctexture",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/Tutorial_cube.geom",
+            "texturerefid": [
+                1065073471,
+                1690869280,
+                2264384965,
+                1749384838,
+                1718410820,
+                0
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 0.8199999928474426,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 3.5,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "prefab": {
+            "prefab": "tutorialNormalCollider"
+        }
+    },
+    {
+        "entityid": 6291465,
+        "general": {
+            "name": "ProgressInstructions",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": -7.0,
+                "y": -4.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": -30.0,
+                "y": 90.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 80.0,
+                "y": 15.215999603271484,
+                "z": 3.700000047683716
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 834937788,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 0,
+            "worldtransform": true
+        }
+    },
+    {
+        "entityid": 6291466,
+        "general": {
+            "name": "Objectives",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 6.0,
+                "y": 1.5,
+                "z": 6.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 129.633544921875,
+                "y": -5.840000152587891,
+                "z": -5.960464477539063e-8
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": true,
+                "z": true
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 4198011357,
+            "instancecolor": {
+                "x": 0.0,
+                "y": 0.8556149005889893,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Objective_Base_BaseColour.ctexture",
+                "../assets/Compressed/Objective_Base_Normal.ctexture",
+                "../assets/Compressed/Objective_Base_Metallic.ctexture",
+                "../assets/Compressed/Objective_Base_Roughness.ctexture",
+                "../assets/Compressed/Objective_Base_Emissive.ctexture",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/Objective_Base_V2.geom",
+            "texturerefid": [
+                200309925,
+                683426931,
+                565530477,
+                2037504544,
+                3188370359,
+                0
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": true
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/TutorialObjectives.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "prefab": {
+            "prefab": "Objectives"
+        }
+    },
+    {
+        "entityid": 7340124,
+        "general": {
+            "name": "endPlatform",
+            "tagid": 3,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 8.0,
+                "y": 8.0,
+                "z": 15.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 44.28799819946289,
+                "y": -1.0222171545028687,
+                "z": 0.0
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": false,
+                "y": false,
+                "z": false
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3232,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "materialinstance": [
+                "../assets/Compressed/Tutorial_Cube_BaseColor.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Normal.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Roughness.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Metallic.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Emissive.ctexture",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/Tutorial_cube.geom",
+            "texturerefid": [
+                1065073471,
+                1690869280,
+                2264384965,
+                1749384838,
+                1718410820,
+                0
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 0.8199999928474426,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 5.170000076293945,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "tutorialNormalCollider"
+        }
+    }
+]
