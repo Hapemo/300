@@ -31,8 +31,8 @@ class SystemManager {
 	bool mIsEditor;
 	bool mIsPlay;
 	bool mIsQuit;
-	// pause menu
-	bool mIsGamePause = false;
+	// changing pause states in script according to button press
+	bool mIsPause;
 public:
 	std::unique_ptr<PhysicsSystem> mPhysicsSystem;
 	std::unique_ptr<ScriptingSystem> mScriptingSystem;
@@ -96,6 +96,8 @@ public:
 	bool isSystemPaused() {return !mIsPlay; }
 
 	bool IsQuit() { return mIsQuit; }
+
+	void SetIsPause(bool pauseanot) { mIsPause = pauseanot; }
 	
 	void DeleteEntity(Entity e);
 	PhysicsSystem *GetPhysicsPointer();

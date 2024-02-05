@@ -40,7 +40,8 @@ void LuaEngine()
         "mAISystem", &SystemManager::GetAIManager,
         "Quit", &SystemManager::Quit,
         "Play", &SystemManager::Play,
-        "Pause", &SystemManager::Pause);
+        "Pause", &SystemManager::Pause,
+        "SetIsPause", &SystemManager::SetIsPause);
 }
 
 void LuaECS()
