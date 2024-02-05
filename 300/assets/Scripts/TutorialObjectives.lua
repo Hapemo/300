@@ -32,7 +32,18 @@ function Update()
     end
     bar:GetUIrenderer():SetSlider(progress/maxProgress)
     if complete == true then
-        systemManager.ecs:SetDeleteEntity(this)
+        gameStateSys = systemManager:mGameStateSystem()
+        inputMapSys = systemManager:mInputActionSystem()
+        
+            x = gameStateSys:GetEntity("TransitionHelper", "Transition") 
+            y = x:GetScripts()
+            z = y:GetScript("../assets/Scripts/Transition.lua")
+
+            if z ~= nil then
+                z:SetNextGameStateHelper("SetNextGameState", "Test")
+                --z:RunFunctionWithParam("SetNextGameState", "Test2")
+                z:RunFunction("StartTransition")
+            end
     end
 end
 
