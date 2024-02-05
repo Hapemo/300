@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 60,
+        "entityid": 62,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -62,7 +62,7 @@
         }
     },
     {
-        "entityid": 86,
+        "entityid": 63,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -124,7 +124,7 @@
         }
     },
     {
-        "entityid": 87,
+        "entityid": 64,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -186,7 +186,7 @@
         }
     },
     {
-        "entityid": 1048661,
+        "entityid": 65,
         "general": {
             "name": "WallCollider",
             "tagid": 4,

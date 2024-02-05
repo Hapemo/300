@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 5242894,
+        "entityid": 66,
         "general": {
             "name": "FinishTutorialText",
             "tagid": 0,
@@ -41,7 +41,7 @@
         }
     },
     {
-        "entityid": 5242895,
+        "entityid": 67,
         "general": {
             "name": "tutorialNormalCollider",
             "tagid": 0,
@@ -98,6 +98,7 @@
                 "z": 1.0,
                 "w": 1.0
             },
+            "castShadow": true,
             "materialinstance": [
                 "../assets/Compressed/Tutorial_Cube_BaseColor.ctexture",
                 "../assets/Compressed/Tutorial_Cube_Normal.ctexture",
@@ -137,7 +138,7 @@
         }
     },
     {
-        "entityid": 5242896,
+        "entityid": 68,
         "general": {
             "name": "tutorialNormalCollider",
             "tagid": 3,
@@ -194,6 +195,7 @@
                 "z": 1.0,
                 "w": 1.0
             },
+            "castShadow": true,
             "materialinstance": [
                 "../assets/Compressed/Tutorial_Cube_BaseColor.ctexture",
                 "../assets/Compressed/Tutorial_Cube_Normal.ctexture",
@@ -233,7 +235,7 @@
         }
     },
     {
-        "entityid": 5242900,
+        "entityid": 69,
         "general": {
             "name": "DashInstructions",
             "tagid": 0,
@@ -274,7 +276,7 @@
         }
     },
     {
-        "entityid": 5242901,
+        "entityid": 70,
         "general": {
             "name": "middlePlatform",
             "tagid": 3,
@@ -331,6 +333,7 @@
                 "z": 1.0,
                 "w": 1.0
             },
+            "castShadow": true,
             "materialinstance": [
                 "../assets/Compressed/Tutorial_Cube_BaseColor.ctexture",
                 "../assets/Compressed/Tutorial_Cube_Normal.ctexture",
@@ -370,7 +373,7 @@
         }
     },
     {
-        "entityid": 5242902,
+        "entityid": 71,
         "general": {
             "name": "KillInstruction",
             "tagid": 0,
@@ -411,7 +414,7 @@
         }
     },
     {
-        "entityid": 5242903,
+        "entityid": 72,
         "general": {
             "name": "dashPlatform",
             "tagid": 3,
@@ -468,6 +471,7 @@
                 "z": 1.0,
                 "w": 1.0
             },
+            "castShadow": true,
             "materialinstance": [
                 "../assets/Compressed/Tutorial_Cube_BaseColor.ctexture",
                 "../assets/Compressed/Tutorial_Cube_Normal.ctexture",
@@ -507,7 +511,7 @@
         }
     },
     {
-        "entityid": 5242904,
+        "entityid": 73,
         "general": {
             "name": "helperPlatform",
             "tagid": 3,
@@ -564,6 +568,7 @@
                 "z": 1.0,
                 "w": 1.0
             },
+            "castShadow": true,
             "materialinstance": [
                 "../assets/Compressed/Tutorial_Cube_BaseColor.ctexture",
                 "../assets/Compressed/Tutorial_Cube_Normal.ctexture",
@@ -603,7 +608,7 @@
         }
     },
     {
-        "entityid": 5242905,
+        "entityid": 74,
         "general": {
             "name": "RedEnemyInstructions",
             "tagid": 0,
@@ -644,7 +649,7 @@
         }
     },
     {
-        "entityid": 5242906,
+        "entityid": 75,
         "general": {
             "name": "tutorialBoxCollider",
             "tagid": 3,
@@ -701,6 +706,7 @@
                 "z": 1.0,
                 "w": 1.0
             },
+            "castShadow": true,
             "materialinstance": [
                 "../assets/Compressed/Tutorial_Cube_BaseColor.ctexture",
                 "../assets/Compressed/Tutorial_Cube_Normal.ctexture",
@@ -737,7 +743,7 @@
         }
     },
     {
-        "entityid": 6291457,
+        "entityid": 76,
         "general": {
             "name": "tutorialTrojan",
             "tagid": 1,
@@ -794,6 +800,7 @@
                 "z": 0.10999999940395355,
                 "w": 1.0
             },
+            "castShadow": true,
             "materialinstance": [
                 "../assets/Compressed/Trojan_Soldier_BaseColor.ctexture",
                 "../assets/Compressed/Trojan_Soldier_Normal.ctexture",
@@ -838,7 +845,7 @@
         }
     },
     {
-        "entityid": 6291459,
+        "entityid": 77,
         "general": {
             "name": "JumpInstructions",
             "tagid": 0,
@@ -879,7 +886,7 @@
         }
     },
     {
-        "entityid": 6291461,
+        "entityid": 78,
         "general": {
             "name": "HealthInstructions",
             "tagid": 0,
@@ -920,7 +927,7 @@
         }
     },
     {
-        "entityid": 6291462,
+        "entityid": 79,
         "general": {
             "name": "helperPlatform",
             "tagid": 0,
@@ -977,6 +984,7 @@
                 "z": 1.0,
                 "w": 1.0
             },
+            "castShadow": true,
             "materialinstance": [
                 "../assets/Compressed/Tutorial_Cube_BaseColor.ctexture",
                 "../assets/Compressed/Tutorial_Cube_Normal.ctexture",
@@ -1016,7 +1024,7 @@
         }
     },
     {
-        "entityid": 6291463,
+        "entityid": 80,
         "general": {
             "name": "CTOInstructions",
             "tagid": 0,
@@ -1057,7 +1065,7 @@
         }
     },
     {
-        "entityid": 6291464,
+        "entityid": 81,
         "general": {
             "name": "startingPlatform",
             "tagid": 3,
@@ -1114,6 +1122,7 @@
                 "z": 1.0,
                 "w": 1.0
             },
+            "castShadow": true,
             "materialinstance": [
                 "../assets/Compressed/Tutorial_Cube_BaseColor.ctexture",
                 "../assets/Compressed/Tutorial_Cube_Normal.ctexture",
@@ -1150,7 +1159,7 @@
         }
     },
     {
-        "entityid": 6291465,
+        "entityid": 82,
         "general": {
             "name": "ProgressInstructions",
             "tagid": 0,
@@ -1191,7 +1200,7 @@
         }
     },
     {
-        "entityid": 6291466,
+        "entityid": 83,
         "general": {
             "name": "Objectives",
             "tagid": 0,
@@ -1248,6 +1257,7 @@
                 "z": 1.0,
                 "w": 1.0
             },
+            "castShadow": true,
             "materialinstance": [
                 "../assets/Compressed/Objective_Base_BaseColour.ctexture",
                 "../assets/Compressed/Objective_Base_Normal.ctexture",
@@ -1292,7 +1302,7 @@
         }
     },
     {
-        "entityid": 7340124,
+        "entityid": 84,
         "general": {
             "name": "endPlatform",
             "tagid": 3,
@@ -1349,6 +1359,7 @@
                 "z": 1.0,
                 "w": 1.0
             },
+            "castShadow": true,
             "materialinstance": [
                 "../assets/Compressed/Tutorial_Cube_BaseColor.ctexture",
                 "../assets/Compressed/Tutorial_Cube_Normal.ctexture",
