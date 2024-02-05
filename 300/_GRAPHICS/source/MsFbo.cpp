@@ -2,6 +2,8 @@
 
 void GFX::MsFBO::Create(int width, int height, bool resize)
 {
+	if (!width || !height)
+		return;
 	// Store size
 	mWidth = width;
 	mHeight = height;
@@ -142,10 +144,11 @@ void GFX::MsFBO::CreateAttachment(unsigned& attachment, GLenum internalFormat)
 
 void GFX::IntermediateFBO::Create(int width, int height, bool resize)
 {
+	if (!width || !height)
+		return;
 	// Store size
 	mWidth = width;
 	mHeight = height;
-
 	if (!resize)
 	{
 		// Create and bind framebuffer
