@@ -3,7 +3,9 @@
 
 function Alive()
     gameStateSys = systemManager:mGameStateSystem()
+    graphicssys = systemManager:mGraphicsSystem()
 
+    graphicssys:HideCursor(false)
     
 end
 
@@ -24,7 +26,7 @@ function Update()
 end
 
 function Dead()
-
+    graphicssys:HideCursor(true)
 end
 
 function OnTriggerEnter(Entity)
