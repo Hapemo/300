@@ -1,146 +1,6 @@
 [
     {
-        "entityid": 2097251,
-        "general": {
-            "name": "SkipTutorial",
-            "tagid": 5,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 4.0,
-                "y": 3.5999999046325684,
-                "z": 0.5
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 90.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 7.183989524841309,
-                "y": 3.5999999046325684,
-                "z": 3.7030162811279297
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 0,
-            "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": false,
-                "y": false,
-                "z": false
-            },
-            "gravity": true
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "translateoffset": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "istrigger": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Tutorial"
-        }
-    },
-    {
-        "entityid": 2097252,
-        "general": {
-            "name": "WASD",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 750.0,
-                "y": -250.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 2000.0,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 2726819873,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 0,
-            "worldtransform": false
-        }
-    },
-    {
-        "entityid": 2097253,
-        "general": {
-            "name": "BGM",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "Troubleshooter_M4.wav",
-            "fullpath": "../assets\\Audio/Troubleshooter_M4.wav",
-            "playonawake": true,
-            "islooping": true,
-            "audiotype": 0,
-            "volume": 0.4000000059604645,
-            "retainaudio": false
-        }
-    },
-    {
-        "entityid": 2097254,
+        "entityid": 2097166,
         "general": {
             "name": "Activate_Skill",
             "tagid": 0,
@@ -177,7 +37,143 @@
         }
     },
     {
-        "entityid": 2097255,
+        "entityid": 2097168,
+        "general": {
+            "name": "WallCollider",
+            "tagid": 4,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 6.999213218688965,
+                "z": 15.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 90.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.013603650033473969,
+                "y": 4.813149452209473,
+                "z": -7.817618370056152
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": true,
+                "z": false
+            },
+            "gravity": true
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "WallCollider"
+        }
+    },
+    {
+        "entityid": 2097169,
+        "general": {
+            "name": "Jump",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "jump.wav",
+            "fullpath": "../assets\\Audio/jump.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 0.4000000059604645,
+            "retainaudio": false
+        }
+    },
+    {
+        "entityid": 2097170,
+        "general": {
+            "name": "Bullet Shoot",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Player_Attack_Shoot.wav",
+            "fullpath": "../assets\\Audio/Player_Attack_Shoot.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 0.30000001192092896,
+            "retainaudio": false
+        }
+    },
+    {
+        "entityid": 2097174,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -247,7 +243,7 @@
         },
         "children": {
             "numchildren": 1,
-            "firstchild": 2097295
+            "firstchild": 3145734
         },
         "audio": {
             "filepath": "../assets\\Audio",
@@ -271,7 +267,7 @@
                 "z": -0.08489522337913513
             },
             "size": {
-                "x": 1222,
+                "x": 1224,
                 "y": 554
             },
             "near": 0.10000000149011612,
@@ -279,7 +275,7 @@
         }
     },
     {
-        "entityid": 2097256,
+        "entityid": 2097175,
         "general": {
             "name": "GoToTutorial",
             "tagid": 5,
@@ -341,7 +337,7 @@
         }
     },
     {
-        "entityid": 2097257,
+        "entityid": 2097176,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -403,7 +399,7 @@
         }
     },
     {
-        "entityid": 2097258,
+        "entityid": 2097240,
         "general": {
             "name": "Skill_Activate",
             "tagid": 0,
@@ -440,7 +436,7 @@
         }
     },
     {
-        "entityid": 2097259,
+        "entityid": 2097241,
         "general": {
             "name": "Light",
             "tagid": 0,
@@ -477,7 +473,7 @@
         }
     },
     {
-        "entityid": 2097290,
+        "entityid": 3145729,
         "general": {
             "name": "SkipTutorialText",
             "tagid": 0,
@@ -518,7 +514,7 @@
         }
     },
     {
-        "entityid": 2097291,
+        "entityid": 3145730,
         "general": {
             "name": "GoToTutorialtext",
             "tagid": 0,
@@ -559,7 +555,7 @@
         }
     },
     {
-        "entityid": 2097292,
+        "entityid": 3145731,
         "general": {
             "name": "Dash",
             "tagid": 0,
@@ -596,7 +592,7 @@
         }
     },
     {
-        "entityid": 2097293,
+        "entityid": 3145732,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -658,7 +654,7 @@
         }
     },
     {
-        "entityid": 2097294,
+        "entityid": 3145733,
         "general": {
             "name": "Skill_Ending",
             "tagid": 0,
@@ -695,7 +691,7 @@
         }
     },
     {
-        "entityid": 2097295,
+        "entityid": 3145734,
         "general": {
             "name": "gun",
             "tagid": 0,
@@ -710,14 +706,14 @@
                 "z": 0.25
             },
             "rotate": {
-                "x": 43.2524528503418,
-                "y": -69.80191802978516,
-                "z": -41.442344665527344
+                "x": 0.0,
+                "y": -75.0,
+                "z": 0.0
             },
             "translate": {
                 "x": 0.5,
                 "y": -0.6499999761581421,
-                "z": -0.16984185576438904
+                "z": -0.75
             }
         },
         "meshrenderer": {
@@ -755,13 +751,13 @@
             ]
         },
         "parent": {
-            "prevsibling": 2097295,
-            "nextsibling": 2097295,
-            "parent": 2097255
+            "prevsibling": 3145734,
+            "nextsibling": 3145734,
+            "parent": 2097174
         }
     },
     {
-        "entityid": 2097296,
+        "entityid": 3145735,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -823,7 +819,7 @@
         }
     },
     {
-        "entityid": 2097297,
+        "entityid": 3145736,
         "general": {
             "name": "TutorialCube",
             "tagid": 0,
@@ -890,19 +886,19 @@
         }
     },
     {
-        "entityid": 2097298,
+        "entityid": 3145737,
         "general": {
-            "name": "WallCollider",
-            "tagid": 4,
+            "name": "SkipTutorial",
+            "tagid": 5,
             "subtag": 0,
             "isActive": true,
             "isPaused": false
         },
         "transform": {
             "scale": {
-                "x": 1.0,
-                "y": 6.999213218688965,
-                "z": 15.0
+                "x": 4.0,
+                "y": 3.5999999046325684,
+                "z": 0.5
             },
             "rotate": {
                 "x": 0.0,
@@ -910,9 +906,9 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 0.013603650033473969,
-                "y": 4.813149452209473,
-                "z": -7.817618370056152
+                "x": 7.183989524841309,
+                "y": 3.5999999046325684,
+                "z": 3.7030162811279297
             }
         },
         "rigidbody": {
@@ -925,8 +921,8 @@
                 "z": 0.0
             },
             "rotationconstraints": {
-                "x": true,
-                "y": true,
+                "x": false,
+                "y": false,
                 "z": false
             },
             "gravity": true
@@ -948,13 +944,54 @@
             "scriptscontainer": []
         },
         "prefab": {
-            "prefab": "WallCollider"
+            "prefab": "Tutorial"
         }
     },
     {
-        "entityid": 2097299,
+        "entityid": 3145738,
         "general": {
-            "name": "Jump",
+            "name": "WASD",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 750.0,
+                "y": -250.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 2000.0,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 2726819873,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 0,
+            "worldtransform": false
+        }
+    },
+    {
+        "entityid": 3145739,
+        "general": {
+            "name": "BGM",
             "tagid": 0,
             "subtag": 0,
             "isActive": true,
@@ -979,11 +1016,11 @@
         },
         "audio": {
             "filepath": "../assets\\Audio",
-            "filename": "jump.wav",
-            "fullpath": "../assets\\Audio/jump.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
+            "filename": "Troubleshooter_M4.wav",
+            "fullpath": "../assets\\Audio/Troubleshooter_M4.wav",
+            "playonawake": true,
+            "islooping": true,
+            "audiotype": 0,
             "volume": 0.4000000059604645,
             "retainaudio": false
         }

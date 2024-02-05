@@ -813,9 +813,9 @@ function Update()
     -- print("AI Count: ")
     -- print(aiSys:GetAICount())
 
-    if(aiSys:GetAICount() <= 0) then
-        gameStateSys:ChangeGameState("WinMenu")
-    end
+    -- if(aiSys:GetAICount() <= 0) then
+    --     gameStateSys:ChangeGameState("WinMenu")
+    -- end
 
 
 
