@@ -313,7 +313,12 @@ function Update()
     -- if(_G.gunEquipped == 1) then -- Revolver
         gunTransform:ParentChildRotateUpdate(dt)
     -- end
-    
+    if(inputMapSys:GetButtonDown("AddHealth")) then
+        playerHealthCurrent += 20
+        if playerHealthCurrent > playerHealthMax then
+            playerHealthCurrent = playerHealthMax
+        end
+    end
     if(inputMapSys:GetButtonDown("Mouse")) then
         if (mouse_on == true) then
             mouse_on = false
