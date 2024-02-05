@@ -8,7 +8,7 @@
             "y": 1.0,
             "z": 0.0
         },
-        "bloom_exposure": 0.10000000149011612,
+        "bloom_exposure": 2.706238031387329,
         "bloom_offset": 1.8380000591278076,
         "bloom_sampleweight": 2.941999912261963,
         "chroma_strength": 0.0038999998942017555,
@@ -35,7 +35,7 @@
             "y": 1.0,
             "z": 0.0
         },
-        "bloom_exposure": 0.10000000149011612,
+        "bloom_exposure": 2.706238031387329,
         "bloom_offset": 1.8380000591278076,
         "bloom_sampleweight": 2.941999912261963,
         "chroma_strength": 0.0038999998942017555,
@@ -62,7 +62,7 @@
             "y": 1.0,
             "z": 0.0
         },
-        "bloom_exposure": 0.10000000149011612,
+        "bloom_exposure": 2.706238031387329,
         "bloom_offset": 1.8380000591278076,
         "bloom_sampleweight": 2.941999912261963,
         "chroma_strength": 0.0038999998942017555,
@@ -76,9 +76,9 @@
             "x": 1.0,
             "y": 1.0,
             "z": 1.0,
-            "w": 0.949999988079071
+            "w": 1.0
         },
-        "debug": 1
+        "debug": 0
     },
     {
         "scene_name": "PauseMenuScene",
@@ -89,7 +89,7 @@
             "y": 1.0,
             "z": 0.0
         },
-        "bloom_exposure": 0.10000000149011612,
+        "bloom_exposure": 2.706238031387329,
         "bloom_offset": 1.8380000591278076,
         "bloom_sampleweight": 2.941999912261963,
         "chroma_strength": 0.0038999998942017555,
@@ -116,7 +116,7 @@
             "y": 1.0,
             "z": 0.0
         },
-        "bloom_exposure": 0.10000000149011612,
+        "bloom_exposure": 2.706238031387329,
         "bloom_offset": 1.8380000591278076,
         "bloom_sampleweight": 2.941999912261963,
         "chroma_strength": 0.0038999998942017555,

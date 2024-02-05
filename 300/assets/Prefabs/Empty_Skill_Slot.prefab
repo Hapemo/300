@@ -1,7 +1,7 @@
 {
-    "entityid": 4194397,
+    "entityid": 1048589,
     "general": {
-        "name": "UI-Spawned",
+        "name": "Empty_Skill_Slot",
         "tagid": 0,
         "subtag": 0,
         "isActive": true,
@@ -9,8 +9,8 @@
     },
     "transform": {
         "scale": {
-            "x": 0.125,
-            "y": -0.25,
+            "x": -0.125,
+            "y": 0.25,
             "z": 1.0
         },
         "rotate": {
@@ -19,14 +19,14 @@
             "z": 0.0
         },
         "translate": {
-            "x": 0.09375,
-            "y": -0.7592592835426331,
+            "x": 0.0,
+            "y": 0.0,
             "z": 0.0
         }
     },
     "uirenderer": {
         "texpath": "",
-        "textureref": 4650,
+        "textureref": 2300985315,
         "degree": 0.0,
         "slider": 1.0,
         "color": {
@@ -35,18 +35,10 @@
             "z": 1.0,
             "w": 1.0
         },
-        "layer": 2,
+        "layer": 0,
         "worldtransform": false
     },
-    "scripts": {
-        "scriptscontainer": [
-            {
-                "scriptFile": "../assets/Scripts/UI-WeaponMovement.lua",
-                "variables": []
-            }
-        ]
-    },
     "prefab": {
-        "prefab": "UI-Spawned"
+        "prefab": "Empty_Skill_Slot"
     }
 }

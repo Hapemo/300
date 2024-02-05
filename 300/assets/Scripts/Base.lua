@@ -5,7 +5,7 @@ _G.weaponArray = {{1,false,0},{1,false,0},{1,false,0},{1,false,0},{1,false,0},{1
 local dispensor = {1,1,1}
 local disCount = 3
 local dashui = { }
-_G.textureArray  = {"UI-Revolver" , "UI-Shotgun-1223341","UI-Assult-133123" }
+_G.textureArray  = {"Revolver" , "Shotgun",  "Machine_Gun" }
 _G.textureArray2 = {"UI-Blue","UI-Yellow-s3&321",  "UI-Red"}
 _G.powerLevel = 1
 
