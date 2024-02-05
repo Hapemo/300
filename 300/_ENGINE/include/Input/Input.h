@@ -116,13 +116,10 @@ private:
   static double mScrollTotal;
   static double mScrollOffset;
 
-
-
-
-
 public:
 	static bool mIsEditor;
 	static glm::vec2 mosposEditor;
+	static glm::vec2 prev_cursorpos;
 	
 	static bool m_EditorSceneHovered;
 	static void SetCursorCenter();

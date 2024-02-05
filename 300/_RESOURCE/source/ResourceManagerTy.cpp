@@ -116,7 +116,7 @@ void ResourceTy::mesh_LoadFolder()
 	std::filesystem::path folderpath = compiled_geom_path.c_str();
 
 	// Reads through all the files in the folder, and loads them into the mesh
-#pragma omp parallel for
+//#pragma omp parallel for
 	for (const auto& entry : std::filesystem::directory_iterator(folderpath))
 	{
 		if (std::filesystem::is_regular_file(entry))
@@ -270,7 +270,7 @@ void ResourceTy::MaterialInstance_Loader() {
 	std::filesystem::path folderpath = compressed_texture_path.c_str();
 
 	// Reads through all the files in the folder, and loads them into the mesh
-#pragma omp parallel for
+//#pragma omp parallel for
 	for (const auto& entry : std::filesystem::directory_iterator(folderpath))
 	{
 

@@ -54,6 +54,7 @@ void GraphicsSystem::Init()
 
 		// Get Window Handle
 		m_Window = systemManager->GetWindow();
+
 		m_Width = m_Window->size().x;
 		m_Height = m_Window->size().y;
 
@@ -1361,7 +1362,7 @@ void GraphicsSystem::ClampCursor()
 void GraphicsSystem::HideCursor(bool hideCursor)
 {
 	if (hideCursor)
-		glfwSetInputMode(m_Window->GetHandle(), GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+		glfwSetInputMode(m_Window->GetHandle(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	else
 		glfwSetInputMode(m_Window->GetHandle(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 }

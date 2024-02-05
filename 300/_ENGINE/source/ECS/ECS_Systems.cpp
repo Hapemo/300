@@ -132,6 +132,7 @@ void SystemManager::Update(float dt)
 
 	TestPathfinderManager();
 
+	//mGraphicsSystem->HideCursor(mIsPlay && !mIsPause);
 
 	// To Test (Uncomment)
 	//EnginePerformance::StartTrack("Audio");

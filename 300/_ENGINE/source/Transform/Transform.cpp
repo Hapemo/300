@@ -8,16 +8,16 @@
 // - Setting up the initial rotation of the gun (child)
 void Transform::parentChildRotateInit(char axis, float angle)
 {
-	std::cout << "Parent Child Init" << std::endl;
+	/*std::cout << "Parent Child Init" << std::endl;
 	std::cout << "Axis Selected: " << axis << std::endl;
-	std::cout << "Rotating by : " << angle << std::endl;
+	std::cout << "Rotating by : " << angle << std::endl;*/
 
 	mRotationAxis = axis;
 	mRotationDegrees = angle;
 	mCumulativeTime = 0.0f;
 	mInitialRotation = mRotate;
 
-	std::cout << "(" << mInitialRotation.x << " , " << mInitialRotation.y << " , " << mInitialRotation.z << std::endl;
+	//std::cout << "(" << mInitialRotation.x << " , " << mInitialRotation.y << " , " << mInitialRotation.z << std::endl;
 
 	// Selecting the axis that we want to rotate on
 	switch (axis)
@@ -38,7 +38,7 @@ void Transform::parentChildRotateInit(char axis, float angle)
 		mRotateAxisVector = glm::vec3(0.0f, 0.0f, angle);
 		break;
 	default:
-		std::cout << "INVALID AXIS." << std::endl;
+		//std::cout << "INVALID AXIS." << std::endl;
 		break;
 	}
 }
@@ -90,7 +90,7 @@ void Transform::parentChildRotateUpdate(float dt)
 // This function is called everytime the [FIRE] button is pressed. 
 void Transform::gunAnimationUpdate(std::string gun_type, float skill_timer, float recoil_angle, float recoil_speed, float recoil_duration)
 {
-	std::cout << "HANDLING GUN ANIMATION" << std::endl;
+	//std::cout << "HANDLING GUN ANIMATION" << std::endl;
 	
 	//mCumulativeTime = 10.0f;
 
