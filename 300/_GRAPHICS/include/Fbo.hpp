@@ -172,6 +172,35 @@ Destructor of the FBO class. Deletes the resources allocated on the GPU
 			glDeleteTextures(2, pingpongColorbuffers);
 		}
 	};
+
+	/*!*****************************************************************************
+	FBO For Shadow Mapping
+	*******************************************************************************/
+	class ShadowFBO
+	{
+	public:
+		void Create(int width, int height);
+		void PrepForDraw();
+		void Clear();
+		void Resize(int width, int height);
+
+		unsigned int GetDepthMap() { return mDepthMap; }
+
+		void Bind() { glBindFramebuffer(GL_FRAMEBUFFER, mID); }
+		void Unbind() { glBindFramebuffer(GL_FRAMEBUFFER, 0); }
+
+		unsigned int mID{};			// Framebuffer Object ID
+		unsigned int mDepthMap;		// Depth map of ShadowFBO
+
+		int mWidth{};
+		int mHeight{};
+
+		~ShadowFBO()
+		{
+			glDeleteFramebuffers(1, &mID);
+			glDeleteTextures(1, &mDepthMap);
+		}
+	};
 }
 
 #endif	//	FBO_HPP

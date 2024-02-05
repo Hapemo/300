@@ -76,9 +76,8 @@ void GFX::FBO::Create(int width, int height, bool editorMode, bool resize)
 
 void GFX::FBO::PrepForDraw()
 {
-	Clear();
-
 	glBindFramebuffer(GL_FRAMEBUFFER, mID);
+	Clear();
 
 	// Set all attachments for output
 	GLuint allAttachments[3] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2 };
@@ -339,4 +338,62 @@ void GFX::Quad2D::Unbind()
 {
 	glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
+}
+
+void GFX::ShadowFBO::Create(int width, int height)
+{
+	mWidth = width;
+	mHeight = height;
+
+	// Create and bind framebuffer
+	glGenFramebuffers(1, &mID);
+	glBindFramebuffer(GL_FRAMEBUFFER, mID);
+
+	// Creating Game Attachment
+	glGenTextures(1, &mDepthMap);
+	glBindTexture(GL_TEXTURE_2D, mDepthMap);
+	// Specifying size
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, width, height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+	float borderColor[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	// Attach all Attachments to currently bound framebuffer
+	glNamedFramebufferTexture(mID, GL_DEPTH_ATTACHMENT, mDepthMap, 0);
+	glDrawBuffer(GL_NONE);
+	glReadBuffer(GL_NONE);
+
+	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+	{
+		throw std::runtime_error("Shadow Framebuffer creation failed");
+	}
+}
+
+void GFX::ShadowFBO::PrepForDraw()
+{
+	glBindFramebuffer(GL_FRAMEBUFFER, mID);
+	Clear();
+
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LEQUAL);
+}
+
+void GFX::ShadowFBO::Clear()
+{
+	glClear(GL_DEPTH_BUFFER_BIT);
+}
+
+void GFX::ShadowFBO::Resize(int width, int height)
+{
+	mWidth = width;
+	mHeight = height;
+
+	// Delete current buffer and attachment
+	glDeleteTextures(1, &mDepthMap);
+
+	Create(width, height);
 }

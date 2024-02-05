@@ -79,7 +79,7 @@ void GraphicsSystem::Init()
 	//glCullFace(GL_BACK);
 
 	// Set Cameras' starting position
-	SetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR, {38, 20, 30});									// Position of camera
+	SetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR, {38, 20, 30});								// Position of camera
 	SetCameraTarget(CAMERA_TYPE::CAMERA_TYPE_EDITOR, {0, 0, 0});									// Target of camera
 	SetCameraProjection(CAMERA_TYPE::CAMERA_TYPE_ALL, GFX::CameraConstants::defaultFOV, m_Window->size(), 0.1f, 900.f);			// Projection of camera
 
@@ -198,6 +198,15 @@ void GraphicsSystem::Update(float dt)
 		AddParticleInstance(p, m_EditorCamera.position());
 	}
 	m_ParticleMesh.PrepForDraw();
+
+	// Render the depth scene first as shadow pass
+	RenderShadowMap();
+	m_Renderer.AddCube(dirLightPos, vec3(1.f, 1.f, 1.f), { 1.f, 0.f, 1.f, 1.f });
+	m_Renderer.AddLine(dirLightPos, dirLightPos + dirLightDir * 3.f);
+	mat4 view = glm::lookAt(dirLightPos, dirLightDir + dirLightPos, { 0.f, 1.f, 0.f });
+	mat4 proj = glm::ortho(-dirLightSize.x / 2, dirLightSize.x / 2, -dirLightSize.y / 2, dirLightSize.y / 2, dirLightNearFar.x, dirLightNearFar.y);
+	mat4 vp = proj * view;
+	m_Renderer.AddFrustum(vp, { 1.f, 0.f, 1.f, 1.f });
 }
 
 
@@ -1337,6 +1346,7 @@ void GraphicsSystem::ResizeWindow(ivec2 newSize)
 	m_IntermediateFBO.Resize(newSize.x, newSize.y);
 	m_PingPongFbo.Resize(newSize.x, newSize.y);
 	m_PhysBloomRenderer.Resize(newSize.x, newSize.y);
+	m_ShadowFbo.Resize(newSize.x, newSize.y);
 
 	// Input
 	glBindImageTexture(2, m_IntermediateFBO.GetBrightColorsAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
@@ -1744,7 +1754,14 @@ void GraphicsSystem::SetupAllShaders()
 	glUniform1iv(uniform_tex, (GLsizei)m_Textures.size(), m_Textures.data()); // Passing texture Binding units to frag shader [0 - 31]
 	m_Quad3DShaderInst.Deactivate();
 
-	
+	// Initialize the Shadow Map shader
+	uid shadowMapShaderstr("ShadowMapShader");
+	shadowMapShaderInst = *systemManager->mResourceTySystem->get_Shader(shadowMapShaderstr.id);
+	shadowMapShaderInst.Activate();
+	shadowMapLightSpaceMatrixLocation = shadowMapShaderInst.GetUniformLocation("uLightSpaceMatrix");
+	shadowMapShaderInst.Deactivate();
+
+
 	//!<< Compile Compute shader >>
 	computeDeferred.CreateShaderFromFile("../assets/shader_files/computePBR.glsl");
 	computeDeferred.Activate();
@@ -1753,6 +1770,8 @@ void GraphicsSystem::SetupAllShaders()
 	m_ComputeDeferredCamPosLocation = computeDeferred.GetUniformLocation("uCamPos");
 	m_ComputeDeferredGlobalTintLocation = computeDeferred.GetUniformLocation("uGlobalTint");
 	m_ComputeDeferredGlobalBloomLocation = computeDeferred.GetUniformLocation("uGlobalBloomThreshold");
+	computePBRLightSpaceMatrixLocation = computeDeferred.GetUniformLocation("uLightSpaceMatrix");
+	m_ComputeDirLightPosLocation = computeDeferred.GetUniformLocation("uDirLightPos");
 	GFX::Shader::Deactivate();
 
 	m_ComputeCRTShader.CreateShaderFromFile("../assets/shader_files/computeCRT.glsl");
@@ -1945,6 +1964,80 @@ void GraphicsSystem::DrawAllParticles()
 	GFX::Shader::Deactivate();
 }
 
+void GraphicsSystem::RenderShadowMap()
+{
+	glCullFace(GL_FRONT);
+
+	// Bind shadow FBO to be rendered to
+	m_ShadowFbo.PrepForDraw();
+
+	// Setting up directional light as camera
+	//GFX::Camera lightCam;
+	//lightCam.SetPosition(dirLightPos);
+	//lightCam.SetTarget(dirLightPos + dirLightDir);
+	//lightCam.SetProjection(GFX::CameraConstants::defaultFOV, m_Window->size(), 0.1f, 900.f);
+	//lightCam.Update(false);
+	//mat4 camVP = lightCam.viewProj();
+
+	mat4 view = glm::lookAt(dirLightPos, dirLightDir + dirLightPos, { 0.f, 1.f, 0.f });
+	mat4 proj = glm::ortho(-dirLightSize.x / 2, dirLightSize.x / 2, -dirLightSize.y / 2, dirLightSize.y / 2, dirLightNearFar.x, dirLightNearFar.y);
+	mat4 camVP = proj * view;
+
+	// Bind Shaders and update uniforms
+	m_AnimationShaderInst.Activate();	// Animation Shader
+	glUniformMatrix4fv(m_AnimationShaderInst.GetUniformVP(), 1, GL_FALSE, &camVP[0][0]);
+	GFX::Shader::Deactivate();
+
+	shadowMapShaderInst.Activate();		// Shadow mapping shader for non-animated meshes
+	glUniformMatrix4fv(shadowMapLightSpaceMatrixLocation, 1, GL_FALSE, &camVP[0][0]);
+	GFX::Shader::Deactivate();
+
+	// Rendering of meshes
+	std::map<std::string, short> renderedMesh;
+	auto meshRendererInstances = systemManager->ecs->GetEntitiesWith<MeshRenderer>();
+
+	for (Entity inst : meshRendererInstances)
+	{
+		auto& meshrefptr = inst.GetComponent<MeshRenderer>();
+
+		if (meshrefptr.mCastShadow == false)	// Don't render objects that do not cast shadows
+			continue;
+
+		// the mesh instance has no meshrenderer
+		if (meshrefptr.mMeshRef.getdata(systemManager->mResourceTySystem->m_ResourceInstance) == nullptr)
+			continue;
+
+		std::string meshstr = meshrefptr.mMeshPath;
+		if (renderedMesh.find(meshstr) != renderedMesh.end()) {
+			// the mesh has been rendered before, skip it
+			continue;
+		}
+
+		// update the map of rendered meshes
+		renderedMesh[meshstr] = 1;
+
+		// render the mesh and its instances here
+		GFX::Mesh& meshinst = *reinterpret_cast<GFX::Mesh*>(meshrefptr.mMeshRef.data);
+
+		// Activate animation shader
+		if (meshinst.mHasAnimation)
+			m_AnimationShaderInst.Activate();
+		else
+			shadowMapShaderInst.Activate();
+
+		//Bind mesh's VAO, copy render data into VBO, Draw
+		DrawAll(meshinst);
+
+		//shaderinst.Deactivate();
+		meshinst.UnbindVao();
+	}
+	GFX::Shader::Deactivate();
+
+	m_ShadowFbo.Unbind();
+
+	glCullFace(GL_NONE);
+}
+
 void GraphicsSystem::ComputeDeferredLight(bool editorDraw)
 {
 	if (editorDraw)	// Draw to Editor FBO
@@ -1968,9 +2061,20 @@ void GraphicsSystem::ComputeDeferredLight(bool editorDraw)
 	glUniform1i(m_ComputeDeferredLightCountLocation, m_LightCount);
 	glUniform1i(m_ComputeDeferredSpotlightCountLocation, m_SpotlightCount);
 	glUniform3fv(m_ComputeDeferredCamPosLocation, 1, &camPos[0]);
+	glUniform3fv(m_ComputeDirLightPosLocation, 1, &dirLightPos[0]);
 	glUniform4fv(m_ComputeDeferredGlobalTintLocation, 1, &m_GlobalTint[0]);
 	vec4 globalBloom = vec4(mAmbientBloomThreshold, m_EnableBloom);
 	glUniform4fv(m_ComputeDeferredGlobalBloomLocation, 1, &globalBloom[0]);
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, m_ShadowFbo.GetDepthMap());
+
+	// Light space matrix
+	mat4 view = glm::lookAt(dirLightPos, dirLightDir + dirLightPos, { 0.f, 1.f, 0.f });
+	mat4 proj = glm::ortho(-dirLightSize.x / 2, dirLightSize.x / 2, -dirLightSize.y / 2, dirLightSize.y / 2, dirLightNearFar.x, dirLightNearFar.y);
+	mat4 camVP = proj * view;
+
+	glUniformMatrix4fv(computePBRLightSpaceMatrixLocation, 1, GL_FALSE, &camVP[0][0]);
 
 	int num_group_x = glm::ceil(m_Width / 29);
 	int num_group_y = glm::ceil(m_Height / 29);
@@ -1981,6 +2085,7 @@ void GraphicsSystem::ComputeDeferredLight(bool editorDraw)
 	glBindImageTexture(0, 0, 0, GL_FALSE, 0, GL_READ_WRITE, GL_RGBA32F);
 	glBindImageTexture(1, 0, 0, GL_FALSE, 0, GL_WRITE_ONLY, GL_RGBA32F);
 
+	glBindTexture(GL_TEXTURE_2D, 0);
 	computeDeferred.Deactivate();
 }
 

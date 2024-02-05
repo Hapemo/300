@@ -61,6 +61,7 @@ void MeshRenderer::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer
 	Serialize(writer, "meshrefid", mMeshRef.data_uid);
 	Serialize(writer, "instancecolor", mInstanceColor);
 	Serialize(writer, "bloomthreshold", mBloomThreshold);
+	Serialize(writer, "castShadow", mCastShadow);
 	Serialize(writer, "materialinstance", mMaterialInstancePath, 6);
 	Serialize(writer, "mesh", mMeshPath);
 	//Serialize(writer, "texturecont", mTextureCont, 5);
@@ -81,6 +82,7 @@ void MeshRenderer::DeserializeSelf(rapidjson::Value& reader)
 	Deserialize(reader, "meshrefid", mMeshRef.data_uid);
 	Deserialize(reader, "instancecolor", mInstanceColor);
 	Deserialize(reader, "bloomthreshold", mBloomThreshold);
+	Deserialize(reader, "castShadow", mCastShadow);
 	Deserialize(reader, "materialinstance", mMaterialInstancePath, 6);
 
 	for (int i{}; i < 6; ++i)

@@ -402,6 +402,18 @@ public:
 	ParticleEmitter m_Emitter;
 	void AddParticleInstance(Particle const& p, vec3 const& camPos);
 	void DrawAllParticles();
+
+	// -- Shadows WIP --
+	GFX::Shader shadowMapShaderInst;
+	GLuint shadowMapLightSpaceMatrixLocation{};
+	GLuint computePBRLightSpaceMatrixLocation{};
+	GLuint m_ComputeDirLightPosLocation{};
+	GFX::ShadowFBO m_ShadowFbo;
+	vec3 dirLightPos{ -0.4f, 12.f, 74.f };
+	vec3 dirLightDir{ 0.3f, -1.f, -1.f };
+	vec2 dirLightSize{ 108.f, 128.f };
+	vec2 dirLightNearFar{ 0.1f, 90.7f };
+	void RenderShadowMap();
 };
 
 #endif

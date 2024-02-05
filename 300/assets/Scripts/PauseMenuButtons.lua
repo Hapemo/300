@@ -25,7 +25,7 @@ function Alive()
     -- inputMapSys = systemManager:mInputActionSystem()
     -- graphicsSys = systemManager:mGraphicsSystem()
 
-    -- hoverOver = false
+    hoverOver = false
 
     clickAudioEntity = gameStateSys:GetEntity("Click")
     clickSFX = clickAudioEntity:GetAudio()
@@ -53,8 +53,13 @@ function PauseUpdate()
     button = Helper.GetScriptEntity(script_entity.id)
     if (button:GetButton().mIsHover) then
         ----print("HOVERRRRRRRRRRRRRRRRRRRRRRR")
-        hoverSFX = button:GetAudio()
-        hoverSFX:SetPlay(0.2)
+
+        if(hoverOver == false) then
+            hoverSFX = button:GetAudio()
+            hoverSFX:SetPlay(0.2)
+            hoverOver = true
+        end
+        
         if (button:GetGeneral().name == "ResumeButton") then
             button:GetUIrenderer():SetTexture("Resume_Hover")
         elseif (button:GetGeneral().name == "HTPButton") then
@@ -67,6 +72,7 @@ function PauseUpdate()
             button:GetUIrenderer():SetTexture("MainMenu_Hover")
         end
     else
+        hoverOver = false
         if (button:GetGeneral().name == "ResumeButton") then
             button:GetUIrenderer():SetTexture("Resume_Default")
         elseif (button:GetGeneral().name == "HTPButton") then
