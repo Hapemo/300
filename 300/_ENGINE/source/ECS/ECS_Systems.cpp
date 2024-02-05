@@ -151,6 +151,7 @@ void SystemManager::Update(float dt)
 			entity.GetComponent<Scripts>().RunFunctionForAllScripts("PauseUpdate");
 		}
 		mButtonSystem.get()->Update();
+		mAudioSystem.get()->Update(dt, false);
 		return;
 	}
 

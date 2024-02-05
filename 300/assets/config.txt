@@ -1,5 +1,5 @@
 ScenePath: ../assets/Scenes/
 GameStatePath: ../assets/GameStates/
 GraphDataPath: ../assets/GraphData/
-StartingGameState: shadowsTest
+StartingGameState: MainMenu
 KeybindPath: ../assets/
