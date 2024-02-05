@@ -23,6 +23,7 @@ uniform int uSpotlightCount;
 uniform vec4 uGlobalTint;
 uniform vec4 uGlobalBloomThreshold;
 uniform mat4 uLightSpaceMatrix;
+uniform vec3 uDirLightPos;
 
 struct PointLight           // 48 Bytes
 {
@@ -61,8 +62,7 @@ float GeometrySmith(vec3 N, vec3 V, vec3 L, float roughness);
 float CalculateAttenuation(float linear, float quadratic, float distance);
 vec3 ComputeLight(PointLight light, vec3 F0, vec3 fragPos, vec3 albedo, vec3 normal, float roughness, float metallic);
 vec3 ComputeSpotLight(SpotLight light, vec3 fragPos, vec3 albedo, vec3 normal, float roughness, float metallic);
-float ShadowCalculation(vec3 fragPos);
-float LinearizeDepth(float depth);
+float ShadowCalculation(vec3 fragPos, vec3 normal);
 
 const float near_plane = 0.1;
 const float far_plane = 900.0;
@@ -102,10 +102,10 @@ void main()
     vec3 ambient = vec3(0.3) * albedoSpec.rgb * ao;
     vec3 color = ambient + lightRadiance;
     vec4 finalColor = vec4(color + emission.rgb, 1.0);
-    float shadow = ShadowCalculation(fragPos.xyz);
+    float shadow = ShadowCalculation(fragPos.xyz, normal.rgb);
     finalColor = finalColor * customColor;   // Set Custom Color
     if (shadow > 0.5f)
-        finalColor.rgb = vec3(0.15) * albedoSpec.rgb;
+        finalColor.rgb = vec3(0.3) * albedoSpec.rgb;
 
     // HDR
     // check whether fragment output is higher than threshold, if so output as bright color
@@ -235,7 +235,7 @@ float GeometrySmith(vec3 N, vec3 V, vec3 L, float roughness)
     return ggx1 * ggx2;
 }
 
-float ShadowCalculation(vec3 fragPos)
+float ShadowCalculation(vec3 fragPos, vec3 normal)
 {
     vec4 fragPosLightSpace = uLightSpaceMatrix * vec4(fragPos, 1.0);
     // Perform perspective divide to transform clip space to NDC
@@ -247,10 +247,14 @@ float ShadowCalculation(vec3 fragPos)
     if (projCoords.z > 1.0)
         return 0.0;
 
+    vec3 fragToLightDir = normalize(uDirLightPos - fragPos);
+    normal = normalize(normal);
+
     float closestDepth = texture(depthBuffer, projCoords.xy).r;
     float currentDepth = projCoords.z;
 
     // In shadow if current depth is larger than closest depth
+    //float bias = max(0.05 * (1.0 - dot(normal, fragToLightDir)), 0.005);
     float bias = 0.0005;
     float shadow = currentDepth - bias > closestDepth ? 1.0 : 0.0;
 

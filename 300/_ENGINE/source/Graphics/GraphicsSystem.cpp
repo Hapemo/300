@@ -197,6 +197,15 @@ void GraphicsSystem::Update(float dt)
 		AddParticleInstance(p, m_EditorCamera.position());
 	}
 	m_ParticleMesh.PrepForDraw();
+
+	// Render the depth scene first as shadow pass
+	RenderShadowMap();
+	m_Renderer.AddCube(dirLightPos, vec3(1.f, 1.f, 1.f), { 1.f, 0.f, 1.f, 1.f });
+	m_Renderer.AddLine(dirLightPos, dirLightPos + dirLightDir * 3.f);
+	mat4 view = glm::lookAt(dirLightPos, dirLightDir + dirLightPos, { 0.f, 1.f, 0.f });
+	mat4 proj = glm::ortho(-dirLightSize.x / 2, dirLightSize.x / 2, -dirLightSize.y / 2, dirLightSize.y / 2, dirLightNearFar.x, dirLightNearFar.y);
+	mat4 vp = proj * view;
+	m_Renderer.AddFrustum(vp, { 1.f, 0.f, 1.f, 1.f });
 }
 
 
@@ -209,11 +218,6 @@ void GraphicsSystem::Update(float dt)
 /**************************************************************************/
 void GraphicsSystem::Draw(float dt, bool forEditor)
 {
-	// Render the depth scene first as shadow pass
-	RenderShadowMap();
-	m_Renderer.AddCube(dirLightPos, vec3(1.f, 1.f, 1.f), { 1.f, 0.f, 1.f, 1.f });
-	m_Renderer.AddLine(dirLightPos, dirLightPos + dirLightDir * 3.f);
-
 	std::map<std::string, short> renderedMesh;
 	auto meshRendererInstances = systemManager->ecs->GetEntitiesWith<MeshRenderer>();
 
@@ -1765,6 +1769,7 @@ void GraphicsSystem::SetupAllShaders()
 	m_ComputeDeferredGlobalTintLocation = computeDeferred.GetUniformLocation("uGlobalTint");
 	m_ComputeDeferredGlobalBloomLocation = computeDeferred.GetUniformLocation("uGlobalBloomThreshold");
 	computePBRLightSpaceMatrixLocation = computeDeferred.GetUniformLocation("uLightSpaceMatrix");
+	m_ComputeDirLightPosLocation = computeDeferred.GetUniformLocation("uDirLightPos");
 	GFX::Shader::Deactivate();
 
 	m_ComputeCRTShader.CreateShaderFromFile("../assets/shader_files/computeCRT.glsl");
@@ -1971,6 +1976,7 @@ void GraphicsSystem::RenderShadowMap()
 	//lightCam.SetProjection(GFX::CameraConstants::defaultFOV, m_Window->size(), 0.1f, 900.f);
 	//lightCam.Update(false);
 	//mat4 camVP = lightCam.viewProj();
+
 	mat4 view = glm::lookAt(dirLightPos, dirLightDir + dirLightPos, { 0.f, 1.f, 0.f });
 	mat4 proj = glm::ortho(-dirLightSize.x / 2, dirLightSize.x / 2, -dirLightSize.y / 2, dirLightSize.y / 2, dirLightNearFar.x, dirLightNearFar.y);
 	mat4 camVP = proj * view;
@@ -2053,6 +2059,7 @@ void GraphicsSystem::ComputeDeferredLight(bool editorDraw)
 	glUniform1i(m_ComputeDeferredLightCountLocation, m_LightCount);
 	glUniform1i(m_ComputeDeferredSpotlightCountLocation, m_SpotlightCount);
 	glUniform3fv(m_ComputeDeferredCamPosLocation, 1, &camPos[0]);
+	glUniform3fv(m_ComputeDirLightPosLocation, 1, &dirLightPos[0]);
 	glUniform4fv(m_ComputeDeferredGlobalTintLocation, 1, &m_GlobalTint[0]);
 	vec4 globalBloom = vec4(mAmbientBloomThreshold, m_EnableBloom);
 	glUniform4fv(m_ComputeDeferredGlobalBloomLocation, 1, &globalBloom[0]);
@@ -2061,12 +2068,6 @@ void GraphicsSystem::ComputeDeferredLight(bool editorDraw)
 	glBindTexture(GL_TEXTURE_2D, m_ShadowFbo.GetDepthMap());
 
 	// Light space matrix
-	//GFX::Camera lightCam;
-	//lightCam.SetPosition(dirLightPos);
-	//lightCam.SetTarget(dirLightPos + dirLightDir);
-	//lightCam.SetProjection(GFX::CameraConstants::defaultFOV, m_Window->size(), 0.1f, 900.f);
-	//lightCam.Update(false);
-	//mat4 camVP = lightCam.viewProj();
 	mat4 view = glm::lookAt(dirLightPos, dirLightDir + dirLightPos, { 0.f, 1.f, 0.f });
 	mat4 proj = glm::ortho(-dirLightSize.x / 2, dirLightSize.x / 2, -dirLightSize.y / 2, dirLightSize.y / 2, dirLightNearFar.x, dirLightNearFar.y);
 	mat4 camVP = proj * view;

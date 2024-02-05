@@ -407,11 +407,12 @@ public:
 	GFX::Shader shadowMapShaderInst;
 	GLuint shadowMapLightSpaceMatrixLocation{};
 	GLuint computePBRLightSpaceMatrixLocation{};
+	GLuint m_ComputeDirLightPosLocation{};
 	GFX::ShadowFBO m_ShadowFbo;
-	vec3 dirLightPos{ -0.4f, 21.7f, 55.6f };
+	vec3 dirLightPos{ -0.4f, 12.f, 74.f };
 	vec3 dirLightDir{ 0.3f, -1.f, -1.f };
-	vec2 dirLightSize{ 20.f, 20.f };
-	vec2 dirLightNearFar{ 0.1f, 900.f };
+	vec2 dirLightSize{ 108.f, 128.f };
+	vec2 dirLightNearFar{ 0.1f, 200.f };
 	void RenderShadowMap();
 };
 
