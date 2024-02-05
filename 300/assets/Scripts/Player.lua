@@ -314,7 +314,7 @@ function Update()
         gunTransform:ParentChildRotateUpdate(dt)
     -- end
     if(inputMapSys:GetButtonDown("AddHealth")) then
-        playerHealthCurrent += 20
+        playerHealthCurrent = playerHealthCurrent + 20
         if playerHealthCurrent > playerHealthMax then
             playerHealthCurrent = playerHealthMax
         end
