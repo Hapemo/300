@@ -83,6 +83,12 @@ function PauseUpdate()
             systemManager:SetIsPause(false)
             systemManager:Play()
         elseif (button:GetGeneral().name == "HTPButton") then
+            mainMenuButton:GetTransform().mTranslate.x = 1000
+            quitButton:GetTransform().mTranslate.x = 1000
+            resumeButton:GetTransform().mTranslate.x = 1000
+            htpButton:GetTransform().mTranslate.x = 1000
+            menuBackground:GetTransform().mTranslate.x = 1000
+            restartButton:GetTransform().mTranslate.x = 1000
             HTPMenu:GetTransform().mTranslate.x = 0
             backButton:GetTransform().mTranslate.x = 0.65
         elseif (button:GetGeneral().name == "BackButton") then
