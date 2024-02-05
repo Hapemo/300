@@ -30,6 +30,8 @@ function Alive()
     resumeButton = gameStateSys:GetEntityByScene("ResumeButton", "PauseMenuScene")
     htpButton = gameStateSys:GetEntityByScene("HTPButton", "PauseMenuScene")
     restartButton = gameStateSys:GetEntityByScene("RestartButton", "PauseMenuScene")
+    HTPMenu = gameStateSys:GetEntityByScene("HTPMenu", "PauseMenuScene")
+    backButton = gameStateSys:GetEntityByScene("BackButton", "PauseMenuScene")
 
 end
 
@@ -81,7 +83,11 @@ function PauseUpdate()
             systemManager:SetIsPause(false)
             systemManager:Play()
         elseif (button:GetGeneral().name == "HTPButton") then
-            --gameStateSys:ChangeGameState("HTPMenu")
+            HTPMenu:GetTransform().mTranslate.x = 0
+            backButton:GetTransform().mTranslate.x = 0.65
+        elseif (button:GetGeneral().name == "BackButton") then
+            HTPMenu:GetTransform().mTranslate.x = 1000
+            backButton:GetTransform().mTranslate.x = 1000
         elseif (button:GetGeneral().name == "RestartButton") then
             mainMenuButton:GetTransform().mTranslate.x = 1000
             quitButton:GetTransform().mTranslate.x = 1000
