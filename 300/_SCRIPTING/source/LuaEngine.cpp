@@ -321,6 +321,7 @@ void LuaGraphicsSystem()
         "m_GlobalTint", &GraphicsSystem::m_GlobalTint,
         "m_WindowWidth", &GraphicsSystem::m_Width,
         "m_WindowHeight", &GraphicsSystem::m_Height,
+        "HideCursor", &GraphicsSystem::HideCursor,
         "SetAllEntityBloomThreshold", &GraphicsSystem::SetAllEntityBloomThreshold,
         "FilterRadius", &GraphicsSystem::mFilterRadius);
 }
