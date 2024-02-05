@@ -3,8 +3,9 @@
 
 function Alive()
     gameStateSys = systemManager:mGameStateSystem()
+    graphicssys = systemManager:mGraphicsSystem()
 
-    
+    graphicssys:HideCursor(false)
 end
 
 function Update()
@@ -19,12 +20,15 @@ function Update()
 
     if (inputSys:GetKeyDown(257)) then -- Press ENTER
         gameStateSys:ChangeGameState("Test")
-
     end
+    
+    -- if (systemManager:mInputActionSystem():GetKeyDown(67)) then -- Press C
+    --     systemManager:mGraphicsSystem():HideCursor(false)
+    -- end
 end
 
 function Dead()
-
+    graphicssys:HideCursor(true)
 end
 
 function OnTriggerEnter(Entity)

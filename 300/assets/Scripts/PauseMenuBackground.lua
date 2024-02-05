@@ -10,10 +10,12 @@ local resumeButton
 local htpButton
 local restartButton
 local menuBackground
+local graphicssys
 
 function Alive()
     gameStateSys = systemManager:mGameStateSystem()
     inputMapSys = systemManager:mInputActionSystem()
+    graphicssys = systemManager:mGraphicsSystem()
     mainMenuButton = gameStateSys:GetEntityByScene("MainMenuButton", "PauseMenuScene")
     quitButton = gameStateSys:GetEntityByScene("QuitButton", "PauseMenuScene")
     resumeButton = gameStateSys:GetEntityByScene("ResumeButton", "PauseMenuScene")
@@ -32,6 +34,7 @@ function Update()
     if (inputMapSys:GetButtonDown("pause")) then
         runOnce = true
         if (not _G.isPausePauseMenu) then
+            graphicssys:HideCursor(false)
             systemManager:Pause()
             _G.isPausePauseMenu = true
         end
@@ -56,6 +59,7 @@ function PauseUpdate()
     inputMapSys = systemManager:mInputActionSystem()
     if (inputMapSys:GetButtonDown("pause")) then
         if (_G.isPausePauseMenu) then
+            graphicssys:HideCursor(true)
             systemManager:Play()
             _G.isPausePauseMenu = false
             runOnce2 = true

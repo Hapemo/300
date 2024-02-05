@@ -244,11 +244,19 @@ function Alive()
     original_translation.x = gunInitialTranslate.x
     original_translation.y = gunInitialTranslate.y
     original_translation.z = gunInitialTranslate.z
+   
+    systemManager:mGraphicsSystem():HideCursor(true)
 end
 
 function Update()
     gunTranslate = gunEntity:GetTransform().mTranslate
-
+    -- if (systemManager:mInputActionSystem():GetKeyDown(61)) then -- Press EQUAL
+    --     systemManager:mGraphicsSystem():HideCursor(false)
+    -- end
+    -- if (systemManager:mInputActionSystem():GetKeyDown(45)) then -- Press MINUS
+    --     systemManager:mGraphicsSystem():HideCursor(true)
+    -- end
+    
     -- Example: I want to get HP from AITest.lua script (getting walking enemy's hp)
     -- scriptingSys = systemManager:mScriptingSystem();
     -- scriptingComp = walkingenemy:GetScripts()

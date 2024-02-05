@@ -134,6 +134,14 @@ void SystemManager::Update(float dt)
 
 	TestPathfinderManager();
 
+	if (Input::CheckKey(E_STATE::PRESS, E_KEY::EQUAL)) {
+		mGraphicsSystem->HideCursor(false);
+	}
+
+	if (Input::CheckKey(E_STATE::PRESS, E_KEY::MINUS)) {
+		mGraphicsSystem->HideCursor(true);
+	}
+
 	//mGraphicsSystem->HideCursor(mIsPlay && !mIsPause);
 
 	// To Test (Uncomment)

@@ -86,7 +86,7 @@ void LuaEntity()
         ADD_COMPONENT("AddSphereCollider", SphereCollider),
         DECLARE_COMPONENT("GetSphereCollider", SphereCollider),
         "HasSphereCollider", &Entity::HasComponent<SphereCollider>,
-
+      
         ADD_COMPONENT("AddCapsuleCollider", CapsuleCollider),
         DECLARE_COMPONENT("GetCapsuleCollider", CapsuleCollider),
         "HasCapsuleCollider", &Entity::HasComponent<CapsuleCollider>,
