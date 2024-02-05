@@ -12,20 +12,21 @@ end
 
 function Update()
     menuBackground = Helper.GetScriptEntity(script_entity.id)
+    mainMenuButton:GetTransform().mTranslate.x = 1000
+    quitButton:GetTransform().mTranslate.x = 1000
+    resumeButton:GetTransform().mTranslate.x = 1000
+    htpButton:GetTransform().mTranslate.x = 1000
+    menuBackground:GetTransform().mTranslate.x = 1000
+    restartButton:GetTransform().mTranslate.x = 1000
     if (inputMapSys:GetButton("pause")) then
-        --if (not _G.isPausePauseMenu) then
+--         --if (not _G.isPausePauseMenu) then
             systemManager:Pause()
-            _--G.isPausePauseMenu = true
-        --end
+--             _--G.isPausePauseMenu = true
+--         --end
     end
-    --if (not _G.isPausePauseMenu) then
-        mainMenuButton:GetTransform().mTranslate.x = 1000
-        quitButton:GetTransform().mTranslate.x = 1000
-        resumeButton:GetTransform().mTranslate.x = 1000
-        htpButton:GetTransform().mTranslate.x = 1000
-        menuBackground:GetTransform().mTranslate.x = 1000
-        restartButton:GetTransform().mTranslate.x = 1000
-    --end
+--     --if (not _G.isPausePauseMenu) then
+-- print("SUPPPPP")
+--     --end
 end
 
 function PauseUpdate()

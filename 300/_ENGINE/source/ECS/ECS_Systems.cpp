@@ -82,6 +82,7 @@ void SystemManager::Reset()
 	mGraphicsSystem.get()->Init();
 	//mScriptingSystem.get()->ScriptReload();
 	mIsPlay = false;
+	mIsPause = false;
 }
 
 void SystemManager::ResetForChangeGS() {
@@ -137,16 +138,17 @@ void SystemManager::Update(float dt)
 	//mAudioSystem.get()->Update(dt);
 	//EnginePerformance::EndTrack("Audio");
 
-	//check if esc is triggered in gamescene
-	if (!systemManager->IsEditor() && mInputActionSystem->GetKeyDown(ESCAPE))
-		mIsGamePause = !mIsGamePause;
-	if (!mIsPlay) {
+	if (mInputActionSystem->GetButtonDown("pause") && mIsPlay)
+		mIsPause = true;
+
+	if (mIsPause) {
 		auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
 		for (Entity entity : scriptEntities)
 		{
 			entity.GetComponent<Scripts>().RunFunctionForAllScripts("PauseUpdate");
 		}
 		mButtonSystem.get()->Update();
+		return;
 	}
 
 	if (!mIsPlay)
@@ -184,8 +186,8 @@ void SystemManager::Exit()
 	mPhysicsSystem.get()->Exit();
 	mScriptingSystem.get()->Exit();
 	mGraphicsSystem.get()->Exit();
-	mResourceTySystem.get()->Exit();
 	mGameStateSystem.get()->Unload();
+	mResourceTySystem.get()->Exit();
 	//mAudioSystem.get()->Exit();
 }
 
