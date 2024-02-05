@@ -1,6 +1,97 @@
 [
     {
-        "entityid": 248,
+        "entityid": 6291606,
+        "general": {
+            "name": "PauseMenuController",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/PauseMenuBackground.lua",
+                    "variables": [
+                        {
+                            "key": "runOnce",
+                            "val": {
+                                "type": -1129103353,
+                                "value": false
+                            }
+                        },
+                        {
+                            "key": "runOnce2",
+                            "val": {
+                                "type": -1129103353,
+                                "value": false
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "entityid": 7340140,
+        "general": {
+            "name": "HTPMenu",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 2.0,
+                "y": -2.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 1000.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 419352496,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 6,
+            "worldtransform": false
+        }
+    },
+    {
+        "entityid": 7340141,
         "general": {
             "name": "RestartButton",
             "tagid": 6,
@@ -20,13 +111,13 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 1000,
+                "x": 1000.0,
                 "y": -0.1550000011920929,
                 "z": 0.0
             }
         },
         "uirenderer": {
-            "texpath": "../assets/Compressed/Restart_Default.ctexture",
+            "texpath": "",
             "textureref": 354076791,
             "degree": 0.0,
             "slider": 1.0,
@@ -66,56 +157,7 @@
         }
     },
     {
-        "entityid": 249,
-        "general": {
-            "name": "MenuBackground",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 2.0,
-                "y": -2.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 1000,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "../assets/Compressed/MainMenuEmpty.ctexture",
-            "textureref": 2389209152,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 4,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/PauseMenuBackground.lua",
-                    "variables": []
-                }
-            ]
-        }
-    },
-    {
-        "entityid": 250,
+        "entityid": 7340142,
         "general": {
             "name": "Exit",
             "tagid": 0,
@@ -152,7 +194,7 @@
         }
     },
     {
-        "entityid": 251,
+        "entityid": 7340143,
         "general": {
             "name": "HTPButton",
             "tagid": 6,
@@ -172,13 +214,13 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 1000,
+                "x": 1000.0,
                 "y": 0.05999999865889549,
                 "z": 0.0
             }
         },
         "uirenderer": {
-            "texpath": "../assets/Compressed/HowToPlay_Default.ctexture",
+            "texpath": "",
             "textureref": 622840434,
             "degree": 0.0,
             "slider": 1.0,
@@ -221,7 +263,7 @@
         }
     },
     {
-        "entityid": 252,
+        "entityid": 7340144,
         "general": {
             "name": "ResumeButton",
             "tagid": 6,
@@ -241,14 +283,14 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 1000,
+                "x": 1000.0,
                 "y": 0.2800000011920929,
                 "z": 0.0
             }
         },
         "uirenderer": {
-            "texpath": "../assets/Compressed/Resume_Default.ctexture",
-            "textureref": 896447279,
+            "texpath": "",
+            "textureref": 354076791,
             "degree": 0.0,
             "slider": 1.0,
             "color": {
@@ -290,7 +332,7 @@
         }
     },
     {
-        "entityid": 253,
+        "entityid": 7340145,
         "general": {
             "name": "Awake",
             "tagid": 0,
@@ -310,7 +352,7 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 1000,
+                "x": 1000.0,
                 "y": 0.0,
                 "z": 0.0
             }
@@ -327,7 +369,7 @@
         }
     },
     {
-        "entityid": 254,
+        "entityid": 7340146,
         "general": {
             "name": "QuitButton",
             "tagid": 6,
@@ -347,7 +389,7 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 1000,
+                "x": 1000.0,
                 "y": -0.5799999833106995,
                 "z": 0.0
             }
@@ -393,7 +435,7 @@
         }
     },
     {
-        "entityid": 255,
+        "entityid": 7340147,
         "general": {
             "name": "Click",
             "tagid": 6,
@@ -430,7 +472,7 @@
         }
     },
     {
-        "entityid": 256,
+        "entityid": 7340148,
         "general": {
             "name": "MainMenuButton",
             "tagid": 6,
@@ -450,7 +492,7 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 1000,
+                "x": 1000.0,
                 "y": -0.3700000047683716,
                 "z": 0.0
             }
@@ -493,6 +535,113 @@
             "click": false,
             "activated": false,
             "renderflag": true
+        }
+    },
+    {
+        "entityid": 7340149,
+        "general": {
+            "name": "BackButton",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.20000000298023224,
+                "y": -0.20000000298023224,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 1000.0,
+                "y": -0.6399999856948853,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 1569467779,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 7,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/PauseMenuButtons.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "UI_Button_Hover.wav",
+            "fullpath": "../assets\\Audio/UI_Button_Hover.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 0.20000000298023224,
+            "retainaudio": false
+        },
+        "button": {
+            "interactable": true,
+            "hover": false,
+            "click": false,
+            "activated": false,
+            "renderflag": true
+        }
+    },
+    {
+        "entityid": 7340150,
+        "general": {
+            "name": "MenuBackground",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 2.0,
+                "y": -2.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 1000.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 227867702,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 4,
+            "worldtransform": false
         }
     }
 ]

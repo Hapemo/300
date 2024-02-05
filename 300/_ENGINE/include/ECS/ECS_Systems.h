@@ -29,11 +29,11 @@ struct Entity;
 class SystemManager {
 	GFX::Window *mWindow;
 	bool mIsEditor;
-	bool mIsPlay;
 	bool mIsQuit;
 	// changing pause states in script according to button press
-	bool mIsPause;
+	bool mIsInGamePause;
 public:
+	bool mIsPlay;
 	std::unique_ptr<PhysicsSystem> mPhysicsSystem;
 	std::unique_ptr<ScriptingSystem> mScriptingSystem;
 	std::unique_ptr<GraphicsSystem> mGraphicsSystem;
@@ -97,7 +97,7 @@ public:
 
 	bool IsQuit() { return mIsQuit; }
 
-	void SetIsPause(bool pauseanot) { mIsPause = pauseanot; }
+	void SetIsPause(bool pauseanot) { mIsInGamePause = pauseanot; }
 	
 	void DeleteEntity(Entity e);
 	PhysicsSystem *GetPhysicsPointer();

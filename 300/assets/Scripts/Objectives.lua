@@ -32,7 +32,6 @@ function Alive()
     isInit = false
     this = Helper.GetScriptEntity(script_entity.id)
     progress = 0
-    print("Progress is", progress)
 
     mobSpawnPos1.x = 18;
     mobSpawnPos1.y = -9;
@@ -52,6 +51,20 @@ function Alive()
 end
 
 function Update()
+    gameStateSys = systemManager:mGameStateSystem()
+    inputMapSys = systemManager:mInputActionSystem()
+    if(inputMapSys:GetButtonDown("NextLevel")) then
+        x = gameStateSys:GetEntity("TransitionHelper", "Transition") 
+        y = x:GetScripts()
+        z = y:GetScript("../assets/Scripts/Transition.lua")
+
+        if z ~= nil then
+            z:SetNextGameStateHelper("SetNextGameState", "Test2")
+            --z:RunFunctionWithParam("SetNextGameState", "Test2")
+            z:RunFunction("StartTransition")
+        end
+    end
+
     if isInit == false then
         gameStateSys = systemManager:mGameStateSystem();
         testScriptEntity = gameStateSys:GetEntity("Controller")
@@ -95,7 +108,6 @@ function Update()
     currentSpawnTimer = currentSpawnTimer + FPSManager.GetDT()
 
     if currentEnemyCount < maxEnemyCount and currentSpawnTimer > spawnTimer then
-        print("SPAWN NEW")
         mobtype = math.random(2, 3) -- generate a random number to spawn a random enemy between Trojan and Melissa only (for level 1)
 
             if (mobtype == 1) then systemManager.ecs:NewEntityFromPrefab("ILOVEYOU", mobSpawnPos1) 
@@ -192,7 +204,6 @@ function Update()
     end
 
     if (progress == objectivesComplete) then
-        print("Objective complete!")
         --objectivebar:GetTransform().mTranslate.y = 20; -- Hide the objective progress
         entityobj = Helper.GetScriptEntity(script_entity.id)
         systemManager.ecs:SetDeleteEntity(entityobj)
@@ -214,7 +225,17 @@ function Update()
         if testScript ~= nil then
             objCount = testScript:ReturnValueInt("GetCountObj")
             if objCount == 0 then
-                gameStateSys:ChangeGameState("Test2")
+                gameStateSys = systemManager:mGameStateSystem()
+            
+                    x = gameStateSys:GetEntity("TransitionHelper", "Transition") 
+                    y = x:GetScripts()
+                    z = y:GetScript("../assets/Scripts/Transition.lua")
+
+                    if z ~= nil then
+                        z:SetNextGameStateHelper("SetNextGameState", "Test2")
+                        --z:RunFunctionWithParam("SetNextGameState", "Test2")
+                        z:RunFunction("StartTransition")
+                    end
             end
         end
 
@@ -233,7 +254,6 @@ end
 
 function OnTriggerEnter(Entity)
     local tagid = Entity:GetGeneral().tagid  
-    print("tagid = ", tagid)
     if (tagid == 0) then -- if colliding with player
         isInZone = true
     end

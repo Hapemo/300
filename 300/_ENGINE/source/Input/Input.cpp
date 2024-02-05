@@ -25,6 +25,7 @@ GLFWcursor* Input::mCursor;
 bool Input::mIsEditor{ false };
 bool Input::m_EditorSceneHovered{ false };
 glm::vec2 Input::mosposEditor {};
+glm::vec2 Input::prev_cursorpos{};
 
  glm::vec2 Input::m_EditorWindowPos;
  glm::vec2 Input::m_EditorCursorPos;
@@ -118,6 +119,8 @@ void Input::SetCursorCenter()
     	//SetCursorPos(x + winlength / 2, y + winheight / 2);
         glfwSetCursorPos(systemManager->GetWindow()->GetHandle(), x + winlength / 2, y + winheight / 2);
     }
+
+    //prev_cursorpos = CursorPos();
 }
 
 glm::vec2 Input::GetCursorCenter()
@@ -136,7 +139,7 @@ glm::vec2 Input::GetCursorCenter()
 
     	return vec2(x + winlength / 2, y + winheight / 2);
     }
-
+    //return prev_cursorpos;
 }
 
 

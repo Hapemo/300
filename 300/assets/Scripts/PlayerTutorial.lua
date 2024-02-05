@@ -222,6 +222,7 @@ function Alive()
 
     -- Gun Stuff --
     gunEntity = gameStateSys:GetEntity("gun")
+    gunMeshRenderer = gunEntity:GetMeshRenderer()
 
     -- -- Testing [ParentChildRotateInit]
     gunTransform = gunEntity:GetTransform()
@@ -416,15 +417,15 @@ function Update()
         
 -- Toggle Weapons
         if(inputMapSys:GetButtonDown("Shotgun")) then 
-            print("Swapping to shotgun")
+            -- print("Swapping to shotgun")
             _G.gunEquipped = 2 --"SHOTGUN"
         end
         if(inputMapSys:GetButtonDown("Revolver")) then 
-            print("Swapping to revolver")
+            -- print("Swapping to revolver")
             _G.gunEquipped = 1 --"REVOLVER"
         end
         if(inputMapSys:GetButtonDown("Machine Gun")) then 
-            print("Swapping to machine gun")
+            -- print("Swapping to machine gun")
             _G.gunEquipped = 3 --"MACHINE GUN"
         end
 -- end of Toggle Weapons
@@ -573,6 +574,28 @@ function Update()
 
 --endregion
 
+-- region (Gun Colors)
+    if(_G.gunEquipped == 0) then 
+        local color_vec4 = Vec4.new(0.5,0.5,0.5,1)
+        setBaseGunTexture(color_vec4)
+    end
+
+    if(_G.gunEquipped == 1) then 
+        local color_vec4 = Vec4.new(0.05, 0.23, 0.7, 1)
+        setBaseGunTexture(color_vec4)
+    end
+
+    if(_G.gunEquipped == 2) then 
+        local color_vec4 = Vec4.new(0.67, 0.65, 0.18, 1)
+        setYellowGunTexture(color_vec4)
+    end
+
+
+    if(_G.gunEquipped == 3) then 
+        local color_vec4 = Vec4.new(0.65, 0.05, 0.05, 1)
+        setRedGunTexture(color_vec4)
+    end
+-- endregion
 
 
 --region -- Player Shooting
@@ -1056,3 +1079,17 @@ function machineGunRecoil()
     end
 end
 
+function setBaseGunTexture(color_vec4)
+    gunMeshRenderer:SetTexture(MaterialType.DIFFUSE, "Gun_Base_Color")
+    gunMeshRenderer:SetColor(color_vec4)
+end
+
+function setRedGunTexture(color_vec4)
+    gunMeshRenderer:SetTexture(MaterialType.DIFFUSE, "Gun_Base_Color_Red")
+    gunMeshRenderer:SetColor(color_vec4)
+end
+
+function setYellowGunTexture(color_vec4)
+    gunMeshRenderer:SetTexture(MaterialType.DIFFUSE, "Gun_Base_Color_Brown")
+    gunMeshRenderer:SetColor(color_vec4)
+end

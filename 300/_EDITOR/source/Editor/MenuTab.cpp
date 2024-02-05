@@ -21,7 +21,8 @@ void MenuTab::update() {
     }
     ImGui::SameLine();
     if (ImGui::Button(ICON_FA_CIRCLE_PAUSE, buttonSize)) {
-        PINFO("PAUSED")
+        PINFO("PAUSED");
+        systemManager->mIsPlay = false;
         systemManager->Pause();
     }
     ImGui::SameLine();
