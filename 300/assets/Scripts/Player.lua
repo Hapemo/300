@@ -287,7 +287,7 @@ function Update()
         -- end
     end
 
-    print(playerHealthCurrent/playerHealthMax)
+    -- print(playerHealthCurrent/playerHealthMax)
     healthbar:GetUIrenderer():SetSlider(playerHealthCurrent/playerHealthMax);
 
 

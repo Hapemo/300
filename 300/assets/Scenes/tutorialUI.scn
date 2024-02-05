@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 22020149,
+        "entityid": 21,
         "general": {
             "name": "UI-Circle-Pattern",
             "tagid": 0,
@@ -49,7 +49,7 @@
         }
     },
     {
-        "entityid": 22020167,
+        "entityid": 22,
         "general": {
             "name": "UI-indicator2",
             "tagid": 0,
@@ -101,7 +101,7 @@
         }
     },
     {
-        "entityid": 22020168,
+        "entityid": 23,
         "general": {
             "name": "UI-indicator6",
             "tagid": 0,
@@ -153,7 +153,7 @@
         }
     },
     {
-        "entityid": 22020169,
+        "entityid": 24,
         "general": {
             "name": "UI-indicator5",
             "tagid": 0,
@@ -205,7 +205,7 @@
         }
     },
     {
-        "entityid": 22020170,
+        "entityid": 25,
         "general": {
             "name": "UI-indicator6",
             "tagid": 0,
@@ -257,7 +257,7 @@
         }
     },
     {
-        "entityid": 22020171,
+        "entityid": 26,
         "general": {
             "name": "UI-indicator7",
             "tagid": 0,
@@ -309,7 +309,7 @@
         }
     },
     {
-        "entityid": 22020172,
+        "entityid": 27,
         "general": {
             "name": "UI-indicator8",
             "tagid": 0,
@@ -361,7 +361,7 @@
         }
     },
     {
-        "entityid": 22020174,
+        "entityid": 28,
         "general": {
             "name": "UI-indicator9",
             "tagid": 0,
@@ -413,7 +413,7 @@
         }
     },
     {
-        "entityid": 22020175,
+        "entityid": 29,
         "general": {
             "name": "UI-indicator10",
             "tagid": 0,
@@ -465,7 +465,7 @@
         }
     },
     {
-        "entityid": 22020180,
+        "entityid": 30,
         "general": {
             "name": "UI-indicator11",
             "tagid": 0,
@@ -517,7 +517,7 @@
         }
     },
     {
-        "entityid": 22020183,
+        "entityid": 31,
         "general": {
             "name": "UI-indicator12",
             "tagid": 0,
@@ -569,7 +569,7 @@
         }
     },
     {
-        "entityid": 22020184,
+        "entityid": 32,
         "general": {
             "name": "UI-indicator13",
             "tagid": 0,
@@ -621,7 +621,7 @@
         }
     },
     {
-        "entityid": 22020185,
+        "entityid": 33,
         "general": {
             "name": "UI-indicator14",
             "tagid": 0,
@@ -673,7 +673,7 @@
         }
     },
     {
-        "entityid": 22020186,
+        "entityid": 34,
         "general": {
             "name": "UI-indicator15",
             "tagid": 0,
@@ -725,7 +725,7 @@
         }
     },
     {
-        "entityid": 22020188,
+        "entityid": 35,
         "general": {
             "name": "UI-indicator16",
             "tagid": 0,
@@ -777,7 +777,7 @@
         }
     },
     {
-        "entityid": 22020189,
+        "entityid": 36,
         "general": {
             "name": "UI-indicator17",
             "tagid": 0,
@@ -829,7 +829,7 @@
         }
     },
     {
-        "entityid": 22020199,
+        "entityid": 37,
         "general": {
             "name": "UI-indicator18",
             "tagid": 0,
@@ -881,7 +881,7 @@
         }
     },
     {
-        "entityid": 23068673,
+        "entityid": 38,
         "general": {
             "name": "UI-indicator19",
             "tagid": 0,
@@ -933,7 +933,7 @@
         }
     },
     {
-        "entityid": 23068676,
+        "entityid": 39,
         "general": {
             "name": "UI-indicator20",
             "tagid": 0,
@@ -985,7 +985,7 @@
         }
     },
     {
-        "entityid": 23068677,
+        "entityid": 40,
         "general": {
             "name": "UI-indicator21",
             "tagid": 0,
@@ -1037,7 +1037,7 @@
         }
     },
     {
-        "entityid": 23068681,
+        "entityid": 41,
         "general": {
             "name": "UI-indicator22",
             "tagid": 0,
@@ -1089,7 +1089,7 @@
         }
     },
     {
-        "entityid": 23068682,
+        "entityid": 42,
         "general": {
             "name": "UI-indicator23",
             "tagid": 0,
@@ -1141,7 +1141,7 @@
         }
     },
     {
-        "entityid": 23068683,
+        "entityid": 43,
         "general": {
             "name": "UI-indicator24",
             "tagid": 0,
@@ -1193,7 +1193,7 @@
         }
     },
     {
-        "entityid": 23068690,
+        "entityid": 44,
         "general": {
             "name": "UI-indicator1",
             "tagid": 0,
@@ -1227,7 +1227,7 @@
                 "x": 1.0,
                 "y": 1.0,
                 "z": 1.0,
-                "w": 1.0
+                "w": 0.0
             },
             "layer": 0,
             "worldtransform": false
@@ -1245,7 +1245,7 @@
         }
     },
     {
-        "entityid": 23068700,
+        "entityid": 45,
         "general": {
             "name": "UI-indicator3",
             "tagid": 0,
@@ -1297,7 +1297,7 @@
         }
     },
     {
-        "entityid": 23068701,
+        "entityid": 46,
         "general": {
             "name": "Leftshift",
             "tagid": 0,
@@ -1346,7 +1346,7 @@
         }
     },
     {
-        "entityid": 23068704,
+        "entityid": 47,
         "general": {
             "name": "Base",
             "tagid": 0,
@@ -1395,7 +1395,7 @@
         }
     },
     {
-        "entityid": 23068706,
+        "entityid": 48,
         "general": {
             "name": "crosshair-1",
             "tagid": 0,
@@ -1444,7 +1444,7 @@
         }
     },
     {
-        "entityid": 24117262,
+        "entityid": 49,
         "general": {
             "name": "crosshair-2",
             "tagid": 0,
@@ -1493,7 +1493,7 @@
         }
     },
     {
-        "entityid": 24117263,
+        "entityid": 50,
         "general": {
             "name": "crosshair-4",
             "tagid": 0,
@@ -1542,7 +1542,7 @@
         }
     },
     {
-        "entityid": 24117275,
+        "entityid": 51,
         "general": {
             "name": "crosshair-3",
             "tagid": 0,
@@ -1591,7 +1591,7 @@
         }
     },
     {
-        "entityid": 24117305,
+        "entityid": 52,
         "general": {
             "name": "P1",
             "tagid": 0,
@@ -1635,7 +1635,7 @@
         }
     },
     {
-        "entityid": 24117312,
+        "entityid": 53,
         "general": {
             "name": "P3",
             "tagid": 0,
@@ -1676,7 +1676,7 @@
         }
     },
     {
-        "entityid": 24117354,
+        "entityid": 54,
         "general": {
             "name": "P4",
             "tagid": 0,
@@ -1717,7 +1717,7 @@
         }
     },
     {
-        "entityid": 24117355,
+        "entityid": 55,
         "general": {
             "name": "P5",
             "tagid": 0,
@@ -1758,7 +1758,7 @@
         }
     },
     {
-        "entityid": 24117357,
+        "entityid": 56,
         "general": {
             "name": "P6",
             "tagid": 0,
@@ -1799,7 +1799,7 @@
         }
     },
     {
-        "entityid": 24117358,
+        "entityid": 57,
         "general": {
             "name": "P7",
             "tagid": 0,
@@ -1840,7 +1840,7 @@
         }
     },
     {
-        "entityid": 24117360,
+        "entityid": 58,
         "general": {
             "name": "P8",
             "tagid": 0,
@@ -1881,7 +1881,7 @@
         }
     },
     {
-        "entityid": 25165837,
+        "entityid": 59,
         "general": {
             "name": "P2",
             "tagid": 0,
@@ -1922,7 +1922,7 @@
         }
     },
     {
-        "entityid": 25165854,
+        "entityid": 60,
         "general": {
             "name": "dashui",
             "tagid": 0,
