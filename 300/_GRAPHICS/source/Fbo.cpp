@@ -13,9 +13,6 @@ to handle resizing of framebuffers and object picking
 
 void GFX::FBO::Create(int width, int height, bool editorMode, bool resize)
 {
-	if (!width || !height)
-		return;
-
 	mWidth = width;
 	mHeight = height;
 	mEditorMode = editorMode;

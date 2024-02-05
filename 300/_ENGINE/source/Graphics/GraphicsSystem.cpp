@@ -1330,6 +1330,9 @@ void GraphicsSystem::CheckWindowSize()
 
 void GraphicsSystem::ResizeWindow(ivec2 newSize)
 {
+	if (!newSize.x || !newSize.y)
+		return;
+
 	// Update Window
 	m_Window->SetWindowSize(newSize);
 
