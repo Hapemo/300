@@ -27,7 +27,7 @@ end
 function Update()
     if this:GetHealthbar().health <= 0 then
         --increase count of dead enemy
-        _G.PreObjectivesCounter = _G.PreObjectivesCounter + 1;
+        -- _G.PreObjectivesCounter = _G.PreObjectivesCounter + 1;
         --transformed away fr now lol
         systemManager.ecs:SetDeleteEntity(this)
     end
@@ -75,7 +75,7 @@ function Update()
 end
 
 function Dead()
-
+    _G.PreObjectivesCounter = _G.PreObjectivesCounter + 1;
 end
 
 function OnTriggerEnter(Entity)
