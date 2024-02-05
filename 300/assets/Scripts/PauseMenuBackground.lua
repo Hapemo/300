@@ -10,10 +10,12 @@ local resumeButton
 local htpButton
 local restartButton
 local menuBackground
+local graphicssys
 
 function Alive()
     gameStateSys = systemManager:mGameStateSystem()
     inputMapSys = systemManager:mInputActionSystem()
+    graphicssys = systemManager:mGraphicsSystem()
     mainMenuButton = gameStateSys:GetEntityByScene("MainMenuButton", "PauseMenuScene")
     quitButton = gameStateSys:GetEntityByScene("QuitButton", "PauseMenuScene")
     resumeButton = gameStateSys:GetEntityByScene("ResumeButton", "PauseMenuScene")
@@ -38,6 +40,7 @@ function Update()
     end
     if (not _G.isPausePauseMenu) then
         --print("bring AWAYYY menu")
+        graphicssys:HideCursor(true)
         mainMenuButton:GetTransform().mTranslate.x = 1000
         quitButton:GetTransform().mTranslate.x = 1000
         resumeButton:GetTransform().mTranslate.x = 1000
@@ -65,6 +68,7 @@ function PauseUpdate()
     if not _G.isPausePauseMenu then return end
 
     --print("bring back menu7")
+    graphicssys:HideCursor(false)
     mainMenuButton:GetTransform().mTranslate.x = 0.02
     quitButton:GetTransform().mTranslate.x = 0.02
     resumeButton:GetTransform().mTranslate.x = 0.023

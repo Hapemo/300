@@ -103,43 +103,43 @@ glm::vec2 Input::CursorPos() {
 
 void Input::SetCursorCenter()
 {
-    //if (0) {
-    if (systemManager->IsEditor()) {
-        SetCursorPos( int(m_EditorWindowPos.x ), int(m_EditorWindowPos.y));
-        //glfwSetCursorPos(systemManager->GetWindow()->GetHandle(), m_EditorWindowPos.x, m_EditorWindowPos.y);
-    }
+    ////if (0) {
+    //if (systemManager->IsEditor()) {
+    //    SetCursorPos( int(m_EditorWindowPos.x ), int(m_EditorWindowPos.y));
+    //    //glfwSetCursorPos(systemManager->GetWindow()->GetHandle(), m_EditorWindowPos.x, m_EditorWindowPos.y);
+    //}
 
-    else {
-    	int x{}, y{};
-    	int winlength{}, winheight{};
+    //else {
+    //	int x{}, y{};
+    //	int winlength{}, winheight{};
 
-    	glfwGetWindowPos(systemManager->GetWindow()->GetHandle(), &x, &y);
-    	glfwGetWindowSize(systemManager->GetWindow()->GetHandle(), &winlength, &winheight);
+    //	glfwGetWindowPos(systemManager->GetWindow()->GetHandle(), &x, &y);
+    //	glfwGetWindowSize(systemManager->GetWindow()->GetHandle(), &winlength, &winheight);
 
-    	//SetCursorPos(x + winlength / 2, y + winheight / 2);
-        glfwSetCursorPos(systemManager->GetWindow()->GetHandle(), x + winlength / 2, y + winheight / 2);
-    }
+    //	//SetCursorPos(x + winlength / 2, y + winheight / 2);
+    //    glfwSetCursorPos(systemManager->GetWindow()->GetHandle(), x + winlength / 2, y + winheight / 2);
+    //}
 
-    //prev_cursorpos = CursorPos();
+    prev_cursorpos = CursorPos();
 }
 
 glm::vec2 Input::GetCursorCenter()
 {
-    //if (0) {
-    if (systemManager->IsEditor()) {
-        return m_EditorWindowPosUnadjusted;
-    }
+    ////if (0) {
+    //if (systemManager->IsEditor()) {
+    //    return m_EditorWindowPosUnadjusted;
+    //}
 
-    else {
-    	int x{}, y{};
-    	int winlength{}, winheight{};
+    //else {
+    //	int x{}, y{};
+    //	int winlength{}, winheight{};
 
-    	glfwGetWindowPos(systemManager->GetWindow()->GetHandle(), &x, &y);
-    	glfwGetWindowSize(systemManager->GetWindow()->GetHandle(), &winlength, &winheight);
+    //	glfwGetWindowPos(systemManager->GetWindow()->GetHandle(), &x, &y);
+    //	glfwGetWindowSize(systemManager->GetWindow()->GetHandle(), &winlength, &winheight);
 
-    	return vec2(x + winlength / 2, y + winheight / 2);
-    }
-    //return prev_cursorpos;
+    //	return vec2(x + winlength / 2, y + winheight / 2);
+    //}
+    return prev_cursorpos;
 }
 
 

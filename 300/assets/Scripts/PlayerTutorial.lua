@@ -244,6 +244,8 @@ function Alive()
     original_translation.x = gunInitialTranslate.x
     original_translation.y = gunInitialTranslate.y
     original_translation.z = gunInitialTranslate.z
+   
+    systemManager:mGraphicsSystem():HideCursor(true)
 end
 
 function Update()
