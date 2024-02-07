@@ -56,7 +56,7 @@ function PauseUpdate()
 
         if(hoverOver == false) then
             hoverSFX = button:GetAudio()
-            hoverSFX:SetPlay(0.2)
+            --hoverSFX:SetPlay(0.2)
             hoverOver = true
         end
         
@@ -86,7 +86,7 @@ function PauseUpdate()
         end
     end
     if (button:GetButton().mActivated) then
-        clickSFX:SetPlay(1.0)
+        --clickSFX:SetPlay(1.0)
         if (button:GetGeneral().name == "ResumeButton") then
         --print("bring AWAYYY menu1")
         mainMenuButton:GetTransform().mTranslate.x = 1000
