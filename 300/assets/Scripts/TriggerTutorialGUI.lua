@@ -21,6 +21,9 @@ function Update()
         -- Logic (move the GUI into view)
         toggleWeaponGUI_Transform.mTranslate.x = 0
         toggleWeaponButton_Transform.mTranslate.x = 0.55
+
+        _G.Tutorial_Phase_1_Activate = true
+
         -- Helper.setTranslate(toggleWeaponGUI, toggleWeaponGUI_Transform.mTranslate)
         -- Helper.setTranslate(toggleWeaponGUI, toggleWeaponGUI_Transform.mTranslate)
     end

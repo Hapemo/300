@@ -125,7 +125,15 @@ function OnTriggerEnter(Entity)
             if(healthComponent ~= nil) then 
                 healthComponent.health = healthComponent.health - pistolDamage * _G.powerLevel
                 print("PISTOL HIT")
+                if(healthComponent.health <= 0 ) then
+                    if(_G.killEnemyWithPistol == false) then 
+                        _G.killEnemyWithPistol = true
+                    end
+                end
+              
             else
+
+            
             end
         end
 

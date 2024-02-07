@@ -1030,7 +1030,7 @@
                 "x": 1.0,
                 "y": 1.0,
                 "z": 1.0,
-                "w": 0.0
+                "w": 1.0
             },
             "layer": 0,
             "worldtransform": false
@@ -1120,7 +1120,7 @@
                 "z": 0.0
             },
             "translate": {
-                "x": -895.0,
+                "x": -1150.0,
                 "y": -0.5462962985038757,
                 "z": 0.0
             }
@@ -1134,7 +1134,7 @@
                 "x": 1.0,
                 "y": 1.0,
                 "z": 1.0,
-                "w": 1.0
+                "w": 0.0
             },
             "layer": 0,
             "worldtransform": false
@@ -1452,7 +1452,7 @@
         "uirenderer": {
             "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
             "textureref": 4923,
-            "degree": 0.0,
+            "degree": 360.0,
             "slider": 1.0,
             "color": {
                 "x": 1.0,
@@ -1493,7 +1493,7 @@
         "uirenderer": {
             "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
             "textureref": 4923,
-            "degree": 0.0,
+            "degree": 360.0,
             "slider": 1.0,
             "color": {
                 "x": 1.0,
@@ -1534,7 +1534,7 @@
         "uirenderer": {
             "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
             "textureref": 4923,
-            "degree": 0.0,
+            "degree": 360.0,
             "slider": 1.0,
             "color": {
                 "x": 1.0,
@@ -1575,7 +1575,7 @@
         "uirenderer": {
             "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
             "textureref": 4923,
-            "degree": 0.0,
+            "degree": 360.0,
             "slider": 1.0,
             "color": {
                 "x": 1.0,
@@ -1616,7 +1616,7 @@
         "uirenderer": {
             "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
             "textureref": 4923,
-            "degree": 0.0,
+            "degree": 360.0,
             "slider": 1.0,
             "color": {
                 "x": 1.0,
@@ -1698,7 +1698,7 @@
         "uirenderer": {
             "texpath": "",
             "textureref": 4923,
-            "degree": 0.0,
+            "degree": 360.0,
             "slider": 1.0,
             "color": {
                 "x": 1.0,
