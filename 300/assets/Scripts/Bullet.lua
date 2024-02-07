@@ -128,6 +128,7 @@ function OnTriggerEnter(Entity)
                 if(healthComponent.health <= 0 ) then
                     if(_G.killEnemyWithPistol == false) then 
                         _G.killEnemyWithPistol = true
+                        print("PISTOL KILL")
                     end
                 end
               

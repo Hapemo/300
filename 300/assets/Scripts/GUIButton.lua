@@ -49,7 +49,8 @@ function Update()
             clickSFX:SetPlay(1.0)
             toggleWeaponGUI_Transform.mTranslate.x = -2
             toggleWeaponButton_Transform.mTranslate.x = -2
-            graphicsSys:HideCursor(false)
+            graphicsSys:HideCursor(true)
+            _G.GUITutorialActive = false
         end
     end
 end

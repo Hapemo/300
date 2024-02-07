@@ -23,7 +23,8 @@ function Update()
         toggleWeaponButton_Transform.mTranslate.x = 0.55
 
         _G.Tutorial_Phase_1_Activate = true
-
+        _G.GUITutorialActive = true
+        -- graphicsSys:HideCursor(false)
         -- Helper.setTranslate(toggleWeaponGUI, toggleWeaponGUI_Transform.mTranslate)
         -- Helper.setTranslate(toggleWeaponGUI, toggleWeaponGUI_Transform.mTranslate)
     end

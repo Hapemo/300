@@ -172,6 +172,9 @@ TutBox = {
 
 local tutState = TutBox.FIRST
 
+-- For GUI Tutorial Screens
+_G.GUITutorialActive = false
+
 function Alive()
     this = Helper.GetScriptEntity(script_entity.id)
     gameStateSys = systemManager:mGameStateSystem();
@@ -504,7 +507,7 @@ function Update()
             end
 -- endregion 
 
-            if (inputMapSys:GetButton("up")) then
+            if (inputMapSys:GetButton("up") and _G.GUITutorialActive == false) then
                 movement.x = movement.x + (viewVec.x * mul);
                 movement.z = movement.z + (viewVec.z * mul);    
              
@@ -518,7 +521,7 @@ function Update()
                 gunRecoilState = "MOVING"
             end
 
-            if (inputMapSys:GetButton("down")) then
+            if (inputMapSys:GetButton("down") and _G.GUITutorialActive == false) then
                 movement.x = movement.x - (viewVec.x * mul);
                 movement.z = movement.z - (viewVec.z * mul);
 
@@ -532,7 +535,7 @@ function Update()
                 gunRecoilState = "MOVING"
             end
 
-            if (inputMapSys:GetButton("left")) then
+            if (inputMapSys:GetButton("left") and _G.GUITutorialActive == false) then
                 movement.x = movement.x + (viewVec.z * mul);
                 movement.z = movement.z - (viewVec.x * mul);
 
@@ -547,7 +550,7 @@ function Update()
             end
 
 
-            if (inputMapSys:GetButton("right")) then
+            if (inputMapSys:GetButton("right") and _G.GUITutorialActive == false) then
                 movement.x = movement.x - viewVec.z * mul;
                 movement.z = movement.z + viewVec.x * mul;
 
