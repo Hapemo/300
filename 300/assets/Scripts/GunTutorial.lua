@@ -3,7 +3,7 @@ function Alive()
 end
 
 function Update()
-    print("GUN TUTORIAL.lua UPDATE")
+    -- print("GUN TUTORIAL.lua UPDATE")
 end
 
 function Dead()
