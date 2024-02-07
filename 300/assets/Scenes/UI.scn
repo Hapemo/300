@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 3145861,
+        "entityid": 23068831,
         "general": {
             "name": "dashui",
             "tagid": 0,
@@ -41,7 +41,7 @@
         }
     },
     {
-        "entityid": 3145863,
+        "entityid": 23068906,
         "general": {
             "name": "P2",
             "tagid": 0,
@@ -82,7 +82,7 @@
         }
     },
     {
-        "entityid": 3145864,
+        "entityid": 23068959,
         "general": {
             "name": "P8",
             "tagid": 0,
@@ -123,7 +123,7 @@
         }
     },
     {
-        "entityid": 3145865,
+        "entityid": 23068967,
         "general": {
             "name": "P7",
             "tagid": 0,
@@ -164,7 +164,7 @@
         }
     },
     {
-        "entityid": 3145866,
+        "entityid": 23068969,
         "general": {
             "name": "P6",
             "tagid": 0,
@@ -205,7 +205,7 @@
         }
     },
     {
-        "entityid": 3145867,
+        "entityid": 23068970,
         "general": {
             "name": "P5",
             "tagid": 0,
@@ -246,7 +246,7 @@
         }
     },
     {
-        "entityid": 3145868,
+        "entityid": 23068971,
         "general": {
             "name": "P4",
             "tagid": 0,
@@ -287,7 +287,7 @@
         }
     },
     {
-        "entityid": 3145869,
+        "entityid": 23068975,
         "general": {
             "name": "P3",
             "tagid": 0,
@@ -328,7 +328,7 @@
         }
     },
     {
-        "entityid": 3145870,
+        "entityid": 23068976,
         "general": {
             "name": "P1",
             "tagid": 0,
@@ -372,7 +372,7 @@
         }
     },
     {
-        "entityid": 3145871,
+        "entityid": 23068978,
         "general": {
             "name": "crosshair-3",
             "tagid": 0,
@@ -421,7 +421,7 @@
         }
     },
     {
-        "entityid": 3145872,
+        "entityid": 24117430,
         "general": {
             "name": "crosshair-4",
             "tagid": 0,
@@ -470,7 +470,7 @@
         }
     },
     {
-        "entityid": 3145873,
+        "entityid": 26214403,
         "general": {
             "name": "crosshair-2",
             "tagid": 0,
@@ -519,7 +519,7 @@
         }
     },
     {
-        "entityid": 3145874,
+        "entityid": 27262981,
         "general": {
             "name": "crosshair-1",
             "tagid": 0,
@@ -568,7 +568,7 @@
         }
     },
     {
-        "entityid": 3145875,
+        "entityid": 27262983,
         "general": {
             "name": "Base",
             "tagid": 0,
@@ -603,7 +603,7 @@
         }
     },
     {
-        "entityid": 3145876,
+        "entityid": 27262984,
         "general": {
             "name": "Leftshift",
             "tagid": 0,
@@ -623,7 +623,7 @@
                 "z": 0.0
             },
             "translate": {
-                "x": -360.0,
+                "x": -1430.0,
                 "y": -0.5462962985038757,
                 "z": 0.0
             }
@@ -637,7 +637,7 @@
                 "x": 1.0,
                 "y": 1.0,
                 "z": 1.0,
-                "w": 1.0
+                "w": 0.0
             },
             "layer": 0,
             "worldtransform": false
@@ -652,7 +652,7 @@
         }
     },
     {
-        "entityid": 3145877,
+        "entityid": 27262985,
         "general": {
             "name": "UI-indicator3",
             "tagid": 0,
@@ -704,7 +704,7 @@
         }
     },
     {
-        "entityid": 3145878,
+        "entityid": 27262992,
         "general": {
             "name": "UI-indicator1",
             "tagid": 0,
@@ -738,7 +738,7 @@
                 "x": 1.0,
                 "y": 1.0,
                 "z": 1.0,
-                "w": 0.0
+                "w": 1.0
             },
             "layer": 0,
             "worldtransform": false
@@ -756,7 +756,7 @@
         }
     },
     {
-        "entityid": 3145879,
+        "entityid": 27263018,
         "general": {
             "name": "UI-indicator24",
             "tagid": 0,
@@ -808,7 +808,7 @@
         }
     },
     {
-        "entityid": 3145880,
+        "entityid": 27263278,
         "general": {
             "name": "UI-indicator23",
             "tagid": 0,
@@ -860,7 +860,7 @@
         }
     },
     {
-        "entityid": 3145881,
+        "entityid": 27263283,
         "general": {
             "name": "UI-indicator22",
             "tagid": 0,
@@ -912,7 +912,7 @@
         }
     },
     {
-        "entityid": 3145882,
+        "entityid": 27263285,
         "general": {
             "name": "UI-indicator21",
             "tagid": 0,
@@ -964,7 +964,7 @@
         }
     },
     {
-        "entityid": 3145883,
+        "entityid": 27263286,
         "general": {
             "name": "UI-indicator20",
             "tagid": 0,
@@ -1016,7 +1016,7 @@
         }
     },
     {
-        "entityid": 3145884,
+        "entityid": 27263287,
         "general": {
             "name": "UI-indicator19",
             "tagid": 0,
@@ -1068,7 +1068,7 @@
         }
     },
     {
-        "entityid": 3145885,
+        "entityid": 27263291,
         "general": {
             "name": "UI-indicator18",
             "tagid": 0,
@@ -1120,7 +1120,7 @@
         }
     },
     {
-        "entityid": 3145886,
+        "entityid": 27263292,
         "general": {
             "name": "UI-indicator17",
             "tagid": 0,
@@ -1172,7 +1172,7 @@
         }
     },
     {
-        "entityid": 3145887,
+        "entityid": 28311556,
         "general": {
             "name": "UI-indicator16",
             "tagid": 0,
@@ -1224,7 +1224,7 @@
         }
     },
     {
-        "entityid": 3145888,
+        "entityid": 28311562,
         "general": {
             "name": "UI-indicator15",
             "tagid": 0,
@@ -1276,7 +1276,7 @@
         }
     },
     {
-        "entityid": 3145889,
+        "entityid": 28311563,
         "general": {
             "name": "UI-indicator14",
             "tagid": 0,
@@ -1328,7 +1328,7 @@
         }
     },
     {
-        "entityid": 3145890,
+        "entityid": 28311656,
         "general": {
             "name": "UI-indicator13",
             "tagid": 0,
@@ -1380,7 +1380,7 @@
         }
     },
     {
-        "entityid": 3145891,
+        "entityid": 28311865,
         "general": {
             "name": "UI-indicator12",
             "tagid": 0,
@@ -1432,7 +1432,7 @@
         }
     },
     {
-        "entityid": 3145892,
+        "entityid": 28311866,
         "general": {
             "name": "UI-indicator11",
             "tagid": 0,
@@ -1484,7 +1484,7 @@
         }
     },
     {
-        "entityid": 3145893,
+        "entityid": 28311872,
         "general": {
             "name": "UI-indicator10",
             "tagid": 0,
@@ -1536,7 +1536,7 @@
         }
     },
     {
-        "entityid": 3145894,
+        "entityid": 29360134,
         "general": {
             "name": "UI-indicator9",
             "tagid": 0,
@@ -1588,7 +1588,7 @@
         }
     },
     {
-        "entityid": 3145895,
+        "entityid": 29360360,
         "general": {
             "name": "UI-indicator8",
             "tagid": 0,
@@ -1640,7 +1640,7 @@
         }
     },
     {
-        "entityid": 3145896,
+        "entityid": 29360433,
         "general": {
             "name": "UI-indicator7",
             "tagid": 0,
@@ -1692,7 +1692,7 @@
         }
     },
     {
-        "entityid": 3145897,
+        "entityid": 30409016,
         "general": {
             "name": "UI-indicator6",
             "tagid": 0,
@@ -1744,7 +1744,7 @@
         }
     },
     {
-        "entityid": 3145898,
+        "entityid": 31457281,
         "general": {
             "name": "UI-indicator5",
             "tagid": 0,
@@ -1796,7 +1796,7 @@
         }
     },
     {
-        "entityid": 3145899,
+        "entityid": 31457293,
         "general": {
             "name": "UI-indicator6",
             "tagid": 0,
@@ -1848,7 +1848,7 @@
         }
     },
     {
-        "entityid": 3145900,
+        "entityid": 31457388,
         "general": {
             "name": "UI-indicator2",
             "tagid": 0,
@@ -1900,7 +1900,7 @@
         }
     },
     {
-        "entityid": 3145901,
+        "entityid": 31457389,
         "general": {
             "name": "UI-Circle-Pattern",
             "tagid": 0,

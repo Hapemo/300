@@ -296,7 +296,6 @@ void GraphicsSystem::Draw(float dt, bool forEditor)
 	ComputeDeferredLight(forEditor);
 	
 	//!< === POST PROCESSING AND UI AREA ===
-	if (!forEditor)
 	{
 		// Post Processing Bloom
 		glDepthMask(GL_FALSE);
@@ -355,75 +354,79 @@ void GraphicsSystem::Draw(float dt, bool forEditor)
 		}
 
 		DrawAllParticles();
-		//!< UI Area
+
+		if (!forEditor)
 		{
-			DrawAllPortals(forEditor);	// Draw Portal object
-
-			// Healthbar objects
-			auto healthbarInstances = systemManager->ecs->GetEntitiesWith<Healthbar>();
-			for (Entity inst : healthbarInstances)
+			//!< UI Area
 			{
-				Healthbar healthbar = inst.GetComponent<Healthbar>();
-				unsigned healthTexID{}, frameTexID{};
-				if (healthbar.mHealthTexture.getdata(systemManager->mResourceTySystem->m_ResourceInstance) != nullptr)
-					healthTexID = reinterpret_cast<GFX::Texture*>(healthbar.mHealthTexture.data)->ID();
-				if (healthbar.mFrameTexture.getdata(systemManager->mResourceTySystem->m_ResourceInstance) != nullptr)
-					frameTexID = reinterpret_cast<GFX::Texture*>(healthbar.mFrameTexture.data)->ID();
+				DrawAllPortals(forEditor);	// Draw Portal object
 
-				if (forEditor)
+				// Healthbar objects
+				auto healthbarInstances = systemManager->ecs->GetEntitiesWith<Healthbar>();
+				for (Entity inst : healthbarInstances)
 				{
-					AddHealthbarInstance(inst, GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR), frameTexID, true);
-					AddHealthbarInstance(inst, GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR), healthTexID);
+					Healthbar healthbar = inst.GetComponent<Healthbar>();
+					unsigned healthTexID{}, frameTexID{};
+					if (healthbar.mHealthTexture.getdata(systemManager->mResourceTySystem->m_ResourceInstance) != nullptr)
+						healthTexID = reinterpret_cast<GFX::Texture*>(healthbar.mHealthTexture.data)->ID();
+					if (healthbar.mFrameTexture.getdata(systemManager->mResourceTySystem->m_ResourceInstance) != nullptr)
+						frameTexID = reinterpret_cast<GFX::Texture*>(healthbar.mFrameTexture.data)->ID();
+
+					if (forEditor)
+					{
+						AddHealthbarInstance(inst, GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR), frameTexID, true);
+						AddHealthbarInstance(inst, GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR), healthTexID);
+					}
+					else
+					{
+						AddHealthbarInstance(inst, GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_GAME), frameTexID, true);
+						AddHealthbarInstance(inst, GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_GAME), healthTexID);
+					}
 				}
-				else
+				m_HealthbarMesh.PrepForDraw();
+				DrawAllHealthbarInstance(camVP);
+				m_HealthbarMesh.ClearInstances();	// Clear data
+
+				// Render UI objects
+				m_UiShaderInst.Activate();		// Activate shader
+				DrawAll2DInstances(m_UiShaderInst.GetHandle());
+				GFX::Shader::Deactivate();	// Deactivate shader
+
+				if (ENABLE_CROSSHAIR_IN_EDITOR_SCENE || !forEditor)
+					DrawCrosshair();	// Render crosshair, if any
+			}
+
+			//!< Post Processing Chromatic Abberation and CRT
+			{
+				glDepthMask(GL_FALSE);
+
+				//if (systemManager->mGraphicsSystem->m_EnableCRT && !systemManager->mGraphicsSystem->m_EnableChromaticAbberation)
+				if (systemManager->mGraphicsSystem->m_EnableCRT)
 				{
-					AddHealthbarInstance(inst, GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_GAME), frameTexID, true);
-					AddHealthbarInstance(inst, GetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_GAME), healthTexID);
+					m_ComputeCRTShader.Activate();
+
+					glUniform1f(m_ComputeCRTTimeLocation, PostProcessing::getInstance().mCRT_AccumulationTime += dt);
+					glUniform1f(m_ComputeCRTDistortionLocation, PostProcessing::getInstance().mCRT_DistortionValue);
+					glUniform1f(m_ComputeCRTChromaticAbberationLocation, PostProcessing::getInstance().mCRT_ChromaticAbberationStrength);
+					glUniform1i(m_ComputeCRTHeightOffsetLocation, PostProcessing::getInstance().mCRT_HeightOffset);
+
+					// CRT post processing effect. Called here so it can be rendered over the UI
+					PostProcessing::CRTBlendFramebuffers(*fbo, m_PingPongFbo, dt);
+
+					m_ComputeCRTShader.Deactivate();
 				}
+
+				if (systemManager->mGraphicsSystem->m_EnableChromaticAbberation)
+				{
+					if (mBloomType == PHYS_BASED_BLOOM)
+						PostProcessing::ChromaticAbbrebationBlendFramebuffers(*fbo, m_PhysBloomRenderer.getBloomTexture());
+					else
+						PostProcessing::ChromaticAbbrebationBlendFramebuffers(*fbo, m_PingPongFbo.pingpongColorbuffers[0]);
+				}
+
+				m_PingPongFbo.UnloadAndClear();
+				glDepthMask(GL_TRUE);
 			}
-			m_HealthbarMesh.PrepForDraw();
-			DrawAllHealthbarInstance(camVP);
-			m_HealthbarMesh.ClearInstances();	// Clear data
-
-			// Render UI objects
-			m_UiShaderInst.Activate();		// Activate shader
-			DrawAll2DInstances(m_UiShaderInst.GetHandle());
-			GFX::Shader::Deactivate();	// Deactivate shader
-
-			if (ENABLE_CROSSHAIR_IN_EDITOR_SCENE || !forEditor)
-				DrawCrosshair();	// Render crosshair, if any
-		}
-
-		//!< Post Processing Chromatic Abberation and CRT
-		{
-			glDepthMask(GL_FALSE);
-
-			//if (systemManager->mGraphicsSystem->m_EnableCRT && !systemManager->mGraphicsSystem->m_EnableChromaticAbberation)
-			if (systemManager->mGraphicsSystem->m_EnableCRT)
-			{
-				m_ComputeCRTShader.Activate();
-
-				glUniform1f(m_ComputeCRTTimeLocation, PostProcessing::getInstance().mCRT_AccumulationTime += dt);
-				glUniform1f(m_ComputeCRTDistortionLocation, PostProcessing::getInstance().mCRT_DistortionValue);
-				glUniform1f(m_ComputeCRTChromaticAbberationLocation, PostProcessing::getInstance().mCRT_ChromaticAbberationStrength);
-				glUniform1i(m_ComputeCRTHeightOffsetLocation, PostProcessing::getInstance().mCRT_HeightOffset);
-
-				// CRT post processing effect. Called here so it can be rendered over the UI
-				PostProcessing::CRTBlendFramebuffers(*fbo, m_PingPongFbo, dt);
-
-				m_ComputeCRTShader.Deactivate();
-			}
-
-			if (systemManager->mGraphicsSystem->m_EnableChromaticAbberation)
-			{
-				if (mBloomType == PHYS_BASED_BLOOM)
-					PostProcessing::ChromaticAbbrebationBlendFramebuffers(*fbo, m_PhysBloomRenderer.getBloomTexture());
-				else
-					PostProcessing::ChromaticAbbrebationBlendFramebuffers(*fbo, m_PingPongFbo.pingpongColorbuffers[0]);
-			}
-
-			m_PingPongFbo.UnloadAndClear();
-			glDepthMask(GL_TRUE);
 		}
 	}
 

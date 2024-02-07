@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 2097153,
+        "entityid": 1,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -45,7 +45,7 @@
         }
     },
     {
-        "entityid": 2097154,
+        "entityid": 2,
         "general": {
             "name": "BGM",
             "tagid": 0,
@@ -82,7 +82,7 @@
         }
     },
     {
-        "entityid": 2097155,
+        "entityid": 3,
         "general": {
             "name": "CreditsButton",
             "tagid": 6,
@@ -148,7 +148,7 @@
         }
     },
     {
-        "entityid": 2097156,
+        "entityid": 4,
         "general": {
             "name": "MenuBackground",
             "tagid": 6,
@@ -189,7 +189,7 @@
         }
     },
     {
-        "entityid": 2097157,
+        "entityid": 5,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -227,14 +227,14 @@
             },
             "size": {
                 "x": 1224,
-                "y": 657
+                "y": 554
             },
             "near": 0.10000000149011612,
             "far": 900.0
         }
     },
     {
-        "entityid": 2097158,
+        "entityid": 6,
         "general": {
             "name": "Exit",
             "tagid": 0,
@@ -271,7 +271,7 @@
         }
     },
     {
-        "entityid": 2097159,
+        "entityid": 7,
         "general": {
             "name": "HTPButton",
             "tagid": 6,
@@ -340,7 +340,7 @@
         }
     },
     {
-        "entityid": 2097160,
+        "entityid": 8,
         "general": {
             "name": "StartButton",
             "tagid": 6,
@@ -409,7 +409,7 @@
         }
     },
     {
-        "entityid": 2097161,
+        "entityid": 9,
         "general": {
             "name": "Awake",
             "tagid": 0,
@@ -446,7 +446,7 @@
         }
     },
     {
-        "entityid": 2097162,
+        "entityid": 10,
         "general": {
             "name": "QuitButton",
             "tagid": 6,
@@ -512,7 +512,7 @@
         }
     },
     {
-        "entityid": 2097163,
+        "entityid": 11,
         "general": {
             "name": "Click",
             "tagid": 6,

@@ -332,9 +332,9 @@ function Update()
     mouse_move.y = Input.CursorPos().y - centerscreen.y
     Input.SetCursorCenter()
 
-    print("cursorx " .. Input.CursorPos().x .. ", cursory " .. Input.CursorPos().y)
-    print("centerx " .. centerscreen.x .. ", centery " .. centerscreen.y)
-    print("")
+    --print("cursorx " .. Input.CursorPos().x .. ", cursory " .. Input.CursorPos().y)
+    --print("centerx " .. centerscreen.x .. ", centery " .. centerscreen.y)
+    --print("")
 
     Camera_Scripting.RotateCameraView(cameraEntity, mouse_move)
 

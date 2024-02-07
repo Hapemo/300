@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 6291489,
+        "entityid": 81,
         "general": {
             "name": "Trigger (Enter_SR)",
             "tagid": 4,
@@ -67,7 +67,7 @@
         }
     },
     {
-        "entityid": 6291490,
+        "entityid": 82,
         "general": {
             "name": "Objectives",
             "tagid": 0,
@@ -169,7 +169,7 @@
         }
     },
     {
-        "entityid": 6291491,
+        "entityid": 83,
         "general": {
             "name": "startingPlatform",
             "tagid": 3,
@@ -263,7 +263,7 @@
         }
     },
     {
-        "entityid": 6291492,
+        "entityid": 84,
         "general": {
             "name": "dashPlatform",
             "tagid": 3,
@@ -360,7 +360,7 @@
         }
     },
     {
-        "entityid": 6291493,
+        "entityid": 85,
         "general": {
             "name": "helperPlatform",
             "tagid": 3,
@@ -457,7 +457,7 @@
         }
     },
     {
-        "entityid": 6291494,
+        "entityid": 86,
         "general": {
             "name": "middlePlatform",
             "tagid": 3,
@@ -554,7 +554,7 @@
         }
     },
     {
-        "entityid": 6291546,
+        "entityid": 87,
         "general": {
             "name": "endPlatform",
             "tagid": 3,
@@ -651,7 +651,7 @@
         }
     },
     {
-        "entityid": 6291547,
+        "entityid": 88,
         "general": {
             "name": "ProgressInstructions",
             "tagid": 0,
@@ -692,7 +692,7 @@
         }
     },
     {
-        "entityid": 6291548,
+        "entityid": 89,
         "general": {
             "name": "tutorialTrojan",
             "tagid": 1,
@@ -708,13 +708,13 @@
             },
             "rotate": {
                 "x": 0.0,
-                "y": -0.03389053791761398,
-                "z": -3.1413676738739014
+                "y": -0.0008311222190968692,
+                "z": 3.141589879989624
             },
             "translate": {
-                "x": 117.38811492919922,
-                "y": 7.44345760345459,
-                "z": -0.0008037031511776149
+                "x": 117.39080810546875,
+                "y": 7.4434590339660645,
+                "z": 0.0011016144417226315
             }
         },
         "rigidbody": {
@@ -794,7 +794,7 @@
         }
     },
     {
-        "entityid": 6291549,
+        "entityid": 90,
         "general": {
             "name": "CTOInstructions",
             "tagid": 0,
@@ -835,7 +835,7 @@
         }
     },
     {
-        "entityid": 6291550,
+        "entityid": 91,
         "general": {
             "name": "ShootingRangeEntrance(RightWall)                                                                          dsss",
             "tagid": 4,
@@ -932,7 +932,7 @@
         }
     },
     {
-        "entityid": 6291551,
+        "entityid": 92,
         "general": {
             "name": "ShootingRangeDoor",
             "tagid": 4,
@@ -1029,7 +1029,7 @@
         }
     },
     {
-        "entityid": 6291552,
+        "entityid": 93,
         "general": {
             "name": "KillInstruction",
             "tagid": 0,
@@ -1070,7 +1070,7 @@
         }
     },
     {
-        "entityid": 6291553,
+        "entityid": 94,
         "general": {
             "name": "FinishTutorialText",
             "tagid": 0,
@@ -1111,7 +1111,7 @@
         }
     },
     {
-        "entityid": 6291554,
+        "entityid": 95,
         "general": {
             "name": "ShootingRangeEntrance(LeftWall)",
             "tagid": 4,
@@ -1208,7 +1208,7 @@
         }
     },
     {
-        "entityid": 6291555,
+        "entityid": 96,
         "general": {
             "name": "tutorialBoxCollider",
             "tagid": 3,
@@ -1302,7 +1302,7 @@
         }
     },
     {
-        "entityid": 6291556,
+        "entityid": 97,
         "general": {
             "name": "helperPlatform",
             "tagid": 0,
@@ -1399,7 +1399,7 @@
         }
     },
     {
-        "entityid": 6291557,
+        "entityid": 98,
         "general": {
             "name": "HealthInstructions",
             "tagid": 0,
@@ -1440,7 +1440,7 @@
         }
     },
     {
-        "entityid": 6291558,
+        "entityid": 99,
         "general": {
             "name": "tutorialNormalCollider",
             "tagid": 0,
@@ -1537,7 +1537,7 @@
         }
     },
     {
-        "entityid": 6291559,
+        "entityid": 100,
         "general": {
             "name": "DashInstructions",
             "tagid": 0,
@@ -1578,7 +1578,7 @@
         }
     },
     {
-        "entityid": 6291560,
+        "entityid": 101,
         "general": {
             "name": "tutorialNormalCollider",
             "tagid": 3,
@@ -1675,7 +1675,7 @@
         }
     },
     {
-        "entityid": 7340140,
+        "entityid": 102,
         "general": {
             "name": "RedEnemyInstructions",
             "tagid": 0,
@@ -1716,7 +1716,7 @@
         }
     },
     {
-        "entityid": 10485865,
+        "entityid": 103,
         "general": {
             "name": "JumpInstructions",
             "tagid": 0,

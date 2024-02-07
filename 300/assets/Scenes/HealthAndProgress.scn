@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 85,
+        "entityid": 104,
         "general": {
             "name": "ProgressionBar",
             "tagid": 0,
@@ -41,7 +41,7 @@
         }
     },
     {
-        "entityid": 86,
+        "entityid": 105,
         "general": {
             "name": "HealthBar",
             "tagid": 0,
@@ -82,7 +82,7 @@
         }
     },
     {
-        "entityid": 87,
+        "entityid": 106,
         "general": {
             "name": "ObjectiveBarEmpty",
             "tagid": 0,
@@ -123,7 +123,7 @@
         }
     },
     {
-        "entityid": 88,
+        "entityid": 107,
         "general": {
             "name": "HealthBarEmpty",
             "tagid": 0,

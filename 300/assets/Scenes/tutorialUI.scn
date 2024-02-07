@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 18874386,
+        "entityid": 24,
         "general": {
             "name": "Queue Arrow (new)",
             "tagid": 0,
@@ -41,7 +41,7 @@
         }
     },
     {
-        "entityid": 18874387,
+        "entityid": 25,
         "general": {
             "name": "UI-indicator12",
             "tagid": 0,
@@ -93,7 +93,7 @@
         }
     },
     {
-        "entityid": 18874388,
+        "entityid": 26,
         "general": {
             "name": "UI-indicator22",
             "tagid": 0,
@@ -145,7 +145,7 @@
         }
     },
     {
-        "entityid": 18874389,
+        "entityid": 27,
         "general": {
             "name": "UI-indicator21",
             "tagid": 0,
@@ -197,7 +197,7 @@
         }
     },
     {
-        "entityid": 18874390,
+        "entityid": 28,
         "general": {
             "name": "UI-indicator23",
             "tagid": 0,
@@ -249,7 +249,7 @@
         }
     },
     {
-        "entityid": 18874391,
+        "entityid": 29,
         "general": {
             "name": "UI-indicator24",
             "tagid": 0,
@@ -301,7 +301,7 @@
         }
     },
     {
-        "entityid": 18874397,
+        "entityid": 30,
         "general": {
             "name": "UI-indicator10",
             "tagid": 0,
@@ -353,7 +353,7 @@
         }
     },
     {
-        "entityid": 18874398,
+        "entityid": 31,
         "general": {
             "name": "Slot 5",
             "tagid": 0,
@@ -400,7 +400,7 @@
         }
     },
     {
-        "entityid": 18874399,
+        "entityid": 32,
         "general": {
             "name": "UI-indicator14",
             "tagid": 0,
@@ -452,7 +452,7 @@
         }
     },
     {
-        "entityid": 18874400,
+        "entityid": 33,
         "general": {
             "name": "Queue (Text)",
             "tagid": 0,
@@ -493,7 +493,7 @@
         }
     },
     {
-        "entityid": 18874411,
+        "entityid": 34,
         "general": {
             "name": "Toggle_Weapon_Close_Button",
             "tagid": 6,
@@ -549,7 +549,7 @@
         }
     },
     {
-        "entityid": 18874412,
+        "entityid": 35,
         "general": {
             "name": "Tutorial_Toggle_Weapon_GUI",
             "tagid": 6,
@@ -597,7 +597,7 @@
         }
     },
     {
-        "entityid": 18874413,
+        "entityid": 36,
         "general": {
             "name": "TutorialGUIController",
             "tagid": 6,
@@ -632,7 +632,7 @@
         }
     },
     {
-        "entityid": 18874414,
+        "entityid": 37,
         "general": {
             "name": "UI-indicator15",
             "tagid": 0,
@@ -684,7 +684,7 @@
         }
     },
     {
-        "entityid": 18874415,
+        "entityid": 38,
         "general": {
             "name": "UI-indicator9",
             "tagid": 0,
@@ -736,7 +736,7 @@
         }
     },
     {
-        "entityid": 18874416,
+        "entityid": 39,
         "general": {
             "name": "UI-indicator16",
             "tagid": 0,
@@ -788,7 +788,7 @@
         }
     },
     {
-        "entityid": 18874417,
+        "entityid": 40,
         "general": {
             "name": "UI-indicator17",
             "tagid": 0,
@@ -840,7 +840,7 @@
         }
     },
     {
-        "entityid": 18874418,
+        "entityid": 41,
         "general": {
             "name": "UI-indicator18",
             "tagid": 0,
@@ -892,7 +892,7 @@
         }
     },
     {
-        "entityid": 18874419,
+        "entityid": 42,
         "general": {
             "name": "UI-indicator19",
             "tagid": 0,
@@ -944,7 +944,7 @@
         }
     },
     {
-        "entityid": 18874420,
+        "entityid": 43,
         "general": {
             "name": "UI-indicator20",
             "tagid": 0,
@@ -996,7 +996,7 @@
         }
     },
     {
-        "entityid": 18874421,
+        "entityid": 44,
         "general": {
             "name": "UI-indicator1",
             "tagid": 0,
@@ -1048,7 +1048,7 @@
         }
     },
     {
-        "entityid": 18874422,
+        "entityid": 45,
         "general": {
             "name": "UI-indicator3",
             "tagid": 0,
@@ -1100,7 +1100,7 @@
         }
     },
     {
-        "entityid": 18874423,
+        "entityid": 46,
         "general": {
             "name": "Leftshift",
             "tagid": 0,
@@ -1149,7 +1149,7 @@
         }
     },
     {
-        "entityid": 18874424,
+        "entityid": 47,
         "general": {
             "name": "Base",
             "tagid": 0,
@@ -1184,7 +1184,7 @@
         }
     },
     {
-        "entityid": 18874425,
+        "entityid": 48,
         "general": {
             "name": "crosshair-1",
             "tagid": 0,
@@ -1233,7 +1233,7 @@
         }
     },
     {
-        "entityid": 18874426,
+        "entityid": 49,
         "general": {
             "name": "crosshair-2",
             "tagid": 0,
@@ -1282,7 +1282,7 @@
         }
     },
     {
-        "entityid": 18874427,
+        "entityid": 50,
         "general": {
             "name": "crosshair-4",
             "tagid": 0,
@@ -1331,7 +1331,7 @@
         }
     },
     {
-        "entityid": 18874428,
+        "entityid": 51,
         "general": {
             "name": "crosshair-3",
             "tagid": 0,
@@ -1380,7 +1380,7 @@
         }
     },
     {
-        "entityid": 18874429,
+        "entityid": 52,
         "general": {
             "name": "P1",
             "tagid": 0,
@@ -1424,7 +1424,7 @@
         }
     },
     {
-        "entityid": 18874430,
+        "entityid": 53,
         "general": {
             "name": "P3",
             "tagid": 0,
@@ -1465,7 +1465,7 @@
         }
     },
     {
-        "entityid": 18874431,
+        "entityid": 54,
         "general": {
             "name": "P4",
             "tagid": 0,
@@ -1506,7 +1506,7 @@
         }
     },
     {
-        "entityid": 18874432,
+        "entityid": 55,
         "general": {
             "name": "P5",
             "tagid": 0,
@@ -1547,7 +1547,7 @@
         }
     },
     {
-        "entityid": 18874433,
+        "entityid": 56,
         "general": {
             "name": "P6",
             "tagid": 0,
@@ -1588,7 +1588,7 @@
         }
     },
     {
-        "entityid": 18874434,
+        "entityid": 57,
         "general": {
             "name": "P7",
             "tagid": 0,
@@ -1629,7 +1629,7 @@
         }
     },
     {
-        "entityid": 18874435,
+        "entityid": 58,
         "general": {
             "name": "P8",
             "tagid": 0,
@@ -1670,7 +1670,7 @@
         }
     },
     {
-        "entityid": 18874436,
+        "entityid": 59,
         "general": {
             "name": "P2",
             "tagid": 0,
@@ -1711,7 +1711,7 @@
         }
     },
     {
-        "entityid": 18874437,
+        "entityid": 60,
         "general": {
             "name": "dashui",
             "tagid": 0,
@@ -1752,7 +1752,7 @@
         }
     },
     {
-        "entityid": 18874438,
+        "entityid": 61,
         "general": {
             "name": "UI-indicator5",
             "tagid": 0,
@@ -1804,7 +1804,7 @@
         }
     },
     {
-        "entityid": 18874439,
+        "entityid": 62,
         "general": {
             "name": "UI-indicator6",
             "tagid": 0,
@@ -1856,7 +1856,7 @@
         }
     },
     {
-        "entityid": 18874440,
+        "entityid": 63,
         "general": {
             "name": "UI-indicator7",
             "tagid": 0,
@@ -1908,7 +1908,7 @@
         }
     },
     {
-        "entityid": 18874441,
+        "entityid": 64,
         "general": {
             "name": "UI-indicator8",
             "tagid": 0,
@@ -1960,7 +1960,7 @@
         }
     },
     {
-        "entityid": 18874442,
+        "entityid": 65,
         "general": {
             "name": "UI-Circle-Pattern",
             "tagid": 0,
@@ -2009,7 +2009,7 @@
         }
     },
     {
-        "entityid": 18874443,
+        "entityid": 66,
         "general": {
             "name": "UI-indicator2",
             "tagid": 0,
@@ -2061,7 +2061,7 @@
         }
     },
     {
-        "entityid": 18874444,
+        "entityid": 67,
         "general": {
             "name": "UI-indicator6",
             "tagid": 0,
@@ -2113,7 +2113,7 @@
         }
     },
     {
-        "entityid": 18874445,
+        "entityid": 68,
         "general": {
             "name": "Slot 1",
             "tagid": 0,
@@ -2160,7 +2160,7 @@
         }
     },
     {
-        "entityid": 18874446,
+        "entityid": 69,
         "general": {
             "name": "UI-indicator11",
             "tagid": 0,
@@ -2212,7 +2212,7 @@
         }
     },
     {
-        "entityid": 18874447,
+        "entityid": 70,
         "general": {
             "name": "Slot 8",
             "tagid": 0,
@@ -2259,7 +2259,7 @@
         }
     },
     {
-        "entityid": 18874448,
+        "entityid": 71,
         "general": {
             "name": "Slot 7",
             "tagid": 0,
@@ -2306,7 +2306,7 @@
         }
     },
     {
-        "entityid": 18874449,
+        "entityid": 72,
         "general": {
             "name": "Slot 2",
             "tagid": 0,
@@ -2353,7 +2353,7 @@
         }
     },
     {
-        "entityid": 18874450,
+        "entityid": 73,
         "general": {
             "name": "UI-indicator13",
             "tagid": 0,
@@ -2405,7 +2405,7 @@
         }
     },
     {
-        "entityid": 18874451,
+        "entityid": 74,
         "general": {
             "name": "Slot 3",
             "tagid": 0,
@@ -2452,7 +2452,7 @@
         }
     },
     {
-        "entityid": 18874452,
+        "entityid": 75,
         "general": {
             "name": "Slot 6",
             "tagid": 0,
@@ -2499,7 +2499,7 @@
         }
     },
     {
-        "entityid": 18874453,
+        "entityid": 76,
         "general": {
             "name": "Slot 4",
             "tagid": 0,
