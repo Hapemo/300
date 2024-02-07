@@ -179,6 +179,10 @@ float Camera_Scripting::GetSensitivity(Entity cameraEntity)
 
 void Camera_Scripting::RotateCameraView(Entity cameraEntity, const vec2& cursorposition)
 {
+	// if the cursor is enabled for the editor, do not rotate the camera
+	if (systemManager->mGraphicsSystem->m_IsCursorEnabledForEditor)
+		return;
+
 	assert(cameraEntity.HasComponent<Camera>());
 	assert(cameraEntity.HasComponent<Transform>());
 	
