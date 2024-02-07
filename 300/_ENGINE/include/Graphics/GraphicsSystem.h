@@ -265,6 +265,7 @@ public:
 	GFX::Window*		m_Window;
 	int					m_Width;
 	int					m_Height;
+	bool				m_IsCursorEnabledForEditor{ true };
 
 	// -- Camera --
 	GFX::Camera m_EditorCamera;

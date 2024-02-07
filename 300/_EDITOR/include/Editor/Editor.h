@@ -118,8 +118,6 @@ Returns main window for docking
 	EditorWindow* Getwindow(std::string id);
 
 
-
-
 private:	
 	MenuPanel* mMenuwindow{};
 	MenuPanel* mMenuwindow2{};

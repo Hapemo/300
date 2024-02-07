@@ -1374,10 +1374,15 @@ void GraphicsSystem::ClampCursor()
 
 void GraphicsSystem::HideCursor(bool hideCursor)
 {
-	if (hideCursor)
+	m_IsCursorEnabledForEditor = !hideCursor;
+
+	if (hideCursor) {
 		glfwSetInputMode(m_Window->GetHandle(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-	else
+	}
+
+	else {
 		glfwSetInputMode(m_Window->GetHandle(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+	}
 }
 
 void GraphicsSystem::Unload()

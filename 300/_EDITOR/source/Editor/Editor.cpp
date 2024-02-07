@@ -193,7 +193,6 @@ void Editor::WindowUpdate(GLFWwindow* window)
 {
     glfwPollEvents();
     glfwSwapBuffers(window);
-    
 }
 
 
@@ -203,9 +202,20 @@ void Editor::WindowUpdate(GLFWwindow* window)
     Update functionality (temporary) for Opengl implementation
 */
 /**************************************************************************/
-void Editor::UIupdate([[maybe_unused]]GLFWwindow* window) {
-
+void Editor::UIupdate([[maybe_unused]]GLFWwindow* window) 
+{
     // ----------------------------------------------------------------------------- // style and basic setups
+    if (systemManager->mGraphicsSystem->m_IsCursorEnabledForEditor)
+    {
+        ImGuiIO& io = ImGui::GetIO();
+        io.ConfigFlags &= ~ImGuiConfigFlags_NoMouse;
+    }
+
+    else
+    {
+        ImGuiIO& io = ImGui::GetIO();
+        io.ConfigFlags |= ImGuiConfigFlags_NoMouse;
+    }
 
     ImGuiWindowFlags windowflag = 0;
     windowflag |= ImGuiWindowFlags_NoScrollbar;
@@ -225,7 +235,7 @@ void Editor::UIupdate([[maybe_unused]]GLFWwindow* window) {
 
     ImGui::PopStyleVar();
     ImGui::PopStyleVar();
-
+    
 
 
     const ImGuiViewport* viewport = ImGui::GetMainViewport();

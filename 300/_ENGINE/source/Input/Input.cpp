@@ -89,23 +89,21 @@ void Input::UpdatePrevKeyStates() {
   mScrollOffset = 0.0;
 }
 
-glm::vec2 Input::CursorPos() {
-  double xpos, ypos;
-
-//  if (m_right == true) {
-      glfwGetCursorPos(systemManager->GetWindow()->GetHandle(), &xpos, &ypos);
-      return glm::vec2{ static_cast<float>(xpos), static_cast<float>(ypos) };
-  //}
-  //else {
-  //    return mosposEditor;
-  //}
+glm::vec2 Input::CursorPos() 
+{
+    double xpos, ypos;
+    glfwGetCursorPos(systemManager->GetWindow()->GetHandle(), &xpos, &ypos);
+      
+    return glm::vec2{ static_cast<float>(xpos), static_cast<float>(ypos) };
 }
 
 void Input::SetCursorCenter()
 {
     ////if (0) {
-    //if (systemManager->IsEditor()) {
-    //    SetCursorPos( int(m_EditorWindowPos.x ), int(m_EditorWindowPos.y));
+    //if (systemManager->IsEditor()) 
+    //{
+    //    glm::vec2 cursorpos = glm::vec2(m_EditorWindowPos.x, m_EditorWindowPos.y);
+    //    SetCursorPos(cursorpos.x, cursorpos.y);
     //    //glfwSetCursorPos(systemManager->GetWindow()->GetHandle(), m_EditorWindowPos.x, m_EditorWindowPos.y);
     //}
 
@@ -117,7 +115,8 @@ void Input::SetCursorCenter()
     //	glfwGetWindowSize(systemManager->GetWindow()->GetHandle(), &winlength, &winheight);
 
     //	//SetCursorPos(x + winlength / 2, y + winheight / 2);
-    //    glfwSetCursorPos(systemManager->GetWindow()->GetHandle(), x + winlength / 2, y + winheight / 2);
+    //    glm::vec2 cursorpos = glm::vec2(x + winlength / 2, y + winheight / 2);
+    //    glfwSetCursorPos(systemManager->GetWindow()->GetHandle(), cursorpos.x, cursorpos.y);
     //}
 
     prev_cursorpos = CursorPos();
@@ -139,6 +138,7 @@ glm::vec2 Input::GetCursorCenter()
 
     //	return vec2(x + winlength / 2, y + winheight / 2);
     //}
+
     return prev_cursorpos;
 }
 

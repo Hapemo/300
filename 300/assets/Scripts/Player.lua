@@ -332,9 +332,10 @@ function Update()
         centerscreen = Input:GetCursorCenter()
         mouse_move.x = Input.CursorPos().x - centerscreen.x
         mouse_move.y = Input.CursorPos().y - centerscreen.y
-        -- print("cursorx "..Input.CursorPos().x)
-        -- print("cursory "..Input.CursorPos().y)
 
+        --print("cursorx " .. Input.CursorPos().x .. ", cursory " .. Input.CursorPos().y)
+        --print("centerx " .. centerscreen.x .. ", centery " .. centerscreen.y)
+        --print("")
 
         -- print("cursorx "..Input.CursorPos().x)
         -- print("cursory "..Input.CursorPos().y)
