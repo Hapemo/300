@@ -1,9 +1,9 @@
 function Alive()
-
+    print("GUN TUTORIAL.lua INIT")
 end
 
 function Update()
-    
+    print("GUN TUTORIAL.lua UPDATE")
 end
 
 function Dead()

@@ -1,0 +1,97 @@
+{
+    "entityid": 11534358,
+    "general": {
+        "name": "ShootingRangeEntrance(LeftWall)                                                                          dsss",
+        "tagid": 4,
+        "subtag": 0,
+        "isActive": true,
+        "isPaused": false
+    },
+    "transform": {
+        "scale": {
+            "x": 3.700000047683716,
+            "y": 11.65999984741211,
+            "z": 5.539999961853027
+        },
+        "rotate": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "translate": {
+            "x": 66.58899688720703,
+            "y": 5.329999923706055,
+            "z": -4.7779998779296875
+        }
+    },
+    "rigidbody": {
+        "density": 10.0,
+        "material": 1,
+        "motion": 0,
+        "velocity": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "rotationconstraints": {
+            "x": false,
+            "y": false,
+            "z": false
+        },
+        "gravity": true
+    },
+    "meshrenderer": {
+        "vert": "../assets/shader_files/pointLight_vert.glsl",
+        "frag": "../assets/shader_files/pointLight_frag.glsl",
+        "meshrefid": 3232,
+        "instancecolor": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+        },
+        "bloomthreshold": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+        },
+        "castShadow": true,
+        "materialinstance": [
+            "../assets/Compressed/Tutorial_Cube_BaseColor.ctexture",
+            "../assets/Compressed/Tutorial_Cube_Normal.ctexture",
+            "../assets/Compressed/Tutorial_Cube_Roughness.ctexture",
+            "../assets/Compressed/Tutorial_Cube_Metallic.ctexture",
+            "../assets/Compressed/Tutorial_Cube_Emissive.ctexture",
+            " "
+        ],
+        "mesh": "../assets/compiled_geom/Tutorial_cube.geom",
+        "texturerefid": [
+            1065073471,
+            1690869280,
+            2264384965,
+            1749384838,
+            1718410820,
+            0
+        ]
+    },
+    "boxcollider": {
+        "scaleoffset": {
+            "x": 1.0,
+            "y": 0.8199999928474426,
+            "z": 1.0
+        },
+        "translateoffset": {
+            "x": 0.0,
+            "y": 6.570000171661377,
+            "z": 0.0
+        },
+        "istrigger": false
+    },
+    "scripts": {
+        "scriptscontainer": []
+    },
+    "prefab": {
+        "prefab": "ShootingRangeEntrance(LeftWall)                                                                          dsss"
+    }
+}
