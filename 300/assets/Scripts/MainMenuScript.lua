@@ -6,6 +6,7 @@ function Alive()
     graphicssys = systemManager:mGraphicsSystem()
 
     graphicssys:HideCursor(false)
+    print("MAIN MENU, CURSOR SHOWN")
 end
 
 function Update()
@@ -29,6 +30,7 @@ end
 
 function Dead()
     graphicssys:HideCursor(true)
+    print("MAIN MENU, CURSOR HIDDEN")
 end
 
 function OnTriggerEnter(Entity)

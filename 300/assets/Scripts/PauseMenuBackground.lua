@@ -34,13 +34,16 @@ function Update()
     if (inputMapSys:GetButtonDown("pause")) then
         runOnce = true
         if (not _G.isPausePauseMenu) then
-            graphicssys:HideCursor(false)
+            --graphicssys:HideCursor(false)
+            --print("PAUSE MENU, CURSOR SHOWN")
             systemManager:Pause()
             _G.isPausePauseMenu = true
         end
     end
     if (not _G.isPausePauseMenu) then
         --print("bring AWAYYY menu")
+            graphicssys:HideCursor(true)
+            --print("PAUSE MENU, CURSOR HIDDEN")
         mainMenuButton:GetTransform().mTranslate.x = 1000
         quitButton:GetTransform().mTranslate.x = 1000
         resumeButton:GetTransform().mTranslate.x = 1000
@@ -59,7 +62,8 @@ function PauseUpdate()
     inputMapSys = systemManager:mInputActionSystem()
     if (inputMapSys:GetButtonDown("pause")) then
         if (_G.isPausePauseMenu) then
-            graphicssys:HideCursor(true)
+            --graphicssys:HideCursor(true)
+            --print("PAUSE MENU, CURSOR HIDDEN")
             systemManager:Play()
             _G.isPausePauseMenu = false
             runOnce2 = true
@@ -69,6 +73,9 @@ function PauseUpdate()
     if not _G.isPausePauseMenu then return end
 
     --print("bring back menu7")
+        graphicssys:HideCursor(false)
+        Input.SetCursorCenter()
+        --print("PAUSE MENU, CURSOR SHOWN")
     mainMenuButton:GetTransform().mTranslate.x = 0.02
     quitButton:GetTransform().mTranslate.x = 0.02
     resumeButton:GetTransform().mTranslate.x = 0.023

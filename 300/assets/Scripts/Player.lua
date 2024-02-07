@@ -41,7 +41,7 @@ local t2 = 0
 local tinc = 0.1
 -- mouse attributes
 local mouse_move = Vec2.new()
-_G.mouse_on = true
+--_G.mouse_on = true
 
 -- audio attributes
 local bulletAudioEntity
@@ -319,34 +319,24 @@ function Update()
             playerHealthCurrent = playerHealthMax
         end
     end
-    if(inputMapSys:GetButtonDown("Mouse")) then
-        if (_G.mouse_on == true) then
-            _G.mouse_on = false
-        else
-            _G.mouse_on =true
-        end
-    end
+    --if(inputMapSys:GetButtonDown("Mouse")) then
+    --    if (_G.mouse_on == true) then
+    --        _G.mouse_on = false
+    --    else
+    --        _G.mouse_on =true
+    --    end
+    --end
 
-    if  (_G.mouse_on)    then
+    centerscreen = Input:GetCursorCenter()
+    mouse_move.x = Input.CursorPos().x - centerscreen.x
+    mouse_move.y = Input.CursorPos().y - centerscreen.y
+    Input.SetCursorCenter()
 
-        centerscreen = Input:GetCursorCenter()
-        mouse_move.x = Input.CursorPos().x - centerscreen.x
-        mouse_move.y = Input.CursorPos().y - centerscreen.y
+    print("cursorx " .. Input.CursorPos().x .. ", cursory " .. Input.CursorPos().y)
+    print("centerx " .. centerscreen.x .. ", centery " .. centerscreen.y)
+    print("")
 
-        --print("cursorx " .. Input.CursorPos().x .. ", cursory " .. Input.CursorPos().y)
-        --print("centerx " .. centerscreen.x .. ", centery " .. centerscreen.y)
-        --print("")
-
-        -- print("cursorx "..Input.CursorPos().x)
-        -- print("cursory "..Input.CursorPos().y)
-
-        -- print("luax "..centerscreen.x)
-        -- print("luay "..centerscreen.y)
-
-        Camera_Scripting.RotateCameraView(cameraEntity, mouse_move)
-        Input.SetCursorCenter()
-
-    end
+    Camera_Scripting.RotateCameraView(cameraEntity, mouse_move)
 
 --endregion
 
