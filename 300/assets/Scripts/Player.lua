@@ -228,7 +228,7 @@ function Alive()
 
     -- -- Testing [ParentChildRotateInit]
     gunTransform = gunEntity:GetTransform()
-    gunTransform:ParentChildRotateInit('x', 30)
+    -- gunTransform:ParentChildRotateInit('x', 30)
 
     -- Original Gun Position --
     original_translate_x =  gunInitialTranslate.x
@@ -311,7 +311,7 @@ function Update()
 
     dt = FPSManager.GetDT()
     -- if(_G.gunEquipped == 1) then -- Revolver
-        gunTransform:ParentChildRotateUpdate(dt)
+    -- gunTransform:ParentChildRotateUpdate(dt)
     -- end
     if(inputMapSys:GetButtonDown("AddHealth")) then
         playerHealthCurrent = playerHealthCurrent + 20
@@ -714,17 +714,17 @@ function Update()
         -- print("GUN RECOIL STATE:" , gunRecoilState)
             -- print("GUN EQUIPPED:" , gunEquipped)
             if(_G.gunEquipped == 1 ) then -- REVOLVER
-                print("SHOOTING REVOLVER")
+                -- print("SHOOTING REVOLVER")
                 if(revolverGunTimer == 0) then 
                     -- print("REVOLVER SHOOTING")
-                    
+                    applyGunRecoil(recoil_speed, 0.5)   
                     -- <GunAnimation>
                     -- 1. Gun Type 
                     -- 2. Skill Timer (sync it up w the internal skill timer)
                     -- 3. Recoil Angle (how much) - depends on axis set on "parentChildRotateInit()"
                     -- 4. Recoil Speed (how fast)
                     -- 5. Recoil Duration (how long the recoil should last)
-                    gunTransform:GunAnimation("REVOLVER",_G.skill_duration, 30.0, 1.0, 0.2)  -- Trigger everytime player shoots 
+                    -- gunTransform:GunAnimation("REVOLVER",_G.skill_duration, 30.0, 1.0, 0.2)  -- Trigger everytime player shoots 
                     -- print("SKILL DURATION" , _G.skill_duration)
 
                     -- gunRecoilState = "MOVING"

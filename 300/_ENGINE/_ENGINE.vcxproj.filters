@@ -34,6 +34,7 @@
     <ClCompile Include="source\Graphics\GraphicsSystemDefinitions.cpp" />
     <ClCompile Include="include\Graphics\GraphicsSystemDefinitions.h" />
     <ClCompile Include="source\Transform\Transform.cpp" />
+    <ClCompile Include="source\Transform\Gun.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Audio\AudioType.h" />

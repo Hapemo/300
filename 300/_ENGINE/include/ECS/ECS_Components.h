@@ -125,24 +125,34 @@ struct Transform : public Serializable
 	//RTTR_ENABLE()
 };
 
-//struct Gun : public Transform 
-//{
-//	enum GunType
-//	{
-//		REVOLER, 
-//		NONE
-//	};
-//
-//	float recoilAngle;			// Current Recoil Angle
-//	float recoilSpeed;			// Speed at which the gun tilts upwards during recoil
-//	float maxRecoilAngle;	    // Maximum angle the gun can tilt.
-//	GunType gunType;			// Gun Holding
-//
-//	Gun() : recoilAngle(0.0f), recoilSpeed(10.0f), maxRecoilAngle(glm::radians(30.0f)) {}
-//
-//	void UpdateRecoil(float dt);
-//
-//};
+// [2/7/2023]
+struct Gun : public Serializable
+{
+	/*enum GunType
+	{
+		REVOLER, 
+		NONE
+	};*/
+
+	// Recoil Angle - can be changed
+	float recoilAngle;			        // Current Recoil Angle
+	float mMinRecoilAngle = 0.0;		// 0 degrees
+	float mMaxRecoilAngle = 360.0;		// 360 degrees  
+
+	float recoilSpeed;			// Speed at which the gun tilts upwards during recoil
+	float maxRecoilAngle;	    // Maximum angle the gun can tilt.
+	std::string gunType;	    // Gun Holding
+
+	Gun() : recoilAngle(0.0f), recoilSpeed(10.0f), maxRecoilAngle(glm::radians(30.0f)) {}
+
+	void Inspect();
+	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
+	void DeserializeSelf(rapidjson::Value& reader);
+
+	void Init();
+	void UpdateRecoil(float dt);
+
+};
 
  
 /******************************************************************************/

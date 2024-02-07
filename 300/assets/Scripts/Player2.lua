@@ -220,7 +220,7 @@ function Alive()
 
     -- -- Testing [ParentChildRotateInit]
     gunTransform = gunEntity:GetTransform()
-    gunTransform:ParentChildRotateInit('x', 30)
+    -- gunTransform:ParentChildRotateInit('x', 30)
 
     -- Original Gun Position --
     original_translate_x =  gunInitialTranslate.x
@@ -301,7 +301,8 @@ function Update()
     -- end
 
     dt = FPSManager.GetDT()
-    gunTransform:ParentChildRotateUpdate(dt, "REVOLVER")
+    -- gunTransform:ParentChildRotateUpdate(dt, "REVOLVER")
+
     
 --region -- player camera
     if (inputMapSys:GetButtonDown("exit")) then
@@ -705,7 +706,7 @@ function Update()
                     -- print("REVOLVER SHOOTING")
                     
                     applyGunRecoil(recoil_speed, 0.5)
-                    gunTransform:GunAnimation("REVOLVER" , 30.0, 1.0, 0.2) -- Trigger everytime player shoots
+                    -- gunTransform:GunAnimation("REVOLVER" , 30.0, 1.0, 0.2) -- Trigger everytime player shoots
 
                     -- gunRecoilState = "MOVING"
 

@@ -52,6 +52,18 @@ void Transform::DeserializeSelf(rapidjson::Value& reader)
 	mPreviousPosition = mTranslate;
 }
 
+
+void Gun::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
+{
+
+}
+
+
+void Gun::DeserializeSelf(rapidjson::Value& reader)
+{
+	
+}
+
 void MeshRenderer::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
 {
 	writer.Key("meshrenderer");

@@ -197,6 +197,12 @@ void Inspect::update()
 			Portal& portal = ent.GetComponent<Portal>();
 			portal.Inspect();
 		}
+
+		if (ent.HasComponent<Gun>())
+		{
+			Gun& gun = ent.GetComponent<Gun>();
+			gun.Inspect();
+		}
 		//--------------------------------------------// must be at the LAST OF THIS LOOP
 		Add_component(); 
 	}
@@ -323,6 +329,12 @@ void Inspect::Add_component() {
 				Entity(Hierarchy::selectedId).AddComponent<Portal>();
 		}
 
+		if (ImGui::Selectable("Gun")) {
+			if (!Entity(Hierarchy::selectedId).HasComponent<Gun>())
+				Entity(Hierarchy::selectedId).AddComponent<Gun>();
+		}
+
+
 		ImGui::EndCombo();
 
 
@@ -399,6 +411,20 @@ void General::Inspect() {
 void Transform::Inspect() {
 	if (ImGui::CollapsingHeader("Transform", ImGuiTreeNodeFlags_DefaultOpen)) {
 		ReflectProperties(*this);
+	}
+
+}
+
+
+void Gun::Inspect() 
+{
+	const char* axis[] = { "X" , "Y" , "Z"};
+
+	if (ImGui::CollapsingHeader("Gun", ImGuiTreeNodeFlags_DefaultOpen)) 
+	{
+		//ImGui::Text("RecoilAngle"/*)*/;
+		ImGui::DragFloat("Recoil Angle", (float*)&recoilAngle, 0.05f, 0.0f, 360.0f);
+		//ImGui::DragFloat("##Recoil Angle", &recoilAngle, 0.2f, mMinRecoilAngle, mMaxRecoilAngle);
 	}
 
 }

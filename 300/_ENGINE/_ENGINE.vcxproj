@@ -208,6 +208,7 @@
     <ClCompile Include="source\Physics\Accumulator.cpp" />
     <ClCompile Include="source\Reflection\Reflection.cpp" />
     <ClCompile Include="source\Serialization\SerializeSelf.cpp" />
+    <ClCompile Include="source\Transform\Gun.cpp" />
     <ClCompile Include="source\Transform\Transform.cpp" />
     <ClInclude Include="include\Reflection\Reflection.h" />
     <ClInclude Include="include\Serialization\Serializable.h" />

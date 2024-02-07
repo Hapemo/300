@@ -62,7 +62,7 @@ function Update()
 
     -- if(skillElapsed > 2) then
     --     print("SLILL ELAPSED") 
-    --     skillEndingAudio:SetPlay(0.4)
+    --     skillEndingAudio:SetPlay(0.4)-=-
     --     skillElapsed = 0
     -- end
 
@@ -88,7 +88,7 @@ function Update()
                 dtransform.mTranslate.z = randn
                 -- uirend:SetTexture(_G.textureArray[dispensor[disCount]])
                 uirend:SetTexture(_G.textureArray[randn])
-                print("TEXTURE SELECTED: " , _G.textureArray[randn])
+                -- print("TEXTURE SELECTED: " , _G.textureArray[randn])
                 -- _G.obj = _G.obj+1
 
                 disCount = disCount-1

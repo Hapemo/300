@@ -226,7 +226,7 @@ function Alive()
 
     -- -- Testing [ParentChildRotateInit]
     gunTransform = gunEntity:GetTransform()
-    gunTransform:ParentChildRotateInit('x', 30)
+    -- gunTransform:ParentChildRotateInit('x', 30)
 
     -- Save reference to gun's original rotation
     -- gunRotation = gunTransform.mRotate
@@ -270,7 +270,7 @@ function Update()
 
     -- For Gun Rotation
     -- if(_G.gunEquipped == 1) then -- Revolver
-        gunTransform:ParentChildRotateUpdate(dt)
+        -- gunTransform:ParentChildRotateUpdate(dt)
     -- end
     
 --region -- player camera
@@ -653,7 +653,7 @@ function Update()
                 -- 3. Recoil Angle (how much) - depends on axis set on "parentChildRotateInit()"
                 -- 4. Recoil Speed (how fast)
                 -- 5. Recoil Duration (how long the recoil should last)
-                gunTransform:GunAnimation("REVOLVER",_G.skill_duration, 30.0, 1.0, 0.2)  -- Trigger everytime player shoots 
+                -- gunTransform:GunAnimation("REVOLVER",_G.skill_duration, 30.0, 1.0, 0.2)  -- Trigger everytime player shoots 
 
                 -- gunRecoilState = "MOVING"
 
