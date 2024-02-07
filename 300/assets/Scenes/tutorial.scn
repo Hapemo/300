@@ -1,6 +1,43 @@
 [
     {
-        "entityid": 2097166,
+        "entityid": 36700261,
+        "general": {
+            "name": "UI_Click_Audio",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "UI_Button_Click.wav",
+            "fullpath": "../assets\\Audio/UI_Button_Click.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false
+        }
+    },
+    {
+        "entityid": 38797414,
         "general": {
             "name": "Pistol Bullet",
             "tagid": 9,
@@ -161,7 +198,7 @@
         }
     },
     {
-        "entityid": 2097168,
+        "entityid": 38797415,
         "general": {
             "name": "Bullet Shoot",
             "tagid": 0,
@@ -198,7 +235,7 @@
         }
     },
     {
-        "entityid": 2097169,
+        "entityid": 38797416,
         "general": {
             "name": "",
             "tagid": 0,
@@ -235,7 +272,7 @@
         }
     },
     {
-        "entityid": 2097170,
+        "entityid": 38797417,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -297,7 +334,7 @@
         }
     },
     {
-        "entityid": 2097171,
+        "entityid": 38797418,
         "general": {
             "name": "Tutorial (Script)",
             "tagid": 0,
@@ -332,7 +369,7 @@
         }
     },
     {
-        "entityid": 2097177,
+        "entityid": 38797419,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -394,7 +431,7 @@
         }
     },
     {
-        "entityid": 2097178,
+        "entityid": 39845892,
         "general": {
             "name": "Jump",
             "tagid": 0,
@@ -431,7 +468,7 @@
         }
     },
     {
-        "entityid": 2097179,
+        "entityid": 39845893,
         "general": {
             "name": "WASD",
             "tagid": 0,
@@ -472,7 +509,7 @@
         }
     },
     {
-        "entityid": 2097180,
+        "entityid": 39845904,
         "general": {
             "name": "SkipTutorial",
             "tagid": 5,
@@ -534,7 +571,7 @@
         }
     },
     {
-        "entityid": 3145729,
+        "entityid": 39845913,
         "general": {
             "name": "TutorialCube",
             "tagid": 0,
@@ -602,7 +639,7 @@
         }
     },
     {
-        "entityid": 3145730,
+        "entityid": 39845974,
         "general": {
             "name": "GoToTutorialtext",
             "tagid": 0,
@@ -643,7 +680,7 @@
         }
     },
     {
-        "entityid": 3145731,
+        "entityid": 39845975,
         "general": {
             "name": "SkipTutorialText",
             "tagid": 0,
@@ -684,7 +721,7 @@
         }
     },
     {
-        "entityid": 3145732,
+        "entityid": 39845979,
         "general": {
             "name": "Light",
             "tagid": 0,
@@ -721,7 +758,7 @@
         }
     },
     {
-        "entityid": 3145733,
+        "entityid": 39845980,
         "general": {
             "name": "Skill_Activate",
             "tagid": 0,
@@ -758,7 +795,7 @@
         }
     },
     {
-        "entityid": 3145734,
+        "entityid": 39845982,
         "general": {
             "name": "WallCollider",
             "tagid": 4,
@@ -820,7 +857,7 @@
         }
     },
     {
-        "entityid": 3145735,
+        "entityid": 39845985,
         "general": {
             "name": "GoToTutorial",
             "tagid": 5,
@@ -882,7 +919,7 @@
         }
     },
     {
-        "entityid": 3145736,
+        "entityid": 39845988,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -894,7 +931,7 @@
             "scale": {
                 "x": 20.0,
                 "y": 20.000003814697266,
-                "z": 20.00021743774414
+                "z": 20.000219345092773
             },
             "rotate": {
                 "x": 11.429980278015137,
@@ -902,9 +939,9 @@
                 "z": 6.849999904632568
             },
             "translate": {
-                "x": -4.368000030517578,
-                "y": 4.504000186920166,
-                "z": 1.284999966621399
+                "x": 61.98571014404297,
+                "y": 8.60853099822998,
+                "z": -1.4558048248291016
             }
         },
         "rigidbody": {
@@ -952,7 +989,7 @@
         },
         "children": {
             "numchildren": 1,
-            "firstchild": 3145739
+            "firstchild": 41943055
         },
         "audio": {
             "filepath": "../assets\\Audio",
@@ -966,25 +1003,25 @@
         },
         "camera": {
             "positon": {
-                "x": -4.368000030517578,
-                "y": 4.504000186920166,
-                "z": 1.284999966621399
+                "x": 61.98571014404297,
+                "y": 8.60853099822998,
+                "z": -1.4558048248291016
             },
             "target": {
-                "x": -3.3932018280029297,
-                "y": 4.399471282958984,
-                "z": 1.4820846319198608
+                "x": 62.960506439208984,
+                "y": 8.50400161743164,
+                "z": -1.2587201595306396
             },
             "size": {
                 "x": 1224,
-                "y": 554
+                "y": 646
             },
             "near": 0.10000000149011612,
             "far": 900.0
         }
     },
     {
-        "entityid": 3145737,
+        "entityid": 40894470,
         "general": {
             "name": "Dash",
             "tagid": 0,
@@ -1021,7 +1058,7 @@
         }
     },
     {
-        "entityid": 3145738,
+        "entityid": 40894552,
         "general": {
             "name": "FloorCollider",
             "tagid": 3,
@@ -1083,7 +1120,7 @@
         }
     },
     {
-        "entityid": 3145739,
+        "entityid": 41943055,
         "general": {
             "name": "gun",
             "tagid": 0,
@@ -1144,13 +1181,13 @@
             ]
         },
         "parent": {
-            "prevsibling": 3145739,
-            "nextsibling": 3145739,
-            "parent": 3145736
+            "prevsibling": 41943055,
+            "nextsibling": 41943055,
+            "parent": 39845988
         }
     },
     {
-        "entityid": 4194411,
+        "entityid": 41943135,
         "general": {
             "name": "Activate_Skill",
             "tagid": 0,
@@ -1187,7 +1224,7 @@
         }
     },
     {
-        "entityid": 6291562,
+        "entityid": 42991715,
         "general": {
             "name": "BGM",
             "tagid": 0,

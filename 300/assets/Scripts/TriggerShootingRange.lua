@@ -9,6 +9,7 @@ function Alive()
     this = Helper.GetScriptEntity(script_entity.id)
     
     gameStateSys = systemManager:mGameStateSystem()
+    graphicsSys = systemManager:mGraphicsSystem()
     shootingRangeDoor = gameStateSys:GetEntity("ShootingRangeDoor")
     doorTransform = shootingRangeDoor:GetTransform()
     doorCollider = shootingRangeDoor:GetBoxCollider()
@@ -25,14 +26,14 @@ end
 
 function OnTriggerEnter(Entity)
 
-    print("PLAYER ENTERED THE ZONE") 
+    -- print("PLAYER ENTERED THE ZONE") 
     -- Shutting Entrance Logic (into Shooting Range)
     doorTransform.mTranslate.y = 5.09
     Helper.SetTranslate(shootingRangeDoor, doorTransform.mTranslate)
 
-
     -- Trigger GUI
     _G.teachWeaponToggle = true -- interacts with logic in "TriggerTutorialGUI.lua" attached to [Entity - "TutorialGUIController"]
+    graphicsSys:HideCursor(false)
 
 end
 
@@ -42,7 +43,7 @@ end
 
 function OnContactEnter(Entity)
     if(tagid == 0) then 
-        print("PLAYER ENTERED THE ZONE")  
+        -- print("PLAYER ENTERED THE ZONE")  
     end
 end
 

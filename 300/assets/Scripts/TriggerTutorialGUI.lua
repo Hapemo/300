@@ -1,10 +1,13 @@
 _G.teachWeaponToggle = false
 local weaponToggleOnce = false
 
+
 function Alive()
     gameStateSys = systemManager:mGameStateSystem()
     toggleWeaponGUI= gameStateSys:GetEntity("Tutorial_Toggle_Weapon_GUI")
+    toggleWeaponButton = gameStateSys:GetEntity("Toggle_Weapon_Close_Button")
     toggleWeaponGUI_Transform = toggleWeaponGUI:GetTransform()
+    toggleWeaponButton_Transform = toggleWeaponButton:GetTransform()
 end 
 
 function Update()
@@ -17,7 +20,9 @@ function Update()
 
         -- Logic (move the GUI into view)
         toggleWeaponGUI_Transform.mTranslate.x = 0
-        Helper.setTranslate(toggleWeaponGUI, toggleWeaponGUI_Transform.mTranslate)
+        toggleWeaponButton_Transform.mTranslate.x = 0.55
+        -- Helper.setTranslate(toggleWeaponGUI, toggleWeaponGUI_Transform.mTranslate)
+        -- Helper.setTranslate(toggleWeaponGUI, toggleWeaponGUI_Transform.mTranslate)
     end
 end
 

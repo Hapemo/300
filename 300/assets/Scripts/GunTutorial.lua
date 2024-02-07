@@ -1,5 +1,5 @@
 function Alive()
-    print("GUN TUTORIAL.lua INIT")
+    -- print("GUN TUTORIAL.lua INIT")
 end
 
 function Update()
