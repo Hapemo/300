@@ -88,6 +88,7 @@ function PauseUpdate()
     if (button:GetButton().mActivated) then
         clickSFX:SetPlay(1.0)
         if (button:GetGeneral().name == "ResumeButton") then
+            _G.mouse_on = true
         --print("bring AWAYYY menu1")
         mainMenuButton:GetTransform().mTranslate.x = 1000
             quitButton:GetTransform().mTranslate.x = 1000

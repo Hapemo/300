@@ -41,7 +41,7 @@ local t2 = 0
 local tinc = 0.1
 -- mouse attributes
 local mouse_move = Vec2.new()
-local mouse_on = true
+_G.mouse_on = true
 
 -- audio attributes
 local bulletAudioEntity
@@ -320,14 +320,14 @@ function Update()
         end
     end
     if(inputMapSys:GetButtonDown("Mouse")) then
-        if (mouse_on == true) then
-            mouse_on = false
+        if (_G.mouse_on == true) then
+            _G.mouse_on = false
         else
-            mouse_on =true
+            _G.mouse_on =true
         end
     end
 
-    if  (mouse_on)    then
+    if  (_G.mouse_on)    then
 
         centerscreen = Input:GetCursorCenter()
         mouse_move.x = Input.CursorPos().x - centerscreen.x
