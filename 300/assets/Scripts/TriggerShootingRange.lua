@@ -26,8 +26,14 @@ end
 function OnTriggerEnter(Entity)
 
     print("PLAYER ENTERED THE ZONE") 
-    doorTransform.mTranslate.y = 5.3
+    -- Shutting Entrance Logic (into Shooting Range)
+    doorTransform.mTranslate.y = 5.09
     Helper.SetTranslate(shootingRangeDoor, doorTransform.mTranslate)
+
+
+    -- Trigger GUI
+    _G.teachWeaponToggle = true -- interacts with logic in "TriggerTutorialGUI.lua" attached to [Entity - "TutorialGUIController"]
+
 end
 
 function OnTriggerExit(Entity)
