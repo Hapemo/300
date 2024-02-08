@@ -1,5 +1,5 @@
 {
-    "entityid": 238,
+    "entityid": 5243020,
     "general": {
         "name": "EnemyBullet",
         "tagid": 2,
@@ -9,19 +9,19 @@
     },
     "transform": {
         "scale": {
-            "x": 0.3655588924884796,
-            "y": 0.3002619743347168,
+            "x": 0.365558922290802,
+            "y": 0.300261914730072,
             "z": 0.12510916590690613
         },
         "rotate": {
             "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
+            "y": 269.730712890625,
+            "z": 3.1415927410125732
         },
         "translate": {
-            "x": 9.356184005737305,
-            "y": -8.402533531188965,
-            "z": -20.574974060058594
+            "x": 84.55949401855469,
+            "y": 8.100817680358887,
+            "z": 1.3711538314819336
         }
     },
     "rigidbody": {
@@ -29,9 +29,9 @@
         "material": 1,
         "motion": 1,
         "velocity": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
+            "x": -9.99837875366211,
+            "y": 0.17384155094623566,
+            "z": -0.04701080173254013
         },
         "rotationconstraints": {
             "x": true,
@@ -56,6 +56,7 @@
             "z": 1.0,
             "w": 1.0
         },
+        "castShadow": true,
         "materialinstance": [
             "../assets/Compressed/Heart_Projectile_BaseColor.ctexture",
             "../assets/Compressed/Cube_Texture_White_Normal.ctexture",
@@ -74,14 +75,18 @@
             0
         ]
     },
-    "spherecollider": {
-        "scaleoffset": 1.0,
+    "boxcollider": {
+        "scaleoffset": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+        },
         "translateoffset": {
             "x": 0.0,
             "y": 0.0,
             "z": 0.0
         },
-        "istrigger": true
+        "istrigger": false
     },
     "scripts": {
         "scriptscontainer": [

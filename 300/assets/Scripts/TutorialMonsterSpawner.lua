@@ -46,6 +46,9 @@ function Update()
         end
     end
 
+    -- [Got Some Visual Bug - not using anymore] 2/9
+
+    
     -- if(_G.Tutorial_Boss_Defeated == true) then 
     --     if(_G.trojan_1_instance == false) then 
     --         prefabEntity = systemManager.ecs:NewEntityFromPrefab("TrojanHorse", spawn_pos)
