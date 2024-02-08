@@ -96,10 +96,12 @@ function OnTriggerEnter(Entity)
         end
     end
 
+    -- print("HIT, " , generalComponent.name)
+
     local healthComponent 
     
     if(Entity:HasHealthbar()) then 
-        print("HIT AN ENTITY WITH HEALTHBAR")
+        -- print("HIT AN ENTITY WITH HEALTHBAR")
         healthComponent = Entity:GetHealthbar()
     end
 
@@ -127,13 +129,12 @@ function OnTriggerEnter(Entity)
                 print("PISTOL HIT")
                 print("HP Left: ", healthComponent.health)
                 if(healthComponent.health <= 0 ) then
-                    if(_G.killEnemyWithPistol == false) then 
-                        _G.killEnemyWithPistol = true
-                        print("PISTOL KILL")
-                        systemManager.ecs:SetDeleteEntity(Entity)
-                    end
+                    systemManager.ecs:SetDeleteEntity(Entity)
+                    -- if(_G.killEnemyWithPistol == false) then 
+                    --     _G.killEnemyWithPistol = true
+                    --     print("PISTOL KILL")
+                    -- end
                 end
-              
             else
 
             
@@ -143,7 +144,14 @@ function OnTriggerEnter(Entity)
         if(bulletTag == "REVOLVER") then 
             if(healthComponent ~= nil) then 
                 healthComponent.health = healthComponent.health - revolverDamage * _G.powerLevel
-                print("DAMAGE (PISTOL): " , revolverDamage * _G.powerLevel)
+                -- print("DAMAGE (REVOLVER): " , revolverDamage * _G.powerLevel)
+                if(healthComponent.health <= 0 ) then
+                    systemManager.ecs:SetDeleteEntity(Entity)
+                    -- if(_G.killEnemyWithPistol == false) then 
+                    --     _G.killEnemyWithPistol = true
+                    --     print("PISTOL KILL")
+                    -- end
+                end
             else
             end
         end
@@ -151,6 +159,13 @@ function OnTriggerEnter(Entity)
         if(bulletTag == "SHOTGUN") then 
             if(healthComponent ~= nil) then 
                 healthComponent.health = healthComponent.health - shotGunDamage * _G.powerLevel
+                if(healthComponent.health <= 0 ) then
+                    systemManager.ecs:SetDeleteEntity(Entity)
+                    -- if(_G.killEnemyWithPistol == false) then 
+                    --     _G.killEnemyWithPistol = true
+                    --     print("PISTOL KILL")
+                    -- end
+                end
             else
             end
         end
@@ -158,8 +173,21 @@ function OnTriggerEnter(Entity)
         if(bulletTag == "MACHINE_GUN") then 
             if(healthComponent ~= nil) then 
                 healthComponent.health = healthComponent.health - machineGunDamage * _G.powerLevel
+                if(healthComponent.health <= 0 ) then
+                    systemManager.ecs:SetDeleteEntity(Entity)
+                    -- if(_G.killEnemyWithPistol == false) then 
+                    --     _G.killEnemyWithPistol = true
+                    --     print("PISTOL KILL")
+                    -- end
+                end
             end
 
+        end
+
+        -- Start Cooldown (for spawning)
+        if(healthComponent.health <= 0 ) then
+            _G.respawn_timer = 0.5 -- interacts with "TutorialMonstrSpawner.lua"
+            _G.one_instance = false
         end
         -- print("BLLET TAG:" , bulletTag)
         -- if(bulletTag == "REVOLVER") then 

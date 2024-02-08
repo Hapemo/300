@@ -15,7 +15,8 @@ function Update()
         -- print("NOT NIL")
         if(healthComponent.health <= 0) then 
             -- print("HELLO NO HEALTH LIAO")
-            systemManager.ecs:SetDeleteEntity(this)
+            -- systemManager.ecs:SetDeleteEntity(this)
+            -- healthComponent.health = -10
             -- _G.one_instance = false
         end
     end

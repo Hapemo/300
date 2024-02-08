@@ -645,7 +645,7 @@ function Update()
     -- print("GUN RECOIL STATE:" , gunRecoilState)
         -- print("GUN EQUIPPED:" , gunEquipped)
         if(_G.gunEquipped == 1 ) then -- REVOLVER
-            print("SHOOTING REVOLVER")
+            -- print("SHOOTING REVOLVER")
             if(revolverGunTimer == 0) then 
                 -- print("REVOLVER SHOOTING")
                 

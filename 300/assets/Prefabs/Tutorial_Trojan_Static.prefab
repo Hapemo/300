@@ -1,5 +1,5 @@
 {
-    "entityid": 118,
+    "entityid": 36700253,
     "general": {
         "name": "Tutorial_Trojan_Static",
         "tagid": 1,
@@ -15,13 +15,13 @@
         },
         "rotate": {
             "x": 0.0,
-            "y": -1.5490357875823975,
-            "z": 0.052948687225580215
+            "y": 0.02703569270670414,
+            "z": -3.141592025756836
         },
         "translate": {
-            "x": 74.74346160888672,
-            "y": 8.39228343963623,
-            "z": 5.735016822814941
+            "x": 117.3915786743164,
+            "y": 7.393501281738281,
+            "z": 0.01727939397096634
         }
     },
     "rigidbody": {
@@ -29,9 +29,9 @@
         "material": 1,
         "motion": 1,
         "velocity": {
-            "x": 0.03396857529878616,
-            "y": -0.9118008613586426,
-            "z": 0.43847137689590454
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
         },
         "rotationconstraints": {
             "x": true,
@@ -89,7 +89,12 @@
         "istrigger": false
     },
     "scripts": {
-        "scriptscontainer": []
+        "scriptscontainer": [
+            {
+                "scriptFile": "../assets/Scripts/TutorialTrojanSoldier.lua",
+                "variables": []
+            }
+        ]
     },
     "audio": {
         "filepath": "",
