@@ -1,8 +1,8 @@
 {
-    "entityid": 4194534,
+    "entityid": 3145889,
     "general": {
         "name": "Machine Gun Bullet",
-        "tagid": 11,
+        "tagid": 12,
         "subtag": 0,
         "isActive": true,
         "isPaused": false
@@ -56,6 +56,7 @@
             "z": 1.0,
             "w": 1.0
         },
+        "castShadow": true,
         "materialinstance": [
             "../assets/Compressed/Cube_Texture_White.ctexture",
             "../assets/Compressed/Cube_Texture_White_Normal.ctexture",

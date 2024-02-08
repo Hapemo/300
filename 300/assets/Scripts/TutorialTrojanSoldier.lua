@@ -7,19 +7,12 @@ function Alive()
     this = Helper.GetScriptEntity(script_entity.id)
     generalComponent = this:GetGeneral()
     healthComponent = this:GetHealthbar()
+
     -- print("THIS IS CALLED" , generalComponent.name)
 end
 
 function Update()
-    if(healthComponent ~= nil) then 
-        -- print("NOT NIL")
-        if(healthComponent.health <= 0) then 
-            -- print("HELLO NO HEALTH LIAO")
-            -- systemManager.ecs:SetDeleteEntity(this)
-            -- healthComponent.health = -10
-            -- _G.one_instance = false
-        end
-    end
+    
 end
 
 function Dead()

@@ -1,8 +1,8 @@
 {
-    "entityid": 1048806,
+    "entityid": 20971687,
     "general": {
         "name": "Shotgun Bullet",
-        "tagid": 9,
+        "tagid": 10,
         "subtag": 0,
         "isActive": true,
         "isPaused": false
@@ -56,6 +56,7 @@
             "z": 1.0,
             "w": 1.0
         },
+        "castShadow": true,
         "materialinstance": [
             "../assets/Compressed/Cube_Texture_White.ctexture",
             "../assets/Compressed/Cube_Texture_White_Normal.ctexture",

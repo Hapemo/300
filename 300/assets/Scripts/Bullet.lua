@@ -33,7 +33,7 @@ local enemytag1HP = 100
 local pistolDamage = 15   -- per bullet (added on 1/31)
 local shotGunDamage = 12 -- per bullet
 local revolverDamage = 75 -- per bullet (adjusted damage on 2/4)
-local machineGunDamage = 3 -- per bullet
+local machineGunDamage = 2 -- per bullet
 
 
 -- local bullethitEntity
@@ -126,14 +126,14 @@ function OnTriggerEnter(Entity)
         if(bulletTag == "PISTOL") then 
             if(healthComponent ~= nil) then 
                 healthComponent.health = healthComponent.health - pistolDamage * _G.powerLevel
-                print("PISTOL HIT")
-                print("HP Left: ", healthComponent.health)
+                -- print("PISTOL HIT")
+                -- print("HP Left: ", healthComponent.health)
                 if(healthComponent.health <= 0 ) then
                     systemManager.ecs:SetDeleteEntity(Entity)
-                    -- if(_G.killEnemyWithPistol == false) then 
-                    --     _G.killEnemyWithPistol = true
-                    --     print("PISTOL KILL")
-                    -- end
+                    if(_G.killEnemyWithPistol == false) then 
+                        _G.killEnemyWithPistol = true
+                        print("PISTOL KILL")
+                    end
                 end
             else
 
@@ -147,10 +147,11 @@ function OnTriggerEnter(Entity)
                 -- print("DAMAGE (REVOLVER): " , revolverDamage * _G.powerLevel)
                 if(healthComponent.health <= 0 ) then
                     systemManager.ecs:SetDeleteEntity(Entity)
-                    -- if(_G.killEnemyWithPistol == false) then 
-                    --     _G.killEnemyWithPistol = true
-                    --     print("PISTOL KILL")
-                    -- end
+                    if(_G.killEnemyWithRevolver == false) then 
+                        _G.killEnemyWithRevolver = true
+                        print("REVOLVER KILL")
+                
+                    end
                 end
             else
             end
@@ -161,10 +162,10 @@ function OnTriggerEnter(Entity)
                 healthComponent.health = healthComponent.health - shotGunDamage * _G.powerLevel
                 if(healthComponent.health <= 0 ) then
                     systemManager.ecs:SetDeleteEntity(Entity)
-                    -- if(_G.killEnemyWithPistol == false) then 
-                    --     _G.killEnemyWithPistol = true
-                    --     print("PISTOL KILL")
-                    -- end
+                    if(_G.killEnemyWithShotGun == false) then 
+                        _G.killEnemyWithShotGun = true
+                        print("SHOTGUN KILL")
+                    end
                 end
             else
             end
@@ -175,10 +176,10 @@ function OnTriggerEnter(Entity)
                 healthComponent.health = healthComponent.health - machineGunDamage * _G.powerLevel
                 if(healthComponent.health <= 0 ) then
                     systemManager.ecs:SetDeleteEntity(Entity)
-                    -- if(_G.killEnemyWithPistol == false) then 
-                    --     _G.killEnemyWithPistol = true
-                    --     print("PISTOL KILL")
-                    -- end
+                    if(_G.killEnemyWithMachineGun == false) then 
+                        _G.killEnemyWithMachineGun = true
+                        print("MACHINE GUN KILL")
+                    end
                 end
             end
 
