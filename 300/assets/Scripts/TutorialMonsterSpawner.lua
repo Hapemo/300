@@ -31,30 +31,30 @@ function Update()
 
     -- Spawning Logic
     if(_G.Tutorial_Phase_1_Activate == true and _G.GUITutorialActive == false) then
-        if(_G.trojan_1_instance == false) then 
-            prefabEntity = systemManager.ecs:NewEntityFromPrefab("TrojanHorse", spawn_pos)
-            _G.trojan_1_instance = true
-        end
+        -- if(_G.trojan_1_instance == false) then 
+        --     prefabEntity = systemManager.ecs:NewEntityFromPrefab("TrojanHorse", spawn_pos)
+        --     _G.trojan_1_instance = true
+        -- end
 
-        if(_G.trojan_2_instance == false) then 
-            prefabEntity = systemManager.ecs:NewEntityFromPrefab("TrojanHorse", spawn_pos)
-            _G.trojan_2_instance = true
-        end
+        -- if(_G.trojan_2_instance == false) then 
+        --     prefabEntity = systemManager.ecs:NewEntityFromPrefab("TrojanHorse", spawn_pos)
+        --     _G.trojan_2_instance = true
+        -- end
 
-        if(_G.Melissa_1_instance == false) then 
-            prefabEntity = systemManager.ecs:NewEntityFromPrefab("Melissa", spawn_pos)
-            _G.Melissa_1_instance = true
-        end
+        -- if(_G.Melissa_1_instance == false) then 
+        --     prefabEntity = systemManager.ecs:NewEntityFromPrefab("Melissa", spawn_pos)
+        --     _G.Melissa_1_instance = true
+        -- end
 
-        if(_G.trojan_soldier_1_instance == false) then 
-            prefabEntity = systemManager.ecs:NewEntityFromPrefab("TrojanSoldier", spawn_pos)
-            _G.trojan_soldier_1_instance = true
-        end
+        -- if(_G.trojan_soldier_1_instance == false) then 
+        --     prefabEntity = systemManager.ecs:NewEntityFromPrefab("TrojanSoldier", spawn_pos)
+        --     _G.trojan_soldier_1_instance = true
+        -- end
 
-        if(_G.trojan_soldier_2_instance == false) then 
-            prefabEntity = systemManager.ecs:NewEntityFromPrefab("TrojanSoldier", spawn_pos)
-            _G.trojan_soldier_2_instance = true
-        end
+        -- if(_G.trojan_soldier_2_instance == false) then 
+        --     prefabEntity = systemManager.ecs:NewEntityFromPrefab("TrojanSoldier", spawn_pos)
+        --     _G.trojan_soldier_2_instance = true
+        -- end
 
         -- Spawn Tutorial Boss
         if(_G.Tutorial_Boss_ILOVEYOU_instance == false ) then

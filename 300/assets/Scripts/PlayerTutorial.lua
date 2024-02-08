@@ -95,10 +95,10 @@ local max_recoil_distance_z = 0.1
 local bullet_scale = Vec3.new()
 
 -- Cooldown in seconds (between bullets)
-local revolverGunCooldown = 1
+local revolverGunCooldown = 0.7
 local shotGunCooldown = 1.5
-local machineGunCooldown = 0.2
-local pistolCooldown = 0.5
+local machineGunCooldown = 0.3
+local pistolCooldown = 0.4
 
 local revolverGunTimer = 0
 local shotGunTimer = 0 
