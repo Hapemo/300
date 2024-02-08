@@ -171,10 +171,12 @@ local isGamePaused
 local DamageCD =1.1;
 local DamageTime = 1.0;
 
-minExposure = 0.1
-minFilterRadius = 0.001
-maxExposure = 1.2
-maxFilterRadius = 0.05
+local minExposure = 0.1
+local minFilterRadius = 0.001
+local maxExposure = 1.2
+local maxFilterRadius = 0.05
+local dmgAudioEnt 
+local dmgAudioComp 
    
 
 function Alive()
@@ -200,6 +202,9 @@ function Alive()
 
     dashAudioEntity = gameStateSys:GetEntity("Dash" )
     dashAudioComp = dashAudioEntity:GetAudio()
+
+    dmgAudioEnt = gameStateSys:GetEntity("DamageAudio" )
+    dmgAudioComp = dmgAudioEnt:GetAudio()
 
     machineGunAudioEntity = gameStateSys:GetEntity("Machine Gun Shoot (LOOP)" )
     machineGunAudioComp = machineGunAudioEntity:GetAudio()
@@ -932,7 +937,6 @@ function OnTriggerEnter(Entity)
     or generalComponent.name == "ZipBomb" or generalComponent.name == "TrojanSoldier" )then
 
 
-
         
 
         if(DamageCD >=DamageTime-0.1)then
@@ -942,7 +946,8 @@ function OnTriggerEnter(Entity)
 
                 graphicsSys.FilterRadius = maxFilterRadius
                 graphicsSys.mAmbientBloomExposure = maxExposure
-
+                dmgAudioComp:SetPlay(0.4)
+               
                 -- print("Running Pause Update fromxxxxxxxxxxxxxxxxxxxxxxxx Player.lua")
                 DamageCD = 0
                 -- isTakingDamage = false
