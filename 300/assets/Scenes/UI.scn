@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 314,
+        "entityid": 5243027,
         "general": {
             "name": "DamageAudio",
             "tagid": 0,
@@ -29,7 +29,7 @@
             "filepath": "../assets\\Audio",
             "filename": "TakeDamage_3.wav",
             "fullpath": "../assets\\Audio/TakeDamage_3.wav",
-            "playonawake": false,
+            "playonawake": true,
             "islooping": false,
             "audiotype": 1,
             "volume": 1.0,
@@ -37,7 +37,7 @@
         }
     },
     {
-        "entityid": 1048610,
+        "entityid": 5243028,
         "general": {
             "name": "UI-Circle-Pattern",
             "tagid": 0,
@@ -86,7 +86,7 @@
         }
     },
     {
-        "entityid": 1048611,
+        "entityid": 5243029,
         "general": {
             "name": "UI-indicator2",
             "tagid": 0,
@@ -138,7 +138,7 @@
         }
     },
     {
-        "entityid": 1048612,
+        "entityid": 5243030,
         "general": {
             "name": "UI-indicator6",
             "tagid": 0,
@@ -172,7 +172,7 @@
                 "x": 1.0,
                 "y": 1.0,
                 "z": 1.0,
-                "w": 0.0
+                "w": 1.0
             },
             "layer": 0,
             "worldtransform": false
@@ -190,7 +190,7 @@
         }
     },
     {
-        "entityid": 1048613,
+        "entityid": 5243031,
         "general": {
             "name": "UI-indicator5",
             "tagid": 0,
@@ -224,7 +224,7 @@
                 "x": 1.0,
                 "y": 1.0,
                 "z": 1.0,
-                "w": 0.0
+                "w": 1.0
             },
             "layer": 0,
             "worldtransform": false
@@ -242,7 +242,7 @@
         }
     },
     {
-        "entityid": 1048614,
+        "entityid": 5243032,
         "general": {
             "name": "UI-indicator6",
             "tagid": 0,
@@ -294,7 +294,7 @@
         }
     },
     {
-        "entityid": 1048615,
+        "entityid": 5243033,
         "general": {
             "name": "UI-indicator7",
             "tagid": 0,
@@ -328,7 +328,7 @@
                 "x": 1.0,
                 "y": 1.0,
                 "z": 1.0,
-                "w": 0.0
+                "w": 1.0
             },
             "layer": 0,
             "worldtransform": false
@@ -346,7 +346,7 @@
         }
     },
     {
-        "entityid": 1048616,
+        "entityid": 5243034,
         "general": {
             "name": "UI-indicator8",
             "tagid": 0,
@@ -398,7 +398,7 @@
         }
     },
     {
-        "entityid": 1048617,
+        "entityid": 5243035,
         "general": {
             "name": "UI-indicator9",
             "tagid": 0,
@@ -450,7 +450,7 @@
         }
     },
     {
-        "entityid": 1048618,
+        "entityid": 5243037,
         "general": {
             "name": "UI-indicator10",
             "tagid": 0,
@@ -484,7 +484,7 @@
                 "x": 1.0,
                 "y": 1.0,
                 "z": 1.0,
-                "w": 0.0
+                "w": 1.0
             },
             "layer": 0,
             "worldtransform": false
@@ -502,7 +502,7 @@
         }
     },
     {
-        "entityid": 1048619,
+        "entityid": 5243038,
         "general": {
             "name": "UI-indicator11",
             "tagid": 0,
@@ -554,7 +554,7 @@
         }
     },
     {
-        "entityid": 1048620,
+        "entityid": 5243039,
         "general": {
             "name": "UI-indicator12",
             "tagid": 0,
@@ -606,7 +606,7 @@
         }
     },
     {
-        "entityid": 1048621,
+        "entityid": 5243040,
         "general": {
             "name": "UI-indicator13",
             "tagid": 0,
@@ -640,7 +640,7 @@
                 "x": 1.0,
                 "y": 1.0,
                 "z": 1.0,
-                "w": 0.0
+                "w": 1.0
             },
             "layer": 0,
             "worldtransform": false
@@ -658,7 +658,7 @@
         }
     },
     {
-        "entityid": 1048622,
+        "entityid": 5243041,
         "general": {
             "name": "UI-indicator14",
             "tagid": 0,
@@ -710,7 +710,7 @@
         }
     },
     {
-        "entityid": 1048623,
+        "entityid": 5243043,
         "general": {
             "name": "UI-indicator15",
             "tagid": 0,
@@ -762,7 +762,7 @@
         }
     },
     {
-        "entityid": 1048625,
+        "entityid": 5243044,
         "general": {
             "name": "UI-indicator16",
             "tagid": 0,
@@ -796,7 +796,7 @@
                 "x": 1.0,
                 "y": 1.0,
                 "z": 1.0,
-                "w": 0.0
+                "w": 1.0
             },
             "layer": 0,
             "worldtransform": false
@@ -814,7 +814,7 @@
         }
     },
     {
-        "entityid": 1048626,
+        "entityid": 5243045,
         "general": {
             "name": "UI-indicator17",
             "tagid": 0,
@@ -866,7 +866,7 @@
         }
     },
     {
-        "entityid": 1048627,
+        "entityid": 5243046,
         "general": {
             "name": "UI-indicator18",
             "tagid": 0,
@@ -918,7 +918,7 @@
         }
     },
     {
-        "entityid": 1048628,
+        "entityid": 5243047,
         "general": {
             "name": "UI-indicator19",
             "tagid": 0,
@@ -952,7 +952,7 @@
                 "x": 1.0,
                 "y": 1.0,
                 "z": 1.0,
-                "w": 0.0
+                "w": 1.0
             },
             "layer": 0,
             "worldtransform": false
@@ -970,7 +970,7 @@
         }
     },
     {
-        "entityid": 1048629,
+        "entityid": 5243048,
         "general": {
             "name": "UI-indicator20",
             "tagid": 0,
@@ -1022,7 +1022,7 @@
         }
     },
     {
-        "entityid": 1048630,
+        "entityid": 5243049,
         "general": {
             "name": "UI-indicator21",
             "tagid": 0,
@@ -1074,7 +1074,7 @@
         }
     },
     {
-        "entityid": 1048631,
+        "entityid": 5243050,
         "general": {
             "name": "UI-indicator22",
             "tagid": 0,
@@ -1108,7 +1108,7 @@
                 "x": 1.0,
                 "y": 1.0,
                 "z": 1.0,
-                "w": 0.0
+                "w": 1.0
             },
             "layer": 0,
             "worldtransform": false
@@ -1126,7 +1126,7 @@
         }
     },
     {
-        "entityid": 1048632,
+        "entityid": 5243051,
         "general": {
             "name": "UI-indicator23",
             "tagid": 0,
@@ -1178,7 +1178,7 @@
         }
     },
     {
-        "entityid": 1048633,
+        "entityid": 5243052,
         "general": {
             "name": "UI-indicator24",
             "tagid": 0,
@@ -1230,7 +1230,7 @@
         }
     },
     {
-        "entityid": 1048634,
+        "entityid": 5243053,
         "general": {
             "name": "UI-indicator1",
             "tagid": 0,
@@ -1264,7 +1264,7 @@
                 "x": 1.0,
                 "y": 1.0,
                 "z": 1.0,
-                "w": 0.0
+                "w": 1.0
             },
             "layer": 0,
             "worldtransform": false
@@ -1282,7 +1282,7 @@
         }
     },
     {
-        "entityid": 1048635,
+        "entityid": 5243054,
         "general": {
             "name": "UI-indicator3",
             "tagid": 0,
@@ -1334,7 +1334,7 @@
         }
     },
     {
-        "entityid": 1048636,
+        "entityid": 5243055,
         "general": {
             "name": "Leftshift",
             "tagid": 0,
@@ -1354,7 +1354,7 @@
                 "z": 0.0
             },
             "translate": {
-                "x": -1430.0,
+                "x": -360.0,
                 "y": -0.5462962985038757,
                 "z": 0.0
             }
@@ -1368,7 +1368,7 @@
                 "x": 1.0,
                 "y": 1.0,
                 "z": 1.0,
-                "w": 0.0
+                "w": 1.0
             },
             "layer": 0,
             "worldtransform": false
@@ -1383,7 +1383,7 @@
         }
     },
     {
-        "entityid": 1048637,
+        "entityid": 5243056,
         "general": {
             "name": "Base",
             "tagid": 0,
@@ -1418,7 +1418,7 @@
         }
     },
     {
-        "entityid": 1048638,
+        "entityid": 5243057,
         "general": {
             "name": "crosshair-1",
             "tagid": 0,
@@ -1467,7 +1467,7 @@
         }
     },
     {
-        "entityid": 1048639,
+        "entityid": 5243058,
         "general": {
             "name": "crosshair-2",
             "tagid": 0,
@@ -1516,7 +1516,7 @@
         }
     },
     {
-        "entityid": 1048640,
+        "entityid": 5243059,
         "general": {
             "name": "crosshair-4",
             "tagid": 0,
@@ -1565,7 +1565,7 @@
         }
     },
     {
-        "entityid": 1048641,
+        "entityid": 5243060,
         "general": {
             "name": "crosshair-3",
             "tagid": 0,
@@ -1614,7 +1614,7 @@
         }
     },
     {
-        "entityid": 1048642,
+        "entityid": 5243061,
         "general": {
             "name": "P1",
             "tagid": 0,
@@ -1658,7 +1658,7 @@
         }
     },
     {
-        "entityid": 1048643,
+        "entityid": 5243062,
         "general": {
             "name": "P3",
             "tagid": 0,
@@ -1699,7 +1699,7 @@
         }
     },
     {
-        "entityid": 1048644,
+        "entityid": 5243063,
         "general": {
             "name": "P4",
             "tagid": 0,
@@ -1740,7 +1740,7 @@
         }
     },
     {
-        "entityid": 1048645,
+        "entityid": 5243064,
         "general": {
             "name": "P5",
             "tagid": 0,
@@ -1781,7 +1781,7 @@
         }
     },
     {
-        "entityid": 1048646,
+        "entityid": 5243065,
         "general": {
             "name": "P6",
             "tagid": 0,
@@ -1822,7 +1822,7 @@
         }
     },
     {
-        "entityid": 1048647,
+        "entityid": 5243066,
         "general": {
             "name": "P7",
             "tagid": 0,
@@ -1863,7 +1863,7 @@
         }
     },
     {
-        "entityid": 1048648,
+        "entityid": 5243067,
         "general": {
             "name": "P8",
             "tagid": 0,
@@ -1904,7 +1904,7 @@
         }
     },
     {
-        "entityid": 1048649,
+        "entityid": 5243068,
         "general": {
             "name": "P2",
             "tagid": 0,
@@ -1945,7 +1945,7 @@
         }
     },
     {
-        "entityid": 1048650,
+        "entityid": 5243069,
         "general": {
             "name": "dashui",
             "tagid": 0,

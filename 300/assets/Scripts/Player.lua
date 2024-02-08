@@ -594,7 +594,9 @@ function Update()
             if (inputMapSys:GetButton("up")) then
                 movement.x = movement.x + (viewVec.x * mul);
                 movement.z = movement.z + (viewVec.z * mul);    
-           
+                
+      
+
                 -- gun "jumps down" when player moves forward\
                 if(gunTranslate.y > gunThreshHold_min_y) then 
                     gunTranslate.y = gunTranslate.y - gunDisplaceSpeed
@@ -936,8 +938,9 @@ function OnTriggerEnter(Entity)
     if (generalComponent.name == "ILOVEYOU" or generalComponent.name == "Melissa" or generalComponent.name == "TrojanHorse"
     or generalComponent.name == "ZipBomb" or generalComponent.name == "TrojanSoldier" )then
 
-
-        
+        dmgAudioComp:SetPlay(1.0)
+    -- print("DAMAGE CD: " , DamageCD)
+    -- print("DAMAGE TIME: " , DamageTime)
 
         if(DamageCD >=DamageTime-0.1)then
             -- if (isTakingDamage == true) then
@@ -946,7 +949,8 @@ function OnTriggerEnter(Entity)
 
                 graphicsSys.FilterRadius = maxFilterRadius
                 graphicsSys.mAmbientBloomExposure = maxExposure
-                dmgAudioComp:SetPlay(0.4)
+                
+        
                
                 -- print("Running Pause Update fromxxxxxxxxxxxxxxxxxxxxxxxx Player.lua")
                 DamageCD = 0
