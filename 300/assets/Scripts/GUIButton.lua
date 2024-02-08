@@ -22,8 +22,8 @@ function Alive()
     clickAudioEntity = gameStateSys:GetEntity("UI_Click_Audio")
     clickSFX = clickAudioEntity:GetAudio()
 
-    toggleWeaponGUI= gameStateSys:GetEntity("Tutorial_Toggle_Weapon_GUI")
-    toggleWeaponButton = gameStateSys:GetEntity("Toggle_Weapon_Close_Button")
+    toggleWeaponGUI= gameStateSys:GetEntity("GUI_Weapon_Types")
+    toggleWeaponButton = gameStateSys:GetEntity("GUI_Weapon_Types_Button")
     toggleWeaponGUI_Transform = toggleWeaponGUI:GetTransform()
     toggleWeaponButton_Transform = toggleWeaponButton:GetTransform()
 
@@ -31,7 +31,7 @@ function Alive()
 end
 
 function Update()
-    if(gen.name == "Toggle_Weapon_Close_Button") then
+    if(gen.name == "GUI_Weapon_Types_Button") then
         -- print("HELLO BUTTON")
         if (button.mIsHover) then
             if (hoverOver == false) then
@@ -53,6 +53,8 @@ function Update()
             _G.GUITutorialActive = false
         end
     end
+
+
 end
 
 function Dead()

@@ -610,7 +610,7 @@ function Update()
 
 
 --region -- Player Shooting
-    if(inputMapSys:GetButtonDown("Shoot")) then
+    if(inputMapSys:GetButtonDown("Shoot") and _G.GUITutorialActive == false) then
         gunHoldState = "HOLDING"   -- for machine gun
 
         if(_G.gunEquipped == 0) then 

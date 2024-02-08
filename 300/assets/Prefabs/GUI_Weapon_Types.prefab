@@ -1,0 +1,51 @@
+{
+    "entityid": 2097240,
+    "general": {
+        "name": "GUI_Weapon_Types",
+        "tagid": 6,
+        "subtag": 0,
+        "isActive": true,
+        "isPaused": false
+    },
+    "transform": {
+        "scale": {
+            "x": 1.3899999856948853,
+            "y": 1.6100000143051147,
+            "z": 1.0
+        },
+        "rotate": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "translate": {
+            "x": -2.0,
+            "y": 0.0,
+            "z": 0.0
+        }
+    },
+    "uirenderer": {
+        "texpath": "",
+        "textureref": 1240115323,
+        "degree": 0.0,
+        "slider": 1.0,
+        "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+        },
+        "layer": 4,
+        "worldtransform": false
+    },
+    "prefab": {
+        "prefab": "GUI_Weapon_Types"
+    },
+    "button": {
+        "interactable": true,
+        "hover": false,
+        "click": false,
+        "activated": false,
+        "renderflag": true
+    }
+}

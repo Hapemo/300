@@ -130,9 +130,16 @@ function OnTriggerEnter(Entity)
                 -- print("HP Left: ", healthComponent.health)
                 if(healthComponent.health <= 0 ) then
                     systemManager.ecs:SetDeleteEntity(Entity)
-                    if(_G.killEnemyWithPistol == false) then 
-                        _G.killEnemyWithPistol = true
-                        print("PISTOL KILL")
+                    -- Interacts with "TutorialMonsterSpawner.lua"
+                    if (generalComponent.name == "TrojanHorse") then 
+                        _G.trojan_1_instance = false
+                    end
+                    if (generalComponent.name == "Melissa") then 
+                        _G.Melissa_1_instance = false
+                    end
+
+                    if (generalComponent.name == "TrojanSoldier") then 
+                        _G.trojan_soldier_1_instance = false
                     end
                 end
             else
@@ -147,10 +154,16 @@ function OnTriggerEnter(Entity)
                 -- print("DAMAGE (REVOLVER): " , revolverDamage * _G.powerLevel)
                 if(healthComponent.health <= 0 ) then
                     systemManager.ecs:SetDeleteEntity(Entity)
-                    if(_G.killEnemyWithRevolver == false) then 
-                        _G.killEnemyWithRevolver = true
-                        print("REVOLVER KILL")
-                
+                    -- Interacts with "TutorialMonsterSpawner.lua"
+                    if (generalComponent.name == "TrojanHorse") then 
+                        _G.trojan_1_instance = false
+                    end
+                    if (generalComponent.name == "Melissa") then 
+                        _G.Melissa_1_instance = false
+                    end
+
+                    if (generalComponent.name == "TrojanSoldier") then 
+                        _G.trojan_soldier_1_instance = false
                     end
                 end
             else
@@ -162,9 +175,17 @@ function OnTriggerEnter(Entity)
                 healthComponent.health = healthComponent.health - shotGunDamage * _G.powerLevel
                 if(healthComponent.health <= 0 ) then
                     systemManager.ecs:SetDeleteEntity(Entity)
-                    if(_G.killEnemyWithShotGun == false) then 
-                        _G.killEnemyWithShotGun = true
-                        print("SHOTGUN KILL")
+
+                    -- Interacts with "TutorialMonsterSpawner.lua"
+                    if (generalComponent.name == "TrojanHorse") then 
+                    _G.trojan_1_instance = false
+                    end
+                    if (generalComponent.name == "Melissa") then 
+                        _G.Melissa_1_instance = false
+                    end
+
+                    if (generalComponent.name == "TrojanSoldier") then 
+                        _G.trojan_soldier_1_instance = false
                     end
                 end
             else
@@ -176,10 +197,19 @@ function OnTriggerEnter(Entity)
                 healthComponent.health = healthComponent.health - machineGunDamage * _G.powerLevel
                 if(healthComponent.health <= 0 ) then
                     systemManager.ecs:SetDeleteEntity(Entity)
-                    if(_G.killEnemyWithMachineGun == false) then 
-                        _G.killEnemyWithMachineGun = true
-                        print("MACHINE GUN KILL")
+
+                    -- Interacts with "TutorialMonsterSpawner.lua"
+                    if (generalComponent.name == "TrojanHorse") then 
+                    _G.trojan_1_instance = false
                     end
+                    if (generalComponent.name == "Melissa") then 
+                        _G.Melissa_1_instance = false
+                    end
+
+                    if (generalComponent.name == "TrojanSoldier") then 
+                        _G.trojan_soldier_1_instance = false
+                    end
+                
                 end
             end
 

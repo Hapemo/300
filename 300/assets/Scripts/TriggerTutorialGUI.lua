@@ -4,10 +4,10 @@ local weaponToggleOnce = false
 
 function Alive()
     gameStateSys = systemManager:mGameStateSystem()
-    toggleWeaponGUI= gameStateSys:GetEntity("Tutorial_Toggle_Weapon_GUI")
-    toggleWeaponButton = gameStateSys:GetEntity("Toggle_Weapon_Close_Button")
-    toggleWeaponGUI_Transform = toggleWeaponGUI:GetTransform()
-    toggleWeaponButton_Transform = toggleWeaponButton:GetTransform()
+    WeaponTypesGUI= gameStateSys:GetEntity("GUI_Weapon_Types")
+    WeaponTypesButton = gameStateSys:GetEntity("GUI_Weapon_Types_Button")
+    WeaponTypesGUI_Transform = WeaponTypesGUI:GetTransform()
+    WeaponTypesButton_Transform =  WeaponTypesButton:GetTransform()
 end 
 
 function Update()
@@ -19,8 +19,8 @@ function Update()
         weaponToggleOnce = true
 
         -- Logic (move the GUI into view)
-        toggleWeaponGUI_Transform.mTranslate.x = 0
-        toggleWeaponButton_Transform.mTranslate.x = 0.55
+        WeaponTypesGUI_Transform.mTranslate.x = 0
+        WeaponTypesButton_Transform.mTranslate.x = 0.55
 
         _G.Tutorial_Phase_1_Activate = true
         _G.GUITutorialActive = true
