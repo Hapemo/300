@@ -1,58 +1,6 @@
 [
     {
-        "entityid": 7340067,
-        "general": {
-            "name": "UI-indicator12",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": -0.02083333395421505,
-                "y": 0.03703703731298447,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -0.4244791567325592,
-                "y": -0.9166666865348816,
-                "z": 12.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
-            "textureref": 3353,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 0.0
-            },
-            "layer": 0,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/UI-indicator.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "prefab": {
-            "prefab": "UI-indicator"
-        }
-    },
-    {
-        "entityid": 7340068,
+        "entityid": 12582925,
         "general": {
             "name": "UI-indicator22",
             "tagid": 0,
@@ -104,7 +52,7 @@
         }
     },
     {
-        "entityid": 7340069,
+        "entityid": 12582928,
         "general": {
             "name": "UI-indicator21",
             "tagid": 0,
@@ -156,61 +104,7 @@
         }
     },
     {
-        "entityid": 7340070,
-        "general": {
-            "name": "GUI_Defeat_Boss",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.3899999856948853,
-                "y": 1.6100000143051147,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -2.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 1240115323,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 0.6680979132652283,
-                "y": 0.15902608633041382,
-                "z": 0.8388625383377075,
-                "w": 1.0
-            },
-            "layer": 4,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "GUI_Weapon_Types"
-        },
-        "button": {
-            "interactable": true,
-            "hover": false,
-            "click": false,
-            "activated": false,
-            "renderflag": true
-        }
-    },
-    {
-        "entityid": 7340071,
+        "entityid": 12582929,
         "general": {
             "name": "UI-indicator23",
             "tagid": 0,
@@ -262,7 +156,7 @@
         }
     },
     {
-        "entityid": 7340072,
+        "entityid": 12582931,
         "general": {
             "name": "UI-indicator24",
             "tagid": 0,
@@ -314,66 +208,7 @@
         }
     },
     {
-        "entityid": 7340073,
-        "general": {
-            "name": "GUI_Defeat_Boss_Button",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.10000000149011612,
-                "y": 0.30000001192092896,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -2.0,
-                "y": 0.5699999928474426,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 193966369,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 5,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/GUIButton.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "prefab": {
-            "prefab": "GUI_Weapon_Types_Button"
-        },
-        "button": {
-            "interactable": true,
-            "hover": false,
-            "click": false,
-            "activated": false,
-            "renderflag": true
-        }
-    },
-    {
-        "entityid": 7340074,
+        "entityid": 12582932,
         "general": {
             "name": "UI-indicator14",
             "tagid": 0,
@@ -425,7 +260,7 @@
         }
     },
     {
-        "entityid": 7340075,
+        "entityid": 12582933,
         "general": {
             "name": "Queue (Text)",
             "tagid": 0,
@@ -466,7 +301,7 @@
         }
     },
     {
-        "entityid": 7340076,
+        "entityid": 12582934,
         "general": {
             "name": "GUI_Stacking_Damage_Button",
             "tagid": 6,
@@ -525,7 +360,7 @@
         }
     },
     {
-        "entityid": 7340077,
+        "entityid": 12582935,
         "general": {
             "name": "Queue Arrow (new)",
             "tagid": 0,
@@ -566,9 +401,9 @@
         }
     },
     {
-        "entityid": 7340078,
+        "entityid": 12582936,
         "general": {
-            "name": "GUI_Weapon_Types_Button",
+            "name": "GUI_Defeat_Boss",
             "tagid": 6,
             "subtag": 0,
             "isActive": true,
@@ -576,8 +411,8 @@
         },
         "transform": {
             "scale": {
-                "x": 0.10000000149011612,
-                "y": 0.30000001192092896,
+                "x": 1.3899999856948853,
+                "y": 1.6100000143051147,
                 "z": 1.0
             },
             "rotate": {
@@ -587,34 +422,29 @@
             },
             "translate": {
                 "x": -2.0,
-                "y": 0.5699999928474426,
+                "y": 0.0,
                 "z": 0.0
             }
         },
         "uirenderer": {
             "texpath": "",
-            "textureref": 193966369,
+            "textureref": 1240115323,
             "degree": 0.0,
             "slider": 1.0,
             "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
+                "x": 0.5769414901733398,
+                "y": 0.16547246277332306,
+                "z": 0.6587677597999573,
                 "w": 1.0
             },
-            "layer": 5,
+            "layer": 4,
             "worldtransform": false
         },
         "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/GUIButton.lua",
-                    "variables": []
-                }
-            ]
+            "scriptscontainer": []
         },
         "prefab": {
-            "prefab": "GUI_Weapon_Types_Button"
+            "prefab": "GUI_Weapon_Types"
         },
         "button": {
             "interactable": true,
@@ -625,7 +455,7 @@
         }
     },
     {
-        "entityid": 7340079,
+        "entityid": 12582945,
         "general": {
             "name": "GUI_Weapon_Toggle",
             "tagid": 6,
@@ -679,7 +509,7 @@
         }
     },
     {
-        "entityid": 7340080,
+        "entityid": 12582946,
         "general": {
             "name": "GUI_Weapon_Toggle_Button",
             "tagid": 6,
@@ -738,7 +568,7 @@
         }
     },
     {
-        "entityid": 7340081,
+        "entityid": 12582947,
         "general": {
             "name": "GUI_Weapon_Types",
             "tagid": 6,
@@ -786,7 +616,59 @@
         }
     },
     {
-        "entityid": 7340082,
+        "entityid": 12582948,
+        "general": {
+            "name": "UI-indicator12",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": -0.02083333395421505,
+                "y": 0.03703703731298447,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -0.4244791567325592,
+                "y": -0.9166666865348816,
+                "z": 12.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
+            "textureref": 3353,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 0.0
+            },
+            "layer": 0,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/UI-indicator.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "prefab": {
+            "prefab": "UI-indicator"
+        }
+    },
+    {
+        "entityid": 12582963,
         "general": {
             "name": "TutorialGUIController",
             "tagid": 6,
@@ -821,7 +703,7 @@
         }
     },
     {
-        "entityid": 7340083,
+        "entityid": 12582964,
         "general": {
             "name": "UI-indicator15",
             "tagid": 0,
@@ -873,7 +755,7 @@
         }
     },
     {
-        "entityid": 7340084,
+        "entityid": 12582965,
         "general": {
             "name": "UI-indicator9",
             "tagid": 0,
@@ -925,7 +807,7 @@
         }
     },
     {
-        "entityid": 7340085,
+        "entityid": 12582966,
         "general": {
             "name": "UI-indicator16",
             "tagid": 0,
@@ -977,7 +859,7 @@
         }
     },
     {
-        "entityid": 7340086,
+        "entityid": 12582967,
         "general": {
             "name": "UI-indicator17",
             "tagid": 0,
@@ -1029,7 +911,7 @@
         }
     },
     {
-        "entityid": 7340087,
+        "entityid": 12582968,
         "general": {
             "name": "UI-indicator18",
             "tagid": 0,
@@ -1081,7 +963,7 @@
         }
     },
     {
-        "entityid": 7340088,
+        "entityid": 12582969,
         "general": {
             "name": "UI-indicator19",
             "tagid": 0,
@@ -1133,7 +1015,7 @@
         }
     },
     {
-        "entityid": 7340089,
+        "entityid": 12582970,
         "general": {
             "name": "UI-indicator20",
             "tagid": 0,
@@ -1185,7 +1067,7 @@
         }
     },
     {
-        "entityid": 7340090,
+        "entityid": 12582971,
         "general": {
             "name": "UI-indicator1",
             "tagid": 0,
@@ -1237,7 +1119,7 @@
         }
     },
     {
-        "entityid": 7340091,
+        "entityid": 12582972,
         "general": {
             "name": "UI-indicator3",
             "tagid": 0,
@@ -1289,7 +1171,7 @@
         }
     },
     {
-        "entityid": 7340092,
+        "entityid": 12582973,
         "general": {
             "name": "Leftshift",
             "tagid": 0,
@@ -1338,7 +1220,7 @@
         }
     },
     {
-        "entityid": 7340093,
+        "entityid": 12582974,
         "general": {
             "name": "Base",
             "tagid": 0,
@@ -1373,7 +1255,7 @@
         }
     },
     {
-        "entityid": 7340094,
+        "entityid": 12582975,
         "general": {
             "name": "crosshair-1",
             "tagid": 0,
@@ -1422,7 +1304,7 @@
         }
     },
     {
-        "entityid": 7340095,
+        "entityid": 12582976,
         "general": {
             "name": "crosshair-2",
             "tagid": 0,
@@ -1471,7 +1353,7 @@
         }
     },
     {
-        "entityid": 7340096,
+        "entityid": 12582977,
         "general": {
             "name": "crosshair-4",
             "tagid": 0,
@@ -1520,7 +1402,7 @@
         }
     },
     {
-        "entityid": 7340097,
+        "entityid": 12582978,
         "general": {
             "name": "crosshair-3",
             "tagid": 0,
@@ -1569,7 +1451,7 @@
         }
     },
     {
-        "entityid": 7340098,
+        "entityid": 12582979,
         "general": {
             "name": "P1",
             "tagid": 0,
@@ -1613,7 +1495,7 @@
         }
     },
     {
-        "entityid": 7340099,
+        "entityid": 12582980,
         "general": {
             "name": "P3",
             "tagid": 0,
@@ -1654,7 +1536,7 @@
         }
     },
     {
-        "entityid": 7340100,
+        "entityid": 12582981,
         "general": {
             "name": "P4",
             "tagid": 0,
@@ -1695,7 +1577,7 @@
         }
     },
     {
-        "entityid": 7340101,
+        "entityid": 12582982,
         "general": {
             "name": "P5",
             "tagid": 0,
@@ -1736,7 +1618,7 @@
         }
     },
     {
-        "entityid": 7340102,
+        "entityid": 12582983,
         "general": {
             "name": "P6",
             "tagid": 0,
@@ -1777,7 +1659,7 @@
         }
     },
     {
-        "entityid": 7340103,
+        "entityid": 12582984,
         "general": {
             "name": "P7",
             "tagid": 0,
@@ -1818,7 +1700,7 @@
         }
     },
     {
-        "entityid": 7340104,
+        "entityid": 12582985,
         "general": {
             "name": "P8",
             "tagid": 0,
@@ -1859,7 +1741,7 @@
         }
     },
     {
-        "entityid": 7340105,
+        "entityid": 12582986,
         "general": {
             "name": "P2",
             "tagid": 0,
@@ -1900,7 +1782,7 @@
         }
     },
     {
-        "entityid": 7340106,
+        "entityid": 12582987,
         "general": {
             "name": "dashui",
             "tagid": 0,
@@ -1941,7 +1823,7 @@
         }
     },
     {
-        "entityid": 7340107,
+        "entityid": 12582988,
         "general": {
             "name": "UI-indicator5",
             "tagid": 0,
@@ -1993,7 +1875,7 @@
         }
     },
     {
-        "entityid": 7340108,
+        "entityid": 12582989,
         "general": {
             "name": "UI-indicator6",
             "tagid": 0,
@@ -2045,7 +1927,7 @@
         }
     },
     {
-        "entityid": 7340109,
+        "entityid": 12582990,
         "general": {
             "name": "UI-indicator7",
             "tagid": 0,
@@ -2097,7 +1979,7 @@
         }
     },
     {
-        "entityid": 7340110,
+        "entityid": 12582991,
         "general": {
             "name": "UI-indicator8",
             "tagid": 0,
@@ -2149,7 +2031,7 @@
         }
     },
     {
-        "entityid": 7340111,
+        "entityid": 12582992,
         "general": {
             "name": "UI-Circle-Pattern",
             "tagid": 0,
@@ -2198,7 +2080,7 @@
         }
     },
     {
-        "entityid": 7340112,
+        "entityid": 12582993,
         "general": {
             "name": "UI-indicator2",
             "tagid": 0,
@@ -2250,7 +2132,7 @@
         }
     },
     {
-        "entityid": 7340113,
+        "entityid": 12582994,
         "general": {
             "name": "UI-indicator6",
             "tagid": 0,
@@ -2302,7 +2184,7 @@
         }
     },
     {
-        "entityid": 7340114,
+        "entityid": 12582995,
         "general": {
             "name": "Slot 1",
             "tagid": 0,
@@ -2349,7 +2231,7 @@
         }
     },
     {
-        "entityid": 7340115,
+        "entityid": 12582996,
         "general": {
             "name": "UI-indicator11",
             "tagid": 0,
@@ -2401,7 +2283,7 @@
         }
     },
     {
-        "entityid": 7340116,
+        "entityid": 12582997,
         "general": {
             "name": "Slot 8",
             "tagid": 0,
@@ -2448,7 +2330,7 @@
         }
     },
     {
-        "entityid": 7340117,
+        "entityid": 12582998,
         "general": {
             "name": "Slot 7",
             "tagid": 0,
@@ -2495,7 +2377,7 @@
         }
     },
     {
-        "entityid": 7340118,
+        "entityid": 12582999,
         "general": {
             "name": "Slot 2",
             "tagid": 0,
@@ -2542,7 +2424,7 @@
         }
     },
     {
-        "entityid": 7340119,
+        "entityid": 12583000,
         "general": {
             "name": "UI-indicator13",
             "tagid": 0,
@@ -2594,7 +2476,7 @@
         }
     },
     {
-        "entityid": 7340120,
+        "entityid": 12583001,
         "general": {
             "name": "Slot 3",
             "tagid": 0,
@@ -2641,7 +2523,7 @@
         }
     },
     {
-        "entityid": 7340121,
+        "entityid": 12583002,
         "general": {
             "name": "GUI_Stacking_Damage",
             "tagid": 6,
@@ -2695,7 +2577,7 @@
         }
     },
     {
-        "entityid": 7340122,
+        "entityid": 12583003,
         "general": {
             "name": "Slot 6",
             "tagid": 0,
@@ -2742,7 +2624,7 @@
         }
     },
     {
-        "entityid": 7340123,
+        "entityid": 12583004,
         "general": {
             "name": "Slot 4",
             "tagid": 0,
@@ -2789,7 +2671,7 @@
         }
     },
     {
-        "entityid": 7340124,
+        "entityid": 12583005,
         "general": {
             "name": "UI-indicator10",
             "tagid": 0,
@@ -2841,7 +2723,7 @@
         }
     },
     {
-        "entityid": 7340125,
+        "entityid": 12583006,
         "general": {
             "name": "Slot 5",
             "tagid": 0,
@@ -2885,6 +2767,124 @@
         },
         "prefab": {
             "prefab": "Empty_Skill_Slot"
+        }
+    },
+    {
+        "entityid": 12583007,
+        "general": {
+            "name": "GUI_Weapon_Types_Button",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.10000000149011612,
+                "y": 0.30000001192092896,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -2.0,
+                "y": 0.5699999928474426,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 193966369,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 5,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/GUIButton.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "prefab": {
+            "prefab": "GUI_Weapon_Types_Button"
+        },
+        "button": {
+            "interactable": true,
+            "hover": false,
+            "click": false,
+            "activated": false,
+            "renderflag": true
+        }
+    },
+    {
+        "entityid": 12583012,
+        "general": {
+            "name": "GUI_Defeat_Boss_Button",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.10000000149011612,
+                "y": 0.30000001192092896,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -2.0,
+                "y": 0.5699999928474426,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 193966369,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 5,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/GUIButton.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "prefab": {
+            "prefab": "GUI_Weapon_Types_Button"
+        },
+        "button": {
+            "interactable": true,
+            "hover": false,
+            "click": false,
+            "activated": false,
+            "renderflag": true
         }
     }
 ]
