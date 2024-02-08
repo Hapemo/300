@@ -1,6 +1,7 @@
 -- Used in "TriggerTutorialGUI.lua" 
 -- Triggered after GUI is done being read.
 _G.Tutorial_Phase_1_Activate = false
+_G.Tutorial_Boss_Defeated = false
 _G.Tutorial_Done = false
 local debug_once = false -- for debugging
 
@@ -14,14 +15,6 @@ function Update()
     if(_G.Tutorial_Phase_1_Activate == true and debug_once == false)  then 
         print("TUTORIAL PHASE 1 ACTIVATED.")
         debug_once = true
-    end
-
-    -- if(_G.killEnemyWithPistol == true and _G.killEnemyWithRevolver == true and _G.killEnemyWithShotGun == true and _G.killEnemyWithMachineGun == true ) then 
-    --     -- win tutorial
-    -- end
-
-    if(_G.Tutorial_Done == true) then 
-        
     end
 
 end

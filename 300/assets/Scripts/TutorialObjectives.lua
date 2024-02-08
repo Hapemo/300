@@ -45,6 +45,10 @@ function Update()
                 z:RunFunction("StartTransition")
             end
     end
+
+    if(_G.Tutorial_Boss_Defeated == true) then 
+        EnemyIsKilled()
+    end
 end
 
 function Dead()

@@ -59,12 +59,15 @@ function Update()
         -- Spawn Tutorial Boss
         if(_G.Tutorial_Boss_ILOVEYOU_instance == false ) then
             TutorialBossEntity = systemManager.ecs:NewEntityFromPrefab("ILOVEYOU_TUTORIAL_BOSS", spawn_pos)
-            TutorialBossHealth = TutorialBossEntity:GetHealthbar()
-        
-            if(TutorialBossHealth.health <= 0) then 
-                _G.Tutorial_Done = true
-            end
             _G.Tutorial_Boss_ILOVEYOU_instance = true
+        end
+
+        if(TutorialBossEntity ~= nil) then
+            TutorialBossHealth = TutorialBossEntity:GetHealthbar()
+            
+            if(TutorialBossHealth.health <= 0) then 
+                _G.Tutorial_Boss_Defeated = true
+            end
         end
 
     end
