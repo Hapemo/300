@@ -149,7 +149,7 @@ function Update()
 
         if (button.mActivated) then
             clickSFX:SetPlay(1.0)
-            defeatBossGUI_Transform .mTranslate.x = -2
+            defeatBossGUI_Transform.mTranslate.x = -2
             defeatBossGUIButton_Transform.mTranslate.x = -2
             graphicsSys:HideCursor(true)
             _G.GUITutorialActive = false
