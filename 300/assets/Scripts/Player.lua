@@ -171,6 +171,12 @@ local isGamePaused
 local DamageCD =1.1;
 local DamageTime = 1.0;
 
+minExposure = 0.1
+minFilterRadius = 0.001
+maxExposure = 1.2
+maxFilterRadius = 0.05
+   
+
 function Alive()
     this = Helper.GetScriptEntity(script_entity.id)
     gameStateSys = systemManager:mGameStateSystem();
@@ -240,7 +246,7 @@ function Alive()
 
     -- Shotgun Stuff -- 
 
-
+   
 
 end
 
@@ -270,11 +276,28 @@ function Update()
 
     -- Player Health System End -- 
     
+    if(graphicsSys.FilterRadius >minFilterRadius )then
+        graphicsSys.FilterRadius =graphicsSys.FilterRadius- ((maxFilterRadius - minFilterRadius)*1/60)
+    end
+
+    if(graphicsSys.mAmbientBloomExposure > minExposure)then
+        graphicsSys.mAmbientBloomExposure = graphicsSys.mAmbientBloomExposure-((maxExposure - minExposure)*1/20)
+
+
+    end
 
 
     -- if (isTakingDamage == false) then -- if not taking damage
     if(DamageCD<=DamageTime)then
             DamageCD = DamageCD+FPSManager.GetDT()
+
+
+            if(DamageCD < DamageTime-0.6)then
+                cameraEntity:GetTransform().mRotate.x = cameraEntity:GetTransform().mRotate.x+math.random(-2,2)
+                cameraEntity:GetTransform().mRotate.y = cameraEntity:GetTransform().mRotate.y+math.random(-2,2)
+            end
+
+
         -- end
 
         -- if (playerHealthStartRegenCurrent < playerHealthStartRegenMax) then
@@ -908,10 +931,18 @@ function OnTriggerEnter(Entity)
     if (generalComponent.name == "ILOVEYOU" or generalComponent.name == "Melissa" or generalComponent.name == "TrojanHorse"
     or generalComponent.name == "ZipBomb" or generalComponent.name == "TrojanSoldier" )then
 
+
+
+        
+
         if(DamageCD >=DamageTime-0.1)then
             -- if (isTakingDamage == true) then
                 playerHealthStartRegenCurrent = 0;
                 playerHealthCurrent = playerHealthCurrent - 10; -- take damage
+
+                graphicsSys.FilterRadius = maxFilterRadius
+                graphicsSys.mAmbientBloomExposure = maxExposure
+
                 -- print("Running Pause Update fromxxxxxxxxxxxxxxxxxxxxxxxx Player.lua")
                 DamageCD = 0
                 -- isTakingDamage = false
