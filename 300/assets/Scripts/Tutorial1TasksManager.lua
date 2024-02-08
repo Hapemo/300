@@ -10,6 +10,7 @@ _G.killEnemyWithRevolver = false
 _G.killEnemyWithShotGun  = false
 _G.killEnemyWithMachineGun = false
 
+
 -- Everything this script runs for the first time, it'll be false.
 function Alive()
     _G.killEnemyWithPistol = false
@@ -25,7 +26,7 @@ function Update()
     end
 
     if(_G.killEnemyWithPistol == true) then 
-        print("PISTOL KILLED SOMEBODDDEH")
+        -- print("PISTOL KILLED SOMEBODDDEH")
     end
 
 end
