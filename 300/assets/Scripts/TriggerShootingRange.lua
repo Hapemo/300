@@ -33,8 +33,10 @@ function OnTriggerEnter(Entity)
 
     -- Trigger GUI
     _G.teachWeaponToggle = true -- interacts with logic in "TriggerTutorialGUI.lua" attached to [Entity - "TutorialGUIController"]
-    graphicsSys:HideCursor(false)
 
+    if(_G.Tutorial_Phase_1_Activate == false) then 
+        graphicsSys:HideCursor(false)
+    end
 end
 
 function OnTriggerExit(Entity)
