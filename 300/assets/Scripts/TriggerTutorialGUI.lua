@@ -1,7 +1,9 @@
 _G.teachWeaponToggle = false
 local weaponToggleOnce = false
+local once = false
+local timer_start = false
 
-
+local timer = 5
 
 function Alive()
     gameStateSys = systemManager:mGameStateSystem()
@@ -17,6 +19,7 @@ end
 
 function Update()
 
+    dt = FPSManager.GetDT()
     -- [1] Check if this tutorial aid has activated
     if(_G.teachWeaponToggle == true and weaponToggleOnce == false) then 
         print("WEAPON TOGGLE TRUE")
@@ -34,8 +37,19 @@ function Update()
         -- Helper.setTranslate(toggleWeaponGUI, toggleWeaponGUI_Transform.mTranslate)
     end
 
-    if(_G.Tutorial_Boss_Defeated == true) then 
+    if(_G.Tutorial_Boss_Defeated == true and once == false) then 
         O_transform.mTranslate.x = 0
+        once = true
+        timer_start = true
+    end
+
+    if(timer_start == true) then 
+        timer = timer - dt 
+        print("TIMER: " , timer )
+        if(timer <= 0) then 
+            O_transform.mTranslate.x = -2.5
+            timer_start = false
+        end
     end
 
 
