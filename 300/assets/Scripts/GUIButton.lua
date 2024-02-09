@@ -153,6 +153,16 @@ function Update()
             defeatBossGUIButton_Transform.mTranslate.x = -2
             graphicsSys:HideCursor(true)
             _G.GUITutorialActive = false
+
+            systemManager.ecs:SetDeleteEntity(weaponTypesGUI)
+            systemManager.ecs:SetDeleteEntity(weaponTypesButton)
+            systemManager.ecs:SetDeleteEntity(toggleWeaponGUI)
+            systemManager.ecs:SetDeleteEntity(toggleWeaponButton)
+
+            systemManager.ecs:SetDeleteEntity(stackingDamageGUI)
+            systemManager.ecs:SetDeleteEntity(stackingDamageButton)
+            systemManager.ecs:SetDeleteEntity(defeatBossGUI)
+            systemManager.ecs:SetDeleteEntity(defeatBossGUIButton)
         end
     end
 
