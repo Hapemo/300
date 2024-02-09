@@ -1381,6 +1381,10 @@ void GraphicsSystem::ClampCursor()
 
 void GraphicsSystem::HideCursor(bool hideCursor)
 {
+	// if there is no change in the state, then return
+	if(m_IsCursorEnabledForEditor == !hideCursor)
+		return;
+
 	m_IsCursorEnabledForEditor = !hideCursor;
 
 	if (hideCursor) {
