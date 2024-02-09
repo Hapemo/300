@@ -320,10 +320,12 @@ void PhysicsSystem::MoveQueuedEntities()
 		RigidBody rbod = e.GetComponent<RigidBody>();
 		if (rbod.mMotion == MOTION::DYNAMIC) {
 			PxRigidDynamic* actor = (physx::PxRigidDynamic*)(mActors[static_cast<uint32_t>(e.id)].mActor);
+			if (actor == nullptr) continue;
 			actor->setGlobalPose(PxTransform(Convert(globalpose), Convert(glm::quat(glm::radians(e.GetComponent<Transform>().mRotate)))));
 		}
 		else if (rbod.mMotion == MOTION::STATIC) {
 			PxRigidStatic* actor = (physx::PxRigidStatic*)(mActors[static_cast<uint32_t>(e.id)].mActor);
+			if (actor == nullptr) continue;
 			actor->setGlobalPose(PxTransform(Convert(globalpose), Convert(glm::quat(glm::radians(e.GetComponent<Transform>().mRotate)))));
 		}
 		
@@ -336,10 +338,12 @@ void PhysicsSystem::MoveQueuedEntities()
 		RigidBody rbod = e.GetComponent<RigidBody>();
 		if (rbod.mMotion == MOTION::DYNAMIC) {
 			PxRigidDynamic* actor = (physx::PxRigidDynamic*)(mActors[static_cast<uint32_t>(e.id)].mActor);
+			if (actor == nullptr) continue;
 			actor->setGlobalPose(PxTransform(Convert(e.GetComponent<Transform>().mTranslate), Convert(glm::quat(glm::radians(rotation)))));
 		}
 		else if (rbod.mMotion == MOTION::STATIC) {
 			PxRigidStatic* actor = (physx::PxRigidStatic*)(mActors[static_cast<uint32_t>(e.id)].mActor);
+			if (actor == nullptr) continue;
 			actor->setGlobalPose(PxTransform(Convert(e.GetComponent<Transform>().mTranslate), Convert(glm::quat(glm::radians(rotation)))));
 		}
 
@@ -350,6 +354,7 @@ void PhysicsSystem::MoveQueuedEntities()
 		Entity e = e_col.first;
 		glm::vec3 velocity = e_col.second;
 		physx::PxRigidDynamic* actor = (physx::PxRigidDynamic*)(mActors[static_cast<uint32_t>(e.id)].mActor);
+		if (actor == nullptr) continue;
 		actor->setAngularDamping(0.5f);
 		actor->setLinearVelocity(Convert(velocity));
 	}
@@ -369,6 +374,7 @@ void PhysicsSystem::Synchronize()
 			continue;
 
 		PxRigidActor* actor = itr->second.mActor;
+		if (actor == nullptr) continue;
 
 		// retrieving positions in physx
 		PxTransform PXform = actor->getGlobalPose();
