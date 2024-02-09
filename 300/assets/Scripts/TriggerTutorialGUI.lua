@@ -2,12 +2,17 @@ _G.teachWeaponToggle = false
 local weaponToggleOnce = false
 
 
+
 function Alive()
     gameStateSys = systemManager:mGameStateSystem()
     WeaponTypesGUI= gameStateSys:GetEntity("GUI_Weapon_Types")
     WeaponTypesButton = gameStateSys:GetEntity("GUI_Weapon_Types_Button")
     WeaponTypesGUI_Transform = WeaponTypesGUI:GetTransform()
     WeaponTypesButton_Transform =  WeaponTypesButton:GetTransform()
+
+    O_GUI =  gameStateSys:GetEntity("GUI_Override")
+    O_transform = O_GUI:GetTransform()
+
 end 
 
 function Update()
@@ -28,6 +33,13 @@ function Update()
         -- Helper.setTranslate(toggleWeaponGUI, toggleWeaponGUI_Transform.mTranslate)
         -- Helper.setTranslate(toggleWeaponGUI, toggleWeaponGUI_Transform.mTranslate)
     end
+
+    if(_G.Tutorial_Boss_Defeated == true) then 
+        O_transform.mTranslate.x = 0
+    end
+
+
+
 end
 
 function Dead()
