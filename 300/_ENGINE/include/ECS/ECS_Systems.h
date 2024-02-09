@@ -30,9 +30,9 @@ class SystemManager {
 	GFX::Window *mWindow;
 	bool mIsEditor;
 	bool mIsQuit;
+public:
 	// changing pause states in script according to button press
 	bool mIsInGamePause;
-public:
 	bool mIsPlay;
 	std::unique_ptr<PhysicsSystem> mPhysicsSystem;
 	std::unique_ptr<ScriptingSystem> mScriptingSystem;
