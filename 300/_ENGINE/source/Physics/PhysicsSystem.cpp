@@ -94,6 +94,7 @@ void PhysicsSystem::SetVelocity(Entity e, const glm::vec3& velocity)
 	}
 
 	physx::PxRigidDynamic* actor = (physx::PxRigidDynamic*)(mActors[static_cast<uint32_t>(e.id)].mActor);
+	if (actor == nullptr) return;
 	actor->setAngularDamping(0.5f);
 	actor->setLinearVelocity(Convert(velocity));
 }
