@@ -33,14 +33,14 @@ function Alive()
     -- exitAudioEntity = gameStateSys:GetEntity("Exit")
     -- exitSFX = exitAudioEntity:GetAudio()
 
-    mainMenuButton = gameStateSys:GetEntityByScene("MainMenuButton", "PauseMenuScene")
-    quitButton = gameStateSys:GetEntityByScene("QuitButton", "PauseMenuScene")
-    resumeButton = gameStateSys:GetEntityByScene("ResumeButton", "PauseMenuScene")
-    htpButton = gameStateSys:GetEntityByScene("HTPButton", "PauseMenuScene")
-    restartButton = gameStateSys:GetEntityByScene("RestartButton", "PauseMenuScene")
-    HTPMenu = gameStateSys:GetEntityByScene("HTPMenu", "PauseMenuScene")
-    backButton = gameStateSys:GetEntityByScene("BackButton", "PauseMenuScene")
-    menuBackground = gameStateSys:GetEntityByScene("MenuBackground", "PauseMenuScene")
+    mainMenuButton = gameStateSys:GetEntityByScene("MainMenuButton", "PauseMenuSceneLvl2")
+    quitButton = gameStateSys:GetEntityByScene("QuitButton", "PauseMenuSceneLvl2")
+    resumeButton = gameStateSys:GetEntityByScene("ResumeButton", "PauseMenuSceneLvl2")
+    htpButton = gameStateSys:GetEntityByScene("HTPButton", "PauseMenuSceneLvl2")
+    restartButton = gameStateSys:GetEntityByScene("RestartButton", "PauseMenuSceneLvl2")
+    HTPMenu = gameStateSys:GetEntityByScene("HTPMenu", "PauseMenuSceneLvl2")
+    backButton = gameStateSys:GetEntityByScene("BackButton", "PauseMenuSceneLvl2")
+    menuBackground = gameStateSys:GetEntityByScene("MenuBackground", "PauseMenuSceneLvl2")
 
 end
 

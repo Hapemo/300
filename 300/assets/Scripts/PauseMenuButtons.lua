@@ -19,8 +19,6 @@ local restartButton
 local HTPMenu
 local backButton
 
-currentScene = "Test"
-
 function Alive()
     gameStateSys = systemManager:mGameStateSystem()
     -- audioSys    = systemManager:mAudioSystem()
@@ -129,7 +127,7 @@ function PauseUpdate()
             restartButton:GetTransform().mTranslate.x = 1000 
             _G.isPausePauseMenu = false
             systemManager:SetIsPause(false)
-            gameStateSys:ChangeGameState(currentScene)
+            gameStateSys:ChangeGameState("Test")
         elseif (button:GetGeneral().name == "MainMenuButton") then
             mainMenuButton:GetTransform().mTranslate.x = 1000
         --print("bring AWAYYY menu5")
