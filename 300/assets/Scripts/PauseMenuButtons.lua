@@ -19,6 +19,8 @@ local restartButton
 local HTPMenu
 local backButton
 
+currentScene = "Test"
+
 function Alive()
     gameStateSys = systemManager:mGameStateSystem()
     -- audioSys    = systemManager:mAudioSystem()
@@ -49,14 +51,16 @@ function Update()
 end
 
 function PauseUpdate()
-    ----print("INUPDATEEEEEEEEEEEEEEE")
+    --print("INUPDATEEEEEEEEEEEEEEE")
     button = Helper.GetScriptEntity(script_entity.id)
     if (button:GetButton().mIsHover) then
-        ----print("HOVERRRRRRRRRRRRRRRRRRRRRRR")
+        --print("HOVERRRRRRRRRRRRRRRRRRRRRRR")
 
         if(hoverOver == false) then
             hoverSFX = button:GetAudio()
-            --hoverSFX:SetPlay(0.2)
+            --if (m_EditorSceneHovered == false) then
+                hoverSFX:SetPlay(0.2)
+            --end
             hoverOver = true
         end
         
@@ -86,7 +90,9 @@ function PauseUpdate()
         end
     end
     if (button:GetButton().mActivated) then
-        --clickSFX:SetPlay(1.0)
+        --if (m_EditorSceneHovered == false) then
+            clickSFX:SetPlay(1.0)
+        --end
         if (button:GetGeneral().name == "ResumeButton") then
             _G.mouse_on = true
         --print("bring AWAYYY menu1")
@@ -123,7 +129,7 @@ function PauseUpdate()
             restartButton:GetTransform().mTranslate.x = 1000 
             _G.isPausePauseMenu = false
             systemManager:SetIsPause(false)
-            gameStateSys:ChangeGameState("Test")
+            gameStateSys:ChangeGameState(currentScene)
         elseif (button:GetGeneral().name == "MainMenuButton") then
             mainMenuButton:GetTransform().mTranslate.x = 1000
         --print("bring AWAYYY menu5")

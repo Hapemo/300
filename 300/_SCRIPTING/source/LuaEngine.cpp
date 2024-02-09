@@ -323,7 +323,8 @@ void LuaGraphicsSystem()
         "m_WindowHeight", &GraphicsSystem::m_Height,
         "HideCursor", &GraphicsSystem::HideCursor,
         "SetAllEntityBloomThreshold", &GraphicsSystem::SetAllEntityBloomThreshold,
-        "FilterRadius", &GraphicsSystem::mFilterRadius);
+        "FilterRadius", &GraphicsSystem::mFilterRadius,
+        "m_EditorSceneHovered", &GraphicsSystem::m_EditorSceneHovered);
 }
 
 void LuaPhysics()
