@@ -14,6 +14,6 @@ down: S
 left: A
 right: D
 up: W
-pause: P
+pause: ESCAPE
 NextLevel: L
 AddHealth: H
