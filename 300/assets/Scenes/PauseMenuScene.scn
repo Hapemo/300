@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 7340043,
+        "entityid": 312,
         "general": {
             "name": "MenuBackground",
             "tagid": 6,
@@ -20,7 +20,7 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 0.0,
+                "x": 1000.0,
                 "y": 0.0,
                 "z": 0.0
             }
@@ -41,7 +41,7 @@
         }
     },
     {
-        "entityid": 7340044,
+        "entityid": 313,
         "general": {
             "name": "BackButton",
             "tagid": 0,
@@ -107,7 +107,7 @@
         }
     },
     {
-        "entityid": 7340045,
+        "entityid": 314,
         "general": {
             "name": "MainMenuButton",
             "tagid": 6,
@@ -127,7 +127,7 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 0.019999999552965164,
+                "x": 1000.0,
                 "y": -0.3700000047683716,
                 "z": 0.0
             }
@@ -173,7 +173,7 @@
         }
     },
     {
-        "entityid": 7340046,
+        "entityid": 315,
         "general": {
             "name": "Click",
             "tagid": 6,
@@ -210,7 +210,7 @@
         }
     },
     {
-        "entityid": 7340047,
+        "entityid": 316,
         "general": {
             "name": "QuitButton",
             "tagid": 6,
@@ -230,7 +230,7 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 0.019999999552965164,
+                "x": 1000.0,
                 "y": -0.5799999833106995,
                 "z": 0.0
             }
@@ -276,7 +276,7 @@
         }
     },
     {
-        "entityid": 7340048,
+        "entityid": 317,
         "general": {
             "name": "Awake",
             "tagid": 0,
@@ -313,7 +313,7 @@
         }
     },
     {
-        "entityid": 7340049,
+        "entityid": 318,
         "general": {
             "name": "ResumeButton",
             "tagid": 6,
@@ -333,7 +333,7 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 0.023000000044703484,
+                "x": 1000.0,
                 "y": 0.2800000011920929,
                 "z": 0.0
             }
@@ -382,7 +382,7 @@
         }
     },
     {
-        "entityid": 7340050,
+        "entityid": 319,
         "general": {
             "name": "HTPButton",
             "tagid": 6,
@@ -402,7 +402,7 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 0.019999999552965164,
+                "x": 1000.0,
                 "y": 0.05999999865889549,
                 "z": 0.0
             }
@@ -451,7 +451,7 @@
         }
     },
     {
-        "entityid": 7340051,
+        "entityid": 320,
         "general": {
             "name": "Exit",
             "tagid": 0,
@@ -488,7 +488,7 @@
         }
     },
     {
-        "entityid": 7340053,
+        "entityid": 321,
         "general": {
             "name": "RestartButton",
             "tagid": 6,
@@ -508,7 +508,7 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 0.019999999552965164,
+                "x": 1000.0,
                 "y": -0.1550000011920929,
                 "z": 0.0
             }
@@ -554,7 +554,7 @@
         }
     },
     {
-        "entityid": 7340054,
+        "entityid": 322,
         "general": {
             "name": "HTPMenu",
             "tagid": 6,
@@ -595,7 +595,7 @@
         }
     },
     {
-        "entityid": 7340055,
+        "entityid": 323,
         "general": {
             "name": "PauseMenuController",
             "tagid": 0,

@@ -36,13 +36,14 @@ function Update()
         if (not _G.isPausePauseMenu) then
             --graphicssys:HideCursor(false)
             --print("PAUSE MENU, CURSOR SHOWN")
-            systemManager:Pause()
+            --systemManager:Pause()
+            systemManager.mIsInGamePause = true
             _G.isPausePauseMenu = true
         end
     end
     if (not _G.isPausePauseMenu) then
         --print("bring AWAYYY menu")
-            graphicssys:HideCursor(true)
+            --graphicssys:HideCursor(true)
             --print("PAUSE MENU, CURSOR HIDDEN")
         mainMenuButton:GetTransform().mTranslate.x = 1000
         quitButton:GetTransform().mTranslate.x = 1000
@@ -62,9 +63,10 @@ function PauseUpdate()
     inputMapSys = systemManager:mInputActionSystem()
     if (inputMapSys:GetButtonDown("pause")) then
         if (_G.isPausePauseMenu) then
-            --graphicssys:HideCursor(true)
+            graphicssys:HideCursor(true)
             --print("PAUSE MENU, CURSOR HIDDEN")
-            systemManager:Play()
+            --systemManager:Play()
+            systemManager.mIsInGamePause = false
             _G.isPausePauseMenu = false
             runOnce2 = true
         end

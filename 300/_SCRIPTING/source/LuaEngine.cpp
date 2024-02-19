@@ -41,7 +41,9 @@ void LuaEngine()
         "Quit", &SystemManager::Quit,
         "Play", &SystemManager::Play,
         "Pause", &SystemManager::Pause,
-        "SetIsPause", &SystemManager::SetIsPause);
+        "SetIsPause", &SystemManager::SetIsPause,
+        "mIsInGamePause", &SystemManager::mIsInGamePause,
+        "mIsPlay", &SystemManager::mIsPlay);
 }
 
 void LuaECS()
