@@ -94,7 +94,7 @@ void SystemManager::ResetForChangeGS() {
 
 void SystemManager::Pause()
 {
-	mIsInGamePause = true;
+	//mIsInGamePause = true;
 	mGraphicsSystem->PauseGlobalAnimation();
 	if (!mAudioSystem->sys_paused)
 	{
@@ -108,7 +108,7 @@ void SystemManager::Pause()
 void SystemManager::Play()
 {
 	mIsPlay = true; 
-	mIsInGamePause = false;
+	//mIsInGamePause = false;
 	mPhysicsSystem.get()->Init();
 	mGraphicsSystem->UnpauseGlobalAnimation();
 	mGameStateSystem->mCurrentGameState.Save();

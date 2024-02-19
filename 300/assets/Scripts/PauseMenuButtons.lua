@@ -23,7 +23,7 @@ function Alive()
     gameStateSys = systemManager:mGameStateSystem()
     -- audioSys    = systemManager:mAudioSystem()
     -- inputMapSys = systemManager:mInputActionSystem()
-    -- graphicsSys = systemManager:mGraphicsSystem()
+    graphicssys = systemManager:mGraphicsSystem()
 
     hoverOver = false
 
@@ -93,6 +93,7 @@ function PauseUpdate()
         --end
         if (button:GetGeneral().name == "ResumeButton") then
             _G.mouse_on = true
+            graphicssys:HideCursor(true)
         --print("bring AWAYYY menu1")
         mainMenuButton:GetTransform().mTranslate.x = 1000
             quitButton:GetTransform().mTranslate.x = 1000
@@ -102,7 +103,7 @@ function PauseUpdate()
             restartButton:GetTransform().mTranslate.x = 1000
             systemManager:SetIsPause(false)
             _G.isPausePauseMenu = false
-            systemManager:Play()
+            --systemManager:Play()
         elseif (button:GetGeneral().name == "HTPButton") then
         --print("bring AWAYYY menu2")
         mainMenuButton:GetTransform().mTranslate.x = 1000

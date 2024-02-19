@@ -1,120 +1,65 @@
 [
     {
-        "entityid": 1048601,
+        "entityid": 1048773,
         "general": {
-            "name": "Objectives2",
-            "tagid": 0,
+            "name": "Health Bar",
+            "tagid": 6,
             "subtag": 0,
             "isActive": true,
             "isPaused": false
         },
         "transform": {
             "scale": {
-                "x": 6.0,
-                "y": 0.5,
-                "z": 6.0
+                "x": 0.3799999952316284,
+                "y": -0.07999999821186066,
+                "z": 1.0
             },
             "rotate": {
-                "x": 0.0,
+                "x": -0.20000000298023224,
                 "y": 0.0,
                 "z": 0.0
             },
             "translate": {
-                "x": -0.8209476470947266,
-                "y": -20.0,
-                "z": 60.31747817993164
+                "x": -0.699999988079071,
+                "y": 0.699999988079071,
+                "z": 0.0
             }
         },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 0,
-            "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": true,
-                "y": true,
-                "z": true
-            },
-            "gravity": true
-        },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 3247065376,
-            "instancecolor": {
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 1267136104,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
                 "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
+                "y": 0.0,
+                "z": 0.0,
                 "w": 1.0
             },
-            "bloomthreshold": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "castShadow": true,
-            "materialinstance": [
-                "../assets/Compressed/Objective_Base_BaseColour.ctexture",
-                "../assets/Compressed/Objective_Base_Normal.ctexture",
-                "../assets/Compressed/Objective_Base_Roughness.ctexture",
-                "../assets/Compressed/Objective_Base_Metallic.ctexture",
-                "../assets/Compressed/Objective_Base_Emissive.ctexture",
-                "../assets/Compressed/Objective_Base_AO.ctexture"
-            ],
-            "mesh": "../assets/compiled_geom/Objective_Base.geom",
-            "texturerefid": [
-                200309925,
-                683426931,
-                2037504544,
-                565530477,
-                3188370359,
-                916185482
-            ]
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "translateoffset": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "istrigger": true
+            "layer": 3,
+            "worldtransform": false
         },
         "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/Objectives.lua",
-                    "variables": []
-                }
-            ]
+            "scriptscontainer": []
         },
         "prefab": {
-            "prefab": "Objectives"
+            "prefab": "Health Bar"
         }
     },
     {
-        "entityid": 1048602,
+        "entityid": 1048775,
         "general": {
-            "name": "Objectives1",
-            "tagid": 0,
+            "name": "Objective Bar Empty",
+            "tagid": 6,
             "subtag": 0,
             "isActive": true,
             "isPaused": false
         },
         "transform": {
             "scale": {
-                "x": 6.0,
-                "y": 0.5,
-                "z": 6.0
+                "x": -0.3799999952316284,
+                "y": 0.09000000357627869,
+                "z": 1.0
             },
             "rotate": {
                 "x": 0.0,
@@ -122,100 +67,45 @@
                 "z": 0.0
             },
             "translate": {
-                "x": -20.57029914855957,
-                "y": -20.0,
-                "z": 14.840156555175781
+                "x": -0.699999988079071,
+                "y": 0.699999988079071,
+                "z": 0.0
             }
         },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 0,
-            "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": true,
-                "y": true,
-                "z": true
-            },
-            "gravity": true
-        },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 3247065376,
-            "instancecolor": {
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 2927780683,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
                 "x": 1.0,
                 "y": 1.0,
                 "z": 1.0,
                 "w": 1.0
             },
-            "bloomthreshold": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "castShadow": true,
-            "materialinstance": [
-                "../assets/Compressed/Objective_Base_BaseColour.ctexture",
-                "../assets/Compressed/Objective_Base_Metallic.ctexture",
-                "../assets/Compressed/Objective_Base_Roughness.ctexture",
-                "../assets/Compressed/Objective_Base_Metallic.ctexture",
-                "../assets/Compressed/Objective_Base_Emissive.ctexture",
-                "../assets/Compressed/Objective_Base_AO.ctexture"
-            ],
-            "mesh": "../assets/compiled_geom/Objective_Base.geom",
-            "texturerefid": [
-                200309925,
-                565530477,
-                2037504544,
-                565530477,
-                3188370359,
-                916185482
-            ]
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "translateoffset": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "istrigger": true
+            "layer": -27,
+            "worldtransform": false
         },
         "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/Objectives.lua",
-                    "variables": []
-                }
-            ]
+            "scriptscontainer": []
         },
         "prefab": {
-            "prefab": "Objectives"
+            "prefab": "Objective Bar Empty"
         }
     },
     {
-        "entityid": 1048603,
+        "entityid": 1048776,
         "general": {
-            "name": "Controller",
-            "tagid": 0,
+            "name": "Objective Bar Empty",
+            "tagid": 6,
             "subtag": 0,
             "isActive": true,
             "isPaused": false
         },
         "transform": {
             "scale": {
-                "x": 1.0,
-                "y": 1.0,
+                "x": -0.3799999952316284,
+                "y": 0.09000000357627869,
                 "z": 1.0
             },
             "rotate": {
@@ -224,33 +114,45 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 0.0,
-                "y": 0.0,
+                "x": 0.699999988079071,
+                "y": 0.699999988079071,
                 "z": 0.0
             }
         },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 2927780683,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 0,
+            "worldtransform": false
+        },
         "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/ObjectivesController.lua",
-                    "variables": []
-                }
-            ]
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Objective Bar Empty"
         }
     },
     {
-        "entityid": 1048604,
+        "entityid": 1048777,
         "general": {
-            "name": "PreObjectivesController",
-            "tagid": 0,
+            "name": "Objective Bar 1",
+            "tagid": 6,
             "subtag": 0,
             "isActive": true,
             "isPaused": false
         },
         "transform": {
             "scale": {
-                "x": 1.0,
-                "y": 1.0,
+                "x": 0.4300000071525574,
+                "y": -0.05999999865889549,
                 "z": 1.0
             },
             "rotate": {
@@ -259,22 +161,34 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 0.0,
-                "y": 0.0,
+                "x": 0.699999988079071,
+                "y": 0.699999988079071,
                 "z": 0.0
             }
         },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 2307664127,
+            "degree": 0.0,
+            "slider": 0.9200000166893005,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": -4,
+            "worldtransform": false
+        },
         "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/PreObjectivesController.lua",
-                    "variables": []
-                }
-            ]
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Objective Bar 1"
         }
     },
     {
-        "entityid": 1048605,
+        "entityid": 1048778,
         "general": {
             "name": "Objectives3",
             "tagid": 0,
@@ -376,18 +290,18 @@
         }
     },
     {
-        "entityid": 1048606,
+        "entityid": 1048779,
         "general": {
-            "name": "Objective Bar 1",
-            "tagid": 6,
+            "name": "PreObjectivesController",
+            "tagid": 0,
             "subtag": 0,
             "isActive": true,
             "isPaused": false
         },
         "transform": {
             "scale": {
-                "x": 0.4300000071525574,
-                "y": -0.05999999865889549,
+                "x": 1.0,
+                "y": 1.0,
                 "z": 1.0
             },
             "rotate": {
@@ -396,45 +310,33 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 0.699999988079071,
-                "y": 0.699999988079071,
+                "x": 0.0,
+                "y": 0.0,
                 "z": 0.0
             }
         },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 2307664127,
-            "degree": 0.0,
-            "slider": 0.9200000166893005,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": -4,
-            "worldtransform": false
-        },
         "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Objective Bar 1"
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/PreObjectivesController.lua",
+                    "variables": []
+                }
+            ]
         }
     },
     {
-        "entityid": 1048607,
+        "entityid": 1048780,
         "general": {
-            "name": "Objective Bar Empty",
-            "tagid": 6,
+            "name": "Controller",
+            "tagid": 0,
             "subtag": 0,
             "isActive": true,
             "isPaused": false
         },
         "transform": {
             "scale": {
-                "x": -0.3799999952316284,
-                "y": 0.09000000357627869,
+                "x": 1.0,
+                "y": 1.0,
                 "z": 1.0
             },
             "rotate": {
@@ -443,46 +345,34 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 0.699999988079071,
-                "y": 0.699999988079071,
+                "x": 0.0,
+                "y": 0.0,
                 "z": 0.0
             }
         },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 2927780683,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 0,
-            "worldtransform": false
-        },
         "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Objective Bar Empty"
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/ObjectivesController.lua",
+                    "variables": []
+                }
+            ]
         }
     },
     {
-        "entityid": 1048608,
+        "entityid": 1048781,
         "general": {
-            "name": "Objective Bar Empty",
-            "tagid": 6,
+            "name": "Objectives1",
+            "tagid": 0,
             "subtag": 0,
             "isActive": true,
             "isPaused": false
         },
         "transform": {
             "scale": {
-                "x": -0.3799999952316284,
-                "y": 0.09000000357627869,
-                "z": 1.0
+                "x": 6.0,
+                "y": 0.5,
+                "z": 6.0
             },
             "rotate": {
                 "x": 0.0,
@@ -490,77 +380,187 @@
                 "z": 0.0
             },
             "translate": {
-                "x": -0.699999988079071,
-                "y": 0.699999988079071,
-                "z": 0.0
+                "x": -20.57029914855957,
+                "y": -20.0,
+                "z": 14.840156555175781
             }
         },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 2927780683,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": true,
+                "z": true
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3247065376,
+            "instancecolor": {
                 "x": 1.0,
                 "y": 1.0,
                 "z": 1.0,
                 "w": 1.0
             },
-            "layer": -27,
-            "worldtransform": false
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "castShadow": true,
+            "materialinstance": [
+                "../assets/Compressed/Objective_Base_BaseColour.ctexture",
+                "../assets/Compressed/Objective_Base_Metallic.ctexture",
+                "../assets/Compressed/Objective_Base_Roughness.ctexture",
+                "../assets/Compressed/Objective_Base_Metallic.ctexture",
+                "../assets/Compressed/Objective_Base_Emissive.ctexture",
+                "../assets/Compressed/Objective_Base_AO.ctexture"
+            ],
+            "mesh": "../assets/compiled_geom/Objective_Base.geom",
+            "texturerefid": [
+                200309925,
+                565530477,
+                2037504544,
+                565530477,
+                3188370359,
+                916185482
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": true
         },
         "scripts": {
-            "scriptscontainer": []
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/Objectives.lua",
+                    "variables": []
+                }
+            ]
         },
         "prefab": {
-            "prefab": "Objective Bar Empty"
+            "prefab": "Objectives"
         }
     },
     {
-        "entityid": 1048609,
+        "entityid": 1048782,
         "general": {
-            "name": "Health Bar",
-            "tagid": 6,
+            "name": "Objectives2",
+            "tagid": 0,
             "subtag": 0,
             "isActive": true,
             "isPaused": false
         },
         "transform": {
             "scale": {
-                "x": 0.3799999952316284,
-                "y": -0.07999999821186066,
-                "z": 1.0
+                "x": 6.0,
+                "y": 0.5,
+                "z": 6.0
             },
             "rotate": {
-                "x": -0.20000000298023224,
+                "x": 0.0,
                 "y": 0.0,
                 "z": 0.0
             },
             "translate": {
-                "x": -0.699999988079071,
-                "y": 0.699999988079071,
-                "z": 0.0
+                "x": -0.8209476470947266,
+                "y": -20.0,
+                "z": 60.31747817993164
             }
         },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 1267136104,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
                 "y": 0.0,
-                "z": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": true,
+                "z": true
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3247065376,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
                 "w": 1.0
             },
-            "layer": 3,
-            "worldtransform": false
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "castShadow": true,
+            "materialinstance": [
+                "../assets/Compressed/Objective_Base_BaseColour.ctexture",
+                "../assets/Compressed/Objective_Base_Normal.ctexture",
+                "../assets/Compressed/Objective_Base_Roughness.ctexture",
+                "../assets/Compressed/Objective_Base_Metallic.ctexture",
+                "../assets/Compressed/Objective_Base_Emissive.ctexture",
+                "../assets/Compressed/Objective_Base_AO.ctexture"
+            ],
+            "mesh": "../assets/compiled_geom/Objective_Base.geom",
+            "texturerefid": [
+                200309925,
+                683426931,
+                2037504544,
+                565530477,
+                3188370359,
+                916185482
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": true
         },
         "scripts": {
-            "scriptscontainer": []
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/Objectives.lua",
+                    "variables": []
+                }
+            ]
         },
         "prefab": {
-            "prefab": "Health Bar"
+            "prefab": "Objectives"
         }
     }
 ]
