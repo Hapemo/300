@@ -28,7 +28,7 @@ void InitFramebuffers()
 	systemManager->mGraphicsSystem->m_IntermediateFBO.Create(width, height);
 	systemManager->mGraphicsSystem->m_PingPongFbo.Create(width, height);
 	systemManager->mGraphicsSystem->m_PhysBloomRenderer.Init(width, height);
-	systemManager->mGraphicsSystem->m_ShadowFbo.Create(width, height);
+	systemManager->mGraphicsSystem->m_ShadowFbo.Create(width * 4, height * 4);
 
 	// Input
 	glBindImageTexture(2, systemManager->mGraphicsSystem->m_IntermediateFBO.GetBrightColorsAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);

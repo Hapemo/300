@@ -1356,7 +1356,7 @@ void GraphicsSystem::ResizeWindow(ivec2 newSize)
 	m_IntermediateFBO.Resize(newSize.x, newSize.y);
 	m_PingPongFbo.Resize(newSize.x, newSize.y);
 	m_PhysBloomRenderer.Resize(newSize.x, newSize.y);
-	m_ShadowFbo.Resize(newSize.x, newSize.y);
+	m_ShadowFbo.Resize(newSize.x * 4, newSize.y * 4);
 
 	// Input
 	glBindImageTexture(2, m_IntermediateFBO.GetBrightColorsAttachment(), 0, GL_FALSE, 0, GL_READ_ONLY, GL_RGBA32F);
@@ -1990,14 +1990,10 @@ void GraphicsSystem::RenderShadowMap()
 	// Bind shadow FBO to be rendered to
 	m_ShadowFbo.PrepForDraw();
 
-	// Setting up directional light as camera
-	//GFX::Camera lightCam;
-	//lightCam.SetPosition(dirLightPos);
-	//lightCam.SetTarget(dirLightPos + dirLightDir);
-	//lightCam.SetProjection(GFX::CameraConstants::defaultFOV, m_Window->size(), 0.1f, 900.f);
-	//lightCam.Update(false);
-	//mat4 camVP = lightCam.viewProj();
+	// set viewport size to be shadow map size
+	glViewport(0, 0, m_ShadowFbo.mWidth, m_ShadowFbo.mHeight);
 
+	// Setting up directional light as camera
 	mat4 view = glm::lookAt(dirLightPos, dirLightDir + dirLightPos, { 0.f, 1.f, 0.f });
 	mat4 proj = glm::ortho(-dirLightSize.x / 2, dirLightSize.x / 2, -dirLightSize.y / 2, dirLightSize.y / 2, dirLightNearFar.x, dirLightNearFar.y);
 	mat4 camVP = proj * view;
@@ -2055,6 +2051,9 @@ void GraphicsSystem::RenderShadowMap()
 	m_ShadowFbo.Unbind();
 
 	glCullFace(GL_NONE);
+
+	// Set viewport back to original
+	glViewport(0, 0, m_Width, m_Height);
 }
 
 void GraphicsSystem::ComputeDeferredLight(bool editorDraw)
