@@ -860,6 +860,15 @@ struct Healthbar : public Serializable
 	void DeserializeSelf(rapidjson::Value& reader);
 };
 
+struct DirectionalLight
+{
+	vec3 mDirection	{ 0.3, -1.f, -1.f };
+	vec2 mSize		{ 50.f, 50.f };
+	vec2 mNearFar	{ 0.1f, 90.f };
+
+	void Inspect();
+};
+
 struct Portal
 {
 	// Serialize these

@@ -192,6 +192,10 @@ void Inspect::update()
 			Button& button = ent.GetComponent<Button>();
 			button.Inspect();
 		}
+		if (ent.HasComponent<DirectionalLight>()) {
+			DirectionalLight& dirLight = ent.GetComponent<DirectionalLight>();
+			dirLight.Inspect();
+		}
 
 		if (ent.HasComponent<Portal>()) {
 			Portal& portal = ent.GetComponent<Portal>();
@@ -271,6 +275,11 @@ void Inspect::Add_component() {
 		{
 			if (!Entity(Hierarchy::selectedId).HasComponent<Spotlight>())
 				Entity(Hierarchy::selectedId).AddComponent<Spotlight>();
+		}
+		if (ImGui::Selectable("Directional Light"))
+		{
+			if (!Entity(Hierarchy::selectedId).HasComponent<DirectionalLight>())
+				Entity(Hierarchy::selectedId).AddComponent<DirectionalLight>();
 		}
 
 		if (ImGui::Selectable("Audio")) {
@@ -570,6 +579,35 @@ void Spotlight::Inspect()
 
 	if (delete_component == false)
 		Entity(Hierarchy::selectedId).RemoveComponent<Spotlight>();
+}
+
+void DirectionalLight::Inspect()
+{
+	bool delete_component = true;
+
+	if (ImGui::CollapsingHeader("DirectionalLight", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
+	{
+		ImGui::Text("Direction");
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		ImGui::DragFloat3("##Light Direction ", (float*)&mDirection, 0.01f, -1.f, 1.f);
+
+		ImGui::Text("Width Height");
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		ImGui::DragFloat2("##Light Size ", (float*)&mSize, 1.f, 0.f);
+
+		ImGui::Text("Near Far");
+		ImGui::SameLine();
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() + ImGui::GetColumnWidth() - ImGui::CalcItemWidth()
+			- ImGui::GetScrollX() - 2 * ImGui::GetStyle().ItemSpacing.x);
+		ImGui::DragFloat2("##Light Near Far ", (float*)&mNearFar, 0.1f, 0.1f);
+	}
+
+	if (delete_component == false)
+		Entity(Hierarchy::selectedId).RemoveComponent<DirectionalLight>();
 }
 
 /***************************************************************************/

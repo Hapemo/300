@@ -203,13 +203,24 @@ void GraphicsSystem::Update(float dt)
 	m_ParticleMesh.PrepForDraw();
 
 	// Render the depth scene first as shadow pass
-	RenderShadowMap();
-	m_Renderer.AddCube(dirLightPos, vec3(1.f, 1.f, 1.f), { 1.f, 0.f, 1.f, 1.f });
-	m_Renderer.AddLine(dirLightPos, dirLightPos + dirLightDir * 3.f);
-	mat4 view = glm::lookAt(dirLightPos, dirLightDir + dirLightPos, { 0.f, 1.f, 0.f });
-	mat4 proj = glm::ortho(-dirLightSize.x / 2, dirLightSize.x / 2, -dirLightSize.y / 2, dirLightSize.y / 2, dirLightNearFar.x, dirLightNearFar.y);
-	mat4 vp = proj * view;
-	m_Renderer.AddFrustum(vp, { 1.f, 0.f, 1.f, 1.f });
+	auto dirLightInstance = systemManager->ecs->GetEntitiesWith<DirectionalLight>();
+	if (dirLightInstance.size())
+	{
+		Entity inst = dirLightInstance[0];
+		DirectionalLight& dirLight = inst.GetComponent<DirectionalLight>();
+		Transform& transform = inst.GetComponent<Transform>();
+
+		mat4 view = glm::lookAt(transform.mTranslate, dirLight.mDirection + transform.mTranslate, { 0.f, 1.f, 0.f });
+		mat4 proj = glm::ortho(-dirLight.mSize.x / 2, dirLight.mSize.x / 2, -dirLight.mSize.y / 2, dirLight.mSize.y / 2, dirLight.mNearFar.x, dirLight.mNearFar.y);
+		lightSpaceMatrix = proj * view;
+
+		RenderShadowMap();
+		m_Renderer.AddCube(transform.mTranslate, vec3(1.f, 1.f, 1.f), { 1.f, 0.f, 1.f, 1.f });
+		m_Renderer.AddLine(transform.mTranslate, transform.mTranslate + dirLight.mDirection * 3.f);
+		m_Renderer.AddFrustum(lightSpaceMatrix, { 1.f, 0.f, 1.f, 1.f });
+	}
+	else
+		lightSpaceMatrix = mat4(1.f);
 }
 
 
@@ -1993,18 +2004,13 @@ void GraphicsSystem::RenderShadowMap()
 	// set viewport size to be shadow map size
 	glViewport(0, 0, m_ShadowFbo.mWidth, m_ShadowFbo.mHeight);
 
-	// Setting up directional light as camera
-	mat4 view = glm::lookAt(dirLightPos, dirLightDir + dirLightPos, { 0.f, 1.f, 0.f });
-	mat4 proj = glm::ortho(-dirLightSize.x / 2, dirLightSize.x / 2, -dirLightSize.y / 2, dirLightSize.y / 2, dirLightNearFar.x, dirLightNearFar.y);
-	mat4 camVP = proj * view;
-
 	// Bind Shaders and update uniforms
 	m_AnimationShaderInst.Activate();	// Animation Shader
-	glUniformMatrix4fv(m_AnimationShaderInst.GetUniformVP(), 1, GL_FALSE, &camVP[0][0]);
+	glUniformMatrix4fv(m_AnimationShaderInst.GetUniformVP(), 1, GL_FALSE, &lightSpaceMatrix[0][0]);
 	GFX::Shader::Deactivate();
 
 	shadowMapShaderInst.Activate();		// Shadow mapping shader for non-animated meshes
-	glUniformMatrix4fv(shadowMapLightSpaceMatrixLocation, 1, GL_FALSE, &camVP[0][0]);
+	glUniformMatrix4fv(shadowMapLightSpaceMatrixLocation, 1, GL_FALSE, &lightSpaceMatrix[0][0]);
 	GFX::Shader::Deactivate();
 
 	// Rendering of meshes
@@ -2088,11 +2094,7 @@ void GraphicsSystem::ComputeDeferredLight(bool editorDraw)
 	glBindTexture(GL_TEXTURE_2D, m_ShadowFbo.GetDepthMap());
 
 	// Light space matrix
-	mat4 view = glm::lookAt(dirLightPos, dirLightDir + dirLightPos, { 0.f, 1.f, 0.f });
-	mat4 proj = glm::ortho(-dirLightSize.x / 2, dirLightSize.x / 2, -dirLightSize.y / 2, dirLightSize.y / 2, dirLightNearFar.x, dirLightNearFar.y);
-	mat4 camVP = proj * view;
-
-	glUniformMatrix4fv(computePBRLightSpaceMatrixLocation, 1, GL_FALSE, &camVP[0][0]);
+	glUniformMatrix4fv(computePBRLightSpaceMatrixLocation, 1, GL_FALSE, &lightSpaceMatrix[0][0]);
 
 	int num_group_x = glm::ceil(m_Width / 29);
 	int num_group_y = glm::ceil(m_Height / 29);
