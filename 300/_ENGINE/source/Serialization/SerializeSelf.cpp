@@ -511,3 +511,20 @@ void Spotlight::DeserializeSelf(rapidjson::Value& reader)
 	Deserialize(reader, "intensity", mIntensity);
 
 }
+
+void DirectionalLight::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
+{
+	writer.Key("directionallight");
+	writer.StartObject();
+	Serialize(writer, "direction", mDirection);
+	Serialize(writer, "size", mSize);
+	Serialize(writer, "nearfar", mNearFar);
+	writer.EndObject();
+}
+
+void DirectionalLight::DeserializeSelf(rapidjson::Value& reader)
+{
+	Deserialize(reader, "direction", mDirection);
+	Deserialize(reader, "size", mSize);
+	Deserialize(reader, "nearfar", mNearFar);
+}
