@@ -77,6 +77,16 @@ SERIALIZE_BASIC(glm::ivec2)
 	writer.EndObject();
 }
 
+SERIALIZE_BASIC(glm::vec2)
+{
+	if (name != nullptr)
+		writer.Key(name);
+	writer.StartObject();
+	Serialize(writer, "x", val.x);
+	Serialize(writer, "y", val.y);
+	writer.EndObject();
+}
+
 SERIALIZE_BASIC(glm::bvec3)
 {
 	if (name != nullptr)
@@ -214,6 +224,23 @@ DESERIALIZE_BASIC(std::string)
 }
 
 DESERIALIZE_BASIC(glm::ivec2)
+{
+	if (name == nullptr)
+	{
+		Deserialize(reader, "x", val.x);
+		Deserialize(reader, "y", val.y);
+	}
+	else
+	{
+		if (reader.HasMember(name))
+		{
+			Deserialize(reader[name], "x", val.x);
+			Deserialize(reader[name], "y", val.y);
+		}
+	}
+}
+
+DESERIALIZE_BASIC(glm::vec2)
 {
 	if (name == nullptr)
 	{
