@@ -221,7 +221,10 @@ void GraphicsSystem::Update(float dt)
 		m_Renderer.AddFrustum(lightSpaceMatrix, { 1.f, 0.f, 1.f, 1.f });
 	}
 	else
+	{
 		lightSpaceMatrix = mat4(1.f);
+		dirLightPos = vec3(0.f);
+	}
 }
 
 
