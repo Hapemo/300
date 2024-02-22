@@ -79,20 +79,6 @@ void TabWindow::update()
 		//systemManager->mGraphicsSystem->m_GlobalTint.w = ischecked ? 0.3f : 1.f;
 	}
 
-	// Edit directional light
-	ImGui::Separator();
-	ImGui::Text("Dir Light Pos");
-	ImGui::DragFloat3("##Light Pos", (float*)&systemManager->mGraphicsSystem->dirLightPos, 0.1f);
-	ImGui::Separator();
-	ImGui::Text("Light Dir");
-	ImGui::DragFloat3("##Light Dir", (float*)&systemManager->mGraphicsSystem->dirLightDir, 0.1f, -1.f, 1.f);
-	ImGui::Separator();
-	ImGui::Text("Light Size");
-	ImGui::DragFloat2("##Light Size", (float*)&systemManager->mGraphicsSystem->dirLightSize, 1.f, 1.f);
-	ImGui::Separator();
-	ImGui::Text("Light Near-Far");
-	ImGui::DragFloat2("##Light Near-Far", (float*)&systemManager->mGraphicsSystem->dirLightNearFar, 0.1f, 0.1f, 900.f);
-
 	// the threshold for bloom
 	ImGui::Separator();
 	ImGui::TextColored({ 0.f,0.5f, 1.f, 1.f }, "Global Bloom Variables");

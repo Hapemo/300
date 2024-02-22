@@ -209,14 +209,15 @@ void GraphicsSystem::Update(float dt)
 		Entity inst = dirLightInstance[0];
 		DirectionalLight& dirLight = inst.GetComponent<DirectionalLight>();
 		Transform& transform = inst.GetComponent<Transform>();
+		dirLightPos = transform.mTranslate;
 
-		mat4 view = glm::lookAt(transform.mTranslate, dirLight.mDirection + transform.mTranslate, { 0.f, 1.f, 0.f });
+		mat4 view = glm::lookAt(dirLightPos, dirLight.mDirection + dirLightPos, { 0.f, 1.f, 0.f });
 		mat4 proj = glm::ortho(-dirLight.mSize.x / 2, dirLight.mSize.x / 2, -dirLight.mSize.y / 2, dirLight.mSize.y / 2, dirLight.mNearFar.x, dirLight.mNearFar.y);
 		lightSpaceMatrix = proj * view;
 
 		RenderShadowMap();
-		m_Renderer.AddCube(transform.mTranslate, vec3(1.f, 1.f, 1.f), { 1.f, 0.f, 1.f, 1.f });
-		m_Renderer.AddLine(transform.mTranslate, transform.mTranslate + dirLight.mDirection * 3.f);
+		m_Renderer.AddCube(dirLightPos, vec3(1.f, 1.f, 1.f), { 1.f, 0.f, 1.f, 1.f });
+		m_Renderer.AddLine(dirLightPos, dirLightPos + dirLight.mDirection * 3.f);
 		m_Renderer.AddFrustum(lightSpaceMatrix, { 1.f, 0.f, 1.f, 1.f });
 	}
 	else
