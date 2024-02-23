@@ -6,11 +6,14 @@ local roamSpeed         = 2
 local damage            = 20
 
 local s2ChargeCount     = 0
-local s2Charge          = 2
+local s2Charge          = 1.5
 
 local s3SprintVelocity  = Vec3.new()
 local sprintSpeed       = 15
 local stareDirection    = Vec3.new()
+
+local dashStopTimer = 1.5
+local dashStopTimerCount = 0
 
 local s4RestTimer       = 2
 local s4RestTimerCount  = 0
@@ -59,48 +62,18 @@ function Alive()
 
     deathTimerCount   = 0
     target = this:GetAISetting():GetTarget()
+
+    CHARGEInit()
 end
 
 local timer = 0
 function Update()
-
-    -- dt = FPSManager.GetDT()
-
-    -- timer = timer - dt 
-
-    -- if (timer < 0) then
-    --     this:GetAudio():SetPlay()
-    --     timer = 3
-    -- end
-
-
-    -- OTHER UPDATE CODES
-    -- if systemManager:mInputActionSystem():GetButtonDown("Test2") then
-    --     this:GetHealthbar().health = this:GetHealthbar().health - 100
-    -- end
-
-    -- STATE MACHINE
-    if state == "ROAM" then         -- roam around and passively look for player (change to 2. when sees player)
-        -- Roam around randomly
-        s1Timer = s1Timer + FPSManager.GetDT()
-        this:GetTransform().mRotate.y = Helper.DirectionToAngle(this, s1RoamVelocity)
-        if s1Timer > 2 then
-            s1Timer = 0
-            MoveRandDir()
-        end
-        phySys:SetVelocity(this, s1RoamVelocity)
-
-        -- Look for player here
-        if aiSys:ConeOfSight(this, target, 70, 40) then
-            -- this:GetAudio():SetPlay()
-            CHARGEInit()
-        end
-
-    elseif state == "CHARGE" then   -- saw player, eyes glow red, play some charge up noise, delay about 3 seconds before charging to player (change to 3. when delay ends)
+    if state == "CHARGE" then   -- saw player, eyes glow red, play some charge up noise, delay about 3 seconds before charging to player (change to 3. when delay ends)
         -- Play animation for eyes glowing red        
         
-        -- Constantly make him stare at player and stand still
-        stareDirection = Helper.Vec3Minus(target:GetTransform().mTranslate, this:GetTransform().mTranslate)
+        -- make trojan horse dash towards z = 1
+        stareDirection = Vec3.new()
+        stareDirection.z = 1
         this:GetTransform().mRotate.y = Helper.DirectionToAngle(this, stareDirection)
         phySys:SetVelocity(this, Vec3.new())
         
@@ -115,7 +88,7 @@ function Update()
             SPRINTInit()
 
             s3SprintVelocity = Helper.Scale(Helper.Normalize(stareDirection), sprintSpeed)
-            s3SprintVelocity.y = 0
+            s3SprintVelocity.y = -2
             -- TODO End audio and animation
         end
 
@@ -125,31 +98,22 @@ function Update()
         this:GetTransform().mRotate.y = Helper.DirectionToAngle(this, stareDirection)
         -- Stop and change state when collided with something
         -- This part is done in OnContactEnter
+        dashStopTimerCount = dashStopTimerCount + FPSManager.GetDT()
+        if dashStopTimerCount > dashStopTimer then
+            dashStopTimerCount = 0
+            EndEpicIntro()
+        end
 
     elseif state == "REST" then     -- stops for some time before moving back to 1. (change to 1. when rest timer ends)
         this:GetTransform().mRotate.y = Helper.DirectionToAngle(this, stareDirection)
         s4RestTimerCount = s4RestTimerCount + FPSManager.GetDT()
         if s4RestTimerCount > s4RestTimer then
             s4RestTimerCount = 0
-            ROAMInit()
+            EndEpicIntro()
         end
-    elseif state == "DEATH" then
-        -- spawning soldier
-        local dt = FPSManager.GetDT()
-        spawnSoldierCounter = spawnSoldierCounter + dt
-        deathTimerCount = deathTimerCount + dt
-
-        if spawnSoldierCounter > spawnSoldierFrequency then
-            spawnSoldierCounter = 0
-            SpawnSoldier()
-        end
-        if deathTimerCount > deathTimer then Die() end
-        return
     end
     -- END STATE MACHINE
 
-    -- Health logic
-    if this:GetHealthbar().health <= 0 then StartDeath() end
 end
 
 function Dead()
@@ -222,6 +186,12 @@ function RESTInit()
 
     -- this:GetAudio():SetPause()
     phySys:SetVelocity(this, Vec3.new())
+end
+
+function EndEpicIntro()
+--    this:GetScripts():AddScript(this, "../assets/Scripts/TrojanHorse.lua")
+    this:GetScripts():DeleteScript("../assets/Scripts/EpicIntroTrojanHorse.lua");
+    _G.TrojanHorsePhase1ToCameraIn = true
 end
 
 

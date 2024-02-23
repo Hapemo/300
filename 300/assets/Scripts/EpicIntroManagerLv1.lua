@@ -3,6 +3,8 @@
 
 _G.gameStateSys = systemManager:mGameStateSystem()
 
+_G.TrojanHorsePhase1ToCameraIn = false
+
 _G.activateTrojanHorse = false
 _G.activateTrojanSoldier = false
 _G.activateMelissa = false
@@ -14,6 +16,9 @@ function Alive()
 end
 
 function Update()
+    if _G.activateTrojanHorse then
+        RunTrojanHorseEpicIntro()
+    end
     
 end
 
@@ -37,4 +42,10 @@ function OnContactExit(Entity)
 
 end
 
+
+function RunTrojanHorseEpicIntro()
+    if _G.TrojanHorsePhase1ToCameraIn then -- Finished landing on the ground, 
+        
+    end
+end
 
