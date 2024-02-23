@@ -9,7 +9,7 @@ local isInZone = false
 local currentSpawnTimer = 0 -- keeps track of how often enemy spawning interval
 local spawnTimer = 10 -- sets how long the enemy spawning interval is
 local currentEnemyCount = 0 -- keeps track of how many enemies there are in the map
-local maxEnemyCount = 2 -- sets how many enemies are allowed in the map
+local maxEnemyCount = 20 -- sets how many enemies are allowed in the map
 
 local mobSpawnPos1 = Vec3.new()
 local mobSpawnPos2 = Vec3.new()
@@ -33,21 +33,21 @@ function Alive()
     this = Helper.GetScriptEntity(script_entity.id)
     progress = 0
 
-    mobSpawnPos1.x = 18;
-    mobSpawnPos1.y = -9;
-    mobSpawnPos1.z = 60;
+    mobSpawnPos1.x = 57;
+    mobSpawnPos1.y = 55;
+    mobSpawnPos1.z = 86;
 
-    mobSpawnPos2.x = -22;
-    mobSpawnPos2.y = -9;
-    mobSpawnPos2.z = 40;
+    mobSpawnPos2.x = -57;
+    mobSpawnPos2.y = 55;
+    mobSpawnPos2.z = 86;
 
-    mobSpawnPos3.x = -22;
-    mobSpawnPos3.y = -9;
-    mobSpawnPos3.z = -8;
+    mobSpawnPos3.x = -66;
+    mobSpawnPos3.y = 55;
+    mobSpawnPos3.z = -33;
 
-    mobSpawnPos4.x = 8;
-    mobSpawnPos4.y = -9;
-    mobSpawnPos4.z = 13;
+    mobSpawnPos4.x = 55;
+    mobSpawnPos4.y = 55;
+    mobSpawnPos4.z = -29;
 end
 
 function Update()
@@ -106,20 +106,25 @@ function Update()
         end
 
     -- SPAWNING ENEMIES
-    -- currentSpawnTimer = currentSpawnTimer + FPSManager.GetDT()
+        currentSpawnTimer = currentSpawnTimer + FPSManager.GetDT()
 
-    -- if currentEnemyCount < maxEnemyCount and currentSpawnTimer > spawnTimer then
-    --     mobtype = math.random(2, 3) -- generate a random number to spawn a random enemy between Trojan and Melissa only (for level 1)
+        if currentEnemyCount < maxEnemyCount and currentSpawnTimer > spawnTimer then
+            mobtype = math.random(1, 4) -- generate a random number to spawn a random enemy between Trojan and Melissa only (for level 1)
 
-    --         if (mobtype == 1) then systemManager.ecs:NewEntityFromPrefab("ILOVEYOU", mobSpawnPos1) 
-    --             elseif (mobtype == 2) then systemManager.ecs:NewEntityFromPrefab("Melissa", mobSpawnPos2) 
-    --             elseif (mobtype == 3) then systemManager.ecs:NewEntityFromPrefab("TrojanHorse", mobSpawnPos3) 
-    --             elseif (mobtype == 4) then systemManager.ecs:NewEntityFromPrefab("ZipBomb", mobSpawnPos4)
-    --         end
-    --     currentEnemyCount = currentEnemyCount + 1
-    --     currentSpawnTimer = 0 -- reset currentSpawnTimer so that next enemy can spawn
-    -- end
-    -- print("Current progress =", progress/objectivesComplete)
+                if (mobtype == 1) then 
+                    systemManager.ecs:NewEntityFromPrefab("ILOVEYOU", mobSpawnPos1) 
+                elseif (mobtype == 2) then 
+                    systemManager.ecs:NewEntityFromPrefab("Melissa", mobSpawnPos2) 
+                elseif (mobtype == 3) then 
+                    systemManager.ecs:NewEntityFromPrefab("TrojanHorse", mobSpawnPos3) 
+                elseif (mobtype == 4) then 
+                    systemManager.ecs:NewEntityFromPrefab("ZipBomb", mobSpawnPos4)
+                end
+            currentEnemyCount = currentEnemyCount + 1
+            currentSpawnTimer = 0 -- reset currentSpawnTimer so that next enemy can spawn
+        end
+        --print("Current progress =", progress/objectivesComplete)
+        print("SPAWNING")
     objectivebar:GetUIrenderer():SetSlider(progress/objectivesComplete);
 
     ent = Helper.GetScriptEntity(script_entity.id)

@@ -256,6 +256,8 @@ function Alive()
 end
 
 function Update()
+    print("TGBHBUUJNMKInjbhtgfrdcfvGBHNJUJBH")
+    
     -- healthbar = gameStateSys:GetEntityByScene("Health Bar","Objectives") // Changed to UI scene
     healthbar = gameStateSys:GetEntity("HealthBar", "UI")
 
