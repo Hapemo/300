@@ -1,8 +1,8 @@
 [
-{
-        "entityid": 22,
+    {
+        "entityid": 3,
         "general": {
-            "name": "Camera",
+            "name": "Skybox",
             "tagid": 0,
             "subtag": 0,
             "isActive": true,
@@ -10,9 +10,9 @@
         },
         "transform": {
             "scale": {
-                "x": 1.100000023841858,
-                "y": 1.399999976158142,
-                "z": 1.100000023841858
+                "x": 500.0,
+                "y": 500.0,
+                "z": 500.0
             },
             "rotate": {
                 "x": 0.0,
@@ -20,112 +20,130 @@
                 "z": 0.0
             },
             "translate": {
-                "x": -6.575305938720703,
-                "y": -4.161545276641846,
-                "z": 39.437259674072266
+                "x": 0.0,
+                "y": -20.668514251708984,
+                "z": -47.40319061279297
+            }
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 2510,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 0.20000000298023224,
+                "y": 0.20999999344348907,
+                "z": 0.1599999964237213,
+                "w": 1.0
+            },
+            "castShadow": true,
+            "materialinstance": [
+                "../assets/Compressed/Environment_Skybox_BaseColor.ctexture",
+                "../assets/Compressed/Environment_Skybox_Normal.ctexture",
+                "../assets/Compressed/Environment_Skybox_Metallic.ctexture",
+                "../assets/Compressed/Environment_Skybox_Roughness.ctexture",
+                "../assets/Compressed/Environment_Skybox_BaseColor.ctexture",
+                "../assets/Compressed/Environment_Skybox_AO.ctexture"
+            ],
+            "mesh": "../assets/compiled_geom/Skybox.geom",
+            "texturerefid": [
+                437536649,
+                3522280818,
+                1686346496,
+                1590588887,
+                5760,
+                1467793003
+            ]
+        }
+    },
+    {
+        "entityid": 4,
+        "general": {
+            "name": "Level2FBX",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 58.59000015258789,
+                "y": 20.0,
+                "z": 56.400001525878906
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": -1.7548270225524902,
+                "z": 8.72984790802002
             }
         },
         "rigidbody": {
             "density": 10.0,
             "material": 1,
-            "motion": 1,
+            "motion": 0,
             "velocity": {
-                "x": 0.2549799084663391,
+                "x": 0.0,
                 "y": 0.0,
-                "z": -0.2355106770992279
+                "z": 0.0
             },
             "rotationconstraints": {
-                "x": true,
-                "y": true,
-                "z": true
+                "x": false,
+                "y": false,
+                "z": false
             },
             "gravity": true
         },
-        "spherecollider": {
-            "scaleoffset": 0.8100000023841858,
-            "translateoffset": {
-                "x": 0.0,
-                "y": -0.5,
-                "z": 0.0
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 1691893685,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
             },
-            "istrigger": true
-        },
-        "capsulecollider": {
-            "translateoffset": {
-                "x": 0.0,
-                "y": -0.5,
-                "z": 0.0
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
             },
-            "radius": 0.4000000059604645,
-            "halfheight": 0.4000000059604645,
-            "istrigger": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/Player2.lua",
-                    "variables": []
-                }
+            "castShadow": false,
+            "materialinstance": [
+                "../assets/Compressed/Texture_Wall_1x1x1.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Normal.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Metallic.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Roughness.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Emissive.ctexture",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/Level3_WIP.geom",
+            "texturerefid": [
+                600252808,
+                1690869280,
+                1749384838,
+                2264384965,
+                1718410820,
+                0
             ]
         },
-        "children": {
-            "numchildren": 1,
-            "firstchild": 196
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "Footsteps_M4.wav",
-            "fullpath": "../assets\\Audio/Footsteps_M4.wav",
-            "playonawake": true,
-            "islooping": true,
-            "audiotype": 1,
-            "volume": 0.0,
-            "retainaudio": false
-        },
-        "camera": {
-            "positon": {
-                "x": -6.575305938720703,
-                "y": -4.161545276641846,
-                "z": 39.437259674072266
-            },
-            "target": {
-                "x": -5.575305938720703,
-                "y": -4.161545276641846,
-                "z": 39.437259674072266
-            },
-            "size": {
-                "x": 1224,
-                "y": 554
-            },
-            "near": 0.10000000149011612,
-            "far": 900.0
-        },
-        "healthbar": {
-            "healthcolor": {
-                "x": 0.0,
-                "y": 1.0,
-                "z": 0.0,
-                "w": 1.0
-            },
-            "backcolor": {
-                "x": 1.0,
-                "y": 0.0,
-                "z": 0.0,
-                "w": 1.0
-            },
-            "position": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "maxhealth": 200.0,
-            "width": 0.0,
-            "height": 0.0,
-            "frametexture": 0,
-            "healthtexture": 0
+        "meshcollider": {
+            "ismeshcollider": true
         }
-    },{
-        "entityid": 196,
+    },
+    {
+        "entityid": 1048577,
         "general": {
             "name": "gun",
             "tagid": 0,
@@ -186,9 +204,135 @@
             ]
         },
         "parent": {
-            "prevsibling": 196,
-            "nextsibling": 196,
-            "parent": 22
+            "prevsibling": 1048577,
+            "nextsibling": 1048577,
+            "parent": 1048578
+        }
+    },
+    {
+        "entityid": 1048578,
+        "general": {
+            "name": "Camera",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.100000023841858,
+                "y": 1.399999976158142,
+                "z": 1.100000023841858
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.824999988079071,
+                "y": 5.638000011444092,
+                "z": 26.797000885009766
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 1,
+            "velocity": {
+                "x": 0.2549799084663391,
+                "y": 0.0,
+                "z": -0.2355106770992279
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": true,
+                "z": true
+            },
+            "gravity": true
+        },
+        "spherecollider": {
+            "scaleoffset": 0.8100000023841858,
+            "translateoffset": {
+                "x": 0.0,
+                "y": -0.5,
+                "z": 0.0
+            },
+            "istrigger": true
+        },
+        "capsulecollider": {
+            "translateoffset": {
+                "x": 0.0,
+                "y": -0.5,
+                "z": 0.0
+            },
+            "radius": 0.4000000059604645,
+            "halfheight": 0.4000000059604645,
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/Player3.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "children": {
+            "numchildren": 1,
+            "firstchild": 1048577
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Footsteps_M4.wav",
+            "fullpath": "../assets\\Audio/Footsteps_M4.wav",
+            "playonawake": true,
+            "islooping": true,
+            "audiotype": 1,
+            "volume": 0.0,
+            "retainaudio": false
+        },
+        "camera": {
+            "positon": {
+                "x": 0.824999988079071,
+                "y": 5.638000011444092,
+                "z": 26.797000885009766
+            },
+            "target": {
+                "x": 1.8250000476837158,
+                "y": 5.638000011444092,
+                "z": 26.797000885009766
+            },
+            "size": {
+                "x": 1224,
+                "y": 554
+            },
+            "near": 0.10000000149011612,
+            "far": 900.0
+        },
+        "healthbar": {
+            "healthcolor": {
+                "x": 0.0,
+                "y": 1.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "backcolor": {
+                "x": 1.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "maxhealth": 200.0,
+            "width": 0.0,
+            "height": 0.0,
+            "frametexture": 0,
+            "healthtexture": 0
         }
     }
 ]
