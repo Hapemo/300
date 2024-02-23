@@ -256,7 +256,8 @@ function Alive()
 end
 
 function Update()
-    healthbar = gameStateSys:GetEntityByScene("Health Bar","Objectives")
+    -- healthbar = gameStateSys:GetEntityByScene("Health Bar","Objectives") // Changed to UI scene
+    healthbar = gameStateSys:GetEntity("HealthBar", "UI")
 
     -- Player Health System Start -- 
     if isuiinit == false then
@@ -347,6 +348,14 @@ function Update()
             playerHealthCurrent = playerHealthMax
         end
     end
+
+    if(inputMapSys:GetButtonDown("MinusHealth")) then
+        print("MINUS HEALTH")
+        playerHealthCurrent = playerHealthCurrent + 20
+        if playerHealthCurrent > playerHealthMax then
+            playerHealthCurrent = playerHealthMax
+        end
+    end
     --if(inputMapSys:GetButtonDown("Mouse")) then
     --    if (_G.mouse_on == true) then
     --        _G.mouse_on = false
@@ -355,6 +364,7 @@ function Update()
     --    end
     --end
 
+    -- Player view control
     centerscreen = Input:GetCursorCenter()
     mouse_move.x = Input.CursorPos().x - centerscreen.x
     mouse_move.y = Input.CursorPos().y - centerscreen.y
@@ -701,6 +711,11 @@ function Update()
 -- endregion
 
         if(inputMapSys:GetButtonDown("Shoot")) then
+            print("MINUS HEALTH")
+            playerHealthCurrent = playerHealthCurrent - 20
+            if playerHealthCurrent > playerHealthMax then
+                playerHealthCurrent = playerHealthMax
+            end
             gunHoldState = "HOLDING"   -- for machine gun
 
             if(_G.gunEquipped == 0) then 

@@ -248,7 +248,8 @@ void LuaScripts()
     systemManager->mScriptingSystem->luaState.new_usertype<Scripts>(
         "Scripts", sol::constructors<>(),
         "GetScript", &Scripts::GetScript,
-        "AddScript", &Scripts::AddScriptScripts);
+        "AddScript", &Scripts::AddScriptScripts,
+        "DeleteScript", &Scripts::DeleteScript);
 }
 
 void LuaParent()

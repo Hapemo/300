@@ -448,6 +448,32 @@ public:
 		}
 	}
 
+	void DeleteScript(std::string scriptFile)
+	{
+		int i = 0;
+		// for case where script to be deleted cant be found!
+		bool isExist = false;
+		for (; i < scriptsContainer.size(); ++i)
+		{
+			if (scriptsContainer[i]->scriptFile == scriptFile)
+			{
+				isExist = true;
+				break;
+			}
+			i++;
+		}
+		// if script to be deleted cant be found, warn !
+		if (!isExist)
+		{
+			std::cout << scriptFile << " to be deleted is not attached to the entity!" << std::endl;
+			return;
+		}
+		std::vector<Script*>::iterator it = scriptsContainer.begin() + i;
+		// delete script memory and remove it from script container
+		delete* it;
+		scriptsContainer.erase(it);
+	}
+
 	//RTTR_ENABLE()
 	void Inspect(entt::entity entityID);
 	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
