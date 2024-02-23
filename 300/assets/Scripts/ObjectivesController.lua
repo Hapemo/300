@@ -31,6 +31,11 @@ function OnContactExit(Entity)
 
 end
 
+function InitializeObjectiveCount()
+	-- number of objectives to complete
+	countObj = 3
+end
+
 function AddObjective()
 	countObj = countObj + 1
 end

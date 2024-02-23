@@ -72,7 +72,8 @@ function Update()
         testScript = TestScripts:GetScript("../assets/Scripts/ObjectivesController.lua")
 
         if testScript ~= nil then
-            testScript:RunFunction("AddObjective")
+            --testScript:RunFunction("AddObjective")
+            testScript:RunFunction("InitializeObjectiveCount") -- set the starting number
         end
 
         objectiveBarSpawnPos.x = 0.8;
@@ -105,19 +106,19 @@ function Update()
         end
 
     -- SPAWNING ENEMIES
-    currentSpawnTimer = currentSpawnTimer + FPSManager.GetDT()
+    -- currentSpawnTimer = currentSpawnTimer + FPSManager.GetDT()
 
-    if currentEnemyCount < maxEnemyCount and currentSpawnTimer > spawnTimer then
-        mobtype = math.random(2, 3) -- generate a random number to spawn a random enemy between Trojan and Melissa only (for level 1)
+    -- if currentEnemyCount < maxEnemyCount and currentSpawnTimer > spawnTimer then
+    --     mobtype = math.random(2, 3) -- generate a random number to spawn a random enemy between Trojan and Melissa only (for level 1)
 
-            if (mobtype == 1) then systemManager.ecs:NewEntityFromPrefab("ILOVEYOU", mobSpawnPos1) 
-                elseif (mobtype == 2) then systemManager.ecs:NewEntityFromPrefab("Melissa", mobSpawnPos2) 
-                elseif (mobtype == 3) then systemManager.ecs:NewEntityFromPrefab("TrojanHorse", mobSpawnPos3) 
-                elseif (mobtype == 4) then systemManager.ecs:NewEntityFromPrefab("ZipBomb", mobSpawnPos4)
-            end
-        currentEnemyCount = currentEnemyCount + 1
-        currentSpawnTimer = 0 -- reset currentSpawnTimer so that next enemy can spawn
-    end
+    --         if (mobtype == 1) then systemManager.ecs:NewEntityFromPrefab("ILOVEYOU", mobSpawnPos1) 
+    --             elseif (mobtype == 2) then systemManager.ecs:NewEntityFromPrefab("Melissa", mobSpawnPos2) 
+    --             elseif (mobtype == 3) then systemManager.ecs:NewEntityFromPrefab("TrojanHorse", mobSpawnPos3) 
+    --             elseif (mobtype == 4) then systemManager.ecs:NewEntityFromPrefab("ZipBomb", mobSpawnPos4)
+    --         end
+    --     currentEnemyCount = currentEnemyCount + 1
+    --     currentSpawnTimer = 0 -- reset currentSpawnTimer so that next enemy can spawn
+    -- end
     -- print("Current progress =", progress/objectivesComplete)
     objectivebar:GetUIrenderer():SetSlider(progress/objectivesComplete);
 
@@ -125,9 +126,6 @@ function Update()
     transform = ent:GetTransform()
 
     -- print(math.random() +math.random(-20,20) )
-
-
-    
 
     moveTime = moveTime + FPSManager.GetDT()
 
@@ -141,7 +139,7 @@ function Update()
 
 
 
-    if(_G.PreObjectivesCounter >=4)then
+    --if(_G.PreObjectivesCounter >=4)then
 
         if(moveTime >0.4)then
 
@@ -149,7 +147,8 @@ function Update()
             -- do 
 
             -- print(math.random(-200,200))
-
+            -- only appear when the platform is raised
+            if(transform.mTranslate.y == -10.5) then
                 spawndataPos.x = transform.mTranslate.x  +math.random(-300,300)/100
                 spawndataPos.y = transform.mTranslate.y 
                 spawndataPos.z = transform.mTranslate.z +math.random(-300,300)/100
@@ -161,6 +160,7 @@ function Update()
                 spawndataPos.z = transform.mTranslate.z +math.random(-300,300)/100
 
                 bulletPrefab = systemManager.ecs:NewEntityFromPrefab("0s", spawndataPos)
+            end
 
                 -- spawndataPos.x = transform.mTranslate.x  +math.random(-300,300)/100
                 -- spawndataPos.y = transform.mTranslate.y 
@@ -172,7 +172,7 @@ function Update()
             -- end
             moveTime = 0
         end
-    end
+    --end
 
     if (isInZone == true) then
 
