@@ -1,8 +1,8 @@
 [
     {
-        "entityid": 252,
+        "entityid": 8388618,
         "general": {
-            "name": "AMelissa",
+            "name": "TrojanHorse",
             "tagid": 1,
             "subtag": 0,
             "isActive": true,
@@ -10,19 +10,19 @@
         },
         "transform": {
             "scale": {
-                "x": 1.162500262260437,
-                "y": 1.4500325918197632,
-                "z": 0.6006437540054321
+                "x": 1.1890875101089478,
+                "y": 2.161978244781494,
+                "z": 2.378175735473633
             },
             "rotate": {
                 "x": 0.0,
-                "y": 0.0,
+                "y": 180.0,
                 "z": 0.0
             },
             "translate": {
-                "x": 18.24958610534668,
-                "y": -11.199999809265137,
-                "z": 61.900543212890625
+                "x": 1.0986489057540894,
+                "y": -11.068476676940918,
+                "z": 67.1900405883789
             }
         },
         "rigidbody": {
@@ -36,67 +36,80 @@
             },
             "rotationconstraints": {
                 "x": true,
-                "y": true,
-                "z": true
+                "y": false,
+                "z": false
             },
             "gravity": true
         },
         "meshrenderer": {
             "vert": "../assets/shader_files/pointLight_vert.glsl",
             "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 2584865052,
+            "meshrefid": 1817507058,
             "instancecolor": {
                 "x": 1.0,
-                "y": 1.0093556642532349,
-                "z": 0.2118937075138092,
+                "y": 1.0,
+                "z": 1.0,
                 "w": 1.0
             },
             "bloomthreshold": {
-                "x": 0.17000000178813934,
-                "y": 0.20999999344348907,
-                "z": 0.3100000023841858,
+                "x": 0.3400000035762787,
+                "y": 0.3100000023841858,
+                "z": 0.23000000417232513,
                 "w": 1.0
             },
             "castShadow": true,
             "materialinstance": [
-                "../assets/Compressed/Melissa_BaseColor.ctexture",
-                "../assets/Compressed/Melissa_Normal.ctexture",
-                "../assets/Compressed/Melissa_Metallic.ctexture",
-                "../assets/Compressed/Melissa_Roughness.ctexture",
-                "../assets/Compressed/Melissa_Emissive.ctexture",
-                "../assets/Compressed/Melissa_AO.ctexture"
+                "../assets/Compressed/Trojan_Default_BaseColor.ctexture",
+                "../assets/Compressed/Trojan_Normal.ctexture",
+                "../assets/Compressed/Trojan_Metallic.ctexture",
+                "../assets/Compressed/Trojan_Roughness.ctexture",
+                "../assets/Compressed/Trojan_Rage_Emissive.ctexture",
+                "../assets/Compressed/Trojan_AO.ctexture"
             ],
-            "mesh": "../assets/compiled_geom/Melissa_Idle.geom",
+            "mesh": "../assets/compiled_geom/Trojan05.geom",
             "texturerefid": [
-                1322168031,
-                1820887936,
-                2908106086,
-                2866962469,
-                2759371044,
-                2018461449
+                1940192559,
+                4213568630,
+                1301958460,
+                3973318747,
+                1469951046,
+                748184727
             ]
         },
         "animator": {},
-        "capsulecollider": {
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 0.8999999761581421,
+                "z": 0.8500000238418579
+            },
             "translateoffset": {
                 "x": 0.0,
-                "y": 0.75,
-                "z": -0.30000001192092896
+                "y": 1.100000023841858,
+                "z": 0.0
             },
-            "radius": 0.5,
-            "halfheight": 0.25,
             "istrigger": false
         },
         "scripts": {
             "scriptscontainer": [
                 {
-                    "scriptFile": "../assets/Scripts/NewEnemy.lua",
+                    "scriptFile": "../assets/Scripts/TrojanHorse.lua",
                     "variables": []
                 }
             ]
         },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "(3D) horse_3.wav",
+            "fullpath": "../assets\\Audio/(3D) horse_3.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false
+        },
         "prefab": {
-            "prefab": "AMelissa"
+            "prefab": "TrojanHorse"
         },
         "aisetting": {
             "movementtype": 1,
@@ -104,7 +117,383 @@
             "stayaway": 0.0,
             "elevation": 0.0,
             "targetname": "Camera",
-            "graphdataname": "GroundPath"
+            "graphdataname": ""
+        },
+        "healthbar": {
+            "healthcolor": {
+                "x": 0.0,
+                "y": 1.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "backcolor": {
+                "x": 1.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "position": {
+                "x": 0.0,
+                "y": 2.4000000953674316,
+                "z": 0.0
+            },
+            "maxhealth": 200.0,
+            "width": 1.0,
+            "height": 0.07000000029802322,
+            "frametexture": 0,
+            "healthtexture": 0
+        }
+    },
+    {
+        "entityid": 8388619,
+        "general": {
+            "name": "TrojanHorse",
+            "tagid": 1,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.1890875101089478,
+                "y": 2.1619303226470947,
+                "z": 2.378175735473633
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 140.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -21.596715927124023,
+                "y": -11.085766792297363,
+                "z": 53.013912200927734
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 1,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": false,
+                "z": false
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 1817507058,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 0.3400000035762787,
+                "y": 0.3100000023841858,
+                "z": 0.23000000417232513,
+                "w": 1.0
+            },
+            "castShadow": true,
+            "materialinstance": [
+                "../assets/Compressed/Trojan_Default_BaseColor.ctexture",
+                "../assets/Compressed/Trojan_Normal.ctexture",
+                "../assets/Compressed/Trojan_Metallic.ctexture",
+                "../assets/Compressed/Trojan_Roughness.ctexture",
+                "../assets/Compressed/Trojan_Rage_Emissive.ctexture",
+                "../assets/Compressed/Trojan_AO.ctexture"
+            ],
+            "mesh": "../assets/compiled_geom/Trojan05.geom",
+            "texturerefid": [
+                1940192559,
+                4213568630,
+                1301958460,
+                3973318747,
+                1469951046,
+                748184727
+            ]
+        },
+        "animator": {},
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 0.8999999761581421,
+                "z": 0.8500000238418579
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 1.100000023841858,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/TrojanHorse.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "(3D) horse_3.wav",
+            "fullpath": "../assets\\Audio/(3D) horse_3.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false
+        },
+        "prefab": {
+            "prefab": "TrojanHorse"
+        },
+        "aisetting": {
+            "movementtype": 1,
+            "spreadout": 0.0,
+            "stayaway": 0.0,
+            "elevation": 0.0,
+            "targetname": "Camera",
+            "graphdataname": ""
+        },
+        "healthbar": {
+            "healthcolor": {
+                "x": 0.0,
+                "y": 1.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "backcolor": {
+                "x": 1.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "position": {
+                "x": 0.0,
+                "y": 2.4000000953674316,
+                "z": 0.0
+            },
+            "maxhealth": 200.0,
+            "width": 1.0,
+            "height": 0.07000000029802322,
+            "frametexture": 0,
+            "healthtexture": 0
+        }
+    },
+    {
+        "entityid": 8388753,
+        "general": {
+            "name": "TrojanHorseChargeAudio",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Enemy_Horse_Charge.wav",
+            "fullpath": "../assets\\Audio/Enemy_Horse_Charge.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false
+        },
+        "prefab": {
+            "prefab": "TrojanHorseChargeAudio"
+        }
+    },
+    {
+        "entityid": 8388764,
+        "general": {
+            "name": "EnemyDeathAudio",
+            "tagid": 8,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Enemy_Death.wav",
+            "fullpath": "../assets\\Audio/Enemy_Death.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 0.25,
+            "retainaudio": false
+        },
+        "prefab": {
+            "prefab": "EnemyDeathAudio"
+        }
+    },
+    {
+        "entityid": 8388765,
+        "general": {
+            "name": "ILOVEYOU",
+            "tagid": 1,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 2.0889999866485596,
+                "y": 1.470267415046692,
+                "z": 0.6134020686149597
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": -137.41400146484375,
+                "z": 3.1343226432800293
+            },
+            "translate": {
+                "x": 16.44435691833496,
+                "y": -4.684450626373291,
+                "z": 58.79777908325195
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 1,
+            "velocity": {
+                "x": -0.009809613227844238,
+                "y": -0.04189608246088028,
+                "z": 0.17683911323547363
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": false,
+                "z": false
+            },
+            "gravity": false
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 1383853127,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 0.29556649923324585,
+                "z": 0.29556649923324585,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 0.6200000047683716,
+                "y": 0.009999999776482582,
+                "z": 0.10999999940395355,
+                "w": 0.8600000143051147
+            },
+            "castShadow": true,
+            "materialinstance": [
+                "../assets/Compressed/ILY_BaseColor.ctexture",
+                "../assets/Compressed/ILY_Normal.ctexture",
+                "../assets/Compressed/ILY_Metallic.ctexture",
+                "../assets/Compressed/ILY_Roughness.ctexture",
+                "../assets/Compressed/ILY_Emissive.ctexture",
+                "../assets/Compressed/ILY_AO.ctexture"
+            ],
+            "mesh": "../assets/compiled_geom/ILY_attack.geom",
+            "texturerefid": [
+                3245335065,
+                571906946,
+                2361540176,
+                3651022823,
+                660779078,
+                3279126427
+            ]
+        },
+        "animator": {},
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 0.800000011920929,
+                "y": 0.800000011920929,
+                "z": 0.699999988079071
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.8999999761581421,
+                "z": 0.10000000149011612
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/ILOVEYOU.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Enemy_ILY_ShootArrow.wav",
+            "fullpath": "../assets\\Audio/Enemy_ILY_ShootArrow.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false
+        },
+        "prefab": {
+            "prefab": "ILOVEYOU"
+        },
+        "aisetting": {
+            "movementtype": 2,
+            "spreadout": 0.0,
+            "stayaway": 6.0,
+            "elevation": 2.0,
+            "targetname": "Camera",
+            "graphdataname": "FlyingPath"
         },
         "healthbar": {
             "healthcolor": {
@@ -122,17 +511,151 @@
             "position": {
                 "x": 0.0,
                 "y": 1.7000000476837158,
-                "z": -0.10000000149011612
+                "z": 0.0
             },
             "maxhealth": 100.0,
-            "width": 0.800000011920929,
+            "width": 1.399999976158142,
             "height": 0.07000000029802322,
             "frametexture": 0,
             "healthtexture": 0
         }
     },
     {
-        "entityid": 253,
+        "entityid": 8388766,
+        "general": {
+            "name": "AtrojanSoldier",
+            "tagid": 1,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.800000011920929,
+                "y": 1.2000000476837158,
+                "z": 0.800000011920929
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": -0.00037513364804908633,
+                "z": 3.1415772438049316
+            },
+            "translate": {
+                "x": -6.889529228210449,
+                "y": -6.43006706237793,
+                "z": 20.547094345092773
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 1,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": false,
+                "z": false
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3309,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0093556642532349,
+                "z": 0.2118937075138092,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 0.3499999940395355,
+                "y": 0.36000001430511475,
+                "z": 0.10999999940395355,
+                "w": 1.0
+            },
+            "castShadow": true,
+            "materialinstance": [
+                "../assets/Compressed/Trojan_Soldier_BaseColor.ctexture",
+                "../assets/Compressed/Trojan_Soldier_Normal.ctexture",
+                "../assets/Compressed/Trojan_Soldier_Metallic.ctexture",
+                "../assets/Compressed/Trojan_Soldier_Roughness.ctexture",
+                "../assets/Compressed/Trojan_Soldier_Emissive.ctexture",
+                "../assets/Compressed/Trojan_Soldier_AO.ctexture"
+            ],
+            "mesh": "../assets/compiled_geom/Trojan_Soldier.geom",
+            "texturerefid": [
+                602447454,
+                2438310811,
+                2305639413,
+                1216284744,
+                928397263,
+                736177602
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 0.800000011920929,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": -0.07999999821186066,
+                "y": 0.5299999713897705,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/NewEnemy.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "prefab": {
+            "prefab": "AtrojanS"
+        },
+        "aisetting": {
+            "movementtype": 1,
+            "spreadout": 0.0,
+            "stayaway": 0.0,
+            "elevation": 0.0,
+            "targetname": "Camera",
+            "graphdataname": ""
+        },
+        "healthbar": {
+            "healthcolor": {
+                "x": 0.0,
+                "y": 1.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "backcolor": {
+                "x": 1.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "position": {
+                "x": 0.0,
+                "y": 1.5,
+                "z": 0.0
+            },
+            "maxhealth": 100.0,
+            "width": 0.30000001192092896,
+            "height": 0.07000000029802322,
+            "frametexture": 0,
+            "healthtexture": 0
+        }
+    },
+    {
+        "entityid": 8388767,
         "general": {
             "name": "AHorse",
             "tagid": 1,
@@ -277,286 +800,7 @@
         }
     },
     {
-        "entityid": 254,
-        "general": {
-            "name": "AtrojanSoldier",
-            "tagid": 1,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.800000011920929,
-                "y": 1.2000000476837158,
-                "z": 0.800000011920929
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": -0.00037513364804908633,
-                "z": 3.1415772438049316
-            },
-            "translate": {
-                "x": -6.889529228210449,
-                "y": -6.43006706237793,
-                "z": 20.547094345092773
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 1,
-            "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": true,
-                "y": false,
-                "z": false
-            },
-            "gravity": true
-        },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 3309,
-            "instancecolor": {
-                "x": 1.0,
-                "y": 1.0093556642532349,
-                "z": 0.2118937075138092,
-                "w": 1.0
-            },
-            "bloomthreshold": {
-                "x": 0.3499999940395355,
-                "y": 0.36000001430511475,
-                "z": 0.10999999940395355,
-                "w": 1.0
-            },
-            "castShadow": true,
-            "materialinstance": [
-                "../assets/Compressed/Trojan_Soldier_BaseColor.ctexture",
-                "../assets/Compressed/Trojan_Soldier_Normal.ctexture",
-                "../assets/Compressed/Trojan_Soldier_Metallic.ctexture",
-                "../assets/Compressed/Trojan_Soldier_Roughness.ctexture",
-                "../assets/Compressed/Trojan_Soldier_Emissive.ctexture",
-                "../assets/Compressed/Trojan_Soldier_AO.ctexture"
-            ],
-            "mesh": "../assets/compiled_geom/Trojan_Soldier.geom",
-            "texturerefid": [
-                602447454,
-                2438310811,
-                2305639413,
-                1216284744,
-                928397263,
-                736177602
-            ]
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 0.800000011920929,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "translateoffset": {
-                "x": -0.07999999821186066,
-                "y": 0.5299999713897705,
-                "z": 0.0
-            },
-            "istrigger": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/NewEnemy.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "prefab": {
-            "prefab": "AtrojanS"
-        },
-        "aisetting": {
-            "movementtype": 1,
-            "spreadout": 0.0,
-            "stayaway": 0.0,
-            "elevation": 0.0,
-            "targetname": "Camera",
-            "graphdataname": ""
-        },
-        "healthbar": {
-            "healthcolor": {
-                "x": 0.0,
-                "y": 1.0,
-                "z": 0.0,
-                "w": 1.0
-            },
-            "backcolor": {
-                "x": 1.0,
-                "y": 0.0,
-                "z": 0.0,
-                "w": 1.0
-            },
-            "position": {
-                "x": 0.0,
-                "y": 1.5,
-                "z": 0.0
-            },
-            "maxhealth": 100.0,
-            "width": 0.30000001192092896,
-            "height": 0.07000000029802322,
-            "frametexture": 0,
-            "healthtexture": 0
-        }
-    },
-    {
-        "entityid": 255,
-        "general": {
-            "name": "Azipbomb",
-            "tagid": 1,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 2.0889999866485596,
-                "y": 1.470267415046692,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 8.947564125061035,
-                "z": 3.1415927410125732
-            },
-            "translate": {
-                "x": 14.052274703979492,
-                "y": -6.060730934143066,
-                "z": 8.809492111206055
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 1,
-            "velocity": {
-                "x": 0.7603335380554199,
-                "y": -0.7359720468521118,
-                "z": 4.824504375457764
-            },
-            "rotationconstraints": {
-                "x": true,
-                "y": false,
-                "z": false
-            },
-            "gravity": false
-        },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 2561,
-            "instancecolor": {
-                "x": 1.0,
-                "y": 1.0093556642532349,
-                "z": 0.2118937075138092,
-                "w": 1.0
-            },
-            "bloomthreshold": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "castShadow": true,
-            "materialinstance": [
-                "../assets/Compressed/ZipBomb_BaseColor.ctexture",
-                "../assets/Compressed/ZipBomb_Normal.ctexture",
-                "../assets/Compressed/ZipBomb_Metallic.ctexture",
-                "../assets/Compressed/ZipBomb_Roughness.ctexture",
-                "../assets/Compressed/ZipBomb_Emissive.ctexture",
-                "../assets/Compressed/ZipBomb_AO.ctexture"
-            ],
-            "mesh": "../assets/compiled_geom/ZipBomb.geom",
-            "texturerefid": [
-                2348069524,
-                1319533521,
-                2095937491,
-                2888612446,
-                3155337405,
-                2357914544
-            ]
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 0.800000011920929,
-                "y": 0.699999988079071,
-                "z": 0.800000011920929
-            },
-            "translateoffset": {
-                "x": 0.10000000149011612,
-                "y": 0.8199999928474426,
-                "z": 0.0
-            },
-            "istrigger": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/NewEnemy.lua",
-                    "variables": []
-                },
-                {
-                    "scriptFile": "..\\assets\\Scripts\\ZipBomb.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "audio": {
-            "filepath": "",
-            "filename": "",
-            "fullpath": "",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 1.0,
-            "retainaudio": false
-        },
-        "aisetting": {
-            "movementtype": 2,
-            "spreadout": 0.0,
-            "stayaway": 0.0,
-            "elevation": 0.0,
-            "targetname": "Camera",
-            "graphdataname": "FlyingPath"
-        },
-        "healthbar": {
-            "healthcolor": {
-                "x": 0.0,
-                "y": 1.0,
-                "z": 0.0,
-                "w": 1.0
-            },
-            "backcolor": {
-                "x": 1.0,
-                "y": 0.0,
-                "z": 0.0,
-                "w": 1.0
-            },
-            "position": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "maxhealth": 100.0,
-            "width": 1.399999976158142,
-            "height": 0.07000000029802322,
-            "frametexture": 0,
-            "healthtexture": 0
-        }
-    },
-    {
-        "entityid": 256,
+        "entityid": 8388768,
         "general": {
             "name": "ILOVEYOU",
             "tagid": 1,
@@ -568,17 +812,17 @@
             "scale": {
                 "x": 2.0889999866485596,
                 "y": 1.470267415046692,
-                "z": 0.6134020686149597
+                "z": 0.6134024262428284
             },
             "rotate": {
                 "x": 0.0,
-                "y": 11.655595779418945,
-                "z": 3.1343226432800293
+                "y": 0.0,
+                "z": 0.0
             },
             "translate": {
-                "x": 10.001091957092285,
-                "y": -10.269059181213379,
-                "z": -6.739625453948975
+                "x": 5.001315593719482,
+                "y": -3.8853721618652344,
+                "z": -13.3790922164917
             }
         },
         "rigidbody": {
@@ -586,9 +830,9 @@
             "material": 1,
             "motion": 1,
             "velocity": {
-                "x": -0.009809613227844238,
-                "y": -0.04189608246088028,
-                "z": 0.17683911323547363
+                "x": -12.324732780456543,
+                "y": -11.139036178588867,
+                "z": -15.685152053833008
             },
             "rotationconstraints": {
                 "x": true,
@@ -622,7 +866,7 @@
                 "../assets/Compressed/ILY_Emissive.ctexture",
                 "../assets/Compressed/ILY_AO.ctexture"
             ],
-            "mesh": "../assets/compiled_geom/ILY_attack.geom",
+            "mesh": "../assets/compiled_geom/ILY.geom",
             "texturerefid": [
                 3245335065,
                 571906946,
@@ -653,16 +897,6 @@
                     "variables": []
                 }
             ]
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "Enemy_ILY_ShootArrow.wav",
-            "fullpath": "../assets\\Audio/Enemy_ILY_ShootArrow.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 1.0,
-            "retainaudio": false
         },
         "prefab": {
             "prefab": "ILOVEYOU"
@@ -701,9 +935,9 @@
         }
     },
     {
-        "entityid": 257,
+        "entityid": 8388769,
         "general": {
-            "name": "ZipBomb",
+            "name": "ILOVEYOU",
             "tagid": 1,
             "subtag": 0,
             "isActive": true,
@@ -711,19 +945,19 @@
         },
         "transform": {
             "scale": {
-                "x": 1.999997854232788,
-                "y": 1.7999999523162842,
-                "z": 0.5999997854232788
+                "x": 2.0889999866485596,
+                "y": 1.470267415046692,
+                "z": 0.6134024262428284
             },
             "rotate": {
                 "x": 0.0,
-                "y": 13.851055145263672,
-                "z": 3.127007007598877
+                "y": -56.220001220703125,
+                "z": 0.0
             },
             "translate": {
-                "x": 8.641630172729492,
-                "y": -10.279296875,
-                "z": -6.900109767913818
+                "x": 17.498071670532227,
+                "y": -4.488839149475098,
+                "z": 18.135778427124023
             }
         },
         "rigidbody": {
@@ -731,9 +965,9 @@
             "material": 1,
             "motion": 1,
             "velocity": {
-                "x": -0.007003068923950195,
-                "y": -0.2173433005809784,
-                "z": -0.050774574279785156
+                "x": -12.324732780456543,
+                "y": -11.139036178588867,
+                "z": -15.685152053833008
             },
             "rotationconstraints": {
                 "x": true,
@@ -745,78 +979,68 @@
         "meshrenderer": {
             "vert": "../assets/shader_files/pointLight_vert.glsl",
             "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 2561,
+            "meshrefid": 1383853127,
             "instancecolor": {
                 "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
+                "y": 0.29556649923324585,
+                "z": 0.29556649923324585,
                 "w": 1.0
             },
             "bloomthreshold": {
-                "x": 0.4399999976158142,
-                "y": 0.0,
-                "z": 1.0,
-                "w": 1.0
+                "x": 0.6200000047683716,
+                "y": 0.009999999776482582,
+                "z": 0.10999999940395355,
+                "w": 0.8600000143051147
             },
             "castShadow": true,
             "materialinstance": [
-                "../assets/Compressed/ZipBomb_BaseColor.ctexture",
-                "../assets/Compressed/ZipBomb_Normal.ctexture",
-                "../assets/Compressed/ZipBomb_Metallic.ctexture",
-                "../assets/Compressed/ZipBomb_Roughness.ctexture",
-                "../assets/Compressed/ZipBomb_Emissive.ctexture",
-                "../assets/Compressed/ZipBomb_AO.ctexture"
+                "../assets/Compressed/ILY_BaseColor.ctexture",
+                "../assets/Compressed/ILY_Normal.ctexture",
+                "../assets/Compressed/ILY_Metallic.ctexture",
+                "../assets/Compressed/ILY_Roughness.ctexture",
+                "../assets/Compressed/ILY_Emissive.ctexture",
+                "../assets/Compressed/ILY_AO.ctexture"
             ],
-            "mesh": "../assets/compiled_geom/ZipBomb.geom",
+            "mesh": "../assets/compiled_geom/ILY.geom",
             "texturerefid": [
-                2348069524,
-                1319533521,
-                2095937491,
-                2888612446,
-                3155337405,
-                2357914544
+                3245335065,
+                571906946,
+                2361540176,
+                3651022823,
+                660779078,
+                3279126427
             ]
         },
         "animator": {},
         "boxcollider": {
             "scaleoffset": {
-                "x": 0.8999999761581421,
-                "y": 0.75,
+                "x": 0.800000011920929,
+                "y": 0.800000011920929,
                 "z": 0.699999988079071
             },
             "translateoffset": {
                 "x": 0.0,
-                "y": 1.0499999523162842,
-                "z": 0.019999999552965164
+                "y": 0.8999999761581421,
+                "z": 0.10000000149011612
             },
             "istrigger": false
         },
         "scripts": {
             "scriptscontainer": [
                 {
-                    "scriptFile": "../assets/Scripts/ZipBomb.lua",
+                    "scriptFile": "../assets/Scripts/ILOVEYOU.lua",
                     "variables": []
                 }
             ]
         },
-        "audio": {
-            "filepath": "",
-            "filename": "",
-            "fullpath": "",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 1.0,
-            "retainaudio": false
-        },
         "prefab": {
-            "prefab": "ZipBomb"
+            "prefab": "ILOVEYOU"
         },
         "aisetting": {
             "movementtype": 2,
             "spreadout": 0.0,
-            "stayaway": 0.0,
-            "elevation": 0.0,
+            "stayaway": 6.0,
+            "elevation": 2.0,
             "targetname": "Camera",
             "graphdataname": "FlyingPath"
         },
@@ -834,8 +1058,8 @@
                 "w": 1.0
             },
             "position": {
-                "x": -0.029999999329447746,
-                "y": 2.0,
+                "x": 0.0,
+                "y": 1.7000000476837158,
                 "z": 0.0
             },
             "maxhealth": 100.0,
@@ -846,138 +1070,9 @@
         }
     },
     {
-        "entityid": 258,
+        "entityid": 8388770,
         "general": {
-            "name": "EnemyDeathAudio",
-            "tagid": 8,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "Enemy_Death.wav",
-            "fullpath": "../assets\\Audio/Enemy_Death.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 0.25,
-            "retainaudio": false
-        },
-        "prefab": {
-            "prefab": "EnemyDeathAudio"
-        }
-    },
-    {
-        "entityid": 259,
-        "general": {
-            "name": "ZipBombFuseAudio",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "Enemy_Zipbomb_Fuse.wav",
-            "fullpath": "../assets\\Audio/Enemy_Zipbomb_Fuse.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 1.0,
-            "retainaudio": false
-        },
-        "prefab": {
-            "prefab": "ZipBombFuseAudio"
-        }
-    },
-    {
-        "entityid": 260,
-        "general": {
-            "name": "TrojanHorseChargeAudio",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "Enemy_Horse_Charge.wav",
-            "fullpath": "../assets\\Audio/Enemy_Horse_Charge.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 1.0,
-            "retainaudio": false
-        },
-        "prefab": {
-            "prefab": "TrojanHorseChargeAudio"
-        }
-    },
-    {
-        "entityid": 261,
-        "general": {
-            "name": "Melissa (AUDIO TEST)",
+            "name": "ILOVEYOU",
             "tagid": 1,
             "subtag": 0,
             "isActive": true,
@@ -985,19 +1080,19 @@
         },
         "transform": {
             "scale": {
-                "x": 1.162500262260437,
-                "y": 1.4500325918197632,
-                "z": 0.6006437540054321
+                "x": 2.0889999866485596,
+                "y": 1.470267415046692,
+                "z": 0.613402247428894
             },
             "rotate": {
                 "x": 0.0,
-                "y": 81.29310607910156,
+                "y": 14.640000343322754,
                 "z": 0.0
             },
             "translate": {
-                "x": 15.983266830444336,
-                "y": -11.199999809265137,
-                "z": 25.948143005371094
+                "x": -18.314735412597656,
+                "y": -4.340559959411621,
+                "z": 10.371302604675293
             }
         },
         "rigidbody": {
@@ -1005,91 +1100,84 @@
             "material": 1,
             "motion": 1,
             "velocity": {
-                "x": -0.12141484022140503,
-                "y": 0.0,
-                "z": -0.06764189898967743
+                "x": -12.324732780456543,
+                "y": -11.139036178588867,
+                "z": -15.685152053833008
             },
             "rotationconstraints": {
                 "x": true,
-                "y": true,
-                "z": true
+                "y": false,
+                "z": false
             },
-            "gravity": true
+            "gravity": false
         },
         "meshrenderer": {
             "vert": "../assets/shader_files/pointLight_vert.glsl",
             "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 2588,
+            "meshrefid": 1383853127,
             "instancecolor": {
                 "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
+                "y": 0.29556649923324585,
+                "z": 0.29556649923324585,
                 "w": 1.0
             },
             "bloomthreshold": {
-                "x": 0.17000000178813934,
-                "y": 0.20999999344348907,
-                "z": 0.3100000023841858,
-                "w": 1.0
+                "x": 0.6200000047683716,
+                "y": 0.009999999776482582,
+                "z": 0.10999999940395355,
+                "w": 0.8600000143051147
             },
             "castShadow": true,
             "materialinstance": [
-                "../assets/Compressed/Melissa_BaseColor.ctexture",
-                "../assets/Compressed/Melissa_Normal.ctexture",
-                "../assets/Compressed/Melissa_Metallic.ctexture",
-                "../assets/Compressed/Melissa_Roughness.ctexture",
-                "../assets/Compressed/Melissa_Emissive.ctexture",
-                "../assets/Compressed/Melissa_AO.ctexture"
+                "../assets/Compressed/ILY_BaseColor.ctexture",
+                "../assets/Compressed/ILY_Normal.ctexture",
+                "../assets/Compressed/ILY_Metallic.ctexture",
+                "../assets/Compressed/ILY_Roughness.ctexture",
+                "../assets/Compressed/ILY_Emissive.ctexture",
+                "../assets/Compressed/ILY_AO.ctexture"
             ],
-            "mesh": "../assets/compiled_geom/Melissa_attack.geom",
+            "mesh": "../assets/compiled_geom/ILY.geom",
             "texturerefid": [
-                1322168031,
-                1820887936,
-                2908106086,
-                2866962469,
-                2759371044,
-                2018461449
+                3245335065,
+                571906946,
+                2361540176,
+                3651022823,
+                660779078,
+                3279126427
             ]
         },
         "animator": {},
-        "capsulecollider": {
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 0.800000011920929,
+                "y": 0.800000011920929,
+                "z": 0.699999988079071
+            },
             "translateoffset": {
                 "x": 0.0,
-                "y": 0.75,
-                "z": -0.30000001192092896
+                "y": 0.8999999761581421,
+                "z": 0.10000000149011612
             },
-            "radius": 0.5,
-            "halfheight": 0.25,
             "istrigger": false
         },
         "scripts": {
             "scriptscontainer": [
                 {
-                    "scriptFile": "../assets/Scripts/Melissa.lua",
+                    "scriptFile": "../assets/Scripts/ILOVEYOU.lua",
                     "variables": []
                 }
             ]
         },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "(3D) Enemy_Melissa_Split.wav",
-            "fullpath": "../assets\\Audio/(3D) Enemy_Melissa_Split.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 1.0,
-            "retainaudio": false
-        },
         "prefab": {
-            "prefab": "Melissa"
+            "prefab": "ILOVEYOU"
         },
         "aisetting": {
-            "movementtype": 1,
+            "movementtype": 2,
             "spreadout": 0.0,
-            "stayaway": 0.0,
-            "elevation": 0.0,
+            "stayaway": 6.0,
+            "elevation": 2.0,
             "targetname": "Camera",
-            "graphdataname": "GroundPath"
+            "graphdataname": "FlyingPath"
         },
         "healthbar": {
             "healthcolor": {
@@ -1107,10 +1195,155 @@
             "position": {
                 "x": 0.0,
                 "y": 1.7000000476837158,
-                "z": -0.10000000149011612
+                "z": 0.0
+            },
+            "maxhealth": 100.0,
+            "width": 1.399999976158142,
+            "height": 0.07000000029802322,
+            "frametexture": 0,
+            "healthtexture": 0
+        }
+    },
+    {
+        "entityid": 8388771,
+        "general": {
+            "name": "TrojanHorse",
+            "tagid": 1,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.1890875101089478,
+                "y": 2.161978244781494,
+                "z": 2.378175735473633
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 45.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -12.71915054321289,
+                "y": -11.036767959594727,
+                "z": -14.930480003356934
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 1,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": false,
+                "z": false
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 1817507058,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 0.3400000035762787,
+                "y": 0.3100000023841858,
+                "z": 0.23000000417232513,
+                "w": 1.0
+            },
+            "castShadow": true,
+            "materialinstance": [
+                "../assets/Compressed/Trojan_Default_BaseColor.ctexture",
+                "../assets/Compressed/Trojan_Normal.ctexture",
+                "../assets/Compressed/Trojan_Metallic.ctexture",
+                "../assets/Compressed/Trojan_Roughness.ctexture",
+                "../assets/Compressed/Trojan_Rage_Emissive.ctexture",
+                "../assets/Compressed/Trojan_AO.ctexture"
+            ],
+            "mesh": "../assets/compiled_geom/Trojan05.geom",
+            "texturerefid": [
+                1940192559,
+                4213568630,
+                1301958460,
+                3973318747,
+                1469951046,
+                748184727
+            ]
+        },
+        "animator": {},
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 0.8999999761581421,
+                "z": 0.8500000238418579
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 1.100000023841858,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/TrojanHorse.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "(3D) horse_3.wav",
+            "fullpath": "../assets\\Audio/(3D) horse_3.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false
+        },
+        "prefab": {
+            "prefab": "TrojanHorse"
+        },
+        "aisetting": {
+            "movementtype": 1,
+            "spreadout": 0.0,
+            "stayaway": 0.0,
+            "elevation": 0.0,
+            "targetname": "Camera",
+            "graphdataname": ""
+        },
+        "healthbar": {
+            "healthcolor": {
+                "x": 0.0,
+                "y": 1.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "backcolor": {
+                "x": 1.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "position": {
+                "x": 0.0,
+                "y": 2.4000000953674316,
+                "z": 0.0
             },
             "maxhealth": 200.0,
-            "width": 0.800000011920929,
+            "width": 1.0,
             "height": 0.07000000029802322,
             "frametexture": 0,
             "healthtexture": 0
