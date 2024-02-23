@@ -373,13 +373,23 @@ void LuaVFX()
         "SetEntityBloomThreshold", &VFX::SetEntityBloomThreshold);
 }
 
-void LuaGameState()
+void LuaGameStateManager()
 {
     systemManager->mScriptingSystem->luaState.new_usertype<GameStateManager>(
         "mGameStateSystem", sol::constructors<>(),
         "GetEntity", sol::resolve<Entity(std::string const &)>(&GameStateManager::GetEntity),
         "GetEntityByScene", sol::resolve<Entity(std::string const &, std::string const &)>(&GameStateManager::GetEntity),
-        "ChangeGameState", sol::resolve<void(const std::string &)>(&GameStateManager::ChangeGameState));
+        "ChangeGameState", sol::resolve<void(const std::string &)>(&GameStateManager::ChangeGameState),
+        "GetPrevGSName", &GameStateManager::GetPrevGSName,
+        "GetCurrentGameState", &GameStateManager::GetCurrentGameState);
+}
+
+void LuaGameState()
+{
+    systemManager->mScriptingSystem->luaState.new_usertype<GameState>(
+        "GameState", sol::constructors<>(),
+        "mName", &GameState::mName
+        );
 }
 
 void LuaAIManager()
