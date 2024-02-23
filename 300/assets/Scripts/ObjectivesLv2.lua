@@ -15,6 +15,7 @@ local mobSpawnPos1 = Vec3.new()
 local mobSpawnPos2 = Vec3.new()
 local mobSpawnPos3 = Vec3.new()
 local mobSpawnPos4 = Vec3.new()
+local mobspawnpoint = Vec3.new()
 
 local objectiveBarSpawnPos = Vec3.new()
 local objCount = 0
@@ -33,21 +34,21 @@ function Alive()
     this = Helper.GetScriptEntity(script_entity.id)
     progress = 0
 
-    mobSpawnPos1.x = 57;
-    mobSpawnPos1.y = 55;
-    mobSpawnPos1.z = 86;
+    mobSpawnPos1.x = 21;
+    mobSpawnPos1.y = 47;
+    mobSpawnPos1.z = 24;
 
-    mobSpawnPos2.x = -57;
-    mobSpawnPos2.y = 55;
-    mobSpawnPos2.z = 86;
+    mobSpawnPos2.x = -20;
+    mobSpawnPos2.y = 47;
+    mobSpawnPos2.z = 36;
 
-    mobSpawnPos3.x = -66;
-    mobSpawnPos3.y = 55;
-    mobSpawnPos3.z = -33;
+    mobSpawnPos3.x = -11;
+    mobSpawnPos3.y = 47;
+    mobSpawnPos3.z = 61;
 
-    mobSpawnPos4.x = 55;
-    mobSpawnPos4.y = 55;
-    mobSpawnPos4.z = -29;
+    mobSpawnPos4.x = -28;
+    mobSpawnPos4.y = 47;
+    mobSpawnPos4.z = 0;
 end
 
 function Update()
@@ -110,15 +111,26 @@ function Update()
 
         if currentEnemyCount < maxEnemyCount and currentSpawnTimer > spawnTimer then
             mobtype = math.random(1, 4) -- generate a random number to spawn a random enemy between Trojan and Melissa only (for level 1)
+            local mobspawnpoint_rand = math.random(1, 4)
+
+                if(mobspawnpoint_rand == 1) then
+                    mobspawnpoint = mobSpawnPos1
+                elseif(mobspawnpoint_rand == 2) then
+                    mobspawnpoint = mobSpawnPos2
+                elseif(mobspawnpoint_rand == 3) then
+                    mobspawnpoint = mobSpawnPos3
+                elseif(mobspawnpoint_rand == 4) then
+                    mobspawnpoint = mobSpawnPos4
+                end
 
                 if (mobtype == 1) then 
-                    systemManager.ecs:NewEntityFromPrefab("ILOVEYOU", mobSpawnPos1) 
+                    systemManager.ecs:NewEntityFromPrefab("ILOVEYOU", mobspawnpoint) 
                 elseif (mobtype == 2) then 
-                    systemManager.ecs:NewEntityFromPrefab("Melissa", mobSpawnPos2) 
+                    systemManager.ecs:NewEntityFromPrefab("Melissa", mobspawnpoint) 
                 elseif (mobtype == 3) then 
-                    systemManager.ecs:NewEntityFromPrefab("TrojanHorse", mobSpawnPos3) 
+                    systemManager.ecs:NewEntityFromPrefab("TrojanHorse", mobspawnpoint) 
                 elseif (mobtype == 4) then 
-                    systemManager.ecs:NewEntityFromPrefab("ZipBomb", mobSpawnPos4)
+                    systemManager.ecs:NewEntityFromPrefab("ZipBomb", mobspawnpoint)
                 end
             currentEnemyCount = currentEnemyCount + 1
             currentSpawnTimer = 0 -- reset currentSpawnTimer so that next enemy can spawn

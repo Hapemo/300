@@ -65,8 +65,7 @@ end
 local timer = 0
 function Update()
     -- If trojan horse epic intro is between state 4 and 6, return
-    if _G.TrojanHorseEpicIntroState >= 4 or _G.TrojanHorseEpicIntroState <= 6 then return end 
-
+    
     -- dt = FPSManager.GetDT()
 
     -- timer = timer - dt 
@@ -84,6 +83,7 @@ function Update()
 
     -- STATE MACHINE
     if state == "ROAM" then         -- roam around and passively look for player (change to 2. when sees player)
+        -- print("state == ROAM")
         -- Roam around randomly
         s1Timer = s1Timer + FPSManager.GetDT()
         this:GetTransform().mRotate.y = Helper.DirectionToAngle(this, s1RoamVelocity)
@@ -100,6 +100,7 @@ function Update()
         end
 
     elseif state == "CHARGE" then   -- saw player, eyes glow red, play some charge up noise, delay about 3 seconds before charging to player (change to 3. when delay ends)
+        -- print("state == CHARGE")
         -- Play animation for eyes glowing red        
         
         -- Constantly make him stare at player and stand still
@@ -123,6 +124,7 @@ function Update()
         end
 
     elseif state == "SPRINT" then   -- charge toward last seen player position at high speed (change to 4. when collided with something)
+        -- print("state == SPRINT")
         -- Charge towards last seen player position at high speed
         phySys:SetVelocity(this, s3SprintVelocity);
         this:GetTransform().mRotate.y = Helper.DirectionToAngle(this, stareDirection)
@@ -130,6 +132,7 @@ function Update()
         -- This part is done in OnContactEnter
 
     elseif state == "REST" then     -- stops for some time before moving back to 1. (change to 1. when rest timer ends)
+        -- print("state == REST")
         this:GetTransform().mRotate.y = Helper.DirectionToAngle(this, stareDirection)
         s4RestTimerCount = s4RestTimerCount + FPSManager.GetDT()
         if s4RestTimerCount > s4RestTimer then
