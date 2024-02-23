@@ -723,11 +723,11 @@ function Update()
 -- endregion
 
         if(inputMapSys:GetButtonDown("Shoot")) then
-            print("MINUS HEALTH")
-            playerHealthCurrent = playerHealthCurrent - 20
-            if playerHealthCurrent > playerHealthMax then
-                playerHealthCurrent = playerHealthMax
-            end
+            -- print("MINUS HEALTH")
+            -- playerHealthCurrent = playerHealthCurrent - 20
+            -- if playerHealthCurrent > playerHealthMax then
+            --     playerHealthCurrent = playerHealthMax
+            -- end
             gunHoldState = "HOLDING"   -- for machine gun
 
             if(_G.gunEquipped == 0) then 
