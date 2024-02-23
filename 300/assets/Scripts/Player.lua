@@ -178,6 +178,8 @@ local maxFilterRadius = 0.05
 local dmgAudioEnt 
 local dmgAudioComp 
    
+_G.FreezePlayerControl = false
+
 
 function Alive()
     this = Helper.GetScriptEntity(script_entity.id)
@@ -256,6 +258,8 @@ function Alive()
 end
 
 function Update()
+    if _G.FreezePlayerControl then return end
+
     healthbar = gameStateSys:GetEntityByScene("Health Bar","Objectives")
 
     -- Player Health System Start -- 
@@ -370,6 +374,9 @@ function Update()
 --endregion
 
 
+-- def interpolatecam(vec3 finaltargetpos)
+-- vec3 currtarget = Camera_Scripting.GetTarget(cameraEntity)
+-- (finaltargetpos - currtarget)*dt*speed
 
 --region -- Player movements
     -- use '.' to reference variable

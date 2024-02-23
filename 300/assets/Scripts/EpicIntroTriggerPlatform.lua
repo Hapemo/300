@@ -1,5 +1,7 @@
 -- This script controls the activation of enemy script based on EpicIntroTriggerPlatform.lua
 
+_G.gameStateSys = systemManager:mGameStateSystem()
+
 local name
 local this
 local targetEnemy
