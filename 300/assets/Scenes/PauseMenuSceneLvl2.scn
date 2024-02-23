@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 1048761,
+        "entityid": 3145734,
         "general": {
             "name": "PauseMenuController",
             "tagid": 0,
@@ -50,7 +50,7 @@
         }
     },
     {
-        "entityid": 1048762,
+        "entityid": 3145736,
         "general": {
             "name": "HTPMenu",
             "tagid": 6,
@@ -91,7 +91,7 @@
         }
     },
     {
-        "entityid": 1048763,
+        "entityid": 3145737,
         "general": {
             "name": "RestartButton",
             "tagid": 6,
@@ -157,7 +157,7 @@
         }
     },
     {
-        "entityid": 1048764,
+        "entityid": 3145738,
         "general": {
             "name": "Exit",
             "tagid": 0,
@@ -194,7 +194,7 @@
         }
     },
     {
-        "entityid": 1048765,
+        "entityid": 3145739,
         "general": {
             "name": "HTPButton",
             "tagid": 6,
@@ -263,7 +263,7 @@
         }
     },
     {
-        "entityid": 1048766,
+        "entityid": 3145740,
         "general": {
             "name": "ResumeButton",
             "tagid": 6,
@@ -332,7 +332,7 @@
         }
     },
     {
-        "entityid": 1048767,
+        "entityid": 3145742,
         "general": {
             "name": "Awake",
             "tagid": 0,
@@ -369,7 +369,7 @@
         }
     },
     {
-        "entityid": 1048768,
+        "entityid": 3145743,
         "general": {
             "name": "QuitButton",
             "tagid": 6,
@@ -435,7 +435,7 @@
         }
     },
     {
-        "entityid": 1048769,
+        "entityid": 3145744,
         "general": {
             "name": "Click",
             "tagid": 6,
@@ -472,7 +472,7 @@
         }
     },
     {
-        "entityid": 1048770,
+        "entityid": 3145745,
         "general": {
             "name": "MainMenuButton",
             "tagid": 6,
@@ -538,7 +538,7 @@
         }
     },
     {
-        "entityid": 1048771,
+        "entityid": 3145746,
         "general": {
             "name": "BackButton",
             "tagid": 0,
@@ -604,7 +604,7 @@
         }
     },
     {
-        "entityid": 1048772,
+        "entityid": 3145747,
         "general": {
             "name": "MenuBackground",
             "tagid": 6,

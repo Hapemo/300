@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 5,
+        "entityid": 3145757,
         "general": {
             "name": "dashui",
             "tagid": 0,
@@ -41,7 +41,7 @@
         }
     },
     {
-        "entityid": 6,
+        "entityid": 3145758,
         "general": {
             "name": "P2",
             "tagid": 0,
@@ -82,7 +82,7 @@
         }
     },
     {
-        "entityid": 7,
+        "entityid": 3145759,
         "general": {
             "name": "P8",
             "tagid": 0,
@@ -123,7 +123,7 @@
         }
     },
     {
-        "entityid": 8,
+        "entityid": 3145760,
         "general": {
             "name": "P7",
             "tagid": 0,
@@ -164,7 +164,7 @@
         }
     },
     {
-        "entityid": 9,
+        "entityid": 3145761,
         "general": {
             "name": "P6",
             "tagid": 0,
@@ -205,9 +205,9 @@
         }
     },
     {
-        "entityid": 10,
+        "entityid": 3145762,
         "general": {
-            "name": "P5",
+            "name": "",
             "tagid": 0,
             "subtag": 0,
             "isActive": true,
@@ -215,8 +215,8 @@
         },
         "transform": {
             "scale": {
-                "x": 0.1041666641831398,
-                "y": -0.18518517911434174,
+                "x": 1.0,
+                "y": 1.0,
                 "z": 1.0
             },
             "rotate": {
@@ -225,8 +225,8 @@
                 "z": 0.0
             },
             "translate": {
-                "x": -0.3229166567325592,
-                "y": -0.7592592835426331,
+                "x": 0.0,
+                "y": 0.0,
                 "z": 0.0
             }
         },
@@ -246,7 +246,7 @@
         }
     },
     {
-        "entityid": 11,
+        "entityid": 3145763,
         "general": {
             "name": "P4",
             "tagid": 0,
@@ -287,7 +287,7 @@
         }
     },
     {
-        "entityid": 12,
+        "entityid": 3145764,
         "general": {
             "name": "P3",
             "tagid": 0,
@@ -328,7 +328,7 @@
         }
     },
     {
-        "entityid": 13,
+        "entityid": 3145766,
         "general": {
             "name": "P1",
             "tagid": 0,
@@ -372,7 +372,7 @@
         }
     },
     {
-        "entityid": 14,
+        "entityid": 3145767,
         "general": {
             "name": "crosshair-3",
             "tagid": 0,
@@ -421,7 +421,7 @@
         }
     },
     {
-        "entityid": 15,
+        "entityid": 3145768,
         "general": {
             "name": "crosshair-4",
             "tagid": 0,
@@ -470,7 +470,7 @@
         }
     },
     {
-        "entityid": 16,
+        "entityid": 3145769,
         "general": {
             "name": "crosshair-2",
             "tagid": 0,
@@ -519,7 +519,7 @@
         }
     },
     {
-        "entityid": 17,
+        "entityid": 3145770,
         "general": {
             "name": "crosshair-1",
             "tagid": 0,
@@ -568,7 +568,7 @@
         }
     },
     {
-        "entityid": 18,
+        "entityid": 3145771,
         "general": {
             "name": "Base",
             "tagid": 0,
@@ -603,7 +603,7 @@
         }
     },
     {
-        "entityid": 19,
+        "entityid": 3145772,
         "general": {
             "name": "Leftshift",
             "tagid": 0,
@@ -623,7 +623,7 @@
                 "z": 0.0
             },
             "translate": {
-                "x": -360.0,
+                "x": -1430.0,
                 "y": -0.5462962985038757,
                 "z": 0.0
             }
@@ -637,7 +637,7 @@
                 "x": 1.0,
                 "y": 1.0,
                 "z": 1.0,
-                "w": 1.0
+                "w": 0.0
             },
             "layer": 0,
             "worldtransform": false
@@ -652,7 +652,7 @@
         }
     },
     {
-        "entityid": 20,
+        "entityid": 3145773,
         "general": {
             "name": "UI-indicator3",
             "tagid": 0,
@@ -704,7 +704,7 @@
         }
     },
     {
-        "entityid": 21,
+        "entityid": 3145774,
         "general": {
             "name": "UI-indicator1",
             "tagid": 0,
@@ -756,7 +756,7 @@
         }
     },
     {
-        "entityid": 22,
+        "entityid": 3145775,
         "general": {
             "name": "UI-indicator24",
             "tagid": 0,
@@ -808,7 +808,7 @@
         }
     },
     {
-        "entityid": 23,
+        "entityid": 3145776,
         "general": {
             "name": "UI-indicator23",
             "tagid": 0,
@@ -860,7 +860,7 @@
         }
     },
     {
-        "entityid": 24,
+        "entityid": 3145777,
         "general": {
             "name": "UI-indicator22",
             "tagid": 0,
@@ -912,7 +912,7 @@
         }
     },
     {
-        "entityid": 25,
+        "entityid": 3145778,
         "general": {
             "name": "UI-indicator21",
             "tagid": 0,
@@ -964,7 +964,7 @@
         }
     },
     {
-        "entityid": 26,
+        "entityid": 3145779,
         "general": {
             "name": "UI-indicator20",
             "tagid": 0,
@@ -1016,7 +1016,7 @@
         }
     },
     {
-        "entityid": 27,
+        "entityid": 3145780,
         "general": {
             "name": "UI-indicator19",
             "tagid": 0,
@@ -1068,7 +1068,7 @@
         }
     },
     {
-        "entityid": 28,
+        "entityid": 3145781,
         "general": {
             "name": "UI-indicator18",
             "tagid": 0,
@@ -1120,7 +1120,7 @@
         }
     },
     {
-        "entityid": 29,
+        "entityid": 3145783,
         "general": {
             "name": "UI-indicator17",
             "tagid": 0,
@@ -1172,7 +1172,7 @@
         }
     },
     {
-        "entityid": 30,
+        "entityid": 3145784,
         "general": {
             "name": "UI-indicator16",
             "tagid": 0,
@@ -1224,7 +1224,7 @@
         }
     },
     {
-        "entityid": 31,
+        "entityid": 3145785,
         "general": {
             "name": "UI-indicator15",
             "tagid": 0,
@@ -1276,7 +1276,7 @@
         }
     },
     {
-        "entityid": 32,
+        "entityid": 3145786,
         "general": {
             "name": "UI-indicator14",
             "tagid": 0,
@@ -1328,7 +1328,7 @@
         }
     },
     {
-        "entityid": 33,
+        "entityid": 3145787,
         "general": {
             "name": "UI-indicator13",
             "tagid": 0,
@@ -1380,7 +1380,7 @@
         }
     },
     {
-        "entityid": 34,
+        "entityid": 3145788,
         "general": {
             "name": "UI-indicator12",
             "tagid": 0,
@@ -1432,7 +1432,7 @@
         }
     },
     {
-        "entityid": 35,
+        "entityid": 3145789,
         "general": {
             "name": "UI-indicator11",
             "tagid": 0,
@@ -1484,7 +1484,7 @@
         }
     },
     {
-        "entityid": 36,
+        "entityid": 3145790,
         "general": {
             "name": "UI-indicator10",
             "tagid": 0,
@@ -1536,7 +1536,7 @@
         }
     },
     {
-        "entityid": 37,
+        "entityid": 3145791,
         "general": {
             "name": "UI-indicator9",
             "tagid": 0,
@@ -1588,7 +1588,7 @@
         }
     },
     {
-        "entityid": 38,
+        "entityid": 3145792,
         "general": {
             "name": "UI-indicator8",
             "tagid": 0,
@@ -1640,7 +1640,7 @@
         }
     },
     {
-        "entityid": 39,
+        "entityid": 3145793,
         "general": {
             "name": "UI-indicator7",
             "tagid": 0,
@@ -1692,7 +1692,7 @@
         }
     },
     {
-        "entityid": 40,
+        "entityid": 3145794,
         "general": {
             "name": "UI-indicator6",
             "tagid": 0,
@@ -1744,7 +1744,7 @@
         }
     },
     {
-        "entityid": 41,
+        "entityid": 3145795,
         "general": {
             "name": "UI-indicator5",
             "tagid": 0,
@@ -1796,7 +1796,7 @@
         }
     },
     {
-        "entityid": 42,
+        "entityid": 3145796,
         "general": {
             "name": "UI-indicator6",
             "tagid": 0,
@@ -1848,7 +1848,7 @@
         }
     },
     {
-        "entityid": 43,
+        "entityid": 3145797,
         "general": {
             "name": "UI-indicator2",
             "tagid": 0,
@@ -1900,7 +1900,7 @@
         }
     },
     {
-        "entityid": 44,
+        "entityid": 3145850,
         "general": {
             "name": "UI-Circle-Pattern",
             "tagid": 0,
@@ -1949,7 +1949,7 @@
         }
     },
     {
-        "entityid": 45,
+        "entityid": 3145875,
         "general": {
             "name": "DamageAudio",
             "tagid": 0,
