@@ -191,7 +191,7 @@ void GraphicsSystem::Update(float dt)
 	// ---------------- PARTICLES WIP ----------------
 	if (Input::CheckKey(E_STATE::RELEASE, E_KEY::F1))
 	{
-		m_Emitter.Emit(1000, glm::normalize(m_EditorCamera.GetRightVector()), glm::normalize(m_EditorCamera.GetUpVector()));
+		m_Emitter.Emit(100, glm::normalize(m_EditorCamera.GetRightVector()), glm::normalize(m_EditorCamera.GetUpVector()));
 	}
 	// Update all particles
 	m_Emitter.Update(dt);
@@ -305,13 +305,29 @@ void GraphicsSystem::Draw(float dt, bool forEditor)
 
 	// Perform blitting over pixel data from Multisample FBO -> intermediate FBO -> Destination FBO
 	BlitMultiSampleToDestinationFBO(*fbo);
-	/*if (forEditor)
-		BlitMultiSampleToDestinationFBO(m_Fbo);
-	else
-		BlitMultiSampleToDestinationFBO(m_GameFbo);*/
 
 	// Compute the light pass with completed G-Buffers
 	ComputeDeferredLight(forEditor);
+
+	// Bind the appropriate FBO
+	if (forEditor)		// Bind Editor FBO
+	{
+		m_Fbo.Bind();
+		m_Fbo.DrawBuffers(true, true);
+	}
+	else				// Bind Game FBO
+	{
+		m_GameFbo.Bind();
+		m_GameFbo.DrawBuffers(true);
+	}
+	glDepthMask(GL_TRUE);
+
+	glEnable(GL_BLEND);			// Enable back blending for later draws
+
+	// Set blend function back to usual for UI rendering
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	// Particles
+	DrawAllParticles();
 	
 	//!< === POST PROCESSING AND UI AREA ===
 	if (!forEditor)
@@ -372,14 +388,10 @@ void GraphicsSystem::Draw(float dt, bool forEditor)
 			m_GameFbo.DrawBuffers(true);
 		}
 
-		DrawAllParticles();
-
 		if (!forEditor)
 		{
 			//!< UI Area
 			{
-				DrawAllPortals(forEditor);	// Draw Portal object
-
 				// Healthbar objects
 				auto healthbarInstances = systemManager->ecs->GetEntitiesWith<Healthbar>();
 				for (Entity inst : healthbarInstances)
@@ -449,19 +461,25 @@ void GraphicsSystem::Draw(float dt, bool forEditor)
 		}
 	}
 
-	// Bind the appropriate FBO
-	if (forEditor)		// Bind Editor FBO
-	{
-		m_Fbo.Bind();
-		m_Fbo.DrawBuffers(true, true);
-	}
-	else				// Bind Game FBO
-	{
-		m_GameFbo.Bind();
-		m_GameFbo.DrawBuffers(true);
-	}
-	// Particles
-	DrawAllParticles();
+	//// Bind the appropriate FBO
+	//if (forEditor)		// Bind Editor FBO
+	//{
+	//	m_Fbo.Bind();
+	//	m_Fbo.DrawBuffers(true, true);
+	//}
+	//else				// Bind Game FBO
+	//{
+	//	m_GameFbo.Bind();
+	//	m_GameFbo.DrawBuffers(true);
+	//}
+	//glDepthMask(GL_TRUE);
+
+	//glEnable(GL_BLEND);			// Enable back blending for later draws
+
+	//// Set blend function back to usual for UI rendering
+	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	//// Particles
+	//DrawAllParticles();
 
 #pragma endregion
 
@@ -1459,6 +1477,12 @@ void GraphicsSystem::SetupShaderStorageBuffers()
 
 	// All spotlight in the scene -- Location 4
 	m_SpotlightSsbo.Create(sizeof(SpotLightSSBO) * MAX_SPOTLIGHT, 4);
+
+	// All particle emitters in the scene -- Location 5
+	m_ParticleEmitterSsbo.Create(sizeof(ParticleEmitterSSBO) * MAX_PARTICLE_EMITTER, 5);
+
+	// All particles in the scene -- Location 6
+	m_ParticleSsbo.Create(sizeof(ParticleSSBO) * MAX_PARTICLE_EMITTER, 6);
 }
 
 void GraphicsSystem::DrawAll2DInstances(unsigned shaderID)
@@ -1820,6 +1844,12 @@ void GraphicsSystem::SetupAllShaders()
 	m_ComputeAddBlendShader.Activate();
 	m_ComputeAddBlendExposureLocation = m_ComputeAddBlendShader.GetUniformLocation("Exposure");
 	GFX::Shader::Deactivate();
+
+	m_ComputeEmitterShader.CreateShaderFromFile("../assets/shader_files/computeEmitter.glsl");
+	m_ComputeEmitterShader.Activate();
+	m_ComputeEmitterCountLocation = m_ComputeEmitterShader.GetUniformLocation("uEmitterCount");
+	m_ComputeEmitterCountLocation = m_ComputeEmitterShader.GetUniformLocation("uCamPos");
+	GFX::Shader::Deactivate();
 }
 
 mat4 GraphicsSystem::GetPortalViewMatrix(GFX::Camera const& camera, Transform const& sourcePortal, Transform const& destPortal)
@@ -1974,7 +2004,7 @@ void GraphicsSystem::AddParticleInstance(Particle const& p, vec3 const& camPos)
 
 	mat4 world = rotate * scale;
 
-	m_ParticleMesh.mTexEntID.push_back(vec4(-2.f, 0.f, 0.f, 0.f));
+	m_ParticleMesh.mTexEntID.emplace_back(vec4(-2.f, 0.f, 0.f, 0.f));
 	m_ParticleMesh.mColors.emplace_back(p.mCurrColor);
 	m_ParticleMesh.mLTW.emplace_back(world);
 }

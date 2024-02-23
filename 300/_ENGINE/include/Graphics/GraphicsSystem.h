@@ -345,6 +345,12 @@ public:
 	GFX::SSBO						m_SpotlightSsbo;
 	std::vector<SpotLightSSBO>		spotlights;
 
+	const int							MAX_PARTICLE_EMITTER = 50;
+	const int							MAX_PARTICLES = 100'000;
+	GFX::SSBO							m_ParticleEmitterSsbo;
+	GFX::SSBO							m_ParticleSsbo;
+	std::vector<ParticleEmitterSSBO>	m_Emitters;
+
 	GLuint64 GetAndStoreBindlessTextureHandle(int texID);	// Stores adn Return the 64bit texture handle and makes it resident
 	void SetupShaderStorageBuffers();		// Creates all SSBO required
 
@@ -403,6 +409,9 @@ public:
 	ParticleEmitter m_Emitter;
 	void AddParticleInstance(Particle const& p, vec3 const& camPos);
 	void DrawAllParticles();
+	GFX::ComputeShader m_ComputeEmitterShader;
+	GLuint m_ComputeEmitterCountLocation{};
+	GLuint m_ComputeEmitterCamPosLocation{};
 
 	// -- Shadows WIP --
 	GFX::Shader shadowMapShaderInst;
