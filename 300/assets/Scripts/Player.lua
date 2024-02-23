@@ -176,8 +176,9 @@ local minFilterRadius = 0.001
 local maxExposure = 1.2
 local maxFilterRadius = 0.05
 local dmgAudioEnt 
-local dmgAudioComp 
-   
+local dmgAudioComp
+
+_G.FreezePlayerControl = false
 
 function Alive()
     this = Helper.GetScriptEntity(script_entity.id)
@@ -256,8 +257,7 @@ function Alive()
 end
 
 function Update()
-    print("TGBHBUUJNMKInjbhtgfrdcfvGBHNJUJBH")
-    
+    if _G.FreezePlayerControl then return end
     -- healthbar = gameStateSys:GetEntityByScene("Health Bar","Objectives") // Changed to UI scene
     healthbar = gameStateSys:GetEntity("HealthBar", "UI")
 
