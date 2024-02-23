@@ -355,6 +355,7 @@ function Update()
     --    end
     --end
 
+    -- Player view control
     centerscreen = Input:GetCursorCenter()
     mouse_move.x = Input.CursorPos().x - centerscreen.x
     mouse_move.y = Input.CursorPos().y - centerscreen.y
