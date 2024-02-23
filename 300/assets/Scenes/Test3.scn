@@ -1,0 +1,194 @@
+[
+{
+        "entityid": 22,
+        "general": {
+            "name": "Camera",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.100000023841858,
+                "y": 1.399999976158142,
+                "z": 1.100000023841858
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -6.575305938720703,
+                "y": -4.161545276641846,
+                "z": 39.437259674072266
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 1,
+            "velocity": {
+                "x": 0.2549799084663391,
+                "y": 0.0,
+                "z": -0.2355106770992279
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": true,
+                "z": true
+            },
+            "gravity": true
+        },
+        "spherecollider": {
+            "scaleoffset": 0.8100000023841858,
+            "translateoffset": {
+                "x": 0.0,
+                "y": -0.5,
+                "z": 0.0
+            },
+            "istrigger": true
+        },
+        "capsulecollider": {
+            "translateoffset": {
+                "x": 0.0,
+                "y": -0.5,
+                "z": 0.0
+            },
+            "radius": 0.4000000059604645,
+            "halfheight": 0.4000000059604645,
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/Player2.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "children": {
+            "numchildren": 1,
+            "firstchild": 196
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Footsteps_M4.wav",
+            "fullpath": "../assets\\Audio/Footsteps_M4.wav",
+            "playonawake": true,
+            "islooping": true,
+            "audiotype": 1,
+            "volume": 0.0,
+            "retainaudio": false
+        },
+        "camera": {
+            "positon": {
+                "x": -6.575305938720703,
+                "y": -4.161545276641846,
+                "z": 39.437259674072266
+            },
+            "target": {
+                "x": -5.575305938720703,
+                "y": -4.161545276641846,
+                "z": 39.437259674072266
+            },
+            "size": {
+                "x": 1224,
+                "y": 554
+            },
+            "near": 0.10000000149011612,
+            "far": 900.0
+        },
+        "healthbar": {
+            "healthcolor": {
+                "x": 0.0,
+                "y": 1.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "backcolor": {
+                "x": 1.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "maxhealth": 200.0,
+            "width": 0.0,
+            "height": 0.0,
+            "frametexture": 0,
+            "healthtexture": 0
+        }
+    },{
+        "entityid": 196,
+        "general": {
+            "name": "gun",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 0.25
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": -75.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.5,
+                "y": -0.6499999761581421,
+                "z": -0.5471169948577881
+            }
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 2168,
+            "instancecolor": {
+                "x": 0.5,
+                "y": 0.5,
+                "z": 0.5,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 0.25,
+                "y": 0.25,
+                "z": 0.25,
+                "w": 1.0
+            },
+            "castShadow": true,
+            "materialinstance": [
+                "../assets/Compressed/Gun_Base_Color.ctexture",
+                "../assets/Compressed/Gun_Normal.ctexture",
+                "../assets/Compressed/Gun_Metallic.ctexture",
+                "../assets/Compressed/Gun_Roughness.ctexture",
+                " ",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/Gun.geom",
+            "texturerefid": [
+                561120090,
+                236381020,
+                3720350570,
+                2134634497,
+                0,
+                0
+            ]
+        },
+        "parent": {
+            "prevsibling": 196,
+            "nextsibling": 196,
+            "parent": 22
+        }
+    }
+]
