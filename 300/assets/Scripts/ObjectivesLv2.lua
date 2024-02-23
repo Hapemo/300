@@ -148,7 +148,7 @@ function Update()
 
             -- print(math.random(-200,200))
             -- only appear when the platform is raised
-            if(transform.mTranslate.y == -10.5) then
+            if(transform.mTranslate.y == -7.5) then
                 spawndataPos.x = transform.mTranslate.x  +math.random(-300,300)/100
                 spawndataPos.y = transform.mTranslate.y 
                 spawndataPos.z = transform.mTranslate.z +math.random(-300,300)/100
