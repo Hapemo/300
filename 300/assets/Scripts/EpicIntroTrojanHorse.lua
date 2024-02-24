@@ -191,7 +191,7 @@ end
 function EndEpicIntro()
 --    this:GetScripts():AddScript(this, "../assets/Scripts/TrojanHorse.lua")
     this:GetScripts():DeleteScript("../assets/Scripts/EpicIntroTrojanHorse.lua");
-    _G.TrojanHorsePhase1ToCameraIn = true
+    _G.TrojanHorseStartToLedge = true
 end
 
 

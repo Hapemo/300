@@ -2,8 +2,13 @@
 
 
 _G.gameStateSys = systemManager:mGameStateSystem()
-
-_G.TrojanHorsePhase1ToCameraIn = false
+_G.inputMapSys = systemManager:mInputActionSystem()
+_G.TrojanHorseStartToLedge = false
+_G.TrojanHorseLedgeToFloor = false
+_G.TrojanHorseFloorZoomIn = false
+_G.TrojanHorseShowInfo = false
+_G.TrojanHorseHideInfo = false
+_G.TrojanHorseFloorZoomOut = false
 
 _G.activateTrojanHorse = false
 _G.activateTrojanSoldier = false

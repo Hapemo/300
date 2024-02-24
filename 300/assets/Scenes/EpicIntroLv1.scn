@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 1048608,
+        "entityid": 361,
         "general": {
             "name": "TrojanHorseEpicTrigger",
             "tagid": 8,
@@ -64,7 +64,7 @@
         }
     },
     {
-        "entityid": 1048609,
+        "entityid": 362,
         "general": {
             "name": "EpicIntroManager",
             "tagid": 8,
@@ -99,7 +99,7 @@
         }
     },
     {
-        "entityid": 1048610,
+        "entityid": 363,
         "general": {
             "name": "EpicIntroTrojanHorse",
             "tagid": 1,
@@ -236,6 +236,88 @@
             "height": 0.07000000029802322,
             "frametexture": 0,
             "healthtexture": 0
+        }
+    },
+    {
+        "entityid": 364,
+        "general": {
+            "name": "TopBlackBorder",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 2.0,
+                "y": 0.4000000059604645,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 1.2000000476837158,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 0,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "layer": 0,
+            "worldtransform": false
+        }
+    },
+    {
+        "entityid": 365,
+        "general": {
+            "name": "BottomBlackBorder",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 2.0,
+                "y": 0.4000000059604645,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": -1.2000000476837158,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 0,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "layer": 0,
+            "worldtransform": false
         }
     }
 ]

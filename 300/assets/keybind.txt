@@ -17,3 +17,5 @@ up: W
 pause: ESCAPE
 NextLevel: L
 AddHealth: H
+InsertBlackBorder: _9
+RetractBlackBorder: _0
