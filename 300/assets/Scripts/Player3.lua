@@ -280,7 +280,7 @@ function Update()
         end
     end
 
-    healthbar:GetUIrenderer():SetSlider(playerHealthCurrent/playerHealthMax);
+    -- healthbar:GetUIrenderer():SetSlider(playerHealthCurrent/playerHealthMax);
 
     if playerHealthCurrent <= 0 then
         gameStateSys:ChangeGameState("LoseMenu")
