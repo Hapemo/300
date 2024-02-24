@@ -78,12 +78,14 @@ function PauseUpdate()
         graphicssys:HideCursor(false)
         Input.SetCursorCenter()
         --print("PAUSE MENU, CURSOR SHOWN")
-    mainMenuButton:GetTransform().mTranslate.x = 0.02
-    quitButton:GetTransform().mTranslate.x = 0.02
-    resumeButton:GetTransform().mTranslate.x = 0.023
-    htpButton:GetTransform().mTranslate.x = 0.02
-    menuBackground:GetTransform().mTranslate.x = 0
-    restartButton:GetTransform().mTranslate.x = 0.02
+    if (_G.isHTPMenu == false) then
+        mainMenuButton:GetTransform().mTranslate.x = 0.02
+        quitButton:GetTransform().mTranslate.x = 0.02
+        resumeButton:GetTransform().mTranslate.x = 0.023
+        htpButton:GetTransform().mTranslate.x = 0.02
+        menuBackground:GetTransform().mTranslate.x = 0
+        restartButton:GetTransform().mTranslate.x = 0.02
+    end
 end
 
 function Dead()

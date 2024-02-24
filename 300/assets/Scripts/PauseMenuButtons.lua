@@ -21,6 +21,8 @@ local backButton
 
 gameState = "Test"
 
+_G.isHTPMenu = false
+
 function Alive()
     gameStateSys = systemManager:mGameStateSystem()
     -- audioSys    = systemManager:mAudioSystem()
@@ -45,6 +47,7 @@ function Alive()
     menuBackground = gameStateSys:GetEntity("PauseMenuBackground")
 
     _G.isPausePauseMenu = false
+    _G.isHTPMenu = false
 
 end
 
@@ -98,8 +101,7 @@ function PauseUpdate()
         if (button:GetGeneral().name == "PauseResumeButton") then
             _G.mouse_on = true
             graphicssys:HideCursor(true)
-        --print("bring AWAYYY menu1")
-        mainMenuButton:GetTransform().mTranslate.x = 1000
+            mainMenuButton:GetTransform().mTranslate.x = 1000
             quitButton:GetTransform().mTranslate.x = 1000
             resumeButton:GetTransform().mTranslate.x = 1000
             htpButton:GetTransform().mTranslate.x = 1000
@@ -107,9 +109,7 @@ function PauseUpdate()
             restartButton:GetTransform().mTranslate.x = 1000
             systemManager:SetIsPause(false)
             _G.isPausePauseMenu = false
-            --systemManager:Play()
         elseif (button:GetGeneral().name == "PauseHTPButton") then
-        --print("bring AWAYYY menu2")
         mainMenuButton:GetTransform().mTranslate.x = 1000
             quitButton:GetTransform().mTranslate.x = 1000
             resumeButton:GetTransform().mTranslate.x = 1000
@@ -118,12 +118,12 @@ function PauseUpdate()
             restartButton:GetTransform().mTranslate.x = 1000
             HTPMenu:GetTransform().mTranslate.x = 0
             backButton:GetTransform().mTranslate.x = 0.65
+            _G.isHTPMenu = true
         elseif (button:GetGeneral().name == "PauseBackButton") then
-        --print("bring AWAYYY menu3")
-        HTPMenu:GetTransform().mTranslate.x = 1000
+            HTPMenu:GetTransform().mTranslate.x = 1000
             backButton:GetTransform().mTranslate.x = 1000
+            _G.isHTPMenu = false
         elseif (button:GetGeneral().name == "PauseRestartButton") then
-        --print("bring AWAYYY menu4")
         mainMenuButton:GetTransform().mTranslate.x = 1000
             quitButton:GetTransform().mTranslate.x = 1000
             resumeButton:GetTransform().mTranslate.x = 1000
@@ -135,8 +135,7 @@ function PauseUpdate()
             gameStateSys:ChangeGameState(gameState)
         elseif (button:GetGeneral().name == "PauseMainMenuButton") then
             mainMenuButton:GetTransform().mTranslate.x = 1000
-        --print("bring AWAYYY menu5")
-        quitButton:GetTransform().mTranslate.x = 1000
+            quitButton:GetTransform().mTranslate.x = 1000
             resumeButton:GetTransform().mTranslate.x = 1000
             htpButton:GetTransform().mTranslate.x = 1000
             menuBackground:GetTransform().mTranslate.x = 1000
@@ -145,8 +144,7 @@ function PauseUpdate()
             systemManager:SetIsPause(false)
             gameStateSys:ChangeGameState("MainMenu")
         elseif (button:GetGeneral().name == "PauseQuitButton") then
-        --print("bring AWAYYY menu6")
-        mainMenuButton:GetTransform().mTranslate.x = 1000
+            mainMenuButton:GetTransform().mTranslate.x = 1000
             quitButton:GetTransform().mTranslate.x = 1000
             resumeButton:GetTransform().mTranslate.x = 1000
             htpButton:GetTransform().mTranslate.x = 1000
@@ -154,7 +152,6 @@ function PauseUpdate()
             restartButton:GetTransform().mTranslate.x = 1000
             _G.isPausePauseMenu = false
             systemManager:SetIsPause(false)
-            --print("About to Exit")
             systemManager:Quit()
         end
     end
