@@ -16,12 +16,12 @@ function Alive()
     gameStateSys = systemManager:mGameStateSystem()
     inputMapSys = systemManager:mInputActionSystem()
     graphicssys = systemManager:mGraphicsSystem()
-    mainMenuButton = gameStateSys:GetEntityByScene("MainMenuButton", "PauseMenuScene")
-    quitButton = gameStateSys:GetEntityByScene("QuitButton", "PauseMenuScene")
-    resumeButton = gameStateSys:GetEntityByScene("ResumeButton", "PauseMenuScene")
-    htpButton = gameStateSys:GetEntityByScene("HTPButton", "PauseMenuScene")
-    restartButton = gameStateSys:GetEntityByScene("RestartButton", "PauseMenuScene")
-    menuBackground = gameStateSys:GetEntityByScene("MenuBackground", "PauseMenuScene")
+    mainMenuButton = gameStateSys:GetEntity("PauseMainMenuButton")
+    quitButton = gameStateSys:GetEntity("PauseQuitButton")
+    resumeButton = gameStateSys:GetEntity("PauseResumeButton")
+    htpButton = gameStateSys:GetEntity("PauseHTPButton")
+    restartButton = gameStateSys:GetEntity("PauseRestartButton")
+    menuBackground = gameStateSys:GetEntity("PauseMenuBackground")
     _G.isPausePauseMenu = false
 end
 
