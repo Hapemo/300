@@ -107,10 +107,11 @@ function RunTrojanHorseEpicIntro()
             -- Finished moving
             _G.TrojanHorseEpicIntroState = 2
             ActivateEpicScript(epicTrojanHorse)
-            systemManager.ecs:SetDeleteEntity(trojanHorsePlatform)
         end
     elseif _G.TrojanHorseEpicIntroState == 2 then -- StartPosToLedge
         print("_G.TrojanHorseEpicIntroState == 2")
+
+        --Helper.SetVelocity(player, Vec3.New())
         -- TODO
         -- Use camera to phase to top of ledge position
 
@@ -240,9 +241,12 @@ function MoveTo(entity, targetPos, speed)
     print(distAway)
     if (distAway < 0.03) then -- reached target position
         targetPos.y = entity:GetTransform().mTranslate.y
-        Helper.SetTranslate(this, targetPos)
-        -- local zeroVector = Vec3.new()
-        -- _G.phySys:SetVelocity(entity, Vec3.new())
+        Helper.SetTranslate(entity, targetPos)
+        local zeroVector = Vec3.new()
+        zeroVector.x = 0
+        zeroVector.y = 0
+        zeroVector.z = 0
+        _G.phySys:SetVelocity(entity, zeroVector)
         return false
     end
 

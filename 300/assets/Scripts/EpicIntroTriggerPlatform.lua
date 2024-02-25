@@ -47,6 +47,9 @@ function OnTriggerEnter(Entity)
         triggerOnce = true
         print("OnTriggerEnter")
         _G.TrojanHorseEpicIntroState = 1
+        --newpos = this:GetTransform().mTranslate
+        --newpos.y = 1000
+        --Helper.SetTranslate(this, newpos)
     end
 end
 
