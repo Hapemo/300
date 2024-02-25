@@ -189,7 +189,7 @@ function RESTInit()
 end
 
 function EndEpicIntro()
---    this:GetScripts():AddScript(this, "../assets/Scripts/TrojanHorse.lua")
+    this:GetScripts():AddScript(this, "../assets/Scripts/TrojanHorse.lua")
     this:GetScripts():DeleteScript("../assets/Scripts/EpicIntroTrojanHorse.lua");
     _G.TrojanHorseStartToLedge = true
 end

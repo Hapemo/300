@@ -6,12 +6,11 @@ local name
 local this
 local targetEnemy
 local targetPlayer
+local triggerOnce
 
 function Alive()
     this = Helper.GetScriptEntity(script_entity.id)
-    if this == nil then
-        print("Entity nil in script!")
-    end
+    if this == nil then print("Entity nil in script!") end
 
     name = string.lower(this:GetGeneral().name)
 
@@ -28,6 +27,7 @@ function Alive()
     end
 
     targetPlayer = _G.gameStateSys:GetEntity("Camera")
+    triggerOnce = false
 
     print(targetEnemy)
     print(targetPlayer)
@@ -42,10 +42,11 @@ function Dead()
 end
 
 function OnTriggerEnter(Entity)
+    if triggerOnce then return end
     if Entity == targetPlayer then --player id
+        triggerOnce = true
         print("OnTriggerEnter")
-        ActivateScript(targetEnemy)
-        systemManager.ecs:SetDeleteEntity(this)
+        _G.TrojanHorseEpicIntroState = 1
     end
 end
 

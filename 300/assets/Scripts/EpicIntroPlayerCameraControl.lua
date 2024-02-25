@@ -2,6 +2,9 @@
 local this
 --local Camera_Scripting
 
+-- Entities
+local trojanHorsePlatform
+
 local insertBlackBorder
 local retractBlackBorder
 
@@ -22,7 +25,6 @@ function Alive()
     this = Helper.GetScriptEntity(script_entity.id)
     if this == nil then print("Entity nil in script!") end
 
-    --Camera_Scripting = systemManager:Camera_Scripting()
     -- if Camera_Scripting == nil then print("Camera Is NILvv") end
 
     -- Black Border Control stuff
@@ -35,6 +37,9 @@ function Alive()
     bottomBorderUpperLimit = -BorderInnerLimitPos
     bottomBorderLowerLimit = -BorderOuterLimitPos
 
+    -- Init entities
+    trojanHorsePlatform = _G.gameStateSys:GetEntity("TrojanHorseEpicTrigger")
+
     -- Hide UI stuff
     
 
@@ -44,21 +49,27 @@ function Update()
     --#region Test LookTowards
     -- local origin = Vec3.new()
     -- origin.x = 0.1
-    -- LookTowards(origin, 1)
+    --LookTowards(origin, 1)
+    --#endregion
+
+    --#region Test MoveTo
+    --MoveTo(_G.gameStateSys:GetEntity("TrojanHorseEpicTrigger"):GetTransform().mTranslate, 50)
     --#endregion
 
     --#region Test black border control
-    if (inputMapSys:GetButtonDown("InsertBlackBorder")) then
-        -- print("insertBlackBorder = true") 
-        insertBlackBorder = true end
-    if (inputMapSys:GetButtonDown("RetractBlackBorder")) then 
-        -- print("retractBlackBorder = true")
-        retractBlackBorder = true end
-    InsertBlackBorder(1)
-    RetractBlackBorder(1)
+    -- if (inputMapSys:GetButtonDown("InsertBlackBorder")) then
+    --     -- print("insertBlackBorder = true") 
+    --     insertBlackBorder = true end
+    -- if (inputMapSys:GetButtonDown("RetractBlackBorder")) then 
+    --     -- print("retractBlackBorder = true")
+    --     retractBlackBorder = true end
+    -- InsertBlackBorder(1)
+    -- RetractBlackBorder(1)
     --#endregion
 
-    if _G.TrojanHorseStartToLedge then
+    if _G.TrojanHorseMoveToStartPos then
+        MoveTo(trojanHorsePlatform:GetTransform().mTranslate, 50)
+    elseif _G.TrojanHorseStartToLedge then
         -- TODO
         -- Use camera to phase to top of ledge position
         -- While adding screen black border at the same time
@@ -115,17 +126,17 @@ end
 
 function LookTowards(target, speed)
     local currPos = this:GetTransform().mTranslate
-    local currDir = Helper.Vec3Minus(systemManager:Camera_Scripting().GetTarget(), currPos)
+    local currDir = Helper.Vec3Minus(Camera_Scripting.GetTarget(this), currPos)
     local targetDir = Helper.Vec3Minus(target, currPos)
-    local upVector = systemManager:Camera_Scripting().Cross(currDir, targetDir)
+    local upVector = Camera_Scripting.Cross(currDir, targetDir)
 
-    -- local newDir = RotateVector(upVector, currDir, math.pi/180 * speed)
-    local targetAngle = math.pi/180 * speed
-    local newDir = systemManager:Camera_Scripting().Rotate(currDir, upVector, targetAngle)
-    systemManager:Camera_Scripting().SetTarget(Helper.Vec3Add(newDir, currPos))
+    local targetAngle = math.pi/180 * speed * FPSManager.GetDT()
+    local newDir = RotateVector(upVector, currDir, targetAngle)
+    -- local newDir = Camera_Scripting.Rotate(currDir, upVector, targetAngle)
+    Camera_Scripting.SetTarget(this, Helper.Vec3Add(newDir, currPos))
 
-    if (AngleBetween(newDir, targetDir) < targetAngle) then return False end
-    return True
+    if (AngleBetween(newDir, targetDir) < targetAngle) then return false end
+    return true
 end
 
 -- Rotate vector about normal in set amount of angle
@@ -193,6 +204,22 @@ function RetractBlackBorder(speed)
         bottomBorder:GetTransform().mTranslate.y = bottomBorderLowerLimit
         retractBlackBorder = false
     end
+end
+
+function MoveTo(targetPos, speed)
+    local dir = Helper.Normalize(Helper.Vec3Minus(targetPos, this:GetTransform().mTranslate))
+    dir.y = 0
+    if (Helper.Vec3Len(dir) < 0.05) then -- reached target position
+        local newTargetPos = targetPos
+        newTargetPos.y = this:GetTransform().mTranslate.y
+        Helper.SetTranslate(this, newTargetPos)
+        -- local zeroVector = Vec3.new()
+        _G.phySys:SetVelocity(this, Helper.Scale(dir, Vec3.new()))
+        return false
+    end
+
+    _G.phySys:SetVelocity(this, Helper.Scale(dir, speed*FPSManager.GetDT()));
+    return true
 end
 
 function HideUI()

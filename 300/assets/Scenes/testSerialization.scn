@@ -4643,10 +4643,6 @@
                 {
                     "scriptFile": "../assets/Scripts/Player.lua",
                     "variables": []
-                },
-                {
-                    "scriptFile": "../assets/Scripts/EpicIntroPlayerCameraControl.lua",
-                    "variables": []
                 }
             ]
         },
