@@ -3,6 +3,7 @@
 _G.gameStateSys = systemManager:mGameStateSystem()
 _G.inputMapSys = systemManager:mInputActionSystem()
 _G.phySys = systemManager:mPhysicsSystem();
+_G.aiSys = systemManager:mAISystem();
 
 _G.TrojanHorseEpicIntroState = 0
 -- 1. MoveToStartPos
@@ -21,8 +22,11 @@ _G.activateZipBomb = false
 local this
 --local Camera_Scripting
 
---#region Trojan horse state control
-local thStartPosState = false
+--#region Trojan horse epic intro variables
+_G.THdashStopTimer = 1.5
+local THs2Charge = 10
+local THdashStopTimerCount
+local THLedgeViewPosition
 
 --#region Entities
 local epicTrojanHorse
@@ -63,6 +67,8 @@ function Alive()
     player = _G.gameStateSys:GetEntity("Camera")
 
     -- Hide UI stuff
+
+    InitTrojanHorseEpicIntro()
     
 end
 
@@ -96,6 +102,14 @@ function Update()
 end
 
 
+function InitTrojanHorseEpicIntro()
+    THLedgeViewPosition = Vec3.new()
+    THLedgeViewPosition.x = -26
+    THLedgeViewPosition.y = -5.5
+    THLedgeViewPosition.z = 31
+
+    THdashStopTimerCount = 0
+end
 
 function RunTrojanHorseEpicIntro()
     if _G.TrojanHorseEpicIntroState == 1 then -- MoveToStartPos
@@ -106,22 +120,32 @@ function RunTrojanHorseEpicIntro()
             print("_G.TrojanHorseEpicIntroState finished")
             -- Finished moving
             _G.TrojanHorseEpicIntroState = 2
-            systemManager.ecs:SetDeleteEntity(this)
-            ActivateEpicScript(trojanHorsePlatform)
+            systemManager.ecs:SetDeleteEntity(trojanHorsePlatform)
+            ActivateEpicScript(epicTrojanHorse)
         end
+        -- Notes
+        -- _G.TrojanHorseStartToLedge should be activated when stepped on platform, trojan horse will also be activated at the same time
     elseif _G.TrojanHorseEpicIntroState == 2 then -- StartPosToLedge
-        print("_G.TrojanHorseEpicIntroState == 2")
-
-        --Helper.SetVelocity(player, Vec3.New())
+        -- print("_G.TrojanHorseEpicIntroState == 2")
+        LookTowards(player, THLedgeViewPosition, 20)
+        if _G.aiSys:ConeOfSight(epicTrojanHorse, player, 70, 40) then _G.TrojanHorseEpicIntroState = 3 end
         -- TODO
         -- Use camera to phase to top of ledge position
 
-        -- Notes
-        -- _G.TrojanHorseStartToLedge should be activated when stepped on platform, trojan horse will also be activated at the same time
     elseif _G.TrojanHorseEpicIntroState == 3 then -- LedgeToFloor
+        print("_G.TrojanHorseEpicIntroState == 3")
+        LookTowards(player, epicTrojanHorse:GetTransform().mTranslate, 15)
+        
+        THdashStopTimerCount = THdashStopTimerCount + FPSManager:GetDT()
+        if THdashStopTimerCount > _G.THdashStopTimer + THs2Charge then
+            epicTrojanHorse:GetAnimator():PauseAnimation()
+            THdashStopTimerCount = 0
+            _G.TrojanHorseEpicIntroState = 4
+        end
         -- Use camera to phase to the floor position with horse on left side
 
     elseif _G.TrojanHorseEpicIntroState == 4 then -- FloorZoomIn
+        print("_G.TrojanHorseEpicIntroState == 4")
         -- Zoom quickly into the horse
 
     elseif _G.TrojanHorseEpicIntroState == 5 then -- ShowInfo
@@ -149,7 +173,14 @@ end
 -- Helper functions
 ----------------------------------------------------------------------------
 ----------------------------------------------------------------------------
+
+-- returns false when finishes
 function LookTowards(entity, target, speed)
+    -- print(target)
+    -- local currTarget = Vec3.new()
+    -- currTarget.x = target.x
+    -- currTarget.y = target.y
+    -- currTarget.z = target.z
     local currPos = entity:GetTransform().mTranslate
     local currDir = Helper.Vec3Minus(Camera_Scripting.GetTarget(entity), currPos)
     local targetDir = Helper.Vec3Minus(target, currPos)

@@ -1,81 +1,17 @@
 [
     {
-        "entityid": 361,
+        "entityid": 24117303,
         "general": {
-            "name": "TrojanHorseEpicTrigger",
-            "tagid": 8,
+            "name": "BottomBlackBorder",
+            "tagid": 6,
             "subtag": 0,
             "isActive": true,
             "isPaused": false
         },
         "transform": {
             "scale": {
-                "x": 1.0,
-                "y": 0.18000000715255737,
-                "z": 5.480000019073486
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -16.15145492553711,
-                "y": -10.97423267364502,
-                "z": 35.222496032714844
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 0,
-            "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": true,
-                "y": true,
-                "z": true
-            },
-            "gravity": false
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "translateoffset": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "istrigger": true
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/EpicIntroTriggerPlatform.lua",
-                    "variables": []
-                }
-            ]
-        }
-    },
-    {
-        "entityid": 362,
-        "general": {
-            "name": "EpicIntroManager",
-            "tagid": 8,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
+                "x": 2.0,
+                "y": 0.4000000059604645,
                 "z": 1.0
             },
             "rotate": {
@@ -85,21 +21,68 @@
             },
             "translate": {
                 "x": 0.0,
-                "y": 0.0,
+                "y": -1.2000000476837158,
                 "z": 0.0
             }
         },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/EpicIntroManagerlv1.lua",
-                    "variables": []
-                }
-            ]
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 0,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "layer": 0,
+            "worldtransform": false
         }
     },
     {
-        "entityid": 363,
+        "entityid": 24117304,
+        "general": {
+            "name": "TopBlackBorder",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 2.0,
+                "y": 0.4000000059604645,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 1.2000000476837158,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 0,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "layer": 0,
+            "worldtransform": false
+        }
+    },
+    {
+        "entityid": 24117306,
         "general": {
             "name": "EpicIntroTrojanHorse",
             "tagid": 1,
@@ -239,18 +222,18 @@
         }
     },
     {
-        "entityid": 364,
+        "entityid": 24117307,
         "general": {
-            "name": "TopBlackBorder",
-            "tagid": 6,
+            "name": "EpicIntroManager",
+            "tagid": 8,
             "subtag": 0,
             "isActive": true,
             "isPaused": false
         },
         "transform": {
             "scale": {
-                "x": 2.0,
-                "y": 0.4000000059604645,
+                "x": 1.0,
+                "y": 1.0,
                 "z": 1.0
             },
             "rotate": {
@@ -260,39 +243,33 @@
             },
             "translate": {
                 "x": 0.0,
-                "y": 1.2000000476837158,
+                "y": 0.0,
                 "z": 0.0
             }
         },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 0,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0,
-                "w": 1.0
-            },
-            "layer": 0,
-            "worldtransform": false
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/EpicIntroManagerlv1.lua",
+                    "variables": []
+                }
+            ]
         }
     },
     {
-        "entityid": 365,
+        "entityid": 24117308,
         "general": {
-            "name": "BottomBlackBorder",
-            "tagid": 6,
+            "name": "TrojanHorseEpicTrigger",
+            "tagid": 8,
             "subtag": 0,
             "isActive": true,
             "isPaused": false
         },
         "transform": {
             "scale": {
-                "x": 2.0,
-                "y": 0.4000000059604645,
-                "z": 1.0
+                "x": 1.0,
+                "y": 0.18000000715255737,
+                "z": 5.480000019073486
             },
             "rotate": {
                 "x": 0.0,
@@ -300,24 +277,47 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 0.0,
-                "y": -1.2000000476837158,
-                "z": 0.0
+                "x": -19.732877731323242,
+                "y": -10.97423267364502,
+                "z": 35.222496032714844
             }
         },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 0,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
                 "x": 0.0,
                 "y": 0.0,
-                "z": 0.0,
-                "w": 1.0
+                "z": 0.0
             },
-            "layer": 0,
-            "worldtransform": false
+            "rotationconstraints": {
+                "x": true,
+                "y": true,
+                "z": true
+            },
+            "gravity": false
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": true
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/EpicIntroTriggerPlatform.lua",
+                    "variables": []
+                }
+            ]
         }
     }
 ]
