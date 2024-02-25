@@ -25,8 +25,8 @@ local this
 local thStartPosState = false
 
 --#region Entities
-local trojanHorsePlatform
 local epicTrojanHorse
+local trojanHorsePlatform
 local player
 --#endregion
 
@@ -76,7 +76,7 @@ function Update()
     --#region Test LookTowards
     -- local origin = Vec3.new()
     -- origin.x = 0.1
-    --LookTowards(origin, 1)
+    -- LookTowards(player, origin, 1)
     --#endregion
 
     --#region Test MoveTo
@@ -106,8 +106,8 @@ function RunTrojanHorseEpicIntro()
             print("_G.TrojanHorseEpicIntroState finished")
             -- Finished moving
             _G.TrojanHorseEpicIntroState = 2
-            ActivateEpicScript(epicTrojanHorse)
-            systemManager.ecs:SetDeleteEntity(trojanHorsePlatform)
+            systemManager.ecs:SetDeleteEntity(this)
+            ActivateEpicScript(trojanHorsePlatform)
         end
     elseif _G.TrojanHorseEpicIntroState == 2 then -- StartPosToLedge
         print("_G.TrojanHorseEpicIntroState == 2")
@@ -156,7 +156,9 @@ function LookTowards(entity, target, speed)
     local targetAngle = math.pi/180 * speed * FPSManager.GetDT()
     local newDir = RotateVector(upVector, currDir, targetAngle)
     -- local newDir = Camera_Scripting.Rotate(currDir, upVector, targetAngle)
+    -- print(Camera_Scripting.GetTarget(entity))
     Camera_Scripting.SetTarget(entity, Helper.Vec3Add(newDir, currPos))
+    -- print(Camera_Scripting.GetTarget(entity))
 
     if (AngleBetween(newDir, targetDir) < targetAngle) then return false end
     return true
@@ -232,15 +234,22 @@ end
 -- return false when reached target pos
 function MoveTo(entity, targetPos, speed)
     print("moving")
-    local tempCurrLocation = entity:GetTransform().mTranslate
-    targetPos.y = tempCurrLocation.y
-    local dirVec = Helper.Vec3Minus(targetPos, entity:GetTransform().mTranslate)
+    local platformPos = Vec3.new()
+    local entityPos = entity:GetTransform().mTranslate
+    platformPos.x = targetPos.x
+    platformPos.y = entityPos.y
+    platformPos.z = targetPos.z
+    
+    local dirVec = Helper.Vec3Minus(platformPos, entityPos)
     local distAway = Helper.Vec3Len(dirVec) 
     local dir = Helper.Normalize(dirVec)
     print(distAway)
     if (distAway < 0.03) then -- reached target position
-        targetPos.y = entity:GetTransform().mTranslate.y
-        Helper.SetTranslate(this, targetPos)
+        --targetPos.y = entity:GetTransform().mTranslate.y
+        -- entityPos.x = platformPos.x
+        -- entityPos.z = platformPos.z
+        -- entityPos.y = entityPos.y
+        Helper.SetTranslate(entity, platformPos)
         -- local zeroVector = Vec3.new()
         -- _G.phySys:SetVelocity(entity, Vec3.new())
         return false
@@ -277,9 +286,6 @@ function ActivateEpicScript(Entity)
     print(scriptName)
     Entity:GetScripts():AddScript(Entity, scriptName)
 end
-
-
-
 
 
 
