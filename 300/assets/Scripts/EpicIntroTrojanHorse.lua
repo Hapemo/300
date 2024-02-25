@@ -66,9 +66,6 @@ end
 
 local timer = 0
 function Update()
-    if _G.TrojanHorseEpicIntroState >= 4 then
-        return
-    end
     if state == "CHARGE" then   -- saw player, eyes glow red, play some charge up noise, delay about 3 seconds before charging to player (change to 3. when delay ends)
         -- Play animation for eyes glowing red        
         
@@ -101,13 +98,12 @@ function Update()
         -- This part is done in OnContactEnter
         dashStopTimerCount = dashStopTimerCount + FPSManager.GetDT()
         if dashStopTimerCount > _G.THdashStopTimer then
-            print("END SPRINTING")
             dashStopTimerCount = 0
             
+            EndEpicIntro()
         end
 
     elseif state == "REST" then     -- stops for some time before moving back to 1. (change to 1. when rest timer ends)
-        print("RESTING")
         this:GetTransform().mRotate.y = Helper.DirectionToAngle(this, stareDirection)
         s4RestTimerCount = s4RestTimerCount + FPSManager.GetDT()
         if s4RestTimerCount > s4RestTimer then
@@ -189,13 +185,11 @@ function RESTInit()
 
     -- this:GetAudio():SetPause()
     phySys:SetVelocity(this, Vec3.new())
-    EndEpicIntro()
 end
 
 function EndEpicIntro()
-    print("EndEpicIntro")
     this:GetScripts():AddScript(this, "../assets/Scripts/TrojanHorse.lua")
-    this:GetScripts():DeleteScript("../assets/Scripts/EpicIntroTrojanHorse.lua");
+    this:GetScripts():DeleteScript("..\\assets\\Scripts\\EpicIntroTrojanHorse.lua");
     _G.TrojanHorseStartToLedge = true
 end
 

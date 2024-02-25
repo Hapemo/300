@@ -24,7 +24,7 @@ local this
 
 --#region Trojan horse epic intro variables
 _G.THdashStopTimer = 1.5
-local THs2Charge = 10
+local THs2Charge = 2
 local THdashStopTimerCount
 local THLedgeViewPosition
 
@@ -188,9 +188,16 @@ function LookTowards(entity, target, speed)
 
     local targetAngle = math.pi/180 * speed * FPSManager.GetDT()
     local newDir = RotateVector(upVector, currDir, targetAngle)
+    local newDirVec = Helper.DirectionToYawPitch(newDir)
+
+    print(newDirVec)
+    entity:GetTransform().mRotate.x = newDirVec.x
+    entity:GetTransform().mRotate.y = newDirVec.y
+    entity:GetTransform().mRotate.z = newDirVec.z
+
     -- local newDir = Camera_Scripting.Rotate(currDir, upVector, targetAngle)
     -- print(Camera_Scripting.GetTarget(entity))
-    Camera_Scripting.SetTarget(entity, Helper.Vec3Add(newDir, currPos))
+    -- Camera_Scripting.SetTarget(entity, Helper.Vec3Add(newDir, currPos))
     -- print(Camera_Scripting.GetTarget(entity))
 
     if (AngleBetween(newDir, targetDir) < targetAngle) then return false end
@@ -277,7 +284,7 @@ function MoveTo(entity, targetPos, speed)
     local distAway = Helper.Vec3Len(dirVec) 
     local dir = Helper.Normalize(dirVec)
     print(distAway)
-    if (distAway < 0.03) then -- reached target position
+    if (distAway < 2.03) then -- reached target position
         --targetPos.y = entity:GetTransform().mTranslate.y
         -- entityPos.x = platformPos.x
         -- entityPos.z = platformPos.z

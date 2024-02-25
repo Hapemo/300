@@ -137,6 +137,14 @@ function Helper.DirectionToAngle(entity, vec)
     return degree
 end
 
+function Helper.DirectionToYawPitch(dir)
+    local returnVec = Vec3.new()
+    returnVec.x = math.asin(dir.y / Helper.Vec3Len(dir));
+    if (returnVec.x == 0) then return Vec3.new() end
+    returnVec.z = math.asin( dir.x / (math.cos(returnVec.x)*Helper.Vec3Len(dir)) )
+    return returnVec
+end
+
 function Helper.CreateSphereParticle(vec)
     systemManager.ecs:NewEntityFromPrefab("SphereParticle", vec)   
 end
