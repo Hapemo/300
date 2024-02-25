@@ -111,6 +111,8 @@ function RunTrojanHorseEpicIntro()
         end
     elseif _G.TrojanHorseEpicIntroState == 2 then -- StartPosToLedge
         print("_G.TrojanHorseEpicIntroState == 2")
+
+        --Helper.SetVelocity(player, Vec3.New())
         -- TODO
         -- Use camera to phase to top of ledge position
 
