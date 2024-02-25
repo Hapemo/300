@@ -27,6 +27,10 @@ _G.THdashStopTimer = 1.5
 local THs2Charge = 10
 local THdashStopTimerCount
 local THLedgeViewPosition
+local THFlyViewPosition1Finish
+local THFlyViewPosition2Finish
+local THFlyViewPosition1
+local THFlyViewPosition2
 
 --#region Entities
 local epicTrojanHorse
@@ -103,12 +107,12 @@ end
 
 
 function InitTrojanHorseEpicIntro()
-    THLedgeViewPosition = Vec3.new()
-    THLedgeViewPosition.x = -26
-    THLedgeViewPosition.y = -5.5
-    THLedgeViewPosition.z = 31
-
+    THLedgeViewPosition = Vec3.new(236, -40.5, 0)
+    THFlyViewPosition1 = Vec3.new(134.6, -11.2, 0)
+    THFlyViewPosition2 = Vec3.new(117.3, 0, 0)
     THdashStopTimerCount = 0
+    THFlyViewPosition1Finish = false
+    THFlyViewPosition2Finish = false
 end
 
 function RunTrojanHorseEpicIntro()
@@ -127,17 +131,23 @@ function RunTrojanHorseEpicIntro()
         -- _G.TrojanHorseStartToLedge should be activated when stepped on platform, trojan horse will also be activated at the same time
     elseif _G.TrojanHorseEpicIntroState == 2 then -- StartPosToLedge
         -- print("_G.TrojanHorseEpicIntroState == 2")
-        LookTowards(player, THLedgeViewPosition, 20)
+        LookTowardsInterpolation(player, THLedgeViewPosition, 40)
         if _G.aiSys:ConeOfSight(epicTrojanHorse, player, 70, 40) then _G.TrojanHorseEpicIntroState = 3 end
         -- TODO
         -- Use camera to phase to top of ledge position
 
     elseif _G.TrojanHorseEpicIntroState == 3 then -- LedgeToFloor
         print("_G.TrojanHorseEpicIntroState == 3")
-        LookTowards(player, epicTrojanHorse:GetTransform().mTranslate, 15)
-        
+        --LookTowards(player, epicTrojanHorse:GetTransform().mTranslate, 15)
         THdashStopTimerCount = THdashStopTimerCount + FPSManager:GetDT()
-        if THdashStopTimerCount > _G.THdashStopTimer + THs2Charge then
+        
+        if not THFlyViewPosition1Finish then
+            print("THFlyViewPosition1")
+            if not LookTowardsInterpolation(player, THFlyViewPosition1, 100) then THFlyViewPosition1Finish = true end
+        elseif not THFlyViewPosition2Finish then
+            print("THFlyViewPosition2")
+            if not LookTowardsInterpolation(player, THFlyViewPosition2, 80) then THFlyViewPosition2Finish = true end
+        elseif THdashStopTimerCount > _G.THdashStopTimer + THs2Charge then
             epicTrojanHorse:GetAnimator():PauseAnimation()
             THdashStopTimerCount = 0
             _G.TrojanHorseEpicIntroState = 4
@@ -188,12 +198,45 @@ function LookTowards(entity, target, speed)
 
     local targetAngle = math.pi/180 * speed * FPSManager.GetDT()
     local newDir = RotateVector(upVector, currDir, targetAngle)
+    local newDirVec = Helper.DirectionToYawPitch(newDir)
+
+    -- print(newDirVec)
+    entity:GetTransform().mRotate.x = newDirVec.x
+    entity:GetTransform().mRotate.y = newDirVec.y
+    entity:GetTransform().mRotate.z = newDirVec.z
+
     -- local newDir = Camera_Scripting.Rotate(currDir, upVector, targetAngle)
     -- print(Camera_Scripting.GetTarget(entity))
     Camera_Scripting.SetTarget(entity, Helper.Vec3Add(newDir, currPos))
     -- print(Camera_Scripting.GetTarget(entity))
 
     if (AngleBetween(newDir, targetDir) < targetAngle) then return false end
+    return true
+end
+
+function LookTowardsInterpolation(entity, targetPitchYaw, speed)
+    local mRotate = entity:GetTransform().mRotate
+
+    -- Cleaning up mRotate
+    if (mRotate.x > -1) then
+        mRotate.x = mRotate.x % 360
+    else 
+        mRotate.x = mRotate.x % (-360)
+    end
+
+    local direction = Helper.Normalize(Vec3.new(targetPitchYaw.x - mRotate.x, targetPitchYaw.y - mRotate.y, 0))
+
+    -- local newRotate = Helper.Vec3Add(mRotate, Helper.Scale(direction, speed * FPSManager:GetDT()))
+    -- print(newRotate)
+    -- _G.phySys:SetRotation(entity, newRotate)
+
+    local toMove = Helper.Scale(direction, speed * FPSManager:GetDT())
+    -- print(toMove)
+    Helper.SetRotate(entity, toMove)
+
+    local interpolationApart = Helper.Vec3Len(Helper.Vec3Minus(entity:GetTransform().mRotate, targetPitchYaw))
+    -- print(interpolationApart)
+    if (interpolationApart < Helper.Vec3Len(toMove)) then return false end
     return true
 end
 
