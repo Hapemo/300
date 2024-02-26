@@ -528,3 +528,28 @@ void DirectionalLight::DeserializeSelf(rapidjson::Value& reader)
 	Deserialize(reader, "size", mSize);
 	Deserialize(reader, "nearfar", mNearFar);
 }
+
+void ParticleEmitter::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
+{
+	writer.Key("particleemitter");
+	writer.StartObject();
+	Serialize(writer, "startcolor", mStartColor);
+	Serialize(writer, "endcolor", mEndColor);
+	Serialize(writer, "startsize", mStartSize);
+	Serialize(writer, "endsize", mEndSize);
+	Serialize(writer, "lifetime", mLifetime);
+	Serialize(writer, "speed", mSpeed);
+	Serialize(writer, "count", mCount);
+	writer.EndObject();
+}
+
+void ParticleEmitter::DeserializeSelf(rapidjson::Value& reader)
+{
+	Deserialize(reader, "startcolor", mStartColor);
+	Deserialize(reader, "endcolor", mEndColor);
+	Deserialize(reader, "startsize", mStartSize);
+	Deserialize(reader, "endsize", mEndSize);
+	Deserialize(reader, "lifetime", mLifetime);
+	Deserialize(reader, "speed", mSpeed);
+	Deserialize(reader, "count", mCount);
+}

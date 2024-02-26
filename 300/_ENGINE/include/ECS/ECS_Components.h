@@ -882,6 +882,8 @@ struct ParticleEmitter
 	int	mCount		{ 100 };
 
 	void Inspect();
+	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
+	void DeserializeSelf(rapidjson::Value& reader);
 };
 
 struct Portal
