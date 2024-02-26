@@ -880,6 +880,7 @@ struct ParticleEmitter
 	float mLifetime	{ 2.f };
 	float mSpeed	{ 3.f };
 	int	mCount		{ 100 };
+	// TODO: To add texture of particles
 
 	void Inspect();
 	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;

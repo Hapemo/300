@@ -51,6 +51,8 @@ struct ParticleEmitterSSBO
 	alignas(16) vec4 mPosition{};			// XYZ: position | W: particle count
 	alignas(16) vec4 mParticlePoolIndex{};	// X: Particle pool start index, the starting index of particle pool for this emitter
 	alignas(8)	GLuint64 mTexture{};
+
+	void Init(ParticleEmitter const& e);
 };
 
 struct ParticleSSBO

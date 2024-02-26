@@ -1,4 +1,4 @@
-//#include <Graphics/ParticleSystem.h>
+#include <Graphics/ParticleSystem.h>
 //
 //void ParticleEmitter::Emit(int count, vec3 const& camRightVector, vec3 const& camUpVector)
 //{
@@ -51,3 +51,10 @@
 //		mParticles.erase(toBeDeleted[i]);
 //	}
 //}
+
+void ParticleEmitterSSBO::Init(ParticleEmitter const& e)
+{
+	mStartColor = e.mStartColor;
+	mEndColor = e.mEndColor;
+	mSizeLifetimeSpeed = vec4(e.mStartSize, e.mEndSize, e.mLifetime, e.mSpeed);
+}

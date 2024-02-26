@@ -175,6 +175,20 @@ void GraphicsSystem::Update(float dt)
 	update_NonMeshrendererColliders();
 
 #pragma endregion
+
+	// ---------------- PARTICLES WIP ----------------
+	if (Input::CheckKey(E_STATE::RELEASE, E_KEY::F1))
+	{
+		auto emitterInstances = systemManager->ecs->GetEntitiesWith<ParticleEmitter>();
+
+		for (Entity inst : emitterInstances)
+		{
+			ParticleEmitter& e = inst.GetComponent<ParticleEmitter>();
+			Transform& transform = inst.GetComponent<Transform>();
+
+			EmitParticles(e, transform.mTranslate);
+		}
+	}
 	
 	updateSSBO_Data();
 
@@ -186,10 +200,6 @@ void GraphicsSystem::Update(float dt)
 
 	update_Portals();
 
-	// ---------------- PARTICLES WIP ----------------
-	if (Input::CheckKey(E_STATE::RELEASE, E_KEY::F1))
-	{
-	}
 
 	// Render the depth scene first as shadow pass
 	auto dirLightInstance = systemManager->ecs->GetEntitiesWith<DirectionalLight>();
@@ -2019,6 +2029,55 @@ void GraphicsSystem::DrawAllParticles()
 
 	m_ParticleMesh.UnbindVao();
 	GFX::Shader::Deactivate();
+}
+
+void GraphicsSystem::UpdateEmitters(vec3 const& camPos, float dt)
+{
+	if (m_Emitters.empty())
+		return;
+
+	int emitterCount = m_Emitters.size();
+
+	int num_group_x = glm::ceil(emitterCount / 32.f);
+	int num_group_y = glm::ceil(emitterCount / 32.f);
+
+	// Activate Compute shader
+	m_ComputeEmitterShader.Activate();
+
+	// Send uniforms to shader
+	glUniform1i(m_ComputeEmitterCountLocation, emitterCount);
+	glUniform3fv(m_ComputeEmitterCamPosLocation, 1, &camPos[0]);
+	glUniform1f(m_ComputeEmitterDeltaTimeLocation, dt);
+
+	glDispatchCompute(num_group_x, num_group_y, 1);
+	// make sure writing to image is done before reading
+	glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT);
+
+	// Deactivate compute shader
+	m_ComputeEmitterShader.Deactivate();
+
+	// Remove outdated particles
+}
+
+void GraphicsSystem::EmitParticles(ParticleEmitter const& e, vec3 const& position)
+{
+	ParticleEmitterSSBO eSsbo;
+	eSsbo.Init(e);
+	eSsbo.mPosition = vec4(position, e.mCount);
+
+	if (m_Emitters.empty())
+	{
+		eSsbo.mParticlePoolIndex.x = 0;
+	}
+	else
+	{
+		// Starting index =  previous emitter start index + previous emitter particle count
+		eSsbo.mParticlePoolIndex.x = m_Emitters.back().mParticlePoolIndex.x + m_Emitters.back().mPosition.w;
+	}
+	// TODO: To add texture of particles
+
+	// Add emitter into container
+	m_Emitters.emplace_back(eSsbo);
 }
 
 void GraphicsSystem::RenderShadowMap()

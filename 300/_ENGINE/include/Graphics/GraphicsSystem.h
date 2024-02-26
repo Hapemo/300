@@ -406,14 +406,16 @@ public:
 	void DrawAllPortals(bool editorDraw);
 
 	// -- Particles WIP --
-	ParticleEmitter m_Emitter;
 	//void AddParticleInstance(Particle const& p, vec3 const& camPos);
 	void DrawAllParticles();
 	GFX::ComputeShader m_ComputeEmitterShader;
 	GFX::Shader m_ParticleShaderInst{};
+	int m_ParticlesCount{};
 	GLuint m_ComputeEmitterCountLocation{};
 	GLuint m_ComputeEmitterCamPosLocation{};
 	GLuint m_ComputeEmitterDeltaTimeLocation{};
+	void UpdateEmitters(vec3 const& camPos, float dt);
+	void EmitParticles(ParticleEmitter const& e, vec3 const& position);
 
 	// -- Shadows WIP --
 	GFX::Shader shadowMapShaderInst;
