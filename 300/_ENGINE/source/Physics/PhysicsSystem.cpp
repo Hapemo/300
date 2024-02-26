@@ -27,6 +27,11 @@ void PhysicsSystem::Init()
 		CreateRigidBody(e);
 }
 
+void PhysicsSystem::ResetEntity(Entity e) {
+	mPX.mScene->removeActor(*mActors[(uint32_t)e.id].mActor);
+	AddEntity(e);
+}
+
 void PhysicsSystem::Update(float dt)
 {
 	if (dt <= 0)
