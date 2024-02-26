@@ -197,6 +197,11 @@ void Inspect::update()
 			dirLight.Inspect();
 		}
 
+		if (ent.HasComponent<ParticleEmitter>()) {
+			ParticleEmitter& emitter = ent.GetComponent<ParticleEmitter>();
+			emitter.Inspect();
+		}
+
 		if (ent.HasComponent<Portal>()) {
 			Portal& portal = ent.GetComponent<Portal>();
 			portal.Inspect();
@@ -280,6 +285,12 @@ void Inspect::Add_component() {
 		{
 			if (!Entity(Hierarchy::selectedId).HasComponent<DirectionalLight>())
 				Entity(Hierarchy::selectedId).AddComponent<DirectionalLight>();
+		}
+
+		if (ImGui::Selectable("Particle Emitter"))
+		{
+			if (!Entity(Hierarchy::selectedId).HasComponent<ParticleEmitter>())
+				Entity(Hierarchy::selectedId).AddComponent<ParticleEmitter>();
 		}
 
 		if (ImGui::Selectable("Audio")) {
@@ -608,6 +619,40 @@ void DirectionalLight::Inspect()
 
 	if (delete_component == false)
 		Entity(Hierarchy::selectedId).RemoveComponent<DirectionalLight>();
+}
+
+void ParticleEmitter::Inspect()
+{
+	bool delete_component = true;
+
+	if (ImGui::CollapsingHeader("Particle Emitter", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
+	{
+		ImGui::ColorPicker4("Start Color", (float*)&mStartColor);
+		ImGui::ColorPicker4("End Color", (float*)&mEndColor);
+
+		ImGui::Text("Start Size");
+		ImGui::SameLine();
+		ImGui::DragFloat("##Start Size ", &mStartSize, 0.1f, 0.f);
+
+		ImGui::Text("End Size");
+		ImGui::SameLine();
+		ImGui::DragFloat("##End Size ", &mEndSize, 0.1f, 0.f);
+
+		ImGui::Text("Lifetime");
+		ImGui::SameLine();
+		ImGui::DragFloat("##Lifetime ", &mLifetime, 0.1f, 0.f);
+
+		ImGui::Text("Speed");
+		ImGui::SameLine();
+		ImGui::DragFloat("##Speed ", &mSpeed, 0.1f, 0.f);
+
+		ImGui::Text("Count");
+		ImGui::SameLine();
+		ImGui::DragInt("##Count ", &mCount, 1, 0);
+	}
+
+	if (delete_component == false)
+		Entity(Hierarchy::selectedId).RemoveComponent<ParticleEmitter>();
 }
 
 /***************************************************************************/

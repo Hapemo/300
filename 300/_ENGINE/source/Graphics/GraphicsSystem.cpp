@@ -94,8 +94,6 @@ void GraphicsSystem::Init()
 		UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_GAME, 0.f);
 	}
 
-	m_Emitter.Init(ParticleProperties());
-
 	PINFO("Window size: %d, %d", m_Window->size().x, m_Window->size().y);
 }
 
@@ -191,16 +189,7 @@ void GraphicsSystem::Update(float dt)
 	// ---------------- PARTICLES WIP ----------------
 	if (Input::CheckKey(E_STATE::RELEASE, E_KEY::F1))
 	{
-		m_Emitter.Emit(100, glm::normalize(m_EditorCamera.GetRightVector()), glm::normalize(m_EditorCamera.GetUpVector()));
 	}
-	// Update all particles
-	m_Emitter.Update(dt);
-	m_ParticleMesh.ClearInstances();
-	for (auto p : m_Emitter.mParticles)
-	{
-		AddParticleInstance(p, m_EditorCamera.position());
-	}
-	m_ParticleMesh.PrepForDraw();
 
 	// Render the depth scene first as shadow pass
 	auto dirLightInstance = systemManager->ecs->GetEntitiesWith<DirectionalLight>();
@@ -1848,8 +1837,12 @@ void GraphicsSystem::SetupAllShaders()
 	m_ComputeEmitterShader.CreateShaderFromFile("../assets/shader_files/computeEmitter.glsl");
 	m_ComputeEmitterShader.Activate();
 	m_ComputeEmitterCountLocation = m_ComputeEmitterShader.GetUniformLocation("uEmitterCount");
-	m_ComputeEmitterCountLocation = m_ComputeEmitterShader.GetUniformLocation("uCamPos");
+	m_ComputeEmitterCamPosLocation = m_ComputeEmitterShader.GetUniformLocation("uCamPos");
+	m_ComputeEmitterDeltaTimeLocation = m_ComputeEmitterShader.GetUniformLocation("uDeltaTime");
 	GFX::Shader::Deactivate();
+
+	uid particleShaderStr("ParticleShader");
+	m_ParticleShaderInst = *systemManager->mResourceTySystem->get_Shader(particleShaderStr.id);
 }
 
 mat4 GraphicsSystem::GetPortalViewMatrix(GFX::Camera const& camera, Transform const& sourcePortal, Transform const& destPortal)
@@ -1975,39 +1968,39 @@ void GraphicsSystem::DrawAllPortals(bool editorDraw)
 	}
 }
 
-void GraphicsSystem::AddParticleInstance(Particle const& p, vec3 const& camPos)
-{
-	// Compute the rotation vectors
-	vec3 normal = camPos - p.mCurrPosition;
-	vec3 up = { 0, 1, 0 };
-	vec3 right = glm::cross(up, normal);
-	vec3 forward = glm::cross(right, normal);
-
-	mat4 scale = {
-		vec4(p.mCurrSize, 0.f, 0.f, 0.f),
-		vec4(0.f, p.mCurrSize, 0.f, 0.f),
-		vec4(0.f, 0.f, 1.f, 0.f),
-		vec4(0.f, 0.f, 0.f, 1.f)
-	};
-
-	mat4 tilt = glm::rotate(glm::radians(p.mCurrRotation), vec3(0, 0, 1));
-
-	scale = tilt * scale;
-
-	// Rotation matrix to always face the camera
-	mat4 rotate = {
-		vec4(glm::normalize(right), 0.0f),
-		vec4(glm::normalize(forward), 0.0f),
-		vec4(glm::normalize(normal), 0.0f),
-		vec4(p.mCurrPosition, 1.0f)
-	};
-
-	mat4 world = rotate * scale;
-
-	m_ParticleMesh.mTexEntID.emplace_back(vec4(-2.f, 0.f, 0.f, 0.f));
-	m_ParticleMesh.mColors.emplace_back(p.mCurrColor);
-	m_ParticleMesh.mLTW.emplace_back(world);
-}
+//void GraphicsSystem::AddParticleInstance(Particle const& p, vec3 const& camPos)
+//{
+//	// Compute the rotation vectors
+//	vec3 normal = camPos - p.mCurrPosition;
+//	vec3 up = { 0, 1, 0 };
+//	vec3 right = glm::cross(up, normal);
+//	vec3 forward = glm::cross(right, normal);
+//
+//	mat4 scale = {
+//		vec4(p.mCurrSize, 0.f, 0.f, 0.f),
+//		vec4(0.f, p.mCurrSize, 0.f, 0.f),
+//		vec4(0.f, 0.f, 1.f, 0.f),
+//		vec4(0.f, 0.f, 0.f, 1.f)
+//	};
+//
+//	mat4 tilt = glm::rotate(glm::radians(p.mCurrRotation), vec3(0, 0, 1));
+//
+//	scale = tilt * scale;
+//
+//	// Rotation matrix to always face the camera
+//	mat4 rotate = {
+//		vec4(glm::normalize(right), 0.0f),
+//		vec4(glm::normalize(forward), 0.0f),
+//		vec4(glm::normalize(normal), 0.0f),
+//		vec4(p.mCurrPosition, 1.0f)
+//	};
+//
+//	mat4 world = rotate * scale;
+//
+//	m_ParticleMesh.mTexEntID.emplace_back(vec4(-2.f, 0.f, 0.f, 0.f));
+//	m_ParticleMesh.mColors.emplace_back(p.mCurrColor);
+//	m_ParticleMesh.mLTW.emplace_back(world);
+//}
 
 void GraphicsSystem::DrawAllParticles()
 {

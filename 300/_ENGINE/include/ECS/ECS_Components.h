@@ -871,6 +871,19 @@ struct DirectionalLight
 	void DeserializeSelf(rapidjson::Value& reader);
 };
 
+struct ParticleEmitter
+{
+	glm::vec4 mStartColor	{ 1.f, 1.f, 1.f, 1.f };
+	glm::vec4 mEndColor		{ 1.f, 1.f, 1.f, 1.f };
+	float mStartSize{ 0.4f };
+	float mEndSize	{ 0.1f };
+	float mLifetime	{ 2.f };
+	float mSpeed	{ 3.f };
+	int	mCount		{ 100 };
+
+	void Inspect();
+};
+
 struct Portal
 {
 	// Serialize these
