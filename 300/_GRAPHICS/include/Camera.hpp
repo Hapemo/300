@@ -124,6 +124,7 @@ Updates projection and view projection matrix of the camera
         float   mFar;     //save
         float   mFovDegree;
         float	mYaw, mPitch;
+        bool    mManualCameraSet;
     };
 }
 
