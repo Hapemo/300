@@ -5,6 +5,8 @@ local hoverOver
 function Alive()
     gameStateSys = systemManager:mGameStateSystem()
     graphicssys = systemManager:mGraphicsSystem()
+    clickAudioEntity = gameStateSys:GetEntity("Click")
+    clickSFX = clickAudioEntity:GetAudio()
     hoverOver = false
 end
 
@@ -33,6 +35,7 @@ function Update()
     end
 
     if (button:GetButton().mActivated) then
+        clickSFX:SetPlay(1.0)
         if (button:GetGeneral().name == "YesButton") then
             if (gameStateSys:GetPrevGSName() == "Test") then
                 gameStateSys:ChangeGameState("Test")
