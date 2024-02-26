@@ -12,7 +12,7 @@
         "bloom_offset": 1.8380000591278076,
         "bloom_sampleweight": 2.941999912261963,
         "chroma_strength": 0.0038999998942017555,
-        "bloom_enable": true,
+        "bloom_enable": false,
         "crt_enable": false,
         "crt_distortion_value": 0.0005000000237487257,
         "crt_height_offset": 100,
@@ -22,9 +22,9 @@
             "x": 1.0,
             "y": 1.0,
             "z": 1.0,
-            "w": 1.0
+            "w": 0.949999988079071
         },
-        "debug": 0
+        "debug": 1
     },
     {
         "scene_name": "UI",
@@ -39,7 +39,7 @@
         "bloom_offset": 1.8380000591278076,
         "bloom_sampleweight": 2.941999912261963,
         "chroma_strength": 0.0038999998942017555,
-        "bloom_enable": true,
+        "bloom_enable": false,
         "crt_enable": false,
         "crt_distortion_value": 0.0005000000237487257,
         "crt_height_offset": 100,
@@ -49,9 +49,9 @@
             "x": 1.0,
             "y": 1.0,
             "z": 1.0,
-            "w": 1.0
+            "w": 0.949999988079071
         },
-        "debug": 0
+        "debug": 1
     },
     {
         "scene_name": "PauseMenuSceneLvl3",
@@ -66,7 +66,7 @@
         "bloom_offset": 1.8380000591278076,
         "bloom_sampleweight": 2.941999912261963,
         "chroma_strength": 0.0038999998942017555,
-        "bloom_enable": true,
+        "bloom_enable": false,
         "crt_enable": false,
         "crt_distortion_value": 0.0005000000237487257,
         "crt_height_offset": 100,
@@ -76,9 +76,9 @@
             "x": 1.0,
             "y": 1.0,
             "z": 1.0,
-            "w": 1.0
+            "w": 0.949999988079071
         },
-        "debug": 0
+        "debug": 1
     },
     {
         "scene_name": "BossUI",
@@ -93,7 +93,7 @@
         "bloom_offset": 1.8380000591278076,
         "bloom_sampleweight": 2.941999912261963,
         "chroma_strength": 0.0038999998942017555,
-        "bloom_enable": true,
+        "bloom_enable": false,
         "crt_enable": false,
         "crt_distortion_value": 0.0005000000237487257,
         "crt_height_offset": 100,
@@ -103,8 +103,8 @@
             "x": 1.0,
             "y": 1.0,
             "z": 1.0,
-            "w": 1.0
+            "w": 0.949999988079071
         },
-        "debug": 0
+        "debug": 1
     }
 ]

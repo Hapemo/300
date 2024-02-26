@@ -15,7 +15,6 @@ function Update()
     ent = Helper.GetScriptEntity(script_entity.id)
     trans = ent:GetTransform()
 
-    print("rotation of laser beam: ", trans.mRotate.y)
     if(trans.mRotate.y < (original_rotation + 360)) then
         trans.mRotate.y = trans.mRotate.y + (FPSManager.GetDT() * speed)
     elseif (trans.mRotate.y >= (original_rotation + 360)) then

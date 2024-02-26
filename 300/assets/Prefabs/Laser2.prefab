@@ -1,7 +1,7 @@
 {
-    "entityid": 8388957,
+    "entityid": 9437444,
     "general": {
-        "name": "Laser1",
+        "name": "Laser2",
         "tagid": 8,
         "subtag": 0,
         "isActive": true,
@@ -15,7 +15,7 @@
         },
         "rotate": {
             "x": 0.0,
-            "y": 0.0,
+            "y": 90.0,
             "z": 0.0
         },
         "translate": {
@@ -81,6 +81,6 @@
         ]
     },
     "prefab": {
-        "prefab": "Laser1"
+        "prefab": "Laser2"
     }
 }
