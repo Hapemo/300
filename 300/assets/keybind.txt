@@ -1,7 +1,10 @@
+AddHealth: H
 Dash: M_BUTTON_R
 Jump: SPACE
 Machine Gun: C
+MinusHealth: ,
 Mouse: ESCAPE
+NextLevel: L
 Revolver: X
 Shoot: M_BUTTON_L
 Shotgun: Z
@@ -12,8 +15,6 @@ Test4: _4
 Test5: _5
 down: S
 left: A
+pause: ESCAPE
 right: D
 up: W
-pause: ESCAPE
-NextLevel: L
-AddHealth: H

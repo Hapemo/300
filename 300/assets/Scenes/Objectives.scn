@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 15728717,
+        "entityid": 162,
         "general": {
             "name": "Health Bar",
             "tagid": 6,
@@ -47,7 +47,7 @@
         }
     },
     {
-        "entityid": 15728718,
+        "entityid": 163,
         "general": {
             "name": "Objective Bar Empty",
             "tagid": 6,
@@ -94,7 +94,7 @@
         }
     },
     {
-        "entityid": 15728719,
+        "entityid": 164,
         "general": {
             "name": "Objective Bar Empty",
             "tagid": 6,
@@ -141,7 +141,7 @@
         }
     },
     {
-        "entityid": 15728720,
+        "entityid": 165,
         "general": {
             "name": "Objective Bar 1",
             "tagid": 6,
@@ -188,7 +188,7 @@
         }
     },
     {
-        "entityid": 15728721,
+        "entityid": 166,
         "general": {
             "name": "Objectives3",
             "tagid": 0,
@@ -208,9 +208,9 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 19.657516479492188,
+                "x": -0.8209476470947266,
                 "y": -20.0,
-                "z": 15.100000381469727
+                "z": 60.31747817993164
             }
         },
         "rigidbody": {
@@ -290,7 +290,7 @@
         }
     },
     {
-        "entityid": 15728722,
+        "entityid": 167,
         "general": {
             "name": "PreObjectivesController",
             "tagid": 0,
@@ -325,7 +325,7 @@
         }
     },
     {
-        "entityid": 15728723,
+        "entityid": 168,
         "general": {
             "name": "Controller",
             "tagid": 0,
@@ -360,7 +360,7 @@
         }
     },
     {
-        "entityid": 15728724,
+        "entityid": 169,
         "general": {
             "name": "Objectives1",
             "tagid": 0,
@@ -462,9 +462,9 @@
         }
     },
     {
-        "entityid": 15728725,
+        "entityid": 170,
         "general": {
-            "name": "Objectives2",
+            "name": "Objectives3",
             "tagid": 0,
             "subtag": 0,
             "isActive": true,
@@ -482,9 +482,9 @@
                 "z": 0.0
             },
             "translate": {
-                "x": -0.8209476470947266,
+                "x": 19.657516479492188,
                 "y": -20.0,
-                "z": 60.31747817993164
+                "z": 15.100000381469727
             }
         },
         "rigidbody": {
@@ -561,6 +561,147 @@
         },
         "prefab": {
             "prefab": "Objectives"
+        }
+    },
+    {
+        "entityid": 2097388,
+        "general": {
+            "name": "Objective Bar 1",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.4300000071525574,
+                "y": -0.05999999865889549,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.699999988079071,
+                "y": 0.699999988079071,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 2307664127,
+            "degree": 0.0,
+            "slider": 0.9200000166893005,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": -4,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Objective Bar 1"
+        }
+    },
+    {
+        "entityid": 2097389,
+        "general": {
+            "name": "Objective Bar Empty",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": -0.3799999952316284,
+                "y": 0.09000000357627869,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.699999988079071,
+                "y": 0.699999988079071,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 2927780683,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 0,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Objective Bar Empty"
+        }
+    },
+    {
+        "entityid": 2097390,
+        "general": {
+            "name": "Objective Bar Empty",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": -0.3799999952316284,
+                "y": 0.09000000357627869,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -0.699999988079071,
+                "y": 0.699999988079071,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 2927780683,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": -27,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Objective Bar Empty"
         }
     }
 ]

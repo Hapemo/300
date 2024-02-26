@@ -16,12 +16,12 @@ function Alive()
     gameStateSys = systemManager:mGameStateSystem()
     inputMapSys = systemManager:mInputActionSystem()
     graphicssys = systemManager:mGraphicsSystem()
-    mainMenuButton = gameStateSys:GetEntityByScene("MainMenuButton", "PauseMenuScene")
-    quitButton = gameStateSys:GetEntityByScene("QuitButton", "PauseMenuScene")
-    resumeButton = gameStateSys:GetEntityByScene("ResumeButton", "PauseMenuScene")
-    htpButton = gameStateSys:GetEntityByScene("HTPButton", "PauseMenuScene")
-    restartButton = gameStateSys:GetEntityByScene("RestartButton", "PauseMenuScene")
-    menuBackground = gameStateSys:GetEntityByScene("MenuBackground", "PauseMenuScene")
+    mainMenuButton = gameStateSys:GetEntity("PauseMainMenuButton")
+    quitButton = gameStateSys:GetEntity("PauseQuitButton")
+    resumeButton = gameStateSys:GetEntity("PauseResumeButton")
+    htpButton = gameStateSys:GetEntity("PauseHTPButton")
+    restartButton = gameStateSys:GetEntity("PauseRestartButton")
+    menuBackground = gameStateSys:GetEntity("PauseMenuBackground")
     _G.isPausePauseMenu = false
 end
 
@@ -78,12 +78,14 @@ function PauseUpdate()
         graphicssys:HideCursor(false)
         Input.SetCursorCenter()
         --print("PAUSE MENU, CURSOR SHOWN")
-    mainMenuButton:GetTransform().mTranslate.x = 0.02
-    quitButton:GetTransform().mTranslate.x = 0.02
-    resumeButton:GetTransform().mTranslate.x = 0.023
-    htpButton:GetTransform().mTranslate.x = 0.02
-    menuBackground:GetTransform().mTranslate.x = 0
-    restartButton:GetTransform().mTranslate.x = 0.02
+    if (_G.isHTPMenu == false) then
+        mainMenuButton:GetTransform().mTranslate.x = 0.02
+        quitButton:GetTransform().mTranslate.x = 0.02
+        resumeButton:GetTransform().mTranslate.x = 0.023
+        htpButton:GetTransform().mTranslate.x = 0.02
+        menuBackground:GetTransform().mTranslate.x = 0
+        restartButton:GetTransform().mTranslate.x = 0.02
+    end
 end
 
 function Dead()

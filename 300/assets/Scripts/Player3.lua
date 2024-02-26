@@ -41,7 +41,6 @@ local t2 = 0
 local tinc = 0.1
 -- mouse attributes
 local mouse_move = Vec2.new()
---_G.mouse_on = true
 
 -- audio attributes
 local bulletAudioEntity
@@ -97,7 +96,7 @@ local max_recoil_distance_z = 0.1
 local bullet_scale = Vec3.new()
 
 -- Cooldown in seconds (between bullets)
-local revolverGunCooldown = 0.7
+local revolverGunCooldown = 1
 local shotGunCooldown = 1.5
 local machineGunCooldown = 0.2
 local pistolCooldown = 0.5
@@ -109,7 +108,7 @@ local pistolTimer = 0
 
 -- gun states
 local gunRecoilState = "IDLE"       -- ["STARTUP", "IDLE" , "MOVING"]
-_G.gunEquipped = 0 --"PISTOL"      -- rename this to whatever ["PISTOL (DEFAULT)" , "REVOLVER" , "SHOTGUN" , "MACHINE GUN"]  - 1/31 (pistol new default gun)
+_G.gunEquipped = 0 --"REVOLVER"      -- rename this to whatever ["PISTOL (DEFAULT)" , "REVOLVER" , "SHOTGUN" , "MACHINE GUN"]  - 1/31 (pistol new default gun)
 local gunHoldState = "NOT HELD"     -- ["NOT HELD" , "HOLDING"]
 
 local pistolShootState = "SHOOTABLE" 
@@ -154,31 +153,16 @@ local dashZ
 local inittedDash = false
 
 local isTakingDamage = false; -- whether player is in contact with other enemies, thus taking damage
-local playerHealthCurrent = 100;
-local playerHealthMax = 100;
+local playerHealthCurrent = 1000;
+local playerHealthMax = 1000;
 local playerHealthStartRegenCurrent = 0;
 local playerHealthStartRegenMax = 30; -- this is the time it takes for the player to not be damaged to start regenerating health
 
 local healthbarSpawnPos = Vec3.new()
 local objectiveBarEmptySpawnPos = Vec3.new()
 local healthBarEmptySpawnPos = Vec3.new()
-local isuiinit = false
+-- local isuiinit = false
 local this
-
-local isGamePaused
-
-
-local DamageCD =1.1;
-local DamageTime = 1.0;
-
-local minExposure = 0.1
-local minFilterRadius = 0.001
-local maxExposure = 1.2
-local maxFilterRadius = 0.05
-local dmgAudioEnt 
-local dmgAudioComp 
-   
-
 function Alive()
     this = Helper.GetScriptEntity(script_entity.id)
     gameStateSys = systemManager:mGameStateSystem();
@@ -203,9 +187,6 @@ function Alive()
     dashAudioEntity = gameStateSys:GetEntity("Dash" )
     dashAudioComp = dashAudioEntity:GetAudio()
 
-    dmgAudioEnt = gameStateSys:GetEntity("DamageAudio" )
-    dmgAudioComp = dmgAudioEnt:GetAudio()
-
     machineGunAudioEntity = gameStateSys:GetEntity("Machine Gun Shoot (LOOP)" )
     machineGunAudioComp = machineGunAudioEntity:GetAudio()
     machineGunAudioComp:UpdateVolume(0.0)
@@ -218,7 +199,6 @@ function Alive()
     if(cameraEntity:HasAudio()) then 
         -- print("HAS AUDIO")
     end
-    isGamePaused = false
 
     dashTime = 3.0
     tpTime = 20.0
@@ -251,75 +231,56 @@ function Alive()
 
     -- Shotgun Stuff -- 
 
-   
+
 
 end
 
 function Update()
-    -- healthbar = gameStateSys:GetEntityByScene("Health Bar","Objectives") // Changed to UI scene
-    healthbar = gameStateSys:GetEntity("HealthBar", "UI")
 
     -- Player Health System Start -- 
-    if isuiinit == false then
-        -- Player Health System Start -- 
+    -- if isuiinit == false then
+    --     -- Player Health System Start -- 
 
+    --     healthbarSpawnPos.x = -0.7;
+    --     healthbarSpawnPos.y = 0.65;
+    --     healthbarSpawnPos.z = 0;
 
-        -- healthbar = systemManager.ecs:NewEntityFromPrefab("Health Bar", healthbarSpawnPos)
+    --     healthbar = systemManager.ecs:NewEntityFromPrefab("Health Bar", healthbarSpawnPos)
 
-        -- objectiveBarEmptySpawnPos.x = 0.7;
-        -- objectiveBarEmptySpawnPos.y = 0.7;
-        -- objectiveBarEmptySpawnPos.z = 0;
+    --     objectiveBarEmptySpawnPos.x = 0.7;
+    --     objectiveBarEmptySpawnPos.y = 0.7;
+    --     objectiveBarEmptySpawnPos.z = 0;
 
-        -- objectivebarEmpty = systemManager.ecs:NewEntityFromPrefab("Objective Bar Empty", objectiveBarEmptySpawnPos)
+    --     objectivebarEmpty = systemManager.ecs:NewEntityFromPrefab("Objective Bar Empty", objectiveBarEmptySpawnPos)
 
-        -- healthBarEmptySpawnPos.x = -0.7;
-        -- healthBarEmptySpawnPos.y = 0.7;
-        -- healthBarEmptySpawnPos.z = 0;
+    --     healthBarEmptySpawnPos.x = -0.7;
+    --     healthBarEmptySpawnPos.y = 0.7;
+    --     healthBarEmptySpawnPos.z = 0;
 
-        -- healthbarEmpty = systemManager.ecs:NewEntityFromPrefab("Objective Bar Empty", healthBarEmptySpawnPos)
-        isuiinit = true
-    end
+    --     healthbarEmpty = systemManager.ecs:NewEntityFromPrefab("Objective Bar Empty", healthBarEmptySpawnPos)
+    --     isuiinit = true
+    -- end
 
     -- Player Health System End -- 
-    
-    if(graphicsSys.FilterRadius >minFilterRadius )then
-        graphicsSys.FilterRadius =graphicsSys.FilterRadius- ((maxFilterRadius - minFilterRadius)*1/60)
+    if (isTakingDamage == true) then
+    playerHealthStartRegenCurrent = 0;
+    playerHealthCurrent = playerHealthCurrent - 6; -- take damage
     end
 
-    if(graphicsSys.mAmbientBloomExposure > minExposure)then
-        graphicsSys.mAmbientBloomExposure = graphicsSys.mAmbientBloomExposure-((maxExposure - minExposure)*1/20)
+    if (isTakingDamage == false) then -- if not taking damage
 
+        if (playerHealthStartRegenCurrent < playerHealthStartRegenMax) then
+            playerHealthStartRegenCurrent = playerHealthStartRegenCurrent + 1;
+        end
 
-    end
-
-
-    -- if (isTakingDamage == false) then -- if not taking damage
-    if(DamageCD<=DamageTime)then
-            DamageCD = DamageCD+FPSManager.GetDT()
-
-
-            if(DamageCD < DamageTime-0.6)then
-                cameraEntity:GetTransform().mRotate.x = cameraEntity:GetTransform().mRotate.x+math.random(-2,2)
-                cameraEntity:GetTransform().mRotate.y = cameraEntity:GetTransform().mRotate.y+math.random(-2,2)
+        if (playerHealthStartRegenCurrent == playerHealthStartRegenMax) then
+            if (playerHealthCurrent < 400) then
+                playerHealthCurrent = playerHealthCurrent + 3; -- regen hp
             end
-
-
-        -- end
-
-        -- if (playerHealthStartRegenCurrent < playerHealthStartRegenMax) then
-        --     playerHealthStartRegenCurrent = playerHealthStartRegenCurrent + 1;
-        -- end
-
-        -- if (playerHealthStartRegenCurrent == playerHealthStartRegenMax) then
-        --     if (playerHealthCurrent < 400) then
-        --         playerHealthCurrent = playerHealthCurrent + 3; -- regen hp
-        --     end
-        -- end
+        end
     end
 
-    -- print(playerHealthCurrent/playerHealthMax)
-    healthbar:GetUIrenderer():SetSlider(playerHealthCurrent/playerHealthMax);
-
+    -- healthbar:GetUIrenderer():SetSlider(playerHealthCurrent/playerHealthMax);
 
     if playerHealthCurrent <= 0 then
         gameStateSys:ChangeGameState("LoseMenu")
@@ -339,32 +300,22 @@ function Update()
     -- end
 
     dt = FPSManager.GetDT()
-    -- if(_G.gunEquipped == 1) then -- Revolver
-    -- gunTransform:ParentChildRotateUpdate(dt)
-    -- end
-    if(inputMapSys:GetButtonDown("AddHealth")) then
-        playerHealthCurrent = playerHealthCurrent + 20
-        if playerHealthCurrent > playerHealthMax then
-            playerHealthCurrent = playerHealthMax
-        end
+    -- gunTransform:ParentChildRotateUpdate(dt, "REVOLVER")
+
+    
+--region -- player camera
+    if (inputMapSys:GetButtonDown("exit")) then
+        gameStateSys:ChangeGameState("MainMenu")
     end
 
-    if(inputMapSys:GetButtonDown("MinusHealth")) then
-        print("MINUS HEALTH")
-        playerHealthCurrent = playerHealthCurrent + 20
-        if playerHealthCurrent > playerHealthMax then
-            playerHealthCurrent = playerHealthMax
-        end
-    end
     --if(inputMapSys:GetButtonDown("Mouse")) then
-    --    if (_G.mouse_on == true) then
-    --        _G.mouse_on = false
+    --    if (mouse_on == true) then
+    --        mouse_on = false
     --    else
-    --        _G.mouse_on =true
+    --        mouse_on =true
     --    end
     --end
 
-    -- Player view control
     centerscreen = Input:GetCursorCenter()
     mouse_move.x = Input.CursorPos().x - centerscreen.x
     mouse_move.y = Input.CursorPos().y - centerscreen.y
@@ -604,9 +555,7 @@ function Update()
             if (inputMapSys:GetButton("up")) then
                 movement.x = movement.x + (viewVec.x * mul);
                 movement.z = movement.z + (viewVec.z * mul);    
-                
-      
-
+           
                 -- gun "jumps down" when player moves forward\
                 if(gunTranslate.y > gunThreshHold_min_y) then 
                     gunTranslate.y = gunTranslate.y - gunDisplaceSpeed
@@ -662,13 +611,12 @@ function Update()
                 gunRecoilState = "MOVING"
 
             end
-            if (floorCount > 0) then
-                if (inputMapSys:GetButtonDown("Jump")) then
-                    movement.y = movement.y + 25.0;
-                    gunRecoilState = "MOVING"
-                    gunJumped = true
-                    jumpAudioComp:SetPlay(0.4)
-                end
+
+            if (inputMapSys:GetButtonDown("Jump") and math.abs(movement.y) < 0.1) then
+                movement.y = movement.y + 25.0;
+                gunRecoilState = "MOVING"
+                gunJumped = true
+                jumpAudioComp:SetPlay(0.4)
             end
 
             if(gunJumped == true) then  -- this loop will drop the gun (dip)
@@ -687,7 +635,7 @@ function Update()
           
         end
 
- -- region (Gun Colors)
+-- region (Gun Colors)
     if(_G.gunEquipped == 0) then 
         local color_vec4 = Vec4.new(0.5,0.5,0.5,1)
         setBaseGunTexture(color_vec4)
@@ -709,13 +657,7 @@ function Update()
         setRedGunTexture(color_vec4)
     end
 -- endregion
-
         if(inputMapSys:GetButtonDown("Shoot")) then
-            print("MINUS HEALTH")
-            playerHealthCurrent = playerHealthCurrent - 20
-            if playerHealthCurrent > playerHealthMax then
-                playerHealthCurrent = playerHealthMax
-            end
             gunHoldState = "HOLDING"   -- for machine gun
 
             if(_G.gunEquipped == 0) then 
@@ -750,27 +692,21 @@ function Update()
         -- print("GUN RECOIL STATE:" , gunRecoilState)
             -- print("GUN EQUIPPED:" , gunEquipped)
             if(_G.gunEquipped == 1 ) then -- REVOLVER
-                -- print("SHOOTING REVOLVER")
+             
                 if(revolverGunTimer == 0) then 
                     -- print("REVOLVER SHOOTING")
-                    applyGunRecoil(recoil_speed, 0.5)   
-                    -- <GunAnimation>
-                    -- 1. Gun Type 
-                    -- 2. Skill Timer (sync it up w the internal skill timer)
-                    -- 3. Recoil Angle (how much) - depends on axis set on "parentChildRotateInit()"
-                    -- 4. Recoil Speed (how fast)
-                    -- 5. Recoil Duration (how long the recoil should last)
-                    -- gunTransform:GunAnimation("REVOLVER",_G.skill_duration, 30.0, 1.0, 0.2)  -- Trigger everytime player shoots 
-                    -- print("SKILL DURATION" , _G.skill_duration)
+                    
+                    applyGunRecoil(recoil_speed, 0.5)
+                    -- gunTransform:GunAnimation("REVOLVER" , 30.0, 1.0, 0.2) -- Trigger everytime player shoots
 
                     -- gunRecoilState = "MOVING"
 
                     -- Shoots Bullet
-                    positions_final.x = positions.x + viewVecCam.x
-                    positions_final.y = positions.y + viewVecCam.y
-                    positions_final.z = positions.z + viewVecCam.z 
+                    positions_final.x = positions.x + viewVecCam.x*3
+                    positions_final.y = positions.y + viewVecCam.y*3
+                    positions_final.z = positions.z + viewVecCam.z*3  
 
-                    prefabEntity = systemManager.ecs:NewEntityFromPrefab("Revolver Bullet", positions_final)
+                    prefabEntity = systemManager.ecs:NewEntityFromPrefab("bullet", positions_final)
                     -- rotationCam.x = rotationCam.x *0
                     -- rotationCam.y = rotationCam.y *0
                     -- rotationCam.z = rotationCam.z *0
@@ -789,7 +725,6 @@ function Update()
                     
                     revolverShootState = "COOLDOWN"
                 end
-                
             end 
 
             -- print("TRANSLATE: " , gunTranslate.z)
@@ -799,7 +734,7 @@ function Update()
 
                     moreAccurateShotgun(10)
                     applyGunRecoil(recoil_speed * 0.5, 0.1)
-             
+
                     shotGunTimer = shotGunTimer + shotGunCooldown
 
 
@@ -808,7 +743,6 @@ function Update()
                     bulletAudioComp:SetPlay(0.3)
                 end
             end
-
         end
 
         -- "COOLDOWN" state
@@ -853,7 +787,6 @@ function Update()
                 -- applyGunRecoil(recoil_speed * 0.05 , 0.
                 machineGunRecoil()
                 machineGunBullets()
-                -- gunTransform:GunAnimation("NA", 0 ,  30.0, 1.0, 0.2)
     
                 if(machineGunTimer <= 0) then
                     bulletAudioComp:SetPlay(0.3)
@@ -950,39 +883,13 @@ function OnTriggerEnter(Entity)
         end
     end
 
-    if (generalComponent.name == "ILOVEYOU" or generalComponent.name == "Melissa" or generalComponent.name == "TrojanHorse"
-    or generalComponent.name == "ZipBomb" or generalComponent.name == "TrojanSoldier" )then
-
-        dmgAudioComp:SetPlay(1.0)
-    -- print("DAMAGE CD: " , DamageCD)
-    -- print("DAMAGE TIME: " , DamageTime)
-
-        if(DamageCD >=DamageTime-0.1)then
-            -- if (isTakingDamage == true) then
-                playerHealthStartRegenCurrent = 0;
-                playerHealthCurrent = playerHealthCurrent - 10; -- take damage
-
-                graphicsSys.FilterRadius = maxFilterRadius
-                graphicsSys.mAmbientBloomExposure = maxExposure
-                
-        
-               
-                -- print("Running Pause Update fromxxxxxxxxxxxxxxxxxxxxxxxx Player.lua")
-                DamageCD = 0
-                -- isTakingDamage = false
-            --end
-        end
-    end
     -- Player Health System Start --
-    -- if (generalComponent.name == "ILOVEYOU") then isTakingDamage = true; end
-    -- if (generalComponent.name == "Melissa") then isTakingDamage = true; end
-    -- if (generalComponent.name == "TrojanHorse") then isTakingDamage = true; end
-    -- if (generalComponent.name == "ZipBomb") then isTakingDamage = true; end
-    -- if (generalComponent.name == "TrojanSoldier") then isTakingDamage = true; end
+    if (generalComponent.name == "ILOVEYOU") then isTakingDamage = true; end
+    if (generalComponent.name == "Melissa") then isTakingDamage = true; end
+    if (generalComponent.name == "TrojanHorse") then isTakingDamage = true; end
+    if (generalComponent.name == "ZipBomb") then isTakingDamage = true; end
+    if (generalComponent.name == "TrojanSoldier") then isTakingDamage = true; end
     -- Player Health System End --
-
-
-    
 
 end
 
@@ -998,11 +905,11 @@ function OnTriggerExit(Entity)
     end
 
     -- Player Health System Start --
-    -- if (generalComponent.name == "ILOVEYOU") then isTakingDamage = false; end
-    -- if (generalComponent.name == "Melissa") then isTakingDamage = false; end
-    -- if (generalComponent.name == "TrojanHorse") then isTakingDamage = false; end
-    -- if (generalComponent.name == "ZipBomb") then isTakingDamage = false; end
-    -- if (generalComponent.name == "TrojanSoldier") then isTakingDamage = false; end
+    if (generalComponent.name == "ILOVEYOU") then isTakingDamage = false; end
+    if (generalComponent.name == "Melissa") then isTakingDamage = false; end
+    if (generalComponent.name == "TrojanHorse") then isTakingDamage = false; end
+    if (generalComponent.name == "ZipBomb") then isTakingDamage = false; end
+    if (generalComponent.name == "TrojanSoldier") then isTakingDamage = false; end
     -- Player Health System End --
 end
 
