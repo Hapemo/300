@@ -379,7 +379,8 @@ void LuaGameState()
         "mGameStateSystem", sol::constructors<>(),
         "GetEntity", sol::resolve<Entity(std::string const &)>(&GameStateManager::GetEntity),
         "GetEntityByScene", sol::resolve<Entity(std::string const &, std::string const &)>(&GameStateManager::GetEntity),
-        "ChangeGameState", sol::resolve<void(const std::string &)>(&GameStateManager::ChangeGameState));
+        "ChangeGameState", sol::resolve<void(const std::string &)>(&GameStateManager::ChangeGameState),
+        "GetPrevGSName", &GameStateManager::GetPrevGSName);
 }
 
 void LuaAIManager()
