@@ -124,6 +124,7 @@ void GraphicsSystem::Update(float dt)
 		UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_GAME, dt);
 	}
 
+	Reset_Data();
 
 	// Retrieve and update the mesh instances to be drawn
 	auto meshRendererInstances = systemManager->ecs->GetEntitiesWith<MeshRenderer>();
@@ -177,14 +178,12 @@ void GraphicsSystem::Update(float dt)
 	update_NonMeshrendererColliders();
 
 #pragma endregion
-	
-	updateSSBO_Data();
 
 	update_Light();
 
-	Reset_Data();
-
 	update_UI();
+
+	updateSSBO_Data();
 
 	update_Portals();
 
@@ -1446,6 +1445,25 @@ GLuint64 GraphicsSystem::GetAndStoreBindlessTextureHandle(int texID)
 	return handle;
 }
 
+int GraphicsSystem::StoreUITexture(int texID)
+{
+	if (texID < 0)
+		return -1;
+
+	// Store the 64-bit handle
+	GLuint64 handle = glGetTextureHandleARB((unsigned)texID);
+	m_UIHandles[(unsigned)texID] = handle;
+
+	if (!glIsTextureHandleResidentARB(handle))
+	{
+		glMakeTextureHandleResidentARB(handle);
+	}
+
+	UITextures.emplace_back(handle);
+
+	return UITextures.size() - 1;
+}
+
 void GraphicsSystem::SetupShaderStorageBuffers()
 {
 	// All materials of each instance -- Location 1
@@ -1459,20 +1477,23 @@ void GraphicsSystem::SetupShaderStorageBuffers()
 
 	// All spotlight in the scene -- Location 4
 	m_SpotlightSsbo.Create(sizeof(SpotLightSSBO) * MAX_SPOTLIGHT, 4);
+
+	// All UI textures in the scene -- Location 7
+	m_UITextureSsbo.Create(sizeof(GLuint64) * MAX_UI, 7);
 }
 
 void GraphicsSystem::DrawAll2DInstances(unsigned shaderID)
 {
 	(void)shaderID;
 
-	if (m_Image2DStore.size() == 0)
-		return;
+	//if (m_Image2DStore.size() == 0)
+	//	return;
 
-	// Bind Textures to OpenGL context
-	for (size_t i{}; i < m_Image2DStore.size(); ++i)
-	{
-		glBindTextureUnit(static_cast<GLuint>(i), m_Image2DStore[static_cast<GLuint>(i)]);
-	}
+	//// Bind Textures to OpenGL context
+	//for (size_t i{}; i < m_Image2DStore.size(); ++i)
+	//{
+	//	glBindTextureUnit(static_cast<GLuint>(i), m_Image2DStore[static_cast<GLuint>(i)]);
+	//}
 
 	// Bind 2D quad VAO
 	m_Image2DMesh.BindVao();
@@ -1483,11 +1504,11 @@ void GraphicsSystem::DrawAll2DInstances(unsigned shaderID)
 	// Unbind 2D quad VAO
 	m_Image2DMesh.UnbindVao();
 
-	// Unbind Textures from openGL context
-	for (size_t i{}; i < m_Image2DStore.size(); ++i)
-	{
-		glBindTextureUnit(static_cast<GLuint>(i), 0);
-	}
+	//// Unbind Textures from openGL context
+	//for (size_t i{}; i < m_Image2DStore.size(); ++i)
+	//{
+	//	glBindTextureUnit(static_cast<GLuint>(i), 0);
+	//}
 }
 
 void GraphicsSystem::Add2DImageInstance(float width, float height, vec3 const& position, unsigned texHandle, unsigned entityID, float degree, vec4 const& color, float slider)
@@ -1504,14 +1525,14 @@ void GraphicsSystem::Add2DImageInstance(float width, float height, vec3 const& p
 	};
 
 	int texIndex{};
-	if (texHandle > 0)
-		texIndex = StoreTextureIndex(texHandle);
+	if (texHandle >= 0)
+		texIndex = texHandle + 0.5f;
 	else
-		texIndex = -2;
+		texIndex = -2.f;
 
 	m_Image2DMesh.mLTW.push_back(world);
 	m_Image2DMesh.mColors.push_back(color);
-	m_Image2DMesh.mTexEntID.push_back(vec4((float)texIndex + 0.5f, (float)entityID + 0.5f, degree, slider));
+	m_Image2DMesh.mTexEntID.push_back(vec4((float)texIndex, (float)entityID + 0.5f, degree, slider));
 }
 
 void GraphicsSystem::Add2DImageWorldInstance(Transform transform, unsigned texHandle, unsigned entityID, float degree, vec4 const& color, float slider)
@@ -1523,14 +1544,14 @@ void GraphicsSystem::Add2DImageWorldInstance(Transform transform, unsigned texHa
 	mat4 world = T * R * S;
 
 	int texIndex{};
-	if (texHandle > 0)
-		texIndex = StoreTextureIndex(texHandle);
+	if (texHandle >= 0)
+		texIndex = texHandle + 0.5f;
 	else
-		texIndex = -2;
+		texIndex = -2.f;
 
 	m_PortalMesh.mLTW.push_back(world);
 	m_PortalMesh.mColors.push_back(color);
-	m_PortalMesh.mTexEntID.push_back(vec4((float)texIndex + 0.5f, (float)entityID + 0.5f, degree, slider));
+	m_PortalMesh.mTexEntID.push_back(vec4((float)texIndex, (float)entityID + 0.5f, degree, slider));
 }
 int GraphicsSystem::StoreTextureIndex(unsigned texHandle)
 {
