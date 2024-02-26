@@ -882,6 +882,9 @@ struct ParticleEmitter
 	int	mCount		{ 100 };
 	// TODO: To add texture of particles
 
+	_GEOM::Texture_DescriptorData		mTextureDescriptorData;
+	ref mTexture;
+
 	void Inspect();
 	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
 	void DeserializeSelf(rapidjson::Value& reader);
