@@ -1,6 +1,56 @@
 [
     {
-        "entityid": 2097249,
+        "entityid": 7340137,
+        "general": {
+            "name": "PauseMenuController",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/PauseMenuBackground.lua",
+                    "variables": [
+                        {
+                            "key": "runOnce",
+                            "val": {
+                                "type": -1129103353,
+                                "value": false
+                            }
+                        },
+                        {
+                            "key": "runOnce2",
+                            "val": {
+                                "type": -1129103353,
+                                "value": false
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "entityid": 7340138,
         "general": {
             "name": "PauseMenuBackground",
             "tagid": 6,
@@ -41,7 +91,7 @@
         }
     },
     {
-        "entityid": 2097250,
+        "entityid": 7340139,
         "general": {
             "name": "PauseBackButton",
             "tagid": 0,
@@ -115,7 +165,7 @@
         }
     },
     {
-        "entityid": 2097251,
+        "entityid": 7340140,
         "general": {
             "name": "PauseMainMenuButton",
             "tagid": 6,
@@ -189,7 +239,7 @@
         }
     },
     {
-        "entityid": 2097252,
+        "entityid": 7340141,
         "general": {
             "name": "Click",
             "tagid": 6,
@@ -226,7 +276,7 @@
         }
     },
     {
-        "entityid": 2097253,
+        "entityid": 7340142,
         "general": {
             "name": "PauseQuitButton",
             "tagid": 6,
@@ -300,7 +350,7 @@
         }
     },
     {
-        "entityid": 2097254,
+        "entityid": 7340143,
         "general": {
             "name": "Awake",
             "tagid": 0,
@@ -337,7 +387,7 @@
         }
     },
     {
-        "entityid": 2097255,
+        "entityid": 7340144,
         "general": {
             "name": "PauseResumeButton",
             "tagid": 6,
@@ -414,7 +464,7 @@
         }
     },
     {
-        "entityid": 2097256,
+        "entityid": 7340145,
         "general": {
             "name": "PauseHTPButton",
             "tagid": 6,
@@ -491,7 +541,7 @@
         }
     },
     {
-        "entityid": 2097257,
+        "entityid": 7340146,
         "general": {
             "name": "Exit",
             "tagid": 0,
@@ -528,7 +578,7 @@
         }
     },
     {
-        "entityid": 2097258,
+        "entityid": 7340147,
         "general": {
             "name": "PauseRestartButton",
             "tagid": 6,
@@ -602,7 +652,7 @@
         }
     },
     {
-        "entityid": 2097259,
+        "entityid": 7340148,
         "general": {
             "name": "PauseHTPMenu",
             "tagid": 6,
@@ -640,56 +690,6 @@
             },
             "layer": 6,
             "worldtransform": false
-        }
-    },
-    {
-        "entityid": 2097260,
-        "general": {
-            "name": "PauseMenuController",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/PauseMenuBackground.lua",
-                    "variables": [
-                        {
-                            "key": "runOnce",
-                            "val": {
-                                "type": -1129103353,
-                                "value": false
-                            }
-                        },
-                        {
-                            "key": "runOnce2",
-                            "val": {
-                                "type": -1129103353,
-                                "value": false
-                            }
-                        }
-                    ]
-                }
-            ]
         }
     }
 ]

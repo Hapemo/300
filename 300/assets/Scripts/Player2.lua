@@ -237,27 +237,30 @@ end
 
 function Update()
 
+    -- healthbar = gameStateSys:GetEntityByScene("Health Bar","Objectives") // Changed to UI scene
+    healthbar = gameStateSys:GetEntity("HealthBar", "UI")
+
     -- Player Health System Start -- 
     if isuiinit == false then
         -- Player Health System Start -- 
 
-        healthbarSpawnPos.x = -0.7;
-        healthbarSpawnPos.y = 0.65;
-        healthbarSpawnPos.z = 0;
-
-        healthbar = systemManager.ecs:NewEntityFromPrefab("Health Bar", healthbarSpawnPos)
-
-        objectiveBarEmptySpawnPos.x = 0.7;
-        objectiveBarEmptySpawnPos.y = 0.7;
-        objectiveBarEmptySpawnPos.z = 0;
-
-        objectivebarEmpty = systemManager.ecs:NewEntityFromPrefab("Objective Bar Empty", objectiveBarEmptySpawnPos)
-
-        healthBarEmptySpawnPos.x = -0.7;
-        healthBarEmptySpawnPos.y = 0.7;
-        healthBarEmptySpawnPos.z = 0;
-
-        healthbarEmpty = systemManager.ecs:NewEntityFromPrefab("Objective Bar Empty", healthBarEmptySpawnPos)
+        -- healthbarSpawnPos.x = -0.7;
+        -- healthbarSpawnPos.y = 0.65;
+        -- healthbarSpawnPos.z = 0;
+        
+        -- healthbar = systemManager.ecs:NewEntityFromPrefab("Health Bar", healthbarSpawnPos)
+        
+        -- objectiveBarEmptySpawnPos.x = 0.7;
+        -- objectiveBarEmptySpawnPos.y = 0.7;
+        -- objectiveBarEmptySpawnPos.z = 0;
+        
+        -- objectivebarEmpty = systemManager.ecs:NewEntityFromPrefab("Objective Bar Empty", objectiveBarEmptySpawnPos)
+        
+        -- healthBarEmptySpawnPos.x = -0.7;
+        -- healthBarEmptySpawnPos.y = 0.7;
+        -- healthBarEmptySpawnPos.z = 0;
+        
+        -- healthbarEmpty = systemManager.ecs:NewEntityFromPrefab("Objective Bar Empty", healthBarEmptySpawnPos)
         isuiinit = true
     end
 
@@ -612,7 +615,7 @@ function Update()
 
             end
 
-            if (inputMapSys:GetButtonDown("Jump") and math.abs(movement.y) < 0.1) then
+            if (inputMapSys:GetButtonDown("Jump") and math.abs(movement.y) < 3.05) then
                 movement.y = movement.y + 25.0;
                 gunRecoilState = "MOVING"
                 gunJumped = true
