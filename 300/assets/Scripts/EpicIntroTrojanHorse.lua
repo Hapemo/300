@@ -12,7 +12,6 @@ local s3SprintVelocity  = Vec3.new()
 local sprintSpeed       = 15
 local stareDirection    = Vec3.new()
 
-local dashStopTimer = 1.5
 local dashStopTimerCount = 0
 
 local s4RestTimer       = 2
@@ -47,8 +46,7 @@ function Alive()
     if this == nil then
         print("Entity nil in Trojan Horse script!")
     end
-
-    aiSys = systemManager:mAISystem();
+    
     phySys = systemManager:mPhysicsSystem();
     gameStateSys = systemManager:mGameStateSystem();
 
@@ -99,8 +97,9 @@ function Update()
         -- Stop and change state when collided with something
         -- This part is done in OnContactEnter
         dashStopTimerCount = dashStopTimerCount + FPSManager.GetDT()
-        if dashStopTimerCount > dashStopTimer then
+        if dashStopTimerCount > _G.THdashStopTimer then
             dashStopTimerCount = 0
+            
             EndEpicIntro()
         end
 
@@ -189,9 +188,9 @@ function RESTInit()
 end
 
 function EndEpicIntro()
---    this:GetScripts():AddScript(this, "../assets/Scripts/TrojanHorse.lua")
-    this:GetScripts():DeleteScript("../assets/Scripts/EpicIntroTrojanHorse.lua");
-    _G.TrojanHorsePhase1ToCameraIn = true
+    this:GetScripts():AddScript(this, "../assets/Scripts/TrojanHorse.lua")
+    this:GetScripts():DeleteScript("..\\assets\\Scripts\\EpicIntroTrojanHorse.lua");
+    _G.TrojanHorseStartToLedge = true
 end
 
 

@@ -64,6 +64,8 @@ end
 
 local timer = 0
 function Update()
+    -- If trojan horse epic intro is between state 4 and 6, return
+    if _G.TrojanHorseEpicIntroState >= 4 or _G.TrojanHorseEpicIntroState <= 6 then return end 
 
     -- dt = FPSManager.GetDT()
 

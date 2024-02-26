@@ -21,6 +21,7 @@ GFX::Camera::Camera()
 	mNear = 0.f;   
 	mFar = 0.f;    
 	mFovDegree = 0.f;
+	mManualCameraSet = false;
 }
 
  /**---------------------------------------------------------------------------/
@@ -177,8 +178,9 @@ void GFX::Camera::Update(bool freeMoving)
 		mPitch = -89.0f;
 	}
 
-	if (freeMoving)
-	{
+	if (mManualCameraSet) {
+		mManualCameraSet = !mManualCameraSet;
+	} else if (freeMoving) {
 		glm::vec3 direction;
 		direction.x = cos(glm::radians(mYaw)) * cos(glm::radians(mPitch));
 		direction.y = sin(glm::radians(mPitch));
