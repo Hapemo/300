@@ -1,4 +1,5 @@
 #version 450
+#extension GL_ARB_gpu_shader_int64 : enable
 
 // -- INPUTS -- 
 layout (location = 0) in vec4 fColor;
@@ -13,6 +14,11 @@ layout (location = 1) out uint outEntityID;
 
 // -- GLOBAL --
 vec2 up = vec2(0, 0.5);
+
+layout (std430, binding = 7) buffer uiTextureBuffer
+{
+    uint64_t uiTextures[];
+};
 
 float GetAngle(vec2 v)
 {
@@ -46,8 +52,12 @@ void main()
 
 	// Get fragment color
 	vec4 outColor = vec4(1.0f);
+
 	if (texIndex >= 0)
-		outColor = texture(uTex2d[texIndex], fTexCoords);
+	{
+		uint64_t handle = uiTextures[texIndex];		// get handle of UI textures
+		outColor = texture(sampler2D(handle), fTexCoords);
+	}
 	outColor = outColor * fColor;
 	
 	if (outColor.a < 0.1)
