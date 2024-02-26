@@ -343,7 +343,7 @@ void update_UI()
 		if (texID > 0)
 			texIndex = systemManager->mGraphicsSystem->StoreUITexture(texID);
 		else
-			texIndex = -2.f;
+			texIndex = -2;
 
 		if (uiRenderer.mWorldTransform)
 		{
