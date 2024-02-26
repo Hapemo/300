@@ -22,6 +22,13 @@ local Option2Progress
 local currState
 
 local speed
+local framespeed
+local picturespeed
+
+local frame
+local picture
+
+local frameOpened
 
 --:GetUIrenderer():SetSlider(progress/objectivesComplete)
 
@@ -38,6 +45,9 @@ function Alive()
     Option1 = gameStateSys:GetEntity("DialogueOption1", "Dialogue_Tutorial")
     Option2 = gameStateSys:GetEntity("DialogueOption2", "Dialogue_Tutorial")
 
+    frame = gameStateSys:GetEntity("DialogueFrame", "Dialogue_Tutorial")
+    picture = gameStateSys:GetEntity("Dora", "Dialogue_Tutorial")
+
     LoadIn1Progress = 0.0
     LoadIn2Progress = 0.0
     ObjectiveIntro1Progress = 0.0
@@ -51,10 +61,20 @@ function Alive()
     currState = 0
 
     speed = 0.01
+    framespeed = 0.05
+    picturespeed = 0.00625
+
+    frameOpened = false
 end
 
 function Update()
-    UpdateDialogues()
+    if frameOpened == false then
+        OpenFrame()
+    end
+
+    if frameOpened == true then
+        UpdateDialogues()
+    end
 end
 
 function Dead()
@@ -103,7 +123,7 @@ function UpdateDialogues()
             else
                 SkipAnimation()
             end
-        elseif currState == 3
+        elseif currState == 3 then
             if Option2Progress >= 1.0 then
                 NextDialogue()
             else
@@ -174,7 +194,7 @@ function UpdateDialogues()
                 TroubleIntro3:GetUIrenderer():SetSlider(TroubleIntro3Progress)
             end
         end
-    elseif currState == 3
+    elseif currState == 3 then
         if Option1Progress < 1.0 then 
             Option1Progress = speed + Option1Progress
             if Option1Progress > 1.0 then
@@ -213,7 +233,7 @@ function SkipAnimation()
         TroubleIntro1:GetUIrenderer():SetSlider(1.0)
         TroubleIntro2:GetUIrenderer():SetSlider(1.0)
         TroubleIntro3:GetUIrenderer():SetSlider(1.0)
-    elseif currState == 3
+    elseif currState == 3 then
         Option1Progress = 1.1
         Option2Progress = 1.1
         Option1:GetUIrenderer():SetSlider(1.0)
@@ -235,9 +255,26 @@ function NextDialogue()
         TroubleIntro2:GetUIrenderer():SetSlider(0.0)
         TroubleIntro3:GetUIrenderer():SetSlider(0.0)
         currState = currState + 1
-    elseif currState == 3
+    elseif currState == 3 then
         Option1:GetUIrenderer():SetSlider(0.0)
         Option2:GetUIrenderer():SetSlider(0.0)
         currState = currState + 1
     end
+end
+
+function OpenFrame()
+    if frame:GetTransform().mScale.x <= 1.99 then
+        frame:GetTransform().mScale.x = frame:GetTransform().mScale.x + framespeed
+        if frame:GetTransform().mScale.x > 1.98 then
+            frame:GetTransform().mScale.x = 2.0
+        end
+    elseif picture:GetTransform().mScale.x <= 0.24 then
+        picture:GetTransform().mScale.x = picture:GetTransform().mScale.x + picturespeed
+        if picture:GetTransform().mScale.x > 0.23 then
+            picture:GetTransform().mScale.x = 0.25
+        end
+    else
+        frameOpened = true
+    end
+
 end
