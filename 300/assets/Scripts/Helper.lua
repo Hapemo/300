@@ -60,12 +60,6 @@ function Helper.SetRotate(Entity, Vec3)
     transformComponent.mRotate.x = transformComponent.mRotate.x + Vec3.x
     transformComponent.mRotate.y = transformComponent.mRotate.y + Vec3.y
     transformComponent.mRotate.z = transformComponent.mRotate.z + Vec3.z
-    vec = Vec3.new()
-    vec.x = transformComponent.mRotate.x;
-    vec.y = transformComponent.mRotate.y;
-    vec.z = transformComponent.mRotate.z;
-    physicsSys = systemManager:mPhysicsSystem();
-    physicsSys:SetRotation(Entity, vec);
 end
 
 function Helper.Normalize(Vec3)
@@ -135,6 +129,29 @@ function Helper.DirectionToAngle(entity, vec)
     if degree ~= degree then return entity:GetTransform().mRotate.y end
 
     return degree
+end
+
+function Helper.DirectionToYawPitch(dir)
+    local returnVec = Vec3.new()
+    -- returnVec.y = math.asin(dir.z / Helper.Vec3Len(dir));
+    -- if (returnVec.y == 0) then return Vec3.new() end
+    -- returnVec.x = math.asin( dir.x / (math.cos(returnVec.x)*Helper.Vec3Len(dir)) )
+
+    -- returnVec.x = -math.asin(dir.y)
+    -- if (dir.z == 0) then dir.z = 0.001 end
+    -- returnVec.y = math.atan2(dir.x/dir.z)
+
+    -- returnVec.x = math.asin(-dir.y)
+    -- returnVec.y = math.atan(dir.x, dir.z)
+
+
+    if (dir.z == 0) then dir.z = 0.001 end
+    dir = Helper.Normalize(dir)
+    returnVec.x = math.atan(math.sqrt(dir.x*dir.x + dir.y*dir.y)/dir.z)
+    returnVec.y = math.atan(-dir.x/dir.y)
+
+    returnVec = Helper.Scale(returnVec, 180/math.pi)
+    return returnVec
 end
 
 function Helper.CreateSphereParticle(vec)

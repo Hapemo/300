@@ -35,6 +35,7 @@ void GameStateManager::Init() {
 		mNextGSName = "Test"; //temp
 	mCurrentGameState.Load(mNextGSName);
 	mCurrentGameState.Init();
+	mPrevGSName = mNextGSName;
 
 	mGSMState = E_GSMSTATE::RUNNING;
 }
@@ -59,6 +60,7 @@ void GameStateManager::UpdateNextGSMState() {
 		systemManager->ResetForChangeGS();
 		break;
 	case E_GSMSTATE::CHANGING:
+		mPrevGSName = mCurrentGameState.mName;
 		systemManager->mAudioSystem.get()->scene_switched = true;
 		systemManager->mAudioSystem.get()->Reset();			// [11/4] Using <Audio> component, must happen before clearing of entities.
 		mCurrentGameState.Unload();

@@ -176,8 +176,9 @@ local minFilterRadius = 0.001
 local maxExposure = 1.2
 local maxFilterRadius = 0.05
 local dmgAudioEnt 
-local dmgAudioComp 
-   
+local dmgAudioComp
+
+_G.FreezePlayerControl = false
 
 function Alive()
     this = Helper.GetScriptEntity(script_entity.id)
@@ -256,7 +257,9 @@ function Alive()
 end
 
 function Update()
-    healthbar = gameStateSys:GetEntityByScene("Health Bar","Objectives")
+    if _G.FreezePlayerControl then return end
+    -- healthbar = gameStateSys:GetEntityByScene("Health Bar","Objectives") // Changed to UI scene
+    healthbar = gameStateSys:GetEntity("HealthBar", "UI")
 
     -- Player Health System Start -- 
     if isuiinit == false then
@@ -342,6 +345,14 @@ function Update()
     -- gunTransform:ParentChildRotateUpdate(dt)
     -- end
     if(inputMapSys:GetButtonDown("AddHealth")) then
+        playerHealthCurrent = playerHealthCurrent + 20
+        if playerHealthCurrent > playerHealthMax then
+            playerHealthCurrent = playerHealthMax
+        end
+    end
+
+    if(inputMapSys:GetButtonDown("MinusHealth")) then
+        print("MINUS HEALTH")
         playerHealthCurrent = playerHealthCurrent + 20
         if playerHealthCurrent > playerHealthMax then
             playerHealthCurrent = playerHealthMax
@@ -702,6 +713,11 @@ function Update()
 -- endregion
 
         if(inputMapSys:GetButtonDown("Shoot")) then
+            print("MINUS HEALTH")
+            playerHealthCurrent = playerHealthCurrent - 20
+            if playerHealthCurrent > playerHealthMax then
+                playerHealthCurrent = playerHealthMax
+            end
             gunHoldState = "HOLDING"   -- for machine gun
 
             if(_G.gunEquipped == 0) then 
