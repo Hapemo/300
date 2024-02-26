@@ -109,7 +109,6 @@ void GameStateManager::NewGameState(std::string const& _name) {
 	if (!mCurrentGameState.mName.empty())
 		mCurrentGameState.Unload();
 	mCurrentGameState.mName = _name;
-	mPrevGSName = _name;
 
 	mCurrentGameState.AddScene();
 }
