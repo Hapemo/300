@@ -623,6 +623,14 @@ void DirectionalLight::Inspect()
 
 void ParticleEmitter::Inspect()
 {
+	//!< Helper
+	auto getFilename = [](std::string filepath) -> std::string
+		{
+			// returns AT-AT
+			std::string ret_str = filepath.substr(filepath.find_last_of("/") + 1);
+			ret_str = ret_str.substr(0, ret_str.find_first_of("."));
+			return ret_str;
+		};
 	bool delete_component = true;
 
 	if (ImGui::CollapsingHeader("Particle Emitter", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
@@ -649,7 +657,72 @@ void ParticleEmitter::Inspect()
 		ImGui::Text("Count");
 		ImGui::SameLine();
 		ImGui::DragInt("##Count ", &mCount, 1, 0);
+
+		ImGui::NewLine();
+
+		ImGui::Selectable("Particles   ");
+		if (ImGui::BeginDragDropTarget())
+		{
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_TEXT")) {
+
+				const char* data = (const char*)payload->Data;
+				std::string data_str = std::string(data);
+				mTexPath = data_str;
+
+
+				std::string texturestr = systemManager->mResourceTySystem->compressed_texture_path + getFilename(data_str) + ".ctexture";
+				mTexPath = texturestr;
+				std::string TEXTURE_Descriptor_Filepath;
+				unsigned guid;
+				// check and ensures that the descriptor file for the materials are created
+				//bool descFilePresent = _GEOM::CheckAndCreateDescriptorFileTEXTURE(data_str, TEXTURE_Descriptor_Filepath, texturestr);
+				std::string descfilepath = data_str + ".desc";
+				guid = _GEOM::GetGUID(descfilepath);
+				mTexture.data_uid = guid;
+				mTexture.data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(guid));
+			}
+
+
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_TEXT_UNCOMPRESS"))
+			{
+				const char* data = (const char*)payload->Data;
+				std::string data_str = std::string(data);
+
+				std::string texturestr = systemManager->mResourceTySystem->compressed_texture_path + getFilename(data_str) + ".ctexture";
+				//mMaterialInstancePath[i] = texturestr;
+
+				std::string TEXTURE_Descriptor_Filepath;
+				unsigned guid;
+
+				// check and ensures that the descriptor file for the materials are created
+				_GEOM::CheckAndCreateDescriptorFileTEXTURE(data_str, TEXTURE_Descriptor_Filepath, texturestr);
+				std::string descfilepath = data_str + ".desc";
+				guid = _GEOM::GetGUID(descfilepath);	// gets the guid from the png desc
+
+				_GEOM::Texture_DescriptorData::DeserializeTEXTURE_DescriptorDataFromFile(mTextureDescriptorData, TEXTURE_Descriptor_Filepath);
+
+				{
+					std::cout << "\033[33mNOTE: >> Compressing texture: " << texturestr << "\033[0m" << std::endl;
+					CompressImageFile(data_str.c_str(), systemManager->mResourceTySystem->compressed_texture_path.c_str(), _GEOM::Texture_DescriptorData::isGammaSpace(TEXTURE_Descriptor_Filepath));
+
+					// Load the textures into the list of usable textures within the engine, if it doesnt already exist
+					if (systemManager->mResourceTySystem->getMaterialInstance(guid) == nullptr) {
+						systemManager->mResourceTySystem->texture_Load(getFilename(data_str), guid);
+					}
+
+					mTexture.data_uid = guid;
+					mTexture.data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(guid));
+				}
+			}
+
+			ImGui::EndDragDropTarget();
+		}
+
+		ImGui::Text(mTexPath.c_str());
+
 	}
+
+
 
 	if (delete_component == false)
 		Entity(Hierarchy::selectedId).RemoveComponent<ParticleEmitter>();

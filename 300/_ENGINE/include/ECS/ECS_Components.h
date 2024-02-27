@@ -882,6 +882,7 @@ struct ParticleEmitter
 	int	mCount		{ 100 };
 	// TODO: To add texture of particles
 
+	std::string							mTexPath; // temporary should be UID
 	_GEOM::Texture_DescriptorData		mTextureDescriptorData;
 	ref mTexture;
 
