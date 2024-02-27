@@ -36,6 +36,7 @@ void LuaScripting();
 void LuaPointLight();
 void LuaMeshRenderer();
 void LuaVFX();
+void LuaGameStateManager();
 void LuaGameState();
 void LuaAIManager();
 void LuaUIrenderer();
