@@ -1,68 +1,540 @@
 [
     {
-        "entityid": 38797570,
+        "entityid": 38797607,
         "general": {
-            "name": "BottomBlackBorder",
-            "tagid": 6,
+            "name": "EpicTrojanSoldier4",
+            "tagid": 1,
             "subtag": 0,
             "isActive": true,
             "isPaused": false
         },
         "transform": {
             "scale": {
-                "x": 2.0,
-                "y": 0.4000000059604645,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": -1.2000000476837158,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 0,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0,
-                "w": 1.0
-            },
-            "layer": 11,
-            "worldtransform": false
-        }
-    },
-    {
-        "entityid": 38797670,
-        "general": {
-            "name": "TopBlackBorder",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 2.0,
-                "y": 0.4000000059604645,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
+                "x": 0.8000028133392334,
                 "y": 1.2000000476837158,
+                "z": 0.8000028729438782
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 90.0,
+                "z": 3.1415772438049316
+            },
+            "translate": {
+                "x": 8.978598594665527,
+                "y": -10.964030265808105,
+                "z": 13.784533500671387
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 1,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": false,
+                "z": false
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3309,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0093556642532349,
+                "z": 0.2118937075138092,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 0.3499999940395355,
+                "y": 0.36000001430511475,
+                "z": 0.10999999940395355,
+                "w": 1.0
+            },
+            "castShadow": true,
+            "materialinstance": [
+                "../assets/Compressed/Trojan_Soldier_BaseColor.ctexture",
+                "../assets/Compressed/Trojan_Soldier_Normal.ctexture",
+                "../assets/Compressed/Trojan_Soldier_Metallic.ctexture",
+                "../assets/Compressed/Trojan_Soldier_Roughness.ctexture",
+                "../assets/Compressed/Trojan_Soldier_Emissive.ctexture",
+                "../assets/Compressed/Trojan_Soldier_AO.ctexture"
+            ],
+            "mesh": "../assets/compiled_geom/Trojan_Soldier.geom",
+            "texturerefid": [
+                602447454,
+                2438310811,
+                2305639413,
+                1216284744,
+                928397263,
+                736177602
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 0.800000011920929,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": -0.07999999821186066,
+                "y": 0.5299999713897705,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "TrojanSoldierBIG"
+        },
+        "aisetting": {
+            "movementtype": 1,
+            "spreadout": 0.0,
+            "stayaway": 0.0,
+            "elevation": 0.0,
+            "targetname": "Camera",
+            "graphdataname": ""
+        },
+        "healthbar": {
+            "healthcolor": {
+                "x": 0.0,
+                "y": 1.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "backcolor": {
+                "x": 1.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "position": {
+                "x": 0.0,
+                "y": 1.5,
+                "z": 0.0
+            },
+            "maxhealth": 100.0,
+            "width": 0.30000001192092896,
+            "height": 0.07000000029802322,
+            "frametexture": 0,
+            "healthtexture": 0
+        }
+    },
+    {
+        "entityid": 39845914,
+        "general": {
+            "name": "EpicTrojanSoldier3",
+            "tagid": 1,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.8000028729438782,
+                "y": 1.2000000476837158,
+                "z": 0.8000028729438782
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 90.0,
+                "z": 3.1415772438049316
+            },
+            "translate": {
+                "x": 9.335430145263672,
+                "y": -11.122002601623535,
+                "z": 34.102298736572266
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 1,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": false,
+                "z": false
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3309,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0093556642532349,
+                "z": 0.2118937075138092,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 0.3499999940395355,
+                "y": 0.36000001430511475,
+                "z": 0.10999999940395355,
+                "w": 1.0
+            },
+            "castShadow": true,
+            "materialinstance": [
+                "../assets/Compressed/Trojan_Soldier_BaseColor.ctexture",
+                "../assets/Compressed/Trojan_Soldier_Normal.ctexture",
+                "../assets/Compressed/Trojan_Soldier_Metallic.ctexture",
+                "../assets/Compressed/Trojan_Soldier_Roughness.ctexture",
+                "../assets/Compressed/Trojan_Soldier_Emissive.ctexture",
+                "../assets/Compressed/Trojan_Soldier_AO.ctexture"
+            ],
+            "mesh": "../assets/compiled_geom/Trojan_Soldier.geom",
+            "texturerefid": [
+                602447454,
+                2438310811,
+                2305639413,
+                1216284744,
+                928397263,
+                736177602
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 0.800000011920929,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": -0.07999999821186066,
+                "y": 0.5299999713897705,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "prefab": {
+            "prefab": "TrojanSoldierBIG"
+        },
+        "aisetting": {
+            "movementtype": 1,
+            "spreadout": 0.0,
+            "stayaway": 0.0,
+            "elevation": 0.0,
+            "targetname": "Camera",
+            "graphdataname": ""
+        },
+        "healthbar": {
+            "healthcolor": {
+                "x": 0.0,
+                "y": 1.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "backcolor": {
+                "x": 1.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "position": {
+                "x": 0.0,
+                "y": 1.5,
+                "z": 0.0
+            },
+            "maxhealth": 100.0,
+            "width": 0.30000001192092896,
+            "height": 0.07000000029802322,
+            "frametexture": 0,
+            "healthtexture": 0
+        }
+    },
+    {
+        "entityid": 39845917,
+        "general": {
+            "name": "EpicTrojanSoldier2",
+            "tagid": 1,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.8000028729438782,
+                "y": 1.2000000476837158,
+                "z": 0.8000028729438782
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 90.0,
+                "z": 3.1415772438049316
+            },
+            "translate": {
+                "x": 10.196696281433105,
+                "y": -10.955601692199707,
+                "z": 19.047325134277344
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 1,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": false,
+                "z": false
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3309,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0093556642532349,
+                "z": 0.2118937075138092,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 0.3499999940395355,
+                "y": 0.36000001430511475,
+                "z": 0.10999999940395355,
+                "w": 1.0
+            },
+            "castShadow": true,
+            "materialinstance": [
+                "../assets/Compressed/Trojan_Soldier_BaseColor.ctexture",
+                "../assets/Compressed/Trojan_Soldier_Normal.ctexture",
+                "../assets/Compressed/Trojan_Soldier_Metallic.ctexture",
+                "../assets/Compressed/Trojan_Soldier_Roughness.ctexture",
+                "../assets/Compressed/Trojan_Soldier_Emissive.ctexture",
+                "../assets/Compressed/Trojan_Soldier_AO.ctexture"
+            ],
+            "mesh": "../assets/compiled_geom/Trojan_Soldier.geom",
+            "texturerefid": [
+                602447454,
+                2438310811,
+                2305639413,
+                1216284744,
+                928397263,
+                736177602
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 0.800000011920929,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": -0.07999999821186066,
+                "y": 0.5299999713897705,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "TrojanSoldierBIG"
+        },
+        "aisetting": {
+            "movementtype": 1,
+            "spreadout": 0.0,
+            "stayaway": 0.0,
+            "elevation": 0.0,
+            "targetname": "Camera",
+            "graphdataname": ""
+        },
+        "healthbar": {
+            "healthcolor": {
+                "x": 0.0,
+                "y": 1.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "backcolor": {
+                "x": 1.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "position": {
+                "x": 0.0,
+                "y": 1.5,
+                "z": 0.0
+            },
+            "maxhealth": 100.0,
+            "width": 0.30000001192092896,
+            "height": 0.07000000029802322,
+            "frametexture": 0,
+            "healthtexture": 0
+        }
+    },
+    {
+        "entityid": 39845918,
+        "general": {
+            "name": "EpicTrojanSoldier1",
+            "tagid": 1,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.8000028729438782,
+                "y": 1.2000000476837158,
+                "z": 0.8000028729438782
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 90.0,
+                "z": 3.1415772438049316
+            },
+            "translate": {
+                "x": 10.18014907836914,
+                "y": -11.0,
+                "z": 28.591264724731445
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 1,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": false,
+                "z": false
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3309,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0093556642532349,
+                "z": 0.2118937075138092,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 0.3499999940395355,
+                "y": 0.36000001430511475,
+                "z": 0.10999999940395355,
+                "w": 1.0
+            },
+            "castShadow": true,
+            "materialinstance": [
+                "../assets/Compressed/Trojan_Soldier_BaseColor.ctexture",
+                "../assets/Compressed/Trojan_Soldier_Normal.ctexture",
+                "../assets/Compressed/Trojan_Soldier_Metallic.ctexture",
+                "../assets/Compressed/Trojan_Soldier_Roughness.ctexture",
+                "../assets/Compressed/Trojan_Soldier_Emissive.ctexture",
+                "../assets/Compressed/Trojan_Soldier_AO.ctexture"
+            ],
+            "mesh": "../assets/compiled_geom/Trojan_Soldier.geom",
+            "texturerefid": [
+                602447454,
+                2438310811,
+                2305639413,
+                1216284744,
+                928397263,
+                736177602
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 0.800000011920929,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": -0.07999999821186066,
+                "y": 0.5299999713897705,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "TrojanSoldierBIG"
+        },
+        "aisetting": {
+            "movementtype": 1,
+            "spreadout": 0.0,
+            "stayaway": 0.0,
+            "elevation": 0.0,
+            "targetname": "Camera",
+            "graphdataname": ""
+        },
+        "healthbar": {
+            "healthcolor": {
+                "x": 0.0,
+                "y": 1.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "backcolor": {
+                "x": 1.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "position": {
+                "x": 0.0,
+                "y": 1.5,
+                "z": 0.0
+            },
+            "maxhealth": 100.0,
+            "width": 0.30000001192092896,
+            "height": 0.07000000029802322,
+            "frametexture": 0,
+            "healthtexture": 0
+        }
+    },
+    {
+        "entityid": 39846177,
+        "general": {
+            "name": "UIHider",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 2.0,
+                "y": 2.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
                 "z": 0.0
             }
         },
@@ -72,17 +544,385 @@
             "degree": 0.0,
             "slider": 1.0,
             "color": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0,
-                "w": 1.0
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 0.0
             },
-            "layer": 11,
+            "layer": 10,
             "worldtransform": false
         }
     },
     {
-        "entityid": 38797671,
+        "entityid": 39846178,
+        "general": {
+            "name": "ILYEpicIntroInfoUI",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.1200000047683716,
+                "y": -2.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -1.5199999809265137,
+                "y": 0.0,
+                "z": 0.20000000298023224
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 1274713670,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 12,
+            "worldtransform": false
+        }
+    },
+    {
+        "entityid": 39846182,
+        "general": {
+            "name": "ZBEpicIntroInfoUI",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.1200000047683716,
+                "y": -2.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 1.5399999618530273,
+                "y": 0.0,
+                "z": 0.20000000298023224
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 2195257807,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 12,
+            "worldtransform": false
+        }
+    },
+    {
+        "entityid": 39846184,
+        "general": {
+            "name": "MEpicIntroInfoUI",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.1200000047683716,
+                "y": -2.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -1.5499999523162842,
+                "y": 0.0,
+                "z": 0.20000000298023224
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 1860689524,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 12,
+            "worldtransform": false
+        }
+    },
+    {
+        "entityid": 39846186,
+        "general": {
+            "name": "TSEpicIntroInfoUI",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.1200000047683716,
+                "y": -2.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -1.5800000429153442,
+                "y": 0.0,
+                "z": 0.20000000298023224
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 2538246206,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 12,
+            "worldtransform": false
+        }
+    },
+    {
+        "entityid": 39846187,
+        "general": {
+            "name": "THEpicIntroInfoUI",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.1200000047683716,
+                "y": -2.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 1.5399999618530273,
+                "y": 0.0,
+                "z": 0.20000000298023224
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 1320874729,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 12,
+            "worldtransform": false
+        }
+    },
+    {
+        "entityid": 39846190,
+        "general": {
+            "name": "TrojanSoldierEpicTrigger",
+            "tagid": 8,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 4.119999885559082,
+                "z": 10.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 23.993410110473633,
+                "y": -9.017999649047852,
+                "z": 24.813753128051758
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": true,
+                "z": true
+            },
+            "gravity": false
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": true
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/EpicIntroTriggerPlatform.lua",
+                    "variables": []
+                }
+            ]
+        }
+    },
+    {
+        "entityid": 39846192,
+        "general": {
+            "name": "TrojanHorseEpicTrigger",
+            "tagid": 8,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 7.769999980926514,
+                "y": 2.5999999046325684,
+                "z": 6.630000114440918
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -19.732877731323242,
+                "y": -10.97423267364502,
+                "z": 35.222496032714844
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": true,
+                "z": true
+            },
+            "gravity": false
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": true
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/EpicIntroTriggerPlatform.lua",
+                    "variables": []
+                }
+            ]
+        }
+    },
+    {
+        "entityid": 39846193,
+        "general": {
+            "name": "EpicIntroManager",
+            "tagid": 8,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/EpicIntroManagerlv1.lua",
+                    "variables": []
+                }
+            ]
+        }
+    },
+    {
+        "entityid": 39846195,
         "general": {
             "name": "EpicIntroTrojanHorse",
             "tagid": 1,
@@ -222,149 +1062,9 @@
         }
     },
     {
-        "entityid": 38797673,
+        "entityid": 39846196,
         "general": {
-            "name": "EpicIntroManager",
-            "tagid": 8,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/EpicIntroManagerlv1.lua",
-                    "variables": []
-                }
-            ]
-        }
-    },
-    {
-        "entityid": 39845893,
-        "general": {
-            "name": "TrojanHorseEpicTrigger",
-            "tagid": 8,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 0.18000000715255737,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -19.732877731323242,
-                "y": -10.97423267364502,
-                "z": 35.222496032714844
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 0,
-            "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": true,
-                "y": true,
-                "z": true
-            },
-            "gravity": false
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "translateoffset": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "istrigger": true
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/EpicIntroTriggerPlatform.lua",
-                    "variables": []
-                }
-            ]
-        }
-    },
-    {
-        "entityid": 39845998,
-        "general": {
-            "name": "EpicIntroInfoUI",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.1200000047683716,
-                "y": -2.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 1.5399999618530273,
-                "y": 0.0,
-                "z": 0.20000000298023224
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 1320874729,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 12,
-            "worldtransform": false
-        }
-    },
-    {
-        "entityid": 39846007,
-        "general": {
-            "name": "UIHider",
+            "name": "TopBlackBorder",
             "tagid": 6,
             "subtag": 0,
             "isActive": true,
@@ -373,7 +1073,7 @@
         "transform": {
             "scale": {
                 "x": 2.0,
-                "y": 2.0,
+                "y": 0.4000000059604645,
                 "z": 1.0
             },
             "rotate": {
@@ -383,7 +1083,7 @@
             },
             "translate": {
                 "x": 0.0,
-                "y": 0.0,
+                "y": 1.2000000476837158,
                 "z": 0.0
             }
         },
@@ -393,12 +1093,53 @@
             "degree": 0.0,
             "slider": 1.0,
             "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 0.0
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
             },
-            "layer": 10,
+            "layer": 11,
+            "worldtransform": false
+        }
+    },
+    {
+        "entityid": 40894468,
+        "general": {
+            "name": "BottomBlackBorder",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 2.0,
+                "y": 0.4000000059604645,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": -1.2000000476837158,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 0,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "layer": 11,
             "worldtransform": false
         }
     }
