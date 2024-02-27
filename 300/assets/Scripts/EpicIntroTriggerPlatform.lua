@@ -46,10 +46,7 @@ function OnTriggerEnter(Entity)
     if Entity == targetPlayer then --player id
         triggerOnce = true
         print("OnTriggerEnter")
-        _G.TrojanHorseEpicIntroState = 1
-        --newpos = this:GetTransform().mTranslate
-        --newpos.y = 1000
-        --Helper.SetTranslate(this, newpos)
+        _G.activateEpicTrojanHorse = true
     end
 end
 
@@ -58,12 +55,7 @@ function OnTriggerExit(Entity)
 end
 
 function OnContactEnter(Entity)
-    if triggerOnce then return end
-    if Entity == targetPlayer then --player id
-        triggerOnce = true
-        print("OnTriggerEnter")
-        _G.TrojanHorseEpicIntroState = 1
-    end
+    
 end
 
 function OnContactExit(Entity)

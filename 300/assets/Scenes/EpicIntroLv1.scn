@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 24117303,
+        "entityid": 38797570,
         "general": {
             "name": "BottomBlackBorder",
             "tagid": 6,
@@ -36,12 +36,12 @@
                 "z": 0.0,
                 "w": 1.0
             },
-            "layer": 0,
+            "layer": 11,
             "worldtransform": false
         }
     },
     {
-        "entityid": 24117304,
+        "entityid": 38797670,
         "general": {
             "name": "TopBlackBorder",
             "tagid": 6,
@@ -77,12 +77,12 @@
                 "z": 0.0,
                 "w": 1.0
             },
-            "layer": 0,
+            "layer": 11,
             "worldtransform": false
         }
     },
     {
-        "entityid": 24117306,
+        "entityid": 38797671,
         "general": {
             "name": "EpicIntroTrojanHorse",
             "tagid": 1,
@@ -222,7 +222,7 @@
         }
     },
     {
-        "entityid": 24117307,
+        "entityid": 38797673,
         "general": {
             "name": "EpicIntroManager",
             "tagid": 8,
@@ -257,7 +257,7 @@
         }
     },
     {
-        "entityid": 24117308,
+        "entityid": 39845893,
         "general": {
             "name": "TrojanHorseEpicTrigger",
             "tagid": 8,
@@ -269,7 +269,7 @@
             "scale": {
                 "x": 1.0,
                 "y": 0.18000000715255737,
-                "z": 5.480000019073486
+                "z": 1.0
             },
             "rotate": {
                 "x": 0.0,
@@ -318,6 +318,88 @@
                     "variables": []
                 }
             ]
+        }
+    },
+    {
+        "entityid": 39845998,
+        "general": {
+            "name": "EpicIntroInfoUI",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.1200000047683716,
+                "y": -2.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 1.5399999618530273,
+                "y": 0.0,
+                "z": 0.20000000298023224
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 1320874729,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 12,
+            "worldtransform": false
+        }
+    },
+    {
+        "entityid": 39846007,
+        "general": {
+            "name": "UIHider",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 2.0,
+                "y": 2.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 0,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 0.0
+            },
+            "layer": 10,
+            "worldtransform": false
         }
     }
 ]

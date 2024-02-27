@@ -14,6 +14,7 @@ _G.TrojanHorseEpicIntroState = 0
 -- 6. HideInfo
 -- 7. FloorZoomOut
 
+_G.activateEpicTrojanHorse = false
 _G.activateTrojanSoldier = false
 _G.activateMelissa = false
 _G.activateILY = false
@@ -22,20 +23,40 @@ _G.activateZipBomb = false
 local this
 --local Camera_Scripting
 
+
+local defaultZoom = 45
+
 --#region Trojan horse epic intro variables
-_G.THdashStopTimer = 1.5
-local THs2Charge = 10
+_G.THdashStopTimer = 2
+local THs2Charge = 1.8
+local THZoomValue = 10
+local THFlyViewWaitTime = 0.4
+local THShowInfoSlowdown = 0.25
 local THdashStopTimerCount
 local THLedgeViewPosition
+local THLedgeStopLooking
 local THFlyViewPosition1Finish
 local THFlyViewPosition2Finish
 local THFlyViewPosition1
 local THFlyViewPosition2
+local THFlyViewWait
+local THShowInfoSlowdownCounter
+
 
 --#region Entities
 local epicTrojanHorse
 local trojanHorsePlatform
 local player
+local uiHider
+--#endregion
+
+--#region EpicIntroUI
+local epicIntroUI
+local showRightEpicUIPos = 0.44
+local hideRightEpicUIPos = 1.53
+local showLeftEpicUIPos = -0.44
+local hideLeftEpicUIPos = -1.53
+
 --#endregion
 
 --#region black border variables
@@ -69,6 +90,8 @@ function Alive()
     trojanHorsePlatform = _G.gameStateSys:GetEntity("TrojanHorseEpicTrigger")
     epicTrojanHorse = _G.gameStateSys:GetEntity("EpicIntroTrojanHorse")
     player = _G.gameStateSys:GetEntity("Camera")
+    uiHider = _G.gameStateSys:GetEntity("UIHider")
+    epicIntroUI = _G.gameStateSys:GetEntity("EpicIntroInfoUI")
 
     -- Hide UI stuff
 
@@ -77,6 +100,11 @@ function Alive()
 end
 
 function Update()
+    if _G.activateEpicTrojanHorse then 
+        SetupTrojanHorseEpicIntro()
+        _G.activateEpicTrojanHorse = false
+        -- need to _G.activateEpicTrojanHorse to true some where else
+    end
     if _G.TrojanHorseEpicIntroState ~= 0 then RunTrojanHorseEpicIntro() end
     
     
@@ -103,25 +131,57 @@ function Update()
     -- InsertBlackBorder(1)
     -- RetractBlackBorder(1)
     --#endregion
+
+    --#region Test ZoomCamTo
+
+    -- print(Camera_Scripting.GetFov(player))
+    -- if (inputMapSys:GetButtonDown("nine")) then
+    --     ZoomCamTo(player, 0, 1)
+    -- end
+    -- if (inputMapSys:GetButtonDown("zero")) then
+    --     ZoomCamTo(player, 900, 1)
+    -- end
+    -- ZoomCamTo(player, )
+    --#endregion
+
+
+    --#region Test ui hider
+    if (inputMapSys:GetButtonDown("nine")) then
+        HideUI()
+    end
+    if (inputMapSys:GetButtonDown("zero")) then
+        ShowUI()
+    end
+    --#endregion
 end
 
 
 function InitTrojanHorseEpicIntro()
     THLedgeViewPosition = Vec3.new(236, -40.5, 0)
     THFlyViewPosition1 = Vec3.new(134.6, -11.2, 0)
-    THFlyViewPosition2 = Vec3.new(117.3, 0, 0)
+    THFlyViewPosition2 = Vec3.new(108, 1, 0)
     THdashStopTimerCount = 0
-    THFlyViewPosition1Finish = false
-    THFlyViewPosition2Finish = false
+    THShowInfoSlowdownCounter = 0
+    THLedgeStopLooking = false
+    THFlyViewPosition1Finish = true
+    THFlyViewPosition2Finish = true
+    THFlyViewWait = true
+end
+
+function SetupTrojanHorseEpicIntro() 
+    epicIntroUI:GetUIrenderer():SetTexture("TrojanHorseInfoUI")
+    epicIntroUI:GetTransform().mTranslate.x = hideRightEpicUIPos
+    insertBlackBorder = true
+    _G.FreezePlayerControl = true
+    _G.TrojanHorseEpicIntroState = 1
+    HideUI()
 end
 
 function RunTrojanHorseEpicIntro()
     if _G.TrojanHorseEpicIntroState == 1 then -- MoveToStartPos
         -- print("_G.TrojanHorseEpicIntroState == 1")
-        insertBlackBorder = true
-        _G.FreezePlayerControl = true
         if not MoveTo(player, trojanHorsePlatform:GetTransform().mTranslate, 100) then
-            print("_G.TrojanHorseEpicIntroState finished")
+            -- print("finish moving")
             -- Finished moving
             _G.TrojanHorseEpicIntroState = 2
             systemManager.ecs:SetDeleteEntity(trojanHorsePlatform)
@@ -131,22 +191,27 @@ function RunTrojanHorseEpicIntro()
         -- _G.TrojanHorseStartToLedge should be activated when stepped on platform, trojan horse will also be activated at the same time
     elseif _G.TrojanHorseEpicIntroState == 2 then -- StartPosToLedge
         -- print("_G.TrojanHorseEpicIntroState == 2")
-        LookTowardsInterpolation(player, THLedgeViewPosition, 40)
+        if not THLedgeStopLooking then
+            THLedgeStopLooking = not LookTowardsInterpolation(player, THLedgeViewPosition, 200)
+        end
+        
         if _G.aiSys:ConeOfSight(epicTrojanHorse, player, 70, 40) then _G.TrojanHorseEpicIntroState = 3 end
         -- TODO
         -- Use camera to phase to top of ledge position
 
     elseif _G.TrojanHorseEpicIntroState == 3 then -- LedgeToFloor
-        print("_G.TrojanHorseEpicIntroState == 3")
+        -- print("_G.TrojanHorseEpicIntroState == 3")
         --LookTowards(player, epicTrojanHorse:GetTransform().mTranslate, 15)
         THdashStopTimerCount = THdashStopTimerCount + FPSManager:GetDT()
         
-        if not THFlyViewPosition1Finish then
-            print("THFlyViewPosition1")
-            if not LookTowardsInterpolation(player, THFlyViewPosition1, 100) then THFlyViewPosition1Finish = true end
-        elseif not THFlyViewPosition2Finish then
-            print("THFlyViewPosition2")
-            if not LookTowardsInterpolation(player, THFlyViewPosition2, 80) then THFlyViewPosition2Finish = true end
+        if THFlyViewWait then
+            if THdashStopTimerCount > THFlyViewWaitTime then THFlyViewWait = false end
+        elseif THFlyViewPosition1Finish then
+            -- print("THFlyViewPosition1")
+            if not LookTowardsInterpolation(player, THFlyViewPosition1, 200) then THFlyViewPosition1Finish = false end
+        elseif THFlyViewPosition2Finish then
+            -- print("THFlyViewPosition2")
+            if not LookTowardsInterpolation(player, THFlyViewPosition2, 160) then THFlyViewPosition2Finish = false end
         elseif THdashStopTimerCount > _G.THdashStopTimer + THs2Charge then
             epicTrojanHorse:GetAnimator():PauseAnimation()
             THdashStopTimerCount = 0
@@ -155,22 +220,42 @@ function RunTrojanHorseEpicIntro()
         -- Use camera to phase to the floor position with horse on left side
 
     elseif _G.TrojanHorseEpicIntroState == 4 then -- FloorZoomIn
-        print("_G.TrojanHorseEpicIntroState == 4")
-        -- Zoom quickly into the horse
-
+        -- print("_G.TrojanHorseEpicIntroState == 4")
+        if (not ZoomCamTo(player, THZoomValue, 150)) then
+            _G.TrojanHorseEpicIntroState = 5
+        end
+        
     elseif _G.TrojanHorseEpicIntroState == 5 then -- ShowInfo
+        -- print("state 5")
+        local speed = 5
+        THShowInfoSlowdownCounter = THShowInfoSlowdownCounter + FPSManager.GetDT()
+
+        if (THShowInfoSlowdownCounter < THShowInfoSlowdown) then
+            MoveEpicIntroUI(epicIntroUI, 4.5, true, true)
+        elseif not MoveEpicIntroUI(epicIntroUI, 0.01, true, true) then _G.TrojanHorseEpicIntroState = 6 end
+
+        -- print("_G.TrojanHorseEpicIntroState == 5")
+
         -- Push the TrojanHorseInfo UI quickly into the screen
         -- Then make it slowly move diagonally
 
         -- Notes
         -- When time's up, quickly retreat the info with same diagonality
     elseif _G.TrojanHorseEpicIntroState == 6 then -- HideInfo
+        -- print("state 6")
+        if not MoveEpicIntroUI(epicIntroUI, 4, true, false) then _G.TrojanHorseEpicIntroState = 7 end
         -- Retracts the TrojanHorseInfo UI quickly
     elseif _G.TrojanHorseEpicIntroState == 7 then -- FloorZoomOut
+        -- print("state 7")
         -- Zooms out quickly and
         -- Retract the black borders
-        _G.FreezePlayerControl = false
-        retractBlackBorder = true
+
+        if (not ZoomCamTo(player, defaultZoom, 150)) then
+            _G.TrojanHorseEpicIntroState = 0
+            _G.FreezePlayerControl = false
+            retractBlackBorder = true
+            ShowUI()
+        end
 
         -- deactivate ActivateTrojanHorse boolean
     end
@@ -214,6 +299,7 @@ function LookTowards(entity, target, speed)
     return true
 end
 
+-- returns false when finishes
 function LookTowardsInterpolation(entity, targetPitchYaw, speed)
     local mRotate = entity:GetTransform().mRotate
 
@@ -235,8 +321,10 @@ function LookTowardsInterpolation(entity, targetPitchYaw, speed)
     Helper.SetRotate(entity, toMove)
 
     local interpolationApart = Helper.Vec3Len(Helper.Vec3Minus(entity:GetTransform().mRotate, targetPitchYaw))
-    -- print(interpolationApart)
-    if (interpolationApart < Helper.Vec3Len(toMove)) then return false end
+    if (interpolationApart < Helper.Vec3Len(toMove)) then 
+        Helper.ChangeRotate(entity, targetPitchYaw)
+        return false 
+    end
     return true
 end
 
@@ -263,6 +351,30 @@ function AngleBetween(v1, v2)
     local normV2 = Helper.Normalize(v2)
     local value = math.acos(normV1.x*normV2.x + normV1.y*normV2.y + normV1.z*normV2.z)
     return value
+end
+
+function ZoomCamTo(entity, targetFOV, speed)
+    -- print("ZoomCamTo")
+    local currFOV = Camera_Scripting.GetFov(entity)
+    local delta = speed*FPSManager:GetDT()
+    if (targetFOV - currFOV) < 0 then delta = -delta end
+    Camera_Scripting.SetFov(entity, currFOV + delta)
+
+    if delta > 0 then
+        -- print("delta > 0")
+        if currFOV + delta > targetFOV then 
+            Camera_Scripting.SetFov(entity, targetFOV)
+            return false
+        end
+    else
+        -- print("delta <= 0")
+        if currFOV + delta < targetFOV then 
+            Camera_Scripting.SetFov(entity, targetFOV)
+            return false
+        end
+    end
+
+    return true
 end
 
 -- Insert the top and bottom black borders, return False when operation is finished
@@ -309,7 +421,7 @@ end
 
 -- return false when reached target pos
 function MoveTo(entity, targetPos, speed)
-    print("moving")
+    -- print("moving")
     local platformPos = Vec3.new()
     local entityPos = entity:GetTransform().mTranslate
     platformPos.x = targetPos.x
@@ -319,7 +431,7 @@ function MoveTo(entity, targetPos, speed)
     local dirVec = Helper.Vec3Minus(platformPos, entityPos)
     local distAway = Helper.Vec3Len(dirVec) 
     local dir = Helper.Normalize(dirVec)
-    print(distAway)
+    -- print(distAway)
     if (distAway < 0.03) then -- reached target position
         --targetPos.y = entity:GetTransform().mTranslate.y
         -- entityPos.x = platformPos.x
@@ -328,6 +440,7 @@ function MoveTo(entity, targetPos, speed)
         Helper.SetTranslate(entity, platformPos)
         -- local zeroVector = Vec3.new()
         -- _G.phySys:SetVelocity(entity, Vec3.new())
+        _G.phySys:ResetEntity(entity)
         return false
     end
 
@@ -336,11 +449,54 @@ function MoveTo(entity, targetPos, speed)
 end
 
 function HideUI()
-
+    uiHider:GetUIrenderer().mColor.w = 27/255
 end
 
 function ShowUI()
+    uiHider:GetUIrenderer().mColor.w = 25/255
+end
 
+-- Take in targeted UI position
+function MoveEpicIntroUI(entity, speed, isRight, isShow)
+
+    local x = entity:GetTransform().mTranslate.x
+    local delta = speed*FPSManager.GetDT()
+    -- print(delta)
+    local keepRunning = true
+    -- print(x)
+    if isRight then
+        if isShow then
+            x = x - delta
+            if x < showRightEpicUIPos then 
+                x = showRightEpicUIPos
+                keepRunning = false
+            end
+        else
+            x = x + delta
+            if x > hideRightEpicUIPos then 
+                x = hideRightEpicUIPos
+                keepRunning = false
+            end
+        end
+    else
+        if isShow then
+            x = x + delta
+            if x > showLeftEpicUIPos then 
+                x = showLeftEpicUIPos
+                keepRunning = false
+            end
+        else
+            x = x - delta
+            if x < hideLeftEpicUIPos then 
+                x = hideLeftEpicUIPos
+                keepRunning = false
+            end
+        end
+    end
+
+    Helper.SetTranslate(entity, Vec3.new(x,0,0))
+
+    return keepRunning
 end
 
 function ActivateEpicScript(Entity)

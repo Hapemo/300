@@ -39,6 +39,7 @@ local audio_played = false
 -- 4. REST. stops for around 0.5 seconds before moving back to 1. (change to 1. when rest timer ends)
 
 function Alive()
+    -- print("Alive()")
     math.randomseed(os.time())
 
     this = Helper.GetScriptEntity(script_entity.id)
@@ -65,7 +66,6 @@ end
 local timer = 0
 function Update()
     -- If trojan horse epic intro is between state 4 and 6, return
-    if _G.TrojanHorseEpicIntroState >= 4 or _G.TrojanHorseEpicIntroState <= 6 then return end 
 
     -- dt = FPSManager.GetDT()
 
@@ -123,9 +123,10 @@ function Update()
         end
 
     elseif state == "SPRINT" then   -- charge toward last seen player position at high speed (change to 4. when collided with something)
+        this:GetTransform().mRotate.y = Helper.DirectionToAngle(this, stareDirection)
+        if (_G.TrojanHorseEpicIntroState >= 5 and _G.TrojanHorseEpicIntroState <= 7) then return end
         -- Charge towards last seen player position at high speed
         phySys:SetVelocity(this, s3SprintVelocity);
-        this:GetTransform().mRotate.y = Helper.DirectionToAngle(this, stareDirection)
         -- Stop and change state when collided with something
         -- This part is done in OnContactEnter
 
