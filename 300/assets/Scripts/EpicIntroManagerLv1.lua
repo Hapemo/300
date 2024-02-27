@@ -276,7 +276,7 @@ function RunTrojanHorseEpicIntro()
         ShowInfoSlowdownCounter = ShowInfoSlowdownCounter + FPSManager.GetDT()
 
         if (ShowInfoSlowdownCounter < ShowInfoSlowdown) then
-            MoveEpicIntroUI(epicIntroUI, 4.5, true, true)
+            MoveEpicIntroUI(epicIntroUI, 4.3, true, true)
         elseif not MoveEpicIntroUI(epicIntroUI, 0.01, true, true) then _G.TrojanHorseEpicIntroState = 6 end
 
         -- print("_G.TrojanHorseEpicIntroState == 5")
