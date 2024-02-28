@@ -124,13 +124,13 @@ function Update()
                 end
 
                 if (mobtype == 1) then 
-                    systemManager.ecs:NewEntityFromPrefab("ILOVEYOU", mobspawnpoint) 
+                    systemManager.ecs:NewEntityFromPrefab("ILOVEYOU2", mobspawnpoint) 
                 elseif (mobtype == 2) then 
-                    systemManager.ecs:NewEntityFromPrefab("Melissa", mobspawnpoint) 
+                    systemManager.ecs:NewEntityFromPrefab("Melissa2", mobspawnpoint) 
                 elseif (mobtype == 3) then 
                     systemManager.ecs:NewEntityFromPrefab("TrojanHorse", mobspawnpoint) 
                 elseif (mobtype == 4) then 
-                    systemManager.ecs:NewEntityFromPrefab("ZipBomb", mobspawnpoint)
+                    systemManager.ecs:NewEntityFromPrefab("ZipBomb2", mobspawnpoint)
                 end
             currentEnemyCount = currentEnemyCount + 1
             currentSpawnTimer = 0 -- reset currentSpawnTimer so that next enemy can spawn
