@@ -158,10 +158,10 @@ public:
 	*/
 	/**************************************************************************/
 	// Adds an instance of a mesh to be drawn
-	void AddInstance(GFX::Mesh& mesh, Transform transform, const vec4& color, int meshID, const vec4& bloomthreshold, unsigned entityID = 0xFFFFFFFF);		
+	void AddInstance(GFX::Mesh& mesh, Transform transform, const vec4& color, int meshID, const vec4& bloomthreshold, unsigned entityID = 0xFFFFFFFF);
 	void AddInstance(GFX::Mesh& mesh, mat4 transform, const vec4& color, int meshID, const vec4& bloomthreshold, unsigned entityID = 0xFFFFFFFF, int animInstanceID = -1);
 
-	
+
 	// -- FBO --
 	/***************************************************************************/
 	/*!
@@ -179,17 +179,17 @@ public:
 
 
 
-	GFX::DebugRenderer& getDebugRenderer() { 
-		return m_Renderer; 
+	GFX::DebugRenderer& getDebugRenderer() {
+		return m_Renderer;
 	}
 	unsigned int GetGameAttachment() {
-		return m_GameFbo.GetColorAttachment(); 
+		return m_GameFbo.GetColorAttachment();
 	}
 	unsigned int GetEditorAttachment() {
-		return m_Fbo.GetColorAttachment(); 
+		return m_Fbo.GetColorAttachment();
 	}
 	unsigned int GetEntityID(float x, float y) {
-		return m_Fbo.ReadEntityID(x, y); 
+		return m_Fbo.ReadEntityID(x, y);
 	}
 	void EnableGlobalBloom() { m_EnableBloom = true; }
 	void DisableGlobalBloom() { m_EnableBloom = false; }
@@ -246,12 +246,12 @@ public:
 
 	void HideCursor(bool hideCursor);
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// 
-//		MEMBER VARIABLES MEMBER VARIABLES MEMBER VARIABLES MEMBER VARIABLES MEMBER VARIABLES MEMBER VARIABLES
-// 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	// -- Renderer --
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// 
+	//		MEMBER VARIABLES MEMBER VARIABLES MEMBER VARIABLES MEMBER VARIABLES MEMBER VARIABLES MEMBER VARIABLES
+	// 
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		// -- Renderer --
 	GFX::DebugRenderer			m_Renderer;				// isolated to debug draws
 	GFX::FBO					m_Fbo;					// Editor Scene
 	GFX::FBO					m_GameFbo;				// Game Scene
@@ -262,7 +262,7 @@ public:
 
 
 	// -- Window --
-	GFX::Window*		m_Window;
+	GFX::Window* m_Window;
 	int					m_Width;
 	int					m_Height;
 	bool				m_IsCursorEnabledForEditor{ true };
@@ -272,11 +272,11 @@ public:
 	CAMERA_TYPE m_CameraControl;
 
 	// -- Global tint --
-	vec4	m_GlobalTint = {1.f, 1.f, 1.f, 1.f};
+	vec4	m_GlobalTint = { 1.f, 1.f, 1.f, 1.f };
 
 	// -- Bloom -- 
-	vec3		mAmbientBloomThreshold { 0.05, 0.05, 0.005 };	// Global bloom threshold	
-	float		mAmbientBloomExposure{ 0.4f };						
+	vec3		mAmbientBloomThreshold{ 0.05, 0.05, 0.005 };	// Global bloom threshold	
+	float		mAmbientBloomExposure{ 0.4f };
 	float		mTexelOffset{ 1.f };							// Gaussian blur Ver1						
 	float		mSamplingWeight{ 1.f };							// Gaussian blur Ver1/2
 	float		mFilterRadius{ 0.001f };						// Phys Based Bloom
@@ -287,8 +287,8 @@ public:
 	float		mChromaticOffset{ 0.006f };
 	float		mChromaticStrength{ 1.f };
 
-	bool		m_EnableBloom{ true };									
-	bool		m_EnableChromaticAbberation{ true };					
+	bool		m_EnableBloom{ true };
+	bool		m_EnableChromaticAbberation{ true };
 	bool		m_EnableCRT{ false };						// this yj
 
 	// -- Textures --
@@ -311,7 +311,7 @@ public:
 	bool	m_HasLight{ false };
 	bool    m_EnableScroll{ false };
 	bool	m_EditorSceneHovered{ false };
-	bool    m_RightClickHeld	{ false };
+	bool    m_RightClickHeld{ false };
 	bool	m_SystemInitialized{ false };
 
 	// -- Stats --
@@ -409,12 +409,20 @@ public:
 	//void AddParticleInstance(Particle const& p, vec3 const& camPos);
 	void DrawAllParticles();
 	GFX::ComputeShader m_ComputeEmitterShader;
+	GFX::ComputeShader m_ComputeParticleShader;
 	GFX::Shader m_ParticleShaderInst{};
+	ParticleSSBO particlePool[100'000];
+	std::vector<ParticleSSBO> particleVector{};
 	int m_ParticlesCount{};
 	GLuint m_ComputeEmitterCountLocation{};
 	GLuint m_ComputeEmitterCamPosLocation{};
-	GLuint m_ComputeEmitterDeltaTimeLocation{};
-	void UpdateEmitters(vec3 const& camPos, float dt);
+	GLuint m_ComputeParticleDeltaTimeLocation{};
+	GLuint m_ComputeParticleCountLocation{};
+	GLuint m_ComputeParticleCamPosLocation{};
+	void ProcessEmitterAndParticle(vec3 const& camPos, float dt);
+	void UpdateEmitters(vec3 const& camPos);
+	void UpdateParticles(vec3 const& camPos, float dt);
+	void RemoveExpiredParticles();
 	void EmitParticles(ParticleEmitter const& e, vec3 const& position);
 
 	// -- Shadows WIP --

@@ -34,6 +34,8 @@ namespace GFX
 /**************************************************************************/
 		void SubData(size_t dataSize, const void* data);
 
+		unsigned ID() { return mID; }
+
 		~SSBO();
 
 	private:

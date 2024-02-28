@@ -57,12 +57,21 @@ struct ParticleEmitterSSBO
 
 struct ParticleSSBO
 {
-	alignas(16) vec4 mColor{};
+	alignas(16) vec4 mStartColor{};
+	alignas(16) vec4 mEndColor{};
 	alignas(16) vec4 mVelocity{};
-	alignas(16) vec4 mSizeLifeSpeed{};	// X: Current size | Y: Life Time left | Z: Speed
+	alignas(16) vec4 mSizeLifeSpeed{};	// X: Start size | Y: End size | Z: Life Time left | W: Speed
 	alignas(16) vec4 mPosition {};		// XYZ: position | W: active flag (< 0 inactive, else active)
 	alignas(8)	GLuint64 mTexture {};
 	alignas(64) mat4 mLtwMatrix {};		// Local-to-world transformation matrix
+};
+
+struct ParticlePoolSSBO
+{
+	alignas(64) mat4 mLtwMatrix {};		// Local-to-world transformation matrix
+	alignas(16) vec4 mColor{};			// Current Color
+	alignas(8)	float mLife{};			// Life remaining
+	alignas(8)	GLuint64 mTexture {};
 };
 
 #endif

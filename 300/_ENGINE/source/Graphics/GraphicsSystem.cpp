@@ -1481,7 +1481,7 @@ void GraphicsSystem::SetupShaderStorageBuffers()
 	m_ParticleEmitterSsbo.Create(sizeof(ParticleEmitterSSBO) * MAX_PARTICLE_EMITTER, 5);
 
 	// All particles in the scene -- Location 6
-	m_ParticleSsbo.Create(sizeof(ParticleSSBO) * MAX_PARTICLE_EMITTER, 6);
+	m_ParticleSsbo.Create(sizeof(ParticleSSBO) * MAX_PARTICLES, 6);
 }
 
 void GraphicsSystem::DrawAll2DInstances(unsigned shaderID)
@@ -1848,7 +1848,13 @@ void GraphicsSystem::SetupAllShaders()
 	m_ComputeEmitterShader.Activate();
 	m_ComputeEmitterCountLocation = m_ComputeEmitterShader.GetUniformLocation("uEmitterCount");
 	m_ComputeEmitterCamPosLocation = m_ComputeEmitterShader.GetUniformLocation("uCamPos");
-	m_ComputeEmitterDeltaTimeLocation = m_ComputeEmitterShader.GetUniformLocation("uDeltaTime");
+	GFX::Shader::Deactivate();
+
+	m_ComputeParticleShader.CreateShaderFromFile("../assets/shader_files/computeParticle.glsl");
+	m_ComputeParticleShader.Activate();
+	m_ComputeParticleDeltaTimeLocation = m_ComputeParticleShader.GetUniformLocation("uDeltaTime");
+	m_ComputeParticleCamPosLocation = m_ComputeParticleShader.GetUniformLocation("uCamPos");
+	m_ComputeParticleCountLocation = m_ComputeParticleShader.GetUniformLocation("uParticleCount");
 	GFX::Shader::Deactivate();
 
 	uid particleShaderStr("ParticleShader");
@@ -2031,7 +2037,20 @@ void GraphicsSystem::DrawAllParticles()
 	GFX::Shader::Deactivate();
 }
 
-void GraphicsSystem::UpdateEmitters(vec3 const& camPos, float dt)
+void GraphicsSystem::ProcessEmitterAndParticle(vec3 const& camPos, float dt)
+{
+	// Update new emitters to create particles
+	UpdateEmitters(camPos);
+
+	// Update the properties of all particles
+	UpdateParticles(camPos, dt);
+
+	// Remove particles that have "died out"
+	// Copy remaining particles back into SSBO
+	RemoveExpiredParticles();
+}
+
+void GraphicsSystem::UpdateEmitters(vec3 const& camPos)
 {
 	if (m_Emitters.empty())
 		return;
@@ -2039,7 +2058,6 @@ void GraphicsSystem::UpdateEmitters(vec3 const& camPos, float dt)
 	int emitterCount = m_Emitters.size();
 
 	int num_group_x = glm::ceil(emitterCount / 32.f);
-	int num_group_y = glm::ceil(emitterCount / 32.f);
 
 	// Activate Compute shader
 	m_ComputeEmitterShader.Activate();
@@ -2047,16 +2065,58 @@ void GraphicsSystem::UpdateEmitters(vec3 const& camPos, float dt)
 	// Send uniforms to shader
 	glUniform1i(m_ComputeEmitterCountLocation, emitterCount);
 	glUniform3fv(m_ComputeEmitterCamPosLocation, 1, &camPos[0]);
-	glUniform1f(m_ComputeEmitterDeltaTimeLocation, dt);
 
-	glDispatchCompute(num_group_x, num_group_y, 1);
+	glDispatchCompute(num_group_x, 1, 1);
 	// make sure writing to image is done before reading
-	glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT);
+	glMemoryBarrier(GL_SHADER_STORAGE_BARRIER_BIT);
 
 	// Deactivate compute shader
 	m_ComputeEmitterShader.Deactivate();
 
-	// Remove outdated particles
+	// Remove emitters
+	m_Emitters.clear();
+}
+
+void GraphicsSystem::UpdateParticles(vec3 const& camPos, float dt)
+{
+	if (m_ParticlesCount == 0)
+		return;
+
+	int num_group_x = 32;
+	int num_group_y = glm::ceil((m_ParticlesCount / num_group_x) / 32.f);
+
+	// Activate Compute shader
+	m_ComputeParticleShader.Activate();
+
+	glUniform1f(m_ComputeParticleDeltaTimeLocation, dt);
+	glUniform1i(m_ComputeParticleCountLocation, m_ParticlesCount);
+	glUniform3fv(m_ComputeEmitterCamPosLocation, 1, &camPos[0]);
+
+	glDispatchCompute(num_group_x, num_group_y, 1);
+	// make sure writing to image is done before reading
+	glMemoryBarrier(GL_SHADER_STORAGE_BARRIER_BIT);
+
+	// Deactivate compute shader
+	m_ComputeParticleShader.Deactivate();
+}
+
+void GraphicsSystem::RemoveExpiredParticles()
+{
+	glGetBufferSubData(m_ParticleSsbo.ID(), 0, m_ParticlesCount * sizeof(ParticleSSBO), particlePool);
+	
+	for (int i{}; i < m_ParticlesCount; ++i)
+	{
+		if (particlePool[i].mSizeLifeSpeed.y > 0)	// Still active pushed into vector
+		{
+			particleVector.emplace_back(particlePool[i]);
+		}
+	}
+
+	// Update particle count
+	m_ParticlesCount = particleVector.size();
+
+	// Write back into particle SSBO
+	m_ParticleSsbo.SubData(m_ParticlesCount * sizeof(ParticleSSBO), particleVector.data());
 }
 
 void GraphicsSystem::EmitParticles(ParticleEmitter const& e, vec3 const& position)
@@ -2065,15 +2125,11 @@ void GraphicsSystem::EmitParticles(ParticleEmitter const& e, vec3 const& positio
 	eSsbo.Init(e);
 	eSsbo.mPosition = vec4(position, e.mCount);
 
-	if (m_Emitters.empty())
-	{
-		eSsbo.mParticlePoolIndex.x = 0;
-	}
-	else
-	{
-		// Starting index =  previous emitter start index + previous emitter particle count
-		eSsbo.mParticlePoolIndex.x = m_Emitters.back().mParticlePoolIndex.x + m_Emitters.back().mPosition.w;
-	}
+	// Starting index =  previous emitter start index + previous emitter particle count
+	eSsbo.mParticlePoolIndex.x = m_ParticlesCount;
+
+	m_ParticlesCount += e.mCount;	// Update number of all particles
+
 	// TODO: To add texture of particles
 
 	// Add emitter into container
