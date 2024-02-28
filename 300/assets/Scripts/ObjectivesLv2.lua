@@ -35,19 +35,19 @@ function Alive()
     progress = 0
 
     mobSpawnPos1.x = 21;
-    mobSpawnPos1.y = 47;
+    mobSpawnPos1.y = 48;
     mobSpawnPos1.z = 24;
 
     mobSpawnPos2.x = -20;
-    mobSpawnPos2.y = 47;
+    mobSpawnPos2.y = 48;
     mobSpawnPos2.z = 36;
 
     mobSpawnPos3.x = -11;
-    mobSpawnPos3.y = 47;
+    mobSpawnPos3.y = 48;
     mobSpawnPos3.z = 61;
 
     mobSpawnPos4.x = -28;
-    mobSpawnPos4.y = 47;
+    mobSpawnPos4.y = 48;
     mobSpawnPos4.z = 0;
 end
 
