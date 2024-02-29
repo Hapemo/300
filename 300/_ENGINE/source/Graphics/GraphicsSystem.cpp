@@ -2005,7 +2005,9 @@ void GraphicsSystem::DrawAllParticles()
 	glUniformMatrix4fv(m_ParticleShaderInst.GetUniformVP(), 1, GL_FALSE, &camVP[0][0]);
 
 	glDepthFunc(GL_LEQUAL);
+	glDepthMask(GL_FALSE);
 	glDrawArraysInstanced(GL_TRIANGLE_FAN, 0, 4, MAX_PARTICLES);
+	glDepthMask(GL_TRUE);
 
 	m_ParticleMesh.UnbindVao();
 	GFX::Shader::Deactivate();
@@ -2027,7 +2029,7 @@ void GraphicsSystem::UpdateEmitters(vec3 const& camPos)
 
 	int emitterCount = m_Emitters.size();
 
-	int num_group_x = glm::ceil(emitterCount / 32.f);
+	int num_group_x = emitterCount;
 
 	// Activate Compute shader
 	m_ComputeEmitterShader.Activate();
