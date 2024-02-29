@@ -11,12 +11,12 @@ layout (location = 0) out vec4 fragColor;
 
 void main()
 {
-	//if (textureSize(sampler2D(fTexture), 0).x > 0)		// Valid texture exists
-	//{
-	//	vec4 textureColor = texture(sampler2D(fTexture), fTexCoords);
-	//	fragColor = textureColor * fColor;
-	//}
-	//else	// No texture, use color instead
+	if (fTexture != 0)		// Valid texture exists
+	{
+		vec4 textureColor = texture(sampler2D(fTexture), fTexCoords);
+		fragColor = textureColor * fColor;
+	}
+	else	// No texture, use color instead
 	{
 		fragColor = fColor;
 	}

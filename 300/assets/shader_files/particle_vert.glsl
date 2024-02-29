@@ -17,7 +17,7 @@ struct Particle
 	vec4 mVelocity;
 	vec4 mSizeLife;			// X: Start size | Y: End size | Z: Life Time left | W: Max Life
 	vec4 mPositionSpeed;	// XYZ: position | W: Speed
-	//uint64_t mTexture;
+	uint64_t mTexture;
 	mat4 mLtwMatrix;		// Local-to-world transformation matrix
 };
 
@@ -41,13 +41,13 @@ void main()
 
 	Particle p = particles[gl_InstanceID];
 
-	//if (p.mCurrColor.a <= 0)	// "Dead" particle, do not draw
-	//{
-	//	gl_Position = vec4(0.0, 0.0, 0.0, 1.0);
-	//	return;
-	//}
+	if (p.mCurrColor.a <= 0)	// "Dead" particle, do not draw
+	{
+		gl_Position = vec4(0.0, 0.0, 0.0, 1.0);
+		return;
+	}
 
 	gl_Position = uMatrixVP * p.mLtwMatrix * vec4(vertexPos, 1.0);
 	fColor = p.mCurrColor;
-	//fTexture = p.mTexture;
+	fTexture = p.mTexture;
 }

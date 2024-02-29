@@ -15,7 +15,7 @@ struct ParticleEmitter
 	vec4 mEndColor;
 	vec4 mSizeLifetimeCount;	// X: start size | Y: end size | Z: Lifetime | W: Count
 	vec4 mPositionSpeed;		// XYZ: position | W: Speed
-	//uint64_t mTexture;
+	uint64_t mTexture;
 };
 
 struct Particle
@@ -26,7 +26,7 @@ struct Particle
 	vec4 mVelocity;
 	vec4 mSizeLife;			// X: Start size | Y: End size | Z: Life Time left | W: Max Life
 	vec4 mPositionSpeed;	// XYZ: position | W: Speed
-	//uint64_t mTexture;
+	uint64_t mTexture;
 	mat4 mLtwMatrix;		// Local-to-world transformation matrix
 };
 
@@ -105,7 +105,7 @@ void MakeParticle(out Particle p, ParticleEmitter e)
 	p.mVelocity.xyz = Rand(vec3(gl_GlobalInvocationID.xyz)) * rightVector + Rand(vec3(gl_GlobalInvocationID.yxz)) * upVector;	// Make velocity be outwards perpendicular to camera's view
 	p.mVelocity.xyz = normalize(p.mVelocity.xyz);
 	// Texture handle
-	//p.mTexture = e.mTexture;
+	p.mTexture = e.mTexture;
 }
 
 void InitVectors(vec3 position)

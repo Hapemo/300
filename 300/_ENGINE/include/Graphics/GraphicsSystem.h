@@ -421,7 +421,7 @@ public:
 	void ProcessEmitterAndParticle(vec3 const& camPos, float dt);
 	void UpdateEmitters(vec3 const& camPos);
 	void UpdateParticles(vec3 const& camPos, float dt);
-	void EmitParticles(ParticleEmitter const& e, vec3 const& position);
+	void EmitParticles(ParticleEmitter& e, vec3 const& position);
 
 	// -- Shadows WIP --
 	GFX::Shader shadowMapShaderInst;

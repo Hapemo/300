@@ -2067,13 +2067,17 @@ void GraphicsSystem::UpdateParticles(vec3 const& camPos, float dt)
 	m_ComputeParticleShader.Deactivate();
 }
 
-void GraphicsSystem::EmitParticles(ParticleEmitter const& e, vec3 const& position)
+void GraphicsSystem::EmitParticles(ParticleEmitter& e, vec3 const& position)
 {
 	ParticleEmitterSSBO eSsbo;
 	eSsbo.Init(e);
 	eSsbo.mPositionSpeed = vec4(position, e.mSpeed);
 
 	// TODO: To add texture of particles
+	unsigned texID{};
+	if (e.mTexture.getdata(systemManager->mResourceTySystem->m_ResourceInstance) != nullptr)
+		texID = reinterpret_cast<GFX::Texture*>(e.mTexture.data)->ID();
+	eSsbo.mTexture = GetAndStoreBindlessTextureHandle(texID);
 
 	// Add emitter into container
 	m_Emitters.emplace_back(eSsbo);
