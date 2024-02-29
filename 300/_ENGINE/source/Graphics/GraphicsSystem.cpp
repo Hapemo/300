@@ -200,6 +200,7 @@ void GraphicsSystem::Update(float dt)
 
 	update_Portals();
 
+	ProcessEmitterAndParticle(GetCamera(CAMERA_TYPE::CAMERA_TYPE_EDITOR).position(), dt);
 
 	// Render the depth scene first as shadow pass
 	auto dirLightInstance = systemManager->ecs->GetEntitiesWith<DirectionalLight>();
@@ -1482,6 +1483,13 @@ void GraphicsSystem::SetupShaderStorageBuffers()
 
 	// All particles in the scene -- Location 6
 	m_ParticleSsbo.Create(sizeof(ParticleSSBO) * MAX_PARTICLES, 6);
+
+	// Particle Freelist -- Location 7
+	m_ParticleFreelistSsbo.Create(sizeof(int) * (MAX_PARTICLES + 1), 7);
+	std::vector<int>indices(MAX_PARTICLES + 1, 0);
+	indices[0] = MAX_PARTICLES;
+	for (int i{1}, j{ MAX_PARTICLES - 1 }; i < MAX_PARTICLES + 1; ++i, --j) indices[i] = j;
+	m_ParticleFreelistSsbo.SubData(sizeof(int) * (MAX_PARTICLES + 1), indices.data());
 }
 
 void GraphicsSystem::DrawAll2DInstances(unsigned shaderID)
@@ -1984,40 +1992,6 @@ void GraphicsSystem::DrawAllPortals(bool editorDraw)
 	}
 }
 
-//void GraphicsSystem::AddParticleInstance(Particle const& p, vec3 const& camPos)
-//{
-//	// Compute the rotation vectors
-//	vec3 normal = camPos - p.mCurrPosition;
-//	vec3 up = { 0, 1, 0 };
-//	vec3 right = glm::cross(up, normal);
-//	vec3 forward = glm::cross(right, normal);
-//
-//	mat4 scale = {
-//		vec4(p.mCurrSize, 0.f, 0.f, 0.f),
-//		vec4(0.f, p.mCurrSize, 0.f, 0.f),
-//		vec4(0.f, 0.f, 1.f, 0.f),
-//		vec4(0.f, 0.f, 0.f, 1.f)
-//	};
-//
-//	mat4 tilt = glm::rotate(glm::radians(p.mCurrRotation), vec3(0, 0, 1));
-//
-//	scale = tilt * scale;
-//
-//	// Rotation matrix to always face the camera
-//	mat4 rotate = {
-//		vec4(glm::normalize(right), 0.0f),
-//		vec4(glm::normalize(forward), 0.0f),
-//		vec4(glm::normalize(normal), 0.0f),
-//		vec4(p.mCurrPosition, 1.0f)
-//	};
-//
-//	mat4 world = rotate * scale;
-//
-//	m_ParticleMesh.mTexEntID.emplace_back(vec4(-2.f, 0.f, 0.f, 0.f));
-//	m_ParticleMesh.mColors.emplace_back(p.mCurrColor);
-//	m_ParticleMesh.mLTW.emplace_back(world);
-//}
-
 void GraphicsSystem::DrawAllParticles()
 {
 	GFX::Camera camera = GetCamera(CAMERA_TYPE::CAMERA_TYPE_GAME);
@@ -2027,11 +2001,11 @@ void GraphicsSystem::DrawAllParticles()
 	mat4 camVP = camera.viewProj();
 
 	m_ParticleMesh.BindVao();
-	m_Quad3DShaderInst.Activate();
-	glUniformMatrix4fv(m_Quad3DShaderInst.GetUniformVP(), 1, GL_FALSE, &camVP[0][0]);
+	m_ParticleShaderInst.Activate();
+	glUniformMatrix4fv(m_ParticleShaderInst.GetUniformVP(), 1, GL_FALSE, &camVP[0][0]);
 
 	glDepthFunc(GL_LEQUAL);
-	glDrawArraysInstanced(GL_TRIANGLE_FAN, 0, 4, GLsizei(m_ParticleMesh.mLTW.size()));
+	glDrawArraysInstanced(GL_TRIANGLE_FAN, 0, 4, MAX_PARTICLES);
 
 	m_ParticleMesh.UnbindVao();
 	GFX::Shader::Deactivate();
@@ -2044,10 +2018,6 @@ void GraphicsSystem::ProcessEmitterAndParticle(vec3 const& camPos, float dt)
 
 	// Update the properties of all particles
 	UpdateParticles(camPos, dt);
-
-	// Remove particles that have "died out"
-	// Copy remaining particles back into SSBO
-	RemoveExpiredParticles();
 }
 
 void GraphicsSystem::UpdateEmitters(vec3 const& camPos)
@@ -2079,17 +2049,14 @@ void GraphicsSystem::UpdateEmitters(vec3 const& camPos)
 
 void GraphicsSystem::UpdateParticles(vec3 const& camPos, float dt)
 {
-	if (m_ParticlesCount == 0)
-		return;
-
 	int num_group_x = 32;
-	int num_group_y = glm::ceil((m_ParticlesCount / num_group_x) / 32.f);
+	int num_group_y = ((MAX_PARTICLES - 1)/ (num_group_x + 1) - 1) / num_group_x + 1;
 
 	// Activate Compute shader
 	m_ComputeParticleShader.Activate();
 
 	glUniform1f(m_ComputeParticleDeltaTimeLocation, dt);
-	glUniform1i(m_ComputeParticleCountLocation, m_ParticlesCount);
+	glUniform1i(m_ComputeParticleCountLocation, MAX_PARTICLES);
 	glUniform3fv(m_ComputeEmitterCamPosLocation, 1, &camPos[0]);
 
 	glDispatchCompute(num_group_x, num_group_y, 1);
@@ -2100,35 +2067,11 @@ void GraphicsSystem::UpdateParticles(vec3 const& camPos, float dt)
 	m_ComputeParticleShader.Deactivate();
 }
 
-void GraphicsSystem::RemoveExpiredParticles()
-{
-	glGetBufferSubData(m_ParticleSsbo.ID(), 0, m_ParticlesCount * sizeof(ParticleSSBO), particlePool);
-	
-	for (int i{}; i < m_ParticlesCount; ++i)
-	{
-		if (particlePool[i].mSizeLifeSpeed.y > 0)	// Still active pushed into vector
-		{
-			particleVector.emplace_back(particlePool[i]);
-		}
-	}
-
-	// Update particle count
-	m_ParticlesCount = particleVector.size();
-
-	// Write back into particle SSBO
-	m_ParticleSsbo.SubData(m_ParticlesCount * sizeof(ParticleSSBO), particleVector.data());
-}
-
 void GraphicsSystem::EmitParticles(ParticleEmitter const& e, vec3 const& position)
 {
 	ParticleEmitterSSBO eSsbo;
 	eSsbo.Init(e);
-	eSsbo.mPosition = vec4(position, e.mCount);
-
-	// Starting index =  previous emitter start index + previous emitter particle count
-	eSsbo.mParticlePoolIndex.x = m_ParticlesCount;
-
-	m_ParticlesCount += e.mCount;	// Update number of all particles
+	eSsbo.mPositionSpeed = vec4(position, e.mSpeed);
 
 	// TODO: To add texture of particles
 

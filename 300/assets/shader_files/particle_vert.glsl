@@ -11,11 +11,13 @@ uniform mat4 uMatrixVP;
 
 struct Particle
 {
-	vec4 mColor;
+	vec4 mStartColor;
+	vec4 mEndColor;
+	vec4 mCurrColor;
 	vec4 mVelocity;
-	vec4 mSizeLifeSpeed;	// X: Current size | Y: Life Time left | Z: Speed
-	vec4 mPosition;			// XYZ: position | W: active flag (< 0 inactive, else active)
-	uint64_t mTexture;
+	vec4 mSizeLife;			// X: Start size | Y: End size | Z: Life Time left | W: Max Life
+	vec4 mPositionSpeed;	// XYZ: position | W: Speed
+	//uint64_t mTexture;
 	mat4 mLtwMatrix;		// Local-to-world transformation matrix
 };
 
@@ -39,7 +41,13 @@ void main()
 
 	Particle p = particles[gl_InstanceID];
 
+	//if (p.mCurrColor.a <= 0)	// "Dead" particle, do not draw
+	//{
+	//	gl_Position = vec4(0.0, 0.0, 0.0, 1.0);
+	//	return;
+	//}
+
 	gl_Position = uMatrixVP * p.mLtwMatrix * vec4(vertexPos, 1.0);
-	fColor = p.mColor;
-	fTexture = p.mTexture;
+	fColor = p.mCurrColor;
+	//fTexture = p.mTexture;
 }

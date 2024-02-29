@@ -13,19 +13,20 @@ struct ParticleEmitter
 {
     vec4 mStartColor;
 	vec4 mEndColor;
-	vec4 mSizeLifetimeSpeed;	// X: start size | Y: end size | Z: Lifetime | W: Speed
-	vec4 mPosition;				// XYZ: position | W: particle count
-	vec4 mParticlePoolIndex;	// X: Particle pool start index
-	uint64_t mTexture;
+	vec4 mSizeLifetimeCount;	// X: start size | Y: end size | Z: Lifetime | W: Count
+	vec4 mPositionSpeed;		// XYZ: position | W: Speed
+	//uint64_t mTexture;
 };
 
 struct Particle
 {
-	vec4 mColor;
+	vec4 mStartColor;
+	vec4 mEndColor;
+	vec4 mCurrColor;
 	vec4 mVelocity;
-	vec4 mSizeLifeSpeed;	// X: Current size | Y: Life Time left | Z: Speed
-	vec4 mPosition;			// XYZ: position
-	uint64_t mTexture;
+	vec4 mSizeLife;			// X: Start size | Y: End size | Z: Life Time left | W: Max Life
+	vec4 mPositionSpeed;	// XYZ: position | W: Speed
+	//uint64_t mTexture;
 	mat4 mLtwMatrix;		// Local-to-world transformation matrix
 };
 
@@ -39,8 +40,14 @@ layout (std430, binding = 6) buffer particleBuffer
     Particle particles[];
 };
 
+layout (std430, binding = 7) buffer indexBuffer
+{
+    int count;
+	int indices[];
+}freelist;
+
 // -- Helper Functions --
-Particle InitNewParticle(ParticleEmitter e);
+void MakeParticle(out Particle p, ParticleEmitter e);
 void InitVectors(vec3 position);
 
 // -- Global Variables -- 
@@ -48,11 +55,9 @@ vec3 rightVector;
 vec3 upVector;
 vec3 forwardVector;
 
-mat4 ltwMatrix;
-
 void main()
 {
-	// Each work group will process one emitter
+	// Each thread group will process one emitter
 	int emitterIndex = int(gl_WorkGroupID.y * gl_NumWorkGroups.x + gl_WorkGroupID.x);
 
 	if (emitterIndex >= uEmitterCount)	// Boundary Check
@@ -60,73 +65,45 @@ void main()
 	
 	// Retrieve Emitter from buffer
 	ParticleEmitter emitter = emitters[emitterIndex];
-	int particleCount = int(emitter.mPosition.w);
-	float startSize = emitter.mSizeLifetimeSpeed.x;
-	float endSize = emitter.mSizeLifetimeSpeed.y;
-	float lifetime = emitter.mSizeLifetimeSpeed.z;
-	float speed = emitter.mSizeLifetimeSpeed.w;
-	int poolStartIndex = int(emitter.mParticlePoolIndex.x);
+	int particleCount = int(emitter.mSizeLifetimeCount.w);
+	InitVectors(emitter.mPositionSpeed.xyz);
 
-	// Initialize vectors 
-	InitVectors(emitter.mPosition.xyz);
-
-	// Each thread process one particle
-	int particleIndex = int(gl_LocalInvocationID.y * gl_WorkGroupSize.x + gl_LocalInvocationID.x);
-
-	if (particleIndex >= particleCount)
-		return;
-
-	// Creating new Particle
-	Particle p;
-
-	p = InitNewParticle(emitter);
-	particles[particleIndex + poolStartIndex];
-
-	mat4 scale = mat4(
-		vec4(p.mSizeLifeSpeed.x, 0.0, 0.0, 0.0),
-		vec4(0.0, p.mSizeLifeSpeed.x, 0.0, 0.0),
-		vec4(0.0, 0.0, 1.0, 0.0),
-		vec4(0.0, 0.0, 0.0, 1.0)
-	);
-
-	ltwMatrix = mat4(
-		vec4(rightVector, 0.0),
-		vec4(upVector, 0.0),
-		vec4(forwardVector, 0.0),
-		vec4(p.mPosition.xyz, 1.0)
-	);
-
-	ltwMatrix = ltwMatrix * scale;
-	p.mLtwMatrix = ltwMatrix;
-
-	// Write new particles to buffer
-	particles[particleIndex + poolStartIndex] = p;
+	int threadIndex = int(gl_LocalInvocationID.y * gl_WorkGroupSize.x + gl_LocalInvocationID.x);
+	if (threadIndex < particleCount)
+	{
+		// undo decrement and return if nothing in freelist
+		int index = atomicAdd(freelist.count, -1) - 1;
+		if (index < 0)
+		{
+			atomicAdd(freelist.count, 1);
+			return;
+		}
+		int particleIndex = freelist.indices[index];
+		MakeParticle(particles[particleIndex], emitter);
+	}
 }
 
-Particle InitNewParticle(ParticleEmitter e)
+void MakeParticle(out Particle p, ParticleEmitter e)
 {
-	// Initialize new particle's properties with emitter's properties
-	Particle p;
-
-	// Position
-	p.mPosition = e.mPosition;
+	// Position, Speed
+	p.mPositionSpeed = e.mPositionSpeed;
 
 	// Color
-	p.mColor = e.mStartColor;
+	p.mStartColor = e.mStartColor;
+	p.mEndColor = e.mEndColor;
 	
-	// Size, Life time left, Speed
-	p.mSizeLifeSpeed.x = e.mSizeLifetimeSpeed.x;
-	p.mSizeLifeSpeed.y = e.mSizeLifetimeSpeed.z;
-	p.mSizeLifeSpeed.z = e.mSizeLifetimeSpeed.w;
+	// Size, Life time left
+	p.mSizeLife.x = e.mSizeLifetimeCount.x;		// start size
+	p.mSizeLife.y = e.mSizeLifetimeCount.y;		// end size
+	p.mSizeLife.z = e.mSizeLifetimeCount.z;		// life left
+	p.mSizeLife.w = e.mSizeLifetimeCount.z;		// life time
 
 	// Random velocity with pseudorandom noise function, with thread index as seed
-	p.mVelocity = noise4(int(gl_LocalInvocationID.y * gl_WorkGroupSize.x + gl_LocalInvocationID.x));
+	p.mVelocity.xyz = noise3(int(gl_LocalInvocationID.y * gl_WorkGroupSize.x + gl_LocalInvocationID.x));
 	p.mVelocity.xyz = normalize(p.mVelocity.x * rightVector + p.mVelocity.y * upVector);	// Make velocity be outwards perpendicular to camera's view							
 
 	// Texture handle
-	p.mTexture = e.mTexture;
-
-	return p;
+	//p.mTexture = e.mTexture;
 }
 
 void InitVectors(vec3 position)

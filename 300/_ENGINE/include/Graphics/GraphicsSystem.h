@@ -349,6 +349,7 @@ public:
 	const int							MAX_PARTICLES = 100'000;
 	GFX::SSBO							m_ParticleEmitterSsbo;
 	GFX::SSBO							m_ParticleSsbo;
+	GFX::SSBO							m_ParticleFreelistSsbo;
 	std::vector<ParticleEmitterSSBO>	m_Emitters;
 
 	GLuint64 GetAndStoreBindlessTextureHandle(int texID);	// Stores adn Return the 64bit texture handle and makes it resident
@@ -411,9 +412,7 @@ public:
 	GFX::ComputeShader m_ComputeEmitterShader;
 	GFX::ComputeShader m_ComputeParticleShader;
 	GFX::Shader m_ParticleShaderInst{};
-	ParticleSSBO particlePool[100'000];
 	std::vector<ParticleSSBO> particleVector{};
-	int m_ParticlesCount{};
 	GLuint m_ComputeEmitterCountLocation{};
 	GLuint m_ComputeEmitterCamPosLocation{};
 	GLuint m_ComputeParticleDeltaTimeLocation{};
@@ -422,7 +421,6 @@ public:
 	void ProcessEmitterAndParticle(vec3 const& camPos, float dt);
 	void UpdateEmitters(vec3 const& camPos);
 	void UpdateParticles(vec3 const& camPos, float dt);
-	void RemoveExpiredParticles();
 	void EmitParticles(ParticleEmitter const& e, vec3 const& position);
 
 	// -- Shadows WIP --

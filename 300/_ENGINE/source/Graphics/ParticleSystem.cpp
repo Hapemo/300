@@ -56,5 +56,5 @@ void ParticleEmitterSSBO::Init(ParticleEmitter const& e)
 {
 	mStartColor = e.mStartColor;
 	mEndColor = e.mEndColor;
-	mSizeLifetimeSpeed = vec4(e.mStartSize, e.mEndSize, e.mLifetime, e.mSpeed);
+	mSizeLifetimeCount = vec4(e.mStartSize, e.mEndSize, e.mLifetime, e.mCount);
 }
