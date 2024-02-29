@@ -163,6 +163,9 @@ local objectiveBarEmptySpawnPos = Vec3.new()
 local healthBarEmptySpawnPos = Vec3.new()
 local isuiinit = false
 local this
+
+_G.FreezePlayerControl = false
+
 function Alive()
     this = Helper.GetScriptEntity(script_entity.id)
     gameStateSys = systemManager:mGameStateSystem();
@@ -236,6 +239,7 @@ function Alive()
 end
 
 function Update()
+    if _G.FreezePlayerControl then return end
 
     -- healthbar = gameStateSys:GetEntityByScene("Health Bar","Objectives") // Changed to UI scene
     healthbar = gameStateSys:GetEntity("HealthBar", "UI")

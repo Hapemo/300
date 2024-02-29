@@ -162,7 +162,7 @@
         "debug": 1
     },
     {
-        "scene_name": "EpicIntroLv2",
+        "scene_name": "New Scene 1",
         "pause": false,
         "force_render": false,
         "bloom_threshold": {

@@ -38,6 +38,16 @@ _G.ILYEpicIntroState = 0
 -- 6. Hide Info
 -- 7. Zoom out and resume game
 
+_G.ZBEpicIntroState = 0
+-- 1. Move to start pos
+-- 2. Make player look at front (ZBView1)
+-- 3. Walk forward and pass the zipbomb (using ZBpos1) (It should catch a glimpse of the zip bomb)
+-- 4. Walk back and activate zipbomb midway
+-- 5. Upon hearing zipbomb fuse, QUICK turn to look at zipbomb
+-- 6. ShowInfo
+-- 7. HideInfo
+-- 8. result game
+
 _G.activateEpicTrojanHorse = false
 _G.activateEpicTS = false
 _G.activateEpicM = false
@@ -89,6 +99,17 @@ local ILYView2
 local ILYZoomValue
 --#endregion
 
+--#region ZB epic intro variables
+local ZBWaitTimerCounter
+local ZBWaitTimer
+local ZBPos1
+local ZBPos2
+local ZBPos15
+local ZBView1
+local ZBView2
+local ZBRunOnce
+--#endregion
+
 --#region Entities
 local player
 local uiHider
@@ -104,6 +125,9 @@ local TSPlatform
 
 local epicILY
 local ILYPlatform
+
+local epicZB
+local ZBPlatform
 --#endregion
 
 --#region EpicIntroUI
@@ -154,7 +178,7 @@ function Alive()
     InitTrojanHorseEpicIntro()
     InitTSEpicIntro()
     InitILYEpicIntro()
-    
+    InitZBEpicIntro()
 end
 
 function Update()
@@ -176,6 +200,12 @@ function Update()
         _G.activateEpicILY = false
     end
     if _G.ILYEpicIntroState ~= 0 then RunILYEpicIntro() end
+    
+    if _G.activateEpicZB then 
+        SetupZBEpicIntro()
+        _G.activateEpicZB = false
+    end
+    if _G.ZBEpicIntroState ~= 0 then RunZBEpicIntro() end
 
     --#region Test LookTowards
     -- local origin = Vec3.new()
@@ -493,13 +523,6 @@ function SetupILYEpicIntro()
 end
 
 function RunILYEpicIntro()
-    -- print("_G.ILYEpicIntroState:")
-    -- print(_G.ILYEpicIntroState)
-    -- if _G.ILYEpicIntroState > 2 then 
-    --     epicILY3:GetTransform().mRotate.y = 90 
-    --     epicILY3:GetTransform().mTranslate = Vec3.new(13.7, -11, 32.4)
-    -- end
-
     if _G.ILYShotAlready then
         epicILY:GetTransform().mRotate = Vec3.new(0, 130.013, 0)
     end 
@@ -550,78 +573,139 @@ function RunILYEpicIntro()
             ShowUI()
         end
     end
-
-    -- if _G.ILYEpicIntroState == 1 then -- Move to start pos
-    --     if not MoveTo(player, ILYPlatform:GetTransform().mTranslate, 100) then
-    --         -- print("finish moving")
-    --         -- Finished moving
-    --         _G.ILYEpicIntroState = 2
-    --         systemManager.ecs:SetDeleteEntity(ILYPlatform)
-    --         AddScriptToILY()
-    --     end
-    -- elseif _G.ILYEpicIntroState == 2 then -- Wait for trojan soldiers to come out
-    --     ILYWaitCounter = ILYWaitCounter + FPSManager.GetDT()
-    --     if ILYWaitCounter > ILYWaitTime then
-    --         RemoveScriptsFromILY()
-    --         _G.ILYEpicIntroState = 3 
-    --     end
-    -- elseif _G.ILYEpicIntroState == 3 then -- Quick Look & ZoomCamTo at solder 1
-    --     if not ILYZoom1Done then ILYZoom1Done = not LookTowardsInterpolation(player, ILYView4, 150) end
-    --     if not ILYLook1Done then ILYLook1Done = not ZoomCamTo(player, ILYZoomValue, 125) end
-    --     if ILYLook1Done and ILYZoom1Done then _G.ILYEpicIntroState = 4 end
-    -- elseif _G.ILYEpicIntroState == 4 then -- Slow panning to right 
-    --     ILYPanningCounter = ILYPanningCounter + FPSManager.GetDT()
-    --     if (ILYPanningCounter > ILYPanningTime) then
-    --         ILYPanningCounter = 0
-    --         _G.ILYEpicIntroState = 5
-    --     end
-    --     LookTowardsInterpolation(player, Helper.Vec3Minus(ILYView4, Vec3.new(179,0,0)), 5.25)
-    -- elseif _G.ILYEpicIntroState == 5 then -- Quick Look at solder 2 
-    --     if not LookTowardsInterpolation(player, ILYView3, 150) then _G.ILYEpicIntroState = 6 end
-    -- elseif _G.ILYEpicIntroState == 6 then -- Slow panning to right 
-    --     ILYPanningCounter = ILYPanningCounter + FPSManager.GetDT()
-    --     if (ILYPanningCounter > ILYPanningTime) then
-    --         ILYPanningCounter = 0
-    --         _G.ILYEpicIntroState = 7
-    --     end
-    --     LookTowardsInterpolation(player, Helper.Vec3Minus(ILYView3, Vec3.new(179,0,0)), 5.25)
-    -- elseif _G.ILYEpicIntroState == 7 then -- Quick Look at solder 3 
-    --     if not LookTowardsInterpolation(player, ILYView2, 150) then _G.ILYEpicIntroState = 8 end
-    -- elseif _G.ILYEpicIntroState == 8 then -- Slow panning to right 
-    --     ILYPanningCounter = ILYPanningCounter + FPSManager.GetDT()
-    --     if (ILYPanningCounter > ILYPanningTime) then
-    --         ILYPanningCounter = 0
-    --         _G.ILYEpicIntroState = 9
-    --     end
-    --     LookTowardsInterpolation(player, Helper.Vec3Minus(ILYView2, Vec3.new(179,0,0)), 5.25)
-    -- elseif _G.ILYEpicIntroState == 9 then -- Quick Look at solder 4 
-    --     if not LookTowardsInterpolation(player, ILYView1, 150) then _G.ILYEpicIntroState = 10 end
-    -- elseif _G.ILYEpicIntroState == 10 then -- Slow panning to right
-    --     ILYPanningCounter = ILYPanningCounter + FPSManager.GetDT()
-    --     if (ILYPanningCounter > ILYPanningTime) then
-    --         ILYPanningCounter = 0
-    --         _G.ILYEpicIntroState = 11
-    --     end 
-    --     LookTowardsInterpolation(player, Helper.Vec3Minus(ILYView1, Vec3.new(179,0,0)), 5.25)
-    -- elseif _G.ILYEpicIntroState == 11 then -- ShowInfo 
-    --     ShowInfoSlowdownCounter = ShowInfoSlowdownCounter + FPSManager.GetDT()
-    --     if (ShowInfoSlowdownCounter < ShowInfoSlowdown) then
-    --         MoveEpicIntroUI(epicIntroUI, 4.3, false, true)
-    --     elseif not MoveEpicIntroUI(epicIntroUI, 0.01, false, true) then _G.ILYEpicIntroState = 12 end
-    -- elseif _G.ILYEpicIntroState == 12 then -- Hideinfo
-    --         if not MoveEpicIntroUI(epicIntroUI, 4, false, false) then _G.ILYEpicIntroState = 13 end
-    -- elseif _G.ILYEpicIntroState == 13 then -- Zoom Out
-    --     if (not ZoomCamTo(player, defaultZoom, 150)) then
-    --         _G.ILYEpicIntroState = 0
-    --         _G.FreezePlayerControl = false
-    --         retractBlackBorder = true
-    --         ShowUI()
-    --         AddScriptToILY()
-    --     end
-    -- end
 end
 
 --#endregion
+
+--#region Zip Bomb Intro
+function InitZBEpicIntro()
+    ZBPlatform = _G.gameStateSys:GetEntity("ZipBombEpicTrigger")
+    epicZB = _G.gameStateSys:GetEntity("EpicZipBomb")
+end
+
+function SetupZBEpicIntro() 
+    print("SetupZBEpicIntro()")
+    epicIntroUI = _G.gameStateSys:GetEntity("ZBEpicIntroInfoUI")
+    epicIntroUI:GetTransform().mTranslate.x = hideRightEpicUIPos
+    _G.ZBEpicIntroState = 1
+    ZBPos1 = Vec3.new(-2.46, 46.2, 14.212)
+    ZBPos15 = Vec3.new(-2.46, 46.2, 12.5)
+    ZBPos2 = Vec3.new(-2.46, 46.2, 12.28)
+    ZBView1 = Vec3.new(90, 0, 0)
+    ZBView2 = Vec3.new(165, -3, 0)
+    ZBWaitTimerCounter = 0
+    ZBWaitTimer = 1
+    ZBAddScriptTime = 1
+    ZBRunOnce = true
+    GeneralSetup()
+end
+
+function RunZBEpicIntro()
+    -- if _G.ZBShotAlready then
+    --     epicZB:GetTransform().mRotate = Vec3.new(0, 130.013, 0)
+    -- end 
+    -- Always look at the player when midway through exploding
+    local dir = Vec3.new()
+    dir = Helper.Normalize(Helper.Vec3Minus(epicZB:GetAISetting():GetTarget():GetTransform().mTranslate, epicZB:GetTransform().mTranslate))
+    epicZB:GetTransform().mRotate.y = Helper.DirectionToAngle(epicZB, dir)
+    print(_G.ZBEpicIntroState)
+
+    if _G.ZBEpicIntroState == 1 then -- Move to start pos
+        if not MoveTo(player, ZBPlatform:GetTransform().mTranslate, 100) then
+            _G.ZBEpicIntroState = 2 -- To keep ZB waiting
+            systemManager.ecs:SetDeleteEntity(ZBPlatform)
+        end
+    elseif _G.ZBEpicIntroState == 2 then -- Make player look at front (ZBView1)
+        if not LookTowardsInterpolation(player, ZBView1, 75) then _G.ZBEpicIntroState = 3 end        
+    elseif _G.ZBEpicIntroState == 3 then -- Walk forward and pass the zipbomb (using ZBpos1) (It should catch a glimpse of the zip bomb)
+        if not MoveTo(player, ZBPos1, 100) then _G.ZBEpicIntroState = 4 end
+    elseif _G.ZBEpicIntroState == 4 then -- Walk back and activate zipbomb midway (add script to zb)
+        ZBWaitTimerCounter = ZBWaitTimerCounter + FPSManager.GetDT()
+        if ZBWaitTimer < ZBWaitTimerCounter then
+            if not MoveTo(player, ZBPos15, 50) then 
+                _G.ZBEpicIntroState = 4.5 
+                epicZB:GetScripts():AddScript(epicZB, "..\\assets\\Scripts\\EpicIntroZB.lua")
+            end
+        end
+    elseif _G.ZBEpicIntroState == 4.5 then
+        if not MoveTo(player, ZBPos2, 50) then 
+            _G.ZBEpicIntroState = 5 
+        end
+    elseif _G.ZBEpicIntroState == 5 then -- Upon hearing zipbomb fuse, QUICK turn to look at zipbomb and pause it's explosion animation
+        if not LookTowardsInterpolation(player, ZBView2, 175) then
+            
+            _G.ZBEpicIntroState = 6 
+        end
+    elseif _G.ZBEpicIntroState == 6 then -- ShowInfo
+        ShowInfoSlowdownCounter = ShowInfoSlowdownCounter + FPSManager.GetDT()
+
+        if ZBRunOnce and (ShowInfoSlowdownCounter < ShowInfoSlowdown) then
+            ZBRunOnce = false
+            gameStateSys:GetEntity("ZipBombFuseAudio"):GetAudio():SetPlay()
+            epicZB:GetAnimator():PauseAnimation()
+            -- epicZB:GetAudio():SetStop()
+        end
+
+        if (ShowInfoSlowdownCounter < ShowInfoSlowdown) then MoveEpicIntroUI(epicIntroUI, 4.42, true, true)
+        elseif not MoveEpicIntroUI(epicIntroUI, 0.01, true, true) and
+               ShowInfoSlowdownCounter > ShowInfoMinTime then _G.ZBEpicIntroState = 7 end
+    elseif _G.ZBEpicIntroState == 7 then -- HideInfo
+        if not MoveEpicIntroUI(epicIntroUI, 4, true, false) then 
+            _G.ZBEpicIntroState = 0
+            _G.FreezePlayerControl = false
+            retractBlackBorder = true
+            epicZB:GetAnimator():UnpauseAnimation()
+            epicZB:GetAudio():SetPlay()
+            ShowUI()
+        end
+    end
+    -- if _G.ZBEpicIntroState == 1 then -- Move to start pos and dwactivate ZB
+    --     if not MoveTo(player, ZBPlatform:GetTransform().mTranslate, 100) then
+    --         _G.ZBEpicIntroState = 100 -- To keep ZB waiting
+    --         systemManager.ecs:SetDeleteEntity(ZBPlatform)
+    --         epicZB:GetScripts():AddScript(epicZB, "..\\assets\\Scripts\\EpicIntroZB.lua")
+    --     end
+    -- elseif _G.ZBEpicIntroState == 2 then -- Wait for ZB to shoot player (move to next state when shot by ZB), then wait abit more
+    --     LookTowardsInterpolation(player, ZBView2, 75)
+    --     shotWaitTimeCounter = shotWaitTimeCounter + FPSManager.GetDT()
+    --     if not _G.ZBShotAlready then
+    --         if shotWaitTimeCounter >shotTriggerEffectTime then 
+    --             _G.ZBShotAlready = true 
+    --             -- print("SHOTTED!!!")
+    --             _G.ZBBulletHitPlayer = true
+    --             _G.phySys:SetVelocity(epicZB, Vec3.new())
+    --             epicZB:GetAnimator():PauseAnimation()
+    --         end
+    --     elseif shotWaitTime < shotWaitTimeCounter then _G.ZBEpicIntroState = 3 end
+    -- elseif _G.ZBEpicIntroState == 3 then -- Rotate at normal speed to ZB (freeze ZB at the end)
+    --     if not LookTowardsInterpolation(player, ZBView1, 125) then 
+    --         _G.ZBEpicIntroState = 4
+    --     end
+    -- elseif _G.ZBEpicIntroState == 4 then -- Zoom into ZB
+    --     if not ZoomCamTo(player, ZBZoomValue, 100) then _G.ZBEpicIntroState = 5 end
+    -- elseif _G.ZBEpicIntroState == 5 then -- Show Info
+    --     -- ShowInfoSlowdownCounter = ShowInfoSlowdownCounter + FPSManager.GetDT()
+    --     -- if (ShowInfoSlowdownCounter < ShowInfoSlowdown) then
+    --     --     MoveEpicIntroUI(epicIntroUI, 4.3, false, true)
+    --     -- end
+    --     ShowInfoSlowdownCounter = ShowInfoSlowdownCounter + FPSManager.GetDT()
+    --     local minTimeReached = false
+    --     if ShowInfoSlowdownCounter > ShowInfoMinTime then minTimeReached = true end
+    --     if (ShowInfoSlowdownCounter < ShowInfoSlowdown) then
+    --         MoveEpicIntroUI(epicIntroUI, 4.35, false, true)
+    --     elseif not MoveEpicIntroUI(epicIntroUI, 0.01, false, true) and minTimeReached then _G.ZBEpicIntroState = 6 end
+    -- elseif _G.ZBEpicIntroState == 6 then -- Hide Info
+    --     if not MoveEpicIntroUI(epicIntroUI, 4, false, false) then _G.ZBEpicIntroState = 7 end
+    -- elseif _G.ZBEpicIntroState == 7 then -- Zoom out and resume game
+    --     if (not ZoomCamTo(player, defaultZoom, 100)) then
+    --         _G.ZBEpicIntroState = 0
+    --         _G.FreezePlayerControl = false
+    --         retractBlackBorder = true
+    --         epicZB:GetAnimator():UnpauseAnimation()
+    --         ShowUI()
+    --     end
+    -- end
+end
 
 
 ----------------------------------------------------------------------------

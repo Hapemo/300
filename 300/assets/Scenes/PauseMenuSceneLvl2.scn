@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 7340137,
+        "entityid": 3145762,
         "general": {
             "name": "PauseMenuController",
             "tagid": 0,
@@ -50,7 +50,7 @@
         }
     },
     {
-        "entityid": 7340138,
+        "entityid": 3145763,
         "general": {
             "name": "PauseMenuBackground",
             "tagid": 6,
@@ -91,7 +91,7 @@
         }
     },
     {
-        "entityid": 7340139,
+        "entityid": 3145764,
         "general": {
             "name": "PauseBackButton",
             "tagid": 0,
@@ -165,7 +165,7 @@
         }
     },
     {
-        "entityid": 7340140,
+        "entityid": 3145765,
         "general": {
             "name": "PauseMainMenuButton",
             "tagid": 6,
@@ -239,7 +239,7 @@
         }
     },
     {
-        "entityid": 7340141,
+        "entityid": 3145766,
         "general": {
             "name": "Click",
             "tagid": 6,
@@ -276,7 +276,7 @@
         }
     },
     {
-        "entityid": 7340142,
+        "entityid": 3145769,
         "general": {
             "name": "PauseQuitButton",
             "tagid": 6,
@@ -350,7 +350,7 @@
         }
     },
     {
-        "entityid": 7340143,
+        "entityid": 3145770,
         "general": {
             "name": "Awake",
             "tagid": 0,
@@ -387,7 +387,7 @@
         }
     },
     {
-        "entityid": 7340144,
+        "entityid": 3145771,
         "general": {
             "name": "PauseResumeButton",
             "tagid": 6,
@@ -464,7 +464,7 @@
         }
     },
     {
-        "entityid": 7340145,
+        "entityid": 3145772,
         "general": {
             "name": "PauseHTPButton",
             "tagid": 6,
@@ -541,7 +541,7 @@
         }
     },
     {
-        "entityid": 7340146,
+        "entityid": 3145773,
         "general": {
             "name": "Exit",
             "tagid": 0,
@@ -578,7 +578,7 @@
         }
     },
     {
-        "entityid": 7340147,
+        "entityid": 3145774,
         "general": {
             "name": "PauseRestartButton",
             "tagid": 6,
@@ -652,7 +652,7 @@
         }
     },
     {
-        "entityid": 7340148,
+        "entityid": 3145775,
         "general": {
             "name": "PauseHTPMenu",
             "tagid": 6,
