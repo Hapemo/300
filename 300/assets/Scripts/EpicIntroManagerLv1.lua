@@ -29,6 +29,15 @@ _G.TSEpicIntroState = 0
 -- 12. Hideinfo
 -- 13. Zoom Out
 
+_G.ILYEpicIntroState = 0
+-- 1. Move to start pos and activate ILY
+-- 2. Wait for ILY to shoot player (move to next state when shot by ILY)
+-- 3. Wait a bit after getting shot then rotate at normal speed to ILY
+-- 4. Zoom into ILY
+-- 5. Show Info
+-- 6. Hide Info
+-- 7. Zoom out and resume game
+
 _G.activateEpicTrojanHorse = false
 _G.activateEpicTS = false
 _G.activateEpicM = false
@@ -70,6 +79,16 @@ local TSZoom1Done
 local TSLook1Done
 --#endregion
 
+--#region ILY epic intro variables
+local shotTriggerEffectTime
+local shotWaitTime
+local shotWaitTimeCounter
+_G.ILYShotAlready = false
+local ILYView1
+local ILYView2
+local ILYZoomValue
+--#endregion
+
 --#region Entities
 local player
 local uiHider
@@ -82,12 +101,16 @@ local epicTS2
 local epicTS3
 local epicTS4
 local TSPlatform
+
+local epicILY
+local ILYPlatform
 --#endregion
 
 --#region EpicIntroUI
 local epicIntroUI
 local ShowInfoSlowdown = 0.25
 local ShowInfoSlowdownCounter
+local ShowInfoMinTime = 4
 local showRightEpicUIPos = 0.44
 local hideRightEpicUIPos = 1.53
 local showLeftEpicUIPos = -0.44
@@ -130,6 +153,7 @@ function Alive()
 
     InitTrojanHorseEpicIntro()
     InitTSEpicIntro()
+    InitILYEpicIntro()
     
 end
 
@@ -146,6 +170,12 @@ function Update()
         _G.activateEpicTS = false
     end
     if _G.TSEpicIntroState ~= 0 then RunTSEpicIntro() end
+
+    if _G.activateEpicILY then 
+        SetupILYEpicIntro()
+        _G.activateEpicILY = false
+    end
+    if _G.ILYEpicIntroState ~= 0 then RunILYEpicIntro() end
 
     --#region Test LookTowards
     -- local origin = Vec3.new()
@@ -181,12 +211,12 @@ function Update()
     --#endregion
 
     --#region Test ui hider
-    if (inputMapSys:GetButtonDown("nine")) then
-        HideUI()
-    end
-    if (inputMapSys:GetButtonDown("zero")) then
-        ShowUI()
-    end
+    -- if (inputMapSys:GetButtonDown("nine")) then
+    --     HideUI()
+    -- end
+    -- if (inputMapSys:GetButtonDown("zero")) then
+    --     ShowUI()
+    -- end
     --#endregion
 
     
@@ -272,12 +302,12 @@ function RunTrojanHorseEpicIntro()
         
     elseif _G.TrojanHorseEpicIntroState == 5 then -- ShowInfo
         -- print("state 5")
-        local speed = 5
         ShowInfoSlowdownCounter = ShowInfoSlowdownCounter + FPSManager.GetDT()
-
+        local minTimeReached = false
+        if ShowInfoSlowdownCounter > ShowInfoMinTime then minTimeReached = true end
         if (ShowInfoSlowdownCounter < ShowInfoSlowdown) then
             MoveEpicIntroUI(epicIntroUI, 4.3, true, true)
-        elseif not MoveEpicIntroUI(epicIntroUI, 0.01, true, true) then _G.TrojanHorseEpicIntroState = 6 end
+        elseif not MoveEpicIntroUI(epicIntroUI, 0.01, true, true) and minTimeReached then _G.TrojanHorseEpicIntroState = 6 end
 
         -- print("_G.TrojanHorseEpicIntroState == 5")
 
@@ -406,9 +436,11 @@ function RunTSEpicIntro()
         LookTowardsInterpolation(player, Helper.Vec3Minus(TSView1, Vec3.new(179,0,0)), 5.25)
     elseif _G.TSEpicIntroState == 11 then -- ShowInfo 
         ShowInfoSlowdownCounter = ShowInfoSlowdownCounter + FPSManager.GetDT()
+        local minTimeReached = false
+        if ShowInfoSlowdownCounter > ShowInfoMinTime then minTimeReached = true end
         if (ShowInfoSlowdownCounter < ShowInfoSlowdown) then
             MoveEpicIntroUI(epicIntroUI, 4.3, false, true)
-        elseif not MoveEpicIntroUI(epicIntroUI, 0.01, false, true) then _G.TSEpicIntroState = 12 end
+        elseif not MoveEpicIntroUI(epicIntroUI, 0.01, false, true) and minTimeReached then _G.TSEpicIntroState = 12 end
     elseif _G.TSEpicIntroState == 12 then -- Hideinfo
             if not MoveEpicIntroUI(epicIntroUI, 4, false, false) then _G.TSEpicIntroState = 13 end
     elseif _G.TSEpicIntroState == 13 then -- Zoom Out
@@ -420,81 +452,6 @@ function RunTSEpicIntro()
             AddScriptToTS()
         end
     end
-
-
-    -- if _G.TSEpicIntroState == 1 then -- MoveToStartPos
-    -- -- print("_G.TSEpicIntroState == 1")
-        
-    -- elseif _G.TSEpicIntroState == 2 then -- StartPosToLedge
-    --     -- print("_G.TSEpicIntroState == 2")
-    --     if not TSLedgeStopLooking then
-    --         TSLedgeStopLooking = not LookTowardsInterpolation(player, TSLedgeViewPosition, 200)
-    --     end
-        
-    --     if _G.aiSys:ConeOfSight(epicTS, player, 70, 40) then _G.TSEpicIntroState = 3 end
-    --     -- TODO
-    --     -- Use camera to phase to top of ledge position
-
-    -- elseif _G.TSEpicIntroState == 3 then -- LedgeToFloor
-    --     -- print("_G.TSEpicIntroState == 3")
-    --     --LookTowards(player, epicTS:GetTransform().mTranslate, 15)
-    --     TSdashStopTimerCount = TSdashStopTimerCount + FPSManager:GetDT()
-        
-    --     if TSFlyViewWait then
-    --         if TSdashStopTimerCount > TSFlyViewWaitTime then TSFlyViewWait = false end
-    --     elseif TSFlyViewPosition1Finish then
-    --         -- print("TSFlyViewPosition1")
-    --         if not LookTowardsInterpolation(player, TSFlyViewPosition1, 200) then TSFlyViewPosition1Finish = false end
-    --     elseif TSFlyViewPosition2Finish then
-    --         -- print("TSFlyViewPosition2")
-    --         if not LookTowardsInterpolation(player, TSFlyViewPosition2, 160) then TSFlyViewPosition2Finish = false end
-    --     elseif TSdashStopTimerCount > _G.TSdashStopTimer + TSs2Charge then
-    --         epicTS:GetAnimator():PauseAnimation()
-    --         TSdashStopTimerCount = 0
-    --         _G.TSEpicIntroState = 4
-    --     end
-    --     -- Use camera to phase to the floor position with horse on left side
-
-    -- elseif _G.TSEpicIntroState == 4 then -- FloorZoomIn
-    --     -- print("_G.TSEpicIntroState == 4")
-    --     if (not ZoomCamTo(player, TSZoomValue, 150)) then
-    --         _G.TSEpicIntroState = 5
-    --     end
-        
-    -- elseif _G.TSEpicIntroState == 5 then -- ShowInfo
-    --     -- print("state 5")
-    --     local speed = 5
-    --     ShowInfoSlowdownCounter = ShowInfoSlowdownCounter + FPSManager.GetDT()
-
-    --     if (ShowInfoSlowdownCounter < ShowInfoSlowdown) then
-    --         MoveEpicIntroUI(epicIntroUI, 4.5, true, true)
-    --     elseif not MoveEpicIntroUI(epicIntroUI, 0.01, true, true) then _G.TSEpicIntroState = 6 end
-        
-    --     -- print("_G.TSEpicIntroState == 5")
-
-    --     -- Push the TSInfo UI quickly into the screen
-    --     -- Then make it slowly move diagonally
-
-    --     -- Notes
-    --     -- When time's up, quickly retreat the info with same diagonality
-    -- elseif _G.TSEpicIntroState == 6 then -- HideInfo
-    --     -- print("state 6")
-    --     if not MoveEpicIntroUI(epicIntroUI, 4, true, false) then _G.TSEpicIntroState = 7 end
-    --     -- Retracts the TSInfo UI quickly
-    -- elseif _G.TSEpicIntroState == 7 then -- FloorZoomOut
-    --     -- print("state 7")
-    --     -- Zooms out quickly and
-    --     -- Retract the black borders
-
-    --     if (not ZoomCamTo(player, defaultZoom, 150)) then
-    --         _G.TSEpicIntroState = 0
-    --         _G.FreezePlayerControl = false
-    --         retractBlackBorder = true
-    --         ShowUI()
-    --     end
-
-    --     -- deactivate ActivateTS boolean
-    -- end
 end
 
 function AddScriptToTS()
@@ -514,6 +471,158 @@ function RemoveScriptsFromTS()
 end
 
 --#endregion
+
+--#region I Love You intro
+function InitILYEpicIntro()
+    ILYPlatform = _G.gameStateSys:GetEntity("ILYEpicTrigger")
+    epicILY = _G.gameStateSys:GetEntity("EpicILY")
+end
+
+function SetupILYEpicIntro() 
+    epicIntroUI = _G.gameStateSys:GetEntity("ILYEpicIntroInfoUI")
+    epicIntroUI:GetTransform().mTranslate.x = hideLeftEpicUIPos
+    _G.ILYEpicIntroState = 1
+    shotTriggerEffectTime = 2.33
+    shotWaitTime = shotTriggerEffectTime + 0.5
+    shotWaitTimeCounter = 0
+    _G.ILYShotAlready = false
+    ILYView1 = Vec3.new(129.5, -29, 0)
+    ILYView2 = Vec3.new(129.5, 0, 0)
+    ILYZoomValue = 5
+    GeneralSetup()
+end
+
+function RunILYEpicIntro()
+    -- print("_G.ILYEpicIntroState:")
+    -- print(_G.ILYEpicIntroState)
+    -- if _G.ILYEpicIntroState > 2 then 
+    --     epicILY3:GetTransform().mRotate.y = 90 
+    --     epicILY3:GetTransform().mTranslate = Vec3.new(13.7, -11, 32.4)
+    -- end
+
+    if _G.ILYShotAlready then
+        epicILY:GetTransform().mRotate = Vec3.new(0, 130.013, 0)
+    end 
+
+    if _G.ILYEpicIntroState == 1 then -- Move to start pos and dwactivate ILY
+        if not MoveTo(player, ILYPlatform:GetTransform().mTranslate, 100) then
+            _G.ILYEpicIntroState = 100 -- To keep ILY waiting
+            systemManager.ecs:SetDeleteEntity(ILYPlatform)
+            epicILY:GetScripts():AddScript(epicILY, "..\\assets\\Scripts\\EpicIntroILY.lua")
+        end
+    elseif _G.ILYEpicIntroState == 2 then -- Wait for ILY to shoot player (move to next state when shot by ILY), then wait abit more
+        LookTowardsInterpolation(player, ILYView2, 75)
+        shotWaitTimeCounter = shotWaitTimeCounter + FPSManager.GetDT()
+        if not _G.ILYShotAlready then
+            if shotWaitTimeCounter >shotTriggerEffectTime then 
+                _G.ILYShotAlready = true 
+                -- print("SHOTTED!!!")
+                _G.ILYBulletHitPlayer = true
+                _G.phySys:SetVelocity(epicILY, Vec3.new())
+                epicILY:GetAnimator():PauseAnimation()
+            end
+        elseif shotWaitTime < shotWaitTimeCounter then _G.ILYEpicIntroState = 3 end
+    elseif _G.ILYEpicIntroState == 3 then -- Rotate at normal speed to ILY (freeze ILY at the end)
+        if not LookTowardsInterpolation(player, ILYView1, 125) then 
+            _G.ILYEpicIntroState = 4
+        end
+    elseif _G.ILYEpicIntroState == 4 then -- Zoom into ILY
+        if not ZoomCamTo(player, ILYZoomValue, 100) then _G.ILYEpicIntroState = 5 end
+    elseif _G.ILYEpicIntroState == 5 then -- Show Info
+        -- ShowInfoSlowdownCounter = ShowInfoSlowdownCounter + FPSManager.GetDT()
+        -- if (ShowInfoSlowdownCounter < ShowInfoSlowdown) then
+        --     MoveEpicIntroUI(epicIntroUI, 4.3, false, true)
+        -- end
+        ShowInfoSlowdownCounter = ShowInfoSlowdownCounter + FPSManager.GetDT()
+        local minTimeReached = false
+        if ShowInfoSlowdownCounter > ShowInfoMinTime then minTimeReached = true end
+        if (ShowInfoSlowdownCounter < ShowInfoSlowdown) then
+            MoveEpicIntroUI(epicIntroUI, 4.35, false, true)
+        elseif not MoveEpicIntroUI(epicIntroUI, 0.01, false, true) and minTimeReached then _G.ILYEpicIntroState = 6 end
+    elseif _G.ILYEpicIntroState == 6 then -- Hide Info
+        if not MoveEpicIntroUI(epicIntroUI, 4, false, false) then _G.ILYEpicIntroState = 7 end
+    elseif _G.ILYEpicIntroState == 7 then -- Zoom out and resume game
+        if (not ZoomCamTo(player, defaultZoom, 100)) then
+            _G.ILYEpicIntroState = 0
+            _G.FreezePlayerControl = false
+            retractBlackBorder = true
+            epicILY:GetAnimator():UnpauseAnimation()
+            ShowUI()
+        end
+    end
+
+    -- if _G.ILYEpicIntroState == 1 then -- Move to start pos
+    --     if not MoveTo(player, ILYPlatform:GetTransform().mTranslate, 100) then
+    --         -- print("finish moving")
+    --         -- Finished moving
+    --         _G.ILYEpicIntroState = 2
+    --         systemManager.ecs:SetDeleteEntity(ILYPlatform)
+    --         AddScriptToILY()
+    --     end
+    -- elseif _G.ILYEpicIntroState == 2 then -- Wait for trojan soldiers to come out
+    --     ILYWaitCounter = ILYWaitCounter + FPSManager.GetDT()
+    --     if ILYWaitCounter > ILYWaitTime then
+    --         RemoveScriptsFromILY()
+    --         _G.ILYEpicIntroState = 3 
+    --     end
+    -- elseif _G.ILYEpicIntroState == 3 then -- Quick Look & ZoomCamTo at solder 1
+    --     if not ILYZoom1Done then ILYZoom1Done = not LookTowardsInterpolation(player, ILYView4, 150) end
+    --     if not ILYLook1Done then ILYLook1Done = not ZoomCamTo(player, ILYZoomValue, 125) end
+    --     if ILYLook1Done and ILYZoom1Done then _G.ILYEpicIntroState = 4 end
+    -- elseif _G.ILYEpicIntroState == 4 then -- Slow panning to right 
+    --     ILYPanningCounter = ILYPanningCounter + FPSManager.GetDT()
+    --     if (ILYPanningCounter > ILYPanningTime) then
+    --         ILYPanningCounter = 0
+    --         _G.ILYEpicIntroState = 5
+    --     end
+    --     LookTowardsInterpolation(player, Helper.Vec3Minus(ILYView4, Vec3.new(179,0,0)), 5.25)
+    -- elseif _G.ILYEpicIntroState == 5 then -- Quick Look at solder 2 
+    --     if not LookTowardsInterpolation(player, ILYView3, 150) then _G.ILYEpicIntroState = 6 end
+    -- elseif _G.ILYEpicIntroState == 6 then -- Slow panning to right 
+    --     ILYPanningCounter = ILYPanningCounter + FPSManager.GetDT()
+    --     if (ILYPanningCounter > ILYPanningTime) then
+    --         ILYPanningCounter = 0
+    --         _G.ILYEpicIntroState = 7
+    --     end
+    --     LookTowardsInterpolation(player, Helper.Vec3Minus(ILYView3, Vec3.new(179,0,0)), 5.25)
+    -- elseif _G.ILYEpicIntroState == 7 then -- Quick Look at solder 3 
+    --     if not LookTowardsInterpolation(player, ILYView2, 150) then _G.ILYEpicIntroState = 8 end
+    -- elseif _G.ILYEpicIntroState == 8 then -- Slow panning to right 
+    --     ILYPanningCounter = ILYPanningCounter + FPSManager.GetDT()
+    --     if (ILYPanningCounter > ILYPanningTime) then
+    --         ILYPanningCounter = 0
+    --         _G.ILYEpicIntroState = 9
+    --     end
+    --     LookTowardsInterpolation(player, Helper.Vec3Minus(ILYView2, Vec3.new(179,0,0)), 5.25)
+    -- elseif _G.ILYEpicIntroState == 9 then -- Quick Look at solder 4 
+    --     if not LookTowardsInterpolation(player, ILYView1, 150) then _G.ILYEpicIntroState = 10 end
+    -- elseif _G.ILYEpicIntroState == 10 then -- Slow panning to right
+    --     ILYPanningCounter = ILYPanningCounter + FPSManager.GetDT()
+    --     if (ILYPanningCounter > ILYPanningTime) then
+    --         ILYPanningCounter = 0
+    --         _G.ILYEpicIntroState = 11
+    --     end 
+    --     LookTowardsInterpolation(player, Helper.Vec3Minus(ILYView1, Vec3.new(179,0,0)), 5.25)
+    -- elseif _G.ILYEpicIntroState == 11 then -- ShowInfo 
+    --     ShowInfoSlowdownCounter = ShowInfoSlowdownCounter + FPSManager.GetDT()
+    --     if (ShowInfoSlowdownCounter < ShowInfoSlowdown) then
+    --         MoveEpicIntroUI(epicIntroUI, 4.3, false, true)
+    --     elseif not MoveEpicIntroUI(epicIntroUI, 0.01, false, true) then _G.ILYEpicIntroState = 12 end
+    -- elseif _G.ILYEpicIntroState == 12 then -- Hideinfo
+    --         if not MoveEpicIntroUI(epicIntroUI, 4, false, false) then _G.ILYEpicIntroState = 13 end
+    -- elseif _G.ILYEpicIntroState == 13 then -- Zoom Out
+    --     if (not ZoomCamTo(player, defaultZoom, 150)) then
+    --         _G.ILYEpicIntroState = 0
+    --         _G.FreezePlayerControl = false
+    --         retractBlackBorder = true
+    --         ShowUI()
+    --         AddScriptToILY()
+    --     end
+    -- end
+end
+
+--#endregion
+
 
 ----------------------------------------------------------------------------
 ----------------------------------------------------------------------------

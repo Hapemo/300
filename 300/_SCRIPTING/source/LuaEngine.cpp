@@ -204,7 +204,9 @@ void LuaAnimator()
         "Animator", sol::constructors<>(),
         "PauseAnimation", &Animator::PauseAnimation,
         "UnpauseAnimation", &Animator::UnpauseAnimation,
-        "IsEndOfAnimation", &Animator::IsEndOfAnimation);
+        "IsEndOfAnimation", &Animator::IsEndOfAnimation,
+        "SetFrame", &Animator::SetFrame,
+        "GetFrame", &Animator::GetFrame);
 }
 
 void LuaRigidBody()

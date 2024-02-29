@@ -40,16 +40,21 @@ function Alive()
     bobbleFrequency = 1
     bobbleIntensity = 0.5
 
-    ShotSpeed = 10
+    ShotSpeed = 40
 
     state = ""
     deathTimerCount = 0
 end
 
 function Update()
+    if _G.ILYEpicIntroState >= 2 and _G.ILYEpicIntroState < 100 and _G.ILYShotAlready then return end
     targetPos = this:GetAISetting():GetTarget():GetTransform().mTranslate
     thisPos = this:GetTransform().mTranslate
     inLineOfSight = aiSys:LineOfSight(this, this:GetAISetting():GetTarget())
+
+    if inLineOfSight and _G.ILYEpicIntroState == 100 then
+        _G.ILYEpicIntroState = 2
+    end
 
     if inLineOfSight and not (state == "ATTACK") then
         -- if (state == "ATTACK")
@@ -174,6 +179,7 @@ function ILOVEYOUAttack()
 end
 
 function ATTACKinit()
+    print("ILY attack init")
     state = "ATTACK"
     this:GetMeshRenderer():SetMesh("ILY_attack", this) -- Change back to attack animation
     AttackTimer = 0
@@ -197,7 +203,10 @@ function Shoot()
     -- phySys:SetVelocity(bullet, bulletVec)
     -- aiSys:SetPredictiveVelocity(bullet, this:GetAISetting():GetTarget(), ShotSpeed)
     aiSys:PredictiveShootPlayer(bullet, ShotSpeed, 30, 50)
-    this:GetAnimator():SetFrame(42.06919)
+    if ShotSpeed > 10 then ShotSpeed = 10 end
+    -- this:GetAnimator():SetFrame(41)
+    this:GetAnimator():SetFrame(42)
+
 end
 
 -- this function is ran when health just reached 0
