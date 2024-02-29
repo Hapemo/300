@@ -49,6 +49,7 @@ layout (std430, binding = 7) buffer indexBuffer
 // -- Helper Functions --
 void MakeParticle(out Particle p, ParticleEmitter e);
 void InitVectors(vec3 position);
+float Rand(vec3 co);
 
 // -- Global Variables -- 
 vec3 rightVector;
@@ -66,7 +67,8 @@ void main()
 	// Retrieve Emitter from buffer
 	ParticleEmitter emitter = emitters[emitterIndex];
 	int particleCount = int(emitter.mSizeLifetimeCount.w);
-	InitVectors(emitter.mPositionSpeed.xyz);
+	
+	 InitVectors(emitter.mPositionSpeed.xyz);
 
 	int threadIndex = int(gl_LocalInvocationID.y * gl_WorkGroupSize.x + gl_LocalInvocationID.x);
 	if (threadIndex < particleCount)
@@ -87,6 +89,7 @@ void MakeParticle(out Particle p, ParticleEmitter e)
 {
 	// Position, Speed
 	p.mPositionSpeed = e.mPositionSpeed;
+	p.mPositionSpeed.w *= Rand(vec3(gl_GlobalInvocationID.xyz));
 
 	// Color
 	p.mStartColor = e.mStartColor;
@@ -99,16 +102,38 @@ void MakeParticle(out Particle p, ParticleEmitter e)
 	p.mSizeLife.w = e.mSizeLifetimeCount.z;		// life time
 
 	// Random velocity with pseudorandom noise function, with thread index as seed
-	p.mVelocity.xyz = noise3(int(gl_LocalInvocationID.y * gl_WorkGroupSize.x + gl_LocalInvocationID.x));
-	p.mVelocity.xyz = normalize(p.mVelocity.x * rightVector + p.mVelocity.y * upVector);	// Make velocity be outwards perpendicular to camera's view							
-
+	p.mVelocity.xyz = Rand(vec3(gl_GlobalInvocationID.xyz)) * rightVector + Rand(vec3(gl_GlobalInvocationID.yxz)) * upVector;	// Make velocity be outwards perpendicular to camera's view
+	p.mVelocity.xyz = normalize(p.mVelocity.xyz);
 	// Texture handle
 	//p.mTexture = e.mTexture;
 }
 
 void InitVectors(vec3 position)
 {
-	forwardVector = uCamPos - position;
-	rightVector = cross(forwardVector, vec3(0, 1, 0));
-	upVector = cross(rightVector, forwardVector);
+	forwardVector = normalize(uCamPos - position);
+	rightVector = normalize(cross(forwardVector, vec3(0, 1, 0)));
+	upVector = normalize(cross(rightVector, forwardVector));
+}
+
+float hash(float n)
+{
+	return fract(sin(n) * 43758.5453);
+}
+
+float Rand(vec3 x)
+{
+	// The noise function returns a value in the range -1.0f -> 1.0f
+
+	vec3 p = floor(x);
+	vec3 f = fract(x);
+
+	f = f * f * (3.0 - 2.0 * f);
+	float n = p.x + p.y * 57.0 + 113.0 * p.z;
+
+	float num =  mix(mix(mix(hash(n + 0.0), hash(n + 1.0), f.x),
+		mix(hash(n + 57.0), hash(n + 58.0), f.x), f.y),
+		mix(mix(hash(n + 113.0), hash(n + 114.0), f.x),
+			mix(hash(n + 170.0), hash(n + 171.0), f.x), f.y), f.z);
+
+	return num - 0.5;
 }

@@ -2022,8 +2022,8 @@ void GraphicsSystem::ProcessEmitterAndParticle(vec3 const& camPos, float dt)
 
 void GraphicsSystem::UpdateEmitters(vec3 const& camPos)
 {
-	if (m_Emitters.empty())
-		return;
+	//if (m_Emitters.empty())
+	//	return;
 
 	int emitterCount = m_Emitters.size();
 
@@ -2057,7 +2057,7 @@ void GraphicsSystem::UpdateParticles(vec3 const& camPos, float dt)
 
 	glUniform1f(m_ComputeParticleDeltaTimeLocation, dt);
 	glUniform1i(m_ComputeParticleCountLocation, MAX_PARTICLES);
-	glUniform3fv(m_ComputeEmitterCamPosLocation, 1, &camPos[0]);
+	glUniform3fv(m_ComputeParticleCamPosLocation, 1, &camPos[0]);
 
 	glDispatchCompute(num_group_x, num_group_y, 1);
 	// make sure writing to image is done before reading

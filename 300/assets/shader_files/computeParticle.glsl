@@ -65,10 +65,10 @@ void UpdateParticle(inout Particle p, int index)
 	{
 		float factor = 1 - (lifeLeft / maxLife);
 
-		p.mCurrColor = mix(p.mStartColor, p.mEndColor, factor);			// Color
-		p.mPositionSpeed.xyz += p.mVelocity.xyz * p.mPositionSpeed.w;	// Position
-		float size = mix(p.mSizeLife.x, p.mSizeLife.y, factor);			// Size
-		p.mSizeLife.z -= uDeltaTime;									// Life left
+		p.mCurrColor = mix(p.mStartColor, p.mEndColor, factor);						// Color
+		p.mPositionSpeed.xyz += p.mVelocity.xyz * p.mPositionSpeed.w * uDeltaTime;	// Position
+		float size = mix(p.mSizeLife.x, p.mSizeLife.y, factor);						// Size
+		p.mSizeLife.z -= uDeltaTime;												// Life left
 
 		InitVectors(p.mPositionSpeed.xyz);
 
@@ -99,7 +99,7 @@ void UpdateParticle(inout Particle p, int index)
 
 void InitVectors(vec3 position)
 {
-	forwardVector = uCamPos - position;
-	rightVector = cross(forwardVector, vec3(0, 1, 0));
-	upVector = cross(rightVector, forwardVector);
+	forwardVector = normalize(uCamPos - position);
+	rightVector = normalize(cross(forwardVector, vec3(0, 1, 0)));
+	upVector = normalize(cross(rightVector, forwardVector));
 }
