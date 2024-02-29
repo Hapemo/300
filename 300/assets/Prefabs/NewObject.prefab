@@ -1,5 +1,5 @@
 {
-    "entityid": 2,
+    "entityid": 2097312,
     "general": {
         "name": "NewObject",
         "tagid": 0,
@@ -23,53 +23,6 @@
             "y": 0.0,
             "z": 0.0
         }
-    },
-    "rigidbody": {
-        "density": 10.0,
-        "material": 1,
-        "motion": 0,
-        "velocity": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
-        },
-        "rotationconstraints": {
-            "x": false,
-            "y": false,
-            "z": false
-        }
-    },
-    "scripts": {
-        "scriptscontainer": [
-            {
-                "scriptFile": "../assets/Scripts/CollideTest.lua",
-                "variables": [
-                    {
-                        "key": "test",
-                        "val": {
-                            "type": 694561268,
-                            "value": 53.04999923706055
-                        }
-                    }
-                ]
-            },
-            {
-                "scriptFile": "../assets/Scripts/Fly.lua",
-                "variables": []
-            },
-            {
-                "scriptFile": "../assets/Scripts/Print.lua",
-                "variables": [
-                    {
-                        "key": "tester",
-                        "val": {
-                            "type": 694561268,
-                            "value": 10.0
-                        }
-                    }
-                ]
-            }
-        ]
     },
     "prefab": {
         "prefab": "NewObject"

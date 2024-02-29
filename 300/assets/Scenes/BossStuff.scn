@@ -1,0 +1,67 @@
+[
+    {
+        "entityid": 3145826,
+        "general": {
+            "name": "Boss",
+            "tagid": 1,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 10.0,
+                "y": 10.0,
+                "z": 10.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 90.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 8.740693092346191
+            }
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 2588,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "castShadow": true,
+            "materialinstance": [
+                "../assets/Compressed/Melissa_BaseColor.ctexture",
+                "../assets/Compressed/Melissa_Metallic.ctexture",
+                " ",
+                " ",
+                "../assets/Compressed/Melissa_Emissive.ctexture",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/Melissa.geom",
+            "texturerefid": [
+                1322168031,
+                2908106086,
+                0,
+                0,
+                2759371044,
+                0
+            ]
+        },
+        "meshcollider": {
+            "ismeshcollider": true
+        }
+    }
+]

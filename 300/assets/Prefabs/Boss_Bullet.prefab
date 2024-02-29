@@ -1,0 +1,73 @@
+{
+    "entityid": 4194393,
+    "general": {
+        "name": "Boss_Bullet",
+        "tagid": 2,
+        "subtag": 0,
+        "isActive": true,
+        "isPaused": false
+    },
+    "transform": {
+        "scale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+        },
+        "rotate": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "translate": {
+            "x": 2.9489998817443848,
+            "y": -0.13300000131130219,
+            "z": 25.379840850830078
+        }
+    },
+    "meshrenderer": {
+        "vert": "../assets/shader_files/pointLight_vert.glsl",
+        "frag": "../assets/shader_files/pointLight_frag.glsl",
+        "meshrefid": 3400,
+        "instancecolor": {
+            "x": 0.9622641801834106,
+            "y": 0.9622641801834106,
+            "z": 0.9622641801834106,
+            "w": 1.0
+        },
+        "bloomthreshold": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+        },
+        "castShadow": true,
+        "materialinstance": [
+            "../assets/Compressed/cube_diffuse.ctexture",
+            " ",
+            " ",
+            " ",
+            " ",
+            " "
+        ],
+        "mesh": "../assets/compiled_geom/Particle_Sphere.geom",
+        "texturerefid": [
+            1061543176,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
+    },
+    "scripts": {
+        "scriptscontainer": [
+            {
+                "scriptFile": "../assets/Scripts/SphereParticle.lua",
+                "variables": []
+            }
+        ]
+    },
+    "prefab": {
+        "prefab": "Boss_Bullet"
+    }
+}
