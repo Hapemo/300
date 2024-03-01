@@ -105,7 +105,7 @@ void PathfinderWindow::update() {
   else {
     ImGui::DragFloat3("##CurrentSelectedPoint", (float*)&mLatestPoint.GetComponent<Transform>().mTranslate, 0.1f);
     if (ImGui::Button("Duplicate Point") || (Input::CheckKey(HOLD, LEFT_ALT) && Input::CheckKey(PRESS, Q))) {
-      pfSys->AddPoint(mLatestPoint.GetComponent<Transform>().mTranslate + glm::vec3{0,0,0.01});
+      pfSys->AddPoint(mLatestPoint.GetComponent<Transform>().mTranslate + glm::vec3{0,0.5,0.01});
     }
   }
   ImGui::Separator();

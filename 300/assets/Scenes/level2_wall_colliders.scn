@@ -1,68 +1,6 @@
 [
     {
-        "entityid": 3145753,
-        "general": {
-            "name": "Level2WallCollider",
-            "tagid": 4,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 4.099999904632568,
-                "y": 29.999088287353516,
-                "z": 100.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 90.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -5.091806411743164,
-                "y": 56.62340545654297,
-                "z": 75.48141479492188
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 0,
-            "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": true,
-                "y": true,
-                "z": false
-            },
-            "gravity": true
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "translateoffset": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "istrigger": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Level2WallCollider"
-        }
-    },
-    {
-        "entityid": 3145754,
+        "entityid": 2097158,
         "general": {
             "name": "Level2WallCollider",
             "tagid": 4,
@@ -124,7 +62,7 @@
         }
     },
     {
-        "entityid": 3145758,
+        "entityid": 2097164,
         "general": {
             "name": "Level2WallCollider",
             "tagid": 4,
@@ -135,7 +73,7 @@
         "transform": {
             "scale": {
                 "x": 4.099999904632568,
-                "y": 29.999889373779297,
+                "y": 29.999088287353516,
                 "z": 100.0
             },
             "rotate": {
@@ -144,9 +82,9 @@
                 "z": 0.0
             },
             "translate": {
-                "x": -4.805807113647461,
-                "y": 56.944217681884766,
-                "z": -26.843889236450195
+                "x": -5.091806411743164,
+                "y": 56.62340545654297,
+                "z": 75.48141479492188
             }
         },
         "rigidbody": {
@@ -186,7 +124,7 @@
         }
     },
     {
-        "entityid": 3145759,
+        "entityid": 7340077,
         "general": {
             "name": "Level2WallCollider",
             "tagid": 4,
@@ -209,6 +147,68 @@
                 "x": 45.90371322631836,
                 "y": 57.0,
                 "z": 24.944913864135742
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": true,
+                "z": false
+            },
+            "gravity": true
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Level2WallCollider"
+        }
+    },
+    {
+        "entityid": 7340086,
+        "general": {
+            "name": "Level2WallCollider",
+            "tagid": 4,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 4.099999904632568,
+                "y": 29.999889373779297,
+                "z": 100.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 90.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -4.805807113647461,
+                "y": 56.944217681884766,
+                "z": -26.843889236450195
             }
         },
         "rigidbody": {
