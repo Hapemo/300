@@ -104,8 +104,10 @@ function Update()
         --  sphere_bullet = systemManager.ecs:NewEntityFromPrefab("Boss_Bullet", bulletSpawnPosition)
         --  once = true
         -- end
-
-        SpawnBulletsPattern1(1)
+        if once == false then 
+           SpawnBulletsPattern1(10)
+           once = true
+        end
 
         -- original_scale =  sphere_bullet :GetTransform().mScale 
         -- sphere_bullet:GetTransform().mScale.x = original_scale.x / 3
@@ -152,9 +154,11 @@ function RotateVectorAroundYAxis(vector, angle)
 
     vector.x = rotatedX 
     vector.z = rotatedZ
+    print("ROTATED X: " , vector.x)
+    print("ROTATED Z: " , vector.z)
 end
 
-
+-- Circular AOE 
 function SpawnBulletsPattern1(number_of_bullets)
     local angleStep = 360 / number_of_bullets
     local angle = 0
@@ -165,14 +169,22 @@ function SpawnBulletsPattern1(number_of_bullets)
 
     for i = 0 , number_of_bullets do 
 
-        bulletDirection = Vec3.new()
+        bulletDirection = Vec3.new(1,0,0)
+        bulletSpeed = 5
         -- Caluclate direction vector in 3D space
-        bulletDirection = RotateVectorAroundYAxis(forward, angle) -- Testing
+        RotateVectorAroundYAxis(bulletDirection, angle) -- Testing
         print("X: " , bulletDirection.x , " Y: " , bulletDirection.y , " Z: ", bulletDirection.z)
         sphere_bullet = systemManager.ecs:NewEntityFromPrefab("Boss_Bullet", bulletSpawnPosition)
+
+        -- Applying speed to vector
+        bulletDirection.x = bulletDirection.x * bulletSpeed 
+        bulletDirection.y = bulletDirection.y * bulletSpeed 
+        bulletDirection.z = bulletDirection.z * bulletSpeed 
+
+
+        physicsSys:SetVelocity(sphere_bullet, bulletDirection)
         
-        
-        -- physicsSys:SetVelocity(sphere_bullet, bulletDirection)
+        angle = angle + angleStep
         
     end
 

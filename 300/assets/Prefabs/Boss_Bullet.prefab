@@ -1,5 +1,5 @@
 {
-    "entityid": 38797383,
+    "entityid": 11534339,
     "general": {
         "name": "Boss_Bullet",
         "tagid": 1,
@@ -19,10 +19,26 @@
             "z": 0.0
         },
         "translate": {
-            "x": 2.4079999923706055,
-            "y": 5.800000190734863,
-            "z": 8.687999725341797
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
         }
+    },
+    "rigidbody": {
+        "density": 10.0,
+        "material": 1,
+        "motion": 1,
+        "velocity": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "rotationconstraints": {
+            "x": false,
+            "y": false,
+            "z": false
+        },
+        "gravity": false
     },
     "meshrenderer": {
         "vert": "../assets/shader_files/pointLight_vert.glsl",
@@ -58,6 +74,9 @@
             0,
             0
         ]
+    },
+    "scripts": {
+        "scriptscontainer": []
     },
     "prefab": {
         "prefab": "Boss_Bullet"
