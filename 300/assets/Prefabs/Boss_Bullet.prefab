@@ -1,5 +1,5 @@
 {
-    "entityid": 11534339,
+    "entityid": 9437272,
     "general": {
         "name": "Boss_Bullet",
         "tagid": 1,
@@ -14,14 +14,14 @@
             "z": 1.0
         },
         "rotate": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
+            "x": 0.054831139743328094,
+            "y": -0.0,
+            "z": 3.1415927410125732
         },
         "translate": {
-            "x": 0.0,
+            "x": 27.506420135498047,
             "y": 0.0,
-            "z": 0.0
+            "z": -11.243980407714844
         }
     },
     "rigidbody": {
@@ -29,9 +29,9 @@
         "material": 1,
         "motion": 1,
         "velocity": {
-            "x": 0.0,
+            "x": 4.0450849533081055,
             "y": 0.0,
-            "z": 0.0
+            "z": -2.9389262199401855
         },
         "rotationconstraints": {
             "x": false,
@@ -76,7 +76,12 @@
         ]
     },
     "scripts": {
-        "scriptscontainer": []
+        "scriptscontainer": [
+            {
+                "scriptFile": "../assets/Scripts/BossBullet.lua",
+                "variables": []
+            }
+        ]
     },
     "prefab": {
         "prefab": "Boss_Bullet"
