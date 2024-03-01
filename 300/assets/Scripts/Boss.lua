@@ -12,8 +12,14 @@ local currentBossStateTimer = 0
 local maxBossStateTimer = 3
 
 -- Phase 3 : Bullethell Phase
+local bossPosition = Vec3.new()
 local bulletSpawnPosition = Vec3.new()
-
+local bulletProjectileType = 0 -- Used to determine which kind of projectile the enemy uses
+local fire_rate = 0.5
+local fire_timer = 0
+local next_fire_time = 1.0
+-- Bullet Hell #1 - Circular Pulse
+local angles_to_spawn_from = {0, 45 , 90 , 135 , 180}
 -- Boss states
 local state = 0
 local state_checker = {false, false ,false}
@@ -22,16 +28,20 @@ local once = false
 -- 2. Ground slam: Boss swings arms and slams the ground, spawning a ground slam area that damages player
 -- 3. Shoot projectiles
 
+
 function Alive()
     this = Helper.GetScriptEntity(script_entity.id)
     -- Testing (Bullet Spawn Position)
-    bulletSpawnPosition = this:GetTransform().mTranslate
+    bossPosition = this:GetTransform().mTranslate
+    bulletSpawnPosition.x = bossPosition.x
+    bulletSpawnPosition.y = bossPosition.y
+    bulletSpawnPosition.z = bossPosition.z
     physicsSys = systemManager:mPhysicsSystem()
 end
 
 function Update()
 
-    print("CURRENT STATE: " , state)
+    -- print("CURRENT STATE: " , state)
 
     -- print("PHASE 1 BOOL: " , state_checker[1])
     
@@ -96,24 +106,35 @@ function Update()
     end
 
     if state == 3 and state_checker[3] == false then
+        
+        -- bulletProjectileType = math.random (1, 3)
+
         -- Bullet Types (Phases)
         -- 1. Bullet Hell (no homing) -> maybe add 2 variations to start
         -- 2. Homing Bullets (but dodgeable)
 
-        -- if once == false then 
-        --  sphere_bullet = systemManager.ecs:NewEntityFromPrefab("Boss_Bullet", bulletSpawnPosition)
-        --  once = true
-        -- end
-        if once == false then 
-           SpawnBulletsPattern1(10)
-           once = true
+        
+        -- [Bullet Hell #1 : Pulsing Circles]
+        -- (a) State 1 : Normal Circles but pulsing in different directions & angles. 
+        --     - Make it easier at the start 
+        fire_timer = fire_timer +  FPSManager.GetDT()
+        print("FIRE TIMER: " , fire_timer)
+
+        if fire_timer > next_fire_time then 
+            fire_timer = 0 -- reset timer
+            SpawnBulletsPattern1(10)
         end
+
+        -- if once == false then 
+        --    SpawnBulletsPattern1(10)
+        --    once = true
+        -- end
 
         -- original_scale =  sphere_bullet :GetTransform().mScale 
         -- sphere_bullet:GetTransform().mScale.x = original_scale.x / 3
         -- sphere_bullet:GetTransform().mScale.y = original_scale.y / 3
         -- sphere_bullet:GetTransform().mScale.z = original_scale.z / 3
-        print("SPAWNING BULLETS")
+        -- print("SPAWNING BULLETS")
     end
 
 end
@@ -154,14 +175,20 @@ function RotateVectorAroundYAxis(vector, angle)
 
     vector.x = rotatedX 
     vector.z = rotatedZ
-    print("ROTATED X: " , vector.x)
-    print("ROTATED Z: " , vector.z)
+    -- print("ROTATED X: " , vector.x)
+    -- print("ROTATED Z: " , vector.z)
 end
 
 -- Circular AOE 
 function SpawnBulletsPattern1(number_of_bullets)
+
     local angleStep = 360 / number_of_bullets
-    local angle = 0
+    -- Add some randomnization
+    local random_index = math.random(1,5)
+    local angle = angles_to_spawn_from[random_index]
+    print("ANGLE: " , angle)
+
+    -- local angle = 0
 
     local forward = Vec3.new(0,0,1)
 
@@ -173,14 +200,14 @@ function SpawnBulletsPattern1(number_of_bullets)
         bulletSpeed = 5
         -- Caluclate direction vector in 3D space
         RotateVectorAroundYAxis(bulletDirection, angle) -- Testing
-        print("X: " , bulletDirection.x , " Y: " , bulletDirection.y , " Z: ", bulletDirection.z)
+        -- print("X: " , bulletDirection.x , " Y: " , bulletDirection.y , " Z: ", bulletDirection.z)
         sphere_bullet = systemManager.ecs:NewEntityFromPrefab("Boss_Bullet", bulletSpawnPosition)
+        print("Spawning at: " , bulletSpawnPosition.x , ", " , bulletSpawnPosition.y , ", " , bulletSpawnPosition.z)
 
         -- Applying speed to vector
         bulletDirection.x = bulletDirection.x * bulletSpeed 
         bulletDirection.y = bulletDirection.y * bulletSpeed 
         bulletDirection.z = bulletDirection.z * bulletSpeed 
-
 
         physicsSys:SetVelocity(sphere_bullet, bulletDirection)
         
