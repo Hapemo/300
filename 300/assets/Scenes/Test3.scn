@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 3145885,
+        "entityid": 4194404,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -70,7 +70,7 @@
         },
         "children": {
             "numchildren": 1,
-            "firstchild": 4194392
+            "firstchild": 31457338
         },
         "audio": {
             "filepath": "../assets\\Audio",
@@ -94,8 +94,8 @@
                 "z": 26.797000885009766
             },
             "size": {
-                "x": 1863,
-                "y": 856
+                "x": 1223,
+                "y": 587
             },
             "near": 0.10000000149011612,
             "far": 900.0
@@ -126,9 +126,9 @@
         }
     },
     {
-        "entityid": 4194392,
+        "entityid": 4194405,
         "general": {
-            "name": "gun",
+            "name": "Skybox",
             "tagid": 0,
             "subtag": 0,
             "isActive": true,
@@ -136,64 +136,59 @@
         },
         "transform": {
             "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 0.25
+                "x": 500.0,
+                "y": 500.0,
+                "z": 500.0
             },
             "rotate": {
                 "x": 0.0,
-                "y": -75.0,
+                "y": 0.0,
                 "z": 0.0
             },
             "translate": {
-                "x": 0.5,
-                "y": -0.6499999761581421,
-                "z": -0.5471169948577881
+                "x": 0.0,
+                "y": -20.668514251708984,
+                "z": -47.40319061279297
             }
         },
         "meshrenderer": {
             "vert": "../assets/shader_files/pointLight_vert.glsl",
             "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 2168,
+            "meshrefid": 2510,
             "instancecolor": {
-                "x": 0.5,
-                "y": 0.5,
-                "z": 0.5,
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
                 "w": 1.0
             },
             "bloomthreshold": {
-                "x": 0.25,
-                "y": 0.25,
-                "z": 0.25,
+                "x": 0.20000000298023224,
+                "y": 0.20999999344348907,
+                "z": 0.1599999964237213,
                 "w": 1.0
             },
             "castShadow": true,
             "materialinstance": [
-                "../assets/Compressed/Gun_Base_Color.ctexture",
-                "../assets/Compressed/Gun_Normal.ctexture",
-                "../assets/Compressed/Gun_Metallic.ctexture",
-                "../assets/Compressed/Gun_Roughness.ctexture",
-                " ",
-                " "
+                "../assets/Compressed/Environment_Skybox_BaseColor.ctexture",
+                "../assets/Compressed/Environment_Skybox_Normal.ctexture",
+                "../assets/Compressed/Environment_Skybox_Metallic.ctexture",
+                "../assets/Compressed/Environment_Skybox_Roughness.ctexture",
+                "../assets/Compressed/Environment_Skybox_BaseColor.ctexture",
+                "../assets/Compressed/Environment_Skybox_AO.ctexture"
             ],
-            "mesh": "../assets/compiled_geom/Gun.geom",
+            "mesh": "../assets/compiled_geom/Skybox.geom",
             "texturerefid": [
-                561120090,
-                236381020,
-                3720350570,
-                2134634497,
-                0,
-                0
+                437536649,
+                3522280818,
+                1686346496,
+                1590588887,
+                5760,
+                1467793003
             ]
-        },
-        "parent": {
-            "prevsibling": 4194392,
-            "nextsibling": 4194392,
-            "parent": 3145885
         }
     },
     {
-        "entityid": 4194393,
+        "entityid": 4194406,
         "general": {
             "name": "Level2FBX",
             "tagid": 0,
@@ -274,9 +269,9 @@
         }
     },
     {
-        "entityid": 4194394,
+        "entityid": 31457338,
         "general": {
-            "name": "Skybox",
+            "name": "gun",
             "tagid": 0,
             "subtag": 0,
             "isActive": true,
@@ -284,90 +279,60 @@
         },
         "transform": {
             "scale": {
-                "x": 500.0,
-                "y": 500.0,
-                "z": 500.0
+                "x": 1.0,
+                "y": 1.0,
+                "z": 0.25
             },
             "rotate": {
                 "x": 0.0,
-                "y": 0.0,
+                "y": -75.0,
                 "z": 0.0
             },
             "translate": {
-                "x": 0.0,
-                "y": -20.668514251708984,
-                "z": -47.40319061279297
+                "x": 0.5,
+                "y": -0.6499999761581421,
+                "z": -0.5471169948577881
             }
         },
         "meshrenderer": {
             "vert": "../assets/shader_files/pointLight_vert.glsl",
             "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 2510,
+            "meshrefid": 2168,
             "instancecolor": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
+                "x": 0.5,
+                "y": 0.5,
+                "z": 0.5,
                 "w": 1.0
             },
             "bloomthreshold": {
-                "x": 0.20000000298023224,
-                "y": 0.20999999344348907,
-                "z": 0.1599999964237213,
+                "x": 0.25,
+                "y": 0.25,
+                "z": 0.25,
                 "w": 1.0
             },
             "castShadow": true,
             "materialinstance": [
-                "../assets/Compressed/Environment_Skybox_BaseColor.ctexture",
-                "../assets/Compressed/Environment_Skybox_Normal.ctexture",
-                "../assets/Compressed/Environment_Skybox_Metallic.ctexture",
-                "../assets/Compressed/Environment_Skybox_Roughness.ctexture",
-                "../assets/Compressed/Environment_Skybox_BaseColor.ctexture",
-                "../assets/Compressed/Environment_Skybox_AO.ctexture"
+                "../assets/Compressed/Gun_Base_Color.ctexture",
+                "../assets/Compressed/Gun_Normal.ctexture",
+                "../assets/Compressed/Gun_Metallic.ctexture",
+                "../assets/Compressed/Gun_Roughness.ctexture",
+                " ",
+                " "
             ],
-            "mesh": "../assets/compiled_geom/Skybox.geom",
+            "mesh": "../assets/compiled_geom/Gun.geom",
             "texturerefid": [
-                437536649,
-                3522280818,
-                1686346496,
-                1590588887,
-                5760,
-                1467793003
+                561120090,
+                236381020,
+                3720350570,
+                2134634497,
+                0,
+                0
             ]
-        }
-    },
-    {
-        "entityid": 4194464,
-        "general": {
-            "name": "Boss",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
         },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": -5.259112358093262
-            }
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/Boss.lua",
-                    "variables": []
-                }
-            ]
+        "parent": {
+            "prevsibling": 31457338,
+            "nextsibling": 31457338,
+            "parent": 4194404
         }
     }
 ]

@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 3145826,
+        "entityid": 39845959,
         "general": {
             "name": "Boss",
             "tagid": 1,
@@ -62,6 +62,14 @@
         },
         "meshcollider": {
             "ismeshcollider": true
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/Boss.lua",
+                    "variables": []
+                }
+            ]
         }
     }
 ]

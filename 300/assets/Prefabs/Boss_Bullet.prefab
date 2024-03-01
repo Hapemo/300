@@ -1,8 +1,8 @@
 {
-    "entityid": 4194393,
+    "entityid": 38797383,
     "general": {
         "name": "Boss_Bullet",
-        "tagid": 2,
+        "tagid": 1,
         "subtag": 0,
         "isActive": true,
         "isPaused": false
@@ -19,9 +19,9 @@
             "z": 0.0
         },
         "translate": {
-            "x": 2.9489998817443848,
-            "y": -0.13300000131130219,
-            "z": 25.379840850830078
+            "x": 2.4079999923706055,
+            "y": 5.800000190734863,
+            "z": 8.687999725341797
         }
     },
     "meshrenderer": {
@@ -57,14 +57,6 @@
             0,
             0,
             0
-        ]
-    },
-    "scripts": {
-        "scriptscontainer": [
-            {
-                "scriptFile": "../assets/Scripts/SphereParticle.lua",
-                "variables": []
-            }
         ]
     },
     "prefab": {

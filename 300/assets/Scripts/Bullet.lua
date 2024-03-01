@@ -290,3 +290,4 @@ function spawned(value)
     meshSys = prefabEntity:GetMeshRenderer()
     meshSys:SetColor(allcolor[value])
 end
+
