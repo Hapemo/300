@@ -31,7 +31,7 @@ void Script::Load(Entity entity)
 {
     id = (int)entity.id;
 
-    PINFO("Script Loaded")
+    //PINFO("Script Loaded")
 
     env = { systemManager->mScriptingSystem->luaState, sol::create, systemManager->mScriptingSystem->luaState.globals() };
 

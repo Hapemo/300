@@ -167,6 +167,8 @@ struct Animator
 	void Inspect();
 	void PauseAnimation() { mAnimator.mIsPaused = true; }
 	void UnpauseAnimation() { mAnimator.mIsPaused = false; }
+	void SetFrame(float frame) { mAnimator.m_CurrentTime = frame; }
+	float GetFrame() { return mAnimator.m_CurrentTime; }
 	bool IsEndOfAnimation();
 
 	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;

@@ -1,8 +1,8 @@
 [
     {
-        "entityid": 208,
+        "entityid": 3145736,
         "general": {
-            "name": "UI-indicator6",
+            "name": "P7",
             "tagid": 6,
             "subtag": 0,
             "isActive": true,
@@ -10,8 +10,8 @@
         },
         "transform": {
             "scale": {
-                "x": -0.02083333395421505,
-                "y": 0.03703703731298447,
+                "x": 0.125,
+                "y": -0.25,
                 "z": 1.0
             },
             "rotate": {
@@ -20,67 +20,15 @@
                 "z": 0.0
             },
             "translate": {
-                "x": -0.7864583134651184,
-                "y": -0.9166666865348816,
-                "z": 4.0
+                "x": -0.046875,
+                "y": -0.7592592835426331,
+                "z": 0.0
             }
         },
         "uirenderer": {
             "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
-            "textureref": 3353,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 0.0
-            },
-            "layer": 0,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/UI-indicator.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "prefab": {
-            "prefab": "UI-indicator"
-        }
-    },
-    {
-        "entityid": 209,
-        "general": {
-            "name": "Queue_Text",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.25,
-                "y": -0.25,
-                "z": 0.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -0.8299999833106995,
-                "y": -0.5299999713897705,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 1495668265,
-            "degree": 0.0,
+            "textureref": 4923,
+            "degree": 360.0,
             "slider": 1.0,
             "color": {
                 "x": 1.0,
@@ -88,12 +36,12 @@
                 "z": 1.0,
                 "w": 1.0
             },
-            "layer": 0,
+            "layer": 2,
             "worldtransform": false
         }
     },
     {
-        "entityid": 210,
+        "entityid": 3145744,
         "general": {
             "name": "Queue_Arrow (new)",
             "tagid": 6,
@@ -134,7 +82,7 @@
         }
     },
     {
-        "entityid": 211,
+        "entityid": 3145788,
         "general": {
             "name": "Slot_7",
             "tagid": 6,
@@ -181,7 +129,7 @@
         }
     },
     {
-        "entityid": 212,
+        "entityid": 3145789,
         "general": {
             "name": "Slot_6",
             "tagid": 6,
@@ -228,7 +176,7 @@
         }
     },
     {
-        "entityid": 213,
+        "entityid": 3145790,
         "general": {
             "name": "Slot_1",
             "tagid": 6,
@@ -275,7 +223,7 @@
         }
     },
     {
-        "entityid": 214,
+        "entityid": 3145791,
         "general": {
             "name": "Slot_5",
             "tagid": 6,
@@ -322,7 +270,7 @@
         }
     },
     {
-        "entityid": 215,
+        "entityid": 3145792,
         "general": {
             "name": "Slot_4",
             "tagid": 6,
@@ -369,7 +317,7 @@
         }
     },
     {
-        "entityid": 216,
+        "entityid": 3145793,
         "general": {
             "name": "Slot_3",
             "tagid": 6,
@@ -416,7 +364,7 @@
         }
     },
     {
-        "entityid": 217,
+        "entityid": 3145794,
         "general": {
             "name": "Slot_2",
             "tagid": 6,
@@ -463,7 +411,7 @@
         }
     },
     {
-        "entityid": 218,
+        "entityid": 3145795,
         "general": {
             "name": "Slot_1",
             "tagid": 6,
@@ -510,7 +458,48 @@
         }
     },
     {
-        "entityid": 219,
+        "entityid": 3145796,
+        "general": {
+            "name": "P2",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.125,
+                "y": -0.25,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -0.7447916865348816,
+                "y": -0.7592592835426331,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 4923,
+            "degree": 360.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 2,
+            "worldtransform": false
+        }
+    },
+    {
+        "entityid": 3145797,
         "general": {
             "name": "P1",
             "tagid": 6,
@@ -551,7 +540,7 @@
         }
     },
     {
-        "entityid": 220,
+        "entityid": 3145798,
         "general": {
             "name": "UI-indicator17",
             "tagid": 6,
@@ -603,7 +592,7 @@
         }
     },
     {
-        "entityid": 221,
+        "entityid": 3145799,
         "general": {
             "name": "UI-indicator19",
             "tagid": 6,
@@ -655,7 +644,7 @@
         }
     },
     {
-        "entityid": 222,
+        "entityid": 3145800,
         "general": {
             "name": "UI-indicator13",
             "tagid": 6,
@@ -707,7 +696,7 @@
         }
     },
     {
-        "entityid": 223,
+        "entityid": 3145801,
         "general": {
             "name": "UI-indicator18",
             "tagid": 6,
@@ -759,7 +748,7 @@
         }
     },
     {
-        "entityid": 224,
+        "entityid": 3145802,
         "general": {
             "name": "UI-indicator20",
             "tagid": 6,
@@ -811,7 +800,7 @@
         }
     },
     {
-        "entityid": 225,
+        "entityid": 3145803,
         "general": {
             "name": "dashui",
             "tagid": 6,
@@ -852,7 +841,48 @@
         }
     },
     {
-        "entityid": 226,
+        "entityid": 3145804,
+        "general": {
+            "name": "P8",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.125,
+                "y": -0.25,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.09375,
+                "y": -0.7592592835426331,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
+            "textureref": 4923,
+            "degree": 360.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 2,
+            "worldtransform": false
+        }
+    },
+    {
+        "entityid": 3145805,
         "general": {
             "name": "P6",
             "tagid": 6,
@@ -893,7 +923,7 @@
         }
     },
     {
-        "entityid": 227,
+        "entityid": 3145806,
         "general": {
             "name": "P4",
             "tagid": 6,
@@ -934,7 +964,7 @@
         }
     },
     {
-        "entityid": 228,
+        "entityid": 3145807,
         "general": {
             "name": "Leftshift",
             "tagid": 6,
@@ -983,7 +1013,7 @@
         }
     },
     {
-        "entityid": 229,
+        "entityid": 3145808,
         "general": {
             "name": "UI-indicator3",
             "tagid": 6,
@@ -1035,7 +1065,7 @@
         }
     },
     {
-        "entityid": 231,
+        "entityid": 3145809,
         "general": {
             "name": "UI-indicator24",
             "tagid": 6,
@@ -1087,7 +1117,7 @@
         }
     },
     {
-        "entityid": 232,
+        "entityid": 3145889,
         "general": {
             "name": "UI-indicator23",
             "tagid": 6,
@@ -1139,7 +1169,7 @@
         }
     },
     {
-        "entityid": 233,
+        "entityid": 3145890,
         "general": {
             "name": "UI-indicator22",
             "tagid": 6,
@@ -1191,7 +1221,7 @@
         }
     },
     {
-        "entityid": 234,
+        "entityid": 3145891,
         "general": {
             "name": "UI-indicator21",
             "tagid": 6,
@@ -1243,7 +1273,7 @@
         }
     },
     {
-        "entityid": 239,
+        "entityid": 15728810,
         "general": {
             "name": "UI-indicator16",
             "tagid": 6,
@@ -1295,7 +1325,7 @@
         }
     },
     {
-        "entityid": 240,
+        "entityid": 16777220,
         "general": {
             "name": "UI-indicator2",
             "tagid": 6,
@@ -1347,7 +1377,7 @@
         }
     },
     {
-        "entityid": 241,
+        "entityid": 20971691,
         "general": {
             "name": "UI-Circle-Pattern",
             "tagid": 6,
@@ -1396,7 +1426,7 @@
         }
     },
     {
-        "entityid": 242,
+        "entityid": 22020106,
         "general": {
             "name": "UI-indicator15",
             "tagid": 6,
@@ -1448,7 +1478,7 @@
         }
     },
     {
-        "entityid": 243,
+        "entityid": 25165997,
         "general": {
             "name": "UI-indicator14",
             "tagid": 6,
@@ -1500,7 +1530,7 @@
         }
     },
     {
-        "entityid": 245,
+        "entityid": 25165998,
         "general": {
             "name": "UI-indicator12",
             "tagid": 6,
@@ -1552,7 +1582,7 @@
         }
     },
     {
-        "entityid": 246,
+        "entityid": 26214429,
         "general": {
             "name": "UI-indicator11",
             "tagid": 6,
@@ -1604,7 +1634,100 @@
         }
     },
     {
-        "entityid": 247,
+        "entityid": 26214455,
+        "general": {
+            "name": "UI-indicator6",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": -0.02083333395421505,
+                "y": 0.03703703731298447,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -0.7864583134651184,
+                "y": -0.9166666865348816,
+                "z": 4.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
+            "textureref": 3353,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 0.0
+            },
+            "layer": 0,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/UI-indicator.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "prefab": {
+            "prefab": "UI-indicator"
+        }
+    },
+    {
+        "entityid": 26214576,
+        "general": {
+            "name": "Queue_Text",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.25,
+                "y": -0.25,
+                "z": 0.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -0.8299999833106995,
+                "y": -0.5299999713897705,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 1495668265,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 0,
+            "worldtransform": false
+        }
+    },
+    {
+        "entityid": 26214577,
         "general": {
             "name": "UI-indicator10",
             "tagid": 6,
@@ -1656,7 +1779,7 @@
         }
     },
     {
-        "entityid": 248,
+        "entityid": 27262978,
         "general": {
             "name": "UI-indicator9",
             "tagid": 6,
@@ -1708,7 +1831,7 @@
         }
     },
     {
-        "entityid": 249,
+        "entityid": 27262981,
         "general": {
             "name": "UI-indicator8",
             "tagid": 6,
@@ -1760,7 +1883,7 @@
         }
     },
     {
-        "entityid": 250,
+        "entityid": 27262987,
         "general": {
             "name": "HealthBarEmpty",
             "tagid": 0,
@@ -1801,7 +1924,7 @@
         }
     },
     {
-        "entityid": 251,
+        "entityid": 27263000,
         "general": {
             "name": "HealthBar",
             "tagid": 6,
@@ -1842,7 +1965,7 @@
         }
     },
     {
-        "entityid": 252,
+        "entityid": 27263004,
         "general": {
             "name": "P5",
             "tagid": 6,
@@ -1883,7 +2006,7 @@
         }
     },
     {
-        "entityid": 253,
+        "entityid": 27263140,
         "general": {
             "name": "P3",
             "tagid": 6,
@@ -1924,7 +2047,7 @@
         }
     },
     {
-        "entityid": 254,
+        "entityid": 27263141,
         "general": {
             "name": "crosshair-3",
             "tagid": 6,
@@ -1973,7 +2096,7 @@
         }
     },
     {
-        "entityid": 255,
+        "entityid": 27263142,
         "general": {
             "name": "crosshair-4",
             "tagid": 6,
@@ -2022,7 +2145,7 @@
         }
     },
     {
-        "entityid": 256,
+        "entityid": 27263143,
         "general": {
             "name": "crosshair-2",
             "tagid": 6,
@@ -2071,7 +2194,7 @@
         }
     },
     {
-        "entityid": 257,
+        "entityid": 27263144,
         "general": {
             "name": "crosshair-1",
             "tagid": 6,
@@ -2120,7 +2243,7 @@
         }
     },
     {
-        "entityid": 258,
+        "entityid": 27263145,
         "general": {
             "name": "Base",
             "tagid": 6,
@@ -2155,7 +2278,7 @@
         }
     },
     {
-        "entityid": 259,
+        "entityid": 27263148,
         "general": {
             "name": "Leftshift",
             "tagid": 6,
@@ -2204,7 +2327,7 @@
         }
     },
     {
-        "entityid": 261,
+        "entityid": 27263151,
         "general": {
             "name": "UI-indicator1",
             "tagid": 6,
@@ -2256,7 +2379,7 @@
         }
     },
     {
-        "entityid": 265,
+        "entityid": 28311561,
         "general": {
             "name": "UI-indicator7",
             "tagid": 6,
@@ -2308,7 +2431,7 @@
         }
     },
     {
-        "entityid": 267,
+        "entityid": 28311574,
         "general": {
             "name": "UI-indicator5",
             "tagid": 6,
@@ -2360,7 +2483,7 @@
         }
     },
     {
-        "entityid": 268,
+        "entityid": 28311585,
         "general": {
             "name": "dashui",
             "tagid": 6,
@@ -2397,129 +2520,6 @@
                 "w": 1.0
             },
             "layer": 0,
-            "worldtransform": false
-        }
-    },
-    {
-        "entityid": 273,
-        "general": {
-            "name": "P2",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.125,
-                "y": -0.25,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -0.7447916865348816,
-                "y": -0.7592592835426331,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 4923,
-            "degree": 360.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 2,
-            "worldtransform": false
-        }
-    },
-    {
-        "entityid": 274,
-        "general": {
-            "name": "P8",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.125,
-                "y": -0.25,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.09375,
-                "y": -0.7592592835426331,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
-            "textureref": 4923,
-            "degree": 360.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 2,
-            "worldtransform": false
-        }
-    },
-    {
-        "entityid": 275,
-        "general": {
-            "name": "P7",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.125,
-                "y": -0.25,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -0.046875,
-                "y": -0.7592592835426331,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
-            "textureref": 4923,
-            "degree": 360.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 2,
             "worldtransform": false
         }
     }

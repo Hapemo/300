@@ -62,6 +62,13 @@ function Helper.SetRotate(Entity, Vec3)
     transformComponent.mRotate.z = transformComponent.mRotate.z + Vec3.z
 end
 
+function Helper.ChangeRotate(Entity, Vec3)
+    transformComponent = Entity:GetTransform()
+    transformComponent.mRotate.x = Vec3.x
+    transformComponent.mRotate.y = Vec3.y
+    transformComponent.mRotate.z = Vec3.z
+end
+
 function Helper.Normalize(Vec3)
     magnitude = (Vec3.x ^ 2 + Vec3.y ^ 2 + Vec3.z ^ 2) ^ 0.5
     if magnitude == 0 then 

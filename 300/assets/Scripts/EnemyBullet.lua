@@ -41,6 +41,7 @@ function OnTriggerEnter(Entity)
         BulletHit()
         if (tagid == 0) then 
             -- Decrease player health here, when player got hit bullet
+            _G.ILYBulletHitPlayer = true
             Entity:GetHealthbar().health = Entity:GetHealthbar().health - damage
         end
     end

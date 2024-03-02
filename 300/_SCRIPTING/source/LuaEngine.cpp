@@ -173,6 +173,7 @@ void LuaCamera()
         "GetSensitivity", &Camera_Scripting::GetSensitivity,
         "RotateCameraView", &Camera_Scripting::RotateCameraView,
         "SetFov", &Camera_Scripting::SetFov,
+        "GetFov", &Camera_Scripting::GetFov,
         "Cross", &Camera_Scripting::Cross, 
         "Rotate" , &Camera_Scripting::Rotate);
 }
@@ -203,7 +204,9 @@ void LuaAnimator()
         "Animator", sol::constructors<>(),
         "PauseAnimation", &Animator::PauseAnimation,
         "UnpauseAnimation", &Animator::UnpauseAnimation,
-        "IsEndOfAnimation", &Animator::IsEndOfAnimation);
+        "IsEndOfAnimation", &Animator::IsEndOfAnimation,
+        "SetFrame", &Animator::SetFrame,
+        "GetFrame", &Animator::GetFrame);
 }
 
 void LuaRigidBody()
@@ -336,7 +339,8 @@ void LuaPhysics()
         "mPhysicsSystem", sol::constructors<>(),
         "SetVelocity", &PhysicsSystem::SetVelocity,
         "SetPosition", &PhysicsSystem::SetPosition,
-        "SetRotation", &PhysicsSystem::SetRotation);
+        "SetRotation", &PhysicsSystem::SetRotation,
+        "ResetEntity", &PhysicsSystem::ResetEntity);
 }
 
 void LuaScripting()

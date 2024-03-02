@@ -20,6 +20,7 @@ function Alive()
 end
 
 function Update()
+    if true then return end
     uirend  = ent:GetUIrenderer()
     if(_G.weaponArray[reArray[index]][2] == true)then
         if(pos <=_G.weaponArray[reArray[index]][3]  )then
