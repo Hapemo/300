@@ -387,6 +387,7 @@ function RunTrojanHorseEpicIntro()
             _G.TrojanHorseEpicIntroState = 0
             _G.FreezePlayerControl = false
             retractBlackBorder = true
+            epicTrojanHorse:GetAnimator():UnpauseAnimation()
             ShowUI()
         end
 
@@ -436,7 +437,7 @@ function RunTSEpicIntro()
     print("_G.TSEpicIntroState:")
     print(_G.TSEpicIntroState)
     if _G.TSEpicIntroState > 2 then 
-        epicTS3:GetTransform().mRotate.y = 90 
+        Helper.SetRealRotate(epicTS3, Vec3.new(0,90,0))
         epicTS3:GetTransform().mTranslate = Vec3.new(13.7, -11, 32.4)
     end
 
@@ -552,7 +553,7 @@ end
 
 function RunILYEpicIntro()
     if _G.ILYShotAlready then
-        epicILY:GetTransform().mRotate = Vec3.new(0, 130.013, 0)
+        Helper.SetRealRotate(epicILY, Vec3.new(0,130.013,0))
     end 
 
     if _G.ILYEpicIntroState == 1 then -- Move to start pos and dwactivate ILY
@@ -633,9 +634,7 @@ function RunZBEpicIntro()
     --     epicZB:GetTransform().mRotate = Vec3.new(0, 130.013, 0)
     -- end 
     -- Always look at the player when midway through exploding
-    local dir = Vec3.new()
-    dir = Helper.Normalize(Helper.Vec3Minus(epicZB:GetAISetting():GetTarget():GetTransform().mTranslate, epicZB:GetTransform().mTranslate))
-    epicZB:GetTransform().mRotate.y = Helper.DirectionToAngle(epicZB, dir)
+    Helper.LookAtTarget(epicZB)
     print(_G.ZBEpicIntroState)
 
     if _G.ZBEpicIntroState == 1 then -- Move to start pos
@@ -718,9 +717,7 @@ function RunMEpicIntro()
     --     epicM:GetTransform().mRotate = Vec3.new(0, 130.013, 0)
     -- end 
     -- Always look at the player when midway through exploding
-    local dir = Vec3.new()
-    dir = Helper.Normalize(Helper.Vec3Minus(epicM:GetAISetting():GetTarget():GetTransform().mTranslate, epicM:GetTransform().mTranslate))
-    epicM:GetTransform().mRotate.y = Helper.DirectionToAngle(epicM, dir)
+    Helper.LookAtTarget(epicM)
     print(_G.MEpicIntroState)
 
     if _G.MEpicIntroState == 1 then -- Move to start pos
@@ -836,7 +833,7 @@ function LookTowardsInterpolation(entity, targetPitchYaw, speed)
     -- _G.phySys:SetRotation(entity, newRotate)
 
     local toMove = Helper.Scale(direction, speed * FPSManager:GetDT())
-    -- print(toMove)
+    -- print(toMove)    
     Helper.SetRotate(entity, toMove)
 
     local interpolationApart = Helper.Vec3Len(Helper.Vec3Minus(entity:GetTransform().mRotate, targetPitchYaw))

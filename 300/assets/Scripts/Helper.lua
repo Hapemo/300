@@ -188,3 +188,9 @@ end
 function Helper.CreateTrailParticle(vec)
     systemManager.ecs:NewEntityFromPrefab("TrailParticle", vec)
 end
+
+function Helper.LookAtTarget(entity)
+    local dir = Helper.Normalize(Helper.Vec3Minus(entity:GetAISetting():GetTarget():GetTransform().mTranslate, entity:GetTransform().mTranslate))
+    -- -- epicZB:GetTransform().mRotate.y = 
+    Helper.SetRealRotate(entity, Vec3.new(0,Helper.DirectionToAngle(entity, dir),0))
+end

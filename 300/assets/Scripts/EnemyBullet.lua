@@ -19,6 +19,8 @@ function Update()
     -- Set bullet's velocity to consistently be some speed
     if (Helper.Vec3Len(startingVec) == 0) then
         startingVec = this:GetRigidBody().mVelocity
+        print(this)
+        print(startingVec)
     else
         phySys:SetVelocity(this, startingVec)
         this:GetTransform().mRotate.y = Helper.DirectionToAngle(this, startingVec)
@@ -29,6 +31,8 @@ function Update()
     if lifeTime < 0 then 
         systemManager.ecs:SetDeleteEntity(this)
     end
+    print(this)
+    print(startingVec)
 end
 
 function Dead()
