@@ -192,6 +192,7 @@ function Alive()
     totaltime = 3.0
 
     cameraPhysicsComp = cameraEntity:GetRigidBody()
+    graphicsSys:HideCursor(true)
     
     dashui = gameStateSys:GetEntityByScene("dashui" , "UI")
 
@@ -257,9 +258,17 @@ function Alive()
 end
 
 function Update()
-    if _G.FreezePlayerControl then return end
+    print("Calling hide cursor in update")
+    
+    if _G.FreezePlayerControl then 
+        return 
+    end
+
     -- healthbar = gameStateSys:GetEntityByScene("Health Bar","Objectives") // Changed to UI scene
     healthbar = gameStateSys:GetEntity("HealthBar", "UI")
+
+    graphicsSys:HideCursor(true)
+    print("Calling hide cursor in update")
 
     -- Player Health System Start -- 
     if isuiinit == false then
