@@ -153,8 +153,8 @@ local dashZ
 local inittedDash = false
 
 local isTakingDamage = false; -- whether player is in contact with other enemies, thus taking damage
-local playerHealthCurrent = 1000;
-local playerHealthMax = 1000;
+_G.playerHealthCurrent = 100;   -- used in <BossBullet.lua>
+local playerHealthMax = 100;       
 local playerHealthStartRegenCurrent = 0;
 local playerHealthStartRegenMax = 30; -- this is the time it takes for the player to not be damaged to start regenerating health
 
@@ -163,6 +163,7 @@ local objectiveBarEmptySpawnPos = Vec3.new()
 local healthBarEmptySpawnPos = Vec3.new()
 -- local isuiinit = false
 local this
+
 function Alive()
     this = Helper.GetScriptEntity(script_entity.id)
     gameStateSys = systemManager:mGameStateSystem();
@@ -236,6 +237,7 @@ function Alive()
 end
 
 function Update()
+    healthbar = gameStateSys:GetEntity("HealthBar", "UI")
 
     -- Player Health System Start -- 
     -- if isuiinit == false then
@@ -264,7 +266,7 @@ function Update()
     -- Player Health System End -- 
     if (isTakingDamage == true) then
     playerHealthStartRegenCurrent = 0;
-    playerHealthCurrent = playerHealthCurrent - 6; -- take damage
+    _G.playerHealthCurrent = _G.playerHealthCurrent - 6; -- take damage
     end
 
     if (isTakingDamage == false) then -- if not taking damage
@@ -274,15 +276,17 @@ function Update()
         end
 
         if (playerHealthStartRegenCurrent == playerHealthStartRegenMax) then
-            if (playerHealthCurrent < 400) then
-                playerHealthCurrent = playerHealthCurrent + 3; -- regen hp
+            if (_G.playerHealthCurrent < 400) then
+                _G.playerHealthCurrent = _G.playerHealthCurrent + 3; -- regen hp
             end
         end
     end
 
-    -- healthbar:GetUIrenderer():SetSlider(playerHealthCurrent/playerHealthMax);
+    healthbar:GetUIrenderer():SetSlider(_G.playerHealthCurrent/playerHealthMax);
+    -- print("PLAYER CURRENT HEALTH: " , _G.playerHealthCurrent)
+    -- print("PLAYER MAX HP: " , playerHealthMax)
 
-    if playerHealthCurrent <= 0 then
+    if _G.playerHealthCurrent <= 0 then
         gameStateSys:ChangeGameState("LoseMenu")
     end
 
@@ -330,6 +334,7 @@ function Update()
 --endregion
 
 
+healthbar:GetUIrenderer():SetSlider(_G.playerHealthCurrent/playerHealthMax);
 
 --region -- Player movements
     -- use '.' to reference variable

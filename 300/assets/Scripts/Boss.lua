@@ -14,15 +14,25 @@ local maxBossStateTimer = 3
 -- Phase 3 : Bullethell Phase
 local bossPosition = Vec3.new()
 local bulletSpawnPosition = Vec3.new()
-local bulletProjectileType = 0 -- Used to determine which kind of projectile the enemy uses
+local bulletProjectileType = 0                          -- Used to determine which kind of projectile the enemy uses
 local fire_rate = 0.5
 local fire_timer = 0
 local next_fire_time = 1.0
+
 -- Bullet Hell #1 - Circular Pulse
 local angles_to_spawn_from = {0, 45 , 90 , 135 , 180}
+local no_of_waves_1 = 5                                 -- used to keep track how many waves of bullets to spawn
+local random_wave_generator = false                     -- boolean value to keep track if a random value has been generated.
+-- keeps track of which bullethell attack has been used (so there won't be back to back usage)
+-- [1] Spiral Bullets (Ground)
+local bullet_attack_checker = {false, false, false}     -- keep track which attacks have been used so won't activate back to back
+local number_of_fire = 0
+local stop_firing_at = 10
+
+
 -- Boss states
 local state = 0
-local state_checker = {false, false ,false}
+local state_checker = {false, false , false}
 local once = false
 -- 1. Summon enemies
 -- 2. Ground slam: Boss swings arms and slams the ground, spawning a ground slam area that damages player
@@ -105,36 +115,49 @@ function Update()
 
     end
 
+    -- Bullet Types (Phases)
+    -- 1. Bullet Hell (no homing) -> maybe add 2 variations to start
+    -- 2. Homing Bullets (but dodgeable)
+
+    
+    -- [Bullet Hell #1 : Pulsing Circles]
+    -- (a) State 1 : Normal Circles but pulsing in different directions & angles. 
+    --     - Make it easier at the start 
     if state == 3 and state_checker[3] == false then
         
-        -- bulletProjectileType = math.random (1, 3)
+        fire_timer = fire_timer +  FPSManager.GetDT()
 
-        -- Bullet Types (Phases)
-        -- 1. Bullet Hell (no homing) -> maybe add 2 variations to start
-        -- 2. Homing Bullets (but dodgeable)
+        bulletProjectileType = math.random (1, 3)
+
+        -- Check if this projectile has been recently used... 
+        if(bullet_attack_checker[bulletProjectileType] == false) then 
+            if(bulletProjectileType == 1) then 
+                if(random_wave_generator == false) then 
+                    random_wave_generator = true 
+                    no_of_waves_1 = math.random(5, 8) -- can generate between 5 to 10 waves of bullets
+                end
+
+                if fire_timer > next_fire_time then 
+                    if number_of_fire < stop_firing_at then 
+                        fire_timer = 0 -- reset timer
+                        print("NO OF WAVES: " , no_of_waves_1)
+                        SpawnBulletsPattern1(no_of_waves_1)
+                        number_of_fire = number_of_fire + 1
+                    else
+                        -- state_checker[3] = true
+                        bullet_attack_checker[1] = true
+                    end
+                end
+            end
 
         
-        -- [Bullet Hell #1 : Pulsing Circles]
-        -- (a) State 1 : Normal Circles but pulsing in different directions & angles. 
-        --     - Make it easier at the start 
-        fire_timer = fire_timer +  FPSManager.GetDT()
-        print("FIRE TIMER: " , fire_timer)
-
-        if fire_timer > next_fire_time then 
-            fire_timer = 0 -- reset timer
-            SpawnBulletsPattern1(10)
         end
 
-        -- if once == false then 
-        --    SpawnBulletsPattern1(10)
-        --    once = true
-        -- end
 
-        -- original_scale =  sphere_bullet :GetTransform().mScale 
-        -- sphere_bullet:GetTransform().mScale.x = original_scale.x / 3
-        -- sphere_bullet:GetTransform().mScale.y = original_scale.y / 3
-        -- sphere_bullet:GetTransform().mScale.z = original_scale.z / 3
-        -- print("SPAWNING BULLETS")
+
+    
+        
+     
     end
 
 end
@@ -179,20 +202,20 @@ function RotateVectorAroundYAxis(vector, angle)
     -- print("ROTATED Z: " , vector.z)
 end
 
--- Circular AOE 
+-- Bullet Attack 1 - Spiraling Spheres (Ground)
 function SpawnBulletsPattern1(number_of_bullets)
 
     local angleStep = 360 / number_of_bullets
     -- Add some randomnization
     local random_index = math.random(1,5)
     local angle = angles_to_spawn_from[random_index]
-    print("ANGLE: " , angle)
+    -- print("ANGLE: " , angle)
 
     -- local angle = 0
 
     local forward = Vec3.new(0,0,1)
 
-    print("NUMBER OF BULLETS TO SPAWN")
+    -- print("NUMBER OF BULLETS TO SPAWN")
 
     for i = 0 , number_of_bullets do 
 
@@ -202,7 +225,7 @@ function SpawnBulletsPattern1(number_of_bullets)
         RotateVectorAroundYAxis(bulletDirection, angle) -- Testing
         -- print("X: " , bulletDirection.x , " Y: " , bulletDirection.y , " Z: ", bulletDirection.z)
         sphere_bullet = systemManager.ecs:NewEntityFromPrefab("Boss_Bullet", bulletSpawnPosition)
-        print("Spawning at: " , bulletSpawnPosition.x , ", " , bulletSpawnPosition.y , ", " , bulletSpawnPosition.z)
+        -- print("Spawning at: " , bulletSpawnPosition.x , ", " , bulletSpawnPosition.y , ", " , bulletSpawnPosition.z)
 
         -- Applying speed to vector
         bulletDirection.x = bulletDirection.x * bulletSpeed 
@@ -216,3 +239,5 @@ function SpawnBulletsPattern1(number_of_bullets)
     end
 
 end
+
+
