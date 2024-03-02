@@ -249,7 +249,7 @@ function Update()
                     z = y:GetScript("../assets/Scripts/Transition.lua")
 
                     if z ~= nil then
-                        z:SetNextGameStateHelper("SetNextGameState", "Test2")
+                        z:SetNextGameStateHelper("SetNextGameState", "Test3")
                         --z:RunFunctionWithParam("SetNextGameState", "Test2")
                         z:RunFunction("StartTransition")
                     end

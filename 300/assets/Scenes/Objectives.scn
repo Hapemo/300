@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 15728875,
+        "entityid": 12583018,
         "general": {
             "name": "Objective Bar Empty",
             "tagid": 6,
@@ -47,7 +47,7 @@
         }
     },
     {
-        "entityid": 15728881,
+        "entityid": 12583024,
         "general": {
             "name": "Objective Bar Empty",
             "tagid": 6,
@@ -94,7 +94,7 @@
         }
     },
     {
-        "entityid": 15728896,
+        "entityid": 12583025,
         "general": {
             "name": "Objective Bar 1",
             "tagid": 6,
@@ -141,9 +141,9 @@
         }
     },
     {
-        "entityid": 15728917,
+        "entityid": 12583026,
         "general": {
-            "name": "Objectives3",
+            "name": "Objectives2",
             "tagid": 0,
             "subtag": 0,
             "isActive": true,
@@ -243,7 +243,7 @@
         }
     },
     {
-        "entityid": 15728920,
+        "entityid": 12583029,
         "general": {
             "name": "PreObjectivesController",
             "tagid": 0,
@@ -271,14 +271,14 @@
         "scripts": {
             "scriptscontainer": [
                 {
-                    "scriptFile": "../assets/Scripts/PreObjectivesController.lua",
+                    "scriptFile": "../assets/Scripts/PreObjectivesControllerLv2.lua",
                     "variables": []
                 }
             ]
         }
     },
     {
-        "entityid": 15728925,
+        "entityid": 12583038,
         "general": {
             "name": "Controller",
             "tagid": 0,
@@ -313,7 +313,7 @@
         }
     },
     {
-        "entityid": 15728930,
+        "entityid": 12583039,
         "general": {
             "name": "Objectives1",
             "tagid": 0,
@@ -415,7 +415,7 @@
         }
     },
     {
-        "entityid": 15728940,
+        "entityid": 12583040,
         "general": {
             "name": "Objectives3",
             "tagid": 0,
@@ -517,7 +517,7 @@
         }
     },
     {
-        "entityid": 15728951,
+        "entityid": 12583042,
         "general": {
             "name": "Objective Bar 1",
             "tagid": 6,
@@ -564,7 +564,7 @@
         }
     },
     {
-        "entityid": 15728958,
+        "entityid": 12583044,
         "general": {
             "name": "Objective Bar Empty",
             "tagid": 6,
@@ -611,7 +611,7 @@
         }
     },
     {
-        "entityid": 16777225,
+        "entityid": 12583051,
         "general": {
             "name": "Objective Bar Empty",
             "tagid": 6,
