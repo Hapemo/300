@@ -62,11 +62,17 @@ function Helper.SetRotate(Entity, Vec3)
     transformComponent.mRotate.z = transformComponent.mRotate.z + Vec3.z
 end
 
-function Helper.ChangeRotate(Entity, Vec3)
+function Helper.SetRealRotate(Entity, Vec3)
     transformComponent = Entity:GetTransform()
     transformComponent.mRotate.x = Vec3.x
     transformComponent.mRotate.y = Vec3.y
     transformComponent.mRotate.z = Vec3.z
+    vec = Vec3.new()
+    vec.x = transformComponent.mRotate.x;
+    vec.y = transformComponent.mRotate.y;
+    vec.z = transformComponent.mRotate.z;
+    physicsSys = systemManager:mPhysicsSystem();
+    physicsSys:SetRotation(Entity, vec);
 end
 
 function Helper.Normalize(Vec3)
