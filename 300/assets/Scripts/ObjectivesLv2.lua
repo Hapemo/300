@@ -7,9 +7,9 @@ local progress
 local isInZone = false
 
 local currentSpawnTimer = 0 -- keeps track of how often enemy spawning interval
-local spawnTimer = 10 -- sets how long the enemy spawning interval is
+local spawnTimer = 10       -- sets how long the enemy spawning interval is
 local currentEnemyCount = 0 -- keeps track of how many enemies there are in the map
-local maxEnemyCount = 20 -- sets how many enemies are allowed in the map
+local maxEnemyCount = 20    -- sets how many enemies are allowed in the map
 
 local mobSpawnPos1 = Vec3.new()
 local mobSpawnPos2 = Vec3.new()
@@ -60,7 +60,7 @@ function Update()
         z = y:GetScript("../assets/Scripts/Transition.lua")
 
         if z ~= nil then
-            z:SetNextGameStateHelper("SetNextGameState", "Test2")
+            z:SetNextGameStateHelper("SetNextGameState", "Test3")
             --z:RunFunctionWithParam("SetNextGameState", "Test2")
             z:RunFunction("StartTransition")
         end
@@ -135,8 +135,9 @@ function Update()
             currentEnemyCount = currentEnemyCount + 1
             currentSpawnTimer = 0 -- reset currentSpawnTimer so that next enemy can spawn
         end
-        --print("Current progress =", progress/objectivesComplete)
-        print("SPAWNING")
+
+    --print("Current progress =", progress/objectivesComplete)
+    -- print("SPAWNING")
     objectivebar:GetUIrenderer():SetSlider(progress/objectivesComplete);
 
     ent = Helper.GetScriptEntity(script_entity.id)
@@ -165,7 +166,7 @@ function Update()
 
             -- print(math.random(-200,200))
             -- only appear when the platform is raised
-            if(transform.mTranslate.y == -7.5) then
+            if(transform.mTranslate.y == 45) then
                 spawndataPos.x = transform.mTranslate.x  +math.random(-300,300)/100
                 spawndataPos.y = transform.mTranslate.y 
                 spawndataPos.z = transform.mTranslate.z +math.random(-300,300)/100
@@ -207,7 +208,6 @@ function Update()
 
     if (isInZone == false) then
     -- OBJECTIVE Progress (decreases if player is outside objective)
-
         --objectivebar:GetTransform().mTranslate.y = 20; -- Hide the objective progress
 
         if (progress < objectivesComplete) then

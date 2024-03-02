@@ -814,13 +814,11 @@ function Update()
              
                     shotGunTimer = shotGunTimer + shotGunCooldown
 
-
                     shotgunShootState = "COOLDOWN"
 
                     bulletAudioComp:SetPlay(0.3)
                 end
             end
-
         end
 
         -- "COOLDOWN" state
@@ -966,18 +964,16 @@ function OnTriggerEnter(Entity)
     or generalComponent.name == "ZipBomb" or generalComponent.name == "TrojanSoldier" )then
 
         dmgAudioComp:SetPlay(1.0)
-    -- print("DAMAGE CD: " , DamageCD)
-    -- print("DAMAGE TIME: " , DamageTime)
+        print("DAMAGE CD: " , DamageCD)
+        print("DAMAGE TIME: " , DamageTime)
 
-        if(DamageCD >=DamageTime-0.1)then
+        if(DamageCD >= DamageTime-0.1)then
             -- if (isTakingDamage == true) then
                 playerHealthStartRegenCurrent = 0;
                 playerHealthCurrent = playerHealthCurrent - 10; -- take damage
 
                 graphicsSys.FilterRadius = maxFilterRadius
                 graphicsSys.mAmbientBloomExposure = maxExposure
-                
-        
                
                 -- print("Running Pause Update fromxxxxxxxxxxxxxxxxxxxxxxxx Player.lua")
                 DamageCD = 0
