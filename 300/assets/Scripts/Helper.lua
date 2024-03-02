@@ -62,6 +62,13 @@ function Helper.SetRotate(Entity, Vec3)
     transformComponent.mRotate.z = transformComponent.mRotate.z + Vec3.z
 end
 
+function Helper.ChangeRotate(Entity, Vec3)
+    transformComponent = Entity:GetTransform()
+    transformComponent.mRotate.x = Vec3.x
+    transformComponent.mRotate.y = Vec3.y
+    transformComponent.mRotate.z = Vec3.z
+end
+
 function Helper.SetRealRotate(Entity, Vec3)
     transformComponent = Entity:GetTransform()
     transformComponent.mRotate.x = Vec3.x
@@ -140,7 +147,7 @@ function Helper.DirectionToAngle(entity, vec)
     end
 
     if degree ~= degree then return entity:GetTransform().mRotate.y end
-
+    
     return degree
 end
 
