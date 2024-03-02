@@ -35,19 +35,19 @@ function Alive()
     progress = 0
 
     mobSpawnPos1.x = 21;
-    mobSpawnPos1.y = 48;
+    mobSpawnPos1.y = -4.5;
     mobSpawnPos1.z = 24;
 
     mobSpawnPos2.x = -20;
-    mobSpawnPos2.y = 48;
+    mobSpawnPos2.y = -4.5;
     mobSpawnPos2.z = 36;
 
     mobSpawnPos3.x = -11;
-    mobSpawnPos3.y = 48;
+    mobSpawnPos3.y = -4.5;
     mobSpawnPos3.z = 61;
 
     mobSpawnPos4.x = -28;
-    mobSpawnPos4.y = 48;
+    mobSpawnPos4.y = -4.5;
     mobSpawnPos4.z = 0;
 end
 
@@ -166,7 +166,7 @@ function Update()
 
             -- print(math.random(-200,200))
             -- only appear when the platform is raised
-            if(transform.mTranslate.y == 45) then
+            if(transform.mTranslate.y == -4.5) then
                 spawndataPos.x = transform.mTranslate.x  +math.random(-300,300)/100
                 spawndataPos.y = transform.mTranslate.y 
                 spawndataPos.z = transform.mTranslate.z +math.random(-300,300)/100
