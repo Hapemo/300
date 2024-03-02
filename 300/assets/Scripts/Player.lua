@@ -192,7 +192,6 @@ function Alive()
     totaltime = 3.0
 
     cameraPhysicsComp = cameraEntity:GetRigidBody()
-    graphicsSys:HideCursor(true)
     
     dashui = gameStateSys:GetEntityByScene("dashui" , "UI")
 
@@ -251,15 +250,12 @@ function Alive()
     original_translation.y = gunInitialTranslate.y
     original_translation.z = gunInitialTranslate.z
 
-    -- Shotgun Stuff -- 
-
+    -- Shotgun Stuff -- ==--==
    
 
 end
 
 function Update()
-    print("Calling hide cursor in update")
-    
     if _G.FreezePlayerControl then 
         return 
     end
@@ -267,14 +263,13 @@ function Update()
     -- healthbar = gameStateSys:GetEntityByScene("Health Bar","Objectives") // Changed to UI scene
     healthbar = gameStateSys:GetEntity("HealthBar", "UI")
 
-    graphicsSys:HideCursor(true)
-    print("Calling hide cursor in update")
-
+    
     -- Player Health System Start -- 
     if isuiinit == false then
+        graphicsSys:HideCursor(true)
+        print("Calling hide cursor in player update")
+
         -- Player Health System Start -- 
-
-
         -- healthbar = systemManager.ecs:NewEntityFromPrefab("Health Bar", healthbarSpawnPos)
 
         -- objectiveBarEmptySpawnPos.x = 0.7;
@@ -307,7 +302,6 @@ function Update()
     -- if (isTakingDamage == false) then -- if not taking damage
     if(DamageCD<=DamageTime)then
             DamageCD = DamageCD+FPSManager.GetDT()
-
 
             if(DamageCD < DamageTime-0.6)then
                 cameraEntity:GetTransform().mRotate.x = cameraEntity:GetTransform().mRotate.x+math.random(-2,2)
@@ -973,8 +967,8 @@ function OnTriggerEnter(Entity)
     or generalComponent.name == "ZipBomb" or generalComponent.name == "TrojanSoldier" )then
 
         dmgAudioComp:SetPlay(1.0)
-        print("DAMAGE CD: " , DamageCD)
-        print("DAMAGE TIME: " , DamageTime)
+        -- print("DAMAGE CD: " , DamageCD)
+        -- print("DAMAGE TIME: " , DamageTime)
 
         if(DamageCD >= DamageTime-0.1)then
             -- if (isTakingDamage == true) then
