@@ -48,6 +48,15 @@ _G.ZBEpicIntroState = 0
 -- 7. HideInfo
 -- 8. result game
 
+_G.MEpicIntroState = 0
+-- 1. Move to start pos
+-- 2. Make player look at front (MView1) (Make melissa scream when ended (attach script to it))
+-- 3. Wait timer for melissa to scream midway (Pause animation and audio)
+-- 4. Zoom in
+-- 5. Show info
+-- 6. Hide information
+-- 7. result game
+
 _G.activateEpicTrojanHorse = false
 _G.activateEpicTS = false
 _G.activateEpicM = false
@@ -110,6 +119,15 @@ local ZBView2
 local ZBRunOnce
 --#endregion
 
+--#region M epic intro variables
+local MPos1
+local MView1
+local MViewUpperLimitx
+local MViewLowerLimitx
+local MAddScriptRunOnce
+local MZoomVal
+--#endregion
+
 --#region Entities
 local player
 local uiHider
@@ -128,6 +146,9 @@ local ILYPlatform
 
 local epicZB
 local ZBPlatform
+
+local epicM
+local MPlatform
 --#endregion
 
 --#region EpicIntroUI
@@ -179,6 +200,7 @@ function Alive()
     InitTSEpicIntro()
     InitILYEpicIntro()
     InitZBEpicIntro()
+    InitMEpicIntro()
 end
 
 function Update()
@@ -206,6 +228,12 @@ function Update()
         _G.activateEpicZB = false
     end
     if _G.ZBEpicIntroState ~= 0 then RunZBEpicIntro() end
+    
+    if _G.activateEpicM then 
+        SetupMEpicIntro()
+        _G.activateEpicM = false
+    end
+    if _G.MEpicIntroState ~= 0 then RunMEpicIntro() end
 
     --#region Test LookTowards
     -- local origin = Vec3.new()
@@ -659,53 +687,90 @@ function RunZBEpicIntro()
             ShowUI()
         end
     end
-    -- if _G.ZBEpicIntroState == 1 then -- Move to start pos and dwactivate ZB
-    --     if not MoveTo(player, ZBPlatform:GetTransform().mTranslate, 100) then
-    --         _G.ZBEpicIntroState = 100 -- To keep ZB waiting
-    --         systemManager.ecs:SetDeleteEntity(ZBPlatform)
-    --         epicZB:GetScripts():AddScript(epicZB, "..\\assets\\Scripts\\EpicIntroZB.lua")
-    --     end
-    -- elseif _G.ZBEpicIntroState == 2 then -- Wait for ZB to shoot player (move to next state when shot by ZB), then wait abit more
-    --     LookTowardsInterpolation(player, ZBView2, 75)
-    --     shotWaitTimeCounter = shotWaitTimeCounter + FPSManager.GetDT()
-    --     if not _G.ZBShotAlready then
-    --         if shotWaitTimeCounter >shotTriggerEffectTime then 
-    --             _G.ZBShotAlready = true 
-    --             -- print("SHOTTED!!!")
-    --             _G.ZBBulletHitPlayer = true
-    --             _G.phySys:SetVelocity(epicZB, Vec3.new())
-    --             epicZB:GetAnimator():PauseAnimation()
-    --         end
-    --     elseif shotWaitTime < shotWaitTimeCounter then _G.ZBEpicIntroState = 3 end
-    -- elseif _G.ZBEpicIntroState == 3 then -- Rotate at normal speed to ZB (freeze ZB at the end)
-    --     if not LookTowardsInterpolation(player, ZBView1, 125) then 
-    --         _G.ZBEpicIntroState = 4
-    --     end
-    -- elseif _G.ZBEpicIntroState == 4 then -- Zoom into ZB
-    --     if not ZoomCamTo(player, ZBZoomValue, 100) then _G.ZBEpicIntroState = 5 end
-    -- elseif _G.ZBEpicIntroState == 5 then -- Show Info
-    --     -- ShowInfoSlowdownCounter = ShowInfoSlowdownCounter + FPSManager.GetDT()
-    --     -- if (ShowInfoSlowdownCounter < ShowInfoSlowdown) then
-    --     --     MoveEpicIntroUI(epicIntroUI, 4.3, false, true)
-    --     -- end
-    --     ShowInfoSlowdownCounter = ShowInfoSlowdownCounter + FPSManager.GetDT()
-    --     local minTimeReached = false
-    --     if ShowInfoSlowdownCounter > ShowInfoMinTime then minTimeReached = true end
-    --     if (ShowInfoSlowdownCounter < ShowInfoSlowdown) then
-    --         MoveEpicIntroUI(epicIntroUI, 4.35, false, true)
-    --     elseif not MoveEpicIntroUI(epicIntroUI, 0.01, false, true) and minTimeReached then _G.ZBEpicIntroState = 6 end
-    -- elseif _G.ZBEpicIntroState == 6 then -- Hide Info
-    --     if not MoveEpicIntroUI(epicIntroUI, 4, false, false) then _G.ZBEpicIntroState = 7 end
-    -- elseif _G.ZBEpicIntroState == 7 then -- Zoom out and resume game
-    --     if (not ZoomCamTo(player, defaultZoom, 100)) then
-    --         _G.ZBEpicIntroState = 0
-    --         _G.FreezePlayerControl = false
-    --         retractBlackBorder = true
-    --         epicZB:GetAnimator():UnpauseAnimation()
-    --         ShowUI()
-    --     end
-    -- end
 end
+
+--#endregion
+
+
+--#region Melissa Intro
+function InitMEpicIntro()
+    MPlatform = _G.gameStateSys:GetEntity("MelissaEpicTrigger")
+    epicM = _G.gameStateSys:GetEntity("EpicMelissa")
+end
+
+function SetupMEpicIntro() 
+    print("SetupMEpicIntro()")
+    epicIntroUI = _G.gameStateSys:GetEntity("MEpicIntroInfoUI")
+    epicIntroUI:GetTransform().mTranslate.x = hideLeftEpicUIPos
+    _G.MEpicIntroState = 1
+    MPos1 = Vec3.new(2.39, 39.6, 19.4)
+    MView1 = Vec3.new(200, 1, 0)
+    MViewUpperLimitx = 220
+    MViewLowerLimitx = 190
+    MZoomVal = 10
+    MAddScriptRunOnce = true
+    systemManager.ecs:SetDeleteEntity(MPlatform)
+    GeneralSetup()
+end
+
+function RunMEpicIntro()
+    -- if _G.MShotAlready then
+    --     epicM:GetTransform().mRotate = Vec3.new(0, 130.013, 0)
+    -- end 
+    -- Always look at the player when midway through exploding
+    local dir = Vec3.new()
+    dir = Helper.Normalize(Helper.Vec3Minus(epicM:GetAISetting():GetTarget():GetTransform().mTranslate, epicM:GetTransform().mTranslate))
+    epicM:GetTransform().mRotate.y = Helper.DirectionToAngle(epicM, dir)
+    print(_G.MEpicIntroState)
+
+    if _G.MEpicIntroState == 1 then -- Move to start pos
+        if not MoveTo(player, MPos1, 100) then
+            _G.MEpicIntroState = 2 -- To keep M waiting
+        end
+    elseif _G.MEpicIntroState == 2 then -- Make player look at front (MView1) (Make melissa scream when ended (attach script to it))
+        if MAddScriptRunOnce then
+            local x = player:GetTransform().mRotate.x
+            if (x > -1) then x = x % 360
+            else  x = x % (-360) end
+            x = math.abs(x)
+            print(x)
+            if x > MViewLowerLimitx and x < MViewUpperLimitx then
+                MAddScriptRunOnce = false
+                epicM:GetScripts():AddScript(epicM, "..\\assets\\Scripts\\EpicIntroM.lua")
+            end
+        end
+        
+        if not LookTowardsInterpolation(player, MView1, 175) then _G.MEpicIntroState = 3 end
+
+    elseif _G.MEpicIntroState == 3 then -- Zoom in
+        if (not ZoomCamTo(player, MZoomVal, 100)) then 
+            _G.MEpicIntroState = 4
+        end
+    elseif _G.MEpicIntroState == 4 then -- Wait timer for melissa to scream midway (Pause animation and audio)
+        if epicM:GetAnimator():GetFrame() > 50 then 
+            epicM:GetAnimator():PauseAnimation()
+            _G.MEpicIntroState = 5 
+        end
+    elseif _G.MEpicIntroState == 5 then -- ShowInfo
+        ShowInfoSlowdownCounter = ShowInfoSlowdownCounter + FPSManager.GetDT()
+
+        if (ShowInfoSlowdownCounter < ShowInfoSlowdown) then MoveEpicIntroUI(epicIntroUI, 4.42, false, true)
+        elseif not MoveEpicIntroUI(epicIntroUI, 0.01, false, true) and
+               ShowInfoSlowdownCounter > ShowInfoMinTime then _G.MEpicIntroState = 6 end
+    elseif _G.MEpicIntroState == 6 then -- HideInfo
+        if not MoveEpicIntroUI(epicIntroUI, 4, false, false) then _G.MEpicIntroState = 7 end
+    elseif _G.MEpicIntroState == 7 then -- zoom out and resume game
+        if (not ZoomCamTo(player, defaultZoom, 100)) then
+            _G.MEpicIntroState = 0
+            _G.FreezePlayerControl = false
+            retractBlackBorder = true
+            epicM:GetAnimator():UnpauseAnimation()
+            ShowUI()
+        end
+    end
+end
+
+--#endregion
 
 
 ----------------------------------------------------------------------------

@@ -1,6 +1,143 @@
 [
     {
-        "entityid": 26214436,
+        "entityid": 2097246,
+        "general": {
+            "name": "EpicMelissa",
+            "tagid": 1,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.162500262260437,
+                "y": 1.4500325918197632,
+                "z": 0.6006437540054321
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -11.089004516601563,
+                "y": 38.686119079589844,
+                "z": 13.200194358825684
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 1,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": true,
+                "z": true
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 2584865052,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 0.17000000178813934,
+                "y": 0.20999999344348907,
+                "z": 0.3100000023841858,
+                "w": 1.0
+            },
+            "castShadow": true,
+            "materialinstance": [
+                "../assets/Compressed/Melissa_BaseColor.ctexture",
+                "../assets/Compressed/Melissa_Normal.ctexture",
+                "../assets/Compressed/Melissa_Metallic.ctexture",
+                "../assets/Compressed/Melissa_Roughness.ctexture",
+                "../assets/Compressed/Melissa_Emissive.ctexture",
+                "../assets/Compressed/Melissa_AO.ctexture"
+            ],
+            "mesh": "../assets/compiled_geom/Melissa_Idle.geom",
+            "texturerefid": [
+                1322168031,
+                1820887936,
+                2908106086,
+                2866962469,
+                2759371044,
+                2018461449
+            ]
+        },
+        "animator": {},
+        "capsulecollider": {
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.75,
+                "z": -0.30000001192092896
+            },
+            "radius": 0.5,
+            "halfheight": 0.25,
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Enemy_Melissa_Split.wav",
+            "fullpath": "../assets\\Audio/Enemy_Melissa_Split.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false
+        },
+        "prefab": {
+            "prefab": "Melissa"
+        },
+        "aisetting": {
+            "movementtype": 1,
+            "spreadout": 0.0,
+            "stayaway": 0.0,
+            "elevation": 0.0,
+            "targetname": "Camera",
+            "graphdataname": "GroundPath"
+        },
+        "healthbar": {
+            "healthcolor": {
+                "x": 0.0,
+                "y": 1.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "backcolor": {
+                "x": 1.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "position": {
+                "x": 0.0,
+                "y": 1.7000000476837158,
+                "z": -0.10000000149011612
+            },
+            "maxhealth": 200.0,
+            "width": 0.800000011920929,
+            "height": 0.07000000029802322,
+            "frametexture": 0,
+            "healthtexture": 0
+        }
+    },
+    {
+        "entityid": 2097247,
         "general": {
             "name": "EpicIntroManagerlv2",
             "tagid": 8,
@@ -35,7 +172,7 @@
         }
     },
     {
-        "entityid": 26214442,
+        "entityid": 2097248,
         "general": {
             "name": "ZBEpicIntroInfoUI",
             "tagid": 6,
@@ -76,7 +213,7 @@
         }
     },
     {
-        "entityid": 26214446,
+        "entityid": 2097249,
         "general": {
             "name": "MEpicIntroInfoUI",
             "tagid": 6,
@@ -117,7 +254,7 @@
         }
     },
     {
-        "entityid": 26214452,
+        "entityid": 2097250,
         "general": {
             "name": "ZipBombFuseAudio",
             "tagid": 8,
@@ -160,7 +297,7 @@
         }
     },
     {
-        "entityid": 26214454,
+        "entityid": 2097251,
         "general": {
             "name": "EpicZipBomb",
             "tagid": 1,
@@ -300,7 +437,7 @@
         }
     },
     {
-        "entityid": 26214463,
+        "entityid": 2097252,
         "general": {
             "name": "ZipBombEpicTrigger",
             "tagid": 8,
@@ -364,7 +501,71 @@
         }
     },
     {
-        "entityid": 26214464,
+        "entityid": 2097253,
+        "general": {
+            "name": "MelissaEpicTrigger",
+            "tagid": 8,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 6.400000095367432,
+                "y": 4.380000114440918,
+                "z": 9.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 2.8923799991607666,
+                "y": 42.485435485839844,
+                "z": 24.138837814331055
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": true,
+                "z": true
+            },
+            "gravity": false
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": true
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/EpicIntroTriggerPlatform.lua",
+                    "variables": []
+                }
+            ]
+        }
+    },
+    {
+        "entityid": 2097254,
         "general": {
             "name": "TopBlackBorder",
             "tagid": 6,
@@ -405,7 +606,7 @@
         }
     },
     {
-        "entityid": 26214472,
+        "entityid": 2097255,
         "general": {
             "name": "BottomBlackBorder",
             "tagid": 6,
@@ -446,7 +647,7 @@
         }
     },
     {
-        "entityid": 26214478,
+        "entityid": 2097256,
         "general": {
             "name": "ILYEffectScreen",
             "tagid": 6,
@@ -498,7 +699,7 @@
         }
     },
     {
-        "entityid": 26214566,
+        "entityid": 2097257,
         "general": {
             "name": "UIHider",
             "tagid": 6,
