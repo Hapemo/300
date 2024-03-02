@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 152,
+        "entityid": 6291551,
         "general": {
             "name": "Level2WallCollider",
             "tagid": 4,
@@ -11,69 +11,7 @@
         "transform": {
             "scale": {
                 "x": 4.099999904632568,
-                "y": 29.999765396118164,
-                "z": 100.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -56.32187271118164,
-                "y": 7.0,
-                "z": 23.397741317749023
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 0,
-            "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": true,
-                "y": true,
-                "z": false
-            },
-            "gravity": true
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "translateoffset": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "istrigger": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Level2WallCollider"
-        }
-    },
-    {
-        "entityid": 153,
-        "general": {
-            "name": "Level2WallCollider",
-            "tagid": 4,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 4.099999904632568,
-                "y": 29.999088287353516,
+                "y": 29.999889373779297,
                 "z": 100.0
             },
             "rotate": {
@@ -82,9 +20,9 @@
                 "z": 0.0
             },
             "translate": {
-                "x": -5.091806411743164,
+                "x": -4.805807113647461,
                 "y": 7.0,
-                "z": 75.48141479492188
+                "z": -26.843889236450195
             }
         },
         "rigidbody": {
@@ -124,7 +62,7 @@
         }
     },
     {
-        "entityid": 154,
+        "entityid": 6291552,
         "general": {
             "name": "Level2WallCollider",
             "tagid": 4,
@@ -186,7 +124,7 @@
         }
     },
     {
-        "entityid": 155,
+        "entityid": 6291554,
         "general": {
             "name": "Level2WallCollider",
             "tagid": 4,
@@ -197,7 +135,7 @@
         "transform": {
             "scale": {
                 "x": 4.099999904632568,
-                "y": 29.999889373779297,
+                "y": 29.999088287353516,
                 "z": 100.0
             },
             "rotate": {
@@ -206,9 +144,71 @@
                 "z": 0.0
             },
             "translate": {
-                "x": -4.805807113647461,
+                "x": -5.091806411743164,
                 "y": 7.0,
-                "z": -26.843889236450195
+                "z": 75.48141479492188
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": true,
+                "z": false
+            },
+            "gravity": true
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Level2WallCollider"
+        }
+    },
+    {
+        "entityid": 6291561,
+        "general": {
+            "name": "Level2WallCollider",
+            "tagid": 4,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 4.099999904632568,
+                "y": 29.999765396118164,
+                "z": 100.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -56.32187271118164,
+                "y": 7.0,
+                "z": 23.397741317749023
             }
         },
         "rigidbody": {
