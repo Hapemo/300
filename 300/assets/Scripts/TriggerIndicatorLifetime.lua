@@ -9,7 +9,7 @@ function Update()
     ent = Helper.GetScriptEntity(script_entity.id)
     transform = ent:GetTransform()
 
-    transform.mTranslate.y = transform.mTranslate.y - 0.5
+    transform.mTranslate.y = transform.mTranslate.y - 1.0
     
     if(transform.mTranslate.y < destroyHeight)then
         systemManager.ecs:SetDeleteEntity(ent)
