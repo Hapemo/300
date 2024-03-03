@@ -893,7 +893,10 @@ function OnTriggerEnter(Entity)
         isTakingDamage = true
         print("laser 1 is damaging player")
     end
-    if (generalComponent.name == "Laser2") then isTakingDamage = true; end
+    if (generalComponent.name == "Laser2") then
+        isTakingDamage = true
+        print("laser 2 is damaging player")
+    end
     -- Player Health System End --
 
 end

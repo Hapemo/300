@@ -1,5 +1,6 @@
 local speed
 local original_rotation
+local new_rotation
 
 function Alive()
 
@@ -15,11 +16,19 @@ function Update()
     ent = Helper.GetScriptEntity(script_entity.id)
     trans = ent:GetTransform()
 
+    new_rotation = Vec3.new()
+
     if(trans.mRotate.y < (original_rotation + 360)) then
-        trans.mRotate.y = trans.mRotate.y + (FPSManager.GetDT() * speed)
+        new_rotation.x = trans.mRotate.x
+        new_rotation.y = trans.mRotate.y + (FPSManager.GetDT() * speed)
+        new_rotation.z = trans.mRotate.z
+        --trans.mRotate.y = trans.mRotate.y + (FPSManager.GetDT() * speed)
     elseif (trans.mRotate.y >= (original_rotation + 360)) then
-        trans.mRotate.y = original_rotation
+        new_rotation.x = trans.mRotate.x
+        new_rotation.y = original_rotation
+        new_rotation.z = trnas.mRotate.z
     end
+    Helper.SetRealRotate(ent, new_rotation)
 end
 
 function Dead()

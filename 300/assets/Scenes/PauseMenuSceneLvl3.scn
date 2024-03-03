@@ -1,8 +1,8 @@
 [
     {
-        "entityid": 2097254,
+        "entityid": 17825797,
         "general": {
-            "name": "Awake",
+            "name": "PauseMenuController",
             "tagid": 0,
             "subtag": 0,
             "isActive": true,
@@ -20,71 +20,47 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 1000.0,
+                "x": 0.0,
                 "y": 0.0,
                 "z": 0.0
             }
         },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "UI_Screen_Awake.wav",
-            "fullpath": "../assets\\Audio/UI_Screen_Awake.wav",
-            "playonawake": true,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 0.4000000059604645,
-            "retainaudio": false
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/PauseMenuBackground.lua",
+                    "variables": [
+                        {
+                            "key": "runOnce",
+                            "val": {
+                                "type": -1129103353,
+                                "value": false
+                            }
+                        },
+                        {
+                            "key": "runOnce2",
+                            "val": {
+                                "type": -1129103353,
+                                "value": false
+                            }
+                        }
+                    ]
+                }
+            ]
         }
     },
     {
-        "entityid": 7340125,
+        "entityid": 17825798,
         "general": {
-            "name": "Click",
-            "tagid": 6,
+            "name": "PauseBackButton",
+            "tagid": 0,
             "subtag": 0,
             "isActive": true,
             "isPaused": false
         },
         "transform": {
             "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "UI_Button_Click.wav",
-            "fullpath": "../assets\\Audio/UI_Button_Click.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 1.0,
-            "retainaudio": false
-        }
-    },
-    {
-        "entityid": 10485768,
-        "general": {
-            "name": "PauseRestartButton",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.25,
+                "x": 0.20000000298023224,
                 "y": -0.20000000298023224,
                 "z": 1.0
             },
@@ -95,13 +71,13 @@
             },
             "translate": {
                 "x": 1000.0,
-                "y": -0.1550000011920929,
+                "y": -0.6399999856948853,
                 "z": 0.0
             }
         },
         "uirenderer": {
             "texpath": "",
-            "textureref": 354076791,
+            "textureref": 1569467779,
             "degree": 0.0,
             "slider": 1.0,
             "color": {
@@ -110,7 +86,7 @@
                 "z": 1.0,
                 "w": 1.0
             },
-            "layer": 5,
+            "layer": 7,
             "worldtransform": false
         },
         "scripts": {
@@ -148,81 +124,7 @@
         }
     },
     {
-        "entityid": 10485769,
-        "general": {
-            "name": "PauseQuitButton",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.25,
-                "y": -0.20000000298023224,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 1000.0,
-                "y": -0.5799999833106995,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "../assets/Compressed/Quit_Default.ctexture",
-            "textureref": 496038782,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 5,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/PauseMenuButtons.lua",
-                    "variables": [
-                        {
-                            "key": "gameState",
-                            "val": {
-                                "type": -734751724,
-                                "value": "Test3"
-                            }
-                        }
-                    ]
-                }
-            ]
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "UI_Button_Hover.wav",
-            "fullpath": "../assets\\Audio/UI_Button_Hover.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 0.20000000298023224,
-            "retainaudio": false
-        },
-        "button": {
-            "interactable": true,
-            "hover": false,
-            "click": false,
-            "activated": false,
-            "renderflag": true
-        }
-    },
-    {
-        "entityid": 10485770,
+        "entityid": 17825800,
         "general": {
             "name": "Exit",
             "tagid": 0,
@@ -259,7 +161,7 @@
         }
     },
     {
-        "entityid": 10485771,
+        "entityid": 17825801,
         "general": {
             "name": "PauseHTPButton",
             "tagid": 6,
@@ -336,7 +238,192 @@
         }
     },
     {
-        "entityid": 10485777,
+        "entityid": 19923040,
+        "general": {
+            "name": "PauseRestartButton",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.25,
+                "y": -0.20000000298023224,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 1000.0,
+                "y": -0.1550000011920929,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 354076791,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 5,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/PauseMenuButtons.lua",
+                    "variables": [
+                        {
+                            "key": "gameState",
+                            "val": {
+                                "type": -734751724,
+                                "value": "Test3"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "UI_Button_Hover.wav",
+            "fullpath": "../assets\\Audio/UI_Button_Hover.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 0.20000000298023224,
+            "retainaudio": false
+        },
+        "button": {
+            "interactable": true,
+            "hover": false,
+            "click": false,
+            "activated": false,
+            "renderflag": true
+        }
+    },
+    {
+        "entityid": 24117345,
+        "general": {
+            "name": "PauseQuitButton",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.25,
+                "y": -0.20000000298023224,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 1000.0,
+                "y": -0.5799999833106995,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "../assets/Compressed/Quit_Default.ctexture",
+            "textureref": 496038782,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 5,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/PauseMenuButtons.lua",
+                    "variables": [
+                        {
+                            "key": "gameState",
+                            "val": {
+                                "type": -734751724,
+                                "value": "Test3"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "UI_Button_Hover.wav",
+            "fullpath": "../assets\\Audio/UI_Button_Hover.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 0.20000000298023224,
+            "retainaudio": false
+        },
+        "button": {
+            "interactable": true,
+            "hover": false,
+            "click": false,
+            "activated": false,
+            "renderflag": true
+        }
+    },
+    {
+        "entityid": 24117347,
+        "general": {
+            "name": "Click",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "UI_Button_Click.wav",
+            "fullpath": "../assets\\Audio/UI_Button_Click.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false
+        }
+    },
+    {
+        "entityid": 24117351,
         "general": {
             "name": "PauseMainMenuButton",
             "tagid": 6,
@@ -410,133 +497,9 @@
         }
     },
     {
-        "entityid": 10485778,
+        "entityid": 26214495,
         "general": {
-            "name": "PauseBackButton",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.20000000298023224,
-                "y": -0.20000000298023224,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 1000.0,
-                "y": -0.6399999856948853,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 1569467779,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 7,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/PauseMenuButtons.lua",
-                    "variables": [
-                        {
-                            "key": "gameState",
-                            "val": {
-                                "type": -734751724,
-                                "value": "Test3"
-                            }
-                        }
-                    ]
-                }
-            ]
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "UI_Button_Hover.wav",
-            "fullpath": "../assets\\Audio/UI_Button_Hover.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 0.20000000298023224,
-            "retainaudio": false
-        },
-        "button": {
-            "interactable": true,
-            "hover": false,
-            "click": false,
-            "activated": false,
-            "renderflag": true
-        }
-    },
-    {
-        "entityid": 10485780,
-        "general": {
-            "name": "PauseMenuController",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/PauseMenuBackground.lua",
-                    "variables": [
-                        {
-                            "key": "runOnce",
-                            "val": {
-                                "type": -1129103353,
-                                "value": false
-                            }
-                        },
-                        {
-                            "key": "runOnce2",
-                            "val": {
-                                "type": -1129103353,
-                                "value": false
-                            }
-                        }
-                    ]
-                }
-            ]
-        }
-    },
-    {
-        "entityid": 10485781,
-        "general": {
-            "name": "PauseHTPMenu",
+            "name": "PauseMenuBackground",
             "tagid": 6,
             "subtag": 0,
             "isActive": true,
@@ -561,7 +524,7 @@
         },
         "uirenderer": {
             "texpath": "",
-            "textureref": 419352496,
+            "textureref": 227867702,
             "degree": 0.0,
             "slider": 1.0,
             "color": {
@@ -570,12 +533,49 @@
                 "z": 1.0,
                 "w": 1.0
             },
-            "layer": 6,
+            "layer": 4,
             "worldtransform": false
         }
     },
     {
-        "entityid": 11534433,
+        "entityid": 27263081,
+        "general": {
+            "name": "Awake",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 1000.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "UI_Screen_Awake.wav",
+            "fullpath": "../assets\\Audio/UI_Screen_Awake.wav",
+            "playonawake": true,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 0.4000000059604645,
+            "retainaudio": false
+        }
+    },
+    {
+        "entityid": 29360129,
         "general": {
             "name": "PauseResumeButton",
             "tagid": 6,
@@ -652,9 +652,9 @@
         }
     },
     {
-        "entityid": 14680151,
+        "entityid": 30408808,
         "general": {
-            "name": "PauseMenuBackground",
+            "name": "PauseHTPMenu",
             "tagid": 6,
             "subtag": 0,
             "isActive": true,
@@ -679,7 +679,7 @@
         },
         "uirenderer": {
             "texpath": "",
-            "textureref": 227867702,
+            "textureref": 419352496,
             "degree": 0.0,
             "slider": 1.0,
             "color": {
@@ -688,7 +688,7 @@
                 "z": 1.0,
                 "w": 1.0
             },
-            "layer": 4,
+            "layer": 6,
             "worldtransform": false
         }
     }
