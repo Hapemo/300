@@ -4,18 +4,6 @@ local objective2
 local objective3
 function Alive()
     gameStateSys = systemManager:mGameStateSystem()
-
-    -- objective1 =  gameStateSys:GetEntityByScene("Objectives1" , "testSerialization")
-    -- objective2 =  gameStateSys:GetEntityByScene("Objectives2" , "testSerialization")
-    -- objective3 =  gameStateSys:GetEntityByScene("Objectives3" , "testSerialization")
-
-    -- game starts with first objective spawned
-    -- objectives = gameStateSys:GetEntity("Objectives1")
-    -- local starting_offset = Vec3.new()
-    -- starting_offset.x = objectives:GetTransform().mTranslate.x
-    -- starting_offset.y = -10.5
-    -- starting_offset.z = objectives:GetTransform().mTranslate.z
-
 end
 
 function Update()
@@ -28,17 +16,17 @@ function Update()
     TestScripts = testScriptEntity:GetScripts()
     testScript = TestScripts:GetScript("../assets/Scripts/ObjectivesController.lua")
     objCount = testScript:ReturnValueInt("GetCountObj")
+        TestScripts = testScriptEntity:GetScripts()
+        testScript = TestScripts:GetScript("../assets/Scripts/ObjectivesController.lua")
+        objCount = testScript:ReturnValueInt("GetCountObj")
+        TestScripts = testScriptEntity:GetScripts()
+        testScript = TestScripts:GetScript("../assets/Scripts/ObjectivesController.lua")
+        objCount = testScript:ReturnValueInt("GetCountObj")
 
     --spawn the objectives portals
     -- print("SPAWN PORTALS")
     objective1 = gameStateSys:GetEntity("Objectives1")
     objective2 = gameStateSys:GetEntity("Objectives2")
-    objective3 = gameStateSys:GetEntity("Objectives3")
-
-    local o1offset = Vec3.new()
-    local o2offset = Vec3.new()
-    local o3offset =Vec3.new()
-
     -- use the counter to raise the objective platforms
     if testScript ~= nil then
         if objCount == 3 then
@@ -63,6 +51,12 @@ function Update()
 
     -- objective1:GetTransform().mTranslate.y = -10.5
     -- objective2:GetTransform().mTranslate.y = -10.5
+    -- objective3:GetTransform().mTranslate.y = -10.5
+
+    -- Helper.SetTranslate(objective1,o1offset)
+    -- Helper.SetTranslate(objective2,o2offset)
+    -- Helper.SetTranslate(objective3,o3offset)
+    --end
     -- objective3:GetTransform().mTranslate.y = -10.5
 
     -- Helper.SetTranslate(objective1,o1offset)
