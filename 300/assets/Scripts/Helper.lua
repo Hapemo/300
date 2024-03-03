@@ -78,8 +78,14 @@ function Helper.SetRealRotate(Entity, Vec3)
     vec.x = transformComponent.mRotate.x;
     vec.y = transformComponent.mRotate.y;
     vec.z = transformComponent.mRotate.z;
+    --print("set rotation") -- working, can check BossLaserBeamPhase.lua
     physicsSys = systemManager:mPhysicsSystem();
     physicsSys:SetRotation(Entity, vec);
+end
+
+function Helper.SetRealRotateQuaternion(Entity, Axis, Angle)
+    physicsSys = systemManager:mPhysicsSystem();
+    physicsSys:SetRotationQuaternion(Entity, Axis, Angle);
 end
 
 function Helper.Normalize(Vec3)
