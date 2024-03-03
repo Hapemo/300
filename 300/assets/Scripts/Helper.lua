@@ -76,6 +76,11 @@ function Helper.SetRealRotate(Entity, Vec3)
     physicsSys:SetRotation(Entity, vec);
 end
 
+function Helper.SetRealRotateQuaternion(Entity, Axis, Angle)
+    physicsSys = systemManager:mPhysicsSystem();
+    physicsSys:SetRotationQuaternion(Entity, Axis, Angle);
+end
+
 function Helper.Normalize(Vec3)
     magnitude = (Vec3.x ^ 2 + Vec3.y ^ 2 + Vec3.z ^ 2) ^ 0.5
     if magnitude == 0 then 

@@ -1,35 +1,23 @@
 local speed
-local original_rotation
-local new_rotation
+local angle = 0.0
+local axis = Vec3.new()
 
 function Alive()
 
     -- testing timer countdown for the rotation of the laser
     ent = Helper.GetScriptEntity(script_entity.id)
     trans = ent:GetTransform()
-    speed = 50
-    original_rotation = trans.mRotate.y
+    axis.x = 0.0
+    axis.y = 1.0
+    axis.z = 0.0
+    speed = 5
+    angle = 0.0
 end
 
 function Update()
 
-    ent = Helper.GetScriptEntity(script_entity.id)
-    trans = ent:GetTransform()
-
-    new_rotation = Vec3.new()
-
-    if(trans.mRotate.y < (original_rotation + 360)) then
-        print("trans is: ", trans.mRotate.y)
-        print("cap is: ", original_rotation + 360)
-        new_rotation.x = trans.mRotate.x
-        new_rotation.y = trans.mRotate.y + (FPSManager.GetDT() * speed)
-        new_rotation.z = trans.mRotate.z
-    elseif (trans.mRotate.y >= (original_rotation + 360)) then
-        new_rotation.x = trans.mRotate.x
-        new_rotation.y = original_rotation
-        new_rotation.z = trnas.mRotate.z
-    end
-    Helper.SetRealRotate(ent, new_rotation)
+    angle = angle + speed * (FPSManager.GetDT() * speed)
+    Helper.SetRealRotateQuaternion(ent, axis, angle)
 end
 
 function Dead()
@@ -37,11 +25,13 @@ function Dead()
 end
 
 function OnTriggerEnter(Entity)
-    
+    generalComponent = Entity:GetGeneral()
+    print("enter", generalComponent.name)
 end
 
 function OnTriggerExit(Entity)
-    
+    generalComponent = Entity:GetGeneral()
+    print("exit", generalComponent.name)
 end
 
 function OnContactEnter(Entity)

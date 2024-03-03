@@ -336,7 +336,8 @@ void LuaPhysics()
         "mPhysicsSystem", sol::constructors<>(),
         "SetVelocity", &PhysicsSystem::SetVelocity,
         "SetPosition", &PhysicsSystem::SetPosition,
-        "SetRotation", &PhysicsSystem::SetRotation);
+        "SetRotation", &PhysicsSystem::SetRotation,
+        "SetRotationQuaternion", &PhysicsSystem::SetRotationQuaternion);
 }
 
 void LuaScripting()
