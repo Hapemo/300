@@ -61,7 +61,7 @@ function Update()
     --     this:GetHealthbar().health = this:GetHealthbar().health - 10
     -- end
 
-    this:GetTransform().mRotate.y = Helper.DirectionToAngle(this, direction)
+    Helper.SetRealRotate(this, Vec3.new(0, Helper.DirectionToAngle(this, direction), 0))
     -- STATE MACHINE
     if state == "TRAVEL" then         -- walk directly to player using pathfinding (change to 2. when duplicate timer runs out)
         direction = aiSys:GetDirection(this)

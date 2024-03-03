@@ -337,6 +337,11 @@ function DisplayArray()
             uirender:SetTexture(_G.textureArray[_G.weaponArray[i][1]])      
             uirender:SetDegree(0)
 
+            -- Debugging 
+            -- if(_G.weaponArray[i][1] == )
+
+            -- print("WEAPON ARRAY HAS: " , _G.weaponArray[i][1])
+
         else
             uirender = dashui[i]:GetUIrenderer()
             uirender:SetDegree(360)

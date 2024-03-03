@@ -1,49 +1,6 @@
 [
     {
-        "entityid": 15728858,
-        "general": {
-            "name": "EnemyDeathAudio",
-            "tagid": 8,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "Enemy_Death.wav",
-            "fullpath": "../assets\\Audio/Enemy_Death.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 0.25,
-            "retainaudio": false
-        },
-        "prefab": {
-            "prefab": "EnemyDeathAudio"
-        }
-    },
-    {
-        "entityid": 15728859,
+        "entityid": 3145806,
         "general": {
             "name": "TrojanHorseChargeAudio",
             "tagid": 0,
@@ -83,6 +40,49 @@
         },
         "prefab": {
             "prefab": "TrojanHorseChargeAudio"
+        }
+    },
+    {
+        "entityid": 3145807,
+        "general": {
+            "name": "EnemyDeathAudio",
+            "tagid": 8,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Enemy_Death.wav",
+            "fullpath": "../assets\\Audio/Enemy_Death.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 0.25,
+            "retainaudio": false
+        },
+        "prefab": {
+            "prefab": "EnemyDeathAudio"
         }
     }
 ]

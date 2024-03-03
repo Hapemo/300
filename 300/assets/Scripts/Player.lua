@@ -176,8 +176,9 @@ local minFilterRadius = 0.001
 local maxExposure = 1.2
 local maxFilterRadius = 0.05
 local dmgAudioEnt 
-local dmgAudioComp 
-   
+local dmgAudioComp
+
+_G.FreezePlayerControl = false
 
 function Alive()
     this = Helper.GetScriptEntity(script_entity.id)
@@ -256,6 +257,7 @@ function Alive()
 end
 
 function Update()
+    if _G.FreezePlayerControl then return end
     -- healthbar = gameStateSys:GetEntityByScene("Health Bar","Objectives") // Changed to UI scene
     healthbar = gameStateSys:GetEntity("HealthBar", "UI")
 
@@ -662,8 +664,18 @@ function Update()
                 gunRecoilState = "MOVING"
 
             end
-            if (floorCount > 0) then
-                if (inputMapSys:GetButtonDown("Jump")) then
+
+            if(gameStateSys:GetCurrentGameState().mName == "Test") then
+                if (floorCount > 0) then
+                    if (inputMapSys:GetButtonDown("Jump")) then
+                        movement.y = movement.y + 25.0;
+                        gunRecoilState = "MOVING"
+                        gunJumped = true
+                        jumpAudioComp:SetPlay(0.4)
+                    end
+                end
+            elseif(gameStateSys:GetCurrentGameState().mName == "Test2") then
+                if (inputMapSys:GetButtonDown("Jump") and math.abs(movement.y) < 3.05) then
                     movement.y = movement.y + 25.0;
                     gunRecoilState = "MOVING"
                     gunJumped = true
@@ -711,11 +723,11 @@ function Update()
 -- endregion
 
         if(inputMapSys:GetButtonDown("Shoot")) then
-            print("MINUS HEALTH")
-            playerHealthCurrent = playerHealthCurrent - 20
-            if playerHealthCurrent > playerHealthMax then
-                playerHealthCurrent = playerHealthMax
-            end
+            -- print("MINUS HEALTH")
+            -- playerHealthCurrent = playerHealthCurrent - 20
+            -- if playerHealthCurrent > playerHealthMax then
+            --     playerHealthCurrent = playerHealthMax
+            -- end
             gunHoldState = "HOLDING"   -- for machine gun
 
             if(_G.gunEquipped == 0) then 

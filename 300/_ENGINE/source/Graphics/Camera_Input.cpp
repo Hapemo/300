@@ -118,7 +118,9 @@ void Camera_Scripting::SetPosition(Entity cameraEntity, const vec3& newposition)
 void Camera_Scripting::SetTarget(Entity cameraEntity, const vec3& newtarget)
 {
 	assert(cameraEntity.HasComponent<Camera>());
-	cameraEntity.GetComponent<Camera>().mCamera.mTarget = newtarget;
+	Camera& cam = cameraEntity.GetComponent<Camera>();
+	cam.mCamera.mTarget = newtarget;
+	cam.mCamera.mManualCameraSet = true;
 }
 
 
@@ -139,6 +141,12 @@ void Camera_Scripting::SetFov(Entity cameraEntity, const float& fov)
 {
 	assert(cameraEntity.HasComponent<Camera>());
 	cameraEntity.GetComponent<Camera>().mCamera.mFovDegree = fov;
+}
+
+float Camera_Scripting::GetFov(Entity cameraEntity)
+{
+	assert(cameraEntity.HasComponent<Camera>());
+	return cameraEntity.GetComponent<Camera>().mCamera.mFovDegree;
 }
 
 

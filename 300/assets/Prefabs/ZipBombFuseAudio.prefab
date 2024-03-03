@@ -1,8 +1,8 @@
 {
-    "entityid": 1048795,
+    "entityid": 5242906,
     "general": {
         "name": "ZipBombFuseAudio",
-        "tagid": 0,
+        "tagid": 8,
         "subtag": 0,
         "isActive": true,
         "isPaused": false
@@ -23,6 +23,9 @@
             "y": 0.0,
             "z": 0.0
         }
+    },
+    "scripts": {
+        "scriptscontainer": []
     },
     "audio": {
         "filepath": "../assets\\Audio",

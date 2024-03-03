@@ -12,8 +12,7 @@ local original_translate_z
 local playerEntity
 local playerRigidBody
 
--- local gunSway = Vec3.new()
-
+-- local gunSway = Vec3.new()    
 function Alive()
     gameStateSys = systemManager:mGameStateSystem()
     inputMapSys = systemManager:mInputActionSystem()
