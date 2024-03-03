@@ -29,7 +29,8 @@ local frame
 local picture
 
 local frameOpened
-
+local frameClosed
+local done
 --:GetUIrenderer():SetSlider(progress/objectivesComplete)
 
 function Alive()
@@ -61,10 +62,14 @@ function Alive()
     currState = 0
 
     speed = 0.01
-    framespeed = 0.05
-    picturespeed = 0.00625
+    framespeed = 0.25
+    picturespeed = 0.03125
 
     frameOpened = false
+
+    done = false;
+
+    frameClosed = false
 end
 
 function Update()
@@ -72,8 +77,12 @@ function Update()
         OpenFrame()
     end
 
-    if frameOpened == true then
+    if frameOpened == true and done == false then
         UpdateDialogues()
+    end
+
+    if done == true and frameClosed == false then
+        CloseFrame()
     end
 end
 
@@ -101,7 +110,7 @@ function UpdateDialogues()
     inputMapSys = systemManager:mInputActionSystem()
 
     if currState > 3 then
-        return
+        done = true
     end
 
     if inputMapSys:GetButtonDown("skip") then 
@@ -143,11 +152,12 @@ function UpdateDialogues()
             end
         else 
             LoadIn2Progress = speed + LoadIn2Progress
+            LoadIn2 = gameStateSys:GetEntity("DialogueLoadIn2", "Dialogue_Tutorial")
             if LoadIn2Progress > 1.0 then
                 LoadIn2Progress = 1.1
                 LoadIn2:GetUIrenderer():SetSlider(1.0)
             else
-                LoadIn2:GetUIrenderer():SetSlider(LoadIn2progress)
+                LoadIn2:GetUIrenderer():SetSlider(LoadIn2Progress)
             end
         end
     elseif currState == 1 then
@@ -277,4 +287,21 @@ function OpenFrame()
         frameOpened = true
     end
 
+end
+
+function CloseFrame()
+    
+    if picture:GetTransform().mScale.x >= 0.01 then
+        picture:GetTransform().mScale.x = picture:GetTransform().mScale.x - picturespeed
+        if picture:GetTransform().mScale.x < 0.0 then
+            picture:GetTransform().mScale.x = 0.0
+        end
+    elseif frame:GetTransform().mScale.x >= 0.01 then
+        frame:GetTransform().mScale.x = frame:GetTransform().mScale.x - framespeed
+        if frame:GetTransform().mScale.x < 0.0 then
+            frame:GetTransform().mScale.x = 0.0
+        end
+    else
+        frameClosed = true
+    end
 end
