@@ -19,10 +19,11 @@ function Update()
     new_rotation = Vec3.new()
 
     if(trans.mRotate.y < (original_rotation + 360)) then
+        print("trans is: ", trans.mRotate.y)
+        print("cap is: ", original_rotation + 360)
         new_rotation.x = trans.mRotate.x
         new_rotation.y = trans.mRotate.y + (FPSManager.GetDT() * speed)
         new_rotation.z = trans.mRotate.z
-        --trans.mRotate.y = trans.mRotate.y + (FPSManager.GetDT() * speed)
     elseif (trans.mRotate.y >= (original_rotation + 360)) then
         new_rotation.x = trans.mRotate.x
         new_rotation.y = original_rotation
