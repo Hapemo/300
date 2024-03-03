@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 2097402,
+        "entityid": 6291682,
         "general": {
             "name": "Objective Bar Empty",
             "tagid": 6,
@@ -47,7 +47,7 @@
         }
     },
     {
-        "entityid": 2097403,
+        "entityid": 6291683,
         "general": {
             "name": "Objective Bar Empty",
             "tagid": 6,
@@ -94,7 +94,7 @@
         }
     },
     {
-        "entityid": 2097404,
+        "entityid": 6291684,
         "general": {
             "name": "Objective Bar 1",
             "tagid": 6,
@@ -141,281 +141,7 @@
         }
     },
     {
-        "entityid": 2097405,
-        "general": {
-            "name": "Objectives3",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 6.0,
-                "y": 0.5,
-                "z": 6.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 19.657516479492188,
-                "y": -20.0,
-                "z": 15.100000381469727
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 0,
-            "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": true,
-                "y": true,
-                "z": true
-            },
-            "gravity": true
-        },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 3247065376,
-            "instancecolor": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "bloomthreshold": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "castShadow": true,
-            "materialinstance": [
-                "../assets/Compressed/Objective_Base_BaseColour.ctexture",
-                "../assets/Compressed/Objective_Base_Normal.ctexture",
-                "../assets/Compressed/Objective_Base_Roughness.ctexture",
-                "../assets/Compressed/Objective_Base_Metallic.ctexture",
-                "../assets/Compressed/Objective_Base_Emissive.ctexture",
-                "../assets/Compressed/Objective_Base_AO.ctexture"
-            ],
-            "mesh": "../assets/compiled_geom/Objective_Base.geom",
-            "texturerefid": [
-                200309925,
-                683426931,
-                2037504544,
-                565530477,
-                3188370359,
-                916185482
-            ]
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "translateoffset": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "istrigger": true
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/ObjectivesLv2.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "prefab": {
-            "prefab": "Objectives"
-        }
-    },
-    {
-        "entityid": 2097406,
-        "general": {
-            "name": "Objectives1",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 6.0,
-                "y": 0.5,
-                "z": 6.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -20.57029914855957,
-                "y": -20.0,
-                "z": 14.840156555175781
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 0,
-            "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": true,
-                "y": true,
-                "z": true
-            },
-            "gravity": true
-        },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 3247065376,
-            "instancecolor": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "bloomthreshold": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "castShadow": true,
-            "materialinstance": [
-                "../assets/Compressed/Objective_Base_BaseColour.ctexture",
-                "../assets/Compressed/Objective_Base_Metallic.ctexture",
-                "../assets/Compressed/Objective_Base_Roughness.ctexture",
-                "../assets/Compressed/Objective_Base_Metallic.ctexture",
-                "../assets/Compressed/Objective_Base_Emissive.ctexture",
-                "../assets/Compressed/Objective_Base_AO.ctexture"
-            ],
-            "mesh": "../assets/compiled_geom/Objective_Base.geom",
-            "texturerefid": [
-                200309925,
-                565530477,
-                2037504544,
-                565530477,
-                3188370359,
-                916185482
-            ]
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "translateoffset": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "istrigger": true
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/ObjectivesLv2.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "prefab": {
-            "prefab": "Objectives"
-        }
-    },
-    {
-        "entityid": 2097407,
-        "general": {
-            "name": "Controller",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/ObjectivesController.lua",
-                    "variables": []
-                }
-            ]
-        }
-    },
-    {
-        "entityid": 2097408,
-        "general": {
-            "name": "PreObjectivesController",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/PreObjectivesController.lua",
-                    "variables": []
-                }
-            ]
-        }
-    },
-    {
-        "entityid": 2097409,
+        "entityid": 6291685,
         "general": {
             "name": "Objectives2",
             "tagid": 0,
@@ -507,7 +233,7 @@
         "scripts": {
             "scriptscontainer": [
                 {
-                    "scriptFile": "../assets/Scripts/ObjectivesLv2.lua",
+                    "scriptFile": "../assets/Scripts/Objectives.lua",
                     "variables": []
                 }
             ]
@@ -517,7 +243,281 @@
         }
     },
     {
-        "entityid": 2097410,
+        "entityid": 6291686,
+        "general": {
+            "name": "PreObjectivesController",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/PreObjectivesController.lua",
+                    "variables": []
+                }
+            ]
+        }
+    },
+    {
+        "entityid": 6291687,
+        "general": {
+            "name": "Controller",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/ObjectivesController.lua",
+                    "variables": []
+                }
+            ]
+        }
+    },
+    {
+        "entityid": 6291688,
+        "general": {
+            "name": "Objectives1",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 6.0,
+                "y": 0.5,
+                "z": 6.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -20.57029914855957,
+                "y": -20.0,
+                "z": 14.840156555175781
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": true,
+                "z": true
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3247065376,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "castShadow": true,
+            "materialinstance": [
+                "../assets/Compressed/Objective_Base_BaseColour.ctexture",
+                "../assets/Compressed/Objective_Base_Metallic.ctexture",
+                "../assets/Compressed/Objective_Base_Roughness.ctexture",
+                "../assets/Compressed/Objective_Base_Metallic.ctexture",
+                "../assets/Compressed/Objective_Base_Emissive.ctexture",
+                "../assets/Compressed/Objective_Base_AO.ctexture"
+            ],
+            "mesh": "../assets/compiled_geom/Objective_Base.geom",
+            "texturerefid": [
+                200309925,
+                565530477,
+                2037504544,
+                565530477,
+                3188370359,
+                916185482
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": true
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/Objectives.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "prefab": {
+            "prefab": "Objectives"
+        }
+    },
+    {
+        "entityid": 6291689,
+        "general": {
+            "name": "Objectives3",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 6.0,
+                "y": 0.5,
+                "z": 6.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 19.657516479492188,
+                "y": -20.0,
+                "z": 15.100000381469727
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": true,
+                "z": true
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3247065376,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "castShadow": true,
+            "materialinstance": [
+                "../assets/Compressed/Objective_Base_BaseColour.ctexture",
+                "../assets/Compressed/Objective_Base_Normal.ctexture",
+                "../assets/Compressed/Objective_Base_Roughness.ctexture",
+                "../assets/Compressed/Objective_Base_Metallic.ctexture",
+                "../assets/Compressed/Objective_Base_Emissive.ctexture",
+                "../assets/Compressed/Objective_Base_AO.ctexture"
+            ],
+            "mesh": "../assets/compiled_geom/Objective_Base.geom",
+            "texturerefid": [
+                200309925,
+                683426931,
+                2037504544,
+                565530477,
+                3188370359,
+                916185482
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": true
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/Objectives.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "prefab": {
+            "prefab": "Objectives"
+        }
+    },
+    {
+        "entityid": 6291690,
         "general": {
             "name": "Objective Bar 1",
             "tagid": 6,
@@ -564,7 +564,7 @@
         }
     },
     {
-        "entityid": 2097411,
+        "entityid": 6291691,
         "general": {
             "name": "Objective Bar Empty",
             "tagid": 6,
@@ -611,7 +611,7 @@
         }
     },
     {
-        "entityid": 2097412,
+        "entityid": 6291692,
         "general": {
             "name": "Objective Bar Empty",
             "tagid": 6,
