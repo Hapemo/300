@@ -27,6 +27,8 @@ local deathTimer = 1.45
 local deathTimerCount = 0
 
 local state
+
+local runOnce
 -- Melissa states
 -- 1. TRAVEL. walk directly to player using pathfinding (change to 2. when health falls below 50% health and is intended to spawn another melissa)
 -- 2. DUPLICATE. stops moving and vibrate hard. when vibrate timer is up, spawn in another melissa (change to 1. after duplicating)
@@ -41,22 +43,20 @@ function Alive()
     phySys = systemManager:mPhysicsSystem();
     gameStateSys = systemManager:mGameStateSystem();
 
-    -- Initialise the state's variables
-    state = "TRAVEL"
-
-    local num = math.random()
-    spawnMelissa = num > 0.5
+    spawnMelissa = true
     target = this:GetAISetting():GetTarget()
 
     thisPos = this:GetTransform().mTranslate
     targetPos = target:GetTransform().mTranslate
 
-    notBelow50Yet = true
+    notBelow50Yet = false
     deathTimerCount = 0
+    this:GetHealthbar().health = this:GetHealthbar().maxHealth/2
+    SpawnMelissa()
 end
 
 function Update()
-
+    if _G.MEpicIntroState > 4 then return end
     -- if systemManager:mInputActionSystem():GetButtonDown("Test1") then
     --     this:GetHealthbar().health = this:GetHealthbar().health - 10
     -- end

@@ -340,7 +340,8 @@ void LuaPhysics()
         "SetVelocity", &PhysicsSystem::SetVelocity,
         "SetPosition", &PhysicsSystem::SetPosition,
         "SetRotation", &PhysicsSystem::SetRotation,
-        "ResetEntity", &PhysicsSystem::ResetEntity);
+        "ResetEntity", &PhysicsSystem::ResetEntity,
+        "SetRotationQuaternion", &PhysicsSystem::SetRotationQuaternion);
 }
 
 void LuaScripting()

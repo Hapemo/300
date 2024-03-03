@@ -50,7 +50,7 @@ function Update()
 
     -- Attack portion is in oncontact
     -- Movement
-    this:GetTransform().mRotate.y = Helper.DirectionToAngle(this, this:GetRigidBody().mVelocity)
+    Helper.SetRealRotate(this, Vec3.new(0, Helper.DirectionToAngle(this, this:GetRigidBody().mVelocity), 0))
     
     if Helper.Vec3Len(this:GetRigidBody().mVelocity) < 0.1 then
         local upVec = Vec3.new()

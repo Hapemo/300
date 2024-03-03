@@ -42,6 +42,8 @@ public:
 	void AddEntity(Entity e);
 	void SetPosition(Entity e, const glm::vec3& globalpose);
 	void SetRotation(Entity e, const glm::vec3& rotation);
+	void SetRotationQuaternion(Entity e, const glm::vec3& axis, const float& rotation);
+
 	/*!*****************************************************************************
 	Set velocity of an entity.
 	*******************************************************************************/
@@ -84,7 +86,6 @@ private:
 		const RigidBody& rbod, bool isTrigger);
 
 	void MoveQueuedEntities();
-
 	void Synchronize();
 
 	PxRaycastHit hitBuffer[HIT_BUFFER_SIZE];

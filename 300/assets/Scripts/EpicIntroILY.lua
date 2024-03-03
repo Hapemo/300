@@ -129,11 +129,11 @@ function ILOVEYOUMovement()
     --#region Movement
     vec = aiSys:GetDirection(this)
     if inLineOfSight then
-        this:GetTransform().mRotate.y = Helper.DirectionToAngle(this, vec)
+        Helper.SetRealRotate(this, Vec3.new(0, Helper.DirectionToAngle(this, vec), 0))
     else
         local dir = Vec3.new()
         dir = Helper.Normalize(Helper.Vec3Minus(targetPos, thisPos))
-        this:GetTransform().mRotate.y = Helper.DirectionToAngle(this, dir)
+        Helper.SetRealRotate(this, Vec3.new(0, Helper.DirectionToAngle(this, dir), 0))
     end
 
     Helper.Scale(vec, 3)

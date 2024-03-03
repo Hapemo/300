@@ -22,7 +22,7 @@ end
 function Update()
     local dir = Vec3.new()
     dir = Helper.Normalize(Helper.Vec3Minus(this:GetAISetting():GetTarget():GetTransform().mTranslate, this:GetTransform().mTranslate))
-    this:GetTransform().mRotate.y = Helper.DirectionToAngle(this, dir)
+    Helper.SetRealRotate(this, Vec3.new(0, Helper.DirectionToAngle(this, dir), 0))
     if _G.ZBEpicIntroState > 5 then return end
     if state == "EXPLODING" then
         explodingTimerCount = explodingTimerCount + FPSManager.GetDT()
