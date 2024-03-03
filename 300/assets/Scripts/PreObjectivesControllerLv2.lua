@@ -30,7 +30,7 @@ function Update()
     objCount = testScript:ReturnValueInt("GetCountObj")
 
     --spawn the objectives portals
-    print("SPAWN PORTALS")
+    --print("SPAWN PORTALS")
     objective1 = gameStateSys:GetEntity("Objectives1")
     objective2 = gameStateSys:GetEntity("Objectives2")
     objective3 = gameStateSys:GetEntity("Objectives3")
