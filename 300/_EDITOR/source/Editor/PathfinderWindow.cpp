@@ -129,7 +129,7 @@ void PathfinderWindow::update() {
 
   // Edge Tool
 
-  // Adding edge portion=
+  // Adding edge portion
   ImGui::Text("Add Edge Tool");
 
   // Display selected points for edge making

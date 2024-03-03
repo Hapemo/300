@@ -9,8 +9,6 @@ local targetPlayer
 local triggerOnce
 local moveTime = 0
 
-_G.obj_counter = 0
-
 function Alive()
     this = Helper.GetScriptEntity(script_entity.id)
     if this == nil then print("Entity nil in script!") end
@@ -19,14 +17,9 @@ function Alive()
 
     targetPlayer = _G.gameStateSys:GetEntity("Camera")
     triggerOnce = false
-
-    print(">>>>>>> Epic platform Alive")
-    _G.obj_counter = 0
 end
 
 function Update()
-    print("OBJCOUNTER", _G.obj_counter)
-
  if not triggerOnce then
     -- keep spawning arrow pointing down
     -- "this" is the script entity, can get position from here, the x,y,z
@@ -35,6 +28,7 @@ function Update()
 end
 
 function Dead()
+    
 end
 
 function OnTriggerEnter(Entity)
@@ -42,7 +36,6 @@ function OnTriggerEnter(Entity)
     if Entity == targetPlayer then --player id
         print("Epic platform OnTriggerEnter")
         triggerOnce = true
-        _G.obj_counter = _G.obj_counter + 1
 
         if (string.find(name, "melissa")) then
             _G.activateEpicM = true
@@ -74,11 +67,11 @@ end
 function RandomSpawnArrowIndicator()
     moveTime = moveTime + FPSManager.GetDT()
 
-    if(moveTime > 0.5) then
+    if(moveTime > 0.4) then
         transform = this:GetTransform()
         local spawndataPos = Vec3.new()
         spawndataPos.x = transform.mTranslate.x + math.random(-300,300)/100
-        spawndataPos.y = transform.mTranslate.y + 50
+        spawndataPos.y = transform.mTranslate.y + 100
         spawndataPos.z = transform.mTranslate.z + math.random(-300,300)/100
 
         systemManager.ecs:NewEntityFromPrefab("TriggerIndicator", spawndataPos)

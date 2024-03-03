@@ -106,9 +106,7 @@ function Update()
             end
         end
 
-        
-    if _G.obj_counter == 2 then
-        -- SPAWNING ENEMIES    
+    -- SPAWNING ENEMIES
         currentSpawnTimer = currentSpawnTimer + FPSManager.GetDT()
 
         if currentEnemyCount < maxEnemyCount and currentSpawnTimer > spawnTimer then
@@ -137,7 +135,6 @@ function Update()
             currentEnemyCount = currentEnemyCount + 1
             currentSpawnTimer = 0 -- reset currentSpawnTimer so that next enemy can spawn
         end
-    end
 
     --print("Current progress =", progress/objectivesComplete)
     -- print("SPAWNING")
@@ -162,7 +159,7 @@ function Update()
 
     --if(_G.PreObjectivesCounter >=4)then
 
-        if(moveTime > 0.5) then
+        if(moveTime >0.4)then
 
             -- for i = 1, 2 , 1 
             -- do 
@@ -182,6 +179,13 @@ function Update()
 
                 bulletPrefab = systemManager.ecs:NewEntityFromPrefab("0s", spawndataPos)
             end
+
+                -- spawndataPos.x = transform.mTranslate.x  +math.random(-300,300)/100
+                -- spawndataPos.y = transform.mTranslate.y 
+                -- spawndataPos.z = transform.mTranslate.z +math.random(-300,300)/100
+
+                -- bulletPrefab = systemManager.ecs:NewEntityFromPrefab("0s", spawndataPos)
+
 
             -- end
             moveTime = 0
