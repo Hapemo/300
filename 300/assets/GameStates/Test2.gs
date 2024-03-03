@@ -54,7 +54,7 @@
         "debug": 1
     },
     {
-        "scene_name": "Objectives",
+        "scene_name": "Objectives2",
         "pause": false,
         "force_render": true,
         "bloom_threshold": {
