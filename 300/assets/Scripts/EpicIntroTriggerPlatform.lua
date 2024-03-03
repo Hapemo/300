@@ -7,6 +7,7 @@ local name
 local this
 local targetPlayer
 local triggerOnce
+local moveTime = 0
 
 function Alive()
     this = Helper.GetScriptEntity(script_entity.id)
@@ -19,7 +20,11 @@ function Alive()
 end
 
 function Update()
-
+ if not triggerOnce then
+    -- keep spawning arrow pointing down
+    -- "this" is the script entity, can get position from here, the x,y,z
+    RandomSpawnArrowIndicator()
+ end
 end
 
 function Dead()
@@ -58,3 +63,18 @@ function OnContactExit(Entity)
 
 end
 
+
+function RandomSpawnArrowIndicator()
+    moveTime = moveTime + FPSManager.GetDT()
+
+    if(moveTime > 0.4) then
+        transform = this:GetTransform()
+        local spawndataPos = Vec3.new()
+        spawndataPos.x = transform.mTranslate.x + math.random(-300,300)/100
+        spawndataPos.y = transform.mTranslate.y + 100
+        spawndataPos.z = transform.mTranslate.z + math.random(-300,300)/100
+
+        systemManager.ecs:NewEntityFromPrefab("TriggerIndicator", spawndataPos)
+        moveTime = 0.0
+    end
+end

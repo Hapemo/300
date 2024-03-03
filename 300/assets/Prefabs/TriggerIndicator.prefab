@@ -1,0 +1,73 @@
+{
+    "entityid": 12582945,
+    "general": {
+        "name": "TriggerIndicator",
+        "tagid": 0,
+        "subtag": 0,
+        "isActive": true,
+        "isPaused": false
+    },
+    "transform": {
+        "scale": {
+            "x": 1.069937825202942,
+            "y": 1.0,
+            "z": 2.9700000286102295
+        },
+        "rotate": {
+            "x": -90.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "translate": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        }
+    },
+    "meshrenderer": {
+        "vert": "../assets/shader_files/pointLight_vert.glsl",
+        "frag": "../assets/shader_files/pointLight_frag.glsl",
+        "meshrefid": 3314,
+        "instancecolor": {
+            "x": 0.0,
+            "y": 0.6886792182922363,
+            "z": 1.0,
+            "w": 1.0
+        },
+        "bloomthreshold": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+        },
+        "castShadow": true,
+        "materialinstance": [
+            "../assets/Compressed/Cube_Texture_White.ctexture",
+            "../assets/Compressed/Cube_Texture_White_Normal.ctexture",
+            " ",
+            " ",
+            " ",
+            " "
+        ],
+        "mesh": "../assets/compiled_geom/Cylinder_Arrow.geom",
+        "texturerefid": [
+            2075419717,
+            1949753341,
+            0,
+            0,
+            0,
+            0
+        ]
+    },
+    "scripts": {
+        "scriptscontainer": [
+            {
+                "scriptFile": "../assets/Scripts/TriggerIndicatorLifetime.lua",
+                "variables": []
+            }
+        ]
+    },
+    "prefab": {
+        "prefab": "TriggerIndicator"
+    }
+}
