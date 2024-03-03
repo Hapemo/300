@@ -1,0 +1,82 @@
+{
+    "entityid": 8388766,
+    "general": {
+        "name": "Spawn_Point_Ref",
+        "tagid": 1,
+        "subtag": 0,
+        "isActive": true,
+        "isPaused": false
+    },
+    "transform": {
+        "scale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 0.9999958872795105
+        },
+        "rotate": {
+            "x": 2.856468915939331,
+            "y": -1.3754568099975586,
+            "z": 0.2807457447052002
+        },
+        "translate": {
+            "x": 3.208970308303833,
+            "y": 7.017225742340088,
+            "z": 9.241089820861816
+        }
+    },
+    "meshrenderer": {
+        "vert": "../assets/shader_files/pointLight_vert.glsl",
+        "frag": "../assets/shader_files/pointLight_frag.glsl",
+        "meshrefid": 3400,
+        "instancecolor": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+        },
+        "bloomthreshold": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+        },
+        "castShadow": true,
+        "materialinstance": [
+            "../assets/Compressed/UI-Yellow-s3&321.ctexture",
+            "../assets/Compressed/UI-Yellow-s3&321.ctexture",
+            " ",
+            " ",
+            " ",
+            " "
+        ],
+        "mesh": "../assets/compiled_geom/Particle_Sphere.geom",
+        "texturerefid": [
+            1240881460,
+            1240881460,
+            0,
+            0,
+            0,
+            0
+        ]
+    },
+    "spherecollider": {
+        "scaleoffset": 1.0,
+        "translateoffset": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "istrigger": true
+    },
+    "scripts": {
+        "scriptscontainer": [
+            {
+                "scriptFile": "../assets/Scripts/BossBullet.lua",
+                "variables": []
+            }
+        ]
+    },
+    "prefab": {
+        "prefab": "Spawn_Point_Ref"
+    }
+}

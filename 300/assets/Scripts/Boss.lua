@@ -24,10 +24,18 @@ local angles_to_spawn_from = {0, 45 , 90 , 135 , 180}
 local no_of_waves_1 = 5                                 -- used to keep track how many waves of bullets to spawn
 local random_wave_generator = false                     -- boolean value to keep track if a random value has been generated.
 -- keeps track of which bullethell attack has been used (so there won't be back to back usage)
+
 -- [1] Spiral Bullets (Ground)
 local bullet_attack_checker = {false, false, false}     -- keep track which attacks have been used so won't activate back to back
+local attacking = false
 local number_of_fire = 0
 local stop_firing_at = 10
+
+-- [2] Summon Bullet + Homing Bullets (From Boss' Mouth / Front) 
+local spawn_point_ref_obj
+local spawn_point_ref_trans
+local spawn_point_translate = Vec3.new()
+
 
 
 -- Boss states
@@ -40,13 +48,31 @@ local once = false
 
 
 function Alive()
+    print("ALIVE")
     this = Helper.GetScriptEntity(script_entity.id)
+    gameStateSys = systemManager:mGameStateSystem();
+    physicsSys = systemManager:mPhysicsSystem()
+
     -- Testing (Bullet Spawn Position)
     bossPosition = this:GetTransform().mTranslate
+    spawn_point_ref_obj = gameStateSys:GetEntityByScene("Spawn_Point_Ref" , "BossStuff")
+    spawn_point_ref_trans = spawn_point_ref_obj:GetTransform().mTranslate
+
+    -- For [1] Spiral Bullets (Ground)
     bulletSpawnPosition.x = bossPosition.x
     bulletSpawnPosition.y = bossPosition.y
     bulletSpawnPosition.z = bossPosition.z
-    physicsSys = systemManager:mPhysicsSystem()
+
+    -- For [2]  Summon Bullet + Homing Bullets (From Boss' Mouth / Front) 
+    spawn_point_translate.x = spawn_point_ref_trans.x
+    spawn_point_translate.y = spawn_point_ref_trans.y
+    spawn_point_translate.z = spawn_point_ref_trans.z
+
+    -- print("1")
+    print("1: " , spawn_point_translate.x)
+    print("2: " , spawn_point_translate.y)
+    print("3: " , spawn_point_translate.z)
+
 end
 
 function Update()
@@ -127,7 +153,16 @@ function Update()
         
         fire_timer = fire_timer +  FPSManager.GetDT()
 
-        bulletProjectileType = math.random (1, 3)
+        if attacking == false then 
+            -- bulletProjectileType = math.random (1, 3)
+            bulletProjectileType = 2
+            print("PROJECTILE ATTACKING TYPE: "  , bulletProjectileType)
+            attacking = true
+        end
+
+        
+
+
 
         -- Check if this projectile has been recently used... 
         if(bullet_attack_checker[bulletProjectileType] == false) then 
@@ -146,11 +181,18 @@ function Update()
                     else
                         -- state_checker[3] = true
                         bullet_attack_checker[1] = true
+                        attacking = false
                     end
                 end
             end
 
-        
+            if(bulletProjectileType == 2) then 
+                HomingSpheres(10)
+                bullet_attack_checker[2] = true
+                attacking = false
+            end
+
+            
         end
 
 
@@ -236,6 +278,26 @@ function SpawnBulletsPattern1(number_of_bullets)
         
         angle = angle + angleStep
         
+    end
+
+end
+
+-- Bullet Attack 2 - Homing Spheres (From eyes to player)
+function HomingSpheres(number_of_bullets)   
+    -- Let's start by randomnizing the starting spawn point of the projectile
+
+    for i = 0 , number_of_bullets do 
+        local attack_offset_range = 5  -- Defines a range to spread out from the central position to summon the bullets in different positions
+                    
+        local random_offset_x = math.random(-attack_offset_range , attack_offset_range)
+        local random_offset_y = math.random(-attack_offset_range , attack_offset_range)
+        local random_offset_z = math.random(-attack_offset_range , attack_offset_range)
+        
+        local bullet_spawn_position = Vec3.new(spawn_point_translate.x + random_offset_x , 
+                                            spawn_point_translate.y + random_offset_y , 
+                                            spawn_point_translate.z + random_offset_z)
+
+        sphere_bullet = systemManager.ecs:NewEntityFromPrefab("Boss_Bullet_Homing",bullet_spawn_position)
     end
 
 end
