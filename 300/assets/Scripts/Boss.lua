@@ -35,13 +35,22 @@ local stop_firing_at = 10
 local spawn_point_ref_obj
 local spawn_point_ref_trans
 local spawn_point_translate = Vec3.new()
+local number_of_homing
 
-
+local homing_bullet
+local homing_projectiles = {}                           -- Define a table to store projectile data
+local projectile_stay_time = 2                          -- timer for the bullet to stay still before it starts homing into the player
+local initial_homing_speed = 3                          -- Starting Homing Speed
 
 -- Boss states
 local state = 0
 local state_checker = {false, false , false}
 local once = false
+
+-- Player Stuff
+local player_object 
+local player_position = Vec3.new()
+
 -- 1. Summon enemies
 -- 2. Ground slam: Boss swings arms and slams the ground, spawning a ground slam area that damages player
 -- 3. Shoot projectiles
@@ -57,6 +66,10 @@ function Alive()
     bossPosition = this:GetTransform().mTranslate
     spawn_point_ref_obj = gameStateSys:GetEntityByScene("Spawn_Point_Ref" , "BossStuff")
     spawn_point_ref_trans = spawn_point_ref_obj:GetTransform().mTranslate
+
+    -- Player 
+    player_object = gameStateSys:GetEntityByScene("Camera" , "test3")
+    player_position = player_object:GetTransform().mTranslate
 
     -- For [1] Spiral Bullets (Ground)
     bulletSpawnPosition.x = bossPosition.x
@@ -155,14 +168,10 @@ function Update()
 
         if attacking == false then 
             -- bulletProjectileType = math.random (1, 3)
-            bulletProjectileType = 2
+            bulletProjectileType = 2 -- temporary
             print("PROJECTILE ATTACKING TYPE: "  , bulletProjectileType)
             attacking = true
         end
-
-        
-
-
 
         -- Check if this projectile has been recently used... 
         if(bullet_attack_checker[bulletProjectileType] == false) then 
@@ -187,13 +196,25 @@ function Update()
             end
 
             if(bulletProjectileType == 2) then 
-                HomingSpheres(10)
+                number_of_homing = math.random(5, 8)
+                print("NUMBER OF HOMING: " , number_of_homing)
+
+                for i = 0 , number_of_homing do
+                    SpawnHomingSpheres()
+                end
+
+                -- if UpdateHomingProjectiles() == false then -- done homing 
+                --     print("Im done homing")
                 bullet_attack_checker[2] = true
                 attacking = false
-            end
+                -- end
 
-            
+           
+
+            end
         end
+
+    
 
 
 
@@ -244,6 +265,18 @@ function RotateVectorAroundYAxis(vector, angle)
     -- print("ROTATED Z: " , vector.z)
 end
 
+-- local Vec3 = {}
+
+-- Define Subtract method within Vec3 module
+function Vec3.Subtract(vector1, vector2)
+    local result = {
+        x = vector1.x - vector2.x,
+        y = vector1.y - vector2.y,
+        z = vector1.z - vector2.z
+    }
+    return result
+end
+
 -- Bullet Attack 1 - Spiraling Spheres (Ground)
 function SpawnBulletsPattern1(number_of_bullets)
 
@@ -283,23 +316,100 @@ function SpawnBulletsPattern1(number_of_bullets)
 end
 
 -- Bullet Attack 2 - Homing Spheres (From eyes to player)
-function HomingSpheres(number_of_bullets)   
+function SpawnHomingSpheres()
     -- Let's start by randomnizing the starting spawn point of the projectile
+    bulletSpeed = 5
 
-    for i = 0 , number_of_bullets do 
-        local attack_offset_range = 5  -- Defines a range to spread out from the central position to summon the bullets in different positions
-                    
-        local random_offset_x = math.random(-attack_offset_range , attack_offset_range)
-        local random_offset_y = math.random(-attack_offset_range , attack_offset_range)
-        local random_offset_z = math.random(-attack_offset_range , attack_offset_range)
+    -- Spawning Logic (Start)
+    -- for i = 0 , number_of_bullets do 
+    local attack_offset_range = 5  -- Defines a range to spread out from the central position to summon the bullets in different positions
+                
+    local random_offset_x = math.random(-attack_offset_range , attack_offset_range)
+    local random_offset_y = math.random(-attack_offset_range , attack_offset_range)
+    local random_offset_z = math.random(-attack_offset_range , attack_offset_range)
+    
+    local bullet_spawn_position = Vec3.new(spawn_point_translate.x + random_offset_x , 
+                                        spawn_point_translate.y + random_offset_y , 
+                                        spawn_point_translate.z + random_offset_z)
+
+    -- homing_bullet = systemManager.ecs:NewEntityFromPrefab("Boss_Bullet_Homing",bullet_spawn_position)
+    local homing_bullet = 
+    {
+        entity = systemManager.ecs:NewEntityFromPrefab("Boss_Bullet_Homing",bullet_spawn_position),
+        position = bulletSpawnPosition,  -- Note that this is randomnized by the previous few lines
+        direction = Vec3.new(0,0,0), 
+        speed = 0,
+        stay_time = 2.0,    -- Time to stay still before homing (in seconds)
+        lock_on_time = 5.0 -- Time to locks onto the player
+    }
+
+    -- local test_transform = homing_bullet:GetTransform().mTranslate
+    -- local test_transform = projectile.entity:GetTransform()
+    -- print("Transform: " , homing_bullet.entity:GetTransform().mTranslate)
+    
+
+    -- local homing_bullet = systemManager.ecs:NewEntityFromPrefab("Boss_Bullet_Homing",bullet_spawn_position)
+
+    table.insert(homing_projectiles, homing_bullet)
+    
+
         
-        local bullet_spawn_position = Vec3.new(spawn_point_translate.x + random_offset_x , 
-                                            spawn_point_translate.y + random_offset_y , 
-                                            spawn_point_translate.z + random_offset_z)
-
-        sphere_bullet = systemManager.ecs:NewEntityFromPrefab("Boss_Bullet_Homing",bullet_spawn_position)
-    end
+    -- end
+    -- Spawning Logic (End)
 
 end
 
+function UpdateHomingProjectiles()
+    -- local counter = 0
+    for i , projectile in ipairs(homing_projectiles) do
+        if projectile.entity ~= nil then 
+            -- counter = counter + 1
+            if projectile.speed == 0 then  -- projectile speed is set to 0 at the start
+                -- Stay still for awhile
+                projectile.stay_time = projectile.stay_time - FPSManager.GetDT()  
+                if projectile.stay_time <= 0 then 
+                    -- Starts homing towards the player (by providing speed)
+                    projectile.speed = initial_homing_speed
+                end
+            else
+                -- Lock onto the player after a delay
+                projectile.lock_on_time = projectile.lock_on_time - FPSManager.GetDT()
+                if projectile.lock_on_time <= 0 then 
+                    local directionToPlayer = Vec3.Subtract(player_position, projectile.position)
+                    -- print("DIRECTION TO PLAYER: " , directionToPlayer.x ,  " , " , directionToPlayer.y , " , " , directionToPlayer.z)
+                    directionToPlayer = Helper.Normalize(directionToPlayer)
+                    -- print("NORMALIZED DIRECTION TO PLAYER: " , directionToPlayer.x ,  " , " , directionToPlayer.y , " , " , directionToPlayer.z)
+
+                    directionToPlayer.x = directionToPlayer.x * projectile.speed
+                    directionToPlayer.y = directionToPlayer.y * projectile.speed
+                    directionToPlayer.z = directionToPlayer.z * projectile.speed
+                    
+                    -- Ensure projectile.entity is not nil before setting velocity
+                    if projectile.entity ~= nil then 
+                        physicsSys:SetVelocity(projectile.entity, directionToPlayer)
+                    else
+                        print("Projectile entity is nil!")
+                    end
+                    -- print("SETTING VELOCITY")
+                    -- print("DIRECTION TO PLAYER: " , directionToPlayer.x ,  " , " , directionToPlayer.y , " , " , directionToPlayer.z)
+                    -- physicsSys:SetVelocity(projectile.entity, directionToPlayer)
+         
+                    
+                end
+            end
+        end
+    end
+
+
+
+
+end 
+
+
+
+
+-- function UpdateHomingProjectiles()
+--     for i , projectiles in
+
+-- end
 
