@@ -44,8 +44,9 @@ function Alive()
     restartButton = gameStateSys:GetEntity("PauseRestartButton")
     HTPMenu = gameStateSys:GetEntity("PauseHTPMenu")
     backButton = gameStateSys:GetEntity("PauseBackButton")
+    settingsButton = gameStateSys:GetEntity("PauseSettingsButton")
     menuBackground = gameStateSys:GetEntity("PauseMenuBackground")
-
+    
     _G.isPausePauseMenu = false
     _G.isHTPMenu = false
 
@@ -56,6 +57,17 @@ function Update()
 end
 
 function PauseUpdate()
+    settingsMenuBackground = gameStateSys:GetEntityByScene("SettingsMenuBackground", "SettingsSceneLvl2")
+    settingsBgmEmpty = gameStateSys:GetEntityByScene("SettingsBgmEmpty", "SettingsSceneLvl2")
+    settingsBgmFull = gameStateSys:GetEntityByScene("SettingsBgmFull", "SettingsSceneLvl2")
+    settingsFSButton = gameStateSys:GetEntityByScene("SettingsFSButton", "SettingsSceneLvl2")
+    settingsWindowButton = gameStateSys:GetEntityByScene("SettingsWindowButton", "SettingsSceneLvl2")
+    settingsBackButton = gameStateSys:GetEntityByScene("SettingsBackButton", "SettingsSceneLvl2")
+    bgmDecrease = gameStateSys:GetEntityByScene("bgmDecrease", "SettingsSceneLvl2")
+    bgmIncrease = gameStateSys:GetEntityByScene("bgmIncrease", "SettingsSceneLvl2")
+    sfxDecrease = gameStateSys:GetEntityByScene("sfxDecrease", "SettingsSceneLvl2")
+    sfxIncrease = gameStateSys:GetEntityByScene("sfxIncrease", "SettingsSceneLvl2")
+
     --print("INUPDATEEEEEEEEEEEEEEE")
     button = Helper.GetScriptEntity(script_entity.id)
     if (button:GetButton().mIsHover) then
@@ -79,6 +91,8 @@ function PauseUpdate()
             button:GetUIrenderer():SetTexture("Quit_P_Hover")
         elseif (button:GetGeneral().name == "PauseMainMenuButton") then
             button:GetUIrenderer():SetTexture("MainMenu_Hover")
+        elseif (button:GetGeneral().name == "PauseSettingsButton") then
+            button:GetUIrenderer():SetTexture("Settings_Hover")
         end
     else
         hoverOver = false
@@ -92,6 +106,8 @@ function PauseUpdate()
             button:GetUIrenderer():SetTexture("Quit_P_Default")
         elseif (button:GetGeneral().name == "PauseMainMenuButton") then
             button:GetUIrenderer():SetTexture("MainMenu_Default")
+        elseif (button:GetGeneral().name == "PauseSettingsButton") then
+            button:GetUIrenderer():SetTexture("Settings_Default")
         end
     end
     if (button:GetButton().mActivated) then
@@ -110,7 +126,7 @@ function PauseUpdate()
             systemManager:SetIsPause(false)
             _G.isPausePauseMenu = false
         elseif (button:GetGeneral().name == "PauseHTPButton") then
-        mainMenuButton:GetTransform().mTranslate.x = 1000
+            mainMenuButton:GetTransform().mTranslate.x = 1000
             quitButton:GetTransform().mTranslate.x = 1000
             resumeButton:GetTransform().mTranslate.x = 1000
             htpButton:GetTransform().mTranslate.x = 1000
@@ -119,6 +135,17 @@ function PauseUpdate()
             HTPMenu:GetTransform().mTranslate.x = 0
             backButton:GetTransform().mTranslate.x = 0.65
             _G.isHTPMenu = true
+        elseif (button:GetGeneral().name == "PauseSettingsButton") then
+            settingsMenuBackground:GetTransform().mTranslate.x = 0
+            settingsBgmEmpty:GetTransform().mTranslate.x = -0.21
+            settingsBgmFull:GetTransform().mTranslate.x = -0.21
+            settingsFSButton:GetTransform().mTranslate.x = -0.59
+            settingsWindowButton:GetTransform().mTranslate.x = -0.08
+            settingsBackButton:GetTransform().mTranslate.x = 0.85
+            bgmDecrease:GetTransform().mTranslate.x = -0.61
+            bgmIncrease:GetTransform().mTranslate.x = 0.21
+            sfxDecrease:GetTransform().mTranslate.x = -0.61
+            sfxIncrease:GetTransform().mTranslate.x = 0.21
         elseif (button:GetGeneral().name == "PauseBackButton") then
             HTPMenu:GetTransform().mTranslate.x = 1000
             backButton:GetTransform().mTranslate.x = 1000

@@ -21,6 +21,7 @@ function Alive()
     resumeButton = gameStateSys:GetEntity("PauseResumeButton")
     htpButton = gameStateSys:GetEntity("PauseHTPButton")
     restartButton = gameStateSys:GetEntity("PauseRestartButton")
+    settingsButton = gameStateSys:GetEntity("PauseSettingsButton")
     menuBackground = gameStateSys:GetEntity("PauseMenuBackground")
     _G.isPausePauseMenu = false
 end
@@ -34,23 +35,18 @@ function Update()
     if (inputMapSys:GetButtonDown("pause")) then
         runOnce = true
         if (not _G.isPausePauseMenu) then
-            --graphicssys:HideCursor(false)
-            --print("PAUSE MENU, CURSOR SHOWN")
-            --systemManager:Pause()
             systemManager.mIsInGamePause = true
             _G.isPausePauseMenu = true
         end
     end
     if (not _G.isPausePauseMenu) then
-        --print("bring AWAYYY menu")
-            --graphicssys:HideCursor(true)
-            --print("PAUSE MENU, CURSOR HIDDEN")
         mainMenuButton:GetTransform().mTranslate.x = 1000
         quitButton:GetTransform().mTranslate.x = 1000
         resumeButton:GetTransform().mTranslate.x = 1000
         htpButton:GetTransform().mTranslate.x = 1000
         menuBackground:GetTransform().mTranslate.x = 1000
         restartButton:GetTransform().mTranslate.x = 1000
+        settingsButton:GetTransform().mTranslate.x = 1000
     end
 end
 
@@ -64,8 +60,6 @@ function PauseUpdate()
     if (inputMapSys:GetButtonDown("pause")) then
         if (_G.isPausePauseMenu) then
             graphicssys:HideCursor(true)
-            --print("PAUSE MENU, CURSOR HIDDEN")
-            --systemManager:Play()
             systemManager.mIsInGamePause = false
             _G.isPausePauseMenu = false
             runOnce2 = true
@@ -73,11 +67,8 @@ function PauseUpdate()
     end
 
     if not _G.isPausePauseMenu then return end
-
-    --print("bring back menu7")
         graphicssys:HideCursor(false)
         Input.SetCursorCenter()
-        --print("PAUSE MENU, CURSOR SHOWN")
     if (_G.isHTPMenu == false) then
         mainMenuButton:GetTransform().mTranslate.x = 0.02
         quitButton:GetTransform().mTranslate.x = 0.02
@@ -85,6 +76,7 @@ function PauseUpdate()
         htpButton:GetTransform().mTranslate.x = 0.02
         menuBackground:GetTransform().mTranslate.x = 0
         restartButton:GetTransform().mTranslate.x = 0.02
+        settingsButton:GetTransform().mTranslate.x = 0.02
     end
 end
 

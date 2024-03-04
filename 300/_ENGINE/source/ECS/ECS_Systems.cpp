@@ -157,6 +157,13 @@ void SystemManager::Update(float dt)
 		for (Entity entity : scriptEntities)
 		{
 			entity.GetComponent<Scripts>().RunFunctionForAllScripts("PauseUpdate");
+			if (entity.GetComponent<General>().name == "SettingsMenuBackground")
+			{
+				for (Script* script : entity.GetComponent<Scripts>().scriptsContainer)
+				{
+					script->Run("Update");
+				}
+			}
 		}
 		mButtonSystem.get()->Update();
 		mAudioSystem.get()->Update(dt, false);
