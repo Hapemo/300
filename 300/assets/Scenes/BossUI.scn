@@ -1,0 +1,255 @@
+[
+    {
+        "entityid": 3145733,
+        "general": {
+            "name": "BossUITitle",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.6129999756813049,
+                "y": -0.20000000298023224,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "../assets/Compressed/Temp_Boss_Name.ctexture",
+            "textureref": 304268164,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 0.0
+            },
+            "layer": 0,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/BossTitleUI.lua",
+                    "variables": []
+                }
+            ]
+        }
+    },
+    {
+        "entityid": 3145735,
+        "general": {
+            "name": "Laser1",
+            "tagid": 8,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 80.0,
+                "y": 0.5,
+                "z": 0.5
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": -1.0,
+                "z": 8.5
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 1,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": false,
+                "y": false,
+                "z": false
+            },
+            "gravity": false
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 2285,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "castShadow": true,
+            "materialinstance": [
+                "../assets/Compressed/Wood Material 15_BaseColor.ctexture",
+                "../assets/Compressed/Wood Material 15_Normal.ctexture",
+                " ",
+                " ",
+                " ",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/cube.geom",
+            "texturerefid": [
+                3285574925,
+                2287741774,
+                0,
+                0,
+                0,
+                0
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": true
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/BossLaserBeamPhase.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "prefab": {
+            "prefab": "Laser1"
+        }
+    },
+    {
+        "entityid": 3145736,
+        "general": {
+            "name": "Laser2",
+            "tagid": 8,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 80.0,
+                "y": 0.4999871850013733,
+                "z": 0.5
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": -1.0,
+                "z": 8.5
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 1,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": false,
+                "y": false,
+                "z": false
+            },
+            "gravity": false
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 2285,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "castShadow": true,
+            "materialinstance": [
+                "../assets/Compressed/Wood Material 15_BaseColor.ctexture",
+                "../assets/Compressed/Wood Material 15_Normal.ctexture",
+                " ",
+                " ",
+                " ",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/cube.geom",
+            "texturerefid": [
+                3285574925,
+                2287741774,
+                0,
+                0,
+                0,
+                0
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": true
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/BossLaserBeamPhase.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "prefab": {
+            "prefab": "Laser1"
+        }
+    }
+]

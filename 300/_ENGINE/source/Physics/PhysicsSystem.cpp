@@ -74,24 +74,75 @@ void PhysicsSystem::AddEntity(Entity e)
 
 void PhysicsSystem::SetPosition(Entity e, const glm::vec3& globalpose)
 {
-	mPendingTranslate.push_back(std::pair<Entity, glm::vec3>(e, globalpose));
+	if (mIsSimulationRunning) {
+		mPendingTranslate.push_back(std::pair<Entity, glm::vec3>(e, globalpose));
+		return;
+	}
+	if (!e.HasComponent<RigidBody>()) return;
+	RigidBody rbod = e.GetComponent<RigidBody>();
+	if (rbod.mMotion == MOTION::DYNAMIC) {
+		PxRigidDynamic* actor = (physx::PxRigidDynamic*)(mActors[static_cast<uint32_t>(e.id)].mActor);
+		if (actor == nullptr) return;
+		actor->setGlobalPose(PxTransform(Convert(globalpose), Convert(glm::quat(glm::radians(e.GetComponent<Transform>().mRotate)))));
+	}
+	else if (rbod.mMotion == MOTION::STATIC) {
+		PxRigidStatic* actor = (physx::PxRigidStatic*)(mActors[static_cast<uint32_t>(e.id)].mActor);
+		if (actor == nullptr) return;
+		actor->setGlobalPose(PxTransform(Convert(globalpose), Convert(glm::quat(glm::radians(e.GetComponent<Transform>().mRotate)))));
+	}
 }
 
 void PhysicsSystem::SetRotation(Entity e, const glm::vec3& rotation)
 {
-	mPendingRotate.push_back(std::pair<Entity, glm::vec3>(e, rotation));
+	if (mIsSimulationRunning) {
+		mPendingRotate.push_back(std::pair<Entity, glm::vec3>(e, rotation));
+		return;
+	}
+	if (!e.HasComponent<RigidBody>()) return;
+	RigidBody rbod = e.GetComponent<RigidBody>();
+	glm::vec3 translate = e.GetComponent<Transform>().mTranslate;
+	if (rbod.mMotion == MOTION::DYNAMIC) {
+		PxRigidDynamic* actor = (physx::PxRigidDynamic*)(mActors[static_cast<uint32_t>(e.id)].mActor);
+		if (actor == nullptr) return;
+		actor->setGlobalPose(PxTransform(Convert(e.GetComponent<Transform>().mTranslate), Convert(glm::quat(glm::radians(rotation)))));
+	}
+	else if (rbod.mMotion == MOTION::STATIC) {
+		PxRigidStatic* actor = (physx::PxRigidStatic*)(mActors[static_cast<uint32_t>(e.id)].mActor);
+		if (actor == nullptr) return;
+		actor->setGlobalPose(PxTransform(Convert(e.GetComponent<Transform>().mTranslate), Convert(glm::quat(glm::radians(rotation)))));
+	}
+}
+
+void PhysicsSystem::SetRotationQuaternion(Entity e, const glm::vec3& axis, const float& rotation) {
+	if (mIsSimulationRunning) {
+		mPendingRotate.push_back(std::pair<Entity, glm::vec3>(e, rotation));
+		return;
+	}
+	if (!e.HasComponent<RigidBody>()) return;
+	RigidBody rbod = e.GetComponent<RigidBody>();
+	glm::vec3 translate = e.GetComponent<Transform>().mTranslate;
+	if (rbod.mMotion == MOTION::DYNAMIC) {
+		PxRigidDynamic* actor = (physx::PxRigidDynamic*)(mActors[static_cast<uint32_t>(e.id)].mActor);
+		if (actor == nullptr) return;
+		actor->setGlobalPose(PxTransform(Convert(e.GetComponent<Transform>().mTranslate), PxQuat(glm::radians(rotation), PxVec3(Convert(axis)))));
+	}
+	else if (rbod.mMotion == MOTION::STATIC) {
+		PxRigidStatic* actor = (physx::PxRigidStatic*)(mActors[static_cast<uint32_t>(e.id)].mActor);
+		if (actor == nullptr) return;
+		actor->setGlobalPose(PxTransform(Convert(e.GetComponent<Transform>().mTranslate), PxQuat(glm::radians(rotation), PxVec3(Convert(axis)))));
+	}
 }
 
 void PhysicsSystem::SetVelocity(Entity e, const glm::vec3& velocity)
 {
-	if (!e.HasComponent<RigidBody>()) return;
-	RigidBody rbod = e.GetComponent<RigidBody>();
-	if (rbod.mMotion == MOTION::STATIC) return;
 	if (mIsSimulationRunning)
 	{
 		mPendingVelocity.push_back(std::pair<Entity, glm::vec3>(e, velocity));
 		return;
 	}
+	if (!e.HasComponent<RigidBody>()) return;
+	RigidBody rbod = e.GetComponent<RigidBody>();
+	if (rbod.mMotion == MOTION::STATIC) return;
 
 	physx::PxRigidDynamic* actor = (physx::PxRigidDynamic*)(mActors[static_cast<uint32_t>(e.id)].mActor);
 	if (actor == nullptr) return;
@@ -392,7 +443,8 @@ void PhysicsSystem::Synchronize()
 		}
 
 		RigidBody& rbod = e.GetComponent<RigidBody>();
-		glm::vec3 rotation = glm::eulerAngles(Convert(PXform.q));
+		glm::vec3 rotation = glm::degrees(glm::eulerAngles(Convert(PXform.q)));
+
 		
 		if (!rbod.mRotationConstraints.x)
 			refXform.mRotate.x = rotation.x;
