@@ -964,7 +964,7 @@ function OnTriggerEnter(Entity)
     end
 
     if (generalComponent.name == "ILOVEYOU" or generalComponent.name == "Melissa" or generalComponent.name == "TrojanHorse"
-    or generalComponent.name == "ZipBomb" or generalComponent.name == "TrojanSoldier" )then
+    or generalComponent.name == "ZipBomb" or generalComponent.name == "TrojanSoldier" or generalComponent.name == "BigTrojanSoldier")then
 
         dmgAudioComp:SetPlay(1.0)
         -- print("DAMAGE CD: " , DamageCD)
