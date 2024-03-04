@@ -63,6 +63,12 @@ _G.activateEpicM = false
 _G.activateEpicILY = false
 _G.activateEpicZB = false
 
+_G.completedEpicTH = false
+_G.completedEpicTS = false
+_G.completedEpicM = false
+_G.completedEpicILY = false
+_G.completedEpicZB = false
+
 local this
 --local Camera_Scripting
 
@@ -389,6 +395,7 @@ function RunTrojanHorseEpicIntro()
             retractBlackBorder = true
             epicTrojanHorse:GetAnimator():UnpauseAnimation()
             ShowUI()
+            _G.completedEpicTH = true
         end
 
         -- deactivate ActivateTrojanHorse boolean
@@ -509,6 +516,7 @@ function RunTSEpicIntro()
             retractBlackBorder = true
             ShowUI()
             AddScriptToTS()
+            _G.completedEpicTS = true
         end
     end
 end
@@ -600,6 +608,7 @@ function RunILYEpicIntro()
             retractBlackBorder = true
             epicILY:GetAnimator():UnpauseAnimation()
             ShowUI()
+            _G.completedEpicILY = true
         end
     end
 end
@@ -684,6 +693,7 @@ function RunZBEpicIntro()
             epicZB:GetAnimator():UnpauseAnimation()
             epicZB:GetAudio():SetPlay()
             ShowUI()
+            _G.completedEpicZB = true
         end
     end
 end
@@ -763,6 +773,7 @@ function RunMEpicIntro()
             retractBlackBorder = true
             epicM:GetAnimator():UnpauseAnimation()
             ShowUI()
+            _G.completedEpicM = true
         end
     end
 end
