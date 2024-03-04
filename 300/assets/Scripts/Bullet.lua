@@ -83,6 +83,7 @@ end
 
 function OnTriggerEnter(Entity)
     generalComponent = Entity:GetGeneral()
+    -- print("HIT THIS OBJECT -> ", generalComponent.name)
 
     --yujun's hardcode :D
     if (generalComponent.name == "tutorialTrojan") then
@@ -116,7 +117,10 @@ function OnTriggerEnter(Entity)
     -- print("THIS ENTITY is: " , generalComponent.name)
 
     tagid = generalComponent.tagid
+
     if (tagid == 1) then
+
+        print("HP of Homing: " , healthComponent.health)
         for i = 3, 1, -1
         do
             spawned(i)
@@ -235,6 +239,12 @@ function OnTriggerEnter(Entity)
         systemManager.ecs:SetDeleteEntity(entityobj)
     end
 
+    if (tagid == 13) then 
+        if(healthComponent ~= nil) then 
+            print("HOMING HAS HEALTH")
+        end
+        -- print("I HAVE SHOT THE HOMING BULLET")
+    end
     -- if (tagid == 3) then
     --     for i = 3, 1, -1
     --     do

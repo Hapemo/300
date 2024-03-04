@@ -33,6 +33,7 @@ local number_of_fire = 0
 local stop_firing_at = 10
 
 -- [2] Summon Bullet + Homing Bullets (From Boss' Mouth / Front) 
+--     -> Players have to shoot them to break them
 local spawn_point_ref_obj
 local spawn_point_ref_trans
 local spawn_point_translate = Vec3.new()
@@ -60,6 +61,7 @@ local player_position = Vec3.new()
 -- 1. Summon enemies
 -- 2. Ground slam: Boss swings arms and slams the ground, spawning a ground slam area that damages player
 -- 3. Shoot projectiles
+-- 4. Laser Attack
 
 
 function Alive()
@@ -110,8 +112,9 @@ function Update()
 
     -- Tentative random switcher between boss states, replace with HP after other states implemented. 100% HP Left = Phase 1, 66% HP Left = Phase 2, 33% HP Left = Phase 3
     currentBossStateTimer = currentBossStateTimer + FPSManager.GetDT()
-    if currentBossStateTimer >= maxBossStateTimer then
-        state = math.random(1, 3)
+    if currentBossStateTimer >= maxBossStateTimer and attacking == false then
+        state = math.random(1, 4)
+        print("STATE CHOSEN: " , state)
         currentBossStateTimer = 0
     end
 
@@ -213,14 +216,14 @@ function Update()
                     -- TODO : Set Timer to spawn 1 by 1 
                     homing_spawn_timer = homing_spawn_timer + FPSManager.GetDT()
 
-                    print("HOMING SPAWN TIMER: " , homing_spawn_timer)
+                    -- print("HOMING SPAWN TIMER: " , homing_spawn_timer)
                     
                     if(homing_spawn_counter < number_of_homing) then 
                         if(homing_spawn_timer > homing_spawn_period) then -- It's time to spawn another homing bullet
                             SpawnHomingSpheres()
                             homing_spawn_counter = homing_spawn_counter + 1 -- Increase the counter
                             homing_spawn_timer = 0   -- Reset the counter
-                            print("SPAWNING ORB")
+                            -- print("SPAWNING ORB")
                         end
                      
                     end
@@ -234,24 +237,16 @@ function Update()
                 -- print("Homing Start: " , homing_start)
                 if homing_start == false then 
                     UpdateHomingProjectiles()
-                    -- print("HI")
-                -- if UpdateHomingProjectiles() == false then -- done homing 
-                --     print("Im done homing")
-
-                --     attacking = false
                 end
 
             end
         end
 
         -- UpdateHomingProjectiles(0)
-    
+    end
 
-
-
-    
-        
-     
+    if state == 4 and state_checker[4] == false then 
+        print("LAZER ATTACK")
     end
 
 end
@@ -385,7 +380,7 @@ function SpawnHomingSpheres()
 
     -- local homing_bullet = systemManager.ecs:NewEntityFromPrefab("Boss_Bullet_Homing",bullet_spawn_position)
 
-    print("THIS HOMING BULLET POSITION: " , homing_bullet.position.x , " , " , homing_bullet.position.y  , " , " , homing_bullet.position.z)
+    -- print("THIS HOMING BULLET POSITION: " , homing_bullet.position.x , " , " , homing_bullet.position.y  , " , " , homing_bullet.position.z)
     table.insert(homing_projectiles, homing_bullet)
 
     -- _G.bulletCounter = _G.bulletCounter + 1
@@ -409,13 +404,13 @@ function UpdateHomingProjectiles()
                 -- print("PROJECTILE STAY TIME: " , projectile.stay_time)
                 if projectile.stay_time <= 0 then 
                     -- Starts homing towards the player (by providing speed)
-                    print("Assigning Initial Speed - Homing")
+                    -- print("Assigning Initial Speed - Homing")
                     projectile.speed = initial_homing_speed
                 end
             else
                 -- Lock onto the player after a delay
                 -- print("Projectile No : " , _G.bulletCounter)
-                print("PROJECTILE LOCK TIME: " , projectile.lock_on_time)
+                -- print("PROJECTILE LOCK TIME: " , projectile.lock_on_time)
                 projectile.lock_on_time = projectile.lock_on_time - FPSManager.GetDT()
                 if projectile.lock_on_time > 0 then 
                     -- print("CALCULATING DIRECTION TO GO.")

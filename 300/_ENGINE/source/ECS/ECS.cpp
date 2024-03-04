@@ -11,7 +11,7 @@
 #include "ResourceManagerTy.h"
 #include "AI/AIManager.h"
 
-std::vector<std::string> ECS::mEntityTags({ "PLAYER", "ENEMY", "BULLET", "FLOOR", "WALL", "TELEPORTER", "UI", "GRAPH", "OTHERS" , "PISTOL" , "SHOTGUN", "REVOLVER", "MACHINE_GUN"});
+std::vector<std::string> ECS::mEntityTags({ "PLAYER", "ENEMY", "BULLET", "FLOOR", "WALL", "TELEPORTER", "UI", "GRAPH", "OTHERS" , "PISTOL" , "SHOTGUN", "REVOLVER", "MACHINE_GUN" , "DESTRUCTABLES"});
 
 bool Entity::ShouldRun() {
 	assert(HasComponent<General>() && std::string("There is no general component when attempting to change Entity's isActive").c_str());
