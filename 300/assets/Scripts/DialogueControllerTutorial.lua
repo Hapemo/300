@@ -27,10 +27,12 @@ local picturespeed
 
 local frame
 local picture
+local angry
 
 local frameOpened
 local frameClosed
 local done
+local boss
 --:GetUIrenderer():SetSlider(progress/objectivesComplete)
 
 function Alive()
@@ -47,8 +49,11 @@ function Alive()
     Option2 = gameStateSys:GetEntity("DialogueOption2", "Dialogue_Tutorial")
 
     frame = gameStateSys:GetEntity("DialogueFrame", "Dialogue_Tutorial")
-    picture = gameStateSys:GetEntity("Dora", "Dialogue_Tutorial")
+    picture = gameStateSys:GetEntity("DialogueNormal", "Dialogue_Tutorial")
+    angry = gameStateSys:GetEntity("DialogueAngry", "Dialogue_Tutorial")
 
+    boss = gameStateSys:GetEntity("DialogueBoss", "Dialogue_Tutorial")
+    
     LoadIn1Progress = 0.0
     LoadIn2Progress = 0.0
     ObjectiveIntro1Progress = 0.0
@@ -152,7 +157,6 @@ function UpdateDialogues()
             end
         else 
             LoadIn2Progress = speed + LoadIn2Progress
-            LoadIn2 = gameStateSys:GetEntity("DialogueLoadIn2", "Dialogue_Tutorial")
             if LoadIn2Progress > 1.0 then
                 LoadIn2Progress = 1.1
                 LoadIn2:GetUIrenderer():SetSlider(1.0)
@@ -173,12 +177,16 @@ function UpdateDialogues()
             ObjectiveIntro2Progress = speed + ObjectiveIntro2Progress
             if ObjectiveIntro2Progress > 1.0 then
                 ObjectiveIntro2Progress = 1.1
-                ObjectiveIntro1:GetUIrenderer():SetSlider(1.0)
+                ObjectiveIntro2:GetUIrenderer():SetSlider(1.0)
             else
-                ObjectiveIntro1:GetUIrenderer():SetSlider(ObjectiveIntro2Progress)
+                ObjectiveIntro2:GetUIrenderer():SetSlider(ObjectiveIntro2Progress)
             end
         end
     elseif currState == 2 then
+        boss:GetUIrenderer():SetSlider(1.0)
+        picture:GetUIrenderer():SetSlider(0.0)
+        angry:GetUIrenderer():SetSlider(1.0)
+
         if TroubleIntro1Progress < 1.0 then 
             TroubleIntro1Progress = speed + TroubleIntro1Progress
             if TroubleIntro1Progress > 1.0 then
@@ -264,6 +272,9 @@ function NextDialogue()
         TroubleIntro1:GetUIrenderer():SetSlider(0.0)
         TroubleIntro2:GetUIrenderer():SetSlider(0.0)
         TroubleIntro3:GetUIrenderer():SetSlider(0.0)
+        boss:GetUIrenderer():SetSlider(0.0)
+        picture:GetUIrenderer():SetSlider(1.0)
+        angry:GetUIrenderer():SetSlider(0.0)
         currState = currState + 1
     elseif currState == 3 then
         Option1:GetUIrenderer():SetSlider(0.0)
@@ -273,6 +284,8 @@ function NextDialogue()
 end
 
 function OpenFrame()
+    picture = gameStateSys:GetEntity("DialogueNormal", "Dialogue_Tutorial")
+
     if frame:GetTransform().mScale.x <= 1.99 then
         frame:GetTransform().mScale.x = frame:GetTransform().mScale.x + framespeed
         if frame:GetTransform().mScale.x > 1.98 then
@@ -290,6 +303,7 @@ function OpenFrame()
 end
 
 function CloseFrame()
+    picture = gameStateSys:GetEntity("DialogueNormal", "Dialogue_Tutorial")
     
     if picture:GetTransform().mScale.x >= 0.01 then
         picture:GetTransform().mScale.x = picture:GetTransform().mScale.x - picturespeed

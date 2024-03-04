@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 3145733,
+        "entityid": 24117379,
         "general": {
             "name": "DialogueControllerTutorial",
             "tagid": 0,
@@ -35,7 +35,7 @@
         }
     },
     {
-        "entityid": 3145734,
+        "entityid": 25165885,
         "general": {
             "name": "DialogueOption2",
             "tagid": 0,
@@ -76,7 +76,7 @@
         }
     },
     {
-        "entityid": 3145735,
+        "entityid": 25165932,
         "general": {
             "name": "DialogueOption1",
             "tagid": 0,
@@ -117,7 +117,7 @@
         }
     },
     {
-        "entityid": 3145736,
+        "entityid": 25165934,
         "general": {
             "name": "DialogueTroubleIntro3",
             "tagid": 0,
@@ -127,7 +127,7 @@
         },
         "transform": {
             "scale": {
-                "x": 1.600000023841858,
+                "x": 1.350000023841858,
                 "y": -0.10000000149011612,
                 "z": 1.0
             },
@@ -137,7 +137,7 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 0.15000000596046448,
+                "x": 0.02500000037252903,
                 "y": -0.699999988079071,
                 "z": 0.0
             }
@@ -158,7 +158,7 @@
         }
     },
     {
-        "entityid": 3145738,
+        "entityid": 25165935,
         "general": {
             "name": "DialogueTroubleIntro2",
             "tagid": 0,
@@ -168,7 +168,7 @@
         },
         "transform": {
             "scale": {
-                "x": 1.600000023841858,
+                "x": 1.350000023841858,
                 "y": -0.10000000149011612,
                 "z": 1.0
             },
@@ -178,7 +178,7 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 0.15000000596046448,
+                "x": 0.02500000037252903,
                 "y": -0.6000000238418579,
                 "z": 0.0
             }
@@ -199,7 +199,7 @@
         }
     },
     {
-        "entityid": 3145739,
+        "entityid": 25165936,
         "general": {
             "name": "DialogueTroubleIntro1",
             "tagid": 0,
@@ -209,7 +209,7 @@
         },
         "transform": {
             "scale": {
-                "x": 1.600000023841858,
+                "x": 1.350000023841858,
                 "y": -0.10000000149011612,
                 "z": 1.0
             },
@@ -219,7 +219,7 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 0.15000000596046448,
+                "x": 0.02500000037252903,
                 "y": -0.5,
                 "z": 0.0
             }
@@ -240,7 +240,7 @@
         }
     },
     {
-        "entityid": 3145740,
+        "entityid": 25165937,
         "general": {
             "name": "DialogueObjectiveIntro2",
             "tagid": 0,
@@ -281,7 +281,7 @@
         }
     },
     {
-        "entityid": 3145741,
+        "entityid": 25165940,
         "general": {
             "name": "DialogueObjectiveIntro1",
             "tagid": 0,
@@ -322,7 +322,7 @@
         }
     },
     {
-        "entityid": 3145742,
+        "entityid": 25165941,
         "general": {
             "name": "DialogueLoadIn2",
             "tagid": 0,
@@ -363,7 +363,7 @@
         }
     },
     {
-        "entityid": 3145744,
+        "entityid": 25165942,
         "general": {
             "name": "DialogueLoadIn1",
             "tagid": 0,
@@ -404,48 +404,7 @@
         }
     },
     {
-        "entityid": 3145745,
-        "general": {
-            "name": "Dora",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.0,
-                "y": -0.5,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -0.8100000023841858,
-                "y": -0.5799999833106995,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 1070481404,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 14,
-            "worldtransform": false
-        }
-    },
-    {
-        "entityid": 3145746,
+        "entityid": 25165943,
         "general": {
             "name": "DialogueFrame",
             "tagid": 0,
@@ -482,6 +441,129 @@
                 "w": 1.0
             },
             "layer": 13,
+            "worldtransform": false
+        }
+    },
+    {
+        "entityid": 25165944,
+        "general": {
+            "name": "DialogueBoss",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.20000000298023224,
+                "y": -0.44999998807907104,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.8299999833106995,
+                "y": -0.5799999833106995,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 1799049510,
+            "degree": 0.0,
+            "slider": 0.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 23,
+            "worldtransform": false
+        }
+    },
+    {
+        "entityid": 25165945,
+        "general": {
+            "name": "DialogueAngry",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.25,
+                "y": -0.5,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -0.8100000023841858,
+                "y": -0.5799999833106995,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 471674240,
+            "degree": 0.0,
+            "slider": 0.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 30,
+            "worldtransform": false
+        }
+    },
+    {
+        "entityid": 25165946,
+        "general": {
+            "name": "DialogueNormal",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.0,
+                "y": -0.5,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -0.8100000023841858,
+                "y": -0.6000000238418579,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 395584188,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 35,
             "worldtransform": false
         }
     }
