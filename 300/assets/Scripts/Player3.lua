@@ -165,7 +165,6 @@ local objectiveBarEmptySpawnPos = Vec3.new()
 local healthBarEmptySpawnPos = Vec3.new()
 -- local isuiinit = false
 local this
-
 function Alive()
     this = Helper.GetScriptEntity(script_entity.id)
     gameStateSys = systemManager:mGameStateSystem();
@@ -242,7 +241,6 @@ function Alive()
 end
 
 function Update()
-    healthbar = gameStateSys:GetEntity("HealthBar", "UI")
 
     -- Player Health System Start -- 
     -- if isuiinit == false then
@@ -287,8 +285,8 @@ function Update()
         end
 
         if (playerHealthStartRegenCurrent == playerHealthStartRegenMax) then
-            if (_G.playerHealthCurrent < 400) then
-                _G.playerHealthCurrent = _G.playerHealthCurrent + 3; -- regen hp
+            if (playerHealthCurrent < 400) then
+                playerHealthCurrent = playerHealthCurrent + 3; -- regen hp
             end
         end
     end
@@ -298,7 +296,7 @@ function Update()
     -- print("PERCENTAGE: " , playerHealthComponent.health/playerHealthComponent.maxHealth)
     healthbar:GetUIrenderer():SetSlider(playerHealthComponent.health/playerHealthComponent.maxHealth)
 
-    if _G.playerHealthCurrent <= 0 then
+    if playerHealthCurrent <= 0 then
         gameStateSys:ChangeGameState("LoseMenu")
     end
 
@@ -346,7 +344,6 @@ function Update()
 --endregion
 
 
-healthbar:GetUIrenderer():SetSlider(_G.playerHealthCurrent/playerHealthMax);
 
 --region -- Player movements
     -- use '.' to reference variable
