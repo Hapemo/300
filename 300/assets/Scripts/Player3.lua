@@ -153,17 +153,18 @@ local dashZ
 local inittedDash = false
 
 local isTakingDamage = false; -- whether player is in contact with other enemies, thus taking damage
-_G.playerHealthCurrent = 100;   -- used in <BossBullet.lua>
-local playerHealthMax = 100;       
+local playerHealthComponent
+local playerHealthCurrent = 1000;
+local playerHealthMax = 1000;
 local playerHealthStartRegenCurrent = 0;
 local playerHealthStartRegenMax = 30; -- this is the time it takes for the player to not be damaged to start regenerating health
 
+local healthbar
 local healthbarSpawnPos = Vec3.new()
 local objectiveBarEmptySpawnPos = Vec3.new()
 local healthBarEmptySpawnPos = Vec3.new()
 -- local isuiinit = false
 local this
-
 function Alive()
     this = Helper.GetScriptEntity(script_entity.id)
     gameStateSys = systemManager:mGameStateSystem();
@@ -232,12 +233,14 @@ function Alive()
 
     -- Shotgun Stuff -- 
 
+    -- if(this == nil) then 
+    --     print("NIL")
+    -- end
 
-
+    playerHealthComponent = this:GetHealthbar()
 end
 
 function Update()
-    healthbar = gameStateSys:GetEntity("HealthBar", "UI")
 
     -- Player Health System Start -- 
     -- if isuiinit == false then
@@ -247,7 +250,9 @@ function Update()
     --     healthbarSpawnPos.y = 0.65;
     --     healthbarSpawnPos.z = 0;
 
-    --     healthbar = systemManager.ecs:NewEntityFromPrefab("Health Bar", healthbarSpawnPos)
+    --  healthbar = systemManager.ecs:NewEntityFromPrefab("Health Bar", healthbarSpawnPos)
+
+    healthbar = gameStateSys:GetEntity("HealthBar", "UI")
 
     --     objectiveBarEmptySpawnPos.x = 0.7;
     --     objectiveBarEmptySpawnPos.y = 0.7;
@@ -266,7 +271,11 @@ function Update()
     -- Player Health System End -- 
     if (isTakingDamage == true) then
     playerHealthStartRegenCurrent = 0;
-    _G.playerHealthCurrent = _G.playerHealthCurrent - 6; -- take damage
+    playerHealthCurrent = playerHealthCurrent - 6; -- take damagen
+    
+    -- -- Added 3/4/2024 (using healthbar component)
+    -- playerHealthComponent.health =  playerHealthComponent.health - 6
+
     end
 
     if (isTakingDamage == false) then -- if not taking damage
@@ -276,17 +285,18 @@ function Update()
         end
 
         if (playerHealthStartRegenCurrent == playerHealthStartRegenMax) then
-            if (_G.playerHealthCurrent < 400) then
-                _G.playerHealthCurrent = _G.playerHealthCurrent + 3; -- regen hp
+            if (playerHealthCurrent < 400) then
+                playerHealthCurrent = playerHealthCurrent + 3; -- regen hp
             end
         end
     end
 
-    healthbar:GetUIrenderer():SetSlider(_G.playerHealthCurrent/playerHealthMax);
-    -- print("PLAYER CURRENT HEALTH: " , _G.playerHealthCurrent)
-    -- print("PLAYER MAX HP: " , playerHealthMax)
+    -- healthbar:GetUIrenderer():SetSlider(playerHealthCurrent/playerHealthMax);
+    -- print("HP LEFT: " , playerHealthComponent.health)
+    -- print("PERCENTAGE: " , playerHealthComponent.health/playerHealthComponent.maxHealth)
+    healthbar:GetUIrenderer():SetSlider(playerHealthComponent.health/playerHealthComponent.maxHealth)
 
-    if _G.playerHealthCurrent <= 0 then
+    if playerHealthCurrent <= 0 then
         gameStateSys:ChangeGameState("LoseMenu")
     end
 
@@ -334,7 +344,6 @@ function Update()
 --endregion
 
 
-healthbar:GetUIrenderer():SetSlider(_G.playerHealthCurrent/playerHealthMax);
 
 --region -- Player movements
     -- use '.' to reference variable

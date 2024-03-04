@@ -154,7 +154,8 @@ local dashZ
 local inittedDash = false
 
 local isTakingDamage = false; -- whether player is in contact with other enemies, thus taking damage
-_G.playerHealthCurrent = 100;
+-- local playerHealthCurrent = 100;
+local playerHealthCurrent 
 local playerHealthMax = 100;
 local playerHealthStartRegenCurrent = 0;
 local playerHealthStartRegenMax = 30; -- this is the time it takes for the player to not be damaged to start regenerating health
@@ -261,6 +262,10 @@ function Update()
     -- healthbar = gameStateSys:GetEntityByScene("Health Bar","Objectives") // Changed to UI scene
     healthbar = gameStateSys:GetEntity("HealthBar", "UI")
 
+
+    if(healthbar ~= nil) then 
+        print("HEALTHBAR EXISTS")
+    end
     -- Player Health System Start -- 
     if isuiinit == false then
         -- Player Health System Start -- 
@@ -975,6 +980,8 @@ function OnTriggerEnter(Entity)
             --end
         end
     end
+
+
     -- Player Health System Start --
     -- if (generalComponent.name == "ILOVEYOU") then isTakingDamage = true; end
     -- if (generalComponent.name == "Melissa") then isTakingDamage = true; end
