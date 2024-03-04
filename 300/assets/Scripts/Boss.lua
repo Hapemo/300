@@ -38,13 +38,15 @@ local spawn_point_ref_trans
 local spawn_point_translate = Vec3.new()
 local number_of_homing
 local homing_spawned = false
+local homing_spawn_timer = 0                            -- Timer that increament with DT
+local homing_spawn_period = 2.0                         -- Time to spawn (in between each sphere)
+local homing_spawn_counter = 0                          -- Counter to keep track how many homing bullets have been spawned
 local homing_start = false
-
 
 local homing_bullet
 local homing_projectiles = {}                           -- Define a table to store projectile data
 local projectile_stay_time = 2                          -- timer for the bullet to stay still before it starts homing into the player
-local initial_homing_speed = 15                          -- Starting Homing Speed
+local initial_homing_speed = 5                          -- Starting Homing Speed
 
 -- Boss states
 local state = 0
@@ -208,10 +210,24 @@ function Update()
                 -- print("NUMBER OF HOMING: " , number_of_homing)
 
                 if homing_spawned == false then 
-                    for i = 0 , number_of_homing do
-                        SpawnHomingSpheres()
+                    -- TODO : Set Timer to spawn 1 by 1 
+                    homing_spawn_timer = homing_spawn_timer + FPSManager.GetDT()
+
+                    print("HOMING SPAWN TIMER: " , homing_spawn_timer)
+                    
+                    if(homing_spawn_counter < number_of_homing) then 
+                        if(homing_spawn_timer > homing_spawn_period) then -- It's time to spawn another homing bullet
+                            SpawnHomingSpheres()
+                            homing_spawn_counter = homing_spawn_counter + 1 -- Increase the counter
+                            homing_spawn_timer = 0   -- Reset the counter
+                            print("SPAWNING ORB")
+                        end
+                     
                     end
-                    homing_spawned = true
+                    
+                    -- for i = 0 , number_of_homing do
+                    --     SpawnHomingSpheres()
+                    -- end
                     -- print("SPAWNED HOMING")
                 end
 

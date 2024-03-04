@@ -3,7 +3,7 @@ local bulletLifeTime = 0
 local bulletDeathTime = 10
 
 -- Phase 3 attack from Boss Level (Lv 3) 
-local bullet_damage = 20 -- Adjust Accordingly
+local bullet_damage = 10 -- Adjust Accordingly
 
 local this
 local general
@@ -55,19 +55,12 @@ function OnTriggerEnter(Entity)
 
         if(player_healthbar_component ~= nil) then 
             player_healthbar_component.health = player_healthbar_component.health - bullet_damage
-            _G.playerHealthCurrent = _G.playerHealthCurrent - bullet_damage
-
-            healthbar = gameStateSys:GetEntity("HealthBar", "UI")
-            if(healthbar ~= nil ) then 
-                -- print("HEALTHBAR EXISTS")
-                -- print("CURRENT / MAX: " , playerHealthCurrent / playerHealthMax)
-                -- healthbar:GetUIrenderer():SetSlider(0)
-                -- healthbar:GetUIrenderer():SetSlider(playerHealthCurrent/playerHealthMax)
-            end
-
-            -- print("TAKING DAMAGE: " , bullet_damage)
-            -- print("HP LEFT: " , player_healthbar_component.health)
+            print("TAKING DAMAGE FROM HOMING BULLET")
+            print("DAMAGE TAKEN: " , bullet_damage)
+            print("HP LEFT: ", player_healthbar_component.health)
         end
+
+        systemManager.ecs:SetDeleteEntity(this) -- Delete the bullet upon contact
 
         -- print("PLAYER HIT")
     end
