@@ -54,7 +54,9 @@ public:
 	bool		 StopSound(uid channel_id, AUDIOTYPE type);
 	bool		 UpdateVolume(uid channel_id, AUDIOTYPE type, float volume);
 	void         SetAllSFXVolume(float volume);											// Built for Sound Settings
-	void		 SetAllBGMVolume(float volume);											// Built for Sound Settings
+	void		 SetAllBGMVolume(float volume);											// Built for Sound Setting
+	float		 GetSFXVolume() const;
+	float		 GetBGMVolume() const;
 	void		 PauseAllSounds();
 	void		 UnpauseAllSounds();
 
@@ -79,8 +81,6 @@ public:
 
 	// Data Members (Global Volume Multiplier)
 public:
-	float sfx_global_vol = 1.0f;
-	float bgm_global_vol = 1.0f;
 	bool  sys_paused = true;
 	bool  sys_was_paused = false;
 	float fade_timer = 0.0f;		// For Fading. 
@@ -102,4 +102,7 @@ public:
 	void TestCases(Audio& comp);
 	void TestCaseEntity(Entity& entity, float dt); 
 
+private: 
+	float sfx_global_vol = 1.0f;
+	float bgm_global_vol = 1.0f;
 };
