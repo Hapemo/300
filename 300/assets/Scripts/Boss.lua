@@ -36,6 +36,7 @@ local spawn_point_ref_obj
 local spawn_point_ref_trans
 local spawn_point_translate = Vec3.new()
 local number_of_homing
+local homing_start = false
 
 local homing_bullet
 local homing_projectiles = {}                           -- Define a table to store projectile data
@@ -201,19 +202,22 @@ function Update()
 
                 for i = 0 , number_of_homing do
                     SpawnHomingSpheres()
+                    bullet_attack_checker[2] = true
                 end
 
+                print("Homing Start: " , homing_start)
+                if homing_start == false then 
+                    UpdateHomingProjectiles()
                 -- if UpdateHomingProjectiles() == false then -- done homing 
                 --     print("Im done homing")
-                bullet_attack_checker[2] = true
-                attacking = false
-                -- end
 
-           
+                --     attacking = false
+                end
 
             end
         end
 
+        -- UpdateHomingProjectiles(0)
     
 
 
@@ -373,6 +377,7 @@ function UpdateHomingProjectiles()
                 end
             else
                 -- Lock onto the player after a delay
+                print("PROJECTILE LOCK TIME: " , projectile.lock_on_time)
                 projectile.lock_on_time = projectile.lock_on_time - FPSManager.GetDT()
                 if projectile.lock_on_time <= 0 then 
                     local directionToPlayer = Vec3.Subtract(player_position, projectile.position)
