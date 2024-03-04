@@ -20,22 +20,21 @@ function Alive()
 end
 
 function Update()
-    if true then return end
     uirend  = ent:GetUIrenderer()
-    if(_G.weaponArray[reArray[index]][2] == true)then
-        if(pos <=_G.weaponArray[reArray[index]][3]  )then
-            -- if(reArray[index] == 8 )then
-            --     print("test")
-            -- end
-            uirend:SetTexture(_G.textureArray2[_G.weaponArray[reArray[index]][1]])
-            uirend.mColor.w = 1
+    -- if(_G.weaponArray[reArray[index]][2] == true)then
+    --     if(pos <=_G.weaponArray[reArray[index]][3]  )then
+    --         -- if(reArray[index] == 8 )then
+    --         --     print("test")
+    --         -- end
+    --         uirend:SetTexture(_G.textureArray2[_G.weaponArray[reArray[index]][1]])
+    --         uirend.mColor.w = 1
 
-        else
-            uirend.mColor.w = 0
-        end
-    else
-        uirend.mColor.w = 0
-    end
+    --     else
+    --         uirend.mColor.w = 0
+    --     end
+    -- else
+    --     uirend.mColor.w = 0
+    -- end
 
 
 
