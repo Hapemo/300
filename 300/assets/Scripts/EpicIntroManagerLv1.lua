@@ -438,6 +438,7 @@ function RunTSEpicIntro()
     print(_G.TSEpicIntroState)
     if _G.TSEpicIntroState > 2 then 
         Helper.SetRealRotate(epicTS3, Vec3.new(0,90,0))
+        Helper.SetRealRotate(epicTS1, Vec3.new(0,90,0))
         epicTS3:GetTransform().mTranslate = Vec3.new(13.7, -11, 32.4)
     end
 
