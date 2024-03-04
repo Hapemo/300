@@ -889,14 +889,6 @@ function OnTriggerEnter(Entity)
     if (generalComponent.name == "TrojanHorse") then isTakingDamage = true; end
     if (generalComponent.name == "ZipBomb") then isTakingDamage = true; end
     if (generalComponent.name == "TrojanSoldier") then isTakingDamage = true; end
-    if (generalComponent.name == "Laser1") then
-        --isTakingDamage = true
-        --print("laser 1 is damaging player") -- it's working yay
-    end
-    if (generalComponent.name == "Laser2") then
-        --isTakingDamage = true
-        --print("laser 2 is damaging player")
-    end
     -- Player Health System End --
 
 end
@@ -918,8 +910,6 @@ function OnTriggerExit(Entity)
     if (generalComponent.name == "TrojanHorse") then isTakingDamage = false; end
     if (generalComponent.name == "ZipBomb") then isTakingDamage = false; end
     if (generalComponent.name == "TrojanSoldier") then isTakingDamage = false; end
-    if (generalComponent.name == "Laser1") then isTakingDamage = false; end
-    if (generalComponent.name == "Laser2") then isTakingDamage = false; end
     -- Player Health System End --
 end
 

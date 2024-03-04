@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 5242981,
+        "entityid": 5242968,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -70,7 +70,7 @@
         },
         "children": {
             "numchildren": 1,
-            "firstchild": 9437197
+            "firstchild": 5242969
         },
         "audio": {
             "filepath": "../assets\\Audio",
@@ -126,7 +126,7 @@
         }
     },
     {
-        "entityid": 9437197,
+        "entityid": 5242969,
         "general": {
             "name": "gun",
             "tagid": 0,
@@ -187,65 +187,13 @@
             ]
         },
         "parent": {
-            "prevsibling": 9437197,
-            "nextsibling": 9437197,
-            "parent": 5242981
+            "prevsibling": 5242969,
+            "nextsibling": 5242969,
+            "parent": 5242968
         }
     },
     {
-        "entityid": 9437288,
-        "general": {
-            "name": "UI-Spawned",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.125,
-                "y": -0.25,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 1.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 4650,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 2,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/UI-WeaponMovement.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "prefab": {
-            "prefab": "UI-Spawned"
-        }
-    },
-    {
-        "entityid": 10485761,
+        "entityid": 5242970,
         "general": {
             "name": "Level2FBX",
             "tagid": 0,
@@ -326,9 +274,9 @@
         }
     },
     {
-        "entityid": 10485763,
+        "entityid": 5242971,
         "general": {
-            "name": "Skybox",
+            "name": "UI-Spawned",
             "tagid": 0,
             "subtag": 0,
             "isActive": true,
@@ -336,9 +284,9 @@
         },
         "transform": {
             "scale": {
-                "x": 500.0,
-                "y": 500.0,
-                "z": 500.0
+                "x": 0.125,
+                "y": -0.25,
+                "z": 1.0
             },
             "rotate": {
                 "x": 0.0,
@@ -347,48 +295,142 @@
             },
             "translate": {
                 "x": 0.0,
-                "y": -20.668514251708984,
-                "z": -47.40319061279297
+                "y": 0.0,
+                "z": 1.0
             }
         },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 2510,
-            "instancecolor": {
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 4650,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
                 "x": 1.0,
                 "y": 1.0,
                 "z": 1.0,
                 "w": 1.0
             },
-            "bloomthreshold": {
-                "x": 0.20000000298023224,
-                "y": 0.20999999344348907,
-                "z": 0.1599999964237213,
-                "w": 1.0
-            },
-            "castShadow": true,
-            "materialinstance": [
-                "../assets/Compressed/Environment_Skybox_BaseColor.ctexture",
-                "../assets/Compressed/Environment_Skybox_Normal.ctexture",
-                "../assets/Compressed/Environment_Skybox_Metallic.ctexture",
-                "../assets/Compressed/Environment_Skybox_Roughness.ctexture",
-                "../assets/Compressed/Environment_Skybox_BaseColor.ctexture",
-                "../assets/Compressed/Environment_Skybox_AO.ctexture"
-            ],
-            "mesh": "../assets/compiled_geom/Skybox.geom",
-            "texturerefid": [
-                437536649,
-                3522280818,
-                1686346496,
-                1590588887,
-                5760,
-                1467793003
+            "layer": 2,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/UI-WeaponMovement.lua",
+                    "variables": []
+                }
             ]
+        },
+        "prefab": {
+            "prefab": "UI-Spawned"
         }
     },
     {
-        "entityid": 10485767,
+        "entityid": 5242972,
+        "general": {
+            "name": "UI-Spawned",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.125,
+                "y": -0.25,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 1.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 4650,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 2,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/UI-WeaponMovement.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "prefab": {
+            "prefab": "UI-Spawned"
+        }
+    },
+    {
+        "entityid": 5242973,
+        "general": {
+            "name": "UI-Spawned",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.125,
+                "y": -0.25,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 1.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 4650,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 2,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/UI-WeaponMovement.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "prefab": {
+            "prefab": "UI-Spawned"
+        }
+    },
+    {
+        "entityid": 5242974,
         "general": {
             "name": "UI-Spawned",
             "tagid": 0,
@@ -440,59 +482,7 @@
         }
     },
     {
-        "entityid": 10485772,
-        "general": {
-            "name": "UI-Spawned",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.125,
-                "y": -0.25,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 1.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 4650,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 2,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/UI-WeaponMovement.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "prefab": {
-            "prefab": "UI-Spawned"
-        }
-    },
-    {
-        "entityid": 10485774,
+        "entityid": 5242975,
         "general": {
             "name": "Pistol Bullet",
             "tagid": 9,
@@ -653,7 +643,59 @@
         }
     },
     {
-        "entityid": 11534347,
+        "entityid": 5242976,
+        "general": {
+            "name": "UI-Spawned",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.125,
+                "y": -0.25,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 1.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 4650,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 2,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/UI-WeaponMovement.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "prefab": {
+            "prefab": "UI-Spawned"
+        }
+    },
+    {
+        "entityid": 5242977,
         "general": {
             "name": "UI-Spawned",
             "tagid": 0,
@@ -705,9 +747,9 @@
         }
     },
     {
-        "entityid": 12582917,
+        "entityid": 5242978,
         "general": {
-            "name": "UI-Spawned",
+            "name": "Skybox",
             "tagid": 0,
             "subtag": 0,
             "isActive": true,
@@ -715,9 +757,9 @@
         },
         "transform": {
             "scale": {
-                "x": 0.125,
-                "y": -0.25,
-                "z": 1.0
+                "x": 500.0,
+                "y": 500.0,
+                "z": 500.0
             },
             "rotate": {
                 "x": 0.0,
@@ -726,86 +768,44 @@
             },
             "translate": {
                 "x": 0.0,
-                "y": 0.0,
-                "z": 1.0
+                "y": -20.668514251708984,
+                "z": -47.40319061279297
             }
         },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 4650,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 2510,
+            "instancecolor": {
                 "x": 1.0,
                 "y": 1.0,
                 "z": 1.0,
                 "w": 1.0
             },
-            "layer": 2,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/UI-WeaponMovement.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "prefab": {
-            "prefab": "UI-Spawned"
-        }
-    },
-    {
-        "entityid": 15728742,
-        "general": {
-            "name": "UI-Spawned",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.125,
-                "y": -0.25,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 1.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 4650,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
+            "bloomthreshold": {
+                "x": 0.20000000298023224,
+                "y": 0.20999999344348907,
+                "z": 0.1599999964237213,
                 "w": 1.0
             },
-            "layer": 2,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/UI-WeaponMovement.lua",
-                    "variables": []
-                }
+            "castShadow": true,
+            "materialinstance": [
+                "../assets/Compressed/Environment_Skybox_BaseColor.ctexture",
+                "../assets/Compressed/Environment_Skybox_Normal.ctexture",
+                "../assets/Compressed/Environment_Skybox_Metallic.ctexture",
+                "../assets/Compressed/Environment_Skybox_Roughness.ctexture",
+                "../assets/Compressed/Environment_Skybox_BaseColor.ctexture",
+                "../assets/Compressed/Environment_Skybox_AO.ctexture"
+            ],
+            "mesh": "../assets/compiled_geom/Skybox.geom",
+            "texturerefid": [
+                437536649,
+                3522280818,
+                1686346496,
+                1590588887,
+                5760,
+                1467793003
             ]
-        },
-        "prefab": {
-            "prefab": "UI-Spawned"
         }
     }
 ]

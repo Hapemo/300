@@ -1,55 +1,6 @@
 [
     {
-        "entityid": 97,
-        "general": {
-            "name": "BossUITitle",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.6129999756813049,
-                "y": -0.20000000298023224,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "../assets/Compressed/Temp_Boss_Name.ctexture",
-            "textureref": 304268164,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 0.0
-            },
-            "layer": 0,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/BossTitleUI.lua",
-                    "variables": []
-                }
-            ]
-        }
-    },
-    {
-        "entityid": 98,
+        "entityid": 3145735,
         "general": {
             "name": "Laser1",
             "tagid": 8,
@@ -70,7 +21,7 @@
             },
             "translate": {
                 "x": 0.0,
-                "y": 0.0,
+                "y": -1.100000023841858,
                 "z": 8.5
             }
         },
@@ -148,6 +99,55 @@
         },
         "prefab": {
             "prefab": "Laser1"
+        }
+    },
+    {
+        "entityid": 5242881,
+        "general": {
+            "name": "BossUITitle",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.6129999756813049,
+                "y": -0.20000000298023224,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "../assets/Compressed/Temp_Boss_Name.ctexture",
+            "textureref": 304268164,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 0.0
+            },
+            "layer": 0,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/BossTitleUI.lua",
+                    "variables": []
+                }
+            ]
         }
     }
 ]

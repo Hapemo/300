@@ -27,6 +27,13 @@ end
 function OnTriggerEnter(Entity)
     generalComponent = Entity:GetGeneral()
     print("enter", generalComponent.name)
+
+    if(generalComponent.name == "Camera") then
+        if(Entity:HasHealthbar()) then 
+            healthComponent = Entity:GetHealthbar()
+            healthComponent.health = healthComponent.health - 6
+        end
+    end
 end
 
 function OnTriggerExit(Entity)
