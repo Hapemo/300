@@ -60,6 +60,8 @@ function PauseUpdate()
     settingsMenuBackground = gameStateSys:GetEntityByScene("SettingsMenuBackground", "SettingsSceneLvl2")
     settingsBgmEmpty = gameStateSys:GetEntityByScene("SettingsBgmEmpty", "SettingsSceneLvl2")
     settingsBgmFull = gameStateSys:GetEntityByScene("SettingsBgmFull", "SettingsSceneLvl2")
+    settingSfxFull = gameStateSys:GetEntityByScene("SettingsSfxFull", "SettingsSceneLvl2")
+    settingSfxEmpty = gameStateSys:GetEntityByScene("SettingsSfxEmpty", "SettingsSceneLvl2")
     settingsFSButton = gameStateSys:GetEntityByScene("SettingsFSButton", "SettingsSceneLvl2")
     settingsWindowButton = gameStateSys:GetEntityByScene("SettingsWindowButton", "SettingsSceneLvl2")
     settingsBackButton = gameStateSys:GetEntityByScene("SettingsBackButton", "SettingsSceneLvl2")
@@ -123,6 +125,7 @@ function PauseUpdate()
             htpButton:GetTransform().mTranslate.x = 1000
             menuBackground:GetTransform().mTranslate.x = 1000
             restartButton:GetTransform().mTranslate.x = 1000
+            settingsButton:GetTransform().mTranslate.x = 1000
             systemManager:SetIsPause(false)
             _G.isPausePauseMenu = false
         elseif (button:GetGeneral().name == "PauseHTPButton") then
@@ -132,13 +135,16 @@ function PauseUpdate()
             htpButton:GetTransform().mTranslate.x = 1000
             menuBackground:GetTransform().mTranslate.x = 1000
             restartButton:GetTransform().mTranslate.x = 1000
+            settingsButton:GetTransform().mTranslate.x = 1000
             HTPMenu:GetTransform().mTranslate.x = 0
             backButton:GetTransform().mTranslate.x = 0.65
             _G.isHTPMenu = true
         elseif (button:GetGeneral().name == "PauseSettingsButton") then
             settingsMenuBackground:GetTransform().mTranslate.x = 0
-            settingsBgmEmpty:GetTransform().mTranslate.x = -0.21
-            settingsBgmFull:GetTransform().mTranslate.x = -0.21
+            settingsBgmEmpty:GetTransform().mTranslate.x = -0.20
+            settingsBgmFull:GetTransform().mTranslate.x = -0.20
+            settingSfxEmpty:GetTransform().mTranslate.x = -0.20
+            settingSfxFull:GetTransform().mTranslate.x = -0.20
             settingsFSButton:GetTransform().mTranslate.x = -0.59
             settingsWindowButton:GetTransform().mTranslate.x = -0.08
             settingsBackButton:GetTransform().mTranslate.x = 0.85
@@ -156,7 +162,8 @@ function PauseUpdate()
             resumeButton:GetTransform().mTranslate.x = 1000
             htpButton:GetTransform().mTranslate.x = 1000
             menuBackground:GetTransform().mTranslate.x = 1000
-            restartButton:GetTransform().mTranslate.x = 1000 
+            restartButton:GetTransform().mTranslate.x = 1000
+            settingsButton:GetTransform().mTranslate.x = 1000
             _G.isPausePauseMenu = false
             systemManager:SetIsPause(false)
             gameStateSys:ChangeGameState(gameState)
@@ -167,6 +174,7 @@ function PauseUpdate()
             htpButton:GetTransform().mTranslate.x = 1000
             menuBackground:GetTransform().mTranslate.x = 1000
             restartButton:GetTransform().mTranslate.x = 1000
+            settingsButton:GetTransform().mTranslate.x = 1000
             _G.isPausePauseMenu = false
             systemManager:SetIsPause(false)
             gameStateSys:ChangeGameState("MainMenu")
@@ -177,6 +185,7 @@ function PauseUpdate()
             htpButton:GetTransform().mTranslate.x = 1000
             menuBackground:GetTransform().mTranslate.x = 1000
             restartButton:GetTransform().mTranslate.x = 1000
+            settingsButton:GetTransform().mTranslate.x = 1000
             _G.isPausePauseMenu = false
             systemManager:SetIsPause(false)
             systemManager:Quit()

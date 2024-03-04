@@ -104,6 +104,7 @@ void ScriptingSystem::Init()
     LuaParent();
     LuaChildren();
     LuaInput();
+    LuaAudioSystem();
     LuaAudio();
     LuaInputMapSystem();
     LuaGraphicsSystem();

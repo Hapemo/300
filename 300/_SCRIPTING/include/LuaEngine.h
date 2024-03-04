@@ -28,6 +28,7 @@ void LuaScripts();
 void LuaParent();
 void LuaChildren();
 void LuaInput();
+void LuaAudioSystem();
 void LuaAudio();
 void LuaInputMapSystem();
 void LuaGraphicsSystem();

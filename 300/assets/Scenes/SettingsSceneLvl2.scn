@@ -1,8 +1,8 @@
 [
     {
-        "entityid": 157,
+        "entityid": 3145746,
         "general": {
-            "name": "bgmDecrease",
+            "name": "sfxDecrease",
             "tagid": 6,
             "subtag": 0,
             "isActive": true,
@@ -20,8 +20,8 @@
                 "z": 0.0
             },
             "translate": {
-                "x": -0.6100000143051147,
-                "y": 0.3100000023841858,
+                "x": 1000.0,
+                "y": 0.15000000596046448,
                 "z": 0.0
             }
         },
@@ -48,9 +48,9 @@
         }
     },
     {
-        "entityid": 158,
+        "entityid": 3145747,
         "general": {
-            "name": "bgmIncrease",
+            "name": "sfxIncrease",
             "tagid": 6,
             "subtag": 0,
             "isActive": true,
@@ -68,8 +68,8 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 0.20999999344348907,
-                "y": 0.3100000023841858,
+                "x": 1000.0,
+                "y": 0.15000000596046448,
                 "z": 0.0
             }
         },
@@ -96,7 +96,294 @@
         }
     },
     {
-        "entityid": 159,
+        "entityid": 3145748,
+        "general": {
+            "name": "SettingsSfxEmpty",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.75,
+                "y": 0.10000000149011612,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 1000.0,
+                "y": 0.15000000596046448,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 3792549019,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 7,
+            "worldtransform": false
+        }
+    },
+    {
+        "entityid": 3145749,
+        "general": {
+            "name": "SettingsSfxFull",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.75,
+                "y": 0.10000000149011612,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 1000.0,
+                "y": 0.15000000596046448,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 2497003415,
+            "degree": 0.0,
+            "slider": 0.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 8,
+            "worldtransform": false
+        }
+    },
+    {
+        "entityid": 3145750,
+        "general": {
+            "name": "SettingsBackButton",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.20000000298023224,
+                "y": -0.15000000596046448,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 1000.0,
+                "y": -0.8500000238418579,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 1569467779,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 7,
+            "worldtransform": false
+        }
+    },
+    {
+        "entityid": 3145751,
+        "general": {
+            "name": "SettingsWindowButton",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.25,
+                "y": -0.15000000596046448,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 1000.0,
+                "y": -0.5,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 1374181958,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 7,
+            "worldtransform": false
+        }
+    },
+    {
+        "entityid": 3145752,
+        "general": {
+            "name": "SettingsFSButton",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.25,
+                "y": -0.15000000596046448,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 1000.0,
+                "y": -0.5,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 2145381289,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 7,
+            "worldtransform": false
+        }
+    },
+    {
+        "entityid": 3145754,
+        "general": {
+            "name": "SettingsBgmFull",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.75,
+                "y": 0.10000000149011612,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 1000.0,
+                "y": 0.3100000023841858,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 2497003415,
+            "degree": 0.0,
+            "slider": 0.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 8,
+            "worldtransform": false
+        }
+    },
+    {
+        "entityid": 3145755,
+        "general": {
+            "name": "SettingsBgmEmpty",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.75,
+                "y": 0.10000000149011612,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 1000.0,
+                "y": 0.3100000023841858,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 3792549019,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 7,
+            "worldtransform": false
+        }
+    },
+    {
+        "entityid": 3145756,
         "general": {
             "name": "SettingsMenuBackground",
             "tagid": 6,
@@ -116,7 +403,7 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 0.0,
+                "x": 1000.0,
                 "y": 0.0,
                 "z": 0.0
             }
@@ -145,296 +432,9 @@
         }
     },
     {
-        "entityid": 160,
+        "entityid": 3145757,
         "general": {
-            "name": "SettingsBgmEmpty",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.75,
-                "y": 0.10000000149011612,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -0.20000000298023224,
-                "y": 0.3100000023841858,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 3792549019,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 7,
-            "worldtransform": false
-        }
-    },
-    {
-        "entityid": 161,
-        "general": {
-            "name": "SettingsBgmFull",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.75,
-                "y": 0.10000000149011612,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -0.20000000298023224,
-                "y": 0.3100000023841858,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 2497003415,
-            "degree": 0.0,
-            "slider": 0.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 8,
-            "worldtransform": false
-        }
-    },
-    {
-        "entityid": 162,
-        "general": {
-            "name": "SettingsFSButton",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.25,
-                "y": -0.15000000596046448,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -0.5899999737739563,
-                "y": -0.5,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 2145381289,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 7,
-            "worldtransform": false
-        }
-    },
-    {
-        "entityid": 163,
-        "general": {
-            "name": "SettingsWindowButton",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.25,
-                "y": -0.15000000596046448,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -0.07999999821186066,
-                "y": -0.5,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 1374181958,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 7,
-            "worldtransform": false
-        }
-    },
-    {
-        "entityid": 164,
-        "general": {
-            "name": "SettingsBackButton",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.20000000298023224,
-                "y": -0.15000000596046448,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.8500000238418579,
-                "y": -0.8500000238418579,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 1569467779,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 7,
-            "worldtransform": false
-        }
-    },
-    {
-        "entityid": 165,
-        "general": {
-            "name": "SettingsSfxFull",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.75,
-                "y": 0.10000000149011612,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -0.20000000298023224,
-                "y": 0.15000000596046448,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 2497003415,
-            "degree": 0.0,
-            "slider": 0.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 8,
-            "worldtransform": false
-        }
-    },
-    {
-        "entityid": 166,
-        "general": {
-            "name": "SettingsSfxEmpty",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.75,
-                "y": 0.10000000149011612,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -0.20000000298023224,
-                "y": 0.15000000596046448,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 3792549019,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 7,
-            "worldtransform": false
-        }
-    },
-    {
-        "entityid": 184,
-        "general": {
-            "name": "sfxIncrease",
+            "name": "bgmIncrease",
             "tagid": 6,
             "subtag": 0,
             "isActive": true,
@@ -452,8 +452,8 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 0.20999999344348907,
-                "y": 0.15000000596046448,
+                "x": 1000.0,
+                "y": 0.3100000023841858,
                 "z": 0.0
             }
         },
@@ -480,9 +480,9 @@
         }
     },
     {
-        "entityid": 185,
+        "entityid": 3145758,
         "general": {
-            "name": "sfxDecrease",
+            "name": "bgmDecrease",
             "tagid": 6,
             "subtag": 0,
             "isActive": true,
@@ -500,8 +500,8 @@
                 "z": 0.0
             },
             "translate": {
-                "x": -0.6100000143051147,
-                "y": 0.15000000596046448,
+                "x": 1000.0,
+                "y": 0.3100000023841858,
                 "z": 0.0
             }
         },

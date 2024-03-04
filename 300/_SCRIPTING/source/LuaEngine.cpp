@@ -284,6 +284,16 @@ void LuaInput()
         "GetCursorCenter", &Input::GetCursorCenter);
 }
 
+void LuaAudioSystem()
+{
+    systemManager->mScriptingSystem->luaState.new_usertype<AudioSystem>(
+        "mAudioSystem", sol::constructors<>(),
+        "GetSFXVolume", &AudioSystem::GetSFXVolume,
+        "GetBGMVolume", &AudioSystem::GetBGMVolume,
+        "SetAllSFXVolume", &AudioSystem::SetAllSFXVolume,
+        "SetAllBGMVolume", &AudioSystem::SetAllBGMVolume);
+}
+
 void LuaAudio()
 {
     systemManager->mScriptingSystem->luaState.new_usertype<Audio>(
