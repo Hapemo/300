@@ -62,6 +62,32 @@ function Helper.SetRotate(Entity, Vec3)
     transformComponent.mRotate.z = transformComponent.mRotate.z + Vec3.z
 end
 
+function Helper.ChangeRotate(Entity, Vec3)
+    transformComponent = Entity:GetTransform()
+    transformComponent.mRotate.x = Vec3.x
+    transformComponent.mRotate.y = Vec3.y
+    transformComponent.mRotate.z = Vec3.z
+end
+
+function Helper.SetRealRotate(Entity, Vec3)
+    transformComponent = Entity:GetTransform()
+    transformComponent.mRotate.x = Vec3.x
+    transformComponent.mRotate.y = Vec3.y
+    transformComponent.mRotate.z = Vec3.z
+    vec = Vec3.new()
+    vec.x = transformComponent.mRotate.x;
+    vec.y = transformComponent.mRotate.y;
+    vec.z = transformComponent.mRotate.z;
+    --print("set rotation") -- working, can check BossLaserBeamPhase.lua
+    physicsSys = systemManager:mPhysicsSystem();
+    physicsSys:SetRotation(Entity, vec);
+end
+
+function Helper.SetRealRotateQuaternion(Entity, Axis, Angle)
+    physicsSys = systemManager:mPhysicsSystem();
+    physicsSys:SetRotationQuaternion(Entity, Axis, Angle);
+end
+
 function Helper.Normalize(Vec3)
     magnitude = (Vec3.x ^ 2 + Vec3.y ^ 2 + Vec3.z ^ 2) ^ 0.5
     if magnitude == 0 then 
@@ -127,7 +153,7 @@ function Helper.DirectionToAngle(entity, vec)
     end
 
     if degree ~= degree then return entity:GetTransform().mRotate.y end
-
+    
     return degree
 end
 
@@ -167,4 +193,10 @@ end
 
 function Helper.CreateTrailParticle(vec)
     systemManager.ecs:NewEntityFromPrefab("TrailParticle", vec)
+end
+
+function Helper.LookAtTarget(entity)
+    local dir = Helper.Normalize(Helper.Vec3Minus(entity:GetAISetting():GetTarget():GetTransform().mTranslate, entity:GetTransform().mTranslate))
+    -- -- epicZB:GetTransform().mRotate.y = 
+    Helper.SetRealRotate(entity, Vec3.new(0,Helper.DirectionToAngle(entity, dir),0))
 end

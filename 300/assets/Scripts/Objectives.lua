@@ -31,7 +31,7 @@ local isInit
 function Alive()
     isInit = false
     this = Helper.GetScriptEntity(script_entity.id)
-    progress = 0
+    progress = 100
 
     mobSpawnPos1.x = 18;
     mobSpawnPos1.y = -9;
@@ -120,6 +120,8 @@ function Update()
     --     currentSpawnTimer = 0 -- reset currentSpawnTimer so that next enemy can spawn
     -- end
     -- print("Current progress =", progress/objectivesComplete)
+    -- print(progress)
+    -- print(objectivesComplete)
     objectivebar:GetUIrenderer():SetSlider(progress/objectivesComplete);
 
     ent = Helper.GetScriptEntity(script_entity.id)
@@ -140,9 +142,7 @@ function Update()
 
 
     --if(_G.PreObjectivesCounter >=4)then
-
         if(moveTime >0.4)then
-
             -- for i = 1, 2 , 1 
             -- do 
 

@@ -23,5 +23,5 @@ glm::vec3 Convert(const physx::PxVec3T<float>& vec)
 
 glm::quat Convert(const physx::PxQuatT<float>& vec)
 {
-	return glm::quat{ vec.x, vec.y, vec.z, vec.w };
+	return glm::quat{ vec.w, vec.x, vec.y, vec.z};
 }

@@ -1,0 +1,52 @@
+{
+    "entityid": 10485994,
+    "general": {
+        "name": "ILYEffectScreen",
+        "tagid": 6,
+        "subtag": 0,
+        "isActive": true,
+        "isPaused": false
+    },
+    "transform": {
+        "scale": {
+            "x": 2.0,
+            "y": 2.0,
+            "z": 1.0
+        },
+        "rotate": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "translate": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        }
+    },
+    "uirenderer": {
+        "texpath": "",
+        "textureref": 0,
+        "degree": 0.0,
+        "slider": 1.0,
+        "color": {
+            "x": 1.0,
+            "y": 0.0,
+            "z": 0.6509804129600525,
+            "w": 0.0
+        },
+        "layer": 11,
+        "worldtransform": false
+    },
+    "scripts": {
+        "scriptscontainer": [
+            {
+                "scriptFile": "../assets/Scripts/ILYBulletEffect.lua",
+                "variables": []
+            }
+        ]
+    },
+    "prefab": {
+        "prefab": "ILYEffectScreen"
+    }
+}

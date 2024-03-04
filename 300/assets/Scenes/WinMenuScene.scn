@@ -1,8 +1,8 @@
 [
     {
-        "entityid": 3145890,
+        "entityid": 4194494,
         "general": {
-            "name": "BackToMainMenuButton",
+            "name": "ContButton",
             "tagid": 6,
             "subtag": 0,
             "isActive": true,
@@ -10,8 +10,8 @@
         },
         "transform": {
             "scale": {
-                "x": 0.625,
-                "y": -0.24629630148410797,
+                "x": 0.20000000298023224,
+                "y": -0.20000000298023224,
                 "z": 1.0
             },
             "rotate": {
@@ -20,14 +20,14 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 0.02500000037252903,
-                "y": -0.5099999904632568,
+                "x": 0.23999999463558197,
+                "y": -0.6299999952316284,
                 "z": 0.0
             }
         },
         "uirenderer": {
             "texpath": "",
-            "textureref": 3379754746,
+            "textureref": 877890541,
             "degree": 0.0,
             "slider": 1.0,
             "color": {
@@ -39,36 +39,18 @@
             "layer": 1,
             "worldtransform": false
         },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/MainMenuButtons.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "UI_Button_Hover.wav",
-            "fullpath": "../assets\\Audio/UI_Button_Hover.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 0.20000000298023224,
-            "retainaudio": false
-        },
         "button": {
             "interactable": true,
-            "hover": true,
-            "click": true,
+            "hover": false,
+            "click": false,
             "activated": false,
             "renderflag": true
         }
     },
     {
-        "entityid": 3145891,
+        "entityid": 4194495,
         "general": {
-            "name": "MenuBackground",
+            "name": "WinMenuBackground",
             "tagid": 6,
             "subtag": 0,
             "isActive": true,
@@ -92,8 +74,8 @@
             }
         },
         "uirenderer": {
-            "texpath": "../assets/Compressed/CreditsScene.ctexture",
-            "textureref": 1092111750,
+            "texpath": "",
+            "textureref": 3735530103,
             "degree": 0.0,
             "slider": 1.0,
             "color": {
@@ -107,7 +89,7 @@
         }
     },
     {
-        "entityid": 3145892,
+        "entityid": 4194496,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -144,15 +126,15 @@
                 "z": 0.0
             },
             "size": {
-                "x": 1224,
-                "y": 657
+                "x": 1223,
+                "y": 554
             },
             "near": 0.10000000149011612,
             "far": 900.0
         }
     },
     {
-        "entityid": 3145893,
+        "entityid": 5243073,
         "general": {
             "name": "BGM",
             "tagid": 0,
@@ -189,7 +171,7 @@
         }
     },
     {
-        "entityid": 4194330,
+        "entityid": 6291650,
         "general": {
             "name": "Click",
             "tagid": 6,

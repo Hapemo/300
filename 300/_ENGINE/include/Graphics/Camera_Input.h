@@ -43,6 +43,8 @@ public:
 	static glm::vec3 GetDirection(Entity cameraEntity);
 	static float GetCameraSpeed(Entity cameraEntity);
 	static float GetSensitivity(Entity cameraEntity);
+	static float GetFov(Entity cameraEntity);
+
 
 	// Update
 	static void RotateCameraView(Entity cameraEntity, const vec2& cursorposition);

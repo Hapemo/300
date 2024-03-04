@@ -250,22 +250,26 @@ function Alive()
     original_translation.y = gunInitialTranslate.y
     original_translation.z = gunInitialTranslate.z
 
-    -- Shotgun Stuff -- 
-
+    -- Shotgun Stuff -- ==--==
    
 
 end
 
 function Update()
-    if _G.FreezePlayerControl then return end
+    if _G.FreezePlayerControl then 
+        return 
+    end
+
     -- healthbar = gameStateSys:GetEntityByScene("Health Bar","Objectives") // Changed to UI scene
     healthbar = gameStateSys:GetEntity("HealthBar", "UI")
 
+    
     -- Player Health System Start -- 
     if isuiinit == false then
+        graphicsSys:HideCursor(true)
+        print("Calling hide cursor in player update")
+
         -- Player Health System Start -- 
-
-
         -- healthbar = systemManager.ecs:NewEntityFromPrefab("Health Bar", healthbarSpawnPos)
 
         -- objectiveBarEmptySpawnPos.x = 0.7;
@@ -298,7 +302,6 @@ function Update()
     -- if (isTakingDamage == false) then -- if not taking damage
     if(DamageCD<=DamageTime)then
             DamageCD = DamageCD+FPSManager.GetDT()
-
 
             if(DamageCD < DamageTime-0.6)then
                 cameraEntity:GetTransform().mRotate.x = cameraEntity:GetTransform().mRotate.x+math.random(-2,2)
@@ -664,8 +667,18 @@ function Update()
                 gunRecoilState = "MOVING"
 
             end
-            if (floorCount > 0) then
-                if (inputMapSys:GetButtonDown("Jump")) then
+
+            if(gameStateSys:GetCurrentGameState().mName == "Test") then
+                if (floorCount > 0) then
+                    if (inputMapSys:GetButtonDown("Jump")) then
+                        movement.y = movement.y + 25.0;
+                        gunRecoilState = "MOVING"
+                        gunJumped = true
+                        jumpAudioComp:SetPlay(0.4)
+                    end
+                end
+            elseif(gameStateSys:GetCurrentGameState().mName == "Test2") then
+                if (inputMapSys:GetButtonDown("Jump") and math.abs(movement.y) < 3.05) then
                     movement.y = movement.y + 25.0;
                     gunRecoilState = "MOVING"
                     gunJumped = true
@@ -713,11 +726,11 @@ function Update()
 -- endregion
 
         if(inputMapSys:GetButtonDown("Shoot")) then
-            print("MINUS HEALTH")
-            playerHealthCurrent = playerHealthCurrent - 20
-            if playerHealthCurrent > playerHealthMax then
-                playerHealthCurrent = playerHealthMax
-            end
+            -- print("MINUS HEALTH")
+            -- playerHealthCurrent = playerHealthCurrent - 20
+            -- if playerHealthCurrent > playerHealthMax then
+            --     playerHealthCurrent = playerHealthMax
+            -- end
             gunHoldState = "HOLDING"   -- for machine gun
 
             if(_G.gunEquipped == 0) then 
@@ -804,13 +817,11 @@ function Update()
              
                     shotGunTimer = shotGunTimer + shotGunCooldown
 
-
                     shotgunShootState = "COOLDOWN"
 
                     bulletAudioComp:SetPlay(0.3)
                 end
             end
-
         end
 
         -- "COOLDOWN" state
@@ -956,18 +967,16 @@ function OnTriggerEnter(Entity)
     or generalComponent.name == "ZipBomb" or generalComponent.name == "TrojanSoldier" )then
 
         dmgAudioComp:SetPlay(1.0)
-    -- print("DAMAGE CD: " , DamageCD)
-    -- print("DAMAGE TIME: " , DamageTime)
+        -- print("DAMAGE CD: " , DamageCD)
+        -- print("DAMAGE TIME: " , DamageTime)
 
-        if(DamageCD >=DamageTime-0.1)then
+        if(DamageCD >= DamageTime-0.1)then
             -- if (isTakingDamage == true) then
                 playerHealthStartRegenCurrent = 0;
                 playerHealthCurrent = playerHealthCurrent - 10; -- take damage
 
                 graphicsSys.FilterRadius = maxFilterRadius
                 graphicsSys.mAmbientBloomExposure = maxExposure
-                
-        
                
                 -- print("Running Pause Update fromxxxxxxxxxxxxxxxxxxxxxxxx Player.lua")
                 DamageCD = 0

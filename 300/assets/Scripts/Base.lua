@@ -40,6 +40,7 @@ function Alive()
 
     skillEndingEntity = gameStateSys:GetEntity("Skill_Ending")
     skillEndingAudio = skillEndingEntity:GetAudio()
+    math.randomseed(os.time())
 end
 
 function Update()
@@ -50,7 +51,8 @@ function Update()
     spawnTime = spawnTime +  FPSManager.GetDT()
     -- skillElapsed = skillElapsed + FPSManager.GetDT()
 
-    if(spawnTime > 1)then
+    if(spawnTime > 3)then
+        
         if (disCount <3)then
         --table.insert(dispensor,1)
         dispensor[disCount] = math.random(1,3)
@@ -67,6 +69,8 @@ function Update()
     -- end
 
     if (disCount >0) then
+        
+
         dispenseTime = dispenseTime +  FPSManager.GetDT()
         --print(dispenseTime)
         --print("discount".. disCount)
@@ -75,12 +79,11 @@ function Update()
             dispenseTime = 0
 
         else
-            if(dispenseTime > 1)then
+            if(dispenseTime > 3)then
         
             --    print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
                 -- print("I ACTIVATED MY SKILL")
                --local newpos = position_1
-                math.randomseed(os.time())
                 local randn = math.random(1,3)
                 dEntity = systemManager.ecs:NewEntityFromPrefab("UI-Spawned", position_1)
                 uirend  = dEntity:GetUIrenderer()
@@ -292,7 +295,7 @@ function recurrArray()
            
                     _G.weaponArray[d][1]= _G.weaponArray[d-1][1]
                     _G.weaponArray[d][2]= _G.weaponArray[d-1][2]
-                    _G.weaponArray[d][3]=  _G.weaponArray[d][3]
+                    _G.weaponArray[d][3]=  _G.weaponArray[d-1][3]
                     _G.weaponArray[d-1][2] = false
 
 
@@ -336,6 +339,11 @@ function DisplayArray()
             uirender = dashui[i]:GetUIrenderer()
             uirender:SetTexture(_G.textureArray[_G.weaponArray[i][1]])      
             uirender:SetDegree(0)
+
+            -- Debugging 
+            -- if(_G.weaponArray[i][1] == )
+
+            -- print("WEAPON ARRAY HAS: " , _G.weaponArray[i][1])
 
         else
             uirender = dashui[i]:GetUIrenderer()

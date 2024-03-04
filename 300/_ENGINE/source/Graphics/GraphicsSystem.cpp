@@ -135,8 +135,8 @@ void GraphicsSystem::Update(float dt)
 #pragma omp parallel for
 	for (int iter{}; iter < meshRendererInstances.size(); ++iter)
 	{
-		if (systemManager->mIsInGamePause)		// Don't add models to be drawn if game pause
-			break;
+		//if (systemManager->mIsInGamePause)		// Don't add models to be drawn if game pause
+		//	break;
 
 		Entity inst = meshRendererInstances[iter];
 		mat4 final = mat4(1.f);
