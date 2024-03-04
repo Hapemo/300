@@ -23,41 +23,45 @@ function Update()
     -- print("OBJECTIVE COUNTER: " , _G.PreObjectivesCounter)
     --if _G.PreObjectivesCounter >= 4 then
 
-    gameStateSys = systemManager:mGameStateSystem();
-    testScriptEntity = gameStateSys:GetEntity("Controller")
-    TestScripts = testScriptEntity:GetScripts()
-    testScript = TestScripts:GetScript("../assets/Scripts/ObjectivesController.lua")
-    objCount = testScript:ReturnValueInt("GetCountObj")
+    if(_G.completedEpicM == true and _G.completedEpicZB == true) then
+    -- if(false) then
+        -- print("All objectives completed")
+        gameStateSys = systemManager:mGameStateSystem();
+        testScriptEntity = gameStateSys:GetEntity("Controller")
+        TestScripts = testScriptEntity:GetScripts()
+        testScript = TestScripts:GetScript("../assets/Scripts/ObjectivesController.lua")
+        objCount = testScript:ReturnValueInt("GetCountObj")
 
-    --spawn the objectives portals
-    --print("SPAWN PORTALS")
-    objective1 = gameStateSys:GetEntity("Objectives1")
-    objective2 = gameStateSys:GetEntity("Objectives2")
-    objective3 = gameStateSys:GetEntity("Objectives3")
+        --spawn the objectives portals
+        --print("SPAWN PORTALS")
+        objective1 = gameStateSys:GetEntity("Objectives1")
+        objective2 = gameStateSys:GetEntity("Objectives2")
+        objective3 = gameStateSys:GetEntity("Objectives3")
 
-    local o1offset = Vec3.new()
-    local o2offset = Vec3.new()
-    local o3offset =Vec3.new()
+        local o1offset = Vec3.new()
+        local o2offset = Vec3.new()
+        local o3offset =Vec3.new()
 
-    -- use the counter to raise the objective platforms
-    if testScript ~= nil then
-        if objCount == 3 then
-            o1offset.x = objective1:GetTransform().mTranslate.x
-            o1offset.y = -4.5
-            o1offset.z = objective1:GetTransform().mTranslate.z
-            Helper.SetTranslate(objective1,o1offset)
-        end
-        if objCount == 2 then
-            o2offset.x = objective2:GetTransform().mTranslate.x
-            o2offset.y = -4.5
-            o2offset.z = objective2:GetTransform().mTranslate.z
-            Helper.SetTranslate(objective2,o2offset)
-        end
-        if objCount == 1 then
-            o3offset.x = objective3:GetTransform().mTranslate.x
-            o3offset.y = -4.5
-            o3offset.z = objective3:GetTransform().mTranslate.z
-            Helper.SetTranslate(objective3,o3offset)
+        -- use the counter to raise the objective platforms
+        if testScript ~= nil then
+            if objCount == 3 then
+                o1offset.x = objective1:GetTransform().mTranslate.x
+                o1offset.y = -4.5
+                o1offset.z = objective1:GetTransform().mTranslate.z
+                Helper.SetTranslate(objective1,o1offset)
+            end
+            if objCount == 2 then
+                o2offset.x = objective2:GetTransform().mTranslate.x
+                o2offset.y = -4.5
+                o2offset.z = objective2:GetTransform().mTranslate.z
+                Helper.SetTranslate(objective2,o2offset)
+            end
+            if objCount == 1 then
+                o3offset.x = objective3:GetTransform().mTranslate.x
+                o3offset.y = -4.5
+                o3offset.z = objective3:GetTransform().mTranslate.z
+                Helper.SetTranslate(objective3,o3offset)
+            end
         end
     end
 

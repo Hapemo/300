@@ -20,11 +20,11 @@ function Alive()
 end
 
 function Update()
- if not triggerOnce then
-    -- keep spawning arrow pointing down
-    -- "this" is the script entity, can get position from here, the x,y,z
-    RandomSpawnArrowIndicator()
- end
+    if not triggerOnce then
+        -- keep spawning arrow pointing down
+        -- "this" is the script entity, can get position from here, the x,y,z
+        RandomSpawnArrowIndicator()
+    end
 end
 
 function Dead()
@@ -71,7 +71,7 @@ function RandomSpawnArrowIndicator()
         transform = this:GetTransform()
         local spawndataPos = Vec3.new()
         spawndataPos.x = transform.mTranslate.x + math.random(-300,300)/100
-        spawndataPos.y = transform.mTranslate.y + 100
+        spawndataPos.y = transform.mTranslate.y + 70
         spawndataPos.z = transform.mTranslate.z + math.random(-300,300)/100
 
         systemManager.ecs:NewEntityFromPrefab("TriggerIndicator", spawndataPos)
