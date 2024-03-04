@@ -124,16 +124,16 @@ function Update()
             -- Pick which direction to ground slam in 
             groundSlamDirection = math.random(1, 3)
 
-            -- Ground slam right (from boss perspective)
+            -- Ground slam front (from boss perspective)
             if groundSlamDirection == 1 then
-                groundSlamPosition.x = -15
+                groundSlamPosition.x = 0
                 groundSlamPosition.y = -6
                 groundSlamPosition.z = 25
             end
 
-            -- Ground slam front (from boss perspective)
+            -- Ground slam right (from boss perspective)
             if groundSlamDirection == 2 then
-                groundSlamPosition.x = 0
+                groundSlamPosition.x = -15
                 groundSlamPosition.y = -6
                 groundSlamPosition.z = 25
             end
