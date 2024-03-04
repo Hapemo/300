@@ -14,6 +14,7 @@ local maxBossStateTimer = 3
 -- Phase 3 : Bullethell Phase
 local bossPosition = Vec3.new()
 local bulletSpawnPosition = Vec3.new()
+local bulletTranslateRef
 local bulletProjectileType = 0                          -- Used to determine which kind of projectile the enemy uses
 local fire_rate = 0.5
 local fire_timer = 0
@@ -39,10 +40,11 @@ local number_of_homing
 local homing_spawned = false
 local homing_start = false
 
+
 local homing_bullet
 local homing_projectiles = {}                           -- Define a table to store projectile data
 local projectile_stay_time = 2                          -- timer for the bullet to stay still before it starts homing into the player
-local initial_homing_speed = 3                          -- Starting Homing Speed
+local initial_homing_speed = 15                          -- Starting Homing Speed
 
 -- Boss states
 local state = 0
@@ -72,6 +74,7 @@ function Alive()
     -- Player 
     player_object = gameStateSys:GetEntityByScene("Camera" , "test3")
     player_position = player_object:GetTransform().mTranslate
+    
 
     -- For [1] Spiral Bullets (Ground)
     bulletSpawnPosition.x = bossPosition.x
@@ -346,14 +349,17 @@ function SpawnHomingSpheres()
                                         spawn_point_translate.z + random_offset_z)
 
     -- homing_bullet = systemManager.ecs:NewEntityFromPrefab("Boss_Bullet_Homing",bullet_spawn_position)
+    entity_ref = systemManager.ecs:NewEntityFromPrefab("Boss_Bullet_Homing",bullet_spawn_position)
+
     local homing_bullet = 
-    {
-        entity = systemManager.ecs:NewEntityFromPrefab("Boss_Bullet_Homing",bullet_spawn_position),
-        position = bulletSpawnPosition,  -- Note that this is randomnized by the previous few lines
+    {   
+    
+        entity = entity_ref, 
+        position = entity_ref:GetTransform().mTranslate,  -- Note that this is randomnized by the previous few lines
         direction = Vec3.new(0,0,0), 
         speed = 0,
         stay_time = 2.0,    -- Time to stay still before homing (in seconds)
-        lock_on_time = 5.0 -- Time to locks onto the player
+        lock_on_time = 15.0 -- Time to locks onto the player
     }
 
     -- local test_transform = homing_bullet:GetTransform().mTranslate
@@ -363,6 +369,7 @@ function SpawnHomingSpheres()
 
     -- local homing_bullet = systemManager.ecs:NewEntityFromPrefab("Boss_Bullet_Homing",bullet_spawn_position)
 
+    print("THIS HOMING BULLET POSITION: " , homing_bullet.position.x , " , " , homing_bullet.position.y  , " , " , homing_bullet.position.z)
     table.insert(homing_projectiles, homing_bullet)
     
 
@@ -392,12 +399,13 @@ function UpdateHomingProjectiles()
                 -- print("PROJECTILE LOCK TIME: " , projectile.lock_on_time)
                 projectile.lock_on_time = projectile.lock_on_time - FPSManager.GetDT()
                 if projectile.lock_on_time >= 0 then 
-                    print("CALCULATING DIRECTION TO GO.")
+                    -- print("CALCULATING DIRECTION TO GO.")
+                        
+                    -- Subtract Vector 
                     local directionToPlayer = Subtract(player_position, projectile.position)
                     
-                    -- Subtract Vector ()
-
-                    print("DIRECTION TO PLAYER: " , directionToPlayer.x ,  " , " , directionToPlayer.y , " , " , directionToPlayer.z)
+                    -- print("PROJECTILE POS: " , projectile.position.x , ", " , projectile.position.y , ", " , projectile.position.z)
+                    -- print("DIRECTION TO PLAYER: " , directionToPlayer.x ,  " , " , directionToPlayer.y , " , " , directionToPlayer.z)
                     directionToPlayer = Helper.Normalize(directionToPlayer)
                     -- print("NORMALIZED DIRECTION TO PLAYER: " , directionToPlayer.x ,  " , " , directionToPlayer.y , " , " , directionToPlayer.z)
 
@@ -407,9 +415,9 @@ function UpdateHomingProjectiles()
                     
                     -- Ensure projectile.entity is not nil before setting velocity
                     if projectile.entity ~= nil then 
-                        print("ENTITY NAME: " , projectile.entity:GetGeneral().name)
-                        print("Entity Exists")
-                        random_vec3 = Vec3.new(0,0,0)
+                        -- print("ENTITY NAME: " , projectile.entity:GetGeneral().name)
+                        -- print("Entity Exists")
+                        -- print("SETTING VELOCITY")
                         physicsSys:SetVelocity(projectile.entity, directionToPlayer)
                         -- physicsSys:SetVelocity(projectile.entity, random_vec3)
                     else

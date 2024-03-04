@@ -1,5 +1,5 @@
 {
-    "entityid": 3145766,
+    "entityid": 9437286,
     "general": {
         "name": "Boss_Bullet_Homing",
         "tagid": 1,
@@ -19,10 +19,26 @@
             "z": 3.091737985610962
         },
         "translate": {
-            "x": -15.654473304748535,
-            "y": 6.017225742340088,
-            "z": -5.150421619415283
+            "x": 0.208970308303833,
+            "y": 10.01722526550293,
+            "z": 11.241089820861816
         }
+    },
+    "rigidbody": {
+        "density": 10.0,
+        "material": 1,
+        "motion": 1,
+        "velocity": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "rotationconstraints": {
+            "x": true,
+            "y": false,
+            "z": false
+        },
+        "gravity": false
     },
     "meshrenderer": {
         "vert": "../assets/shader_files/pointLight_vert.glsl",
