@@ -238,12 +238,6 @@ function Alive()
     -- end
 
     playerHealthComponent = this:GetHealthbar()
-
-    if(playerHealthComponent ~= nil) then 
-        print("HEALTHBAR")
-    end
-
-
 end
 
 function Update()
@@ -298,10 +292,9 @@ function Update()
     end
 
     -- healthbar:GetUIrenderer():SetSlider(playerHealthCurrent/playerHealthMax);
-    print("HP LEFT: " , playerHealthComponent.health)
-    print("PERCENTAGE: " , playerHealthComponent.health/playerHealthComponent.maxHealth)
+    -- print("HP LEFT: " , playerHealthComponent.health)
+    -- print("PERCENTAGE: " , playerHealthComponent.health/playerHealthComponent.maxHealth)
     healthbar:GetUIrenderer():SetSlider(playerHealthComponent.health/playerHealthComponent.maxHealth)
-
 
     if playerHealthCurrent <= 0 then
         gameStateSys:ChangeGameState("LoseMenu")

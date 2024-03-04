@@ -7,11 +7,18 @@ function Alive()
     -- testing timer countdown for the rotation of the laser
     ent = Helper.GetScriptEntity(script_entity.id)
     trans = ent:GetTransform()
-    axis.x = 0.0
-    axis.y = 1.0
-    axis.z = 0.0
-    speed = 5
-    angle = 0.0
+    speed = 7
+    if(ent:GetGeneral().name == "Laser1") then
+        axis.x = 0.0
+        axis.y = 1.0
+        axis.z = 0.0
+        angle = 0.0
+    elseif (ent:GetGeneral().name == "Laser2") then
+        axis.x = 0.0
+        axis.y = 1.0
+        axis.z = 0.0
+        angle = 90.0
+    end
 end
 
 function Update()
@@ -26,7 +33,6 @@ end
 
 function OnTriggerEnter(Entity)
     generalComponent = Entity:GetGeneral()
-    print("enter", generalComponent.name)
 
     if(generalComponent.name == "Camera") then
         if(Entity:HasHealthbar()) then 
@@ -38,7 +44,6 @@ end
 
 function OnTriggerExit(Entity)
     generalComponent = Entity:GetGeneral()
-    print("exit", generalComponent.name)
 end
 
 function OnContactEnter(Entity)
