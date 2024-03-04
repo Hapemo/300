@@ -57,4 +57,7 @@ void ParticleEmitterSSBO::Init(ParticleEmitter const& e)
 	mStartColor = e.mStartColor;
 	mEndColor = e.mEndColor;
 	mSizeLifetimeCount = vec4(e.mStartSize, e.mEndSize, e.mLifetime, e.mCount);
+	mRotationGravity.x = e.mRotation;
+	mRotationGravity.y = e.mGravity;
+	mOffset = vec4(e.mOffset, 0.f);
 }

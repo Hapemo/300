@@ -49,6 +49,8 @@ struct ParticleEmitterSSBO
 	alignas(16) vec4 mEndColor{};
 	alignas(16) vec4 mSizeLifetimeCount{};	// X: start size | Y: end size | Z: Lifetime | W: Count
 	alignas(16) vec4 mPositionSpeed{};		// XYZ: position | W: Speed
+	alignas(16) vec4 mOffset {};			// XYZ: offset position
+	alignas(16) vec4 mRotationGravity{};	// X: Rotation Delta | Y: Gravity
 	alignas(8)	GLuint64 mTexture{};
 
 	void Init(ParticleEmitter const& e);
@@ -56,14 +58,15 @@ struct ParticleEmitterSSBO
 
 struct ParticleSSBO
 {
-	alignas(16) vec4 mStartColor	{};
-	alignas(16) vec4 mEndColor		{};
-	alignas(16) vec4 mCurrColor		{};
-	alignas(16) vec4 mVelocity		{};
-	alignas(16) vec4 mSizeLife		{};	// X: Start size | Y: End size | Z: Life Time left | W: Max Life
-	alignas(16) vec4 mPositionSpeed	{};	// XYZ: position | W: Speed
-	alignas(8)	GLuint64 mTexture	{};
-	alignas(64) mat4 mLtwMatrix		{};	// Local-to-world transformation matrix
+	alignas(16) vec4 mStartColor		{};
+	alignas(16) vec4 mEndColor			{};
+	alignas(16) vec4 mCurrColor			{};
+	alignas(16) vec4 mVelocity			{};
+	alignas(16) vec4 mSizeLife			{};	// X: Start size | Y: End size | Z: Life Time left | W: Max Life
+	alignas(16) vec4 mPositionSpeed		{};	// XYZ: position | W: Speed
+	alignas(16) vec4 mRotationGravity	{};	// X: Current Rotation | Y: Rotation Delta | Z: Gravity
+	alignas(8)	GLuint64 mTexture		{};
+	alignas(64) mat4 mLtwMatrix			{};	// Local-to-world transformation matrix
 };
 
 #endif

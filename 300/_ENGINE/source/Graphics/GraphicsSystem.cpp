@@ -95,6 +95,7 @@ void GraphicsSystem::Init()
 	}
 
 	PINFO("Window size: %d, %d", m_Window->size().x, m_Window->size().y);
+	PrintDeviceInfo();
 }
 
 
@@ -1401,6 +1402,30 @@ void GraphicsSystem::ResizeWindow(ivec2 newSize)
 	SetCameraSize(CAMERA_TYPE::CAMERA_TYPE_ALL, newSize);
 }
 
+void GraphicsSystem::PrintDeviceInfo()
+{
+	printf("\n----------------- DEVICE INFO -----------------\n");
+
+	GLint integer[3];
+	glGetIntegerv(GL_MAX_COMPUTE_SHADER_STORAGE_BLOCKS, integer);
+	printf("\n Max Compute Shader Storage Blocks: %d", integer[0]);
+
+	glGetIntegeri_v(GL_MAX_COMPUTE_WORK_GROUP_COUNT, 0, integer);
+	glGetIntegeri_v(GL_MAX_COMPUTE_WORK_GROUP_COUNT, 1, integer + 1);
+	glGetIntegeri_v(GL_MAX_COMPUTE_WORK_GROUP_COUNT, 2, integer + 2);
+	printf("\n Max Compute Shader Work Group Count: %d, %d, %d", integer[0], integer[1], integer[2]);
+
+	glGetIntegeri_v(GL_MAX_COMPUTE_WORK_GROUP_INVOCATIONS, 0, integer);
+	glGetIntegeri_v(GL_MAX_COMPUTE_WORK_GROUP_INVOCATIONS, 1, integer + 1);
+	glGetIntegeri_v(GL_MAX_COMPUTE_WORK_GROUP_INVOCATIONS, 2, integer + 2);
+	printf("\n Max Compute Shader Work Group Invocations: %d, %d, %d", integer[0], integer[1], integer[2]);
+
+	glGetIntegeri_v(GL_MAX_COMPUTE_WORK_GROUP_SIZE, 0, integer);
+	glGetIntegeri_v(GL_MAX_COMPUTE_WORK_GROUP_SIZE, 1, integer + 1);
+	glGetIntegeri_v(GL_MAX_COMPUTE_WORK_GROUP_SIZE, 2, integer + 2);
+	printf("\n Max Compute Shader Work Group Size: %d, %d, %d", integer[0], integer[1], integer[2]);
+}
+
 void GraphicsSystem::ClampCursor()
 {
 	double posX, posY;
@@ -1856,6 +1881,7 @@ void GraphicsSystem::SetupAllShaders()
 	m_ComputeEmitterShader.Activate();
 	m_ComputeEmitterCountLocation = m_ComputeEmitterShader.GetUniformLocation("uEmitterCount");
 	m_ComputeEmitterCamPosLocation = m_ComputeEmitterShader.GetUniformLocation("uCamPos");
+	m_ComputeEmitterSeedLocation = m_ComputeEmitterShader.GetUniformLocation("uSeed");
 	GFX::Shader::Deactivate();
 
 	m_ComputeParticleShader.CreateShaderFromFile("../assets/shader_files/computeParticle.glsl");
@@ -2036,6 +2062,7 @@ void GraphicsSystem::UpdateEmitters(vec3 const& camPos)
 
 	// Send uniforms to shader
 	glUniform1i(m_ComputeEmitterCountLocation, emitterCount);
+	glUniform1f(m_ComputeEmitterSeedLocation, m_Window->GetTime());
 	glUniform3fv(m_ComputeEmitterCamPosLocation, 1, &camPos[0]);
 
 	glDispatchCompute(num_group_x, 1, 1);

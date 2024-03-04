@@ -17,6 +17,7 @@ struct Particle
 	vec4 mVelocity;
 	vec4 mSizeLife;			// X: Start size | Y: End size | Z: Life Time left | W: Max Life
 	vec4 mPositionSpeed;	// XYZ: position | W: Speed
+	vec4 mRotation;			// X: Current Rotaiton | Y: Rotation Delta
 	uint64_t mTexture;
 	mat4 mLtwMatrix;		// Local-to-world transformation matrix
 };

@@ -537,6 +537,8 @@ void ParticleEmitter::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuf
 	Serialize(writer, "endcolor", mEndColor);
 	Serialize(writer, "startsize", mStartSize);
 	Serialize(writer, "endsize", mEndSize);
+	Serialize(writer, "offset", mOffset);
+	Serialize(writer, "rotation", mRotation);
 	Serialize(writer, "lifetime", mLifetime);
 	Serialize(writer, "speed", mSpeed);
 	Serialize(writer, "count", mCount);
@@ -549,6 +551,8 @@ void ParticleEmitter::DeserializeSelf(rapidjson::Value& reader)
 	Deserialize(reader, "endcolor", mEndColor);
 	Deserialize(reader, "startsize", mStartSize);
 	Deserialize(reader, "endsize", mEndSize);
+	Deserialize(reader, "offset", mOffset);
+	Deserialize(reader, "rotation", mRotation);
 	Deserialize(reader, "lifetime", mLifetime);
 	Deserialize(reader, "speed", mSpeed);
 	Deserialize(reader, "count", mCount);

@@ -241,6 +241,8 @@ public:
 
 	void ResizeWindow(ivec2 newSize);
 
+	void PrintDeviceInfo();
+
 	// Top-left position as 0, 0. normalized coordinates [0, 1]
 	void ClampCursor();
 
@@ -415,6 +417,7 @@ public:
 	std::vector<ParticleSSBO> particleVector{};
 	GLuint m_ComputeEmitterCountLocation{};
 	GLuint m_ComputeEmitterCamPosLocation{};
+	GLuint m_ComputeEmitterSeedLocation{};
 	GLuint m_ComputeParticleDeltaTimeLocation{};
 	GLuint m_ComputeParticleCountLocation{};
 	GLuint m_ComputeParticleCamPosLocation{};

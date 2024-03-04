@@ -638,6 +638,10 @@ void ParticleEmitter::Inspect()
 		ImGui::ColorPicker4("Start Color", (float*)&mStartColor);
 		ImGui::ColorPicker4("End Color", (float*)&mEndColor);
 
+		ImGui::Text("Offset");
+		ImGui::SameLine();
+		ImGui::DragFloat3("##Offset ", &mOffset[0], 0.1f);
+
 		ImGui::Text("Start Size");
 		ImGui::SameLine();
 		ImGui::DragFloat("##Start Size ", &mStartSize, 0.1f, 0.f);
@@ -645,6 +649,14 @@ void ParticleEmitter::Inspect()
 		ImGui::Text("End Size");
 		ImGui::SameLine();
 		ImGui::DragFloat("##End Size ", &mEndSize, 0.1f, 0.f);
+
+		ImGui::Text("Gravity");
+		ImGui::SameLine();
+		ImGui::DragFloat("##Gravity ", &mGravity, 0.1f);
+
+		ImGui::Text("Rotation");
+		ImGui::SameLine();
+		ImGui::DragFloat("##Rotation ", &mRotation, 1.f);
 
 		ImGui::Text("Lifetime");
 		ImGui::SameLine();
