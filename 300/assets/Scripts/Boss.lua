@@ -39,14 +39,14 @@ local spawn_point_translate = Vec3.new()
 local number_of_homing
 local homing_spawned = false
 local homing_spawn_timer = 0                            -- Timer that increament with DT
-local homing_spawn_period = 2.0                         -- Time to spawn (in between each sphere)
+local homing_spawn_period = 1.0                         -- Time to spawn (in between each sphere)
 local homing_spawn_counter = 0                          -- Counter to keep track how many homing bullets have been spawned
 local homing_start = false
 
 local homing_bullet
 local homing_projectiles = {}                           -- Define a table to store projectile data
 local projectile_stay_time = 2                          -- timer for the bullet to stay still before it starts homing into the player
-local initial_homing_speed = 5                          -- Starting Homing Speed
+local initial_homing_speed = 6                          -- Starting Homing Speed
 
 -- Boss states
 local state = 0
@@ -369,13 +369,13 @@ function SpawnHomingSpheres()
 
     local homing_bullet = 
     {   
-    
         entity = entity_ref, 
         position = entity_ref:GetTransform().mTranslate,  -- Note that this is randomnized by the previous few lines
         direction = Vec3.new(0,0,0), 
         speed = 0,
-        stay_time = 2.0,    -- Time to stay still before homing (in seconds)
-        lock_on_time = 15.0 -- Time to locks onto the player
+        stay_time = 2.0,      -- Time to stay still before homing (in seconds)
+        lock_on_time = 15.0,   -- Time to locks onto the player : Used as an internal timer (for each bullet to calculate how long to home and lock on)
+        lock_on_bool = false, -- To control when to home and when not to
     }
 
     -- local test_transform = homing_bullet:GetTransform().mTranslate
@@ -387,6 +387,8 @@ function SpawnHomingSpheres()
 
     print("THIS HOMING BULLET POSITION: " , homing_bullet.position.x , " , " , homing_bullet.position.y  , " , " , homing_bullet.position.z)
     table.insert(homing_projectiles, homing_bullet)
+
+    -- _G.bulletCounter = _G.bulletCounter + 1
     
 
         
@@ -412,9 +414,10 @@ function UpdateHomingProjectiles()
                 end
             else
                 -- Lock onto the player after a delay
-                -- print("PROJECTILE LOCK TIME: " , projectile.lock_on_time)
+                -- print("Projectile No : " , _G.bulletCounter)
+                print("PROJECTILE LOCK TIME: " , projectile.lock_on_time)
                 projectile.lock_on_time = projectile.lock_on_time - FPSManager.GetDT()
-                if projectile.lock_on_time >= 0 then 
+                if projectile.lock_on_time > 0 then 
                     -- print("CALCULATING DIRECTION TO GO.")
                         
                     -- Subtract Vector 
@@ -428,13 +431,16 @@ function UpdateHomingProjectiles()
                     directionToPlayer.x = directionToPlayer.x * projectile.speed
                     directionToPlayer.y = directionToPlayer.y * projectile.speed
                     directionToPlayer.z = directionToPlayer.z * projectile.speed
+
+                    -- Save the direction 
+                    projectile.direction = directionToPlayer
                     
                     -- Ensure projectile.entity is not nil before setting velocity
                     if projectile.entity ~= nil then 
                         -- print("ENTITY NAME: " , projectile.entity:GetGeneral().name)
                         -- print("Entity Exists")
                         -- print("SETTING VELOCITY")
-                        physicsSys:SetVelocity(projectile.entity, directionToPlayer)
+                        physicsSys:SetVelocity(projectile.entity,  projectile.direction)
                         -- physicsSys:SetVelocity(projectile.entity, random_vec3)
                     else
                         print("Projectile entity is nil!")
@@ -442,9 +448,11 @@ function UpdateHomingProjectiles()
                     -- print("SETTING VELOCITY")
                     -- print("DIRECTION TO PLAYER: " , directionToPlayer.x ,  " , " , directionToPlayer.y , " , " , directionToPlayer.z)
                     -- physicsSys:SetVelocity(projectile.entity, directionToPlayer)
-         
-                    
                 end
+
+            
+
+            
             end
         end
     end

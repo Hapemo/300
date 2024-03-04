@@ -10,6 +10,8 @@ local general
 local spawn_bullet_name = "Boss_Bullet_Homing"
 
 
+
+
 function Alive()
     bulletObject = Helper.GetScriptEntity(script_entity.id)
     this = Helper.GetScriptEntity(script_entity.id)
@@ -61,7 +63,8 @@ function OnTriggerEnter(Entity)
         end
 
         systemManager.ecs:SetDeleteEntity(this) -- Delete the bullet upon contact
-
+        
+        
         -- print("PLAYER HIT")
     end
 end
