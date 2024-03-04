@@ -258,6 +258,15 @@ Entity ECS::NewEntityFromPrefabScene(std::string prefabName,int prefabscene, con
 	return e;
 }
 
+Entity ECS::NewEntityFromPrefabSceneName(std::string prefabName, std::string prefabscene, const glm::vec3& pos)
+{
+	int i{};
+	auto scenes = systemManager->mGameStateSystem->mCurrentGameState.mScenes;
+	for (; i < scenes.size(); ++i) if (scenes[i].mName == prefabscene) break;
+	
+	return NewEntityFromPrefabScene(prefabName, i, pos);
+}
+
 Entity ECS::NewEntityPrefabForGraph(std::string prefabName, const glm::vec3& pos) {
 	Entity e(ObjectFactory::DeserializePrefab("../assets/Prefabs/" + prefabName + ".prefab"));
 	e.GetComponent<Transform>().mTranslate = pos;

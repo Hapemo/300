@@ -81,11 +81,11 @@ function Update()
         else
             if(dispenseTime > 3)then
         
-            --    print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
+               print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
                 -- print("I ACTIVATED MY SKILL")
                --local newpos = position_1
                 local randn = math.random(1,3)
-                dEntity = systemManager.ecs:NewEntityFromPrefab("UI-Spawned", position_1)
+                dEntity = systemManager.ecs:NewEntityFromPrefabSceneName("UI-Spawned", "UI",position_1)
                 uirend  = dEntity:GetUIrenderer()
                 dtransform = dEntity:GetTransform()
                 dtransform.mTranslate.z = randn
