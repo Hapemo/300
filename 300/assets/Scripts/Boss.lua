@@ -36,6 +36,7 @@ local spawn_point_ref_obj
 local spawn_point_ref_trans
 local spawn_point_translate = Vec3.new()
 local number_of_homing
+local homing_spawned = false
 local homing_start = false
 
 local homing_bullet
@@ -169,13 +170,15 @@ function Update()
 
         if attacking == false then 
             -- bulletProjectileType = math.random (1, 3)
-            bulletProjectileType = 2 -- temporary
-            print("PROJECTILE ATTACKING TYPE: "  , bulletProjectileType)
+            bulletProjectileType = 1 -- temporary
+            -- print("PROJECTILE ATTACKING TYPE: "  , bulletProjectileType)
             attacking = true
         end
 
         -- Check if this projectile has been recently used... 
         if(bullet_attack_checker[bulletProjectileType] == false) then 
+
+            -- [1] Spiral Bullets (Ground)
             if(bulletProjectileType == 1) then 
                 if(random_wave_generator == false) then 
                     random_wave_generator = true 
@@ -196,18 +199,23 @@ function Update()
                 end
             end
 
+            -- [2] Summon Bullet + Homing Bullets (From Boss' Mouth / Front) 
             if(bulletProjectileType == 2) then 
                 number_of_homing = math.random(5, 8)
-                print("NUMBER OF HOMING: " , number_of_homing)
+                -- print("NUMBER OF HOMING: " , number_of_homing)
 
-                for i = 0 , number_of_homing do
-                    SpawnHomingSpheres()
-                    bullet_attack_checker[2] = true
+                if homing_spawned == false then 
+                    for i = 0 , number_of_homing do
+                        SpawnHomingSpheres()
+                    end
+                    homing_spawned = true
+                    -- print("SPAWNED HOMING")
                 end
 
-                print("Homing Start: " , homing_start)
+                -- print("Homing Start: " , homing_start)
                 if homing_start == false then 
                     UpdateHomingProjectiles()
+                    -- print("HI")
                 -- if UpdateHomingProjectiles() == false then -- done homing 
                 --     print("Im done homing")
 
@@ -369,15 +377,18 @@ function UpdateHomingProjectiles()
         if projectile.entity ~= nil then 
             -- counter = counter + 1
             if projectile.speed == 0 then  -- projectile speed is set to 0 at the start
+                -- print("STAYING STILL")
                 -- Stay still for awhile
                 projectile.stay_time = projectile.stay_time - FPSManager.GetDT()  
+                -- print("PROJECTILE STAY TIME: " , projectile.stay_time)
                 if projectile.stay_time <= 0 then 
                     -- Starts homing towards the player (by providing speed)
+                    print("Assigning Initial Speed - Homing")
                     projectile.speed = initial_homing_speed
                 end
             else
                 -- Lock onto the player after a delay
-                print("PROJECTILE LOCK TIME: " , projectile.lock_on_time)
+                -- print("PROJECTILE LOCK TIME: " , projectile.lock_on_time)
                 projectile.lock_on_time = projectile.lock_on_time - FPSManager.GetDT()
                 if projectile.lock_on_time <= 0 then 
                     local directionToPlayer = Vec3.Subtract(player_position, projectile.position)
@@ -391,7 +402,7 @@ function UpdateHomingProjectiles()
                     
                     -- Ensure projectile.entity is not nil before setting velocity
                     if projectile.entity ~= nil then 
-                        physicsSys:SetVelocity(projectile.entity, directionToPlayer)
+                        -- physicsSys:SetVelocity(projectile.entity, directionToPlayer)
                     else
                         print("Projectile entity is nil!")
                     end

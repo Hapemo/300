@@ -1,20 +1,30 @@
 local bulletObject
 local bulletLifeTime = 0
-local bulletDeathTime = 1000
+local bulletDeathTime = 10
 
 -- Phase 3 attack from Boss Level (Lv 3) 
 local bullet_damage = 20 -- Adjust Accordingly
 
+local this
+local general
+local spawn_bullet_name = "Boss_Bullet_Homing"
+
 
 function Alive()
     bulletObject = Helper.GetScriptEntity(script_entity.id)
+    this = Helper.GetScriptEntity(script_entity.id)
+    general = this:GetGeneral()
 end
 
 function Update()
     while bulletObject ~= nil do 
+        -- Customized Check (to prevent homing from despawning unless it collides with something) -> disable lifetime
+        -- if(general.name == spawn_bullet_name) then -- won't delete the homing bullets
+        --     break
+        -- end
         --print("THERE IS A BULLET OBJECT")
-         bulletLifeTime = bulletLifeTime + 1
-         -- print("BULLET LIFETIME: " , bulletLifeTime)
+         bulletLifeTime = bulletLifeTime + FPSManager.GetDT()
+         print("BULLET LIFETIME: " , bulletLifeTime)
          if(bulletLifeTime > bulletDeathTime) then
              systemManager.ecs:SetDeleteEntity(bulletObject)
              -- print("DELETING BULLET")
