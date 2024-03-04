@@ -19,12 +19,12 @@ end
 function Update()
     while bulletObject ~= nil do 
         -- Customized Check (to prevent homing from despawning unless it collides with something) -> disable lifetime
-        -- if(general.name == spawn_bullet_name) then -- won't delete the homing bullets
-        --     break
-        -- end
+        if(general.name == spawn_bullet_name) then -- won't delete the homing bullets
+            break
+        end
         --print("THERE IS A BULLET OBJECT")
          bulletLifeTime = bulletLifeTime + FPSManager.GetDT()
-         print("BULLET LIFETIME: " , bulletLifeTime)
+        --  print("BULLET LIFETIME: " , bulletLifeTime)
          if(bulletLifeTime > bulletDeathTime) then
              systemManager.ecs:SetDeleteEntity(bulletObject)
              -- print("DELETING BULLET")

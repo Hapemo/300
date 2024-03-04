@@ -170,7 +170,7 @@ function Update()
 
         if attacking == false then 
             -- bulletProjectileType = math.random (1, 3)
-            bulletProjectileType = 1 -- temporary
+            bulletProjectileType = 2 -- temporary
             -- print("PROJECTILE ATTACKING TYPE: "  , bulletProjectileType)
             attacking = true
         end
@@ -280,12 +280,13 @@ end
 -- local Vec3 = {}
 
 -- Define Subtract method within Vec3 module
-function Vec3.Subtract(vector1, vector2)
-    local result = {
-        x = vector1.x - vector2.x,
-        y = vector1.y - vector2.y,
-        z = vector1.z - vector2.z
-    }
+function Subtract(vector1, vector2)
+    local result = Vec3.new()
+
+    result.x = vector1.x - vector2.x
+    result.y = vector1.y - vector2.y
+    result.z = vector1.z - vector2.z
+
     return result
 end
 
@@ -390,9 +391,13 @@ function UpdateHomingProjectiles()
                 -- Lock onto the player after a delay
                 -- print("PROJECTILE LOCK TIME: " , projectile.lock_on_time)
                 projectile.lock_on_time = projectile.lock_on_time - FPSManager.GetDT()
-                if projectile.lock_on_time <= 0 then 
-                    local directionToPlayer = Vec3.Subtract(player_position, projectile.position)
-                    -- print("DIRECTION TO PLAYER: " , directionToPlayer.x ,  " , " , directionToPlayer.y , " , " , directionToPlayer.z)
+                if projectile.lock_on_time >= 0 then 
+                    print("CALCULATING DIRECTION TO GO.")
+                    local directionToPlayer = Subtract(player_position, projectile.position)
+                    
+                    -- Subtract Vector ()
+
+                    print("DIRECTION TO PLAYER: " , directionToPlayer.x ,  " , " , directionToPlayer.y , " , " , directionToPlayer.z)
                     directionToPlayer = Helper.Normalize(directionToPlayer)
                     -- print("NORMALIZED DIRECTION TO PLAYER: " , directionToPlayer.x ,  " , " , directionToPlayer.y , " , " , directionToPlayer.z)
 
@@ -402,7 +407,11 @@ function UpdateHomingProjectiles()
                     
                     -- Ensure projectile.entity is not nil before setting velocity
                     if projectile.entity ~= nil then 
-                        -- physicsSys:SetVelocity(projectile.entity, directionToPlayer)
+                        print("ENTITY NAME: " , projectile.entity:GetGeneral().name)
+                        print("Entity Exists")
+                        random_vec3 = Vec3.new(0,0,0)
+                        physicsSys:SetVelocity(projectile.entity, directionToPlayer)
+                        -- physicsSys:SetVelocity(projectile.entity, random_vec3)
                     else
                         print("Projectile entity is nil!")
                     end
