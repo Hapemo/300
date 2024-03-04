@@ -1,3 +1,8 @@
+_G.level = 0
+_G.collided = false
+local spawn = 2
+
+
 _G.obj =1
 local position_1 = Vec3.new(180,-820,0)
 _G.weaponArray = {{1,false,0},{1,false,0},{1,false,0},{1,false,0},{1,false,0},{1,false,0},{1,false,0},{1,true,1}}
@@ -51,62 +56,58 @@ function Update()
     spawnTime = spawnTime +  FPSManager.GetDT()
     -- skillElapsed = skillElapsed + FPSManager.GetDT()
 
-    if(spawnTime > 3)then
+
+    if(_G.level >=3)then
+
+        spawn = 5
+    end
+
+
+    -- if(spawnTime > spawn)then
         
-        if (disCount <3)then
-        --table.insert(dispensor,1)
-        dispensor[disCount] = math.random(1,3)
-        --print(dispensor[disCount])
-        disCount = disCount+1
-        spawnTime =0
-        end
-    end    
+    --     if (disCount <3)then
+    --     dispensor[disCount] = math.random(1,3)
+    --     disCount = disCount+1
+    --     spawnTime =0
+    --     end
+    -- end    
 
-    -- if(skillElapsed > 2) then
-    --     print("SLILL ELAPSED") 
-    --     skillEndingAudio:SetPlay(0.4)-=-
-    --     skillElapsed = 0
-    -- end
 
-    if (disCount >0) then
+    -- if (disCount >0) then
         
 
         dispenseTime = dispenseTime +  FPSManager.GetDT()
-        --print(dispenseTime)
-        --print("discount".. disCount)
+
+
+        if(_G.collided == true)then
+            dispenseTime = spawn+1
+        end
+
         if(_G.weaponArray[1][2] == true)then
-            disCount =0
+            -- disCount =0
             dispenseTime = 0
 
         else
-            if(dispenseTime > 3)then
+            if(dispenseTime > spawn)then
         
-            --    print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
-                -- print("I ACTIVATED MY SKILL")
-               --local newpos = position_1
                 local randn = math.random(1,3)
                 dEntity = systemManager.ecs:NewEntityFromPrefab("UI-Spawned", position_1)
                 uirend  = dEntity:GetUIrenderer()
                 dtransform = dEntity:GetTransform()
                 dtransform.mTranslate.z = randn
-                -- uirend:SetTexture(_G.textureArray[dispensor[disCount]])
                 uirend:SetTexture(_G.textureArray[randn])
-                -- print("TEXTURE SELECTED: " , _G.textureArray[randn])
-                -- _G.obj = _G.obj+1
-
-                disCount = disCount-1
+                -- disCount = disCount-1
                 dispenseTime = 0
-            -- else if (dispenseTime < 0.25) then 
-            --     skillEndingAudio:SetPlay(0.4)
-            -- end
+                _G.collided = false
+
             end
         end
 
         
-    else 
+    -- else 
 
-        dispenseTime =0
-    end
+        -- dispenseTime =0
+    -- end
 
 
 
