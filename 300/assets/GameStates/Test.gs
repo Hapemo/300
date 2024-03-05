@@ -189,7 +189,7 @@
         "debug": 1
     },
     {
-        "scene_name": "EpicIntroIndicator",
+        "scene_name": "Level1Boss",
         "pause": false,
         "force_render": true,
         "bloom_threshold": {
