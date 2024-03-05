@@ -441,8 +441,8 @@ function SetupTSEpicIntro()
 end
 
 function RunTSEpicIntro()
-    print("_G.TSEpicIntroState:")
-    print(_G.TSEpicIntroState)
+    --print("_G.TSEpicIntroState:")
+    --print(_G.TSEpicIntroState)
     if _G.TSEpicIntroState > 2 then 
         Helper.SetRealRotate(epicTS3, Vec3.new(0,90,0))
         epicTS3:GetTransform().mTranslate = Vec3.new(13.7, -11, 32.4)
@@ -842,9 +842,9 @@ function LookTowardsInterpolation(entity, targetPitchYaw, speed)
     -- print(newRotate)
     -- _G.phySys:SetRotation(entity, newRotate)
 -- print(targetPitchYaw)
-print(mRotate)
+--print(mRotate)
     local toMove = Helper.Scale(direction, speed * FPSManager:GetDT())
-    print(toMove)    
+    --print(toMove)    
     Helper.SetRotate(entity, toMove)
 
     local interpolationApart = Helper.Vec3Len(Helper.Vec3Minus(entity:GetTransform().mRotate, targetPitchYaw))

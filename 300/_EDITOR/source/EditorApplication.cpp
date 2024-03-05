@@ -104,6 +104,8 @@ void EditorApplication::MainUpdate()
 
         EnginePerformance::EndTrack("Editor");
         EnginePerformance::StoreTime("Editor");
+        FPSManager::LimitFPS(80);
+
         if (systemManager->IsQuit())
             break;
     }

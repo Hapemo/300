@@ -219,7 +219,7 @@ void ECS::NewPrefab(Entity e)
 
 Entity ECS::NewEntityFromPrefab(std::string prefabName, const glm::vec3& pos)
 {
-	std::cout << "spawning prefab: " << prefabName << std::endl;
+	//std::cout << "spawning prefab: " << prefabName << std::endl;
 	// void ObjectFactory::DeserializeScene(const std::string& filename)
 	// creation of new entity done inside deserializescene function
 	Entity e(ObjectFactory::DeserializePrefab("../assets/Prefabs/" + prefabName + ".prefab"));
