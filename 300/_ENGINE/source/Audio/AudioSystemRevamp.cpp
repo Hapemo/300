@@ -757,6 +757,16 @@ void AudioSystem::SetAllBGMVolume(float volume)
 	bgm_global_vol = volume;
 }
 
+float AudioSystem::GetSFXVolume() const
+{
+	return sfx_global_vol;
+}
+float AudioSystem::GetBGMVolume() const
+{
+	return bgm_global_vol;
+}
+
+
 void AudioSystem::PauseAllSounds()
 {
 	// Need to pause every channel.
