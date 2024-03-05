@@ -884,7 +884,10 @@ struct ParticleEmitter
 	float mSpeed	{ 3.f };
 	int	mCount		{ 100 };
 
+	float mCurrTime{};
+	float mLoopInterval{ 0.5f };
 	bool mEmit{ false };
+	bool mLoop{ false };
 
 	std::string							mTexPath; // temporary should be UID
 	_GEOM::Texture_DescriptorData		mTextureDescriptorData;

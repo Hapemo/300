@@ -674,6 +674,14 @@ void ParticleEmitter::Inspect()
 		{
 			mEmit = true;	// Set to true to emit
 		}
+		ImGui::SameLine();
+		ImGui::Checkbox("Loop: ", &mLoop);
+		if (mLoop)
+		{
+			ImGui::Text("Loop Interval");
+			ImGui::SameLine();
+			ImGui::DragFloat("##Loop Interval ", &mLoopInterval, 0.1f, 0.f);
+		}
 
 		ImGui::NewLine();
 

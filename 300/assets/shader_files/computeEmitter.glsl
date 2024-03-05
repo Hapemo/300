@@ -100,7 +100,7 @@ void MakeParticle(out Particle p, ParticleEmitter e)
 	p.mPositionSpeed.xyz += vec3(offset.x * rightVector + offset.y * upVector + offset.z * forwardVector);
 	// clamp speed
 	float scale = fract(uSeed);
-	p.mPositionSpeed.w *= clamp(Rand2(vec2(gl_GlobalInvocationID.xy), uSeed + 0.1) * p.mPositionSpeed.w, scale * p.mPositionSpeed.w, p.mPositionSpeed.w);
+	p.mPositionSpeed.w *= clamp(Rand2(vec2(gl_GlobalInvocationID.xy), uSeed + 0.1) * p.mPositionSpeed.w, 0.1 * p.mPositionSpeed.w, p.mPositionSpeed.w);
 
 	// Color
 	p.mStartColor = e.mStartColor;

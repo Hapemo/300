@@ -541,6 +541,8 @@ void ParticleEmitter::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuf
 	Serialize(writer, "gravity", mGravity);
 	Serialize(writer, "rotation", mRotation);
 	Serialize(writer, "lifetime", mLifetime);
+	Serialize(writer, "loop", mLoop);
+	Serialize(writer, "loopInterval", mLoopInterval);
 	Serialize(writer, "speed", mSpeed);
 	Serialize(writer, "count", mCount);
 	writer.EndObject();
@@ -556,6 +558,8 @@ void ParticleEmitter::DeserializeSelf(rapidjson::Value& reader)
 	Deserialize(reader, "gravity", mGravity);
 	Deserialize(reader, "rotation", mRotation);
 	Deserialize(reader, "lifetime", mLifetime);
+	Deserialize(reader, "loop", mLoop);
+	Deserialize(reader, "loopInterval", mLoopInterval);
 	Deserialize(reader, "speed", mSpeed);
 	Deserialize(reader, "count", mCount);
 }

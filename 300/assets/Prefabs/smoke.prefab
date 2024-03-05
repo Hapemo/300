@@ -1,5 +1,5 @@
 {
-    "entityid": 327,
+    "entityid": 263,
     "general": {
         "name": "smoke",
         "tagid": 8,
@@ -23,6 +23,9 @@
             "y": 0.0,
             "z": 0.0
         }
+    },
+    "scripts": {
+        "scriptscontainer": []
     },
     "prefab": {
         "prefab": "smoke"
@@ -50,7 +53,9 @@
         "gravity": 0.05999999865889549,
         "rotation": 90.0,
         "lifetime": 2.0,
-        "speed": 3.0,
-        "count": 100
+        "loop": true,
+        "loopInterval": 0.4000000059604645,
+        "speed": 1.5,
+        "count": 40
     }
 }

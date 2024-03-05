@@ -191,9 +191,11 @@ void GraphicsSystem::Update(float dt)
 				parentPos = inst.GetParent().GetComponent<Transform>().mTranslate;
 				pos += parentPos;	// emitter's position is an offset if has parent
 			}
-			if (e.mEmit)
+			e.mCurrTime += dt;
+			if (e.mEmit || e.mLoop && (e.mCurrTime > e.mLoopInterval))
 			{
 				EmitParticles(e, pos);
+				e.mCurrTime = 0.f;
 			}
 			m_Renderer.AddCube(pos, vec3(0.2f, 0.2f, 0.2f));	// small white cube for each emitter
 		}
@@ -2119,7 +2121,8 @@ void GraphicsSystem::EmitParticles(ParticleEmitter& e, vec3 const& position)
 	// Add emitter into container
 	m_Emitters.emplace_back(eSsbo);
 
-	e.mEmit = false;	// Set to false after emission
+	if (!e.mLoop)
+		e.mEmit = false;	// Set to false after emission if not looping
 }
 
 void GraphicsSystem::RenderShadowMap()
