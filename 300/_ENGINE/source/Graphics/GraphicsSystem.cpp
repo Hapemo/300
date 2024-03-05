@@ -184,11 +184,18 @@ void GraphicsSystem::Update(float dt)
 		for (Entity inst : emitterInstances)
 		{
 			ParticleEmitter& e = inst.GetComponent<ParticleEmitter>();
+			vec3 pos = inst.GetComponent<Transform>().mTranslate;
+			vec3 parentPos{};
+			if (inst.HasParent())
+			{
+				parentPos = inst.GetParent().GetComponent<Transform>().mTranslate;
+				pos += parentPos;	// emitter's position is an offset if has parent
+			}
 			if (e.mEmit)
 			{
-				Transform& transform = inst.GetComponent<Transform>();
-				EmitParticles(e, transform.mTranslate);
+				EmitParticles(e, pos);
 			}
+			m_Renderer.AddCube(pos, vec3(0.2f, 0.2f, 0.2f));	// small white cube for each emitter
 		}
 	}
 	

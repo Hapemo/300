@@ -56,7 +56,7 @@ layout (std430, binding = 7) buffer indexBuffer
 void MakeParticle(out Particle p, ParticleEmitter e);
 void InitVectors(vec3 position);
 float Rand(in vec2 xy);		// Returns value between [-0.5, 0.5]
-float Rand2(in vec2 xy);	// Returns value between [0.0, 1.0]
+float Rand2(in vec2 xy, float seed);	// Returns value between [0.0, 1.0]
 
 // -- Global Variables -- 
 vec3 rightVector;
@@ -98,7 +98,9 @@ void MakeParticle(out Particle p, ParticleEmitter e)
 	p.mPositionSpeed = e.mPositionSpeed;
 	vec3 offset = Rand(vec2(gl_GlobalInvocationID.xy)) * e.mOffset.xyz;
 	p.mPositionSpeed.xyz += vec3(offset.x * rightVector + offset.y * upVector + offset.z * forwardVector);
-	p.mPositionSpeed.w *= Rand2(vec2(gl_GlobalInvocationID.yx));
+	// clamp speed
+	float scale = fract(uSeed);
+	p.mPositionSpeed.w *= clamp(Rand2(vec2(gl_GlobalInvocationID.xy), uSeed + 0.1) * p.mPositionSpeed.w, scale * p.mPositionSpeed.w, p.mPositionSpeed.w);
 
 	// Color
 	p.mStartColor = e.mStartColor;
@@ -158,7 +160,7 @@ float Rand(in vec2 xy)
 	   return num - 0.5;
 }
 
-float Rand2(in vec2 xy)
+float Rand2(in vec2 xy, float seed)
 {
-       return fract(tan(distance(xy*PHI, xy)*uSeed)*xy.x);
+       return fract(tan(distance(xy*PHI, xy)* seed)*xy.x);
 }
