@@ -42,3 +42,4 @@ void LuaUIrenderer();
 void LuaAISetting();
 void LuaHealth();
 void LuaButton();
+void LuaParticleEmitter();

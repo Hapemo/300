@@ -118,6 +118,7 @@ void ScriptingSystem::Init()
     LuaAISetting();
     LuaHealth();
     LuaButton();
+    LuaParticleEmitter();
 
     /******************************************************************************/
     /*!

@@ -890,6 +890,9 @@ struct ParticleEmitter
 	_GEOM::Texture_DescriptorData		mTextureDescriptorData;
 	ref mTexture;
 
+	// For scripts
+	void Emit() { mEmit = true; }
+
 	void Inspect();
 	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
 	void DeserializeSelf(rapidjson::Value& reader);
