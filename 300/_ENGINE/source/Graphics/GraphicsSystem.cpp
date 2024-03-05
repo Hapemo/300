@@ -178,16 +178,17 @@ void GraphicsSystem::Update(float dt)
 #pragma endregion
 
 	// ---------------- PARTICLES WIP ----------------
-	if (Input::CheckKey(E_STATE::RELEASE, E_KEY::F1))
 	{
 		auto emitterInstances = systemManager->ecs->GetEntitiesWith<ParticleEmitter>();
 
 		for (Entity inst : emitterInstances)
 		{
 			ParticleEmitter& e = inst.GetComponent<ParticleEmitter>();
-			Transform& transform = inst.GetComponent<Transform>();
-
-			EmitParticles(e, transform.mTranslate);
+			if (e.mEmit)
+			{
+				Transform& transform = inst.GetComponent<Transform>();
+				EmitParticles(e, transform.mTranslate);
+			}
 		}
 	}
 	
@@ -2110,6 +2111,8 @@ void GraphicsSystem::EmitParticles(ParticleEmitter& e, vec3 const& position)
 
 	// Add emitter into container
 	m_Emitters.emplace_back(eSsbo);
+
+	e.mEmit = false;	// Set to false after emission
 }
 
 void GraphicsSystem::RenderShadowMap()

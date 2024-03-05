@@ -670,6 +670,11 @@ void ParticleEmitter::Inspect()
 		ImGui::SameLine();
 		ImGui::DragInt("##Count ", &mCount, 1, 0);
 
+		if (ImGui::Button("Emit Particles"))
+		{
+			mEmit = true;	// Set to true to emit
+		}
+
 		ImGui::NewLine();
 
 		ImGui::Selectable("Particles   ");

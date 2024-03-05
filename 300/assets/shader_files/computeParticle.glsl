@@ -69,8 +69,8 @@ void UpdateParticle(inout Particle p, int index)
 		float factor = 1 - (lifeLeft / maxLife);
 
 		p.mCurrColor = mix(p.mStartColor, p.mEndColor, factor);							// Color
-		p.mVelocity.xyz = normalize(p.mVelocity.xyz + p.mRotationGravity.z * upVector);	// Update velocity with gravity
-		p.mPositionSpeed.xyz += p.mVelocity.xyz * p.mPositionSpeed.w * uDeltaTime;		// Position
+		p.mVelocity.xyz = p.mVelocity.xyz + p.mRotationGravity.z * upVector;	// Update velocity with gravity
+		p.mPositionSpeed.xyz += p.mVelocity.xyz * (p.mPositionSpeed.w * smoothstep(0, maxLife, lifeLeft/maxLife)) * uDeltaTime;		// Position
 		float size = mix(p.mSizeLife.x, p.mSizeLife.y, factor);							// Size
 		p.mSizeLife.z -= uDeltaTime;													// Life left
 		p.mRotationGravity.x += p.mRotationGravity.y * uDeltaTime;						// Rotation
