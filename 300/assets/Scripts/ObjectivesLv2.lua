@@ -7,7 +7,7 @@ local progress
 local isInZone = false
 
 local currentSpawnTimer = 0 -- keeps track of how often enemy spawning interval
-local spawnTimer = 10       -- sets how long the enemy spawning interval is
+local spawnTimer = 5       -- sets how long the enemy spawning interval is
 local currentEnemyCount = 0 -- keeps track of how many enemies there are in the map
 local maxEnemyCount = 20    -- sets how many enemies are allowed in the map
 
@@ -35,20 +35,20 @@ function Alive()
     progress = 0
 
     mobSpawnPos1.x = 21;
-    mobSpawnPos1.y = -4.5;
+    mobSpawnPos1.y = -4;
     mobSpawnPos1.z = 24;
 
     mobSpawnPos2.x = -20;
-    mobSpawnPos2.y = -4.5;
+    mobSpawnPos2.y = -4;
     mobSpawnPos2.z = 36;
 
-    mobSpawnPos3.x = -11;
-    mobSpawnPos3.y = -4.5;
-    mobSpawnPos3.z = 61;
+    mobSpawnPos3.x = -44;
+    mobSpawnPos3.y = -4;
+    mobSpawnPos3.z = 64;
 
-    mobSpawnPos4.x = -28;
-    mobSpawnPos4.y = -4.5;
-    mobSpawnPos4.z = 0;
+    mobSpawnPos4.x = 8;
+    mobSpawnPos4.y = 4;
+    mobSpawnPos4.z = 13;
 end
 
 function Update()
@@ -106,6 +106,11 @@ function Update()
             end
         end
 
+        if (inputMapSys:GetButtonDown("nine")) then
+            _G.completedEpicM = true 
+            _G.completedEpicZB = true 
+            print("EpicM and EpicZB completed")
+        end
 
         if(_G.completedEpicM == true and _G.completedEpicZB == true) then
         -- if(false) then
