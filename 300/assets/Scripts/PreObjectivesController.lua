@@ -2,16 +2,28 @@ _G.PreObjectivesCounter = 0;
 local objective1
 local objective2
 local objective3
+local initonce
 function Alive()
     gameStateSys = systemManager:mGameStateSystem()
+    initonce = false
 end
 
 function Update()
     --set >= 4 for now as there are 4 'A' enemies in the scene rn
     -- print("OBJECTIVE COUNTER: " , _G.PreObjectivesCounter)
     --if _G.PreObjectivesCounter >= 4 then
-
     if(_G.completedEpicTH == true and _G.completedEpicTS == true and _G.completedEpicILY == true) then
+        if initonce==false then
+
+            controllerL2 = gameStateSys:GetEntity("DialogueController")
+            controllerL2Scripts = controllerL2:GetScripts()
+            controllerL2Script = controllerL2Scripts:GetScript("../assets/Scripts/DialogueControllerLevel1.lua")
+        
+            if controllerL2Script ~= nil then
+                controllerL2Script:RunFunction("FinishedCutscenes")
+            end
+            initonce = true
+        end
         gameStateSys = systemManager:mGameStateSystem();
         testScriptEntity = gameStateSys:GetEntity("Controller")
         TestScripts = testScriptEntity:GetScripts()

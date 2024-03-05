@@ -264,22 +264,6 @@ function Update()
         TestScripts = testScriptEntity:GetScripts()
         testScript = TestScripts:GetScript("../assets/Scripts/ObjectivesController.lua")
 
-        if testScript ~= nil then
-            objCount = testScript:ReturnValueInt("GetCountObj")
-            if objCount == 0 then
-                gameStateSys = systemManager:mGameStateSystem()
-            
-                    x = gameStateSys:GetEntity("TransitionHelper", "Transition") 
-                    y = x:GetScripts()
-                    z = y:GetScript("../assets/Scripts/Transition.lua")
-
-                    if z ~= nil then
-                        z:SetNextGameStateHelper("SetNextGameState", "Test3")
-                        --z:RunFunctionWithParam("SetNextGameState", "Test2")
-                        z:RunFunction("StartTransition")
-                    end
-            end
-        end
 
         --gameStateSys:GetEntity("ZipBombFuseAudio"):GetAudio():SetPlay() -- TODO: Play audio
         -- TODO: Spawn another objective entity prefab at XYZ location in the map

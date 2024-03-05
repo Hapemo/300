@@ -24,8 +24,9 @@ local quaking = 0
 
 local magnitude = Vec2.new(-1.0,1.0)
 local magfloat = 1.0
+local initonce
 function Alive()
-
+    initonce =false
 end
 
 function Update()
@@ -88,7 +89,16 @@ function Update()
         end
 
         if MoveTo(bossEntity, savedbosspos, 950) == false then
-            --call dialogue
+            if initonce == false then
+                initonce = true
+                controllerL2 = gameStateSys:GetEntity("DialogueController")
+                controllerL2Scripts = controllerL2:GetScripts()
+                controllerL2Script = controllerL2Scripts:GetScript("../assets/Scripts/DialogueControllerLevel1.lua")
+    
+                if controllerL2Script ~= nil then
+                    controllerL2Script:RunFunction("FinishObjective3")
+                end
+            end
         end
 
     end
@@ -128,7 +138,7 @@ function MoveTo(entity, targetPos, speed)
     local distAway = Helper.Vec3Len(dirVec) 
     local dir = Helper.Normalize(dirVec)
     -- print(distAway)
-    if (distAway < 0.03) then -- reached target position
+    if (distAway < 0.1) then -- reached target position
         --targetPos.y = entity:GetTransform().mTranslate.y
         -- entityPos.x = platformPos.x
         -- entityPos.z = platformPos.z

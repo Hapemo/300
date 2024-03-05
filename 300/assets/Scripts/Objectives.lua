@@ -48,6 +48,8 @@ function Alive()
     mobSpawnPos4.x = 8;
     mobSpawnPos4.y = -10.5;
     mobSpawnPos4.z = 13;
+
+    
 end
 
 function Update()
@@ -200,6 +202,36 @@ function Update()
     if (progress == objectivesComplete) then
         --objectivebar:GetTransform().mTranslate.y = 20; -- Hide the objective progress
         entityobj = Helper.GetScriptEntity(script_entity.id)
+        
+        if entityobj:GetGeneral().name == "Objectives1" then
+            controllerL2 = gameStateSys:GetEntity("DialogueController")
+            controllerL2Scripts = controllerL2:GetScripts()
+            controllerL2Script = controllerL2Scripts:GetScript("../assets/Scripts/DialogueControllerLevel1.lua")
+
+            if controllerL2Script ~= nil then
+                controllerL2Script:RunFunction("FinishObjective1")
+            end
+        end
+        if entityobj:GetGeneral().name == "Objectives2" then
+            controllerL2 = gameStateSys:GetEntity("DialogueController")
+            controllerL2Scripts = controllerL2:GetScripts()
+            controllerL2Script = controllerL2Scripts:GetScript("../assets/Scripts/DialogueControllerLevel1.lua")
+
+            if controllerL2Script ~= nil then
+                controllerL2Script:RunFunction("FinishObjective2")
+            end
+        end
+        if entityobj:GetGeneral().name == "Objectives3" then
+            controllerL2 = gameStateSys:GetEntity("Level2BossScene")
+            controllerL2Scripts = controllerL2:GetScripts()
+            controllerL2Script = controllerL2Scripts:GetScript("../assets/Scripts/Level1BossSceneController.lua")
+
+            if controllerL2Script ~= nil then
+                controllerL2Script:RunFunction("ChangeState")
+            end
+        end
+
+
         systemManager.ecs:SetDeleteEntity(entityobj)
         gameStateSys = systemManager:mGameStateSystem();
   
@@ -211,27 +243,6 @@ function Update()
             testScript:RunFunction("RemoveObjective")
         end
 
-        gameStateSys = systemManager:mGameStateSystem();
-        testScriptEntity = gameStateSys:GetEntity("Controller")
-        TestScripts = testScriptEntity:GetScripts()
-        testScript = TestScripts:GetScript("../assets/Scripts/ObjectivesController.lua")
-
-        if testScript ~= nil then
-            objCount = testScript:ReturnValueInt("GetCountObj")
-            if objCount == 0 then
-                gameStateSys = systemManager:mGameStateSystem()
-            
-                    x = gameStateSys:GetEntity("TransitionHelper", "Transition") 
-                    y = x:GetScripts()
-                    z = y:GetScript("../assets/Scripts/Transition.lua")
-
-                    if z ~= nil then
-                        z:SetNextGameStateHelper("SetNextGameState", "Test2")
-                        --z:RunFunctionWithParam("SetNextGameState", "Test2")
-                        z:RunFunction("StartTransition")
-                    end
-            end
-        end
 
         --gameStateSys:GetEntity("ZipBombFuseAudio"):GetAudio():SetPlay() -- TODO: Play audio
         -- TODO: Spawn another objective entity prefab at XYZ location in the map

@@ -251,8 +251,20 @@ function CloseFrame()
         end
     elseif frame:GetTransform().mScale.x >= 0.01 then
         frame:GetTransform().mScale.x = frame:GetTransform().mScale.x - framespeed
-        if frame:GetTransform().mScale.x < 0.0 then
+        if frame:GetTransform().mScale.x < 0.01 then
             frame:GetTransform().mScale.x = 0.0
+            if currState == "boss" then
+                gameStateSys = systemManager:mGameStateSystem()
+            
+                x = gameStateSys:GetEntity("TransitionHelper", "Transition") 
+                y = x:GetScripts()
+                z = y:GetScript("../assets/Scripts/Transition.lua")
+
+                if z ~= nil then
+                    z:SetNextGameStateHelper("SetNextGameState", "Test3")
+                    z:RunFunction("StartTransition")
+                end
+            end
         end
     else
         frameClosed = true
