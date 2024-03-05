@@ -9,7 +9,7 @@ local isInZone = false
 local currentSpawnTimer = 0 -- keeps track of how often enemy spawning interval
 local spawnTimer = 10 -- sets how long the enemy spawning interval is
 local currentEnemyCount = 0 -- keeps track of how many enemies there are in the map
-local maxEnemyCount = 2 -- sets how many enemies are allowed in the map
+local maxEnemyCount = 20 -- sets how many enemies are allowed in the map
 
 local mobSpawnPos1 = Vec3.new()
 local mobSpawnPos2 = Vec3.new()
@@ -34,19 +34,19 @@ function Alive()
     progress = 100
 
     mobSpawnPos1.x = 18;
-    mobSpawnPos1.y = -9;
+    mobSpawnPos1.y = -10.5;
     mobSpawnPos1.z = 60;
 
     mobSpawnPos2.x = -22;
-    mobSpawnPos2.y = -9;
+    mobSpawnPos2.y = -10.5;
     mobSpawnPos2.z = 40;
 
     mobSpawnPos3.x = -22;
-    mobSpawnPos3.y = -9;
+    mobSpawnPos3.y = -10.5;
     mobSpawnPos3.z = -8;
 
     mobSpawnPos4.x = 8;
-    mobSpawnPos4.y = -9;
+    mobSpawnPos4.y = -10.5;
     mobSpawnPos4.z = 13;
 end
 
@@ -106,22 +106,33 @@ function Update()
         end
 
     -- SPAWNING ENEMIES
-    -- currentSpawnTimer = currentSpawnTimer + FPSManager.GetDT()
+    if(_G.completedEpicTH == true and _G.completedEpicTS == true and _G.completedEpicILY == true) then
+        
+        currentSpawnTimer = currentSpawnTimer + FPSManager.GetDT()
 
-    -- if currentEnemyCount < maxEnemyCount and currentSpawnTimer > spawnTimer then
-    --     mobtype = math.random(2, 3) -- generate a random number to spawn a random enemy between Trojan and Melissa only (for level 1)
+        if currentEnemyCount < maxEnemyCount and currentSpawnTimer > spawnTimer then
+            mobtype = math.random(1, 4)
+                local mobspawnpoint_rand = math.random(1, 4)
 
-    --         if (mobtype == 1) then systemManager.ecs:NewEntityFromPrefab("ILOVEYOU", mobSpawnPos1) 
-    --             elseif (mobtype == 2) then systemManager.ecs:NewEntityFromPrefab("Melissa", mobSpawnPos2) 
-    --             elseif (mobtype == 3) then systemManager.ecs:NewEntityFromPrefab("TrojanHorse", mobSpawnPos3) 
-    --             elseif (mobtype == 4) then systemManager.ecs:NewEntityFromPrefab("ZipBomb", mobSpawnPos4)
-    --         end
-    --     currentEnemyCount = currentEnemyCount + 1
-    --     currentSpawnTimer = 0 -- reset currentSpawnTimer so that next enemy can spawn
-    -- end
-    -- print("Current progress =", progress/objectivesComplete)
-    -- print(progress)
-    -- print(objectivesComplete)
+                    if(mobspawnpoint_rand == 1) then
+                        mobspawnpoint = mobSpawnPos1
+                    elseif(mobspawnpoint_rand == 2) then
+                        mobspawnpoint = mobSpawnPos2
+                    elseif(mobspawnpoint_rand == 3) then
+                        mobspawnpoint = mobSpawnPos3
+                    elseif(mobspawnpoint_rand == 4) then
+                        mobspawnpoint = mobSpawnPos4
+                    end
+
+                if (mobtype == 1) then systemManager.ecs:NewEntityFromPrefab("ILOVEYOU", mobspawnpoint)
+                    elseif (mobtype == 2) then systemManager.ecs:NewEntityFromPrefab("TrojanHorse", mobspawnpoint) 
+                    elseif (mobtype == 3 or mobtype == 4) then systemManager.ecs:NewEntityFromPrefab("BigTrojanSoldier", mobspawnpoint) 
+                end
+                currentEnemyCount = currentEnemyCount + 1
+            currentSpawnTimer = 0 -- reset currentSpawnTimer so that next enemy can spawn
+        end
+    end
+
     objectivebar:GetUIrenderer():SetSlider(progress/objectivesComplete);
 
     ent = Helper.GetScriptEntity(script_entity.id)
@@ -139,40 +150,23 @@ function Update()
         reseed = 0
     end
 
+    if(moveTime > 0.4)then
+        -- only appear when the platform is raised
+        if(transform.mTranslate.y == -10.5) then
+            spawndataPos.x = transform.mTranslate.x + math.random(-300,300)/100
+            spawndataPos.y = transform.mTranslate.y 
+            spawndataPos.z = transform.mTranslate.z + math.random(-300,300)/100
 
+            bulletPrefab = systemManager.ecs:NewEntityFromPrefab("1s", spawndataPos)
 
-    --if(_G.PreObjectivesCounter >=4)then
-        if(moveTime >0.4)then
-            -- for i = 1, 2 , 1 
-            -- do 
+            spawndataPos.x = transform.mTranslate.x + math.random(-300,300)/100
+            spawndataPos.y = transform.mTranslate.y 
+            spawndataPos.z = transform.mTranslate.z + math.random(-300,300)/100
 
-            -- print(math.random(-200,200))
-            -- only appear when the platform is raised
-            if(transform.mTranslate.y == -10.5) then
-                spawndataPos.x = transform.mTranslate.x  +math.random(-300,300)/100
-                spawndataPos.y = transform.mTranslate.y 
-                spawndataPos.z = transform.mTranslate.z +math.random(-300,300)/100
-
-                bulletPrefab = systemManager.ecs:NewEntityFromPrefab("1s", spawndataPos)
-
-                spawndataPos.x = transform.mTranslate.x  +math.random(-300,300)/100
-                spawndataPos.y = transform.mTranslate.y 
-                spawndataPos.z = transform.mTranslate.z +math.random(-300,300)/100
-
-                bulletPrefab = systemManager.ecs:NewEntityFromPrefab("0s", spawndataPos)
-            end
-
-                -- spawndataPos.x = transform.mTranslate.x  +math.random(-300,300)/100
-                -- spawndataPos.y = transform.mTranslate.y 
-                -- spawndataPos.z = transform.mTranslate.z +math.random(-300,300)/100
-
-                -- bulletPrefab = systemManager.ecs:NewEntityFromPrefab("0s", spawndataPos)
-
-
-            -- end
-            moveTime = 0
+            bulletPrefab = systemManager.ecs:NewEntityFromPrefab("0s", spawndataPos)
         end
-    --end
+        moveTime = 0
+    end
 
     if (isInZone == true) then
 

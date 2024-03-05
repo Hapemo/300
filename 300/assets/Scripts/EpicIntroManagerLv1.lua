@@ -63,6 +63,12 @@ _G.activateEpicM = false
 _G.activateEpicILY = false
 _G.activateEpicZB = false
 
+_G.completedEpicTH = false
+_G.completedEpicTS = false
+_G.completedEpicILY = false
+_G.completedEpicM = false
+_G.completedEpicZB = false
+
 local this
 --local Camera_Scripting
 
@@ -389,6 +395,7 @@ function RunTrojanHorseEpicIntro()
             retractBlackBorder = true
             epicTrojanHorse:GetAnimator():UnpauseAnimation()
             ShowUI()
+            _G.completedEpicTH = true
         end
 
         -- deactivate ActivateTrojanHorse boolean
@@ -434,8 +441,8 @@ function SetupTSEpicIntro()
 end
 
 function RunTSEpicIntro()
-    print("_G.TSEpicIntroState:")
-    print(_G.TSEpicIntroState)
+    --print("_G.TSEpicIntroState:")
+    --print(_G.TSEpicIntroState)
     if _G.TSEpicIntroState > 2 then 
         Helper.SetRealRotate(epicTS3, Vec3.new(0,90,0))
         Helper.SetRealRotate(epicTS1, Vec3.new(0,90,0))
@@ -513,6 +520,7 @@ function RunTSEpicIntro()
             retractBlackBorder = true
             ShowUI()
             AddScriptToTS()
+            _G.completedEpicTS = true
         end
     end
 end
@@ -604,6 +612,7 @@ function RunILYEpicIntro()
             retractBlackBorder = true
             epicILY:GetAnimator():UnpauseAnimation()
             ShowUI()
+            _G.completedEpicILY = true
         end
     end
 end
@@ -617,13 +626,13 @@ function InitZBEpicIntro()
 end
 
 function SetupZBEpicIntro() 
-    print("SetupZBEpicIntro()")
+    --print("SetupZBEpicIntro()")
     epicIntroUI = _G.gameStateSys:GetEntity("ZBEpicIntroInfoUI")
     epicIntroUI:GetTransform().mTranslate.x = hideRightEpicUIPos
     _G.ZBEpicIntroState = 1
-    ZBPos1 = Vec3.new(-2.46, 46.2, 14.212)
-    ZBPos15 = Vec3.new(-2.46, 46.2, 12.5)
-    ZBPos2 = Vec3.new(-2.46, 46.2, 12.28)
+    ZBPos1 = Vec3.new(-2.2, -3.8, 13.5)
+    ZBPos15 = Vec3.new(-2.2, -3.8, 12.3)
+    ZBPos2 = Vec3.new(-2.2, -3.8, 12.1)
     ZBView1 = Vec3.new(90, 0, 0)
     ZBView2 = Vec3.new(165, -3, 0)
     ZBWaitTimerCounter = 0
@@ -639,7 +648,7 @@ function RunZBEpicIntro()
     -- end 
     -- Always look at the player when midway through exploding
     Helper.LookAtTarget(epicZB)
-    print(_G.ZBEpicIntroState)
+    --print(_G.ZBEpicIntroState)
 
     if _G.ZBEpicIntroState == 1 then -- Move to start pos
         if not MoveTo(player, ZBPlatform:GetTransform().mTranslate, 100) then
@@ -653,13 +662,13 @@ function RunZBEpicIntro()
     elseif _G.ZBEpicIntroState == 4 then -- Walk back and activate zipbomb midway (add script to zb)
         ZBWaitTimerCounter = ZBWaitTimerCounter + FPSManager.GetDT()
         if ZBWaitTimer < ZBWaitTimerCounter then
-            if not MoveTo(player, ZBPos15, 50) then 
+            if not MoveTo(player, ZBPos15, 75) then 
                 _G.ZBEpicIntroState = 4.5 
                 epicZB:GetScripts():AddScript(epicZB, "..\\assets\\Scripts\\EpicIntroZB.lua")
             end
         end
     elseif _G.ZBEpicIntroState == 4.5 then
-        if not MoveTo(player, ZBPos2, 50) then 
+        if not MoveTo(player, ZBPos2, 75) then 
             _G.ZBEpicIntroState = 5 
         end
     elseif _G.ZBEpicIntroState == 5 then -- Upon hearing zipbomb fuse, QUICK turn to look at zipbomb and pause it's explosion animation
@@ -688,6 +697,7 @@ function RunZBEpicIntro()
             epicZB:GetAnimator():UnpauseAnimation()
             epicZB:GetAudio():SetPlay()
             ShowUI()
+            _G.completedEpicZB = true
         end
     end
 end
@@ -702,11 +712,11 @@ function InitMEpicIntro()
 end
 
 function SetupMEpicIntro() 
-    print("SetupMEpicIntro()")
+    --print("SetupMEpicIntro()")
     epicIntroUI = _G.gameStateSys:GetEntity("MEpicIntroInfoUI")
     epicIntroUI:GetTransform().mTranslate.x = hideLeftEpicUIPos
     _G.MEpicIntroState = 1
-    MPos1 = Vec3.new(2.39, 39.6, 19.4)
+    MPos1 = Vec3.new(2.39, -10.4, 19.4)
     MView1 = Vec3.new(200, 1, 0)
     MViewUpperLimitx = 220
     MViewLowerLimitx = 190
@@ -722,7 +732,7 @@ function RunMEpicIntro()
     -- end 
     -- Always look at the player when midway through exploding
     Helper.LookAtTarget(epicM)
-    print(_G.MEpicIntroState)
+    --print(_G.MEpicIntroState)
 
     if _G.MEpicIntroState == 1 then -- Move to start pos
         if not MoveTo(player, MPos1, 100) then
@@ -734,7 +744,6 @@ function RunMEpicIntro()
             if (x > -1) then x = x % 360
             else  x = x % (-360) end
             x = math.abs(x)
-            print(x)
             if x > MViewLowerLimitx and x < MViewUpperLimitx then
                 MAddScriptRunOnce = false
                 epicM:GetScripts():AddScript(epicM, "..\\assets\\Scripts\\EpicIntroM.lua")
@@ -767,6 +776,7 @@ function RunMEpicIntro()
             retractBlackBorder = true
             epicM:GetAnimator():UnpauseAnimation()
             ShowUI()
+            _G.completedEpicM = true
         end
     end
 end
@@ -827,7 +837,7 @@ function LookTowardsInterpolation(entity, targetPitchYaw, speed)
     if (mRotate.x > -1) then
         mRotate.x = mRotate.x % 360
     else 
-        mRotate.x = mRotate.x % (-360)
+        mRotate.x = mRotate.x % (-360) + 360
     end
 
     local direction = Helper.Normalize(Vec3.new(targetPitchYaw.x - mRotate.x, targetPitchYaw.y - mRotate.y, 0))
@@ -835,9 +845,10 @@ function LookTowardsInterpolation(entity, targetPitchYaw, speed)
     -- local newRotate = Helper.Vec3Add(mRotate, Helper.Scale(direction, speed * FPSManager:GetDT()))
     -- print(newRotate)
     -- _G.phySys:SetRotation(entity, newRotate)
-
+-- print(targetPitchYaw)
+--print(mRotate)
     local toMove = Helper.Scale(direction, speed * FPSManager:GetDT())
-    -- print(toMove)    
+    --print(toMove)    
     Helper.SetRotate(entity, toMove)
 
     local interpolationApart = Helper.Vec3Len(Helper.Vec3Minus(entity:GetTransform().mRotate, targetPitchYaw))

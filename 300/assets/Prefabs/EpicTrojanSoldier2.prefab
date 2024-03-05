@@ -1,0 +1,129 @@
+{
+    "entityid": 10485841,
+    "general": {
+        "name": "EpicTrojanSoldier2",
+        "tagid": 1,
+        "subtag": 0,
+        "isActive": true,
+        "isPaused": false
+    },
+    "transform": {
+        "scale": {
+            "x": 0.8000028729438782,
+            "y": 1.2000000476837158,
+            "z": 0.8000028729438782
+        },
+        "rotate": {
+            "x": 0.0,
+            "y": -1.5707963705062866,
+            "z": -3.050800323486328
+        },
+        "translate": {
+            "x": 10.20102596282959,
+            "y": -11.130006790161133,
+            "z": 19.048398971557617
+        }
+    },
+    "rigidbody": {
+        "density": 10.0,
+        "material": 1,
+        "motion": 1,
+        "velocity": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "rotationconstraints": {
+            "x": true,
+            "y": false,
+            "z": false
+        },
+        "gravity": true
+    },
+    "meshrenderer": {
+        "vert": "../assets/shader_files/pointLight_vert.glsl",
+        "frag": "../assets/shader_files/pointLight_frag.glsl",
+        "meshrefid": 3309,
+        "instancecolor": {
+            "x": 1.0,
+            "y": 1.0093556642532349,
+            "z": 0.2118937075138092,
+            "w": 1.0
+        },
+        "bloomthreshold": {
+            "x": 0.3499999940395355,
+            "y": 0.36000001430511475,
+            "z": 0.10999999940395355,
+            "w": 1.0
+        },
+        "castShadow": true,
+        "materialinstance": [
+            "../assets/Compressed/Trojan_Soldier_BaseColor.ctexture",
+            "../assets/Compressed/Trojan_Soldier_Normal.ctexture",
+            "../assets/Compressed/Trojan_Soldier_Metallic.ctexture",
+            "../assets/Compressed/Trojan_Soldier_Roughness.ctexture",
+            "../assets/Compressed/Trojan_Soldier_Emissive.ctexture",
+            "../assets/Compressed/Trojan_Soldier_AO.ctexture"
+        ],
+        "mesh": "../assets/compiled_geom/Trojan_Soldier.geom",
+        "texturerefid": [
+            602447454,
+            2438310811,
+            2305639413,
+            1216284744,
+            928397263,
+            736177602
+        ]
+    },
+    "boxcollider": {
+        "scaleoffset": {
+            "x": 0.800000011920929,
+            "y": 1.0,
+            "z": 1.0
+        },
+        "translateoffset": {
+            "x": -0.07999999821186066,
+            "y": 0.5299999713897705,
+            "z": 0.0
+        },
+        "istrigger": false
+    },
+    "scripts": {
+        "scriptscontainer": []
+    },
+    "prefab": {
+        "prefab": "EpicTrojanSoldier2"
+    },
+    "aisetting": {
+        "movementtype": 1,
+        "spreadout": 0.0,
+        "stayaway": 0.0,
+        "elevation": 0.0,
+        "targetname": "Camera",
+        "graphdataname": ""
+    },
+    "healthbar": {
+        "healthcolor": {
+            "x": 0.0,
+            "y": 1.0,
+            "z": 0.0,
+            "w": 1.0
+        },
+        "backcolor": {
+            "x": 1.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 1.0
+        },
+        "position": {
+            "x": 0.0,
+            "y": 1.5,
+            "z": 0.0
+        },
+        "maxhealth": 100.0,
+        "width": 0.30000001192092896,
+        "height": 0.07000000029802322,
+        "frametexture": 0,
+        "healthtexture": 0
+    }
+}
