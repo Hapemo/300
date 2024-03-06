@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 10485859,
+        "entityid": 6291738,
         "general": {
             "name": "Objective Bar Empty",
             "tagid": 6,
@@ -47,7 +47,7 @@
         }
     },
     {
-        "entityid": 10485898,
+        "entityid": 6291739,
         "general": {
             "name": "Objective Bar Empty",
             "tagid": 6,
@@ -94,7 +94,7 @@
         }
     },
     {
-        "entityid": 11534443,
+        "entityid": 6291740,
         "general": {
             "name": "Objective Bar 1",
             "tagid": 6,
@@ -141,9 +141,9 @@
         }
     },
     {
-        "entityid": 11534460,
+        "entityid": 6291741,
         "general": {
-            "name": "Objectives2",
+            "name": "Objectives3",
             "tagid": 0,
             "subtag": 0,
             "isActive": true,
@@ -161,9 +161,9 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 30.78842544555664,
-                "y": -20.0,
-                "z": 56.06375503540039
+                "x": -19.255064010620117,
+                "y": -17.85018539428711,
+                "z": 11.416296005249023
             }
         },
         "rigidbody": {
@@ -243,77 +243,7 @@
         }
     },
     {
-        "entityid": 11534466,
-        "general": {
-            "name": "PreObjectivesController",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/PreObjectivesControllerLv2.lua",
-                    "variables": []
-                }
-            ]
-        }
-    },
-    {
-        "entityid": 12583008,
-        "general": {
-            "name": "Controller",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/ObjectivesController.lua",
-                    "variables": []
-                }
-            ]
-        }
-    },
-    {
-        "entityid": 12583023,
+        "entityid": 6291742,
         "general": {
             "name": "Objectives1",
             "tagid": 0,
@@ -415,9 +345,79 @@
         }
     },
     {
-        "entityid": 12583026,
+        "entityid": 6291743,
         "general": {
-            "name": "Objectives3",
+            "name": "Controller",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/ObjectivesController.lua",
+                    "variables": []
+                }
+            ]
+        }
+    },
+    {
+        "entityid": 6291744,
+        "general": {
+            "name": "PreObjectivesController",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/PreObjectivesControllerLv2.lua",
+                    "variables": []
+                }
+            ]
+        }
+    },
+    {
+        "entityid": 6291745,
+        "general": {
+            "name": "Objectives2",
             "tagid": 0,
             "subtag": 0,
             "isActive": true,
@@ -435,9 +435,9 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 33.09693145751953,
-                "y": -20.0,
-                "z": -15.47390079498291
+                "x": 9.35831069946289,
+                "y": -12.659839630126953,
+                "z": 60.67029571533203
             }
         },
         "rigidbody": {
@@ -517,7 +517,7 @@
         }
     },
     {
-        "entityid": 12583040,
+        "entityid": 6291746,
         "general": {
             "name": "Objective Bar 1",
             "tagid": 6,
@@ -564,7 +564,7 @@
         }
     },
     {
-        "entityid": 12583046,
+        "entityid": 6291747,
         "general": {
             "name": "Objective Bar Empty",
             "tagid": 6,
@@ -611,7 +611,7 @@
         }
     },
     {
-        "entityid": 12583047,
+        "entityid": 6291750,
         "general": {
             "name": "Objective Bar Empty",
             "tagid": 6,
