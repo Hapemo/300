@@ -125,11 +125,34 @@ function Update()
 
     -- Tentative random switcher between boss states, replace with HP after other states implemented. 100% HP Left = Phase 1, 66% HP Left = Phase 2, 33% HP Left = Phase 3
     if _G.attacking == false then 
-        -- currentBossStateTimer = currentBossStateTimer + FPSManager.GetDT()
-        state = math.random(1, 5)
-        print("STATE CHOSEN: " , state)
 
-        currentBossStateTimer = 0
+        -- [Recycle Attacks]
+        -- Check if the current state checker has at least 4 "true" -> reset them 
+        local state_true_counter = 0 
+
+        for i = 1, #_G.state_checker do
+            if _G.state_checker[i] == true then 
+                state_true_counter = state_true_counter + 1
+            end 
+        end
+
+        if state_true_counter >= 4 then 
+            for i = 1, #_G.state_checker do
+                if _G.state_checker[i] == false then 
+                    state = i 
+                    print("STATE CHOSEN: " , state)
+                else 
+                    _G.state_checker[i] = true -- reset it for next cycle use
+                end 
+            end
+            
+        else 
+            state = math.random(1, 5)
+            print("STATE CHOSEN: " , state)
+        end
+
+
+        -- currentBossStateTimer = 0
     end
 
     -- if currentBossStateTimer >= maxBossStateTimer then
@@ -138,7 +161,7 @@ function Update()
 
     -- Debug States
     -- state = 1 [OK]
-    -- state = 2 -- need to check agn after i check the other mechanics
+    state = 2 -- need to check agn after i check the other mechanics
     -- state = 3 [OK]
     -- state = 4 [OK]
     -- state = 5 [OK]
@@ -197,6 +220,7 @@ function Update()
         _G.attacking = true -- must include (to stop state choosing)
 
         if groundSlamMax == 0 then 
+            print("GROUND SLAM MAX: " , groundSlamMax)
             groundSlamMax = math.random(3, 5)
         end
         -- Timer to set intervals between ground slams
@@ -241,9 +265,10 @@ function Update()
             end
             groundSlamCount = groundSlamCount + 1
 
-        else 
-            _G.state_checker[2] = true
-            _G.attacking = false
+        -- else 
+        --     _G.state_checker[2] = true
+        --     _G.attacking = false
+        --     groundSlamMax = 0
         end
 
     end
