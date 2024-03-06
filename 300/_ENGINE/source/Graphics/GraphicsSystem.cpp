@@ -204,8 +204,6 @@ void GraphicsSystem::Update(float dt)
 		}
 	}
 	
-	updateSSBO_Data();
-
 	update_Light();
 
 	update_UI();
