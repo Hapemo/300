@@ -17,13 +17,21 @@ function Alive()
     settingsFSButton = gameStateSys:GetEntity("SettingsFSButton")
     settingsWindowButton = gameStateSys:GetEntity("SettingsWindowButton")
     settingsBackButton = gameStateSys:GetEntity("SettingsBackButton")
+
+    clickAudioEntity = gameStateSys:GetEntity("Click")
+    clickSFX = clickAudioEntity:GetAudio()
 end
 
 function Update()
+
+end
+
+function PauseUpdate()
     settingsBgmFull:GetUIrenderer():SetSlider(audioSys:GetBGMVolume())
     settingSfxFull:GetUIrenderer():SetSlider(audioSys:GetSFXVolume())
 
     if (bgmIncrease:GetButton().mActivated) then
+        clickSFX:SetPlay(1.0)
         if (audioSys:GetBGMVolume() <= 0.9) then
             local roundedNewVol = tonumber(string.format("%.1f", audioSys:GetBGMVolume() + 0.1))
             settingsBgmFull:GetUIrenderer():SetSlider(roundedNewVol);
@@ -34,6 +42,7 @@ function Update()
     end
 
     if (bgmDecrease:GetButton().mActivated) then
+        clickSFX:SetPlay(1.0)
         if (audioSys:GetBGMVolume() >= 0.1) then
             local roundedNewVol = tonumber(string.format("%.1f", audioSys:GetBGMVolume() - 0.1))
             settingsBgmFull:GetUIrenderer():SetSlider(roundedNewVol);
@@ -44,6 +53,7 @@ function Update()
     end
 
     if (sfxIncrease:GetButton().mActivated) then
+        clickSFX:SetPlay(1.0)
         if (audioSys:GetSFXVolume() <= 0.9) then
             local roundedNewVol = tonumber(string.format("%.1f", audioSys:GetSFXVolume() + 0.1))
             settingSfxFull:GetUIrenderer():SetSlider(roundedNewVol);
@@ -54,6 +64,7 @@ function Update()
     end
 
     if (sfxDecrease:GetButton().mActivated) then
+        clickSFX:SetPlay(1.0)
         if (audioSys:GetSFXVolume() >= 0.1) then
             local roundedNewVol = tonumber(string.format("%.1f", audioSys:GetSFXVolume() - 0.1))
             settingSfxFull:GetUIrenderer():SetSlider(roundedNewVol);
@@ -65,6 +76,7 @@ function Update()
 
     -- if back button pressed
     if (settingsBackButton:GetButton().mActivated) then
+        clickSFX:SetPlay(1.0)
         settingsMenuBackground:GetTransform().mTranslate.x = 1000
         settingsBgmEmpty:GetTransform().mTranslate.x = 1000
         settingsBgmFull:GetTransform().mTranslate.x = 1000

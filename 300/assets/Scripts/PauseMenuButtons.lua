@@ -44,7 +44,7 @@ function Alive()
     htpButton = gameStateSys:GetEntity("PauseHTPButton")
     restartButton = gameStateSys:GetEntity("PauseRestartButton")
     HTPMenu = gameStateSys:GetEntity("PauseHTPMenu")
-    backButton = gameStateSys:GetEntity("PauseBackButton")
+    backButton = gameStateSys:GetEntity("HTPBackButton")
     settingsButton = gameStateSys:GetEntity("PauseSettingsButton")
     menuBackground = gameStateSys:GetEntity("PauseMenuBackground")
     
@@ -57,18 +57,18 @@ function Update()
 end
 
 function PauseUpdate()
-    settingsMenuBackground = gameStateSys:GetEntityByScene("SettingsMenuBackground", "SettingsSceneLvl2")
-    settingsBgmEmpty = gameStateSys:GetEntityByScene("SettingsBgmEmpty", "SettingsSceneLvl2")
-    settingsBgmFull = gameStateSys:GetEntityByScene("SettingsBgmFull", "SettingsSceneLvl2")
-    settingSfxFull = gameStateSys:GetEntityByScene("SettingsSfxFull", "SettingsSceneLvl2")
-    settingSfxEmpty = gameStateSys:GetEntityByScene("SettingsSfxEmpty", "SettingsSceneLvl2")
-    settingsFSButton = gameStateSys:GetEntityByScene("SettingsFSButton", "SettingsSceneLvl2")
-    settingsWindowButton = gameStateSys:GetEntityByScene("SettingsWindowButton", "SettingsSceneLvl2")
-    settingsBackButton = gameStateSys:GetEntityByScene("SettingsBackButton", "SettingsSceneLvl2")
-    bgmDecrease = gameStateSys:GetEntityByScene("bgmDecrease", "SettingsSceneLvl2")
-    bgmIncrease = gameStateSys:GetEntityByScene("bgmIncrease", "SettingsSceneLvl2")
-    sfxDecrease = gameStateSys:GetEntityByScene("sfxDecrease", "SettingsSceneLvl2")
-    sfxIncrease = gameStateSys:GetEntityByScene("sfxIncrease", "SettingsSceneLvl2")
+    settingsMenuBackground = gameStateSys:GetEntityByScene("SettingsMenuBackground", "SettingsScene")
+    settingsBgmEmpty = gameStateSys:GetEntityByScene("SettingsBgmEmpty", "SettingsScene")
+    settingsBgmFull = gameStateSys:GetEntityByScene("SettingsBgmFull", "SettingsScene")
+    settingSfxFull = gameStateSys:GetEntityByScene("SettingsSfxFull", "SettingsScene")
+    settingSfxEmpty = gameStateSys:GetEntityByScene("SettingsSfxEmpty", "SettingsScene")
+    settingsFSButton = gameStateSys:GetEntityByScene("SettingsFSButton", "SettingsScene")
+    settingsWindowButton = gameStateSys:GetEntityByScene("SettingsWindowButton", "SettingsScene")
+    settingsBackButton = gameStateSys:GetEntityByScene("SettingsBackButton", "SettingsScene")
+    bgmDecrease = gameStateSys:GetEntityByScene("bgmDecrease", "SettingsScene")
+    bgmIncrease = gameStateSys:GetEntityByScene("bgmIncrease", "SettingsScene")
+    sfxDecrease = gameStateSys:GetEntityByScene("sfxDecrease", "SettingsScene")
+    sfxIncrease = gameStateSys:GetEntityByScene("sfxIncrease", "SettingsScene")
 
     --print("INUPDATEEEEEEEEEEEEEEE")
     button = Helper.GetScriptEntity(script_entity.id)
@@ -95,6 +95,8 @@ function PauseUpdate()
             button:GetUIrenderer():SetTexture("MainMenu_Hover")
         elseif (button:GetGeneral().name == "PauseSettingsButton") then
             button:GetUIrenderer():SetTexture("Settings_Hover")
+        elseif (button:GetGeneral().name == "HTPBackButton") then
+            button:GetUIrenderer():SetTexture("Back_Hover")
         end
     else
         hoverOver = false
@@ -110,6 +112,8 @@ function PauseUpdate()
             button:GetUIrenderer():SetTexture("MainMenu_Default")
         elseif (button:GetGeneral().name == "PauseSettingsButton") then
             button:GetUIrenderer():SetTexture("Settings_Default")
+        elseif (button:GetGeneral().name == "HTPBackButton") then
+            button:GetUIrenderer():SetTexture("Back_Default")
         end
     end
     if (button:GetButton().mActivated) then
@@ -142,7 +146,7 @@ function PauseUpdate()
             sfxDecrease:GetTransform().mTranslate.x = -0.61
             sfxIncrease:GetTransform().mTranslate.x = 0.21
             _G.isSettingsMenu = true
-        elseif (button:GetGeneral().name == "PauseBackButton") then
+        elseif (button:GetGeneral().name == "HTPBackButton") then
             HTPMenu:GetTransform().mTranslate.x = 1000
             backButton:GetTransform().mTranslate.x = 1000
             _G.isHTPMenu = false

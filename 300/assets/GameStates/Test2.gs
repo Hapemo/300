@@ -108,7 +108,7 @@
         "debug": 1
     },
     {
-        "scene_name": "SettingsSceneLvl2",
+        "scene_name": "SettingsScene",
         "pause": false,
         "force_render": true,
         "bloom_threshold": {

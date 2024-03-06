@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 8388728,
+        "entityid": 5242909,
         "general": {
             "name": "PauseSettingsButton",
             "tagid": 6,
@@ -74,7 +74,7 @@
         }
     },
     {
-        "entityid": 8388729,
+        "entityid": 5242917,
         "general": {
             "name": "PauseMenuController",
             "tagid": 0,
@@ -124,7 +124,7 @@
         }
     },
     {
-        "entityid": 8388730,
+        "entityid": 5242918,
         "general": {
             "name": "PauseMenuBackground",
             "tagid": 6,
@@ -165,9 +165,9 @@
         }
     },
     {
-        "entityid": 8388731,
+        "entityid": 5242919,
         "general": {
-            "name": "PauseBackButton",
+            "name": "HTPBackButton",
             "tagid": 0,
             "subtag": 0,
             "isActive": true,
@@ -176,7 +176,7 @@
         "transform": {
             "scale": {
                 "x": 0.20000000298023224,
-                "y": -0.20000000298023224,
+                "y": -0.15000000596046448,
                 "z": 1.0
             },
             "rotate": {
@@ -239,7 +239,7 @@
         }
     },
     {
-        "entityid": 8388732,
+        "entityid": 5242920,
         "general": {
             "name": "PauseMainMenuButton",
             "tagid": 6,
@@ -313,7 +313,7 @@
         }
     },
     {
-        "entityid": 8388733,
+        "entityid": 5242921,
         "general": {
             "name": "Click",
             "tagid": 6,
@@ -350,7 +350,7 @@
         }
     },
     {
-        "entityid": 8388734,
+        "entityid": 5242922,
         "general": {
             "name": "PauseQuitButton",
             "tagid": 6,
@@ -424,7 +424,7 @@
         }
     },
     {
-        "entityid": 8388735,
+        "entityid": 5242923,
         "general": {
             "name": "Awake",
             "tagid": 0,
@@ -461,7 +461,7 @@
         }
     },
     {
-        "entityid": 8388736,
+        "entityid": 5242924,
         "general": {
             "name": "PauseResumeButton",
             "tagid": 6,
@@ -538,7 +538,7 @@
         }
     },
     {
-        "entityid": 8388740,
+        "entityid": 5242926,
         "general": {
             "name": "PauseHTPButton",
             "tagid": 6,
@@ -615,7 +615,7 @@
         }
     },
     {
-        "entityid": 8388742,
+        "entityid": 5242927,
         "general": {
             "name": "Exit",
             "tagid": 0,
@@ -652,7 +652,7 @@
         }
     },
     {
-        "entityid": 8388743,
+        "entityid": 5242928,
         "general": {
             "name": "PauseRestartButton",
             "tagid": 6,
@@ -726,7 +726,7 @@
         }
     },
     {
-        "entityid": 8388744,
+        "entityid": 5242929,
         "general": {
             "name": "PauseHTPMenu",
             "tagid": 6,
