@@ -6,6 +6,10 @@ local enemySpawnDirection
 local enemySpawnPosition = Vec3.new()
 local currentEnemySpawnResetTimer = 0
 local maxEnemySpawnResetTimer = 3
+local total_number_of_enemies_to_spawn = 0              -- Total number of enemies to spawn this attack phase
+local summon_per_spawn_instance = 0                     -- Per Spawn Instance (2, 3, 2) -> at varying locations
+local number_of_enemies_to_summon_per_round = 3          
+_G.number_of_spawned_in_level_3 = 0                     -- Keeps track how many enemies have been spawned
 
 -- Phase 2 : Groundslam Phase
 local groundSlamDirection
@@ -33,13 +37,13 @@ local no_of_waves_1 = 5                                 -- used to keep track ho
 local random_wave_generator = false                     -- boolean value to keep track if a random value has been generated.
 -- keeps track of which bullethell attack has been used (so there won't be back to back usage)
 
--- [1] Spiral Bullets (Ground)
+-- [a] Spiral Bullets (Ground)
 local bullet_attack_checker = {false, false, false}     -- keep track which attacks have been used so won't activate back to back
 local attacking = false
 local number_of_fire = 0
 local stop_firing_at = 10
 
--- [2] Summon Bullet + Homing Bullets (From Boss' Mouth / Front) 
+-- [b] Summon Bullet + Homing Bullets (From Boss' Mouth / Front) 
 --     -> Players have to shoot them to break them
 local spawn_point_ref_obj
 local spawn_point_ref_trans
@@ -131,61 +135,47 @@ function Update()
 
     -- state = 2 -- For testing only to force state 2, delete afterwards
     -- state = 3
-    state = 4
+    state = 1
 
     if state == 1 and state_checker[1] == false then
 
-         -- Timer to set intervals between ground slams
-        currentEnemySpawnResetTimer = currentEnemySpawnResetTimer + FPSManager.GetDT()
+        attacking = true
 
-        if currentEnemySpawnResetTimer >= maxEnemySpawnResetTimer then
-
-            -- Pick which direction to ground slam in 
-            enemySpawnDirection = math.random(1, 3)
-
-            -- Ground slam front (from boss perspective)
-            if enemySpawnDirection == 1 then
-                groundSlamPosition.x = 0
-                groundSlamPosition.y = 2
-                groundSlamPosition.z = 25
-            end
-
-            -- Ground slam right (from boss perspective)
-            if enemySpawnDirection == 2 then
-                groundSlamPosition.x = -15
-                groundSlamPosition.y = 2
-                groundSlamPosition.z = 25
-            end
-
-            -- Ground slam left (from boss perspective)
-            if enemySpawnDirection == 3 then
-                groundSlamPosition.x = 15
-                groundSlamPosition.y = 2
-                groundSlamPosition.z = 25
-            end
-
-            enemyType = math.random(1, 4)
-
-            if enemyType == 1 then
-                enemySpawn = systemManager.ecs:NewEntityFromPrefab("Melissa", groundSlamPosition)
-            end
-
-            if enemyType == 2 then
-                enemySpawn = systemManager.ecs:NewEntityFromPrefab("ILOVEYOU", groundSlamPosition)
-            end
-
-            if enemyType == 3 then
-                enemySpawn = systemManager.ecs:NewEntityFromPrefab("ZipBomb", groundSlamPosition)
-            end
-
-            if enemyType == 4 then
-                enemySpawn = systemManager.ecs:NewEntityFromPrefab("TrojanHorse", groundSlamPosition)
-            end
-
-            currentEnemySpawnResetTimer = 0 -- Reset ground slam timer
-        else 
-            state_checker[1] = true
+        -- Decide how many enemies to spawn this phase.
+        if total_number_of_enemies_to_spawn == 0 then 
+            total_number_of_enemies_to_spawn = math.random(6,10)  
+            print("NUMBER OF ENEMIES TO SPAWN: " , total_number_of_enemies_to_spawn)
         end
+
+        -- Timer to set intervals between summons
+        currentEnemySpawnResetTimer = currentEnemySpawnResetTimer + FPSManager.GetDT()
+        -- print("TIMER: " , currentEnemySpawnResetTimer)
+
+        if (currentEnemySpawnResetTimer >= maxEnemySpawnResetTimer) then
+
+            -- Number of enemies to summon per position
+            if(summon_per_spawn_instance == 0) then 
+                summon_per_spawn_instance = math.random(2,3)
+            end
+
+            print("CURRENTLY ENEMIES IN LV3: " , _G.number_of_spawned_in_level_3)
+            print("TOTAL: " ,_G.number_of_spawned_in_level_3 + summon_per_spawn_instance)
+
+            if(_G.number_of_spawned_in_level_3 +  summon_per_spawn_instance < total_number_of_enemies_to_spawn) then 
+                
+               SummonMinions(summon_per_spawn_instance)
+               currentEnemySpawnResetTimer = 0 -- Reset spawn time
+
+            else -- if exceed the total amount. 
+                SummonMinions(total_number_of_enemies_to_spawn - _G.number_of_enemies_in_level_3)
+                currentEnemySpawnResetTimer = 0 -- Reset spawn time
+            end
+
+            summon_per_spawn_instance   = 0 -- Reset number of enemies per spawn instance (for a new RNG) -> put here coz might exceed total number
+        end
+
+
+
 
     end
 
@@ -517,11 +507,65 @@ function UpdateHomingProjectiles()
             end
         end
     end
-
-
-
-
 end 
+
+function SummonMinions(summon_per_spawn_instance) 
+    print("Number of Enemies to Summon: " , summon_per_spawn_instance)
+
+    -- Pick which direction to ground slam in 
+    enemySpawnDirection = math.random(1, 3)
+    
+    print("ENEMY SPAWN DIRECTION: " , enemySpawnDirection)
+
+    -- Ground slam front (from boss perspective)
+    if enemySpawnDirection == 1 then
+        groundSlamPosition.x = 0
+        groundSlamPosition.y = 2
+        groundSlamPosition.z = 25
+    end
+
+    -- Ground slam right (from boss perspective)
+    if enemySpawnDirection == 2 then
+        groundSlamPosition.x = -15
+        groundSlamPosition.y = 2
+        groundSlamPosition.z = 25
+    end
+
+    -- Ground slam left (from boss perspective)
+    if enemySpawnDirection == 3 then
+        groundSlamPosition.x = 15
+        groundSlamPosition.y = 2
+        groundSlamPosition.z = 25
+    end
+
+
+
+    print("ENEMY TYPE: " , enemyType)
+
+    -- [3/6] - Set to summon multiple enemies in 1 area 
+    for i = 0 , summon_per_spawn_instance  do 
+        enemyType = math.random(1, 4)
+        print("SUMMON # " , _G.number_of_spawned_in_level_3)
+        _G.number_of_spawned_in_level_3 = _G.number_of_spawned_in_level_3 + 1
+
+        if enemyType == 1 then
+            enemySpawn = systemManager.ecs:NewEntityFromPrefab("Melissa", groundSlamPosition)
+        end
+
+        if enemyType == 2 then
+            enemySpawn = systemManager.ecs:NewEntityFromPrefab("ILOVEYOU", groundSlamPosition)
+        end
+
+        if enemyType == 3 then
+            enemySpawn = systemManager.ecs:NewEntityFromPrefab("ZipBomb", groundSlamPosition)
+        end
+
+        if enemyType == 4 then
+            enemySpawn = systemManager.ecs:NewEntityFromPrefab("TrojanHorse", groundSlamPosition)
+        end
+
+    end
+end
 
 
 
