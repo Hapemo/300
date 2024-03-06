@@ -167,7 +167,7 @@ function Update()
                currentEnemySpawnResetTimer = 0 -- Reset spawn time
 
             else -- if exceed the total amount. 
-                SummonMinions(total_number_of_enemies_to_spawn - _G.number_of_enemies_in_level_3)
+                SummonMinions(total_number_of_enemies_to_spawn - _G.number_of_spawned_in_level_3)
                 currentEnemySpawnResetTimer = 0 -- Reset spawn time
             end
 
