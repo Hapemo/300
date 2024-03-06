@@ -1,6 +1,13 @@
 local this
 
--- Ground slam variables
+-- Phase 1 : Enemyspawn Phase
+local enemyType
+local enemySpawnDirection
+local enemySpawnPosition = Vec3.new()
+local currentEnemySpawnResetTimer = 0
+local maxEnemySpawnResetTimer = 3
+
+-- Phase 2 : Groundslam Phase
 local groundSlamDirection
 local groundSlamPosition = Vec3.new()
 local currentGroundSlamResetTimer = 0
@@ -127,8 +134,59 @@ function Update()
     state = 4
 
     if state == 1 and state_checker[1] == false then
-        print("STATE 1")
-        state_checker[1] = true
+
+         -- Timer to set intervals between ground slams
+        currentEnemySpawnResetTimer = currentEnemySpawnResetTimer + FPSManager.GetDT()
+
+        if currentEnemySpawnResetTimer >= maxEnemySpawnResetTimer then
+
+            -- Pick which direction to ground slam in 
+            enemySpawnDirection = math.random(1, 3)
+
+            -- Ground slam front (from boss perspective)
+            if enemySpawnDirection == 1 then
+                groundSlamPosition.x = 0
+                groundSlamPosition.y = 2
+                groundSlamPosition.z = 25
+            end
+
+            -- Ground slam right (from boss perspective)
+            if enemySpawnDirection == 2 then
+                groundSlamPosition.x = -15
+                groundSlamPosition.y = 2
+                groundSlamPosition.z = 25
+            end
+
+            -- Ground slam left (from boss perspective)
+            if enemySpawnDirection == 3 then
+                groundSlamPosition.x = 15
+                groundSlamPosition.y = 2
+                groundSlamPosition.z = 25
+            end
+
+            enemyType = math.random(1, 4)
+
+            if enemyType == 1 then
+                enemySpawn = systemManager.ecs:NewEntityFromPrefab("Melissa", groundSlamPosition)
+            end
+
+            if enemyType == 2 then
+                enemySpawn = systemManager.ecs:NewEntityFromPrefab("ILOVEYOU", groundSlamPosition)
+            end
+
+            if enemyType == 3 then
+                enemySpawn = systemManager.ecs:NewEntityFromPrefab("ZipBomb", groundSlamPosition)
+            end
+
+            if enemyType == 4 then
+                enemySpawn = systemManager.ecs:NewEntityFromPrefab("TrojanHorse", groundSlamPosition)
+            end
+
+            currentEnemySpawnResetTimer = 0 -- Reset ground slam timer
+        else 
+            state_checker[1] = true
+        end
+
     end
 
     if state == 2 and state_checker[2] == false then
@@ -141,16 +199,16 @@ function Update()
             -- Pick which direction to ground slam in 
             groundSlamDirection = math.random(1, 3)
 
-            -- Ground slam right (from boss perspective)
+            -- Ground slam front (from boss perspective)
             if groundSlamDirection == 1 then
-                groundSlamPosition.x = -15
+                groundSlamPosition.x = 0
                 groundSlamPosition.y = -6
                 groundSlamPosition.z = 25
             end
 
-            -- Ground slam front (from boss perspective)
+            -- Ground slam right (from boss perspective)
             if groundSlamDirection == 2 then
-                groundSlamPosition.x = 0
+                groundSlamPosition.x = -15
                 groundSlamPosition.y = -6
                 groundSlamPosition.z = 25
             end
