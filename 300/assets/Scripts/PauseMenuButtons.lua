@@ -119,27 +119,16 @@ function PauseUpdate()
         if (button:GetGeneral().name == "PauseResumeButton") then
             _G.mouse_on = true
             graphicssys:HideCursor(true)
-            mainMenuButton:GetTransform().mTranslate.x = 1000
-            quitButton:GetTransform().mTranslate.x = 1000
-            resumeButton:GetTransform().mTranslate.x = 1000
-            htpButton:GetTransform().mTranslate.x = 1000
-            menuBackground:GetTransform().mTranslate.x = 1000
-            restartButton:GetTransform().mTranslate.x = 1000
-            settingsButton:GetTransform().mTranslate.x = 1000
+            TranslatePauseElements()
             systemManager:SetIsPause(false)
             _G.isPausePauseMenu = false
         elseif (button:GetGeneral().name == "PauseHTPButton") then
-            mainMenuButton:GetTransform().mTranslate.x = 1000
-            quitButton:GetTransform().mTranslate.x = 1000
-            resumeButton:GetTransform().mTranslate.x = 1000
-            htpButton:GetTransform().mTranslate.x = 1000
-            menuBackground:GetTransform().mTranslate.x = 1000
-            restartButton:GetTransform().mTranslate.x = 1000
-            settingsButton:GetTransform().mTranslate.x = 1000
+            TranslatePauseElements()
             HTPMenu:GetTransform().mTranslate.x = 0
             backButton:GetTransform().mTranslate.x = 0.65
             _G.isHTPMenu = true
         elseif (button:GetGeneral().name == "PauseSettingsButton") then
+            TranslatePauseElements()
             settingsMenuBackground:GetTransform().mTranslate.x = 0
             settingsBgmEmpty:GetTransform().mTranslate.x = -0.20
             settingsBgmFull:GetTransform().mTranslate.x = -0.20
@@ -159,34 +148,17 @@ function PauseUpdate()
             _G.isHTPMenu = false
         elseif (button:GetGeneral().name == "PauseRestartButton") then
         mainMenuButton:GetTransform().mTranslate.x = 1000
-            quitButton:GetTransform().mTranslate.x = 1000
-            resumeButton:GetTransform().mTranslate.x = 1000
-            htpButton:GetTransform().mTranslate.x = 1000
-            menuBackground:GetTransform().mTranslate.x = 1000
-            restartButton:GetTransform().mTranslate.x = 1000
-            settingsButton:GetTransform().mTranslate.x = 1000
+        TranslatePauseElements()
             _G.isPausePauseMenu = false
             systemManager:SetIsPause(false)
             gameStateSys:ChangeGameState(gameState)
         elseif (button:GetGeneral().name == "PauseMainMenuButton") then
-            mainMenuButton:GetTransform().mTranslate.x = 1000
-            quitButton:GetTransform().mTranslate.x = 1000
-            resumeButton:GetTransform().mTranslate.x = 1000
-            htpButton:GetTransform().mTranslate.x = 1000
-            menuBackground:GetTransform().mTranslate.x = 1000
-            restartButton:GetTransform().mTranslate.x = 1000
-            settingsButton:GetTransform().mTranslate.x = 1000
+            TranslatePauseElements()
             _G.isPausePauseMenu = false
             systemManager:SetIsPause(false)
             gameStateSys:ChangeGameState("MainMenu")
         elseif (button:GetGeneral().name == "PauseQuitButton") then
-            mainMenuButton:GetTransform().mTranslate.x = 1000
-            quitButton:GetTransform().mTranslate.x = 1000
-            resumeButton:GetTransform().mTranslate.x = 1000
-            htpButton:GetTransform().mTranslate.x = 1000
-            menuBackground:GetTransform().mTranslate.x = 1000
-            restartButton:GetTransform().mTranslate.x = 1000
-            settingsButton:GetTransform().mTranslate.x = 1000
+            TranslatePauseElements()
             _G.isPausePauseMenu = false
             systemManager:SetIsPause(false)
             systemManager:Quit()
@@ -208,4 +180,14 @@ end
 
 function OnTriggerExit(Entity)
     
+end
+
+function TranslatePauseElements()
+    mainMenuButton:GetTransform().mTranslate.x = 1000
+    quitButton:GetTransform().mTranslate.x = 1000
+    resumeButton:GetTransform().mTranslate.x = 1000
+    htpButton:GetTransform().mTranslate.x = 1000
+    menuBackground:GetTransform().mTranslate.x = 1000
+    restartButton:GetTransform().mTranslate.x = 1000
+    settingsButton:GetTransform().mTranslate.x = 1000
 end

@@ -76,6 +76,11 @@ function Update()
         bgmIncrease:GetTransform().mTranslate.x = 1000
         sfxDecrease:GetTransform().mTranslate.x = 1000
         sfxIncrease:GetTransform().mTranslate.x = 1000
+        _G.isSettingsMenu = false
+    end
+
+    if (settingsFSButton:GetButton().mActivated) then
+        --toggle fs
     end
 end
 
