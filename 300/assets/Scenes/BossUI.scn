@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 11534421,
+        "entityid": 10485838,
         "general": {
             "name": "BossUITitle",
             "tagid": 6,
@@ -49,7 +49,7 @@
         }
     },
     {
-        "entityid": 11534425,
+        "entityid": 10485918,
         "general": {
             "name": "Laser1",
             "tagid": 8,
@@ -70,7 +70,7 @@
             },
             "translate": {
                 "x": 0.0,
-                "y": -11.260000228881836,
+                "y": -100.0,
                 "z": 8.5
             }
         },
@@ -151,7 +151,7 @@
         }
     },
     {
-        "entityid": 13631570,
+        "entityid": 11534419,
         "general": {
             "name": "Laser2",
             "tagid": 8,
@@ -172,7 +172,7 @@
             },
             "translate": {
                 "x": 0.0,
-                "y": -9.050000190734863,
+                "y": -100.0,
                 "z": 8.5
             }
         },

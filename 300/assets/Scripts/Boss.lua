@@ -49,9 +49,13 @@ local homing_projectiles = {}                           -- Define a table to sto
 local projectile_stay_time = 2                          -- timer for the bullet to stay still before it starts homing into the player
 local initial_homing_speed = 6                          -- Starting Homing Speed
 
+
+-- [4] Lazer Attack 
+_G.activateLazerScript = false
+
 -- Boss states
 local state = 0
-local state_checker = {false, false , false}
+local state_checker = {false, false , false , false}
 local once = false
 
 -- Player Stuff
@@ -119,9 +123,12 @@ function Update()
     end
 
     -- state = 2 -- For testing only to force state 2, delete afterwards
-    state = 3
+    -- state = 3
+    state = 4
 
     if state == 1 and state_checker[1] == false then
+        print("STATE 1")
+        state_checker[1] = true
     end
 
     if state == 2 and state_checker[2] == false then
@@ -177,8 +184,8 @@ function Update()
         fire_timer = fire_timer +  FPSManager.GetDT()
 
         if attacking == false then 
-            -- bulletProjectileType = math.random (1, 3)
-            bulletProjectileType = 2 -- temporary
+            bulletProjectileType = math.random (1, 2)
+            -- bulletProjectileType = 1 -- temporary
             -- print("PROJECTILE ATTACKING TYPE: "  , bulletProjectileType)
             attacking = true
         end
@@ -247,6 +254,7 @@ function Update()
 
     if state == 4 and state_checker[4] == false then 
         print("LAZER ATTACK")
+        _G.activateLazerScript = true
     end
 
 end

@@ -2,6 +2,10 @@ local speed
 local angle = 0.0
 local axis = Vec3.new()
 
+local translation = Vec3.new()
+
+local ent 
+
 function Alive()
 
     -- testing timer countdown for the rotation of the laser
@@ -22,9 +26,14 @@ function Alive()
 end
 
 function Update()
-
-    angle = angle + speed * (FPSManager.GetDT() * speed)
-    Helper.SetRealRotateQuaternion(ent, axis, angle)
+    translation = trans.mTranslate 
+    if(_G.activateLazerScript == true) then 
+        translation.y = -1.19
+        angle = angle + speed * (FPSManager.GetDT() * speed)
+        Helper.SetRealRotateQuaternion(ent, axis, angle)
+    else
+        translation.y = -100
+    end
 end
 
 function Dead()
