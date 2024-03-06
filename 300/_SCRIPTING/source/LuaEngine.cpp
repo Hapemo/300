@@ -54,6 +54,7 @@ void LuaECS()
         "NewEntity", &ECS::NewEntity,
         "NewEntityByScene", &ECS::NewEntityByScene,
         "NewEntityFromPrefab", &ECS::NewEntityFromPrefab,
+        "NewEntityFromPrefabSceneName", &ECS::NewEntityFromPrefabSceneName,
         "SetDeleteEntity", &ECS::SetDeleteEntity);
 }
 

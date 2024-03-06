@@ -7,9 +7,9 @@ local progress
 local isInZone = false
 
 local currentSpawnTimer = 0 -- keeps track of how often enemy spawning interval
-local spawnTimer = 10 -- sets how long the enemy spawning interval is
+local spawnTimer = 5       -- sets how long the enemy spawning interval is
 local currentEnemyCount = 0 -- keeps track of how many enemies there are in the map
-local maxEnemyCount = 20 -- sets how many enemies are allowed in the map
+local maxEnemyCount = 20    -- sets how many enemies are allowed in the map
 
 local mobSpawnPos1 = Vec3.new()
 local mobSpawnPos2 = Vec3.new()
@@ -35,20 +35,20 @@ function Alive()
     progress = 0
 
     mobSpawnPos1.x = 21;
-    mobSpawnPos1.y = 48;
+    mobSpawnPos1.y = -4;
     mobSpawnPos1.z = 24;
 
     mobSpawnPos2.x = -20;
-    mobSpawnPos2.y = 48;
+    mobSpawnPos2.y = -4;
     mobSpawnPos2.z = 36;
 
-    mobSpawnPos3.x = -11;
-    mobSpawnPos3.y = 48;
-    mobSpawnPos3.z = 61;
+    mobSpawnPos3.x = -44;
+    mobSpawnPos3.y = -4;
+    mobSpawnPos3.z = 64;
 
-    mobSpawnPos4.x = -28;
-    mobSpawnPos4.y = 48;
-    mobSpawnPos4.z = 0;
+    mobSpawnPos4.x = 8;
+    mobSpawnPos4.y = 4;
+    mobSpawnPos4.z = 13;
 end
 
 function Update()
@@ -60,7 +60,7 @@ function Update()
         z = y:GetScript("../assets/Scripts/Transition.lua")
 
         if z ~= nil then
-            z:SetNextGameStateHelper("SetNextGameState", "Test2")
+            z:SetNextGameStateHelper("SetNextGameState", "Test3")
             --z:RunFunctionWithParam("SetNextGameState", "Test2")
             z:RunFunction("StartTransition")
         end
@@ -106,37 +106,47 @@ function Update()
             end
         end
 
-    -- SPAWNING ENEMIES
-        currentSpawnTimer = currentSpawnTimer + FPSManager.GetDT()
-
-        if currentEnemyCount < maxEnemyCount and currentSpawnTimer > spawnTimer then
-            mobtype = math.random(1, 4) -- generate a random number to spawn a random enemy between Trojan and Melissa only (for level 1)
-            local mobspawnpoint_rand = math.random(1, 4)
-
-                if(mobspawnpoint_rand == 1) then
-                    mobspawnpoint = mobSpawnPos1
-                elseif(mobspawnpoint_rand == 2) then
-                    mobspawnpoint = mobSpawnPos2
-                elseif(mobspawnpoint_rand == 3) then
-                    mobspawnpoint = mobSpawnPos3
-                elseif(mobspawnpoint_rand == 4) then
-                    mobspawnpoint = mobSpawnPos4
-                end
-
-                if (mobtype == 1) then 
-                    systemManager.ecs:NewEntityFromPrefab("ILOVEYOU2", mobspawnpoint) 
-                elseif (mobtype == 2) then 
-                    systemManager.ecs:NewEntityFromPrefab("Melissa2", mobspawnpoint) 
-                elseif (mobtype == 3) then 
-                    systemManager.ecs:NewEntityFromPrefab("TrojanHorse", mobspawnpoint) 
-                elseif (mobtype == 4) then 
-                    systemManager.ecs:NewEntityFromPrefab("ZipBomb2", mobspawnpoint)
-                end
-            currentEnemyCount = currentEnemyCount + 1
-            currentSpawnTimer = 0 -- reset currentSpawnTimer so that next enemy can spawn
+        if (inputMapSys:GetButtonDown("nine")) then
+            _G.completedEpicM = true 
+            _G.completedEpicZB = true 
+            print("EpicM and EpicZB completed")
         end
-        --print("Current progress =", progress/objectivesComplete)
-        print("SPAWNING")
+
+        if(_G.completedEpicM == true and _G.completedEpicZB == true) then
+        -- if(false) then
+            -- SPAWNING ENEMIES
+            currentSpawnTimer = currentSpawnTimer + FPSManager.GetDT()
+
+            if currentEnemyCount < maxEnemyCount and currentSpawnTimer > spawnTimer then
+                mobtype = math.random(1, 4) -- generate a random number to spawn a random enemy between Trojan and Melissa only (for level 1)
+                local mobspawnpoint_rand = math.random(1, 4)
+
+                    if(mobspawnpoint_rand == 1) then
+                        mobspawnpoint = mobSpawnPos1
+                    elseif(mobspawnpoint_rand == 2) then
+                        mobspawnpoint = mobSpawnPos2
+                    elseif(mobspawnpoint_rand == 3) then
+                        mobspawnpoint = mobSpawnPos3
+                    elseif(mobspawnpoint_rand == 4) then
+                        mobspawnpoint = mobSpawnPos4
+                    end
+
+                    if (mobtype == 1) then 
+                        systemManager.ecs:NewEntityFromPrefab("ILOVEYOU2", mobspawnpoint) 
+                    elseif (mobtype == 2) then 
+                        systemManager.ecs:NewEntityFromPrefab("Melissa2", mobspawnpoint) 
+                    elseif (mobtype == 3) then 
+                        systemManager.ecs:NewEntityFromPrefab("TrojanHorse", mobspawnpoint) 
+                    elseif (mobtype == 4) then 
+                        systemManager.ecs:NewEntityFromPrefab("ZipBomb2", mobspawnpoint)
+                    end
+                currentEnemyCount = currentEnemyCount + 1
+                currentSpawnTimer = 0 -- reset currentSpawnTimer so that next enemy can spawn
+            end
+        end
+
+    --print("Current progress =", progress/objectivesComplete)
+    -- print("SPAWNING")
     objectivebar:GetUIrenderer():SetSlider(progress/objectivesComplete);
 
     ent = Helper.GetScriptEntity(script_entity.id)
@@ -159,13 +169,9 @@ function Update()
     --if(_G.PreObjectivesCounter >=4)then
 
         if(moveTime >0.4)then
-
-            -- for i = 1, 2 , 1 
-            -- do 
-
-            -- print(math.random(-200,200))
             -- only appear when the platform is raised
-            if(transform.mTranslate.y == -7.5) then
+            if(transform.mTranslate.y == -4.5) then
+                -- print("Spawning 1's and 0's")
                 spawndataPos.x = transform.mTranslate.x  +math.random(-300,300)/100
                 spawndataPos.y = transform.mTranslate.y 
                 spawndataPos.z = transform.mTranslate.z +math.random(-300,300)/100
@@ -178,15 +184,6 @@ function Update()
 
                 bulletPrefab = systemManager.ecs:NewEntityFromPrefab("0s", spawndataPos)
             end
-
-                -- spawndataPos.x = transform.mTranslate.x  +math.random(-300,300)/100
-                -- spawndataPos.y = transform.mTranslate.y 
-                -- spawndataPos.z = transform.mTranslate.z +math.random(-300,300)/100
-
-                -- bulletPrefab = systemManager.ecs:NewEntityFromPrefab("0s", spawndataPos)
-
-
-            -- end
             moveTime = 0
         end
     --end
@@ -207,7 +204,6 @@ function Update()
 
     if (isInZone == false) then
     -- OBJECTIVE Progress (decreases if player is outside objective)
-
         --objectivebar:GetTransform().mTranslate.y = 20; -- Hide the objective progress
 
         if (progress < objectivesComplete) then
@@ -223,6 +219,35 @@ function Update()
     if (progress == objectivesComplete) then
         --objectivebar:GetTransform().mTranslate.y = 20; -- Hide the objective progress
         entityobj = Helper.GetScriptEntity(script_entity.id)
+
+        if entityobj:GetGeneral().name == "Objectives1" then
+            controllerL2 = gameStateSys:GetEntity("DialogueControllerLevel2")
+            controllerL2Scripts = controllerL2:GetScripts()
+            controllerL2Script = controllerL2Scripts:GetScript("../assets/Scripts/DialogueControllerLevel2.lua")
+
+            if controllerL2Script ~= nil then
+                controllerL2Script:RunFunction("FinishObjective1")
+            end
+        end
+        if entityobj:GetGeneral().name == "Objectives2" then
+            controllerL2 = gameStateSys:GetEntity("DialogueControllerLevel2")
+            controllerL2Scripts = controllerL2:GetScripts()
+            controllerL2Script = controllerL2Scripts:GetScript("../assets/Scripts/DialogueControllerLevel2.lua")
+
+            if controllerL2Script ~= nil then
+                controllerL2Script:RunFunction("FinishObjective2")
+            end
+        end
+        if entityobj:GetGeneral().name == "Objectives3" then
+            controllerL2 = gameStateSys:GetEntity("DialogueControllerLevel2")
+            controllerL2Scripts = controllerL2:GetScripts()
+            controllerL2Script = controllerL2Scripts:GetScript("../assets/Scripts/DialogueControllerLevel2.lua")
+
+            if controllerL2Script ~= nil then
+                controllerL2Script:RunFunction("FinishObjective3")
+            end
+        end
+
         systemManager.ecs:SetDeleteEntity(entityobj)
         gameStateSys = systemManager:mGameStateSystem();
   
@@ -239,22 +264,6 @@ function Update()
         TestScripts = testScriptEntity:GetScripts()
         testScript = TestScripts:GetScript("../assets/Scripts/ObjectivesController.lua")
 
-        if testScript ~= nil then
-            objCount = testScript:ReturnValueInt("GetCountObj")
-            if objCount == 0 then
-                gameStateSys = systemManager:mGameStateSystem()
-            
-                    x = gameStateSys:GetEntity("TransitionHelper", "Transition") 
-                    y = x:GetScripts()
-                    z = y:GetScript("../assets/Scripts/Transition.lua")
-
-                    if z ~= nil then
-                        z:SetNextGameStateHelper("SetNextGameState", "Test2")
-                        --z:RunFunctionWithParam("SetNextGameState", "Test2")
-                        z:RunFunction("StartTransition")
-                    end
-            end
-        end
 
         --gameStateSys:GetEntity("ZipBombFuseAudio"):GetAudio():SetPlay() -- TODO: Play audio
         -- TODO: Spawn another objective entity prefab at XYZ location in the map

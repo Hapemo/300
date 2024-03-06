@@ -54,7 +54,7 @@ public:
 	bool		 StopSound(uid channel_id, AUDIOTYPE type);
 	bool		 UpdateVolume(uid channel_id, AUDIOTYPE type, float volume);
 	void         SetAllSFXVolume(float volume);											// Built for Sound Settings
-	void		 SetAllBGMVolume(float volume);											// Built for Sound Setting
+	void		 SetAllBGMVolume(float volume);											// Built for Sound Settings
 	float		 GetSFXVolume() const;
 	float		 GetBGMVolume() const;
 	void		 PauseAllSounds();

@@ -1526,13 +1526,13 @@ void GraphicsSystem::Add2DImageInstance(float width, float height, vec3 const& p
 
 	int texIndex{};
 	if (texHandle >= 0)
-		texIndex = texHandle + 0.5f;
+		texIndex = texHandle;
 	else
-		texIndex = -2.f;
+		texIndex = -2;
 
 	m_Image2DMesh.mLTW.push_back(world);
 	m_Image2DMesh.mColors.push_back(color);
-	m_Image2DMesh.mTexEntID.push_back(vec4((float)texIndex, (float)entityID + 0.5f, degree, slider));
+	m_Image2DMesh.mTexEntID.push_back(vec4((float)texIndex + 0.5f, (float)entityID + 0.5f, degree, slider));
 }
 
 void GraphicsSystem::Add2DImageWorldInstance(Transform transform, unsigned texHandle, unsigned entityID, float degree, vec4 const& color, float slider)
@@ -1545,13 +1545,13 @@ void GraphicsSystem::Add2DImageWorldInstance(Transform transform, unsigned texHa
 
 	int texIndex{};
 	if (texHandle >= 0)
-		texIndex = texHandle + 0.5f;
+		texIndex = texHandle;
 	else
-		texIndex = -2.f;
+		texIndex = -2;
 
 	m_PortalMesh.mLTW.push_back(world);
 	m_PortalMesh.mColors.push_back(color);
-	m_PortalMesh.mTexEntID.push_back(vec4((float)texIndex, (float)entityID + 0.5f, degree, slider));
+	m_PortalMesh.mTexEntID.push_back(vec4((float)texIndex + 0.5f, (float)entityID + 0.5f, degree, slider));
 }
 int GraphicsSystem::StoreTextureIndex(unsigned texHandle)
 {

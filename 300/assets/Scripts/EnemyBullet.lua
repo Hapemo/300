@@ -56,11 +56,6 @@ function OnTriggerEnter(Entity)
         end
     end
 end
-
-function OnTrigger(Entity)
-    
-end
-
 function OnTriggerExit(Entity)
     
 end
