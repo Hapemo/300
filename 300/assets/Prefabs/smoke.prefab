@@ -1,5 +1,5 @@
 {
-    "entityid": 263,
+    "entityid": 324,
     "general": {
         "name": "smoke",
         "tagid": 8,
@@ -56,6 +56,8 @@
         "loop": true,
         "loopInterval": 0.4000000059604645,
         "speed": 1.5,
-        "count": 40
+        "count": 40,
+        "emit": false,
+        "particletexture": 2273550607
     }
 }
