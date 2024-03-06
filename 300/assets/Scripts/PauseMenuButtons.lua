@@ -22,6 +22,7 @@ local backButton
 gameState = "Test"
 
 _G.isHTPMenu = false
+_G.isSettingsMenu = false
 
 function Alive()
     gameStateSys = systemManager:mGameStateSystem()
@@ -47,9 +48,8 @@ function Alive()
     settingsButton = gameStateSys:GetEntity("PauseSettingsButton")
     menuBackground = gameStateSys:GetEntity("PauseMenuBackground")
     
-    _G.isPausePauseMenu = false
     _G.isHTPMenu = false
-
+    _G.isSettingsMenu = false
 end
 
 function Update()
@@ -152,6 +152,7 @@ function PauseUpdate()
             bgmIncrease:GetTransform().mTranslate.x = 0.21
             sfxDecrease:GetTransform().mTranslate.x = -0.61
             sfxIncrease:GetTransform().mTranslate.x = 0.21
+            _G.isSettingsMenu = true
         elseif (button:GetGeneral().name == "PauseBackButton") then
             HTPMenu:GetTransform().mTranslate.x = 1000
             backButton:GetTransform().mTranslate.x = 1000
