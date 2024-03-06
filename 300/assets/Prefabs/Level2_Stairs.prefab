@@ -1,0 +1,65 @@
+{
+    "entityid": 160432220,
+    "general": {
+        "name": "Level2_Stairs",
+        "tagid": 0,
+        "subtag": 0,
+        "isActive": true,
+        "isPaused": false
+    },
+    "transform": {
+        "scale": {
+            "x": 10.0,
+            "y": 6.0,
+            "z": 5.420000076293945
+        },
+        "rotate": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "translate": {
+            "x": 15.84000015258789,
+            "y": 45.080142974853516,
+            "z": -14.07699966430664
+        }
+    },
+    "meshrenderer": {
+        "vert": "../assets/shader_files/pointLight_vert.glsl",
+        "frag": "../assets/shader_files/pointLight_frag.glsl",
+        "meshrefid": 3918981442,
+        "instancecolor": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+        },
+        "bloomthreshold": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+        },
+        "castShadow": true,
+        "materialinstance": [
+            "../assets/Compressed/Level2_Stairs_BaseColor.ctexture",
+            "../assets/Compressed/Level2_Stairs_Normal.ctexture",
+            "../assets/Compressed/Level2_Stairs_Roughness.ctexture",
+            "../assets/Compressed/Level2_Stairs_Metallic.ctexture",
+            "../assets/Compressed/Level2_Stairs_Emissive.ctexture",
+            "../assets/Compressed/Level2_Ambient Occlusion Map from Mesh Stairs.ctexture"
+        ],
+        "mesh": "../assets/compiled_geom/Level2_SeparatedStair.geom",
+        "texturerefid": [
+            2480130408,
+            1876222333,
+            1403517130,
+            492908823,
+            3179331785,
+            2661393407
+        ]
+    },
+    "prefab": {
+        "prefab": "Level2_Stairs"
+    }
+}

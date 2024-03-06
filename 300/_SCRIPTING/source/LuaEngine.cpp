@@ -53,6 +53,7 @@ void LuaECS()
         "NewEntity", &ECS::NewEntity,
         "NewEntityByScene", &ECS::NewEntityByScene,
         "NewEntityFromPrefab", &ECS::NewEntityFromPrefab,
+        "NewEntityFromPrefabSceneName", &ECS::NewEntityFromPrefabSceneName,
         "SetDeleteEntity", &ECS::SetDeleteEntity);
 }
 
@@ -177,6 +178,7 @@ void LuaCamera()
         "GetSensitivity", &Camera_Scripting::GetSensitivity,
         "RotateCameraView", &Camera_Scripting::RotateCameraView,
         "SetFov", &Camera_Scripting::SetFov,
+        "GetFov", &Camera_Scripting::GetFov,
         "Cross", &Camera_Scripting::Cross, 
         "Rotate" , &Camera_Scripting::Rotate);
 }
@@ -207,7 +209,9 @@ void LuaAnimator()
         "Animator", sol::constructors<>(),
         "PauseAnimation", &Animator::PauseAnimation,
         "UnpauseAnimation", &Animator::UnpauseAnimation,
-        "IsEndOfAnimation", &Animator::IsEndOfAnimation);
+        "IsEndOfAnimation", &Animator::IsEndOfAnimation,
+        "SetFrame", &Animator::SetFrame,
+        "GetFrame", &Animator::GetFrame);
 }
 
 void LuaRigidBody()
@@ -252,7 +256,8 @@ void LuaScripts()
     systemManager->mScriptingSystem->luaState.new_usertype<Scripts>(
         "Scripts", sol::constructors<>(),
         "GetScript", &Scripts::GetScript,
-        "AddScript", &Scripts::AddScriptScripts);
+        "AddScript", &Scripts::AddScriptScripts,
+        "DeleteScript", &Scripts::DeleteScript);
 }
 
 void LuaParent()
@@ -339,7 +344,9 @@ void LuaPhysics()
         "mPhysicsSystem", sol::constructors<>(),
         "SetVelocity", &PhysicsSystem::SetVelocity,
         "SetPosition", &PhysicsSystem::SetPosition,
-        "SetRotation", &PhysicsSystem::SetRotation);
+        "SetRotation", &PhysicsSystem::SetRotation,
+        "ResetEntity", &PhysicsSystem::ResetEntity,
+        "SetRotationQuaternion", &PhysicsSystem::SetRotationQuaternion);
 }
 
 void LuaScripting()
@@ -376,13 +383,23 @@ void LuaVFX()
         "SetEntityBloomThreshold", &VFX::SetEntityBloomThreshold);
 }
 
-void LuaGameState()
+void LuaGameStateManager()
 {
     systemManager->mScriptingSystem->luaState.new_usertype<GameStateManager>(
         "mGameStateSystem", sol::constructors<>(),
         "GetEntity", sol::resolve<Entity(std::string const &)>(&GameStateManager::GetEntity),
         "GetEntityByScene", sol::resolve<Entity(std::string const &, std::string const &)>(&GameStateManager::GetEntity),
-        "ChangeGameState", sol::resolve<void(const std::string &)>(&GameStateManager::ChangeGameState));
+        "ChangeGameState", sol::resolve<void(const std::string &)>(&GameStateManager::ChangeGameState),
+        "GetPrevGSName", &GameStateManager::GetPrevGSName,
+        "GetCurrentGameState", &GameStateManager::GetCurrentGameState);
+}
+
+void LuaGameState()
+{
+    systemManager->mScriptingSystem->luaState.new_usertype<GameState>(
+        "GameState", sol::constructors<>(),
+        "mName", &GameState::mName
+        );
 }
 
 void LuaAIManager()

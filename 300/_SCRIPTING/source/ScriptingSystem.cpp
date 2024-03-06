@@ -112,6 +112,7 @@ void ScriptingSystem::Init()
     LuaPointLight();
     LuaMeshRenderer();
     LuaVFX();
+    LuaGameStateManager();
     LuaGameState();
     LuaAIManager();
     LuaUIrenderer();
@@ -200,11 +201,16 @@ void ScriptingSystem::Update(float dt)
 
     // Call the "Update" function 
     for (Entity entity : scriptEntities)
-    {   
+    {
+        //std::cout << entity.GetComponent<General>().name;
+
         for (Script* script : entity.GetComponent<Scripts>().scriptsContainer)
         {
+            //std::cout << '\t' << script->scriptFile;
             script->Run("Update");
         }
+
+        //std::cout << "\n";
     }
 }
 

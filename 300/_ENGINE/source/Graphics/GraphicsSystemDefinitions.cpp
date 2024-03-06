@@ -229,6 +229,7 @@ void updateSSBO_Data()
 {
 	systemManager->mGraphicsSystem->m_FinalBoneMatrixSsbo.SubData(systemManager->mGraphicsSystem->finalBoneMatrices.size() * sizeof(mat4), systemManager->mGraphicsSystem->finalBoneMatrices.data());
 	systemManager->mGraphicsSystem->m_MaterialSsbo.SubData(systemManager->mGraphicsSystem->m_Materials.size() * sizeof(MaterialSSBO), systemManager->mGraphicsSystem->m_Materials.data());
+	systemManager->mGraphicsSystem->m_UITextureSsbo.SubData(systemManager->mGraphicsSystem->UITextures.size() * sizeof(GLuint64), systemManager->mGraphicsSystem->UITextures.data());
 }
 
 
@@ -299,6 +300,7 @@ void Reset_Data()
 	systemManager->mGraphicsSystem->m_Image2DStore.clear();
 	systemManager->mGraphicsSystem->finalBoneMatrices.clear();
 	systemManager->mGraphicsSystem->m_Materials.clear();
+	systemManager->mGraphicsSystem->UITextures.clear();
 	systemManager->mGraphicsSystem->pointLights.clear();
 	systemManager->mGraphicsSystem->spotlights.clear();
 }
@@ -309,6 +311,7 @@ void update_UI()
 	auto UiInstances = systemManager->ecs->GetEntitiesWith<UIrenderer>();
 	for (Entity inst : UiInstances)
 	{
+		if (inst.GetComponent<General>().name == "") continue;
 		UIrenderer& uiRenderer = inst.GetComponent<UIrenderer>();
 		Transform& uiTransform = inst.GetComponent<Transform>();
 
@@ -331,6 +334,12 @@ void update_UI()
 		if (uiRenderer.mTextureRef.getdata(systemManager->mResourceTySystem->m_ResourceInstance) != nullptr)
 			texID = reinterpret_cast<GFX::Texture*>(uiRenderer.mTextureRef.data)->ID();
 
+		int texIndex{};
+		if (texID > 0)
+			texIndex = systemManager->mGraphicsSystem->StoreUITexture(texID);
+		else
+			texIndex = -2;
+
 		if (uiRenderer.mWorldTransform)
 		{
 			Transform xform = uiTransform;
@@ -350,10 +359,10 @@ void update_UI()
 					xform.mTranslate += parent_translate;
 				}
 			}
-			systemManager->mGraphicsSystem->Add2DImageWorldInstance(xform, texID, static_cast<int>(inst.id), uiRenderer.mDegree, uiRenderer.mColor, uiRenderer.mSlider);
+			systemManager->mGraphicsSystem->Add2DImageWorldInstance(xform, texIndex, static_cast<int>(inst.id), uiRenderer.mDegree, uiRenderer.mColor, uiRenderer.mSlider);
 		}
 		else
-			systemManager->mGraphicsSystem->Add2DImageInstance(uiWidth, uiHeight, uiPosition, texID, static_cast<int>(inst.id), uiRenderer.mDegree, uiRenderer.mColor, uiRenderer.mSlider);
+			systemManager->mGraphicsSystem->Add2DImageInstance(uiWidth, uiHeight, uiPosition, texIndex, static_cast<int>(inst.id), uiRenderer.mDegree, uiRenderer.mColor, uiRenderer.mSlider);
 	}
 
 	systemManager->mGraphicsSystem->m_Image2DMesh.PrepForDraw();

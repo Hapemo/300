@@ -39,6 +39,7 @@ local audio_played = false
 -- 4. REST. stops for around 0.5 seconds before moving back to 1. (change to 1. when rest timer ends)
 
 function Alive()
+    -- print("Alive()")
     math.randomseed(os.time())
 
     this = Helper.GetScriptEntity(script_entity.id)
@@ -64,6 +65,7 @@ end
 
 local timer = 0
 function Update()
+    -- If trojan horse epic intro is between state 4 and 6, return
 
     -- dt = FPSManager.GetDT()
 
@@ -84,7 +86,8 @@ function Update()
     if state == "ROAM" then         -- roam around and passively look for player (change to 2. when sees player)
         -- Roam around randomly
         s1Timer = s1Timer + FPSManager.GetDT()
-        this:GetTransform().mRotate.y = Helper.DirectionToAngle(this, s1RoamVelocity)
+        Helper.SetRealRotate(this, Vec3.new(0,Helper.DirectionToAngle(this, s1RoamVelocity),0))
+
         if s1Timer > 2 then
             s1Timer = 0
             MoveRandDir()
@@ -102,7 +105,7 @@ function Update()
         
         -- Constantly make him stare at player and stand still
         stareDirection = Helper.Vec3Minus(target:GetTransform().mTranslate, this:GetTransform().mTranslate)
-        this:GetTransform().mRotate.y = Helper.DirectionToAngle(this, stareDirection)
+        Helper.SetRealRotate(this, Vec3.new(0,Helper.DirectionToAngle(this, stareDirection),0))
         phySys:SetVelocity(this, Vec3.new())
         
         -- if audio_played == false then 
@@ -121,14 +124,15 @@ function Update()
         end
 
     elseif state == "SPRINT" then   -- charge toward last seen player position at high speed (change to 4. when collided with something)
+        Helper.SetRealRotate(this, Vec3.new(0,Helper.DirectionToAngle(this, stareDirection),0))
+        if (_G.TrojanHorseEpicIntroState >= 5 and _G.TrojanHorseEpicIntroState <= 7) then return end
         -- Charge towards last seen player position at high speed
         phySys:SetVelocity(this, s3SprintVelocity);
-        this:GetTransform().mRotate.y = Helper.DirectionToAngle(this, stareDirection)
         -- Stop and change state when collided with something
         -- This part is done in OnContactEnter
 
     elseif state == "REST" then     -- stops for some time before moving back to 1. (change to 1. when rest timer ends)
-        this:GetTransform().mRotate.y = Helper.DirectionToAngle(this, stareDirection)
+        Helper.SetRealRotate(this, Vec3.new(0,Helper.DirectionToAngle(this, stareDirection),0))
         s4RestTimerCount = s4RestTimerCount + FPSManager.GetDT()
         if s4RestTimerCount > s4RestTimer then
             s4RestTimerCount = 0
@@ -239,7 +243,7 @@ end
 function MoveRandDir()
     s1RoamVelocity = RandDirectionXZ()
     s1RoamVelocity = Helper.Normalize(s1RoamVelocity)
-    this:GetTransform().mRotate.y = Helper.DirectionToAngle(this, s1RoamVelocity)
+    Helper.SetRealRotate(this, Vec3.new(0,Helper.DirectionToAngle(this, s1RoamVelocity),0))
     s1RoamVelocity = Helper.Scale(s1RoamVelocity, roamSpeed)
 end
 

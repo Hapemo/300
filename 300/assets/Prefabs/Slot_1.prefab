@@ -1,0 +1,47 @@
+{
+    "entityid": 2097227,
+    "general": {
+        "name": "Slot_1",
+        "tagid": 6,
+        "subtag": 0,
+        "isActive": true,
+        "isPaused": false
+    },
+    "transform": {
+        "scale": {
+            "x": 0.125,
+            "y": -0.25,
+            "z": 1.0
+        },
+        "rotate": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "translate": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        }
+    },
+    "uirenderer": {
+        "texpath": "",
+        "textureref": 2300985315,
+        "degree": 0.0,
+        "slider": 1.0,
+        "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+        },
+        "layer": 0,
+        "worldtransform": false
+    },
+    "scripts": {
+        "scriptscontainer": []
+    },
+    "prefab": {
+        "prefab": "Slot_1"
+    }
+}

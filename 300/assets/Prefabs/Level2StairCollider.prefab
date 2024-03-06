@@ -1,0 +1,62 @@
+{
+    "entityid": 3145890,
+    "general": {
+        "name": "Level2StairCollider",
+        "tagid": 4,
+        "subtag": 0,
+        "isActive": true,
+        "isPaused": false
+    },
+    "transform": {
+        "scale": {
+            "x": 3.490000009536743,
+            "y": 1.7690000534057617,
+            "z": 12.220000267028809
+        },
+        "rotate": {
+            "x": 29.360000610351563,
+            "y": 90.0,
+            "z": 0.03999999910593033
+        },
+        "translate": {
+            "x": 20.746665954589844,
+            "y": 47.520957946777344,
+            "z": -10.088330268859863
+        }
+    },
+    "rigidbody": {
+        "density": 10.0,
+        "material": 1,
+        "motion": 0,
+        "velocity": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "rotationconstraints": {
+            "x": true,
+            "y": true,
+            "z": false
+        },
+        "gravity": true
+    },
+    "boxcollider": {
+        "scaleoffset": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+        },
+        "translateoffset": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "istrigger": false
+    },
+    "scripts": {
+        "scriptscontainer": []
+    },
+    "prefab": {
+        "prefab": "Level2StairCollider"
+    }
+}

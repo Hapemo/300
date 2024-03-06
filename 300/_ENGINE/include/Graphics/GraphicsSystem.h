@@ -347,6 +347,11 @@ public:
 	GFX::SSBO						m_SpotlightSsbo;
 	std::vector<SpotLightSSBO>		spotlights;
 
+	const int						MAX_UI = 1000;
+	GFX::SSBO						m_UITextureSsbo;
+	std::map<unsigned, GLuint64>	m_UIHandles;
+	std::vector<GLuint64>			UITextures;
+
 	const int							MAX_PARTICLE_EMITTER = 50;
 	const int							MAX_PARTICLES = 100'000;
 	GFX::SSBO							m_ParticleEmitterSsbo;
@@ -355,6 +360,7 @@ public:
 	std::vector<ParticleEmitterSSBO>	m_Emitters;
 
 	GLuint64 GetAndStoreBindlessTextureHandle(int texID);	// Stores adn Return the 64bit texture handle and makes it resident
+	int StoreUITexture(int texID);			// Make texture resident, store handle into map, returns the index of the handle
 	void SetupShaderStorageBuffers();		// Creates all SSBO required
 
 	void DrawAll2DInstances(unsigned shaderID);

@@ -224,11 +224,14 @@ public:
 	*******************************************************************************/
 	bool SceneExists(std::string const& _name);
 
+	std::string GetPrevGSName() { return mPrevGSName; }
+
 	Scene mErrorScene;						// Error Scene, to show that some error occured when getting scene
 	E_GSMSTATE mGSMState;					// The state of the gamestate
 	GameState mCurrentGameState;	// Current game state that is operated on
 
 private:
+	std::string mPrevGSName;			// previous gs name
 	std::string mNextGSName;			// This path has to be set initially in config file
 };
 

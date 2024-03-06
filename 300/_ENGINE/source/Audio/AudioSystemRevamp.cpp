@@ -405,7 +405,7 @@ void AudioSystem::Reset()
 					if (scene_switched == true)
 					{
 						channel_pair.second->getPosition(&playback_position, FMOD_TIMEUNIT_MS);
-						std::cout << "PLAYBACK: " << playback_position << std::endl;
+						//std::cout << "PLAYBACK: " << playback_position << std::endl;
 					}
 
 					channel_pair.second->stop();
@@ -594,9 +594,9 @@ unsigned int AudioSystem::PlaySound(std::string audio_name, AUDIOTYPE type, floa
 
 			if (audio_name == "Troubleshooter_M4.wav" && scene_switched == true)
 			{
-				std::cout << "PLAYING BACK AT: " << playback_position << std::endl;
+				//std::cout << "PLAYING BACK AT: " << playback_position << std::endl;
 				channel.second->setPosition(playback_position, FMOD_TIMEUNIT_MS);
-				std::cout << "HEY" << std::endl;
+				//std::cout << "HEY" << std::endl;
 				scene_switched = false;
 			}
 
@@ -756,6 +756,16 @@ void AudioSystem::SetAllBGMVolume(float volume)
 {
 	bgm_global_vol = volume;
 }
+
+float AudioSystem::GetSFXVolume() const
+{
+	return sfx_global_vol;
+}
+float AudioSystem::GetBGMVolume() const
+{
+	return bgm_global_vol;
+}
+
 
 void AudioSystem::PauseAllSounds()
 {

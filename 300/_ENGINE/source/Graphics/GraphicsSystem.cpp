@@ -123,6 +123,7 @@ void GraphicsSystem::Update(float dt)
 		UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_GAME, dt);
 	}
 
+	Reset_Data();
 
 	// Retrieve and update the mesh instances to be drawn
 	auto meshRendererInstances = systemManager->ecs->GetEntitiesWith<MeshRenderer>();
@@ -133,8 +134,8 @@ void GraphicsSystem::Update(float dt)
 #pragma omp parallel for
 	for (int iter{}; iter < meshRendererInstances.size(); ++iter)
 	{
-		if (systemManager->mIsInGamePause)		// Don't add models to be drawn if game pause
-			break;
+		//if (systemManager->mIsInGamePause)		// Don't add models to be drawn if game pause
+		//	break;
 
 		Entity inst = meshRendererInstances[iter];
 		mat4 final = mat4(1.f);
@@ -207,9 +208,9 @@ void GraphicsSystem::Update(float dt)
 
 	update_Light();
 
-	Reset_Data();
-
 	update_UI();
+
+	updateSSBO_Data();
 
 	update_Portals();
 
@@ -1504,6 +1505,25 @@ GLuint64 GraphicsSystem::GetAndStoreBindlessTextureHandle(int texID)
 	return handle;
 }
 
+int GraphicsSystem::StoreUITexture(int texID)
+{
+	if (texID < 0)
+		return -1;
+
+	// Store the 64-bit handle
+	GLuint64 handle = glGetTextureHandleARB((unsigned)texID);
+	m_UIHandles[(unsigned)texID] = handle;
+
+	if (!glIsTextureHandleResidentARB(handle))
+	{
+		glMakeTextureHandleResidentARB(handle);
+	}
+
+	UITextures.emplace_back(handle);
+
+	return UITextures.size() - 1;
+}
+
 void GraphicsSystem::SetupShaderStorageBuffers()
 {
 	// All materials of each instance -- Location 1
@@ -1530,20 +1550,23 @@ void GraphicsSystem::SetupShaderStorageBuffers()
 	indices[0] = MAX_PARTICLES;
 	for (int i{1}, j{ MAX_PARTICLES - 1 }; i < MAX_PARTICLES + 1; ++i, --j) indices[i] = j;
 	m_ParticleFreelistSsbo.SubData(sizeof(int) * (MAX_PARTICLES + 1), indices.data());
+
+	// All UI textures in the scene -- Location 8
+	m_UITextureSsbo.Create(sizeof(GLuint64) * MAX_UI, 8);
 }
 
 void GraphicsSystem::DrawAll2DInstances(unsigned shaderID)
 {
 	(void)shaderID;
 
-	if (m_Image2DStore.size() == 0)
-		return;
+	//if (m_Image2DStore.size() == 0)
+	//	return;
 
-	// Bind Textures to OpenGL context
-	for (size_t i{}; i < m_Image2DStore.size(); ++i)
-	{
-		glBindTextureUnit(static_cast<GLuint>(i), m_Image2DStore[static_cast<GLuint>(i)]);
-	}
+	//// Bind Textures to OpenGL context
+	//for (size_t i{}; i < m_Image2DStore.size(); ++i)
+	//{
+	//	glBindTextureUnit(static_cast<GLuint>(i), m_Image2DStore[static_cast<GLuint>(i)]);
+	//}
 
 	// Bind 2D quad VAO
 	m_Image2DMesh.BindVao();
@@ -1554,11 +1577,11 @@ void GraphicsSystem::DrawAll2DInstances(unsigned shaderID)
 	// Unbind 2D quad VAO
 	m_Image2DMesh.UnbindVao();
 
-	// Unbind Textures from openGL context
-	for (size_t i{}; i < m_Image2DStore.size(); ++i)
-	{
-		glBindTextureUnit(static_cast<GLuint>(i), 0);
-	}
+	//// Unbind Textures from openGL context
+	//for (size_t i{}; i < m_Image2DStore.size(); ++i)
+	//{
+	//	glBindTextureUnit(static_cast<GLuint>(i), 0);
+	//}
 }
 
 void GraphicsSystem::Add2DImageInstance(float width, float height, vec3 const& position, unsigned texHandle, unsigned entityID, float degree, vec4 const& color, float slider)
@@ -1575,8 +1598,8 @@ void GraphicsSystem::Add2DImageInstance(float width, float height, vec3 const& p
 	};
 
 	int texIndex{};
-	if (texHandle > 0)
-		texIndex = StoreTextureIndex(texHandle);
+	if (texHandle >= 0)
+		texIndex = texHandle;
 	else
 		texIndex = -2;
 
@@ -1594,8 +1617,8 @@ void GraphicsSystem::Add2DImageWorldInstance(Transform transform, unsigned texHa
 	mat4 world = T * R * S;
 
 	int texIndex{};
-	if (texHandle > 0)
-		texIndex = StoreTextureIndex(texHandle);
+	if (texHandle >= 0)
+		texIndex = texHandle;
 	else
 		texIndex = -2;
 
