@@ -49,9 +49,9 @@ function Alive()
     mobSpawnPos3.y = 1.5;
     mobSpawnPos3.z = 50;
 
-    mobSpawnPos4.x = 7;
-    mobSpawnPos4.y = 4;
-    mobSpawnPos4.z = 13;
+    mobSpawnPos4.x = -1;
+    mobSpawnPos4.y = -3.4;
+    mobSpawnPos4.z = 50;
 end
 
 function Update()
@@ -168,7 +168,6 @@ function Update()
 
 
     if(moveTime > 0.4)then
-        print(transform.mTranslate.y)
         -- only appear when the platform is raised
         if( math.abs(transform.mTranslate.y - (-4.7)) <= flt_epsilon
             or math.abs(transform.mTranslate.y - 1) <= flt_epsilon 
