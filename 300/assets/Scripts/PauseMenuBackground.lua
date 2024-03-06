@@ -58,7 +58,7 @@ function PauseUpdate()
 
     inputMapSys = systemManager:mInputActionSystem()
     if (inputMapSys:GetButtonDown("pause")) then
-        if (_G.isPausePauseMenu) then
+        if (_G.isPausePauseMenu and not _G.isHTPMenu and not _G.isSettingsMenu) then
             graphicssys:HideCursor(true)
             systemManager.mIsInGamePause = false
             _G.isPausePauseMenu = false

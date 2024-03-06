@@ -52,7 +52,7 @@ function Update()
         end
         if (button.mActivated) then
             clickSFX:SetPlay(1.0)
-            gameStateSys:ChangeGameState("Tutorial")
+            gameStateSys:ChangeGameState("StartCutscene")
         end
     end
 

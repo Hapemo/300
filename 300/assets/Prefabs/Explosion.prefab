@@ -1,5 +1,5 @@
 {
-    "entityid": 327,
+    "entityid": 338,
     "general": {
         "name": "explosion",
         "tagid": 8,
@@ -23,6 +23,9 @@
             "y": 0.0,
             "z": 0.0
         }
+    },
+    "scripts": {
+        "scriptscontainer": []
     },
     "prefab": {
         "prefab": "explosion"
@@ -53,6 +56,8 @@
         "loop": false,
         "loopInterval": 0.5,
         "speed": 1.899999976158142,
-        "count": 300
+        "count": 300,
+        "emit": false,
+        "particletexture": 2273550607
     }
 }
