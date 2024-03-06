@@ -90,7 +90,7 @@
         "scripts": {
             "scriptscontainer": [
                 {
-                    "scriptFile": "../assets/Scripts/Level2BossIntro.lua",
+                    "scriptFile": "../assets/Scripts/Level1BossIntro.lua",
                     "variables": []
                 }
             ]
@@ -170,7 +170,7 @@
         "scripts": {
             "scriptscontainer": [
                 {
-                    "scriptFile": "../assets/Scripts/Level2BossSceneController.lua",
+                    "scriptFile": "../assets/Scripts/Level1BossSceneController.lua",
                     "variables": []
                 }
             ]

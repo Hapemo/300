@@ -1,19 +1,23 @@
 -- saved states 
 
-local savedpos = Vec3.new(-4,28,72)
-local savedbosspos = Vec3.new(-6,11,-40)
+local savedpos = Vec3.new(-1.770,9.200,39.440)
+local savedbosspos = Vec3.new(-3.396,-15.330,-64.750)
 local savedrotate = Vec3.new(270,7.6,72)
 local savedplayerrotate = Vec3.new(0,0,0)
 
-local STATE = -1 ------------------------------------ CHANGE THIS FOR INTRO---------------------------------------------
+local STATE =  -1 ------------------------------------ CHANGE THIS FOR INTRO---------------------------------------------
 local firstTrigger = false
 local bossEntity
 local cameraEntity
+local gunEntity
+
+-- fov
+local fov =45
 
 -- screen shake
 local Quakeintervalcd = 0
 local QuakeLimit = 2
-local QuakeLimit2 = 2.5
+local QuakeLimit2 = 2
 
 local quakinterv = 0.03
 local quaking = 0
@@ -55,8 +59,9 @@ function Update()
             STATE = 1
         end
 
-    elseif STATE == 1 then
-
+    elseif STATE == 1 then  
+        gunEntity = gameStateSys:GetEntity("gun")
+        systemManager.ecs:SetDeleteEntity(gunEntity)
         cameraEntity:GetTransform().mRotate.x = savedrotate.x
         cameraEntity:GetTransform().mRotate.y = savedrotate.y
         cameraEntity:GetTransform().mRotate.z = savedrotate.z
@@ -76,7 +81,13 @@ function Update()
             quakinterv = quakinterv+0.0004
 
         end
-        MoveTo(bossEntity, savedbosspos, 850)
+
+        if( fov >35)then
+            fov = fov -0.05
+            Camera_Scripting.SetFov(cameraEntity,fov)
+        end
+
+        MoveTo(bossEntity, savedbosspos, 950)
 
     end
 
