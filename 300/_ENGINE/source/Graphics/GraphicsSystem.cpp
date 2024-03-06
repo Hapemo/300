@@ -409,6 +409,7 @@ void GraphicsSystem::Draw(float dt, bool forEditor)
 		{
 			//!< UI Area
 			{
+				DrawAllWorldUI(forEditor);
 				// Healthbar objects
 				auto healthbarInstances = systemManager->ecs->GetEntitiesWith<Healthbar>();
 				for (Entity inst : healthbarInstances)
@@ -897,7 +898,7 @@ void GraphicsSystem::Exit()
 {
 	m_Image2DMesh.Destroy();
 	m_HealthbarMesh.Destroy();
-	m_PortalMesh.Destroy();
+	m_WorldUIMesh.Destroy();
 }
 
 /***************************************************************************/
@@ -1622,9 +1623,9 @@ void GraphicsSystem::Add2DImageWorldInstance(Transform transform, unsigned texHa
 	else
 		texIndex = -2;
 
-	m_PortalMesh.mLTW.push_back(world);
-	m_PortalMesh.mColors.push_back(color);
-	m_PortalMesh.mTexEntID.push_back(vec4((float)texIndex + 0.5f, (float)entityID + 0.5f, degree, slider));
+	m_WorldUIMesh.mLTW.push_back(world);
+	m_WorldUIMesh.mColors.push_back(color);
+	m_WorldUIMesh.mTexEntID.push_back(vec4((float)texIndex + 0.5f, (float)entityID + 0.5f, degree, slider));
 }
 int GraphicsSystem::StoreTextureIndex(unsigned texHandle)
 {
@@ -1991,18 +1992,18 @@ void GraphicsSystem::AddPortalInstance(Entity portal)
 	mat4 T1 = glm::translate(p.mTranslate1);
 	mat4 ltw1 = T1 * R1 * S1;
 
-	m_PortalMesh.mLTW.push_back(ltw1);
-	m_PortalMesh.mColors.push_back(vec4(1.f, 1.f, 1.f, 1.f));
-	m_PortalMesh.mTexEntID.push_back(vec4(- 2.f, entID + 0.5f, 0.f, 0.f));
+	m_WorldUIMesh.mLTW.push_back(ltw1);
+	m_WorldUIMesh.mColors.push_back(vec4(1.f, 1.f, 1.f, 1.f));
+	m_WorldUIMesh.mTexEntID.push_back(vec4(- 2.f, entID + 0.5f, 0.f, 0.f));
 
 	mat4 S2 = glm::scale(p.mScale2);
 	mat4 R2 = glm::toMat4(glm::quat(glm::radians(p.mRotate2)));
 	mat4 T2 = glm::translate(p.mTranslate2);
 	mat4 ltw2 = T2 * R2 * S2;
 
-	m_PortalMesh.mLTW.push_back(ltw2);
-	m_PortalMesh.mColors.push_back(vec4(1.f, 1.f, 1.f, 1.f));
-	m_PortalMesh.mTexEntID.push_back(vec4(-2.f, entID + 0.5f, 0.f, 0.f));
+	m_WorldUIMesh.mLTW.push_back(ltw2);
+	m_WorldUIMesh.mColors.push_back(vec4(1.f, 1.f, 1.f, 1.f));
+	m_WorldUIMesh.mTexEntID.push_back(vec4(-2.f, entID + 0.5f, 0.f, 0.f));
 
 	if (m_DebugDrawing)
 	{
@@ -2016,16 +2017,10 @@ void GraphicsSystem::AddPortalInstance(Entity portal)
 	}
 }
 
-void GraphicsSystem::DrawAllPortals(bool editorDraw)
+void GraphicsSystem::DrawAllWorldUI(bool editorDraw)
 {
-	if (m_PortalMesh.mLTW.empty())
+	if (m_WorldUIMesh.mLTW.empty())
 		return;
-
-	// Bind Textures to OpenGL context
-	for (size_t i{}; i < m_Image2DStore.size(); ++i)
-	{
-		glBindTextureUnit(static_cast<GLuint>(i), m_Image2DStore[static_cast<GLuint>(i)]);
-	}
 
 	// Get appropriate camera
 	GFX::Camera camera = GetCamera(CAMERA_TYPE::CAMERA_TYPE_GAME);
@@ -2034,26 +2029,17 @@ void GraphicsSystem::DrawAllPortals(bool editorDraw)
 
 	mat4 camVP = camera.viewProj();
 
-	m_PortalMesh.BindVao();
+	m_WorldUIMesh.BindVao();
 	m_Quad3DShaderInst.Activate();
 	glUniformMatrix4fv(m_Quad3DShaderInst.GetUniformVP(), 1, GL_FALSE, &camVP[0][0]);
 
 	glDepthFunc(GL_LEQUAL);
 	//glDisable(GL_CULL_FACE);
-	glDrawArraysInstanced(GL_TRIANGLE_FAN, 0, 4, GLsizei(m_PortalMesh.mLTW.size()));
+	glDrawArraysInstanced(GL_TRIANGLE_FAN, 0, 4, GLsizei(m_WorldUIMesh.mLTW.size()));
 	//glEnable(GL_CULL_FACE);
 
-	m_PortalMesh.UnbindVao();
+	m_WorldUIMesh.UnbindVao();
 	GFX::Shader::Deactivate();
-
-	if (m_Image2DStore.size() == 0)
-		return;
-
-	// Bind Textures to OpenGL context
-	for (size_t i{}; i < m_Image2DStore.size(); ++i)
-	{
-		glBindTextureUnit(static_cast<GLuint>(i), 0);
-	}
 }
 
 void GraphicsSystem::DrawAllParticles(bool forEditor)

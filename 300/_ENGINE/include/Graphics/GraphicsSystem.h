@@ -323,7 +323,7 @@ public:
 	// -- 2D Image Rendering --
 	GFX::Mesh						m_Image2DMesh;
 	GFX::Mesh						m_HealthbarMesh;
-	GFX::Mesh						m_PortalMesh;
+	GFX::Mesh						m_WorldUIMesh;
 	GFX::Mesh						m_ParticleMesh;
 	std::vector<unsigned>			m_Image2DStore;
 	GFX::Quad2D						mScreenQuad;
@@ -412,7 +412,7 @@ public:
 	mat4 GetPortalViewMatrix(GFX::Camera const& camera, Transform const& sourcePortal, Transform const& destPortal);
 	mat4 ObliqueNearPlaneClipping(mat4 proj, mat4 view, Transform const& srcPortal, Transform const& destPortal);
 	void AddPortalInstance(Entity portal);
-	void DrawAllPortals(bool editorDraw);
+	void DrawAllWorldUI(bool editorDraw);
 
 	// -- Particles WIP --
 	//void AddParticleInstance(Particle const& p, vec3 const& camPos);

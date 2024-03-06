@@ -7,7 +7,7 @@ void InitUIMeshes()
 {
 	systemManager->mGraphicsSystem->m_HealthbarMesh.Setup2DImageMesh();
 	systemManager->mGraphicsSystem->m_Image2DMesh.Setup2DImageMesh();
-	systemManager->mGraphicsSystem->m_PortalMesh.Setup2DImageMesh();
+	systemManager->mGraphicsSystem->m_WorldUIMesh.Setup2DImageMesh();
 	systemManager->mGraphicsSystem->m_ParticleMesh.Setup2DImageMesh();
 
 	for (int i{}; i < 32; ++i)
@@ -296,7 +296,7 @@ void Reset_Data()
 {
 	// Clear data from previous frame
 	systemManager->mGraphicsSystem->m_Image2DMesh.ClearInstances();		
-	systemManager->mGraphicsSystem->m_PortalMesh.ClearInstances();
+	systemManager->mGraphicsSystem->m_WorldUIMesh.ClearInstances();
 	systemManager->mGraphicsSystem->m_Image2DStore.clear();
 	systemManager->mGraphicsSystem->finalBoneMatrices.clear();
 	systemManager->mGraphicsSystem->m_Materials.clear();
@@ -390,7 +390,7 @@ void update_Portals()
 		systemManager->mGraphicsSystem->m_Renderer.AddFrustum(destViewProj, vec4(0.f, 0.f, 1.f, 1.f));
 	}
 
-	systemManager->mGraphicsSystem->m_PortalMesh.PrepForDraw();
+	systemManager->mGraphicsSystem->m_WorldUIMesh.PrepForDraw();
 }
 
 
