@@ -87,7 +87,9 @@ function Update()
             Camera_Scripting.SetFov(cameraEntity,fov)
         end
 
-        MoveTo(bossEntity, savedbosspos, 950)
+        if MoveTo(bossEntity, savedbosspos, 950) == false then
+            --call dialogue
+        end
 
     end
 
@@ -144,3 +146,6 @@ function MoveTo(entity, targetPos, speed)
     return true
 end
 
+function ChangeState()
+    STATE = 0
+end

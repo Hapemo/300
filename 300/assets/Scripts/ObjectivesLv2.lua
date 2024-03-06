@@ -219,6 +219,35 @@ function Update()
     if (progress == objectivesComplete) then
         --objectivebar:GetTransform().mTranslate.y = 20; -- Hide the objective progress
         entityobj = Helper.GetScriptEntity(script_entity.id)
+
+        if entityobj:GetGeneral().name == "Objectives1" then
+            controllerL2 = gameStateSys:GetEntity("DialogueControllerLevel2")
+            controllerL2Scripts = controllerL2:GetScripts()
+            controllerL2Script = controllerL2Scripts:GetScript("../assets/Scripts/DialogueControllerLevel2.lua")
+
+            if controllerL2Script ~= nil then
+                controllerL2Script:RunFunction("FinishObjective1")
+            end
+        end
+        if entityobj:GetGeneral().name == "Objectives2" then
+            controllerL2 = gameStateSys:GetEntity("DialogueControllerLevel2")
+            controllerL2Scripts = controllerL2:GetScripts()
+            controllerL2Script = controllerL2Scripts:GetScript("../assets/Scripts/DialogueControllerLevel2.lua")
+
+            if controllerL2Script ~= nil then
+                controllerL2Script:RunFunction("FinishObjective2")
+            end
+        end
+        if entityobj:GetGeneral().name == "Objectives3" then
+            controllerL2 = gameStateSys:GetEntity("DialogueControllerLevel2")
+            controllerL2Scripts = controllerL2:GetScripts()
+            controllerL2Script = controllerL2Scripts:GetScript("../assets/Scripts/DialogueControllerLevel2.lua")
+
+            if controllerL2Script ~= nil then
+                controllerL2Script:RunFunction("FinishObjective3")
+            end
+        end
+
         systemManager.ecs:SetDeleteEntity(entityobj)
         gameStateSys = systemManager:mGameStateSystem();
   

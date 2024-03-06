@@ -49,18 +49,23 @@ function Update()
                 o1offset.y = -4.5
                 o1offset.z = objective1:GetTransform().mTranslate.z
                 Helper.SetTranslate(objective1,o1offset)
+                
             end
             if objCount == 2 then
                 o2offset.x = objective2:GetTransform().mTranslate.x
                 o2offset.y = -4.5
                 o2offset.z = objective2:GetTransform().mTranslate.z
                 Helper.SetTranslate(objective2,o2offset)
+                                controllerL2 = gameStateSys:GetEntity("DialogueControllerLevel2")
+                
             end
             if objCount == 1 then
                 o3offset.x = objective3:GetTransform().mTranslate.x
                 o3offset.y = -4.5
                 o3offset.z = objective3:GetTransform().mTranslate.z
                 Helper.SetTranslate(objective3,o3offset)
+
+
             end
         end
     end
