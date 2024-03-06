@@ -37,17 +37,17 @@ local no_of_waves_1 = 5                                 -- used to keep track ho
 local random_wave_generator = false                     -- boolean value to keep track if a random value has been generated.
 -- keeps track of which bullethell attack has been used (so there won't be back to back usage)
 
--- [a] Spiral Bullets (Ground)
+-- [3] Spiral Bullets (Ground)
 local bullet_attack_checker = {false, false, false}     -- keep track which attacks have been used so won't activate back to back
 local attacking = false
 local number_of_fire = 0
 local stop_firing_at = 10
 
--- [b] Summon Bullet + Homing Bullets (From Boss' Mouth / Front) 
+-- [4] Summon Bullet + Homing Bullets (From Boss' Mouth / Front) 
 --     -> Players have to shoot them to break them
 local spawn_point_ref_obj
 local spawn_point_ref_trans
-local spawn_point_translate = Vec3.new()
+local spawn_point_translate = Vec3.new()                         
 local number_of_homing
 local homing_spawned = false
 local homing_spawn_timer = 0                            -- Timer that increament with DT
@@ -62,7 +62,7 @@ local projectile_stay_time = 2                          -- timer for the bullet 
 local initial_homing_speed = 6                          -- Starting Homing Speed
 
 
--- [4] Lazer Attack 
+-- [5] Lazer Attack 
 _G.activateLazerScript = false
 
 -- Boss states
@@ -71,10 +71,10 @@ local state = 0
 -- [1] - Summon Minions -> visual : through a portal  (OK)
 -- [2] - Ground Slam (AOE)                            (OK)
 -- [3] - Projectile #1 (Pulsing Spheres)              (OK)
--- [4] - Projectile #2 (Homing Eyeballs)              
+-- [4] - Projectile #2 (Homing Eyeballs)              (OK)
 -- [5] - Lazer Attack (Ground)      
 
-local state_checker = {false, false , false , false , false}
+_G.state_checker = {false, false , false , false , false}   -- used in [BossLaserBeamPhase.lua]
 local once = false
 
 -- Player Stuff
@@ -123,20 +123,26 @@ end
 function Update()
 
     -- Tentative random switcher between boss states, replace with HP after other states implemented. 100% HP Left = Phase 1, 66% HP Left = Phase 2, 33% HP Left = Phase 3
-    currentBossStateTimer = currentBossStateTimer + FPSManager.GetDT()
-    if currentBossStateTimer >= maxBossStateTimer and attacking == false then
+    if attacking == false then 
+        currentBossStateTimer = currentBossStateTimer + FPSManager.GetDT()
+    end
+
+    if currentBossStateTimer >= maxBossStateTimer then
         state = math.random(1, 5)
         print("STATE CHOSEN: " , state)
         currentBossStateTimer = 0
     end
 
     -- Debug States
-    state = 1
-    -- state = 4
+    -- state = 1 [OK]
+    -- state = 2 -- need to check agn after i check the other mechanics
+    -- state = 3 [OK]
+    -- state = 4 [OK]
+    -- state = 5 [OK]
 
-    if state == 1 and state_checker[1] == false then
+    if state == 1 and _G.state_checker[1] == false then
 
-        attacking = true
+        attacking = true -- must include (to stop state choosing)
 
         -- Decide how many enemies to spawn this phase.
         if total_number_of_enemies_to_spawn == 0 then 
@@ -175,14 +181,16 @@ function Update()
             summon_per_spawn_instance   = 0 -- Reset number of enemies per spawn instance (for a new RNG) -> put here coz might exceed total number
 
             if(_G.number_of_spawned_in_level_3 == total_number_of_enemies_to_spawn) then  -- Exit State (Condition)
-                state_checker[1] = true -- attack done (exit state)
+                _G.state_checker[1] = true -- attack done (exit state)
                 PrintAttackingStates()
             end
         end
 
     end
 
-    if state == 2 and state_checker[2] == false then
+    if state == 2 and _G.state_checker[2] == false then
+
+        attacking = true -- must include (to stop state choosing)
 
         -- Timer to set intervals between ground slams
         currentGroundSlamResetTimer = currentGroundSlamResetTimer + FPSManager.GetDT()
@@ -217,7 +225,7 @@ function Update()
             roundSlam = systemManager.ecs:NewEntityFromPrefab("GroundSlamObject", groundSlamPosition)
             currentGroundSlamResetTimer = 0 -- Reset ground slam timer
         else  -- Exit State (Condition)
-            state_checker[2] = true -- attack done (exit state)
+            _G.state_checker[2] = true -- attack done (exit state)
             PrintAttackingStates()
         end
 
@@ -231,10 +239,11 @@ function Update()
     -- [3] Bullet Hell #1 : Pulsing Spheres
     -- (a) State 1 : Normal Circles but pulsing in different directions & angles. 
     --     - Make it easier at the start 
-    if state == 3 and state_checker[3] == false then
+    if state == 3 and _G.state_checker[3] == false then
         
-        fire_timer = fire_timer +  FPSManager.GetDT()
+        attacking = true -- must include (to stop state choosing)
 
+        fire_timer = fire_timer +  FPSManager.GetDT()
 
         if(random_wave_generator == false) then 
             random_wave_generator = true 
@@ -248,7 +257,7 @@ function Update()
                 SpawnBulletsPattern1(no_of_waves_1)
                 number_of_fire = number_of_fire + 1
             else -- Exit State (Condition)
-                state_checker[3] = true
+                _G.state_checker[3] = true
                 attacking = false
                 PrintAttackingStates()
             end
@@ -256,7 +265,9 @@ function Update()
     end
 
     -- [4] Homing Eyeballs (From Boss' Mouth / Face)
-    if state == 4 and state_checker[4] == false then 
+    if state == 4 and _G.state_checker[4] == false then 
+
+        attacking = true -- must include (to stop state choosing)
 
         number_of_homing = math.random(5, 8)
         -- print("NUMBER OF HOMING: " , number_of_homing)
@@ -276,12 +287,15 @@ function Update()
             
         end
 
-        UpdateHomingProjectiles()
+        if homing_spawned == true then
+            UpdateHomingProjectiles()
+        end
     end
 
 
-    if state == 5 and state_checker[5] == false then 
-        print("LAZER ATTACK")
+    if state == 5 and _G.state_checker[5] == false then 
+        -- print("LAZER ATTACK")
+        attacking = true -- must include (to stop state choosing)
         _G.activateLazerScript = true
     end
 
@@ -422,6 +436,8 @@ function SpawnHomingSpheres()
     -- print("THIS HOMING BULLET POSITION: " , homing_bullet.position.x , " , " , homing_bullet.position.y  , " , " , homing_bullet.position.z)
     table.insert(_G.homing_projectiles, homing_bullet)
 
+    homing_spawned = true -- to trigger "Update" Loop
+
     -- _G.bulletCounter = _G.bulletCounter + 1
     
 
@@ -432,8 +448,7 @@ function SpawnHomingSpheres()
 end
 
 function UpdateHomingProjectiles()
-    -- local counter = 0
-    -- print("SIZE: " , #_G.homing_projectiles)
+    -- local active_projectiles = 0 -- Counter to keep track of active projectiles
     
     for i , projectile in ipairs(_G.homing_projectiles) do
         -- print("ID: " , projectile.id)
@@ -490,9 +505,12 @@ function UpdateHomingProjectiles()
         end
     end
 
-    if #homing_projectiles == 0 then 
-        print("EMPTY HOMING")
-        state_checker[4] = true
+    if #_G.homing_projectiles == 0 then 
+        print("EMPTY LIAO")
+        _G.state_checker[4] = true
+        homing_spawned = false
+        attacking = false           -- important to toggle state choose again
+        PrintAttackingStates()
     end
 end 
 
@@ -541,19 +559,19 @@ function SummonMinions(summon_per_spawn_instance)
         _G.number_of_spawned_in_level_3 = _G.number_of_spawned_in_level_3 + 1
 
         if enemyType == 1 then
-            enemySpawn = systemManager.ecs:NewEntityFromPrefab("Melissa", groundSlamPosition)
+            -- enemySpawn = systemManager.ecs:NewEntityFromPrefab("Melissa", groundSlamPosition)
         end
 
         if enemyType == 2 then
-            enemySpawn = systemManager.ecs:NewEntityFromPrefab("ILOVEYOU", groundSlamPosition)
+            -- enemySpawn = systemManager.ecs:NewEntityFromPrefab("ILOVEYOU", groundSlamPosition)
         end
 
         if enemyType == 3 then
-            enemySpawn = systemManager.ecs:NewEntityFromPrefab("ZipBomb", groundSlamPosition)
+            -- enemySpawn = systemManager.ecs:NewEntityFromPrefab("ZipBomb", groundSlamPosition)
         end
 
         if enemyType == 4 then
-            enemySpawn = systemManager.ecs:NewEntityFromPrefab("TrojanHorse", groundSlamPosition)
+            -- enemySpawn = systemManager.ecs:NewEntityFromPrefab("TrojanHorse", groundSlamPosition)
         end
 
     end
@@ -561,8 +579,8 @@ end
 
 
 function PrintAttackingStates()
-    for i = 1, #state_checker do
-        print("Phase " .. i .. ": " .. tostring(state_checker[i]))
+    for i = 1, #_G.state_checker do
+        print("Phase " .. i .. ": " .. tostring(_G.state_checker[i]))
     end
 end
 

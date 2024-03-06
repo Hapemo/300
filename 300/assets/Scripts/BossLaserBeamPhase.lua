@@ -6,6 +6,10 @@ local translation = Vec3.new()
 
 local ent 
 
+-- [5] Lazer Attack 
+local lazer_timer = 0 
+local lazer_duration = 3.0
+
 function Alive()
 
     -- testing timer countdown for the rotation of the laser
@@ -28,11 +32,26 @@ end
 function Update()
     translation = trans.mTranslate 
     if(_G.activateLazerScript == true) then 
-        translation.y = -1.19
-        angle = angle + speed * (FPSManager.GetDT() * speed)
-        Helper.SetRealRotateQuaternion(ent, axis, angle)
+
+        lazer_timer = lazer_timer + FPSManager.GetDT()
+        if(lazer_timer < lazer_duration) then
+            translation.y = -1.19
+            angle = angle + speed * (FPSManager.GetDT() * speed)
+            Helper.SetRealRotateQuaternion(ent, axis, angle)
+        else            
+            _G.state_checker[5] = true -- mark the database
+            attacking = false     
+            
+            for i = 1, #_G.state_checker do
+                print("Phase " .. i .. ": " .. tostring(_G.state_checker[i]))
+            end
+
+            _G.activateLazerScript = false
+            attacking = false
+        end
+
     else
-        translation.y = -100
+        translation.y = -100  
     end
 end
 
