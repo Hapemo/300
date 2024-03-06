@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 254,
+        "entityid": 253,
         "general": {
             "name": "AMelissa",
             "tagid": 1,
@@ -132,7 +132,7 @@
         }
     },
     {
-        "entityid": 255,
+        "entityid": 254,
         "general": {
             "name": "AHorse",
             "tagid": 1,
@@ -277,7 +277,7 @@
         }
     },
     {
-        "entityid": 256,
+        "entityid": 255,
         "general": {
             "name": "AtrojanSoldier",
             "tagid": 1,
@@ -411,7 +411,7 @@
         }
     },
     {
-        "entityid": 257,
+        "entityid": 256,
         "general": {
             "name": "Azipbomb",
             "tagid": 1,
@@ -512,6 +512,10 @@
                 }
             ]
         },
+        "children": {
+            "numchildren": 1,
+            "firstchild": 263
+        },
         "audio": {
             "filepath": "",
             "filename": "",
@@ -556,7 +560,7 @@
         }
     },
     {
-        "entityid": 258,
+        "entityid": 257,
         "general": {
             "name": "ILOVEYOU",
             "tagid": 1,
@@ -701,7 +705,7 @@
         }
     },
     {
-        "entityid": 259,
+        "entityid": 258,
         "general": {
             "name": "ZipBomb",
             "tagid": 1,
@@ -846,7 +850,7 @@
         }
     },
     {
-        "entityid": 260,
+        "entityid": 259,
         "general": {
             "name": "EnemyDeathAudio",
             "tagid": 8,
@@ -889,7 +893,7 @@
         }
     },
     {
-        "entityid": 261,
+        "entityid": 260,
         "general": {
             "name": "ZipBombFuseAudio",
             "tagid": 0,
@@ -932,7 +936,7 @@
         }
     },
     {
-        "entityid": 262,
+        "entityid": 261,
         "general": {
             "name": "TrojanHorseChargeAudio",
             "tagid": 0,
@@ -975,7 +979,7 @@
         }
     },
     {
-        "entityid": 263,
+        "entityid": 262,
         "general": {
             "name": "Melissa (AUDIO TEST)",
             "tagid": 1,
@@ -1117,7 +1121,7 @@
         }
     },
     {
-        "entityid": 1048829,
+        "entityid": 263,
         "general": {
             "name": "smoke",
             "tagid": 8,
@@ -1137,16 +1141,18 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
+                "x": -1.2000000476837158,
+                "y": 1.5,
+                "z": 0.44999998807907104
             }
         },
         "scripts": {
             "scriptscontainer": []
         },
-        "prefab": {
-            "prefab": "smoke"
+        "parent": {
+            "prevsibling": 263,
+            "nextsibling": 263,
+            "parent": 256
         },
         "particleemitter": {
             "startcolor": {
@@ -1157,8 +1163,8 @@
             },
             "endcolor": {
                 "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
+                "y": 0.6824644207954407,
+                "z": 0.0,
                 "w": 0.0
             },
             "startsize": 0.10000000149011612,
@@ -1170,11 +1176,13 @@
             },
             "gravity": 0.05999999865889549,
             "rotation": 90.0,
-            "lifetime": 2.0,
-            "loop": false,
+            "lifetime": 3.0,
+            "loop": true,
             "loopInterval": 0.5,
             "speed": 1.5,
-            "count": 100
+            "count": 50,
+            "emit": false,
+            "particletexture": 2273550607
         }
     }
 ]

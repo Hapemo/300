@@ -229,7 +229,6 @@ void updateSSBO_Data()
 {
 	systemManager->mGraphicsSystem->m_FinalBoneMatrixSsbo.SubData(systemManager->mGraphicsSystem->finalBoneMatrices.size() * sizeof(mat4), systemManager->mGraphicsSystem->finalBoneMatrices.data());
 	systemManager->mGraphicsSystem->m_MaterialSsbo.SubData(systemManager->mGraphicsSystem->m_Materials.size() * sizeof(MaterialSSBO), systemManager->mGraphicsSystem->m_Materials.data());
-	systemManager->mGraphicsSystem->m_ParticleEmitterSsbo.SubData(systemManager->mGraphicsSystem->m_Emitters.size() * sizeof(ParticleEmitterSSBO), systemManager->mGraphicsSystem->m_Emitters.data());
 }
 
 

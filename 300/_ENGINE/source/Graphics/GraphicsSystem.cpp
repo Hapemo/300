@@ -189,6 +189,8 @@ void GraphicsSystem::Update(float dt)
 			if (inst.HasParent())
 			{
 				parentPos = inst.GetParent().GetComponent<Transform>().mTranslate;
+				mat4 R = glm::toMat4(glm::quat(glm::radians(inst.GetParent().GetComponent<Transform>().mRotate)));
+				pos = vec3(R * vec4(pos, 1.f));
 				pos += parentPos;	// emitter's position is an offset if has parent
 			}
 			e.mCurrTime += dt;
@@ -210,8 +212,6 @@ void GraphicsSystem::Update(float dt)
 	update_UI();
 
 	update_Portals();
-
-	ProcessEmitterAndParticle(GetCamera(CAMERA_TYPE::CAMERA_TYPE_EDITOR).position(), dt);
 
 	// Render the depth scene first as shadow pass
 	auto dirLightInstance = systemManager->ecs->GetEntitiesWith<DirectionalLight>();
@@ -337,8 +337,13 @@ void GraphicsSystem::Draw(float dt, bool forEditor)
 
 	// Set blend function back to usual for UI rendering
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 	// Particles
-	DrawAllParticles();
+	vec3 camPos = GetCamera(CAMERA_TYPE::CAMERA_TYPE_GAME).position();
+	if (forEditor)
+		camPos = GetCamera(CAMERA_TYPE::CAMERA_TYPE_EDITOR).position();
+	ProcessEmitterAndParticle(camPos, dt);
+	DrawAllParticles(forEditor);
 	
 	//!< === POST PROCESSING AND UI AREA ===
 	if (!forEditor)
@@ -2028,10 +2033,10 @@ void GraphicsSystem::DrawAllPortals(bool editorDraw)
 	}
 }
 
-void GraphicsSystem::DrawAllParticles()
+void GraphicsSystem::DrawAllParticles(bool forEditor)
 {
 	GFX::Camera camera = GetCamera(CAMERA_TYPE::CAMERA_TYPE_GAME);
-	if (true)
+	if (forEditor)
 		camera = GetCamera(CAMERA_TYPE::CAMERA_TYPE_EDITOR);
 
 	mat4 camVP = camera.viewProj();
@@ -2051,6 +2056,9 @@ void GraphicsSystem::DrawAllParticles()
 
 void GraphicsSystem::ProcessEmitterAndParticle(vec3 const& camPos, float dt)
 {
+	// Send data over to the SSBO
+	m_ParticleEmitterSsbo.SubData(m_Emitters.size() * sizeof(ParticleEmitterSSBO), m_Emitters.data());
+
 	// Update new emitters to create particles
 	UpdateEmitters(camPos);
 

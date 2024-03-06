@@ -410,7 +410,7 @@ public:
 
 	// -- Particles WIP --
 	//void AddParticleInstance(Particle const& p, vec3 const& camPos);
-	void DrawAllParticles();
+	void DrawAllParticles(bool forEditor);
 	GFX::ComputeShader m_ComputeEmitterShader;
 	GFX::ComputeShader m_ComputeParticleShader;
 	GFX::Shader m_ParticleShaderInst{};
