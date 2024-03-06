@@ -23,6 +23,7 @@ local frame8State = false
 
 
 function Alive()
+    gameStateSys = systemManager:mGameStateSystem()
     camera = gameStateSys:GetEntity("Camera")
     frame1 = gameStateSys:GetEntity("Frame1")
     frame2 = gameStateSys:GetEntity("Frame2")
@@ -58,9 +59,11 @@ function Update()
     elseif (timer >= 16 and timer < 18) then
         frame7State = true
         frame6State = false
-    elseif (timer >= 18) then
+    elseif (timer >= 18 and timer < 21) then
         frame8State = true
         frame7State = false
+    elseif (timer >= 21) then
+        gameStateSys:ChangeGameState("Tutorial")
     end
 
     -- WHAT IS DONE IN EACH FRAME
