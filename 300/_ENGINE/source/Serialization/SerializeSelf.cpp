@@ -545,6 +545,8 @@ void ParticleEmitter::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuf
 	Serialize(writer, "loopInterval", mLoopInterval);
 	Serialize(writer, "speed", mSpeed);
 	Serialize(writer, "count", mCount);
+	Serialize(writer, "emit", mEmit);
+	Serialize(writer, "particletexture", mTexture.data_uid);
 	writer.EndObject();
 }
 
@@ -562,4 +564,6 @@ void ParticleEmitter::DeserializeSelf(rapidjson::Value& reader)
 	Deserialize(reader, "loopInterval", mLoopInterval);
 	Deserialize(reader, "speed", mSpeed);
 	Deserialize(reader, "count", mCount);
+	Deserialize(reader, "emit", mEmit);
+	Deserialize(reader, "particletexture", mTexture.data_uid);
 }
