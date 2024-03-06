@@ -134,7 +134,7 @@ Entity GameStateManager::GetEntity(std::string const& _entityName) {
 				return e;
 			}
 	}
-	PWARNING("Unable to get entity: %s", _entityName.c_str());
+	//PWARNING("Unable to get entity: %s", _entityName.c_str());
 
 	return Entity();
 }
@@ -151,7 +151,7 @@ Entity GameStateManager::GetEntity(std::string const& _entityName, std::string c
 				return e;
 			}
 	}
-	PWARNING("Unable to get entity: %s", _entityName.c_str());
+	//PWARNING("Unable to get entity: %s", _entityName.c_str());
 
 	return Entity();
 }

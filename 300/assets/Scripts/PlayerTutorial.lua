@@ -321,10 +321,10 @@ function Update()
             zxcTextTranslate = zxcText:GetTransform().mTranslate
             zxcTextTranslate.y = 750
     	end
-    elseif tutState == TutBox.GAME then
-	    if travelBox == true then
-            gameStateSys:ChangeGameState("Test")
-    	end
+    -- elseif tutState == TutBox.GAME then
+	--     if travelBox == true then
+    --         gameStateSys:ChangeGameState("Test")
+    -- 	end
     end
 
 --endregion

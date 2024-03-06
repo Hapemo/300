@@ -1,0 +1,52 @@
+{
+    "entityid": 17826090,
+    "general": {
+        "name": "UI-indicator21",
+        "tagid": 6,
+        "subtag": 0,
+        "isActive": true,
+        "isPaused": false
+    },
+    "transform": {
+        "scale": {
+            "x": -0.02083333395421505,
+            "y": 0.03703703731298447,
+            "z": 1.0
+        },
+        "rotate": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "translate": {
+            "x": -0.0052083334885537624,
+            "y": -0.9166666865348816,
+            "z": 21.0
+        }
+    },
+    "uirenderer": {
+        "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
+        "textureref": 3353,
+        "degree": 0.0,
+        "slider": 1.0,
+        "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 0.0
+        },
+        "layer": 0,
+        "worldtransform": false
+    },
+    "scripts": {
+        "scriptscontainer": [
+            {
+                "scriptFile": "../assets/Scripts/UI-indicator.lua",
+                "variables": []
+            }
+        ]
+    },
+    "prefab": {
+        "prefab": "UI-indicator21"
+    }
+}

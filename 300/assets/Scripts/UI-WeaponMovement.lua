@@ -62,7 +62,16 @@ function Alive()
     objecto = _G.obj
 end
 
-function Update()
+function Update()   
+
+
+    uirend  = ent:GetUIrenderer()
+    if(_G.FreezePlayerControl == true )then
+        uirend.mColor.w = 0
+    else
+        uirend.mColor.w = 1
+    end
+
     moveTime = moveTime + FPSManager.GetDT()
     ent = Helper.GetScriptEntity(script_entity.id)
     transform = ent:GetTransform()

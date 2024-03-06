@@ -54,9 +54,9 @@ function Update()
     if lineOfSight then
         local dir = Vec3.new()
         dir = Helper.Normalize(Helper.Vec3Minus(this:GetAISetting():GetTarget():GetTransform().mTranslate, this:GetTransform().mTranslate))
-        this:GetTransform().mRotate.y = Helper.DirectionToAngle(this, dir)
+        Helper.SetRealRotate(this, Vec3.new(0, Helper.DirectionToAngle(this, dir), 0))
     else
-        this:GetTransform().mRotate.y = Helper.DirectionToAngle(this, vec)
+        Helper.SetRealRotate(this, Vec3.new(0, Helper.DirectionToAngle(this, vec), 0))
     end
 
     if lineOfSight then 

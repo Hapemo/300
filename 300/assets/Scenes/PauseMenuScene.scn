@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 1048585,
+        "entityid": 6291670,
         "general": {
             "name": "PauseMenuBackground",
             "tagid": 6,
@@ -41,7 +41,7 @@
         }
     },
     {
-        "entityid": 1048586,
+        "entityid": 6291671,
         "general": {
             "name": "PauseBackButton",
             "tagid": 0,
@@ -115,7 +115,7 @@
         }
     },
     {
-        "entityid": 1048587,
+        "entityid": 6291672,
         "general": {
             "name": "PauseMainMenuButton",
             "tagid": 6,
@@ -189,7 +189,7 @@
         }
     },
     {
-        "entityid": 1048588,
+        "entityid": 6291673,
         "general": {
             "name": "Click",
             "tagid": 6,
@@ -226,7 +226,7 @@
         }
     },
     {
-        "entityid": 1048589,
+        "entityid": 6291674,
         "general": {
             "name": "PauseQuitButton",
             "tagid": 6,
@@ -300,7 +300,7 @@
         }
     },
     {
-        "entityid": 1048590,
+        "entityid": 6291675,
         "general": {
             "name": "Awake",
             "tagid": 0,
@@ -337,7 +337,7 @@
         }
     },
     {
-        "entityid": 1048591,
+        "entityid": 6291676,
         "general": {
             "name": "PauseResumeButton",
             "tagid": 6,
@@ -414,7 +414,7 @@
         }
     },
     {
-        "entityid": 1048592,
+        "entityid": 6291677,
         "general": {
             "name": "PauseHTPButton",
             "tagid": 6,
@@ -491,7 +491,7 @@
         }
     },
     {
-        "entityid": 1048593,
+        "entityid": 6291678,
         "general": {
             "name": "Exit",
             "tagid": 0,
@@ -528,7 +528,7 @@
         }
     },
     {
-        "entityid": 1048594,
+        "entityid": 6291679,
         "general": {
             "name": "PauseRestartButton",
             "tagid": 6,
@@ -602,7 +602,7 @@
         }
     },
     {
-        "entityid": 1048595,
+        "entityid": 6291680,
         "general": {
             "name": "PauseHTPMenu",
             "tagid": 6,
@@ -643,7 +643,7 @@
         }
     },
     {
-        "entityid": 1048596,
+        "entityid": 6291681,
         "general": {
             "name": "PauseMenuController",
             "tagid": 0,

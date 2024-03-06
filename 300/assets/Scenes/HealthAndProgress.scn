@@ -1,8 +1,8 @@
 [
     {
-        "entityid": 104,
+        "entityid": 3145733,
         "general": {
-            "name": "ProgressionBar",
+            "name": "HealthBarEmpty",
             "tagid": 0,
             "subtag": 0,
             "isActive": true,
@@ -10,49 +10,8 @@
         },
         "transform": {
             "scale": {
-                "x": -0.44999998807907104,
+                "x": -0.3799999952316284,
                 "y": 0.09000000357627869,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.699999988079071,
-                "y": 0.699999988079071,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 1267136104,
-            "degree": 0.0,
-            "slider": 0.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 2,
-            "worldtransform": false
-        }
-    },
-    {
-        "entityid": 105,
-        "general": {
-            "name": "HealthBar",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.44999998807907104,
-                "y": -0.09000000357627869,
                 "z": 1.0
             },
             "rotate": {
@@ -68,21 +27,21 @@
         },
         "uirenderer": {
             "texpath": "",
-            "textureref": 1267136104,
+            "textureref": 2927780683,
             "degree": 0.0,
             "slider": 1.0,
             "color": {
                 "x": 1.0,
-                "y": 0.0,
-                "z": 0.0,
+                "y": 1.0,
+                "z": 1.0,
                 "w": 1.0
             },
-            "layer": 1,
+            "layer": 0,
             "worldtransform": false
         }
     },
     {
-        "entityid": 106,
+        "entityid": 3145734,
         "general": {
             "name": "ObjectiveBarEmpty",
             "tagid": 0,
@@ -123,9 +82,9 @@
         }
     },
     {
-        "entityid": 107,
+        "entityid": 3145735,
         "general": {
-            "name": "HealthBarEmpty",
+            "name": "HealthBar",
             "tagid": 0,
             "subtag": 0,
             "isActive": true,
@@ -133,8 +92,8 @@
         },
         "transform": {
             "scale": {
-                "x": -0.3799999952316284,
-                "y": 0.09000000357627869,
+                "x": 0.44999998807907104,
+                "y": -0.09000000357627869,
                 "z": 1.0
             },
             "rotate": {
@@ -150,16 +109,57 @@
         },
         "uirenderer": {
             "texpath": "",
-            "textureref": 2927780683,
+            "textureref": 1267136104,
             "degree": 0.0,
             "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "layer": 1,
+            "worldtransform": false
+        }
+    },
+    {
+        "entityid": 3145737,
+        "general": {
+            "name": "ProgressionBar",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": -0.44999998807907104,
+                "y": 0.09000000357627869,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.699999988079071,
+                "y": 0.699999988079071,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 1267136104,
+            "degree": 0.0,
+            "slider": 0.0,
             "color": {
                 "x": 1.0,
                 "y": 1.0,
                 "z": 1.0,
                 "w": 1.0
             },
-            "layer": 0,
+            "layer": 2,
             "worldtransform": false
         }
     }

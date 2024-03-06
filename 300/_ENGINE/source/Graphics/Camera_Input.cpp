@@ -143,6 +143,12 @@ void Camera_Scripting::SetFov(Entity cameraEntity, const float& fov)
 	cameraEntity.GetComponent<Camera>().mCamera.mFovDegree = fov;
 }
 
+float Camera_Scripting::GetFov(Entity cameraEntity)
+{
+	assert(cameraEntity.HasComponent<Camera>());
+	return cameraEntity.GetComponent<Camera>().mCamera.mFovDegree;
+}
+
 
 glm::vec3 Camera_Scripting::GetPosition(Entity cameraEntity)
 {

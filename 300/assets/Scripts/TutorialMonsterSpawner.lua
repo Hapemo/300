@@ -22,6 +22,8 @@ local dt
 local TutorialBossEntity
 local TutorialBossHealth
 
+local isDeathTime = false
+
 function Alive()
     gameStateSys = systemManager:mGameStateSystem();
     dt = FPSManager.GetDT()
@@ -37,11 +39,14 @@ function Update()
             _G.Tutorial_Boss_ILOVEYOU_instance = true
         end
 
-        if(TutorialBossEntity ~= nil) then
-            TutorialBossHealth = TutorialBossEntity:GetHealthbar()
-            
-            if(TutorialBossHealth.health <= 0) then 
-                _G.Tutorial_Boss_Defeated = true
+        if (isDeathTime == false) then
+            if(TutorialBossEntity ~= nil) then
+                TutorialBossHealth = TutorialBossEntity:GetHealthbar()
+                
+                if(TutorialBossHealth.health <= 0) then 
+                    _G.Tutorial_Boss_Defeated = true
+                    isDeathTime = true
+                end
             end
         end
     end

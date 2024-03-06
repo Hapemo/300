@@ -317,6 +317,7 @@ void update_UI()
 	auto UiInstances = systemManager->ecs->GetEntitiesWith<UIrenderer>();
 	for (Entity inst : UiInstances)
 	{
+		if (inst.GetComponent<General>().name == "") continue;
 		UIrenderer& uiRenderer = inst.GetComponent<UIrenderer>();
 		Transform& uiTransform = inst.GetComponent<Transform>();
 
@@ -343,7 +344,7 @@ void update_UI()
 		if (texID > 0)
 			texIndex = systemManager->mGraphicsSystem->StoreUITexture(texID);
 		else
-			texIndex = -2.f;
+			texIndex = -2;
 
 		if (uiRenderer.mWorldTransform)
 		{

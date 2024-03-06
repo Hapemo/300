@@ -219,6 +219,7 @@ void ECS::NewPrefab(Entity e)
 
 Entity ECS::NewEntityFromPrefab(std::string prefabName, const glm::vec3& pos)
 {
+	//std::cout << "spawning prefab: " << prefabName << std::endl;
 	// void ObjectFactory::DeserializeScene(const std::string& filename)
 	// creation of new entity done inside deserializescene function
 	Entity e(ObjectFactory::DeserializePrefab("../assets/Prefabs/" + prefabName + ".prefab"));
@@ -255,6 +256,15 @@ Entity ECS::NewEntityFromPrefabScene(std::string prefabName,int prefabscene, con
 	if (e.HasComponent<AISetting>())
 		systemManager->mAISystem->InitialiseAI(e);
 	return e;
+}
+
+Entity ECS::NewEntityFromPrefabSceneName(std::string prefabName, std::string prefabscene, const glm::vec3& pos)
+{
+	int i{};
+	auto scenes = systemManager->mGameStateSystem->mCurrentGameState.mScenes;
+	for (; i < scenes.size(); ++i) if (scenes[i].mName == prefabscene) break;
+	
+	return NewEntityFromPrefabScene(prefabName, i, pos);
 }
 
 Entity ECS::NewEntityPrefabForGraph(std::string prefabName, const glm::vec3& pos) {

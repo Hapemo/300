@@ -27,6 +27,12 @@ void PhysicsSystem::Init()
 		CreateRigidBody(e);
 }
 
+void PhysicsSystem::ResetEntity(Entity e) {
+	mPX.mScene->removeActor(*mActors[(uint32_t)e.id].mActor);
+	mActors.erase((uint32_t)e.id);
+	CreateRigidBody(e);
+}
+
 void PhysicsSystem::Update(float dt)
 {
 	if (dt <= 0)
@@ -198,14 +204,19 @@ physx::PxMaterial* PhysicsSystem::CreateMaterial(float us, float ud, float res)
 
 void PhysicsSystem::CreateRigidBody(Entity e)
 {
+
 	// retrieve entity info
 	Transform xform = e.GetComponent<Transform>();
 	RigidBody rbod = e.GetComponent<RigidBody>();
 	glm::vec3 childOffset = e.HasParent() ? Entity(e.GetParent()).GetComponent<Transform>().mTranslate : glm::vec3(0);
 
 	PxRigidActor* actor{};
-	CreateActor(actor, PxTransform(Convert(xform.mTranslate + childOffset), 
-		Convert(glm::quat(glm::radians(xform.mRotate)))), rbod);
+	if (e.GetComponent<General>().name == "Camera")
+		CreateActor(actor, PxTransform(Convert(xform.mTranslate + childOffset),
+			PxQuat(PxIdentity)), rbod);
+	else
+		CreateActor(actor, PxTransform(Convert(xform.mTranslate + childOffset), 
+			Convert(glm::quat(glm::radians(xform.mRotate)))), rbod);
 
 	if (e.HasComponent<MeshCollider>() && e.HasComponent<MeshRenderer>() && rbod.mMotion == MOTION::STATIC) 
 	{
@@ -372,6 +383,10 @@ void PhysicsSystem::MoveQueuedEntities()
 		if (rbod.mMotion == MOTION::DYNAMIC) {
 			PxRigidDynamic* actor = (physx::PxRigidDynamic*)(mActors[static_cast<uint32_t>(e.id)].mActor);
 			if (actor == nullptr) continue;
+			if (e.GetComponent<General>().name == "Camera") {
+				actor->setGlobalPose(PxTransform(Convert(globalpose), PxQuat(PxIdentity)));
+				continue;
+			}
 			actor->setGlobalPose(PxTransform(Convert(globalpose), Convert(glm::quat(glm::radians(e.GetComponent<Transform>().mRotate)))));
 		}
 		else if (rbod.mMotion == MOTION::STATIC) {
@@ -443,9 +458,12 @@ void PhysicsSystem::Synchronize()
 		}
 
 		RigidBody& rbod = e.GetComponent<RigidBody>();
-		glm::vec3 rotation = glm::degrees(glm::eulerAngles(Convert(PXform.q)));
+		rbod.mVelocity = Convert(static_cast<physx::PxRigidDynamic*>(itr->second.mActor)->getLinearVelocity());
 
 		
+
+		if (e.GetComponent<General>().name == "Camera") continue;
+		glm::vec3 rotation = glm::degrees(glm::eulerAngles(Convert(PXform.q)));
 		if (!rbod.mRotationConstraints.x)
 			refXform.mRotate.x = rotation.x;
 		if (!rbod.mRotationConstraints.y)
@@ -454,6 +472,5 @@ void PhysicsSystem::Synchronize()
 			refXform.mRotate.z = rotation.z;
 
 		// update velocity
-		rbod.mVelocity = Convert(static_cast<physx::PxRigidDynamic*>(itr->second.mActor)->getLinearVelocity());
 	}
 }

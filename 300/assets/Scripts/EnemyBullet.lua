@@ -5,6 +5,7 @@ local damage = 10
 
 local startingVec
 local lifeTime -- in seconds
+local first
 
 function Alive()
     this = Helper.GetScriptEntity(script_entity.id)
@@ -13,15 +14,22 @@ function Alive()
 
     startingVec = Vec3.new()
     lifeTime = 5
+    first = false
 end
 
 function Update()
     -- Set bullet's velocity to consistently be some speed
     if (Helper.Vec3Len(startingVec) == 0) then
         startingVec = this:GetRigidBody().mVelocity
-    else
+        --print(this)
+        --print(startingVec)
+    elseif first == false then
         phySys:SetVelocity(this, startingVec)
         this:GetTransform().mRotate.y = Helper.DirectionToAngle(this, startingVec)
+        first = true
+    else 
+        phySys:SetVelocity(this, this:GetRigidBody().mVelocity)
+        this:GetTransform().mRotate.y = Helper.DirectionToAngle(this, this:GetRigidBody().mVelocity)
     end
 
     -- Bullet despawn countdown
@@ -29,6 +37,8 @@ function Update()
     if lifeTime < 0 then 
         systemManager.ecs:SetDeleteEntity(this)
     end
+    --print(this)
+    --print(startingVec)
 end
 
 function Dead()
@@ -41,15 +51,11 @@ function OnTriggerEnter(Entity)
         BulletHit()
         if (tagid == 0) then 
             -- Decrease player health here, when player got hit bullet
+            _G.ILYBulletHitPlayer = true
             Entity:GetHealthbar().health = Entity:GetHealthbar().health - damage
         end
     end
 end
-
-function OnTrigger(Entity)
-    
-end
-
 function OnTriggerExit(Entity)
     
 end

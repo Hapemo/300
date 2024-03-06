@@ -241,7 +241,7 @@ function Alive()
 end
 
 function Update()
-
+    _G.level = 3
     -- Player Health System Start -- 
     -- if isuiinit == false then
     --     -- Player Health System Start -- 
