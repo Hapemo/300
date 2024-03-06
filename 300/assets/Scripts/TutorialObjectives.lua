@@ -5,6 +5,7 @@ local maxProgress
 local playerOnObjective
 local bar
 local complete
+local inputMapSys
 function Alive()
     progress = 0
     maxProgress = 360
@@ -12,6 +13,7 @@ function Alive()
     this = Helper.GetScriptEntity(script_entity.id)
     
     complete = false
+    inputMapSys = systemManager:mInputActionSystem();
 end
 
 function Update()
@@ -32,6 +34,7 @@ function Update()
     end
     bar:GetUIrenderer():SetSlider(progress/maxProgress)
     if complete == true then
+         gameStateSys:ChangeGameState("Test")
         gameStateSys = systemManager:mGameStateSystem()
         inputMapSys = systemManager:mInputActionSystem()
         

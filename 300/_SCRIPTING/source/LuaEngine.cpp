@@ -43,7 +43,8 @@ void LuaEngine()
         "Pause", &SystemManager::Pause,
         "SetIsPause", &SystemManager::SetIsPause,
         "mIsInGamePause", &SystemManager::mIsInGamePause,
-        "mIsPlay", &SystemManager::mIsPlay);
+        "mIsPlay", &SystemManager::mIsPlay,
+        "GetWindowWidth", &SystemManager::GetWindowWidth);
 }
 
 void LuaECS()
@@ -286,6 +287,16 @@ void LuaInput()
         "CursorPos", &Input::CursorPos,
         "SetCursorCenter", &Input::SetCursorCenter,
         "GetCursorCenter", &Input::GetCursorCenter);
+}
+
+void LuaAudioSystem()
+{
+    systemManager->mScriptingSystem->luaState.new_usertype<AudioSystem>(
+        "mAudioSystem", sol::constructors<>(),
+        "GetSFXVolume", &AudioSystem::GetSFXVolume,
+        "GetBGMVolume", &AudioSystem::GetBGMVolume,
+        "SetAllSFXVolume", &AudioSystem::SetAllSFXVolume,
+        "SetAllBGMVolume", &AudioSystem::SetAllBGMVolume);
 }
 
 void LuaAudio()

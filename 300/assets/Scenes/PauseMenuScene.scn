@@ -1,6 +1,130 @@
 [
     {
-        "entityid": 6291670,
+        "entityid": 5242909,
+        "general": {
+            "name": "PauseSettingsButton",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.20000000298023224,
+                "y": -0.15000000596046448,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 1000.0,
+                "y": -0.05999999865889549,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 3113566441,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 5,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/PauseMenuButtons.lua",
+                    "variables": [
+                        {
+                            "key": "gameState",
+                            "val": {
+                                "type": -734751724,
+                                "value": "Test"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "UI_Button_Hover.wav",
+            "fullpath": "../assets\\Audio/UI_Button_Hover.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false
+        },
+        "button": {
+            "interactable": true,
+            "hover": false,
+            "click": false,
+            "activated": false,
+            "renderflag": true
+        }
+    },
+    {
+        "entityid": 5242917,
+        "general": {
+            "name": "PauseMenuController",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/PauseMenuBackground.lua",
+                    "variables": [
+                        {
+                            "key": "runOnce",
+                            "val": {
+                                "type": -1129103353,
+                                "value": false
+                            }
+                        },
+                        {
+                            "key": "runOnce2",
+                            "val": {
+                                "type": -1129103353,
+                                "value": false
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        "entityid": 5242918,
         "general": {
             "name": "PauseMenuBackground",
             "tagid": 6,
@@ -41,9 +165,9 @@
         }
     },
     {
-        "entityid": 6291671,
+        "entityid": 5242919,
         "general": {
-            "name": "PauseBackButton",
+            "name": "HTPBackButton",
             "tagid": 0,
             "subtag": 0,
             "isActive": true,
@@ -52,7 +176,7 @@
         "transform": {
             "scale": {
                 "x": 0.20000000298023224,
-                "y": -0.20000000298023224,
+                "y": -0.15000000596046448,
                 "z": 1.0
             },
             "rotate": {
@@ -115,7 +239,7 @@
         }
     },
     {
-        "entityid": 6291672,
+        "entityid": 5242920,
         "general": {
             "name": "PauseMainMenuButton",
             "tagid": 6,
@@ -125,8 +249,8 @@
         },
         "transform": {
             "scale": {
-                "x": 0.3499999940395355,
-                "y": -0.20000000298023224,
+                "x": 0.25,
+                "y": -0.15000000596046448,
                 "z": 1.0
             },
             "rotate": {
@@ -136,7 +260,7 @@
             },
             "translate": {
                 "x": 1000.0,
-                "y": -0.3700000047683716,
+                "y": -0.4399999976158142,
                 "z": 0.0
             }
         },
@@ -189,7 +313,7 @@
         }
     },
     {
-        "entityid": 6291673,
+        "entityid": 5242921,
         "general": {
             "name": "Click",
             "tagid": 6,
@@ -226,7 +350,7 @@
         }
     },
     {
-        "entityid": 6291674,
+        "entityid": 5242922,
         "general": {
             "name": "PauseQuitButton",
             "tagid": 6,
@@ -236,8 +360,8 @@
         },
         "transform": {
             "scale": {
-                "x": 0.25,
-                "y": -0.20000000298023224,
+                "x": 0.20000000298023224,
+                "y": -0.15000000596046448,
                 "z": 1.0
             },
             "rotate": {
@@ -247,7 +371,7 @@
             },
             "translate": {
                 "x": 1000.0,
-                "y": -0.5799999833106995,
+                "y": -0.6299999952316284,
                 "z": 0.0
             }
         },
@@ -300,7 +424,7 @@
         }
     },
     {
-        "entityid": 6291675,
+        "entityid": 5242923,
         "general": {
             "name": "Awake",
             "tagid": 0,
@@ -337,7 +461,7 @@
         }
     },
     {
-        "entityid": 6291676,
+        "entityid": 5242924,
         "general": {
             "name": "PauseResumeButton",
             "tagid": 6,
@@ -347,8 +471,8 @@
         },
         "transform": {
             "scale": {
-                "x": 0.25,
-                "y": -0.20000000298023224,
+                "x": 0.20000000298023224,
+                "y": -0.15000000596046448,
                 "z": 1.0
             },
             "rotate": {
@@ -358,13 +482,13 @@
             },
             "translate": {
                 "x": 1000.0,
-                "y": 0.2800000011920929,
+                "y": 0.3400000035762787,
                 "z": 0.0
             }
         },
         "uirenderer": {
             "texpath": "",
-            "textureref": 354076791,
+            "textureref": 896447279,
             "degree": 0.0,
             "slider": 1.0,
             "color": {
@@ -414,7 +538,7 @@
         }
     },
     {
-        "entityid": 6291677,
+        "entityid": 5242926,
         "general": {
             "name": "PauseHTPButton",
             "tagid": 6,
@@ -424,8 +548,8 @@
         },
         "transform": {
             "scale": {
-                "x": 0.3499999940395355,
-                "y": -0.20000000298023224,
+                "x": 0.25,
+                "y": -0.15000000596046448,
                 "z": 1.0
             },
             "rotate": {
@@ -435,7 +559,7 @@
             },
             "translate": {
                 "x": 1000.0,
-                "y": 0.05999999865889549,
+                "y": 0.14000000059604645,
                 "z": 0.0
             }
         },
@@ -491,7 +615,7 @@
         }
     },
     {
-        "entityid": 6291678,
+        "entityid": 5242927,
         "general": {
             "name": "Exit",
             "tagid": 0,
@@ -528,7 +652,7 @@
         }
     },
     {
-        "entityid": 6291679,
+        "entityid": 5242928,
         "general": {
             "name": "PauseRestartButton",
             "tagid": 6,
@@ -538,8 +662,8 @@
         },
         "transform": {
             "scale": {
-                "x": 0.25,
-                "y": -0.20000000298023224,
+                "x": 0.20000000298023224,
+                "y": -0.15000000596046448,
                 "z": 1.0
             },
             "rotate": {
@@ -549,7 +673,7 @@
             },
             "translate": {
                 "x": 1000.0,
-                "y": -0.1550000011920929,
+                "y": -0.25,
                 "z": 0.0
             }
         },
@@ -602,7 +726,7 @@
         }
     },
     {
-        "entityid": 6291680,
+        "entityid": 5242929,
         "general": {
             "name": "PauseHTPMenu",
             "tagid": 6,
@@ -640,56 +764,6 @@
             },
             "layer": 6,
             "worldtransform": false
-        }
-    },
-    {
-        "entityid": 6291681,
-        "general": {
-            "name": "PauseMenuController",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/PauseMenuBackground.lua",
-                    "variables": [
-                        {
-                            "key": "runOnce",
-                            "val": {
-                                "type": -1129103353,
-                                "value": false
-                            }
-                        },
-                        {
-                            "key": "runOnce2",
-                            "val": {
-                                "type": -1129103353,
-                                "value": false
-                            }
-                        }
-                    ]
-                }
-            ]
         }
     }
 ]
