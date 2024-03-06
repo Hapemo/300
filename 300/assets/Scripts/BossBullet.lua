@@ -24,13 +24,22 @@ function Update()
         if(general.name == spawn_bullet_name) then -- won't delete the homing bullets
             break
         end
-        --print("THERE IS A BULLET OBJECT")
+  
          bulletLifeTime = bulletLifeTime + FPSManager.GetDT()
-        --  print("BULLET LIFETIME: " , bulletLifeTime)
-         if(bulletLifeTime > bulletDeathTime) then
-             systemManager.ecs:SetDeleteEntity(bulletObject)
-             -- print("DELETING BULLET")
-         end
+
+        --  if(bulletLifeTime > bulletDeathTime) then
+        --      systemManager.ecs:SetDeleteEntity(bulletObject)
+        --  end
+
+         for i , projectile in ipairs(_G.homing_projectiles) do
+            if this == projectile.entity then 
+                if(bulletLifeTime > bulletDeathTime) then
+                    table.remove(_G.homing_projectiles, i) -- Delete entry in the table.
+                    systemManager.ecs:SetDeleteEntity(this) -- Delete the bullet upon contact
+                    break
+                end
+            end
+        end
          break
      end
 end
@@ -62,7 +71,20 @@ function OnTriggerEnter(Entity)
             print("HP LEFT: ", player_healthbar_component.health)
         end
 
-        systemManager.ecs:SetDeleteEntity(this) -- Delete the bullet upon contact
+        -- Update Database (Homing Bullets)
+        local deleted_id = 0
+
+        for i , projectile in ipairs(_G.homing_projectiles) do
+            if this == projectile.entity then 
+                table.remove(_G.homing_projectiles, i) -- Delete entry in the table.
+                systemManager.ecs:SetDeleteEntity(this) -- Delete the bullet upon contact
+                break
+            end
+        end
+
+        -- if(hello == nil) then 
+        --     print("OMG DELETED LA")
+        -- end
         
         
         -- print("PLAYER HIT")

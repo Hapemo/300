@@ -53,10 +53,11 @@ local homing_spawned = false
 local homing_spawn_timer = 0                            -- Timer that increament with DT
 local homing_spawn_period = 1.0                         -- Time to spawn (in between each sphere)
 local homing_spawn_counter = 0                          -- Counter to keep track how many homing bullets have been spawned
-local homing_start = false
+-- local homing_start = false
 
 local homing_bullet
-local homing_projectiles = {}                           -- Define a table to store projectile data
+local next_homing_id = 0                                -- Used in [SpawnHomingSpheres] -> for ID recognition (used for deletion logic)
+_G.homing_projectiles = {}                              -- Define a table to store projectile data -> used in [BossBullet.lua] also
 local projectile_stay_time = 2                          -- timer for the bullet to stay still before it starts homing into the player
 local initial_homing_speed = 6                          -- Starting Homing Speed
 
@@ -66,7 +67,14 @@ _G.activateLazerScript = false
 
 -- Boss states
 local state = 0
-local state_checker = {false, false , false , false}
+-- State Checker List -> checks if this attack has been used (if used, won't repeat again until a certain conditions hits)
+-- [1] - Summon Minions -> visual : through a portal  (OK)
+-- [2] - Ground Slam (AOE)                            (OK)
+-- [3] - Projectile #1 (Pulsing Spheres)              (OK)
+-- [4] - Projectile #2 (Homing Eyeballs)              
+-- [5] - Lazer Attack (Ground)      
+
+local state_checker = {false, false , false , false , false}
 local once = false
 
 -- Player Stuff
@@ -114,28 +122,17 @@ end
 
 function Update()
 
-    -- print("CURRENT STATE: " , state)
-
-    -- print("PHASE 1 BOOL: " , state_checker[1])
-    
-    -- print("PHASE 2 BOOL: " , state_checker[2])
-    
-    -- print("PHASE 3 BOOL: " , state_checker[3])
-    -- for i = 0 , 2 do
-    --     print("PHASE BOOL: " , state_checker[i][1])
-    -- end
-
     -- Tentative random switcher between boss states, replace with HP after other states implemented. 100% HP Left = Phase 1, 66% HP Left = Phase 2, 33% HP Left = Phase 3
     currentBossStateTimer = currentBossStateTimer + FPSManager.GetDT()
     if currentBossStateTimer >= maxBossStateTimer and attacking == false then
-        state = math.random(1, 4)
+        state = math.random(1, 5)
         print("STATE CHOSEN: " , state)
         currentBossStateTimer = 0
     end
 
-    -- state = 2 -- For testing only to force state 2, delete afterwards
-    -- state = 3
+    -- Debug States
     state = 1
+    -- state = 4
 
     if state == 1 and state_checker[1] == false then
 
@@ -156,6 +153,7 @@ function Update()
             -- Number of enemies to summon per position
             if(summon_per_spawn_instance == 0) then 
                 summon_per_spawn_instance = math.random(2,3)
+                print("SUMMON PER SPAWN INSTANCE: " , summon_per_spawn_instance)
             end
 
             print("CURRENTLY ENEMIES IN LV3: " , _G.number_of_spawned_in_level_3)
@@ -163,19 +161,24 @@ function Update()
 
             if(_G.number_of_spawned_in_level_3 +  summon_per_spawn_instance < total_number_of_enemies_to_spawn) then 
                 
+               print("NORMAL SUMMON")
                SummonMinions(summon_per_spawn_instance)
                currentEnemySpawnResetTimer = 0 -- Reset spawn time
 
             else -- if exceed the total amount. 
+                        
+                print("SPECIAL SUMMON")
                 SummonMinions(total_number_of_enemies_to_spawn - _G.number_of_spawned_in_level_3)
                 currentEnemySpawnResetTimer = 0 -- Reset spawn time
             end
 
             summon_per_spawn_instance   = 0 -- Reset number of enemies per spawn instance (for a new RNG) -> put here coz might exceed total number
+
+            if(_G.number_of_spawned_in_level_3 == total_number_of_enemies_to_spawn) then  -- Exit State (Condition)
+                state_checker[1] = true -- attack done (exit state)
+                PrintAttackingStates()
+            end
         end
-
-
-
 
     end
 
@@ -213,8 +216,9 @@ function Update()
             -- TODO: Play arm swinging animation before spawning ground slam object
             roundSlam = systemManager.ecs:NewEntityFromPrefab("GroundSlamObject", groundSlamPosition)
             currentGroundSlamResetTimer = 0 -- Reset ground slam timer
-        else 
-            state_checker[2] = true
+        else  -- Exit State (Condition)
+            state_checker[2] = true -- attack done (exit state)
+            PrintAttackingStates()
         end
 
     end
@@ -224,83 +228,59 @@ function Update()
     -- 2. Homing Bullets (but dodgeable)
 
     
-    -- [Bullet Hell #1 : Pulsing Circles]
+    -- [3] Bullet Hell #1 : Pulsing Spheres
     -- (a) State 1 : Normal Circles but pulsing in different directions & angles. 
     --     - Make it easier at the start 
     if state == 3 and state_checker[3] == false then
         
         fire_timer = fire_timer +  FPSManager.GetDT()
 
-        if attacking == false then 
-            bulletProjectileType = math.random (1, 2)
-            -- bulletProjectileType = 1 -- temporary
-            -- print("PROJECTILE ATTACKING TYPE: "  , bulletProjectileType)
-            attacking = true
+
+        if(random_wave_generator == false) then 
+            random_wave_generator = true 
+            no_of_waves_1 = math.random(5, 8) -- can generate between 5 to 10 waves of bullets
         end
 
-        -- Check if this projectile has been recently used... 
-        if(bullet_attack_checker[bulletProjectileType] == false) then 
-
-            -- [1] Spiral Bullets (Ground)
-            if(bulletProjectileType == 1) then 
-                if(random_wave_generator == false) then 
-                    random_wave_generator = true 
-                    no_of_waves_1 = math.random(5, 8) -- can generate between 5 to 10 waves of bullets
-                end
-
-                if fire_timer > next_fire_time then 
-                    if number_of_fire < stop_firing_at then 
-                        fire_timer = 0 -- reset timer
-                        print("NO OF WAVES: " , no_of_waves_1)
-                        SpawnBulletsPattern1(no_of_waves_1)
-                        number_of_fire = number_of_fire + 1
-                    else
-                        -- state_checker[3] = true
-                        bullet_attack_checker[1] = true
-                        attacking = false
-                    end
-                end
-            end
-
-            -- [2] Summon Bullet + Homing Bullets (From Boss' Mouth / Front) 
-            if(bulletProjectileType == 2) then 
-                number_of_homing = math.random(5, 8)
-                -- print("NUMBER OF HOMING: " , number_of_homing)
-
-                if homing_spawned == false then 
-                    -- TODO : Set Timer to spawn 1 by 1 
-                    homing_spawn_timer = homing_spawn_timer + FPSManager.GetDT()
-
-                    -- print("HOMING SPAWN TIMER: " , homing_spawn_timer)
-                    
-                    if(homing_spawn_counter < number_of_homing) then 
-                        if(homing_spawn_timer > homing_spawn_period) then -- It's time to spawn another homing bullet
-                            SpawnHomingSpheres()
-                            homing_spawn_counter = homing_spawn_counter + 1 -- Increase the counter
-                            homing_spawn_timer = 0   -- Reset the counter
-                            -- print("SPAWNING ORB")
-                        end
-                     
-                    end
-                    
-                    -- for i = 0 , number_of_homing do
-                    --     SpawnHomingSpheres()
-                    -- end
-                    -- print("SPAWNED HOMING")
-                end
-
-                -- print("Homing Start: " , homing_start)
-                if homing_start == false then 
-                    UpdateHomingProjectiles()
-                end
-
+        if fire_timer > next_fire_time then 
+            if number_of_fire < stop_firing_at then 
+                fire_timer = 0 -- reset timer
+                print("NO OF WAVES: " , no_of_waves_1)
+                SpawnBulletsPattern1(no_of_waves_1)
+                number_of_fire = number_of_fire + 1
+            else -- Exit State (Condition)
+                state_checker[3] = true
+                attacking = false
+                PrintAttackingStates()
             end
         end
-
-        -- UpdateHomingProjectiles(0)
     end
 
+    -- [4] Homing Eyeballs (From Boss' Mouth / Face)
     if state == 4 and state_checker[4] == false then 
+
+        number_of_homing = math.random(5, 8)
+        -- print("NUMBER OF HOMING: " , number_of_homing)
+
+        -- Timer to spawn 1 by 1
+        homing_spawn_timer = homing_spawn_timer + FPSManager.GetDT()
+
+        -- print("HOMING SPAWN TIMER: " , homing_spawn_timer)
+        
+        if(homing_spawn_counter < number_of_homing) then 
+            if(homing_spawn_timer > homing_spawn_period) then -- It's time to spawn another homing bullet
+                SpawnHomingSpheres()
+                homing_spawn_counter = homing_spawn_counter + 1 -- Increase the counter
+                homing_spawn_timer = 0   -- Reset the counter
+                -- print("SPAWNING ORB")
+            end
+            
+        end
+
+        UpdateHomingProjectiles()
+    end
+
+
+    if state == 5 and state_checker[5] == false then 
         print("LAZER ATTACK")
         _G.activateLazerScript = true
     end
@@ -420,6 +400,7 @@ function SpawnHomingSpheres()
 
     local homing_bullet = 
     {   
+        id = next_homing_id,
         entity = entity_ref, 
         position = entity_ref:GetTransform().mTranslate,  -- Note that this is randomnized by the previous few lines
         direction = Vec3.new(0,0,0), 
@@ -429,6 +410,8 @@ function SpawnHomingSpheres()
         lock_on_bool = false, -- To control when to home and when not to
     }
 
+    next_homing_id = next_homing_id + 1 -- Increment the id counter.
+
     -- local test_transform = homing_bullet:GetTransform().mTranslate
     -- local test_transform = projectile.entity:GetTransform()
     -- print("Transform: " , homing_bullet.entity:GetTransform().mTranslate)
@@ -437,7 +420,7 @@ function SpawnHomingSpheres()
     -- local homing_bullet = systemManager.ecs:NewEntityFromPrefab("Boss_Bullet_Homing",bullet_spawn_position)
 
     -- print("THIS HOMING BULLET POSITION: " , homing_bullet.position.x , " , " , homing_bullet.position.y  , " , " , homing_bullet.position.z)
-    table.insert(homing_projectiles, homing_bullet)
+    table.insert(_G.homing_projectiles, homing_bullet)
 
     -- _G.bulletCounter = _G.bulletCounter + 1
     
@@ -450,7 +433,10 @@ end
 
 function UpdateHomingProjectiles()
     -- local counter = 0
-    for i , projectile in ipairs(homing_projectiles) do
+    -- print("SIZE: " , #_G.homing_projectiles)
+    
+    for i , projectile in ipairs(_G.homing_projectiles) do
+        -- print("ID: " , projectile.id)
         if projectile.entity ~= nil then 
             -- counter = counter + 1
             if projectile.speed == 0 then  -- projectile speed is set to 0 at the start
@@ -500,12 +486,13 @@ function UpdateHomingProjectiles()
                     -- print("DIRECTION TO PLAYER: " , directionToPlayer.x ,  " , " , directionToPlayer.y , " , " , directionToPlayer.z)
                     -- physicsSys:SetVelocity(projectile.entity, directionToPlayer)
                 end
-
-            
-
-            
             end
         end
+    end
+
+    if #homing_projectiles == 0 then 
+        print("EMPTY HOMING")
+        state_checker[4] = true
     end
 end 
 
@@ -513,38 +500,43 @@ function SummonMinions(summon_per_spawn_instance)
     print("Number of Enemies to Summon: " , summon_per_spawn_instance)
 
     -- Pick which direction to ground slam in 
-    enemySpawnDirection = math.random(1, 3)
+    enemySpawnDirection = math.random(1, 4)
     
     print("ENEMY SPAWN DIRECTION: " , enemySpawnDirection)
 
-    -- Ground slam front (from boss perspective)
+    -- Summon Area (In Front of Boss)
     if enemySpawnDirection == 1 then
+        groundSlamPosition.x = 11.15
+        groundSlamPosition.y = -0.74
+        groundSlamPosition.z = 0.48
+    end
+
+    -- Summon Area (Left of Boss)
+    if enemySpawnDirection == 2 then
         groundSlamPosition.x = 0
         groundSlamPosition.y = 2
         groundSlamPosition.z = 25
+
     end
 
-    -- Ground slam right (from boss perspective)
-    if enemySpawnDirection == 2 then
-        groundSlamPosition.x = -15
-        groundSlamPosition.y = 2
-        groundSlamPosition.z = 25
-    end
-
-    -- Ground slam left (from boss perspective)
+    -- Summon Area (Right of Boss)
     if enemySpawnDirection == 3 then
-        groundSlamPosition.x = 15
+        groundSlamPosition.x = 0    
         groundSlamPosition.y = 2
-        groundSlamPosition.z = 25
+        groundSlamPosition.z = -5.11
     end
 
+    if enemySpawnDirection == 4 then
+        groundSlamPosition.x = -18.7
+        groundSlamPosition.y = -0.887
+        groundSlamPosition.z = 7.7
+    end
 
-
-    print("ENEMY TYPE: " , enemyType)
 
     -- [3/6] - Set to summon multiple enemies in 1 area 
-    for i = 0 , summon_per_spawn_instance  do 
+    for i = 1 , summon_per_spawn_instance  do 
         enemyType = math.random(1, 4)
+        print("ENEMY TYPE: " , enemyType)
         print("SUMMON # " , _G.number_of_spawned_in_level_3)
         _G.number_of_spawned_in_level_3 = _G.number_of_spawned_in_level_3 + 1
 
@@ -568,7 +560,11 @@ function SummonMinions(summon_per_spawn_instance)
 end
 
 
-
+function PrintAttackingStates()
+    for i = 1, #state_checker do
+        print("Phase " .. i .. ": " .. tostring(state_checker[i]))
+    end
+end
 
 -- function UpdateHomingProjectiles()
 --     for i , projectiles in
