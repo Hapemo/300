@@ -17,6 +17,7 @@ local groundSlamPosition = Vec3.new()
 local currentGroundSlamResetTimer = 0
 local maxGroundSlamResetTimer = 3
 local groundSlamCount = 0  -- Changes to other attacking state when it slams a designated amount of time 
+local groundSlamMax = 0
 
 -- Tentative Random Boss State CHanger
 local currentBossStateTimer = 0
@@ -39,7 +40,7 @@ local random_wave_generator = false                     -- boolean value to keep
 
 -- [3] Spiral Bullets (Ground)
 local bullet_attack_checker = {false, false, false}     -- keep track which attacks have been used so won't activate back to back
-local attacking = false
+_G.attacking = false                                    -- boolean to control when to choose state (used in [BossLaserBeamPhase.lua])
 local number_of_fire = 0
 local stop_firing_at = 10
 
@@ -69,9 +70,9 @@ _G.activateLazerScript = false
 local state = 0
 -- State Checker List -> checks if this attack has been used (if used, won't repeat again until a certain conditions hits)
 -- [1] - Summon Minions -> visual : through a portal  (OK)
--- [2] - Ground Slam (AOE)                            (OK)
+-- [2] - Ground Slam (AOE)                            (OK)  -> need to review
 -- [3] - Projectile #1 (Pulsing Spheres)              (OK)
--- [4] - Projectile #2 (Homing Eyeballs)              (OK)
+-- [4] - Projectile #2 (Homing Eyeballs)              (OK)  -> need to fix homing logic
 -- [5] - Lazer Attack (Ground)      
 
 _G.state_checker = {false, false , false , false , false}   -- used in [BossLaserBeamPhase.lua]
@@ -123,15 +124,17 @@ end
 function Update()
 
     -- Tentative random switcher between boss states, replace with HP after other states implemented. 100% HP Left = Phase 1, 66% HP Left = Phase 2, 33% HP Left = Phase 3
-    if attacking == false then 
-        currentBossStateTimer = currentBossStateTimer + FPSManager.GetDT()
-    end
-
-    if currentBossStateTimer >= maxBossStateTimer then
+    if _G.attacking == false then 
+        -- currentBossStateTimer = currentBossStateTimer + FPSManager.GetDT()
         state = math.random(1, 5)
         print("STATE CHOSEN: " , state)
+
         currentBossStateTimer = 0
     end
+
+    -- if currentBossStateTimer >= maxBossStateTimer then
+     
+    -- end
 
     -- Debug States
     -- state = 1 [OK]
@@ -142,7 +145,7 @@ function Update()
 
     if state == 1 and _G.state_checker[1] == false then
 
-        attacking = true -- must include (to stop state choosing)
+        _G.attacking = true -- must include (to stop state choosing)
 
         -- Decide how many enemies to spawn this phase.
         if total_number_of_enemies_to_spawn == 0 then 
@@ -181,7 +184,8 @@ function Update()
             summon_per_spawn_instance   = 0 -- Reset number of enemies per spawn instance (for a new RNG) -> put here coz might exceed total number
 
             if(_G.number_of_spawned_in_level_3 == total_number_of_enemies_to_spawn) then  -- Exit State (Condition)
-                _G.state_checker[1] = true -- attack done (exit state)
+                _G.state_checker[1] = true 
+                _G.attacking = false           -- attack done (exit state)
                 PrintAttackingStates()
             end
         end
@@ -190,43 +194,56 @@ function Update()
 
     if state == 2 and _G.state_checker[2] == false then
 
-        attacking = true -- must include (to stop state choosing)
+        _G.attacking = true -- must include (to stop state choosing)
 
+        if groundSlamMax == 0 then 
+            groundSlamMax = math.random(3, 5)
+        end
         -- Timer to set intervals between ground slams
-        currentGroundSlamResetTimer = currentGroundSlamResetTimer + FPSManager.GetDT()
+        -- print("Current Ground Slam Reset Timer: " , currentGroundSlamResetTimer)
 
-        if currentGroundSlamResetTimer >= maxGroundSlamResetTimer then
+        if groundSlamCount < groundSlamMax then 
+            currentGroundSlamResetTimer = currentGroundSlamResetTimer + FPSManager.GetDT()
 
-            -- Pick which direction to ground slam in 
-            groundSlamDirection = math.random(1, 3)
+            if currentGroundSlamResetTimer >= maxGroundSlamResetTimer then
 
-            -- Ground slam front (from boss perspective)
-            if groundSlamDirection == 1 then
-                groundSlamPosition.x = 0
-                groundSlamPosition.y = -6
-                groundSlamPosition.z = 25
+                -- Pick which direction to ground slam in 
+                groundSlamDirection = math.random(1, 3)
+
+                -- Ground slam front (from boss perspective)
+                if groundSlamDirection == 1 then
+                    groundSlamPosition.x = 0
+                    groundSlamPosition.y = -6
+                    groundSlamPosition.z = 25
+                end
+
+                -- Ground slam right (from boss perspective)
+                if groundSlamDirection == 2 then
+                    groundSlamPosition.x = -15
+                    groundSlamPosition.y = -6
+                    groundSlamPosition.z = 25
+                end
+
+                -- Ground slam left (from boss perspective)
+                if groundSlamDirection == 3 then
+                    groundSlamPosition.x = 15
+                    groundSlamPosition.y = -6
+                    groundSlamPosition.z = 25
+                end
+
+                -- TODO: Play arm swinging animation before spawning ground slam object
+                roundSlam = systemManager.ecs:NewEntityFromPrefab("GroundSlamObject", groundSlamPosition)
+                currentGroundSlamResetTimer = 0 -- Reset ground slam timer
+            -- else  -- Exit State (Condition)
+            --     _G.state_checker[2] = true -- attack done (exit state)
+            --     _G.attacking = false
+            --     Print_G.attackingStates()
             end
+            groundSlamCount = groundSlamCount + 1
 
-            -- Ground slam right (from boss perspective)
-            if groundSlamDirection == 2 then
-                groundSlamPosition.x = -15
-                groundSlamPosition.y = -6
-                groundSlamPosition.z = 25
-            end
-
-            -- Ground slam left (from boss perspective)
-            if groundSlamDirection == 3 then
-                groundSlamPosition.x = 15
-                groundSlamPosition.y = -6
-                groundSlamPosition.z = 25
-            end
-
-            -- TODO: Play arm swinging animation before spawning ground slam object
-            roundSlam = systemManager.ecs:NewEntityFromPrefab("GroundSlamObject", groundSlamPosition)
-            currentGroundSlamResetTimer = 0 -- Reset ground slam timer
-        else  -- Exit State (Condition)
-            _G.state_checker[2] = true -- attack done (exit state)
-            PrintAttackingStates()
+        else 
+            _G.state_checker[2] = true
+            _G.attacking = false
         end
 
     end
@@ -241,7 +258,7 @@ function Update()
     --     - Make it easier at the start 
     if state == 3 and _G.state_checker[3] == false then
         
-        attacking = true -- must include (to stop state choosing)
+        _G.attacking = true -- must include (to stop state choosing)
 
         fire_timer = fire_timer +  FPSManager.GetDT()
 
@@ -258,7 +275,7 @@ function Update()
                 number_of_fire = number_of_fire + 1
             else -- Exit State (Condition)
                 _G.state_checker[3] = true
-                attacking = false
+                _G.attacking = false
                 PrintAttackingStates()
             end
         end
@@ -267,7 +284,7 @@ function Update()
     -- [4] Homing Eyeballs (From Boss' Mouth / Face)
     if state == 4 and _G.state_checker[4] == false then 
 
-        attacking = true -- must include (to stop state choosing)
+        _G.attacking = true -- must include (to stop state choosing)
 
         number_of_homing = math.random(5, 8)
         -- print("NUMBER OF HOMING: " , number_of_homing)
@@ -295,7 +312,7 @@ function Update()
 
     if state == 5 and _G.state_checker[5] == false then 
         -- print("LAZER ATTACK")
-        attacking = true -- must include (to stop state choosing)
+        _G.attacking = true -- must include (to stop state choosing)
         _G.activateLazerScript = true
     end
 
@@ -509,7 +526,7 @@ function UpdateHomingProjectiles()
         print("EMPTY LIAO")
         _G.state_checker[4] = true
         homing_spawned = false
-        attacking = false           -- important to toggle state choose again
+        _G.attacking = false           -- important to toggle state choose again
         PrintAttackingStates()
     end
 end 

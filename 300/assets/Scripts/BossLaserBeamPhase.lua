@@ -47,7 +47,7 @@ function Update()
             end
 
             _G.activateLazerScript = false
-            attacking = false
+            _G.attacking = false
         end
 
     else

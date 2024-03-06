@@ -27,9 +27,9 @@ function Update()
   
          bulletLifeTime = bulletLifeTime + FPSManager.GetDT()
 
-        --  if(bulletLifeTime > bulletDeathTime) then
-        --      systemManager.ecs:SetDeleteEntity(bulletObject)
-        --  end
+         if(bulletLifeTime > bulletDeathTime) then
+             systemManager.ecs:SetDeleteEntity(bulletObject)
+         end
 
          for i , projectile in ipairs(_G.homing_projectiles) do
             if this == projectile.entity then 
