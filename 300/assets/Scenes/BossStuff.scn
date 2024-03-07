@@ -1,6 +1,68 @@
 [
     {
-        "entityid": 8388765,
+        "entityid": 6291531,
+        "general": {
+            "name": "Out_Of_Bounds_Boss",
+            "tagid": 4,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 11.699999809265137,
+                "y": 9.118487358093262,
+                "z": 12.460000038146973
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": -90.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -0.6899999976158142,
+                "y": -10.09246826171875,
+                "z": 8.510000228881836
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": false,
+                "y": false,
+                "z": false
+            },
+            "gravity": false
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 0.8199999928474426,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 6.570000171661377,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Out_Of_Bounds_Boss"
+        }
+    },
+    {
+        "entityid": 6291532,
         "general": {
             "name": "Boss",
             "tagid": 1,
@@ -73,7 +135,7 @@
         }
     },
     {
-        "entityid": 8388766,
+        "entityid": 6291533,
         "general": {
             "name": "Spawn_Point_Ref",
             "tagid": 1,

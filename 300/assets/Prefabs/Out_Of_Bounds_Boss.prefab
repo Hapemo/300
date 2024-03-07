@@ -1,0 +1,62 @@
+{
+    "entityid": 4194348,
+    "general": {
+        "name": "Out_Of_Bounds_Boss",
+        "tagid": 4,
+        "subtag": 0,
+        "isActive": true,
+        "isPaused": false
+    },
+    "transform": {
+        "scale": {
+            "x": 14.5600004196167,
+            "y": 9.119000434875488,
+            "z": 12.9399995803833
+        },
+        "rotate": {
+            "x": 0.0,
+            "y": -90.0,
+            "z": 0.0
+        },
+        "translate": {
+            "x": -0.25,
+            "y": -7.03000020980835,
+            "z": 7.340000152587891
+        }
+    },
+    "rigidbody": {
+        "density": 10.0,
+        "material": 1,
+        "motion": 0,
+        "velocity": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "rotationconstraints": {
+            "x": false,
+            "y": false,
+            "z": false
+        },
+        "gravity": true
+    },
+    "boxcollider": {
+        "scaleoffset": {
+            "x": 1.0,
+            "y": 0.8199999928474426,
+            "z": 1.0
+        },
+        "translateoffset": {
+            "x": 0.0,
+            "y": 6.570000171661377,
+            "z": 0.0
+        },
+        "istrigger": false
+    },
+    "scripts": {
+        "scriptscontainer": []
+    },
+    "prefab": {
+        "prefab": "Out_Of_Bounds_Boss"
+    }
+}
