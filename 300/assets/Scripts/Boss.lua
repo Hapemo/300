@@ -10,6 +10,10 @@ local total_number_of_enemies_to_spawn = 0              -- Total number of enemi
 local summon_per_spawn_instance = 0                     -- Per Spawn Instance (2, 3, 2) -> at varying locations
 local number_of_enemies_to_summon_per_round = 3          
 _G.number_of_spawned_in_level_3 = 0                     -- Keeps track how many enemies have been spawned
+_G.number_left_in_level_3 = 0                           -- Keeps track how many enemies is left
+_G.Level3_Monsters = true                               -- Special Boolean -> interaction with spawning mechanic
+local phase_1_timer = 0 
+local phase_1_max_time = 10                             -- Give Players time to fight the minions
 
 -- Phase 2 : Groundslam Phase
 local groundSlamDirection
@@ -49,7 +53,8 @@ local stop_firing_at = 10
 local spawn_point_ref_obj
 local spawn_point_ref_trans
 local spawn_point_translate = Vec3.new()                         
-local number_of_homing
+local number_of_homing = 0
+-- local number_of_homing_spawned = 0
 local homing_spawned = false
 local homing_spawn_timer = 0                            -- Timer that increament with DT
 local homing_spawn_period = 1.0                         -- Time to spawn (in between each sphere)
@@ -142,9 +147,10 @@ function Update()
                     state = i 
                     print("STATE CHOSEN: " , state)
                 else 
-                    _G.state_checker[i] = true -- reset it for next cycle use
+                    _G.state_checker[i] = false -- reset it for next cycle use
                 end 
             end
+            PrintAttackingStates()
             
         else 
             state = math.random(1, 5)
@@ -160,8 +166,8 @@ function Update()
     -- end
 
     -- Debug States
-    -- state = 1 [OK]
-    -- state = 2 -- need to check agn after i check the other mechanics
+    -- state = 1 --[OK]
+    -- state = 2 [OK] -- need to check agn after i check the other mechanics
     -- state = 3 [OK]
     -- state = 4 [OK]
     -- state = 5 [OK]
@@ -172,7 +178,7 @@ function Update()
 
         -- Decide how many enemies to spawn this phase.
         if total_number_of_enemies_to_spawn == 0 then 
-            total_number_of_enemies_to_spawn = math.random(6,10)  
+            total_number_of_enemies_to_spawn = math.random(4,7)
             print("NUMBER OF ENEMIES TO SPAWN: " , total_number_of_enemies_to_spawn)
         end
 
@@ -204,13 +210,20 @@ function Update()
                 currentEnemySpawnResetTimer = 0 -- Reset spawn time
             end
 
-            summon_per_spawn_instance   = 0 -- Reset number of enemies per spawn instance (for a new RNG) -> put here coz might exceed total number
+            summon_per_spawn_instance   = 0 -- Reset number of enemies per spawn instance (for a new RNG) -> put here coz might exceed total number    
+        end
 
-            if(_G.number_of_spawned_in_level_3 == total_number_of_enemies_to_spawn) then  -- Exit State (Condition)
-                _G.state_checker[1] = true 
-                _G.attacking = false           -- attack done (exit state)
-                PrintAttackingStates()
-            end
+        if(_G.number_of_spawned_in_level_3 >= total_number_of_enemies_to_spawn) then  -- Exit State (Condition)
+            phase_1_timer = phase_1_timer + FPSManager.GetDT()
+            print("PHASE TIMER: " , phase_1_timer)
+        end
+
+        if(phase_1_timer >= phase_1_max_time) then 
+            print("SWITCHING OUT PHASE 1")
+            _G.state_checker[1] = true 
+            _G.attacking = false           -- attack done (exit state)
+            PrintAttackingStates()
+            phase_1_timer = 0              -- reset toimer
         end
 
     end
@@ -220,19 +233,24 @@ function Update()
         _G.attacking = true -- must include (to stop state choosing)
 
         if groundSlamMax == 0 then 
-            print("GROUND SLAM MAX: " , groundSlamMax)
+          
             groundSlamMax = math.random(3, 5)
+            -- print("GROUND SLAM MAX: " , groundSlamMax)
         end
         -- Timer to set intervals between ground slams
         -- print("Current Ground Slam Reset Timer: " , currentGroundSlamResetTimer)
 
         if groundSlamCount < groundSlamMax then 
+            -- print("HI INSIDE HERE")
             currentGroundSlamResetTimer = currentGroundSlamResetTimer + FPSManager.GetDT()
+            -- print("Current Ground Slam Reset Timer: " , currentGroundSlamResetTimer)
 
             if currentGroundSlamResetTimer >= maxGroundSlamResetTimer then
 
                 -- Pick which direction to ground slam in 
                 groundSlamDirection = math.random(1, 3)
+
+                -- print("GROUND SLAM: " , groundSlamDirection)
 
                 -- Ground slam front (from boss perspective)
                 if groundSlamDirection == 1 then
@@ -257,18 +275,21 @@ function Update()
 
                 -- TODO: Play arm swinging animation before spawning ground slam object
                 roundSlam = systemManager.ecs:NewEntityFromPrefab("GroundSlamObject", groundSlamPosition)
+                groundSlamCount = groundSlamCount + 1
+                print("GROUND SLAM COUNT: ", groundSlamCount)
                 currentGroundSlamResetTimer = 0 -- Reset ground slam timer
             -- else  -- Exit State (Condition)
             --     _G.state_checker[2] = true -- attack done (exit state)
             --     _G.attacking = false
             --     Print_G.attackingStates()
             end
-            groundSlamCount = groundSlamCount + 1
+          
 
-        -- else 
-        --     _G.state_checker[2] = true
-        --     _G.attacking = false
-        --     groundSlamMax = 0
+        else 
+            print("DONE SLAM")
+            _G.state_checker[2] = true
+            _G.attacking = false
+            groundSlamMax = 0
         end
 
     end
@@ -308,14 +329,23 @@ function Update()
 
     -- [4] Homing Eyeballs (From Boss' Mouth / Face)
     if state == 4 and _G.state_checker[4] == false then 
-
+        -- print("INSIDE STATE 4")
+        -- homing_spawn_counter = 0 
         _G.attacking = true -- must include (to stop state choosing)
 
-        number_of_homing = math.random(5, 8)
-        -- print("NUMBER OF HOMING: " , number_of_homing)
+        -- Initially -> decides the number of homing to spawn
+        if number_of_homing == 0 then 
+            number_of_homing = math.random(5, 8)
+            -- print("NUMBER OF HOMING: " , number_of_homing)
+        end
 
         -- Timer to spawn 1 by 1
-        homing_spawn_timer = homing_spawn_timer + FPSManager.GetDT()
+        if homing_spawn_counter ~= number_of_homing then 
+            -- print("SPAWNED ENOUGH")
+            homing_spawn_timer = homing_spawn_timer + FPSManager.GetDT()
+        else 
+            print("SPAWNED ENOUGH")
+        end
 
         -- print("HOMING SPAWN TIMER: " , homing_spawn_timer)
         
@@ -326,8 +356,9 @@ function Update()
                 homing_spawn_timer = 0   -- Reset the counter
                 -- print("SPAWNING ORB")
             end
-            
         end
+
+    
 
         if homing_spawned == true then
             UpdateHomingProjectiles()
@@ -479,6 +510,7 @@ function SpawnHomingSpheres()
     table.insert(_G.homing_projectiles, homing_bullet)
 
     homing_spawned = true -- to trigger "Update" Loop
+    -- number_of_homing_spawned = number_of_homing_spawned + 1
 
     -- _G.bulletCounter = _G.bulletCounter + 1
     
@@ -551,6 +583,9 @@ function UpdateHomingProjectiles()
         print("EMPTY LIAO")
         _G.state_checker[4] = true
         homing_spawned = false
+        homing_spawn_timer = 0    -- need to reset 
+        homing_spawn_counter = 0  -- Reset number of homing spawned
+        number_of_homing = 0      -- Reset number of homing required
         _G.attacking = false           -- important to toggle state choose again
         PrintAttackingStates()
     end
@@ -599,21 +634,22 @@ function SummonMinions(summon_per_spawn_instance)
         print("ENEMY TYPE: " , enemyType)
         print("SUMMON # " , _G.number_of_spawned_in_level_3)
         _G.number_of_spawned_in_level_3 = _G.number_of_spawned_in_level_3 + 1
+        _G.number_left_in_level_3 = _G.number_left_in_level_3 + 1
 
         if enemyType == 1 then
-            -- enemySpawn = systemManager.ecs:NewEntityFromPrefab("Melissa", groundSlamPosition)
+            enemySpawn = systemManager.ecs:NewEntityFromPrefab("Melissa", groundSlamPosition)
         end
 
         if enemyType == 2 then
-            -- enemySpawn = systemManager.ecs:NewEntityFromPrefab("ILOVEYOU", groundSlamPosition)
+            enemySpawn = systemManager.ecs:NewEntityFromPrefab("ILOVEYOU", groundSlamPosition)
         end
 
         if enemyType == 3 then
-            -- enemySpawn = systemManager.ecs:NewEntityFromPrefab("ZipBomb", groundSlamPosition)
+            enemySpawn = systemManager.ecs:NewEntityFromPrefab("ZipBomb", groundSlamPosition)
         end
 
         if enemyType == 4 then
-            -- enemySpawn = systemManager.ecs:NewEntityFromPrefab("TrojanHorse", groundSlamPosition)
+            enemySpawn = systemManager.ecs:NewEntityFromPrefab("TrojanHorse", groundSlamPosition)
         end
 
     end
@@ -624,6 +660,8 @@ function PrintAttackingStates()
     for i = 1, #_G.state_checker do
         print("Phase " .. i .. ": " .. tostring(_G.state_checker[i]))
     end
+
+    print("ATTACKING: " , _G.attacking)
 end
 
 -- function UpdateHomingProjectiles()
