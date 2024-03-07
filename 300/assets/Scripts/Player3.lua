@@ -236,6 +236,9 @@ function Alive()
 end
 
 function Update()
+    if _G.FreezePlayerControl then 
+        return 
+    end
     _G.level = 3
     -- Player Health System Start -- 
     -- if isuiinit == false then

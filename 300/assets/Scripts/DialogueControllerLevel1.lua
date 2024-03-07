@@ -342,6 +342,8 @@ function UpdateDialogues()
 end
 
 function OpenFrame()
+    _G.FreezePlayerControl = true
+
     if frame:GetTransform().mScale.x <= 1.99 then
         frame:GetTransform().mScale.x = frame:GetTransform().mScale.x + framespeed
         if frame:GetTransform().mScale.x > 1.98 then
@@ -358,6 +360,8 @@ function OpenFrame()
 end
 
 function CloseFrame()
+    _G.FreezePlayerControl = false
+
     if currState == "obj3" then 
         picture = normal
     end

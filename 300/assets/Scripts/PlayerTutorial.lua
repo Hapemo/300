@@ -254,6 +254,9 @@ function Alive()
 end
 
 function Update()
+    if _G.FreezePlayerControl then 
+        return 
+    end
     gunTranslate = gunEntity:GetTransform().mTranslate
     -- if (systemManager:mInputActionSystem():GetKeyDown(61)) then -- Press EQUAL
     --     systemManager:mGraphicsSystem():HideCursor(false)
