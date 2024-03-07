@@ -1,6 +1,297 @@
 [
     {
-        "entityid": 6291717,
+        "entityid": 1048623,
+        "general": {
+            "name": "Boss_Arena_Front_Wall",
+            "tagid": 4,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 62.81999588012695,
+                "y": 17.0584659576416,
+                "z": 5.340000152587891
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": -90.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 29.645353317260742,
+                "y": -5.805041313171387,
+                "z": 8.706562042236328
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": false,
+                "y": false,
+                "z": false
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3232,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "castShadow": true,
+            "materialinstance": [
+                "../assets/Compressed/Tutorial_Cube_BaseColor.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Normal.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Roughness.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Metallic.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Emissive.ctexture",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/Tutorial_cube.geom",
+            "texturerefid": [
+                1065073471,
+                1690869280,
+                2264384965,
+                1749384838,
+                1718410820,
+                0
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 0.8199999928474426,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 6.570000171661377,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Boss_Arena_Back_Wall"
+        }
+    },
+    {
+        "entityid": 1048624,
+        "general": {
+            "name": "Boss_Arena_Back_Wall",
+            "tagid": 4,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 62.81999969482422,
+                "y": 17.058767318725586,
+                "z": 5.340000152587891
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": -90.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -28.32084846496582,
+                "y": -5.4878830909729,
+                "z": 9.222576141357422
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": false,
+                "y": false,
+                "z": false
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3232,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "castShadow": true,
+            "materialinstance": [
+                "../assets/Compressed/Tutorial_Cube_BaseColor.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Normal.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Roughness.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Metallic.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Emissive.ctexture",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/Tutorial_cube.geom",
+            "texturerefid": [
+                1065073471,
+                1690869280,
+                2264384965,
+                1749384838,
+                1718410820,
+                0
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 0.8199999928474426,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 6.570000171661377,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Boss_Arena_Back_Wall"
+        }
+    },
+    {
+        "entityid": 2097201,
+        "general": {
+            "name": "Boss_Arena_Right_Wall",
+            "tagid": 4,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 62.81999969482422,
+                "y": 17.059999465942383,
+                "z": 5.340000152587891
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": -5.0,
+                "z": 37.26424026489258
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": false,
+                "y": false,
+                "z": false
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3232,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "castShadow": true,
+            "materialinstance": [
+                "../assets/Compressed/Tutorial_Cube_BaseColor.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Normal.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Roughness.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Metallic.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Emissive.ctexture",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/Tutorial_cube.geom",
+            "texturerefid": [
+                1065073471,
+                1690869280,
+                2264384965,
+                1749384838,
+                1718410820,
+                0
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 0.8199999928474426,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 6.570000171661377,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Boss_Arena_Right_Wall"
+        }
+    },
+    {
+        "entityid": 2097205,
         "general": {
             "name": "gun",
             "tagid": 0,
@@ -61,13 +352,13 @@
             ]
         },
         "parent": {
-            "prevsibling": 6291717,
-            "nextsibling": 6291717,
-            "parent": 23068793
+            "prevsibling": 2097205,
+            "nextsibling": 2097205,
+            "parent": 2097207
         }
     },
     {
-        "entityid": 6291727,
+        "entityid": 2097206,
         "general": {
             "name": "Level2FBX",
             "tagid": 0,
@@ -148,7 +439,7 @@
         }
     },
     {
-        "entityid": 23068793,
+        "entityid": 2097207,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -218,7 +509,7 @@
         },
         "children": {
             "numchildren": 1,
-            "firstchild": 6291717
+            "firstchild": 2097205
         },
         "audio": {
             "filepath": "../assets\\Audio",
@@ -243,7 +534,7 @@
             },
             "size": {
                 "x": 1223,
-                "y": 554
+                "y": 572
             },
             "near": 0.10000000149011612,
             "far": 900.0
@@ -274,7 +565,7 @@
         }
     },
     {
-        "entityid": 23068794,
+        "entityid": 2097208,
         "general": {
             "name": "Skybox",
             "tagid": 0,
@@ -333,6 +624,103 @@
                 5760,
                 1467793003
             ]
+        }
+    },
+    {
+        "entityid": 2097209,
+        "general": {
+            "name": "Boss_Arena_Left_Wall",
+            "tagid": 4,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 62.81999969482422,
+                "y": 17.059999465942383,
+                "z": 5.340000152587891
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -0.6600000262260437,
+                "y": -5.079999923706055,
+                "z": -16.75
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": false,
+                "y": false,
+                "z": false
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3232,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "castShadow": true,
+            "materialinstance": [
+                "../assets/Compressed/Tutorial_Cube_BaseColor.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Normal.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Roughness.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Metallic.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Emissive.ctexture",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/Tutorial_cube.geom",
+            "texturerefid": [
+                1065073471,
+                1690869280,
+                2264384965,
+                1749384838,
+                1718410820,
+                0
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 0.8199999928474426,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 6.570000171661377,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Jump_Dash_Left_Wall"
         }
     }
 ]
