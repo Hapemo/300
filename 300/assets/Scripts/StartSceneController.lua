@@ -19,12 +19,8 @@ local frame6State = false
 local frame7State = false
 local frame8State = false
 
---camera
-
-
 function Alive()
     gameStateSys = systemManager:mGameStateSystem()
-    camera = gameStateSys:GetEntity("Camera")
     frame1 = gameStateSys:GetEntity("Frame1")
     frame2 = gameStateSys:GetEntity("Frame2")
     frame3 = gameStateSys:GetEntity("Frame3")
@@ -38,8 +34,13 @@ function Alive()
     timer = 0
 end
 
+-- function TimerCondition(startTime, endTime)
+--     return function(timer) return timer >= startTime and timer  endTime end
+-- end 
+
 function Update()
     timer = timer + 1 * FPSManager.GetDT()
+
     -- TIMER CONTROLLER --
     if (timer >= 3 and timer < 5) then
         frame2State = true
@@ -59,10 +60,10 @@ function Update()
     elseif (timer >= 16 and timer < 18) then
         frame7State = true
         frame6State = false
-    elseif (timer >= 18 and timer < 21) then
+    elseif (timer >= 18 and timer < 20) then
         frame8State = true
         frame7State = false
-    elseif (timer >= 21) then
+    elseif (timer >= 20) then
         gameStateSys:ChangeGameState("Tutorial")
     end
 
@@ -73,6 +74,7 @@ function Update()
         Frame2()
     elseif(frame3State) then
         Frame3()
+        Shake()
     elseif(frame4State) then
         Frame4()
     elseif(frame5State) then
@@ -119,6 +121,26 @@ end
 
 function Frame8()
     frame8:GetUIrenderer().mColor.w = 1
+end
+
+function Shake()
+    if (timer >= 5 and timer < 5.1) then
+        frame3:GetTransform().mTranslate.x = -0.03
+    elseif (timer >= 5.1 and timer < 5.15) then
+        frame3:GetTransform().mTranslate.x = 0
+    elseif (timer >= 5.15 and timer < 5.2) then
+        frame3:GetTransform().mTranslate.x = 0.03
+    elseif (timer >= 5.2 and timer < 5.25) then
+        frame3:GetTransform().mTranslate.x = 0
+    elseif (timer >= 5.25 and timer < 5.3) then
+        frame3:GetTransform().mTranslate.x = -0.03
+    elseif (timer >= 5.3 and timer < 5.35) then
+        frame3:GetTransform().mTranslate.x = 0
+    elseif (timer >= 5.35 and timer < 5.4) then
+        frame3:GetTransform().mTranslate.x = 0.03
+    elseif (timer >= 5.4 and timer < 5.45) then
+        frame3:GetTransform().mTranslate.x = 0
+    end
 end
 
 function Dead()
