@@ -94,9 +94,8 @@ void GraphicsSystem::Init()
 		UpdateCamera(CAMERA_TYPE::CAMERA_TYPE_GAME, 0.f);
 	}
 
-	m_Emitter.Init(ParticleProperties());
-
 	PINFO("Window size: %d, %d", m_Window->size().x, m_Window->size().y);
+	PrintDeviceInfo();
 }
 
 
@@ -179,6 +178,30 @@ void GraphicsSystem::Update(float dt)
 
 #pragma endregion
 
+	// ---------------- PARTICLES WIP ----------------
+	{
+		auto emitterInstances = systemManager->ecs->GetEntitiesWith<ParticleEmitter>();
+
+		for (Entity inst : emitterInstances)
+		{
+			ParticleEmitter& e = inst.GetComponent<ParticleEmitter>();
+			vec3 pos = inst.GetComponent<Transform>().mTranslate;
+			vec3 posOffset = e.mPosition;
+
+			mat4 R = glm::toMat4(glm::quat(glm::radians(inst.GetComponent<Transform>().mRotate)));
+			posOffset = vec3(R * vec4(posOffset, 1.f));
+			pos += posOffset;	// emitter's position is an offset if has parent
+
+			e.mCurrTime += dt;
+			if (e.mEmit || e.mLoop && (e.mCurrTime > e.mLoopInterval))
+			{
+				EmitParticles(e, pos);
+				e.mCurrTime = 0.f;
+			}
+			m_Renderer.AddCube(pos, vec3(0.2f, 0.2f, 0.2f));	// small white cube for each emitter
+		}
+	}
+	
 	update_Light();
 
 	update_UI();
@@ -186,20 +209,6 @@ void GraphicsSystem::Update(float dt)
 	updateSSBO_Data();
 
 	update_Portals();
-
-	// ---------------- PARTICLES WIP ----------------
-	if (Input::CheckKey(E_STATE::RELEASE, E_KEY::F1))
-	{
-		m_Emitter.Emit(1000, glm::normalize(m_EditorCamera.GetRightVector()), glm::normalize(m_EditorCamera.GetUpVector()));
-	}
-	// Update all particles
-	m_Emitter.Update(dt);
-	m_ParticleMesh.ClearInstances();
-	for (auto p : m_Emitter.mParticles)
-	{
-		AddParticleInstance(p, m_EditorCamera.position());
-	}
-	m_ParticleMesh.PrepForDraw();
 
 	// Render the depth scene first as shadow pass
 	auto dirLightInstance = systemManager->ecs->GetEntitiesWith<DirectionalLight>();
@@ -304,13 +313,34 @@ void GraphicsSystem::Draw(float dt, bool forEditor)
 
 	// Perform blitting over pixel data from Multisample FBO -> intermediate FBO -> Destination FBO
 	BlitMultiSampleToDestinationFBO(*fbo);
-	/*if (forEditor)
-		BlitMultiSampleToDestinationFBO(m_Fbo);
-	else
-		BlitMultiSampleToDestinationFBO(m_GameFbo);*/
 
 	// Compute the light pass with completed G-Buffers
 	ComputeDeferredLight(forEditor);
+
+	// Bind the appropriate FBO
+	if (forEditor)		// Bind Editor FBO
+	{
+		m_Fbo.Bind();
+		m_Fbo.DrawBuffers(true, true);
+	}
+	else				// Bind Game FBO
+	{
+		m_GameFbo.Bind();
+		m_GameFbo.DrawBuffers(true);
+	}
+	glDepthMask(GL_TRUE);
+
+	glEnable(GL_BLEND);			// Enable back blending for later draws
+
+	// Set blend function back to usual for UI rendering
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	// Particles
+	vec3 camPos = GetCamera(CAMERA_TYPE::CAMERA_TYPE_GAME).position();
+	if (forEditor)
+		camPos = GetCamera(CAMERA_TYPE::CAMERA_TYPE_EDITOR).position();
+	ProcessEmitterAndParticle(camPos, dt);
+	DrawAllParticles(forEditor);
 	
 	//!< === POST PROCESSING AND UI AREA ===
 	if (!forEditor)
@@ -371,14 +401,11 @@ void GraphicsSystem::Draw(float dt, bool forEditor)
 			m_GameFbo.DrawBuffers(true);
 		}
 
-		DrawAllParticles();
-
 		if (!forEditor)
 		{
 			//!< UI Area
 			{
-				DrawAllPortals(forEditor);	// Draw Portal object
-
+				DrawAllWorldUI(forEditor);
 				// Healthbar objects
 				auto healthbarInstances = systemManager->ecs->GetEntitiesWith<Healthbar>();
 				for (Entity inst : healthbarInstances)
@@ -448,19 +475,25 @@ void GraphicsSystem::Draw(float dt, bool forEditor)
 		}
 	}
 
-	// Bind the appropriate FBO
-	if (forEditor)		// Bind Editor FBO
-	{
-		m_Fbo.Bind();
-		m_Fbo.DrawBuffers(true, true);
-	}
-	else				// Bind Game FBO
-	{
-		m_GameFbo.Bind();
-		m_GameFbo.DrawBuffers(true);
-	}
-	// Particles
-	DrawAllParticles();
+	//// Bind the appropriate FBO
+	//if (forEditor)		// Bind Editor FBO
+	//{
+	//	m_Fbo.Bind();
+	//	m_Fbo.DrawBuffers(true, true);
+	//}
+	//else				// Bind Game FBO
+	//{
+	//	m_GameFbo.Bind();
+	//	m_GameFbo.DrawBuffers(true);
+	//}
+	//glDepthMask(GL_TRUE);
+
+	//glEnable(GL_BLEND);			// Enable back blending for later draws
+
+	//// Set blend function back to usual for UI rendering
+	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	//// Particles
+	//DrawAllParticles();
 
 #pragma endregion
 
@@ -861,7 +894,7 @@ void GraphicsSystem::Exit()
 {
 	m_Image2DMesh.Destroy();
 	m_HealthbarMesh.Destroy();
-	m_PortalMesh.Destroy();
+	m_WorldUIMesh.Destroy();
 }
 
 /***************************************************************************/
@@ -1382,6 +1415,30 @@ void GraphicsSystem::ResizeWindow(ivec2 newSize)
 	SetCameraSize(CAMERA_TYPE::CAMERA_TYPE_ALL, newSize);
 }
 
+void GraphicsSystem::PrintDeviceInfo()
+{
+	printf("\n----------------- DEVICE INFO -----------------\n");
+
+	GLint integer[3];
+	glGetIntegerv(GL_MAX_COMPUTE_SHADER_STORAGE_BLOCKS, integer);
+	printf("\n Max Compute Shader Storage Blocks: %d", integer[0]);
+
+	glGetIntegeri_v(GL_MAX_COMPUTE_WORK_GROUP_COUNT, 0, integer);
+	glGetIntegeri_v(GL_MAX_COMPUTE_WORK_GROUP_COUNT, 1, integer + 1);
+	glGetIntegeri_v(GL_MAX_COMPUTE_WORK_GROUP_COUNT, 2, integer + 2);
+	printf("\n Max Compute Shader Work Group Count: %d, %d, %d", integer[0], integer[1], integer[2]);
+
+	glGetIntegeri_v(GL_MAX_COMPUTE_WORK_GROUP_INVOCATIONS, 0, integer);
+	glGetIntegeri_v(GL_MAX_COMPUTE_WORK_GROUP_INVOCATIONS, 1, integer + 1);
+	glGetIntegeri_v(GL_MAX_COMPUTE_WORK_GROUP_INVOCATIONS, 2, integer + 2);
+	printf("\n Max Compute Shader Work Group Invocations: %d, %d, %d", integer[0], integer[1], integer[2]);
+
+	glGetIntegeri_v(GL_MAX_COMPUTE_WORK_GROUP_SIZE, 0, integer);
+	glGetIntegeri_v(GL_MAX_COMPUTE_WORK_GROUP_SIZE, 1, integer + 1);
+	glGetIntegeri_v(GL_MAX_COMPUTE_WORK_GROUP_SIZE, 2, integer + 2);
+	printf("\n Max Compute Shader Work Group Size: %d, %d, %d", integer[0], integer[1], integer[2]);
+}
+
 void GraphicsSystem::ClampCursor()
 {
 	double posX, posY;
@@ -1478,8 +1535,21 @@ void GraphicsSystem::SetupShaderStorageBuffers()
 	// All spotlight in the scene -- Location 4
 	m_SpotlightSsbo.Create(sizeof(SpotLightSSBO) * MAX_SPOTLIGHT, 4);
 
-	// All UI textures in the scene -- Location 7
-	m_UITextureSsbo.Create(sizeof(GLuint64) * MAX_UI, 7);
+	// All particle emitters in the scene -- Location 5
+	m_ParticleEmitterSsbo.Create(sizeof(ParticleEmitterSSBO) * MAX_PARTICLE_EMITTER, 5);
+
+	// All particles in the scene -- Location 6
+	m_ParticleSsbo.Create(sizeof(ParticleSSBO) * MAX_PARTICLES, 6);
+
+	// Particle Freelist -- Location 7
+	m_ParticleFreelistSsbo.Create(sizeof(int) * (MAX_PARTICLES + 1), 7);
+	std::vector<int>indices(MAX_PARTICLES + 1, 0);
+	indices[0] = MAX_PARTICLES;
+	for (int i{1}, j{ MAX_PARTICLES - 1 }; i < MAX_PARTICLES + 1; ++i, --j) indices[i] = j;
+	m_ParticleFreelistSsbo.SubData(sizeof(int) * (MAX_PARTICLES + 1), indices.data());
+
+	// All UI textures in the scene -- Location 8
+	m_UITextureSsbo.Create(sizeof(GLuint64) * MAX_UI, 8);
 }
 
 void GraphicsSystem::DrawAll2DInstances(unsigned shaderID)
@@ -1549,9 +1619,9 @@ void GraphicsSystem::Add2DImageWorldInstance(Transform transform, unsigned texHa
 	else
 		texIndex = -2;
 
-	m_PortalMesh.mLTW.push_back(world);
-	m_PortalMesh.mColors.push_back(color);
-	m_PortalMesh.mTexEntID.push_back(vec4((float)texIndex + 0.5f, (float)entityID + 0.5f, degree, slider));
+	m_WorldUIMesh.mLTW.push_back(world);
+	m_WorldUIMesh.mColors.push_back(color);
+	m_WorldUIMesh.mTexEntID.push_back(vec4((float)texIndex + 0.5f, (float)entityID + 0.5f, degree, slider));
 }
 int GraphicsSystem::StoreTextureIndex(unsigned texHandle)
 {
@@ -1841,6 +1911,23 @@ void GraphicsSystem::SetupAllShaders()
 	m_ComputeAddBlendShader.Activate();
 	m_ComputeAddBlendExposureLocation = m_ComputeAddBlendShader.GetUniformLocation("Exposure");
 	GFX::Shader::Deactivate();
+
+	m_ComputeEmitterShader.CreateShaderFromFile("../assets/shader_files/computeEmitter.glsl");
+	m_ComputeEmitterShader.Activate();
+	m_ComputeEmitterCountLocation = m_ComputeEmitterShader.GetUniformLocation("uEmitterCount");
+	m_ComputeEmitterCamPosLocation = m_ComputeEmitterShader.GetUniformLocation("uCamPos");
+	m_ComputeEmitterSeedLocation = m_ComputeEmitterShader.GetUniformLocation("uSeed");
+	GFX::Shader::Deactivate();
+
+	m_ComputeParticleShader.CreateShaderFromFile("../assets/shader_files/computeParticle.glsl");
+	m_ComputeParticleShader.Activate();
+	m_ComputeParticleDeltaTimeLocation = m_ComputeParticleShader.GetUniformLocation("uDeltaTime");
+	m_ComputeParticleCamPosLocation = m_ComputeParticleShader.GetUniformLocation("uCamPos");
+	m_ComputeParticleCountLocation = m_ComputeParticleShader.GetUniformLocation("uParticleCount");
+	GFX::Shader::Deactivate();
+
+	uid particleShaderStr("ParticleShader");
+	m_ParticleShaderInst = *systemManager->mResourceTySystem->get_Shader(particleShaderStr.id);
 }
 
 mat4 GraphicsSystem::GetPortalViewMatrix(GFX::Camera const& camera, Transform const& sourcePortal, Transform const& destPortal)
@@ -1901,18 +1988,18 @@ void GraphicsSystem::AddPortalInstance(Entity portal)
 	mat4 T1 = glm::translate(p.mTranslate1);
 	mat4 ltw1 = T1 * R1 * S1;
 
-	m_PortalMesh.mLTW.push_back(ltw1);
-	m_PortalMesh.mColors.push_back(vec4(1.f, 1.f, 1.f, 1.f));
-	m_PortalMesh.mTexEntID.push_back(vec4(- 2.f, entID + 0.5f, 0.f, 0.f));
+	m_WorldUIMesh.mLTW.push_back(ltw1);
+	m_WorldUIMesh.mColors.push_back(vec4(1.f, 1.f, 1.f, 1.f));
+	m_WorldUIMesh.mTexEntID.push_back(vec4(- 2.f, entID + 0.5f, 0.f, 0.f));
 
 	mat4 S2 = glm::scale(p.mScale2);
 	mat4 R2 = glm::toMat4(glm::quat(glm::radians(p.mRotate2)));
 	mat4 T2 = glm::translate(p.mTranslate2);
 	mat4 ltw2 = T2 * R2 * S2;
 
-	m_PortalMesh.mLTW.push_back(ltw2);
-	m_PortalMesh.mColors.push_back(vec4(1.f, 1.f, 1.f, 1.f));
-	m_PortalMesh.mTexEntID.push_back(vec4(-2.f, entID + 0.5f, 0.f, 0.f));
+	m_WorldUIMesh.mLTW.push_back(ltw2);
+	m_WorldUIMesh.mColors.push_back(vec4(1.f, 1.f, 1.f, 1.f));
+	m_WorldUIMesh.mTexEntID.push_back(vec4(-2.f, entID + 0.5f, 0.f, 0.f));
 
 	if (m_DebugDrawing)
 	{
@@ -1926,16 +2013,10 @@ void GraphicsSystem::AddPortalInstance(Entity portal)
 	}
 }
 
-void GraphicsSystem::DrawAllPortals(bool editorDraw)
+void GraphicsSystem::DrawAllWorldUI(bool editorDraw)
 {
-	if (m_PortalMesh.mLTW.empty())
+	if (m_WorldUIMesh.mLTW.empty())
 		return;
-
-	// Bind Textures to OpenGL context
-	for (size_t i{}; i < m_Image2DStore.size(); ++i)
-	{
-		glBindTextureUnit(static_cast<GLuint>(i), m_Image2DStore[static_cast<GLuint>(i)]);
-	}
 
 	// Get appropriate camera
 	GFX::Camera camera = GetCamera(CAMERA_TYPE::CAMERA_TYPE_GAME);
@@ -1944,79 +2025,117 @@ void GraphicsSystem::DrawAllPortals(bool editorDraw)
 
 	mat4 camVP = camera.viewProj();
 
-	m_PortalMesh.BindVao();
+	m_WorldUIMesh.BindVao();
 	m_Quad3DShaderInst.Activate();
 	glUniformMatrix4fv(m_Quad3DShaderInst.GetUniformVP(), 1, GL_FALSE, &camVP[0][0]);
 
 	glDepthFunc(GL_LEQUAL);
 	//glDisable(GL_CULL_FACE);
-	glDrawArraysInstanced(GL_TRIANGLE_FAN, 0, 4, GLsizei(m_PortalMesh.mLTW.size()));
+	glDrawArraysInstanced(GL_TRIANGLE_FAN, 0, 4, GLsizei(m_WorldUIMesh.mLTW.size()));
 	//glEnable(GL_CULL_FACE);
 
-	m_PortalMesh.UnbindVao();
+	m_WorldUIMesh.UnbindVao();
 	GFX::Shader::Deactivate();
-
-	if (m_Image2DStore.size() == 0)
-		return;
-
-	// Bind Textures to OpenGL context
-	for (size_t i{}; i < m_Image2DStore.size(); ++i)
-	{
-		glBindTextureUnit(static_cast<GLuint>(i), 0);
-	}
 }
 
-void GraphicsSystem::AddParticleInstance(Particle const& p, vec3 const& camPos)
-{
-	// Compute the rotation vectors
-	vec3 normal = camPos - p.mCurrPosition;
-	vec3 up = { 0, 1, 0 };
-	vec3 right = glm::cross(up, normal);
-	vec3 forward = glm::cross(right, normal);
-
-	mat4 scale = {
-		vec4(p.mCurrSize, 0.f, 0.f, 0.f),
-		vec4(0.f, p.mCurrSize, 0.f, 0.f),
-		vec4(0.f, 0.f, 1.f, 0.f),
-		vec4(0.f, 0.f, 0.f, 1.f)
-	};
-
-	mat4 tilt = glm::rotate(glm::radians(p.mCurrRotation), vec3(0, 0, 1));
-
-	scale = tilt * scale;
-
-	// Rotation matrix to always face the camera
-	mat4 rotate = {
-		vec4(glm::normalize(right), 0.0f),
-		vec4(glm::normalize(forward), 0.0f),
-		vec4(glm::normalize(normal), 0.0f),
-		vec4(p.mCurrPosition, 1.0f)
-	};
-
-	mat4 world = rotate * scale;
-
-	m_ParticleMesh.mTexEntID.push_back(vec4(-2.f, 0.f, 0.f, 0.f));
-	m_ParticleMesh.mColors.emplace_back(p.mCurrColor);
-	m_ParticleMesh.mLTW.emplace_back(world);
-}
-
-void GraphicsSystem::DrawAllParticles()
+void GraphicsSystem::DrawAllParticles(bool forEditor)
 {
 	GFX::Camera camera = GetCamera(CAMERA_TYPE::CAMERA_TYPE_GAME);
-	if (true)
+	if (forEditor)
 		camera = GetCamera(CAMERA_TYPE::CAMERA_TYPE_EDITOR);
 
 	mat4 camVP = camera.viewProj();
 
 	m_ParticleMesh.BindVao();
-	m_Quad3DShaderInst.Activate();
-	glUniformMatrix4fv(m_Quad3DShaderInst.GetUniformVP(), 1, GL_FALSE, &camVP[0][0]);
+	m_ParticleShaderInst.Activate();
+	glUniformMatrix4fv(m_ParticleShaderInst.GetUniformVP(), 1, GL_FALSE, &camVP[0][0]);
 
 	glDepthFunc(GL_LEQUAL);
-	glDrawArraysInstanced(GL_TRIANGLE_FAN, 0, 4, GLsizei(m_ParticleMesh.mLTW.size()));
+	glDepthMask(GL_FALSE);
+	glDrawArraysInstanced(GL_TRIANGLE_FAN, 0, 4, MAX_PARTICLES);
+	glDepthMask(GL_TRUE);
 
 	m_ParticleMesh.UnbindVao();
 	GFX::Shader::Deactivate();
+}
+
+void GraphicsSystem::ProcessEmitterAndParticle(vec3 const& camPos, float dt)
+{
+	// Send data over to the SSBO
+	m_ParticleEmitterSsbo.SubData(m_Emitters.size() * sizeof(ParticleEmitterSSBO), m_Emitters.data());
+
+	// Update new emitters to create particles
+	UpdateEmitters(camPos);
+
+	// Update the properties of all particles
+	UpdateParticles(camPos, dt);
+}
+
+void GraphicsSystem::UpdateEmitters(vec3 const& camPos)
+{
+	//if (m_Emitters.empty())
+	//	return;
+
+	int emitterCount = m_Emitters.size();
+
+	int num_group_x = emitterCount;
+
+	// Activate Compute shader
+	m_ComputeEmitterShader.Activate();
+
+	// Send uniforms to shader
+	glUniform1i(m_ComputeEmitterCountLocation, emitterCount);
+	glUniform1f(m_ComputeEmitterSeedLocation, m_Window->GetTime());
+	glUniform3fv(m_ComputeEmitterCamPosLocation, 1, &camPos[0]);
+
+	glDispatchCompute(num_group_x, 1, 1);
+	// make sure writing to image is done before reading
+	glMemoryBarrier(GL_SHADER_STORAGE_BARRIER_BIT);
+
+	// Deactivate compute shader
+	m_ComputeEmitterShader.Deactivate();
+
+	// Remove emitters
+	m_Emitters.clear();
+}
+
+void GraphicsSystem::UpdateParticles(vec3 const& camPos, float dt)
+{
+	int num_group_x = 32;
+	int num_group_y = ((MAX_PARTICLES - 1)/ (num_group_x + 1) - 1) / num_group_x + 1;
+
+	// Activate Compute shader
+	m_ComputeParticleShader.Activate();
+
+	glUniform1f(m_ComputeParticleDeltaTimeLocation, dt);
+	glUniform1i(m_ComputeParticleCountLocation, MAX_PARTICLES);
+	glUniform3fv(m_ComputeParticleCamPosLocation, 1, &camPos[0]);
+
+	glDispatchCompute(num_group_x, num_group_y, 1);
+	// make sure writing to image is done before reading
+	glMemoryBarrier(GL_SHADER_STORAGE_BARRIER_BIT);
+
+	// Deactivate compute shader
+	m_ComputeParticleShader.Deactivate();
+}
+
+void GraphicsSystem::EmitParticles(ParticleEmitter& e, vec3 const& position)
+{
+	ParticleEmitterSSBO eSsbo;
+	eSsbo.Init(e);
+	eSsbo.mPositionSpeed = vec4(position, e.mSpeed);
+
+	// TODO: To add texture of particles
+	unsigned texID{};
+	if (e.mTexture.getdata(systemManager->mResourceTySystem->m_ResourceInstance) != nullptr)
+		texID = reinterpret_cast<GFX::Texture*>(e.mTexture.data)->ID();
+	eSsbo.mTexture = GetAndStoreBindlessTextureHandle(texID);
+
+	// Add emitter into container
+	m_Emitters.emplace_back(eSsbo);
+
+	if (!e.mLoop)
+		e.mEmit = false;	// Set to false after emission if not looping
 }
 
 void GraphicsSystem::RenderShadowMap()

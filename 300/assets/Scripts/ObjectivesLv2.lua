@@ -1,15 +1,17 @@
 
 local this
 
+local const flt_epsilon = 1e-5
+
 -- for objectives bar
 local objectivesComplete = 500
 local progress
 local isInZone = false
 
 local currentSpawnTimer = 0 -- keeps track of how often enemy spawning interval
-local spawnTimer = 5       -- sets how long the enemy spawning interval is
+local spawnTimer = 7.5       -- sets how long the enemy spawning interval is
 local currentEnemyCount = 0 -- keeps track of how many enemies there are in the map
-local maxEnemyCount = 20    -- sets how many enemies are allowed in the map
+local maxEnemyCount = 15    -- sets how many enemies are allowed in the map
 
 local mobSpawnPos1 = Vec3.new()
 local mobSpawnPos2 = Vec3.new()
@@ -29,6 +31,7 @@ local reseed = 0
 local mobtype = 0;
 local isInit
 
+
 function Alive()
     isInit = false
     this = Helper.GetScriptEntity(script_entity.id)
@@ -42,13 +45,13 @@ function Alive()
     mobSpawnPos2.y = -4;
     mobSpawnPos2.z = 36;
 
-    mobSpawnPos3.x = -44;
-    mobSpawnPos3.y = -4;
-    mobSpawnPos3.z = 64;
+    mobSpawnPos3.x = -7;
+    mobSpawnPos3.y = 1.5;
+    mobSpawnPos3.z = 50;
 
-    mobSpawnPos4.x = 8;
-    mobSpawnPos4.y = 4;
-    mobSpawnPos4.z = 13;
+    mobSpawnPos4.x = -1;
+    mobSpawnPos4.y = -3.4;
+    mobSpawnPos4.z = 50;
 end
 
 function Update()
@@ -113,7 +116,6 @@ function Update()
         end
 
         if(_G.completedEpicM == true and _G.completedEpicZB == true) then
-        -- if(false) then
             -- SPAWNING ENEMIES
             currentSpawnTimer = currentSpawnTimer + FPSManager.GetDT()
 
@@ -165,28 +167,26 @@ function Update()
     end
 
 
+    if(moveTime > 0.4)then
+        -- only appear when the platform is raised
+        if( math.abs(transform.mTranslate.y - (-4.7)) <= flt_epsilon
+            or math.abs(transform.mTranslate.y - 1) <= flt_epsilon 
+            or math.abs(transform.mTranslate.y - (-10)) <= flt_epsilon) then
+            -- print("Spawning 1's and 0's")
+            spawndataPos.x = transform.mTranslate.x  +math.random(-300,300)/100
+            spawndataPos.y = transform.mTranslate.y 
+            spawndataPos.z = transform.mTranslate.z +math.random(-300,300)/100
 
-    --if(_G.PreObjectivesCounter >=4)then
+            bulletPrefab = systemManager.ecs:NewEntityFromPrefab("1s", spawndataPos)
 
-        if(moveTime >0.4)then
-            -- only appear when the platform is raised
-            if(transform.mTranslate.y == -4.5) then
-                -- print("Spawning 1's and 0's")
-                spawndataPos.x = transform.mTranslate.x  +math.random(-300,300)/100
-                spawndataPos.y = transform.mTranslate.y 
-                spawndataPos.z = transform.mTranslate.z +math.random(-300,300)/100
+            spawndataPos.x = transform.mTranslate.x  +math.random(-300,300)/100
+            spawndataPos.y = transform.mTranslate.y 
+            spawndataPos.z = transform.mTranslate.z +math.random(-300,300)/100
 
-                bulletPrefab = systemManager.ecs:NewEntityFromPrefab("1s", spawndataPos)
-
-                spawndataPos.x = transform.mTranslate.x  +math.random(-300,300)/100
-                spawndataPos.y = transform.mTranslate.y 
-                spawndataPos.z = transform.mTranslate.z +math.random(-300,300)/100
-
-                bulletPrefab = systemManager.ecs:NewEntityFromPrefab("0s", spawndataPos)
-            end
-            moveTime = 0
+            bulletPrefab = systemManager.ecs:NewEntityFromPrefab("0s", spawndataPos)
         end
-    --end
+        moveTime = 0
+    end
 
     if (isInZone == true) then
 

@@ -104,7 +104,7 @@ void EditorApplication::MainUpdate()
 
         EnginePerformance::EndTrack("Editor");
         EnginePerformance::StoreTime("Editor");
-        FPSManager::LimitFPS(80);
+        //FPSManager::LimitFPS(80);
 
         if (systemManager->IsQuit())
             break;
@@ -126,7 +126,7 @@ void EditorApplication::SystemUpdate()
 void EditorApplication::SecondUpdate()
 {
     Input::UpdatePrevKeyStates();
-    FPSManager::LimitFPS(0);
+    FPSManager::LimitFPS(60);
 }
 
 void EditorApplication::Exit()

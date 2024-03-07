@@ -7,7 +7,7 @@ void InitUIMeshes()
 {
 	systemManager->mGraphicsSystem->m_HealthbarMesh.Setup2DImageMesh();
 	systemManager->mGraphicsSystem->m_Image2DMesh.Setup2DImageMesh();
-	systemManager->mGraphicsSystem->m_PortalMesh.Setup2DImageMesh();
+	systemManager->mGraphicsSystem->m_WorldUIMesh.Setup2DImageMesh();
 	systemManager->mGraphicsSystem->m_ParticleMesh.Setup2DImageMesh();
 
 	for (int i{}; i < 32; ++i)
@@ -147,12 +147,6 @@ void update_CalculateLTW(Entity inst, GFX::Mesh& meshinst, Transform& transformi
 
 			systemManager->mGraphicsSystem->m_Renderer.AddCapsule(systemManager->mGraphicsSystem->m_EditorCamera.position(), first, second, cap.mRadius, glm::vec4(0.f, 1.f, 0.f, 1.f));
 		}
-
-		// Draw the axes
-		static const vec3 origin{ -180.f, -100.f, 250.f };
-		systemManager->mGraphicsSystem->m_Renderer.AddLine(origin, origin + vec3{ 100.f, 0.f, 0.f }, { 1.f, 0.f, 0.f, 1.f });
-		systemManager->mGraphicsSystem->m_Renderer.AddLine(origin, origin + vec3{ 0.f, 100.f, 0.f }, { 0.f, 1.f, 0.f, 1.f });
-		systemManager->mGraphicsSystem->m_Renderer.AddLine(origin, origin + vec3{ 0.f, 0.f, 100.f }, { 0.f, 0.f, 1.f, 1.f });
 	}
 }
 
@@ -302,7 +296,7 @@ void Reset_Data()
 {
 	// Clear data from previous frame
 	systemManager->mGraphicsSystem->m_Image2DMesh.ClearInstances();		
-	systemManager->mGraphicsSystem->m_PortalMesh.ClearInstances();
+	systemManager->mGraphicsSystem->m_WorldUIMesh.ClearInstances();
 	systemManager->mGraphicsSystem->m_Image2DStore.clear();
 	systemManager->mGraphicsSystem->finalBoneMatrices.clear();
 	systemManager->mGraphicsSystem->m_Materials.clear();
@@ -396,7 +390,7 @@ void update_Portals()
 		systemManager->mGraphicsSystem->m_Renderer.AddFrustum(destViewProj, vec4(0.f, 0.f, 1.f, 1.f));
 	}
 
-	systemManager->mGraphicsSystem->m_PortalMesh.PrepForDraw();
+	systemManager->mGraphicsSystem->m_WorldUIMesh.PrepForDraw();
 }
 
 

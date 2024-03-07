@@ -15,7 +15,7 @@ layout (location = 1) out uint outEntityID;
 // -- GLOBAL --
 vec2 up = vec2(0, 0.5);
 
-layout (std430, binding = 7) buffer uiTextureBuffer
+layout (std430, binding = 8) buffer uiTextureBuffer
 {
     uint64_t uiTextures[];
 };

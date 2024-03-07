@@ -158,10 +158,10 @@ public:
 	*/
 	/**************************************************************************/
 	// Adds an instance of a mesh to be drawn
-	void AddInstance(GFX::Mesh& mesh, Transform transform, const vec4& color, int meshID, const vec4& bloomthreshold, unsigned entityID = 0xFFFFFFFF);		
+	void AddInstance(GFX::Mesh& mesh, Transform transform, const vec4& color, int meshID, const vec4& bloomthreshold, unsigned entityID = 0xFFFFFFFF);
 	void AddInstance(GFX::Mesh& mesh, mat4 transform, const vec4& color, int meshID, const vec4& bloomthreshold, unsigned entityID = 0xFFFFFFFF, int animInstanceID = -1);
 
-	
+
 	// -- FBO --
 	/***************************************************************************/
 	/*!
@@ -179,17 +179,17 @@ public:
 
 
 
-	GFX::DebugRenderer& getDebugRenderer() { 
-		return m_Renderer; 
+	GFX::DebugRenderer& getDebugRenderer() {
+		return m_Renderer;
 	}
 	unsigned int GetGameAttachment() {
-		return m_GameFbo.GetColorAttachment(); 
+		return m_GameFbo.GetColorAttachment();
 	}
 	unsigned int GetEditorAttachment() {
-		return m_Fbo.GetColorAttachment(); 
+		return m_Fbo.GetColorAttachment();
 	}
 	unsigned int GetEntityID(float x, float y) {
-		return m_Fbo.ReadEntityID(x, y); 
+		return m_Fbo.ReadEntityID(x, y);
 	}
 	void EnableGlobalBloom() { m_EnableBloom = true; }
 	void DisableGlobalBloom() { m_EnableBloom = false; }
@@ -241,17 +241,19 @@ public:
 
 	void ResizeWindow(ivec2 newSize);
 
+	void PrintDeviceInfo();
+
 	// Top-left position as 0, 0. normalized coordinates [0, 1]
 	void ClampCursor();
 
 	void HideCursor(bool hideCursor);
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// 
-//		MEMBER VARIABLES MEMBER VARIABLES MEMBER VARIABLES MEMBER VARIABLES MEMBER VARIABLES MEMBER VARIABLES
-// 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	// -- Renderer --
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// 
+	//		MEMBER VARIABLES MEMBER VARIABLES MEMBER VARIABLES MEMBER VARIABLES MEMBER VARIABLES MEMBER VARIABLES
+	// 
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		// -- Renderer --
 	GFX::DebugRenderer			m_Renderer;				// isolated to debug draws
 	GFX::FBO					m_Fbo;					// Editor Scene
 	GFX::FBO					m_GameFbo;				// Game Scene
@@ -262,7 +264,7 @@ public:
 
 
 	// -- Window --
-	GFX::Window*		m_Window;
+	GFX::Window* m_Window;
 	int					m_Width;
 	int					m_Height;
 	bool				m_IsCursorEnabledForEditor{ true };
@@ -272,11 +274,11 @@ public:
 	CAMERA_TYPE m_CameraControl;
 
 	// -- Global tint --
-	vec4	m_GlobalTint = {1.f, 1.f, 1.f, 1.f};
+	vec4	m_GlobalTint = { 1.f, 1.f, 1.f, 1.f };
 
 	// -- Bloom -- 
-	vec3		mAmbientBloomThreshold { 0.05, 0.05, 0.005 };	// Global bloom threshold	
-	float		mAmbientBloomExposure{ 0.4f };						
+	vec3		mAmbientBloomThreshold{ 0.05, 0.05, 0.005 };	// Global bloom threshold	
+	float		mAmbientBloomExposure{ 0.4f };
 	float		mTexelOffset{ 1.f };							// Gaussian blur Ver1						
 	float		mSamplingWeight{ 1.f };							// Gaussian blur Ver1/2
 	float		mFilterRadius{ 0.001f };						// Phys Based Bloom
@@ -287,8 +289,8 @@ public:
 	float		mChromaticOffset{ 0.006f };
 	float		mChromaticStrength{ 1.f };
 
-	bool		m_EnableBloom{ true };									
-	bool		m_EnableChromaticAbberation{ true };					
+	bool		m_EnableBloom{ true };
+	bool		m_EnableChromaticAbberation{ true };
 	bool		m_EnableCRT{ false };						// this yj
 
 	// -- Textures --
@@ -311,7 +313,7 @@ public:
 	bool	m_HasLight{ false };
 	bool    m_EnableScroll{ false };
 	bool	m_EditorSceneHovered{ false };
-	bool    m_RightClickHeld	{ false };
+	bool    m_RightClickHeld{ false };
 	bool	m_SystemInitialized{ false };
 
 	// -- Stats --
@@ -321,7 +323,7 @@ public:
 	// -- 2D Image Rendering --
 	GFX::Mesh						m_Image2DMesh;
 	GFX::Mesh						m_HealthbarMesh;
-	GFX::Mesh						m_PortalMesh;
+	GFX::Mesh						m_WorldUIMesh;
 	GFX::Mesh						m_ParticleMesh;
 	std::vector<unsigned>			m_Image2DStore;
 	GFX::Quad2D						mScreenQuad;
@@ -349,6 +351,13 @@ public:
 	GFX::SSBO						m_UITextureSsbo;
 	std::map<unsigned, GLuint64>	m_UIHandles;
 	std::vector<GLuint64>			UITextures;
+
+	const int							MAX_PARTICLE_EMITTER = 50;
+	const int							MAX_PARTICLES = 100'000;
+	GFX::SSBO							m_ParticleEmitterSsbo;
+	GFX::SSBO							m_ParticleSsbo;
+	GFX::SSBO							m_ParticleFreelistSsbo;
+	std::vector<ParticleEmitterSSBO>	m_Emitters;
 
 	GLuint64 GetAndStoreBindlessTextureHandle(int texID);	// Stores adn Return the 64bit texture handle and makes it resident
 	int StoreUITexture(int texID);			// Make texture resident, store handle into map, returns the index of the handle
@@ -403,12 +412,25 @@ public:
 	mat4 GetPortalViewMatrix(GFX::Camera const& camera, Transform const& sourcePortal, Transform const& destPortal);
 	mat4 ObliqueNearPlaneClipping(mat4 proj, mat4 view, Transform const& srcPortal, Transform const& destPortal);
 	void AddPortalInstance(Entity portal);
-	void DrawAllPortals(bool editorDraw);
+	void DrawAllWorldUI(bool editorDraw);
 
 	// -- Particles WIP --
-	ParticleEmitter m_Emitter;
-	void AddParticleInstance(Particle const& p, vec3 const& camPos);
-	void DrawAllParticles();
+	//void AddParticleInstance(Particle const& p, vec3 const& camPos);
+	void DrawAllParticles(bool forEditor);
+	GFX::ComputeShader m_ComputeEmitterShader;
+	GFX::ComputeShader m_ComputeParticleShader;
+	GFX::Shader m_ParticleShaderInst{};
+	std::vector<ParticleSSBO> particleVector{};
+	GLuint m_ComputeEmitterCountLocation{};
+	GLuint m_ComputeEmitterCamPosLocation{};
+	GLuint m_ComputeEmitterSeedLocation{};
+	GLuint m_ComputeParticleDeltaTimeLocation{};
+	GLuint m_ComputeParticleCountLocation{};
+	GLuint m_ComputeParticleCamPosLocation{};
+	void ProcessEmitterAndParticle(vec3 const& camPos, float dt);
+	void UpdateEmitters(vec3 const& camPos);
+	void UpdateParticles(vec3 const& camPos, float dt);
+	void EmitParticles(ParticleEmitter& e, vec3 const& position);
 
 	// -- Shadows WIP --
 	GFX::Shader shadowMapShaderInst;

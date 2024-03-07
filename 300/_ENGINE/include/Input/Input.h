@@ -166,9 +166,6 @@ public:
   static glm::vec2 CursorPos();
 
 
-
-
-
   static void scroll_callback(GLFWwindow* _window, double _xoffset, double _yoffset);
   static double GetScroll();
 };

@@ -32,6 +32,8 @@ local d_tint_result = Vec4.new(0,0,0,0)
 local e_fov = 50
 local d_fov = 60
 
+local isinit = false
+
 --local constants = {
 --    test = 1,
 --    working = 2.4,
@@ -248,10 +250,13 @@ function Alive()
     original_translation.y = gunInitialTranslate.y
     original_translation.z = gunInitialTranslate.z
    
-    systemManager:mGraphicsSystem():HideCursor(true)
+    --systemManager:mGraphicsSystem():HideCursor(true)
 end
 
 function Update()
+    if _G.FreezePlayerControl then 
+        return 
+    end
     gunTranslate = gunEntity:GetTransform().mTranslate
     -- if (systemManager:mInputActionSystem():GetKeyDown(61)) then -- Press EQUAL
     --     systemManager:mGraphicsSystem():HideCursor(false)
@@ -275,6 +280,12 @@ function Update()
     -- if(_G.gunEquipped == 1) then -- Revolver
         -- gunTransform:ParentChildRotateUpdate(dt)
     -- end
+
+    if isinit == false then
+        graphicsSys:HideCursor(true)
+        print("Calling hide cursor in player update")
+        isinit = true
+    end
     
 --region -- player camera
     if(inputMapSys:GetButtonDown("Mouse")) then

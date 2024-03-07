@@ -1,0 +1,7 @@
+[
+    {
+        "ShaderProgram": "ParticleShader",
+        "Vertex": "../assets/shader_files/particle_vert.glsl",
+        "Fragment": "../assets/shader_files/particle_frag.glsl"
+    }
+]

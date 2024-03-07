@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 10485859,
+        "entityid": 1048820,
         "general": {
             "name": "Objective Bar Empty",
             "tagid": 6,
@@ -47,7 +47,7 @@
         }
     },
     {
-        "entityid": 10485898,
+        "entityid": 1048821,
         "general": {
             "name": "Objective Bar Empty",
             "tagid": 6,
@@ -94,7 +94,7 @@
         }
     },
     {
-        "entityid": 11534443,
+        "entityid": 1048822,
         "general": {
             "name": "Objective Bar 1",
             "tagid": 6,
@@ -141,7 +141,7 @@
         }
     },
     {
-        "entityid": 11534460,
+        "entityid": 1048823,
         "general": {
             "name": "Objectives2",
             "tagid": 0,
@@ -161,9 +161,9 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 30.78842544555664,
-                "y": -20.0,
-                "z": 56.06375503540039
+                "x": 9.35831069946289,
+                "y": -12.659839630126953,
+                "z": 60.67029571533203
             }
         },
         "rigidbody": {
@@ -234,7 +234,15 @@
             "scriptscontainer": [
                 {
                     "scriptFile": "../assets/Scripts/ObjectivesLv2.lua",
-                    "variables": []
+                    "variables": [
+                        {
+                            "key": "flt_epsilon",
+                            "val": {
+                                "type": 694561268,
+                                "value": 0.000009999999747378752
+                            }
+                        }
+                    ]
                 }
             ]
         },
@@ -243,7 +251,7 @@
         }
     },
     {
-        "entityid": 11534466,
+        "entityid": 1048824,
         "general": {
             "name": "PreObjectivesController",
             "tagid": 0,
@@ -278,7 +286,7 @@
         }
     },
     {
-        "entityid": 12583008,
+        "entityid": 1048825,
         "general": {
             "name": "Controller",
             "tagid": 0,
@@ -313,7 +321,7 @@
         }
     },
     {
-        "entityid": 12583023,
+        "entityid": 1048826,
         "general": {
             "name": "Objectives1",
             "tagid": 0,
@@ -333,9 +341,9 @@
                 "z": 0.0
             },
             "translate": {
-                "x": -39.82014083862305,
-                "y": -20.0,
-                "z": 62.92877960205078
+                "x": -8.64923095703125,
+                "y": -14.853635787963867,
+                "z": -17.538721084594727
             }
         },
         "rigidbody": {
@@ -406,7 +414,15 @@
             "scriptscontainer": [
                 {
                     "scriptFile": "../assets/Scripts/ObjectivesLv2.lua",
-                    "variables": []
+                    "variables": [
+                        {
+                            "key": "flt_epsilon",
+                            "val": {
+                                "type": 694561268,
+                                "value": 0.000009999999747378752
+                            }
+                        }
+                    ]
                 }
             ]
         },
@@ -415,7 +431,7 @@
         }
     },
     {
-        "entityid": 12583026,
+        "entityid": 1048827,
         "general": {
             "name": "Objectives3",
             "tagid": 0,
@@ -435,9 +451,9 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 33.09693145751953,
-                "y": -20.0,
-                "z": -15.47390079498291
+                "x": -19.255064010620117,
+                "y": -17.85018539428711,
+                "z": 11.416296005249023
             }
         },
         "rigidbody": {
@@ -508,7 +524,15 @@
             "scriptscontainer": [
                 {
                     "scriptFile": "../assets/Scripts/ObjectivesLv2.lua",
-                    "variables": []
+                    "variables": [
+                        {
+                            "key": "flt_epsilon",
+                            "val": {
+                                "type": 694561268,
+                                "value": 0.000009999999747378752
+                            }
+                        }
+                    ]
                 }
             ]
         },
@@ -517,7 +541,7 @@
         }
     },
     {
-        "entityid": 12583040,
+        "entityid": 1048828,
         "general": {
             "name": "Objective Bar 1",
             "tagid": 6,
@@ -564,7 +588,7 @@
         }
     },
     {
-        "entityid": 12583046,
+        "entityid": 1048829,
         "general": {
             "name": "Objective Bar Empty",
             "tagid": 6,
@@ -611,7 +635,7 @@
         }
     },
     {
-        "entityid": 12583047,
+        "entityid": 1048830,
         "general": {
             "name": "Objective Bar Empty",
             "tagid": 6,

@@ -899,6 +899,37 @@ struct DirectionalLight
 	void DeserializeSelf(rapidjson::Value& reader);
 };
 
+struct ParticleEmitter
+{
+	glm::vec4 mStartColor	{ 1.f, 1.f, 1.f, 1.f };
+	glm::vec4 mEndColor		{ 1.f, 1.f, 1.f, 1.f };
+	glm::vec3 mOffset		{0.f, 0.f, 0.f};
+	glm::vec3 mPosition		{0.f, 0.f, 0.f};
+	float mGravity	{ 0.0f };
+	float mStartSize{ 0.4f };
+	float mEndSize	{ 0.1f };
+	float mRotation	{ 10.f };
+	float mLifetime	{ 2.f };
+	float mSpeed	{ 3.f };
+	int	mCount		{ 100 };
+
+	float mCurrTime{};
+	float mLoopInterval{ 0.5f };
+	bool mEmit{ false };
+	bool mLoop{ false };
+
+	std::string							mTexPath; // temporary should be UID
+	_GEOM::Texture_DescriptorData		mTextureDescriptorData;
+	ref mTexture;
+
+	// For scripts
+	void Emit() { mEmit = true; }
+
+	void Inspect();
+	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
+	void DeserializeSelf(rapidjson::Value& reader);
+};
+
 struct Portal
 {
 	// Serialize these

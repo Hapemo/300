@@ -1,7 +1,7 @@
 {
-    "entityid": 2097164,
+    "entityid": 338,
     "general": {
-        "name": "Explosion",
+        "name": "explosion",
         "tagid": 8,
         "subtag": 0,
         "isActive": true,
@@ -9,9 +9,9 @@
     },
     "transform": {
         "scale": {
-            "x": 3.1449601650238037,
-            "y": 3.1449601650238037,
-            "z": 3.1449601650238037
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
         },
         "rotate": {
             "x": 0.0,
@@ -24,83 +24,40 @@
             "z": 0.0
         }
     },
-    "rigidbody": {
-        "density": 10.0,
-        "material": 1,
-        "motion": 0,
-        "velocity": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
-        },
-        "rotationconstraints": {
-            "x": true,
-            "y": false,
-            "z": false
-        },
-        "gravity": false
+    "scripts": {
+        "scriptscontainer": []
     },
-    "meshrenderer": {
-        "vert": "../assets/shader_files/pointLight_vert.glsl",
-        "frag": "../assets/shader_files/pointLight_frag.glsl",
-        "meshrefid": 2285,
-        "instancecolor": {
-            "x": 1.0,
-            "y": 0.0,
+    "prefab": {
+        "prefab": "explosion"
+    },
+    "particleemitter": {
+        "startcolor": {
+            "x": 0.9763033390045166,
+            "y": 1.0,
             "z": 0.0,
             "w": 1.0
         },
-        "bloomthreshold": {
+        "endcolor": {
             "x": 1.0,
-            "y": 1.0,
-            "z": 1.0,
-            "w": 1.0
+            "y": 0.9952606558799744,
+            "z": 0.0,
+            "w": 0.0
         },
-        "materialinstance": [
-            "../assets/Compressed/Cube_Texture_White.ctexture",
-            " ",
-            " ",
-            " ",
-            " ",
-            " "
-        ],
-        "mesh": "../assets/compiled_geom/cube.geom",
-        "texturerefid": [
-            4706,
-            0,
-            0,
-            0,
-            0,
-            0
-        ]
-    },
-    "spherecollider": {
-        "scaleoffset": 1.0,
-        "translateoffset": {
+        "startsize": 0.4000000059604645,
+        "endsize": 0.800000011920929,
+        "offset": {
             "x": 0.0,
             "y": 0.0,
             "z": 0.0
         },
-        "istrigger": true
-    },
-    "scripts": {
-        "scriptscontainer": [
-            {
-                "scriptFile": "../assets/Scripts/Explosion.lua",
-                "variables": []
-            }
-        ]
-    },
-    "audio": {
-        "filepath": "../assets\\Audio",
-        "filename": "Enemy_Zipbomb_Explode.wav",
-        "fullpath": "../assets\\Audio/Enemy_Zipbomb_Explode.wav",
-        "playonawake": false,
-        "islooping": false,
-        "audiotype": 1,
-        "volume": 1.0
-    },
-    "prefab": {
-        "prefab": "Explosion"
+        "gravity": 0.0,
+        "rotation": 90.0,
+        "lifetime": 1.0,
+        "loop": false,
+        "loopInterval": 0.5,
+        "speed": 1.899999976158142,
+        "count": 300,
+        "emit": false,
+        "particletexture": 2273550607
     }
 }

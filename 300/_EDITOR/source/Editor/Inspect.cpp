@@ -197,6 +197,11 @@ void Inspect::update()
 			dirLight.Inspect();
 		}
 
+		if (ent.HasComponent<ParticleEmitter>()) {
+			ParticleEmitter& emitter = ent.GetComponent<ParticleEmitter>();
+			emitter.Inspect();
+		}
+
 		if (ent.HasComponent<Portal>()) {
 			Portal& portal = ent.GetComponent<Portal>();
 			portal.Inspect();
@@ -280,6 +285,12 @@ void Inspect::Add_component() {
 		{
 			if (!Entity(Hierarchy::selectedId).HasComponent<DirectionalLight>())
 				Entity(Hierarchy::selectedId).AddComponent<DirectionalLight>();
+		}
+
+		if (ImGui::Selectable("Particle Emitter"))
+		{
+			if (!Entity(Hierarchy::selectedId).HasComponent<ParticleEmitter>())
+				Entity(Hierarchy::selectedId).AddComponent<ParticleEmitter>();
 		}
 
 		if (ImGui::Selectable("Audio")) {
@@ -608,6 +619,142 @@ void DirectionalLight::Inspect()
 
 	if (delete_component == false)
 		Entity(Hierarchy::selectedId).RemoveComponent<DirectionalLight>();
+}
+
+void ParticleEmitter::Inspect()
+{
+	//!< Helper
+	auto getFilename = [](std::string filepath) -> std::string
+		{
+			// returns AT-AT
+			std::string ret_str = filepath.substr(filepath.find_last_of("/") + 1);
+			ret_str = ret_str.substr(0, ret_str.find_first_of("."));
+			return ret_str;
+		};
+	bool delete_component = true;
+
+	if (ImGui::CollapsingHeader("Particle Emitter", &delete_component, ImGuiTreeNodeFlags_DefaultOpen))
+	{
+		ImGui::ColorPicker4("Start Color", (float*)&mStartColor);
+		ImGui::ColorPicker4("End Color", (float*)&mEndColor);
+
+		ImGui::Text("Position");
+		ImGui::SameLine();
+		ImGui::DragFloat3("##Position ", &mPosition[0], 0.1f);
+
+		ImGui::Text("Offset");
+		ImGui::SameLine();
+		ImGui::DragFloat3("##Offset ", &mOffset[0], 0.1f);
+
+		ImGui::Text("Start Size");
+		ImGui::SameLine();
+		ImGui::DragFloat("##Start Size ", &mStartSize, 0.1f, 0.f);
+
+		ImGui::Text("End Size");
+		ImGui::SameLine();
+		ImGui::DragFloat("##End Size ", &mEndSize, 0.1f, 0.f);
+
+		ImGui::Text("Gravity");
+		ImGui::SameLine();
+		ImGui::DragFloat("##Gravity ", &mGravity, 0.1f);
+
+		ImGui::Text("Rotation");
+		ImGui::SameLine();
+		ImGui::DragFloat("##Rotation ", &mRotation, 1.f);
+
+		ImGui::Text("Lifetime");
+		ImGui::SameLine();
+		ImGui::DragFloat("##Lifetime ", &mLifetime, 0.1f, 0.f);
+
+		ImGui::Text("Speed");
+		ImGui::SameLine();
+		ImGui::DragFloat("##Speed ", &mSpeed, 0.1f, 0.f);
+
+		ImGui::Text("Count");
+		ImGui::SameLine();
+		ImGui::DragInt("##Count ", &mCount, 1, 0);
+
+		if (ImGui::Button("Emit Particles"))
+		{
+			mEmit = true;	// Set to true to emit
+		}
+		ImGui::SameLine();
+		ImGui::Checkbox("Loop: ", &mLoop);
+		if (mLoop)
+		{
+			ImGui::Text("Loop Interval");
+			ImGui::SameLine();
+			ImGui::DragFloat("##Loop Interval ", &mLoopInterval, 0.1f, 0.f);
+		}
+
+		ImGui::NewLine();
+
+		ImGui::Selectable("Particles   ");
+		if (ImGui::BeginDragDropTarget())
+		{
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_TEXT")) {
+
+				const char* data = (const char*)payload->Data;
+				std::string data_str = std::string(data);
+				mTexPath = data_str;
+
+
+				std::string texturestr = systemManager->mResourceTySystem->compressed_texture_path + getFilename(data_str) + ".ctexture";
+				mTexPath = texturestr;
+				std::string TEXTURE_Descriptor_Filepath;
+				unsigned guid;
+				// check and ensures that the descriptor file for the materials are created
+				//bool descFilePresent = _GEOM::CheckAndCreateDescriptorFileTEXTURE(data_str, TEXTURE_Descriptor_Filepath, texturestr);
+				std::string descfilepath = data_str + ".desc";
+				guid = _GEOM::GetGUID(descfilepath);
+				mTexture.data_uid = guid;
+				mTexture.data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(guid));
+			}
+
+
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("FILE_TEXT_UNCOMPRESS"))
+			{
+				const char* data = (const char*)payload->Data;
+				std::string data_str = std::string(data);
+
+				std::string texturestr = systemManager->mResourceTySystem->compressed_texture_path + getFilename(data_str) + ".ctexture";
+				//mMaterialInstancePath[i] = texturestr;
+
+				std::string TEXTURE_Descriptor_Filepath;
+				unsigned guid;
+
+				// check and ensures that the descriptor file for the materials are created
+				_GEOM::CheckAndCreateDescriptorFileTEXTURE(data_str, TEXTURE_Descriptor_Filepath, texturestr);
+				std::string descfilepath = data_str + ".desc";
+				guid = _GEOM::GetGUID(descfilepath);	// gets the guid from the png desc
+
+				_GEOM::Texture_DescriptorData::DeserializeTEXTURE_DescriptorDataFromFile(mTextureDescriptorData, TEXTURE_Descriptor_Filepath);
+
+				{
+					std::cout << "\033[33mNOTE: >> Compressing texture: " << texturestr << "\033[0m" << std::endl;
+					CompressImageFile(data_str.c_str(), systemManager->mResourceTySystem->compressed_texture_path.c_str(), _GEOM::Texture_DescriptorData::isGammaSpace(TEXTURE_Descriptor_Filepath));
+
+					// Load the textures into the list of usable textures within the engine, if it doesnt already exist
+					if (systemManager->mResourceTySystem->getMaterialInstance(guid) == nullptr) {
+						systemManager->mResourceTySystem->texture_Load(getFilename(data_str), guid);
+					}
+
+					mTexture.data_uid = guid;
+					mTexture.data = reinterpret_cast<void*>(systemManager->mResourceTySystem->getMaterialInstance(guid));
+				}
+			}
+
+			ImGui::EndDragDropTarget();
+		}
+
+		ImGui::Text(mTexPath.c_str());
+
+	}
+
+
+
+	if (delete_component == false)
+		Entity(Hierarchy::selectedId).RemoveComponent<ParticleEmitter>();
 }
 
 /***************************************************************************/

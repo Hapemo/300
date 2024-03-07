@@ -98,6 +98,8 @@ public:
 	bool IsQuit() { return mIsQuit; }
 
 	void SetIsPause(bool pauseanot) { mIsInGamePause = pauseanot; }
+
+	int GetWindowWidth() { return mWindow->GetScreenWidth(); }
 	
 	void DeleteEntity(Entity e);
 	PhysicsSystem *GetPhysicsPointer();

@@ -43,7 +43,8 @@ void LuaEngine()
         "Pause", &SystemManager::Pause,
         "SetIsPause", &SystemManager::SetIsPause,
         "mIsInGamePause", &SystemManager::mIsInGamePause,
-        "mIsPlay", &SystemManager::mIsPlay);
+        "mIsPlay", &SystemManager::mIsPlay,
+        "GetWindowWidth", &SystemManager::GetWindowWidth);
 }
 
 void LuaECS()
@@ -144,7 +145,11 @@ void LuaEntity()
 
         ADD_COMPONENT("AddButton", Button),
         DECLARE_COMPONENT("GetButton", Button),
-        "HasButton", & Entity::HasComponent<Button>);
+        "HasButton", & Entity::HasComponent<Button>,
+
+        ADD_COMPONENT("AddParticleEmitter", ParticleEmitter),
+        DECLARE_COMPONENT("GetParticleEmitter", ParticleEmitter),
+        "HasParticleEmitter", & Entity::HasComponent<ParticleEmitter>);
 }
 
 void LuaGeneral()
@@ -282,6 +287,16 @@ void LuaInput()
         "CursorPos", &Input::CursorPos,
         "SetCursorCenter", &Input::SetCursorCenter,
         "GetCursorCenter", &Input::GetCursorCenter);
+}
+
+void LuaAudioSystem()
+{
+    systemManager->mScriptingSystem->luaState.new_usertype<AudioSystem>(
+        "mAudioSystem", sol::constructors<>(),
+        "GetSFXVolume", &AudioSystem::GetSFXVolume,
+        "GetBGMVolume", &AudioSystem::GetBGMVolume,
+        "SetAllSFXVolume", &AudioSystem::SetAllSFXVolume,
+        "SetAllBGMVolume", &AudioSystem::SetAllBGMVolume);
 }
 
 void LuaAudio()
@@ -451,4 +466,11 @@ void LuaButton()
         "mIsClick", &Button::mIsClick,
         "mActivated", &Button::mActivated,
         "mRenderFlag", &Button::mRenderFlag);
+}
+
+void LuaParticleEmitter()
+{
+    systemManager->mScriptingSystem->luaState.new_usertype<ParticleEmitter>(
+        "ParticleEmitter", sol::constructors<>(),
+        "Emit", &ParticleEmitter::Emit);
 }
