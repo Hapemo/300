@@ -904,6 +904,7 @@ struct ParticleEmitter
 	glm::vec4 mStartColor	{ 1.f, 1.f, 1.f, 1.f };
 	glm::vec4 mEndColor		{ 1.f, 1.f, 1.f, 1.f };
 	glm::vec3 mOffset		{0.f, 0.f, 0.f};
+	glm::vec3 mPosition		{0.f, 0.f, 0.f};
 	float mGravity	{ 0.0f };
 	float mStartSize{ 0.4f };
 	float mEndSize	{ 0.1f };

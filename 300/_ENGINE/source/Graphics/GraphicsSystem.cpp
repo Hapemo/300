@@ -186,14 +186,12 @@ void GraphicsSystem::Update(float dt)
 		{
 			ParticleEmitter& e = inst.GetComponent<ParticleEmitter>();
 			vec3 pos = inst.GetComponent<Transform>().mTranslate;
-			vec3 parentPos{};
-			if (inst.HasParent())
-			{
-				parentPos = inst.GetParent().GetComponent<Transform>().mTranslate;
-				mat4 R = glm::toMat4(glm::quat(glm::radians(inst.GetParent().GetComponent<Transform>().mRotate)));
-				pos = vec3(R * vec4(pos, 1.f));
-				pos += parentPos;	// emitter's position is an offset if has parent
-			}
+			vec3 posOffset = e.mPosition;
+
+			mat4 R = glm::toMat4(glm::quat(glm::radians(inst.GetComponent<Transform>().mRotate)));
+			posOffset = vec3(R * vec4(posOffset, 1.f));
+			pos += posOffset;	// emitter's position is an offset if has parent
+
 			e.mCurrTime += dt;
 			if (e.mEmit || e.mLoop && (e.mCurrTime > e.mLoopInterval))
 			{

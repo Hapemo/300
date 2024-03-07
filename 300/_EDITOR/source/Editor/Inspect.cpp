@@ -638,6 +638,10 @@ void ParticleEmitter::Inspect()
 		ImGui::ColorPicker4("Start Color", (float*)&mStartColor);
 		ImGui::ColorPicker4("End Color", (float*)&mEndColor);
 
+		ImGui::Text("Position");
+		ImGui::SameLine();
+		ImGui::DragFloat3("##Position ", &mPosition[0], 0.1f);
+
 		ImGui::Text("Offset");
 		ImGui::SameLine();
 		ImGui::DragFloat3("##Offset ", &mOffset[0], 0.1f);
