@@ -668,15 +668,13 @@ function Update()
 
             end
 
-            if(gameStateSys:GetCurrentGameState().mName == "Test") then
-                if (floorCount > 0) then
-                    if (inputMapSys:GetButtonDown("Jump")) then
+            if(gameStateSys:GetCurrentGameState().mName == "test" or gameStateSys:GetCurrentGameState().mName == "Test" ) then
+                    if (inputMapSys:GetButtonDown("Jump") and math.abs(movement.y) < 3.05) then
                         movement.y = movement.y + 25.0;
                         gunRecoilState = "MOVING"
                         gunJumped = true
                         jumpAudioComp:SetPlay(0.4)
                     end
-                end
             elseif(gameStateSys:GetCurrentGameState().mName == "Test2") then
                 if (inputMapSys:GetButtonDown("Jump") and math.abs(movement.y) < 3.05) then
                     movement.y = movement.y + 25.0;
