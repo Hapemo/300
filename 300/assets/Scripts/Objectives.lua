@@ -15,6 +15,7 @@ local mobSpawnPos1 = Vec3.new()
 local mobSpawnPos2 = Vec3.new()
 local mobSpawnPos3 = Vec3.new()
 local mobSpawnPos4 = Vec3.new()
+local const flt_epsilon = 1e-5
 
 local objectiveBarSpawnPos = Vec3.new()
 local objCount = 0
@@ -67,6 +68,13 @@ function Update()
         end
     end
 
+    if (inputMapSys:GetButtonDown("nine")) then
+        _G.completedEpicTH = true 
+        _G.completedEpicTS = true 
+        _G.completedEpicILY = true 
+        print("Objectives spawned")
+    end
+
     if isInit == false then
         gameStateSys = systemManager:mGameStateSystem();
         testScriptEntity = gameStateSys:GetEntity("Controller")
@@ -112,26 +120,34 @@ function Update()
         
         currentSpawnTimer = currentSpawnTimer + FPSManager.GetDT()
 
+        print("currentenemycount: ", currentEnemyCount, "maxenemycount: ", maxEnemyCount, "currentspawntimer: ", currentSpawnTimer, "spawntimer: ", spawnTimer)
         if currentEnemyCount < maxEnemyCount and currentSpawnTimer > spawnTimer then
             mobtype = math.random(1, 4)
-                local mobspawnpoint_rand = math.random(1, 4)
+            local mobspawnpoint_rand = math.random(1, 4)
 
-                    if(mobspawnpoint_rand == 1) then
-                        mobspawnpoint = mobSpawnPos1
-                    elseif(mobspawnpoint_rand == 2) then
-                        mobspawnpoint = mobSpawnPos2
-                    elseif(mobspawnpoint_rand == 3) then
-                        mobspawnpoint = mobSpawnPos3
-                    elseif(mobspawnpoint_rand == 4) then
-                        mobspawnpoint = mobSpawnPos4
-                    end
-
-                if (mobtype == 1) then systemManager.ecs:NewEntityFromPrefab("ILOVEYOU", mobspawnpoint)
-                    elseif (mobtype == 2) then systemManager.ecs:NewEntityFromPrefab("TrojanHorse", mobspawnpoint) 
-                    elseif (mobtype == 3 or mobtype == 4) then systemManager.ecs:NewEntityFromPrefab("BigTrojanSoldier", mobspawnpoint) 
+                if(mobspawnpoint_rand == 1) then
+                    mobspawnpoint = mobSpawnPos1
+                elseif(mobspawnpoint_rand == 2) then
+                    mobspawnpoint = mobSpawnPos2
+                elseif(mobspawnpoint_rand == 3) then
+                    mobspawnpoint = mobSpawnPos3
+                elseif(mobspawnpoint_rand == 4) then
+                    mobspawnpoint = mobSpawnPos4
                 end
-                currentEnemyCount = currentEnemyCount + 1
-            currentSpawnTimer = 0 -- reset currentSpawnTimer so that next enemy can spawn
+
+            if (mobtype == 1) then
+                 systemManager.ecs:NewEntityFromPrefab("ILOVEYOU", mobspawnpoint)
+                 currentEnemyCount = currentEnemyCount + 1
+                 currentSpawnTimer = 0 
+                elseif (mobtype == 2) then 
+                    systemManager.ecs:NewEntityFromPrefab("TrojanHorse", mobspawnpoint) 
+                    currentEnemyCount = currentEnemyCount + 1
+                    currentSpawnTimer = 0 
+                elseif (mobtype == 3 or mobtype == 4) then 
+                    systemManager.ecs:NewEntityFromPrefab("BigTrojanSoldier", mobspawnpoint) 
+                    currentEnemyCount = currentEnemyCount + 1
+                    currentSpawnTimer = 0 
+            end
         end
     end
 
@@ -154,7 +170,7 @@ function Update()
 
     if(moveTime > 0.4)then
         -- only appear when the platform is raised
-        if(transform.mTranslate.y == -10.5) then
+        if(math.abs(transform.mTranslate.y - -10.8) <= flt_epsilon) then
             spawndataPos.x = transform.mTranslate.x + math.random(-300,300)/100
             spawndataPos.y = transform.mTranslate.y 
             spawndataPos.z = transform.mTranslate.z + math.random(-300,300)/100

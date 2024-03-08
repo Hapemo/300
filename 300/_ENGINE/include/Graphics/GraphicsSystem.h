@@ -268,6 +268,7 @@ public:
 	int					m_Width;
 	int					m_Height;
 	bool				m_IsCursorEnabledForEditor{ true };
+	bool				m_bRenderUI{ true };
 
 	// -- Camera --
 	GFX::Camera m_EditorCamera;
@@ -291,7 +292,8 @@ public:
 
 	bool		m_EnableBloom{ true };
 	bool		m_EnableChromaticAbberation{ true };
-	bool		m_EnableCRT{ false };						// this yj
+	bool		m_EnableCRT{ false };						
+
 
 	// -- Textures --
 	std::vector<int> m_Textures;	// 0, 1, ..., 31
@@ -362,6 +364,7 @@ public:
 	GLuint64 GetAndStoreBindlessTextureHandle(int texID);	// Stores adn Return the 64bit texture handle and makes it resident
 	int StoreUITexture(int texID);			// Make texture resident, store handle into map, returns the index of the handle
 	void SetupShaderStorageBuffers();		// Creates all SSBO required
+	void SetRenderUIFlag(bool flag) { m_bRenderUI = flag; }
 
 	void DrawAll2DInstances(unsigned shaderID);
 	void Add2DImageInstance(float width, float height, vec3 const& position, unsigned texHandle, unsigned entityID = 0xFFFFFFFF, float degree = 0.f, vec4 const& color = vec4{ 1.f, 1.f, 1.f, 1.f }, float slider = 1.f);

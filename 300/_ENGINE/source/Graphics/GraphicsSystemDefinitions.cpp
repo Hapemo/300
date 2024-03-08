@@ -308,6 +308,9 @@ void Reset_Data()
 
 void update_UI()
 {
+	if (!systemManager->mGraphicsSystem->m_bRenderUI)
+		return;
+
 	auto UiInstances = systemManager->ecs->GetEntitiesWith<UIrenderer>();
 	for (Entity inst : UiInstances)
 	{

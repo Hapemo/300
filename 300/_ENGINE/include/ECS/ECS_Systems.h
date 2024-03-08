@@ -35,6 +35,7 @@ public:
 	bool mIsInGamePause;
 	bool mIsDialogue;
 	bool mIsPlay;
+
 	std::unique_ptr<PhysicsSystem> mPhysicsSystem;
 	std::unique_ptr<ScriptingSystem> mScriptingSystem;
 	std::unique_ptr<GraphicsSystem> mGraphicsSystem;

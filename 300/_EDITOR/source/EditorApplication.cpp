@@ -126,7 +126,7 @@ void EditorApplication::SystemUpdate()
 void EditorApplication::SecondUpdate()
 {
     Input::UpdatePrevKeyStates();
-    FPSManager::LimitFPS(80);
+    FPSManager::LimitFPS(60);
 }
 
 void EditorApplication::Exit()
