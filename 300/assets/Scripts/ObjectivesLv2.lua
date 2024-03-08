@@ -9,9 +9,9 @@ local progress
 local isInZone = false
 
 local currentSpawnTimer = 0 -- keeps track of how often enemy spawning interval
-local spawnTimer = 7.5       -- sets how long the enemy spawning interval is
+local spawnTimer = 2        -- sets how long the enemy spawning interval is
 local currentEnemyCount = 0 -- keeps track of how many enemies there are in the map
-local maxEnemyCount = 15    -- sets how many enemies are allowed in the map
+local maxEnemyCount = 20    -- sets how many enemies are allowed in the map
 
 local mobSpawnPos1 = Vec3.new()
 local mobSpawnPos2 = Vec3.new()
@@ -30,6 +30,7 @@ local reseed = 0
 
 local mobtype = 0;
 local isInit
+local isObjectiveEnabled = false
 
 
 function Alive()
@@ -115,8 +116,18 @@ function Update()
             print("EpicM and EpicZB completed")
         end
 
-        if(_G.completedEpicM == true and _G.completedEpicZB == true) then
-            -- SPAWNING ENEMIES
+        ent = Helper.GetScriptEntity(script_entity.id)
+        transform = ent:GetTransform()
+        isObjectiveEnabled = false
+    
+        if( math.abs(transform.mTranslate.y - (-4.7)) <= flt_epsilon
+            or math.abs(transform.mTranslate.y - 0.11) <= flt_epsilon 
+            or math.abs(transform.mTranslate.y - (-10)) <= flt_epsilon) then
+            isObjectiveEnabled = true
+        end
+
+        -- SPAWNING ENEMIES
+        if(_G.completedEpicM == true and _G.completedEpicZB == true and isObjectiveEnabled) then
             currentSpawnTimer = currentSpawnTimer + FPSManager.GetDT()
 
             if currentEnemyCount < maxEnemyCount and currentSpawnTimer > spawnTimer then
@@ -151,9 +162,6 @@ function Update()
     -- print("SPAWNING")
     objectivebar:GetUIrenderer():SetSlider(progress/objectivesComplete);
 
-    ent = Helper.GetScriptEntity(script_entity.id)
-    transform = ent:GetTransform()
-
     -- print(math.random() +math.random(-20,20) )
 
     moveTime = moveTime + FPSManager.GetDT()
@@ -169,9 +177,7 @@ function Update()
 
     if(moveTime > 0.4)then
         -- only appear when the platform is raised
-        if( math.abs(transform.mTranslate.y - (-4.7)) <= flt_epsilon
-            or math.abs(transform.mTranslate.y - 0.11) <= flt_epsilon 
-            or math.abs(transform.mTranslate.y - (-10)) <= flt_epsilon) then
+        if(isObjectiveEnabled) then
             -- print("Spawning 1's and 0's")
             spawndataPos.x = transform.mTranslate.x  +math.random(-300,300)/100
             spawndataPos.y = transform.mTranslate.y 

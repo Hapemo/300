@@ -7,7 +7,7 @@ local progress
 local isInZone = false
 
 local currentSpawnTimer = 0 -- keeps track of how often enemy spawning interval
-local spawnTimer = 10 -- sets how long the enemy spawning interval is
+local spawnTimer = 2.5 -- sets how long the enemy spawning interval is
 local currentEnemyCount = 0 -- keeps track of how many enemies there are in the map
 local maxEnemyCount = 20 -- sets how many enemies are allowed in the map
 
@@ -28,6 +28,7 @@ local reseed = 0
 
 local mobtype = 0;
 local isInit
+local isObjectiveEnabled = false
 
 function Alive()
     isInit = false
@@ -56,6 +57,7 @@ function Alive()
 end
 
 function Update()
+
     if(inputMapSys:GetButtonDown("NextLevel")) then
         x = gameStateSys:GetEntity("TransitionHelper", "Transition") 
         y = x:GetScripts()
@@ -94,6 +96,14 @@ function Update()
         isInit = true
     end
 
+    ent = Helper.GetScriptEntity(script_entity.id)
+    transform = ent:GetTransform()
+    isObjectiveEnabled = false
+
+    if(math.abs(transform.mTranslate.y - -10.8) <= flt_epsilon) then
+        isObjectiveEnabled = true
+    end
+
         gameStateSys = systemManager:mGameStateSystem();
         testScriptEntity = gameStateSys:GetEntity("Controller")
         TestScripts = testScriptEntity:GetScripts()
@@ -116,11 +126,10 @@ function Update()
         end
 
     -- SPAWNING ENEMIES
-    if(_G.completedEpicTH == true and _G.completedEpicTS == true and _G.completedEpicILY == true) then
+    if(_G.completedEpicTH == true and _G.completedEpicTS == true and _G.completedEpicILY == true and isObjectiveEnabled) then
         
         currentSpawnTimer = currentSpawnTimer + FPSManager.GetDT()
 
-        print("currentenemycount: ", currentEnemyCount, "maxenemycount: ", maxEnemyCount, "currentspawntimer: ", currentSpawnTimer, "spawntimer: ", spawnTimer)
         if currentEnemyCount < maxEnemyCount and currentSpawnTimer > spawnTimer then
             mobtype = math.random(1, 4)
             local mobspawnpoint_rand = math.random(1, 4)
@@ -137,24 +146,18 @@ function Update()
 
             if (mobtype == 1) then
                  systemManager.ecs:NewEntityFromPrefab("ILOVEYOU", mobspawnpoint)
-                 currentEnemyCount = currentEnemyCount + 1
-                 currentSpawnTimer = 0 
                 elseif (mobtype == 2) then 
                     systemManager.ecs:NewEntityFromPrefab("TrojanHorse", mobspawnpoint) 
-                    currentEnemyCount = currentEnemyCount + 1
-                    currentSpawnTimer = 0 
                 elseif (mobtype == 3 or mobtype == 4) then 
                     systemManager.ecs:NewEntityFromPrefab("BigTrojanSoldier", mobspawnpoint) 
-                    currentEnemyCount = currentEnemyCount + 1
-                    currentSpawnTimer = 0 
             end
+
+            currentEnemyCount = currentEnemyCount + 1
+            currentSpawnTimer = 0 
         end
     end
 
     objectivebar:GetUIrenderer():SetSlider(progress/objectivesComplete);
-
-    ent = Helper.GetScriptEntity(script_entity.id)
-    transform = ent:GetTransform()
 
     -- print(math.random() +math.random(-20,20) )
 
@@ -170,7 +173,7 @@ function Update()
 
     if(moveTime > 0.4)then
         -- only appear when the platform is raised
-        if(math.abs(transform.mTranslate.y - -10.8) <= flt_epsilon) then
+        if(isObjectiveEnabled) then
             spawndataPos.x = transform.mTranslate.x + math.random(-300,300)/100
             spawndataPos.y = transform.mTranslate.y 
             spawndataPos.z = transform.mTranslate.z + math.random(-300,300)/100
@@ -269,7 +272,6 @@ function Update()
         -- TODO: Disable/hide/destroy this objective entity
 
     end
-
 end
 
 function Dead()
