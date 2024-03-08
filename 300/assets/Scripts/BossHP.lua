@@ -1,5 +1,5 @@
 local boss_entity 
-local bossHP_healthbar_comp
+_G.bossHP_healthbar_comp = nil
 
 local this -- hp bar
 function Alive()
@@ -10,16 +10,20 @@ function Alive()
     -- if(this ~= nil) then 
     --     print("NOT NULL")
     -- end
-    bossHP_healthbar_comp = boss_entity:GetHealthbar()
+    _G.bossHP_healthbar_comp= boss_entity:GetHealthbar()
 
-    if( bossHP_healthbar_comp ~= nil) then 
+    if(_G.bossHP_healthbar_comp ~= nil) then 
         print("BOSS has healthbar")
-        print("BOSS HP: " , bossHP_healthbar_comp.health)
+        print("BOSS HP: " , _G.bossHP_healthbar_comp.health)
     end
 end
 
 function Update()
-    this:GetUIrenderer():SetSlider(bossHP_healthbar_comp.health / bossHP_healthbar_comp.maxHealth)
+    this:GetUIrenderer():SetSlider(_G.bossHP_healthbar_comp.health / _G.bossHP_healthbar_comp.maxHealth)
+
+    if(_G.bossHP_healthbar_comp.health) then 
+        -- win screen?
+    end
 end
 
 function Dead()

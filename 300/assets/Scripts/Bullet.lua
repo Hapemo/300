@@ -252,6 +252,33 @@ function OnTriggerEnter(Entity)
 
     if (tagid == 14) then 
         print("I HIT BOSS")
+        if(bulletTag == "PISTOL") then 
+            if(_G.bossHP_healthbar_comp ~= nil) then 
+                _G.bossHP_healthbar_comp.health = _G.bossHP_healthbar_comp.health - pistolDamage
+                print("HP LEFT: " ,   _G.bossHP_healthbar_comp.health)
+            end
+        end
+
+        if(bulletTag == "REVOLVER") then 
+            if(_G.bossHP_healthbar_comp ~= nil) then 
+                _G.bossHP_healthbar_comp.health = _G.bossHP_healthbar_comp.health - revolverDamage
+                print("HP LEFT: " , _G.bossHP_healthbar_comp.health)
+            end
+        end
+
+        if(bulletTag == "SHOTGUN") then 
+            if(_G.bossHP_healthbar_comp ~= nil) then 
+                _G.bossHP_healthbar_comp.health = _G.bossHP_healthbar_comp.health - shotGunDamage
+                print("HP LEFT: " , _G.bossHP_healthbar_comp.health)
+            end
+        end
+
+        if(bulletTag == "MACHINE_GUN") then 
+            if(_G.bossHP_healthbar_comp ~= nil) then 
+                _G.bossHP_healthbar_comp.health = _G.bossHP_healthbar_comp.health- machineGunDamage
+                print("HP LEFT: " ,   _G.bossHP_healthbar_comp.health)
+            end
+        end
     end
     -- if (tagid == 3) then
     --     for i = 3, 1, -1
