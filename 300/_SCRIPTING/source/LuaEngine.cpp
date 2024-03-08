@@ -44,6 +44,7 @@ void LuaEngine()
         "SetIsPause", &SystemManager::SetIsPause,
         "mIsInGamePause", &SystemManager::mIsInGamePause,
         "mIsPlay", &SystemManager::mIsPlay,
+        "mIsDialogue", &SystemManager::mIsDialogue,
         "GetWindowWidth", &SystemManager::GetWindowWidth);
 }
 

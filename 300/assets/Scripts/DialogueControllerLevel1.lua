@@ -98,35 +98,7 @@ end
 function Update()
     
     if currState ~= "" then
-        if currState == "loadin" then
-            picture = angry
-        elseif currState == "obj1" then
-            picture = excited
-        elseif currState == "obj2" then
-            picture = scared
-        elseif currState == "obj3" then
-            picture = angry
-        end
-
-        if frameOpened == false then
-            OpenFrame()
-        end
-
-        if frameOpened == true and finish == false then
-            UpdateDialogues()
-        end
-
-        if finish == true and frameClosed == false then
-            CloseFrame()
-        end
-
-        if finish == true and frameClosed == true then
-            frameOpened = false
-            frameClosed = false
-            finish = false
-            currState = ""
-            counter = 0
-        end
+        systemManager.mIsDialogue = true
     end
 end
 
@@ -148,6 +120,39 @@ end
 
 function OnContactExit(Entity)
 
+end
+
+function DialogueUpdate()
+    if currState == "loadin" then
+        picture = angry
+    elseif currState == "obj1" then
+        picture = excited
+    elseif currState == "obj2" then
+        picture = scared
+    elseif currState == "obj3" then
+        picture = angry
+    end
+
+    if frameOpened == false then
+        OpenFrame()
+    end
+
+    if frameOpened == true and finish == false then
+        UpdateDialogues()
+    end
+
+    if finish == true and frameClosed == false then
+        CloseFrame()
+    end
+
+    if finish == true and frameClosed == true then
+        frameOpened = false
+        frameClosed = false
+        finish = false
+        currState = ""
+        counter = 0
+        systemManager.mIsDialogue = false
+    end
 end
 
 function UpdateDialogues()
@@ -342,8 +347,6 @@ function UpdateDialogues()
 end
 
 function OpenFrame()
-    _G.FreezePlayerControl = true
-
     if frame:GetTransform().mScale.x <= 1.99 then
         frame:GetTransform().mScale.x = frame:GetTransform().mScale.x + framespeed
         if frame:GetTransform().mScale.x > 1.98 then
@@ -360,8 +363,6 @@ function OpenFrame()
 end
 
 function CloseFrame()
-    _G.FreezePlayerControl = false
-
     if currState == "obj3" then 
         picture = normal
     end

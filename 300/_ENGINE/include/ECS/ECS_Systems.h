@@ -33,6 +33,7 @@ class SystemManager {
 public:
 	// changing pause states in script according to button press
 	bool mIsInGamePause;
+	bool mIsDialogue;
 	bool mIsPlay;
 	std::unique_ptr<PhysicsSystem> mPhysicsSystem;
 	std::unique_ptr<ScriptingSystem> mScriptingSystem;

@@ -68,35 +68,40 @@ end
 
 function Update()
     if currState ~= "" then
-        if currState == "obj1" then
-            picture = excited
-        elseif currState == "obj2" then
-            picture = excited
-        elseif currState == "obj3" then
-            picture = angry
-        elseif currState == "boss" then
-            picture = excited
-        end
+        systemManager.mIsDialogue = true
+    end
+end
 
-        if frameOpened == false then
-            OpenFrame()
-        end
+function DialogueUpdate()
+    if currState == "obj1" then
+        picture = excited
+    elseif currState == "obj2" then
+        picture = excited
+    elseif currState == "obj3" then
+        picture = angry
+    elseif currState == "boss" then
+        picture = excited
+    end
 
-        if frameOpened == true and finish == false then
-            UpdateDialogues()
-        end
+    if frameOpened == false then
+        OpenFrame()
+    end
 
-        if finish == true and frameClosed == false then
-            CloseFrame()
-        end
+    if frameOpened == true and finish == false then
+        UpdateDialogues()
+    end
 
-        if finish == true and frameClosed == true then
-            frameOpened = false
-            frameClosed = false
-            finish = false
-            currState = ""
-            counter = 0
-        end
+    if finish == true and frameClosed == false then
+        CloseFrame()
+    end
+
+    if finish == true and frameClosed == true then
+        frameOpened = false
+        frameClosed = false
+        finish = false
+        currState = ""
+        counter = 0
+        systemManager.mIsDialogue = false
     end
 end
 
@@ -228,8 +233,6 @@ function UpdateDialogues()
 end
 
 function OpenFrame()
-    _G.FreezePlayerControl = true
-
     if frame:GetTransform().mScale.x <= 1.99 then
         frame:GetTransform().mScale.x = frame:GetTransform().mScale.x + framespeed
         if frame:GetTransform().mScale.x > 1.98 then
@@ -246,8 +249,6 @@ function OpenFrame()
 end
 
 function CloseFrame()
-    _G.FreezePlayerControl = false
-
     if picture:GetTransform().mScale.x >= 0.01 then
         picture:GetTransform().mScale.x = picture:GetTransform().mScale.x - picturespeed
         if picture:GetTransform().mScale.x < 0.0 then
