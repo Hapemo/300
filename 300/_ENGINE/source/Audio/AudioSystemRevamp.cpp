@@ -181,6 +181,15 @@ void AudioSystem::Update([[maybe_unused]] float dt, bool calling_from_pause)
 			break;
 		}
 
+		if (Input::CheckKey(PRESS, P))
+		{
+			if (audio.GetComponent<Audio>().mFileName == "VO_Tutorial_ObjectiveIntro.wav") {
+				std::string name = audio.GetComponent<General>().name;
+			}
+
+		}
+
+
 		UpdateVolume(audio_component.mChannelID, audio_component.mAudioType, audio_component.mVolume * global_modifier);
 
 		switch (audio_component.mNextActionState)
@@ -192,9 +201,16 @@ void AudioSystem::Update([[maybe_unused]] float dt, bool calling_from_pause)
 					{
 						mSoundsCurrentlyPlaying.find()
 					}*/
+			
+					if (audio.GetComponent<Audio>().mFileName == "VO_Tutorial_LoadIn.wav") {
+						std::string name = audio.GetComponent<General>().name;
+					}
+
 					if (audio.GetComponent<Audio>().mFileName == "VO_Tutorial_ObjectiveIntro.wav") {
 						std::string name = audio.GetComponent<General>().name;
 					}
+
+
 					PINFO("AUDIO EXISTS");
 					PINFO("PLAYING AUDIO %s AT: %f", audio_component.mFileName.c_str(), audio_component.mVolume);
 
@@ -241,8 +257,17 @@ void AudioSystem::Update([[maybe_unused]] float dt, bool calling_from_pause)
 			case Audio::SET_STOP:
 				if (StopSound(audio_component.mChannelID, audio_component.mAudioType))
 				{
+					if (audio.GetComponent<Audio>().mFileName == "VO_Tutorial_LoadIn.wav") {
+						std::string name = audio.GetComponent<General>().name;
+					}
+
+					if (audio.GetComponent<Audio>().mFileName == "VO_Tutorial_ObjectiveIntro.wav") {
+						std::string name = audio.GetComponent<General>().name;
+					}
+
 					audio_component.mState = Audio::STOPPED;
 					audio_component.mNextActionState = Audio::INACTIVE;
+					//audio_component.mChannelID = uid();
 				}
 				break;
 			
@@ -278,7 +303,13 @@ void AudioSystem::Update([[maybe_unused]] float dt, bool calling_from_pause)
 				{ 
 					audio_component.mState = Audio::FINISHED;
 					NullChannelPointer(audio_component.mAudioType, channel_id);
+					audio_component.mChannelID = uid();
 					PINFO("DONE PLAYING");
+
+					if (audio_component.mFileName == "VO_Tutorial_LoadIn.wav")
+					{
+						std::cout << "HI" << std::endl;
+					}
 					//std::cout << "DONE PLAYING" << std::endl;
 
 					// Remove the finished channel ID from the vector
@@ -594,6 +625,10 @@ unsigned int AudioSystem::PlaySound(std::string audio_name, AUDIOTYPE type, floa
 		if (!current_sound)
 		{	
 
+			if (audio_name == "VO_Tutorial_ObjectiveIntro.wav") {
+				int i = 0;
+			}
+
 			system_obj->playSound(sound, 0, true, &channel.second);
 			channel.second->setVolume(vol);
 
@@ -604,6 +639,8 @@ unsigned int AudioSystem::PlaySound(std::string audio_name, AUDIOTYPE type, floa
 				//std::cout << "HEY" << std::endl;
 				scene_switched = false;
 			}
+
+	
 
 			if (audio_component->m3DAudio)
 			{
