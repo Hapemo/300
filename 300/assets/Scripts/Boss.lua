@@ -169,7 +169,7 @@ function Update()
     -- state = 1 --[OK]
     -- state = 2 [OK] -- need to check agn after i check the other mechanics
     -- state = 3 [OK]
-    -- state = 4 [OK]
+    state = 4 --[OK]
     -- state = 5 [OK]
 
     if state == 1 and _G.state_checker[1] == false then

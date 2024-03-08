@@ -1,68 +1,88 @@
 [
     {
-        "entityid": 6291734,
+        "entityid": 1048823,
         "general": {
-            "name": "Out_Of_Bounds_Boss",
-            "tagid": 4,
+            "name": "Spawn_Point_Ref",
+            "tagid": 1,
             "subtag": 0,
             "isActive": true,
             "isPaused": false
         },
         "transform": {
             "scale": {
-                "x": 11.90999984741211,
-                "y": 9.118487358093262,
-                "z": 14.930000305175781
+                "x": 3.0,
+                "y": 3.0,
+                "z": 3.0
             },
             "rotate": {
-                "x": 0.0,
-                "y": -90.0,
-                "z": 0.0
+                "x": 2.856468915939331,
+                "y": -1.3754568099975586,
+                "z": 0.2807457447052002
             },
             "translate": {
-                "x": 0.8100000023841858,
-                "y": -10.09246826171875,
-                "z": 8.510000228881836
+                "x": 12.322985649108887,
+                "y": 15.56225872039795,
+                "z": 9.885177612304688
             }
         },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 0,
-            "velocity": {
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3400,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "castShadow": true,
+            "materialinstance": [
+                "../assets/Compressed/UI-Yellow-s3&321.ctexture",
+                "../assets/Compressed/UI-Yellow-s3&321.ctexture",
+                " ",
+                " ",
+                " ",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/Particle_Sphere.geom",
+            "texturerefid": [
+                1240881460,
+                1240881460,
+                0,
+                0,
+                0,
+                0
+            ]
+        },
+        "spherecollider": {
+            "scaleoffset": 1.0,
+            "translateoffset": {
                 "x": 0.0,
                 "y": 0.0,
                 "z": 0.0
             },
-            "rotationconstraints": {
-                "x": false,
-                "y": false,
-                "z": false
-            },
-            "gravity": false
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 0.8199999928474426,
-                "z": 1.0
-            },
-            "translateoffset": {
-                "x": 0.0,
-                "y": 6.570000171661377,
-                "z": 0.0
-            },
-            "istrigger": false
+            "istrigger": true
         },
         "scripts": {
-            "scriptscontainer": []
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/BossBullet.lua",
+                    "variables": []
+                }
+            ]
         },
         "prefab": {
-            "prefab": "Out_Of_Bounds_Boss"
+            "prefab": "Boss_Bullet"
         }
     },
     {
-        "entityid": 6291736,
+        "entityid": 1048824,
         "general": {
             "name": "Boss",
             "tagid": 1,
@@ -135,85 +155,65 @@
         }
     },
     {
-        "entityid": 6291737,
+        "entityid": 1048825,
         "general": {
-            "name": "Spawn_Point_Ref",
-            "tagid": 1,
+            "name": "Out_Of_Bounds_Boss",
+            "tagid": 4,
             "subtag": 0,
             "isActive": true,
             "isPaused": false
         },
         "transform": {
             "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 0.9999958872795105
+                "x": 11.90999984741211,
+                "y": 9.118487358093262,
+                "z": 14.930000305175781
             },
             "rotate": {
-                "x": 2.856468915939331,
-                "y": -1.3754568099975586,
-                "z": 0.2807457447052002
+                "x": 0.0,
+                "y": -90.0,
+                "z": 0.0
             },
             "translate": {
-                "x": 3.208970308303833,
-                "y": 7.017225742340088,
-                "z": 9.241089820861816
+                "x": 0.8100000023841858,
+                "y": -10.09246826171875,
+                "z": 8.510000228881836
             }
         },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 3400,
-            "instancecolor": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "bloomthreshold": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "castShadow": true,
-            "materialinstance": [
-                "../assets/Compressed/UI-Yellow-s3&321.ctexture",
-                "../assets/Compressed/UI-Yellow-s3&321.ctexture",
-                " ",
-                " ",
-                " ",
-                " "
-            ],
-            "mesh": "../assets/compiled_geom/Particle_Sphere.geom",
-            "texturerefid": [
-                1240881460,
-                1240881460,
-                0,
-                0,
-                0,
-                0
-            ]
-        },
-        "spherecollider": {
-            "scaleoffset": 1.0,
-            "translateoffset": {
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
                 "x": 0.0,
                 "y": 0.0,
                 "z": 0.0
             },
-            "istrigger": true
+            "rotationconstraints": {
+                "x": false,
+                "y": false,
+                "z": false
+            },
+            "gravity": false
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 0.8199999928474426,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 6.570000171661377,
+                "z": 0.0
+            },
+            "istrigger": false
         },
         "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/BossBullet.lua",
-                    "variables": []
-                }
-            ]
+            "scriptscontainer": []
         },
         "prefab": {
-            "prefab": "Boss_Bullet"
+            "prefab": "Out_Of_Bounds_Boss"
         }
     }
 ]
