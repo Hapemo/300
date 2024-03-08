@@ -45,9 +45,9 @@ function Alive()
     mobSpawnPos2.y = -4;
     mobSpawnPos2.z = 36;
 
-    mobSpawnPos3.x = -7;
-    mobSpawnPos3.y = 1.5;
-    mobSpawnPos3.z = 50;
+    mobSpawnPos3.x = -45;
+    mobSpawnPos3.y = -4;
+    mobSpawnPos3.z = 67;
 
     mobSpawnPos4.x = -1;
     mobSpawnPos4.y = -3.4;
@@ -170,7 +170,7 @@ function Update()
     if(moveTime > 0.4)then
         -- only appear when the platform is raised
         if( math.abs(transform.mTranslate.y - (-4.7)) <= flt_epsilon
-            or math.abs(transform.mTranslate.y - 1) <= flt_epsilon 
+            or math.abs(transform.mTranslate.y - 0.11) <= flt_epsilon 
             or math.abs(transform.mTranslate.y - (-10)) <= flt_epsilon) then
             -- print("Spawning 1's and 0's")
             spawndataPos.x = transform.mTranslate.x  +math.random(-300,300)/100
