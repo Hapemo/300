@@ -184,7 +184,7 @@ local bottomBorderLowerLimit
 function Alive()
     this = Helper.GetScriptEntity(script_entity.id)
     if this == nil then print("Entity nil in script!") end
-    
+    graphicsSys = systemManager:mGraphicsSystem();
     -- Black Border Control stuff
     insertBlackBorder = false
     retractBlackBorder = false
@@ -977,11 +977,15 @@ function MoveTo(entity, targetPos, speed)
 end
 
 function HideUI()
-    uiHider:GetUIrenderer().mColor.w = 27/255
+    graphicsSys:IgnoreUIScene("UI")
+    graphicsSys:IgnoreUIScene("Objectives")
 end
 
 function ShowUI()
-    uiHider:GetUIrenderer().mColor.w = 25/255
+    graphicsSys:UnignoreUIScene("UI")
+    graphicsSys:UnignoreUIScene("Objectives")
+
+
 end
 
 -- Take in targeted UI position

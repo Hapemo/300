@@ -86,6 +86,15 @@ class GraphicsSystem
 {
 public:
 
+	/* YJ's hardcode */
+	std::unordered_set<std::string> ignoredUIScenes;
+	void IgnoreUIScene(const std::string& sceneName) {
+		if (ignoredUIScenes.find(sceneName) == ignoredUIScenes.end())
+			ignoredUIScenes.insert(sceneName);
+	}
+	void UnignoreUIScene(const std::string& sceneName) {
+		ignoredUIScenes.erase(sceneName);
+	}
 	/***************************************************************************/
 	/*!
 	\brief
@@ -268,7 +277,6 @@ public:
 	int					m_Width;
 	int					m_Height;
 	bool				m_IsCursorEnabledForEditor{ true };
-	bool				m_bRenderUI{ true };
 
 	// -- Camera --
 	GFX::Camera m_EditorCamera;
@@ -364,7 +372,6 @@ public:
 	GLuint64 GetAndStoreBindlessTextureHandle(int texID);	// Stores adn Return the 64bit texture handle and makes it resident
 	int StoreUITexture(int texID);			// Make texture resident, store handle into map, returns the index of the handle
 	void SetupShaderStorageBuffers();		// Creates all SSBO required
-	void SetRenderUIFlag(bool flag) { m_bRenderUI = flag; }
 
 	void DrawAll2DInstances(unsigned shaderID);
 	void Add2DImageInstance(float width, float height, vec3 const& position, unsigned texHandle, unsigned entityID = 0xFFFFFFFF, float degree = 0.f, vec4 const& color = vec4{ 1.f, 1.f, 1.f, 1.f }, float slider = 1.f);

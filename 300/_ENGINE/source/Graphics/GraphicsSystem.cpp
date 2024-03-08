@@ -77,6 +77,7 @@ void GraphicsSystem::Init()
 	
 	//glEnable(GL_CULL_FACE);
 	//glCullFace(GL_BACK);
+	ignoredUIScenes.clear();
 
 	// Set Cameras' starting position
 	SetCameraPosition(CAMERA_TYPE::CAMERA_TYPE_EDITOR, {38, 20, 30});								// Position of camera
