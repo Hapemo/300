@@ -8,7 +8,7 @@
             "y": 1.0,
             "z": 0.0
         },
-        "bloom_exposure": 0.04500000178813934,
+        "bloom_exposure": 5.0,
         "bloom_offset": 1.8380000591278076,
         "bloom_sampleweight": 2.941999912261963,
         "chroma_strength": 0.0038999998942017555,
@@ -35,7 +35,7 @@
             "y": 1.0,
             "z": 0.0
         },
-        "bloom_exposure": 0.04500000178813934,
+        "bloom_exposure": 5.0,
         "bloom_offset": 1.8380000591278076,
         "bloom_sampleweight": 2.941999912261963,
         "chroma_strength": 0.0038999998942017555,
@@ -62,7 +62,7 @@
             "y": 1.0,
             "z": 0.0
         },
-        "bloom_exposure": 0.04500000178813934,
+        "bloom_exposure": 5.0,
         "bloom_offset": 1.8380000591278076,
         "bloom_sampleweight": 2.941999912261963,
         "chroma_strength": 0.0038999998942017555,
@@ -89,7 +89,7 @@
             "y": 1.0,
             "z": 0.0
         },
-        "bloom_exposure": 0.04500000178813934,
+        "bloom_exposure": 5.0,
         "bloom_offset": 1.8380000591278076,
         "bloom_sampleweight": 2.941999912261963,
         "chroma_strength": 0.0038999998942017555,
@@ -116,7 +116,7 @@
             "y": 1.0,
             "z": 0.0
         },
-        "bloom_exposure": 0.04500000178813934,
+        "bloom_exposure": 5.0,
         "bloom_offset": 1.8380000591278076,
         "bloom_sampleweight": 2.941999912261963,
         "chroma_strength": 0.0038999998942017555,
@@ -143,7 +143,7 @@
             "y": 1.0,
             "z": 0.0
         },
-        "bloom_exposure": 0.04500000178813934,
+        "bloom_exposure": 5.0,
         "bloom_offset": 1.8380000591278076,
         "bloom_sampleweight": 2.941999912261963,
         "chroma_strength": 0.0038999998942017555,
@@ -170,7 +170,7 @@
             "y": 1.0,
             "z": 0.0
         },
-        "bloom_exposure": 0.04500000178813934,
+        "bloom_exposure": 5.0,
         "bloom_offset": 1.8380000591278076,
         "bloom_sampleweight": 2.941999912261963,
         "chroma_strength": 0.0038999998942017555,
@@ -197,7 +197,7 @@
             "y": 1.0,
             "z": 0.0
         },
-        "bloom_exposure": 0.04500000178813934,
+        "bloom_exposure": 5.0,
         "bloom_offset": 1.8380000591278076,
         "bloom_sampleweight": 2.941999912261963,
         "chroma_strength": 0.0038999998942017555,
@@ -224,7 +224,7 @@
             "y": 1.0,
             "z": 0.0
         },
-        "bloom_exposure": 0.04500000178813934,
+        "bloom_exposure": 5.0,
         "bloom_offset": 1.8380000591278076,
         "bloom_sampleweight": 2.941999912261963,
         "chroma_strength": 0.0038999998942017555,
@@ -251,7 +251,7 @@
             "y": 1.0,
             "z": 0.0
         },
-        "bloom_exposure": 0.04500000178813934,
+        "bloom_exposure": 5.0,
         "bloom_offset": 1.8380000591278076,
         "bloom_sampleweight": 2.941999912261963,
         "chroma_strength": 0.0038999998942017555,

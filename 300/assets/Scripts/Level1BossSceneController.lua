@@ -1,11 +1,12 @@
 -- saved states 
 
 local savedpos = Vec3.new(-1.770,9.200,39.440)
-local savedbosspos = Vec3.new(-3.396,-15.330,-64.750)
-local savedrotate = Vec3.new(270,7.6,72)
+-- local savedbosspos = Vec3.new(-3.396,-15.330,-64.750)
+local savedbosspos = Vec3.new(-4.2,10,-28.6)
+local savedrotate = Vec3.new(270,-7.6,72)
 local savedplayerrotate = Vec3.new(0,0,0)
 
-local STATE =  -1 ------------------------------------ CHANGE THIS FOR INTRO---------------------------------------------
+local STATE =  0 ------------------------------------ CHANGE THIS FOR INTRO---------------------------------------------
 local firstTrigger = false
 local bossEntity
 local cameraEntity
@@ -31,7 +32,7 @@ end
 
 function Update()
     cameraEntity = gameStateSys:GetEntity("Camera")
-    bossEntity = gameStateSys:GetEntity("BossLevel1")
+    bossEntity = gameStateSys:GetEntity("BossLevel2")
     
     if STATE == 0 then
         if firstTrigger == false then
@@ -70,7 +71,9 @@ function Update()
         cameraEntity:GetTransform().mTranslate.x = savedpos.x
         cameraEntity:GetTransform().mTranslate.y = savedpos.y
         cameraEntity:GetTransform().mTranslate.z = savedpos.z
-
+        bossEntity:GetTransform().mTranslate.x = savedbosspos.x
+        bossEntity:GetTransform().mTranslate.y = savedbosspos.y
+        bossEntity:GetTransform().mTranslate.z = savedbosspos.z
         if(quaking<=QuakeLimit2)then
             quaking = quaking+FPSManager.GetDT()
             Quakeintervalcd= Quakeintervalcd+FPSManager.GetDT()
@@ -89,18 +92,18 @@ function Update()
             Camera_Scripting.SetFov(cameraEntity,fov)
         end
 
-        if MoveTo(bossEntity, savedbosspos, 950) == false then
-            if initonce == false then
-                initonce = true
-                controllerL2 = gameStateSys:GetEntity("DialogueController")
-                controllerL2Scripts = controllerL2:GetScripts()
-                controllerL2Script = controllerL2Scripts:GetScript("../assets/Scripts/DialogueControllerLevel1.lua")
+        -- if MoveTo(bossEntity, savedbosspos, 950) == false then
+        --     if initonce == false then
+        --         initonce = true
+        --         controllerL2 = gameStateSys:GetEntity("DialogueController")
+        --         controllerL2Scripts = controllerL2:GetScripts()
+        --         controllerL2Script = controllerL2Scripts:GetScript("../assets/Scripts/DialogueControllerLevel1.lua")
     
-                if controllerL2Script ~= nil then
-                    controllerL2Script:RunFunction("FinishObjective3")
-                end
-            end
-        end
+        --         if controllerL2Script ~= nil then
+        --             controllerL2Script:RunFunction("FinishObjective3")
+        --         end
+        --     end
+        -- end
 
     end
 
