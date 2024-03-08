@@ -11,15 +11,19 @@ local objecto
 function Alive()
 
 
-
     gameStateSys = systemManager:mGameStateSystem()
+
+
+
+    ent = Helper.GetScriptEntity(script_entity.id)
+    uirend  = ent:GetUIrenderer()
 
     dd = gameStateSys:GetEntity("P8", "UI")
     transform = dd:GetTransform()
     position_1.x = transform.mTranslate.x
     position_1.y = transform.mTranslate.y
 
-    
+    uirend.mColor.w = 0
 
     dashui1 = gameStateSys:GetEntity("P8", "UI")
     weaponPosition[1] = dashui1:GetTransform().mTranslate.x
@@ -50,7 +54,6 @@ function Alive()
     -- dashui[8] = gameStateSys:GetEntity("P1", "UI")
 
 
-    ent = Helper.GetScriptEntity(script_entity.id)
     transform = ent:GetTransform()
     general = ent:GetGeneral()
     --print(transform.mTranslate.z)
@@ -65,7 +68,7 @@ end
 function Update()   
 
 
-    uirend  = ent:GetUIrenderer()
+    
     if(_G.FreezePlayerControl == true )then
         uirend.mColor.w = 0
     else

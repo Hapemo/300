@@ -1,194 +1,6 @@
 [
     {
-        "entityid": 5242897,
-        "general": {
-            "name": "Slot_6",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.125,
-                "y": -0.25,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -0.1860000044107437,
-                "y": -0.7599999904632568,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 2300985315,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 0,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Slot_1"
-        }
-    },
-    {
-        "entityid": 5242904,
-        "general": {
-            "name": "Slot_1",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.125,
-                "y": -0.25,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.09000000357627869,
-                "y": -0.7599999904632568,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 2300985315,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 0,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Slot_1"
-        }
-    },
-    {
-        "entityid": 5242905,
-        "general": {
-            "name": "Slot_5",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.125,
-                "y": -0.25,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -0.3240000009536743,
-                "y": -0.7599999904632568,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 2300985315,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 0,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Slot_1"
-        }
-    },
-    {
-        "entityid": 5242906,
-        "general": {
-            "name": "Slot_4",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.125,
-                "y": -0.25,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -0.4699999988079071,
-                "y": -0.7599999904632568,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 2300985315,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 0,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Slot_1"
-        }
-    },
-    {
-        "entityid": 5242907,
+        "entityid": 4194530,
         "general": {
             "name": "Slot_3",
             "tagid": 6,
@@ -235,9 +47,9 @@
         }
     },
     {
-        "entityid": 5242908,
+        "entityid": 4194534,
         "general": {
-            "name": "P1",
+            "name": "Slot_4",
             "tagid": 6,
             "subtag": 0,
             "isActive": true,
@@ -255,211 +67,14 @@
                 "z": 0.0
             },
             "translate": {
-                "x": -0.8849999904632568,
+                "x": -0.4699999988079071,
                 "y": -0.7599999904632568,
                 "z": 0.0
             }
         },
         "uirenderer": {
             "texpath": "",
-            "textureref": 0,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 2,
-            "worldtransform": false
-        }
-    },
-    {
-        "entityid": 5242909,
-        "general": {
-            "name": "UI-indicator17",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": -0.02083333395421505,
-                "y": 0.03703703731298447,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -0.1875,
-                "y": -0.9166666865348816,
-                "z": 17.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
-            "textureref": 3353,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 0.0
-            },
-            "layer": 0,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/UI-indicator.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "prefab": {
-            "prefab": "UI-indicator"
-        }
-    },
-    {
-        "entityid": 5242910,
-        "general": {
-            "name": "UI-indicator19",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": -0.02083333395421505,
-                "y": 0.03703703731298447,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -0.0885416641831398,
-                "y": -0.9166666865348816,
-                "z": 19.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
-            "textureref": 3353,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 0.0
-            },
-            "layer": 0,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/UI-indicator.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "prefab": {
-            "prefab": "UI-indicator"
-        }
-    },
-    {
-        "entityid": 5242911,
-        "general": {
-            "name": "UI-indicator20",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": -0.02083333395421505,
-                "y": 0.03703703731298447,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -0.046875,
-                "y": -0.9166666865348816,
-                "z": 20.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
-            "textureref": 3353,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 0.0
-            },
-            "layer": 0,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/UI-indicator.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "prefab": {
-            "prefab": "UI-indicator"
-        }
-    },
-    {
-        "entityid": 5242912,
-        "general": {
-            "name": "dashui",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.1666666716337204,
-                "y": -0.29629629850387573,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.78125,
-                "y": -0.6944444179534912,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "../assets/Compressed/UI-Dash.ctexture",
-            "textureref": 4125721315,
+            "textureref": 2300985315,
             "degree": 0.0,
             "slider": 1.0,
             "color": {
@@ -470,12 +85,18 @@
             },
             "layer": 0,
             "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Slot_1"
         }
     },
     {
-        "entityid": 5242913,
+        "entityid": 4194537,
         "general": {
-            "name": "P8",
+            "name": "Slot_5",
             "tagid": 6,
             "subtag": 0,
             "isActive": true,
@@ -493,137 +114,14 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 0.09375,
-                "y": -0.7592592835426331,
+                "x": -0.3240000009536743,
+                "y": -0.7599999904632568,
                 "z": 0.0
             }
         },
         "uirenderer": {
-            "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
-            "textureref": 4923,
-            "degree": 360.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 2,
-            "worldtransform": false
-        }
-    },
-    {
-        "entityid": 5242914,
-        "general": {
-            "name": "P6",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.125,
-                "y": -0.25,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -0.1875,
-                "y": -0.7592592835426331,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
-            "textureref": 4923,
-            "degree": 360.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 2,
-            "worldtransform": false
-        }
-    },
-    {
-        "entityid": 5242915,
-        "general": {
-            "name": "P4",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.125,
-                "y": -0.25,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -0.46875,
-                "y": -0.7592592835426331,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
-            "textureref": 4923,
-            "degree": 360.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 2,
-            "worldtransform": false
-        }
-    },
-    {
-        "entityid": 5242916,
-        "general": {
-            "name": "Leftshift",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.0989583358168602,
-                "y": -0.0833333358168602,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -360.0,
-                "y": -0.5462962985038757,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "../assets/Compressed/UI-Leftshift.ctexture",
-            "textureref": 3891596652,
+            "texpath": "",
+            "textureref": 2300985315,
             "degree": 0.0,
             "slider": 1.0,
             "color": {
@@ -636,68 +134,108 @@
             "worldtransform": false
         },
         "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/UI-Leftshift.lua",
-                    "variables": []
-                }
-            ]
-        }
-    },
-    {
-        "entityid": 5242917,
-        "general": {
-            "name": "UI-indicator3",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": -0.02083333395421505,
-                "y": 0.03703703731298447,
-                "z": 3.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -0.84375,
-                "y": -0.9166666865348816,
-                "z": 3.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
-            "textureref": 3353,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 0.0
-            },
-            "layer": 0,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/UI-indicator.lua",
-                    "variables": []
-                }
-            ]
+            "scriptscontainer": []
         },
         "prefab": {
-            "prefab": "UI-indicator"
+            "prefab": "Slot_1"
         }
     },
     {
-        "entityid": 5242918,
+        "entityid": 4194538,
+        "general": {
+            "name": "Slot_1",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.125,
+                "y": -0.25,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.09000000357627869,
+                "y": -0.7599999904632568,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 2300985315,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 0,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Slot_1"
+        }
+    },
+    {
+        "entityid": 4194539,
+        "general": {
+            "name": "Slot_6",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.125,
+                "y": -0.25,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -0.1860000044107437,
+                "y": -0.7599999904632568,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 2300985315,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 0,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Slot_1"
+        }
+    },
+    {
+        "entityid": 4194541,
         "general": {
             "name": "UI-indicator24",
             "tagid": 6,
@@ -749,9 +287,9 @@
         }
     },
     {
-        "entityid": 5242919,
+        "entityid": 4194543,
         "general": {
-            "name": "UI-indicator23",
+            "name": "UI-indicator3",
             "tagid": 6,
             "subtag": 0,
             "isActive": true,
@@ -761,6 +299,189 @@
             "scale": {
                 "x": -0.02083333395421505,
                 "y": 0.03703703731298447,
+                "z": 3.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -0.84375,
+                "y": -0.9166666865348816,
+                "z": 3.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
+            "textureref": 3353,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 0.0
+            },
+            "layer": 0,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/UI-indicator.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "prefab": {
+            "prefab": "UI-indicator"
+        }
+    },
+    {
+        "entityid": 4194544,
+        "general": {
+            "name": "Leftshift",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.0989583358168602,
+                "y": -0.0833333358168602,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -360.0,
+                "y": -0.5462962985038757,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "../assets/Compressed/UI-Leftshift.ctexture",
+            "textureref": 3891596652,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 0,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/UI-Leftshift.lua",
+                    "variables": []
+                }
+            ]
+        }
+    },
+    {
+        "entityid": 4194545,
+        "general": {
+            "name": "P4",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.125,
+                "y": -0.25,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -0.46875,
+                "y": -0.7592592835426331,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
+            "textureref": 4923,
+            "degree": 360.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 2,
+            "worldtransform": false
+        }
+    },
+    {
+        "entityid": 4194546,
+        "general": {
+            "name": "P6",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.125,
+                "y": -0.25,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -0.1875,
+                "y": -0.7592592835426331,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
+            "textureref": 4923,
+            "degree": 360.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 2,
+            "worldtransform": false
+        }
+    },
+    {
+        "entityid": 4194547,
+        "general": {
+            "name": "P8",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.125,
+                "y": -0.25,
                 "z": 1.0
             },
             "rotate": {
@@ -770,40 +491,70 @@
             },
             "translate": {
                 "x": 0.09375,
-                "y": -0.9166666865348816,
-                "z": 23.0
+                "y": -0.7592592835426331,
+                "z": 0.0
             }
         },
         "uirenderer": {
             "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
-            "textureref": 3353,
+            "textureref": 4923,
+            "degree": 360.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 2,
+            "worldtransform": false
+        }
+    },
+    {
+        "entityid": 4194548,
+        "general": {
+            "name": "dashui",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.1666666716337204,
+                "y": -0.29629629850387573,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.78125,
+                "y": -0.6944444179534912,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "../assets/Compressed/UI-Dash.ctexture",
+            "textureref": 4125721315,
             "degree": 0.0,
             "slider": 1.0,
             "color": {
                 "x": 1.0,
                 "y": 1.0,
                 "z": 1.0,
-                "w": 0.0
+                "w": 1.0
             },
             "layer": 0,
             "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/UI-indicator.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "prefab": {
-            "prefab": "UI-indicator"
         }
     },
     {
-        "entityid": 5242920,
+        "entityid": 4194549,
         "general": {
-            "name": "UI-indicator22",
+            "name": "UI-indicator20",
             "tagid": 6,
             "subtag": 0,
             "isActive": true,
@@ -821,9 +572,9 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 0.0520833320915699,
+                "x": -0.046875,
                 "y": -0.9166666865348816,
-                "z": 22.0
+                "z": 20.0
             }
         },
         "uirenderer": {
@@ -853,9 +604,113 @@
         }
     },
     {
-        "entityid": 5242921,
+        "entityid": 4194550,
         "general": {
-            "name": "P2",
+            "name": "UI-indicator19",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": -0.02083333395421505,
+                "y": 0.03703703731298447,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -0.0885416641831398,
+                "y": -0.9166666865348816,
+                "z": 19.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
+            "textureref": 3353,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 0.0
+            },
+            "layer": 0,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/UI-indicator.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "prefab": {
+            "prefab": "UI-indicator"
+        }
+    },
+    {
+        "entityid": 4194551,
+        "general": {
+            "name": "UI-indicator17",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": -0.02083333395421505,
+                "y": 0.03703703731298447,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -0.1875,
+                "y": -0.9166666865348816,
+                "z": 17.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
+            "textureref": 3353,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 0.0
+            },
+            "layer": 0,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/UI-indicator.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "prefab": {
+            "prefab": "UI-indicator"
+        }
+    },
+    {
+        "entityid": 4194552,
+        "general": {
+            "name": "P1",
             "tagid": 6,
             "subtag": 0,
             "isActive": true,
@@ -873,159 +728,14 @@
                 "z": 0.0
             },
             "translate": {
-                "x": -0.7447916865348816,
-                "y": -0.7592592835426331,
+                "x": -0.8849999904632568,
+                "y": -0.7599999904632568,
                 "z": 0.0
             }
         },
         "uirenderer": {
             "texpath": "",
-            "textureref": 4923,
-            "degree": 360.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 2,
-            "worldtransform": false
-        }
-    },
-    {
-        "entityid": 5242922,
-        "general": {
-            "name": "UI-indicator21",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": -0.02083333395421505,
-                "y": 0.03703703731298447,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -0.0052083334885537624,
-                "y": -0.9166666865348816,
-                "z": 21.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
-            "textureref": 3353,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 0.0
-            },
-            "layer": 0,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/UI-indicator.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "prefab": {
-            "prefab": "UI-indicator"
-        }
-    },
-    {
-        "entityid": 5242923,
-        "general": {
-            "name": "UI-indicator16",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": -0.02083333395421505,
-                "y": 0.03703703731298447,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -0.2291666716337204,
-                "y": -0.9166666865348816,
-                "z": 16.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
-            "textureref": 3353,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 0.0
-            },
-            "layer": 0,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/UI-indicator.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "prefab": {
-            "prefab": "UI-indicator"
-        }
-    },
-    {
-        "entityid": 5242944,
-        "general": {
-            "name": "HealthBar",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.550000011920929,
-                "y": -0.25999999046325684,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -0.699999988079071,
-                "y": -0.3199999928474426,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 4042149372,
+            "textureref": 0,
             "degree": 0.0,
             "slider": 1.0,
             "color": {
@@ -1039,337 +749,7 @@
         }
     },
     {
-        "entityid": 5242945,
-        "general": {
-            "name": "P5",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.125,
-                "y": -0.25,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -0.3229166567325592,
-                "y": -0.7592592835426331,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
-            "textureref": 4923,
-            "degree": 360.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 2,
-            "worldtransform": false
-        }
-    },
-    {
-        "entityid": 5242946,
-        "general": {
-            "name": "P3",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.125,
-                "y": -0.25,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -0.609375,
-                "y": -0.7592592835426331,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
-            "textureref": 4923,
-            "degree": 360.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 2,
-            "worldtransform": false
-        }
-    },
-    {
-        "entityid": 5242947,
-        "general": {
-            "name": "crosshair-3",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.03541666641831398,
-                "y": -0.06296296417713165,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.05000000074505806,
-                "y": -0.05000000074505806,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "../assets/Compressed/UI-cross-topleft.ctexture",
-            "textureref": 1964819264,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 0,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/Crosshair.lua",
-                    "variables": []
-                }
-            ]
-        }
-    },
-    {
-        "entityid": 5242948,
-        "general": {
-            "name": "crosshair-4",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.03541666641831398,
-                "y": -0.06296296417713165,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -0.05000000074505806,
-                "y": -0.05000000074505806,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "../assets/Compressed/UI-cross-topright.ctexture",
-            "textureref": 127443535,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 0,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/Crosshair.lua",
-                    "variables": []
-                }
-            ]
-        }
-    },
-    {
-        "entityid": 5242949,
-        "general": {
-            "name": "crosshair-2",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.03541666641831398,
-                "y": -0.06296296417713165,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.05000000074505806,
-                "y": 0.15000000596046448,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "../assets/Compressed/UI-cross-topright.ctexture",
-            "textureref": 127443535,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 0,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/Crosshair.lua",
-                    "variables": []
-                }
-            ]
-        }
-    },
-    {
-        "entityid": 5242950,
-        "general": {
-            "name": "crosshair-1",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.03541666641831398,
-                "y": -0.06296296417713165,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -0.05000000074505806,
-                "y": 0.15000000596046448,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "../assets/Compressed/UI-cross-topleft.ctexture",
-            "textureref": 1964819264,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 0,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/Crosshair.lua",
-                    "variables": []
-                }
-            ]
-        }
-    },
-    {
-        "entityid": 5242951,
-        "general": {
-            "name": "UI-indicator15",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": -0.02083333395421505,
-                "y": 0.03703703731298447,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -0.2864583432674408,
-                "y": -0.9166666865348816,
-                "z": 15.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
-            "textureref": 3353,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 0.0
-            },
-            "layer": 0,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/UI-indicator.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "prefab": {
-            "prefab": "UI-indicator"
-        }
-    },
-    {
-        "entityid": 5242952,
+        "entityid": 4194553,
         "general": {
             "name": "UI-indicator14",
             "tagid": 6,
@@ -1421,9 +801,9 @@
         }
     },
     {
-        "entityid": 5242953,
+        "entityid": 4194554,
         "general": {
-            "name": "UI-indicator12",
+            "name": "UI-indicator15",
             "tagid": 6,
             "subtag": 0,
             "isActive": true,
@@ -1441,9 +821,9 @@
                 "z": 0.0
             },
             "translate": {
-                "x": -0.4244791567325592,
+                "x": -0.2864583432674408,
                 "y": -0.9166666865348816,
-                "z": 12.0
+                "z": 15.0
             }
         },
         "uirenderer": {
@@ -1473,9 +853,9 @@
         }
     },
     {
-        "entityid": 5242954,
+        "entityid": 4194555,
         "general": {
-            "name": "UI-indicator11",
+            "name": "crosshair-1",
             "tagid": 6,
             "subtag": 0,
             "isActive": true,
@@ -1483,8 +863,8 @@
         },
         "transform": {
             "scale": {
-                "x": -0.02083333395421505,
-                "y": 0.03703703731298447,
+                "x": 0.03541666641831398,
+                "y": -0.06296296417713165,
                 "z": 1.0
             },
             "rotate": {
@@ -1493,202 +873,14 @@
                 "z": 0.0
             },
             "translate": {
-                "x": -0.4661458432674408,
-                "y": -0.9166666865348816,
-                "z": 11.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
-            "textureref": 3353,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 0.0
-            },
-            "layer": 0,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/UI-indicator.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "prefab": {
-            "prefab": "UI-indicator"
-        }
-    },
-    {
-        "entityid": 5242955,
-        "general": {
-            "name": "UI-Circle-Pattern",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.5210000276565552,
-                "y": 0.9259259104728699,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
+                "x": -0.05000000074505806,
+                "y": 0.15000000596046448,
                 "z": 0.0
             }
         },
         "uirenderer": {
-            "texpath": "../assets/Compressed/UI-Circle-Shooting-Pattern.ctexture",
-            "textureref": 401058174,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 0.0
-            },
-            "layer": 0,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/UI-ShootingPattern.lua",
-                    "variables": []
-                }
-            ]
-        }
-    },
-    {
-        "entityid": 5242957,
-        "general": {
-            "name": "UI-indicator2",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": -0.02083333395421505,
-                "y": 0.03703703731298447,
-                "z": 2.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -0.8854166865348816,
-                "y": -0.9166666865348816,
-                "z": 2.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
-            "textureref": 3353,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 0.0
-            },
-            "layer": 0,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/UI-indicator.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "prefab": {
-            "prefab": "UI-indicator"
-        }
-    },
-    {
-        "entityid": 5242958,
-        "general": {
-            "name": "Base",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0947916507720947,
-                "y": -0.35370370745658875,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -0.39364582300186157,
-                "y": -0.6854629516601563,
-                "z": 0.0
-            }
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/Base.lua",
-                    "variables": []
-                }
-            ]
-        }
-    },
-    {
-        "entityid": 5242993,
-        "general": {
-            "name": "Leftshift",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.0989583358168602,
-                "y": -0.0833333358168602,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -360.0,
-                "y": -0.5462962985038757,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "../assets/Compressed/UI-Leftshift.ctexture",
-            "textureref": 3891596652,
+            "texpath": "../assets/Compressed/UI-cross-topleft.ctexture",
+            "textureref": 1964819264,
             "degree": 0.0,
             "slider": 1.0,
             "color": {
@@ -1703,16 +895,286 @@
         "scripts": {
             "scriptscontainer": [
                 {
-                    "scriptFile": "../assets/Scripts/UI-Leftshift.lua",
+                    "scriptFile": "../assets/Scripts/Crosshair.lua",
                     "variables": []
                 }
             ]
         }
     },
     {
-        "entityid": 5242997,
+        "entityid": 4194556,
         "general": {
-            "name": "UI-indicator1",
+            "name": "crosshair-2",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.03541666641831398,
+                "y": -0.06296296417713165,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.05000000074505806,
+                "y": 0.15000000596046448,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "../assets/Compressed/UI-cross-topright.ctexture",
+            "textureref": 127443535,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 0,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/Crosshair.lua",
+                    "variables": []
+                }
+            ]
+        }
+    },
+    {
+        "entityid": 4194557,
+        "general": {
+            "name": "crosshair-4",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.03541666641831398,
+                "y": -0.06296296417713165,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -0.05000000074505806,
+                "y": -0.05000000074505806,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "../assets/Compressed/UI-cross-topright.ctexture",
+            "textureref": 127443535,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 0,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/Crosshair.lua",
+                    "variables": []
+                }
+            ]
+        }
+    },
+    {
+        "entityid": 4194558,
+        "general": {
+            "name": "crosshair-3",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.03541666641831398,
+                "y": -0.06296296417713165,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.05000000074505806,
+                "y": -0.05000000074505806,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "../assets/Compressed/UI-cross-topleft.ctexture",
+            "textureref": 1964819264,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 0,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/Crosshair.lua",
+                    "variables": []
+                }
+            ]
+        }
+    },
+    {
+        "entityid": 4194559,
+        "general": {
+            "name": "P3",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.125,
+                "y": -0.25,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -0.609375,
+                "y": -0.7592592835426331,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
+            "textureref": 4923,
+            "degree": 360.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 2,
+            "worldtransform": false
+        }
+    },
+    {
+        "entityid": 4194560,
+        "general": {
+            "name": "P5",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.125,
+                "y": -0.25,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -0.3229166567325592,
+                "y": -0.7592592835426331,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
+            "textureref": 4923,
+            "degree": 360.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 2,
+            "worldtransform": false
+        }
+    },
+    {
+        "entityid": 4194561,
+        "general": {
+            "name": "HealthBar",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.550000011920929,
+                "y": -0.25999999046325684,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -0.699999988079071,
+                "y": -0.3199999928474426,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 4042149372,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 2,
+            "worldtransform": false
+        }
+    },
+    {
+        "entityid": 4194562,
+        "general": {
+            "name": "UI-indicator16",
             "tagid": 6,
             "subtag": 0,
             "isActive": true,
@@ -1730,9 +1192,9 @@
                 "z": 0.0
             },
             "translate": {
-                "x": -0.9270833134651184,
+                "x": -0.2291666716337204,
                 "y": -0.9166666865348816,
-                "z": 1.0
+                "z": 16.0
             }
         },
         "uirenderer": {
@@ -1762,9 +1224,9 @@
         }
     },
     {
-        "entityid": 5242998,
+        "entityid": 4194563,
         "general": {
-            "name": "UI-indicator13",
+            "name": "UI-indicator21",
             "tagid": 6,
             "subtag": 0,
             "isActive": true,
@@ -1782,9 +1244,9 @@
                 "z": 0.0
             },
             "translate": {
-                "x": -0.3697916567325592,
+                "x": -0.0052083334885537624,
                 "y": -0.9166666865348816,
-                "z": 13.0
+                "z": 21.0
             }
         },
         "uirenderer": {
@@ -1814,9 +1276,9 @@
         }
     },
     {
-        "entityid": 5242999,
+        "entityid": 4194564,
         "general": {
-            "name": "UI-indicator7",
+            "name": "P2",
             "tagid": 6,
             "subtag": 0,
             "isActive": true,
@@ -1824,61 +1286,9 @@
         },
         "transform": {
             "scale": {
-                "x": -0.02083333395421505,
-                "y": 0.03703703731298447,
+                "x": 0.125,
+                "y": -0.25,
                 "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -0.6458333134651184,
-                "y": -0.9166666865348816,
-                "z": 7.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
-            "textureref": 3353,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 0.0
-            },
-            "layer": 0,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/UI-indicator.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "prefab": {
-            "prefab": "UI-indicator"
-        }
-    },
-    {
-        "entityid": 5243000,
-        "general": {
-            "name": "UI-indicator5",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": -0.02083333395421505,
-                "y": 0.03703703731298447,
-                "z": 5.0
             },
             "rotate": {
                 "x": 0.0,
@@ -1887,8 +1297,49 @@
             },
             "translate": {
                 "x": -0.7447916865348816,
+                "y": -0.7592592835426331,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 4923,
+            "degree": 360.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 2,
+            "worldtransform": false
+        }
+    },
+    {
+        "entityid": 4194565,
+        "general": {
+            "name": "UI-indicator22",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": -0.02083333395421505,
+                "y": 0.03703703731298447,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0520833320915699,
                 "y": -0.9166666865348816,
-                "z": 5.0
+                "z": 22.0
             }
         },
         "uirenderer": {
@@ -1918,7 +1369,153 @@
         }
     },
     {
-        "entityid": 5243001,
+        "entityid": 4194566,
+        "general": {
+            "name": "UI-indicator23",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": -0.02083333395421505,
+                "y": 0.03703703731298447,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.09375,
+                "y": -0.9166666865348816,
+                "z": 23.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
+            "textureref": 3353,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 0.0
+            },
+            "layer": 0,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/UI-indicator.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "prefab": {
+            "prefab": "UI-indicator"
+        }
+    },
+    {
+        "entityid": 4194567,
+        "general": {
+            "name": "Slot_1",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.125,
+                "y": -0.25,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -0.8849999904632568,
+                "y": -0.7599999904632568,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 2300985315,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 0,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Slot_1"
+        }
+    },
+    {
+        "entityid": 4194568,
+        "general": {
+            "name": "Slot_2",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.125,
+                "y": -0.25,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -0.7450000047683716,
+                "y": -0.7599999904632568,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 2300985315,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 0,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Slot_1"
+        }
+    },
+    {
+        "entityid": 4194569,
         "general": {
             "name": "UI-indicator18",
             "tagid": 6,
@@ -1970,9 +1567,9 @@
         }
     },
     {
-        "entityid": 5243002,
+        "entityid": 4194570,
         "general": {
-            "name": "Slot_2",
+            "name": "UI-indicator5",
             "tagid": 6,
             "subtag": 0,
             "isActive": true,
@@ -1980,8 +1577,60 @@
         },
         "transform": {
             "scale": {
-                "x": 0.125,
-                "y": -0.25,
+                "x": -0.02083333395421505,
+                "y": 0.03703703731298447,
+                "z": 5.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -0.7447916865348816,
+                "y": -0.9166666865348816,
+                "z": 5.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
+            "textureref": 3353,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 0.0
+            },
+            "layer": 0,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/UI-indicator.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "prefab": {
+            "prefab": "UI-indicator"
+        }
+    },
+    {
+        "entityid": 4194571,
+        "general": {
+            "name": "UI-indicator7",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": -0.02083333395421505,
+                "y": 0.03703703731298447,
                 "z": 1.0
             },
             "rotate": {
@@ -1990,14 +1639,170 @@
                 "z": 0.0
             },
             "translate": {
-                "x": -0.7450000047683716,
-                "y": -0.7599999904632568,
+                "x": -0.6458333134651184,
+                "y": -0.9166666865348816,
+                "z": 7.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
+            "textureref": 3353,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 0.0
+            },
+            "layer": 0,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/UI-indicator.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "prefab": {
+            "prefab": "UI-indicator"
+        }
+    },
+    {
+        "entityid": 4194572,
+        "general": {
+            "name": "UI-indicator13",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": -0.02083333395421505,
+                "y": 0.03703703731298447,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -0.3697916567325592,
+                "y": -0.9166666865348816,
+                "z": 13.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
+            "textureref": 3353,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 0.0
+            },
+            "layer": 0,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/UI-indicator.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "prefab": {
+            "prefab": "UI-indicator"
+        }
+    },
+    {
+        "entityid": 4194573,
+        "general": {
+            "name": "UI-indicator1",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": -0.02083333395421505,
+                "y": 0.03703703731298447,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -0.9270833134651184,
+                "y": -0.9166666865348816,
+                "z": 1.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
+            "textureref": 3353,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 0.0
+            },
+            "layer": 0,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/UI-indicator.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "prefab": {
+            "prefab": "UI-indicator"
+        }
+    },
+    {
+        "entityid": 4194574,
+        "general": {
+            "name": "Leftshift",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.0989583358168602,
+                "y": -0.0833333358168602,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -360.0,
+                "y": -0.5462962985038757,
                 "z": 0.0
             }
         },
         "uirenderer": {
-            "texpath": "",
-            "textureref": 2300985315,
+            "texpath": "../assets/Compressed/UI-Leftshift.ctexture",
+            "textureref": 3891596652,
             "degree": 0.0,
             "slider": 1.0,
             "color": {
@@ -2010,16 +1815,18 @@
             "worldtransform": false
         },
         "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Slot_1"
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/UI-Leftshift.lua",
+                    "variables": []
+                }
+            ]
         }
     },
     {
-        "entityid": 5243003,
+        "entityid": 4194575,
         "general": {
-            "name": "Slot_1",
+            "name": "Base",
             "tagid": 6,
             "subtag": 0,
             "isActive": true,
@@ -2027,8 +1834,8 @@
         },
         "transform": {
             "scale": {
-                "x": 0.125,
-                "y": -0.25,
+                "x": 1.0947916507720947,
+                "y": -0.35370370745658875,
                 "z": 1.0
             },
             "rotate": {
@@ -2037,36 +1844,229 @@
                 "z": 0.0
             },
             "translate": {
-                "x": -0.8849999904632568,
-                "y": -0.7599999904632568,
+                "x": -0.39364582300186157,
+                "y": -0.6854629516601563,
                 "z": 0.0
             }
         },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/Base.lua",
+                    "variables": []
+                }
+            ]
+        }
+    },
+    {
+        "entityid": 4194576,
+        "general": {
+            "name": "UI-indicator2",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": -0.02083333395421505,
+                "y": 0.03703703731298447,
+                "z": 2.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -0.8854166865348816,
+                "y": -0.9166666865348816,
+                "z": 2.0
+            }
+        },
         "uirenderer": {
-            "texpath": "",
-            "textureref": 2300985315,
+            "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
+            "textureref": 3353,
             "degree": 0.0,
             "slider": 1.0,
             "color": {
                 "x": 1.0,
                 "y": 1.0,
                 "z": 1.0,
-                "w": 1.0
+                "w": 0.0
             },
             "layer": 0,
             "worldtransform": false
         },
         "scripts": {
-            "scriptscontainer": []
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/UI-indicator.lua",
+                    "variables": []
+                }
+            ]
         },
         "prefab": {
-            "prefab": "Slot_1"
+            "prefab": "UI-indicator"
         }
     },
     {
-        "entityid": 5243004,
+        "entityid": 4194577,
         "general": {
-            "name": "UI-indicator6",
+            "name": "UI-Circle-Pattern",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.5210000276565552,
+                "y": 0.9259259104728699,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "../assets/Compressed/UI-Circle-Shooting-Pattern.ctexture",
+            "textureref": 401058174,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 0.0
+            },
+            "layer": 0,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/UI-ShootingPattern.lua",
+                    "variables": []
+                }
+            ]
+        }
+    },
+    {
+        "entityid": 4194578,
+        "general": {
+            "name": "UI-indicator11",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": -0.02083333395421505,
+                "y": 0.03703703731298447,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -0.4661458432674408,
+                "y": -0.9166666865348816,
+                "z": 11.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
+            "textureref": 3353,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 0.0
+            },
+            "layer": 0,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/UI-indicator.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "prefab": {
+            "prefab": "UI-indicator"
+        }
+    },
+    {
+        "entityid": 4194579,
+        "general": {
+            "name": "UI-indicator12",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": -0.02083333395421505,
+                "y": 0.03703703731298447,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -0.4244791567325592,
+                "y": -0.9166666865348816,
+                "z": 12.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
+            "textureref": 3353,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 0.0
+            },
+            "layer": 0,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/UI-indicator.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "prefab": {
+            "prefab": "UI-indicator"
+        }
+    },
+    {
+        "entityid": 4194624,
+        "general": {
+            "name": "HealthBarEmpty",
             "tagid": 0,
             "subtag": 0,
             "isActive": true,
@@ -2074,8 +2074,8 @@
         },
         "transform": {
             "scale": {
-                "x": -0.020999999716877937,
-                "y": 0.03700000047683716,
+                "x": 0.5600000023841858,
+                "y": -0.25999999046325684,
                 "z": 1.0
             },
             "rotate": {
@@ -2084,104 +2084,14 @@
                 "z": 0.0
             },
             "translate": {
-                "x": -0.7059999704360962,
-                "y": -0.9169999957084656,
-                "z": 6.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 0,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 0.0
-            },
-            "layer": 0,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/UI-indicator.lua",
-                    "variables": []
-                }
-            ]
-        }
-    },
-    {
-        "entityid": 5243005,
-        "general": {
-            "name": "P7",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.125,
-                "y": -0.25,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -0.046875,
-                "y": -0.7592592835426331,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
-            "textureref": 4923,
-            "degree": 360.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 2,
-            "worldtransform": false
-        }
-    },
-    {
-        "entityid": 5243006,
-        "general": {
-            "name": "Queue_Arrow (new)",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.125,
-                "y": 0.125,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.029999999329447746,
-                "y": -0.550000011920929,
+                "x": -0.699999988079071,
+                "y": -0.3199999928474426,
                 "z": 0.0
             }
         },
         "uirenderer": {
             "texpath": "",
-            "textureref": 3021241502,
+            "textureref": 47813768,
             "degree": 0.0,
             "slider": 1.0,
             "color": {
@@ -2195,251 +2105,7 @@
         }
     },
     {
-        "entityid": 5243007,
-        "general": {
-            "name": "Slot_7",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.125,
-                "y": -0.25,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -0.04500000178813934,
-                "y": -0.7599999904632568,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 2300985315,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 0,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Slot_1"
-        }
-    },
-    {
-        "entityid": 5243008,
-        "general": {
-            "name": "UI-indicator4",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": -0.02083333395421505,
-                "y": 0.03703703731298447,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -0.7864583134651184,
-                "y": -0.9166666865348816,
-                "z": 4.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
-            "textureref": 3353,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 0.0
-            },
-            "layer": 0,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/UI-indicator.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "prefab": {
-            "prefab": "UI-indicator"
-        }
-    },
-    {
-        "entityid": 5243009,
-        "general": {
-            "name": "Queue_Text",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.25,
-                "y": -0.25,
-                "z": 0.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -0.8299999833106995,
-                "y": -0.5299999713897705,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 1495668265,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 0,
-            "worldtransform": false
-        }
-    },
-    {
-        "entityid": 5243010,
-        "general": {
-            "name": "UI-indicator10",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": -0.02083333395421505,
-                "y": 0.03703703731298447,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -0.5078125,
-                "y": -0.9166666865348816,
-                "z": 10.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
-            "textureref": 3353,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 0.0
-            },
-            "layer": 0,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/UI-indicator.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "prefab": {
-            "prefab": "UI-indicator"
-        }
-    },
-    {
-        "entityid": 5243011,
-        "general": {
-            "name": "UI-indicator9",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": -0.02083333395421505,
-                "y": 0.03703703731298447,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -0.5625,
-                "y": -0.9166666865348816,
-                "z": 9.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
-            "textureref": 3353,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 0.0
-            },
-            "layer": 0,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/UI-indicator.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "prefab": {
-            "prefab": "UI-indicator"
-        }
-    },
-    {
-        "entityid": 5243013,
+        "entityid": 4194625,
         "general": {
             "name": "UI-indicator8",
             "tagid": 6,
@@ -2491,18 +2157,18 @@
         }
     },
     {
-        "entityid": 5243014,
+        "entityid": 4194626,
         "general": {
-            "name": "HealthBarEmpty",
-            "tagid": 0,
+            "name": "UI-indicator9",
+            "tagid": 6,
             "subtag": 0,
             "isActive": true,
             "isPaused": false
         },
         "transform": {
             "scale": {
-                "x": 0.5600000023841858,
-                "y": -0.25999999046325684,
+                "x": -0.02083333395421505,
+                "y": 0.03703703731298447,
                 "z": 1.0
             },
             "rotate": {
@@ -2511,14 +2177,118 @@
                 "z": 0.0
             },
             "translate": {
-                "x": -0.699999988079071,
-                "y": -0.3199999928474426,
+                "x": -0.5625,
+                "y": -0.9166666865348816,
+                "z": 9.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
+            "textureref": 3353,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 0.0
+            },
+            "layer": 0,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/UI-indicator.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "prefab": {
+            "prefab": "UI-indicator"
+        }
+    },
+    {
+        "entityid": 4194627,
+        "general": {
+            "name": "UI-indicator10",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": -0.02083333395421505,
+                "y": 0.03703703731298447,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -0.5078125,
+                "y": -0.9166666865348816,
+                "z": 10.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
+            "textureref": 3353,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 0.0
+            },
+            "layer": 0,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/UI-indicator.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "prefab": {
+            "prefab": "UI-indicator"
+        }
+    },
+    {
+        "entityid": 4194628,
+        "general": {
+            "name": "Queue_Text",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.25,
+                "y": -0.25,
+                "z": 0.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -0.8299999833106995,
+                "y": -0.5299999713897705,
                 "z": 0.0
             }
         },
         "uirenderer": {
             "texpath": "",
-            "textureref": 47813768,
+            "textureref": 1495668265,
             "degree": 0.0,
             "slider": 1.0,
             "color": {
@@ -2529,6 +2299,283 @@
             },
             "layer": 0,
             "worldtransform": false
+        }
+    },
+    {
+        "entityid": 4194629,
+        "general": {
+            "name": "UI-indicator4",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": -0.02083333395421505,
+                "y": 0.03703703731298447,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -0.7864583134651184,
+                "y": -0.9166666865348816,
+                "z": 4.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
+            "textureref": 3353,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 0.0
+            },
+            "layer": 0,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/UI-indicator.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "prefab": {
+            "prefab": "UI-indicator"
+        }
+    },
+    {
+        "entityid": 4194630,
+        "general": {
+            "name": "Slot_7",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.125,
+                "y": -0.25,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -0.04500000178813934,
+                "y": -0.7599999904632568,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 2300985315,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 0,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Slot_1"
+        }
+    },
+    {
+        "entityid": 4194631,
+        "general": {
+            "name": "Queue_Arrow (new)",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.125,
+                "y": 0.125,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.029999999329447746,
+                "y": -0.550000011920929,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 3021241502,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 0,
+            "worldtransform": false
+        }
+    },
+    {
+        "entityid": 4194632,
+        "general": {
+            "name": "P7",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.125,
+                "y": -0.25,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -0.046875,
+                "y": -0.7592592835426331,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
+            "textureref": 4923,
+            "degree": 360.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 2,
+            "worldtransform": false
+        }
+    },
+    {
+        "entityid": 4194633,
+        "general": {
+            "name": "UI-indicator6",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": -0.020999999716877937,
+                "y": 0.03700000047683716,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -0.7059999704360962,
+                "y": -0.9169999957084656,
+                "z": 6.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 0,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 0.0
+            },
+            "layer": 0,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/UI-indicator.lua",
+                    "variables": []
+                }
+            ]
+        }
+    },
+    {
+        "entityid": 4194635,
+        "general": {
+            "name": "UIHider",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 2.0,
+                "y": 2.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 0,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 0.0
+            },
+            "layer": 10,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "UIHider"
         }
     }
 ]
