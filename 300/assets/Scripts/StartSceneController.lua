@@ -46,6 +46,7 @@ function Update()
 
     frame3Translate = frame3:GetTransform().mTranslate
     frame4Translate = frame4:GetTransform().mTranslate
+    frame3Scale = frame3:GetTransform().mScale
     frame4Scale = frame4:GetTransform().mScale
 
     timer = timer + 1 * FPSManager.GetDT()
@@ -54,25 +55,22 @@ function Update()
     if (timer >= 3 and timer < 5) then
         frame2State = true
         frame1State = false
-    elseif (timer >= 5 and timer < 7) then
+    elseif (timer >= 5 and timer < 8.5) then
         frame3State = true
         frame2State = false
-    elseif (timer >= 7 and timer < 13) then
+    elseif (timer >= 8.5 and timer < 16) then
         frame4State = true
         frame3State = false
-    elseif (timer >= 13 and timer < 15) then
+    elseif (timer >= 16 and timer < 18) then
         frame5State = true
         frame4State = false
-    elseif (timer >= 15 and timer < 17) then
+    elseif (timer >= 18 and timer < 20) then
         frame6State = true
         frame5State = false
-    elseif (timer >= 17 and timer < 19) then
+    elseif (timer >= 20 and timer < 22) then
         frame7State = true
         frame6State = false
-    elseif (timer >= 19 and timer < 21) then
-        frame8State = true
-        frame7State = false
-    elseif (timer >= 21) then
+    elseif (timer >= 22) then
         gameStateSys:ChangeGameState("Tutorial")
     end
 
@@ -82,7 +80,6 @@ function Update()
     elseif(frame2State) then
         Frame2()
     elseif(frame3State) then
-        Frame3()
         Shake()
     elseif(frame4State) then
         Frame4()
@@ -99,67 +96,112 @@ function Update()
 end
 
 function Frame1()
-    
+    if (timer >= 0 and timer < 3) then
+        if(frame1:GetTransform().mTranslate.x <= 2) then
+            frame1:GetTransform().mTranslate.x = frame1:GetTransform().mTranslate.x + 1 * FPSManager.GetDT()
+        end
+    end
 end
 
 function Frame2()
-    frame2:GetUIrenderer().mColor.w = 1
+    if (timer >= 3 and timer < 5) then
+        if(frame2:GetTransform().mTranslate.x <= 2) then
+            frame2:GetTransform().mTranslate.x = frame2:GetTransform().mTranslate.x + 1 * FPSManager.GetDT()
+        end
+    end
 end
 
 function Frame3()
-    frame3:GetUIrenderer().mColor.w = 1
+
 end
 
 function Frame4()
-    frame4:GetUIrenderer().mColor.w = 1
+    if (timer >= 11 and timer < 16) then
+        if(frame4:GetTransform().mTranslate.x <= 4) then
+            frame4:GetTransform().mTranslate.x = frame4:GetTransform().mTranslate.x + 1 * FPSManager.GetDT()
+        end
+    end
 end
 
 function Frame5()
-    frame5:GetUIrenderer().mColor.w = 1
+    if (timer >= 16 and timer < 18) then
+        if(frame5:GetTransform().mTranslate.x <= 2) then
+            frame5:GetTransform().mTranslate.x = frame5:GetTransform().mTranslate.x + 1 * FPSManager.GetDT()
+        end
+    end
 end
 
 function Frame6()
-    frame6:GetUIrenderer().mColor.w = 1
+    if (timer >= 18 and timer < 20) then
+        if(frame6:GetTransform().mTranslate.x <= 2) then
+            frame6:GetTransform().mTranslate.x = frame6:GetTransform().mTranslate.x + 1 * FPSManager.GetDT()
+        end
+    end
 end
 
 function Frame7()
-    frame7:GetUIrenderer().mColor.w = 1
+    if (timer >= 20 and timer < 22) then
+        if(frame7:GetTransform().mTranslate.x <= 2) then
+            fram7:GetTransform().mTranslate.x = frame7:GetTransform().mTranslate.x + 1 * FPSManager.GetDT()
+        end
+    end
 end
 
 function Frame8()
-    frame8:GetUIrenderer().mColor.w = 1
+
 end
 
 function Shake()
-    if (timer >= 5 and timer < 5.1) then
-        frame3Translate.x = -0.02
-        frame3Translate.y = -0.02
-    elseif (timer >= 5.1 and timer < 5.15) then
+    if (timer >= 5 and timer < 6.5) then
+        if (frame3Scale.x < 2.5 and frame3Scale.y > -2.5) then
+            frame3Scale.x = frame3Scale.x + 0.2 * FPSManager.GetDT()
+            frame3Scale.y = frame3Scale.y - 0.2 * FPSManager.GetDT()
+        end
+    end
+    if (timer >= 6.5 and timer < 6.55) then
+        frame3Translate.x = -0.01
+        frame3Translate.y = -0.01
+    elseif (timer >= 6.55 and timer < 6.6) then
         frame3Translate.x = 0
         frame3Translate.y = 0
-    elseif (timer >= 5.15 and timer < 5.2) then
-        frame3Translate.x = 0.02
-        frame3Translate.y = 0.02
-    elseif (timer >= 5.2 and timer < 5.25) then
-        frame3Translatex = 0
-        frame3Translatey = 0
-    elseif (timer >= 5.25 and timer < 5.3) then
-        frame3Translate.x = -0.02
-        frame3Translate.y = -0.02
-    elseif (timer >= 5.3 and timer < 5.35) then
+    elseif (timer >= 6.6 and timer < 6.65) then
+        frame3Translate.x = 0.01
+        frame3Translate.y = 0.01
+    elseif (timer >= 6.65 and timer < 6.7) then
         frame3Translate.x = 0
         frame3Translate.y = 0
-    elseif (timer >= 5.35 and timer < 5.4) then
-        frame3Translate.x = 0.02
-        frame3Translate.y = 0.02
-    elseif (timer >= 5.4 and timer < 5.45) then
+    elseif (timer >= 6.7 and timer < 6.75) then
+        frame3Translate.x = -0.01
+        frame3Translate.y = -0.01
+    elseif (timer >= 6.75 and timer < 6.8) then
         frame3Translate.x = 0
         frame3Translate.y = 0
+    elseif (timer >= 6.8 and timer < 6.85) then
+        frame3Translate.x = 0.01
+        frame3Translate.y = 0.01
+    elseif (timer >= 6.85 and timer < 6.9) then
+        frame3Translate.x = 0
+        frame3Translate.y = 0
+    elseif (timer >= 6.9 and timer < 6.95) then
+        frame3Translate.x = -0.01
+        frame3Translate.y = -0.01
+    elseif (timer >= 6.95 and timer < 7) then
+        frame3Translate.x = 0
+        frame3Translate.y = 0
+    elseif (timer >= 7 and timer < 7.5) then
+        frame3Translate.x = 0.01
+        frame3Translate.y = 0.01
+    elseif (timer >= 7.5 and timer < 8) then
+        frame3Translate.x = 0
+        frame3Translate.y = 0
+    end
+    if (timer > 8) then
+        frame3:GetTransform().mTranslate.x = 1000
     end
 end
 
 function Zoom()
-    if (timer >= 8 and timer < 13) then
+    if (timer >= 8 and timer < 15) then
         if (frame4Scale.x < 3.2 and frame4Scale.y > -3.2) then
             frame4Scale.x = frame4Scale.x + 0.3 * FPSManager.GetDT()
             frame4Scale.y = frame4Scale.y - 0.3 * FPSManager.GetDT()
