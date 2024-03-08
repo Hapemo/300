@@ -1,7 +1,7 @@
 {
-    "entityid": 12582956,
+    "entityid": 12583067,
     "general": {
-        "name": "Out_Of_Bounds_Boss",
+        "name": "Out_Of_Bounds_Left_Hand",
         "tagid": 4,
         "subtag": 0,
         "isActive": true,
@@ -9,9 +9,9 @@
     },
     "transform": {
         "scale": {
-            "x": 34.599998474121094,
+            "x": 15.3100004196167,
             "y": 9.118487358093262,
-            "z": 29.940000534057617
+            "z": 21.520000457763672
         },
         "rotate": {
             "x": 0.0,
@@ -19,9 +19,9 @@
             "z": 0.0
         },
         "translate": {
-            "x": 3.450000047683716,
-            "y": -10.161999702453613,
-            "z": 8.420000076293945
+            "x": 25.799999237060547,
+            "y": -2.6500000953674316,
+            "z": 22.56999969482422
         }
     },
     "rigidbody": {
@@ -57,6 +57,6 @@
         "scriptscontainer": []
     },
     "prefab": {
-        "prefab": "Out_Of_Bounds_Boss"
+        "prefab": "Out_Of_Bounds_Left_Hand"
     }
 }

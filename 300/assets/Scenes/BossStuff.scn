@@ -1,35 +1,8 @@
 [
     {
-        "entityid": 10486036,
+        "entityid": 3145960,
         "general": {
-            "name": "Spiral_Bullet_Spawn",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 7.848718643188477,
-                "y": 0.0,
-                "z": 12.419782638549805
-            }
-        }
-    },
-    {
-        "entityid": 10486037,
-        "general": {
-            "name": "Out_Of_Bounds_Boss",
+            "name": "Out_Of_Bounds_Right_Thumb",
             "tagid": 4,
             "subtag": 0,
             "isActive": true,
@@ -37,9 +10,9 @@
         },
         "transform": {
             "scale": {
-                "x": 11.90999984741211,
-                "y": 9.118487358093262,
-                "z": 14.930000305175781
+                "x": 4.96999979019165,
+                "y": 7.947742938995361,
+                "z": 8.869999885559082
             },
             "rotate": {
                 "x": 0.0,
@@ -47,9 +20,9 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 0.8100000023841858,
-                "y": -10.09246826171875,
-                "z": 8.510000228881836
+                "x": 21.616165161132813,
+                "y": -5.353341102600098,
+                "z": 1.6165862083435059
             }
         },
         "rigidbody": {
@@ -85,11 +58,217 @@
             "scriptscontainer": []
         },
         "prefab": {
-            "prefab": "Out_Of_Bounds_Boss"
+            "prefab": "Out_Of_Bounds_Left_Thumb"
         }
     },
     {
-        "entityid": 10486039,
+        "entityid": 3145961,
+        "general": {
+            "name": "Out_Of_Bounds_Left_Thumb",
+            "tagid": 4,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 4.96999979019165,
+                "y": 7.94782829284668,
+                "z": 8.869999885559082
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": -90.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 22.482486724853516,
+                "y": -3.950303077697754,
+                "z": 15.543195724487305
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": false,
+                "y": false,
+                "z": false
+            },
+            "gravity": false
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 0.8199999928474426,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 6.570000171661377,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Out_Of_Bounds_Left_Thumb"
+        }
+    },
+    {
+        "entityid": 3145972,
+        "general": {
+            "name": "Out_Of_Bounds_Right_Hand",
+            "tagid": 4,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 15.3100004196167,
+                "y": 9.118339538574219,
+                "z": 21.520000457763672
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": -90.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 25.158857345581055,
+                "y": -5.170000076293945,
+                "z": -4.344974040985107
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": false,
+                "y": false,
+                "z": false
+            },
+            "gravity": false
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 0.8199999928474426,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 6.570000171661377,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Out_Of_Bounds_Left_Hand"
+        }
+    },
+    {
+        "entityid": 3145973,
+        "general": {
+            "name": "Spawn_Point_Ref",
+            "tagid": 1,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 3.0,
+                "y": 3.0,
+                "z": 3.0
+            },
+            "rotate": {
+                "x": 2.856468915939331,
+                "y": -1.3754568099975586,
+                "z": 0.2807457447052002
+            },
+            "translate": {
+                "x": 12.322985649108887,
+                "y": 15.56225872039795,
+                "z": 9.885177612304688
+            }
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3400,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "castShadow": true,
+            "materialinstance": [
+                "../assets/Compressed/UI-Yellow-s3&321.ctexture",
+                "../assets/Compressed/UI-Yellow-s3&321.ctexture",
+                " ",
+                " ",
+                " ",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/Particle_Sphere.geom",
+            "texturerefid": [
+                1240881460,
+                1240881460,
+                0,
+                0,
+                0,
+                0
+            ]
+        },
+        "spherecollider": {
+            "scaleoffset": 1.0,
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": true
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/BossBullet.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "prefab": {
+            "prefab": "Boss_Bullet"
+        }
+    },
+    {
+        "entityid": 3145974,
         "general": {
             "name": "Boss",
             "tagid": 1,
@@ -186,85 +365,154 @@
         }
     },
     {
-        "entityid": 10486041,
+        "entityid": 3145975,
         "general": {
-            "name": "Spawn_Point_Ref",
-            "tagid": 1,
+            "name": "Out_Of_Bounds_Boss_Body",
+            "tagid": 4,
             "subtag": 0,
             "isActive": true,
             "isPaused": false
         },
         "transform": {
             "scale": {
-                "x": 3.0,
-                "y": 3.0,
-                "z": 3.0
+                "x": 34.599998474121094,
+                "y": 9.118459701538086,
+                "z": 39.189998626708984
             },
             "rotate": {
-                "x": 2.856468915939331,
-                "y": -1.3754568099975586,
-                "z": 0.2807457447052002
+                "x": 0.0,
+                "y": -90.0,
+                "z": 0.0
             },
             "translate": {
-                "x": 12.322985649108887,
-                "y": 15.56225872039795,
-                "z": 9.885177612304688
+                "x": 0.18000000715255737,
+                "y": -4.2125115394592285,
+                "z": 8.34000015258789
             }
         },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 3400,
-            "instancecolor": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "bloomthreshold": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "castShadow": true,
-            "materialinstance": [
-                "../assets/Compressed/UI-Yellow-s3&321.ctexture",
-                "../assets/Compressed/UI-Yellow-s3&321.ctexture",
-                " ",
-                " ",
-                " ",
-                " "
-            ],
-            "mesh": "../assets/compiled_geom/Particle_Sphere.geom",
-            "texturerefid": [
-                1240881460,
-                1240881460,
-                0,
-                0,
-                0,
-                0
-            ]
-        },
-        "spherecollider": {
-            "scaleoffset": 1.0,
-            "translateoffset": {
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
                 "x": 0.0,
                 "y": 0.0,
                 "z": 0.0
             },
-            "istrigger": true
+            "rotationconstraints": {
+                "x": false,
+                "y": false,
+                "z": false
+            },
+            "gravity": false
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 0.8199999928474426,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 6.570000171661377,
+                "z": 0.0
+            },
+            "istrigger": false
         },
         "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/BossBullet.lua",
-                    "variables": []
-                }
-            ]
+            "scriptscontainer": []
         },
         "prefab": {
-            "prefab": "Boss_Bullet"
+            "prefab": "Out_Of_Bounds_Boss"
+        }
+    },
+    {
+        "entityid": 3145977,
+        "general": {
+            "name": "Spiral_Bullet_Spawn",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 7.848718643188477,
+                "y": 0.0,
+                "z": 12.419782638549805
+            }
+        }
+    },
+    {
+        "entityid": 3145978,
+        "general": {
+            "name": "Out_Of_Bounds_Left_Hand_1",
+            "tagid": 4,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 11.960000038146973,
+                "y": 9.118424415588379,
+                "z": 21.459999084472656
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": -90.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 25.799999237060547,
+                "y": -4.956158638000488,
+                "z": 24.15999984741211
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": false,
+                "y": false,
+                "z": false
+            },
+            "gravity": false
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 0.8199999928474426,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 6.570000171661377,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Out_Of_Bounds_Left_Hand"
         }
     }
 ]
