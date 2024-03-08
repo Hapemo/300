@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 208,
+        "entityid": 7340269,
         "general": {
             "name": "UI-Circle-Pattern",
             "tagid": 6,
@@ -49,7 +49,101 @@
         }
     },
     {
-        "entityid": 209,
+        "entityid": 7340270,
+        "general": {
+            "name": "HealthBar_Boss",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.5,
+                "y": -0.25,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.800000011920929,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 4042149372,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 0.37293457984924316,
+                "y": 0.028346404433250427,
+                "z": 0.8584905862808228,
+                "w": 1.0
+            },
+            "layer": 2,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "HealthBar_Boss"
+        }
+    },
+    {
+        "entityid": 7340271,
+        "general": {
+            "name": "HealthBarEmpty_Boss",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.5,
+                "y": -0.25,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.800000011920929,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 47813768,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 0,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "HealthBarEmpty_Boss"
+        }
+    },
+    {
+        "entityid": 7340308,
         "general": {
             "name": "UI-indicator15",
             "tagid": 6,
@@ -101,7 +195,7 @@
         }
     },
     {
-        "entityid": 210,
+        "entityid": 7340309,
         "general": {
             "name": "UI-indicator14",
             "tagid": 6,
@@ -153,7 +247,7 @@
         }
     },
     {
-        "entityid": 211,
+        "entityid": 7340311,
         "general": {
             "name": "UI-indicator12",
             "tagid": 6,
@@ -205,7 +299,7 @@
         }
     },
     {
-        "entityid": 212,
+        "entityid": 7340312,
         "general": {
             "name": "UI-indicator11",
             "tagid": 6,
@@ -257,7 +351,7 @@
         }
     },
     {
-        "entityid": 213,
+        "entityid": 7340313,
         "general": {
             "name": "UI-indicator4",
             "tagid": 6,
@@ -309,7 +403,7 @@
         }
     },
     {
-        "entityid": 214,
+        "entityid": 7340314,
         "general": {
             "name": "Queue_Text",
             "tagid": 6,
@@ -350,7 +444,7 @@
         }
     },
     {
-        "entityid": 215,
+        "entityid": 7340315,
         "general": {
             "name": "UI-indicator10",
             "tagid": 6,
@@ -402,7 +496,7 @@
         }
     },
     {
-        "entityid": 216,
+        "entityid": 7340316,
         "general": {
             "name": "UI-indicator9",
             "tagid": 6,
@@ -454,7 +548,7 @@
         }
     },
     {
-        "entityid": 217,
+        "entityid": 7340317,
         "general": {
             "name": "UI-indicator8",
             "tagid": 6,
@@ -506,7 +600,7 @@
         }
     },
     {
-        "entityid": 218,
+        "entityid": 7340318,
         "general": {
             "name": "HealthBarEmpty",
             "tagid": 0,
@@ -526,8 +620,8 @@
                 "z": 0.0
             },
             "translate": {
-                "x": -0.6800000071525574,
-                "y": 0.699999988079071,
+                "x": -0.699999988079071,
+                "y": -0.3199999928474426,
                 "z": 0.0
             }
         },
@@ -547,7 +641,7 @@
         }
     },
     {
-        "entityid": 219,
+        "entityid": 7340319,
         "general": {
             "name": "HealthBar",
             "tagid": 6,
@@ -567,8 +661,8 @@
                 "z": 0.0
             },
             "translate": {
-                "x": -0.6800000071525574,
-                "y": 0.6899999976158142,
+                "x": -0.699999988079071,
+                "y": -0.3199999928474426,
                 "z": 0.0
             }
         },
@@ -588,7 +682,7 @@
         }
     },
     {
-        "entityid": 220,
+        "entityid": 7340320,
         "general": {
             "name": "P5",
             "tagid": 6,
@@ -629,7 +723,7 @@
         }
     },
     {
-        "entityid": 221,
+        "entityid": 7340321,
         "general": {
             "name": "P3",
             "tagid": 6,
@@ -670,7 +764,7 @@
         }
     },
     {
-        "entityid": 222,
+        "entityid": 7340322,
         "general": {
             "name": "crosshair-3",
             "tagid": 6,
@@ -719,7 +813,7 @@
         }
     },
     {
-        "entityid": 223,
+        "entityid": 7340323,
         "general": {
             "name": "crosshair-4",
             "tagid": 6,
@@ -768,7 +862,7 @@
         }
     },
     {
-        "entityid": 224,
+        "entityid": 7340324,
         "general": {
             "name": "crosshair-2",
             "tagid": 6,
@@ -817,7 +911,7 @@
         }
     },
     {
-        "entityid": 225,
+        "entityid": 7340325,
         "general": {
             "name": "crosshair-1",
             "tagid": 6,
@@ -866,7 +960,7 @@
         }
     },
     {
-        "entityid": 226,
+        "entityid": 7340326,
         "general": {
             "name": "Base",
             "tagid": 6,
@@ -901,7 +995,7 @@
         }
     },
     {
-        "entityid": 227,
+        "entityid": 7340327,
         "general": {
             "name": "Leftshift",
             "tagid": 6,
@@ -950,7 +1044,7 @@
         }
     },
     {
-        "entityid": 228,
+        "entityid": 7340328,
         "general": {
             "name": "UI-indicator1",
             "tagid": 6,
@@ -1002,7 +1096,7 @@
         }
     },
     {
-        "entityid": 229,
+        "entityid": 7340329,
         "general": {
             "name": "UI-indicator13",
             "tagid": 6,
@@ -1054,7 +1148,7 @@
         }
     },
     {
-        "entityid": 230,
+        "entityid": 7340330,
         "general": {
             "name": "UI-indicator7",
             "tagid": 6,
@@ -1106,7 +1200,7 @@
         }
     },
     {
-        "entityid": 231,
+        "entityid": 7340331,
         "general": {
             "name": "UI-indicator5",
             "tagid": 6,
@@ -1158,7 +1252,7 @@
         }
     },
     {
-        "entityid": 233,
+        "entityid": 7340332,
         "general": {
             "name": "UI-indicator18",
             "tagid": 6,
@@ -1210,7 +1304,7 @@
         }
     },
     {
-        "entityid": 234,
+        "entityid": 7340333,
         "general": {
             "name": "Slot_2",
             "tagid": 6,
@@ -1257,7 +1351,7 @@
         }
     },
     {
-        "entityid": 235,
+        "entityid": 7340334,
         "general": {
             "name": "Slot_1",
             "tagid": 6,
@@ -1304,7 +1398,7 @@
         }
     },
     {
-        "entityid": 236,
+        "entityid": 7340335,
         "general": {
             "name": "UI-indicator6",
             "tagid": 0,
@@ -1353,7 +1447,7 @@
         }
     },
     {
-        "entityid": 237,
+        "entityid": 7340336,
         "general": {
             "name": "P7",
             "tagid": 6,
@@ -1394,7 +1488,7 @@
         }
     },
     {
-        "entityid": 238,
+        "entityid": 7340337,
         "general": {
             "name": "Queue_Arrow (new)",
             "tagid": 6,
@@ -1435,7 +1529,7 @@
         }
     },
     {
-        "entityid": 239,
+        "entityid": 7340338,
         "general": {
             "name": "Slot_7",
             "tagid": 6,
@@ -1482,7 +1576,7 @@
         }
     },
     {
-        "entityid": 240,
+        "entityid": 7340339,
         "general": {
             "name": "Slot_6",
             "tagid": 6,
@@ -1529,7 +1623,7 @@
         }
     },
     {
-        "entityid": 241,
+        "entityid": 7340342,
         "general": {
             "name": "Slot_1",
             "tagid": 6,
@@ -1576,7 +1670,7 @@
         }
     },
     {
-        "entityid": 242,
+        "entityid": 7340345,
         "general": {
             "name": "Slot_5",
             "tagid": 6,
@@ -1623,7 +1717,7 @@
         }
     },
     {
-        "entityid": 243,
+        "entityid": 7340346,
         "general": {
             "name": "Slot_4",
             "tagid": 6,
@@ -1670,7 +1764,7 @@
         }
     },
     {
-        "entityid": 244,
+        "entityid": 7340347,
         "general": {
             "name": "Slot_3",
             "tagid": 6,
@@ -1717,7 +1811,7 @@
         }
     },
     {
-        "entityid": 245,
+        "entityid": 7340348,
         "general": {
             "name": "P1",
             "tagid": 6,
@@ -1758,7 +1852,7 @@
         }
     },
     {
-        "entityid": 246,
+        "entityid": 7340349,
         "general": {
             "name": "UI-indicator17",
             "tagid": 6,
@@ -1810,7 +1904,7 @@
         }
     },
     {
-        "entityid": 247,
+        "entityid": 7340350,
         "general": {
             "name": "UI-indicator19",
             "tagid": 6,
@@ -1862,7 +1956,7 @@
         }
     },
     {
-        "entityid": 248,
+        "entityid": 7340351,
         "general": {
             "name": "UI-indicator20",
             "tagid": 6,
@@ -1914,7 +2008,7 @@
         }
     },
     {
-        "entityid": 249,
+        "entityid": 7340352,
         "general": {
             "name": "dashui",
             "tagid": 6,
@@ -1955,7 +2049,7 @@
         }
     },
     {
-        "entityid": 250,
+        "entityid": 7340353,
         "general": {
             "name": "P8",
             "tagid": 6,
@@ -1996,7 +2090,7 @@
         }
     },
     {
-        "entityid": 251,
+        "entityid": 7340354,
         "general": {
             "name": "P6",
             "tagid": 6,
@@ -2037,7 +2131,7 @@
         }
     },
     {
-        "entityid": 252,
+        "entityid": 7340355,
         "general": {
             "name": "P4",
             "tagid": 6,
@@ -2078,7 +2172,7 @@
         }
     },
     {
-        "entityid": 253,
+        "entityid": 7340356,
         "general": {
             "name": "Leftshift",
             "tagid": 6,
@@ -2127,7 +2221,7 @@
         }
     },
     {
-        "entityid": 254,
+        "entityid": 7340357,
         "general": {
             "name": "UI-indicator3",
             "tagid": 6,
@@ -2179,7 +2273,7 @@
         }
     },
     {
-        "entityid": 255,
+        "entityid": 7340358,
         "general": {
             "name": "UI-indicator24",
             "tagid": 6,
@@ -2231,7 +2325,7 @@
         }
     },
     {
-        "entityid": 256,
+        "entityid": 7340359,
         "general": {
             "name": "UI-indicator23",
             "tagid": 6,
@@ -2283,7 +2377,7 @@
         }
     },
     {
-        "entityid": 257,
+        "entityid": 7340360,
         "general": {
             "name": "UI-indicator22",
             "tagid": 6,
@@ -2335,7 +2429,7 @@
         }
     },
     {
-        "entityid": 258,
+        "entityid": 7340361,
         "general": {
             "name": "P2",
             "tagid": 6,
@@ -2376,7 +2470,7 @@
         }
     },
     {
-        "entityid": 259,
+        "entityid": 7340362,
         "general": {
             "name": "UI-indicator21",
             "tagid": 6,
@@ -2428,7 +2522,7 @@
         }
     },
     {
-        "entityid": 260,
+        "entityid": 7340364,
         "general": {
             "name": "UI-indicator16",
             "tagid": 6,
@@ -2480,7 +2574,7 @@
         }
     },
     {
-        "entityid": 261,
+        "entityid": 10485994,
         "general": {
             "name": "UI-indicator2",
             "tagid": 6,

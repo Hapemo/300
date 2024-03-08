@@ -1,0 +1,44 @@
+{
+    "entityid": 3146013,
+    "general": {
+        "name": "HealthBarEmpty_Boss",
+        "tagid": 0,
+        "subtag": 0,
+        "isActive": true,
+        "isPaused": false
+    },
+    "transform": {
+        "scale": {
+            "x": 0.5600000023841858,
+            "y": -0.25999999046325684,
+            "z": 1.0
+        },
+        "rotate": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "translate": {
+            "x": -0.699999988079071,
+            "y": -0.3199999928474426,
+            "z": 0.0
+        }
+    },
+    "uirenderer": {
+        "texpath": "",
+        "textureref": 47813768,
+        "degree": 0.0,
+        "slider": 1.0,
+        "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+        },
+        "layer": 0,
+        "worldtransform": false
+    },
+    "prefab": {
+        "prefab": "HealthBarEmpty_Boss"
+    }
+}
