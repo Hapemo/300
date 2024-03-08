@@ -131,7 +131,7 @@ end
 function Update()
 
     -- Tentative random switcher between boss states, replace with HP after other states implemented. 100% HP Left = Phase 1, 66% HP Left = Phase 2, 33% HP Left = Phase 3
-    if _G.attacking == false then 
+    if _G.attacking == false and _G.FreezePlayerControl  == false then 
 
         -- [Recycle Attacks]
         -- Check if the current state checker has at least 4 "true" -> reset them 
