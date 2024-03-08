@@ -1,0 +1,81 @@
+{
+    "entityid": 1048765,
+    "general": {
+        "name": "level2_stairs_platform1",
+        "tagid": 0,
+        "subtag": 0,
+        "isActive": true,
+        "isPaused": false
+    },
+    "transform": {
+        "scale": {
+            "x": 15.859999656677246,
+            "y": 7.3797688484191895,
+            "z": 3.2200000286102295
+        },
+        "rotate": {
+            "x": 0.0,
+            "y": 90.0,
+            "z": 0.0
+        },
+        "translate": {
+            "x": -25.832401275634766,
+            "y": -1.3790228366851807,
+            "z": 11.745115280151367
+        }
+    },
+    "meshrenderer": {
+        "vert": "../assets/shader_files/pointLight_vert.glsl",
+        "frag": "../assets/shader_files/pointLight_frag.glsl",
+        "meshrefid": 2285,
+        "instancecolor": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+        },
+        "bloomthreshold": {
+            "x": 0.5,
+            "y": 0.5,
+            "z": 0.5,
+            "w": 1.0
+        },
+        "castShadow": true,
+        "materialinstance": [
+            "../assets/Compressed/Level2_Floor_BaseColor.ctexture",
+            "../assets/Compressed/Level2_Floor_Normal.ctexture",
+            " ",
+            " ",
+            "../assets/Compressed/Level2_Floor_Emissive.ctexture",
+            " "
+        ],
+        "mesh": "../assets/compiled_geom/cube.geom",
+        "texturerefid": [
+            874281738,
+            2646457951,
+            0,
+            0,
+            3589366211,
+            0
+        ]
+    },
+    "boxcollider": {
+        "scaleoffset": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+        },
+        "translateoffset": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "istrigger": false
+    },
+    "scripts": {
+        "scriptscontainer": []
+    },
+    "prefab": {
+        "prefab": "level2_stairs_platform1"
+    }
+}
