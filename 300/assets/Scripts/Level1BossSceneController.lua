@@ -31,7 +31,7 @@ end
 
 function Update()
     cameraEntity = gameStateSys:GetEntity("Camera")
-    bossEntity = gameStateSys:GetEntity("BossLevel2")
+    bossEntity = gameStateSys:GetEntity("BossLevel1")
     
     if STATE == 0 then
         if firstTrigger == false then
@@ -57,6 +57,7 @@ function Update()
             end
         else
             quaking = 0
+
             STATE = 1
         end
 

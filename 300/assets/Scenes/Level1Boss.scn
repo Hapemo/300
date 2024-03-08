@@ -1,8 +1,43 @@
 [
     {
-        "entityid": 4194461,
+        "entityid": 1048583,
         "general": {
-            "name": "BossLevel2",
+            "name": "Level2BossScene",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/Level1BossSceneController.lua",
+                    "variables": []
+                }
+            ]
+        }
+    },
+    {
+        "entityid": 1048584,
+        "general": {
+            "name": "BossLevel1",
             "tagid": 1,
             "subtag": 0,
             "isActive": true,
@@ -139,41 +174,6 @@
             "height": 0.07000000029802322,
             "frametexture": 0,
             "healthtexture": 0
-        }
-    },
-    {
-        "entityid": 7340180,
-        "general": {
-            "name": "Level2BossScene",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/Level1BossSceneController.lua",
-                    "variables": []
-                }
-            ]
         }
     }
 ]
