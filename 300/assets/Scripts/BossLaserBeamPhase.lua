@@ -8,7 +8,7 @@ local ent
 
 -- [5] Lazer Attack 
 local lazer_timer = 0 
-local lazer_duration = 3.0
+local lazer_duration = 5.0
 
 function Alive()
 
