@@ -34,7 +34,7 @@ function Alive()
     Intro2Progress = 0.0
     BossProgress = 0.0
 
-    currState = "intro"
+    currState = ""
 
     excited = gameStateSys:GetEntity("DialogueExcited", "Dialogue_Level3")
     angry = gameStateSys:GetEntity("DialogueAngry", "Dialogue_Level3")
@@ -208,6 +208,10 @@ function EndDialogue()
     elseif currState == "boss" then
         Boss:GetUIrenderer():SetSlider(0.0)
     end
+end
+
+function StartIntro()
+    currState = "intro" --angry
 end
 
 function FinishBoss()
