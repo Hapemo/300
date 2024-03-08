@@ -1,7 +1,7 @@
 #include <Graphics/GraphicsSystemDefinitions.h>
 #include <Graphics/GraphicsSystem.h>
 #include <omp.h>
-
+#include <GameState/GameStateManager.h>
 
 void InitUIMeshes()
 {
@@ -308,19 +308,36 @@ void Reset_Data()
 
 void update_UI()
 {
+	GameState* gs = systemManager->mGameStateSystem->GetCurrentGameState();
+	std::vector<Scene*> scn;
+
+	for (std::string str : systemManager->mGraphicsSystem->ignoredUIScenes) {
+		Scene* temp = gs->GetScene(str);
+		if (temp != systemManager->mGameStateSystem->GetErrorScene()) {
+			scn.push_back(temp);
+		}
+	}
+
 	auto UiInstances = systemManager->ecs->GetEntitiesWith<UIrenderer>();
 	for (Entity inst : UiInstances)
 	{
+		bool ignore = false;
+		for (Scene* temp : scn) {
+			if (temp->HasEntity(inst)) {
+				ignore = true;
+				break;
+			}
+		}
+		if (ignore) continue;
 		if (inst.GetComponent<General>().name == "") continue;
-		UIrenderer& uiRenderer = inst.GetComponent<UIrenderer>();
-		Transform& uiTransform = inst.GetComponent<Transform>();
-
 		/*if (inst.HasParent())
 		{
 			Transform parentTransform = inst.GetParent().GetComponent<Transform>();
 			uiTransform = parentTransform;
 		}*/
 
+		Transform& uiTransform = inst.GetComponent<Transform>();
+		UIrenderer& uiRenderer = inst.GetComponent<UIrenderer>();
 		float width = systemManager->mGraphicsSystem->m_Width;
 		float height = systemManager->mGraphicsSystem->m_Height;
 		float uiWidth = uiTransform.mScale.x * width / 2.f;

@@ -333,6 +333,8 @@ void LuaGraphicsSystem()
         "DisableGlobalBloom", &GraphicsSystem::DisableGlobalBloom,
         "SetGlobalBloomThreshold", &GraphicsSystem::SetGlobalBloomThreshold,
         "SetGlobalBloomExposure", &GraphicsSystem::SetGlobalBloomExposure,
+        "IgnoreUIScene", &GraphicsSystem::IgnoreUIScene,
+        "UnignoreUIScene", &GraphicsSystem::UnignoreUIScene,
         "mAmbientBloomThreshold", &GraphicsSystem::mAmbientBloomThreshold,
         "mAmbientBloomExposure", &GraphicsSystem::mAmbientBloomExposure,
         "mTexelOffset", &GraphicsSystem::mTexelOffset,

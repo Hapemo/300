@@ -86,6 +86,15 @@ class GraphicsSystem
 {
 public:
 
+	/* YJ's hardcode */
+	std::unordered_set<std::string> ignoredUIScenes;
+	void IgnoreUIScene(const std::string& sceneName) {
+		if (ignoredUIScenes.find(sceneName) == ignoredUIScenes.end())
+			ignoredUIScenes.insert(sceneName);
+	}
+	void UnignoreUIScene(const std::string& sceneName) {
+		ignoredUIScenes.erase(sceneName);
+	}
 	/***************************************************************************/
 	/*!
 	\brief
@@ -291,7 +300,8 @@ public:
 
 	bool		m_EnableBloom{ true };
 	bool		m_EnableChromaticAbberation{ true };
-	bool		m_EnableCRT{ false };						// this yj
+	bool		m_EnableCRT{ false };						
+
 
 	// -- Textures --
 	std::vector<int> m_Textures;	// 0, 1, ..., 31
