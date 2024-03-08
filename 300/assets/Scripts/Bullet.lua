@@ -84,6 +84,8 @@ end
 function OnTriggerEnter(Entity)
     generalComponent = Entity:GetGeneral()
 
+    print("ddddddddddddddddddddddddd")
+
     --yujun's hardcode :D
     if (generalComponent.name == "tutorialTrojan") then
         entityobj = Helper.GetScriptEntity(script_entity.id)
@@ -113,7 +115,6 @@ function OnTriggerEnter(Entity)
 
     entityobj = Helper.GetScriptEntity(script_entity.id)
 
-    -- print("THIS ENTITY is: " , generalComponent.name)
 
     tagid = generalComponent.tagid
     if (tagid == 1) then
@@ -123,10 +124,13 @@ function OnTriggerEnter(Entity)
         end
         gameStateSys = systemManager:mGameStateSystem()
 
+
+        -- print(bulletTag)
+
         if(bulletTag == "PISTOL") then 
             if(healthComponent ~= nil) then 
                 healthComponent.health = healthComponent.health - pistolDamage * _G.powerLevel
-                -- print("PISTOL HIT")
+                print("PISTOL HIT")
                 -- print("HP Left: ", healthComponent.health)
                 -- if(healthComponent.health <= 0 ) then
                 --     systemManager.ecs:SetDeleteEntity(Entity)
