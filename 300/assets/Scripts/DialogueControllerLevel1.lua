@@ -44,6 +44,9 @@ local picturespeed
 
 local counter
 local picture
+
+local audio
+local playing
 function Alive()
     Intro1 = gameStateSys:GetEntity("DialogueIntro1", "Dialogue_Level1")
     Intro2 = gameStateSys:GetEntity("DialogueIntro2", "Dialogue_Level1")
@@ -93,6 +96,7 @@ function Alive()
     counter = 0
 
     picture = normal
+    playing = false
 end
 
 function Update()
@@ -157,6 +161,7 @@ end
 
 function UpdateDialogues()
     if currState == "intro" then
+        
         if inputMapSys:GetButtonDown("skip") then 
             if Intro2Progress >= 1.0 then
                 EndDialogue()
@@ -167,6 +172,11 @@ function UpdateDialogues()
         end
 
         if Intro1Progress < 1.0 then 
+            if playing == false then
+                audio = Intro1:GetAudio()
+                audio:SetPlay(0.3)
+                playing = true
+            end
             Intro1Progress = speed + Intro1Progress
             if Intro1Progress > 1.0 then
                 Intro1Progress = 1.1
@@ -207,6 +217,11 @@ function UpdateDialogues()
             end
         end
         if counter == 0 then
+            if playing == false then
+                audio = LoadIn:GetAudio()
+                audio:SetPlay(0.3)
+                playing = true
+            end
             if LoadInProgress < 1.0 then 
                 LoadInProgress = speed + LoadInProgress
                 if LoadInProgress > 1.0 then
@@ -217,6 +232,11 @@ function UpdateDialogues()
                 end
             end
         elseif counter == 1 then
+            if playing == false then
+                audio = ObjectiveBrief1_1:GetAudio()
+                audio:SetPlay(0.3)
+                playing = true
+            end
             if ObjectiveBrief1_1Progress < 1.0 then 
                 ObjectiveBrief1_1Progress = speed + ObjectiveBrief1_1Progress
                 if ObjectiveBrief1_1Progress > 1.0 then
@@ -235,6 +255,11 @@ function UpdateDialogues()
                 end
             end
         elseif counter == 2 then
+            if playing == false then
+                audio = ObjectiveBrief2_1:GetAudio()
+                audio:SetPlay(0.3)
+                playing = true
+            end
             if ObjectiveBrief2_1Progress < 1.0 then 
                 ObjectiveBrief2_1Progress = speed + ObjectiveBrief2_1Progress
                 if ObjectiveBrief2_1Progress > 1.0 then
@@ -263,6 +288,11 @@ function UpdateDialogues()
             end
         end
         if CompleteObjective1Progress < 1.0 then
+            if playing == false then
+                audio = CompleteObjective1:GetAudio()
+                audio:SetPlay(0.3)
+                playing = true
+            end
             CompleteObjective1Progress = speed + CompleteObjective1Progress
             if CompleteObjective1Progress > 1.0 then
                 CompleteObjective1Progress = 1.1
@@ -281,6 +311,11 @@ function UpdateDialogues()
             end
         end
         if CompleteObjective2Progress < 1.0 then
+            if playing == false then
+                audio = CompleteObjective2:GetAudio()
+                audio:SetPlay(0.3)
+                playing = true
+            end
             CompleteObjective2Progress = speed + CompleteObjective2Progress
             if CompleteObjective2Progress > 1.0 then
                 CompleteObjective2Progress = 1.1
@@ -307,6 +342,11 @@ function UpdateDialogues()
             end
         end
         if counter == 0 then
+            if playing == false then
+                audio = CompleteObjective3_1:GetAudio()
+                audio:SetPlay(0.3)
+                playing = true
+            end
             if CompleteObjective3_1Progress < 1.0 then 
                 CompleteObjective3_1Progress = speed + CompleteObjective3_1Progress
                 if CompleteObjective3_1Progress > 1.0 then
@@ -325,6 +365,11 @@ function UpdateDialogues()
                 end
             end
         elseif counter == 1 then
+            if playing == false then
+                audio = DestroyedAV1:GetAudio()
+                audio:SetPlay(0.3)
+                playing = true
+            end
             if DestroyedAV1Progress < 1.0 then 
                 DestroyedAV1Progress = speed + DestroyedAV1Progress
                 if DestroyedAV1Progress > 1.0 then
@@ -437,6 +482,8 @@ function SkipAnimation()
 end
 
 function EndDialogue()
+    audio:SetStop()
+    playing = false
     if currState == "intro" then
         Intro1:GetUIrenderer():SetSlider(0.0)
         Intro2:GetUIrenderer():SetSlider(0.0)

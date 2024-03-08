@@ -33,6 +33,8 @@ local frameOpened
 local frameClosed
 local done
 local boss
+local playing
+local audio
 --:GetUIrenderer():SetSlider(progress/objectivesComplete)
 
 function Alive()
@@ -53,7 +55,7 @@ function Alive()
     angry = gameStateSys:GetEntity("DialogueAngry", "Dialogue_Tutorial")
 
     boss = gameStateSys:GetEntity("DialogueBoss", "Dialogue_Tutorial")
-    
+
     LoadIn1Progress = 0.0
     LoadIn2Progress = 0.0
     ObjectiveIntro1Progress = 0.0
@@ -75,6 +77,8 @@ function Alive()
     done = false;
 
     frameClosed = false
+
+    playing = false
 end
 
 function Update()
@@ -147,6 +151,11 @@ function UpdateDialogues()
     end
 
     if currState == 0 then
+        if playing == false then
+            audio = LoadIn1:GetAudio()
+            audio:SetPlay(0.3)
+            playing = true
+        end
         if LoadIn1Progress < 1.0 then 
             LoadIn1Progress = speed + LoadIn1Progress
             if LoadIn1Progress > 1.0 then
@@ -165,6 +174,11 @@ function UpdateDialogues()
             end
         end
     elseif currState == 1 then
+        if playing == false then
+            audio = ObjectiveIntro1:GetAudio()
+            audio:SetPlay(0.3)
+            playing = true
+        end
         if ObjectiveIntro1Progress < 1.0 then 
             ObjectiveIntro1Progress = speed + ObjectiveIntro1Progress
             if ObjectiveIntro1Progress > 1.0 then
@@ -183,6 +197,11 @@ function UpdateDialogues()
             end
         end
     elseif currState == 2 then
+        if playing == false then
+            audio = TroubleIntro1:GetAudio()
+            audio:SetPlay(0.3)
+            playing = true
+        end
         boss:GetUIrenderer():SetSlider(1.0)
         picture:GetUIrenderer():SetSlider(0.0)
         angry:GetUIrenderer():SetSlider(1.0)
@@ -213,6 +232,11 @@ function UpdateDialogues()
             end
         end
     elseif currState == 3 then
+        if playing == false then
+            audio = Option1:GetAudio()
+            audio:SetPlay(0.3)
+            playing = true
+        end
         if Option1Progress < 1.0 then 
             Option1Progress = speed + Option1Progress
             if Option1Progress > 1.0 then
@@ -260,6 +284,8 @@ function SkipAnimation()
 end
 
 function NextDialogue()
+    audio:SetStop()
+    playing = false
     if currState == 0 then
         LoadIn1:GetUIrenderer():SetSlider(0.0)
         LoadIn2:GetUIrenderer():SetSlider(0.0)
