@@ -49,12 +49,12 @@ function Alive()
     mobSpawnPos4.y = -10.5;
     mobSpawnPos4.z = 13;
 
-    
+    gameStateSys = systemManager:mGameStateSystem()
+    inputMapSys = systemManager:mInputActionSystem()
+    graphicsSys = systemManager:mGraphicsSystem()
 end
 
 function Update()
-    gameStateSys = systemManager:mGameStateSystem()
-    inputMapSys = systemManager:mInputActionSystem()
     if(inputMapSys:GetButtonDown("NextLevel")) then
         x = gameStateSys:GetEntity("TransitionHelper", "Transition") 
         y = x:GetScripts()
@@ -222,6 +222,9 @@ function Update()
             end
         end
         if entityobj:GetGeneral().name == "Objectives3" then
+            
+            graphicsSys.mAmbientBloomExposure = minExposure
+            graphicsSys.FilterRadius = minFilterRadius
             controllerL2 = gameStateSys:GetEntity("Level2BossScene")
             controllerL2Scripts = controllerL2:GetScripts()
             controllerL2Script = controllerL2Scripts:GetScript("../assets/Scripts/Level1BossSceneController.lua")

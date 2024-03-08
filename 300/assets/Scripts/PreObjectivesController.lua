@@ -29,12 +29,6 @@ function Update()
         TestScripts = testScriptEntity:GetScripts()
         testScript = TestScripts:GetScript("../assets/Scripts/ObjectivesController.lua")
         objCount = testScript:ReturnValueInt("GetCountObj")
-            TestScripts = testScriptEntity:GetScripts()
-            testScript = TestScripts:GetScript("../assets/Scripts/ObjectivesController.lua")
-            objCount = testScript:ReturnValueInt("GetCountObj")
-            TestScripts = testScriptEntity:GetScripts()
-            testScript = TestScripts:GetScript("../assets/Scripts/ObjectivesController.lua")
-            objCount = testScript:ReturnValueInt("GetCountObj")
 
         --spawn the objectives portals
         -- print("SPAWN PORTALS")
@@ -67,21 +61,6 @@ function Update()
             end
         end
     end
-
-    -- objective1:GetTransform().mTranslate.y = -10.5
-    -- objective2:GetTransform().mTranslate.y = -10.5
-    -- objective3:GetTransform().mTranslate.y = -10.5
-
-    -- Helper.SetTranslate(objective1,o1offset)
-    -- Helper.SetTranslate(objective2,o2offset)
-    -- Helper.SetTranslate(objective3,o3offset)
-    --end
-    -- objective3:GetTransform().mTranslate.y = -10.5
-
-    -- Helper.SetTranslate(objective1,o1offset)
-    -- Helper.SetTranslate(objective2,o2offset)
-    -- Helper.SetTranslate(objective3,o3offset)
-    --end
 end
 
 function Dead()
