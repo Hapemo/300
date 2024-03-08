@@ -128,20 +128,20 @@ function OnTriggerEnter(Entity)
                 healthComponent.health = healthComponent.health - pistolDamage * _G.powerLevel
                 -- print("PISTOL HIT")
                 -- print("HP Left: ", healthComponent.health)
-                if(healthComponent.health <= 0 ) then
-                    systemManager.ecs:SetDeleteEntity(Entity)
-                    -- Interacts with "TutorialMonsterSpawner.lua"
-                    if (generalComponent.name == "TrojanHorse") then 
-                        _G.trojan_1_instance = false
-                    end
-                    if (generalComponent.name == "Melissa") then 
-                        _G.Melissa_1_instance = false
-                    end
+                -- if(healthComponent.health <= 0 ) then
+                --     systemManager.ecs:SetDeleteEntity(Entity)
+                --     -- Interacts with "TutorialMonsterSpawner.lua"
+                --     if (generalComponent.name == "TrojanHorse") then 
+                --         _G.trojan_1_instance = false
+                --     end
+                --     if (generalComponent.name == "Melissa") then 
+                --         _G.Melissa_1_instance = false
+                --     end
 
-                    if (generalComponent.name == "TrojanSoldier") then 
-                        _G.trojan_soldier_1_instance = false
-                    end
-                end
+                --     if (generalComponent.name == "TrojanSoldier") then 
+                --         _G.trojan_soldier_1_instance = false
+                --     end
+                -- end
             else
 
             
@@ -152,20 +152,20 @@ function OnTriggerEnter(Entity)
             if(healthComponent ~= nil) then 
                 healthComponent.health = healthComponent.health - revolverDamage * _G.powerLevel
                 -- print("DAMAGE (REVOLVER): " , revolverDamage * _G.powerLevel)
-                if(healthComponent.health <= 0 ) then
-                    systemManager.ecs:SetDeleteEntity(Entity)
-                    -- Interacts with "TutorialMonsterSpawner.lua"
-                    if (generalComponent.name == "TrojanHorse") then 
-                        _G.trojan_1_instance = false
-                    end
-                    if (generalComponent.name == "Melissa") then 
-                        _G.Melissa_1_instance = false
-                    end
+                -- if(healthComponent.health <= 0 ) then
+                --     systemManager.ecs:SetDeleteEntity(Entity)
+                --     -- Interacts with "TutorialMonsterSpawner.lua"
+                --     if (generalComponent.name == "TrojanHorse") then 
+                --         _G.trojan_1_instance = false
+                --     end
+                --     if (generalComponent.name == "Melissa") then 
+                --         _G.Melissa_1_instance = false
+                --     end
 
-                    if (generalComponent.name == "TrojanSoldier") then 
-                        _G.trojan_soldier_1_instance = false
-                    end
-                end
+                --     if (generalComponent.name == "TrojanSoldier") then 
+                --         _G.trojan_soldier_1_instance = false
+                --     end
+                -- end
             else
             end
         end
@@ -173,21 +173,21 @@ function OnTriggerEnter(Entity)
         if(bulletTag == "SHOTGUN") then 
             if(healthComponent ~= nil) then 
                 healthComponent.health = healthComponent.health - shotGunDamage * _G.powerLevel
-                if(healthComponent.health <= 0 ) then
-                    systemManager.ecs:SetDeleteEntity(Entity)
+                -- if(healthComponent.health <= 0 ) then
+                --     systemManager.ecs:SetDeleteEntity(Entity)
 
-                    -- Interacts with "TutorialMonsterSpawner.lua"
-                    if (generalComponent.name == "TrojanHorse") then 
-                    _G.trojan_1_instance = false
-                    end
-                    if (generalComponent.name == "Melissa") then 
-                        _G.Melissa_1_instance = false
-                    end
+                --     -- Interacts with "TutorialMonsterSpawner.lua"
+                --     if (generalComponent.name == "TrojanHorse") then 
+                --     _G.trojan_1_instance = false
+                --     end
+                --     if (generalComponent.name == "Melissa") then 
+                --         _G.Melissa_1_instance = false
+                --     end
 
-                    if (generalComponent.name == "TrojanSoldier") then 
-                        _G.trojan_soldier_1_instance = false
-                    end
-                end
+                --     if (generalComponent.name == "TrojanSoldier") then 
+                --         _G.trojan_soldier_1_instance = false
+                --     end
+                -- end
             else
             end
         end
@@ -195,22 +195,22 @@ function OnTriggerEnter(Entity)
         if(bulletTag == "MACHINE_GUN") then 
             if(healthComponent ~= nil) then 
                 healthComponent.health = healthComponent.health - machineGunDamage * _G.powerLevel
-                if(healthComponent.health <= 0 ) then
-                    systemManager.ecs:SetDeleteEntity(Entity)
+                -- if(healthComponent.health <= 0 ) then
+                --     systemManager.ecs:SetDeleteEntity(Entity)
 
-                    -- Interacts with "TutorialMonsterSpawner.lua"
-                    if (generalComponent.name == "TrojanHorse") then 
-                    _G.trojan_1_instance = false
-                    end
-                    if (generalComponent.name == "Melissa") then 
-                        _G.Melissa_1_instance = false
-                    end
+                --     -- Interacts with "TutorialMonsterSpawner.lua"
+                --     if (generalComponent.name == "TrojanHorse") then 
+                --     _G.trojan_1_instance = false
+                --     end
+                --     if (generalComponent.name == "Melissa") then 
+                --         _G.Melissa_1_instance = false
+                --     end
 
-                    if (generalComponent.name == "TrojanSoldier") then 
-                        _G.trojan_soldier_1_instance = false
-                    end
+                --     if (generalComponent.name == "TrojanSoldier") then 
+                --         _G.trojan_soldier_1_instance = false
+                --     end
                 
-                end
+                -- end
             end
 
         end
