@@ -1,0 +1,145 @@
+{
+    "entityid": 4194543,
+    "general": {
+        "name": "ZipBomb_Lv3",
+        "tagid": 1,
+        "subtag": 0,
+        "isActive": true,
+        "isPaused": false
+    },
+    "transform": {
+        "scale": {
+            "x": 4.0,
+            "y": 4.0,
+            "z": 2.0
+        },
+        "rotate": {
+            "x": 0.0,
+            "y": 13.750004768371582,
+            "z": 0.9224058389663696
+        },
+        "translate": {
+            "x": 29.736366271972656,
+            "y": 0.47876766324043274,
+            "z": 12.655649185180664
+        }
+    },
+    "rigidbody": {
+        "density": 10.0,
+        "material": 1,
+        "motion": 1,
+        "velocity": {
+            "x": 1.1818112134933472,
+            "y": -0.2849671542644501,
+            "z": 4.857924938201904
+        },
+        "rotationconstraints": {
+            "x": true,
+            "y": false,
+            "z": false
+        },
+        "gravity": false
+    },
+    "meshrenderer": {
+        "vert": "../assets/shader_files/pointLight_vert.glsl",
+        "frag": "../assets/shader_files/pointLight_frag.glsl",
+        "meshrefid": 2561,
+        "instancecolor": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+        },
+        "bloomthreshold": {
+            "x": 0.4399999976158142,
+            "y": 0.0,
+            "z": 1.0,
+            "w": 1.0
+        },
+        "castShadow": true,
+        "materialinstance": [
+            "../assets/Compressed/ZipBomb_BaseColor.ctexture",
+            "../assets/Compressed/ZipBomb_Normal.ctexture",
+            "../assets/Compressed/ZipBomb_Metallic.ctexture",
+            "../assets/Compressed/ZipBomb_Roughness.ctexture",
+            "../assets/Compressed/ZipBomb_Emissive.ctexture",
+            "../assets/Compressed/ZipBomb_AO.ctexture"
+        ],
+        "mesh": "../assets/compiled_geom/ZipBomb.geom",
+        "texturerefid": [
+            2348069524,
+            1319533521,
+            2095937491,
+            2888612446,
+            3155337405,
+            2357914544
+        ]
+    },
+    "animator": {},
+    "boxcollider": {
+        "scaleoffset": {
+            "x": 0.8999999761581421,
+            "y": 0.75,
+            "z": 0.699999988079071
+        },
+        "translateoffset": {
+            "x": 0.0,
+            "y": 1.0499999523162842,
+            "z": 0.019999999552965164
+        },
+        "istrigger": false
+    },
+    "scripts": {
+        "scriptscontainer": [
+            {
+                "scriptFile": "../assets/Scripts/ZipBomb.lua",
+                "variables": []
+            }
+        ]
+    },
+    "audio": {
+        "filepath": "",
+        "filename": "",
+        "fullpath": "",
+        "playonawake": false,
+        "islooping": false,
+        "audiotype": 1,
+        "volume": 1.0,
+        "retainaudio": false
+    },
+    "prefab": {
+        "prefab": "ZipBomb_Lv3"
+    },
+    "aisetting": {
+        "movementtype": 2,
+        "spreadout": 0.0,
+        "stayaway": 0.0,
+        "elevation": 0.0,
+        "targetname": "Camera",
+        "graphdataname": "FlyingPath"
+    },
+    "healthbar": {
+        "healthcolor": {
+            "x": 0.0,
+            "y": 1.0,
+            "z": 0.0,
+            "w": 1.0
+        },
+        "backcolor": {
+            "x": 1.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 1.0
+        },
+        "position": {
+            "x": -0.029999999329447746,
+            "y": 2.0,
+            "z": 0.0
+        },
+        "maxhealth": 100.0,
+        "width": 1.399999976158142,
+        "height": 0.07000000029802322,
+        "frametexture": 0,
+        "healthtexture": 0
+    }
+}

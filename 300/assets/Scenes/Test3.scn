@@ -1,34 +1,34 @@
 [
     {
-        "entityid": 19923024,
+        "entityid": 5243138,
         "general": {
-            "name": "yellowweapon",
-            "tagid": 0,
+            "name": "Boss_Arena_Front_Wall",
+            "tagid": 4,
             "subtag": 0,
             "isActive": true,
             "isPaused": false
         },
         "transform": {
             "scale": {
-                "x": 0.5,
-                "y": 0.5,
-                "z": 0.5
+                "x": 155.0,
+                "y": 17.05791664123535,
+                "z": 5.340000152587891
             },
             "rotate": {
                 "x": 0.0,
-                "y": 0.0,
+                "y": -90.0,
                 "z": 0.0
             },
             "translate": {
-                "x": 5.059999942779541,
-                "y": -0.8999999761581421,
-                "z": 24.15999984741211
+                "x": 77.37699890136719,
+                "y": -5.805041313171387,
+                "z": 10.0927152633667
             }
         },
         "rigidbody": {
             "density": 10.0,
             "material": 1,
-            "motion": 1,
+            "motion": 0,
             "velocity": {
                 "x": 0.0,
                 "y": 0.0,
@@ -39,16 +39,16 @@
                 "y": false,
                 "z": false
             },
-            "gravity": false
+            "gravity": true
         },
         "meshrenderer": {
             "vert": "../assets/shader_files/pointLight_vert.glsl",
             "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 2285,
+            "meshrefid": 3232,
             "instancecolor": {
                 "x": 1.0,
-                "y": 0.9622641205787659,
-                "z": 0.0,
+                "y": 1.0,
+                "z": 1.0,
                 "w": 1.0
             },
             "bloomthreshold": {
@@ -59,211 +59,142 @@
             },
             "castShadow": true,
             "materialinstance": [
-                "../assets/Compressed/Cube_Texture_White.ctexture",
-                "../assets/Compressed/Cube_Texture_White_Normal.ctexture",
-                " ",
-                " ",
-                " ",
+                "../assets/Compressed/Tutorial_Cube_BaseColor.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Normal.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Roughness.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Metallic.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Emissive.ctexture",
                 " "
             ],
-            "mesh": "../assets/compiled_geom/cube.geom",
+            "mesh": "../assets/compiled_geom/Tutorial_cube.geom",
             "texturerefid": [
-                2075419717,
-                1949753341,
-                0,
-                0,
-                0,
+                1065073471,
+                1690869280,
+                2264384965,
+                1749384838,
+                1718410820,
                 0
             ]
         },
         "boxcollider": {
             "scaleoffset": {
                 "x": 1.0,
-                "y": 1.0,
+                "y": 0.8199999928474426,
                 "z": 1.0
             },
             "translateoffset": {
                 "x": 0.0,
-                "y": 0.0,
+                "y": 6.570000171661377,
                 "z": 0.0
             },
-            "istrigger": true
+            "istrigger": false
         },
         "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/ SkillsBox.lua",
-                    "variables": []
-                }
-            ]
+            "scriptscontainer": []
         },
         "prefab": {
-            "prefab": "yellowweapon"
+            "prefab": "Boss_Arena_Back_Wall"
         }
     },
     {
-        "entityid": 19923074,
+        "entityid": 5243139,
         "general": {
-            "name": "Camera",
-            "tagid": 0,
+            "name": "Boss_Arena_Back_Wall",
+            "tagid": 4,
             "subtag": 0,
             "isActive": true,
             "isPaused": false
         },
         "transform": {
             "scale": {
-                "x": 1.100000023841858,
-                "y": 1.399999976158142,
-                "z": 1.100000023841858
+                "x": 155.94000244140625,
+                "y": 17.05812644958496,
+                "z": 5.340000152587891
             },
             "rotate": {
                 "x": 0.0,
-                "y": 0.0,
+                "y": -90.0,
                 "z": 0.0
             },
             "translate": {
-                "x": 0.8292496800422668,
-                "y": -0.42336738109588623,
-                "z": 26.793075561523438
+                "x": -76.73699951171875,
+                "y": -5.4878830909729,
+                "z": 7.586441516876221
             }
         },
         "rigidbody": {
             "density": 10.0,
             "material": 1,
-            "motion": 1,
+            "motion": 0,
             "velocity": {
                 "x": 0.0,
                 "y": 0.0,
                 "z": 0.0
             },
             "rotationconstraints": {
-                "x": true,
-                "y": true,
-                "z": true
+                "x": false,
+                "y": false,
+                "z": false
             },
             "gravity": true
         },
-        "spherecollider": {
-            "scaleoffset": 0.8100000023841858,
-            "translateoffset": {
-                "x": 0.0,
-                "y": -0.5,
-                "z": 0.0
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3232,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
             },
-            "istrigger": true
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "castShadow": true,
+            "materialinstance": [
+                "../assets/Compressed/Tutorial_Cube_BaseColor.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Normal.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Roughness.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Metallic.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Emissive.ctexture",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/Tutorial_cube.geom",
+            "texturerefid": [
+                1065073471,
+                1690869280,
+                2264384965,
+                1749384838,
+                1718410820,
+                0
+            ]
         },
-        "capsulecollider": {
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 0.8199999928474426,
+                "z": 1.0
+            },
             "translateoffset": {
                 "x": 0.0,
-                "y": -0.5,
+                "y": 6.570000171661377,
                 "z": 0.0
             },
-            "radius": 0.4000000059604645,
-            "halfheight": 0.4000000059604645,
             "istrigger": false
         },
         "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/Player3.lua",
-                    "variables": []
-                }
-            ]
+            "scriptscontainer": []
         },
-        "children": {
-            "numchildren": 1,
-            "firstchild": 19923076
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "Footsteps_M4.wav",
-            "fullpath": "../assets\\Audio/Footsteps_M4.wav",
-            "playonawake": true,
-            "islooping": true,
-            "audiotype": 1,
-            "volume": 0.0,
-            "retainaudio": false
-        },
-        "camera": {
-            "positon": {
-                "x": 0.8292496800422668,
-                "y": -0.42336738109588623,
-                "z": 26.793075561523438
-            },
-            "target": {
-                "x": 1.829249620437622,
-                "y": -0.42336738109588623,
-                "z": 26.793075561523438
-            },
-            "size": {
-                "x": 1223,
-                "y": 554
-            },
-            "near": 0.10000000149011612,
-            "far": 900.0
-        },
-        "healthbar": {
-            "healthcolor": {
-                "x": 0.0,
-                "y": 1.0,
-                "z": 0.0,
-                "w": 1.0
-            },
-            "backcolor": {
-                "x": 1.0,
-                "y": 0.0,
-                "z": 0.0,
-                "w": 1.0
-            },
-            "position": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "maxhealth": 200.0,
-            "width": 0.0,
-            "height": 0.0,
-            "frametexture": 0,
-            "healthtexture": 0
+        "prefab": {
+            "prefab": "Boss_Arena_Back_Wall"
         }
     },
     {
-        "entityid": 19923075,
-        "general": {
-            "name": "SpawnController",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.019999999552965164,
-                "z": 0.0
-            }
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/SkillSpawner.lua",
-                    "variables": []
-                }
-            ]
-        }
-    },
-    {
-        "entityid": 19923076,
+        "entityid": 5243140,
         "general": {
             "name": "gun",
             "tagid": 0,
@@ -274,7 +205,7 @@
         "transform": {
             "scale": {
                 "x": 1.0,
-                "y": 1.0,
+                "y": 0.0,
                 "z": 0.25
             },
             "rotate": {
@@ -324,25 +255,25 @@
             ]
         },
         "parent": {
-            "prevsibling": 19923076,
-            "nextsibling": 19923076,
-            "parent": 19923074
+            "prevsibling": 5243140,
+            "nextsibling": 5243140,
+            "parent": 5243144
         }
     },
     {
-        "entityid": 19923078,
+        "entityid": 5243141,
         "general": {
-            "name": "Skybox",
-            "tagid": 0,
+            "name": "Boss_Arena_Left_Wall",
+            "tagid": 4,
             "subtag": 0,
             "isActive": true,
             "isPaused": false
         },
         "transform": {
             "scale": {
-                "x": 500.0,
-                "y": 500.0,
-                "z": 500.0
+                "x": 160.0,
+                "y": 17.059999465942383,
+                "z": 5.340000152587891
             },
             "rotate": {
                 "x": 0.0,
@@ -350,77 +281,15 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 0.0,
-                "y": -20.668514251708984,
-                "z": -47.40319061279297
-            }
-        },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 2510,
-            "instancecolor": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "bloomthreshold": {
-                "x": 0.20000000298023224,
-                "y": 0.20999999344348907,
-                "z": 0.1599999964237213,
-                "w": 1.0
-            },
-            "castShadow": true,
-            "materialinstance": [
-                "../assets/Compressed/Environment_Skybox_BaseColor.ctexture",
-                "../assets/Compressed/Environment_Skybox_Normal.ctexture",
-                "../assets/Compressed/Environment_Skybox_Metallic.ctexture",
-                "../assets/Compressed/Environment_Skybox_Roughness.ctexture",
-                "../assets/Compressed/Environment_Skybox_BaseColor.ctexture",
-                "../assets/Compressed/Environment_Skybox_AO.ctexture"
-            ],
-            "mesh": "../assets/compiled_geom/Skybox.geom",
-            "texturerefid": [
-                437536649,
-                3522280818,
-                1686346496,
-                1590588887,
-                5760,
-                1467793003
-            ]
-        }
-    },
-    {
-        "entityid": 19923079,
-        "general": {
-            "name": "redweapon",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.5,
-                "y": 0.5,
-                "z": 0.5
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 4.502999782562256,
-                "y": -1.2003260850906372,
-                "z": 29.15953254699707
+                "x": -0.3089999854564667,
+                "y": -5.880000114440918,
+                "z": 85.97000122070313
             }
         },
         "rigidbody": {
             "density": 10.0,
             "material": 1,
-            "motion": 1,
+            "motion": 0,
             "velocity": {
                 "x": 0.0,
                 "y": 0.0,
@@ -431,16 +300,16 @@
                 "y": false,
                 "z": false
             },
-            "gravity": false
+            "gravity": true
         },
         "meshrenderer": {
             "vert": "../assets/shader_files/pointLight_vert.glsl",
             "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 2285,
+            "meshrefid": 3232,
             "instancecolor": {
                 "x": 1.0,
-                "y": 0.0,
-                "z": 0.0,
+                "y": 1.0,
+                "z": 1.0,
                 "w": 1.0
             },
             "bloomthreshold": {
@@ -451,93 +320,45 @@
             },
             "castShadow": true,
             "materialinstance": [
-                "../assets/Compressed/Cube_Texture_White.ctexture",
-                "../assets/Compressed/Cube_Texture_White_Normal.ctexture",
-                " ",
-                " ",
-                " ",
+                "../assets/Compressed/Tutorial_Cube_BaseColor.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Normal.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Roughness.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Metallic.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Emissive.ctexture",
                 " "
             ],
-            "mesh": "../assets/compiled_geom/cube.geom",
+            "mesh": "../assets/compiled_geom/Tutorial_cube.geom",
             "texturerefid": [
-                2075419717,
-                1949753341,
-                0,
-                0,
-                0,
+                1065073471,
+                1690869280,
+                2264384965,
+                1749384838,
+                1718410820,
                 0
             ]
         },
         "boxcollider": {
             "scaleoffset": {
                 "x": 1.0,
-                "y": 1.0,
+                "y": 0.8199999928474426,
                 "z": 1.0
             },
             "translateoffset": {
                 "x": 0.0,
-                "y": 0.0,
+                "y": 6.570000171661377,
                 "z": 0.0
             },
-            "istrigger": true
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/ SkillsBox.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "prefab": {
-            "prefab": "redweapon"
-        }
-    },
-    {
-        "entityid": 19923080,
-        "general": {
-            "name": "Light",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -4.380005359649658,
-                "y": 1.980149507522583,
-                "z": 39.0725212097168
-            }
+            "istrigger": false
         },
         "scripts": {
             "scriptscontainer": []
         },
         "prefab": {
-            "prefab": "Light"
-        },
-        "pointlight": {
-            "lightcolor": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "linearfalloff": 0.0,
-            "quadraticfalloff": 0.0,
-            "intensity": 5.0
+            "prefab": "Boss_Arena_Right_Wall"
         }
     },
     {
-        "entityid": 19923081,
+        "entityid": 5243142,
         "general": {
             "name": "Level2FBX",
             "tagid": 0,
@@ -547,9 +368,9 @@
         },
         "transform": {
             "scale": {
-                "x": 58.59000015258789,
+                "x": 150.0,
                 "y": 20.0,
-                "z": 56.400001525878906
+                "z": 150.0
             },
             "rotate": {
                 "x": 0.0,
@@ -618,19 +439,19 @@
         }
     },
     {
-        "entityid": 19923082,
+        "entityid": 5243143,
         "general": {
-            "name": "blueweapon",
-            "tagid": 0,
+            "name": "Boss_Arena_Right_Wall",
+            "tagid": 4,
             "subtag": 0,
             "isActive": true,
             "isPaused": false
         },
         "transform": {
             "scale": {
-                "x": 0.5,
-                "y": 0.5,
-                "z": 0.5
+                "x": 160.0,
+                "y": 17.059999465942383,
+                "z": 5.340000152587891
             },
             "rotate": {
                 "x": 0.0,
@@ -638,15 +459,15 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 5.449999809265137,
-                "y": -0.7599999904632568,
-                "z": 26.149999618530273
+                "x": -0.6600000262260437,
+                "y": -5.531038284301758,
+                "z": -67.0062255859375
             }
         },
         "rigidbody": {
             "density": 10.0,
             "material": 1,
-            "motion": 1,
+            "motion": 0,
             "velocity": {
                 "x": 0.0,
                 "y": 0.0,
@@ -657,15 +478,15 @@
                 "y": false,
                 "z": false
             },
-            "gravity": false
+            "gravity": true
         },
         "meshrenderer": {
             "vert": "../assets/shader_files/pointLight_vert.glsl",
             "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 2285,
+            "meshrefid": 3232,
             "instancecolor": {
-                "x": 0.0,
-                "y": 0.23584914207458496,
+                "x": 1.0,
+                "y": 1.0,
                 "z": 1.0,
                 "w": 1.0
             },
@@ -677,46 +498,229 @@
             },
             "castShadow": true,
             "materialinstance": [
-                "../assets/Compressed/Cube_Texture_White.ctexture",
-                "../assets/Compressed/Cube_Texture_White_Normal.ctexture",
-                " ",
-                " ",
-                " ",
+                "../assets/Compressed/Tutorial_Cube_BaseColor.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Normal.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Roughness.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Metallic.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Emissive.ctexture",
                 " "
             ],
-            "mesh": "../assets/compiled_geom/cube.geom",
+            "mesh": "../assets/compiled_geom/Tutorial_cube.geom",
             "texturerefid": [
-                2075419717,
-                1949753341,
-                0,
-                0,
-                0,
+                1065073471,
+                1690869280,
+                2264384965,
+                1749384838,
+                1718410820,
                 0
             ]
         },
         "boxcollider": {
             "scaleoffset": {
                 "x": 1.0,
-                "y": 1.0,
+                "y": 0.8199999928474426,
                 "z": 1.0
             },
             "translateoffset": {
                 "x": 0.0,
+                "y": 6.570000171661377,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Jump_Dash_Left_Wall"
+        }
+    },
+    {
+        "entityid": 5243144,
+        "general": {
+            "name": "Camera",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.100000023841858,
+                "y": 1.399999976158142,
+                "z": 1.100000023841858
+            },
+            "rotate": {
+                "x": -180.0,
+                "y": -7.949999809265137,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 72.15473175048828,
+                "y": 1.5379999876022339,
+                "z": 8.626999855041504
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 1,
+            "velocity": {
+                "x": 0.2549799084663391,
                 "y": 0.0,
+                "z": -0.2355106770992279
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": true,
+                "z": true
+            },
+            "gravity": true
+        },
+        "spherecollider": {
+            "scaleoffset": 0.8100000023841858,
+            "translateoffset": {
+                "x": 0.0,
+                "y": -0.5,
                 "z": 0.0
             },
             "istrigger": true
         },
+        "capsulecollider": {
+            "translateoffset": {
+                "x": 0.0,
+                "y": -0.5,
+                "z": 0.0
+            },
+            "radius": 0.4000000059604645,
+            "halfheight": 0.4000000059604645,
+            "istrigger": false
+        },
         "scripts": {
             "scriptscontainer": [
                 {
-                    "scriptFile": "../assets/Scripts/ SkillsBox.lua",
+                    "scriptFile": "../assets/Scripts/Player3.lua",
                     "variables": []
                 }
             ]
         },
-        "prefab": {
-            "prefab": "blueweapon"
+        "children": {
+            "numchildren": 1,
+            "firstchild": 5243140
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Footsteps_M4.wav",
+            "fullpath": "../assets\\Audio/Footsteps_M4.wav",
+            "playonawake": true,
+            "islooping": true,
+            "audiotype": 1,
+            "volume": 0.0,
+            "retainaudio": false
+        },
+        "camera": {
+            "positon": {
+                "x": 72.15473175048828,
+                "y": 1.5379999876022339,
+                "z": 8.626999855041504
+            },
+            "target": {
+                "x": 71.16434478759766,
+                "y": 1.6763088703155518,
+                "z": 8.626999855041504
+            },
+            "size": {
+                "x": 1223,
+                "y": 556
+            },
+            "near": 0.10000000149011612,
+            "far": 900.0
+        },
+        "healthbar": {
+            "healthcolor": {
+                "x": 0.0,
+                "y": 1.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "backcolor": {
+                "x": 1.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "maxhealth": 100.0,
+            "width": 0.0,
+            "height": 0.0,
+            "frametexture": 0,
+            "healthtexture": 0
+        }
+    },
+    {
+        "entityid": 5243148,
+        "general": {
+            "name": "Skybox",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 500.0,
+                "y": 500.0,
+                "z": 500.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": -20.668514251708984,
+                "z": -47.40319061279297
+            }
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 2510,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 0.20000000298023224,
+                "y": 0.20999999344348907,
+                "z": 0.1599999964237213,
+                "w": 1.0
+            },
+            "castShadow": true,
+            "materialinstance": [
+                "../assets/Compressed/Environment_Skybox_BaseColor.ctexture",
+                "../assets/Compressed/Environment_Skybox_Normal.ctexture",
+                "../assets/Compressed/Environment_Skybox_Metallic.ctexture",
+                "../assets/Compressed/Environment_Skybox_Roughness.ctexture",
+                "../assets/Compressed/Environment_Skybox_BaseColor.ctexture",
+                "../assets/Compressed/Environment_Skybox_AO.ctexture"
+            ],
+            "mesh": "../assets/compiled_geom/Skybox.geom",
+            "texturerefid": [
+                437536649,
+                3522280818,
+                1686346496,
+                1590588887,
+                5760,
+                1467793003
+            ]
         }
     }
 ]

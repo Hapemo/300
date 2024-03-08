@@ -120,7 +120,14 @@ function Update()
     -- END STATE MACHINE
 
     -- Health logic
-    if this:GetHealthbar().health <= 0 then StartDeath() end
+    if this:GetHealthbar().health <= 0 then
+        StartDeath() 
+        if _G.Level3_Monsters ~= nil then 
+            if _G.Level3_Monsters == true then 
+                _G.number_left_in_level_3 = _G.number_left_in_level_3 - 1
+            end
+        end
+    end
 end
 
 function Dead()

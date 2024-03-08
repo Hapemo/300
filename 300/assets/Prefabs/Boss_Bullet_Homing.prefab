@@ -1,0 +1,135 @@
+{
+    "entityid": 3145961,
+    "general": {
+        "name": "Boss_Bullet_Homing",
+        "tagid": 1,
+        "subtag": 0,
+        "isActive": true,
+        "isPaused": false
+    },
+    "transform": {
+        "scale": {
+            "x": 2.0,
+            "y": 2.0,
+            "z": 2.0
+        },
+        "rotate": {
+            "x": 0.004899937193840742,
+            "y": 0.02400626614689827,
+            "z": 3.091737985610962
+        },
+        "translate": {
+            "x": 5.420000076293945,
+            "y": 3.4800000190734863,
+            "z": 0.0
+        }
+    },
+    "rigidbody": {
+        "density": 10.0,
+        "material": 1,
+        "motion": 1,
+        "velocity": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "rotationconstraints": {
+            "x": true,
+            "y": false,
+            "z": false
+        },
+        "gravity": false
+    },
+    "meshrenderer": {
+        "vert": "../assets/shader_files/pointLight_vert.glsl",
+        "frag": "../assets/shader_files/pointLight_frag.glsl",
+        "meshrefid": 3400,
+        "instancecolor": {
+            "x": 0.9622641801834106,
+            "y": 0.9622641801834106,
+            "z": 0.9622641801834106,
+            "w": 1.0
+        },
+        "bloomthreshold": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+        },
+        "castShadow": true,
+        "materialinstance": [
+            "../assets/Compressed/UI-Yellow-s3&321.ctexture",
+            " ",
+            " ",
+            " ",
+            " ",
+            " "
+        ],
+        "mesh": "../assets/compiled_geom/Particle_Sphere.geom",
+        "texturerefid": [
+            1240881460,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
+    },
+    "boxcollider": {
+        "scaleoffset": {
+            "x": 0.8799999952316284,
+            "y": 0.6700000166893005,
+            "z": 1.0
+        },
+        "translateoffset": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "istrigger": false
+    },
+    "spherecollider": {
+        "scaleoffset": 1.0,
+        "translateoffset": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "istrigger": true
+    },
+    "scripts": {
+        "scriptscontainer": [
+            {
+                "scriptFile": "../assets/Scripts/BossBullet.lua",
+                "variables": []
+            }
+        ]
+    },
+    "prefab": {
+        "prefab": "Boss_Bullet_Homing"
+    },
+    "healthbar": {
+        "healthcolor": {
+            "x": 0.0,
+            "y": 1.0,
+            "z": 0.0,
+            "w": 1.0
+        },
+        "backcolor": {
+            "x": 1.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 1.0
+        },
+        "position": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "maxhealth": 50.0,
+        "width": 0.0,
+        "height": 0.0,
+        "frametexture": 0,
+        "healthtexture": 0
+    }
+}

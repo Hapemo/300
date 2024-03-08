@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 4194461,
+        "entityid": 335,
         "general": {
             "name": "BossLevel2",
             "tagid": 1,
@@ -44,7 +44,7 @@
         "meshrenderer": {
             "vert": "../assets/shader_files/pointLight_vert.glsl",
             "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 2584865052,
+            "meshrefid": 3987251140,
             "instancecolor": {
                 "x": 1.0,
                 "y": 1.0,
@@ -66,7 +66,7 @@
                 "../assets/Compressed/Melissa_Emissive.ctexture",
                 "../assets/Compressed/Melissa_AO.ctexture"
             ],
-            "mesh": "../assets/compiled_geom/Melissa_Idle.geom",
+            "mesh": "../assets/compiled_geom/Boss.geom",
             "texturerefid": [
                 1322168031,
                 1820887936,
@@ -142,7 +142,7 @@
         }
     },
     {
-        "entityid": 7340180,
+        "entityid": 336,
         "general": {
             "name": "Level2BossScene",
             "tagid": 0,
