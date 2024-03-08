@@ -9,7 +9,7 @@ local attackinterval = 3
 
 
 local animationtimer =0
-local STATE =  0 --------------------- CHANGE THIS FOR INTRO-----------------------
+local STATE =  -1 --------------------- CHANGE THIS FOR INTRO-----------------------
 
 -- screen shake
 local Quakeintervalcd = 0
@@ -45,7 +45,7 @@ function Update()
         end
     end
 
-    print(this:GetHealthbar().health)
+    -- print(this:GetHealthbar().health)
 
     if this:GetHealthbar().health <= 0 then
         STATE = 1

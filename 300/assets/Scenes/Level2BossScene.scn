@@ -1,6 +1,41 @@
 [
     {
-        "entityid": 8388792,
+        "entityid": 6291762,
+        "general": {
+            "name": "Level2ControllerBoss",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/Level2BossSceneController.lua",
+                    "variables": []
+                }
+            ]
+        }
+    },
+    {
+        "entityid": 6291763,
         "general": {
             "name": "Level2Boss",
             "tagid": 1,
@@ -12,7 +47,7 @@
             "scale": {
                 "x": 50.0,
                 "y": 50.0,
-                "z": 31.270000457763672
+                "z": 31.26999855041504
             },
             "rotate": {
                 "x": 0.0,
@@ -21,8 +56,8 @@
             },
             "translate": {
                 "x": 0.0,
-                "y": 33.880393981933594,
-                "z": -39.44406509399414
+                "y": 32.356781005859375,
+                "z": -39.0
             }
         },
         "rigidbody": {
