@@ -1,8 +1,8 @@
 [
     {
-        "entityid": 6291593,
+        "entityid": 1048758,
         "general": {
-            "name": "DialogueCompleteObj3",
+            "name": "DialogueLoadIn1",
             "tagid": 0,
             "subtag": 0,
             "isActive": true,
@@ -27,7 +27,7 @@
         },
         "uirenderer": {
             "texpath": "",
-            "textureref": 824126029,
+            "textureref": 4102011533,
             "degree": 0.0,
             "slider": 0.0,
             "color": {
@@ -41,8 +41,8 @@
         },
         "audio": {
             "filepath": "../assets\\Audio",
-            "filename": "VO_Level2_CompleteObjective3.wav",
-            "fullpath": "../assets\\Audio/VO_Level2_CompleteObjective3.wav",
+            "filename": "VO_Level2_LoadIn.wav",
+            "fullpath": "../assets\\Audio/VO_Level2_LoadIn.wav",
             "playonawake": false,
             "islooping": false,
             "audiotype": 1,
@@ -54,50 +54,9 @@
         }
     },
     {
-        "entityid": 6291594,
+        "entityid": 1048759,
         "general": {
-            "name": "DialogueFrame",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.0,
-                "y": -0.800000011920929,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": -0.6000000238418579,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 3896556072,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 10,
-            "worldtransform": false
-        }
-    },
-    {
-        "entityid": 6291595,
-        "general": {
-            "name": "DialogueExcited",
+            "name": "DialogueNormal",
             "tagid": 0,
             "subtag": 0,
             "isActive": true,
@@ -122,7 +81,7 @@
         },
         "uirenderer": {
             "texpath": "",
-            "textureref": 2884792257,
+            "textureref": 395584188,
             "degree": 0.0,
             "slider": 1.0,
             "color": {
@@ -139,9 +98,9 @@
         }
     },
     {
-        "entityid": 6291597,
+        "entityid": 1048760,
         "general": {
-            "name": "DialogueAngry",
+            "name": "DialogueLoadIn2",
             "tagid": 0,
             "subtag": 0,
             "isActive": true,
@@ -149,8 +108,8 @@
         },
         "transform": {
             "scale": {
-                "x": 0.0,
-                "y": -0.5,
+                "x": 1.600000023841858,
+                "y": -0.10000000149011612,
                 "z": 1.0
             },
             "rotate": {
@@ -159,93 +118,14 @@
                 "z": 0.0
             },
             "translate": {
-                "x": -0.8100000023841858,
+                "x": 0.15000000596046448,
                 "y": -0.6000000238418579,
                 "z": 0.0
             }
         },
         "uirenderer": {
             "texpath": "",
-            "textureref": 471674240,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 26,
-            "worldtransform": false
-        },
-        "prefab": {
-            "prefab": "DialogueFace"
-        }
-    },
-    {
-        "entityid": 6291598,
-        "general": {
-            "name": "DialogueControllerLevel2",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/DialogueControllerLevel2.lua",
-                    "variables": []
-                }
-            ]
-        }
-    },
-    {
-        "entityid": 6291599,
-        "general": {
-            "name": "DialogueCompleteBoss",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.600000023841858,
-                "y": -0.10000000149011612,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.15000000596046448,
-                "y": -0.5,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 4291951275,
+            "textureref": 3048048050,
             "degree": 0.0,
             "slider": 0.0,
             "color": {
@@ -257,76 +137,12 @@
             "layer": 30,
             "worldtransform": false
         },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "VO_Level2_BossFight.wav",
-            "fullpath": "../assets\\Audio/VO_Level2_BossFight.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 1.0,
-            "retainaudio": false
-        },
         "prefab": {
             "prefab": "Dialogue"
         }
     },
     {
-        "entityid": 6291600,
-        "general": {
-            "name": "DialogueCompleteObj2",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.600000023841858,
-                "y": -0.10000000149011612,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.15000000596046448,
-                "y": -0.5,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 3246638600,
-            "degree": 0.0,
-            "slider": 0.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 30,
-            "worldtransform": false
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "VO_Level2_CompleteObjective2.wav",
-            "fullpath": "../assets\\Audio/VO_Level2_CompleteObjective2.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 1.0,
-            "retainaudio": false
-        },
-        "prefab": {
-            "prefab": "Dialogue"
-        }
-    },
-    {
-        "entityid": 6291601,
+        "entityid": 1048761,
         "general": {
             "name": "DialogueCompleteObj1",
             "tagid": 0,
@@ -380,9 +196,9 @@
         }
     },
     {
-        "entityid": 6291602,
+        "entityid": 1048762,
         "general": {
-            "name": "DialogueLoadIn2",
+            "name": "DialogueCompleteObj2",
             "tagid": 0,
             "subtag": 0,
             "isActive": true,
@@ -401,13 +217,13 @@
             },
             "translate": {
                 "x": 0.15000000596046448,
-                "y": -0.6000000238418579,
+                "y": -0.5,
                 "z": 0.0
             }
         },
         "uirenderer": {
             "texpath": "",
-            "textureref": 3048048050,
+            "textureref": 3246638600,
             "degree": 0.0,
             "slider": 0.0,
             "color": {
@@ -419,14 +235,113 @@
             "layer": 30,
             "worldtransform": false
         },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "VO_Level2_CompleteObjective2.wav",
+            "fullpath": "../assets\\Audio/VO_Level2_CompleteObjective2.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false
+        },
         "prefab": {
             "prefab": "Dialogue"
         }
     },
     {
-        "entityid": 6291604,
+        "entityid": 1048763,
         "general": {
-            "name": "DialogueNormal",
+            "name": "DialogueCompleteBoss",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.600000023841858,
+                "y": -0.10000000149011612,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.15000000596046448,
+                "y": -0.5,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 4291951275,
+            "degree": 0.0,
+            "slider": 0.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 30,
+            "worldtransform": false
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "VO_Level2_BossFight.wav",
+            "fullpath": "../assets\\Audio/VO_Level2_BossFight.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false
+        },
+        "prefab": {
+            "prefab": "Dialogue"
+        }
+    },
+    {
+        "entityid": 1048764,
+        "general": {
+            "name": "DialogueControllerLevel2",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/DialogueControllerLevel2.lua",
+                    "variables": []
+                }
+            ]
+        }
+    },
+    {
+        "entityid": 1048765,
+        "general": {
+            "name": "DialogueAngry",
             "tagid": 0,
             "subtag": 0,
             "isActive": true,
@@ -451,7 +366,7 @@
         },
         "uirenderer": {
             "texpath": "",
-            "textureref": 395584188,
+            "textureref": 471674240,
             "degree": 0.0,
             "slider": 1.0,
             "color": {
@@ -468,9 +383,94 @@
         }
     },
     {
-        "entityid": 6291605,
+        "entityid": 1048766,
         "general": {
-            "name": "DialogueLoadIn1",
+            "name": "DialogueExcited",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.0,
+                "y": -0.5,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -0.8100000023841858,
+                "y": -0.6000000238418579,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 2884792257,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 26,
+            "worldtransform": false
+        },
+        "prefab": {
+            "prefab": "DialogueFace"
+        }
+    },
+    {
+        "entityid": 1048767,
+        "general": {
+            "name": "DialogueFrame",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.0,
+                "y": -0.800000011920929,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": -0.6000000238418579,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 3896556072,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 10,
+            "worldtransform": false
+        }
+    },
+    {
+        "entityid": 1048768,
+        "general": {
+            "name": "DialogueCompleteObj3",
             "tagid": 0,
             "subtag": 0,
             "isActive": true,
@@ -495,7 +495,7 @@
         },
         "uirenderer": {
             "texpath": "",
-            "textureref": 4102011533,
+            "textureref": 824126029,
             "degree": 0.0,
             "slider": 0.0,
             "color": {
@@ -509,8 +509,8 @@
         },
         "audio": {
             "filepath": "../assets\\Audio",
-            "filename": "VO_Level2_LoadIn.wav",
-            "fullpath": "../assets\\Audio/VO_Level2_LoadIn.wav",
+            "filename": "VO_Level2_CompleteObjective3.wav",
+            "fullpath": "../assets\\Audio/VO_Level2_CompleteObjective3.wav",
             "playonawake": false,
             "islooping": false,
             "audiotype": 1,

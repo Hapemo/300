@@ -1,0 +1,125 @@
+[
+    {
+        "entityid": 8388792,
+        "general": {
+            "name": "Level2Boss",
+            "tagid": 1,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 50.0,
+                "y": 50.0,
+                "z": 31.270000457763672
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 33.880393981933594,
+                "z": -39.44406509399414
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 1,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": false,
+                "y": false,
+                "z": false
+            },
+            "gravity": false
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3987251140,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "castShadow": true,
+            "materialinstance": [
+                "../assets/Compressed/Melissa_BaseColor.ctexture",
+                " ",
+                " ",
+                " ",
+                "../assets/Compressed/Melissa_Emissive.ctexture",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/Boss.geom",
+            "texturerefid": [
+                1322168031,
+                0,
+                0,
+                0,
+                2759371044,
+                0
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 0.7799999713897705,
+                "y": 0.5,
+                "z": 1.0099999904632568
+            },
+            "translateoffset": {
+                "x": 0.5699999928474426,
+                "y": 5.510000228881836,
+                "z": 0.4300000071525574
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/Level2Boss.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "healthbar": {
+            "healthcolor": {
+                "x": 0.0,
+                "y": 1.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "backcolor": {
+                "x": 1.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "maxhealth": 20.0,
+            "width": 0.0,
+            "height": 0.0,
+            "frametexture": 0,
+            "healthtexture": 0
+        }
+    }
+]

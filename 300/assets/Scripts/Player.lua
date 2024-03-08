@@ -278,8 +278,6 @@ function Update()
 
     if(graphicsSys.mAmbientBloomExposure > minExposure)then
         graphicsSys.mAmbientBloomExposure = graphicsSys.mAmbientBloomExposure-((maxExposure - minExposure)*1/20)
-
-
     end
 
 
