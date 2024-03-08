@@ -106,9 +106,6 @@ function Update()
             if controllerL2Script ~= nil then
                 controllerL2Script:RunFunction("StartIntro")
             end
-
-            _G.FreezePlayerControl = false
-            ShowUI()
         STATE = -1
     end
 

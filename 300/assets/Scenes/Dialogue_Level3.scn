@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 1048812,
+        "entityid": 10485951,
         "general": {
             "name": "DialogueFrame",
             "tagid": 0,
@@ -41,7 +41,7 @@
         }
     },
     {
-        "entityid": 1048813,
+        "entityid": 10485952,
         "general": {
             "name": "DialogueLoadIn2",
             "tagid": 0,
@@ -85,7 +85,7 @@
         }
     },
     {
-        "entityid": 1048814,
+        "entityid": 10485953,
         "general": {
             "name": "DialogueControllerLevel3",
             "tagid": 0,
@@ -120,7 +120,7 @@
         }
     },
     {
-        "entityid": 1048815,
+        "entityid": 10485956,
         "general": {
             "name": "DialogueBoss",
             "tagid": 0,
@@ -159,12 +159,22 @@
             "layer": 30,
             "worldtransform": false
         },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "VO_Level3_FinishBossFight.wav",
+            "fullpath": "../assets\\Audio/VO_Level3_FinishBossFight.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false
+        },
         "prefab": {
             "prefab": "Dialogue"
         }
     },
     {
-        "entityid": 1048816,
+        "entityid": 10485957,
         "general": {
             "name": "DialogueLoadIn1",
             "tagid": 0,
@@ -203,12 +213,22 @@
             "layer": 30,
             "worldtransform": false
         },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "VO_Level3_LoadIn.wav",
+            "fullpath": "../assets\\Audio/VO_Level3_LoadIn.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false
+        },
         "prefab": {
             "prefab": "Dialogue"
         }
     },
     {
-        "entityid": 1048817,
+        "entityid": 10485959,
         "general": {
             "name": "DialogueAngry",
             "tagid": 0,
@@ -252,7 +272,7 @@
         }
     },
     {
-        "entityid": 1048818,
+        "entityid": 10485960,
         "general": {
             "name": "DialogueExcited",
             "tagid": 0,

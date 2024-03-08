@@ -1,43 +1,8 @@
 [
     {
-        "entityid": 1048583,
+        "entityid": 335,
         "general": {
-            "name": "Level2BossScene",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/Level1BossSceneController.lua",
-                    "variables": []
-                }
-            ]
-        }
-    },
-    {
-        "entityid": 1048584,
-        "general": {
-            "name": "BossLevel1",
+            "name": "BossLevel2",
             "tagid": 1,
             "subtag": 0,
             "isActive": true,
@@ -79,7 +44,7 @@
         "meshrenderer": {
             "vert": "../assets/shader_files/pointLight_vert.glsl",
             "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 2584865052,
+            "meshrefid": 3987251140,
             "instancecolor": {
                 "x": 1.0,
                 "y": 1.0,
@@ -101,7 +66,7 @@
                 "../assets/Compressed/Melissa_Emissive.ctexture",
                 "../assets/Compressed/Melissa_AO.ctexture"
             ],
-            "mesh": "../assets/compiled_geom/Melissa_Idle.geom",
+            "mesh": "../assets/compiled_geom/Boss.geom",
             "texturerefid": [
                 1322168031,
                 1820887936,
@@ -174,6 +139,41 @@
             "height": 0.07000000029802322,
             "frametexture": 0,
             "healthtexture": 0
+        }
+    },
+    {
+        "entityid": 336,
+        "general": {
+            "name": "Level2BossScene",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/Level1BossSceneController.lua",
+                    "variables": []
+                }
+            ]
         }
     }
 ]

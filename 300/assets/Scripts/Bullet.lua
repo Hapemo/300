@@ -82,9 +82,9 @@ function Dead()
 end
 
 function OnTriggerEnter(Entity)
-    -- print("HELLLO")
     generalComponent = Entity:GetGeneral()
-    -- print("HIT THIS OBJECT -> ", generalComponent.name)
+
+    print("ddddddddddddddddddddddddd")
 
     --yujun's hardcode :D
     if (generalComponent.name == "tutorialTrojan") then
@@ -115,38 +115,37 @@ function OnTriggerEnter(Entity)
 
     entityobj = Helper.GetScriptEntity(script_entity.id)
 
-    -- print("THIS ENTITY is: " , generalComponent.name)
 
     tagid = generalComponent.tagid
-
     if (tagid == 1) then
-
-        -- print("HP of Homing: " , healthComponent.health)
         for i = 3, 1, -1
         do
             spawned(i)
         end
         gameStateSys = systemManager:mGameStateSystem()
 
+
+        -- print(bulletTag)
+
         if(bulletTag == "PISTOL") then 
             if(healthComponent ~= nil) then 
                 healthComponent.health = healthComponent.health - pistolDamage * _G.powerLevel
-                -- print("PISTOL HIT")
-                print("HP Left: ", healthComponent.health)
-                if(healthComponent.health <= 0 ) then
-                    systemManager.ecs:SetDeleteEntity(Entity)
-                    -- Interacts with "TutorialMonsterSpawner.lua"
-                    if (generalComponent.name == "TrojanHorse") then 
-                        _G.trojan_1_instance = false
-                    end
-                    if (generalComponent.name == "Melissa") then 
-                        _G.Melissa_1_instance = false
-                    end
+                print("PISTOL HIT")
+                -- print("HP Left: ", healthComponent.health)
+                -- if(healthComponent.health <= 0 ) then
+                --     systemManager.ecs:SetDeleteEntity(Entity)
+                --     -- Interacts with "TutorialMonsterSpawner.lua"
+                --     if (generalComponent.name == "TrojanHorse") then 
+                --         _G.trojan_1_instance = false
+                --     end
+                --     if (generalComponent.name == "Melissa") then 
+                --         _G.Melissa_1_instance = false
+                --     end
 
-                    if (generalComponent.name == "TrojanSoldier") then 
-                        _G.trojan_soldier_1_instance = false
-                    end
-                end
+                --     if (generalComponent.name == "TrojanSoldier") then 
+                --         _G.trojan_soldier_1_instance = false
+                --     end
+                -- end
             else
 
             
@@ -157,21 +156,20 @@ function OnTriggerEnter(Entity)
             if(healthComponent ~= nil) then 
                 healthComponent.health = healthComponent.health - revolverDamage * _G.powerLevel
                 -- print("DAMAGE (REVOLVER): " , revolverDamage * _G.powerLevel)
-                print("HP Left: ", healthComponent.health)
-                if(healthComponent.health <= 0 ) then
-                    systemManager.ecs:SetDeleteEntity(Entity)
-                    -- Interacts with "TutorialMonsterSpawner.lua"
-                    if (generalComponent.name == "TrojanHorse") then 
-                        _G.trojan_1_instance = false
-                    end
-                    if (generalComponent.name == "Melissa") then 
-                        _G.Melissa_1_instance = false
-                    end
+                -- if(healthComponent.health <= 0 ) then
+                --     systemManager.ecs:SetDeleteEntity(Entity)
+                --     -- Interacts with "TutorialMonsterSpawner.lua"
+                --     if (generalComponent.name == "TrojanHorse") then 
+                --         _G.trojan_1_instance = false
+                --     end
+                --     if (generalComponent.name == "Melissa") then 
+                --         _G.Melissa_1_instance = false
+                --     end
 
-                    if (generalComponent.name == "TrojanSoldier") then 
-                        _G.trojan_soldier_1_instance = false
-                    end
-                end
+                --     if (generalComponent.name == "TrojanSoldier") then 
+                --         _G.trojan_soldier_1_instance = false
+                --     end
+                -- end
             else
             end
         end
@@ -179,22 +177,21 @@ function OnTriggerEnter(Entity)
         if(bulletTag == "SHOTGUN") then 
             if(healthComponent ~= nil) then 
                 healthComponent.health = healthComponent.health - shotGunDamage * _G.powerLevel
-                print("HP Left: ", healthComponent.health)
-                if(healthComponent.health <= 0 ) then
-                    systemManager.ecs:SetDeleteEntity(Entity)
+                -- if(healthComponent.health <= 0 ) then
+                --     systemManager.ecs:SetDeleteEntity(Entity)
 
-                    -- Interacts with "TutorialMonsterSpawner.lua"
-                    if (generalComponent.name == "TrojanHorse") then 
-                    _G.trojan_1_instance = false
-                    end
-                    if (generalComponent.name == "Melissa") then 
-                        _G.Melissa_1_instance = false
-                    end
+                --     -- Interacts with "TutorialMonsterSpawner.lua"
+                --     if (generalComponent.name == "TrojanHorse") then 
+                --     _G.trojan_1_instance = false
+                --     end
+                --     if (generalComponent.name == "Melissa") then 
+                --         _G.Melissa_1_instance = false
+                --     end
 
-                    if (generalComponent.name == "TrojanSoldier") then 
-                        _G.trojan_soldier_1_instance = false
-                    end
-                end
+                --     if (generalComponent.name == "TrojanSoldier") then 
+                --         _G.trojan_soldier_1_instance = false
+                --     end
+                -- end
             else
             end
         end
@@ -202,23 +199,22 @@ function OnTriggerEnter(Entity)
         if(bulletTag == "MACHINE_GUN") then 
             if(healthComponent ~= nil) then 
                 healthComponent.health = healthComponent.health - machineGunDamage * _G.powerLevel
-                print("HP Left: ", healthComponent.health)
-                if(healthComponent.health <= 0 ) then
-                    systemManager.ecs:SetDeleteEntity(Entity)
+                -- if(healthComponent.health <= 0 ) then
+                --     systemManager.ecs:SetDeleteEntity(Entity)
 
-                    -- Interacts with "TutorialMonsterSpawner.lua"
-                    if (generalComponent.name == "TrojanHorse") then 
-                    _G.trojan_1_instance = false
-                    end
-                    if (generalComponent.name == "Melissa") then 
-                        _G.Melissa_1_instance = false
-                    end
+                --     -- Interacts with "TutorialMonsterSpawner.lua"
+                --     if (generalComponent.name == "TrojanHorse") then 
+                --     _G.trojan_1_instance = false
+                --     end
+                --     if (generalComponent.name == "Melissa") then 
+                --         _G.Melissa_1_instance = false
+                --     end
 
-                    if (generalComponent.name == "TrojanSoldier") then 
-                        _G.trojan_soldier_1_instance = false
-                    end
+                --     if (generalComponent.name == "TrojanSoldier") then 
+                --         _G.trojan_soldier_1_instance = false
+                --     end
                 
-                end
+                -- end
             end
 
         end
@@ -243,43 +239,6 @@ function OnTriggerEnter(Entity)
         systemManager.ecs:SetDeleteEntity(entityobj)
     end
 
-    if (tagid == 13) then 
-        if(healthComponent ~= nil) then 
-            print("HOMING HAS HEALTH")
-        end
-        -- print("I HAVE SHOT THE HOMING BULLET")
-    end
-
-    if (tagid == 14) then 
-        print("I HIT BOSS")
-        if(bulletTag == "PISTOL") then 
-            if(_G.bossHP_healthbar_comp ~= nil) then 
-                _G.bossHP_healthbar_comp.health = _G.bossHP_healthbar_comp.health - pistolDamage
-                print("HP LEFT: " ,   _G.bossHP_healthbar_comp.health)
-            end
-        end
-
-        if(bulletTag == "REVOLVER") then 
-            if(_G.bossHP_healthbar_comp ~= nil) then 
-                _G.bossHP_healthbar_comp.health = _G.bossHP_healthbar_comp.health - revolverDamage
-                print("HP LEFT: " , _G.bossHP_healthbar_comp.health)
-            end
-        end
-
-        if(bulletTag == "SHOTGUN") then 
-            if(_G.bossHP_healthbar_comp ~= nil) then 
-                _G.bossHP_healthbar_comp.health = _G.bossHP_healthbar_comp.health - shotGunDamage
-                print("HP LEFT: " , _G.bossHP_healthbar_comp.health)
-            end
-        end
-
-        if(bulletTag == "MACHINE_GUN") then 
-            if(_G.bossHP_healthbar_comp ~= nil) then 
-                _G.bossHP_healthbar_comp.health = _G.bossHP_healthbar_comp.health- machineGunDamage
-                print("HP LEFT: " ,   _G.bossHP_healthbar_comp.health)
-            end
-        end
-    end
     -- if (tagid == 3) then
     --     for i = 3, 1, -1
     --     do
@@ -335,4 +294,3 @@ function spawned(value)
     meshSys = prefabEntity:GetMeshRenderer()
     meshSys:SetColor(allcolor[value])
 end
-

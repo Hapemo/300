@@ -23,6 +23,9 @@ local picturespeed
 local counter
 local picture
 
+local playing
+local audio
+
 --neeae
 function Alive()
     Intro1 = gameStateSys:GetEntity("DialogueLoadIn1", "Dialogue_Level3")
@@ -51,10 +54,37 @@ function Alive()
     counter = 0
 
     picture = angry
+
+    playing = false
 end
 
 function Update()
     if currState ~= "" then
+        systemManager.mIsDialogue = true
+    end
+end
+
+function Dead()
+
+end
+
+function OnTriggerEnter(Entity)
+    
+end
+
+function OnTriggerExit(Entity)
+    
+end
+
+function OnContactEnter(Entity)
+
+end
+
+function OnContactExit(Entity)
+
+end
+
+function DialogueUpdate()
         if currState == "intro" then
             picture = angry
         elseif currState == "boss" then
@@ -79,28 +109,8 @@ function Update()
             finish = false
             currState = ""
             counter = 0
+            systemManager.mIsDialogue = false
         end
-    end
-end
-
-function Dead()
-
-end
-
-function OnTriggerEnter(Entity)
-    
-end
-
-function OnTriggerExit(Entity)
-    
-end
-
-function OnContactEnter(Entity)
-
-end
-
-function OnContactExit(Entity)
-
 end
 
 function UpdateDialogues()
@@ -115,6 +125,11 @@ function UpdateDialogues()
         end
 
         if Intro1Progress < 1.0 then 
+            if playing == false then
+                audio = Intro1:GetAudio()
+                audio:SetPlay(0.3)
+                playing = true
+            end
             Intro1Progress = speed + Intro1Progress
             if Intro1Progress > 1.0 then
                 Intro1Progress = 1.1
@@ -142,6 +157,11 @@ function UpdateDialogues()
         end
 
         if BossProgress < 1.0 then 
+            if playing == false then
+                audio = Boss:GetAudio()
+                audio:SetPlay(0.3)
+                playing = true
+            end
             BossProgress = speed + BossProgress
             if BossProgress > 1.0 then
                 BossProgress = 1.1
@@ -154,8 +174,6 @@ function UpdateDialogues()
 end
 
 function OpenFrame()
-    _G.FreezePlayerControl = true
-
     if frame:GetTransform().mScale.x <= 1.99 then
         frame:GetTransform().mScale.x = frame:GetTransform().mScale.x + framespeed
         if frame:GetTransform().mScale.x > 1.98 then
@@ -172,8 +190,6 @@ function OpenFrame()
 end
 
 function CloseFrame()
-    _G.FreezePlayerControl = false
-
     if picture:GetTransform().mScale.x >= 0.01 then
         picture:GetTransform().mScale.x = picture:GetTransform().mScale.x - picturespeed
         if picture:GetTransform().mScale.x < 0.0 then
@@ -202,6 +218,8 @@ function SkipAnimation()
 end
 
 function EndDialogue()
+    audio:SetStop()
+    playing = false
     if currState == "intro" then
         Intro1:GetUIrenderer():SetSlider(0.0)
         Intro2:GetUIrenderer():SetSlider(0.0)

@@ -83,6 +83,7 @@ void SystemManager::Reset()
 	//mScriptingSystem.get()->ScriptReload();
 	mIsPlay = false;
 	mIsInGamePause = false;
+	mIsDialogue = false;
 }
 
 void SystemManager::ResetForChangeGS() {
@@ -159,6 +160,16 @@ void SystemManager::Update(float dt)
 			entity.GetComponent<Scripts>().RunFunctionForAllScripts("PauseUpdate");
 		}
 		mButtonSystem.get()->Update();
+		mAudioSystem.get()->Update(dt, false);
+		return;
+	}
+
+	if (mIsDialogue) {
+		auto scriptEntities = systemManager->ecs->GetEntitiesWith<Scripts>();
+		for (Entity entity : scriptEntities)
+		{
+			entity.GetComponent<Scripts>().RunFunctionForAllScripts("DialogueUpdate");
+		}
 		mAudioSystem.get()->Update(dt, false);
 		return;
 	}

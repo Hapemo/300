@@ -1,68 +1,6 @@
 [
     {
-        "entityid": 3145756,
-        "general": {
-            "name": "ZipBombSmoke",
-            "tagid": 8,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -1.090000033378601,
-                "y": 1.6799999475479126,
-                "z": 0.3400000035762787
-            }
-        },
-        "parent": {
-            "prevsibling": 3145756,
-            "nextsibling": 3145756,
-            "parent": 4194447
-        },
-        "particleemitter": {
-            "startcolor": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "endcolor": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "startsize": 0.5,
-            "endsize": 0.10000000149011612,
-            "offset": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.5
-            },
-            "gravity": 0.30000001192092896,
-            "rotation": 1.0,
-            "lifetime": 2.0,
-            "loop": true,
-            "loopInterval": 0.10000000149011612,
-            "speed": 0.800000011920929,
-            "count": 5,
-            "emit": false,
-            "particletexture": 2273550607
-        }
-    },
-    {
-        "entityid": 3145780,
+        "entityid": 8388784,
         "general": {
             "name": "UIHider",
             "tagid": 6,
@@ -103,7 +41,7 @@
         }
     },
     {
-        "entityid": 3145781,
+        "entityid": 8388787,
         "general": {
             "name": "ILYEffectScreen",
             "tagid": 6,
@@ -155,7 +93,7 @@
         }
     },
     {
-        "entityid": 3145782,
+        "entityid": 8388795,
         "general": {
             "name": "BottomBlackBorder",
             "tagid": 6,
@@ -196,7 +134,7 @@
         }
     },
     {
-        "entityid": 3145783,
+        "entityid": 8388797,
         "general": {
             "name": "TopBlackBorder",
             "tagid": 6,
@@ -237,7 +175,7 @@
         }
     },
     {
-        "entityid": 3145784,
+        "entityid": 8388803,
         "general": {
             "name": "MelissaEpicTrigger",
             "tagid": 8,
@@ -301,7 +239,7 @@
         }
     },
     {
-        "entityid": 3146084,
+        "entityid": 8388924,
         "general": {
             "name": "ZipBombEpicTrigger",
             "tagid": 8,
@@ -365,7 +303,7 @@
         }
     },
     {
-        "entityid": 4194447,
+        "entityid": 8388925,
         "general": {
             "name": "EpicZipBomb",
             "tagid": 1,
@@ -458,10 +396,6 @@
         "scripts": {
             "scriptscontainer": []
         },
-        "children": {
-            "numchildren": 1,
-            "firstchild": 3145756
-        },
         "audio": {
             "filepath": "",
             "filename": "",
@@ -503,94 +437,45 @@
             "height": 0.07000000029802322,
             "frametexture": 0,
             "healthtexture": 0
-        }
-    },
-    {
-        "entityid": 4194449,
-        "general": {
-            "name": "ZipBombFuseAudio",
-            "tagid": 8,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
         },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
+        "particleemitter": {
+            "startcolor": {
                 "x": 0.0,
                 "y": 0.0,
-                "z": 0.0
+                "z": 0.0,
+                "w": 1.0
             },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "Enemy_Zipbomb_Fuse.wav",
-            "fullpath": "../assets\\Audio/Enemy_Zipbomb_Fuse.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 1.0,
-            "retainaudio": false
-        },
-        "prefab": {
-            "prefab": "ZipBombFuseAudio"
-        }
-    },
-    {
-        "entityid": 4194450,
-        "general": {
-            "name": "MEpicIntroInfoUI",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.1200000047683716,
-                "y": -2.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -1.5499999523162842,
-                "y": 0.0,
-                "z": 0.20000000298023224
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 1860689524,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
+            "endcolor": {
                 "x": 1.0,
                 "y": 1.0,
                 "z": 1.0,
-                "w": 1.0
+                "w": 0.0
             },
-            "layer": 12,
-            "worldtransform": false
+            "startsize": 0.20000000298023224,
+            "endsize": 0.6000000238418579,
+            "position": {
+                "x": -1.100000023841858,
+                "y": 1.6799999475479126,
+                "z": 0.30000001192092896
+            },
+            "offset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "gravity": 0.30000001192092896,
+            "rotation": 1.0,
+            "lifetime": 2.0,
+            "loop": true,
+            "loopInterval": 0.10000000149011612,
+            "speed": 0.800000011920929,
+            "count": 5,
+            "emit": false,
+            "particletexture": 2273550607
         }
     },
     {
-        "entityid": 4194451,
+        "entityid": 8388947,
         "general": {
             "name": "ZBEpicIntroInfoUI",
             "tagid": 6,
@@ -631,7 +516,7 @@
         }
     },
     {
-        "entityid": 4194453,
+        "entityid": 9437351,
         "general": {
             "name": "EpicIntroManagerlv2",
             "tagid": 8,
@@ -666,7 +551,7 @@
         }
     },
     {
-        "entityid": 4194454,
+        "entityid": 9437362,
         "general": {
             "name": "EpicMelissa",
             "tagid": 1,
@@ -800,6 +685,90 @@
             "height": 0.07000000029802322,
             "frametexture": 0,
             "healthtexture": 0
+        }
+    },
+    {
+        "entityid": 9437368,
+        "general": {
+            "name": "MEpicIntroInfoUI",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.1200000047683716,
+                "y": -2.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -1.5499999523162842,
+                "y": 0.0,
+                "z": 0.20000000298023224
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 1860689524,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 12,
+            "worldtransform": false
+        }
+    },
+    {
+        "entityid": 9437369,
+        "general": {
+            "name": "ZipBombFuseAudio",
+            "tagid": 8,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Enemy_Zipbomb_Fuse.wav",
+            "fullpath": "../assets\\Audio/Enemy_Zipbomb_Fuse.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false
+        },
+        "prefab": {
+            "prefab": "ZipBombFuseAudio"
         }
     }
 ]
