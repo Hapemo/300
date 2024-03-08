@@ -122,7 +122,10 @@ void AudioSystem::Update([[maybe_unused]] float dt, bool calling_from_pause)
 		Audio& audio_component = audio.GetComponent<Audio>();
 		Transform& transform = audio.GetComponent<Transform>(); // need to update "mPreviousPosition" for 
 		General& general = audio.GetComponent<General>();
-
+		if (general.name == "DialogueObjectiveIntro1" && audio_component.mNextActionState == Audio::SET_TO_PLAY)
+		{
+			std::string temp = "";
+		}
 		// Set 3D Flag
 		if (audio_component.mFileName.find("3D") != std::string::npos)
 		{
@@ -189,7 +192,9 @@ void AudioSystem::Update([[maybe_unused]] float dt, bool calling_from_pause)
 					{
 						mSoundsCurrentlyPlaying.find()
 					}*/
-
+					if (audio.GetComponent<Audio>().mFileName == "VO_Tutorial_ObjectiveIntro.wav") {
+						std::string name = audio.GetComponent<General>().name;
+					}
 					PINFO("AUDIO EXISTS");
 					PINFO("PLAYING AUDIO %s AT: %f", audio_component.mFileName.c_str(), audio_component.mVolume);
 
