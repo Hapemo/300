@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 1048823,
+        "entityid": 5243124,
         "general": {
             "name": "Spawn_Point_Ref",
             "tagid": 1,
@@ -82,7 +82,7 @@
         }
     },
     {
-        "entityid": 1048824,
+        "entityid": 5243127,
         "general": {
             "name": "Boss",
             "tagid": 1,
@@ -155,7 +155,7 @@
         }
     },
     {
-        "entityid": 1048825,
+        "entityid": 5243128,
         "general": {
             "name": "Out_Of_Bounds_Boss",
             "tagid": 4,
@@ -214,6 +214,33 @@
         },
         "prefab": {
             "prefab": "Out_Of_Bounds_Boss"
+        }
+    },
+    {
+        "entityid": 5243130,
+        "general": {
+            "name": "Spiral_Bullet_Spawn",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 7.848718643188477,
+                "y": 0.0,
+                "z": 12.419782638549805
+            }
         }
     }
 ]

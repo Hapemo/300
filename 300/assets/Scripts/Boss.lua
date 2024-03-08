@@ -28,7 +28,8 @@ local currentBossStateTimer = 0
 local maxBossStateTimer = 3
 
 -- Phase 3 : Bullethell Phase
-local bossPosition = Vec3.new()
+local spiralBulletSpawnerObj
+local spiralBulletSpawnPosition = Vec3.new()
 local bulletSpawnPosition = Vec3.new()
 local bulletTranslateRef
 local bulletProjectileType = 0                          -- Used to determine which kind of projectile the enemy uses
@@ -100,7 +101,8 @@ function Alive()
     physicsSys = systemManager:mPhysicsSystem()
 
     -- Testing (Bullet Spawn Position)
-    bossPosition = this:GetTransform().mTranslate
+    spiralBulletSpawnerObj = gameStateSys:GetEntityByScene("Spiral_Bullet_Spawn", "BossStuff")
+    spiralBulletSpawnPosition = spiralBulletSpawnerObj:GetTransform().mTranslate
     spawn_point_ref_obj = gameStateSys:GetEntityByScene("Spawn_Point_Ref" , "BossStuff")
     spawn_point_ref_trans = spawn_point_ref_obj:GetTransform().mTranslate
 
@@ -110,9 +112,9 @@ function Alive()
     
 
     -- For [1] Spiral Bullets (Ground)
-    bulletSpawnPosition.x = bossPosition.x
-    bulletSpawnPosition.y = bossPosition.y
-    bulletSpawnPosition.z = bossPosition.z
+    bulletSpawnPosition.x = spiralBulletSpawnPosition.x
+    bulletSpawnPosition.y = spiralBulletSpawnPosition.y
+    bulletSpawnPosition.z = spiralBulletSpawnPosition.z
 
     -- For [2]  Summon Bullet + Homing Bullets (From Boss' Mouth / Front) 
     spawn_point_translate.x = spawn_point_ref_trans.x
@@ -145,7 +147,7 @@ function Update()
             for i = 1, #_G.state_checker do
                 if _G.state_checker[i] == false then 
                     state = i 
-                    print("STATE CHOSEN: " , state)
+                    -- print("STATE CHOSEN: " , state)
                 else 
                     _G.state_checker[i] = false -- reset it for next cycle use
                 end 
@@ -154,7 +156,7 @@ function Update()
             
         else 
             state = math.random(1, 5)
-            print("STATE CHOSEN: " , state)
+            -- print("STATE CHOSEN: " , state)
         end
 
 
@@ -168,8 +170,8 @@ function Update()
     -- Debug States
     -- state = 1 --[OK]
     -- state = 2 [OK] -- need to check agn after i check the other mechanics
-    -- state = 3 [OK]
-    state = 4 --[OK]
+    state = 3 -- [OK]
+    -- state = 4 --[OK]
     -- state = 5 [OK]
 
     if state == 1 and _G.state_checker[1] == false then

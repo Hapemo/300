@@ -1,6 +1,6 @@
 local bulletObject
 local bulletLifeTime = 0
-local bulletDeathTime = 10
+local bulletDeathTime = 15
 
 -- Phase 3 attack from Boss Level (Lv 3) 
 local bullet_damage = 10 -- Adjust Accordingly
@@ -59,6 +59,7 @@ function OnTriggerEnter(Entity)
     -- print("ON TRIGGER ENTER BOSS BULLET")
 
     if(tagid == 0) then 
+        -- print("HIT BULLET")
         if(Entity:HasHealthbar()) then 
             -- print("HAS HEALTHBAR")
             player_healthbar_component = Entity:GetHealthbar()

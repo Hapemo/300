@@ -82,6 +82,7 @@ function Dead()
 end
 
 function OnTriggerEnter(Entity)
+    -- print("HELLLO")
     generalComponent = Entity:GetGeneral()
     -- print("HIT THIS OBJECT -> ", generalComponent.name)
 
@@ -131,7 +132,7 @@ function OnTriggerEnter(Entity)
             if(healthComponent ~= nil) then 
                 healthComponent.health = healthComponent.health - pistolDamage * _G.powerLevel
                 -- print("PISTOL HIT")
-                -- print("HP Left: ", healthComponent.health)
+                print("HP Left: ", healthComponent.health)
                 if(healthComponent.health <= 0 ) then
                     systemManager.ecs:SetDeleteEntity(Entity)
                     -- Interacts with "TutorialMonsterSpawner.lua"
@@ -156,6 +157,7 @@ function OnTriggerEnter(Entity)
             if(healthComponent ~= nil) then 
                 healthComponent.health = healthComponent.health - revolverDamage * _G.powerLevel
                 -- print("DAMAGE (REVOLVER): " , revolverDamage * _G.powerLevel)
+                print("HP Left: ", healthComponent.health)
                 if(healthComponent.health <= 0 ) then
                     systemManager.ecs:SetDeleteEntity(Entity)
                     -- Interacts with "TutorialMonsterSpawner.lua"
@@ -177,6 +179,7 @@ function OnTriggerEnter(Entity)
         if(bulletTag == "SHOTGUN") then 
             if(healthComponent ~= nil) then 
                 healthComponent.health = healthComponent.health - shotGunDamage * _G.powerLevel
+                print("HP Left: ", healthComponent.health)
                 if(healthComponent.health <= 0 ) then
                     systemManager.ecs:SetDeleteEntity(Entity)
 
@@ -199,6 +202,7 @@ function OnTriggerEnter(Entity)
         if(bulletTag == "MACHINE_GUN") then 
             if(healthComponent ~= nil) then 
                 healthComponent.health = healthComponent.health - machineGunDamage * _G.powerLevel
+                print("HP Left: ", healthComponent.health)
                 if(healthComponent.health <= 0 ) then
                     systemManager.ecs:SetDeleteEntity(Entity)
 
