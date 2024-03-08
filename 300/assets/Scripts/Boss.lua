@@ -169,10 +169,10 @@ function Update()
 
     -- Debug States
     -- state = 1 --[OK]
-    -- state = 2 [OK] -- need to check agn after i check the other mechanics
+    state = 2 -- [OK] -- need to check agn after i check the other mechanics
     -- state = 3 -- [OK]
     -- state = 4 --[OK]
-    state = 5 -- [OK]
+    -- state = 5 -- [OK]
 
     if state == 1 and _G.state_checker[1] == false then
 
@@ -250,29 +250,65 @@ function Update()
             if currentGroundSlamResetTimer >= maxGroundSlamResetTimer then
 
                 -- Pick which direction to ground slam in 
-                groundSlamDirection = math.random(1, 3)
+                groundSlamDirection = math.random(1, 8)
+                -- groundSlamDirection  = 2
 
                 -- print("GROUND SLAM: " , groundSlamDirection)
 
-                -- Ground slam front (from boss perspective)
+                -- Ground slam (9 o'clock)
                 if groundSlamDirection == 1 then
                     groundSlamPosition.x = 0
-                    groundSlamPosition.y = -6
-                    groundSlamPosition.z = 25
+                    groundSlamPosition.y = 0
+                    groundSlamPosition.z = 40
                 end
 
-                -- Ground slam right (from boss perspective)
+                -- Ground slam (7 o'clock)
                 if groundSlamDirection == 2 then
-                    groundSlamPosition.x = -15
-                    groundSlamPosition.y = -6
-                    groundSlamPosition.z = 25
+                    groundSlamPosition.x = 37   
+                    groundSlamPosition.y = 0
+                    groundSlamPosition.z = 37
                 end
 
-                -- Ground slam left (from boss perspective)
+                -- Ground slam (6 o'clock)
                 if groundSlamDirection == 3 then
-                    groundSlamPosition.x = 15
-                    groundSlamPosition.y = -6
-                    groundSlamPosition.z = 25
+                    groundSlamPosition.x = 50
+                    groundSlamPosition.y = 0
+                    groundSlamPosition.z = 8
+                end
+
+                  -- Ground slam (5 o'clock)
+                if groundSlamDirection == 4 then
+                    groundSlamPosition.x = 33
+                    groundSlamPosition.y = 0
+                    groundSlamPosition.z = -32
+                end
+
+                -- Ground slam (3 o'clock)
+                if groundSlamDirection == 5 then
+                    groundSlamPosition.x =  3
+                    groundSlamPosition.y = 0
+                    groundSlamPosition.z = -42
+                end
+
+                -- Ground slam (1 o'clock)
+                if groundSlamDirection == 6 then
+                    groundSlamPosition.x = -43
+                    groundSlamPosition.y = 0
+                    groundSlamPosition.z = -29
+                end
+
+                -- Ground slam (11o'clock)
+                if groundSlamDirection == 7 then
+                    groundSlamPosition.x = -43
+                    groundSlamPosition.y = 0
+                    groundSlamPosition.z = 39
+                end
+
+                -- Ground slam (12 o'clock)
+                if groundSlamDirection == 8 then
+                    groundSlamPosition.x = -60
+                    groundSlamPosition.y = 0
+                    groundSlamPosition.z = 2.3
                 end
 
                 -- TODO: Play arm swinging animation before spawning ground slam object
@@ -598,35 +634,36 @@ function SummonMinions(summon_per_spawn_instance)
 
     -- Pick which direction to ground slam in 
     enemySpawnDirection = math.random(1, 4)
-    
+    enemySpawnDirection = 1
     print("ENEMY SPAWN DIRECTION: " , enemySpawnDirection)
 
     -- Summon Area (In Front of Boss)
     if enemySpawnDirection == 1 then
-        groundSlamPosition.x = 11.15
-        groundSlamPosition.y = -0.74
-        groundSlamPosition.z = 0.48
+        groundSlamPosition.x = 43.2
+        groundSlamPosition.y = 0.697
+        groundSlamPosition.z = 7
     end
 
     -- Summon Area (Left of Boss)
     if enemySpawnDirection == 2 then
         groundSlamPosition.x = 0
-        groundSlamPosition.y = 2
-        groundSlamPosition.z = 25
+        groundSlamPosition.y = 0
+        groundSlamPosition.z = 40
 
     end
 
     -- Summon Area (Right of Boss)
     if enemySpawnDirection == 3 then
-        groundSlamPosition.x = 0    
-        groundSlamPosition.y = 2
-        groundSlamPosition.z = -5.11
+        groundSlamPosition.x = 5.6  
+        groundSlamPosition.y = 0
+        groundSlamPosition.z = -35
     end
 
+    -- Summon Area (Behind Boss)
     if enemySpawnDirection == 4 then
-        groundSlamPosition.x = -18.7
-        groundSlamPosition.y = -0.887
-        groundSlamPosition.z = 7.7
+        groundSlamPosition.x = -33.7
+        groundSlamPosition.y = 0
+        groundSlamPosition.z = -0.09
     end
 
 
