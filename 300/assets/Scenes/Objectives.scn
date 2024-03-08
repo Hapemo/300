@@ -1,53 +1,6 @@
 [
     {
-        "entityid": 2097387,
-        "general": {
-            "name": "Objective Bar Empty",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": -0.3799999952316284,
-                "y": 0.09000000357627869,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -0.699999988079071,
-                "y": 0.699999988079071,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 2927780683,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": -27,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Objective Bar Empty"
-        }
-    },
-    {
-        "entityid": 2097388,
+        "entityid": 263,
         "general": {
             "name": "Objective Bar Empty",
             "tagid": 6,
@@ -94,7 +47,7 @@
         }
     },
     {
-        "entityid": 2097389,
+        "entityid": 264,
         "general": {
             "name": "Objective Bar 1",
             "tagid": 6,
@@ -141,7 +94,7 @@
         }
     },
     {
-        "entityid": 2097390,
+        "entityid": 265,
         "general": {
             "name": "Objectives3",
             "tagid": 0,
@@ -243,7 +196,7 @@
         }
     },
     {
-        "entityid": 2097391,
+        "entityid": 266,
         "general": {
             "name": "Objectives1",
             "tagid": 0,
@@ -345,7 +298,7 @@
         }
     },
     {
-        "entityid": 2097392,
+        "entityid": 267,
         "general": {
             "name": "Controller",
             "tagid": 0,
@@ -380,7 +333,7 @@
         }
     },
     {
-        "entityid": 2097393,
+        "entityid": 268,
         "general": {
             "name": "PreObjectivesController",
             "tagid": 0,
@@ -415,7 +368,7 @@
         }
     },
     {
-        "entityid": 2097394,
+        "entityid": 269,
         "general": {
             "name": "Objectives2",
             "tagid": 0,
@@ -517,7 +470,7 @@
         }
     },
     {
-        "entityid": 2097395,
+        "entityid": 270,
         "general": {
             "name": "Objective Bar 1",
             "tagid": 6,
@@ -561,100 +514,6 @@
         },
         "prefab": {
             "prefab": "Objective Bar 1"
-        }
-    },
-    {
-        "entityid": 2097396,
-        "general": {
-            "name": "Objective Bar Empty",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": -0.3799999952316284,
-                "y": 0.09000000357627869,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.699999988079071,
-                "y": 0.699999988079071,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 2927780683,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 0,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Objective Bar Empty"
-        }
-    },
-    {
-        "entityid": 2097397,
-        "general": {
-            "name": "Objective Bar Empty",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": -0.3799999952316284,
-                "y": 0.09000000357627869,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -0.699999988079071,
-                "y": 0.699999988079071,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 2927780683,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": -27,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Objective Bar Empty"
         }
     }
 ]
