@@ -41,7 +41,7 @@ local initonce
 
 function Alive()
     initonce =false
-    uiHider = _G.gameStateSys:GetEntity("UIHider")
+    uiHider = gameStateSys:GetEntity("UIHider")
     cameraEntity = gameStateSys:GetEntity("Camera")
     gunEntity = gameStateSys:GetEntity("gun")
     bossEntity = gameStateSys:GetEntity("Boss")

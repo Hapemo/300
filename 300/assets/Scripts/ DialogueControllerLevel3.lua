@@ -104,12 +104,26 @@ function DialogueUpdate()
         end
 
         if finish == true and frameClosed == true then
+            if currState == "boss" then
+                print("going to next gamestate")
+                gameStateSys = systemManager:mGameStateSystem()
+            
+                x = gameStateSys:GetEntity("TransitionHelper", "Transition") 
+                y = x:GetScripts()
+                z = y:GetScript("../assets/Scripts/Transition.lua")
+
+                if z ~= nil then
+                    z:SetNextGameStateHelper("SetNextGameState", "EndCutscene")
+                    z:RunFunction("StartTransition")
+                end
+            end
             frameOpened = false
             frameClosed = false
             finish = false
             currState = ""
             counter = 0
             systemManager.mIsDialogue = false
+            
         end
 end
 
