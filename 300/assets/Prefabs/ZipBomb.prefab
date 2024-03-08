@@ -1,5 +1,5 @@
 {
-    "entityid": 2097182,
+    "entityid": 4194536,
     "general": {
         "name": "ZipBomb",
         "tagid": 1,
@@ -19,9 +19,9 @@
             "z": 0.9224058389663696
         },
         "translate": {
-            "x": 6.573337078094482,
-            "y": -10.432845115661621,
-            "z": -15.414334297180176
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
         }
     },
     "rigidbody": {
@@ -56,6 +56,7 @@
             "z": 1.0,
             "w": 1.0
         },
+        "castShadow": true,
         "materialinstance": [
             "../assets/Compressed/ZipBomb_BaseColor.ctexture",
             "../assets/Compressed/ZipBomb_Normal.ctexture",
@@ -140,5 +141,40 @@
         "height": 0.07000000029802322,
         "frametexture": 0,
         "healthtexture": 0
+    },
+    "particleemitter": {
+        "startcolor": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 1.0
+        },
+        "endcolor": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 0.0
+        },
+        "startsize": 0.20000000298023224,
+        "endsize": 0.6000000238418579,
+        "position": {
+            "x": -1.100000023841858,
+            "y": 1.6799999475479126,
+            "z": 0.30000001192092896
+        },
+        "offset": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "gravity": 0.30000001192092896,
+        "rotation": 1.0,
+        "lifetime": 2.0,
+        "loop": true,
+        "loopInterval": 0.10000000149011612,
+        "speed": 0.800000011920929,
+        "count": 5,
+        "emit": false,
+        "particletexture": 2273550607
     }
 }
