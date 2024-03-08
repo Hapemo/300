@@ -71,9 +71,9 @@ function Update()
         cameraEntity:GetTransform().mTranslate.x = savedpos.x
         cameraEntity:GetTransform().mTranslate.y = savedpos.y
         cameraEntity:GetTransform().mTranslate.z = savedpos.z
-        bossEntity:GetTransform().mTranslate.x = savedbosspos.x
-        bossEntity:GetTransform().mTranslate.y = savedbosspos.y
-        bossEntity:GetTransform().mTranslate.z = savedbosspos.z
+        -- bossEntity:GetTransform().mTranslate.x = savedbosspos.x
+        -- bossEntity:GetTransform().mTranslate.y = savedbosspos.y
+        -- bossEntity:GetTransform().mTranslate.z = savedbosspos.z
         if(quaking<=QuakeLimit2)then
             quaking = quaking+FPSManager.GetDT()
             Quakeintervalcd= Quakeintervalcd+FPSManager.GetDT()
@@ -92,18 +92,18 @@ function Update()
             Camera_Scripting.SetFov(cameraEntity,fov)
         end
 
-        -- if MoveTo(bossEntity, savedbosspos, 950) == false then
-        --     if initonce == false then
-        --         initonce = true
-        --         controllerL2 = gameStateSys:GetEntity("DialogueController")
-        --         controllerL2Scripts = controllerL2:GetScripts()
-        --         controllerL2Script = controllerL2Scripts:GetScript("../assets/Scripts/DialogueControllerLevel1.lua")
+        if MoveTo(bossEntity, savedbosspos, 950) == false then
+            if initonce == false then
+                initonce = true
+                controllerL2 = gameStateSys:GetEntity("DialogueController")
+                controllerL2Scripts = controllerL2:GetScripts()
+                controllerL2Script = controllerL2Scripts:GetScript("../assets/Scripts/DialogueControllerLevel1.lua")
     
-        --         if controllerL2Script ~= nil then
-        --             controllerL2Script:RunFunction("FinishObjective3")
-        --         end
-        --     end
-        -- end
+                if controllerL2Script ~= nil then
+                    controllerL2Script:RunFunction("FinishObjective3")
+                end
+            end
+        end
 
     end
 
