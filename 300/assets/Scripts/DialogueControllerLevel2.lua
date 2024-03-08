@@ -29,7 +29,7 @@ local picturespeed
 
 local counter
 local picture
-
+local playing
 --neeae
 function Alive()
     Intro1 = gameStateSys:GetEntity("DialogueLoadIn1", "Dialogue_Level2")
@@ -64,6 +64,7 @@ function Alive()
     counter = 0
 
     picture = normal
+    playing = false
 end
 
 function Update()
@@ -137,6 +138,11 @@ function UpdateDialogues()
         end
 
         if Intro1Progress < 1.0 then 
+            if playing == false then
+                audio = Intro1:GetAudio()
+                audio:SetPlay(0.3)
+                playing = true
+            end
             Intro1Progress = speed + Intro1Progress
             if Intro1Progress > 1.0 then
                 Intro1Progress = 1.1
@@ -164,6 +170,11 @@ function UpdateDialogues()
         end
 
         if Obj1Progress < 1.0 then 
+            if playing == false then
+                audio = Obj1:GetAudio()
+                audio:SetPlay(0.3)
+                playing = true
+            end
             Obj1Progress = speed + Obj1Progress
             if Obj1Progress > 1.0 then
                 Obj1Progress = 1.1
@@ -183,6 +194,11 @@ function UpdateDialogues()
         end
 
         if Obj2Progress < 1.0 then 
+            if playing == false then
+                audio = Obj2:GetAudio()
+                audio:SetPlay(0.3)
+                playing = true
+            end
             Obj2Progress = speed + Obj2Progress
             if Obj2Progress > 1.0 then
                 Obj2Progress = 1.1
@@ -202,6 +218,11 @@ function UpdateDialogues()
         end
 
         if Obj3Progress < 1.0 then 
+            if playing == false then
+                audio = Obj3:GetAudio()
+                audio:SetPlay(0.3)
+                playing = true
+            end
             Obj3Progress = speed + Obj3Progress
             if Obj3Progress > 1.0 then
                 Obj3Progress = 1.1
@@ -221,6 +242,11 @@ function UpdateDialogues()
         end
 
         if BossProgress < 1.0 then 
+            if playing == false then
+                audio = Boss:GetAudio()
+                audio:SetPlay(0.3)
+                playing = true
+            end
             BossProgress = speed + BossProgress
             if BossProgress > 1.0 then
                 BossProgress = 1.1
@@ -298,6 +324,8 @@ function SkipAnimation()
 end
 
 function EndDialogue()
+    audio:SetStop()
+    playing = false
     if currState == "intro" then
         Intro1:GetUIrenderer():SetSlider(0.0)
         Intro2:GetUIrenderer():SetSlider(0.0)

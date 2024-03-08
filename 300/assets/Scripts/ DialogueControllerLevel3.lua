@@ -23,6 +23,9 @@ local picturespeed
 local counter
 local picture
 
+local playing
+local audio
+
 --neeae
 function Alive()
     Intro1 = gameStateSys:GetEntity("DialogueLoadIn1", "Dialogue_Level3")
@@ -51,6 +54,8 @@ function Alive()
     counter = 0
 
     picture = angry
+
+    playing = false
 end
 
 function Update()
@@ -120,6 +125,11 @@ function UpdateDialogues()
         end
 
         if Intro1Progress < 1.0 then 
+            if playing == false then
+                audio = Intro1:GetAudio()
+                audio:SetPlay(0.3)
+                playing = true
+            end
             Intro1Progress = speed + Intro1Progress
             if Intro1Progress > 1.0 then
                 Intro1Progress = 1.1
@@ -147,6 +157,11 @@ function UpdateDialogues()
         end
 
         if BossProgress < 1.0 then 
+            if playing == false then
+                audio = Boss:GetAudio()
+                audio:SetPlay(0.3)
+                playing = true
+            end
             BossProgress = speed + BossProgress
             if BossProgress > 1.0 then
                 BossProgress = 1.1
@@ -203,6 +218,8 @@ function SkipAnimation()
 end
 
 function EndDialogue()
+    audio:SetStop()
+    playing = false
     if currState == "intro" then
         Intro1:GetUIrenderer():SetSlider(0.0)
         Intro2:GetUIrenderer():SetSlider(0.0)

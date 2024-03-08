@@ -1,8 +1,8 @@
 [
     {
-        "entityid": 14680116,
+        "entityid": 10485951,
         "general": {
-            "name": "DialogueExcited",
+            "name": "DialogueFrame",
             "tagid": 0,
             "subtag": 0,
             "isActive": true,
@@ -11,7 +11,7 @@
         "transform": {
             "scale": {
                 "x": 0.0,
-                "y": -0.5,
+                "y": -0.800000011920929,
                 "z": 1.0
             },
             "rotate": {
@@ -20,14 +20,14 @@
                 "z": 0.0
             },
             "translate": {
-                "x": -0.8100000023841858,
+                "x": 0.0,
                 "y": -0.6000000238418579,
                 "z": 0.0
             }
         },
         "uirenderer": {
             "texpath": "",
-            "textureref": 2884792257,
+            "textureref": 3896556072,
             "degree": 0.0,
             "slider": 1.0,
             "color": {
@@ -36,182 +36,12 @@
                 "z": 1.0,
                 "w": 1.0
             },
-            "layer": 26,
+            "layer": 10,
             "worldtransform": false
-        },
-        "prefab": {
-            "prefab": "DialogueFace"
         }
     },
     {
-        "entityid": 14680117,
-        "general": {
-            "name": "DialogueAngry",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.0,
-                "y": -0.5,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -0.8100000023841858,
-                "y": -0.6000000238418579,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 471674240,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 26,
-            "worldtransform": false
-        },
-        "prefab": {
-            "prefab": "DialogueFace"
-        }
-    },
-    {
-        "entityid": 14680195,
-        "general": {
-            "name": "DialogueLoadIn1",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.600000023841858,
-                "y": -0.10000000149011612,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.15000000596046448,
-                "y": -0.5,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 2391277434,
-            "degree": 0.0,
-            "slider": 0.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 30,
-            "worldtransform": false
-        },
-        "prefab": {
-            "prefab": "Dialogue"
-        }
-    },
-    {
-        "entityid": 14680197,
-        "general": {
-            "name": "DialogueBoss",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.600000023841858,
-                "y": -0.10000000149011612,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.15000000596046448,
-                "y": -0.5,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 1660202457,
-            "degree": 0.0,
-            "slider": 0.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 30,
-            "worldtransform": false
-        },
-        "prefab": {
-            "prefab": "Dialogue"
-        }
-    },
-    {
-        "entityid": 14680202,
-        "general": {
-            "name": "DialogueControllerLevel3",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/ DialogueControllerLevel3.lua",
-                    "variables": []
-                }
-            ]
-        }
-    },
-    {
-        "entityid": 14680208,
+        "entityid": 10485952,
         "general": {
             "name": "DialogueLoadIn2",
             "tagid": 0,
@@ -255,9 +85,9 @@
         }
     },
     {
-        "entityid": 15728694,
+        "entityid": 10485953,
         "general": {
-            "name": "DialogueFrame",
+            "name": "DialogueControllerLevel3",
             "tagid": 0,
             "subtag": 0,
             "isActive": true,
@@ -265,8 +95,8 @@
         },
         "transform": {
             "scale": {
-                "x": 0.0,
-                "y": -0.800000011920929,
+                "x": 1.0,
+                "y": 1.0,
                 "z": 1.0
             },
             "rotate": {
@@ -276,13 +106,156 @@
             },
             "translate": {
                 "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/ DialogueControllerLevel3.lua",
+                    "variables": []
+                }
+            ]
+        }
+    },
+    {
+        "entityid": 10485956,
+        "general": {
+            "name": "DialogueBoss",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.600000023841858,
+                "y": -0.10000000149011612,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.15000000596046448,
+                "y": -0.5,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 1660202457,
+            "degree": 0.0,
+            "slider": 0.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 30,
+            "worldtransform": false
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "VO_Level3_FinishBossFight.wav",
+            "fullpath": "../assets\\Audio/VO_Level3_FinishBossFight.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false
+        },
+        "prefab": {
+            "prefab": "Dialogue"
+        }
+    },
+    {
+        "entityid": 10485957,
+        "general": {
+            "name": "DialogueLoadIn1",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.600000023841858,
+                "y": -0.10000000149011612,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.15000000596046448,
+                "y": -0.5,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 2391277434,
+            "degree": 0.0,
+            "slider": 0.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 30,
+            "worldtransform": false
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "VO_Level3_LoadIn.wav",
+            "fullpath": "../assets\\Audio/VO_Level3_LoadIn.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false
+        },
+        "prefab": {
+            "prefab": "Dialogue"
+        }
+    },
+    {
+        "entityid": 10485959,
+        "general": {
+            "name": "DialogueAngry",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.0,
+                "y": -0.5,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -0.8100000023841858,
                 "y": -0.6000000238418579,
                 "z": 0.0
             }
         },
         "uirenderer": {
             "texpath": "",
-            "textureref": 3896556072,
+            "textureref": 471674240,
             "degree": 0.0,
             "slider": 1.0,
             "color": {
@@ -291,8 +264,55 @@
                 "z": 1.0,
                 "w": 1.0
             },
-            "layer": 10,
+            "layer": 26,
             "worldtransform": false
+        },
+        "prefab": {
+            "prefab": "DialogueFace"
+        }
+    },
+    {
+        "entityid": 10485960,
+        "general": {
+            "name": "DialogueExcited",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.0,
+                "y": -0.5,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -0.8100000023841858,
+                "y": -0.6000000238418579,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 2884792257,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 26,
+            "worldtransform": false
+        },
+        "prefab": {
+            "prefab": "DialogueFace"
         }
     }
 ]
