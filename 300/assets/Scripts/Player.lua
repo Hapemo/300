@@ -154,8 +154,7 @@ local dashZ
 local inittedDash = false
 
 local isTakingDamage = false; -- whether player is in contact with other enemies, thus taking damage
--- local playerHealthCurrent = 100;
-local playerHealthCurrent 
+local playerHealthCurrent = 100;
 local playerHealthMax = 100;
 local playerHealthStartRegenCurrent = 0;
 local playerHealthStartRegenMax = 30; -- this is the time it takes for the player to not be damaged to start regenerating health
@@ -317,17 +316,17 @@ function Update()
         -- end
 
         -- if (playerHealthStartRegenCurrent == playerHealthStartRegenMax) then
-        --     if (_G.playerHealthCurrent < 400) then
-        --         _G.playerHealthCurrent = _G.playerHealthCurrent + 3; -- regen hp
+        --     if (playerHealthCurrent < 400) then
+        --         playerHealthCurrent = playerHealthCurrent + 3; -- regen hp
         --     end
         -- end
     end
 
-    -- print(_G.playerHealthCurrent/playerHealthMax)
-    healthbar:GetUIrenderer():SetSlider(_G.playerHealthCurrent/playerHealthMax);
+    -- print(playerHealthCurrent/playerHealthMax)
+    healthbar:GetUIrenderer():SetSlider(playerHealthCurrent/playerHealthMax);
 
 
-    if _G.playerHealthCurrent <= 0 then
+    if playerHealthCurrent <= 0 then
         gameStateSys:ChangeGameState("LoseMenu")
     end
 
@@ -349,17 +348,17 @@ function Update()
     -- gunTransform:ParentChildRotateUpdate(dt)
     -- end
     if(inputMapSys:GetButtonDown("AddHealth")) then
-        _G.playerHealthCurrent = _G.playerHealthCurrent + 20
-        if _G.playerHealthCurrent > playerHealthMax then
-            _G.playerHealthCurrent = playerHealthMax
+        playerHealthCurrent = playerHealthCurrent + 20
+        if playerHealthCurrent > playerHealthMax then
+            playerHealthCurrent = playerHealthMax
         end
     end
 
     if(inputMapSys:GetButtonDown("MinusHealth")) then
         print("MINUS HEALTH")
-        _G.playerHealthCurrent = _G.playerHealthCurrent + 20
-        if _G.playerHealthCurrent > playerHealthMax then
-            _G.playerHealthCurrent = playerHealthMax
+        playerHealthCurrent = playerHealthCurrent + 20
+        if playerHealthCurrent > playerHealthMax then
+            playerHealthCurrent = playerHealthMax
         end
     end
     --if(inputMapSys:GetButtonDown("Mouse")) then
@@ -728,9 +727,9 @@ function Update()
 
         if(inputMapSys:GetButtonDown("Shoot")) then
             -- print("MINUS HEALTH")
-            -- _G.playerHealthCurrent = _G.playerHealthCurrent - 20
-            -- if _G.playerHealthCurrent > playerHealthMax then
-            --     _G.playerHealthCurrent = playerHealthMax
+            -- playerHealthCurrent = playerHealthCurrent - 20
+            -- if playerHealthCurrent > playerHealthMax then
+            --     playerHealthCurrent = playerHealthMax
             -- end
             gunHoldState = "HOLDING"   -- for machine gun
 
@@ -974,7 +973,7 @@ function OnTriggerEnter(Entity)
         if(DamageCD >= DamageTime-0.1)then
             -- if (isTakingDamage == true) then
                 playerHealthStartRegenCurrent = 0;
-                _G.playerHealthCurrent = _G.playerHealthCurrent - 10; -- take damage
+                playerHealthCurrent = playerHealthCurrent - 10; -- take damage
 
                 graphicsSys.FilterRadius = maxFilterRadius
                 graphicsSys.mAmbientBloomExposure = maxExposure
@@ -985,8 +984,6 @@ function OnTriggerEnter(Entity)
             --end
         end
     end
-
-
     -- Player Health System Start --
     -- if (generalComponent.name == "ILOVEYOU") then isTakingDamage = true; end
     -- if (generalComponent.name == "Melissa") then isTakingDamage = true; end

@@ -343,6 +343,7 @@ end
 
 function OpenFrame()
     _G.FreezePlayerControl = true
+    -- print("IM IN OPEN FRAME: " , _G.)
 
     if frame:GetTransform().mScale.x <= 1.99 then
         frame:GetTransform().mScale.x = frame:GetTransform().mScale.x + framespeed
