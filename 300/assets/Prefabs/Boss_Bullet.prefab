@@ -1,27 +1,27 @@
 {
-    "entityid": 10485855,
+    "entityid": 2097306,
     "general": {
-        "name": "Laser1",
-        "tagid": 8,
+        "name": "Boss_Bullet",
+        "tagid": 1,
         "subtag": 0,
         "isActive": true,
         "isPaused": false
     },
     "transform": {
         "scale": {
-            "x": 80.0,
-            "y": 0.5,
-            "z": 0.5
+            "x": 3.0,
+            "y": 3.0,
+            "z": 3.0
         },
         "rotate": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
+            "x": -92.29513549804688,
+            "y": -46.58549499511719,
+            "z": 109.64163970947266
         },
         "translate": {
-            "x": 0.0,
-            "y": -1.100000023841858,
-            "z": 8.5
+            "x": -34.06801986694336,
+            "y": 0.0,
+            "z": 12.419782638549805
         }
     },
     "rigidbody": {
@@ -29,9 +29,9 @@
         "material": 1,
         "motion": 1,
         "velocity": {
-            "x": 0.0,
+            "x": -5.0,
             "y": 0.0,
-            "z": 0.0
+            "z": 1.8369700935892946e-15
         },
         "rotationconstraints": {
             "x": false,
@@ -43,11 +43,11 @@
     "meshrenderer": {
         "vert": "../assets/shader_files/pointLight_vert.glsl",
         "frag": "../assets/shader_files/pointLight_frag.glsl",
-        "meshrefid": 2285,
+        "meshrefid": 3400,
         "instancecolor": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0,
+            "x": 0.9622641801834106,
+            "y": 0.9622641801834106,
+            "z": 0.9622641801834106,
             "w": 1.0
         },
         "bloomthreshold": {
@@ -58,17 +58,17 @@
         },
         "castShadow": true,
         "materialinstance": [
-            "../assets/Compressed/Wood Material 15_BaseColor.ctexture",
-            "../assets/Compressed/Wood Material 15_Normal.ctexture",
+            "../assets/Compressed/cube_diffuse.ctexture",
+            " ",
             " ",
             " ",
             " ",
             " "
         ],
-        "mesh": "../assets/compiled_geom/cube.geom",
+        "mesh": "../assets/compiled_geom/Particle_Sphere.geom",
         "texturerefid": [
-            3285574925,
-            2287741774,
+            1061543176,
+            0,
             0,
             0,
             0,
@@ -77,8 +77,8 @@
     },
     "boxcollider": {
         "scaleoffset": {
-            "x": 1.0,
-            "y": 1.0,
+            "x": 0.7099999785423279,
+            "y": 0.6399999856948853,
             "z": 1.0
         },
         "translateoffset": {
@@ -91,12 +91,36 @@
     "scripts": {
         "scriptscontainer": [
             {
-                "scriptFile": "../assets/Scripts/BossLaserBeamPhase.lua",
+                "scriptFile": "../assets/Scripts/BossBullet.lua",
                 "variables": []
             }
         ]
     },
     "prefab": {
-        "prefab": "Laser1"
+        "prefab": "Boss_Bullet"
+    },
+    "healthbar": {
+        "healthcolor": {
+            "x": 0.0,
+            "y": 1.0,
+            "z": 0.0,
+            "w": 1.0
+        },
+        "backcolor": {
+            "x": 1.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 1.0
+        },
+        "position": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "maxhealth": 50.0,
+        "width": 0.0,
+        "height": 0.0,
+        "frametexture": 0,
+        "healthtexture": 0
     }
 }

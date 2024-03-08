@@ -94,7 +94,14 @@ function Update()
 
     -- #region Check should explode
     if Helper.Vec3Len(Helper.Vec3Minus(targetPos, thisPos)) < triggerExplosionDistance then kamekazi = true end
-    if this:GetHealthbar().health <= 0 then StartExploding() end
+    if this:GetHealthbar().health <= 0 then 
+        StartExploding()
+        if _G.Level3_Monsters ~= nil then 
+            if _G.Level3_Monsters == true then 
+                _G.number_left_in_level_3 = _G.number_left_in_level_3 - 1
+            end
+        end
+    end
 
 
     -- #endregion

@@ -84,7 +84,7 @@ end
 function OnTriggerEnter(Entity)
     generalComponent = Entity:GetGeneral()
 
-    print("ddddddddddddddddddddddddd")
+    -- print("ddddddddddddddddddddddddd")
 
     --yujun's hardcode :D
     if (generalComponent.name == "tutorialTrojan") then
@@ -271,6 +271,42 @@ function OnTriggerEnter(Entity)
     --         systemManager.ecs:SetDeleteEntity(entityobj)
     --     end
     -- end
+
+    if(tagid == 14) then 
+        print("BAWSE")
+
+        if(bulletTag == "PISTOL") then 
+            if(_G.bossHP_healthbar_comp ~= nil) then 
+                _G.bossHP_healthbar_comp.health = _G.bossHP_healthbar_comp.health - pistolDamage * _G.powerLevel
+
+            end
+        end
+
+        
+        if(bulletTag == "REVOLVER") then 
+            if(_G.bossHP_healthbar_comp ~= nil) then 
+                _G.bossHP_healthbar_comp.health = _G.bossHP_healthbar_comp.health - revolverDamage * _G.powerLevel
+
+            end
+        end
+
+        if(bulletTag == "SHOTGUN") then 
+            if(_G.bossHP_healthbar_comp ~= nil) then 
+                _G.bossHP_healthbar_comp.health = _G.bossHP_healthbar_comp.health - shotGunDamage * _G.powerLevel
+
+            end
+        end
+
+        if(bulletTag == "MACHINE_GUN") then 
+            if(_G.bossHP_healthbar_comp ~= nil) then 
+                _G.bossHP_healthbar_comp.health = _G.bossHP_healthbar_comp.health - machineGunDamage * _G.powerLevel
+
+            end
+        end
+
+
+
+    end
 
 end
 

@@ -1,0 +1,62 @@
+{
+    "entityid": 3145961,
+    "general": {
+        "name": "Out_Of_Bounds_Left_Thumb",
+        "tagid": 4,
+        "subtag": 0,
+        "isActive": true,
+        "isPaused": false
+    },
+    "transform": {
+        "scale": {
+            "x": 4.96999979019165,
+            "y": 7.947869300842285,
+            "z": 8.869999885559082
+        },
+        "rotate": {
+            "x": 0.0,
+            "y": -90.0,
+            "z": 0.0
+        },
+        "translate": {
+            "x": 22.482486724853516,
+            "y": -3.950303077697754,
+            "z": 16.230241775512695
+        }
+    },
+    "rigidbody": {
+        "density": 10.0,
+        "material": 1,
+        "motion": 0,
+        "velocity": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "rotationconstraints": {
+            "x": false,
+            "y": false,
+            "z": false
+        },
+        "gravity": false
+    },
+    "boxcollider": {
+        "scaleoffset": {
+            "x": 1.0,
+            "y": 0.8199999928474426,
+            "z": 1.0
+        },
+        "translateoffset": {
+            "x": 0.0,
+            "y": 6.570000171661377,
+            "z": 0.0
+        },
+        "istrigger": false
+    },
+    "scripts": {
+        "scriptscontainer": []
+    },
+    "prefab": {
+        "prefab": "Out_Of_Bounds_Left_Thumb"
+    }
+}
