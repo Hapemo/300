@@ -142,7 +142,7 @@ local dashrender= {}
 local tpcolor = Vec4.new(0, 0, 0, 1)
 
 local once = false
-local up_vector = Vec3.new()
+local up_vector = Vec3.new(0, 1, 0)
 --This variable is to be set in another script
 --testingSet = 5.0
 
@@ -156,8 +156,8 @@ local inittedDash = false
 local isTakingDamage = false; -- whether player is in contact with other enemies, thus taking damage
 local playerHealthCurrent = 100;
 local playerHealthMax = 100;
-local playerHealthStartRegenCurrent = 0;
-local playerHealthStartRegenMax = 30; -- this is the time it takes for the player to not be damaged to start regenerating health
+local playerHealthRegen_Cooldown = 0;
+local playerHealthRegen_CooldownMax = 4; -- this is the time it takes for the player to not be damaged to start regenerating health
 
 local healthbarSpawnPos = Vec3.new()
 local objectiveBarEmptySpawnPos = Vec3.new()
@@ -256,35 +256,19 @@ function Alive()
 end
 
 function Update()
+    -- Player Health System Start -- 
+    if isuiinit == false then
+        graphicsSys:HideCursor(true)
+        print("Calling hide cursor in player update")
+        isuiinit = true
+    end
+
     if _G.FreezePlayerControl then 
         return 
     end
 
     -- healthbar = gameStateSys:GetEntityByScene("Health Bar","Objectives") // Changed to UI scene
     healthbar = gameStateSys:GetEntity("HealthBar", "UI")
-
-    
-    -- Player Health System Start -- 
-    if isuiinit == false then
-        graphicsSys:HideCursor(true)
-        print("Calling hide cursor in player update")
-
-        -- Player Health System Start -- 
-        -- healthbar = systemManager.ecs:NewEntityFromPrefab("Health Bar", healthbarSpawnPos)
-
-        -- objectiveBarEmptySpawnPos.x = 0.7;
-        -- objectiveBarEmptySpawnPos.y = 0.7;
-        -- objectiveBarEmptySpawnPos.z = 0;
-
-        -- objectivebarEmpty = systemManager.ecs:NewEntityFromPrefab("Objective Bar Empty", objectiveBarEmptySpawnPos)
-
-        -- healthBarEmptySpawnPos.x = -0.7;
-        -- healthBarEmptySpawnPos.y = 0.7;
-        -- healthBarEmptySpawnPos.z = 0;
-
-        -- healthbarEmpty = systemManager.ecs:NewEntityFromPrefab("Objective Bar Empty", healthBarEmptySpawnPos)
-        isuiinit = true
-    end
 
     -- Player Health System End -- 
     
@@ -301,25 +285,23 @@ function Update()
 
     -- if (isTakingDamage == false) then -- if not taking damage
     if(DamageCD<=DamageTime)then
-            DamageCD = DamageCD+FPSManager.GetDT()
+            DamageCD = DamageCD + FPSManager.GetDT()
 
             if(DamageCD < DamageTime-0.6)then
                 cameraEntity:GetTransform().mRotate.x = cameraEntity:GetTransform().mRotate.x+math.random(-2,2)
                 cameraEntity:GetTransform().mRotate.y = cameraEntity:GetTransform().mRotate.y+math.random(-2,2)
             end
+    end
 
+    -- health regen
+    if (playerHealthRegen_Cooldown < playerHealthRegen_CooldownMax) then
+        playerHealthRegen_Cooldown = playerHealthRegen_Cooldown + FPSManager.GetDT();
+    end
 
-        -- end
-
-        -- if (playerHealthStartRegenCurrent < playerHealthStartRegenMax) then
-        --     playerHealthStartRegenCurrent = playerHealthStartRegenCurrent + 1;
-        -- end
-
-        -- if (playerHealthStartRegenCurrent == playerHealthStartRegenMax) then
-        --     if (playerHealthCurrent < 400) then
-        --         playerHealthCurrent = playerHealthCurrent + 3; -- regen hp
-        --     end
-        -- end
+    if (playerHealthRegen_Cooldown >= playerHealthRegen_CooldownMax) then
+        if (playerHealthCurrent < playerHealthMax) then
+            playerHealthCurrent = playerHealthCurrent + 0.5 * FPSManager.GetDT(); -- regen hp
+        end
     end
 
     -- print(playerHealthCurrent/playerHealthMax)
@@ -484,7 +466,7 @@ function Update()
         if(e_dashEffect == true)then
             dashEffect()
             dashAudioComp:SetPlay(0.4)
-            print("DASH")
+            --print("DASH")
           
             e_dashEffect = false
         end
@@ -548,9 +530,6 @@ function Update()
 -- region (snapback)
             -- print("GUN RECOIL STATE: ", gunRecoilState)
             if (gunRecoilState == "IDLE") then
-                
-                this:GetAudio():UpdateVolume(0.0)
-
                 -- Account for "vertical" axis
                 if(gunTranslate.y ~= original_translate_y) then
                     if((gunTranslate.y > original_translate_y)) then -- it should go up 
@@ -605,13 +584,12 @@ function Update()
             end
 
             -- walkingAudioComp:UpdateVolume(0.0)
+            this:GetAudio():UpdateVolume(0.0)
 
             if (inputMapSys:GetButton("up")) then
                 movement.x = movement.x + (viewVec.x * mul);
                 movement.z = movement.z + (viewVec.z * mul);    
                 
-      
-
                 -- gun "jumps down" when player moves forward\
                 if(gunTranslate.y > gunThreshHold_min_y) then 
                     gunTranslate.y = gunTranslate.y - gunDisplaceSpeed
@@ -621,6 +599,7 @@ function Update()
 
                 gunRecoilState = "MOVING"
             end
+
             if (inputMapSys:GetButton("down")) then
                 movement.x = movement.x - (viewVec.x * mul);
                 movement.z = movement.z - (viewVec.z * mul);
@@ -628,13 +607,13 @@ function Update()
                 -- gun "jumps up" when player moves forward
                 if(gunTranslate.y < gunThreshHold_max_y) then -- limit to how much 
                     gunTranslate.y = gunTranslate.y + gunDisplaceSpeed
-
                 end
 
                 this:GetAudio():UpdateVolume(0.2)
 
                 gunRecoilState = "MOVING"
             end
+
             if (inputMapSys:GetButton("left")) then
                 movement.x = movement.x + (viewVec.z * mul);
                 movement.z = movement.z - (viewVec.x * mul);
@@ -649,6 +628,7 @@ function Update()
                 gunRecoilState = "MOVING"
     
             end
+
             if (inputMapSys:GetButton("right")) then
                 movement.x = movement.x - viewVec.z * mul;
                 movement.z = movement.z + viewVec.x * mul;
@@ -656,10 +636,6 @@ function Update()
                 -- gun "moves leftwards" when player moves right
                 if(gunTranslate.x > gunThreshHold_min_x) then 
                     gunTranslate.x = gunTranslate.x - gunDisplaceSpeed
-
-                    -- if(gunDisplaceSpeedModifier < gunDisplaceSpeedFactorLimit) then 
-                    --     gunDisplaceSpeedModifier = gunDisplaceSpeedModifier + 0.01
-                    -- end
                 end
 
                 this:GetAudio():UpdateVolume(0.2)
@@ -716,7 +692,6 @@ function Update()
         setYellowGunTexture(color_vec4)
     end
 
-
     if(_G.gunEquipped == 3) then 
         local color_vec4 = Vec4.new(0.65, 0.05, 0.05, 1)
         setRedGunTexture(color_vec4)
@@ -724,11 +699,6 @@ function Update()
 -- endregion
 
         if(inputMapSys:GetButtonDown("Shoot")) then
-            -- print("MINUS HEALTH")
-            -- playerHealthCurrent = playerHealthCurrent - 20
-            -- if playerHealthCurrent > playerHealthMax then
-            --     playerHealthCurrent = playerHealthMax
-            -- end
             gunHoldState = "HOLDING"   -- for machine gun
 
             if(_G.gunEquipped == 0) then 
@@ -737,16 +707,16 @@ function Update()
                     print("SHOOTING PISTOLS")
                     applyGunRecoil(recoil_speed, 0.5)
 
-                    positions_final.x = positions.x + viewVecCam.x*3
-                    positions_final.y = positions.y + viewVecCam.y*3
-                    positions_final.z = positions.z + viewVecCam.z*3  
+                    positions_final.x = positions.x + viewVecCam.x * 3
+                    positions_final.y = positions.y + viewVecCam.y * 3
+                    positions_final.z = positions.z + viewVecCam.z * 3
 
                     prefabEntity = systemManager.ecs:NewEntityFromPrefab("Pistol Bullet", positions_final)
 
                     prefabEntity:GetTransform().mRotate = rotationCam    
-                    viewVecCam.x = viewVecCam.x*100
-                    viewVecCam.y=viewVecCam.y *100
-                    viewVecCam.z=viewVecCam.z *100
+                    viewVecCam.x = viewVecCam.x * 100
+                    viewVecCam.y = viewVecCam.y * 100
+                    viewVecCam.z = viewVecCam.z * 100
 
                     physicsSys:SetVelocity(prefabEntity, viewVecCam)
                     bulletAudioComp:SetPlay(0.3)
@@ -970,7 +940,7 @@ function OnTriggerEnter(Entity)
 
         if(DamageCD >= DamageTime-0.1)then
             -- if (isTakingDamage == true) then
-                playerHealthStartRegenCurrent = 0;
+                playerHealthRegen_Cooldown = 0;
                 playerHealthCurrent = playerHealthCurrent - 10; -- take damage
 
                 graphicsSys.FilterRadius = maxFilterRadius
@@ -1112,11 +1082,6 @@ end
 function moreAccurateShotgun(num_of_bullets) 
 
     local bullet_speed = 50
-
-    -- 1. Get my local right vector
-    up_vector.x = 0 
-    up_vector.y = 1
-    up_vector.z = 0
 
     local local_right_vector = Vec3.new()
     local world_true_up_vector = Vec3.new()

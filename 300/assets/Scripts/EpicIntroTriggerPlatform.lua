@@ -67,11 +67,11 @@ end
 function RandomSpawnArrowIndicator()
     moveTime = moveTime + FPSManager.GetDT()
 
-    if(moveTime > 0.4) then
+    if(moveTime > 0.9) then
         transform = this:GetTransform()
         local spawndataPos = Vec3.new()
         spawndataPos.x = transform.mTranslate.x --+ math.random(-300,300)/100
-        spawndataPos.y = transform.mTranslate.y + 70
+        spawndataPos.y = transform.mTranslate.y + 50
         spawndataPos.z = transform.mTranslate.z --+ math.random(-300,300)/100
 
         systemManager.ecs:NewEntityFromPrefab("TriggerIndicator", spawndataPos)
