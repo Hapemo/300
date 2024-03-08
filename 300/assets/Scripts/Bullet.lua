@@ -121,7 +121,7 @@ function OnTriggerEnter(Entity)
 
     if (tagid == 1) then
 
-        print("HP of Homing: " , healthComponent.health)
+        -- print("HP of Homing: " , healthComponent.health)
         for i = 3, 1, -1
         do
             spawned(i)
@@ -248,6 +248,10 @@ function OnTriggerEnter(Entity)
             print("HOMING HAS HEALTH")
         end
         -- print("I HAVE SHOT THE HOMING BULLET")
+    end
+
+    if (tagid == 14) then 
+        print("I HIT BOSS")
     end
     -- if (tagid == 3) then
     --     for i = 3, 1, -1

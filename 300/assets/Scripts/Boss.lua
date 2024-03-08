@@ -193,21 +193,21 @@ function Update()
             -- Number of enemies to summon per position
             if(summon_per_spawn_instance == 0) then 
                 summon_per_spawn_instance = math.random(2,3)
-                print("SUMMON PER SPAWN INSTANCE: " , summon_per_spawn_instance)
+                -- print("SUMMON PER SPAWN INSTANCE: " , summon_per_spawn_instance)
             end
 
-            print("CURRENTLY ENEMIES IN LV3: " , _G.number_of_spawned_in_level_3)
-            print("TOTAL: " ,_G.number_of_spawned_in_level_3 + summon_per_spawn_instance)
+            -- print("CURRENTLY ENEMIES IN LV3: " , _G.number_of_spawned_in_level_3)
+            -- print("TOTAL: " ,_G.number_of_spawned_in_level_3 + summon_per_spawn_instance)
 
             if(_G.number_of_spawned_in_level_3 +  summon_per_spawn_instance < total_number_of_enemies_to_spawn) then 
                 
-               print("NORMAL SUMMON")
+            --    print("NORMAL SUMMON")
                SummonMinions(summon_per_spawn_instance)
                currentEnemySpawnResetTimer = 0 -- Reset spawn time
 
             else -- if exceed the total amount. 
                         
-                print("SPECIAL SUMMON")
+                -- print("SPECIAL SUMMON")
                 SummonMinions(total_number_of_enemies_to_spawn - _G.number_of_spawned_in_level_3)
                 currentEnemySpawnResetTimer = 0 -- Reset spawn time
             end
@@ -382,7 +382,7 @@ function Update()
             -- print("SPAWNED ENOUGH")
             homing_spawn_timer = homing_spawn_timer + FPSManager.GetDT()
         else 
-            print("SPAWNED ENOUGH")
+            -- print("SPAWNED ENOUGH")
         end
 
         -- print("HOMING SPAWN TIMER: " , homing_spawn_timer)
