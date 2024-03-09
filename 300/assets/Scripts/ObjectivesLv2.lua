@@ -245,12 +245,12 @@ function Update()
             end
         end
         if entityobj:GetGeneral().name == "Objectives3" then
-            controllerL2 = gameStateSys:GetEntity("DialogueControllerLevel2")
+            controllerL2 = gameStateSys:GetEntity("Level2ControllerBoss")
             controllerL2Scripts = controllerL2:GetScripts()
-            controllerL2Script = controllerL2Scripts:GetScript("../assets/Scripts/DialogueControllerLevel2.lua")
+            controllerL2Script = controllerL2Scripts:GetScript("../assets/Scripts/Level2BossSceneController.lua")
 
             if controllerL2Script ~= nil then
-                controllerL2Script:RunFunction("FinishObjective3")
+                controllerL2Script:RunFunction("StartBoss")
             end
         end
 

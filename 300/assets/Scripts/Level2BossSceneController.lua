@@ -6,7 +6,7 @@ local savedbosspos = Vec3.new(0,33.0,-39)
 local savedrotate = Vec3.new(270,-1.5,72)
 local savedplayerrotate = Vec3.new(0,0,0)
 
-local STATE =  0 ------------------------------------ CHANGE THIS FOR INTRO---------------------------------------------
+local STATE =  -1 ------------------------------------ CHANGE THIS FOR INTRO---------------------------------------------
 local firstTrigger = false
 local bossEntity
 local cameraEntity
@@ -29,13 +29,14 @@ local quaking = 0
 local magnitude = Vec2.new(-1.0,1.0)
 local magfloat = 1.0
 local initonce
-
+local inittwice
 
 -- boss run
 local runtimer = 0
 local runtimerover = 3
 function Alive()
     initonce =false
+    inittwice = false
 end
 
 function Update()
@@ -128,7 +129,16 @@ function Update()
         STATE=-1
 
         fov = 45
+        if initonce == false then
+            controllerL2 = gameStateSys:GetEntity("DialogueControllerLevel2")
+            controllerL2Scripts = controllerL2:GetScripts()
+            controllerL2Script = controllerL2Scripts:GetScript("../assets/Scripts/DialogueControllerLevel2.lua")
 
+            if controllerL2Script ~= nil then
+                controllerL2Script:RunFunction("FinishObjective3")
+            end
+            initonce = true
+        end
     end
 
 
@@ -164,7 +174,17 @@ function Update()
         if(runtimer > runtimerover)then
             
             -- _G.FreezePlayerControl = false
-            -- STATE = 4
+            if inittwice == false then 
+                controllerL2 = gameStateSys:GetEntity("DialogueControllerLevel2")
+                controllerL2Scripts = controllerL2:GetScripts()
+                controllerL2Script = controllerL2Scripts:GetScript("../assets/Scripts/DialogueControllerLevel2.lua")
+
+                if controllerL2Script ~= nil then
+                    controllerL2Script:RunFunction("FinishBoss")
+                end
+                inittwice = true
+            end
+            STATE = 4
         end
         -- if( fov > 35)then
         --     fov = fov - 0.05
@@ -200,3 +220,6 @@ function OnContactExit(Entity)
 end
 
 
+function StartBoss()
+    STATE = 0
+end
