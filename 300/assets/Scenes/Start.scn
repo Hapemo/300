@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 5243091,
+        "entityid": 3146043,
         "general": {
             "name": "Frame8",
             "tagid": 6,
@@ -34,14 +34,14 @@
                 "x": 1.0,
                 "y": 1.0,
                 "z": 1.0,
-                "w": 0.0
+                "w": 1.0
             },
             "layer": 0,
             "worldtransform": false
         }
     },
     {
-        "entityid": 5243092,
+        "entityid": 3146044,
         "general": {
             "name": "Frame7",
             "tagid": 6,
@@ -75,14 +75,14 @@
                 "x": 1.0,
                 "y": 1.0,
                 "z": 1.0,
-                "w": 0.0
+                "w": 1.0
             },
             "layer": 1,
             "worldtransform": false
         }
     },
     {
-        "entityid": 5243093,
+        "entityid": 3146045,
         "general": {
             "name": "Frame6",
             "tagid": 0,
@@ -123,7 +123,7 @@
         }
     },
     {
-        "entityid": 5243094,
+        "entityid": 3146046,
         "general": {
             "name": "Frame5",
             "tagid": 6,
@@ -164,7 +164,7 @@
         }
     },
     {
-        "entityid": 5243095,
+        "entityid": 3146047,
         "general": {
             "name": "Frame4",
             "tagid": 6,
@@ -205,7 +205,7 @@
         }
     },
     {
-        "entityid": 5243096,
+        "entityid": 3146049,
         "general": {
             "name": "Frame3",
             "tagid": 6,
@@ -246,7 +246,7 @@
         }
     },
     {
-        "entityid": 5243097,
+        "entityid": 3146050,
         "general": {
             "name": "Frame2",
             "tagid": 6,
@@ -287,7 +287,7 @@
         }
     },
     {
-        "entityid": 5243098,
+        "entityid": 3146051,
         "general": {
             "name": "Frame1",
             "tagid": 6,
@@ -328,7 +328,7 @@
         }
     },
     {
-        "entityid": 5243099,
+        "entityid": 9437508,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -373,7 +373,7 @@
         }
     },
     {
-        "entityid": 5243100,
+        "entityid": 9437509,
         "general": {
             "name": "StartSceneController",
             "tagid": 8,
@@ -405,6 +405,62 @@
                     "variables": []
                 }
             ]
+        }
+    },
+    {
+        "entityid": 9437511,
+        "general": {
+            "name": "SkipButton",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.20000000298023224,
+                "y": -0.20000000298023224,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.8600000143051147,
+                "y": -0.8600000143051147,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 144685435,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 8,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/StartSceneController.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "button": {
+            "interactable": true,
+            "hover": false,
+            "click": false,
+            "activated": false,
+            "renderflag": true
         }
     }
 ]

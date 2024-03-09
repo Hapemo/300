@@ -6,7 +6,6 @@ local frame4
 local frame5
 local frame6
 local frame7
-local frame8
 local timer
 
 --states bools
@@ -17,7 +16,6 @@ local frame4State = false
 local frame5State = false
 local frame6State = false
 local frame7State = false
-local frame8State = false
 
 local frame3Translate = Vec3.new(0,0,0)
 local frame4Translate = Vec3.new(0,0,0)
@@ -32,7 +30,7 @@ function Alive()
     frame5 = gameStateSys:GetEntity("Frame5")
     frame6 = gameStateSys:GetEntity("Frame6")
     frame7 = gameStateSys:GetEntity("Frame7")
-    frame8 = gameStateSys:GetEntity("Frame8")
+    skipButton = gameStateSys:GetEntity("SkipButton")
 
     --generaltimer
     timer = 0
@@ -90,8 +88,22 @@ function Update()
         Frame6()
     elseif(frame7State) then
         Frame7()
-    elseif(frame8State) then
-        Frame8()
+    end
+
+    if (skipButton:GetButton().mIsHover) then
+        if(hoverOver == false) then
+            hoverSFX = button:GetAudio()
+                hoverSFX:SetPlay(0.2)
+            hoverOver = true
+        end
+        skipButton:GetUIrenderer():SetTexture("Skip_Hover")
+    else
+        hoverOver = false
+        skipButton:GetUIrenderer():SetTexture("Skip_Default")
+    end
+
+    if (skipButton:GetButton().mActivated) then
+        gameStateSys:ChangeGameState("Tutorial")
     end
 end
 
@@ -142,13 +154,9 @@ end
 function Frame7()
     if (timer >= 20 and timer < 22) then
         if(frame7:GetTransform().mTranslate.x <= 2) then
-            fram7:GetTransform().mTranslate.x = frame7:GetTransform().mTranslate.x + 1 * FPSManager.GetDT()
+            frame7:GetTransform().mTranslate.x = frame7:GetTransform().mTranslate.x + 1 * FPSManager.GetDT()
         end
     end
-end
-
-function Frame8()
-
 end
 
 function Shake()
