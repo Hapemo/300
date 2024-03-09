@@ -28,7 +28,7 @@ function Alive()
     frame5 = gameStateSys:GetEntity("Frame5E")
     frame6 = gameStateSys:GetEntity("Frame6E")
 
-    skipButton = gameStateSys:GetEntity("SkipButton")
+    skipButton = gameStateSys:GetEntity("SkipButtonE")
     clickAudioEntity = gameStateSys:GetEntity("Click")
 
     hoverOver = false

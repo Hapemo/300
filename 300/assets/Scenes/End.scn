@@ -1,8 +1,8 @@
 [
     {
-        "entityid": 26214725,
+        "entityid": 3146044,
         "general": {
-            "name": "SkipButton",
+            "name": "SkipButtonE",
             "tagid": 0,
             "subtag": 0,
             "isActive": true,
@@ -42,7 +42,7 @@
         "scripts": {
             "scriptscontainer": [
                 {
-                    "scriptFile": "../assets/Scripts/StartSceneController.lua",
+                    "scriptFile": "../assets/Scripts/EndSceneController.lua",
                     "variables": []
                 }
             ]
@@ -69,7 +69,7 @@
         }
     },
     {
-        "entityid": 26214726,
+        "entityid": 3146045,
         "general": {
             "name": "Click",
             "tagid": 6,
@@ -112,7 +112,7 @@
         }
     },
     {
-        "entityid": 26214727,
+        "entityid": 3146046,
         "general": {
             "name": "EndSceneController",
             "tagid": 8,
@@ -147,7 +147,7 @@
         }
     },
     {
-        "entityid": 26214728,
+        "entityid": 3146047,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -192,7 +192,7 @@
         }
     },
     {
-        "entityid": 26214729,
+        "entityid": 3146049,
         "general": {
             "name": "Frame1E",
             "tagid": 6,
@@ -233,7 +233,7 @@
         }
     },
     {
-        "entityid": 32506186,
+        "entityid": 3146050,
         "general": {
             "name": "Frame2E",
             "tagid": 6,
@@ -274,7 +274,7 @@
         }
     },
     {
-        "entityid": 32506187,
+        "entityid": 3146051,
         "general": {
             "name": "Frame3E",
             "tagid": 6,
@@ -315,7 +315,7 @@
         }
     },
     {
-        "entityid": 32506188,
+        "entityid": 3146052,
         "general": {
             "name": "Frame4E",
             "tagid": 6,
@@ -356,7 +356,7 @@
         }
     },
     {
-        "entityid": 32506189,
+        "entityid": 4194629,
         "general": {
             "name": "Frame5E",
             "tagid": 6,
@@ -397,7 +397,7 @@
         }
     },
     {
-        "entityid": 32506190,
+        "entityid": 4194631,
         "general": {
             "name": "Frame6E",
             "tagid": 0,
