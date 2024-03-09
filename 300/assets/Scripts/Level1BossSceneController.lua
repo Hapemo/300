@@ -6,7 +6,7 @@ local savedbosspos = Vec3.new(-4.2,10,-28.6)
 local savedrotate = Vec3.new(270,-7.6,72)
 local savedplayerrotate = Vec3.new(0,0,0)
 
-local STATE =  -1 ------------------------------------ CHANGE THIS FOR INTRO---------------------------------------------
+local STATE =  0 ------------------------------------ CHANGE THIS FOR INTRO---------------------------------------------
 local firstTrigger = false
 local bossEntity
 local cameraEntity
@@ -26,8 +26,15 @@ local quaking = 0
 local magnitude = Vec2.new(-1.0,1.0)
 local magfloat = 1.0
 local initonce
+
+local graphicsSys
+
+
+local playtimer =0
+local playlimit = 1.5
 function Alive()
     initonce =false
+    graphicsSys = systemManager:mGraphicsSystem()
 end
 
 function Update()
@@ -38,6 +45,7 @@ function Update()
         if firstTrigger == false then
             firstTrigger = true
             _G.FreezePlayerControl = true
+
             savedplayerrotate.x = cameraEntity:GetTransform().mRotate.x
             savedplayerrotate.y = cameraEntity:GetTransform().mRotate.y
             savedplayerrotate.z = cameraEntity:GetTransform().mRotate.z
@@ -63,6 +71,9 @@ function Update()
         end
 
     elseif STATE == 1 then  
+        graphicsSys:IgnoreUIScene("UI")
+        graphicsSys:IgnoreUIScene("Objectives")
+
         gunEntity = gameStateSys:GetEntity("gun")
         systemManager.ecs:SetDeleteEntity(gunEntity)
         cameraEntity:GetTransform().mRotate.x = savedrotate.x
@@ -92,17 +103,24 @@ function Update()
             Camera_Scripting.SetFov(cameraEntity,fov)
         end
 
-        if MoveTo(bossEntity, savedbosspos, 950) == false then
-            if initonce == false then
-                initonce = true
-                controllerL2 = gameStateSys:GetEntity("DialogueController")
-                controllerL2Scripts = controllerL2:GetScripts()
-                controllerL2Script = controllerL2Scripts:GetScript("../assets/Scripts/DialogueControllerLevel1.lua")
+        if MoveTo(bossEntity, savedbosspos,2050) == false then
+                playtimer= playtimer +FPSManager.GetDT()
+            if(playtimer >= playlimit)then
+                if initonce == false then
+                    initonce = true
+                    controllerL2 = gameStateSys:GetEntity("DialogueController")
+                    controllerL2Scripts = controllerL2:GetScripts()
+                    controllerL2Script = controllerL2Scripts:GetScript("../assets/Scripts/DialogueControllerLevel1.lua")
+        
+                    if controllerL2Script ~= nil then
+                        graphicsSys:UnignoreUIScene("UI")
+                        graphicsSys:UnignoreUIScene("Objectives")
     
-                if controllerL2Script ~= nil then
-                    controllerL2Script:RunFunction("FinishObjective3")
+                        controllerL2Script:RunFunction("FinishObjective3")
+                    end
                 end
             end
+            
         end
 
     end

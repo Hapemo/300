@@ -38,14 +38,17 @@ local magnitude = Vec2.new(-1.0,1.0)
 local magfloat = 0.5
 local initonce
 
-
+local graphicsSys
 function Alive()
     initonce =false
     uiHider = gameStateSys:GetEntity("UIHider")
     cameraEntity = gameStateSys:GetEntity("Camera")
     gunEntity = gameStateSys:GetEntity("gun")
     bossEntity = gameStateSys:GetEntity("Boss")
-    
+
+    graphicsSys = systemManager:mGraphicsSystem()
+
+
     _G.FreezePlayerControl = true
     gunEntity:GetTransform().mScale.y =0
     Camera_Scripting.SetFov(cameraEntity,savedfov)
@@ -63,6 +66,7 @@ function Update()
     -- Camera_Scripting.SetFov(cameraEntity,savedfov)
     
     if STATE == 0 then
+        graphicsSys:IgnoreUIScene("UI")
     --     if firstTrigger == false then
     --         firstTrigger = true
     --         _G.FreezePlayerControl = true
@@ -106,6 +110,7 @@ function Update()
             if controllerL2Script ~= nil then
                 controllerL2Script:RunFunction("StartIntro")
             end
+            graphicsSys:UnignoreUIScene("UI")
 
             _G.FreezePlayerControl = false
             ShowUI()

@@ -34,8 +34,11 @@ local inittwice
 -- boss run
 local runtimer = 0
 local runtimerover = 3
+
+local graphicsSys
 function Alive()
     initonce =false
+    graphicsSys = systemManager:mGraphicsSystem()
     inittwice = false
 end
 
@@ -54,8 +57,9 @@ function Update()
     if STATE == 0 then
         if firstTrigger == false then
             firstTrigger = true
+
+
             _G.FreezePlayerControl = true
-            gunEntity:GetTransform().mScale.y =0
             savedplayerrotate.x = cameraEntity:GetTransform().mRotate.x
             savedplayerrotate.y = cameraEntity:GetTransform().mRotate.y
             savedplayerrotate.z = cameraEntity:GetTransform().mRotate.z
@@ -82,6 +86,9 @@ function Update()
         end
 
     elseif STATE == 1 then  
+        graphicsSys:IgnoreUIScene("UI")
+        graphicsSys:IgnoreUIScene("Objectives2")
+        gunEntity:GetTransform().mScale.y =0
         -- gunEntity = gameStateSys:GetEntity("gun")
         -- systemManager.ecs:SetDeleteEntity(gunEntity)
         cameraEntity:GetTransform().mRotate.x = savedrotate.x
@@ -125,6 +132,9 @@ function Update()
         -- cameraEntity:GetTransform().mRotate.z = savedrotate.z
         Camera_Scripting.SetFov(cameraEntity,savedfovplayer)
         gunEntity:GetTransform().mScale.y =1
+        graphicsSys:UnignoreUIScene("Objectives2")
+
+        graphicsSys:UnignoreUIScene("UI")
         _G.FreezePlayerControl = false  
         STATE=-1
 
@@ -144,7 +154,12 @@ function Update()
 
 
     if STATE == 3 then
+        graphicsSys:IgnoreUIScene("Objectives2")
+
+        graphicsSys:IgnoreUIScene("UI")
+        gunEntity:GetTransform().mScale.y =0
         _G.FreezePlayerControl = true  
+        
         cameraEntity:GetTransform().mRotate.x = savedrotate.x
         cameraEntity:GetTransform().mRotate.y = savedrotate.y
         cameraEntity:GetTransform().mRotate.z = savedrotate.z
@@ -172,8 +187,8 @@ function Update()
         runtimer = runtimer + FPSManager.GetDT()
 
         if(runtimer > runtimerover)then
-            
-            -- _G.FreezePlayerControl = false
+            gunEntity:GetTransform().mScale.y =1
+
             if inittwice == false then 
                 controllerL2 = gameStateSys:GetEntity("DialogueControllerLevel2")
                 controllerL2Scripts = controllerL2:GetScripts()
@@ -184,6 +199,9 @@ function Update()
                 end
                 inittwice = true
             end
+            graphicsSys:UnignoreUIScene("Objectives2")
+            graphicsSys:UnignoreUIScene("UI")
+            _G.FreezePlayerControl = false
             STATE = 4
         end
         -- if( fov > 35)then
