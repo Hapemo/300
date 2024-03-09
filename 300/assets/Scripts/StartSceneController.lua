@@ -31,6 +31,9 @@ function Alive()
     frame6 = gameStateSys:GetEntity("Frame6")
     frame7 = gameStateSys:GetEntity("Frame7")
     skipButton = gameStateSys:GetEntity("SkipButton")
+    clickAudioEntity = gameStateSys:GetEntity("Click")
+
+    hoverOver = false
 
     --generaltimer
     timer = 0
@@ -92,8 +95,8 @@ function Update()
 
     if (skipButton:GetButton().mIsHover) then
         if(hoverOver == false) then
-            hoverSFX = button:GetAudio()
-                hoverSFX:SetPlay(0.2)
+            hoverSFX = skipButton:GetAudio()
+            hoverSFX:SetPlay(0.2)
             hoverOver = true
         end
         skipButton:GetUIrenderer():SetTexture("Skip_Hover")
@@ -103,6 +106,8 @@ function Update()
     end
 
     if (skipButton:GetButton().mActivated) then
+        clickSFX = clickAudioEntity:GetAudio()
+        clickSFX:SetPlay(1.0)
         gameStateSys:ChangeGameState("Tutorial")
     end
 end
