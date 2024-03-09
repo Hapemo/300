@@ -38,21 +38,21 @@ function Alive()
     this = Helper.GetScriptEntity(script_entity.id)
     progress = 100
 
-    mobSpawnPos1.x = 18;
-    mobSpawnPos1.y = -10.5;
-    mobSpawnPos1.z = 60;
+    mobSpawnPos1.x = -7
+    mobSpawnPos1.y = -6.61
+    mobSpawnPos1.z = 20
 
-    mobSpawnPos2.x = -22;
-    mobSpawnPos2.y = -10.5;
-    mobSpawnPos2.z = 40;
+    mobSpawnPos2.x = 21
+    mobSpawnPos2.y = -11
+    mobSpawnPos2.z = 63.6
 
-    mobSpawnPos3.x = -22;
-    mobSpawnPos3.y = -10.5;
-    mobSpawnPos3.z = -8;
+    mobSpawnPos3.x = -4.5
+    mobSpawnPos3.y = -6.555
+    mobSpawnPos3.z = -1.5
 
-    mobSpawnPos4.x = 8;
-    mobSpawnPos4.y = -10.5;
-    mobSpawnPos4.z = 13;
+    mobSpawnPos4.x = 4.6
+    mobSpawnPos4.y = -11
+    mobSpawnPos4.z = -13.5
 
     gameStateSys = systemManager:mGameStateSystem()
     inputMapSys = systemManager:mInputActionSystem()
@@ -130,7 +130,6 @@ function Update()
 
     -- SPAWNING ENEMIES
     if(_G.completedEpicTH == true and _G.completedEpicTS == true and _G.completedEpicILY == true and isObjectiveEnabled) then
-        
         currentSpawnTimer = currentSpawnTimer + FPSManager.GetDT()
 
         if currentEnemyCount < maxEnemyCount and currentSpawnTimer > spawnTimer then
@@ -148,11 +147,11 @@ function Update()
                 end
 
             if (mobtype == 1) then
-                 systemManager.ecs:NewEntityFromPrefab("ILOVEYOU", mobspawnpoint)
-                elseif (mobtype == 2) then 
-                    systemManager.ecs:NewEntityFromPrefab("TrojanHorse", mobspawnpoint) 
-                elseif (mobtype == 3 or mobtype == 4) then 
-                    systemManager.ecs:NewEntityFromPrefab("BigTrojanSoldier", mobspawnpoint) 
+                systemManager.ecs:NewEntityFromPrefab("ILOVEYOU", mobspawnpoint)
+            elseif (mobtype == 2) then 
+                systemManager.ecs:NewEntityFromPrefab("TrojanHorse", mobspawnpoint) 
+            elseif (mobtype == 3 or mobtype == 4) then 
+                systemManager.ecs:NewEntityFromPrefab("BigTrojanSoldier", mobspawnpoint) 
             end
 
             currentEnemyCount = currentEnemyCount + 1
