@@ -30,6 +30,9 @@ local mobtype = 0;
 local isInit
 local isObjectiveEnabled = false
 
+local minExposure = 0.1
+local minFilterRadius = 0.001
+
 function Alive()
     isInit = false
     this = Helper.GetScriptEntity(script_entity.id)
@@ -100,7 +103,7 @@ function Update()
     transform = ent:GetTransform()
     isObjectiveEnabled = false
 
-    if(math.abs(transform.mTranslate.y - -10.8) <= flt_epsilon) then
+    if(math.abs(transform.mTranslate.y - -11) <= flt_epsilon or math.abs(transform.mTranslate.y - -6.555) <= flt_epsilon) then
         isObjectiveEnabled = true
     end
 
@@ -241,9 +244,9 @@ function Update()
             end
         end
         if entityobj:GetGeneral().name == "Objectives3" then
-            
             graphicsSys.mAmbientBloomExposure = minExposure
             graphicsSys.FilterRadius = minFilterRadius
+
             controllerL2 = gameStateSys:GetEntity("Level2BossScene")
             controllerL2Scripts = controllerL2:GetScripts()
             controllerL2Script = controllerL2Scripts:GetScript("../assets/Scripts/Level1BossSceneController.lua")
