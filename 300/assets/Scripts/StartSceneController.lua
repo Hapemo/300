@@ -142,7 +142,7 @@ end
 function Frame7()
     if (timer >= 20 and timer < 22) then
         if(frame7:GetTransform().mTranslate.x <= 2) then
-            fram7:GetTransform().mTranslate.x = frame7:GetTransform().mTranslate.x + 1 * FPSManager.GetDT()
+            frame7:GetTransform().mTranslate.x = frame7:GetTransform().mTranslate.x + 1 * FPSManager.GetDT()
         end
     end
 end
