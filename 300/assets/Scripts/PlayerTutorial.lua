@@ -205,6 +205,10 @@ function Alive()
     dashAudioEntity = gameStateSys:GetEntity("Dash")
     dashAudioComp = dashAudioEntity:GetAudio()
 
+    if(dashAudioComp == nil) then 
+        print("HI DASH EMPTY")
+    end
+
     dashTime = 3.0
     tpTime = 20.0
     -- teleporter1 = gameStateSys:GetEntity("Teleporter1")
