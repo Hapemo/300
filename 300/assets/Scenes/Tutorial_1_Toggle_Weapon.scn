@@ -1,41 +1,6 @@
 [
     {
-        "entityid": 3145731,
-        "general": {
-            "name": "TutorialPhase1Manager",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/Tutorial1TasksManager.lua",
-                    "variables": []
-                }
-            ]
-        }
-    },
-    {
-        "entityid": 3145747,
+        "entityid": 13631492,
         "general": {
             "name": "MonsterSpawner",
             "tagid": 0,
@@ -64,6 +29,41 @@
             "scriptscontainer": [
                 {
                     "scriptFile": "../assets/Scripts/TutorialMonsterSpawner.lua",
+                    "variables": []
+                }
+            ]
+        }
+    },
+    {
+        "entityid": 13631494,
+        "general": {
+            "name": "TutorialPhase1Manager",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/Tutorial1TasksManager.lua",
                     "variables": []
                 }
             ]

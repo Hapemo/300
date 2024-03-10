@@ -121,9 +121,6 @@ local gunShot = false
 local up_vector = Vec3.new()
 
 
-local dashEntity
-local dashAudioComp
-
 local fadeOutTimer = 0.0
 local fadeOutDuration = 5.0
 local dt
@@ -405,6 +402,7 @@ function Update()
         if(e_dashEffect == true)then
             dashEffect()
             dashAudioComp:SetPlay(0.4)
+            print("DASHING")
           
             e_dashEffect = false
         end

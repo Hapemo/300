@@ -592,6 +592,11 @@ unsigned int AudioSystem::PlaySound(std::string audio_name, AUDIOTYPE type, floa
 			system_obj->playSound(sound, 0, true, &channel.second);
 			channel.second->setVolume(vol);
 
+			if (audio_name == "dash.wav")
+			{
+				int i = 0;
+			}
+
 			if (audio_name == "Troubleshooter_M4.wav" && scene_switched == true)
 			{
 				//std::cout << "PLAYING BACK AT: " << playback_position << std::endl;
