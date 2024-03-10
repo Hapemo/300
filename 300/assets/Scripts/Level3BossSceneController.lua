@@ -61,6 +61,11 @@ function Update()
     gunEntity = gameStateSys:GetEntity("gun")
     bossEntity = gameStateSys:GetEntity("Boss")
     
+    if(bossEntity:GetAnimator():IsEndOfAnimation()) then
+        
+        -- print("ANIMATION DONE")
+        bossEntity:GetMeshRenderer():SetMesh("Boss_Idle" , bossEntity)
+    end
 
     -- gunEntity.GetTransform().mScale.y =0
     -- Camera_Scripting.SetFov(cameraEntity,savedfov)
