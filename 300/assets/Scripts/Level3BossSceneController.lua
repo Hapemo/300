@@ -22,7 +22,7 @@ local uiHider
 -- fov
 local fov =57
 local savedfovstart =57
-local savedfovend = 33
+local savedfovend = 46
 local savedfovplayer = 45
 
 -- screen shake
@@ -37,6 +37,9 @@ local quaking = 0
 local magnitude = Vec2.new(-1.0,1.0)
 local magfloat = 0.5
 local initonce
+
+
+local roared = false
 
 local graphicsSys
 function Alive()
@@ -64,7 +67,10 @@ function Update()
     if(bossEntity:GetAnimator():IsEndOfAnimation()) then
         
         -- print("ANIMATION DONE")
-        bossEntity:GetMeshRenderer():SetMesh("Boss_Idle" , bossEntity)
+        if roared == false then 
+            bossEntity:GetMeshRenderer():SetMesh("Boss_Roar" , bossEntity)
+            roared = true
+        end
     end
 
     -- gunEntity.GetTransform().mScale.y =0
@@ -72,12 +78,13 @@ function Update()
     
     if STATE == 0 then
         graphicsSys:IgnoreUIScene("UI")
+        graphicsSys:IgnoreUIScene("BossUI")
     --     if firstTrigger == false then
     --         firstTrigger = true
     --         _G.FreezePlayerControl = true
 
         Camera_Scripting.SetFov(cameraEntity,fov)
-        fov = fov -0.05
+        fov = fov - 0.05
 
         if(fov <= savedfovend)then
             savedplayerrotate.x = cameraEntity:GetTransform().mRotate.x
@@ -116,6 +123,7 @@ function Update()
                 controllerL2Script:RunFunction("StartIntro")
             end
             graphicsSys:UnignoreUIScene("UI")
+            graphicsSys:UnignoreUIScene("BossUI")
 
             _G.FreezePlayerControl = false
             ShowUI()
