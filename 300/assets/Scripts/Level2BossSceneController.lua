@@ -39,7 +39,6 @@ local runtimerover = 3
 
 local looper = 0
 local loop3r = 0
-local loober = 0
 
 local graphicsSys
 function Alive()
@@ -52,8 +51,6 @@ function Update()
     cameraEntity = gameStateSys:GetEntity("Camera")
     bossEntity = gameStateSys:GetEntity("Level2Boss")
     gunEntity = gameStateSys:GetEntity("gun")
-
-    print("state: ", STATE)
 
     if(STATE == -1)then
         
