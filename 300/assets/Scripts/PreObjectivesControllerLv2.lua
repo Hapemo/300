@@ -61,7 +61,7 @@ function Update()
             end
             if objCount == 1 then
                 o3offset.x = objective3:GetTransform().mTranslate.x
-                o3offset.y = 1
+                o3offset.y = 0.11
                 o3offset.z = objective3:GetTransform().mTranslate.z
                 Helper.SetTranslate(objective3,o3offset)
 

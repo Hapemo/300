@@ -29,12 +29,6 @@ function Update()
         TestScripts = testScriptEntity:GetScripts()
         testScript = TestScripts:GetScript("../assets/Scripts/ObjectivesController.lua")
         objCount = testScript:ReturnValueInt("GetCountObj")
-            TestScripts = testScriptEntity:GetScripts()
-            testScript = TestScripts:GetScript("../assets/Scripts/ObjectivesController.lua")
-            objCount = testScript:ReturnValueInt("GetCountObj")
-            TestScripts = testScriptEntity:GetScripts()
-            testScript = TestScripts:GetScript("../assets/Scripts/ObjectivesController.lua")
-            objCount = testScript:ReturnValueInt("GetCountObj")
 
         --spawn the objectives portals
         -- print("SPAWN PORTALS")
@@ -46,42 +40,28 @@ function Update()
         local o2offset = Vec3.new()
         local o3offset =Vec3.new()
         -- use the counter to raise the objective platforms
+        -- updated 9-3-2024 new objectives positions
         if testScript ~= nil then
             if objCount == 3 then
                 o1offset.x = objective1:GetTransform().mTranslate.x
-                o1offset.y = -10.5
+                o1offset.y = -6.555
                 o1offset.z = objective1:GetTransform().mTranslate.z
                 Helper.SetTranslate(objective1,o1offset)
             end
             if objCount == 2 then
                 o2offset.x = objective2:GetTransform().mTranslate.x
-                o2offset.y = -10.5
+                o2offset.y = -11
                 o2offset.z = objective2:GetTransform().mTranslate.z
                 Helper.SetTranslate(objective2,o2offset)
             end
             if objCount == 1 then
                 o3offset.x = objective3:GetTransform().mTranslate.x
-                o3offset.y = -10.5
+                o3offset.y = -6.555
                 o3offset.z = objective3:GetTransform().mTranslate.z
                 Helper.SetTranslate(objective3,o3offset)
             end
         end
     end
-
-    -- objective1:GetTransform().mTranslate.y = -10.5
-    -- objective2:GetTransform().mTranslate.y = -10.5
-    -- objective3:GetTransform().mTranslate.y = -10.5
-
-    -- Helper.SetTranslate(objective1,o1offset)
-    -- Helper.SetTranslate(objective2,o2offset)
-    -- Helper.SetTranslate(objective3,o3offset)
-    --end
-    -- objective3:GetTransform().mTranslate.y = -10.5
-
-    -- Helper.SetTranslate(objective1,o1offset)
-    -- Helper.SetTranslate(objective2,o2offset)
-    -- Helper.SetTranslate(objective3,o3offset)
-    --end
 end
 
 function Dead()

@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 1048617,
+        "entityid": 1048794,
         "general": {
             "name": "bgmDecrease",
             "tagid": 6,
@@ -66,7 +66,7 @@
         }
     },
     {
-        "entityid": 1048618,
+        "entityid": 1048795,
         "general": {
             "name": "bgmIncrease",
             "tagid": 6,
@@ -132,7 +132,7 @@
         }
     },
     {
-        "entityid": 1048619,
+        "entityid": 1048796,
         "general": {
             "name": "SettingsMenuBackground",
             "tagid": 6,
@@ -181,7 +181,7 @@
         }
     },
     {
-        "entityid": 1048620,
+        "entityid": 1048797,
         "general": {
             "name": "SettingsBgmEmpty",
             "tagid": 0,
@@ -222,7 +222,7 @@
         }
     },
     {
-        "entityid": 1048621,
+        "entityid": 1048798,
         "general": {
             "name": "SettingsBgmFull",
             "tagid": 0,
@@ -263,7 +263,7 @@
         }
     },
     {
-        "entityid": 1048622,
+        "entityid": 1048799,
         "general": {
             "name": "SettingsFSButton",
             "tagid": 6,
@@ -322,7 +322,7 @@
         }
     },
     {
-        "entityid": 1048623,
+        "entityid": 1048800,
         "general": {
             "name": "SettingsWindowButton",
             "tagid": 6,
@@ -381,7 +381,7 @@
         }
     },
     {
-        "entityid": 1048624,
+        "entityid": 1048801,
         "general": {
             "name": "SettingsBackButton",
             "tagid": 6,
@@ -440,7 +440,7 @@
         }
     },
     {
-        "entityid": 1048625,
+        "entityid": 1048802,
         "general": {
             "name": "SettingsSfxFull",
             "tagid": 6,
@@ -481,7 +481,7 @@
         }
     },
     {
-        "entityid": 1048626,
+        "entityid": 1048803,
         "general": {
             "name": "SettingsSfxEmpty",
             "tagid": 6,
@@ -522,7 +522,7 @@
         }
     },
     {
-        "entityid": 1048627,
+        "entityid": 1048804,
         "general": {
             "name": "sfxIncrease",
             "tagid": 6,
@@ -588,7 +588,7 @@
         }
     },
     {
-        "entityid": 1048628,
+        "entityid": 1048805,
         "general": {
             "name": "sfxDecrease",
             "tagid": 6,
@@ -654,7 +654,7 @@
         }
     },
     {
-        "entityid": 2097323,
+        "entityid": 1048806,
         "general": {
             "name": "Click",
             "tagid": 0,

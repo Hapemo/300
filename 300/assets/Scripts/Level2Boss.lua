@@ -9,7 +9,7 @@ local attackinterval = 3
 
 
 local animationtimer =0
-local STATE =  0 --------------------- CHANGE THIS FOR INTRO-----------------------
+local STATE =  -1 --------------------- CHANGE THIS FOR INTRO-----------------------
 
 -- screen shake
 local Quakeintervalcd = 0
@@ -32,6 +32,8 @@ function Update()
     if STATE == 0 then
         attacktimer = attacktimer + FPSManager.GetDT()
         if attacktimer > attackinterval then
+            -- play roar
+            --bossEntity:GetMeshRenderer():SetMesh("Boss_Roar", bossEntity)
             quaketimer= quaketimer+FPSManager.GetDT()
             if(quaketimer <1)then
                     cameraEntity:GetTransform().mRotate.x = cameraEntity:GetTransform().mRotate.x+math.random(magnitude.x,magnitude.y)
@@ -45,7 +47,7 @@ function Update()
         end
     end
 
-    print(this:GetHealthbar().health)
+    -- print(this:GetHealthbar().health)
 
     if this:GetHealthbar().health <= 0 then
         STATE = 1

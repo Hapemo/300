@@ -263,6 +263,8 @@ Entity ECS::NewEntityFromPrefabSceneName(std::string prefabName, std::string pre
 	int i{};
 	auto scenes = systemManager->mGameStateSystem->mCurrentGameState.mScenes;
 	for (; i < scenes.size(); ++i) if (scenes[i].mName == prefabscene) break;
+	if (i >= scenes.size())
+		i = 0;
 	
 	return NewEntityFromPrefabScene(prefabName, i, pos);
 }

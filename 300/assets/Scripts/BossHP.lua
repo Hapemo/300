@@ -2,6 +2,7 @@ local boss_entity
 _G.bossHP_healthbar_comp = nil
 
 local this -- hp bar
+local initonce
 function Alive()
     boss_entity = gameStateSys:GetEntityByScene("Boss", "BossStuff")
 
@@ -16,13 +17,23 @@ function Alive()
         print("BOSS has healthbar")
         print("BOSS HP: " , _G.bossHP_healthbar_comp.health)
     end
+    initonce = false
 end
 
 function Update()
     this:GetUIrenderer():SetSlider(_G.bossHP_healthbar_comp.health / _G.bossHP_healthbar_comp.maxHealth)
 
-    if(_G.bossHP_healthbar_comp.health) then 
-        -- win screen?
+    if(_G.bossHP_healthbar_comp.health < 0) then 
+        if initonce == false then
+            initonce = true
+            controllerL2 = gameStateSys:GetEntity("DialogueControllerLevel3")
+            controllerL2Scripts = controllerL2:GetScripts()
+            controllerL2Script = controllerL2Scripts:GetScript("../assets/Scripts/ DialogueControllerLevel3.lua")
+
+            if controllerL2Script ~= nil then
+                controllerL2Script:RunFunction("FinishBoss")
+            end
+        end
     end
 end
 

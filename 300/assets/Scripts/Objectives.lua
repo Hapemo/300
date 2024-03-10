@@ -7,7 +7,7 @@ local progress
 local isInZone = false
 
 local currentSpawnTimer = 0 -- keeps track of how often enemy spawning interval
-local spawnTimer = 10 -- sets how long the enemy spawning interval is
+local spawnTimer = 2.5 -- sets how long the enemy spawning interval is
 local currentEnemyCount = 0 -- keeps track of how many enemies there are in the map
 local maxEnemyCount = 20 -- sets how many enemies are allowed in the map
 
@@ -15,6 +15,7 @@ local mobSpawnPos1 = Vec3.new()
 local mobSpawnPos2 = Vec3.new()
 local mobSpawnPos3 = Vec3.new()
 local mobSpawnPos4 = Vec3.new()
+local const flt_epsilon = 1e-5
 
 local objectiveBarSpawnPos = Vec3.new()
 local objCount = 0
@@ -27,34 +28,39 @@ local reseed = 0
 
 local mobtype = 0;
 local isInit
+local isObjectiveEnabled = false
+
+local minExposure = 0.1
+local minFilterRadius = 0.001
 
 function Alive()
     isInit = false
     this = Helper.GetScriptEntity(script_entity.id)
     progress = 100
 
-    mobSpawnPos1.x = 18;
-    mobSpawnPos1.y = -10.5;
-    mobSpawnPos1.z = 60;
+    mobSpawnPos1.x = -7
+    mobSpawnPos1.y = -6.61
+    mobSpawnPos1.z = 20
 
-    mobSpawnPos2.x = -22;
-    mobSpawnPos2.y = -10.5;
-    mobSpawnPos2.z = 40;
+    mobSpawnPos2.x = 21
+    mobSpawnPos2.y = -11
+    mobSpawnPos2.z = 63.6
 
-    mobSpawnPos3.x = -22;
-    mobSpawnPos3.y = -10.5;
-    mobSpawnPos3.z = -8;
+    mobSpawnPos3.x = -4.5
+    mobSpawnPos3.y = -6.555
+    mobSpawnPos3.z = -1.5
 
-    mobSpawnPos4.x = 8;
-    mobSpawnPos4.y = -10.5;
-    mobSpawnPos4.z = 13;
+    mobSpawnPos4.x = 4.6
+    mobSpawnPos4.y = -11
+    mobSpawnPos4.z = -13.5
 
-    
+    gameStateSys = systemManager:mGameStateSystem()
+    inputMapSys = systemManager:mInputActionSystem()
+    graphicsSys = systemManager:mGraphicsSystem()
 end
 
 function Update()
-    gameStateSys = systemManager:mGameStateSystem()
-    inputMapSys = systemManager:mInputActionSystem()
+
     if(inputMapSys:GetButtonDown("NextLevel")) then
         x = gameStateSys:GetEntity("TransitionHelper", "Transition") 
         y = x:GetScripts()
@@ -65,6 +71,13 @@ function Update()
             --z:RunFunctionWithParam("SetNextGameState", "Test2")
             z:RunFunction("StartTransition")
         end
+    end
+
+    if (inputMapSys:GetButtonDown("nine")) then
+        _G.completedEpicTH = true 
+        _G.completedEpicTS = true 
+        _G.completedEpicILY = true 
+        print("Objectives spawned")
     end
 
     if isInit == false then
@@ -84,6 +97,14 @@ function Update()
         objectivebar = systemManager.ecs:NewEntityFromPrefab("Objective Bar 1", objectiveBarSpawnPos)
         -- objectivebar = gameStateSys:GetEntityByScene("Objective Bar 1","Objectives")
         isInit = true
+    end
+
+    ent = Helper.GetScriptEntity(script_entity.id)
+    transform = ent:GetTransform()
+    isObjectiveEnabled = false
+
+    if(math.abs(transform.mTranslate.y - -11) <= flt_epsilon or math.abs(transform.mTranslate.y - -6.555) <= flt_epsilon) then
+        isObjectiveEnabled = true
     end
 
         gameStateSys = systemManager:mGameStateSystem();
@@ -108,37 +129,37 @@ function Update()
         end
 
     -- SPAWNING ENEMIES
-    if(_G.completedEpicTH == true and _G.completedEpicTS == true and _G.completedEpicILY == true) then
-        
+    if(_G.completedEpicTH == true and _G.completedEpicTS == true and _G.completedEpicILY == true and isObjectiveEnabled) then
         currentSpawnTimer = currentSpawnTimer + FPSManager.GetDT()
 
         if currentEnemyCount < maxEnemyCount and currentSpawnTimer > spawnTimer then
             mobtype = math.random(1, 4)
-                local mobspawnpoint_rand = math.random(1, 4)
+            local mobspawnpoint_rand = math.random(1, 4)
 
-                    if(mobspawnpoint_rand == 1) then
-                        mobspawnpoint = mobSpawnPos1
-                    elseif(mobspawnpoint_rand == 2) then
-                        mobspawnpoint = mobSpawnPos2
-                    elseif(mobspawnpoint_rand == 3) then
-                        mobspawnpoint = mobSpawnPos3
-                    elseif(mobspawnpoint_rand == 4) then
-                        mobspawnpoint = mobSpawnPos4
-                    end
-
-                if (mobtype == 1) then systemManager.ecs:NewEntityFromPrefab("ILOVEYOU", mobspawnpoint)
-                    elseif (mobtype == 2) then systemManager.ecs:NewEntityFromPrefab("TrojanHorse", mobspawnpoint) 
-                    elseif (mobtype == 3 or mobtype == 4) then systemManager.ecs:NewEntityFromPrefab("BigTrojanSoldier", mobspawnpoint) 
+                if(mobspawnpoint_rand == 1) then
+                    mobspawnpoint = mobSpawnPos1
+                elseif(mobspawnpoint_rand == 2) then
+                    mobspawnpoint = mobSpawnPos2
+                elseif(mobspawnpoint_rand == 3) then
+                    mobspawnpoint = mobSpawnPos3
+                elseif(mobspawnpoint_rand == 4) then
+                    mobspawnpoint = mobSpawnPos4
                 end
-                currentEnemyCount = currentEnemyCount + 1
-            currentSpawnTimer = 0 -- reset currentSpawnTimer so that next enemy can spawn
+
+            if (mobtype == 1) then
+                systemManager.ecs:NewEntityFromPrefab("ILOVEYOU", mobspawnpoint)
+            elseif (mobtype == 2) then 
+                systemManager.ecs:NewEntityFromPrefab("TrojanHorse", mobspawnpoint) 
+            elseif (mobtype == 3 or mobtype == 4) then 
+                systemManager.ecs:NewEntityFromPrefab("BigTrojanSoldier", mobspawnpoint) 
+            end
+
+            currentEnemyCount = currentEnemyCount + 1
+            currentSpawnTimer = 0 
         end
     end
 
     objectivebar:GetUIrenderer():SetSlider(progress/objectivesComplete);
-
-    ent = Helper.GetScriptEntity(script_entity.id)
-    transform = ent:GetTransform()
 
     -- print(math.random() +math.random(-20,20) )
 
@@ -154,7 +175,7 @@ function Update()
 
     if(moveTime > 0.4)then
         -- only appear when the platform is raised
-        if(transform.mTranslate.y == -10.5) then
+        if(isObjectiveEnabled) then
             spawndataPos.x = transform.mTranslate.x + math.random(-300,300)/100
             spawndataPos.y = transform.mTranslate.y 
             spawndataPos.z = transform.mTranslate.z + math.random(-300,300)/100
@@ -222,6 +243,9 @@ function Update()
             end
         end
         if entityobj:GetGeneral().name == "Objectives3" then
+            graphicsSys.mAmbientBloomExposure = minExposure
+            graphicsSys.FilterRadius = minFilterRadius
+
             controllerL2 = gameStateSys:GetEntity("Level2BossScene")
             controllerL2Scripts = controllerL2:GetScripts()
             controllerL2Script = controllerL2Scripts:GetScript("../assets/Scripts/Level1BossSceneController.lua")
@@ -250,7 +274,6 @@ function Update()
         -- TODO: Disable/hide/destroy this objective entity
 
     end
-
 end
 
 function Dead()

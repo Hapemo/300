@@ -1,8 +1,9 @@
 -- saved states 
 
 local savedpos = Vec3.new(-1.770,9.200,39.440)
-local savedbosspos = Vec3.new(-3.396,-15.330,-64.750)
-local savedrotate = Vec3.new(270,7.6,72)
+-- local savedbosspos = Vec3.new(-3.396,-15.330,-64.750)
+local savedbosspos = Vec3.new(-4.2,10,-28.6)
+local savedrotate = Vec3.new(270,-7.6,72)
 local savedplayerrotate = Vec3.new(0,0,0)
 
 local STATE =  -1 ------------------------------------ CHANGE THIS FOR INTRO---------------------------------------------
@@ -25,18 +26,32 @@ local quaking = 0
 local magnitude = Vec2.new(-1.0,1.0)
 local magfloat = 1.0
 local initonce
+
+local graphicsSys
+
+local ani_timer
+
+local playtimer =0
+local playlimit = 5
+
 function Alive()
     initonce =false
+    graphicsSys = systemManager:mGraphicsSystem()
 end
 
 function Update()
     cameraEntity = gameStateSys:GetEntity("Camera")
-    bossEntity = gameStateSys:GetEntity("BossLevel1")
+    bossEntity = gameStateSys:GetEntity("BossLevel2")
+
+    --print("current frame: ", bossEntity:GetAnimator():GetFrame())
     
     if STATE == 0 then
+        bossEntity:GetAnimator():SetFrame(0.0) -- intialize initial position
+        bossEntity:GetAnimator():PauseAnimation()
         if firstTrigger == false then
             firstTrigger = true
             _G.FreezePlayerControl = true
+
             savedplayerrotate.x = cameraEntity:GetTransform().mRotate.x
             savedplayerrotate.y = cameraEntity:GetTransform().mRotate.y
             savedplayerrotate.z = cameraEntity:GetTransform().mRotate.z
@@ -57,11 +72,15 @@ function Update()
             end
         else
             quaking = 0
-
             STATE = 1
         end
 
-    elseif STATE == 1 then  
+    elseif STATE == 1 then
+        bossEntity:GetAnimator():UnpauseAnimation()
+
+        graphicsSys:IgnoreUIScene("UI")
+        graphicsSys:IgnoreUIScene("Objectives")
+
         gunEntity = gameStateSys:GetEntity("gun")
         systemManager.ecs:SetDeleteEntity(gunEntity)
         cameraEntity:GetTransform().mRotate.x = savedrotate.x
@@ -70,7 +89,9 @@ function Update()
         cameraEntity:GetTransform().mTranslate.x = savedpos.x
         cameraEntity:GetTransform().mTranslate.y = savedpos.y
         cameraEntity:GetTransform().mTranslate.z = savedpos.z
-
+        bossEntity:GetTransform().mTranslate.x = savedbosspos.x
+        bossEntity:GetTransform().mTranslate.y = savedbosspos.y
+        bossEntity:GetTransform().mTranslate.z = savedbosspos.z
         if(quaking<=QuakeLimit2)then
             quaking = quaking+FPSManager.GetDT()
             Quakeintervalcd= Quakeintervalcd+FPSManager.GetDT()
@@ -89,18 +110,26 @@ function Update()
             Camera_Scripting.SetFov(cameraEntity,fov)
         end
 
-        if MoveTo(bossEntity, savedbosspos, 950) == false then
-            if initonce == false then
-                initonce = true
-                controllerL2 = gameStateSys:GetEntity("DialogueController")
-                controllerL2Scripts = controllerL2:GetScripts()
-                controllerL2Script = controllerL2Scripts:GetScript("../assets/Scripts/DialogueControllerLevel1.lua")
+        --if MoveTo(bossEntity, savedbosspos, 10000) == false then
+            playtimer= playtimer +FPSManager.GetDT()
+
+            if(playtimer >= playlimit)then
+                if initonce == false then
+                    initonce = true
+                    controllerL2 = gameStateSys:GetEntity("DialogueController")
+                    controllerL2Scripts = controllerL2:GetScripts()
+                    controllerL2Script = controllerL2Scripts:GetScript("../assets/Scripts/DialogueControllerLevel1.lua")
+        
+                    if controllerL2Script ~= nil then
+                        graphicsSys:UnignoreUIScene("UI")
+                        graphicsSys:UnignoreUIScene("Objectives")
     
-                if controllerL2Script ~= nil then
-                    controllerL2Script:RunFunction("FinishObjective3")
+                        controllerL2Script:RunFunction("FinishObjective3")
+                    end
                 end
             end
-        end
+            
+        --end
 
     end
 
@@ -125,6 +154,14 @@ end
 
 function OnContactExit(Entity)
 
+end
+
+function DialogueUpdate()
+    --print("current frame: ", bossEntity:GetAnimator():GetFrame())
+    if(bossEntity:GetAnimator():IsEndOfAnimation()) then
+        --print("i've entered here")
+        bossEntity:GetMeshRenderer():SetMesh("Boss_Idle", bossEntity)
+    end
 end
 
 function MoveTo(entity, targetPos, speed)

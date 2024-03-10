@@ -20,7 +20,7 @@ local Attacked = false -- This run once every attack
 
 local inLineOfSight
 
-local deathTimer = 0.1
+local deathTimer = 0.5
 local deathTimerCount
 
 local state
@@ -51,21 +51,23 @@ function Update()
     thisPos = this:GetTransform().mTranslate
     inLineOfSight = aiSys:LineOfSight(this, this:GetAISetting():GetTarget())
 
-    if inLineOfSight and not (state == "ATTACK") then
-        -- if (state == "ATTACK")
-        --print(state)
-        --print("Attack init")
-        ATTACKinit()
-    elseif not inLineOfSight and state ~= "IDLE" then
-        if AttackTimer > AttackAnimation then -- If attack animation ended already
-            --print()
-            IDLEinit()
+    if state~="DEATH" then
+        if inLineOfSight and not (state == "ATTACK") then
+            -- if (state == "ATTACK")
+            --print(state)
+            --print("Attack init")
+            ATTACKinit()
+        elseif not inLineOfSight and state ~= "IDLE" then
+            if AttackTimer > AttackAnimation then -- If attack animation ended already
+                --print()
+                IDLEinit()
+            end
         end
     end
 
     if state == "DEATH" then
-        if deathTimerCount > deathTimer then systemManager.ecs:SetDeleteEntity(this) end
         deathTimerCount = deathTimerCount + FPSManager.GetDT()
+        if deathTimerCount > deathTimer then systemManager.ecs:SetDeleteEntity(this) end
         return
     elseif state == "ATTACK" then
         AttackTimer = AttackTimer + FPSManager.GetDT()

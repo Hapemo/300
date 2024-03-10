@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 1048577,
+        "entityid": 2097168,
         "general": {
             "name": "Level2BossScene",
             "tagid": 0,
@@ -35,7 +35,7 @@
         }
     },
     {
-        "entityid": 1048578,
+        "entityid": 2097283,
         "general": {
             "name": "BossLevel2",
             "tagid": 1,
@@ -55,9 +55,9 @@
                 "z": 0.0
             },
             "translate": {
-                "x": -7.511196136474609,
-                "y": -37.69255065917969,
-                "z": -95.85498809814453
+                "x": -4.199999809265137,
+                "y": 10.0,
+                "z": -28.600000381469727
             }
         },
         "rigidbody": {
@@ -79,7 +79,7 @@
         "meshrenderer": {
             "vert": "../assets/shader_files/pointLight_vert.glsl",
             "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 3987251140,
+            "meshrefid": 500282633,
             "instancecolor": {
                 "x": 1.0,
                 "y": 1.0,
@@ -92,23 +92,23 @@
                 "z": 0.3100000023841858,
                 "w": 1.0
             },
-            "castShadow": true,
+            "castShadow": false,
             "materialinstance": [
-                "../assets/Compressed/Melissa_BaseColor.ctexture",
-                "../assets/Compressed/Melissa_Normal.ctexture",
-                "../assets/Compressed/Melissa_Metallic.ctexture",
-                "../assets/Compressed/Melissa_Roughness.ctexture",
-                "../assets/Compressed/Melissa_Emissive.ctexture",
-                "../assets/Compressed/Melissa_AO.ctexture"
+                "../assets/Compressed/Boss_Head_Particles_Spine_BaseColor.ctexture",
+                "../assets/Compressed/Boss_Head_Particles_Spine_Normal.ctexture",
+                "../assets/Compressed/Boss_Head_Particles_Spine_Metallic.ctexture",
+                "../assets/Compressed/Boss_Head_Particles_Spine_Roughness.ctexture",
+                "../assets/Compressed/Boss_Head_Particles_Spine_Emissive.ctexture",
+                "../assets/Compressed/Boss_Head_Particles_Spine_AO.ctexture"
             ],
-            "mesh": "../assets/compiled_geom/Boss.geom",
+            "mesh": "../assets/compiled_geom/Boss_Intro.geom",
             "texturerefid": [
-                1322168031,
-                1820887936,
-                2908106086,
-                2866962469,
-                2759371044,
-                2018461449
+                206604193,
+                2914982666,
+                2945292664,
+                557562255,
+                3232324542,
+                1257437683
             ]
         },
         "animator": {},

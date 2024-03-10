@@ -21,12 +21,17 @@ local frame4Scale = Vec3.new(0,0,0)
 
 function Alive()
     gameStateSys = systemManager:mGameStateSystem()
-    frame1 = gameStateSys:GetEntity("Frame1")
-    frame2 = gameStateSys:GetEntity("Frame2")
-    frame3 = gameStateSys:GetEntity("Frame3")
-    frame4 = gameStateSys:GetEntity("Frame4")
-    frame5 = gameStateSys:GetEntity("Frame5")
-    frame6 = gameStateSys:GetEntity("Frame6")
+    frame1 = gameStateSys:GetEntity("Frame1E")
+    frame2 = gameStateSys:GetEntity("Frame2E")
+    frame3 = gameStateSys:GetEntity("Frame3E")
+    frame4 = gameStateSys:GetEntity("Frame4E")
+    frame5 = gameStateSys:GetEntity("Frame5E")
+    frame6 = gameStateSys:GetEntity("Frame6E")
+
+    skipButton = gameStateSys:GetEntity("SkipButtonE")
+    clickAudioEntity = gameStateSys:GetEntity("Click")
+
+    hoverOver = false
 
     --generaltimer
     timer = 0
@@ -61,7 +66,7 @@ function Update()
         frame6State = true
         frame5State = false
     elseif (timer >= 20) then
-        gameStateSys:ChangeGameState("MainMenu")
+        gameStateSys:ChangeGameState("WinMenu")
     end
 
     -- WHAT IS DONE IN EACH FRAME
@@ -80,15 +85,33 @@ function Update()
     elseif(frame6State) then
         Frame6()
     end
+
+    if (skipButton:GetButton().mIsHover) then
+        if(hoverOver == false) then
+            hoverSFX = skipButton:GetAudio()
+            hoverSFX:SetPlay(0.2)
+            hoverOver = true
+        end
+        skipButton:GetUIrenderer():SetTexture("Skip_Hover")
+    else
+        hoverOver = false
+        skipButton:GetUIrenderer():SetTexture("Skip_Default")
+    end
+
+    if (skipButton:GetButton().mActivated) then
+        clickSFX = clickAudioEntity:GetAudio()
+        clickSFX:SetPlay(1.0)
+        gameStateSys:ChangeGameState("WinMenu")
+    end
 end
 
 function Frame1()
-    
+
 end
 
 function Frame2()
-    if(frame2:GetUIrenderer().mColor.w < 1) then
-        frame2:GetUIrenderer().mColor.w = frame2:GetUIrenderer().mColor.w + 0.3 * FPSManager.GetDT()
+    if(frame1:GetUIrenderer().mColor.w > 0) then
+        frame1:GetUIrenderer().mColor.w = frame1:GetUIrenderer().mColor.w - 0.3 * FPSManager.GetDT()
     end
 end
 

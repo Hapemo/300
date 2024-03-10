@@ -265,6 +265,12 @@ function Alive()
 end
 
 function Update()
+    if isinit == false then
+        graphicsSys:HideCursor(true)
+        print("Calling hide cursor in player update")
+        isinit = true
+    end
+
     if _G.FreezePlayerControl then 
         return 
     end
@@ -291,12 +297,6 @@ function Update()
     -- if(_G.gunEquipped == 1) then -- Revolver
         -- gunTransform:ParentChildRotateUpdate(dt)
     -- end
-
-    if isinit == false then
-        graphicsSys:HideCursor(true)
-        print("Calling hide cursor in player update")
-        isinit = true
-    end
     
 --region -- player camera
     if(inputMapSys:GetButtonDown("Mouse")) then

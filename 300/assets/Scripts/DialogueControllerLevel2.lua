@@ -68,12 +68,16 @@ function Alive()
 end
 
 function Update()
+    -- print("hi",_G.FreezePlayerControl)
+
     if currState ~= "" then
         systemManager.mIsDialogue = true
     end
 end
 
 function DialogueUpdate()
+    -- print("hi",_G.FreezePlayerControl)
+
     if currState == "obj1" then
         picture = excited
     elseif currState == "obj2" then

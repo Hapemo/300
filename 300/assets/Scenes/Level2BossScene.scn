@@ -1,0 +1,161 @@
+[
+    {
+        "entityid": 5242884,
+        "general": {
+            "name": "Level2ControllerBoss",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/Level2BossSceneController.lua",
+                    "variables": []
+                }
+            ]
+        }
+    },
+    {
+        "entityid": 5242886,
+        "general": {
+            "name": "Level2Boss",
+            "tagid": 1,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 50.0,
+                "y": 50.0,
+                "z": 31.26999855041504
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 30.0,
+                "z": -42.599998474121094
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 1,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": false,
+                "y": false,
+                "z": false
+            },
+            "gravity": false
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 500282633,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "castShadow": true,
+            "materialinstance": [
+                "../assets/Compressed/Boss_Head_Particles_Spine_BaseColor.ctexture",
+                "../assets/Compressed/Boss_Head_Particles_Spine_Normal.ctexture",
+                "../assets/Compressed/Boss_Head_Particles_Spine_Metallic.ctexture",
+                "../assets/Compressed/Boss_Head_Particles_Spine_Roughness.ctexture",
+                "../assets/Compressed/Boss_Head_Particles_Spine_Emissive.ctexture",
+                "../assets/Compressed/Boss_Head_Particles_Spine_AO.ctexture"
+            ],
+            "mesh": "../assets/compiled_geom/Boss_Intro.geom",
+            "texturerefid": [
+                206604193,
+                2914982666,
+                2945292664,
+                557562255,
+                3232324542,
+                1257437683
+            ]
+        },
+        "animator": {},
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 0.7799999713897705,
+                "y": 0.5,
+                "z": 1.0099999904632568
+            },
+            "translateoffset": {
+                "x": 0.5699999928474426,
+                "y": 5.510000228881836,
+                "z": 0.4300000071525574
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/Level2Boss.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "healthbar": {
+            "healthcolor": {
+                "x": 0.0,
+                "y": 1.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "backcolor": {
+                "x": 1.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "maxhealth": 20.0,
+            "width": 0.0,
+            "height": 0.0,
+            "frametexture": 0,
+            "healthtexture": 0
+        }
+    }
+]
