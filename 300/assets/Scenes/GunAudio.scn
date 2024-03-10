@@ -1,8 +1,8 @@
 [
     {
-        "entityid": 13631532,
+        "entityid": 2097471,
         "general": {
-            "name": "NewObject",
+            "name": "BasicGun",
             "tagid": 0,
             "subtag": 0,
             "isActive": true,
@@ -26,9 +26,9 @@
             }
         },
         "audio": {
-            "filepath": "",
-            "filename": "",
-            "fullpath": "",
+            "filepath": "../assets\\Audio",
+            "filename": "Player_BasicGun.wav",
+            "fullpath": "../assets\\Audio/Player_BasicGun.wav",
             "playonawake": false,
             "islooping": false,
             "audiotype": 1,

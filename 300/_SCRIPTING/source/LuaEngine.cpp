@@ -304,6 +304,7 @@ void LuaAudio()
 {
     systemManager->mScriptingSystem->luaState.new_usertype<Audio>(
         "Audio", sol::constructors<>(),
+        "SetFile", &Audio::SetFileName,
         "SetPlay", &Audio::SetPlay,
         "SetPause", &Audio::SetPause,
         "SetResume", &Audio::SetResume,

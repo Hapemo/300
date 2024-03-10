@@ -118,6 +118,8 @@ local shotgunShootState = "SHOOTABLE"   -- ["SHOOTABLE" , "COOLDOWN"]
 local machinegunShootState = "SHOOTABLE"
 local gunShot = false
 
+local basicGunAudioEnt
+
 local up_vector = Vec3.new()
 
 
@@ -192,8 +194,10 @@ function Alive()
 
     dashui = gameStateSys:GetEntityByScene("dashui" , "tutorialUI")
 
-    bulletAudioEntity = gameStateSys:GetEntity("Bullet Shoot")
-    bulletAudioComp = bulletAudioEntity:GetAudio()
+    -- bulletAudioEntity = gameStateSys:GetEntity("Bullet Shoot")
+    -- bulletAudioComp = bulletAudioEntity:GetAudio()
+
+    basicGunAudioEnt =  gameStateSys:GetEntity("BasicGun")
 
     jumpAudioEntity = gameStateSys:GetEntity("Jump")
     jumpAudioComp = jumpAudioEntity:GetAudio()
@@ -640,7 +644,8 @@ function Update()
                 viewVecCam.z=viewVecCam.z *100
 
                 physicsSys:SetVelocity(prefabEntity, viewVecCam)
-                bulletAudioComp:SetPlay(0.3)
+                -- bulletAudioComp:SetPlay(0.3)
+                basicGunAudioEnt:GetAudio():SetPlay(1.0)
                 
                 pistolTimer = pistolTimer + pistolCooldown
 

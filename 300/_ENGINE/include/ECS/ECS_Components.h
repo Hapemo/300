@@ -543,7 +543,8 @@ struct Audio : public Serializable
 		SET_FADE_IN, 
 		SET_FADE_OUT, 
 		FINISHED,		    // mIsLooping
-		FAILED				// When the audio fails to play...
+		FAILED,				// When the audio fails to play...
+		//NIL
 	};
 	//----------------------------------------------------
 
@@ -576,12 +577,23 @@ struct Audio : public Serializable
 	// ------------------------------------------
 	STATE          mState = STATE::STARTUP;		        // Initial State - Startup 
 	STATE		   mNextActionState = STATE::INACTIVE;  // Preface the next cause of action.
+	bool		   mJustPlayed = false;	// [3/10]
 
 	// This is okay - because it's just editing data (use through component)
 
+	// Temp Fix [3/10] -> initial issue with some sounds not being able to play
+	void SetFileName(std::string file_name)
+	{
+		mFileName = file_name;
+	}
+
 	void SetPlay(/*float vol = 1.0f*/)
 	{
-		mNextActionState = STATE::SET_TO_PLAY;
+		std::cout << mFullPath << std::endl;
+		std::cout << mState << mNextActionState << std::endl;
+
+
+		mNextActionState = STATE::SET_TO_PLAY;	
 		//mVolume = vol;
 	}
 

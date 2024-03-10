@@ -123,6 +123,13 @@ void AudioSystem::Update([[maybe_unused]] float dt, bool calling_from_pause)
 		Transform& transform = audio.GetComponent<Transform>(); // need to update "mPreviousPosition" for 
 		General& general = audio.GetComponent<General>();
 
+
+		if (audio_component.mFileName == "Player_BasicGun.wav")
+		{
+			int i = 0;
+			std::cout << i << std::endl;
+		}
+
 		// Set 3D Flag
 		if (audio_component.mFileName.find("3D") != std::string::npos)
 		{
@@ -150,7 +157,11 @@ void AudioSystem::Update([[maybe_unused]] float dt, bool calling_from_pause)
 
 		// On Awake Play (Check once only)
 		if (audio_component.mState == Audio::STARTUP)
-		{
+		{	
+			if (audio_component.mFileName == "Player_BasicGun")
+			{
+				std::cout << "PLAYER BASIC GUN" << std::endl;
+			}
 			if (audio_component.mPlayonAwake)
 			{
 				audio_component.mNextActionState = Audio::SET_TO_PLAY;
@@ -183,6 +194,12 @@ void AudioSystem::Update([[maybe_unused]] float dt, bool calling_from_pause)
 		switch (audio_component.mNextActionState)
 		{
 			case Audio::SET_TO_PLAY:
+
+			/*	if (audio_component.mFileName == "Player_BasicGun.wav")
+				{
+					int i = 0;
+				}*/
+
 				if (FindSound(audio_component.mFileName) != nullptr) // Sound Exists ...
 				{
 					/*if (audio_component.mIsUnique)
@@ -193,6 +210,12 @@ void AudioSystem::Update([[maybe_unused]] float dt, bool calling_from_pause)
 					PINFO("AUDIO EXISTS");
 					PINFO("PLAYING AUDIO %s AT: %f", audio_component.mFileName.c_str(), audio_component.mVolume);
 
+					if (audio_component.mFileName == "Player_BasicGun.wav")
+						{
+							int i = 0;
+							std::cout << i;
+						}
+
 					unsigned int play_bool = PlaySound(audio_component.mFileName, audio_component.mAudioType, audio_component.mVolume, &audio_component); // audio_component is used to access [3D] data
 					if (play_bool)  // Plays the sound based on parameters
 					{
@@ -202,6 +225,7 @@ void AudioSystem::Update([[maybe_unused]] float dt, bool calling_from_pause)
 						audio_component.mCurrentlyPlaying = audio_component.mFileName; // for info display in editor.
 
 						audio_component.mListOfChannelIDs.push_back(audio_component.mChannelID); // push an instance of the audio where the channel is being played
+						audio_component.mJustPlayed = true;
 					}
 
 					else
@@ -256,59 +280,73 @@ void AudioSystem::Update([[maybe_unused]] float dt, bool calling_from_pause)
 				break;
 			}
 
-		switch (audio_component.mState)
+		if (audio_component.mJustPlayed == false)
 		{
-		case Audio::INACTIVE:
-			break;
-
-		case Audio::PLAYING:
-			// Check if the current sound has finished playing...
-
-			// [11/20] Supporting multiple audio instances
-			for (auto it = audio_component.mListOfChannelIDs.begin(); it != audio_component.mListOfChannelIDs.end();)
+			switch (audio_component.mState)
 			{
-				uid channel_id = *it;
+			case Audio::INACTIVE:
+				break;
 
-				if (!IsChannelPlaying(channel_id, audio_component.mAudioType))
-				{ 
-					audio_component.mState = Audio::FINISHED;
-					NullChannelPointer(audio_component.mAudioType, channel_id);
-					PINFO("DONE PLAYING");
-					//std::cout << "DONE PLAYING" << std::endl;
+			case Audio::PLAYING:
+				// Check if the current sound has finished playing...
 
-					// Remove the finished channel ID from the vector
-					it = audio_component.mListOfChannelIDs.erase(it);
-					if (it != audio_component.mListOfChannelIDs.end() && it != audio_component.mListOfChannelIDs.begin())
+				// [11/20] Supporting multiple audio instances
+				for (auto it = audio_component.mListOfChannelIDs.begin(); it != audio_component.mListOfChannelIDs.end();)
+				{
+					uid channel_id = *it;
+
+					if (!IsChannelPlaying(channel_id, audio_component.mAudioType))
 					{
-						--it; // Adjust the iterator to stay at the current position after erasing
+						audio_component.mState = Audio::FINISHED;
+						NullChannelPointer(audio_component.mAudioType, channel_id);
+						PINFO("DONE PLAYING: %s", audio_component.mFileName);
+						//std::cout << "DONE PLAYING" << std::endl;
+
+						// Remove the finished channel ID from the vector
+						it = audio_component.mListOfChannelIDs.erase(it);
+						if (it != audio_component.mListOfChannelIDs.end() && it != audio_component.mListOfChannelIDs.begin())
+						{
+							--it; // Adjust the iterator to stay at the current position after erasing
+						}
+					}
+
+					else
+					{
+						++it;
 					}
 				}
+				break;
 
+			case Audio::PAUSED:
+				//if (sys_was_paused && !sys_paused) // Systme Unpaused + System was paused (pause button use case)
+				//{
+				//	audio_component.mNextActionState = Audio::SET_TO_RESUME;
+				//}
+				break;
+			case Audio::STOPPED:
+				break;
+
+			case Audio::FINISHED:
+				if (audio_component.mIsLooping)
+				{
+					audio_component.mNextActionState = Audio::SET_TO_PLAY;
+				}
 				else
 				{
-					++it;
+					audio_component.mState = Audio::INACTIVE;
+					audio_component.mNextActionState = Audio::INACTIVE;
 				}
+				break;
+			case Audio::FAILED:
+				break;
 			}
-			break;
-
-		case Audio::PAUSED:
-			//if (sys_was_paused && !sys_paused) // Systme Unpaused + System was paused (pause button use case)
-			//{
-			//	audio_component.mNextActionState = Audio::SET_TO_RESUME;
-			//}
-			break;
-		case Audio::STOPPED:
-			break;
-
-		case Audio::FINISHED:
-			if (audio_component.mIsLooping)
-			{
-				audio_component.mNextActionState = Audio::SET_TO_PLAY;
-			}
-			break;
-		case Audio::FAILED:
-			break;
 		}
+
+		else
+		{
+			audio_component.mJustPlayed = false;
+		}
+
 
 
 
