@@ -1,8 +1,8 @@
 {
-    "entityid": 4194583,
+    "entityid": 9437418,
     "general": {
         "name": "Portal",
-        "tagid": 2,
+        "tagid": 8,
         "subtag": 0,
         "isActive": true,
         "isPaused": false
@@ -19,9 +19,9 @@
             "z": 0.0
         },
         "translate": {
-            "x": 41.718814849853516,
-            "y": 4.899809837341309,
-            "z": 1.7631709575653076
+            "x": 0.0,
+            "y": 7.819528579711914,
+            "z": 49.54824447631836
         }
     },
     "meshrenderer": {
@@ -57,6 +57,14 @@
             0,
             0,
             0
+        ]
+    },
+    "scripts": {
+        "scriptscontainer": [
+            {
+                "scriptFile": "../assets/Scripts/Portal.lua",
+                "variables": []
+            }
         ]
     },
     "prefab": {

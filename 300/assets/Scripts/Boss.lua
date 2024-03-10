@@ -14,6 +14,7 @@ _G.number_left_in_level_3 = 0                           -- Keeps track how many 
 _G.Level3_Monsters = true                               -- Special Boolean -> interaction with spawning mechanic
 local phase_1_timer = 0 
 local phase_1_max_time = 10                             -- Give Players time to fight the minions
+local portals = {}                                      -- Table of Portals
 
 -- Phase 2 : Groundslam Phase
 local groundSlamDirection
@@ -638,8 +639,11 @@ end
 
 function SummonMinions(summon_per_spawn_instance) 
     -- print("Number of Enemies to Summon: " , summon_per_spawn_instance)
-    
+
     portal_audio:GetAudio():SetPlay(1.0)
+
+   
+
     -- Pick which direction to ground slam in 
     enemySpawnDirection = math.random(1, 4)
     enemySpawnDirection = 1
@@ -674,6 +678,10 @@ function SummonMinions(summon_per_spawn_instance)
         groundSlamPosition.z = -0.09
     end
 
+    -- Summon Portal (Visual)
+    portal = systemManager.ecs:NewEntityFromPrefab("Portal", groundSlamPosition)
+    
+    
 
     -- [3/6] - Set to summon multiple enemies in 1 area 
     for i = 1 , summon_per_spawn_instance  do 
@@ -709,6 +717,18 @@ function PrintAttackingStates()
     end
 
     print("ATTACKING: " , _G.attacking)
+end
+
+
+function PortalAnimation()
+
+    -- 0.13 , -0.06, 7.53
+    -- 0.13 , 12.1 , 7.53
+    portal_trans = portal:GetTransform()
+
+    portal_open_timer = 0
+    portal_max_timer = 3
+
 end
 
 -- function UpdateHomingProjectiles()
