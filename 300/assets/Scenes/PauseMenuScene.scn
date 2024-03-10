@@ -1,6 +1,43 @@
 [
     {
-        "entityid": 2097339,
+        "entityid": 4194394,
+        "general": {
+            "name": "Exit",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "UI_Screen_Sleep.wav",
+            "fullpath": "../assets\\Audio/UI_Screen_Sleep.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 0.6000000238418579,
+            "retainaudio": false
+        }
+    },
+    {
+        "entityid": 4194444,
         "general": {
             "name": "PauseHTPMenu",
             "tagid": 6,
@@ -41,7 +78,7 @@
         }
     },
     {
-        "entityid": 2097340,
+        "entityid": 4194445,
         "general": {
             "name": "PauseRestartButton",
             "tagid": 6,
@@ -115,44 +152,7 @@
         }
     },
     {
-        "entityid": 2097341,
-        "general": {
-            "name": "Exit",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "UI_Screen_Sleep.wav",
-            "fullpath": "../assets\\Audio/UI_Screen_Sleep.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 0.6000000238418579,
-            "retainaudio": false
-        }
-    },
-    {
-        "entityid": 2097342,
+        "entityid": 4194446,
         "general": {
             "name": "PauseHTPButton",
             "tagid": 6,
@@ -229,7 +229,7 @@
         }
     },
     {
-        "entityid": 2097343,
+        "entityid": 4194447,
         "general": {
             "name": "PauseResumeButton",
             "tagid": 6,
@@ -306,7 +306,7 @@
         }
     },
     {
-        "entityid": 2097344,
+        "entityid": 4194448,
         "general": {
             "name": "Awake",
             "tagid": 0,
@@ -343,7 +343,7 @@
         }
     },
     {
-        "entityid": 2097345,
+        "entityid": 4194449,
         "general": {
             "name": "PauseQuitButton",
             "tagid": 6,
@@ -417,7 +417,7 @@
         }
     },
     {
-        "entityid": 2097346,
+        "entityid": 4194450,
         "general": {
             "name": "Click",
             "tagid": 6,
@@ -454,7 +454,7 @@
         }
     },
     {
-        "entityid": 2097347,
+        "entityid": 4194451,
         "general": {
             "name": "PauseMainMenuButton",
             "tagid": 6,
@@ -528,7 +528,7 @@
         }
     },
     {
-        "entityid": 2097348,
+        "entityid": 4194452,
         "general": {
             "name": "HTPBackButton",
             "tagid": 0,
@@ -602,7 +602,7 @@
         }
     },
     {
-        "entityid": 2097349,
+        "entityid": 4194453,
         "general": {
             "name": "PauseMenuBackground",
             "tagid": 6,
@@ -643,7 +643,7 @@
         }
     },
     {
-        "entityid": 2097350,
+        "entityid": 4194454,
         "general": {
             "name": "PauseMenuController",
             "tagid": 0,
@@ -693,7 +693,7 @@
         }
     },
     {
-        "entityid": 2097351,
+        "entityid": 5243031,
         "general": {
             "name": "PauseSettingsButton",
             "tagid": 6,

@@ -1,8 +1,8 @@
 [
     {
-        "entityid": 1048616,
+        "entityid": 339,
         "general": {
-            "name": "TransitionHelper",
+            "name": "BasicGun",
             "tagid": 0,
             "subtag": 0,
             "isActive": true,
@@ -25,13 +25,15 @@
                 "z": 0.0
             }
         },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/Transition.lua",
-                    "variables": []
-                }
-            ]
+        "audio": {
+            "filepath": "",
+            "filename": "",
+            "fullpath": "",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false
         }
     }
 ]

@@ -118,6 +118,11 @@ local shotgunShootState = "SHOOTABLE"   -- ["SHOOTABLE" , "COOLDOWN"]
 local machinegunShootState = "SHOOTABLE"
 local gunShot = false
 
+-- M5 Audio Assets (this works idk why) -> cannot be in separate scene (other than test scene)
+local basicGunAudioEnt
+local revolverGunAudioEnt
+local shotGunAudioEnt
+local machineGunAudioEnt
 
 -- end gun states
 
@@ -197,6 +202,18 @@ function Alive()
 
     bulletAudioEntity = gameStateSys:GetEntity("Bullet Shoot" )
     bulletAudioComp = bulletAudioEntity:GetAudio()
+
+    -- Added [3/10] - M5
+    basicGunAudioEnt =  gameStateSys:GetEntity("BasicGun")
+    revolverGunAudioEnt = gameStateSys:GetEntity("RevolverGun")
+    shotGunAudioEnt = gameStateSys:GetEntity("ShotGun")
+    machineGunAudioEnt = gameStateSys:GetEntity("MachineGun")
+
+    if(basicGunAudioEnt ~= nil) then 
+        print("BASIC GUN EXISTS")
+    end
+
+    -- basicGunAudioEnt = gameStateSys:GetEntityByScene("")
 
     jumpAudioEntity = gameStateSys:GetEntity("Jump" )
     jumpAudioComp = jumpAudioEntity:GetAudio()
@@ -749,7 +766,8 @@ function Update()
                     viewVecCam.z=viewVecCam.z *100
 
                     physicsSys:SetVelocity(prefabEntity, viewVecCam)
-                    bulletAudioComp:SetPlay(0.3)
+                    -- bulletAudioComp:SetPlay(0.3)
+                    basicGunAudioEnt:GetAudio():SetPlay(1.0)
                     
                     pistolTimer = pistolTimer + pistolCooldown
 
@@ -795,7 +813,7 @@ function Update()
                     viewVecCam.z=viewVecCam.z *100
 
                     physicsSys:SetVelocity(prefabEntity, viewVecCam)
-                    bulletAudioComp:SetPlay(0.3)
+                    revolverGunAudioEnt:GetAudio():SetPlay(0.4)
 
                     revolverGunTimer = revolverGunTimer + revolverGunCooldown
                     -- print("GUN TIMER:" ,revolverGunTimer)
@@ -817,7 +835,8 @@ function Update()
 
                     shotgunShootState = "COOLDOWN"
 
-                    bulletAudioComp:SetPlay(0.3)
+                    shotGunAudioEnt:GetAudio():SetPlay(0.6)
+
                 end
             end
         end
@@ -867,7 +886,7 @@ function Update()
                 -- gunTransform:GunAnimation("NA", 0 ,  30.0, 1.0, 0.2)
     
                 if(machineGunTimer <= 0) then
-                    bulletAudioComp:SetPlay(0.3)
+                    machineGunAudioEnt:GetAudio():SetPlay(0.6)
                     machineGunTimer = machineGunCooldown  -- Set the cooldown timer
                end
                machineGunTimer = math.max(0, machineGunTimer - dt)  -- deltaTime is the time since the last fra
