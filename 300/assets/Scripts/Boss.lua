@@ -189,19 +189,15 @@ function Update()
         -- currentBossStateTimer = 0
     end
      -- Stop Animation 
-    -- if(this:GetAnimator():IsEndOfAnimation()) then
-    --     if  roar_slammed_state == "SLAM_AUDIO" then
-    --         boss_slam_audio:GetAudio():SetPlay(1.0)
-    --         roar_slammed_state = "IDLE"
-    --     -- else if roar_slammed_state == "IDLE"
-    --     --     this:GetMeshRenderer():SetMesh("Boss_Idle" , this)
-    --     -- end
-    -- end
+    if(this:GetAnimator():IsEndOfAnimation()) then
+        if roar_slammed_state == "IDLE" then
+            this:GetMeshRenderer():SetMesh("Boss_Idle" , this)
+        end
+    end
 
-    -- if roar_slammed_state == "IDLE" then
-    --         this:GetMeshRenderer():SetMesh("Boss_Idle" , this)
-    -- end
 
+
+   
 
 
 
@@ -304,10 +300,19 @@ function Update()
             if roar_slammed_state == "SMASH" then 
                 if smashed == false then 
                     this:GetMeshRenderer():SetMesh("Boss_Slam" , this)
+                    boss_slam_audio:GetAudio():SetPlay(1.0)
                     print("SMASH")
                     smashed = true
                 end
+
+                if(this:GetAnimator():IsEndOfAnimation()) then
+                    roar_slammed_state = "IDLE"
+
+                end
+
             end
+
+        
 
             -- if roar_slammed_state == "SMASH" then 
             --     -- boss_slam_audio:GetAudio():SetPlay(1.0)
@@ -422,6 +427,7 @@ function Update()
                 -- _G.state_checker[2] = true
                 -- _G.attacking = false
                 -- groundSlamMax = 0
+                -- smashed = false 
             end
 
         end
