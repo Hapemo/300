@@ -56,6 +56,9 @@ function Alive()
 end
 
 function Update()
+    if(inputMapSys:GetButtonDown("ClearObj2")) then
+        progress = objectivesComplete - 1
+    end
     gameStateSys = systemManager:mGameStateSystem()
     inputMapSys = systemManager:mInputActionSystem()
     if(inputMapSys:GetButtonDown("NextLevel")) then

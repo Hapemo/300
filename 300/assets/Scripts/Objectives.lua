@@ -61,6 +61,10 @@ end
 
 function Update()
 
+    if(inputMapSys:GetButtonDown("ClearObj1")) then
+        progress = objectivesComplete - 1
+    end
+
     if(inputMapSys:GetButtonDown("NextLevel")) then
         x = gameStateSys:GetEntity("TransitionHelper", "Transition") 
         y = x:GetScripts()
