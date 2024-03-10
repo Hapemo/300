@@ -118,7 +118,12 @@ local shotgunShootState = "SHOOTABLE"   -- ["SHOOTABLE" , "COOLDOWN"]
 local machinegunShootState = "SHOOTABLE"
 local gunShot = false
 
+-- M5 Audio Assets (this works idk why)
 local basicGunAudioEnt
+local revolverGunAudioEnt
+local shotGunAudioEnt
+local machineGunAudioEnt
+
 
 local up_vector = Vec3.new()
 
@@ -197,7 +202,11 @@ function Alive()
     -- bulletAudioEntity = gameStateSys:GetEntity("Bullet Shoot")
     -- bulletAudioComp = bulletAudioEntity:GetAudio()
 
+    -- Added [3/10] - M5
     basicGunAudioEnt =  gameStateSys:GetEntity("BasicGun")
+    revolverGunAudioEnt = gameStateSys:GetEntity("RevolverGun")
+    shotGunAudioEnt = gameStateSys:GetEntity("ShotGun")
+    machineGunAudioEnt = gameStateSys:GetEntity("MachineGun")
 
     jumpAudioEntity = gameStateSys:GetEntity("Jump")
     jumpAudioComp = jumpAudioEntity:GetAudio()
@@ -205,9 +214,6 @@ function Alive()
     dashAudioEntity = gameStateSys:GetEntity("Dash")
     dashAudioComp = dashAudioEntity:GetAudio()
 
-    if(dashAudioComp == nil) then 
-        print("HI DASH EMPTY")
-    end
 
     dashTime = 3.0
     tpTime = 20.0
@@ -695,7 +701,9 @@ function Update()
                 viewVecCam.z=viewVecCam.z *100
 
                 physicsSys:SetVelocity(prefabEntity, viewVecCam)
-                bulletAudioComp:SetPlay(0.3)
+                -- bulletAudioComp:SetPlay(0.3)
+                revolverGunAudioEnt:GetAudio():SetPlay(0.4)
+            
 
                 revolverGunTimer = revolverGunTimer + revolverGunCooldown
                 -- print("GUN TIMER:" ,revolverGunTimer)
@@ -716,6 +724,7 @@ function Update()
 
                 shotGunTimer = shotGunTimer + shotGunCooldown
 
+                shotGunAudioEnt:GetAudio():SetPlay(0.6)
 
                 shotgunShootState = "COOLDOWN"
 
@@ -768,7 +777,8 @@ function Update()
 
 
             if(machineGunTimer <= 0) then
-                bulletAudioComp:SetPlay(0.3)
+                -- bulletAudioComp:SetPlay(0.3)
+                machineGunAudioEnt:GetAudio():SetPlay(0.6)
                 machineGunTimer = machineGunCooldown  -- Set the cooldown timer
            end
            machineGunTimer = math.max(0, machineGunTimer - dt)  -- deltaTime is the time since the last fra
