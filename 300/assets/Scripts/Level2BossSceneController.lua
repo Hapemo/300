@@ -41,10 +41,12 @@ local looper = 0
 local loop3r = 0
 
 local graphicsSys
+local isfightingboss
 function Alive()
     initonce =false
     graphicsSys = systemManager:mGraphicsSystem()
     inittwice = false
+    isfightingboss = false
 end
 
 function Update()
@@ -52,7 +54,7 @@ function Update()
     bossEntity = gameStateSys:GetEntity("Level2Boss")
     gunEntity = gameStateSys:GetEntity("gun")
 
-    if(STATE == -1)then
+    if(STATE == -1 and isfightingboss)then
         
         if(looper == 0) then
             bossEntity:GetMeshRenderer():SetMesh("Boss_Roar", bossEntity)
@@ -173,7 +175,7 @@ function Update()
         graphicsSys:UnignoreUIScene("UI")
         _G.FreezePlayerControl = false  
         STATE=-1
-
+        isfightingboss = true
         fov = 45
         if initonce == false then
             controllerL2 = gameStateSys:GetEntity("DialogueControllerLevel2")
