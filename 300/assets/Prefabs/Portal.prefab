@@ -1,0 +1,65 @@
+{
+    "entityid": 4194583,
+    "general": {
+        "name": "Portal",
+        "tagid": 2,
+        "subtag": 0,
+        "isActive": true,
+        "isPaused": false
+    },
+    "transform": {
+        "scale": {
+            "x": 0.12999999523162842,
+            "y": 12.180000305175781,
+            "z": 7.53000020980835
+        },
+        "rotate": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "translate": {
+            "x": 41.718814849853516,
+            "y": 4.899809837341309,
+            "z": 1.7631709575653076
+        }
+    },
+    "meshrenderer": {
+        "vert": "../assets/shader_files/pointLight_vert.glsl",
+        "frag": "../assets/shader_files/pointLight_frag.glsl",
+        "meshrefid": 3400,
+        "instancecolor": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+        },
+        "bloomthreshold": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+        },
+        "castShadow": true,
+        "materialinstance": [
+            "../assets/Compressed/UI-Blue.ctexture",
+            "../assets/Compressed/UI-Blue.ctexture",
+            " ",
+            " ",
+            " ",
+            " "
+        ],
+        "mesh": "../assets/compiled_geom/Particle_Sphere.geom",
+        "texturerefid": [
+            160439243,
+            160439243,
+            0,
+            0,
+            0,
+            0
+        ]
+    },
+    "prefab": {
+        "prefab": "Portal"
+    }
+}

@@ -93,6 +93,8 @@ local player_position = Vec3.new()
 -- 3. Shoot projectiles
 -- 4. Laser Attack
 
+-- Audio Stuff
+local portal_audio 
 
 function Alive()
     print("ALIVE")
@@ -122,9 +124,12 @@ function Alive()
     spawn_point_translate.z = spawn_point_ref_trans.z
 
     -- print("1")
-    print("1: " , spawn_point_translate.x)
-    print("2: " , spawn_point_translate.y)
-    print("3: " , spawn_point_translate.z)
+    -- print("1: " , spawn_point_translate.x)
+    -- print("2: " , spawn_point_translate.y)
+    -- print("3: " , spawn_point_translate.z)
+
+    -- Audio Stuff
+    portal_audio = gameStateSys:GetEntity("SummonPortalAudio")
 
 end
 
@@ -168,13 +173,13 @@ function Update()
     -- end
 
     -- Debug States
-    -- state = 1 --[OK]
+    state = 1 --[OK]
     -- state = 2 -- [OK] -- need to check agn after i check the other mechanics
     -- state = 3 -- [OK]
     -- state = 4 --[OK]
     -- state = 5 -- [OK]
 
-    --  Added [3/11] -> to disable when cutscene is on
+    --  Added [3/11] -> to disable when cutscene is on 
     if _G.level3intro == false then 
         if state == 1 and _G.state_checker[1] == false then
 
@@ -632,12 +637,13 @@ function UpdateHomingProjectiles()
 end 
 
 function SummonMinions(summon_per_spawn_instance) 
-    print("Number of Enemies to Summon: " , summon_per_spawn_instance)
-
+    -- print("Number of Enemies to Summon: " , summon_per_spawn_instance)
+    
+    portal_audio:GetAudio():SetPlay(1.0)
     -- Pick which direction to ground slam in 
     enemySpawnDirection = math.random(1, 4)
     enemySpawnDirection = 1
-    print("ENEMY SPAWN DIRECTION: " , enemySpawnDirection)
+    -- print("ENEMY SPAWN DIRECTION: " , enemySpawnDirection)
 
     -- Summon Area (In Front of Boss)
     if enemySpawnDirection == 1 then
