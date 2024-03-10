@@ -16,6 +16,12 @@ local phase_1_timer = 0
 local phase_1_max_time = 10                             -- Give Players time to fight the minions
 local portals = {}                                      -- Table of Portals
 
+-- Phase 1 : Audio Stuff
+local roar_audio
+local initial_roar = false
+
+
+
 -- Phase 2 : Groundslam Phase
 local groundSlamDirection
 local groundSlamPosition = Vec3.new()
@@ -131,6 +137,8 @@ function Alive()
 
     -- Audio Stuff
     portal_audio = gameStateSys:GetEntity("SummonPortalAudio")
+    roar_audio = gameStateSys:GetEntity("RoarAudio")
+
 
 end
 
@@ -167,6 +175,11 @@ function Update()
 
 
         -- currentBossStateTimer = 0
+    end
+
+    -- Stop Animation 
+    if(this:GetAnimator():IsEndOfAnimation()) then
+        this:GetMeshRenderer():SetMesh("Boss_Idle" , bossEntity)
     end
 
     -- if currentBossStateTimer >= maxBossStateTimer then
@@ -210,12 +223,25 @@ function Update()
                 if(_G.number_of_spawned_in_level_3 +  summon_per_spawn_instance < total_number_of_enemies_to_spawn) then 
                     
                 --    print("NORMAL SUMMON")
+                -- Animate Roar
+                if initial_roar == false then
+                    this:GetMeshRenderer():SetMesh("Boss_Roar", this)
+                    roar_audio:GetAudio():SetPlay(1.0)
+                    initial_roar = true
+                end
+
                 SummonMinions(summon_per_spawn_instance)
                 currentEnemySpawnResetTimer = 0 -- Reset spawn time
 
                 else -- if exceed the total amount. 
                             
                     -- print("SPECIAL SUMMON")
+                    -- Animate Roar
+                    if initial_roar == false then
+                        this:GetMeshRenderer():SetMesh("Boss_Roar", this)
+                        roar_audio:GetAudio():SetPlay(1.0)
+                        initial_roar = true
+                    end
                     SummonMinions(total_number_of_enemies_to_spawn - _G.number_of_spawned_in_level_3)
                     currentEnemySpawnResetTimer = 0 -- Reset spawn time
                 end
@@ -234,6 +260,7 @@ function Update()
                 _G.attacking = false           -- attack done (exit state)
                 PrintAttackingStates()
                 phase_1_timer = 0              -- reset toimer
+                initial_roar = false
             end
 
         end
@@ -640,7 +667,7 @@ end
 function SummonMinions(summon_per_spawn_instance) 
     -- print("Number of Enemies to Summon: " , summon_per_spawn_instance)
 
-    portal_audio:GetAudio():SetPlay(1.0)
+    portal_audio:GetAudio():SetPlay(0.7)
 
    
 
