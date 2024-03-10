@@ -117,6 +117,12 @@ local shotgunShootState = "SHOOTABLE"   -- ["SHOOTABLE" , "COOLDOWN"]
 local machinegunShootState = "SHOOTABLE"
 local gunShot = false
 
+-- M5 Audio Assets (this works idk why)
+local basicGunAudioEnt
+local revolverGunAudioEnt
+local shotGunAudioEnt
+local machineGunAudioEnt
+
 
 -- end gun states
 
@@ -189,6 +195,12 @@ function Alive()
 
     dashAudioEntity = gameStateSys:GetEntity("Dash" )
     dashAudioComp = dashAudioEntity:GetAudio()
+
+    -- Added [3/10] - M5
+    basicGunAudioEnt =  gameStateSys:GetEntity("BasicGun")
+    revolverGunAudioEnt = gameStateSys:GetEntity("RevolverGun")
+    shotGunAudioEnt = gameStateSys:GetEntity("ShotGun")
+    machineGunAudioEnt = gameStateSys:GetEntity("MachineGun")
 
     machineGunAudioEntity = gameStateSys:GetEntity("Machine Gun Shoot (LOOP)" )
     machineGunAudioComp = machineGunAudioEntity:GetAudio()
@@ -725,7 +737,7 @@ function Update()
                     viewVecCam.z=viewVecCam.z *100
 
                     physicsSys:SetVelocity(prefabEntity, viewVecCam)
-                    bulletAudioComp:SetPlay(0.3)
+                    revolverGunAudioEnt:GetAudio():SetPlay(0.4)
 
                     revolverGunTimer = revolverGunTimer + revolverGunCooldown
                     -- print("GUN TIMER:" ,revolverGunTimer)
@@ -746,8 +758,8 @@ function Update()
 
 
                     shotgunShootState = "COOLDOWN"
-
-                    bulletAudioComp:SetPlay(0.3)
+                    shotGunAudioEnt:GetAudio():SetPlay(0.6)
+            
                 end
             end
         end
@@ -796,7 +808,7 @@ function Update()
                 machineGunBullets()
     
                 if(machineGunTimer <= 0) then
-                    bulletAudioComp:SetPlay(0.3)
+                    machineGunAudioEnt:GetAudio():SetPlay(0.6)
                     machineGunTimer = machineGunCooldown  -- Set the cooldown timer
                end
                machineGunTimer = math.max(0, machineGunTimer - dt)  -- deltaTime is the time since the last fra

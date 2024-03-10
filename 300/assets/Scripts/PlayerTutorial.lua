@@ -728,7 +728,7 @@ function Update()
 
                 shotgunShootState = "COOLDOWN"
 
-                bulletAudioComp:SetPlay(0.3)
+                -- bulletAudioComp:SetPlay(0.3)
             end
         end
     end
