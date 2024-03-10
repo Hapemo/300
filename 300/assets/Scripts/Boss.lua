@@ -30,9 +30,17 @@ local maxGroundSlamResetTimer = 3
 local groundSlamCount = 0  -- Changes to other attacking state when it slams a designated amount of time 
 local groundSlamMax = 0
 
+local buffer_time = 0.5
+local roar_slammed_state = "START"
+local roar_anim_timer = 0 -- temp
+local slam_audio_timer = 0
+local delay_slam_audio_time = 2 
+local smashed = false
+
 -- Tentative Random Boss State CHanger
 local currentBossStateTimer = 0
 local maxBossStateTimer = 3
+
 
 -- Phase 3 : Bullethell Phase
 local spiralBulletSpawnerObj
@@ -102,6 +110,8 @@ local player_position = Vec3.new()
 
 -- Audio Stuff
 local portal_audio 
+local roar_slam_audio 
+local boss_slam_audio
 
 function Alive()
     print("ALIVE")
@@ -138,6 +148,8 @@ function Alive()
     -- Audio Stuff
     portal_audio = gameStateSys:GetEntity("SummonPortalAudio")
     roar_audio = gameStateSys:GetEntity("RoarAudio")
+    roar_slam_audio = gameStateSys:GetEntity("RoarSlamAudio")
+    boss_slam_audio = gameStateSys:GetEntity("BossSlamAudio")
 
 
 end
@@ -176,19 +188,30 @@ function Update()
 
         -- currentBossStateTimer = 0
     end
+     -- Stop Animation 
+    -- if(this:GetAnimator():IsEndOfAnimation()) then
+    --     if  roar_slammed_state == "SLAM_AUDIO" then
+    --         boss_slam_audio:GetAudio():SetPlay(1.0)
+    --         roar_slammed_state = "IDLE"
+    --     -- else if roar_slammed_state == "IDLE"
+    --     --     this:GetMeshRenderer():SetMesh("Boss_Idle" , this)
+    --     -- end
+    -- end
 
-    -- Stop Animation 
-    if(this:GetAnimator():IsEndOfAnimation()) then
-        this:GetMeshRenderer():SetMesh("Boss_Idle" , bossEntity)
-    end
+    -- if roar_slammed_state == "IDLE" then
+    --         this:GetMeshRenderer():SetMesh("Boss_Idle" , this)
+    -- end
+
+
+
 
     -- if currentBossStateTimer >= maxBossStateTimer then
      
     -- end
 
     -- Debug States
-    state = 1 --[OK]
-    -- state = 2 -- [OK] -- need to check agn after i check the other mechanics
+    -- state = 1 --[OK]
+    state = 2 -- [OK] -- need to check agn after i check the other mechanics
     -- state = 3 -- [OK]
     -- state = 4 --[OK]
     -- state = 5 -- [OK]
@@ -212,6 +235,7 @@ function Update()
             if (currentEnemySpawnResetTimer >= maxEnemySpawnResetTimer) then
 
                 -- Number of enemies to summon per position
+                
                 if(summon_per_spawn_instance == 0) then 
                     summon_per_spawn_instance = math.random(2,3)
                     -- print("SUMMON PER SPAWN INSTANCE: " , summon_per_spawn_instance)
@@ -266,12 +290,40 @@ function Update()
         end
 
         if state == 2 and _G.state_checker[2] == false then
+            -- if(this:GetAnimator():IsEndOfAnimation()) then
+            if roar_slammed_state == "RS_SLAM" then 
+                roar_anim_timer = roar_anim_timer + FPSManager.GetDT()
+                print("ROAR TIME: " , roar_anim_timer)
+
+                if roar_anim_timer >= 3.5 then 
+                    roar_slammed_state = "SMASH"
+                    roar_anim_timer = 0
+                end
+            end
+
+            if roar_slammed_state == "SMASH" then 
+                if smashed == false then 
+                    this:GetMeshRenderer():SetMesh("Boss_Slam" , this)
+                    print("SMASH")
+                    smashed = true
+                end
+            end
+
+            -- if roar_slammed_state == "SMASH" then 
+            --     -- boss_slam_audio:GetAudio():SetPlay(1.0)
+            --     this:GetMeshRenderer():SetMesh("Boss_Slam" , this)
+            --     roar_slammed_state = "SLAM_AUDIO" -- wait for smash to finish
+            -- end
+
+        
+            --  end
+          
 
             _G.attacking = true -- must include (to stop state choosing)
 
             if groundSlamMax == 0 then 
             
-                groundSlamMax = math.random(3, 5)
+                groundSlamMax = math.random(1,1)
                 -- print("GROUND SLAM MAX: " , groundSlamMax)
             end
             -- Timer to set intervals between ground slams
@@ -281,6 +333,13 @@ function Update()
                 -- print("HI INSIDE HERE")
                 currentGroundSlamResetTimer = currentGroundSlamResetTimer + FPSManager.GetDT()
                 -- print("Current Ground Slam Reset Timer: " , currentGroundSlamResetTimer)
+                if currentGroundSlamResetTimer + buffer_time >= maxGroundSlamResetTimer then 
+                    if roar_slammed_state == "START" then 
+                        roar_audio:GetAudio():SetPlay(1.0)
+                        this:GetMeshRenderer():SetMesh("Boss_Roar", this)
+                        roar_slammed_state = "RS_SLAM"
+                    end
+                end
 
                 if currentGroundSlamResetTimer >= maxGroundSlamResetTimer then
 
@@ -359,10 +418,10 @@ function Update()
             
 
             else 
-                print("DONE SLAM")
-                _G.state_checker[2] = true
-                _G.attacking = false
-                groundSlamMax = 0
+                -- print("DONE SLAM")
+                -- _G.state_checker[2] = true
+                -- _G.attacking = false
+                -- groundSlamMax = 0
             end
 
         end

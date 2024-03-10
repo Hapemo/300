@@ -1,8 +1,8 @@
 [
     {
-        "entityid": 11534661,
+        "entityid": 5243155,
         "general": {
-            "name": "Dash",
+            "name": "RevolverGun",
             "tagid": 0,
             "subtag": 0,
             "isActive": true,
@@ -27,8 +27,8 @@
         },
         "audio": {
             "filepath": "../assets\\Audio",
-            "filename": "dash.wav",
-            "fullpath": "../assets\\Audio/dash.wav",
+            "filename": "Player_Revolver.wav",
+            "fullpath": "../assets\\Audio/Player_Revolver.wav",
             "playonawake": false,
             "islooping": false,
             "audiotype": 1,
@@ -37,7 +37,7 @@
         }
     },
     {
-        "entityid": 11534662,
+        "entityid": 5243202,
         "general": {
             "name": "Boss_Arena_Back_Wall",
             "tagid": 4,
@@ -134,7 +134,7 @@
         }
     },
     {
-        "entityid": 11534663,
+        "entityid": 5243204,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -149,14 +149,14 @@
                 "z": 1.100000023841858
             },
             "rotate": {
-                "x": -180.0,
-                "y": -7.949999809265137,
+                "x": -179.5,
+                "y": -4.449999809265137,
                 "z": 0.0
             },
             "translate": {
-                "x": 72.21148681640625,
-                "y": -0.423367440700531,
-                "z": 8.57457160949707
+                "x": 56.3111457824707,
+                "y": -0.42336738109588623,
+                "z": 10.827869415283203
             }
         },
         "rigidbody": {
@@ -204,7 +204,7 @@
         },
         "children": {
             "numchildren": 1,
-            "firstchild": 11534670
+            "firstchild": 9437507
         },
         "audio": {
             "filepath": "../assets\\Audio",
@@ -218,14 +218,14 @@
         },
         "camera": {
             "positon": {
-                "x": 72.21148681640625,
-                "y": -0.423367440700531,
-                "z": 8.57457160949707
+                "x": 56.3111457824707,
+                "y": -0.42336738109588623,
+                "z": 10.827869415283203
             },
             "target": {
-                "x": 71.22109985351563,
-                "y": -0.28505855798721313,
-                "z": 8.57457160949707
+                "x": 55.3141975402832,
+                "y": -0.34577828645706177,
+                "z": 10.819169044494629
             },
             "size": {
                 "x": 1223,
@@ -260,7 +260,88 @@
         }
     },
     {
-        "entityid": 11534664,
+        "entityid": 5243205,
+        "general": {
+            "name": "Level2FBX",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 150.0,
+                "y": 20.0,
+                "z": 150.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": -1.7548270225524902,
+                "z": 8.72984790802002
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": false,
+                "y": false,
+                "z": false
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 1691893685,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "castShadow": false,
+            "materialinstance": [
+                "../assets/Compressed/Texture_Wall_1x1x1.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Normal.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Metallic.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Roughness.ctexture",
+                "../assets/Compressed/Tutorial_Cube_Emissive.ctexture",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/Level3_WIP.geom",
+            "texturerefid": [
+                600252808,
+                1690869280,
+                1749384838,
+                2264384965,
+                1718410820,
+                0
+            ]
+        },
+        "meshcollider": {
+            "ismeshcollider": true
+        }
+    },
+    {
+        "entityid": 5243206,
         "general": {
             "name": "Boss_Arena_Right_Wall",
             "tagid": 4,
@@ -357,7 +438,7 @@
         }
     },
     {
-        "entityid": 11534665,
+        "entityid": 5243207,
         "general": {
             "name": "Boss_Arena_Front_Wall",
             "tagid": 4,
@@ -454,7 +535,7 @@
         }
     },
     {
-        "entityid": 11534666,
+        "entityid": 5243208,
         "general": {
             "name": "SummonPortalAudio",
             "tagid": 8,
@@ -491,7 +572,7 @@
         }
     },
     {
-        "entityid": 11534667,
+        "entityid": 5243209,
         "general": {
             "name": "Skybox",
             "tagid": 0,
@@ -553,9 +634,9 @@
         }
     },
     {
-        "entityid": 11534668,
+        "entityid": 5243210,
         "general": {
-            "name": "RevolverGun",
+            "name": "RoarSlamAudio",
             "tagid": 0,
             "subtag": 0,
             "isActive": true,
@@ -579,85 +660,18 @@
             }
         },
         "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "Player_Revolver.wav",
-            "fullpath": "../assets\\Audio/Player_Revolver.wav",
+            "filepath": "",
+            "filename": "",
+            "fullpath": "",
             "playonawake": false,
             "islooping": false,
             "audiotype": 1,
-            "volume": 0.4000000059604645,
+            "volume": 1.0,
             "retainaudio": false
         }
     },
     {
-        "entityid": 11534670,
-        "general": {
-            "name": "gun",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 0.0,
-                "z": 0.25
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": -75.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.5,
-                "y": -0.6499999761581421,
-                "z": -0.5471169948577881
-            }
-        },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 2168,
-            "instancecolor": {
-                "x": 0.5,
-                "y": 0.5,
-                "z": 0.5,
-                "w": 1.0
-            },
-            "bloomthreshold": {
-                "x": 0.25,
-                "y": 0.25,
-                "z": 0.25,
-                "w": 1.0
-            },
-            "castShadow": true,
-            "materialinstance": [
-                "../assets/Compressed/Gun_Base_Color.ctexture",
-                "../assets/Compressed/Gun_Normal.ctexture",
-                "../assets/Compressed/Gun_Metallic.ctexture",
-                "../assets/Compressed/Gun_Roughness.ctexture",
-                " ",
-                " "
-            ],
-            "mesh": "../assets/compiled_geom/Gun.geom",
-            "texturerefid": [
-                561120090,
-                236381020,
-                3720350570,
-                2134634497,
-                0,
-                0
-            ]
-        },
-        "parent": {
-            "prevsibling": 11534670,
-            "nextsibling": 11534670,
-            "parent": 11534663
-        }
-    },
-    {
-        "entityid": 11534671,
+        "entityid": 5243211,
         "general": {
             "name": "MachineGun",
             "tagid": 0,
@@ -694,7 +708,7 @@
         }
     },
     {
-        "entityid": 11534672,
+        "entityid": 5243212,
         "general": {
             "name": "BossSlamAudio",
             "tagid": 0,
@@ -731,7 +745,7 @@
         }
     },
     {
-        "entityid": 11534673,
+        "entityid": 5243214,
         "general": {
             "name": "Boss_Arena_Left_Wall",
             "tagid": 4,
@@ -828,7 +842,7 @@
         }
     },
     {
-        "entityid": 11534674,
+        "entityid": 5243215,
         "general": {
             "name": "RoarAudio",
             "tagid": 0,
@@ -865,7 +879,44 @@
         }
     },
     {
-        "entityid": 12583145,
+        "entityid": 5243216,
+        "general": {
+            "name": "ShotGun",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Player_Shotgun.wav",
+            "fullpath": "../assets\\Audio/Player_Shotgun.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 0.6000000238418579,
+            "retainaudio": false
+        }
+    },
+    {
+        "entityid": 5243217,
         "general": {
             "name": "BasicGun",
             "tagid": 0,
@@ -902,90 +953,9 @@
         }
     },
     {
-        "entityid": 13631705,
+        "entityid": 5243218,
         "general": {
-            "name": "Level2FBX",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 150.0,
-                "y": 20.0,
-                "z": 150.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": -1.7548270225524902,
-                "z": 8.72984790802002
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 0,
-            "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": false,
-                "y": false,
-                "z": false
-            },
-            "gravity": true
-        },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 1691893685,
-            "instancecolor": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "bloomthreshold": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "castShadow": false,
-            "materialinstance": [
-                "../assets/Compressed/Texture_Wall_1x1x1.ctexture",
-                "../assets/Compressed/Tutorial_Cube_Normal.ctexture",
-                "../assets/Compressed/Tutorial_Cube_Metallic.ctexture",
-                "../assets/Compressed/Tutorial_Cube_Roughness.ctexture",
-                "../assets/Compressed/Tutorial_Cube_Emissive.ctexture",
-                " "
-            ],
-            "mesh": "../assets/compiled_geom/Level3_WIP.geom",
-            "texturerefid": [
-                600252808,
-                1690869280,
-                1749384838,
-                2264384965,
-                1718410820,
-                0
-            ]
-        },
-        "meshcollider": {
-            "ismeshcollider": true
-        }
-    },
-    {
-        "entityid": 16777427,
-        "general": {
-            "name": "ShotGun",
+            "name": "Dash",
             "tagid": 0,
             "subtag": 0,
             "isActive": true,
@@ -1010,13 +980,241 @@
         },
         "audio": {
             "filepath": "../assets\\Audio",
-            "filename": "Player_Shotgun.wav",
-            "fullpath": "../assets\\Audio/Player_Shotgun.wav",
+            "filename": "dash.wav",
+            "fullpath": "../assets\\Audio/dash.wav",
             "playonawake": false,
             "islooping": false,
             "audiotype": 1,
-            "volume": 0.6000000238418579,
+            "volume": 0.4000000059604645,
             "retainaudio": false
+        }
+    },
+    {
+        "entityid": 9437507,
+        "general": {
+            "name": "gun",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 0.25
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": -75.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.5,
+                "y": -0.6499999761581421,
+                "z": 0.02288454957306385
+            }
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 2168,
+            "instancecolor": {
+                "x": 0.5,
+                "y": 0.5,
+                "z": 0.5,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 0.25,
+                "y": 0.25,
+                "z": 0.25,
+                "w": 1.0
+            },
+            "castShadow": true,
+            "materialinstance": [
+                "../assets/Compressed/Gun_Base_Color.ctexture",
+                "../assets/Compressed/Gun_Normal.ctexture",
+                "../assets/Compressed/Gun_Metallic.ctexture",
+                "../assets/Compressed/Gun_Roughness.ctexture",
+                " ",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/Gun.geom",
+            "texturerefid": [
+                561120090,
+                236381020,
+                3720350570,
+                2134634497,
+                0,
+                0
+            ]
+        },
+        "parent": {
+            "prevsibling": 9437507,
+            "nextsibling": 9437507,
+            "parent": 5243204
+        }
+    },
+    {
+        "entityid": 14680281,
+        "general": {
+            "name": "Pistol Bullet",
+            "tagid": 9,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.5,
+                "y": 0.5,
+                "z": 0.5
+            },
+            "rotate": {
+                "x": -0.9969482421875,
+                "y": -0.0,
+                "z": 3.1415929794311523
+            },
+            "translate": {
+                "x": 45.01240539550781,
+                "y": 0.455975741147995,
+                "z": 10.729265213012695
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 1,
+            "velocity": {
+                "x": -99.69482421875,
+                "y": 7.758909225463867,
+                "z": -0.8700370788574219
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": false,
+                "z": false
+            },
+            "gravity": false
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 2285,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "castShadow": true,
+            "materialinstance": [
+                "../assets/Compressed/Cube_Texture_White.ctexture",
+                "../assets/Compressed/Cube_Texture_White_Normal.ctexture",
+                " ",
+                " ",
+                "../assets/Compressed/cube_emission.ctexture",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/cube.geom",
+            "texturerefid": [
+                2075419717,
+                1949753341,
+                0,
+                0,
+                3806423867,
+                0
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": true
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/Bullet.lua",
+                    "variables": [
+                        {
+                            "key": "direction",
+                            "val": {
+                                "type": -655306154,
+                                "value": {
+                                    "x": 10.0,
+                                    "y": 0.0,
+                                    "z": 0.0
+                                }
+                            }
+                        },
+                        {
+                            "key": "movement",
+                            "val": {
+                                "type": -655306154,
+                                "value": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0
+                                }
+                            }
+                        },
+                        {
+                            "key": "positions",
+                            "val": {
+                                "type": -655306154,
+                                "value": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0
+                                }
+                            }
+                        },
+                        {
+                            "key": "spawn",
+                            "val": {
+                                "type": -1129103353,
+                                "value": true
+                            }
+                        },
+                        {
+                            "key": "timer",
+                            "val": {
+                                "type": 694561268,
+                                "value": 0.0
+                            }
+                        },
+                        {
+                            "key": "viewVec",
+                            "val": {
+                                "type": -655306154,
+                                "value": {
+                                    "x": 0.0,
+                                    "y": 1.0,
+                                    "z": 0.0
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        "prefab": {
+            "prefab": "Pistol Bullet"
         }
     }
 ]
