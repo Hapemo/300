@@ -1,41 +1,6 @@
 [
     {
-        "entityid": 5242884,
-        "general": {
-            "name": "Level2ControllerBoss",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/Level2BossSceneController.lua",
-                    "variables": []
-                }
-            ]
-        }
-    },
-    {
-        "entityid": 5242886,
+        "entityid": 1048588,
         "general": {
             "name": "Level2Boss",
             "tagid": 1,
@@ -151,11 +116,46 @@
                 "y": 0.0,
                 "z": 0.0
             },
-            "maxhealth": 20.0,
+            "maxhealth": 60.0,
             "width": 0.0,
             "height": 0.0,
             "frametexture": 0,
             "healthtexture": 0
+        }
+    },
+    {
+        "entityid": 1048589,
+        "general": {
+            "name": "Level2ControllerBoss",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/Level2BossSceneController.lua",
+                    "variables": []
+                }
+            ]
         }
     }
 ]
