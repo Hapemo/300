@@ -29,12 +29,17 @@ local initonce
 
 local graphicsSys
 
+local ani_timer
 
 local playtimer =0
-local playlimit = 1.5
+local playlimit = 5
+
+local idle_timer = 0
+
 function Alive()
     initonce =false
     graphicsSys = systemManager:mGraphicsSystem()
+    idle_timer = 0
 end
 
 function Update()
@@ -42,6 +47,8 @@ function Update()
     bossEntity = gameStateSys:GetEntity("BossLevel2")
     
     if STATE == 0 then
+        bossEntity:GetAnimator():SetFrame(0.0) -- intialize initial position
+        bossEntity:GetAnimator():PauseAnimation()
         if firstTrigger == false then
             firstTrigger = true
             _G.FreezePlayerControl = true
@@ -66,11 +73,17 @@ function Update()
             end
         else
             quaking = 0
-
             STATE = 1
         end
 
-    elseif STATE == 1 then  
+    elseif STATE == 1 then
+        bossEntity:GetAnimator():UnpauseAnimation()
+        print(bossEntity:GetAnimator():GetFrame() * FPSManager.GetDT())
+        if(bossEntity:GetAnimator():GetFrame() >= 140.0) then
+            print("i've entered here")
+            bossEntity:GetMeshRenderer():SetMesh("Boss_Idle", bossEntity)
+        end
+
         graphicsSys:IgnoreUIScene("UI")
         graphicsSys:IgnoreUIScene("Objectives")
 
@@ -82,9 +95,9 @@ function Update()
         cameraEntity:GetTransform().mTranslate.x = savedpos.x
         cameraEntity:GetTransform().mTranslate.y = savedpos.y
         cameraEntity:GetTransform().mTranslate.z = savedpos.z
-        -- bossEntity:GetTransform().mTranslate.x = savedbosspos.x
-        -- bossEntity:GetTransform().mTranslate.y = savedbosspos.y
-        -- bossEntity:GetTransform().mTranslate.z = savedbosspos.z
+        bossEntity:GetTransform().mTranslate.x = savedbosspos.x
+        bossEntity:GetTransform().mTranslate.y = savedbosspos.y
+        bossEntity:GetTransform().mTranslate.z = savedbosspos.z
         if(quaking<=QuakeLimit2)then
             quaking = quaking+FPSManager.GetDT()
             Quakeintervalcd= Quakeintervalcd+FPSManager.GetDT()
@@ -103,8 +116,9 @@ function Update()
             Camera_Scripting.SetFov(cameraEntity,fov)
         end
 
-        if MoveTo(bossEntity, savedbosspos,2050) == false then
-                playtimer= playtimer +FPSManager.GetDT()
+        --if MoveTo(bossEntity, savedbosspos, 10000) == false then
+            playtimer= playtimer +FPSManager.GetDT()
+
             if(playtimer >= playlimit)then
                 if initonce == false then
                     initonce = true
@@ -121,7 +135,7 @@ function Update()
                 end
             end
             
-        end
+        --end
 
     end
 

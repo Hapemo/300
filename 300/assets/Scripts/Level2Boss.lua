@@ -32,6 +32,7 @@ function Update()
     if STATE == 0 then
         attacktimer = attacktimer + FPSManager.GetDT()
         if attacktimer > attackinterval then
+            -- play roar
             quaketimer= quaketimer+FPSManager.GetDT()
             if(quaketimer <1)then
                     cameraEntity:GetTransform().mRotate.x = cameraEntity:GetTransform().mRotate.x+math.random(magnitude.x,magnitude.y)

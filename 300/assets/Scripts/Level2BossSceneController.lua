@@ -6,7 +6,7 @@ local savedbosspos = Vec3.new(0,33.0,-39)
 local savedrotate = Vec3.new(270,-1.5,72)
 local savedplayerrotate = Vec3.new(0,0,0)
 
-local STATE =  -1 ------------------------------------ CHANGE THIS FOR INTRO---------------------------------------------
+local STATE =  0 ------------------------------------ CHANGE THIS FOR INTRO---------------------------------------------
 local firstTrigger = false
 local bossEntity
 local cameraEntity
@@ -55,9 +55,9 @@ function Update()
     end
 
     if STATE == 0 then
+        -- need to pause animation and initialize
         if firstTrigger == false then
             firstTrigger = true
-
 
             _G.FreezePlayerControl = true
             savedplayerrotate.x = cameraEntity:GetTransform().mRotate.x
@@ -85,7 +85,8 @@ function Update()
             STATE = 1
         end
 
-    elseif STATE == 1 then  
+    elseif STATE == 1 then
+        -- boss intro fbx
         graphicsSys:IgnoreUIScene("UI")
         graphicsSys:IgnoreUIScene("Objectives2")
         gunEntity:GetTransform().mScale.y =0
@@ -154,6 +155,7 @@ function Update()
 
 
     if STATE == 3 then
+        -- boss death
         graphicsSys:IgnoreUIScene("Objectives2")
 
         graphicsSys:IgnoreUIScene("UI")
