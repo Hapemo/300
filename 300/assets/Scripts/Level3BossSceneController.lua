@@ -38,8 +38,20 @@ local magnitude = Vec2.new(-1.0,1.0)
 local magfloat = 0.5
 local initonce
 
-
 local roared = false
+
+-- Audio Stuff 
+local hand_slam_audio
+local roar_audio
+
+-- Trying match audio with animation
+local hand_slam_timer = 0
+local hand_slam_anim_1_time = 2.0 
+local hand_slam_anim_2_time = 3.0
+local roar_time = 4.0
+local hand_slammed_1 = false
+local hand_slammed_2 = false
+local audio_roared = false
 
 local graphicsSys
 function Alive()
@@ -48,9 +60,10 @@ function Alive()
     cameraEntity = gameStateSys:GetEntity("Camera")
     gunEntity = gameStateSys:GetEntity("gun")
     bossEntity = gameStateSys:GetEntity("Boss")
+    hand_slam_audio = gameStateSys:GetEntity("BossSlamAudio")
+    roar_audio = gameStateSys:GetEntity("RoarAudio")
 
     graphicsSys = systemManager:mGraphicsSystem()
-
 
     _G.FreezePlayerControl = true
     gunEntity:GetTransform().mScale.y =0
@@ -63,13 +76,41 @@ function Update()
     cameraEntity = gameStateSys:GetEntity("Camera")
     gunEntity = gameStateSys:GetEntity("gun")
     bossEntity = gameStateSys:GetEntity("Boss")
+
     
+    hand_slam_timer = hand_slam_timer + FPSManager.GetDT()
+
+    if(hand_slam_timer > hand_slam_anim_1_time) then 
+        if hand_slammed_1 == false then 
+            hand_slam_audio:GetAudio():SetPlay(1.0)
+            hand_slammed_1 = true
+        end
+    end
+
+    if(hand_slam_timer > hand_slam_anim_2_time) then 
+        if hand_slammed_2 == false then 
+            hand_slam_audio:GetAudio():SetPlay(1.0)
+            hand_slammed_2 = true
+        end
+    end
+
+    if(hand_slam_timer > roar_time) then 
+        if audio_roared  == false then 
+            roar_audio:GetAudio():SetPlay(1.0)
+            audio_roared = true
+        end
+    end
+
+
+
     if(bossEntity:GetAnimator():IsEndOfAnimation()) then
         
         -- print("ANIMATION DONE")
         if roared == false then 
             bossEntity:GetMeshRenderer():SetMesh("Boss_Roar" , bossEntity)
             roared = true
+        else 
+            bossEntity:GetMeshRenderer():SetMesh("Boss_Idle" , bossEntity)
         end
     end
 

@@ -589,8 +589,8 @@ struct Audio : public Serializable
 
 	void SetPlay(/*float vol = 1.0f*/)
 	{
-		std::cout << mFullPath << std::endl;
-		std::cout << mState << mNextActionState << std::endl;
+		/*std::cout << mFullPath << std::endl;
+		std::cout << mState << mNextActionState << std::endl;*/
 
 
 		mNextActionState = STATE::SET_TO_PLAY;	
