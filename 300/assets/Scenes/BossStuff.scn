@@ -1,18 +1,18 @@
 [
     {
-        "entityid": 7340052,
+        "entityid": 8388816,
         "general": {
-            "name": "Out_Of_Bounds_Right_Thumb",
-            "tagid": 4,
+            "name": "Boss_HitBox_Left_Horn",
+            "tagid": 14,
             "subtag": 0,
             "isActive": true,
             "isPaused": false
         },
         "transform": {
             "scale": {
-                "x": 4.96999979019165,
-                "y": 7.947742938995361,
-                "z": 8.869999885559082
+                "x": 3.7100000381469727,
+                "y": 17.197999954223633,
+                "z": 5.579999923706055
             },
             "rotate": {
                 "x": 0.0,
@@ -20,9 +20,9 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 21.616165161132813,
-                "y": -5.353341102600098,
-                "z": 1.6165862083435059
+                "x": -7.51954303268576e-7,
+                "y": 13.900795936584473,
+                "z": 17.20270538330078
             }
         },
         "rigidbody": {
@@ -62,19 +62,19 @@
         }
     },
     {
-        "entityid": 7340053,
+        "entityid": 9437350,
         "general": {
-            "name": "Out_Of_Bounds_Left_Thumb",
-            "tagid": 4,
+            "name": "Boss_HitBox_Right_Horn",
+            "tagid": 14,
             "subtag": 0,
             "isActive": true,
             "isPaused": false
         },
         "transform": {
             "scale": {
-                "x": 4.96999979019165,
-                "y": 7.94782829284668,
-                "z": 8.869999885559082
+                "x": 4.429999828338623,
+                "y": 19.097999572753906,
+                "z": 10.65999984741211
             },
             "rotate": {
                 "x": 0.0,
@@ -82,71 +82,9 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 22.482486724853516,
-                "y": -3.950303077697754,
-                "z": 15.543195724487305
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 0,
-            "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": false,
-                "y": false,
-                "z": false
-            },
-            "gravity": false
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 0.8199999928474426,
-                "z": 1.0
-            },
-            "translateoffset": {
-                "x": 0.0,
-                "y": 6.570000171661377,
-                "z": 0.0
-            },
-            "istrigger": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Out_Of_Bounds_Left_Thumb"
-        }
-    },
-    {
-        "entityid": 7340054,
-        "general": {
-            "name": "Out_Of_Bounds_Right_Hand",
-            "tagid": 4,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 15.3100004196167,
-                "y": 9.118339538574219,
-                "z": 21.520000457763672
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": -90.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 25.158857345581055,
-                "y": -5.170000076293945,
-                "z": -4.344974040985107
+                "x": -0.8199999928474426,
+                "y": 16.858478546142578,
+                "z": 1.3200000524520874
             }
         },
         "rigidbody": {
@@ -186,89 +124,220 @@
         }
     },
     {
-        "entityid": 7340055,
+        "entityid": 9437389,
         "general": {
-            "name": "Spawn_Point_Ref",
-            "tagid": 1,
+            "name": "Boss_Hitbox_Body_Head",
+            "tagid": 14,
             "subtag": 0,
             "isActive": true,
             "isPaused": false
         },
         "transform": {
             "scale": {
-                "x": 3.0,
-                "y": 3.0,
-                "z": 3.0
+                "x": 12.829999923706055,
+                "y": 37.63800048828125,
+                "z": 11.270000457763672
             },
             "rotate": {
-                "x": 2.856468915939331,
-                "y": -1.3754568099975586,
-                "z": 0.2807457447052002
+                "x": 0.0,
+                "y": -90.0,
+                "z": 0.0
             },
             "translate": {
-                "x": 12.322985649108887,
-                "y": 15.56225872039795,
-                "z": 9.885177612304688
+                "x": -1.815000057220459,
+                "y": 1.9600000381469727,
+                "z": 10.409000396728516
             }
         },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 3400,
-            "instancecolor": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "bloomthreshold": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "castShadow": true,
-            "materialinstance": [
-                "../assets/Compressed/UI-Yellow-s3&321.ctexture",
-                "../assets/Compressed/UI-Yellow-s3&321.ctexture",
-                " ",
-                " ",
-                " ",
-                " "
-            ],
-            "mesh": "../assets/compiled_geom/Particle_Sphere.geom",
-            "texturerefid": [
-                1240881460,
-                1240881460,
-                0,
-                0,
-                0,
-                0
-            ]
-        },
-        "spherecollider": {
-            "scaleoffset": 1.0,
-            "translateoffset": {
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
                 "x": 0.0,
                 "y": 0.0,
                 "z": 0.0
             },
-            "istrigger": true
+            "rotationconstraints": {
+                "x": false,
+                "y": false,
+                "z": false
+            },
+            "gravity": false
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 0.8199999928474426,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 6.570000171661377,
+                "z": 0.0
+            },
+            "istrigger": false
         },
         "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/BossBullet.lua",
-                    "variables": []
-                }
-            ]
+            "scriptscontainer": []
         },
         "prefab": {
-            "prefab": "Boss_Bullet"
+            "prefab": "Out_Of_Bounds_Boss"
         }
     },
     {
-        "entityid": 7340056,
+        "entityid": 9437390,
+        "general": {
+            "name": "Out_Of_Bounds_Left_Hand_1",
+            "tagid": 4,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 11.960000038146973,
+                "y": 9.118424415588379,
+                "z": 21.459999084472656
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": -90.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 25.799999237060547,
+                "y": -4.956158638000488,
+                "z": 24.15999984741211
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": false,
+                "y": false,
+                "z": false
+            },
+            "gravity": false
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 0.8199999928474426,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 6.570000171661377,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Out_Of_Bounds_Left_Hand"
+        }
+    },
+    {
+        "entityid": 9437391,
+        "general": {
+            "name": "Spiral_Bullet_Spawn",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 7.848718643188477,
+                "y": 0.0,
+                "z": 12.419782638549805
+            }
+        }
+    },
+    {
+        "entityid": 9437393,
+        "general": {
+            "name": "Out_Of_Bounds_Boss_Body",
+            "tagid": 4,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 34.599998474121094,
+                "y": 9.118459701538086,
+                "z": 39.189998626708984
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": -90.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.18000000715255737,
+                "y": -4.2125115394592285,
+                "z": 8.34000015258789
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": false,
+                "y": false,
+                "z": false
+            },
+            "gravity": false
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 0.8199999928474426,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 6.570000171661377,
+                "z": 0.0
+            },
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Out_Of_Bounds_Boss"
+        }
+    },
+    {
+        "entityid": 9437400,
         "general": {
             "name": "Boss",
             "tagid": 1,
@@ -365,98 +434,56 @@
         }
     },
     {
-        "entityid": 7340057,
+        "entityid": 9437401,
         "general": {
-            "name": "Out_Of_Bounds_Boss_Body",
-            "tagid": 4,
+            "name": "Spawn_Point_Ref",
+            "tagid": 1,
             "subtag": 0,
             "isActive": true,
             "isPaused": false
         },
         "transform": {
             "scale": {
-                "x": 34.599998474121094,
-                "y": 9.118459701538086,
-                "z": 39.189998626708984
+                "x": 3.0,
+                "y": 3.0,
+                "z": 3.0
             },
             "rotate": {
-                "x": 0.0,
-                "y": -90.0,
-                "z": 0.0
+                "x": 2.856468915939331,
+                "y": -1.3754568099975586,
+                "z": 0.2807457447052002
             },
             "translate": {
-                "x": 0.18000000715255737,
-                "y": -4.2125115394592285,
-                "z": 8.34000015258789
+                "x": 12.322985649108887,
+                "y": 15.56225872039795,
+                "z": 9.885177612304688
             }
         },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 0,
-            "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": false,
-                "y": false,
-                "z": false
-            },
-            "gravity": false
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 0.8199999928474426,
-                "z": 1.0
-            },
+        "spherecollider": {
+            "scaleoffset": 1.0,
             "translateoffset": {
                 "x": 0.0,
-                "y": 6.570000171661377,
+                "y": 0.0,
                 "z": 0.0
             },
-            "istrigger": false
+            "istrigger": true
         },
         "scripts": {
-            "scriptscontainer": []
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/BossBullet.lua",
+                    "variables": []
+                }
+            ]
         },
         "prefab": {
-            "prefab": "Out_Of_Bounds_Boss"
+            "prefab": "Boss_Bullet"
         }
     },
     {
-        "entityid": 7340058,
+        "entityid": 9437402,
         "general": {
-            "name": "Spiral_Bullet_Spawn",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 7.848718643188477,
-                "y": 0.0,
-                "z": 12.419782638549805
-            }
-        }
-    },
-    {
-        "entityid": 7340059,
-        "general": {
-            "name": "Out_Of_Bounds_Left_Hand_1",
+            "name": "Out_Of_Bounds_Right_Hand",
             "tagid": 4,
             "subtag": 0,
             "isActive": true,
@@ -464,9 +491,9 @@
         },
         "transform": {
             "scale": {
-                "x": 11.960000038146973,
-                "y": 9.118424415588379,
-                "z": 21.459999084472656
+                "x": 15.3100004196167,
+                "y": 9.118339538574219,
+                "z": 21.520000457763672
             },
             "rotate": {
                 "x": 0.0,
@@ -474,9 +501,9 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 25.799999237060547,
-                "y": -4.956158638000488,
-                "z": 24.15999984741211
+                "x": 25.158857345581055,
+                "y": -5.170000076293945,
+                "z": -4.344974040985107
             }
         },
         "rigidbody": {
@@ -516,19 +543,19 @@
         }
     },
     {
-        "entityid": 7340060,
+        "entityid": 9437404,
         "general": {
-            "name": "Boss_Hitbox_Body_Head",
-            "tagid": 14,
+            "name": "Out_Of_Bounds_Left_Thumb",
+            "tagid": 4,
             "subtag": 0,
             "isActive": true,
             "isPaused": false
         },
         "transform": {
             "scale": {
-                "x": 12.829999923706055,
-                "y": 37.63800048828125,
-                "z": 11.270000457763672
+                "x": 4.96999979019165,
+                "y": 7.94782829284668,
+                "z": 8.869999885559082
             },
             "rotate": {
                 "x": 0.0,
@@ -536,9 +563,9 @@
                 "z": 0.0
             },
             "translate": {
-                "x": -1.815000057220459,
-                "y": 1.9600000381469727,
-                "z": 10.409000396728516
+                "x": 22.482486724853516,
+                "y": -3.950303077697754,
+                "z": 15.543195724487305
             }
         },
         "rigidbody": {
@@ -574,23 +601,23 @@
             "scriptscontainer": []
         },
         "prefab": {
-            "prefab": "Out_Of_Bounds_Boss"
+            "prefab": "Out_Of_Bounds_Left_Thumb"
         }
     },
     {
-        "entityid": 7340061,
+        "entityid": 9437405,
         "general": {
-            "name": "Boss_HitBox_Right_Horn",
-            "tagid": 14,
+            "name": "Out_Of_Bounds_Right_Thumb",
+            "tagid": 4,
             "subtag": 0,
             "isActive": true,
             "isPaused": false
         },
         "transform": {
             "scale": {
-                "x": 4.429999828338623,
-                "y": 19.097999572753906,
-                "z": 10.65999984741211
+                "x": 4.96999979019165,
+                "y": 7.947742938995361,
+                "z": 8.869999885559082
             },
             "rotate": {
                 "x": 0.0,
@@ -598,71 +625,9 @@
                 "z": 0.0
             },
             "translate": {
-                "x": -0.8199999928474426,
-                "y": 16.858478546142578,
-                "z": 1.3200000524520874
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 0,
-            "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": false,
-                "y": false,
-                "z": false
-            },
-            "gravity": false
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 0.8199999928474426,
-                "z": 1.0
-            },
-            "translateoffset": {
-                "x": 0.0,
-                "y": 6.570000171661377,
-                "z": 0.0
-            },
-            "istrigger": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Out_Of_Bounds_Left_Hand"
-        }
-    },
-    {
-        "entityid": 7340062,
-        "general": {
-            "name": "Boss_HitBox_Left_Horn",
-            "tagid": 14,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 3.7100000381469727,
-                "y": 17.197999954223633,
-                "z": 5.579999923706055
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": -90.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -7.51954303268576e-7,
-                "y": 13.900795936584473,
-                "z": 17.20270538330078
+                "x": 21.616165161132813,
+                "y": -5.353341102600098,
+                "z": 1.6165862083435059
             }
         },
         "rigidbody": {
