@@ -57,8 +57,8 @@ function Update()
     gunEntity = gameStateSys:GetEntity("gun")
 
     --bossEntity:GetAnimator():PauseAnimation()
-    print("state: ", STATE)
-    print("boolean: ", isfightingboss)
+    -- print("state: ", STATE)
+    -- print("boolean: ", isfightingboss)
 
     if(STATE == -1) then
         if(isfightingboss == false) then
