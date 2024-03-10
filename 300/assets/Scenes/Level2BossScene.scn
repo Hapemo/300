@@ -1,41 +1,6 @@
 [
     {
-        "entityid": 6291762,
-        "general": {
-            "name": "Level2ControllerBoss",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/Level2BossSceneController.lua",
-                    "variables": []
-                }
-            ]
-        }
-    },
-    {
-        "entityid": 6291763,
+        "entityid": 66060478,
         "general": {
             "name": "Level2Boss",
             "tagid": 1,
@@ -56,8 +21,8 @@
             },
             "translate": {
                 "x": 0.0,
-                "y": 32.356781005859375,
-                "z": -39.0
+                "y": 30.0,
+                "z": -42.599998474121094
             }
         },
         "rigidbody": {
@@ -79,7 +44,7 @@
         "meshrenderer": {
             "vert": "../assets/shader_files/pointLight_vert.glsl",
             "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 3987251140,
+            "meshrefid": 500282633,
             "instancecolor": {
                 "x": 1.0,
                 "y": 1.0,
@@ -101,7 +66,7 @@
                 "../assets/Compressed/Melissa_Emissive.ctexture",
                 " "
             ],
-            "mesh": "../assets/compiled_geom/Boss.geom",
+            "mesh": "../assets/compiled_geom/Boss_Intro.geom",
             "texturerefid": [
                 1322168031,
                 0,
@@ -111,6 +76,7 @@
                 0
             ]
         },
+        "animator": {},
         "boxcollider": {
             "scaleoffset": {
                 "x": 0.7799999713897705,
@@ -155,6 +121,41 @@
             "height": 0.0,
             "frametexture": 0,
             "healthtexture": 0
+        }
+    },
+    {
+        "entityid": 75497702,
+        "general": {
+            "name": "Level2ControllerBoss",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/Level2BossSceneController.lua",
+                    "variables": []
+                }
+            ]
         }
     }
 ]

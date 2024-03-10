@@ -165,8 +165,8 @@ struct Animator
 	GFX::Animator	mAnimator;
 
 	void Inspect();
-	void PauseAnimation() { mAnimator.mIsPaused = true; }
-	void UnpauseAnimation() { mAnimator.mIsPaused = false; }
+	void PauseAnimation() { mAnimator.mIsPaused = true; std::cout << "pause boolean: " << mAnimator.mIsPaused << std::endl; }
+	void UnpauseAnimation() { mAnimator.mIsPaused = false; std::cout << "unpause boolean: " << mAnimator.mIsPaused << std::endl; }
 	void SetFrame(float frame) { mAnimator.m_CurrentTime = frame; }
 	float GetFrame() { return mAnimator.m_CurrentTime; }
 	bool IsEndOfAnimation();

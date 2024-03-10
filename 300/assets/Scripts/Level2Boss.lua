@@ -33,6 +33,7 @@ function Update()
         attacktimer = attacktimer + FPSManager.GetDT()
         if attacktimer > attackinterval then
             -- play roar
+            --bossEntity:GetMeshRenderer():SetMesh("Boss_Roar", bossEntity)
             quaketimer= quaketimer+FPSManager.GetDT()
             if(quaketimer <1)then
                     cameraEntity:GetTransform().mRotate.x = cameraEntity:GetTransform().mRotate.x+math.random(magnitude.x,magnitude.y)

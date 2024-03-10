@@ -34,17 +34,16 @@ local ani_timer
 local playtimer =0
 local playlimit = 5
 
-local idle_timer = 0
-
 function Alive()
     initonce =false
     graphicsSys = systemManager:mGraphicsSystem()
-    idle_timer = 0
 end
 
 function Update()
     cameraEntity = gameStateSys:GetEntity("Camera")
     bossEntity = gameStateSys:GetEntity("BossLevel2")
+
+    --print("current frame: ", bossEntity:GetAnimator():GetFrame())
     
     if STATE == 0 then
         bossEntity:GetAnimator():SetFrame(0.0) -- intialize initial position
@@ -78,11 +77,6 @@ function Update()
 
     elseif STATE == 1 then
         bossEntity:GetAnimator():UnpauseAnimation()
-        print(bossEntity:GetAnimator():GetFrame() * FPSManager.GetDT())
-        if(bossEntity:GetAnimator():GetFrame() >= 140.0) then
-            print("i've entered here")
-            bossEntity:GetMeshRenderer():SetMesh("Boss_Idle", bossEntity)
-        end
 
         graphicsSys:IgnoreUIScene("UI")
         graphicsSys:IgnoreUIScene("Objectives")
@@ -160,6 +154,14 @@ end
 
 function OnContactExit(Entity)
 
+end
+
+function DialogueUpdate()
+    --print("current frame: ", bossEntity:GetAnimator():GetFrame())
+    if(bossEntity:GetAnimator():IsEndOfAnimation()) then
+        --print("i've entered here")
+        bossEntity:GetMeshRenderer():SetMesh("Boss_Idle", bossEntity)
+    end
 end
 
 function MoveTo(entity, targetPos, speed)

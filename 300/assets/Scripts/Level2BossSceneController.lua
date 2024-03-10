@@ -2,9 +2,11 @@ local fov = 45
 
 local savedpos = Vec3.new(-1.6,33.4,58.7)
 local savedplayerpos = Vec3.new(-1.1,-2.1,-16.3)
-local savedbosspos = Vec3.new(0,33.0,-39)
+local savedbosspos = Vec3.new(0,30,-42.6)
 local savedrotate = Vec3.new(270,-1.5,72)
 local savedplayerrotate = Vec3.new(0,0,0)
+
+local deadbosspos = Vec3.new(0, -30, -42.6)
 
 local STATE =  0 ------------------------------------ CHANGE THIS FOR INTRO---------------------------------------------
 local firstTrigger = false
@@ -35,6 +37,10 @@ local inittwice
 local runtimer = 0
 local runtimerover = 3
 
+local looper = 0
+local loop3r = 0
+local loober = 0
+
 local graphicsSys
 function Alive()
     initonce =false
@@ -47,8 +53,18 @@ function Update()
     bossEntity = gameStateSys:GetEntity("Level2Boss")
     gunEntity = gameStateSys:GetEntity("gun")
 
+    print("state: ", STATE)
 
     if(STATE == -1)then
+        
+        if(looper == 0) then
+            bossEntity:GetMeshRenderer():SetMesh("Boss_Roar", bossEntity)
+            looper = 1
+        elseif(looper == 1) then
+            if(bossEntity:GetAnimator():IsEndOfAnimation()) then
+                looper = 0
+            end
+        end
         if bossEntity:GetHealthbar().health <= 0 then
             STATE = 3
         end
@@ -56,6 +72,11 @@ function Update()
 
     if STATE == 0 then
         -- need to pause animation and initialize
+        bossEntity:GetAnimator():SetFrame(0.0) -- intialize initial position
+        bossEntity:GetAnimator():PauseAnimation()
+        bossEntity:GetTransform().mTranslate.x = savedbosspos.x
+        bossEntity:GetTransform().mTranslate.y = -savedbosspos.y
+        bossEntity:GetTransform().mTranslate.z = savedbosspos.z
         if firstTrigger == false then
             firstTrigger = true
 
@@ -87,6 +108,8 @@ function Update()
 
     elseif STATE == 1 then
         -- boss intro fbx
+        bossEntity:GetAnimator():UnpauseAnimation()
+
         graphicsSys:IgnoreUIScene("UI")
         graphicsSys:IgnoreUIScene("Objectives2")
         gunEntity:GetTransform().mScale.y =0
@@ -98,9 +121,16 @@ function Update()
         cameraEntity:GetTransform().mTranslate.x = savedpos.x
         cameraEntity:GetTransform().mTranslate.y = savedpos.y
         cameraEntity:GetTransform().mTranslate.z = savedpos.z
-        bossEntity:GetTransform().mTranslate.x = savedbosspos.x
-        bossEntity:GetTransform().mTranslate.y = savedbosspos.y
-        bossEntity:GetTransform().mTranslate.z = savedbosspos.z
+        
+        if(bossEntity:GetAnimator():GetFrame() < 30.0) then
+            bossEntity:GetTransform().mTranslate.x = savedbosspos.x
+            bossEntity:GetTransform().mTranslate.y = -savedbosspos.y
+            bossEntity:GetTransform().mTranslate.z = savedbosspos.z
+        elseif(bossEntity:GetAnimator():GetFrame() >= 30.0) then
+            bossEntity:GetTransform().mTranslate.x = savedbosspos.x
+            bossEntity:GetTransform().mTranslate.y = savedbosspos.y
+            bossEntity:GetTransform().mTranslate.z = savedbosspos.z
+        end
 
         if(quaking<=QuakeLimit2)then
             quaking = quaking+FPSManager.GetDT()
@@ -112,19 +142,27 @@ function Update()
                 Quakeintervalcd = 0
 
             end
-            -- quakinterv = quakinterv+0.0004
-
+            --quakinterv = quakinterv+0.0004
         end
 
         if( fov > 35)then
             fov = fov - 0.05
             Camera_Scripting.SetFov(cameraEntity,fov)
         else
-            STATE =2
+            if(bossEntity:GetAnimator():IsEndOfAnimation()) then
+                STATE = 2
+            end
         end
     
     elseif STATE == 2 then
-
+        if(looper == 0) then
+            bossEntity:GetMeshRenderer():SetMesh("Boss_Roar", bossEntity)
+            looper = 1
+        elseif(looper == 1) then
+            if(bossEntity:GetAnimator():IsEndOfAnimation()) then
+                looper = 0
+            end
+        end
         cameraEntity:GetTransform().mTranslate.x = savedplayerpos.x  
         cameraEntity:GetTransform().mTranslate.y = savedplayerpos.y 
         cameraEntity:GetTransform().mTranslate.z = savedplayerpos.z
@@ -152,10 +190,21 @@ function Update()
         end
     end
 
-
-
     if STATE == 3 then
-        -- boss death
+        if(loop3r == 0) then
+            bossEntity:GetMeshRenderer():SetMesh("Boss_Death", bossEntity)
+            loop3r = 1
+        elseif(loop3r == 1) then
+            if(bossEntity:GetAnimator():GetFrame() >= 52.0) then
+                bossEntity:GetTransform().mTranslate.x = deadbosspos.x
+                bossEntity:GetTransform().mTranslate.y = deadbosspos.y
+                bossEntity:GetTransform().mTranslate.z = deadbosspos.z
+            end
+
+            if(bossEntity:GetAnimator():IsEndOfAnimation()) then
+                bossEntity:GetAnimator():PauseAnimation()
+            end
+        end
         graphicsSys:IgnoreUIScene("Objectives2")
 
         graphicsSys:IgnoreUIScene("UI")
@@ -217,6 +266,12 @@ function Update()
 
     end
 
+    if(STATE == 4) then
+        bossEntity:GetTransform().mTranslate.x = deadbosspos.x
+        bossEntity:GetTransform().mTranslate.y = deadbosspos.y
+        bossEntity:GetTransform().mTranslate.z = deadbosspos.z
+    end
+
 end
 
 function Dead()
@@ -239,6 +294,13 @@ function OnContactExit(Entity)
 
 end
 
+function DialogueUpdate()
+    --print("current frame: ", bossEntity:GetAnimator():GetFrame())
+    if(bossEntity:GetAnimator():IsEndOfAnimation()) then
+        --print("i've entered here")
+        bossEntity:GetMeshRenderer():SetMesh("Boss_Roar", bossEntity)
+    end
+end
 
 function StartBoss()
     STATE = 0

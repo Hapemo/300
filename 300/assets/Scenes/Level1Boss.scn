@@ -1,41 +1,6 @@
 [
     {
-        "entityid": 333,
-        "general": {
-            "name": "Level2BossScene",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/Level1BossSceneController.lua",
-                    "variables": []
-                }
-            ]
-        }
-    },
-    {
-        "entityid": 334,
+        "entityid": 3146043,
         "general": {
             "name": "BossLevel2",
             "tagid": 1,
@@ -55,9 +20,9 @@
                 "z": 0.0
             },
             "translate": {
-                "x": -7.511196136474609,
-                "y": -37.69255065917969,
-                "z": -95.85498809814453
+                "x": -4.199999809265137,
+                "y": 10.0,
+                "z": -28.600000381469727
             }
         },
         "rigidbody": {
@@ -174,6 +139,41 @@
             "height": 0.07000000029802322,
             "frametexture": 0,
             "healthtexture": 0
+        }
+    },
+    {
+        "entityid": 3146053,
+        "general": {
+            "name": "Level2BossScene",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/Level1BossSceneController.lua",
+                    "variables": []
+                }
+            ]
         }
     }
 ]
