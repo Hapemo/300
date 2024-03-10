@@ -152,7 +152,6 @@ function Update()
 
 
     elseif STATE == 2 then  
-
         gunEntity:GetTransform().mScale.y =1
         Camera_Scripting.SetFov(cameraEntity,savedfovplayer)
 
@@ -169,6 +168,10 @@ function Update()
             _G.FreezePlayerControl = false
             ShowUI()
         STATE = -1
+
+    else if STATE == -1 then 
+        _G.level3intro = false -- interacts with [Boss.lua] -> to trigger start attack
+    end
     end
 
 
