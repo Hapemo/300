@@ -188,6 +188,10 @@ function UpdateDialogues()
 end
 
 function OpenFrame()
+    if currState == "boss" then
+        picture = gameStateSys:GetEntity("DialogueExcited", "Dialogue_Level3")
+        picture:GetTransform().mTranslate.y = -0.6
+    end
     if frame:GetTransform().mScale.x <= 1.99 then
         frame:GetTransform().mScale.x = frame:GetTransform().mScale.x + framespeed
         if frame:GetTransform().mScale.x > 1.98 then

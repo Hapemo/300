@@ -113,12 +113,13 @@ local portal_audio
 local roar_slam_audio 
 local boss_slam_audio
 
+local play_sphere_audio
 function Alive()
     print("ALIVE")
     this = Helper.GetScriptEntity(script_entity.id)
     gameStateSys = systemManager:mGameStateSystem();
     physicsSys = systemManager:mPhysicsSystem()
-
+    play_sphere_audio = false
     -- Testing (Bullet Spawn Position)
     spiralBulletSpawnerObj = gameStateSys:GetEntityByScene("Spiral_Bullet_Spawn", "BossStuff")
     spiralBulletSpawnPosition = spiralBulletSpawnerObj:GetTransform().mTranslate
@@ -155,7 +156,9 @@ function Alive()
 end
 
 function Update()
-
+    if state~= 3 then
+        play_sphere_audio = false
+    end
     -- Tentative random switcher between boss states, replace with HP after other states implemented. 100% HP Left = Phase 1, 66% HP Left = Phase 2, 33% HP Left = Phase 3
     if _G.attacking == false and _G.FreezePlayerControl  == false then 
 
@@ -207,7 +210,7 @@ function Update()
 
     -- Debug States
     -- state = 1 --[OK]
-    state = 2 -- [OK] -- need to check agn after i check the other mechanics
+    -- state = 2 -- [OK] -- need to check agn after i check the other mechanics
     -- state = 3 -- [OK]
     -- state = 4 --[OK]
     -- state = 5 -- [OK]
@@ -441,7 +444,12 @@ function Update()
         -- (a) State 1 : Normal Circles but pulsing in different directions & angles. 
         --     - Make it easier at the start 
         if state == 3 and _G.state_checker[3] == false then
-            
+            if play_sphere_audio ==false then
+                play_sphere_audio = true
+                spherePhase = gameStateSys:GetEntity("SpherePhase")
+                spherePhaseAudio = spherePhase:GetAudio()
+                spherePhaseAudio:SetPlay(0.5)
+            end
             _G.attacking = true -- must include (to stop state choosing)
 
             fire_timer = fire_timer +  FPSManager.GetDT()
