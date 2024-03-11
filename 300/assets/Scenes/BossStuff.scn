@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 2097420,
+        "entityid": 101,
         "general": {
             "name": "Out_Of_Bounds_Boss_Body",
             "tagid": 4,
@@ -62,7 +62,7 @@
         }
     },
     {
-        "entityid": 2097421,
+        "entityid": 102,
         "general": {
             "name": "Spiral_Bullet_Spawn",
             "tagid": 0,
@@ -89,7 +89,7 @@
         }
     },
     {
-        "entityid": 2097422,
+        "entityid": 103,
         "general": {
             "name": "Out_Of_Bounds_Left_Hand_1",
             "tagid": 4,
@@ -151,7 +151,7 @@
         }
     },
     {
-        "entityid": 2097423,
+        "entityid": 104,
         "general": {
             "name": "Boss_Hitbox_Body_Head",
             "tagid": 14,
@@ -213,7 +213,7 @@
         }
     },
     {
-        "entityid": 2097424,
+        "entityid": 105,
         "general": {
             "name": "Out_Of_Bounds_Left_Thumb",
             "tagid": 4,
@@ -275,7 +275,7 @@
         }
     },
     {
-        "entityid": 2097425,
+        "entityid": 106,
         "general": {
             "name": "SpherePhase",
             "tagid": 0,
@@ -312,7 +312,7 @@
         }
     },
     {
-        "entityid": 2097426,
+        "entityid": 107,
         "general": {
             "name": "Out_Of_Bounds_Right_Hand",
             "tagid": 4,
@@ -374,7 +374,7 @@
         }
     },
     {
-        "entityid": 2097427,
+        "entityid": 108,
         "general": {
             "name": "Boss_HitBox_Left_Horn",
             "tagid": 14,
@@ -436,7 +436,7 @@
         }
     },
     {
-        "entityid": 2097428,
+        "entityid": 109,
         "general": {
             "name": "Boss_HitBox_Right_Horn",
             "tagid": 14,
@@ -498,7 +498,7 @@
         }
     },
     {
-        "entityid": 2097429,
+        "entityid": 110,
         "general": {
             "name": "Out_Of_Bounds_Right_Thumb",
             "tagid": 4,
@@ -560,7 +560,7 @@
         }
     },
     {
-        "entityid": 2097474,
+        "entityid": 111,
         "general": {
             "name": "LaserPhase",
             "tagid": 0,
@@ -597,7 +597,7 @@
         }
     },
     {
-        "entityid": 2097476,
+        "entityid": 112,
         "general": {
             "name": "Spawn_Point_Ref",
             "tagid": 1,
@@ -644,7 +644,7 @@
         }
     },
     {
-        "entityid": 2097486,
+        "entityid": 113,
         "general": {
             "name": "Boss",
             "tagid": 1,
@@ -734,7 +734,7 @@
                 "y": 0.0,
                 "z": 0.0
             },
-            "maxhealth": 2000.0,
+            "maxhealth": 500.0,
             "width": 0.0,
             "height": 0.0,
             "frametexture": 0,
