@@ -1,568 +1,6 @@
 [
     {
-        "entityid": 13631637,
-        "general": {
-            "name": "TriggerIndicator",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.069937825202942,
-                "y": 1.0,
-                "z": 5.970000267028809
-            },
-            "rotate": {
-                "x": -90.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 2.8923799991607666,
-                "y": 0.4850006103515625,
-                "z": 24.138837814331055
-            }
-        },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 3314,
-            "instancecolor": {
-                "x": 0.0,
-                "y": 0.6886792182922363,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "bloomthreshold": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "castShadow": true,
-            "materialinstance": [
-                "../assets/Compressed/Cube_Texture_White.ctexture",
-                "../assets/Compressed/Cube_Texture_White_Normal.ctexture",
-                " ",
-                " ",
-                " ",
-                " "
-            ],
-            "mesh": "../assets/compiled_geom/Cylinder_Arrow.geom",
-            "texturerefid": [
-                2075419717,
-                1949753341,
-                0,
-                0,
-                0,
-                0
-            ]
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/TriggerIndicatorLifetime.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "prefab": {
-            "prefab": "TriggerIndicator"
-        }
-    },
-    {
-        "entityid": 13631638,
-        "general": {
-            "name": "Light",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 70.0,
-                "z": -110.59866333007813
-            }
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Light"
-        },
-        "pointlight": {
-            "lightcolor": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "linearfalloff": 0.0,
-            "quadraticfalloff": 0.0,
-            "intensity": 1.0
-        }
-    },
-    {
-        "entityid": 14680335,
-        "general": {
-            "name": "Light",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -151.35720825195313,
-                "y": 70.0,
-                "z": 33.575775146484375
-            }
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Light"
-        },
-        "pointlight": {
-            "lightcolor": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "linearfalloff": 0.0,
-            "quadraticfalloff": 0.0,
-            "intensity": 1.0
-        }
-    },
-    {
-        "entityid": 17826049,
-        "general": {
-            "name": "Objective Bar 1",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.14000000059604645,
-                "y": -0.07999999821186066,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.5799999833106995,
-                "y": 0.699999988079071,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 2307664127,
-            "degree": 0.0,
-            "slider": 0.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 1,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Objective Bar 1"
-        }
-    },
-    {
-        "entityid": 18874592,
-        "general": {
-            "name": "TriggerIndicator",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.069937825202942,
-                "y": 1.0,
-                "z": 5.970000267028809
-            },
-            "rotate": {
-                "x": -90.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -2.1892669200897217,
-                "y": 5.0,
-                "z": 7.9289021492004395
-            }
-        },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 3314,
-            "instancecolor": {
-                "x": 0.0,
-                "y": 0.6886792182922363,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "bloomthreshold": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "castShadow": true,
-            "materialinstance": [
-                "../assets/Compressed/Cube_Texture_White.ctexture",
-                "../assets/Compressed/Cube_Texture_White_Normal.ctexture",
-                " ",
-                " ",
-                " ",
-                " "
-            ],
-            "mesh": "../assets/compiled_geom/Cylinder_Arrow.geom",
-            "texturerefid": [
-                2075419717,
-                1949753341,
-                0,
-                0,
-                0,
-                0
-            ]
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/TriggerIndicatorLifetime.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "prefab": {
-            "prefab": "TriggerIndicator"
-        }
-    },
-    {
-        "entityid": 19923211,
-        "general": {
-            "name": "BasicGun",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "Player_BasicGun.wav",
-            "fullpath": "../assets\\Audio/Player_BasicGun.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 1.0,
-            "retainaudio": false
-        }
-    },
-    {
-        "entityid": 19923216,
-        "general": {
-            "name": "Skill_Ending",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "Player_Skill_End.wav",
-            "fullpath": "../assets\\Audio/Player_Skill_End.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 0.4000000059604645,
-            "retainaudio": false
-        }
-    },
-    {
-        "entityid": 19923218,
-        "general": {
-            "name": "Light",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": -26.0,
-                "z": -118.47150421142578
-            }
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Light"
-        },
-        "pointlight": {
-            "lightcolor": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "linearfalloff": 0.0,
-            "quadraticfalloff": 0.0,
-            "intensity": 1.0
-        }
-    },
-    {
-        "entityid": 19923220,
-        "general": {
-            "name": "pauseMenu",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": -1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 1000.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "../assets/Compressed/MainMenu.ctexture",
-            "textureref": 3691930878,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 0,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/testPauseState.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "button": {
-            "interactable": true,
-            "hover": false,
-            "click": false,
-            "activated": false,
-            "renderflag": true
-        }
-    },
-    {
-        "entityid": 19923242,
-        "general": {
-            "name": "TriggerIndicator",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.069937825202942,
-                "y": 1.0,
-                "z": 5.970000267028809
-            },
-            "rotate": {
-                "x": -90.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 2.8923799991607666,
-                "y": 11.985000610351563,
-                "z": 24.138837814331055
-            }
-        },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 3314,
-            "instancecolor": {
-                "x": 0.0,
-                "y": 0.6886792182922363,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "bloomthreshold": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "castShadow": true,
-            "materialinstance": [
-                "../assets/Compressed/Cube_Texture_White.ctexture",
-                "../assets/Compressed/Cube_Texture_White_Normal.ctexture",
-                " ",
-                " ",
-                " ",
-                " "
-            ],
-            "mesh": "../assets/compiled_geom/Cylinder_Arrow.geom",
-            "texturerefid": [
-                2075419717,
-                1949753341,
-                0,
-                0,
-                0,
-                0
-            ]
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/TriggerIndicatorLifetime.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "prefab": {
-            "prefab": "TriggerIndicator"
-        }
-    },
-    {
-        "entityid": 19923268,
-        "general": {
-            "name": "Jump",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "Player_Movement_Jump.wav",
-            "fullpath": "../assets\\Audio/Player_Movement_Jump.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 0.4000000059604645,
-            "retainaudio": false
-        }
-    },
-    {
-        "entityid": 19923269,
+        "entityid": 12,
         "general": {
             "name": "TriggerIndicator",
             "tagid": 0,
@@ -635,7 +73,7 @@
         }
     },
     {
-        "entityid": 19923275,
+        "entityid": 13,
         "general": {
             "name": "Pistol Bullet",
             "tagid": 9,
@@ -796,7 +234,7 @@
         }
     },
     {
-        "entityid": 19923280,
+        "entityid": 14,
         "general": {
             "name": "Level2_Buildings2",
             "tagid": 0,
@@ -877,7 +315,7 @@
         }
     },
     {
-        "entityid": 19923283,
+        "entityid": 15,
         "general": {
             "name": "Skill_Activate",
             "tagid": 0,
@@ -914,7 +352,7 @@
         }
     },
     {
-        "entityid": 19923284,
+        "entityid": 16,
         "general": {
             "name": "MachineGun",
             "tagid": 0,
@@ -951,7 +389,7 @@
         }
     },
     {
-        "entityid": 22020376,
+        "entityid": 17,
         "general": {
             "name": "TriggerIndicator",
             "tagid": 0,
@@ -1024,7 +462,7 @@
         }
     },
     {
-        "entityid": 23068938,
+        "entityid": 18,
         "general": {
             "name": "Light",
             "tagid": 0,
@@ -1061,7 +499,7 @@
         }
     },
     {
-        "entityid": 25165950,
+        "entityid": 19,
         "general": {
             "name": "TriggerIndicator",
             "tagid": 0,
@@ -1134,7 +572,7 @@
         }
     },
     {
-        "entityid": 26214664,
+        "entityid": 20,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -1149,8 +587,8 @@
                 "z": 1.0999999046325684
             },
             "rotate": {
-                "x": 2117.966064453125,
-                "y": -96.30000305175781,
+                "x": 90.0,
+                "y": 0.0,
                 "z": 0.0
             },
             "translate": {
@@ -1204,7 +642,7 @@
         },
         "children": {
             "numchildren": 1,
-            "firstchild": 36700172
+            "firstchild": 33
         },
         "audio": {
             "filepath": "../assets\\Audio",
@@ -1223,9 +661,9 @@
                 "z": -15.523016929626465
             },
             "target": {
-                "x": -6.204415321350098,
-                "y": -2.8022983074188232,
-                "z": -15.53470230102539
+                "x": -6.21737813949585,
+                "y": -3.8021459579467773,
+                "z": -14.523016929626465
             },
             "size": {
                 "x": 1223,
@@ -1260,7 +698,7 @@
         }
     },
     {
-        "entityid": 28311811,
+        "entityid": 21,
         "general": {
             "name": "TriggerIndicator",
             "tagid": 0,
@@ -1333,7 +771,7 @@
         }
     },
     {
-        "entityid": 31457579,
+        "entityid": 22,
         "general": {
             "name": "TriggerIndicator",
             "tagid": 0,
@@ -1406,7 +844,7 @@
         }
     },
     {
-        "entityid": 33554649,
+        "entityid": 23,
         "general": {
             "name": "ShotGun",
             "tagid": 0,
@@ -1443,168 +881,7 @@
         }
     },
     {
-        "entityid": 33554782,
-        "general": {
-            "name": "Pistol Bullet",
-            "tagid": 9,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.5,
-                "y": 0.5,
-                "z": 0.5
-            },
-            "rotate": {
-                "x": 0.22930383682250977,
-                "y": -0.0,
-                "z": 3.1415929794311523
-            },
-            "translate": {
-                "x": 55.235992431640625,
-                "y": 242.15591430664063,
-                "z": -102.4251480102539
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 1,
-            "velocity": {
-                "x": 22.930383682250977,
-                "y": 91.77546691894531,
-                "z": -32.42626190185547
-            },
-            "rotationconstraints": {
-                "x": true,
-                "y": false,
-                "z": false
-            },
-            "gravity": false
-        },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 2285,
-            "instancecolor": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "bloomthreshold": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "castShadow": true,
-            "materialinstance": [
-                "../assets/Compressed/Cube_Texture_White.ctexture",
-                "../assets/Compressed/Cube_Texture_White_Normal.ctexture",
-                " ",
-                " ",
-                "../assets/Compressed/cube_emission.ctexture",
-                " "
-            ],
-            "mesh": "../assets/compiled_geom/cube.geom",
-            "texturerefid": [
-                2075419717,
-                1949753341,
-                0,
-                0,
-                3806423867,
-                0
-            ]
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "translateoffset": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "istrigger": true
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/Bullet.lua",
-                    "variables": [
-                        {
-                            "key": "direction",
-                            "val": {
-                                "type": -655306154,
-                                "value": {
-                                    "x": 10.0,
-                                    "y": 0.0,
-                                    "z": 0.0
-                                }
-                            }
-                        },
-                        {
-                            "key": "movement",
-                            "val": {
-                                "type": -655306154,
-                                "value": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0
-                                }
-                            }
-                        },
-                        {
-                            "key": "positions",
-                            "val": {
-                                "type": -655306154,
-                                "value": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0
-                                }
-                            }
-                        },
-                        {
-                            "key": "spawn",
-                            "val": {
-                                "type": -1129103353,
-                                "value": true
-                            }
-                        },
-                        {
-                            "key": "timer",
-                            "val": {
-                                "type": 694561268,
-                                "value": 0.0
-                            }
-                        },
-                        {
-                            "key": "viewVec",
-                            "val": {
-                                "type": -655306154,
-                                "value": {
-                                    "x": 0.0,
-                                    "y": 1.0,
-                                    "z": 0.0
-                                }
-                            }
-                        }
-                    ]
-                }
-            ]
-        },
-        "prefab": {
-            "prefab": "Pistol Bullet"
-        }
-    },
-    {
-        "entityid": 33554805,
+        "entityid": 25,
         "general": {
             "name": "TriggerIndicator",
             "tagid": 0,
@@ -1677,7 +954,7 @@
         }
     },
     {
-        "entityid": 33554811,
+        "entityid": 26,
         "general": {
             "name": "ShadowCaster",
             "tagid": 8,
@@ -1719,7 +996,7 @@
         }
     },
     {
-        "entityid": 34603093,
+        "entityid": 27,
         "general": {
             "name": "TriggerIndicator",
             "tagid": 0,
@@ -1792,7 +1069,7 @@
         }
     },
     {
-        "entityid": 34603218,
+        "entityid": 28,
         "general": {
             "name": "Player_Movement",
             "tagid": 0,
@@ -1829,7 +1106,7 @@
         }
     },
     {
-        "entityid": 34603261,
+        "entityid": 29,
         "general": {
             "name": "TriggerIndicator",
             "tagid": 0,
@@ -1902,7 +1179,7 @@
         }
     },
     {
-        "entityid": 35651824,
+        "entityid": 30,
         "general": {
             "name": "Level2StairCollider",
             "tagid": 4,
@@ -1964,7 +1241,7 @@
         }
     },
     {
-        "entityid": 35651852,
+        "entityid": 31,
         "general": {
             "name": "TriggerIndicator",
             "tagid": 0,
@@ -2037,7 +1314,7 @@
         }
     },
     {
-        "entityid": 35652030,
+        "entityid": 32,
         "general": {
             "name": "TriggerIndicator",
             "tagid": 0,
@@ -2110,7 +1387,7 @@
         }
     },
     {
-        "entityid": 36700172,
+        "entityid": 33,
         "general": {
             "name": "gun",
             "tagid": 0,
@@ -2171,13 +1448,13 @@
             ]
         },
         "parent": {
-            "prevsibling": 36700172,
-            "nextsibling": 36700172,
-            "parent": 26214664
+            "prevsibling": 33,
+            "nextsibling": 33,
+            "parent": 20
         }
     },
     {
-        "entityid": 37749092,
+        "entityid": 34,
         "general": {
             "name": "Light",
             "tagid": 0,
@@ -2214,7 +1491,7 @@
         }
     },
     {
-        "entityid": 38797457,
+        "entityid": 35,
         "general": {
             "name": "Light",
             "tagid": 0,
@@ -2257,7 +1534,7 @@
         }
     },
     {
-        "entityid": 38797613,
+        "entityid": 36,
         "general": {
             "name": "Level2_Building1",
             "tagid": 0,
@@ -2338,7 +1615,7 @@
         }
     },
     {
-        "entityid": 40894477,
+        "entityid": 37,
         "general": {
             "name": "Level2_Stairs",
             "tagid": 0,
@@ -2403,7 +1680,7 @@
         }
     },
     {
-        "entityid": 40894482,
+        "entityid": 38,
         "general": {
             "name": "Level2Floor",
             "tagid": 3,
@@ -2484,7 +1761,7 @@
         }
     },
     {
-        "entityid": 40894708,
+        "entityid": 39,
         "general": {
             "name": "Dash",
             "tagid": 0,
@@ -2521,7 +1798,7 @@
         }
     },
     {
-        "entityid": 40894772,
+        "entityid": 40,
         "general": {
             "name": "Level2StairCollider",
             "tagid": 4,
@@ -2583,7 +1860,7 @@
         }
     },
     {
-        "entityid": 40894882,
+        "entityid": 41,
         "general": {
             "name": "Level2_Wall",
             "tagid": 4,
@@ -2645,7 +1922,7 @@
         }
     },
     {
-        "entityid": 41943113,
+        "entityid": 42,
         "general": {
             "name": "BGM",
             "tagid": 0,
@@ -2682,7 +1959,7 @@
         }
     },
     {
-        "entityid": 41943427,
+        "entityid": 43,
         "general": {
             "name": "Light",
             "tagid": 0,
@@ -2725,7 +2002,7 @@
         }
     },
     {
-        "entityid": 42991986,
+        "entityid": 44,
         "general": {
             "name": "RevolverGun",
             "tagid": 0,
@@ -2762,7 +2039,7 @@
         }
     },
     {
-        "entityid": 42992025,
+        "entityid": 45,
         "general": {
             "name": "Objective Bar 1",
             "tagid": 6,
@@ -2809,7 +2086,7 @@
         }
     },
     {
-        "entityid": 44040391,
+        "entityid": 46,
         "general": {
             "name": "Objective Bar 1",
             "tagid": 6,
@@ -2856,7 +2133,7 @@
         }
     },
     {
-        "entityid": 44040578,
+        "entityid": 47,
         "general": {
             "name": "Skybox",
             "tagid": 0,
@@ -2918,7 +2195,7 @@
         }
     },
     {
-        "entityid": 45089191,
+        "entityid": 48,
         "general": {
             "name": "Level2_Stairs",
             "tagid": 0,
@@ -2986,7 +2263,7 @@
         }
     },
     {
-        "entityid": 46137422,
+        "entityid": 49,
         "general": {
             "name": "Bullet Shoot",
             "tagid": 0,
@@ -3020,6 +2297,568 @@
             "audiotype": 1,
             "volume": 0.30000001192092896,
             "retainaudio": false
+        }
+    },
+    {
+        "entityid": 1048577,
+        "general": {
+            "name": "Jump",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Player_Movement_Jump.wav",
+            "fullpath": "../assets\\Audio/Player_Movement_Jump.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 0.4000000059604645,
+            "retainaudio": false
+        }
+    },
+    {
+        "entityid": 2097154,
+        "general": {
+            "name": "TriggerIndicator",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.069937825202942,
+                "y": 1.0,
+                "z": 5.970000267028809
+            },
+            "rotate": {
+                "x": -90.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 2.8923799991607666,
+                "y": 11.985000610351563,
+                "z": 24.138837814331055
+            }
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3314,
+            "instancecolor": {
+                "x": 0.0,
+                "y": 0.6886792182922363,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "castShadow": true,
+            "materialinstance": [
+                "../assets/Compressed/Cube_Texture_White.ctexture",
+                "../assets/Compressed/Cube_Texture_White_Normal.ctexture",
+                " ",
+                " ",
+                " ",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/Cylinder_Arrow.geom",
+            "texturerefid": [
+                2075419717,
+                1949753341,
+                0,
+                0,
+                0,
+                0
+            ]
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/TriggerIndicatorLifetime.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "prefab": {
+            "prefab": "TriggerIndicator"
+        }
+    },
+    {
+        "entityid": 2097155,
+        "general": {
+            "name": "pauseMenu",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": -1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 1000.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "../assets/Compressed/MainMenu.ctexture",
+            "textureref": 3691930878,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 0,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/testPauseState.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "button": {
+            "interactable": true,
+            "hover": false,
+            "click": false,
+            "activated": false,
+            "renderflag": true
+        }
+    },
+    {
+        "entityid": 2097156,
+        "general": {
+            "name": "Light",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": -26.0,
+                "z": -118.47150421142578
+            }
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Light"
+        },
+        "pointlight": {
+            "lightcolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "linearfalloff": 0.0,
+            "quadraticfalloff": 0.0,
+            "intensity": 1.0
+        }
+    },
+    {
+        "entityid": 2097157,
+        "general": {
+            "name": "Skill_Ending",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Player_Skill_End.wav",
+            "fullpath": "../assets\\Audio/Player_Skill_End.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 0.4000000059604645,
+            "retainaudio": false
+        }
+    },
+    {
+        "entityid": 2097158,
+        "general": {
+            "name": "BasicGun",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Player_BasicGun.wav",
+            "fullpath": "../assets\\Audio/Player_BasicGun.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false
+        }
+    },
+    {
+        "entityid": 2097159,
+        "general": {
+            "name": "TriggerIndicator",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.069937825202942,
+                "y": 1.0,
+                "z": 5.970000267028809
+            },
+            "rotate": {
+                "x": -90.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -2.1892669200897217,
+                "y": 5.0,
+                "z": 7.9289021492004395
+            }
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3314,
+            "instancecolor": {
+                "x": 0.0,
+                "y": 0.6886792182922363,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "castShadow": true,
+            "materialinstance": [
+                "../assets/Compressed/Cube_Texture_White.ctexture",
+                "../assets/Compressed/Cube_Texture_White_Normal.ctexture",
+                " ",
+                " ",
+                " ",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/Cylinder_Arrow.geom",
+            "texturerefid": [
+                2075419717,
+                1949753341,
+                0,
+                0,
+                0,
+                0
+            ]
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/TriggerIndicatorLifetime.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "prefab": {
+            "prefab": "TriggerIndicator"
+        }
+    },
+    {
+        "entityid": 2097160,
+        "general": {
+            "name": "Objective Bar 1",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.14000000059604645,
+                "y": -0.07999999821186066,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.5799999833106995,
+                "y": 0.699999988079071,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 2307664127,
+            "degree": 0.0,
+            "slider": 0.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 1,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Objective Bar 1"
+        }
+    },
+    {
+        "entityid": 2097161,
+        "general": {
+            "name": "Light",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -151.35720825195313,
+                "y": 70.0,
+                "z": 33.575775146484375
+            }
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Light"
+        },
+        "pointlight": {
+            "lightcolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "linearfalloff": 0.0,
+            "quadraticfalloff": 0.0,
+            "intensity": 1.0
+        }
+    },
+    {
+        "entityid": 2097162,
+        "general": {
+            "name": "Light",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 70.0,
+                "z": -110.59866333007813
+            }
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Light"
+        },
+        "pointlight": {
+            "lightcolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "linearfalloff": 0.0,
+            "quadraticfalloff": 0.0,
+            "intensity": 1.0
+        }
+    },
+    {
+        "entityid": 2097163,
+        "general": {
+            "name": "TriggerIndicator",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.069937825202942,
+                "y": 1.0,
+                "z": 5.970000267028809
+            },
+            "rotate": {
+                "x": -90.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 2.8923799991607666,
+                "y": 0.4850006103515625,
+                "z": 24.138837814331055
+            }
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3314,
+            "instancecolor": {
+                "x": 0.0,
+                "y": 0.6886792182922363,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "castShadow": true,
+            "materialinstance": [
+                "../assets/Compressed/Cube_Texture_White.ctexture",
+                "../assets/Compressed/Cube_Texture_White_Normal.ctexture",
+                " ",
+                " ",
+                " ",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/Cylinder_Arrow.geom",
+            "texturerefid": [
+                2075419717,
+                1949753341,
+                0,
+                0,
+                0,
+                0
+            ]
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/TriggerIndicatorLifetime.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "prefab": {
+            "prefab": "TriggerIndicator"
         }
     }
 ]
