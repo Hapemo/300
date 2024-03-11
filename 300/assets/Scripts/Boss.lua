@@ -34,12 +34,13 @@ local buffer_time = 0.5
 local roar_slammed_state = "START"
 local roar_anim_timer = 0 -- temp
 local slam_audio_timer = 0
-local delay_slam_audio_time = 2 
-local smashed = false
+local delay_slam_audio_time = 3.5
+local s_roared = false
+local s_smashed = false
 
 -- Tentative Random Boss State CHanger
 local currentBossStateTimer = 0
-local maxBossStateTimer = 3
+local maxBossStateTimer = 3.8
 
 
 -- Phase 3 : Bullethell Phase
@@ -200,11 +201,11 @@ function Update()
         -- currentBossStateTimer = 0
     end
      -- Stop Animation 
-    if(this:GetAnimator():IsEndOfAnimation()) then
-        if roar_slammed_state == "IDLE" then
-            this:GetMeshRenderer():SetMesh("Boss_Idle" , this)
-        end
-    end
+    -- if(this:GetAnimator():IsEndOfAnimation()) then
+    --     if roar_slammed_state == "IDLE" then
+    --         this:GetMeshRenderer():SetMesh("Boss_Idle" , this)
+    --     end
+    -- end
 
 
 
@@ -218,7 +219,7 @@ function Update()
 
     -- Debug States
     -- state = 1 --[OK]
-    -- state = 2 -- [OK] -- need to check agn after i check the other mechanics
+    state = 2 -- [OK] -- need to check agn after i check the other mechanics
     -- state = 3 -- [OK]
     -- state = 4 --[OK]
     -- state = 5 -- [OK]
@@ -297,31 +298,42 @@ function Update()
         end
 
         if state == 2 and _G.state_checker[2] == false then
+            print("Roar Slam State: " , roar_slammed_state)
             -- if(this:GetAnimator():IsEndOfAnimation()) then
+                -- print("ANIM DONE SLAM")
             if roar_slammed_state == "RS_SLAM" then 
-                roar_anim_timer = roar_anim_timer + FPSManager.GetDT()
-                print("ROAR TIME: " , roar_anim_timer)
+                this:GetMeshRenderer():SetMesh("Boss_Slam" , this)
+                roar_slammed_state = "SLAM_ANIM"
+            end
 
-                if roar_anim_timer >= 3.5 then 
-                    roar_slammed_state = "SMASH"
-                    roar_anim_timer = 0
+            if roar_slammed_state == "SLAM_ANIM" then 
+                slam_audio_timer = slam_audio_timer + FPSManager.GetDT()
+
+                if slam_audio_timer >= delay_slam_audio_time then
+                    roar_slammed_state = "PLAY_SLAM_AUDIO"
                 end
             end
 
-            if roar_slammed_state == "SMASH" then 
-                if smashed == false then 
-                    this:GetMeshRenderer():SetMesh("Boss_Slam" , this)
-                    boss_slam_audio:GetAudio():SetPlay(1.0)
-                    print("SMASH")
-                    smashed = true
-                end
-
-                if(this:GetAnimator():IsEndOfAnimation()) then
-                    roar_slammed_state = "IDLE"
-
-                end
-
+            if roar_slammed_state == "PLAY_SLAM_AUDIO" then -- delayed audio slam
+                 boss_slam_audio:GetAudio():SetPlay(1.0)
+                 roar_slammed_state = "SLAMMING"
             end
+            -- end
+
+            -- if roar_slammed_state == "SMASH" then 
+            --     if smashed == false then 
+            --         this:GetMeshRenderer():SetMesh("Boss_Slam" , this)
+            --         boss_slam_audio:GetAudio():SetPlay(1.0)
+            --         print("SMASH")
+            --         smashed = true
+            --     end
+
+            --     if(this:GetAnimator():IsEndOfAnimation()) then
+            --         roar_slammed_state = "IDLE"
+
+            --     end
+
+            -- end
 
         
 
