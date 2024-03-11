@@ -57,11 +57,14 @@ function Alive()
 end
 
 function Update()
+    hoverSFX = this:GetAudio()
     if(gen.name == "GUI_Weapon_Types_Button") then
         -- print("HELLO BUTTON")
         if (button.mIsHover) then
             if (hoverOver == false) then
             -- print("BUTTON HOVER")
+            hoverSFX:SetPlay(0.2)
+            hoverOver = true
             uirend:SetTexture("NextButton_Hover")
             end
         end
@@ -87,6 +90,8 @@ function Update()
          if (button.mIsHover) then
             if (hoverOver == false) then
             -- print("BUTTON HOVER")
+            hoverSFX:SetPlay(0.2)
+            hoverOver = true
             uirend:SetTexture("NextButton_Hover")
             end
         end
@@ -112,6 +117,8 @@ function Update()
         if (button.mIsHover) then
             if (hoverOver == false) then
             -- print("BUTTON HOVER")
+            hoverSFX:SetPlay(0.2)
+            hoverOver = true
             uirend:SetTexture("NextButton_Hover")
             end
         end
@@ -122,7 +129,7 @@ function Update()
         end
 
         if (button.mActivated) then
-            print("HELLO BUTTON")
+            --print("HELLO BUTTON")
             clickSFX:SetPlay(1.0)
             stackingDamageGUI_Transform.mTranslate.x = -2
             stackingDamageButton_Transform.mTranslate.x = -2
@@ -138,6 +145,8 @@ function Update()
         if (button.mIsHover) then
             if (hoverOver == false) then
             -- print("BUTTON HOVER")
+            hoverSFX:SetPlay(0.2)
+            hoverOver = true
             uirend:SetTexture("NextButton_Hover")
             end
         end
