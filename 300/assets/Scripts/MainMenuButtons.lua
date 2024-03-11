@@ -24,6 +24,28 @@ function Alive()
 
     exitAudioEntity = gameStateSys:GetEntity("Exit")
     exitSFX = exitAudioEntity:GetAudio()
+
+    --main menu
+    startButton = gameStateSys:GetEntity("StartButton")
+    menuBGButton = gameStateSys:GetEntity("MenuBackground")
+    HTPButton = gameStateSys:GetEntity("HTPButton")
+    settingsButton = gameStateSys:GetEntity("SettingsButton")
+    creditsButton = gameStateSys:GetEntity("CreditsButton")
+    quitButton = gameStateSys:GetEntity("QuitButton")
+
+    --settings
+    settingsMenuBackground = gameStateSys:GetEntity("SettingsMenuBackground")
+    settingsBgmEmpty = gameStateSys:GetEntity("SettingsBgmEmpty")
+    settingsBgmFull = gameStateSys:GetEntity("SettingsBgmFull")
+    settingSfxFull = gameStateSys:GetEntity("SettingsSfxFull")
+    settingSfxEmpty = gameStateSys:GetEntity("SettingsSfxEmpty")
+    settingsFSButton = gameStateSys:GetEntity("SettingsFSButton")
+    settingsWindowButton = gameStateSys:GetEntity("SettingsWindowButton")
+    settingsBackButton = gameStateSys:GetEntity("SettingsBackButton")
+    bgmDecrease = gameStateSys:GetEntity("bgmDecrease")
+    bgmIncrease = gameStateSys:GetEntity("bgmIncrease")
+    sfxDecrease = gameStateSys:GetEntity("sfxDecrease")
+    sfxIncrease = gameStateSys:GetEntity("sfxIncrease")
 end
 
 function Update()
@@ -112,6 +134,25 @@ function Update()
         end
         if (button.mActivated) then
             clickSFX:SetPlay(1.0)
+            startButton:GetTransform().mTranslate.x = 1000
+            menuBGButton:GetTransform().mTranslate.x = 1000
+            HTPButton:GetTransform().mTranslate.x = 1000
+            settingsButton:GetTransform().mTranslate.x = 1000
+            creditsButton:GetTransform().mTranslate.x = 1000
+            quitButton:GetTransform().mTranslate.x = 1000
+
+            settingsMenuBackground:GetTransform().mTranslate.x = 0
+            settingsBgmEmpty:GetTransform().mTranslate.x = -0.20
+            settingsBgmFull:GetTransform().mTranslate.x = -0.20
+            settingSfxEmpty:GetTransform().mTranslate.x = -0.20
+            settingSfxFull:GetTransform().mTranslate.x = -0.20
+            settingsFSButton:GetTransform().mTranslate.x = -0.59
+            settingsWindowButton:GetTransform().mTranslate.x = -0.08
+            settingsBackButton:GetTransform().mTranslate.x = 0.85
+            bgmDecrease:GetTransform().mTranslate.x = -0.61
+            bgmIncrease:GetTransform().mTranslate.x = 0.21
+            sfxDecrease:GetTransform().mTranslate.x = -0.61
+            sfxIncrease:GetTransform().mTranslate.x = 0.21
         end
     end
 
@@ -223,7 +264,7 @@ function Update()
         end
         if (button.mActivated) then
             clickSFX:SetPlay(1.0)
-            gameStateSys:ChangeGameState("MainMenu")
+            gameStateSys:ChangeGameState("Menu")
         end
     end
 end
