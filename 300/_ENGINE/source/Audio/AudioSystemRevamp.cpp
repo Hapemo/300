@@ -123,13 +123,6 @@ void AudioSystem::Update([[maybe_unused]] float dt, bool calling_from_pause)
 		Transform& transform = audio.GetComponent<Transform>(); // need to update "mPreviousPosition" for 
 		General& general = audio.GetComponent<General>();
 
-
-		if (audio_component.mFileName == "Player_BasicGun.wav")
-		{
-			int i = 0;
-			std::cout << i << std::endl;
-		}
-
 		if (general.name == "DialogueObjectiveIntro1" && audio_component.mNextActionState == Audio::SET_TO_PLAY)
 		{
 			std::string temp = "";
