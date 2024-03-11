@@ -114,12 +114,14 @@ local roar_slam_audio
 local boss_slam_audio
 
 local play_sphere_audio
+local play_laser_audio
 function Alive()
     print("ALIVE")
     this = Helper.GetScriptEntity(script_entity.id)
     gameStateSys = systemManager:mGameStateSystem();
     physicsSys = systemManager:mPhysicsSystem()
     play_sphere_audio = false
+    play_laser_audio = false
     -- Testing (Bullet Spawn Position)
     spiralBulletSpawnerObj = gameStateSys:GetEntityByScene("Spiral_Bullet_Spawn", "BossStuff")
     spiralBulletSpawnPosition = spiralBulletSpawnerObj:GetTransform().mTranslate
@@ -158,6 +160,12 @@ end
 function Update()
     if state~= 3 then
         play_sphere_audio = false
+    end
+    if state~= 5 then 
+        play_laser_audio = false
+        laser_phase = gameStateSys:GetEntity("LaserPhase")
+        laserPhaseAudio = laser_phase:GetAudio()
+        laserPhaseAudio:SetStop()
     end
     -- Tentative random switcher between boss states, replace with HP after other states implemented. 100% HP Left = Phase 1, 66% HP Left = Phase 2, 33% HP Left = Phase 3
     if _G.attacking == false and _G.FreezePlayerControl  == false then 
@@ -213,7 +221,7 @@ function Update()
     -- state = 2 -- [OK] -- need to check agn after i check the other mechanics
     -- state = 3 -- [OK]
     -- state = 4 --[OK]
-    -- state = 5 -- [OK]
+    state = 5 -- [OK]
 
     --  Added [3/11] -> to disable when cutscene is on 
     if _G.level3intro == false then 
@@ -513,6 +521,12 @@ function Update()
 
 
         if state == 5 and _G.state_checker[5] == false then 
+            if play_laser_audio == false then
+                play_laser_audio = true
+                laser_phase = gameStateSys:GetEntity("LaserPhase")
+                laserPhaseAudio = laser_phase:GetAudio()
+                laserPhaseAudio:SetPlay(0.5)
+            end
             -- print("LAZER ATTACK")
             _G.attacking = true -- must include (to stop state choosing)
             _G.activateLazerScript = true
