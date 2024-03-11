@@ -1,0 +1,73 @@
+{
+    "entityid": 9437418,
+    "general": {
+        "name": "Portal",
+        "tagid": 8,
+        "subtag": 0,
+        "isActive": true,
+        "isPaused": false
+    },
+    "transform": {
+        "scale": {
+            "x": 0.12999999523162842,
+            "y": 12.180000305175781,
+            "z": 7.53000020980835
+        },
+        "rotate": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "translate": {
+            "x": 0.0,
+            "y": 7.819528579711914,
+            "z": 49.54824447631836
+        }
+    },
+    "meshrenderer": {
+        "vert": "../assets/shader_files/pointLight_vert.glsl",
+        "frag": "../assets/shader_files/pointLight_frag.glsl",
+        "meshrefid": 3400,
+        "instancecolor": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+        },
+        "bloomthreshold": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+        },
+        "castShadow": true,
+        "materialinstance": [
+            "../assets/Compressed/UI-Blue.ctexture",
+            "../assets/Compressed/UI-Blue.ctexture",
+            " ",
+            " ",
+            " ",
+            " "
+        ],
+        "mesh": "../assets/compiled_geom/Particle_Sphere.geom",
+        "texturerefid": [
+            160439243,
+            160439243,
+            0,
+            0,
+            0,
+            0
+        ]
+    },
+    "scripts": {
+        "scriptscontainer": [
+            {
+                "scriptFile": "../assets/Scripts/Portal.lua",
+                "variables": []
+            }
+        ]
+    },
+    "prefab": {
+        "prefab": "Portal"
+    }
+}

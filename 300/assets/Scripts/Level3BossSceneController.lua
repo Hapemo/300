@@ -22,7 +22,7 @@ local uiHider
 -- fov
 local fov =57
 local savedfovstart =57
-local savedfovend = 33
+local savedfovend = 46
 local savedfovplayer = 45
 
 -- screen shake
@@ -38,6 +38,21 @@ local magnitude = Vec2.new(-1.0,1.0)
 local magfloat = 0.5
 local initonce
 
+local roared = false
+
+-- Audio Stuff 
+local hand_slam_audio
+local roar_audio
+
+-- Trying match audio with animation
+local hand_slam_timer = 0
+local hand_slam_anim_1_time = 2.0 
+local hand_slam_anim_2_time = 3.0
+local roar_time = 4.0
+local hand_slammed_1 = false
+local hand_slammed_2 = false
+local audio_roared = false
+
 local graphicsSys
 local gameStateSys
 
@@ -48,9 +63,10 @@ function Alive()
     cameraEntity = gameStateSys:GetEntity("Camera")
     gunEntity = gameStateSys:GetEntity("gun")
     bossEntity = gameStateSys:GetEntity("Boss")
+    hand_slam_audio = gameStateSys:GetEntity("BossSlamAudio")
+    roar_audio = gameStateSys:GetEntity("RoarAudio")
 
     graphicsSys = systemManager:mGraphicsSystem()
-
 
     _G.FreezePlayerControl = true
     gunEntity:GetTransform().mScale.y =0
@@ -63,19 +79,56 @@ function Update()
     cameraEntity = gameStateSys:GetEntity("Camera")
     gunEntity = gameStateSys:GetEntity("gun")
     bossEntity = gameStateSys:GetEntity("Boss")
+
     
+    hand_slam_timer = hand_slam_timer + FPSManager.GetDT()
+
+    if(hand_slam_timer > hand_slam_anim_1_time) then 
+        if hand_slammed_1 == false then 
+            hand_slam_audio:GetAudio():SetPlay(1.0)
+            hand_slammed_1 = true
+        end
+    end
+
+    if(hand_slam_timer > hand_slam_anim_2_time) then 
+        if hand_slammed_2 == false then 
+            hand_slam_audio:GetAudio():SetPlay(1.0)
+            hand_slammed_2 = true
+        end
+    end
+
+    if(hand_slam_timer > roar_time) then 
+        if audio_roared  == false then 
+            roar_audio:GetAudio():SetPlay(1.0)
+            audio_roared = true
+        end
+    end
+
+
+
+    if(bossEntity:GetAnimator():IsEndOfAnimation()) then
+        
+        -- print("ANIMATION DONE")
+        if roared == false then 
+            bossEntity:GetMeshRenderer():SetMesh("Boss_Roar" , bossEntity)
+            roared = true
+        else 
+            bossEntity:GetMeshRenderer():SetMesh("Boss_Idle" , bossEntity)
+        end
+    end
 
     -- gunEntity.GetTransform().mScale.y =0
     -- Camera_Scripting.SetFov(cameraEntity,savedfov)
     
     if STATE == 0 then
         graphicsSys:IgnoreUIScene("UI")
+        graphicsSys:IgnoreUIScene("BossUI")
     --     if firstTrigger == false then
     --         firstTrigger = true
     --         _G.FreezePlayerControl = true
 
         Camera_Scripting.SetFov(cameraEntity,fov)
-        fov = fov -0.05
+        fov = fov - 0.05
 
         if(fov <= savedfovend)then
             savedplayerrotate.x = cameraEntity:GetTransform().mRotate.x
@@ -102,7 +155,6 @@ function Update()
 
 
     elseif STATE == 2 then  
-
         gunEntity:GetTransform().mScale.y =1
         Camera_Scripting.SetFov(cameraEntity,savedfovplayer)
 
@@ -114,10 +166,15 @@ function Update()
                 controllerL2Script:RunFunction("StartIntro")
             end
             graphicsSys:UnignoreUIScene("UI")
+            graphicsSys:UnignoreUIScene("BossUI")
 
             _G.FreezePlayerControl = false
             ShowUI()
         STATE = -1
+
+    else if STATE == -1 then 
+        _G.level3intro = false -- interacts with [Boss.lua] -> to trigger start attack
+    end
     end
 
 

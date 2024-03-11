@@ -14,6 +14,13 @@ _G.number_left_in_level_3 = 0                           -- Keeps track how many 
 _G.Level3_Monsters = true                               -- Special Boolean -> interaction with spawning mechanic
 local phase_1_timer = 0 
 local phase_1_max_time = 10                             -- Give Players time to fight the minions
+local portals = {}                                      -- Table of Portals
+
+-- Phase 1 : Audio Stuff
+local roar_audio
+local initial_roar = false
+
+
 
 -- Phase 2 : Groundslam Phase
 local groundSlamDirection
@@ -23,9 +30,18 @@ local maxGroundSlamResetTimer = 3
 local groundSlamCount = 0  -- Changes to other attacking state when it slams a designated amount of time 
 local groundSlamMax = 0
 
+local buffer_time = 0.5
+local roar_slammed_state = "START"
+local roar_anim_timer = 0 -- temp
+local slam_audio_timer = 0
+local delay_slam_audio_time = 3.5
+local s_roared = false
+local s_smashed = false
+
 -- Tentative Random Boss State CHanger
 local currentBossStateTimer = 0
-local maxBossStateTimer = 3
+local maxBossStateTimer = 3.8
+
 
 -- Phase 3 : Bullethell Phase
 local spiralBulletSpawnerObj
@@ -93,13 +109,21 @@ local player_position = Vec3.new()
 -- 3. Shoot projectiles
 -- 4. Laser Attack
 
+-- Audio Stuff
+local portal_audio 
+local roar_slam_audio 
+local boss_slam_audio
+local sphere_phase_audio
 
+local play_sphere_audio
+local play_laser_audio
 function Alive()
     print("ALIVE")
     this = Helper.GetScriptEntity(script_entity.id)
     gameStateSys = systemManager:mGameStateSystem();
     physicsSys = systemManager:mPhysicsSystem()
-
+    play_sphere_audio = false
+    play_laser_audio = false
     -- Testing (Bullet Spawn Position)
     spiralBulletSpawnerObj = gameStateSys:GetEntityByScene("Spiral_Bullet_Spawn", "BossStuff")
     spiralBulletSpawnPosition = spiralBulletSpawnerObj:GetTransform().mTranslate
@@ -122,14 +146,30 @@ function Alive()
     spawn_point_translate.z = spawn_point_ref_trans.z
 
     -- print("1")
-    print("1: " , spawn_point_translate.x)
-    print("2: " , spawn_point_translate.y)
-    print("3: " , spawn_point_translate.z)
+    -- print("1: " , spawn_point_translate.x)
+    -- print("2: " , spawn_point_translate.y)
+    -- print("3: " , spawn_point_translate.z)
+
+    -- Audio Stuff
+    portal_audio = gameStateSys:GetEntity("SummonPortalAudio")
+    roar_audio = gameStateSys:GetEntity("RoarAudio")
+    roar_slam_audio = gameStateSys:GetEntity("RoarSlamAudio")
+    boss_slam_audio = gameStateSys:GetEntity("BossSlamAudio")
+    sphere_phase_audio = gameStateSys:GetEntity("SpherePhase")
+
 
 end
 
 function Update()
-
+    if state~= 3 then
+        play_sphere_audio = false
+    end
+    if state~= 5 then 
+        play_laser_audio = false
+        laser_phase = gameStateSys:GetEntity("LaserPhase")
+        laserPhaseAudio = laser_phase:GetAudio()
+        laserPhaseAudio:SetStop()
+    end
     -- Tentative random switcher between boss states, replace with HP after other states implemented. 100% HP Left = Phase 1, 66% HP Left = Phase 2, 33% HP Left = Phase 3
     if _G.attacking == false and _G.FreezePlayerControl  == false then 
 
@@ -162,6 +202,18 @@ function Update()
 
         -- currentBossStateTimer = 0
     end
+     -- Stop Animation 
+    -- if(this:GetAnimator():IsEndOfAnimation()) then
+    --     if roar_slammed_state == "IDLE" then
+    --         this:GetMeshRenderer():SetMesh("Boss_Idle" , this)
+    --     end
+    -- end
+
+
+
+   
+
+
 
     -- if currentBossStateTimer >= maxBossStateTimer then
      
@@ -170,246 +222,299 @@ function Update()
     -- Debug States
     -- state = 1 --[OK]
     -- state = 2 -- [OK] -- need to check agn after i check the other mechanics
-    -- state = 3 -- [OK]
+    state = 3 -- [OK]
     -- state = 4 --[OK]
     -- state = 5 -- [OK]
 
-    if state == 1 and _G.state_checker[1] == false then
+    --  Added [3/11] -> to disable when cutscene is on 
+    if _G.level3intro == false then 
+        if state == 1 and _G.state_checker[1] == false then
 
-        _G.attacking = true -- must include (to stop state choosing)
+            _G.attacking = true -- must include (to stop state choosing)
 
-        -- Decide how many enemies to spawn this phase.
-        if total_number_of_enemies_to_spawn == 0 then 
-            total_number_of_enemies_to_spawn = math.random(4,7)
-            print("NUMBER OF ENEMIES TO SPAWN: " , total_number_of_enemies_to_spawn)
-        end
-
-        -- Timer to set intervals between summons
-        currentEnemySpawnResetTimer = currentEnemySpawnResetTimer + FPSManager.GetDT()
-        -- print("TIMER: " , currentEnemySpawnResetTimer)
-
-        if (currentEnemySpawnResetTimer >= maxEnemySpawnResetTimer) then
-
-            -- Number of enemies to summon per position
-            if(summon_per_spawn_instance == 0) then 
-                summon_per_spawn_instance = math.random(2,3)
-                -- print("SUMMON PER SPAWN INSTANCE: " , summon_per_spawn_instance)
+            -- Decide how many enemies to spawn this phase.
+            if total_number_of_enemies_to_spawn == 0 then 
+                total_number_of_enemies_to_spawn = math.random(4,7)
+                print("NUMBER OF ENEMIES TO SPAWN: " , total_number_of_enemies_to_spawn)
             end
 
-            -- print("CURRENTLY ENEMIES IN LV3: " , _G.number_of_spawned_in_level_3)
-            -- print("TOTAL: " ,_G.number_of_spawned_in_level_3 + summon_per_spawn_instance)
+            -- Timer to set intervals between summons
+            currentEnemySpawnResetTimer = currentEnemySpawnResetTimer + FPSManager.GetDT()
+            -- print("TIMER: " , currentEnemySpawnResetTimer)
 
-            if(_G.number_of_spawned_in_level_3 +  summon_per_spawn_instance < total_number_of_enemies_to_spawn) then 
+            if (currentEnemySpawnResetTimer >= maxEnemySpawnResetTimer) then
+
+                -- Number of enemies to summon per position
                 
-            --    print("NORMAL SUMMON")
-               SummonMinions(summon_per_spawn_instance)
-               currentEnemySpawnResetTimer = 0 -- Reset spawn time
+                if(summon_per_spawn_instance == 0) then 
+                    summon_per_spawn_instance = math.random(2,3)
+                    -- print("SUMMON PER SPAWN INSTANCE: " , summon_per_spawn_instance)
+                end
 
-            else -- if exceed the total amount. 
-                        
-                -- print("SPECIAL SUMMON")
-                SummonMinions(total_number_of_enemies_to_spawn - _G.number_of_spawned_in_level_3)
+                -- print("CURRENTLY ENEMIES IN LV3: " , _G.number_of_spawned_in_level_3)
+                -- print("TOTAL: " ,_G.number_of_spawned_in_level_3 + summon_per_spawn_instance)
+
+                if(_G.number_of_spawned_in_level_3 +  summon_per_spawn_instance < total_number_of_enemies_to_spawn) then 
+                    
+                --    print("NORMAL SUMMON")
+                -- Animate Roar
+                if initial_roar == false then
+                    this:GetMeshRenderer():SetMesh("Boss_Roar", this)
+                    roar_audio:GetAudio():SetPlay(1.0)
+                    initial_roar = true
+                end
+
+                SummonMinions(summon_per_spawn_instance)
                 currentEnemySpawnResetTimer = 0 -- Reset spawn time
+
+                else -- if exceed the total amount. 
+                            
+                    -- print("SPECIAL SUMMON")
+                    -- Animate Roar
+                    if initial_roar == false then
+                        this:GetMeshRenderer():SetMesh("Boss_Roar", this)
+                        roar_audio:GetAudio():SetPlay(1.0)
+                        initial_roar = true
+                    end
+                    SummonMinions(total_number_of_enemies_to_spawn - _G.number_of_spawned_in_level_3)
+                    currentEnemySpawnResetTimer = 0 -- Reset spawn time
+                end
+
+                summon_per_spawn_instance   = 0 -- Reset number of enemies per spawn instance (for a new RNG) -> put here coz might exceed total number    
             end
 
-            summon_per_spawn_instance   = 0 -- Reset number of enemies per spawn instance (for a new RNG) -> put here coz might exceed total number    
+            if(_G.number_of_spawned_in_level_3 >= total_number_of_enemies_to_spawn) then  -- Exit State (Condition)
+                phase_1_timer = phase_1_timer + FPSManager.GetDT()
+                print("PHASE TIMER: " , phase_1_timer)
+            end
+
+            if(phase_1_timer >= phase_1_max_time) then 
+                print("SWITCHING OUT PHASE 1")
+                _G.state_checker[1] = true 
+                _G.attacking = false           -- attack done (exit state)
+                PrintAttackingStates()
+                phase_1_timer = 0              -- reset toimer
+                initial_roar = false
+            end
+
         end
 
-        if(_G.number_of_spawned_in_level_3 >= total_number_of_enemies_to_spawn) then  -- Exit State (Condition)
-            phase_1_timer = phase_1_timer + FPSManager.GetDT()
-            print("PHASE TIMER: " , phase_1_timer)
-        end
+        if state == 2 and _G.state_checker[2] == false then
 
-        if(phase_1_timer >= phase_1_max_time) then 
-            print("SWITCHING OUT PHASE 1")
-            _G.state_checker[1] = true 
-            _G.attacking = false           -- attack done (exit state)
-            PrintAttackingStates()
-            phase_1_timer = 0              -- reset toimer
-        end
+            if roar_slammed_state == "RS_SLAM" then 
+                this:GetMeshRenderer():SetMesh("Boss_Slam" , this)
+                roar_slammed_state = "SLAM_ANIM"
+            end
 
-    end
+            if roar_slammed_state == "SLAM_ANIM" then 
+                slam_audio_timer = slam_audio_timer + FPSManager.GetDT()
 
-    if state == 2 and _G.state_checker[2] == false then
+                if slam_audio_timer >= delay_slam_audio_time then
+                    roar_slammed_state = "PLAY_SLAM_AUDIO"
+                end
+            end
 
-        _G.attacking = true -- must include (to stop state choosing)
+            if roar_slammed_state == "PLAY_SLAM_AUDIO" then -- delayed audio slam
+                 boss_slam_audio:GetAudio():SetPlay(1.0)
+                 roar_slammed_state = "SLAMMING"
+            end
 
-        if groundSlamMax == 0 then 
+            if roar_slammed_state == "SLAMMING" then 
+                -- if currentGroundSlamResetTimer >= maxGroundSlamResetTimer then
+
+                    -- Pick which direction to ground slam in 
+                    groundSlamDirection = math.random(1, 8)
+                    -- groundSlamDirection  = 2
+
+                    -- print("GROUND SLAM: " , groundSlamDirection)
+
+                    -- Ground slam (9 o'clock)
+                    if groundSlamDirection == 1 then
+                        groundSlamPosition.x = 0
+                        groundSlamPosition.y = 0
+                        groundSlamPosition.z = 40
+                    end
+
+                    -- Ground slam (7 o'clock)
+                    if groundSlamDirection == 2 then
+                        groundSlamPosition.x = 37   
+                        groundSlamPosition.y = 0
+                        groundSlamPosition.z = 37
+                    end
+
+                    -- Ground slam (6 o'clock)
+                    if groundSlamDirection == 3 then
+                        groundSlamPosition.x = 50
+                        groundSlamPosition.y = 0
+                        groundSlamPosition.z = 8
+                    end
+
+                    -- Ground slam (5 o'clock)
+                    if groundSlamDirection == 4 then
+                        groundSlamPosition.x = 33
+                        groundSlamPosition.y = 0
+                        groundSlamPosition.z = -32
+                    end
+
+                    -- Ground slam (3 o'clock)
+                    if groundSlamDirection == 5 then
+                        groundSlamPosition.x =  3
+                        groundSlamPosition.y = 0
+                        groundSlamPosition.z = -42
+                    end
+
+                    -- Ground slam (1 o'clock)
+                    if groundSlamDirection == 6 then
+                        groundSlamPosition.x = -43
+                        groundSlamPosition.y = 0
+                        groundSlamPosition.z = -29
+                    end
+
+                    -- Ground slam (11o'clock)
+                    if groundSlamDirection == 7 then
+                        groundSlamPosition.x = -43
+                        groundSlamPosition.y = 0
+                        groundSlamPosition.z = 39
+                    end
+
+                    -- Ground slam (12 o'clock)
+                    if groundSlamDirection == 8 then
+                        groundSlamPosition.x = -60
+                        groundSlamPosition.y = 0
+                        groundSlamPosition.z = 2.3
+                    end
+
+                    -- TODO: Play arm swinging animation before spawning ground slam object
+                    roundSlam = systemManager.ecs:NewEntityFromPrefab("GroundSlamObject", groundSlamPosition)
+                    groundSlamCount = groundSlamCount + 1
+                    print("GROUND SLAM COUNT: ", groundSlamCount)
+                    -- currentGroundSlamResetTimer = 0 -- Reset ground slam timer
+
+                    roar_slammed_state = "SPAWN_SHOCKWAVE"
+            end
           
-            groundSlamMax = math.random(3, 5)
-            -- print("GROUND SLAM MAX: " , groundSlamMax)
-        end
-        -- Timer to set intervals between ground slams
-        -- print("Current Ground Slam Reset Timer: " , currentGroundSlamResetTimer)
 
-        if groundSlamCount < groundSlamMax then 
-            -- print("HI INSIDE HERE")
-            currentGroundSlamResetTimer = currentGroundSlamResetTimer + FPSManager.GetDT()
+            _G.attacking = true -- must include (to stop state choosing)
+
+            if groundSlamMax == 0 then 
+            
+                groundSlamMax = math.random(1,1)
+                -- print("GROUND SLAM MAX: " , groundSlamMax)
+            end
+            -- Timer to set intervals between ground slams
             -- print("Current Ground Slam Reset Timer: " , currentGroundSlamResetTimer)
 
-            if currentGroundSlamResetTimer >= maxGroundSlamResetTimer then
+            if groundSlamCount < groundSlamMax then 
+                -- print("HI INSIDE HERE")
+                currentGroundSlamResetTimer = currentGroundSlamResetTimer + FPSManager.GetDT()
+                -- print("Current Ground Slam Reset Timer: " , currentGroundSlamResetTimer)
+                if currentGroundSlamResetTimer + buffer_time >= maxGroundSlamResetTimer then 
+                    -- roar_slammed_state = "START"
 
-                -- Pick which direction to ground slam in 
-                groundSlamDirection = math.random(1, 8)
-                -- groundSlamDirection  = 2
-
-                -- print("GROUND SLAM: " , groundSlamDirection)
-
-                -- Ground slam (9 o'clock)
-                if groundSlamDirection == 1 then
-                    groundSlamPosition.x = 0
-                    groundSlamPosition.y = 0
-                    groundSlamPosition.z = 40
+                    if roar_slammed_state == "START" then 
+                        roar_audio:GetAudio():SetPlay(1.0)
+                        this:GetMeshRenderer():SetMesh("Boss_Roar", this)
+                        roar_slammed_state = "RS_SLAM"
+                    end
                 end
 
-                -- Ground slam (7 o'clock)
-                if groundSlamDirection == 2 then
-                    groundSlamPosition.x = 37   
-                    groundSlamPosition.y = 0
-                    groundSlamPosition.z = 37
-                end
-
-                -- Ground slam (6 o'clock)
-                if groundSlamDirection == 3 then
-                    groundSlamPosition.x = 50
-                    groundSlamPosition.y = 0
-                    groundSlamPosition.z = 8
-                end
-
-                  -- Ground slam (5 o'clock)
-                if groundSlamDirection == 4 then
-                    groundSlamPosition.x = 33
-                    groundSlamPosition.y = 0
-                    groundSlamPosition.z = -32
-                end
-
-                -- Ground slam (3 o'clock)
-                if groundSlamDirection == 5 then
-                    groundSlamPosition.x =  3
-                    groundSlamPosition.y = 0
-                    groundSlamPosition.z = -42
-                end
-
-                -- Ground slam (1 o'clock)
-                if groundSlamDirection == 6 then
-                    groundSlamPosition.x = -43
-                    groundSlamPosition.y = 0
-                    groundSlamPosition.z = -29
-                end
-
-                -- Ground slam (11o'clock)
-                if groundSlamDirection == 7 then
-                    groundSlamPosition.x = -43
-                    groundSlamPosition.y = 0
-                    groundSlamPosition.z = 39
-                end
-
-                -- Ground slam (12 o'clock)
-                if groundSlamDirection == 8 then
-                    groundSlamPosition.x = -60
-                    groundSlamPosition.y = 0
-                    groundSlamPosition.z = 2.3
-                end
-
-                -- TODO: Play arm swinging animation before spawning ground slam object
-                roundSlam = systemManager.ecs:NewEntityFromPrefab("GroundSlamObject", groundSlamPosition)
-                groundSlamCount = groundSlamCount + 1
-                print("GROUND SLAM COUNT: ", groundSlamCount)
-                currentGroundSlamResetTimer = 0 -- Reset ground slam timer
-            -- else  -- Exit State (Condition)
-            --     _G.state_checker[2] = true -- attack done (exit state)
-            --     _G.attacking = false
-            --     Print_G.attackingStates()
+            else 
+                -- print("DONE SLAM")
+                -- _G.state_checker[2] = true
+                -- _G.attacking = false
+                -- groundSlamMax = 0
+                -- smashed = false 
             end
-          
 
-        else 
-            print("DONE SLAM")
-            _G.state_checker[2] = true
-            _G.attacking = false
-            groundSlamMax = 0
         end
 
-    end
+        -- Bullet Types (Phases)
+        -- 1. Bullet Hell (no homing) -> maybe add 2 variations to start
+        -- 2. Homing Bullets (but dodgeable)
 
-    -- Bullet Types (Phases)
-    -- 1. Bullet Hell (no homing) -> maybe add 2 variations to start
-    -- 2. Homing Bullets (but dodgeable)
-
-    
-    -- [3] Bullet Hell #1 : Pulsing Spheres
-    -- (a) State 1 : Normal Circles but pulsing in different directions & angles. 
-    --     - Make it easier at the start 
-    if state == 3 and _G.state_checker[3] == false then
         
-        _G.attacking = true -- must include (to stop state choosing)
+        -- [3] Bullet Hell #1 : Pulsing Spheres
+        -- (a) State 1 : Normal Circles but pulsing in different directions & angles. 
+        --     - Make it easier at the start 
+        if state == 3 and _G.state_checker[3] == false then
+            if play_sphere_audio == false then
+                play_sphere_audio = true
+                -- sphere_phase_audio:GetAudio():SetPlay(0.5) 
+            end
+            _G.attacking = true -- must include (to stop state choosing)
 
-        fire_timer = fire_timer +  FPSManager.GetDT()
+            fire_timer = fire_timer +  FPSManager.GetDT()
 
-        if(random_wave_generator == false) then 
-            random_wave_generator = true 
-            no_of_waves_1 = math.random(5, 8) -- can generate between 5 to 10 waves of bullets
-        end
+            if(random_wave_generator == false) then 
+                random_wave_generator = true 
+                no_of_waves_1 = math.random(5, 8) -- can generate between 5 to 10 waves of bullets
+            end
 
-        if fire_timer > next_fire_time then 
-            if number_of_fire < stop_firing_at then 
-                fire_timer = 0 -- reset timer
-                print("NO OF WAVES: " , no_of_waves_1)
-                SpawnBulletsPattern1(no_of_waves_1)
-                number_of_fire = number_of_fire + 1
-            else -- Exit State (Condition)
-                _G.state_checker[3] = true
-                _G.attacking = false
-                PrintAttackingStates()
+            if fire_timer > next_fire_time then 
+                if number_of_fire < stop_firing_at then 
+                    fire_timer = 0 -- reset timer
+                    print("NO OF WAVES: " , no_of_waves_1)
+                    SpawnBulletsPattern1(no_of_waves_1)
+                    number_of_fire = number_of_fire + 1
+                else -- Exit State (Condition)
+                    _G.state_checker[3] = true
+                    _G.attacking = false
+                    PrintAttackingStates()
+                end
             end
         end
-    end
 
-    -- [4] Homing Eyeballs (From Boss' Mouth / Face)
-    if state == 4 and _G.state_checker[4] == false then 
-        -- print("INSIDE STATE 4")
-        -- homing_spawn_counter = 0 
-        _G.attacking = true -- must include (to stop state choosing)
+        -- [4] Homing Eyeballs (From Boss' Mouth / Face)
+        if state == 4 and _G.state_checker[4] == false then 
+            -- print("INSIDE STATE 4")
+            -- homing_spawn_counter = 0 
+            _G.attacking = true -- must include (to stop state choosing)
 
-        -- Initially -> decides the number of homing to spawn
-        if number_of_homing == 0 then 
-            number_of_homing = math.random(5, 8)
-            -- print("NUMBER OF HOMING: " , number_of_homing)
-        end
+            -- Initially -> decides the number of homing to spawn
+            if number_of_homing == 0 then 
+                number_of_homing = math.random(5, 8)
+                -- print("NUMBER OF HOMING: " , number_of_homing)
+            end
 
-        -- Timer to spawn 1 by 1
-        if homing_spawn_counter ~= number_of_homing then 
-            -- print("SPAWNED ENOUGH")
-            homing_spawn_timer = homing_spawn_timer + FPSManager.GetDT()
-        else 
-            -- print("SPAWNED ENOUGH")
-        end
+            -- Timer to spawn 1 by 1
+            if homing_spawn_counter ~= number_of_homing then 
+                -- print("SPAWNED ENOUGH")
+                homing_spawn_timer = homing_spawn_timer + FPSManager.GetDT()
+            else 
+                -- print("SPAWNED ENOUGH")
+            end
 
-        -- print("HOMING SPAWN TIMER: " , homing_spawn_timer)
+            -- print("HOMING SPAWN TIMER: " , homing_spawn_timer)
+            
+            if(homing_spawn_counter < number_of_homing) then 
+                if(homing_spawn_timer > homing_spawn_period) then -- It's time to spawn another homing bullet
+                    SpawnHomingSpheres()
+                    homing_spawn_counter = homing_spawn_counter + 1 -- Increase the counter
+                    homing_spawn_timer = 0   -- Reset the counter
+                    -- print("SPAWNING ORB")
+                end
+            end
+
         
-        if(homing_spawn_counter < number_of_homing) then 
-            if(homing_spawn_timer > homing_spawn_period) then -- It's time to spawn another homing bullet
-                SpawnHomingSpheres()
-                homing_spawn_counter = homing_spawn_counter + 1 -- Increase the counter
-                homing_spawn_timer = 0   -- Reset the counter
-                -- print("SPAWNING ORB")
+
+            if homing_spawned == true then
+                UpdateHomingProjectiles()
             end
         end
 
-    
 
-        if homing_spawned == true then
-            UpdateHomingProjectiles()
+        if state == 5 and _G.state_checker[5] == false then 
+            if play_laser_audio == false then
+                play_laser_audio = true
+                laser_phase = gameStateSys:GetEntity("LaserPhase")
+                laserPhaseAudio = laser_phase:GetAudio()
+                laserPhaseAudio:SetPlay(0.5)
+            end
+            -- print("LAZER ATTACK")
+            _G.attacking = true -- must include (to stop state choosing)
+            _G.activateLazerScript = true
         end
     end
-
-
-    if state == 5 and _G.state_checker[5] == false then 
-        -- print("LAZER ATTACK")
-        _G.attacking = true -- must include (to stop state choosing)
-        _G.activateLazerScript = true
-    end
-
 end
 
 function Dead()
@@ -500,6 +605,8 @@ function SpawnBulletsPattern1(number_of_bullets)
         angle = angle + angleStep
         
     end
+
+    sphere_phase_audio:GetAudio():SetPlay(0.3) 
 
 end
 
@@ -630,12 +737,16 @@ function UpdateHomingProjectiles()
 end 
 
 function SummonMinions(summon_per_spawn_instance) 
-    print("Number of Enemies to Summon: " , summon_per_spawn_instance)
+    -- print("Number of Enemies to Summon: " , summon_per_spawn_instance)
+
+    portal_audio:GetAudio():SetPlay(0.7)
+
+   
 
     -- Pick which direction to ground slam in 
     enemySpawnDirection = math.random(1, 4)
     enemySpawnDirection = 1
-    print("ENEMY SPAWN DIRECTION: " , enemySpawnDirection)
+    -- print("ENEMY SPAWN DIRECTION: " , enemySpawnDirection)
 
     -- Summon Area (In Front of Boss)
     if enemySpawnDirection == 1 then
@@ -666,6 +777,10 @@ function SummonMinions(summon_per_spawn_instance)
         groundSlamPosition.z = -0.09
     end
 
+    -- Summon Portal (Visual)
+    portal = systemManager.ecs:NewEntityFromPrefab("Portal", groundSlamPosition)
+    
+    
 
     -- [3/6] - Set to summon multiple enemies in 1 area 
     for i = 1 , summon_per_spawn_instance  do 
@@ -701,6 +816,18 @@ function PrintAttackingStates()
     end
 
     print("ATTACKING: " , _G.attacking)
+end
+
+
+function PortalAnimation()
+
+    -- 0.13 , -0.06, 7.53
+    -- 0.13 , 12.1 , 7.53
+    portal_trans = portal:GetTransform()
+
+    portal_open_timer = 0
+    portal_max_timer = 3
+
 end
 
 -- function UpdateHomingProjectiles()
