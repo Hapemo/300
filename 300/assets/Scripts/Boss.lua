@@ -298,9 +298,7 @@ function Update()
         end
 
         if state == 2 and _G.state_checker[2] == false then
-            print("Roar Slam State: " , roar_slammed_state)
-            -- if(this:GetAnimator():IsEndOfAnimation()) then
-                -- print("ANIM DONE SLAM")
+
             if roar_slammed_state == "RS_SLAM" then 
                 this:GetMeshRenderer():SetMesh("Boss_Slam" , this)
                 roar_slammed_state = "SLAM_ANIM"
@@ -318,58 +316,9 @@ function Update()
                  boss_slam_audio:GetAudio():SetPlay(1.0)
                  roar_slammed_state = "SLAMMING"
             end
-            -- end
 
-            -- if roar_slammed_state == "SMASH" then 
-            --     if smashed == false then 
-            --         this:GetMeshRenderer():SetMesh("Boss_Slam" , this)
-            --         boss_slam_audio:GetAudio():SetPlay(1.0)
-            --         print("SMASH")
-            --         smashed = true
-            --     end
-
-            --     if(this:GetAnimator():IsEndOfAnimation()) then
-            --         roar_slammed_state = "IDLE"
-
-            --     end
-
-            -- end
-
-        
-
-            -- if roar_slammed_state == "SMASH" then 
-            --     -- boss_slam_audio:GetAudio():SetPlay(1.0)
-            --     this:GetMeshRenderer():SetMesh("Boss_Slam" , this)
-            --     roar_slammed_state = "SLAM_AUDIO" -- wait for smash to finish
-            -- end
-
-        
-            --  end
-          
-
-            _G.attacking = true -- must include (to stop state choosing)
-
-            if groundSlamMax == 0 then 
-            
-                groundSlamMax = math.random(1,1)
-                -- print("GROUND SLAM MAX: " , groundSlamMax)
-            end
-            -- Timer to set intervals between ground slams
-            -- print("Current Ground Slam Reset Timer: " , currentGroundSlamResetTimer)
-
-            if groundSlamCount < groundSlamMax then 
-                -- print("HI INSIDE HERE")
-                currentGroundSlamResetTimer = currentGroundSlamResetTimer + FPSManager.GetDT()
-                -- print("Current Ground Slam Reset Timer: " , currentGroundSlamResetTimer)
-                if currentGroundSlamResetTimer + buffer_time >= maxGroundSlamResetTimer then 
-                    if roar_slammed_state == "START" then 
-                        roar_audio:GetAudio():SetPlay(1.0)
-                        this:GetMeshRenderer():SetMesh("Boss_Roar", this)
-                        roar_slammed_state = "RS_SLAM"
-                    end
-                end
-
-                if currentGroundSlamResetTimer >= maxGroundSlamResetTimer then
+            if roar_slammed_state == "SLAMMING" then 
+                -- if currentGroundSlamResetTimer >= maxGroundSlamResetTimer then
 
                     -- Pick which direction to ground slam in 
                     groundSlamDirection = math.random(1, 8)
@@ -437,13 +386,35 @@ function Update()
                     roundSlam = systemManager.ecs:NewEntityFromPrefab("GroundSlamObject", groundSlamPosition)
                     groundSlamCount = groundSlamCount + 1
                     print("GROUND SLAM COUNT: ", groundSlamCount)
-                    currentGroundSlamResetTimer = 0 -- Reset ground slam timer
-                -- else  -- Exit State (Condition)
-                --     _G.state_checker[2] = true -- attack done (exit state)
-                --     _G.attacking = false
-                --     Print_G.attackingStates()
-                end
+                    -- currentGroundSlamResetTimer = 0 -- Reset ground slam timer
+
+                    roar_slammed_state = "SPAWN_SHOCKWAVEW"
+            end
+          
+
+            _G.attacking = true -- must include (to stop state choosing)
+
+            if groundSlamMax == 0 then 
             
+                groundSlamMax = math.random(1,1)
+                -- print("GROUND SLAM MAX: " , groundSlamMax)
+            end
+            -- Timer to set intervals between ground slams
+            -- print("Current Ground Slam Reset Timer: " , currentGroundSlamResetTimer)
+
+            if groundSlamCount < groundSlamMax then 
+                -- print("HI INSIDE HERE")
+                currentGroundSlamResetTimer = currentGroundSlamResetTimer + FPSManager.GetDT()
+                -- print("Current Ground Slam Reset Timer: " , currentGroundSlamResetTimer)
+                if currentGroundSlamResetTimer + buffer_time >= maxGroundSlamResetTimer then 
+                    -- roar_slammed_state = "START"
+
+                    if roar_slammed_state == "START" then 
+                        roar_audio:GetAudio():SetPlay(1.0)
+                        this:GetMeshRenderer():SetMesh("Boss_Roar", this)
+                        roar_slammed_state = "RS_SLAM"
+                    end
+                end
 
             else 
                 -- print("DONE SLAM")
