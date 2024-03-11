@@ -3,6 +3,7 @@ local angle = 0.0
 local axis = Vec3.new()
 
 local translation = Vec3.new()
+local trans
 
 local ent 
 
@@ -10,8 +11,17 @@ local ent
 local lazer_timer = 0 
 local lazer_duration = 5.0
 
-function Alive()
+local laser_phase 
+local laserPhaseAudio 
 
+local laser_audio_played = false
+local gameStateSys
+
+function Alive()
+    gameStateSys = systemManager:mGameStateSystem()
+
+    laser_phase = gameStateSys:GetEntity("LaserPhase")
+    laserPhaseAudio = laser_phase:GetAudio()
     -- testing timer countdown for the rotation of the laser
     ent = Helper.GetScriptEntity(script_entity.id)
     trans = ent:GetTransform()
@@ -33,12 +43,19 @@ function Update()
     translation = trans.mTranslate 
     if(_G.activateLazerScript == true) then 
 
-        lazer_timer = lazer_timer + FPSManager.GetDT()
+        if laser_audio_played == false then 
+            laserPhaseAudio:SetPlay(0.5)
+            laser_audio_played = true
+        end
+        lazer_timer = lazer_timer + FPSManager.GetDT()  
+        print("LAZER TIMER: " , lazer_timer)
+   
         if(lazer_timer < lazer_duration) then
             translation.y = -1.19
             angle = angle + speed * (FPSManager.GetDT() * speed)
             Helper.SetRealRotateQuaternion(ent, axis, angle)
         else            
+            laserPhaseAudio:SetStop()
             _G.state_checker[5] = true -- mark the database
             attacking = false     
             

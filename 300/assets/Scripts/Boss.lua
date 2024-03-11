@@ -222,9 +222,9 @@ function Update()
     -- Debug States
     -- state = 1 --[OK]
     -- state = 2 -- [OK] -- need to check agn after i check the other mechanics
-    state = 3 -- [OK]
+    -- state = 3 -- [OK]
     -- state = 4 --[OK]
-    -- state = 5 -- [OK]
+    state = 5 -- [OK]
 
     --  Added [3/11] -> to disable when cutscene is on 
     if _G.level3intro == false then 
@@ -506,9 +506,9 @@ function Update()
         if state == 5 and _G.state_checker[5] == false then 
             if play_laser_audio == false then
                 play_laser_audio = true
-                laser_phase = gameStateSys:GetEntity("LaserPhase")
-                laserPhaseAudio = laser_phase:GetAudio()
-                laserPhaseAudio:SetPlay(0.5)
+                -- laser_phase = gameStateSys:GetEntity("LaserPhase")
+                -- laserPhaseAudio = laser_phase:GetAudio()
+                -- laserPhaseAudio:SetPlay(0.5)
             end
             -- print("LAZER ATTACK")
             _G.attacking = true -- must include (to stop state choosing)
