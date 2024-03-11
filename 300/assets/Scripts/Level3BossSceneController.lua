@@ -39,7 +39,10 @@ local magfloat = 0.5
 local initonce
 
 local graphicsSys
+local gameStateSys
+
 function Alive()
+    gameStateSys = systemManager:mGameStateSystem()
     initonce =false
     uiHider = gameStateSys:GetEntity("UIHider")
     cameraEntity = gameStateSys:GetEntity("Camera")

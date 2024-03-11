@@ -3,7 +3,10 @@ _G.bossHP_healthbar_comp = nil
 
 local this -- hp bar
 local initonce
+local gameStateSys
+
 function Alive()
+    gameStateSys = systemManager:mGameStateSystem()
     boss_entity = gameStateSys:GetEntityByScene("Boss", "BossStuff")
 
     this = Helper.GetScriptEntity(script_entity.id)
