@@ -113,6 +113,7 @@ local player_position = Vec3.new()
 local portal_audio 
 local roar_slam_audio 
 local boss_slam_audio
+local sphere_phase_audio
 
 local play_sphere_audio
 local play_laser_audio
@@ -154,6 +155,7 @@ function Alive()
     roar_audio = gameStateSys:GetEntity("RoarAudio")
     roar_slam_audio = gameStateSys:GetEntity("RoarSlamAudio")
     boss_slam_audio = gameStateSys:GetEntity("BossSlamAudio")
+    sphere_phase_audio = gameStateSys:GetEntity("SpherePhase")
 
 
 end
@@ -219,8 +221,8 @@ function Update()
 
     -- Debug States
     -- state = 1 --[OK]
-    state = 2 -- [OK] -- need to check agn after i check the other mechanics
-    -- state = 3 -- [OK]
+    -- state = 2 -- [OK] -- need to check agn after i check the other mechanics
+    state = 3 -- [OK]
     -- state = 4 --[OK]
     -- state = 5 -- [OK]
 
@@ -435,11 +437,9 @@ function Update()
         -- (a) State 1 : Normal Circles but pulsing in different directions & angles. 
         --     - Make it easier at the start 
         if state == 3 and _G.state_checker[3] == false then
-            if play_sphere_audio ==false then
+            if play_sphere_audio == false then
                 play_sphere_audio = true
-                spherePhase = gameStateSys:GetEntity("SpherePhase")
-                spherePhaseAudio = spherePhase:GetAudio()
-                spherePhaseAudio:SetPlay(0.5)
+                -- sphere_phase_audio:GetAudio():SetPlay(0.5) 
             end
             _G.attacking = true -- must include (to stop state choosing)
 
@@ -605,6 +605,8 @@ function SpawnBulletsPattern1(number_of_bullets)
         angle = angle + angleStep
         
     end
+
+    sphere_phase_audio:GetAudio():SetPlay(0.3) 
 
 end
 
