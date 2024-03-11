@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 3146044,
+        "entityid": 31457300,
         "general": {
             "name": "SkipButtonE",
             "tagid": 0,
@@ -69,7 +69,7 @@
         }
     },
     {
-        "entityid": 3146045,
+        "entityid": 31457302,
         "general": {
             "name": "Click",
             "tagid": 6,
@@ -112,7 +112,7 @@
         }
     },
     {
-        "entityid": 3146046,
+        "entityid": 31457303,
         "general": {
             "name": "EndSceneController",
             "tagid": 8,
@@ -147,7 +147,7 @@
         }
     },
     {
-        "entityid": 3146047,
+        "entityid": 39845912,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -185,14 +185,14 @@
             },
             "size": {
                 "x": 1223,
-                "y": 504
+                "y": 583
             },
             "near": 0.10000000149011612,
             "far": 900.0
         }
     },
     {
-        "entityid": 3146049,
+        "entityid": 39845914,
         "general": {
             "name": "Frame1E",
             "tagid": 6,
@@ -228,12 +228,12 @@
                 "z": 1.0,
                 "w": 1.0
             },
-            "layer": 7,
+            "layer": 6,
             "worldtransform": false
         }
     },
     {
-        "entityid": 3146050,
+        "entityid": 39845915,
         "general": {
             "name": "Frame2E",
             "tagid": 6,
@@ -269,12 +269,12 @@
                 "z": 1.0,
                 "w": 1.0
             },
-            "layer": 1,
+            "layer": 5,
             "worldtransform": false
         }
     },
     {
-        "entityid": 3146051,
+        "entityid": 39846026,
         "general": {
             "name": "Frame3E",
             "tagid": 6,
@@ -308,14 +308,14 @@
                 "x": 1.0,
                 "y": 1.0,
                 "z": 1.0,
-                "w": 0.0
+                "w": 1.0
             },
-            "layer": 2,
+            "layer": 4,
             "worldtransform": false
         }
     },
     {
-        "entityid": 3146052,
+        "entityid": 63963144,
         "general": {
             "name": "Frame4E",
             "tagid": 6,
@@ -349,14 +349,14 @@
                 "x": 1.0,
                 "y": 1.0,
                 "z": 1.0,
-                "w": 0.0
+                "w": 1.0
             },
             "layer": 3,
             "worldtransform": false
         }
     },
     {
-        "entityid": 4194629,
+        "entityid": 63963145,
         "general": {
             "name": "Frame5E",
             "tagid": 6,
@@ -390,17 +390,17 @@
                 "x": 1.0,
                 "y": 1.0,
                 "z": 1.0,
-                "w": 0.0
+                "w": 1.0
             },
-            "layer": 4,
+            "layer": 2,
             "worldtransform": false
         }
     },
     {
-        "entityid": 4194631,
+        "entityid": 67108874,
         "general": {
             "name": "Frame6E",
-            "tagid": 0,
+            "tagid": 6,
             "subtag": 0,
             "isActive": true,
             "isPaused": false
@@ -431,9 +431,9 @@
                 "x": 1.0,
                 "y": 1.0,
                 "z": 1.0,
-                "w": 0.0
+                "w": 1.0
             },
-            "layer": 5,
+            "layer": 1,
             "worldtransform": false
         }
     }

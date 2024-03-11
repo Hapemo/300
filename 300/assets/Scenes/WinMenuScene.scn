@@ -1,8 +1,8 @@
 [
     {
-        "entityid": 7340351,
+        "entityid": 7340037,
         "general": {
-            "name": "WMReplayButton",
+            "name": "WMQuitButton",
             "tagid": 6,
             "subtag": 0,
             "isActive": true,
@@ -11,7 +11,7 @@
         "transform": {
             "scale": {
                 "x": 0.20000000298023224,
-                "y": -0.20000000298023224,
+                "y": -0.18000000715255737,
                 "z": 1.0
             },
             "rotate": {
@@ -20,14 +20,14 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 0.0,
-                "y": -0.09000000357627869,
+                "x": 0.029999999329447746,
+                "y": -0.47999998927116394,
                 "z": 0.0
             }
         },
         "uirenderer": {
-            "texpath": "",
-            "textureref": 423582751,
+            "texpath": "../assets/Compressed/Quit_Default.ctexture",
+            "textureref": 496038782,
             "degree": 0.0,
             "slider": 1.0,
             "color": {
@@ -36,11 +36,23 @@
                 "z": 1.0,
                 "w": 1.0
             },
-            "layer": 1,
+            "layer": 41,
             "worldtransform": false
         },
         "scripts": {
             "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/PauseMenuButtons.lua",
+                    "variables": [
+                        {
+                            "key": "gameState",
+                            "val": {
+                                "type": -734751724,
+                                "value": "Test"
+                            }
+                        }
+                    ]
+                },
                 {
                     "scriptFile": "../assets/Scripts/WinMenuButton.lua",
                     "variables": []
@@ -54,8 +66,11 @@
             "playonawake": false,
             "islooping": false,
             "audiotype": 1,
-            "volume": 1.0,
+            "volume": 0.20000000298023224,
             "retainaudio": false
+        },
+        "prefab": {
+            "prefab": "PauseQuitButton"
         },
         "button": {
             "interactable": true,
@@ -66,167 +81,7 @@
         }
     },
     {
-        "entityid": 8388929,
-        "general": {
-            "name": "WinMenuBackground",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 2.0,
-                "y": -2.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 3735530103,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 0.0
-            },
-            "layer": 0,
-            "worldtransform": false
-        }
-    },
-    {
-        "entityid": 12583234,
-        "general": {
-            "name": "Camera",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "camera": {
-            "positon": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "target": {
-                "x": 1.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "size": {
-                "x": 1223,
-                "y": 504
-            },
-            "near": 0.10000000149011612,
-            "far": 900.0
-        }
-    },
-    {
-        "entityid": 12583235,
-        "general": {
-            "name": "BGM",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "Troubleshooter_M4.wav",
-            "fullpath": "../assets\\Audio/Troubleshooter_M4.wav",
-            "playonawake": true,
-            "islooping": true,
-            "audiotype": 1,
-            "volume": 0.4000000059604645,
-            "retainaudio": false
-        }
-    },
-    {
-        "entityid": 12583236,
-        "general": {
-            "name": "Click",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "UI_Button_Click.wav",
-            "fullpath": "../assets\\Audio/UI_Button_Click.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 1.0,
-            "retainaudio": false
-        }
-    },
-    {
-        "entityid": 13631813,
+        "entityid": 7340038,
         "general": {
             "name": "WMMainMenuButton",
             "tagid": 6,
@@ -246,8 +101,8 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 0.0,
-                "y": -0.33000001311302185,
+                "x": 0.029999999329447746,
+                "y": -0.20999999344348907,
                 "z": 0.0
             }
         },
@@ -307,9 +162,9 @@
         }
     },
     {
-        "entityid": 13631815,
+        "entityid": 7340039,
         "general": {
-            "name": "WMQuitButton",
+            "name": "Click",
             "tagid": 6,
             "subtag": 0,
             "isActive": true,
@@ -317,8 +172,8 @@
         },
         "transform": {
             "scale": {
-                "x": 0.20000000298023224,
-                "y": -0.18000000715255737,
+                "x": 1.0,
+                "y": 1.0,
                 "z": 1.0
             },
             "rotate": {
@@ -328,13 +183,132 @@
             },
             "translate": {
                 "x": 0.0,
-                "y": -0.5600000023841858,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "UI_Button_Click.wav",
+            "fullpath": "../assets\\Audio/UI_Button_Click.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false
+        }
+    },
+    {
+        "entityid": 7340040,
+        "general": {
+            "name": "BGM",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Troubleshooter_M4.wav",
+            "fullpath": "../assets\\Audio/Troubleshooter_M4.wav",
+            "playonawake": true,
+            "islooping": true,
+            "audiotype": 1,
+            "volume": 0.4000000059604645,
+            "retainaudio": false
+        }
+    },
+    {
+        "entityid": 7340041,
+        "general": {
+            "name": "Camera",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "camera": {
+            "positon": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "target": {
+                "x": 1.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "size": {
+                "x": 1223,
+                "y": 583
+            },
+            "near": 0.10000000149011612,
+            "far": 900.0
+        }
+    },
+    {
+        "entityid": 7340043,
+        "general": {
+            "name": "WMReplayButton",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.20000000298023224,
+                "y": -0.20000000298023224,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.029999999329447746,
+                "y": 0.05999999865889549,
                 "z": 0.0
             }
         },
         "uirenderer": {
-            "texpath": "../assets/Compressed/Quit_Default.ctexture",
-            "textureref": 496038782,
+            "texpath": "",
+            "textureref": 423582751,
             "degree": 0.0,
             "slider": 1.0,
             "color": {
@@ -343,23 +317,11 @@
                 "z": 1.0,
                 "w": 1.0
             },
-            "layer": 41,
+            "layer": 1,
             "worldtransform": false
         },
         "scripts": {
             "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/PauseMenuButtons.lua",
-                    "variables": [
-                        {
-                            "key": "gameState",
-                            "val": {
-                                "type": -734751724,
-                                "value": "Test"
-                            }
-                        }
-                    ]
-                },
                 {
                     "scriptFile": "../assets/Scripts/WinMenuButton.lua",
                     "variables": []
@@ -373,11 +335,8 @@
             "playonawake": false,
             "islooping": false,
             "audiotype": 1,
-            "volume": 0.20000000298023224,
+            "volume": 1.0,
             "retainaudio": false
-        },
-        "prefab": {
-            "prefab": "PauseQuitButton"
         },
         "button": {
             "interactable": true,
@@ -385,6 +344,47 @@
             "click": false,
             "activated": false,
             "renderflag": true
+        }
+    },
+    {
+        "entityid": 8388618,
+        "general": {
+            "name": "WinMenuBackground",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 2.0,
+                "y": -2.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 2299001368,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 0,
+            "worldtransform": false
         }
     }
 ]
