@@ -388,7 +388,7 @@ function Update()
                     print("GROUND SLAM COUNT: ", groundSlamCount)
                     -- currentGroundSlamResetTimer = 0 -- Reset ground slam timer
 
-                    roar_slammed_state = "SPAWN_SHOCKWAVEW"
+                    roar_slammed_state = "SPAWN_SHOCKWAVE"
             end
           
 
