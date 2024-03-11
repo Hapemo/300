@@ -979,13 +979,13 @@ end
 function HideUI()
     graphicsSys:IgnoreUIScene("UI")
     graphicsSys:IgnoreUIScene("Objectives")
+    graphicsSys:IgnoreUIScene("Objectives2")
 end
 
 function ShowUI()
     graphicsSys:UnignoreUIScene("UI")
     graphicsSys:UnignoreUIScene("Objectives")
-
-
+    graphicsSys:UnignoreUIScene("Objectives2")
 end
 
 -- Take in targeted UI position
