@@ -42,9 +42,8 @@ end
 function Update()
     cameraEntity = gameStateSys:GetEntity("Camera")
     bossEntity = gameStateSys:GetEntity("BossLevel2")
-
+    bossEntity:GetAnimator():PauseAnimation()
     --print("current frame: ", bossEntity:GetAnimator():GetFrame())
-    
     if STATE == 0 then
         bossEntity:GetAnimator():SetFrame(0.0) -- intialize initial position
         bossEntity:GetAnimator():PauseAnimation()

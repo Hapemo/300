@@ -25,9 +25,12 @@ local picture
 
 local playing
 local audio
+local gameStateSys
 
 --neeae
 function Alive()
+    inputMapSys = systemManager:mInputActionSystem();
+    gameStateSys = systemManager:mGameStateSystem()
     Intro1 = gameStateSys:GetEntity("DialogueLoadIn1", "Dialogue_Level3")
     Intro2 = gameStateSys:GetEntity("DialogueLoadIn2", "Dialogue_Level3")
     Obj1 = gameStateSys:GetEntity("DialogueCompleteObj1", "Dialogue_Level3")

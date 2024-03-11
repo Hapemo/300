@@ -281,6 +281,8 @@ function Update()
     end
 
     if _G.FreezePlayerControl then 
+        graphicsSys.FilterRadius = minFilterRadius
+        graphicsSys.mAmbientBloomExposure = minExposure
         return 
     end
 

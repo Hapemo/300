@@ -41,10 +41,14 @@ local looper = 0
 local loop3r = 0
 
 local graphicsSys
+local isfightingboss
 function Alive()
     initonce =false
     graphicsSys = systemManager:mGraphicsSystem()
+    bossEntity = gameStateSys:GetEntity("Level2Boss")
+    bossEntity:GetAnimator():PauseAnimation()
     inittwice = false
+    isfightingboss = false
 end
 
 function Update()
@@ -52,18 +56,32 @@ function Update()
     bossEntity = gameStateSys:GetEntity("Level2Boss")
     gunEntity = gameStateSys:GetEntity("gun")
 
-    if(STATE == -1)then
-        
-        if(looper == 0) then
-            bossEntity:GetMeshRenderer():SetMesh("Boss_Roar", bossEntity)
-            looper = 1
-        elseif(looper == 1) then
-            if(bossEntity:GetAnimator():IsEndOfAnimation()) then
-                looper = 0
-            end
+    --bossEntity:GetAnimator():PauseAnimation()
+    -- print("state: ", STATE)
+    -- print("boolean: ", isfightingboss)
+
+    if(STATE == -1) then
+        if(isfightingboss == false) then
+            bossEntity:GetTransform().mTranslate.x = savedbosspos.x
+            bossEntity:GetTransform().mTranslate.y = -savedbosspos.y
+            bossEntity:GetTransform().mTranslate.z = savedbosspos.z
         end
-        if bossEntity:GetHealthbar().health <= 0 then
-            STATE = 3
+
+        if(isfightingboss == true) then
+            bossEntity:GetTransform().mTranslate.x = savedbosspos.x
+            bossEntity:GetTransform().mTranslate.y = savedbosspos.y
+            bossEntity:GetTransform().mTranslate.z = savedbosspos.z
+            if(looper == 0) then
+                bossEntity:GetMeshRenderer():SetMesh("Boss_Roar", bossEntity)
+                looper = 1
+            elseif(looper == 1) then
+                if(bossEntity:GetAnimator():IsEndOfAnimation()) then
+                    looper = 0
+                end
+            end
+            if bossEntity:GetHealthbar().health <= 0 then
+                STATE = 3
+            end
         end
     end
 
@@ -157,7 +175,7 @@ function Update()
             looper = 1
         elseif(looper == 1) then
             if(bossEntity:GetAnimator():IsEndOfAnimation()) then
-                looper = 0
+                --looper = 0
             end
         end
         cameraEntity:GetTransform().mTranslate.x = savedplayerpos.x  
@@ -173,7 +191,7 @@ function Update()
         graphicsSys:UnignoreUIScene("UI")
         _G.FreezePlayerControl = false  
         STATE=-1
-
+        isfightingboss = true
         fov = 45
         if initonce == false then
             controllerL2 = gameStateSys:GetEntity("DialogueControllerLevel2")

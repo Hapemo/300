@@ -54,7 +54,10 @@ local hand_slammed_2 = false
 local audio_roared = false
 
 local graphicsSys
+local gameStateSys
+
 function Alive()
+    gameStateSys = systemManager:mGameStateSystem()
     initonce =false
     uiHider = gameStateSys:GetEntity("UIHider")
     cameraEntity = gameStateSys:GetEntity("Camera")
