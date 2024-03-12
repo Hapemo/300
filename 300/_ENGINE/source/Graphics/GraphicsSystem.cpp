@@ -1383,6 +1383,11 @@ void GraphicsSystem::CheckWindowSize()
 	}
 }
 
+void GraphicsSystem::SetFullscreen(bool flag)
+{
+	m_Window->SetFullScreenFlag(flag);
+}
+
 void GraphicsSystem::ResizeWindow(ivec2 newSize)
 {
 	if (!newSize.x || !newSize.y)

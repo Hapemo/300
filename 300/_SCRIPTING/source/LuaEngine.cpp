@@ -331,6 +331,7 @@ void LuaGraphicsSystem()
     systemManager->mScriptingSystem->luaState.new_usertype<GraphicsSystem>(
         "mGraphicsSystem", sol::constructors<>(),
         "EnableGlobalBloom", &GraphicsSystem::EnableGlobalBloom,
+        "ToggleFullscreen", &GraphicsSystem::SetFullscreen,
         "DisableGlobalBloom", &GraphicsSystem::DisableGlobalBloom,
         "SetGlobalBloomThreshold", &GraphicsSystem::SetGlobalBloomThreshold,
         "SetGlobalBloomExposure", &GraphicsSystem::SetGlobalBloomExposure,

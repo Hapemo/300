@@ -247,7 +247,7 @@ public:
 	void UnpauseGlobalAnimation();
 
 	void CheckWindowSize();
-
+	void SetFullscreen(bool flag);
 	void ResizeWindow(ivec2 newSize);
 
 	void PrintDeviceInfo();
