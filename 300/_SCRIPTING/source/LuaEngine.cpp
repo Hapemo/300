@@ -351,7 +351,9 @@ void LuaGraphicsSystem()
         "HideCursor", &GraphicsSystem::HideCursor,
         "SetAllEntityBloomThreshold", &GraphicsSystem::SetAllEntityBloomThreshold,
         "FilterRadius", &GraphicsSystem::mFilterRadius,
-        "m_EditorSceneHovered", &GraphicsSystem::m_EditorSceneHovered);
+        "m_EditorSceneHovered", &GraphicsSystem::m_EditorSceneHovered,
+        "Getm_Gamma", &GraphicsSystem::Getm_Gamma,
+        "Setm_Gamma", &GraphicsSystem::Setm_Gamma);
 }
 
 void LuaPhysics()

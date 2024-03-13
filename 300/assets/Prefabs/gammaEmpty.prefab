@@ -1,0 +1,44 @@
+{
+    "entityid": 25,
+    "general": {
+        "name": "gammaEmpty",
+        "tagid": 6,
+        "subtag": 0,
+        "isActive": true,
+        "isPaused": false
+    },
+    "transform": {
+        "scale": {
+            "x": 0.75,
+            "y": 0.10000000149011612,
+            "z": 1.0
+        },
+        "rotate": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "translate": {
+            "x": 1000.0,
+            "y": 0.0,
+            "z": 0.0
+        }
+    },
+    "uirenderer": {
+        "texpath": "",
+        "textureref": 3792549019,
+        "degree": 0.0,
+        "slider": 1.0,
+        "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+        },
+        "layer": 43,
+        "worldtransform": false
+    },
+    "prefab": {
+        "prefab": "gammaEmpty"
+    }
+}

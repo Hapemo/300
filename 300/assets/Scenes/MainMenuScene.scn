@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 14680065,
+        "entityid": 2097177,
         "general": {
             "name": "Click",
             "tagid": 6,
@@ -37,7 +37,7 @@
         }
     },
     {
-        "entityid": 14680066,
+        "entityid": 2097178,
         "general": {
             "name": "SettingsButton",
             "tagid": 6,
@@ -103,7 +103,7 @@
         }
     },
     {
-        "entityid": 14680067,
+        "entityid": 2097179,
         "general": {
             "name": "SettingsSfxFull",
             "tagid": 6,
@@ -150,7 +150,7 @@
         }
     },
     {
-        "entityid": 14680068,
+        "entityid": 2097180,
         "general": {
             "name": "SettingsBackButton",
             "tagid": 6,
@@ -212,7 +212,7 @@
         }
     },
     {
-        "entityid": 14680069,
+        "entityid": 3145729,
         "general": {
             "name": "SettingsWindowButton",
             "tagid": 6,
@@ -274,7 +274,7 @@
         }
     },
     {
-        "entityid": 14680070,
+        "entityid": 3145730,
         "general": {
             "name": "SettingsFSButton",
             "tagid": 6,
@@ -336,7 +336,7 @@
         }
     },
     {
-        "entityid": 14680071,
+        "entityid": 3145731,
         "general": {
             "name": "SettingsBgmFull",
             "tagid": 0,
@@ -383,7 +383,7 @@
         }
     },
     {
-        "entityid": 14680072,
+        "entityid": 3145732,
         "general": {
             "name": "SettingsBgmEmpty",
             "tagid": 0,
@@ -430,7 +430,7 @@
         }
     },
     {
-        "entityid": 14680073,
+        "entityid": 3145733,
         "general": {
             "name": "SettingsMenuBackground",
             "tagid": 6,
@@ -482,7 +482,7 @@
         }
     },
     {
-        "entityid": 14680074,
+        "entityid": 3145734,
         "general": {
             "name": "bgmDecrease",
             "tagid": 6,
@@ -551,7 +551,7 @@
         }
     },
     {
-        "entityid": 14680075,
+        "entityid": 3145735,
         "general": {
             "name": "bgmIncrease",
             "tagid": 6,
@@ -620,7 +620,7 @@
         }
     },
     {
-        "entityid": 14680076,
+        "entityid": 3145736,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -665,7 +665,7 @@
         }
     },
     {
-        "entityid": 14680077,
+        "entityid": 3145737,
         "general": {
             "name": "BGM",
             "tagid": 0,
@@ -702,7 +702,7 @@
         }
     },
     {
-        "entityid": 14680078,
+        "entityid": 3145738,
         "general": {
             "name": "CreditsButton",
             "tagid": 6,
@@ -768,7 +768,7 @@
         }
     },
     {
-        "entityid": 14680079,
+        "entityid": 3145739,
         "general": {
             "name": "MenuBackground",
             "tagid": 6,
@@ -809,7 +809,7 @@
         }
     },
     {
-        "entityid": 14680080,
+        "entityid": 3145740,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -854,7 +854,7 @@
         }
     },
     {
-        "entityid": 14680081,
+        "entityid": 3145741,
         "general": {
             "name": "Exit",
             "tagid": 0,
@@ -891,7 +891,7 @@
         }
     },
     {
-        "entityid": 14680082,
+        "entityid": 3145742,
         "general": {
             "name": "HTPButton",
             "tagid": 6,
@@ -960,7 +960,7 @@
         }
     },
     {
-        "entityid": 14680083,
+        "entityid": 3145743,
         "general": {
             "name": "StartButton",
             "tagid": 6,
@@ -1029,7 +1029,7 @@
         }
     },
     {
-        "entityid": 14680084,
+        "entityid": 3145744,
         "general": {
             "name": "Awake",
             "tagid": 0,
@@ -1066,7 +1066,7 @@
         }
     },
     {
-        "entityid": 14680085,
+        "entityid": 3145745,
         "general": {
             "name": "QuitButton",
             "tagid": 6,
@@ -1132,7 +1132,7 @@
         }
     },
     {
-        "entityid": 14680086,
+        "entityid": 3145746,
         "general": {
             "name": "sfxDecrease",
             "tagid": 6,
@@ -1201,7 +1201,7 @@
         }
     },
     {
-        "entityid": 14680087,
+        "entityid": 3145747,
         "general": {
             "name": "sfxIncrease",
             "tagid": 6,
@@ -1270,7 +1270,7 @@
         }
     },
     {
-        "entityid": 14680088,
+        "entityid": 3145748,
         "general": {
             "name": "SettingsSfxEmpty",
             "tagid": 6,
@@ -1314,6 +1314,220 @@
         },
         "prefab": {
             "prefab": "SettingsSfxEmpty"
+        }
+    },
+    {
+        "entityid": 3145749,
+        "general": {
+            "name": "gammaDecrease",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.05000000074505806,
+                "y": 0.05000000074505806,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 1000.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 3520629780,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 43,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/MainMenuSettingsMenuButtons.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "UI_Button_Hover.wav",
+            "fullpath": "../assets\\Audio/UI_Button_Hover.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false
+        },
+        "button": {
+            "interactable": true,
+            "hover": false,
+            "click": false,
+            "activated": false,
+            "renderflag": true
+        }
+    },
+    {
+        "entityid": 3145750,
+        "general": {
+            "name": "gammaIncrease",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.05000000074505806,
+                "y": 0.10000000149011612,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 1000.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 755934584,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 43,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/MainMenuSettingsMenuButtons.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "UI_Button_Hover.wav",
+            "fullpath": "../assets\\Audio/UI_Button_Hover.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false
+        },
+        "button": {
+            "interactable": true,
+            "hover": false,
+            "click": false,
+            "activated": false,
+            "renderflag": true
+        }
+    },
+    {
+        "entityid": 3145751,
+        "general": {
+            "name": "gammaFull",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.75,
+                "y": 0.10000000149011612,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 1000.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 2497003415,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 44,
+            "worldtransform": false
+        }
+    },
+    {
+        "entityid": 3145752,
+        "general": {
+            "name": "gammaEmpty",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.75,
+                "y": 0.10000000149011612,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 1000.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 3792549019,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 43,
+            "worldtransform": false
         }
     }
 ]

@@ -25,6 +25,10 @@ function Update()
             button:GetUIrenderer():SetTexture("Vol_Decrease_Hover")
         elseif (button:GetGeneral().name == "bgmIncrease") then
             button:GetUIrenderer():SetTexture("Vol_Increase_Hover")
+        elseif (button:GetGeneral().name == "gammaDecrease") then
+            button:GetUIrenderer():SetTexture("Vol_Decrease_Hover")
+        elseif (button:GetGeneral().name == "gammaIncrease") then
+            button:GetUIrenderer():SetTexture("Vol_Increase_Hover")
         end
     else
         hoverOver = false
@@ -41,6 +45,10 @@ function Update()
         elseif (button:GetGeneral().name == "bgmDecrease") then
             button:GetUIrenderer():SetTexture("Vol_Decrease_Default")
         elseif (button:GetGeneral().name == "bgmIncrease") then
+            button:GetUIrenderer():SetTexture("Vol_Increase_Default")
+        elseif (button:GetGeneral().name == "gammaDecrease") then
+            button:GetUIrenderer():SetTexture("Vol_Decrease_Default")
+        elseif (button:GetGeneral().name == "gammaIncrease") then
             button:GetUIrenderer():SetTexture("Vol_Increase_Default")
         end
     end

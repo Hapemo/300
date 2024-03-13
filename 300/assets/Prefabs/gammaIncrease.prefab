@@ -1,0 +1,69 @@
+{
+    "entityid": 27,
+    "general": {
+        "name": "gammaIncrease",
+        "tagid": 6,
+        "subtag": 0,
+        "isActive": true,
+        "isPaused": false
+    },
+    "transform": {
+        "scale": {
+            "x": 0.05000000074505806,
+            "y": 0.10000000149011612,
+            "z": 1.0
+        },
+        "rotate": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "translate": {
+            "x": 1000.0,
+            "y": 0.0,
+            "z": 0.0
+        }
+    },
+    "uirenderer": {
+        "texpath": "",
+        "textureref": 755934584,
+        "degree": 0.0,
+        "slider": 1.0,
+        "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+        },
+        "layer": 43,
+        "worldtransform": false
+    },
+    "scripts": {
+        "scriptscontainer": [
+            {
+                "scriptFile": "../assets/Scripts/MainMenuSettingsMenuButtons.lua",
+                "variables": []
+            }
+        ]
+    },
+    "audio": {
+        "filepath": "../assets\\Audio",
+        "filename": "UI_Button_Hover.wav",
+        "fullpath": "../assets\\Audio/UI_Button_Hover.wav",
+        "playonawake": false,
+        "islooping": false,
+        "audiotype": 1,
+        "volume": 1.0,
+        "retainaudio": false
+    },
+    "prefab": {
+        "prefab": "gammaIncrease"
+    },
+    "button": {
+        "interactable": true,
+        "hover": false,
+        "click": false,
+        "activated": false,
+        "renderflag": true
+    }
+}

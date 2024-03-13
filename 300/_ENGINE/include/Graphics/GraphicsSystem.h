@@ -278,6 +278,11 @@ public:
 	int					m_Height;
 	bool				m_IsCursorEnabledForEditor{ true };
 
+	// -- Gamma --
+	float m_Gamma{ 2.2f };
+	float Getm_Gamma() { return m_Gamma; }
+	void Setm_Gamma(float newm_Gamma) { m_Gamma = newm_Gamma; }
+
 	// -- Camera --
 	GFX::Camera m_EditorCamera;
 	CAMERA_TYPE m_CameraControl;

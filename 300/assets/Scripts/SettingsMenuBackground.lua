@@ -12,6 +12,10 @@ function Alive()
     bgmIncrease = gameStateSys:GetEntity("bgmIncrease")
     sfxDecrease = gameStateSys:GetEntity("sfxDecrease")
     sfxIncrease = gameStateSys:GetEntity("sfxIncrease")
+    gammaFull = gameStateSys:GetEntity("gammaFull")
+    gammaEmpty = gameStateSys:GetEntity("gammaEmpty")
+    gammaDecrease = gameStateSys:GetEntity("gammaDecrease")
+    gammaIncrease = gameStateSys:GetEntity("gammaIncrease")
 
     -- button
     settingsFSButton = gameStateSys:GetEntity("SettingsFSButton")
@@ -30,6 +34,11 @@ function PauseUpdate()
     graphicssys = systemManager:mGraphicsSystem()
     settingsBgmFull:GetUIrenderer():SetSlider(audioSys:GetBGMVolume())
     settingSfxFull:GetUIrenderer():SetSlider(audioSys:GetSFXVolume())
+    --gamma range from 1.f to 3.f
+    gammaValue = (graphicssys:Getm_Gamma()-1.0) / 2.0;
+    gammaFull:GetUIrenderer():SetSlider(gammaValue)
+    -- print(gammaValue)
+    -- print(graphicssys:Getm_Gamma())
 
     if (bgmIncrease:GetButton().mActivated) then
         clickSFX:SetPlay(1.0)
@@ -75,6 +84,24 @@ function PauseUpdate()
         end
     end
 
+    if (gammaIncrease:GetButton().mActivated) then
+        clickSFX:SetPlay(1.0)
+        if (graphicssys:Getm_Gamma() < 3) then
+            local roundedNewVol = tonumber(string.format("%.1f", graphicssys:Getm_Gamma() + 0.1))
+            gammaFull:GetUIrenderer():SetSlider((roundedNewVol - 1.0) / 2.0);
+            graphicssys:Setm_Gamma(roundedNewVol);
+        end
+    end
+
+    if (gammaDecrease:GetButton().mActivated) then
+        clickSFX:SetPlay(1.0)
+        if (graphicssys:Getm_Gamma() > 1) then
+            local roundedNewVol = tonumber(string.format("%.1f", graphicssys:Getm_Gamma() - 0.1))
+            gammaFull:GetUIrenderer():SetSlider((roundedNewVol - 1.0) / 2.0);
+            graphicssys:Setm_Gamma(roundedNewVol);
+        end
+    end
+
     -- if back button pressed
     if (settingsBackButton:GetButton().mActivated) then
         clickSFX:SetPlay(1.0)
@@ -89,6 +116,10 @@ function PauseUpdate()
         bgmIncrease:GetTransform().mTranslate.x = 1000
         sfxDecrease:GetTransform().mTranslate.x = 1000
         sfxIncrease:GetTransform().mTranslate.x = 1000
+        gammaFull:GetTransform().mTranslate.x = 1000
+        gammaEmpty:GetTransform().mTranslate.x = 1000
+        gammaDecrease:GetTransform().mTranslate.x = 1000
+        gammaIncrease:GetTransform().mTranslate.x = 1000
         _G.isSettingsMenu = false
     end
 

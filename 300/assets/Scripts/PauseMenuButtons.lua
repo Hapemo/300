@@ -69,6 +69,10 @@ function PauseUpdate()
     bgmIncrease = gameStateSys:GetEntityByScene("bgmIncrease", "SettingsScene")
     sfxDecrease = gameStateSys:GetEntityByScene("sfxDecrease", "SettingsScene")
     sfxIncrease = gameStateSys:GetEntityByScene("sfxIncrease", "SettingsScene")
+    gammaFull = gameStateSys:GetEntityByScene("gammaFull", "SettingsScene")
+    gammaEmpty = gameStateSys:GetEntityByScene("gammaEmpty", "SettingsScene")
+    gammaIncrease = gameStateSys:GetEntityByScene("gammaIncrease", "SettingsScene")
+    gammaDecrease = gameStateSys:GetEntityByScene("gammaDecrease", "SettingsScene")
 
     --print("INUPDATEEEEEEEEEEEEEEE")
     button = Helper.GetScriptEntity(script_entity.id)
@@ -145,6 +149,11 @@ function PauseUpdate()
             bgmIncrease:GetTransform().mTranslate.x = 0.21
             sfxDecrease:GetTransform().mTranslate.x = -0.61
             sfxIncrease:GetTransform().mTranslate.x = 0.21
+            gammaFull:GetTransform().mTranslate.x = -0.20
+            gammaEmpty:GetTransform().mTranslate.x = -0.20
+            gammaDecrease:GetTransform().mTranslate.x = -0.61
+            gammaIncrease:GetTransform().mTranslate.x = 0.21
+
             _G.isSettingsMenu = true
         elseif (button:GetGeneral().name == "HTPBackButton") then
             HTPMenu:GetTransform().mTranslate.x = 1000

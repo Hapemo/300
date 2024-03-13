@@ -39,6 +39,8 @@ function Alive()
     settingsBgmFull = gameStateSys:GetEntity("SettingsBgmFull")
     settingSfxFull = gameStateSys:GetEntity("SettingsSfxFull")
     settingSfxEmpty = gameStateSys:GetEntity("SettingsSfxEmpty")
+    gammaFull = gameStateSys:GetEntity("gammaFull")
+    gammaEmpty = gameStateSys:GetEntity("gammaEmpty")
     settingsFSButton = gameStateSys:GetEntity("SettingsFSButton")
     settingsWindowButton = gameStateSys:GetEntity("SettingsWindowButton")
     settingsBackButton = gameStateSys:GetEntity("SettingsBackButton")
@@ -46,6 +48,8 @@ function Alive()
     bgmIncrease = gameStateSys:GetEntity("bgmIncrease")
     sfxDecrease = gameStateSys:GetEntity("sfxDecrease")
     sfxIncrease = gameStateSys:GetEntity("sfxIncrease")
+    gammaDecrease = gameStateSys:GetEntity("gammaDecrease")
+    gammaIncrease = gameStateSys:GetEntity("gammaIncrease")
 end
 
 function Update()
@@ -146,6 +150,8 @@ function Update()
             settingsBgmFull:GetTransform().mTranslate.x = -0.20
             settingSfxEmpty:GetTransform().mTranslate.x = -0.20
             settingSfxFull:GetTransform().mTranslate.x = -0.20
+            gammaFull:GetTransform().mTranslate.x = -0.20
+            gammaEmpty:GetTransform().mTranslate.x = -0.20
             settingsFSButton:GetTransform().mTranslate.x = -0.59
             settingsWindowButton:GetTransform().mTranslate.x = -0.08
             settingsBackButton:GetTransform().mTranslate.x = 0.85
@@ -153,6 +159,8 @@ function Update()
             bgmIncrease:GetTransform().mTranslate.x = 0.21
             sfxDecrease:GetTransform().mTranslate.x = -0.61
             sfxIncrease:GetTransform().mTranslate.x = 0.21
+            gammaDecrease:GetTransform().mTranslate.x = -0.61
+            gammaIncrease:GetTransform().mTranslate.x = 0.21
         end
     end
 
