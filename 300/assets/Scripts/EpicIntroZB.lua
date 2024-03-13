@@ -61,7 +61,8 @@ end
 
 
 function Kamekazi()
-    systemManager.ecs:NewEntityFromPrefab("Explosion", this:GetTransform().mTranslate)
+    local explosion = systemManager.ecs:NewEntityFromPrefab("Explosion", this:GetTransform().mTranslate)
+    Helper.Translate(explosion, Vec3.new(0,1,0))
     systemManager.ecs:SetDeleteEntity(this)
 end
 

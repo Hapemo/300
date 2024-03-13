@@ -1,5 +1,5 @@
 {
-    "entityid": 4194631,
+    "entityid": 1048624,
     "general": {
         "name": "explosion",
         "tagid": 8,
@@ -61,6 +61,16 @@
             }
         ]
     },
+    "audio": {
+        "filepath": "",
+        "filename": "",
+        "fullpath": "",
+        "playonawake": false,
+        "islooping": false,
+        "audiotype": 1,
+        "volume": 1.0,
+        "retainaudio": false
+    },
     "prefab": {
         "prefab": "explosion"
     },
@@ -77,8 +87,8 @@
             "z": 0.0,
             "w": 0.0
         },
-        "startsize": 0.4000000059604645,
-        "endsize": 0.800000011920929,
+        "startsize": 0.8999999761581421,
+        "endsize": 3.200000047683716,
         "position": {
             "x": 0.0,
             "y": 0.0,
@@ -93,9 +103,9 @@
         "rotation": 30.0,
         "lifetime": 4.0,
         "loop": true,
-        "loopInterval": 0.10000000149011612,
-        "speed": 3.0,
-        "count": 100,
+        "loopInterval": 0.20000000298023224,
+        "speed": 5.0,
+        "count": 200,
         "emit": false,
         "particletexture": 2273550607
     }
