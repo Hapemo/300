@@ -577,8 +577,9 @@ struct Audio : public Serializable
 	//  - Ideally for audio that is attached to the player. 
 	// [TODO] 1. Container to support multiple audio files? (Left - Right)
 	//		 
-	bool		   mPanAudio = false;
-	float		   mPanBalance = 0.0f;
+	bool		   mPanAudio          = false;
+	float		   mPanBalance        = 0.0f;
+	float		   mPanSpeed          = 0.1f;
 
 
 

@@ -305,6 +305,13 @@ void Audio::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writ
 	Serialize(writer, "audiotype", mAudioType);
 	Serialize(writer, "volume", mVolume);
 	Serialize(writer, "retainaudio", mGameStateRetain);
+	Serialize(writer, "panaudio", mPanAudio);
+	if (mPanAudio == true)
+	{
+		Serialize(writer, "panbalance", mPanBalance);
+		Serialize(writer, "panspeed", mPanSpeed);
+	}
+
 	writer.EndObject();
 }
 
@@ -318,6 +325,14 @@ void Audio::DeserializeSelf(rapidjson::Value& reader)
 	Deserialize(reader, "audiotype", mAudioType);
 	Deserialize(reader, "volume", mVolume);
 	Deserialize(reader, "retainaudio", mGameStateRetain);
+	Deserialize(reader, "panaudio", mPanAudio);
+	if (mPanAudio == true)
+	{
+		std::cout << "HI PAN AUDIO TRUE" << std::endl;
+		Deserialize(reader, "panbalance", mPanBalance);
+		Deserialize(reader, "panspeed", mPanSpeed);
+	}
+
 }
 
 void AudioListener::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const

@@ -200,7 +200,7 @@ void AudioSystem::Update([[maybe_unused]] float dt, bool calling_from_pause)
 		// Check for panning updates
 		if (audio_component.mPanAudio)
 		{
-			UpdatePanning();
+			UpdatePanning(&audio_component);
 		}
 
 		switch (audio_component.mNextActionState)
@@ -1062,9 +1062,31 @@ void AudioSystem::ClearFinishedSounds()
 	}
 }
 
-void AudioSystem::UpdatePanning()
+void AudioSystem::UpdatePanning(Audio* audio_component)
 {
-	
+	std::vector<std::pair<uid, FMOD::Channel*>> sfx_or_bgm = mChannels[audio_component->mAudioType];
+
+	for (auto& channel_pair : sfx_or_bgm)
+	{
+		if (channel_pair.first == audio_component->mChannelID)
+		{
+			FMOD::Sound* current_sound;
+			channel_pair.second->getCurrentSound(&current_sound);
+
+			if (current_sound)  // not empty..
+			{
+				
+				channel_pair.second->setPan(audio_component->mPanBalance); 
+			}
+		}
+	}
+
+	//switch (audio_component->mAudioType)
+	//{
+	//	case AUDIOTYPE::AUDIO_BGM:
+
+	//	case AUDIOTYPE::AUDIO_SFX:
+	//}
 }
 
 bool AudioSystem::IsChannelPlaying(uid id, AUDIOTYPE type)

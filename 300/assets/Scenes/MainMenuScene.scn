@@ -2,110 +2,7 @@
     {
         "entityid": 1,
         "general": {
-            "name": "Click",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "UI_Button_Click.wav",
-            "fullpath": "../assets\\Audio/UI_Button_Click.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 1.0,
-            "retainaudio": false
-        }
-    },
-    {
-        "entityid": 2,
-        "general": {
-            "name": "SettingsButton",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.30000001192092896,
-                "y": -0.27000001072883606,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -0.46000000834465027,
-                "y": -0.23000000417232513,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 3113566441,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 1,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/MainMenuButtons.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "UI_Button_Hover.wav",
-            "fullpath": "../assets\\Audio/UI_Button_Hover.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 1.0,
-            "retainaudio": false
-        },
-        "button": {
-            "interactable": true,
-            "hover": false,
-            "click": false,
-            "activated": false,
-            "renderflag": true
-        }
-    },
-    {
-        "entityid": 3,
-        "general": {
-            "name": "SettingsSfxFull",
+            "name": "SettingsSfxEmpty",
             "tagid": 6,
             "subtag": 0,
             "isActive": true,
@@ -125,307 +22,6 @@
             "translate": {
                 "x": 1000.0,
                 "y": 0.15000000596046448,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 2497003415,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 44,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "SettingsSfxFull"
-        }
-    },
-    {
-        "entityid": 4,
-        "general": {
-            "name": "SettingsBackButton",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.20000000298023224,
-                "y": -0.15000000596046448,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 1000.0,
-                "y": -0.8700000047683716,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 1569467779,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 43,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/MainMenuSettingsMenuButtons.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "UI_Button_Hover.wav",
-            "fullpath": "../assets\\Audio/UI_Button_Hover.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 1.0,
-            "retainaudio": false
-        },
-        "prefab": {
-            "prefab": "SettingsBackButton"
-        },
-        "button": {
-            "interactable": true,
-            "hover": false,
-            "click": false,
-            "activated": false,
-            "renderflag": true
-        }
-    },
-    {
-        "entityid": 5,
-        "general": {
-            "name": "SettingsWindowButton",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.25,
-                "y": -0.15000000596046448,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 1000.0,
-                "y": -0.3700000047683716,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 1374181958,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 43,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/MainMenuSettingsMenuButtons.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "UI_Button_Hover.wav",
-            "fullpath": "../assets\\Audio/UI_Button_Hover.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 1.0,
-            "retainaudio": false
-        },
-        "prefab": {
-            "prefab": "SettingsWindowButton"
-        },
-        "button": {
-            "interactable": true,
-            "hover": false,
-            "click": false,
-            "activated": false,
-            "renderflag": true
-        }
-    },
-    {
-        "entityid": 6,
-        "general": {
-            "name": "SettingsFSButton",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.25,
-                "y": -0.15000000596046448,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 1000.0,
-                "y": -0.3700000047683716,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 2145381289,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 43,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/MainMenuSettingsMenuButtons.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "UI_Button_Hover.wav",
-            "fullpath": "../assets\\Audio/UI_Button_Hover.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 1.0,
-            "retainaudio": false
-        },
-        "prefab": {
-            "prefab": "SettingsFSButton"
-        },
-        "button": {
-            "interactable": true,
-            "hover": false,
-            "click": false,
-            "activated": false,
-            "renderflag": true
-        }
-    },
-    {
-        "entityid": 7,
-        "general": {
-            "name": "SettingsBgmFull",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.75,
-                "y": 0.10000000149011612,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 1000.0,
-                "y": 0.3100000023841858,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 2497003415,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 44,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "SettingsBgmFull"
-        }
-    },
-    {
-        "entityid": 8,
-        "general": {
-            "name": "SettingsBgmEmpty",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.75,
-                "y": 0.10000000149011612,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 1000.0,
-                "y": 0.3100000023841858,
                 "z": 0.0
             }
         },
@@ -447,782 +43,11 @@
             "scriptscontainer": []
         },
         "prefab": {
-            "prefab": "SettingsBgmEmpty"
+            "prefab": "SettingsSfxEmpty"
         }
     },
     {
-        "entityid": 9,
-        "general": {
-            "name": "SettingsMenuBackground",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 2.0,
-                "y": -2.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 1000.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 577715370,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 42,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/MainMenuSettingsMenuBackground.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "prefab": {
-            "prefab": "SettingsMenuBackground"
-        }
-    },
-    {
-        "entityid": 10,
-        "general": {
-            "name": "bgmDecrease",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.05000000074505806,
-                "y": 0.05000000074505806,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 1000.0,
-                "y": 0.3100000023841858,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 3520629780,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 43,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/MainMenuSettingsMenuButtons.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "UI_Button_Hover.wav",
-            "fullpath": "../assets\\Audio/UI_Button_Hover.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 1.0,
-            "retainaudio": false
-        },
-        "prefab": {
-            "prefab": "bgmDecrease"
-        },
-        "button": {
-            "interactable": true,
-            "hover": false,
-            "click": false,
-            "activated": false,
-            "renderflag": true
-        }
-    },
-    {
-        "entityid": 11,
-        "general": {
-            "name": "bgmIncrease",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.05000000074505806,
-                "y": 0.10000000149011612,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 1000.0,
-                "y": 0.3100000023841858,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 755934584,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 43,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/MainMenuSettingsMenuButtons.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "UI_Button_Hover.wav",
-            "fullpath": "../assets\\Audio/UI_Button_Hover.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 1.0,
-            "retainaudio": false
-        },
-        "prefab": {
-            "prefab": "bgmIncrease"
-        },
-        "button": {
-            "interactable": true,
-            "hover": false,
-            "click": false,
-            "activated": false,
-            "renderflag": true
-        }
-    },
-    {
-        "entityid": 12,
-        "general": {
-            "name": "Camera",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "camera": {
-            "positon": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "target": {
-                "x": 1.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "size": {
-                "x": 1223,
-                "y": 583
-            },
-            "near": 0.10000000149011612,
-            "far": 900.0
-        }
-    },
-    {
-        "entityid": 13,
-        "general": {
-            "name": "BGM",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "Troubleshooter_M4.wav",
-            "fullpath": "../assets\\Audio/Troubleshooter_M4.wav",
-            "playonawake": true,
-            "islooping": true,
-            "audiotype": 0,
-            "volume": 0.4000000059604645,
-            "retainaudio": true
-        }
-    },
-    {
-        "entityid": 14,
-        "general": {
-            "name": "CreditsButton",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.39500001072883606,
-                "y": -0.2809999883174896,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -0.4519999921321869,
-                "y": -0.5350000262260437,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "../assets/Compressed/Credits_Default.ctexture",
-            "textureref": 533001668,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 1,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/MainMenuButtons.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "UI_Button_Hover.wav",
-            "fullpath": "../assets\\Audio/UI_Button_Hover.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 0.20000000298023224,
-            "retainaudio": false
-        },
-        "button": {
-            "interactable": true,
-            "hover": false,
-            "click": false,
-            "activated": false,
-            "renderflag": true
-        }
-    },
-    {
-        "entityid": 15,
-        "general": {
-            "name": "MenuBackground",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 2.0,
-                "y": -2.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "../assets/Compressed/MainMenuEmpty.ctexture",
-            "textureref": 131267284,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 0,
-            "worldtransform": false
-        }
-    },
-    {
-        "entityid": 16,
-        "general": {
-            "name": "Camera",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "camera": {
-            "positon": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "target": {
-                "x": 1.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "size": {
-                "x": 1075,
-                "y": 583
-            },
-            "near": 0.10000000149011612,
-            "far": 900.0
-        }
-    },
-    {
-        "entityid": 17,
-        "general": {
-            "name": "Exit",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "UI_Screen_Sleep.wav",
-            "fullpath": "../assets\\Audio/UI_Screen_Sleep.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 0.6000000238418579,
-            "retainaudio": false
-        }
-    },
-    {
-        "entityid": 18,
-        "general": {
-            "name": "HTPButton",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.5353000164031982,
-                "y": -0.29100000858306885,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -0.44999998807907104,
-                "y": 0.07999999821186066,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "../assets/Compressed/HowToPlay_Default.ctexture",
-            "textureref": 2586813445,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 1,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/MainMenuButtons.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "UI_Button_Hover.wav",
-            "fullpath": "../assets\\Audio/UI_Button_Hover.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 0.20000000298023224,
-            "retainaudio": false
-        },
-        "prefab": {
-            "prefab": "StartButton"
-        },
-        "button": {
-            "interactable": true,
-            "hover": false,
-            "click": false,
-            "activated": false,
-            "renderflag": true
-        }
-    },
-    {
-        "entityid": 19,
-        "general": {
-            "name": "StartButton",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.39500001072883606,
-                "y": -0.29100000858306885,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -0.44699999690055847,
-                "y": 0.3700000047683716,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "../assets/Compressed/Start_Default.ctexture",
-            "textureref": 1952423938,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 1,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/MainMenuButtons.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "UI_Button_Hover.wav",
-            "fullpath": "../assets\\Audio/UI_Button_Hover.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 0.20000000298023224,
-            "retainaudio": false
-        },
-        "prefab": {
-            "prefab": "StartButton"
-        },
-        "button": {
-            "interactable": true,
-            "hover": false,
-            "click": false,
-            "activated": false,
-            "renderflag": true
-        }
-    },
-    {
-        "entityid": 20,
-        "general": {
-            "name": "Awake",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "UI_Screen_Awake.wav",
-            "fullpath": "../assets\\Audio/UI_Screen_Awake.wav",
-            "playonawake": true,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 0.4000000059604645,
-            "retainaudio": false
-        }
-    },
-    {
-        "entityid": 21,
-        "general": {
-            "name": "QuitButton",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.38499999046325684,
-                "y": -0.3009999990463257,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -0.44999998807907104,
-                "y": -0.8199999928474426,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "../assets/Compressed/Quit_Default.ctexture",
-            "textureref": 3328537307,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 1,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/MainMenuButtons.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "UI_Button_Hover.wav",
-            "fullpath": "../assets\\Audio/UI_Button_Hover.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 0.20000000298023224,
-            "retainaudio": false
-        },
-        "button": {
-            "interactable": true,
-            "hover": false,
-            "click": false,
-            "activated": false,
-            "renderflag": true
-        }
-    },
-    {
-        "entityid": 22,
-        "general": {
-            "name": "sfxDecrease",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.05000000074505806,
-                "y": 0.05000000074505806,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 1000.0,
-                "y": 0.15000000596046448,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 3520629780,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 43,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/MainMenuSettingsMenuButtons.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "UI_Button_Hover.wav",
-            "fullpath": "../assets\\Audio/UI_Button_Hover.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 1.0,
-            "retainaudio": false
-        },
-        "prefab": {
-            "prefab": "sfxDecrease"
-        },
-        "button": {
-            "interactable": true,
-            "hover": false,
-            "click": false,
-            "activated": false,
-            "renderflag": true
-        }
-    },
-    {
-        "entityid": 23,
+        "entityid": 2,
         "general": {
             "name": "sfxIncrease",
             "tagid": 6,
@@ -1277,7 +102,8 @@
             "islooping": false,
             "audiotype": 1,
             "volume": 1.0,
-            "retainaudio": false
+            "retainaudio": false,
+            "panaudio": false
         },
         "prefab": {
             "prefab": "sfxIncrease"
@@ -1291,9 +117,1096 @@
         }
     },
     {
-        "entityid": 24,
+        "entityid": 3,
         "general": {
-            "name": "SettingsSfxEmpty",
+            "name": "sfxDecrease",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.05000000074505806,
+                "y": 0.05000000074505806,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 1000.0,
+                "y": 0.15000000596046448,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 3520629780,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 43,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/MainMenuSettingsMenuButtons.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "UI_Button_Hover.wav",
+            "fullpath": "../assets\\Audio/UI_Button_Hover.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false,
+            "panaudio": false
+        },
+        "prefab": {
+            "prefab": "sfxDecrease"
+        },
+        "button": {
+            "interactable": true,
+            "hover": false,
+            "click": false,
+            "activated": false,
+            "renderflag": true
+        }
+    },
+    {
+        "entityid": 4,
+        "general": {
+            "name": "QuitButton",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.38499999046325684,
+                "y": -0.3009999990463257,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -0.44999998807907104,
+                "y": -0.8199999928474426,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "../assets/Compressed/Quit_Default.ctexture",
+            "textureref": 3328537307,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 1,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/MainMenuButtons.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "UI_Button_Hover.wav",
+            "fullpath": "../assets\\Audio/UI_Button_Hover.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 0.20000000298023224,
+            "retainaudio": false,
+            "panaudio": false
+        },
+        "button": {
+            "interactable": true,
+            "hover": false,
+            "click": false,
+            "activated": false,
+            "renderflag": true
+        }
+    },
+    {
+        "entityid": 5,
+        "general": {
+            "name": "Awake",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "UI_Screen_Awake.wav",
+            "fullpath": "../assets\\Audio/UI_Screen_Awake.wav",
+            "playonawake": true,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 0.4000000059604645,
+            "retainaudio": false,
+            "panaudio": false
+        }
+    },
+    {
+        "entityid": 6,
+        "general": {
+            "name": "StartButton",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.39500001072883606,
+                "y": -0.29100000858306885,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -0.44699999690055847,
+                "y": 0.3700000047683716,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "../assets/Compressed/Start_Default.ctexture",
+            "textureref": 1952423938,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 1,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/MainMenuButtons.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "UI_Button_Hover.wav",
+            "fullpath": "../assets\\Audio/UI_Button_Hover.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 0.20000000298023224,
+            "retainaudio": false,
+            "panaudio": false
+        },
+        "prefab": {
+            "prefab": "StartButton"
+        },
+        "button": {
+            "interactable": true,
+            "hover": false,
+            "click": false,
+            "activated": false,
+            "renderflag": true
+        }
+    },
+    {
+        "entityid": 7,
+        "general": {
+            "name": "HTPButton",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.5353000164031982,
+                "y": -0.29100000858306885,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -0.44999998807907104,
+                "y": 0.07999999821186066,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "../assets/Compressed/HowToPlay_Default.ctexture",
+            "textureref": 2586813445,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 1,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/MainMenuButtons.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "UI_Button_Hover.wav",
+            "fullpath": "../assets\\Audio/UI_Button_Hover.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 0.20000000298023224,
+            "retainaudio": false,
+            "panaudio": false
+        },
+        "prefab": {
+            "prefab": "StartButton"
+        },
+        "button": {
+            "interactable": true,
+            "hover": false,
+            "click": false,
+            "activated": false,
+            "renderflag": true
+        }
+    },
+    {
+        "entityid": 8,
+        "general": {
+            "name": "Exit",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "UI_Screen_Sleep.wav",
+            "fullpath": "../assets\\Audio/UI_Screen_Sleep.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 0.6000000238418579,
+            "retainaudio": false,
+            "panaudio": false
+        }
+    },
+    {
+        "entityid": 9,
+        "general": {
+            "name": "Camera",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "camera": {
+            "positon": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "target": {
+                "x": 1.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "size": {
+                "x": 1223,
+                "y": 583
+            },
+            "near": 0.10000000149011612,
+            "far": 900.0
+        }
+    },
+    {
+        "entityid": 10,
+        "general": {
+            "name": "MenuBackground",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 2.0,
+                "y": -2.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "../assets/Compressed/MainMenuEmpty.ctexture",
+            "textureref": 131267284,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 0,
+            "worldtransform": false
+        }
+    },
+    {
+        "entityid": 11,
+        "general": {
+            "name": "CreditsButton",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.39500001072883606,
+                "y": -0.2809999883174896,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -0.4519999921321869,
+                "y": -0.5350000262260437,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "../assets/Compressed/Credits_Default.ctexture",
+            "textureref": 533001668,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 1,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/MainMenuButtons.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "UI_Button_Hover.wav",
+            "fullpath": "../assets\\Audio/UI_Button_Hover.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 0.20000000298023224,
+            "retainaudio": false,
+            "panaudio": false
+        },
+        "button": {
+            "interactable": true,
+            "hover": false,
+            "click": false,
+            "activated": false,
+            "renderflag": true
+        }
+    },
+    {
+        "entityid": 12,
+        "general": {
+            "name": "BGM",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Troubleshooter_M4.wav",
+            "fullpath": "../assets\\Audio/Troubleshooter_M4.wav",
+            "playonawake": true,
+            "islooping": true,
+            "audiotype": 0,
+            "volume": 0.4000000059604645,
+            "retainaudio": true,
+            "panaudio": true,
+            "panbalance": 0.0,
+            "panspeed": 0.10000000149011612
+        }
+    },
+    {
+        "entityid": 13,
+        "general": {
+            "name": "Camera",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "camera": {
+            "positon": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "target": {
+                "x": 1.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "size": {
+                "x": 1223,
+                "y": 583
+            },
+            "near": 0.10000000149011612,
+            "far": 900.0
+        }
+    },
+    {
+        "entityid": 14,
+        "general": {
+            "name": "bgmIncrease",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.05000000074505806,
+                "y": 0.10000000149011612,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 1000.0,
+                "y": 0.3100000023841858,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 755934584,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 43,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/MainMenuSettingsMenuButtons.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "UI_Button_Hover.wav",
+            "fullpath": "../assets\\Audio/UI_Button_Hover.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false,
+            "panaudio": false
+        },
+        "prefab": {
+            "prefab": "bgmIncrease"
+        },
+        "button": {
+            "interactable": true,
+            "hover": false,
+            "click": false,
+            "activated": false,
+            "renderflag": true
+        }
+    },
+    {
+        "entityid": 15,
+        "general": {
+            "name": "bgmDecrease",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.05000000074505806,
+                "y": 0.05000000074505806,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 1000.0,
+                "y": 0.3100000023841858,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 3520629780,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 43,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/MainMenuSettingsMenuButtons.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "UI_Button_Hover.wav",
+            "fullpath": "../assets\\Audio/UI_Button_Hover.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false,
+            "panaudio": false
+        },
+        "prefab": {
+            "prefab": "bgmDecrease"
+        },
+        "button": {
+            "interactable": true,
+            "hover": false,
+            "click": false,
+            "activated": false,
+            "renderflag": true
+        }
+    },
+    {
+        "entityid": 16,
+        "general": {
+            "name": "SettingsMenuBackground",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 2.0,
+                "y": -2.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 1000.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 577715370,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 42,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/MainMenuSettingsMenuBackground.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "prefab": {
+            "prefab": "SettingsMenuBackground"
+        }
+    },
+    {
+        "entityid": 17,
+        "general": {
+            "name": "SettingsBgmEmpty",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.75,
+                "y": 0.10000000149011612,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 1000.0,
+                "y": 0.3100000023841858,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 3792549019,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 43,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "SettingsBgmEmpty"
+        }
+    },
+    {
+        "entityid": 18,
+        "general": {
+            "name": "SettingsBgmFull",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.75,
+                "y": 0.10000000149011612,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 1000.0,
+                "y": 0.3100000023841858,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 2497003415,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 44,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "SettingsBgmFull"
+        }
+    },
+    {
+        "entityid": 19,
+        "general": {
+            "name": "SettingsFSButton",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.25,
+                "y": -0.15000000596046448,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 1000.0,
+                "y": -0.3700000047683716,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 2145381289,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 43,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/MainMenuSettingsMenuButtons.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "UI_Button_Hover.wav",
+            "fullpath": "../assets\\Audio/UI_Button_Hover.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false,
+            "panaudio": false
+        },
+        "prefab": {
+            "prefab": "SettingsFSButton"
+        },
+        "button": {
+            "interactable": true,
+            "hover": false,
+            "click": false,
+            "activated": false,
+            "renderflag": true
+        }
+    },
+    {
+        "entityid": 20,
+        "general": {
+            "name": "SettingsWindowButton",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.25,
+                "y": -0.15000000596046448,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 1000.0,
+                "y": -0.3700000047683716,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 1374181958,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 43,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/MainMenuSettingsMenuButtons.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "UI_Button_Hover.wav",
+            "fullpath": "../assets\\Audio/UI_Button_Hover.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false,
+            "panaudio": false
+        },
+        "prefab": {
+            "prefab": "SettingsWindowButton"
+        },
+        "button": {
+            "interactable": true,
+            "hover": false,
+            "click": false,
+            "activated": false,
+            "renderflag": true
+        }
+    },
+    {
+        "entityid": 21,
+        "general": {
+            "name": "SettingsBackButton",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.20000000298023224,
+                "y": -0.15000000596046448,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 1000.0,
+                "y": -0.8700000047683716,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 1569467779,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 43,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/MainMenuSettingsMenuButtons.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "UI_Button_Hover.wav",
+            "fullpath": "../assets\\Audio/UI_Button_Hover.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false,
+            "panaudio": false
+        },
+        "prefab": {
+            "prefab": "SettingsBackButton"
+        },
+        "button": {
+            "interactable": true,
+            "hover": false,
+            "click": false,
+            "activated": false,
+            "renderflag": true
+        }
+    },
+    {
+        "entityid": 22,
+        "general": {
+            "name": "SettingsSfxFull",
             "tagid": 6,
             "subtag": 0,
             "isActive": true,
@@ -1318,7 +1231,7 @@
         },
         "uirenderer": {
             "texpath": "",
-            "textureref": 3792549019,
+            "textureref": 2497003415,
             "degree": 0.0,
             "slider": 1.0,
             "color": {
@@ -1327,14 +1240,119 @@
                 "z": 1.0,
                 "w": 1.0
             },
-            "layer": 43,
+            "layer": 44,
             "worldtransform": false
         },
         "scripts": {
             "scriptscontainer": []
         },
         "prefab": {
-            "prefab": "SettingsSfxEmpty"
+            "prefab": "SettingsSfxFull"
+        }
+    },
+    {
+        "entityid": 23,
+        "general": {
+            "name": "SettingsButton",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.30000001192092896,
+                "y": -0.27000001072883606,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -0.46000000834465027,
+                "y": -0.23000000417232513,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 3113566441,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 1,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/MainMenuButtons.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "UI_Button_Hover.wav",
+            "fullpath": "../assets\\Audio/UI_Button_Hover.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false,
+            "panaudio": false
+        },
+        "button": {
+            "interactable": true,
+            "hover": false,
+            "click": false,
+            "activated": false,
+            "renderflag": true
+        }
+    },
+    {
+        "entityid": 24,
+        "general": {
+            "name": "Click",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "UI_Button_Click.wav",
+            "fullpath": "../assets\\Audio/UI_Button_Click.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false,
+            "panaudio": false
         }
     }
 ]

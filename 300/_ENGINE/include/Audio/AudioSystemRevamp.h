@@ -70,7 +70,7 @@ public:
 
 
 	// [3/13] Audio Panning
-	void		 UpdatePanning();				 // Update Loop - go into channel and update panning
+	void		 UpdatePanning(Audio* audio_component = nullptr);				        // Update Loop - go into channel and update panning
 
 
 	
