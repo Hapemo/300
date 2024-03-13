@@ -159,13 +159,17 @@ local MPlatform
 
 --#region EpicIntroUI
 local epicIntroUI
-local ShowInfoSlowdown = 0.25
-local ShowInfoSlowdownCounter
+local ShowInfoCounter
 local ShowInfoMinTime = 4
 local showRightEpicUIPos = 0.44
+local showRightEpicUImidPos = 0.50
 local hideRightEpicUIPos = 1.53
 local showLeftEpicUIPos = -0.44
+local showLeftEpicUImidPos = -0.50
 local hideLeftEpicUIPos = -1.53
+local showFastSpeed = 4.65
+local showSlowSpeed = 0.01
+local moveFast
 --#endregion
 
 --#region black border variables
@@ -366,12 +370,10 @@ function RunTrojanHorseEpicIntro()
         
     elseif _G.TrojanHorseEpicIntroState == 5 then -- ShowInfo
         -- print("state 5")
-        ShowInfoSlowdownCounter = ShowInfoSlowdownCounter + FPSManager.GetDT()
-        local minTimeReached = false
-        if ShowInfoSlowdownCounter > ShowInfoMinTime then minTimeReached = true end
-        if (ShowInfoSlowdownCounter < ShowInfoSlowdown) then
-            MoveEpicIntroUI(epicIntroUI, 4.45, true, true)
-        elseif not MoveEpicIntroUI(epicIntroUI, 0.01, true, true) and minTimeReached then _G.TrojanHorseEpicIntroState = 6 end
+        print(ShowInfoCounter)
+        ShowInfoCounter = ShowInfoCounter + FPSManager.GetDT()
+        if moveFast then moveFast = MoveEpicIntroUI(epicIntroUI, true, true, true)
+        elseif not MoveEpicIntroUI(epicIntroUI, false, true, true) and ShowInfoCounter > ShowInfoMinTime then _G.TrojanHorseEpicIntroState = 6 end
 
         -- print("_G.TrojanHorseEpicIntroState == 5")
 
@@ -382,7 +384,7 @@ function RunTrojanHorseEpicIntro()
         -- When time's up, quickly retreat the info with same diagonality
     elseif _G.TrojanHorseEpicIntroState == 6 then -- HideInfo
         -- print("state 6")
-        if not MoveEpicIntroUI(epicIntroUI, 4, true, false) then _G.TrojanHorseEpicIntroState = 7 end
+        if not MoveEpicIntroUI(epicIntroUI, true, true, false) then _G.TrojanHorseEpicIntroState = 7 end
         -- Retracts the TrojanHorseInfo UI quickly
     elseif _G.TrojanHorseEpicIntroState == 7 then -- FloorZoomOut
         -- print("state 7")
@@ -415,7 +417,7 @@ function InitTSEpicIntro()
     -- THFlyViewPosition1 = Vec3.new(134.6, -11.2, 0)
     -- THFlyViewPosition2 = Vec3.new(108, 1, 0)
     -- THdashStopTimerCount = 0
-    -- ShowInfoSlowdownCounter = 0
+    -- ShowInfoCounter = 0
     -- THLedgeStopLooking = false
     -- THFlyViewPosition1Finish = true
     -- THFlyViewPosition2Finish = true
@@ -505,14 +507,13 @@ function RunTSEpicIntro()
         end 
         LookTowardsInterpolation(player, Helper.Vec3Minus(TSView1, Vec3.new(179,0,0)), 5.25)
     elseif _G.TSEpicIntroState == 11 then -- ShowInfo 
-        ShowInfoSlowdownCounter = ShowInfoSlowdownCounter + FPSManager.GetDT()
-        local minTimeReached = false
-        if ShowInfoSlowdownCounter > ShowInfoMinTime then minTimeReached = true end
-        if (ShowInfoSlowdownCounter < ShowInfoSlowdown) then
-            MoveEpicIntroUI(epicIntroUI, 4.4, false, true)
-        elseif not MoveEpicIntroUI(epicIntroUI, 0.01, false, true) and minTimeReached then _G.TSEpicIntroState = 12 end
+        ShowInfoCounter = ShowInfoCounter + FPSManager.GetDT()
+        print(ShowInfoCounter)
+        if moveFast then moveFast = MoveEpicIntroUI(epicIntroUI, true, false, true)
+        elseif not MoveEpicIntroUI(epicIntroUI, false, false, true) and ShowInfoCounter > ShowInfoMinTime then _G.TSEpicIntroState = 12 end
+
     elseif _G.TSEpicIntroState == 12 then -- Hideinfo
-            if not MoveEpicIntroUI(epicIntroUI, 4, false, false) then _G.TSEpicIntroState = 13 end
+            if not MoveEpicIntroUI(epicIntroUI, true, false, false) then _G.TSEpicIntroState = 13 end
     elseif _G.TSEpicIntroState == 13 then -- Zoom Out
         if (not ZoomCamTo(player, defaultZoom, 150)) then
             _G.TSEpicIntroState = 0
@@ -593,14 +594,12 @@ function RunILYEpicIntro()
     elseif _G.ILYEpicIntroState == 4 then -- Zoom into ILY
         if not ZoomCamTo(player, ILYZoomValue, 100) then _G.ILYEpicIntroState = 5 end
     elseif _G.ILYEpicIntroState == 5 then -- Show Info
-        ShowInfoSlowdownCounter = ShowInfoSlowdownCounter + FPSManager.GetDT()
-        local minTimeReached = false
-        if ShowInfoSlowdownCounter > ShowInfoMinTime then minTimeReached = true end
-        if (ShowInfoSlowdownCounter < ShowInfoSlowdown) then
-            MoveEpicIntroUI(epicIntroUI, 4.3, false, true)
-        elseif not MoveEpicIntroUI(epicIntroUI, 0.01, false, true) and minTimeReached then _G.ILYEpicIntroState = 6 end
+        ShowInfoCounter = ShowInfoCounter + FPSManager.GetDT()
+        print(ShowInfoCounter)
+        if moveFast then moveFast = MoveEpicIntroUI(epicIntroUI, true, false, true)
+        elseif not MoveEpicIntroUI(epicIntroUI, false, false, true) and ShowInfoCounter > ShowInfoMinTime then _G.ILYEpicIntroState = 6 end
     elseif _G.ILYEpicIntroState == 6 then -- Hide Info
-        if not MoveEpicIntroUI(epicIntroUI, 4, false, false) then _G.ILYEpicIntroState = 7 end
+        if not MoveEpicIntroUI(epicIntroUI, true, false, false) then _G.ILYEpicIntroState = 7 end
     elseif _G.ILYEpicIntroState == 7 then -- Zoom out and resume game
         if (not ZoomCamTo(player, defaultZoom, 100)) then
             _G.ILYEpicIntroState = 0
@@ -673,20 +672,21 @@ function RunZBEpicIntro()
             _G.ZBEpicIntroState = 6 
         end
     elseif _G.ZBEpicIntroState == 6 then -- ShowInfo
-        ShowInfoSlowdownCounter = ShowInfoSlowdownCounter + FPSManager.GetDT()
+        ShowInfoCounter = ShowInfoCounter + FPSManager.GetDT()
 
-        if ZBRunOnce and (ShowInfoSlowdownCounter < ShowInfoSlowdown) then
+        if ZBRunOnce and (ShowInfoCounter < 0.25) then
             ZBRunOnce = false
             gameStateSys:GetEntity("ZipBombFuseAudio"):GetAudio():SetPlay()
             epicZB:GetAnimator():PauseAnimation()
             -- epicZB:GetAudio():SetStop()
         end
 
-        if (ShowInfoSlowdownCounter < ShowInfoSlowdown) then MoveEpicIntroUI(epicIntroUI, 4.25, true, true)
-        elseif not MoveEpicIntroUI(epicIntroUI, 0.01, true, true) and
-               ShowInfoSlowdownCounter > ShowInfoMinTime then _G.ZBEpicIntroState = 7 end
+        print(ShowInfoCounter)
+        if moveFast then moveFast = MoveEpicIntroUI(epicIntroUI, true, true, true)
+        elseif not MoveEpicIntroUI(epicIntroUI, false, true, true) and ShowInfoCounter > ShowInfoMinTime then _G.ZBEpicIntroState = 7 end
+
     elseif _G.ZBEpicIntroState == 7 then -- HideInfo
-        if not MoveEpicIntroUI(epicIntroUI, 4, true, false) then 
+        if not MoveEpicIntroUI(epicIntroUI, true, true, false) then 
             _G.ZBEpicIntroState = 0
             _G.FreezePlayerControl = false
             retractBlackBorder = true
@@ -758,13 +758,12 @@ function RunMEpicIntro()
             _G.MEpicIntroState = 5 
         end
     elseif _G.MEpicIntroState == 5 then -- ShowInfo
-        ShowInfoSlowdownCounter = ShowInfoSlowdownCounter + FPSManager.GetDT()
-
-        if (ShowInfoSlowdownCounter < ShowInfoSlowdown) then MoveEpicIntroUI(epicIntroUI, 4.65, false, true)
-        elseif not MoveEpicIntroUI(epicIntroUI, 0.01, false, true) and
-               ShowInfoSlowdownCounter > ShowInfoMinTime then _G.MEpicIntroState = 6 end
+        ShowInfoCounter = ShowInfoCounter + FPSManager.GetDT()
+        print(ShowInfoCounter)
+        if moveFast then moveFast = MoveEpicIntroUI(epicIntroUI, true, false, true)
+        elseif not MoveEpicIntroUI(epicIntroUI, false, false, true) and ShowInfoCounter > ShowInfoMinTime then _G.MEpicIntroState = 6 end
     elseif _G.MEpicIntroState == 6 then -- HideInfo
-        if not MoveEpicIntroUI(epicIntroUI, 4, false, false) then _G.MEpicIntroState = 7 end
+        if not MoveEpicIntroUI(epicIntroUI, true, false, false) then _G.MEpicIntroState = 7 end
     elseif _G.MEpicIntroState == 7 then -- zoom out and resume game
         if (not ZoomCamTo(player, defaultZoom, 100)) then
             _G.MEpicIntroState = 0
@@ -791,7 +790,8 @@ end
 function GeneralSetup()
     insertBlackBorder = true
     _G.FreezePlayerControl = true
-    ShowInfoSlowdownCounter = 0
+    ShowInfoCounter = 0
+    moveFast = true
     HideUI()
 end
 
@@ -989,18 +989,22 @@ function ShowUI()
 end
 
 -- Take in targeted UI position
-function MoveEpicIntroUI(entity, speed, isRight, isShow)
+function MoveEpicIntroUI(entity, fastSpeed, isRight, isShow)
 
     local x = entity:GetTransform().mTranslate.x
-    local delta = speed*FPSManager.GetDT()
+    local delta = 0
+    if fastSpeed then delta = showFastSpeed*FPSManager.GetDT() else delta = showSlowSpeed*FPSManager.GetDT() end
+
     -- print(delta)
     local keepRunning = true
     -- print(x)
     if isRight then
         if isShow then
             x = x - delta
-            if x < showRightEpicUIPos then 
-                x = showRightEpicUIPos
+            local showPos = 0
+            if fastSpeed then showPos = showRightEpicUImidPos else showPos = showRightEpicUIPos end
+            if x < showPos then 
+                x = showPos
                 keepRunning = false
             end
         else
@@ -1013,8 +1017,10 @@ function MoveEpicIntroUI(entity, speed, isRight, isShow)
     else
         if isShow then
             x = x + delta
-            if x > showLeftEpicUIPos then 
-                x = showLeftEpicUIPos
+            local showPos = 0
+            if fastSpeed then showPos = showLeftEpicUImidPos else showPos = showLeftEpicUIPos end
+            if x > showPos then 
+                x = showPos
                 keepRunning = false
             end
         else
