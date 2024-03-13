@@ -312,6 +312,11 @@ void Audio::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writ
 		Serialize(writer, "panspeed", mPanSpeed);
 	}
 
+	Serialize(writer, "filepaths", mFilePaths);
+	Serialize(writer, "filenames", mFileNames);
+	Serialize(writer, "audioactives", mAudioActiveStates);
+
+
 	writer.EndObject();
 }
 
@@ -332,7 +337,9 @@ void Audio::DeserializeSelf(rapidjson::Value& reader)
 		Deserialize(reader, "panbalance", mPanBalance);
 		Deserialize(reader, "panspeed", mPanSpeed);
 	}
-
+	Deserialize(reader, "filepaths", mFilePaths);
+	Deserialize(reader, "filenames", mFileNames);
+	Deserialize(reader, "audioactives", mAudioActiveStates);
 }
 
 void AudioListener::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const

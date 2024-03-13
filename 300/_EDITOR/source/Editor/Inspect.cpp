@@ -1580,8 +1580,14 @@ void Audio::Inspect() {
 				ImGui::Checkbox(("Active##" + std::to_string(i)).c_str(), &activeState);
 				mAudioActiveStates[i] = activeState;
 			}
+
+			if (!mIsEmpty && m3DAudio)
+			{
+				ImGui::Text("This is a 3D Audio");
+			}
 		}
 	}
+
 	//ImGui::Text(Entity(Hierarchy::selectedId).GetComponent<Audio>().mFullPath.c_str());
 
 	// Debugging (to show which audio are playing) - on editor
@@ -1601,12 +1607,6 @@ void Audio::Inspect() {
 		//ImGui::Text("On the %s group", audio_type.c_str());
 	}
 		
-
-	if (!mIsEmpty && m3DAudio)
-	{
-		ImGui::Text("This is a 3D Audio");
-	}
-
 	if (mState == Audio::PAUSED)
 		ImGui::Text("Audio Paused :o");
 
