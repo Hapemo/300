@@ -183,6 +183,21 @@ local maxFilterRadius = 0.05
 local dmgAudioEnt 
 local dmgAudioComp
 
+-- [M5] - Footsteps
+local leftFootsteps = {}
+local footstep_left_1 
+local footstep_left_2
+local footstep_left_3
+local footstep_left_4
+
+local rightFootsteps = {}
+local footstep_right_1
+local footstep_right_2
+local footstep_right_3
+local footstep_right_4
+
+
+
 _G.FreezePlayerControl = false
 
 function Alive()
@@ -270,6 +285,27 @@ function Alive()
     -- Shotgun Stuff -- ==--==
    
 
+    -- Footsteps stuff
+    footstep_left_1 = gameStateSys:GetEntity("Footstep_Left_1")
+    footstep_left_2 = gameStateSys:GetEntity("Footstep_Left_2")
+    footstep_left_3 = gameStateSys:GetEntity("Footstep_Left_3")
+    footstep_left_4 = gameStateSys:GetEntity("Footstep_Left_4")
+    
+    table.insert(leftFootsteps , footstep_left_1)
+    table.insert(leftFootsteps , footstep_left_2)
+    table.insert(leftFootsteps , footstep_left_3)
+    table.insert(leftFootsteps , footstep_left_4)
+
+    footstep_right_1 = gameStateSys:GetEntity("Footstep_Right_1")
+    footstep_right_2 = gameStateSys:GetEntity("Footstep_Right_2")
+    footstep_right_3 = gameStateSys:GetEntity("Footstep_Right_3")
+    footstep_right_4 = gameStateSys:GetEntity("Footstep_Right_4")
+
+    table.insert(rightFootsteps , footstep_right_1)
+    table.insert(rightFootsteps , footstep_right_2)
+    table.insert(rightFootsteps , footstep_right_3)
+    table.insert(rightFootsteps , footstep_right_4)
+    
 end
 
 function Update()
@@ -1272,4 +1308,10 @@ end
 function setYellowGunTexture(color_vec4)
     gunMeshRenderer:SetTexture(MaterialType.DIFFUSE, "Gun_Base_Color_Brown")
     gunMeshRenderer:SetColor(color_vec4)
+end
+
+
+-- [M5]
+function playFootsteps()
+
 end

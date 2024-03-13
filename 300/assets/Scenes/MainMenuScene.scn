@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 5242881,
+        "entityid": 1,
         "general": {
             "name": "Click",
             "tagid": 6,
@@ -34,14 +34,11 @@
             "audiotype": 1,
             "volume": 1.0,
             "retainaudio": false,
-            "panaudio": false,
-            "filepaths": [],
-            "filenames": [],
-            "audioactives": []
+            "panaudio": false
         }
     },
     {
-        "entityid": 5242882,
+        "entityid": 2,
         "general": {
             "name": "SettingsButton",
             "tagid": 6,
@@ -97,10 +94,7 @@
             "audiotype": 1,
             "volume": 1.0,
             "retainaudio": false,
-            "panaudio": false,
-            "filepaths": [],
-            "filenames": [],
-            "audioactives": []
+            "panaudio": false
         },
         "button": {
             "interactable": true,
@@ -111,7 +105,7 @@
         }
     },
     {
-        "entityid": 5242883,
+        "entityid": 3,
         "general": {
             "name": "SettingsSfxFull",
             "tagid": 6,
@@ -158,7 +152,7 @@
         }
     },
     {
-        "entityid": 5242884,
+        "entityid": 4,
         "general": {
             "name": "SettingsBackButton",
             "tagid": 6,
@@ -214,10 +208,7 @@
             "audiotype": 1,
             "volume": 1.0,
             "retainaudio": false,
-            "panaudio": false,
-            "filepaths": [],
-            "filenames": [],
-            "audioactives": []
+            "panaudio": false
         },
         "prefab": {
             "prefab": "SettingsBackButton"
@@ -231,7 +222,7 @@
         }
     },
     {
-        "entityid": 5242885,
+        "entityid": 5,
         "general": {
             "name": "SettingsWindowButton",
             "tagid": 6,
@@ -287,10 +278,7 @@
             "audiotype": 1,
             "volume": 1.0,
             "retainaudio": false,
-            "panaudio": false,
-            "filepaths": [],
-            "filenames": [],
-            "audioactives": []
+            "panaudio": false
         },
         "prefab": {
             "prefab": "SettingsWindowButton"
@@ -304,7 +292,7 @@
         }
     },
     {
-        "entityid": 5242886,
+        "entityid": 6,
         "general": {
             "name": "SettingsFSButton",
             "tagid": 6,
@@ -360,10 +348,7 @@
             "audiotype": 1,
             "volume": 1.0,
             "retainaudio": false,
-            "panaudio": false,
-            "filepaths": [],
-            "filenames": [],
-            "audioactives": []
+            "panaudio": false
         },
         "prefab": {
             "prefab": "SettingsFSButton"
@@ -377,7 +362,7 @@
         }
     },
     {
-        "entityid": 5242887,
+        "entityid": 7,
         "general": {
             "name": "SettingsBgmFull",
             "tagid": 0,
@@ -424,7 +409,7 @@
         }
     },
     {
-        "entityid": 5242888,
+        "entityid": 8,
         "general": {
             "name": "SettingsBgmEmpty",
             "tagid": 0,
@@ -471,7 +456,7 @@
         }
     },
     {
-        "entityid": 5242889,
+        "entityid": 9,
         "general": {
             "name": "SettingsMenuBackground",
             "tagid": 6,
@@ -523,7 +508,7 @@
         }
     },
     {
-        "entityid": 5242890,
+        "entityid": 10,
         "general": {
             "name": "bgmDecrease",
             "tagid": 6,
@@ -579,10 +564,7 @@
             "audiotype": 1,
             "volume": 1.0,
             "retainaudio": false,
-            "panaudio": false,
-            "filepaths": [],
-            "filenames": [],
-            "audioactives": []
+            "panaudio": false
         },
         "prefab": {
             "prefab": "bgmDecrease"
@@ -596,7 +578,7 @@
         }
     },
     {
-        "entityid": 5242891,
+        "entityid": 11,
         "general": {
             "name": "bgmIncrease",
             "tagid": 6,
@@ -652,10 +634,7 @@
             "audiotype": 1,
             "volume": 1.0,
             "retainaudio": false,
-            "panaudio": false,
-            "filepaths": [],
-            "filenames": [],
-            "audioactives": []
+            "panaudio": false
         },
         "prefab": {
             "prefab": "bgmIncrease"
@@ -669,7 +648,7 @@
         }
     },
     {
-        "entityid": 5242892,
+        "entityid": 12,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -714,7 +693,7 @@
         }
     },
     {
-        "entityid": 5242893,
+        "entityid": 13,
         "general": {
             "name": "BGM",
             "tagid": 0,
@@ -750,23 +729,11 @@
             "retainaudio": true,
             "panaudio": true,
             "panbalance": 0.0,
-            "panspeed": 0.10000000149011612,
-            "filepaths": [
-                "../assets\\Audio",
-                "../assets\\Audio"
-            ],
-            "filenames": [
-                "(3D) cruising-down-8bit-lane-159615.mp3",
-                "Troubleshooter_M4.wav"
-            ],
-            "audioactives": [
-                false,
-                true
-            ]
+            "panspeed": 0.10000000149011612
         }
     },
     {
-        "entityid": 5242894,
+        "entityid": 14,
         "general": {
             "name": "CreditsButton",
             "tagid": 6,
@@ -822,10 +789,7 @@
             "audiotype": 1,
             "volume": 0.20000000298023224,
             "retainaudio": false,
-            "panaudio": false,
-            "filepaths": [],
-            "filenames": [],
-            "audioactives": []
+            "panaudio": false
         },
         "button": {
             "interactable": true,
@@ -836,7 +800,7 @@
         }
     },
     {
-        "entityid": 5242895,
+        "entityid": 15,
         "general": {
             "name": "MenuBackground",
             "tagid": 6,
@@ -877,7 +841,7 @@
         }
     },
     {
-        "entityid": 5242896,
+        "entityid": 16,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -922,7 +886,7 @@
         }
     },
     {
-        "entityid": 5242897,
+        "entityid": 17,
         "general": {
             "name": "Exit",
             "tagid": 0,
@@ -956,14 +920,11 @@
             "audiotype": 1,
             "volume": 0.6000000238418579,
             "retainaudio": false,
-            "panaudio": false,
-            "filepaths": [],
-            "filenames": [],
-            "audioactives": []
+            "panaudio": false
         }
     },
     {
-        "entityid": 5242898,
+        "entityid": 18,
         "general": {
             "name": "HTPButton",
             "tagid": 6,
@@ -1019,10 +980,7 @@
             "audiotype": 1,
             "volume": 0.20000000298023224,
             "retainaudio": false,
-            "panaudio": false,
-            "filepaths": [],
-            "filenames": [],
-            "audioactives": []
+            "panaudio": false
         },
         "prefab": {
             "prefab": "StartButton"
@@ -1036,7 +994,7 @@
         }
     },
     {
-        "entityid": 5242899,
+        "entityid": 19,
         "general": {
             "name": "StartButton",
             "tagid": 6,
@@ -1092,10 +1050,7 @@
             "audiotype": 1,
             "volume": 0.20000000298023224,
             "retainaudio": false,
-            "panaudio": false,
-            "filepaths": [],
-            "filenames": [],
-            "audioactives": []
+            "panaudio": false
         },
         "prefab": {
             "prefab": "StartButton"
@@ -1109,7 +1064,7 @@
         }
     },
     {
-        "entityid": 5242900,
+        "entityid": 20,
         "general": {
             "name": "Awake",
             "tagid": 0,
@@ -1143,14 +1098,11 @@
             "audiotype": 1,
             "volume": 0.4000000059604645,
             "retainaudio": false,
-            "panaudio": false,
-            "filepaths": [],
-            "filenames": [],
-            "audioactives": []
+            "panaudio": false
         }
     },
     {
-        "entityid": 5242901,
+        "entityid": 21,
         "general": {
             "name": "QuitButton",
             "tagid": 6,
@@ -1206,10 +1158,7 @@
             "audiotype": 1,
             "volume": 0.20000000298023224,
             "retainaudio": false,
-            "panaudio": false,
-            "filepaths": [],
-            "filenames": [],
-            "audioactives": []
+            "panaudio": false
         },
         "button": {
             "interactable": true,
@@ -1220,7 +1169,7 @@
         }
     },
     {
-        "entityid": 5242902,
+        "entityid": 22,
         "general": {
             "name": "sfxDecrease",
             "tagid": 6,
@@ -1276,10 +1225,7 @@
             "audiotype": 1,
             "volume": 1.0,
             "retainaudio": false,
-            "panaudio": false,
-            "filepaths": [],
-            "filenames": [],
-            "audioactives": []
+            "panaudio": false
         },
         "prefab": {
             "prefab": "sfxDecrease"
@@ -1293,7 +1239,7 @@
         }
     },
     {
-        "entityid": 5242903,
+        "entityid": 23,
         "general": {
             "name": "sfxIncrease",
             "tagid": 6,
@@ -1349,10 +1295,7 @@
             "audiotype": 1,
             "volume": 1.0,
             "retainaudio": false,
-            "panaudio": false,
-            "filepaths": [],
-            "filenames": [],
-            "audioactives": []
+            "panaudio": false
         },
         "prefab": {
             "prefab": "sfxIncrease"
@@ -1366,7 +1309,7 @@
         }
     },
     {
-        "entityid": 5242904,
+        "entityid": 24,
         "general": {
             "name": "SettingsSfxEmpty",
             "tagid": 6,

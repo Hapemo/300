@@ -1068,7 +1068,6 @@ void AudioSystem::UpdatePanning(Audio* audio_component)
 
 			if (current_sound)  // not empty..
 			{
-				
 				channel_pair.second->setPan(audio_component->mPanBalance); 
 			}
 		}

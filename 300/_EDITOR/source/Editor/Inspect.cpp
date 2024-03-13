@@ -1653,8 +1653,9 @@ void Audio::Inspect() {
 		if (mPanAudio)
 		{	
 			ImGui::Text("Audio Panning Attributes: ");
-			ImGui::DragFloat("Starting Panning Balance", (float*)&mPanBalance, 0.05f, 0.0f, 1.0f); // Set Initial Balance (0.0 for center, -1.0 for left , 1.0 for right)
-			ImGui::DragFloat("Panning Speed", (float*)&mPanSpeed, 0.01f, 0.0f, 1.0f);
+			ImGui::DragFloat("Starting Panning Balance", (float*)&mPanBalance, 0.05f, -1.0f, 1.0f); // Set Initial Balance (0.0 for center, -1.0 for left , 1.0 for right)
+			ImGui::DragFloat("Panning Speed", (float*)&mPanSpeed, 0.01f, 0.0f, 1.0f);	// [3/13] irrelevant for now
+			ImGui::Text("Panning Guide : [-1.0] for left, [0.0] for center, [1.0] for right)");
 		}
 	
 	
