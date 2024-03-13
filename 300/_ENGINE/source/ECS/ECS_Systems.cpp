@@ -64,6 +64,8 @@ void SystemManager::Init(bool isEditor, GFX::Window *window)
 	mGraphicsSystem.get()->Init();
 	mGraphicsSystem->PauseGlobalAnimation();
 
+	// set fullscreen on init
+	//mGraphicsSystem.get()->SetFullscreen(true);
 
 	mAudioSystem.get()->Init();
 	PINFO("Init Game state System");

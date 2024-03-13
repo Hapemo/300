@@ -105,7 +105,11 @@ function Update()
     end
 
     if (settingsFSButton:GetButton().mActivated) then
-        --toggle fs
+        graphicssys:SetFullscreenFlag(true)
+    end
+
+    if (settingsWindowButton:GetButton().mActivated) then
+        graphicssys:SetFullscreenFlag(false)
     end
 end
 

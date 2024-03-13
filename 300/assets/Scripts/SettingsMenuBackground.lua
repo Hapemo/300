@@ -27,6 +27,7 @@ function Update()
 end
 
 function PauseUpdate()
+    graphicssys = systemManager:mGraphicsSystem()
     settingsBgmFull:GetUIrenderer():SetSlider(audioSys:GetBGMVolume())
     settingSfxFull:GetUIrenderer():SetSlider(audioSys:GetSFXVolume())
 
@@ -92,7 +93,11 @@ function PauseUpdate()
     end
 
     if (settingsFSButton:GetButton().mActivated) then
-        --toggle fs
+        graphicssys:SetFullscreenFlag(true)
+    end
+
+    if (settingsWindowButton:GetButton().mActivated) then
+        graphicssys:SetFullscreenFlag(false)
     end
 end
 
