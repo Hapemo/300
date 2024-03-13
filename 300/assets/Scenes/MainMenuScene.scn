@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 14680065,
+        "entityid": 1,
         "general": {
             "name": "Click",
             "tagid": 6,
@@ -37,7 +37,7 @@
         }
     },
     {
-        "entityid": 14680066,
+        "entityid": 2,
         "general": {
             "name": "SettingsButton",
             "tagid": 6,
@@ -103,7 +103,7 @@
         }
     },
     {
-        "entityid": 14680067,
+        "entityid": 3,
         "general": {
             "name": "SettingsSfxFull",
             "tagid": 6,
@@ -132,7 +132,7 @@
             "texpath": "",
             "textureref": 2497003415,
             "degree": 0.0,
-            "slider": 0.0,
+            "slider": 1.0,
             "color": {
                 "x": 1.0,
                 "y": 1.0,
@@ -150,7 +150,7 @@
         }
     },
     {
-        "entityid": 14680068,
+        "entityid": 4,
         "general": {
             "name": "SettingsBackButton",
             "tagid": 6,
@@ -209,10 +209,17 @@
         },
         "prefab": {
             "prefab": "SettingsBackButton"
+        },
+        "button": {
+            "interactable": true,
+            "hover": false,
+            "click": false,
+            "activated": false,
+            "renderflag": true
         }
     },
     {
-        "entityid": 14680069,
+        "entityid": 5,
         "general": {
             "name": "SettingsWindowButton",
             "tagid": 6,
@@ -271,10 +278,17 @@
         },
         "prefab": {
             "prefab": "SettingsWindowButton"
+        },
+        "button": {
+            "interactable": true,
+            "hover": false,
+            "click": false,
+            "activated": false,
+            "renderflag": true
         }
     },
     {
-        "entityid": 14680070,
+        "entityid": 6,
         "general": {
             "name": "SettingsFSButton",
             "tagid": 6,
@@ -333,10 +347,17 @@
         },
         "prefab": {
             "prefab": "SettingsFSButton"
+        },
+        "button": {
+            "interactable": true,
+            "hover": false,
+            "click": false,
+            "activated": false,
+            "renderflag": true
         }
     },
     {
-        "entityid": 14680071,
+        "entityid": 7,
         "general": {
             "name": "SettingsBgmFull",
             "tagid": 0,
@@ -365,7 +386,7 @@
             "texpath": "",
             "textureref": 2497003415,
             "degree": 0.0,
-            "slider": 0.0,
+            "slider": 1.0,
             "color": {
                 "x": 1.0,
                 "y": 1.0,
@@ -383,7 +404,7 @@
         }
     },
     {
-        "entityid": 14680072,
+        "entityid": 8,
         "general": {
             "name": "SettingsBgmEmpty",
             "tagid": 0,
@@ -430,7 +451,7 @@
         }
     },
     {
-        "entityid": 14680073,
+        "entityid": 9,
         "general": {
             "name": "SettingsMenuBackground",
             "tagid": 6,
@@ -482,7 +503,7 @@
         }
     },
     {
-        "entityid": 14680074,
+        "entityid": 10,
         "general": {
             "name": "bgmDecrease",
             "tagid": 6,
@@ -551,7 +572,7 @@
         }
     },
     {
-        "entityid": 14680075,
+        "entityid": 11,
         "general": {
             "name": "bgmIncrease",
             "tagid": 6,
@@ -620,7 +641,7 @@
         }
     },
     {
-        "entityid": 14680076,
+        "entityid": 12,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -665,7 +686,7 @@
         }
     },
     {
-        "entityid": 14680077,
+        "entityid": 13,
         "general": {
             "name": "BGM",
             "tagid": 0,
@@ -702,7 +723,7 @@
         }
     },
     {
-        "entityid": 14680078,
+        "entityid": 14,
         "general": {
             "name": "CreditsButton",
             "tagid": 6,
@@ -768,7 +789,7 @@
         }
     },
     {
-        "entityid": 14680079,
+        "entityid": 15,
         "general": {
             "name": "MenuBackground",
             "tagid": 6,
@@ -809,7 +830,7 @@
         }
     },
     {
-        "entityid": 14680080,
+        "entityid": 16,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -846,7 +867,7 @@
                 "z": 0.0
             },
             "size": {
-                "x": 1223,
+                "x": 1075,
                 "y": 583
             },
             "near": 0.10000000149011612,
@@ -854,7 +875,7 @@
         }
     },
     {
-        "entityid": 14680081,
+        "entityid": 17,
         "general": {
             "name": "Exit",
             "tagid": 0,
@@ -891,7 +912,7 @@
         }
     },
     {
-        "entityid": 14680082,
+        "entityid": 18,
         "general": {
             "name": "HTPButton",
             "tagid": 6,
@@ -960,7 +981,7 @@
         }
     },
     {
-        "entityid": 14680083,
+        "entityid": 19,
         "general": {
             "name": "StartButton",
             "tagid": 6,
@@ -1029,7 +1050,7 @@
         }
     },
     {
-        "entityid": 14680084,
+        "entityid": 20,
         "general": {
             "name": "Awake",
             "tagid": 0,
@@ -1066,7 +1087,7 @@
         }
     },
     {
-        "entityid": 14680085,
+        "entityid": 21,
         "general": {
             "name": "QuitButton",
             "tagid": 6,
@@ -1132,7 +1153,7 @@
         }
     },
     {
-        "entityid": 14680086,
+        "entityid": 22,
         "general": {
             "name": "sfxDecrease",
             "tagid": 6,
@@ -1201,7 +1222,7 @@
         }
     },
     {
-        "entityid": 14680087,
+        "entityid": 23,
         "general": {
             "name": "sfxIncrease",
             "tagid": 6,
@@ -1270,7 +1291,7 @@
         }
     },
     {
-        "entityid": 14680088,
+        "entityid": 24,
         "general": {
             "name": "SettingsSfxEmpty",
             "tagid": 6,

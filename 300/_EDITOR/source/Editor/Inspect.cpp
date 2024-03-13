@@ -1621,12 +1621,14 @@ void Audio::Inspect() {
 		ImGui::Checkbox("Play on Awake", &mPlayonAwake);
 		ImGui::Checkbox("Is Looping", &mIsLooping);
 		ImGui::Checkbox("Persist upon game state switch", &mGameStateRetain);
+		ImGui::Checkbox("Pan Audio", &mPanAudio);
 		//ImGui::SliderFloat("Volume", &mVolume, 0.0f, 1.0f, "volume = %.3f");
 		ImGui::DragFloat("Volume", (float*)&mVolume, 0.05f, 0.0f, 1.0f);
 		ImGui::DragFloat("Fade Speed", (float*)&mFadeSpeedModifier, 0.05f, 0.0f);
 		
 		// Added [3/13] - Pan Audio
-		ImGui::DragFloat("Panning Balance: ", (float*)&mPanBalance, 0.05f, 0.0f, 1.0f);
+		if (mPanAudio)
+			ImGui::DragFloat("Panning Balance", (float*)&mPanBalance, 0.05f, 0.0f, 1.0f);
 
 		if (m3DAudio)
 		{

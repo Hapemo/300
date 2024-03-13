@@ -197,14 +197,20 @@ void AudioSystem::Update([[maybe_unused]] float dt, bool calling_from_pause)
 
 		UpdateVolume(audio_component.mChannelID, audio_component.mAudioType, audio_component.mVolume * global_modifier);
 
+		// Check for panning updates
+		if (audio_component.mPanAudio)
+		{
+			UpdatePanning();
+		}
+
 		switch (audio_component.mNextActionState)
 		{
 			case Audio::SET_TO_PLAY:
 
-				if (audio_component.mFileName == "Player_Movement_Walk.wav")
+			/*	if (audio_component.mFileName == "Player_Movement_Walk.wav")
 				{
 					int i = 0;
-				}
+				}*/
 
 				if (FindSound(audio_component.mFileName) != nullptr) // Sound Exists ...
 				{
@@ -219,8 +225,8 @@ void AudioSystem::Update([[maybe_unused]] float dt, bool calling_from_pause)
 
 					if (audio.GetComponent<Audio>().mFileName == "VO_Tutorial_ObjectiveIntro.wav") {
 						std::string name = audio.GetComponent<General>().name;
-					}
 
+					}
 
 					PINFO("AUDIO EXISTS");
 					PINFO("PLAYING AUDIO %s AT: %f", audio_component.mFileName.c_str(), audio_component.mVolume);
@@ -1054,6 +1060,11 @@ void AudioSystem::ClearFinishedSounds()
 			}
 		}
 	}
+}
+
+void AudioSystem::UpdatePanning()
+{
+	
 }
 
 bool AudioSystem::IsChannelPlaying(uid id, AUDIOTYPE type)

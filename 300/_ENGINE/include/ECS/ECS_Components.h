@@ -573,8 +573,14 @@ struct Audio : public Serializable
 	glm::vec3      mPosition = { 0.0,0.0,0.0 };
 	glm::vec3	   mVelocity = { 0.0,0.0,0.0 };
 
-	// [M5 - 13/3] Panning Feature - Left-Right Audio
+	// [M5 - 13/3] Panning Feature - Left-Right Audio 
+	//  - Ideally for audio that is attached to the player. 
+	// [TODO] 1. Container to support multiple audio files? (Left - Right)
+	//		 
+	bool		   mPanAudio = false;
 	float		   mPanBalance = 0.0f;
+
+
 
 
 	

@@ -67,6 +67,12 @@ public:
 
 	// Channel Management (used in every loop)
 	void		 ClearFinishedSounds();
+
+
+	// [3/13] Audio Panning
+	void		 UpdatePanning();				 // Update Loop - go into channel and update panning
+
+
 	
 public:
 	// Channel Check (still playing or not)
