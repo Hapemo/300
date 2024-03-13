@@ -40,6 +40,8 @@ function Alive()
 end
 
 function Update()
+
+    STATE = 1
     cameraEntity = gameStateSys:GetEntity("Camera")
     bossEntity = gameStateSys:GetEntity("BossLevel2")
     bossEntity:GetAnimator():PauseAnimation()

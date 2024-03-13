@@ -573,6 +573,12 @@ struct Audio : public Serializable
 	glm::vec3      mPosition = { 0.0,0.0,0.0 };
 	glm::vec3	   mVelocity = { 0.0,0.0,0.0 };
 
+	// [M5 - 13/3] Panning Feature - Left-Right Audio
+	float		   mPanBalance = 0.0f;
+
+
+	
+
 	// Do not serialize 
 	// ------------------------------------------
 	STATE          mState = STATE::STARTUP;		        // Initial State - Startup 

@@ -1624,6 +1624,9 @@ void Audio::Inspect() {
 		//ImGui::SliderFloat("Volume", &mVolume, 0.0f, 1.0f, "volume = %.3f");
 		ImGui::DragFloat("Volume", (float*)&mVolume, 0.05f, 0.0f, 1.0f);
 		ImGui::DragFloat("Fade Speed", (float*)&mFadeSpeedModifier, 0.05f, 0.0f);
+		
+		// Added [3/13] - Pan Audio
+		ImGui::DragFloat("Panning Balance: ", (float*)&mPanBalance, 0.05f, 0.0f, 1.0f);
 
 		if (m3DAudio)
 		{

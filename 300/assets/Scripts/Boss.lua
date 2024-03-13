@@ -1,5 +1,8 @@
 local this
 
+-- Disable everything (MECHANIC WISE) -> development mode. doing audio
+local debug_mode = false
+
 -- Phase 1 : Enemyspawn Phase
 local enemyType
 local enemySpawnDirection
@@ -158,6 +161,8 @@ function Alive()
     sphere_phase_audio = gameStateSys:GetEntity("SpherePhase")
 
 
+    debug_mode = true
+
 end
 
 function Update()
@@ -171,7 +176,7 @@ function Update()
         laserPhaseAudio:SetStop()
     end
     -- Tentative random switcher between boss states, replace with HP after other states implemented. 100% HP Left = Phase 1, 66% HP Left = Phase 2, 33% HP Left = Phase 3
-    if _G.attacking == false and _G.FreezePlayerControl  == false then 
+    if _G.attacking == false and _G.FreezePlayerControl  == false and debug_mode == false then 
 
         -- [Recycle Attacks]
         -- Check if the current state checker has at least 4 "true" -> reset them 
@@ -227,7 +232,7 @@ function Update()
     -- state = 5 -- [OK]
 
     --  Added [3/11] -> to disable when cutscene is on 
-    if _G.level3intro == false then 
+    if _G.level3intro == false and debug_mode == false then 
         if state == 1 and _G.state_checker[1] == false then
 
             _G.attacking = true -- must include (to stop state choosing)

@@ -201,10 +201,10 @@ void AudioSystem::Update([[maybe_unused]] float dt, bool calling_from_pause)
 		{
 			case Audio::SET_TO_PLAY:
 
-			/*	if (audio_component.mFileName == "Player_BasicGun.wav")
+				if (audio_component.mFileName == "Player_Movement_Walk.wav")
 				{
 					int i = 0;
-				}*/
+				}
 
 				if (FindSound(audio_component.mFileName) != nullptr) // Sound Exists ...
 				{
