@@ -155,10 +155,7 @@ void AudioSystem::Update([[maybe_unused]] float dt, bool calling_from_pause)
 		// On Awake Play (Check once only)
 		if (audio_component.mState == Audio::STARTUP)
 		{	
-			if (audio_component.mFileName == "Player_BasicGun")
-			{
-				std::cout << "PLAYER BASIC GUN" << std::endl;
-			}
+		
 			if (audio_component.mPlayonAwake)
 			{
 				audio_component.mNextActionState = Audio::SET_TO_PLAY;

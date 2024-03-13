@@ -580,6 +580,14 @@ struct Audio : public Serializable
 	bool		   mPanAudio          = false;
 	float		   mPanBalance        = 0.0f;
 	float		   mPanSpeed          = 0.1f;
+	
+	// Contains the [file paths] + [file names] 8 different footsteps noises
+	std::vector<std::string> mFilePaths;
+	std::vector<std::string> mFileNames;
+	std::vector<bool>		 mAudioActiveStates;    // Keeps track of whether each audio file is active or not
+
+
+
 
 
 

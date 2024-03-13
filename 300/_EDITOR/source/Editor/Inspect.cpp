@@ -1541,6 +1541,11 @@ void Audio::Inspect() {
 				mFilePath = file_path;
 				mFileName = audio_name;
 				mFullPath = file_path + "/" + audio_name;
+
+				// [3/13] - Start of the inclusion of <Multi-Audio> support
+				mFilePaths.push_back(file_path);
+				mFileNames.push_back(audio_name);
+				mAudioActiveStates.push_back(true);
 			}
 
 			ImGui::EndDragDropTarget();
@@ -1559,8 +1564,25 @@ void Audio::Inspect() {
 	}
 
 	ImGui::Text("Drag drop 'Audio' files to header above 'Audio'");
-	ImGui::Text("Audio File Selected: ");
-	ImGui::Text(Entity(Hierarchy::selectedId).GetComponent<Audio>().mFullPath.c_str());
+	ImGui::Text("Audio Files Selected: ");
+
+	// Display each loaded audio file and its full path
+	for (size_t i = 0; i < mFilePaths.size(); ++i) {
+		if (i < mFileNames.size() && i < mFilePaths.size() && i < mAudioActiveStates.size())  // At any time ideally they'll always have the same size.
+		{
+			ImGui::Text("Audio %d:", i + 1);
+			ImGui::Text("Name: %s", mFileNames[i].c_str());
+			ImGui::Text("Path: %s", mFilePaths[i].c_str());
+
+			if (i < mAudioActiveStates.size()) {
+				// Checkbox to toggle active state
+				bool activeState = static_cast<bool>(mAudioActiveStates[i]);
+				ImGui::Checkbox(("Active##" + std::to_string(i)).c_str(), &activeState);
+				mAudioActiveStates[i] = activeState;
+			}
+		}
+	}
+	//ImGui::Text(Entity(Hierarchy::selectedId).GetComponent<Audio>().mFullPath.c_str());
 
 	// Debugging (to show which audio are playing) - on editor
 	if (mState == Audio::PLAYING)
@@ -1634,8 +1656,7 @@ void Audio::Inspect() {
 			ImGui::DragFloat("Panning Speed", (float*)&mPanSpeed, 0.01f, 0.0f, 1.0f);
 		}
 	
-		
-
+	
 		if (m3DAudio)
 		{
 			ImGui::DragFloat("Min Distance", (float*)&mMinDistance);
