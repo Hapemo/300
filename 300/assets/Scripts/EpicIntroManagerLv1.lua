@@ -162,10 +162,10 @@ local epicIntroUI
 local ShowInfoCounter
 local ShowInfoMinTime = 4
 local showRightEpicUIPos = 0.44
-local showRightEpicUImidPos = 0.50
+local showRightEpicUImidPos = 0.49
 local hideRightEpicUIPos = 1.53
 local showLeftEpicUIPos = -0.44
-local showLeftEpicUImidPos = -0.50
+local showLeftEpicUImidPos = -0.49
 local hideLeftEpicUIPos = -1.53
 local showFastSpeed = 4.65
 local showSlowSpeed = 0.01
