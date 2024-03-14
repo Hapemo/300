@@ -51,7 +51,7 @@ function Update()
     frame6Scale = frame6:GetTransform().mScale
     
     timer = timer + 1 * FPSManager.GetDT()
-    print(timer)
+    --print(timer)
     -- TIMER CONTROLLER --
     if (timer >= 3 and timer < 8) then
         frame2State = true

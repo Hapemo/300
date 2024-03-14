@@ -138,21 +138,21 @@ function PauseUpdate()
         elseif (button:GetGeneral().name == "PauseSettingsButton") then
             TranslatePauseElements()
             settingsMenuBackground:GetTransform().mTranslate.x = 0
-            settingsBgmEmpty:GetTransform().mTranslate.x = -0.20
-            settingsBgmFull:GetTransform().mTranslate.x = -0.20
-            settingSfxEmpty:GetTransform().mTranslate.x = -0.20
-            settingSfxFull:GetTransform().mTranslate.x = -0.20
-            settingsFSButton:GetTransform().mTranslate.x = -0.59
-            settingsWindowButton:GetTransform().mTranslate.x = -0.08
-            settingsBackButton:GetTransform().mTranslate.x = 0.85
-            bgmDecrease:GetTransform().mTranslate.x = -0.61
-            bgmIncrease:GetTransform().mTranslate.x = 0.21
-            sfxDecrease:GetTransform().mTranslate.x = -0.61
-            sfxIncrease:GetTransform().mTranslate.x = 0.21
-            gammaFull:GetTransform().mTranslate.x = -0.20
-            gammaEmpty:GetTransform().mTranslate.x = -0.20
-            gammaDecrease:GetTransform().mTranslate.x = -0.61
-            gammaIncrease:GetTransform().mTranslate.x = 0.21
+            settingsBgmEmpty:GetTransform().mTranslate.x = 0.22
+            settingsBgmFull:GetTransform().mTranslate.x = 0.22
+            settingSfxEmpty:GetTransform().mTranslate.x = 0.22
+            settingSfxFull:GetTransform().mTranslate.x = 0.22
+            settingsFSButton:GetTransform().mTranslate.x = -0.18
+            settingsWindowButton:GetTransform().mTranslate.x = 0.33
+            settingsBackButton:GetTransform().mTranslate.x = 0.89
+            bgmDecrease:GetTransform().mTranslate.x = -0.2
+            bgmIncrease:GetTransform().mTranslate.x = 0.64
+            sfxDecrease:GetTransform().mTranslate.x = -0.2
+            sfxIncrease:GetTransform().mTranslate.x = 0.64
+            gammaFull:GetTransform().mTranslate.x = 0.22
+            gammaEmpty:GetTransform().mTranslate.x = 0.22
+            gammaDecrease:GetTransform().mTranslate.x = -0.2
+            gammaIncrease:GetTransform().mTranslate.x = 0.64
 
             _G.isSettingsMenu = true
         elseif (button:GetGeneral().name == "HTPBackButton") then
