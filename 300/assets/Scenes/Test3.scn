@@ -1,6 +1,308 @@
 [
     {
-        "entityid": 3145734,
+        "entityid": 5242927,
+        "general": {
+            "name": "Footstep_Right_4",
+            "tagid": 8,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "parent": {
+            "prevsibling": 8388627,
+            "nextsibling": 5242929,
+            "parent": 7340076
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Player_Footsteps_Right_4.wav",
+            "fullpath": "../assets\\Audio/Player_Footsteps_Right_4.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false,
+            "panaudio": true,
+            "panbalance": 0.5,
+            "panspeed": 0.0
+        }
+    },
+    {
+        "entityid": 5242929,
+        "general": {
+            "name": "Footstep_Right_3",
+            "tagid": 8,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "parent": {
+            "prevsibling": 5242927,
+            "nextsibling": 6291468,
+            "parent": 7340076
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Player_Footsteps_Right_3.wav",
+            "fullpath": "../assets\\Audio/Player_Footsteps_Right_3.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false,
+            "panaudio": true,
+            "panbalance": 0.5,
+            "panspeed": 0.0
+        }
+    },
+    {
+        "entityid": 5242935,
+        "general": {
+            "name": "Footstep_Left_2",
+            "tagid": 8,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "parent": {
+            "prevsibling": 5243061,
+            "nextsibling": 8388627,
+            "parent": 7340076
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Player_Footsteps_Left_2.wav",
+            "fullpath": "../assets\\Audio/Player_Footsteps_Left_2.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false,
+            "panaudio": true,
+            "panbalance": -0.5,
+            "panspeed": 0.0
+        }
+    },
+    {
+        "entityid": 5243061,
+        "general": {
+            "name": "Footstep_Left_1",
+            "tagid": 8,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "parent": {
+            "prevsibling": 6291477,
+            "nextsibling": 5242935,
+            "parent": 7340076
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Player_Footsteps_Left_1.wav",
+            "fullpath": "../assets\\Audio/Player_Footsteps_Left_1.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false,
+            "panaudio": true,
+            "panbalance": -0.5,
+            "panspeed": 0.0
+        }
+    },
+    {
+        "entityid": 6291468,
+        "general": {
+            "name": "Footstep_Right_2",
+            "tagid": 8,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "parent": {
+            "prevsibling": 5242929,
+            "nextsibling": 6291472,
+            "parent": 7340076
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Player_Footsteps_Right_2.wav",
+            "fullpath": "../assets\\Audio/Player_Footsteps_Right_2.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false,
+            "panaudio": true,
+            "panbalance": 0.5,
+            "panspeed": 0.0
+        }
+    },
+    {
+        "entityid": 6291472,
+        "general": {
+            "name": "Footstep_Right_1",
+            "tagid": 8,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "parent": {
+            "prevsibling": 6291468,
+            "nextsibling": 7340200,
+            "parent": 7340076
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Player_Footsteps_Right_1.wav",
+            "fullpath": "../assets\\Audio/Player_Footsteps_Right_1.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false,
+            "panaudio": true,
+            "panbalance": 0.5,
+            "panspeed": 0.0
+        }
+    },
+    {
+        "entityid": 6291477,
+        "general": {
+            "name": "Footstep_Left_4",
+            "tagid": 8,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "parent": {
+            "prevsibling": 7340200,
+            "nextsibling": 5243061,
+            "parent": 7340076
+        }
+    },
+    {
+        "entityid": 7340076,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -69,18 +371,19 @@
             ]
         },
         "children": {
-            "numchildren": 1,
-            "firstchild": 3145746
+            "numchildren": 9,
+            "firstchild": 7340200
         },
         "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "Player_Movement_Walk.wav",
-            "fullpath": "../assets\\Audio/Player_Movement_Walk.wav",
+            "filepath": "",
+            "filename": "",
+            "fullpath": "",
             "playonawake": false,
             "islooping": false,
             "audiotype": 1,
             "volume": 1.0,
-            "retainaudio": false
+            "retainaudio": false,
+            "panaudio": false
         },
         "camera": {
             "positon": {
@@ -94,7 +397,7 @@
                 "z": 10.827869415283203
             },
             "size": {
-                "x": 1075,
+                "x": 1223,
                 "y": 583
             },
             "near": 0.10000000149011612,
@@ -126,7 +429,7 @@
         }
     },
     {
-        "entityid": 3145735,
+        "entityid": 7340080,
         "general": {
             "name": "SpherePhase",
             "tagid": 8,
@@ -159,11 +462,88 @@
             "islooping": false,
             "audiotype": 1,
             "volume": 0.30000001192092896,
-            "retainaudio": false
+            "retainaudio": false,
+            "panaudio": false
         }
     },
     {
-        "entityid": 3145736,
+        "entityid": 7340112,
+        "general": {
+            "name": "RoarSlamAudio",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "audio": {
+            "filepath": "",
+            "filename": "",
+            "fullpath": "",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false,
+            "panaudio": false
+        }
+    },
+    {
+        "entityid": 7340113,
+        "general": {
+            "name": "RevolverGun",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Player_Revolver.wav",
+            "fullpath": "../assets\\Audio/Player_Revolver.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 0.4000000059604645,
+            "retainaudio": false,
+            "panaudio": false
+        }
+    },
+    {
+        "entityid": 7340121,
         "general": {
             "name": "Dash",
             "tagid": 0,
@@ -196,11 +576,12 @@
             "islooping": false,
             "audiotype": 1,
             "volume": 0.4000000059604645,
-            "retainaudio": false
+            "retainaudio": false,
+            "panaudio": false
         }
     },
     {
-        "entityid": 3145737,
+        "entityid": 7340123,
         "general": {
             "name": "BasicGun",
             "tagid": 0,
@@ -233,11 +614,12 @@
             "islooping": false,
             "audiotype": 1,
             "volume": 1.0,
-            "retainaudio": false
+            "retainaudio": false,
+            "panaudio": false
         }
     },
     {
-        "entityid": 3145738,
+        "entityid": 7340163,
         "general": {
             "name": "BGM",
             "tagid": 8,
@@ -270,11 +652,12 @@
             "islooping": false,
             "audiotype": 1,
             "volume": 0.4000000059604645,
-            "retainaudio": true
+            "retainaudio": true,
+            "panaudio": false
         }
     },
     {
-        "entityid": 3145739,
+        "entityid": 7340164,
         "general": {
             "name": "Level2FBX",
             "tagid": 0,
@@ -355,7 +738,7 @@
         }
     },
     {
-        "entityid": 3145740,
+        "entityid": 7340172,
         "general": {
             "name": "Boss_Arena_Right_Wall",
             "tagid": 4,
@@ -452,7 +835,7 @@
         }
     },
     {
-        "entityid": 3145741,
+        "entityid": 7340174,
         "general": {
             "name": "Boss_Arena_Back_Wall",
             "tagid": 4,
@@ -549,7 +932,7 @@
         }
     },
     {
-        "entityid": 3145742,
+        "entityid": 7340176,
         "general": {
             "name": "SummonPortalAudio",
             "tagid": 8,
@@ -582,11 +965,74 @@
             "islooping": false,
             "audiotype": 1,
             "volume": 0.6000000238418579,
-            "retainaudio": false
+            "retainaudio": false,
+            "panaudio": false
         }
     },
     {
-        "entityid": 3145743,
+        "entityid": 7340177,
+        "general": {
+            "name": "Skybox",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 500.0,
+                "y": 500.0,
+                "z": 500.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": -20.668514251708984,
+                "z": -47.40319061279297
+            }
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 2510,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 0.20000000298023224,
+                "y": 0.20999999344348907,
+                "z": 0.1599999964237213,
+                "w": 1.0
+            },
+            "castShadow": true,
+            "materialinstance": [
+                "../assets/Compressed/Environment_Skybox_BaseColor.ctexture",
+                "../assets/Compressed/Environment_Skybox_Normal.ctexture",
+                "../assets/Compressed/Environment_Skybox_Metallic.ctexture",
+                "../assets/Compressed/Environment_Skybox_Roughness.ctexture",
+                "../assets/Compressed/Environment_Skybox_BaseColor.ctexture",
+                "../assets/Compressed/Environment_Skybox_AO.ctexture"
+            ],
+            "mesh": "../assets/compiled_geom/Skybox.geom",
+            "texturerefid": [
+                437536649,
+                3522280818,
+                1686346496,
+                1590588887,
+                5760,
+                1467793003
+            ]
+        }
+    },
+    {
+        "entityid": 7340178,
         "general": {
             "name": "Boss_Arena_Left_Wall",
             "tagid": 4,
@@ -683,7 +1129,7 @@
         }
     },
     {
-        "entityid": 3145744,
+        "entityid": 7340179,
         "general": {
             "name": "Boss_Arena_Front_Wall",
             "tagid": 4,
@@ -780,7 +1226,7 @@
         }
     },
     {
-        "entityid": 3145745,
+        "entityid": 7340180,
         "general": {
             "name": "BossSlamAudio",
             "tagid": 0,
@@ -813,11 +1259,12 @@
             "islooping": false,
             "audiotype": 1,
             "volume": 0.6000000238418579,
-            "retainaudio": false
+            "retainaudio": false,
+            "panaudio": false
         }
     },
     {
-        "entityid": 3145746,
+        "entityid": 7340200,
         "general": {
             "name": "gun",
             "tagid": 0,
@@ -878,13 +1325,58 @@
             ]
         },
         "parent": {
-            "prevsibling": 3145746,
-            "nextsibling": 3145746,
-            "parent": 3145734
+            "prevsibling": 6291472,
+            "nextsibling": 6291477,
+            "parent": 7340076
         }
     },
     {
-        "entityid": 3145747,
+        "entityid": 8388627,
+        "general": {
+            "name": "Footstep_Left_3",
+            "tagid": 8,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "parent": {
+            "prevsibling": 5242935,
+            "nextsibling": 5242927,
+            "parent": 7340076
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Player_Footsteps_Left_3.wav",
+            "fullpath": "../assets\\Audio/Player_Footsteps_Left_3.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false,
+            "panaudio": true,
+            "panbalance": -0.5,
+            "panspeed": 0.0
+        }
+    },
+    {
+        "entityid": 9437194,
         "general": {
             "name": "ShotGun",
             "tagid": 0,
@@ -917,11 +1409,12 @@
             "islooping": false,
             "audiotype": 1,
             "volume": 0.6000000238418579,
-            "retainaudio": false
+            "retainaudio": false,
+            "panaudio": false
         }
     },
     {
-        "entityid": 3145748,
+        "entityid": 14680231,
         "general": {
             "name": "MachineGun",
             "tagid": 0,
@@ -954,147 +1447,12 @@
             "islooping": false,
             "audiotype": 1,
             "volume": 0.6000000238418579,
-            "retainaudio": false
+            "retainaudio": false,
+            "panaudio": false
         }
     },
     {
-        "entityid": 3145749,
-        "general": {
-            "name": "RoarSlamAudio",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "audio": {
-            "filepath": "",
-            "filename": "",
-            "fullpath": "",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 1.0,
-            "retainaudio": false
-        }
-    },
-    {
-        "entityid": 3145750,
-        "general": {
-            "name": "RevolverGun",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "Player_Revolver.wav",
-            "fullpath": "../assets\\Audio/Player_Revolver.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 0.4000000059604645,
-            "retainaudio": false
-        }
-    },
-    {
-        "entityid": 3145751,
-        "general": {
-            "name": "Skybox",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 500.0,
-                "y": 500.0,
-                "z": 500.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": -20.668514251708984,
-                "z": -47.40319061279297
-            }
-        },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 2510,
-            "instancecolor": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "bloomthreshold": {
-                "x": 0.20000000298023224,
-                "y": 0.20999999344348907,
-                "z": 0.1599999964237213,
-                "w": 1.0
-            },
-            "castShadow": true,
-            "materialinstance": [
-                "../assets/Compressed/Environment_Skybox_BaseColor.ctexture",
-                "../assets/Compressed/Environment_Skybox_Normal.ctexture",
-                "../assets/Compressed/Environment_Skybox_Metallic.ctexture",
-                "../assets/Compressed/Environment_Skybox_Roughness.ctexture",
-                "../assets/Compressed/Environment_Skybox_BaseColor.ctexture",
-                "../assets/Compressed/Environment_Skybox_AO.ctexture"
-            ],
-            "mesh": "../assets/compiled_geom/Skybox.geom",
-            "texturerefid": [
-                437536649,
-                3522280818,
-                1686346496,
-                1590588887,
-                5760,
-                1467793003
-            ]
-        }
-    },
-    {
-        "entityid": 3145752,
+        "entityid": 15728806,
         "general": {
             "name": "RoarAudio",
             "tagid": 0,
@@ -1127,7 +1485,8 @@
             "islooping": false,
             "audiotype": 1,
             "volume": 1.0,
-            "retainaudio": false
+            "retainaudio": false,
+            "panaudio": false
         }
     }
 ]
