@@ -120,6 +120,8 @@ local sphere_phase_audio
 
 local play_sphere_audio
 local play_laser_audio
+
+local homing_audio
 function Alive()
     print("ALIVE")
     this = Helper.GetScriptEntity(script_entity.id)
@@ -159,6 +161,7 @@ function Alive()
     roar_slam_audio = gameStateSys:GetEntity("RoarSlamAudio")
     boss_slam_audio = gameStateSys:GetEntity("BossSlamAudio")
     sphere_phase_audio = gameStateSys:GetEntity("SpherePhase")
+    homing_audio = gameStateSys:GetEntity("HomingEyeballAudio")
 
 
     -- debug_mode = true
@@ -621,7 +624,7 @@ end
 function SpawnHomingSpheres()
     -- Let's start by randomnizing the starting spawn point of the projectile
     bulletSpeed = 5
-
+    homing_audio:GetAudio():SetPlay(0.5)
     -- Spawning Logic (Start)
     -- for i = 0 , number_of_bullets do 
     local attack_offset_range = 5  -- Defines a range to spread out from the central position to summon the bullets in different positions
@@ -697,7 +700,7 @@ function UpdateHomingProjectiles()
                 projectile.lock_on_time = projectile.lock_on_time - FPSManager.GetDT()
                 if projectile.lock_on_time > 0 then 
                     -- print("CALCULATING DIRECTION TO GO.")
-                        
+  
                     -- Subtract Vector 
                     local directionToPlayer = Subtract(player_position, projectile.position)
                     
