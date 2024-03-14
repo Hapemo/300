@@ -161,7 +161,7 @@ function Alive()
     sphere_phase_audio = gameStateSys:GetEntity("SpherePhase")
 
 
-    debug_mode = true
+    -- debug_mode = true
 
 end
 
@@ -229,7 +229,7 @@ function Update()
     -- state = 2 -- [OK] -- need to check agn after i check the other mechanics
     -- state = 3 -- [OK]
     -- state = 4 --[OK]
-    -- state = 5 -- [OK]
+    state = 5 -- [OK]
 
     --  Added [3/11] -> to disable when cutscene is on 
     if _G.level3intro == false and debug_mode == false then 
@@ -281,8 +281,10 @@ function Update()
                         roar_audio:GetAudio():SetPlay(1.0)
                         initial_roar = true
                     end
-                    SummonMinions(total_number_of_enemies_to_spawn - _G.number_of_spawned_in_level_3)
-                    currentEnemySpawnResetTimer = 0 -- Reset spawn time
+                    if (total_number_of_enemies_to_spawn - _G.number_of_spawned_in_level_3 > 0 ) then 
+                        SummonMinions(total_number_of_enemies_to_spawn - _G.number_of_spawned_in_level_3)
+                        currentEnemySpawnResetTimer = 0 -- Reset spawn time
+                    end
                 end
 
                 summon_per_spawn_instance   = 0 -- Reset number of enemies per spawn instance (for a new RNG) -> put here coz might exceed total number    
@@ -424,11 +426,11 @@ function Update()
                 end
 
             else 
-                -- print("DONE SLAM")
-                -- _G.state_checker[2] = true
-                -- _G.attacking = false
-                -- groundSlamMax = 0
-                -- smashed = false 
+                print("DONE SLAM")
+                _G.state_checker[2] = true
+                _G.attacking = false
+                groundSlamMax = 0
+                smashed = false 
             end
 
         end

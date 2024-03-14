@@ -3,7 +3,7 @@ local bulletLifeTime = 0
 local bulletDeathTime = 15
 
 -- Phase 3 attack from Boss Level (Lv 3) 
-local bullet_damage = 4 -- Adjust Accordingly
+local bullet_damage = 6 -- Adjust Accordingly
 
 local this
 local general

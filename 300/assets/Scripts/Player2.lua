@@ -191,6 +191,9 @@ local currentRightIndex = 1     -- Used to keep track which track is being playe
 
 local walking_state = "NOT_WALKING"
 
+-- [M5] Player Damaged (Audio)
+local dmgAudioEnt
+
 _G.FreezePlayerControl = false
 
 function Alive()
@@ -292,6 +295,8 @@ function Alive()
     print("LEFT FOOTSTEP DATABASE: " , #leftFootsteps)
     print("RIGHT FOOTSTEP DATABASE: " , #rightFootsteps)
 
+    
+    dmgAudioEnt = gameStateSys:GetEntity("DamageAudio")
 
 end
 
@@ -329,6 +334,8 @@ function Update()
     if (isTakingDamage == true) then
     playerHealthStartRegenCurrent = 0;
     playerHealthCurrent = playerHealthCurrent - 6; -- take damage
+    
+    dmgAudioEnt:GetAudio():SetPlay()
     end
 
     if (isTakingDamage == false) then -- if not taking damage

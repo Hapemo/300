@@ -190,6 +190,10 @@ local footstepDelay   = 0.5     -- Delay between each step
 local currentLeftIndex = 1      -- Used to keep track which track is being played (in the left footstep database)   -> lua starts from 1
 local currentRightIndex = 1     -- Used to keep track which track is being played (in the right footstep database)  -> lua starts from 1
 
+-- [M5] Player Damaged (Audio)
+local dmgAudioEnt
+local play_normal_damage_audio
+
 function Alive()
     this = Helper.GetScriptEntity(script_entity.id)
     gameStateSys = systemManager:mGameStateSystem();
@@ -293,6 +297,8 @@ function Alive()
 
     print("LEFT FOOTSTEP DATABASE: " , #leftFootsteps)
     print("RIGHT FOOTSTEP DATABASE: " , #rightFootsteps)
+
+    dmgAudioEnt = gameStateSys:GetEntity("DamageAudio")
 end
 
 function Update()
@@ -328,8 +334,15 @@ function Update()
 
     -- Player Health System End -- 
     if (isTakingDamage == true) then
-    playerHealthStartRegenCurrent = 0;
-    playerHealthCurrent = playerHealthCurrent - 6; -- take damagen
+        playerHealthStartRegenCurrent = 0;
+        playerHealthCurrent = playerHealthCurrent - 6; -- take damagen
+            
+        if play_normal_damage_audio == true then 
+             dmgAudioEnt:GetAudio():SetPlay()
+            play_normal_damage_audio = false
+        end
+
+        -- isTakingDamage = false
     
     -- -- Added 3/4/2024 (using healthbar component)
     -- playerHealthComponent.health =  playerHealthComponent.health - 6
@@ -946,6 +959,7 @@ function OnTriggerEnter(Entity)
 
     if (tagid == 1) then
         -- play attack anim
+        isTakingDamage = true
     end 
 
     if (tagid == 5) then
@@ -957,11 +971,40 @@ function OnTriggerEnter(Entity)
     end
 
     -- Player Health System Start --
-    if (generalComponent.name == "ILOVEYOU") then isTakingDamage = true; end
-    if (generalComponent.name == "Melissa") then isTakingDamage = true; end
-    if (generalComponent.name == "TrojanHorse") then isTakingDamage = true; end
-    if (generalComponent.name == "ZipBomb") then isTakingDamage = true; end
-    if (generalComponent.name == "TrojanSoldier") then isTakingDamage = true; end
+    if (generalComponent.name == "ILOVEYOU") then
+         isTakingDamage = true
+         play_normal_damage_audio = true
+     end
+    if (generalComponent.name == "Melissa") then
+         isTakingDamage = true
+        play_normal_damage_audio = true
+     end
+    if (generalComponent.name == "TrojanHorse") then 
+        isTakingDamage = true
+        play_normal_damage_audio = true
+    end
+    if (generalComponent.name == "ZipBomb") then 
+        isTakingDamage = true
+        play_normal_damage_audio = true
+     end
+    if (generalComponent.name == "TrojanSoldier") then 
+        isTakingDamage = true;
+        play_normal_damage_audio = true
+     end
+    if (generalComponent.name == "Laser1") then 
+        isTakingDamage = true; 
+        play_normal_damage_audio = true
+    end
+    if (generalComponent.name == "Laser2") then 
+        isTakingDamage = true;
+        play_normal_damage_audio = true
+     end
+    if (generalComponent.name == "Boss_Bullet") then 
+        isTakingDamage = true;
+        play_normal_damage_audio = true
+        print("BOSS BULLET HIT WOI")
+    end
+
     -- Player Health System End --
 
 
