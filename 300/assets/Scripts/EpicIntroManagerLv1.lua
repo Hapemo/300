@@ -193,6 +193,9 @@ local epicTrojanHorsePlayed = false
 local epicZipBombAudio
 local epicZipBombPlayed = false
 
+local epicMelissaAudio
+local epicMelissaPlayed = false
+
 function Alive()
     this = Helper.GetScriptEntity(script_entity.id)
     if this == nil then print("Entity nil in script!") end
@@ -225,6 +228,7 @@ function Alive()
     BGM   = gameStateSys:GetEntity("BGM")
     epicTrojanHorseAudio = gameStateSys:GetEntityByScene("TrojanHorseEpicAudio" , "EpicIntroLv1")
     epicZipBombAudio = gameStateSys:GetEntityByScene("ZipBombEpicAudio" , "EpicIntroLv2")
+    epicMelissaAudio = gameStateSys:GetEntityByScene("MelissaEpicAudio"  , "EpicIntroLv2")
 
     if BGM == nil then 
         print("BGM FAILED")
@@ -787,6 +791,7 @@ function RunMEpicIntro()
     --print(_G.MEpicIntroState)
 
     if _G.MEpicIntroState == 1 then -- Move to start pos
+        BGM:GetAudio():UpdateVolume(0.2)
         if not MoveTo(player, MPos1, 100) then
             _G.MEpicIntroState = 2 -- To keep M waiting
         end
@@ -816,7 +821,13 @@ function RunMEpicIntro()
     elseif _G.MEpicIntroState == 5 then -- ShowInfo
         ShowInfoSlowdownCounter = ShowInfoSlowdownCounter + FPSManager.GetDT()
 
-        if (ShowInfoSlowdownCounter < ShowInfoSlowdown) then MoveEpicIntroUI(epicIntroUI, 4.65, false, true)
+        if (ShowInfoSlowdownCounter < ShowInfoSlowdown) then 
+            MoveEpicIntroUI(epicIntroUI, 4.65, false, true)
+            BGM:GetAudio():SetPause()
+            if epicMelissaPlayed == false then 
+                epicMelissaAudio:GetAudio():SetPlay(1.0)
+                epicMelissaPlayed = true
+            end
         elseif not MoveEpicIntroUI(epicIntroUI, 0.01, false, true) and
                ShowInfoSlowdownCounter > ShowInfoMinTime then _G.MEpicIntroState = 6 end
     elseif _G.MEpicIntroState == 6 then -- HideInfo
@@ -828,6 +839,7 @@ function RunMEpicIntro()
             retractBlackBorder = true
             epicM:GetAnimator():UnpauseAnimation()
             ShowUI()
+            BGM:GetAudio():SetResume()
             _G.completedEpicM = true
         end
     end
