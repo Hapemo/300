@@ -64,8 +64,9 @@ void main()
 		discard;
 
 	// Gamma correction
-    float gamma = 2.2;
-    vec4 finalColor = vec4(pow(outColor.rgb, vec3(1.0/gamma)), outColor.a);
+    //float gamma = 2.2;
+    //vec4 finalColor = vec4(pow(outColor.rgb, vec3(1.0/gamma)), outColor.a);
+    vec4 finalColor = vec4(outColor.rgb, outColor.a);
 
 	fragColor = finalColor * fColor;
 	outEntityID = entID;

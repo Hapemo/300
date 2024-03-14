@@ -87,8 +87,8 @@ void main()
     }
 
     // Gamma correction
-    float gamma = 2.2;
-    finalColor = pow(finalColor.rgb, vec3(1.0/gamma));
+    //float gamma = 2.2;
+    //finalColor = pow(finalColor.rgb, vec3(1.0/gamma));
 
     // Output
     fragColor0 = vec4(finalColor, 1.0);

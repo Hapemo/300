@@ -282,6 +282,9 @@ public:
 	float m_Gamma{ 2.2f };
 	float Getm_Gamma() { return m_Gamma; }
 	void Setm_Gamma(float newm_Gamma) { m_Gamma = newm_Gamma; }
+	GFX::ComputeShader m_ComputeGammaShader;
+	GLint m_ComputeGammaLocation{};
+	void ComputeGammaCorrection(bool forEditor);
 
 	// -- Camera --
 	GFX::Camera m_EditorCamera;

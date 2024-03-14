@@ -67,9 +67,9 @@ void main()
     vec3 ambient = vec3(0.03) * albedoSpec.rgb * ao;
     vec3 color = ambient + lightRadiance;
 
-    float gamma = 2.2;
     color = color / (color + vec3(1.0));
-    color = pow(color, vec3(1.0/gamma));
+    //float gamma = 2.2;
+    //color = pow(color, vec3(1.0/gamma));
 }
 
 vec3 ComputeLight(PointLight light, vec3 F0, vec3 fragPos, vec3 albedo, vec3 normal, float roughness, float metallic)

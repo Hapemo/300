@@ -476,6 +476,8 @@ void GraphicsSystem::Draw(float dt, bool forEditor)
 		}
 	}
 
+	ComputeGammaCorrection(forEditor);
+
 	//// Bind the appropriate FBO
 	//if (forEditor)		// Bind Editor FBO
 	//{
@@ -1473,6 +1475,32 @@ void GraphicsSystem::HideCursor(bool hideCursor)
 	}
 }
 
+void GraphicsSystem::ComputeGammaCorrection(bool forEditor)
+{
+	if (forEditor)	// Draw to Editor FBO
+	{
+		glBindImageTexture(0, m_Fbo.GetColorAttachment(), 0, GL_FALSE, 0, GL_READ_WRITE, GL_RGBA32F);
+	}
+	else
+	{
+		glBindImageTexture(0, m_GameFbo.GetColorAttachment(), 0, GL_FALSE, 0, GL_READ_WRITE, GL_RGBA32F);
+	}
+
+	m_ComputeGammaShader.Activate();
+
+	glUniform1f(m_ComputeGammaLocation, m_Gamma);
+
+	int num_group_x = glm::ceil(m_Width / 29);
+	int num_group_y = glm::ceil(m_Height / 29);
+	glDispatchCompute(num_group_x, num_group_y, 1);
+	// make sure writing to image is done before reading
+	glMemoryBarrier(GL_SHADER_IMAGE_ACCESS_BARRIER_BIT);
+
+	glBindImageTexture(0, 0, 0, GL_FALSE, 0, GL_READ_WRITE, GL_RGBA32F);
+
+	m_ComputeGammaShader.Deactivate();
+}
+
 void GraphicsSystem::Unload()
 {
 	auto meshRendererInstances = systemManager->ecs->GetEntitiesWith<MeshRenderer>();
@@ -1934,6 +1962,11 @@ void GraphicsSystem::SetupAllShaders()
 
 	uid particleShaderStr("ParticleShader");
 	m_ParticleShaderInst = *systemManager->mResourceTySystem->get_Shader(particleShaderStr.id);
+
+	m_ComputeGammaShader.CreateShaderFromFile("../assets/shader_files/computeGamma.glsl");
+	m_ComputeGammaShader.Activate();
+	m_ComputeGammaLocation = m_ComputeGammaShader.GetUniformLocation("uGamma");
+	GFX::Shader::Deactivate();
 }
 
 mat4 GraphicsSystem::GetPortalViewMatrix(GFX::Camera const& camera, Transform const& sourcePortal, Transform const& destPortal)
